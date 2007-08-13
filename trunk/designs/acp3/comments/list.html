@@ -1,0 +1,34 @@
+{if $comments}
+<a name="comments" id="comments"></a>
+{$pagination}
+<div style="width:100%;float:left">
+{foreach from=$comments item=row}
+	<div class="gb">
+		<div class="gbhead">
+			<div class="author">
+				{lang values="common|author"}
+			</div>
+			<div class="message">
+				{lang values="common|message"}
+			</div>
+		</div>
+		<div class="gbleft">
+			<strong>{lang values="common|name"}:</strong> {$row.name}<br />
+			<strong>{lang values="common|date"}:</strong> {$row.date}
+		</div>
+		<div class="gbright">
+			{$row.message}
+		</div>
+		<div class="gbfooter">
+			&nbsp;
+		</div>
+	</div>
+	<br />
+	<br />
+{/foreach}
+</div>
+{else}
+<div class="error">
+	<h4 style="text-align:center">{lang values="common|no_entries"}</h4>
+</div>
+{/if}

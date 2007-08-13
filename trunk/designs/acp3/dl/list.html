@@ -1,0 +1,21 @@
+{if $categories}
+<table>
+	<thead>
+		<tr>
+			<th colspan="2" class="newshead">{lang values="dl|category_select"}</th>
+		</tr>
+	</thead>
+	<tbody>
+{foreach from=$categories item=cat}
+		<tr>
+			<td style="width:25%"><a href="{uri args="dl/files/cat_`$cat.id`"}">{$cat.name}</a></td>
+			<td>{$cat.description}</td>
+		</tr>
+{/foreach}
+	</tbody>
+</table>
+{else}
+<div class="error">
+	<h4 style="text-align:center">{lang values="common|no_entries"}</h4>
+</div>
+{/if}

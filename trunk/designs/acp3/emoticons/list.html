@@ -1,0 +1,6 @@
+<script type="text/javascript" src="{$design_path}emoticons/script.js"></script>
+<div class="icons">
+{foreach from=$emoticons item=row}
+	<a href="javascript:emoticon('{$emoticons_field_id}','{$row.code}')"><img src="{$root_dir}files/emoticons/{$row.img}" alt="{$row.description}" title="{$row.description}" /></a>
+{/foreach}
+</div>

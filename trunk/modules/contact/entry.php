@@ -1,0 +1,64 @@
+<?php
+/**
+ * Contact
+ *
+ * @author Goratsch Webdesign
+ * @package ACP3
+ * @subpackage Modules
+ */
+
+if (!defined('IN_ACP3') && !defined('IN_ADM'))
+	exit;
+
+switch ($modules->action) {
+	case 'contact':
+		$form = $_POST['form'];
+		$i = 0;
+
+		if (empty($form['name']))
+			$errors[$i++] = lang('common', 'name_to_short');
+		if (!$validate->email($form['mail']))
+			$errors[$i++] = lang('common', 'wrong_email_format');
+		if (strlen($form['message']) < 3)
+			$errors[$i++] = lang('common', 'message_to_short');
+
+		if (isset($errors)) {
+			$error_msg = combo_box($errors);
+		} else {
+			$contact = $config->output('contact');
+
+			$subject = sprintf(lang('contact', 'contact_subject'), CONFIG_TITLE);
+			$body = sprintf(lang('contact', 'contact_body'), $form['name'], $form['mail']) . "\n\n" . $form['message'];
+
+			$bool = @mail($contact[0]['mail'], $subject, $body, 'FROM:' . $form['mail']);
+
+			$content = combo_box($bool ? lang('contact', 'form_success') : lang('contact', 'form_error'), uri('contact/contact'));
+		}
+		break;
+	case 'edit':
+		if (!$modules->check())
+			redirect('errors/403');
+		$form = $_POST['form'];
+		$i = 0;
+
+		if (!empty($form['mail']) && !$validate->email($form['mail']))
+			$errors[$i++] = lang('common', 'wrong_email_format');
+
+		if (isset($errors)) {
+			$error_msg = combo_box($errors);
+		} else {
+			$form['address'] = $db->escape($form['address'], 2);
+			$form['telephone'] = $db->escape($form['telephone']);
+			$form['fax'] = $db->escape($form['fax']);
+			$form['disclaimer'] = $db->escape($form['disclaimer'], 2);
+			$form['miscellaneous'] = $db->escape($form['miscellaneous'], 2);
+
+			$bool = $config->module('contact', $form);
+
+			$content = combo_box($bool ? lang('contact', 'edit_success') : lang('contact', 'edit_error'), uri('acp/contact'));
+		}
+		break;
+	default:
+		redirect('errors/404');
+}
+?>

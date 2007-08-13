@@ -1,0 +1,22 @@
+{$error_msg}
+<form action="{$request_uri}" method="post" accept-charset="UTF-8">
+	<fieldset class="no-border">
+		<dl>
+			<dt><label for="mail">{lang values="common|email"}</label></dt>
+			<dd><input type="text" name="form[mail]" id="mail" maxlength="120" value="{$form.mail}" /></dd>
+		</dl>
+	</fieldset>
+	<div style="text-align:center;white-space:nowrap">
+		<label for="subscribe">
+			<input type="radio" name="action" id="subscribe" value="subscribe" checked="checked" class="radio" />
+			{lang values="newsletter|subscribe"}
+		</label>
+		<label for="unsubscribe">
+			<input type="radio" name="action" id="unsubscribe" value="unsubscribe" class="radio" />
+			{lang values="newsletter|unsubscribe"}
+		</label>
+	</div>
+	<div style="margin-top:20px">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>

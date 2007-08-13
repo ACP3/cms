@@ -1,0 +1,14 @@
+<form action="{$request_uri}" method="post">
+	<div class="poll">
+		<h4>{$question}</h4>
+{foreach from=$answers item=row}
+		<label for="answer_{$row.id}" class="{$row.css_class}">
+			<input type="radio" name="answer" id="answer_{$row.id}" value="{$row.id}" />
+			{$row.text}
+		</label>
+{/foreach}
+	</div>
+	<div style="margin-top:20px">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>

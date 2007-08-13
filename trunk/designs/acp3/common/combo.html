@@ -1,0 +1,23 @@
+{if !$forward && !$back}
+<div class="error">
+	<h4>{lang values="common|failure"}</h4>
+	<ul>
+{foreach from=$text item=error}
+		<li>{$error}</li>
+{/foreach}
+	</ul>
+</div>
+<br />
+{else}
+<div class="success">
+	<div class="successhead">{$text}</div>
+	<div class="forward">
+{if $back}
+		<a href="{$forward}confirmed_1/" class="form">{lang values="common|yes"}</a>
+		<a href="{$back}" class="form">{lang values="common|no"}</a>
+{else}
+		<a href="{$forward}" class="form">{lang values="common|forward"}</a>
+{/if}
+	</div>
+</div>
+{/if}
