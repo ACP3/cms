@@ -1,0 +1,271 @@
+﻿body {
+	padding: 1px;
+	margin: 0;
+}
+#xEditingArea {
+	border: 1px solid #c2c2c2;
+}
+.SourceField {
+	margin: 0;
+	padding: 5px;
+	font-family: Monospace;
+}
+/* Toolbar */
+.TB_ToolbarSet, .TB_Expand, .TB_Collapse {
+	background: #eee;
+	cursor: default;
+}
+.TB_ToolbarSet {
+	border-top: 1px solid #c2c2c2;
+}
+.TB_ToolbarSet TD {
+	font: 11px 'Lucida Grande', 'Trebuchet MS', Arial, sans-serif;
+}
+.TB_Toolbar {
+	height: 24px;
+	display: inline-table;	/* inline = Opera jumping buttons bug */
+}
+.TB_Separator {
+	width: 1px;
+	height: 16px;
+	margin: 2px;
+	background: #333;
+}
+.TB_Start {
+	width: 3px;
+	height: 16px;
+	margin: 2px;
+	background: url('images/toolbar.start.gif') no-repeat;
+}
+.TB_End {
+	display: none;
+}
+.TB_ExpandImg {
+	background: url('images/toolbar.expand.gif') no-repeat;
+}
+.TB_CollapseImg {
+	background: url('images/toolbar.collapse.gif') no-repeat;
+}
+.TB_SideBorder {
+	background: #c2c2c2;
+}
+.TB_Expand, .TB_Collapse {
+	padding: 4px 2px;
+	border: 1px solid #c2c2c2;
+	border-width: 1px 1px 0 1px;
+}
+.TB_Collapse {
+	width: 5px;
+}
+.TB_Break {
+	height: 24px;
+}
+/* Toolbar Button */
+.TB_Button_On, .TB_Button_Off, .TB_Button_On_Over, .TB_Button_Off_Over, .TB_Button_Disabled {
+	border: 1px solid #eee; /* This is the default border */
+	height: 22px;
+}
+.TB_Button_On, .TB_Button_On_Over, .TB_Button_Off_Over {
+	border: 1px solid #c2c2c2;
+	background: #ffc;
+}
+.TB_Button_Off_Over {
+	border: 1px solid #c2c2c2;
+}
+.TB_Button_Off {
+	filter: alpha(opacity=70);
+	opacity: 0.70;
+}
+.TB_Button_Disabled {
+	filter: gray() alpha(opacity=30);
+	opacity: 0.30;
+}
+.TB_Button_Padding {
+	width: 3px;
+	height: 22px;
+	visibility: hidden;
+}
+.TB_Button_Image {
+	width: 16px;
+	height: 16px;
+	margin: 3px;
+	background-repeat: no-repeat;
+	overflow: hidden;
+}
+.TB_Button_Image img {
+	position: relative;
+}
+.TB_Button_Off .TB_Button_Text {
+   	background: #eee;  /* Needed because of a bug on Clear Type */
+}
+.TB_ConnectionLine {
+	height: 1px;
+	margin: auto 1px;
+	background: #fff;
+}
+.TB_Text {
+	height: 22px;
+}
+.TB_Button_Off .TB_Text {
+   	background: #eee; /* Needed because of a bug on ClearType */
+}
+.TB_Button_On_Over .TB_Text {
+   	background: #dff1ff; /* Needed because of a bug on ClearType */
+}
+/* Menu */
+.MN_Menu {
+	padding: 2px;
+	background: #fff;
+	border: 1px solid #333;
+	cursor: default;
+}
+.MN_Menu, .MN_Menu .MN_Label {
+	font: 11px 'Lucida Grande', 'Trebuchet MS', Arial, sans-serif;
+}
+.MN_Item_Padding {
+	width: 3px;
+	height: 20px;
+	visibility: hidden;
+}
+.MN_Icon {
+	height: 20px;
+	background: #eee;
+	text-align: center;
+}
+.MN_Label {
+	padding: 0 3px;
+}
+.MN_Separator {
+	height: 3px;
+}
+.MN_Separator_Line {
+	border-top: 1px solid #eee;
+}
+.MN_Item .MN_Icon IMG {
+	filter: alpha(opacity=70);
+	opacity: 0.70;
+}
+.MN_Item_Over {
+	background: #ccc;
+	color: #fff;
+}
+.MN_Item_Over .MN_Icon {
+	background: #ccc;
+}
+.MN_Item_Disabled IMG {
+	filter: gray() alpha(opacity=30);
+	opacity: 0.30;
+}
+.MN_Item_Disabled .MN_Label {
+	color: #b7b7b7;
+}
+.MN_Arrow {
+	padding: 0 3px;
+}
+.MN_ConnectionLine {
+	background: #fff;
+}
+.Menu .TB_Button_On, .Menu .TB_Button_On_Over {
+	background: #fff;
+	border: 1px solid #333;
+}
+/* Panel Styles */
+.FCK_Panel {
+	padding: 2px;
+	background: #fff;
+	border: 1px solid #333;
+}
+.FCK_Panel, .FCK_Panel TD {
+	font: 11px 'Lucida Grande', 'Trebuchet MS', Arial, sans-serif;
+}
+/* Special Combos */
+.SC_Panel {
+	padding: 0 2px;
+	background: #fff;
+	border: 1px solid #333;
+	white-space: nowrap;
+	cursor: default;
+	overflow: auto;
+}
+.SC_Panel, .SC_Panel TD {
+	font: 11px 'Lucida Grande', 'Trebuchet MS', Arial, sans-serif;
+}
+.SC_Item, .SC_ItemSelected {
+	margin: 2px 0;
+	padding: 2px 3px 2px 11px;
+	border: 1px solid #c2c2c2;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.SC_Item *, .SC_ItemSelected * {
+	margin: 0 auto;
+}
+.SC_ItemSelected {
+	background: #ffc url('images/toolbar.arrowright.gif') no-repeat left center;
+	border: 1px solid #c2c2c2;
+}
+.SC_ItemOver {
+	background: #ffc;
+	border: 1px solid #c2c2c2;
+}
+.SC_Field {
+	border: 1px solid #c2c2c2;
+	cursor: default;
+}
+.SC_FieldCaption {
+	height: 23px;
+	padding: 0 5px;
+	background: #eee;
+	filter: alpha(opacity=70);
+	opacity: 0.75;
+	overflow: visible;
+}
+.SC_FieldLabel {
+	width: 100%;
+	padding: 2px;
+	background: #fff;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	cursor: default;
+	overflow: hidden;
+}
+.SC_FieldButton {
+	width: 14px;
+	background: url('images/toolbar.buttonarrow.gif') no-repeat center center;
+	border-left: 1px solid #c2c2c2;
+}
+.SC_FieldDisabled .SC_FieldButton, .SC_FieldDisabled .SC_FieldCaption {
+	filter: gray() alpha(opacity=30);
+	opacity: 0.30;
+}
+.SC_FieldOver {
+	border: 1px solid #c2c2c2;
+}
+.SC_FieldOver .SC_FieldButton {
+	border-left: 1px solid #c2c2c2;
+}
+/* ### Color Selector Panel */
+.ColorBoxBorder {
+	border: 1px solid #333;
+	position: static;
+}
+.ColorBox {
+	width: 10px;
+	height: 10px;
+	font-size: 1px;
+	position: static;
+}
+.ColorDeselected, .ColorSelected {
+	cursor: default;
+}
+.ColorDeselected {
+	padding: 2px;
+	border: 1px solid #fff;
+	float: left;
+}
+.ColorSelected {
+	padding: 2px;
+	background: #ffc;
+	border: 1px solid #c2c2c2;
+	float: left;
+}

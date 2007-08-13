@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+	<channel>
+		<title>{$rss.title} - RSS Feed</title>
+		<generator>ACP3</generator>
+		<link>{$rss.path}</link>
+		<description>{$rss.description}</description>
+		<language>{$rss.language}</language>
+{if $results}
+{foreach from=$results item=row}
+		<item>
+			<pubDate>{$row.date}</pubDate>
+			<title>{$row.title}</title>
+			<description>{$row.description}...</description>
+			<link>{$rss.path}{$row.uri}</link>
+			<guid>{$rss.path}{$row.uri}</guid>
+		</item>
+{/foreach}
+{/if}
+	</channel>
+</rss>

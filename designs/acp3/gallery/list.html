@@ -1,0 +1,18 @@
+{if $galleries}
+{$pagination}
+{foreach from=$galleries item=row}
+<div class="newsbox newshead">
+	<div style="float:right;font-size:1.2em">
+		{$row.pics}
+	</div>
+	<div class="dlhead">
+		<a href="{uri args="gallery/pics/id_`$row.id`"}">{$row.date} - {$row.name}</a>
+	</div>
+</div>
+<hr />
+{/foreach}
+{else}
+<div class="error">
+	<h4 style="text-align:center">{lang values="common|no_entries"}</h4>
+</div>
+{/if}

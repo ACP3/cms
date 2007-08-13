@@ -1,0 +1,16 @@
+{if $install_dir_exists}
+<div class="error">
+	{lang values="home|installation_dir_exists"}
+</div>
+<br />
+{/if}
+<form action="{$request_uri}" method="post" accept-charset="UTF-8">
+	<fieldset style="width:70%">
+		<legend>{lang values="home|draft"}</legend>
+		{fckeditor InstanceName="draft" Value="$draft" Width="100%" Height="250px"}
+	</fieldset>
+	<div style="margin-top:20px">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="reset" value="{lang values="common|reset"}" class="form" />
+	</div>
+</form>

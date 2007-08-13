@@ -1,0 +1,307 @@
+/* Allgemeines */
+* {
+	margin: 0;
+	padding: 0;
+}
+html {
+	background: #333;
+}
+body {
+	margin: 1%;
+	padding: 1%;
+	background: #fff;
+	border: 2px solid #ccc;
+	font: 62.5% 'Lucida Grande', 'Trebuchet MS', Arial, sans-serif;
+	color: #333;
+}
+img {
+	border: 0;
+}
+h1 {
+	margin-bottom: 10px;
+	font-size: 1.5em;
+	text-align: center;
+}
+h2 {
+	font-size: 1.4em;
+}
+h3 {
+	font-size: 1.3em;
+}
+h4 {
+	font-size: 1.2em;
+}
+h5 {
+	font-size: 1.1em;
+}
+h6 {
+	font-size: 1.0em;
+}
+hr {
+	height: 1px;
+	margin: 2px 0;
+	background: #fff url('../../designs/acp3/images/hr.jpg') no-repeat 50% 50%;
+	border: 0;
+}
+a, a:hover {
+	color: #069;
+	text-decoration: none;
+}
+a:hover {
+	color: #f90;
+}
+ul, ol {
+	margin: 10px 20px;
+}
+ul ul, ol ol {
+	margin: 0 20px;
+}
+p {
+	margin: 10px 0;
+	text-align: justify;
+}
+table {
+	width: 100%;
+	margin: 0 auto;
+	border: 0;
+	font-size: 1.0em;
+	text-align: center;
+}
+#queries, #queries tr, #queries th, #queries td {
+	border: 1px solid #333;
+	border-collapse: collapse;
+}
+#queries th {
+	background: #069 url('../../designs/acp3/images/common_header.png') repeat-x;
+	font-weight: bold;
+	font-size: 1.1em;
+	color: #f90;
+	line-height: 24px;
+}
+/* Layout */
+#head {
+	position: relative;
+}
+#head #page_title {
+	padding-left: 15px;
+	font-size: 2.4em;
+	line-height: 30px;
+	text-align: left;
+}
+#head ul {
+	height: 30px;
+	margin: 0;
+	padding-left: 10px;
+	background: url('../../designs/acp3/images/head.png') repeat-x;
+	border-bottom: 1px solid #333;
+	font: bold 1.3em Verdana, Arial, sans-serif;
+	list-style: none;
+}
+#head ul li {
+	float: left;
+}
+#head ul li a {
+	margin-right: 3px;
+	padding: 0 5px;
+	line-height: 30px;
+	color: #fff;
+	display: block;
+}
+#head ul li a:hover, #head ul li a.selected {
+	color: #f00;
+}
+#languages {
+	font-size: 1.2em;
+	position: absolute;
+	top: 5px;
+	right: 10px;
+}
+#languages label {
+	font-weight: bold;
+	font-size: 1.1em;
+}
+#breadcrumb {
+	padding-left: 15px;
+	font-weight: bold;
+	font-size: 1.3em;
+	line-height: 40px;
+	color: #f00;
+	clear: both;
+}
+#breadcrumb a {
+	text-decoration: underline;
+}
+#breadcrumb a, #breadcrumb span {
+	color: #333;
+}
+#breadcrumb a:hover {
+	color: #f00;
+	text-decoration: none;
+}
+#sidebar {
+	width: 19%;
+	border: 1px solid #333;
+	border-width: 1px 1px 0;
+	font-size: 1.2em;
+	text-align: left;
+	float: left;
+}
+#sidebar h4 {
+	height: 25px;
+	padding-left: 15px;
+	background: url('../../designs/acp3/images/common_header.png') repeat-x;
+	border-bottom: 1px solid #333;
+	font-size: 1.1em;
+	line-height: 25px;
+	color: #f90;
+	clear: both;
+}
+#sidebar ul {
+	margin: 0;
+	list-style: none;
+}
+#sidebar ul li {
+	width: 100%;
+	float: left;
+}
+#sidebar ul li a, #sidebar ul li span {
+	padding-left: 15px;
+	background: #eee;
+	border-bottom: 1px solid #333;
+	line-height: 22px;
+	color: #069;
+	display: block;
+}
+#sidebar ul li a:hover, #sidebar ul li a.selected, #sidebar ul li span.selected {
+	color: #f90;
+}
+#content {
+	margin-left: 20%;
+	font-size: 1.2em;
+}
+#footer {
+	clear: both;
+}
+/* Formulare */
+form {
+	text-align: center;
+}
+fieldset {
+	width: 60%;
+	margin: 0 auto 1px auto;
+	padding: 10px;
+	border: 1px solid #c2c2c2;
+	font-size: 100%;
+}
+legend {
+	padding: 1px 6px;
+	background: #ffc;
+	font-weight: bold;
+	border: 1px dotted #f00;
+}
+fieldset dl {
+	text-align: left;
+}
+label {
+	font: 1.0em Arial, sans-serif;
+	color: #000;
+	cursor: pointer;
+}
+label:hover {
+	color: #f00;
+}
+fieldset dl dt label {
+	font-weight: bold;
+}
+fieldset dl dt span {
+	font-size: 0.9em;
+}
+fieldset input, fieldset textarea {
+	display: block;
+}
+fieldset input, fieldset select, fieldset textarea {
+	width: 100%;
+	margin: 1px;
+	background: #fff;
+	border: 1px solid #c2c2c2;
+}
+fieldset input:hover, fieldset select:hover, fieldset textarea:hover, fieldset input:focus, fieldset select:focus, fieldset textarea:focus {
+	background: #ffc;
+}
+input.checkbox {
+	width: auto;
+	border: 0;
+	background: none;
+	display: inline;
+}
+option {
+	padding: 0 5px 0 3px;
+}
+fieldset textarea {
+	height: 150px;
+	overflow: auto;
+}
+.form {
+	padding: 1px 7px;
+	background: #e5e5e5;
+	border: 1px solid #c2c2c2;
+	font-size: 1.1em;
+	font-family: Arial, sans-serif;
+	color: #000;
+	cursor: pointer;
+}
+a.form {
+	padding: 2px 10px;
+}
+.form:hover {
+	background: #eee;
+	color: #f00;
+}
+.error {
+	width: 70%;
+	margin: 0 auto;
+	padding: 10px;
+	background: #ffc;
+	text-align: justify;
+	border: 1px dotted #f00;
+}
+.success {
+	width: 70%;
+	margin: 0 auto;
+	text-align: center;
+	border: 1px solid #333;
+}
+.successhead {
+	background: #069 url('../../designs/acp3/images/common_header.png') repeat-x;
+	font-weight: bold;
+	color: #f90;
+	line-height: 25px;
+	border-bottom: 1px solid #333;
+}
+.forward {
+	background: #eee;
+	line-height: 28px;
+}
+/* Akkordeon */
+#accordion {
+	width: 70%;
+	margin: 0 auto;
+}
+#accordion fieldset {
+	width: 100%;
+	padding: 0;
+}
+#accordion fieldset dl {
+	margin: 10px;
+}
+#accordion fieldset legend {
+	margin-left: 10px;
+	padding: 1px 0;
+	background: #fff;
+	border: 0;
+	font: bold 1.1em/20px Arial, sans-serif;
+	color: #069;
+	text-align: left;
+	display: block;
+	cursor: pointer;
+}

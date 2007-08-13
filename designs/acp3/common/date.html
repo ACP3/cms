@@ -1,0 +1,6 @@
+<select name="form[{$name}]" id="{$id}" style="width:auto">
+	<option value="">{lang values="common|$mode"}</option>
+{foreach from=$loop item=row}
+	<option value="{$row.current}"{$row.selected}>{$row.current}</option>
+{/foreach}
+</select>

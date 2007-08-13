@@ -1,0 +1,20 @@
+<div class="newsbox">
+	<h3 class="newshead">{$news.headline}</h3>
+	<div class="newstime">
+		{$news.date}
+	</div>
+	<div class="newstext">
+		{$news.text}
+	</div>
+{if $news.uri!='' && $news.link_title!=''}
+	<div id="additional-link">
+		<span>{lang values="news|additional_hyperlink"}:</span> <a href="{$news.uri}"{$news.target}>{$news.link_title}</a>
+	</div>
+{/if}
+</div>
+<hr />
+{$comments_list}
+<div style="width:100%;float:left">
+	<hr />
+{$comments_form}
+</div>

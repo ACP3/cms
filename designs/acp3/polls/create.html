@@ -1,0 +1,33 @@
+{$error_msg}
+<form action="{$request_uri}" method="post" accept-charset="UTF-8">
+	<fieldset>
+		<legend>{lang values="common|publication_period"}</legend>
+		<dl>
+			<dt><label for="start_day">{lang values="common|start_date"}</label></dt>
+			<dd>{$start_day} {$start_month} {$start_year} - {$start_hour} {$start_min}</dd>
+			<dt><label for="end_day">{lang values="common|end_date"}</label></dt>
+			<dd>{$end_day} {$end_month} {$end_year} - {$end_hour} {$end_min}</dd>
+		</dl>
+		<p>
+			{lang values="common|date_description"}
+		</p>
+	</fieldset>
+	<fieldset>
+		<legend>{lang values="polls|poll"}</legend>
+		<dl>
+			<dt><label for="question">{lang values="polls|question"}</label></dt>
+			<dd><input type="text" name="form[question]" id="question" value="{$question}" maxlength="120" /></dd>
+{foreach from=$answers item=row}
+			<dt><label for="answer_{$row.number}">{lang values="polls|answer"} {$row.number}</label></dt>
+			<dd><input type="text" name="form[answers][]" id="answer_{$row.number}" value="{$row.value}" maxlength="120" /></dd>
+{/foreach}
+		</dl>
+	</fieldset>
+	<div style="margin-top:20px">
+{if !$disable}
+		<input type="submit" name="add_answer" value="{lang values="polls|add_answer"}" class="form" />
+{/if}
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="reset" value="{lang values="common|reset"}" class="form" />
+	</div>
+</form>

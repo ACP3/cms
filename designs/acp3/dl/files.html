@@ -1,0 +1,17 @@
+{if $files}
+{foreach from=$files item=file}
+<div class="newsbox newshead">
+	<div style="float:right;font-size:1.2em">
+		{$file.date}
+	</div>
+	<div class="dlhead">
+		<a href="{uri args="dl/details/id_`$file.id`"}">{$file.link_title} ({$file.size})</a>
+	</div>
+</div>
+<hr />
+{/foreach}
+{else}
+<div class="error">
+	<h4 style="text-align:center">{lang values="common|no_entries"}</h4>
+</div>
+{/if}

@@ -1,0 +1,23 @@
+{$error_msg}
+<form action="{$request_uri}" method="post" accept-charset="UTF-8">
+	<fieldset>
+		<dl>
+			<dt><label for="name">{lang values="common|name"}</label></dt>
+			<dd><input type="text" name="form[name]" id="name" value="{$form.name}" maxlength="120" /></dd>
+			<dt><label for="description">{lang values="common|description"}</label></dt>
+			<dd><input type="text" name="form[description]" id="description" value="{$form.description}" maxlength="120" /></dd>
+			<dt><label for="module">{lang values="categories|module"}</label></dt>
+			<dd>
+				<select name="form[module]" id="module">
+					<option value="">{lang values="common|pls_select"}</option>
+{foreach from=$mod_list item=row}
+					<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
+{/foreach}
+				</select>
+			</dd>
+		</dl>
+	</fieldset>
+	<div style="margin-top:20px">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>

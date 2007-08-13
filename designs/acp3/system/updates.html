@@ -1,0 +1,11 @@
+<div class="error">
+{if $update}
+	<p style="margin-top:0">
+		{$update_text}
+	</p>
+	<strong>{lang values="system|installed_version"}:</strong> {$update.2}<br />
+	<strong>{lang values="system|current_version"}:</strong> {$update.0}
+{else}
+	<h4 style="text-align:center">{lang values="system|error_update_check"}</h4>
+{/if}
+</div>
