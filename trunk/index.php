@@ -1,5 +1,7 @@
 <?php
 /**
+ * Index
+ *
  * @author Goratsch Webdesign
  * @package ACP3
  * @subpackage Core
