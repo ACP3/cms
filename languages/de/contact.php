@@ -1,9 +1,10 @@
 <?php
 /**
+ * Contact
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage Contact
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('contact_additional_information', 'Weitere Informationen');

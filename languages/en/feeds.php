@@ -1,9 +1,10 @@
 <?php
 /**
+ * Feeds
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage Feeds
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('feeds_feeds', 'Feeds');

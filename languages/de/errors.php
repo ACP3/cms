@@ -1,9 +1,10 @@
 <?php
 /**
+ * Errors
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage Errors
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('errors_403', 'Zugriff verweigert');

@@ -1,9 +1,10 @@
 <?php
 /**
+ * Comments
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage Comments
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('comments_comments', 'Comments');

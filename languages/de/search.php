@@ -1,9 +1,10 @@
 <?php
 /**
+ * Search
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage Search
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('search_asc', 'Aufsteigend');

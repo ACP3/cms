@@ -1,8 +1,9 @@
 <?php
 /**
+ * German Language Package
  *
  * @author Goratsch Webdesign
- * @package Language
+ * @package ACP3
  * @subpackage Installer
  */
 

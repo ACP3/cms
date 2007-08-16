@@ -1,9 +1,10 @@
 <?php
 /**
+ * Files
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage Files
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('dl_category_select', 'Please select one of the below categories.');

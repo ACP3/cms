@@ -1,9 +1,10 @@
 <?php
 /**
+ * Polls
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage Polls
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('polls_add_answer', 'Add answer');
