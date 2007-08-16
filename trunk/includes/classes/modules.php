@@ -75,7 +75,7 @@ class modules
 	 * Überpüft, ob ein Modul überhaupt existiert, bzw. der Benutzer auf ein Modul Zugriff hat
 	 *
 	 * @param integer $mode
-	 * 	1 = Nur überpfüfen, ob Modul aktiv ist und Moduldatei existiert
+	 * 	1 = Nur überprüfen, ob Modul aktiv ist und Moduldatei existiert
 	 * 	2 = Zusätzlich überprüfen, ob Benutzer auch Zugriff auf das Modul besitzt
 	 * @param string $mod
 	 * 	Zu überprüfendes Modul

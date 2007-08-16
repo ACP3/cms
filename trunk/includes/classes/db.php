@@ -72,13 +72,15 @@ class db
 		}
 	}
 	/**
-	 * Maskiert die Variablen vor der Eintragung in die Datenbank
+	 * Maskiert die Variablen vor dem Eintragen in die Datenbank
 	 *
 	 * @param mixed $value
 	 * 	Zu maskierende Variable
 	 * @param integer $mode
-	 * 	Maskieren bzw. demaskieren des Inhaltes von $value
-	 * @return mixed
+	 *	1 = Variablen komplett maskieren
+	 * 	2 = Nur Slashes hinzufügen (wichtig für die WYSIWYG-Editoren Eingaben)
+	 * 	3 = Slashes entfernen
+	 * @return string
 	 */
 	function escape($value, $mode = 1)
 	{
