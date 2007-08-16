@@ -1,5 +1,12 @@
 <?php
 /**
+ * Validate
+ *
+ * @author Goratsch Webdesign
+ * @package ACP3
+ * @subpackage Core
+ */
+/**
  * Klasse zur Validierung von bestimmten Einträgen
  *
  * @author Goratsch Webdesign

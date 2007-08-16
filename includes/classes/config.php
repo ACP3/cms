@@ -1,5 +1,12 @@
 <?php
 /**
+ * Config
+ *
+ * @author Goratsch Webdesign
+ * @package ACP3
+ * @subpackage Core
+ */
+/**
  * Erstellt die jeweiligen Konfigurationsdateien für Module, etc.
  *
  * @author Goratsch Webdesign

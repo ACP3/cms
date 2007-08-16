@@ -1,6 +1,13 @@
 <?php
 /**
- * Erstellt den Cache für bestimmte SQL Abfragen um die Leistung des ACP3 zu steigern
+ * Cache
+ *
+ * @author Goratsch Webdesign
+ * @package ACP3
+ * @subpackage Core
+ */
+/**
+ * Erstellt den Cache für bestimmte SQL Abfragen, um die Leistung des ACP3 zu steigern
  *
  * @author Goratsch Webdesign
  * @package ACP3

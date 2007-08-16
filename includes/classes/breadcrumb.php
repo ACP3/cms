@@ -1,5 +1,12 @@
 <?php
 /**
+ * Breadcrumbs
+ *
+ * @author Goratsch Webdesign
+ * @package ACP3
+ * @subpackage Core
+ */
+/**
  * Erzeugt die Brotkrümelspur und gibt den Titel der jeweiligen Seite aus
  *
  * @author Goratsch Webdesign
@@ -16,7 +23,7 @@ class breadcrumb
 	 */
 	protected $steps = array();
 	/**
-	 * Das Ende der Brotkrpmelspur
+	 * Das Ende der Brotkrümelspur
 	 *
 	 * @var string
 	 * @access protected

@@ -1,5 +1,12 @@
 <?php
 /**
+ * Modules
+ *
+ * @author Goratsch Webdesign
+ * @package ACP3
+ * @subpackage Core
+ */
+/**
  * Klasse für die Module
  *
  * @author Goratsch Webdesign
