@@ -252,7 +252,8 @@ function salt($str_length)
  *  HTML-Attribut, um Eintrag zu selektieren
  * @return string
  */
-function select_entry($name, $value, $field_value = '', $attr = 'selected') {
+function select_entry($name, $value, $field_value = '', $attr = 'selected')
+{
 	$attr = ' ' . $attr . '="' . $attr . '"';
 
 	if (!isset($_POST['form'][$name])) {

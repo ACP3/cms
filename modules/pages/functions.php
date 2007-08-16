@@ -16,26 +16,25 @@
 function pages_list($id = 0, $parent = 0)
 {
 	global $db;
-	static $output = array(), $key = 0, $padding = '';
+	static $output = array(), $key = 0, $spaces = '';
 
 	$pages = $db->select('id, title', 'pages', 'mode = \'1\' AND parent = \'' . $id . '\'', 'block_id ASC, sort ASC, title ASC');
 	$c_pages = count($pages);
 
 	if ($c_pages > 0) {
 		if ($id != 0)
-			$padding.= '&nbsp;&nbsp;';
+			$spaces.= '&nbsp;&nbsp;';
 
 		for ($i = 0; $i < $c_pages; $i++) {
 			$output[$key]['id'] = $pages[$i]['id'];
 			$output[$key]['selected'] = select_entry('parent', $pages[$i]['id'], $parent);
-			$output[$key]['title'] = $padding . $pages[$i]['title'];
+			$output[$key]['title'] = $spaces . $pages[$i]['title'];
 			$key++;
 
 			pages_list($pages[$i]['id'], $parent);
 
 			if ($i == $c_pages - 1) {
-				$p_length = strlen($padding);
-				$padding = substr($padding, 0, $p_length - 12);
+				$spaces = substr($spaces, 0, -12);
 			}
 		}
 	}
