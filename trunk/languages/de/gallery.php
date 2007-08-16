@@ -1,9 +1,10 @@
 <?php
 /**
+ * Gallery
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage Gallery
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('gallery_add_picture', 'Bild hinzufügen');

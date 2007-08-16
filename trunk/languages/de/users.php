@@ -1,9 +1,10 @@
 <?php
 /**
+ * Users
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage Úsers
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('users_admin_user_undeletable', 'Der Administrator kann nicht gelöscht werden.');

@@ -1,9 +1,10 @@
 <?php
 /**
+ * Pages
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage Pages
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('pages_adm_list_blocks', 'Blöcke');

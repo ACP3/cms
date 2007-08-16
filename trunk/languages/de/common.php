@@ -1,9 +1,10 @@
 <?php
 /**
+ * Common
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage Common
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('common_acp', 'Administration Control Panel');

@@ -1,9 +1,10 @@
 <?php
 /**
+ * Access
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage Access
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('access_access', 'Zugriffslevel');

@@ -1,9 +1,10 @@
 <?php
 /**
+ * Emoticons
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage Emoticons
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('emoticons_code', 'Code');

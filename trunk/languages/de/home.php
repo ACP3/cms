@@ -1,9 +1,10 @@
 <?php
 /**
+ * Administration Home
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage Administration Home
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('home_draft', 'Entwurf');

@@ -1,9 +1,10 @@
 <?php
 /**
+ * System
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage System
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('system_access_to_following_modules', "You have access to the following %d modules.");

@@ -1,9 +1,10 @@
 <?php
 /**
+ * Guestbook
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage Guestbook
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('gb_confirm_delete', 'Do you really want to delete the marked guestbook entries?');

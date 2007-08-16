@@ -1,9 +1,10 @@
 <?php
 /**
+ * Categories
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage Categories
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('categories_categories', 'Categories');

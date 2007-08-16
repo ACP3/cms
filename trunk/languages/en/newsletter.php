@@ -1,9 +1,10 @@
 <?php
 /**
+ * Mewsletter
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage Newsletter
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('newsletter_activate_account', 'Active newsletter account');

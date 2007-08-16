@@ -1,9 +1,10 @@
 <?php
 /**
+ * News
  *
  * @author Goratsch Webdesign
- * @package Language
- * @subpackage News
+ * @package ACP3
+ * @subpackage Modules
  */
 
 define('news_additional_hyperlink', 'Additional hpyerlink');
