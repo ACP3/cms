@@ -14,7 +14,6 @@ require 'includes/common.php';
 // Evtl. gesetzten Content-Type des Servers überschreiben
 header('Content-Type: text/html; charset=' . CHARSET);
 
-
 $tpl->assign('lang', CONFIG_LANG);
 $tpl->assign('page_title', CONFIG_TITLE);
 $tpl->assign('keywords', CONFIG_META_KEYWORDS);
@@ -40,13 +39,13 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 	} else {
 		$cookie = $db->escape($_COOKIE['ACP3_AUTH']);
 		$cookie_arr = explode('|', $cookie);
-		$no_access = true;
+		$is_user = false;
 
 		$user_check = $db->select('id, pwd, access', 'users', 'name=\'' . $cookie_arr[0] . '\'');
 		if (count($user_check) > 0) {
 			$user_check[0]['pwd'] = substr($user_check[0]['pwd'], 0, 40);
 			if ($user_check[0]['pwd'] == $cookie_arr[1]) {
-				$no_access = false;
+				$is_user = true;
 				session_start();
 				// Session neu setzen, falls nötig
 				if (empty($_SESSION['acp3_id']) || empty($_SESSION['acp3_access'])) {
@@ -57,7 +56,7 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 				$tpl->assign('login_switch', $field);
 			}
 		}
-		if ($no_access) {
+		if (!$is_user) {
 			include 'modules/users/signoff.php';
 		}
 	}
