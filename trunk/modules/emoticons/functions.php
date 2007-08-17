@@ -13,7 +13,8 @@
  * 	Die ID des Eingabefeldes, in welches die Emoticons eingefügt werden sollen
  * @return string
  */
-function emoticons_list($field_id = 0) {
+function emoticons_list($field_id = 0)
+{
 	global $cache, $db, $tpl;
 
 	if (!$cache->check('emoticons')) {
