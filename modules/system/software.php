@@ -21,7 +21,7 @@ $server_info[2]['col_right'] = $_SERVER['SERVER_SOFTWARE'];
 $server_info[3]['col_left'] = lang('system', 'php_version');
 $server_info[3]['col_right'] = phpversion();
 $server_info[4]['col_left'] = lang('system', 'mysql_version');
-$server_info[4]['col_right'] = CONFIG_DB_TYPE == 'mysqli' ? mysqli_get_server_info($db->con) : mysql_get_server_info($db->con);
+$server_info[4]['col_right'] = CONFIG_DB_TYPE == 'mysqli' ? mysqli_get_server_info($db->link) : mysql_get_server_info($db->link);
 $server_info[5]['col_left'] = lang('system', 'zend_engine');
 $server_info[5]['col_right'] = zend_version();
 
