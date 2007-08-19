@@ -99,7 +99,7 @@ define('system_sql_text', 'SQL Text');
 define('system_status', 'Status');
 define('system_system', 'System');
 define('system_table_name', 'Tabellenname');
-define('system_table_prefix', 'Tabellenprefix');
+define('system_table_prefix', 'Tabellenpräfix');
 define('system_time_zone', 'Zeitzone');
 define('system_title', 'Seitentitel');
 define('system_title_to_short', 'Bitte geben Sie einen Seitentitel ein');

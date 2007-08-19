@@ -4,17 +4,22 @@
 		<dl>
 			<dt><label for="name">{lang values="common|name"}</label></dt>
 			<dd><input type="text" name="form[name]" id="name" value="{$form.name}" maxlength="120" /></dd>
-			<dt><label for="modules">{lang values="common|modules"}</label></dt>
-			<dd>
-				<select name="form[modules][]" id="modules" multiple="multiple" style="height:auto !important;height:250px">
+		</dl>
+		<p>
+			{lang values="access|access_level_selection_tip"}
+		</p>
+		<dl>
 {foreach from=$mod_list item=row}
-					<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
-{/foreach}
+			<dt><label for="{$row.module}">{$row.name}</label></dt>
+			<dd>
+				<select name="form[modules][{$row.module}]" id="{$row.module}">
+					<option value="">{lang values="common|pls_select"}</option>
+					<option value="0">{lang values="access|access_level_0"}</option>
+					<option value="1">{lang values="access|access_level_1"}</option>
+					<option value="2">{lang values="access|access_level_2"}</option>
 				</select>
-				<p>
-					{lang values="access|select_tip"}
-				</p>
 			</dd>
+{/foreach}
 		</dl>
 	</fieldset>
 	<div style="margin-top:20px">

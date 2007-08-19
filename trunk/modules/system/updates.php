@@ -9,8 +9,6 @@
 
 if (!defined('IN_ADM'))
 	exit;
-if (!$modules->check())
-	redirect('errors/403');
 
 $file = @file_get_contents('http://www.goratsch-webdesign.de/acp3/update.txt');
 if ($file) {

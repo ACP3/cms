@@ -11,6 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 if (!$modules->check())
 	redirect('errors/403');
+
 switch ($modules->action) {
 	case 'create':
 		$form = $_POST['form'];

@@ -9,6 +9,8 @@
 
 if (!defined('IN_ACP3') && !defined('IN_ADM'))
 	exit;
+if (!$modules->check())
+	redirect('errors/403');
 
 switch ($modules->action) {
 	case 'subscribe':
@@ -81,15 +83,11 @@ switch ($modules->action) {
 		}
 		break;
 	case 'activate_adm':
-		if (!$modules->check())
-			redirect('errors/403');
 		$bool = !empty($modules->id) ? $db->update('nl_accounts', array('hash', ''), 'id = \'' . $modules->id . '\'') : false;
 
 		$content = combo_box($bool ? lang('newsletter', 'nl_activate_success') : lang('newsletter', 'nl_activate_error'), uri('acp/newsletter'));
 		break;
 	case 'settings':
-		if (!$modules->check())
-			redirect('errors/403');
 		$form = $_POST['form'];
 		$i = 0;
 
@@ -105,8 +103,6 @@ switch ($modules->action) {
 		}
 		break;
 	case 'compose':
-		if (!$modules->check())
-			redirect('errors/403');
 		$form = $_POST['form'];
 		$i = 0;
 
@@ -138,8 +134,6 @@ switch ($modules->action) {
 		}
 		break;
 	case 'delete':
-		if (!$modules->check())
-			redirect('errors/403');
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
 		elseif (isset($modules->gen['entries']) && ereg('^([0-9|]+)$', $modules->gen['entries']))

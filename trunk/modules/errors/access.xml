@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<access>
+	<active>1</active>
+	<item>
+		<file>403</file>
+		<level>1</level>
+	</item>
+	<item>
+		<file>404</file>
+		<level>1</level>
+	</item>
+</access>

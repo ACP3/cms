@@ -9,8 +9,7 @@
 
 if (!defined('IN_ADM'))
 	exit;
-if (!$modules->check())
-	redirect('errors/403');
+
 //Server Infos
 $server_info[0]['col_left'] = lang('system', 'architecture');
 $server_info[0]['col_right'] = @php_uname('m');

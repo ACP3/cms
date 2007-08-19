@@ -20,6 +20,7 @@ define('comments_edit_error', 'While editing the comment an error has occured.')
 define('comments_edit_success', 'The comment has been edited successfully.');
 define('comments_ip', 'IP address');
 define('comments_mod_description', 'With this module it is possible to create comments for other modules.');
+define('comments_module_doesnt_exist', 'Either the selected module doesn\'t exist or is currently deactivated');
 define('comments_module', 'Module');
 define('comments_show_comments', 'Show comments');
 ?>

@@ -9,8 +9,7 @@
 
 if (!defined('IN_ADM'))
 	exit;
-if (!$modules->check())
-	redirect('errors/403');
+
 if (!empty($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['entries']) || isset($modules->gen['entries']) || isset($_POST['submit'])) {
 		include 'modules/gallery/entry.php';
