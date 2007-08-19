@@ -24,14 +24,14 @@ switch($form['area']) {
 }
 $c_result_news = count($result_news);
 
-if ($c_result_dl > 0) {
+if ($c_result_news > 0) {
 	$i = isset($i) ? $i + 1 : 0;
 	$results_mods[$i]['title'] = lang('news', 'news');
 	for ($j = 0; $j < $c_result_news; $j++) {
-		$results_mods[$i]['results'][$j]['hyperlink'] = uri('news/details/id_' . $result_news[$i]['id']);
-		$results_mods[$i]['results'][$j]['headline'] = $result_news[$i]['headline'];
+		$results_mods[$i]['results'][$j]['hyperlink'] = uri('news/details/id_' . $result_news[$j]['id']);
+		$results_mods[$i]['results'][$j]['headline'] = $result_news[$j]['headline'];
 
-		$striped_text = strip_tags($result_news[$i]['text']);
+		$striped_text = strip_tags($result_news[$j]['text']);
 		$striped_text = $db->escape($striped_text, 3);
 		$striped_text = html_entity_decode($striped_text, ENT_QUOTES, CHARSET);
 		$striped_text = substr($striped_text, 0, 200);

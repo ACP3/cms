@@ -11,19 +11,15 @@ if (!defined('IN_ADM'))
 	exit;
 if (!$modules->check())
 	redirect('errors/403');
+
 switch ($modules->action) {
 	case 'modactivation':
-		$dir = isset($modules->gen['dir']) && file_exists('modules/' . $modules->gen['dir'] . '/info.php') ? $modules->gen['dir'] : 0;
-
-		if (!empty($dir)) {
-			include 'modules/' . $dir . '/info.php';
+		if (isset($modules->gen['dir'])) {
+			include 'modules/' . $modules->gen['dir'] . '/info.php';
 			if (isset($mod_info['protected']) && $mod_info['protected']) {
-				$tpl->assign('LANG_text', lang('system', 'mod_deactivate_forbidden'));
+				$text = lang('system', 'mod_deactivate_forbidden');
 			} else {
-				if ($db->select('id', 'modules', 'module = \'' . $dir . '\'', 0, 0, 0, 1) == '0')
-					$bool = $db->insert('modules', array('id' => '', 'module' => $dir, 'active' => '1'));
-				else
-					$bool = $db->update('modules', array('active' => '1'), 'module = \'' . $dir . '\'');
+				// TODO: Modulaktivierung
 
 				$text = $bool ? lang('system', 'mod_activate_success') : lang('system', 'mod_activate_error');
 			}
@@ -33,14 +29,12 @@ switch ($modules->action) {
 		$content = combo_box($text, uri('acp/system/mod_list'));
 		break;
 	case 'moddeactivation':
-		$dir = isset($modules->gen['dir']) && file_exists('modules/' . $modules->gen['dir'] . '/info.php') ? $modules->gen['dir'] : 0;
-
-		if (!empty($dir) && $modules->check(1, $dir, 'info')) {
-			include 'modules/' . $dir . '/info.php';
+		if (isset($modules->gen['dir']) && $modules->is_active($modules->gen['dir'])) {
+			include 'modules/' . $modules->gen['dir'] . '/info.php';
 			if (isset($mod_info['protected']) && $mod_info['protected']) {
-				$tpl->assign('LANG_text', lang('system', 'mod_deactivate_forbidden'));
+				$text = lang('system', 'mod_deactivate_forbidden');
 			} else {
-				$bool = $db->update('modules', array('active' => '1'), 'module = \'' . $dir . '\'');
+				// TODO: Moduldeaktivierung
 
 				$text = $bool ? lang('system', 'mod_deactivate_success') : lang('system', 'mod_deactivate_error');
 			}
@@ -89,18 +83,20 @@ switch ($modules->action) {
 		}
 		break;
 	case 'lang':
-		$dir = isset($modules->gen['dir']) && file_exists('languages/' . $modules->gen['dir'] . '/info.php') ? $modules->gen['dir'] : 0;
+		$dir = isset($modules->gen['dir']) && is_file('languages/' . $modules->gen['dir'] . '/info.php') ? $modules->gen['dir'] : 0;
 
 		$bool = $config->general(array('lang' => $dir));
+		$text = $bool && !empty($dir) ? lang('system', 'lang_edit_success') : lang('system', 'lang_edit_error');
 
-		$content = combo_box($bool && !empty($dir) ? lang('system', 'lang_edit_success') : lang('system', 'lang_edit_error'), uri('acp/system/lang_design'));
+		$content = combo_box($text, uri('acp/system/lang_design'));
 		break;
 	case 'design';
-		$dir = isset($modules->gen['dir']) && file_exists('designs/' . $modules->gen['dir'] . '/info.php') ? $modules->gen['dir'] : 0;
+		$dir = isset($modules->gen['dir']) && is_file('designs/' . $modules->gen['dir'] . '/info.php') ? $modules->gen['dir'] : 0;
 
 		$bool = $config->general(array('design' => $dir));
+		$text = $bool && !empty($dir) ? lang('system', 'design_edit_success') : lang('system', 'design_edit_error');
 
-		$content = combo_box($bool && !empty($dir) ? lang('system', 'design_edit_success') : lang('system', 'design_edit_error'), uri('acp/system/lang_design'));
+		$content = combo_box($text, uri('acp/system/lang_design'));
 		break;
 	case 'sql':
 		$update_text = str_replace(array("\r\n", "\r", "\n"), "\n", $_POST['update_text']);

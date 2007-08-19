@@ -9,8 +9,7 @@
 
 if (!defined('IN_ADM'))
 	exit;
-if (!$modules->check())
-	redirect('errors/403');
+
 if (!empty($modules->id) && $db->select('id', 'access', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		include 'modules/access/entry.php';
@@ -18,21 +17,21 @@ if (!empty($modules->id) && $db->select('id', 'access', 'id = \'' . $modules->id
 	if (!isset($_POST['submit']) || isset($error_msg)) {
 		$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
 
-		$access = $db->select('name, mods', 'access', 'id = \'' . $modules->id . '\'');
+		$access = $db->select('name, modules', 'access', 'id = \'' . $modules->id . '\'');
 
 		$tpl->assign('form', isset($form) ? $form : $access[0]);
 
-		$mods = $db->select('module', 'modules', 'active = \'1\'');
-		$c_mods = count($mods);
-		$mods_arr = explode('|', $access[0]['mods']);
+		$active_modules = $modules->active_modules();
+		$c_active_modules = count($active_modules);
+		$mods_arr = explode(',', $access[0]['modules']);
 
-		for($i = 0; $i < $c_mods; $i++) {
-			$mods[$i]['module'] = $db->escape($mods[$i]['module'], 3);
-			if ($modules->check(1, $mods[$i]['module'], 'adm_list')) {
-				include('modules/' . $mods[$i]['module'] . '/info.php');
+		// TODO: Selektion der Einträge
+		for ($i = 0; $i < $c_active_modules; $i++) {
+			if ($active_modules[$i] != 'errors') {
+				$mod_info = array();
+				include 'modules/' . $active_modules[$i] . '/info.php';
 				$name = $mod_info['name'];
-				$mod_list[$name]['dir'] = $mods[$i]['module'];
-				$mod_list[$name]['selected'] = select_entry('modules', $mods[$i]['module'], $mods_arr);
+				$mod_list[$name]['module'] = $active_modules[$i];
 				$mod_list[$name]['name'] = $name;
 			}
 		}

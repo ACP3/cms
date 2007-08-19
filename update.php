@@ -9,7 +9,10 @@ $db = new db;
 
 $cache = new cache;
 
-$queries = array();
+$queries = array(
+	0 => 'ALTER TABLE `' . CONFIG_DB_PRE . 'dl` RENAME `' . CONFIG_DB_PRE . 'files`',
+	1 => 'UPDATE `' . CONFIG_DB_PRE . 'categories` SET module = \'files\' WHERE module = \'dl\'',
+);
 
 $successful = 'Abfrage erfolgreich durchgeführt!';
 $unsuccessful = 'Abfrage gescheitert!';
@@ -30,13 +33,7 @@ if (is_writable($path))	{
 	// Konfigurationsdatei in ein Array schreiben
 	$config = file($path);
 	$entries_to_change = array(
-		'define(\'CONFIG_DB\', \'' . CONFIG_DB . '\');' => 'define(\'CONFIG_DB_NAME\', \'' . CONFIG_DB . '\');',
-		'define(\'CONFIG_HOST\', \'' . CONFIG_HOST . '\');' => 'define(\'CONFIG_DB_HOST\', \'' . CONFIG_HOST . '\');',
-		'define(\'CONFIG_PRE\', \'' . CONFIG_PRE . '\');' => 'define(\'CONFIG_DB_PRE\', \'' . CONFIG_PRE . '\');',
-		'define(\'CONFIG_PWD\', \'' . CONFIG_PWD . '\');' => 'define(\'CONFIG_DB_PWD\', \'' . CONFIG_PWD . '\');',
-		'define(\'CONFIG_TYPE\', \'' . CONFIG_TYPE . '\');' => 'define(\'CONFIG_DB_TYPE\', \'' . CONFIG_TYPE . '\');',
-		'define(\'CONFIG_USER\', \'' . CONFIG_USER . '\');' => 'define(\'CONFIG_DB_USER\', \'' . CONFIG_USER . '\');',
-		'define(\'CONFIG_VERSION\', \'' . CONFIG_VERSION . '\');' => 'define(\'CONFIG_VERSION\', \'4.0b7\');',
+		'define(\'CONFIG_VERSION\', \'' . CONFIG_VERSION . '\');' => 'define(\'CONFIG_VERSION\', \'4.0b8\');',
 	);
 
 	foreach ($config as $c_key => $c_value) {

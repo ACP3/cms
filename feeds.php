@@ -31,7 +31,7 @@ if ($modules->check(1, 'feeds', 'info')) {
 	$tpl->assign('rss', $rss);
 
 	//Einträge einbinden
-	if ($modules->check(1, $mode, 'info'))
+	if ($modules->check($mode, ''))
 		include 'modules/feeds/modules/' . $mode . '.php';
 
 	$tpl->display('feeds/feeds.html');

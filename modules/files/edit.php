@@ -9,16 +9,15 @@
 
 if (!defined('IN_ADM'))
 	exit;
-if (!$modules->check())
-	redirect('errors/403');
-if (!empty($modules->id) && $db->select('id', 'dl', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+
+if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
-		include 'modules/dl/entry.php';
+		include 'modules/files/entry.php';
 	}
 	if (!isset($_POST['submit']) || isset($error_msg)) {
 		$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
 
-		$dl = $db->select('start, end, cat, file, size, link_title, text', 'dl', 'id = \'' . $modules->id . '\'');
+		$dl = $db->select('start, end, cat, file, size, link_title, text', 'files', 'id = \'' . $modules->id . '\'');
 		$dl[0]['text'] = $db->escape($dl[0]['text'], 3);
 		// Datum
 		$start_date = explode('.', date_aligned(1, $dl[0]['start'], 'j.n.Y.G.i'));
@@ -37,10 +36,10 @@ if (!empty($modules->id) && $db->select('id', 'dl', 'id = \'' . $modules->id . '
 		$tpl->assign('end_min', date_dropdown('min', 'end_min', 'end_min', $end_date[4]));
 
 		// Formularelemente
-		if (!$cache->check('categories_dl')) {
-			$cache->create('categories_dl', $db->select('id, name, description', 'categories', 'module = \'dl\'', 'name ASC'));
+		if (!$cache->check('categories_files')) {
+			$cache->create('categories_files', $db->select('id, name, description', 'categories', 'module = \'files\'', 'name ASC'));
 		}
-		$categories = $cache->output('categories_dl');
+		$categories = $cache->output('categories_files');
 		$c_categories = count($categories);
 
 		if ($c_categories > 0) {
@@ -55,7 +54,7 @@ if (!empty($modules->id) && $db->select('id', 'dl', 'id = \'' . $modules->id . '
 		$tpl->assign('current_file', $dl[0]['file']);
 		$tpl->assign('form', isset($form) ? $form : $dl[0]);
 
-		$content = $tpl->fetch('dl/edit.html');
+		$content = $tpl->fetch('files/edit.html');
 	}
 } else {
 	redirect('errors/403');

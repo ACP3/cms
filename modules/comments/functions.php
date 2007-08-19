@@ -45,7 +45,7 @@ function comments_form($url = 0, $module = 0, $entry_id = 0)
 	$tpl->assign('com_form', array('url' => $url, 'module' => $module, 'entry_id' => $entry_id));
 
 	//Falls aktiv, Emoticons anzeigen
-	if ($modules->check(1, 'emoticons', 'info')) {
+	if ($modules->check('emoticons', 'functions')) {
 		include_once 'modules/emoticons/functions.php';
 		$tpl->assign('emoticons', emoticons_list());
 	}
@@ -71,7 +71,7 @@ function comments_list($module = 0, $entry_id = 0)
 	$c_comments = count($comments);
 	$emoticons = false;
 
-	if ($modules->check(1, 'emoticons', 'info')) {
+	if ($modules->check('emoticons', 'functions')) {
 		include_once 'modules/emoticons/functions.php';
 		$emoticons = true;
 	}

@@ -20,6 +20,7 @@ define('comments_edit_error', 'Beim Bearbeiten des Kommentares ist ein Fehler au
 define('comments_edit_success', 'Der Kommentar wurde erfolgreich bearbeitet.');
 define('comments_ip', 'IP Adresse');
 define('comments_mod_description', 'Mit diesem Modul können Kommentare für andere Module erstellt werden.');
+define('comments_module_doesnt_exist', 'Entweder existiert das ausgewählte Modul nicht oder es ist zur Zeit deaktiviert');
 define('comments_module', 'Modul');
 define('comments_show_comments', 'Kommentare anzeigen');
 ?>

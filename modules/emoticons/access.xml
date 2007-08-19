@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<access>
+	<active>1</active>
+	<item>
+		<file>adm_list</file>
+		<level>2</level>
+	</item>
+	<item>
+		<file>create</file>
+		<level>2</level>
+	</item>
+	<item>
+		<file>edit</file>
+		<level>2</level>
+	</item>
+	<item>
+		<file>entry</file>
+		<action>
+			<name>create</name>
+			<level>2</level>
+		</action>
+		<action>
+			<name>delete</name>
+			<level>2</level>
+		</action>
+		<action>
+			<name>edit</name>
+			<level>2</level>
+		</action>
+	</item>
+	<item>
+		<file>functions</file>
+		<level>1</level>
+	</item>
+</access>

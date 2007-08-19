@@ -14,8 +14,6 @@ CREATE TABLE `{pre}galpics` ( `id` int(11) NOT NULL auto_increment, `pic` int(11
 
 CREATE TABLE `{pre}gb` ( `id` int(11) NOT NULL auto_increment, `ip` varchar(40) NOT NULL, `date` varchar(14) NOT NULL, `name` varchar(20) NOT NULL, `message` text NOT NULL, `website` varchar(120) NOT NULL, `mail` varchar(120) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 
-CREATE TABLE `{pre}modules` ( `id` int(11) NOT NULL auto_increment, `module` varchar(120) NOT NULL, `active` tinyint(1) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
-
 CREATE TABLE `{pre}news` ( `id` int(11) NOT NULL auto_increment, `start` varchar(14) NOT NULL, `end` varchar(14) NOT NULL, `headline` varchar(120) NOT NULL, `text` text NOT NULL, `cat` int(11) NOT NULL, `uri` varchar(120) NOT NULL, `target` tinyint(1) NOT NULL, `link_title` varchar(120) NOT NULL, PRIMARY KEY (`id`), FULLTEXT KEY `headline` (`headline`,`text`)) {engine} ;
 
 CREATE TABLE `{pre}nl_accounts` ( `id` int(11) NOT NULL auto_increment, `mail` varchar(120) NOT NULL, `hash` varchar(32) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
@@ -32,10 +30,8 @@ CREATE TABLE `{pre}poll_votes` ( `poll_id` int(11) NOT NULL, `answer_id` int(11)
 
 CREATE TABLE `{pre}users` ( `id` int(11) NOT NULL auto_increment, `name` varchar(120) NOT NULL, `pwd` varchar(53) NOT NULL, `access` int(11) NOT NULL, `mail` varchar(120) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 
-INSERT INTO `{pre}access` VALUES ('', 'Administrator', 'users|dl|emoticons|gallery|gb|home|categories|comments|contact|pages|news|newsletter|search|system|polls|access|');
+INSERT INTO `{pre}access` VALUES ('', 'Administrator', 'users:2,files:2,emoticons:2,errors:2,gallery:2,gb:2,home:2,categories:2,comments:2,contact:2,pages:2,news:2,newsletter:2,search:2,system:2,polls:2,access:2');
 
 INSERT INTO `{pre}categories` VALUES ('', 'Erste Kategorie', 'Dies ist die erste Kategorie', 'news');
 
 INSERT INTO `{pre}emoticons` VALUES ('', ':D', 'Very Happy', '1.gif'), ('', ':)', 'Smile', '2.gif'), ('', ':(', 'Sad', '3.gif'), ('', ':o', 'Surprised', '4.gif'), ('', ':shocked:', 'Shocked', '5.gif'), ('', ':?', 'Confused', '6.gif'), ('', ':8)', 'Cool', '7.gif'), ('', ':lol:', 'Laughing', '8.gif'), ('', ':x', 'Mad', '9.gif'), ('', ':P', 'Razz', '10.gif'), ('', ':oops:', 'Embarassed', '11.gif'), ('', ':cry:', 'Crying', '12.gif'), ('', ':evil:', 'Evil', '13.gif'), ('', ':twisted:', 'Twisted Evil', '14.gif'), ('', ':roll:', 'Rolling Eyes', '15.gif'), ('', ':wink:', 'Wink', '16.gif'), ('', ':!:', 'Exclamation', '17.gif'), ('', ':?:', 'Question', '18.gif'), ('', ':idea:', 'Idea', '19.gif'), ('', ':arrow:', 'Arrow', '20.gif'), ('', ':|', 'Neutral', '21.gif'), ('', ':mrgreen:', 'Mr. Green', '22.gif');
-
-INSERT INTO `{pre}modules` VALUES ('', 'access', 1), ('', 'categories', 1), ('', 'comments', 1), ('', 'contact', 1), ('', 'dl', 1), ('', 'emoticons', 1), ('', 'errors', 1), ('', 'feeds', 1), ('', 'gallery', 1), ('', 'gb', 1), ('', 'home', 1), ('', 'news', 1), ('', 'newsletter', 1), ('', 'pages', 1), ('', 'polls', 1), ('', 'search', 1), ('', 'system', 1), ('', 'users', 1);

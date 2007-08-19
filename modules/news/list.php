@@ -43,7 +43,7 @@ $c_news = count($news);
 
 if ($c_news > 0) {
 	// Überprüfen, ob das Kommentare Modul aktiv ist
-	if ($modules->check(1, 'comments', 'info')) {
+	if ($modules->check('comments', 'functions')) {
 		$comment_check = true;
 		$tpl->assign('comment_check', true);
 		include 'modules/comments/functions.php';

@@ -17,6 +17,7 @@ $(document).ready(function() {
 {/literal}
 <h4>Administration</h4>
 <ul class="admin">
+{if $nav_mods}
 	<li><a href="{uri args="acp/home"}">{lang values="home|home"}</a></li>
 	<li>
 		<a href="#" id="nav_mods_link">{lang values="common|modules"}</a>
@@ -26,6 +27,7 @@ $(document).ready(function() {
 {/foreach}
 		</ul>
 	</li>
+{/if}
 {if $access_system}
 	<li>
 		<a href="#" id="nav_system_link">{lang values="system|system"}</a>

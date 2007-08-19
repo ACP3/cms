@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 		$_SESSION['acp3_id'] = $user[0]['id'];
 		$_SESSION['acp3_access'] = $user[0]['access'];
 
-		redirect('acp/home');
+		redirect(0, ROOT_DIR);
 	} else {
 		$tpl->assign('error', lang('users', 'user_does_not_exists'));
 	}

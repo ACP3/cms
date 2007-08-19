@@ -11,6 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 if (!$modules->check())
 	redirect('errors/403');
+
 switch ($modules->action) {
 	case 'create':
 		$form = $_POST['form'];
@@ -20,22 +21,33 @@ switch ($modules->action) {
 			$errors[$i++] = lang('common', 'name_to_short');
 		if (!empty($form['name']) && $db->select('id', 'access', 'name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
 			$errors[$i++] = lang('access', 'access_level_already_exist');
-		if (!isset($form['modules']) || !is_array($form['modules']))
+		// Überprüfen, ob zumindest einem Modul ein Zugriffslevel zugewiesen wurde
+		$empty = true;
+		foreach ($form['modules'] as $key) {
+			if (!empty($key)) {
+				$empty = false;
+				break;
+			}
+		}
+		if ($empty)
 			$errors[$i++] = lang('access', 'select_modules');
-		if (isset($form['modules']) && is_array($form['modules']) && !in_array('home', $form['modules']))
-			$errors[$i++] = lang('access', 'select_home');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);
 		} else {
+			// String für die einzelnen Zugriffslevel auf die Module erstellen
+			$form['modules']['errors'] = '2';
+			ksort($form['modules']);
 			$insert_mods = '';
-			foreach ($form['modules'] as $mod) {
-				$insert_mods.= $mod . '|';
+
+			foreach ($form['modules'] as $module => $level) {
+				$insert_mods.= $module . ':' . $level . ',';
 			}
+
 			$insert_values = array(
 				'id' => '',
 				'name' => $db->escape($form['name']),
-				'mods' => $insert_mods,
+				'modules' => substr($insert_mods, 0, -1),
 			);
 
 			$bool = $db->insert('access', $insert_values);
@@ -51,21 +63,32 @@ switch ($modules->action) {
 			$errors[$i++] = lang('common', 'name_to_short');
 		if (!empty($form['name']) && $db->select('id', 'access', 'id != \'' . $modules->id . '\' AND name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
 			$errors[$i++] = lang('access', 'access_level_already_exist');
-		if (!isset($form['modules']) || !is_array($form['modules']))
+		// Überprüfen, ob zumindest einem Modul ein Zugriffslevel zugewiesen wurde
+		$empty = true;
+		foreach ($form['modules'] as $key) {
+			if (!empty($key)) {
+				$empty = false;
+				break;
+			}
+		}
+		if ($empty)
 			$errors[$i++] = lang('access', 'select_modules');
-		if (isset($form['modules']) && is_array($form['modules']) && !in_array('home', $form['modules']))
-			$errors[$i++] = lang('access', 'select_home');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);
 		} else {
+			// String für die einzelnen Zugriffslevel auf die Module erstellen
+			$form['modules']['errors'] = '2';
+			ksort($form['modules']);
 			$insert_mods = '';
-			foreach ($form['modules'] as $mod) {
-				$insert_mods.= $mod . '|';
+
+			foreach ($form['modules'] as $module => $level) {
+				$insert_mods.= $module . ':' . $level . ',';
 			}
+
 			$update_values = array(
 				'name' => $db->escape($form['name']),
-				'mods' => $insert_mods,
+				'modules' => substr($insert_mods, 0, -1),
 			);
 
 			$bool = $db->update('access', $update_values, 'id = \'' . $modules->id . '\'');

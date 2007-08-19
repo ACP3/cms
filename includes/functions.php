@@ -167,18 +167,21 @@ function pagination($rows)
 	global $modules, $tpl;
 
 	if ($rows > CONFIG_ENTRIES) {
-		// Falls angegeben, IDs und Kategorien mit einbeziehen
+		// Alle angegeben URL Parameter mit in die URL einbeziehen
 		$acp = defined('IN_ADM') ? 'acp/' : '';
 		$id = !empty($modules->id) ? '/id_' . $modules->id : '';
 		$cat = !empty($modules->cat) ? '/cat_' . $modules->cat : '';
 		$gen = '';
 		if (!empty($modules->gen)) {
 			foreach ($modules->gen as $key => $value) {
-				$gen.= '/' . $key . '_' . $value;
+				if ($key != 'pos') {
+					$gen.= '/' . $key . '_' . $value;
+				}
 			}
 		}
 
 		$tpl->assign('uri', uri($acp . $modules->mod . '/' . $modules->page . $id . $cat . $gen));
+
 		// Seitenauswahl
 		$c_pages = ceil($rows / CONFIG_ENTRIES);
 		$recent = 0;

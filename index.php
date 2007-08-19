@@ -23,16 +23,14 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 	$tpl->assign('maintenance_msg', CONFIG_MAINTENANCE_MSG);
 	$tpl->display('offline.html');
 } else {
-	// Navigationsleisten
-	if ($modules->check(1, 'pages', 'info')) {
-		include_once 'modules/pages/functions.php';
-		$tpl->assign('navbar', process_navbar());
-	}
-
 	// Loginfeld
 	if (!isset($_COOKIE['ACP3_AUTH'])) {
 		if (defined('IN_ADM') && $modules->mod != 'users' && $modules->page != 'login')
 			redirect('acp/users/login');
+
+		// Session für Gast User setzen
+		session_start();
+		$_SESSION['acp3_access'] = '1';
 
 		include 'modules/users/sidebar.php';
 		$tpl->assign('login_switch', $field);
@@ -60,7 +58,14 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 			include 'modules/users/signoff.php';
 		}
 	}
-	if ($modules->check(1) && $modules->page != 'info') {
+
+	// Navigationsleisten
+	if ($modules->check('pages', 'functions')) {
+		include_once 'modules/pages/functions.php';
+		$tpl->assign('navbar', process_navbar());
+	}
+
+	if ($modules->check() && $modules->page != 'info') {
 		$content = '';
 		include 'modules/' . $modules->mod . '/' . $modules->page . '.php';
 		$tpl->assign('content', $content);

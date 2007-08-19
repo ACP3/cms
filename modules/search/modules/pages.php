@@ -26,10 +26,10 @@ if ($c_result_pages > 0) {
 	$i = isset($i) ? $i + 1 : 0;
 	$results_mods[$i]['title'] = lang('pages', 'pages');
 	for ($j = 0; $j < $c_result_pages; $j++) {
-		$results_mods[$i]['results'][$j]['hyperlink'] = uri('pages/list/id_' . $result_pages[$i]['id']);
-		$results_mods[$i]['results'][$j]['headline'] = $result_pages[$i]['title'];
+		$results_mods[$i]['results'][$j]['hyperlink'] = uri('pages/list/id_' . $result_pages[$j]['id']);
+		$results_mods[$i]['results'][$j]['headline'] = $result_pages[$j]['title'];
 
-		$striped_text = strip_tags($result_pages[$i]['text']);
+		$striped_text = strip_tags($result_pages[$j]['text']);
 		$striped_text = $db->escape($striped_text, 3);
 		$striped_text = html_entity_decode($striped_text, ENT_QUOTES, CHARSET);
 		$striped_text = substr($striped_text, 0, 200);

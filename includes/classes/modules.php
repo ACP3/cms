@@ -79,39 +79,85 @@ class modules
 		}
 	}
 	/**
+	 * Return an array of active modules
+	 *
+	 * @return array
+	 */
+	function active_modules()
+	{
+		$modules = scandir('modules/');
+		$active_modules = array();
+
+		foreach ($modules as $module) {
+			if ($this->is_active($module)) {
+				$active_modules[] = $module;
+			}
+		}
+		return $active_modules;
+	}
+	/**
 	 * Überpüft, ob ein Modul überhaupt existiert, bzw. der Benutzer auf ein Modul Zugriff hat
 	 *
-	 * @param integer $mode
-	 * 	1 = Nur überprüfen, ob Modul aktiv ist und Moduldatei existiert
-	 * 	2 = Zusätzlich überprüfen, ob Benutzer auch Zugriff auf das Modul besitzt
-	 * @param string $mod
+	 * @param string $module
 	 * 	Zu überprüfendes Modul
 	 * @param string $page
 	 * 	Zu überprüfende Moduldatei
 	 * @return boolean
 	 */
-	function check($mode = 2, $mod = 0, $page = 0)
-	{
+	function check($module = 0, $page = 0) {
 		global $db;
+		static $access_level = array();
 
-		$mod = !empty($mod) ? $mod : $this->mod;
+		$module = !empty($module) ? $module : $this->mod;
 		$page = !empty($page) ? $page : $this->page;
 
-		$bool = $db->select('id', 'modules', 'module = \'' . $mod . '\' AND active = \'1\'', 0, 0, 0, 1) == '1' && is_file('modules/' . $mod . '/' . $page . '.php') ? true : false;
-		if ($bool && $mode == 2 && isset($_SESSION) && ereg('[0-9]', $_SESSION['acp3_access'])) {
-			$access = $db->select('mods', 'access', 'id = \'' . $_SESSION['acp3_access'] . '\'');
+		if (isset($_SESSION) && is_file('modules/' . $module . '/' . $page . '.php')) {
+			$xml = simplexml_load_file('modules/' . $module . '/access.xml');
 
-			if (count($access) > 0) {
-				$mods = explode('|', $access[0]['mods']);
-				$c_mods = count($mods);
-				for ($i = 0; $i < $c_mods; $i++) {
-					if ($mods[$i] == $mod) {
+			if ((string) $xml->active == '1') {
+				if (!isset($access_level[$module])) {
+					$access_to_modules = $db->select('modules', 'access', 'id = \'' . $_SESSION['acp3_access'] . '\'');
+					$modules = explode(',', $access_to_modules[0]['modules']);
+
+					foreach ($modules as $row) {
+						$access_level[substr($row, 0, -2)] = substr($row, -1, 1);
+					}
+				}
+
+				// XML Datei parsen
+				foreach ($xml->item as $item) {
+					if ((string) $item->file == 'entry') {
+						foreach ($item->action as $action) {
+							if ((string) $action->name == $this->action && (string) $action->level != '0' && isset($access_level[$module]) && (string) $action->level <= $access_level[$module]) {
+								return true;
+							}
+						}
+					} elseif ((string) $item->file == $page && (string) $item->level != '0' && isset($access_level[$module]) && (string) $item->level <= $access_level[$module]) {
 						return true;
 					}
 				}
 			}
 		}
-		return $mode == 1 && $bool ? true : false;
+		return false;
+	}
+	/**
+	 * Führt eine Suche durch, ob das gesuchte Modul aktiv ist
+	 *
+	 * @param string $module
+	 * 	Das zu überprüfende Modul
+	 * @return boolean
+	 */
+	function is_active($module)
+	{
+		$path = 'modules/' . $module;
+		if (is_file($path . '/access.xml') && is_file($path . '/info.php')) {
+			$xml = simplexml_load_file($path . '/access.xml');
+
+			if ((string) $xml->active == '1') {
+				return true;
+			}
+		}
+		return false;
 	}
 }
 ?>

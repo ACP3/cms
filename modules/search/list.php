@@ -20,11 +20,11 @@ if (!isset($_POST['submit']) || isset($error_msg)) {
 
 	$search_mods = array();
 	$mods = scandir('modules/search/modules');
-	$count_dir = count($mods);
-	for ($i = 0; $i < $count_dir; $i++) {
+	$c_mods = count($mods);
+	for ($i = 0; $i < $c_mods; $i++) {
 		$mods[$i] = str_replace('.php', '', $mods[$i]);
 		$mod_info = array();
-		if ($mods[$i] != '.' && $mods[$i] != '..' && $modules->check(1, $mods[$i], 'info')) {
+		if ($mods[$i] != '.' && $mods[$i] != '..' && $modules->is_active($mods[$i])) {
 			include 'modules/' . $mods[$i] . '/info.php';
 			$name = $mod_info['name'];
 			$search_mods[$name]['dir'] = $mods[$i];

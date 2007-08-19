@@ -9,8 +9,7 @@
 
 if (!defined('IN_ADM'))
 	exit;
-if (!$modules->check())
-	redirect('errors/403');
+
 //Sprache
 $languages = array();
 $directories = scandir('languages');
