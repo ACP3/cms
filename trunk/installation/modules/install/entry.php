@@ -62,7 +62,7 @@ if (isset($errors)) {
 	$form['meta_description'] = mask($form['meta_description']);
 	$form['meta_keywords'] = '';
 	$form['title'] = mask($form['title']);
-	$form['version'] = '4.0b7';
+	$form['version'] = '4.0b8';
 	ksort($form);
 
 	// Modulkonfigurationsdateien schreiben
