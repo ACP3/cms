@@ -10,9 +10,9 @@
 		</p>
 		<dl>
 {foreach from=$mod_list item=row}
-			<dt><label for="{$row.module}">{$row.name}</label></dt>
+			<dt><label for="{$row.dir}">{$row.name}</label></dt>
 			<dd>
-				<select name="form[modules][{$row.module}]" id="{$row.module}">
+				<select name="form[modules][{$row.dir}]" id="{$row.dir}">
 					<option value="">{lang values="common|pls_select"}</option>
 					<option value="0">{lang values="access|access_level_0"}</option>
 					<option value="1">{lang values="access|access_level_1"}</option>

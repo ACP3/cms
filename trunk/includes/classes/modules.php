@@ -79,7 +79,7 @@ class modules
 		}
 	}
 	/**
-	 * Return an array of active modules
+	 * Gibt ein alphabetisch sortiertes Array mit den zur Zeit aktivierten Modulen aus
 	 *
 	 * @return array
 	 */
@@ -90,9 +90,13 @@ class modules
 
 		foreach ($modules as $module) {
 			if ($this->is_active($module)) {
-				$active_modules[] = $module;
+				$mod_info = array();
+				include 'modules/' . $module . '/info.php';
+				$active_modules[$mod_info['name']] = $module;
 			}
 		}
+		ksort($active_modules);
+
 		return $active_modules;
 	}
 	/**
