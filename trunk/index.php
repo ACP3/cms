@@ -27,23 +27,21 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 	if (isset($_COOKIE['ACP3_AUTH'])) {
 		$cookie = $db->escape($_COOKIE['ACP3_AUTH']);
 		$cookie_arr = explode('|', $cookie);
-		$is_user = false;
 
 		$user_check = $db->select('id, pwd, access', 'users', 'name=\'' . $cookie_arr[0] . '\'');
 		if (count($user_check) == '1') {
 			$user_check[0]['pwd'] = substr($user_check[0]['pwd'], 0, 40);
 			if ($user_check[0]['pwd'] == $cookie_arr[1]) {
-				$is_user = true;
+				define('IS_USER', true);
+
 				// Falls nötig, Session neu setzen
 				if (empty($_SESSION['acp3_id']) || empty($_SESSION['acp3_access'])) {
 					$_SESSION['acp3_id'] = $user_check[0]['id'];
 					$_SESSION['acp3_access'] = $user_check[0]['access'];
 				}
-				include 'modules/system/sidebar.php';
-				$tpl->assign('login_switch', $field);
 			}
 		}
-		if (!$is_user) {
+		if (!defined('IS_USER')) {
 			include 'modules/users/signoff.php';
 		}
 	} else {
@@ -52,10 +50,8 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 
 		// Session für Gast User setzen
 		$_SESSION['acp3_access'] = '2';
-
-		include 'modules/users/sidebar.php';
-		$tpl->assign('login_switch', $field);
 	}
+	include 'modules/users/sidebar.php';
 
 	// Navigationsleisten
 	if ($modules->check('pages', 'functions')) {
