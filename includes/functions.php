@@ -136,7 +136,7 @@ function lang($mod, $key)
 function move_file($tmp_filename, $filename, $dir)
 {
 	$ext = strrchr($filename, '.');
-	$path = 'files/' . $dir . '/';
+	$path = 'uploads/' . $dir . '/';
 
 	$new_name = 1;
 	while (file_exists($path . $new_name . $ext)) {

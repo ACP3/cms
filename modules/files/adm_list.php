@@ -21,7 +21,7 @@ if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
 		for ($i = 0; $i < $c_files; $i++) {
 			$files[$i]['start'] = date_aligned(1, $files[$i]['start']);
 			$files[$i]['end'] = date_aligned(1, $files[$i]['end']);
-			$files[$i]['size'] = file_exists('files/files/' . $files[$i]['file']) ? $files[$i]['size'] . ' MB' : lang('files', 'unknown_filesize');
+			$files[$i]['size'] = file_exists('uploads/files/' . $files[$i]['file']) ? $files[$i]['size'] . ' MB' : lang('files', 'unknown_filesize');
 			$files[$i]['link_title'] = $files[$i]['link_title'];
 		}
 		$tpl->assign('files', $files);

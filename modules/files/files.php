@@ -21,7 +21,7 @@ if (!empty($modules->cat)) {
 
 	if ($c_files > 0) {
 		for ($i = 0; $i < $c_files; $i++) {
-			$files[$i]['size'] = is_file('files/files/' . $files[$i]['file']) ? $files[$i]['size'] . ' MB' : lang('files', 'unknown_filesize');
+			$files[$i]['size'] = is_file('uploads/files/' . $files[$i]['file']) ? $files[$i]['size'] . ' MB' : lang('files', 'unknown_filesize');
 			$files[$i]['date'] = date_aligned(1, $files[$i]['start']);
 		}
 		$tpl->assign('files', $files);
