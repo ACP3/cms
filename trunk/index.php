@@ -20,29 +20,21 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 	$tpl->assign('maintenance_msg', CONFIG_MAINTENANCE_MSG);
 	$tpl->display('offline.html');
 } else {
-	// Loginfeld
-	if (!isset($_COOKIE['ACP3_AUTH'])) {
-		if (defined('IN_ADM') && $modules->mod != 'users' && $modules->page != 'login')
-			redirect('acp/users/login');
+	// Session starten
+	session_start();
 
-		// Session für Gast User setzen
-		session_start();
-		$_SESSION['acp3_access'] = '2';
-
-		include 'modules/users/sidebar.php';
-		$tpl->assign('login_switch', $field);
-	} else {
+	// Loginfeld bzw. im eingeloggten Zustand, Anzeige der Module
+	if (isset($_COOKIE['ACP3_AUTH'])) {
 		$cookie = $db->escape($_COOKIE['ACP3_AUTH']);
 		$cookie_arr = explode('|', $cookie);
 		$is_user = false;
 
 		$user_check = $db->select('id, pwd, access', 'users', 'name=\'' . $cookie_arr[0] . '\'');
-		if (count($user_check) > 0) {
+		if (count($user_check) == '1') {
 			$user_check[0]['pwd'] = substr($user_check[0]['pwd'], 0, 40);
 			if ($user_check[0]['pwd'] == $cookie_arr[1]) {
 				$is_user = true;
-				session_start();
-				// Session neu setzen, falls nötig
+				// Falls nötig, Session neu setzen
 				if (empty($_SESSION['acp3_id']) || empty($_SESSION['acp3_access'])) {
 					$_SESSION['acp3_id'] = $user_check[0]['id'];
 					$_SESSION['acp3_access'] = $user_check[0]['access'];
@@ -54,6 +46,15 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 		if (!$is_user) {
 			include 'modules/users/signoff.php';
 		}
+	} else {
+		if (defined('IN_ADM') && $modules->mod != 'users' && $modules->page != 'login')
+			redirect('acp/users/login');
+
+		// Session für Gast User setzen
+		$_SESSION['acp3_access'] = '2';
+
+		include 'modules/users/sidebar.php';
+		$tpl->assign('login_switch', $field);
 	}
 
 	// Navigationsleisten
