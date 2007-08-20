@@ -79,7 +79,7 @@ class modules
 		}
 	}
 	/**
-	 * Gibt ein alphabetisch sortiertes Array mit den zur Zeit aktivierten Modulen aus
+	 * Gibt ein alphabetisch sortiertes Array mit den zur Zeit aktivierten Modulen zurück
 	 *
 	 * @return array
 	 */
@@ -130,15 +130,19 @@ class modules
 				}
 
 				// XML Datei parsen
-				foreach ($xml->item as $item) {
-					if ((string) $item->file == 'entry' && $page == 'entry') {
-						foreach ($item->action as $action) {
-							if ((string) $action->name == $this->action && (string) $action->level != '0' && isset($access_level[$module]) && (string) $action->level <= $access_level[$module]) {
-								return true;
-							}
+				// Falls die entry.php eines Moduls verwendet werden soll, dann Zugriffslevel für die einzelnen Aktionen parsen
+				if ($page == 'entry') {
+					foreach ($xml->xpath('//item/action') as $action) {
+						if ((string) $action->name == $this->action && (string) $action->level != '0' && isset($access_level[$module]) && (string) $action->level <= $access_level[$module]) {
+							return true;
 						}
-					} elseif ((string) $item->file == $page && (string) $item->level != '0' && isset($access_level[$module]) && (string) $item->level <= $access_level[$module]) {
-						return true;
+					}
+				// Restlichen Dateien durchlaufen
+				} else {
+					foreach ($xml->item as $item) {
+						if ((string) $item->file == $page && (string) $item->level != '0' && isset($access_level[$module]) && (string) $item->level <= $access_level[$module]) {
+							return true;
+						}
 					}
 				}
 			}
