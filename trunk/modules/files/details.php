@@ -19,13 +19,12 @@ if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id 
 	$file = $cache->output('files_details_id_' . $modules->id);
 
 	if (isset($modules->gen['download']) && $modules->gen['download'] == '1') {
-		$path = 'files/files/';
+		$path = 'uploads/files/';
 		if (is_file($path . $file[0]['file'])) {
-			$file_new = $path . $file[0]['file'];
 			header('Content-Type: application/force-download');
 			header('Content-Transfer-Encoding: binary');
 			header('Content-Disposition: attachment; filename="' . $file[0]['file'] . '"');
-			readfile($file_new);
+			readfile($path . $file[0]['file']);
 			exit;
 		} else {
 			redirect(0, $file[0]['file']);
