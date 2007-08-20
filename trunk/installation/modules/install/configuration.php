@@ -48,12 +48,14 @@ if (!isset($_POST['submit']) || isset($error_msg)) {
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 
+	$default_db_type = extension_loaded('mysqli') ? 'mysqli' : 'mysql';
+
 	$db_type[0]['value'] = 'mysql';
-	$db_type[0]['selected'] = select_entry('type', 'mysql', 'mysql');
+	$db_type[0]['selected'] = select_entry('db_type', 'mysql', $default_db_type);
 	$db_type[0]['lang'] = 'MySQL';
 	if (extension_loaded('mysqli'))	{
 		$db_type[1]['value'] = 'mysqli';
-		$db_type[1]['selected'] = select_entry('type', 'mysqli', 'mysql');
+		$db_type[1]['selected'] = select_entry('db_type', 'mysqli', $default_db_type);
 		$db_type[1]['lang'] = 'MySQLi';
 	}
 	$tpl->assign('db_type', $db_type);

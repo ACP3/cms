@@ -2,7 +2,7 @@
 if (!defined('IN_INSTALL'))
 	exit;
 
-//Allgemeine Voraussetzungen
+// Allgemeine Voraussetzungen
 $requirements[0]['name'] = lang('php_version');
 $requirements[0]['color'] = version_compare(phpversion(), '5.0.5', '>=') ? '090' : 'f00';
 $requirements[0]['found'] = phpversion();
@@ -23,10 +23,28 @@ $defaults = array(
 	'../modules/contact/config.php' => 'file',
 	'../modules/home/draft.txt' => 'file',
 	'../modules/newsletter/config.php' => 'file',
+	'../modules/access/access.xml' => 'file',
+	'../modules/categories/access.xml' => 'file',
+	'../modules/comments/access.xml' => 'file',
+	'../modules/contact/access.xml' => 'file',
+	'../modules/emoticons/access.xml' => 'file',
+	'../modules/errors/access.xml' => 'file',
+	'../modules/feeds/access.xml' => 'file',
+	'../modules/files/access.xml' => 'file',
+	'../modules/gallery/access.xml' => 'file',
+	'../modules/gb/access.xml' => 'file',
+	'../modules/home/access.xml' => 'file',
+	'../modules/news/access.xml' => 'file',
+	'../modules/newsletter/access.xml' => 'file',
+	'../modules/pages/access.xml' => 'file',
+	'../modules/polls/access.xml' => 'file',
+	'../modules/search/access.xml' => 'file',
+	'../modules/system/access.xml' => 'file',
+	'../modules/users/access.xml' => 'file',
 	'../cache/' => 'dir',
-	'../files/dl/' => 'dir',
-	'../files/emoticons/' => 'dir',
-	'../files/gallery/' => 'dir',
+	'../uploads/emoticons/' => 'dir',
+	'../uploads/files/' => 'dir',
+	'../uploads/gallery/' => 'dir',
 );
 $files_dirs = array();
 $check_again = false;
@@ -51,7 +69,7 @@ foreach ($defaults as $key => $value) {
 
 $tpl->assign('files_dirs', $files_dirs);
 
-//PHP Einstellungen
+// PHP Einstellungen
 $php_settings[0]['setting'] = lang('error_messages');
 $php_settings[0]['color'] = (bool)ini_get('display_errors') ? 'f00' : '090';
 $php_settings[0]['value'] = (bool)ini_get('display_errors') ? lang('on') : lang('off');

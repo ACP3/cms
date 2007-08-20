@@ -50,7 +50,7 @@ define('meta_statements', 'Meta Angaben');
 define('mysql_version', 'MySQL-Version');
 define('navigation', 'Navigation');
 define('news_headline', 'Installation erfolgreich beendet!');
-define('news_text', 'Wie es aussieht hat bei der Installation des ACP3 4.0 alles geklappt.<br />Dies ist nur eine Testnews, die Sie nun im Administrationsbereich bearbeiten oder l&ouml;schen k&ouml;nnen.<br />Ansonsten w&uuml;nscht Ihnen das Team von Goratsch Webdesign viel Spa&szlig; bei der Arbeit mit dem ACP3 4.0!');
+define('news_text', 'So wie es aussieht, hat bei der Installation des ACP3 4.0 alles geklappt.<br />Dies ist nur eine Testnews, die Sie nun im Administrationsbereich bearbeiten oder l&ouml;schen k&ouml;nnen.<br />Ansonsten w&uuml;nscht Ihnen das Team von Goratsch Webdesign viel Spa&szlig; bei der Arbeit mit dem ACP3 4.0!');
 define('newsletter_mailsig', 'das Newsletterteam');
 define('no', 'Nein');
 define('not_writeable', 'Keine Schreibrechte gefunden');
