@@ -111,22 +111,21 @@ switch ($modules->action) {
 		} elseif (ereg('^([0-9|]+)$', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
+			$level_undeletable = 0;
+
 			foreach ($marked_entries as $entry) {
 				if (!empty($entry) && ereg('[0-9]', $entry) && $db->select('id', 'access', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
-					if ($entry == '1') {
-						$admin_access = 1;
-						break;
+					if ($entry == '1' || $entry == '2') {
+						$level_undeletable = 1;
 					} else {
 						$bool = $db->delete('access', 'id = \'' . $entry . '\'');
 					}
 				}
 			}
-			if ($bool) {
-				$text = lang('access', 'delete_success');
-			} elseif ($admin_access) {
-				$text = lang('access', 'admin_access_undeletable');
+			if ($level_undeletable) {
+				$text = lang('access', 'access_level_undeletable');
 			} else {
-				$text = lang('access', 'delete_error');
+				$text = $bool ? lang('access', 'delete_success') : lang('access', 'delete_error');
 			}
 			$content = combo_box($text, uri('acp/access'));
 		} else {
