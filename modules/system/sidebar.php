@@ -24,7 +24,6 @@ foreach ($active_modules as $name => $dir) {
 		}
 	}
 }
-
 $tpl->assign('nav_mods', $nav_mods);
 
 $field = $tpl->fetch('system/sidebar.html');

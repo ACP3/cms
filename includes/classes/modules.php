@@ -119,6 +119,7 @@ class modules
 			$xml = simplexml_load_file('modules/' . $module . '/access.xml');
 
 			if ((string) $xml->active == '1') {
+				// Falls die einzelnen Zugriffslevel auf die Module noch nicht gesetzt sind, diese aus der Datenbank selektieren
 				if (!isset($access_level[$module])) {
 					$access_to_modules = $db->select('modules', 'access', 'id = \'' . $_SESSION['acp3_access'] . '\'');
 					$modules = explode(',', $access_to_modules[0]['modules']);
@@ -130,7 +131,7 @@ class modules
 
 				// XML Datei parsen
 				foreach ($xml->item as $item) {
-					if ((string) $item->file == 'entry') {
+					if ((string) $item->file == 'entry' && $page == 'entry') {
 						foreach ($item->action as $action) {
 							if ((string) $action->name == $this->action && (string) $action->level != '0' && isset($access_level[$module]) && (string) $action->level <= $access_level[$module]) {
 								return true;
@@ -145,7 +146,7 @@ class modules
 		return false;
 	}
 	/**
-	 * Führt eine Suche durch, ob das gesuchte Modul aktiv ist
+	 * Führt eine Suche durch, ob das angeforderte Modul aktiv ist
 	 *
 	 * @param string $module
 	 * 	Das zu überprüfende Modul
