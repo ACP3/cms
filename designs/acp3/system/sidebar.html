@@ -17,8 +17,10 @@ $(document).ready(function() {
 {/literal}
 <h4>Administration</h4>
 <ul class="admin">
-{if $nav_mods}
+{if $access_home}
 	<li><a href="{uri args="acp/home"}">{lang values="home|home"}</a></li>
+{/if}
+{if $nav_mods}
 	<li>
 		<a href="#" id="nav_mods_link">{lang values="common|modules"}</a>
 		<ul id="nav_mods" class="hide">
