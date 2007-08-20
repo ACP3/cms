@@ -114,7 +114,6 @@ switch ($modules->action) {
 				if (!empty($entry) && ereg('[0-9]', $entry) && $db->select('id', 'users', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 					if ($entry == '1') {
 						$admin_user = 1;
-						break;
 					} elseif ($entry == $_SESSION['acp3_id']) {
 						$s_user = 1;
 					} else {
@@ -134,12 +133,10 @@ switch ($modules->action) {
 				session_destroy();
 				$check_admin = true;
 			}
-			if ($bool) {
-				$text = lang('users', 'delete_success');
-			} elseif ($admin_user) {
+			if ($admin_user) {
 				$text = lang('users', 'admin_user_undeletable');
 			} else {
-				$text = lang('users', 'delete_error');
+				$text = $bool ? lang('users', 'delete_success') : lang('users', 'delete_error');
 			}
 			$content = combo_box($text, $s_user ? ROOT_DIR : uri('acp/users'));
 		} else {
