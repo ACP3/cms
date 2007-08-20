@@ -14,9 +14,9 @@
 			<dd>
 				<select name="form[modules][{$row.dir}]" id="{$row.dir}">
 					<option value="">{lang values="common|pls_select"}</option>
-					<option value="0">{lang values="access|access_level_0"}</option>
-					<option value="1">{lang values="access|access_level_1"}</option>
-					<option value="2">{lang values="access|access_level_2"}</option>
+					<option value="0"{$row.level_0_selected}>{lang values="access|access_level_0"}</option>
+					<option value="1"{$row.level_1_selected}>{lang values="access|access_level_1"}</option>
+					<option value="2"{$row.level_2_selected}>{lang values="access|access_level_2"}</option>
 				</select>
 			</dd>
 {/foreach}

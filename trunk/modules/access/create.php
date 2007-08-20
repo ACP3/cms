@@ -21,10 +21,20 @@ if (!isset($_POST['submit']) || isset($error_msg)) {
 	$active_modules = $modules->active_modules();
 	$mod_list = array();
 
-	// TODO: Selektion der Einträge
+	function select_level($dir, $value)
+	{
+		if (isset($_POST['form']['modules'][$dir]) && $_POST['form']['modules'][$dir] == $value) {
+			return ' selected="selected"';
+		}
+		return '';
+	}
+
 	foreach ($active_modules as $name => $dir) {
 		if ($dir != 'errors') {
 			$mod_list[$name]['name'] = $name;
+			$mod_list[$name]['level_0_selected'] = select_level($dir, '0');
+			$mod_list[$name]['level_1_selected'] = select_level($dir, '1');
+			$mod_list[$name]['level_2_selected'] = select_level($dir, '2');
 			$mod_list[$name]['dir'] = $dir;
 		}
 	}
