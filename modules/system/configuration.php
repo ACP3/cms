@@ -53,11 +53,11 @@ if (!isset($_POST['submit']) || isset($error_msg)) {
 
 	// Datenbank-Typen
 	$db_type[0]['value'] = 'mysql';
-	$db_type[0]['selected'] = select_entry('type', 'mysql', CONFIG_DB_TYPE);
+	$db_type[0]['selected'] = select_entry('db_type', 'mysql', CONFIG_DB_TYPE);
 	$db_type[0]['lang'] = 'MySQL';
 	if (extension_loaded('mysqli'))	{
 		$db_type[1]['value'] = 'mysqli';
-		$db_type[1]['selected'] = select_entry('type', 'mysqli', CONFIG_DB_TYPE);
+		$db_type[1]['selected'] = select_entry('db_type', 'mysqli', CONFIG_DB_TYPE);
 		$db_type[1]['lang'] = 'MySQLi';
 	}
 	$tpl->assign('db_type', $db_type);
