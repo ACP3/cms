@@ -23,7 +23,7 @@ if (!isset($_POST['submit']) || isset($error_msg)) {
 
 	for ($i = 0; $i < $c_mods; $i++) {
 		$mods[$i]['module'] = $db->escape($mods[$i]['module'], 3);
-		if ($modules->check(1, $mods[$i]['module'], 'info')) {
+		if ($modules->is_active($mods[$i]['module'])) {
 			include('modules/' . $mods[$i]['module'] . '/info.php');
 			if (isset($mod_info['categories'])) {
 				$name = $mod_info['name'];

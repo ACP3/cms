@@ -9,7 +9,7 @@
 
 if (!defined('IN_ACP3') && !defined('IN_ADM'))
 	exit;
-if (!$modules->check())
+if (!$modules->check('comments', 'entry'))
 	redirect('errors/403');
 
 switch ($modules->action) {

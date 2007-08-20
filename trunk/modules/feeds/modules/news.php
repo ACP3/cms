@@ -23,7 +23,7 @@ if ($c_result > 0) {
 		$description = html_entity_decode($description, ENT_QUOTES, CHARSET);
 
 		$results[$i]['description'] = substr($description, 0, 300);
-		$results[$i]['uri'] = 'index.php?stm=news/details/id_' . $result[$i]['id'] . '/';
+		$results[$i]['uri'] = $link . uri('news/details/id_' . $result[$i]['id']);
 	}
 	$tpl->assign('results', $results);
 }

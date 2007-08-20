@@ -17,7 +17,7 @@ if (!isset($_POST['submit']) || isset($error_msg)) {
 	$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
 
 	// Emoticons einbinden
-	if ($modules->check(1, 'emoticons', 'info')) {
+	if ($modules->check('emoticons', 'functions')) {
 		include_once 'modules/emoticons/functions.php';
 		$tpl->assign('emoticons', emoticons_list());
 	}

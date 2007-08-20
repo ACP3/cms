@@ -11,9 +11,6 @@ ob_start();
 
 require 'includes/common.php';
 
-// Evtl. gesetzten Content-Type des Servers überschreiben
-header('Content-Type: text/html; charset=' . CHARSET);
-
 $tpl->assign('lang', CONFIG_LANG);
 $tpl->assign('page_title', CONFIG_TITLE);
 $tpl->assign('keywords', CONFIG_META_KEYWORDS);
@@ -30,7 +27,7 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 
 		// Session für Gast User setzen
 		session_start();
-		$_SESSION['acp3_access'] = '1';
+		$_SESSION['acp3_access'] = '2';
 
 		include 'modules/users/sidebar.php';
 		$tpl->assign('login_switch', $field);
@@ -69,13 +66,19 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 		$content = '';
 		include 'modules/' . $modules->mod . '/' . $modules->page . '.php';
 		$tpl->assign('content', $content);
-	} elseif (file_exists('modules/errors/404.php')) {
+	} elseif (is_file('modules/errors/404.php')) {
 		redirect('errors/404');
 	}
+
+	// Evtl. gesetzten Content-Type des Servers überschreiben
+	header('Content-Type: ' . (defined('CUSTOM_CONTENT_TYPE') ? CUSTOM_CONTENT_TYPE : 'text/html') . '; charset=' . CHARSET);
+
 	// Template ausgeben
 	$tpl->assign('title', $breadcrumb->output(2));
 	$tpl->assign('breadcrumb', $breadcrumb->output());
-	$tpl->display('layout.html');
+
+	// Falls ein Modul ein eigenes Layout verwenden möchte, dieses auch verweden
+	$tpl->display(defined('CUSTOM_LAYOUT') ? CUSTOM_LAYOUT : 'layout.html');
 }
 
 ob_end_flush();

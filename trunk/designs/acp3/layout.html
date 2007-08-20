@@ -8,8 +8,8 @@
 <script type="text/javascript" src="{$root_dir}includes/js/jquery.js"></script>
 <script type="text/javascript" src="{$root_dir}includes/js/acp3.js"></script>
 <link rel="stylesheet" type="text/css" href="{$design_path}style.css" />
-<link rel="alternate" type="application/rss+xml" href="{$root_dir}feeds.php?mode=news" title="{$page_title} - {lang values="news|news"}" />
-<link rel="alternate" type="application/rss+xml" href="{$root_dir}feeds.php?mode=dl" title="{$page_title} - {lang values="dl|dl"}" />
+<link rel="alternate" type="application/rss+xml" href="{uri args="feeds/list/feed_news"}" title="{$page_title} - {lang values="news|news"}" />
+<link rel="alternate" type="application/rss+xml" href="{uri args="feeds/list/feed_files"}" title="{$page_title} - {lang values="files|files"}" />
 <!--[if lte IE 6]>
 <link rel="stylesheet" type="text/css" href="{$design_path}ie.css" />
 <script type="text/javascript" defer="defer" src="{$root_dir}includes/js/pngfix.js"></script>
