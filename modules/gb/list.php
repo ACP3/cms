@@ -18,7 +18,7 @@ if ($c_gb > 0) {
 	$emoticons = false;
 
 	// Emoticons einbinden
-	if ($modules->check(1, 'emoticons', 'info')) {
+	if ($modules->check('emoticons', 'functions')) {
 		include_once 'modules/emoticons/functions.php';
 		$emoticons = true;
 	}
