@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP3') && !defined('IN_ADM'))
 	exit;
 if (!$modules->check(0, 'entry'))
 	redirect('errors/403');
@@ -19,7 +19,7 @@ switch ($modules->action) {
 
 		if (empty($form['name']))
 			$errors[$i++] = lang('common', 'name_to_short');
-		if (!empty($form['name']) && $db->select('id', 'users', "name='" . $db->escape($form['name']) . "'", 0, 0, 0, 1) == '1')
+		if (!empty($form['name']) && $db->select('id', 'users', 'name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
 			$errors[$i++] = lang('users', 'user_already_exists');
 		if (!$validate->email($form['mail']))
 			$errors[$i++] = lang('common', 'wrong_email_format');
@@ -52,7 +52,7 @@ switch ($modules->action) {
 
 		if (empty($form['name']))
 			$errors[$i++] = lang('common', 'name_to_short');
-		if (!empty($form['name']) && $db->select('id', 'users', "id != '" . $modules->id . "' AND name='" . $db->escape($form['name']) . "'", 0, 0, 0, 1) == '1')
+		if (!empty($form['name']) && $db->select('id', 'users', 'id != \'' . $modules->id . '\' AND name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
 			$errors[$i++] = lang('users', 'user_already_exists');
 		if (!$validate->email($form['mail']))
 			$errors[$i++] = lang('common', 'wrong_email_format');
@@ -141,6 +141,71 @@ switch ($modules->action) {
 			$content = combo_box($text, $s_user ? ROOT_DIR : uri('acp/users'));
 		} else {
 			redirect('errors/404');
+		}
+		break;
+	case 'forgot_pwd':
+		$form = $_POST['form'];
+		$i = 0;
+
+		if (empty($form['name']) && empty($form['mail']))
+			$errors[$i++] = lang('users', 'type_in_name_and_email');
+		if (!empty($form['name']) && $db->select('id', 'users', 'name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '0')
+			$errors[$i++] = lang('users', 'user_not_exists');
+		if (!empty($form['mail']) && !$validate->email($form['mail']))
+			$errors[$i++] = lang('common', 'wrong_email_format');
+		if ($validate->email($form['mail']) && $db->select('id', 'users', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) == '0')
+			$errors[$i++] = lang('users', 'user_not_exists');
+
+		if (isset($errors)) {
+			$error_msg = combo_box($errors);
+		} else {
+			// Je nachdem welches Feld ausgefüllt wurde, dieses auswählen
+			$field = !empty($form['mail']) ? 'mail = \'' . $form['mail'] . '\'' : 'name = \'' . $db->escape($form['name']) . '\'';
+
+			// Neues Passwort erstellen und neuen Zufallsschlüssel erstellen
+			$new_password = salt(8);
+			$salt = salt(12);
+
+			$update_values = array(
+				'pwd' => sha1($salt . sha1($new_password)) . ':' . $salt,
+			);
+
+			$bool = $db->update('users', $update_values, $field);
+
+			$content = combo_box($bool ? lang('users', 'forgot_pwd_success') : lang('users', 'forgot_pwd_error'), ROOT_DIR);
+		}
+		break;
+	case 'register':
+		$form = $_POST['form'];
+		$i = 0;
+
+		if (empty($form['name']))
+			$errors[$i++] = lang('common', 'name_to_short');
+		if (!empty($form['name']) && $db->select('id', 'users', 'name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
+			$errors[$i++] = lang('users', 'user_already_exists');
+		if (!$validate->email($form['mail']))
+			$errors[$i++] = lang('common', 'wrong_email_format');
+		if ($validate->email($form['mail']) && $db->select('id', 'users', 'mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
+			$errors[$i++] = lang('common', 'user_email_already_exists');
+		if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])
+			$errors[$i++] = lang('users', 'type_in_pwd');
+
+		if (isset($errors)) {
+			$error_msg = combo_box($errors);
+		} else {
+			$salt = salt(12);
+
+			$insert_values = array(
+				'id' => '',
+				'name' => $db->escape($form['name']),
+				'pwd' => sha1($salt . sha1($form['pwd'])) . ':' . $salt,
+				'access' => '3',
+				'mail' => $form['mail'],
+			);
+
+			$bool = $db->insert('users', $insert_values);
+
+			$content = combo_box($bool ? lang('users', 'register_success') : lang('users', 'register_error'), ROOT_DIR);
 		}
 		break;
 	default:

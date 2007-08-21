@@ -30,7 +30,7 @@ CREATE TABLE `{pre}poll_votes` ( `poll_id` int(11) NOT NULL, `answer_id` int(11)
 
 CREATE TABLE `{pre}users` ( `id` int(11) NOT NULL auto_increment, `name` varchar(120) NOT NULL, `pwd` varchar(53) NOT NULL, `access` int(11) NOT NULL, `mail` varchar(120) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 
-INSERT INTO `{pre}access` VALUES ('1', 'Administrator', 'users:2,feeds:2,files:2,emoticons:2,errors:2,gallery:2,gb:2,home:2,categories:2,comments:2,contact:2,pages:2,news:2,newsletter:2,search:2,system:2,polls:2,access:2'), ('2', 'Besucher', 'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,gb:1,home:0,categories:1,comments:1,contact:1,pages:1,news:1,newsletter:1,search:1,system:0,polls:1,access:0');
+INSERT INTO `{pre}access` VALUES ('1', 'Administrator', 'users:2,feeds:2,files:2,emoticons:2,errors:2,gallery:2,gb:2,home:2,categories:2,comments:2,contact:2,pages:2,news:2,newsletter:2,search:2,system:2,polls:2,access:2'), ('2', 'Besucher', 'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,gb:1,home:0,categories:1,comments:1,contact:1,pages:1,news:1,newsletter:1,search:1,system:0,polls:1,access:0'), ('3', 'Benutzer', 'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,gb:1,home:0,categories:1,comments:1,contact:1,pages:1,news:1,newsletter:1,search:1,system:0,polls:1,access:0');
 
 INSERT INTO `{pre}categories` VALUES ('', 'Erste Kategorie', 'Dies ist die erste Kategorie', 'news');
 
