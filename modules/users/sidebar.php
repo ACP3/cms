@@ -36,6 +36,8 @@ if (defined('IS_USER')) {
 	elseif (defined('IN_ACP3'))
 		$tpl->assign('uri', uri('users/login'));
 
+	$tpl->assign('redirect_uri', isset($_POST['form']['redirect_uri']) ? $_POST['form']['redirect_uri'] : base64_encode(htmlentities($_SERVER['REQUEST_URI'])));
+
 	$tpl->assign('users_sidebar', $tpl->fetch('users/sidebar_login.html'));
 }
 ?>
