@@ -30,8 +30,8 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 
 		$user_check = $db->select('id, pwd, access', 'users', 'name=\'' . $cookie_arr[0] . '\'');
 		if (count($user_check) == '1') {
-			$user_check[0]['pwd'] = substr($user_check[0]['pwd'], 0, 40);
-			if ($user_check[0]['pwd'] == $cookie_arr[1]) {
+			$db_password = substr($user_check[0]['pwd'], 0, 40);
+			if ($db_password == $cookie_arr[1]) {
 				define('IS_USER', true);
 
 				// Falls nötig, Session neu setzen
