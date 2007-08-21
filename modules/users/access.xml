@@ -27,18 +27,30 @@
 			<name>edit</name>
 			<level>2</level>
 		</action>
+		<action>
+			<name>forgot_pwd</name>
+			<level>1</level>
+		</action>
+		<action>
+			<name>register</name>
+			<level>1</level>
+		</action>
+	</item>
+	<item>
+		<file>forgot_pwd</file>
+		<level>1</level>
 	</item>
 	<item>
 		<file>login</file>
 		<level>1</level>
 	</item>
 	<item>
-		<file>sidebar</file>
+		<file>register</file>
 		<level>1</level>
 	</item>
 	<item>
-		<file>optimisation</file>
-		<level>2</level>
+		<file>sidebar</file>
+		<level>1</level>
 	</item>
 	<item>
 		<file>signoff</file>

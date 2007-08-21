@@ -59,7 +59,7 @@ define('offline_message', 'This website is currently offline. Please try it in a
 define('on', 'on');
 define('overview', 'Overview');
 define('pages_contact', 'Contact');
-define('pages_dl', 'Downloads');
+define('pages_files', 'Downloads');
 define('pages_gallery', 'Galleries');
 define('pages_gb', 'Guestbook');
 define('pages_imprint', 'Imprint');

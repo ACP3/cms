@@ -130,8 +130,6 @@ class db
 					} else {
 						return $result;
 					}
-				} else {
-					return $this->error();
 				}
 				break;
 			default:
@@ -151,10 +149,9 @@ class db
 					} else {
 						return $result;
 					}
-				} else {
-					return $this->error();
 				}
 		}
+		return $this->error();
 	}
 	/**
 	 * Führt den DELETE Befehl aus

@@ -1,9 +1,11 @@
 <h4>Login</h4>
-<form action="{$uri}" method="post" accept-charset="UTF-8" style="padding-bottom:5px;border-bottom:1px solid #333">
-	<fieldset class="no-border" style="width:80%;padding:5px 5px 5px 0">
+<form action="{$uri}" method="post" accept-charset="UTF-8" id="login-sidebar">
+	<fieldset>
 		<dl>
 			<dt><label for="nav_name">{lang values="common|name"}</label></dt>
 			<dd><input type="text" name="form[name]" id="nav_name" maxlength="120" /></dd>
+		</dl>
+		<dl>
 			<dt><label for="nav_pwd">{lang values="users|pwd"}</label></dt>
 			<dd><input type="password" name="form[pwd]" id="nav_pwd" /></dd>
 		</dl>
@@ -13,9 +15,11 @@
 			<input type="checkbox" name="remember" id="nav_remember" value="1" class="checkbox" />
 			{lang values="users|remember_me"}
 		</label>
-		<br />
-		<br />
-		<input type="hidden" name="form[redirect_uri]" value="{$redirect_uri}" />
-		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		<p style="text-align:center">
+			<input type="hidden" name="form[redirect_uri]" value="{$redirect_uri}" />
+			<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		</p>
+		<a href="{uri args="users/forgot_pwd}">{lang values="users|forgot_pwd"}</a><br />
+		<a href="{uri args="users/register"}">{lang values="users|register"}</a>
 	</div>
 </form>

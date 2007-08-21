@@ -25,3 +25,6 @@ input.form {
 a.form {
 	padding: 2px 18px;
 }
+#login-sidebar fieldset {
+	margin: 0;
+}

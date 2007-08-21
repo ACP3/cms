@@ -1,0 +1,18 @@
+{$error_msg}
+<form action="{$request_uri}" method="post" accept-charset="UTF-8">
+	<fieldset>
+		<p>
+			{lang values="users|forgot_pwd_description"}
+		</p>
+		<dl>
+			<dt><label for="name">{lang values="common|name"}</label></dt>
+			<dd><input type="text" name="form[name]" id="name" value="{$form.name}" maxlength="120" /></dd>
+			<dt><label for="mail">{lang values="common|email"}</label></dt>
+			<dd><input type="text" name="form[mail]" id="mail" value="{$form.mail}" maxlength="120" /></dd>
+		</dl>
+	</fieldset>
+	<div style="margin-top:20px">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="reset" value="{lang values="common|reset"}" class="form" />
+	</div>
+</form>
