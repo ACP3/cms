@@ -87,7 +87,7 @@ class breadcrumb
 			} else {
 				return $modules->page != 'list' && $modules->page != 'entry' ? lang($modules->mod, $modules->page) : lang($modules->mod, $modules->mod);
 			}
-			// Brotkrümelspur für das Admin Panel
+		// Brotkrümelspur für das Admin Panel
 		} elseif (defined('IN_ADM')) {
 			// Ausgangsstufe der Brotkrümelspur
 			$breadcrumb[0]['uri'] = uri('acp');

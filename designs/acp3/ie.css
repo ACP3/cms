@@ -1,12 +1,9 @@
-#head ul li a {
-	width: .1em;
-}
 table {
 	width: 99%;
 	margin: 0 auto;
 }
 fieldset {
-	margin-top: 21px;
+	margin-top: 13px;
 	padding-top: 20px;
 	display: block;
 	position: relative;
@@ -25,6 +22,18 @@ input.form {
 a.form {
 	padding: 2px 18px;
 }
+/* Layout fixes */
+#head ul li a {
+	width: .1em;
+}
 #login-sidebar fieldset {
+	margin: 0;
+}
+/* Accordion Menü */
+#accordion fieldset {
+	width: 100%;
+	padding: 20px 10px 10px;
+}
+#accordion fieldset dl {
 	margin: 0;
 }
