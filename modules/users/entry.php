@@ -170,11 +170,11 @@ switch ($modules->action) {
 
 			// E-Mail mit dem neuen Passwort versenden
 			$subject = sprintf(lang('users', 'forgot_pwd_mail_subject'), CONFIG_TITLE, htmlentities($_SERVER['HTTP_HOST']));
-			$message = sprintf(lang('users', 'forgot_pwd_mail_message'), $user[0]['name'], CONFIG_TITLE, htmlentities($_SERVER['HTTP_HOST']), $user[0]['name'], $user[0]['mail'], $new_password);
+			$message = sprintf(lang('users', 'forgot_pwd_mail_message'), $user[0]['name'], CONFIG_TITLE, htmlentities($_SERVER['HTTP_HOST']), $user[0]['mail'], $new_password);
 			$header = 'Content-type: text/plain; charset=' . CHARSET;
-			$mail_sent = mail($user[0]['mail'], $subject, $message, $header);
+			$mail_sent = @mail($user[0]['mail'], $subject, $message, $header);
 
-			// Nur das Passwort des Benutzers abändern, wenn die Mail erfolgreich versandt werden konnte
+			// Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versandt werden konnte
 			if ($mail_sent) {
 				$update_values = array(
 					'pwd' => sha1($salt . sha1($new_password)) . ':' . $salt,
@@ -204,17 +204,26 @@ switch ($modules->action) {
 		} else {
 			$salt = salt(12);
 
-			$insert_values = array(
-				'id' => '',
-				'name' => $db->escape($form['name']),
-				'pwd' => sha1($salt . sha1($form['pwd'])) . ':' . $salt,
-				'access' => '3',
-				'mail' => $form['mail'],
-			);
+			// E-Mail mit den Accountdaten zusenden
+			$subject = sprintf(lang('users', 'register_mail_subject'), CONFIG_TITLE, htmlentities($_SERVER['HTTP_HOST']));
+			$message = sprintf(lang('users', 'register_mail_message'), $db->escape($form['name']), CONFIG_TITLE, htmlentities($_SERVER['HTTP_HOST']), $form['mail'], $form['pwd']);
+			$header = 'Content-type: text/plain; charset=' . CHARSET;
+			$mail_sent = @mail($user[0]['mail'], $subject, $message, $header);
 
-			$bool = $db->insert('users', $insert_values);
+			// Das Benutzerkonto nur erstellen, wenn die E-Mail erfolgreich versandt werden konnte
+			if ($mail_sent) {
+				$insert_values = array(
+					'id' => '',
+					'name' => $db->escape($form['name']),
+					'pwd' => sha1($salt . sha1($form['pwd'])) . ':' . $salt,
+					'access' => '3',
+					'mail' => $form['mail'],
+				);
 
-			$content = combo_box($bool ? lang('users', 'register_success') : lang('users', 'register_error'), ROOT_DIR);
+				$bool = $db->insert('users', $insert_values);
+			}
+
+			$content = combo_box($mail_sent && isset($bool) && $bool ? lang('users', 'register_success') : lang('users', 'register_error'), ROOT_DIR);
 		}
 		break;
 	default:
