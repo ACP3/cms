@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<info>
+		<name lang="true"/>
+		<description lang="true"/>
+		<author>Goratsch Webdesign</author>
+		<version core="true"/>
+		<active>1</active>
+	</info>
+	<access>
+		<item>
+			<file>adm_list</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>contact</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>entry</file>
+			<action>
+				<name>contact</name>
+				<level>1</level>
+			</action>
+			<action>
+				<name>edit</name>
+				<level>2</level>
+			</action>
+		</item>
+		<item>
+			<file>imprint</file>
+			<level>1</level>
+		</item>
+	</access>
+</module>

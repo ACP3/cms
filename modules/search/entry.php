@@ -9,7 +9,7 @@
 
 if (!defined('IN_ACP3'))
 	exit;
-if (!$modules->check(0, 'entry'))
+if (!$modules->check('search', 'entry'))
 	redirect('errors/403');
 
 switch ($modules->action) {
@@ -30,9 +30,9 @@ switch ($modules->action) {
 		} else {
 			$form['sort'] = strtoupper($form['sort']);
 			$results_mods = array();
-			foreach ($form['mods'] as $search_mod) {
-				if ($modules->is_active($search_mod) && is_file('modules/search/modules/' . $search_mod . '.php')) {
-					include 'modules/search/modules/' . $search_mod . '.php';
+			foreach ($form['mods'] as $module) {
+				if ($modules->check($module, 'extensions/search')) {
+					include 'modules/' . $module . '/extensions/search.php';
 				}
 			}
 			if (!empty($results_mods))

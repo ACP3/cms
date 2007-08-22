@@ -59,7 +59,7 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 		$tpl->assign('navbar', process_navbar());
 	}
 
-	if ($modules->check() && $modules->page != 'info') {
+	if ($modules->check()) {
 		$content = '';
 		include 'modules/' . $modules->mod . '/' . $modules->page . '.php';
 		$tpl->assign('content', $content);

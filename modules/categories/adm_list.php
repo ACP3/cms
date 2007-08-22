@@ -21,7 +21,8 @@ if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
 		for ($i = 0; $i < $c_categories; $i++) {
 			$categories[$i]['name'] = $categories[$i]['name'];
 			$categories[$i]['description'] = $categories[$i]['description'];
-			$categories[$i]['module'] = lang($db->escape($categories[$i]['module'], 3), $db->escape($categories[$i]['module'], 3));
+			$info = $modules->parseInfo($db->escape($categories[$i]['module'], 3));
+			$categories[$i]['module'] = $info['name'];
 		}
 		$tpl->assign('categories', $categories);
 	}

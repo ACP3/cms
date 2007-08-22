@@ -19,20 +19,20 @@ if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
 	if ($c_access > 0) {
 		$tpl->assign('pagination', pagination($db->select('id', 'access', 0, 0, 0, 0, 1)));
 
-		for ($i = 0; $i < $c_access; $i++) {
-			$access[$i]['access_to_mod'] = '';
+		$mod_list = $modules->modulesList();
 
+		for ($i = 0; $i < $c_access; $i++) {
 			// Modulnamen anzeigen
 			$access_to_mods = explode(',', $access[$i]['modules']);
 			$c_access_to_mods = count($access_to_mods);
+			$access[$i]['access_to_mod'] = '';
 
-			for ($j = 0; $j < $c_access_to_mods; $j++) {
-				$name = substr($access_to_mods[$j], 0, -2);
-				if ($modules->is_active($name) && substr($access_to_mods[$j], -1, 1) != '0') {
-					$mod_info = array();
-					include 'modules/' . $name . '/info.php';
-
-					$access[$i]['access_to_mod'].= $mod_info['name'] . ', ';
+			foreach ($mod_list as $name => $info) {
+				for ($j = 0; $j < $c_access_to_mods; $j++) {
+					$mod_name = substr($access_to_mods[$j], 0, -2);
+					if ($info['active'] && $info['dir'] == $mod_name && substr($access_to_mods[$j], -1, 1) != '0') {
+						$access[$i]['access_to_mod'].= $name . ', ';
+					}
 				}
 			}
 			$access[$i]['access_to_mod'] = substr($access[$i]['access_to_mod'], 0, -2);

@@ -9,7 +9,7 @@
 
 if (!defined('IN_ADM'))
 	exit;
-if (!$modules->check(0, 'entry'))
+if (!$modules->check('pages', 'entry'))
 	redirect('errors/403');
 
 switch ($modules->action) {

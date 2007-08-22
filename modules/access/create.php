@@ -18,8 +18,7 @@ if (!isset($_POST['submit']) || isset($error_msg)) {
 
 	$tpl->assign('form', isset($form) ? $form : '');
 
-	$active_modules = $modules->active_modules();
-	$mod_list = array();
+	$mod_list = $modules->modulesList();
 
 	function select_level($dir, $value)
 	{
@@ -29,16 +28,15 @@ if (!isset($_POST['submit']) || isset($error_msg)) {
 		return '';
 	}
 
-	foreach ($active_modules as $name => $dir) {
-		if ($dir != 'errors') {
-			$mod_list[$name]['name'] = $name;
-			$mod_list[$name]['level_0_selected'] = select_level($dir, '0');
-			$mod_list[$name]['level_1_selected'] = select_level($dir, '1');
-			$mod_list[$name]['level_2_selected'] = select_level($dir, '2');
-			$mod_list[$name]['dir'] = $dir;
+	foreach ($mod_list as $name => $info) {
+		if ($info['dir'] == 'errors' || !$info['active']) {
+			unset($mod_list[$name]);
+		} else {
+			$mod_list[$name]['level_0_selected'] = select_level($info['dir'], '0');
+			$mod_list[$name]['level_1_selected'] = select_level($info['dir'], '1');
+			$mod_list[$name]['level_2_selected'] = select_level($info['dir'], '2');
 		}
 	}
-
 	$tpl->assign('mod_list', $mod_list);
 
 	$content = $tpl->fetch('access/create.html');

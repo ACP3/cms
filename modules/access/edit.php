@@ -21,10 +21,9 @@ if (!empty($modules->id) && $db->select('id', 'access', 'id = \'' . $modules->id
 
 		$tpl->assign('form', isset($form) ? $form : $access[0]);
 
-		$active_modules = $modules->active_modules();
+		$mod_list = $modules->modulesList();
 		$mods_arr = explode(',', $access[0]['modules']);
 		$c_mods_arr = count($mods_arr);
-		$mod_list = array();
 
 		function select_level($dir, $db_value, $value)
 		{
@@ -36,17 +35,16 @@ if (!empty($modules->id) && $db->select('id', 'access', 'id = \'' . $modules->id
 			return '';
 		}
 
-		foreach ($active_modules as $name => $dir) {
-			if ($dir != 'errors') {
-				$mod_list[$name]['name'] = $name;
-				$mod_list[$name]['dir'] = $dir;
-
+		foreach ($mod_list as $name => $info) {
+			if ($info['dir'] == 'errors' || !$info['active']) {
+				unset($mod_list[$name]);
+			} else {
 				for ($i = 0; $i < $c_mods_arr; $i++) {
-					if ($dir == substr($mods_arr[$i], 0, -2)) {
+					if ($info['dir'] == substr($mods_arr[$i], 0, -2)) {
 						$db_value = substr($mods_arr[$i], -1, 1);
-						$mod_list[$name]['level_0_selected'] = select_level($dir, $db_value, '0');
-						$mod_list[$name]['level_1_selected'] = select_level($dir, $db_value, '1');
-						$mod_list[$name]['level_2_selected'] = select_level($dir, $db_value, '2');
+						$mod_list[$name]['level_0_selected'] = select_level($info['dir'], $db_value, '0');
+						$mod_list[$name]['level_1_selected'] = select_level($info['dir'], $db_value, '1');
+						$mod_list[$name]['level_2_selected'] = select_level($info['dir'], $db_value, '2');
 						break;
 					}
 				}

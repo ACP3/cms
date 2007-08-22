@@ -18,15 +18,14 @@ if (!isset($_POST['submit']) || isset($error_msg)) {
 
 	$tpl->assign('form', isset($form) ? $form : '');
 
-	$search_mods = array();
-	$mods = scandir('modules/search/modules');
+	$mods = scandir('modules/');
 	$c_mods = count($mods);
+	$search_mods = array();
+
 	for ($i = 0; $i < $c_mods; $i++) {
-		$mods[$i] = str_replace('.php', '', $mods[$i]);
-		$mod_info = array();
-		if ($mods[$i] != '.' && $mods[$i] != '..' && $modules->is_active($mods[$i])) {
-			include 'modules/' . $mods[$i] . '/info.php';
-			$name = $mod_info['name'];
+		if ($modules->check($mods[$i], 'extensions/search')) {
+			$info = $modules->parseInfo($mods[$i]);
+			$name = $info['name'];
 			$search_mods[$name]['dir'] = $mods[$i];
 			$search_mods[$name]['checked'] = select_entry('mods', $mods[$i], '', 'checked');
 			$search_mods[$name]['name'] = $name;
