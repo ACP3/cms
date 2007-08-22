@@ -142,7 +142,7 @@ switch ($modules->action) {
 			} else {
 				$text = $bool ? lang('users', 'delete_success') : lang('users', 'delete_error');
 			}
-			$content = combo_box($text, $s_user ? ROOT_DIR : uri('acp/users'));
+			$content = combo_box($text, $session_user ? ROOT_DIR : uri('acp/users'));
 		} else {
 			redirect('errors/404');
 		}
