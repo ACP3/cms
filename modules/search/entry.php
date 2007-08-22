@@ -15,16 +15,15 @@ if (!$modules->check(0, 'entry'))
 switch ($modules->action) {
 	case 'search':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (strlen($form['search_term']) < 3)
-			$errors[$i++] = lang('search', 'search_term_to_short');
+			$errors[] = lang('search', 'search_term_to_short');
 		if (empty($form['mods']))
-			$errors[$i++] = lang('search', 'no_module_selected');
+			$errors[] = lang('search', 'no_module_selected');
 		if (empty($form['area']))
-			$errors[$i++] = lang('search', 'no_area_selected');
+			$errors[] = lang('search', 'no_area_selected');
 		if (empty($form['sort']) || $form['sort'] != 'asc' && $form['sort'] != 'desc')
-			$errors[$i++] = lang('search', 'no_hits_sorting_selected');
+			$errors[] = lang('search', 'no_hits_sorting_selected');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);

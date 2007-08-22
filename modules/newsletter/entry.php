@@ -15,12 +15,11 @@ if (!$modules->check(0, 'entry'))
 switch ($modules->action) {
 	case 'subscribe':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (!$validate->email($form['mail']))
-			$errors[$i++] = lang('common', 'wrong_email_format');
+			$errors[] = lang('common', 'wrong_email_format');
 		if ($validate->email($form['mail']) && $db->select('id', 'nl_accounts', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) == 1)
-			$errors[$i++] = lang('newsletter', 'nl_account_exists');
+			$errors[] = lang('newsletter', 'nl_account_exists');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);
@@ -47,12 +46,11 @@ switch ($modules->action) {
 		break;
 	case 'unsubscribe':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (!$validate->email($form['mail']))
-			$errors[$i++] = lang('common', 'wrong_email_format');
+			$errors[] = lang('common', 'wrong_email_format');
 		if ($validate->email($form['mail']) && $db->select('id', 'nl_accounts', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) != 1)
-			$errors[$i++] = lang('newsletter', 'nl_account_not_exists');
+			$errors[] = lang('newsletter', 'nl_account_not_exists');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);
@@ -66,13 +64,12 @@ switch ($modules->action) {
 		if (isset($modules->gen['mail']) && $validate->email($modules->gen['mail']) && isset($modules->gen['hash']) && preg_match('/^[a-f0-9]{32}+$/', $modules->gen['hash'])) {
 			$mail = $modules->gen['mail'];
 			$hash = $modules->gen['hash'];
-			$i = 0;
 		} else {
 			redirect('errors/404');
 		}
 
 		if ($db->select('id', 'nl_accounts', 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'', 0, 0, 0, 1) != 1)
-			$errors[$i++] = lang('newsletter', 'nl_account_not_exists');
+			$errors[] = lang('newsletter', 'nl_account_not_exists');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);
@@ -89,10 +86,9 @@ switch ($modules->action) {
 		break;
 	case 'settings':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (!$validate->email($form['mail']))
-			$errors[$i++] = lang('common', 'wrong_email_format');
+			$errors[] = lang('common', 'wrong_email_format');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);
@@ -104,12 +100,11 @@ switch ($modules->action) {
 		break;
 	case 'compose':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (strlen($form['subject']) < 3)
-			$errors[$i++] = lang('newsletter', 'subject_to_short');
+			$errors[] = lang('newsletter', 'subject_to_short');
 		if (strlen($form['text']) < 3)
-			$errors[$i++] = lang('newsletter', 'text_to_short');
+			$errors[] = lang('newsletter', 'text_to_short');
 
 		if (isset($errors)) {
 			include 'modules/common/errors.php';

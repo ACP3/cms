@@ -15,14 +15,13 @@ if (!$modules->check(0, 'entry'))
 switch ($modules->action) {
 	case 'contact':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (empty($form['name']))
-			$errors[$i++] = lang('common', 'name_to_short');
+			$errors[] = lang('common', 'name_to_short');
 		if (!$validate->email($form['mail']))
-			$errors[$i++] = lang('common', 'wrong_email_format');
+			$errors[] = lang('common', 'wrong_email_format');
 		if (strlen($form['message']) < 3)
-			$errors[$i++] = lang('common', 'message_to_short');
+			$errors[] = lang('common', 'message_to_short');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);
@@ -39,10 +38,9 @@ switch ($modules->action) {
 		break;
 	case 'edit':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (!empty($form['mail']) && !$validate->email($form['mail']))
-			$errors[$i++] = lang('common', 'wrong_email_format');
+			$errors[] = lang('common', 'wrong_email_format');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);

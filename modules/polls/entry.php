@@ -15,12 +15,11 @@ if (!$modules->check(0, 'entry'))
 switch ($modules->action) {
 	case 'create':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (!$validate->date($form))
-			$errors[$i++] = lang('common', 'select_date');
+			$errors[] = lang('common', 'select_date');
 		if (empty($form['question']))
-			$errors[$i++] = lang('polls', 'type_in_question');
+			$errors[] = lang('polls', 'type_in_question');
 		foreach ($form['answers'] as $row) {
 			if (!empty($row)) {
 				$check_answers = true;
@@ -28,7 +27,7 @@ switch ($modules->action) {
 			}
 		}
 		if (!isset($check_answers))
-			$errors[$i++] = lang('polls', 'type_in_answer');
+			$errors[] = lang('polls', 'type_in_answer');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);
@@ -63,12 +62,11 @@ switch ($modules->action) {
 		break;
 	case 'edit':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (!$validate->date($form))
-			$errors[$i++] = lang('common', 'select_date');
+			$errors[] = lang('common', 'select_date');
 		if (empty($form['question']))
-			$errors[$i++] = lang('polls', 'type_in_question');
+			$errors[] = lang('polls', 'type_in_question');
 		$j = 0;
 		foreach ($form['answers'] as $row) {
 			if (!empty($row['value']))
@@ -77,9 +75,9 @@ switch ($modules->action) {
 				$j++;
 		}
 		if (!isset($check_answers))
-			$errors[$i++] = lang('polls', 'type_in_answer');
+			$errors[] = lang('polls', 'type_in_answer');
 		if ($j == count($form['answers']))
-			$errors[$i++] = lang('polls', 'can_not_delete_all_answers');
+			$errors[] = lang('polls', 'can_not_delete_all_answers');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);

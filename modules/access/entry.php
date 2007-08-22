@@ -15,12 +15,11 @@ if (!$modules->check(0, 'entry'))
 switch ($modules->action) {
 	case 'create':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (empty($form['name']))
-			$errors[$i++] = lang('common', 'name_to_short');
+			$errors[] = lang('common', 'name_to_short');
 		if (!empty($form['name']) && $db->select('id', 'access', 'name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
-			$errors[$i++] = lang('access', 'access_level_already_exist');
+			$errors[] = lang('access', 'access_level_already_exist');
 		// Überprüfen, ob zumindest einem Modul ein Zugriffslevel zugewiesen wurde
 		$empty = true;
 		foreach ($form['modules'] as $key) {
@@ -30,7 +29,7 @@ switch ($modules->action) {
 			}
 		}
 		if ($empty)
-			$errors[$i++] = lang('access', 'select_modules');
+			$errors[] = lang('access', 'select_modules');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);
@@ -57,12 +56,11 @@ switch ($modules->action) {
 		break;
 	case 'edit':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (empty($form['name']))
-			$errors[$i++] = lang('common', 'name_to_short');
+			$errors[] = lang('common', 'name_to_short');
 		if (!empty($form['name']) && $db->select('id', 'access', 'id != \'' . $modules->id . '\' AND name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
-			$errors[$i++] = lang('access', 'access_level_already_exist');
+			$errors[] = lang('access', 'access_level_already_exist');
 		// Überprüfen, ob zumindest einem Modul ein Zugriffslevel zugewiesen wurde
 		$empty = true;
 		foreach ($form['modules'] as $key) {
@@ -72,7 +70,7 @@ switch ($modules->action) {
 			}
 		}
 		if ($empty)
-			$errors[$i++] = lang('access', 'select_modules');
+			$errors[] = lang('access', 'select_modules');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);

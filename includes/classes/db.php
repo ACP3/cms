@@ -118,18 +118,16 @@ class db
 					if ($mode == 1) {
 						return @mysqli_num_rows($result);
 					} elseif ($mode == 2) {
-						$i = 0;
-						$new_result = NULL;
+						$new_result = array();
 
 						while ($data = @mysqli_fetch_assoc($result)) {
-							$new_result[$i++] = $data;
+							$new_result[] = $data;
 						}
 						mysqli_free_result($result);
 
 						return $new_result;
-					} else {
-						return $result;
 					}
+					return $result;
 				}
 				break;
 			default:
@@ -137,18 +135,16 @@ class db
 					if ($mode == 1) {
 						return @mysql_num_rows($result);
 					} elseif ($mode == 2) {
-						$i = 0;
-						$new_result = NULL;
+						$new_result = array();
 
 						while ($data = @mysql_fetch_assoc($result)) {
-							$new_result[$i++] = $data;
+							$new_result[] = $data;
 						}
 						mysql_free_result($result);
 
 						return $new_result;
-					} else {
-						return $result;
 					}
+					return $result;
 				}
 		}
 		return $this->error();

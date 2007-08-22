@@ -36,7 +36,8 @@ define('users_select_access_level', 'Bitte wählen Sie einen Zugriffslevel für 
 define('users_sign_off', 'Abmelden');
 define('users_type_in_name_and_email', 'Bitte geben Sie entweder den bei der Registrierung verwendeten Benutzernamen oder die E-Mail-Adresse ein');
 define('users_type_in_pwd', 'Entweder ist das Passwort leer oder in der Wiederholung ist ein Tippfehler');
-define('users_user_already_exists', 'Für den angegebenen Namen existiert schon ein Benutzerkonto');
+define('users_user_already_exists', 'Für den angegebenen Namen existiert bereits ein Benutzerkonto');
+define('users_user_email_already_exists', 'Für die angegebene E-Mail-Adresse existiert bereits ein Benutzerkonto');
 define('users_user_not_exists', 'Für den eingegebenen Benutzernamen bzw. die eingegebene E-Mail-Adresse konnte kein Benutzerprofil gefunden werden');
 define('users_users', 'Benutzer');
 define('users_users_overview', 'Benutzer Übersicht');

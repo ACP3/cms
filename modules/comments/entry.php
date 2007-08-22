@@ -19,7 +19,6 @@ switch ($modules->action) {
 			$form = $_POST['form'];
 			$module = $_POST['module'];
 			$entry_id = $_POST['entry_id'];
-			$i = 0;
 
 			//Flood Sperre
 			$flood = $db->select('date', 'comments', 'ip = \'' . $ip . '\'', 'id DESC', '1');
@@ -27,13 +26,13 @@ switch ($modules->action) {
 			$time = date_aligned(2, time());
 
 			if ($flood_time > $time)
-				$errors[$i++] = sprintf(lang('common', 'flood_no_entry_possible'), $flood_time - $time);
+				$errors[] = sprintf(lang('common', 'flood_no_entry_possible'), $flood_time - $time);
 			if (empty($form['name']))
-				$errors[$i++] = lang('common', 'name_to_short');
+				$errors[] = lang('common', 'name_to_short');
 			if (strlen($form['message']) < 3)
-				$errors[$i++] = lang('common', 'message_to_short');
+				$errors[] = lang('common', 'message_to_short');
 			if (!$modules->is_active($db->escape($module, 2)))
-				$errors[$i++] = lang('comments', 'module_doesnt_exist');
+				$errors[] = lang('comments', 'module_doesnt_exist');
 
 			if (isset($errors)) {
 				$error_msg = combo_box($errors);
@@ -58,12 +57,11 @@ switch ($modules->action) {
 		break;
 	case 'edit':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (empty($form['name']))
-			$errors[$i++] = lang('common', 'name_to_short');
+			$errors[] = lang('common', 'name_to_short');
 		if (strlen($form['message']) < 3)
-			$errors[$i++] = lang('common', 'message_to_short');
+			$errors[] = lang('common', 'message_to_short');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);
