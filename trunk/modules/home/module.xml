@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<info>
+		<name lang="true"/>
+		<description lang="true"/>
+		<author>Goratsch Webdesign</author>
+		<version core="true"/>
+		<protected/>
+		<active>1</active>
+	</info>
+	<access>
+		<item>
+			<file>adm_list</file>
+			<level>2</level>
+		</item>
+	</access>
+</module>

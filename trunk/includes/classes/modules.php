@@ -79,27 +79,6 @@ class modules
 		}
 	}
 	/**
-	 * Gibt ein alphabetisch sortiertes Array mit den zur Zeit aktivierten Modulen zurück
-	 *
-	 * @return array
-	 */
-	function active_modules()
-	{
-		$modules = scandir('modules/');
-		$active_modules = array();
-
-		foreach ($modules as $module) {
-			if ($this->is_active($module)) {
-				$mod_info = array();
-				include 'modules/' . $module . '/info.php';
-				$active_modules[$mod_info['name']] = $module;
-			}
-		}
-		ksort($active_modules);
-
-		return $active_modules;
-	}
-	/**
 	 * Überpüft, ob ein Modul überhaupt existiert, bzw. der Benutzer auf ein Modul Zugriff hat
 	 *
 	 * @param string $module
@@ -116,9 +95,9 @@ class modules
 		$page = !empty($page) ? $page : $this->page;
 
 		if (isset($_SESSION) && is_file('modules/' . $module . '/' . $page . '.php')) {
-			$xml = simplexml_load_file('modules/' . $module . '/access.xml');
+			$xml = simplexml_load_file('modules/' . $module . '/module.xml');
 
-			if ((string) $xml->active == '1') {
+			if ((string) $xml->info->active == '1') {
 				// Falls die einzelnen Zugriffslevel auf die Module noch nicht gesetzt sind, diese aus der Datenbank selektieren
 				if (!isset($access_level[$module])) {
 					$access_to_modules = $db->select('modules', 'access', 'id = \'' . $_SESSION['acp3_access'] . '\'');
@@ -132,14 +111,14 @@ class modules
 				// XML Datei parsen
 				// Falls die entry.php eines Moduls verwendet werden soll, dann Zugriffslevel für die einzelnen Aktionen parsen
 				if ($page == 'entry') {
-					foreach ($xml->xpath('//item/action') as $action) {
+					foreach ($xml->xpath('//access/item/action') as $action) {
 						if ((string) $action->name == $this->action && (string) $action->level != '0' && isset($access_level[$module]) && (string) $action->level <= $access_level[$module]) {
 							return true;
 						}
 					}
 				// Restlichen Dateien durchlaufen
 				} else {
-					foreach ($xml->item as $item) {
+					foreach ($xml->access->item as $item) {
 						if ((string) $item->file == $page && (string) $item->level != '0' && isset($access_level[$module]) && (string) $item->level <= $access_level[$module]) {
 							return true;
 						}
@@ -150,21 +129,50 @@ class modules
 		return false;
 	}
 	/**
-	 * Führt eine Suche durch, ob das angeforderte Modul aktiv ist
+	 * Gibt ein alphabetisch sortiertes Array mit allen gefundenen Modulen des ACP3 mitsamt Modulinformationen aus
+	 *
+	 * @return array
+	 */
+	function modulesList()
+	{
+		$modules_dir = scandir('modules/');
+		$mod_list = array();
+
+		foreach ($modules_dir as $module) {
+			$info = $this->parseInfo($module);
+			if (is_array($info)) {
+				$name = $info['name'];
+				$mod_list[$name] = $info;
+				$mod_list[$name]['dir'] = $module;
+			}
+		}
+		ksort($mod_list);
+		return $mod_list;
+	}
+	/**
+	 * Durchläuft für das angeforderte Modul den <info> Abschnitt in der
+	 * module.xml und gibt die gefunden Informationen als Array zurück
 	 *
 	 * @param string $module
-	 * 	Das zu überprüfende Modul
-	 * @return boolean
+	 * @return mixed
 	 */
-	function is_active($module)
+	function parseInfo($module)
 	{
-		$path = 'modules/' . $module;
-		if (is_file($path . '/access.xml') && is_file($path . '/info.php')) {
-			$xml = simplexml_load_file($path . '/access.xml');
+		$path = 'modules/' . $module . '/module.xml';
+		if (!preg_match('=/=', $module) && is_file($path)) {
+			$xml = simplexml_load_file($path);
 
-			if ((string) $xml->active == '1') {
-				return true;
-			}
+			$info = $xml->info;
+
+			$mod_info = array();
+			$mod_info['author'] = (string) $info->author;
+			$mod_info['description'] = (string) $info->description['lang'] == 'true' ? lang($module, 'mod_description') : (string) $info->description;
+			$mod_info['name'] = (string) $info->name['lang'] == 'true' ? lang($module, $module) : (string) $info->name;
+			$mod_info['version'] = (string) $info->version['core'] == 'true' ? CONFIG_VERSION : (string) $info->version;
+			$mod_info['active'] = (string) $info->active;
+			$mod_info['categories'] = isset($info->categories) ? true : false;
+			$mod_info['protected'] = $info->protected ? true : false;
+			return $mod_info;
 		}
 		return false;
 	}

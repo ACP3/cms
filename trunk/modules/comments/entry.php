@@ -20,18 +20,20 @@ switch ($modules->action) {
 			$module = $_POST['module'];
 			$entry_id = $_POST['entry_id'];
 
-			//Flood Sperre
+			// Flood Sperre
 			$flood = $db->select('date', 'comments', 'ip = \'' . $ip . '\'', 'id DESC', '1');
-			$flood_time = $flood[0]['date'] + CONFIG_FLOOD;
+			if (count($flood) == '1') {
+				$flood_time = $flood[0]['date'] + CONFIG_FLOOD;
+			}
 			$time = date_aligned(2, time());
 
-			if ($flood_time > $time)
+			if (isset($flood_time) && $flood_time > $time)
 				$errors[] = sprintf(lang('common', 'flood_no_entry_possible'), $flood_time - $time);
 			if (empty($form['name']))
 				$errors[] = lang('common', 'name_to_short');
 			if (strlen($form['message']) < 3)
 				$errors[] = lang('common', 'message_to_short');
-			if (!$modules->is_active($db->escape($module, 2)))
+			if (!$modules->check($db->escape($module, 2), 'list'))
 				$errors[] = lang('comments', 'module_doesnt_exist');
 
 			if (isset($errors)) {

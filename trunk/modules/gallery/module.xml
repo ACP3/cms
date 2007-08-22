@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<info>
+		<name lang="true"/>
+		<description lang="true"/>
+		<author>Goratsch Webdesign</author>
+		<version core="true"/>
+		<active>1</active>
+	</info>
+	<access>
+		<item>
+			<file>add_picture</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>adm_list</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>create</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>details</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>edit_gallery</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>edit_picture</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>entry</file>
+			<action>
+				<name>create</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>delete_gallery</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>edit_gallery</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>add_picture</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>delete_picture</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>edit_picture</name>
+				<level>2</level>
+			</action>
+		</item>
+		<item>
+			<file>list</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>pics</file>
+			<level>1</level>
+		</item>
+	</access>
+</module>
