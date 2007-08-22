@@ -208,7 +208,7 @@ switch ($modules->action) {
 			$subject = sprintf(lang('users', 'register_mail_subject'), CONFIG_TITLE, htmlentities($_SERVER['HTTP_HOST']));
 			$message = sprintf(lang('users', 'register_mail_message'), $db->escape($form['name']), CONFIG_TITLE, htmlentities($_SERVER['HTTP_HOST']), $form['mail'], $form['pwd']);
 			$header = 'Content-type: text/plain; charset=' . CHARSET;
-			$mail_sent = @mail($user[0]['mail'], $subject, $message, $header);
+			$mail_sent = @mail($form['mail'], $subject, $message, $header);
 
 			// Das Benutzerkonto nur erstellen, wenn die E-Mail erfolgreich versandt werden konnte
 			if ($mail_sent) {
