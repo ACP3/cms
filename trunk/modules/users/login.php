@@ -47,7 +47,7 @@ if (defined('IS_USER')) {
 			redirect(0, ROOT_DIR);
 		}
 	} else {
-		$tpl->assign('error', lang('users', 'user_does_not_exists'));
+		$tpl->assign('error', lang('users', 'name_or_password_wrong'));
 	}
 }
 $content = $tpl->fetch('users/login.html');
