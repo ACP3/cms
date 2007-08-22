@@ -20,6 +20,8 @@ define('users_edit_success', 'The user has been edited successfully.');
 define('users_forgot_pwd', 'Forgot password?');
 define('users_forgot_pwd_error', 'While sending the E-mail with your new password an error has occured.');
 define('users_forgot_pwd_description', 'Please either enter the E-mail address or the user name you used with the registration in the following fields.');
+define('users_forgot_pwd_mail_subject', "Change of the password at %1\$s (%2\$s)");
+define('users_forgot_pwd_mail_message', "Hello %1\$s,\n\nYou have requested a new password for your user account on the website of %2\$s (%3\$s).\n\nUser name: %4\$s\nE-mail address:%5\$s\nPassword:%6\$s\n\nPlease change the password again, after you logged in to your account.");
 define('users_forgot_pwd_success', 'An E-mail with you new password has been sent successfully.');
 define('users_login', 'Login');
 define('users_mod_description', 'With this module you can administer the users.');
