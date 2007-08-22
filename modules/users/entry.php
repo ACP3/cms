@@ -71,7 +71,7 @@ switch ($modules->action) {
 			if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat'])) {
 				$salt = salt(12);
 				$new_pwd = sha1($salt . sha1($form['new_pwd']));
-				$new_pwd_sql = array('pwd' => $pwd . ':' . $salt);
+				$new_pwd_sql = array('pwd' => $new_pwd . ':' . $salt);
 			}
 
 			$update_values = array(
@@ -88,7 +88,7 @@ switch ($modules->action) {
 			// Falls sich der User selbst bearbeitet hat, Cookies und Session aktualisieren
 			if ($modules->id == $_SESSION['acp3_id']) {
 				$cookie_arr = explode('|', $_COOKIE['ACP3_AUTH']);
-				setcookie('ACP3_AUTH', $form['name'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]), time() + 3600, '/');
+				setcookie('ACP3_AUTH', $form['name'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]), time() + 3600, ROOT_DIR);
 
 				$_SESSION['acp3_access'] = $form['access'];
 			}
@@ -110,25 +110,27 @@ switch ($modules->action) {
 			$content = combo_box(lang('users', 'confirm_delete'), uri('acp/users/adm_list/action_delete/entries_' . $marked_entries), uri('acp/users'));
 		} elseif (ereg('^([0-9|]+)$', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
-			$bool = 0;
-			$s_user = 0;
+			$bool = false;
+			$admin_user = false;
+			$session_user = false;
 			foreach ($marked_entries as $entry) {
 				if (!empty($entry) && ereg('[0-9]', $entry) && $db->select('id', 'users', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 					if ($entry == '1') {
-						$admin_user = 1;
-					} elseif ($entry == $_SESSION['acp3_id']) {
-						$s_user = 1;
+						$admin_user = true;
 					} else {
+						if ($entry == $_SESSION['acp3_id']) {
+							$session_user = true;
+						}
 						$bool = $db->delete('users', 'id = \'' . $entry . '\'');
 					}
 				}
 			}
 			// Falls sich der User selbst gelöscht hat, diesen auch gleich abmelden
-			if ($s_user) {
+			if ($session_user) {
 				if (isset($_COOKIE[session_name()])) {
-					setcookie(session_name(), '', time() - 3600, '/');
+					setcookie(session_name(), '', time() - 3600, ROOT_DIR);
 				}
-				setcookie('ACP3_AUTH', '', time() - 3600, '/');
+				setcookie('ACP3_AUTH', '', time() - 3600, ROOT_DIR);
 
 				$_SESSION = array();
 
