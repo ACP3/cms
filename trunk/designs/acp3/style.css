@@ -99,9 +99,8 @@ fieldset {
 }
 legend {
 	padding: 1px 6px;
-	background: #ffc;
-	border: 1px dotted #f00;
-	font-weight: bold;
+	font: bold 1.1em/20px Arial, sans-serif;
+	color: #069;
 }
 fieldset dl {
 	text-align: left;
@@ -327,13 +326,6 @@ a.form {
 }
 #accordion fieldset legend {
 	margin-left: 10px;
-	padding: 1px 0;
-	background: #fff;
-	border: 0;
-	font: bold 1.1em/20px Arial, sans-serif;
-	color: #069;
-	text-align: left;
-	display: block;
 	cursor: pointer;
 }
 /* ACP */
