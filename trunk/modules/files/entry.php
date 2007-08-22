@@ -22,20 +22,19 @@ switch ($modules->action) {
 			$file['name'] = $_FILES['file_internal']['name'];
 			$file['size'] = $_FILES['file_internal']['size'];
 		}
-		$i = 0;
 
 		if (!$validate->date($form))
-			$errors[$i++] = lang('common', 'select_date');
+			$errors[] = lang('common', 'select_date');
 		if (strlen($form['link_title']) < 3)
-			$errors[$i++] = lang('files', 'type_in_link_title');
+			$errors[] = lang('files', 'type_in_link_title');
 		if (isset($_POST['external']) && empty($file))
-			$errors[$i++] = lang('files', 'type_in_external_resource');
+			$errors[] = lang('files', 'type_in_external_resource');
 		if (!isset($_POST['external']) && (empty($file['tmp_name']) || $file['size'] == '0'))
-			$errors[$i++] = lang('files', 'select_internal_resource');
+			$errors[] = lang('files', 'select_internal_resource');
 		if (strlen($form['text']) < 3)
-			$errors[$i++] = lang('files', 'description_to_short');
+			$errors[] = lang('files', 'description_to_short');
 		if (!ereg('[0-9]', $form['cat']) || ereg('[0-9]', $form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
-			$errors[$i++] = lang('files', 'select_category');
+			$errors[] = lang('files', 'select_category');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);
@@ -76,20 +75,19 @@ switch ($modules->action) {
 			$file['name'] = $_FILES['file_internal']['name'];
 			$file['size'] = $_FILES['file_internal']['size'];
 		}
-		$i = 0;
 
 		if (!$validate->date($form))
-			$errors[$i++] = lang('common', 'select_date');
+			$errors[] = lang('common', 'select_date');
 		if (strlen($form['link_title']) < 3)
-			$errors[$i++] = lang('files', 'type_in_link_title');
+			$errors[] = lang('files', 'type_in_link_title');
 		if (isset($form['external']) && empty($file))
-			$errors[$i++] = lang('files', 'type_in_external_resource');
+			$errors[] = lang('files', 'type_in_external_resource');
 		if (!isset($form['external']) && isset($file) && is_array($file) && (empty($file['tmp_name']) || $file['size'] == '0'))
-			$errors[$i++] = lang('files', 'select_internal_resource');
+			$errors[] = lang('files', 'select_internal_resource');
 		if (strlen($form['text']) < 3)
-			$errors[$i++] = lang('files', 'description_to_short');
+			$errors[] = lang('files', 'description_to_short');
 		if (!ereg('[0-9]', $form['cat']) || ereg('[0-9]', $form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
-			$errors[$i++] = lang('files', 'select_category');
+			$errors[] = lang('files', 'select_category');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);

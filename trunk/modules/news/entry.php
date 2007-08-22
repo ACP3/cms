@@ -15,18 +15,17 @@ if (!$modules->check(0, 'entry'))
 switch ($modules->action) {
 	case 'create':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (!$validate->date($form))
-			$errors[$i++] = lang('common', 'select_date');
+			$errors[] = lang('common', 'select_date');
 		if (strlen($form['headline']) < 3)
-			$errors[$i++] = lang('news', 'headline_to_short');
+			$errors[] = lang('news', 'headline_to_short');
 		if (strlen($form['text']) < 3)
-			$errors[$i++] = lang('news', 'text_to_short');
+			$errors[] = lang('news', 'text_to_short');
 		if (!ereg('[0-9]', $form['cat']) || ereg('[0-9]', $form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
-			$errors[$i++] = lang('news', 'select_category');
+			$errors[] = lang('news', 'select_category');
 		if (!empty($form['uri']) && (!ereg('[0-9]', $form['target']) || strlen($form['link_title']) < 3))
-			$errors[$i++] = lang('news', 'complete_additional_hyperlink_statements');
+			$errors[] = lang('news', 'complete_additional_hyperlink_statements');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);
@@ -53,18 +52,17 @@ switch ($modules->action) {
 		break;
 	case 'edit':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (!$validate->date($form))
-			$errors[$i++] = lang('common', 'select_date');
+			$errors[] = lang('common', 'select_date');
 		if (strlen($form['headline']) < 3)
-			$errors[$i++] = lang('news', 'headline_to_short');
+			$errors[] = lang('news', 'headline_to_short');
 		if (strlen($form['text']) < 3)
-			$errors[$i++] = lang('news', 'text_to_short');
+			$errors[] = lang('news', 'text_to_short');
 		if (!ereg('[0-9]', $form['cat']) || ereg('[0-9]', $form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
-			$errors[$i++] = lang('news', 'select_category');
+			$errors[] = lang('news', 'select_category');
 		if (!empty($form['uri']) && (!ereg('[0-9]', $form['target']) || strlen($form['link_title']) < 3))
-			$errors[$i++] = lang('news', 'complete_additional_hyperlink_statements');
+			$errors[] = lang('news', 'complete_additional_hyperlink_statements');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);

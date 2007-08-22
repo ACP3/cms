@@ -19,48 +19,52 @@ $requirements[2]['required'] = lang('off');
 $tpl->assign('requirements', $requirements);
 
 $defaults = array(
-	'../includes/config.php' => 'file',
-	'../modules/contact/config.php' => 'file',
-	'../modules/home/draft.txt' => 'file',
-	'../modules/newsletter/config.php' => 'file',
-	'../modules/access/access.xml' => 'file',
-	'../modules/categories/access.xml' => 'file',
-	'../modules/comments/access.xml' => 'file',
-	'../modules/contact/access.xml' => 'file',
-	'../modules/emoticons/access.xml' => 'file',
-	'../modules/errors/access.xml' => 'file',
-	'../modules/feeds/access.xml' => 'file',
-	'../modules/files/access.xml' => 'file',
-	'../modules/gallery/access.xml' => 'file',
-	'../modules/gb/access.xml' => 'file',
-	'../modules/home/access.xml' => 'file',
-	'../modules/news/access.xml' => 'file',
-	'../modules/newsletter/access.xml' => 'file',
-	'../modules/pages/access.xml' => 'file',
-	'../modules/polls/access.xml' => 'file',
-	'../modules/search/access.xml' => 'file',
-	'../modules/system/access.xml' => 'file',
-	'../modules/users/access.xml' => 'file',
-	'../cache/' => 'dir',
-	'../uploads/emoticons/' => 'dir',
-	'../uploads/files/' => 'dir',
-	'../uploads/gallery/' => 'dir',
+	'includes/config.php',
+	'modules/contact/config.php',
+	'modules/home/draft.txt',
+	'modules/newsletter/config.php',
+	'modules/access/access.xml',
+	'modules/categories/access.xml',
+	'modules/comments/access.xml',
+	'modules/contact/access.xml',
+	'modules/emoticons/access.xml',
+	'modules/errors/access.xml',
+	'modules/feeds/access.xml',
+	'modules/files/access.xml',
+	'modules/gallery/access.xml',
+	'modules/gb/access.xml',
+	'modules/home/access.xml',
+	'modules/news/access.xml',
+	'modules/newsletter/access.xml',
+	'modules/pages/access.xml',
+	'modules/polls/access.xml',
+	'modules/search/access.xml',
+	'modules/system/access.xml',
+	'modules/users/access.xml',
+	'cache/',
+	'uploads/emoticons/',
+	'uploads/files/',
+	'uploads/gallery/',
 );
 $files_dirs = array();
 $check_again = false;
 
 $i = 0;
-foreach ($defaults as $key => $value) {
-	$files_dirs[$i]['path'] = $key;
-	$files_dirs[$i]['color_1'] = file_exists($key) ? '090' : 'f00';
-	// Überprüfen, ob Datei/Ordner überhaupt vorhanden ist
-	if ($value == 'file')
-		$files_dirs[$i]['exists'] = file_exists($key) ? lang('file_found') : lang('file_not_found');
-	else
-		$files_dirs[$i]['exists'] = file_exists($key) ? lang('folder_found') : lang('folder_not_found');
-
-	$files_dirs[$i]['color_2'] = is_writable($key) ? '090' : 'f00';
-	$files_dirs[$i]['writeable'] = is_writable($key) ? lang('writeable') : lang('not_writeable');
+foreach ($defaults as $row) {
+	$files_dirs[$i]['path'] = $row;
+	// Überprüfen, ob es eine Datei oder ein Ordner ist
+	if (is_file('../' . $row)) {
+		$files_dirs[$i]['color_1'] = '090';
+		$files_dirs[$i]['exists'] = lang('file_found');
+	} elseif (is_dir('../' . $row)) {
+		$files_dirs[$i]['color_1'] = '090';
+		$files_dirs[$i]['exists'] = lang('folder_found');
+	} else {
+		$files_dirs[$i]['color_1'] = 'f00';
+		$files_dirs[$i]['exists'] = lang('file_folder_not_found');
+	}
+	$files_dirs[$i]['color_2'] = is_writable('../' . $row) ? '090' : 'f00';
+	$files_dirs[$i]['writeable'] = $files_dirs[$i]['color_2'] == '090' ? lang('writeable') : lang('not_writeable');
 	if ($files_dirs[$i]['color_1'] == 'f00' || $files_dirs[$i]['color_2'] == 'f00') {
 		$check_again = true;
 	}

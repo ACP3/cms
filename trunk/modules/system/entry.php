@@ -53,34 +53,33 @@ switch ($modules->action) {
 		break;
 	case 'configuration':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (!ereg('[0-9]', $form['entries']))
-			$errors[$i++] = lang('system', 'select_entries_per_page');
+			$errors[] = lang('system', 'select_entries_per_page');
 		if (!ereg('[0-9]', $form['flood']))
-			$errors[$i++] = lang('system', 'type_in_flood_barrier');
+			$errors[] = lang('system', 'type_in_flood_barrier');
 		if (!ereg('[0-9]', $form['sef']))
-			$errors[$i++] = lang('system', 'select_sef_uris');
+			$errors[] = lang('system', 'select_sef_uris');
 		if (empty($form['date']))
-			$errors[$i++] = lang('system', 'type_in_date_format');
+			$errors[] = lang('system', 'type_in_date_format');
 		if (!ereg('[0-9]', $form['dst']))
-			$errors[$i++] = lang('system', 'select_daylight_saving_time');
+			$errors[] = lang('system', 'select_daylight_saving_time');
 		if (!ereg('[0-9]', $form['time_zone']))
-			$errors[$i++] = lang('system', 'select_time_zone');
+			$errors[] = lang('system', 'select_time_zone');
 		if (!ereg('[0-9]', $form['maintenance']))
-			$errors[$i++] = lang('system', 'select_online_maintenance');
+			$errors[] = lang('system', 'select_online_maintenance');
 		if (strlen($form['maintenance_msg']) < 3)
-			$errors[$i++] = lang('system', 'maintenance_message_to_short');
+			$errors[] = lang('system', 'maintenance_message_to_short');
 		if (empty($form['title']))
-			$errors[$i++] = lang('system', 'title_to_short');
+			$errors[] = lang('system', 'title_to_short');
 		if (empty($form['db_host']))
-			$errors[$i++] = lang('system', 'type_in_db_host');
+			$errors[] = lang('system', 'type_in_db_host');
 		if (empty($form['db_user']))
-			$errors[$i++] = lang('system', 'type_in_db_username');
+			$errors[] = lang('system', 'type_in_db_username');
 		if (empty($form['db_name']))
-			$errors[$i++] = lang('system', 'type_in_db_name');
+			$errors[] = lang('system', 'type_in_db_name');
 		if (empty($form['db_type']))
-			$errors[$i++] = lang('system', 'select_db_type');
+			$errors[] = lang('system', 'select_db_type');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);
@@ -110,12 +109,11 @@ switch ($modules->action) {
 		$update_text = str_replace(array("\r\n", "\r", "\n"), "\n", $_POST['update_text']);
 		$update_file['name'] = isset($_FILES['update_file']['name']) ? $_FILES['update_file']['name'] : '';
 		$update_file['size'] = isset($_FILES['update_file']['size']) ? $_FILES['update_file']['size'] : 0;
-		$i = 0;
 
 		if (empty($update_text) && empty($update_file['name']) && empty($update_file['size']))
-			$errors[$i++] = lang('system', 'type_in_sql_text_or_upload_file');
+			$errors[] = lang('system', 'type_in_sql_text_or_upload_file');
 		if (!empty($update_file['name']) && $update_file['size'] > 0 && !eregi('.+(\.sql)$', $update_file['name']))
-			$errors[$i++] = lang('system', 'wrong_file_format');
+			$errors[] = lang('system', 'wrong_file_format');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);

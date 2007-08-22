@@ -3,50 +3,49 @@ if (!defined('IN_INSTALL'))
 	exit;
 
 $form = $_POST['form'];
-$i = 0;
 
 if (empty($form['db_host']))
-	$errors[$i++] = lang('type_in_db_host');
+	$errors[] = lang('type_in_db_host');
 if (empty($form['db_user']))
-	$errors[$i++] = lang('type_in_db_user_name');
+	$errors[] = lang('type_in_db_user_name');
 if (empty($form['db_name']))
-	$errors[$i++] = lang('type_in_db_name');
+	$errors[] = lang('type_in_db_name');
 if (empty($form['db_type']))
-	$errors[$i++] = lang('select_db_type');
+	$errors[] = lang('select_db_type');
 if (!empty($form['db_host']) && !empty($form['db_user']) && !empty($form['db_name'])) {
 	if ($form['db_type'] == 'mysql') {
 		$db = @mysql_connect($form['db_host'], $form['db_user'], $form['db_pwd']);
 		$db_select = @mysql_select_db($form['db_name'], $db);
 		if (!$db || !$db_select)
-			$errors[$i++] = lang('db_connection_failed');
+			$errors[] = lang('db_connection_failed');
 	} elseif ($form['db_type'] == 'mysqli') {
 		$db = @mysqli_connect($form['db_host'], $form['db_user'], $form['db_pwd'], $form['db_name']);
 		if (mysqli_connect_errno())
-			$errors[$i++] = lang('db_connection_failed');
+			$errors[] = lang('db_connection_failed');
 	}
 }
 if (empty($form['user_name']))
-	$errors[$i++] = lang('type_in_user_name');
+	$errors[] = lang('type_in_user_name');
 if ((empty($form['user_pwd']) || empty($form['user_pwd_wdh'])) || (!empty($form['user_pwd']) && !empty($form['user_pwd_wdh']) && $form['user_pwd'] != $form['user_pwd_wdh']))
-	$errors[$i++] = lang('type_in_pwd');
+	$errors[] = lang('type_in_pwd');
 if (!validate_email($form['mail']))
-	$errors[$i++] = lang('wrong_email_format');
+	$errors[] = lang('wrong_email_format');
 if (!ereg('[0-9]', $form['entries']))
-	$errors[$i++] = lang('select_entries_per_page');
+	$errors[] = lang('select_entries_per_page');
 if (!ereg('[0-9]', $form['flood']))
-	$errors[$i++] = lang('type_in_flood_barrier');
+	$errors[] = lang('type_in_flood_barrier');
 if (!ereg('[0-9]', $form['sef']))
-	$errors[$i++] = lang('select_sef_uris');
+	$errors[] = lang('select_sef_uris');
 if (empty($form['date']))
-	$errors[$i++] = lang('type_in_date_format');
+	$errors[] = lang('type_in_date_format');
 if (!ereg('[0-9]', $form['dst']))
-	$errors[$i++] = lang('select_daylight_saving_time');
+	$errors[] = lang('select_daylight_saving_time');
 if (!ereg('[0-9]', $form['time_zone']))
-	$errors[$i++] = lang('select_time_zone');
+	$errors[] = lang('select_time_zone');
 if (empty($form['title']))
-	$errors[$i++] = lang('type_in_title');
+	$errors[] = lang('type_in_title');
 if (!file_exists('../includes/config.php') || !is_writable('../includes/config.php'))
-	$errors[$i++] = lang('wrong_chmod_for_config_file');
+	$errors[] = lang('wrong_chmod_for_config_file');
 
 if (isset($errors)) {
 	$tpl->assign('errors', $errors);

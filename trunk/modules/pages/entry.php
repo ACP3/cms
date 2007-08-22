@@ -15,28 +15,27 @@ if (!$modules->check(0, 'entry'))
 switch ($modules->action) {
 	case 'create':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (!$validate->date($form))
-			$errors[$i++] = lang('common', 'select_date');
+			$errors[] = lang('common', 'select_date');
 		if (!ereg('[0-9]', $form['mode']))
-			$errors[$i++] = lang('pages', 'select_static_hyperlink');
+			$errors[] = lang('pages', 'select_static_hyperlink');
 		if (!ereg('[0-9]', $form['blocks']))
-			$errors[$i++] = lang('pages', 'select_block');
+			$errors[] = lang('pages', 'select_block');
 		if (!empty($form['blocks']) && !ereg('[0-9]', $form['sort']))
-			$errors[$i++] = lang('pages', 'type_in_chronology');
+			$errors[] = lang('pages', 'type_in_chronology');
 		if (strlen($form['title']) < 3)
-			$errors[$i++] = lang('pages', 'title_to_short');
+			$errors[] = lang('pages', 'title_to_short');
 		if ($form['mode'] == '1' && (!empty($form['uri']) || ereg('[0-9]', $form['target'])))
-			$errors[$i++] = lang('pages', 'uri_and_target_not_allowed');
+			$errors[] = lang('pages', 'uri_and_target_not_allowed');
 		if ($form['mode'] == '1' && !empty($form['parent']) && !ereg('[0-9]', $form['parent']))
-			$errors[$i++] = lang('pages', 'select_superior_page');
+			$errors[] = lang('pages', 'select_superior_page');
 		if ($form['mode'] == '1' && strlen($form['text']) < 3)
-			$errors[$i++] = lang('pages', 'text_to_short');
+			$errors[] = lang('pages', 'text_to_short');
 		if (($form['mode'] == '2' || $form['mode'] == '3') && (!empty($form['text']) || ereg('[0-9]', $form['parent'])))
-			$errors[$i++] = lang('pages', 'superior_page_and_text_not_allowed');
+			$errors[] = lang('pages', 'superior_page_and_text_not_allowed');
 		if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !ereg('[0-9]', $form['target'])))
-			$errors[$i++] = lang('pages', 'type_in_uri_and_target');
+			$errors[] = lang('pages', 'type_in_uri_and_target');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);
@@ -68,30 +67,29 @@ switch ($modules->action) {
 	case 'edit':
 		include_once 'modules/pages/functions.php';
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (!$validate->date($form))
-			$errors[$i++] = lang('common', 'select_date');
+			$errors[] = lang('common', 'select_date');
 		if (!ereg('[0-9]', $form['mode']))
-			$errors[$i++] = lang('pages', 'select_static_hyperlink');
+			$errors[] = lang('pages', 'select_static_hyperlink');
 		if (!ereg('[0-9]', $form['blocks']))
-			$errors[$i++] = lang('pages', 'select_block');
+			$errors[] = lang('pages', 'select_block');
 		if (!empty($form['blocks']) && !ereg('[0-9]', $form['sort']))
-			$errors[$i++] = lang('pages', 'type_in_chronology');
+			$errors[] = lang('pages', 'type_in_chronology');
 		if (strlen($form['title']) < 3)
-			$errors[$i++] = lang('pages', 'title_to_short');
+			$errors[] = lang('pages', 'title_to_short');
 		if ($form['mode'] == '1' && (!empty($form['uri']) || ereg('[0-9]', $form['target'])))
-			$errors[$i++] = lang('pages', 'uri_and_target_not_allowed');
+			$errors[] = lang('pages', 'uri_and_target_not_allowed');
 		if ($form['mode'] == '1' && !empty($form['parent']) && !ereg('[0-9]', $form['parent']))
-			$errors[$i++] = lang('pages', 'select_superior_page');
+			$errors[] = lang('pages', 'select_superior_page');
 		if ($form['mode'] == '1' && ereg('[0-9]', $form['parent']) && ($db->select('id', 'pages', "id != '" . $modules->id . "' AND mode='1' AND parent='0'", 0, 0, 0, 1) == 0) || $form['parent'] == $modules->id || parent_check($modules->id, $form['parent']))
-			$errors[$i++] = lang('pages', 'superior_page_not_allowed');
+			$errors[] = lang('pages', 'superior_page_not_allowed');
 		if ($form['mode'] == '1' && strlen($form['text']) < 3)
-			$errors[$i++] = lang('pages', 'text_to_short');
+			$errors[] = lang('pages', 'text_to_short');
 		if (($form['mode'] == '2' || $form['mode'] == '3') && (!empty($form['text']) || ereg('[0-9]', $form['parent'])))
-			$errors[$i++] = lang('pages', 'superior_page_and_text_not_allowed');
+			$errors[] = lang('pages', 'superior_page_and_text_not_allowed');
 		if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !ereg('[0-9]', $form['target'])))
-			$errors[$i++] = lang('pages', 'type_in_uri_and_target');
+			$errors[] = lang('pages', 'type_in_uri_and_target');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);
@@ -152,14 +150,13 @@ switch ($modules->action) {
 		break;
 	case 'create_block':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (!preg_match('/^[a-zA-Z]+\w/', $form['index_name']))
-			$errors[$i++] = lang('pages', 'type_in_index_name');
+			$errors[] = lang('pages', 'type_in_index_name');
 		if (preg_match('/^[a-zA-Z]+\w/', $form['index_name']) && $db->select('id', 'pages_blocks', 'index_name = \'' . $db->escape($form['index_name']) . '\'', 0, 0, 0, 1) > 0)
-			$errors[$i++] = lang('pages', 'index_name_unique');
+			$errors[] = lang('pages', 'index_name_unique');
 		if (strlen($form['title']) < 3)
-			$errors[$i++] = lang('pages', 'block_title_to_short');
+			$errors[] = lang('pages', 'block_title_to_short');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);
@@ -177,14 +174,13 @@ switch ($modules->action) {
 		break;
 	case 'edit_block':
 		$form = $_POST['form'];
-		$i = 0;
 
 		if (!preg_match('/^[a-zA-Z]+\w/', $form['index_name']))
-			$errors[$i++] = lang('pages', 'type_in_index_name');
+			$errors[] = lang('pages', 'type_in_index_name');
 		if (preg_match('/^[a-zA-Z]+\w/', $form['index_name']) && $db->select('id', 'pages_blocks', 'index_name = \'' . $db->escape($form['index_name']) . '\' AND id != \'' . $modules->id . '\'', 0, 0, 0, 1) > 0)
-			$errors[$i++] = lang('pages', 'index_name_unique');
+			$errors[] = lang('pages', 'index_name_unique');
 		if (strlen($form['title']) < 3)
-			$errors[$i++] = lang('pages', 'block_title_to_short');
+			$errors[] = lang('pages', 'block_title_to_short');
 
 		if (isset($errors)) {
 			$error_msg = combo_box($errors);
