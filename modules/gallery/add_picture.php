@@ -12,6 +12,15 @@ if (!defined('IN_ADM'))
 
 $pic = isset($modules->gen['pic']) && ereg('[0-9]', $modules->gen['pic']) ? $modules->gen['pic'] : 1;
 
+if (!empty($modules->id)) {
+	$gallery = $db->select('name', 'gallery', 'id = \'' . $modules->id . '\'');
+
+	$breadcrumb->assign(lang('gallery', 'gallery'), uri('acp/gallery'));
+	$breadcrumb->assign($gallery[0]['name'], uri('acp/gallery/edit_gallery/id_' . $modules->id));
+	$breadcrumb->assign(lang('gallery', 'add_picture'));
+	unset($gallery);
+}
+
 if (isset($_POST['submit'])) {
 	include 'modules/gallery/entry.php';
 }

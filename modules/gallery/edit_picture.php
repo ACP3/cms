@@ -11,13 +11,18 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (!empty($modules->id) && $db->select('id', 'galpics', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+	$picture = $db->select('p.pic, p.gallery, p.file, p.description, g.name AS gallery_name', 'galpics AS p, ' . CONFIG_DB_PRE . 'gallery AS g', 'p.id = \'' . $modules->id . '\' AND p.gallery = g.id');
+
+	$breadcrumb->assign(lang('gallery', 'gallery'), uri('acp/gallery'));
+	$breadcrumb->assign($picture[0]['gallery_name'], uri('acp/gallery/edit_gallery/id_' . $picture[0]['gallery']));
+	$breadcrumb->assign(lang('gallery', 'edit_picture'));
+
 	if (isset($_POST['submit'])) {
 		include 'modules/gallery/entry.php';
 	}
 	if (!isset($_POST['submit']) || isset($error_msg)) {
 		$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
 
-		$picture = $db->select('pic, gallery, file, description', 'galpics', 'id = \'' . $modules->id . '\'');
 		$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
 
 		$galleries = $db->select('id, start, name', 'gallery', 0, 'start DESC');
