@@ -82,7 +82,7 @@ switch ($modules->action) {
 			$errors[] = lang('system', 'select_db_type');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			$bool = $config->general($form);
 
@@ -116,7 +116,7 @@ switch ($modules->action) {
 			$errors[] = lang('system', 'wrong_file_format');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			$updates = !empty($update_file['name']) ? file($_FILES['update_file']['tmp_name']) : explode("\n", $update_text);
 			$i = 0;

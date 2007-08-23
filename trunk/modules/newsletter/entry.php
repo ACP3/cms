@@ -22,7 +22,7 @@ switch ($modules->action) {
 			$errors[] = lang('newsletter', 'nl_account_exists');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			$time = explode(' ', microtime());
 			$hash = md5(mt_rand(0, $time['1']));
@@ -53,7 +53,7 @@ switch ($modules->action) {
 			$errors[] = lang('newsletter', 'nl_account_not_exists');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			$bool = $db->delete('nl_accounts', 'mail = \'' . $form['mail'] . '\'');
 
@@ -72,7 +72,7 @@ switch ($modules->action) {
 			$errors[] = lang('newsletter', 'nl_account_not_exists');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			$bool = $db->update('nl_accounts', array('hash', ''), 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'');
 
@@ -91,7 +91,7 @@ switch ($modules->action) {
 			$errors[] = lang('common', 'wrong_email_format');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			$bool = $config->module('newsletter', $form);
 

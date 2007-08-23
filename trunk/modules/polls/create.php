@@ -13,9 +13,7 @@ if (!defined('IN_ADM'))
 if (isset($_POST['submit'])) {
 	include 'modules/polls/entry.php';
 }
-if (!isset($_POST['submit']) || isset($error_msg)) {
-	$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
-
+if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Datumsauswahl
 	$tpl->assign('start_day', date_dropdown('day', 'start_day', 'start_day'));
 	$tpl->assign('start_month', date_dropdown('month', 'start_month', 'start_month'));

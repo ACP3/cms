@@ -16,9 +16,8 @@ if (!empty($modules->id) && $db->select('id', 'news', 'id = \'' . $modules->id .
 	if (isset($_POST['submit'])) {
 		include_once 'modules/comments/entry.php';
 	}
-	if (!isset($_POST['submit']) || isset($error_msg)) {
-		// Fehlermeldungen und Input Felder von den Kommentaren
-		$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
+	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+		// Input Felder von den Kommentaren
 		$tpl->assign('form', isset($form) ? $form : '');
 
 		// News Cache erstellen

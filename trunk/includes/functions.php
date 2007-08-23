@@ -22,12 +22,15 @@ function combo_box($text, $forward = 0, $back = 0)
 	global $tpl;
 
 	$tpl->assign('text', $text);
-	if (!empty($forward))
+	if (empty($forward) && empty($back)) {
+		$tpl->assign('error_msg', $tpl->fetch('common/error.html'));
+		return;
+	} else {
 		$tpl->assign('forward', $forward);
-	if (!empty($back))
 		$tpl->assign('back', $back);
 
-	return $tpl->fetch('common/combo.html');
+		return $tpl->fetch('common/combo.html');
+	}
 }
 /**
  * Datumsausrichtung an den Zeitzonen

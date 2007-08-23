@@ -24,7 +24,7 @@ switch ($modules->action) {
 			$errors[] = lang('common', 'message_to_short');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			$contact = $config->output('contact');
 
@@ -43,7 +43,7 @@ switch ($modules->action) {
 			$errors[] = lang('common', 'wrong_email_format');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			$form['address'] = $db->escape($form['address'], 2);
 			$form['telephone'] = $db->escape($form['telephone']);

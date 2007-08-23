@@ -32,7 +32,7 @@ switch ($modules->action) {
 			$errors[] = lang('access', 'select_modules');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			// String für die einzelnen Zugriffslevel auf die Module erstellen
 			$form['modules']['errors'] = '2';
@@ -73,7 +73,7 @@ switch ($modules->action) {
 			$errors[] = lang('access', 'select_modules');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			// String für die einzelnen Zugriffslevel auf die Module erstellen
 			$form['modules']['errors'] = '2';

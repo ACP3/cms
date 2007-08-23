@@ -24,9 +24,7 @@ if (!empty($modules->id)) {
 if (isset($_POST['submit'])) {
 	include 'modules/gallery/entry.php';
 }
-if (!isset($_POST['submit']) || isset($error_msg)) {
-	$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
-
+if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$galleries = $db->select('id, start, name', 'gallery', 0, 'start DESC');
 	$c_galleries = count($galleries);
 

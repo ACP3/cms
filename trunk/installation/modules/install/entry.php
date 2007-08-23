@@ -49,7 +49,7 @@ if (!file_exists('../includes/config.php') || !is_writable('../includes/config.p
 
 if (isset($errors)) {
 	$tpl->assign('errors', $errors);
-	$error_msg = $tpl->fetch('error.html');
+	$tpl->assign('error_msg', $tpl->fetch('error.html'));
 } else {
 	define('CHARSET', 'UTF-8');
 

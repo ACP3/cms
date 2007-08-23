@@ -14,9 +14,7 @@ if (!empty($modules->id) && $db->select('id', 'news', 'id = \'' . $modules->id .
 	if (isset($_POST['submit'])) {
 		include 'modules/news/entry.php';
 	}
-	if (!isset($_POST['submit']) || isset($error_msg)) {
-		$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
-
+	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$news = $db->select('start, end, headline, text, cat, uri, target, link_title', 'news', 'id = \'' . $modules->id . '\'');
 		$news[0]['text'] = $db->escape($news[0]['text'], 3);
 		// Datum

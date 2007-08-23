@@ -14,11 +14,9 @@ if (!empty($modules->id) && $db->select('id', 'pages', 'id = \'' . $modules->id 
 	if (isset($_POST['submit'])) {
 		include 'modules/pages/entry.php';
 	}
-	if (!isset($_POST['submit']) || isset($error_msg)) {
+	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		//Funktionen einbinden
 		include_once 'modules/pages/functions.php';
-
-		$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
 
 		$page = $db->select('start, end, mode, parent, block_id, sort, title, uri, target, text', 'pages', 'id = \'' . $modules->id . '\'');
 		$page[0]['text'] = $db->escape($page[0]['text'], 3);

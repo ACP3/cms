@@ -14,9 +14,7 @@ if (!empty($modules->id) && $db->select('id', 'access', 'id = \'' . $modules->id
 	if (isset($_POST['submit'])) {
 		include 'modules/access/entry.php';
 	}
-	if (!isset($_POST['submit']) || isset($error_msg)) {
-		$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
-
+	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$access = $db->select('name, modules', 'access', 'id = \'' . $modules->id . '\'');
 
 		$tpl->assign('form', isset($form) ? $form : $access[0]);
