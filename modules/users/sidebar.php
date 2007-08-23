@@ -30,7 +30,7 @@ if (defined('IS_USER')) {
 	}
 	$tpl->assign('nav_mods', $nav_mods);
 
-	$tpl->assign('users_sidebar', $tpl->fetch('users/sidebar_control_center.html'));
+	$tpl->assign('users_sidebar', $tpl->fetch('users/sidebar_user_menu.html'));
 } else {
 	if (defined('IN_ADM'))
 		$tpl->assign('uri', uri('acp/users/login'));

@@ -25,7 +25,6 @@ if ($c_gb > 0) {
 
 	for ($i = 0; $i < $c_gb; $i++) {
 		$gb[$i]['date'] = date_aligned(1, $gb[$i]['date']);
-		$gb[$i]['name'] = $gb[$i]['name'];
 		$gb[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $gb[$i]['message']);
 		if ($emoticons) {
 			$gb[$i]['message'] = emoticons_replace($gb[$i]['message']);

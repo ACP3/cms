@@ -79,7 +79,6 @@ function comments_list($module = 0, $entry_id = 0)
 	if ($c_comments > 0) {
 		$tpl->assign('pagination', pagination($db->select('id', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 0, 0, 0, 1)));
 		for ($i = 0; $i < $c_comments; $i++) {
-			$comments[$i]['name'] = $comments[$i]['name'];
 			$comments[$i]['date'] = date_aligned(1, $comments[$i]['date']);
 			$comments[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $comments[$i]['message']);
 			if ($emoticons) {

@@ -1,12 +1,10 @@
-{if $install_dir_exists}
-<div class="error">
-	{lang values="home|installation_dir_exists"}
+<div id="adm-list">
+	<a href="{uri args="users/edit_profile"}" title="{lang values="users|edit_profile}"><img src="{$root_dir}images/crystal/32/edit_profile.png" alt="{lang values="users|edit_profile}" /></a>
 </div>
 <br />
-{/if}
 <form action="{$request_uri}" method="post" accept-charset="UTF-8">
 	<fieldset style="width:70%">
-		<legend>{lang values="home|draft"}</legend>
+		<legend>{lang values="users|drafts"}</legend>
 		{fckeditor InstanceName="draft" Value="$draft" Width="100%" Height="250px"}
 	</fieldset>
 	<div style="margin-top:20px">

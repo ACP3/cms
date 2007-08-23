@@ -21,7 +21,6 @@ $tpl->assign('requirements', $requirements);
 $defaults = array(
 	'includes/config.php',
 	'modules/contact/config.php',
-	'modules/home/draft.txt',
 	'modules/newsletter/config.php',
 	'modules/access/module.xml',
 	'modules/categories/module.xml',

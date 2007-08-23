@@ -1,25 +1,9 @@
-{literal}
-<script type="text/javascript">
-$(document).ready(function() {
-	$('#nav_mods_link').toggle(function() {
-		$('#nav_mods').slideDown('slow');
-		return false;
-	},function() {
-		$('ul#nav_mods').slideUp('slow');
-	});
-	$('#nav_system_link').toggle(function() {
-		$('#nav_system').slideDown('slow');
-		return false;
-	},function() {
-		$('#nav_system').slideUp('slow');
-	});
-});</script>
-{/literal}
-<h4>{lang values="users|control_center"}</h4>
-<ul class="admin">
-{if $access_home}
-	<li><a href="{uri args="acp/home"}">{lang values="home|home"}</a></li>
+{if $nav_mods || $access_system}
+<script type="text/javascript" src="{$design_path}users/script.js"></script>
 {/if}
+<h4>{lang values="users|user_menu"}</h4>
+<ul class="admin">
+	<li><a href="{uri args="users/home"}">{lang values="users|home"}</a></li>
 {if $nav_mods}
 	<li>
 		<a href="#" id="nav_mods_link">{lang values="common|modules"}</a>
