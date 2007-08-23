@@ -76,7 +76,9 @@ class breadcrumb
 					$tpl->assign('end', $this->end);
 				// Falls keine zusätzlichen Brotkrumen angegeben sind, jeweiligen Seitennamen der Moduldatei ausgeben
 				} else {
-					if ($modules->page == 'list' || $modules->page == 'entry') {
+					if (!empty($this->end)) {
+						$tpl->assign('end', $this->end);
+					} elseif ($modules->page == 'list' || $modules->page == 'entry') {
 						$tpl->assign('end', lang($modules->mod, $modules->mod));
 					} else {
 						$tpl->assign('end', lang($modules->mod, $modules->page));

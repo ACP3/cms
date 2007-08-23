@@ -40,6 +40,7 @@ switch ($modules->action) {
 				'pwd' => sha1($salt . sha1($form['pwd'])) . ':' . $salt,
 				'access' => $form['access'],
 				'mail' => $form['mail'],
+				'draft' => '',
 			);
 
 			$bool = $db->insert('users', $insert_values);
@@ -185,6 +186,17 @@ switch ($modules->action) {
 				$bool = $db->update('users', $update_values, 'id = \'' . $user[0]['id'] . '\'');
 			}
 			$content = combo_box($mail_sent && isset($bool) && $bool ? lang('users', 'forgot_pwd_success') : lang('users', 'forgot_pwd_error'), ROOT_DIR);
+		}
+		break;
+	case 'home':
+		if (!defined('IS_USER') || !preg_match('/\d/', $_SESSION['acp3_id'])) {
+			redirect('errors/403');
+		} else {
+			$form = $_POST['form'];
+
+			$bool = $db->update('users', array('draft' => $db->escape($form['draft'], 2)), 'id = \'' . $_SESSION['acp3_id'] . '\'');
+
+			$content = combo_box($bool ? lang('users', 'draft_success') : lang('users', 'draft_error'), uri('users/home'));
 		}
 		break;
 	case 'register':

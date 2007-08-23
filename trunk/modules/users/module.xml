@@ -40,12 +40,24 @@
 				<level>1</level>
 			</action>
 			<action>
+				<name>home</name>
+				<level>1</level>
+			</action>
+			<action>
 				<name>register</name>
 				<level>1</level>
 			</action>
 		</item>
 		<item>
 			<file>forgot_pwd</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>home</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>list</file>
 			<level>1</level>
 		</item>
 		<item>
