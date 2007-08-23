@@ -5,10 +5,7 @@ if (!defined('IN_INSTALL'))
 if (isset($_POST['submit'])) {
 	include 'modules/install/entry.php';
 }
-if (!isset($_POST['submit']) || isset($error_msg)) {
-	if (isset($error_msg)) {
-		$tpl->assign('error_msg', $error_msg);
-	}
+if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Einträge pro Seite
 	$i = 0;
 	for ($j = 10; $j <= 50; $j = $j + 10) {

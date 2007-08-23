@@ -14,9 +14,7 @@ if (!empty($modules->id) && $db->select('id', 'users', 'id = \'' . $modules->id 
 	if (isset($_POST['submit'])) {
 		include 'modules/users/entry.php';
 	}
-	if (!isset($_POST['submit']) || isset($error_msg)) {
-		$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
-
+	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$user = $db->select('name, mail, access', 'users', 'id = \'' . $modules->id . '\'');
 
 		$access = $db->select('id, name', 'access', 0, 'name ASC');

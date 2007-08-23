@@ -13,9 +13,7 @@ if (!defined('IN_ADM'))
 if (isset($_POST['submit'])) {
 	include 'modules/users/entry.php';
 }
-if (!isset($_POST['submit']) || isset($error_msg)) {
-	$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
-
+if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$access = $db->select('id, name', 'access', 0, 'name ASC');
 	$c_access = count($access);
 

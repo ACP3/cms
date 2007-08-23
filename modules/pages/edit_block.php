@@ -18,9 +18,7 @@ if (!empty($modules->id) && $db->select('id', 'pages_blocks', 'id = \'' . $modul
 	if (isset($_POST['submit'])) {
 		include 'modules/pages/entry.php';
 	}
-	if (!isset($_POST['submit']) || isset($error_msg)) {
-		$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
-
+	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$block = $db->select('index_name, title', 'pages_blocks', 'id = \'' . $modules->id . '\'');
 
 		$tpl->assign('form', isset($form) ? $form : $block[0]);

@@ -19,9 +19,7 @@ if (!empty($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->i
 	if (isset($_POST['entries']) || isset($modules->gen['entries']) || isset($_POST['submit'])) {
 		include 'modules/gallery/entry.php';
 	}
-	if (!isset($_POST['entries']) && !isset($_POST['submit']) || isset($error_msg)) {
-		$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
-
+	if (!isset($_POST['entries']) && !isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$tpl->assign('gallery_id', $modules->id);
 
 		$start_date = explode('.', date('j.n.Y.G.i', $gallery[0]['start']));

@@ -29,7 +29,7 @@ switch ($modules->action) {
 			$errors[] = lang('emoticons', 'select_picture');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			$result = move_file($file['tmp_name'], $file['name'], 'emoticons');
 
@@ -63,7 +63,7 @@ switch ($modules->action) {
 			$errors[] = lang('emoticons', 'select_picture');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			$new_file_sql = null;
 			if (isset($file)) {

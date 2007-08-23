@@ -37,7 +37,7 @@ switch ($modules->action) {
 			$errors[] = lang('files', 'select_category');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			if (is_array($file)) {
 				$result = move_file($file['tmp_name'], $file['name'], 'files');
@@ -90,7 +90,7 @@ switch ($modules->action) {
 			$errors[] = lang('files', 'select_category');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			$new_file_sql = null;
 			// Falls neue Datei angegeben wurde, Änderungen durchführen

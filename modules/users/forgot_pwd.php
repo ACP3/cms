@@ -8,9 +8,7 @@ if (defined('IS_USER')) {
 	if (isset($_POST['submit'])) {
 		include 'modules/users/entry.php';
 	}
-	if (!isset($_POST['submit']) || isset($error_msg)) {
-		$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
-
+	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$tpl->assign('form', isset($form) ? $form : '');
 
 		$content = $tpl->fetch('users/forgot_pwd.html');

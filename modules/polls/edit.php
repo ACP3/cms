@@ -14,9 +14,7 @@ if (!empty($modules->id) && $db->select('id', 'poll_question', 'id = \'' . $modu
 	if (isset($_POST['submit'])) {
 		include 'modules/polls/entry.php';
 	}
-	if (!isset($_POST['submit']) || isset($error_msg)) {
-		$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
-
+	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$poll = $db->select('start, end, question', 'poll_question', 'id = \'' . $modules->id . '\'');
 
 		$start_date = explode('.', date('j.n.Y.G.i', $poll[0]['start']));

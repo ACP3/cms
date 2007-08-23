@@ -14,9 +14,7 @@ if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id 
 	if (isset($_POST['submit'])) {
 		include 'modules/files/entry.php';
 	}
-	if (!isset($_POST['submit']) || isset($error_msg)) {
-		$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
-
+	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$dl = $db->select('start, end, cat, file, size, link_title, text', 'files', 'id = \'' . $modules->id . '\'');
 		$dl[0]['text'] = $db->escape($dl[0]['text'], 3);
 		// Datum

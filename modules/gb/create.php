@@ -16,9 +16,7 @@ $breadcrumb->assign(lang('gb', 'create'));
 if (isset($_POST['submit'])) {
 	include 'modules/gb/entry.php';
 }
-if (!isset($_POST['submit']) || isset($error_msg)) {
-	$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
-
+if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Emoticons einbinden
 	if ($modules->check('emoticons', 'functions')) {
 		include_once 'modules/emoticons/functions.php';

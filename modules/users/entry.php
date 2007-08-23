@@ -30,7 +30,7 @@ switch ($modules->action) {
 			$errors[] = lang('users', 'type_in_pwd');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			$salt = salt(12);
 
@@ -64,7 +64,7 @@ switch ($modules->action) {
 			$errors[] = lang('users', 'type_in_pwd');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			$new_pwd_sql = null;
 			// Neues Passwort
@@ -160,7 +160,7 @@ switch ($modules->action) {
 			$errors[] = lang('users', 'user_not_exists');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			// Neues Passwort erstellen und neuen Zufallsschlüssel erstellen
 			$new_password = salt(8);
@@ -202,7 +202,7 @@ switch ($modules->action) {
 			$errors[] = lang('users', 'type_in_pwd');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			$salt = salt(12);
 

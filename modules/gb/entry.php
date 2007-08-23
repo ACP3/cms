@@ -34,7 +34,7 @@ switch ($modules->action) {
 			$errors[] = lang('common', 'message_to_short');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			$insert_values = array(
 				'id' => '',
@@ -60,7 +60,7 @@ switch ($modules->action) {
 			$errors[] = lang('common', 'message_to_short');
 
 		if (isset($errors)) {
-			$error_msg = combo_box($errors);
+			combo_box($errors);
 		} else {
 			$update_values = array(
 				'name' => $db->escape($form['name']),
