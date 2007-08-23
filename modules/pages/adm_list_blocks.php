@@ -13,6 +13,9 @@ if (!defined('IN_ADM'))
 if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
 	include 'modules/pages/entry.php';
 } else {
+	$breadcrumb->assign(lang('pages', 'pages'), uri('acp/pages'));
+	$breadcrumb->assign(lang('pages', 'adm_list_blocks'));
+
 	$blocks = $db->select('id, index_name, title', 'pages_blocks', 0, 'title ASC, index_name ASC', POS, CONFIG_ENTRIES);
 	$c_blocks = count($blocks);
 

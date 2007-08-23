@@ -24,11 +24,15 @@ if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
 			$tpl->assign('pagination', pagination($db->query('SELECT module FROM ' . CONFIG_DB_PRE . 'comments GROUP BY module', 1)));
 			for ($i = 0; $i < $c_comments; $i++) {
 				$comments[$i]['name'] = lang($comments[$i]['module'], $comments[$i]['module']);
-				$comments[$i]['count'] = $db->select('id', 'comments', "module='" . $comments[$i]['module'] . "'", 0, 0, 0, 1);
+				$comments[$i]['count'] = $db->select('id', 'comments', 'module = \'' . $comments[$i]['module'] . '\'', 0, 0, 0, 1);
 			}
 			$tpl->assign('comments', $comments);
 		}
 	} elseif (!empty($module) && $db->select('id', 'comments', 'module = \'' . $module . '\'', 0, 0, 0, 1) > '0') {
+		//Brotkrümelspur
+		$breadcrumb->assign(lang('comments', 'comments'), uri('acp/comments'));
+		$breadcrumb->assign(lang($module, $module));
+
 		$comments = $db->select('id, ip, date, name, message', 'comments', 'module = \'' . $module . '\'', 'date DESC', POS, CONFIG_ENTRIES);
 		$c_comments = count($comments);
 		$emoticons = false;
