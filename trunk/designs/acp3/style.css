@@ -187,7 +187,7 @@ a.form {
 	line-height: 28px;
 }
 /* Layout */
-#head #page_title {
+#head #page-title {
 	padding-left: 15px;
 	font-size: 2.4em;
 	line-height: 30px;
@@ -428,7 +428,7 @@ a.form {
 	color: #f00;
 	text-decoration: underline;
 }
-a.download_file {
+a.download-file {
 	padding-left: 34px;
 	background: url('../../images/crystal/32/create_dl.png') no-repeat;
 	font-size: 1.1em;
@@ -437,7 +437,7 @@ a.download_file {
 	line-height: 34px;
 	display: block;
 }
-a.download_file:hover {
+a.download-file:hover {
 	color: #f00;
 }
 /* Emoticons */
@@ -445,7 +445,7 @@ a.download_file:hover {
 	margin: 2px 0;
 }
 /* Fotogalerien */
-#gallery_bottom {
+#gallery-bottom {
 	height: 120px;
 	line-height: 120px;
 	text-align: center;
