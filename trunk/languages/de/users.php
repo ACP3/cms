@@ -9,6 +9,7 @@
 
 define('users_admin_user_undeletable', 'Der Administrator kann nicht gelöscht werden.');
 define('users_confirm_delete', 'Sollen die ausgewählten Benutzer wirklich gelöscht werden?');
+define('users_control_center', 'Kontrollzentrum');
 define('users_create', 'Neuen Benutzer erstellen');
 define('users_create_error', 'Beim Erstellen des Benutzers ist ein Fehler aufgetreten.');
 define('users_create_success', 'Der Benutzer wurde erfolgreich erstellt.');
