@@ -11,6 +11,11 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (!empty($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+	$gallery = $db->select('start, end, name', 'gallery', 'id = \'' . $modules->id . '\'');
+
+	$breadcrumb->assign(lang('gallery', 'gallery'), uri('acp/gallery'));
+	$breadcrumb->assign($gallery[0]['name']);
+
 	if (isset($_POST['entries']) || isset($modules->gen['entries']) || isset($_POST['submit'])) {
 		include 'modules/gallery/entry.php';
 	}
@@ -18,8 +23,6 @@ if (!empty($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->i
 		$tpl->assign('error_msg', isset($error_msg) ? $error_msg : '');
 
 		$tpl->assign('gallery_id', $modules->id);
-
-		$gallery = $db->select('start, end, name', 'gallery', 'id = \'' . $modules->id . '\'');
 
 		$start_date = explode('.', date('j.n.Y.G.i', $gallery[0]['start']));
 		$end_date = explode('.', date('j.n.Y.G.i', $gallery[0]['end']));
