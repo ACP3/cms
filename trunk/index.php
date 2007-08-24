@@ -22,7 +22,7 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 } else {
 	$auth = new auth;
 
-	if ($auth->is_guest() && defined('IN_ADM') && $modules->mod != 'users' && $modules->page != 'login') {
+	if (!$auth->is_user() && defined('IN_ADM') && $modules->mod != 'users' && $modules->page != 'login') {
 		redirect('acp/users/login');
 	}
 
