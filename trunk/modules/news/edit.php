@@ -15,7 +15,7 @@ if (!empty($modules->id) && $db->select('id', 'news', 'id = \'' . $modules->id .
 		include 'modules/news/entry.php';
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$news = $db->select('start, end, headline, text, cat, uri, target, link_title', 'news', 'id = \'' . $modules->id . '\'');
+		$news = $db->select('start, end, headline, text, category_id, uri, target, link_title', 'news', 'id = \'' . $modules->id . '\'');
 		$news[0]['text'] = $db->escape($news[0]['text'], 3);
 		// Datum
 		$start_date = explode('.', date('j.n.Y.G.i', $news[0]['start']));
@@ -42,7 +42,7 @@ if (!empty($modules->id) && $db->select('id', 'news', 'id = \'' . $modules->id .
 
 		if ($c_categories > 0) {
 			for ($i = 0; $i < $c_categories; $i++) {
-				$categories[$i]['selected'] = select_entry('cat', $categories[$i]['id'], $news[0]['cat']);
+				$categories[$i]['selected'] = select_entry('cat', $categories[$i]['id'], $news[0]['category_id']);
 				$categories[$i]['name'] = $categories[$i]['name'];
 			}
 			$tpl->assign('categories', $categories);

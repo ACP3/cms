@@ -21,13 +21,13 @@ class modules
 	public $gen = array();
 
 	/**
-	 * Zerlegt u.a. der übergebenen Parameter in der URL in ihre Bestandteile
+	 * Zerlegt u.a. die übergebenen Parameter in der URL in ihre Bestandteile
 	 *
 	 * @return modules
 	 */
 	function __construct()
 	{
-		if (!empty($_GET['stm']) && eregi('^(acp/)', $_GET['stm'])) {
+		if (!empty($_GET['stm']) && preg_match('/^(acp\/)/', $_GET['stm'])) {
 			/**
 			 * Definieren, dass man sich im Administrationsbereich befindet
 			 */
@@ -41,33 +41,37 @@ class modules
 			define('IN_ACP3', true);
 		}
 		$stm = !empty($_GET['stm']) ? explode('/', $_GET['stm']) : null;
-		$c_stm = count($stm);
 		$def_mod = defined('IN_ADM') ? 'home' : 'news';
 		$def_page = defined('IN_ADM') ? 'adm_list' : 'list';
 
 		$this->mod = !empty($stm[0]) ? $stm[0] : $def_mod;
 		$this->page = !empty($stm[1]) ? $stm[1] : $def_page;
 
-		// Modul und Seite aus Array entfernen und restlichen Einträge zählen
-		unset($stm[0]);
-		unset($stm[1]);
-
 		$this->id = '0';
 		$this->cat = !empty($_POST['cat']) ? $_POST['cat'] : '0';
 		$this->action = !empty($_POST['action']) ? $_POST['action'] : $this->page;
 
-		if ($c_stm > 0) {
+		if (!empty($stm[2])) {
+			$c_stm = count($stm);
+
+			// Regex
+			$pos_regex = '/^(pos_(\d+))$/';
+			$id_regex = '/^(id_(\d+))$/';
+			$cat_regex = '/^(cat_(\d+))$/';
+			$action_regex = '/^(action_(\w+))$/';
+			$gen_regex = '/^(([a-z0-9-]+)_(\w+))$/';
+
 			for ($i = 2; $i < $c_stm; $i++) {
 				if (!empty($stm[$i])) {
-					if (ereg('^(pos_[0-9]+)$', $stm[$i]) && !defined('POS'))
-						define('POS', str_replace('pos_', '', $stm[$i]));
-					if (ereg('^(id_[0-9]+)$', $stm[$i])) {
-						$this->id = str_replace('id_', '', $stm[$i]);
-					} elseif (ereg('^(cat_[0-9]+)$', $stm[$i])) {
-						$this->cat = str_replace('cat_', '', $stm[$i]);
-					} elseif (ereg('^(action_[_a-z0-9-]+)$', $stm[$i])) {
-						$this->action = str_replace('action_', '', $stm[$i]);
-					} elseif (ereg('^([_a-z0-9-]+)_(.+)$', $stm[$i])) {
+					if (!defined('POS') && preg_match($pos_regex, $stm[$i]))
+						define('POS', substr($stm[$i], 4));
+					if (preg_match($id_regex, $stm[$i])) {
+						$this->id = substr($stm[$i], 3);
+					} elseif (preg_match($cat_regex, $stm[$i])) {
+						$this->cat = substr($stm[$i], 4);
+					} elseif (preg_match($action_regex, $stm[$i])) {
+						$this->action = substr($stm[$i], 7);
+					} elseif (preg_match($gen_regex, $stm[$i])) {
 						$pos = strpos($stm[$i], '_');
 						$this->gen[substr($stm[$i], 0, $pos)] = substr($stm[$i], $pos + 1, strlen($stm[$i]));
 					}

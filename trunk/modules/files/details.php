@@ -14,7 +14,7 @@ $date = ' AND (start = end AND start <= \'' . date_aligned(2, time()) . '\' OR s
 
 if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id . '\'' . $date, 0, 0, 0, 1) == '1') {
 	if (!$cache->check('files_details_id_' . $modules->id)) {
-		$cache->create('files_details_id_' . $modules->id, $db->select('f.id, f.start, f.file, f.size, f.link_title, f.text, c.id AS cat_id, c.name AS cat_name', 'files AS f, ' . CONFIG_DB_PRE . 'categories AS c', 'f.id = \'' . $modules->id . '\' AND f.cat = c.id'));
+		$cache->create('files_details_id_' . $modules->id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, c.name AS category_name', 'files AS f, ' . CONFIG_DB_PRE . 'categories AS c', 'f.id = \'' . $modules->id . '\' AND f.category_id = c.id'));
 	}
 	$file = $cache->output('files_details_id_' . $modules->id);
 
@@ -32,7 +32,7 @@ if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id 
 	} else {
 		// Brotkrümelspur
 		$breadcrumb->assign(lang('files', 'files'), uri('files'));
-		$breadcrumb->assign($file[0]['cat_name'], uri('files/files/cat_' . $file[0]['cat_id']));
+		$breadcrumb->assign($file[0]['category_name'], uri('files/files/cat_' . $file[0]['category_id']));
 		$breadcrumb->assign($file[0]['link_title']);
 
 		$file[0]['size'] = file_exists('uploads/files/' . $file[0]['file']) ? $file[0]['size'] . ' MB' : lang('files', 'unknown_filesize');

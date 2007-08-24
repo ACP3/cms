@@ -138,6 +138,10 @@ input.checkbox {
 	background: none;
 	display: inline;
 }
+fieldset .readonly, fieldset .readonly:hover, fieldset .readonly:focus {
+	background: #eee;
+	color: #888;
+}
 option {
 	padding: 0 5px 0 3px;
 }

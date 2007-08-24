@@ -19,7 +19,7 @@ if ($c_galleries > 0) {
 	for ($i = 0; $i < $c_galleries; $i++) {
 		$galleries[$i]['date'] = date_aligned(1, $galleries[$i]['start']);
 		$galleries[$i]['name'] = $galleries[$i]['name'];
-		$pictures = $db->select('DISTINCT id', 'galpics', 'gallery = \'' . $galleries[$i]['id'] . '\'', 0, 0, 0, 1);
+		$pictures = $db->select('DISTINCT id', 'galpics', 'gallery_id = \'' . $galleries[$i]['id'] . '\'', 0, 0, 0, 1);
 		$galleries[$i]['pics'] = $pictures == '1' ? '1 ' . lang('gallery', 'picture') : $pictures . ' ' . lang('gallery', 'pictures');
 	}
 	$tpl->assign('galleries', $galleries);

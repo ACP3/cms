@@ -2,7 +2,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (!defined('IS_USER') || !preg_match('/\d/', $_SESSION['acp3_id'])) {
+if (!$auth->is_user() || !preg_match('/\d/', $_SESSION['acp3_id'])) {
 	redirect('errors/403');
 } else {
 	$breadcrumb->assign(lang('users', 'users'), uri('users'));

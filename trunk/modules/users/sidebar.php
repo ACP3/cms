@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3') && !defined('IN_ADM'))
 	exit;
 
-if (defined('IS_USER')) {
+if ($auth->is_user()) {
 	// Module einholen
 	$mod_list = $modules->modulesList();
 	$nav_mods = array();

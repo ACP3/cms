@@ -54,7 +54,7 @@ switch ($modules->action) {
 				'id' => '',
 				'start' => $start_date,
 				'end' => $end_date,
-				'cat' => $form['cat'],
+				'category_id' => $form['cat'],
 				'file' => $new_file,
 				'size' => $filesize,
 				'link_title' => $db->escape($form['link_title']),
@@ -115,7 +115,7 @@ switch ($modules->action) {
 			$update_values = array(
 				'start' => $start_date,
 				'end' => $end_date,
-				'cat' => $form['cat'],
+				'category_id' => $form['cat'],
 				'link_title' => $db->escape($form['link_title']),
 				'text' => $db->escape($form['text'], 2),
 			);
@@ -125,7 +125,7 @@ switch ($modules->action) {
 
 			$bool = $db->update('files', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$cache->create('files_details_id_' . $modules->id, $db->select('f.id, f.start, f.end, f.file, f.size, f.link_title, f.text, c.id AS cat_id, c.name AS cat_name', 'files AS f, ' . CONFIG_DB_PRE . 'categories AS c', 'f.id = \'' . $modules->id . '\' AND f.cat = c.id'));
+			$cache->create('files_details_id_' . $modules->id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, c.name AS category_name', 'files AS f, ' . CONFIG_DB_PRE . 'categories AS c', 'f.id = \'' . $modules->id . '\' AND f.cat = c.id'));
 
 			$content = combo_box($bool ? lang('files', 'edit_success') : lang('files', 'edit_error'), uri('acp/files'));
 		}
