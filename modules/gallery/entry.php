@@ -61,7 +61,7 @@ switch ($modules->action) {
 
 			$bool = $db->update('gallery', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$cache->create('gallery_pics_id_' . $modules->id, $db->query('SELECT g.name, p.id FROM ' . CONFIG_DB_PRE . 'gallery g LEFT JOIN ' . CONFIG_DB_PRE . 'galpics p ON g.id=\'' . $modules->id . '\' AND p.gallery=\'' . $modules->id . '\' ORDER BY p.pic ASC, p.id ASC'));
+			$cache->create('gallery_pics_id_' . $modules->id, $db->query('SELECT g.name, p.id FROM ' . CONFIG_DB_PRE . 'gallery g LEFT JOIN ' . CONFIG_DB_PRE . 'galpics p ON g.id = \'' . $modules->id . '\' AND p.gallery_id = \'' . $modules->id . '\' ORDER BY p.pic ASC, p.id ASC'));
 
 			$content = combo_box($bool ? lang('gallery', 'edit_success') : lang('gallery', 'edit_error'), uri('acp/gallery'));
 		}
@@ -125,7 +125,7 @@ switch ($modules->action) {
 
 			$bool = $db->insert('galpics', $insert_values);
 
-			$cache->create('gallery_pics_id_' . $form['gallery'], $db->query('SELECT g.name, p.id FROM ' . CONFIG_DB_PRE . 'gallery g LEFT JOIN ' . CONFIG_DB_PRE . 'galpics p ON g.id=\'' . $modules->id . '\' AND p.gallery=\'' . $modules->id . '\' ORDER BY p.pic ASC, p.id ASC'));
+			$cache->create('gallery_pics_id_' . $form['gallery'], $db->query('SELECT g.name, p.id FROM ' . CONFIG_DB_PRE . 'gallery g LEFT JOIN ' . CONFIG_DB_PRE . 'galpics p ON g.id = \'' . $modules->id . '\' AND p.gallery_id = \'' . $modules->id . '\' ORDER BY p.pic ASC, p.id ASC'));
 
 			$content = combo_box($bool ? lang('gallery', 'add_picture_success') : lang('gallery', 'add_picture_error'), uri('acp/gallery/add_picture/id_' . $form['gallery'] . '/pic_' . ($pic + 1)));
 		}
@@ -165,7 +165,7 @@ switch ($modules->action) {
 
 			$bool = $db->update('galpics', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$cache->create('gallery_pics_id_' . $form['gallery'], $db->query('SELECT g.name, p.id FROM ' . CONFIG_DB_PRE . 'gallery g LEFT JOIN ' . CONFIG_DB_PRE . 'galpics p ON g.id=\'' . $modules->id . '\' AND p.gallery=\'' . $modules->id . '\' ORDER BY p.pic ASC, p.id ASC'));
+			$cache->create('gallery_pics_id_' . $form['gallery'], $db->query('SELECT g.name, p.id FROM ' . CONFIG_DB_PRE . 'gallery g LEFT JOIN ' . CONFIG_DB_PRE . 'galpics p ON g.id = \'' . $modules->id . '\' AND p.gallery_id = \'' . $modules->id . '\' ORDER BY p.pic ASC, p.id ASC'));
 
 			$content = combo_box($bool ? lang('gallery', 'edit_picture_success') : lang('gallery', 'edit_picture_error'), uri('acp/gallery'));
 		}

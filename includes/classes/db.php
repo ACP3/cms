@@ -147,7 +147,8 @@ class db
 					return $result;
 				}
 		}
-		return $this->error();
+		$this->error();
+		return false;
 	}
 	/**
 	 * Führt den DELETE Befehl aus

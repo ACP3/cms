@@ -20,6 +20,8 @@ define('users_drafts', 'Drafts');
 define('users_edit', 'Edit user');
 define('users_edit_error', 'While editing the user an error has occured.');
 define('users_edit_profile', 'Edit profile');
+define('users_edit_profile_error', 'While editing you user profile an error has occured.');
+define('users_edit_profile_success', 'Your user profile has been edited successfully.');
 define('users_edit_success', 'The user has been edited successfully.');
 define('users_forgot_pwd', 'Forgot password?');
 define('users_forgot_pwd_error', 'While sending the E-mail with your new password an error has occured.');

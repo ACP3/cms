@@ -20,6 +20,8 @@ define('users_drafts', 'Entwürfe');
 define('users_edit', 'Benutzer bearbeiten');
 define('users_edit_error', 'Beim Bearbeiten des Benutzers ist ein Fehler aufgetreten.');
 define('users_edit_profile', 'Profil bearbeiten');
+define('users_edit_profile_error', 'Beim Bearbeiten Ihres Benutzerprofils ist ein Fehler aufgetreten.');
+define('users_edit_profile_success', 'Ihr Benutzerprofil wurde erfolgreich bearbeitet.');
 define('users_edit_success', 'Der Benutzer wurde erfolgreich bearbeitet.');
 define('users_forgot_pwd', 'Passwort vergessen?');
 define('users_forgot_pwd_error', 'Beim Versenden der E-Mail-Adresse mit Ihrem neuen Passwort ist ein Fehler aufgetreten.');

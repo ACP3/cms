@@ -2,7 +2,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (defined('IS_USER')) {
+if ($auth->is_user()) {
 	redirect(0, ROOT_DIR);
 } else {
 	if (isset($_POST['submit'])) {

@@ -22,7 +22,7 @@ if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
 			$galleries[$i]['start'] = date_aligned(1, $galleries[$i]['start']);
 			$galleries[$i]['end'] = date_aligned(1, $galleries[$i]['end']);
 			$galleries[$i]['name'] = $galleries[$i]['name'];
-			$galleries[$i]['pictures'] = $db->select('DISTINCT id', 'galpics', 'gallery = \'' . $galleries[$i]['id'] . '\'', 0, 0, 0, 1);
+			$galleries[$i]['pictures'] = $db->select('DISTINCT id', 'galpics', 'gallery_id = \'' . $galleries[$i]['id'] . '\'', 0, 0, 0, 1);
 		}
 		$tpl->assign('galleries', $galleries);
 	}

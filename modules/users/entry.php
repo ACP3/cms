@@ -148,6 +148,51 @@ switch ($modules->action) {
 			redirect('errors/404');
 		}
 		break;
+	case 'edit_profile':
+		if (!$auth->is_user() || !preg_match('/\d/', $_SESSION['acp3_id'])) {
+			redirect('errors/403');
+		} else {
+			$form = $_POST['form'];
+
+			if (empty($form['name']))
+				$errors[] = lang('common', 'name_to_short');
+			if (!empty($form['name']) && $db->select('id', 'users', 'id != \'' . $_SESSION['acp3_id'] . '\' AND name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
+				$errors[] = lang('users', 'user_already_exists');
+			if (!$validate->email($form['mail']))
+				$errors[] = lang('common', 'wrong_email_format');
+			if ($validate->email($form['mail']) && $db->select('id', 'users', 'id != \'' . $_SESSION['acp3_id'] . '\' AND mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
+				$errors[] = lang('common', 'user_email_already_exists');
+			if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
+				$errors[] = lang('users', 'type_in_pwd');
+
+			if (isset($errors)) {
+				combo_box($errors);
+			} else {
+				$new_pwd_sql = null;
+				// Neues Passwort
+				if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat'])) {
+					$salt = salt(12);
+					$new_pwd = sha1($salt . sha1($form['new_pwd']));
+					$new_pwd_sql = array('pwd' => $new_pwd . ':' . $salt);
+				}
+
+				$update_values = array(
+					'name' => $db->escape($form['name']),
+					'mail' => $form['mail'],
+				);
+				if (is_array($new_pwd_sql)) {
+					$update_values = array_merge($update_values, $new_pwd_sql);
+				}
+
+				$bool = $db->update('users', $update_values, 'id = \'' . $_SESSION['acp3_id'] . '\'');
+
+				$cookie_arr = explode('|', $_COOKIE['ACP3_AUTH']);
+				setcookie('ACP3_AUTH', $form['name'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]), time() + 3600, ROOT_DIR);
+
+				$content = combo_box($bool ? lang('users', 'edit_profile_success') : lang('users', 'edit_profile_error'), uri('users/home'));
+			}
+		}
+		break;
 	case 'forgot_pwd':
 		$form = $_POST['form'];
 
@@ -189,7 +234,7 @@ switch ($modules->action) {
 		}
 		break;
 	case 'home':
-		if (!defined('IS_USER') || !preg_match('/\d/', $_SESSION['acp3_id'])) {
+		if (!$auth->is_user() || !preg_match('/\d/', $_SESSION['acp3_id'])) {
 			redirect('errors/403');
 		} else {
 			$form = $_POST['form'];

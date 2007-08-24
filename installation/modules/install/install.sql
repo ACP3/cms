@@ -6,15 +6,15 @@ CREATE TABLE `{pre}comments` ( `id` int(11) NOT NULL auto_increment, `ip` varcha
 
 CREATE TABLE `{pre}emoticons` ( `id` int(11) NOT NULL auto_increment, `code` varchar(10) NOT NULL, `description` varchar(15) NOT NULL, `img` varchar(40) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 
-CREATE TABLE `{pre}files` ( `id` int(11) NOT NULL auto_increment, `start` varchar(14) NOT NULL, `end` varchar(14) NOT NULL, `cat` int(11) NOT NULL, `file` varchar(120) NOT NULL, `size` float NOT NULL, `link_title` varchar(120) NOT NULL, `text` text NOT NULL, PRIMARY KEY (`id`), FULLTEXT KEY `file` (`link_title`,`text`)) {engine} ;
+CREATE TABLE `{pre}files` ( `id` int(11) NOT NULL auto_increment, `start` varchar(14) NOT NULL, `end` varchar(14) NOT NULL, `category_id` int(11) NOT NULL, `file` varchar(120) NOT NULL, `size` float NOT NULL, `link_title` varchar(120) NOT NULL, `text` text NOT NULL, PRIMARY KEY (`id`), FULLTEXT KEY `file` (`link_title`,`text`)) {engine} ;
 
 CREATE TABLE `{pre}gallery` ( `id` int(11) NOT NULL auto_increment, `start` varchar(14) NOT NULL, `end` varchar(14) NOT NULL, `name` varchar(120) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 
-CREATE TABLE `{pre}galpics` ( `id` int(11) NOT NULL auto_increment, `pic` int(11) NOT NULL, `gallery` int(11) NOT NULL, `file` varchar(120) NOT NULL, `description` text NOT NULL, PRIMARY KEY (`id`)) {engine} ;
+CREATE TABLE `{pre}galpics` ( `id` int(11) NOT NULL auto_increment, `pic` int(11) NOT NULL, `gallery_id` int(11) NOT NULL, `file` varchar(120) NOT NULL, `description` text NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 
 CREATE TABLE `{pre}gb` ( `id` int(11) NOT NULL auto_increment, `ip` varchar(40) NOT NULL, `date` varchar(14) NOT NULL, `name` varchar(20) NOT NULL, `message` text NOT NULL, `website` varchar(120) NOT NULL, `mail` varchar(120) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 
-CREATE TABLE `{pre}news` ( `id` int(11) NOT NULL auto_increment, `start` varchar(14) NOT NULL, `end` varchar(14) NOT NULL, `headline` varchar(120) NOT NULL, `text` text NOT NULL, `cat` int(11) NOT NULL, `uri` varchar(120) NOT NULL, `target` tinyint(1) NOT NULL, `link_title` varchar(120) NOT NULL, PRIMARY KEY (`id`), FULLTEXT KEY `headline` (`headline`,`text`)) {engine} ;
+CREATE TABLE `{pre}news` ( `id` int(11) NOT NULL auto_increment, `start` varchar(14) NOT NULL, `end` varchar(14) NOT NULL, `headline` varchar(120) NOT NULL, `text` text NOT NULL, `category_id` int(11) NOT NULL, `uri` varchar(120) NOT NULL, `target` tinyint(1) NOT NULL, `link_title` varchar(120) NOT NULL, PRIMARY KEY (`id`), FULLTEXT KEY `headline` (`headline`,`text`)) {engine} ;
 
 CREATE TABLE `{pre}nl_accounts` ( `id` int(11) NOT NULL auto_increment, `mail` varchar(120) NOT NULL, `hash` varchar(32) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 
