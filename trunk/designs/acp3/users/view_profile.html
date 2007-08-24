@@ -2,10 +2,18 @@
 <fieldset>
 	<legend>{lang values="common|general_statements"}</legend>
 	<dl class="imprint" style="width:100%;padding:0">
-		<dt><strong>{lang values="common|name"}</strong></dt>
-		<dd>{$user.name}</dd>
+		<dt><strong>{lang values="users|nickname"}</strong></dt>
+		<dd>{$user.nickname}</dd>
+{if $user.realname}
+		<dt><strong>{lang values="users|realname"}</strong></dt>
+		<dd>{$user.realname}</dd>
+{/if}
 		<dt><strong>{lang values="common|email"}</strong></dt>
 		<dd>{$user.mail}</dd>
+{if $user.website}
+		<dt><strong>{lang values="common|website"}</strong></dt>
+		<dd>{$user.website}</dd>
+{/if}
 	</dl>
 </fieldset>
 {else}

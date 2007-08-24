@@ -21,7 +21,9 @@ if (!$auth->is_user() || !preg_match('/\d/', $_SESSION['acp3_id'])) {
 		include 'modules/users/entry.php';
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$user = $db->select('name, mail', 'users', 'id = \'' . $_SESSION['acp3_id'] . '\'');
+		$user = $db->select('nickname, realname, mail, website', 'users', 'id = \'' . $_SESSION['acp3_id'] . '\'');
+
+		$user[0]['website'] = $db->escape($user[0]['website'], 3);
 
 		$tpl->assign('form', isset($form) ? $form : $user[0]);
 
