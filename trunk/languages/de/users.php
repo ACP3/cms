@@ -35,7 +35,6 @@ define('users_mod_description', 'Mit diesem Modul können die Benutzer verwaltet
 define('users_name_or_password_wrong', 'Entweder ist der Name oder das Passwort falsch.');
 define('users_new_pwd', 'Neues Passwort');
 define('users_new_pwd_repeat', 'Neues Passwort wiederholen');
-define('users_profile', 'Benutzerprofil ansehen');
 define('users_pwd', 'Passwort');
 define('users_pwd_repeat', 'Passwort wiederholen');
 define('users_remember_me', 'Eingeloggt bleiben');
@@ -53,7 +52,9 @@ define('users_user_already_exists', 'Für den angegebenen Namen existiert bereit
 define('users_user_email_already_exists', 'Für die angegebene E-Mail-Adresse existiert bereits ein Benutzerkonto');
 define('users_user_menu', 'Benutzermenü');
 define('users_user_not_exists', 'Für den eingegebenen Benutzernamen bzw. die eingegebene E-Mail-Adresse konnte kein Benutzerprofil gefunden werden');
+define('users_user_profile_not_exists', 'Das angeforderte Benutzerprofil konnte nicht gefunden werden.');
 define('users_users', 'Benutzer');
 define('users_users_found', 'Insgesamt haben sich auf dieser Website %d Benutzer registriert.');
 define('users_users_overview', 'Benutzer Übersicht');
+define('users_view_profile', 'Benutzerprofil ansehen');
 ?>

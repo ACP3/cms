@@ -84,5 +84,9 @@
 			<file>signoff</file>
 			<level>1</level>
 		</item>
+		<item>
+			<file>view_profile</file>
+			<level>1</level>
+		</item>
 	</access>
 </module>

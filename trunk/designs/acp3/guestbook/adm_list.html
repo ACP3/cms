@@ -1,8 +1,8 @@
-{if $gb}
-<form action="{uri args="acp/gb/adm_list/action_delete"}" method="post" id="gb">
+{if $guestbook}
+<form action="{uri args="acp/guestbook/adm_list/action_delete"}" method="post" id="guestbook">
 	<div id="adm-list">
-		<a href="javascript:$('#gb').submit()" title="{lang values="common|delete_marked"}"><img src="{$root_dir}images/crystal/32/delete.png" alt="{lang values="common|delete_marked"}" /></a>
-		<h2>{lang values="gb|gb_entries_overview"}</h2>
+		<a href="javascript:$('#guestbook').submit()" title="{lang values="common|delete_marked"}"><img src="{$root_dir}images/crystal/32/delete.png" alt="{lang values="common|delete_marked"}" /></a>
+		<h2>{lang values="guestbook|guestbook_entries_overview"}</h2>
 	</div>
 	<hr />
 {$pagination}
@@ -11,18 +11,18 @@
 			<tr>
 				<th>{lang values="common|mark"}</th>
 				<th>{lang values="common|date"}</th>
-				<th>{lang values="gb|ip"}</th>
+				<th>{lang values="guestbook|ip"}</th>
 				<th>{lang values="common|name"}</th>
 				<th>{lang values="common|message"}</th>
 			</tr>
 		</thead>
 		<tbody>
-{foreach from=$gb item=row}
+{foreach from=$guestbook item=row}
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
 				<td>{$row.date}</td>
 				<td>{$row.ip}</td>
-				<td><a href="{uri args="acp/gb/edit/id_`$row.id`"}" title="{lang values="gb|edit"}">{$row.name}</a></td>
+				<td><a href="{uri args="acp/guestbook/edit/id_`$row.id`"}" title="{lang values="guestbook|edit"}">{$row.name}</a></td>
 				<td>{$row.message}</td>
 			</tr>
 {/foreach}

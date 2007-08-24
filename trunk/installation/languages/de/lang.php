@@ -60,7 +60,7 @@ define('overview', 'Übersicht');
 define('pages_contact', 'Kontakt');
 define('pages_files', 'Downloads');
 define('pages_gallery', 'Fotogalerien');
-define('pages_gb', 'Gästebuch');
+define('pages_guestbook', 'Gästebuch');
 define('pages_imprint', 'Impressum');
 define('pages_main', 'Hauptnavigation');
 define('pages_news', 'News');
