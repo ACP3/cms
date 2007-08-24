@@ -16,10 +16,10 @@ switch ($modules->action) {
 	case 'create':
 		$form = $_POST['form'];
 
-		if (empty($form['name']))
+		if (empty($form['nickname']))
 			$errors[] = lang('common', 'name_to_short');
-		if (!empty($form['name']) && $db->select('id', 'users', 'name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
-			$errors[] = lang('users', 'user_already_exists');
+		if (!empty($form['nickname']) && $db->select('id', 'users', 'nickname = \'' . $db->escape($form['nickname']) . '\'', 0, 0, 0, 1) == '1')
+			$errors[] = lang('users', 'user_name_already_exists');
 		if (!$validate->email($form['mail']))
 			$errors[] = lang('common', 'wrong_email_format');
 		if ($validate->email($form['mail']) && $db->select('id', 'users', 'mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
@@ -36,7 +36,7 @@ switch ($modules->action) {
 
 			$insert_values = array(
 				'id' => '',
-				'name' => $db->escape($form['name']),
+				'nickname' => $db->escape($form['nickname']),
 				'pwd' => sha1($salt . sha1($form['pwd'])) . ':' . $salt,
 				'access' => $form['access'],
 				'mail' => $form['mail'],
@@ -51,10 +51,10 @@ switch ($modules->action) {
 	case 'edit':
 		$form = $_POST['form'];
 
-		if (empty($form['name']))
+		if (empty($form['nickname']))
 			$errors[] = lang('common', 'name_to_short');
-		if (!empty($form['name']) && $db->select('id', 'users', 'id != \'' . $modules->id . '\' AND name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
-			$errors[] = lang('users', 'user_already_exists');
+		if (!empty($form['nickname']) && $db->select('id', 'users', 'id != \'' . $modules->id . '\' AND nickname = \'' . $db->escape($form['nickname']) . '\'', 0, 0, 0, 1) == '1')
+			$errors[] = lang('users', 'user_name_already_exists');
 		if (!$validate->email($form['mail']))
 			$errors[] = lang('common', 'wrong_email_format');
 		if ($validate->email($form['mail']) && $db->select('id', 'users', 'id != \'' . $modules->id . '\' AND mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
@@ -76,7 +76,7 @@ switch ($modules->action) {
 			}
 
 			$update_values = array(
-				'name' => $db->escape($form['name']),
+				'nickname' => $db->escape($form['nickname']),
 				'access' => $form['access'],
 				'mail' => $form['mail'],
 			);
@@ -89,7 +89,7 @@ switch ($modules->action) {
 			// Falls sich der User selbst bearbeitet hat, Cookies und Session aktualisieren
 			if ($modules->id == $_SESSION['acp3_id']) {
 				$cookie_arr = explode('|', $_COOKIE['ACP3_AUTH']);
-				setcookie('ACP3_AUTH', $form['name'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]), time() + 3600, ROOT_DIR);
+				setcookie('ACP3_AUTH', $form['nickname'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]), time() + 3600, ROOT_DIR);
 
 				$_SESSION['acp3_access'] = $form['access'];
 			}
@@ -154,10 +154,10 @@ switch ($modules->action) {
 		} else {
 			$form = $_POST['form'];
 
-			if (empty($form['name']))
+			if (empty($form['nickname']))
 				$errors[] = lang('common', 'name_to_short');
-			if (!empty($form['name']) && $db->select('id', 'users', 'id != \'' . $_SESSION['acp3_id'] . '\' AND name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
-				$errors[] = lang('users', 'user_already_exists');
+			if (!empty($form['nickname']) && $db->select('id', 'users', 'id != \'' . $_SESSION['acp3_id'] . '\' AND nickname = \'' . $db->escape($form['nickname']) . '\'', 0, 0, 0, 1) == '1')
+				$errors[] = lang('users', 'user_name_already_exists');
 			if (!$validate->email($form['mail']))
 				$errors[] = lang('common', 'wrong_email_format');
 			if ($validate->email($form['mail']) && $db->select('id', 'users', 'id != \'' . $_SESSION['acp3_id'] . '\' AND mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
@@ -177,8 +177,10 @@ switch ($modules->action) {
 				}
 
 				$update_values = array(
-					'name' => $db->escape($form['name']),
+					'nickname' => $db->escape($form['nickname']),
+					'realname' => $db->escape($form['realname']),
 					'mail' => $form['mail'],
+					'website' => $db->escape($form['website'], 2),
 				);
 				if (is_array($new_pwd_sql)) {
 					$update_values = array_merge($update_values, $new_pwd_sql);
@@ -187,7 +189,7 @@ switch ($modules->action) {
 				$bool = $db->update('users', $update_values, 'id = \'' . $_SESSION['acp3_id'] . '\'');
 
 				$cookie_arr = explode('|', $_COOKIE['ACP3_AUTH']);
-				setcookie('ACP3_AUTH', $form['name'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]), time() + 3600, ROOT_DIR);
+				setcookie('ACP3_AUTH', $form['nickname'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]), time() + 3600, ROOT_DIR);
 
 				$content = combo_box($bool ? lang('users', 'edit_profile_success') : lang('users', 'edit_profile_error'), uri('users/home'));
 			}
@@ -196,9 +198,9 @@ switch ($modules->action) {
 	case 'forgot_pwd':
 		$form = $_POST['form'];
 
-		if (empty($form['name']) && empty($form['mail']))
-			$errors[] = lang('users', 'type_in_name_and_email');
-		if (!empty($form['name']) && $db->select('id', 'users', 'name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '0')
+		if (empty($form['nickname']) && empty($form['mail']))
+			$errors[] = lang('users', 'type_in_nickname_or_email');
+		if (!empty($form['nickname']) && $db->select('id', 'users', 'nickname = \'' . $db->escape($form['nickname']) . '\'', 0, 0, 0, 1) == '0')
 			$errors[] = lang('users', 'user_not_exists');
 		if (!empty($form['mail']) && !$validate->email($form['mail']))
 			$errors[] = lang('common', 'wrong_email_format');
@@ -213,12 +215,12 @@ switch ($modules->action) {
 			$salt = salt(12);
 
 			// Je nachdem welches Feld ausgefüllt wurde, dieses auswählen
-			$where_stmt = !empty($form['mail']) ? 'mail = \'' . $form['mail'] . '\'' : 'name = \'' . $db->escape($form['name']) . '\'';
+			$where_stmt = !empty($form['mail']) ? 'mail = \'' . $form['mail'] . '\'' : 'nickname = \'' . $db->escape($form['nickname']) . '\'';
 			$user = $db->select('id, name, mail', 'users', $where_stmt);
 
 			// E-Mail mit dem neuen Passwort versenden
 			$subject = sprintf(lang('users', 'forgot_pwd_mail_subject'), CONFIG_TITLE, htmlentities($_SERVER['HTTP_HOST']));
-			$message = sprintf(lang('users', 'forgot_pwd_mail_message'), $user[0]['name'], CONFIG_TITLE, htmlentities($_SERVER['HTTP_HOST']), $user[0]['mail'], $new_password);
+			$message = sprintf(lang('users', 'forgot_pwd_mail_message'), $user[0]['nickname'], CONFIG_TITLE, htmlentities($_SERVER['HTTP_HOST']), $user[0]['mail'], $new_password);
 			$header = 'Content-type: text/plain; charset=' . CHARSET;
 			$mail_sent = @mail($user[0]['mail'], $subject, $message, $header);
 
@@ -247,10 +249,10 @@ switch ($modules->action) {
 	case 'register':
 		$form = $_POST['form'];
 
-		if (empty($form['name']))
+		if (empty($form['nickname']))
 			$errors[] = lang('common', 'name_to_short');
-		if (!empty($form['name']) && $db->select('id', 'users', 'name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
-			$errors[] = lang('users', 'user_already_exists');
+		if (!empty($form['nickname']) && $db->select('id', 'users', 'nickname = \'' . $db->escape($form['nickname']) . '\'', 0, 0, 0, 1) == '1')
+			$errors[] = lang('users', 'user_name_already_exists');
 		if (!$validate->email($form['mail']))
 			$errors[] = lang('common', 'wrong_email_format');
 		if ($validate->email($form['mail']) && $db->select('id', 'users', 'mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
@@ -265,7 +267,7 @@ switch ($modules->action) {
 
 			// E-Mail mit den Accountdaten zusenden
 			$subject = sprintf(lang('users', 'register_mail_subject'), CONFIG_TITLE, htmlentities($_SERVER['HTTP_HOST']));
-			$message = sprintf(lang('users', 'register_mail_message'), $db->escape($form['name']), CONFIG_TITLE, htmlentities($_SERVER['HTTP_HOST']), $form['mail'], $form['pwd']);
+			$message = sprintf(lang('users', 'register_mail_message'), $db->escape($form['nickname']), CONFIG_TITLE, htmlentities($_SERVER['HTTP_HOST']), $form['mail'], $form['pwd']);
 			$header = 'Content-type: text/plain; charset=' . CHARSET;
 			$mail_sent = @mail($form['mail'], $subject, $message, $header);
 
@@ -273,7 +275,7 @@ switch ($modules->action) {
 			if ($mail_sent) {
 				$insert_values = array(
 					'id' => '',
-					'name' => $db->escape($form['name']),
+					'nickname' => $db->escape($form['nickname']),
 					'pwd' => sha1($salt . sha1($form['pwd'])) . ':' . $salt,
 					'access' => '3',
 					'mail' => $form['mail'],

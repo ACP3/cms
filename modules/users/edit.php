@@ -15,7 +15,7 @@ if (!empty($modules->id) && $db->select('id', 'users', 'id = \'' . $modules->id 
 		include 'modules/users/entry.php';
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$user = $db->select('name, mail, access', 'users', 'id = \'' . $modules->id . '\'');
+		$user = $db->select('nickname, mail, access', 'users', 'id = \'' . $modules->id . '\'');
 
 		$access = $db->select('id, name', 'access', 0, 'name ASC');
 		$c_access = count($access);

@@ -36,7 +36,7 @@ class auth
 			$cookie = $db->escape($_COOKIE['ACP3_AUTH']);
 			$cookie_arr = explode('|', $cookie);
 
-			$user_check = $db->select('id, pwd, access', 'users', 'name = \'' . $cookie_arr[0] . '\'');
+			$user_check = $db->select('id, pwd, access', 'users', 'nickname = \'' . $cookie_arr[0] . '\'');
 			if (count($user_check) == '1') {
 				$db_password = substr($user_check[0]['pwd'], 0, 40);
 				if ($db_password == $cookie_arr[1]) {
@@ -50,7 +50,12 @@ class auth
 				}
 			}
 			if (!$this->is_user) {
-				redirect('users/signoff');
+				setcookie('ACP3_AUTH', '', time() - 3600, ROOT_DIR);
+				$_SESSION = array();
+				if (isset($_COOKIE[session_name()]))
+					setcookie(session_name(), '', time() - 3600, ROOT_DIR);
+				session_destroy();
+				redirect(0, ROOT_DIR);
 			}
 		// Zugriffslevel für Besucher setzen
 		} else {

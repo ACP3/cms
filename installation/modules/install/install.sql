@@ -28,7 +28,7 @@ CREATE TABLE `{pre}poll_question` ( `id` int(11) NOT NULL auto_increment, `start
 
 CREATE TABLE `{pre}poll_votes` ( `poll_id` int(11) NOT NULL, `answer_id` int(11) NOT NULL, `ip` varchar(40) NOT NULL, `time` varchar(14) NOT NULL, PRIMARY KEY (`answer_id`)) {engine} ;
 
-CREATE TABLE `{pre}users` ( `id` int(11) NOT NULL auto_increment, `name` varchar(120) NOT NULL, `pwd` varchar(53) NOT NULL, `access` int(11) NOT NULL, `mail` varchar(120) NOT NULL, `draft` text NOT NULL, PRIMARY KEY (`id`)) {engine} ;
+CREATE TABLE `{pre}users` ( `id` int(11) NOT NULL auto_increment, `nickname` varchar(30) NOT NULL, `realname` varchar(80) NOT NULL, `pwd` varchar(53) NOT NULL, `access` int(11) NOT NULL, `mail` varchar(120) NOT NULL, `website` varchar(120) NOT NULL, `time_zone` int(5) NOT NULL, `dst` tinyint(1) NOT NULL, `language` varchar(10) NOT NULL, `draft` text NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 
 INSERT INTO `{pre}access` VALUES ('1', 'Administrator', 'users:2,feeds:2,files:2,emoticons:2,errors:2,gallery:2,guestbook:2,categories:2,comments:2,contact:2,pages:2,news:2,newsletter:2,search:2,system:2,polls:2,access:2');
 

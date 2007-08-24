@@ -18,12 +18,12 @@ $queries = array(
 	5 => 'INSERT INTO `{pre}access` VALUES (\'1\', \'Administrator\', \'users:2,feeds:2,files:2,emoticons:2,errors:2,gallery:2,guestbook:2,categories:2,comments:2,contact:2,pages:2,news:2,newsletter:2,search:2,system:2,polls:2,access:2\');',
 	6 => 'INSERT INTO `{pre}access` VALUES (\'2\', \'Besucher\', \'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:1,categories:1,comments:1,contact:1,pages:1,news:1,newsletter:1,search:1,system:0,polls:1,access:0\');',
 	7 => 'INSERT INTO `{pre}access` VALUES (\'3\', \'Benutzer\', \'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:1,categories:1,comments:1,contact:1,pages:1,news:1,newsletter:1,search:1,system:0,polls:1,access:0\');',
-	8 => 'ALTER TABLE `{pre}users` ADD `draft` TEXT {charset} NOT NULL AFTER `mail`',
-	9 => 'ALTER TABLE `{pre}news` CHANGE `cat` `category_id` INT(11) NOT NULL',
-	10 => 'ALTER TABLE `{pre}galpics` CHANGE `gallery` `gallery_id` INT(11) NOT NULL',
-	11 => 'ALTER TABLE `{pre}gb` RENAME `{pre}guestbook`',
-	12 => 'ALTER TABLE `{pre}guestbook` ADD `user_id` INT(11) NOT NULL AFTER `name`',
-	13 => 'ALTER TABLE `{pre}comments` ADD `user_id` INT(11) NOT NULL AFTER `name`',
+	8 => 'ALTER TABLE `{pre}news` CHANGE `cat` `category_id` INT(11) NOT NULL',
+	9 => 'ALTER TABLE `{pre}galpics` CHANGE `gallery` `gallery_id` INT(11) NOT NULL',
+	10 => 'ALTER TABLE `{pre}gb` RENAME `{pre}guestbook`',
+	11 => 'ALTER TABLE `{pre}guestbook` ADD `user_id` INT(11) NOT NULL AFTER `name`',
+	12 => 'ALTER TABLE `{pre}comments` ADD `user_id` INT(11) NOT NULL AFTER `name`',
+	13 => 'ALTER TABLE `{pre}users` CHANGE `name` `nickname` VARCHAR(30) {charset} NOT NULL, ADD `realname` VARCHAR(80) {charset} NOT NULL AFTER `nickname`, ADD `website` VARCHAR(120) {charset} NOT NULL AFTER `mail`, ADD `time_zone` INT(5) NOT NULL AFTER `website`, ADD `dst` TINYINT(1) NOT NULL AFTER `time_zone`, ADD `language` VARCHAR(10) {charset} NOT NULL AFTER `dst`, ADD `draft` TEXT {charset} NOT NULL AFTER `language`;',
 );
 
 $successful = 'Abfrage erfolgreich durchgeführt!';

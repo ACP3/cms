@@ -24,13 +24,16 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	}
 	// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
 	if ($auth->is_user() && preg_match('/\d/', $_SESSION['acp3_id'])) {
-		$user = $db->select('name, mail', 'users', 'id = \'' . $_SESSION['acp3_id'] . '\'');
+		$user = $db->select('nickname, mail', 'users', 'id = \'' . $_SESSION['acp3_id'] . '\'');
 		$disabled = ' readonly="readonly" class="readonly"';
 
 		if (isset($form)) {
+			$form['name'] = $user[0]['nickname'];
 			$form['name_disabled'] = $disabled;
 			$form['mail_disabled'] = $disabled;
 		} else {
+			$user[0]['name'] = $user[0]['nickname'];
+			unset($user[0]['nickname']);
 			$user[0]['name_disabled'] = $disabled;
 			$user[0]['mail_disabled'] = $disabled;
 		}

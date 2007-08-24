@@ -11,7 +11,7 @@
 		<thead>
 			<tr>
 				<th>{lang values="common|mark"}</th>
-				<th>{lang values="common|name"}</th>
+				<th>{lang values="users|nickname"}</th>
 				<th>{lang values="common|email"}</th>
 				<th>{lang values="access|access"}</th>
 			</tr>
@@ -20,7 +20,7 @@
 {foreach from=$users item=row}
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
-				<td><a href="{uri args="acp/users/edit/id_`$row.id`"}" title="{lang values="users|edit"}">{$row.name}</a></td>
+				<td><a href="{uri args="acp/users/edit/id_`$row.id`"}" title="{lang values="users|edit"}">{$row.nickname}</a></td>
 				<td>{$row.mail}</td>
 				<td>{$row.access}</td>
 			</tr>
