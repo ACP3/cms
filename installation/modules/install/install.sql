@@ -2,7 +2,7 @@ CREATE TABLE `{pre}access` ( `id` int(11) NOT NULL auto_increment, `name` varcha
 
 CREATE TABLE `{pre}categories` ( `id` int(11) NOT NULL auto_increment, `name` varchar(120) NOT NULL, `description` varchar(120) NOT NULL, `module` varchar(120) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 
-CREATE TABLE `{pre}comments` ( `id` int(11) NOT NULL auto_increment, `ip` varchar(40) NOT NULL, `date` varchar(14) NOT NULL, `name` varchar(20) NOT NULL, `message` text NOT NULL, `module` varchar(120) NOT NULL, `entry_id` int(11) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
+CREATE TABLE `{pre}comments` ( `id` int(11) NOT NULL auto_increment, `ip` varchar(40) NOT NULL, `date` varchar(14) NOT NULL, `name` varchar(20) NOT NULL, `user_id` int(11) NOT NULL, `message` text NOT NULL, `module` varchar(120) NOT NULL, `entry_id` int(11) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 
 CREATE TABLE `{pre}emoticons` ( `id` int(11) NOT NULL auto_increment, `code` varchar(10) NOT NULL, `description` varchar(15) NOT NULL, `img` varchar(40) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 
@@ -12,7 +12,7 @@ CREATE TABLE `{pre}gallery` ( `id` int(11) NOT NULL auto_increment, `start` varc
 
 CREATE TABLE `{pre}galpics` ( `id` int(11) NOT NULL auto_increment, `pic` int(11) NOT NULL, `gallery_id` int(11) NOT NULL, `file` varchar(120) NOT NULL, `description` text NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 
-CREATE TABLE `{pre}gb` ( `id` int(11) NOT NULL auto_increment, `ip` varchar(40) NOT NULL, `date` varchar(14) NOT NULL, `name` varchar(20) NOT NULL, `message` text NOT NULL, `website` varchar(120) NOT NULL, `mail` varchar(120) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
+CREATE TABLE `{pre}guestbook` ( `id` int(11) NOT NULL auto_increment, `ip` varchar(40) NOT NULL, `date` varchar(14) NOT NULL, `name` varchar(20) NOT NULL, `user_id` int(11) NOT NULL, `message` text NOT NULL, `website` varchar(120) NOT NULL, `mail` varchar(120) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 
 CREATE TABLE `{pre}news` ( `id` int(11) NOT NULL auto_increment, `start` varchar(14) NOT NULL, `end` varchar(14) NOT NULL, `headline` varchar(120) NOT NULL, `text` text NOT NULL, `category_id` int(11) NOT NULL, `uri` varchar(120) NOT NULL, `target` tinyint(1) NOT NULL, `link_title` varchar(120) NOT NULL, PRIMARY KEY (`id`), FULLTEXT KEY `headline` (`headline`,`text`)) {engine} ;
 
@@ -30,7 +30,11 @@ CREATE TABLE `{pre}poll_votes` ( `poll_id` int(11) NOT NULL, `answer_id` int(11)
 
 CREATE TABLE `{pre}users` ( `id` int(11) NOT NULL auto_increment, `name` varchar(120) NOT NULL, `pwd` varchar(53) NOT NULL, `access` int(11) NOT NULL, `mail` varchar(120) NOT NULL, `draft` text NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 
-INSERT INTO `{pre}access` VALUES ('1', 'Administrator', 'users:2,feeds:2,files:2,emoticons:2,errors:2,gallery:2,gb:2,categories:2,comments:2,contact:2,pages:2,news:2,newsletter:2,search:2,system:2,polls:2,access:2'), ('2', 'Besucher', 'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,gb:1,categories:1,comments:1,contact:1,pages:1,news:1,newsletter:1,search:1,system:0,polls:1,access:0'), ('3', 'Benutzer', 'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,gb:1,categories:1,comments:1,contact:1,pages:1,news:1,newsletter:1,search:1,system:0,polls:1,access:0');
+INSERT INTO `{pre}access` VALUES ('1', 'Administrator', 'users:2,feeds:2,files:2,emoticons:2,errors:2,gallery:2,guestbook:2,categories:2,comments:2,contact:2,pages:2,news:2,newsletter:2,search:2,system:2,polls:2,access:2');
+
+INSERT INTO `{pre}access` VALUES ('2', 'Besucher', 'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:1,categories:1,comments:1,contact:1,pages:1,news:1,newsletter:1,search:1,system:0,polls:1,access:0');
+
+INSERT INTO `{pre}access` VALUES ('3', 'Benutzer', 'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:1,categories:1,comments:1,contact:1,pages:1,news:1,newsletter:1,search:1,system:0,polls:1,access:0');
 
 INSERT INTO `{pre}categories` VALUES ('', 'Erste Kategorie', 'Dies ist die erste Kategorie', 'news');
 

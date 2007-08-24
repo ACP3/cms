@@ -10,11 +10,11 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$breadcrumb->assign(lang('gb', 'gb'), uri('gb'));
-$breadcrumb->assign(lang('gb', 'create'));
+$breadcrumb->assign(lang('guestbook', 'guestbook'), uri('guestbook'));
+$breadcrumb->assign(lang('guestbook', 'create'));
 
 if (isset($_POST['submit'])) {
-	include 'modules/gb/entry.php';
+	include 'modules/guestbook/entry.php';
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Emoticons einbinden
@@ -42,6 +42,6 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$tpl->assign('form', isset($form) ? $form : $defaults);
 	}
 
-	$content = $tpl->fetch('gb/create.html');
+	$content = $tpl->fetch('guestbook/create.html');
 }
 ?>

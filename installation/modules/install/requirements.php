@@ -31,7 +31,7 @@ $defaults = array(
 	'modules/feeds/module.xml',
 	'modules/files/module.xml',
 	'modules/gallery/module.xml',
-	'modules/gb/module.xml',
+	'modules/guestbook/module.xml',
 	'modules/news/module.xml',
 	'modules/newsletter/module.xml',
 	'modules/pages/module.xml',

@@ -19,5 +19,5 @@ if (isset($_COOKIE[session_name()]))
 
 session_destroy();
 
-redirect('news/list');
+redirect(0, ROOT_DIR);
 ?>

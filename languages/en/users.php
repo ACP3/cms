@@ -35,7 +35,6 @@ define('users_mod_description', 'With this module you can administer the users.'
 define('users_name_or_password_wrong', 'Either the username or the password is wrong.');
 define('users_new_pwd', 'New password');
 define('users_new_pwd_repeat', 'Repeat new password');
-define('users_profile', 'View user profile');
 define('users_pwd', 'Password');
 define('users_pwd_repeat', 'Repeat password');
 define('users_remember_me', 'Stay logged in');
@@ -53,7 +52,9 @@ define('users_user_already_exists', 'There is already an user account registered
 define('users_user_email_already_exists', 'There is already an user account registered with the same E-mail address');
 define('users_user_menu', 'User menu');
 define('users_user_not_exists', 'There is no user profile registered with the typed in user name respectively the typed in E-mail address');
+define('users_user_profile_not_exists', 'The requested user profile doesn\'t exists.');
 define('users_users', 'Users');
 define('users_users_found', 'In total there are %d users registered on this Website.');
 define('users_users_overview', 'Users overview');
+define('users_view_profile', 'View user profile');
 ?>

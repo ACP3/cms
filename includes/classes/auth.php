@@ -1,8 +1,30 @@
 <?php
+/**
+ * Authentification
+ *
+ * @author Goratsch Webdesign
+ * @package ACP3
+ * @subpackage Core
+ */
+/**
+ * Authentifiziert den Benutzer
+ *
+ * @author Goratsch Webdesign
+ * @package ACP3
+ * @subpackage Core
+ */
 class auth
 {
+	/**
+	 * User oder nicht
+	 *
+	 * @var boolean
+	 */
 	private $is_user = false;
 
+	/**
+	 * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der Seitenbesucher auch wirklich ein registrierter Benutzer des ACP3 ist
+	 */
 	function __construct()
 	{
 		// Session starten
@@ -35,6 +57,11 @@ class auth
 			$_SESSION['acp3_access'] = '2';
 		}
 	}
+	/**
+	 * Gibt den Status von $is_user zurück
+	 *
+	 * @return boolean
+	 */
 	function is_user()
 	{
 		return $this->is_user;

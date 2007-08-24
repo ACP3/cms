@@ -59,7 +59,7 @@ class modules
 			$id_regex = '/^(id_(\d+))$/';
 			$cat_regex = '/^(cat_(\d+))$/';
 			$action_regex = '/^(action_(\w+))$/';
-			$gen_regex = '/^(([a-z0-9-]+)_(\w+))$/';
+			$gen_regex = '/^(([a-z0-9-]+)_(.+))$/';
 
 			for ($i = 2; $i < $c_stm; $i++) {
 				if (!empty($stm[$i])) {

@@ -13,7 +13,7 @@
 	<tbody>
 {foreach from=$users item=row}
 		<tr>
-			<td><a href="{uri args="users/profile/id_`$row.id`"}" title="{lang values="users|profile"}">{$row.name}</a></td>
+			<td><a href="{uri args="users/view_profile/id_`$row.id`"}" title="{lang values="users|view_profile"}">{$row.name}</a></td>
 			<td><a href="mailto:{$row.mail}" title="{lang values="users|send_email"}">{$row.mail}</a></td>
 		</tr>
 {/foreach}
