@@ -1,0 +1,15 @@
+{if $user}
+<fieldset>
+	<legend>{lang values="common|general_statements"}</legend>
+	<dl class="imprint" style="width:100%;padding:0">
+		<dt><strong>{lang values="common|name"}</strong></dt>
+		<dd>{$user.name}</dd>
+		<dt><strong>{lang values="common|email"}</strong></dt>
+		<dd>{$user.mail}</dd>
+	</dl>
+</fieldset>
+{else}
+<div class="error">
+	<h4 style="text-align:center">{lang values="users|user_profile_not_exists"}</h4>
+</div>
+{/if}
