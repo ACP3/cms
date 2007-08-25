@@ -37,9 +37,14 @@ switch ($modules->action) {
 			$insert_values = array(
 				'id' => '',
 				'nickname' => $db->escape($form['nickname']),
+				'realname' => '',
 				'pwd' => sha1($salt . sha1($form['pwd'])) . ':' . $salt,
 				'access' => $form['access'],
 				'mail' => $form['mail'],
+				'website' => '',
+				'time_zone' => CONFIG_TIME_ZONE,
+				'dst' => CONFIG_DST,
+				'language' => CONFIG_LANG,
 				'draft' => '',
 			);
 
@@ -304,9 +309,15 @@ switch ($modules->action) {
 				$insert_values = array(
 					'id' => '',
 					'nickname' => $db->escape($form['nickname']),
+					'realname' => '',
 					'pwd' => sha1($salt . sha1($form['pwd'])) . ':' . $salt,
 					'access' => '3',
 					'mail' => $form['mail'],
+					'website' => '',
+					'time_zone' => CONFIG_TIME_ZONE,
+					'dst' => CONFIG_DST,
+					'language' => CONFIG_LANG,
+					'draft' => '',
 				);
 
 				$bool = $db->insert('users', $insert_values);
