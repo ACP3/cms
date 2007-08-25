@@ -64,4 +64,5 @@ define('users_users', 'Users');
 define('users_users_found', 'In total there are %d users registered on this Website.');
 define('users_users_overview', 'Users overview');
 define('users_view_profile', 'View user profile');
+define('users_visit_website', 'Visit website');
 ?>

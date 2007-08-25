@@ -9,10 +9,10 @@
 		<dd>{$user.realname}</dd>
 {/if}
 		<dt><strong>{lang values="common|email"}</strong></dt>
-		<dd>{$user.mail}</dd>
+		<dd><a href="mailto:{$user.mail}" title="{lang values="users|send_email"}">{$user.mail}</a></dd>
 {if $user.website}
 		<dt><strong>{lang values="common|website"}</strong></dt>
-		<dd>{$user.website}</dd>
+		<dd><a href="{$user.website}" onclick="window.open(this.href); return false" title="{lang values="users|visit_website"}">{$user.website}</a></dd>
 {/if}
 	</dl>
 </fieldset>
