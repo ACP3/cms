@@ -69,7 +69,7 @@ switch ($modules->action) {
 	case 'delete_gallery':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
-		elseif (isset($modules->gen['entries']) && ereg('^([0-9|]+)$', $modules->gen['entries']))
+		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
 			$entries = $modules->gen['entries'];
 
 		if (is_array($entries)) {
@@ -78,12 +78,12 @@ switch ($modules->action) {
 				$marked_entries.= $entry . '|';
 			}
 			$content = combo_box(lang('gallery', 'confirm_delete'), uri('acp/gallery/adm_list/action_delete_gallery/entries_' . $marked_entries), uri('acp/gallery'));
-		} elseif (ereg('^([0-9|]+)$', $entries) && isset($modules->gen['confirmed'])) {
+		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
 			$bool2 = 0;
 			foreach ($marked_entries as $entry) {
-				if (!empty($entry) && ereg('[0-9]', $entry) && $db->select('id', 'gallery', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+				if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'gallery', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 					$bool = $db->delete('gallery', 'id = \'' . $entry . '\'');
 					$bool2 = $db->delete('galpics', 'gallery = \'' . $entry . '\'', 0);
 					// Galerie Cache löschen
@@ -101,9 +101,9 @@ switch ($modules->action) {
 		$file['size'] = $_FILES['file']['size'];
 		$form = $_POST['form'];
 
-		if (!ereg('[0-9]', $form['gallery']) || $db->select('id', 'gallery', 'id = \'' . $form['gallery'] . '\'', 0, 0, 0, 1) != '1')
+		if (!$validate->is_number($form['gallery']) || $db->select('id', 'gallery', 'id = \'' . $form['gallery'] . '\'', 0, 0, 0, 1) != '1')
 			$errors[] = lang('gallery', 'no_gallery_selected');
-		if (!ereg('[0-9]', $form['pic']))
+		if (!$validate->is_number($form['pic']))
 			$errors[] = lang('gallery', 'type_in_picture_number');
 		if (empty($file['tmp_name']) || $file['size'] == '0')
 			$errors[] = lang('gallery', 'no_picture_selected');
@@ -138,9 +138,9 @@ switch ($modules->action) {
 		}
 		$form = $_POST['form'];
 
-		if (!ereg('[0-9]', $form['gallery']) || $db->select('id', 'gallery', 'id = \'' . $form['gallery'] . '\'', 0, 0, 0, 1) != '1')
+		if (!$validate->is_number($form['gallery']) || $db->select('id', 'gallery', 'id = \'' . $form['gallery'] . '\'', 0, 0, 0, 1) != '1')
 			$errors[] = lang('gallery', 'no_gallery_selected');
-		if (!ereg('[0-9]', $form['pic']))
+		if (!$validate->is_number($form['pic']))
 			$errors[] = lang('gallery', 'type_in_picture_number');
 		if (isset($file) && is_array($file) && !$validate->is_picture($file['tmp_name']))
 			$errors[] = lang('gallery', 'only_png_jpg_gif_allowed');
@@ -173,7 +173,7 @@ switch ($modules->action) {
 	case 'delete_picture':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
-		elseif (isset($modules->gen['entries']) && ereg('^([0-9|]+)$', $modules->gen['entries']))
+		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
 			$entries = $modules->gen['entries'];
 
 		if (is_array($entries)) {
@@ -182,11 +182,11 @@ switch ($modules->action) {
 				$marked_entries.= $entry . '|';
 			}
 			$content = combo_box(lang('gallery', 'confirm_picture_delete'), uri('acp/gallery/adm_list/action_delete_picture/entries_' . $marked_entries), uri('acp/gallery/edit_gallery/id_' . $modules->id));
-		} elseif (ereg('^([0-9|]+)$', $entries) && isset($modules->gen['confirmed'])) {
+		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
 			foreach ($marked_entries as $entry) {
-				if (!empty($entry) && ereg('[0-9]', $entry) && $db->select('id', 'galpics', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1')
+				if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'galpics', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1')
 					// Galerie Cache löschen
 					$bool = $db->delete('galpics', 'id = \'' . $entry . '\'');
 			}

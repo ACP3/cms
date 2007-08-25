@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-$pic = isset($modules->gen['pic']) && ereg('[0-9]', $modules->gen['pic']) ? $modules->gen['pic'] : 1;
+$pic = isset($modules->gen['pic']) && $validate->is_number($modules->gen['pic']) ? $modules->gen['pic'] : 1;
 
 if (!empty($modules->id)) {
 	$gallery = $db->select('name', 'gallery', 'id = \'' . $modules->id . '\'');

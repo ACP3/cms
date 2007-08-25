@@ -22,9 +22,9 @@ switch ($modules->action) {
 			$errors[] = lang('news', 'headline_to_short');
 		if (strlen($form['text']) < 3)
 			$errors[] = lang('news', 'text_to_short');
-		if (!ereg('[0-9]', $form['cat']) || ereg('[0-9]', $form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
+		if (!$validate->is_number($form['cat']) || $validate->is_number($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
 			$errors[] = lang('news', 'select_category');
-		if (!empty($form['uri']) && (!ereg('[0-9]', $form['target']) || strlen($form['link_title']) < 3))
+		if (!empty($form['uri']) && (!$validate->is_number($form['target']) || strlen($form['link_title']) < 3))
 			$errors[] = lang('news', 'complete_additional_hyperlink_statements');
 
 		if (isset($errors)) {
@@ -59,9 +59,9 @@ switch ($modules->action) {
 			$errors[] = lang('news', 'headline_to_short');
 		if (strlen($form['text']) < 3)
 			$errors[] = lang('news', 'text_to_short');
-		if (!ereg('[0-9]', $form['cat']) || ereg('[0-9]', $form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
+		if (!$validate->is_number($form['cat']) || $validate->is_number($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
 			$errors[] = lang('news', 'select_category');
-		if (!empty($form['uri']) && (!ereg('[0-9]', $form['target']) || strlen($form['link_title']) < 3))
+		if (!empty($form['uri']) && (!$validate->is_number($form['target']) || strlen($form['link_title']) < 3))
 			$errors[] = lang('news', 'complete_additional_hyperlink_statements');
 
 		if (isset($errors)) {
@@ -91,7 +91,7 @@ switch ($modules->action) {
 	case 'delete':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
-		elseif (isset($modules->gen['entries']) && ereg('^([0-9|]+)$', $modules->gen['entries']))
+		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
 			$entries = $modules->gen['entries'];
 
 		if (is_array($entries)) {
@@ -100,12 +100,12 @@ switch ($modules->action) {
 				$marked_entries.= $entry . '|';
 			}
 			$content = combo_box(lang('news', 'confirm_delete'), uri('acp/news/adm_list/action_delete/entries_' . $marked_entries), uri('acp/news'));
-		} elseif (ereg('^([0-9|]+)$', $entries) && isset($modules->gen['confirmed'])) {
+		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
 			$bool2 = 0;
 			foreach ($marked_entries as $entry) {
-				if (!empty($entry) && ereg('[0-9]', $entry) && $db->select('id', 'news', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+				if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'news', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 					$bool = $db->delete('news', 'id = \'' . $entry . '\'');
 					$bool2 = $db->delete('comments', 'module = \'news\' AND entry_id = \'' . $entry . '\'');
 					// News Cache löschen

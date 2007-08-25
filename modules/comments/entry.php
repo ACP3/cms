@@ -14,7 +14,7 @@ if (!$modules->check('comments', 'entry'))
 
 switch ($modules->action) {
 	case 'create':
-		if (isset($_POST['module']) && isset($_POST['entry_id']) && ereg('[0-9]', $_POST['entry_id'])) {
+		if (isset($_POST['module']) && isset($_POST['entry_id']) && $validate->is_number($_POST['entry_id'])) {
 			$ip = $_SERVER['REMOTE_ADDR'];
 			$form = $_POST['form'];
 			$module = $_POST['module'];
@@ -81,7 +81,7 @@ switch ($modules->action) {
 	case 'delete_com_by_mod':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
-		elseif (isset($modules->gen['entries']) && eregi('^([a-z0-9_\-|]+)$', $modules->gen['entries']))
+		elseif (isset($modules->gen['entries']) && preg_match('/^([\w|]+)$/', $modules->gen['entries']))
 			$entries = $modules->gen['entries'];
 
 		if (is_array($entries)) {
@@ -90,11 +90,11 @@ switch ($modules->action) {
 				$marked_entries.= $entry . '|';
 			}
 			$content = combo_box(lang('comments', 'confirm_delete'), uri('acp/comments/adm_list/action_delete_com_by_mod/entries_' . $marked_entries), uri('acp/comments'));
-		} elseif (ereg('^([a-z0-9_\-|]+)$', $entries) && isset($modules->gen['confirmed'])) {
+		} elseif (preg_match('/^([\w|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
 			foreach ($marked_entries as $entry) {
-				if (!empty($entry) && ereg('[a-z0-9]', $entry) && $db->select('id', 'comments', 'module = \'' . $entry . '\'', 0, 0, 0, 1) > '0')
+				if (!empty($entry) && preg_match('/^(\w+)$/', $entry) && $db->select('id', 'comments', 'module = \'' . $entry . '\'', 0, 0, 0, 1) > '0')
 					$bool = $db->delete('comments', 'module = \'' . $entry . '\'');
 			}
 			$content = combo_box($bool ? lang('comments', 'delete_success') : lang('comments', 'delete_error'), uri('acp/comments'));
@@ -105,7 +105,7 @@ switch ($modules->action) {
 	case 'delete_comments':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
-		elseif (isset($modules->gen['entries']) && ereg('^([0-9|]+)$', $modules->gen['entries']))
+		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
 			$entries = $modules->gen['entries'];
 
 		if (is_array($entries)) {
@@ -114,11 +114,11 @@ switch ($modules->action) {
 				$marked_entries.= $entry . '|';
 			}
 			$content = combo_box(lang('comments', 'confirm_delete'), uri('acp/comments/adm_list/action_delete_comments/entries_' . $marked_entries), uri('acp/comments'));
-		} elseif (ereg('^([0-9|]+)$', $entries) && isset($modules->gen['confirmed'])) {
+		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
 			foreach ($marked_entries as $entry) {
-				if (!empty($entry) && ereg('[0-9]', $entry) && $db->select('id', 'comments', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1')
+				if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'comments', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1')
 					$bool = $db->delete('comments', 'id = \'' . $entry . '\'');
 			}
 			$content = combo_box($bool ? lang('comments', 'delete_success') : lang('comments', 'delete_error'), uri('acp/comments'));

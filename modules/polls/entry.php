@@ -94,7 +94,7 @@ switch ($modules->action) {
 			$bool = $db->update('poll_question', $update_values, 'id = \'' . $modules->id . '\'');
 
 			foreach ($form['answers'] as $row) {
-				if (isset($row['delete']) && ereg('[0-9]', $row['id'])) {
+				if (isset($row['delete']) && $validate->is_number($row['id'])) {
 					$db->delete('poll_answers', 'id = \'' . $row['id'] . '\'');
 					$db->delete('poll_votes', 'answer_id = \'' . $row['id'] . '\'');
 				} else {
@@ -107,7 +107,7 @@ switch ($modules->action) {
 	case 'delete':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
-		elseif (isset($modules->gen['entries']) && ereg('^([0-9|]+)$', $modules->gen['entries']))
+		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
 			$entries = $modules->gen['entries'];
 
 		if (is_array($entries)) {
@@ -116,11 +116,11 @@ switch ($modules->action) {
 				$marked_entries.= $entry . '|';
 			}
 			$content = combo_box(lang('polls', 'confirm_delete'), uri('acp/polls/adm_list/action_delete/entries_' . $marked_entries), uri('acp/polls'));
-		} elseif (ereg('^([0-9|]+)$', $entries) && isset($modules->gen['confirmed'])) {
+		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
 			foreach ($marked_entries as $entry) {
-				if (!empty($entry) && ereg('[0-9]', $entry) && $db->select('id', 'poll_question', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+				if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'poll_question', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 					$bool = $db->delete('poll_question', 'id = \'' . $entry . '\'');
 					$bool2 = $db->delete('poll_answers', 'poll_id = \'' . $entry . '\'');
 					$bool3 = $db->delete('poll_votes', 'poll_id = \'' . $entry . '\'');
