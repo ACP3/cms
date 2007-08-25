@@ -195,6 +195,34 @@ switch ($modules->action) {
 			}
 		}
 		break;
+	case 'edit_settings':
+		if (!$auth->is_user() || !preg_match('/\d/', $_SESSION['acp3_id'])) {
+			redirect('errors/403');
+		} else {
+			$form = $_POST['form'];
+
+			if (!ereg('[0-9]', $form['time_zone']))
+				$errors[] = lang('common', 'select_time_zone');
+			if (!ereg('[0-9]', $form['dst']))
+				$errors[] = lang('common', 'select_daylight_saving_time');
+			if (!is_file('languages/' . $db->escape($form['language'], 2) . '/info.php'))
+				$errors[] = lang('users', 'select_language');
+
+			if (isset($errors)) {
+				combo_box($errors);
+			} else {
+				$update_values = array(
+					'time_zone' => $form['time_zone'],
+					'dst' => $form['dst'],
+					'language' => $db->escape($form['language'], 2),
+				);
+
+				$bool = $db->update('users', $update_values, 'id = \'' . $_SESSION['acp3_id'] . '\'');
+
+				$content = combo_box($bool ? lang('users', 'edit_settings_success') : lang('users', 'edit_settings_error'), uri('users/home'));
+			}
+		}
+		break;
 	case 'forgot_pwd':
 		$form = $_POST['form'];
 

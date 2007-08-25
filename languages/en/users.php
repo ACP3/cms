@@ -24,6 +24,8 @@ define('users_edit_profile_error', 'While editing you user profile an error has 
 define('users_edit_profile_success', 'Your user profile has been edited successfully.');
 define('users_edit_settings', 'Edit settings');
 define('users_edit_success', 'The user has been edited successfully.');
+define('users_edit_settings_error', 'While editing the settings of your user account an error has occured.');
+define('users_edit_settings_success', 'The settings of you user account have been edited successfully.');
 define('users_forgot_pwd', 'Forgot password?');
 define('users_forgot_pwd_error', 'While sending the E-mail with your new password an error has occured.');
 define('users_forgot_pwd_description', 'Please either enter the E-mail address or the user name you used with the registration in the following fields.');
@@ -31,6 +33,7 @@ define('users_forgot_pwd_mail_subject', "Change of the password on %1\$s (%2\$s)
 define('users_forgot_pwd_mail_message', "Hello %1\$s,\n\nYou have requested a new password for your user account on the website of %2\$s (%3\$s).\n\nUser name: %1\$s\nE-mail address: %4\$s\nPassword: %5\$s\n\nPlease change the password again, after you logged in to your account.");
 define('users_forgot_pwd_success', 'An E-mail with you new password has been sent successfully.');
 define('users_home', 'Control center');
+define('users_language', 'Language');
 define('users_login', 'Login');
 define('users_mod_description', 'With this module you can administer the users.');
 define('users_new_pwd', 'New password');
@@ -47,6 +50,7 @@ define('users_register_mail_subject', "User account on %1\$s (%2\$s)");
 define('users_register_mail_message', "Hello %1\$s,\n\nYou have just registered a user account on the website of %2\$s (%3\$s).\nBelow you can see the data, with which you has been registered.\n\nUser name: %1\$s\nE-mail address: %4\$s\nPassword: %5\$s");
 define('users_register_success', 'The user account has been created successfully.');
 define('users_select_access_level', 'Please select an access level for this user');
+define('users_select_language', 'Please select the language in which you want to see the website');
 define('users_send_email', 'Send E-mail');
 define('users_sign_off', 'Sign off');
 define('users_type_in_nickname_or_email', 'Please either enter the E-mail address or the user name you used with the registration');

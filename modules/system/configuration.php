@@ -34,7 +34,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	foreach ($time_zones as $row) {
 		$time_zone[$i]['value'] = $row * 3600;
 		$time_zone[$i]['selected'] = select_entry('time_zone', $row * 3600, CONFIG_TIME_ZONE);
-		$time_zone[$i]['lang'] = lang('system', 'utc' . $row);
+		$time_zone[$i]['lang'] = lang('common', 'utc' . $row);
 		$i++;
 	}
 	$tpl->assign('time_zone', $time_zone);
