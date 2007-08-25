@@ -22,7 +22,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		if (isset($form)) {
 			$form['mail_disabled'] = $disabled;
 		} else {
-			$use['mail_disabled'] = $disabled;
+			$user['mail_disabled'] = $disabled;
 		}
 		$tpl->assign('form', isset($form) ? $form : $user);
 	} else {
