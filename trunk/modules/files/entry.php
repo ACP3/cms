@@ -33,7 +33,7 @@ switch ($modules->action) {
 			$errors[] = lang('files', 'select_internal_resource');
 		if (strlen($form['text']) < 3)
 			$errors[] = lang('files', 'description_to_short');
-		if (!ereg('[0-9]', $form['cat']) || ereg('[0-9]', $form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
+		if (!$validate->is_number($form['cat']) || $validate->is_number($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
 			$errors[] = lang('files', 'select_category');
 
 		if (isset($errors)) {
@@ -86,7 +86,7 @@ switch ($modules->action) {
 			$errors[] = lang('files', 'select_internal_resource');
 		if (strlen($form['text']) < 3)
 			$errors[] = lang('files', 'description_to_short');
-		if (!ereg('[0-9]', $form['cat']) || ereg('[0-9]', $form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
+		if (!$validate->is_number($form['cat']) || $validate->is_number($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
 			$errors[] = lang('files', 'select_category');
 
 		if (isset($errors)) {
@@ -133,7 +133,7 @@ switch ($modules->action) {
 	case 'delete':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
-		elseif (isset($modules->gen['entries']) && ereg('^([0-9|]+)$', $modules->gen['entries']))
+		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
 			$entries = $modules->gen['entries'];
 
 		if (is_array($entries)) {
@@ -142,11 +142,11 @@ switch ($modules->action) {
 				$marked_entries.= $entry . '|';
 			}
 			$content = combo_box(lang('files', 'confirm_delete'), uri('acp/files/adm_list/action_delete/entries_' . $marked_entries), uri('acp/files'));
-		} elseif (ereg('^([0-9|]+)$', $entries) && isset($modules->gen['confirmed'])) {
+		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
 			foreach ($marked_entries as $entry) {
-				if (!empty($entry) && ereg('[0-9]', $entry) && $db->select('id', 'files', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+				if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'files', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 					// Datei ebenfalls löschen
 					$file = $db->select('file', 'files', 'id = \'' . $entry . '\'');
 					if (is_file('files/files/' . $file[0]['file'])) {

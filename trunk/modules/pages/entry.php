@@ -18,23 +18,23 @@ switch ($modules->action) {
 
 		if (!$validate->date($form))
 			$errors[] = lang('common', 'select_date');
-		if (!ereg('[0-9]', $form['mode']))
+		if (!$validate->is_number($form['mode']))
 			$errors[] = lang('pages', 'select_static_hyperlink');
-		if (!ereg('[0-9]', $form['blocks']))
+		if (!$validate->is_number($form['blocks']))
 			$errors[] = lang('pages', 'select_block');
-		if (!empty($form['blocks']) && !ereg('[0-9]', $form['sort']))
+		if (!empty($form['blocks']) && !$validate->is_number($form['sort']))
 			$errors[] = lang('pages', 'type_in_chronology');
 		if (strlen($form['title']) < 3)
 			$errors[] = lang('pages', 'title_to_short');
-		if ($form['mode'] == '1' && (!empty($form['uri']) || ereg('[0-9]', $form['target'])))
+		if ($form['mode'] == '1' && (!empty($form['uri']) || $validate->is_number($form['target'])))
 			$errors[] = lang('pages', 'uri_and_target_not_allowed');
-		if ($form['mode'] == '1' && !empty($form['parent']) && !ereg('[0-9]', $form['parent']))
+		if ($form['mode'] == '1' && !empty($form['parent']) && !$validate->is_number($form['parent']))
 			$errors[] = lang('pages', 'select_superior_page');
 		if ($form['mode'] == '1' && strlen($form['text']) < 3)
 			$errors[] = lang('pages', 'text_to_short');
-		if (($form['mode'] == '2' || $form['mode'] == '3') && (!empty($form['text']) || ereg('[0-9]', $form['parent'])))
+		if (($form['mode'] == '2' || $form['mode'] == '3') && (!empty($form['text']) || $validate->is_number($form['parent'])))
 			$errors[] = lang('pages', 'superior_page_and_text_not_allowed');
-		if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !ereg('[0-9]', $form['target'])))
+		if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !$validate->is_number($form['target'])))
 			$errors[] = lang('pages', 'type_in_uri_and_target');
 
 		if (isset($errors)) {
@@ -70,25 +70,25 @@ switch ($modules->action) {
 
 		if (!$validate->date($form))
 			$errors[] = lang('common', 'select_date');
-		if (!ereg('[0-9]', $form['mode']))
+		if (!$validate->is_number($form['mode']))
 			$errors[] = lang('pages', 'select_static_hyperlink');
-		if (!ereg('[0-9]', $form['blocks']))
+		if (!$validate->is_number($form['blocks']))
 			$errors[] = lang('pages', 'select_block');
-		if (!empty($form['blocks']) && !ereg('[0-9]', $form['sort']))
+		if (!empty($form['blocks']) && !$validate->is_number($form['sort']))
 			$errors[] = lang('pages', 'type_in_chronology');
 		if (strlen($form['title']) < 3)
 			$errors[] = lang('pages', 'title_to_short');
-		if ($form['mode'] == '1' && (!empty($form['uri']) || ereg('[0-9]', $form['target'])))
+		if ($form['mode'] == '1' && (!empty($form['uri']) || $validate->is_number($form['target'])))
 			$errors[] = lang('pages', 'uri_and_target_not_allowed');
-		if ($form['mode'] == '1' && !empty($form['parent']) && !ereg('[0-9]', $form['parent']))
+		if ($form['mode'] == '1' && !empty($form['parent']) && !$validate->is_number($form['parent']))
 			$errors[] = lang('pages', 'select_superior_page');
-		if ($form['mode'] == '1' && ereg('[0-9]', $form['parent']) && ($db->select('id', 'pages', "id != '" . $modules->id . "' AND mode='1' AND parent='0'", 0, 0, 0, 1) == 0) || $form['parent'] == $modules->id || parent_check($modules->id, $form['parent']))
+		if ($form['mode'] == '1' && $validate->is_number($form['parent']) && ($db->select('id', 'pages', "id != '" . $modules->id . "' AND mode='1' AND parent='0'", 0, 0, 0, 1) == 0) || $form['parent'] == $modules->id || parent_check($modules->id, $form['parent']))
 			$errors[] = lang('pages', 'superior_page_not_allowed');
 		if ($form['mode'] == '1' && strlen($form['text']) < 3)
 			$errors[] = lang('pages', 'text_to_short');
-		if (($form['mode'] == '2' || $form['mode'] == '3') && (!empty($form['text']) || ereg('[0-9]', $form['parent'])))
+		if (($form['mode'] == '2' || $form['mode'] == '3') && (!empty($form['text']) || $validate->is_number($form['parent'])))
 			$errors[] = lang('pages', 'superior_page_and_text_not_allowed');
-		if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !ereg('[0-9]', $form['target'])))
+		if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !$validate->is_number($form['target'])))
 			$errors[] = lang('pages', 'type_in_uri_and_target');
 
 		if (isset($errors)) {
@@ -121,7 +121,7 @@ switch ($modules->action) {
 	case 'delete':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
-		elseif (isset($modules->gen['entries']) && ereg('^([0-9|]+)$', $modules->gen['entries']))
+		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
 			$entries = $modules->gen['entries'];
 
 		if (is_array($entries)) {
@@ -130,11 +130,11 @@ switch ($modules->action) {
 				$marked_entries.= $entry . '|';
 			}
 			$content = combo_box(lang('pages', 'confirm_delete'), uri('acp/pages/adm_list/action_delete/entries_' . $marked_entries), uri('acp/pages'));
-		} elseif (ereg('^([0-9|]+)$', $entries) && isset($modules->gen['confirmed'])) {
+		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
 			foreach ($marked_entries as $entry) {
-				if (!empty($entry) && ereg('[0-9]', $entry) && $db->select('id', 'pages', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+				if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'pages', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 					$bool = $db->delete('pages', 'id = \'' . $entry . '\'');
 
 					$cache->delete('pages_list_id_' . $entry);
@@ -198,7 +198,7 @@ switch ($modules->action) {
 	case 'delete_blocks':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
-		elseif (isset($modules->gen['entries']) && ereg('^([0-9|]+)$', $modules->gen['entries']))
+		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
 			$entries = $modules->gen['entries'];
 
 		if (is_array($entries)) {
@@ -207,11 +207,11 @@ switch ($modules->action) {
 				$marked_entries.= $entry . '|';
 			}
 			$content = combo_box(lang('pages', 'confirm_delete'), uri('acp/pages/adm_list_blocks/action_delete_blocks/entries_' . $marked_entries), uri('acp/pages_adm_list_blocks'));
-		} elseif (ereg('^([0-9|]+)$', $entries) && isset($modules->gen['confirmed'])) {
+		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
 			foreach ($marked_entries as $entry) {
-				if (!empty($entry) && ereg('[0-9]', $entry) && $db->select('id', 'pages_blocks', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+				if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'pages_blocks', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 					$bool = $db->delete('pages_blocks', 'id = \'' . $entry . '\'');
 				}
 			}

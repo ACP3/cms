@@ -16,7 +16,7 @@ $tpl->assign('MOD_newsletter', $modules->check('newsletter', 'create'));
 //
 $tpl->assign('MOD_feeds', $modules->check('feeds', 'list'));
 
-$cat = isset($_POST['form']['cat']) && ereg('[0-9]', $_POST['form']['cat']) ? $_POST['form']['cat'] : $modules->cat;
+$cat = isset($_POST['form']['cat']) && $validate->is_number($_POST['form']['cat']) ? $_POST['form']['cat'] : $modules->cat;
 
 // Cache für die Kategorien
 if (!$cache->check('categories_news')) {

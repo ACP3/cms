@@ -24,7 +24,7 @@ switch ($modules->action) {
 			$errors[] = lang('common', 'wrong_email_format');
 		if ($validate->email($form['mail']) && $db->select('id', 'users', 'mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
 			$errors[] = lang('common', 'user_email_already_exists');
-		if (!ereg('[0-9]', $form['access']))
+		if (!$validate->is_number($form['access']))
 			$errors[] = lang('users', 'select_access_level');
 		if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])
 			$errors[] = lang('users', 'type_in_pwd');
@@ -64,7 +64,7 @@ switch ($modules->action) {
 			$errors[] = lang('common', 'wrong_email_format');
 		if ($validate->email($form['mail']) && $db->select('id', 'users', 'id != \'' . $modules->id . '\' AND mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
 			$errors[] = lang('common', 'user_email_already_exists');
-		if (!ereg('[0-9]', $form['access']))
+		if (!$validate->is_number($form['access']))
 			$errors[] = lang('users', 'select_access_level');
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
 			$errors[] = lang('users', 'type_in_pwd');
@@ -105,7 +105,7 @@ switch ($modules->action) {
 	case 'delete':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
-		elseif (isset($modules->gen['entries']) && ereg('^([0-9|]+)$', $modules->gen['entries']))
+		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
 			$entries = $modules->gen['entries'];
 
 		if (is_array($entries)) {
@@ -114,13 +114,13 @@ switch ($modules->action) {
 				$marked_entries.= $entry . '|';
 			}
 			$content = combo_box(lang('users', 'confirm_delete'), uri('acp/users/adm_list/action_delete/entries_' . $marked_entries), uri('acp/users'));
-		} elseif (ereg('^([0-9|]+)$', $entries) && isset($modules->gen['confirmed'])) {
+		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = false;
 			$admin_user = false;
 			$session_user = false;
 			foreach ($marked_entries as $entry) {
-				if (!empty($entry) && ereg('[0-9]', $entry) && $db->select('id', 'users', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+				if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'users', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 					if ($entry == '1') {
 						$admin_user = true;
 					} else {
@@ -206,9 +206,9 @@ switch ($modules->action) {
 		} else {
 			$form = $_POST['form'];
 
-			if (!ereg('[0-9]', $form['time_zone']))
+			if (!$validate->is_number($form['time_zone']))
 				$errors[] = lang('common', 'select_time_zone');
-			if (!ereg('[0-9]', $form['dst']))
+			if (!$validate->is_number($form['dst']))
 				$errors[] = lang('common', 'select_daylight_saving_time');
 			if (!is_file('languages/' . $db->escape($form['language'], 2) . '/info.php'))
 				$errors[] = lang('users', 'select_language');

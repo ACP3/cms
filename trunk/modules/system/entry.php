@@ -54,19 +54,19 @@ switch ($modules->action) {
 	case 'configuration':
 		$form = $_POST['form'];
 
-		if (!ereg('[0-9]', $form['entries']))
+		if (!$validate->is_number($form['entries']))
 			$errors[] = lang('system', 'select_entries_per_page');
-		if (!ereg('[0-9]', $form['flood']))
+		if (!$validate->is_number($form['flood']))
 			$errors[] = lang('system', 'type_in_flood_barrier');
-		if (!ereg('[0-9]', $form['sef']))
+		if (!$validate->is_number($form['sef']))
 			$errors[] = lang('system', 'select_sef_uris');
 		if (empty($form['date']))
 			$errors[] = lang('system', 'type_in_date_format');
-		if (!ereg('[0-9]', $form['time_zone']))
+		if (!$validate->is_number($form['time_zone']))
 			$errors[] = lang('common', 'select_time_zone');
-		if (!ereg('[0-9]', $form['dst']))
+		if (!$validate->is_number($form['dst']))
 			$errors[] = lang('common', 'select_daylight_saving_time');
-		if (!ereg('[0-9]', $form['maintenance']))
+		if (!$validate->is_number($form['maintenance']))
 			$errors[] = lang('system', 'select_online_maintenance');
 		if (strlen($form['maintenance_msg']) < 3)
 			$errors[] = lang('system', 'maintenance_message_to_short');

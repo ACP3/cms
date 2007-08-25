@@ -92,7 +92,7 @@ function date_aligned($mode, $time_stamp, $format = 0)
  */
 function date_dropdown($mode, $name, $id, $value = '')
 {
-	global $tpl;
+	global $tpl, $validate;
 
 	$time = date_aligned(1, time(), 'Y');
 	$date_arr = array(
@@ -111,7 +111,7 @@ function date_dropdown($mode, $name, $id, $value = '')
 	$loop = NULL;
 	for ($date[1]; $date[1] <= $date[2]; $date[1]++) {
 		$loop[$date[1]]['current'] = $date[1];
-		$time = !ereg('[0-9]', $value) ? date_aligned(1, time(), $date[0]) : $value;
+		$time = !$validate->is_number($value) ? date_aligned(1, time(), $date[0]) : $value;
 		$loop[$date[1]]['selected'] = select_entry($name, $date[1], $time);
 	}
 	$tpl->assign('loop', $loop);
