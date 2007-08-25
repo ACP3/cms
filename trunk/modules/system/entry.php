@@ -62,10 +62,10 @@ switch ($modules->action) {
 			$errors[] = lang('system', 'select_sef_uris');
 		if (empty($form['date']))
 			$errors[] = lang('system', 'type_in_date_format');
-		if (!ereg('[0-9]', $form['dst']))
-			$errors[] = lang('system', 'select_daylight_saving_time');
 		if (!ereg('[0-9]', $form['time_zone']))
-			$errors[] = lang('system', 'select_time_zone');
+			$errors[] = lang('common', 'select_time_zone');
+		if (!ereg('[0-9]', $form['dst']))
+			$errors[] = lang('common', 'select_daylight_saving_time');
 		if (!ereg('[0-9]', $form['maintenance']))
 			$errors[] = lang('system', 'select_online_maintenance');
 		if (strlen($form['maintenance_msg']) < 3)

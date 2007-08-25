@@ -40,7 +40,7 @@
 				<span>({lang values="system|php_date_function"})</span>
 			</dt>
 			<dd><input type="text" name="form[date]" id="date" value="{$form.date}" maxlength="20" /></dd>
-			<dt><label for="time_zone">{lang values="system|time_zone"}</label></dt>
+			<dt><label for="time_zone">{lang values="common|time_zone"}</label></dt>
 			<dd>
 				<select name="form[time_zone]" id="time_zone">
 {foreach from=$time_zone item=row}
@@ -48,7 +48,7 @@
 {/foreach}
 				</select>
 			</dd>
-			<dt><label for="dst_yes">{lang values="system|daylight_saving_time"}</label></dt>
+			<dt><label for="dst_yes">{lang values="common|daylight_saving_time"}</label></dt>
 			<dd>
 				<label for="dst_yes">
 					<input type="radio" name="form[dst]" id="dst_yes" value="1"{$dst.0.checked} class="checkbox" />

@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-//Sprache
+// Sprache
 $languages = array();
 $directories = scandir('languages');
 $count_dir = count($directories);
@@ -27,7 +27,7 @@ for ($i = 0; $i < $count_dir; $i++) {
 }
 $tpl->assign('languages', $languages);
 
-//Designs
+// Designs
 $designs = array();
 $directories = scandir('designs');
 $count_dir = count($directories);

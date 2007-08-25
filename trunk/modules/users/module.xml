@@ -40,6 +40,10 @@
 				<level>1</level>
 			</action>
 			<action>
+				<name>edit_settings</name>
+				<level>1</level>
+			</action>
+			<action>
 				<name>forgot_pwd</name>
 				<level>1</level>
 			</action>
@@ -54,6 +58,10 @@
 		</item>
 		<item>
 			<file>edit_profile</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>edit_settings</file>
 			<level>1</level>
 		</item>
 		<item>
