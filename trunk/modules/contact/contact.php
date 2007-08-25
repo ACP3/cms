@@ -16,15 +16,15 @@ if (isset($_POST['submit'])) {
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
 	if ($auth->is_user() && preg_match('/\d/', $_SESSION['acp3_id'])) {
-		$user = $db->select('mail', 'users', 'id = \'' . $_SESSION['acp3_id'] . '\'');
+		$user = $auth->getUserInfo('mail');
 		$disabled = ' readonly="readonly" class="readonly"';
 
 		if (isset($form)) {
 			$form['mail_disabled'] = $disabled;
 		} else {
-			$user[0]['mail_disabled'] = $disabled;
+			$use['mail_disabled'] = $disabled;
 		}
-		$tpl->assign('form', isset($form) ? $form : $user[0]);
+		$tpl->assign('form', isset($form) ? $form : $user);
 	} else {
 		$tpl->assign('form', isset($form) ? $form : array('mail_disabled' => ''));
 	}

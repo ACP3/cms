@@ -63,6 +63,29 @@ class auth
 		}
 	}
 	/**
+	 * Gibt ein Array mit den angeforderten Daten eines Benutzers zurück
+	 *
+	 * @param string $fields
+	 * 	Die zu selektierenden Benutzerdaten
+	 * @param integer $user_id
+	 * 	Der angeforderte Benutzer
+	 * @return mixed
+	 */
+	function getUserInfo($fields, $user_id = 0)
+	{
+		if (empty($user_id) && $this->is_user) {
+			$user_id = $_SESSION['acp3_id'];
+		}
+		if (preg_match('/\d/', $user_id)) {
+			global $db;
+
+			$info = $db->select($fields, 'users', 'id = \'' . $user_id . '\'');
+
+			return count($info) == '1' ? $info[0] : false;
+		}
+		return false;
+	}
+	/**
 	 * Gibt den Status von $is_user zurück
 	 *
 	 * @return boolean

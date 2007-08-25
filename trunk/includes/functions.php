@@ -47,7 +47,19 @@ function combo_box($text, $forward = 0, $back = 0)
  */
 function date_aligned($mode, $time_stamp, $format = 0)
 {
-	$offset = CONFIG_TIME_ZONE + (CONFIG_DST == '1' ? 3600 : 0);
+	global $auth;
+	static $info = array();
+
+	$info = $auth->getUserInfo('time_zone, dst');
+
+	if (!empty($info)) {
+		$time_zone = $info['time_zone'];
+		$dst = $info['dst'];
+	} else {
+		$time_zone = CONFIG_TIME_ZONE;
+		$dst = CONFIG_DST;
+	}
+	$offset = $time_zone + ($dst == '1' ? 3600 : 0);
 
 	// Datum in jeweiliger Formatierung ausgeben
 	if ($mode == 1) {
@@ -117,7 +129,15 @@ function date_dropdown($mode, $name, $id, $value = '')
  */
 function lang($mod, $key)
 {
-	$path = 'languages/' . CONFIG_LANG . '/' . $mod . '.php';
+	global $auth;
+	static $lang = 0;
+
+	if (empty($lang)) {
+		$info = $auth->getUserInfo('language');
+		$lang = !empty($info) ? $info['language'] : CONFIG_LANG;
+	}
+
+	$path = 'languages/' . $lang . '/' . $mod . '.php';
 
 	if (!defined($mod . '_' . $key) && is_file($path))
 		include_once $path;
