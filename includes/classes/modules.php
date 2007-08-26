@@ -15,9 +15,33 @@
  */
 class modules
 {
+	/**
+	 * Die ID eines Eintrages in der Datenbank
+	 *
+	 * @var integer
+	 * @access public
+	 */
 	public $id = '0';
+	/**
+	 * Die ID einer Kategorie in der Datenbank
+	 *
+	 * @var integer
+	 * @access public
+	 */
 	public $cat = '0';
+	/**
+	 * Die Aktion, welche z.B: in einem Formular ausgeführt werden soll
+	 *
+	 * @var string
+	 * @access public
+	 */
 	public $action = '';
+	/**
+	 * Die restlichen URI Parameter
+	 *
+	 * @var array
+	 * @access public
+	 */
 	public $gen = array();
 
 	/**
@@ -27,7 +51,7 @@ class modules
 	 */
 	function __construct()
 	{
-		if (!empty($_GET['stm']) && preg_match('/^(acp\/)/', $_GET['stm'])) {
+		if (!empty($_GET['stm']) && strpos($_GET['stm'], 'acp/') !== false) {
 			/**
 			 * Definieren, dass man sich im Administrationsbereich befindet
 			 */
@@ -40,14 +64,13 @@ class modules
 			 */
 			define('IN_ACP3', true);
 		}
-		$stm = !empty($_GET['stm']) ? explode('/', $_GET['stm']) : null;
+		$stm = !empty($_GET['stm']) ? explode('/', $_GET['stm']) : 0;
 		$def_mod = defined('IN_ADM') ? 'home' : 'news';
 		$def_page = defined('IN_ADM') ? 'adm_list' : 'list';
 
 		$this->mod = !empty($stm[0]) ? $stm[0] : $def_mod;
 		$this->page = !empty($stm[1]) ? $stm[1] : $def_page;
 
-		$this->id = '0';
 		$this->cat = !empty($_POST['cat']) ? $_POST['cat'] : '0';
 		$this->action = !empty($_POST['action']) ? $_POST['action'] : $this->page;
 
