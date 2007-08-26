@@ -92,7 +92,7 @@ class modules
 	 * @return boolean
 	 */
 	function check($module = 0, $page = 0) {
-		global $db;
+		global $auth, $db;
 		static $access_level = array();
 
 		$module = !empty($module) ? $module : $this->mod;
@@ -104,7 +104,16 @@ class modules
 			if ((string) $xml->info->active == '1') {
 				// Falls die einzelnen Zugriffslevel auf die Module noch nicht gesetzt sind, diese aus der Datenbank selektieren
 				if (!isset($access_level[$module])) {
-					$access_to_modules = $db->select('modules', 'access', 'id = \'' . $_SESSION['acp3_access'] . '\'');
+					// Zugriffslevel für Gäste
+					$access_id = 2;
+					// Zugriffslevel für Benutzer holen
+					if (isset($_SESSION['acp3_id'])) {
+						$info = $auth->getUserInfo('access');
+						if (!empty($info)) {
+							$access_id = $info['access'];
+						}
+					}
+					$access_to_modules = $db->select('modules', 'access', 'id = \'' . $access_id . '\'');
 					$modules = explode(',', $access_to_modules[0]['modules']);
 
 					foreach ($modules as $row) {
