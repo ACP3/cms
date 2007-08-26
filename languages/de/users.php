@@ -7,6 +7,7 @@
  * @subpackage Modules
  */
 
+define('users_administration', 'Verwaltung');
 define('users_admin_user_undeletable', 'Der Administrator kann nicht gelöscht werden.');
 define('users_confirm_delete', 'Sollen die ausgewählten Benutzer wirklich gelöscht werden?');
 define('users_create', 'Neuen Benutzer erstellen');

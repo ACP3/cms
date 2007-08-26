@@ -6,7 +6,7 @@
 	<li><a href="{uri args="users/home"}">{lang values="users|home"}</a></li>
 {if $nav_mods}
 	<li>
-		<a href="#" id="nav_mods_link">{lang values="common|modules"}</a>
+		<a href="#" id="nav_mods_link">{lang values="users|administration"}</a>
 		<ul id="nav_mods" class="hide">
 {foreach from=$nav_mods item=row}
 			<li><a href="{uri args="acp/`$row.dir`"}">{$row.name}</a></li>
@@ -19,12 +19,9 @@
 		<a href="#" id="nav_system_link">{lang values="system|system"}</a>
 		<ul id="nav_system" class="hide">
 			<li><a href="{uri args="acp/system/configuration"}">{lang values="system|configuration"}</a></li>
-			<li><a href="{uri args="acp/system/lang_design"}">{lang values="system|lang_design"}</a></li>
 			<li><a href="{uri args="acp/system/software"}">{lang values="system|software"}</a></li>
-			<li><a href="{uri args="acp/system/mod_list"}">{lang values="system|mod_list"}</a></li>
-			<li><a href="{uri args="acp/system/updates"}">{lang values="system|updates"}</a></li>
-			<li><a href="{uri args="acp/system/sql"}">{lang values="system|sql"}</a></li>
-			<li><a href="{uri args="acp/system/optimisation"}">{lang values="system|optimisation"}</a></li>
+			<li><a href="{uri args="acp/system/extensions"}">{lang values="system|extensions"}</a></li>
+			<li><a href="{uri args="acp/system/maintenance"}">{lang values="system|maintenance"}</a></li>
 		</ul>
 	</li>
 {/if}

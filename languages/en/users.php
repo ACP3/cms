@@ -7,6 +7,7 @@
  * @subpackage Modules
  */
 
+define('users_administration', 'Administration');
 define('users_admin_user_undeletable', 'The administrator can\'t be deleted.');
 define('users_confirm_delete', 'Do you really want to delete the marked user accounts?');
 define('users_create', 'Create a new user');

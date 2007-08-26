@@ -10,6 +10,10 @@
 if (!defined('IN_ADM'))
 	exit;
 
+$breadcrumb->assign(lang('system', 'system'), uri('acp/system'));
+$breadcrumb->assign(lang('system', 'maintenance'), uri('acp/system/maintenance'));
+$breadcrumb->assign(lang('system', 'sql_optimisation'));
+
 $action = $modules->action == 'do' ? true : false;
 
 $tpl->assign('action', $action);
@@ -36,5 +40,5 @@ if ($action) {
 	$tpl->assign('overall_overhead', $overall_overhead);
 }
 
-$content = $tpl->fetch('system/optimisation.html');
+$content = $tpl->fetch('system/sql_optimisation.html');
 ?>
