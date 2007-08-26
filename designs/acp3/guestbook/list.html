@@ -19,10 +19,10 @@
 			<strong>{lang values="common|name"}:</strong> {if $row.user_id}<a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang values="users|view_profile"}">{$row.name}</a>{else}{$row.name}{/if}<br />
 			<strong>{lang values="common|date"}:</strong> {$row.date}<br />
 {if $row.hp != 'http://'}
-			<a href="{$row.website}" onclick="window.open(this.href); return false" title="{lang values="guestbook|visit_website"}"><img src="{$root_dir}images/crystal/16/website.png" alt="{$row.website}" /></a>
+			<a href="{$row.website}" onclick="window.open(this.href); return false" title="{lang values="guestbook|visit_website"}"><img src="{icon path="16/website"}" alt="{$row.website}" /></a>
 {/if}
 {if $row.mail != ''}
-			<a href="mailto:{$row.mail}" title="{lang values="guestbook|send_email"}"><img src="{$root_dir}images/crystal/16/mail.png" alt="{$row.mail}" /></a>
+			<a href="mailto:{$row.mail}" title="{lang values="guestbook|send_email"}"><img src="{icon path="16/mail"}" alt="{$row.mail}" /></a>
 {/if}
 		</div>
 		<div class="gbright">
