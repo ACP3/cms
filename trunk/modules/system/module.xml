@@ -18,6 +18,10 @@
 			<level>2</level>
 		</item>
 		<item>
+			<file>designs</file>
+			<level>2</level>
+		</item>
+		<item>
 			<file>entry</file>
 			<action>
 				<name>modactivation</name>
@@ -32,20 +36,24 @@
 				<level>2</level>
 			</action>
 			<action>
-				<name>lang</name>
+				<name>designs</name>
 				<level>2</level>
 			</action>
 			<action>
-				<name>design</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>sql</name>
+				<name>languages</name>
 				<level>2</level>
 			</action>
 		</item>
 		<item>
-			<file>lang_design</file>
+			<file>extensions</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>languages</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>maintenance</file>
 			<level>2</level>
 		</item>
 		<item>
@@ -53,23 +61,19 @@
 			<level>2</level>
 		</item>
 		<item>
-			<file>optimisation</file>
-			<level>2</level>
-		</item>
-		<item>
-			<file>sidebar</file>
-			<level>2</level>
-		</item>
-		<item>
 			<file>software</file>
 			<level>2</level>
 		</item>
 		<item>
-			<file>sql</file>
+			<file>sql_export</file>
 			<level>2</level>
 		</item>
 		<item>
-			<file>updates</file>
+			<file>sql_optimisation</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>update_check</file>
 			<level>2</level>
 		</item>
 	</access>

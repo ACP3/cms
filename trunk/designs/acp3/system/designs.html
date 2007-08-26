@@ -1,0 +1,22 @@
+<table>
+	<thead>
+		<tr>
+			<th style="width:20%">{lang values="common|name"}</th>
+			<th style="width:40%">{lang values="common|description"}</th>
+			<th style="width:15%">{lang values="common|author"}</th>
+			<th>{lang values="system|version"}</th>
+			<th style="width:10%">{lang values="common|options"}</th>
+		</tr>
+	</thead>
+	<tbody>
+{foreach from=$designs item=row}
+		<tr>
+			<td>{$row.name}</td>
+			<td>{$row.description}</td>
+			<td>{$row.author}</td>
+			<td>{$row.version}</td>
+			<td>{$row.action}</td>
+		</tr>
+{/foreach}
+	</tbody>
+</table>
