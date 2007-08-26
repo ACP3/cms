@@ -29,6 +29,6 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$tpl->assign('form', isset($form) ? $form : array('mail_disabled' => ''));
 	}
 
-	$content = $tpl->fetch('contact/contact.html');
+	$content = $tpl->fetch('contact/list.html');
 }
 ?>

@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$breadcrumb->assign(lang('contact', 'contact'), uri('contact/contact'));
+$breadcrumb->assign(lang('contact', 'contact'), uri('contact'));
 $breadcrumb->assign(lang('contact', 'imprint'));
 
 $contact = $config->output('contact');

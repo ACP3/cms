@@ -13,13 +13,9 @@
 			<level>2</level>
 		</item>
 		<item>
-			<file>contact</file>
-			<level>1</level>
-		</item>
-		<item>
 			<file>entry</file>
 			<action>
-				<name>contact</name>
+				<name>send_mail</name>
 				<level>1</level>
 			</action>
 			<action>
@@ -29,6 +25,10 @@
 		</item>
 		<item>
 			<file>imprint</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>list</file>
 			<level>1</level>
 		</item>
 	</access>
