@@ -27,7 +27,8 @@ class auth
 	 */
 	function __construct()
 	{
-		// Session starten
+		// Session Einstellungen setzen und Session starten
+		session_set_cookie_params(0, ROOT_DIR, htmlentities($_SERVER['HTTP_HOST']));
 		session_start();
 
 		if (isset($_COOKIE['ACP3_AUTH'])) {
@@ -36,16 +37,15 @@ class auth
 			$cookie = $db->escape($_COOKIE['ACP3_AUTH']);
 			$cookie_arr = explode('|', $cookie);
 
-			$user_check = $db->select('id, pwd, access', 'users', 'nickname = \'' . $cookie_arr[0] . '\'');
+			$user_check = $db->select('id, pwd', 'users', 'nickname = \'' . $cookie_arr[0] . '\'');
 			if (count($user_check) == '1') {
 				$db_password = substr($user_check[0]['pwd'], 0, 40);
 				if ($db_password == $cookie_arr[1]) {
 					$this->is_user = true;
 
 					// Falls nötig, Session neu setzen
-					if (empty($_SESSION['acp3_id']) || empty($_SESSION['acp3_access'])) {
+					if (empty($_SESSION['acp3_id'])) {
 						$_SESSION['acp3_id'] = $user_check[0]['id'];
-						$_SESSION['acp3_access'] = $user_check[0]['access'];
 					}
 				}
 			}
@@ -57,9 +57,6 @@ class auth
 				session_destroy();
 				redirect(0, ROOT_DIR);
 			}
-		// Zugriffslevel für Besucher setzen
-		} else {
-			$_SESSION['acp3_access'] = '2';
 		}
 	}
 	/**

@@ -95,8 +95,6 @@ switch ($modules->action) {
 			if ($modules->id == $_SESSION['acp3_id']) {
 				$cookie_arr = explode('|', $_COOKIE['ACP3_AUTH']);
 				setcookie('ACP3_AUTH', $form['nickname'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]), time() + 3600, ROOT_DIR);
-
-				$_SESSION['acp3_access'] = $form['access'];
 			}
 
 			$content = combo_box($bool ? lang('users', 'edit_success') : lang('users', 'edit_error'), uri('acp/users'));
