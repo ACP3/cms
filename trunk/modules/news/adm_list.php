@@ -13,7 +13,7 @@ if (!defined('IN_ADM'))
 if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
 	include 'modules/news/entry.php';
 } else {
-	$news = $db->select('id, start, end, headline, category_id', 'news', 0, 'start DESC', POS, CONFIG_ENTRIES);
+	$news = $db->select('n.id, n.start, n.end, n.headline, c.name AS cat', 'news AS n, ' . CONFIG_DB_PRE . 'categories AS c', 'n.category_id = c.id', 'n.start DESC', POS, CONFIG_ENTRIES);
 	$c_news = count($news);
 
 	if ($c_news > 0) {
@@ -22,8 +22,6 @@ if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
 		for ($i = 0; $i < $c_news; $i++) {
 			$news[$i]['start'] = date_aligned(1, $news[$i]['start']);
 			$news[$i]['end'] = date_aligned(1, $news[$i]['end']);
-			$cat = $db->select('name', 'categories', 'id = \'' . $news[$i]['category_id'] . '\'');
-			$news[$i]['cat'] = $cat[0]['name'];
 		}
 		$tpl->assign('news', $news);
 	}

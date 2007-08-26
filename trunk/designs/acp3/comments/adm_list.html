@@ -1,7 +1,7 @@
 {if $comments && $module == '0'}
 <form action="{uri args="acp/comments/adm_list/action_delete_com_by_mod"}" method="post" id="comments">
 	<div id="adm-list">
-		<a href="javascript:$('#comments').submit()" title="{lang values="common|delete_marked"}"><img src="{$root_dir}images/crystal/32/delete.png" alt="{lang values="common|delete_marked"}" /></a>
+		<a href="javascript:$('#comments').submit()" title="{lang values="common|delete_marked"}"><img src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" /></a>
 		<h2>{lang values="comments|comments_overview"}</h2>
 	</div>
 	<hr />
@@ -31,7 +31,7 @@
 {elseif $comments && $module != '0'}
 <form action="{uri args="acp/comments/adm_list/action_delete_comments"}" method="post" id="comments">
 	<div id="adm-list">
-		<a href="javascript:$('#comments').submit()" title="{lang values="common|delete_marked"}"><img src="{$root_dir}images/crystal/32/delete.png" alt="{lang values="common|delete_marked"}" /></a>
+		<a href="javascript:$('#comments').submit()" title="{lang values="common|delete_marked"}"><img src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" /></a>
 		<h2>{lang values="comments|comments_overview"}</h2>
 	</div>
 	<hr />
