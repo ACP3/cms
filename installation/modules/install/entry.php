@@ -54,8 +54,6 @@ if (isset($errors)) {
 	$tpl->assign('errors', $errors);
 	$tpl->assign('error_msg', $tpl->fetch('error.html'));
 } else {
-	define('CHARSET', 'UTF-8');
-
 	$form['date'] = mask($form['date']);
 	$form['design'] = 'acp3';
 	$form['lang'] = is_file('../languages/' . LANG . '/info.php') ? LANG : 'de';

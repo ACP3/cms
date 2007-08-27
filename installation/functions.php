@@ -20,7 +20,7 @@ function mask($var, $mode = 1)
 {
 	switch ($mode) {
 		case 1:
-			return htmlspecialchars($var, ENT_QUOTES, CHARSET);
+			return htmlspecialchars($var, ENT_QUOTES, 'UTF-8');
 			break;
 		case 2:
 			return addslashes($var);
