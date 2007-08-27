@@ -65,17 +65,6 @@ function select_entry($name, $value, $field_value = '', $attr = 'selected') {
 		}
 	}
 }
-// Regex um E-Mail-Adressen auf Korrektheit zu überprüfen
-function validate_email($mail)
-{
-	// Suchmuster von PEAR: HTML/QuickForm/Rule/Email.php
-	$pattern = '/^((\"[^\"\f\n\r\t\v\b]+\")|([\w\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+(\.[\w\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+)*))@((\[(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))\])|(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))|((([A-Za-z0-9\-])+\.)+[A-Za-z\-]+))$/';
-
-	if (preg_match($pattern, $mail)) {
-		return true;
-	}
-	return false;
-}
 // Konfigurationsdateien für die Module erstellen
 function write_config($module, $data)
 {

@@ -2,6 +2,9 @@
 if (!defined('IN_INSTALL'))
 	exit;
 
+require_once '../includes/classes/validate.php';
+$validate = new validate;
+
 $form = $_POST['form'];
 
 if (empty($form['db_host']))
@@ -28,23 +31,23 @@ if (empty($form['user_name']))
 	$errors[] = lang('type_in_user_name');
 if ((empty($form['user_pwd']) || empty($form['user_pwd_wdh'])) || (!empty($form['user_pwd']) && !empty($form['user_pwd_wdh']) && $form['user_pwd'] != $form['user_pwd_wdh']))
 	$errors[] = lang('type_in_pwd');
-if (!validate_email($form['mail']))
+if (!$validate->email($form['mail']))
 	$errors[] = lang('wrong_email_format');
-if (!ereg('[0-9]', $form['entries']))
+if (!$validate->is_number($form['entries']))
 	$errors[] = lang('select_entries_per_page');
-if (!ereg('[0-9]', $form['flood']))
+if (!$validate->is_number($form['flood']))
 	$errors[] = lang('type_in_flood_barrier');
-if (!ereg('[0-9]', $form['sef']))
+if (!$validate->is_number($form['sef']))
 	$errors[] = lang('select_sef_uris');
 if (empty($form['date']))
 	$errors[] = lang('type_in_date_format');
-if (!ereg('[0-9]', $form['dst']))
+if (!$validate->is_number($form['dst']))
 	$errors[] = lang('select_daylight_saving_time');
-if (!ereg('[0-9]', $form['time_zone']))
+if (!$validate->is_number($form['time_zone']))
 	$errors[] = lang('select_time_zone');
 if (empty($form['title']))
 	$errors[] = lang('type_in_title');
-if (!file_exists('../includes/config.php') || !is_writable('../includes/config.php'))
+if (!is_file('../includes/config.php') || !is_writable('../includes/config.php'))
 	$errors[] = lang('wrong_chmod_for_config_file');
 
 if (isset($errors)) {

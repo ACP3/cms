@@ -104,11 +104,11 @@ function process_navbar()
 							for ($j = 2; $j < $c_uri_arr; $j++) {
 								if (!empty($uri_arr[$j])) {
 									$is_page = false;
-									if (ereg('^(id_[0-9]+)$', $uri_arr[$j]) && str_replace('id_', '', $uri_arr[$j]) == $modules->id ||
-										ereg('^(cat_[0-9]+)$', $uri_arr[$j]) && str_replace('cat_', '', $uri_arr[$j]) == $modules->cat ||
-										ereg('^(action_[_a-z0-9-]+)$', $uri_arr[$j]) && str_replace('action_', '', $uri_arr[$j]) == $modules->action) {
+									if (preg_match('/^(id_(\d+))$/', $uri_arr[$j]) && str_replace('id_', '', $uri_arr[$j]) == $modules->id ||
+										preg_match('/^(cat_(\d+))$/', $uri_arr[$j]) && str_replace('cat_', '', $uri_arr[$j]) == $modules->cat ||
+										preg_match('/^(action_(\w+))$/', $uri_arr[$j]) && str_replace('action_', '', $uri_arr[$j]) == $modules->action) {
 										$is_page = true;
-									} elseif (ereg('^([_a-z0-9-]+)_(.+)$', $uri_arr[$j])) {
+									} elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $uri_arr[$j])) {
 										$pos = strpos($uri_arr[$j], '_');
 										if (isset($modules->gen[substr($uri_arr[$j], 0, $pos)]) &&
 											substr($uri_arr[$j], $pos + 1, strlen($uri_arr[$j])) == $modules->gen[substr($uri_arr[$j], 0, $pos)]) {
