@@ -81,7 +81,7 @@ define('system_sef_uris', 'Search engine friendly URIs');
 define('system_sef_uris_description', 'This requires the mod_rewrite module of the Apache Webserver');
 define('system_select_db_type', 'Please select the database type');
 define('system_select_entries_per_page', 'Please select, how many resultsets per page should be displayed');
-define('system_select_menupoint', 'Please select one of the adjoining menu items, to reach the desired action.');
+define('system_select_menu_item', 'Please select one of the above-noted menu items, to reach the desired action.');
 define('system_select_online_maintenance', 'Please selecr, wether the maintenance mode should be turned on or off');
 define('system_select_sef_uris', 'Please select, wether search engine friendly URIs should be used, or not');
 define('system_separate_with_commas', 'Please seperate with commas');

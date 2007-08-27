@@ -81,7 +81,7 @@ define('system_sef_uris', 'Suchmaschinenfreundliche URIs');
 define('system_sef_uris_description', 'Das mod_rewrite-Modul des Apache-Servers muss aktiviert sein');
 define('system_select_db_type', 'Bitte wählen Sie den Datenbank-Typ aus');
 define('system_select_entries_per_page', 'Bitte wählen Sie aus, wie viele Datensätze pro Seite angezeigt werden sollen');
-define('system_select_menupoint', 'Bitte wählen Sie einen der nebenstehenden Menüpunkte aus, um zur gewünschten Aktion zu gelangen.');
+define('system_select_menu_item', 'Bitte wählen Sie einen der oebnstehenden Menüpunkte aus, um zur gewünschten Aktion zu gelangen.');
 define('system_select_online_maintenance', 'Bitte wählen Sie aus, ob sich die Seite im Wartungsmodus befinden soll oder nicht');
 define('system_select_sef_uris', 'Bitte geben Sie an, ob die suchmaschinenfreundlichen URIs verwendet werden sollen, oder nicht');
 define('system_separate_with_commas', 'Bitte mit Kommata trennen');
