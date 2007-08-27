@@ -312,6 +312,6 @@ function select_entry($name, $value, $field_value = '', $attr = 'selected')
 function uri($uri)
 {
 	$pre = CONFIG_SEF == '0' ? PHP_SELF . '?stm=' : ROOT_DIR;
-	return $pre . $uri . (!ereg('\/$', $uri) ? '/' : '');
+	return $pre . $uri . (!preg_match('/\/$/', $uri) ? '/' : '');
 }
 ?>
