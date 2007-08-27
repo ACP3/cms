@@ -20,7 +20,7 @@ if ($c_result > 0) {
 		$results[$i]['title'] = html_entity_decode($result[$i]['headline']);
 
 		$description = strip_tags($db->escape($result[$i]['text'], 3));
-		$description = html_entity_decode($description, ENT_QUOTES, CHARSET);
+		$description = html_entity_decode($description, ENT_QUOTES, 'UTF-8');
 
 		$results[$i]['description'] = substr($description, 0, 300);
 		$results[$i]['uri'] = $link . uri('news/details/id_' . $result[$i]['id']);

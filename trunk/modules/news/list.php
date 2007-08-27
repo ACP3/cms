@@ -64,7 +64,7 @@ if ($c_news > 0) {
 		// HTML-Code entfernen, für den weiterlesen... Link
 		$striped_news = strip_tags($news[$i]['text']);
 		$striped_news = $db->escape($striped_news, 3);
-		$striped_news = html_entity_decode($striped_news, ENT_QUOTES, CHARSET);
+		$striped_news = html_entity_decode($striped_news, ENT_QUOTES, 'UTF-8');
 		$chars = 350;
 
 		// Weiterlesen-Link, falls zusätzliche Links zur News angegeben sind oder Zeichenanzahl größer als $chars

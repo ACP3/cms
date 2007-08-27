@@ -23,9 +23,9 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 	$auth = new auth;
 
 	if (!$auth->is_user() && defined('IN_ADM') && $modules->mod != 'users' && $modules->page != 'login') {
-		redirect('acp/users/login');
+		redirect('users/login');
 	}
-
+	// Loginfeld bzw. Benutzermenü laden
 	include 'modules/users/sidebar.php';
 
 	// Navigationsleisten
@@ -43,7 +43,7 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 	}
 
 	// Evtl. gesetzten Content-Type des Servers überschreiben
-	header('Content-Type: ' . (defined('CUSTOM_CONTENT_TYPE') ? CUSTOM_CONTENT_TYPE : 'text/html') . '; charset=' . CHARSET);
+	header('Content-Type: ' . (defined('CUSTOM_CONTENT_TYPE') ? CUSTOM_CONTENT_TYPE : 'text/html') . '; charset=UTF-8');
 
 	// Template ausgeben
 	$tpl->assign('title', $breadcrumb->output(2));

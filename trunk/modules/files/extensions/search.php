@@ -33,10 +33,10 @@ if ($c_result_files > 0) {
 
 		$striped_text = strip_tags($result_files[$j]['text']);
 		$striped_text = $db->escape($striped_text, 3);
-		$striped_text = html_entity_decode($striped_text, ENT_QUOTES, CHARSET);
+		$striped_text = html_entity_decode($striped_text, ENT_QUOTES, 'UTF-8');
 		$striped_text = substr($striped_text, 0, 200);
 
-		$results_mods[$i]['results'][$j]['text'] = htmlentities($striped_text, ENT_QUOTES, CHARSET) . '...';
+		$results_mods[$i]['results'][$j]['text'] = htmlentities($striped_text, ENT_QUOTES, 'UTF-8') . '...';
 	}
 }
 ?>
