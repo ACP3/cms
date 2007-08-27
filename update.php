@@ -10,23 +10,21 @@ $db = new db;
 $cache = new cache;
 
 $queries = array(
-	0 => 'ALTER TABLE `{pre}dl` RENAME `{pre}files`',
-	1 => 'ALTER TABLE `{pre}files` CHANGE `cat` `category_id` INT(11) NOT NULL',
-	2 => 'UPDATE `{pre}categories` SET module = \'files\' WHERE module = \'dl\'',
-	3 => 'ALTER TABLE `{pre}access` CHANGE `mods` `modules` TEXT NOT NULL',
-	4 => 'TRUNCATE TABLE `{pre}access`',
-	5 => 'INSERT INTO `{pre}access` VALUES (\'1\', \'Administrator\', \'users:2,feeds:2,files:2,emoticons:2,errors:2,gallery:2,guestbook:2,categories:2,comments:2,contact:2,pages:2,news:2,newsletter:2,search:2,system:2,polls:2,access:2\');',
-	6 => 'INSERT INTO `{pre}access` VALUES (\'2\', \'Besucher\', \'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:1,categories:1,comments:1,contact:1,pages:1,news:1,newsletter:1,search:1,system:0,polls:1,access:0\');',
-	7 => 'INSERT INTO `{pre}access` VALUES (\'3\', \'Benutzer\', \'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:1,categories:1,comments:1,contact:1,pages:1,news:1,newsletter:1,search:1,system:0,polls:1,access:0\');',
-	8 => 'ALTER TABLE `{pre}news` CHANGE `cat` `category_id` INT(11) NOT NULL',
-	9 => 'ALTER TABLE `{pre}galpics` CHANGE `gallery` `gallery_id` INT(11) NOT NULL',
-	10 => 'ALTER TABLE `{pre}gb` RENAME `{pre}guestbook`',
-	11 => 'ALTER TABLE `{pre}guestbook` ADD `user_id` INT(11) NOT NULL AFTER `name`',
-	12 => 'ALTER TABLE `{pre}comments` ADD `user_id` INT(11) NOT NULL AFTER `name`',
-	13 => 'ALTER TABLE `{pre}users` CHANGE `name` `nickname` VARCHAR(30) {charset} NOT NULL, ADD `realname` VARCHAR(80) {charset} NOT NULL AFTER `nickname`, ADD `website` VARCHAR(120) {charset} NOT NULL AFTER `mail`, ADD `time_zone` INT(5) NOT NULL AFTER `website`, ADD `dst` TINYINT(1) NOT NULL AFTER `time_zone`, ADD `language` VARCHAR(10) {charset} NOT NULL AFTER `dst`, ADD `draft` TEXT {charset} NOT NULL AFTER `language`;',
+	'ALTER TABLE `{pre}dl` RENAME `{pre}files`',
+	'ALTER TABLE `{pre}files` CHANGE `cat` `category_id` INT(11) NOT NULL',
+	'UPDATE `{pre}categories` SET module = \'files\' WHERE module = \'dl\'',
+	'ALTER TABLE `{pre}access` CHANGE `mods` `modules` TEXT NOT NULL',
+	'TRUNCATE TABLE `{pre}access`',
+	'INSERT INTO `{pre}access` VALUES (\'1\', \'Administrator\', \'users:2,feeds:2,files:2,emoticons:2,errors:2,gallery:2,guestbook:2,categories:2,comments:2,contact:2,pages:2,news:2,newsletter:2,search:2,system:2,polls:2,access:2\');',
+	'INSERT INTO `{pre}access` VALUES (\'2\', \'Besucher\', \'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:1,categories:1,comments:1,contact:1,pages:1,news:1,newsletter:1,search:1,system:0,polls:1,access:0\');',
+	'INSERT INTO `{pre}access` VALUES (\'3\', \'Benutzer\', \'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:1,categories:1,comments:1,contact:1,pages:1,news:1,newsletter:1,search:1,system:0,polls:1,access:0\');',
+	'ALTER TABLE `{pre}news` CHANGE `cat` `category_id` INT(11) NOT NULL',
+	'ALTER TABLE `{pre}galpics` CHANGE `gallery` `gallery_id` INT(11) NOT NULL',
+	'ALTER TABLE `{pre}gb` RENAME `{pre}guestbook`',
+	'ALTER TABLE `{pre}guestbook` ADD `user_id` INT(11) NOT NULL AFTER `name`',
+	'ALTER TABLE `{pre}comments` ADD `user_id` INT(11) NOT NULL AFTER `name`',
+	'ALTER TABLE `{pre}users` CHANGE `name` `nickname` VARCHAR(30) {charset} NOT NULL, ADD `realname` VARCHAR(80) {charset} NOT NULL AFTER `nickname`, ADD `website` VARCHAR(120) {charset} NOT NULL AFTER `mail`, ADD `time_zone` INT(5) NOT NULL AFTER `website`, ADD `dst` TINYINT(1) NOT NULL AFTER `time_zone`, ADD `language` VARCHAR(10) {charset} NOT NULL AFTER `dst`, ADD `draft` TEXT {charset} NOT NULL AFTER `language`;',
 );
-
-$successful = 'Abfrage erfolgreich durchgeführt!';
 
 if (version_compare(mysql_get_client_info(), '4.1', '>=')) {
 	$charset = ' CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
@@ -34,21 +32,26 @@ if (version_compare(mysql_get_client_info(), '4.1', '>=')) {
 	$charset = 'CHARSET=utf-8';
 }
 
+print 'Aktualisierung der Datenbank:' . "\n\n";
+$success = true;
+
 if (count($queries) > 0) {
 	foreach ($queries as $row) {
 		$row = str_replace(array('{pre}', '{charset}'), array(CONFIG_DB_PRE, $charset), $row);
 		$bool = $db->query($row, 3);
-
-		if ($bool) {
-			echo $row . ' - ' . $successful . "\n\n";
-		} else {
-			echo ' - ' . $row . "\n\n";
+		if (!$bool) {
+			print "\n";
+			$success = false;
 		}
 	}
 }
 
+print "\n" . ($success ? 'Die Datenbank wurde erfolgreich aktualisiert.' : 'Mindestens eine Datenbankänderung konnte nicht durchgeführt werden.') . "\n";
+
 // Gecachete SQL Queries löschen
 $cache->purge();
+
+print "\n" . '----------------------------' . "\n\n";
 
 // Konfigurationsdatei aktualisieren
 $path = 'includes/config.php';
