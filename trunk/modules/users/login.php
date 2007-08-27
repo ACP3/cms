@@ -33,6 +33,10 @@ if ($auth->is_user()) {
 		}
 	}
 	if ($auth) {
+		// Session Einstellungen setzen und Session starten
+		session_set_cookie_params(0, ROOT_DIR, htmlentities($_SERVER['HTTP_HOST']));
+		session_start();
+
 		// Ein Jahr oder eine Stunde...
 		$expire = isset($_POST['remember']) ? 31104000 : 3600;
 
