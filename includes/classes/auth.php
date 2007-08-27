@@ -27,10 +27,6 @@ class auth
 	 */
 	function __construct()
 	{
-		// Session Einstellungen setzen und Session starten
-		session_set_cookie_params(0, ROOT_DIR, htmlentities($_SERVER['HTTP_HOST']));
-		session_start();
-
 		if (isset($_COOKIE['ACP3_AUTH'])) {
 			global $db;
 
@@ -41,6 +37,10 @@ class auth
 			if (count($user_check) == '1') {
 				$db_password = substr($user_check[0]['pwd'], 0, 40);
 				if ($db_password == $cookie_arr[1]) {
+					// Session Einstellungen setzen und Session starten
+					session_set_cookie_params(0, ROOT_DIR, htmlentities($_SERVER['HTTP_HOST']));
+					session_start();
+
 					$this->is_user = true;
 
 					// Falls nötig, Session neu setzen

@@ -121,7 +121,7 @@ class modules
 		$module = !empty($module) ? $module : $this->mod;
 		$page = !empty($page) ? $page : $this->page;
 
-		if (isset($_SESSION) && is_file('modules/' . $module . '/' . $page . '.php')) {
+		if (is_file('modules/' . $module . '/' . $page . '.php')) {
 			$xml = simplexml_load_file('modules/' . $module . '/module.xml');
 
 			if ((string) $xml->info->active == '1') {
