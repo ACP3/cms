@@ -18,30 +18,30 @@ if (!empty($modules->id) && $db->select('id', 'pages', 'id = \'' . $modules->id 
 	}
 	$page = $cache->output('pages_list_id_' . $modules->id);
 
-	/**
-	 * Erweitert die Breadcrumb Klasse, damit für die statischen Seiten die Brotkrümelspur erstellt werden kann
-	 *
-	 */
-	class breadcrumb_pages extends breadcrumb
-	{
+	if ($page[0]['mode'] == '1') {
 		/**
-		 * Gibt die Brotkrümelspur bzw. den Seitentitel einer statischen Seite aus
+		 * Erweitert die Breadcrumb Klasse, damit für die statischen Seiten die Brotkrümelspur erstellt werden kann
 		 *
-		 * @param integer $mode
-		 * 	1 = Brotkrümelspur ausgeben
-		 * 	2 = Nur Seitentitel ausgeben
-		 * @param integer $id
-		 * 	ID der jeweiligen statischen Seite
-		 * @return string
 		 */
-		function output($mode = 1, $id = 0)
+		class breadcrumb_pages extends breadcrumb
 		{
-			global $modules, $tpl;
+			/**
+			 * Gibt die Brotkrümelspur bzw. den Seitentitel einer statischen Seite aus
+			 *
+			 * @param integer $mode
+			 * 	1 = Brotkrümelspur ausgeben
+			 * 	2 = Nur Seitentitel ausgeben
+			 * @param integer $id
+			 * 	ID der jeweiligen statischen Seite
+			 * @return string
+			 */
+			function output($mode = 1, $id = 0)
+			{
+				global $db, $modules, $tpl;
 
-			// Zuweisung der ID von der Elternseite bzw. der Ausgangsseite
-			$id = !empty($id) ? $id : $modules->id;
-			if (!empty($id)) {
-				global $db;
+				// Zuweisung der ID von der Elternseite bzw. der Ausgangsseite
+				$id = !empty($id) ? $id : $modules->id;
+
 				$page = $db->select('parent, title', 'pages', 'id = \'' . $id . '\' AND mode = \'1\'');
 				// Brotkrümelspur ausgeben
 				if ($mode == 1) {
@@ -59,16 +59,13 @@ if (!empty($modules->id) && $db->select('id', 'pages', 'id = \'' . $modules->id 
 					$tpl->assign('breadcrumb', $pages);
 					$tpl->assign('end', $this->end);
 					return $tpl->fetch('common/breadcrumb.html');
-					// Nur Seitentitel ausgeben
+				// Nur Seitentitel ausgeben
 				} else {
 					return $page[0]['title'];
 				}
 			}
-			return '';
 		}
-	}
 
-	if ($page[0]['mode'] == '1') {
 		unset($breadcrumb);
 		$breadcrumb = new breadcrumb_pages;
 
