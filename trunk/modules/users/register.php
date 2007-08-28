@@ -5,6 +5,9 @@ if (!defined('IN_ACP3'))
 if ($auth->is_user()) {
 	redirect(0, ROOT_DIR);
 } else {
+	$breadcrumb->assign(lang('users', 'users'), uri('users'));
+	$breadcrumb->assign(lang('users', 'register'));
+
 	if (isset($_POST['submit'])) {
 		include 'modules/users/entry.php';
 	}
