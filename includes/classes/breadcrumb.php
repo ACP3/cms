@@ -83,7 +83,7 @@ class breadcrumb
 				}
 			}
 			return $tpl->fetch('common/breadcrumb.html');
-			// Brotkrümelspur für das Admin Panel
+		// Brotkrümelspur für das Admin Panel
 		} elseif (defined('IN_ADM') && $mode == 1) {
 			// Ausgangsstufe der Brotkrümelspur
 			$breadcrumb[0]['uri'] = uri('acp');
@@ -98,7 +98,7 @@ class breadcrumb
 				if ($c_steps > 0) {
 					$breadcrumb = array_merge($breadcrumb, $this->steps);
 					$tpl->assign('end', $this->end);
-					// Falls keine zusätzlichen Brotkrumen angegeben sind, jeweiligen Seitennamen der Moduldatei ausgeben
+				// Falls keine zusätzlichen Brotkrumen angegeben sind, jeweiligen Seitennamen der Moduldatei ausgeben
 				} else {
 					$breadcrumb[1]['uri'] = uri('acp/' . $modules->mod);
 					$breadcrumb[1]['title'] = lang($modules->mod, $modules->mod);
@@ -107,15 +107,14 @@ class breadcrumb
 			}
 			$tpl->assign('breadcrumb', $breadcrumb);
 			return $tpl->fetch('common/breadcrumb.html');
-			// Nur Seitentitel ausgeben
-		} elseif ($mode == 2) {
+		// Nur Seitentitel ausgeben
+		} else {
 			if (!empty($this->end)) {
 				return $this->end;
 			} else {
 				return $modules->page != 'list' && $modules->page != 'adm_list' && $modules->page != 'entry' ? lang($modules->mod, $modules->page) : lang($modules->mod, $modules->mod);
 			}
 		}
-		return '';
 	}
 }
 ?>
