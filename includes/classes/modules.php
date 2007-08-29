@@ -177,9 +177,7 @@ class modules
 		foreach ($modules_dir as $module) {
 			$info = $this->parseInfo($module);
 			if (is_array($info)) {
-				$name = $info['name'];
-				$mod_list[$name] = $info;
-				$mod_list[$name]['dir'] = $module;
+				$mod_list[$info['name']] = $info;
 			}
 		}
 		ksort($mod_list);
@@ -201,11 +199,13 @@ class modules
 			$info = $xml->info;
 
 			$mod_info = array();
+			$mod_info['dir'] = $module;
 			$mod_info['author'] = (string) $info->author;
 			$mod_info['description'] = (string) $info->description['lang'] == 'true' ? lang($module, 'mod_description') : (string) $info->description;
 			$mod_info['name'] = (string) $info->name['lang'] == 'true' ? lang($module, $module) : (string) $info->name;
 			$mod_info['version'] = (string) $info->version['core'] == 'true' ? CONFIG_VERSION : (string) $info->version;
 			$mod_info['active'] = (string) $info->active;
+			$mod_info['tables'] = isset($info->tables) ? explode(',', (string) $info->tables) : false;
 			$mod_info['categories'] = isset($info->categories) ? true : false;
 			$mod_info['protected'] = $info->protected ? true : false;
 			return $mod_info;

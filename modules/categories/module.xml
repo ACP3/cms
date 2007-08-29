@@ -4,6 +4,7 @@
 		<name lang="true"/>
 		<description lang="true"/>
 		<author>Goratsch Webdesign</author>
+		<tables>categories</tables>
 		<version core="true"/>
 		<protected/>
 		<active>1</active>

@@ -109,6 +109,7 @@ label {
 	font: 1.0em Arial, sans-serif;
 	color: #000;
 	cursor: pointer;
+	white-space: nowrap;
 }
 label:hover {
 	color: #f00;
