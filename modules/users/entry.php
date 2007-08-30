@@ -204,7 +204,7 @@ switch ($modules->action) {
 		} else {
 			$form = $_POST['form'];
 
-			if (!$validate->is_number($form['time_zone']))
+			if (!is_numeric($form['time_zone']))
 				$errors[] = lang('common', 'select_time_zone');
 			if (!$validate->is_number($form['dst']))
 				$errors[] = lang('common', 'select_daylight_saving_time');

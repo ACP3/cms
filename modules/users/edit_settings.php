@@ -24,15 +24,7 @@ if (!$auth->is_user() || !preg_match('/\d/', $_SESSION['acp3_id'])) {
 		$user = $db->select('time_zone, dst, language', 'users', 'id = \'' . $_SESSION['acp3_id'] . '\'');
 
 		// Zeitzonen
-		$time_zones = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.75, 13, 14);
-		$i = 0;
-		foreach ($time_zones as $row) {
-			$time_zone[$i]['value'] = $row * 3600;
-			$time_zone[$i]['selected'] = select_entry('time_zone', $row * 3600, $user[0]['time_zone']);
-			$time_zone[$i]['lang'] = lang('common', 'utc' . $row);
-			$i++;
-		}
-		$tpl->assign('time_zone', $time_zone);
+		$tpl->assign('time_zone', time_zones($user[0]['time_zone']));
 
 		// Sommerzeit an/aus
 		$dst[0]['checked'] = select_entry('dst', '1', $user[0]['dst'], 'checked');

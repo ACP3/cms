@@ -29,15 +29,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('sef', $sef);
 
 	// Zeitzonen
-	$time_zones = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.75, 13, 14);
-	$i = 0;
-	foreach ($time_zones as $row) {
-		$time_zone[$i]['value'] = $row * 3600;
-		$time_zone[$i]['selected'] = select_entry('time_zone', $row * 3600, CONFIG_TIME_ZONE);
-		$time_zone[$i]['lang'] = lang('common', 'utc' . $row);
-		$i++;
-	}
-	$tpl->assign('time_zone', $time_zone);
+	$tpl->assign('time_zone', time_zones(CONFIG_TIME_ZONE));
 
 	// Sommerzeit an/aus
 	$dst[0]['checked'] = select_entry('dst', '1', CONFIG_DST, 'checked');
