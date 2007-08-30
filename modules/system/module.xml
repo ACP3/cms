@@ -24,14 +24,6 @@
 		<item>
 			<file>entry</file>
 			<action>
-				<name>modactivation</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>moddeactivation</name>
-				<level>2</level>
-			</action>
-			<action>
 				<name>configuration</name>
 				<level>2</level>
 			</action>
@@ -41,6 +33,18 @@
 			</action>
 			<action>
 				<name>languages</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>modactivation</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>moddeactivation</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>sql_export</name>
 				<level>2</level>
 			</action>
 		</item>

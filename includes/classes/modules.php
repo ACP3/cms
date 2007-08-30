@@ -86,9 +86,9 @@ class modules
 
 			for ($i = 2; $i < $c_stm; $i++) {
 				if (!empty($stm[$i])) {
-					if (!defined('POS') && preg_match($pos_regex, $stm[$i]))
+					if (!defined('POS') && preg_match($pos_regex, $stm[$i])) {
 						define('POS', substr($stm[$i], 4));
-					if (preg_match($id_regex, $stm[$i])) {
+					} elseif (preg_match($id_regex, $stm[$i])) {
 						$this->id = substr($stm[$i], 3);
 					} elseif (preg_match($cat_regex, $stm[$i])) {
 						$this->cat = substr($stm[$i], 4);
