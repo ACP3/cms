@@ -62,7 +62,7 @@ switch ($modules->action) {
 			$errors[] = lang('system', 'select_sef_uris');
 		if (empty($form['date']))
 			$errors[] = lang('system', 'type_in_date_format');
-		if (!$validate->is_number($form['time_zone']))
+		if (!is_numeric($form['time_zone']))
 			$errors[] = lang('common', 'select_time_zone');
 		if (!$validate->is_number($form['dst']))
 			$errors[] = lang('common', 'select_daylight_saving_time');
