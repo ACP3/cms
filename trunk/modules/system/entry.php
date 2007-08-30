@@ -13,44 +13,6 @@ if (!$modules->check('system', 'entry'))
 	redirect('errors/403');
 
 switch ($modules->action) {
-	case 'modactivation':
-		if (isset($modules->gen['dir']) && is_file('modules/' . $modules->gen['dir'] . '/module.xml')) {
-			$info = $modules->parseInfo($modules->gen['dir']);
-			if ($info['protected']) {
-				$text = lang('system', 'mod_deactivate_forbidden');
-			} else {
-				$path = 'modules/' . $modules->gen['dir'] . '/module.xml';
-
-				$xml = simplexml_load_file($path);
-				$xml->info->active = '1';
-				$bool = $xml->asXML($path);
-
-				$text = $bool ? lang('system', 'mod_activate_success') : lang('system', 'mod_activate_error');
-			}
-		} else {
-			$text = lang('system', 'mod_activate_error');
-		}
-		$content = combo_box($text, uri('acp/system/mod_list'));
-		break;
-	case 'moddeactivation':
-		if (isset($modules->gen['dir']) && is_file('modules/' . $modules->gen['dir'] . '/module.xml')) {
-			$info = $modules->parseInfo($modules->gen['dir']);
-			if ($info['protected']) {
-				$text = lang('system', 'mod_deactivate_forbidden');
-			} else {
-				$path = 'modules/' . $modules->gen['dir'] . '/module.xml';
-
-				$xml = simplexml_load_file($path);
-				$xml->info->active = '0';
-				$bool = $xml->asXML($path);
-
-				$text = $bool ? lang('system', 'mod_deactivate_success') : lang('system', 'mod_deactivate_error');
-			}
-		} else {
-			$text = lang('system', 'mod_deactivate_error');
-		}
-		$content = combo_box($text, uri('acp/system/mod_list'));
-		break;
 	case 'configuration':
 		$form = $_POST['form'];
 
@@ -110,6 +72,96 @@ switch ($modules->action) {
 		$text = $bool ? lang('system', 'languages_edit_success') : lang('system', 'languages_edit_error');
 
 		$content = combo_box($text, uri('acp/system/languages'));
+		break;
+	case 'modactivation':
+		if (isset($modules->gen['dir']) && is_file('modules/' . $modules->gen['dir'] . '/module.xml')) {
+			$info = $modules->parseInfo($modules->gen['dir']);
+			if ($info['protected']) {
+				$text = lang('system', 'mod_deactivate_forbidden');
+			} else {
+				$path = 'modules/' . $modules->gen['dir'] . '/module.xml';
+
+				$xml = simplexml_load_file($path);
+				$xml->info->active = '1';
+				$bool = $xml->asXML($path);
+
+				$text = $bool ? lang('system', 'mod_activate_success') : lang('system', 'mod_activate_error');
+			}
+		} else {
+			$text = lang('system', 'mod_activate_error');
+		}
+		$content = combo_box($text, uri('acp/system/mod_list'));
+		break;
+	case 'moddeactivation':
+		if (isset($modules->gen['dir']) && is_file('modules/' . $modules->gen['dir'] . '/module.xml')) {
+			$info = $modules->parseInfo($modules->gen['dir']);
+			if ($info['protected']) {
+				$text = lang('system', 'mod_deactivate_forbidden');
+			} else {
+				$path = 'modules/' . $modules->gen['dir'] . '/module.xml';
+
+				$xml = simplexml_load_file($path);
+				$xml->info->active = '0';
+				$bool = $xml->asXML($path);
+
+				$text = $bool ? lang('system', 'mod_deactivate_success') : lang('system', 'mod_deactivate_error');
+			}
+		} else {
+			$text = lang('system', 'mod_deactivate_error');
+		}
+		$content = combo_box($text, uri('acp/system/mod_list'));
+		break;
+	case 'sql_export':
+		$form = $_POST['form'];
+
+		if (empty($form['tables']))
+			$errors[] = lang('system', 'select_sql_tables');
+		if ($form['output'] != 'file' && $form['output'] != 'text')
+			$errors[] = lang('system', 'select_output');
+		if ($form['export_type'] != 'complete' && $form['export_type'] != 'structure' && $form['export_type'] != 'data')
+			$errors[] = lang('system', 'select_export_type');
+
+		if (isset($errors)) {
+			combo_box($errors);
+		} else {
+			$structure = '';
+			$data = '';
+			foreach ($form['tables'] as $table) {
+				if ($form['export_type'] == 'complete' || $form['export_type'] == 'structure') {
+					$result = $db->query('SHOW CREATE TABLE ' . $table);
+					if (is_array($result)) {
+						$structure.= '-- ' . sprintf(lang('system', 'structure_of_table'), $table) . "\n\n";
+						$structure.= $result[0]['Create Table'] . "\n\n";
+					}
+				}
+				if ($form['export_type'] == 'complete' || $form['export_type'] == 'data') {
+					$resultsets = $db->select('*', substr($table, strlen(CONFIG_DB_PRE), strlen($table)));
+					if (count($resultsets) > 0) {
+						$data.= "\n" . '-- '. sprintf(lang('system', 'data_of_table'), $table) . "\n\n";
+						$fields = '';
+						foreach ($resultsets[0] as $field => $content) {
+							$fields.= $field . ', ';
+						}
+						foreach ($resultsets as $row) {
+							$values = '';
+							foreach ($row as $value) {
+								$values.= '\'' . $value . '\', ';
+							}
+							$data.= 'INSERT INTO ' . $table . ' (' . substr($fields, 0, -2) . ') VALUES (' . substr($values, 0, -2) . ')' . "\n";
+						}
+					}
+				}
+			}
+			$export = $structure . $data;
+			if ($form['output'] == 'file') {
+				ob_end_clean();
+				define('CUSTOM_CONTENT_TYPE', 'text/sql');
+				header('Content-Disposition: attachment; filename=' . CONFIG_DB_NAME . '_export.sql');
+				die($export);
+			} else {
+				$tpl->assign('export', htmlentities($export, ENT_QUOTES, 'UTF-8'));
+			}
+		}
 		break;
 	default:
 		redirect('errors/404');

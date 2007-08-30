@@ -24,6 +24,17 @@ if (!isset($_POST['submit']) || isset($errors)) {
 	ksort($tables);
 	$tpl->assign('tables', $tables);
 
-	$content = $tpl->fetch('system/sql_export.html');
+	// Ausgabe
+	$output[0]['selected'] = select_entry('output', 'file', 'file', 'checked');
+	$output[1]['selected'] = select_entry('output', 'text', 'file', 'checked');
+	$tpl->assign('output', $output);
+
+	// Exportart
+	$export_type[0]['selected'] = select_entry('export_type', 'complete', 'complete', 'checked');
+	$export_type[1]['selected'] = select_entry('export_type', 'structure', 'complete', 'checked');
+	$export_type[2]['selected'] = select_entry('export_type', 'data', 'complete', 'checked');
+	$tpl->assign('export_type', $export_type);
+
 }
+$content = $tpl->fetch('system/sql_export.html');
 ?>
