@@ -131,7 +131,7 @@ switch ($modules->action) {
 					$result = $db->query('SHOW CREATE TABLE ' . $table);
 					if (is_array($result)) {
 						$structure.= '-- ' . sprintf(lang('system', 'structure_of_table'), $table) . "\n\n";
-						$structure.= $result[0]['Create Table'] . "\n\n";
+						$structure.= $result[0]['Create Table'] . ';' . "\n\n";
 					}
 				}
 				if ($form['export_type'] == 'complete' || $form['export_type'] == 'data') {
@@ -147,7 +147,7 @@ switch ($modules->action) {
 							foreach ($row as $value) {
 								$values.= '\'' . $value . '\', ';
 							}
-							$data.= 'INSERT INTO ' . $table . ' (' . substr($fields, 0, -2) . ') VALUES (' . substr($values, 0, -2) . ')' . "\n";
+							$data.= 'INSERT INTO ' . $table . ' (' . substr($fields, 0, -2) . ') VALUES (' . substr($values, 0, -2) . ');' . "\n";
 						}
 					}
 				}
