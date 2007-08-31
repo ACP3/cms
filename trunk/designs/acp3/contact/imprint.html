@@ -1,28 +1,28 @@
 <dl class="imprint">
 {if $imprint.address}
-	<dt><strong>{lang values="contact|address"}</strong></dt>
+	<dt>{lang values="contact|address"}</dt>
 	<dd><address>{$imprint.address}</address></dd>
 {/if}
 {if $imprint.mail}
-	<dt><strong>{lang values="common|email}</strong></dt>
+	<dt>{lang values="common|email}</dt>
 	<dd><a href="{uri args="contact/contact"}">{$imprint.mail}</a></dd>
 {/if}
 {if $imprint.telephone}
-	<dt><strong>{lang values="contact|telephone}</strong></dt>
+	<dt>{lang values="contact|telephone}</dt>
 	<dd>{$imprint.telephone}</dd>
 {/if}
 {if $imprint.fax}
-	<dt><strong>{lang values="contact|fax}</strong></dt>
+	<dt>{lang values="contact|fax}</dt>
 	<dd>{$imprint.fax}</dd>
 {/if}
 {if $imprint.miscellaneous}
-	<dt><strong>{lang values="contact|additional_information"}</strong></dt>
+	<dt>{lang values="contact|additional_information"}</dt>
 	<dd>
 		{$imprint.miscellaneous}
 	</dd>
 {/if}
 {if $imprint.disclaimer}
-	<dt><strong>{lang values="contact|disclaimer"}</strong></dt>
+	<dt>{lang values="contact|disclaimer"}</dt>
 	<dd>
 		{$imprint.disclaimer}
 	</dd>
