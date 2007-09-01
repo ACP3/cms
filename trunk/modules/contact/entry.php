@@ -31,7 +31,7 @@ switch ($modules->action) {
 			$subject = sprintf(lang('contact', 'contact_subject'), CONFIG_TITLE);
 			$body = sprintf(lang('contact', 'contact_body'), $form['name'], $form['mail']) . "\n\n" . $form['message'];
 
-			$bool = @mail($contact[0]['mail'], $subject, $body, 'FROM:' . $form['mail']);
+			$bool = @mail($contact['mail'], $subject, $body, 'FROM:' . $form['mail']);
 
 			$content = combo_box($bool ? lang('contact', 'send_mail_success') : lang('contact', 'send_mail_error'), uri('contact'));
 		}
