@@ -18,8 +18,8 @@ if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id 
 		$dl = $db->select('start, end, category_id, file, size, link_title, text', 'files', 'id = \'' . $modules->id . '\'');
 		$dl[0]['text'] = $db->escape($dl[0]['text'], 3);
 		// Datum
-		$start_date = explode('.', date_aligned(1, $dl[0]['start'], 'j.n.Y.G.i'));
-		$end_date = explode('.', date_aligned(1, $dl[0]['end'], 'j.n.Y.G.i'));
+		$start_date = explode('.', date_aligned(1, $files[0]['start'], 'j.n.Y.G.i'));
+		$end_date = explode('.', date_aligned(1, $files[0]['end'], 'j.n.Y.G.i'));
 
 		// Datumsauswahl
 		$tpl->assign('start_day', date_dropdown('day', 'start_day', 'start_day', $start_date[0]));

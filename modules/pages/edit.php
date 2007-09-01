@@ -22,8 +22,8 @@ if (!empty($modules->id) && $db->select('id', 'pages', 'id = \'' . $modules->id 
 		$page[0]['text'] = $db->escape($page[0]['text'], 3);
 		$page[0]['uri'] = $db->escape($page[0]['uri'], 3);
 		// Datum
-		$start_date = explode('.', date('j.n.Y.G.i', $page[0]['start']));
-		$end_date = explode('.', date('j.n.Y.G.i', $page[0]['end']));
+		$start_date = explode('.', date_aligned(1, $page[0]['start'], 'j.n.Y.G.i'));
+		$end_date = explode('.', date_aligned(1, $page[0]['end'], 'j.n.Y.G.i'));
 
 		// Datumsauswahl
 		$tpl->assign('start_day', date_dropdown('day', 'start_day', 'start_day', $start_date[0]));

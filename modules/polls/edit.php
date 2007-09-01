@@ -17,8 +17,9 @@ if (!empty($modules->id) && $db->select('id', 'poll_question', 'id = \'' . $modu
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$poll = $db->select('start, end, question', 'poll_question', 'id = \'' . $modules->id . '\'');
 
-		$start_date = explode('.', date('j.n.Y.G.i', $poll[0]['start']));
-		$end_date = explode('.', date('j.n.Y.G.i', $poll[0]['end']));
+		// Datum
+		$start_date = explode('.', date_aligned(1, $poll[0]['start'], 'j.n.Y.G.i'));
+		$end_date = explode('.', date_aligned(1, $poll[0]['end'], 'j.n.Y.G.i'));
 
 		// Datumsauswahl
 		$tpl->assign('start_day', date_dropdown('day', 'start_day', 'start_day', $start_date[0]));

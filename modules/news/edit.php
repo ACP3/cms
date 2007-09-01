@@ -18,8 +18,8 @@ if (!empty($modules->id) && $db->select('id', 'news', 'id = \'' . $modules->id .
 		$news = $db->select('start, end, headline, text, category_id, uri, target, link_title', 'news', 'id = \'' . $modules->id . '\'');
 		$news[0]['text'] = $db->escape($news[0]['text'], 3);
 		// Datum
-		$start_date = explode('.', date('j.n.Y.G.i', $news[0]['start']));
-		$end_date = explode('.', date('j.n.Y.G.i', $news[0]['end']));
+		$start_date = explode('.', date_aligned(1, $news[0]['start'], 'j.n.Y.G.i'));
+		$end_date = explode('.', date_aligned(1, $news[0]['end'], 'j.n.Y.G.i'));
 
 		// Datumsauswahl
 		$tpl->assign('start_day', date_dropdown('day', 'start_day', 'start_day', $start_date[0]));

@@ -22,8 +22,8 @@ if (!empty($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->i
 	if (!isset($_POST['entries']) && !isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$tpl->assign('gallery_id', $modules->id);
 
-		$start_date = explode('.', date('j.n.Y.G.i', $gallery[0]['start']));
-		$end_date = explode('.', date('j.n.Y.G.i', $gallery[0]['end']));
+		$start_date = explode('.', date_aligned(1, $gallery[0]['start'], 'j.n.Y.G.i'));
+		$end_date = explode('.', date_aligned(1, $gallery[0]['end'], 'j.n.Y.G.i'));
 
 		// Datumsauswahl
 		$tpl->assign('start_day', date_dropdown('day', 'start_day', 'start_day', $start_date[0]));
