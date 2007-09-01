@@ -56,7 +56,7 @@
 				<level>2</level>
 			</action>
 			<action>
-				<name>delete_block</name>
+				<name>delete_blocks</name>
 				<level>2</level>
 			</action>
 			<action>
