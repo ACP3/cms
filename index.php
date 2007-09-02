@@ -25,15 +25,8 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 	if (!$auth->is_user() && defined('IN_ADM') && $modules->mod != 'users' && $modules->page != 'login') {
 		redirect('users/login');
 	}
-	// Loginfeld bzw. Benutzermenü laden
-	include 'modules/users/sidebar.php';
 
-	// Navigationsleisten
-	if ($modules->check('pages', 'functions')) {
-		include_once 'modules/pages/functions.php';
-		$tpl->assign('navbar', process_navbar());
-	}
-
+	// Content einbinden
 	if ($modules->check()) {
 		$content = '';
 		include 'modules/' . $modules->mod . '/' . $modules->page . '.php';
@@ -44,6 +37,15 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 
 	// Evtl. gesetzten Content-Type des Servers überschreiben
 	header('Content-Type: ' . (defined('CUSTOM_CONTENT_TYPE') ? CUSTOM_CONTENT_TYPE : 'text/html') . '; charset=UTF-8');
+
+	// Loginfeld bzw. Benutzermenü laden
+	include 'modules/users/sidebar.php';
+
+	// Navigationsleisten
+	if ($modules->check('pages', 'functions')) {
+		include_once 'modules/pages/functions.php';
+		$tpl->assign('navbar', process_navbar());
+	}
 
 	// Template ausgeben
 	$tpl->assign('title', $breadcrumb->output(2));
