@@ -15,14 +15,16 @@ $date = ' AND (start = end AND start <= \'' . date_aligned(2, time()) . '\' OR s
 if (!empty($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->id . '\'' . $date, 0, 0, 0, 1) == 1) {
 	// Cache für die jeweilige Galerie
 	if (!$cache->check('gallery_pics_id_' . $modules->id)) {
-		$cache->create('gallery_pics_id_' . $modules->id, $db->query('SELECT g.name, p.id FROM ' . CONFIG_DB_PRE . 'gallery g LEFT JOIN ' . CONFIG_DB_PRE . 'galpics p ON g.id = \'' . $modules->id . '\' AND p.gallery_id = \'' . $modules->id . '\' ORDER BY p.pic ASC, p.id ASC'));
+		$cache->create('gallery_pics_id_' . $modules->id, $db->select('id', 'galpics', 'gallery_id = \'' . $modules->id . '\'', 'id ASC'));
 	}
 	$gallery = $cache->output('gallery_pics_id_' . $modules->id);
 
-	if (count($gallery) > 0 && !empty($gallery[0]['id'])) {
+	if (count($gallery) > 0 ) {
+		$gallery_name = $db->select('name', 'gallery', 'id = \'' . $modules->id . '\'');
+
 		// Brotkrümelspur
 		$breadcrumb->assign(lang('gallery', 'gallery'), uri('gallery'));
-		$breadcrumb->assign($gallery[0]['name']);
+		$breadcrumb->assign($gallery_name[0]['name']);
 
 		$tpl->assign('gallery', $gallery);
 	}
