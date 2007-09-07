@@ -118,7 +118,7 @@ switch ($modules->action) {
 			$insert_values = array(
 				'id' => '',
 				'pic' => $form['pic'],
-				'gallery' => $form['gallery'],
+				'gallery_id' => $form['gallery'],
 				'file' => $result['name'],
 				'description' => $db->escape($form['description'], 2),
 			);
@@ -156,7 +156,7 @@ switch ($modules->action) {
 
 			$update_values = array(
 				'pic' => $form['pic'],
-				'gallery' => $form['gallery'],
+				'gallery_id' => $form['gallery'],
 				'description' => $db->escape($form['description'], 2),
 			);
 			if (is_array($new_file_sql)) {
