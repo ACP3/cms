@@ -18,7 +18,7 @@ if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id 
 	}
 	$file = $cache->output('files_details_id_' . $modules->id);
 
-	if (isset($modules->gen['download']) && $modules->gen['download'] == '1') {
+	if ($modules->action == 'download') {
 		$path = 'uploads/files/';
 		if (is_file($path . $file[0]['file'])) {
 			header('Content-Type: application/force-download');

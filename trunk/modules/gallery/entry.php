@@ -84,8 +84,17 @@ switch ($modules->action) {
 			$bool2 = 0;
 			foreach ($marked_entries as $entry) {
 				if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'gallery', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+					// Hochgeladene Bilder löschen
+					$pictures = $db->select('file', 'galpics', 'gallery_id = \'' . $entry . '\'');
+					foreach ($pictures as $row) {
+						if (is_file('uploads/gallery/' . $row['file'])) {
+							unlink('uploads/gallery/' . $row['file']);
+						}
+					}
+					// Fotogalerie mitsamt Bildern löschen
 					$bool = $db->delete('gallery', 'id = \'' . $entry . '\'');
-					$bool2 = $db->delete('galpics', 'gallery = \'' . $entry . '\'', 0);
+					$bool2 = $db->delete('galpics', 'gallery_id = \'' . $entry . '\'', 0);
+
 					// Galerie Cache löschen
 					$cache->delete('gallery_pics_id_' . $entry);
 				}
@@ -187,6 +196,12 @@ switch ($modules->action) {
 			$bool = 0;
 			foreach ($marked_entries as $entry) {
 				if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'galpics', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1')
+					// Datei ebenfalls löschen
+					$file = $db->select('file', 'galpics', 'id = \'' . $entry . '\'');
+					if (is_file('uploads/gallery/' . $file[0]['file'])) {
+						unlink('uploads/gallery/' . $file[0]['file']);
+					}
+
 					// Galerie Cache löschen
 					$bool = $db->delete('galpics', 'id = \'' . $entry . '\'');
 			}

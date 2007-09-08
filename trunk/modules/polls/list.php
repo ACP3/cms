@@ -16,12 +16,13 @@ $c_polls = count($polls);
 if ($c_polls > 0) {
 	for ($i = 0; $i < $c_polls; $i++) {
 		$polls[$i]['question'] = $polls[$i]['question'];
-		if ($db->select('poll_id', 'poll_votes', 'poll_id = \''. $polls[$i]['id'] . '\' AND ip = \'' . $_SERVER['REMOTE_ADDR'] . '\'', 0, 0, 0, 1) == 1 || $polls[$i]['start'] != $polls[$i]['end'] && $polls[$i]['end'] <= date_aligned(2, time()))
+		if ($db->select('poll_id', 'poll_votes', 'poll_id = \''. $polls[$i]['id'] . '\' AND ip = \'' . $_SERVER['REMOTE_ADDR'] . '\'', 0, 0, 0, 1) == 1 || $polls[$i]['start'] != $polls[$i]['end'] && $polls[$i]['end'] <= date_aligned(2, time())) {
 			$polls[$i]['link'] = 'result';
-		else
+		} else {
 			$polls[$i]['link'] = 'vote';
+		}
 		$polls[$i]['votes'] = $db->select('poll_id', 'poll_votes', 'poll_id = \'' . $polls[$i]['id'] . '\'', 0, 0, 0, 1);
-		$polls[$i]['date'] = date_aligned(1, $polls[$i]['end']);
+		$polls[$i]['date'] = $polls[$i]['start'] == $polls[$i]['end'] ? '-' : date_aligned(1, $polls[$i]['end']);
 	}
 	$tpl->assign('polls', $polls);
 }

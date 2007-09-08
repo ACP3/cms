@@ -149,8 +149,8 @@ switch ($modules->action) {
 				if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'files', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 					// Datei ebenfalls löschen
 					$file = $db->select('file', 'files', 'id = \'' . $entry . '\'');
-					if (is_file('files/files/' . $file[0]['file'])) {
-						unlink('files/files/' . $file[0]['file']);
+					if (is_file('uploads/files/' . $file[0]['file'])) {
+						unlink('uploads/files/' . $file[0]['file']);
 					}
 					$bool = $db->delete('files', 'id = \'' . $entry . '\'');
 
