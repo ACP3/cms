@@ -16,7 +16,7 @@ if (!empty($modules->cat)) {
 	$breadcrumb->assign($category[0]['name']);
 	$date = ' AND (start = end AND start <= \'' . date_aligned(2, time()) . '\' OR start != end AND start <= \'' . date_aligned(2, time()) . '\' AND end >= \'' . date_aligned(2, time()) . '\')';
 
-	$files = $db->select('id, start, file, size, link_title', 'files', 'category_id = \'' . $modules->cat . '\'' . $date);
+	$files = $db->select('id, start, file, size, link_title', 'files', 'category_id = \'' . $modules->cat . '\'' . $date, 'start DESC, end DESC');
 	$c_files = count($files);
 
 	if ($c_files > 0) {
