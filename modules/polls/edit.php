@@ -42,7 +42,6 @@ if (!empty($modules->id) && $db->select('id', 'poll_question', 'id = \'' . $modu
 			$answers[$i]['number'] = $i + 1;
 			$answers[$i]['id'] = $answers[$i]['id'];
 			$answers[$i]['value'] = $answers[$i]['text'];
-			$i++;
 		}
 		$tpl->assign('answers', $answers);
 

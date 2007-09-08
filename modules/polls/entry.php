@@ -97,7 +97,7 @@ switch ($modules->action) {
 				if (isset($row['delete']) && $validate->is_number($row['id'])) {
 					$db->delete('poll_answers', 'id = \'' . $row['id'] . '\'');
 					$db->delete('poll_votes', 'answer_id = \'' . $row['id'] . '\'');
-				} else {
+				} elseif ($validate->is_number($row['id'])) {
 					$bool = $db->update('poll_answers', array('text' =>$db->escape($row['value'])), 'id = \'' . $db->escape($row['id']) . '\'');
 				}
 			}

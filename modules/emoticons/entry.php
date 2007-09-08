@@ -105,8 +105,8 @@ switch ($modules->action) {
 				if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'emoticons', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1')
 					// Datei ebenfalls löschen
 					$file = $db->select('img', 'emoticons', 'id = \'' . $entry . '\'');
-					if (is_file('files/emoticons/' . $file[0]['file'])) {
-						unlink('files/emoticons/' . $file[0]['file']);
+					if (is_file('uploads/emoticons/' . $file[0]['img'])) {
+						unlink('uploads/emoticons/' . $file[0]['img']);
 					}
 					$bool = $db->delete('emoticons', 'id = \'' . $entry . '\'');
 			}
