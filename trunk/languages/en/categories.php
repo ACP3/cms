@@ -10,6 +10,7 @@
 define('categories_categories', 'Categories');
 define('categories_categories_overview', 'Categories overview');
 define('categories_category_already_exists', 'There is already a category with the same name for the selected module');
+define('categories_category_in_use', 'Not all marked categories have been deleted, because they are used by at least one resultset.');
 define('categories_confirm_delete', 'Do you really want to delete the marked categories?');
 define('categories_create', 'Create a new category');
 define('categories_create_error', 'While creating the category an error has occured.');

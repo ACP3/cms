@@ -15,20 +15,9 @@ if (!empty($modules->id) && $db->select('id', 'categories', 'id = \'' . $modules
 		include 'modules/categories/entry.php';
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$category = $db->select('name, description, module', 'categories', 'id = \'' . $modules->id . '\'');
+		$category = $db->select('name, description', 'categories', 'id = \'' . $modules->id . '\'');
 
 		$tpl->assign('form', isset($form) ? $form : $category[0]);
-
-		$mod_list = $modules->modulesList();
-
-		foreach ($mod_list as $name => $info) {
-			if ($info['active'] && $info['categories']) {
-				$mod_list[$name]['selected'] = select_entry('module', $info['dir'], $db->escape($category[0]['module'], 3));
-			} else {
-				unset($mod_list[$name]);
-			}
-		}
-		$tpl->assign('mod_list', $mod_list);
 
 		$content = $tpl->fetch('categories/edit.html');
 	}
