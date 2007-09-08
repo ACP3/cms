@@ -49,8 +49,6 @@ switch ($modules->action) {
 			$errors[] = lang('categories', 'name_to_short');
 		if (strlen($form['description']) < 3)
 			$errors[] = lang('categories', 'description_to_short');
-		if (empty($form['module']))
-			$errors[] = lang('categories', 'select_module');
 		if (strlen($form['name']) > 3 && !empty($form['module']) && $db->select('id', 'categories', 'id != \'' . $modules->id . '\' AND name = \'' . $db->escape($form['name']) . '\' AND module = \'' . $db->escape($form['module'], 2) . '\'', 0, 0, 0, 1) > 0)
 			$errors[] = lang('categories', 'category_already_exists');
 
@@ -60,11 +58,12 @@ switch ($modules->action) {
 			$update_values = array(
 				'name' => $db->escape($form['name']),
 				'description' => $db->escape($form['description']),
-				'module' => $db->escape($form['module'], 2),
 			);
 			$bool = $db->update('categories', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$cache->create('categories_' . $form['module'], $db->select('id, name, description', 'categories', 'module = \'' . $db->escape($form['module'], 2) . '\'', 'name ASC'));
+			$category = $db->select('module', 'categories', 'id = \'' . $modules->id . '\'');
+
+			$cache->create('categories_' . $db->escape($category[0]['module'], 3), $db->select('id, name, description', 'categories', 'module = \'' . $db->escape($category[0]['module'], 3) . '\'', 'name ASC'));
 
 			$content = combo_box($bool ? lang('categories', 'edit_success') : lang('categories', 'edit_error'), uri('acp/categories'));
 		}
@@ -84,9 +83,17 @@ switch ($modules->action) {
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
+			$in_use = 0;
+
 			foreach ($marked_entries as $entry) {
 				if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'categories', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
-					$bool = $db->delete('categories', 'id = \'' . $entry . '\'');
+					$category = $db->select('module', 'categories', 'id = \'' . $entry . '\'');
+					$c_in_use = $db->select('id', $db->escape($category[0]['module'], 3), 'category_id = \'' . $entry . '\'', 0, 0, 0, 1);
+					if ($c_in_use > 0) {
+						$in_use = 1;
+					} else {
+						$bool = $db->delete('categories', 'id = \'' . $entry . '\'');
+					}
 				}
 			}
 			// Cache für die Kategorien neu erstellen
@@ -94,7 +101,13 @@ switch ($modules->action) {
 			foreach ($com_mods as $row) {
 				$cache->create('categories_' . $db->escape($row['module'], 3), $db->select('id, name, description', 'categories', 'module = \'' . $db->escape($row['module'], 3) . '\'', 'name ASC'));
 			}
-			$content = combo_box($bool ? lang('categories', 'delete_success') : lang('categories', 'delete_error'), uri('acp/categories'));
+
+			if ($in_use) {
+				$text = lang('categories', 'category_is_in_use');
+			} else {
+				$text = $bool ? lang('categories', 'delete_success') : lang('categories', 'delete_error');
+			}
+			$content = combo_box($text, uri('acp/categories'));
 		} else {
 			redirect('errors/404');
 		}
