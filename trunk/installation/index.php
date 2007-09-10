@@ -1,24 +1,24 @@
 <?php
 ob_start();
 
+error_reporting(E_ALL);
+
 // Evtl. gesetzten Content-Type des Servers überschreiben
 header('Content-type: text/html; charset=UTF-8');
 
 define('IN_INSTALL', true);
-
-error_reporting(E_ALL);
 
 include '../includes/globals.php';
 
 include 'functions.php';
 
 // Smarty einbinden
-define('ACP3_SKIN', 'design');
 define('SMARTY_DIR', '../includes/smarty/');
 include SMARTY_DIR . 'Smarty.class.php';
 $tpl = new smarty;
-$tpl->template_dir = ACP3_SKIN . '/';
+$tpl->template_dir = 'design/';
 $tpl->compile_dir = '../cache/';
+$tpl->compile_check = false;
 
 define('PHP_SELF', $_SERVER['PHP_SELF']);
 $tpl->assign('php_self', PHP_SELF);
