@@ -44,6 +44,7 @@ if (is_writable('cache/') && !is_dir($path)) {
 	chmod($path, 0777);
 }
 $tpl->compile_dir = $path;
+$tpl->compile_check = false;
 
 // Einige Konstanten definieren
 define('PHP_SELF', htmlentities($_SERVER['PHP_SELF']));
