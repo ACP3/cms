@@ -114,9 +114,9 @@ switch ($modules->action) {
 			$errors[] = lang('gallery', 'no_gallery_selected');
 		if (!$validate->is_number($form['pic']))
 			$errors[] = lang('gallery', 'type_in_picture_number');
-		if (empty($file['tmp_name']) || $file['size'] == '0')
+		if (empty($file['tmp_name']) || empty($file['size']))
 			$errors[] = lang('gallery', 'no_picture_selected');
-		if (!empty($file['tmp_name']) && $file['size'] > '0' && !$validate->is_picture($file['tmp_name']))
+		if (!empty($file['tmp_name']) && !empty($file['size']) && !$validate->is_picture($file['tmp_name']))
 			$errors[] = lang('gallery', 'only_png_jpg_gif_allowed');
 
 		if (isset($errors)) {

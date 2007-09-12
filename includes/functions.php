@@ -119,6 +119,31 @@ function date_dropdown($mode, $name, $id, $value = '')
 	return $tpl->fetch('common/date.html');
 }
 /**
+ * Ermittelt die Dateigröße, gemäß IEC 60027-2
+ *
+ * @param integer $value
+ * 	Die Dateigröße in Byte
+ * @return string
+ * 	Die Dateigröße als Fließkommazahl, mit der dazugehörigen Einheit
+ */
+function calc_filesize($value)
+{
+	$units = array(
+		0 => 'Byte',
+		1 => 'KiB',
+		2 => 'MiB',
+		3 => 'GiB',
+		4 => 'TiB',
+	);
+	$loops = 0;
+
+	while ($value >= 1024) {
+		$value = $value / 1024;
+		$loops++;
+	}
+	return round($value, 3) . ' ' . $units[$loops];
+}
+/**
  * Diese Funktion gibt den Inhalt der angeforderten Sprachkonstante aus
  *
  * @param string $mod
@@ -170,8 +195,7 @@ function move_file($tmp_filename, $filename, $dir)
 			echo sprintf(lang('common', 'upload_error'), $filename);
 		} else {
 			$new_file['name'] = $new_name . $ext;
-			$new_file['size'] = filesize($path . $new_file['name']) / 1024 / 1024;
-			$new_file['size'] = round($new_file['size'], 3);
+			$new_file['size'] = calc_filesize(filesize($path . $new_file['name']));
 
 			return $new_file;
 		}

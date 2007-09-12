@@ -12,6 +12,7 @@ $cache = new cache;
 $queries = array(
 	'ALTER TABLE `{pre}dl` RENAME `{pre}files`',
 	'ALTER TABLE `{pre}files` CHANGE `cat` `category_id` INT(11) NOT NULL',
+	'ALTER TABLE `{pre}files` CHANGE `size` `size` VARCHAR(20) NOT NULL',
 	'UPDATE `{pre}categories` SET module = \'files\' WHERE module = \'dl\'',
 	'ALTER TABLE `{pre}access` CHANGE `mods` `modules` TEXT NOT NULL',
 	'TRUNCATE TABLE `{pre}access`',

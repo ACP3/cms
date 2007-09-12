@@ -29,7 +29,7 @@ switch ($modules->action) {
 			$errors[] = lang('files', 'type_in_link_title');
 		if (isset($_POST['external']) && empty($file))
 			$errors[] = lang('files', 'type_in_external_resource');
-		if (!isset($_POST['external']) && (empty($file['tmp_name']) || $file['size'] == '0'))
+		if (!isset($_POST['external']) && (empty($file['tmp_name']) || empty($file['size'])))
 			$errors[] = lang('files', 'select_internal_resource');
 		if (strlen($form['text']) < 3)
 			$errors[] = lang('files', 'description_to_short');
@@ -82,7 +82,7 @@ switch ($modules->action) {
 			$errors[] = lang('files', 'type_in_link_title');
 		if (isset($form['external']) && empty($file))
 			$errors[] = lang('files', 'type_in_external_resource');
-		if (!isset($form['external']) && isset($file) && is_array($file) && (empty($file['tmp_name']) || $file['size'] == '0'))
+		if (!isset($form['external']) && isset($file) && is_array($file) && (empty($file['tmp_name']) || empty($file['size'])))
 			$errors[] = lang('files', 'select_internal_resource');
 		if (strlen($form['text']) < 3)
 			$errors[] = lang('files', 'description_to_short');

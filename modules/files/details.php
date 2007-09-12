@@ -35,7 +35,7 @@ if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id 
 		$breadcrumb->assign($file[0]['category_name'], uri('files/files/cat_' . $file[0]['category_id']));
 		$breadcrumb->assign($file[0]['link_title']);
 
-		$file[0]['size'] = file_exists('uploads/files/' . $file[0]['file']) ? $file[0]['size'] . ' MB' : lang('files', 'unknown_filesize');
+		$file[0]['size'] = !empty($file[0]['size']) ? $file[0]['size'] : lang('files', 'unknown_filesize');
 		$file[0]['date'] = date_aligned(1, $file[0]['start']);
 		$tpl->assign('file', $file[0]);
 
