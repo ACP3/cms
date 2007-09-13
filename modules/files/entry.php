@@ -125,7 +125,7 @@ switch ($modules->action) {
 
 			$bool = $db->update('files', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$cache->create('files_details_id_' . $modules->id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, c.name AS category_name', 'files AS f, ' . CONFIG_DB_PRE . 'categories AS c', 'f.id = \'' . $modules->id . '\' AND f.cat = c.id'));
+			$cache->create('files_details_id_' . $modules->id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, c.name AS category_name', 'files AS f, ' . CONFIG_DB_PRE . 'categories AS c', 'f.id = \'' . $modules->id . '\' AND f.category_id = c.id'));
 
 			$content = combo_box($bool ? lang('files', 'edit_success') : lang('files', 'edit_error'), uri('acp/files'));
 		}
