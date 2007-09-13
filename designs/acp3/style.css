@@ -62,8 +62,8 @@ p {
 table, tr, th, td {
 	border: 1px solid #333;
 	border-collapse: collapse;
-	text-align: center;
 	font-size: 1.0em;
+	text-align: center;
 }
 table.no-border, .no-border tr, .no-border th, .no-border td {
 	border: 0;
@@ -77,8 +77,8 @@ th {
 	background: #069 url('images/common_header.png') repeat-x;
 	font-weight: bold;
 	font-size: 1.1em;
-	color: #f90;
 	line-height: 24px;
+	color: #f90;
 }
 td {
 	padding: 3px;
@@ -171,21 +171,21 @@ a.form {
 	margin: 0 auto;
 	padding: 10px;
 	background: #ffc;
-	text-align: justify;
 	border: 1px dotted #f00;
+	text-align: justify;
 }
 .success {
 	width: 70%;
 	margin: 0 auto;
-	text-align: center;
 	border: 1px solid #333;
+	text-align: center;
 }
 .successhead {
 	background: #069 url('images/common_header.png') repeat-x;
-	font-weight: bold;
-	color: #f90;
-	line-height: 25px;
 	border-bottom: 1px solid #333;
+	font-weight: bold;
+	line-height: 25px;
+	color: #f90;
 }
 .forward {
 	background: #eee;
@@ -338,10 +338,10 @@ a.form {
 	height: 40px;
 	padding: 0 10px;
 	background: #e5e5e5;
-	line-height: 40px;
-	text-align: left;
 	border: 2px solid #ccc;
 	border-color: #eee #c2c2c2 #c2c2c2 #eee;
+	line-height: 40px;
+	text-align: left;
 }
 #adm-list a {
 	margin: 4px 0 0 8px;
@@ -358,16 +358,16 @@ a.form {
 .gb {
 	width: 70%;
 	margin: 0 auto;
-	border: 1px solid #333;
 	background: #eee;
+	border: 1px solid #333;
 }
 .gbhead {
 	background: #069 url('images/common_header.png') repeat-x;
-	font-size: 1.1em;
-	font-weight: bold;
-	color: #f90;
-	line-height: 25px;
 	border-bottom: 1px solid #333;
+	font-weight: bold;
+	font-size: 1.1em;
+	line-height: 25px;
+	color: #f90;
 }
 .author {
 	width: 200px;
@@ -395,8 +395,8 @@ a.form {
 }
 .gbfooter {
 	background: #ccc url('images/common_footer.png') repeat-x;
-	line-height: 18px;
 	border-top: 1px solid #333;
+	line-height: 18px;
 	clear: both;
 }
 /* Impressum */
@@ -412,8 +412,9 @@ a.form {
 	border-width: 1px;
 	border-style: solid;
 	border-color: #eee #ccc #ccc #eee;
-	line-height: 20px;
+	font-weight: bold;
 	font-size: 1.1em;
+	line-height: 20px;
 	float: left;
 }
 .imprint dd {
@@ -436,10 +437,10 @@ a.form {
 a.download-file {
 	padding-left: 34px;
 	background: url('../../images/crystal/32/create_file.png') no-repeat;
-	font-size: 1.1em;
 	font-weight: bold;
-	color: #000;
+	font-size: 1.1em;
 	line-height: 34px;
+	color: #000;
 	display: block;
 }
 a.download-file:hover {
@@ -477,8 +478,8 @@ a.download-file:hover {
 }
 .newstime {
 	padding: 0 10px;
-	line-height: 20px;
 	border-top: 1px solid #333;
+	line-height: 20px;
 }
 .comments {
 	float: right;
@@ -494,8 +495,8 @@ a.download-file:hover {
 	margin: 10px;
 	padding: 0 4px;
 	background: #eee;
-	line-height: 20px;
 	border: 1px solid #333;
+	line-height: 20px;
 }
 #additional-link span {
 	font-weight: bold;
@@ -512,8 +513,8 @@ a.download-file:hover {
 	background: url('images/common_header.png') repeat-x;
 	border-bottom: 1px solid #333;
 	line-height: 25px;
-	text-align: center;
 	color: #f90;
+	text-align: center;
 }
 .poll label {
 	padding: 5px;
@@ -536,10 +537,10 @@ a.download-file:hover {
 .search a {
 	padding: 3px;
 	background: #069 url('images/common_header.png') repeat-x;
-	font-size: 1.2em;
-	font-weight: bold;
-	color: #f90;
 	border-bottom: 1px solid #333;
+	font-weight: bold;
+	font-size: 1.2em;
+	color: #f90;
 	display: block;
 }
 .search p {
