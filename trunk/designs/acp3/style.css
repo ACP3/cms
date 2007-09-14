@@ -135,8 +135,8 @@ fieldset input:hover, fieldset select:hover, fieldset textarea:hover, fieldset i
 }
 input.checkbox {
 	width: auto;
-	border: 0;
 	background: none;
+	border: 0;
 	display: inline;
 }
 fieldset .readonly, fieldset .readonly:hover, fieldset .readonly:focus {

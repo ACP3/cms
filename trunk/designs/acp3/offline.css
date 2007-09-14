@@ -18,10 +18,10 @@ body {
 	padding: 0 20px;
 	background: #ffc;
 	border: 1px dotted #f00;
-	text-align: center;
 	font-weight: bold;
 	font-size: 1.3em;
 	line-height: 40px;
+	text-align: center;
 	position: absolute;
 	top: 50%;
 	left: 15%;
