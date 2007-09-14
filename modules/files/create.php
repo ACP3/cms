@@ -26,6 +26,18 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('end_hour', date_dropdown('hour', 'end_hour', 'end_hour'));
 	$tpl->assign('end_min', date_dropdown('min', 'end_min', 'end_min'));
 
+	$units[0]['value'] = 'Byte';
+	$units[0]['selected'] = select_entry('unit', 'Byte');
+	$units[1]['value'] = 'KiB';
+	$units[1]['selected'] = select_entry('unit', 'KiB');
+	$units[2]['value'] = 'MiB';
+	$units[2]['selected'] = select_entry('unit', 'MiB');
+	$units[3]['value'] = 'GiB';
+	$units[3]['selected'] = select_entry('unit', 'GiB');
+	$units[4]['value'] = 'TiB';
+	$units[4]['selected'] = select_entry('unit', 'TiB');
+	$tpl->assign('units', $units);
+
 	// Formularelemente
 	if (!$cache->check('categories_files')) {
 		$cache->create('categories_files', $db->select('id, name, description', 'categories', 'module = \'files\'', 'name ASC'));

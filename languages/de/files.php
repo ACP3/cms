@@ -31,7 +31,7 @@ define('files_mod_description', 'Mit diesem Modul können die Downloads verwalte
 define('files_new_file', 'Neue Datei angeben');
 define('files_select_category', 'Bitte wählen Sie die Kategorie aus, in der sich der Download befinden soll');
 define('files_select_internal_resource', 'Bitte geben Sie den Pfad zur hochzuladenden Datei an');
-define('files_type_in_external_resource', 'Bitte geben Sie eine externe Quelle für die Datei ein');
+define('files_type_in_external_resource', 'Bitte geben Sie den Pfad zur Datei und die Dateigröße ein');
 define('files_type_in_link_title', 'Der Linktitel sollte mindestens 3 Zeichen lang sein');
 define('files_unknown_filesize', 'Dateigröße unbekannt');
 ?>
