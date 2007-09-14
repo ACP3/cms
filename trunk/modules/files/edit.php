@@ -33,6 +33,22 @@ if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id 
 		$tpl->assign('end_hour', date_dropdown('hour', 'end_hour', 'end_hour', $end_date[3]));
 		$tpl->assign('end_min', date_dropdown('min', 'end_min', 'end_min', $end_date[4]));
 
+		$unit = trim(strrchr($dl[0]['size'], ' '));
+
+		$units[0]['value'] = 'Byte';
+		$units[0]['selected'] = select_entry('unit', 'Byte', $unit);
+		$units[1]['value'] = 'KiB';
+		$units[1]['selected'] = select_entry('unit', 'KiB', $unit);
+		$units[2]['value'] = 'MiB';
+		$units[2]['selected'] = select_entry('unit', 'MiB', $unit);
+		$units[3]['value'] = 'GiB';
+		$units[3]['selected'] = select_entry('unit', 'GiB', $unit);
+		$units[4]['value'] = 'TiB';
+		$units[4]['selected'] = select_entry('unit', 'TiB', $unit);
+		$tpl->assign('units', $units);
+
+		$dl[0]['filesize'] = substr($dl[0]['size'], 0, strpos($dl[0]['size'], ' '));
+
 		// Formularelemente
 		if (!$cache->check('categories_files')) {
 			$cache->create('categories_files', $db->select('id, name, description', 'categories', 'module = \'files\'', 'name ASC'));

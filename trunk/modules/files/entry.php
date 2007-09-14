@@ -27,9 +27,9 @@ switch ($modules->action) {
 			$errors[] = lang('common', 'select_date');
 		if (strlen($form['link_title']) < 3)
 			$errors[] = lang('files', 'type_in_link_title');
-		if (isset($_POST['external']) && empty($file))
+		if (isset($form['external']) && (empty($file) || empty($form['filesize']) || empty($form['unit'])))
 			$errors[] = lang('files', 'type_in_external_resource');
-		if (!isset($_POST['external']) && (empty($file['tmp_name']) || empty($file['size'])))
+		if (!isset($form['external']) && (empty($file['tmp_name']) || empty($file['size'])))
 			$errors[] = lang('files', 'select_internal_resource');
 		if (strlen($form['text']) < 3)
 			$errors[] = lang('files', 'description_to_short');
@@ -44,8 +44,9 @@ switch ($modules->action) {
 				$new_file = $result['name'];
 				$filesize = $result['size'];
 			} elseif (is_string($file)) {
+				settype($form['filesize'], 'float');
 				$new_file = $file;
-				$filesize = 0;
+				$filesize = $form['filesize'] . ' ' . $form['unit'];
 			}
 			$start_date = date_aligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
 			$end_date = date_aligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
@@ -80,7 +81,7 @@ switch ($modules->action) {
 			$errors[] = lang('common', 'select_date');
 		if (strlen($form['link_title']) < 3)
 			$errors[] = lang('files', 'type_in_link_title');
-		if (isset($form['external']) && empty($file))
+		if (isset($form['external']) && (empty($file) || empty($orm['filesize']) || empty($orm['unit'])))
 			$errors[] = lang('files', 'type_in_external_resource');
 		if (!isset($form['external']) && isset($file) && is_array($file) && (empty($file['tmp_name']) || empty($file['size'])))
 			$errors[] = lang('files', 'select_internal_resource');
@@ -93,15 +94,16 @@ switch ($modules->action) {
 			combo_box($errors);
 		} else {
 			$new_file_sql = null;
-			// Falls neue Datei angegeben wurde, Änderungen durchführen
+			// Falls eine neue Datei angegeben wurde, Änderungen durchführen
 			if (isset($file)) {
 				if (is_array($file)) {
 					$result = move_file($file['tmp_name'], $file['name'], 'files');
 					$new_file = $result['name'];
 					$filesize = $result['size'];
 				} elseif (is_string($file)) {
+					settype($form['filesize'], 'float');
 					$new_file = $file;
-					$filesize = 0;
+					$filesize = $form['filesize'] . ' ' . $form['unit'];
 				}
 				// SQL Query für die Änderungen
 				$new_file_sql = array(

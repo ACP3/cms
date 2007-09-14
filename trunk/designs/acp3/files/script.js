@@ -1,13 +1,16 @@
 $(document).ready(function() {
 	if ($('#external')[0].checked) {
-		$('#file_external').show();
-		$('#file_internal').hide();
+		$('#file-external').show();
+		$('#external-filesize').show();
+		$('#file-internal').hide();
 	} else {
-		$('#file_external').hide();
-		$('#file_internal').show();
+		$('#file-external').hide();
+		$('#external-filesize').hide();
+		$('#file-internal').show();
 	}
 	$('#external').click(function() {
-		$('#file_external').toggle();
-		$('#file_internal').toggle();
+		$('#file-external').toggle();
+		$('#external-filesize').toggle();
+		$('#file-internal').toggle();
 	});
 });
