@@ -81,7 +81,7 @@ switch ($modules->action) {
 			$errors[] = lang('common', 'select_date');
 		if (strlen($form['link_title']) < 3)
 			$errors[] = lang('files', 'type_in_link_title');
-		if (isset($form['external']) && (empty($file) || empty($orm['filesize']) || empty($orm['unit'])))
+		if (isset($form['external']) && (empty($file) || empty($form['filesize']) || empty($form['unit'])))
 			$errors[] = lang('files', 'type_in_external_resource');
 		if (!isset($form['external']) && isset($file) && is_array($file) && (empty($file['tmp_name']) || empty($file['size'])))
 			$errors[] = lang('files', 'select_internal_resource');
