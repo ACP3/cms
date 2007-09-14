@@ -75,8 +75,8 @@ table {
 	background: #069 url('../../designs/acp3/images/common_header.png') repeat-x;
 	font-weight: bold;
 	font-size: 1.1em;
-	color: #f90;
 	line-height: 24px;
+	color: #f90;
 }
 /* Layout */
 #head {
@@ -229,8 +229,8 @@ fieldset input:hover, fieldset select:hover, fieldset textarea:hover, fieldset i
 }
 input.checkbox {
 	width: auto;
-	border: 0;
 	background: none;
+	border: 0;
 	display: inline;
 }
 option {
@@ -261,21 +261,21 @@ a.form {
 	margin: 0 auto;
 	padding: 10px;
 	background: #ffc;
-	text-align: justify;
 	border: 1px dotted #f00;
+	text-align: justify;
 }
 .success {
 	width: 70%;
 	margin: 0 auto;
-	text-align: center;
 	border: 1px solid #333;
+	text-align: center;
 }
 .successhead {
 	background: #069 url('../../designs/acp3/images/common_header.png') repeat-x;
-	font-weight: bold;
-	color: #f90;
-	line-height: 25px;
 	border-bottom: 1px solid #333;
+	font-weight: bold;
+	line-height: 25px;
+	color: #f90;
 }
 .forward {
 	background: #eee;
