@@ -531,8 +531,8 @@ a.download-file:hover {
 }
 /* Suche */
 .search {
-	border: 1px solid #333;
 	margin-bottom: 5px;
+	border: 1px solid #333;
 }
 .search a {
 	padding: 3px;
