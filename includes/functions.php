@@ -78,43 +78,81 @@ function date_aligned($mode, $time_stamp, $format = 0)
 	return false;
 }
 /**
- * Datums Dropdownmenüs
+ * Zeigt Dropdown-Menüs für die Veröffentlichungsdauer von Inhalten an
  *
  * @param string $mode
- *  Legt fest, ob der Typ des Dropdownmenüs für die Tage, Monate, etc. zuständig sein soll
- * @param string $name
- *  Der Name des Dropdownmenüs im Formular
- * @param string $id
- *  Die ID des Dropdownmenüs im Formular
+ * 	Start- bzw. Enddatum
  * @param integer $value
- *  Evtl. schon vorhandener Wert, um diesen selektieren zu können
+ * 	Die Zeitstempel des Eintrages
  * @return string
  */
-function date_dropdown($mode, $name, $id, $value = '')
+function publication_period($mode, $value = '')
 {
-	global $tpl, $validate;
+	global $tpl;
 
-	$time = date_aligned(1, time(), 'Y');
-	$date_arr = array(
+	$get_year = date_aligned(1, time(), 'Y');
+	$date = array(
 		'day' => 'j|1|31',
 		'month' => 'n|1|12',
-		'year' => 'Y|' . ($time - 6) . '|' . ($time + 3),
+		'year' => 'Y|' . ($get_year - 6) . '|' . ($get_year + 3),
 		'hour' => 'G|0|23',
 		'min' => 'i|0|59'
 	);
+	if (!empty($value)) {
+		$date_arr = explode('.', date_aligned(1, $value, 'j.n.Y.G.i'));
+	}
 
 	$tpl->assign('mode', $mode);
-	$tpl->assign('name', $name);
-	$tpl->assign('id', $id);
 
-	$date = explode('|', $date_arr[$mode]);
-	$loop = NULL;
-	for ($date[1]; $date[1] <= $date[2]; $date[1]++) {
-		$loop[$date[1]]['current'] = $date[1];
-		$time = !$validate->is_number($value) ? date_aligned(1, time(), $date[0]) : $value;
-		$loop[$date[1]]['selected'] = select_entry($name, $date[1], $time);
+	// Tag
+	$day_arr = explode('|', $date['day']);
+	$time = !isset($date_arr[0]) ? date_aligned(1, time(), $day_arr[0]) : $date_arr[0];
+	$day = NULL;
+	for ($day_arr[1]; $day_arr[1] <= $day_arr[2]; $day_arr[1]++) {
+		$day[$day_arr[1]]['value'] = $day_arr[1];
+		$day[$day_arr[1]]['selected'] = select_entry($mode . '_day', $day_arr[1], $time);
 	}
-	$tpl->assign('loop', $loop);
+	$tpl->assign('day', $day);
+
+	// Monat
+	$month_arr = explode('|', $date['month']);
+	$time = !isset($date_arr[1]) ? date_aligned(1, time(), $month_arr[0]) : $date_arr[1];
+	$month = NULL;
+	for ($month_arr[1]; $month_arr[1] <= $month_arr[2]; $month_arr[1]++) {
+		$month[$month_arr[1]]['value'] = $month_arr[1];
+		$month[$month_arr[1]]['selected'] = select_entry($mode . '_month', $month_arr[1], $time);
+	}
+	$tpl->assign('month', $month);
+
+	// Jahr
+	$year_arr = explode('|', $date['year']);
+	$time = !isset($date_arr[2]) ? date_aligned(1, time(), $year_arr[0]) : $date_arr[2];
+	$year = NULL;
+	for ($year_arr[1]; $year_arr[1] <= $year_arr[2]; $year_arr[1]++) {
+		$year[$year_arr[1]]['value'] = $year_arr[1];
+		$year[$year_arr[1]]['selected'] = select_entry($mode . '_year', $year_arr[1], $time);
+	}
+	$tpl->assign('year', $year);
+
+	// Stunde
+	$hour_arr = explode('|', $date['hour']);
+	$time = !isset($date_arr[3]) ? date_aligned(1, time(), $hour_arr[0]) : $date_arr[3];
+	$hour = NULL;
+	for ($hour_arr[1]; $hour_arr[1] <= $hour_arr[2]; $hour_arr[1]++) {
+		$hour[$hour_arr[1]]['value'] = $hour_arr[1];
+		$hour[$hour_arr[1]]['selected'] = select_entry($mode . '_hour', $hour_arr[1], $time);
+	}
+	$tpl->assign('hour', $hour);
+
+	// Minute
+	$min_arr = explode('|', $date['min']);
+	$time = !isset($date_arr[4]) ? date_aligned(1, time(), $min_arr[0]) : $date_arr[4];
+	$min = NULL;
+	for ($min_arr[1]; $min_arr[1] <= $min_arr[2]; $min_arr[1]++) {
+		$min[$min_arr[1]]['value'] = $min_arr[1];
+		$min[$min_arr[1]]['selected'] = select_entry($mode . '_min', $min_arr[1], $time);
+	}
+	$tpl->assign('min', $min);
 
 	return $tpl->fetch('common/date.html');
 }
