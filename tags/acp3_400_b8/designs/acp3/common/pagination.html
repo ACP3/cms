@@ -1,0 +1,21 @@
+<div id="pagination">
+	{lang values="common|pagination"}:
+{if $pos_prev.selected}
+	<span>&laquo;</span>
+{else}
+	<a href="{$uri}{$pos_prev.pos}">&laquo;</a>
+{/if}
+{foreach from=$pages item=page}
+{if $page.selected}
+	<span>{$page.page}</span>
+{else}
+	<a href="{$uri}{$page.pos}">{$page.page}</a>
+{/if}
+{/foreach}
+{if $pos_next.selected}
+	<span>&raquo;</span>
+{else}
+	<a href="{$uri}{$pos_next.pos}">&raquo;</a>
+{/if}
+</div>
+<hr />

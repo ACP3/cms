@@ -1,0 +1,12 @@
+<div class="newsbox">
+	<h3 class="newshead">{$file.link_title}</h3>
+	<div class="newstime">
+		{$file.date}
+	</div>
+	<div class="newstext">
+		{$file.text}
+	</div>
+	<div id="additional-link">
+		<a href="{uri args="files/details/id_`$file.id`/action_download"}" class="download-file">{lang values="files|download_file"} ({$file.size})</a>
+	</div>
+</div>

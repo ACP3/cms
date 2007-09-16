@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<info>
+		<name lang="true"/>
+		<description lang="true"/>
+		<author>Goratsch Webdesign</author>
+		<version core="true"/>
+		<protected/>
+		<active>1</active>
+	</info>
+	<access>
+		<item>
+			<file>adm_list</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>configuration</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>designs</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>entry</file>
+			<action>
+				<name>configuration</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>designs</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>languages</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>modactivation</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>moddeactivation</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>sql_export</name>
+				<level>2</level>
+			</action>
+		</item>
+		<item>
+			<file>extensions</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>languages</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>maintenance</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>mod_list</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>software</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>sql_export</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>sql_optimisation</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>update_check</file>
+			<level>2</level>
+		</item>
+	</access>
+</module>

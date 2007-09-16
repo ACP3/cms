@@ -1,0 +1,15 @@
+{$error_msg}
+<form action="{$request_uri}" method="post" accept-charset="UTF-8">
+	<fieldset>
+		<legend>{lang values="newsletter|settings"}</legend>
+		<dl>
+			<dt><label for="mail">{lang values="common|email"}</label></dt>
+			<dd><input type="text" name="form[mail]" id="mail" value="{$form.mail}" maxlength="120" /></dd>
+			<dt><label for="mailsig">{lang values="newsletter|mailsig"}</label></dt>
+			<dd><textarea name="form[mailsig]" id="mailsig" cols="50" rows="3" style="height:100px">{$form.mailsig}</textarea></dd>
+		</dl>
+	</fieldset>
+	<div style="margin-top:20px">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>

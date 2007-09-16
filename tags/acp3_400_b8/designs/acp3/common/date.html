@@ -1,0 +1,31 @@
+<select name="form[{$mode}_day]" id="{$mode}_day" style="width:auto">
+	<option value="">{lang values="common|day"}</option>
+{foreach from=$day item=row}
+	<option value="{$row.value}"{$row.selected}>{$row.value}</option>
+{/foreach}
+</select>
+<select name="form[{$mode}_month]" id="{$mode}_month" style="width:auto">
+	<option value="">{lang values="common|month"}</option>
+{foreach from=$month item=row}
+	<option value="{$row.value}"{$row.selected}>{$row.value}</option>
+{/foreach}
+</select>
+<select name="form[{$mode}_year]" id="{$mode}_year" style="width:auto">
+	<option value="">{lang values="common|year"}</option>
+{foreach from=$year item=row}
+	<option value="{$row.value}"{$row.selected}>{$row.value}</option>
+{/foreach}
+</select>
+-
+<select name="form[{$mode}_hour]" id="{$mode}_hour" style="width:auto">
+	<option value="">{lang values="common|hour"}</option>
+{foreach from=$hour item=row}
+	<option value="{$row.value}"{$row.selected}>{$row.value}</option>
+{/foreach}
+</select>
+<select name="form[{$mode}_min]" id="{$mode}_min" style="width:auto">
+	<option value="">{lang values="common|min"}</option>
+{foreach from=$min item=row}
+	<option value="{$row.value}"{$row.selected}>{$row.value}</option>
+{/foreach}
+</select>

@@ -1,0 +1,44 @@
+{$error_msg}
+<form action="{$request_uri}" method="post" accept-charset="UTF-8">
+	<fieldset>
+		<legend>{lang values="common|publication_period"}</legend>
+		<dl>
+			<dt><label for="start_day">{lang values="common|start_date"}</label></dt>
+			<dd>{$start_date}</dd>
+			<dt><label for="end_day">{lang values="common|end_date"}</label></dt>
+			<dd>{$end_date}</dd>
+		</dl>
+		<p>
+			{lang values="common|date_description"}
+		</p>
+	</fieldset>
+	<fieldset>
+		<legend>{lang values="polls|poll"}</legend>
+		<dl>
+			<dt><label for="question">{lang values="polls|question"}</label></dt>
+			<dd><input type="text" name="form[question]" id="question" value="{$question}" maxlength="120" /></dd>
+		</dl>
+		<p>
+			{lang values="polls|delete_answer_description"}
+		</p>
+		<table class="no-border">
+{foreach from=$answers item=row}
+			<tr>
+				<td style="width:5%;padding:3px 0"><input type="checkbox" name="form[answers][{$row.number}][delete]" value="1" class="checkbox" /></td>
+				<td style="padding:3px 0">
+					<dl>
+						<dt><label for="answer_{$row.number}">{lang values="polls|answer"} {$row.number}</label></dt>
+						<dd>
+							<input type="text" name="form[answers][{$row.number}][value]" id="answer_{$row.number}" value="{$row.value}" maxlength="120" />
+							<input type="hidden" name="form[answers][{$row.number}][id]" value="{$row.id}" style="display:none" />
+						</dd>
+					</dl>
+				</td>
+			</tr>
+{/foreach}
+		</table>
+	</fieldset>
+	<div style="margin-top:20px">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>

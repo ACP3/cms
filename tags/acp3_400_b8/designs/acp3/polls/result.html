@@ -1,0 +1,28 @@
+<h4 style="margin-bottom:10px">{$question}</h4>
+<table>
+	<thead>
+		<tr>
+			<th style="width:60%">{lang values="polls|answers"}</th>
+			<th style="width:20%">{lang values="polls|per_cent"}</th>
+			<th>{lang values="polls|votes"}</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr style="background:#eee;font-weight:bold">
+			<td colspan="2">{lang values="polls|total_votes"}:</td>
+			<td>{$total_votes}</td>
+		</tr>
+	</tfoot>
+	<tbody>
+{foreach from=$answers item=row}
+		<tr>
+			<td>{$row.text}</td>
+			<td>{$row.percent}%</td>
+			<td>{$row.votes}</td>
+		</tr>
+{/foreach}
+	</tbody>
+</table>
+<p style="text-align:center">
+	<a href="{uri args="polls"}">{lang values="polls|polls_archive"}</a>
+</p>
