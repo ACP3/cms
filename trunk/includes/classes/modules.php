@@ -65,10 +65,9 @@ class modules
 			define('IN_ACP3', true);
 		}
 		$stm = !empty($_GET['stm']) ? explode('/', $_GET['stm']) : 0;
-		$def_mod = defined('IN_ADM') ? 'home' : 'news';
 		$def_page = defined('IN_ADM') ? 'adm_list' : 'list';
 
-		$this->mod = !empty($stm[0]) ? $stm[0] : $def_mod;
+		$this->mod = !empty($stm[0]) ? $stm[0] : 'news';
 		$this->page = !empty($stm[1]) ? $stm[1] : $def_page;
 
 		$this->cat = !empty($_POST['cat']) ? $_POST['cat'] : '0';

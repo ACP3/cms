@@ -24,6 +24,8 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 
 	if (!$auth->is_user() && defined('IN_ADM') && $modules->mod != 'users' && $modules->page != 'login') {
 		redirect('users/login');
+	} elseif ($auth->is_user() && defined('IN_ADM') && empty($_GET['stm'])) {
+		redirect(0, ROOT_DIR);
 	}
 
 	// Content einbinden
