@@ -34,7 +34,6 @@ function smarty_function_fckeditor($params, &$smarty) {
 	if (!isset($params['InstanceName']) || empty($params['InstanceName']))
 		$smarty->trigger_error('fckeditor: required parameter "InstanceName" missing');
 
-	global $db;
 	static $base_arguments = array(), $config_arguments = array();
 
 	// Test if editor has been loaded before
@@ -73,14 +72,14 @@ function smarty_function_fckeditor($params, &$smarty) {
 	foreach ($base_arguments as $key => $value) {
 		// Fix newlines, javascript cannot handle multiple line strings very well.
 		if (!is_bool($value))
-			$value = '"' . str_replace("\r\n", "\" + \n\"", $db->escape($value, 2)) . '"';
+			 $value = '"' . preg_replace("/[\r\n]+/", '" + $0"', addslashes($value)) . '"';
 
 		$out.= 'oFCKeditor.' . $key . ' = ' . $value . ';' . "\n";
 	}
 
 	foreach ($config_arguments as $key => $value) {
 		if (!is_bool($value))
-			$value = '"' . str_replace("\r\n", "\" + \n\"", $db->escape($value, 2)) . '"';
+			 $value = '"' . preg_replace("/[\r\n]+/", '" + $0"', addslashes($value)) . '"';
 
 		$out.= 'oFCKeditor.Config[\'' . $key . '\'] = ' . $value . ';' . "\n";
 	}

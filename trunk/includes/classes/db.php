@@ -91,6 +91,8 @@ class db
 	 */
 	function escape($value, $mode = 1)
 	{
+		$value = trim($value);
+
 		if ($mode == 1) {
 			return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 		} elseif ($mode == 2) {
