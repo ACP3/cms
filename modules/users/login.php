@@ -17,7 +17,7 @@ if ($auth->is_user()) {
 	$form = $_POST['form'];
 
 	$user = $db->select('id, pwd', 'users', 'nickname = \'' . $db->escape($form['nickname']) . '\'');
-	$auth = false;
+	$is_user = false;
 
 	if (count($user) == '1') {
 		// Passwort aus Datenbank
@@ -29,10 +29,10 @@ if ($auth->is_user()) {
 
 		// Wenn beide Hash Werte gleich sind, Benutzer authentifizieren
 		if ($db_hash == $form_pwd_hash) {
-			$auth = true;
+			$is_user = true;
 		}
 	}
-	if ($auth) {
+	if ($is_user) {
 		// Session Einstellungen setzen und Session starten
 		session_set_cookie_params(0, ROOT_DIR, htmlentities($_SERVER['HTTP_HOST']));
 		session_start();
