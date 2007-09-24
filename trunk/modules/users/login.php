@@ -34,13 +34,13 @@ if ($auth->is_user()) {
 	}
 	if ($is_user) {
 		// Session Einstellungen setzen und Session starten
-		session_set_cookie_params(0, ROOT_DIR, htmlentities($_SERVER['HTTP_HOST']));
+		session_set_cookie_params(0, '/');
 		session_start();
 
 		// Ein Jahr oder eine Stunde...
 		$expire = isset($_POST['remember']) ? 31104000 : 3600;
 
-		setcookie('ACP3_AUTH', $db->escape($form['nickname']) . '|' . $db_hash, time() + $expire, ROOT_DIR);
+		setcookie('ACP3_AUTH', $db->escape($form['nickname']) . '|' . $db_hash, time() + $expire, '/');
 
 		$_SESSION['acp3_id'] = $user[0]['id'];
 
