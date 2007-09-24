@@ -38,23 +38,26 @@ class auth
 				$db_password = substr($user_check[0]['pwd'], 0, 40);
 				if ($db_password == $cookie_arr[1]) {
 					// Session Einstellungen setzen und Session starten
-					session_set_cookie_params(0, ROOT_DIR, htmlentities($_SERVER['HTTP_HOST']));
+					session_set_cookie_params(0, '/');
 					session_start();
 
 					$this->is_user = true;
 
 					// Falls nötig, Session neu setzen
 					if (empty($_SESSION['acp3_id'])) {
+						session_regenerate_id(true);
 						$_SESSION['acp3_id'] = $user_check[0]['id'];
 					}
 				}
 			}
 			if (!$this->is_user) {
-				setcookie('ACP3_AUTH', '', time() - 3600, ROOT_DIR);
+				setcookie('ACP3_AUTH', '', time() - 3600, '/');
+
 				$_SESSION = array();
 				if (isset($_COOKIE[session_name()]))
-					setcookie(session_name(), '', time() - 3600, ROOT_DIR);
+					setcookie(session_name(), '', time() - 3600, '/');
 				session_destroy();
+
 				redirect(0, ROOT_DIR);
 			}
 		}
