@@ -32,7 +32,7 @@ FCKConfig.CustomConfigurationsPath = '' ;
 FCKConfig.EditorAreaCSS = FCKConfig.BasePath + 'css/fck_editorarea.css' ;
 FCKConfig.ToolbarComboPreviewCSS = '' ;
 
-FCKConfig.DocType = '' ;
+FCKConfig.DocType = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">' ;
 
 FCKConfig.BaseHref = '' ;
 
@@ -58,10 +58,10 @@ FCKConfig.DefaultLanguage		= 'de' ;
 FCKConfig.ContentLangDirection	= 'ltr' ;
 
 FCKConfig.ProcessHTMLEntities	= true ;
-FCKConfig.IncludeLatinEntities	= true ;
-FCKConfig.IncludeGreekEntities	= true ;
+FCKConfig.IncludeLatinEntities	= false ;
+FCKConfig.IncludeGreekEntities	= false ;
 
-FCKConfig.ProcessNumericEntities = false ;
+FCKConfig.ProcessNumericEntities = true ;
 
 FCKConfig.AdditionalNumericEntities = ''  ;		// Single Quote: "'"
 
@@ -111,8 +111,8 @@ FCKConfig.ToolbarSets["Basic"] = [
 	['Bold','Italic','-','OrderedList','UnorderedList','-','Link','Unlink','-','About']
 ] ;
 
-FCKConfig.EnterMode = 'br' ;			// p | div | br
-FCKConfig.ShiftEnterMode = 'p' ;	// p | div | br
+FCKConfig.EnterMode = 'p' ;			// p | div | br
+FCKConfig.ShiftEnterMode = 'br' ;	// p | div | br
 
 FCKConfig.Keystrokes = [
 	[ CTRL + 65 /*A*/, true ],
