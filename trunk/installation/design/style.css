@@ -297,3 +297,6 @@ a.form {
 	margin-left: 10px;
 	cursor: pointer;
 }
+#accordion fieldset legend a {
+	color: #069;
+}
