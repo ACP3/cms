@@ -15,10 +15,17 @@ function mark_entries(name, state)
 }
 $(document).ready(function() {
 	// Akkordeon Menü
+	$('#accordion fieldset > legend').each(function() {
+		var legend = $(this).text();
+		$(this).empty().append($('<a href="#">'+ legend +'</a>'));
+	});
+
 	$('#accordion fieldset dl:not(:first)').hide();
-	$('#accordion fieldset legend').click(function(){
+	$('#accordion fieldset > legend a').click(function() {
+		var fieldset = $(this).parent().parent();
+
 		$('dl:visible').animate({height: 'hide', opacity: 'hide'}, 'fast');
-		$(this).parent().children('dl').animate({height: 'show', opacity: 'show'}, 'slow');
+		fieldset.children('dl').animate({height: 'show', opacity: 'show'}, 'slow');
 		return false;
 	});
 })

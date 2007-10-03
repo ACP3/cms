@@ -331,7 +331,9 @@ a.form {
 }
 #accordion fieldset legend {
 	margin-left: 10px;
-	cursor: pointer;
+}
+#accordion fieldset legend a {
+	color: #069;
 }
 /* ACP */
 #adm-list {
