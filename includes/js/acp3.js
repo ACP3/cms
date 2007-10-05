@@ -24,8 +24,10 @@ $(document).ready(function() {
 	$('#accordion fieldset > legend a').click(function() {
 		var fieldset = $(this).parent().parent();
 
-		$('dl:visible').slideUp('fast');
-		fieldset.children('dl').slideDown('slow');
+		if (!fieldset.children('dl').is(':visible')) {
+			$('dl:visible').slideUp('fast');
+			fieldset.children('dl').slideDown('slow');
+		}
 		return false;
 	});
 })
