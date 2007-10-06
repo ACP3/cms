@@ -24,7 +24,7 @@ $(document).ready(function() {
 	$('#accordion fieldset > legend a').click(function() {
 		var fieldset = $(this).parent().parent();
 
-		if (!fieldset.children('dl').is(':visible')) {
+		if (!fieldset.children('dl').is(':visible') && !$('#accordion fieldset dl').is(':animated')) {
 			$('dl:visible').slideUp('fast');
 			fieldset.children('dl').slideDown('slow');
 		}
