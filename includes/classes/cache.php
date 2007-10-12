@@ -40,13 +40,7 @@ class cache
 	function create($filename, $sql_results)
 	{
 		if (!empty($sql_results)) {
-			$content = '<?php' . "\n";
-			$content.= 'if (!defined(\'IN_ACP3\') && !defined(\'IN_ADM\'))' . "\n";
-			$content.= "\t" . 'exit;' . "\n\n";
-			$content.= '$results = ' . var_export($sql_results, true) . ';' . "\n";
-			$content.= '?>';
-
-			$bool = @file_put_contents('cache/sql_' . md5($filename) . '.php', $content);
+			$bool = @file_put_contents('cache/sql_' . md5($filename) . '.php', serialize($sql_results));
 
 			return $bool ? true : false;
 		} elseif ($this->check($filename)) {
@@ -80,9 +74,7 @@ class cache
 	function output($filename)
 	{
 		if ($this->check($filename)) {
-			$results = array();
-			include 'cache/sql_' . md5($filename) . '.php';
-			return $results;
+			return unserialize(@file_get_contents('cache/sql_' . md5($filename) . '.php'));
 		}
 		return null;
 	}
