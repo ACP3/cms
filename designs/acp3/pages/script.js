@@ -4,18 +4,16 @@ $(document).ready(function() {
 	}
 	function SwitchBackground() {
 		var mode = GetValue('mode');
-		var light = '#fff';
-		var dark = '#eee';
 
 		if (mode == '1') {
-			$('#static_page').css({ background: dark });
-			$('#hyperlink').css({ background: light });
+			$('#static_page').show();
+			$('#hyperlink').hide();
 		} else if (mode == '2' || mode == '3') {
-			$('#static_page').css({ background: light });
-			$('#hyperlink').css({ background: dark });
+			$('#static_page').hide();
+			$('#hyperlink').show();
 		} else {
-			$('#static_page').css({ background: light });
-			$('#hyperlink').css({ background: light });
+			$('#static_page').hide();
+			$('#hyperlink').hide();
 		}
 	}
 	function ShowHideSort() {
