@@ -13,11 +13,11 @@ if ((bool)@ini_get('register_globals')) {
 		array_unshift($superglobals, $_SESSION);
 
 	$knownglobals = array(
-	//Reservierte Superglobale von PHP:
-	'_ENV', 'HTTP_ENV_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_FILES', 'HTTP_FILES_VARS', '_SERVER', 'HTTP_SERVER_VARS', '_SESSION', 'HTTP_SESSION_VARS', '_REQUEST',
+		//Reservierte Superglobale von PHP:
+		'_ENV', 'HTTP_ENV_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_FILES', 'HTTP_FILES_VARS', '_SERVER', 'HTTP_SERVER_VARS', '_SESSION', 'HTTP_SESSION_VARS', '_REQUEST',
 
-	//Globale Variablen dieser Datei:
-	'superglobals', 'knownglobals', 'superglobal', 'global', 'void',
+		//Globale Variablen dieser Datei:
+		'superglobals', 'knownglobals', 'superglobal', 'global', 'void',
 	);
 	foreach ($superglobals as $superglobal) {
 		foreach ($superglobal as $global => $void) {
