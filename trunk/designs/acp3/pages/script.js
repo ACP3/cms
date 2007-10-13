@@ -2,7 +2,7 @@ $(document).ready(function() {
 	function GetValue(id) {
 		return $('#' + id).val();
 	}
-	function SwitchBackground() {
+	function SwitchContainer() {
 		var mode = GetValue('mode');
 
 		if (mode == '1') {
@@ -19,17 +19,15 @@ $(document).ready(function() {
 	function ShowHideSort() {
 		var blocks = GetValue('blocks');
 		if (blocks != '0' && blocks != '') {
-			$('#sort_label').css({ display: 'block' });
-			$('#sort_input').css({ display: 'block' });
+			$('#ShowHideSort').show();
 		} else {
-			$('#sort_label').css({ display: 'none' });
-			$('#sort_input').css({ display: 'none' });
+			$('#ShowHideSort').hide();
 		}
 	}
 	// Seitentyp
-	SwitchBackground();
+	SwitchContainer();
 	$('#mode').change(function() {
-		SwitchBackground();
+		SwitchContainer();
 	});
 	// Blöcke für die Navigationsleisten
 	ShowHideSort();
