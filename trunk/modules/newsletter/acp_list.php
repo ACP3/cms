@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
@@ -19,6 +19,6 @@ if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
 		$tpl->assign('pagination', pagination($db->select('id', 'nl_accounts', 0, 0, 0, 0, 1)));
 		$tpl->assign('newsletter', $newsletter);
 	}
-	$content = $tpl->fetch('newsletter/adm_list.html');
+	$content = $tpl->fetch('newsletter/acp_list.html');
 }
 ?>

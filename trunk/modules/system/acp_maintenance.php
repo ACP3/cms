@@ -7,11 +7,11 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 $breadcrumb->assign(lang('system', 'system'), uri('acp/system'));
 $breadcrumb->assign(lang('system', 'maintenance'));
 
-$content = $tpl->fetch('system/maintenance.html');
+$content = $tpl->fetch('system/acp_maintenance.html');
 ?>

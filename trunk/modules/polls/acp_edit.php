@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (!empty($modules->id) && $db->select('id', 'poll_question', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
@@ -33,7 +33,7 @@ if (!empty($modules->id) && $db->select('id', 'poll_question', 'id = \'' . $modu
 		}
 		$tpl->assign('answers', $answers);
 
-		$content = $tpl->fetch('polls/edit.html');
+		$content = $tpl->fetch('polls/acp_edit.html');
 	}
 } else {
 	redirect('errors/404');

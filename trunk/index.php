@@ -16,15 +16,15 @@ $tpl->assign('page_title', CONFIG_TITLE);
 $tpl->assign('keywords', CONFIG_META_KEYWORDS);
 $tpl->assign('description', CONFIG_META_DESCRIPTION);
 
-if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
+if (CONFIG_MAINTENANCE == '1' && defined('IN_FRONTEND')) {
 	$tpl->assign('maintenance_msg', CONFIG_MAINTENANCE_MSG);
 	$tpl->display('offline.html');
 } else {
 	$auth = new auth;
 
-	if (!$auth->is_user() && defined('IN_ADM') && $modules->mod != 'users' && $modules->page != 'login') {
+	if (!$auth->is_user() && defined('IN_ACP') && $modules->mod != 'users' && $modules->page != 'login') {
 		redirect('users/login');
-	} elseif ($auth->is_user() && defined('IN_ADM') && empty($_GET['stm'])) {
+	} elseif ($auth->is_user() && defined('IN_ACP') && empty($_GET['stm'])) {
 		redirect(0, ROOT_DIR);
 	}
 

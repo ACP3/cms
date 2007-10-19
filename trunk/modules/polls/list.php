@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (!defined('IN_FRONTEND'))
 	exit;
 
 $polls = $db->select('id, start, end, question', 'poll_question', 'start <= \'' . date_aligned(2, time()) . '\'', 'end DESC');

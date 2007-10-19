@@ -7,8 +7,8 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
-$content = $tpl->fetch('system/adm_list.html');
+$content = $tpl->fetch('system/acp_list.html');
 ?>

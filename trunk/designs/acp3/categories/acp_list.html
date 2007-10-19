@@ -1,6 +1,6 @@
-<form action="{uri args="acp/categories/adm_list/action_delete"}" method="post" id="categories">
+<form action="{uri args="categories/acp_list/action_delete"}" method="post" id="categories">
 	<div id="adm-list">
-		<a href="{uri args="acp/categories/create"}" title="{lang values="categories|create"}"><img src="{icon path="32/create_category"}" alt="{lang values="categories|create"}" /></a>
+		<a href="{uri args="categories/acp_create"}" title="{lang values="categories|create"}"><img src="{icon path="32/create_category"}" alt="{lang values="categories|create"}" /></a>
 		<a href="javascript:$('#categories').submit()" title="{lang values="common|delete_marked"}"><img src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" /></a>
 		<h2>{lang values="categories|categories_overview"}</h2>
 	</div>
@@ -20,7 +20,7 @@
 {foreach from=$categories item=row}
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
-				<td><a href="{uri args="acp/categories/edit/id_`$row.id`"}" title="{lang values="categories|edit"}">{$row.name}</a></td>
+				<td><a href="{uri args="categories/acp_edit/id_`$row.id`"}" title="{lang values="categories|edit"}">{$row.name}</a></td>
 				<td>{$row.description}</td>
 				<td>{$row.module}</td>
 			</tr>

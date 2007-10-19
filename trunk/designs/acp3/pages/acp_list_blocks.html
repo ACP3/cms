@@ -1,6 +1,6 @@
-<form action="{uri args="acp/pages/adm_list_blocks/action_delete_blocks"}" method="post" id="blocks">
+<form action="{uri args="pages/acp_list_blocks/action_delete_blocks"}" method="post" id="blocks">
 	<div id="adm-list">
-		<a href="{uri args="acp/pages/create_block"}" title="{lang values="pages|create_block"}"><img src="{icon path="32/create_block"}" alt="{lang values="pages|create_block"}" /></a>
+		<a href="{uri args="pages/acp_create_block"}" title="{lang values="pages|create_block"}"><img src="{icon path="32/create_block"}" alt="{lang values="pages|create_block"}" /></a>
 		<a href="javascript:$('#blocks').submit()" title="{lang values="common|delete_marked"}"><img src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" /></a>
 		<h2>{lang values="pages|blocks_overview"}</h2>
 	</div>
@@ -19,7 +19,7 @@
 {foreach from=$blocks item=row}
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
-				<td><a href="{uri args="acp/pages/edit_block/id_`$row.id`"}" title="{lang values="pages|edit_block"}">{$row.title}</a></td>
+				<td><a href="{uri args="pages/acp_edit_block/id_`$row.id`"}" title="{lang values="pages|edit_block"}">{$row.title}</a></td>
 				<td>{$row.index_name}</td>
 			</tr>
 {/foreach}

@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
@@ -39,6 +39,6 @@ if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
 		}
 		$tpl->assign('access', $access);
 	}
-	$content = $tpl->fetch('access/adm_list.html');
+	$content = $tpl->fetch('access/acp_list.html');
 }
 ?>

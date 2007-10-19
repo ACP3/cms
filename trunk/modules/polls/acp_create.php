@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (isset($_POST['submit'])) {
@@ -41,6 +41,6 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('question', isset($_POST['form']['question']) ? $_POST['form']['question'] : '');
 
-	$content = $tpl->fetch('polls/create.html');
+	$content = $tpl->fetch('polls/acp_create.html');
 }
 ?>

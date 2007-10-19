@@ -253,7 +253,6 @@ function pagination($rows)
 
 	if ($rows > CONFIG_ENTRIES) {
 		// Alle angegeben URL Parameter mit in die URL einbeziehen
-		$acp = defined('IN_ADM') ? 'acp/' : '';
 		$id = !empty($modules->id) ? '/id_' . $modules->id : '';
 		$cat = !empty($modules->cat) ? '/cat_' . $modules->cat : '';
 		$gen = '';
@@ -265,7 +264,7 @@ function pagination($rows)
 			}
 		}
 
-		$tpl->assign('uri', uri($acp . $modules->mod . '/' . $modules->page . $id . $cat . $gen));
+		$tpl->assign('uri', uri($modules->mod . '/' . $modules->page . $id . $cat . $gen));
 
 		// Seitenauswahl
 		$c_pages = ceil($rows / CONFIG_ENTRIES);

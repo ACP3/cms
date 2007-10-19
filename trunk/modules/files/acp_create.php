@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (isset($_POST['submit'])) {
@@ -48,6 +48,6 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('checked_external', isset($form['external']) ? ' checked="checked"' : '');
 	$tpl->assign('form', isset($form) ? $form : '');
 
-	$content = $tpl->fetch('files/create.html');
+	$content = $tpl->fetch('files/acp_create.html');
 }
 ?>

@@ -7,12 +7,12 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (!empty($modules->id) && $db->select('id', 'pages_blocks', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	$breadcrumb->assign(lang('pages', 'pages'), uri('acp/pages'));
-	$breadcrumb->assign(lang('pages', 'adm_list_blocks'), uri('acp/pages/adm_list_blocks'));
+	$breadcrumb->assign(lang('pages', 'acp_list_blocks'), uri('acp/pages/acp_list_blocks'));
 	$breadcrumb->assign(lang('pages', 'edit_block'));
 
 	if (isset($_POST['submit'])) {
@@ -23,7 +23,7 @@ if (!empty($modules->id) && $db->select('id', 'pages_blocks', 'id = \'' . $modul
 
 		$tpl->assign('form', isset($form) ? $form : $block[0]);
 
-		$content = $tpl->fetch('pages/edit_block.html');
+		$content = $tpl->fetch('pages/acp_edit_block.html');
 	}
 } else {
 	redirect('errors/404');

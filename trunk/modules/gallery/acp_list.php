@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
@@ -26,6 +26,6 @@ if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
 		}
 		$tpl->assign('galleries', $galleries);
 	}
-	$content = $tpl->fetch('gallery/adm_list.html');
+	$content = $tpl->fetch('gallery/acp_list.html');
 }
 ?>

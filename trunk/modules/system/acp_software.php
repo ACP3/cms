@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 //Server Infos
@@ -62,5 +62,5 @@ if (!$errors && !$register_globals && !$safe_mode && $php_settings[3]['col_right
 
 $tpl->assign('php_settings', $php_settings);
 
-$content = $tpl->fetch('system/software.html');
+$content = $tpl->fetch('system/acp_software.html');
 ?>

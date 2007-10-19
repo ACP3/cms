@@ -1,6 +1,6 @@
-<form action="{uri args="acp/access/adm_list/action_delete"}" method="post" id="access">
+<form action="{uri args="access/acp_list/action_delete"}" method="post" id="access">
 	<div id="adm-list">
-		<a href="{uri args="acp/access/create"}" title="{lang values="access|create"}"><img src="{icon path="32/create_access"}" alt="{lang values="access|create"}" /></a>
+		<a href="{uri args="access/acp_create"}" title="{lang values="access|create"}"><img src="{icon path="32/create_access"}" alt="{lang values="access|create"}" /></a>
 		<a href="javascript:$('#access').submit()" title="{lang values="common|delete_marked"}"><img src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" /></a>
 		<h2>{lang values="access|access_overview"}</h2>
 	</div>
@@ -19,7 +19,7 @@
 {foreach from=$access item=row}
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
-				<td><a href="{uri args="acp/access/edit/id_`$row.id`"}" title="{lang values="access|edit"}">{$row.name}</a></td>
+				<td><a href="{uri args="access/acp_edit/id_`$row.id`"}" title="{lang values="access|edit"}">{$row.name}</a></td>
 				<td style="text-align:justify">{$row.access_to_mod}</td>
 			</tr>
 {/foreach}

@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 if (!$modules->check('pages', 'entry'))
 	redirect('errors/403');
@@ -129,7 +129,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('pages', 'confirm_delete'), uri('acp/pages/adm_list/action_delete/entries_' . $marked_entries), uri('acp/pages'));
+			$content = combo_box(lang('pages', 'confirm_delete'), uri('acp/pages/acp_list/action_delete/entries_' . $marked_entries), uri('acp/pages'));
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
@@ -169,7 +169,7 @@ switch ($modules->action) {
 
 			$bool = $db->insert('pages_blocks', $insert_values);
 
-			$content = combo_box($bool ? lang('pages', 'create_block_success') : lang('pages', 'create_block_error'), uri('acp/pages/adm_list_blocks'));
+			$content = combo_box($bool ? lang('pages', 'create_block_success') : lang('pages', 'create_block_error'), uri('acp/pages/acp_list_blocks'));
 		}
 		break;
 	case 'edit_block':
@@ -192,7 +192,7 @@ switch ($modules->action) {
 
 			$bool = $db->update('pages_blocks', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$content = combo_box($bool ? lang('pages', 'edit_block_success') : lang('pages', 'edit_block_error'), uri('acp/pages/adm_list_blocks'));
+			$content = combo_box($bool ? lang('pages', 'edit_block_success') : lang('pages', 'edit_block_error'), uri('acp/pages/acp_list_blocks'));
 		}
 		break;
 	case 'delete_blocks':
@@ -206,7 +206,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('pages', 'confirm_delete'), uri('acp/pages/adm_list_blocks/action_delete_blocks/entries_' . $marked_entries), uri('acp/pages_adm_list_blocks'));
+			$content = combo_box(lang('pages', 'confirm_delete'), uri('acp/pages/acp_list_blocks/action_delete_blocks/entries_' . $marked_entries), uri('acp/pages_acp_list_blocks'));
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
@@ -215,7 +215,7 @@ switch ($modules->action) {
 					$bool = $db->delete('pages_blocks', 'id = \'' . $entry . '\'');
 				}
 			}
-			$content = combo_box($bool ? lang('pages', 'delete_block_success') : lang('pages', 'delete_block_error'), uri('acp/pages/adm_list_blocks'));
+			$content = combo_box($bool ? lang('pages', 'delete_block_success') : lang('pages', 'delete_block_error'), uri('acp/pages/acp_list_blocks'));
 		} else {
 			redirect('errors/404');
 		}

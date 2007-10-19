@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 $breadcrumb->assign(lang('system', 'system'), uri('acp/system'));
@@ -30,5 +30,5 @@ foreach ($mod_list as $name => $info) {
 $tpl->assign('LANG_modules_found', sprintf(lang('system', 'modules_found'), count($mod_list)));
 $tpl->assign('modules', $mod_list);
 
-$content = $tpl->fetch('system/mod_list.html');
+$content = $tpl->fetch('system/acp_modules.html');
 ?>

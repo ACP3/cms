@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (!empty($modules->id) && $db->select('id', 'emoticons', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
@@ -20,7 +20,7 @@ if (!empty($modules->id) && $db->select('id', 'emoticons', 'id = \'' . $modules-
 		$tpl->assign('picture', $emoticon[0]['img']);
 		$tpl->assign('form', isset($form) ? $form : $emoticon[0]);
 
-		$content = $tpl->fetch('emoticons/edit.html');
+		$content = $tpl->fetch('emoticons/acp_edit.html');
 	}
 } else {
 	redirect('errors/404');

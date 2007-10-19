@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (!empty($modules->id) && $db->select('id', 'pages', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
@@ -61,7 +61,7 @@ if (!empty($modules->id) && $db->select('id', 'pages', 'id = \'' . $modules->id 
 
 		$tpl->assign('pages_list', pages_list(0, $page[0]['parent']));
 
-		$content = $tpl->fetch('pages/edit.html');
+		$content = $tpl->fetch('pages/acp_edit.html');
 	}
 } else {
 	redirect('errors/404');

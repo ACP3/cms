@@ -7,11 +7,11 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 $breadcrumb->assign(lang('pages', 'pages'), uri('acp/pages'));
-$breadcrumb->assign(lang('pages', 'adm_list_blocks'), uri('acp/pages/adm_list_blocks'));
+$breadcrumb->assign(lang('pages', 'acp_list_blocks'), uri('acp/pages/acp_list_blocks'));
 $breadcrumb->assign(lang('pages', 'create_block'));
 
 if (isset($_POST['submit'])) {
@@ -20,6 +20,6 @@ if (isset($_POST['submit'])) {
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : '');
 
-	$content = $tpl->fetch('pages/create_block.html');
+	$content = $tpl->fetch('pages/acp_create_block.html');
 }
 ?>

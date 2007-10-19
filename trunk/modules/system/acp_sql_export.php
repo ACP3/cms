@@ -1,5 +1,5 @@
 <?php
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 $breadcrumb->assign(lang('system', 'system'), uri('acp/system'));
@@ -36,5 +36,5 @@ if (!isset($_POST['submit']) || isset($errors)) {
 	$tpl->assign('export_type', $export_type);
 
 }
-$content = $tpl->fetch('system/sql_export.html');
+$content = $tpl->fetch('system/acp_sql_export.html');
 ?>
