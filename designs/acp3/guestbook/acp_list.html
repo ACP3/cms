@@ -1,5 +1,5 @@
 {if $guestbook}
-<form action="{uri args="acp/guestbook/adm_list/action_delete"}" method="post" id="guestbook">
+<form action="{uri args="guestbook/acp_list/action_delete"}" method="post" id="guestbook">
 	<div id="adm-list">
 		<a href="javascript:$('#guestbook').submit()" title="{lang values="common|delete_marked"}"><img src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" /></a>
 		<h2>{lang values="guestbook|guestbook_entries_overview"}</h2>
@@ -22,7 +22,7 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
 				<td>{$row.date}</td>
 				<td>{$row.ip}</td>
-				<td><a href="{uri args="acp/guestbook/edit/id_`$row.id`"}" title="{lang values="guestbook|edit"}">{$row.name}</a></td>
+				<td><a href="{uri args="guestbook/acp_edit/id_`$row.id`"}" title="{lang values="guestbook|edit"}">{$row.name}</a></td>
 				<td>{$row.message}</td>
 			</tr>
 {/foreach}

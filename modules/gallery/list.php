@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (!defined('IN_FRONTEND'))
 	exit;
 
 $galleries = $db->select('id, start, name', 'gallery', '(start = end AND start <= \'' . date_aligned(2, time()) . '\' OR start != end AND start <= \'' . date_aligned(2, time()) . '\' AND end >= \'' . date_aligned(2, time()) . '\')', 'start DESC, id DESC', POS, CONFIG_ENTRIES);

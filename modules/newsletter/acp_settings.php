@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (isset($_POST['submit'])) {
@@ -18,6 +18,6 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : $settings);
 
-	$content = $tpl->fetch('newsletter/settings.html');
+	$content = $tpl->fetch('newsletter/acp_settings.html');
 }
 ?>

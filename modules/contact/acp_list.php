@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (isset($_POST['submit'])) {
@@ -21,6 +21,6 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : $contact);
 
-	$content = $tpl->fetch('contact/adm_list.html');
+	$content = $tpl->fetch('contact/acp_list.html');
 }
 ?>

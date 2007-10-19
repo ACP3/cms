@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-define('pages_adm_list_blocks', 'Blöcke');
+define('pages_acp_list_blocks', 'Blöcke');
 define('pages_block_title', 'Name des Blocks');
 define('pages_block_title_to_short', 'Der Name des Blocks sollte mindestens 3 Zeichen lang sein');
 define('pages_blocks', 'Block');

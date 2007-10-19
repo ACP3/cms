@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 $pic = isset($modules->gen['pic']) && $validate->is_number($modules->gen['pic']) ? $modules->gen['pic'] : 1;
@@ -16,7 +16,7 @@ if (!empty($modules->id)) {
 	$gallery = $db->select('name', 'gallery', 'id = \'' . $modules->id . '\'');
 
 	$breadcrumb->assign(lang('gallery', 'gallery'), uri('acp/gallery'));
-	$breadcrumb->assign($gallery[0]['name'], uri('acp/gallery/edit_gallery/id_' . $modules->id));
+	$breadcrumb->assign($gallery[0]['name'], uri('acp/gallery/acp_edit_gallery/id_' . $modules->id));
 	$breadcrumb->assign(lang('gallery', 'add_picture'));
 	unset($gallery);
 }
@@ -38,6 +38,6 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$form['pic'] = isset($form['pic']) ? $form['pic'] : $pic;
 	$tpl->assign('form', $form);
 
-	$content = $tpl->fetch('gallery/add_picture.html');
+	$content = $tpl->fetch('gallery/acp_add_picture.html');
 }
 ?>

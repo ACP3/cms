@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (isset($_POST['submit'])) {
@@ -56,6 +56,6 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('pages_list', pages_list());
 
-	$content = $tpl->fetch('pages/create.html');
+	$content = $tpl->fetch('pages/acp_create.html');
 }
 ?>

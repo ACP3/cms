@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 $breadcrumb->assign(lang('system', 'system'), uri('acp/system'));
@@ -30,5 +30,5 @@ for ($i = 0; $i < $count_dir; $i++) {
 }
 $tpl->assign('designs', $designs);
 
-$content = $tpl->fetch('system/designs.html');
+$content = $tpl->fetch('system/acp_designs.html');
 ?>

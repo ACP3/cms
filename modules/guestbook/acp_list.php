@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
@@ -36,6 +36,6 @@ if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
 		}
 		$tpl->assign('guestbook', $guestbook);
 	}
-	$content = $tpl->fetch('guestbook/adm_list.html');
+	$content = $tpl->fetch('guestbook/acp_list.html');
 }
 ?>

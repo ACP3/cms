@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 $breadcrumb->assign(lang('system', 'system'), uri('acp/system'));
@@ -26,5 +26,5 @@ if ($file) {
 	}
 	$tpl->assign('update', $content);
 }
-$content = $tpl->fetch('system/update_check.html');
+$content = $tpl->fetch('system/acp_update_check.html');
 ?>

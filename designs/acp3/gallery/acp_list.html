@@ -1,6 +1,6 @@
-<form action="{uri args="acp/gallery/adm_list/action_delete_gallery"}" method="post" id="gallery">
+<form action="{uri args="gallery/acp_list/action_delete_gallery"}" method="post" id="gallery">
 	<div id="adm-list">
-		<a href="{uri args="acp/gallery/create"}" title="{lang values="gallery|create"}"><img src="{icon path="32/create_gallery"}" alt="{lang values="gallery|create"}" /></a>
+		<a href="{uri args="gallery/acp_create"}" title="{lang values="gallery|create"}"><img src="{icon path="32/create_gallery"}" alt="{lang values="gallery|create"}" /></a>
 		<a href="javascript:$('#gallery').submit()" title="{lang values="common|delete_marked"}"><img src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" /></a>
 		<h2>{lang values="gallery|galleries_overview"}</h2>
 	</div>
@@ -21,7 +21,7 @@
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
 				<td>{$row.start} {lang values="common|until"} {$row.end}</td>
-				<td><a href="{uri args="acp/gallery/edit_gallery/id_`$row.id`"}" title="{lang values="gallery|edit_gallery"}">{$row.name}</a></td>
+				<td><a href="{uri args="gallery/acp_edit_gallery/id_`$row.id`"}" title="{lang values="gallery|edit_gallery"}">{$row.name}</a></td>
 				<td>{$row.pictures}</td>
 			</tr>
 {/foreach}

@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (!empty($modules->id) && $db->select('id', 'guestbook', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
@@ -19,7 +19,7 @@ if (!empty($modules->id) && $db->select('id', 'guestbook', 'id = \'' . $modules-
 
 		$tpl->assign('form', isset($form) ? $form : $guestbook[0]);
 
-		$content = $tpl->fetch('guestbook/edit.html');
+		$content = $tpl->fetch('guestbook/acp_edit.html');
 	}
 } else {
 	redirect('errors/404');

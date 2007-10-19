@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (!empty($modules->id) && $db->select('id', 'users', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
@@ -28,7 +28,7 @@ if (!empty($modules->id) && $db->select('id', 'users', 'id = \'' . $modules->id 
 
 		$tpl->assign('form', isset($form) ? $form : $user[0]);
 
-		$content = $tpl->fetch('users/edit.html');
+		$content = $tpl->fetch('users/acp_edit.html');
 	}
 } else {
 	redirect('errors/404');

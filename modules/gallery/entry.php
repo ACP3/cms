@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 if (!$modules->check('gallery', 'entry'))
 	redirect('errors/403');
@@ -77,7 +77,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('gallery', 'confirm_delete'), uri('acp/gallery/adm_list/action_delete_gallery/entries_' . $marked_entries), uri('acp/gallery'));
+			$content = combo_box(lang('gallery', 'confirm_delete'), uri('acp/gallery/acp_list/action_delete_gallery/entries_' . $marked_entries), uri('acp/gallery'));
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
@@ -190,7 +190,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('gallery', 'confirm_picture_delete'), uri('acp/gallery/adm_list/action_delete_picture/entries_' . $marked_entries), uri('acp/gallery/edit_gallery/id_' . $modules->id));
+			$content = combo_box(lang('gallery', 'confirm_picture_delete'), uri('acp/gallery/acp_list/action_delete_picture/entries_' . $marked_entries), uri('acp/gallery/acp_edit_gallery/id_' . $modules->id));
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;

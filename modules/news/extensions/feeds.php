@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (!defined('IN_FRONTEND'))
 	exit;
 
 $result = $db->select('id, start, headline, text', 'news', '(start = end AND start <= \'' . date_aligned(2, time()) . '\' OR start != end AND start <= \'' . date_aligned(2, time()) . '\' AND end >= \'' . date_aligned(2, time()) . '\')', 'start DESC, id DESC', 10);

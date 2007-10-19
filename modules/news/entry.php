@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 if (!$modules->check('news', 'entry'))
 	redirect('errors/403');
@@ -99,7 +99,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('news', 'confirm_delete'), uri('acp/news/adm_list/action_delete/entries_' . $marked_entries), uri('acp/news'));
+			$content = combo_box(lang('news', 'confirm_delete'), uri('acp/news/acp_list/action_delete/entries_' . $marked_entries), uri('acp/news'));
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;

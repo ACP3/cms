@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
@@ -56,7 +56,7 @@ if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id 
 		$tpl->assign('current_file', $dl[0]['file']);
 		$tpl->assign('form', isset($form) ? $form : $dl[0]);
 
-		$content = $tpl->fetch('files/edit.html');
+		$content = $tpl->fetch('files/acp_edit.html');
 	}
 } else {
 	redirect('errors/403');

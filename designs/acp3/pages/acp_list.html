@@ -1,7 +1,7 @@
-<form action="{uri args="acp/pages/adm_list/action_delete"}" method="post" id="pages">
+<form action="{uri args="pages/acp_list/action_delete"}" method="post" id="pages">
 	<div id="adm-list">
-		<a href="{uri args="acp/pages/create"}" title="{lang values="pages|create"}"><img src="{icon path="32/create_page"}" alt="{lang values="pages|create"}" /></a>
-		<a href="{uri args="acp/pages/adm_list_blocks"}" title="{lang values="pages|adm_list_blocks"}"><img src="{icon path="32/blocks_modules"}" alt="{lang values="pages|manage_blocks"}" /></a>
+		<a href="{uri args="pages/acp_create"}" title="{lang values="pages|create"}"><img src="{icon path="32/create_page"}" alt="{lang values="pages|create"}" /></a>
+		<a href="{uri args="pages/acp_list_blocks"}" title="{lang values="pages|acp_list_blocks"}"><img src="{icon path="32/blocks_modules"}" alt="{lang values="pages|manage_blocks"}" /></a>
 		<a href="javascript:$('#pages').submit()" title="{lang values="common|delete_marked"}"><img src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" /></a>
 		<h2>{lang values="pages|pages_overview"}</h2>
 	</div>
@@ -23,7 +23,7 @@
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
 				<td>{$row.start} {lang values="common|until"} {$row.end}</td>
-				<td><a href="{uri args="acp/pages/edit/id_`$row.id`"}" title="{lang values="pages|edit"}">{$row.title}</a></td>
+				<td><a href="{uri args="pages/acp_edit/id_`$row.id`"}" title="{lang values="pages|edit"}">{$row.title}</a></td>
 				<td>{$row.block}</td>
 				<td>{$row.mode}</td>
 			</tr>

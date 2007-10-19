@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (!defined('IN_FRONTEND'))
 	exit;
 
 $guestbook = $db->select('date, name, user_id, message, website, mail', 'guestbook', 0, 'id DESC', POS, CONFIG_ENTRIES);

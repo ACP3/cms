@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
@@ -24,6 +24,6 @@ if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
 		}
 		$tpl->assign('emoticons', $emoticons);
 	}
-	$content = $tpl->fetch('emoticons/adm_list.html');
+	$content = $tpl->fetch('emoticons/acp_list.html');
 }
 ?>

@@ -9,7 +9,7 @@
 		<a href="#" id="nav_mods_link">{lang values="users|administration"}</a>
 		<ul id="nav_mods" class="hide">
 {foreach from=$nav_mods item=row}
-			<li><a href="{uri args="acp/`$row.dir`"}">{$row.name}</a></li>
+			<li><a href="{uri args="`$row.dir`/acp_list"}">{$row.name}</a></li>
 {/foreach}
 		</ul>
 	</li>
@@ -18,12 +18,12 @@
 	<li>
 		<a href="#" id="nav_system_link">{lang values="system|system"}</a>
 		<ul id="nav_system" class="hide">
-			<li><a href="{uri args="acp/system/configuration"}">{lang values="system|configuration"}</a></li>
-			<li><a href="{uri args="acp/system/software"}">{lang values="system|software"}</a></li>
-			<li><a href="{uri args="acp/system/extensions"}">{lang values="system|extensions"}</a></li>
-			<li><a href="{uri args="acp/system/maintenance"}">{lang values="system|maintenance"}</a></li>
+			<li><a href="{uri args="system/acp_configuration"}">{lang values="system|configuration"}</a></li>
+			<li><a href="{uri args="system/acp_software"}">{lang values="system|software"}</a></li>
+			<li><a href="{uri args="system/acp_extensions"}">{lang values="system|extensions"}</a></li>
+			<li><a href="{uri args="system/acp_maintenance"}">{lang values="system|maintenance"}</a></li>
 		</ul>
 	</li>
 {/if}
-	<li><a href="{uri args="acp/users/signoff"}">{lang values="users|sign_off"}</a></li>
+	<li><a href="{uri args="users/signoff"}">{lang values="users|sign_off"}</a></li>
 </ul>

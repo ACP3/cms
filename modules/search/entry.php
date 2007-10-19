@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (!defined('IN_FRONTEND'))
 	exit;
 if (!$modules->check('search', 'entry'))
 	redirect('errors/403');

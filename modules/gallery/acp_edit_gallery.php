@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 if (!empty($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
@@ -39,7 +39,7 @@ if (!empty($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->i
 			$tpl->assign('pictures', $pictures);
 		}
 
-		$content = $tpl->fetch('gallery/edit_gallery.html');
+		$content = $tpl->fetch('gallery/acp_edit_gallery.html');
 	}
 } else {
 	redirect('errors/404');

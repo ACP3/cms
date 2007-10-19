@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (!defined('IN_ACP'))
 	exit;
 
 $breadcrumb->assign(lang('system', 'system'), uri('acp/system'));
@@ -40,5 +40,5 @@ if ($action) {
 	$tpl->assign('overall_overhead', $overall_overhead);
 }
 
-$content = $tpl->fetch('system/sql_optimisation.html');
+$content = $tpl->fetch('system/acp_sql_optimisation.html');
 ?>
