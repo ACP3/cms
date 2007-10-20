@@ -31,7 +31,7 @@ switch ($modules->action) {
 			$form['sort'] = strtoupper($form['sort']);
 			$results_mods = array();
 			foreach ($form['mods'] as $module) {
-				if ($modules->check($module, 'extensions/search')) {
+				if ($modules->check($module, 'extensions/search', 'frontend')) {
 					include 'modules/' . $module . '/extensions/search.php';
 				}
 			}

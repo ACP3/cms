@@ -10,32 +10,34 @@
 		<active>1</active>
 	</info>
 	<access>
-		<item>
-			<file>acp_create</file>
-			<level>2</level>
-		</item>
-		<item>
-			<file>acp_edit</file>
-			<level>2</level>
-		</item>
-		<item>
-			<file>acp_list</file>
-			<level>2</level>
-		</item>
-		<item>
-			<file>entry</file>
-			<action>
-				<name>create</name>
+		<acp>
+			<item>
+				<file>acp_create</file>
 				<level>2</level>
-			</action>
-			<action>
-				<name>delete</name>
+			</item>
+			<item>
+				<file>acp_edit</file>
 				<level>2</level>
-			</action>
-			<action>
-				<name>edit</name>
+			</item>
+			<item>
+				<file>acp_list</file>
 				<level>2</level>
-			</action>
-		</item>
+			</item>
+			<item>
+				<file>entry</file>
+				<action>
+					<name>acp_create</name>
+					<level>2</level>
+				</action>
+				<action>
+					<name>acp_delete</name>
+					<level>2</level>
+				</action>
+				<action>
+					<name>acp_edit</name>
+					<level>2</level>
+				</action>
+			</item>
+		</acp>
 	</access>
 </module>

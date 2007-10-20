@@ -55,7 +55,7 @@ if (!empty($modules->id) && $db->select('id', 'news', 'id = \'' . $modules->id .
 
 		$tpl->assign('news', $news[0]);
 
-		if ($modules->check('comments', 'functions')) {
+		if ($modules->check('comments', 'functions', 'frontend')) {
 			include_once 'modules/comments/functions.php';
 
 			$tpl->assign('comments_list', comments_list());

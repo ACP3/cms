@@ -8,28 +8,35 @@
 		<active>1</active>
 	</info>
 	<access>
-		<item>
-			<file>acp_list</file>
-			<level>2</level>
-		</item>
-		<item>
-			<file>entry</file>
-			<action>
-				<name>send_mail</name>
-				<level>1</level>
-			</action>
-			<action>
-				<name>edit</name>
+		<acp>
+			<item>
+				<file>acp_list</file>
 				<level>2</level>
-			</action>
-		</item>
-		<item>
-			<file>imprint</file>
-			<level>1</level>
-		</item>
-		<item>
-			<file>list</file>
-			<level>1</level>
-		</item>
+			</item>
+			<item>
+				<file>entry</file>
+				<action>
+					<name>acp_edit</name>
+					<level>2</level>
+				</action>
+			</item>
+		</acp>
+		<frontend>
+			<item>
+				<file>entry</file>
+				<action>
+					<name>send_mail</name>
+					<level>1</level>
+				</action>
+			</item>
+			<item>
+				<file>imprint</file>
+				<level>1</level>
+			</item>
+			<item>
+				<file>list</file>
+				<level>1</level>
+			</item>
+		</frontend>
 	</access>
 </module>

@@ -21,7 +21,7 @@ if (isset($_POST['entries']) || isset($modules->gen['entries'])) {
 		$emoticons = false;
 
 		// Emoticons einbinden
-		if ($modules->check('emoticons', 'functions')) {
+		if ($modules->check('emoticons', 'functions', 'frontend')) {
 			include_once 'modules/emoticons/functions.php';
 			$emoticons = true;
 		}

@@ -21,7 +21,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$search_mods = array();
 
 	for ($i = 0; $i < $c_mods; $i++) {
-		if ($modules->check($mods[$i], 'extensions/search')) {
+		if ($modules->check($mods[$i], 'extensions/search', 'frontend')) {
 			$info = $modules->parseInfo($mods[$i]);
 			$name = $info['name'];
 			$search_mods[$name]['dir'] = $mods[$i];
