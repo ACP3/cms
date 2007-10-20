@@ -25,7 +25,7 @@ for ($i = 0; $i < $count_dir; $i++) {
 		$designs[$i]['description'] = $design_info['description'];
 		$designs[$i]['author'] = $design_info['author'];
 		$designs[$i]['version'] = $design_info['version'];
-		$designs[$i]['action'] = CONFIG_DESIGN == $directories[$i] ? '<img src="' . ROOT_DIR . 'images/crystal/16/active.png" alt="" />' : '<a href="' . uri('acp/system/entry/action_designs/dir_' . urlencode($directories[$i])) . '"><img src="' . ROOT_DIR . 'images/crystal/16/inactive.png" alt="" /></a>';
+		$designs[$i]['action'] = CONFIG_DESIGN == $directories[$i] ? '<img src="' . ROOT_DIR . 'images/crystal/16/active.png" alt="" />' : '<a href="' . uri('system/entry/action_acp_designs/dir_' . urlencode($directories[$i])) . '"><img src="' . ROOT_DIR . 'images/crystal/16/inactive.png" alt="" /></a>';
 	}
 }
 $tpl->assign('designs', $designs);
