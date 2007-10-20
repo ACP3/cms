@@ -30,34 +30,33 @@
 				<file>acp_list</file>
 				<level>2</level>
 			</item>
-			<item>
-				<file>entry</file>
-				<action>
-					<name>acp_add_picture</name>
-					<level>2</level>
-				</action>
-				<action>
-					<name>acp_create</name>
-					<level>2</level>
-				</action>
-				<action>
-					<name>acp_delete_gallery</name>
-					<level>2</level>
-				</action>
-				<action>
-					<name>acp_delete_picture</name>
-					<level>2</level>
-				</action>
-				<action>
-					<name>acp_edit_gallery</name>
-					<level>2</level>
-				</action>
-				<action>
-					<name>acp_edit_picture</name>
-					<level>2</level>
-				</action>
-			</item>
 		</acp>
+		<entry>
+			<action>
+				<name>acp_add_picture</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>acp_create</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>acp_delete_gallery</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>acp_delete_picture</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>acp_edit_gallery</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>acp_edit_picture</name>
+				<level>2</level>
+			</action>
+		</entry>
 		<frontend>
 			<item>
 				<file>details</file>

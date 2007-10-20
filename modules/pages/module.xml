@@ -34,34 +34,33 @@
 				<file>acp_list_blocks</file>
 				<level>2</level>
 			</item>
-			<item>
-				<file>entry</file>
-				<action>
-					<name>acp_create</name>
-					<level>2</level>
-				</action>
-				<action>
-					<name>acp_create_block</name>
-					<level>2</level>
-				</action>
-				<action>
-					<name>acp_delete</name>
-					<level>2</level>
-				</action>
-				<action>
-					<name>acp_delete_blocks</name>
-					<level>2</level>
-				</action>
-				<action>
-					<name>acp_edit</name>
-					<level>2</level>
-				</action>
-				<action>
-					<name>acp_edit_block</name>
-					<level>2</level>
-				</action>
-			</item>
 		</acp>
+		<entry>
+			<action>
+				<name>acp_create</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>acp_create_block</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>acp_delete</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>acp_delete_blocks</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>acp_edit</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>acp_edit_block</name>
+				<level>2</level>
+			</action>
+		</entry>
 		<frontend>
 			<item>
 				<file>extensions/search</file>

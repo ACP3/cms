@@ -18,29 +18,25 @@
 				<file>acp_list</file>
 				<level>2</level>
 			</item>
-			<item>
-				<file>entry</file>
-				<action>
-					<name>acp_delete</name>
-					<level>2</level>
-				</action>
-				<action>
-					<name>acp_edit</name>
-					<level>2</level>
-				</action>
-			</item>
 		</acp>
+		<entry>
+			<action>
+				<name>acp_delete</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>acp_edit</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>create</name>
+				<level>1</level>
+			</action>
+		</entry>
 		<frontend>
 			<item>
 				<file>create</file>
 				<level>1</level>
-			</item>
-			<item>
-				<file>entry</file>
-				<action>
-					<name>create</name>
-					<level>1</level>
-				</action>
 			</item>
 			<item>
 				<file>list</file>

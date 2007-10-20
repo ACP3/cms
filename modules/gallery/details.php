@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_FRONTEND'))
+if (!defined('IN_ACP3'))
 	exit;
 
 $date = " AND ((g.start = g.end AND g.start<='" . date_aligned(2, time()) . "') OR (g.start != g.end AND g.start<='" . date_aligned(2, time()) . "' AND g.end>='" . date_aligned(2, time()) . "'))";

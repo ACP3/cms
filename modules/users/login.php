@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_FRONTEND') && !defined('IN_ACP'))
+if (!defined('IN_ACP3'))
 	exit;
 
 // Falls der Benutzer schon eingeloggt ist, diesen zur Startseite weiterleiten

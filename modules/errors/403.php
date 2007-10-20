@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_FRONTEND') && !defined('IN_ACP'))
+if (!defined('IN_ACP3'))
 	exit;
 
 $content = $tpl->fetch('errors/403.html');

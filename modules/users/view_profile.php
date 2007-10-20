@@ -1,5 +1,5 @@
 <?php
-if (!defined('IN_FRONTEND'))
+if (!defined('IN_ACP3'))
 	exit;
 
 $breadcrumb->assign(lang('users', 'users'), uri('users'));

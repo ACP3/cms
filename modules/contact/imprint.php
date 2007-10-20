@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_FRONTEND'))
+if (!defined('IN_ACP3'))
 	exit;
 
 $breadcrumb->assign(lang('contact', 'contact'), uri('contact'));
