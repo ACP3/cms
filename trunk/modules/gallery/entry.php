@@ -13,7 +13,7 @@ if (!$modules->check('gallery', 'entry'))
 	redirect('errors/403');
 
 switch ($modules->action) {
-	case 'create':
+	case 'acp_create':
 		$form = $_POST['form'];
 
 		if (!$validate->date($form))
@@ -36,10 +36,10 @@ switch ($modules->action) {
 
 			$bool = $db->insert('gallery', $insert_values);
 
-			$content = combo_box($bool ? lang('gallery', 'create_success') : lang('gallery', 'create_error'), uri('acp/gallery'));
+			$content = combo_box($bool ? lang('gallery', 'create_success') : lang('gallery', 'create_error'), uri('gallery/acp_list'));
 		}
 		break;
-	case 'edit_gallery':
+	case 'acp_edit_gallery':
 		$form = $_POST['form'];
 
 		if (!$validate->date($form))
@@ -63,10 +63,10 @@ switch ($modules->action) {
 
 			$cache->create('gallery_pics_id_' . $modules->id, $db->query('SELECT g.name, p.id FROM ' . CONFIG_DB_PRE . 'gallery g LEFT JOIN ' . CONFIG_DB_PRE . 'galpics p ON g.id = \'' . $modules->id . '\' AND p.gallery_id = \'' . $modules->id . '\' ORDER BY p.pic ASC, p.id ASC'));
 
-			$content = combo_box($bool ? lang('gallery', 'edit_success') : lang('gallery', 'edit_error'), uri('acp/gallery'));
+			$content = combo_box($bool ? lang('gallery', 'edit_success') : lang('gallery', 'edit_error'), uri('gallery/acp_list'));
 		}
 		break;
-	case 'delete_gallery':
+	case 'acp_delete_gallery':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
 		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
@@ -77,7 +77,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('gallery', 'confirm_delete'), uri('acp/gallery/acp_list/action_delete_gallery/entries_' . $marked_entries), uri('acp/gallery'));
+			$content = combo_box(lang('gallery', 'confirm_delete'), uri('gallery/acp_list/action_delete_gallery/entries_' . $marked_entries), uri('gallery/acp_list'));
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
@@ -99,12 +99,12 @@ switch ($modules->action) {
 					$cache->delete('gallery_pics_id_' . $entry);
 				}
 			}
-			$content = combo_box($bool && $bool2 ? lang('gallery', 'delete_success') : lang('gallery', 'delete_error'), uri('acp/gallery'));
+			$content = combo_box($bool && $bool2 ? lang('gallery', 'delete_success') : lang('gallery', 'delete_error'), uri('gallery/acp_list'));
 		} else {
 			redirect('errors/404');
 		}
 		break;
-	case 'add_picture':
+	case 'acp_add_picture':
 		$file['tmp_name'] = $_FILES['file']['tmp_name'];
 		$file['name'] = $_FILES['file']['name'];
 		$file['size'] = $_FILES['file']['size'];
@@ -136,10 +136,10 @@ switch ($modules->action) {
 
 			$cache->create('gallery_pics_id_' . $form['gallery'], $db->select('id', 'galpics', 'gallery_id = \'' . $modules->id . '\'', 'id ASC'));
 
-			$content = combo_box($bool ? lang('gallery', 'add_picture_success') : lang('gallery', 'add_picture_error'), uri('acp/gallery/add_picture/id_' . $form['gallery'] . '/pic_' . ($pic + 1)));
+			$content = combo_box($bool ? lang('gallery', 'add_picture_success') : lang('gallery', 'add_picture_error'), uri('gallery/acp_add_picture/id_' . $form['gallery'] . '/pic_' . ($pic + 1)));
 		}
 		break;
-	case 'edit_picture':
+	case 'acp_edit_picture':
 		if (!empty($_FILES['file']['tmp_name']) && $_FILES['file']['size'] > '0') {
 			$file['tmp_name'] = $_FILES['file']['tmp_name'];
 			$file['name'] = $_FILES['file']['name'];
@@ -176,10 +176,10 @@ switch ($modules->action) {
 
 			$cache->create('gallery_pics_id_' . $form['gallery'], $db->select('id', 'galpics', 'gallery_id = \'' . $modules->id . '\'', 'id ASC'));
 
-			$content = combo_box($bool ? lang('gallery', 'edit_picture_success') : lang('gallery', 'edit_picture_error'), uri('acp/gallery'));
+			$content = combo_box($bool ? lang('gallery', 'edit_picture_success') : lang('gallery', 'edit_picture_error'), uri('gallery/acp_list'));
 		}
 		break;
-	case 'delete_picture':
+	case 'acp_delete_picture':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
 		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
@@ -190,7 +190,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('gallery', 'confirm_picture_delete'), uri('acp/gallery/acp_list/action_delete_picture/entries_' . $marked_entries), uri('acp/gallery/acp_edit_gallery/id_' . $modules->id));
+			$content = combo_box(lang('gallery', 'confirm_picture_delete'), uri('gallery/acp_list/action_delete_picture/entries_' . $marked_entries), uri('gallery/acp_edit_gallery/id_' . $modules->id));
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
@@ -205,7 +205,7 @@ switch ($modules->action) {
 					// Galerie Cache löschen
 					$bool = $db->delete('galpics', 'id = \'' . $entry . '\'');
 			}
-			$content = combo_box($bool ? lang('gallery', 'picture_delete_success') : lang('gallery', 'picture_delete_error'), uri('acp/gallery'));
+			$content = combo_box($bool ? lang('gallery', 'picture_delete_success') : lang('gallery', 'picture_delete_error'), uri('gallery/acp_list'));
 		} else {
 			redirect('errors/404');
 		}

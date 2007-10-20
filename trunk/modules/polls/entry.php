@@ -13,7 +13,7 @@ if (!$modules->check('polls', 'entry'))
 	redirect('errors/403');
 
 switch ($modules->action) {
-	case 'create':
+	case 'acp_create':
 		$form = $_POST['form'];
 
 		if (!$validate->date($form))
@@ -57,10 +57,10 @@ switch ($modules->action) {
 				}
 			}
 
-			$content = combo_box($bool && $bool2 ? lang('polls', 'create_success') : lang('polls', 'create_error'), uri('acp/polls'));
+			$content = combo_box($bool && $bool2 ? lang('polls', 'create_success') : lang('polls', 'create_error'), uri('polls/acp_list'));
 		}
 		break;
-	case 'edit':
+	case 'acp_edit':
 		$form = $_POST['form'];
 
 		if (!$validate->date($form))
@@ -101,10 +101,10 @@ switch ($modules->action) {
 					$bool = $db->update('poll_answers', array('text' =>$db->escape($row['value'])), 'id = \'' . $db->escape($row['id']) . '\'');
 				}
 			}
-			$content = combo_box($bool ? lang('polls', 'edit_success') : lang('polls', 'edit_error'), uri('acp/polls'));
+			$content = combo_box($bool ? lang('polls', 'edit_success') : lang('polls', 'edit_error'), uri('polls/acp_list'));
 		}
 		break;
-	case 'delete':
+	case 'acp_delete':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
 		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
@@ -115,7 +115,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('polls', 'confirm_delete'), uri('acp/polls/acp_list/action_delete/entries_' . $marked_entries), uri('acp/polls'));
+			$content = combo_box(lang('polls', 'confirm_delete'), uri('polls/acp_list/action_delete/entries_' . $marked_entries), uri('polls/acp_list'));
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
@@ -126,7 +126,7 @@ switch ($modules->action) {
 					$bool3 = $db->delete('poll_votes', 'poll_id = \'' . $entry . '\'');
 				}
 			}
-			$content = combo_box($bool && $bool2 && $bool3 ? lang('polls', 'delete_success') : lang('polls', 'delete_error'), uri('acp/polls'));
+			$content = combo_box($bool && $bool2 && $bool3 ? lang('polls', 'delete_success') : lang('polls', 'delete_error'), uri('polls/acp_list'));
 		} else {
 			redirect('errors/404');
 		}
