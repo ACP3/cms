@@ -21,7 +21,7 @@
 </form>
 <form action="{uri args="gallery/acp_edit_gallery/id_$gallery_id/action_delete_picture"}" method="post" id="gallery">
 	<div id="adm-list">
-		<a href="{uri args="gallery/acp_add_picture/id_$gallery_id"}" title="{lang values="gallery|add_picture"}"><img src="{icon path="32/add_picture"}" alt="{lang values="gallery|add_picture"}" /></a>
+		<a href="{uri args="gallery/acp_add_picture/id_$gallery_id"}" title="{lang values="gallery|acp_add_picture"}"><img src="{icon path="32/add_picture"}" alt="{lang values="gallery|acp_add_picture"}" /></a>
 		<a href="javascript:$('#gallery').submit()" title="{lang values="common|delete_marked"}"><img src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" /></a>
 		<h2>{lang values="gallery|pictures"}</h2>
 	</div>
@@ -41,7 +41,7 @@
 {foreach from=$pictures item=row}
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
-				<td><a href="{uri args="gallery/acp_edit_picture/id_`$row.id`"}" title="{lang values="gallery|edit_picture"}">{$row.pic}</a></td>
+				<td><a href="{uri args="gallery/acp_edit_picture/id_`$row.id`"}" title="{lang values="gallery|acp_edit_picture"}">{$row.pic}</a></td>
 				<td>{$row.file}</td>
 				<td>{$row.description}</td>
 			</tr>

@@ -2,9 +2,9 @@
 if (!defined('IN_ACP'))
 	exit;
 
-$breadcrumb->assign(lang('system', 'system'), uri('acp/system'));
-$breadcrumb->assign(lang('system', 'maintenance'), uri('acp/system/maintenance'));
-$breadcrumb->assign(lang('system', 'sql_export'));
+$breadcrumb->assign(lang('system', 'system'), uri('system/acp_list'));
+$breadcrumb->assign(lang('system', 'acp_maintenance'), uri('system/acp_maintenance'));
+$breadcrumb->assign(lang('system', 'acp_sql_export'));
 
 if (isset($_POST['submit'])) {
 	include 'modules/system/entry.php';

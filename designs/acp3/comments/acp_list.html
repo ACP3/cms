@@ -52,7 +52,7 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
 				<td>{$row.date}</td>
 				<td>{$row.ip}</td>
-				<td><a href="{uri args="comments/acp_edit/id_`$row.id`"}" title="{lang values="comments|edit"}">{$row.name}</a></td>
+				<td><a href="{uri args="comments/acp_edit/id_`$row.id`"}" title="{lang values="comments|acp_edit"}">{$row.name}</a></td>
 				<td>{$row.message}</td>
 			</tr>
 {/foreach}

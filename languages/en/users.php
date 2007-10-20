@@ -7,10 +7,11 @@
  * @subpackage Modules
  */
 
+define('users_acp_create', 'Create a new user');
+define('users_acp_edit', 'Edit user');
 define('users_administration', 'Administration');
 define('users_admin_user_undeletable', 'The administrator can\'t be deleted.');
 define('users_confirm_delete', 'Do you really want to delete the marked user accounts?');
-define('users_create', 'Create a new user');
 define('users_create_error', 'While creating the user an error has occured.');
 define('users_create_success', 'The user has been created successfully.');
 define('users_delete_error', 'While deleting the marked users an error has occured.');
@@ -18,7 +19,6 @@ define('users_delete_success', 'The marked users have been deleted successfully.
 define('users_draft_error', 'While saving the draft an error has occured.');
 define('users_draft_success', 'The draft has been saved successfully.');
 define('users_drafts', 'Drafts');
-define('users_edit', 'Edit user');
 define('users_edit_error', 'While editing the user an error has occured.');
 define('users_edit_profile', 'Edit profile');
 define('users_edit_profile_error', 'While editing you user profile an error has occured.');

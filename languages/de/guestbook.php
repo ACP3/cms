@@ -7,13 +7,13 @@
  * @subpackage Modules
  */
 
+define('guestbook_acp_edit', 'Gästebuch Eintrag bearbeiten');
 define('guestbook_confirm_delete', 'Sollen die ausgewählten Gästebuch Einträge wirklich gelöscht werden?');
 define('guestbook_create', 'Neuer Eintrag');
 define('guestbook_create_error', 'Beim Erstellen des Gästebuch Eintrages ist ein Fehler aufgetreten.');
 define('guestbook_create_success', 'Der Gästebuch Eintrag wurde erfolgreich erstellt.');
 define('guestbook_delete_error', 'Beim Löschen der ausgewählten Gästebuch Einträge ist ein Fehler aufgetreten.');
 define('guestbook_delete_success', 'Die ausgewählten Gästebuch Einträge wurden erfolgreich gelöscht.');
-define('guestbook_edit', 'Gästebuch Eintrag bearbeiten');
 define('guestbook_edit_error', 'Beim Bearbeiten des Gästebuch Eintrages ist ein Fehler aufgetreten.');
 define('guestbook_edit_success', 'Der Gästebuch Eintrag wurde erfolgreich bearbeitet.');
 define('guestbook_guestbook', 'Gästebuch');

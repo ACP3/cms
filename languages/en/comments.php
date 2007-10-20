@@ -7,6 +7,7 @@
  * @subpackage Modules
  */
 
+define('comments_acp_edit', 'Edit comment');
 define('comments_comments', 'Comments');
 define('comments_comments_count', 'Comments');
 define('comments_comments_overview', 'Comments overview');
@@ -15,7 +16,6 @@ define('comments_create_error', 'While creating the comment an error has occured
 define('comments_create_success', 'The comment has been created successfully.');
 define('comments_delete_error', 'While deleting the marked comments an error has occured.');
 define('comments_delete_success', 'The marked comments have been deleted successfully.');
-define('comments_edit', 'Edit comment');
 define('comments_edit_error', 'While editing the comment an error has occured.');
 define('comments_edit_success', 'The comment has been edited successfully.');
 define('comments_ip', 'IP address');

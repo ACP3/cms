@@ -7,16 +7,16 @@
  * @subpackage Modules
  */
 
+define('news_acp_create', 'Create a new news');
+define('news_acp_edit', 'Edit news');
 define('news_additional_hyperlink', 'Additional hpyerlink');
 define('news_complete_additional_hyperlink_statements', 'Please complete the statements for the additional hyperlink');
 define('news_confirm_delete', 'Do you really want to delete the marked news?');
-define('news_create', 'Create a new news');
 define('news_create_error', 'While creating the news anerror has occured.');
 define('news_create_success', 'The news has been created successfully.');
 define('news_delete_error', 'While deleting the marked news an error has occured.');
 define('news_delete_success', 'The marked news have been deleted successfully.');
 define('news_details', 'News');
-define('news_edit', 'Edit news');
 define('news_edit_error', 'While editing the news an error has occured.');
 define('news_edit_success', 'The news has been edited successfully.');
 define('news_headline', 'Headline');
