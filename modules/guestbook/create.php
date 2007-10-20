@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Emoticons einbinden
-	if ($modules->check('emoticons', 'functions')) {
+	if ($modules->check('emoticons', 'functions', 'frontend')) {
 		include_once 'modules/emoticons/functions.php';
 		$tpl->assign('emoticons', emoticons_list());
 	}

@@ -8,9 +8,11 @@
 		<active>1</active>
 	</info>
 	<access>
-		<item>
-			<file>list</file>
-			<level>1</level>
-		</item>
+		<frontend>
+			<item>
+				<file>list</file>
+				<level>1</level>
+			</item>
+		</frontend>
 	</access>
 </module>

@@ -9,52 +9,59 @@
 		<active>1</active>
 	</info>
 	<access>
-		<item>
-			<file>acp_compose</file>
-			<level>2</level>
-		</item>
-		<item>
-			<file>acp_list</file>
-			<level>2</level>
-		</item>
-		<item>
-			<file>acp_settings</file>
-			<level>2</level>
-		</item>
-		<item>
-			<file>create</file>
-			<level>1</level>
-		</item>
-		<item>
-			<file>entry</file>
-			<action>
-				<name>acp_activate</name>
+		<acp>
+			<item>
+				<file>acp_compose</file>
 				<level>2</level>
-			</action>
-			<action>
-				<name>acp_compose</name>
+			</item>
+			<item>
+				<file>acp_list</file>
 				<level>2</level>
-			</action>
-			<action>
-				<name>acp_settings</name>
+			</item>
+			<item>
+				<file>acp_settings</file>
 				<level>2</level>
-			</action>
-			<action>
-				<name>activate</name>
+			</item>
+			<item>
+				<file>entry</file>
+				<action>
+					<name>acp_activate</name>
+					<level>2</level>
+				</action>
+				<action>
+					<name>acp_compose</name>
+					<level>2</level>
+				</action>
+				<action>
+					<name>acp_settings</name>
+					<level>2</level>
+				</action>
+				<action>
+					<name>acp_delete</name>
+					<level>2</level>
+				</action>
+			</item>
+		</acp>
+		<frontend>
+			<item>
+				<file>create</file>
 				<level>1</level>
-			</action>
-			<action>
-				<name>delete</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>subscribe</name>
-				<level>1</level>
-			</action>
-			<action>
-				<name>unsubscribe</name>
-				<level>1</level>
-			</action>
-		</item>
+			</item>
+			<item>
+				<file>entry</file>
+				<action>
+					<name>activate</name>
+					<level>1</level>
+				</action>
+				<action>
+					<name>subscribe</name>
+					<level>1</level>
+				</action>
+				<action>
+					<name>unsubscribe</name>
+					<level>1</level>
+				</action>
+			</item>
+		</frontend>
 	</access>
 </module>

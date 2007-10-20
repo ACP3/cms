@@ -44,7 +44,7 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_FRONTEND')) {
 	include 'modules/users/sidebar.php';
 
 	// Navigationsleisten
-	if ($modules->check('pages', 'functions')) {
+	if ($modules->check('pages', 'functions', 'frontend')) {
 		include_once 'modules/pages/functions.php';
 		$tpl->assign('navbar', process_navbar());
 	}

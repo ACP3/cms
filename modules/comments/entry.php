@@ -33,7 +33,7 @@ switch ($modules->action) {
 				$errors[] = lang('common', 'name_to_short');
 			if (strlen($form['message']) < 3)
 				$errors[] = lang('common', 'message_to_short');
-			if (!$modules->check($db->escape($module, 2), 'list'))
+			if (!$modules->check($db->escape($module, 2), 'list', 'frontend'))
 				$errors[] = lang('comments', 'module_doesnt_exist');
 
 			if (isset($errors)) {

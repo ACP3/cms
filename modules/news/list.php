@@ -11,10 +11,10 @@ if (!defined('IN_FRONTEND'))
 	exit;
 
 // Newsletter
-$tpl->assign('MOD_newsletter', $modules->check('newsletter', 'create'));
+$tpl->assign('MOD_newsletter', $modules->check('newsletter', 'create', 'frontend'));
 
 //
-$tpl->assign('MOD_feeds', $modules->check('feeds', 'list'));
+$tpl->assign('MOD_feeds', $modules->check('feeds', 'list', 'frontend'));
 
 $cat = isset($_POST['form']['cat']) && $validate->is_number($_POST['form']['cat']) ? $_POST['form']['cat'] : $modules->cat;
 
@@ -46,7 +46,7 @@ $c_news = count($news);
 
 if ($c_news > 0) {
 	// Überprüfen, ob das Kommentare Modul aktiv ist
-	if ($modules->check('comments', 'functions')) {
+	if ($modules->check('comments', 'functions', 'frontend')) {
 		$comment_check = true;
 		$tpl->assign('comment_check', true);
 		include 'modules/comments/functions.php';

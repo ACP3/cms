@@ -9,13 +9,15 @@
 		<active>1</active>
 	</info>
 	<access>
-		<item>
-			<file>403</file>
-			<level>1</level>
-		</item>
-		<item>
-			<file>404</file>
-			<level>1</level>
-		</item>
+		<frontend>
+			<item>
+				<file>403</file>
+				<level>1</level>
+			</item>
+			<item>
+				<file>404</file>
+				<level>1</level>
+			</item>
+		</frontend>
 	</access>
 </module>

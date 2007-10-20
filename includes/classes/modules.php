@@ -105,12 +105,16 @@ class modules
 	 * 	Zu überprüfende Moduldatei
 	 * @return boolean
 	 */
-	function check($module = 0, $page = 0) {
+	function check($module = 0, $page = 0, $area = 0) {
 		global $auth, $db;
 		static $access_level = array();
 
 		$module = !empty($module) ? $module : $this->mod;
 		$page = !empty($page) ? $page : $this->page;
+
+		if (empty($area)) {
+			$area = defined('IN_ACP') ? 'acp' : 'frontend';
+		}
 
 		if (is_file('modules/' . $module . '/' . $page . '.php')) {
 			$xml = simplexml_load_file('modules/' . $module . '/module.xml');
@@ -138,15 +142,21 @@ class modules
 				// XML Datei parsen
 				// Falls die entry.php eines Moduls verwendet werden soll, dann Zugriffslevel für die einzelnen Aktionen parsen
 				if ($page == 'entry') {
-					foreach ($xml->xpath('//access/item/action') as $action) {
-						if ((string) $action->name == $this->action && (string) $action->level != '0' && isset($access_level[$module]) && (string) $action->level <= $access_level[$module]) {
+					foreach ($xml->xpath('//access/' . $area . '/item/action') as $action) {
+						if (isset($access_level[$module]) &&
+							(string) $action->level != '0' &&
+							(string) $action->level <= $access_level[$module] &&
+							(string) $action->name == $this->action) {
 							return true;
 						}
 					}
 				// Restlichen Dateien durchlaufen
 				} else {
-					foreach ($xml->access->item as $item) {
-						if ((string) $item->file == $page && (string) $item->level != '0' && isset($access_level[$module]) && (string) $item->level <= $access_level[$module]) {
+					foreach ($xml->xpath('//access/' . $area . '/item') as $item) {
+						if (isset($access_level[$module]) &&
+							(string) $item->level != '0' &&
+							(string) $item->level <= $access_level[$module] &&
+							(string) $item->file == $page) {
 							return true;
 						}
 					}
