@@ -52,7 +52,7 @@ switch ($modules->action) {
 			$content = combo_box($bool ? lang('guestbook', 'create_success') : lang('guestbook', 'create_error'), uri('guestbook'));
 		}
 		break;
-	case 'edit':
+	case 'acp_edit':
 		$form = $_POST['form'];
 
 		if (empty($form['name']))
@@ -70,10 +70,10 @@ switch ($modules->action) {
 
 			$bool = $db->update('guestbook', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$content = combo_box($bool ? lang('guestbook', 'edit_success') : lang('guestbook', 'edit_error'), uri('acp/guestbook'));
+			$content = combo_box($bool ? lang('guestbook', 'edit_success') : lang('guestbook', 'edit_error'), uri('guestbook/acp_list'));
 		}
 		break;
-	case 'delete':
+	case 'acp_delete':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
 		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
@@ -84,7 +84,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('guestbook', 'confirm_delete'), uri('acp/guestbook/acp_list/action_delete/entries_' . $marked_entries), uri('acp/guestbook'));
+			$content = combo_box(lang('guestbook', 'confirm_delete'), uri('guestbook/acp_list/action_delete/entries_' . $marked_entries), uri('guestbook/acp_list'));
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
@@ -92,7 +92,7 @@ switch ($modules->action) {
 				if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'guestbook', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1')
 					$bool = $db->delete('guestbook', 'id = \'' . $entry . '\'');
 			}
-			$content = combo_box($bool ? lang('guestbook', 'delete_success') : lang('guestbook', 'delete_error'), uri('acp/guestbook'));
+			$content = combo_box($bool ? lang('guestbook', 'delete_success') : lang('guestbook', 'delete_error'), uri('guestbook/acp_list'));
 		} else {
 			redirect('errors/404');
 		}

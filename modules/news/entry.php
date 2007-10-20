@@ -13,7 +13,7 @@ if (!$modules->check('news', 'entry'))
 	redirect('errors/403');
 
 switch ($modules->action) {
-	case 'create':
+	case 'acp_create':
 		$form = $_POST['form'];
 
 		if (!$validate->date($form))
@@ -47,10 +47,10 @@ switch ($modules->action) {
 
 			$bool = $db->insert('news', $insert_values);
 
-			$content = combo_box($bool ? lang('news', 'create_success') : lang('news', 'create_error'), uri('acp/news'));
+			$content = combo_box($bool ? lang('news', 'create_success') : lang('news', 'create_error'), uri('news/acp_list'));
 		}
 		break;
-	case 'edit':
+	case 'acp_edit':
 		$form = $_POST['form'];
 
 		if (!$validate->date($form))
@@ -85,10 +85,10 @@ switch ($modules->action) {
 
 			$cache->create('news_details_id_' . $modules->id, $db->select('id, start, headline, text, category_id, uri, target, link_title', 'news', 'id = \'' . $modules->id . '\''));
 
-			$content = combo_box($bool ? lang('news', 'edit_success') : lang('news', 'edit_error'), uri('acp/news'));
+			$content = combo_box($bool ? lang('news', 'edit_success') : lang('news', 'edit_error'), uri('news/acp_list'));
 		}
 		break;
-	case 'delete':
+	case 'acp_delete':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
 		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
@@ -99,7 +99,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('news', 'confirm_delete'), uri('acp/news/acp_list/action_delete/entries_' . $marked_entries), uri('acp/news'));
+			$content = combo_box(lang('news', 'confirm_delete'), uri('news/acp_list/action_delete/entries_' . $marked_entries), uri('news/acp_list'));
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
@@ -112,7 +112,7 @@ switch ($modules->action) {
 					$cache->delete('news_details_id_' . $entry);
 				}
 			}
-			$content = combo_box($bool && $bool2 ? lang('news', 'delete_success') : lang('news', 'delete_error'), uri('acp/news'));
+			$content = combo_box($bool && $bool2 ? lang('news', 'delete_success') : lang('news', 'delete_error'), uri('news/acp_list'));
 		} else {
 			redirect('errors/404');
 		}

@@ -36,7 +36,7 @@ switch ($modules->action) {
 			$content = combo_box($bool ? lang('contact', 'send_mail_success') : lang('contact', 'send_mail_error'), uri('contact'));
 		}
 		break;
-	case 'edit':
+	case 'acp_edit':
 		$form = $_POST['form'];
 
 		if (!empty($form['mail']) && !$validate->email($form['mail']))
@@ -53,7 +53,7 @@ switch ($modules->action) {
 
 			$bool = $config->module('contact', $form);
 
-			$content = combo_box($bool ? lang('contact', 'edit_success') : lang('contact', 'edit_error'), uri('acp/contact'));
+			$content = combo_box($bool ? lang('contact', 'edit_success') : lang('contact', 'edit_error'), uri('contact/acp_list'));
 		}
 		break;
 	default:

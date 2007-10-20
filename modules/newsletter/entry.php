@@ -79,12 +79,12 @@ switch ($modules->action) {
 			$content = combo_box($bool ? lang('newsletter', 'nl_activate_success') : lang('newsletter', 'nl_activate_error'), ROOT_DIR);
 		}
 		break;
-	case 'activate_adm':
+	case 'acp_activate':
 		$bool = !empty($modules->id) ? $db->update('nl_accounts', array('hash', ''), 'id = \'' . $modules->id . '\'') : false;
 
-		$content = combo_box($bool ? lang('newsletter', 'nl_activate_success') : lang('newsletter', 'nl_activate_error'), uri('acp/newsletter'));
+		$content = combo_box($bool ? lang('newsletter', 'nl_activate_success') : lang('newsletter', 'nl_activate_error'), uri('newsletter/acp_list'));
 		break;
-	case 'settings':
+	case 'acp_settings':
 		$form = $_POST['form'];
 
 		if (!$validate->email($form['mail']))
@@ -95,10 +95,10 @@ switch ($modules->action) {
 		} else {
 			$bool = $config->module('newsletter', $form);
 
-			$content = combo_box($bool ? lang('newsletter', 'edit_success') : lang('newsletter', 'edit_error'), uri('acp/newsletter'));
+			$content = combo_box($bool ? lang('newsletter', 'edit_success') : lang('newsletter', 'edit_error'), uri('newsletter/acp_list'));
 		}
 		break;
-	case 'compose':
+	case 'acp_compose':
 		$form = $_POST['form'];
 
 		if (strlen($form['subject']) < 3)
@@ -125,10 +125,10 @@ switch ($modules->action) {
 						break;
 				}
 			}
-			$content = combo_box($bool ? lang('newsletter', 'compose_success') : lang('newsletter', 'compose_error'), uri('acp/newsletter'));
+			$content = combo_box($bool ? lang('newsletter', 'compose_success') : lang('newsletter', 'compose_error'), uri('newsletter/acp_list'));
 		}
 		break;
-	case 'delete':
+	case 'acp_delete':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
 		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
@@ -139,7 +139,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('newsletter', 'confirm_delete'), uri('acp/newsletter/acp_list/action_delete/entries_' . $marked_entries), uri('acp/newsletter'));
+			$content = combo_box(lang('newsletter', 'confirm_delete'), uri('newsletter/acp_list/action_delete/entries_' . $marked_entries), uri('newsletter/acp_list'));
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
@@ -147,7 +147,7 @@ switch ($modules->action) {
 				if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'nl_accounts', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1')
 					$bool = $db->delete('nl_accounts', 'id = \'' . $entry . '\'');
 			}
-			$content = combo_box($bool ? lang('newsletter', 'delete_success') : lang('newsletter', 'delete_error'), uri('acp/newsletter'));
+			$content = combo_box($bool ? lang('newsletter', 'delete_success') : lang('newsletter', 'delete_error'), uri('newsletter/acp_list'));
 		} else {
 			redirect('errors/404');
 		}
