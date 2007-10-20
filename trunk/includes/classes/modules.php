@@ -16,12 +16,19 @@
 class modules
 {
 	/**
-	 * Die ID eines Eintrages in der Datenbank
+	 * Definieren, ob man sich in der Administration befindet, oder nicht
 	 *
-	 * @var integer
+	 * @var boolean
 	 * @access public
 	 */
-	public $id = '0';
+	public $acp = false;
+	/**
+	 * Die Aktion, welche z.B. in einem Formular ausgeführt werden soll
+	 *
+	 * @var string
+	 * @access public
+	 */
+	public $action = '';
 	/**
 	 * Die ID einer Kategorie in der Datenbank
 	 *
@@ -30,12 +37,12 @@ class modules
 	 */
 	public $cat = '0';
 	/**
-	 * Die Aktion, welche z.B: in einem Formular ausgeführt werden soll
+	 * Die ID eines Eintrages in der Datenbank
 	 *
-	 * @var string
+	 * @var integer
 	 * @access public
 	 */
-	public $action = '';
+	public $id = '0';
 	/**
 	 * Die restlichen URI Parameter
 	 *
@@ -53,14 +60,15 @@ class modules
 	{
 		$query = !empty($_GET['stm']) ? explode('/', $_GET['stm']) : 0;
 		if (isset($query[1]) && strpos($query[1], 'acp_') !== false) {
-			define('IN_ACP', true);
-		} else {
-			define('IN_FRONTEND', true);
-		}
-		$def_page = defined('IN_ACP') ? 'acp_list' : 'list';
+			$this->acp = true;
 
+			//define('CUSTOM_LAYOUT', 'acp.html');
+			$default_page = 'acp_list';
+		} else {
+			$default_page = 'list';
+		}
 		$this->mod = !empty($query[0]) ? $query[0] : 'news';
-		$this->page = !empty($query[1]) ? $query[1] : $def_page;
+		$this->page = !empty($query[1]) ? $query[1] : $default_page;
 
 		$this->cat = !empty($_POST['cat']) ? $_POST['cat'] : '0';
 		$this->action = !empty($_POST['action']) ? $_POST['action'] : $this->page;
@@ -113,7 +121,7 @@ class modules
 		$page = !empty($page) ? $page : $this->page;
 
 		if (empty($area)) {
-			$area = defined('IN_ACP') ? 'acp' : 'frontend';
+			$area = $this->acp ? 'acp' : 'frontend';
 		}
 
 		if (is_file('modules/' . $module . '/' . $page . '.php')) {
@@ -142,7 +150,7 @@ class modules
 				// XML Datei parsen
 				// Falls die entry.php eines Moduls verwendet werden soll, dann Zugriffslevel für die einzelnen Aktionen parsen
 				if ($page == 'entry') {
-					foreach ($xml->xpath('//access/' . $area . '/item/action') as $action) {
+					foreach ($xml->xpath('//access/entry/action') as $action) {
 						if (isset($access_level[$module]) &&
 							(string) $action->level != '0' &&
 							(string) $action->level <= $access_level[$module] &&

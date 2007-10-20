@@ -1,5 +1,5 @@
 <?php
-if (!defined('IN_FRONTEND'))
+if (!defined('IN_ACP3'))
 	exit;
 
 if (!$auth->is_user() || !preg_match('/\d/', $_SESSION['acp3_id'])) {

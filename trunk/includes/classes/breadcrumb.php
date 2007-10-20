@@ -65,8 +65,8 @@ class breadcrumb
 	{
 		global $modules, $tpl;
 
-		// Brotkrümelspur für das Frontend
-		if (defined('IN_FRONTEND') && $mode == 1) {
+		// Brotkrümelspur ausgeben
+		if ($mode == 1) {
 			// Zusätzlich zugewiesene Brotkrumen holen und Einträge zählen
 			$c_steps = count($this->steps);
 			if ($c_steps > 0) {
@@ -76,36 +76,12 @@ class breadcrumb
 			} else {
 				if (!empty($this->end)) {
 					$tpl->assign('end', $this->end);
-				} elseif ($modules->page == 'list' || $modules->page == 'entry') {
+				} elseif ($modules->page == 'list' || $modules->page == 'acp_list' || $modules->page == 'entry') {
 					$tpl->assign('end', lang($modules->mod, $modules->mod));
 				} else {
 					$tpl->assign('end', lang($modules->mod, $modules->page));
 				}
 			}
-			return $tpl->fetch('common/breadcrumb.html');
-		// Brotkrümelspur für das Admin Panel
-		} elseif (defined('IN_ACP') && $mode == 1) {
-			// Ausgangsstufe der Brotkrümelspur
-			$breadcrumb[0]['uri'] = uri('acp');
-			$breadcrumb[0]['title'] = lang('common', 'acp');
-
-			// Zusätzlich zugewiesene Brotkrumen holen und Einträge zählen
-			$c_steps = count($this->steps);
-
-			if (($modules->page == 'acp_list' || $modules->page == 'entry') && $c_steps == 0) {
-				$tpl->assign('end', lang($modules->mod, $modules->mod));
-			} else {
-				if ($c_steps > 0) {
-					$breadcrumb = array_merge($breadcrumb, $this->steps);
-					$tpl->assign('end', $this->end);
-				// Falls keine zusätzlichen Brotkrumen angegeben sind, jeweiligen Seitennamen der Moduldatei ausgeben
-				} else {
-					$breadcrumb[1]['uri'] = uri($modules->mod . '/acp_list');
-					$breadcrumb[1]['title'] = lang($modules->mod, $modules->mod);
-					$tpl->assign('end', lang($modules->mod, $modules->page));
-				}
-			}
-			$tpl->assign('breadcrumb', $breadcrumb);
 			return $tpl->fetch('common/breadcrumb.html');
 		// Nur Seitentitel ausgeben
 		} else {

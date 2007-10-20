@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP'))
+if (!defined('IN_ACP3'))
 	exit;
 if (!$modules->check('polls', 'entry'))
 	redirect('errors/403');

@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP'))
+if (!defined('IN_ACP3'))
 	exit;
 
 $pic = isset($modules->gen['pic']) && $validate->is_number($modules->gen['pic']) ? $modules->gen['pic'] : 1;

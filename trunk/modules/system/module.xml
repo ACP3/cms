@@ -54,33 +54,32 @@
 				<file>acp_update_check</file>
 				<level>2</level>
 			</item>
-			<item>
-				<file>entry</file>
-				<action>
-					<name>acp_configuration</name>
-					<level>2</level>
-				</action>
-				<action>
-					<name>acp_designs</name>
-					<level>2</level>
-				</action>
-				<action>
-					<name>acp_languages</name>
-					<level>2</level>
-				</action>
-				<action>
-					<name>acp_modactivation</name>
-					<level>2</level>
-				</action>
-				<action>
-					<name>acp_moddeactivation</name>
-					<level>2</level>
-				</action>
-				<action>
-					<name>acp_sql_export</name>
-					<level>2</level>
-				</action>
-			</item>
 		</acp>
+		<entry>
+			<action>
+				<name>acp_configuration</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>acp_designs</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>acp_languages</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>acp_modactivation</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>acp_moddeactivation</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>acp_sql_export</name>
+				<level>2</level>
+			</action>
+		</entry>
 	</access>
 </module>

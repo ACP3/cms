@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_FRONTEND') && !defined('IN_ACP'))
+if (!defined('IN_ACP3'))
 	exit;
 
 if ($auth->is_user()) {
@@ -32,10 +32,7 @@ if ($auth->is_user()) {
 
 	$tpl->assign('users_sidebar', $tpl->fetch('users/sidebar_user_menu.html'));
 } else {
-	if (defined('IN_ACP'))
-		$tpl->assign('uri', uri('acp/users/login'));
-	elseif (defined('IN_FRONTEND'))
-		$tpl->assign('uri', uri('users/login'));
+	$tpl->assign('uri', uri('users/login'));
 
 	$tpl->assign('redirect_uri', isset($_POST['form']['redirect_uri']) ? $_POST['form']['redirect_uri'] : base64_encode(htmlentities($_SERVER['REQUEST_URI'])));
 

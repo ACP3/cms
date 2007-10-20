@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP'))
+if (!defined('IN_ACP3'))
 	exit;
 
 $breadcrumb->assign(lang('pages', 'pages'), uri('acp/pages'));

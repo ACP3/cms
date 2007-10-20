@@ -9,6 +9,8 @@
 
 ob_start();
 
+define('IN_ACP3', true);
+
 require 'includes/common.php';
 
 $tpl->assign('lang', CONFIG_LANG);
@@ -22,9 +24,9 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_FRONTEND')) {
 } else {
 	$auth = new auth;
 
-	if (!$auth->is_user() && defined('IN_ACP') && $modules->mod != 'users' && $modules->page != 'login') {
+	if (!$auth->is_user() && $modules->acp && $modules->mod != 'users' && $modules->page != 'login') {
 		redirect('users/login');
-	} elseif ($auth->is_user() && defined('IN_ACP') && empty($_GET['stm'])) {
+	} elseif ($auth->is_user() && $modules->acp && empty($_GET['stm'])) {
 		redirect(0, ROOT_DIR);
 	}
 

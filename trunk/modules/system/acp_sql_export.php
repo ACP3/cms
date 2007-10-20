@@ -1,5 +1,5 @@
 <?php
-if (!defined('IN_ACP'))
+if (!defined('IN_ACP3'))
 	exit;
 
 $breadcrumb->assign(lang('system', 'system'), uri('system/acp_list'));

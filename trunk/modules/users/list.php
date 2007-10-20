@@ -1,5 +1,5 @@
 <?php
-if (!defined('IN_FRONTEND'))
+if (!defined('IN_ACP3'))
 	exit;
 
 $users = $db->select('id, nickname, realname, mail, website', 'users', 0, 'nickname ASC, id ASC', POS, CONFIG_ENTRIES);
