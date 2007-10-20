@@ -1,6 +1,6 @@
 <form action="{uri args="news/acp_list/action_delete"}" method="post" id="news">
 	<div id="adm-list">
-		<a href="{uri args="news/acp_create"}" title="{lang values="news|create"}"><img src="{icon path="32/create_news"}" alt="{lang values="news|create"}" /></a>
+		<a href="{uri args="news/acp_create"}" title="{lang values="news|acp_create"}"><img src="{icon path="32/create_news"}" alt="{lang values="news|acp_create"}" /></a>
 		<a href="javascript:$('#news').submit()" title="{lang values="common|delete_marked"}"><img src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" /></a>
 		<h2>{lang values="news|news_overview"}</h2>
 	</div>
@@ -21,7 +21,7 @@
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
 				<td>{$row.start} {lang values="common|until"} {$row.end}</td>
-				<td><a href="{uri args="news/acp_edit/id_`$row.id`"}" title="{lang values="news|edit"}">{$row.headline}</a></td>
+				<td><a href="{uri args="news/acp_edit/id_`$row.id`"}" title="{lang values="news|acp_edit"}">{$row.headline}</a></td>
 				<td>{$row.cat}</td>
 			</tr>
 {/foreach}

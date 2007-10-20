@@ -1,6 +1,6 @@
 <form action="{uri args="users/acp_list/action_delete"}" method="post" id="users">
 	<div id="adm-list">
-		<a href="{uri args="users/acp_create"}" title="{lang values="users|create"}"><img src="{icon path="32/create_user"}" alt="{lang values="users|create"}" /></a>
+		<a href="{uri args="users/acp_create"}" title="{lang values="users|acp_create"}"><img src="{icon path="32/create_user"}" alt="{lang values="users|acp_create"}" /></a>
 		<a href="javascript:$('#users').submit()" title="{lang values="common|delete_marked"}"><img src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" /></a>
 		<h2>{lang values="users|users_overview"}</h2>
 	</div>
@@ -20,7 +20,7 @@
 {foreach from=$users item=row}
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
-				<td><a href="{uri args="users/acp_edit/id_`$row.id`"}" title="{lang values="users|edit"}">{$row.nickname}</a></td>
+				<td><a href="{uri args="users/acp_edit/id_`$row.id`"}" title="{lang values="users|acp_edit"}">{$row.nickname}</a></td>
 				<td>{$row.mail}</td>
 				<td>{$row.access}</td>
 			</tr>

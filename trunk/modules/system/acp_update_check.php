@@ -10,9 +10,9 @@
 if (!defined('IN_ACP'))
 	exit;
 
-$breadcrumb->assign(lang('system', 'system'), uri('acp/system'));
-$breadcrumb->assign(lang('system', 'maintenance'), uri('acp/system/maintenance'));
-$breadcrumb->assign(lang('system', 'update_check'));
+$breadcrumb->assign(lang('system', 'system'), uri('system/acp_list'));
+$breadcrumb->assign(lang('system', 'acp_maintenance'), uri('system/acp_maintenance'));
+$breadcrumb->assign(lang('system', 'acp_update_check'));
 
 $file = @file_get_contents('http://www.goratsch-webdesign.de/acp3/update.txt');
 if ($file) {

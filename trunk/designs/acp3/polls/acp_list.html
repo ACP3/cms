@@ -1,6 +1,6 @@
 <form action="{uri args="polls/acp_list/action_delete"}" method="post" id="polls">
 	<div id="adm-list">
-		<a href="{uri args="polls/acp_create"}" title="{lang values="polls|create"}"><img src="{icon path="32/create_poll"}" alt="{lang values="polls|create"}" /></a>
+		<a href="{uri args="polls/acp_create"}" title="{lang values="polls|acp_create"}"><img src="{icon path="32/create_poll"}" alt="{lang values="polls|acp_create"}" /></a>
 		<a href="javascript:$('#polls').submit()" title="{lang values="common|delete_marked"}"><img src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" /></a>
 		<h2>{lang values="polls|polls_overview"}</h2>
 	</div>
@@ -20,7 +20,7 @@
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
 				<td>{$row.start} {lang values="common|until"} {$row.end}</td>
-				<td><a href="{uri args="polls/acp_edit/id_`$row.id`"}" title="{lang values="polls|edit"}">{$row.question}</a></td>
+				<td><a href="{uri args="polls/acp_edit/id_`$row.id`"}" title="{lang values="polls|acp_edit"}">{$row.question}</a></td>
 			</tr>
 {/foreach}
 		</tbody>

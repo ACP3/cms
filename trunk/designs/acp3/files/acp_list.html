@@ -1,6 +1,6 @@
 <form action="{uri args="files/acp_list/action_delete"}" method="post" id="files">
 	<div id="adm-list">
-		<a href="{uri args="files/acp_create"}" title="{lang values="files|create"}"><img src="{icon path="32/create_file"}" alt="{lang values="files|create"}" /></a>
+		<a href="{uri args="files/acp_create"}" title="{lang values="files|acp_create"}"><img src="{icon path="32/create_file"}" alt="{lang values="files|acp_create"}" /></a>
 		<a href="javascript:$('#files').submit()" title="{lang values="common|delete_marked"}"><img src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" /></a>
 		<h2>{lang values="files|files_overview"}</h2>
 	</div>
@@ -22,7 +22,7 @@
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
 				<td>{$row.start} {lang values="common|until"} {$row.end}</td>
-				<td><a href="{uri args="files/acp_edit/id_`$row.id`"}" title="{lang values="files|edit"}">{$row.link_title}</a></td>
+				<td><a href="{uri args="files/acp_edit/id_`$row.id`"}" title="{lang values="files|acp_edit"}">{$row.link_title}</a></td>
 				<td><a href="{uri args="files/details/id_`$row.id`/download_1"}" title="{lang values="files|download_file"}">{$row.file}</a></td>
 				<td>{$row.size}</td>
 			</tr>

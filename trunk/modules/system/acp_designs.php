@@ -10,9 +10,9 @@
 if (!defined('IN_ACP'))
 	exit;
 
-$breadcrumb->assign(lang('system', 'system'), uri('acp/system'));
-$breadcrumb->assign(lang('system', 'extensions'), uri('acp/system/extensions'));
-$breadcrumb->assign(lang('system', 'designs'));
+$breadcrumb->assign(lang('system', 'system'), uri('system/acp_list'));
+$breadcrumb->assign(lang('system', 'acp_extensions'), uri('system/acp_extensions'));
+$breadcrumb->assign(lang('system', 'acp_designs'));
 
 $designs = array();
 $directories = scandir('designs');

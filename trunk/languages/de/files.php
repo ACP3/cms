@@ -7,9 +7,10 @@
  * @subpackage Modules
  */
 
+define('files_acp_create', 'Neuen Download erstellen');
+define('files_acp_edit', 'Download bearbeiten');
 define('files_category_select', 'Bitte wählen Sie eine der untenstehenden Kategorien aus.');
 define('files_confirm_delete', 'Sollen die ausgewählten Downloads wirklich gelöscht werden?');
-define('files_create', 'Neuen Download erstellen');
 define('files_create_error', 'Beim Erstellen des Downloads ist ein Fehler aufgetreten.');
 define('files_create_success', 'Der Download wurde erfolgreich erstellt.');
 define('files_delete_error', 'Beim Löschen der ausgewählten Downloads ist ein Fehler aufgetreten.');
@@ -17,7 +18,6 @@ define('files_delete_success', 'Die ausgewählten Downloads wurden erfolgreich g
 define('files_description_to_short', 'Der Beschreibungstext sollte mindestens 3 Zeichen lang sein');
 define('files_details', 'Downloads');
 define('files_download_file', 'Datei herunterladen');
-define('files_edit', 'Download bearbeiten');
 define('files_edit_error', 'Beim Bearbeiten des Downloads ist ein Fehler aufgetreten.');
 define('files_edit_success', 'Der Download wurde erfolgreich bearbeitet.');
 define('files_external_resource', 'Externe Quelle');

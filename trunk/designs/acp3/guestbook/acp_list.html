@@ -22,7 +22,7 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
 				<td>{$row.date}</td>
 				<td>{$row.ip}</td>
-				<td><a href="{uri args="guestbook/acp_edit/id_`$row.id`"}" title="{lang values="guestbook|edit"}">{$row.name}</a></td>
+				<td><a href="{uri args="guestbook/acp_edit/id_`$row.id`"}" title="{lang values="guestbook|acp_edit"}">{$row.name}</a></td>
 				<td>{$row.message}</td>
 			</tr>
 {/foreach}

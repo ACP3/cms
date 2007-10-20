@@ -1,6 +1,6 @@
 <form action="{uri args="emoticons/acp_list/action_delete"}" method="post" id="emoticons">
 	<div id="adm-list">
-		<a href="{uri args="emoticons/acp_create"}" title="{lang values="emoticons|create"}"><img src="{icon path="32/add_emoticon"}" alt="{lang values="emoticons|create"}" /></a>
+		<a href="{uri args="emoticons/acp_create"}" title="{lang values="emoticons|acp_create"}"><img src="{icon path="32/add_emoticon"}" alt="{lang values="emoticons|acp_create"}" /></a>
 		<a href="javascript:$('#emoticons').submit()" title="{lang values="common|delete_marked"}"><img src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" /></a>
 		<h2>{lang values="emoticons|emoticons_overview"}</h2>
 	</div>
@@ -20,7 +20,7 @@
 {foreach from=$emoticons item=row}
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
-				<td><a href="{uri args="emoticons/acp_edit/id_`$row.id`"}" title="{lang values="emoticons|edit"}">{$row.description}</a></td>
+				<td><a href="{uri args="emoticons/acp_edit/id_`$row.id`"}" title="{lang values="emoticons|acp_edit"}">{$row.description}</a></td>
 				<td>{$row.code}</td>
 				<td><img src="{$root_dir}uploads/emoticons/{$row.img}" alt="" /></td>
 			</tr>
