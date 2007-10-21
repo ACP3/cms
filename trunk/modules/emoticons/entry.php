@@ -7,13 +7,13 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (!defined('IN_ADM'))
 	exit;
 if (!$modules->check('emoticons', 'entry'))
 	redirect('errors/403');
 
 switch ($modules->action) {
-	case 'acp_create':
+	case 'create':
 		$form = $_POST['form'];
 		if (!empty($_FILES['picture']['tmp_name'])) {
 			$file['tmp_name'] = $_FILES['picture']['tmp_name'];
@@ -44,10 +44,10 @@ switch ($modules->action) {
 
 			$cache->create('emoticons', $db->select('code, description, img', 'emoticons'));
 
-			$content = combo_box($bool ? lang('emoticons', 'create_success') : lang('emoticons', 'create_error'), uri('emoticons/acp_list'));
+			$content = combo_box($bool ? lang('emoticons', 'create_success') : lang('emoticons', 'create_error'), uri('acp/emoticons'));
 		}
 		break;
-	case 'acp_edit':
+	case 'edit':
 		$form = $_POST['form'];
 		if (!empty($_FILES['picture']['tmp_name'])) {
 			$file['tmp_name'] = $_FILES['picture']['tmp_name'];
@@ -83,10 +83,10 @@ switch ($modules->action) {
 
 			$cache->create('emoticons', $db->select('code, description, img', 'emoticons'));
 
-			$content = combo_box($bool ? lang('emoticons', 'edit_success') : lang('emoticons', 'edit_error'), uri('emoticons/acp_list'));
+			$content = combo_box($bool ? lang('emoticons', 'edit_success') : lang('emoticons', 'edit_error'), uri('acp/emoticons'));
 		}
 		break;
-	case 'acp_delete':
+	case 'delete':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
 		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
@@ -97,7 +97,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('emoticons', 'confirm_delete'), uri('emoticons/acp_list/action_delete/entries_' . $marked_entries), uri('emoticons/acp_list'));
+			$content = combo_box(lang('emoticons', 'confirm_delete'), uri('acp/emoticons/adm_list/action_delete/entries_' . $marked_entries), uri('acp/emoticons'));
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
@@ -112,7 +112,7 @@ switch ($modules->action) {
 			}
 			$cache->create('emoticons', $db->select('code, description, img', 'emoticons'));
 
-			$content = combo_box($bool ? lang('emoticons', 'delete_success') : lang('emoticons', 'delete_error'), uri('emoticons/acp_list'));
+			$content = combo_box($bool ? lang('emoticons', 'delete_success') : lang('emoticons', 'delete_error'), uri('acp/emoticons'));
 		} else {
 			redirect('errors/404');
 		}

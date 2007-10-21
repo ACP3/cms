@@ -16,13 +16,13 @@ define('access_access_level_selection_tip', 'Bitte wählen Sie aus der untensteh
 define('access_access_overview', 'Access levels overview');
 define('access_access_to_following_modules', 'Access to modules');
 define('access_access_level_undeletable', 'It\'s impossible to delete the administrator and guest access levels.');
-define('access_acp_create', 'Create a new access level');
-define('access_acp_edit', 'Edit access level');
 define('access_confirm_delete', 'Do you really want to delete the marked access levels?');
+define('access_create', 'Create a new access level');
 define('access_create_error', 'While creating the access level an error has occured.');
 define('access_create_success', 'The access level has been created successfully.');
 define('access_delete_error', 'While deleting the marked access levels an error has occured.');
 define('access_delete_success', 'The marked access levels have been deleted successfully.');
+define('access_edit', 'Edit access level');
 define('access_edit_error', 'While editing the access level an error has occured.');
 define('access_edit_success', 'The access level has been edited successfully.');
 define('access_mod_description', 'With this module you can create different access levels for users.');

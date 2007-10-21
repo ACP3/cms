@@ -7,17 +7,15 @@
  * @subpackage Modules
  */
 
-define('pages_acp_list_blocks', 'Blöcke');
-define('pages_acp_create', 'Neuen Menüpunkt erstellen');
-define('pages_acp_create_block', 'Neuen Block erstellen');
-define('pages_acp_edit', 'Menüpunkt bearbeiten');
-define('pages_acp_edit_block', 'Block bearbeiten');
+define('pages_adm_list_blocks', 'Blöcke');
 define('pages_block_title', 'Name des Blocks');
 define('pages_block_title_to_short', 'Der Name des Blocks sollte mindestens 3 Zeichen lang sein');
 define('pages_blocks', 'Block');
 define('pages_blocks_overview', 'Blöcke Übersicht');
 define('pages_chronology', 'Reihenfolge');
 define('pages_confirm_delete', 'Sollen die ausgewählten Menüpunkte wirklich gelöscht werden?');
+define('pages_create', 'Neuen Menüpunkt erstellen');
+define('pages_create_block', 'Neuen Block erstellen');
 define('pages_create_block_error', 'Beim Erstellen des Blockes ist ein Fehler aufgetreten.');
 define('pages_create_block_success', 'Der Block wurde erfolgreich erstellt.');
 define('pages_create_error', 'Beim Erstellen des Menüpunktes ist ein Fehler aufgetreten.');
@@ -29,6 +27,8 @@ define('pages_delete_success', 'Die ausgewählten Menüpunkte wurden erfolgreich
 define('pages_do_not_display', 'Nicht anzeigen');
 define('pages_dynamic_page', 'Dynamische Seite');
 define('pages_dynamic_page_hints', 'Falls Sie eine dynamische Seite, d.h. ein Modul/eine Seite des ACP3, einbinden möchten, so tragen Sie in &quot;URI&quot; die Seite in der Form &quot;modul/datei/weitere_angaben&quot; ein, also z.B. news/list/id_1.');
+define('pages_edit', 'Menüpunkt bearbeiten');
+define('pages_edit_block', 'Block bearbeiten');
 define('pages_edit_block_error', 'Beim Bearbeiten des Blockes ist ein Fehler aufgetreten.');
 define('pages_edit_block_success', 'Der Block wurde erfolgreich bearbeitet.');
 define('pages_edit_error', 'Beim Bearbeiten des Menüpunktes ist ein Fehler aufgetreten.');

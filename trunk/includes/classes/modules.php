@@ -16,19 +16,12 @@
 class modules
 {
 	/**
-	 * Definieren, ob man sich in der Administration befindet, oder nicht
+	 * Die ID eines Eintrages in der Datenbank
 	 *
-	 * @var boolean
+	 * @var integer
 	 * @access public
 	 */
-	public $acp = false;
-	/**
-	 * Die Aktion, welche z.B. in einem Formular ausgeführt werden soll
-	 *
-	 * @var string
-	 * @access public
-	 */
-	public $action = '';
+	public $id = '0';
 	/**
 	 * Die ID einer Kategorie in der Datenbank
 	 *
@@ -37,12 +30,12 @@ class modules
 	 */
 	public $cat = '0';
 	/**
-	 * Die ID eines Eintrages in der Datenbank
+	 * Die Aktion, welche z.B: in einem Formular ausgeführt werden soll
 	 *
-	 * @var integer
+	 * @var string
 	 * @access public
 	 */
-	public $id = '0';
+	public $action = '';
 	/**
 	 * Die restlichen URI Parameter
 	 *
@@ -58,23 +51,30 @@ class modules
 	 */
 	function __construct()
 	{
-		$query = !empty($_GET['stm']) ? explode('/', $_GET['stm']) : 0;
-		if (isset($query[1]) && strpos($query[1], 'acp_') !== false) {
-			$this->acp = true;
-
-			//define('CUSTOM_LAYOUT', 'acp.html');
-			$default_page = 'acp_list';
+		if (!empty($_GET['stm']) && strpos($_GET['stm'], 'acp/') !== false) {
+			/**
+			 * Definieren, dass man sich im Administrationsbereich befindet
+			 */
+			define('IN_ADM', true);
+			// "acp/" entfernen
+			$_GET['stm'] = substr($_GET['stm'], 4, strlen($_GET['stm']));
 		} else {
-			$default_page = 'list';
+			/**
+			 * Definieren, dass man sich im Frontend befindet
+			 */
+			define('IN_ACP3', true);
 		}
-		$this->mod = !empty($query[0]) ? $query[0] : 'news';
-		$this->page = !empty($query[1]) ? $query[1] : $default_page;
+		$stm = !empty($_GET['stm']) ? explode('/', $_GET['stm']) : 0;
+		$def_page = defined('IN_ADM') ? 'adm_list' : 'list';
+
+		$this->mod = !empty($stm[0]) ? $stm[0] : 'news';
+		$this->page = !empty($stm[1]) ? $stm[1] : $def_page;
 
 		$this->cat = !empty($_POST['cat']) ? $_POST['cat'] : '0';
 		$this->action = !empty($_POST['action']) ? $_POST['action'] : $this->page;
 
-		if (!empty($query[2])) {
-			$c_stm = count($query);
+		if (!empty($stm[2])) {
+			$c_stm = count($stm);
 
 			// Regex
 			$pos_regex = '/^(pos_(\d+))$/';
@@ -84,18 +84,18 @@ class modules
 			$gen_regex = '/^(([a-z0-9-]+)_(.+))$/';
 
 			for ($i = 2; $i < $c_stm; $i++) {
-				if (!empty($query[$i])) {
-					if (!defined('POS') && preg_match($pos_regex, $query[$i])) {
-						define('POS', substr($query[$i], 4));
-					} elseif (preg_match($id_regex, $query[$i])) {
-						$this->id = substr($query[$i], 3);
-					} elseif (preg_match($cat_regex, $query[$i])) {
-						$this->cat = substr($query[$i], 4);
-					} elseif (preg_match($action_regex, $query[$i])) {
-						$this->action = substr($query[$i], 7);
-					} elseif (preg_match($gen_regex, $query[$i])) {
-						$pos = strpos($query[$i], '_');
-						$this->gen[substr($query[$i], 0, $pos)] = substr($query[$i], $pos + 1, strlen($query[$i]));
+				if (!empty($stm[$i])) {
+					if (!defined('POS') && preg_match($pos_regex, $stm[$i])) {
+						define('POS', substr($stm[$i], 4));
+					} elseif (preg_match($id_regex, $stm[$i])) {
+						$this->id = substr($stm[$i], 3);
+					} elseif (preg_match($cat_regex, $stm[$i])) {
+						$this->cat = substr($stm[$i], 4);
+					} elseif (preg_match($action_regex, $stm[$i])) {
+						$this->action = substr($stm[$i], 7);
+					} elseif (preg_match($gen_regex, $stm[$i])) {
+						$pos = strpos($stm[$i], '_');
+						$this->gen[substr($stm[$i], 0, $pos)] = substr($stm[$i], $pos + 1, strlen($stm[$i]));
 					}
 				}
 			}
@@ -113,16 +113,12 @@ class modules
 	 * 	Zu überprüfende Moduldatei
 	 * @return boolean
 	 */
-	function check($module = 0, $page = 0, $area = 0) {
+	function check($module = 0, $page = 0) {
 		global $auth, $db;
 		static $access_level = array();
 
 		$module = !empty($module) ? $module : $this->mod;
 		$page = !empty($page) ? $page : $this->page;
-
-		if (empty($area)) {
-			$area = $this->acp ? 'acp' : 'frontend';
-		}
 
 		if (is_file('modules/' . $module . '/' . $page . '.php')) {
 			$xml = simplexml_load_file('modules/' . $module . '/module.xml');
@@ -150,21 +146,15 @@ class modules
 				// XML Datei parsen
 				// Falls die entry.php eines Moduls verwendet werden soll, dann Zugriffslevel für die einzelnen Aktionen parsen
 				if ($page == 'entry') {
-					foreach ($xml->xpath('//access/entry/action') as $action) {
-						if (isset($access_level[$module]) &&
-							(string) $action->level != '0' &&
-							(string) $action->level <= $access_level[$module] &&
-							(string) $action->name == $this->action) {
+					foreach ($xml->xpath('//access/item/action') as $action) {
+						if ((string) $action->name == $this->action && (string) $action->level != '0' && isset($access_level[$module]) && (string) $action->level <= $access_level[$module]) {
 							return true;
 						}
 					}
 				// Restlichen Dateien durchlaufen
 				} else {
-					foreach ($xml->xpath('//access/' . $area . '/item') as $item) {
-						if (isset($access_level[$module]) &&
-							(string) $item->level != '0' &&
-							(string) $item->level <= $access_level[$module] &&
-							(string) $item->file == $page) {
+					foreach ($xml->access->item as $item) {
+						if ((string) $item->file == $page && (string) $item->level != '0' && isset($access_level[$module]) && (string) $item->level <= $access_level[$module]) {
 							return true;
 						}
 					}

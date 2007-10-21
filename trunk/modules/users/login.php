@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (!defined('IN_ACP3') && !defined('IN_ADM'))
 	exit;
 
 // Falls der Benutzer schon eingeloggt ist, diesen zur Startseite weiterleiten

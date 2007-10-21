@@ -7,10 +7,9 @@
  * @subpackage Modules
  */
 
-define('files_acp_create', 'Create a new download');
-define('files_acp_edit', 'Edit download');
 define('files_category_select', 'Please select one of the below categories.');
 define('files_confirm_delete', 'Do you really want to delete the marked downloads?');
+define('files_create', 'Create a new download');
 define('files_create_error', 'While creating the download an error has occured.');
 define('files_create_success', 'The download has been created successfully.');
 define('files_delete_error', 'While delelting the marked download an error has occured.');
@@ -18,6 +17,7 @@ define('files_delete_success', 'The marked have been deleted successfully.');
 define('files_description_to_short', 'The description should be at least 3 characters long');
 define('files_details', 'Downloads');
 define('files_download_file', 'Download file');
+define('files_edit', 'Edit download');
 define('files_edit_error', 'While editing the download an error has occured.');
 define('files_edit_success', 'The download has been edited successfully.');
 define('files_external_resource', 'External resource');

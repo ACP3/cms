@@ -9,67 +9,64 @@
 		<active>1</active>
 	</info>
 	<access>
-		<acp>
-			<item>
-				<file>acp_add_picture</file>
-				<level>2</level>
-			</item>
-			<item>
-				<file>acp_create</file>
-				<level>2</level>
-			</item>
-			<item>
-				<file>acp_edit_gallery</file>
-				<level>2</level>
-			</item>
-			<item>
-				<file>acp_edit_picture</file>
-				<level>2</level>
-			</item>
-			<item>
-				<file>acp_list</file>
-				<level>2</level>
-			</item>
-		</acp>
-		<entry>
+		<item>
+			<file>add_picture</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>adm_list</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>create</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>details</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>edit_gallery</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>edit_picture</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>entry</file>
 			<action>
-				<name>acp_add_picture</name>
+				<name>create</name>
 				<level>2</level>
 			</action>
 			<action>
-				<name>acp_create</name>
+				<name>delete_gallery</name>
 				<level>2</level>
 			</action>
 			<action>
-				<name>acp_delete_gallery</name>
+				<name>edit_gallery</name>
 				<level>2</level>
 			</action>
 			<action>
-				<name>acp_delete_picture</name>
+				<name>add_picture</name>
 				<level>2</level>
 			</action>
 			<action>
-				<name>acp_edit_gallery</name>
+				<name>delete_picture</name>
 				<level>2</level>
 			</action>
 			<action>
-				<name>acp_edit_picture</name>
+				<name>edit_picture</name>
 				<level>2</level>
 			</action>
-		</entry>
-		<frontend>
-			<item>
-				<file>details</file>
-				<level>1</level>
-			</item>
-			<item>
-				<file>list</file>
-				<level>1</level>
-			</item>
-			<item>
-				<file>pics</file>
-				<level>1</level>
-			</item>
-		</frontend>
+		</item>
+		<item>
+			<file>list</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>pics</file>
+			<level>1</level>
+		</item>
 	</access>
 </module>

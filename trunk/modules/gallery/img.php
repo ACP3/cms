@@ -13,7 +13,7 @@ if (empty($_GET['id']) || !preg_match('/^(\d+)$/', $_GET['id']) || empty($_GET['
 @set_time_limit(20);
 error_reporting(0);
 
-define('IN_FRONTEND', true);
+define('IN_ACP3', true);
 
 require '../../includes/globals.php';
 require '../../includes/config.php';

@@ -7,11 +7,10 @@
  * @subpackage Modules
  */
 
-define('users_acp_create', 'Neuen Benutzer erstellen');
-define('users_acp_edit', 'Benutzer bearbeiten');
 define('users_administration', 'Verwaltung');
 define('users_admin_user_undeletable', 'Der Administrator kann nicht gelöscht werden.');
 define('users_confirm_delete', 'Sollen die ausgewählten Benutzer wirklich gelöscht werden?');
+define('users_create', 'Neuen Benutzer erstellen');
 define('users_create_error', 'Beim Erstellen des Benutzers ist ein Fehler aufgetreten.');
 define('users_create_success', 'Der Benutzer wurde erfolgreich erstellt.');
 define('users_delete_error', 'Beim Löschen der ausgewählten Benutzer ist ein Fehler aufgetreten.');
@@ -19,6 +18,7 @@ define('users_delete_success', 'Die ausgewählten Benutzer wurden erfolgreich ge
 define('users_draft_error', 'Beim Speichern des Entwurfes ist ein Fehler aufgetreten.');
 define('users_draft_success', 'Der Entwurf wurde erfolgreich gespeichert.');
 define('users_drafts', 'Entwürfe');
+define('users_edit', 'Benutzer bearbeiten');
 define('users_edit_error', 'Beim Bearbeiten des Benutzers ist ein Fehler aufgetreten.');
 define('users_edit_profile', 'Profil bearbeiten');
 define('users_edit_profile_error', 'Beim Bearbeiten Ihres Benutzerprofils ist ein Fehler aufgetreten.');

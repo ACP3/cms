@@ -7,20 +7,20 @@
  * @subpackage Modules
  */
 
-define('gallery_acp_add_picture', 'Bild hinzufügen');
-define('gallery_acp_create', 'Neue Fotogalerie erstellen');
-define('gallery_acp_edit_gallery', 'Fotogalerie bearbeiten');
-define('gallery_acp_edit_picture', 'Bild bearbeiten');
+define('gallery_add_picture', 'Bild hinzufügen');
 define('gallery_add_picture_error', 'Beim Hinzufügen des Bildes zur Fotogalerie ist ein Fehler aufgetreten.');
 define('gallery_add_picture_success', 'Das Bild wurde der Fotogalerie erfolgreich hinzugefügt.');
 define('gallery_confirm_delete', 'Sollen die ausgewählten Fotogalerien wirklich gelöscht werden?');
 define('gallery_confirm_picture_delete', 'Sollen die ausgewählten Bilder wirklich gelöscht werden?');
+define('gallery_create', 'Neue Fotogalerie erstellen');
 define('gallery_create_error', 'Beim Erstellen der Fotogalerie ist ein Fehler aufgetreten.');
 define('gallery_create_success', 'Die Fotogalerie wurde erfolgreich erstellt.');
 define('gallery_delete_error', 'Beim Löschen der ausgewählten Fotogalerien ist ein Fehler aufgetreten.');
 define('gallery_delete_success', 'Die ausgewählten Fotogalerien wurden erfolgreich gelöscht.');
 define('gallery_details', 'Bilddetails');
 define('gallery_edit_error', 'Beim Bearbeiten der Fotogalerie ist ein Fehler aufgetreten.');
+define('gallery_edit_gallery', 'Fotogalerie bearbeiten');
+define('gallery_edit_picture', 'Bild bearbeiten');
 define('gallery_edit_picture_error', 'Beim Bearbeiten des Bildes ist ein Fehler aufgetreten.');
 define('gallery_edit_picture_success', 'Das Bild wurde erfolgreich bearbeitet.');
 define('gallery_edit_success', 'Die Fotogalerie wurde erfolgreich bearbeitet.');

@@ -7,13 +7,13 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (!defined('IN_ADM'))
 	exit;
 if (!$modules->check('access', 'entry'))
 	redirect('errors/403');
 
 switch ($modules->action) {
-	case 'acp_create':
+	case 'create':
 		$form = $_POST['form'];
 
 		if (empty($form['name']))
@@ -51,10 +51,10 @@ switch ($modules->action) {
 
 			$bool = $db->insert('access', $insert_values);
 
-			$content = combo_box($bool ? lang('access', 'create_success') : lang('access', 'create_error'), uri('access/acp_list'));
+			$content = combo_box($bool ? lang('access', 'create_success') : lang('access', 'create_error'), uri('acp/access'));
 		}
 		break;
-	case 'acp_edit':
+	case 'edit':
 		$form = $_POST['form'];
 
 		if (empty($form['name']))
@@ -91,10 +91,10 @@ switch ($modules->action) {
 
 			$bool = $db->update('access', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$content = combo_box($bool ? lang('access', 'edit_success') : lang('access', 'edit_error'), uri('access/acp_list'));
+			$content = combo_box($bool ? lang('access', 'edit_success') : lang('access', 'edit_error'), uri('acp/access'));
 		}
 		break;
-	case 'acp_delete':
+	case 'delete':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
 		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
@@ -105,7 +105,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('access', 'confirm_delete'), uri('access/acp_list/action_delete/entries_' . $marked_entries), uri('access/acp_list'));
+			$content = combo_box(lang('access', 'confirm_delete'), uri('acp/access/adm_list/action_delete/entries_' . $marked_entries), uri('acp/access'));
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
@@ -125,7 +125,7 @@ switch ($modules->action) {
 			} else {
 				$text = $bool ? lang('access', 'delete_success') : lang('access', 'delete_error');
 			}
-			$content = combo_box($text, uri('access/acp_list'));
+			$content = combo_box($text, uri('acp/access'));
 		} else {
 			redirect('errors/404');
 		}

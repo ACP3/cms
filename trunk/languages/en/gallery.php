@@ -7,20 +7,20 @@
  * @subpackage Modules
  */
 
-define('gallery_acp_add_picture', 'Add picture');
-define('gallery_acp_create', 'Create a new gallery');
-define('gallery_acp_edit_gallery', 'Edit gallery');
-define('gallery_acp_edit_picture', 'Edit picture');
+define('gallery_add_picture', 'Add picture');
 define('gallery_add_picture_error', 'While adding the picture to the gallery an error has occured.');
 define('gallery_add_picture_success', 'The picture was successfully added to the gallery.');
 define('gallery_confirm_delete', 'Do you really want to delete the marked galleries?');
 define('gallery_confirm_picture_delete', 'Do you really want to delete the marked pictures?');
+define('gallery_create', 'Create a new gallery');
 define('gallery_create_error', 'While creating the gallery an error has occured.');
 define('gallery_create_success', 'The gallery has been created successfully.');
 define('gallery_delete_error', 'While deleting the marked galleries an error has occured.');
 define('gallery_delete_success', 'The marked galleries have been deleted successfully.');
 define('gallery_details', 'Picture details');
 define('gallery_edit_error', 'Beim Bearbeiten der Fotogalerie ist ein Fehler aufgetreten.');
+define('gallery_edit_gallery', 'Edit gallery');
+define('gallery_edit_picture', 'Edit picture');
 define('gallery_edit_picture_error', 'While editing the picture an error has occured.');
 define('gallery_edit_picture_success', 'The picture has been edited successfully.');
 define('gallery_edit_success', 'The gallery has been edited successfully.');

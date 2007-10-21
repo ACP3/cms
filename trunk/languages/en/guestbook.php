@@ -7,13 +7,13 @@
  * @subpackage Modules
  */
 
-define('guestbook_acp_edit', 'Edit guestbook entry');
 define('guestbook_confirm_delete', 'Do you really want to delete the marked guestbook entries?');
 define('guestbook_create', 'New entry');
 define('guestbook_create_error', 'While creating the guestbook entry an error has occured.');
 define('guestbook_create_success', 'The guestbook entry has been created successfully.');
 define('guestbook_delete_error', 'While deleting the marked guestbook entries an error has occured.');
 define('guestbook_delete_success', 'The marked guestbook entries have been deleted successfully.');
+define('guestbook_edit', 'Edit guestbook entry');
 define('guestbook_edit_error', 'While editing the guestbook entry an error has occured.');
 define('guestbook_edit_success', 'The guestbook entry has been edited successfully.');
 define('guestbook_guestbook', 'Guestbook');

@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (!defined('IN_ACP3') && !defined('IN_ADM'))
 	exit;
 if (!$modules->check('comments', 'entry'))
 	redirect('errors/403');
@@ -33,7 +33,7 @@ switch ($modules->action) {
 				$errors[] = lang('common', 'name_to_short');
 			if (strlen($form['message']) < 3)
 				$errors[] = lang('common', 'message_to_short');
-			if (!$modules->check($db->escape($module, 2), 'list', 'frontend'))
+			if (!$modules->check($db->escape($module, 2), 'list'))
 				$errors[] = lang('comments', 'module_doesnt_exist');
 
 			if (isset($errors)) {
@@ -57,7 +57,7 @@ switch ($modules->action) {
 			$content = combo_box(lang('common', 'entry_not_found'), ROOT_DIR);
 		}
 		break;
-	case 'acp_edit':
+	case 'edit':
 		$form = $_POST['form'];
 
 		if (empty($form['name']))
@@ -75,10 +75,10 @@ switch ($modules->action) {
 
 			$bool = $db->update('comments', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$content = combo_box($bool ? lang('comments', 'edit_success') : lang('comments', 'edit_error'), uri('comments/acp_list'));
+			$content = combo_box($bool ? lang('comments', 'edit_success') : lang('comments', 'edit_error'), uri('acp/comments'));
 		}
 		break;
-	case 'acp_delete_com_by_mod':
+	case 'delete_com_by_mod':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
 		elseif (isset($modules->gen['entries']) && preg_match('/^([\w|]+)$/', $modules->gen['entries']))
@@ -89,7 +89,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('comments', 'confirm_delete'), uri('comments/acp_list/action_delete_com_by_mod/entries_' . $marked_entries), uri('comments/acp_list'));
+			$content = combo_box(lang('comments', 'confirm_delete'), uri('acp/comments/adm_list/action_delete_com_by_mod/entries_' . $marked_entries), uri('acp/comments'));
 		} elseif (preg_match('/^([\w|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
@@ -97,12 +97,12 @@ switch ($modules->action) {
 				if (!empty($entry) && preg_match('/^(\w+)$/', $entry) && $db->select('id', 'comments', 'module = \'' . $entry . '\'', 0, 0, 0, 1) > '0')
 					$bool = $db->delete('comments', 'module = \'' . $entry . '\'');
 			}
-			$content = combo_box($bool ? lang('comments', 'delete_success') : lang('comments', 'delete_error'), uri('comments/acp_list'));
+			$content = combo_box($bool ? lang('comments', 'delete_success') : lang('comments', 'delete_error'), uri('acp/comments'));
 		} else {
 			redirect('errors/404');
 		}
 		break;
-	case 'acp_delete_comments':
+	case 'delete_comments':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
 		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
@@ -113,7 +113,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('comments', 'confirm_delete'), uri('comments/acp_list/action_delete_comments/entries_' . $marked_entries), uri('comments/acp_list'));
+			$content = combo_box(lang('comments', 'confirm_delete'), uri('acp/comments/adm_list/action_delete_comments/entries_' . $marked_entries), uri('acp/comments'));
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
@@ -121,7 +121,7 @@ switch ($modules->action) {
 				if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'comments', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1')
 					$bool = $db->delete('comments', 'id = \'' . $entry . '\'');
 			}
-			$content = combo_box($bool ? lang('comments', 'delete_success') : lang('comments', 'delete_error'), uri('comments/acp_list'));
+			$content = combo_box($bool ? lang('comments', 'delete_success') : lang('comments', 'delete_error'), uri('acp/comments'));
 		} else {
 			redirect('errors/404');
 		}

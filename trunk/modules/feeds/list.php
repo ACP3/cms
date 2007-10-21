@@ -14,7 +14,7 @@ if (isset($modules->gen['feed'])) {
 	$tpl->assign('rss', $rss);
 
 	//Einträge einbinden
-	if (isset($module) && $modules->check($module, 'extensions/feeds', 'frontend')) {
+	if (isset($module) && $modules->check($module, 'extensions/feeds')) {
 		include 'modules/' . $module . '/extensions/feeds.php';
 	}
 

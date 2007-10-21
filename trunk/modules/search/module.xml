@@ -8,17 +8,16 @@
 		<active>1</active>
 	</info>
 	<access>
-		<entry>
+		<item>
+			<file>entry</file>
 			<action>
 				<name>search</name>
 				<level>1</level>
 			</action>
-		</entry>
-		<frontend>
-			<item>
-				<file>list</file>
-				<level>1</level>
-			</item>
-		</frontend>
+		</item>
+		<item>
+			<file>list</file>
+			<level>1</level>
+		</item>
 	</access>
 </module>

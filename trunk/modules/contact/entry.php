@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (!defined('IN_ACP3') && !defined('IN_ADM'))
 	exit;
 if (!$modules->check('contact', 'entry'))
 	redirect('errors/403');
@@ -36,7 +36,7 @@ switch ($modules->action) {
 			$content = combo_box($bool ? lang('contact', 'send_mail_success') : lang('contact', 'send_mail_error'), uri('contact'));
 		}
 		break;
-	case 'acp_edit':
+	case 'edit':
 		$form = $_POST['form'];
 
 		if (!empty($form['mail']) && !$validate->email($form['mail']))
@@ -53,7 +53,7 @@ switch ($modules->action) {
 
 			$bool = $config->module('contact', $form);
 
-			$content = combo_box($bool ? lang('contact', 'edit_success') : lang('contact', 'edit_error'), uri('contact/acp_list'));
+			$content = combo_box($bool ? lang('contact', 'edit_success') : lang('contact', 'edit_error'), uri('acp/contact'));
 		}
 		break;
 	default:
