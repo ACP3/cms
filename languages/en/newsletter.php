@@ -7,9 +7,8 @@
  * @subpackage Modules
  */
 
-define('newsletter_acp_compose', 'Create a new newsletter');
-define('newsletter_acp_settings', 'Newsletter settings');
 define('newsletter_activate_account', 'Active newsletter account');
+define('newsletter_compose', 'Create a new newsletter');
 define('newsletter_compose_error', 'While sending the newsletter an error has occured.');
 define('newsletter_compose_success', 'The newsletter was successfully sent.');
 define('newsletter_confirm_delete', 'Do you really want to delete the marked newsletter accounts?');
@@ -34,6 +33,7 @@ define('newsletter_nl_subscribe_success', 'The E-mail address was successfully a
 define('newsletter_nl_un_subscribe', 'Subscribe/Unsubscribe the newsletter');
 define('newsletter_nl_unsubscribe_error', 'While deleting the newsletter account an error has occured.');
 define('newsletter_nl_unsubscribe_success', 'The newsletter account was successfully deleted.');
+define('newsletter_settings', 'Newsletter settings');
 define('newsletter_subject', 'Subject');
 define('newsletter_subject_to_short', 'The subject should be at least 3 characters long');
 define('newsletter_subscribe', 'Subscribe');

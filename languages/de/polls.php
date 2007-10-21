@@ -7,19 +7,19 @@
  * @subpackage Modules
  */
 
-define('polls_acp_create', 'Neue Umfrage erstellen');
-define('polls_acp_edit', 'Umfrage bearbeiten');
 define('polls_add_answer', 'Antwort hinzufügen');
 define('polls_already_voted', 'Sie haben bereits an dieser Umfrage teilgenommen.');
 define('polls_answer', 'Antwort');
 define('polls_answers', 'Antworten');
 define('polls_can_not_delete_all_answers', 'Es ist nicht möglich alle Antworten zu löschen');
 define('polls_confirm_delete', 'Sollen die ausgewählten Umfragen wirklich gelöscht werden?');
+define('polls_create', 'Neue Umfrage erstellen');
 define('polls_create_error', 'Beim Erstellen der Umfrage ist ein Fehler aufgetreten!');
 define('polls_create_success', 'Die Umfrage wurde erfolgreich erstellt!');
 define('polls_delete_answer_description', 'Sie können Antworten löschen, indem Sie einfach auf das Auswahlfeld links neben den Antworten klicken.');
 define('polls_delete_error', 'Beim Löschen der ausgewählten Umfragen ist ein Fehler aufgetreten.');
 define('polls_delete_success', 'Die ausgewählten Umfragen wurden erfolgreich gelöscht.');
+define('polls_edit', 'Umfrage bearbeiten');
 define('polls_edit_error', 'Beim Bearbeiten der Umfrage ist ein Fehler aufgetreten.');
 define('polls_edit_success', 'Die Umfrage wurde erfolgreich bearbeitet.');
 define('polls_mod_description', 'Mit diesem Modul können die Umfragen verwaltet werden.');

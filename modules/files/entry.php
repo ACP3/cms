@@ -7,13 +7,13 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (!defined('IN_ADM'))
 	exit;
 if (!$modules->check('files', 'entry'))
 	redirect('errors/403');
 
 switch ($modules->action) {
-	case 'acp_create':
+	case 'create':
 		$form = $_POST['form'];
 		if (isset($form['external'])) {
 			$file = $form['file_external'];
@@ -64,10 +64,10 @@ switch ($modules->action) {
 
 			$bool = $db->insert('files', $insert_values);
 
-			$content = combo_box($bool ? lang('files', 'create_success') : lang('files', 'create_error'), uri('files/acp_list'));
+			$content = combo_box($bool ? lang('files', 'create_success') : lang('files', 'create_error'), uri('acp/files'));
 		}
 		break;
-	case 'acp_edit':
+	case 'edit':
 		$form = $_POST['form'];
 		if (isset($form['external'])) {
 			$file = $form['file_external'];
@@ -129,10 +129,10 @@ switch ($modules->action) {
 
 			$cache->create('files_details_id_' . $modules->id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, c.name AS category_name', 'files AS f, ' . CONFIG_DB_PRE . 'categories AS c', 'f.id = \'' . $modules->id . '\' AND f.category_id = c.id'));
 
-			$content = combo_box($bool ? lang('files', 'edit_success') : lang('files', 'edit_error'), uri('files/acp_list'));
+			$content = combo_box($bool ? lang('files', 'edit_success') : lang('files', 'edit_error'), uri('acp/files'));
 		}
 		break;
-	case 'acp_delete':
+	case 'delete':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
 		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
@@ -143,7 +143,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('files', 'confirm_delete'), uri('files/acp_list/action_delete/entries_' . $marked_entries), uri('files/acp_list'));
+			$content = combo_box(lang('files', 'confirm_delete'), uri('acp/files/adm_list/action_delete/entries_' . $marked_entries), uri('acp/files'));
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
@@ -159,7 +159,7 @@ switch ($modules->action) {
 					$cache->delete('files_details_id_' . $entry);
 				}
 			}
-			$content = combo_box($bool ? lang('files', 'delete_success') : lang('files', 'delete_error'), uri('files/acp_list'));
+			$content = combo_box($bool ? lang('files', 'delete_success') : lang('files', 'delete_error'), uri('acp/files'));
 		} else {
 			redirect('errors/404');
 		}

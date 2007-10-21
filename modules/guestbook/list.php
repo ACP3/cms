@@ -18,7 +18,7 @@ if ($c_guestbook > 0) {
 	$emoticons = false;
 
 	// Emoticons einbinden
-	if ($modules->check('emoticons', 'functions', 'frontend')) {
+	if ($modules->check('emoticons', 'functions')) {
 		include_once 'modules/emoticons/functions.php';
 		$emoticons = true;
 	}

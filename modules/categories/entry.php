@@ -7,13 +7,13 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (!defined('IN_ADM'))
 	exit;
 if (!$modules->check('categories', 'entry'))
 	redirect('errors/403');
 
 switch ($modules->action) {
-	case 'acp_create':
+	case 'create':
 		$form = $_POST['form'];
 
 		if (strlen($form['name']) < 3)
@@ -39,10 +39,10 @@ switch ($modules->action) {
 
 			$cache->create('categories_' . $form['module'], $db->select('id, name, description', 'categories', 'module = \'' . $form['module'] . '\'', 'name ASC'));
 
-			$content = combo_box($bool ? lang('categories', 'create_success') : lang('categories', 'create_error'), uri('categories/acp_list'));
+			$content = combo_box($bool ? lang('categories', 'create_success') : lang('categories', 'create_error'), uri('acp/categories'));
 		}
 		break;
-	case 'acp_edit':
+	case 'edit':
 		$form = $_POST['form'];
 
 		if (strlen($form['name']) < 3)
@@ -65,10 +65,10 @@ switch ($modules->action) {
 
 			$cache->create('categories_' . $db->escape($category[0]['module'], 3), $db->select('id, name, description', 'categories', 'module = \'' . $db->escape($category[0]['module'], 3) . '\'', 'name ASC'));
 
-			$content = combo_box($bool ? lang('categories', 'edit_success') : lang('categories', 'edit_error'), uri('categories/acp_list'));
+			$content = combo_box($bool ? lang('categories', 'edit_success') : lang('categories', 'edit_error'), uri('acp/categories'));
 		}
 		break;
-	case 'acp_delete':
+	case 'delete':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
 		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
@@ -79,7 +79,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('categories', 'confirm_delete'), uri('categories/acp_list/action_delete/entries_' . $marked_entries), uri('categories/acp_list'));
+			$content = combo_box(lang('categories', 'confirm_delete'), uri('acp/categories/adm_list/action_delete/entries_' . $marked_entries), uri('acp/categories'));
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = 0;
@@ -107,7 +107,7 @@ switch ($modules->action) {
 			} else {
 				$text = $bool ? lang('categories', 'delete_success') : lang('categories', 'delete_error');
 			}
-			$content = combo_box($text, uri('categories/acp_list'));
+			$content = combo_box($text, uri('acp/categories'));
 		} else {
 			redirect('errors/404');
 		}

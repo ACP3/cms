@@ -9,77 +9,76 @@
 		<active>1</active>
 	</info>
 	<access>
-		<acp>
-			<item>
-				<file>acp_configuration</file>
-				<level>2</level>
-			</item>
-			<item>
-				<file>acp_designs</file>
-				<level>2</level>
-			</item>
-			<item>
-				<file>acp_extensions</file>
-				<level>2</level>
-			</item>
-			<item>
-				<file>acp_languages</file>
-				<level>2</level>
-			</item>
-			<item>
-				<file>acp_list</file>
-				<level>2</level>
-			</item>
-			<item>
-				<file>acp_maintenance</file>
-				<level>2</level>
-			</item>
-			<item>
-				<file>acp_modules</file>
-				<level>2</level>
-			</item>
-			<item>
-				<file>acp_software</file>
-				<level>2</level>
-			</item>
-			<item>
-				<file>acp_sql_export</file>
-				<level>2</level>
-			</item>
-			<item>
-				<file>acp_sql_optimisation</file>
-				<level>2</level>
-			</item>
-			<item>
-				<file>acp_update_check</file>
-				<level>2</level>
-			</item>
-		</acp>
-		<entry>
+		<item>
+			<file>adm_list</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>configuration</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>designs</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>entry</file>
 			<action>
-				<name>acp_configuration</name>
+				<name>configuration</name>
 				<level>2</level>
 			</action>
 			<action>
-				<name>acp_designs</name>
+				<name>designs</name>
 				<level>2</level>
 			</action>
 			<action>
-				<name>acp_languages</name>
+				<name>languages</name>
 				<level>2</level>
 			</action>
 			<action>
-				<name>acp_modactivation</name>
+				<name>modactivation</name>
 				<level>2</level>
 			</action>
 			<action>
-				<name>acp_moddeactivation</name>
+				<name>moddeactivation</name>
 				<level>2</level>
 			</action>
 			<action>
-				<name>acp_sql_export</name>
+				<name>sql_export</name>
 				<level>2</level>
 			</action>
-		</entry>
+		</item>
+		<item>
+			<file>extensions</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>languages</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>maintenance</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>mod_list</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>software</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>sql_export</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>sql_optimisation</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>update_check</file>
+			<level>2</level>
+		</item>
 	</access>
 </module>

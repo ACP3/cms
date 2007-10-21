@@ -7,13 +7,13 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (!defined('IN_ADM'))
 	exit;
 if (!$modules->check('system', 'entry'))
 	redirect('errors/403');
 
 switch ($modules->action) {
-	case 'acp_configuration':
+	case 'configuration':
 		$form = $_POST['form'];
 
 		if (!$validate->is_number($form['entries']))
@@ -48,10 +48,10 @@ switch ($modules->action) {
 		} else {
 			$bool = $config->general($form);
 
-			$content = combo_box($bool ? lang('system', 'config_edit_success') : lang('system', 'config_edit_error'), uri('system/acp_configuration'));
+			$content = combo_box($bool ? lang('system', 'config_edit_success') : lang('system', 'config_edit_error'), uri('acp/system/configuration'));
 		}
 		break;
-	case 'acp_designs';
+	case 'designs';
 		$dir = isset($modules->gen['dir']) && is_file('designs/' . $modules->gen['dir'] . '/info.php') ? $modules->gen['dir'] : 0;
 		$bool = false;
 
@@ -60,9 +60,9 @@ switch ($modules->action) {
 		}
 		$text = $bool ? lang('system', 'designs_edit_success') : lang('system', 'designs_edit_error');
 
-		$content = combo_box($text, uri('system/acp_designs'));
+		$content = combo_box($text, uri('acp/system/designs'));
 		break;
-	case 'acp_languages':
+	case 'languages':
 		$dir = isset($modules->gen['dir']) && is_file('languages/' . $modules->gen['dir'] . '/info.php') ? $modules->gen['dir'] : 0;
 		$bool = false;
 
@@ -71,9 +71,9 @@ switch ($modules->action) {
 		}
 		$text = $bool ? lang('system', 'languages_edit_success') : lang('system', 'languages_edit_error');
 
-		$content = combo_box($text, uri('system/acp_languages'));
+		$content = combo_box($text, uri('acp/system/languages'));
 		break;
-	case 'acp_modactivation':
+	case 'modactivation':
 		if (isset($modules->gen['dir']) && is_file('modules/' . $modules->gen['dir'] . '/module.xml')) {
 			$info = $modules->parseInfo($modules->gen['dir']);
 			if ($info['protected']) {
@@ -90,9 +90,9 @@ switch ($modules->action) {
 		} else {
 			$text = lang('system', 'mod_activate_error');
 		}
-		$content = combo_box($text, uri('system/acp_modules'));
+		$content = combo_box($text, uri('acp/system/mod_list'));
 		break;
-	case 'acp_moddeactivation':
+	case 'moddeactivation':
 		if (isset($modules->gen['dir']) && is_file('modules/' . $modules->gen['dir'] . '/module.xml')) {
 			$info = $modules->parseInfo($modules->gen['dir']);
 			if ($info['protected']) {
@@ -109,9 +109,9 @@ switch ($modules->action) {
 		} else {
 			$text = lang('system', 'mod_deactivate_error');
 		}
-		$content = combo_box($text, uri('system/acp_modules'));
+		$content = combo_box($text, uri('acp/system/mod_list'));
 		break;
-	case 'acp_sql_export':
+	case 'sql_export':
 		$form = $_POST['form'];
 
 		if (empty($form['tables']))

@@ -25,8 +25,8 @@ $(document).ready(function() {
 		var fieldset = $(this).parent().parent();
 
 		if (!fieldset.children('dl').is(':visible') && !$('#accordion fieldset dl').is(':animated')) {
-			$('dl:visible').slideUp();
-			fieldset.children('dl').slideDown();
+			$('dl:visible').slideUp('fast');
+			fieldset.children('dl').slideDown('slow');
 		}
 		return false;
 	});

@@ -7,13 +7,13 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (!defined('IN_ACP3') && !defined('IN_ADM'))
 	exit;
 if (!$modules->check('users', 'entry'))
 	redirect('errors/403');
 
 switch ($modules->action) {
-	case 'acp_create':
+	case 'create':
 		$form = $_POST['form'];
 
 		if (empty($form['nickname']))
@@ -50,10 +50,10 @@ switch ($modules->action) {
 
 			$bool = $db->insert('users', $insert_values);
 
-			$content = combo_box($bool ? lang('users', 'create_success') : lang('users', 'create_error'), uri('users/acp_list'));
+			$content = combo_box($bool ? lang('users', 'create_success') : lang('users', 'create_error'), uri('acp/users'));
 		}
 		break;
-	case 'acp_edit':
+	case 'edit':
 		$form = $_POST['form'];
 
 		if (empty($form['nickname']))
@@ -97,10 +97,10 @@ switch ($modules->action) {
 				setcookie('ACP3_AUTH', $form['nickname'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]), time() + 3600, ROOT_DIR);
 			}
 
-			$content = combo_box($bool ? lang('users', 'edit_success') : lang('users', 'edit_error'), uri('users/acp_list'));
+			$content = combo_box($bool ? lang('users', 'edit_success') : lang('users', 'edit_error'), uri('acp/users'));
 		}
 		break;
-	case 'acp_delete':
+	case 'delete':
 		if (isset($_POST['entries']) && is_array($_POST['entries']))
 			$entries = $_POST['entries'];
 		elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
@@ -111,7 +111,7 @@ switch ($modules->action) {
 			foreach ($entries as $entry) {
 				$marked_entries.= $entry . '|';
 			}
-			$content = combo_box(lang('users', 'confirm_delete'), uri('users/acp_list/action_delete/entries_' . $marked_entries), uri('users/acp_list'));
+			$content = combo_box(lang('users', 'confirm_delete'), uri('acp/users/adm_list/action_delete/entries_' . $marked_entries), uri('acp/users'));
 		} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 			$marked_entries = explode('|', $entries);
 			$bool = false;
@@ -146,7 +146,7 @@ switch ($modules->action) {
 			} else {
 				$text = $bool ? lang('users', 'delete_success') : lang('users', 'delete_error');
 			}
-			$content = combo_box($text, $session_user ? ROOT_DIR : uri('users/acp_list'));
+			$content = combo_box($text, $session_user ? ROOT_DIR : uri('acp/users'));
 		} else {
 			redirect('errors/404');
 		}

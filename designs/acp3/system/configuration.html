@@ -1,0 +1,122 @@
+{$error_msg}
+<form action="{$request_uri}" method="post" accept-charset="UTF-8" id="accordion">
+	<fieldset>
+		<legend>{lang values="system|general"}</legend>
+		<dl>
+			<dt><label for="entries">{lang values="system|entries_per_page"}</label></dt>
+			<dd>
+				<select name="form[entries]" id="entries">
+{foreach from=$entries item=row}
+					<option value="{$row.value}"{$row.selected}>{$row.value}</option>
+{/foreach}
+				</select>
+			</dd>
+			<dt>
+				<label for="flood">{lang values="system|flood_barrier"}</label>
+				<span>({lang values="system|flood_barrier_description"})</span>
+			</dt>
+			<dd><input type="text" name="form[flood]" id="flood" value="{$form.flood}" maxlength="3" /></dd>
+			<dt>
+				<label for="sef_yes">{lang values="system|sef_uris"}</label>
+				<span>({lang values="system|sef_uris_description"})</span>
+			</dt>
+			<dd>
+				<label for="sef_yes">
+					<input type="radio" name="form[sef]" id="sef_yes" value="1"{$sef.0.checked} class="checkbox" />
+					{lang values="common|yes"}
+				</label>
+				<label for="sef_no">
+					<input type="radio" name="form[sef]" id="sef_no" value="0"{$sef.1.checked} class="checkbox" />
+					{lang values="common|no"}
+				</label>
+			</dd>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<legend>{lang values="common|date"}</legend>
+		<dl>
+			<dt>
+				<label for="date">{lang values="system|date_format"}</label>
+				<span>({lang values="system|php_date_function"})</span>
+			</dt>
+			<dd><input type="text" name="form[date]" id="date" value="{$form.date}" maxlength="20" /></dd>
+			<dt><label for="time_zone">{lang values="common|time_zone"}</label></dt>
+			<dd>
+				<select name="form[time_zone]" id="time_zone">
+{foreach from=$time_zone item=row}
+					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{/foreach}
+				</select>
+			</dd>
+			<dt><label for="dst_yes">{lang values="common|daylight_saving_time"}</label></dt>
+			<dd>
+				<label for="dst_yes">
+					<input type="radio" name="form[dst]" id="dst_yes" value="1"{$dst.0.checked} class="checkbox" />
+					{lang values="common|yes"}
+				</label>
+				<label for="dst_no">
+					<input type="radio" name="form[dst]" id="dst_no" value="0"{$dst.1.checked} class="checkbox" />
+					{lang values="common|no"}
+				</label>
+			</dd>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<legend>{lang values="system|maintenance"}</legend>
+		<dl>
+			<dt><label for="maintenance_yes">{lang values="system|maintenance_mode"}</label></dt>
+			<dd>
+				<label for="maintenance_yes">
+					<input type="radio" name="form[maintenance]" id="maintenance_yes" value="1"{$maintenance.0.checked} class="checkbox" />
+					{lang values="common|yes"}
+				</label>
+				<label for="maintenance_no">
+					<input type="radio" name="form[maintenance]" id="maintenance_no" value="0"{$maintenance.1.checked} class="checkbox" />
+					{lang values="common|no"}
+				</label>
+			</dd>
+			<dt><label for="maintenance_msg">{lang values="system|maintenance_msg"}</label></dt>
+			<dd><textarea name="form[maintenance_msg]" id="maintenance_msg" cols="50" rows="6">{$form.maintenance_msg}</textarea></dd>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<legend>{lang values="system|meta_statements"}</legend>
+		<dl>
+			<dt><label for="title">{lang values="system|title"}</label></dt>
+			<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120" /></dd>
+			<dt><label for="meta_description">{lang values="system|description"}</label></dt>
+			<dd><input type="text" name="form[meta_description]" id="meta_description" value="{$form.meta_description}" maxlength="120" /></dd>
+			<dt>
+				<label for="meta_keywords">{lang values="system|keywords"}</label>
+				<span>({lang values="system|separate_with_commas"})</span>
+			</dt>
+			<dd><textarea name="form[meta_keywords]" id="meta_keywords" cols="50" rows="6">{$form.meta_keywords}</textarea></dd>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<legend>{lang values="system|db_connection_settings"}</legend>
+		<dl>
+			<dt><label for="db_host">{lang values="system|host"}</label></dt>
+			<dd><input type="text" name="form[db_host]" id="db_host" value="{$form.db_host}" /></dd>
+			<dt><label for="db_user">{lang values="system|db_username"}</label></dt>
+			<dd><input type="text" name="form[db_user]" id="db_user" value="{$form.db_user}" /></dd>
+			<dt><label for="db_pwd">{lang values="system|db_password"}</label></dt>
+			<dd><input type="text" name="form[db_pwd]" id="db_pwd" value="{$form.db_pwd}" /></dd>
+			<dt><label for="db_name">{lang values="system|db_name"}</label></dt>
+			<dd><input type="text" name="form[db_name]" id="db_name" value="{$form.db_name}" /></dd>
+			<dt><label for="db_pre">{lang values="system|table_prefix"}</label></dt>
+			<dd><input type="text" name="form[db_pre]" id="db_pre" value="{$form.db_pre}" /></dd>
+			<dt><label for="db_type">{lang values="system|db_type"}</label></dt>
+			<dd>
+				<select name="form[db_type]" id="db_type">
+{foreach from=$db_type item=row}
+					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{/foreach}
+				</select>
+			</dd>
+		</dl>
+	</fieldset>
+	<div style="margin-top:20px">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>

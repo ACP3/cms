@@ -16,13 +16,13 @@ define('access_access_level_selection_tip', 'Bitte wählen Sie aus der untensteh
 define('access_access_overview', 'Zugriffslevel Übersicht');
 define('access_access_to_following_modules', 'Zugriff auf die Module');
 define('access_access_level_undeletable', 'Die Zugriffslevel für Administratoren, Benutzer und Besucher können nicht gelöscht werden.');
-define('access_acp_create', 'Neuen Zugriffslevel erstellen');
-define('access_acp_edit', 'Zugriffslevel bearbeiten');
 define('access_confirm_delete', 'Sollen die ausgewählten Zugriffslevel wirklich gelöscht werden?');
+define('access_create', 'Neuen Zugriffslevel erstellen');
 define('access_create_error', 'Beim Erstellen des Zugriffslevels ist ein Fehler aufgetreten.');
 define('access_create_success', 'Das Zugriffslevel wurde erfolgreich erstellt.');
 define('access_delete_error', 'Beim Löschen der ausgewählten Zugriffslevel ist ein Fehler aufgetreten.');
 define('access_delete_success', 'Die ausgewählten Zugriffslevel wurden erfolgreich gelöscht.');
+define('access_edit', 'Zugriffslevel bearbeiten');
 define('access_edit_error', 'Beim Bearbeiten des Zugriffslevels ist ein Fehler aufgetreten.');
 define('access_edit_success', 'Das Zugriffslevel wurde erfolgreich bearbeitet.');
 define('access_mod_description', 'Mit diesem Modul können verschiedene Zugriffslevel für die Benutzer angelegt werden.');

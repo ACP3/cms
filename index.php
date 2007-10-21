@@ -9,8 +9,6 @@
 
 ob_start();
 
-define('IN_ACP3', true);
-
 require 'includes/common.php';
 
 $tpl->assign('lang', CONFIG_LANG);
@@ -18,15 +16,15 @@ $tpl->assign('page_title', CONFIG_TITLE);
 $tpl->assign('keywords', CONFIG_META_KEYWORDS);
 $tpl->assign('description', CONFIG_META_DESCRIPTION);
 
-if (CONFIG_MAINTENANCE == '1' && defined('IN_FRONTEND')) {
+if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 	$tpl->assign('maintenance_msg', CONFIG_MAINTENANCE_MSG);
 	$tpl->display('offline.html');
 } else {
 	$auth = new auth;
 
-	if (!$auth->is_user() && $modules->acp && $modules->mod != 'users' && $modules->page != 'login') {
+	if (!$auth->is_user() && defined('IN_ADM') && $modules->mod != 'users' && $modules->page != 'login') {
 		redirect('users/login');
-	} elseif ($auth->is_user() && $modules->acp && empty($_GET['stm'])) {
+	} elseif ($auth->is_user() && defined('IN_ADM') && empty($_GET['stm'])) {
 		redirect(0, ROOT_DIR);
 	}
 
@@ -46,7 +44,7 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_FRONTEND')) {
 	include 'modules/users/sidebar.php';
 
 	// Navigationsleisten
-	if ($modules->check('pages', 'functions', 'frontend')) {
+	if ($modules->check('pages', 'functions')) {
 		include_once 'modules/pages/functions.php';
 		$tpl->assign('navbar', process_navbar());
 	}

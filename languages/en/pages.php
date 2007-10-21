@@ -7,17 +7,15 @@
  * @subpackage Modules
  */
 
-define('pages_acp_create', 'Create a new menu item');
-define('pages_acp_create_block', 'Create a new block');
-define('pages_acp_edit', 'Edit menu item');
-define('pages_acp_edit_block', 'Edit block');
-define('pages_acp_list_blocks', 'Blocks');
+define('pages_adm_list_blocks', 'Blocks');
 define('pages_block_title', 'Name of the block');
 define('pages_block_title_to_short', 'The name of the block should be at least 3 characters long');
 define('pages_blocks', 'Block');
 define('pages_blocks_overview', 'Blocks overview');
 define('pages_chronology', 'Chronology');
 define('pages_confirm_delete', 'Do you really want to delete the marked menu items?');
+define('pages_create', 'Create a new menu item');
+define('pages_create_block', 'Create a new block');
 define('pages_create_block_error', 'While creating the block an error has occured.');
 define('pages_create_block_success', 'The block has been created successfully.');
 define('pages_create_error', 'While creating the menu item an error has occured.');
@@ -29,6 +27,8 @@ define('pages_delete_success', 'The marked menu items have been deleted successf
 define('pages_do_not_display', 'Do not display');
 define('pages_dynamic_page', 'Dynamic page');
 define('pages_dynamic_page_hints', 'If you want to include a dynamic page, i.e. a module of the ACP3, please use the format &quot;module/file/additional_statements&quot;, e.g. news/list/id_1.');
+define('pages_edit', 'Edit menu item');
+define('pages_edit_block', 'Edit block');
 define('pages_edit_block_error', 'While editing the block an error has occured.');
 define('pages_edit_block_success', 'The block has been edited successfully.');
 define('pages_edit_error', 'While editing the menu item an error has occured.');
