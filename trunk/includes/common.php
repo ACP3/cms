@@ -38,12 +38,7 @@ define('SMARTY_DIR', './includes/smarty/');
 include SMARTY_DIR . 'Smarty.class.php';
 $tpl = new smarty;
 $tpl->template_dir = './designs/' . CONFIG_DESIGN . '/';
-$path = 'cache/' . CONFIG_DESIGN . '/';
-if (is_writable('cache/') && !is_dir($path)) {
-	mkdir($path, 0777);
-	chmod($path, 0777);
-}
-$tpl->compile_dir = $path;
+$tpl->compile_dir = './cache/';
 $tpl->compile_check = false;
 
 // Einige Konstanten definieren

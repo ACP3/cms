@@ -60,6 +60,11 @@ switch ($modules->action) {
 		}
 		$text = $bool ? lang('system', 'designs_edit_success') : lang('system', 'designs_edit_error');
 
+		// Cache leeren und diverse Parameter für die Template Engine abändern
+		$cache->purge();
+		$tpl->template_dir = './designs/' . $dir . '/';
+		$tpl->assign('design_path', ROOT_DIR . 'designs/' . $dir . '/');
+
 		$content = combo_box($text, uri('acp/system/designs'));
 		break;
 	case 'languages':
