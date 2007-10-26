@@ -44,9 +44,7 @@ class cache
 
 			return $bool ? true : false;
 		} elseif ($this->check($filename)) {
-			$this->delete($filename);
-
-			return true;
+			return $this->delete($filename);
 		}
 		return false;
 	}
@@ -65,7 +63,7 @@ class cache
 		return false;
 	}
 	/**
-	 * Ausgabe des SQL Cache
+	 * Ausgabe des SQL Caches
 	 *
 	 * @param string $filename
 	 * 	Auszugebende Datei
