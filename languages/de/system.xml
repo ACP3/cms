@@ -290,7 +290,7 @@
 	</item>
 	<item>
 		<name>php_date_function</name>
-		<message>siehe <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a>-Funktion von PHP</message>
+		<message><![CDATA[ siehe <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a>-Funktion von PHP ]]></message>
 	</item>
 	<item>
 		<name>php_extensions</name>
@@ -437,20 +437,12 @@
 		<message>Bitte geben Sie ein, für wieviele Sekunden ein Benutzer keine Beiträge abschicken kann</message>
 	</item>
 	<item>
-		<name>type_in_sql_text_or_upload_file</name>
-		<message>Bitte geben Sie einen SQL Text ein oder laden Sie eine SQL Datei hoch</message>
-	</item>
-	<item>
 		<name>update_check</name>
 		<message>Versionsüberprüfung</message>
 	</item>
 	<item>
 		<name>version</name>
 		<message>Version</message>
-	</item>
-	<item>
-		<name>wrong_file_format</name>
-		<message>Die SQL Datei muss die Dateiendung &quot;.sql&quot; besitzen</message>
 	</item>
 	<item>
 		<name>zend_engine</name>
