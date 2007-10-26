@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>add_answer</name>
+		<message>Add answer</message>
+	</item>
+	<item>
+		<name>already_voted</name>
+		<message>You have already at this poll.</message>
+	</item>
+	<item>
+		<name>answer</name>
+		<message>Answer</message>
+	</item>
+	<item>
+		<name>answers</name>
+		<message>Answers</message>
+	</item>
+	<item>
+		<name>can_not_delete_all_answers</name>
+		<message>It\'s impossible to delete all answers</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Do you really want to delete the marked polls?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Create a new poll</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>While creating the poll an error has occured!</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>The poll has been created successfully!</message>
+	</item>
+	<item>
+		<name>delete_answer_description</name>
+		<message>To delete answer, please click on the checkbox on the left hand side of the form.</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>While deleting the marked polls an error has occured.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>The marked polls have been deleted successfully.</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Edit poll</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>While editing the poll an error has occured.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>The poll has been edited successfully.</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>With this module you can administer the polls.</message>
+	</item>
+	<item>
+		<name>per_cent</name>
+		<message>Per cent</message>
+	</item>
+	<item>
+		<name>poll</name>
+		<message>Poll</message>
+	</item>
+	<item>
+		<name>poll_error</name>
+		<message>While saving your vote an error has occured.</message>
+	</item>
+	<item>
+		<name>poll_success</name>
+		<message>You vote was successfully counted.</message>
+	</item>
+	<item>
+		<name>polls</name>
+		<message>Polls</message>
+	</item>
+	<item>
+		<name>polls_archive</name>
+		<message>Polls archive</message>
+	</item>
+	<item>
+		<name>polls_overview</name>
+		<message>Polls overview</message>
+	</item>
+	<item>
+		<name>question</name>
+		<message>Question</message>
+	</item>
+	<item>
+		<name>result</name>
+		<message>Result</message>
+	</item>
+	<item>
+		<name>total_votes</name>
+		<message>Total votes</message>
+	</item>
+	<item>
+		<name>type_in_answer</name>
+		<message>Please type in at least one anwers</message>
+	</item>
+	<item>
+		<name>type_in_question</name>
+		<message>Please type in a question</message>
+	</item>
+	<item>
+		<name>vote</name>
+		<message>Vote</message>
+	</item>
+	<item>
+		<name>votes</name>
+		<message>Votes</message>
+	</item>
+</language>

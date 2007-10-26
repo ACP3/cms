@@ -190,22 +190,26 @@ function calc_filesize($value)
  *  Betroffene Konstante
  * @return string
  */
-function lang($mod, $key)
+function lang($module, $key)
 {
 	global $auth;
-	static $lang = 0;
+	static $lang = 0, $lang_data = array();
 
 	if (empty($lang)) {
 		$info = $auth->getUserInfo('language');
 		$lang = !empty($info) ? $info['language'] : CONFIG_LANG;
 	}
 
-	$path = 'languages/' . $lang . '/' . $mod . '.php';
+	$path = 'languages/' . $lang . '/' . $module . '.xml';
 
-	if (!defined($mod . '_' . $key) && is_file($path))
-		include_once $path;
+	if (!isset($lang_data[$module][$key]) && is_file($path)) {
+		$xml = simplexml_load_file($path);
+		foreach ($xml->item as $row) {
+			$lang_data[$module][(string) $row->name] = (string) $row->message;
+		}
+	}
 
-	return defined($mod . '_' . $key) ? str_replace('\n', '<br />', constant($mod . '_' . $key)) : strtoupper('{' . $mod . '_' . $key . '}');
+	return isset($lang_data[$module][$key]) ? str_replace('\n', '<br />', $lang_data[$module][$key]) : strtoupper('{' . $module . '_' . $key . '}');
 }
 /**
  * Hochgeladene Dateien verschieben und umbenennen

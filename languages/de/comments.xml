@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>comments</name>
+		<message>Kommentare</message>
+	</item>
+	<item>
+		<name>comments_count</name>
+		<message>Kommentar Anzahl</message>
+	</item>
+	<item>
+		<name>comments_overview</name>
+		<message>Kommentare Übersicht</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Sollen die ausgewählten Kommentare wirklich gelöscht werden?</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>Beim Erstellen des Kommentares ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>Der Kommentar wurde erfolgreich erstellt.</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>Beim Löschen der ausgewählten Kommentare ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>Die ausgewählten Kommentare wurden erfolgreich gelöscht.</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Kommentar bearbeiten</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>Beim Bearbeiten des Kommentares ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>Der Kommentar wurde erfolgreich bearbeitet.</message>
+	</item>
+	<item>
+		<name>ip</name>
+		<message>IP Adresse</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Mit diesem Modul können Kommentare für andere Module erstellt werden.</message>
+	</item>
+	<item>
+		<name>module_doesnt_exist</name>
+		<message>Entweder existiert das ausgewählte Modul nicht oder es ist zur Zeit deaktiviert</message>
+	</item>
+	<item>
+		<name>module</name>
+		<message>Modul</message>
+	</item>
+	<item>
+		<name>show_comments</name>
+		<message>Kommentare anzeigen</message>
+	</item>
+</language>

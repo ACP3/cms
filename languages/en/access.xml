@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>access</name>
+		<message>Access levels</message>
+	</item>
+	<item>
+		<name>access_level_0</name>
+		<message>No access</message>
+	</item>
+	<item>
+		<name>access_level_1</name>
+		<message>Only access to the frontend area</message>
+	</item>
+	<item>
+		<name>access_level_2</name>
+		<message>With access to the administration area</message>
+	</item>
+	<item>
+		<name>access_level_already_exist</name>
+		<message>There is already an access level with the same name</message>
+	</item>
+	<item>
+		<name>access_level_selection_tip</name>
+		<message>Bitte wählen Sie aus der untenstehenden Liste die Module aus, auf welche die Benutzer Zugriff erhalten sollen und auf welche nicht. Des Weiteren können Sie für jedes Modul festlegen, ob Benutzer nur Zugriff auf den Frontendbereich erhalten sollen oder auch den Administrationsbereich. D.h. diese Benutzer können dann z.B. neue News erstellen, diese bearbeiten und auch löschen.</message>
+	</item>
+	<item>
+		<name>access_overview</name>
+		<message>Access levels overview</message>
+	</item>
+	<item>
+		<name>access_to_following_modules</name>
+		<message>Access to modules</message>
+	</item>
+	<item>
+		<name>access_level_undeletable</name>
+		<message>It\'s impossible to delete the administrator and guest access levels.</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Do you really want to delete the marked access levels?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Create a new access level</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>While creating the access level an error has occured.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>The access level has been created successfully.</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>While deleting the marked access levels an error has occured.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>The marked access levels have been deleted successfully.</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Edit access level</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>While editing the access level an error has occured.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>The access level has been edited successfully.</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>With this module you can create different access levels for users.</message>
+	</item>
+	<item>
+		<name>select_modules</name>
+		<message>Please select at least one module</message>
+	</item>
+</language>

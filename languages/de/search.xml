@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>asc</name>
+		<message>Aufsteigend</message>
+	</item>
+	<item>
+		<name>content_only</name>
+		<message>Nur Inhalt</message>
+	</item>
+	<item>
+		<name>desc</name>
+		<message>Absteigend</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Mit diesem Modul können andere Module durchsucht werden.</message>
+	</item>
+	<item>
+		<name>no_area_selected</name>
+		<message>Bitte geben Sie an, welche Bereiche der Einträge druchsucht werden sollen</message>
+	</item>
+	<item>
+		<name>no_hits_sorting_selected</name>
+		<message>Bitte wählen Sie aus, in welcher Reihenfolge die Treffer sortiert werden sollen</message>
+	</item>
+	<item>
+		<name>no_module_selected</name>
+		<message>Bitte wählen Sie mindestens ein Modul aus, welches durchsucht werden soll</message>
+	</item>
+	<item>
+		<name>no_search_results</name>
+		<message>Es konnten keine Einträge mit dem Suchbegriff &quot;%s&quot; gefunden werden.</message>
+	</item>
+	<item>
+		<name>search</name>
+		<message>Suche</message>
+	</item>
+	<item>
+		<name>search_after_areas</name>
+		<message> Zu durchsuchende Bereiche</message>
+	</item>
+	<item>
+		<name>search_after_modules</name>
+		<message>Zu durchsuchende Module</message>
+	</item>
+	<item>
+		<name>search_options</name>
+		<message>Suchoptionen</message>
+	</item>
+	<item>
+		<name>search_term</name>
+		<message>Suchbegriff</message>
+	</item>
+	<item>
+		<name>search_term_to_short</name>
+		<message>Der Suchbegriff sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>sort_hits</name>
+		<message>Reihenfolge der Treffer</message>
+	</item>
+	<item>
+		<name>submit_search</name>
+		<message>Suche starten</message>
+	</item>
+	<item>
+		<name>title_and_content</name>
+		<message>Titel und Inhalt</message>
+	</item>
+	<item>
+		<name>title_only</name>
+		<message>Nur Titel</message>
+	</item>
+</language>
