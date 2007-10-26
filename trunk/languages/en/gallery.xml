@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>add_picture</name>
+		<message>Add picture</message>
+	</item>
+	<item>
+		<name>add_picture_error</name>
+		<message>While adding the picture to the gallery an error has occured.</message>
+	</item>
+	<item>
+		<name>add_picture_success</name>
+		<message>The picture was successfully added to the gallery.</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Do you really want to delete the marked galleries?</message>
+	</item>
+	<item>
+		<name>confirm_picture_delete</name>
+		<message>Do you really want to delete the marked pictures?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Create a new gallery</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>While creating the gallery an error has occured.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>The gallery has been created successfully.</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>While deleting the marked galleries an error has occured.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>The marked galleries have been deleted successfully.</message>
+	</item>
+	<item>
+		<name>details</name>
+		<message>Picture details</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>Beim Bearbeiten der Fotogalerie ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>edit_gallery</name>
+		<message>Edit gallery</message>
+	</item>
+	<item>
+		<name>edit_picture</name>
+		<message>Edit picture</message>
+	</item>
+	<item>
+		<name>edit_picture_error</name>
+		<message>While editing the picture an error has occured.</message>
+	</item>
+	<item>
+		<name>edit_picture_success</name>
+		<message>The picture has been edited successfully.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>The gallery has been edited successfully.</message>
+	</item>
+	<item>
+		<name>filename</name>
+		<message>Filename</message>
+	</item>
+	<item>
+		<name>galleries_overview</name>
+		<message>Gallery overview</message>
+	</item>
+	<item>
+		<name>gallery</name>
+		<message>Gallery</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>With this module you can administer the galleries.</message>
+	</item>
+	<item>
+		<name>no_gallery_selected</name>
+		<message>Please select a gallery</message>
+	</item>
+	<item>
+		<name>no_picture_selected</name>
+		<message>Please select a picture</message>
+	</item>
+	<item>
+		<name>no_pictures</name>
+		<message>There are no pictures registered for this gallery.</message>
+	</item>
+	<item>
+		<name>only_png_jpg_gif_allowed</name>
+		<message>Only the following file types are allowed: png, jpg and gif</message>
+	</item>
+	<item>
+		<name>pics</name>
+		<message>Gallery</message>
+	</item>
+	<item>
+		<name>picture</name>
+		<message>Picture</message>
+	</item>
+	<item>
+		<name>picture_delete_error</name>
+		<message>While deleting the marked picture an error has occured</message>
+	</item>
+	<item>
+		<name>picture_delete_success</name>
+		<message>The marked picture were successfully delted.</message>
+	</item>
+	<item>
+		<name>picture_index</name>
+		<message>Picture overview</message>
+	</item>
+	<item>
+		<name>picture_information</name>
+		<message>Picture information</message>
+	</item>
+	<item>
+		<name>picture_number</name>
+		<message>Picture number</message>
+	</item>
+	<item>
+		<name>pictures</name>
+		<message>Pictures</message>
+	</item>
+	<item>
+		<name>select_new_picture</name>
+		<message>Select a new picture</message>
+	</item>
+	<item>
+		<name>select_picture</name>
+		<message>Select picture</message>
+	</item>
+	<item>
+		<name>title</name>
+		<message>Title</message>
+	</item>
+	<item>
+		<name>type_in_gallery_name</name>
+		<message>The name of the gallery should be at least 3 characters long</message>
+	</item>
+	<item>
+		<name>type_in_picture_number</name>
+		<message>Please type in the picture number</message>
+	</item>
+</language>

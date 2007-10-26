@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>additional_information</name>
+		<message>Weitere Informationen</message>
+	</item>
+	<item>
+		<name>address</name>
+		<message>Anschrift</message>
+	</item>
+	<item>
+		<name>address_to_short</name>
+		<message>Die Anschrift sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>contact</name>
+		<message>Kontakt</message>
+	</item>
+	<item>
+		<name>contact_body</name>
+		<message>%1\$s (%2\$s) hat folgende Nachricht hinterlassen:</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>Beim Bearbeiten der Kontakt Daten ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>Die Kontakt Daten wurden erfolgreich bearbeitet.</message>
+	</item>
+	<item>
+		<name>contact_information</name>
+		<message>Kontakt Daten</message>
+	</item>
+	<item>
+		<name>contact_subject</name>
+		<message>Kontaktformular %s</message>
+	</item>
+	<item>
+		<name>disclaimer</name>
+		<message>Haftungshinweise</message>
+	</item>
+	<item>
+		<name>disclaimer_to_short</name>
+		<message>Die Haftungshinweise sollten mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>fax</name>
+		<message>FAX Nummer</message>
+	</item>
+	<item>
+		<name>imprint</name>
+		<message>Impressum</message>
+	</item>
+	<item>
+		<name>miscellaneous</name>
+		<message>Sonstiges</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Dieses Modul ist für das Kontaktformular und das Impressum zuständig.</message>
+	</item>
+	<item>
+		<name>powered_by</name>
+		<message>Diese Website wird angetrieben vom %s</message>
+	</item>
+	<item>
+		<name>send_mail_error</name>
+		<message>Beim Versenden der E-Mail ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal.</message>
+	</item>
+	<item>
+		<name>send_mail_success</name>
+		<message>Die E-Mail wurde erfolgreich versandt. Wir werden uns in Kürze mit Ihnen in Verbindung setzen.</message>
+	</item>
+	<item>
+		<name>telephone</name>
+		<message>Telefonnummer</message>
+	</item>
+</language>

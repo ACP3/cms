@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>add_picture</name>
+		<message>Bild hinzufügen</message>
+	</item>
+	<item>
+		<name>add_picture_error</name>
+		<message>Beim Hinzufügen des Bildes zur Fotogalerie ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>add_picture_success</name>
+		<message>Das Bild wurde der Fotogalerie erfolgreich hinzugefügt.</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Sollen die ausgewählten Fotogalerien wirklich gelöscht werden?</message>
+	</item>
+	<item>
+		<name>confirm_picture_delete</name>
+		<message>Sollen die ausgewählten Bilder wirklich gelöscht werden?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Neue Fotogalerie erstellen</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>Beim Erstellen der Fotogalerie ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>Die Fotogalerie wurde erfolgreich erstellt.</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>Beim Löschen der ausgewählten Fotogalerien ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>Die ausgewählten Fotogalerien wurden erfolgreich gelöscht.</message>
+	</item>
+	<item>
+		<name>details</name>
+		<message>Bilddetails</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>Beim Bearbeiten der Fotogalerie ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>edit_gallery</name>
+		<message>Fotogalerie bearbeiten</message>
+	</item>
+	<item>
+		<name>edit_picture</name>
+		<message>Bild bearbeiten</message>
+	</item>
+	<item>
+		<name>edit_picture_error</name>
+		<message>Beim Bearbeiten des Bildes ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>edit_picture_success</name>
+		<message>Das Bild wurde erfolgreich bearbeitet.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>Die Fotogalerie wurde erfolgreich bearbeitet.</message>
+	</item>
+	<item>
+		<name>filename</name>
+		<message>Dateiname</message>
+	</item>
+	<item>
+		<name>galleries_overview</name>
+		<message>Fotogalerien Übersicht</message>
+	</item>
+	<item>
+		<name>gallery</name>
+		<message>Fotogalerien</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Mit diesem Modul können die Fotogalerien verwaltet werden.</message>
+	</item>
+	<item>
+		<name>no_gallery_selected</name>
+		<message>Bitte wählen Sie eine Fotogalerie aus</message>
+	</item>
+	<item>
+		<name>no_picture_selected</name>
+		<message>Bitte wählen Sie ein Bild aus</message>
+	</item>
+	<item>
+		<name>no_pictures</name>
+		<message>In diese Fotogalerie wurden noch keine Bilder eingetragen.</message>
+	</item>
+	<item>
+		<name>only_png_jpg_gif_allowed</name>
+		<message>Es sind nur die Dateiformate png, jpg und gif erlaubt</message>
+	</item>
+	<item>
+		<name>pics</name>
+		<message>Fotogalerien</message>
+	</item>
+	<item>
+		<name>picture</name>
+		<message>Bild</message>
+	</item>
+	<item>
+		<name>picture_delete_error</name>
+		<message>Beim Löschen der ausgewählten Bilder ist ein Fehler aufgetreten</message>
+	</item>
+	<item>
+		<name>picture_delete_success</name>
+		<message>Die ausgewählten Bilder wurden erfolgreich gelöscht.</message>
+	</item>
+	<item>
+		<name>picture_index</name>
+		<message>Bild Übersicht</message>
+	</item>
+	<item>
+		<name>picture_information</name>
+		<message>Bild Informationen</message>
+	</item>
+	<item>
+		<name>picture_number</name>
+		<message>Bildnummer</message>
+	</item>
+	<item>
+		<name>pictures</name>
+		<message>Bilder</message>
+	</item>
+	<item>
+		<name>select_new_picture</name>
+		<message>Neues Bild auswählen</message>
+	</item>
+	<item>
+		<name>select_picture</name>
+		<message>Bild auswählen</message>
+	</item>
+	<item>
+		<name>title</name>
+		<message>Titel</message>
+	</item>
+	<item>
+		<name>type_in_gallery_name</name>
+		<message>Der Name der Fotogalerie sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>type_in_picture_number</name>
+		<message>Bitte geben Sie die Bilnummer an</message>
+	</item>
+</language>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>code</name>
+		<message>Code</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Sollen die ausgewählten Emoticons wirklich gelöscht werden?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Emoticon hinzufügen</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>Beim Hinzufügen des Emoticons zur Datenbank ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>Das Emoticon wurde der Datenbank erfolgreich hinzugefügt.</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>Beim Löschen der ausgewählten Emoticons ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>Die ausgewählten Emoticons wurde erfolgreich gelöscht.</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Emoticon bearbeiten</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>Beim Bearbeiten des Emoticons ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>Das Emoticon wurde erfolgreich bearbeitet.</message>
+	</item>
+	<item>
+		<name>emoticons</name>
+		<message>Emoticons</message>
+	</item>
+	<item>
+		<name>emoticons_overview</name>
+		<message>Emoticons Übersicht</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Mit diesem Modul können Emoticons z.B. in Kommentare eingefügt werden.</message>
+	</item>
+	<item>
+		<name>picture</name>
+		<message>Bild</message>
+	</item>
+	<item>
+		<name>replace_picture</name>
+		<message>Bild ersetzen</message>
+	</item>
+	<item>
+		<name>select_picture</name>
+		<message>Bitte wählen Sie ein Bild aus</message>
+	</item>
+	<item>
+		<name>type_in_code</name>
+		<message>Bitte geben Sie einen Code an, der dann durch ein Bild ersetzt werden soll</message>
+	</item>
+	<item>
+		<name>type_in_description</name>
+		<message>Bitte geben Sie zum Code eine kurze Beschreibung an</message>
+	</item>
+</language>

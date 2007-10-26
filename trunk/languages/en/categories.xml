@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>categories</name>
+		<message>Categories</message>
+	</item>
+	<item>
+		<name>categories_overview</name>
+		<message>Categories overview</message>
+	</item>
+	<item>
+		<name>category_already_exists</name>
+		<message>There is already a category with the same name for the selected module</message>
+	</item>
+	<item>
+		<name>category_in_use</name>
+		<message>Not all marked categories have been deleted, because they are used by at least one resultset.</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Do you really want to delete the marked categories?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Create a new category</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>While creating the category an error has occured.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>The category has been created successfully.</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>While deleting the marked categories an error has occured.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>The marked categories have been deleted successfully.</message>
+	</item>
+	<item>
+		<name>description_to_short</name>
+		<message>The description should be at least 3 characters long</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Edit category</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>While editing the category an error has occured.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>The category has been edited successfully.</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>With this module you can create categories for other modules.</message>
+	</item>
+	<item>
+		<name>module</name>
+		<message>Module</message>
+	</item>
+	<item>
+		<name>name_to_short</name>
+		<message>The name of the category should be at least 3 characters long</message>
+	</item>
+	<item>
+		<name>select_module</name>
+		<message>Please select a module</message>
+	</item>
+</language>

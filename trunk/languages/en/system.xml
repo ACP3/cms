@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>access_to_following_modules</name>
+		<message>You have access to the following %d modules.</message>
+	</item>
+	<item>
+		<name>acp3_not_up_to_date</name>
+		<message>The version check resulted in, that you don\'t have the latest available of the ACP3 intalled.\nPlease click %1$shere%2$s to download the latest version.</message>
+	</item>
+	<item>
+		<name>acp3_up_to_date</name>
+		<message>The version check resulted in, that you already have the latest available of the ACP3 installed.</message>
+	</item>
+	<item>
+		<name>architecture</name>
+		<message>Architecture</message>
+	</item>
+	<item>
+		<name>attention</name>
+		<message>Attention</message>
+	</item>
+	<item>
+		<name>complete_export</name>
+		<message>Complete</message>
+	</item>
+	<item>
+		<name>config_edit_error</name>
+		<message>While editing the ACP3 configuration an error has occured.</message>
+	</item>
+	<item>
+		<name>config_edit_success</name>
+		<message>The ACP3 configuration has been edited successfully.</message>
+	</item>
+	<item>
+		<name>configuration</name>
+		<message>Configuration</message>
+	</item>
+	<item>
+		<name>current_version</name>
+		<message>Current version</message>
+	</item>
+	<item>
+		<name>data_of_table</name>
+		<message>Data of table %s</message>
+	</item>
+	<item>
+		<name>database</name>
+		<message>Database</message>
+	</item>
+	<item>
+		<name>date_format</name>
+		<message>Date format</message>
+	</item>
+	<item>
+		<name>db_connection_settings</name>
+		<message>Database connection settings</message>
+	</item>
+	<item>
+		<name>db_name</name>
+		<message>Database name</message>
+	</item>
+	<item>
+		<name>db_password</name>
+		<message>Password</message>
+	</item>
+	<item>
+		<name>db_type</name>
+		<message>Database type</message>
+	</item>
+	<item>
+		<name>db_username</name>
+		<message>Username</message>
+	</item>
+	<item>
+		<name>description</name>
+		<message>Description</message>
+	</item>
+	<item>
+		<name>designs</name>
+		<message>Designs</message>
+	</item>
+	<item>
+		<name>designs_edit_error</name>
+		<message>While switching the design an error has occured.</message>
+	</item>
+	<item>
+		<name>designs_edit_success</name>
+		<message>The design was successfully selected and can now be used.</message>
+	</item>
+	<item>
+		<name>disable_module</name>
+		<message>Disable module</message>
+	</item>
+	<item>
+		<name>enable_module</name>
+		<message>Enable module</message>
+	</item>
+	<item>
+		<name>entries_per_page</name>
+		<message>Resultsets per page</message>
+	</item>
+	<item>
+		<name>error_messages</name>
+		<message>Output of error messages</message>
+	</item>
+	<item>
+		<name>error_update_check</name>
+		<message>It wasn\'t possible to establish a connection to the update server.</message>
+	</item>
+	<item>
+		<name>export_data</name>
+		<message>Data only</message>
+	</item>
+	<item>
+		<name>export_options</name>
+		<message>Exportoptions</message>
+	</item>
+	<item>
+		<name>export_structure</name>
+		<message>Struture only</message>
+	</item>
+	<item>
+		<name>export_type</name>
+		<message>Export type</message>
+	</item>
+	<item>
+		<name>extensions</name>
+		<message>Extensions</message>
+	</item>
+	<item>
+		<name>flood_barrier</name>
+		<message>Flood barrier</message>
+	</item>
+	<item>
+		<name>flood_barrier_description</name>
+		<message>Time in seconds, how long an user has to wait, before he can write a new entry</message>
+	</item>
+	<item>
+		<name>general</name>
+		<message>General</message>
+	</item>
+	<item>
+		<name>general_settings</name>
+		<message>General settings</message>
+	</item>
+	<item>
+		<name>host</name>
+		<message>Hostname</message>
+	</item>
+	<item>
+		<name>installed_version</name>
+		<message>Installed version</message>
+	</item>
+	<item>
+		<name>keywords</name>
+		<message>Keywords</message>
+	</item>
+	<item>
+		<name>language</name>
+		<message>Language</message>
+	</item>
+	<item>
+		<name>languages</name>
+		<message>Languages</message>
+	</item>
+	<item>
+		<name>languages_edit_error</name>
+		<message>While switching the language an error has occured.</message>
+	</item>
+	<item>
+		<name>languages_edit_success</name>
+		<message>The language was successfully selected and can now be used.</message>
+	</item>
+	<item>
+		<name>maintenance</name>
+		<message>Maintenance</message>
+	</item>
+	<item>
+		<name>maintenance_message_to_short</name>
+		<message>The maintenance message should be at least 3 characters long</message>
+	</item>
+	<item>
+		<name>maintenance_mode</name>
+		<message>Turn maintenance mode on</message>
+	</item>
+	<item>
+		<name>maintenance_msg</name>
+		<message>Maintenance message</message>
+	</item>
+	<item>
+		<name>max_upload_size</name>
+		<message>Maximum upload size</message>
+	</item>
+	<item>
+		<name>meta_statements</name>
+		<message>Meta statements</message>
+	</item>
+	<item>
+		<name>mod_activate_error</name>
+		<message>While enabling the module an error has occured.</message>
+	</item>
+	<item>
+		<name>mod_activate_success</name>
+		<message>The module was successfully enabled and can now be used.</message>
+	</item>
+	<item>
+		<name>mod_deactivate_error</name>
+		<message>While disabling the module an error has occured.</message>
+	</item>
+	<item>
+		<name>mod_deactivate_forbidden</name>
+		<message>It is impossible to enable resp. disable this module.</message>
+	</item>
+	<item>
+		<name>mod_deactivate_success</name>
+		<message>The module was successfully disabled.</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>This module is responsible for the basic functions of the ACP3.</message>
+	</item>
+	<item>
+		<name>mod_list</name>
+		<message>Available modules</message>
+	</item>
+	<item>
+		<name>module_name</name>
+		<message>Module name</message>
+	</item>
+	<item>
+		<name>modules_found</name>
+		<message>All in all, there are %d modules registered.</message>
+	</item>
+	<item>
+		<name>mysql_version</name>
+		<message>MySQL version</message>
+	</item>
+	<item>
+		<name>not_optimal_server_configuration</name>
+		<message>The server isn\'t well configured</message>
+	</item>
+	<item>
+		<name>not_optimised</name>
+		<message>Optimisation unnecessary</message>
+	</item>
+	<item>
+		<name>off</name>
+		<message>off</message>
+	</item>
+	<item>
+		<name>on</name>
+		<message>on</message>
+	</item>
+	<item>
+		<name>operating_system</name>
+		<message>Operating system</message>
+	</item>
+	<item>
+		<name>optimal_server_configuration</name>
+		<message>The server is well configured</message>
+	</item>
+	<item>
+		<name>optimisation_access_forbidden</name>
+		<message>During the optimisation process you don\'t have any access to the database!</message>
+	</item>
+	<item>
+		<name>optimised</name>
+		<message>Table successfully optimised</message>
+	</item>
+	<item>
+		<name>output</name>
+		<message>Output</message>
+	</item>
+	<item>
+		<name>output_as_text</name>
+		<message>As text</message>
+	</item>
+	<item>
+		<name>output_as_file</name>
+		<message>As file</message>
+	</item>
+	<item>
+		<name>overall_overhead</name>
+		<message>Overall overhead</message>
+	</item>
+	<item>
+		<name>overhead</name>
+		<message>Overhead</message>
+	</item>
+	<item>
+		<name>php_date_function</name>
+		<message>see <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a> function of PHP</message>
+	</item>
+	<item>
+		<name>php_extensions</name>
+		<message>Available PHP extensions</message>
+	</item>
+	<item>
+		<name>php_settings</name>
+		<message>PHP settings</message>
+	</item>
+	<item>
+		<name>php_version</name>
+		<message>PHP version</message>
+	</item>
+	<item>
+		<name>register_globals</name>
+		<message>Register globals</message>
+	</item>
+	<item>
+		<name>result</name>
+		<message>Result</message>
+	</item>
+	<item>
+		<name>safe_mode</name>
+		<message>Safe mode</message>
+	</item>
+	<item>
+		<name>sef_uris</name>
+		<message>Search engine friendly URIs</message>
+	</item>
+	<item>
+		<name>sef_uris_description</name>
+		<message>This requires the mod_rewrite module of the Apache Webserver</message>
+	</item>
+	<item>
+		<name>select_db_type</name>
+		<message>Please select the database type</message>
+	</item>
+	<item>
+		<name>select_entries_per_page</name>
+		<message>Please select, how many resultsets per page should be displayed</message>
+	</item>
+	<item>
+		<name>select_export_type</name>
+		<message>Please select the export type</message>
+	</item>
+	<item>
+		<name>select_menu_item</name>
+		<message>Please select one of the above-noted menu items, to reach the desired action.</message>
+	</item>
+	<item>
+		<name>select_online_maintenance</name>
+		<message>Please selecr, wether the maintenance mode should be turned on or off</message>
+	</item>
+	<item>
+		<name>select_output</name>
+		<message>Please select, wether the backup should be output as a file or a text</message>
+	</item>
+	<item>
+		<name>select_sef_uris</name>
+		<message>Please select, wether search engine friendly URIs should be used, or not</message>
+	</item>
+	<item>
+		<name>select_sql_tables</name>
+		<message>Please select at least one SQL-table, that should be exported</message>
+	</item>
+	<item>
+		<name>separate_with_commas</name>
+		<message>Please seperate with commas</message>
+	</item>
+	<item>
+		<name>server_infos</name>
+		<message>Server information</message>
+	</item>
+	<item>
+		<name>server_software</name>
+		<message>Server software</message>
+	</item>
+	<item>
+		<name>software</name>
+		<message>Software &amp; Serverconfiguration</message>
+	</item>
+	<item>
+		<name>sql_export</name>
+		<message>SQL-table export</message>
+	</item>
+	<item>
+		<name>sql_optimisation</name>
+		<message>SQL table optimisation</message>
+	</item>
+	<item>
+		<name>sql_table_optimisation_description</name>
+		<message>The table optimisation eliminates the overhead, which is the result of many erasing and editing processes.</message>
+	</item>
+	<item>
+		<name>sql_tables</name>
+		<message>SQL-tables</message>
+	</item>
+	<item>
+		<name>status</name>
+		<message>Status</message>
+	</item>
+	<item>
+		<name>structure_of_table</name>
+		<message>Structure of table %s</message>
+	</item>
+	<item>
+		<name>system</name>
+		<message>System</message>
+	</item>
+	<item>
+		<name>table_name</name>
+		<message>Table name</message>
+	</item>
+	<item>
+		<name>table_prefix</name>
+		<message>Table prefix</message>
+	</item>
+	<item>
+		<name>title</name>
+		<message>Title</message>
+	</item>
+	<item>
+		<name>title_to_short</name>
+		<message>Please type in a title</message>
+	</item>
+	<item>
+		<name>type_in_date_format</name>
+		<message>Please type in a date format</message>
+	</item>
+	<item>
+		<name>type_in_db_host</name>
+		<message>Please type in the hostname, which belongs to the database</message>
+	</item>
+	<item>
+		<name>type_in_db_name</name>
+		<message>Please type in the database name</message>
+	</item>
+	<item>
+		<name>type_in_db_username</name>
+		<message>Please type in the user name for the database</message>
+	</item>
+	<item>
+		<name>type_in_flood_barrier</name>
+		<message>Please type in, for how long an user can\'t submit new entries</message>
+	</item>
+	<item>
+		<name>type_in_sql_text_or_upload_file</name>
+		<message>Please type in a SQL text oder select a SQL file which should be uploaded</message>
+	</item>
+	<item>
+		<name>update_check</name>
+		<message>Version check</message>
+	</item>
+	<item>
+		<name>version</name>
+		<message>Version</message>
+	</item>
+	<item>
+		<name>wrong_file_format</name>
+		<message>The SQL file must have the file extension &quot;.sql&quot;</message>
+	</item>
+	<item>
+		<name>zend_engine</name>
+		<message>Zend Engine</message>
+	</item>
+</language>
