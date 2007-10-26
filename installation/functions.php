@@ -8,12 +8,18 @@
 // Sprachdateien
 function lang($key)
 {
-	$path = 'languages/' . LANG . '/lang.php';
+	static $lang_data = array();
 
-	if (!defined($key) && is_file($path))
-		include_once $path;
+	$path = 'languages/' . LANG . '/lang.xml';
 
-	return defined($key) ? str_replace('\n', '<br />', constant($key)) : strtoupper('{' . $key . '}');
+	if (!isset($lang_data[$key]) && is_file($path)) {
+		$xml = simplexml_load_file($path);
+		foreach ($xml->item as $row) {
+			$lang_data[(string) $row->name] = (string) $row->message;
+		}
+	}
+
+	return isset($lang_data[$key]) ? $lang_data[$key] : strtoupper('{' . $key . '}');
 }
 // Variablen escapen
 function mask($var, $mode = 1)
