@@ -209,7 +209,7 @@ function lang($module, $key)
 		}
 	}
 
-	return isset($lang_data[$module][$key]) ? str_replace('\n', '<br />', $lang_data[$module][$key]) : strtoupper('{' . $module . '_' . $key . '}');
+	return isset($lang_data[$module][$key]) ? $lang_data[$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
 }
 /**
  * Hochgeladene Dateien verschieben und umbenennen
