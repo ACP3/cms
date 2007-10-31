@@ -1,7 +1,6 @@
 {if $comments}
 <a name="comments" id="comments"></a>
 {$pagination}
-<div style="width:100%;float:left">
 {foreach from=$comments item=row}
 	<div class="gb">
 		<div class="gbhead">
@@ -26,7 +25,6 @@
 	<br />
 	<br />
 {/foreach}
-</div>
 {else}
 <div class="error">
 	<h5>{lang values="common|no_entries"}</h5>
