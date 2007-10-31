@@ -12,7 +12,7 @@ if (!defined('IN_ADM'))
 
 $breadcrumb->assign(lang('system', 'system'), uri('acp/system'));
 $breadcrumb->assign(lang('system', 'extensions'), uri('acp/system/extensions'));
-$breadcrumb->assign(lang('system', 'mod_list'));
+$breadcrumb->assign(lang('system', 'modules'));
 
 $mod_list = $modules->modulesList();
 
@@ -30,5 +30,5 @@ foreach ($mod_list as $name => $info) {
 $tpl->assign('LANG_modules_found', sprintf(lang('system', 'modules_found'), count($mod_list)));
 $tpl->assign('modules', $mod_list);
 
-$content = $tpl->fetch('system/mod_list.html');
+$content = $tpl->fetch('system/modules.html');
 ?>

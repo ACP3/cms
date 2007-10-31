@@ -40,10 +40,10 @@ if (!empty($modules->id) && $db->select('id', 'news', 'id = \'' . $modules->id .
 		// Linkziel
 		$target[0]['value'] = '1';
 		$target[0]['selected'] = select_entry('target', '1', $news[0]['target']);
-		$target[0]['lang'] = lang('news', 'window_self');
+		$target[0]['lang'] = lang('common', 'window_self');
 		$target[1]['value'] = '2';
 		$target[1]['selected'] = select_entry('target', '2', $news[0]['target']);
-		$target[1]['lang'] = lang('news', 'window_blank');
+		$target[1]['lang'] = lang('common', 'window_blank');
 		$tpl->assign('target', $target);
 
 		$tpl->assign('form', isset($form) ? $form : $news[0]);

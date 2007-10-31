@@ -78,7 +78,7 @@
 	</item>
 	<item>
 		<name>dynamic_page_hints</name>
-		<message>Falls Sie eine dynamische Seite, d.h. ein Modul/eine Seite des ACP3, einbinden möchten, so tragen Sie in &quot;URI&quot; die Seite in der Form &quot;modul/datei/weitere_angaben&quot; ein, also z.B. news/list/id_1.</message>
+		<message><![CDATA[ Falls Sie eine dynamische Seite, d.h. ein Modul/eine Seite des ACP3, einbinden möchten, so tragen Sie in &quot;URI&quot; die Seite in der Form &quot;modul/datei/weitere_angaben&quot; ein, also z.B. news/list/id_1. ]]></message>
 	</item>
 	<item>
 		<name>edit</name>
@@ -207,13 +207,5 @@
 	<item>
 		<name>uri_and_target_not_allowed</name>
 		<message>Für statische Seiten sind die URI und die Zielseite nicht erlaubt</message>
-	</item>
-	<item>
-		<name>window_blank</name>
-		<message>Neues Fenster (_blank)</message>
-	</item>
-	<item>
-		<name>window_self</name>
-		<message>Selbes Fenster (_self)</message>
 	</item>
 </language>

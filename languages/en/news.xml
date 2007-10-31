@@ -100,12 +100,4 @@
 		<name>uri</name>
 		<message>URI</message>
 	</item>
-	<item>
-		<name>window_blank</name>
-		<message>New window (_blank)</message>
-	</item>
-	<item>
-		<name>window_self</name>
-		<message>Same window (_self)</message>
-	</item>
 </language>

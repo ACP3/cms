@@ -6,7 +6,7 @@
 	</item>
 	<item>
 		<name>activate_module</name>
-		<message>Das Modul &quot;%s&quot; ist deaktiviert, wodurch bestimmte Funktionen eingeschränkt sein könnten.\nBitte aktivieren Sie dieses Modul, um diesen Fehler zu beheben.</message>
+		<message><![CDATA[ Das Modul &quot;%s&quot; ist deaktiviert, wodurch bestimmte Funktionen eingeschränkt sein könnten.\nBitte aktivieren Sie dieses Modul, um diesen Fehler zu beheben. ]]></message>
 	</item>
 	<item>
 		<name>author</name>
@@ -238,7 +238,7 @@
 	</item>
 	<item>
 		<name>utc-2</name>
-		<message>(UTC-02:00) Fernando de Noronha Time, South Georgia &amp; the South Sandwich Islands Time</message>
+		<message><![CDATA[ (UTC-02:00) Fernando de Noronha Time, South Georgia &amp; the South Sandwich Islands Time ]]></message>
 	</item>
 	<item>
 		<name>utc-1</name>
@@ -347,6 +347,14 @@
 	<item>
 		<name>website</name>
 		<message>Website</message>
+	</item>
+	<item>
+		<name>window_blank</name>
+		<message>Neues Fenster (_blank)</message>
+	</item>
+	<item>
+		<name>window_self</name>
+		<message>Selbes Fenster (_self)</message>
 	</item>
 	<item>
 		<name>wrong_email_format</name>
