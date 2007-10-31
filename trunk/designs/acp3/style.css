@@ -150,6 +150,9 @@ fieldset textarea {
 	height: 150px;
 	overflow: auto;
 }
+.form-bottom {
+	margin-top: 20px;
+}
 .form {
 	padding: 1px 7px;
 	background: #e5e5e5;
