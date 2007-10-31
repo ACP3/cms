@@ -489,10 +489,10 @@ a.download-file:hover {
 .picture-back {
 	float: left;
 }
-picture-next {
+.picture-next {
 	float: right;
 }
-picture-index {
+.picture-index {
 	padding: 0 130px;
 }
 /* News */
