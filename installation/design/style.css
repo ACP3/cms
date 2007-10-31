@@ -176,8 +176,9 @@ table {
 	color: #f90;
 }
 #content {
-	margin-left: 20%;
+	width: 80%;
 	font-size: 1.2em;
+	float: right;
 }
 #footer {
 	clear: both;
