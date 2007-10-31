@@ -60,7 +60,7 @@ if (is_writable($path))	{
 	// Konfigurationsdatei in ein Array schreiben
 	$config = file($path);
 	$entries_to_change = array(
-		'define(\'CONFIG_VERSION\', \'' . CONFIG_VERSION . '\');' => 'define(\'CONFIG_VERSION\', \'4.0b8\');',
+		'define(\'CONFIG_VERSION\', \'' . CONFIG_VERSION . '\');' => 'define(\'CONFIG_VERSION\', \'4.0b9 SVN\');',
 	);
 
 	foreach ($config as $c_key => $c_value) {
