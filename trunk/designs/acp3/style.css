@@ -528,9 +528,6 @@ picture-index {
 	border: 1px solid #333;
 	line-height: 20px;
 }
-#additional-link span {
-	font-weight: bold;
-}
 /* Umfragen */
 .poll {
 	width: 40%;
