@@ -79,6 +79,7 @@ th {
 	font-size: 1.1em;
 	line-height: 24px;
 	color: #f90;
+	white-space: nowrap;
 }
 td {
 	padding: 3px;
@@ -86,6 +87,15 @@ td {
 .table-bottom {
 	background: #eee;
 	font-weight: bold;
+}
+pre {
+	width: 99%;
+	height: 500px;
+	padding: 5px;
+	border: 1px solid #ccc;
+	font-size: 1.1em;
+	font-family: 'Courier New', serif;
+	overflow: auto;
 }
 /* Formulare */
 form {

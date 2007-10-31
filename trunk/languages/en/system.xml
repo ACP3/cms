@@ -221,12 +221,12 @@
 		<message>This module is responsible for the basic functions of the ACP3.</message>
 	</item>
 	<item>
-		<name>mod_list</name>
-		<message>Available modules</message>
-	</item>
-	<item>
 		<name>module_name</name>
 		<message>Module name</message>
+	</item>
+	<item>
+		<name>modules</name>
+		<message>Available modules</message>
 	</item>
 	<item>
 		<name>modules_found</name>
@@ -370,7 +370,7 @@
 	</item>
 	<item>
 		<name>software</name>
-		<message>Software &amp; Serverconfiguration</message>
+		<message><![CDATA[ Software &amp; Serverconfiguration ]]></message>
 	</item>
 	<item>
 		<name>sql_export</name>

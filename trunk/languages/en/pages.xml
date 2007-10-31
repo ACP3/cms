@@ -78,7 +78,7 @@
 	</item>
 	<item>
 		<name>dynamic_page_hints</name>
-		<message>If you want to include a dynamic page, i.e. a module of the ACP3, please use the format &quot;module/file/additional_statements&quot;, e.g. news/list/id_1.</message>
+		<message><![CDATA[ If you want to include a dynamic page, i.e. a module of the ACP3, please use the format &quot;module/file/additional_statements&quot;, e.g. news/list/id_1. ]]></message>
 	</item>
 	<item>
 		<name>edit</name>
@@ -207,13 +207,5 @@
 	<item>
 		<name>uri_and_target_not_allowed</name>
 		<message>It isn\'t allowed to use the URI und the target page for static pages</message>
-	</item>
-	<item>
-		<name>window_blank</name>
-		<message>New window (_blank)</message>
-	</item>
-	<item>
-		<name>window_self</name>
-		<message>Same window (_self)</message>
 	</item>
 </language>

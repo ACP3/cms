@@ -30,7 +30,7 @@
 	</item>
 	<item>
 		<name>no_search_results</name>
-		<message>Es konnten keine Einträge mit dem Suchbegriff &quot;%s&quot; gefunden werden.</message>
+		<message><![CDATA[ Es konnten keine Einträge mit dem Suchbegriff &quot;%s&quot; gefunden werden. ]]></message>
 	</item>
 	<item>
 		<name>search</name>

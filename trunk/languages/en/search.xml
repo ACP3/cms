@@ -30,7 +30,7 @@
 	</item>
 	<item>
 		<name>no_search_results</name>
-		<message>No entries matched search term &quot;%s&quot;.</message>
+		<message><![CDATA[ No entries matched search term &quot;%s&quot;. ]]></message>
 	</item>
 	<item>
 		<name>search</name>
