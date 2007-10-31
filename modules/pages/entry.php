@@ -26,14 +26,10 @@ switch ($modules->action) {
 			$errors[] = lang('pages', 'type_in_chronology');
 		if (strlen($form['title']) < 3)
 			$errors[] = lang('pages', 'title_to_short');
-		if ($form['mode'] == '1' && (!empty($form['uri']) || $validate->is_number($form['target'])))
-			$errors[] = lang('pages', 'uri_and_target_not_allowed');
 		if ($form['mode'] == '1' && !empty($form['parent']) && !$validate->is_number($form['parent']))
 			$errors[] = lang('pages', 'select_superior_page');
 		if ($form['mode'] == '1' && strlen($form['text']) < 3)
 			$errors[] = lang('pages', 'text_to_short');
-		if (($form['mode'] == '2' || $form['mode'] == '3') && (!empty($form['text']) || $validate->is_number($form['parent'])))
-			$errors[] = lang('pages', 'superior_page_and_text_not_allowed');
 		if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !$validate->is_number($form['target'])))
 			$errors[] = lang('pages', 'type_in_uri_and_target');
 
@@ -42,6 +38,14 @@ switch ($modules->action) {
 		} else {
 			$start_date = date_aligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
 			$end_date = date_aligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
+
+			if ($form['mode'] == '1') {
+				$form['uri'] = '';
+				$form['target'] = '';
+			} else {
+				$form['parent'] = '';
+				$form['text'] = '';
+			}
 
 			$insert_values = array(
 				'id' => '',
@@ -78,16 +82,12 @@ switch ($modules->action) {
 			$errors[] = lang('pages', 'type_in_chronology');
 		if (strlen($form['title']) < 3)
 			$errors[] = lang('pages', 'title_to_short');
-		if ($form['mode'] == '1' && (!empty($form['uri']) || $validate->is_number($form['target'])))
-			$errors[] = lang('pages', 'uri_and_target_not_allowed');
 		if ($form['mode'] == '1' && !empty($form['parent']) && !$validate->is_number($form['parent']))
 			$errors[] = lang('pages', 'select_superior_page');
 		if ($form['mode'] == '1' && $validate->is_number($form['parent']) && ($db->select('id', 'pages', "id != '" . $modules->id . "' AND mode='1' AND parent='0'", 0, 0, 0, 1) == 0) || $form['parent'] == $modules->id || parent_check($modules->id, $form['parent']))
 			$errors[] = lang('pages', 'superior_page_not_allowed');
 		if ($form['mode'] == '1' && strlen($form['text']) < 3)
 			$errors[] = lang('pages', 'text_to_short');
-		if (($form['mode'] == '2' || $form['mode'] == '3') && (!empty($form['text']) || $validate->is_number($form['parent'])))
-			$errors[] = lang('pages', 'superior_page_and_text_not_allowed');
 		if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !$validate->is_number($form['target'])))
 			$errors[] = lang('pages', 'type_in_uri_and_target');
 
@@ -96,6 +96,14 @@ switch ($modules->action) {
 		} else {
 			$start_date = date_aligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
 			$end_date = date_aligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
+
+			if ($form['mode'] == '1') {
+				$form['uri'] = '';
+				$form['target'] = '';
+			} else {
+				$form['parent'] = '';
+				$form['text'] = '';
+			}
 
 			$update_values = array(
 				'start' => $start_date,
