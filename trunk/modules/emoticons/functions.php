@@ -44,7 +44,7 @@ function emoticons_replace($string)
 	$emoticons = $cache->output('emoticons');
 
 	foreach ($emoticons as $row) {
-		$string = str_replace($row['code'] . ' ', '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $row['img'] . '" alt="' . $row['description'] . '" title="' . $row['description'] . '" />', $string);
+		$string = str_replace($row['code'], '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $row['img'] . '" alt="' . $row['description'] . '" title="' . $row['description'] . '" />', $string);
 	}
 	return $string;
 }
