@@ -161,10 +161,6 @@
 		<message>Übergeordnete Seite</message>
 	</item>
 	<item>
-		<name>superior_page_and_text_not_allowed</name>
-		<message>Für einen Hyperlink bzw. eine dynamische Seite sind die übergeordnete Seite und der Text nicht erlaubt</message>
-	</item>
-	<item>
 		<name>superior_page_not_allowed</name>
 		<message>Die gerade ausgewählte Seite kann nicht als übergeordnete Seite verwendet werden</message>
 	</item>
@@ -203,9 +199,5 @@
 	<item>
 		<name>uri</name>
 		<message>URI</message>
-	</item>
-	<item>
-		<name>uri_and_target_not_allowed</name>
-		<message>Für statische Seiten sind die URI und die Zielseite nicht erlaubt</message>
 	</item>
 </language>

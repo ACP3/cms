@@ -161,10 +161,6 @@
 		<message>Superior page</message>
 	</item>
 	<item>
-		<name>superior_page_and_text_not_allowed</name>
-		<message>It isn\'t allowed to use superior pages for hyperlinks and dynamic pages</message>
-	</item>
-	<item>
 		<name>superior_page_not_allowed</name>
 		<message>It is impossible to use the selected page as a superior page</message>
 	</item>
@@ -203,9 +199,5 @@
 	<item>
 		<name>uri</name>
 		<message>URI</message>
-	</item>
-	<item>
-		<name>uri_and_target_not_allowed</name>
-		<message>It isn\'t allowed to use the URI und the target page for static pages</message>
 	</item>
 </language>
