@@ -4,7 +4,6 @@
 <hr />
 {if $guestbook}
 {$pagination}
-<div style="width:100%;float:left">
 {foreach from=$guestbook item=row}
 	<div class="gb">
 		<div class="gbhead">
@@ -35,9 +34,8 @@
 	<br />
 	<br />
 {/foreach}
-</div>
 {else}
 <div class="error">
-	<h4 style="text-align:center">{lang values="common|no_entries"}</h4>
+	<h4>{lang values="common|no_entries"}</h4>
 </div>
 {/if}

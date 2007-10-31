@@ -1,8 +1,6 @@
+{$error_msg}
 <form action="{$request_uri}" method="post" accept-charset="UTF-8">
 	<fieldset style="width:30%">
-{if $error}
-		<p style="margin-top:0;font-weight:bold;color:#f00;text-align:center">{$error}</p>
-{/if}
 		<dl>
 			<dt><label for="nickname">{lang values="users|nickname"}</label></dt>
 			<dd><input type="text" name="form[nickname]" id="nickname" maxlength="30" /></dd>

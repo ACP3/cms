@@ -1,23 +1,23 @@
 {if $picture}
-<div style="margin:10px 0;text-align:center">
-	<img src="{$root_dir}modules/gallery/img.php?mode=thumb&amp;id={$picture.id}" alt="" style="border:1px dotted #333" />
+<div class="picture">
+	<img src="{$root_dir}modules/gallery/img.php?mode=thumb&amp;id={$picture.id}" alt="" />
 </div>
-<div style="margin:10px 0;text-align:center">
+<div class="picture-description">
 	{$picture.description}
 </div>
-<div id="gallery-bottom">
+<div class="pictures">
 {if $picture_back}
-	<a href="{uri args="gallery/details/id_`$picture_back.id`"}" id="pic-back"><img src="{$root_dir}modules/gallery/img.php?mode=mini&amp;id={$picture_back.id}" alt="" style="border:1px dotted #333" /></a>
+	<a href="{uri args="gallery/details/id_`$picture_back.id`"}" class="picture-back"><img src="{$root_dir}modules/gallery/img.php?mode=mini&amp;id={$picture_back.id}" alt="" /></a>
 {/if}
 {if $picture_next}
-	<a href="{uri args="gallery/details/id_`$picture_next.id`"}" id="pic-next"><img src="{$root_dir}modules/gallery/img.php?mode=mini&amp;id={$picture_next.id}" alt="" style="border:1px dotted #333" /></a>
+	<a href="{uri args="gallery/details/id_`$picture_next.id`"}" class="picture-next"><img src="{$root_dir}modules/gallery/img.php?mode=mini&amp;id={$picture_next.id}" alt="" /></a>
 {/if}
-	<div id="pic-index">
+	<div class="pic-index">
 		<a href="{uri args="gallery/pics/id_`$picture.gallery_id`"}">{lang values="gallery|picture_index"}</a>
 	</div>
 </div>
 {else}
 <div class="error">
-	<h4 style="text-align:center">{lang values="gallery|no_pictures"}</h4>
+	<h4>{lang values="gallery|no_pictures"}</h4>
 </div>
 {/if}
