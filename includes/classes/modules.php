@@ -45,7 +45,7 @@ class modules
 	public $gen = array();
 
 	/**
-	 * Zerlegt u.a. die übergebenen Parameter in der URL in ihre Bestandteile
+	 * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
 	 *
 	 * @return modules
 	 */
