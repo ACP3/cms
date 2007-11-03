@@ -30,7 +30,7 @@ if ($auth->is_user()) {
 	}
 	$tpl->assign('nav_mods', $nav_mods);
 
-	$tpl->assign('users_sidebar', $tpl->fetch('users/sidebar_user_menu.html'));
+	$tpl->display('users/sidebar_user_menu.html');
 } else {
 	if (defined('IN_ADM'))
 		$tpl->assign('uri', uri('acp/users/login'));
@@ -39,6 +39,6 @@ if ($auth->is_user()) {
 
 	$tpl->assign('redirect_uri', isset($_POST['form']['redirect_uri']) ? $_POST['form']['redirect_uri'] : base64_encode(htmlentities($_SERVER['REQUEST_URI'])));
 
-	$tpl->assign('users_sidebar', $tpl->fetch('users/sidebar_login.html'));
+	$tpl->display('users/sidebar_login.html');
 }
 ?>

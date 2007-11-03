@@ -40,9 +40,6 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 	// Evtl. gesetzten Content-Type des Servers überschreiben
 	header('Content-Type: ' . (defined('CUSTOM_CONTENT_TYPE') ? CUSTOM_CONTENT_TYPE : 'text/html') . '; charset=UTF-8');
 
-	// Loginfeld bzw. Benutzermenü laden
-	include 'modules/users/sidebar.php';
-
 	// Navigationsleisten
 	if ($modules->check('pages', 'functions')) {
 		include_once 'modules/pages/functions.php';
