@@ -422,13 +422,17 @@ a.form {
 	line-height: 18px;
 	clear: both;
 }
-/* Impressum */
-.imprint {
+/* Impressum & Benutzerinfos */
+.imprint, .user-info {
 	width: 80%;
 	margin: 0 auto;
 	padding: 15px 20px 0 20px;
 }
-.imprint dt {
+.user-info {
+	width: 100%;
+	padding: 0;
+}
+.imprint dt, .user-info dt {
 	width: 20%;
 	padding: 0 3px;
 	background: #e5e5e5;
@@ -440,22 +444,38 @@ a.form {
 	line-height: 20px;
 	float: left;
 }
-.imprint dd {
+.imprint dd, .user-info dd {
 	margin-bottom: 4px;
 	margin-left: 22%;
 	line-height: 20px;
 }
 /* Downloads */
-.dlhead {
-	text-align: left;
-	font-size: 1.2em;
+.files {
+	background: #069 url('images/common_header.png') repeat-x;
+	border: 1px solid #333;
 }
-.dlhead a {
+.files .title, .files .date {
+	padding: 3px;
+	font-weight: bold;
+	font-size: 1.2em;
+	color: #f90;
+}
+.files .title {
+	text-align: left;
+}
+.files .title a {
 	color: #000;
 }
-.dlhead a:hover {
+.files .title a:hover {
 	color: #f00;
-	text-decoration: underline;
+}
+.files .date {
+	float: right;
+}
+.files .content {
+	padding: 10px;
+	background: #fff;
+	border-top: 1px solid #333;
 }
 a.download-file {
 	padding-left: 34px;
@@ -522,7 +542,6 @@ a.download-file:hover {
 	border-top: 1px solid #333;
 }
 #additional-link {
-	margin: 10px;
 	padding: 0 4px;
 	background: #eee;
 	border: 1px solid #333;

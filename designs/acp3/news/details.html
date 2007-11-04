@@ -5,12 +5,12 @@
 	</div>
 	<div class="newstext">
 		{$news.text}
-	</div>
 {if $news.uri!='' && $news.link_title!=''}
-	<div id="additional-link">
-		<strong>{lang values="news|additional_hyperlink"}:</strong> <a href="{$news.uri}"{$news.target}>{$news.link_title}</a>
-	</div>
+		<div id="additional-link">
+			<strong>{lang values="news|additional_hyperlink"}:</strong> <a href="{$news.uri}"{$news.target}>{$news.link_title}</a>
+		</div>
 {/if}
+	</div>
 </div>
 <hr />
 {$comments_list}
