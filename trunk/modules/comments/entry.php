@@ -44,6 +44,7 @@ switch ($modules->action) {
 					'ip' => $ip,
 					'date' => $time,
 					'name' => $db->escape($form['name']),
+					'user_id' => $auth->is_user() && preg_match('/\d/', $_SESSION['acp3_id']) ? $_SESSION['acp3_id'] : '',
 					'message' => $db->escape($form['message']),
 					'module' => $db->escape($module, 2),
 					'entry_id' => $entry_id,
