@@ -8,10 +8,12 @@ if (isset($modules->gen['feed'])) {
 	$link = 'http://' . htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES);
 
 	//RSS Kopf Felder
-	$rss['link'] = $link . ROOT_DIR;
-	$rss['description'] = lang($module, $module);
+	$feed['generator'] = CONFIG_VERSION;
+	$feed['atom_link'] = $link . uri($modules->mod . '/' . $modules->page . '/feed_' . $modules->gen['feed']);
+	$feed['link'] = $link . ROOT_DIR;
+	$feed['description'] = lang($module, $module);
 
-	$tpl->assign('rss', $rss);
+	$tpl->assign('feed', $feed);
 
 	//Einträge einbinden
 	if (isset($module) && $modules->check($module, 'extensions/feeds')) {
