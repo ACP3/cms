@@ -61,6 +61,10 @@
 			</action>
 		</item>
 		<item>
+			<file>image</file>
+			<level>1</level>
+		</item>
+		<item>
 			<file>list</file>
 			<level>1</level>
 		</item>

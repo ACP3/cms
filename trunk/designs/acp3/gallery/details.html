@@ -1,16 +1,16 @@
 {if $picture}
 <div class="picture">
-	<img src="{$root_dir}modules/gallery/img.php?mode=thumb&amp;id={$picture.id}" alt="" />
+	<img src="{uri args="gallery/image/id_`$picture.id`/action_thumb"}" alt="" />
 </div>
 <div class="picture-description">
 	{$picture.description}
 </div>
 <div class="pictures">
 {if $picture_back}
-	<a href="{uri args="gallery/details/id_`$picture_back.id`"}" class="picture-back"><img src="{$root_dir}modules/gallery/img.php?mode=mini&amp;id={$picture_back.id}" alt="" /></a>
+	<a href="{uri args="gallery/details/id_`$picture_back.id`"}" class="picture-back"><img src="{uri args="gallery/image/id_`$picture_back.id`/action_mini"}" alt="" /></a>
 {/if}
 {if $picture_next}
-	<a href="{uri args="gallery/details/id_`$picture_next.id`"}" class="picture-next"><img src="{$root_dir}modules/gallery/img.php?mode=mini&amp;id={$picture_next.id}" alt="" /></a>
+	<a href="{uri args="gallery/details/id_`$picture_next.id`"}" class="picture-next"><img src="{uri args="gallery/image/id_`$picture_next.id`/action_mini"}" alt="" /></a>
 {/if}
 	<div class="pic-index">
 		<a href="{uri args="gallery/pics/id_`$picture.gallery_id`"}">{lang values="gallery|picture_index"}</a>
