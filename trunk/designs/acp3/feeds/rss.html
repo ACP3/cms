@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>{$page_title} :: {$title}</title>
-		<generator>ACP3</generator>
-		<link>{$rss.link}</link>
-		<description>{$rss.description}</description>
+		<generator>{$feed.generator}</generator>
+		<atom:link href="{$feed.atom_link}" rel="self" type="application/rss+xml"/>
+		<link>{$feed.link}</link>
+		<description>{$feed.description}</description>
 		<language>{$lang}</language>
 {if $results}
 {foreach from=$results item=row}
