@@ -1,13 +1,11 @@
 {if $galleries}
 {$pagination}
 {foreach from=$galleries item=row}
-<div class="newsbox newshead">
-	<div style="float:right;font-size:1.2em">
-		{$row.pics}
+<div class="galleries">
+	<div class="date">
+		{$row.date}
 	</div>
-	<div class="dlhead">
-		<a href="{uri args="gallery/pics/id_`$row.id`"}">{$row.date} - {$row.name}</a>
-	</div>
+	<h3 class="title"><a href="{uri args="gallery/pics/id_`$row.id`"}">{$row.name} ({$row.pics})</a></h3>
 </div>
 <hr />
 {/foreach}

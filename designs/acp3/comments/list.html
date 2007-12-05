@@ -3,7 +3,7 @@
 {$pagination}
 {foreach from=$comments item=row}
 	<div class="gb">
-		<div class="gbhead">
+		<div class="header">
 			<div class="author">
 				{lang values="common|author"}
 			</div>
@@ -11,14 +11,14 @@
 				{lang values="common|message"}
 			</div>
 		</div>
-		<div class="gbleft">
+		<div class="left">
 			<strong>{lang values="common|name"}:</strong> {if $row.user_id}<a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang values="users|view_profile"}">{$row.name}</a>{else}{$row.name}{/if}<br />
 			<strong>{lang values="common|date"}:</strong> {$row.date}
 		</div>
-		<div class="gbright">
+		<div class="content">
 			{$row.message}
 		</div>
-		<div class="gbfooter">
+		<div class="footer">
 			&nbsp;
 		</div>
 	</div>
