@@ -384,7 +384,7 @@ a.form {
 	background: #eee;
 	border: 1px solid #333;
 }
-.gbhead {
+.gb .header {
 	background: #069 url('images/common_header.png') repeat-x;
 	border-bottom: 1px solid #333;
 	font-weight: bold;
@@ -392,31 +392,31 @@ a.form {
 	line-height: 25px;
 	color: #f90;
 }
-.author {
+.gb .author {
 	width: 200px;
 	float: left;
 	text-align: center;
 }
-.message {
+.gb .message {
 	margin-left: 200px;
 	text-align: center;
 }
-.gbleft {
+.gb .left {
 	max-width: 200px;
 	width: 190px;
 	padding: 5px;
 	border-right: 1px solid #333;
 	float: left;
 }
-.gbleft span {
+.gb .left span {
 	font-weight: bold;
 }
-.gbright {
+.gb .content {
 	margin-left: 200px;
 	padding: 5px;
 	border-left: 1px solid #333;
 }
-.gbfooter {
+.gb .footer {
 	background: #ccc url('images/common_footer.png') repeat-x;
 	border-top: 1px solid #333;
 	line-height: 18px;
@@ -447,6 +447,13 @@ a.form {
 .imprint dd, .user-info dd {
 	margin-bottom: 4px;
 	margin-left: 22%;
+	line-height: 20px;
+}
+/* Hyperlink */
+.hyperlink {
+	padding: 0 4px;
+	background: #eee;
+	border: 1px solid #333;
 	line-height: 20px;
 }
 /* Downloads */
@@ -494,58 +501,73 @@ a.download-file:hover {
 	margin: 2px 0;
 }
 /* Fotogalerien */
+.galleries {
+	padding: 3px;
+	background: #069 url('images/common_header.png') repeat-x;
+	border: 1px solid #333;
+	font-weight: bold;
+	font-size: 1.2em;
+	color: #f90;
+}
+.galleries .title {
+	font-size: 1.0em;
+	text-align: left;
+}
+.galleries .title a {
+	color: #000;
+}
+.galleries .title a:hover {
+	color: #f00;
+}
+.galleries .date {
+	float: right;
+}
+.picture img {
+	border: 1px dotted #333;
+}
 .picture, .picture-description {
 	margin: 10px 0;
 	text-align: center;
 }
-.pictures {
+.picture .pictures-prev-next {
 	height: 120px;
 	line-height: 120px;
 	text-align: center;
 }
-.picture img, .pictures img {
-	border: 1px dotted #333;
-}
-.picture-back {
+.picture .picture-prev {
 	float: left;
 }
-.picture-next {
+.picture .picture-next {
 	float: right;
 }
-.picture-index {
+.picture .picture-index {
 	padding: 0 130px;
 }
 /* News */
-.newsbox {
+.news {
 	border: 1px solid #333;
 }
-.newshead {
+.news .headline {
 	padding: 3px;
 	background: #069 url('images/common_header.png') repeat-x;
 	font-weight: bold;
 	color: #f90;
 	text-align: center;
 }
-.newstime {
+.news .date {
 	padding: 0 10px;
 	border-top: 1px solid #333;
 	line-height: 20px;
 }
-.comments {
+.news .comments {
 	float: right;
 }
-.comments span {
+.news .comments span {
 	font-size: 0.9em;
 }
-.newstext {
+.news .content {
 	padding: 10px;
 	border-top: 1px solid #333;
-}
-#additional-link {
-	padding: 0 4px;
-	background: #eee;
-	border: 1px solid #333;
-	line-height: 20px;
 }
 /* Umfragen */
 .poll {
