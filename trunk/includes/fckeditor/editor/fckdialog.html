@@ -21,10 +21,11 @@
  *
  * This page is used by all dialog box as the container.
 -->
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta name="robots" content="noindex, nofollow" />
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="robots" content="noindex, nofollow">
 		<script type="text/javascript">
 
 // On some Gecko browsers (probably over slow connections) the
@@ -111,7 +112,7 @@ function RefreshSize()
 	}
 }
 
-// Kludge for #1316: Safari seems to have a bug with the time when RefreshSize() is executed - it thinks frmMain's innerHeight 
+// Kludge for #1316: Safari seems to have a bug with the time when RefreshSize() is executed - it thinks frmMain's innerHeight
 // is 0 if we query the value too soon after the page is loaded in some circumstances.
 if ( window.dialogArguments.Editor.FCKBrowserInfo.IsSafari )
 {
@@ -328,7 +329,7 @@ document.write( sTitle ) ;
 							<td width="100%">&nbsp;</td>
 							<td nowrap="nowrap">
 								<input id="btnOk" style="VISIBILITY: hidden;" type="button" value="Ok" class="Button" onclick="Ok();" fckLang="DlgBtnOK" />
-								&nbsp; 
+								&nbsp;
 								<input id="btnCancel" type="button" value="Cancel" class="Button" onclick="Cancel();" fckLang="DlgBtnCancel" />
 							</td>
 						</tr>
