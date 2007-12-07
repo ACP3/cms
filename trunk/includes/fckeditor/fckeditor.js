@@ -44,8 +44,8 @@ var FCKeditor = function( instanceName, width, height, toolbarSet, value )
 	this.OnError		= null ;	// function( source, errorNumber, errorDescription )
 }
 
-FCKeditor.prototype.Version			= '2.5 Beta' ;
-FCKeditor.prototype.VersionBuild	= '16848' ;
+FCKeditor.prototype.Version			= '2.5' ;
+FCKeditor.prototype.VersionBuild	= '17352' ;
 
 FCKeditor.prototype.Create = function()
 {
