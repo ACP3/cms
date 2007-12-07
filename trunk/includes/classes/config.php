@@ -51,10 +51,25 @@ class config
 	 */
 	function module($module, $data)
 	{
-		$path = 'modules/' . $module . '/config.php';
+		$path = 'modules/' . $module . '/module.xml';
 		if (!preg_match('=/=', $module) && is_file($path)) {
-			$content = '<?php' . "\n" . '$settings = ' . var_export($data, true) . ';' . "\n" . '?>';
-			$bool = @file_put_contents($path, $content);
+			$xml = DOMDocument::load($path);
+			$xp = new domxpath($xml);
+			$items = $xp->query('settings');
+
+			foreach ($items as $item) {
+				foreach ($item->childNodes as $cNode) {
+					if ($cNode->nodeType == 1 && array_key_exists($cNode->nodeName, $data)) {
+						$replace = $xml->createElement($cNode->nodeName);
+						$replace_content = $xml->createCDATASection($data[$cNode->nodeName]);
+						$replace->appendChild($replace_content);
+
+						$cNode->parentNode->replaceChild($replace, $cNode);
+					}
+				}
+			}
+			$bool = $xml->save($path);
+
 			return $bool ? true : false;
 		}
 		return false;
@@ -67,13 +82,23 @@ class config
 	 */
 	function output($module)
 	{
-		$path = 'modules/' . $module . '/config.php';
-		if (!preg_match('=/=', $module) && is_file($path)) {
-			$settings = array();
-			require_once $path;
-			return $settings;
+		static $settings = array();
+
+		if (!array_key_exists($module, $settings)) {
+			$path = 'modules/' . $module . '/module.xml';
+			if (!preg_match('=/=', $module) && is_file($path)) {
+				$xml = simplexml_load_file($path);
+
+				foreach ($xml->xpath('settings') as $row) {
+					foreach ($row as $key => $value) {
+						$settings[$module][$key] = $value;
+					}
+				}
+				return $settings[$module];
+			}
+			return false;
 		}
-		return false;
+		return $settings[$module];
 	}
 }
 ?>

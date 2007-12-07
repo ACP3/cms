@@ -8,6 +8,12 @@
 		<version core="true"/>
 		<active>1</active>
 	</info>
+	<settings>
+		<mail></mail>
+		<mailsig><![CDATA[Mit freundlichen Grüßen,
+
+das Newsletterteam ]]></mailsig>
+	</settings>
 	<access>
 		<item>
 			<file>adm_list</file>
