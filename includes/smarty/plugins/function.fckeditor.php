@@ -72,14 +72,14 @@ function smarty_function_fckeditor($params, &$smarty) {
 	foreach ($base_arguments as $key => $value) {
 		// Fix newlines, javascript cannot handle multiple line strings very well.
 		if (!is_bool($value))
-			 $value = '"' . preg_replace("/[\r\n]+/", '" + $0"', addslashes($value)) . '"';
+			$value = '"' . preg_replace("/[\r\n]+/", '" + $0"', addslashes($value)) . '"';
 
 		$out.= 'oFCKeditor.' . $key . ' = ' . $value . ';' . "\n";
 	}
 
 	foreach ($config_arguments as $key => $value) {
 		if (!is_bool($value))
-			 $value = '"' . preg_replace("/[\r\n]+/", '" + $0"', addslashes($value)) . '"';
+			$value = '"' . preg_replace("/[\r\n]+/", '" + $0"', addslashes($value)) . '"';
 
 		$out.= 'oFCKeditor.Config[\'' . $key . '\'] = ' . $value . ';' . "\n";
 	}
