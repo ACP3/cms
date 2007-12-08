@@ -55,18 +55,19 @@ class config
 		if (!preg_match('=/=', $module) && is_file($path)) {
 			$xml = DOMDocument::load($path);
 			$xp = new domxpath($xml);
-			$items = $xp->query('settings');
+			$items = $xp->query('settings/*');
+			$i = $items->length - 1;
 
-			foreach ($items as $item) {
-				foreach ($item->childNodes as $cNode) {
-					if ($cNode->nodeType == 1 && array_key_exists($cNode->nodeName, $data)) {
-						$replace = $xml->createElement($cNode->nodeName);
-						$replace_content = $xml->createCDATASection($data[$cNode->nodeName]);
-						$replace->appendChild($replace_content);
+			while ($i > -1) {
+				$item = $items->item($i);
 
-						$cNode->parentNode->replaceChild($replace, $cNode);
-					}
+				if (array_key_exists($item->nodeName, $data)) {
+					$newitem = $xml->createElement($item->nodeName);
+					$newitem_content = $xml->createCDATASection($data[$item->nodeName]);
+					$newitem->appendChild($newitem_content);
+					$item->parentNode->replaceChild($newitem, $item);
 				}
+				$i--;
 			}
 			$bool = $xml->save($path);
 
