@@ -20,7 +20,7 @@ $cat = isset($_POST['form']['cat']) && $validate->is_number($_POST['form']['cat'
 
 // Cache für die Kategorien
 if (!$cache->check('categories_news')) {
-	$cache->create('categories_news', $db->select('id, name, description', 'categories', 'module = \'news\'', 'name ASC'));
+	$cache->create('categories_news', $db->select('id, name, picture, description', 'categories', 'module = \'news\'', 'name ASC'));
 }
 $categories = $cache->output('categories_news');
 $c_categories = count($categories);
