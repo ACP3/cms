@@ -69,6 +69,14 @@
 		<message>Der Name der Kategorie sollte mindestens 3 Zeichen lang sein</message>
 	</item>
 	<item>
+		<name>picture</name>
+		<message>Bild</message>
+	</item>
+	<item>
+		<name>please_select_an_image</name>
+		<message>Es sind nur die Dateiformate png, jpg und gif erlaubt</message>
+	</item>
+	<item>
 		<name>select_module</name>
 		<message>Bitte wählen Sie ein Modul aus</message>
 	</item>
