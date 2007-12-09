@@ -1,6 +1,6 @@
 CREATE TABLE `{pre}access` ( `id` int(11) NOT NULL auto_increment, `name` varchar(120) NOT NULL, `modules` text NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 
-CREATE TABLE `{pre}categories` ( `id` int(11) NOT NULL auto_increment, `name` varchar(120) NOT NULL, `description` varchar(120) NOT NULL, `module` varchar(120) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
+CREATE TABLE `{pre}categories` ( `id` int(11) NOT NULL auto_increment, `name` varchar(120) NOT NULL, `picture` varchar(120) NOT NULL, `description` varchar(120) NOT NULL, `module` varchar(120) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 
 CREATE TABLE `{pre}comments` ( `id` int(11) NOT NULL auto_increment, `ip` varchar(40) NOT NULL, `date` varchar(14) NOT NULL, `name` varchar(20) NOT NULL, `user_id` int(11) NOT NULL, `message` text NOT NULL, `module` varchar(120) NOT NULL, `entry_id` int(11) NOT NULL, PRIMARY KEY (`id`)) {engine} ;
 

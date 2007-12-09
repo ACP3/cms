@@ -23,7 +23,7 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
 				<td>{$row.start} {lang values="common|until"} {$row.end}</td>
 				<td><a href="{uri args="acp/files/edit/id_`$row.id`"}" title="{lang values="files|edit"}">{$row.link_title}</a></td>
-				<td><a href="{uri args="files/details/id_`$row.id`/download_1"}" title="{lang values="files|download_file"}">{$row.file}</a></td>
+				<td><a href="{uri args="files/details/id_`$row.id`/action_download"}" title="{lang values="files|download_file"}">{$row.file}</a></td>
 				<td>{$row.size}</td>
 			</tr>
 {/foreach}

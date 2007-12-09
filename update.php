@@ -7,12 +7,12 @@ require 'includes/classes/cache.php';
 
 $db = new db;
 
-$cache = new cache;
-
-$queries = array();
+$queries = array(
+	0 => 'ALTER TABLE `{pre}categories` ADD `picture` VARCHAR( 120 ) {charset} NOT NULL AFTER `name` ;',
+);
 
 if (version_compare(mysql_get_client_info(), '4.1', '>=')) {
-	$charset = ' CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
+	$charset = 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
 } else {
 	$charset = 'CHARSET=utf-8';
 }
@@ -34,7 +34,7 @@ if (count($queries) > 0) {
 print "\n" . ($success ? 'Die Datenbank wurde erfolgreich aktualisiert.' : 'Mindestens eine Datenbankänderung konnte nicht durchgeführt werden.') . "\n";
 
 // Gecachete SQL Queries löschen
-$cache->purge();
+cache::purge();
 
 print "\n" . '----------------------------' . "\n\n";
 

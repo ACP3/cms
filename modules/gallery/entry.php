@@ -160,7 +160,7 @@ switch ($modules->action) {
 			$new_file_sql = null;
 			if (isset($file) && is_array($file)) {
 				$result = move_file($file['tmp_name'], $file['name'], 'gallery');
-				$new_file_sql = array('file' => $result['name'],);
+				$new_file_sql = array('file' => $result['name']);
 			}
 
 			$update_values = array(
