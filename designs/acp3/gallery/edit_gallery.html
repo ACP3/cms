@@ -15,7 +15,7 @@
 			<dd><input type="text" name="form[name]" id="name" value="{$form.name}" maxlength="120" /></dd>
 		</dl>
 	</fieldset>
-	<div class="form-bottom">
+	<div class="form-bottom" style="margin:20px 0">
 		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
 	</div>
 </form>
@@ -32,8 +32,7 @@
 		<thead>
 			<tr>
 				<th>{lang values="common|mark"}</th>
-				<th>{lang values="gallery|picture_number"}</th>
-				<th>{lang values="gallery|filename"}</th>
+				<th>{lang values="gallery|picture"}</th>
 				<th>{lang values="common|description"}</th>
 			</tr>
 		</thead>
@@ -41,8 +40,7 @@
 {foreach from=$pictures item=row}
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
-				<td><a href="{uri args="acp/gallery/edit_picture/id_`$row.id`"}" title="{lang values="gallery|edit_picture"}">{$row.pic}</a></td>
-				<td>{$row.file}</td>
+				<td><a href="{uri args="acp/gallery/edit_picture/id_`$row.id`"}" title="{lang values="gallery|edit_picture"}"><img src="{uri args="gallery/image/id_`$row.pic`/action_thumb"}" alt="" /></a></td>
 				<td>{$row.description}</td>
 			</tr>
 {/foreach}

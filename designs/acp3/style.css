@@ -525,9 +525,12 @@ a.download-file:hover {
 .picture img {
 	border: 1px dotted #333;
 }
-.picture, .picture-description {
+.picture {
 	margin: 10px 0;
 	text-align: center;
+}
+.picture .picture-description {
+	margin: 10px 25%;
 }
 .picture .pictures-prev-next {
 	height: 120px;
