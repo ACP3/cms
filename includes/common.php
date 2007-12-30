@@ -39,7 +39,7 @@ include SMARTY_DIR . 'Smarty.class.php';
 $tpl = new smarty;
 $tpl->template_dir = './designs/' . CONFIG_DESIGN . '/';
 $tpl->compile_dir = './cache/';
-$tpl->compile_check = false;
+//$tpl->compile_check = false;
 
 // Einige Konstanten definieren
 define('PHP_SELF', htmlentities($_SERVER['PHP_SELF']));

@@ -20,8 +20,6 @@ $tpl->assign('requirements', $requirements);
 
 $defaults = array(
 	'includes/config.php',
-	'modules/contact/config.php',
-	'modules/newsletter/config.php',
 	'modules/access/module.xml',
 	'modules/categories/module.xml',
 	'modules/comments/module.xml',
@@ -40,6 +38,7 @@ $defaults = array(
 	'modules/system/module.xml',
 	'modules/users/module.xml',
 	'cache/',
+	'uploads/categories/',
 	'uploads/emoticons/',
 	'uploads/files/',
 	'uploads/gallery/',

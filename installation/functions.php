@@ -74,10 +74,26 @@ function select_entry($name, $value, $field_value = '', $attr = 'selected') {
 // Konfigurationsdateien für die Module erstellen
 function write_config($module, $data)
 {
-	$path = '../modules/' . $module . '/config.php';
+	$path = '../modules/' . $module . '/module.xml';
 	if (!preg_match('=/=', $module) && is_file($path)) {
-		$content = '<?php' . "\n" . '$settings = ' . var_export($data, true) . ';' . "\n" . '?>';
-		$bool = @file_put_contents($path, $content);
+		$xml = DOMDocument::load($path);
+		$xp = new domxpath($xml);
+		$items = $xp->query('settings/*');
+		$i = $items->length - 1;
+
+		while ($i > -1) {
+			$item = $items->item($i);
+
+			if (array_key_exists($item->nodeName, $data)) {
+				$newitem = $xml->createElement($item->nodeName);
+				$newitem_content = $xml->createCDATASection($data[$item->nodeName]);
+				$newitem->appendChild($newitem_content);
+				$item->parentNode->replaceChild($newitem, $item);
+			}
+			$i--;
+		}
+		$bool = $xml->save($path);
+
 		return $bool ? true : false;
 	}
 	return false;
