@@ -1,0 +1,51 @@
+<table>
+	<thead>
+		<tr>
+			<th colspan="2">{lang values="system|server_infos"}</th>
+		</tr>
+	</thead>
+	<tbody>
+{foreach from=$server_info item=row}
+		<tr>
+			<td style="width:20%">{$row.col_left}:</td>
+			<td>{$row.col_right}</td>
+		</tr>
+{/foreach}
+	</tbody>
+</table>
+<br />
+<table>
+	<thead>
+		<tr>
+			<th>{lang values="system|php_extensions"}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>{$php_ext}</td>
+		</tr>
+	</tbody>
+</table>
+<br />
+<table style="width:35%">
+	<thead>
+		<tr>
+			<th colspan="2">{lang values="system|php_settings"}</th>
+		</tr>
+	</thead>
+	<tfoot>
+	<tr>
+		<td colspan="2" class="table-bottom">
+			{$result_text}
+		</td>
+	</tr>
+	</tfoot>
+	<tbody>
+{foreach from=$php_settings item=setting}
+		<tr>
+			<td style="width:66%">{$setting.col_left}:</td>
+			<td style="background:{$setting.col_color};font-weight:bold;color:#fff">{$setting.col_right}</td>
+		</tr>
+{/foreach}
+	</tbody>
+</table>

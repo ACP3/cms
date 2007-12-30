@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>adm_list_blocks</name>
+		<message>Blöcke</message>
+	</item>
+	<item>
+		<name>block_title</name>
+		<message>Name des Blocks</message>
+	</item>
+	<item>
+		<name>block_title_to_short</name>
+		<message>Der Name des Blocks sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>blocks</name>
+		<message>Block</message>
+	</item>
+	<item>
+		<name>blocks_overview</name>
+		<message>Blöcke Übersicht</message>
+	</item>
+	<item>
+		<name>chronology</name>
+		<message>Reihenfolge</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Sollen die ausgewählten Menüpunkte wirklich gelöscht werden?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Neuen Menüpunkt erstellen</message>
+	</item>
+	<item>
+		<name>create_block</name>
+		<message>Neuen Block erstellen</message>
+	</item>
+	<item>
+		<name>create_block_error</name>
+		<message>Beim Erstellen des Blockes ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>create_block_success</name>
+		<message>Der Block wurde erfolgreich erstellt.</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>Beim Erstellen des Menüpunktes ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>Der Menüpunkt wurde erfolgreich erstellt.</message>
+	</item>
+	<item>
+		<name>delete_block_error</name>
+		<message>Beim Löschen der ausgewählten Blöcke ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>delete_block_success</name>
+		<message>Die ausgewählten Blöcke wurden erfolgreich gelöscht.</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>Beim Löschen der ausgewählten Menüpunkte ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>Die ausgewählten Menüpunkte wurden erfolgreich gelöscht.</message>
+	</item>
+	<item>
+		<name>do_not_display</name>
+		<message>Nicht anzeigen</message>
+	</item>
+	<item>
+		<name>dynamic_page</name>
+		<message>Dynamische Seite</message>
+	</item>
+	<item>
+		<name>dynamic_page_hints</name>
+		<message><![CDATA[ Falls Sie eine dynamische Seite, d.h. ein Modul/eine Seite des ACP3, einbinden möchten, so tragen Sie in &quot;URI&quot; die Seite in der Form &quot;modul/datei/weitere_angaben&quot; ein, also z.B. news/list/id_1. ]]></message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Menüpunkt bearbeiten</message>
+	</item>
+	<item>
+		<name>edit_block</name>
+		<message>Block bearbeiten</message>
+	</item>
+	<item>
+		<name>edit_block_error</name>
+		<message>Beim Bearbeiten des Blockes ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>edit_block_success</name>
+		<message>Der Block wurde erfolgreich bearbeitet.</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>Beim Bearbeiten des Menüpunktes ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>Der Menüpunkt wurde erfolgreich bearbeitet.</message>
+	</item>
+	<item>
+		<name>hyperlink</name>
+		<message>Hyperlink</message>
+	</item>
+	<item>
+		<name>index_name</name>
+		<message>Index Name</message>
+	</item>
+	<item>
+		<name>index_name_description</name>
+		<message>Dies beschreibt den Namen des Platzhalters in den Templates</message>
+	</item>
+	<item>
+		<name>index_name_unique</name>
+		<message>Der Name des Template Platzhalters muss einzigartig sein</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Dieses Modul ist für die beiden Navigationsleisten und für die statischen Seiten zuständig.</message>
+	</item>
+	<item>
+		<name>no_superior_page</name>
+		<message>Keine übergeordnete Seite</message>
+	</item>
+	<item>
+		<name>page_type</name>
+		<message>Seitentyp</message>
+	</item>
+	<item>
+		<name>pages</name>
+		<message>Menüpunkte</message>
+	</item>
+	<item>
+		<name>pages_overview</name>
+		<message>Menüpunkte Übersicht</message>
+	</item>
+	<item>
+		<name>select_block</name>
+		<message>Bitte wählen Sie aus, ob und in welcher Navigationsleiste der Menüpunkt angezeigt werden soll</message>
+	</item>
+	<item>
+		<name>select_static_hyperlink</name>
+		<message>Bitte wählen Sie aus, ob die Seite eine statische Seite oder ein Hyperlink sein soll</message>
+	</item>
+	<item>
+		<name>select_superior_page</name>
+		<message>Bitte wählen Sie eine übergeordnete Seite aus</message>
+	</item>
+	<item>
+		<name>static_page</name>
+		<message>Statische Seite</message>
+	</item>
+	<item>
+		<name>superior_page</name>
+		<message>Übergeordnete Seite</message>
+	</item>
+	<item>
+		<name>superior_page_not_allowed</name>
+		<message>Die gerade ausgewählte Seite kann nicht als übergeordnete Seite verwendet werden</message>
+	</item>
+	<item>
+		<name>target_page</name>
+		<message>Zielseite</message>
+	</item>
+	<item>
+		<name>text</name>
+		<message>Text</message>
+	</item>
+	<item>
+		<name>text_to_short</name>
+		<message>Der Text sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>title</name>
+		<message>Seitentitel</message>
+	</item>
+	<item>
+		<name>title_to_short</name>
+		<message>Der Seitentitel sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>type_in_chronology</name>
+		<message>Bitte geben Sie die Stelle an, an der der Menüpunkt erscheinen soll</message>
+	</item>
+	<item>
+		<name>type_in_index_name</name>
+		<message>Der Index Name darf nur Buchstaben, Ziffern und den Unterstrich enthalten</message>
+	</item>
+	<item>
+		<name>type_in_uri_and_target</name>
+		<message>Bitte geben Sie die URI und die Zielseite an</message>
+	</item>
+	<item>
+		<name>uri</name>
+		<message>URI</message>
+	</item>
+</language>

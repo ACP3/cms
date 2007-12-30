@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<info>
+		<name lang="true"/>
+		<description lang="true"/>
+		<author>Goratsch Webdesign</author>
+		<tables>nl_accounts</tables>
+		<version core="true"/>
+		<active>1</active>
+	</info>
+	<settings>
+		<mail></mail>
+		<mailsig><![CDATA[Mit freundlichen Grüßen,
+
+das Newsletterteam]]></mailsig>
+	</settings>
+	<access>
+		<item>
+			<file>adm_list</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>compose</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>create</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>entry</file>
+			<action>
+				<name>activate</name>
+				<level>1</level>
+			</action>
+			<action>
+				<name>activate_adm</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>compose</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>delete</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>settings</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>subscribe</name>
+				<level>1</level>
+			</action>
+			<action>
+				<name>unsubscribe</name>
+				<level>1</level>
+			</action>
+		</item>
+		<item>
+			<file>settings</file>
+			<level>2</level>
+		</item>
+	</access>
+</module>

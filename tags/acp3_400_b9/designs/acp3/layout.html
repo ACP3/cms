@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$lang}" lang="{$lang}">
+<head>
+<title>{$page_title} :: {$title}</title>
+<meta name="description" content="{$description}" />
+<meta name="keywords" content="{$keywords}" />
+<script type="text/javascript" src="{$root_dir}includes/js/jquery.js"></script>
+<script type="text/javascript" src="{$root_dir}includes/js/acp3.js"></script>
+<link rel="stylesheet" type="text/css" href="{$design_path}style.css" />
+<link rel="alternate" type="application/rss+xml" href="{uri args="feeds/list/feed_news"}" title="{$page_title} - {lang values="news|news"}" />
+<link rel="alternate" type="application/rss+xml" href="{uri args="feeds/list/feed_files"}" title="{$page_title} - {lang values="files|files"}" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" type="text/css" href="{$design_path}ie.css" />
+<script type="text/javascript" defer="defer" src="{$root_dir}includes/js/pngfix.js"></script>
+<![endif]-->
+</head>
+
+<body>
+<a name="top"></a>
+<div id="head">
+	<h1 id="page-title">{$page_title}</h1>
+{if $navbar.main}
+	<ul>
+{foreach from=$navbar.main item=row}
+		<li><a href="{$row.href}"{$row.target}{$row.selected}>{$row.title}</a></li>
+{/foreach}
+	</ul>
+{/if}
+</div>
+<div id="breadcrumb">
+	{$breadcrumb}
+</div>
+<div id="sidebar">
+{if $navbar.sidebar}
+	<h4>Navigation</h4>
+	<ul>
+{foreach from=$navbar.sidebar item=row}
+		<li><a href="{$row.href}"{$row.target}{$row.selected}>{$row.title}</a></li>
+{/foreach}
+	</ul>
+{/if}
+	{load_module module="users|sidebar"}
+</div>
+<div id="content">
+	<h1>{$title}</h1>
+{$content}
+</div>
+<div id="footer"></div>
+</body>
+</html>

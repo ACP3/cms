@@ -1,0 +1,27 @@
+{$error_msg}
+<form action="{$request_uri}" method="post" accept-charset="UTF-8">
+	<fieldset>
+		<legend>{lang values="newsletter|newsletter"}</legend>
+		<dl>
+			<dt><label for="subject">{lang values="newsletter|subject"}</label></dt>
+			<dd><input type="text" name="form[subject]" id="subject" value="{$form.subject}" /></dd>
+			<dt><label for="text">{lang values="newsletter|text"}</label></dt>
+			<dd><textarea name="form[text]" id="text" cols="50" rows="5">{$form.text}</textarea></dd>
+			<dt><label for="test_yes">{lang values="newsletter|test_newsletter"}</label> <span>({lang values="newsletter|test_nl_description"})</span></dt>
+			<dd>
+				<label for="test_yes">
+					<input type="radio" name="form[test]" id="test_yes" value="1" class="checkbox" />
+					{lang values="common|yes"}
+				</label>
+				<label for="test_no">
+					<input type="radio" name="form[test]" id="test_no" value="0" class="checkbox" checked="checked" />
+					{lang values="common|no"}
+				</label>
+			</dd>
+		</dl>
+	</fieldset>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="reset" value="{lang values="common|reset"}" class="form" />
+	</div>
+</form>

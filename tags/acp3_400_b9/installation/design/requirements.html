@@ -1,0 +1,52 @@
+<fieldset>
+	<legend>{lang values="step_3_legend_1"}</legend>
+	<p style="margin:0">
+		{lang values="step_3_paragraph_1"}
+	</p>
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th style="width:33%">{lang values="found"}</th>
+				<th style="width:33%">{lang values="required"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$requirements item=row}
+			<tr>
+				<td>{$row.name}</td>
+				<td><span style="color:#{$row.color}">{$row.found}{if $row.color == 'f00'} - {lang values="installation_impossible"}{/if}</span></td>
+				<td>{$row.required}</td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+	<hr />
+	<p>
+{foreach from=$files_dirs item=row}
+		<strong>{$row.path}</strong> <span style="color:#{$row.color_1}">{$row.exists}</span>, <span style="color:#{$row.color_2}">{$row.writeable}</span><br />
+{/foreach}
+	</p>
+</fieldset>
+<fieldset>
+	<legend>{lang values="step_3_legend_2"}</legend>
+	<p style="margin:0">
+		{lang values="step_3_paragraph_2"}
+	</p>
+	<p>
+{foreach from=$php_settings item=row}
+		<strong>{$row.setting}</strong> <span style="color:#{$row.color}">{$row.value}</span><br />
+{/foreach}
+	</p>
+</fieldset>
+<br />
+<br />
+<div class="success forward">
+{if $stop_install}
+{lang values="stop_installation"}
+{elseif $check_again}
+	<a href="{$request_uri}" class="form">{lang values="check_again"}</a>
+{else}
+	<a href="{$php_self}?mod=install&amp;page=configuration&amp;lang={$lang}" class="form">{lang values="configuration"}</a>
+{/if}
+</div>

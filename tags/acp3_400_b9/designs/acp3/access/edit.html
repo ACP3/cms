@@ -1,0 +1,28 @@
+{$error_msg}
+<form action="{$request_uri}" method="post" accept-charset="UTF-8">
+	<fieldset>
+		<dl>
+			<dt><label for="name">{lang values="common|name"}</label></dt>
+			<dd><input type="text" name="form[name]" id="name" value="{$form.name}" maxlength="120" /></dd>
+		</dl>
+		<p>
+			{lang values="access|access_level_selection_tip"}
+		</p>
+		<dl>
+{foreach from=$mod_list item=row}
+			<dt><label for="{$row.dir}">{$row.name}</label></dt>
+			<dd>
+				<select name="form[modules][{$row.dir}]" id="{$row.dir}">
+					<option value="">{lang values="common|pls_select"}</option>
+					<option value="0"{$row.level_0_selected}>{lang values="access|access_level_0"}</option>
+					<option value="1"{$row.level_1_selected}>{lang values="access|access_level_1"}</option>
+					<option value="2"{$row.level_2_selected}>{lang values="access|access_level_2"}</option>
+				</select>
+			</dd>
+{/foreach}
+		</dl>
+	</fieldset>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>

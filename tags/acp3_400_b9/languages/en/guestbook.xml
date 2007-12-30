@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>confirm_delete</name>
+		<message>Do you really want to delete the marked guestbook entries?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>New entry</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>While creating the guestbook entry an error has occured.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>The guestbook entry has been created successfully.</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>While deleting the marked guestbook entries an error has occured.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>The marked guestbook entries have been deleted successfully.</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Edit guestbook entry</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>While editing the guestbook entry an error has occured.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>The guestbook entry has been edited successfully.</message>
+	</item>
+	<item>
+		<name>guestbook</name>
+		<message>Guestbook</message>
+	</item>
+	<item>
+		<name>guestbook_entries</name>
+		<message>Guestbook entries</message>
+	</item>
+	<item>
+		<name>guestbook_entries_overview</name>
+		<message>Guestbook entries overview</message>
+	</item>
+	<item>
+		<name>ip</name>
+		<message>IP Address</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>With this module you can administer the guestbook.</message>
+	</item>
+	<item>
+		<name>send_email</name>
+		<message>Send E-mail</message>
+	</item>
+	<item>
+		<name>visit_website</name>
+		<message>Visit website</message>
+	</item>
+</language>

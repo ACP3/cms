@@ -1,0 +1,55 @@
+{if $export}
+<pre>
+{$export}
+</pre>
+{else}
+{$error_msg}
+<form action="{$request_uri}" method="post" accept-charset="UTF-8" id="accordion">
+	<fieldset>
+		<legend>{lang values="system|sql_tables"}</legend>
+		<dl>
+			<dd>
+				<select name="form[tables][]" id="tables" multiple="multiple" style="height:200px">
+{foreach from=$tables item=row}
+					<option value="{$row.name}"{$row.selected}>{$row.name}</option>
+{/foreach}
+				</select>
+			</dd>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<legend>{lang values="system|export_options"}</legend>
+		<dl>
+			<dt><label for="file">{lang values="system|output"}</label></dt>
+			<dd>
+				<label for="file">
+					<input type="radio" name="form[output]" id="file" value="file" class="checkbox"{$output.0.selected} />
+					{lang values="system|output_as_file"}
+				</label>
+				<label for="text">
+					<input type="radio" name="form[output]" id="text" value="text" class="checkbox"{$output.1.selected} />
+					{lang values="system|output_as_text"}
+				</label>
+			</dd>
+			<dt><label for="complete">{lang values="system|export_type"}</label></dt>
+			<dd>
+				<label for="complete">
+					<input type="radio" name="form[export_type]" id="complete" value="complete" class="checkbox"{$export_type.0.selected} />
+					{lang values="system|complete_export"}
+				</label>
+				<label for="structure">
+					<input type="radio" name="form[export_type]" id="structure" value="structure" class="checkbox"{$export_type.1.selected} />
+					{lang values="system|export_structure"}
+				</label>
+				<label for="data">
+					<input type="radio" name="form[export_type]" id="data" value="data" class="checkbox"{$export_type.2.selected} />
+					{lang values="system|export_data"}
+				</label>
+			</dd>
+		</dl>
+	</fieldset>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>
+{/if}

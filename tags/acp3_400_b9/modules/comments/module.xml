@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<info>
+		<name lang="true"/>
+		<description lang="true"/>
+		<author>Goratsch Webdesign</author>
+		<tables>comments</tables>
+		<version core="true"/>
+		<active>1</active>
+	</info>
+	<access>
+		<item>
+			<file>adm_list</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>edit</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>entry</file>
+			<action>
+				<name>create</name>
+				<level>1</level>
+			</action>
+			<action>
+				<name>delete_com_by_mod</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>delete_comments</name>
+				<level>2</level>
+			</action>
+			<action>
+				<name>edit</name>
+				<level>2</level>
+			</action>
+		</item>
+		<item>
+			<file>functions</file>
+			<level>1</level>
+		</item>
+	</access>
+</module>

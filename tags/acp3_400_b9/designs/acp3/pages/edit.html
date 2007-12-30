@@ -1,0 +1,82 @@
+{$error_msg}
+<script type="text/javascript" src="{$design_path}pages/script.js"></script>
+<form action="{$request_uri}" method="post" accept-charset="UTF-8">
+	<fieldset style="width:70%">
+		<legend>{lang values="common|general_statements"}</legend>
+		<dl>
+			<dt><label for="start_day">{lang values="common|start_date"}</label></dt>
+			<dd>{$start_date}</dd>
+			<dt><label for="end_day">{lang values="common|end_date"}</label></dt>
+			<dd>{$end_date}</dd>
+		</dl>
+		<p>
+			{lang values="common|date_description"}
+		</p>
+		<dl>
+			<dt><label for="mode">{lang values="pages|page_type"}</label></dt>
+			<dd>
+				<select name="form[mode]" id="mode">
+					<option value="">{lang values="common|pls_select"}</option>
+{foreach from=$mode item=row}
+					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{/foreach}
+				</select>
+			</dd>
+			<dt><label for="blocks">{lang values="pages|blocks"}</label></dt>
+			<dd>
+				<select name="form[blocks]" id="blocks">
+					<option value="">{lang values="common|pls_select"}</option>
+{foreach from=$blocks item=row}
+					<option value="{$row.id}"{$row.selected}>{$row.title}</option>
+{/foreach}
+				</select>
+			</dd>
+		</dl>
+		<dl id="ShowHideSort">
+			<dt><label for="sort">{lang values="pages|chronology"}</label></dt>
+			<dd><input type="text" name="form[sort]" id="sort" value="{$form.sort}" maxlength="2" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="title">{lang values="pages|title"}</label></dt>
+			<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120" /></dd>
+		</dl>
+	</fieldset>
+	<fieldset id="static_page" style="width:70%">
+		<legend>{lang values="pages|static_page"}</legend>
+		<dl>
+			<dt><label for="parent">{lang values="pages|superior_page"}</label></dt>
+			<dd>
+				<select name="form[parent]" id="parent">
+					<option value="">{lang values="pages|no_superior_page"}</option>
+{foreach from=$pages_list item=row}
+					<option value="{$row.id}"{$row.selected}>{$row.title}</option>
+{/foreach}
+				</select>
+			</dd>
+			<dt><label for="text">{lang values="pages|text"}</label></dt>
+			<dd>{fckeditor InstanceName="text" Value="`$form.text`" Width="100%" Height="250px"}</dd>
+		</dl>
+	</fieldset>
+	<fieldset id="hyperlink" style="width:70%">
+		<legend>{lang values="pages|dynamic_page"} / {lang values="pages|hyperlink"}</legend>
+		<p>
+			{lang values="pages|dynamic_page_hints"}
+		</p>
+		<dl>
+			<dt><label for="uri">{lang values="pages|uri"}</label></dt>
+			<dd><input type="text" name="form[uri]" id="uri" value="{$form.uri}" maxlength="120" /></dd>
+			<dt><label for="target">{lang values="pages|target_page"}</label></dt>
+			<dd>
+				<select name="form[target]" id="target">
+					<option value="">{lang values="common|pls_select"}</option>
+{foreach from=$target item=row}
+					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{/foreach}
+				</select>
+			</dd>
+		</dl>
+	</fieldset>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>

@@ -1,0 +1,41 @@
+<div style="text-align:center">
+	<a href="{uri args="guestbook/create"}">{lang values="guestbook|create"}</a>
+</div>
+<hr />
+{if $guestbook}
+{$pagination}
+{foreach from=$guestbook item=row}
+	<div class="gb">
+		<div class="header">
+			<div class="author">
+				{lang values="common|author"}
+			</div>
+			<div class="message">
+				{lang values="common|message"}
+			</div>
+		</div>
+		<div class="left">
+			<strong>{lang values="common|name"}:</strong> {if $row.user_id}<a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang values="users|view_profile"}">{$row.name}</a>{else}{$row.name}{/if}<br />
+			<strong>{lang values="common|date"}:</strong> {$row.date}<br />
+{if $row.hp != 'http://'}
+			<a href="{$row.website}" onclick="window.open(this.href); return false" title="{lang values="guestbook|visit_website"}"><img src="{icon path="16/website"}" alt="{$row.website}" /></a>
+{/if}
+{if $row.mail != ''}
+			<a href="mailto:{$row.mail}" title="{lang values="guestbook|send_email"}"><img src="{icon path="16/mail"}" alt="{$row.mail}" /></a>
+{/if}
+		</div>
+		<div class="content">
+			{$row.message}
+		</div>
+		<div class="footer">
+			&nbsp;
+		</div>
+	</div>
+	<br />
+	<br />
+{/foreach}
+{else}
+<div class="error">
+	<h4>{lang values="common|no_entries"}</h5>
+</div>
+{/if}

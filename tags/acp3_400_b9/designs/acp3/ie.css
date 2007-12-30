@@ -1,0 +1,42 @@
+hr {
+	margin: 0;
+}
+table {
+	width: 99%;
+	margin: 0 auto;
+}
+fieldset {
+	margin-top: 13px;
+	padding-top: 20px;
+	display: block;
+	position: relative;
+}
+legend {
+	position: absolute;
+	top: -10px;
+	left: 0;
+}
+.no-border {
+	margin-top: 0;
+}
+input.form {
+	padding: 0;
+}
+a.form {
+	padding: 2px 18px;
+}
+/* Layout fixes */
+#head ul li a {
+	width: .1em;
+}
+#login-sidebar fieldset {
+	margin: 0;
+}
+/* Akkordeon */
+#accordion fieldset {
+	width: 100%;
+	padding: 20px 10px 10px;
+}
+#accordion fieldset dl {
+	margin: 0;
+}

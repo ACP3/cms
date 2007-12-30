@@ -1,0 +1,15 @@
+<div id="adm-list">
+	<a href="{uri args="users/edit_profile"}" title="{lang values="users|edit_profile}"><img src="{icon path="32/edit_profile"}" alt="{lang values="users|edit_profile}" /></a>
+	<a href="{uri args="users/edit_settings"}" title="{lang values="users|edit_settings}"><img src="{icon path="32/settings"}" alt="{lang values="users|edit_settings}" /></a>
+</div>
+<br />
+<form action="{$request_uri}" method="post" accept-charset="UTF-8">
+	<fieldset style="width:70%">
+		<legend>{lang values="users|drafts"}</legend>
+		{fckeditor InstanceName="draft" Value="$draft" Width="100%" Height="250px" ToolbarSet="Basic"}
+	</fieldset>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="reset" value="{lang values="common|reset"}" class="form" />
+	</div>
+</form>

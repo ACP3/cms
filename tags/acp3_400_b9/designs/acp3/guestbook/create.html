@@ -1,0 +1,22 @@
+{$error_msg}
+<form action="{$request_uri}" method="post" accept-charset="UTF-8">
+	<fieldset class="no-border">
+		<dl>
+			<dt><label for="name">{lang values="common|name"}</label></dt>
+			<dd><input type="text" name="form[name]" id="name" size="35" value="{$form.name}"{$form.name_disabled} /></dd>
+			<dt><label for="mail">{lang values="common|email"}</label></dt>
+			<dd><input type="text" name="form[mail]" id="mail" size="35" value="{$form.mail}"{$form.mail_disabled} /></dd>
+			<dt><label for="website">{lang values="common|website"}</label></dt>
+			<dd><input type="text" name="form[website]" id="website" size="35" value="{$form.website}" /></dd>
+			<dt><label for="message">{lang values="common|message"}</label></dt>
+			<dd>
+{$emoticons}
+				<textarea name="form[message]" id="message" cols="50" rows="6">{$form.message}</textarea>
+			</dd>
+		</dl>
+	</fieldset>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="reset" value="{lang values="common|reset"}" class="form" />
+	</div>
+</form>

@@ -1,0 +1,16 @@
+{$error_msg}
+<form action="{$request_uri}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+	<fieldset>
+		<dl>
+			<dt><label for="name">{lang values="common|name"}</label></dt>
+			<dd><input type="text" name="form[name]" id="name" value="{$form.name}" maxlength="120" /></dd>
+			<dt><label for="description">{lang values="common|description"}</label></dt>
+			<dd><input type="text" name="form[description]" id="description" value="{$form.description}" maxlength="120" /></dd>
+			<dt><label for="picture">{lang values="categories|picture"}</label></dt>
+			<dd><input type="file" id="picture" name="picture" value="{$form.picture}" /></dd>
+		</dl>
+	</fieldset>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>

@@ -1,0 +1,23 @@
+{if $user}
+<fieldset>
+	<legend>{lang values="common|general_statements"}</legend>
+	<dl class="user-info">
+		<dt><strong>{lang values="users|nickname"}</strong></dt>
+		<dd>{$user.nickname}</dd>
+{if $user.realname}
+		<dt><strong>{lang values="users|realname"}</strong></dt>
+		<dd>{$user.realname}</dd>
+{/if}
+		<dt><strong>{lang values="common|email"}</strong></dt>
+		<dd><a href="mailto:{$user.mail}" title="{lang values="users|send_email"}">{$user.mail}</a></dd>
+{if $user.website}
+		<dt><strong>{lang values="common|website"}</strong></dt>
+		<dd><a href="{$user.website}" onclick="window.open(this.href); return false" title="{lang values="users|visit_website"}">{$user.website}</a></dd>
+{/if}
+	</dl>
+</fieldset>
+{else}
+<div class="error">
+	<h5>{lang values="users|user_profile_not_exists"}</h5>
+</div>
+{/if}

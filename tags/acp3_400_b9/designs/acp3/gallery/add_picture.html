@@ -1,0 +1,29 @@
+{$error_msg}
+<form action="{$request_uri}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+	<fieldset>
+		<legend>{lang values="gallery|picture_information"}</legend>
+		<dl>
+			<dt><label for="gallery">{lang values="gallery|gallery"}</label></dt>
+			<dd>
+				<select name="form[gallery]" id="gallery">
+					<option value="">{lang values="common|pls_select"}</option>
+{foreach from=$galleries item=row}
+					<option value="{$row.id}"{$row.selected}>{$row.name}</option>
+{/foreach}
+				</select>
+			</dd>
+			<dt><label for="pic">{lang values="gallery|picture_number"}</label></dt>
+			<dd><input type="text" name="form[pic]" id="pic" value="{$form.pic}" maxlength="11" /></dd>
+			<dt><label for="file">{lang values="gallery|select_picture"}</label></dt>
+			<dd><input type="file" name="file" id="file" /></dd>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<legend>{lang values="common|description"}</legend>
+		{fckeditor InstanceName="description" Value="`$form.description`" Width="100%" Height="150px" ToolbarSet="Basic"}
+	</fieldset>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="reset" value="{lang values="common|reset"}" class="form" />
+	</div>
+</form>
