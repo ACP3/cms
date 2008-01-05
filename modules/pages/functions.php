@@ -83,20 +83,21 @@ function process_navbar()
 
 	if ($c_pages > 0) {
 		$navbar = array();
-		$selected = ' class="selected"';
+		$selected = ' selected';
 		for ($i = 0; $i < $c_pages; $i++) {
 			if ($pages[$i]['start'] == $pages[$i]['end'] && $pages[$i]['start'] <= date_aligned(2, time()) || $pages[$i]['start'] != $pages[$i]['end'] && $pages[$i]['start'] <= date_aligned(2, time()) && $pages[$i]['end'] >= date_aligned(2, time())) {
+				$link['css'] = 'navi-' . $pages[$i]['id'];
 				switch ($pages[$i]['mode']) {
 					case '1':
 						$link['href'] = uri('pages/list/id_' . $pages[$i]['id']);
-						$link['selected'] = $modules->mod == 'pages' && $modules->page == 'list' && $modules->id == $pages[$i]['id'] ? $selected : '';
+						$link['css'].= $modules->mod == 'pages' && $modules->page == 'list' && $modules->id == $pages[$i]['id'] ? $selected : '';
 						break;
 					case '2':
 						// URL zum Parsen in ein Array zerlegen
 						$uri_arr = explode('/', $pages[$i]['uri']);
 
 						$link['href'] = uri($pages[$i]['uri']);
-						$link['selected'] = '';
+						$link['css'].= '';
 
 						// Genaue Überprüfung der URL, damit nicht 2 Menüpunkte selektiert werden (passiert nur noch bei identischen URLs)
 						if (!empty($uri_arr[2]) && $modules->mod == $uri_arr[0] && $modules->page == $uri_arr[1] && (!empty($modules->id) || !empty($modules->cat) || !empty($modules->action) || !empty($modules->gen))) {
@@ -118,15 +119,15 @@ function process_navbar()
 								}
 							}
 							if (isset($is_page) && $is_page) {
-								$link['selected'] = $selected;
+								$link['css'].= $selected;
 							}
 						} elseif (empty($uri_arr[2]) && $modules->mod == $uri_arr[0] && $modules->page == $uri_arr[1] && empty($modules->id) && empty($modules->cat) && empty($modules->gen) && $modules->action == $modules->page) {
-							$link['selected'] = $selected;
+							$link['css'].= $selected;
 						}
 						break;
 					default:
 						$link['href'] = $pages[$i]['uri'];
-						$link['selected'] = '';
+						$link['css'].= '';
 				}
 				$link['target'] = ($pages[$i]['mode'] == '2' || $pages[$i]['mode'] == '3') && $pages[$i]['target'] == '2' ? ' onclick="window.open(this.href); return false"' : '';
 				$link['title'] = $pages[$i]['title'];
