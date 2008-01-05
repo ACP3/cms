@@ -113,7 +113,7 @@ class modules
 	 * 	Zu überprüfende Moduldatei
 	 * @return boolean
 	 */
-	function check($module = 0, $page = 0) {
+	public function check($module = 0, $page = 0) {
 		global $auth, $db;
 		static $access_level = array();
 
@@ -168,7 +168,7 @@ class modules
 	 *
 	 * @return array
 	 */
-	function modulesList()
+	public function modulesList()
 	{
 		$modules_dir = scandir('modules/');
 		$mod_list = array();
@@ -189,7 +189,7 @@ class modules
 	 * @param string $module
 	 * @return mixed
 	 */
-	function parseInfo($module)
+	public function parseInfo($module)
 	{
 		$path = 'modules/' . $module . '/module.xml';
 		if (!preg_match('=/=', $module) && is_file($path)) {

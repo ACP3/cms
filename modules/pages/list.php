@@ -35,7 +35,7 @@ if (!empty($modules->id) && $db->select('id', 'pages', 'id = \'' . $modules->id 
 			 * 	ID der jeweiligen statischen Seite
 			 * @return string
 			 */
-			function output($mode = 1, $id = 0)
+			public function output($mode = 1, $id = 0)
 			{
 				global $db, $modules, $tpl;
 
@@ -66,7 +66,6 @@ if (!empty($modules->id) && $db->select('id', 'pages', 'id = \'' . $modules->id 
 			}
 		}
 
-		unset($breadcrumb);
 		$breadcrumb = new breadcrumb_pages;
 
 		$tpl->assign('text', $db->escape($page[0]['text'], 3));

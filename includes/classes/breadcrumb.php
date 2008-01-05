@@ -39,7 +39,7 @@ class breadcrumb
 	 * 	Der zum $title zugehörige Hyperlink
 	 * @return array
 	 */
-	function assign($title, $uri = 0)
+	public function assign($title, $uri = 0)
 	{
 		static $i = 0;
 
@@ -61,7 +61,7 @@ class breadcrumb
 	 * 	2 = Nur Seitentitel ausgeben
 	 * @return string
 	 */
-	function output($mode = 1)
+	public function output($mode = 1)
 	{
 		global $modules, $tpl;
 
