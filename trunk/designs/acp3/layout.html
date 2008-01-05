@@ -23,7 +23,7 @@
 {if $navbar.main}
 	<ul>
 {foreach from=$navbar.main item=row}
-		<li><a href="{$row.href}"{$row.target}{$row.selected}>{$row.title}</a></li>
+		<li><a href="{$row.href}" class="{$row.css}"{$row.target}>{$row.title}</a></li>
 {/foreach}
 	</ul>
 {/if}
@@ -36,7 +36,7 @@
 	<h4>Navigation</h4>
 	<ul>
 {foreach from=$navbar.sidebar item=row}
-		<li><a href="{$row.href}"{$row.target}{$row.selected}>{$row.title}</a></li>
+		<li><a href="{$row.href}" class="{$row.css}"{$row.target}>{$row.title}</a></li>
 {/foreach}
 	</ul>
 {/if}
