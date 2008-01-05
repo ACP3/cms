@@ -6,8 +6,8 @@
 	<li><a href="{uri args="users/home"}">{lang values="users|home"}</a></li>
 {if $nav_mods}
 	<li>
-		<a href="#" id="nav_mods_link">{lang values="users|administration"}</a>
-		<ul id="nav_mods" class="hide">
+		<a href="#" id="nav-mods-link">{lang values="users|administration"}</a>
+		<ul id="nav-mods" class="hide">
 {foreach from=$nav_mods item=row}
 			<li><a href="{uri args="acp/`$row.dir`"}">{$row.name}</a></li>
 {/foreach}
@@ -16,8 +16,8 @@
 {/if}
 {if $access_system}
 	<li>
-		<a href="#" id="nav_system_link">{lang values="system|system"}</a>
-		<ul id="nav_system" class="hide">
+		<a href="{uri args="acp/system"}" id="nav-system-link">{lang values="system|system"}</a>
+		<ul id="nav-system" class="hide">
 			<li><a href="{uri args="acp/system/configuration"}">{lang values="system|configuration"}</a></li>
 			<li><a href="{uri args="acp/system/software"}">{lang values="system|software"}</a></li>
 			<li><a href="{uri args="acp/system/extensions"}">{lang values="system|extensions"}</a></li>

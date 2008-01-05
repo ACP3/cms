@@ -21,6 +21,11 @@ function emoticons_list($field_id = 0)
 		$cache->create('emoticons', $db->select('code, description, img', 'emoticons'));
 	}
 	$emoticons = $cache->output('emoticons');
+	$c_emoticons = count($emoticons);
+
+	for ($i = 0; $i < $c_emoticons; $i++) {
+		$emoticons[$i]['img'] = ROOT_DIR . 'uploads/emoticons/' . $emoticons[$i]['img'];
+	}
 
 	$tpl->assign('emoticons_field_id', empty($field_id) ? 'message' : $field_id);
 	$tpl->assign('emoticons', $emoticons);

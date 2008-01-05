@@ -1,14 +1,14 @@
 $(document).ready(function() {
-	$('#nav_mods_link').toggle(function() {
-		$('#nav_mods').slideDown('slow');
+	$('#nav-mods-link').toggle(function() {
+		$('#nav-mods').slideDown('slow');
 		return false;
 	},function() {
-		$('ul#nav_mods').slideUp('slow');
+		$('#nav-mods').slideUp('slow');
 	});
-	$('#nav_system_link').toggle(function() {
-		$('#nav_system').slideDown('slow');
+	$('#nav-system-link').toggle(function() {
+		$('#nav-system').slideDown('slow');
 		return false;
 	},function() {
-		$('#nav_system').slideUp('slow');
+		$('#nav-system').slideUp('slow');
 	});
 });
