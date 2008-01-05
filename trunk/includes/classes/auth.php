@@ -71,7 +71,7 @@ class auth
 	 * 	Der angeforderte Benutzer
 	 * @return mixed
 	 */
-	function getUserInfo($fields, $user_id = 0)
+	public function getUserInfo($fields, $user_id = 0)
 	{
 		if (empty($user_id) && $this->is_user) {
 			$user_id = $_SESSION['acp3_id'];
@@ -90,7 +90,7 @@ class auth
 	 *
 	 * @return boolean
 	 */
-	function is_user()
+	public function is_user()
 	{
 		return $this->is_user;
 	}

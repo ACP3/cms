@@ -21,7 +21,7 @@ class cache
 	 * @param string $filename
 	 * @return boolean
 	 */
-	function check($filename)
+	public function check($filename)
 	{
 		if (is_file('cache/sql_' . md5($filename) . '.php')) {
 			return true;
@@ -37,7 +37,7 @@ class cache
 	 * 	Datensätze der SQL Abfrage
 	 * @return boolean
 	 */
-	function create($filename, $sql_results)
+	public function create($filename, $sql_results)
 	{
 		if (!empty($sql_results)) {
 			$bool = @file_put_contents('cache/sql_' . md5($filename) . '.php', serialize($sql_results));
@@ -55,7 +55,7 @@ class cache
 	 * 	Zu löschende Datei
 	 * @return boolean
 	 */
-	function delete($filename)
+	public function delete($filename)
 	{
 		if ($this->check($filename)) {
 			return unlink('cache/sql_' . md5($filename) . '.php');
@@ -69,17 +69,17 @@ class cache
 	 * 	Auszugebende Datei
 	 * @return mixed
 	 */
-	function output($filename)
+	public function output($filename)
 	{
 		if ($this->check($filename)) {
 			return unserialize(@file_get_contents('cache/sql_' . md5($filename) . '.php'));
 		}
-		return null;
+		return false;
 	}
 	/**
 	 * Löscht alle gecacheten SQL Queries
 	 */
-	function purge()
+	public function purge()
 	{
 		$cache_dir = scandir('cache');
 		$c_cache_dir = count($cache_dir);

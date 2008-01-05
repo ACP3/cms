@@ -26,7 +26,7 @@ class validate
 	 *  Präfix für das Enddatum
 	 * @return boolean
 	 */
-	function date($values, $prefix_start = 'start', $prefix_end = 'end')
+	public function date($values, $prefix_start = 'start', $prefix_end = 'end')
 	{
 		if (!$this->is_number($values[$prefix_start . '_day']) ||
 			!$this->is_number($values[$prefix_start . '_month']) ||
@@ -53,7 +53,7 @@ class validate
 	 *  Zu überprüfende E-Mail-Adresse
 	 * @return boolean
 	 */
-	function email($var)
+	public function email($var)
 	{
 		$pattern = '/^((\"[^\"\f\n\r\t\v\b]+\")|([\w\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+(\.[\w\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+)*))@((\[(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))\])|(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))|((([A-Za-z0-9\-])+\.)+[A-Za-z\-]+))$/';
 
@@ -65,7 +65,7 @@ class validate
 	 * @param mixed $var
 	 * @return boolean
 	 */
-	function is_number($var)
+	public function is_number($var)
 	{
 		return preg_match('/^(\d+)$/', $var);
 	}
@@ -76,7 +76,7 @@ class validate
 	 *  Zu überprüfendes Bild
 	 * @return boolean
 	 */
-	function is_picture($var)
+	public function is_picture($var)
 	{
 		$info = getimagesize($var);
 

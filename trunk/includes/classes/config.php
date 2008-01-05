@@ -22,7 +22,7 @@ class config
 	 * 	Zu schreibende Daten
 	 * @return boolean
 	 */
-	function general($data)
+	public function general($data)
 	{
 		$path = 'includes/config.php';
 		if (is_writable($path))	{
@@ -49,7 +49,7 @@ class config
 	 * @param array $data
 	 * @return boolean
 	 */
-	function module($module, $data)
+	public function module($module, $data)
 	{
 		$path = 'modules/' . $module . '/module.xml';
 		if (!preg_match('=/=', $module) && is_file($path)) {
@@ -81,7 +81,7 @@ class config
 	 * @param string $module
 	 * @return mixed
 	 */
-	function output($module)
+	public function output($module)
 	{
 		static $settings = array();
 

@@ -68,7 +68,7 @@ class db
 	/**
 	 * Falls SQL Fehler auftreten, werden diese ausgegeben
 	 */
-	function error()
+	private function error()
 	{
 		switch (CONFIG_DB_TYPE) {
 			case 'mysqli':
@@ -89,7 +89,7 @@ class db
 	 * 	3 = Slashes entfernen
 	 * @return string
 	 */
-	function escape($value, $mode = 1)
+	public function escape($value, $mode = 1)
 	{
 		$value = trim($value);
 
@@ -112,7 +112,7 @@ class db
 	 *  3 = Rückgabewert der SQL Abfrage
 	 * @return mixed
 	 */
-	function query($query, $mode = 2)
+	public function query($query, $mode = 2)
 	{
 		switch (CONFIG_DB_TYPE) {
 			case 'mysqli':
@@ -163,7 +163,7 @@ class db
 	 *  Die maximal zu löschenden Einträge, falls mehr als ein Eintrag gelöscht werden könnte
 	 * @return boolean
 	 */
-	function delete($table, $field, $limit = 0)
+	public function delete($table, $field, $limit = 0)
 	{
 		$query = 'DELETE FROM ' . CONFIG_DB_PRE . $table . ' WHERE ' . $field;
 		$query.= !empty($limit) ? ' LIMIT ' . $limit : '';
@@ -179,7 +179,7 @@ class db
 	 *  Erwartet ein Array mit den betroffenen Feldern als Schlüssel und dazugehörigem Inhalt
 	 * @return boolean
 	 */
-	function insert($table, $insert_values)
+	public function insert($table, $insert_values)
 	{
 		if (is_array($insert_values)) {
 			$fields = '';
@@ -214,7 +214,7 @@ class db
 	 * 	@see query()
 	 * @return @see query()
 	 */
-	function select($field, $table, $where = 0, $order = 0, $min = '', $max = '', $mode = 2)
+	public function select($field, $table, $where = 0, $order = 0, $min = '', $max = '', $mode = 2)
 	{
 		$field = empty($field) ? '*' : $field;
 		$query = 'SELECT ' . $field . ' FROM ' . CONFIG_DB_PRE . $table;
@@ -239,7 +239,7 @@ class db
 	 *  WHERE Bedingung der SQL Abfrage
 	 * @return boolean
 	 */
-	function update($table, $update_values, $where = 0, $limit = 0)
+	public function update($table, $update_values, $where = 0, $limit = 0)
 	{
 		if (is_array($update_values)) {
 			$set_to = '';
