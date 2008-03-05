@@ -74,7 +74,7 @@ class cache
 		if ($this->check($filename)) {
 			return unserialize(@file_get_contents('cache/sql_' . md5($filename) . '.php'));
 		}
-		return false;
+		return array();
 	}
 	/**
 	 * Löscht alle gecacheten SQL Queries

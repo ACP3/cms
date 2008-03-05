@@ -173,13 +173,11 @@ function calc_filesize($value)
 		3 => 'GiB',
 		4 => 'TiB',
 	);
-	$loops = 0;
 
-	while ($value >= 1024) {
+	for ($i = 0; $value >= 1024; $i++) {
 		$value = $value / 1024;
-		$loops++;
 	}
-	return round($value, 3) . ' ' . $units[$loops];
+	return round($value, 3) . ' ' . $units[$i];
 }
 /**
  * Diese Funktion gibt den Inhalt der angeforderten Sprachkonstante aus
