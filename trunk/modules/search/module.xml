@@ -9,13 +9,6 @@
 	</info>
 	<access>
 		<item>
-			<file>entry</file>
-			<action>
-				<name>search</name>
-				<level>1</level>
-			</action>
-		</item>
-		<item>
 			<file>list</file>
 			<level>1</level>
 		</item>
