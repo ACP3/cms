@@ -23,23 +23,12 @@
 			<level>1</level>
 		</item>
 		<item>
-			<file>edit</file>
+			<file>delete</file>
 			<level>2</level>
 		</item>
 		<item>
-			<file>entry</file>
-			<action>
-				<name>create</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>delete</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>edit</name>
-				<level>2</level>
-			</action>
+			<file>edit</file>
+			<level>2</level>
 		</item>
 		<item>
 			<file>files</file>

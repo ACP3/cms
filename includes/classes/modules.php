@@ -144,19 +144,9 @@ class modules
 				}
 
 				// XML Datei parsen
-				// Falls die entry.php eines Moduls verwendet werden soll, dann Zugriffslevel für die einzelnen Aktionen parsen
-				if ($page == 'entry') {
-					foreach ($xml->xpath('//access/item/action') as $action) {
-						if ((string) $action->name == $this->action && (string) $action->level != '0' && isset($access_level[$module]) && (string) $action->level <= $access_level[$module]) {
-							return true;
-						}
-					}
-				// Restlichen Dateien durchlaufen
-				} else {
-					foreach ($xml->access->item as $item) {
-						if ((string) $item->file == $page && (string) $item->level != '0' && isset($access_level[$module]) && (string) $item->level <= $access_level[$module]) {
-							return true;
-						}
+				foreach ($xml->access->item as $item) {
+					if ((string) $item->file == $page && (string) $item->level != '0' && isset($access_level[$module]) && (string) $item->level <= $access_level[$module]) {
+						return true;
 					}
 				}
 			}

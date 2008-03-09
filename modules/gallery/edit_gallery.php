@@ -16,7 +16,7 @@ if (!empty($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->i
 	$breadcrumb->assign(lang('gallery', 'gallery'), uri('acp/gallery'));
 	$breadcrumb->assign($gallery[0]['name']);
 
-	if (isset($_POST['entries']) || isset($modules->gen['entries']) || isset($_POST['submit'])) {
+	if (isset($_POST['submit'])) {
 		include 'modules/gallery/entry.php';
 	}
 	if (!isset($_POST['entries']) && !isset($_POST['submit']) || isset($errors) && is_array($errors)) {

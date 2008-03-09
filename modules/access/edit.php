@@ -12,7 +12,44 @@ if (!defined('IN_ADM'))
 
 if (!empty($modules->id) && $db->select('id', 'access', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
-		include 'modules/access/entry.php';
+		$form = $_POST['form'];
+
+		if (empty($form['name']))
+			$errors[] = lang('common', 'name_to_short');
+		if (!empty($form['name']) && $db->select('id', 'access', 'id != \'' . $modules->id . '\' AND name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
+			$errors[] = lang('access', 'access_level_already_exist');
+		// Überprüfen, ob zumindest einem Modul ein Zugriffslevel zugewiesen wurde
+		$empty = true;
+		foreach ($form['modules'] as $key) {
+			if (!empty($key)) {
+				$empty = false;
+				break;
+			}
+		}
+		if ($empty)
+			$errors[] = lang('access', 'select_modules');
+
+		if (isset($errors)) {
+			combo_box($errors);
+		} else {
+			// String für die einzelnen Zugriffslevel auf die Module erstellen
+			$form['modules']['errors'] = '2';
+			ksort($form['modules']);
+			$insert_mods = '';
+
+			foreach ($form['modules'] as $module => $level) {
+				$insert_mods.= $module . ':' . $level . ',';
+			}
+
+			$update_values = array(
+				'name' => $db->escape($form['name']),
+				'modules' => substr($insert_mods, 0, -1),
+			);
+
+			$bool = $db->update('access', $update_values, 'id = \'' . $modules->id . '\'');
+
+			$content = combo_box($bool ? lang('access', 'edit_success') : lang('access', 'edit_error'), uri('acp/access'));
+		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$access = $db->select('name, modules', 'access', 'id = \'' . $modules->id . '\'');
