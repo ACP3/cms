@@ -18,7 +18,28 @@ if (!$auth->is_user() || !preg_match('/\d/', $_SESSION['acp3_id'])) {
 	$breadcrumb->assign(lang('users', 'edit_settings'));
 
 	if (isset($_POST['submit'])) {
-		include 'modules/users/entry.php';
+		$form = $_POST['form'];
+
+		if (!is_numeric($form['time_zone']))
+			$errors[] = lang('common', 'select_time_zone');
+		if (!$validate->is_number($form['dst']))
+			$errors[] = lang('common', 'select_daylight_saving_time');
+		if (!is_file('languages/' . $db->escape($form['language'], 2) . '/info.php'))
+			$errors[] = lang('users', 'select_language');
+
+		if (isset($errors)) {
+			combo_box($errors);
+		} else {
+			$update_values = array(
+				'time_zone' => $form['time_zone'],
+				'dst' => $form['dst'],
+				'language' => $db->escape($form['language'], 2),
+			);
+
+			$bool = $db->update('users', $update_values, 'id = \'' . $_SESSION['acp3_id'] . '\'');
+
+			$content = combo_box($bool ? lang('users', 'edit_settings_success') : lang('users', 'edit_settings_error'), uri('users/home'));
+		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$user = $db->select('time_zone, dst, language', 'users', 'id = \'' . $_SESSION['acp3_id'] . '\'');
