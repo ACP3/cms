@@ -20,7 +20,7 @@ if (is_array($entries)) {
 	foreach ($entries as $entry) {
 		$marked_entries.= $entry . '|';
 	}
-	$content = combo_box(lang('newsletter', 'confirm_delete'), uri('acp/newsletter/adm_list/action_delete/entries_' . $marked_entries), uri('acp/newsletter'));
+	$content = combo_box(lang('newsletter', 'confirm_delete'), uri('acp/newsletter/delete/entries_' . $marked_entries), uri('acp/newsletter'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;

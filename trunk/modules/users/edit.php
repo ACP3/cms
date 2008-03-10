@@ -12,7 +12,51 @@ if (!defined('IN_ADM'))
 
 if (!empty($modules->id) && $db->select('id', 'users', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
-		include 'modules/users/entry.php';
+		$form = $_POST['form'];
+
+		if (empty($form['nickname']))
+			$errors[] = lang('common', 'name_to_short');
+		if (!empty($form['nickname']) && $db->select('id', 'users', 'id != \'' . $modules->id . '\' AND nickname = \'' . $db->escape($form['nickname']) . '\'', 0, 0, 0, 1) == '1')
+			$errors[] = lang('users', 'user_name_already_exists');
+		if (!$validate->email($form['mail']))
+			$errors[] = lang('common', 'wrong_email_format');
+		if ($validate->email($form['mail']) && $db->select('id', 'users', 'id != \'' . $modules->id . '\' AND mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
+			$errors[] = lang('common', 'user_email_already_exists');
+		if (!$validate->is_number($form['access']))
+			$errors[] = lang('users', 'select_access_level');
+		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
+			$errors[] = lang('users', 'type_in_pwd');
+
+		if (isset($errors)) {
+			combo_box($errors);
+		} else {
+			$new_pwd_sql = null;
+			// Neues Passwort
+			if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat'])) {
+				$salt = salt(12);
+				$new_pwd = sha1($salt . sha1($form['new_pwd']));
+				$new_pwd_sql = array('pwd' => $new_pwd . ':' . $salt);
+			}
+
+			$update_values = array(
+				'nickname' => $db->escape($form['nickname']),
+				'access' => $form['access'],
+				'mail' => $form['mail'],
+			);
+			if (is_array($new_pwd_sql)) {
+				$update_values = array_merge($update_values, $new_pwd_sql);
+			}
+
+			$bool = $db->update('users', $update_values, 'id = \'' . $modules->id . '\'');
+
+			// Falls sich der User selbst bearbeitet hat, Cookies und Session aktualisieren
+			if ($modules->id == $_SESSION['acp3_id']) {
+				$cookie_arr = explode('|', $_COOKIE['ACP3_AUTH']);
+				setcookie('ACP3_AUTH', $form['nickname'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]), time() + 3600, ROOT_DIR);
+			}
+
+			$content = combo_box($bool ? lang('users', 'edit_success') : lang('users', 'edit_error'), uri('acp/users'));
+		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$user = $db->select('nickname, mail, access', 'users', 'id = \'' . $modules->id . '\'');

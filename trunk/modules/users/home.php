@@ -9,7 +9,15 @@ if (!$auth->is_user() || !preg_match('/\d/', $_SESSION['acp3_id'])) {
 	$breadcrumb->assign(lang('users', 'home'));
 
 	if (isset($_POST['submit'])) {
-		include 'modules/users/entry.php';
+		if (!$auth->is_user() || !preg_match('/\d/', $_SESSION['acp3_id'])) {
+			redirect('errors/403');
+		} else {
+			$form = $_POST['form'];
+
+			$bool = $db->update('users', array('draft' => $db->escape($form['draft'], 2)), 'id = \'' . $_SESSION['acp3_id'] . '\'');
+
+			$content = combo_box($bool ? lang('users', 'draft_success') : lang('users', 'draft_error'), uri('users/home'));
+		}
 	}
 	if (!isset($_POST['submit'])) {
 		$user = $db->select('draft', 'users', 'id = \'' . $_SESSION['acp3_id'] . '\'');
