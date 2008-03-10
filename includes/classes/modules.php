@@ -71,7 +71,7 @@ class modules
 		$this->page = !empty($stm[1]) ? $stm[1] : $def_page;
 
 		$this->cat = !empty($_POST['cat']) ? $_POST['cat'] : '0';
-		$this->action = !empty($_POST['action']) ? $_POST['action'] : $this->page;
+		$this->action = !empty($_POST['action']) ? $_POST['action'] : '';
 
 		if (!empty($stm[2])) {
 			$c_stm = count($stm);

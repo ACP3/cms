@@ -11,7 +11,42 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (isset($_POST['submit'])) {
-	include 'modules/system/entry.php';
+	$form = $_POST['form'];
+
+	if (!$validate->is_number($form['entries']))
+		$errors[] = lang('system', 'select_entries_per_page');
+	if (!$validate->is_number($form['flood']))
+		$errors[] = lang('system', 'type_in_flood_barrier');
+	if (!$validate->is_number($form['sef']))
+		$errors[] = lang('system', 'select_sef_uris');
+	if (empty($form['date']))
+		$errors[] = lang('system', 'type_in_date_format');
+	if (!is_numeric($form['time_zone']))
+		$errors[] = lang('common', 'select_time_zone');
+	if (!$validate->is_number($form['dst']))
+		$errors[] = lang('common', 'select_daylight_saving_time');
+	if (!$validate->is_number($form['maintenance']))
+		$errors[] = lang('system', 'select_online_maintenance');
+	if (strlen($form['maintenance_msg']) < 3)
+		$errors[] = lang('system', 'maintenance_message_to_short');
+	if (empty($form['title']))
+		$errors[] = lang('system', 'title_to_short');
+	if (empty($form['db_host']))
+		$errors[] = lang('system', 'type_in_db_host');
+	if (empty($form['db_user']))
+		$errors[] = lang('system', 'type_in_db_username');
+	if (empty($form['db_name']))
+		$errors[] = lang('system', 'type_in_db_name');
+	if (empty($form['db_type']))
+		$errors[] = lang('system', 'select_db_type');
+
+	if (isset($errors)) {
+		combo_box($errors);
+	} else {
+		$bool = $config->general($form);
+
+		$content = combo_box($bool ? lang('system', 'config_edit_success') : lang('system', 'config_edit_error'), uri('acp/system/configuration'));
+	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Einträge pro Seite
