@@ -11,7 +11,51 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (isset($_POST['submit'])) {
-	include 'modules/polls/entry.php';
+	$form = $_POST['form'];
+
+	if (!$validate->date($form))
+		$errors[] = lang('common', 'select_date');
+	if (empty($form['question']))
+		$errors[] = lang('polls', 'type_in_question');
+	foreach ($form['answers'] as $row) {
+		if (!empty($row)) {
+			$check_answers = true;
+			break;
+		}
+	}
+	if (!isset($check_answers))
+		$errors[] = lang('polls', 'type_in_answer');
+
+	if (isset($errors)) {
+		combo_box($errors);
+	} else {
+		$start_date = date_aligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
+		$end_date = date_aligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
+
+		$insert_values = array(
+			'id' => '',
+			'start' => $start_date,
+			'end' => $end_date,
+			'question' => $db->escape($form['question']),
+		);
+
+		$bool = $db->insert('poll_question', $insert_values);
+
+		if ($bool) {
+			$poll_id = $db->select('id', 'poll_question', 'start = \'' . $start_date . '\' AND end = \'' . $end_date . '\' AND question = \'' . $db->escape($form['question']) . '\'', 'id DESC', 1);
+			foreach ($form['answers'] as $row) {
+				$insert_answer = array(
+					'id' => '',
+					'text' => $db->escape($row),
+					'poll_id' => $poll_id[0]['id'],
+				);
+				if (!empty($row) && $bool2 = $db->insert('poll_answers', $insert_answer))
+					continue;
+			}
+		}
+
+		$content = combo_box($bool && $bool2 ? lang('polls', 'create_success') : lang('polls', 'create_error'), uri('acp/polls'));
+	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Datumsauswahl

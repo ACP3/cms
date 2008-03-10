@@ -16,7 +16,27 @@ if (!empty($modules->id) && $db->select('id', 'pages_blocks', 'id = \'' . $modul
 	$breadcrumb->assign(lang('pages', 'edit_block'));
 
 	if (isset($_POST['submit'])) {
-		include 'modules/pages/entry.php';
+		$form = $_POST['form'];
+
+		if (!preg_match('/^[a-zA-Z]+\w/', $form['index_name']))
+			$errors[] = lang('pages', 'type_in_index_name');
+		if (preg_match('/^[a-zA-Z]+\w/', $form['index_name']) && $db->select('id', 'pages_blocks', 'index_name = \'' . $db->escape($form['index_name']) . '\' AND id != \'' . $modules->id . '\'', 0, 0, 0, 1) > 0)
+			$errors[] = lang('pages', 'index_name_unique');
+		if (strlen($form['title']) < 3)
+			$errors[] = lang('pages', 'block_title_to_short');
+
+		if (isset($errors)) {
+			combo_box($errors);
+		} else {
+			$update_values = array(
+				'index_name' => $db->escape($form['index_name']),
+				'title' => $db->escape($form['title']),
+			);
+
+			$bool = $db->update('pages_blocks', $update_values, 'id = \'' . $modules->id . '\'');
+
+			$content = combo_box($bool ? lang('pages', 'edit_block_success') : lang('pages', 'edit_block_error'), uri('acp/pages/adm_list_blocks'));
+		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$block = $db->select('index_name, title', 'pages_blocks', 'id = \'' . $modules->id . '\'');
