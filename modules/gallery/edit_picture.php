@@ -18,7 +18,44 @@ if (!empty($modules->id) && $db->select('id', 'galpics', 'id = \'' . $modules->i
 	$breadcrumb->assign(lang('gallery', 'edit_picture'));
 
 	if (isset($_POST['submit'])) {
-		include 'modules/gallery/entry.php';
+		if (!empty($_FILES['file']['tmp_name']) && $_FILES['file']['size'] > '0') {
+			$file['tmp_name'] = $_FILES['file']['tmp_name'];
+			$file['name'] = $_FILES['file']['name'];
+			$file['size'] = $_FILES['file']['size'];
+		}
+		$form = $_POST['form'];
+
+		if (!$validate->is_number($form['gallery']) || $db->select('id', 'gallery', 'id = \'' . $form['gallery'] . '\'', 0, 0, 0, 1) != '1')
+			$errors[] = lang('gallery', 'no_gallery_selected');
+		if (!$validate->is_number($form['pic']))
+			$errors[] = lang('gallery', 'type_in_picture_number');
+		if (isset($file) && is_array($file) && !$validate->is_picture($file['tmp_name']))
+			$errors[] = lang('gallery', 'only_png_jpg_gif_allowed');
+
+		if (isset($errors)) {
+			combo_box($errors);
+		} else {
+			$new_file_sql = null;
+			if (isset($file) && is_array($file)) {
+				$result = move_file($file['tmp_name'], $file['name'], 'gallery');
+				$new_file_sql = array('file' => $result['name']);
+			}
+
+			$update_values = array(
+				'pic' => $form['pic'],
+				'gallery_id' => $form['gallery'],
+				'description' => $db->escape($form['description'], 2),
+			);
+			if (is_array($new_file_sql)) {
+				$update_values = array_merge($update_values, $new_file_sql);
+			}
+
+			$bool = $db->update('galpics', $update_values, 'id = \'' . $modules->id . '\'');
+
+			$cache->create('gallery_pics_id_' . $form['gallery'], $db->select('id', 'galpics', 'gallery_id = \'' . $modules->id . '\'', 'id ASC'));
+
+			$content = combo_box($bool ? lang('gallery', 'edit_picture_success') : lang('gallery', 'edit_picture_error'), uri('acp/gallery'));
+		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
