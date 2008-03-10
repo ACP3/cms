@@ -23,7 +23,7 @@
 				<td>{$row.mail}</td>
 				<td>
 {if $row.hash != ''}
-					<a href="{uri args="acp/newsletter/entry/action_activate_adm/id_`$row.id`"}" title="{lang values="newsletter|activate_account"}"><img src="{icon path="16/inactive"}" alt="" /></a>
+					<a href="{uri args="acp/newsletter/adm_activate/id_`$row.id`"}" title="{lang values="newsletter|activate_account"}"><img src="{icon path="16/inactive"}" alt="" /></a>
 {else}
 					<img src="{icon path="16/active"}" alt="" />
 {/if}

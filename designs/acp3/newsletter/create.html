@@ -7,14 +7,12 @@
 		</dl>
 	</fieldset>
 	<div>
-		<label for="subscribe">
-			<input type="radio" name="action" id="subscribe" value="subscribe" checked="checked" class="radio" />
-			{lang values="newsletter|subscribe"}
+{foreach from=$actions item="row"}
+		<label for="{$row.value}">
+			<input type="radio" name="action" id="{$row.value}" value="{$row.value}"{$row.checked} class="radio" />
+			{$row.lang}
 		</label>
-		<label for="unsubscribe">
-			<input type="radio" name="action" id="unsubscribe" value="unsubscribe" class="radio" />
-			{lang values="newsletter|unsubscribe"}
-		</label>
+{/foreach}
 	</div>
 	<div class="form-bottom">
 		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />

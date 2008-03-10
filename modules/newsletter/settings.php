@@ -11,7 +11,18 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (isset($_POST['submit'])) {
-	include 'modules/newsletter/entry.php';
+	$form = $_POST['form'];
+
+	if (!$validate->email($form['mail']))
+		$errors[] = lang('common', 'wrong_email_format');
+
+	if (isset($errors)) {
+		combo_box($errors);
+	} else {
+		$bool = $config->module('newsletter', $form);
+
+		$content = combo_box($bool ? lang('newsletter', 'edit_success') : lang('newsletter', 'edit_error'), uri('acp/newsletter'));
+	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$settings = $config->output('newsletter');
