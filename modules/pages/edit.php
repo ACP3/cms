@@ -12,7 +12,62 @@ if (!defined('IN_ADM'))
 
 if (!empty($modules->id) && $db->select('id', 'pages', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
-		include 'modules/pages/entry.php';
+		include_once 'modules/pages/functions.php';
+		$form = $_POST['form'];
+
+		if (!$validate->date($form))
+			$errors[] = lang('common', 'select_date');
+		if (!$validate->is_number($form['mode']))
+			$errors[] = lang('pages', 'select_static_hyperlink');
+		if (!$validate->is_number($form['blocks']))
+			$errors[] = lang('pages', 'select_block');
+		if (!empty($form['blocks']) && !$validate->is_number($form['sort']))
+			$errors[] = lang('pages', 'type_in_chronology');
+		if (strlen($form['title']) < 3)
+			$errors[] = lang('pages', 'title_to_short');
+		if ($form['mode'] == '1' && !empty($form['parent']) && !$validate->is_number($form['parent']))
+			$errors[] = lang('pages', 'select_superior_page');
+		if ($form['mode'] == '1' && $validate->is_number($form['parent']) && ($db->select('id', 'pages', "id != '" . $modules->id . "' AND mode='1' AND parent='0'", 0, 0, 0, 1) == 0) || $form['parent'] == $modules->id || parent_check($modules->id, $form['parent']))
+			$errors[] = lang('pages', 'superior_page_not_allowed');
+		if ($form['mode'] == '1' && strlen($form['text']) < 3)
+			$errors[] = lang('pages', 'text_to_short');
+		if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !$validate->is_number($form['target'])))
+			$errors[] = lang('pages', 'type_in_uri_and_target');
+
+		if (isset($errors)) {
+			combo_box($errors);
+		} else {
+			$start_date = date_aligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
+			$end_date = date_aligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
+
+			if ($form['mode'] == '1') {
+				$form['uri'] = '';
+				$form['target'] = '';
+			} else {
+				$form['parent'] = '';
+				$form['text'] = '';
+			}
+
+			$update_values = array(
+				'start' => $start_date,
+				'end' => $end_date,
+				'mode' => $form['mode'],
+				'parent' => $form['parent'],
+				'block_id' => $form['blocks'],
+				'sort' => $form['sort'],
+				'title' => $db->escape($form['title']),
+				'uri' => $db->escape($form['uri'], 2),
+				'target' => $form['target'],
+				'text' => $db->escape($form['text'], 2),
+			);
+
+			$bool = $db->update('pages', $update_values, 'id = \'' . $modules->id . '\'');
+
+			$cache->create('pages', $db->select('p.id, p.start, p.end, p.mode, p.title, p.uri, p.target, b.index_name AS block_name', 'pages AS p, ' . CONFIG_DB_PRE . 'pages_blocks AS b', 'p.block_id != \'0\' AND p.block_id = b.id', 'p.sort ASC, p.title ASC'));
+			$cache->create('pages_list_id_' . $modules->id, $db->select('mode, uri, text', 'pages', 'id = \'' . $modules->id . '\''));
+
+			$content = combo_box($bool ? lang('pages', 'edit_success') : lang('pages', 'edit_error'), uri('acp/pages'));
+		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		//Funktionen einbinden

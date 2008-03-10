@@ -1,6 +1,6 @@
 <?php
 /**
- * News
+ * Polls
  *
  * @author Goratsch Webdesign
  * @package ACP3
@@ -20,20 +20,18 @@ if (is_array($entries)) {
 	foreach ($entries as $entry) {
 		$marked_entries.= $entry . '|';
 	}
-	$content = combo_box(lang('news', 'confirm_delete'), uri('acp/news/delete/entries_' . $marked_entries), uri('acp/news'));
+	$content = combo_box(lang('polls', 'confirm_delete'), uri('acp/polls/delete/entries_' . $marked_entries), uri('acp/polls'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
-	$bool2 = 0;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'news', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
-			$bool = $db->delete('news', 'id = \'' . $entry . '\'');
-			$bool2 = $db->delete('comments', 'module = \'news\' AND entry_id = \'' . $entry . '\'');
-			// News Cache löschen
-			$cache->delete('news_details_id_' . $entry);
+		if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'poll_question', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+			$bool = $db->delete('poll_question', 'id = \'' . $entry . '\'');
+			$bool2 = $db->delete('poll_answers', 'poll_id = \'' . $entry . '\'');
+			$bool3 = $db->delete('poll_votes', 'poll_id = \'' . $entry . '\'');
 		}
 	}
-	$content = combo_box($bool && $bool2 ? lang('news', 'delete_success') : lang('news', 'delete_error'), uri('acp/news'));
+	$content = combo_box($bool && $bool2 && $bool3 ? lang('polls', 'delete_success') : lang('polls', 'delete_error'), uri('acp/polls'));
 } else {
 	redirect('errors/404');
 }
