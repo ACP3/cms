@@ -1,6 +1,7 @@
 // Emoticons in <textarea> einfügen
-function emoticon(field_id, emotion)
+function emoticon(fieldId, emotion)
 {
-	$('#' + field_id)[0].focus();
-	$('#' + field_id)[0].value+= ' ' + emotion + ' ';
+	$('#' + fieldId).focus();
+	var currentVal = $('#' + fieldId).val();
+	$('#' + fieldId).val(currentVal + ' ' + emotion + ' ');
 }
