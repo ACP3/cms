@@ -54,8 +54,7 @@ if (!empty($modules->id) && $db->select('id', 'news', 'id = \'' . $modules->id .
 	if ($modules->check('comments', 'functions')) {
 		include_once 'modules/comments/functions.php';
 
-		$tpl->assign('comments_list', comments_list());
-		$tpl->assign('comments_form', comments_form());
+		$tpl->assign('comments', comments());
 	}
 	$content = $tpl->fetch('news/details.html');
 } else {

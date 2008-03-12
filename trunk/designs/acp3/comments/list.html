@@ -30,3 +30,23 @@
 	<h5>{lang values="common|no_entries"}</h5>
 </div>
 {/if}
+{$error_msg}
+<form action="{$request_uri}" method="post" accept-charset="UTF-8">
+	<fieldset class="no-border">
+		<dl>
+			<dt><label for="name">{lang values="common|name"}</label></dt>
+			<dd><input type="text" name="form[name]" id="name" maxlength="20" value="{$form.name}"{$form.name_disabled} /></dd>
+			<dt><label for="message">{lang values="common|message"}</label></dt>
+			<dd>
+				{$emoticons}
+				<textarea name="form[message]" id="message" cols="50" rows="5">{$form.message}</textarea>
+			</dd>
+		</dl>
+	</fieldset>
+	<div class="form-bottom">
+		<input type="hidden" name="module" value="{$com_form.module}" />
+		<input type="hidden" name="entry_id" value="{$com_form.entry_id}" />
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="reset" value="{lang values="common|reset"}" class="form" />
+	</div>
+</form>
