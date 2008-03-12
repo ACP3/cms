@@ -24,7 +24,8 @@ function comments_count($entry_id, $module = 0)
 	return $db->select('id', 'comments', 'module = \'' . $module . '\' AND entry_id =\'' . $entry_id . '\'', 0, 0, 0, 1);
 }
 /**
- * Gibt das Formular für die Kommentare aus
+ * Zeigt alle Kommentare für das jeweilige Modul und Datensatz
+ * Gibt das Formular für das Eintragen von Kommentaren aus
  *
  * @param string $url
  * 	Die URL, an welche das Formular abgesendet werden soll
@@ -34,10 +35,11 @@ function comments_count($entry_id, $module = 0)
  * 	Die ID des jeweiligen Eintrages
  * @return string
  */
-function comments_form($module = 0, $entry_id = 0)
+function comments($module = 0, $entry_id = 0)
 {
 	global $auth, $db, $modules, $tpl, $validate;
 
+	// Formular für das Eintragen von Kommentaren
 	if (isset($_POST['submit']) && isset($_POST['module']) && isset($_POST['entry_id']) && $validate->is_number($_POST['entry_id'])) {
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$form = $_POST['form'];
@@ -83,56 +85,38 @@ function comments_form($module = 0, $entry_id = 0)
 		$module = !empty($module) ? $module : $modules->mod;
 		$entry_id = !empty($entry_id) ? $entry_id : $modules->id;
 
-		$tpl->assign('com_form', array('module' => $module, 'entry_id' => $entry_id));
+		// Auflistung der Kommentare
+		$comments = $db->select('name, user_id, date, message', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 'date ASC', POS, CONFIG_ENTRIES);
+		$c_comments = count($comments);
+		$emoticons = false;
 
-		//Falls aktiv, Emoticons anzeigen
 		if ($modules->check('emoticons', 'functions')) {
 			include_once 'modules/emoticons/functions.php';
+			$emoticons = true;
+
+			//Emoticons im Formular anzeigen
 			$tpl->assign('emoticons', emoticons_list());
 		}
 
-		return $tpl->fetch('comments/create.html');
-	}
-}
-/**
- * Gibt eine Liste von Kommentaren aus
- *
- * @param string $module
- * 	Das jeweilige Modul
- * @param integer $entry_id
- * 	Die ID des jeweiligen Eintrages
- * @return string
- */
-function comments_list($module = 0, $entry_id = 0)
-{
-	global $db, $modules, $tpl;
-
-	$module = !empty($module) ? $module : $modules->mod;
-	$entry_id = !empty($entry_id) ? $entry_id : $modules->id;
-	$comments = $db->select('name, user_id, date, message', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 'date ASC', POS, CONFIG_ENTRIES);
-	$c_comments = count($comments);
-	$emoticons = false;
-
-	if ($modules->check('emoticons', 'functions')) {
-		include_once 'modules/emoticons/functions.php';
-		$emoticons = true;
-	}
-
-	if ($c_comments > 0) {
-		$tpl->assign('pagination', pagination($db->select('id', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 0, 0, 0, 1)));
-		for ($i = 0; $i < $c_comments; $i++) {
-			$comments[$i]['date'] = date_aligned(1, $comments[$i]['date']);
-			if (empty($comments[$i]['user_id'])) {
-				unset($comments[$i]['user_id']);
+		if ($c_comments > 0) {
+			$tpl->assign('pagination', pagination($db->select('id', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 0, 0, 0, 1)));
+			for ($i = 0; $i < $c_comments; $i++) {
+				$comments[$i]['date'] = date_aligned(1, $comments[$i]['date']);
+				if (empty($comments[$i]['user_id'])) {
+					unset($comments[$i]['user_id']);
+				}
+				$comments[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $comments[$i]['message']);
+				if ($emoticons) {
+					$comments[$i]['message'] = emoticons_replace($comments[$i]['message']);
+				}
 			}
-			$comments[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $comments[$i]['message']);
-			if ($emoticons) {
-				$comments[$i]['message'] = emoticons_replace($comments[$i]['message']);
-			}
+			$tpl->assign('comments', $comments);
 		}
-		$tpl->assign('comments', $comments);
 
+		// Modul und Datensatznummer mit ins Formular einbinden
+		$tpl->assign('com_form', array('module' => $module, 'entry_id' => $entry_id));
+
+		return $tpl->fetch('comments/list.html');
 	}
-	return $tpl->fetch('comments/list.html');
 }
 ?>
