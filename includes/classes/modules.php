@@ -129,7 +129,7 @@ class modules
 					// Zugriffslevel für Gäste
 					$access_id = 2;
 					// Zugriffslevel für Benutzer holen
-					if (isset($_SESSION['acp3_id'])) {
+					if ($auth->isUser()) {
 						$info = $auth->getUserInfo('access');
 						if (!empty($info)) {
 							$access_id = $info['access'];

@@ -50,7 +50,7 @@ if (!empty($modules->id) && $db->select('id', 'users', 'id = \'' . $modules->id 
 			$bool = $db->update('users', $update_values, 'id = \'' . $modules->id . '\'');
 
 			// Falls sich der User selbst bearbeitet hat, Cookies und Session aktualisieren
-			if ($modules->id == $_SESSION['acp3_id']) {
+			if ($modules->id == USER_ID) {
 				$cookie_arr = explode('|', $_COOKIE['ACP3_AUTH']);
 				setcookie('ACP3_AUTH', $form['nickname'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]), time() + 3600, ROOT_DIR);
 			}

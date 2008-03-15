@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (!$auth->is_user() || !preg_match('/\d/', $_SESSION['acp3_id'])) {
+if (!$auth->isUser() || !preg_match('/\d/', USER_ID)) {
 	redirect('errors/403');
 } else {
 	$breadcrumb->assign(lang('users', 'users'), uri('users'));
@@ -36,13 +36,13 @@ if (!$auth->is_user() || !preg_match('/\d/', $_SESSION['acp3_id'])) {
 				'language' => $db->escape($form['language'], 2),
 			);
 
-			$bool = $db->update('users', $update_values, 'id = \'' . $_SESSION['acp3_id'] . '\'');
+			$bool = $db->update('users', $update_values, 'id = \'' . USER_ID . '\'');
 
 			$content = combo_box($bool ? lang('users', 'edit_settings_success') : lang('users', 'edit_settings_error'), uri('users/home'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$user = $db->select('time_zone, dst, language', 'users', 'id = \'' . $_SESSION['acp3_id'] . '\'');
+		$user = $db->select('time_zone, dst, language', 'users', 'id = \'' . USER_ID . '\'');
 
 		// Zeitzonen
 		$tpl->assign('time_zone', time_zones($user[0]['time_zone']));
