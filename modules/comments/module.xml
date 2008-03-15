@@ -14,7 +14,11 @@
 			<level>2</level>
 		</item>
 		<item>
-			<file>delete</file>
+			<file>delete_comments</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>delete_comments_per_module</file>
 			<level>2</level>
 		</item>
 		<item>
