@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (!$auth->is_user() || !preg_match('/\d/', $_SESSION['acp3_id'])) {
+if (!$auth->isUser() || !preg_match('/\d/', USER_ID)) {
 	redirect('errors/403');
 } else {
 	$breadcrumb->assign(lang('users', 'users'), uri('users'));
@@ -22,11 +22,11 @@ if (!$auth->is_user() || !preg_match('/\d/', $_SESSION['acp3_id'])) {
 
 		if (empty($form['nickname']))
 			$errors[] = lang('common', 'name_to_short');
-		if (!empty($form['nickname']) && $db->select('id', 'users', 'id != \'' . $_SESSION['acp3_id'] . '\' AND nickname = \'' . $db->escape($form['nickname']) . '\'', 0, 0, 0, 1) == '1')
+		if (!empty($form['nickname']) && $db->select('id', 'users', 'id != \'' . USER_ID . '\' AND nickname = \'' . $db->escape($form['nickname']) . '\'', 0, 0, 0, 1) == '1')
 			$errors[] = lang('users', 'user_name_already_exists');
 		if (!$validate->email($form['mail']))
 			$errors[] = lang('common', 'wrong_email_format');
-		if ($validate->email($form['mail']) && $db->select('id', 'users', 'id != \'' . $_SESSION['acp3_id'] . '\' AND mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
+		if ($validate->email($form['mail']) && $db->select('id', 'users', 'id != \'' . USER_ID . '\' AND mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
 			$errors[] = lang('common', 'user_email_already_exists');
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
 			$errors[] = lang('users', 'type_in_pwd');
@@ -52,7 +52,7 @@ if (!$auth->is_user() || !preg_match('/\d/', $_SESSION['acp3_id'])) {
 				$update_values = array_merge($update_values, $new_pwd_sql);
 			}
 
-			$bool = $db->update('users', $update_values, 'id = \'' . $_SESSION['acp3_id'] . '\'');
+			$bool = $db->update('users', $update_values, 'id = \'' . USER_ID . '\'');
 
 			$cookie_arr = explode('|', $_COOKIE['ACP3_AUTH']);
 			setcookie('ACP3_AUTH', $form['nickname'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]), time() + 3600, ROOT_DIR);
@@ -61,7 +61,7 @@ if (!$auth->is_user() || !preg_match('/\d/', $_SESSION['acp3_id'])) {
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$user = $db->select('nickname, realname, mail, website', 'users', 'id = \'' . $_SESSION['acp3_id'] . '\'');
+		$user = $db->select('nickname, realname, mail, website', 'users', 'id = \'' . USER_ID . '\'');
 
 		$user[0]['website'] = $db->escape($user[0]['website'], 3);
 

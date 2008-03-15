@@ -70,7 +70,7 @@ function comments($module = 0, $entry_id = 0)
 				'ip' => $ip,
 				'date' => $time,
 				'name' => $db->escape($form['name']),
-				'user_id' => $auth->is_user() && preg_match('/\d/', $_SESSION['acp3_id']) ? $_SESSION['acp3_id'] : '',
+				'user_id' => $auth->isUser() && preg_match('/\d/', USER_ID) ? USER_ID : '',
 				'message' => $db->escape($form['message']),
 				'module' => $db->escape($module, 2),
 				'entry_id' => $entry_id,

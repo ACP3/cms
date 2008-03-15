@@ -31,7 +31,7 @@ if (is_array($entries)) {
 			if ($entry == '1') {
 				$admin_user = true;
 			} else {
-				if ($entry == $_SESSION['acp3_id']) {
+				if ($entry == USER_ID) {
 					$session_user = true;
 				}
 				$bool = $db->delete('users', 'id = \'' . $entry . '\'');

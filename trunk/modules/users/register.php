@@ -2,7 +2,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if ($auth->is_user()) {
+if ($auth->isUser()) {
 	redirect(0, ROOT_DIR);
 } else {
 	$breadcrumb->assign(lang('users', 'users'), uri('users'));
