@@ -14,19 +14,11 @@
 			<level>2</level>
 		</item>
 		<item>
-			<file>create</file>
-			<level>2</level>
-		</item>
-		<item>
-			<file>edit</file>
-			<level>2</level>
-		</item>
-		<item>
-			<file>functions</file>
-			<level>1</level>
-		</item>
-		<item>
 			<file>adm_list_blocks</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>create</file>
 			<level>2</level>
 		</item>
 		<item>
@@ -34,35 +26,24 @@
 			<level>2</level>
 		</item>
 		<item>
+			<file>delete</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>delete_blocks</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>edit</file>
+			<level>2</level>
+		</item>
+		<item>
 			<file>edit_block</file>
 			<level>2</level>
 		</item>
 		<item>
-			<file>entry</file>
-			<action>
-				<name>create</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>delete</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>edit</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>create_block</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>delete_blocks</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>edit_block</name>
-				<level>2</level>
-			</action>
+			<file>functions</file>
+			<level>1</level>
 		</item>
 		<item>
 			<file>list</file>

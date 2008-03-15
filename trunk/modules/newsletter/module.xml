@@ -16,6 +16,14 @@ das Newsletterteam]]></mailsig>
 	</settings>
 	<access>
 		<item>
+			<file>activate</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>adm_activate</file>
+			<level>2</level>
+		</item>
+		<item>
 			<file>adm_list</file>
 			<level>2</level>
 		</item>
@@ -28,35 +36,8 @@ das Newsletterteam]]></mailsig>
 			<level>1</level>
 		</item>
 		<item>
-			<file>entry</file>
-			<action>
-				<name>activate</name>
-				<level>1</level>
-			</action>
-			<action>
-				<name>activate_adm</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>compose</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>delete</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>settings</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>subscribe</name>
-				<level>1</level>
-			</action>
-			<action>
-				<name>unsubscribe</name>
-				<level>1</level>
-			</action>
+			<file>delete</file>
+			<level>2</level>
 		</item>
 		<item>
 			<file>settings</file>
