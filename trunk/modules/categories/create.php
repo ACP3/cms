@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('categories', 'category_already_exists');
 
 	if (isset($errors)) {
-		combo_box($errors);
+		$tpl->assign('error_msg', combo_box($errors));
 	} else {
 		$file_sql = null;
 		if (!empty($file)) {

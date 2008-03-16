@@ -133,6 +133,10 @@
 		<message>Es konnten keine Einträge gefunden werden.</message>
 	</item>
 	<item>
+		<name>no_entries_selected</name>
+		<message>Bitte wählen Sie die zu löschenden Einträge aus.</message>
+	</item>
+	<item>
 		<name>options</name>
 		<message>Optionen</message>
 	</item>

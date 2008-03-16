@@ -27,7 +27,7 @@ if (!empty($modules->id) && $db->select('id', 'comments', 'id = \'' . $modules->
 			$errors[] = lang('common', 'message_to_short');
 
 		if (isset($errors)) {
-			combo_box($errors);
+			$tpl->assign('error_msg', combo_box($errors));
 		} else {
 			$update_values = array(
 				'name' => $db->escape($form['name']),

@@ -26,7 +26,7 @@ if (!empty($modules->id) && $db->select('id', 'pages_blocks', 'id = \'' . $modul
 			$errors[] = lang('pages', 'block_title_to_short');
 
 		if (isset($errors)) {
-			combo_box($errors);
+			$tpl->assign('error_msg', combo_box($errors));
 		} else {
 			$update_values = array(
 				'index_name' => $db->escape($form['index_name']),

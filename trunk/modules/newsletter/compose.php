@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('newsletter', 'text_to_short');
 
 	if (isset($errors)) {
-		combo_box($errors);
+		$tpl->assign('error_msg', combo_box($errors));
 	} else {
 		$settings = $config->output('newsletter');
 

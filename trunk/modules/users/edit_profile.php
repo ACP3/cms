@@ -32,7 +32,7 @@ if (!$auth->isUser() || !preg_match('/\d/', USER_ID)) {
 			$errors[] = lang('users', 'type_in_pwd');
 
 		if (isset($errors)) {
-			combo_box($errors);
+			$tpl->assign('error_msg', combo_box($errors));
 		} else {
 			$new_pwd_sql = null;
 			// Neues Passwort

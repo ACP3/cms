@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('system', 'select_db_type');
 
 	if (isset($errors)) {
-		combo_box($errors);
+		$tpl->assign('error_msg', combo_box($errors));
 	} else {
 		$bool = $config->general($form);
 

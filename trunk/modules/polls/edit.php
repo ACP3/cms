@@ -31,7 +31,7 @@ if (!empty($modules->id) && $db->select('id', 'poll_question', 'id = \'' . $modu
 			$errors[] = lang('polls', 'can_not_delete_all_answers');
 
 		if (isset($errors)) {
-			combo_box($errors);
+			$tpl->assign('error_msg', combo_box($errors));
 		} else {
 			$start_date = date_aligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
 			$end_date = date_aligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));

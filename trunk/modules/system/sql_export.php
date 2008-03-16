@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('system', 'select_export_type');
 
 	if (isset($errors)) {
-		combo_box($errors);
+		$tpl->assign('error_msg', combo_box($errors));
 	} else {
 		$structure = '';
 		$data = '';

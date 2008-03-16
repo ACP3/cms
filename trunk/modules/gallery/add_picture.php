@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 	$errors[] = lang('gallery', 'only_png_jpg_gif_allowed');
 
 	if (isset($errors)) {
-		combo_box($errors);
+		$tpl->assign('error_msg', combo_box($errors));
 	} else {
 		$result = move_file($file['tmp_name'], $file['name'], 'gallery');
 

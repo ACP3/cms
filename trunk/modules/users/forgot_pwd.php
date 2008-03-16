@@ -21,7 +21,7 @@ if ($auth->isUser()) {
 			$errors[] = lang('users', 'user_not_exists');
 
 		if (isset($errors)) {
-			combo_box($errors);
+			$tpl->assign('error_msg', combo_box($errors));
 		} else {
 			// Neues Passwort erstellen und neuen Zufallsschlüssel erstellen
 			$new_password = salt(8);

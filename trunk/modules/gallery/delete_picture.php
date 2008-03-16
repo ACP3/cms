@@ -15,7 +15,9 @@ if (isset($_POST['entries']) && is_array($_POST['entries']))
 elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
 	$entries = $modules->gen['entries'];
 
-if (is_array($entries)) {
+if (!isset($entries)) {
+	$content = combo_box(array(lang('common', 'no_entries_selected')));
+} elseif (is_array($entries)) {
 	$marked_entries = '';
 	foreach ($entries as $entry) {
 		$marked_entries.= $entry . '|';
@@ -36,7 +38,5 @@ if (is_array($entries)) {
 		$bool = $db->delete('galpics', 'id = \'' . $entry . '\'');
 	}
 	$content = combo_box($bool ? lang('gallery', 'picture_delete_success') : lang('gallery', 'picture_delete_error'), uri('acp/gallery'));
-} else {
-	redirect('errors/404');
 }
 ?>
