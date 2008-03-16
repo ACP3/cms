@@ -45,6 +45,14 @@
 		<message>The block has been created successfully.</message>
 	</item>
 	<item>
+		<name>delete</name>
+		<message>Delete menu items</message>
+	</item>
+	<item>
+		<name>delete_blocks</name>
+		<message>Delete blocks</message>
+	</item>
+	<item>
 		<name>create_error</name>
 		<message>While creating the menu item an error has occured.</message>
 	</item>

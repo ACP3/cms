@@ -21,6 +21,10 @@
 		<message>Der Download wurde erfolgreich erstellt.</message>
 	</item>
 	<item>
+		<name>delete</name>
+		<message>Downloads löschen</message>
+	</item>
+	<item>
 		<name>delete_error</name>
 		<message>Beim Löschen der ausgewählten Downloads ist ein Fehler aufgetreten.</message>
 	</item>

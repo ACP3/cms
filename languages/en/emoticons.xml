@@ -21,6 +21,10 @@
 		<message>The emoticons has been created successfully.</message>
 	</item>
 	<item>
+		<name>delete</name>
+		<message>Delete emoticons</message>
+	</item>
+	<item>
 		<name>delete_error</name>
 		<message>While deleting the marked emoticons an error has occured.</message>
 	</item>

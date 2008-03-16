@@ -37,6 +37,10 @@
 		<message>The poll has been created successfully!</message>
 	</item>
 	<item>
+		<name>delete</name>
+		<message>Delete polls</message>
+	</item>
+	<item>
 		<name>delete_answer_description</name>
 		<message>To delete answer, please click on the checkbox on the left hand side of the form.</message>
 	</item>

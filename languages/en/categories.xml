@@ -33,6 +33,10 @@
 		<message>The category has been created successfully.</message>
 	</item>
 	<item>
+		<name>delete</name>
+		<message>Delete categories</message>
+	</item>
+	<item>
 		<name>delete_error</name>
 		<message>While deleting the marked categories an error has occured.</message>
 	</item>

@@ -25,6 +25,10 @@
 		<message>The user has been created successfully.</message>
 	</item>
 	<item>
+		<name>delete</name>
+		<message>Delete users</message>
+	</item>
+	<item>
 		<name>delete_error</name>
 		<message>While deleting the marked users an error has occured.</message>
 	</item>

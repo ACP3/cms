@@ -53,6 +53,14 @@
 		<message>Der Menüpunkt wurde erfolgreich erstellt.</message>
 	</item>
 	<item>
+		<name>delete</name>
+		<message>Menüpunkte löschen</message>
+	</item>
+	<item>
+		<name>delete_blocks</name>
+		<message>Blöcke löschen</message>
+	</item>
+	<item>
 		<name>delete_block_error</name>
 		<message>Beim Löschen der ausgewählten Blöcke ist ein Fehler aufgetreten.</message>
 	</item>

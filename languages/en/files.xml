@@ -21,6 +21,10 @@
 		<message>The download has been created successfully.</message>
 	</item>
 	<item>
+		<name>delete</name>
+		<message>Delete downloads</message>
+	</item>
+	<item>
 		<name>delete_error</name>
 		<message>While delelting the marked download an error has occured.</message>
 	</item>

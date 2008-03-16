@@ -25,6 +25,14 @@
 		<message>Der Kommentar wurde erfolgreich erstellt.</message>
 	</item>
 	<item>
+		<name>delete_comments</name>
+		<message>Kommentare löschen</message>
+	</item>
+	<item>
+		<name>delete_comments_per_module</name>
+		<message>Kommentare löschen</message>
+	</item>
+	<item>
 		<name>delete_error</name>
 		<message>Beim Löschen der ausgewählten Kommentare ist ein Fehler aufgetreten.</message>
 	</item>

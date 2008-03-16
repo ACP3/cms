@@ -17,6 +17,10 @@
 		<message>Der Gästebuch Eintrag wurde erfolgreich erstellt.</message>
 	</item>
 	<item>
+		<name>delete</name>
+		<message>Gästebuch Einträge löschen</message>
+	</item>
+	<item>
 		<name>delete_error</name>
 		<message>Beim Löschen der ausgewählten Gästebuch Einträge ist ein Fehler aufgetreten.</message>
 	</item>

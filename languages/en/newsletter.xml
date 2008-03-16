@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-<?php
-/**
- * Mewsletter
- *
- * @author Goratsch Webdesign
- * @package ACP3
- * @subpackage Modules
- */
-
+	<item>
+		<name>activate</name>
+		<message>Activate newsletter account</message>
+	</item>
 	<item>
 		<name>activate_account</name>
 		<message>Active newsletter account</message>
+	</item>
+	<item>
+		<name>adm_activate</name>
+		<message>Activate newsletter account</message>
 	</item>
 	<item>
 		<name>compose</name>
@@ -32,6 +31,10 @@
 	<item>
 		<name>create</name>
 		<message>Subscribe/Unscribe the newsletter</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>Delete newsletter accounts</message>
 	</item>
 	<item>
 		<name>delete_error</name>

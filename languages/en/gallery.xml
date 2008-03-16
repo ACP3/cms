@@ -29,6 +29,14 @@
 		<message>While creating the gallery an error has occured.</message>
 	</item>
 	<item>
+		<name>delete_gallery</name>
+		<message>Delete galleries</message>
+	</item>
+	<item>
+		<name>delete_picture</name>
+		<message>Delete pictures</message>
+	</item>
+	<item>
 		<name>create_success</name>
 		<message>The gallery has been created successfully.</message>
 	</item>

@@ -37,6 +37,10 @@
 		<message>Die Umfrage wurde erfolgreich erstellt!</message>
 	</item>
 	<item>
+		<name>delete</name>
+		<message>Umfragen löschen</message>
+	</item>
+	<item>
 		<name>delete_answer_description</name>
 		<message>Sie können Antworten löschen, indem Sie einfach auf das Auswahlfeld links neben den Antworten klicken.</message>
 	</item>

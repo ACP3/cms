@@ -17,6 +17,10 @@
 		<message>The guestbook entry has been created successfully.</message>
 	</item>
 	<item>
+		<name>delete</name>
+		<message>Delete guestbook entries</message>
+	</item>
+	<item>
 		<name>delete_error</name>
 		<message>While deleting the marked guestbook entries an error has occured.</message>
 	</item>

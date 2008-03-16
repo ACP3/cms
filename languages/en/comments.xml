@@ -25,6 +25,14 @@
 		<message>The comment has been created successfully.</message>
 	</item>
 	<item>
+		<name>delete_comments</name>
+		<message>Delete comments</message>
+	</item>
+	<item>
+		<name>delete_comments_per_module</name>
+		<message>Delete comments</message>
+	</item>
+	<item>
 		<name>delete_error</name>
 		<message>While deleting the marked comments an error has occured.</message>
 	</item>

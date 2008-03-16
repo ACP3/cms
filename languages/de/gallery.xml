@@ -37,6 +37,14 @@
 		<message>Beim Löschen der ausgewählten Fotogalerien ist ein Fehler aufgetreten.</message>
 	</item>
 	<item>
+		<name>delete_gallery</name>
+		<message>Fotogallerien löschen</message>
+	</item>
+	<item>
+		<name>delete_picture</name>
+		<message>Bilder löschen</message>
+	</item>
+	<item>
 		<name>delete_success</name>
 		<message>Die ausgewählten Fotogalerien wurden erfolgreich gelöscht.</message>
 	</item>

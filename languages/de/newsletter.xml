@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
 	<item>
+		<name>activate</name>
+		<message>Newsletterkonto aktivieren</message>
+	</item>
+	<item>
 		<name>activate_account</name>
 		<message>Newsletterkonto aktivieren</message>
+	</item>
+	<item>
+		<name>adm_activate</name>
+		<message>Newsletterkonto löschen</message>
 	</item>
 	<item>
 		<name>compose</name>
@@ -23,6 +31,10 @@
 	<item>
 		<name>create</name>
 		<message>In Newsletter eintragen/austragen</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>Newsletterkonten löschen</message>
 	</item>
 	<item>
 		<name>delete_error</name>
