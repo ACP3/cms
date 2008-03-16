@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function() {
 	$('#nav-mods-link').toggle(function() {
 		$('#nav-mods').slideDown('slow');
 		return false;

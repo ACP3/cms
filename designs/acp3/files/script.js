@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function() {
 	if ($('#external')[0].checked) {
 		$('#file-external').show();
 		$('#external-filesize').show();

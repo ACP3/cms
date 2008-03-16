@@ -13,7 +13,7 @@ function mark_entries(name, state)
 		}
 	}
 }
-$(document).ready(function() {
+$(function() {
 	// Akkordeon Menü
 	$('#accordion fieldset dl:not(:first)').hide();
 
