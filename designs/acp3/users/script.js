@@ -1,14 +1,14 @@
 $(function() {
-	$('#nav-mods-link').toggle(function() {
-		$('#nav-mods').slideDown('slow');
+	$('#nav-mods-link').click(function() {
+		if (!$('#nav-mods').is(':animated')) {
+			$('#nav-mods').slideToggle('slow');
+		}
 		return false;
-	},function() {
-		$('#nav-mods').slideUp('slow');
 	});
-	$('#nav-system-link').toggle(function() {
-		$('#nav-system').slideDown('slow');
+	$('#nav-system-link').click(function() {
+		if (!$('#nav-system').is(':animated')) {
+			$('#nav-system').slideToggle('slow');
+		}
 		return false;
-	},function() {
-		$('#nav-system').slideUp('slow');
 	});
 });
