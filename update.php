@@ -5,6 +5,7 @@ require 'includes/config.php';
 require 'includes/classes/db.php';
 require 'includes/classes/cache.php';
 
+/*
 $db = new db;
 
 $queries = array(
@@ -37,6 +38,7 @@ print "\n" . ($success ? 'Die Datenbank wurde erfolgreich aktualisiert.' : 'Mind
 cache::purge();
 
 print "\n" . '----------------------------' . "\n\n";
+*/
 
 // Konfigurationsdatei aktualisieren
 $path = 'includes/config.php';
@@ -44,7 +46,7 @@ if (is_writable($path))	{
 	// Konfigurationsdatei in ein Array schreiben
 	$config = file($path);
 	$entries_to_change = array(
-		'define(\'CONFIG_VERSION\', \'' . CONFIG_VERSION . '\');' => 'define(\'CONFIG_VERSION\', \'4.0b9\');',
+		'define(\'CONFIG_VERSION\', \'' . CONFIG_VERSION . '\');' => 'define(\'CONFIG_VERSION\', \'4.0b10 SVN\');',
 	);
 
 	foreach ($config as $c_key => $c_value) {
