@@ -33,6 +33,10 @@
 		<message>Emoticon bearbeiten</message>
 	</item>
 	<item>
+		<name>delete</name>
+		<message>Emoticon löschen</message>
+	</item>
+	<item>
 		<name>edit_error</name>
 		<message>Beim Bearbeiten des Emoticons ist ein Fehler aufgetreten.</message>
 	</item>

@@ -25,6 +25,10 @@
 		<message>The news has been created successfully.</message>
 	</item>
 	<item>
+		<name>delete</name>
+		<message>Delete news</message>
+	</item>
+	<item>
 		<name>delete_error</name>
 		<message>While deleting the marked news an error has occured.</message>
 	</item>

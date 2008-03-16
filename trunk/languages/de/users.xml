@@ -25,6 +25,10 @@
 		<message>Der Benutzer wurde erfolgreich erstellt.</message>
 	</item>
 	<item>
+		<name>delete</name>
+		<message>Benutzer löschen</message>
+	</item>
+	<item>
 		<name>delete_error</name>
 		<message>Beim Löschen der ausgewählten Benutzer ist ein Fehler aufgetreten.</message>
 	</item>

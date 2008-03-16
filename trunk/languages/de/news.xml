@@ -25,6 +25,10 @@
 		<message>Die News wurde erfolgreich erstellt.</message>
 	</item>
 	<item>
+		<name>delete</name>
+		<message>News löschen</message>
+	</item>
+	<item>
 		<name>delete_error</name>
 		<message>Beim Löschen der ausgewählten News ist ein Fehler aufgetreten.</message>
 	</item>

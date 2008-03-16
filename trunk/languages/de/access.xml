@@ -53,6 +53,10 @@
 		<message>Das Zugriffslevel wurde erfolgreich erstellt.</message>
 	</item>
 	<item>
+		<name>delete</name>
+		<message>Zugriffslevel löschen</message>
+	</item>
+	<item>
 		<name>delete_error</name>
 		<message>Beim Löschen der ausgewählten Zugriffslevel ist ein Fehler aufgetreten.</message>
 	</item>

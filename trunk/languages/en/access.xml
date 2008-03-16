@@ -53,6 +53,10 @@
 		<message>The access level has been created successfully.</message>
 	</item>
 	<item>
+		<name>delete</name>
+		<message>Delete access levels</message>
+	</item>
+	<item>
 		<name>delete_error</name>
 		<message>While deleting the marked access levels an error has occured.</message>
 	</item>
