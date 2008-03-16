@@ -17,7 +17,10 @@ define('SMARTY_DIR', '../includes/smarty/');
 include SMARTY_DIR . 'Smarty.class.php';
 $tpl = new smarty;
 $tpl->template_dir = '../installation/design/';
-$tpl->compile_dir = '../cache/';
+$tpl->compile_dir = '../cache/installation/';
+if (!file_exists($tpl->compile_dir)) {
+	mkdir($tpl->compile_dir);
+}
 //$tpl->compile_check = false;
 
 define('PHP_SELF', $_SERVER['PHP_SELF']);
