@@ -28,7 +28,7 @@ if (!$auth->isUser() || !preg_match('/\d/', USER_ID)) {
 			$errors[] = lang('users', 'select_language');
 
 		if (isset($errors)) {
-			combo_box($errors);
+			$tpl->assign('error_msg', combo_box($errors));
 		} else {
 			$update_values = array(
 				'time_zone' => $form['time_zone'],

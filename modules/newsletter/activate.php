@@ -21,7 +21,7 @@ if ($db->select('id', 'nl_accounts', 'mail = \'' . $mail . '\' AND hash = \'' . 
 	$errors[] = lang('newsletter', 'nl_account_not_exists');
 
 if (isset($errors)) {
-	combo_box($errors);
+	$tpl->assign('error_msg', combo_box($errors));
 } else {
 	$bool = $db->update('nl_accounts', array('hash', ''), 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'');
 

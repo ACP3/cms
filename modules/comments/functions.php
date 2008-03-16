@@ -63,7 +63,7 @@ function comments($module = 0, $entry_id = 0)
 			$errors[] = lang('comments', 'module_doesnt_exist');
 
 		if (isset($errors)) {
-			combo_box($errors);
+			$tpl->assign('error_msg', combo_box($errors));
 		} else {
 			$insert_values = array(
 				'id' => '',

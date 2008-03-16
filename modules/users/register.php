@@ -23,7 +23,7 @@ if ($auth->isUser()) {
 			$errors[] = lang('users', 'type_in_pwd');
 
 		if (isset($errors)) {
-			combo_box($errors);
+			$tpl->assign('error_msg', combo_box($errors));
 		} else {
 			$salt = salt(12);
 

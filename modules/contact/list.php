@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('common', 'message_to_short');
 
 	if (isset($errors)) {
-		combo_box($errors);
+		$tpl->assign('error_msg', combo_box($errors));
 	} else {
 		$contact = $config->output('contact');
 

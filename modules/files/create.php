@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('files', 'select_category');
 
 	if (isset($errors)) {
-		combo_box($errors);
+		$tpl->assign('error_msg', combo_box($errors));
 	} else {
 		if (is_array($file)) {
 			$result = move_file($file['tmp_name'], $file['name'], 'files');

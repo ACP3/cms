@@ -27,7 +27,7 @@ if (!empty($modules->id) && $db->select('id', 'emoticons', 'id = \'' . $modules-
 			$errors[] = lang('emoticons', 'select_picture');
 
 		if (isset($errors)) {
-			combo_box($errors);
+			$tpl->assign('error_msg', combo_box($errors));
 		} else {
 			$new_file_sql = null;
 			if (isset($file)) {

@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
 				$errors[] = lang('newsletter', 'nl_account_exists');
 
 			if (isset($errors)) {
-				combo_box($errors);
+				$tpl->assign('error_msg', combo_box($errors));
 			} else {
 				$time = explode(' ', microtime());
 				$hash = md5(mt_rand(0, $time['1']));
@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
 				$errors[] = lang('newsletter', 'nl_account_not_exists');
 
 			if (isset($errors)) {
-				combo_box($errors);
+				$tpl->assign('error_msg', combo_box($errors));
 			} else {
 				$bool = $db->delete('nl_accounts', 'mail = \'' . $form['mail'] . '\'');
 

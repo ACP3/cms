@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('common', 'wrong_email_format');
 
 	if (isset($errors)) {
-		combo_box($errors);
+		$tpl->assign('error_msg', combo_box($errors));
 	} else {
 		$bool = $config->module('newsletter', $form);
 

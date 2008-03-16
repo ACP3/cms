@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('search', 'no_hits_sorting_selected');
 
 	if (isset($errors)) {
-		combo_box($errors);
+		$tpl->assign('error_msg', combo_box($errors));
 	} else {
 		$form['sort'] = strtoupper($form['sort']);
 		$results_mods = array();
@@ -33,9 +33,9 @@ if (isset($_POST['submit'])) {
 			}
 		}
 		if (!empty($results_mods))
-		$tpl->assign('results_mods', $results_mods);
+			$tpl->assign('results_mods', $results_mods);
 		else
-		$tpl->assign('no_search_results', sprintf(lang('search', 'no_search_results'), $form['search_term']));
+			$tpl->assign('no_search_results', sprintf(lang('search', 'no_search_results'), $form['search_term']));
 
 		$content = $tpl->fetch('search/results.html');
 	}

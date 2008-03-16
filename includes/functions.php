@@ -21,16 +21,18 @@ function combo_box($text, $forward = 0, $back = 0)
 {
 	global $tpl;
 
-	$tpl->assign('text', $text);
-	if (empty($forward) && empty($back)) {
-		$tpl->assign('error_msg', $tpl->fetch('common/error.html'));
-		return;
-	} else {
+	if (is_array($text) && empty($forward) && empty($back)) {
+		$tpl->assign('text', $text);
+
+		return $tpl->fetch('common/error.html');
+	} elseif (!empty($forward) && !empty($back)) {
+		$tpl->assign('text', $text);
 		$tpl->assign('forward', $forward);
 		$tpl->assign('back', $back);
 
 		return $tpl->fetch('common/combo.html');
 	}
+	return '';
 }
 /**
  * Datumsausrichtung an den Zeitzonen

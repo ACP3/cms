@@ -30,7 +30,7 @@ if (!empty($modules->id) && $db->select('id', 'access', 'id = \'' . $modules->id
 			$errors[] = lang('access', 'select_modules');
 
 		if (isset($errors)) {
-			combo_box($errors);
+			$tpl->assign('error_msg', combo_box($errors));
 		} else {
 			// String für die einzelnen Zugriffslevel auf die Module erstellen
 			$form['modules']['errors'] = '2';

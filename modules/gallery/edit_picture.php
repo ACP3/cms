@@ -33,7 +33,7 @@ if (!empty($modules->id) && $db->select('id', 'galpics', 'id = \'' . $modules->i
 			$errors[] = lang('gallery', 'only_png_jpg_gif_allowed');
 
 		if (isset($errors)) {
-			combo_box($errors);
+			$tpl->assign('error_msg', combo_box($errors));
 		} else {
 			$new_file_sql = null;
 			if (isset($file) && is_array($file)) {

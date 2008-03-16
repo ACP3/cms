@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('common', 'wrong_email_format');
 
 	if (isset($errors)) {
-		combo_box($errors);
+		$tpl->assign('error_msg', combo_box($errors));
 	} else {
 		$form['address'] = $db->escape($form['address'], 2);
 		$form['telephone'] = $db->escape($form['telephone']);

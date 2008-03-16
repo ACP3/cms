@@ -133,6 +133,10 @@
 		<message>There are no entries registered.</message>
 	</item>
 	<item>
+		<name>no_entries_selected</name>
+		<message>Please select the entries that should be deleted.</message>
+	</item>
+	<item>
 		<name>options</name>
 		<message>Options</message>
 	</item>

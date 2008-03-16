@@ -35,7 +35,7 @@ if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id 
 			$errors[] = lang('files', 'select_category');
 
 		if (isset($errors)) {
-			combo_box($errors);
+			$tpl->assign('error_msg', combo_box($errors));
 		} else {
 			$new_file_sql = null;
 			// Falls eine neue Datei angegeben wurde, Änderungen durchführen
