@@ -17,7 +17,7 @@ if ($auth->isUser()) {
 
 	foreach ($mod_list as $name => $info) {
 		$dir = $info['dir'];
-		if ($modules->check($dir, 'adm_list')) {
+		if ($modules->check($dir, 'adm_list') && $dir != 'acp') {
 			if ($dir == 'system') {
 				$tpl->assign('access_system', true);
 			} elseif ($dir == 'home') {

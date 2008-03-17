@@ -65,10 +65,11 @@ class modules
 			define('IN_ACP3', true);
 		}
 		$stm = !empty($_GET['stm']) ? explode('/', $_GET['stm']) : 0;
-		$def_page = defined('IN_ADM') ? 'adm_list' : 'list';
+		$defaultModule = defined('IN_ADM') ? 'acp' : 'news';
+		$defaultPage = defined('IN_ADM') ? 'adm_list' : 'list';
 
-		$this->mod = !empty($stm[0]) ? $stm[0] : 'news';
-		$this->page = !empty($stm[1]) ? $stm[1] : $def_page;
+		$this->mod = !empty($stm[0]) ? $stm[0] : $defaultModule;
+		$this->page = !empty($stm[1]) ? $stm[1] : $defaultPage;
 
 		$this->cat = !empty($_POST['cat']) ? $_POST['cat'] : '0';
 		$this->action = !empty($_POST['action']) ? $_POST['action'] : '';

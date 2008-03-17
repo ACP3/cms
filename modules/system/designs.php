@@ -10,6 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
+$breadcrumb->assign(lang('common', 'acp'), uri('acp'));
 $breadcrumb->assign(lang('system', 'system'), uri('acp/system'));
 $breadcrumb->assign(lang('system', 'extensions'), uri('acp/system/extensions'));
 $breadcrumb->assign(lang('system', 'designs'));

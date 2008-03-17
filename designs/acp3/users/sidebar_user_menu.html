@@ -6,7 +6,7 @@
 	<li><a href="{uri args="users/home"}">{lang values="users|home"}</a></li>
 {if $nav_mods}
 	<li>
-		<a href="#" id="nav-mods-link">{lang values="users|administration"}</a>
+		<a href="{uri args="acp"}" id="nav-mods-link">{lang values="users|administration"}</a>
 		<ul id="nav-mods" class="hide">
 {foreach from=$nav_mods item=row}
 			<li><a href="{uri args="acp/`$row.dir`"}">{$row.name}</a></li>

@@ -2,6 +2,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
+$breadcrumb->assign(lang('common', 'acp'), uri('acp'));
 $breadcrumb->assign(lang('system', 'system'), uri('acp/system'));
 $breadcrumb->assign(lang('system', 'maintenance'), uri('acp/system/maintenance'));
 $breadcrumb->assign(lang('system', 'sql_export'));

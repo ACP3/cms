@@ -23,12 +23,13 @@ function combo_box($text, $forward = 0, $back = 0)
 
 	if (is_array($text) && empty($forward) && empty($back)) {
 		$tpl->assign('text', $text);
-
 		return $tpl->fetch('common/error.html');
-	} elseif (!empty($forward) && !empty($back)) {
+	} elseif (!empty($text) && (!empty($forward) || !empty($back))) {
 		$tpl->assign('text', $text);
 		$tpl->assign('forward', $forward);
-		$tpl->assign('back', $back);
+		if (!empty($back)) {
+			$tpl->assign('back', $back);
+		}
 
 		return $tpl->fetch('common/combo.html');
 	}
