@@ -15,6 +15,7 @@ $pic = isset($modules->gen['pic']) && $validate->is_number($modules->gen['pic'])
 if (!empty($modules->id)) {
 	$gallery = $db->select('name', 'gallery', 'id = \'' . $modules->id . '\'');
 
+	$breadcrumb->assign(lang('common', 'acp'), uri('acp'));
 	$breadcrumb->assign(lang('gallery', 'gallery'), uri('acp/gallery'));
 	$breadcrumb->assign($gallery[0]['name'], uri('acp/gallery/edit_gallery/id_' . $modules->id));
 	$breadcrumb->assign(lang('gallery', 'add_picture'));

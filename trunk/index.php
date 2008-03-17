@@ -22,12 +22,9 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 } else {
 	$auth = new auth;
 
-	if ($auth->isUser() && defined('IN_ADM') && empty($_GET['stm'])) {
-		redirect(0, ROOT_DIR);
-	} elseif ($modules->check()) {
-		$content = '';
+	if ($modules->check()) {
 		include 'modules/' . $modules->mod . '/' . $modules->page . '.php';
-		$tpl->assign('content', $content);
+		$tpl->assign('content', isset($content) ? $content : '');
 	} elseif (!$auth->isUser() && defined('IN_ADM') && $modules->mod != 'users' && $modules->page != 'login') {
 		redirect('users/login');
 	} elseif (is_file('modules/errors/404.php')) {

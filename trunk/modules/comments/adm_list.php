@@ -27,6 +27,7 @@ if (empty($module) || !empty($module) && $db->select('id', 'comments', 'module =
 	}
 } elseif (!empty($module) && $db->select('id', 'comments', 'module = \'' . $module . '\'', 0, 0, 0, 1) > '0') {
 	//Brotkrümelspur
+	$breadcrumb->assign(lang('common', 'acp'), uri('acp'));
 	$breadcrumb->assign(lang('comments', 'comments'), uri('acp/comments'));
 	$breadcrumb->assign(lang($module, $module));
 
