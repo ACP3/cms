@@ -6,11 +6,11 @@
 	</item>
 	<item>
 		<name>acp3_not_up_to_date</name>
-		<message>The version check resulted in, that you don\'t have the latest available of the ACP3 intalled.\nPlease click %1$shere%2$s to download the latest version.</message>
+		<message>A newer version of the ACP3 is available. Click %1$shere%2$s to download the latest version.</message>
 	</item>
 	<item>
 		<name>acp3_up_to_date</name>
-		<message>The version check resulted in, that you already have the latest available of the ACP3 installed.</message>
+		<message>You already use the most recent version of the ACP3.</message>
 	</item>
 	<item>
 		<name>architecture</name>
