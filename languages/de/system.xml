@@ -6,11 +6,11 @@
 	</item>
 	<item>
 		<name>acp3_not_up_to_date</name>
-		<message>Die Versionsüberprüfung ergab, dass Sie nicht die aktuelle Version des ACP3 verwenden.\nBitte klicken Sie %1$shier%2$s, um zum Download der aktuellen Version zu gelangen.</message>
+		<message>Es ist eine neuere Version des ACP3 verfügbar. Die neue Version kann %1$shier%2$s heruntergeladen werden.</message>
 	</item>
 	<item>
 		<name>acp3_up_to_date</name>
-		<message>Die Versionsüberprüfung ergab, dass Sie bereits die aktuellste Version des ACP3 verwenden.</message>
+		<message>Sie verwenden bereits die aktuellste Version des ACP3.</message>
 	</item>
 	<item>
 		<name>architecture</name>
@@ -26,11 +26,11 @@
 	</item>
 	<item>
 		<name>config_edit_error</name>
-		<message>Beim Bearbeiten der ACP3 Konfiguration ist ein Fehler aufgetreten.</message>
+		<message>Beim Bearbeiten der Konfiguration ist ein Fehler aufgetreten.</message>
 	</item>
 	<item>
 		<name>config_edit_success</name>
-		<message>Die ACP3 Konfiguration wurde erfolgreich bearbeitet.</message>
+		<message>Die Konfiguration wurde erfolgreich bearbeitet.</message>
 	</item>
 	<item>
 		<name>configuration</name>
