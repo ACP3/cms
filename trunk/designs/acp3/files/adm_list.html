@@ -29,9 +29,7 @@
 {/foreach}
 		</tbody>
 	</table>
-	<div class="mark-entries">
-		<a href="javascript:mark_entries('entries',true)">{lang values="common|mark_all"}</a> <span>::</span> <a href="javascript:mark_entries('entries',false)">{lang values="common|unmark_all"}</a>
-	</div>
+{mark name="entries"}
 {else}
 	<div class="error">
 		<h5>{lang values="common|no_entries"}</h5>

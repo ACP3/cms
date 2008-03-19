@@ -3,15 +3,19 @@ document.writeln('.hide { display:none; }');
 document.writeln('</style>');
 
 // Einträge markieren bzw. Markierung aufheben
-function mark_entries(name, state)
+function mark_entries(name, action)
 {
-	var fields = $('form input[@type=checkbox]');
+	var fields = $('form :checkbox');
 
-	for (var i = 0; i < fields.length; i++) {
-		if (fields[i].name.substr(0, name.length) == name) {
-			fields[i].checked = state;
+	jQuery.each(fields, function() {
+		if ($(this).attr('name') == name + '[]') {
+			if (action == 'add') {
+				$(this).attr('checked', 'checked');
+			} else {
+				$(this).removeAttr('checked');
+			}
 		}
-	}
+	});
 }
 $(function() {
 	// Akkordeon Menü
