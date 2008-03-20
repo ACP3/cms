@@ -16,12 +16,12 @@
 class modules
 {
 	/**
-	 * Die ID eines Eintrages in der Datenbank
+	 * Die Aktion, welche z.B: in einem Formular ausgeführt werden soll
 	 *
-	 * @var integer
+	 * @var string
 	 * @access public
 	 */
-	public $id = '0';
+	public $action = '';
 	/**
 	 * Die ID einer Kategorie in der Datenbank
 	 *
@@ -30,19 +30,25 @@ class modules
 	 */
 	public $cat = '0';
 	/**
-	 * Die Aktion, welche z.B: in einem Formular ausgeführt werden soll
-	 *
-	 * @var string
-	 * @access public
-	 */
-	public $action = '';
-	/**
 	 * Die restlichen URI Parameter
 	 *
 	 * @var array
 	 * @access public
 	 */
 	public $gen = array();
+	/**
+	 * Die ID eines Eintrages in der Datenbank
+	 *
+	 * @var integer
+	 * @access public
+	 */
+	public $id = '0';
+	/**
+	 * Die komplette übergebene URL
+	 *
+	 * @var string
+	 */
+	public static $stm = '';
 
 	/**
 	 * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
@@ -51,17 +57,15 @@ class modules
 	 */
 	function __construct()
 	{
+		$this->stm = $_GET['stm'];
+
 		if (!empty($_GET['stm']) && strpos($_GET['stm'], 'acp/') !== false) {
-			/**
-			 * Definieren, dass man sich im Administrationsbereich befindet
-			 */
+			// Definieren, dass man sich im Administrationsbereich befindet
 			define('IN_ADM', true);
 			// "acp/" entfernen
 			$_GET['stm'] = substr($_GET['stm'], 4, strlen($_GET['stm']));
 		} else {
-			/**
-			 * Definieren, dass man sich im Frontend befindet
-			 */
+			// Definieren, dass man sich im Frontend befindet
 			define('IN_ACP3', true);
 		}
 		$stm = !empty($_GET['stm']) ? explode('/', $_GET['stm']) : 0;
