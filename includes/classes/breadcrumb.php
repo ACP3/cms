@@ -65,6 +65,9 @@ class breadcrumb
 	{
 		global $modules, $tpl;
 
+		$module = $modules->mod;
+		$page = $modules->page;
+
 		// Brotkrümelspur für das Frontend
 		if (defined('IN_ACP3') && $mode == 1) {
 			// Zusätzlich zugewiesene Brotkrumen an Smarty übergeben
@@ -75,31 +78,28 @@ class breadcrumb
 			} else {
 				if (!empty($this->end)) {
 					$tpl->assign('end', $this->end);
-				} elseif ($modules->page == 'list') {
-					$tpl->assign('end', lang($modules->mod, $modules->mod));
+				} elseif ($page == 'list') {
+					$tpl->assign('end', lang($module, $module));
 				} else {
-					$tpl->assign('end', lang($modules->mod, $modules->page));
+					$tpl->assign('end', lang($module, $page));
 				}
 			}
 			return $tpl->fetch('common/breadcrumb.html');
 		// Brotkrümelspur für das Admin Panel
 		} elseif (defined('IN_ADM') && $mode == 1) {
-			if ($modules->page == 'adm_list' && count($this->steps) == 0 && empty($this->end)) {
-				$breadcrumb[0]['uri'] = uri('acp');
-				$breadcrumb[0]['title'] = lang('common', 'acp');
-				$tpl->assign('breadcrumb', $breadcrumb);
-				$tpl->assign('end', lang($modules->mod, $modules->mod));
+			if ($page == 'adm_list' && count($this->steps) == 0 && empty($this->end)) {
+				$this->assign(lang('common', 'acp'), uri('acp'));
+				$tpl->assign('breadcrumb', $this->steps);
+				$tpl->assign('end', lang($module, $module));
 			} elseif (count($this->steps) > 0 || !empty($this->end)) {
 				$tpl->assign('breadcrumb', $this->steps);
 				$tpl->assign('end', $this->end);
 			// Falls keine zusätzlichen Brotkrumen angegeben sind, jeweiligen Seitennamen der Moduldatei ausgeben
 			} else {
-				$breadcrumb[0]['uri'] = uri('acp');
-				$breadcrumb[0]['title'] = lang('common', 'acp');
-				$breadcrumb[1]['uri'] = uri('acp/' . $modules->mod);
-				$breadcrumb[1]['title'] = lang($modules->mod, $modules->mod);
-				$tpl->assign('breadcrumb', $breadcrumb);
-				$tpl->assign('end', lang($modules->mod, $modules->page));
+				$this->assign(lang('common', 'acp'), uri('acp'));
+				$this->assign(lang($module, $module), uri('acp/' . $module));
+				$tpl->assign('breadcrumb', $this->steps);
+				$tpl->assign('end', lang($module, $page));
 			}
 			return $tpl->fetch('common/breadcrumb.html');
 		// Nur Seitentitel ausgeben
@@ -107,7 +107,7 @@ class breadcrumb
 			if (!empty($this->end)) {
 				return $this->end;
 			} else {
-				return $modules->page != 'list' && $modules->page != 'adm_list' ? lang($modules->mod, $modules->page) : lang($modules->mod, $modules->mod);
+				return $page != 'list' && $page != 'adm_list' ? lang($module, $page) : lang($module, $module);
 			}
 		}
 	}
