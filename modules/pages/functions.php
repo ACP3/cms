@@ -84,50 +84,25 @@ function process_navbar()
 	if ($c_pages > 0) {
 		$navbar = array();
 		$selected = ' selected';
+
 		for ($i = 0; $i < $c_pages; $i++) {
-			if ($pages[$i]['start'] == $pages[$i]['end'] && $pages[$i]['start'] <= date_aligned(2, time()) || $pages[$i]['start'] != $pages[$i]['end'] && $pages[$i]['start'] <= date_aligned(2, time()) && $pages[$i]['end'] >= date_aligned(2, time())) {
+			if (publish_check($pages[$i]['start'], $pages[$i]['end'])) {
 				$link['css'] = 'navi-' . $pages[$i]['id'];
 				switch ($pages[$i]['mode']) {
 					case '1':
 						$link['href'] = uri('pages/list/id_' . $pages[$i]['id']);
-						$link['css'].= $modules->mod == 'pages' && $modules->page == 'list' && $modules->id == $pages[$i]['id'] ? $selected : '';
+						$link['css'].= $modules->mod == 'pages' && $modules->page == 'list' && $modId == $pages[$i]['id'] ? $selected : '';
 						break;
 					case '2':
-						// URL zum Parsen in ein Array zerlegen
-						$uri_arr = explode('/', $pages[$i]['uri']);
-
 						$link['href'] = uri($pages[$i]['uri']);
-						$link['css'].= '';
 
 						// Genaue Überprüfung der URL, damit nicht 2 Menüpunkte selektiert werden (passiert nur noch bei identischen URLs)
-						if (!empty($uri_arr[2]) && $modules->mod == $uri_arr[0] && $modules->page == $uri_arr[1] && (!empty($modules->id) || !empty($modules->cat) || !empty($modules->action) || !empty($modules->gen))) {
-							$c_uri_arr = count($uri_arr);
-							for ($j = 2; $j < $c_uri_arr; $j++) {
-								if (!empty($uri_arr[$j])) {
-									$is_page = false;
-									if (preg_match('/^(id_(\d+))$/', $uri_arr[$j]) && str_replace('id_', '', $uri_arr[$j]) == $modules->id ||
-										preg_match('/^(cat_(\d+))$/', $uri_arr[$j]) && str_replace('cat_', '', $uri_arr[$j]) == $modules->cat ||
-										preg_match('/^(action_(\w+))$/', $uri_arr[$j]) && str_replace('action_', '', $uri_arr[$j]) == $modules->action) {
-										$is_page = true;
-									} elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $uri_arr[$j])) {
-										$pos = strpos($uri_arr[$j], '_');
-										if (isset($modules->gen[substr($uri_arr[$j], 0, $pos)]) &&
-											substr($uri_arr[$j], $pos + 1, strlen($uri_arr[$j])) == $modules->gen[substr($uri_arr[$j], 0, $pos)]) {
-											$is_page = true;
-										}
-									}
-								}
-							}
-							if (isset($is_page) && $is_page) {
-								$link['css'].= $selected;
-							}
-						} elseif (empty($uri_arr[2]) && $modules->mod == $uri_arr[0] && $modules->page == $uri_arr[1] && empty($modules->id) && empty($modules->cat) && empty($modules->gen) && $modules->action == $modules->page) {
+						if (uri($modules->stm) == uri($pages[$i]['uri'])) {
 							$link['css'].= $selected;
 						}
 						break;
 					default:
 						$link['href'] = $pages[$i]['uri'];
-						$link['css'].= '';
 				}
 				$link['target'] = ($pages[$i]['mode'] == '2' || $pages[$i]['mode'] == '3') && $pages[$i]['target'] == '2' ? ' onclick="window.open(this.href); return false"' : '';
 				$link['title'] = $pages[$i]['title'];

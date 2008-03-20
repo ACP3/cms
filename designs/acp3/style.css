@@ -72,7 +72,7 @@ table {
 	width: 100%;
 	margin: 0 auto;
 }
-th {
+thead {
 	padding: 0 3px;
 	background: #069 url('images/common_header.png') repeat-x;
 	font-weight: bold;
@@ -81,12 +81,12 @@ th {
 	color: #f90;
 	white-space: nowrap;
 }
-td {
-	padding: 3px;
-}
-.table-bottom {
+tfoot {
 	background: #eee;
 	font-weight: bold;
+}
+td {
+	padding: 3px;
 }
 pre {
 	width: 99%;
