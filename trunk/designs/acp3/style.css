@@ -72,7 +72,11 @@ table {
 	width: 100%;
 	margin: 0 auto;
 }
-thead {
+tfoot {
+	background: #eee;
+	font-weight: bold;
+}
+th {
 	padding: 0 3px;
 	background: #069 url('images/common_header.png') repeat-x;
 	font-weight: bold;
@@ -80,10 +84,6 @@ thead {
 	line-height: 24px;
 	color: #f90;
 	white-space: nowrap;
-}
-tfoot {
-	background: #eee;
-	font-weight: bold;
 }
 td {
 	padding: 3px;
