@@ -48,7 +48,7 @@ class modules
 	 *
 	 * @var string
 	 */
-	public static $stm = '';
+	public $stm = '';
 
 	/**
 	 * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
@@ -59,13 +59,13 @@ class modules
 	{
 		if (!empty($_GET['stm'])) {
 			$this->stm = $_GET['stm'];
+		}
 
-			if (strpos($_GET['stm'], 'acp/') !== false) {
-				// Definieren, dass man sich im Administrationsbereich befindet
-				define('IN_ADM', true);
-				// "acp/" entfernen
-				$_GET['stm'] = substr($_GET['stm'], 4, strlen($_GET['stm']));
-			}
+		if (!empty($_GET['stm']) && strpos($_GET['stm'], 'acp/') !== false) {
+			// Definieren, dass man sich im Administrationsbereich befindet
+			define('IN_ADM', true);
+			// "acp/" entfernen
+			$_GET['stm'] = substr($_GET['stm'], 4, strlen($_GET['stm']));
 		} else {
 			// Definieren, dass man sich im Frontend befindet
 			define('IN_ACP3', true);

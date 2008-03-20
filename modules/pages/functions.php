@@ -91,7 +91,7 @@ function process_navbar()
 				switch ($pages[$i]['mode']) {
 					case '1':
 						$link['href'] = uri('pages/list/id_' . $pages[$i]['id']);
-						$link['css'].= $modules->mod == 'pages' && $modules->page == 'list' && $modId == $pages[$i]['id'] ? $selected : '';
+						$link['css'].= $modules->mod == 'pages' && $modules->page == 'list' && $modules->id == $pages[$i]['id'] ? $selected : '';
 						break;
 					case '2':
 						$link['href'] = uri($pages[$i]['uri']);
