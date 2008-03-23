@@ -17,7 +17,7 @@ if (isset($modules->gen['feed'])) {
 
 	//Einträge einbinden
 	if (isset($module) && $modules->check($module, 'extensions/feeds')) {
-		include 'modules/' . $module . '/extensions/feeds.php';
+		include ACP3_ROOT . 'modules/' . $module . '/extensions/feeds.php';
 	}
 
 	// Content-Type setzen und Layout für den RSS-Feed laden

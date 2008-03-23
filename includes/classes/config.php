@@ -24,7 +24,7 @@ class config
 	 */
 	public function general($data)
 	{
-		$path = 'includes/config.php';
+		$path = ACP3_ROOT . 'includes/config.php';
 		if (is_writable($path))	{
 			// Konfigurationsdatei in ein Array schreiben
 			$config = file($path);
@@ -51,7 +51,7 @@ class config
 	 */
 	public function module($module, $data)
 	{
-		$path = 'modules/' . $module . '/module.xml';
+		$path = ACP3_ROOT . 'modules/' . $module . '/module.xml';
 		if (!preg_match('=/=', $module) && is_file($path)) {
 			$xml = DOMDocument::load($path);
 			$xp = new domxpath($xml);
@@ -86,7 +86,7 @@ class config
 		static $settings = array();
 
 		if (!array_key_exists($module, $settings)) {
-			$path = 'modules/' . $module . '/module.xml';
+			$path = ACP3_ROOT . 'modules/' . $module . '/module.xml';
 			if (!preg_match('=/=', $module) && is_file($path)) {
 				$xml = simplexml_load_file($path);
 

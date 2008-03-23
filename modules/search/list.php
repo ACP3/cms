@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
 		$results_mods = array();
 		foreach ($form['mods'] as $module) {
 			if ($modules->check($module, 'extensions/search')) {
-				include 'modules/' . $module . '/extensions/search.php';
+				include ACP3_ROOT . 'modules/' . $module . '/extensions/search.php';
 			}
 		}
 		if (!empty($results_mods))

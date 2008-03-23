@@ -12,7 +12,7 @@ if (!defined('IN_ADM'))
 
 if (!empty($modules->id) && $db->select('id', 'pages', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
-		include_once 'modules/pages/functions.php';
+		include_once ACP3_ROOT . 'modules/pages/functions.php';
 		$form = $_POST['form'];
 
 		if (!$validate->date($form))
@@ -71,7 +71,7 @@ if (!empty($modules->id) && $db->select('id', 'pages', 'id = \'' . $modules->id 
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		//Funktionen einbinden
-		include_once 'modules/pages/functions.php';
+		include_once ACP3_ROOT . 'modules/pages/functions.php';
 
 		$page = $db->select('start, end, mode, parent, block_id, sort, title, uri, target, text', 'pages', 'id = \'' . $modules->id . '\'');
 		$page[0]['text'] = $db->escape($page[0]['text'], 3);

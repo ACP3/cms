@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	//Funktionen einbinden
-	include_once 'modules/pages/functions.php';
+	include_once ACP3_ROOT . 'modules/pages/functions.php';
 
 	// Datumsauswahl
 	$tpl->assign('start_date', publication_period('start'));

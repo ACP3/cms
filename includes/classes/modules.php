@@ -127,8 +127,8 @@ class modules
 		$module = !empty($module) ? $module : $this->mod;
 		$page = !empty($page) ? $page : $this->page;
 
-		if (is_file('modules/' . $module . '/' . $page . '.php')) {
-			$xml = simplexml_load_file('modules/' . $module . '/module.xml');
+		if (file_exists(ACP3_ROOT . 'modules/' . $module . '/' . $page . '.php')) {
+			$xml = simplexml_load_file(ACP3_ROOT . 'modules/' . $module . '/module.xml');
 
 			if ((string) $xml->info->active == '1') {
 				// Falls die einzelnen Zugriffslevel auf die Module noch nicht gesetzt sind, diese aus der Datenbank selektieren
@@ -167,7 +167,7 @@ class modules
 	 */
 	public function modulesList()
 	{
-		$modules_dir = scandir('modules/');
+		$modules_dir = scandir(ACP3_ROOT . 'modules/');
 		$mod_list = array();
 
 		foreach ($modules_dir as $module) {
@@ -188,7 +188,7 @@ class modules
 	 */
 	public function parseInfo($module)
 	{
-		$path = 'modules/' . $module . '/module.xml';
+		$path = ACP3_ROOT . 'modules/' . $module . '/module.xml';
 		if (!preg_match('=/=', $module) && is_file($path)) {
 			$xml = simplexml_load_file($path);
 

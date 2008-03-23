@@ -1,9 +1,10 @@
 <?php
 header('Content-type: text/plain; charset=UTF-8');
 
-require 'includes/config.php';
-require 'includes/classes/db.php';
-require 'includes/classes/cache.php';
+define('ACP3_ROOT', './')
+require ACP3_ROOT . 'includes/config.php';
+require ACP3_ROOT . 'includes/classes/db.php';
+require ACP3_ROOT . 'includes/classes/cache.php';
 
 /*
 $db = new db;
@@ -41,7 +42,7 @@ print "\n" . '----------------------------' . "\n\n";
 */
 
 // Konfigurationsdatei aktualisieren
-$path = 'includes/config.php';
+$path = ACP3_ROOT . 'includes/config.php';
 if (is_writable($path))	{
 	// Konfigurationsdatei in ein Array schreiben
 	$config = file($path);

@@ -37,7 +37,7 @@ if (empty($module) || !empty($module) && $db->select('id', 'comments', 'module =
 
 	// Emoticons einbinden
 	if ($modules->check('emoticons', 'functions')) {
-		include_once 'modules/emoticons/functions.php';
+		include_once ACP3_ROOT . 'modules/emoticons/functions.php';
 		$emoticons = true;
 	}
 

@@ -9,7 +9,8 @@
 
 ob_start();
 
-require 'includes/common.php';
+define('ACP3_ROOT', './');
+require ACP3_ROOT . 'includes/common.php';
 
 $tpl->assign('lang', CONFIG_LANG);
 $tpl->assign('page_title', CONFIG_TITLE);
@@ -23,11 +24,11 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 	$auth = new auth;
 
 	if ($modules->check()) {
-		include 'modules/' . $modules->mod . '/' . $modules->page . '.php';
+		include ACP3_ROOT . 'modules/' . $modules->mod . '/' . $modules->page . '.php';
 		$tpl->assign('content', isset($content) ? $content : '');
 	} elseif (!$auth->isUser() && defined('IN_ADM') && $modules->mod != 'users' && $modules->page != 'login') {
 		redirect('users/login');
-	} elseif (is_file('modules/errors/404.php')) {
+	} elseif (is_file(ACP3_ROOT . 'modules/errors/404.php')) {
 		redirect('errors/404');
 	}
 
@@ -36,7 +37,7 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 
 	// Navigationsleisten
 	if ($modules->check('pages', 'functions')) {
-		include_once 'modules/pages/functions.php';
+		include_once ACP3_ROOT . 'modules/pages/functions.php';
 		$tpl->assign('navbar', process_navbar());
 	}
 
