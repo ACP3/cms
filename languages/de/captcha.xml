@@ -9,11 +9,11 @@
 		<message>Bitte auf Groß- und Kleinschreibung achten.</message>
 	</item>
 	<item>
-		<name>description</name>
-		<message>Captchas bieten wirkungsvollen Schutz gegen Spambots.</message>
-	</item>
-	<item>
 		<name>invalid_captcha_entered</name>
 		<message>Das Captcha wurde falsch eingegeben</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Captchas bieten wirkungsvollen Schutz gegen Spambots.</message>
 	</item>
 </language>
