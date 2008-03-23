@@ -9,11 +9,11 @@
 		<message>Please keep in mind, that the captcha is case sensitive</message>
 	</item>
 	<item>
-		<name>description</name>
-		<message>Captchas can block Spambots</message>
-	</item>
-	<item>
 		<name>invalid_captcha_entered</name>
 		<message>The entered captcha is invalid</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Captchas can block Spambots</message>
 	</item>
 </language>
