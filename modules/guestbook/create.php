@@ -32,6 +32,8 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('common', 'wrong_email_format');
 	if (strlen($form['message']) < 3)
 		$errors[] = lang('common', 'message_to_short');
+	if (!$validate->captcha($form['captcha'], $form['hash']))
+		$errors[] = lang('captcha', 'invalid_captcha_entered');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', combo_box($errors));
@@ -80,6 +82,8 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 		$tpl->assign('form', isset($form) ? $form : $defaults);
 	}
+	
+	$tpl->assign('captcha', captcha());
 
 	$content = $tpl->fetch('guestbook/create.html');
 }

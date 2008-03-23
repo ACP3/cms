@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>captcha</name>
+		<message>Captcha</message>
+	</item>
+	<item>
+		<name>case_sensitive</name>
+		<message>Bitte auf Groß- und Kleinschreibung achten.</message>
+	</item>
+	<item>
+		<name>description</name>
+		<message>Captchas bieten wirkungsvollen Schutz gegen Spambots.</message>
+	</item>
+	<item>
+		<name>invalid_captcha_entered</name>
+		<message>Das Captcha wurde falsch eingegeben</message>
+	</item>
+</language>

@@ -7,7 +7,7 @@
  * @subpackage Core
  */
 /**
- * Klasse zur Validierung von bestimmten EintrÃ¤gen
+ * Klasse zur Validierung von bestimmten Einträgen
  *
  * @author Goratsch Webdesign
  * @package ACP3
@@ -16,14 +16,25 @@
 class validate
 {
 	/**
-	 * ÃœberprÃ¼ft, ob alle Daten ein sinnvolles Datum ergeben
+	 * Überpürft, ob der eingegebene Captcha mit dem generierten übereinstimmt
+	 *
+	 * @param string $input
+	 * @param string $hash
+	 * @return boolean
+	 */
+	public function captcha($input, $hash)
+	{
+		return $input != base64_decode($hash) ? false : true;
+	}
+	/**
+	 * Überprüft, ob alle Daten ein sinnvolles Datum ergeben
 	 *
 	 * @param array $values
-	 *  Zu Ã¼berprÃ¼fende Werte
+	 *  Zu überprüfende Werte
 	 * @param string $prefix_start
-	 *  PrÃ¤fix fÃ¼r das VerÃ¶ffentlichungsdatum
+	 *  Präfix für das Veröffentlichungsdatum
 	 * @param string $prefix_end
-	 *  PrÃ¤fix fÃ¼r das Enddatum
+	 *  Präfix für das Enddatum
 	 * @return boolean
 	 */
 	public function date($values, $prefix_start = 'start', $prefix_end = 'end')
@@ -45,12 +56,12 @@ class validate
 		return true;
 	}
 	/**
-	 * ÃœberprÃ¼ft, ob eine Standardkonforme E-Mail-Adresse Ã¼bergeben wurde
+	 * Überprüft, ob eine Standardkonforme E-Mail-Adresse übergeben wurde
 	 *
 	 * @copyright HTML/QuickForm/Rule/Email.php
 	 * 	Suchmuster von PEAR entnommen
 	 * @param string $var
-	 *  Zu Ã¼berprÃ¼fende E-Mail-Adresse
+	 *  Zu überprüfende E-Mail-Adresse
 	 * @return boolean
 	 */
 	public function email($var)
@@ -60,7 +71,7 @@ class validate
 		return preg_match($pattern, $var);
 	}
 	/**
-	 * ÃœberprÃ¼ft eine Variable, ob diese nur aus Ziffern besteht
+	 * Überprüft eine Variable, ob diese nur aus Ziffern besteht
 	 *
 	 * @param mixed $var
 	 * @return boolean
@@ -70,10 +81,10 @@ class validate
 		return preg_match('/^(\d+)$/', $var);
 	}
 	/**
-	 * ÃœberpÃ¼fen, ob es ein unterstÃ¼tztes Bildformat ist
+	 * Überprüfen, ob es ein unterstütztes Bildformat ist
 	 *
 	 * @param string $var
-	 *  Zu Ã¼berprÃ¼fendes Bild
+	 *  Zu überprüfendes Bild
 	 * @return boolean
 	 */
 	public function is_picture($var)

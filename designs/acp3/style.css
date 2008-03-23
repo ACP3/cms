@@ -108,6 +108,16 @@ fieldset {
 	border: 1px solid #c2c2c2;
 	font-size: 100%;
 }
+fieldset dl {
+	text-align: left;
+}
+fieldset fieldset {
+	width: 70%;
+	margin-top: 5px;
+}
+fieldset fieldset.captcha {
+	width: 45%;
+}
 .no-border {
 	border: 0;
 }
@@ -115,9 +125,6 @@ legend {
 	padding: 1px 6px;
 	font: bold 1.1em/20px Arial, sans-serif;
 	color: #069;
-}
-fieldset dl {
-	text-align: left;
 }
 label {
 	font: 1.0em Arial, sans-serif;

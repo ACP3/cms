@@ -7,6 +7,19 @@
  * @subpackage Core
  */
 /**
+ * Erzeugt das Captchafeld für das Template
+ *
+ * @param integer $captcha_length
+ * @return string
+ */
+function captcha($captcha_length = 5)
+{
+	global $tpl;
+	
+	$tpl->assign('hash', base64_encode(salt($captcha_length)));
+	return $tpl->fetch('common/captcha.html');
+}
+/**
  * Gibt je nach angegeben Parametern eine Fehlerbox oder eine Bestätigungsbox aus
  *
  * @param string $text
