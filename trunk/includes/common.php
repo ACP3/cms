@@ -9,10 +9,10 @@
 error_reporting(E_ALL);
 
 // register_globals OFF Emulation
-require_once './includes/globals.php';
+require_once ACP3_ROOT . 'includes/globals.php';
 
 // Konfiguration des ACP3 laden
-require_once './includes/config.php';
+require_once ACP3_ROOT . 'includes/config.php';
 if (!defined('INSTALLED')) {
 	header('Location: installation/');
 	exit;
@@ -20,7 +20,7 @@ if (!defined('INSTALLED')) {
 
 function __autoload($className)
 {
-	require_once './includes/classes/' . $className . '.php';
+	require_once ACP3_ROOT . 'includes/classes/' . $className . '.php';
 }
 
 // Klassen initialisieren
@@ -31,14 +31,14 @@ $config = new config;
 $cache = new cache;
 $breadcrumb = new breadcrumb;
 
-require_once './includes/functions.php';
+require_once ACP3_ROOT . 'includes/functions.php';
 
 // Smarty einbinden
-define('SMARTY_DIR', './includes/smarty/');
+define('SMARTY_DIR', ACP3_ROOT . 'includes/smarty/');
 include SMARTY_DIR . 'Smarty.class.php';
 $tpl = new smarty;
-$tpl->template_dir = './designs/' . CONFIG_DESIGN . '/';
-$tpl->compile_dir = './cache/';
+$tpl->template_dir = ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/';
+$tpl->compile_dir = ACP3_ROOT . 'cache/';
 //$tpl->compile_check = false;
 
 // Einige Konstanten definieren

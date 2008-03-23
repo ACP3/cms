@@ -93,7 +93,7 @@ function comments($module = 0, $entry_id = 0)
 		$emoticons = false;
 
 		if ($modules->check('emoticons', 'functions')) {
-			include_once 'modules/emoticons/functions.php';
+			include_once ACP3_ROOT . 'modules/emoticons/functions.php';
 			$emoticons = true;
 
 			//Emoticons im Formular anzeigen

@@ -16,12 +16,12 @@ $breadcrumb->assign(lang('system', 'extensions'), uri('acp/system/extensions'));
 $breadcrumb->assign(lang('system', 'modules'));
 
 if ($modules->action == 'activate') {
-	if (isset($modules->gen['dir']) && is_file('modules/' . $modules->gen['dir'] . '/module.xml')) {
+	if (isset($modules->gen['dir']) && is_file(ACP3_ROOT . 'modules/' . $modules->gen['dir'] . '/module.xml')) {
 		$info = $modules->parseInfo($modules->gen['dir']);
 		if ($info['protected']) {
 			$text = lang('system', 'mod_deactivate_forbidden');
 		} else {
-			$path = 'modules/' . $modules->gen['dir'] . '/module.xml';
+			$path = ACP3_ROOT . 'modules/' . $modules->gen['dir'] . '/module.xml';
 
 			$xml = simplexml_load_file($path);
 			$xml->info->active = '1';
@@ -34,12 +34,12 @@ if ($modules->action == 'activate') {
 	}
 	$content = combo_box($text, uri('acp/system/modules'));
 } elseif ($modules->action == 'deactivate') {
-	if (isset($modules->gen['dir']) && is_file('modules/' . $modules->gen['dir'] . '/module.xml')) {
+	if (isset($modules->gen['dir']) && is_file(ACP3_ROOT . 'modules/' . $modules->gen['dir'] . '/module.xml')) {
 		$info = $modules->parseInfo($modules->gen['dir']);
 		if ($info['protected']) {
 			$text = lang('system', 'mod_deactivate_forbidden');
 		} else {
-			$path = 'modules/' . $modules->gen['dir'] . '/module.xml';
+			$path = ACP3_ROOT . 'modules/' . $modules->gen['dir'] . '/module.xml';
 
 			$xml = simplexml_load_file($path);
 			$xml->info->active = '0';

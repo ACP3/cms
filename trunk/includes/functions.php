@@ -135,7 +135,7 @@ function lang($module, $key)
 		$lang = !empty($info) ? $info['language'] : CONFIG_LANG;
 	}
 
-	$path = 'languages/' . $lang . '/' . $module . '.xml';
+	$path = ACP3_ROOT . 'languages/' . $lang . '/' . $module . '.xml';
 
 	if (!isset($lang_data[$module][$key]) && is_file($path)) {
 		$xml = simplexml_load_file($path);
@@ -161,7 +161,7 @@ function lang($module, $key)
 function move_file($tmp_filename, $filename, $dir)
 {
 	$ext = strrchr($filename, '.');
-	$path = 'uploads/' . $dir . '/';
+	$path = ACP3_ROOT . 'uploads/' . $dir . '/';
 
 	$new_name = 1;
 	while (file_exists($path . $new_name . $ext)) {

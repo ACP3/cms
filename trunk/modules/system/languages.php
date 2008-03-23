@@ -16,7 +16,7 @@ $breadcrumb->assign(lang('system', 'extensions'), uri('acp/system/extensions'));
 $breadcrumb->assign(lang('system', 'languages'));
 
 if (isset($modules->gen['dir'])) {
-	$dir = is_file('languages/' . $modules->gen['dir'] . '/info.php') ? $modules->gen['dir'] : 0;
+	$dir = is_file(ACP3_ROOT . 'languages/' . $modules->gen['dir'] . '/info.php') ? $modules->gen['dir'] : 0;
 	$bool = false;
 
 	if (!empty($dir)) {
@@ -27,12 +27,12 @@ if (isset($modules->gen['dir'])) {
 	$content = combo_box($text, uri('acp/system/languages'));
 } else {
 	$languages = array();
-	$directories = scandir('languages');
+	$directories = scandir(ACP3_ROOT . 'languages');
 	$count_dir = count($directories);
 	for ($i = 0; $i < $count_dir; $i++) {
 		$lang_info = array();
-		if ($directories[$i] != '.' && $directories[$i] != '..' && file_exists('languages/' . $directories[$i] . '/info.php')) {
-			include 'languages/' . $directories[$i] . '/info.php';
+		if ($directories[$i] != '.' && $directories[$i] != '..' && file_exists(ACP3_ROOT . 'languages/' . $directories[$i] . '/info.php')) {
+			include ACP3_ROOT . 'languages/' . $directories[$i] . '/info.php';
 			$languages[$i]['name'] = $lang_info['name'];
 			$languages[$i]['description'] = $lang_info['description'];
 			$languages[$i]['author'] = $lang_info['author'];

@@ -23,7 +23,7 @@ class cache
 	 */
 	public function check($filename)
 	{
-		if (is_file('cache/sql_' . md5($filename) . '.php')) {
+		if (is_file(ACP3_ROOT . 'cache/sql_' . md5($filename) . '.php')) {
 			return true;
 		}
 		return false;
@@ -40,7 +40,7 @@ class cache
 	public function create($filename, $sql_results)
 	{
 		if (!empty($sql_results)) {
-			$bool = @file_put_contents('cache/sql_' . md5($filename) . '.php', serialize($sql_results));
+			$bool = @file_put_contents(ACP3_ROOT . 'cache/sql_' . md5($filename) . '.php', serialize($sql_results));
 
 			return $bool ? true : false;
 		} elseif ($this->check($filename)) {
@@ -58,7 +58,7 @@ class cache
 	public function delete($filename)
 	{
 		if ($this->check($filename)) {
-			return unlink('cache/sql_' . md5($filename) . '.php');
+			return unlink(ACP3_ROOT . 'cache/sql_' . md5($filename) . '.php');
 		}
 		return false;
 	}
@@ -72,7 +72,7 @@ class cache
 	public function output($filename)
 	{
 		if ($this->check($filename)) {
-			return unserialize(@file_get_contents('cache/sql_' . md5($filename) . '.php'));
+			return unserialize(@file_get_contents(ACP3_ROOT . 'cache/sql_' . md5($filename) . '.php'));
 		}
 		return array();
 	}
@@ -85,8 +85,8 @@ class cache
 		$c_cache_dir = count($cache_dir);
 
 		for ($i = 0; $i < $c_cache_dir; $i++) {
-			if (is_file('cache/' . $cache_dir[$i]) && $cache_dir[$i] != '.htaccess') {
-				unlink('cache/' . $cache_dir[$i]);
+			if (is_file(ACP3_ROOT . 'cache/' . $cache_dir[$i]) && $cache_dir[$i] != '.htaccess') {
+				unlink(ACP3_ROOT . 'cache/' . $cache_dir[$i]);
 			}
 		}
 		return;
