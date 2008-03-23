@@ -61,6 +61,8 @@ function comments($module = 0, $entry_id = 0)
 			$errors[] = lang('common', 'message_to_short');
 		if (!$modules->check($db->escape($module, 2), 'list'))
 			$errors[] = lang('comments', 'module_doesnt_exist');
+		if (!$validate->captcha($form['captcha'], $form['hash']))
+			$errors[] = lang('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', combo_box($errors));
@@ -112,6 +114,8 @@ function comments($module = 0, $entry_id = 0)
 			}
 			$tpl->assign('comments', $comments);
 		}
+
+		$tpl->assign('captcha', captcha());
 
 		// Modul und Datensatznummer mit ins Formular einbinden
 		$tpl->assign('com_form', array('module' => $module, 'entry_id' => $entry_id));

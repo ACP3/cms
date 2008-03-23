@@ -1,0 +1,11 @@
+<fieldset class="captcha">
+	<legend>{lang values="captcha|captcha"}</legend>
+	<p style="margin-top:0;text-align:center">
+		{lang values="captcha|case_sensitive"}
+	</p>
+	<img src="{uri args="captcha/image/hash_`$hash`"}" alt="" />
+	<div>
+		<input type="text" name="form[captcha]" id="captcha" value="" maxlength="5" style="width:auto;display:inline" />
+		<input type="hidden" name="form[hash]" value="{$hash}" class="checkbox" />
+	</div>
+</fieldset>

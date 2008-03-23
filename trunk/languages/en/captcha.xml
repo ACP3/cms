@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>captcha</name>
+		<message>Captcha</message>
+	</item>
+	<item>
+		<name>case_sensitive</name>
+		<message>Please keep in mind, that the captcha is case sensitive</message>
+	</item>
+	<item>
+		<name>description</name>
+		<message>Captchas can block Spambots</message>
+	</item>
+	<item>
+		<name>invalid_captcha_entered</name>
+		<message>The entered captcha is invalid</message>
+	</item>
+</language>
