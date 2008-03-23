@@ -7,7 +7,7 @@
  * @subpackage Core
  */
 /**
- * Klasse zur Validierung von bestimmten Einträgen
+ * Klasse zur Validierung von bestimmten EintrÃ¤gen
  *
  * @author Goratsch Webdesign
  * @package ACP3
@@ -16,7 +16,7 @@
 class validate
 {
 	/**
-	 * Überpürft, ob der eingegebene Captcha mit dem generierten übereinstimmt
+	 * ÃœberpÃ¼rft, ob der eingegebene Captcha mit dem generierten Ã¼bereinstimmt
 	 *
 	 * @param string $input
 	 * @param string $hash
@@ -24,17 +24,17 @@ class validate
 	 */
 	public function captcha($input, $hash)
 	{
-		return $input != base64_decode($hash) ? false : true;
+		return strtolower($input) != strtolower(base64_decode($hash)) ? false : true;
 	}
 	/**
-	 * Überprüft, ob alle Daten ein sinnvolles Datum ergeben
+	 * ÃœberprÃ¼ft, ob alle Daten ein sinnvolles Datum ergeben
 	 *
 	 * @param array $values
-	 *  Zu überprüfende Werte
+	 *  Zu Ã¼berprÃ¼fende Werte
 	 * @param string $prefix_start
-	 *  Präfix für das Veröffentlichungsdatum
+	 *  PrÃ¤fix fÃ¼r das VerÃ¶ffentlichungsdatum
 	 * @param string $prefix_end
-	 *  Präfix für das Enddatum
+	 *  PrÃ¤fix fÃ¼r das Enddatum
 	 * @return boolean
 	 */
 	public function date($values, $prefix_start = 'start', $prefix_end = 'end')
@@ -56,12 +56,12 @@ class validate
 		return true;
 	}
 	/**
-	 * Überprüft, ob eine Standardkonforme E-Mail-Adresse übergeben wurde
+	 * ÃœberprÃ¼ft, ob eine Standardkonforme E-Mail-Adresse Ã¼bergeben wurde
 	 *
 	 * @copyright HTML/QuickForm/Rule/Email.php
 	 * 	Suchmuster von PEAR entnommen
 	 * @param string $var
-	 *  Zu überprüfende E-Mail-Adresse
+	 *  Zu Ã¼berprÃ¼fende E-Mail-Adresse
 	 * @return boolean
 	 */
 	public function email($var)
@@ -71,7 +71,7 @@ class validate
 		return preg_match($pattern, $var);
 	}
 	/**
-	 * Überprüft eine Variable, ob diese nur aus Ziffern besteht
+	 * ÃœberprÃ¼ft eine Variable, ob diese nur aus Ziffern besteht
 	 *
 	 * @param mixed $var
 	 * @return boolean
@@ -81,10 +81,10 @@ class validate
 		return preg_match('/^(\d+)$/', $var);
 	}
 	/**
-	 * Überprüfen, ob es ein unterstütztes Bildformat ist
+	 * ÃœberprÃ¼fen, ob es ein unterstÃ¼tztes Bildformat ist
 	 *
 	 * @param string $var
-	 *  Zu überprüfendes Bild
+	 *  Zu Ã¼berprÃ¼fendes Bild
 	 * @return boolean
 	 */
 	public function is_picture($var)
