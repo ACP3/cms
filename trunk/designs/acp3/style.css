@@ -318,7 +318,10 @@ a.form {
 	padding-left: 15px;
 	text-align: left;
 }
-#sidebar ul.admin ul li a {
+#sidebar ul.admin li ul {
+	display: none;
+}
+#sidebar ul.admin li ul li a {
 	padding-left: 30px;
 }
 #login-sidebar {
