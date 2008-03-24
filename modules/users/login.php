@@ -44,7 +44,8 @@ if ($auth->isUser()) {
 			redirect(0, ROOT_DIR);
 		}
 	} else {
-		combo_box(array(lang('users', 'nickname_or_password_wrong')));
+		$error[] = lang('users', 'nickname_or_password_wrong');
+		$tpl->assign('error_msg', combo_box($error));
 	}
 }
 $content = $tpl->fetch('users/login.html');

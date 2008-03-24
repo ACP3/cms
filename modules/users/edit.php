@@ -51,8 +51,9 @@ if (!empty($modules->id) && $db->select('id', 'users', 'id = \'' . $modules->id 
 
 			// Falls sich der User selbst bearbeitet hat, Cookies und Session aktualisieren
 			if ($modules->id == USER_ID) {
-				$cookie_arr = explode('|', $_COOKIE['ACP3_AUTH']);
-				setcookie('ACP3_AUTH', $form['nickname'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]), time() + 3600, ROOT_DIR);
+				$cookie_arr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
+				$cookie_value = base64_encode($form['nickname'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]));
+				setcookie('ACP3_AUTH', $cookie_value, time() + 3600, '/');
 			}
 
 			$content = combo_box($bool ? lang('users', 'edit_success') : lang('users', 'edit_error'), uri('acp/users'));

@@ -55,7 +55,8 @@ if (!$auth->isUser() || !preg_match('/\d/', USER_ID)) {
 			$bool = $db->update('users', $update_values, 'id = \'' . USER_ID . '\'');
 
 			$cookie_arr = explode('|', $_COOKIE['ACP3_AUTH']);
-			setcookie('ACP3_AUTH', $form['nickname'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]), time() + 3600, ROOT_DIR);
+			$cookie_value = base64_encode($form['nickname'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]));
+			setcookie('ACP3_AUTH', $cookie_value, time() + 3600, '/');
 
 			$content = combo_box($bool ? lang('users', 'edit_profile_success') : lang('users', 'edit_profile_error'), uri('users/home'));
 		}
