@@ -16,7 +16,7 @@ function captcha($captcha_length = 5)
 {
 	global $tpl;
 	
-	$captcha['hash'] = base64_encode(salt($captcha_length));
+	$captcha['hash'] = md5(uniqid(rand(), true));
 	$captcha['length'] = $captcha_length;
 	$tpl->assign('captcha', $captcha);
 	return $tpl->fetch('common/captcha.html');
