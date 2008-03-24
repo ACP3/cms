@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
 	<item>
+		<name>account_exists</name>
+		<message>Für die angegebene E-Mail-Adresse existiert bereits ein Newsletter-Konto</message>
+	</item>
+	<item>
+		<name>account_not_exists</name>
+		<message>Für die angegebene E-Mail-Adresse konnte kein Newsletter-Konto gefunden werden</message>
+	</item>
+	<item>
 		<name>activate</name>
 		<message>Newsletterkonto aktivieren</message>
 	</item>
 	<item>
 		<name>activate_account</name>
 		<message>Newsletterkonto aktivieren</message>
+	</item>
+	<item>
+		<name>activate_error</name>
+		<message>Beim Aktivieren des Newsletter-Kontos ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>activate_success</name>
+		<message>Das Newsletter-Konto wurde erfolgreich aktiviert und kann nun verwendet werden.</message>
 	</item>
 	<item>
 		<name>adm_activate</name>
@@ -73,50 +89,6 @@
 		<message>Newsletterkonten</message>
 	</item>
 	<item>
-		<name>nl_account_exists</name>
-		<message>Für die angegebene E-Mail-Adresse existiert bereits ein Newsletter-Konto</message>
-	</item>
-	<item>
-		<name>nl_account_not_exists</name>
-		<message>Für die angegebene E-Mail-Adresse konnte kein Newsletter-Konto gefunden werden</message>
-	</item>
-	<item>
-		<name>nl_activate_error</name>
-		<message>Beim Aktivieren des Newsletter-Kontos ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>nl_activate_success</name>
-		<message>Das Newsletter-Konto wurde erfolgreich aktiviert und kann nun verwendet werden.</message>
-	</item>
-	<item>
-		<name>nl_subscribe_body</name>
-		<message>Sie haben sich mit der E-Mail-Adresse %1\$s auf %2\$s erfolgreich beim Newsletter angemeldet.\nUm die Registrierung abzuschließen, klicken Sie bitte auf den untenstehenden Link.\nWenn es sich um einen Irrtum handelt, dann ignorieren/löschen Sie diese E-Mail einfach.\n\n</message>
-	</item>
-	<item>
-		<name>nl_subscribe_error</name>
-		<message>Entweder ist ein Fehler beim Eintragen der E-Mail-Adresse in die Datenbank oder beim Versenden der Aktivierungs-E-Mail aufgetreten.</message>
-	</item>
-	<item>
-		<name>nl_subscribe_subject</name>
-		<message>Newsletter auf %s</message>
-	</item>
-	<item>
-		<name>nl_subscribe_success</name>
-		<message>Die E-Mail-Adresse wurde der Datenbank erfolgreich hinzugefügt.\nEs wurde eine E-Mail mit einem Aktivierungslink an Ihre E-Mail-Adresse geschickt.</message>
-	</item>
-	<item>
-		<name>nl_un_subscribe</name>
-		<message>In Newsletter eintragen/austragen</message>
-	</item>
-	<item>
-		<name>nl_unsubscribe_error</name>
-		<message>Beim Löschen des Newsletterkontos ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>nl_unsubscribe_success</name>
-		<message>Das Newsletterkonto wurde erfolgreich gelöscht.</message>
-	</item>
-	<item>
 		<name>settings</name>
 		<message>Newsletter Einstellungen</message>
 	</item>
@@ -131,6 +103,22 @@
 	<item>
 		<name>subscribe</name>
 		<message>Eintragen</message>
+	</item>
+	<item>
+		<name>subscribe_error</name>
+		<message>Entweder ist ein Fehler beim Eintragen der E-Mail-Adresse in die Datenbank oder beim Versenden der Aktivierungs-E-Mail aufgetreten.</message>
+	</item>
+	<item>
+		<name>subscribe_mail_body</name>
+		<message>Sie haben sich mit der E-Mail-Adresse %1\$s auf %2\$s erfolgreich beim Newsletter angemeldet.\nUm die Registrierung abzuschließen, klicken Sie bitte auf den untenstehenden Link.\nWenn es sich um einen Irrtum handelt, dann ignorieren/löschen Sie diese E-Mail einfach.\n\n</message>
+	</item>
+	<item>
+		<name>subscribe_mail_subject</name>
+		<message>Newsletter auf %s</message>
+	</item>
+	<item>
+		<name>subscribe_success</name>
+		<message>Die E-Mail-Adresse wurde der Datenbank erfolgreich hinzugefügt.\nEs wurde eine E-Mail mit einem Aktivierungslink an Ihre E-Mail-Adresse geschickt.</message>
 	</item>
 	<item>
 		<name>test_newsletter</name>
@@ -151,5 +139,13 @@
 	<item>
 		<name>unsubscribe</name>
 		<message>Austragen</message>
+	</item>
+	<item>
+		<name>unsubscribe_error</name>
+		<message>Beim Löschen des Newsletterkontos ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>unsubscribe_success</name>
+		<message>Das Newsletterkonto wurde erfolgreich gelöscht.</message>
 	</item>
 </language>

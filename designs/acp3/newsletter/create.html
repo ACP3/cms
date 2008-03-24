@@ -5,15 +5,14 @@
 			<dt><label for="mail">{lang values="common|email"}</label></dt>
 			<dd><input type="text" name="form[mail]" id="mail" maxlength="120" value="{$form.mail}" /></dd>
 		</dl>
+{$captcha}
 	</fieldset>
-	<div>
 {foreach from=$actions item="row"}
 		<label for="{$row.value}">
-			<input type="radio" name="action" id="{$row.value}" value="{$row.value}"{$row.checked} class="radio" />
+			<input type="radio" name="action" id="{$row.value}" value="{$row.value}"{$row.checked} class="checkbox" />
 			{$row.lang}
 		</label>
 {/foreach}
-	</div>
 	<div class="form-bottom">
 		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
 	</div>

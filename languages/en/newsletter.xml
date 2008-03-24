@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
 	<item>
+		<name>account_exists</name>
+		<message>There is already an newsletter account with the same E-Mail address registered</message>
+	</item>
+	<item>
+		<name>account_not_exists</name>
+		<message>For the stated E-mail address is no newsletter account registered</message>
+	</item>
+	<item>
 		<name>activate</name>
 		<message>Activate newsletter account</message>
 	</item>
 	<item>
 		<name>activate_account</name>
 		<message>Active newsletter account</message>
+	</item>
+	<item>
+		<name>activate_error</name>
+		<message>While activating the newsletter account an error has occured.</message>
+	</item>
+	<item>
+		<name>activate_success</name>
+		<message>The newsletter account was successfully activated and can now be used.</message>
 	</item>
 	<item>
 		<name>adm_activate</name>
@@ -73,50 +89,6 @@
 		<message>Newsletter accounts</message>
 	</item>
 	<item>
-		<name>nl_account_exists</name>
-		<message>There is already an newsletter account with the same E-Mail address registered</message>
-	</item>
-	<item>
-		<name>nl_account_not_exists</name>
-		<message>For the stated E-mail address is no newsletter account registered</message>
-	</item>
-	<item>
-		<name>nl_activate_error</name>
-		<message>While activating the newsletter account an error has occured.</message>
-	</item>
-	<item>
-		<name>nl_activate_success</name>
-		<message>The newsletter account was successfully activated and can now be used.</message>
-	</item>
-	<item>
-		<name>nl_subscribe_body</name>
-		<message>You successfully subscribed with your E-mail address %1\$s to the newsletter of %2\$s.\nTo complete the registration process, please click on the hyperlink below.\nIf you haven\'t subscribed this newsletter, please ignore or delete this E-mail.\n\n</message>
-	</item>
-	<item>
-		<name>nl_subscribe_error</name>
-		<message>Either there has error occured while adding the E-mail address to the database or while sending the activation E-mail.</message>
-	</item>
-	<item>
-		<name>nl_subscribe_subject</name>
-		<message>Newsletter at %s</message>
-	</item>
-	<item>
-		<name>nl_subscribe_success</name>
-		<message>The E-mail address was successfully added to the database.\nWe sent an E-mail with an activationlink to your E-mail address.</message>
-	</item>
-	<item>
-		<name>nl_un_subscribe</name>
-		<message>Subscribe/Unsubscribe the newsletter</message>
-	</item>
-	<item>
-		<name>nl_unsubscribe_error</name>
-		<message>While deleting the newsletter account an error has occured.</message>
-	</item>
-	<item>
-		<name>nl_unsubscribe_success</name>
-		<message>The newsletter account was successfully deleted.</message>
-	</item>
-	<item>
 		<name>settings</name>
 		<message>Newsletter settings</message>
 	</item>
@@ -131,6 +103,22 @@
 	<item>
 		<name>subscribe</name>
 		<message>Subscribe</message>
+	</item>
+	<item>
+		<name>subscribe_error</name>
+		<message>Either there has error occured while adding the E-mail address to the database or while sending the activation E-mail.</message>
+	</item>
+	<item>
+		<name>subscribe_mail_body</name>
+		<message>You successfully subscribed with your E-mail address %1\$s to the newsletter of %2\$s.\nTo complete the registration process, please click on the hyperlink below.\nIf you haven\'t subscribed this newsletter, please ignore or delete this E-mail.\n\n</message>
+	</item>
+	<item>
+		<name>nl_subscribe_mail_subject</name>
+		<message>Newsletter at %s</message>
+	</item>
+	<item>
+		<name>subscribe_success</name>
+		<message>The E-mail address was successfully added to the database.\nWe sent an E-mail with an activationlink to your E-mail address.</message>
 	</item>
 	<item>
 		<name>test_newsletter</name>
@@ -151,5 +139,13 @@
 	<item>
 		<name>unsubscribe</name>
 		<message>Unsubsribe</message>
+	</item>
+	<item>
+		<name>unsubscribe_error</name>
+		<message>While deleting the newsletter account an error has occured.</message>
+	</item>
+	<item>
+		<name>unsubscribe_success</name>
+		<message>The newsletter account was successfully deleted.</message>
 	</item>
 </language>
