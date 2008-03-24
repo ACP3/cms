@@ -18,13 +18,13 @@ if (isset($modules->gen['mail']) && $validate->email($modules->gen['mail']) && i
 }
 
 if ($db->select('id', 'nl_accounts', 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'', 0, 0, 0, 1) != 1)
-	$errors[] = lang('newsletter', 'nl_account_not_exists');
+	$errors[] = lang('newsletter', 'account_not_exists');
 
 if (isset($errors)) {
 	$tpl->assign('error_msg', combo_box($errors));
 } else {
 	$bool = $db->update('nl_accounts', array('hash', ''), 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'');
 
-	$content = combo_box($bool ? lang('newsletter', 'nl_activate_success') : lang('newsletter', 'nl_activate_error'), ROOT_DIR);
+	$content = combo_box($bool ? lang('newsletter', 'activate_success') : lang('newsletter', 'activate_error'), ROOT_DIR);
 }
 ?>

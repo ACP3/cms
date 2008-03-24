@@ -19,7 +19,7 @@ $tpl->assign('description', CONFIG_META_DESCRIPTION);
 
 if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 	$tpl->assign('maintenance_msg', CONFIG_MAINTENANCE_MSG);
-	$tpl->display('offline.html');
+	$tpl->display('maintenance.html');
 } else {
 	$auth = new auth;
 

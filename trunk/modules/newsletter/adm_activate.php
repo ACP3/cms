@@ -12,5 +12,5 @@ if (!defined('IN_ADM'))
 
 $bool = !empty($modules->id) ? $db->update('nl_accounts', array('hash', ''), 'id = \'' . $modules->id . '\'') : false;
 
-$content = combo_box($bool ? lang('newsletter', 'nl_activate_success') : lang('newsletter', 'nl_activate_error'), uri('acp/newsletter'));
+$content = combo_box($bool ? lang('newsletter', 'activate_success') : lang('newsletter', 'activate_error'), uri('acp/newsletter'));
 ?>
