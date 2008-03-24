@@ -9,9 +9,9 @@
 {/if}
 				<h4>{lang values="acp|access_to_modules"}</h4>
 				<ul>
-			{foreach from=$modules item=module}
+{foreach from=$modules item=module}
 					<li><a href="{uri args="acp/`$module.dir`"}">{$module.name}</a></li>
-			{/foreach}
+{/foreach}
 				</ul>
 {if $access_system}
 			</td>
