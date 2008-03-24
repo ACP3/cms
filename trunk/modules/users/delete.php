@@ -27,36 +27,26 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	$admin_user = false;
-	$session_user = false;
+	$self_delete = false;
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'users', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			if ($entry == '1') {
 				$admin_user = true;
 			} else {
+				// Falls sich der User selbst gelöscht hat, diesen auch gleich abmelden
 				if ($entry == USER_ID) {
-					$session_user = true;
+					setcookie('ACP3_AUTH', '', time() - 3600, '/');
+					$self_delete = true;
 				}
 				$bool = $db->delete('users', 'id = \'' . $entry . '\'');
 			}
 		}
-	}
-	// Falls sich der User selbst gelöscht hat, diesen auch gleich abmelden
-	if ($session_user) {
-		if (isset($_COOKIE[session_name()])) {
-			setcookie(session_name(), '', time() - 3600, ROOT_DIR);
-		}
-		setcookie('ACP3_AUTH', '', time() - 3600, ROOT_DIR);
-
-		$_SESSION = array();
-
-		session_destroy();
-		$check_admin = true;
 	}
 	if ($admin_user) {
 		$text = lang('users', 'admin_user_undeletable');
 	} else {
 		$text = $bool ? lang('users', 'delete_success') : lang('users', 'delete_error');
 	}
-	$content = combo_box($text, $session_user ? ROOT_DIR : uri('acp/users'));
+	$content = combo_box($text, $self_delete ? ROOT_DIR : uri('acp/users'));
 }
 ?>
