@@ -1,12 +1,12 @@
 {$error_msg}
 <form action="{$request_uri}" method="post" accept-charset="UTF-8">
-	<fieldset>
+	<fieldset class="no-border">
 		<p>
 			{lang values="users|forgot_pwd_description"}
 		</p>
 		<dl>
 			<dt><label for="nickname">{lang values="users|nickname"}</label></dt>
-			<dd><input type="text" name="form[nickname]" id="name" value="{$form.nickname}" maxlength="30" /></dd>
+			<dd><input type="text" name="form[nickname]" id="nickname" value="{$form.nickname}" maxlength="30" /></dd>
 			<dt><label for="mail">{lang values="common|email"}</label></dt>
 			<dd><input type="text" name="form[mail]" id="mail" value="{$form.mail}" maxlength="120" /></dd>
 		</dl>
