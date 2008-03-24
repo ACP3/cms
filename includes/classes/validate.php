@@ -24,7 +24,14 @@ class validate
 	 */
 	public function captcha($input, $hash)
 	{
-		return strtolower($input) != strtolower(base64_decode($hash)) ? false : true;
+		if (preg_match('/^[a-zA-Z0-9]+$/', $input) && strlen($hash) == 32 && preg_match('/^[a-z0-9]+$/', $hash)) {
+			$path = ACP3_ROOT . 'modules/captcha/generated/' . $hash . strtolower($input);
+			if (file_exists($path)) {
+				@unlink($path);
+				return true;
+			}
+		}
+		return false;
 	}
 	/**
 	 * Überprüft, ob alle Daten ein sinnvolles Datum ergeben
