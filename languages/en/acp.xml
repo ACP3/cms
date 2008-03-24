@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
 	<item>
+		<name>access_to_modules</name>
+		<message>You access to following modules:</message>
+	</item>
+	<item>
 		<name>acp</name>
 		<message>Administration</message>
+	</item>
+	<item>
+		<name>description</name>
+		<message>From here you have the ability, to access all modules you are allowed to.</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Homepage of the administration area</message>
 	</item>
 </language>

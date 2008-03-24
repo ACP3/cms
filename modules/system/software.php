@@ -10,22 +10,6 @@
 if (!defined('IN_ADM'))
 	exit;
 
-//Server Infos
-$server_info[0]['col_left'] = lang('system', 'architecture');
-$server_info[0]['col_right'] = @php_uname('m');
-$server_info[1]['col_left'] = lang('system', 'operating_system');
-$server_info[1]['col_right'] = @php_uname('s') . ' ' . @php_uname('r');
-$server_info[2]['col_left'] = lang('system', 'server_software');
-$server_info[2]['col_right'] = $_SERVER['SERVER_SOFTWARE'];
-$server_info[3]['col_left'] = lang('system', 'php_version');
-$server_info[3]['col_right'] = phpversion();
-$server_info[4]['col_left'] = lang('system', 'mysql_version');
-$server_info[4]['col_right'] = CONFIG_DB_TYPE == 'mysqli' ? mysqli_get_server_info($db->link) : mysql_get_server_info($db->link);
-$server_info[5]['col_left'] = lang('system', 'zend_engine');
-$server_info[5]['col_right'] = zend_version();
-
-$tpl->assign('server_info', $server_info);
-
 //PHP Erweiterungen
 $ext = get_loaded_extensions();
 $ext_count = count($ext);
