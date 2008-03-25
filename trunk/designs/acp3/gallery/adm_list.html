@@ -1,7 +1,7 @@
-<form action="{uri args="acp/gallery/delete_gallery"}" method="post" id="gallery">
+<form action="{uri args="acp/gallery/delete_gallery"}" method="post">
 	<div id="adm-list">
 		<a href="{uri args="acp/gallery/create"}" title="{lang values="gallery|create"}"><img src="{icon path="32/create_gallery"}" alt="{lang values="gallery|create"}" /></a>
-		<a href="javascript:$('#gallery').submit()" title="{lang values="common|delete_marked"}"><img src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" /></a>
+		<input type="image" src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
 		<h2>{lang values="gallery|galleries_overview"}</h2>
 	</div>
 	<hr />

@@ -33,8 +33,8 @@ class auth
 			$cookie = base64_decode($_COOKIE['ACP3_AUTH']);
 			$cookie_arr = explode('|', $cookie);
 
-			$user_check = $db->select('id, pwd', 'users', 'nickname = \'' . $cookie_arr[0] . '\'');
-			if (count($user_check) == '1') {
+			$user_check = $db->select('id, pwd', 'users', 'nickname = \'' . $db->escape($cookie_arr[0]) . '\'');
+			if (count($user_check) == 1) {
 				$db_password = substr($user_check[0]['pwd'], 0, 40);
 				if ($db_password == $cookie_arr[1]) {
 					$this->isUser = true;
@@ -57,7 +57,7 @@ class auth
 	 * 	Der angeforderte Benutzer
 	 * @return mixed
 	 */
-	public function getUserInfo($fields, $user_id = 0)
+	public function getUserInfo($fields, $user_id = '')
 	{
 		if (empty($user_id) && $this->isUser) {
 			$user_id = USER_ID;

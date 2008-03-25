@@ -68,14 +68,19 @@ function date_aligned($mode, $time_stamp, $format = 0)
 	global $auth;
 	static $info = array();
 
-	$info = $auth->getUserInfo('time_zone, dst');
-
 	if (!empty($info)) {
 		$time_zone = $info['time_zone'];
 		$dst = $info['dst'];
 	} else {
-		$time_zone = CONFIG_TIME_ZONE;
-		$dst = CONFIG_DST;
+		$info = $auth->getUserInfo('time_zone, dst');
+
+		if (!empty($info)) {
+			$time_zone = $info['time_zone'];
+			$dst = $info['dst'];
+		} else {
+			$time_zone = CONFIG_TIME_ZONE;
+			$dst = CONFIG_DST;
+		}
 	}
 	$offset = $time_zone + ($dst == '1' ? 3600 : 0);
 
