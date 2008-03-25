@@ -1,7 +1,7 @@
 {if $comments && $module == '0'}
-<form action="{uri args="acp/comments/delete_comments_per_module"}" method="post" id="comments">
+<form action="{uri args="acp/comments/delete_comments_per_module"}" method="post">
 	<div id="adm-list">
-		<a href="javascript:$('#comments').submit()" title="{lang values="common|delete_marked"}"><img src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" /></a>
+		<input type="image" src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
 		<h2>{lang values="comments|comments_overview"}</h2>
 	</div>
 	<hr />
@@ -27,9 +27,9 @@
 {mark name="entries"}
 </form>
 {elseif $comments && $module != '0'}
-<form action="{uri args="acp/comments/delete_comments"}" method="post" id="comments">
+<form action="{uri args="acp/comments/delete_comments"}" method="post">
 	<div id="adm-list">
-		<a href="javascript:$('#comments').submit()" title="{lang values="common|delete_marked"}"><img src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" /></a>
+		<input type="image" src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
 		<h2>{lang values="comments|comments_overview"}</h2>
 	</div>
 	<hr />

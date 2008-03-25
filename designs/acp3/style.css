@@ -384,7 +384,7 @@ a.form {
 	line-height: 40px;
 	text-align: left;
 }
-#adm-list a {
+#adm-list a, #adm-list input {
 	margin: 4px 0 0 8px;
 	float: right;
 }

@@ -201,7 +201,7 @@ class modules
 			$mod_info['name'] = (string) $info->name['lang'] == 'true' ? lang($module, $module) : (string) $info->name;
 			$mod_info['version'] = (string) $info->version['core'] == 'true' ? CONFIG_VERSION : (string) $info->version;
 			$mod_info['active'] = (string) $info->active;
-			$mod_info['tables'] = isset($info->tables) ? explode(',', (string) $info->tables) : false;
+			$mod_info['tables'] = !empty($info->tables) ? explode(',', (string) $info->tables) : false;
 			$mod_info['categories'] = isset($info->categories) ? true : false;
 			$mod_info['protected'] = $info->protected ? true : false;
 			return $mod_info;
