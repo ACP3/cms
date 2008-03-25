@@ -1,6 +1,6 @@
 <?php
 /**
- * register_globals = off emulieren
+ * register_globals = off Emulation und magic_quotes deaktivieren
  *
  * @package ACP3
  * @subpackage Core
@@ -26,7 +26,11 @@ if ((bool)@ini_get('register_globals')) {
 		}
 	}
 }
-if ((bool)@ini_get('magic_quotes_gpc')) {
+
+// Magic Quotes deaktivieren
+set_magic_quotes_runtime(0);
+
+if (get_magic_quotes_gpc()) {
 	/**
 	 * Falls magic_quotes an sind, Slashes entfernen
 	 * wir haben selbst eine Funktion dafür...

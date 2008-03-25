@@ -1,5 +1,5 @@
 {$error_msg}
-<form action="{$request_uri}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+<form action="{$REQUEST_URI}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 	<fieldset style="width:30%">
 		<dl>
 			<dt><label for="code">{lang values="emoticons|code"}</label></dt>
@@ -8,7 +8,7 @@
 			<dd><input type="text" name="form[description]" id="description" value="{$form.description}" maxlength="15" /></dd>
 			<dt>
 				<label for="picture">{lang values="emoticons|replace_picture"}</label>
-				<img src="{$root_dir}uploads/emoticons/{$picture}" alt="" />
+				<img src="{$ROOT_DIR}uploads/emoticons/{$picture}" alt="" />
 			</dt>
 			<dd><input type="file" name="picture" id="picture" /></dd>
 		</dl>
