@@ -12,11 +12,6 @@ ob_start();
 define('ACP3_ROOT', './');
 require ACP3_ROOT . 'includes/common.php';
 
-$tpl->assign('lang', CONFIG_LANG);
-$tpl->assign('page_title', CONFIG_TITLE);
-$tpl->assign('keywords', CONFIG_META_KEYWORDS);
-$tpl->assign('description', CONFIG_META_DESCRIPTION);
-
 if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 	$tpl->assign('maintenance_msg', CONFIG_MAINTENANCE_MSG);
 	$tpl->display('maintenance.html');
@@ -28,7 +23,7 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 		$tpl->assign('content', isset($content) ? $content : '');
 	} elseif (!$auth->isUser() && defined('IN_ADM') && $modules->mod != 'users' && $modules->page != 'login') {
 		redirect('users/login');
-	} elseif (is_file(ACP3_ROOT . 'modules/errors/404.php')) {
+	} else {
 		redirect('errors/404');
 	}
 
@@ -41,9 +36,9 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 		$tpl->assign('navbar', process_navbar());
 	}
 
-	// Template ausgeben
-	$tpl->assign('title', $breadcrumb->output(2));
-	$tpl->assign('breadcrumb', $breadcrumb->output());
+	// Seitentitel und Brotkrümelspur setzen
+	$tpl->assign('TITLE', $breadcrumb->output(2));
+	$tpl->assign('BREADCRUMB', $breadcrumb->output());
 
 	// Falls ein Modul ein eigenes Layout verwenden möchte, dieses auch verweden
 	$tpl->display(defined('CUSTOM_LAYOUT') ? CUSTOM_LAYOUT : 'layout.html');

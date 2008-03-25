@@ -39,15 +39,19 @@ include SMARTY_DIR . 'Smarty.class.php';
 $tpl = new smarty;
 $tpl->template_dir = ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/';
 $tpl->compile_dir = ACP3_ROOT . 'cache/';
-//$tpl->compile_check = false;
+// $tpl->compile_check = false;
 
 // Einige Konstanten definieren
 define('PHP_SELF', htmlentities($_SERVER['PHP_SELF']));
-$tpl->assign('php_self', PHP_SELF);
-$tpl->assign('request_uri', htmlentities($_SERVER['REQUEST_URI']));
-
 define('ROOT_DIR', substr(PHP_SELF, 0, strrpos(PHP_SELF, '/') + 1));
-$tpl->assign('root_dir', ROOT_DIR);
 
-$tpl->assign('design_path', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
+// Einige Template Variablen setzen
+$tpl->assign('PHP_SELF', PHP_SELF);
+$tpl->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
+$tpl->assign('ROOT_DIR', ROOT_DIR);
+$tpl->assign('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
+$tpl->assign('LANG', CONFIG_LANG);
+$tpl->assign('PAGE_TITLE', CONFIG_TITLE);
+$tpl->assign('KEYWORDS', CONFIG_META_KEYWORDS);
+$tpl->assign('DESCRIPTION', CONFIG_META_DESCRIPTION);
 ?>

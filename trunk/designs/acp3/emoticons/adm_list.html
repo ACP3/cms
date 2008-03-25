@@ -22,7 +22,7 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
 				<td><a href="{uri args="acp/emoticons/edit/id_`$row.id`"}" title="{lang values="emoticons|edit"}">{$row.description}</a></td>
 				<td>{$row.code}</td>
-				<td><img src="{$root_dir}uploads/emoticons/{$row.img}" alt="" /></td>
+				<td><img src="{$ROOT_DIR}uploads/emoticons/{$row.img}" alt="" /></td>
 			</tr>
 {/foreach}
 		</tbody>
