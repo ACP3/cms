@@ -290,7 +290,7 @@
 	</item>
 	<item>
 		<name>php_date_function</name>
-		<message><![CDATA[ siehe <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a>-Funktion von PHP ]]></message>
+		<message><![CDATA[siehe <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a>-Funktion von PHP]]></message>
 	</item>
 	<item>
 		<name>php_extensions</name>
