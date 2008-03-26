@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('pages', 'block_title_to_short');
 
 	if (isset($errors)) {
-		$tpl->assign('error_msg', combo_box($errors));
+		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$insert_values = array(
 			'id' => '',
@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('pages_blocks', $insert_values);
 
-		$content = combo_box($bool ? lang('pages', 'create_block_success') : lang('pages', 'create_block_error'), uri('acp/pages/adm_list_blocks'));
+		$content = comboBox($bool ? lang('pages', 'create_block_success') : lang('pages', 'create_block_error'), uri('acp/pages/adm_list_blocks'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

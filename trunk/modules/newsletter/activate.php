@@ -21,10 +21,10 @@ if ($db->select('id', 'nl_accounts', 'mail = \'' . $mail . '\' AND hash = \'' . 
 	$errors[] = lang('newsletter', 'account_not_exists');
 
 if (isset($errors)) {
-	$tpl->assign('error_msg', combo_box($errors));
+	$tpl->assign('error_msg', comboBox($errors));
 } else {
 	$bool = $db->update('nl_accounts', array('hash', ''), 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'');
 
-	$content = combo_box($bool ? lang('newsletter', 'activate_success') : lang('newsletter', 'activate_error'), ROOT_DIR);
+	$content = comboBox($bool ? lang('newsletter', 'activate_success') : lang('newsletter', 'activate_error'), ROOT_DIR);
 }
 ?>

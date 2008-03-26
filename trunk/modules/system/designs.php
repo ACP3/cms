@@ -29,7 +29,7 @@ if (isset($modules->gen['dir'])) {
 	$tpl->template_dir = ACP3_ROOT . 'designs/' . $dir . '/';
 	$tpl->assign('design_path', ROOT_DIR . 'designs/' . $dir . '/');
 
-	$content = combo_box($text, uri('acp/system/designs'));
+	$content = comboBox($text, uri('acp/system/designs'));
 } else {
 	$designs = array();
 	$directories = scandir(ACP3_ROOT . 'designs');

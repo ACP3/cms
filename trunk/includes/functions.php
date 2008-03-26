@@ -32,7 +32,7 @@ function captcha($captcha_length = 5)
  *  Zurück Hyperlink
  * @return string
  */
-function combo_box($text, $forward = 0, $back = 0)
+function comboBox($text, $forward = 0, $back = 0)
 {
 	global $tpl;
 
@@ -63,7 +63,7 @@ function combo_box($text, $forward = 0, $back = 0)
  *  Datumsformat
  * @return mixed
  */
-function date_aligned($mode, $time_stamp, $format = 0)
+function dateAligned($mode, $time_stamp, $format = 0)
 {
 	global $auth;
 	static $info = array();
@@ -84,7 +84,7 @@ function date_aligned($mode, $time_stamp, $format = 0)
 	}
 	$offset = $time_zone + ($dst == '1' ? 3600 : 0);
 
-	// Datum in jeweiliger Formatierung ausgeben
+	// Datum in gewünschter Formatierung ausgeben
 	if ($mode == 1) {
 		$format = !empty($format) ? $format : CONFIG_DATE;
 		return gmdate($format, $time_stamp + $offset);
@@ -108,7 +108,7 @@ function date_aligned($mode, $time_stamp, $format = 0)
  * @return string
  * 	Die Dateigröße als Fließkommazahl, mit der dazugehörigen Einheit
  */
-function calc_filesize($value)
+function calcFilesize($value)
 {
 	$units = array(
 		0 => 'Byte',
@@ -165,11 +165,11 @@ function lang($module, $key)
  * @return array
  *  Gibt ein Array mit dem Namen und der Größe der neuen Datei aus
  */
-function move_file($tmp_filename, $filename, $dir)
+function moveFile($tmp_filename, $filename, $dir)
 {
-	$ext = strrchr($filename, '.');
 	$path = ACP3_ROOT . 'uploads/' . $dir . '/';
-
+	$ext = strrchr($filename, '.');
+	
 	$new_name = 1;
 	while (file_exists($path . $new_name . $ext)) {
 		$new_name++;
@@ -179,7 +179,7 @@ function move_file($tmp_filename, $filename, $dir)
 			echo sprintf(lang('common', 'upload_error'), $filename);
 		} else {
 			$new_file['name'] = $new_name . $ext;
-			$new_file['size'] = calc_filesize(filesize($path . $new_file['name']));
+			$new_file['size'] = calcFilesize(filesize($path . $new_file['name']));
 
 			return $new_file;
 		}
@@ -244,22 +244,6 @@ function pagination($rows)
 	}
 }
 /**
- * Überprüft, ob eine Seite öffentlich zugänglich ist
- *
- * @param integer $start_time
- * 	Startdatum
- * @param integer $end_time
- * 	Enddatum
- * @return boolean
- */
-function publish_check($start_time, $end_time)
-{
-	if ($start_time == $end_time  && $start_time <= date_aligned(2, time()) || $start_time != $end_time && $start_time <= date_aligned(2, time()) && $end_time >= date_aligned(2, time())) {
-		return true;
-	}
-	return false;
-}
-/**
  * Zeigt Dropdown-Menüs für die Veröffentlichungsdauer von Inhalten an
  *
  * @param string $mode
@@ -268,11 +252,11 @@ function publish_check($start_time, $end_time)
  * 	Die Zeitstempel des Eintrages
  * @return string
  */
-function publication_period($mode, $value = '')
+function publicationPeriod($mode, $value = '')
 {
 	global $tpl;
 
-	$get_year = date_aligned(1, time(), 'Y');
+	$get_year = dateAligned(1, time(), 'Y');
 	$date = array(
 		'day' => 'j|1|31',
 		'month' => 'n|1|12',
@@ -281,58 +265,58 @@ function publication_period($mode, $value = '')
 		'min' => 'i|0|59'
 	);
 	if (!empty($value)) {
-		$date_arr = explode('.', date_aligned(1, $value, 'j.n.Y.G.i'));
+		$date_arr = explode('.', dateAligned(1, $value, 'j.n.Y.G.i'));
 	}
 
 	$tpl->assign('mode', $mode);
 
 	// Tag
 	$day_arr = explode('|', $date['day']);
-	$time = !isset($date_arr[0]) ? date_aligned(1, time(), $day_arr[0]) : $date_arr[0];
+	$time = !isset($date_arr[0]) ? dateAligned(1, time(), $day_arr[0]) : $date_arr[0];
 	$day = NULL;
 	for ($day_arr[1]; $day_arr[1] <= $day_arr[2]; $day_arr[1]++) {
 		$day[$day_arr[1]]['value'] = $day_arr[1];
-		$day[$day_arr[1]]['selected'] = select_entry($mode . '_day', $day_arr[1], $time);
+		$day[$day_arr[1]]['selected'] = selectEntry($mode . '_day', $day_arr[1], $time);
 	}
 	$tpl->assign('day', $day);
 
 	// Monat
 	$month_arr = explode('|', $date['month']);
-	$time = !isset($date_arr[1]) ? date_aligned(1, time(), $month_arr[0]) : $date_arr[1];
+	$time = !isset($date_arr[1]) ? dateAligned(1, time(), $month_arr[0]) : $date_arr[1];
 	$month = NULL;
 	for ($month_arr[1]; $month_arr[1] <= $month_arr[2]; $month_arr[1]++) {
 		$month[$month_arr[1]]['value'] = $month_arr[1];
-		$month[$month_arr[1]]['selected'] = select_entry($mode . '_month', $month_arr[1], $time);
+		$month[$month_arr[1]]['selected'] = selectEntry($mode . '_month', $month_arr[1], $time);
 	}
 	$tpl->assign('month', $month);
 
 	// Jahr
 	$year_arr = explode('|', $date['year']);
-	$time = !isset($date_arr[2]) ? date_aligned(1, time(), $year_arr[0]) : $date_arr[2];
+	$time = !isset($date_arr[2]) ? dateAligned(1, time(), $year_arr[0]) : $date_arr[2];
 	$year = NULL;
 	for ($year_arr[1]; $year_arr[1] <= $year_arr[2]; $year_arr[1]++) {
 		$year[$year_arr[1]]['value'] = $year_arr[1];
-		$year[$year_arr[1]]['selected'] = select_entry($mode . '_year', $year_arr[1], $time);
+		$year[$year_arr[1]]['selected'] = selectEntry($mode . '_year', $year_arr[1], $time);
 	}
 	$tpl->assign('year', $year);
 
 	// Stunde
 	$hour_arr = explode('|', $date['hour']);
-	$time = !isset($date_arr[3]) ? date_aligned(1, time(), $hour_arr[0]) : $date_arr[3];
+	$time = !isset($date_arr[3]) ? dateAligned(1, time(), $hour_arr[0]) : $date_arr[3];
 	$hour = NULL;
 	for ($hour_arr[1]; $hour_arr[1] <= $hour_arr[2]; $hour_arr[1]++) {
 		$hour[$hour_arr[1]]['value'] = $hour_arr[1];
-		$hour[$hour_arr[1]]['selected'] = select_entry($mode . '_hour', $hour_arr[1], $time);
+		$hour[$hour_arr[1]]['selected'] = selectEntry($mode . '_hour', $hour_arr[1], $time);
 	}
 	$tpl->assign('hour', $hour);
 
 	// Minute
 	$min_arr = explode('|', $date['min']);
-	$time = !isset($date_arr[4]) ? date_aligned(1, time(), $min_arr[0]) : $date_arr[4];
+	$time = !isset($date_arr[4]) ? dateAligned(1, time(), $min_arr[0]) : $date_arr[4];
 	$min = NULL;
 	for ($min_arr[1]; $min_arr[1] <= $min_arr[2]; $min_arr[1]++) {
 		$min[$min_arr[1]]['value'] = $min_arr[1];
-		$min[$min_arr[1]]['selected'] = select_entry($mode . '_min', $min_arr[1], $time);
+		$min[$min_arr[1]]['selected'] = selectEntry($mode . '_min', $min_arr[1], $time);
 	}
 	$tpl->assign('min', $min);
 
@@ -381,7 +365,7 @@ function salt($str_length)
  *  HTML-Attribut, um Eintrag zu selektieren
  * @return string
  */
-function select_entry($name, $value, $field_value = '', $attr = 'selected')
+function selectEntry($name, $value, $field_value = '', $attr = 'selected')
 {
 	$attr = ' ' . $attr . '="' . $attr . '"';
 
@@ -412,14 +396,14 @@ function select_entry($name, $value, $field_value = '', $attr = 'selected')
  * 	Der Wert der aktuell eingestellten Zeitzone
  * @return array
  */
-function time_zones($value)
+function timeZones($value)
 {
 	$time_zones = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.75, 13, 14);
 	$time_zone = array();
 	$i = 0;
 	foreach ($time_zones as $row) {
 		$time_zone[$i]['value'] = $row * 3600;
-		$time_zone[$i]['selected'] = select_entry('time_zone', $row * 3600, $value);
+		$time_zone[$i]['selected'] = selectEntry('time_zone', $row * 3600, $value);
 		$time_zone[$i]['lang'] = lang('common', 'utc' . $row);
 		$i++;
 	}

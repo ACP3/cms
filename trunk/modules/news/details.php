@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$date = ' AND (start = end AND start <= \'' . date_aligned(2, time()) . '\' OR start != end AND start <= \'' . date_aligned(2, time()) . '\' AND end >= \'' . date_aligned(2, time()) . '\')';
+$date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
 
 if (!empty($modules->id) && $db->select('id', 'news', 'id = \'' . $modules->id . '\'' . $date, 0, 0, 0, 1) == 1) {
 	// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
@@ -43,7 +43,7 @@ if (!empty($modules->id) && $db->select('id', 'news', 'id = \'' . $modules->id .
 	$breadcrumb->assign($category[0]['name'], uri('news/list/cat_' . $news[0]['category_id']));
 	$breadcrumb->assign($news[0]['headline']);
 
-	$news[0]['date'] = date_aligned(1, $news[0]['start']);
+	$news[0]['date'] = dateAligned(1, $news[0]['start']);
 	$news[0]['headline'] = $news[0]['headline'];
 	$news[0]['text'] = $db->escape($news[0]['text'], 3);
 	$news[0]['uri'] = $db->escape($news[0]['uri'], 3);

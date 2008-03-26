@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('common', 'wrong_email_format');
 
 	if (isset($errors)) {
-		$tpl->assign('error_msg', combo_box($errors));
+		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$form['address'] = $db->escape($form['address'], 2);
 		$form['telephone'] = $db->escape($form['telephone']);
@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = $config->module('contact', $form);
 
-		$content = combo_box($bool ? lang('contact', 'edit_success') : lang('contact', 'edit_error'), uri('acp/contact'));
+		$content = comboBox($bool ? lang('contact', 'edit_success') : lang('contact', 'edit_error'), uri('acp/contact'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

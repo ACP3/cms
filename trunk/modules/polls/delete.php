@@ -16,13 +16,13 @@ elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->
 	$entries = $modules->gen['entries'];
 
 if (!isset($entries)) {
-	$content = combo_box(array(lang('common', 'no_entries_selected')));
+	$content = comboBox(array(lang('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = '';
 	foreach ($entries as $entry) {
 		$marked_entries.= $entry . '|';
 	}
-	$content = combo_box(lang('polls', 'confirm_delete'), uri('acp/polls/delete/entries_' . $marked_entries), uri('acp/polls'));
+	$content = comboBox(lang('polls', 'confirm_delete'), uri('acp/polls/delete/entries_' . $marked_entries), uri('acp/polls'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
@@ -33,6 +33,6 @@ if (!isset($entries)) {
 			$bool3 = $db->delete('poll_votes', 'poll_id = \'' . $entry . '\'');
 		}
 	}
-	$content = combo_box($bool && $bool2 && $bool3 ? lang('polls', 'delete_success') : lang('polls', 'delete_error'), uri('acp/polls'));
+	$content = comboBox($bool && $bool2 && $bool3 ? lang('polls', 'delete_success') : lang('polls', 'delete_error'), uri('acp/polls'));
 }
 ?>

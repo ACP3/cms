@@ -35,13 +35,13 @@ if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id 
 			$errors[] = lang('files', 'select_category');
 
 		if (isset($errors)) {
-			$tpl->assign('error_msg', combo_box($errors));
+			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$new_file_sql = null;
 			// Falls eine neue Datei angegeben wurde, Änderungen durchführen
 			if (isset($file)) {
 				if (is_array($file)) {
-					$result = move_file($file['tmp_name'], $file['name'], 'files');
+					$result = moveFile($file['tmp_name'], $file['name'], 'files');
 					$new_file = $result['name'];
 					$filesize = $result['size'];
 				} elseif (is_string($file)) {
@@ -55,8 +55,8 @@ if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id 
 					'size' => $filesize,
 				);
 			}
-			$start_date = date_aligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
-			$end_date = date_aligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
+			$start_date = dateAligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
+			$end_date = dateAligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
 
 			$update_values = array(
 				'start' => $start_date,
@@ -73,28 +73,28 @@ if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id 
 
 			$cache->create('files_details_id_' . $modules->id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, c.name AS category_name', 'files AS f, ' . CONFIG_DB_PRE . 'categories AS c', 'f.id = \'' . $modules->id . '\' AND f.category_id = c.id'));
 
-			$content = combo_box($bool ? lang('files', 'edit_success') : lang('files', 'edit_error'), uri('acp/files'));
+			$content = comboBox($bool ? lang('files', 'edit_success') : lang('files', 'edit_error'), uri('acp/files'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$dl = $db->select('start, end, category_id, file, size, link_title, text', 'files', 'id = \'' . $modules->id . '\'');
 		$dl[0]['text'] = $db->escape($dl[0]['text'], 3);
 		// Datumsauswahl
-		$tpl->assign('start_date', publication_period('start', $dl[0]['start']));
-		$tpl->assign('end_date', publication_period('end', $dl[0]['end']));
+		$tpl->assign('start_date', publicationPeriod('start', $dl[0]['start']));
+		$tpl->assign('end_date', publicationPeriod('end', $dl[0]['end']));
 
 		$unit = trim(strrchr($dl[0]['size'], ' '));
 
 		$units[0]['value'] = 'Byte';
-		$units[0]['selected'] = select_entry('unit', 'Byte', $unit);
+		$units[0]['selected'] = selectEntry('unit', 'Byte', $unit);
 		$units[1]['value'] = 'KiB';
-		$units[1]['selected'] = select_entry('unit', 'KiB', $unit);
+		$units[1]['selected'] = selectEntry('unit', 'KiB', $unit);
 		$units[2]['value'] = 'MiB';
-		$units[2]['selected'] = select_entry('unit', 'MiB', $unit);
+		$units[2]['selected'] = selectEntry('unit', 'MiB', $unit);
 		$units[3]['value'] = 'GiB';
-		$units[3]['selected'] = select_entry('unit', 'GiB', $unit);
+		$units[3]['selected'] = selectEntry('unit', 'GiB', $unit);
 		$units[4]['value'] = 'TiB';
-		$units[4]['selected'] = select_entry('unit', 'TiB', $unit);
+		$units[4]['selected'] = selectEntry('unit', 'TiB', $unit);
 		$tpl->assign('units', $units);
 
 		$dl[0]['filesize'] = substr($dl[0]['size'], 0, strpos($dl[0]['size'], ' '));

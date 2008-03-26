@@ -16,13 +16,13 @@ elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->
 	$entries = $modules->gen['entries'];
 
 if (!isset($entries)) {
-	$content = combo_box(array(lang('common', 'no_entries_selected')));
+	$content = comboBox(array(lang('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = '';
 	foreach ($entries as $entry) {
 		$marked_entries.= $entry . '|';
 	}
-	$content = combo_box(lang('emoticons', 'confirm_delete'), uri('acp/emoticons/delete/entries_' . $marked_entries), uri('acp/emoticons'));
+	$content = comboBox(lang('emoticons', 'confirm_delete'), uri('acp/emoticons/delete/entries_' . $marked_entries), uri('acp/emoticons'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
@@ -37,6 +37,6 @@ if (!isset($entries)) {
 	}
 	$cache->create('emoticons', $db->select('code, description, img', 'emoticons'));
 
-	$content = combo_box($bool ? lang('emoticons', 'delete_success') : lang('emoticons', 'delete_error'), uri('acp/emoticons'));
+	$content = comboBox($bool ? lang('emoticons', 'delete_success') : lang('emoticons', 'delete_error'), uri('acp/emoticons'));
 }
 ?>

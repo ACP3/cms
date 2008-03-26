@@ -27,11 +27,11 @@ if (!empty($modules->id) && $db->select('id', 'emoticons', 'id = \'' . $modules-
 			$errors[] = lang('emoticons', 'select_picture');
 
 		if (isset($errors)) {
-			$tpl->assign('error_msg', combo_box($errors));
+			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$new_file_sql = null;
 			if (isset($file)) {
-				$result = move_file($file['tmp_name'], $file['name'], 'emoticons');
+				$result = moveFile($file['tmp_name'], $file['name'], 'emoticons');
 				$new_file_sql = array('img' => $result['name'],);
 			}
 
@@ -47,7 +47,7 @@ if (!empty($modules->id) && $db->select('id', 'emoticons', 'id = \'' . $modules-
 
 			$cache->create('emoticons', $db->select('code, description, img', 'emoticons'));
 
-			$content = combo_box($bool ? lang('emoticons', 'edit_success') : lang('emoticons', 'edit_error'), uri('acp/emoticons'));
+			$content = comboBox($bool ? lang('emoticons', 'edit_success') : lang('emoticons', 'edit_error'), uri('acp/emoticons'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

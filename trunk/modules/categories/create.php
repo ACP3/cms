@@ -30,11 +30,11 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('categories', 'category_already_exists');
 
 	if (isset($errors)) {
-		$tpl->assign('error_msg', combo_box($errors));
+		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$file_sql = null;
 		if (!empty($file)) {
-			$result = move_file($file['tmp_name'], $file['name'], 'categories');
+			$result = moveFile($file['tmp_name'], $file['name'], 'categories');
 			$file_sql = array('picture' => $result['name']);
 		}
 
@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
 
 		$cache->create('categories_' . $form['module'], $db->select('id, name, picture, description', 'categories', 'module = \'' . $form['module'] . '\'', 'name ASC'));
 
-		$content = combo_box($bool ? lang('categories', 'create_success') : lang('categories', 'create_error'), uri('acp/categories'));
+		$content = comboBox($bool ? lang('categories', 'create_success') : lang('categories', 'create_error'), uri('acp/categories'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
@@ -62,7 +62,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 	foreach ($mod_list as $name => $info) {
 		if ($info['active'] && $info['categories']) {
-			$mod_list[$name]['selected'] = select_entry('module', $info['dir']);
+			$mod_list[$name]['selected'] = selectEntry('module', $info['dir']);
 		} else {
 			unset($mod_list[$name]);
 		}

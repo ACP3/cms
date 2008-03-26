@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
 	if (count($flood) == '1') {
 		$flood_time = $flood[0]['date'] + CONFIG_FLOOD;
 	}
-	$time = date_aligned(2, time());
+	$time = dateAligned(2, time());
 
 	if (isset($flood_time) && $flood_time > $time)
 		$errors[] = sprintf(lang('common', 'flood_no_entry_possible'), $flood_time - $time);
@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('captcha', 'invalid_captcha_entered');
 
 	if (isset($errors)) {
-		$tpl->assign('error_msg', combo_box($errors));
+		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$insert_values = array(
 			'id' => '',
@@ -51,14 +51,14 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('guestbook', $insert_values);
 
-		$content = combo_box($bool ? lang('guestbook', 'create_success') : lang('guestbook', 'create_error'), uri('guestbook'));
+		$content = comboBox($bool ? lang('guestbook', 'create_success') : lang('guestbook', 'create_error'), uri('guestbook'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Emoticons einbinden
 	if ($modules->check('emoticons', 'functions')) {
 		include_once ACP3_ROOT . 'modules/emoticons/functions.php';
-		$tpl->assign('emoticons', emoticons_list());
+		$tpl->assign('emoticons', emoticonsList());
 	}
 	// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
 	if ($auth->isUser(USER_ID)) {

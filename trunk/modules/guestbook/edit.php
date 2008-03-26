@@ -20,7 +20,7 @@ if (!empty($modules->id) && $db->select('id', 'guestbook', 'id = \'' . $modules-
 			$errors[] = lang('common', 'message_to_short');
 
 		if (isset($errors)) {
-			$tpl->assign('error_msg', combo_box($errors));
+			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
 				'name' => $db->escape($form['name']),
@@ -29,7 +29,7 @@ if (!empty($modules->id) && $db->select('id', 'guestbook', 'id = \'' . $modules-
 
 			$bool = $db->update('guestbook', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$content = combo_box($bool ? lang('guestbook', 'edit_success') : lang('guestbook', 'edit_error'), uri('acp/guestbook'));
+			$content = comboBox($bool ? lang('guestbook', 'edit_success') : lang('guestbook', 'edit_error'), uri('acp/guestbook'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

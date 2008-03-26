@@ -29,11 +29,11 @@ if (!empty($modules->id) && $db->select('id', 'categories', 'id = \'' . $modules
 			$errors[] = lang('categories', 'category_already_exists');
 
 		if (isset($errors)) {
-			$tpl->assign('error_msg', combo_box($errors));
+			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$new_file_sql = null;
 			if (isset($file) && is_array($file)) {
-				$result = move_file($file['tmp_name'], $file['name'], 'categories');
+				$result = moveFile($file['tmp_name'], $file['name'], 'categories');
 				$new_file_sql = array('picture' => $result['name']);
 			}
 
@@ -51,7 +51,7 @@ if (!empty($modules->id) && $db->select('id', 'categories', 'id = \'' . $modules
 
 			$cache->create('categories_' . $db->escape($category[0]['module'], 3), $db->select('id, name, picture, description', 'categories', 'module = \'' . $db->escape($category[0]['module'], 3) . '\'', 'name ASC'));
 
-			$content = combo_box($bool ? lang('categories', 'edit_success') : lang('categories', 'edit_error'), uri('acp/categories'));
+			$content = comboBox($bool ? lang('categories', 'edit_success') : lang('categories', 'edit_error'), uri('acp/categories'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

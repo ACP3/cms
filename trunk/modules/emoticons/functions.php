@@ -13,7 +13,7 @@
  * 	Die ID des Eingabefeldes, in welches die Emoticons eingefügt werden sollen
  * @return string
  */
-function emoticons_list($field_id = 0)
+function emoticonsList($field_id = 0)
 {
 	global $cache, $db, $tpl;
 
@@ -38,7 +38,7 @@ function emoticons_list($field_id = 0)
  *  Zu durchsuchender Text nach Zeichen
  * @return string
  */
-function emoticons_replace($string)
+function emoticonsReplace($string)
 {
 	global $cache, $db;
 	static $emoticons = array();

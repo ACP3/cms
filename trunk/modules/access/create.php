@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('access', 'select_modules');
 
 	if (isset($errors)) {
-		$tpl->assign('error_msg', combo_box($errors));
+		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		// String für die einzelnen Zugriffslevel auf die Module erstellen
 		$form['modules']['errors'] = '2';
@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('access', $insert_values);
 
-		$content = combo_box($bool ? lang('access', 'create_success') : lang('access', 'create_error'), uri('acp/access'));
+		$content = comboBox($bool ? lang('access', 'create_success') : lang('access', 'create_error'), uri('acp/access'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

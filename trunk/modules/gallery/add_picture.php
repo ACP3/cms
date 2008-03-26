@@ -37,9 +37,9 @@ if (isset($_POST['submit'])) {
 	$errors[] = lang('gallery', 'only_png_jpg_gif_allowed');
 
 	if (isset($errors)) {
-		$tpl->assign('error_msg', combo_box($errors));
+		$tpl->assign('error_msg', comboBox($errors));
 	} else {
-		$result = move_file($file['tmp_name'], $file['name'], 'gallery');
+		$result = moveFile($file['tmp_name'], $file['name'], 'gallery');
 
 		$insert_values = array(
 		'id' => '',
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 
 		$cache->create('gallery_pics_id_' . $form['gallery'], $db->select('id', 'galpics', 'gallery_id = \'' . $modules->id . '\'', 'id ASC'));
 
-		$content = combo_box($bool ? lang('gallery', 'add_picture_success') : lang('gallery', 'add_picture_error'), uri('acp/gallery/add_picture/id_' . $form['gallery'] . '/pic_' . ($pic + 1)));
+		$content = comboBox($bool ? lang('gallery', 'add_picture_success') : lang('gallery', 'add_picture_error'), uri('acp/gallery/add_picture/id_' . $form['gallery'] . '/pic_' . ($pic + 1)));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
@@ -61,8 +61,8 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$c_galleries = count($galleries);
 
 	for ($i = 0; $i < $c_galleries; $i++) {
-		$galleries[$i]['selected'] = select_entry('gallery', $galleries[$i]['id'], $modules->id);
-		$galleries[$i]['date'] = date_aligned(1, $galleries[$i]['start']);
+		$galleries[$i]['selected'] = selectEntry('gallery', $galleries[$i]['id'], $modules->id);
+		$galleries[$i]['date'] = dateAligned(1, $galleries[$i]['start']);
 		$galleries[$i]['name'] = $galleries[$i]['name'];
 	}
 

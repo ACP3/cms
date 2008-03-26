@@ -24,7 +24,7 @@ if (isset($modules->gen['dir'])) {
 	}
 	$text = $bool ? lang('system', 'languages_edit_success') : lang('system', 'languages_edit_error');
 
-	$content = combo_box($text, uri('acp/system/languages'));
+	$content = comboBox($text, uri('acp/system/languages'));
 } else {
 	$languages = array();
 	$directories = scandir(ACP3_ROOT . 'languages');

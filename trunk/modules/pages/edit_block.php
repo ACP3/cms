@@ -27,7 +27,7 @@ if (!empty($modules->id) && $db->select('id', 'pages_blocks', 'id = \'' . $modul
 			$errors[] = lang('pages', 'block_title_to_short');
 
 		if (isset($errors)) {
-			$tpl->assign('error_msg', combo_box($errors));
+			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
 				'index_name' => $db->escape($form['index_name']),
@@ -36,7 +36,7 @@ if (!empty($modules->id) && $db->select('id', 'pages_blocks', 'id = \'' . $modul
 
 			$bool = $db->update('pages_blocks', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$content = combo_box($bool ? lang('pages', 'edit_block_success') : lang('pages', 'edit_block_error'), uri('acp/pages/adm_list_blocks'));
+			$content = comboBox($bool ? lang('pages', 'edit_block_success') : lang('pages', 'edit_block_error'), uri('acp/pages/adm_list_blocks'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

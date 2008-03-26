@@ -44,11 +44,11 @@ if (empty($module) || !empty($module) && $db->select('id', 'comments', 'module =
 	if ($c_comments > 0) {
 		$tpl->assign('pagination', pagination($db->select('id', 'comments', 'module = \'' . $module . '\'', 0, 0, 0, 1)));
 		for ($i = 0; $i < $c_comments; $i++) {
-			$comments[$i]['date'] = date_aligned(1, $comments[$i]['date']);
+			$comments[$i]['date'] = dateAligned(1, $comments[$i]['date']);
 			$comments[$i]['name'] = $comments[$i]['name'];
 			$comments[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $comments[$i]['message']);
 			if ($emoticons) {
-				$comments[$i]['message'] = emoticons_replace($comments[$i]['message']);
+				$comments[$i]['message'] = emoticonsReplace($comments[$i]['message']);
 			}
 		}
 		$tpl->assign('comments', $comments);

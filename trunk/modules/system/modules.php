@@ -32,7 +32,7 @@ if ($modules->action == 'activate') {
 	} else {
 		$text = lang('system', 'mod_activate_error');
 	}
-	$content = combo_box($text, uri('acp/system/modules'));
+	$content = comboBox($text, uri('acp/system/modules'));
 } elseif ($modules->action == 'deactivate') {
 	if (isset($modules->gen['dir']) && is_file(ACP3_ROOT . 'modules/' . $modules->gen['dir'] . '/module.xml')) {
 		$info = $modules->parseInfo($modules->gen['dir']);
@@ -50,7 +50,7 @@ if ($modules->action == 'activate') {
 	} else {
 		$text = lang('system', 'mod_deactivate_error');
 	}
-	$content = combo_box($text, uri('acp/system/modules'));
+	$content = comboBox($text, uri('acp/system/modules'));
 } else {
 	$mod_list = $modules->modulesList();
 

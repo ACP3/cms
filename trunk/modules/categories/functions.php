@@ -22,7 +22,7 @@ function categoriesList($module, $page, $category = '') {
 		
 		if ($c_categories > 0) {
 			for ($i = 0; $i < $c_categories; $i++) {
-				$categories[$i]['selected'] = select_entry('cat', $categories[$i]['id'], $category);
+				$categories[$i]['selected'] = selectEntry('cat', $categories[$i]['id'], $category);
 				$categories[$i]['name'] = $categories[$i]['name'];
 			}
 			return $categories;

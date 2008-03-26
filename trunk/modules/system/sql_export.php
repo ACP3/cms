@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('system', 'select_export_type');
 
 	if (isset($errors)) {
-		$tpl->assign('error_msg', combo_box($errors));
+		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$structure = '';
 		$data = '';
@@ -67,7 +67,7 @@ if (!isset($_POST['submit']) || isset($errors)) {
 		if (is_array($info['tables'])) {
 			foreach ($info['tables'] as $table) {
 				$tables[$table]['name'] = CONFIG_DB_PRE . $table;
-				$tables[$table]['selected'] = select_entry('tables', $table);
+				$tables[$table]['selected'] = selectEntry('tables', $table);
 			}
 		}
 	}
@@ -75,14 +75,14 @@ if (!isset($_POST['submit']) || isset($errors)) {
 	$tpl->assign('tables', $tables);
 
 	// Ausgabe
-	$output[0]['selected'] = select_entry('output', 'file', 'file', 'checked');
-	$output[1]['selected'] = select_entry('output', 'text', 'file', 'checked');
+	$output[0]['selected'] = selectEntry('output', 'file', 'file', 'checked');
+	$output[1]['selected'] = selectEntry('output', 'text', 'file', 'checked');
 	$tpl->assign('output', $output);
 
 	// Exportart
-	$export_type[0]['selected'] = select_entry('export_type', 'complete', 'complete', 'checked');
-	$export_type[1]['selected'] = select_entry('export_type', 'structure', 'complete', 'checked');
-	$export_type[2]['selected'] = select_entry('export_type', 'data', 'complete', 'checked');
+	$export_type[0]['selected'] = selectEntry('export_type', 'complete', 'complete', 'checked');
+	$export_type[1]['selected'] = selectEntry('export_type', 'structure', 'complete', 'checked');
+	$export_type[2]['selected'] = selectEntry('export_type', 'data', 'complete', 'checked');
 	$tpl->assign('export_type', $export_type);
 
 }

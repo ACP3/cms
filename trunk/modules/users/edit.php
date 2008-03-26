@@ -28,7 +28,7 @@ if (!empty($modules->id) && $db->select('id', 'users', 'id = \'' . $modules->id 
 			$errors[] = lang('users', 'type_in_pwd');
 
 		if (isset($errors)) {
-			$tpl->assign('error_msg', combo_box($errors));
+			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$new_pwd_sql = null;
 			// Neues Passwort
@@ -56,7 +56,7 @@ if (!empty($modules->id) && $db->select('id', 'users', 'id = \'' . $modules->id 
 				setcookie('ACP3_AUTH', $cookie_value, time() + 3600, '/');
 			}
 
-			$content = combo_box($bool ? lang('users', 'edit_success') : lang('users', 'edit_error'), uri('acp/users'));
+			$content = comboBox($bool ? lang('users', 'edit_success') : lang('users', 'edit_error'), uri('acp/users'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
@@ -67,7 +67,7 @@ if (!empty($modules->id) && $db->select('id', 'users', 'id = \'' . $modules->id 
 
 		for ($i = 0; $i < $c_access; $i++) {
 			$access[$i]['name'] = $access[$i]['name'];
-			$access[$i]['selected'] = select_entry('access', $access[$i]['id'], $user[0]['access']);
+			$access[$i]['selected'] = selectEntry('access', $access[$i]['id'], $user[0]['access']);
 		}
 		$tpl->assign('access', $access);
 

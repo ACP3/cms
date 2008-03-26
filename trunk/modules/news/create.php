@@ -25,10 +25,10 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('news', 'complete_additional_hyperlink_statements');
 
 	if (isset($errors)) {
-		$tpl->assign('error_msg', combo_box($errors));
+		$tpl->assign('error_msg', comboBox($errors));
 	} else {
-		$start_date = date_aligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
-		$end_date = date_aligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
+		$start_date = dateAligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
+		$end_date = dateAligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
 
 		$insert_values = array(
 			'id' => '',
@@ -44,13 +44,13 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('news', $insert_values);
 
-		$content = combo_box($bool ? lang('news', 'create_success') : lang('news', 'create_error'), uri('acp/news'));
+		$content = comboBox($bool ? lang('news', 'create_success') : lang('news', 'create_error'), uri('acp/news'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Datumsauswahl
-	$tpl->assign('start_date', publication_period('start'));
-	$tpl->assign('end_date', publication_period('end'));
+	$tpl->assign('start_date', publicationPeriod('start'));
+	$tpl->assign('end_date', publicationPeriod('end'));
 
 	// Kategorien
 	if ($modules->check('categories', 'functions')) {
@@ -60,10 +60,10 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	
 	// Linkziel
 	$target[0]['value'] = '1';
-	$target[0]['selected'] = select_entry('target', '1');
+	$target[0]['selected'] = selectEntry('target', '1');
 	$target[0]['lang'] = lang('common', 'window_self');
 	$target[1]['value'] = '2';
-	$target[1]['selected'] = select_entry('target', '2');
+	$target[1]['selected'] = selectEntry('target', '2');
 	$target[1]['lang'] = lang('common', 'window_blank');
 	$tpl->assign('target', $target);
 

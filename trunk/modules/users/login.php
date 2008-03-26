@@ -45,7 +45,7 @@ if ($auth->isUser()) {
 		}
 	} else {
 		$error[] = lang('users', 'nickname_or_password_wrong');
-		$tpl->assign('error_msg', combo_box($error));
+		$tpl->assign('error_msg', comboBox($error));
 	}
 }
 $content = $tpl->fetch('users/login.html');
