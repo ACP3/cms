@@ -29,7 +29,7 @@ if (!isset($entries)) {
 	$level_undeletable = 0;
 
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'access', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+		if (!empty($entry) && $validate->isNumber($entry) && $db->select('id', 'access', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			if ($entry == '1' || $entry == '2' || $entry == '3') {
 				$level_undeletable = 1;
 			} else {

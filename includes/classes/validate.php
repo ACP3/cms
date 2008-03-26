@@ -46,16 +46,16 @@ class validate
 	 */
 	public function date($values, $prefix_start = 'start', $prefix_end = 'end')
 	{
-		if (!$this->is_number($values[$prefix_start . '_day']) ||
-			!$this->is_number($values[$prefix_start . '_month']) ||
-			!$this->is_number($values[$prefix_start . '_year']) ||
-			!$this->is_number($values[$prefix_start . '_hour']) ||
-			!$this->is_number($values[$prefix_start . '_min']) ||
-			!$this->is_number($values[$prefix_end . '_day']) ||
-			!$this->is_number($values[$prefix_end . '_month']) ||
-			!$this->is_number($values[$prefix_end . '_year']) ||
-			!$this->is_number($values[$prefix_end . '_hour']) ||
-			!$this->is_number($values[$prefix_end . '_min']) ||
+		if (!$this->isNumber($values[$prefix_start . '_day']) ||
+			!$this->isNumber($values[$prefix_start . '_month']) ||
+			!$this->isNumber($values[$prefix_start . '_year']) ||
+			!$this->isNumber($values[$prefix_start . '_hour']) ||
+			!$this->isNumber($values[$prefix_start . '_min']) ||
+			!$this->isNumber($values[$prefix_end . '_day']) ||
+			!$this->isNumber($values[$prefix_end . '_month']) ||
+			!$this->isNumber($values[$prefix_end . '_year']) ||
+			!$this->isNumber($values[$prefix_end . '_hour']) ||
+			!$this->isNumber($values[$prefix_end . '_min']) ||
 			mktime($values[$prefix_start . '_hour'], $values[$prefix_start . '_min'], 0, $values[$prefix_start . '_month'], $values[$prefix_start . '_day'], $values[$prefix_start . '_year']) >
 			mktime($values[$prefix_end . '_hour'], $values[$prefix_end . '_min'], 0, $values[$prefix_end . '_month'], $values[$prefix_end . '_day'], $values[$prefix_end . '_year'])) {
 			return false;
@@ -83,7 +83,7 @@ class validate
 	 * @param mixed $var
 	 * @return boolean
 	 */
-	public function is_number($var)
+	public function isNumber($var)
 	{
 		return preg_match('/^(\d+)$/', $var);
 	}
@@ -94,7 +94,7 @@ class validate
 	 *  Zu überprüfendes Bild
 	 * @return boolean
 	 */
-	public function is_picture($var)
+	public function isPicture($var)
 	{
 		$info = getimagesize($var);
 

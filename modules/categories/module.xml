@@ -26,5 +26,9 @@
 			<file>edit</file>
 			<level>2</level>
 		</item>
+		<item>
+			<file>functions</file>
+			<level>1</level>
+		</item>
 	</access>
 </module>

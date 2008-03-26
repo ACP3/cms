@@ -13,19 +13,19 @@ if (!defined('IN_ADM'))
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
-	if (!$validate->is_number($form['entries']))
+	if (!$validate->isNumber($form['entries']))
 		$errors[] = lang('system', 'select_entries_per_page');
-	if (!$validate->is_number($form['flood']))
+	if (!$validate->isNumber($form['flood']))
 		$errors[] = lang('system', 'type_in_flood_barrier');
-	if (!$validate->is_number($form['sef']))
+	if (!$validate->isNumber($form['sef']))
 		$errors[] = lang('system', 'select_sef_uris');
 	if (empty($form['date']))
 		$errors[] = lang('system', 'type_in_date_format');
 	if (!is_numeric($form['time_zone']))
 		$errors[] = lang('common', 'select_time_zone');
-	if (!$validate->is_number($form['dst']))
+	if (!$validate->isNumber($form['dst']))
 		$errors[] = lang('common', 'select_daylight_saving_time');
-	if (!$validate->is_number($form['maintenance']))
+	if (!$validate->isNumber($form['maintenance']))
 		$errors[] = lang('system', 'select_online_maintenance');
 	if (strlen($form['maintenance_msg']) < 3)
 		$errors[] = lang('system', 'maintenance_message_to_short');

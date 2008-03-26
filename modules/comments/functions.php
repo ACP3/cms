@@ -40,7 +40,7 @@ function comments($module = 0, $entry_id = 0)
 	global $auth, $db, $modules, $tpl, $validate;
 
 	// Formular für das Eintragen von Kommentaren
-	if (isset($_POST['submit']) && isset($_POST['module']) && isset($_POST['entry_id']) && $validate->is_number($_POST['entry_id'])) {
+	if (isset($_POST['submit']) && isset($_POST['module']) && isset($_POST['entry_id']) && $validate->isNumber($_POST['entry_id'])) {
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$form = $_POST['form'];
 		$module = $_POST['module'];

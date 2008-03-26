@@ -10,13 +10,10 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (!$cache->check('categories_files')) {
-	$cache->create('categories_files', $db->select('id, name, picture, description', 'categories', 'module = \'files\''));
+if ($modules->check('categories', 'functions')) {
+	include_once ACP3_ROOT . 'modules/categories/functions.php';
+	$tpl->assign('categories', categoriesList('files', 'list'));
 }
-$categories = $cache->output('categories_files');
 
-if (count($categories) > 0) {
-	$tpl->assign('categories', $categories);
-}
 $content = $tpl->fetch('files/list.html');
 ?>

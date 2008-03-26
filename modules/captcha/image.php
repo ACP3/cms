@@ -15,7 +15,7 @@ if (!empty($modules->gen['hash']) && strlen($modules->gen['hash']) == 32 && preg
 	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 	header('Content-Type: image/gif');
 	$hash = $modules->gen['hash'];
-	$captcha = salt(!empty($modules->gen['length']) && preg_match('/\d/', $modules->gen['length']) ? $modules->gen['length'] : 5);
+	$captcha = salt(!empty($modules->gen['length']) && $validate->isNumber($modules->gen['length']) ? $modules->gen['length'] : 5);
 	$captchaLength = strlen($captcha);
 	$dir = ACP3_ROOT . 'modules/captcha/generated/';
 

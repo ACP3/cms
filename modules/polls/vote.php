@@ -17,7 +17,7 @@ if (!empty($modules->id) && $db->select('id', 'poll_question', 'id = \'' . $modu
 	$breadcrumb->assign(lang('polls', 'polls'), uri('polls'));
 	$breadcrumb->assign(lang('polls', 'vote'));
 
-	if (isset($_POST['submit']) && isset($_POST['answer']) && $validate->is_number($_POST['answer'])) {
+	if (isset($_POST['submit']) && isset($_POST['answer']) && $validate->isNumber($_POST['answer'])) {
 		$answer = $_POST['answer'];
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$time = date_aligned(2, time());

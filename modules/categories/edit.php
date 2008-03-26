@@ -23,7 +23,7 @@ if (!empty($modules->id) && $db->select('id', 'categories', 'id = \'' . $modules
 			$errors[] = lang('categories', 'name_to_short');
 		if (strlen($form['description']) < 3)
 			$errors[] = lang('categories', 'description_to_short');
-		if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) || !$validate->is_picture($file['tmp_name'])))
+		if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) || !$validate->isPicture($file['tmp_name'])))
 			$errors[] = lang('categories', 'please_select_an_image');
 		if (strlen($form['name']) > 3 && !empty($form['module']) && $db->select('id', 'categories', 'id != \'' . $modules->id . '\' AND name = \'' . $db->escape($form['name']) . '\' AND module = \'' . $db->escape($form['module'], 2) . '\'', 0, 0, 0, 1) > 0)
 			$errors[] = lang('categories', 'category_already_exists');

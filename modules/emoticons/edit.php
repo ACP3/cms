@@ -23,7 +23,7 @@ if (!empty($modules->id) && $db->select('id', 'emoticons', 'id = \'' . $modules-
 			$errors[] = lang('emoticons', 'type_in_code');
 		if (empty($form['description']))
 			$errors[] = lang('emoticons', 'type_in_description');
-		if (isset($file) && (empty($file['size']) || !$validate->is_picture($file['tmp_name'])))
+		if (isset($file) && (empty($file['size']) || !$validate->isPicture($file['tmp_name'])))
 			$errors[] = lang('emoticons', 'select_picture');
 
 		if (isset($errors)) {

@@ -26,11 +26,11 @@ if (!empty($modules->id) && $db->select('id', 'galpics', 'id = \'' . $modules->i
 		}
 		$form = $_POST['form'];
 
-		if (!$validate->is_number($form['gallery']) || $db->select('id', 'gallery', 'id = \'' . $form['gallery'] . '\'', 0, 0, 0, 1) != '1')
+		if (!$validate->isNumber($form['gallery']) || $db->select('id', 'gallery', 'id = \'' . $form['gallery'] . '\'', 0, 0, 0, 1) != '1')
 			$errors[] = lang('gallery', 'no_gallery_selected');
-		if (!$validate->is_number($form['pic']))
+		if (!$validate->isNumber($form['pic']))
 			$errors[] = lang('gallery', 'type_in_picture_number');
-		if (isset($file) && is_array($file) && !$validate->is_picture($file['tmp_name']))
+		if (isset($file) && is_array($file) && !$validate->isPicture($file['tmp_name']))
 			$errors[] = lang('gallery', 'only_png_jpg_gif_allowed');
 
 		if (isset($errors)) {
