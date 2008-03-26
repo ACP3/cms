@@ -25,20 +25,20 @@ if ($action) {
 	$c_table_status = count($table_status);
 
 	for($i = 0; $i < $c_table_status; $i++) {
-		$overhead_row = round($table_status[$i]['Data_free'] / 1024, 3);
+		$overhead_row = $table_status[$i]['Data_free'];
 		$overall_overhead = $overall_overhead + $overhead_row;
 
 		if ($overhead_row == 0) {
 			$table_status[$i]['status'] = lang('system', 'not_optimised');
-			$table_status[$i]['overhead'] = 0;
+			$table_status[$i]['overhead'] = calcFilesize(0);
 		} else {
 			$db->query('OPTIMIZE TABLE ' . $table_status[$i]['Name'], 3);
 			$table_status[$i]['status'] = lang('system', 'optimised');
-			$table_status[$i]['overhead'] = $overhead_row;
+			$table_status[$i]['overhead'] = calcFilesize($overhead_row);
 		}
 	}
 	$tpl->assign('table_status', $table_status);
-	$tpl->assign('overall_overhead', $overall_overhead);
+	$tpl->assign('overall_overhead', calcFilesize($overall_overhead));
 }
 
 $content = $tpl->fetch('system/sql_optimisation.html');
