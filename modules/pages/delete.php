@@ -16,13 +16,13 @@ elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->
 	$entries = $modules->gen['entries'];
 
 if (!isset($entries)) {
-	$content = combo_box(array(lang('common', 'no_entries_selected')));
+	$content = comboBox(array(lang('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = '';
 	foreach ($entries as $entry) {
 		$marked_entries.= $entry . '|';
 	}
-	$content = combo_box(lang('pages', 'confirm_delete'), uri('acp/pages/delete/entries_' . $marked_entries), uri('acp/pages'));
+	$content = comboBox(lang('pages', 'confirm_delete'), uri('acp/pages/delete/entries_' . $marked_entries), uri('acp/pages'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
@@ -36,6 +36,6 @@ if (!isset($entries)) {
 
 	$cache->create('pages', $db->select('p.id, p.start, p.end, p.mode, p.title, p.uri, p.target, b.index_name AS block_name', 'pages AS p, ' . CONFIG_DB_PRE . 'pages_blocks AS b', 'p.block_id != \'0\' AND p.block_id = b.id', 'p.sort ASC, p.title ASC'));
 
-	$content = combo_box($bool ? lang('pages', 'delete_success') : lang('pages', 'delete_error'), uri('acp/pages'));
+	$content = comboBox($bool ? lang('pages', 'delete_success') : lang('pages', 'delete_error'), uri('acp/pages'));
 }
 ?>

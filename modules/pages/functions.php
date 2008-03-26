@@ -13,7 +13,7 @@
  * @param integer $parent
  * @return array
  */
-function pages_list($id = 0, $parent = 0)
+function pagesList($id = 0, $parent = 0)
 {
 	global $db;
 	static $output = array(), $key = 0, $spaces = '';
@@ -27,7 +27,7 @@ function pages_list($id = 0, $parent = 0)
 
 		for ($i = 0; $i < $c_pages; $i++) {
 			$output[$key]['id'] = $pages[$i]['id'];
-			$output[$key]['selected'] = select_entry('parent', $pages[$i]['id'], $parent);
+			$output[$key]['selected'] = selectEntry('parent', $pages[$i]['id'], $parent);
 			$output[$key]['title'] = $spaces . $pages[$i]['title'];
 			$key++;
 
@@ -47,7 +47,7 @@ function pages_list($id = 0, $parent = 0)
  * @param integer $parent_id
  * @return boolean
  */
-function parent_check($id, $parent_id)
+function parentCheck($id, $parent_id)
 {
 	global $db;
 
@@ -71,7 +71,7 @@ function parent_check($id, $parent_id)
  *
  * @return mixed
  */
-function process_navbar()
+function processNavbar()
 {
 	global $cache, $db, $modules;
 
@@ -86,7 +86,7 @@ function process_navbar()
 		$selected = ' selected';
 
 		for ($i = 0; $i < $c_pages; $i++) {
-			if (publish_check($pages[$i]['start'], $pages[$i]['end'])) {
+			if ($pages[$i]['start'] == $pages[$i]['end']  && $pages[$i]['start'] <= dateAligned(2, time()) || $pages[$i]['start'] != $pages[$i]['end'] && $pages[$i]['start'] <= dateAligned(2, time()) && $pages[$i]['end'] >= dateAligned(2, time())) {
 				$link['css'] = 'navi-' . $pages[$i]['id'];
 				switch ($pages[$i]['mode']) {
 					case '1':
@@ -96,7 +96,6 @@ function process_navbar()
 					case '2':
 						$link['href'] = uri($pages[$i]['uri']);
 
-						// Genaue Überprüfung der URL, damit nicht 2 Menüpunkte selektiert werden (passiert nur noch bei identischen URLs)
 						if (uri($modules->stm) == uri($pages[$i]['uri'])) {
 							$link['css'].= $selected;
 						}

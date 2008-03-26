@@ -28,7 +28,7 @@ if (!empty($modules->id) && $db->select('id', 'comments', 'id = \'' . $modules->
 			$errors[] = lang('common', 'message_to_short');
 
 		if (isset($errors)) {
-			$tpl->assign('error_msg', combo_box($errors));
+			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
 				'name' => $db->escape($form['name']),
@@ -37,7 +37,7 @@ if (!empty($modules->id) && $db->select('id', 'comments', 'id = \'' . $modules->
 
 			$bool = $db->update('comments', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$content = combo_box($bool ? lang('comments', 'edit_success') : lang('comments', 'edit_error'), uri('acp/comments'));
+			$content = comboBox($bool ? lang('comments', 'edit_success') : lang('comments', 'edit_error'), uri('acp/comments'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

@@ -17,11 +17,11 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('common', 'wrong_email_format');
 
 	if (isset($errors)) {
-		$tpl->assign('error_msg', combo_box($errors));
+		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$bool = $config->module('newsletter', $form);
 
-		$content = combo_box($bool ? lang('newsletter', 'edit_success') : lang('newsletter', 'edit_error'), uri('acp/newsletter'));
+		$content = comboBox($bool ? lang('newsletter', 'edit_success') : lang('newsletter', 'edit_error'), uri('acp/newsletter'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

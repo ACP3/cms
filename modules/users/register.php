@@ -25,7 +25,7 @@ if ($auth->isUser()) {
 			$errors[] = lang('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors)) {
-			$tpl->assign('error_msg', combo_box($errors));
+			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$salt = salt(12);
 
@@ -54,7 +54,7 @@ if ($auth->isUser()) {
 				$bool = $db->insert('users', $insert_values);
 			}
 
-			$content = combo_box($mail_sent && isset($bool) && $bool ? lang('users', 'register_success') : lang('users', 'register_error'), ROOT_DIR);
+			$content = comboBox($mail_sent && isset($bool) && $bool ? lang('users', 'register_success') : lang('users', 'register_error'), ROOT_DIR);
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

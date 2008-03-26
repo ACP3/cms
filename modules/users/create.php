@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('users', 'type_in_pwd');
 
 	if (isset($errors)) {
-		$tpl->assign('error_msg', combo_box($errors));
+		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$salt = salt(12);
 
@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('users', $insert_values);
 
-		$content = combo_box($bool ? lang('users', 'create_success') : lang('users', 'create_error'), uri('acp/users'));
+		$content = comboBox($bool ? lang('users', 'create_success') : lang('users', 'create_error'), uri('acp/users'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
@@ -56,7 +56,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 	for ($i = 0; $i < $c_access; $i++) {
 		$access[$i]['name'] = $access[$i]['name'];
-		$access[$i]['selected'] = select_entry('access', $access[$i]['id']);
+		$access[$i]['selected'] = selectEntry('access', $access[$i]['id']);
 	}
 	$tpl->assign('access', $access);
 

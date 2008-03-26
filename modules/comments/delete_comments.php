@@ -16,13 +16,13 @@ elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->
 	$entries = $modules->gen['entries'];
 
 if (!isset($entries)) {
-	$content = combo_box(array(lang('common', 'no_entries_selected')));
+	$content = comboBox(array(lang('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = '';
 	foreach ($entries as $entry) {
 		$marked_entries.= $entry . '|';
 	}
-	$content = combo_box(lang('comments', 'confirm_delete'), uri('acp/comments/delete_comments/entries_' . $marked_entries), uri('acp/comments'));
+	$content = comboBox(lang('comments', 'confirm_delete'), uri('acp/comments/delete_comments/entries_' . $marked_entries), uri('acp/comments'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
@@ -30,6 +30,6 @@ if (!isset($entries)) {
 		if (!empty($entry) && $validate->isNumber($entry) && $db->select('id', 'comments', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1')
 		$bool = $db->delete('comments', 'id = \'' . $entry . '\'');
 	}
-	$content = combo_box($bool ? lang('comments', 'delete_success') : lang('comments', 'delete_error'), uri('acp/comments'));
+	$content = comboBox($bool ? lang('comments', 'delete_success') : lang('comments', 'delete_error'), uri('acp/comments'));
 }
 ?>

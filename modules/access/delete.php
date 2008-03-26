@@ -16,13 +16,13 @@ elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->
 	$entries = $modules->gen['entries'];
 
 if (!isset($entries)) {
-	$content = combo_box(array(lang('common', 'no_entries_selected')));
+	$content = comboBox(array(lang('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = '';
 	foreach ($entries as $entry) {
 		$marked_entries.= $entry . '|';
 	}
-	$content = combo_box(lang('access', 'confirm_delete'), uri('acp/access/delete/entries_' . $marked_entries), uri('acp/access'));
+	$content = comboBox(lang('access', 'confirm_delete'), uri('acp/access/delete/entries_' . $marked_entries), uri('acp/access'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
@@ -42,6 +42,6 @@ if (!isset($entries)) {
 	} else {
 		$text = $bool ? lang('access', 'delete_success') : lang('access', 'delete_error');
 	}
-	$content = combo_box($text, uri('acp/access'));
+	$content = comboBox($text, uri('acp/access'));
 }
 ?>

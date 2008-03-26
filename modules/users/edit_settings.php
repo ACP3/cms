@@ -28,7 +28,7 @@ if (!$auth->isUser() || !preg_match('/\d/', USER_ID)) {
 			$errors[] = lang('users', 'select_language');
 
 		if (isset($errors)) {
-			$tpl->assign('error_msg', combo_box($errors));
+			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
 				'time_zone' => $form['time_zone'],
@@ -38,18 +38,18 @@ if (!$auth->isUser() || !preg_match('/\d/', USER_ID)) {
 
 			$bool = $db->update('users', $update_values, 'id = \'' . USER_ID . '\'');
 
-			$content = combo_box($bool ? lang('users', 'edit_settings_success') : lang('users', 'edit_settings_error'), uri('users/home'));
+			$content = comboBox($bool ? lang('users', 'edit_settings_success') : lang('users', 'edit_settings_error'), uri('users/home'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$user = $db->select('time_zone, dst, language', 'users', 'id = \'' . USER_ID . '\'');
 
 		// Zeitzonen
-		$tpl->assign('time_zone', time_zones($user[0]['time_zone']));
+		$tpl->assign('time_zone', timeZones($user[0]['time_zone']));
 
 		// Sommerzeit an/aus
-		$dst[0]['checked'] = select_entry('dst', '1', $user[0]['dst'], 'checked');
-		$dst[1]['checked'] = select_entry('dst', '0', $user[0]['dst'], 'checked');
+		$dst[0]['checked'] = selectEntry('dst', '1', $user[0]['dst'], 'checked');
+		$dst[1]['checked'] = selectEntry('dst', '0', $user[0]['dst'], 'checked');
 		$tpl->assign('dst', $dst);
 
 		// Sprache
@@ -62,7 +62,7 @@ if (!$auth->isUser() || !preg_match('/\d/', USER_ID)) {
 				include 'languages/' . $lang_dir[$i] . '/info.php';
 				$name = $lang_info['name'];
 				$languages[$name]['dir'] = $lang_dir[$i];
-				$languages[$name]['selected'] = select_entry('language', $lang_dir[$i], $db->escape($user[0]['language'], 3));
+				$languages[$name]['selected'] = selectEntry('language', $lang_dir[$i], $db->escape($user[0]['language'], 3));
 				$languages[$name]['name'] = $lang_info['name'];
 			}
 		}

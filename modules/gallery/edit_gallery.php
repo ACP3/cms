@@ -26,10 +26,10 @@ if (!empty($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->i
 			$errors[] = lang('gallery', 'type_in_gallery_name');
 
 		if (isset($errors)) {
-			$tpl->assign('error_msg', combo_box($errors));
+			$tpl->assign('error_msg', comboBox($errors));
 		} else {
-			$start_date = date_aligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
-			$end_date = date_aligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
+			$start_date = dateAligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
+			$end_date = dateAligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
 
 			$update_values = array(
 				'start' => $start_date,
@@ -41,15 +41,15 @@ if (!empty($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->i
 
 			$cache->create('gallery_pics_id_' . $modules->id, $db->query('SELECT g.name, p.id FROM ' . CONFIG_DB_PRE . 'gallery g LEFT JOIN ' . CONFIG_DB_PRE . 'galpics p ON g.id = \'' . $modules->id . '\' AND p.gallery_id = \'' . $modules->id . '\' ORDER BY p.pic ASC, p.id ASC'));
 
-			$content = combo_box($bool ? lang('gallery', 'edit_success') : lang('gallery', 'edit_error'), uri('acp/gallery'));
+			$content = comboBox($bool ? lang('gallery', 'edit_success') : lang('gallery', 'edit_error'), uri('acp/gallery'));
 		}
 	}
 	if (!isset($_POST['entries']) && !isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$tpl->assign('gallery_id', $modules->id);
 
 		// Datumsauswahl
-		$tpl->assign('start_date', publication_period('start', $gallery[0]['start']));
-		$tpl->assign('end_date', publication_period('end', $gallery[0]['end']));
+		$tpl->assign('start_date', publicationPeriod('start', $gallery[0]['start']));
+		$tpl->assign('end_date', publicationPeriod('end', $gallery[0]['end']));
 
 		$tpl->assign('form', isset($form) ? $form : $gallery[0]);
 

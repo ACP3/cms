@@ -41,11 +41,11 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('system', 'select_db_type');
 
 	if (isset($errors)) {
-		$tpl->assign('error_msg', combo_box($errors));
+		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$bool = $config->general($form);
 
-		$content = combo_box($bool ? lang('system', 'config_edit_success') : lang('system', 'config_edit_error'), uri('acp/system/configuration'));
+		$content = comboBox($bool ? lang('system', 'config_edit_success') : lang('system', 'config_edit_error'), uri('acp/system/configuration'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
@@ -53,36 +53,36 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$i = 0;
 	for ($j = 10; $j <= 50; $j = $j + 10) {
 		$entries[$i]['value'] = $j;
-		$entries[$i]['selected'] = select_entry('entries', $j, CONFIG_ENTRIES);
+		$entries[$i]['selected'] = selectEntry('entries', $j, CONFIG_ENTRIES);
 		$i++;
 	}
 	$tpl->assign('entries', $entries);
 
 	// Sef-URIs
-	$sef[0]['checked'] = select_entry('sef', '1', CONFIG_SEF, 'checked');
-	$sef[1]['checked'] = select_entry('sef', '0', CONFIG_SEF, 'checked');
+	$sef[0]['checked'] = selectEntry('sef', '1', CONFIG_SEF, 'checked');
+	$sef[1]['checked'] = selectEntry('sef', '0', CONFIG_SEF, 'checked');
 	$tpl->assign('sef', $sef);
 
 	// Zeitzonen
-	$tpl->assign('time_zone', time_zones(CONFIG_TIME_ZONE));
+	$tpl->assign('time_zone', timeZones(CONFIG_TIME_ZONE));
 
 	// Sommerzeit an/aus
-	$dst[0]['checked'] = select_entry('dst', '1', CONFIG_DST, 'checked');
-	$dst[1]['checked'] = select_entry('dst', '0', CONFIG_DST, 'checked');
+	$dst[0]['checked'] = selectEntry('dst', '1', CONFIG_DST, 'checked');
+	$dst[1]['checked'] = selectEntry('dst', '0', CONFIG_DST, 'checked');
 	$tpl->assign('dst', $dst);
 
 	// Wartungsmodus an/aus
-	$maintenance[0]['checked'] = select_entry('maintenance', '1', CONFIG_MAINTENANCE, 'checked');
-	$maintenance[1]['checked'] = select_entry('maintenance', '0', CONFIG_MAINTENANCE, 'checked');
+	$maintenance[0]['checked'] = selectEntry('maintenance', '1', CONFIG_MAINTENANCE, 'checked');
+	$maintenance[1]['checked'] = selectEntry('maintenance', '0', CONFIG_MAINTENANCE, 'checked');
 	$tpl->assign('maintenance', $maintenance);
 
 	// Datenbank-Typen
 	$db_type[0]['value'] = 'mysql';
-	$db_type[0]['selected'] = select_entry('db_type', 'mysql', CONFIG_DB_TYPE);
+	$db_type[0]['selected'] = selectEntry('db_type', 'mysql', CONFIG_DB_TYPE);
 	$db_type[0]['lang'] = 'MySQL';
 	if (extension_loaded('mysqli'))	{
 		$db_type[1]['value'] = 'mysqli';
-		$db_type[1]['selected'] = select_entry('db_type', 'mysqli', CONFIG_DB_TYPE);
+		$db_type[1]['selected'] = selectEntry('db_type', 'mysqli', CONFIG_DB_TYPE);
 		$db_type[1]['lang'] = 'MySQLi';
 	}
 	$tpl->assign('db_type', $db_type);

@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
 				$errors[] = lang('captcha', 'invalid_captcha_entered');
 			
 			if (isset($errors)) {
-				$tpl->assign('error_msg', combo_box($errors));
+				$tpl->assign('error_msg', comboBox($errors));
 			} else {
 				$time = explode(' ', microtime());
 				$hash = md5(mt_rand(0, $time['1']));
@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
 				$nl_mail = $config->output('newsletter');
 				$bool2 = @mail($form['mail'], sprintf(lang('newsletter', 'subscribe_mail_subject'), $_SERVER['HTTP_HOST']), $text, 'FROM:' . $nl_mail['mail']);
 				
-				$content = combo_box($bool && $bool2 ? lang('newsletter', 'subscribe_success') : lang('newsletter', 'subscribe_error'), ROOT_DIR);
+				$content = comboBox($bool && $bool2 ? lang('newsletter', 'subscribe_success') : lang('newsletter', 'subscribe_error'), ROOT_DIR);
 			}
 			break;
 		case 'unsubscribe' :
@@ -52,11 +52,11 @@ if (isset($_POST['submit'])) {
 				$errors[] = lang('captcha', 'invalid_captcha_entered');
 			
 			if (isset($errors)) {
-				$tpl->assign('error_msg', combo_box($errors));
+				$tpl->assign('error_msg', comboBox($errors));
 			} else {
 				$bool = $db->delete('nl_accounts', 'mail = \'' . $form['mail'] . '\'');
 				
-				$content = combo_box($bool ? lang('newsletter', 'unsubscribe_success') : lang('newsletter', 'unsubscribe_error'), ROOT_DIR);
+				$content = comboBox($bool ? lang('newsletter', 'unsubscribe_success') : lang('newsletter', 'unsubscribe_error'), ROOT_DIR);
 			}
 			break;
 	}
@@ -67,10 +67,10 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$field_value = isset($_POST['action']) ? $_POST['action'] : 'subscribe';
 	
 	$actions[0]['value'] = 'subscribe';
-	$actions[0]['checked'] = select_entry('action', 'subscribe', $field_value, 'checked');
+	$actions[0]['checked'] = selectEntry('action', 'subscribe', $field_value, 'checked');
 	$actions[0]['lang'] = lang('newsletter', 'subscribe');
 	$actions[1]['value'] = 'unsubscribe';
-	$actions[1]['checked'] = select_entry('action', 'unsubscribe', $field_value, 'checked');
+	$actions[1]['checked'] = selectEntry('action', 'unsubscribe', $field_value, 'checked');
 	$actions[1]['lang'] = lang('newsletter', 'unsubscribe');
 	$tpl->assign('actions', $actions);
 	

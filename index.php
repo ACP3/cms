@@ -33,7 +33,7 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 	// Navigationsleisten
 	if ($modules->check('pages', 'functions')) {
 		include_once ACP3_ROOT . 'modules/pages/functions.php';
-		$tpl->assign('navbar', process_navbar());
+		$tpl->assign('navbar', processNavbar());
 	}
 
 	// Seitentitel und Brotkrümelspur setzen

@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('newsletter', 'text_to_short');
 
 	if (isset($errors)) {
-		$tpl->assign('error_msg', combo_box($errors));
+		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$settings = $config->output('newsletter');
 
@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
 				break;
 			}
 		}
-		$content = combo_box($bool ? lang('newsletter', 'compose_success') : lang('newsletter', 'compose_error'), uri('acp/newsletter'));
+		$content = comboBox($bool ? lang('newsletter', 'compose_success') : lang('newsletter', 'compose_error'), uri('acp/newsletter'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

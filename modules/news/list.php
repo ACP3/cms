@@ -36,7 +36,7 @@ if ($modules->check('categories', 'functions')) {
 
 // Falls Kategorie angegeben, News nur aus eben jener selektieren
 $cat_field = !empty($cat) ? ' AND category_id = \'' . $cat . '\'' : '';
-$date = '(start = end AND start <= \'' . date_aligned(2, time()) . '\' OR start != end AND start <= \'' . date_aligned(2, time()) . '\' AND end >= \'' . date_aligned(2, time()) . '\')';
+$date = '(start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
 
 $news = $db->select('id, start, headline, text, uri', 'news', $date . $cat_field, 'id DESC', POS, CONFIG_ENTRIES);
 $c_news = count($news);
@@ -51,12 +51,12 @@ if ($c_news > 0) {
 	$tpl->assign('pagination', pagination($db->select('id', 'news', $date . $cat_field, 0, 0, 0, 1)));
 
 	for ($i = 0; $i < $c_news; $i++) {
-		$news[$i]['date'] = date_aligned(1, $news[$i]['start']);
+		$news[$i]['date'] = dateAligned(1, $news[$i]['start']);
 		$news[$i]['headline'] = $news[$i]['headline'];
 		$news[$i]['text'] = $db->escape($news[$i]['text'], 3);
 		$news[$i]['uri'] = $db->escape($news[$i]['uri'], 3);
 		if (isset($comment_check)) {
-			$news[$i]['comments'] = comments_count($news[$i]['id']);
+			$news[$i]['comments'] = commentsCount($news[$i]['id']);
 		}
 		// HTML-Code entfernen, für den weiterlesen... Link
 		$striped_news = strip_tags($news[$i]['text']);

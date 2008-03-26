@@ -34,10 +34,10 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('files', 'select_category');
 
 	if (isset($errors)) {
-		$tpl->assign('error_msg', combo_box($errors));
+		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		if (is_array($file)) {
-			$result = move_file($file['tmp_name'], $file['name'], 'files');
+			$result = moveFile($file['tmp_name'], $file['name'], 'files');
 			$new_file = $result['name'];
 			$filesize = $result['size'];
 		} elseif (is_string($file)) {
@@ -45,8 +45,8 @@ if (isset($_POST['submit'])) {
 			$new_file = $file;
 			$filesize = $form['filesize'] . ' ' . $form['unit'];
 		}
-		$start_date = date_aligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
-		$end_date = date_aligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
+		$start_date = dateAligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
+		$end_date = dateAligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
 
 		$insert_values = array(
 			'id' => '',
@@ -61,24 +61,24 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('files', $insert_values);
 
-		$content = combo_box($bool ? lang('files', 'create_success') : lang('files', 'create_error'), uri('acp/files'));
+		$content = comboBox($bool ? lang('files', 'create_success') : lang('files', 'create_error'), uri('acp/files'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Datumsauswahl
-	$tpl->assign('start_date', publication_period('start'));
-	$tpl->assign('end_date', publication_period('end'));
+	$tpl->assign('start_date', publicationPeriod('start'));
+	$tpl->assign('end_date', publicationPeriod('end'));
 
 	$units[0]['value'] = 'Byte';
-	$units[0]['selected'] = select_entry('unit', 'Byte');
+	$units[0]['selected'] = selectEntry('unit', 'Byte');
 	$units[1]['value'] = 'KiB';
-	$units[1]['selected'] = select_entry('unit', 'KiB');
+	$units[1]['selected'] = selectEntry('unit', 'KiB');
 	$units[2]['value'] = 'MiB';
-	$units[2]['selected'] = select_entry('unit', 'MiB');
+	$units[2]['selected'] = selectEntry('unit', 'MiB');
 	$units[3]['value'] = 'GiB';
-	$units[3]['selected'] = select_entry('unit', 'GiB');
+	$units[3]['selected'] = selectEntry('unit', 'GiB');
 	$units[4]['value'] = 'TiB';
-	$units[4]['selected'] = select_entry('unit', 'TiB');
+	$units[4]['selected'] = selectEntry('unit', 'TiB');
 	$tpl->assign('units', $units);
 
 	// Formularelemente

@@ -23,7 +23,7 @@ if ($auth->isUser()) {
 			$errors[] = lang('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors)) {
-			$tpl->assign('error_msg', combo_box($errors));
+			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			// Neues Passwort und neuen Zufallsschlüssel erstellen
 			$new_password = salt(8);
@@ -47,7 +47,7 @@ if ($auth->isUser()) {
 
 				$bool = $db->update('users', $update_values, 'id = \'' . $user[0]['id'] . '\'');
 			}
-			$content = combo_box($mail_sent && isset($bool) && $bool ? lang('users', 'forgot_pwd_success') : lang('users', 'forgot_pwd_error'), ROOT_DIR);
+			$content = comboBox($mail_sent && isset($bool) && $bool ? lang('users', 'forgot_pwd_success') : lang('users', 'forgot_pwd_error'), ROOT_DIR);
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

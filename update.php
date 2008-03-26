@@ -1,7 +1,7 @@
 <?php
 header('Content-type: text/plain; charset=UTF-8');
 
-define('ACP3_ROOT', './')
+define('ACP3_ROOT', './');
 require ACP3_ROOT . 'includes/config.php';
 require ACP3_ROOT . 'includes/classes/db.php';
 require ACP3_ROOT . 'includes/classes/cache.php';

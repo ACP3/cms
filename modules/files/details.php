@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$date = ' AND (start = end AND start <= \'' . date_aligned(2, time()) . '\' OR start != end AND start <= \'' . date_aligned(2, time()) . '\' AND end >= \'' . date_aligned(2, time()) . '\')';
+$date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
 
 if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id . '\'' . $date, 0, 0, 0, 1) == '1') {
 	if (!$cache->check('files_details_id_' . $modules->id)) {
@@ -36,7 +36,7 @@ if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id 
 		$breadcrumb->assign($file[0]['link_title']);
 
 		$file[0]['size'] = !empty($file[0]['size']) ? $file[0]['size'] : lang('files', 'unknown_filesize');
-		$file[0]['date'] = date_aligned(1, $file[0]['start']);
+		$file[0]['date'] = dateAligned(1, $file[0]['start']);
 		$tpl->assign('file', $file[0]);
 
 		$content = $tpl->fetch('files/details.html');

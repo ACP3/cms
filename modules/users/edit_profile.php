@@ -32,7 +32,7 @@ if (!$auth->isUser() || !$validate->isNumber(USER_ID)) {
 			$errors[] = lang('users', 'type_in_pwd');
 
 		if (isset($errors)) {
-			$tpl->assign('error_msg', combo_box($errors));
+			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$new_pwd_sql = null;
 			// Neues Passwort
@@ -58,7 +58,7 @@ if (!$auth->isUser() || !$validate->isNumber(USER_ID)) {
 			$cookie_value = base64_encode($form['nickname'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]));
 			setcookie('ACP3_AUTH', $cookie_value, time() + 3600, '/');
 
-			$content = combo_box($bool ? lang('users', 'edit_profile_success') : lang('users', 'edit_profile_error'), uri('users/home'));
+			$content = comboBox($bool ? lang('users', 'edit_profile_success') : lang('users', 'edit_profile_error'), uri('users/home'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

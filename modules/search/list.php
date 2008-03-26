@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('search', 'no_hits_sorting_selected');
 
 	if (isset($errors)) {
-		$tpl->assign('error_msg', combo_box($errors));
+		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$form['sort'] = strtoupper($form['sort']);
 		$results_mods = array();
@@ -52,7 +52,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 			$info = $modules->parseInfo($mods[$i]);
 			$name = $info['name'];
 			$search_mods[$name]['dir'] = $mods[$i];
-			$search_mods[$name]['checked'] = select_entry('mods', $mods[$i], $mods[$i], 'checked');
+			$search_mods[$name]['checked'] = selectEntry('mods', $mods[$i], $mods[$i], 'checked');
 			$search_mods[$name]['name'] = $name;
 		}
 	}
@@ -62,26 +62,26 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Zu durchsuchende Bereiche
 	$search_areas[0]['id'] = 'title_only';
 	$search_areas[0]['value'] = 'title';
-	$search_areas[0]['checked'] = select_entry('area', 'title', 'title', 'checked');
+	$search_areas[0]['checked'] = selectEntry('area', 'title', 'title', 'checked');
 	$search_areas[0]['lang'] = lang('search', 'title_only');
 	$search_areas[1]['id'] = 'content_only';
 	$search_areas[1]['value'] = 'content';
-	$search_areas[1]['checked'] = select_entry('area', 'content', 'title', 'checked');
+	$search_areas[1]['checked'] = selectEntry('area', 'content', 'title', 'checked');
 	$search_areas[1]['lang'] = lang('search', 'content_only');
 	$search_areas[2]['id'] = 'title_content';
 	$search_areas[2]['value'] = 'title_content';
-	$search_areas[2]['checked'] = select_entry('area', 'title_content', 'title', 'checked');
+	$search_areas[2]['checked'] = selectEntry('area', 'title_content', 'title', 'checked');
 	$search_areas[2]['lang'] = lang('search', 'title_and_content');
 	$tpl->assign('search_areas', $search_areas);
 
 	// Treffer sortieren
 	$sort_hits[0]['id'] = 'asc';
 	$sort_hits[0]['value'] = 'asc';
-	$sort_hits[0]['checked'] = select_entry('sort', 'asc', 'asc', 'checked');
+	$sort_hits[0]['checked'] = selectEntry('sort', 'asc', 'asc', 'checked');
 	$sort_hits[0]['lang'] = lang('search', 'asc');
 	$sort_hits[1]['id'] = 'desc';
 	$sort_hits[1]['value'] = 'desc';
-	$sort_hits[1]['checked'] = select_entry('sort', 'desc', 'asc', 'checked');
+	$sort_hits[1]['checked'] = selectEntry('sort', 'desc', 'asc', 'checked');
 	$sort_hits[1]['lang'] = lang('search', 'desc');
 	$tpl->assign('sort_hits', $sort_hits);
 

@@ -30,7 +30,7 @@ if (!empty($modules->id) && $db->select('id', 'access', 'id = \'' . $modules->id
 			$errors[] = lang('access', 'select_modules');
 
 		if (isset($errors)) {
-			$tpl->assign('error_msg', combo_box($errors));
+			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			// String für die einzelnen Zugriffslevel auf die Module erstellen
 			$form['modules']['errors'] = '2';
@@ -48,7 +48,7 @@ if (!empty($modules->id) && $db->select('id', 'access', 'id = \'' . $modules->id
 
 			$bool = $db->update('access', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$content = combo_box($bool ? lang('access', 'edit_success') : lang('access', 'edit_error'), uri('acp/access'));
+			$content = comboBox($bool ? lang('access', 'edit_success') : lang('access', 'edit_error'), uri('acp/access'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

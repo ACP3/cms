@@ -26,9 +26,9 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('emoticons', 'select_picture');
 
 	if (isset($errors)) {
-		$tpl->assign('error_msg', combo_box($errors));
+		$tpl->assign('error_msg', comboBox($errors));
 	} else {
-		$result = move_file($file['tmp_name'], $file['name'], 'emoticons');
+		$result = moveFile($file['tmp_name'], $file['name'], 'emoticons');
 
 		$insert_values = array(
 		'id' => '',
@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 
 		$cache->create('emoticons', $db->select('code, description, img', 'emoticons'));
 
-		$content = combo_box($bool ? lang('emoticons', 'create_success') : lang('emoticons', 'create_error'), uri('acp/emoticons'));
+		$content = comboBox($bool ? lang('emoticons', 'create_success') : lang('emoticons', 'create_error'), uri('acp/emoticons'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

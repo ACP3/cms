@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('captcha', 'invalid_captcha_entered');
 
 	if (isset($errors)) {
-		$tpl->assign('error_msg', combo_box($errors));
+		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$contact = $config->output('contact');
 
@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = @mail($contact['mail'], $subject, $body, 'FROM:' . $form['mail']);
 
-		$content = combo_box($bool ? lang('contact', 'send_mail_success') : lang('contact', 'send_mail_error'), uri('contact'));
+		$content = comboBox($bool ? lang('contact', 'send_mail_success') : lang('contact', 'send_mail_error'), uri('contact'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

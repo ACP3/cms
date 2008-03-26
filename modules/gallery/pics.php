@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$date = ' AND (start = end AND start <= \'' . date_aligned(2, time()) . '\' OR start != end AND start <= \'' . date_aligned(2, time()) . '\' AND end >= \'' . date_aligned(2, time()) . '\')';
+$date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
 
 if (!empty($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->id . '\'' . $date, 0, 0, 0, 1) == 1) {
 	// Cache für die jeweilige Galerie
