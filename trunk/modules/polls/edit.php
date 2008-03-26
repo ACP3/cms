@@ -45,10 +45,10 @@ if (!empty($modules->id) && $db->select('id', 'poll_question', 'id = \'' . $modu
 			$bool = $db->update('poll_question', $update_values, 'id = \'' . $modules->id . '\'');
 
 			foreach ($form['answers'] as $row) {
-				if (isset($row['delete']) && $validate->is_number($row['id'])) {
+				if (isset($row['delete']) && $validate->isNumber($row['id'])) {
 					$db->delete('poll_answers', 'id = \'' . $row['id'] . '\'');
 					$db->delete('poll_votes', 'answer_id = \'' . $row['id'] . '\'');
-				} elseif ($validate->is_number($row['id'])) {
+				} elseif ($validate->isNumber($row['id'])) {
 					$bool = $db->update('poll_answers', array('text' =>$db->escape($row['value'])), 'id = \'' . $db->escape($row['id']) . '\'');
 				}
 			}

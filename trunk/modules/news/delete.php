@@ -28,7 +28,7 @@ if (!isset($entries)) {
 	$bool = 0;
 	$bool2 = 0;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'news', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+		if (!empty($entry) && $validate->isNumber($entry) && $db->select('id', 'news', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			$bool = $db->delete('news', 'id = \'' . $entry . '\'');
 			$bool2 = $db->delete('comments', 'module = \'news\' AND entry_id = \'' . $entry . '\'');
 			// News Cache löschen

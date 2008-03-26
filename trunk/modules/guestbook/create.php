@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
 			'ip' => $ip,
 			'date' => $time,
 			'name' => $db->escape($form['name']),
-			'user_id' => $auth->isUser() && preg_match('/\d/', USER_ID) ? USER_ID : '',
+			'user_id' => $auth->isUser(USER_ID) ? USER_ID : '',
 			'message' => $db->escape($form['message']),
 			'website' => $db->escape($form['website'], 2),
 			'mail' => $form['mail'],
@@ -61,7 +61,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$tpl->assign('emoticons', emoticons_list());
 	}
 	// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
-	if ($auth->isUser() && preg_match('/\d/', USER_ID)) {
+	if ($auth->isUser(USER_ID)) {
 		$user = $auth->getUserInfo('nickname, mail');
 		$disabled = ' readonly="readonly" class="readonly"';
 

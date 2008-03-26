@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('categories', 'name_to_short');
 	if (strlen($form['description']) < 3)
 		$errors[] = lang('categories', 'description_to_short');
-	if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) || !$validate->is_picture($file['tmp_name'])))
+	if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) || !$validate->isPicture($file['tmp_name'])))
 		$errors[] = lang('categories', 'please_select_an_image');
 	if (empty($form['module']))
 		$errors[] = lang('categories', 'select_module');

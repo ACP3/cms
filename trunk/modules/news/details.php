@@ -14,7 +14,7 @@ $date = ' AND (start = end AND start <= \'' . date_aligned(2, time()) . '\' OR s
 
 if (!empty($modules->id) && $db->select('id', 'news', 'id = \'' . $modules->id . '\'' . $date, 0, 0, 0, 1) == 1) {
 	// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
-	if ($auth->isUser() && preg_match('/\d/', USER_ID)) {
+	if ($auth->isUser(USER_ID)) {
 		$user = $auth->getUserInfo('nickname');
 		$disabled = ' readonly="readonly" class="readonly"';
 

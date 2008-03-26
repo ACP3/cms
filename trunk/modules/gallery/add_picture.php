@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-$pic = isset($modules->gen['pic']) && $validate->is_number($modules->gen['pic']) ? $modules->gen['pic'] : 1;
+$pic = isset($modules->gen['pic']) && $validate->isNumber($modules->gen['pic']) ? $modules->gen['pic'] : 1;
 
 if (!empty($modules->id)) {
 	$gallery = $db->select('name', 'gallery', 'id = \'' . $modules->id . '\'');
@@ -27,13 +27,13 @@ if (isset($_POST['submit'])) {
 	$file['size'] = $_FILES['file']['size'];
 	$form = $_POST['form'];
 
-	if (!$validate->is_number($form['gallery']) || $db->select('id', 'gallery', 'id = \'' . $form['gallery'] . '\'', 0, 0, 0, 1) != '1')
+	if (!$validate->isNumber($form['gallery']) || $db->select('id', 'gallery', 'id = \'' . $form['gallery'] . '\'', 0, 0, 0, 1) != '1')
 	$errors[] = lang('gallery', 'no_gallery_selected');
-	if (!$validate->is_number($form['pic']))
+	if (!$validate->isNumber($form['pic']))
 	$errors[] = lang('gallery', 'type_in_picture_number');
 	if (empty($file['tmp_name']) || empty($file['size']))
 	$errors[] = lang('gallery', 'no_picture_selected');
-	if (!empty($file['tmp_name']) && !empty($file['size']) && !$validate->is_picture($file['tmp_name']))
+	if (!empty($file['tmp_name']) && !empty($file['size']) && !$validate->isPicture($file['tmp_name']))
 	$errors[] = lang('gallery', 'only_png_jpg_gif_allowed');
 
 	if (isset($errors)) {

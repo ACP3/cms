@@ -27,7 +27,7 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'comments', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1')
+		if (!empty($entry) && $validate->isNumber($entry) && $db->select('id', 'comments', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1')
 		$bool = $db->delete('comments', 'id = \'' . $entry . '\'');
 	}
 	$content = combo_box($bool ? lang('comments', 'delete_success') : lang('comments', 'delete_error'), uri('acp/comments'));

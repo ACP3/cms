@@ -19,9 +19,9 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('news', 'headline_to_short');
 	if (strlen($form['text']) < 3)
 		$errors[] = lang('news', 'text_to_short');
-	if (!$validate->is_number($form['cat']) || $validate->is_number($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
+	if (!$validate->isNumber($form['cat']) || $validate->isNumber($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
 		$errors[] = lang('news', 'select_category');
-	if (!empty($form['uri']) && (!$validate->is_number($form['target']) || strlen($form['link_title']) < 3))
+	if (!empty($form['uri']) && (!$validate->isNumber($form['target']) || strlen($form['link_title']) < 3))
 		$errors[] = lang('news', 'complete_additional_hyperlink_statements');
 
 	if (isset($errors)) {
@@ -31,15 +31,15 @@ if (isset($_POST['submit'])) {
 		$end_date = date_aligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
 
 		$insert_values = array(
-		'id' => '',
-		'start' => $start_date,
-		'end' => $end_date,
-		'headline' => $db->escape($form['headline']),
-		'text' => $db->escape($form['text'], 2),
-		'category_id' => $form['cat'],
-		'uri' => $db->escape($form['uri'], 2),
-		'target' => $form['target'],
-		'link_title' => $db->escape($form['link_title'])
+			'id' => '',
+			'start' => $start_date,
+			'end' => $end_date,
+			'headline' => $db->escape($form['headline']),
+			'text' => $db->escape($form['text'], 2),
+			'category_id' => $form['cat'],
+			'uri' => $db->escape($form['uri'], 2),
+			'target' => $form['target'],
+			'link_title' => $db->escape($form['link_title'])
 		);
 
 		$bool = $db->insert('news', $insert_values);
@@ -53,20 +53,11 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('end_date', publication_period('end'));
 
 	// Kategorien
-	if (!$cache->check('categories_news')) {
-		$cache->create('categories_news', $db->select('id, name, description', 'categories', 'module = \'news\'', 'name ASC'));
+	if ($modules->check('categories', 'functions')) {
+		include_once ACP3_ROOT . 'modules/categories/functions.php';
+		$tpl->assign('categories', categoriesList('news', 'create'));
 	}
-	$categories = $cache->output('categories_news');
-	$c_categories = count($categories);
-
-	if ($c_categories > 0) {
-		for ($i = 0; $i < $c_categories; $i++) {
-			$categories[$i]['selected'] = select_entry('cat', $categories[$i]['id']);
-			$categories[$i]['name'] = $categories[$i]['name'];
-		}
-		$tpl->assign('categories', $categories);
-	}
-
+	
 	// Linkziel
 	$target[0]['value'] = '1';
 	$target[0]['selected'] = select_entry('target', '1');

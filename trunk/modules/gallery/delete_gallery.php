@@ -28,7 +28,7 @@ if (!isset($entries)) {
 	$bool = 0;
 	$bool2 = 0;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'gallery', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+		if (!empty($entry) && $validate->isNumber($entry) && $db->select('id', 'gallery', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			// Hochgeladene Bilder löschen
 			$pictures = $db->select('file', 'galpics', 'gallery_id = \'' . $entry . '\'');
 			foreach ($pictures as $row) {

@@ -34,17 +34,17 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('type_in_pwd');
 	if (!$validate->email($form['mail']))
 		$errors[] = lang('wrong_email_format');
-	if (!$validate->is_number($form['entries']))
+	if (!$validate->isNumber($form['entries']))
 		$errors[] = lang('select_entries_per_page');
-	if (!$validate->is_number($form['flood']))
+	if (!$validate->isNumber($form['flood']))
 		$errors[] = lang('type_in_flood_barrier');
-	if (!$validate->is_number($form['sef']))
+	if (!$validate->isNumber($form['sef']))
 		$errors[] = lang('select_sef_uris');
 	if (empty($form['date']))
 		$errors[] = lang('type_in_date_format');
-	if (!$validate->is_number($form['dst']))
+	if (!$validate->isNumber($form['dst']))
 		$errors[] = lang('select_daylight_saving_time');
-	if (!$validate->is_number($form['time_zone']))
+	if (!$validate->isNumber($form['time_zone']))
 		$errors[] = lang('select_time_zone');
 	if (empty($form['title']))
 		$errors[] = lang('type_in_title');

@@ -29,7 +29,7 @@ if (!isset($entries)) {
 	$in_use = 0;
 
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'categories', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+		if (!empty($entry) && $validate->isNumber($entry) && $db->select('id', 'categories', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			$category = $db->select('module', 'categories', 'id = \'' . $entry . '\'');
 			$c_in_use = $db->select('id', $db->escape($category[0]['module'], 3), 'category_id = \'' . $entry . '\'', 0, 0, 0, 1);
 			if ($c_in_use > 0) {

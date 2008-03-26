@@ -17,21 +17,21 @@ if (!empty($modules->id) && $db->select('id', 'pages', 'id = \'' . $modules->id 
 
 		if (!$validate->date($form))
 			$errors[] = lang('common', 'select_date');
-		if (!$validate->is_number($form['mode']))
+		if (!$validate->isNumber($form['mode']))
 			$errors[] = lang('pages', 'select_static_hyperlink');
-		if (!$validate->is_number($form['blocks']))
+		if (!$validate->isNumber($form['blocks']))
 			$errors[] = lang('pages', 'select_block');
-		if (!empty($form['blocks']) && !$validate->is_number($form['sort']))
+		if (!empty($form['blocks']) && !$validate->isNumber($form['sort']))
 			$errors[] = lang('pages', 'type_in_chronology');
 		if (strlen($form['title']) < 3)
 			$errors[] = lang('pages', 'title_to_short');
-		if ($form['mode'] == '1' && !empty($form['parent']) && !$validate->is_number($form['parent']))
+		if ($form['mode'] == '1' && !empty($form['parent']) && !$validate->isNumber($form['parent']))
 			$errors[] = lang('pages', 'select_superior_page');
-		if ($form['mode'] == '1' && $validate->is_number($form['parent']) && ($db->select('id', 'pages', "id != '" . $modules->id . "' AND mode='1' AND parent='0'", 0, 0, 0, 1) == 0) || $form['parent'] == $modules->id || parent_check($modules->id, $form['parent']))
+		if ($form['mode'] == '1' && $validate->isNumber($form['parent']) && ($db->select('id', 'pages', "id != '" . $modules->id . "' AND mode='1' AND parent='0'", 0, 0, 0, 1) == 0) || $form['parent'] == $modules->id || parent_check($modules->id, $form['parent']))
 			$errors[] = lang('pages', 'superior_page_not_allowed');
 		if ($form['mode'] == '1' && strlen($form['text']) < 3)
 			$errors[] = lang('pages', 'text_to_short');
-		if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !$validate->is_number($form['target'])))
+		if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !$validate->isNumber($form['target'])))
 			$errors[] = lang('pages', 'type_in_uri_and_target');
 
 		if (isset($errors)) {

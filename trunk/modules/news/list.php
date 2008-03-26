@@ -16,22 +16,19 @@ $tpl->assign('MOD_newsletter', $modules->check('newsletter', 'create'));
 //
 $tpl->assign('MOD_feeds', $modules->check('feeds', 'list'));
 
-$cat = isset($_POST['form']['cat']) && $validate->is_number($_POST['form']['cat']) ? $_POST['form']['cat'] : $modules->cat;
+$cat = isset($_POST['form']['cat']) && $validate->isNumber($_POST['form']['cat']) ? $_POST['form']['cat'] : $modules->cat;
 
-// Cache für die Kategorien
-if (!$cache->check('categories_news')) {
-	$cache->create('categories_news', $db->select('id, name, picture, description', 'categories', 'module = \'news\'', 'name ASC'));
-}
-$categories = $cache->output('categories_news');
-$c_categories = count($categories);
-
-if ($c_categories > 0) {
+// Kategorien auflisten
+if ($modules->check('categories', 'functions')) {
+	include_once ACP3_ROOT . 'modules/categories/functions.php';
+	$categories = categoriesList('news', 'list', $cat);
+	$c_categories = count($categories);
+	
 	for ($i = 0; $i < $c_categories; $i++) {
-		$categories[$i]['selected'] = select_entry('cat', $categories[$i]['id'], $cat);
-		$categories[$i]['name'] = $categories[$i]['name'];
 		if ($categories[$i]['id'] == $cat) {
-				$breadcrumb->assign(lang('news', 'news'), uri('news'));
-				$breadcrumb->assign($categories[$i]['name']);
+			$breadcrumb->assign(lang('news', 'news'), uri('news'));
+			$breadcrumb->assign($categories[$i]['name']);
+			break;
 		}
 	}
 	$tpl->assign('categories', $categories);

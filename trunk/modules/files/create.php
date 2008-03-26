@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('files', 'select_internal_resource');
 	if (strlen($form['text']) < 3)
 		$errors[] = lang('files', 'description_to_short');
-	if (!$validate->is_number($form['cat']) || $validate->is_number($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
+	if (!$validate->isNumber($form['cat']) || $validate->isNumber($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
 		$errors[] = lang('files', 'select_category');
 
 	if (isset($errors)) {
@@ -82,18 +82,9 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('units', $units);
 
 	// Formularelemente
-	if (!$cache->check('categories_files')) {
-		$cache->create('categories_files', $db->select('id, name, description', 'categories', 'module = \'files\'', 'name ASC'));
-	}
-	$categories = $cache->output('categories_files');
-	$c_categories = count($categories);
-
-	if ($c_categories > 0) {
-		for ($i = 0; $i < $c_categories; $i++) {
-			$categories[$i]['name'] = $categories[$i]['name'];
-			$categories[$i]['selected'] = select_entry('cat', $categories[$i]['id']);
-		}
-		$tpl->assign('categories', $categories);
+	if ($modules->check('categories', 'functions')) {
+		include_once ACP3_ROOT . 'modules/categories/functions.php';
+		$tpl->assign('categories', categoriesList('files', 'create'));
 	}
 
 	$tpl->assign('checked_external', isset($form['external']) ? ' checked="checked"' : '');

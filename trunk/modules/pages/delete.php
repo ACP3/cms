@@ -27,7 +27,7 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $validate->is_number($entry) && $db->select('id', 'pages', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+		if (!empty($entry) && $validate->isNumber($entry) && $db->select('id', 'pages', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			$bool = $db->delete('pages', 'id = \'' . $entry . '\'');
 
 			$cache->delete('pages_list_id_' . $entry);
