@@ -14,12 +14,13 @@ if ($auth->isUser()) {
 	// Module einholen
 	$mod_list = $modules->modulesList();
 	$nav_mods = array();
+	$access_system = false;
 
 	foreach ($mod_list as $name => $info) {
 		$dir = $info['dir'];
 		if ($modules->check($dir, 'adm_list') && $dir != 'acp') {
 			if ($dir == 'system') {
-				$tpl->assign('access_system', true);
+				$access_system = true;
 			} elseif ($dir == 'home') {
 				$tpl->assign('access_home', true);
 			} else {
@@ -29,6 +30,18 @@ if ($auth->isUser()) {
 		}
 	}
 	$tpl->assign('nav_mods', $nav_mods);
+
+	if ($access_system) {
+		$nav_system[0]['page'] = 'configuration';
+		$nav_system[0]['name'] = lang('system', 'configuration');
+		$nav_system[1]['page'] = 'server_config';
+		$nav_system[1]['name'] = lang('system', 'server_config');
+		$nav_system[2]['page'] = 'extensions';
+		$nav_system[2]['name'] = lang('system', 'extensions');
+		$nav_system[3]['page'] = 'maintenance';
+		$nav_system[3]['name'] = lang('system', 'maintenance');
+		$tpl->assign('nav_system', $nav_system);
+	}
 
 	$tpl->display('users/sidebar_user_menu.html');
 } else {
