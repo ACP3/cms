@@ -31,7 +31,7 @@ function pagesList($id = 0, $parent = 0)
 			$output[$key]['title'] = $spaces . $pages[$i]['title'];
 			$key++;
 
-			pages_list($pages[$i]['id'], $parent);
+			pagesList($pages[$i]['id'], $parent);
 
 			if ($i == $c_pages - 1) {
 				$spaces = substr($spaces, 0, -12);
