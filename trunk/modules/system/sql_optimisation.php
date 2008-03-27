@@ -15,30 +15,38 @@ $breadcrumb->assign(lang('system', 'system'), uri('acp/system'));
 $breadcrumb->assign(lang('system', 'maintenance'), uri('acp/system/maintenance'));
 $breadcrumb->assign(lang('system', 'sql_optimisation'));
 
-$action = $modules->action == 'do' ? true : false;
+if ($modules->action == 'do') {
+	$mod_list = $modules->modulesList();
+	$tables = array();
+	$total_overhead = 0;
+	$i = 0;
 
-$tpl->assign('action', $action);
+	foreach ($mod_list as $name => $info) {
+		if (is_array($info['tables'])) {
+			foreach ($info['tables'] as $table) {
+				$table_status = $db->query('SHOW TABLE STATUS FROM ' . CONFIG_DB_NAME . ' LIKE \'' . CONFIG_DB_PRE . $table . '\'');
+				$c_table_status = count($table_status);
+				for ($j = 0; $j < $c_table_status; $j++) {
+					$tables[$i]['name'] = $table_status[$j]['Name'];
+					if ($table_status[$j]['Data_free'] != 0) {
+						$db->query('OPTIMIZE TABLE ' . $table_status[$j]['Name'], 3);
 
-if ($action) {
-	$overall_overhead = 0;
-	$table_status = $db->query('SHOW TABLE STATUS FROM ' . CONFIG_DB_NAME);
-	$c_table_status = count($table_status);
+						$overhead = $table_status[$j]['Data_free'];
+						$total_overhead+= $overhead;
 
-	for($i = 0; $i < $c_table_status; $i++) {
-		$overhead_row = $table_status[$i]['Data_free'];
-		$overall_overhead = $overall_overhead + $overhead_row;
-
-		if ($overhead_row == 0) {
-			$table_status[$i]['status'] = lang('system', 'not_optimised');
-			$table_status[$i]['overhead'] = calcFilesize(0);
-		} else {
-			$db->query('OPTIMIZE TABLE ' . $table_status[$i]['Name'], 3);
-			$table_status[$i]['status'] = lang('system', 'optimised');
-			$table_status[$i]['overhead'] = calcFilesize($overhead_row);
+						$tables[$i]['overhead'] = calcFilesize($overhead);
+						$tables[$i]['status'] = lang('system', 'optimised');
+					} else {
+						$tables[$i]['overhead'] = calcFilesize(0);
+						$tables[$i]['status'] = lang('system', 'not_optimised');
+					}
+					$i++;
+				}
+			}
 		}
 	}
-	$tpl->assign('table_status', $table_status);
-	$tpl->assign('overall_overhead', calcFilesize($overall_overhead));
+	$tpl->assign('tables', $tables);
+	$tpl->assign('total_overhead', calcFilesize($total_overhead));
 }
 
 $content = $tpl->fetch('system/sql_optimisation.html');
