@@ -1,4 +1,4 @@
-{if !$action}
+{if !$tables}
 <div class="error" style="padding-top:0">
 	<p>
 		{lang values="system|sql_table_optimisation_description"}
@@ -20,13 +20,13 @@
 	<tfoot>
 		<tr>
 			<td colspan="2">{lang values="system|overall_overhead"}:</td>
-			<td>{$overall_overhead}</td>
+			<td>{$total_overhead}</td>
 		</tr>
 	</tfoot>
 	<tbody>
-{foreach from=$table_status item=table}
+{foreach from=$tables item=table}
 		<tr>
-			<td>{$table.Name}</td>
+			<td>{$table.name}</td>
 			<td>{$table.status}</td>
 			<td>{$table.overhead}</td>
 		</tr>
