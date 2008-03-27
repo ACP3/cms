@@ -39,7 +39,7 @@ if (!empty($modules->id) && $db->select('id', 'galpics', 'id = \'' . $modules->i
 			$new_file_sql = null;
 			if (isset($file) && is_array($file)) {
 				$result = moveFile($file['tmp_name'], $file['name'], 'gallery');
-				$new_file_sql = array('file' => $result['name']);
+				$new_file_sql['file'] = $result['name'];
 			}
 
 			$update_values = array(
@@ -48,6 +48,9 @@ if (!empty($modules->id) && $db->select('id', 'galpics', 'id = \'' . $modules->i
 				'description' => $db->escape($form['description'], 2),
 			);
 			if (is_array($new_file_sql)) {
+				$old_file = $db->select('file', 'galpics', 'id = \'' . $modules->id . '\'');
+				removeFile('gallery', $old_file[0]['file']);
+
 				$update_values = array_merge($update_values, $new_file_sql);
 			}
 

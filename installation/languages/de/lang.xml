@@ -242,7 +242,7 @@
 	</item>
 	<item>
 		<name>php_date_function</name>
-		<message>siehe <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a>-Funktion von PHP</message>
+		<message><![CDATA[siehe <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a>-Funktion von PHP]]></message>
 	</item>
 	<item>
 		<name>php_version</name>
@@ -478,7 +478,7 @@
 	</item>
 	<item>
 		<name>utc-2</name>
-		<message>(UTC-02:00) Fernando de Noronha Time, South Georgia &amp; the South Sandwich Islands Time</message>
+		<message><![CDATA[(UTC-02:00) Fernando de Noronha Time, South Georgia &amp; the South Sandwich Islands Time]]></message>
 	</item>
 	<item>
 		<name>utc-1</name>

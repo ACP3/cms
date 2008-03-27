@@ -34,7 +34,7 @@ if (!empty($modules->id) && $db->select('id', 'categories', 'id = \'' . $modules
 			$new_file_sql = null;
 			if (isset($file) && is_array($file)) {
 				$result = moveFile($file['tmp_name'], $file['name'], 'categories');
-				$new_file_sql = array('picture' => $result['name']);
+				$new_file_sql['picture'] = $result['name'];
 			}
 
 			$update_values = array(
@@ -42,6 +42,9 @@ if (!empty($modules->id) && $db->select('id', 'categories', 'id = \'' . $modules
 				'description' => $db->escape($form['description']),
 			);
 			if (is_array($new_file_sql)) {
+				$old_file = $db->select('picture', 'categories', 'id = \'' . $modules->id . '\'');
+				removeFile('categories', $old_file[0]['picture']);
+
 				$update_values = array_merge($update_values, $new_file_sql);
 			}
 

@@ -37,9 +37,7 @@ if (!isset($entries)) {
 			} else {
 				// Datei ebenfalls löschen
 				$file = $db->select('picture', 'categories', 'id = \'' . $entry . '\'');
-				if (is_file('uploads/categories/' . $file[0]['picture'])) {
-					unlink('uploads/categories/' . $file[0]['picture']);
-				}
+				removeFile('categories', $file[0]['picture']);
 				$bool = $db->delete('categories', 'id = \'' . $entry . '\'');
 			}
 		}

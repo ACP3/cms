@@ -30,9 +30,7 @@ if (!isset($entries)) {
 		if (!empty($entry) && $validate->isNumber($entry) && $db->select('id', 'emoticons', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1')
 		// Datei ebenfalls löschen
 		$file = $db->select('img', 'emoticons', 'id = \'' . $entry . '\'');
-		if (is_file('uploads/emoticons/' . $file[0]['img'])) {
-			unlink('uploads/emoticons/' . $file[0]['img']);
-		}
+		removeFile('emoticons', $file[0]['img']);
 		$bool = $db->delete('emoticons', 'id = \'' . $entry . '\'');
 	}
 	$cache->create('emoticons', $db->select('code, description, img', 'emoticons'));

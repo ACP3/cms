@@ -32,7 +32,7 @@ if (!empty($modules->id) && $db->select('id', 'emoticons', 'id = \'' . $modules-
 			$new_file_sql = null;
 			if (isset($file)) {
 				$result = moveFile($file['tmp_name'], $file['name'], 'emoticons');
-				$new_file_sql = array('img' => $result['name'],);
+				$new_file_sql['img'] = $result['name'];
 			}
 
 			$update_values = array(
@@ -40,6 +40,9 @@ if (!empty($modules->id) && $db->select('id', 'emoticons', 'id = \'' . $modules-
 				'description' => $db->escape($form['description']),
 			);
 			if (is_array($new_file_sql)) {
+				$old_file = $db->select('img', 'emoticons', 'id = \'' . $modules->id . '\'');
+				removeFile('emoticons', $old_file[0]['img']);
+
 				$update_values = array_merge($update_values, $new_file_sql);
 			}
 

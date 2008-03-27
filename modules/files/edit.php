@@ -66,6 +66,9 @@ if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id 
 				'text' => $db->escape($form['text'], 2),
 			);
 			if (is_array($new_file_sql)) {
+				$old_file = $db->select('file', 'files', 'id = \'' . $modules->id . '\'');
+				removeFile('files', $old_file[0]['file']);
+
 				$update_values = array_merge($update_values, $new_file_sql);
 			}
 
