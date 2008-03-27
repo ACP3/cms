@@ -89,6 +89,34 @@
 		<message>Gallery</message>
 	</item>
 	<item>
+		<name>image_filesize</name>
+		<message>Maximum image filesize</message>
+	</item>
+	<item>
+		<name>image_height</name>
+		<message>Maximum image height</message>
+	</item>
+	<item>
+		<name>image_width</name>
+		<message>Maximum image width</message>
+	</item>
+	<item>
+		<name>invalid_image_filesize_entered</name>
+		<message>Please type in the maximum image filesize in bytes</message>
+	</item>
+	<item>
+		<name>invalid_image_height_entered</name>
+		<message>Please type in the maximum image height in pixels</message>
+	</item>
+	<item>
+		<name>invalid_image_selected</name>
+		<message>Either you selected an image with a invalid filesize, or the image is to wide, to tall or the filsize is to big</message>
+	</item>
+	<item>
+		<name>invalid_image_width_entered</name>
+		<message>Please type in the maximum image width in pixels</message>
+	</item>
+	<item>
 		<name>mod_description</name>
 		<message>With this module you can administer the galleries.</message>
 	</item>
@@ -103,10 +131,6 @@
 	<item>
 		<name>no_pictures</name>
 		<message>There are no pictures registered for this gallery.</message>
-	</item>
-	<item>
-		<name>only_png_jpg_gif_allowed</name>
-		<message>Only the following file types are allowed: png, jpg and gif</message>
 	</item>
 	<item>
 		<name>pics</name>
@@ -147,6 +171,14 @@
 	<item>
 		<name>select_picture</name>
 		<message>Select picture</message>
+	</item>
+	<item>
+		<name>settings_error</name>
+		<message>While editing the settings an error has occured.</message>
+	</item>
+	<item>
+		<name>settings_success</name>
+		<message>The settings has been edited successfully.</message>
 	</item>
 	<item>
 		<name>title</name>

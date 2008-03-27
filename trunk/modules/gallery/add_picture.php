@@ -26,15 +26,16 @@ if (isset($_POST['submit'])) {
 	$file['name'] = $_FILES['file']['name'];
 	$file['size'] = $_FILES['file']['size'];
 	$form = $_POST['form'];
+	$settings = $config->output('gallery');
 
 	if (!$validate->isNumber($form['gallery']) || $db->select('id', 'gallery', 'id = \'' . $form['gallery'] . '\'', 0, 0, 0, 1) != '1')
-	$errors[] = lang('gallery', 'no_gallery_selected');
+		$errors[] = lang('gallery', 'no_gallery_selected');
 	if (!$validate->isNumber($form['pic']))
-	$errors[] = lang('gallery', 'type_in_picture_number');
+		$errors[] = lang('gallery', 'type_in_picture_number');
 	if (empty($file['tmp_name']) || empty($file['size']))
-	$errors[] = lang('gallery', 'no_picture_selected');
-	if (!empty($file['tmp_name']) && !empty($file['size']) && !$validate->isPicture($file['tmp_name']))
-	$errors[] = lang('gallery', 'only_png_jpg_gif_allowed');
+		$errors[] = lang('gallery', 'no_picture_selected');
+	if (!empty($file['tmp_name']) && !empty($file['size']) && !$validate->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']))
+		$errors[] = lang('gallery', 'invalid_image_selected');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));

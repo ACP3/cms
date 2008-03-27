@@ -40,7 +40,7 @@
 {foreach from=$pictures item=row}
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
-				<td><a href="{uri args="acp/gallery/edit_picture/id_`$row.id`"}" title="{lang values="gallery|edit_picture"}"><img src="{uri args="gallery/image/id_`$row.pic`/action_thumb"}" alt="" /></a></td>
+				<td><a href="{uri args="acp/gallery/edit_picture/id_`$row.id`"}" title="{lang values="gallery|edit_picture"}"><img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" /></a></td>
 				<td>{$row.description}</td>
 			</tr>
 {/foreach}
