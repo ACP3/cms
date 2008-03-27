@@ -61,6 +61,34 @@
 		<message>Die Kategorie wurde erfolgreich bearbeitet.</message>
 	</item>
 	<item>
+		<name>image_filesize</name>
+		<message>Maximale Dateigröße des Bildes</message>
+	</item>
+	<item>
+		<name>image_height</name>
+		<message>Maximale Bildhöhe</message>
+	</item>
+	<item>
+		<name>image_width</name>
+		<message>Maximale Bildbreite</message>
+	</item>
+	<item>
+		<name>invalid_image_filesize_entered</name>
+		<message>Bitte geben Sie die maximale Dateigröße des Bildes in Byte an</message>
+	</item>
+	<item>
+		<name>invalid_image_height_entered</name>
+		<message>Bitte geben Sie die maximale Bildhöhe in Pixel an</message>
+	</item>
+	<item>
+		<name>invalid_image_selected</name>
+		<message>Entweder Sie haben ein unerlaubtes Dateiformat verwendet oder das Bild ist zu breit, zu hoch oder zu groß</message>
+	</item>
+	<item>
+		<name>invalid_image_width_entered</name>
+		<message>Bitte geben Sie die maximale Bildbreite in Pixel an</message>
+	</item>
+	<item>
 		<name>mod_description</name>
 		<message>Mit diesem Modul können Kategorien für andere Module erstellt werden.</message>
 	</item>
@@ -77,11 +105,19 @@
 		<message>Bild</message>
 	</item>
 	<item>
-		<name>please_select_an_image</name>
-		<message>Es sind nur die Dateiformate png, jpg und gif erlaubt</message>
-	</item>
-	<item>
 		<name>select_module</name>
 		<message>Bitte wählen Sie ein Modul aus</message>
+	</item>
+	<item>
+		<name>settings</name>
+		<message>Einstellungen</message>
+	</item>
+	<item>
+		<name>settings_error</name>
+		<message>Beim Bearbeiten der Einstellungen ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>settings_success</name>
+		<message>Die Einstellungen wurden erfolgreich bearbeitet.</message>
 	</item>
 </language>
