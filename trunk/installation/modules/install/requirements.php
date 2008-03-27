@@ -21,8 +21,11 @@ $tpl->assign('requirements', $requirements);
 $defaults = array(
 	'includes/config.php',
 	'modules/access/module.xml',
+	'modules/acp/module.xml',
 	'modules/categories/module.xml',
 	'modules/comments/module.xml',
+	'modules/captcha/generated/',
+	'modules/captcha/module.xml',
 	'modules/contact/module.xml',
 	'modules/emoticons/module.xml',
 	'modules/errors/module.xml',

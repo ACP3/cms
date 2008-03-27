@@ -30,11 +30,8 @@ if (!isset($entries)) {
 		if (!empty($entry) && $validate->isNumber($entry) && $db->select('id', 'galpics', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1')
 		// Datei ebenfalls löschen
 		$file = $db->select('file', 'galpics', 'id = \'' . $entry . '\'');
-		if (is_file('uploads/gallery/' . $file[0]['file'])) {
-			unlink('uploads/gallery/' . $file[0]['file']);
-		}
+		removeFile('gallery', $file[0]['file']);
 
-		// Galerie Cache löschen
 		$bool = $db->delete('galpics', 'id = \'' . $entry . '\'');
 	}
 	$content = comboBox($bool ? lang('gallery', 'picture_delete_success') : lang('gallery', 'picture_delete_error'), uri('acp/gallery'));

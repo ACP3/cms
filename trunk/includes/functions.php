@@ -335,6 +335,14 @@ function redirect($args, $new_page = 0)
 	header('Location:' . (empty($args) && !empty($new_page) ? str_replace('&amp;', '&', $new_page) : uri($args)));
 	exit;
 }
+function removeFile($dir, $file)
+{
+	$path = ACP3_ROOT . 'uploads/' . $dir . '/' . $file;
+	if (!empty($dir) && !empty($file) && !preg_match('=/=', $dir) && !preg_match('=/=', $file) && file_exists($path)) {
+		@unlink($path);
+	}
+	return false;
+}
 /**
  * Funktion zum Salzen von Passwörtern, damit diese nicht so leicht entschlüsselt werden können
  *

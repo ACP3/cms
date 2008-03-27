@@ -183,6 +183,14 @@ table {
 #footer {
 	clear: both;
 }
+.licence {
+	width: 70%;
+	height: 400px;
+	margin: 0 auto;
+	padding: 10px;
+	border: 1px solid #c2c2c2;
+	overflow: auto;
+}
 /* Formulare */
 form {
 	text-align: center;

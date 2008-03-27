@@ -32,9 +32,7 @@ if (!isset($entries)) {
 			// Hochgeladene Bilder löschen
 			$pictures = $db->select('file', 'galpics', 'gallery_id = \'' . $entry . '\'');
 			foreach ($pictures as $row) {
-				if (is_file('uploads/gallery/' . $row['file'])) {
-					unlink('uploads/gallery/' . $row['file']);
-				}
+				removeFile('gallery', $row['file']);
 			}
 			// Fotogalerie mitsamt Bildern löschen
 			$bool = $db->delete('gallery', 'id = \'' . $entry . '\'');

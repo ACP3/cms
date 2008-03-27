@@ -30,9 +30,7 @@ if (!isset($entries)) {
 		if (!empty($entry) && $validate->isNumber($entry) && $db->select('id', 'files', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			// Datei ebenfalls löschen
 			$file = $db->select('file', 'files', 'id = \'' . $entry . '\'');
-			if (is_file('uploads/files/' . $file[0]['file'])) {
-				unlink('uploads/files/' . $file[0]['file']);
-			}
+			removeFile('files', $file[0]['file']);
 			$bool = $db->delete('files', 'id = \'' . $entry . '\'');
 
 			$cache->delete('files_details_id_' . $entry);
