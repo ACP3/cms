@@ -1,4 +1,4 @@
-{if $nav_mods || $access_system}
+{if $nav_mods || $nav_system}
 <script type="text/javascript" src="{$DESIGN_PATH}users/script.js"></script>
 {/if}
 <h4>{lang values="users|user_menu"}</h4>
@@ -14,14 +14,13 @@
 		</ul>
 	</li>
 {/if}
-{if $access_system}
+{if $nav_system}
 	<li>
 		<a href="{uri args="acp/system"}" id="nav-system-link">{lang values="system|system"}</a>
 		<ul id="nav-system">
-			<li><a href="{uri args="acp/system/configuration"}">{lang values="system|configuration"}</a></li>
-			<li><a href="{uri args="acp/system/software"}">{lang values="system|software"}</a></li>
-			<li><a href="{uri args="acp/system/extensions"}">{lang values="system|extensions"}</a></li>
-			<li><a href="{uri args="acp/system/maintenance"}">{lang values="system|maintenance"}</a></li>
+{foreach from=$nav_system item=row}
+			<li><a href="{uri args="acp/system/`$row.page`"}">{$row.name}</a></li>
+{/foreach}
 		</ul>
 	</li>
 {/if}

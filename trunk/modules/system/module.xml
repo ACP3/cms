@@ -22,33 +22,6 @@
 			<level>2</level>
 		</item>
 		<item>
-			<file>entry</file>
-			<action>
-				<name>configuration</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>designs</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>languages</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>modactivation</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>moddeactivation</name>
-				<level>2</level>
-			</action>
-			<action>
-				<name>sql_export</name>
-				<level>2</level>
-			</action>
-		</item>
-		<item>
 			<file>extensions</file>
 			<level>2</level>
 		</item>
@@ -65,7 +38,7 @@
 			<level>2</level>
 		</item>
 		<item>
-			<file>software</file>
+			<file>server_config</file>
 			<level>2</level>
 		</item>
 		<item>

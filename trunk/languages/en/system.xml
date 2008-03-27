@@ -361,16 +361,16 @@
 		<message>Please seperate with commas</message>
 	</item>
 	<item>
+		<name>server_config</name>
+		<message>Serverconfiguration</message>
+	</item>
+	<item>
 		<name>server_infos</name>
 		<message>Server information</message>
 	</item>
 	<item>
 		<name>server_software</name>
 		<message>Server software</message>
-	</item>
-	<item>
-		<name>software</name>
-		<message><![CDATA[ Software &amp; Serverconfiguration ]]></message>
 	</item>
 	<item>
 		<name>sql_export</name>
