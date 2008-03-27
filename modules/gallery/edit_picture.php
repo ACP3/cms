@@ -25,13 +25,14 @@ if (!empty($modules->id) && $db->select('id', 'galpics', 'id = \'' . $modules->i
 			$file['size'] = $_FILES['file']['size'];
 		}
 		$form = $_POST['form'];
+		$settings = $config->outout('gallery');
 
 		if (!$validate->isNumber($form['gallery']) || $db->select('id', 'gallery', 'id = \'' . $form['gallery'] . '\'', 0, 0, 0, 1) != '1')
 			$errors[] = lang('gallery', 'no_gallery_selected');
 		if (!$validate->isNumber($form['pic']))
 			$errors[] = lang('gallery', 'type_in_picture_number');
-		if (isset($file) && is_array($file) && !$validate->isPicture($file['tmp_name']))
-			$errors[] = lang('gallery', 'only_png_jpg_gif_allowed');
+		if (isset($file) && is_array($file) && !$validate->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']))
+			$errors[] = lang('gallery', 'invalid_image_selected');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));

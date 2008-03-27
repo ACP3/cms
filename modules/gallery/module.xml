@@ -8,6 +8,11 @@
 		<version core="true"/>
 		<active>1</active>
 	</info>
+	<settings>
+		<width>1024</width>
+		<height>768</height>
+		<filesize>204800</filesize>
+	</settings>
 	<access>
 		<item>
 			<file>add_picture</file>
@@ -27,11 +32,11 @@
 		</item>
 		<item>
 			<file>delete_gallery</file>
-			<level>1</level>
+			<level>2</level>
 		</item>
 		<item>
 			<file>delete_picture</file>
-			<level>1</level>
+			<level>2</level>
 		</item>
 		<item>
 			<file>edit_gallery</file>
@@ -52,6 +57,10 @@
 		<item>
 			<file>pics</file>
 			<level>1</level>
+		</item>
+		<item>
+			<file>settings</file>
+			<level>2</level>
 		</item>
 	</access>
 </module>
