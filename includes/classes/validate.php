@@ -90,15 +90,20 @@ class validate
 	/**
 	 * Überprüfen, ob es ein unterstütztes Bildformat ist
 	 *
-	 * @param string $var
+	 * @param string $file
 	 *  Zu überprüfendes Bild
 	 * @return boolean
 	 */
-	public function isPicture($var)
+	public function isPicture($file, $width = '', $height = '', $filesize = '')
 	{
-		$info = getimagesize($var);
+		$info = getimagesize($file);
 
-		return $info[2] == '1' || $info[2] == '2' || $info[2] == '3' ? true : false;
+		$isPicture = $info[2] >= '1' && $info[2] <= '3' ? true : false;
+
+		if ($isPicture && $this->isNumber($width) && $this->isNumber($height) && $this->isNumber($filesize)) {
+			return $info[0] <= $width && $info[1] <= $height && filesize($file) <= $filesize ? true : false;
+		}
+		return false;
 	}
 }
 ?>

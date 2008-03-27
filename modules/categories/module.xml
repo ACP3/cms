@@ -9,6 +9,11 @@
 		<protected/>
 		<active>1</active>
 	</info>
+	<settings>
+		<width>100</width>
+		<height>50</height>
+		<filesize>40960</filesize>
+	</settings>
 	<access>
 		<item>
 			<file>adm_list</file>
@@ -29,6 +34,10 @@
 		<item>
 			<file>functions</file>
 			<level>1</level>
+		</item>
+		<item>
+			<file>settings</file>
+			<level>2</level>
 		</item>
 	</access>
 </module>
