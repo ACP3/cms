@@ -19,5 +19,5 @@ define('CONFIG_META_KEYWORDS', '');
 define('CONFIG_SEF', '0');
 define('CONFIG_TIME_ZONE', '3600');
 define('CONFIG_TITLE', 'ACP3');
-define('CONFIG_VERSION', '4.0b9 SVN');
+define('CONFIG_VERSION', '4.0b10 SVN');
 ?>

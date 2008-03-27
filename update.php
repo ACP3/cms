@@ -6,11 +6,13 @@ require ACP3_ROOT . 'includes/config.php';
 require ACP3_ROOT . 'includes/classes/db.php';
 require ACP3_ROOT . 'includes/classes/cache.php';
 
-/*
+
 $db = new db;
 
 $queries = array(
-	0 => 'ALTER TABLE `{pre}categories` ADD `picture` VARCHAR( 120 ) {charset} NOT NULL AFTER `name` ;',
+	0 => 'UPDATE {pre}access SET modules =\'access:2,acp:2,captcha:2,categories:2,comments:2,contact:2,emoticons:2,errors:2,feeds:2,files:2,gallery:2,guestbook:2,news:2,newsletter:2,pages:2,polls:2,search:2,system:2,users:2\' WHERE id = \'1\'',
+	1 => 'UPDATE {pre}access SET modules =\'access:0,acp:0,captcha:1,categories:1,comments:1,contact:1,emoticons:1,errors:2,feeds:1,files:1,gallery:1,guestbook:1,news:1,newsletter:1,pages:1,polls:1,search:1,system:0,users:1\' WHERE id = \'2\'',
+	2 => 'UPDATE {pre}access SET modules =\'access:0,acp:0,captcha:1,categories:1,comments:1,contact:1,emoticons:1,errors:2,feeds:1,files:1,gallery:1,guestbook:1,news:1,newsletter:1,pages:1,polls:1,search:1,system:0,users:1\' WHERE id = \'3\'',
 );
 
 if (version_compare(mysql_get_client_info(), '4.1', '>=')) {
@@ -39,7 +41,6 @@ print "\n" . ($success ? 'Die Datenbank wurde erfolgreich aktualisiert.' : 'Mind
 cache::purge();
 
 print "\n" . '----------------------------' . "\n\n";
-*/
 
 // Konfigurationsdatei aktualisieren
 $path = ACP3_ROOT . 'includes/config.php';
@@ -57,8 +58,8 @@ if (is_writable($path))	{
 	}
 	$bool = @file_put_contents($path, $config);
 
-	echo $bool ? 'Konfigurationsdatei erfolgreich aktualisiert!' : 'Konfigurationsdatei konnte nicht aktualisiert werden!';
+	echo $bool ? 'Konfigurationsdatei erfolgreich aktualisiert.' : 'Konfigurationsdatei konnte nicht aktualisiert werden.';
 } else {
-	echo 'Konfigurationsdatei konnte nicht aktualisiert werden!';
+	echo 'Konfigurationsdatei konnte nicht aktualisiert werden.';
 }
 ?>
