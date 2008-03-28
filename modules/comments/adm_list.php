@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-$module = isset($modules->gen['module']) && !empty($modules->gen['module']) ? $db->escape($modules->gen['module']) : 0;
+$module = $modules->module ? $db->escape($modules->module) : 0;
 $tpl->assign('module', $module);
 
 if (empty($module) || !empty($module) && $db->select('id', 'comments', 'module = \'' . $module . '\'', 0, 0, 0, 1) == '0') {
@@ -18,7 +18,7 @@ if (empty($module) || !empty($module) && $db->select('id', 'comments', 'module =
 	$c_comments = count($comments);
 
 	if ($c_comments > 0) {
-		$tpl->assign('pagination', pagination($db->query('SELECT module FROM ' . CONFIG_DB_PRE . 'comments GROUP BY module', 1)));
+		$tpl->assign('pagination', $modules->pagination($db->query('SELECT module FROM ' . CONFIG_DB_PRE . 'comments GROUP BY module', 1)));
 		for ($i = 0; $i < $c_comments; $i++) {
 			$comments[$i]['name'] = lang($comments[$i]['module'], $comments[$i]['module']);
 			$comments[$i]['count'] = $db->select('id', 'comments', 'module = \'' . $comments[$i]['module'] . '\'', 0, 0, 0, 1);
@@ -42,7 +42,7 @@ if (empty($module) || !empty($module) && $db->select('id', 'comments', 'module =
 	}
 
 	if ($c_comments > 0) {
-		$tpl->assign('pagination', pagination($db->select('id', 'comments', 'module = \'' . $module . '\'', 0, 0, 0, 1)));
+		$tpl->assign('pagination', $modules->pagination($db->select('id', 'comments', 'module = \'' . $module . '\'', 0, 0, 0, 1)));
 		for ($i = 0; $i < $c_comments; $i++) {
 			$comments[$i]['date'] = dateAligned(1, $comments[$i]['date']);
 			$comments[$i]['name'] = $comments[$i]['name'];

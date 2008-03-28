@@ -186,64 +186,6 @@ function moveFile($tmp_filename, $filename, $dir)
 	}
 }
 /**
- * Gibt eine Seitenauswahl aus
- *
- * @param integer $rows
- *  Anzahl der Datensätze
- * @return string
- *  Gibt die Seitenauswahl aus
- */
-function pagination($rows)
-{
-	global $modules, $tpl;
-
-	if ($rows > CONFIG_ENTRIES) {
-		// Alle angegeben URL Parameter mit in die URL einbeziehen
-		$acp = defined('IN_ADM') ? 'acp/' : '';
-		$id = !empty($modules->id) ? '/id_' . $modules->id : '';
-		$cat = !empty($modules->cat) ? '/cat_' . $modules->cat : '';
-		$gen = '';
-		if (!empty($modules->gen)) {
-			foreach ($modules->gen as $key => $value) {
-				if ($key != 'pos') {
-					$gen.= '/' . $key . '_' . $value;
-				}
-			}
-		}
-
-		$tpl->assign('uri', uri($acp . $modules->mod . '/' . $modules->page . $id . $cat . $gen));
-
-		// Seitenauswahl
-		$c_pages = ceil($rows / CONFIG_ENTRIES);
-		$recent = 0;
-
-		for ($i = 1; $i <= $c_pages; $i++) {
-			$pages[$i]['selected'] = POS == $recent ? true : false;
-			$pages[$i]['page'] = $i;
-			$pages[$i]['pos'] = 'pos_' . $recent . '/';
-
-			$recent = $recent + CONFIG_ENTRIES;
-		}
-		$tpl->assign('pages', $pages);
-
-		// Vorherige Seite
-		$pos_prev = array(
-			'pos' => POS - CONFIG_ENTRIES >= 0 ? 'pos_' . (POS - CONFIG_ENTRIES) . '/' : '',
-			'selected' => POS == 0 ? true : false,
-		);
-		$tpl->assign('pos_prev', $pos_prev);
-
-		// Nächste Seite
-		$pos_next = array(
-			'pos' => 'pos_' . (POS + CONFIG_ENTRIES) . '/',
-			'selected' => POS + CONFIG_ENTRIES >= $rows ? true : false,
-		);
-		$tpl->assign('pos_next', $pos_next);
-
-		return $tpl->fetch('common/pagination.html');
-	}
-}
-/**
  * Zeigt Dropdown-Menüs für die Veröffentlichungsdauer von Inhalten an
  *
  * @param string $mode

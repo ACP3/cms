@@ -12,8 +12,8 @@ if (!defined('IN_ADM'))
 
 if (isset($_POST['entries']) && is_array($_POST['entries']))
 	$entries = $_POST['entries'];
-elseif (isset($modules->gen['entries']) && preg_match('/^([\d|]+)$/', $modules->gen['entries']))
-	$entries = $modules->gen['entries'];
+elseif (preg_match('/^([\d|]+)$/', $modules->entries))
+	$entries = $modules->entries;
 
 if (!isset($entries)) {
 	$content = comboBox(array(lang('common', 'no_entries_selected')));
@@ -23,7 +23,7 @@ if (!isset($entries)) {
 		$marked_entries.= $entry . '|';
 	}
 	$content = comboBox(lang('categories', 'confirm_delete'), uri('acp/categories/delete/entries_' . $marked_entries), uri('acp/categories'));
-} elseif (preg_match('/^([\d|]+)$/', $entries) && isset($modules->gen['confirmed'])) {
+} elseif (preg_match('/^([\d|]+)$/', $entries) && $modules->confirmed) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
 	$in_use = 0;

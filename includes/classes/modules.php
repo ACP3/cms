@@ -33,9 +33,9 @@ class modules
 	 * Die restlichen URI Parameter
 	 *
 	 * @var array
-	 * @access public
+	 * @access protected
 	 */
-	public $gen = array();
+	protected $other = array();
 	/**
 	 * Die ID eines Eintrages in der Datenbank
 	 *
@@ -88,7 +88,7 @@ class modules
 			$id_regex = '/^(id_(\d+))$/';
 			$cat_regex = '/^(cat_(\d+))$/';
 			$action_regex = '/^(action_(\w+))$/';
-			$gen_regex = '/^(([a-z0-9-]+)_(.+))$/';
+			$other_regex = '/^(([a-z0-9-]+)_(.+))$/';
 
 			for ($i = 2; $i < $c_stm; $i++) {
 				if (!empty($stm[$i])) {
@@ -100,9 +100,9 @@ class modules
 						$this->cat = substr($stm[$i], 4);
 					} elseif (preg_match($action_regex, $stm[$i])) {
 						$this->action = substr($stm[$i], 7);
-					} elseif (preg_match($gen_regex, $stm[$i])) {
+					} elseif (preg_match($other_regex, $stm[$i])) {
 						$pos = strpos($stm[$i], '_');
-						$this->gen[substr($stm[$i], 0, $pos)] = substr($stm[$i], $pos + 1, strlen($stm[$i]));
+						$this->other[substr($stm[$i], 0, $pos)] = substr($stm[$i], $pos + 1, strlen($stm[$i]));
 					}
 				}
 			}
@@ -110,6 +110,18 @@ class modules
 		if (!defined('POS')) {
 			define('POS', '0');
 		}
+	}
+	/**
+	 * Gibt alle zusätzlichen URI Angaben aus
+	 *
+	 * @param string $key
+	 * @return mixed
+	 */
+	public function __get($key)
+	{
+		if (!empty($key) && array_key_exists($key, $this->other))
+			return $this->other[$key];
+		return null;
 	}
 	/**
 	 * Überpüft, ob ein Modul überhaupt existiert, bzw. der Benutzer auf ein Modul Zugriff hat
@@ -178,6 +190,58 @@ class modules
 		}
 		ksort($mod_list);
 		return $mod_list;
+	}
+	/**
+	 * Gibt eine Seitenauswahl aus
+	 *
+	 * @param integer $rows
+	 *  Anzahl der Datensätze
+	 * @return string
+	 *  Gibt die Seitenauswahl aus
+	 */
+	public function pagination($rows)
+	{
+		global $tpl;
+
+		if ($rows > CONFIG_ENTRIES) {
+			// Alle angegeben URL Parameter mit in die URL einbeziehen
+			$acp = defined('IN_ADM') ? 'acp/' : '';
+			$id = !empty($this->id) ? '/id_' . $this->id : '';
+			$cat = !empty($this->cat) ? '/cat_' . $this->cat : '';
+			$gen = '';
+			if (!empty($this->gen)) {
+				foreach ($this->gen as $key => $value) {
+					if ($key != 'pos') {
+						$gen .= '/' . $key . '_' . $value;
+					}
+				}
+			}
+
+			$tpl->assign('uri', uri($acp . $this->mod . '/' . $this->page . $id . $cat . $gen));
+
+			// Seitenauswahl
+			$c_pages = ceil($rows / CONFIG_ENTRIES);
+			$recent = 0;
+
+			for ($i = 1; $i <= $c_pages; $i++) {
+				$pages[$i]['selected'] = POS == $recent ? true : false;
+				$pages[$i]['page'] = $i;
+				$pages[$i]['pos'] = 'pos_' . $recent . '/';
+
+				$recent = $recent + CONFIG_ENTRIES;
+			}
+			$tpl->assign('pages', $pages);
+
+			// Vorherige Seite
+			$pos_prev = array('pos' => POS - CONFIG_ENTRIES >= 0 ? 'pos_' . (POS - CONFIG_ENTRIES) . '/' : '', 'selected' => POS == 0 ? true : false);
+			$tpl->assign('pos_prev', $pos_prev);
+
+			// Nächste Seite
+			$pos_next = array('pos' => 'pos_' . (POS + CONFIG_ENTRIES) . '/', 'selected' => POS + CONFIG_ENTRIES >= $rows ? true : false);
+			$tpl->assign('pos_next', $pos_next);
+
+			return $tpl->fetch('common/pagination.html');
+		}
 	}
 	/**
 	 * Durchläuft für das angeforderte Modul den <info> Abschnitt in der

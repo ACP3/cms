@@ -10,14 +10,15 @@
 if (!defined('IN_ACP3'))
 	exit();
 
-if (!empty($modules->gen['hash']) && strlen($modules->gen['hash']) == 32 && preg_match('/^[a-f0-9]+$/', $modules->gen['hash'])) {
+if (strlen($modules->hash) == 32 && preg_match('/^[a-f0-9]+$/', $modules->hash)) {
 	header('Cache-Control: no-cache, must-revalidate');
 	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 	header('Content-Type: image/gif');
-	$hash = $modules->gen['hash'];
-	$captcha = salt(!empty($modules->gen['length']) && $validate->isNumber($modules->gen['length']) ? $modules->gen['length'] : 5);
+	$hash = $modules->hash;
+	$captcha = salt(!empty($modules->length) && $validate->isNumber($modules->length) ? $modules->length : 5);
 	$captchaLength = strlen($captcha);
 	$dir = ACP3_ROOT . 'uploads/captcha/';
+	$file = $dir . $hash . strtolower($captcha);
 
 	$im = imagecreate($captchaLength * 25, 30);
 	// Hintergrundfarbe
@@ -32,8 +33,7 @@ if (!empty($modules->gen['hash']) && strlen($modules->gen['hash']) == 32 && preg
 		$posTop = rand(20, 25);
 		ImageTTFText($im, $textSize, $angle, $posLeft, $posTop, $textColor, ACP3_ROOT . 'modules/captcha/DejaVuSans.ttf', $captcha[$i]);
 	}
-	ImageGif($im, $dir . $hash . strtolower($captcha));
-	ImageGif($im);
+	ImageGif($im, $file);
 	ImageDestroy($im);
 	
 	// Alte Captchas löschen
@@ -45,7 +45,7 @@ if (!empty($modules->gen['hash']) && strlen($modules->gen['hash']) == 32 && preg
 			@unlink($dir . $captchas[$i]);
 		}
 	}
-	exit();
+	exit(readfile($file));
 } else {
 	redirect('errors/404');
 }

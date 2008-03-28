@@ -1,7 +1,10 @@
 <?php
 ob_start();
 
-error_reporting(E_ALL);
+error_reporting(E_ALL|E_STRICT);
+
+// Standardzeitzone festlegen
+date_default_timezone_set('Europe/Berlin');
 
 // Evtl. gesetzten Content-Type des Servers überschreiben
 header('Content-type: text/html; charset=UTF-8');

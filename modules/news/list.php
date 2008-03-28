@@ -48,7 +48,7 @@ if ($c_news > 0) {
 		$tpl->assign('comment_check', true);
 		include 'modules/comments/functions.php';
 	}
-	$tpl->assign('pagination', pagination($db->select('id', 'news', $date . $cat_field, 0, 0, 0, 1)));
+	$tpl->assign('pagination', $modules->pagination($db->select('id', 'news', $date . $cat_field, 0, 0, 0, 1)));
 
 	for ($i = 0; $i < $c_news; $i++) {
 		$news[$i]['date'] = dateAligned(1, $news[$i]['start']);

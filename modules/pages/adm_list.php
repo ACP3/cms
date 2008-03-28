@@ -14,7 +14,7 @@ $pages = $db->query('SELECT p.id, p.start, p.end, p.mode, p.block_id, p.title, b
 $c_pages = count($pages);
 
 if ($c_pages > 0) {
-	$tpl->assign('pagination', pagination($db->query('SELECT p.id FROM ' . CONFIG_DB_PRE . 'pages AS p LEFT JOIN ' . CONFIG_DB_PRE . 'pages_blocks AS b ON p.block_id = b.id', 1)));
+	$tpl->assign('pagination', $modules->pagination($db->query('SELECT p.id FROM ' . CONFIG_DB_PRE . 'pages AS p LEFT JOIN ' . CONFIG_DB_PRE . 'pages_blocks AS b ON p.block_id = b.id', 1)));
 
 	$mode_replace = array(lang('pages', 'static_page'), lang('pages', 'dynamic_page'), lang('pages', 'hyperlink'));
 

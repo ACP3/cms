@@ -11,7 +11,7 @@ if (!defined('IN_ADM'))
 	exit();
 
 if (!empty($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
-	$pic = isset($modules->gen['pic']) && $validate->isNumber($modules->gen['pic']) ? $modules->gen['pic'] : 1;
+	$pic = $validate->isNumber($modules->pic) ? $modules->pic : 1;
 	$gallery = $db->select('name', 'gallery', 'id = \'' . $modules->id . '\'');
 
 	$breadcrumb->assign(lang('common', 'acp'), uri('acp'));
