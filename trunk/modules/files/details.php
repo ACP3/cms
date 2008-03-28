@@ -12,7 +12,7 @@ if (!defined('IN_ACP3'))
 
 $date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
 
-if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id . '\'' . $date, 0, 0, 0, 1) == '1') {
+if ($validate->isNumber($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id . '\'' . $date, 0, 0, 0, 1) == '1') {
 	if (!$cache->check('files_details_id_' . $modules->id)) {
 		$cache->create('files_details_id_' . $modules->id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, c.name AS category_name', 'files AS f, ' . CONFIG_DB_PRE . 'categories AS c', 'f.id = \'' . $modules->id . '\' AND f.category_id = c.id'));
 	}

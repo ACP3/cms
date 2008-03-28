@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (!empty($modules->id) && $db->select('id', 'comments', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if ($validate->isNumber($modules->id) && $db->select('id', 'comments', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	$comment = $db->select('name, message, module', 'comments', 'id = \'' . $modules->id . '\'');
 
 	$comment[0]['module'] = $db->escape($comment[0]['module'], 3);

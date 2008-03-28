@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (!empty($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if ($validate->isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	$gallery = $db->select('start, end, name', 'gallery', 'id = \'' . $modules->id . '\'');
 
 	$breadcrumb->assign(lang('common', 'acp'), uri('acp'));
