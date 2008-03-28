@@ -46,8 +46,8 @@
 {$captcha}
 	</fieldset>
 	<div class="form-bottom">
-		<input type="hidden" name="module" value="{$com_form.module}" />
-		<input type="hidden" name="entry_id" value="{$com_form.entry_id}" />
+		<input type="hidden" name="form[module]" value="{$form.module}" />
+		<input type="hidden" name="form[entry_id]" value="{$form.entry_id}" />
 		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
 		<input type="reset" value="{lang values="common|reset"}" class="form" />
 	</div>
