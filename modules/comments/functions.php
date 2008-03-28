@@ -40,11 +40,9 @@ function comments($module = 0, $entry_id = 0)
 	global $auth, $db, $modules, $tpl, $validate;
 
 	// Formular für das Eintragen von Kommentaren
-	if (isset($_POST['submit']) && isset($_POST['module']) && isset($_POST['entry_id']) && $validate->isNumber($_POST['entry_id'])) {
+	if (isset($_POST['submit'])) {
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$form = $_POST['form'];
-		$module = $_POST['module'];
-		$entry_id = $_POST['entry_id'];
 
 		// Flood Sperre
 		$flood = $db->select('date', 'comments', 'ip = \'' . $ip . '\'', 'id DESC', '1');
@@ -59,7 +57,7 @@ function comments($module = 0, $entry_id = 0)
 			$errors[] = lang('common', 'name_to_short');
 		if (strlen($form['message']) < 3)
 			$errors[] = lang('common', 'message_to_short');
-		if (!$modules->check($db->escape($module, 2), 'list'))
+		if (!$modules->check($db->escape($form['module'], 2), 'list') || !$validate->isNumber($form['entry_id']))
 			$errors[] = lang('comments', 'module_doesnt_exist');
 		if (!$validate->captcha($form['captcha'], $form['hash']))
 			$errors[] = lang('captcha', 'invalid_captcha_entered');
@@ -118,7 +116,7 @@ function comments($module = 0, $entry_id = 0)
 		$tpl->assign('captcha', captcha());
 
 		// Modul und Datensatznummer mit ins Formular einbinden
-		$tpl->assign('com_form', array('module' => $module, 'entry_id' => $entry_id));
+		$tpl->assign('form', isset($form) ? $form : array('module' => $module, 'entry_id' => $entry_id));
 
 		return $tpl->fetch('comments/list.html');
 	}
