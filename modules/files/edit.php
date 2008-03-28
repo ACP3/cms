@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (!empty($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if ($validate->isNumber($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 		if (isset($form['external'])) {

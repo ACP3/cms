@@ -16,33 +16,12 @@
 class modules
 {
 	/**
-	 * Die Aktion, welche z.B: in einem Formular ausgeführt werden soll
-	 *
-	 * @var string
-	 * @access public
-	 */
-	public $action = '';
-	/**
-	 * Die ID einer Kategorie in der Datenbank
-	 *
-	 * @var integer
-	 * @access public
-	 */
-	public $cat = '0';
-	/**
-	 * Die restlichen URI Parameter
+	 * Array, welches die URI Parameter enthält
 	 *
 	 * @var array
 	 * @access protected
 	 */
-	protected $other = array();
-	/**
-	 * Die ID eines Eintrages in der Datenbank
-	 *
-	 * @var integer
-	 * @access public
-	 */
-	public $id = '0';
+	protected $params = array();
 	/**
 	 * Die komplette übergebene URL
 	 *
@@ -77,32 +56,21 @@ class modules
 		$this->mod = !empty($stm[0]) ? $stm[0] : $defaultModule;
 		$this->page = !empty($stm[1]) ? $stm[1] : $defaultPage;
 
-		$this->cat = !empty($_POST['cat']) ? $_POST['cat'] : '0';
-		$this->action = !empty($_POST['action']) ? $_POST['action'] : '';
+		if (!empty($_POST['cat']))
+			$this->params['cat'] = $_POST['cat'];
+		if (!empty($_POST['action']))
+			$this->params['action'] = $_POST['action'];
 
 		if (!empty($stm[2])) {
 			$c_stm = count($stm);
 
-			// Regex
-			$pos_regex = '/^(pos_(\d+))$/';
-			$id_regex = '/^(id_(\d+))$/';
-			$cat_regex = '/^(cat_(\d+))$/';
-			$action_regex = '/^(action_(\w+))$/';
-			$other_regex = '/^(([a-z0-9-]+)_(.+))$/';
-
 			for ($i = 2; $i < $c_stm; $i++) {
 				if (!empty($stm[$i])) {
-					if (!defined('POS') && preg_match($pos_regex, $stm[$i])) {
+					if (!defined('POS') && preg_match('/^(pos_(\d+))$/', $stm[$i])) {
 						define('POS', substr($stm[$i], 4));
-					} elseif (preg_match($id_regex, $stm[$i])) {
-						$this->id = substr($stm[$i], 3);
-					} elseif (preg_match($cat_regex, $stm[$i])) {
-						$this->cat = substr($stm[$i], 4);
-					} elseif (preg_match($action_regex, $stm[$i])) {
-						$this->action = substr($stm[$i], 7);
-					} elseif (preg_match($other_regex, $stm[$i])) {
+					} elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $stm[$i])) {
 						$pos = strpos($stm[$i], '_');
-						$this->other[substr($stm[$i], 0, $pos)] = substr($stm[$i], $pos + 1, strlen($stm[$i]));
+						$this->params[substr($stm[$i], 0, $pos)] = substr($stm[$i], $pos + 1, strlen($stm[$i]));
 					}
 				}
 			}
@@ -112,15 +80,15 @@ class modules
 		}
 	}
 	/**
-	 * Gibt alle zusätzlichen URI Angaben aus
+	 * Gibt alle URI Parameter aus
 	 *
 	 * @param string $key
 	 * @return mixed
 	 */
 	public function __get($key)
 	{
-		if (!empty($key) && array_key_exists($key, $this->other))
-			return $this->other[$key];
+		if (!empty($key) && array_key_exists($key, $this->params))
+			return $this->params[$key];
 		return null;
 	}
 	/**

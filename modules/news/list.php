@@ -16,7 +16,13 @@ $tpl->assign('MOD_newsletter', $modules->check('newsletter', 'create'));
 //
 $tpl->assign('MOD_feeds', $modules->check('feeds', 'list'));
 
-$cat = isset($_POST['form']['cat']) && $validate->isNumber($_POST['form']['cat']) ? $_POST['form']['cat'] : $modules->cat;
+if (isset($_POST['form']['cat']) && $validate->isNumber($_POST['form']['cat'])) {
+	$cat = $_POST['form']['cat'];
+} elseif ($validate->isNumber($modules->cat)) {
+	$cat = $modules->cat;
+} else {
+	$cat = 0;;
+}
 
 // Kategorien auflisten
 if ($modules->check('categories', 'functions')) {
