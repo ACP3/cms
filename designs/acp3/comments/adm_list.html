@@ -39,9 +39,9 @@
 			<tr>
 				<th>{lang values="common|mark"}</th>
 				<th>{lang values="common|date"}</th>
-				<th>{lang values="comments|ip}</th>
 				<th>{lang values="common|name"}</th>
 				<th>{lang values="common|message"}</th>
+				<th>{lang values="comments|ip}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -49,9 +49,9 @@
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
 				<td>{$row.date}</td>
-				<td>{$row.ip}</td>
 				<td><a href="{uri args="acp/comments/edit/id_`$row.id`"}" title="{lang values="comments|edit"}">{$row.name}</a></td>
 				<td>{$row.message}</td>
+				<td>{$row.ip}</td>
 			</tr>
 {/foreach}
 		</tbody>
