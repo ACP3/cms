@@ -10,9 +10,9 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (isset($modules->gen['mail']) && $validate->email($modules->gen['mail']) && isset($modules->gen['hash']) && preg_match('/^[a-f0-9]{32}+$/', $modules->gen['hash'])) {
-	$mail = $modules->gen['mail'];
-	$hash = $modules->gen['hash'];
+if ($validate->email($modules->mail) && preg_match('/^[a-f0-9]{32}+$/', $modules->hash)) {
+	$mail = $modules->mail;
+	$hash = $modules->hash;
 } else {
 	redirect('errors/404');
 }

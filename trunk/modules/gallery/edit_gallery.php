@@ -57,7 +57,7 @@ if (!empty($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->i
 		$c_pictures = count($pictures);
 
 		if ($c_pictures > 0) {
-			$tpl->assign('pagination', pagination($db->select('id', 'galpics', 'gallery_id = \'' . $modules->id . '\'', 0, 0, 0, 1)));
+			$tpl->assign('pagination', $modules->pagination($db->select('id', 'galpics', 'gallery_id = \'' . $modules->id . '\'', 0, 0, 0, 1)));
 			for ($i = 0; $i < $c_pictures; $i++) {
 				$pictures[$i]['description'] = $db->escape($pictures[$i]['description'], 3);
 			}

@@ -6,7 +6,10 @@
  */
 
 // Debug - alle Fehler ausgeben
-error_reporting(E_ALL);
+error_reporting(E_ALL|E_STRICT);
+
+// Standardzeitzone festlegen
+date_default_timezone_set('Europe/Berlin');
 
 // register_globals OFF Emulation
 require_once ACP3_ROOT . 'includes/globals.php';
