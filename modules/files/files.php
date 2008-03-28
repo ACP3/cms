@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (!empty($modules->cat)) {
+if (!empty($modules->cat) && $db->select('id', 'categories', 'id = \'' . $modules->cat . '\'', 0,0, 0, 1) == '1') {
 	$breadcrumb->assign(lang('files', 'files'), uri('files'));
 	$category = $db->select('name', 'categories', 'id = \'' . $modules->cat . '\'');
 	$breadcrumb->assign($category[0]['name']);

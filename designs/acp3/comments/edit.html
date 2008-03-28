@@ -5,7 +5,10 @@
 			<dt><label for="name">{lang values="common|name"}</label></dt>
 			<dd><input type="text" name="form[name]" id="name" value="{$form.name}" /></dd>
 			<dt><label for="message">{lang values="common|message"}</label></dt>
-			<dd><textarea name="form[message]" id="message" cols="50" rows="5">{$form.message}</textarea></dd>
+			<dd>
+				{$emoticons}
+				<textarea name="form[message]" id="message" cols="50" rows="5">{$form.message}</textarea>
+			</dd>
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
