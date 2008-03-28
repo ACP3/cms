@@ -41,6 +41,13 @@ if (!empty($modules->id) && $db->select('id', 'comments', 'id = \'' . $modules->
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+		if ($modules->check('emoticons', 'functions')) {
+			include_once ACP3_ROOT . 'modules/emoticons/functions.php';
+
+			//Emoticons im Formular anzeigen
+			$tpl->assign('emoticons', emoticonsList());
+		}
+
 		$tpl->assign('form', isset($form) ? $form : $comment[0]);
 
 		$content = $tpl->fetch('comments/edit.html');

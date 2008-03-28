@@ -17,7 +17,7 @@ if (!empty($modules->gen['hash']) && strlen($modules->gen['hash']) == 32 && preg
 	$hash = $modules->gen['hash'];
 	$captcha = salt(!empty($modules->gen['length']) && $validate->isNumber($modules->gen['length']) ? $modules->gen['length'] : 5);
 	$captchaLength = strlen($captcha);
-	$dir = ACP3_ROOT . 'modules/captcha/generated/';
+	$dir = ACP3_ROOT . 'uploads/captcha/';
 
 	$im = imagecreate($captchaLength * 25, 30);
 	// Hintergrundfarbe
@@ -30,7 +30,7 @@ if (!empty($modules->gen['hash']) && strlen($modules->gen['hash']) == 32 && preg
 		$angle = rand(0, 30);
 		$posLeft = 22 * $i + 10;
 		$posTop = rand(20, 25);
-		ImageTTFText($im, $textSize, $angle, $posLeft, $posTop, $textColor, 'modules/captcha/DejaVuSans.ttf', $captcha[$i]);
+		ImageTTFText($im, $textSize, $angle, $posLeft, $posTop, $textColor, ACP3_ROOT . 'modules/captcha/DejaVuSans.ttf', $captcha[$i]);
 	}
 	ImageGif($im, $dir . $hash . strtolower($captcha));
 	ImageGif($im);

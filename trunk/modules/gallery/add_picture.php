@@ -12,7 +12,7 @@ if (!defined('IN_ADM'))
 
 $pic = isset($modules->gen['pic']) && $validate->isNumber($modules->gen['pic']) ? $modules->gen['pic'] : 1;
 
-if (!empty($modules->id)) {
+if (!empty($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	$gallery = $db->select('name', 'gallery', 'id = \'' . $modules->id . '\'');
 
 	$breadcrumb->assign(lang('common', 'acp'), uri('acp'));
@@ -64,7 +64,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	for ($i = 0; $i < $c_galleries; $i++) {
 		$galleries[$i]['selected'] = selectEntry('gallery', $galleries[$i]['id'], $modules->id);
 		$galleries[$i]['date'] = dateAligned(1, $galleries[$i]['start']);
-		$galleries[$i]['name'] = $galleries[$i]['name'];
+		$galleries[$i]['name'] = $db->escape($galleries[$i]['name'], 3);
 	}
 
 	$tpl->assign('galleries', $galleries);
