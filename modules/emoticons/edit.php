@@ -18,13 +18,14 @@ if (!empty($modules->id) && $db->select('id', 'emoticons', 'id = \'' . $modules-
 			$file['name'] = $_FILES['picture']['name'];
 			$file['size'] = $_FILES['picture']['size'];
 		}
+		$settings = $config->output('emoticons');
 
 		if (empty($form['code']))
 			$errors[] = lang('emoticons', 'type_in_code');
 		if (empty($form['description']))
 			$errors[] = lang('emoticons', 'type_in_description');
-		if (isset($file) && (empty($file['size']) || !$validate->isPicture($file['tmp_name'])))
-			$errors[] = lang('emoticons', 'select_picture');
+		if (isset($file) && (empty($file['size']) || !$validate->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize'])))
+			$errors[] = lang('emoticons', 'invalid_image_selected');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));

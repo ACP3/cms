@@ -25,7 +25,7 @@ if (!empty($modules->id) && $db->select('id', 'galpics', 'id = \'' . $modules->i
 			$file['size'] = $_FILES['file']['size'];
 		}
 		$form = $_POST['form'];
-		$settings = $config->outout('gallery');
+		$settings = $config->output('gallery');
 
 		if (!$validate->isNumber($form['gallery']) || $db->select('id', 'gallery', 'id = \'' . $form['gallery'] . '\'', 0, 0, 0, 1) != '1')
 			$errors[] = lang('gallery', 'no_gallery_selected');
