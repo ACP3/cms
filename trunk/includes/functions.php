@@ -72,7 +72,7 @@ function dateAligned($mode, $time_stamp, $format = 0)
 		$time_zone = $info['time_zone'];
 		$dst = $info['dst'];
 	} else {
-		$info = $auth->getUserInfo('time_zone, dst');
+		$info = $auth->getUserInfo();
 
 		if (!empty($info)) {
 			$time_zone = $info['time_zone'];
@@ -138,7 +138,7 @@ function lang($module, $key)
 	static $lang = 0, $lang_data = array();
 
 	if (empty($lang)) {
-		$info = $auth->getUserInfo('language');
+		$info = $auth->getUserInfo();
 		$lang = !empty($info) ? $info['language'] : CONFIG_LANG;
 	}
 

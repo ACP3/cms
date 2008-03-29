@@ -15,7 +15,7 @@ $date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR st
 if ($validate->isNumber($modules->id) && $db->select('id', 'news', 'id = \'' . $modules->id . '\'' . $date, 0, 0, 0, 1) == 1) {
 	// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
 	if ($auth->isUser()) {
-		$user = $auth->getUserInfo('nickname');
+		$user = $auth->getUserInfo();
 		$disabled = ' readonly="readonly" class="readonly"';
 
 		if (isset($form)) {
