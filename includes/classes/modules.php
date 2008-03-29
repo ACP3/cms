@@ -117,7 +117,7 @@ class modules
 					$access_id = 2;
 					// Zugriffslevel für Benutzer holen
 					if ($auth->isUser()) {
-						$info = $auth->getUserInfo('access');
+						$info = $auth->getUserInfo();
 						if (!empty($info)) {
 							$access_id = $info['access'];
 						}

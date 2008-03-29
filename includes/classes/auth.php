@@ -51,21 +51,22 @@ class auth
 	/**
 	 * Gibt ein Array mit den angeforderten Daten eines Benutzers zurück
 	 *
-	 * @param string $fields
-	 * 	Die zu selektierenden Benutzerdaten
 	 * @param integer $user_id
 	 * 	Der angeforderte Benutzer
 	 * @return mixed
 	 */
-	public function getUserInfo($fields, $user_id = '')
+	public function getUserInfo($user_id = '')
 	{
-		if (empty($user_id) && $this->isUser) {
+		if (empty($user_id) && $this->isUser()) {
 			$user_id = USER_ID;
 		}
 		if (preg_match('/(\d+)/', $user_id)) {
 			global $db;
+			static $info = array();
 
-			$info = $db->select($fields, 'users', 'id = \'' . $user_id . '\'');
+			if (empty($info)) {
+				$info = $db->select('nickname, realname, access, mail, website, time_zone, dst, language, draft', 'users', 'id = \'' . $user_id . '\'');
+			}
 
 			return count($info) == '1' ? $info[0] : false;
 		}
