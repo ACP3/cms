@@ -6,7 +6,7 @@
 	</item>
 	<item>
 		<name>invalid_captcha_entered</name>
-		<message>The entered captcha is invalid</message>
+		<message>Either you you had a typo in the captcha or the it's outdated</message>
 	</item>
 	<item>
 		<name>mod_description</name>

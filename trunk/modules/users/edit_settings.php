@@ -59,7 +59,7 @@ if (!$auth->isUser() || !preg_match('/\d/', USER_ID)) {
 		for ($i = 0; $i < $c_lang_dir; $i++) {
 			$lang_info = array();
 			if ($lang_dir[$i] != '.' && $lang_dir[$i] != '..' && is_file('languages/' . $lang_dir[$i] . '/info.php')) {
-				include 'languages/' . $lang_dir[$i] . '/info.php';
+				include ACP3_ROOT . 'languages/' . $lang_dir[$i] . '/info.php';
 				$name = $lang_info['name'];
 				$languages[$name]['dir'] = $lang_dir[$i];
 				$languages[$name]['selected'] = selectEntry('language', $lang_dir[$i], $db->escape($user[0]['language'], 3));
