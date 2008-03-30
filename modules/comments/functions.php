@@ -113,10 +113,34 @@ function comments($module = 0, $entry_id = 0)
 			$tpl->assign('comments', $comments);
 		}
 
+		// Name des Moduls und Datensatznummer ins Formular einbinden
+		$default = array(
+			'module' => $module,
+			'entry_id' => $entry_id
+		);
+
+		// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
+		if ($auth->isUser()) {
+			$user = $auth->getUserInfo();
+			$disabled = ' readonly="readonly" class="readonly"';
+
+			if (isset($form)) {
+				$form['name'] = $user['nickname'];
+				$form['name_disabled'] = $disabled;
+			} else {
+				$default['name'] = $user['nickname'];
+				$default['name_disabled'] = $disabled;
+			}
+			$tpl->assign('form', isset($form) ? $form : $default);
+		} else {
+			$default['name_disabled'] = '';
+			$tpl->assign('form', isset($form) ? $form : $default);
+		}
+
 		$tpl->assign('captcha', captcha());
 
 		// Modul und Datensatznummer mit ins Formular einbinden
-		$tpl->assign('form', isset($form) ? $form : array('module' => $module, 'entry_id' => $entry_id));
+		$tpl->assign('form', isset($form) ? $form : $default);
 
 		return $tpl->fetch('comments/list.html');
 	}
