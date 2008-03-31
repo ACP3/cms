@@ -72,10 +72,10 @@ class db
 	{
 		switch (CONFIG_DB_TYPE) {
 			case 'mysqli':
-				echo 'Fehler ' . mysqli_errno($this->link) . ' - ' . mysqli_error($this->link);
+				return 'Fehler ' . mysqli_errno($this->link) . ' - ' . mysqli_error($this->link);
 				break;
 			default:
-				echo 'Fehler ' . mysql_errno($this->link) . ' - ' . mysql_error($this->link);
+				return 'Fehler ' . mysql_errno($this->link) . ' - ' . mysql_error($this->link);
 		}
 	}
 	/**
@@ -116,7 +116,8 @@ class db
 	{
 		switch (CONFIG_DB_TYPE) {
 			case 'mysqli':
-				if ($result = @mysqli_query($this->link, $query)) {
+				$result = @mysqli_query($this->link, $query);
+				if ($result) {
 					if ($mode == 1) {
 						return @mysqli_num_rows($result);
 					} elseif ($mode == 2) {
@@ -133,7 +134,8 @@ class db
 				}
 				break;
 			default:
-				if ($result = @mysql_query($query, $this->link)) {
+				$result = @mysql_query($query, $this->link);
+				if ($result) {
 					if ($mode == 1) {
 						return @mysql_num_rows($result);
 					} elseif ($mode == 2) {
@@ -149,8 +151,7 @@ class db
 					return $result;
 				}
 		}
-		$this->error();
-		return false;
+		return $this->error();
 	}
 	/**
 	 * Führt den DELETE Befehl aus

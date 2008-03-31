@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
 
 	// Flood Sperre
 	$flood = $db->select('date', 'guestbook', 'ip = \'' . $ip . '\'', 'id DESC', '1');
-	if (count($flood) == '1') {
+	if ($validate->countArrayElements($flood) == '1') {
 		$flood_time = $flood[0]['date'] + CONFIG_FLOOD;
 	}
 	$time = dateAligned(2, time());

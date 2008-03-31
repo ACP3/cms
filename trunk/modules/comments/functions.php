@@ -46,7 +46,7 @@ function comments($module = 0, $entry_id = 0)
 
 		// Flood Sperre
 		$flood = $db->select('date', 'comments', 'ip = \'' . $ip . '\'', 'id DESC', '1');
-		if (count($flood) == '1') {
+		if ($validate->countArrayElements($flood) == '1') {
 			$flood_time = $flood[0]['date'] + CONFIG_FLOOD;
 		}
 		$time = dateAligned(2, time());
@@ -87,7 +87,7 @@ function comments($module = 0, $entry_id = 0)
 
 		// Auflistung der Kommentare
 		$comments = $db->select('name, user_id, date, message', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 'date ASC', POS, CONFIG_ENTRIES);
-		$c_comments = count($comments);
+		$c_comments = $validate->countArrayElements($comments);
 		$emoticons = false;
 
 		if ($modules->check('emoticons', 'functions')) {

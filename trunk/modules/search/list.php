@@ -44,7 +44,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : '');
 
 	$mods = scandir('modules/');
-	$c_mods = count($mods);
+	$c_mods = $validate->countArrayElements($mods);
 	$search_mods = array();
 
 	for ($i = 0; $i < $c_mods; $i++) {

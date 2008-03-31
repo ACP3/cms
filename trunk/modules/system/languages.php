@@ -28,7 +28,7 @@ if ($modules->dir) {
 } else {
 	$languages = array();
 	$directories = scandir(ACP3_ROOT . 'languages');
-	$count_dir = count($directories);
+	$count_dir = $validate->countArrayElements($directories);
 	for ($i = 0; $i < $count_dir; $i++) {
 		$lang_info = array();
 		if ($directories[$i] != '.' && $directories[$i] != '..' && file_exists(ACP3_ROOT . 'languages/' . $directories[$i] . '/info.php')) {

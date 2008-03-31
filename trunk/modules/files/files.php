@@ -17,7 +17,7 @@ if ($validate->isNumber($modules->cat) && $db->select('id', 'categories', 'id = 
 	$date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
 
 	$files = $db->select('id, start, file, size, link_title', 'files', 'category_id = \'' . $modules->cat . '\'' . $date, 'start DESC, end DESC');
-	$c_files = count($files);
+	$c_files = $validate->countArrayElements($files);
 
 	if ($c_files > 0) {
 		for ($i = 0; $i < $c_files; $i++) {

@@ -11,7 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 
 $guestbook = $db->select('id, ip, date, name, message', 'guestbook', 0, 'date DESC', POS, CONFIG_ENTRIES);
-$c_guestbook = count($guestbook);
+$c_guestbook = $validate->countArrayElements($guestbook);
 
 if ($c_guestbook > 0) {
 	$tpl->assign('pagination', $modules->pagination($db->select('id', 'guestbook', 0, 0, 0, 0, 1)));

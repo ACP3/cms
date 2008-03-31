@@ -62,7 +62,7 @@
 	</item>
 	<item>
 		<name>disclaimer</name>
-		<message><![CDATA[ Despite careful contentwise control we do not take over adhesion for contents of external hyperlinks. Exclusively the operators are responsible for the contents of the  of the linked pages. ]]></message>
+		<message><![CDATA[Despite careful contentwise control we do not take over adhesion for contents of external hyperlinks. Exclusively the operators are responsible for the contents of the  of the linked pages.]]></message>
 	</item>
 	<item>
 		<name>email</name>
@@ -126,7 +126,7 @@
 	</item>
 	<item>
 		<name>installation_error</name>
-		<message>During the installation an error has occured, whereby the installation can\'t continue. Please check all petitions again, especially, wether all statements inside the configuration file are right.\nPlease click on the "Back"-button, to go back to the start of the installation process.</message>
+		<message><![CDATA[During the installation an error has occured, whereby the installation can\'t continue. Please check all petitions again, especially, wether all statements inside the configuration file are right.<br />Please click on the "Back"-button, to go back to the start of the installation process.]]></message>
 	</item>
 	<item>
 		<name>installation_impossible</name>
@@ -134,7 +134,7 @@
 	</item>
 	<item>
 		<name>installation_successful_1</name>
-		<message>All queries has been executed successfully, whereby the installation is now finished.\nBy the following button you can reach the frontend of your website. Afterwards you can log in and do further changes to your site, eg. changing the language, choosing an other design or publishing content.</message>
+		<message><![CDATA[All queries has been executed successfully, whereby the installation is now finished.<br />By the following button you can reach the frontend of your website. Afterwards you can log in and do further changes to your site, eg. changing the language, choosing an other design or publishing content.]]></message>
 	</item>
 	<item>
 		<name>installation_successful_2</name>
@@ -170,7 +170,7 @@
 	</item>
 	<item>
 		<name>news_text</name>
-		<message><![CDATA[ It looks like that the installation of the ACP3 4.0 was successful.<br />This is only a Testnews, which you can now edit or delete inside the administration area.<br />Apart from that, the Goratsch Webdesign Team wishes you much fun with the ACP3 4.0! ]]></message>
+		<message><![CDATA[It looks like that the installation of the ACP3 4.0 was successful.<br />This is only a Testnews, which you can now edit or delete inside the administration area.<br />Apart from that, the Goratsch Webdesign Team wishes you much fun with the ACP3 4.0!]]></message>
 	</item>
 	<item>
 		<name>newsletter_mailsig</name>

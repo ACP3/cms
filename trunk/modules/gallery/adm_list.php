@@ -11,7 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 
 $galleries = $db->select('id, start, end, name', 'gallery', 0, 'start DESC', POS, CONFIG_ENTRIES);
-$c_galleries = count($galleries);
+$c_galleries = $validate->countArrayElements($galleries);
 
 if ($c_galleries > 0) {
 	$tpl->assign('pagination', $modules->pagination($db->select('id', 'gallery', 0, 0, 0, 0, 1)));

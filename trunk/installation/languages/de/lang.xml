@@ -62,7 +62,7 @@
 	</item>
 	<item>
 		<name>disclaimer</name>
-		<message><![CDATA[ Trotz sorgf&auml;ltiger inhaltlicher Kontrolle &uuml;bernehmen wir keine Haftung f&uuml;r die Inhalte externer Links. F&uuml;r den Inhalt der verlinkten Seiten sind ausschlie&szlig;lich deren Betreiber verantwortlich. ]]></message>
+		<message><![CDATA[Trotz sorgf&auml;ltiger inhaltlicher Kontrolle &uuml;bernehmen wir keine Haftung f&uuml;r die Inhalte externer Links. F&uuml;r den Inhalt der verlinkten Seiten sind ausschlie&szlig;lich deren Betreiber verantwortlich.]]></message>
 	</item>
 	<item>
 		<name>email</name>
@@ -126,7 +126,7 @@
 	</item>
 	<item>
 		<name>installation_error</name>
-		<message>Während der Installation ist ein Fehler aufgetreten, wodurch die Installation nicht fortgesetzt werden kann. Bitte überprüfen Sie nochmals alle Eingaben, insbesondere, ob alle Angaben in der Konfigurationsdatei stimmen.\nBitte klicken Sie auf "Zurück", um wieder zum Anfang der Installation zu gelangen.</message>
+		<message><![CDATA[Während der Installation ist ein Fehler aufgetreten, wodurch die Installation nicht fortgesetzt werden kann. Bitte überprüfen Sie nochmals alle Eingaben, insbesondere ob alle Angaben in der Konfigurationsdatei stimmen.<br />Bitte klicken Sie auf "Zurück", um wieder zum Anfang der Installation zu gelangen.]]></message>
 	</item>
 	<item>
 		<name>installation_impossible</name>
@@ -134,7 +134,7 @@
 	</item>
 	<item>
 		<name>installation_successful_1</name>
-		<message>Alle Abfragen wurden erfolgreich durchgeführt, womit die Installation nun abgeschlossen ist.\nÜber die unten stehende Schaltfläche können Sie zum Frontend Ihrer Website gelangen. Anschließend können Sie sich einloggen und weitere Änderungen an der Seite vornehmen, wie z.B. die Sprache wechseln, ein anderes Design wählen oder Inhalte veröffentlichen.</message>
+		<message><![CDATA[Alle Abfragen wurden erfolgreich durchgeführt, womit die Installation nun abgeschlossen ist.<br />Über die unten stehende Schaltfläche können Sie zum Frontend Ihrer Website gelangen. Anschließend können Sie sich einloggen und weitere Änderungen an der Seite vornehmen, wie z.B. die Sprache wechseln, ein anderes Design wählen oder Inhalte veröffentlichen.]]></message>
 	</item>
 	<item>
 		<name>installation_successful_2</name>
@@ -170,7 +170,7 @@
 	</item>
 	<item>
 		<name>news_text</name>
-		<message><![CDATA[ So wie es aussieht, hat bei der Installation des ACP3 4.0 alles geklappt.<br />Dies ist nur eine Testnews, die Sie nun im Administrationsbereich bearbeiten oder l&ouml;schen k&ouml;nnen.<br />Ansonsten w&uuml;nscht Ihnen das Team von Goratsch Webdesign viel Spa&szlig; bei der Arbeit mit dem ACP3 4.0! ]]></message>
+		<message><![CDATA[So wie es aussieht, hat bei der Installation des ACP3 4.0 alles geklappt.<br />Dies ist nur eine Testnews, die Sie nun im Administrationsbereich bearbeiten oder l&ouml;schen k&ouml;nnen.<br />Ansonsten w&uuml;nscht Ihnen das Team von Goratsch Webdesign viel Spa&szlig; bei der Arbeit mit dem ACP3 4.0!]]></message>
 	</item>
 	<item>
 		<name>newsletter_mailsig</name>

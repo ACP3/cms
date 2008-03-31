@@ -34,6 +34,19 @@ class validate
 		return false;
 	}
 	/**
+	 * Gibt bei Erfolg die Anzahl der Elemente eines Arrays aus
+	 *
+	 * @param array $array
+	 * @return integer
+	 */
+	public function countArrayElements($array, $recursive = 0)
+	{
+		if (!empty($array) && is_array($array)) {
+			return count($array, $recursive);
+		}
+		return 0;
+	}
+	/**
 	 * Überprüft, ob alle Daten ein sinnvolles Datum ergeben
 	 *
 	 * @param array $values
@@ -77,6 +90,16 @@ class validate
 
 		return preg_match($pattern, $var);
 	}
+	/**
+	 * Überprüft, ob ein gültiger MD5-Hash übergeben wurde
+	 *
+	 * @param string $string
+	 * @return boolean
+	 */
+	public function isMD5($string)
+	{
+		return preg_match('/^[a-f0-9]+$/', $string) && strlen($string) == 32 ? true : false;
+ 	}
 	/**
 	 * Überprüft eine Variable, ob diese nur aus Ziffern besteht
 	 *

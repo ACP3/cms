@@ -19,7 +19,7 @@ if ($auth->isUser()) {
 	$user = $db->select('id, pwd', 'users', 'nickname = \'' . $db->escape($form['nickname']) . '\'');
 	$isUser = false;
 
-	if (count($user) == '1') {
+	if ($validate->countArrayElements($user) == '1') {
 		// Passwort aus Datenbank
 		$db_hash = substr($user[0]['pwd'], 0, 40);
 

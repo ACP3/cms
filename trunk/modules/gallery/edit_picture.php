@@ -66,7 +66,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'galpics', 'id = \'' 
 		$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
 
 		$galleries = $db->select('id, start, name', 'gallery', 0, 'start DESC');
-		$c_galleries = count($galleries);
+		$c_galleries = $validate->countArrayElements($galleries);
 
 		for ($i = 0; $i < $c_galleries; $i++) {
 			$galleries[$i]['selected'] = selectEntry('gallery', $galleries[$i]['id'], $picture[0]['gallery_id']);

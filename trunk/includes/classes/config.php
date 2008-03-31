@@ -53,7 +53,8 @@ class config
 	{
 		$path = ACP3_ROOT . 'modules/' . $module . '/module.xml';
 		if (!preg_match('=/=', $module) && file_exists($path) && is_writable($path)) {
-			$xml = DOMDocument::load($path);
+			$xml = new DOMDocument();
+			$xml->load($path);
 			$xp = new domxpath($xml);
 			$items = $xp->query('settings/*');
 			$i = $items->length - 1;

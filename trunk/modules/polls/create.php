@@ -70,11 +70,11 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 			$answers[$i]['value'] = $row;
 			$i++;
 		}
-		if (count($_POST['form']['answers']) <= 9 && !isset($_POST['submit'])) {
+		if ($validate->countArrayElements($_POST['form']['answers']) <= 9 && !isset($_POST['submit'])) {
 			$answers[$i]['number'] = $i + 1;
 			$answers[$i]['value'] = '';
 		}
-		if (count($_POST['form']['answers']) >= 9) {
+		if ($validate->countArrayElements($_POST['form']['answers']) >= 9) {
 			$tpl->assign('disable', true);
 		}
 	} else {

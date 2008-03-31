@@ -19,7 +19,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' 
 	}
 	$gallery = $cache->output('gallery_pics_id_' . $modules->id);
 
-	if (count($gallery) > 0 ) {
+	if ($validate->countArrayElements($gallery) > 0 ) {
 		$gallery_name = $db->select('name', 'gallery', 'id = \'' . $modules->id . '\'');
 
 		// Brotkrümelspur

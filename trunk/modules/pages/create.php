@@ -85,7 +85,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('mode', $mode);
 
 	$blocks = $db->select('id, title', 'pages_blocks');
-	$c_blocks = count($blocks);
+	$c_blocks = $validate->countArrayElements($blocks);
 
 	for ($i = 0; $i < $c_blocks; $i++) {
 		$blocks[$i]['selected'] = selectEntry('block', $blocks[$i]['id']);

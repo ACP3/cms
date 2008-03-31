@@ -10,7 +10,7 @@ function lang($key)
 {
 	static $lang_data = array();
 
-	$path = 'languages/' . LANG . '/lang.xml';
+	$path = ACP3_ROOT . 'installation/languages/' . LANG . '/lang.xml';
 
 	if (!isset($lang_data[$key]) && is_file($path)) {
 		$xml = simplexml_load_file($path);
@@ -74,9 +74,10 @@ function select_entry($name, $value, $field_value = '', $attr = 'selected') {
 // Konfigurationsdateien für die Module erstellen
 function write_config($module, $data)
 {
-	$path = '../modules/' . $module . '/module.xml';
+	$path = ACP3_ROOT . 'modules/' . $module . '/module.xml';
 	if (!preg_match('=/=', $module) && is_file($path)) {
-		$xml = DOMDocument::load($path);
+		$xml = new DOMDocument();
+		$xml->load($path);
 		$xp = new domxpath($xml);
 		$items = $xp->query('settings/*');
 		$i = $items->length - 1;

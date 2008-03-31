@@ -16,7 +16,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'poll_question', 'id 
 
 	$question = $db->select('question', 'poll_question');
 	$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $modules->id . '\'', 'id ASC');
-	$c_answers = count($answers);
+	$c_answers = $validate->countArrayElements($answers);
 	$total_votes = $db->select('answer_id', 'poll_votes', 'poll_id = \'' . $modules->id . '\'', 0, 0, 0, 1);
 
 	for ($i = 0; $i < $c_answers; $i++) {

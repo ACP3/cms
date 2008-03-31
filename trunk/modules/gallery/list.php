@@ -11,7 +11,7 @@ if (!defined('IN_ACP3'))
 	exit;
 
 $galleries = $db->select('id, start, name', 'gallery', '(start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')', 'start DESC, id DESC', POS, CONFIG_ENTRIES);
-$c_galleries = count($galleries);
+$c_galleries = $validate->countArrayElements($galleries);
 
 if ($c_galleries > 0) {
 	$tpl->assign('pagination', $modules->pagination($db->select('id', 'gallery', '(start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')', 0, 0, 0, 1)));

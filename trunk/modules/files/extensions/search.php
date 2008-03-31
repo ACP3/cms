@@ -22,7 +22,7 @@ switch($form['area']) {
 	default:
 		$result_files = $db->select('id, link_title, text', 'files', 'MATCH (link_title, file, text) AGAINST (\'' . $db->escape($form['search_term']) . '\' IN BOOLEAN MODE) AND ' . $date, 'start ' . $form['sort'] . ', id ' . $form['sort']);
 }
-$c_result_files = count($result_files);
+$c_result_files = $validate->countArrayElements($result_files);
 
 if ($c_result_files > 0) {
 	$i = isset($i) ? $i + 1 : 0;

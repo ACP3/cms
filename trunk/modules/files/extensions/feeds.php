@@ -11,7 +11,7 @@ if (!defined('IN_ACP3'))
 	exit;
 
 $result = $db->select('id, start, link_title, text', 'files', '(start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')', 'start DESC, id DESC', 10);
-$c_result = count($result);
+$c_result = $validate->countArrayElements($result);
 
 if ($c_result > 0) {
 	$results = NULL;

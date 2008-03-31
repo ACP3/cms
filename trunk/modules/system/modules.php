@@ -65,7 +65,7 @@ if ($modules->action == 'activate') {
 
 	}
 
-	$tpl->assign('LANG_modules_found', sprintf(lang('system', 'modules_found'), count($mod_list)));
+	$tpl->assign('LANG_modules_found', sprintf(lang('system', 'modules_found'), $validate->countArrayElements($mod_list)));
 	$tpl->assign('modules', $mod_list);
 
 	$content = $tpl->fetch('system/modules.html');

@@ -3,7 +3,7 @@ if (!defined('IN_INSTALL'))
 	exit;
 
 if (isset($_POST['submit'])) {
-	require_once '../includes/classes/validate.php';
+	require_once ACP3_ROOT . 'includes/classes/validate.php';
 	$validate = new validate;
 
 	$form = $_POST['form'];
@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('select_time_zone');
 	if (empty($form['title']))
 		$errors[] = lang('type_in_title');
-	if (!is_file('../includes/config.php') || !is_writable('../includes/config.php'))
+	if (!is_file(ACP3_ROOT . 'includes/config.php') || !is_writable(ACP3_ROOT . 'includes/config.php'))
 		$errors[] = lang('wrong_chmod_for_config_file');
 
 	if (isset($errors)) {
@@ -57,37 +57,38 @@ if (isset($_POST['submit'])) {
 	} else {
 		$form['date'] = mask($form['date']);
 		$form['design'] = 'acp3';
-		$form['lang'] = is_file('../languages/' . LANG . '/info.php') ? LANG : 'de';
+		$form['lang'] = is_file(ACP3_ROOT . 'languages/' . LANG . '/info.php') ? LANG : 'de';
 		$form['maintenance'] = '0';
 		$form['maintenance_msg'] = lang('offline_message');
 		$form['meta_description'] = mask($form['meta_description']);
 		$form['meta_keywords'] = '';
 		$form['title'] = mask($form['title']);
-		$form['version'] = '4.0b9';
+		$form['version'] = '4.0b10 SVN';
 		ksort($form);
 
 		// Modulkonfigurationsdateien schreiben
 		write_config('contact', array('mail' => $form['mail'], 'address' => '', 'telephone' => '', 'fax' => '', 'disclaimer' => lang('disclaimer'), 'miscellaneous' => ''));
 		write_config('newsletter', array('mail' => $form['mail'], 'mailsig' => lang('sincerely') . "\n\n" . lang('newsletter_mailsig')));
 
+		$pattern = "define('CONFIG_%s', '%s');\n";
 		$config_file = '<?php' . "\n";
 		$config_file.= 'define(\'INSTALLED\', true);' . "\n";
 		foreach ($form as $key => $value) {
 			if ($key != 'mail' && $key != 'user_name' && $key != 'user_pwd' && $key != 'user_pwd_wdh') {
-				$config_file.= 'define(\'CONFIG_' . strtoupper($key) . '\', \'' . $value . '\');' . "\n";
+				$config_file.= sprintf($pattern, strtoupper($key), $value);
 			}
 		}
 		$config_file.= '?>';
 
-		$config_path = '../includes/config.php';
+		$config_path = ACP3_ROOT . 'includes/config.php';
 		@file_put_contents($config_path, $config_file);
 
 		require $config_path;
-		require '../includes/classes/db.php';
+		require ACP3_ROOT . 'includes/classes/db.php';
 
 		$db = new db();
 
-		$sql_file = file_get_contents('modules/install/install.sql');
+		$sql_file = file_get_contents(ACP3_ROOT . 'installation/modules/install/install.sql');
 		$sql_file = str_replace(array("\r\n", "\r"), "\n", $sql_file);
 		$sql_file = str_replace('{pre}', CONFIG_DB_PRE, $sql_file);
 		if (version_compare(mysql_get_client_info(), '4.1', '>=')) {
@@ -114,10 +115,10 @@ if (isset($_POST['submit'])) {
 			if (!empty($query)) {
 				$data[$i]['query'] = $query;
 				$bool = $db->query($query, 3);
-				$data[$i]['color'] = $bool ? '090' : 'f00';
-				$data[$i]['result'] = $bool ? lang('query_successfully_executed') : lang('query_failed');
+				$data[$i]['color'] = $bool == true ? '090' : 'f00';
+				$data[$i]['result'] = $bool == true ? lang('query_successfully_executed') : lang('query_failed');
 				$i++;
-				if (!$bool) {
+				if ($bool != true) {
 					$tpl->assign('install_error', true);
 					break;
 				}
