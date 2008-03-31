@@ -15,11 +15,11 @@
  */
 function pagesList($id = 0, $parent = 0)
 {
-	global $db;
+	global $db, $validate;
 	static $output = array(), $key = 0, $spaces = '';
 
 	$pages = $db->select('id, title', 'pages', 'mode = \'1\' AND parent = \'' . $id . '\'', 'block_id ASC, sort ASC, title ASC');
-	$c_pages = count($pages);
+	$c_pages = $validate->countArrayElements($pages);
 
 	if ($c_pages > 0) {
 		if ($id != 0)
@@ -49,10 +49,10 @@ function pagesList($id = 0, $parent = 0)
  */
 function parentCheck($id, $parent_id)
 {
-	global $db;
+	global $db, $validate;
 
 	$parents = $db->select('parent', 'pages', 'id = \'' . $parent_id . '\'');
-	$c_parents = count($parents);
+	$c_parents = $validate->countArrayElements($parents);
 
 	if ($c_parents > 0) {
 		for ($i = 0; $i < $c_parents; $i++) {
@@ -73,13 +73,13 @@ function parentCheck($id, $parent_id)
  */
 function processNavbar()
 {
-	global $cache, $db, $modules;
+	global $cache, $db, $modules, $validate;
 
 	if (!$cache->check('pages')) {
 		$cache->create('pages', $db->select('p.id, p.start, p.end, p.mode, p.title, p.uri, p.target, b.index_name AS block_name', 'pages AS p, ' . CONFIG_DB_PRE . 'pages_blocks AS b', 'p.block_id != \'0\' AND p.block_id = b.id', 'p.sort ASC, p.title ASC'));
 	}
 	$pages = $cache->output('pages');
-	$c_pages = count($pages);
+	$c_pages = $validate->countArrayElements($pages);
 
 	if ($c_pages > 0) {
 		$navbar = array();

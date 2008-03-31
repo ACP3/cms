@@ -63,7 +63,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'users', 'id = \'' . 
 		$user = $db->select('nickname, mail, access', 'users', 'id = \'' . $modules->id . '\'');
 
 		$access = $db->select('id, name', 'access', 0, 'name ASC');
-		$c_access = count($access);
+		$c_access = $validate->countArrayElements($access);
 
 		for ($i = 0; $i < $c_access; $i++) {
 			$access[$i]['name'] = $access[$i]['name'];

@@ -33,7 +33,7 @@ if ($modules->dir) {
 } else {
 	$designs = array();
 	$directories = scandir(ACP3_ROOT . 'designs');
-	$count_dir = count($directories);
+	$count_dir = $validate->countArrayElements($directories);
 	for ($i = 0; $i < $count_dir; $i++) {
 		$design_info = array();
 		if ($directories[$i] != '.' && $directories[$i] != '..' && file_exists('designs/' . $directories[$i] . '/info.php')) {

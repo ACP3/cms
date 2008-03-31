@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit();
 
-if (strlen($modules->hash) == 32 && preg_match('/^[a-f0-9]+$/', $modules->hash)) {
+if (strlen($modules->hash) == 32 && $validate->isMD5($modules->hash)) {
 	header('Cache-Control: no-cache, must-revalidate');
 	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 	header('Content-Type: image/gif');
@@ -38,7 +38,7 @@ if (strlen($modules->hash) == 32 && preg_match('/^[a-f0-9]+$/', $modules->hash))
 	
 	// Alte Captchas löschen
 	$captchas = scandir($dir);
-	$c_captchas = count($captchas);
+	$c_captchas = $validate->countArrayElements($captchas);
 	
 	for ($i = 0; $i < $c_captchas; $i++) {
 		if (time() - filemtime($dir . $captchas[$i]) > 900) {

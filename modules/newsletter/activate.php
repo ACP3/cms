@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if ($validate->email($modules->mail) && preg_match('/^[a-f0-9]{32}+$/', $modules->hash)) {
+if ($validate->email($modules->mail) && $validate->isMD5($modules->hash)) {
 	$mail = $modules->mail;
 	$hash = $modules->hash;
 } else {

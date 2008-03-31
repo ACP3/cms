@@ -53,17 +53,17 @@ $i = 0;
 foreach ($defaults as $row) {
 	$files_dirs[$i]['path'] = $row;
 	// Überprüfen, ob es eine Datei oder ein Ordner ist
-	if (is_file('../' . $row)) {
+	if (is_file(ACP3_ROOT . $row)) {
 		$files_dirs[$i]['color_1'] = '090';
 		$files_dirs[$i]['exists'] = lang('file_found');
-	} elseif (is_dir('../' . $row)) {
+	} elseif (is_dir(ACP3_ROOT . $row)) {
 		$files_dirs[$i]['color_1'] = '090';
 		$files_dirs[$i]['exists'] = lang('folder_found');
 	} else {
 		$files_dirs[$i]['color_1'] = 'f00';
 		$files_dirs[$i]['exists'] = lang('file_folder_not_found');
 	}
-	$files_dirs[$i]['color_2'] = is_writable('../' . $row) ? '090' : 'f00';
+	$files_dirs[$i]['color_2'] = is_writable(ACP3_ROOT . $row) ? '090' : 'f00';
 	$files_dirs[$i]['writeable'] = $files_dirs[$i]['color_2'] == '090' ? lang('writeable') : lang('not_writeable');
 	if ($files_dirs[$i]['color_1'] == 'f00' || $files_dirs[$i]['color_2'] == 'f00') {
 		$check_again = true;
