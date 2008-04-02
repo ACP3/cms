@@ -20,7 +20,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' 
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
-		if (!$validate->date($form))
+		if (!$validate->date($form['start']) || !$validate->date($form['end']))
 			$errors[] = lang('common', 'select_date');
 		if (strlen($form['name']) < 3)
 			$errors[] = lang('gallery', 'type_in_gallery_name');
@@ -28,8 +28,8 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
-			$start_date = dateAligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
-			$end_date = dateAligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
+			$start_date = strtotime($form['start'], dateAligned(2, time()));
+			$end_date = strtotime($form['end'], dateAligned(2, time()));
 
 			$update_values = array(
 				'start' => $start_date,
@@ -48,8 +48,8 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' 
 		$tpl->assign('gallery_id', $modules->id);
 
 		// Datumsauswahl
-		$tpl->assign('start_date', publicationPeriod('start', $gallery[0]['start']));
-		$tpl->assign('end_date', publicationPeriod('end', $gallery[0]['end']));
+		$tpl->assign('start_date', datepicker('start', $gallery[0]['start']));
+		$tpl->assign('end_date', datepicker('end', $gallery[0]['end']));
 
 		$tpl->assign('form', isset($form) ? $form : $gallery[0]);
 

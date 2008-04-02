@@ -194,73 +194,29 @@ function moveFile($tmp_filename, $filename, $dir)
  * 	Die Zeitstempel des Eintrages
  * @return string
  */
-function publicationPeriod($mode, $value = '')
+function datepicker($name, $value = '')
 {
-	global $tpl;
+	global $tpl, $validate;
+	static $included = false;
 
-	$get_year = dateAligned(1, time(), 'Y');
+	$format = 'Y-m-d H:i';
+	if (!empty($_POST['form'][$name])) {
+		$input = $_POST['form'][$name];
+	} elseif ($validate->isNumber($value)) {
+		$input = dateAligned(1, $value, $format);
+	} else {
+		$input = dateAligned(1, time(), $format);
+	}
+
 	$date = array(
-		'day' => 'j|1|31',
-		'month' => 'n|1|12',
-		'year' => 'Y|' . ($get_year - 6) . '|' . ($get_year + 3),
-		'hour' => 'G|0|23',
-		'min' => 'i|0|59'
+		'already_included' => $included,
+		'format' => 'yy-mm-dd',
+		'name' => $name,
+		'input' => $input,
 	);
-	if (!empty($value)) {
-		$date_arr = explode('.', dateAligned(1, $value, 'j.n.Y.G.i'));
-	}
-
-	$tpl->assign('mode', $mode);
-
-	// Tag
-	$day_arr = explode('|', $date['day']);
-	$time = !isset($date_arr[0]) ? dateAligned(1, time(), $day_arr[0]) : $date_arr[0];
-	$day = NULL;
-	for ($day_arr[1]; $day_arr[1] <= $day_arr[2]; $day_arr[1]++) {
-		$day[$day_arr[1]]['value'] = $day_arr[1];
-		$day[$day_arr[1]]['selected'] = selectEntry($mode . '_day', $day_arr[1], $time);
-	}
-	$tpl->assign('day', $day);
-
-	// Monat
-	$month_arr = explode('|', $date['month']);
-	$time = !isset($date_arr[1]) ? dateAligned(1, time(), $month_arr[0]) : $date_arr[1];
-	$month = NULL;
-	for ($month_arr[1]; $month_arr[1] <= $month_arr[2]; $month_arr[1]++) {
-		$month[$month_arr[1]]['value'] = $month_arr[1];
-		$month[$month_arr[1]]['selected'] = selectEntry($mode . '_month', $month_arr[1], $time);
-	}
-	$tpl->assign('month', $month);
-
-	// Jahr
-	$year_arr = explode('|', $date['year']);
-	$time = !isset($date_arr[2]) ? dateAligned(1, time(), $year_arr[0]) : $date_arr[2];
-	$year = NULL;
-	for ($year_arr[1]; $year_arr[1] <= $year_arr[2]; $year_arr[1]++) {
-		$year[$year_arr[1]]['value'] = $year_arr[1];
-		$year[$year_arr[1]]['selected'] = selectEntry($mode . '_year', $year_arr[1], $time);
-	}
-	$tpl->assign('year', $year);
-
-	// Stunde
-	$hour_arr = explode('|', $date['hour']);
-	$time = !isset($date_arr[3]) ? dateAligned(1, time(), $hour_arr[0]) : $date_arr[3];
-	$hour = NULL;
-	for ($hour_arr[1]; $hour_arr[1] <= $hour_arr[2]; $hour_arr[1]++) {
-		$hour[$hour_arr[1]]['value'] = $hour_arr[1];
-		$hour[$hour_arr[1]]['selected'] = selectEntry($mode . '_hour', $hour_arr[1], $time);
-	}
-	$tpl->assign('hour', $hour);
-
-	// Minute
-	$min_arr = explode('|', $date['min']);
-	$time = !isset($date_arr[4]) ? dateAligned(1, time(), $min_arr[0]) : $date_arr[4];
-	$min = NULL;
-	for ($min_arr[1]; $min_arr[1] <= $min_arr[2]; $min_arr[1]++) {
-		$min[$min_arr[1]]['value'] = $min_arr[1];
-		$min[$min_arr[1]]['selected'] = selectEntry($mode . '_min', $min_arr[1], $time);
-	}
-	$tpl->assign('min', $min);
+	$tpl->assign('date', $date);
+	// Variable auf 'true' setzen, damit der datepicker nicht unzählige Male eingebunden wird
+	$included = true;
 
 	return $tpl->fetch('common/date.html');
 }

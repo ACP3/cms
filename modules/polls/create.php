@@ -29,8 +29,8 @@ if (isset($_POST['submit'])) {
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
-		$start_date = dateAligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
-		$end_date = dateAligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
+		$start_date = strtotime($form['start'], dateAligned(2, time()));
+		$end_date = strtotime($form['end'], dateAligned(2, time()));
 
 		$insert_values = array(
 			'id' => '',
@@ -59,8 +59,8 @@ if (isset($_POST['submit'])) {
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Datumsauswahl
-	$tpl->assign('start_date', publicationPeriod('start'));
-	$tpl->assign('end_date', publicationPeriod('end'));
+	$tpl->assign('start_date', datepicker('start'));
+	$tpl->assign('end_date', datepicker('end'));
 
 	$tpl->assign('disable', false);
 	if (isset($_POST['form']['answers'])) {

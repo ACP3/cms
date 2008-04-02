@@ -14,7 +14,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'poll_question', 'id 
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
-		if (!$validate->date($form))
+		if (!$validate->date($form['start']) || !$validate->date($form['end']))
 			$errors[] = lang('common', 'select_date');
 		if (empty($form['question']))
 			$errors[] = lang('polls', 'type_in_question');
@@ -33,8 +33,8 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'poll_question', 'id 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
-			$start_date = dateAligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
-			$end_date = dateAligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
+			$start_date = strtotime($form['start'], dateAligned(2, time()));
+			$end_date = strtotime($form['end'], dateAligned(2, time()));
 
 			$update_values = array(
 				'start' => $start_date,
@@ -59,8 +59,8 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'poll_question', 'id 
 		$poll = $db->select('start, end, question', 'poll_question', 'id = \'' . $modules->id . '\'');
 
 		// Datumsauswahl
-		$tpl->assign('start_date', publicationPeriod('start', $poll[0]['start']));
-		$tpl->assign('end_date', publicationPeriod('end', $poll[0]['end']));
+		$tpl->assign('start_date', datepicker('start', $poll[0]['start']));
+		$tpl->assign('end_date', datepicker('end', $poll[0]['end']));
 
 		$tpl->assign('question', isset($form['question']) ? $form['question'] : $poll[0]['question']);
 

@@ -71,8 +71,8 @@ if (isset($_POST['submit'])) {
 		write_config('newsletter', array('mail' => $form['mail'], 'mailsig' => lang('sincerely') . "\n\n" . lang('newsletter_mailsig')));
 
 		$pattern = "define('CONFIG_%s', '%s');\n";
-		$config_file = '<?php' . "\n";
-		$config_file.= 'define(\'INSTALLED\', true);' . "\n";
+		$config_file = "<?php\n";
+		$config_file.= "define('INSTALLED', true);\n";
 		foreach ($form as $key => $value) {
 			if ($key != 'mail' && $key != 'user_name' && $key != 'user_pwd' && $key != 'user_pwd_wdh') {
 				$config_file.= sprintf($pattern, strtoupper($key), $value);

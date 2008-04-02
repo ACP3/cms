@@ -21,7 +21,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'files', 'id = \'' . 
 			$file['size'] = $_FILES['file_internal']['size'];
 		}
 
-		if (!$validate->date($form))
+		if (!$validate->date($form['start']) || !$validate->date($form['end']))
 			$errors[] = lang('common', 'select_date');
 		if (strlen($form['link_title']) < 3)
 			$errors[] = lang('files', 'type_in_link_title');
@@ -55,8 +55,8 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'files', 'id = \'' . 
 					'size' => $filesize,
 				);
 			}
-			$start_date = dateAligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
-			$end_date = dateAligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
+			$start_date = strtotime($form['start'], dateAligned(2, time()));
+			$end_date = strtotime($form['end'], dateAligned(2, time()));
 
 			$update_values = array(
 				'start' => $start_date,
@@ -83,8 +83,8 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'files', 'id = \'' . 
 		$dl = $db->select('start, end, category_id, file, size, link_title, text', 'files', 'id = \'' . $modules->id . '\'');
 		$dl[0]['text'] = $db->escape($dl[0]['text'], 3);
 		// Datumsauswahl
-		$tpl->assign('start_date', publicationPeriod('start', $dl[0]['start']));
-		$tpl->assign('end_date', publicationPeriod('end', $dl[0]['end']));
+		$tpl->assign('start_date', datepicker('start', $dl[0]['start']));
+		$tpl->assign('end_date', datepicker('end', $dl[0]['end']));
 
 		$unit = trim(strrchr($dl[0]['size'], ' '));
 

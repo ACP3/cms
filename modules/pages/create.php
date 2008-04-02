@@ -13,7 +13,7 @@ if (!defined('IN_ADM'))
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
-	if (!$validate->date($form))
+	if (!$validate->date($form['start']) || !$validate->date($form['end']))
 		$errors[] = lang('common', 'select_date');
 	if (!$validate->isNumber($form['mode']))
 		$errors[] = lang('pages', 'select_static_hyperlink');
@@ -33,8 +33,8 @@ if (isset($_POST['submit'])) {
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
-		$start_date = dateAligned(3, array($form['start_hour'], $form['start_min'], 0, $form['start_month'], $form['start_day'], $form['start_year']));
-		$end_date = dateAligned(3, array($form['end_hour'], $form['end_min'], 0, $form['end_month'], $form['end_day'], $form['end_year']));
+		$start_date = strtotime($form['start'], dateAligned(2, time()));
+		$end_date = strtotime($form['end'], dateAligned(2, time()));
 
 		if ($form['mode'] == '1') {
 			$form['uri'] = '';
@@ -70,8 +70,8 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	include_once ACP3_ROOT . 'modules/pages/functions.php';
 
 	// Datumsauswahl
-	$tpl->assign('start_date', publicationPeriod('start'));
-	$tpl->assign('end_date', publicationPeriod('end'));
+	$tpl->assign('start_date', datepicker('start'));
+	$tpl->assign('end_date', datepicker('end'));
 
 	$mode[0]['value'] = 1;
 	$mode[0]['selected'] = selectEntry('mode', '1');
