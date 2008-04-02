@@ -49,31 +49,13 @@ class validate
 	/**
 	 * Überprüft, ob alle Daten ein sinnvolles Datum ergeben
 	 *
-	 * @param array $values
-	 *  Zu überprüfende Werte
-	 * @param string $prefix_start
-	 *  Präfix für das Veröffentlichungsdatum
-	 * @param string $prefix_end
-	 *  Präfix für das Enddatum
+	 * @param array $value
+	 *  Der zu überprüfende Wert
 	 * @return boolean
 	 */
-	public function date($values, $prefix_start = 'start', $prefix_end = 'end')
+	public function date($value)
 	{
-		if (!$this->isNumber($values[$prefix_start . '_day']) ||
-			!$this->isNumber($values[$prefix_start . '_month']) ||
-			!$this->isNumber($values[$prefix_start . '_year']) ||
-			!$this->isNumber($values[$prefix_start . '_hour']) ||
-			!$this->isNumber($values[$prefix_start . '_min']) ||
-			!$this->isNumber($values[$prefix_end . '_day']) ||
-			!$this->isNumber($values[$prefix_end . '_month']) ||
-			!$this->isNumber($values[$prefix_end . '_year']) ||
-			!$this->isNumber($values[$prefix_end . '_hour']) ||
-			!$this->isNumber($values[$prefix_end . '_min']) ||
-			mktime($values[$prefix_start . '_hour'], $values[$prefix_start . '_min'], 0, $values[$prefix_start . '_month'], $values[$prefix_start . '_day'], $values[$prefix_start . '_year']) >
-			mktime($values[$prefix_end . '_hour'], $values[$prefix_end . '_min'], 0, $values[$prefix_end . '_month'], $values[$prefix_end . '_day'], $values[$prefix_end . '_year'])) {
-			return false;
-		}
-		return true;
+		return strtotime($value, dateAligned(2, time())) == -1 ? false : true;
 	}
 	/**
 	 * Überprüft, ob eine Standardkonforme E-Mail-Adresse übergeben wurde

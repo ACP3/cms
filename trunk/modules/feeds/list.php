@@ -2,7 +2,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if ($modules->feed) {
+if ($modules->check($modules->feed, 'extensions/feeds')) {
 	$module = $modules->feed;
 
 	$link = 'http://' . htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES);
@@ -16,9 +16,7 @@ if ($modules->feed) {
 	$tpl->assign('feed', $feed);
 
 	//Einträge einbinden
-	if (isset($module) && $modules->check($module, 'extensions/feeds')) {
-		include ACP3_ROOT . 'modules/' . $module . '/extensions/feeds.php';
-	}
+	include ACP3_ROOT . 'modules/' . $module . '/extensions/feeds.php';
 
 	// Content-Type setzen und Layout für den RSS-Feed laden
 	define('CUSTOM_CONTENT_TYPE', 'application/xml');
