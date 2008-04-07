@@ -39,7 +39,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'poll_question', 'id 
 	} else {
 		$question = $db->select('question', 'poll_question', 'id = \'' . $modules->id . '\'');
 		$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $modules->id . '\'', 'id ASC');
-		$c_answers = $validate->countArrayElements($answers);
+		$c_answers = count($answers);
 
 		$css_class = 'dark';
 		for ($i = 0; $i < $c_answers; $i++) {

@@ -11,14 +11,14 @@ if (!defined('IN_ACP3') && !defined('IN_ADM'))
 	exit();
 
 function categoriesList($module, $page, $category = '') {
-	global $cache, $db, $modules, $validate;
+	global $cache, $db, $modules;
 
 	if ($modules->check($module, $page)) {
 		if (!$cache->check('categories_' . $module)) {
 			$cache->create('categories_' . $module, $db->select('id, name, picture, description', 'categories', 'module = \'' . $module . '\'', 'name ASC'));
 		}
 		$categories = $cache->output('categories_' . $module);
-		$c_categories = $validate->countArrayElements($categories);
+		$c_categories = count($categories);
 		
 		if ($c_categories > 0) {
 			for ($i = 0; $i < $c_categories; $i++) {

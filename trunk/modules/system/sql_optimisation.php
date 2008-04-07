@@ -25,7 +25,7 @@ if ($modules->action == 'do') {
 		if (is_array($info['tables'])) {
 			foreach ($info['tables'] as $table) {
 				$table_status = $db->query('SHOW TABLE STATUS FROM ' . CONFIG_DB_NAME . ' LIKE \'' . CONFIG_DB_PRE . $table . '\'');
-				$c_table_status = $validate->countArrayElements($table_status);
+				$c_table_status = count($table_status);
 				for ($j = 0; $j < $c_table_status; $j++) {
 					$tables[$i]['name'] = $table_status[$j]['Name'];
 					if ($table_status[$j]['Data_free'] != 0) {

@@ -27,7 +27,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'poll_question', 'id 
 		}
 		if (!isset($check_answers))
 			$errors[] = lang('polls', 'type_in_answer');
-		if ($j == $validate->countArrayElements($form['answers']))
+		if ($j == count($form['answers']))
 			$errors[] = lang('polls', 'can_not_delete_all_answers');
 
 		if (isset($errors)) {
@@ -65,7 +65,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'poll_question', 'id 
 		$tpl->assign('question', isset($form['question']) ? $form['question'] : $poll[0]['question']);
 
 		$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $modules->id . '\'');
-		$c_answers = $validate->countArrayElements($answers);
+		$c_answers = count($answers);
 
 		for ($i = 0; $i < $c_answers; $i++) {
 			$answers[$i]['number'] = $i + 1;

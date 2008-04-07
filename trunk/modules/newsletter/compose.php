@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
 			//An alle versenden
 		} else {
 			$accounts = $db->select('mail', 'nl_accounts');
-			$c_accounts = $validate->countArrayElements($accounts);
+			$c_accounts = count($accounts);
 
 			for ($i = 0; $i < $c_accounts; $i++) {
 				$bool = @mail($accounts[$i]['mail'], $db->escape($form['subject']), $db->escape($form['text']) . $settings['mailsig'], 'FROM:' . $settings['mail'] . "\r\n" . 'Content-Type: text/plain; charset: UTF-8');

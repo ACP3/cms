@@ -11,7 +11,7 @@ if (!defined('IN_ACP3'))
 	exit;
 
 $polls = $db->select('id, start, end, question', 'poll_question', 'start <= \'' . dateAligned(2, time()) . '\'', 'end DESC');
-$c_polls = $validate->countArrayElements($polls);
+$c_polls = count($polls);
 
 if ($c_polls > 0) {
 	for ($i = 0; $i < $c_polls; $i++) {

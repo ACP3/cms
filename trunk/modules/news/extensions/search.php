@@ -22,7 +22,7 @@ switch($form['area']) {
 	default:
 		$result_news = $db->select('id, headline, text', 'news', 'MATCH (headline, text) AGAINST (\'' . $db->escape($form['search_term']) . '\' IN BOOLEAN MODE) AND ' . $date, 'start ' . $form['sort'] . ', id ' . $form['sort']);
 }
-$c_result_news = $validate->countArrayElements($result_news);
+$c_result_news = count($result_news);
 
 if ($c_result_news > 0) {
 	$i = isset($i) ? $i + 1 : 0;

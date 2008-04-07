@@ -28,13 +28,13 @@ class auth
 	function __construct()
 	{
 		if (isset($_COOKIE['ACP3_AUTH'])) {
-			global $db, $validate;
+			global $db;
 
 			$cookie = base64_decode($_COOKIE['ACP3_AUTH']);
 			$cookie_arr = explode('|', $cookie);
 
 			$user_check = $db->select('id, pwd', 'users', 'nickname = \'' . $db->escape($cookie_arr[0]) . '\'');
-			if ($validate->countArrayElements($user_check) == 1) {
+			if (count($user_check) == 1) {
 				$db_password = substr($user_check[0]['pwd'], 0, 40);
 				if ($db_password == $cookie_arr[1]) {
 					$this->isUser = true;
@@ -61,14 +61,14 @@ class auth
 			$user_id = USER_ID;
 		}
 		if (preg_match('/(\d+)/', $user_id)) {
-			global $db, $validate;
+			global $db;
 			static $info = array();
 
 			if (empty($info)) {
 				$info = $db->select('nickname, realname, access, mail, website, time_zone, dst, language, draft', 'users', 'id = \'' . $user_id . '\'');
 			}
 
-			return $validate->countArrayElements($info) == '1' ? $info[0] : false;
+			return count($info) == '1' ? $info[0] : false;
 		}
 		return false;
 	}

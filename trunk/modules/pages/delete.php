@@ -18,10 +18,7 @@ elseif (preg_match('/^([\d|]+)$/', $modules->entries))
 if (!isset($entries)) {
 	$content = comboBox(array(lang('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
-	$marked_entries = '';
-	foreach ($entries as $entry) {
-		$marked_entries.= $entry . '|';
-	}
+	$marked_entries = implode('|', $entries);
 	$content = comboBox(lang('pages', 'confirm_delete'), uri('acp/pages/delete/entries_' . $marked_entries), uri('acp/pages'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && $modules->confirmed) {
 	$marked_entries = explode('|', $entries);

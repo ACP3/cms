@@ -15,13 +15,13 @@
  */
 function emoticonsList($field_id = 0)
 {
-	global $cache, $db, $tpl, $validate;
+	global $cache, $db, $tpl;
 
 	if (!$cache->check('emoticons')) {
 		$cache->create('emoticons', $db->select('code, description, img', 'emoticons'));
 	}
 	$emoticons = $cache->output('emoticons');
-	$c_emoticons = $validate->countArrayElements($emoticons);
+	$c_emoticons = count($emoticons);
 
 	for ($i = 0; $i < $c_emoticons; $i++) {
 		$emoticons[$i]['img'] = ROOT_DIR . 'uploads/emoticons/' . $emoticons[$i]['img'];

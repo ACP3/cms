@@ -18,10 +18,7 @@ elseif (preg_match('/^([\w|]+)$/', $modules->entries))
 if (!isset($entries)) {
 	$content = comboBox(array(lang('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
-	$marked_entries = '';
-	foreach ($entries as $entry) {
-		$marked_entries.= $entry . '|';
-	}
+	$marked_entries = implode('|', $entries);
 	$content = comboBox(lang('comments', 'confirm_delete'), uri('acp/comments/delete_comments_per_module/entries_' . $marked_entries), uri('acp/comments'));
 } elseif (preg_match('/^([\w|]+)$/', $entries) && $modules->confirmed) {
 	$marked_entries = explode('|', $entries);

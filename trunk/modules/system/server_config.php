@@ -12,7 +12,7 @@ if (!defined('IN_ADM'))
 
 //PHP Erweiterungen
 $ext = get_loaded_extensions();
-$ext_count = $validate->countArrayElements($ext);
+$ext_count = count($ext);
 $php_ext = '';
 for ($i = 0; $i < $ext_count; $i++) {
 	$php_ext.= $ext[$i] . ', ';

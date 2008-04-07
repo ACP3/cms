@@ -20,7 +20,7 @@ switch($form['area']) {
 	default:
 		$result_pages = $db->select('id, title, text', 'pages', 'MATCH (title, text) AGAINST (\'' .  $db->escape($form['search_term']) . '\' IN BOOLEAN MODE) AND mode = \'1\'', 'id ' . $form['sort']);
 }
-$c_result_pages = $validate->countArrayElements($result_pages);
+$c_result_pages = count($result_pages);
 
 if ($c_result_pages > 0) {
 	$i = isset($i) ? $i + 1 : 0;

@@ -11,7 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 
 $access = $db->select('id, name, modules', 'access', 0, 'name ASC', POS, CONFIG_ENTRIES);
-$c_access = $validate->countArrayElements($access);
+$c_access = count($access);
 
 if ($c_access > 0) {
 	$tpl->assign('pagination', $modules->pagination($db->select('id', 'access', 0, 0, 0, 0, 1)));
@@ -21,7 +21,7 @@ if ($c_access > 0) {
 	for ($i = 0; $i < $c_access; $i++) {
 		// Modulnamen anzeigen
 		$access_to_mods = explode(',', $access[$i]['modules']);
-		$c_access_to_mods = $validate->countArrayElements($access_to_mods);
+		$c_access_to_mods = count($access_to_mods);
 		$access[$i]['access_to_mod'] = '';
 
 		foreach ($mod_list as $name => $info) {

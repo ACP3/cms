@@ -93,7 +93,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'pages', 'id = \'' . 
 		$tpl->assign('mode', $mode);
 
 		$blocks = $db->select('id, title', 'pages_blocks', 0, 'title ASC, id ASC');
-		$c_blocks = $validate->countArrayElements($blocks);
+		$c_blocks = count($blocks);
 
 		for ($i = 0; $i < $c_blocks; $i++) {
 			$blocks[$i]['selected'] = selectEntry('blocks', $blocks[$i]['id'], $page[0]['block_id']);

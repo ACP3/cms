@@ -54,7 +54,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' 
 		$tpl->assign('form', isset($form) ? $form : $gallery[0]);
 
 		$pictures = $db->select('id, pic, file, description', 'galpics', 'gallery_id = \'' . $modules->id . '\'', 'pic ASC', POS, CONFIG_ENTRIES);
-		$c_pictures = $validate->countArrayElements($pictures);
+		$c_pictures = count($pictures);
 
 		if ($c_pictures > 0) {
 			$tpl->assign('pagination', $modules->pagination($db->select('id', 'galpics', 'gallery_id = \'' . $modules->id . '\'', 0, 0, 0, 1)));

@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 			}
 			if ($form['export_type'] == 'complete' || $form['export_type'] == 'data') {
 				$resultsets = $db->select('*', substr($table, strlen(CONFIG_DB_PRE), strlen($table)));
-				if ($validate->countArrayElements($resultsets) > 0) {
+				if (count($resultsets) > 0) {
 					$data.= "\n" . '-- '. sprintf(lang('system', 'data_of_table'), $table) . "\n\n";
 					$fields = '';
 					foreach ($resultsets[0] as $field => $content) {

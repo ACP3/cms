@@ -36,7 +36,7 @@ $cat = !empty($cat) ? ' AND category_id = \'' . $cat . '\'' : '';
 $where = '(start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')' . $cat;
 
 $news = $db->select('id, start, headline, text, uri', 'news', $where, 'id DESC', POS, CONFIG_ENTRIES);
-$c_news = $validate->countArrayElements($news);
+$c_news = count($news);
 
 if ($c_news > 0) {
 	// Überprüfen, ob das Kommentare Modul aktiv ist
