@@ -59,8 +59,8 @@ FCKeditor.MinHeight = 200 ;
  */
 FCKeditor.MinWidth = 750 ;
 
-FCKeditor.prototype.Version			= '2.6 RC' ;
-FCKeditor.prototype.VersionBuild	= '18531' ;
+FCKeditor.prototype.Version			= '2.6' ;
+FCKeditor.prototype.VersionBuild	= '18638' ;
 
 FCKeditor.prototype.Create = function()
 {
