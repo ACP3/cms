@@ -22,7 +22,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'news', 'id = \'' . $
 	// Brotkrümelspur
 	$category = $db->select('name', 'categories', 'id = \'' . $news[0]['category_id'] . '\'');
 	$breadcrumb->assign(lang('news', 'news'), uri('news'));
-	if ($validate->countArrayElements($category) > 0) {
+	if (count($category) > 0) {
 		$breadcrumb->assign($category[0]['name'], uri('news/list/cat_' . $news[0]['category_id']));
 	}
 	$breadcrumb->assign($news[0]['headline']);

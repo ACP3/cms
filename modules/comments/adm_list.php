@@ -15,7 +15,7 @@ $tpl->assign('module', $module);
 
 if (empty($module) || !empty($module) && $db->select('id', 'comments', 'module = \'' . $module . '\'', 0, 0, 0, 1) == '0') {
 	$comments = $db->query('SELECT module FROM ' . CONFIG_DB_PRE . 'comments GROUP BY module LIMIT ' . POS . ',' . CONFIG_ENTRIES);
-	$c_comments = $validate->countArrayElements($comments);
+	$c_comments = count($comments);
 
 	if ($c_comments > 0) {
 		$tpl->assign('pagination', $modules->pagination($db->query('SELECT module FROM ' . CONFIG_DB_PRE . 'comments GROUP BY module', 1)));
@@ -32,7 +32,7 @@ if (empty($module) || !empty($module) && $db->select('id', 'comments', 'module =
 	$breadcrumb->assign(lang($module, $module));
 
 	$comments = $db->select('id, ip, date, name, message', 'comments', 'module = \'' . $module . '\'', 'date DESC', POS, CONFIG_ENTRIES);
-	$c_comments = $validate->countArrayElements($comments);
+	$c_comments = count($comments);
 	$emoticons = false;
 
 	// Emoticons einbinden

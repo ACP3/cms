@@ -55,7 +55,7 @@ if (!$auth->isUser() || !preg_match('/\d/', USER_ID)) {
 		// Sprache
 		$languages = array();
 		$lang_dir = scandir('languages');
-		$c_lang_dir = $validate->countArrayElements($lang_dir);
+		$c_lang_dir = count($lang_dir);
 		for ($i = 0; $i < $c_lang_dir; $i++) {
 			$lang_info = array();
 			if ($lang_dir[$i] != '.' && $lang_dir[$i] != '..' && is_file('languages/' . $lang_dir[$i] . '/info.php')) {

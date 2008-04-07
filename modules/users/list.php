@@ -3,7 +3,7 @@ if (!defined('IN_ACP3'))
 	exit;
 
 $users = $db->select('id, nickname, realname, mail, website', 'users', 0, 'nickname ASC, id ASC', POS, CONFIG_ENTRIES);
-$c_users = $validate->countArrayElements($users);
+$c_users = count($users);
 $all_users = $db->select('id', 'users', 0, 0, 0, 0, 1);
 
 if ($c_users > 0) {

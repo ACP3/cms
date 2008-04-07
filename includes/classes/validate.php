@@ -34,19 +34,6 @@ class validate
 		return false;
 	}
 	/**
-	 * Gibt bei Erfolg die Anzahl der Elemente eines Arrays aus
-	 *
-	 * @param array $array
-	 * @return integer
-	 */
-	public function countArrayElements($array, $recursive = 0)
-	{
-		if (!empty($array) && is_array($array)) {
-			return count($array, $recursive);
-		}
-		return 0;
-	}
-	/**
 	 * Überprüft, ob alle Daten ein sinnvolles Datum ergeben
 	 *
 	 * @param array $value

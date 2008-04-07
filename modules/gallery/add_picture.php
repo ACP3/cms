@@ -51,7 +51,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' 
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$galleries = $db->select('id, start, name', 'gallery', 0, 'start DESC');
-		$c_galleries = $validate->countArrayElements($galleries);
+		$c_galleries = count($galleries);
 
 		for ($i = 0; $i < $c_galleries; $i++) {
 			$galleries[$i]['selected'] = selectEntry('gallery', $galleries[$i]['id'], $modules->id);

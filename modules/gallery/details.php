@@ -15,7 +15,7 @@ $date = " AND ((g.start = g.end AND g.start<='" . dateAligned(2, time()) . "') O
 if ($validate->isNumber($modules->id) && $db->select('g.id', 'gallery AS g, ' . CONFIG_DB_PRE . 'galpics AS p', 'p.id = \'' . $modules->id . '\' AND p.gallery_id = g.id' . $date, 0, 0, 0, 1) == 1) {
 	$picture = $db->select('g.id AS gallery_id, g.name, p.id, p.pic, p.description', 'gallery AS g, ' . CONFIG_DB_PRE . 'galpics AS p', 'p.id = \'' . $modules->id . '\' AND p.gallery_id = g.id');
 
-	if ($validate->countArrayElements($picture) > 0) {
+	if (count($picture) > 0) {
 		// Brotkrümelspur
 		$breadcrumb->assign(lang('gallery', 'gallery'), uri('gallery'));
 		$breadcrumb->assign($picture[0]['name'], uri('gallery/pics/id_' . $picture[0]['gallery_id']));
@@ -27,10 +27,10 @@ if ($validate->isNumber($modules->id) && $db->select('g.id', 'gallery AS g, ' . 
 		$picture_back = $db->select('id', 'galpics', 'pic < \'' . $picture[0]['pic'] . '\' AND gallery_id = \'' . $picture[0]['gallery_id'] . '\'', 'pic DESC', 1);
 		$picture_next = $db->select('id', 'galpics', 'pic > \'' . $picture[0]['pic'] . '\' AND gallery_id = \'' . $picture[0]['gallery_id'] . '\'', 'pic ASC', 1);
 
-		if ($validate->countArrayElements($picture_back) > 0)
+		if (count($picture_back) > 0)
 			$tpl->assign('picture_back', $picture_back[0]);
 
-		if ($validate->countArrayElements($picture_next) > 0)
+		if (count($picture_next) > 0)
 			$tpl->assign('picture_next', $picture_next[0]);
 	}
 	$content = $tpl->fetch('gallery/details.html');

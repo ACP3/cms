@@ -184,6 +184,7 @@ function moveFile($tmp_filename, $filename, $dir)
 			return $new_file;
 		}
 	}
+	return array();
 }
 /**
  * Zeigt Dropdown-Menüs für die Veröffentlichungsdauer von Inhalten an
@@ -294,6 +295,7 @@ function selectEntry($name, $value, $field_value = '', $attr = 'selected')
 			}
 		}
 	}
+	return '';
 }
 /**
  * Gibt eine Liste aller Zeitzonen aus

@@ -38,7 +38,7 @@ if (strlen($modules->hash) == 32 && $validate->isMD5($modules->hash)) {
 	
 	// Alte Captchas löschen
 	$captchas = scandir($dir);
-	$c_captchas = $validate->countArrayElements($captchas);
+	$c_captchas = count($captchas);
 	
 	for ($i = 0; $i < $c_captchas; $i++) {
 		if (time() - filemtime($dir . $captchas[$i]) > 900) {

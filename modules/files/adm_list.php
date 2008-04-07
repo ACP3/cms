@@ -11,7 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 
 $files = $db->select('id, start, end, file, size, link_title', 'files', 0, 'start DESC', POS, CONFIG_ENTRIES);
-$c_files = $validate->countArrayElements($files);
+$c_files = count($files);
 
 if ($c_files > 0) {
 	$tpl->assign('pagination', $modules->pagination($db->select('id', 'files', 0, 0, 0, 0, 1)));

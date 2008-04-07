@@ -43,7 +43,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'access', 'id = \'' .
 
 		$mod_list = $modules->modulesList();
 		$mods_arr = explode(',', $access[0]['modules']);
-		$c_mods_arr = $validate->countArrayElements($mods_arr);
+		$c_mods_arr = count($mods_arr);
 
 		foreach ($mod_list as $name => $info) {
 			if ($info['dir'] == 'errors' || !$info['active']) {
