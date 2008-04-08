@@ -356,23 +356,38 @@ a.form {
 	padding: 2px 3px;
 	border: 1px solid #333;
 }
-/* Akkordeon */
-#accordion {
-	width: 70%;
+/* Tabs */
+#tabs h3 {
+	width: 60%;
+	margin: 5px auto;
+	text-align: left;
+}
+#tabs fieldset {
+	clear: both;
+}
+#tabs #wrapper {
+	width: 60%;
 	margin: 0 auto;
 }
-#accordion fieldset {
-	width: 100%;
-	padding: 0;
+#tabs #wrapper h3 {
+	width: auto;
+	margin: 0 2px;
+	font-size: 1.1em;
+	float: left;
 }
-#accordion fieldset dl {
-	margin: 10px;
+#tabs #wrapper h3 a {
+	padding: 2px 3px;
+	background: #eee;
+	border: 1px solid #c2c2c2;
+	color: #000;
+	display: block;
+	position: relative;
+	bottom: -1px;
 }
-#accordion fieldset legend {
-	margin-left: 10px;
-}
-#accordion fieldset legend a {
-	color: #069;
+#tabs #wrapper h3 a:hover, #tabs #wrapper h3 a.selected {
+	background: #fff;
+	border-bottom-color: #fff;
+	color: #f00;
 }
 /* ACP */
 #adm-list {

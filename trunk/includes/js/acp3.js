@@ -18,19 +18,25 @@ function mark_entries(name, action)
 	});
 }
 $(function() {
-	// Akkordeon Menü
-	$('#accordion fieldset dl:not(:first)').hide();
-
-	$('#accordion fieldset > legend').each(function() {
-		var legend = $(this).text();
-		$(this).empty().append($('<a href="#">'+ legend +'</a>'));
+	$("#tabs fieldset").each(function() {
+		if ($(this).attr('id')) {
+			var header = $(this).prev('h3').text();
+			var id = $(this).attr('id');
+			$(this).prev('h3').empty().append($('<a href="#' + id + '">' + header + '</a>'));
+		}
 	});
-	$('#accordion fieldset > legend a').click(function() {
-		var fieldset = $(this).parent().parent();
-
-		if (!fieldset.children('dl').is(':visible') && !$('#accordion fieldset dl').is(':animated')) {
-			$('dl:visible').slideUp();
-			fieldset.children('dl').slideDown();
+	$('#tabs').prepend('<div id="wrapper"></div>');
+	$('#tabs h3').appendTo('#wrapper');
+	$('#tabs #wrapper a:first').addClass('selected');
+	$('#tabs fieldset:not(:first)').hide();
+	
+	$('#tabs #wrapper a').click(function() {
+		var tab = $(this).attr('href').substr(1);
+		if (!$('#tabs fieldset#' + tab).is(':visible') && !$('#tabs fieldset').is(':animated')) {
+			$('#tabs #wrapper a').removeClass('selected');
+			$(this).addClass('selected');
+			$('#tabs fieldset:visible').animate({ height: 'hide', opacity: 'hide' }, 'fast');
+			$('#tabs fieldset#' + tab).animate({ height: 'show', opacity: 'show' }, 'slow');
 		}
 		return false;
 	});
