@@ -1,7 +1,7 @@
 {$error_msg}
-<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" id="accordion">
-	<fieldset>
-		<legend>{lang values="system|general"}</legend>
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" id="tabs">
+	<h3>{lang values="system|general"}</h3>
+	<fieldset id="tab-general">
 		<dl>
 			<dt><label for="entries">{lang values="system|entries_per_page"}</label></dt>
 			<dd>
@@ -32,8 +32,8 @@
 			</dd>
 		</dl>
 	</fieldset>
-	<fieldset>
-		<legend>{lang values="common|date"}</legend>
+	<h3>{lang values="common|date"}</h3>
+	<fieldset id="tab-date">
 		<dl>
 			<dt>
 				<label for="date">{lang values="system|date_format"}</label>
@@ -61,8 +61,8 @@
 			</dd>
 		</dl>
 	</fieldset>
-	<fieldset>
-		<legend>{lang values="system|maintenance"}</legend>
+	<h3>{lang values="system|maintenance"}</h3>
+	<fieldset id="tab-maintenance">
 		<dl>
 			<dt><label for="maintenance_yes">{lang values="system|maintenance_mode"}</label></dt>
 			<dd>
@@ -79,8 +79,8 @@
 			<dd><textarea name="form[maintenance_msg]" id="maintenance_msg" cols="50" rows="6">{$form.maintenance_msg}</textarea></dd>
 		</dl>
 	</fieldset>
-	<fieldset>
-		<legend>{lang values="system|meta_statements"}</legend>
+	<h3>{lang values="system|meta_statements"}</h3>
+	<fieldset id="tab-meta">
 		<dl>
 			<dt><label for="title">{lang values="system|title"}</label></dt>
 			<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120" /></dd>
@@ -93,8 +93,8 @@
 			<dd><textarea name="form[meta_keywords]" id="meta_keywords" cols="50" rows="6">{$form.meta_keywords}</textarea></dd>
 		</dl>
 	</fieldset>
-	<fieldset>
-		<legend>{lang values="system|db_connection_settings"}</legend>
+	<h3>{lang values="system|db_connection_settings"}</h3>
+	<fieldset id="tab-database">
 		<dl>
 			<dt><label for="db_host">{lang values="system|host"}</label></dt>
 			<dd><input type="text" name="form[db_host]" id="db_host" value="{$form.db_host}" /></dd>

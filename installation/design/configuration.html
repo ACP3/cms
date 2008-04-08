@@ -51,9 +51,9 @@ $(document).ready(function() {
 {/if}
 {else}
 {$error_msg}
-<form action="{$php_self}?mod=install&amp;page=configuration&amp;lang={$lang}" method="post" accept-charset="UTF-8" id="accordion">
-	<fieldset>
-		<legend>{lang values="db_connection_settings"}</legend>
+<form action="{$php_self}?mod=install&amp;page=configuration&amp;lang={$lang}" method="post" accept-charset="UTF-8" id="tabs">
+	<h3>{lang values="db_connection_settings"}</h3>
+	<fieldset id="tab-database">
 		<dl>
 			<dt>
 				<label for="db_host">{lang values="hostname"}</label>
@@ -79,8 +79,8 @@ $(document).ready(function() {
 			</dd>
 		</dl>
 	</fieldset>
-	<fieldset>
-		<legend>{lang values="admin_account"}</legend>
+	<h3>{lang values="admin_account"}</h3>
+	<fieldset id="tab-admin">
 		<dl>
 			<dt><label for="user-name">{lang values="user_name"}</label></dt>
 			<dd><input type="text" name="form[user_name]" id="user-name" value="{$form.user_name}" /></dd>
@@ -92,8 +92,8 @@ $(document).ready(function() {
 			<dd><input type="text" name="form[mail]" id="mail" value="{$form.mail}" /></dd>
 		</dl>
 	</fieldset>
-	<fieldset>
-		<legend>{lang values="general"}</legend>
+	<h3>{lang values="general"}</h3>
+	<fieldset id="tab-general">
 		<dl>
 			<dt><label for="entries">{lang values="entries_per_page"}</label></dt>
 			<dd>
@@ -124,8 +124,8 @@ $(document).ready(function() {
 			</dd>
 		</dl>
 	</fieldset>
-	<fieldset>
-		<legend>{lang values="date"}</legend>
+	<h3>{lang values="date"}</h3>
+	<fieldset id="tab-date">
 		<dl>
 			<dt>
 				<label for="date">{lang values="date_format"}</label>
@@ -153,8 +153,8 @@ $(document).ready(function() {
 			</dd>
 		</dl>
 	</fieldset>
-	<fieldset>
-		<legend>{lang values="meta_statements"}</legend>
+	<h3>{lang values="meta_statements"}</h3>
+	<fieldset id="tab-meta">
 		<dl>
 			<dt><label for="title">{lang values="title"}</label></dt>
 			<dd><input type="text" name="form[title]" id="title" value="{$form.title}" /></dd>
