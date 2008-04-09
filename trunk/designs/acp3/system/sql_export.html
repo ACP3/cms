@@ -5,8 +5,8 @@
 {else}
 {$error_msg}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" id="tabs">
-	<h3>{lang values="system|sql_tables"}</h3>
 	<fieldset id="tab-tables">
+		<legend>{lang values="system|sql_tables"}</legend>
 		<dl>
 			<dd>
 				<select name="form[tables][]" id="tables" multiple="multiple" style="height:200px">
@@ -17,8 +17,8 @@
 			</dd>
 		</dl>
 	</fieldset>
-	<h3>{lang values="system|export_options"}</h3>
 	<fieldset id="tab-options">
+		<legend>{lang values="system|export_options"}</legend>
 		<dl>
 			<dt><label for="file">{lang values="system|output"}</label></dt>
 			<dd>

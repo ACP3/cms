@@ -299,11 +299,6 @@ a.form {
 	line-height: 28px;
 }
 /* Tabs */
-#tabs h3 {
-	width: 60%;
-	margin: 5px auto;
-	text-align: left;
-}
 #tabs fieldset {
 	clear: both;
 }
@@ -311,22 +306,20 @@ a.form {
 	width: 60%;
 	margin: 0 auto;
 }
-#tabs #wrapper h3 {
-	width: auto;
+#tabs #wrapper a {
 	margin: 0 2px;
-	font-size: 1.1em;
-	float: left;
-}
-#tabs #wrapper h3 a {
 	padding: 2px 3px;
 	background: #eee;
 	border: 1px solid #c2c2c2;
+	font-weight: bold;
+	font-size: 1.1em;
 	color: #000;
+	float: left;
 	display: block;
 	position: relative;
 	bottom: -1px;
 }
-#tabs #wrapper h3 a:hover, #tabs #wrapper h3 a.selected {
+#tabs #wrapper a:hover, #tabs #wrapper a.selected {
 	background: #fff;
 	border-bottom-color: #fff;
 	color: #f00;
