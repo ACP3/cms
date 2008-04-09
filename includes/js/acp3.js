@@ -18,16 +18,26 @@ function mark_entries(name, action)
 	});
 }
 $(function() {
-	$("#tabs fieldset").each(function() {
+	var match = '';
+	$('#tabs').prepend('<div id="wrapper"></div>');
+	$("#tabs fieldset").each(function(i) {
 		if ($(this).attr('id')) {
-			var header = $(this).prev('h3').text();
+			var header = $(this).children('legend').text();
 			var id = $(this).attr('id');
-			$(this).prev('h3').empty().append($('<a href="#' + id + '">' + header + '</a>'));
+			$('#tabs #wrapper').append($('<a href="#' + id + '">' + header + '</a>'));
+			if (window.location.hash.substr(1) == id) {
+				match = id;
+				$('#tabs #wrapper a:eq(' + i + ')').addClass('selected');
+			}
 		}
 	});
-	$('#tabs').prepend('<div id="wrapper"></div>');
-	$('#tabs h3').appendTo('#wrapper');
-	$('#tabs fieldset:not(:first)').hide();
+	$('#tabs legend').remove();
+	if (match != '') {
+		$('#tabs fieldset:not(#' + match + ')').hide();
+	} else {
+		$('#tabs #wrapper a:first').addClass('selected');
+		$('#tabs fieldset:not(:first)').hide();
+	}
 	
 	$('#tabs #wrapper a').click(function() {
 		$('#tabs #wrapper a').removeClass('selected');
@@ -35,6 +45,6 @@ $(function() {
 		$('#tabs fieldset:visible').hide();
 		$('#tabs fieldset').filter(this.hash).show();
 		return false;
-	}).filter(':first').click();
+	});
 })
 
