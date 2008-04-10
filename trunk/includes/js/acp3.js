@@ -2,7 +2,9 @@ document.writeln('<style type="text/css">');
 document.writeln('.hide { display:none; }');
 document.writeln('</style>');
 
-// Einträge markieren bzw. Markierung aufheben
+/**
+ * Einträge markieren bzw. Markierung aufheben
+ **/
 function mark_entries(name, action)
 {
 	var fields = $('form :checkbox');
@@ -18,33 +20,30 @@ function mark_entries(name, action)
 	});
 }
 $(function() {
-	var match = '';
+	/**
+	 * Tabs
+	 **/
+	var match = 0;
 	$('#tabs').prepend('<div id="wrapper"></div>');
-	$("#tabs fieldset").each(function(i) {
+	$('#tabs > fieldset').each(function(i) {
 		if ($(this).attr('id')) {
 			var header = $(this).children('legend').text();
 			var id = $(this).attr('id');
 			$('#tabs #wrapper').append($('<a href="#' + id + '">' + header + '</a>'));
 			if (window.location.hash.substr(1) == id) {
-				match = id;
-				$('#tabs #wrapper a:eq(' + i + ')').addClass('selected');
+				match = i;
 			}
 		}
 	});
-	$('#tabs legend').remove();
-	if (match != '') {
-		$('#tabs fieldset:not(#' + match + ')').hide();
-	} else {
-		$('#tabs #wrapper a:first').addClass('selected');
-		$('#tabs fieldset:not(:first)').hide();
-	}
+	$('#tabs > fieldset > legend').remove();
+	$('#tabs > fieldset:not(:eq(' + match + '))').hide();
 	
 	$('#tabs #wrapper a').click(function() {
 		$('#tabs #wrapper a').removeClass('selected');
 		$(this).addClass('selected');
-		$('#tabs fieldset:visible').hide();
+		$('#tabs > fieldset:visible').hide();
 		$('#tabs fieldset').filter(this.hash).show();
 		return false;
-	});
+	}).filter(':eq(' + match + ')').click();
 })
 
