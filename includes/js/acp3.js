@@ -46,4 +46,3 @@ $(function() {
 		return false;
 	}).filter(':eq(' + match + ')').click();
 })
-
