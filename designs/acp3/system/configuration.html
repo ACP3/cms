@@ -1,6 +1,6 @@
 {$error_msg}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" id="tabs">
-	<fieldset id="tab-general">
+	<fieldset>
 		<legend>{lang values="system|general"}</legend>
 		<dl>
 			<dt><label for="entries">{lang values="system|entries_per_page"}</label></dt>
@@ -32,7 +32,7 @@
 			</dd>
 		</dl>
 	</fieldset>
-	<fieldset id="tab-date">
+	<fieldset>
 		<legend>{lang values="common|date"}</legend>
 		<dl>
 			<dt>
@@ -61,7 +61,7 @@
 			</dd>
 		</dl>
 	</fieldset>
-	<fieldset id="tab-maintenance">
+	<fieldset>
 		<legend>{lang values="system|maintenance"}</legend>
 		<dl>
 			<dt><label for="maintenance_yes">{lang values="system|maintenance_mode"}</label></dt>
@@ -79,7 +79,7 @@
 			<dd><textarea name="form[maintenance_msg]" id="maintenance_msg" cols="50" rows="6">{$form.maintenance_msg}</textarea></dd>
 		</dl>
 	</fieldset>
-	<fieldset id="tab-meta">
+	<fieldset>
 		<legend>{lang values="system|meta_statements"}</legend>
 		<dl>
 			<dt><label for="title">{lang values="system|title"}</label></dt>
@@ -93,7 +93,7 @@
 			<dd><textarea name="form[meta_keywords]" id="meta_keywords" cols="50" rows="6">{$form.meta_keywords}</textarea></dd>
 		</dl>
 	</fieldset>
-	<fieldset id="tab-database">
+	<fieldset>
 		<legend>{lang values="system|db_connection_settings"}</legend>
 		<dl>
 			<dt><label for="db_host">{lang values="system|host"}</label></dt>

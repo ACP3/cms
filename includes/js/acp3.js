@@ -26,13 +26,12 @@ $(function() {
 	var match = 0;
 	$('#tabs').prepend('<div id="wrapper"></div>');
 	$('#tabs > fieldset').each(function(i) {
-		if ($(this).attr('id')) {
-			var header = $(this).children('legend').text();
-			var id = $(this).attr('id');
-			$('#tabs #wrapper').append($('<a href="#' + id + '">' + header + '</a>'));
-			if (window.location.hash.substr(1) == id) {
-				match = i;
-			}
+		var header = $(this).children('legend').text();
+		var index = 'tab-' + i;
+		$('#tabs #wrapper').append($('<a href="#' + index + '">' + header + '</a>'));
+		$(this).attr('id', index);
+		if (window.location.hash.substr(1) == index) {
+			match = i;
 		}
 	});
 	$('#tabs > fieldset > legend').remove();

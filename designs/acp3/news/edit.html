@@ -1,6 +1,6 @@
 {$error_msg}
-<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
-	<fieldset style="width:70%">
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" id="tabs">
+	<fieldset>
 		<legend>{lang values="common|publication_period"}</legend>
 		<dl>
 			<dt><label for="start">{lang values="common|start_date"}</label></dt>
@@ -12,7 +12,7 @@
 			{lang values="common|date_description"}
 		</p>
 	</fieldset>
-	<fieldset style="width:70%">
+	<fieldset>
 		<legend>{lang values="news|news"}</legend>
 		<dl>
 			<dt><label for="headline">{lang values="news|headline"}</label></dt>
@@ -30,7 +30,7 @@
 			</dd>
 		</dl>
 	</fieldset>
-	<fieldset style="width:70%">
+	<fieldset>
 		<legend>{lang values="news|additional_hyperlink"}</legend>
 		<dl>
 			<dt><label for="uri">{lang values="news|uri"}</label></dt>
