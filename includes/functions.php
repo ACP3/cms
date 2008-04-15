@@ -326,7 +326,7 @@ function timeZones($value)
  */
 function uri($uri)
 {
-	$pre = CONFIG_SEF == '0' ? PHP_SELF . '?stm=' : ROOT_DIR;
-	return $pre . $uri . (!preg_match('/\/$/', $uri) ? '/' : '');
+	$prefix = CONFIG_SEF == '0' ? PHP_SELF . '/' : ROOT_DIR;
+	return $prefix . $uri . (!preg_match('/\/$/', $uri) ? '/' : '');
 }
 ?>

@@ -17,7 +17,7 @@ require_once ACP3_ROOT . 'includes/globals.php';
 // Konfiguration des ACP3 laden
 require_once ACP3_ROOT . 'includes/config.php';
 if (!defined('INSTALLED')) {
-	header('Location: installation/');
+	header('Location:' . ACP3_ROOT . 'installation/');
 	exit;
 }
 
@@ -26,15 +26,9 @@ function __autoload($className)
 	require_once ACP3_ROOT . 'includes/classes/' . $className . '.php';
 }
 
-// Klassen initialisieren
-$db = new db;
-$modules = new modules;
-$validate = new validate;
-$config = new config;
-$cache = new cache;
-$breadcrumb = new breadcrumb;
-
-require_once ACP3_ROOT . 'includes/functions.php';
+// Einige Konstanten definieren
+define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
+define('ROOT_DIR', substr(PHP_SELF, 0, strrpos(PHP_SELF, '/') + 1));
 
 // Smarty einbinden
 define('SMARTY_DIR', ACP3_ROOT . 'includes/smarty/');
@@ -43,10 +37,6 @@ $tpl = new smarty;
 $tpl->template_dir = ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/';
 $tpl->compile_dir = ACP3_ROOT . 'cache/';
 // $tpl->compile_check = false;
-
-// Einige Konstanten definieren
-define('PHP_SELF', htmlentities($_SERVER['PHP_SELF']));
-define('ROOT_DIR', substr(PHP_SELF, 0, strrpos(PHP_SELF, '/') + 1));
 
 // Einige Template Variablen setzen
 $tpl->assign('PHP_SELF', PHP_SELF);
@@ -57,4 +47,14 @@ $tpl->assign('LANG', CONFIG_LANG);
 $tpl->assign('PAGE_TITLE', CONFIG_TITLE);
 $tpl->assign('KEYWORDS', CONFIG_META_KEYWORDS);
 $tpl->assign('DESCRIPTION', CONFIG_META_DESCRIPTION);
+
+// Klassen initialisieren
+$db = new db;
+$modules = new modules;
+$validate = new validate;
+$config = new config;
+$cache = new cache;
+$breadcrumb = new breadcrumb;
+
+require_once ACP3_ROOT . 'includes/functions.php';
 ?>

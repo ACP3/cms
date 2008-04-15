@@ -27,7 +27,7 @@ class modules
 	 *
 	 * @var string
 	 */
-	public $stm = '';
+	public $query = '';
 
 	/**
 	 * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
@@ -36,41 +36,40 @@ class modules
 	 */
 	function __construct()
 	{
-		if (!empty($_GET['stm'])) {
-			$this->stm = $_GET['stm'];
-		}
+		$this->query = str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES));
 
-		if (!empty($_GET['stm']) && strpos($_GET['stm'], 'acp/') !== false) {
+		if (!empty($this->query) && preg_match('/^(\/acp)/', $this->query)) {
 			// Definieren, dass man sich im Administrationsbereich befindet
 			define('IN_ADM', true);
 			// "acp/" entfernen
-			$_GET['stm'] = substr($_GET['stm'], 4, strlen($_GET['stm']));
+			$this->query = substr($this->query, 5);
 		} else {
 			// Definieren, dass man sich im Frontend befindet
 			define('IN_ACP3', true);
+			$this->query = substr($this->query, 1);
 		}
-		$stm = !empty($_GET['stm']) ? explode('/', $_GET['stm']) : 0;
+		$query = !empty($this->query) ? explode('/', $this->query) : 0;
 		$defaultModule = defined('IN_ADM') ? 'acp' : 'news';
 		$defaultPage = defined('IN_ADM') ? 'adm_list' : 'list';
 
-		$this->mod = !empty($stm[0]) ? $stm[0] : $defaultModule;
-		$this->page = !empty($stm[1]) ? $stm[1] : $defaultPage;
+		$this->mod = !empty($query[0]) ? $query[0] : $defaultModule;
+		$this->page = !empty($query[1]) ? $query[1] : $defaultPage;
 
 		if (!empty($_POST['cat']))
 			$this->params['cat'] = $_POST['cat'];
 		if (!empty($_POST['action']))
 			$this->params['action'] = $_POST['action'];
 
-		if (!empty($stm[2])) {
-			$c_stm = count($stm);
+		if (!empty($query[2])) {
+			$c_query = count($query);
 
-			for ($i = 2; $i < $c_stm; $i++) {
-				if (!empty($stm[$i])) {
-					if (!defined('POS') && preg_match('/^(pos_(\d+))$/', $stm[$i])) {
-						define('POS', substr($stm[$i], 4));
-					} elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $stm[$i])) {
-						$pos = strpos($stm[$i], '_');
-						$this->params[substr($stm[$i], 0, $pos)] = substr($stm[$i], $pos + 1, strlen($stm[$i]));
+			for ($i = 2; $i < $c_query; $i++) {
+				if (!empty($query[$i])) {
+					if (!defined('POS') && preg_match('/^(pos_(\d+))$/', $query[$i])) {
+						define('POS', substr($query[$i], 4));
+					} elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) {
+						$pos = strpos($query[$i], '_');
+						$this->params[substr($query[$i], 0, $pos)] = substr($query[$i], $pos + 1);
 					}
 				}
 			}
