@@ -96,7 +96,7 @@ function processNavbar()
 					case '2':
 						$link['href'] = uri($pages[$i]['uri']);
 
-						if (uri($modules->stm) == uri($pages[$i]['uri'])) {
+						if (uri($modules->query) == uri($pages[$i]['uri'])) {
 							$link['css'].= $selected;
 						}
 						break;
