@@ -36,17 +36,16 @@ class modules
 	 */
 	function __construct()
 	{
-		$this->query = str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES));
+		$this->query = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
 
-		if (!empty($this->query) && preg_match('/^(\/acp)/', $this->query)) {
+		if (!empty($this->query) && preg_match('/^(acp\/)/', $this->query)) {
 			// Definieren, dass man sich im Administrationsbereich befindet
 			define('IN_ADM', true);
 			// "acp/" entfernen
-			$this->query = substr($this->query, 5);
+			$this->query = substr($this->query, 4);
 		} else {
 			// Definieren, dass man sich im Frontend befindet
 			define('IN_ACP3', true);
-			$this->query = substr($this->query, 1);
 		}
 		$query = !empty($this->query) ? explode('/', $this->query) : 0;
 		$defaultModule = defined('IN_ADM') ? 'acp' : 'news';

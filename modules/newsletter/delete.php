@@ -24,8 +24,9 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $validate->isNumber($entry) && $db->select('id', 'nl_accounts', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1')
-		$bool = $db->delete('nl_accounts', 'id = \'' . $entry . '\'');
+		if (!empty($entry) && $validate->isNumber($entry) && $db->select('id', 'nl_accounts', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+			$bool = $db->delete('nl_accounts', 'id = \'' . $entry . '\'');
+		}
 	}
 	$content = comboBox($bool ? lang('newsletter', 'delete_success') : lang('newsletter', 'delete_error'), uri('acp/newsletter'));
 }
