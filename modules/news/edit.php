@@ -10,19 +10,19 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if ($validate->isNumber($modules->id) && $db->select('id', 'news', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($modules->id) && $db->select('id', 'news', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
-		if (!$validate->date($form['start']) || !$validate->date($form['end']))
+		if (!validate::date($form['start']) || !validate::date($form['end']))
 			$errors[] = lang('common', 'select_date');
 		if (strlen($form['headline']) < 3)
 			$errors[] = lang('news', 'headline_to_short');
 		if (strlen($form['text']) < 3)
 			$errors[] = lang('news', 'text_to_short');
-		if (!$validate->isNumber($form['cat']) || $validate->isNumber($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
+		if (!validate::isNumber($form['cat']) || validate::isNumber($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
 			$errors[] = lang('news', 'select_category');
-		if (!empty($form['uri']) && (!$validate->isNumber($form['target']) || strlen($form['link_title']) < 3))
+		if (!empty($form['uri']) && (!validate::isNumber($form['target']) || strlen($form['link_title']) < 3))
 			$errors[] = lang('news', 'complete_additional_hyperlink_statements');
 
 		if (isset($errors)) {
@@ -44,7 +44,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'news', 'id = \'' . $
 
 			$bool = $db->update('news', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$cache->create('news_details_id_' . $modules->id, $db->select('id, start, headline, text, category_id, uri, target, link_title', 'news', 'id = \'' . $modules->id . '\''));
+			cache::create('news_details_id_' . $modules->id, $db->select('id, start, headline, text, category_id, uri, target, link_title', 'news', 'id = \'' . $modules->id . '\''));
 
 			$content = comboBox($bool ? lang('news', 'edit_success') : lang('news', 'edit_error'), uri('acp/news'));
 		}

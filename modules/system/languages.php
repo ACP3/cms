@@ -20,7 +20,7 @@ if ($modules->dir) {
 	$bool = false;
 
 	if (!empty($dir)) {
-		$bool = $config->general(array('lang' => $dir));
+		$bool = config::general(array('lang' => $dir));
 	}
 	$text = $bool ? lang('system', 'languages_edit_success') : lang('system', 'languages_edit_error');
 

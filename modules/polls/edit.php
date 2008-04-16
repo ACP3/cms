@@ -10,11 +10,11 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if ($validate->isNumber($modules->id) && $db->select('id', 'poll_question', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($modules->id) && $db->select('id', 'poll_question', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
-		if (!$validate->date($form['start']) || !$validate->date($form['end']))
+		if (!validate::date($form['start']) || !validate::date($form['end']))
 			$errors[] = lang('common', 'select_date');
 		if (empty($form['question']))
 			$errors[] = lang('polls', 'type_in_question');
@@ -45,10 +45,10 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'poll_question', 'id 
 			$bool = $db->update('poll_question', $update_values, 'id = \'' . $modules->id . '\'');
 
 			foreach ($form['answers'] as $row) {
-				if (isset($row['delete']) && $validate->isNumber($row['id'])) {
+				if (isset($row['delete']) && validate::isNumber($row['id'])) {
 					$db->delete('poll_answers', 'id = \'' . $row['id'] . '\'');
 					$db->delete('poll_votes', 'answer_id = \'' . $row['id'] . '\'');
-				} elseif ($validate->isNumber($row['id'])) {
+				} elseif (validate::isNumber($row['id'])) {
 					$bool = $db->update('poll_answers', array('text' =>$db->escape($row['value'])), 'id = \'' . $db->escape($row['id']) . '\'');
 				}
 			}

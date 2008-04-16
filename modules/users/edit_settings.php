@@ -22,7 +22,7 @@ if (!$auth->isUser() || !preg_match('/\d/', USER_ID)) {
 
 		if (!is_numeric($form['time_zone']))
 			$errors[] = lang('common', 'select_time_zone');
-		if (!$validate->isNumber($form['dst']))
+		if (!validate::isNumber($form['dst']))
 			$errors[] = lang('common', 'select_daylight_saving_time');
 		if (!is_file('languages/' . $db->escape($form['language'], 2) . '/info.php'))
 			$errors[] = lang('users', 'select_language');

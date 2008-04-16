@@ -4,7 +4,6 @@ if (!defined('IN_INSTALL'))
 
 if (isset($_POST['submit'])) {
 	require_once ACP3_ROOT . 'includes/classes/validate.php';
-	$validate = new validate;
 
 	$form = $_POST['form'];
 
@@ -32,19 +31,19 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('type_in_user_name');
 	if ((empty($form['user_pwd']) || empty($form['user_pwd_wdh'])) || (!empty($form['user_pwd']) && !empty($form['user_pwd_wdh']) && $form['user_pwd'] != $form['user_pwd_wdh']))
 		$errors[] = lang('type_in_pwd');
-	if (!$validate->email($form['mail']))
+	if (!validate::email($form['mail']))
 		$errors[] = lang('wrong_email_format');
-	if (!$validate->isNumber($form['entries']))
+	if (!validate::isNumber($form['entries']))
 		$errors[] = lang('select_entries_per_page');
-	if (!$validate->isNumber($form['flood']))
+	if (!validate::isNumber($form['flood']))
 		$errors[] = lang('type_in_flood_barrier');
-	if (!$validate->isNumber($form['sef']))
+	if (!validate::isNumber($form['sef']))
 		$errors[] = lang('select_sef_uris');
 	if (empty($form['date']))
 		$errors[] = lang('type_in_date_format');
-	if (!$validate->isNumber($form['dst']))
+	if (!validate::isNumber($form['dst']))
 		$errors[] = lang('select_daylight_saving_time');
-	if (!$validate->isNumber($form['time_zone']))
+	if (!validate::isNumber($form['time_zone']))
 		$errors[] = lang('select_time_zone');
 	if (empty($form['title']))
 		$errors[] = lang('type_in_title');

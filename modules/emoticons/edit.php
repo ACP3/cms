@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if ($validate->isNumber($modules->id) && $db->select('id', 'emoticons', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($modules->id) && $db->select('id', 'emoticons', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 		if (!empty($_FILES['picture']['tmp_name'])) {
@@ -18,13 +18,13 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'emoticons', 'id = \'
 			$file['name'] = $_FILES['picture']['name'];
 			$file['size'] = $_FILES['picture']['size'];
 		}
-		$settings = $config->output('emoticons');
+		$settings = config::output('emoticons');
 
 		if (empty($form['code']))
 			$errors[] = lang('emoticons', 'type_in_code');
 		if (empty($form['description']))
 			$errors[] = lang('emoticons', 'type_in_description');
-		if (isset($file) && (empty($file['size']) || !$validate->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize'])))
+		if (isset($file) && (empty($file['size']) || !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize'])))
 			$errors[] = lang('emoticons', 'invalid_image_selected');
 
 		if (isset($errors)) {
@@ -49,7 +49,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'emoticons', 'id = \'
 
 			$bool = $db->update('emoticons', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$cache->create('emoticons', $db->select('code, description, img', 'emoticons'));
+			cache::create('emoticons', $db->select('code, description, img', 'emoticons'));
 
 			$content = comboBox($bool ? lang('emoticons', 'edit_success') : lang('emoticons', 'edit_error'), uri('acp/emoticons'));
 		}

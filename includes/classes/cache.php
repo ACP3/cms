@@ -21,7 +21,7 @@ class cache
 	 * @param string $filename
 	 * @return boolean
 	 */
-	public function check($filename)
+	static public function check($filename)
 	{
 		if (is_file(ACP3_ROOT . 'cache/sql_' . md5($filename) . '.php')) {
 			return true;
@@ -37,14 +37,14 @@ class cache
 	 * 	Datensätze der SQL Abfrage
 	 * @return boolean
 	 */
-	public function create($filename, $sql_results)
+	static public function create($filename, $sql_results)
 	{
 		if (!empty($sql_results)) {
 			$bool = @file_put_contents(ACP3_ROOT . 'cache/sql_' . md5($filename) . '.php', serialize($sql_results));
 
 			return $bool ? true : false;
-		} elseif ($this->check($filename)) {
-			return $this->delete($filename);
+		} elseif (self::check($filename)) {
+			return self::delete($filename);
 		}
 		return false;
 	}
@@ -55,9 +55,9 @@ class cache
 	 * 	Zu löschende Datei
 	 * @return boolean
 	 */
-	public function delete($filename)
+	static public function delete($filename)
 	{
-		if ($this->check($filename)) {
+		if (self::check($filename)) {
 			return unlink(ACP3_ROOT . 'cache/sql_' . md5($filename) . '.php');
 		}
 		return false;
@@ -69,9 +69,9 @@ class cache
 	 * 	Auszugebende Datei
 	 * @return mixed
 	 */
-	public function output($filename)
+	static public function output($filename)
 	{
-		if ($this->check($filename)) {
+		if (self::check($filename)) {
 			return unserialize(@file_get_contents(ACP3_ROOT . 'cache/sql_' . md5($filename) . '.php'));
 		}
 		return array();
@@ -79,7 +79,7 @@ class cache
 	/**
 	 * Löscht alle gecacheten SQL Queries
 	 */
-	public function purge()
+	static public function purge()
 	{
 		$cache_dir = scandir('cache');
 		$c_cache_dir = count($cache_dir);

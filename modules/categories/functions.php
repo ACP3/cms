@@ -14,10 +14,10 @@ function categoriesList($module, $page, $category = '') {
 	global $cache, $db, $modules;
 
 	if ($modules->check($module, $page)) {
-		if (!$cache->check('categories_' . $module)) {
-			$cache->create('categories_' . $module, $db->select('id, name, picture, description', 'categories', 'module = \'' . $module . '\'', 'name ASC'));
+		if (!cache::check('categories_' . $module)) {
+			cache::create('categories_' . $module, $db->select('id, name, picture, description', 'categories', 'module = \'' . $module . '\'', 'name ASC'));
 		}
-		$categories = $cache->output('categories_' . $module);
+		$categories = cache::output('categories_' . $module);
 		$c_categories = count($categories);
 		
 		if ($c_categories > 0) {

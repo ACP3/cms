@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if ($validate->isNumber($modules->id) && $db->select('id', 'pages_blocks', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($modules->id) && $db->select('id', 'pages_blocks', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	$breadcrumb->assign(lang('common', 'acp'), uri('acp'));
 	$breadcrumb->assign(lang('pages', 'pages'), uri('acp/pages'));
 	$breadcrumb->assign(lang('pages', 'adm_list_blocks'), uri('acp/pages/adm_list_blocks'));

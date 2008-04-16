@@ -15,11 +15,11 @@ if (isset($_POST['submit'])) {
 		case 'subscribe' :
 			$form = $_POST['form'];
 			
-			if (!$validate->email($form['mail']))
+			if (!validate::email($form['mail']))
 				$errors[] = lang('common', 'wrong_email_format');
-			if ($validate->email($form['mail']) && $db->select('id', 'nl_accounts', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) == 1)
+			if (validate::email($form['mail']) && $db->select('id', 'nl_accounts', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) == 1)
 				$errors[] = lang('newsletter', 'account_exists');
-			if (!$validate->captcha($form['captcha'], $form['hash']))
+			if (!validate::captcha($form['captcha'], $form['hash']))
 				$errors[] = lang('captcha', 'invalid_captcha_entered');
 			
 			if (isset($errors)) {
@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
 				
 				$bool = $db->insert('nl_accounts', $insert_values);
 				
-				$nl_mail = $config->output('newsletter');
+				$nl_mail = config::output('newsletter');
 				$bool2 = @mail($form['mail'], sprintf(lang('newsletter', 'subscribe_mail_subject'), $_SERVER['HTTP_HOST']), $text, 'FROM:' . $nl_mail['mail']);
 				
 				$content = comboBox($bool && $bool2 ? lang('newsletter', 'subscribe_success') : lang('newsletter', 'subscribe_error'), ROOT_DIR);
@@ -44,11 +44,11 @@ if (isset($_POST['submit'])) {
 		case 'unsubscribe' :
 			$form = $_POST['form'];
 			
-			if (!$validate->email($form['mail']))
+			if (!validate::email($form['mail']))
 				$errors[] = lang('common', 'wrong_email_format');
-			if ($validate->email($form['mail']) && $db->select('id', 'nl_accounts', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) != 1)
+			if (validate::email($form['mail']) && $db->select('id', 'nl_accounts', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) != 1)
 				$errors[] = lang('newsletter', 'account_not_exists');
-			if (!$validate->captcha($form['captcha'], $form['hash']))
+			if (!validate::captcha($form['captcha'], $form['hash']))
 				$errors[] = lang('captcha', 'invalid_captcha_entered');
 			
 			if (isset($errors)) {

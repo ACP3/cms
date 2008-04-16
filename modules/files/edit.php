@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if ($validate->isNumber($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 		if (isset($form['external'])) {
@@ -21,7 +21,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'files', 'id = \'' . 
 			$file['size'] = $_FILES['file_internal']['size'];
 		}
 
-		if (!$validate->date($form['start']) || !$validate->date($form['end']))
+		if (!validate::date($form['start']) || !validate::date($form['end']))
 			$errors[] = lang('common', 'select_date');
 		if (strlen($form['link_title']) < 3)
 			$errors[] = lang('files', 'type_in_link_title');
@@ -31,7 +31,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'files', 'id = \'' . 
 			$errors[] = lang('files', 'select_internal_resource');
 		if (strlen($form['text']) < 3)
 			$errors[] = lang('files', 'description_to_short');
-		if (!$validate->isNumber($form['cat']) || $validate->isNumber($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
+		if (!validate::isNumber($form['cat']) || validate::isNumber($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
 			$errors[] = lang('files', 'select_category');
 
 		if (isset($errors)) {
@@ -74,7 +74,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'files', 'id = \'' . 
 
 			$bool = $db->update('files', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$cache->create('files_details_id_' . $modules->id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, c.name AS category_name', 'files AS f, ' . CONFIG_DB_PRE . 'categories AS c', 'f.id = \'' . $modules->id . '\' AND f.category_id = c.id'));
+			cache::create('files_details_id_' . $modules->id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, c.name AS category_name', 'files AS f, ' . CONFIG_DB_PRE . 'categories AS c', 'f.id = \'' . $modules->id . '\' AND f.category_id = c.id'));
 
 			$content = comboBox($bool ? lang('files', 'edit_success') : lang('files', 'edit_error'), uri('acp/files'));
 		}

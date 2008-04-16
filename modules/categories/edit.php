@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if ($validate->isNumber($modules->id) && $db->select('id', 'categories', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($modules->id) && $db->select('id', 'categories', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 		if (!empty($_FILES['picture']['name'])) {
@@ -18,13 +18,13 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'categories', 'id = \
 			$file['name'] = $_FILES['picture']['name'];
 			$file['size'] = $_FILES['picture']['size'];
 		}
-		$settings = $config->output('categories');
+		$settings = config::output('categories');
 
 		if (strlen($form['name']) < 3)
 			$errors[] = lang('categories', 'name_to_short');
 		if (strlen($form['description']) < 3)
 			$errors[] = lang('categories', 'description_to_short');
-		if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) || !$validate->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize'])))
+		if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) || !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize'])))
 			$errors[] = lang('categories', 'invalid_image_selected');
 		if (strlen($form['name']) > 3 && !empty($form['module']) && $db->select('id', 'categories', 'id != \'' . $modules->id . '\' AND name = \'' . $db->escape($form['name']) . '\' AND module = \'' . $db->escape($form['module'], 2) . '\'', 0, 0, 0, 1) > 0)
 			$errors[] = lang('categories', 'category_already_exists');
@@ -53,7 +53,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'categories', 'id = \
 
 			$category = $db->select('module', 'categories', 'id = \'' . $modules->id . '\'');
 
-			$cache->create('categories_' . $db->escape($category[0]['module'], 3), $db->select('id, name, picture, description', 'categories', 'module = \'' . $db->escape($category[0]['module'], 3) . '\'', 'name ASC'));
+			cache::create('categories_' . $db->escape($category[0]['module'], 3), $db->select('id, name, picture, description', 'categories', 'module = \'' . $db->escape($category[0]['module'], 3) . '\'', 'name ASC'));
 
 			$content = comboBox($bool ? lang('categories', 'edit_success') : lang('categories', 'edit_error'), uri('acp/categories'));
 		}

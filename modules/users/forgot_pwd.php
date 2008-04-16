@@ -15,11 +15,11 @@ if ($auth->isUser()) {
 			$errors[] = lang('users', 'type_in_nickname_or_email');
 		if (!empty($form['nickname']) && $db->select('id', 'users', 'nickname = \'' . $db->escape($form['nickname']) . '\'', 0, 0, 0, 1) == '0')
 			$errors[] = lang('users', 'user_not_exists');
-		if (!empty($form['mail']) && !$validate->email($form['mail']))
+		if (!empty($form['mail']) && !validate::email($form['mail']))
 			$errors[] = lang('common', 'wrong_email_format');
-		if ($validate->email($form['mail']) && $db->select('id', 'users', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) == '0')
+		if (validate::email($form['mail']) && $db->select('id', 'users', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) == '0')
 			$errors[] = lang('users', 'user_not_exists');
-		if (!$validate->captcha($form['captcha'], $form['hash']))
+		if (!validate::captcha($form['captcha'], $form['hash']))
 			$errors[] = lang('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors)) {

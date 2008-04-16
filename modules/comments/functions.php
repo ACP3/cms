@@ -57,9 +57,9 @@ function comments($module = 0, $entry_id = 0)
 			$errors[] = lang('common', 'name_to_short');
 		if (strlen($form['message']) < 3)
 			$errors[] = lang('common', 'message_to_short');
-		if (!$modules->check($db->escape($form['module'], 2), 'list') || !$validate->isNumber($form['entry_id']))
+		if (!$modules->check($db->escape($form['module'], 2), 'list') || !validate::isNumber($form['entry_id']))
 			$errors[] = lang('comments', 'module_doesnt_exist');
-		if (!$validate->captcha($form['captcha'], $form['hash']))
+		if (!validate::captcha($form['captcha'], $form['hash']))
 			$errors[] = lang('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors)) {

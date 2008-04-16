@@ -12,12 +12,12 @@ if (!defined('IN_ACP3'))
 
 $date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
 
-if ($validate->isNumber($modules->id) && $db->select('id', 'news', 'id = \'' . $modules->id . '\'' . $date, 0, 0, 0, 1) == 1) {
+if (validate::isNumber($modules->id) && $db->select('id', 'news', 'id = \'' . $modules->id . '\'' . $date, 0, 0, 0, 1) == 1) {
 	// News Cache erstellen
-	if (!$cache->check('news_details_id_' . $modules->id)) {
-		$cache->create('news_details_id_' . $modules->id, $db->select('id, start, headline, text, category_id, uri, target, link_title', 'news', 'id = \'' . $modules->id . '\''));
+	if (!cache::check('news_details_id_' . $modules->id)) {
+		cache::create('news_details_id_' . $modules->id, $db->select('id, start, headline, text, category_id, uri, target, link_title', 'news', 'id = \'' . $modules->id . '\''));
 	}
-	$news = $cache->output('news_details_id_' . $modules->id);
+	$news = cache::output('news_details_id_' . $modules->id);
 
 	// Brotkrümelspur
 	$category = $db->select('name', 'categories', 'id = \'' . $news[0]['category_id'] . '\'');

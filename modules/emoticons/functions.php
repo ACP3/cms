@@ -17,10 +17,10 @@ function emoticonsList($field_id = 0)
 {
 	global $cache, $db, $tpl;
 
-	if (!$cache->check('emoticons')) {
-		$cache->create('emoticons', $db->select('code, description, img', 'emoticons'));
+	if (!cache::check('emoticons')) {
+		cache::create('emoticons', $db->select('code, description, img', 'emoticons'));
 	}
-	$emoticons = $cache->output('emoticons');
+	$emoticons = cache::output('emoticons');
 	$c_emoticons = count($emoticons);
 
 	for ($i = 0; $i < $c_emoticons; $i++) {
@@ -43,10 +43,10 @@ function emoticonsReplace($string)
 	global $cache, $db;
 	static $emoticons = array();
 
-	if (!$cache->check('emoticons')) {
-		$cache->create('emoticons', $db->select('code, description, img', 'emoticons'));
+	if (!cache::check('emoticons')) {
+		cache::create('emoticons', $db->select('code, description, img', 'emoticons'));
 	}
-	$emoticons = $cache->output('emoticons');
+	$emoticons = cache::output('emoticons');
 
 	foreach ($emoticons as $row) {
 		$string = str_replace($row['code'], '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $row['img'] . '" alt="' . $row['description'] . '" title="' . $row['description'] . '" />', $string);

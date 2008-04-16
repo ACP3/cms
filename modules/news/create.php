@@ -13,15 +13,15 @@ if (!defined('IN_ADM'))
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
-	if (!$validate->date($form['start']) || !$validate->date($form['end']))
+	if (!validate::date($form['start']) || !validate::date($form['end']))
 		$errors[] = lang('common', 'select_date');
 	if (strlen($form['headline']) < 3)
 		$errors[] = lang('news', 'headline_to_short');
 	if (strlen($form['text']) < 3)
 		$errors[] = lang('news', 'text_to_short');
-	if (!$validate->isNumber($form['cat']) || $validate->isNumber($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
+	if (!validate::isNumber($form['cat']) || validate::isNumber($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
 		$errors[] = lang('news', 'select_category');
-	if (!empty($form['uri']) && (!$validate->isNumber($form['target']) || strlen($form['link_title']) < 3))
+	if (!empty($form['uri']) && (!validate::isNumber($form['target']) || strlen($form['link_title']) < 3))
 		$errors[] = lang('news', 'complete_additional_hyperlink_statements');
 
 	if (isset($errors)) {

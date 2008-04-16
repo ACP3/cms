@@ -10,12 +10,12 @@
 if (!defined('IN_ACP3'))
 	exit();
 
-if (strlen($modules->hash) == 32 && $validate->isMD5($modules->hash)) {
+if (strlen($modules->hash) == 32 && validate::isMD5($modules->hash)) {
 	header('Cache-Control: no-cache, must-revalidate');
 	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 	header('Content-Type: image/gif');
 	$hash = $modules->hash;
-	$captcha = salt(!empty($modules->length) && $validate->isNumber($modules->length) ? $modules->length : 5);
+	$captcha = salt(!empty($modules->length) && validate::isNumber($modules->length) ? $modules->length : 5);
 	$captchaLength = strlen($captcha);
 	$dir = ACP3_ROOT . 'uploads/captcha/';
 	$file = $dir . $hash . strtolower($captcha);

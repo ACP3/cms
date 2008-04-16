@@ -28,11 +28,11 @@ if (isset($_POST['submit'])) {
 		$errors[] = sprintf(lang('common', 'flood_no_entry_possible'), $flood_time - $time);
 	if (empty($form['name']))
 		$errors[] = lang('common', 'name_to_short');
-	if (!empty($form['mail']) && !$validate->email($form['mail']))
+	if (!empty($form['mail']) && !validate::email($form['mail']))
 		$errors[] = lang('common', 'wrong_email_format');
 	if (strlen($form['message']) < 3)
 		$errors[] = lang('common', 'message_to_short');
-	if (!$validate->captcha($form['captcha'], $form['hash']))
+	if (!validate::captcha($form['captcha'], $form['hash']))
 		$errors[] = lang('captcha', 'invalid_captcha_entered');
 
 	if (isset($errors)) {

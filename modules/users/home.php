@@ -2,7 +2,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (!$auth->isUser() || !$validate->isNumber(USER_ID)) {
+if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 	redirect('errors/403');
 } else {
 	$breadcrumb->assign(lang('users', 'users'), uri('users'));
