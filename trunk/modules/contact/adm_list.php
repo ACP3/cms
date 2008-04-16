@@ -13,7 +13,7 @@ if (!defined('IN_ADM'))
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
-	if (!empty($form['mail']) && !$validate->email($form['mail']))
+	if (!empty($form['mail']) && !validate::email($form['mail']))
 		$errors[] = lang('common', 'wrong_email_format');
 
 	if (isset($errors)) {
@@ -25,13 +25,13 @@ if (isset($_POST['submit'])) {
 		$form['disclaimer'] = $db->escape($form['disclaimer'], 2);
 		$form['miscellaneous'] = $db->escape($form['miscellaneous'], 2);
 
-		$bool = $config->module('contact', $form);
+		$bool = config::module('contact', $form);
 
 		$content = comboBox($bool ? lang('contact', 'edit_success') : lang('contact', 'edit_error'), uri('acp/contact'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-	$contact = $config->output('contact');
+	$contact = config::output('contact');
 	$contact['address'] = $contact['address'];
 	$contact['disclaimer'] = $db->escape($contact['disclaimer'], 3);
 	$contact['miscellaneous'] = $db->escape($contact['miscellaneous'], 3);

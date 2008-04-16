@@ -12,12 +12,12 @@ if (!defined('IN_ACP3'))
 
 $date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
 
-if ($validate->isNumber($modules->id) && $db->select('id', 'poll_question', 'id = \'' . $modules->id . '\'' . $date, 0, 0, 0, 1) == 1) {
+if (validate::isNumber($modules->id) && $db->select('id', 'poll_question', 'id = \'' . $modules->id . '\'' . $date, 0, 0, 0, 1) == 1) {
 	// Brotkrümelspur
 	$breadcrumb->assign(lang('polls', 'polls'), uri('polls'));
 	$breadcrumb->assign(lang('polls', 'vote'));
 
-	if (isset($_POST['submit']) && isset($_POST['answer']) && $validate->isNumber($_POST['answer'])) {
+	if (isset($_POST['submit']) && isset($_POST['answer']) && validate::isNumber($_POST['answer'])) {
 		$answer = $_POST['answer'];
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$time = dateAligned(2, time());

@@ -362,7 +362,7 @@
 	</item>
 	<item>
 		<name>step_3_legend_1</name>
-		<message>General requirements &amp; write access</message>
+		<message><![CDATA[General requirements &amp; write access]]></message>
 	</item>
 	<item>
 		<name>step_3_legend_2</name>

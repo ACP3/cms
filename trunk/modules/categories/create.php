@@ -17,13 +17,13 @@ if (isset($_POST['submit'])) {
 		$file['name'] = $_FILES['picture']['name'];
 		$file['size'] = $_FILES['picture']['size'];
 	}
-	$settings = $config->output('categories');
+	$settings = config::output('categories');
 	
 	if (strlen($form['name']) < 3)
 		$errors[] = lang('categories', 'name_to_short');
 	if (strlen($form['description']) < 3)
 		$errors[] = lang('categories', 'description_to_short');
-	if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) || !$validate->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize'])))
+	if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) || !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize'])))
 		$errors[] = lang('categories', 'invalid_image_selected');
 	if (empty($form['module']))
 		$errors[] = lang('categories', 'select_module');
@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('categories', $insert_values);
 
-		$cache->create('categories_' . $form['module'], $db->select('id, name, picture, description', 'categories', 'module = \'' . $form['module'] . '\'', 'name ASC'));
+		cache::create('categories_' . $form['module'], $db->select('id, name, picture, description', 'categories', 'module = \'' . $form['module'] . '\'', 'name ASC'));
 
 		$content = comboBox($bool ? lang('categories', 'create_success') : lang('categories', 'create_error'), uri('acp/categories'));
 	}

@@ -25,7 +25,7 @@ if (!isset($entries)) {
 	$bool = 0;
 	$bool2 = 0;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $validate->isNumber($entry) && $db->select('id', 'gallery', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+		if (!empty($entry) && validate::isNumber($entry) && $db->select('id', 'gallery', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			// Hochgeladene Bilder löschen
 			$pictures = $db->select('file', 'galpics', 'gallery_id = \'' . $entry . '\'');
 			foreach ($pictures as $row) {
@@ -36,7 +36,7 @@ if (!isset($entries)) {
 			$bool2 = $db->delete('galpics', 'gallery_id = \'' . $entry . '\'', 0);
 
 			// Galerie Cache löschen
-			$cache->delete('gallery_pics_id_' . $entry);
+			cache::delete('gallery_pics_id_' . $entry);
 		}
 	}
 	$content = comboBox($bool && $bool2 ? lang('gallery', 'delete_success') : lang('gallery', 'delete_error'), uri('acp/gallery'));

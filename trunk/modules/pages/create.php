@@ -13,21 +13,21 @@ if (!defined('IN_ADM'))
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
-	if (!$validate->date($form['start']) || !$validate->date($form['end']))
+	if (!validate::date($form['start']) || !validate::date($form['end']))
 		$errors[] = lang('common', 'select_date');
-	if (!$validate->isNumber($form['mode']))
+	if (!validate::isNumber($form['mode']))
 		$errors[] = lang('pages', 'select_static_hyperlink');
-	if (!$validate->isNumber($form['blocks']))
+	if (!validate::isNumber($form['blocks']))
 		$errors[] = lang('pages', 'select_block');
-	if (!empty($form['blocks']) && !$validate->isNumber($form['sort']))
+	if (!empty($form['blocks']) && !validate::isNumber($form['sort']))
 		$errors[] = lang('pages', 'type_in_chronology');
 	if (strlen($form['title']) < 3)
 		$errors[] = lang('pages', 'title_to_short');
-	if ($form['mode'] == '1' && !empty($form['parent']) && !$validate->isNumber($form['parent']))
+	if ($form['mode'] == '1' && !empty($form['parent']) && !validate::isNumber($form['parent']))
 		$errors[] = lang('pages', 'select_superior_page');
 	if ($form['mode'] == '1' && strlen($form['text']) < 3)
 		$errors[] = lang('pages', 'text_to_short');
-	if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !$validate->isNumber($form['target'])))
+	if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !validate::isNumber($form['target'])))
 		$errors[] = lang('pages', 'type_in_uri_and_target');
 
 	if (isset($errors)) {
@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('pages', $insert_values);
 
-		$cache->create('pages', $db->select('p.id, p.start, p.end, p.mode, p.title, p.uri, p.target, b.index_name AS block_name', 'pages AS p, ' . CONFIG_DB_PRE . 'pages_blocks AS b', 'p.block_id != \'0\' AND p.block_id = b.id', 'p.sort ASC, p.title ASC'));
+		cache::create('pages', $db->select('p.id, p.start, p.end, p.mode, p.title, p.uri, p.target, b.index_name AS block_name', 'pages AS p, ' . CONFIG_DB_PRE . 'pages_blocks AS b', 'p.block_id != \'0\' AND p.block_id = b.id', 'p.sort ASC, p.title ASC'));
 
 		$content = comboBox($bool ? lang('pages', 'create_success') : lang('pages', 'create_error'), uri('acp/pages'));
 	}

@@ -51,9 +51,6 @@ $tpl->assign('DESCRIPTION', CONFIG_META_DESCRIPTION);
 // Klassen initialisieren
 $db = new db;
 $modules = new modules;
-$validate = new validate;
-$config = new config;
-$cache = new cache;
 $breadcrumb = new breadcrumb;
 
 require_once ACP3_ROOT . 'includes/functions.php';

@@ -13,19 +13,19 @@ if (!defined('IN_ADM'))
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
-	if (!$validate->email($form['mail']))
+	if (!validate::email($form['mail']))
 		$errors[] = lang('common', 'wrong_email_format');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
-		$bool = $config->module('newsletter', $form);
+		$bool = config::module('newsletter', $form);
 
 		$content = comboBox($bool ? lang('newsletter', 'edit_success') : lang('newsletter', 'edit_error'), uri('acp/newsletter'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-	$settings = $config->output('newsletter');
+	$settings = config::output('newsletter');
 
 	$tpl->assign('form', isset($form) ? $form : $settings);
 

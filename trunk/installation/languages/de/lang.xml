@@ -362,7 +362,7 @@
 	</item>
 	<item>
 		<name>step_3_legend_1</name>
-		<message>Allgemeine Systemvoraussetzungen &amp; Ordner-Rechte</message>
+		<message><![CDATA[Allgemeine Systemvoraussetzungen &amp; Ordner-Rechte]]></message>
 	</item>
 	<item>
 		<name>step_3_legend_2</name>

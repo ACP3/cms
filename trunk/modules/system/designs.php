@@ -20,12 +20,12 @@ if ($modules->dir) {
 	$bool = false;
 
 	if (!empty($dir)) {
-		$bool = $config->general(array('design' => $dir));
+		$bool = config::general(array('design' => $dir));
 	}
 	$text = $bool ? lang('system', 'designs_edit_success') : lang('system', 'designs_edit_error');
 
 	// Cache leeren und diverse Parameter für die Template Engine abändern
-	$cache->purge();
+	cache::purge();
 	$tpl->template_dir = ACP3_ROOT . 'designs/' . $dir . '/';
 	$tpl->assign('design_path', ROOT_DIR . 'designs/' . $dir . '/');
 

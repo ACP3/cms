@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
 		$file['size'] = $_FILES['file_internal']['size'];
 	}
 
-	if (!$validate->date($form['start']) || !$validate->date($form['end']))
+	if (!validate::date($form['start']) || !validate::date($form['end']))
 		$errors[] = lang('common', 'select_date');
 	if (strlen($form['link_title']) < 3)
 		$errors[] = lang('files', 'type_in_link_title');
@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('files', 'select_internal_resource');
 	if (strlen($form['text']) < 3)
 		$errors[] = lang('files', 'description_to_short');
-	if (!$validate->isNumber($form['cat']) || $validate->isNumber($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
+	if (!validate::isNumber($form['cat']) || validate::isNumber($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
 		$errors[] = lang('files', 'select_category');
 
 	if (isset($errors)) {

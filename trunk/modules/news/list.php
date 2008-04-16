@@ -15,9 +15,9 @@ $tpl->assign('MOD_newsletter', $modules->check('newsletter', 'create'));
 // RSS Feed Icon
 $tpl->assign('MOD_feeds', $modules->check('feeds', 'list'));
 
-if (isset($_POST['form']['cat']) && $validate->isNumber($_POST['form']['cat'])) {
+if (isset($_POST['form']['cat']) && validate::isNumber($_POST['form']['cat'])) {
 	$cat = $_POST['form']['cat'];
-} elseif ($validate->isNumber($modules->cat)) {
+} elseif (validate::isNumber($modules->cat)) {
 	$cat = $modules->cat;
 } else {
 	$cat = 0;

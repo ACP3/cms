@@ -25,11 +25,11 @@ if (!isset($entries)) {
 	$bool = 0;
 	$bool2 = 0;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $validate->isNumber($entry) && $db->select('id', 'news', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+		if (!empty($entry) && validate::isNumber($entry) && $db->select('id', 'news', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			$bool = $db->delete('news', 'id = \'' . $entry . '\'');
 			$bool2 = $db->delete('comments', 'module = \'news\' AND entry_id = \'' . $entry . '\'');
 			// News Cache löschen
-			$cache->delete('news_details_id_' . $entry);
+			cache::delete('news_details_id_' . $entry);
 		}
 	}
 	$content = comboBox($bool && $bool2 ? lang('news', 'delete_success') : lang('news', 'delete_error'), uri('acp/news'));

@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if ($validate->isNumber($modules->id) && $db->select('id', 'galpics', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($modules->id) && $db->select('id', 'galpics', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	$picture = $db->select('p.pic, p.gallery_id, p.file, p.description, g.name AS gallery_name', 'galpics AS p, ' . CONFIG_DB_PRE . 'gallery AS g', 'p.id = \'' . $modules->id . '\' AND p.gallery_id = g.id');
 
 	$breadcrumb->assign(lang('common', 'acp'), uri('acp'));
@@ -25,13 +25,13 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'galpics', 'id = \'' 
 			$file['size'] = $_FILES['file']['size'];
 		}
 		$form = $_POST['form'];
-		$settings = $config->output('gallery');
+		$settings = config::output('gallery');
 
-		if (!$validate->isNumber($form['gallery']) || $db->select('id', 'gallery', 'id = \'' . $form['gallery'] . '\'', 0, 0, 0, 1) != '1')
+		if (!validate::isNumber($form['gallery']) || $db->select('id', 'gallery', 'id = \'' . $form['gallery'] . '\'', 0, 0, 0, 1) != '1')
 			$errors[] = lang('gallery', 'no_gallery_selected');
-		if (!$validate->isNumber($form['pic']))
+		if (!validate::isNumber($form['pic']))
 			$errors[] = lang('gallery', 'type_in_picture_number');
-		if (isset($file) && is_array($file) && !$validate->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']))
+		if (isset($file) && is_array($file) && !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']))
 			$errors[] = lang('gallery', 'invalid_image_selected');
 
 		if (isset($errors)) {
@@ -57,7 +57,7 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'galpics', 'id = \'' 
 
 			$bool = $db->update('galpics', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$cache->create('gallery_pics_id_' . $form['gallery'], $db->select('id', 'galpics', 'gallery_id = \'' . $modules->id . '\'', 'id ASC'));
+			cache::create('gallery_pics_id_' . $form['gallery'], $db->select('id', 'galpics', 'gallery_id = \'' . $modules->id . '\'', 'id ASC'));
 
 			$content = comboBox($bool ? lang('gallery', 'edit_picture_success') : lang('gallery', 'edit_picture_error'), uri('acp/gallery'));
 		}

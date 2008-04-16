@@ -17,13 +17,13 @@ if (isset($_POST['submit'])) {
 		$file['name'] = $_FILES['picture']['name'];
 		$file['size'] = $_FILES['picture']['size'];
 	}
-	$settings = $config->output('emoticons');
+	$settings = config::output('emoticons');
 
 	if (empty($form['code']))
 		$errors[] = lang('emoticons', 'type_in_code');
 	if (empty($form['description']))
 		$errors[] = lang('emoticons', 'type_in_description');
-	if (!isset($file) || empty($file['size']) || !$validate->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']))
+	if (!isset($file) || empty($file['size']) || !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']))
 		$errors[] = lang('emoticons', 'invalid_image_selected');
 
 	if (isset($errors)) {
@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('emoticons', $insert_values);
 
-		$cache->create('emoticons', $db->select('code, description, img', 'emoticons'));
+		cache::create('emoticons', $db->select('code, description, img', 'emoticons'));
 
 		$content = comboBox($bool ? lang('emoticons', 'create_success') : lang('emoticons', 'create_error'), uri('acp/emoticons'));
 	}

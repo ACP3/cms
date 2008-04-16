@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (!$auth->isUser() || !$validate->isNumber(USER_ID)) {
+if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 	redirect('errors/403');
 } else {
 	$breadcrumb->assign(lang('users', 'users'), uri('users'));
@@ -24,9 +24,9 @@ if (!$auth->isUser() || !$validate->isNumber(USER_ID)) {
 			$errors[] = lang('common', 'name_to_short');
 		if (!empty($form['nickname']) && $db->select('id', 'users', 'id != \'' . USER_ID . '\' AND nickname = \'' . $db->escape($form['nickname']) . '\'', 0, 0, 0, 1) == '1')
 			$errors[] = lang('users', 'user_name_already_exists');
-		if (!$validate->email($form['mail']))
+		if (!validate::email($form['mail']))
 			$errors[] = lang('common', 'wrong_email_format');
-		if ($validate->email($form['mail']) && $db->select('id', 'users', 'id != \'' . USER_ID . '\' AND mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
+		if (validate::email($form['mail']) && $db->select('id', 'users', 'id != \'' . USER_ID . '\' AND mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
 			$errors[] = lang('common', 'user_email_already_exists');
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
 			$errors[] = lang('users', 'type_in_pwd');

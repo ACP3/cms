@@ -15,17 +15,17 @@ if (isset($_POST['submit'])) {
 
 	if (empty($form['name']))
 		$errors[] = lang('common', 'name_to_short');
-	if (!$validate->email($form['mail']))
+	if (!validate::email($form['mail']))
 		$errors[] = lang('common', 'wrong_email_format');
 	if (strlen($form['message']) < 3)
 		$errors[] = lang('common', 'message_to_short');
-	if (!$validate->captcha($form['captcha'], $form['hash']))
+	if (!validate::captcha($form['captcha'], $form['hash']))
 		$errors[] = lang('captcha', 'invalid_captcha_entered');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
-		$contact = $config->output('contact');
+		$contact = config::output('contact');
 
 		$subject = sprintf(lang('contact', 'contact_subject'), CONFIG_TITLE);
 		$body = sprintf(lang('contact', 'contact_body'), $form['name'], $form['mail']) . "\n\n" . $form['message'];

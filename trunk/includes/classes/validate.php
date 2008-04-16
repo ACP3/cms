@@ -22,7 +22,7 @@ class validate
 	 * @param string $hash
 	 * @return boolean
 	 */
-	public function captcha($input, $hash)
+	static public function captcha($input, $hash)
 	{
 		if (preg_match('/^[a-zA-Z0-9]+$/', $input) && strlen($hash) == 32 && preg_match('/^[a-z0-9]+$/', $hash)) {
 			$path = ACP3_ROOT . 'modules/captcha/generated/' . $hash . strtolower($input);
@@ -40,7 +40,7 @@ class validate
 	 *  Der zu überprüfende Wert
 	 * @return boolean
 	 */
-	public function date($value)
+	static public function date($value)
 	{
 		return strtotime($value, dateAligned(2, time())) == -1 ? false : true;
 	}
@@ -53,7 +53,7 @@ class validate
 	 *  Zu überprüfende E-Mail-Adresse
 	 * @return boolean
 	 */
-	public function email($var)
+	static public function email($var)
 	{
 		$pattern = '/^((\"[^\"\f\n\r\t\v\b]+\")|([\w\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+(\.[\w\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+)*))@((\[(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))\])|(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))|((([A-Za-z0-9\-])+\.)+[A-Za-z\-]+))$/';
 
@@ -65,7 +65,7 @@ class validate
 	 * @param string $string
 	 * @return boolean
 	 */
-	public function isMD5($string)
+	static public function isMD5($string)
 	{
 		return preg_match('/^[a-f0-9]+$/', $string) && strlen($string) == 32 ? true : false;
  	}
@@ -75,7 +75,7 @@ class validate
 	 * @param mixed $var
 	 * @return boolean
 	 */
-	public function isNumber($var)
+	static public function isNumber($var)
 	{
 		return preg_match('/^(\d+)$/', $var);
 	}
@@ -86,7 +86,7 @@ class validate
 	 *  Zu überprüfendes Bild
 	 * @return boolean
 	 */
-	public function isPicture($file, $width = '', $height = '', $filesize = '')
+	static public function isPicture($file, $width = '', $height = '', $filesize = '')
 	{
 		$info = getimagesize($file);
 

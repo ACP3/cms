@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if ($validate->isNumber($modules->id) && $db->select('id', 'users', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($modules->id) && $db->select('id', 'users', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
@@ -18,11 +18,11 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'users', 'id = \'' . 
 			$errors[] = lang('common', 'name_to_short');
 		if (!empty($form['nickname']) && $db->select('id', 'users', 'id != \'' . $modules->id . '\' AND nickname = \'' . $db->escape($form['nickname']) . '\'', 0, 0, 0, 1) == '1')
 			$errors[] = lang('users', 'user_name_already_exists');
-		if (!$validate->email($form['mail']))
+		if (!validate::email($form['mail']))
 			$errors[] = lang('common', 'wrong_email_format');
-		if ($validate->email($form['mail']) && $db->select('id', 'users', 'id != \'' . $modules->id . '\' AND mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
+		if (validate::email($form['mail']) && $db->select('id', 'users', 'id != \'' . $modules->id . '\' AND mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
 			$errors[] = lang('common', 'user_email_already_exists');
-		if (!$validate->isNumber($form['access']))
+		if (!validate::isNumber($form['access']))
 			$errors[] = lang('users', 'select_access_level');
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
 			$errors[] = lang('users', 'type_in_pwd');

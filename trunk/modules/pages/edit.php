@@ -10,28 +10,28 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if ($validate->isNumber($modules->id) && $db->select('id', 'pages', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($modules->id) && $db->select('id', 'pages', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		include_once ACP3_ROOT . 'modules/pages/functions.php';
 		$form = $_POST['form'];
 
-		if (!$validate->date($form['start']) || !$validate->date($form['end']))
+		if (!validate::date($form['start']) || !validate::date($form['end']))
 			$errors[] = lang('common', 'select_date');
-		if (!$validate->isNumber($form['mode']))
+		if (!validate::isNumber($form['mode']))
 			$errors[] = lang('pages', 'select_static_hyperlink');
-		if (!$validate->isNumber($form['blocks']))
+		if (!validate::isNumber($form['blocks']))
 			$errors[] = lang('pages', 'select_block');
-		if (!empty($form['blocks']) && !$validate->isNumber($form['sort']))
+		if (!empty($form['blocks']) && !validate::isNumber($form['sort']))
 			$errors[] = lang('pages', 'type_in_chronology');
 		if (strlen($form['title']) < 3)
 			$errors[] = lang('pages', 'title_to_short');
-		if ($form['mode'] == '1' && !empty($form['parent']) && !$validate->isNumber($form['parent']))
+		if ($form['mode'] == '1' && !empty($form['parent']) && !validate::isNumber($form['parent']))
 			$errors[] = lang('pages', 'select_superior_page');
-		if ($form['mode'] == '1' && $validate->isNumber($form['parent']) && ($db->select('id', 'pages', "id != '" . $modules->id . "' AND mode='1' AND parent='0'", 0, 0, 0, 1) == 0) || $form['parent'] == $modules->id || parentCheck($modules->id, $form['parent']))
+		if ($form['mode'] == '1' && validate::isNumber($form['parent']) && ($db->select('id', 'pages', "id != '" . $modules->id . "' AND mode='1' AND parent='0'", 0, 0, 0, 1) == 0) || $form['parent'] == $modules->id || parentCheck($modules->id, $form['parent']))
 			$errors[] = lang('pages', 'superior_page_not_allowed');
 		if ($form['mode'] == '1' && strlen($form['text']) < 3)
 			$errors[] = lang('pages', 'text_to_short');
-		if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !$validate->isNumber($form['target'])))
+		if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !validate::isNumber($form['target'])))
 			$errors[] = lang('pages', 'type_in_uri_and_target');
 
 		if (isset($errors)) {
@@ -63,8 +63,8 @@ if ($validate->isNumber($modules->id) && $db->select('id', 'pages', 'id = \'' . 
 
 			$bool = $db->update('pages', $update_values, 'id = \'' . $modules->id . '\'');
 
-			$cache->create('pages', $db->select('p.id, p.start, p.end, p.mode, p.title, p.uri, p.target, b.index_name AS block_name', 'pages AS p, ' . CONFIG_DB_PRE . 'pages_blocks AS b', 'p.block_id != \'0\' AND p.block_id = b.id', 'p.sort ASC, p.title ASC'));
-			$cache->create('pages_list_id_' . $modules->id, $db->select('mode, uri, text', 'pages', 'id = \'' . $modules->id . '\''));
+			cache::create('pages', $db->select('p.id, p.start, p.end, p.mode, p.title, p.uri, p.target, b.index_name AS block_name', 'pages AS p, ' . CONFIG_DB_PRE . 'pages_blocks AS b', 'p.block_id != \'0\' AND p.block_id = b.id', 'p.sort ASC, p.title ASC'));
+			cache::create('pages_list_id_' . $modules->id, $db->select('mode, uri, text', 'pages', 'id = \'' . $modules->id . '\''));
 
 			$content = comboBox($bool ? lang('pages', 'edit_success') : lang('pages', 'edit_error'), uri('acp/pages'));
 		}

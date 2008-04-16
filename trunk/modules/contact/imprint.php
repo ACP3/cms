@@ -13,7 +13,7 @@ if (!defined('IN_ACP3'))
 $breadcrumb->assign(lang('contact', 'contact'), uri('contact'));
 $breadcrumb->assign(lang('contact', 'imprint'));
 
-$contact = $config->output('contact');
+$contact = config::output('contact');
 
 $contact['address'] = $db->escape($contact['address'], 3);
 $contact['disclaimer'] = $db->escape($contact['disclaimer'], 3);

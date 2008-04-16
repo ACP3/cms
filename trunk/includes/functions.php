@@ -203,7 +203,7 @@ function datepicker($name, $value = '')
 	$format = 'Y-m-d H:i';
 	if (!empty($_POST['form'][$name])) {
 		$input = $_POST['form'][$name];
-	} elseif ($validate->isNumber($value)) {
+	} elseif (validate::isNumber($value)) {
 		$input = dateAligned(1, $value, $format);
 	} else {
 		$input = dateAligned(1, time(), $format);

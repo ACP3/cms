@@ -13,7 +13,7 @@ if (!defined('IN_ADM'))
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
-	if (!$validate->date($form))
+	if (!validate::date($form))
 		$errors[] = lang('common', 'select_date');
 	if (empty($form['question']))
 		$errors[] = lang('polls', 'type_in_question');
