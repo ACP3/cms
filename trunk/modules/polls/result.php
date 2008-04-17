@@ -19,7 +19,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'poll_question', 'id =
 	$c_answers = count($answers);
 	$total_votes = $db->select('answer_id', 'poll_votes', 'poll_id = \'' . $modules->id . '\'', 0, 0, 0, 1);
 
-	for ($i = 0; $i < $c_answers; $i++) {
+	for ($i = 0; $i < $c_answers; ++$i) {
 		$answers[$i]['text'] = $answers[$i]['text'];
 		$answers[$i]['votes'] = $db->select('answer_id', 'poll_votes', 'poll_id = \'' . $modules->id . '\' AND answer_id = \'' . $answers[$i]['id'] . '\'', 0, 0, 0, 1);
 		$answers[$i]['percent'] = $total_votes > '0' ? 100 * $answers[$i]['votes'] / $total_votes : '0';

@@ -15,7 +15,7 @@ $c_result = count($result);
 
 if ($c_result > 0) {
 	$results = NULL;
-	for ($i = 0; $i < $c_result; $i++) {
+	for ($i = 0; $i < $c_result; ++$i) {
 		$results[$i]['date'] = dateAligned(1, $result[$i]['start'], 'r');
 		$results[$i]['title'] = html_entity_decode($result[$i]['headline']);
 

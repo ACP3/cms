@@ -26,7 +26,7 @@ if (strlen($modules->hash) == 32 && validate::isMD5($modules->hash)) {
 	// Textfarbe
 	$textColor = ImageColorAllocate($im, 0, 0, 0);
 	
-	for ($i = 0; $i < $captchaLength; $i++) {
+	for ($i = 0; $i < $captchaLength; ++$i) {
 		$textSize = rand(10, 15);
 		$angle = rand(0, 30);
 		$posLeft = 22 * $i + 10;
@@ -40,7 +40,7 @@ if (strlen($modules->hash) == 32 && validate::isMD5($modules->hash)) {
 	$captchas = scandir($dir);
 	$c_captchas = count($captchas);
 	
-	for ($i = 0; $i < $c_captchas; $i++) {
+	for ($i = 0; $i < $c_captchas; ++$i) {
 		if (time() - filemtime($dir . $captchas[$i]) > 900) {
 			@unlink($dir . $captchas[$i]);
 		}

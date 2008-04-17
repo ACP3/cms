@@ -20,7 +20,7 @@ if (validate::isNumber($modules->cat) && $db->select('id', 'categories', 'id = \
 	$c_files = count($files);
 
 	if ($c_files > 0) {
-		for ($i = 0; $i < $c_files; $i++) {
+		for ($i = 0; $i < $c_files; ++$i) {
 			$files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : lang('files', 'unknown_filesize');
 			$files[$i]['date'] = dateAligned(1, $files[$i]['start']);
 		}

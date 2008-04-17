@@ -14,7 +14,7 @@ $polls = $db->select('id, start, end, question', 'poll_question', 'start <= \'' 
 $c_polls = count($polls);
 
 if ($c_polls > 0) {
-	for ($i = 0; $i < $c_polls; $i++) {
+	for ($i = 0; $i < $c_polls; ++$i) {
 		$polls[$i]['question'] = $polls[$i]['question'];
 		if ($db->select('poll_id', 'poll_votes', 'poll_id = \''. $polls[$i]['id'] . '\' AND ip = \'' . $_SERVER['REMOTE_ADDR'] . '\'', 0, 0, 0, 1) == 1 || $polls[$i]['start'] != $polls[$i]['end'] && $polls[$i]['end'] <= dateAligned(2, time())) {
 			$polls[$i]['link'] = 'result';

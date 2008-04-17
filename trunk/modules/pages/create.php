@@ -87,7 +87,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$blocks = $db->select('id, title', 'pages_blocks');
 	$c_blocks = count($blocks);
 
-	for ($i = 0; $i < $c_blocks; $i++) {
+	for ($i = 0; $i < $c_blocks; ++$i) {
 		$blocks[$i]['selected'] = selectEntry('block', $blocks[$i]['id']);
 	}
 	$blocks[$c_blocks]['id'] = 0;

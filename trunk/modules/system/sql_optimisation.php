@@ -26,7 +26,7 @@ if ($modules->action == 'do') {
 			foreach ($info['tables'] as $table) {
 				$table_status = $db->query('SHOW TABLE STATUS FROM ' . CONFIG_DB_NAME . ' LIKE \'' . CONFIG_DB_PRE . $table . '\'');
 				$c_table_status = count($table_status);
-				for ($j = 0; $j < $c_table_status; $j++) {
+				for ($j = 0; $j < $c_table_status; ++$j) {
 					$tables[$i]['name'] = $table_status[$j]['Name'];
 					if ($table_status[$j]['Data_free'] != 0) {
 						$db->query('OPTIMIZE TABLE ' . $table_status[$j]['Name'], 3);

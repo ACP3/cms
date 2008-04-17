@@ -29,7 +29,7 @@ if ($modules->dir) {
 	$languages = array();
 	$directories = scandir(ACP3_ROOT . 'languages');
 	$count_dir = count($directories);
-	for ($i = 0; $i < $count_dir; $i++) {
+	for ($i = 0; $i < $count_dir; ++$i) {
 		$lang_info = array();
 		if ($directories[$i] != '.' && $directories[$i] != '..' && file_exists(ACP3_ROOT . 'languages/' . $directories[$i] . '/info.php')) {
 			include ACP3_ROOT . 'languages/' . $directories[$i] . '/info.php';

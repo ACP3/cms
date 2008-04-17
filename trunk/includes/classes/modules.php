@@ -62,7 +62,7 @@ class modules
 		if (!empty($query[2])) {
 			$c_query = count($query);
 
-			for ($i = 2; $i < $c_query; $i++) {
+			for ($i = 2; $i < $c_query; ++$i) {
 				if (!empty($query[$i])) {
 					if (!defined('POS') && preg_match('/^(pos_(\d+))$/', $query[$i])) {
 						define('POS', substr($query[$i], 4));
@@ -189,7 +189,7 @@ class modules
 			$c_pages = ceil($rows / CONFIG_ENTRIES);
 			$recent = 0;
 
-			for ($i = 1; $i <= $c_pages; $i++) {
+			for ($i = 1; $i <= $c_pages; ++$i) {
 				$pages[$i]['selected'] = POS == $recent ? true : false;
 				$pages[$i]['page'] = $i;
 				$pages[$i]['pos'] = 'pos_' . $recent . '/';

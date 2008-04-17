@@ -16,7 +16,7 @@ $c_galleries = count($galleries);
 if ($c_galleries > 0) {
 	$tpl->assign('pagination', $modules->pagination($db->select('id', 'gallery', '(start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')', 0, 0, 0, 1)));
 
-	for ($i = 0; $i < $c_galleries; $i++) {
+	for ($i = 0; $i < $c_galleries; ++$i) {
 		$galleries[$i]['date'] = dateAligned(1, $galleries[$i]['start']);
 		$galleries[$i]['name'] = $galleries[$i]['name'];
 		$pictures = $db->select('DISTINCT id', 'galpics', 'gallery_id = \'' . $galleries[$i]['id'] . '\'', 0, 0, 0, 1);

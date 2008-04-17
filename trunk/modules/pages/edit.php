@@ -95,7 +95,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'pages', 'id = \'' . $
 		$blocks = $db->select('id, title', 'pages_blocks', 0, 'title ASC, id ASC');
 		$c_blocks = count($blocks);
 
-		for ($i = 0; $i < $c_blocks; $i++) {
+		for ($i = 0; $i < $c_blocks; ++$i) {
 			$blocks[$i]['selected'] = selectEntry('blocks', $blocks[$i]['id'], $page[0]['block_id']);
 		}
 		$blocks[$c_blocks]['id'] = '0';

@@ -67,7 +67,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'poll_question', 'id =
 		$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $modules->id . '\'');
 		$c_answers = count($answers);
 
-		for ($i = 0; $i < $c_answers; $i++) {
+		for ($i = 0; $i < $c_answers; ++$i) {
 			$answers[$i]['number'] = $i + 1;
 			$answers[$i]['id'] = $answers[$i]['id'];
 			$answers[$i]['value'] = $answers[$i]['text'];

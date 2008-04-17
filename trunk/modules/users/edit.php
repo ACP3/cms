@@ -65,7 +65,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'users', 'id = \'' . $
 		$access = $db->select('id, name', 'access', 0, 'name ASC');
 		$c_access = count($access);
 
-		for ($i = 0; $i < $c_access; $i++) {
+		for ($i = 0; $i < $c_access; ++$i) {
 			$access[$i]['name'] = $access[$i]['name'];
 			$access[$i]['selected'] = selectEntry('access', $access[$i]['id'], $user[0]['access']);
 		}

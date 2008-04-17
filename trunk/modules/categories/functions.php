@@ -21,7 +21,7 @@ function categoriesList($module, $page, $category = '') {
 		$c_categories = count($categories);
 		
 		if ($c_categories > 0) {
-			for ($i = 0; $i < $c_categories; $i++) {
+			for ($i = 0; $i < $c_categories; ++$i) {
 				$categories[$i]['selected'] = selectEntry('cat', $categories[$i]['id'], $category);
 				$categories[$i]['name'] = $categories[$i]['name'];
 			}

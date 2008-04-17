@@ -56,7 +56,7 @@ if (!$auth->isUser() || !preg_match('/\d/', USER_ID)) {
 		$languages = array();
 		$lang_dir = scandir('languages');
 		$c_lang_dir = count($lang_dir);
-		for ($i = 0; $i < $c_lang_dir; $i++) {
+		for ($i = 0; $i < $c_lang_dir; ++$i) {
 			$lang_info = array();
 			if ($lang_dir[$i] != '.' && $lang_dir[$i] != '..' && is_file('languages/' . $lang_dir[$i] . '/info.php')) {
 				include ACP3_ROOT . 'languages/' . $lang_dir[$i] . '/info.php';
