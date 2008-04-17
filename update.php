@@ -6,7 +6,6 @@ require ACP3_ROOT . 'includes/config.php';
 require ACP3_ROOT . 'includes/classes/db.php';
 require ACP3_ROOT . 'includes/classes/cache.php';
 
-
 $db = new db;
 
 $queries = array(

@@ -15,7 +15,7 @@
  */
 function emoticonsList($field_id = 0)
 {
-	global $cache, $db, $tpl;
+	global $db, $tpl;
 
 	if (!cache::check('emoticons')) {
 		cache::create('emoticons', $db->select('code, description, img', 'emoticons'));

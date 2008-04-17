@@ -60,7 +60,7 @@ class auth
 		if (empty($user_id) && $this->isUser()) {
 			$user_id = USER_ID;
 		}
-		if (preg_match('/(\d+)/', $user_id)) {
+		if (validate::isNumber($user_id)) {
 			global $db;
 			static $info = array();
 
@@ -79,7 +79,7 @@ class auth
 	 */
 	public function isUser()
 	{
-		return $this->isUser && defined('USER_ID') && preg_match('/(\d+)/', USER_ID) ? true : false;
+		return $this->isUser && defined('USER_ID') && validate::isNumber(USER_ID) ? true : false;
 	}
 }
 ?>
