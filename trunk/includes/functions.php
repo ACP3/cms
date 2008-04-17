@@ -197,7 +197,7 @@ function moveFile($tmp_filename, $filename, $dir)
  */
 function datepicker($name, $value = '')
 {
-	global $tpl, $validate;
+	global $tpl;
 	static $included = false;
 
 	$format = 'Y-m-d H:i';

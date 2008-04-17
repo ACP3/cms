@@ -37,7 +37,7 @@ function commentsCount($entry_id, $module = 0)
  */
 function comments($module = 0, $entry_id = 0)
 {
-	global $auth, $db, $modules, $tpl, $validate;
+	global $auth, $db, $modules, $tpl;
 
 	// Formular für das Eintragen von Kommentaren
 	if (isset($_POST['submit'])) {

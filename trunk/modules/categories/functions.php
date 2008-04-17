@@ -11,7 +11,7 @@ if (!defined('IN_ACP3') && !defined('IN_ADM'))
 	exit();
 
 function categoriesList($module, $page, $category = '') {
-	global $cache, $db, $modules;
+	global $db, $modules;
 
 	if ($modules->check($module, $page)) {
 		if (!cache::check('categories_' . $module)) {
