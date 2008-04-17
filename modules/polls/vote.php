@@ -42,7 +42,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'poll_question', 'id =
 		$c_answers = count($answers);
 
 		$css_class = 'dark';
-		for ($i = 0; $i < $c_answers; $i++) {
+		for ($i = 0; $i < $c_answers; ++$i) {
 			$css_class = $css_class == 'dark' ? 'light' : 'dark';
 			$answers[$i]['css_class'] = $css_class;
 		}

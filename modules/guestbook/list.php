@@ -23,7 +23,7 @@ if ($c_guestbook > 0) {
 		$emoticons = true;
 	}
 
-	for ($i = 0; $i < $c_guestbook; $i++) {
+	for ($i = 0; $i < $c_guestbook; ++$i) {
 		$guestbook[$i]['date'] = dateAligned(1, $guestbook[$i]['date']);
 		if (empty($guestbook[$i]['user_id'])) {
 			unset($guestbook[$i]['user_id']);

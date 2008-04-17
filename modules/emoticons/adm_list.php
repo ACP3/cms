@@ -15,7 +15,7 @@ $c_emoticons = count($emoticons);
 
 if ($c_emoticons > 0) {
 	$tpl->assign('pagination', $modules->pagination($db->select('id', 'emoticons', 0, 0, 0, 0, 1)));
-	for ($i = 0; $i < $c_emoticons; $i++) {
+	for ($i = 0; $i < $c_emoticons; ++$i) {
 		$emoticons[$i]['code'] = $emoticons[$i]['code'];
 		$emoticons[$i]['description'] = $emoticons[$i]['description'];
 	}

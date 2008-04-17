@@ -9,7 +9,7 @@ $all_users = $db->select('id', 'users', 0, 0, 0, 0, 1);
 if ($c_users > 0) {
 	$tpl->assign('pagination', $modules->pagination($all_users));
 
-	for ($i = 0; $i < $c_users; $i++) {
+	for ($i = 0; $i < $c_users; ++$i) {
 		$users[$i]['website'] = $db->escape($users[$i]['website'], 3);
 	}
 	$tpl->assign('users', $users);

@@ -47,7 +47,7 @@ if ($c_news > 0) {
 	}
 	$tpl->assign('pagination', $modules->pagination($db->select('id', 'news', $where, 0, 0, 0, 1)));
 
-	for ($i = 0; $i < $c_news; $i++) {
+	for ($i = 0; $i < $c_news; ++$i) {
 		$news[$i]['date'] = dateAligned(1, $news[$i]['start']);
 		$news[$i]['headline'] = $news[$i]['headline'];
 		$news[$i]['text'] = $db->escape($news[$i]['text'], 3);

@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
 			$accounts = $db->select('mail', 'nl_accounts');
 			$c_accounts = count($accounts);
 
-			for ($i = 0; $i < $c_accounts; $i++) {
+			for ($i = 0; $i < $c_accounts; ++$i) {
 				$bool = @mail($accounts[$i]['mail'], $db->escape($form['subject']), $db->escape($form['text']) . $settings['mailsig'], 'FROM:' . $settings['mail'] . "\r\n" . 'Content-Type: text/plain; charset: UTF-8');
 				if (!$bool)
 				break;

@@ -118,7 +118,7 @@ function calcFilesize($value)
 		4 => 'TiB',
 	);
 
-	for ($i = 0; $value >= 1024; $i++) {
+	for ($i = 0; $value >= 1024; ++$i) {
 		$value = $value / 1024;
 	}
 	return round($value, 3) . ' ' . $units[$i];

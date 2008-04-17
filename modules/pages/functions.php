@@ -25,7 +25,7 @@ function pagesList($id = 0, $parent = 0)
 		if ($id != 0)
 			$spaces.= '&nbsp;&nbsp;';
 
-		for ($i = 0; $i < $c_pages; $i++) {
+		for ($i = 0; $i < $c_pages; ++$i) {
 			$output[$key]['id'] = $pages[$i]['id'];
 			$output[$key]['selected'] = selectEntry('parent', $pages[$i]['id'], $parent);
 			$output[$key]['title'] = $spaces . $pages[$i]['title'];
@@ -55,7 +55,7 @@ function parentCheck($id, $parent_id)
 	$c_parents = count($parents);
 
 	if ($c_parents > 0) {
-		for ($i = 0; $i < $c_parents; $i++) {
+		for ($i = 0; $i < $c_parents; ++$i) {
 			if ($parents[$i]['parent'] == $id)
 				return true;
 
@@ -85,7 +85,7 @@ function processNavbar()
 		$navbar = array();
 		$selected = ' selected';
 
-		for ($i = 0; $i < $c_pages; $i++) {
+		for ($i = 0; $i < $c_pages; ++$i) {
 			if ($pages[$i]['start'] == $pages[$i]['end']  && $pages[$i]['start'] <= dateAligned(2, time()) || $pages[$i]['start'] != $pages[$i]['end'] && $pages[$i]['start'] <= dateAligned(2, time()) && $pages[$i]['end'] >= dateAligned(2, time())) {
 				$link['css'] = 'navi-' . $pages[$i]['id'];
 				switch ($pages[$i]['mode']) {

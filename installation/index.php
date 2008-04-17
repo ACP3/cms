@@ -91,7 +91,7 @@ $tpl->assign('nav_left', $nav_left);
 $languages = array();
 $directories = scandir('languages');
 $count_dir = count($directories);
-for ($i = 0; $i < $count_dir; $i++) {
+for ($i = 0; $i < $count_dir; ++$i) {
 	$lang_info = array();
 	if ($directories[$i] != '.' && $directories[$i] != '..' && is_file(ACP3_ROOT . 'installation/languages/' . $directories[$i] . '/info.php')) {
 		include ACP3_ROOT . 'installation/languages/' . $directories[$i] . '/info.php';

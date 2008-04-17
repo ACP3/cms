@@ -23,7 +23,7 @@ function emoticonsList($field_id = 0)
 	$emoticons = cache::output('emoticons');
 	$c_emoticons = count($emoticons);
 
-	for ($i = 0; $i < $c_emoticons; $i++) {
+	for ($i = 0; $i < $c_emoticons; ++$i) {
 		$emoticons[$i]['img'] = ROOT_DIR . 'uploads/emoticons/' . $emoticons[$i]['img'];
 	}
 

@@ -84,7 +84,7 @@ class cache
 		$cache_dir = scandir('cache');
 		$c_cache_dir = count($cache_dir);
 
-		for ($i = 0; $i < $c_cache_dir; $i++) {
+		for ($i = 0; $i < $c_cache_dir; ++$i) {
 			if (is_file(ACP3_ROOT . 'cache/' . $cache_dir[$i]) && $cache_dir[$i] != '.htaccess') {
 				unlink(ACP3_ROOT . 'cache/' . $cache_dir[$i]);
 			}

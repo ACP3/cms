@@ -100,7 +100,7 @@ function comments($module = 0, $entry_id = 0)
 
 		if ($c_comments > 0) {
 			$tpl->assign('pagination', $modules->pagination($db->select('id', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 0, 0, 0, 1)));
-			for ($i = 0; $i < $c_comments; $i++) {
+			for ($i = 0; $i < $c_comments; ++$i) {
 				$comments[$i]['date'] = dateAligned(1, $comments[$i]['date']);
 				if (empty($comments[$i]['user_id'])) {
 					unset($comments[$i]['user_id']);

@@ -49,7 +49,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'access', 'id = \'' . 
 			if ($info['dir'] == 'errors' || !$info['active']) {
 				unset($mod_list[$name]);
 			} else {
-				for ($i = 0; $i < $c_mods_arr; $i++) {
+				for ($i = 0; $i < $c_mods_arr; ++$i) {
 					if ($info['dir'] == substr($mods_arr[$i], 0, -2)) {
 						$db_value = substr($mods_arr[$i], -1, 1);
 						$mod_list[$name]['level_0_selected'] = selectAccessLevel($info['dir'], '0', $db_value);

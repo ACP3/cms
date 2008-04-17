@@ -53,7 +53,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' .
 		$galleries = $db->select('id, start, name', 'gallery', 0, 'start DESC');
 		$c_galleries = count($galleries);
 
-		for ($i = 0; $i < $c_galleries; $i++) {
+		for ($i = 0; $i < $c_galleries; ++$i) {
 			$galleries[$i]['selected'] = selectEntry('gallery', $galleries[$i]['id'], $modules->id);
 			$galleries[$i]['date'] = dateAligned(1, $galleries[$i]['start']);
 			$galleries[$i]['name'] = $db->escape($galleries[$i]['name'], 3);
