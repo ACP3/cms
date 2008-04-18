@@ -1,21 +1,21 @@
 <fieldset>
-	<legend>{lang values="step_3_legend_1"}</legend>
+	<legend>{lang values="installation|step_3_legend_1"}</legend>
 	<p style="margin:0">
-		{lang values="step_3_paragraph_1"}
+		{lang values="installation|step_3_paragraph_1"}
 	</p>
 	<table>
 		<thead>
 			<tr>
 				<th></th>
-				<th style="width:33%">{lang values="found"}</th>
-				<th style="width:33%">{lang values="required"}</th>
+				<th style="width:33%">{lang values="installation|found"}</th>
+				<th style="width:33%">{lang values="installation|required"}</th>
 			</tr>
 		</thead>
 		<tbody>
 {foreach from=$requirements item=row}
 			<tr>
 				<td>{$row.name}</td>
-				<td><span style="color:#{$row.color}">{$row.found}{if $row.color == 'f00'} - {lang values="installation_impossible"}{/if}</span></td>
+				<td><span style="color:#{$row.color}">{$row.found}{if $row.color == 'f00'} - {lang values="installation|installation_impossible"}{/if}</span></td>
 				<td>{$row.required}</td>
 			</tr>
 {/foreach}
@@ -29,9 +29,9 @@
 	</p>
 </fieldset>
 <fieldset>
-	<legend>{lang values="step_3_legend_2"}</legend>
+	<legend>{lang values="installation|step_3_legend_2"}</legend>
 	<p style="margin:0">
-		{lang values="step_3_paragraph_2"}
+		{lang values="installation|step_3_paragraph_2"}
 	</p>
 	<p>
 {foreach from=$php_settings item=row}
@@ -43,10 +43,10 @@
 <br />
 <div class="success forward">
 {if $stop_install}
-{lang values="stop_installation"}
+{lang values="installation|stop_installation"}
 {elseif $check_again}
-	<a href="{$request_uri}" class="form">{lang values="check_again"}</a>
+	<a href="{$request_uri}" class="form">{lang values="installation|check_again"}</a>
 {else}
-	<a href="{$php_self}?mod=install&amp;page=configuration&amp;lang={$lang}" class="form">{lang values="configuration"}</a>
+	<a href="{$php_self}?mod=install&amp;page=configuration&amp;lang={$lang}" class="form">{lang values="installation|configuration"}</a>
 {/if}
 </div>

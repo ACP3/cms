@@ -2,7 +2,7 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$lang}" lang="{$lang}">
 <head>
-<title>ACP3 {lang values="installation"} :: {$title}</title>
+<title>ACP3 {lang values="installation|installation"} :: {$title}</title>
 <link rel="stylesheet" type="text/css" href="design/style.css" />
 <script type="text/javascript" src="../includes/js/jquery.js"></script>
 <script type="text/javascript" src="../includes/js/acp3.js"></script>
@@ -14,7 +14,7 @@
 
 <body>
 <div id="head">
-	<h1 id="page-title">ACP3 {lang values="installation"}</h1>
+	<h1 id="page-title">ACP3 {lang values="installation|installation"}</h1>
 	<ul>
 {foreach from=$navbar item=row}
 		<li><a href="{$php_self}?mod={$row.page}&amp;lang={$lang}"{$row.selected}>{$row.title}</a></li>
@@ -22,24 +22,24 @@
 	</ul>
 	<form action="{$request_uri}" method="post" id="languages">
 		<label for="lang">
-			{lang values="language"}
+			{lang values="installation|language"}
 			<select name="lang" id="lang">
 {foreach from=$languages item=row}
 				<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
 {/foreach}
 			</select>
 		</label>
-		<input type="submit" value="{lang values="submit"}" class="form" />
+		<input type="submit" value="{lang values="installation|submit"}" class="form" />
 	</form>
 </div>
 <div id="breadcrumb">
-	<a href="../">ACP3</a> &raquo; <a href="{$php_self}?lang={$lang}">{lang values="installation"}</a> &raquo; <span>{$title}</span>
+	<a href="../">ACP3</a> &raquo; <a href="{$php_self}?lang={$lang}">{lang values="installation|installation"}</a> &raquo; <span>{$title}</span>
 </div>
 <div id="sidebar">
-	<h4>{lang values="navigation"}</h4>
+	<h4>{lang values="installation|navigation"}</h4>
 	<ul>
 {foreach from=$nav_left item=row}
-		<li>{if !$row.no_href}<a href="{$php_self}?mod={$smarty.get.mod}&amp;page={$row.page}&amp;lang={$lang}"{$row.selected}>{lang values="`$row.page`"}</a>{else}<span{$row.selected}>{lang values="`$row.page`"}</span>{/if}</li>
+		<li>{if !$row.no_href}<a href="{$php_self}?mod={$smarty.get.mod}&amp;page={$row.page}&amp;lang={$lang}"{$row.selected}>{lang values="installation|`$row.page`"}</a>{else}<span{$row.selected}>{lang values="installation|`$row.page`"}</span>{/if}</li>
 {/foreach}
 	</ul>
 </div>

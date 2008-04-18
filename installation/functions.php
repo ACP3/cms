@@ -6,20 +6,20 @@
  * @package ACP3 Installer
  */
 // Sprachdateien
-function lang($key)
+function lang($module, $key)
 {
 	static $lang_data = array();
 
-	$path = ACP3_ROOT . 'installation/languages/' . LANG . '/lang.xml';
+	$path = ACP3_ROOT . 'languages/' . LANG . '/' . $module . '.xml';
 
-	if (!isset($lang_data[$key]) && is_file($path)) {
+	if (!isset($lang_data[$module][$key]) && is_file($path)) {
 		$xml = simplexml_load_file($path);
 		foreach ($xml->item as $row) {
-			$lang_data[(string) $row->name] = (string) $row->message;
+			$lang_data[$module][(string) $row->name] = (string) $row->message;
 		}
 	}
 
-	return isset($lang_data[$key]) ? $lang_data[$key] : strtoupper('{' . $key . '}');
+	return isset($lang_data[$module][$key]) ? $lang_data[$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
 }
 // Variablen escapen
 function mask($var, $mode = 1)

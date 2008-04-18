@@ -9,10 +9,6 @@
 		<message>Administrator Konto</message>
 	</item>
 	<item>
-		<name>back</name>
-		<message>Zurück</message>
-	</item>
-	<item>
 		<name>check_again</name>
 		<message>Erneut prüfen</message>
 	</item>
@@ -27,10 +23,6 @@
 	<item>
 		<name>database_name</name>
 		<message>Datenbankname</message>
-	</item>
-	<item>
-		<name>date</name>
-		<message>Datum</message>
 	</item>
 	<item>
 		<name>date_format</name>
@@ -57,16 +49,8 @@
 		<message>Ablehnen</message>
 	</item>
 	<item>
-		<name>description</name>
-		<message>Beschreibung</message>
-	</item>
-	<item>
 		<name>disclaimer</name>
 		<message><![CDATA[Trotz sorgf&auml;ltiger inhaltlicher Kontrolle &uuml;bernehmen wir keine Haftung f&uuml;r die Inhalte externer Links. F&uuml;r den Inhalt der verlinkten Seiten sind ausschlie&szlig;lich deren Betreiber verantwortlich.]]></message>
-	</item>
-	<item>
-		<name>email</name>
-		<message>E-Mail-Adresse</message>
 	</item>
 	<item>
 		<name>entries_per_page</name>
@@ -75,10 +59,6 @@
 	<item>
 		<name>error_messages</name>
 		<message>Ausgabe von Fehlermeldungen:</message>
-	</item>
-	<item>
-		<name>failure</name>
-		<message>Es sind folgende Fehler aufgetreten:</message>
 	</item>
 	<item>
 		<name>file_folder_not_found</name>
@@ -99,10 +79,6 @@
 	<item>
 		<name>folder_found</name>
 		<message>Ordner gefunden</message>
-	</item>
-	<item>
-		<name>forward</name>
-		<message>Weiter</message>
 	</item>
 	<item>
 		<name>found</name>
@@ -177,10 +153,6 @@
 		<message>das Newsletterteam</message>
 	</item>
 	<item>
-		<name>no</name>
-		<message>Nein</message>
-	</item>
-	<item>
 		<name>not_writeable</name>
 		<message>Keine Schreibrechte gefunden</message>
 	</item>
@@ -249,10 +221,6 @@
 		<message>PHP-Version</message>
 	</item>
 	<item>
-		<name>pls_select</name>
-		<message>Bitte auswählen</message>
-	</item>
-	<item>
 		<name>prefix</name>
 		<message>Tabellenpräfix</message>
 	</item>
@@ -285,10 +253,6 @@
 		<message>Voraussetzungen</message>
 	</item>
 	<item>
-		<name>reset</name>
-		<message>Zurücksetzen</message>
-	</item>
-	<item>
 		<name>result</name>
 		<message>Ergebnis</message>
 	</item>
@@ -305,10 +269,6 @@
 		<message>Das mod_rewrite-Modul des Apache-Servers muss aktiviert sein</message>
 	</item>
 	<item>
-		<name>select_daylight_saving_time</name>
-		<message>Bitte wählen Sie aus, ob gerade Sommerzeit ist oder nicht</message>
-	</item>
-	<item>
 		<name>select_db_type</name>
 		<message>Bitte wählen Sie den Datenbank-Typ aus</message>
 	</item>
@@ -319,10 +279,6 @@
 	<item>
 		<name>select_sef_uris</name>
 		<message>Bitte geben Sie an, ob die suchmaschinenfreundlichen URIs verwendet werden sollen, oder nicht</message>
-	</item>
-	<item>
-		<name>select_time_zone</name>
-		<message>Bitte wählen Sie die Zeitzone aus</message>
 	</item>
 	<item>
 		<name>show_hide_executed_db_queries</name>
@@ -381,14 +337,6 @@
 		<message>Die Installation kann nicht fortgesetzt werden, da dieser Webspace/Server die benötigten Voraussetzungen nicht erfüllt.</message>
 	</item>
 	<item>
-		<name>submit</name>
-		<message>Senden</message>
-	</item>
-	<item>
-		<name>time_zone</name>
-		<message>Zeitzone</message>
-	</item>
-	<item>
 		<name>title</name>
 		<message>Seitentitel</message>
 	</item>
@@ -429,162 +377,6 @@
 		<message>Benutzername</message>
 	</item>
 	<item>
-		<name>utc-12</name>
-		<message>(UTC-12:00) Baker Island Time</message>
-	</item>
-	<item>
-		<name>utc-11</name>
-		<message>(UTC-11:00) Niue Time, Samoa Standard Time</message>
-	</item>
-	<item>
-		<name>utc-10</name>
-		<message>(UTC-10:00) Hawaii-Aleutian Standard Time, Cook Island Time</message>
-	</item>
-	<item>
-		<name>utc-9.5</name>
-		<message>(UTC-09:30) Marquesas Islands Time</message>
-	</item>
-	<item>
-		<name>utc-9</name>
-		<message>(UTC-09:00) Alaska Standard Time, Gambier Island Time</message>
-	</item>
-	<item>
-		<name>utc-8</name>
-		<message>(UTC-08:00) Pacific Standard Time</message>
-	</item>
-	<item>
-		<name>utc-7</name>
-		<message>(UTC-07:00) Mountain Standard Time</message>
-	</item>
-	<item>
-		<name>utc-6</name>
-		<message>(UTC-06:00) Central Standard Time</message>
-	</item>
-	<item>
-		<name>utc-5</name>
-		<message>(UTC-05:00) Eastern Standard Time</message>
-	</item>
-	<item>
-		<name>utc-4</name>
-		<message>(UTC-04:00) Atlantic Standard Time</message>
-	</item>
-	<item>
-		<name>utc-3.5</name>
-		<message>(UTC-03:30) Newfoundland Standard Time</message>
-	</item>
-	<item>
-		<name>utc-3</name>
-		<message>(UTC-03:00) Amazon Standard Time, Central Greenland Time</message>
-	</item>
-	<item>
-		<name>utc-2</name>
-		<message><![CDATA[(UTC-02:00) Fernando de Noronha Time, South Georgia &amp; the South Sandwich Islands Time]]></message>
-	</item>
-	<item>
-		<name>utc-1</name>
-		<message>(UTC-01:00) Azores Standard Time, Cape Verde Time, Eastern Greenland Time</message>
-	</item>
-	<item>
-		<name>utc0</name>
-		<message>(UTC) Westeuropäische Zeit, Greenwich Mean Time</message>
-	</item>
-	<item>
-		<name>utc1</name>
-		<message>(UTC+01:00) Mitteleuropäische Zeit, West African Time</message>
-	</item>
-	<item>
-		<name>utc2</name>
-		<message>(UTC+02:00) Osteuropäische Zeit, Central African Time</message>
-	</item>
-	<item>
-		<name>utc3</name>
-		<message>(UTC+03:00) Moscow Standard Time, Eastern African Time</message>
-	</item>
-	<item>
-		<name>utc3.5</name>
-		<message>(UTC+03:30) Iran Standard Time</message>
-	</item>
-	<item>
-		<name>utc4</name>
-		<message>(UTC+04:00) Gulf Standard Time, Samara Standard Time</message>
-	</item>
-	<item>
-		<name>utc4.5</name>
-		<message>(UTC+04:30) Afghanistan Time</message>
-	</item>
-	<item>
-		<name>utc5</name>
-		<message>(UTC+05:00) Pakistan Standard Time, Yekaterinburg Standard Time</message>
-	</item>
-	<item>
-		<name>utc5.5</name>
-		<message>(UTC+05:30) Indian Standard Time, Sri Lanka Time</message>
-	</item>
-	<item>
-		<name>utc5.75</name>
-		<message>(UTC+05:45) Nepal Time</message>
-	</item>
-	<item>
-		<name>utc6</name>
-		<message>(UTC+06:00) Bangladesh Time, Bhutan Time, Novosibirsk Standard Time</message>
-	</item>
-	<item>
-		<name>utc6.5</name>
-		<message>(UTC+06:30) Cocos Islands Time, Myanmar Time</message>
-	</item>
-	<item>
-		<name>utc7</name>
-		<message>(UTC+07:00) Indochina Time, Krasnoyarsk Standard Time</message>
-	</item>
-	<item>
-		<name>utc8</name>
-		<message>(UTC+08:00) Chinese Standard Time, Australian Western Standard Time, Irkutsk Standard Time</message>
-	</item>
-	<item>
-		<name>utc8.75</name>
-		<message>(UTC+08:45) Southeastern Western Australia Standard Time</message>
-	</item>
-	<item>
-		<name>utc9</name>
-		<message>(UTC+09:00) Dili, Jakutsk, Osaka, Pjöngjang, Sapporo, Seoul, Tokyo</message>
-	</item>
-	<item>
-		<name>utc9.5</name>
-		<message>(UTC+09:30) Australian Central Standard Time</message>
-	</item>
-	<item>
-		<name>utc10</name>
-		<message>(UTC+10:00) Australian Eastern Standard Time, Vladivostok Standard Time</message>
-	</item>
-	<item>
-		<name>utc10.5</name>
-		<message>(UTC+10:30) Lord Howe Standard Time</message>
-	</item>
-	<item>
-		<name>utc11</name>
-		<message>(UTC+11:00) Solomon Island Time, Magadan Standard Time</message>
-	</item>
-	<item>
-		<name>utc11.5</name>
-		<message>(UTC+11:30) Norfolk Island Time</message>
-	</item>
-	<item>
-		<name>utc12</name>
-		<message>(UTC+12:00) New Zealand Time, Fiji Time, Kamchatka Standard Time</message>
-	</item>
-	<item>
-		<name>utc12.75</name>
-		<message>(UTC+12:45) Chatham Islands Time</message>
-	</item>
-	<item>
-		<name>utc13</name>
-		<message>(UTC+13:00) Tonga Time, Phoenix Islands Time</message>
-	</item>
-	<item>
-		<name>utc14</name>
-		<message>(UTC+14:00) Line Island Time</message>
-	</item>
-	<item>
 		<name>welcome</name>
 		<message>Willkommen</message>
 	</item>
@@ -595,13 +387,5 @@
 	<item>
 		<name>wrong_chmod_for_config_file</name>
 		<message>Bitte geben Sie der Datei config.php im "includes"-Ordner den CHMOD 777</message>
-	</item>
-	<item>
-		<name>wrong_email_format</name>
-		<message>Die angegebene E-Mail-Adresse entspricht nicht dem Format name@domain.com</message>
-	</item>
-	<item>
-		<name>yes</name>
-		<message>Ja</message>
 	</item>
 </language>

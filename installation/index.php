@@ -14,7 +14,7 @@ define('IN_INSTALL', true);
 
 include ACP3_ROOT . 'includes/globals.php';
 
-include 'functions.php';
+include ACP3_ROOT . 'installation/functions.php';
 
 // Smarty einbinden
 define('SMARTY_DIR', ACP3_ROOT . 'includes/smarty/');
@@ -45,12 +45,12 @@ if ($mod == 'overview') {
 
 // Navigationsleiste
 $navbar['overview'] = array(
-	'title' => lang('overview'),
+	'title' => lang('installation', 'overview'),
 	'page' => 'overview',
 	'selected' => '',
 );
 $navbar['install'] = array(
-	'title' => lang('installation'),
+	'title' => lang('installation', 'installation'),
 	'page' => 'install',
 	'selected' => '',
 );
@@ -80,7 +80,7 @@ $i = 0;
 foreach ($nav_left as $row) {
 	if ($row['page'] == $page) {
 		$nav_left[$i]['selected'] = ' class="selected"';
-		$tpl->assign('title', lang($row['page']));
+		$tpl->assign('title', lang('installation', $row['page']));
 		break;
 	}
 	$i++;
@@ -88,13 +88,14 @@ foreach ($nav_left as $row) {
 $tpl->assign('nav_left', $nav_left);
 
 // Sprachpakete
+define('CONFIG_VERSION', '4.0b10 SVN');
 $languages = array();
-$directories = scandir('languages');
+$directories = scandir(ACP3_ROOT . 'languages');
 $count_dir = count($directories);
 for ($i = 0; $i < $count_dir; ++$i) {
 	$lang_info = array();
-	if ($directories[$i] != '.' && $directories[$i] != '..' && is_file(ACP3_ROOT . 'installation/languages/' . $directories[$i] . '/info.php')) {
-		include ACP3_ROOT . 'installation/languages/' . $directories[$i] . '/info.php';
+	if ($directories[$i] != '.' && $directories[$i] != '..' && is_file(ACP3_ROOT . 'languages/' . $directories[$i] . '/info.php')) {
+		include ACP3_ROOT . 'languages/' . $directories[$i] . '/info.php';
 		$languages[$i]['dir'] = $directories[$i];
 		$languages[$i]['selected'] = LANG == $directories[$i] ? ' selected="selected"' : '';
 		$languages[$i]['name'] = $lang_info['name'];
