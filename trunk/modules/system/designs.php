@@ -10,10 +10,10 @@
 if (!defined('IN_ADM'))
 	exit;
 
-$breadcrumb->assign(lang('common', 'acp'), uri('acp'));
-$breadcrumb->assign(lang('system', 'system'), uri('acp/system'));
-$breadcrumb->assign(lang('system', 'extensions'), uri('acp/system/extensions'));
-$breadcrumb->assign(lang('system', 'designs'));
+breadcrumb::assign(lang('common', 'acp'), uri('acp'));
+breadcrumb::assign(lang('system', 'system'), uri('acp/system'));
+breadcrumb::assign(lang('system', 'extensions'), uri('acp/system/extensions'));
+breadcrumb::assign(lang('system', 'designs'));
 
 if ($modules->dir) {
 	$dir = is_file(ACP3_ROOT . 'designs/' . $modules->dir . '/info.php') ? $modules->dir : 0;

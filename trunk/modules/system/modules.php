@@ -10,10 +10,10 @@
 if (!defined('IN_ADM'))
 	exit;
 
-$breadcrumb->assign(lang('common', 'acp'), uri('acp'));
-$breadcrumb->assign(lang('system', 'system'), uri('acp/system'));
-$breadcrumb->assign(lang('system', 'extensions'), uri('acp/system/extensions'));
-$breadcrumb->assign(lang('system', 'modules'));
+breadcrumb::assign(lang('common', 'acp'), uri('acp'));
+breadcrumb::assign(lang('system', 'system'), uri('acp/system'));
+breadcrumb::assign(lang('system', 'extensions'), uri('acp/system/extensions'));
+breadcrumb::assign(lang('system', 'modules'));
 
 if ($modules->action == 'activate') {
 	if ($modules->dir && is_file(ACP3_ROOT . 'modules/' . $modules->dir . '/module.xml')) {

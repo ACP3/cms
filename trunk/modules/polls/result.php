@@ -11,8 +11,8 @@ if (!defined('IN_ACP3'))
 	exit;
 
 if (validate::isNumber($modules->id) && $db->select('id', 'poll_question', 'id = \'' . $modules->id . '\' AND start <= \'' . dateAligned(2, time()) . '\'', 0, 0, 0, 1) == 1) {
-	$breadcrumb->assign(lang('polls', 'polls'), uri('polls'));
-	$breadcrumb->assign(lang('polls', 'result'));
+	breadcrumb::assign(lang('polls', 'polls'), uri('polls'));
+	breadcrumb::assign(lang('polls', 'result'));
 
 	$question = $db->select('question', 'poll_question');
 	$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $modules->id . '\'', 'id ASC');

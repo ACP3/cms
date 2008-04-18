@@ -5,8 +5,8 @@ if (!defined('IN_ACP3'))
 if ($auth->isUser()) {
 	redirect(0, ROOT_DIR);
 } else {
-	$breadcrumb->assign(lang('users', 'users'), uri('users'));
-	$breadcrumb->assign(lang('users', 'forgot_pwd'));
+	breadcrumb::assign(lang('users', 'users'), uri('users'));
+	breadcrumb::assign(lang('users', 'forgot_pwd'));
 
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];

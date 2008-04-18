@@ -13,10 +13,10 @@ if (!defined('IN_ADM'))
 if (validate::isNumber($modules->id) && $db->select('id', 'galpics', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	$picture = $db->select('p.pic, p.gallery_id, p.file, p.description, g.name AS gallery_name', 'galpics AS p, ' . CONFIG_DB_PRE . 'gallery AS g', 'p.id = \'' . $modules->id . '\' AND p.gallery_id = g.id');
 
-	$breadcrumb->assign(lang('common', 'acp'), uri('acp'));
-	$breadcrumb->assign(lang('gallery', 'gallery'), uri('acp/gallery'));
-	$breadcrumb->assign($picture[0]['gallery_name'], uri('acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id']));
-	$breadcrumb->assign(lang('gallery', 'edit_picture'));
+	breadcrumb::assign(lang('common', 'acp'), uri('acp'));
+	breadcrumb::assign(lang('gallery', 'gallery'), uri('acp/gallery'));
+	breadcrumb::assign($picture[0]['gallery_name'], uri('acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id']));
+	breadcrumb::assign(lang('gallery', 'edit_picture'));
 
 	if (isset($_POST['submit'])) {
 		if (!empty($_FILES['file']['tmp_name']) && $_FILES['file']['size'] > '0') {

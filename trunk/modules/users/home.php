@@ -5,8 +5,8 @@ if (!defined('IN_ACP3'))
 if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 	redirect('errors/403');
 } else {
-	$breadcrumb->assign(lang('users', 'users'), uri('users'));
-	$breadcrumb->assign(lang('users', 'home'));
+	breadcrumb::assign(lang('users', 'users'), uri('users'));
+	breadcrumb::assign(lang('users', 'home'));
 
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];

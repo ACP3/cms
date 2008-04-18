@@ -10,8 +10,8 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$breadcrumb->assign(lang('guestbook', 'guestbook'), uri('guestbook'));
-$breadcrumb->assign(lang('guestbook', 'create'));
+breadcrumb::assign(lang('guestbook', 'guestbook'), uri('guestbook'));
+breadcrumb::assign(lang('guestbook', 'create'));
 
 if (isset($_POST['submit'])) {
 	$ip = $_SERVER['REMOTE_ADDR'];

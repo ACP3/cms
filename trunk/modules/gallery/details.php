@@ -17,9 +17,9 @@ if (validate::isNumber($modules->id) && $db->select('g.id', 'gallery AS g, ' . C
 
 	if (count($picture) > 0) {
 		// Brotkrümelspur
-		$breadcrumb->assign(lang('gallery', 'gallery'), uri('gallery'));
-		$breadcrumb->assign($picture[0]['name'], uri('gallery/pics/id_' . $picture[0]['gallery_id']));
-		$breadcrumb->assign(lang('gallery', 'details'));
+		breadcrumb::assign(lang('gallery', 'gallery'), uri('gallery'));
+		breadcrumb::assign($picture[0]['name'], uri('gallery/pics/id_' . $picture[0]['gallery_id']));
+		breadcrumb::assign(lang('gallery', 'details'));
 
 		$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
 		$tpl->assign('picture', $picture[0]);

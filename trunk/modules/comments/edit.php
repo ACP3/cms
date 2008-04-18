@@ -14,10 +14,10 @@ if (validate::isNumber($modules->id) && $db->select('id', 'comments', 'id = \'' 
 	$comment = $db->select('name, message, module', 'comments', 'id = \'' . $modules->id . '\'');
 
 	$comment[0]['module'] = $db->escape($comment[0]['module'], 3);
-	$breadcrumb->assign(lang('common', 'acp'), uri('acp'));
-	$breadcrumb->assign(lang('comments', 'comments'), uri('acp/comments'));
-	$breadcrumb->assign(lang($comment[0]['module'], $comment[0]['module']), uri('acp/comments/adm_list/module_' . $comment[0]['module']));
-	$breadcrumb->assign(lang('comments', 'edit'));
+	breadcrumb::assign(lang('common', 'acp'), uri('acp'));
+	breadcrumb::assign(lang('comments', 'comments'), uri('acp/comments'));
+	breadcrumb::assign(lang($comment[0]['module'], $comment[0]['module']), uri('acp/comments/adm_list/module_' . $comment[0]['module']));
+	breadcrumb::assign(lang('comments', 'edit'));
 
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
