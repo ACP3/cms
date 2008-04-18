@@ -31,9 +31,9 @@ if (validate::isNumber($modules->id) && $db->select('id', 'files', 'id = \'' . $
 		}
 	} else {
 		// Brotkrümelspur
-		$breadcrumb->assign(lang('files', 'files'), uri('files'));
-		$breadcrumb->assign($file[0]['category_name'], uri('files/files/cat_' . $file[0]['category_id']));
-		$breadcrumb->assign($file[0]['link_title']);
+		breadcrumb::assign(lang('files', 'files'), uri('files'));
+		breadcrumb::assign($file[0]['category_name'], uri('files/files/cat_' . $file[0]['category_id']));
+		breadcrumb::assign($file[0]['link_title']);
 
 		$file[0]['size'] = !empty($file[0]['size']) ? $file[0]['size'] : lang('files', 'unknown_filesize');
 		$file[0]['date'] = dateAligned(1, $file[0]['start']);

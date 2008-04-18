@@ -10,7 +10,7 @@
 if (! defined('IN_ADM'))
 	exit();
 
-$breadcrumb->assign(lang('common', 'acp'));
+breadcrumb::assign(lang('common', 'acp'));
 
 // Module einholen
 $mod_list = $modules->modulesList();

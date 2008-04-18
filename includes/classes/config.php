@@ -22,7 +22,7 @@ class config
 	 * 	Zu schreibende Daten
 	 * @return boolean
 	 */
-	static public function general($data)
+	public static function general($data)
 	{
 		$path = ACP3_ROOT . 'includes/config.php';
 		if (is_writable($path))	{
@@ -49,7 +49,7 @@ class config
 	 * @param array $data
 	 * @return boolean
 	 */
-	static public function module($module, $data)
+	public static function module($module, $data)
 	{
 		$path = ACP3_ROOT . 'modules/' . $module . '/module.xml';
 		if (!preg_match('=/=', $module) && file_exists($path) && is_writable($path)) {
@@ -82,7 +82,7 @@ class config
 	 * @param string $module
 	 * @return mixed
 	 */
-	static public function output($module)
+	public static function output($module)
 	{
 		static $settings = array();
 

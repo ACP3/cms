@@ -2,8 +2,8 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$breadcrumb->assign(lang('users', 'users'), uri('users'));
-$breadcrumb->assign(lang('users', 'view_profile'));
+breadcrumb::assign(lang('users', 'users'), uri('users'));
+breadcrumb::assign(lang('users', 'view_profile'));
 
 if (validate::isNumber($modules->id) && $db->select('id', 'users', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
 	$user = $auth->getUserInfo($modules->id);

@@ -23,8 +23,8 @@ if (validate::isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' .
 		$gallery_name = $db->select('name', 'gallery', 'id = \'' . $modules->id . '\'');
 
 		// Brotkrümelspur
-		$breadcrumb->assign(lang('gallery', 'gallery'), uri('gallery'));
-		$breadcrumb->assign($gallery_name[0]['name']);
+		breadcrumb::assign(lang('gallery', 'gallery'), uri('gallery'));
+		breadcrumb::assign($gallery_name[0]['name']);
 
 		$tpl->assign('gallery', $gallery);
 	}

@@ -21,11 +21,11 @@ if (validate::isNumber($modules->id) && $db->select('id', 'news', 'id = \'' . $m
 
 	// Brotkrümelspur
 	$category = $db->select('name', 'categories', 'id = \'' . $news[0]['category_id'] . '\'');
-	$breadcrumb->assign(lang('news', 'news'), uri('news'));
+	breadcrumb::assign(lang('news', 'news'), uri('news'));
 	if (count($category) > 0) {
-		$breadcrumb->assign($category[0]['name'], uri('news/list/cat_' . $news[0]['category_id']));
+		breadcrumb::assign($category[0]['name'], uri('news/list/cat_' . $news[0]['category_id']));
 	}
-	$breadcrumb->assign($news[0]['headline']);
+	breadcrumb::assign($news[0]['headline']);
 
 	$news[0]['date'] = dateAligned(1, $news[0]['start']);
 	$news[0]['headline'] = $news[0]['headline'];

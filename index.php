@@ -37,8 +37,8 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 	}
 
 	// Seitentitel und Brotkrümelspur setzen
-	$tpl->assign('TITLE', $breadcrumb->output(2));
-	$tpl->assign('BREADCRUMB', $breadcrumb->output());
+	$tpl->assign('TITLE', breadcrumb::output(2));
+	$tpl->assign('BREADCRUMB', breadcrumb::output());
 
 	// Falls ein Modul ein eigenes Layout verwenden möchte, dieses auch verweden
 	$tpl->display(defined('CUSTOM_LAYOUT') ? CUSTOM_LAYOUT : 'layout.html');

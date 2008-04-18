@@ -13,9 +13,9 @@ if (!defined('IN_ACP3'))
 if (!$auth->isUser() || !preg_match('/\d/', USER_ID)) {
 	redirect('errors/403');
 } else {
-	$breadcrumb->assign(lang('users', 'users'), uri('users'));
-	$breadcrumb->assign(lang('users', 'home'), uri('users/home'));
-	$breadcrumb->assign(lang('users', 'edit_settings'));
+	breadcrumb::assign(lang('users', 'users'), uri('users'));
+	breadcrumb::assign(lang('users', 'home'), uri('users/home'));
+	breadcrumb::assign(lang('users', 'edit_settings'));
 
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
