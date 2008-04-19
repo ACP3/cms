@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : '');
 
-	$mods = scandir('modules/');
+	$mods = scandir(ACP3_ROOT . 'modules/');
 	$c_mods = count($mods);
 	$search_mods = array();
 

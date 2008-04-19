@@ -81,7 +81,7 @@ class cache
 	 */
 	public static function purge()
 	{
-		$cache_dir = scandir('cache');
+		$cache_dir = scandir(ACP3_ROOT . 'cache');
 		$c_cache_dir = count($cache_dir);
 
 		for ($i = 0; $i < $c_cache_dir; ++$i) {

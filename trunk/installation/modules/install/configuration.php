@@ -3,8 +3,6 @@ if (!defined('IN_INSTALL'))
 	exit;
 
 if (isset($_POST['submit'])) {
-	require_once ACP3_ROOT . 'includes/classes/validate.php';
-
 	$form = $_POST['form'];
 
 	if (empty($form['db_host']))
@@ -83,7 +81,6 @@ if (isset($_POST['submit'])) {
 		@file_put_contents($config_path, $config_file);
 
 		require $config_path;
-		require ACP3_ROOT . 'includes/classes/db.php';
 
 		$db = new db();
 
@@ -124,6 +121,9 @@ if (isset($_POST['submit'])) {
 			}
 		}
 		$tpl->assign('sql_queries', $data);
+
+		// Bei einer Neuinstallation den alten Cache löschen
+		cache::purge();
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
@@ -163,7 +163,8 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$defaults['user_name'] = 'admin';
 	$defaults['flood'] = '30';
 	$defaults['date'] = 'd.m.y, H:i';
-
+	$defaults['title'] = 'ACP3';
+	
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 
 	$default_db_type = extension_loaded('mysqli') ? 'mysqli' : 'mysql';

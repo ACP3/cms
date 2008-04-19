@@ -54,7 +54,7 @@ if (!$auth->isUser() || !preg_match('/\d/', USER_ID)) {
 
 		// Sprache
 		$languages = array();
-		$lang_dir = scandir('languages');
+		$lang_dir = scandir(ACP3_ROOT . 'languages');
 		$c_lang_dir = count($lang_dir);
 		for ($i = 0; $i < $c_lang_dir; ++$i) {
 			$lang_info = array();
