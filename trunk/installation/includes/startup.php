@@ -76,6 +76,5 @@ $pages = array(
 		),
 	),
 );
-$tpl->assign('pages', $pages);
 $tpl->assign('currentModule', $modules->mod);
 ?>

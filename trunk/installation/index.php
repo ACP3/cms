@@ -24,6 +24,7 @@ if (array_key_exists($modules->mod, $pages)) {
 
 // Selektion eines Menüpunktes in der Navigation
 $pages[$modules->mod]['selected'] = ' class="selected"';
+$tpl->assign('pages', $pages);
 
 // Sprachpakete
 $languages = array();
