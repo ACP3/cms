@@ -34,7 +34,7 @@ $(function() {
 	{lang values="installation|installation_error"}
 </p>
 <div class="success forward">
-	<a href="{$php_self}?lang={$lang}" class="form">{lang values="common|back"}</a>
+	<a href="{uri args="overview/welcome"}" class="form">{lang values="common|back"}</a>
 </div>
 {else}
 <p>
@@ -44,12 +44,12 @@ $(function() {
 	{lang values="installation|installation_successful_2"}
 </p>
 <div class="success forward">
-	<a href="../" class="form">{lang values="common|forward"}</a>
+	<a href="../../../../../" class="form">{lang values="common|forward"}</a>
 </div>
 {/if}
 {else}
 {$error_msg}
-<form action="{$php_self}?mod=install&amp;page=configuration&amp;lang={$lang}" method="post" accept-charset="UTF-8" id="tabs">
+<form action="{uri args="install/configuration"}" method="post" accept-charset="UTF-8" id="tabs">
 	<fieldset>
 		<legend>{lang values="installation|db_connection_settings"}</legend>
 		<dl>

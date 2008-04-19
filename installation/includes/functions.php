@@ -71,6 +71,11 @@ function select_entry($name, $value, $field_value = '', $attr = 'selected') {
 		}
 	}
 }
+// URIs
+function uri($uri)
+{
+	return PHP_SELF . '/' . $uri . (!preg_match('/\/$/', $uri) ? '/' : '') . 'lang_' . LANG . '/';
+}
 // Konfigurationsdateien für die Module erstellen
 function write_config($module, $data)
 {

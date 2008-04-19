@@ -210,6 +210,9 @@ legend {
 fieldset dl {
 	text-align: left;
 }
+fieldset ol {
+	margin: 0 20px;
+}
 label {
 	font: 1.0em Arial, sans-serif;
 	color: #000;

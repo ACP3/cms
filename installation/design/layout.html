@@ -1,14 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$lang}" lang="{$lang}">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$LANG}" lang="{$LANG}">
 <head>
 <title>ACP3 {lang values="installation|installation"} :: {$title}</title>
-<link rel="stylesheet" type="text/css" href="design/style.css" />
-<script type="text/javascript" src="../includes/js/jquery.js"></script>
-<script type="text/javascript" src="../includes/js/acp3.js"></script>
-<script type="text/javascript" src="design/lang.js"></script>
+<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}design/style.css" />
+<script type="text/javascript" src="{$ROOT_DIR}../includes/js/jquery.js"></script>
+<script type="text/javascript" src="{$ROOT_DIR}../includes/js/acp3.js"></script>
+<script type="text/javascript" src="{$ROOT_DIR}design/lang.js"></script>
 <!--[if lte IE 6]>
-<link rel="stylesheet" type="text/css" href="design/ie.css" />
+<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}design/ie.css" />
 <![endif]-->
 </head>
 
@@ -16,11 +16,11 @@
 <div id="head">
 	<h1 id="page-title">ACP3 {lang values="installation|installation"}</h1>
 	<ul>
-{foreach from=$navbar item=row}
-		<li><a href="{$php_self}?mod={$row.page}&amp;lang={$lang}"{$row.selected}>{$row.title}</a></li>
+{foreach from=$pages item=row}
+		<li><a href="{uri args="`$row.mod`/`$row.pages.0.page`"}"{$row.selected}>{$row.title}</a></li>
 {/foreach}
 	</ul>
-	<form action="{$request_uri}" method="post" id="languages">
+	<form action="{$REQUEST_URI}" method="post" id="languages">
 		<label for="lang">
 			{lang values="installation|language"}
 			<select name="lang" id="lang">
@@ -29,17 +29,23 @@
 {/foreach}
 			</select>
 		</label>
-		<input type="submit" value="{lang values="installation|submit"}" class="form" />
+		<input type="submit" value="{lang values="common|submit"}" class="form" />
 	</form>
 </div>
 <div id="breadcrumb">
-	<a href="../">ACP3</a> &raquo; <a href="{$php_self}?lang={$lang}">{lang values="installation|installation"}</a> &raquo; <span>{$title}</span>
+	<a href="../">ACP3</a> &raquo; <a href="{uri args="overview/welcome"}">{lang values="installation|installation"}</a> &raquo; <span>{$title}</span>
 </div>
 <div id="sidebar">
 	<h4>{lang values="installation|navigation"}</h4>
 	<ul>
-{foreach from=$nav_left item=row}
-		<li>{if !$row.no_href}<a href="{$php_self}?mod={$smarty.get.mod}&amp;page={$row.page}&amp;lang={$lang}"{$row.selected}>{lang values="installation|`$row.page`"}</a>{else}<span{$row.selected}>{lang values="installation|`$row.page`"}</span>{/if}</li>
+{foreach from=$pages.$currentModule.pages item=row}
+		<li>
+{if !$row.no_href}
+			<a href="{uri args="`$currentModule`/`$row.page`"}"{$row.selected}>{lang values="installation|`$row.page`"}</a>
+{else}
+			<span{$row.selected}>{lang values="installation|`$row.page`"}</span>
+{/if}
+		</li>
 {/foreach}
 	</ul>
 </div>
