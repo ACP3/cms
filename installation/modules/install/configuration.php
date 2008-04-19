@@ -4,7 +4,8 @@ if (!defined('IN_INSTALL'))
 
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
-
+	$config_path = ACP3_ROOT . 'includes/config.php';
+	
 	if (empty($form['db_host']))
 		$errors[] = lang('installation', 'type_in_db_host');
 	if (empty($form['db_user']))
@@ -45,41 +46,51 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('common', 'select_time_zone');
 	if (empty($form['title']))
 		$errors[] = lang('installation', 'type_in_title');
-	if (!is_file(ACP3_ROOT . 'includes/config.php') || !is_writable(ACP3_ROOT . 'includes/config.php'))
+	if (!file_exists($config_path) || !is_writable($config_path))
 		$errors[] = lang('installation', 'wrong_chmod_for_config_file');
 
 	if (isset($errors)) {
 		$tpl->assign('errors', $errors);
 		$tpl->assign('error_msg', $tpl->fetch('error.html'));
 	} else {
-		$form['date'] = mask($form['date']);
-		$form['design'] = 'acp3';
-		$form['lang'] = LANG;
-		$form['maintenance'] = '0';
-		$form['maintenance_msg'] = lang('installation', 'offline_message');
-		$form['meta_description'] = mask($form['meta_description']);
-		$form['meta_keywords'] = '';
-		$form['title'] = mask($form['title']);
-		$form['version'] = CONFIG_VERSION;
-		ksort($form);
-
 		// Modulkonfigurationsdateien schreiben
 		write_config('contact', array('mail' => $form['mail'], 'address' => '', 'telephone' => '', 'fax' => '', 'disclaimer' => lang('installation', 'disclaimer'), 'miscellaneous' => ''));
 		write_config('newsletter', array('mail' => $form['mail'], 'mailsig' => lang('installation', 'sincerely') . "\n\n" . lang('installation', 'newsletter_mailsig')));
 
+		// Systemkonfiguration erstellen
+		$config = array(
+			'date' => mask($form['date']),
+			'db_host' => $form['db_host'],
+			'db_name' => $form['db_name'],
+			'db_pre' => mask($form['db_pre']),
+			'db_pwd' => $form['db_pwd'],
+			'db_type' => mask($form['db_type']),
+			'db_user' => $form['db_user'],
+			'design' => 'acp3',
+			'dst' => $form['dst'],
+			'entries' => $form['entries'],
+			'flood' => $form['flood'],
+			'lang' => LANG,
+			'maintenance' => 0,
+			'maintenance_msg' => lang('installation', 'offline_message'),
+			'meta_descirption' => '',
+			'meta_keywords' => '',
+			'sef' => $form['sef'],
+			'time_zone' => $form['time_zone'],
+			'title' => mask($form['title']),
+			'version' => CONFIG_VERSION
+		);
+
 		$pattern = "define('CONFIG_%s', '%s');\n";
 		$config_file = "<?php\n";
 		$config_file.= "define('INSTALLED', true);\n";
-		foreach ($form as $key => $value) {
-			if ($key != 'mail' && $key != 'user_name' && $key != 'user_pwd' && $key != 'user_pwd_wdh') {
-				$config_file.= sprintf($pattern, strtoupper($key), $value);
-			}
+		foreach ($config as $key => $value) {
+			$config_file.= sprintf($pattern, strtoupper($key), $value);
 		}
 		$config_file.= '?>';
 
-		$config_path = ACP3_ROOT . 'includes/config.php';
+		// Daten in die config.php schreiben und diese laden
 		@file_put_contents($config_path, $config_file);
-
 		require $config_path;
 
 		$db = new db();
@@ -93,22 +104,23 @@ if (isset($_POST['submit'])) {
 			$sql_file = str_replace('{engine}', 'TYPE=MyISAM CHARSET=utf-8', $sql_file);
 		}
 
-		$sql_file_arr = explode("\n", $sql_file);
+		$sql_file_arr = explode(";\n", $sql_file);
 		$salt = salt(12);
 		$current_date = gmdate('U');
 
 		$other_arr = array(
-			1 => 'INSERT INTO `' . CONFIG_DB_PRE . 'users` VALUES (1, \'' . mask($form['user_name']) . '\', \'\', \'' . sha1($salt . sha1($form['user_pwd'])) . ':' . $salt . '\', 1, \'' . $form['mail'] . '\', \'\', \'' . CONFIG_TIME_ZONE . '\', \'' . CONFIG_DST .'\', \'' . CONFIG_LANG . '\', \'\');',
-			2 => 'INSERT INTO `' . CONFIG_DB_PRE . 'news` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', \'' . lang('installation', 'news_headline') . '\', \'' . lang('installation', 'news_text') . '\', \'1\', \'\', \'\', \'\');',
-			3 => 'INSERT INTO `' . CONFIG_DB_PRE . 'pages` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 0, \'' . lang('installation', 'pages_news') . '\', \'news/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 1, \'' . lang('installation', 'pages_files') . '\', \'files/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 2, \'' . lang('installation', 'pages_gallery') . '\', \'gallery/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 3, \'' . lang('installation', 'pages_guestbook') . '\', \'guestbook/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 4, \'' . lang('installation', 'pages_polls') . '\', \'polls/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 5, \'' . lang('installation', 'pages_search') . '\', \'search/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 2, 0, \'' . lang('installation', 'pages_contact') . '\', \'contact/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 2, 1, \'' . lang('installation', 'pages_imprint') . '\', \'contact/imprint\', 1, \'\');',
-			4 => 'INSERT INTO `' . CONFIG_DB_PRE . 'pages_blocks` (`id`, `index_name`, `title`) VALUES (1, \'main\', \'' . lang('installation', 'pages_main') . '\'), (2, \'sidebar\', \'' . lang('installation', 'pages_sidebar') . '\');',
+			1 => 'INSERT INTO `' . CONFIG_DB_PRE . 'users` VALUES (1, \'' . mask($form['user_name']) . '\', \'\', \'' . sha1($salt . sha1($form['user_pwd'])) . ':' . $salt . '\', 1, \'' . $form['mail'] . '\', \'\', \'' . CONFIG_TIME_ZONE . '\', \'' . CONFIG_DST .'\', \'' . CONFIG_LANG . '\', \'\')',
+			2 => 'INSERT INTO `' . CONFIG_DB_PRE . 'news` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', \'' . lang('installation', 'news_headline') . '\', \'' . lang('installation', 'news_text') . '\', \'1\', \'\', \'\', \'\')',
+			3 => 'INSERT INTO `' . CONFIG_DB_PRE . 'pages` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 0, \'' . lang('installation', 'pages_news') . '\', \'news/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 1, \'' . lang('installation', 'pages_files') . '\', \'files/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 2, \'' . lang('installation', 'pages_gallery') . '\', \'gallery/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 3, \'' . lang('installation', 'pages_guestbook') . '\', \'guestbook/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 4, \'' . lang('installation', 'pages_polls') . '\', \'polls/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 5, \'' . lang('installation', 'pages_search') . '\', \'search/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 2, 0, \'' . lang('installation', 'pages_contact') . '\', \'contact/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 2, 1, \'' . lang('installation', 'pages_imprint') . '\', \'contact/imprint\', 1, \'\')',
+			4 => 'INSERT INTO `' . CONFIG_DB_PRE . 'pages_blocks` (`id`, `index_name`, `title`) VALUES (1, \'main\', \'' . lang('installation', 'pages_main') . '\'), (2, \'sidebar\', \'' . lang('installation', 'pages_sidebar') . '\')',
 		);
-		$new_arr = array_merge($sql_file_arr, $other_arr);
+		$queires = array_merge($sql_file_arr, $other_arr);
 
 		$data = NULL;
 		$i = 0;
-		foreach ($new_arr as $query) {
+		foreach ($queries as $query) {
 			if (!empty($query)) {
+				$query.= ';';
 				$data[$i]['query'] = $query;
 				$bool = $db->query($query, 3);
 				$data[$i]['color'] = $bool == true ? '090' : 'f00';
@@ -122,7 +134,7 @@ if (isset($_POST['submit'])) {
 		}
 		$tpl->assign('sql_queries', $data);
 
-		// Bei einer Neuinstallation den alten Cache löschen
+		// Bei einer erneuten Installation den alten Cache löschen
 		cache::purge();
 	}
 }
