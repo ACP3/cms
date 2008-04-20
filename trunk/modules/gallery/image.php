@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (!$validdate->isNumber($modules->id) || $modules->action != 'mini' && $modules->action != 'thumb') {
+if (!validate::isNumber($modules->id) || $modules->action != 'mini' && $modules->action != 'thumb') {
 	redirect('errors/404');
 } else {
 	@set_time_limit(20);
