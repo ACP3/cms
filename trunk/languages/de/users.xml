@@ -98,11 +98,11 @@
 	</item>
 	<item>
 		<name>forgot_pwd_mail_subject</name>
-		<message>Passwortänderung bei %1\$s (%2\$s)</message>
+		<message>Passwortänderung bei {title} ({host})</message>
 	</item>
 	<item>
 		<name>forgot_pwd_mail_message</name>
-		<message>Hallo %1\$s,\n\nSie haben auf der Website von %2\$s (%3\$s) ein neues Passwort für Ihr Benutzerkonto angefordert.\n\nBenutzername: %1\$s\nE-Mail-Adresse: %4\$s\nPasswort: %5\$s\n\nBitte ändern Sie, nachdem Sie sich mit obrigem Passwort angemeldet haben, das Passwort zu einem Ihrer Wahl ab.</message>
+		<message>Hallo {name},\n\nSie haben auf der Website von {title} ({host}) ein neues Passwort für Ihr Benutzerkonto angefordert.\n\nBenutzername: {name}\nE-Mail-Adresse: {mail}\nPasswort: {password}\n\nBitte ändern Sie, nachdem Sie sich mit obrigem Passwort angemeldet haben, das Passwort zu einem Ihrer Wahl ab.</message>
 	</item>
 	<item>
 		<name>forgot_pwd_success</name>

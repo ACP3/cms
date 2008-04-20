@@ -27,26 +27,22 @@ if ($auth->isUser()) {
 		} else {
 			// Neues Passwort und neuen Zufallsschlüssel erstellen
 			$new_password = salt(8);
-			$salt = salt(12);
-			$host = htmlentities($_SERVER['host']);
+			$host = htmlentities($_SERVER['HTTP_HOST']);
 
 			// Je nachdem welches Feld ausgefüllt wurde, dieses auswählen
-			$where_stmt = !empty($form['mail']) ? 'mail = \'' . $form['mail'] . '\'' : 'nickname = \'' . $db->escape($form['nickname']) . '\'';
-			$user = $db->select('id, name, mail', 'users', $where_stmt);
+			$where = !empty($form['mail']) ? 'mail = \'' . $form['mail'] . '\'' : 'nickname = \'' . $db->escape($form['nickname']) . '\'';
+			$user = $db->select('id, nickname, mail', 'users', $where);
 
 			// E-Mail mit dem neuen Passwort versenden
 			$subject = str_replace(array('{title}', '{host}'), array(CONFIG_TITLE, $host), lang('users', 'forgot_pwd_mail_subject'));
-			$message = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}', '\n'), array($user[0]['nickname'], $user[0]['mail'], $new_password, CONFIG_TITLE, $host, "\n"), lang('users', 'register_mail_message'));
+			$message = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}', '\n'), array($user[0]['nickname'], $user[0]['mail'], $new_password, CONFIG_TITLE, $host, "\n"), lang('users', 'forgot_pwd_mail_message'));
 			$header = 'Content-type: text/plain; charset=UTF-8';
-			$mail_sent = @mail($user[0]['mail'], $subject, $message, $header);
+			$mail_sent = mail($user[0]['mail'], $subject, $message, $header);
 
-			// Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versandt werden konnte
+			// Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
 			if ($mail_sent) {
-				$update_values = array(
-					'pwd' => sha1($salt . sha1($new_password)) . ':' . $salt,
-				);
-
-				$bool = $db->update('users', $update_values, 'id = \'' . $user[0]['id'] . '\'');
+				$salt = salt(12);
+				$bool = $db->update('users', array('pwd' => sha1($salt . sha1($new_password)) . ':' . $salt), 'id = \'' . $user[0]['id'] . '\'');
 			}
 			$content = comboBox($mail_sent && isset($bool) && $bool ? lang('users', 'forgot_pwd_success') : lang('users', 'forgot_pwd_error'), ROOT_DIR);
 		}
