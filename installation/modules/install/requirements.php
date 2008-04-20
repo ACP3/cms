@@ -4,13 +4,13 @@ if (!defined('IN_INSTALL'))
 
 // Allgemeine Voraussetzungen
 $requirements[0]['name'] = lang('installation', 'php_version');
-$requirements[0]['color'] = version_compare(phpversion(), '5.0.5', '>=') ? '090' : 'f00';
+$requirements[0]['color'] = version_compare(phpversion(), '5.1.0', '>=') ? '090' : 'f00';
 $requirements[0]['found'] = phpversion();
-$requirements[0]['required'] = '5.0.5+';
+$requirements[0]['required'] = '5.1.0';
 $requirements[1]['name'] = lang('installation', 'mysql_version');
 $requirements[1]['color'] = version_compare(mysql_get_client_info(), '4.0', '>=') ? '090' : 'f00';
 $requirements[1]['found'] = mysql_get_client_info();
-$requirements[1]['required'] = '4.0+';
+$requirements[1]['required'] = '4.0';
 $requirements[2]['name'] = lang('installation', 'safe_mode');
 $requirements[2]['color'] = (bool)ini_get('safe_mode') ? 'f00' : '090';
 $requirements[2]['found'] = (bool)ini_get('safe_mode') ? lang('installation', 'on') : lang('installation', 'off');
