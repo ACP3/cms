@@ -7,16 +7,16 @@
 		<thead>
 			<tr>
 				<th></th>
-				<th style="width:33%">{lang values="installation|found"}</th>
 				<th style="width:33%">{lang values="installation|required"}</th>
+				<th style="width:33%">{lang values="installation|found"}</th>
 			</tr>
 		</thead>
 		<tbody>
 {foreach from=$requirements item=row}
 			<tr>
 				<td>{$row.name}</td>
-				<td><span style="color:#{$row.color}">{$row.found}{if $row.color == 'f00'} - {lang values="installation|installation_impossible"}{/if}</span></td>
 				<td>{$row.required}</td>
+				<td><span style="color:#{$row.color}">{$row.found}{if $row.color == 'f00'} - {lang values="installation|installation_impossible"}{/if}</span></td>
 			</tr>
 {/foreach}
 		</tbody>
