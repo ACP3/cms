@@ -15,7 +15,7 @@ breadcrumb::assign(lang('system', 'system'), uri('acp/system'));
 breadcrumb::assign(lang('system', 'maintenance'), uri('acp/system/maintenance'));
 breadcrumb::assign(lang('system', 'update_check'));
 
-$file = @file_get_contents('http://www.goratsch-webdesign.de/acp3/update.txt');
+$file = @file_get_contents('http://www.goratsch-webdesign.de/update.txt');
 if ($file) {
 	$content = explode('||', $file);
 	$content[2] = CONFIG_VERSION;
