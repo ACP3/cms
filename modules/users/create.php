@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
 	if (!validate::email($form['mail']))
 		$errors[] = lang('common', 'wrong_email_format');
 	if (validate::email($form['mail']) && $db->select('id', 'users', 'mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
-		$errors[] = lang('common', 'user_email_already_exists');
+		$errors[] = lang('users', 'user_email_already_exists');
 	if (!validate::isNumber($form['access']))
 		$errors[] = lang('users', 'select_access_level');
 	if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])

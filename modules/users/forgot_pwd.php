@@ -28,14 +28,15 @@ if ($auth->isUser()) {
 			// Neues Passwort und neuen Zufallsschlüssel erstellen
 			$new_password = salt(8);
 			$salt = salt(12);
+			$host = htmlentities($_SERVER['host']);
 
 			// Je nachdem welches Feld ausgefüllt wurde, dieses auswählen
 			$where_stmt = !empty($form['mail']) ? 'mail = \'' . $form['mail'] . '\'' : 'nickname = \'' . $db->escape($form['nickname']) . '\'';
 			$user = $db->select('id, name, mail', 'users', $where_stmt);
 
 			// E-Mail mit dem neuen Passwort versenden
-			$subject = sprintf(lang('users', 'forgot_pwd_mail_subject'), CONFIG_TITLE, htmlentities($_SERVER['HTTP_HOST']));
-			$message = sprintf(lang('users', 'forgot_pwd_mail_message'), $user[0]['nickname'], CONFIG_TITLE, htmlentities($_SERVER['HTTP_HOST']), $user[0]['mail'], $new_password);
+			$subject = str_replace(array('{title}', '{host}'), array(CONFIG_TITLE, $host), lang('users', 'forgot_pwd_mail_subject'));
+			$message = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}', '\n'), array($user[0]['nickname'], $user[0]['mail'], $new_password, CONFIG_TITLE, $host, "\n"), lang('users', 'register_mail_message'));
 			$header = 'Content-type: text/plain; charset=UTF-8';
 			$mail_sent = @mail($user[0]['mail'], $subject, $message, $header);
 

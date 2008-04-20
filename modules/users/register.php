@@ -18,28 +18,29 @@ if ($auth->isUser()) {
 		if (!validate::email($form['mail']))
 			$errors[] = lang('common', 'wrong_email_format');
 		if (validate::email($form['mail']) && $db->select('id', 'users', 'mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
-			$errors[] = lang('common', 'user_email_already_exists');
+			$errors[] = lang('users', 'user_email_already_exists');
 		if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])
 			$errors[] = lang('users', 'type_in_pwd');
-		if (!validate::captcha($form['captcha'], $form['hash']))
-			$errors[] = lang('captcha', 'invalid_captcha_entered');
+		//if (!validate::captcha($form['captcha'], $form['hash']))
+		//	$errors[] = lang('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
-			$salt = salt(12);
-
 			// E-Mail mit den Accountdaten zusenden
-			$subject = sprintf(lang('users', 'register_mail_subject'), CONFIG_TITLE, htmlentities($_SERVER['HTTP_HOST']));
-			$message = sprintf(lang('users', 'register_mail_message'), $db->escape($form['nickname']), CONFIG_TITLE, htmlentities($_SERVER['HTTP_HOST']), $form['mail'], $form['pwd']);
+			$form['nickname'] = $db->escape($form['nickname']);
+			$host = htmlentities($_SERVER['HTTP_HOST']);
+			$subject = str_replace(array('{title}', '{host}'), array(CONFIG_TITLE, $host), lang('users', 'register_mail_subject'));
+			$message = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}', '\n'), array($form['nickname'], $form['mail'], $form['pwd'], CONFIG_TITLE, $host, "\n"), lang('users', 'register_mail_message'));
 			$header = 'Content-type: text/plain; charset=UTF-8';
 			$mail_sent = @mail($form['mail'], $subject, $message, $header);
 
-			// Das Benutzerkonto nur erstellen, wenn die E-Mail erfolgreich versandt werden konnte
+			// Das Benutzerkonto nur erstellen, wenn die E-Mail erfolgreich versendet werden konnte
 			if ($mail_sent) {
+				$salt = salt(12);
 				$insert_values = array(
 					'id' => '',
-					'nickname' => $db->escape($form['nickname']),
+					'nickname' => $form['nickname'],
 					'realname' => '',
 					'pwd' => sha1($salt . sha1($form['pwd'])) . ':' . $salt,
 					'access' => '3',

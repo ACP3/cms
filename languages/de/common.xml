@@ -6,7 +6,7 @@
 	</item>
 	<item>
 		<name>activate_module</name>
-		<message><![CDATA[ Das Modul &quot;%s&quot; ist deaktiviert, wodurch bestimmte Funktionen eingeschränkt sein könnten.\nBitte aktivieren Sie dieses Modul, um diesen Fehler zu beheben. ]]></message>
+		<message><![CDATA[Das Modul &quot;%s&quot; ist deaktiviert, wodurch bestimmte Funktionen eingeschränkt sein könnten.\nBitte aktivieren Sie dieses Modul, um diesen Fehler zu beheben.]]></message>
 	</item>
 	<item>
 		<name>author</name>
