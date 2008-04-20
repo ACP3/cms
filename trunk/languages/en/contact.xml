@@ -66,11 +66,11 @@
 	</item>
 	<item>
 		<name>send_mail_error</name>
-		<message>While sending the E-mail an error has occured. Please try it in a few minutes again.</message>
+		<message>While sending the E-mail an error has occured.</message>
 	</item>
 	<item>
 		<name>send_mail_success</name>
-		<message>The E-mail has been sent successfully. We will contact you soon.</message>
+		<message>The E-mail has been sent successfully.</message>
 	</item>
 	<item>
 		<name>telephone</name>

@@ -78,7 +78,7 @@
 	</item>
 	<item>
 		<name>mod_description</name>
-		<message>With module is responsible for the newsletter.</message>
+		<message>This module is responsible for the newsletter.</message>
 	</item>
 	<item>
 		<name>newsletter</name>
@@ -106,7 +106,7 @@
 	</item>
 	<item>
 		<name>subscribe_error</name>
-		<message>Either there has error occured while adding the E-mail address to the database or while sending the activation E-mail.</message>
+		<message>While creating your newsletter account an error has occured.</message>
 	</item>
 	<item>
 		<name>subscribe_mail_body</name>
@@ -118,7 +118,7 @@
 	</item>
 	<item>
 		<name>subscribe_success</name>
-		<message>The E-mail address was successfully added to the database.\nWe sent an E-mail with an activationlink to your E-mail address.</message>
+		<message>The newsletter account has been successfully created.</message>
 	</item>
 	<item>
 		<name>test_newsletter</name>
