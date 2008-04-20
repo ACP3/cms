@@ -92,7 +92,7 @@ class validate
 
 		$isPicture = $info[2] >= '1' && $info[2] <= '3' ? true : false;
 
-		if ($isPicture && $this->isNumber($width) && $this->isNumber($height) && $this->isNumber($filesize)) {
+		if ($isPicture && self::isNumber($width) && self::isNumber($height) && self::isNumber($filesize)) {
 			return $info[0] <= $width && $info[1] <= $height && filesize($file) <= $filesize ? true : false;
 		}
 		return false;
