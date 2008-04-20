@@ -73,7 +73,7 @@ if (isset($_POST['submit'])) {
 			'lang' => LANG,
 			'maintenance' => 0,
 			'maintenance_msg' => lang('installation', 'offline_message'),
-			'meta_descirption' => '',
+			'meta_description' => '',
 			'meta_keywords' => '',
 			'sef' => $form['sef'],
 			'time_zone' => $form['time_zone'],
@@ -114,7 +114,7 @@ if (isset($_POST['submit'])) {
 			3 => 'INSERT INTO `' . CONFIG_DB_PRE . 'pages` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 0, \'' . lang('installation', 'pages_news') . '\', \'news/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 1, \'' . lang('installation', 'pages_files') . '\', \'files/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 2, \'' . lang('installation', 'pages_gallery') . '\', \'gallery/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 3, \'' . lang('installation', 'pages_guestbook') . '\', \'guestbook/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 4, \'' . lang('installation', 'pages_polls') . '\', \'polls/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 5, \'' . lang('installation', 'pages_search') . '\', \'search/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 2, 0, \'' . lang('installation', 'pages_contact') . '\', \'contact/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 2, 1, \'' . lang('installation', 'pages_imprint') . '\', \'contact/imprint\', 1, \'\')',
 			4 => 'INSERT INTO `' . CONFIG_DB_PRE . 'pages_blocks` (`id`, `index_name`, `title`) VALUES (1, \'main\', \'' . lang('installation', 'pages_main') . '\'), (2, \'sidebar\', \'' . lang('installation', 'pages_sidebar') . '\')',
 		);
-		$queires = array_merge($sql_file_arr, $other_arr);
+		$queries = array_merge($sql_file_arr, $other_arr);
 
 		$data = NULL;
 		$i = 0;
