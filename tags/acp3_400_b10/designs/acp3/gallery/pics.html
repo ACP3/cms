@@ -1,0 +1,11 @@
+{if $gallery}
+<p style="text-align:center">
+{foreach from=$gallery item=row}
+	<a href="{uri args="gallery/details/id_`$row.id`"}"><img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" /></a>
+{/foreach}
+</p>
+{else}
+<div class="error">
+	<h5>{lang values="gallery|no_pictures"}</h5>
+</div>
+{/if}

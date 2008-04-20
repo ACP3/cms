@@ -1,0 +1,38 @@
+{$error_msg}
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+	<fieldset>
+		<dl>
+			<dt><label for="time_zone">{lang values="common|time_zone"}</label></dt>
+			<dd>
+				<select name="form[time_zone]" id="time_zone">
+{foreach from=$time_zone item=row}
+					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{/foreach}
+				</select>
+			</dd>
+			<dt><label for="dst_yes">{lang values="common|daylight_saving_time"}</label></dt>
+			<dd>
+				<label for="dst_yes">
+					<input type="radio" name="form[dst]" id="dst_yes" value="1"{$dst.0.checked} class="checkbox" />
+					{lang values="common|yes"}
+				</label>
+				<label for="dst_no">
+					<input type="radio" name="form[dst]" id="dst_no" value="0"{$dst.1.checked} class="checkbox" />
+					{lang values="common|no"}
+				</label>
+			</dd>
+			<dt><label for="language">{lang values="users|language"}</label></dt>
+			<dd>
+				<select name="form[language]" id="language">
+					<option value="">{lang values="common|pls_select"}</option>
+{foreach from=$languages item=row}
+					<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
+{/foreach}
+				</select>
+			</dd>
+		</dl>
+	</fieldset>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>

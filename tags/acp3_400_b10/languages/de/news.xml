@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>additional_hyperlink</name>
+		<message>Optionaler Hyperlink</message>
+	</item>
+	<item>
+		<name>complete_additional_hyperlink_statements</name>
+		<message>Bitte vervollständigen Sie die Angaben zum optionalen Hyperlink</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Sollen die ausgewählten News wirklich gelöscht werden?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Neue News erstellen</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>Beim Erstellen der News ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>Die News wurde erfolgreich erstellt.</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>News löschen</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>Beim Löschen der ausgewählten News ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>Die ausgewählten News wurden erfolgreich gelöscht.</message>
+	</item>
+	<item>
+		<name>details</name>
+		<message>News</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>News bearbeiten</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>Beim Bearbeiten der News ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>Die News wurde erfolgreich bearbeitet.</message>
+	</item>
+	<item>
+		<name>headline</name>
+		<message>Überschrift</message>
+	</item>
+	<item>
+		<name>headline_to_short</name>
+		<message>Die Überschrift sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>link_title</name>
+		<message>Linkbezeichnung</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Mit diesem Modul können die News verwaltet werden.</message>
+	</item>
+	<item>
+		<name>news</name>
+		<message>News</message>
+	</item>
+	<item>
+		<name>news_overview</name>
+		<message>News Übersicht</message>
+	</item>
+	<item>
+		<name>read_newsfeed</name>
+		<message>Newsfeed ansehen</message>
+	</item>
+	<item>
+		<name>read_on</name>
+		<message>weiterlesen</message>
+	</item>
+	<item>
+		<name>select_category</name>
+		<message>Bitte wählen Sie die Kategorie aus, in der sich die News befinden soll</message>
+	</item>
+	<item>
+		<name>target_page</name>
+		<message>Zielseite</message>
+	</item>
+	<item>
+		<name>text</name>
+		<message>Text</message>
+	</item>
+	<item>
+		<name>text_to_short</name>
+		<message>Der Text sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>uri</name>
+		<message>URI</message>
+	</item>
+</language>

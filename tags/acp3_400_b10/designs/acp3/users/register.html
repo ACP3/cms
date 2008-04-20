@@ -1,0 +1,26 @@
+{$error_msg}
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+	<fieldset>
+		<legend>{lang values="users|nickname"} &amp; {lang values="common|email"}</legend>
+		<dl>
+			<dt><label for="nickname">{lang values="users|nickname"}</label></dt>
+			<dd><input type="text" name="form[nickname]" id="nickname" value="{$form.nickname}" maxlength="30" /></dd>
+			<dt><label for="mail">{lang values="common|email"}</label></dt>
+			<dd><input type="text" name="form[mail]" id="mail" value="{$form.mail}" maxlength="120" /></dd>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<legend>{lang values="users|pwd"}</legend>
+		<dl>
+			<dt><label for="pwd">{lang values="users|pwd"}</label></dt>
+			<dd><input type="password" name="form[pwd]" id="pwd" value="" /></dd>
+			<dt><label for="pwd_repeat">{lang values="users|pwd_repeat"}</label></dt>
+			<dd><input type="password" name="form[pwd_repeat]" id="pwd_repeat" value="" /></dd>
+		</dl>
+	</fieldset>
+{$captcha}
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="reset" value="{lang values="common|reset"}" class="form" />
+	</div>
+</form>

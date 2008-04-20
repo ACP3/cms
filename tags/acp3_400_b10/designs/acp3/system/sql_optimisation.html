@@ -1,0 +1,36 @@
+{if !$tables}
+<div class="error" style="padding-top:0">
+	<p>
+		{lang values="system|sql_table_optimisation_description"}
+	</p>
+	<strong>{lang values="system|attention"}:</strong> {lang values="system|optimisation_access_forbidden"}
+</div>
+<div style="margin-top:20px;text-align:center">
+	<a href="{uri args="acp/system/sql_optimisation/action_do"}" class="form">{lang values="common|forward"}</a>
+</div>
+{else}
+<table style="width:66%">
+	<thead>
+		<tr>
+			<th>{lang values="system|table_name"}</th>
+			<th>{lang values="system|status"}</th>
+			<th>{lang values="system|overhead"}</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<td colspan="2">{lang values="system|overall_overhead"}:</td>
+			<td>{$total_overhead}</td>
+		</tr>
+	</tfoot>
+	<tbody>
+{foreach from=$tables item=table}
+		<tr>
+			<td>{$table.name}</td>
+			<td>{$table.status}</td>
+			<td>{$table.overhead}</td>
+		</tr>
+{/foreach}
+	</tbody>
+</table>
+{/if}

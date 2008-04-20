@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$LANG}" lang="{$LANG}">
+<head>
+<title>{$PAGE_TITLE} :: {$TITLE}</title>
+<meta name="description" content="{$DESCRIPTION}" />
+<meta name="keywords" content="{$KEYWORDS}" />
+<script type="text/javascript" src="{$ROOT_DIR}includes/js/jquery.js"></script>
+<script type="text/javascript" src="{$ROOT_DIR}includes/js/acp3.js"></script>
+<link rel="stylesheet" type="text/css" href="{$DESIGN_PATH}style.css" />
+<link rel="stylesheet" type="text/css" href="{$DESIGN_PATH}ui.datepicker.css" />
+<link rel="alternate" type="application/rss+xml" href="{uri args="feeds/list/feed_news"}" title="{$PAGE_TITLE} - {lang values="news|news"}" />
+<link rel="alternate" type="application/rss+xml" href="{uri args="feeds/list/feed_files"}" title="{$PAGE_TITLE} - {lang values="files|files"}" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" type="text/css" href="{$DESIGN_PATH}ie.css" />
+<script type="text/javascript" defer="defer" src="{$ROOT_DIR}includes/js/pngfix.js"></script>
+<![endif]-->
+</head>
+
+<body>
+<a name="top"></a>
+<div id="head">
+	<h1 id="page-title">{$PAGE_TITLE}</h1>
+{if $navbar.main}
+	<ul>
+{foreach from=$navbar.main item=row}
+		<li><a href="{$row.href}" class="{$row.css}"{$row.target}>{$row.title}</a></li>
+{/foreach}
+	</ul>
+{/if}
+</div>
+<div id="breadcrumb">
+	{$BREADCRUMB}
+</div>
+<div id="sidebar">
+{if $navbar.sidebar}
+	<h4>Navigation</h4>
+	<ul>
+{foreach from=$navbar.sidebar item=row}
+		<li><a href="{$row.href}" class="{$row.css}"{$row.target}>{$row.title}</a></li>
+{/foreach}
+	</ul>
+{/if}
+	{load_module module="users|sidebar"}
+</div>
+<div id="content">
+	<h1>{$TITLE}</h1>
+{$CONTENT}
+</div>
+<div id="footer"></div>
+</body>
+</html>

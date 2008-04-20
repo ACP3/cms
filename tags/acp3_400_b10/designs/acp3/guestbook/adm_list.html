@@ -1,0 +1,37 @@
+{if $guestbook}
+<form action="{uri args="acp/guestbook/delete"}" method="post">
+	<div id="adm-list">
+		<input type="image" src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		<h2>{lang values="guestbook|guestbook_entries_overview"}</h2>
+	</div>
+	<hr />
+{$pagination}
+	<table>
+		<thead>
+			<tr>
+				<th>{lang values="common|mark"}</th>
+				<th>{lang values="common|date"}</th>
+				<th>{lang values="common|name"}</th>
+				<th>{lang values="common|message"}</th>
+				<th>{lang values="guestbook|ip"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$guestbook item=row}
+			<tr>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td>{$row.date}</td>
+				<td><a href="{uri args="acp/guestbook/edit/id_`$row.id`"}" title="{lang values="guestbook|edit"}">{$row.name}</a></td>
+				<td>{$row.message}</td>
+				<td>{$row.ip}</td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{mark name="entries"}
+</form>
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}

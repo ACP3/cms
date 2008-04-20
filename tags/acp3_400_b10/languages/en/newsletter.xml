@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>account_exists</name>
+		<message>There is already an newsletter account with the same E-Mail address registered</message>
+	</item>
+	<item>
+		<name>account_not_exists</name>
+		<message>For the stated E-mail address is no newsletter account registered</message>
+	</item>
+	<item>
+		<name>activate</name>
+		<message>Activate newsletter account</message>
+	</item>
+	<item>
+		<name>activate_account</name>
+		<message>Active newsletter account</message>
+	</item>
+	<item>
+		<name>activate_error</name>
+		<message>While activating the newsletter account an error has occured.</message>
+	</item>
+	<item>
+		<name>activate_success</name>
+		<message>The newsletter account was successfully activated and can now be used.</message>
+	</item>
+	<item>
+		<name>adm_activate</name>
+		<message>Activate newsletter account</message>
+	</item>
+	<item>
+		<name>compose</name>
+		<message>Create a new newsletter</message>
+	</item>
+	<item>
+		<name>compose_error</name>
+		<message>While sending the newsletter an error has occured.</message>
+	</item>
+	<item>
+		<name>compose_success</name>
+		<message>The newsletter was successfully sent.</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Do you really want to delete the marked newsletter accounts?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Subscribe/Unscribe the newsletter</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>Delete newsletter accounts</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>While deleting the marked newsletter accounts an error has occured.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>The marked newsletter accounts have been deleted successfully.</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>While editing the newsletter settings an error has occured.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>The newsletter settings were successfully edited.</message>
+	</item>
+	<item>
+		<name>entry</name>
+		<message>Subscribe/Unsubscribe the newsletter</message>
+	</item>
+	<item>
+		<name>mailsig</name>
+		<message>E-mail signature</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>This module is responsible for the newsletter.</message>
+	</item>
+	<item>
+		<name>newsletter</name>
+		<message>Newsletter</message>
+	</item>
+	<item>
+		<name>newsletter_accounts</name>
+		<message>Newsletter accounts</message>
+	</item>
+	<item>
+		<name>settings</name>
+		<message>Newsletter settings</message>
+	</item>
+	<item>
+		<name>subject</name>
+		<message>Subject</message>
+	</item>
+	<item>
+		<name>subject_to_short</name>
+		<message>The subject should be at least 3 characters long</message>
+	</item>
+	<item>
+		<name>subscribe</name>
+		<message>Subscribe</message>
+	</item>
+	<item>
+		<name>subscribe_error</name>
+		<message>While creating your newsletter account an error has occured.</message>
+	</item>
+	<item>
+		<name>subscribe_mail_body</name>
+		<message>You successfully subscribed with your E-mail address {mail} to the newsletter of {title} ({host}).\nTo complete the registration process, please click on the hyperlink below.\nIf you haven\'t subscribed this newsletter, please ignore or delete this E-mail.\n\n</message>
+	</item>
+	<item>
+		<name>nl_subscribe_mail_subject</name>
+		<message>Newsletter at %s</message>
+	</item>
+	<item>
+		<name>subscribe_success</name>
+		<message>The newsletter account has been successfully created.</message>
+	</item>
+	<item>
+		<name>test_newsletter</name>
+		<message>Test newsletter</message>
+	</item>
+	<item>
+		<name>test_nl_description</name>
+		<message>Will only be send to the E-mail adress which is stated in the newsletter settings</message>
+	</item>
+	<item>
+		<name>text</name>
+		<message>Text</message>
+	</item>
+	<item>
+		<name>text_to_short</name>
+		<message>The text should be at least 3 characters long</message>
+	</item>
+	<item>
+		<name>unsubscribe</name>
+		<message>Unsubsribe</message>
+	</item>
+	<item>
+		<name>unsubscribe_error</name>
+		<message>While deleting the newsletter account an error has occured.</message>
+	</item>
+	<item>
+		<name>unsubscribe_success</name>
+		<message>The newsletter account was successfully deleted.</message>
+	</item>
+</language>

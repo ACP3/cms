@@ -1,0 +1,17 @@
+{$error_msg}
+<form action="{$REQUEST_URI}" method="post">
+	<fieldset>
+		<dl>
+			<dt><label for="width">{lang values="emoticons|image_width"}</label></dt>
+			<dd><input type="text" name="form[width]" id="width" value="{$form.width}" /></dd>
+			<dt><label for="height">{lang values="emoticons|image_height"}</label></dt>
+			<dd><input type="text" name="form[height]" id="height" value="{$form.height}" /></dd>
+			<dt><label for="filesize">{lang values="emoticons|image_filesize"}</label></dt>
+			<dd><input type="text" name="form[filesize]" id="filesize" value="{$form.filesize}" /></dd>
+		</dl>
+	</fieldset>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="reset" value="{lang values="common|reset"}" class="form" />
+	</div>
+</form>

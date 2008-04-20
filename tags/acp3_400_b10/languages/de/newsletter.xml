@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>account_exists</name>
+		<message>Für die angegebene E-Mail-Adresse existiert bereits ein Newsletter-Konto</message>
+	</item>
+	<item>
+		<name>account_not_exists</name>
+		<message>Für die angegebene E-Mail-Adresse konnte kein Newsletter-Konto gefunden werden</message>
+	</item>
+	<item>
+		<name>activate</name>
+		<message>Newsletterkonto aktivieren</message>
+	</item>
+	<item>
+		<name>activate_account</name>
+		<message>Newsletterkonto aktivieren</message>
+	</item>
+	<item>
+		<name>activate_error</name>
+		<message>Beim Aktivieren des Newsletter-Kontos ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>activate_success</name>
+		<message>Das Newsletter-Konto wurde erfolgreich aktiviert und kann nun verwendet werden.</message>
+	</item>
+	<item>
+		<name>adm_activate</name>
+		<message>Newsletterkonto löschen</message>
+	</item>
+	<item>
+		<name>compose</name>
+		<message>Neuen Newsletter erstellen</message>
+	</item>
+	<item>
+		<name>compose_error</name>
+		<message>Beim Versenden das Newsletters ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>compose_success</name>
+		<message>Der Newsletter wurde erfolgreich versendet.</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Sollen die ausgewählten Newsletterkonten wirklich gelöscht werden?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>In Newsletter eintragen/austragen</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>Newsletterkonten löschen</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>Beim Löschen der ausgewählten Newsletterkonten ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>Die ausgewählten Newsletterkonten wurden erfolgreich gelöscht.</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>Beim Bearbeiten der Newsletter Einstellungen ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>Die Newsletter Einstellungen wurden erfolgreich bearbeitet.</message>
+	</item>
+	<item>
+		<name>entry</name>
+		<message>In Newsletter eintragen/austragen</message>
+	</item>
+	<item>
+		<name>mailsig</name>
+		<message>E-Mail Signatur</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Dieses Modul ist für den Newsletter zuständig.</message>
+	</item>
+	<item>
+		<name>newsletter</name>
+		<message>Newsletter</message>
+	</item>
+	<item>
+		<name>newsletter_accounts</name>
+		<message>Newsletterkonten</message>
+	</item>
+	<item>
+		<name>settings</name>
+		<message>Newsletter Einstellungen</message>
+	</item>
+	<item>
+		<name>subject</name>
+		<message>Betreff</message>
+	</item>
+	<item>
+		<name>subject_to_short</name>
+		<message>Der Betreff sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>subscribe</name>
+		<message>Eintragen</message>
+	</item>
+	<item>
+		<name>subscribe_error</name>
+		<message>Es ist ein Fehler beim Erstellen des Newsletterkontos aufgetreten.</message>
+	</item>
+	<item>
+		<name>subscribe_mail_body</name>
+		<message>Sie haben sich mit der E-Mail-Adresse {mail} auf {title} ({host}) erfolgreich beim Newsletter angemeldet.\nUm die Registrierung abzuschließen, klicken Sie bitte auf den untenstehenden Link.\nWenn es sich um einen Irrtum handelt, dann ignorieren/löschen Sie diese E-Mail einfach.\n\n</message>
+	</item>
+	<item>
+		<name>subscribe_mail_subject</name>
+		<message>Newsletter auf %s</message>
+	</item>
+	<item>
+		<name>subscribe_success</name>
+		<message>Das Newsletter wurde erfolgreich erstellt.</message>
+	</item>
+	<item>
+		<name>test_newsletter</name>
+		<message>Testnewsletter</message>
+	</item>
+	<item>
+		<name>test_nl_description</name>
+		<message>Wird nur an die E-Mail-Adresse der Newsletter Einstellungen gesendet</message>
+	</item>
+	<item>
+		<name>text</name>
+		<message>Text</message>
+	</item>
+	<item>
+		<name>text_to_short</name>
+		<message>Der Text sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>unsubscribe</name>
+		<message>Austragen</message>
+	</item>
+	<item>
+		<name>unsubscribe_error</name>
+		<message>Beim Löschen des Newsletterkontos ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>unsubscribe_success</name>
+		<message>Das Newsletterkonto wurde erfolgreich gelöscht.</message>
+	</item>
+</language>

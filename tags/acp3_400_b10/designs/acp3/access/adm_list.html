@@ -1,0 +1,34 @@
+<form action="{uri args="acp/access/delete"}" method="post">
+	<div id="adm-list">
+		<a href="{uri args="acp/access/create"}" title="{lang values="access|create"}"><img src="{icon path="32/create_access"}" alt="{lang values="access|create"}" /></a>
+		<input type="image" src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		<h2>{lang values="access|access_overview"}</h2>
+	</div>
+	<hr />
+{if $access}
+{$pagination}
+	<table>
+		<thead>
+			<tr>
+				<th>{lang values="common|mark"}</th>
+				<th>{lang values="common|name"}</th>
+				<th>{lang values="access|access_to_following_modules"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$access item=row}
+			<tr>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td><a href="{uri args="acp/access/edit/id_`$row.id`"}" title="{lang values="access|edit"}">{$row.name}</a></td>
+				<td style="text-align:justify">{$row.access_to_mod}</td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{mark name="entries"}
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}
+</form>

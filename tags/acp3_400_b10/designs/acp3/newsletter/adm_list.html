@@ -1,0 +1,41 @@
+<form action="{uri args="acp/newsletter/delete"}" method="post">
+	<div id="adm-list">
+		<a href="{uri args="acp/newsletter/compose"}" title="{lang values="newsletter|compose"}"><img src="{icon path="32/nl_compose"}" alt="{lang values="newsletter|compose"}" /></a>
+		<a href="{uri args="acp/newsletter/settings"}" title="{lang values="newsletter|settings"}"><img src="{icon path="32/settings"}" alt="{lang values="newsletter|settings"}" /></a>
+		<input type="image" src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		<h2>{lang values="newsletter|newsletter_accounts"}</h2>
+	</div>
+	<hr />
+{if $newsletter}
+{$pagination}
+	<table>
+		<thead>
+			<tr>
+				<th>{lang values="common|mark"}</th>
+				<th>{lang values="common|email"}</th>
+				<th>{lang values="common|options"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$newsletter item=row}
+			<tr>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td>{$row.mail}</td>
+				<td>
+{if $row.hash != ''}
+					<a href="{uri args="acp/newsletter/adm_activate/id_`$row.id`"}" title="{lang values="newsletter|activate_account"}"><img src="{icon path="16/inactive"}" alt="" /></a>
+{else}
+					<img src="{icon path="16/active"}" alt="" />
+{/if}
+				</td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{mark name="entries"}
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}
+</form>

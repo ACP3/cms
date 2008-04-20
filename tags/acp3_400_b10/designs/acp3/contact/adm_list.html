@@ -1,0 +1,28 @@
+{$error_msg}
+<form action="{uri args="acp/contact/adm_list"}" method="post" accept-charset="UTF-8">
+	<fieldset>
+		<legend>{lang values="contact|imprint"}</legend>
+		<dl>
+			<dt><label for="address">{lang values="contact|address"}</label></dt>
+			<dd>{fckeditor InstanceName="address" Value="`$form.address`" Width="100%" Height="150px" ToolbarSet="Basic"}</dd>
+			<dt><label for="mail">{lang values="common|email"}</label></dt>
+			<dd><input type="text" name="form[mail]" id="mail" value="{$form.mail}" maxlength="120" /></dd>
+			<dt><label for="telephone">{lang values="contact|telephone"}</label></dt>
+			<dd><input type="text" name="form[telephone]" id="telephone" value="{$form.telephone}" maxlength="120" /></dd>
+			<dt><label for="fax">{lang values="contact|fax"}</label></dt>
+			<dd><input type="text" name="form[fax]" id="fax" value="{$form.fax}" maxlength="120" /></dd>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<legend>{lang values="contact|miscellaneous"}</legend>
+		<dl>
+			<dt><label for="disclaimer">{lang values="contact|disclaimer"}</label></dt>
+			<dd>{fckeditor InstanceName="disclaimer" Value="`$form.disclaimer`" Width="100%" Height="150px" ToolbarSet="Basic"}</dd>
+			<dt><label for="miscellaneous">{lang values="contact|additional_information"}</label></dt>
+			<dd>{fckeditor InstanceName="miscellaneous" Value="`$form.miscellaneous`" Width="100%" Height="150px" ToolbarSet="Basic"}</dd>
+		</dl>
+	</fieldset>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>code</name>
+		<message>Code</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Do you really want to delete the marked emoticons?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Create a new emoticons</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>While creating the emoticon an error has occured.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>The emoticons has been created successfully.</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>Delete emoticons</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>While deleting the marked emoticons an error has occured.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>The marked emoticons have been deleted successfully.</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Edit emoticon</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>While editing the emoticon an error has occured.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>The emoticon has been edited successfully.</message>
+	</item>
+	<item>
+		<name>emoticons</name>
+		<message>Emoticons</message>
+	</item>
+	<item>
+		<name>emoticons_overview</name>
+		<message>Emoticons overview</message>
+	</item>
+	<item>
+		<name>image_filesize</name>
+		<message>Maximum image filesize</message>
+	</item>
+	<item>
+		<name>image_height</name>
+		<message>Maximum image height</message>
+	</item>
+	<item>
+		<name>image_width</name>
+		<message>Maximum image width</message>
+	</item>
+	<item>
+		<name>invalid_image_filesize_entered</name>
+		<message>Please type in the maximum image filesize in bytes</message>
+	</item>
+	<item>
+		<name>invalid_image_height_entered</name>
+		<message>Please type in the maximum image height in pixels</message>
+	</item>
+	<item>
+		<name>invalid_image_selected</name>
+		<message>Either you selected an image with a invalid filesize, or the image is to wide, to tall or the filsize is to big</message>
+	</item>
+	<item>
+		<name>invalid_image_width_entered</name>
+		<message>Please type in the maximum image width in pixels</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>With this module it is possible to add emoticons for example to comments.</message>
+	</item>
+	<item>
+		<name>picture</name>
+		<message>Picture</message>
+	</item>
+	<item>
+		<name>replace_picture</name>
+		<message>Replace picture</message>
+	</item>
+	<item>
+		<name>settings</name>
+		<message>Settings</message>
+	</item>
+	<item>
+		<name>settings_error</name>
+		<message>While editing the settings an error has occured.</message>
+	</item>
+	<item>
+		<name>settings_success</name>
+		<message>The settings have been edited successfully.</message>
+	</item>
+	<item>
+		<name>type_in_code</name>
+		<message>Please type in a code, which should be replaced with a picture</message>
+	</item>
+	<item>
+		<name>type_in_description</name>
+		<message>Please type in a short description</message>
+	</item>
+</language>

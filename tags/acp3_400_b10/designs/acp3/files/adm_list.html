@@ -1,0 +1,38 @@
+<form action="{uri args="acp/files/delete"}" method="post">
+	<div id="adm-list">
+		<a href="{uri args="acp/files/create"}" title="{lang values="files|create"}"><img src="{icon path="32/create_file"}" alt="{lang values="files|create"}" /></a>
+		<input type="image" src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		<h2>{lang values="files|files_overview"}</h2>
+	</div>
+	<hr />
+{if $files}
+{$pagination}
+	<table>
+		<thead>
+			<tr>
+				<th>{lang values="common|mark"}</th>
+				<th>{lang values="common|publication_period"}</th>
+				<th>{lang values="files|link_title"}</th>
+				<th>{lang values="files|filename"}</th>
+				<th>{lang values="files|filesize"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$files item=row}
+			<tr>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td>{$row.start} {lang values="common|until"} {$row.end}</td>
+				<td><a href="{uri args="acp/files/edit/id_`$row.id`"}" title="{lang values="files|edit"}">{$row.link_title}</a></td>
+				<td><a href="{uri args="files/details/id_`$row.id`/action_download"}" title="{lang values="files|download_file"}">{$row.file}</a></td>
+				<td>{$row.size}</td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{mark name="entries"}
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}
+</form>

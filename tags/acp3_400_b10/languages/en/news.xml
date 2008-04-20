@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>additional_hyperlink</name>
+		<message>Additional hpyerlink</message>
+	</item>
+	<item>
+		<name>complete_additional_hyperlink_statements</name>
+		<message>Please complete the statements for the additional hyperlink</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Do you really want to delete the marked news?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Create a new news</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>While creating the news anerror has occured.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>The news has been created successfully.</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>Delete news</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>While deleting the marked news an error has occured.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>The marked news have been deleted successfully.</message>
+	</item>
+	<item>
+		<name>details</name>
+		<message>News</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Edit news</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>While editing the news an error has occured.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>The news has been edited successfully.</message>
+	</item>
+	<item>
+		<name>headline</name>
+		<message>Headline</message>
+	</item>
+	<item>
+		<name>headline_to_short</name>
+		<message>The headline should be at least 3 characters long</message>
+	</item>
+	<item>
+		<name>link_title</name>
+		<message>Link title</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>With this module you can adminster the news.</message>
+	</item>
+	<item>
+		<name>news</name>
+		<message>News</message>
+	</item>
+	<item>
+		<name>news_overview</name>
+		<message>News overview</message>
+	</item>
+	<item>
+		<name>read_newsfeed</name>
+		<message>Read newsfeed</message>
+	</item>
+	<item>
+		<name>read_on</name>
+		<message>read on</message>
+	</item>
+	<item>
+		<name>select_category</name>
+		<message>Please select the category, where do you want to find the news</message>
+	</item>
+	<item>
+		<name>target_page</name>
+		<message>Target page</message>
+	</item>
+	<item>
+		<name>text</name>
+		<message>Text</message>
+	</item>
+	<item>
+		<name>text_to_short</name>
+		<message>The newstext should be at least 3 characters long</message>
+	</item>
+	<item>
+		<name>uri</name>
+		<message>URI</message>
+	</item>
+</language>

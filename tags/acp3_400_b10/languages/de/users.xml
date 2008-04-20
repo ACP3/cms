@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>administration</name>
+		<message>Verwaltung</message>
+	</item>
+	<item>
+		<name>admin_user_undeletable</name>
+		<message>Der Administrator kann nicht gelöscht werden.</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Sollen die ausgewählten Benutzer wirklich gelöscht werden?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Neuen Benutzer erstellen</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>Beim Erstellen des Benutzers ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>Der Benutzer wurde erfolgreich erstellt.</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>Benutzer löschen</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>Beim Löschen der ausgewählten Benutzer ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>Die ausgewählten Benutzer wurden erfolgreich gelöscht.</message>
+	</item>
+	<item>
+		<name>draft_error</name>
+		<message>Beim Speichern des Entwurfes ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>draft_success</name>
+		<message>Der Entwurf wurde erfolgreich gespeichert.</message>
+	</item>
+	<item>
+		<name>drafts</name>
+		<message>Entwürfe</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Benutzer bearbeiten</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>Beim Bearbeiten des Benutzers ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>edit_profile</name>
+		<message>Profil bearbeiten</message>
+	</item>
+	<item>
+		<name>edit_profile_error</name>
+		<message>Beim Bearbeiten Ihres Benutzerprofils ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>edit_profile_success</name>
+		<message>Ihr Benutzerprofil wurde erfolgreich bearbeitet.</message>
+	</item>
+	<item>
+		<name>edit_settings</name>
+		<message>Einstellungen bearbeiten</message>
+	</item>
+	<item>
+		<name>edit_settings_error</name>
+		<message>Beim Bearbeiten der Einstellungen Ihres Benutzerkontos ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>edit_settings_success</name>
+		<message>Die Einstellungen Ihres Benutzerkontos wurden erfolgreich bearbeitet.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>Der Benutzer wurde erfolgreich bearbeitet.</message>
+	</item>
+	<item>
+		<name>forgot_pwd</name>
+		<message>Passwort vergessen?</message>
+	</item>
+	<item>
+		<name>forgot_pwd_error</name>
+		<message>Beim Versenden der E-Mail-Adresse mit Ihrem neuen Passwort ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>forgot_pwd_description</name>
+		<message>Bitte geben Sie in den folgenden Feldern entweder Ihren bei der Registrierung verwendeten Benutzernamen oder die E-Mail-Adresse ein.</message>
+	</item>
+	<item>
+		<name>forgot_pwd_mail_subject</name>
+		<message>Passwortänderung bei {title} ({host})</message>
+	</item>
+	<item>
+		<name>forgot_pwd_mail_message</name>
+		<message>Hallo {name},\n\nSie haben auf der Website von {title} ({host}) ein neues Passwort für Ihr Benutzerkonto angefordert.\n\nBenutzername: {name}\nE-Mail-Adresse: {mail}\nPasswort: {password}\n\nBitte ändern Sie, nachdem Sie sich mit obrigem Passwort angemeldet haben, das Passwort zu einem Ihrer Wahl ab.</message>
+	</item>
+	<item>
+		<name>forgot_pwd_success</name>
+		<message>Das neue Passwort wurde erfolgreich an Ihre E-Mail-Adresse versandt.</message>
+	</item>
+	<item>
+		<name>home</name>
+		<message>Kontrollzentrum</message>
+	</item>
+	<item>
+		<name>language</name>
+		<message>Sprache</message>
+	</item>
+	<item>
+		<name>login</name>
+		<message>Login</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Mit diesem Modul können die Benutzer verwaltet werden.</message>
+	</item>
+	<item>
+		<name>new_pwd</name>
+		<message>Neues Passwort</message>
+	</item>
+	<item>
+		<name>new_pwd_repeat</name>
+		<message>Neues Passwort wiederholen</message>
+	</item>
+	<item>
+		<name>nickname</name>
+		<message>Benutzername</message>
+	</item>
+	<item>
+		<name>nickname_or_password_wrong</name>
+		<message>Entweder ist der Benutzername oder das Passwort falsch.</message>
+	</item>
+	<item>
+		<name>pwd</name>
+		<message>Passwort</message>
+	</item>
+	<item>
+		<name>pwd_repeat</name>
+		<message>Passwort wiederholen</message>
+	</item>
+	<item>
+		<name>realname</name>
+		<message>Vollständiger Name</message>
+	</item>
+	<item>
+		<name>remember_me</name>
+		<message>Eingeloggt bleiben</message>
+	</item>
+	<item>
+		<name>register</name>
+		<message>Registrieren</message>
+	</item>
+	<item>
+		<name>register_error</name>
+		<message>Beim Erstellen des Benutzerkontos ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>register_mail_subject</name>
+		<message>Ihr Registrierung bei {title} ({host})</message>
+	</item>
+	<item>
+		<name>register_mail_message</name>
+		<message>Hallo {name},\n\nSie haben soben auf der Website von {title} ({host}) ein Benutzerkonto erstellt.\nIm Folgenden sehen Sie die Daten, mit welchen Sie sich auf der Seite registriert haben.\n\nBenutzername: {name}\nE-Mail-Adresse: {mail}\nPasswort: {password}</message>
+	</item>
+	<item>
+		<name>register_success</name>
+		<message>Ihr Benutzerkonto wurde erfolgreich erstellt.</message>
+	</item>
+	<item>
+		<name>select_access_level</name>
+		<message>Bitte wählen Sie einen Zugriffslevel für den Benutzer aus</message>
+	</item>
+	<item>
+		<name>select_language</name>
+		<message>Bitte wählen Sie aus, in welcher Sprache Sie die Website angezeigt bekommen möchten</message>
+	</item>
+	<item>
+		<name>send_email</name>
+		<message>E-Mail senden</message>
+	</item>
+	<item>
+		<name>sign_off</name>
+		<message>Abmelden</message>
+	</item>
+	<item>
+		<name>type_in_nickname_or_email</name>
+		<message>Bitte geben Sie entweder den bei der Registrierung verwendeten Benutzernamen oder die E-Mail-Adresse ein</message>
+	</item>
+	<item>
+		<name>type_in_pwd</name>
+		<message>Entweder ist das Passwort leer oder in der Wiederholung ist ein Tippfehler</message>
+	</item>
+	<item>
+		<name>user_email_already_exists</name>
+		<message>Für die angegebene E-Mail-Adresse existiert bereits ein Benutzerkonto</message>
+	</item>
+	<item>
+		<name>user_menu</name>
+		<message>Benutzermenü</message>
+	</item>
+	<item>
+		<name>user_name_already_exists</name>
+		<message>Für den angegebenen Benutzernamen existiert bereits ein Benutzerkonto</message>
+	</item>
+	<item>
+		<name>user_not_exists</name>
+		<message>Für den eingegebenen Benutzernamen bzw. die eingegebene E-Mail-Adresse konnte kein Benutzerprofil gefunden werden</message>
+	</item>
+	<item>
+		<name>user_profile_not_exists</name>
+		<message>Das angeforderte Benutzerprofil konnte nicht gefunden werden.</message>
+	</item>
+	<item>
+		<name>users</name>
+		<message>Benutzer</message>
+	</item>
+	<item>
+		<name>users_found</name>
+		<message>Insgesamt haben sich auf dieser Website %d Benutzer registriert.</message>
+	</item>
+	<item>
+		<name>users_overview</name>
+		<message>Benutzer Übersicht</message>
+	</item>
+	<item>
+		<name>view_profile</name>
+		<message>Benutzerprofil ansehen</message>
+	</item>
+	<item>
+		<name>visit_website</name>
+		<message>Website besuchen</message>
+	</item>
+</language>

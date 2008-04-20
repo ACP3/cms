@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>access_to_modules</name>
+		<message>Sie haben Zugriff auf folgende Module:</message>
+	</item>
+	<item>
+		<name>acp</name>
+		<message>Administration</message>
+	</item>
+	<item>
+		<name>description</name>
+		<message>Von hier aus haben Sie nun die Möglichkeit, auf alle Ihnen zur Verfügung stehenden Module zuzugreifen.</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Startseite der Administrationsoberfläche</message>
+	</item>
+</language>

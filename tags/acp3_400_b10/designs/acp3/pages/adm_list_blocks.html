@@ -1,0 +1,34 @@
+<form action="{uri args="acp/pages/delete_blocks"}" method="post">
+	<div id="adm-list">
+		<a href="{uri args="acp/pages/create_block"}" title="{lang values="pages|create_block"}"><img src="{icon path="32/create_block"}" alt="{lang values="pages|create_block"}" /></a>
+		<input type="image" src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		<h2>{lang values="pages|blocks_overview"}</h2>
+	</div>
+	<hr />
+{if $blocks}
+{$pagination}
+	<table>
+		<thead>
+			<tr>
+				<th>{lang values="common|mark"}</th>
+				<th>{lang values="pages|title"}</th>
+				<th>{lang values="pages|index_name"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$blocks item=row}
+			<tr>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td><a href="{uri args="acp/pages/edit_block/id_`$row.id`"}" title="{lang values="pages|edit_block"}">{$row.title}</a></td>
+				<td>{$row.index_name}</td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{mark name="entries"}
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}
+</form>

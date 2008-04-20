@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<info>
+		<name lang="true"/>
+		<description lang="true"/>
+		<author>Goratsch Webdesign</author>
+		<version core="true"/>
+		<active>1</active>
+	</info>
+	<settings>
+		<mail></mail>
+		<address></address>
+		<telephone></telephone>
+		<fax></fax>
+		<disclaimer><![CDATA[Trotz sorgf&#228;ltiger inhaltlicher Kontrolle &#252;bernehmen wir keine Haftung f&#252;r die Inhalte externer Links. F&#252;r den Inhalt der verlinkten Seiten sind ausschlie&#223;lich deren Betreiber verantwortlich.]]></disclaimer>
+		<miscellaneous></miscellaneous>
+	</settings>
+	<access>
+		<item>
+			<file>adm_list</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>imprint</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>list</file>
+			<level>1</level>
+		</item>
+	</access>
+</module>

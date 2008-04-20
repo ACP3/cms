@@ -1,0 +1,55 @@
+{$error_msg}
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" id="tabs">
+	<fieldset>
+		<legend>{lang values="common|publication_period"}</legend>
+		<dl>
+			<dt><label for="start">{lang values="common|start_date"}</label></dt>
+			<dd>{$start_date}</dd>
+			<dt><label for="end">{lang values="common|end_date"}</label></dt>
+			<dd>{$end_date}</dd>
+		</dl>
+		<p>
+			{lang values="common|date_description"}
+		</p>
+	</fieldset>
+	<fieldset>
+		<legend>{lang values="news|news"}</legend>
+		<dl>
+			<dt><label for="headline">{lang values="news|headline"}</label></dt>
+			<dd><input type="text" name="form[headline]" id="headline" value="{$form.headline}" maxlength="120" /></dd>
+			<dt><label for="text">{lang values="news|text"}</label></dt>
+			<dd>{fckeditor InstanceName="text" Value="`$form.text`" Width="100%" Height="250px"}</dd>
+			<dt><label for="cat">{lang values="common|category"}</label></dt>
+			<dd>
+				<select name="form[cat]" id="cat">
+					<option value="">{lang values="common|pls_select"}</option>
+{foreach from=$categories item=row}
+					<option value="{$row.id}"{$row.selected}>{$row.name}</option>
+{/foreach}
+				</select>
+			</dd>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<legend>{lang values="news|additional_hyperlink"}</legend>
+		<dl>
+			<dt><label for="uri">{lang values="news|uri"}</label></dt>
+			<dd><input type="text" name="form[uri]" id="uri" value="{$form.uri}" maxlength="120" /></dd>
+			<dt><label for="target">{lang values="news|target_page"}</label></dt>
+			<dd>
+				<select name="form[target]" id="target">
+					<option value="">{lang values="common|pls_select"}</option>
+{foreach from=$target item=row}
+					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{/foreach}
+				</select>
+			</dd>
+			<dt><label for="link_title">{lang values="news|link_title"}</label></dt>
+			<dd><input type="text" name="form[link_title]" id="link_title" value="{$form.link_title}" maxlength="120" /></dd>
+		</dl>
+	</fieldset>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="reset" value="{lang values="common|reset"}" class="form" />
+	</div>
+</form>

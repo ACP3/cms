@@ -1,0 +1,37 @@
+<form action="{uri args="acp/categories/delete"}" method="post">
+	<div id="adm-list">
+		<a href="{uri args="acp/categories/create"}" title="{lang values="categories|create"}"><img src="{icon path="32/create_category"}" alt="{lang values="categories|create"}" /></a>
+		<a href="{uri args="acp/categories/settings"}" title="{lang values="categories|settings"}"><img src="{icon path="32/settings"}" alt="{lang values="categories|settings"}" /></a>
+		<input type="image" src="{icon path="32/delete"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		<h2>{lang values="categories|categories_overview"}</h2>
+	</div>
+	<hr />
+{if $categories}
+{$pagination}
+	<table>
+		<thead>
+			<tr>
+				<th>{lang values="common|mark"}</th>
+				<th>{lang values="common|name"}</th>
+				<th>{lang values="common|description"}</th>
+				<th>{lang values="categories|module"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$categories item=row}
+			<tr>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td><a href="{uri args="acp/categories/edit/id_`$row.id`"}" title="{lang values="categories|edit"}">{$row.name}</a></td>
+				<td>{$row.description}</td>
+				<td>{$row.module}</td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{mark name="entries"}
+{else}
+	<div class="error">
+		<h5>{lang values="common|entries"}</h5>
+	</div>
+{/if}
+</form>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>comments</name>
+		<message>Comments</message>
+	</item>
+	<item>
+		<name>comments_count</name>
+		<message>Comments</message>
+	</item>
+	<item>
+		<name>comments_overview</name>
+		<message>Comments overview</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Do you really want to delete the marked commentd?</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>While creating the comment an error has occured.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>The comment has been created successfully.</message>
+	</item>
+	<item>
+		<name>delete_comments</name>
+		<message>Delete comments</message>
+	</item>
+	<item>
+		<name>delete_comments_per_module</name>
+		<message>Delete comments</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>While deleting the marked comments an error has occured.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>The marked comments have been deleted successfully.</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Edit comment</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>While editing the comment an error has occured.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>The comment has been edited successfully.</message>
+	</item>
+	<item>
+		<name>ip</name>
+		<message>IP address</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>With this module it is possible to create comments for other modules.</message>
+	</item>
+	<item>
+		<name>module_doesnt_exist</name>
+		<message>Either the selected module doesn\'t exist or is currently deactivated</message>
+	</item>
+	<item>
+		<name>module</name>
+		<message>Module</message>
+	</item>
+	<item>
+		<name>show_comments</name>
+		<message>Show comments</message>
+	</item>
+</language>
