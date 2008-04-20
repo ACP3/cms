@@ -7,7 +7,7 @@ date_default_timezone_set('Europe/Berlin');
 define('IN_INSTALL', true);
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
 define('ROOT_DIR', substr(PHP_SELF, 0, strrpos(PHP_SELF, '/') + 1));
-define('CONFIG_VERSION', '4.0b10 SVN');
+define('CONFIG_VERSION', '4.0b10');
 
 include ACP3_ROOT . 'includes/globals.php';
 
