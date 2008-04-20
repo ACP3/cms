@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
 			} else {
 				$time = explode(' ', microtime());
 				$hash = md5(mt_rand(0, $time['1']));
-				$host = htmlentities($_SERVER['host']);
+				$host = htmlentities($_SERVER['HTTP_HOST']);
 				
 				$text = str_replace(array('{mail}', '{title}', '{host}', '\n'), array($form['mail'], CONFIG_TITLE, $host, "\n"), lang('newsletter', 'subscribe_mail_body'));
 				$text .= 'http://' . $host . uri('newsletter/activate/hash_' . $hash . '/mail_' . $form['mail']);

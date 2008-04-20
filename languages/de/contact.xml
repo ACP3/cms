@@ -66,11 +66,11 @@
 	</item>
 	<item>
 		<name>send_mail_error</name>
-		<message>Beim Versenden der E-Mail ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal.</message>
+		<message>Beim Versenden der E-Mail ist ein Fehler aufgetreten.</message>
 	</item>
 	<item>
 		<name>send_mail_success</name>
-		<message>Die E-Mail wurde erfolgreich versandt. Wir werden uns in Kürze mit Ihnen in Verbindung setzen.</message>
+		<message>Die E-Mail wurde erfolgreich versendet.</message>
 	</item>
 	<item>
 		<name>telephone</name>

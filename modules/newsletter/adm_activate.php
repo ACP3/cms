@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-$bool = validate::isNumber($modules->id) ? $db->update('nl_accounts', array('hash', ''), 'id = \'' . $modules->id . '\'') : false;
+$bool = validate::isNumber($modules->id) ? $db->update('nl_accounts', array('hash' => ''), 'id = \'' . $modules->id . '\'') : false;
 
 $content = comboBox($bool ? lang('newsletter', 'activate_success') : lang('newsletter', 'activate_error'), uri('acp/newsletter'));
 ?>

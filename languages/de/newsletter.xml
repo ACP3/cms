@@ -106,7 +106,7 @@
 	</item>
 	<item>
 		<name>subscribe_error</name>
-		<message>Entweder ist ein Fehler beim Eintragen der E-Mail-Adresse in die Datenbank oder beim Versenden der Aktivierungs-E-Mail aufgetreten.</message>
+		<message>Es ist ein Fehler beim Erstellen des Newsletterkontos aufgetreten.</message>
 	</item>
 	<item>
 		<name>subscribe_mail_body</name>
@@ -118,7 +118,7 @@
 	</item>
 	<item>
 		<name>subscribe_success</name>
-		<message>Die E-Mail-Adresse wurde der Datenbank erfolgreich hinzugefügt.\nEs wurde eine E-Mail mit einem Aktivierungslink an Ihre E-Mail-Adresse geschickt.</message>
+		<message>Das Newsletter wurde erfolgreich erstellt.</message>
 	</item>
 	<item>
 		<name>test_newsletter</name>
