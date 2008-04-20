@@ -110,7 +110,7 @@
 	</item>
 	<item>
 		<name>subscribe_mail_body</name>
-		<message>Sie haben sich mit der E-Mail-Adresse %1\$s auf %2\$s erfolgreich beim Newsletter angemeldet.\nUm die Registrierung abzuschließen, klicken Sie bitte auf den untenstehenden Link.\nWenn es sich um einen Irrtum handelt, dann ignorieren/löschen Sie diese E-Mail einfach.\n\n</message>
+		<message>Sie haben sich mit der E-Mail-Adresse {mail} auf {title} ({host}) erfolgreich beim Newsletter angemeldet.\nUm die Registrierung abzuschließen, klicken Sie bitte auf den untenstehenden Link.\nWenn es sich um einen Irrtum handelt, dann ignorieren/löschen Sie diese E-Mail einfach.\n\n</message>
 	</item>
 	<item>
 		<name>subscribe_mail_subject</name>

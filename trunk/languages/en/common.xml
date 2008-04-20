@@ -6,7 +6,7 @@
 	</item>
 	<item>
 		<name>activate_module</name>
-		<message><![CDATA[ The module &quot;%s&quot; is disabled, whereby certain features can be limited.\nPlease enable the module, to resolve this problem. ]]></message>
+		<message><![CDATA[The module &quot;%s&quot; is disabled, whereby certain features can be limited.\nPlease enable the module, to resolve this problem.]]></message>
 	</item>
 	<item>
 		<name>author</name>

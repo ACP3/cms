@@ -166,11 +166,11 @@
 	</item>
 	<item>
 		<name>register_mail_subject</name>
-		<message>Benutzerkonto-Daten bei %1\$s (%2\$s)</message>
+		<message>Ihr Registrierung bei {title} ({host})</message>
 	</item>
 	<item>
 		<name>register_mail_message</name>
-		<message>Hallo %1\$s,\n\nSie haben soben auf der Website von %2\$s (%3\$s) ein Benutzerkonto erstellt.\nIm Folgenden sehen Sie die Daten, mit welchen Sie sich auf der Seite registriert haben.\n\nBenutzername: %1\$s\nE-Mail-Adresse: %4\$s\nPasswort: %5\$s</message>
+		<message>Hallo {name},\n\nSie haben soben auf der Website von {title} ({host}) ein Benutzerkonto erstellt.\nIm Folgenden sehen Sie die Daten, mit welchen Sie sich auf der Seite registriert haben.\n\nBenutzername: {name}\nE-Mail-Adresse: {mail}\nPasswort: {password}</message>
 	</item>
 	<item>
 		<name>register_success</name>

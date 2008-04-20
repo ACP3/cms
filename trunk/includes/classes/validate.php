@@ -24,8 +24,8 @@ class validate
 	 */
 	public static function captcha($input, $hash)
 	{
-		if (preg_match('/^[a-zA-Z0-9]+$/', $input) && strlen($hash) == 32 && preg_match('/^[a-z0-9]+$/', $hash)) {
-			$path = ACP3_ROOT . 'modules/captcha/generated/' . $hash . strtolower($input);
+		if (preg_match('/^[a-zA-Z0-9]+$/', $input) && self::isMD5($hash)) {
+			$path = ACP3_ROOT . 'uploads/captcha/' . $hash . strtolower($input);
 			if (file_exists($path)) {
 				@unlink($path);
 				return true;

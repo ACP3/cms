@@ -115,7 +115,7 @@ fieldset fieldset {
 	width: 70%;
 	margin-top: 5px;
 }
-fieldset fieldset.captcha {
+fieldset.captcha {
 	width: 35%;
 }
 .no-border {

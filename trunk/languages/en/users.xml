@@ -98,11 +98,11 @@
 	</item>
 	<item>
 		<name>forgot_pwd_mail_subject</name>
-		<message>Change of the password on %1\$s (%2\$s)</message>
+		<message>Change of the password on {title} ({host})</message>
 	</item>
 	<item>
 		<name>forgot_pwd_mail_message</name>
-		<message>Hello %1\$s,\n\nYou have requested a new password for your user account on the website of %2\$s (%3\$s).\n\nUser name: %1\$s\nE-mail address: %4\$s\nPassword: %5\$s\n\nPlease change the password again, after you logged in to your account.</message>
+		<message>Hello {name},\n\nYou have requested a new password for your user account on the website of {title} ({host}).\n\nUser name: {name}\nE-mail address: {mail}\nPassword: {password}\n\nPlease change the password again, after you logged in to your account.</message>
 	</item>
 	<item>
 		<name>forgot_pwd_success</name>
@@ -166,11 +166,11 @@
 	</item>
 	<item>
 		<name>register_mail_subject</name>
-		<message>User account on %1\$s (%2\$s)</message>
+		<message>Your registration at {title} ({host})</message>
 	</item>
 	<item>
 		<name>register_mail_message</name>
-		<message>Hello %1\$s,\n\nYou have just registered a user account on the website of %2\$s (%3\$s).\nBelow you can see the data, with which you has been registered.\n\nUser name: %1\$s\nE-mail address: %4\$s\nPassword: %5\$s</message>
+		<message>Hello {name},\n\nYou have just registered a user account on the website of {title} ({host}).\nBelow you can see the data, with which you has been registered.\n\nUser name: {name}\nE-mail address: {mail}\nPassword: {password}</message>
 	</item>
 	<item>
 		<name>register_success</name>

@@ -27,9 +27,10 @@ if (isset($_POST['submit'])) {
 			} else {
 				$time = explode(' ', microtime());
 				$hash = md5(mt_rand(0, $time['1']));
+				$host = htmlentities($_SERVER['host']);
 				
-				$text = sprintf(lang('newsletter', 'subscribe_mail_body'), $form['mail'], $_SERVER['HTTP_HOST']);
-				$text .= 'http://' . $_SERVER['HTTP_HOST'] . uri('newsletter/activate/hash_' . $hash . '/mail_' . $form['mail']);
+				$text = str_replace(array('{mail}', '{title}', '{host}', '\n'), array($form['mail'], CONFIG_TITLE, $host, "\n"), lang('newsletter', 'subscribe_mail_body'));
+				$text .= 'http://' . $host . uri('newsletter/activate/hash_' . $hash . '/mail_' . $form['mail']);
 				
 				$insert_values = array('id' => '', 'mail' => $form['mail'], 'hash' => $hash);
 				

@@ -28,9 +28,11 @@ if (isset($_POST['submit'])) {
 		$contact = config::output('contact');
 
 		$subject = sprintf(lang('contact', 'contact_subject'), CONFIG_TITLE);
-		$body = sprintf(lang('contact', 'contact_body'), $form['name'], $form['mail']) . "\n\n" . $form['message'];
+		$body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($form['name'], $form['mail'], $form['message'], "\n"), lang('contact', 'contact_body'));
+		$header = "Content-type: text/plain; charset=UTF-8\r\n";
+		$header.= 'FROM:' . $form['mail'];
 
-		$bool = @mail($contact['mail'], $subject, $body, 'FROM:' . $form['mail']);
+		$bool = @mail($contact['mail'], $subject, $body, $header);
 
 		$content = comboBox($bool ? lang('contact', 'send_mail_success') : lang('contact', 'send_mail_error'), uri('contact'));
 	}
