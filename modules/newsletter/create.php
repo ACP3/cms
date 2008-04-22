@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
 			if (isset($errors)) {
 				$tpl->assign('error_msg', comboBox($errors));
 			} else {
-				$hash = md5(mt_rand(0, microtime(true));
+				$hash = md5(mt_rand(0, microtime(true)));
 				$host = htmlentities($_SERVER['HTTP_HOST']);
 				$newsletter = config::output('newsletter');
 

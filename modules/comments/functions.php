@@ -72,13 +72,13 @@ function comments($module = 0, $entry_id = 0)
 				'name' => $db->escape($form['name']),
 				'user_id' => $auth->isUser() && preg_match('/\d/', USER_ID) ? USER_ID : '',
 				'message' => $db->escape($form['message']),
-				'module' => $db->escape($module, 2),
-				'entry_id' => $entry_id,
+				'module' => $db->escape($form['module'], 2),
+				'entry_id' => $form['entry_id'],
 			);
 
 			$bool = $db->insert('comments', $insert_values);
 
-			return comboBox($bool ? lang('comments', 'create_success') : lang('comments', 'create_error'), uri($module . '/details/id_' . $entry_id));
+			return comboBox($bool ? lang('comments', 'create_success') : lang('comments', 'create_error'), uri($form['module'] . '/details/id_' . $form['entry_id']));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
