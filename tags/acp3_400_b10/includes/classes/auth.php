@@ -62,13 +62,14 @@ class auth
 		}
 		if (validate::isNumber($user_id)) {
 			global $db;
-			static $info = array();
+			static $user_info = array();
 
-			if (empty($info)) {
+			if (empty($user_info[$user_id])) {
 				$info = $db->select('nickname, realname, access, mail, website, time_zone, dst, language, draft', 'users', 'id = \'' . $user_id . '\'');
+				$user_info[$user_id] = $info[0];
 			}
 
-			return count($info) == '1' ? $info[0] : false;
+			return !empty($user_info[$user_id]) == '1' ? $user_info[$user_id] : false;
 		}
 		return false;
 	}
