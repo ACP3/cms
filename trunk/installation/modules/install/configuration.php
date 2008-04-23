@@ -7,13 +7,13 @@ if (isset($_POST['submit'])) {
 	$config_path = ACP3_ROOT . 'includes/config.php';
 	
 	if (empty($form['db_host']))
-		$errors[] = lang('installation', 'type_in_db_host');
+		$errors[] = lang('system', 'type_in_db_host');
 	if (empty($form['db_user']))
-		$errors[] = lang('installation', 'type_in_db_user_name');
+		$errors[] = lang('system', 'type_in_db_username');
 	if (empty($form['db_name']))
-		$errors[] = lang('installation', 'type_in_db_name');
+		$errors[] = lang('system', 'type_in_db_name');
 	if (empty($form['db_type']))
-		$errors[] = lang('installation', 'select_db_type');
+		$errors[] = lang('system', 'select_db_type');
 	if (!empty($form['db_host']) && !empty($form['db_user']) && !empty($form['db_name'])) {
 		if ($form['db_type'] == 'mysql') {
 			$db = @mysql_connect($form['db_host'], $form['db_user'], $form['db_pwd']);
@@ -33,19 +33,15 @@ if (isset($_POST['submit'])) {
 	if (!validate::email($form['mail']))
 		$errors[] = lang('common', 'wrong_email_format');
 	if (!validate::isNumber($form['entries']))
-		$errors[] = lang('installation', 'select_entries_per_page');
+		$errors[] = lang('system', 'select_entries_per_page');
 	if (!validate::isNumber($form['flood']))
-		$errors[] = lang('installation', 'type_in_flood_barrier');
-	if (!validate::isNumber($form['sef']))
-		$errors[] = lang('installation', 'select_sef_uris');
+		$errors[] = lang('system', 'type_in_flood_barrier');
 	if (empty($form['date']))
-		$errors[] = lang('installation', 'type_in_date_format');
+		$errors[] = lang('system', 'type_in_date_format');
 	if (!validate::isNumber($form['dst']))
 		$errors[] = lang('common', 'select_daylight_saving_time');
 	if (!validate::isNumber($form['time_zone']))
 		$errors[] = lang('common', 'select_time_zone');
-	if (empty($form['title']))
-		$errors[] = lang('installation', 'type_in_title');
 	if (!file_exists($config_path) || !is_writable($config_path))
 		$errors[] = lang('installation', 'wrong_chmod_for_config_file');
 
@@ -75,9 +71,9 @@ if (isset($_POST['submit'])) {
 			'maintenance_msg' => lang('installation', 'offline_message'),
 			'meta_description' => '',
 			'meta_keywords' => '',
-			'sef' => $form['sef'],
+			'sef' => 0,
 			'time_zone' => $form['time_zone'],
-			'title' => mask($form['title']),
+			'title' => !empty($form['title']) ? mask($form['title']) : 'ACP3',
 			'version' => CONFIG_VERSION
 		);
 

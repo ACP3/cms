@@ -21,18 +21,6 @@
 		<message>Datenbank</message>
 	</item>
 	<item>
-		<name>database_name</name>
-		<message>Datenbankname</message>
-	</item>
-	<item>
-		<name>date_format</name>
-		<message>Datumsformat</message>
-	</item>
-	<item>
-		<name>daylight_saving_time</name>
-		<message>Sommerzeit</message>
-	</item>
-	<item>
 		<name>db_connection_failed</name>
 		<message>Es konnte keine Verbindung zur Datenbank hergestellt werden</message>
 	</item>
@@ -41,20 +29,12 @@
 		<message>Verbindungsdaten zur Datenbank</message>
 	</item>
 	<item>
-		<name>db_type</name>
-		<message>Datenbank-Typ</message>
-	</item>
-	<item>
 		<name>decline</name>
 		<message>Ablehnen</message>
 	</item>
 	<item>
 		<name>disclaimer</name>
 		<message><![CDATA[Trotz sorgf&auml;ltiger inhaltlicher Kontrolle &uuml;bernehmen wir keine Haftung f&uuml;r die Inhalte externer Links. F&uuml;r den Inhalt der verlinkten Seiten sind ausschlie&szlig;lich deren Betreiber verantwortlich.]]></message>
-	</item>
-	<item>
-		<name>entries_per_page</name>
-		<message>Datensätze pro Seite</message>
 	</item>
 	<item>
 		<name>error_messages</name>
@@ -69,28 +49,12 @@
 		<message>Datei gefunden</message>
 	</item>
 	<item>
-		<name>flood_barrier</name>
-		<message>Flood Sperre</message>
-	</item>
-	<item>
-		<name>flood_barrier_description</name>
-		<message>Zeit in Sekunden, die ein Benutzer warten muss, bis er einen neuen Beitrag verfassen kann</message>
-	</item>
-	<item>
 		<name>folder_found</name>
 		<message>Ordner gefunden</message>
 	</item>
 	<item>
 		<name>found</name>
 		<message>Gefunden</message>
-	</item>
-	<item>
-		<name>general</name>
-		<message>Allgemeines</message>
-	</item>
-	<item>
-		<name>hostname</name>
-		<message>Hostname</message>
 	</item>
 	<item>
 		<name>hostname_description</name>
@@ -127,10 +91,6 @@
 	<item>
 		<name>maximum_uploadsize</name>
 		<message>Maximale Uploadgröße:</message>
-	</item>
-	<item>
-		<name>meta_statements</name>
-		<message>Meta Angaben</message>
 	</item>
 	<item>
 		<name>mysql_version</name>
@@ -213,24 +173,8 @@
 		<message>Sidebar</message>
 	</item>
 	<item>
-		<name>php_date_function</name>
-		<message><![CDATA[siehe <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a>-Funktion von PHP]]></message>
-	</item>
-	<item>
 		<name>php_version</name>
 		<message>PHP-Version</message>
-	</item>
-	<item>
-		<name>prefix</name>
-		<message>Tabellenpräfix</message>
-	</item>
-	<item>
-		<name>pwd</name>
-		<message>Passwort</message>
-	</item>
-	<item>
-		<name>pwd_repeat</name>
-		<message>Passwort wiederholen</message>
 	</item>
 	<item>
 		<name>query_failed</name>
@@ -259,26 +203,6 @@
 	<item>
 		<name>safe_mode</name>
 		<message>Abgesicherter Modus</message>
-	</item>
-	<item>
-		<name>sef_uris</name>
-		<message>Suchenmaschinenfreundliche URIs</message>
-	</item>
-	<item>
-		<name>sef_uris_description</name>
-		<message>Das mod_rewrite-Modul des Apache-Servers muss aktiviert sein</message>
-	</item>
-	<item>
-		<name>select_db_type</name>
-		<message>Bitte wählen Sie den Datenbank-Typ aus</message>
-	</item>
-	<item>
-		<name>select_entries_per_page</name>
-		<message>Bitte wählen Sie aus, wie viele Datensätze pro Seite angezeigt werden sollen</message>
-	</item>
-	<item>
-		<name>select_sef_uris</name>
-		<message>Bitte geben Sie an, ob die suchmaschinenfreundlichen URIs verwendet werden sollen, oder nicht</message>
 	</item>
 	<item>
 		<name>show_hide_executed_db_queries</name>
@@ -337,44 +261,12 @@
 		<message>Die Installation kann nicht fortgesetzt werden, da dieser Webspace/Server die benötigten Voraussetzungen nicht erfüllt.</message>
 	</item>
 	<item>
-		<name>title</name>
-		<message>Seitentitel</message>
-	</item>
-	<item>
-		<name>type_in_date_format</name>
-		<message>Bitte geben Sie eine Datumsformatierung ein</message>
-	</item>
-	<item>
-		<name>type_in_db_host</name>
-		<message>Bitte geben Sie den Hostnamen zur Datenbank ein</message>
-	</item>
-	<item>
-		<name>type_in_db_name</name>
-		<message>Bitte geben Sie den Datenbankname ein</message>
-	</item>
-	<item>
-		<name>type_in_db_user_name</name>
-		<message>Bitte geben Sie den Benutzernamen zur Datenbank ein</message>
-	</item>
-	<item>
-		<name>type_in_flood_barrier</name>
-		<message>Bitte geben Sie ein, für wieviele Sekunden ein Benutzer keine Beiträge abschicken kann</message>
-	</item>
-	<item>
 		<name>type_in_pwd</name>
 		<message>Entweder ist das Passwort leer oder in der Wiederholung ist ein Tippfehler</message>
 	</item>
 	<item>
-		<name>type_in_title</name>
-		<message>Bitte geben Sie einen Seitentitel an</message>
-	</item>
-	<item>
 		<name>type_in_user_name</name>
 		<message>Bitte geben Sie einen Benutzernamen für das Administrator Konto an</message>
-	</item>
-	<item>
-		<name>user_name</name>
-		<message>Benutzername</message>
 	</item>
 	<item>
 		<name>welcome</name>

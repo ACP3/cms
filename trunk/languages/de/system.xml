@@ -193,10 +193,6 @@
 		<message>Maximale Uploadgröße</message>
 	</item>
 	<item>
-		<name>meta_statements</name>
-		<message>Meta Angaben</message>
-	</item>
-	<item>
 		<name>mod_activate_error</name>
 		<message>Beim Aktivieren des Moduls ist ein Fehler aufgetreten.</message>
 	</item>
@@ -219,6 +215,14 @@
 	<item>
 		<name>mod_description</name>
 		<message>Dieses Modul ist für die grundlegenden Einstellungen des ACP3 zuständig.</message>
+	</item>
+	<item>
+		<name>mod_rewrite</name>
+		<message>mod_rewrite verwenden</message>
+	</item>
+	<item>
+		<name>mod_rewrite_description</name>
+		<message>Bitte nur verwenden, wenn Sie den Apache Webserver verwenden.</message>
 	</item>
 	<item>
 		<name>module_name</name>
@@ -317,14 +321,6 @@
 		<message>Sicherer Modus</message>
 	</item>
 	<item>
-		<name>sef_uris</name>
-		<message>Suchmaschinenfreundliche URIs</message>
-	</item>
-	<item>
-		<name>sef_uris_description</name>
-		<message>Das mod_rewrite-Modul des Apache-Servers muss aktiviert sein</message>
-	</item>
-	<item>
 		<name>select_db_type</name>
 		<message>Bitte wählen Sie den Datenbank-Typ aus</message>
 	</item>
@@ -355,6 +351,10 @@
 	<item>
 		<name>select_sql_tables</name>
 		<message>Bitte wählen Sie mindestens eine SQL-Tabelle aus, welche exportiert werden soll</message>
+	</item>
+	<item>
+		<name>seo</name>
+		<message>SEO</message>
 	</item>
 	<item>
 		<name>separate_with_commas</name>
