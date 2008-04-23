@@ -21,18 +21,6 @@
 		<message>Database</message>
 	</item>
 	<item>
-		<name>database_name</name>
-		<message>Database name</message>
-	</item>
-	<item>
-		<name>date_format</name>
-		<message>Date format</message>
-	</item>
-	<item>
-		<name>daylight_saving_time</name>
-		<message>Daylight saving time is in effect</message>
-	</item>
-	<item>
 		<name>db_connection_failed</name>
 		<message>The connection to the database failed</message>
 	</item>
@@ -41,20 +29,12 @@
 		<message>Database connection settings</message>
 	</item>
 	<item>
-		<name>db_type</name>
-		<message>Database type</message>
-	</item>
-	<item>
 		<name>decline</name>
 		<message>Decline</message>
 	</item>
 	<item>
 		<name>disclaimer</name>
 		<message><![CDATA[Despite careful contentwise control we do not take over adhesion for contents of external hyperlinks. Exclusively the operators are responsible for the contents of the  of the linked pages.]]></message>
-	</item>
-	<item>
-		<name>entries_per_page</name>
-		<message>Entries per page</message>
 	</item>
 	<item>
 		<name>error_messages</name>
@@ -69,28 +49,12 @@
 		<message>File found</message>
 	</item>
 	<item>
-		<name>flood_barrier</name>
-		<message>Flood barrier</message>
-	</item>
-	<item>
-		<name>flood_barrier_description</name>
-		<message>Time in seconds, how long an user has to wait, before he can write a new entry</message>
-	</item>
-	<item>
 		<name>folder_found</name>
 		<message>Folder found</message>
 	</item>
 	<item>
 		<name>found</name>
 		<message>Found</message>
-	</item>
-	<item>
-		<name>general</name>
-		<message>General</message>
-	</item>
-	<item>
-		<name>hostname</name>
-		<message>Hostname</message>
 	</item>
 	<item>
 		<name>hostname_description</name>
@@ -127,10 +91,6 @@
 	<item>
 		<name>maximum_uploadsize</name>
 		<message>Maximum uploadsize:</message>
-	</item>
-	<item>
-		<name>meta_statements</name>
-		<message>Meta statements</message>
 	</item>
 	<item>
 		<name>mysql_version</name>
@@ -213,24 +173,8 @@
 		<message>Sidebar</message>
 	</item>
 	<item>
-		<name>php_date_function</name>
-		<message><![CDATA[see PHP <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a>-function]]></message>
-	</item>
-	<item>
 		<name>php_version</name>
 		<message>PHP-Version</message>
-	</item>
-	<item>
-		<name>prefix</name>
-		<message>Table prefix</message>
-	</item>
-	<item>
-		<name>pwd</name>
-		<message>Password</message>
-	</item>
-	<item>
-		<name>pwd_repeat</name>
-		<message>Repeat password</message>
 	</item>
 	<item>
 		<name>query_failed</name>
@@ -259,26 +203,6 @@
 	<item>
 		<name>safe_mode</name>
 		<message>Safe mode</message>
-	</item>
-	<item>
-		<name>sef_uris</name>
-		<message>Search engine friendly URIs</message>
-	</item>
-	<item>
-		<name>sef_uris_description</name>
-		<message>This requires the mod_rewrite module of the Apache Webserver</message>
-	</item>
-	<item>
-		<name>select_db_type</name>
-		<message>Please select the database type</message>
-	</item>
-	<item>
-		<name>select_entries_per_page</name>
-		<message>Please select, how many resultsets per page should be displayed</message>
-	</item>
-	<item>
-		<name>select_sef_uris</name>
-		<message>Please select, wether search engine friendly URIs should be used or not</message>
 	</item>
 	<item>
 		<name>show_hide_executed_db_queries</name>
@@ -337,44 +261,12 @@
 		<message>The installation can\'t continue, because your webspace/server doesn\'t fulfill the requirements.</message>
 	</item>
 	<item>
-		<name>title</name>
-		<message>Sitetitle</message>
-	</item>
-	<item>
-		<name>type_in_date_format</name>
-		<message>Please type in a date format</message>
-	</item>
-	<item>
-		<name>type_in_db_host</name>
-		<message>Please type in the hostname, which belongs to the database</message>
-	</item>
-	<item>
-		<name>type_in_db_name</name>
-		<message>Please type in the database name</message>
-	</item>
-	<item>
-		<name>type_in_db_user_name</name>
-		<message>Please type in the user name for the database</message>
-	</item>
-	<item>
-		<name>type_in_flood_barrier</name>
-		<message>Please type in, for how long an user can\'t submit new entries</message>
-	</item>
-	<item>
 		<name>type_in_pwd</name>
 		<message>Either the password is empty or in the repetition of the password is a typo</message>
 	</item>
 	<item>
-		<name>type_in_title</name>
-		<message>Please type in a sitetitle</message>
-	</item>
-	<item>
 		<name>type_in_user_name</name>
 		<message>Please type in an user name for the administrator account</message>
-	</item>
-	<item>
-		<name>user_name</name>
-		<message>User name</message>
 	</item>
 	<item>
 		<name>welcome</name>

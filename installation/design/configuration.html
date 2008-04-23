@@ -51,22 +51,22 @@ $(function() {
 {$error_msg}
 <form action="{uri args="install/configuration"}" method="post" accept-charset="UTF-8" id="tabs">
 	<fieldset>
-		<legend>{lang values="installation|db_connection_settings"}</legend>
+		<legend>{lang values="system|db_connection_settings"}</legend>
 		<dl>
 			<dt>
-				<label for="db_host">{lang values="installation|hostname"}</label>
+				<label for="db_host">{lang values="system|host"}</label>
 				<span>{lang values="installation|hostname_description"}</span>
 			</dt>
 			<dd><input type="text" name="form[db_host]" id="db_host" value="{$form.db_host}" /></dd>
-			<dt><label for="db_user">{lang values="installation|user_name"}</label></dt>
+			<dt><label for="db_user">{lang values="system|db_username"}</label></dt>
 			<dd><input type="text" name="form[db_user]" id="db_user" value="{$form.db_user}" /></dd>
-			<dt><label for="db_pwd">{lang values="installation|pwd"}</label></dt>
+			<dt><label for="db_pwd">{lang values="system|db_password"}</label></dt>
 			<dd><input type="text" name="form[db_pwd]" id="db_pwd" value="{$form.db_pwd}" /></dd>
-			<dt><label for="db_name">{lang values="installation|database_name"}</label></dt>
+			<dt><label for="db_name">{lang values="system|db_name"}</label></dt>
 			<dd><input type="text" name="form[db_name]" id="db_name" value="{$form.db_name}" /></dd>
-			<dt><label for="db_pre">{lang values="installation|prefix"}</label></dt>
+			<dt><label for="db_pre">{lang values="system|table_prefix"}</label></dt>
 			<dd><input type="text" name="form[db_pre]" id="db_pre" value="{$form.db_pre}" /></dd>
-			<dt><label for="db_type">{lang values="installation|db_type"}</label></dt>
+			<dt><label for="db_type">{lang values="system|db_type"}</label></dt>
 			<dd>
 				<select name="form[db_type]" id="db_type">
 					<option value="">{lang values="common|pls_select"}</option>
@@ -80,22 +80,22 @@ $(function() {
 	<fieldset>
 		<legend>{lang values="installation|admin_account"}</legend>
 		<dl>
-			<dt><label for="user-name">{lang values="installation|user_name"}</label></dt>
+			<dt><label for="user-name">{lang values="users|nickname"}</label></dt>
 			<dd><input type="text" name="form[user_name]" id="user-name" value="{$form.user_name}" /></dd>
-			<dt><label for="user-pwd">{lang values="installation|pwd"}</label></dt>
+			<dt><label for="user-pwd">{lang values="users|pwd"}</label></dt>
 			<dd><input type="password" name="form[user_pwd]" id="user-pwd" /></dd>
-			<dt><label for="user-pwd-wdh">{lang values="installation|pwd_repeat"}</label></dt>
+			<dt><label for="user-pwd-wdh">{lang values="users|pwd_repeat"}</label></dt>
 			<dd><input type="password" name="form[user_pwd_wdh]" id="user-pwd-wdh" /></dd>
 			<dt><label for="mail">{lang values="common|email"}</label></dt>
 			<dd><input type="text" name="form[mail]" id="mail" value="{$form.mail}" /></dd>
 		</dl>
 	</fieldset>
 	<fieldset>
-		<legend>{lang values="installation|general"}</legend>
+		<legend>{lang values="system|general"}</legend>
 		<dl>
-			<dt><label for="title">{lang values="installation|title"}</label></dt>
+			<dt><label for="title">{lang values="system|title"}</label></dt>
 			<dd><input type="text" name="form[title]" id="title" value="{$form.title}" /></dd>
-			<dt><label for="entries">{lang values="installation|entries_per_page"}</label></dt>
+			<dt><label for="entries">{lang values="system|entries_per_page"}</label></dt>
 			<dd>
 				<select name="form[entries]" id="entries">
 {foreach from=$entries item=row}
@@ -104,32 +104,18 @@ $(function() {
 				</select>
 			</dd>
 			<dt>
-				<label for="flood">{lang values="installation|flood_barrier"}</label>
-				<span>({lang values="installation|flood_barrier_description"})</span>
+				<label for="flood">{lang values="system|flood_barrier"}</label>
+				<span>({lang values="system|flood_barrier_description"})</span>
 			</dt>
 			<dd><input type="text" name="form[flood]" id="flood" value="{$form.flood}" maxlength="3" /></dd>
-			<dt>
-				<label for="sef_yes">{lang values="installation|sef_uris"}</label>
-				<span>({lang values="installation|sef_uris_description"})</span>
-			</dt>
-			<dd>
-				<label for="sef_yes">
-					<input type="radio" name="form[sef]" id="sef_yes" value="1"{$sef.0.checked} class="checkbox" />
-					{lang values="common|yes"}
-				</label>
-				<label for="sef_no">
-					<input type="radio" name="form[sef]" id="sef_no" value="0"{$sef.1.checked} class="checkbox" />
-					{lang values="common|no"}
-				</label>
-			</dd>
 		</dl>
 	</fieldset>
 	<fieldset>
 		<legend>{lang values="common|date"}</legend>
 		<dl>
 			<dt>
-				<label for="date">{lang values="installation|date_format"}</label>
-				<span>({lang values="installation|php_date_function"})</span>
+				<label for="date">{lang values="system|date_format"}</label>
+				<span>({lang values="system|php_date_function"})</span>
 			</dt>
 			<dd><input type="text" name="form[date]" id="date" value="{$form.date}" maxlength="20" /></dd>
 			<dt><label for="time_zone">{lang values="common|time_zone"}</label></dt>
@@ -140,7 +126,7 @@ $(function() {
 {/foreach}
 				</select>
 			</dd>
-			<dt><label for="dst_yes">{lang values="installation|daylight_saving_time"}</label></dt>
+			<dt><label for="dst_yes">{lang values="common|daylight_saving_time"}</label></dt>
 			<dd>
 				<label for="dst_yes">
 					<input type="radio" name="form[dst]" id="dst_yes" value="1"{$dst.0.checked} class="checkbox" />
