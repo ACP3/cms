@@ -67,8 +67,8 @@ class modules
 					if (!defined('POS') && preg_match('/^(pos_(\d+))$/', $query[$i])) {
 						define('POS', substr($query[$i], 4));
 					} elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) {
-						$pos = strpos($query[$i], '_');
-						$this->params[substr($query[$i], 0, $pos)] = substr($query[$i], $pos + 1);
+						$param = explode('_', $query[$i], 2);
+						$this->$param[0] = $param[1];
 					}
 				}
 			}
@@ -88,6 +88,16 @@ class modules
 		if (!empty($key) && array_key_exists($key, $this->params))
 			return $this->params[$key];
 		return null;
+	}
+	/**
+	 * Setzt neue URI Parameter
+	 *
+	 * @param string $name
+	 * @param mixed $value
+	 */
+	public function __set($name, $value)
+	{
+		$this->params[$name] = $value;
 	}
 	/**
 	 * Überpüft, ob ein Modul überhaupt existiert, bzw. der Benutzer auf ein Modul Zugriff hat

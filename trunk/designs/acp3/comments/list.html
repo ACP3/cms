@@ -1,5 +1,5 @@
 {if $comments}
-<a name="comments" id="comments"></a>
+<h1 id="comments">{lang values="comments|comments"}</h1>
 {$pagination}
 {foreach from=$comments item=row}
 	<div class="gb">
@@ -18,9 +18,7 @@
 		<div class="content">
 			{$row.message}
 		</div>
-		<div class="footer">
-			&nbsp;
-		</div>
+		<div class="footer"></div>
 	</div>
 	<br />
 	<br />
@@ -32,7 +30,7 @@
 {/if}
 <hr />
 {$error_msg}
-<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+<form action="{$REQUEST_URI}#comments" method="post" accept-charset="UTF-8">
 	<fieldset class="no-border">
 		<dl>
 			<dt><label for="name">{lang values="common|name"}</label></dt>
