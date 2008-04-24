@@ -443,6 +443,7 @@ a.form {
 	border-left: 1px solid #333;
 }
 .gb .footer {
+	height: 25px;
 	background: #ccc url('images/common_footer.png') repeat-x;
 	border-top: 1px solid #333;
 	line-height: 18px;
