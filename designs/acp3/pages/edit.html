@@ -39,11 +39,6 @@
 		<dl>
 			<dt><label for="title">{lang values="pages|title"}</label></dt>
 			<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120" /></dd>
-		</dl>
-	</fieldset>
-	<fieldset id="static_page" style="width:70%">
-		<legend>{lang values="pages|static_page"}</legend>
-		<dl>
 			<dt><label for="parent">{lang values="pages|superior_page"}</label></dt>
 			<dd>
 				<select name="form[parent]" id="parent">
@@ -53,6 +48,11 @@
 {/foreach}
 				</select>
 			</dd>
+		</dl>
+	</fieldset>
+	<fieldset id="static_page" style="width:70%">
+		<legend>{lang values="pages|static_page"}</legend>
+		<dl>
 			<dt><label for="text">{lang values="pages|text"}</label></dt>
 			<dd>{fckeditor InstanceName="text" Value="`$form.text`" Width="100%" Height="250px"}</dd>
 		</dl>

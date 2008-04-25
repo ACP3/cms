@@ -44,7 +44,6 @@ if (validate::isNumber($modules->id) && $db->select('id', 'pages', 'id = \'' . $
 				$form['uri'] = '';
 				$form['target'] = '';
 			} else {
-				$form['parent'] = '';
 				$form['text'] = '';
 			}
 
@@ -63,7 +62,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'pages', 'id = \'' . $
 
 			$bool = $db->update('pages', $update_values, 'id = \'' . $modules->id . '\'');
 
-			cache::create('pages', $db->select('p.id, p.start, p.end, p.mode, p.title, p.uri, p.target, b.index_name AS block_name', 'pages AS p, ' . CONFIG_DB_PRE . 'pages_blocks AS b', 'p.block_id != \'0\' AND p.block_id = b.id', 'p.sort ASC, p.title ASC'));
+			cache::create('pages', $db->select('p.id, p.start, p.end, p.mode, p.title, p.target, b.index_name AS block_name', 'pages AS p, ' . CONFIG_DB_PRE . 'pages_blocks AS b', 'p.block_id != \'0\' AND p.block_id = b.id', 'p.sort ASC, p.title ASC'));
 			cache::create('pages_list_id_' . $modules->id, $db->select('mode, uri, text', 'pages', 'id = \'' . $modules->id . '\''));
 
 			$content = comboBox($bool ? lang('pages', 'edit_success') : lang('pages', 'edit_error'), uri('acp/pages'));
@@ -73,7 +72,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'pages', 'id = \'' . $
 		//Funktionen einbinden
 		include_once ACP3_ROOT . 'modules/pages/functions.php';
 
-		$page = $db->select('start, end, mode, parent, block_id, sort, title, uri, target, text', 'pages', 'id = \'' . $modules->id . '\'');
+		$page = $db->select('id, start, end, mode, parent, block_id, sort, title, uri, target, text', 'pages', 'id = \'' . $modules->id . '\'');
 		$page[0]['text'] = $db->escape($page[0]['text'], 3);
 		$page[0]['uri'] = $db->escape($page[0]['uri'], 3);
 
@@ -114,7 +113,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'pages', 'id = \'' . $
 
 		$tpl->assign('form', isset($form) ? $form : $page[0]);
 
-		$tpl->assign('pages_list', pagesList(0, $page[0]['parent']));
+		$tpl->assign('pages_list', pagesList(0, $page[0]['parent'], $page[0]['id']));
 
 		$content = $tpl->fetch('pages/edit.html');
 	}
