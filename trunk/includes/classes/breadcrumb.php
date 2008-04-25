@@ -61,15 +61,60 @@ class breadcrumb
 	 * 	2 = Nur Seitentitel ausgeben
 	 * @return string
 	 */
-	public static function output($mode = 1)
+	public static function output($mode = 1, $id = '')
 	{
 		global $modules, $tpl;
 
 		$module = $modules->mod;
 		$page = $modules->page;
 
+		// Brotkrümelspur für die Menüpunkte
+		if ($module == 'pages' && $page == 'list') {
+			global $db;
+
+			if (!validate::isNumber($id))
+				$id = $modules->id;
+
+			$page = $db->select('mode, parent, title', 'pages', 'id = \'' . $id . '\' AND (mode = \'1\' OR mode = \'2\')');
+
+			// Dynamische Seiten (ACP3 intern)
+			if ($id == $modules->id && $page[0]['mode'] == 2 && empty($page[0]['parent']) && !empty(self::$steps) && self::$end != '') {
+				if ($mode == 1) {
+					$tpl->assign('breadcrumb', self::$steps);
+					$tpl->assign('end', self::$end);
+					return $tpl->fetch('common/breadcrumb.html');
+				} else {
+					return self::$end;
+				}
+			// Statische Seiten
+			} else {
+				// Brotkrümelspur ausgeben
+				if ($mode == 1) {
+					if ($id == $modules->id) {
+						self::$steps = array();
+						self::$end = '';
+					}
+					if (empty(self::$end)) {
+						self::$end = $page[0]['title'];
+					}
+					if ($db->select('parent', 'pages', 'id = \'' . $page[0]['parent'] . '\' AND (mode = \'1\' OR mode = \'2\')', 0, 0, 0, 1) > 0) {
+						$parent = $db->select('title', 'pages', 'id = \'' . $page[0]['parent'] . '\' AND (mode = \'1\' OR mode = \'2\')');
+						self::assign($parent[0]['title'], uri('pages/list/id_' . $page[0]['parent']));
+
+						return self::output(1, $page[0]['parent']);
+					}
+					$pages = self::$steps;
+					krsort($pages);
+					$tpl->assign('breadcrumb', $pages);
+					$tpl->assign('end', self::$end);
+					return $tpl->fetch('common/breadcrumb.html');
+				// Nur Seitentitel ausgeben
+				} else {
+					return $page[0]['title'];
+				}
+			}
 		// Brotkrümelspur für das Frontend
-		if (defined('IN_ACP3') && $mode == 1) {
+		} elseif (defined('IN_ACP3') && $mode == 1) {
 			// Zusätzlich zugewiesene Brotkrumen an Smarty übergeben
 			if (count(self::$steps) > 0) {
 				$tpl->assign('breadcrumb', self::$steps);

@@ -20,7 +20,7 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 
 	if ($modules->check()) {
 		include ACP3_ROOT . 'modules/' . $modules->mod . '/' . $modules->page . '.php';
-		$tpl->assign('CONTENT', isset($content) ? $content : '');
+		$tpl->assign('CONTENT', !empty($content) ? $content : '');
 	} elseif (!$auth->isUser() && defined('IN_ADM') && $modules->mod != 'users' && $modules->page != 'login') {
 		redirect('users/login');
 	} else {
