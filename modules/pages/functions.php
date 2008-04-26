@@ -88,7 +88,7 @@ function processNavbar()
 		for ($i = 0; $i < $c_pages; ++$i) {
 			if ($pages[$i]['start'] == $pages[$i]['end']  && $pages[$i]['start'] <= dateAligned(2, time()) || $pages[$i]['start'] != $pages[$i]['end'] && $pages[$i]['start'] <= dateAligned(2, time()) && $pages[$i]['end'] >= dateAligned(2, time())) {
 				$link['css'] = 'navi-' . $pages[$i]['id'] . ($modules->mod == 'pages' && $modules->page == 'list' && $modules->id == $pages[$i]['id'] ? $selected : '');
-				$link['href'] = uri('pages/list/id_' . $pages[$i]['id']);
+				$link['href'] = uri('pages/list/item_' . $pages[$i]['id']);
 				$link['target'] = ($pages[$i]['mode'] == 2 || $pages[$i]['mode'] == 3) && $pages[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 				$link['title'] = $pages[$i]['title'];
 

@@ -97,7 +97,9 @@ class modules
 	 */
 	public function __set($name, $value)
 	{
-		$this->params[$name] = $value;
+		if ($this->mod != 'pages' && $this->page != 'list' && $name != 'item') {
+			$this->params[$name] = $value;
+		}
 	}
 	/**
 	 * Überpüft, ob ein Modul überhaupt existiert, bzw. der Benutzer auf ein Modul Zugriff hat
