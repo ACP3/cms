@@ -12,11 +12,11 @@ if (!defined('IN_ACP3'))
 
 $date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
 
-if (validate::isNumber($modules->id) && $db->select('id', 'pages', 'id = \'' . $modules->id . '\'' . $date, 0, 0, 0, 1) == 1) {
-	if (!cache::check('pages_list_id_' . $modules->id)) {
-		cache::create('pages_list_id_' . $modules->id, $db->select('mode, uri, text', 'pages', 'id = \'' . $modules->id . '\''));
+if (validate::isNumber($modules->item) && $db->select('id', 'pages', 'id = \'' . $modules->item . '\'' . $date, 0, 0, 0, 1) == 1) {
+	if (!cache::check('pages_list_id_' . $modules->item)) {
+		cache::create('pages_list_id_' . $modules->item, $db->select('mode, uri, text', 'pages', 'id = \'' . $modules->item . '\''));
 	}
-	$page = cache::output('pages_list_id_' . $modules->id);
+	$page = cache::output('pages_list_id_' . $modules->item);
 
 	if ($page[0]['mode'] == '1') {
 		$tpl->assign('text', $db->escape($page[0]['text'], 3));

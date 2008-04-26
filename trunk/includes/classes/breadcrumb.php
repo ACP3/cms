@@ -73,12 +73,12 @@ class breadcrumb
 			global $db;
 
 			if (!validate::isNumber($id))
-				$id = $modules->id;
+				$id = $modules->item;
 
 			$page = $db->select('mode, parent, title', 'pages', 'id = \'' . $id . '\' AND (mode = \'1\' OR mode = \'2\')');
 
 			// Dynamische Seiten (ACP3 intern)
-			if ($id == $modules->id && $page[0]['mode'] == 2 && empty($page[0]['parent']) && !empty(self::$steps) && self::$end != '') {
+			if ($id == $modules->item && $page[0]['mode'] == 2 && empty($page[0]['parent']) && !empty(self::$steps) && self::$end != '') {
 				if ($mode == 1) {
 					$tpl->assign('breadcrumb', self::$steps);
 					$tpl->assign('end', self::$end);
@@ -90,7 +90,7 @@ class breadcrumb
 			} else {
 				// Brotkrümelspur ausgeben
 				if ($mode == 1) {
-					if ($id == $modules->id) {
+					if ($id == $modules->item) {
 						self::$steps = array();
 						self::$end = '';
 					}
