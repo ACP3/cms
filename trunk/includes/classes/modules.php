@@ -55,9 +55,9 @@ class modules
 		$this->page = !empty($query[1]) ? $query[1] : $defaultPage;
 
 		if (!empty($_POST['cat']))
-			$this->params['cat'] = $_POST['cat'];
+			$this->cat = $_POST['cat'];
 		if (!empty($_POST['action']))
-			$this->params['action'] = $_POST['action'];
+			$this->action = $_POST['action'];
 
 		if (!empty($query[2])) {
 			$c_query = count($query);
@@ -97,9 +97,7 @@ class modules
 	 */
 	public function __set($name, $value)
 	{
-		if ($this->mod != 'pages' && $this->page != 'list' && $name != 'item') {
-			$this->params[$name] = $value;
-		}
+		$this->params[$name] = $value;
 	}
 	/**
 	 * Überpüft, ob ein Modul überhaupt existiert, bzw. der Benutzer auf ein Modul Zugriff hat
