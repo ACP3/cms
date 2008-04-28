@@ -99,7 +99,7 @@ class breadcrumb
 					}
 					if ($db->select('parent', 'pages', 'id = \'' . $page[0]['parent'] . '\' AND (mode = \'1\' OR mode = \'2\')', 0, 0, 0, 1) > 0) {
 						$parent = $db->select('title', 'pages', 'id = \'' . $page[0]['parent'] . '\' AND (mode = \'1\' OR mode = \'2\')');
-						self::assign($parent[0]['title'], uri('pages/list/id_' . $page[0]['parent']));
+						self::assign($parent[0]['title'], uri('pages/list/item_' . $page[0]['parent']));
 
 						return self::output(1, $page[0]['parent']);
 					}
