@@ -10,6 +10,9 @@
 if (!defined('IN_ADM'))
 	exit;
 
+//Funktionen einbinden
+include_once ACP3_ROOT . 'modules/pages/functions.php';
+
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
@@ -59,15 +62,12 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('pages', $insert_values);
 
-		cache::create('pages', $db->select('p.id, p.start, p.end, p.mode, p.title, p.target, b.index_name AS block_name', 'pages AS p, ' . CONFIG_DB_PRE . 'pages_blocks AS b', 'p.block_id != \'0\' AND p.block_id = b.id', 'p.sort ASC, p.title ASC'));
+		generatePagesCache();
 
 		$content = comboBox($bool ? lang('pages', 'create_success') : lang('pages', 'create_error'), uri('acp/pages'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-	//Funktionen einbinden
-	include_once ACP3_ROOT . 'modules/pages/functions.php';
-
 	// Datumsauswahl
 	$tpl->assign('start_date', datepicker('start'));
 	$tpl->assign('end_date', datepicker('end'));
@@ -104,8 +104,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('target', $target);
 
 	$tpl->assign('form', isset($form) ? $form : '');
-
-	$tpl->assign('pages_list', pagesList());
+	$tpl->assign('pages_list', pagesList(cache::output('pages')));
 
 	$content = $tpl->fetch('pages/create.html');
 }
