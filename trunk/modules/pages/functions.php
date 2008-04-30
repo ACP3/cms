@@ -99,8 +99,14 @@ function parentCheck($id, $parent_id)
  *
  * @return mixed
  */
-function processNavbar($pages, $block)
+function processNavbar($block, $pages = 0)
 {
+	if (empty($pages)) {
+		if (!cache::check('pages')) {
+			generatePagesCache();
+		}
+		$pages = cache::output('pages');
+	}
 	$c_pages = count($pages);
 
 	if ($c_pages > 0) {
@@ -116,7 +122,7 @@ function processNavbar($pages, $block)
 				$target = ($row['mode'] == 2 || $row['mode'] == 3) && $row['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 				$navbar[$block].= "\t" . '<li><a href="' . $href . '" class="' . $css . '"' . $target . '>' . $row['title'] . '</a>';
 				if (!empty($row['children'])) {
-					processNavbar($row['children'], $block);
+					processNavbar($block, $row['children']);
 				}
 				$navbar[$block].= "</li>\n";
 			}
