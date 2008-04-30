@@ -20,39 +20,40 @@ function generatePagesCache()
 			foreach ($pages[$i] as $key => $value) {
 				$items[$pages[$i]['id']][$key] = $value;
 			}
-			$items[$pages[$i]['parent']]['childs'][$pages[$i]['id']] =& $items[$pages[$i]['id']];
+			$items[$pages[$i]['parent']]['children'][$pages[$i]['id']] =& $items[$pages[$i]['id']];
 		}
 	}
-	cache::create('pages', $items[0]['childs']);
+	cache::create('pages', $items[0]['children']);
 }
 /**
  * Auflistung der übergeordneten Seiten
  *
  * @param array $pages
- * @param integer $id
  * @param integer $parent
+ * @param integer $self
  * @return array
  */
-function pagesList($pages, $id = 0, $parent = 0)
+function pagesList($pages, $parent = 0, $self = 0)
 {
 	static $output = array(), $key = 0, $spaces = '';
 
 	$c_pages = count($pages);
 
 	if ($c_pages > 0) {
-		if ($id != 0)
+		if ($key != 0)
 			$spaces.= '&nbsp;&nbsp;';
 
 		$i = 0;
 		foreach ($pages as $row) {
-			$output[$key]['id'] = $row['id'];
-			$output[$key]['selected'] = selectEntry('parent', $row['id'], $parent);
-			$output[$key]['title'] = $spaces . $row['title'];
-			$key++;
-			if (!empty($row['childs'])) {
-				pagesList($row['childs'], $row['id'], $parent);
+			if ($self != $row['id']) {
+				$output[$key]['id'] = $row['id'];
+				$output[$key]['selected'] = selectEntry('parent', $row['id'], $parent);
+				$output[$key]['title'] = $spaces . $row['title'];
+				$key++;
+				if (!empty($row['children'])) {
+					pagesList($row['children'], $parent, $self);
+				}
 			}
-
 			if ($i == $c_pages - 1) {
 				$spaces = substr($spaces, 0, -12);
 			}

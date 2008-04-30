@@ -113,7 +113,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'pages', 'id = \'' . $
 
 		$tpl->assign('form', isset($form) ? $form : $page[0]);
 
-		$tpl->assign('pages_list', pagesList(cache::output('pages'), 0, $page[0]['parent']));
+		$tpl->assign('pages_list', pagesList(cache::output('pages'), $page[0]['parent'], $page[0]['id']));
 
 		$content = $tpl->fetch('pages/edit.html');
 	}
