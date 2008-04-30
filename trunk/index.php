@@ -30,12 +30,6 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 	// Evtl. gesetzten Content-Type des Servers überschreiben
 	header('Content-Type: ' . (defined('CUSTOM_CONTENT_TYPE') ? CUSTOM_CONTENT_TYPE : 'text/html') . '; charset=UTF-8');
 
-	// Navigationsleisten
-	if ($modules->check('pages', 'functions')) {
-		include_once ACP3_ROOT . 'modules/pages/functions.php';
-		$tpl->assign('navbar', processNavbar());
-	}
-
 	// Seitentitel und Brotkrümelspur setzen
 	$tpl->assign('TITLE', breadcrumb::output(2));
 	$tpl->assign('BREADCRUMB', breadcrumb::output());

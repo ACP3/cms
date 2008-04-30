@@ -7,6 +7,7 @@
 <meta name="keywords" content="{$KEYWORDS}" />
 <script type="text/javascript" src="{$ROOT_DIR}includes/js/jquery.js"></script>
 <script type="text/javascript" src="{$ROOT_DIR}includes/js/acp3.js"></script>
+<script type="text/javascript" src="{$DESIGN_PATH}navbar.js"></script>
 <link rel="stylesheet" type="text/css" href="{$DESIGN_PATH}style.css" />
 <link rel="stylesheet" type="text/css" href="{$DESIGN_PATH}ui.datepicker.css" />
 <link rel="alternate" type="application/rss+xml" href="{uri args="feeds/list/feed_news"}" title="{$PAGE_TITLE} - {lang values="news|news"}" />
@@ -21,26 +22,14 @@
 <a name="top"></a>
 <div id="head">
 	<h1 id="page-title">{$PAGE_TITLE}</h1>
-{if $navbar.main}
-	<ul>
-{foreach from=$navbar.main item=row}
-		<li><a href="{$row.href}" class="{$row.css}"{$row.target}>{$row.title}</a></li>
-{/foreach}
-	</ul>
-{/if}
+{navbar block="main"}
 </div>
 <div id="breadcrumb">
 	{$BREADCRUMB}
 </div>
 <div id="sidebar">
-{if $navbar.sidebar}
 	<h4>Navigation</h4>
-	<ul>
-{foreach from=$navbar.sidebar item=row}
-		<li><a href="{$row.href}" class="{$row.css}"{$row.target}>{$row.title}</a></li>
-{/foreach}
-	</ul>
-{/if}
+{navbar block="sidebar"}
 	{load_module module="users|sidebar"}
 </div>
 <div id="content">

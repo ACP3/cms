@@ -10,7 +10,7 @@ function generatePagesCache()
 {
 	global $db;
 	
-	$pages = $db->select('p.id, p.start, p.end, p.mode, p.parent, p.sort, p.title, p.target, b.index_name AS block_name', 'pages AS p, ' . CONFIG_DB_PRE . 'pages_blocks AS b', 'p.block_id = b.id', 'b.id ASC, p.sort ASC, p.title ASC');
+	$pages = $db->select('p.id, p.start, p.end, p.mode, p.parent, p.block_id, p.sort, p.title, p.target, b.index_name AS block_name', 'pages AS p, ' . CONFIG_DB_PRE . 'pages_blocks AS b', 'p.block_id = b.id', 'p.block_id ASC, p.sort ASC, p.title ASC');
 	$c_pages = count($pages);
 	$items = array();
 	
@@ -33,10 +33,16 @@ function generatePagesCache()
  * @param integer $self
  * @return array
  */
-function pagesList($pages, $parent = 0, $self = 0)
+function pagesList($pages = 0, $parent = 0, $self = 0)
 {
 	static $output = array(), $key = 0, $spaces = '';
 
+	if (empty($pages)) {
+		if (!cache::check('pages')) {
+			generatePagesCache();
+		}
+		$pages = cache::output('pages');
+	}
 	$c_pages = count($pages);
 
 	if ($c_pages > 0) {
@@ -93,32 +99,34 @@ function parentCheck($id, $parent_id)
  *
  * @return mixed
  */
-function processNavbar()
+function processNavbar($pages, $block)
 {
-	global $db, $modules;
-
-	if (!cache::check('pages_navbar')) {
-		cache::create('pages_navbar', $db->select('p.id, p.start, p.end, p.mode, p.title, p.target, b.index_name AS block_name', 'pages AS p, ' . CONFIG_DB_PRE . 'pages_blocks AS b', 'p.block_id != \'0\' AND p.block_id = b.id', 'p.sort ASC, p.title ASC'));
-	}
-	$pages = cache::output('pages_navbar');
 	$c_pages = count($pages);
 
 	if ($c_pages > 0) {
-		$navbar = array();
-		$selected = ' selected';
+		global $modules;
+		static $navbar = array();
 
-		for ($i = 0; $i < $c_pages; ++$i) {
-			if ($pages[$i]['start'] == $pages[$i]['end']  && $pages[$i]['start'] <= dateAligned(2, time()) || $pages[$i]['start'] != $pages[$i]['end'] && $pages[$i]['start'] <= dateAligned(2, time()) && $pages[$i]['end'] >= dateAligned(2, time())) {
-				$link['css'] = 'navi-' . $pages[$i]['id'] . ($modules->mod == 'pages' && $modules->page == 'list' && $modules->id == $pages[$i]['id'] ? $selected : '');
-				$link['href'] = uri('pages/list/item_' . $pages[$i]['id']);
-				$link['target'] = ($pages[$i]['mode'] == 2 || $pages[$i]['mode'] == 3) && $pages[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
-				$link['title'] = $pages[$i]['title'];
-
-				$navbar[$pages[$i]['block_name']][$i] = $link;
+		$i = 0;
+		$navbar[$block].=  empty($navbar[$block]) ?  "<ul>\n" : "\n<ul>\n";
+		foreach ($pages as $row) {
+			if ($row['block_name'] == $block && !empty($row['block_id']) && $row['start'] == $row['end']  && $row['start'] <= dateAligned(2, time()) || $row['start'] != $row['end'] && $row['start'] <= dateAligned(2, time()) && $row['end'] >= dateAligned(2, time())) {
+				$css = 'navi-' . $row['id'] . ($modules->mod == 'pages' && $modules->page == 'list' && $modules->item == $row['id'] ? ' selected' : '');
+				$href = uri('pages/list/item_' . $row['id']);
+				$target = ($row['mode'] == 2 || $row['mode'] == 3) && $row['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
+				$navbar[$block].= "\t" . '<li><a href="' . $href . '" class="' . $css . '"' . $target . '>' . $row['title'] . '</a>';
+				if (!empty($row['children'])) {
+					processNavbar($row['children'], $block);
+				}
+				$navbar[$block].= "</li>\n";
 			}
+			if ($i == $c_pages - 1) {
+				$navbar[$block].= "</ul>\n";
+			}
+			++$i;
 		}
-		return $navbar;
+		return str_replace("\n<ul>\n</ul>\n", '', $navbar[$block]);
 	}
-	return null;
+	return '';
 }
 ?>
