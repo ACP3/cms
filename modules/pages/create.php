@@ -104,7 +104,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('target', $target);
 
 	$tpl->assign('form', isset($form) ? $form : '');
-	$tpl->assign('pages_list', pagesList(cache::output('pages')));
+	$tpl->assign('pages_list', pagesList());
 
 	$content = $tpl->fetch('pages/create.html');
 }

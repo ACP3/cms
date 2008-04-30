@@ -244,16 +244,38 @@ a.form {
 }
 #head ul li {
 	float: left;
+	position: relative;
 }
 #head ul li a {
 	margin-right: 3px;
 	padding: 0 5px;
 	line-height: 30px;
+	text-align: center;
 	color: #fff;
+	white-space: nowrap;
 	display: block;
 }
 #head ul li a:hover, #head ul li a.selected {
 	color: #f00;
+}
+#head ul ul {
+	width: 150px;
+	height: auto;
+	padding: 0;
+	background: #069;
+	border: 1px solid #333;
+	font-size: 1.0em;
+	display: none;
+	position: absolute;
+	top: 30px;
+	left: 0;
+}
+#head ul ul li a {
+	width: 140px;
+}
+#head ul ul ul {
+	top: -1px;
+	left: 149px;
 }
 #breadcrumb {
 	padding-left: 15px;
