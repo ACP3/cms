@@ -114,7 +114,7 @@ function processNavbar($block, $pages = 0)
 		static $navbar = array();
 
 		$i = 0;
-		$navbar[$block].=  empty($navbar[$block]) ?  "<ul>\n" : "\n<ul>\n";
+		$navbar[$block].=  empty($navbar[$block]) ?  "<ul id=\"navigation-" . $block . "\">\n" : "\n<ul>\n";
 		foreach ($pages as $row) {
 			if ($row['block_name'] == $block && !empty($row['block_id']) && $row['start'] == $row['end']  && $row['start'] <= dateAligned(2, time()) || $row['start'] != $row['end'] && $row['start'] <= dateAligned(2, time()) && $row['end'] >= dateAligned(2, time())) {
 				$css = 'navi-' . $row['id'] . ($modules->mod == 'pages' && $modules->page == 'list' && $modules->item == $row['id'] ? ' selected' : '');
