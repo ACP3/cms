@@ -38,7 +38,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'news', 'id = \'' . $m
 	if ($modules->check('comments', 'functions')) {
 		include_once ACP3_ROOT . 'modules/comments/functions.php';
 
-		$tpl->assign('comments', comments());
+		$tpl->assign('comments', comments('news', $modules->id));
 	}
 	$content = $tpl->fetch('news/details.html');
 } else {

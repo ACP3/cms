@@ -261,16 +261,22 @@ a.form {
 #head ul ul {
 	width: 150px;
 	height: auto;
+	margin-left: 1px;
 	padding: 0;
 	background: #069;
 	border: 1px solid #333;
+	border-width: 1px 1px 0;
 	font-size: 1.0em;
 	display: none;
 	position: absolute;
 	top: 30px;
 	left: 0;
 }
+#head ul ul li {
+	border-bottom: 1px solid #333;
+}
 #head ul ul li a {
+	margin: 0;
 	width: 140px;
 }
 #head ul ul ul {

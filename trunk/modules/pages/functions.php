@@ -101,38 +101,43 @@ function parentCheck($id, $parent_id)
  */
 function processNavbar($block, $pages = 0)
 {
-	if (empty($pages)) {
-		if (!cache::check('pages')) {
-			generatePagesCache();
+	static $navbar = array();
+	$search = "\n<ul>\n</ul>\n";
+	if (empty($pages) && !empty($navbar[$block])) {
+		return str_replace($search, '', $navbar[$block]);
+	} else {
+		if (empty($pages)) {
+			if (!cache::check('pages')) {
+				generatePagesCache();
+			}
+			$pages = cache::output('pages');
 		}
-		$pages = cache::output('pages');
-	}
-	$c_pages = count($pages);
+		$c_pages = count($pages);
 
-	if ($c_pages > 0) {
-		global $modules;
-		static $navbar = array();
+		if ($c_pages > 0) {
+			global $modules;
 
-		$i = 0;
-		$navbar[$block].=  empty($navbar[$block]) ?  "<ul id=\"navigation-" . $block . "\">\n" : "\n<ul>\n";
-		foreach ($pages as $row) {
-			if ($row['block_name'] == $block && !empty($row['block_id']) && $row['start'] == $row['end']  && $row['start'] <= dateAligned(2, time()) || $row['start'] != $row['end'] && $row['start'] <= dateAligned(2, time()) && $row['end'] >= dateAligned(2, time())) {
-				$css = 'navi-' . $row['id'] . ($modules->mod == 'pages' && $modules->page == 'list' && $modules->item == $row['id'] ? ' selected' : '');
-				$href = uri('pages/list/item_' . $row['id']);
-				$target = ($row['mode'] == 2 || $row['mode'] == 3) && $row['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
-				$navbar[$block].= "\t" . '<li><a href="' . $href . '" class="' . $css . '"' . $target . '>' . $row['title'] . '</a>';
-				if (!empty($row['children'])) {
-					processNavbar($block, $row['children']);
+			$i = 0;
+			$navbar[$block].=  empty($navbar[$block]) ?  "<ul id=\"navigation-" . $block . "\">\n" : "\n<ul>\n";
+			foreach ($pages as $row) {
+				if ($row['block_name'] == $block && !empty($row['block_id']) && $row['start'] == $row['end']  && $row['start'] <= dateAligned(2, time()) || $row['start'] != $row['end'] && $row['start'] <= dateAligned(2, time()) && $row['end'] >= dateAligned(2, time())) {
+					$css = 'navi-' . $row['id'] . ($modules->mod == 'pages' && $modules->page == 'list' && $modules->item == $row['id'] ? ' selected' : '');
+					$href = uri('pages/list/item_' . $row['id']);
+					$target = ($row['mode'] == 2 || $row['mode'] == 3) && $row['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
+					$navbar[$block].= "\t" . '<li><a href="' . $href . '" class="' . $css . '"' . $target . '>' . $row['title'] . '</a>';
+					if (!empty($row['children'])) {
+						processNavbar($block, $row['children']);
+					}
+					$navbar[$block].= "</li>\n";
 				}
-				$navbar[$block].= "</li>\n";
+				if ($i == $c_pages - 1) {
+					$navbar[$block].= "</ul>\n";
+				}
+				++$i;
 			}
-			if ($i == $c_pages - 1) {
-				$navbar[$block].= "</ul>\n";
-			}
-			++$i;
+			return str_replace($search, '', $navbar[$block]);
 		}
-		return str_replace("\n<ul>\n</ul>\n", '', $navbar[$block]);
+		return '';
 	}
-	return '';
 }
 ?>

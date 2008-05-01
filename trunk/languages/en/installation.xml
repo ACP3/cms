@@ -93,10 +93,6 @@
 		<message>Maximum uploadsize:</message>
 	</item>
 	<item>
-		<name>mysql_version</name>
-		<message>MySQL-Version</message>
-	</item>
-	<item>
 		<name>navigation</name>
 		<message>Navigation</message>
 	</item>
@@ -117,16 +113,8 @@
 		<message>Not writeable</message>
 	</item>
 	<item>
-		<name>off</name>
-		<message>off</message>
-	</item>
-	<item>
 		<name>offline_message</name>
 		<message>This website is currently offline. Please try it in a few minutes again.</message>
-	</item>
-	<item>
-		<name>on</name>
-		<message>on</message>
 	</item>
 	<item>
 		<name>overview</name>
@@ -173,10 +161,6 @@
 		<message>Sidebar</message>
 	</item>
 	<item>
-		<name>php_version</name>
-		<message>PHP-Version</message>
-	</item>
-	<item>
 		<name>query_failed</name>
 		<message>Query failed!</message>
 	</item>
@@ -199,10 +183,6 @@
 	<item>
 		<name>result</name>
 		<message>Reset</message>
-	</item>
-	<item>
-		<name>safe_mode</name>
-		<message>Safe mode</message>
 	</item>
 	<item>
 		<name>show_hide_executed_db_queries</name>

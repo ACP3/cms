@@ -35,7 +35,7 @@ function commentsCount($entry_id, $module = 0)
  * 	Die ID des jeweiligen Eintrages
  * @return string
  */
-function comments($module = 0, $entry_id = 0)
+function comments($module, $entry_id)
 {
 	global $auth, $db, $modules, $tpl;
 
@@ -78,13 +78,10 @@ function comments($module = 0, $entry_id = 0)
 
 			$bool = $db->insert('comments', $insert_values);
 
-			return comboBox($bool ? lang('comments', 'create_success') : lang('comments', 'create_error'), uri($form['module'] . '/details/id_' . $form['entry_id']));
+			return comboBox($bool ? lang('comments', 'create_success') : lang('comments', 'create_error'), uri($modules->query));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$module = !empty($module) ? $module : $modules->mod;
-		$entry_id = !empty($entry_id) ? $entry_id : $modules->id;
-
 		// Auflistung der Kommentare
 		$comments = $db->select('name, user_id, date, message', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 'date ASC', POS, CONFIG_ENTRIES);
 		$c_comments = count($comments);
