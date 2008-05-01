@@ -185,9 +185,9 @@ class modules
 			$id = !empty($this->id) ? '/id_' . $this->id : '';
 			$cat = !empty($this->cat) ? '/cat_' . $this->cat : '';
 			$gen = '';
-			if (!empty($this->gen)) {
-				foreach ($this->gen as $key => $value) {
-					if ($key != 'pos') {
+			if (!empty($this->params)) {
+				foreach ($this->params as $key => $value) {
+					if ($key != 'mod' && $key != 'page' && $key != 'pos') {
 						$gen .= '/' . $key . '_' . $value;
 					}
 				}
