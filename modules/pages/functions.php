@@ -10,7 +10,7 @@ function generatePagesCache()
 {
 	global $db;
 	
-	$pages = $db->select('p.id, p.start, p.end, p.mode, p.parent, p.block_id, p.sort, p.title, p.target, b.index_name AS block_name', 'pages AS p, ' . CONFIG_DB_PRE . 'pages_blocks AS b', 'p.block_id = b.id', 'p.block_id ASC, p.sort ASC, p.title ASC');
+	$pages = $db->query('SELECT p.id, p.start, p.end, p.mode, p.parent, p.block_id, p.sort, p.title, p.target, b.index_name AS block_name FROM ' . CONFIG_DB_PRE . 'pages AS p LEFT JOIN ' . CONFIG_DB_PRE . 'pages_blocks AS b ON (p.block_id = b.id) ORDER BY p.block_id ASC, p.sort ASC, p.title ASC');
 	$c_pages = count($pages);
 	$items = array();
 	
