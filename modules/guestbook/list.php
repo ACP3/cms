@@ -33,7 +33,7 @@ if ($c_guestbook > 0) {
 			$guestbook[$i]['message'] = emoticonsReplace($guestbook[$i]['message']);
 		}
 		$guestbook[$i]['website'] = $db->escape($guestbook[$i]['website'], 3);
-		if (strpos($guestbook[$i]['website'], 'http://') === false)
+		if (!empty($guestbook[$i]['website']) && strpos($guestbook[$i]['website'], 'http://') === false)
 			$guestbook[$i]['website'] = 'http://' . $guestbook[$i]['website'];
 
 		$guestbook[$i]['mail'] = !empty($guestbook[$i]['mail']) ? $guestbook[$i]['mail'] : '';
