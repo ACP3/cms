@@ -3,18 +3,18 @@ if (!defined('IN_INSTALL'))
 	exit;
 
 // Allgemeine Voraussetzungen
-$requirements[0]['name'] = lang('installation', 'php_version');
+$requirements[0]['name'] = lang('system', 'php_version');
 $requirements[0]['color'] = version_compare(phpversion(), '5.1.0', '>=') ? '090' : 'f00';
 $requirements[0]['found'] = phpversion();
 $requirements[0]['required'] = '5.1.0';
-$requirements[1]['name'] = lang('installation', 'mysql_version');
+$requirements[1]['name'] = lang('system', 'mysql_version');
 $requirements[1]['color'] = version_compare(mysql_get_client_info(), '4.0', '>=') ? '090' : 'f00';
 $requirements[1]['found'] = mysql_get_client_info();
 $requirements[1]['required'] = '4.0';
-$requirements[2]['name'] = lang('installation', 'safe_mode');
+$requirements[2]['name'] = lang('system', 'safe_mode');
 $requirements[2]['color'] = (bool)ini_get('safe_mode') ? 'f00' : '090';
-$requirements[2]['found'] = (bool)ini_get('safe_mode') ? lang('installation', 'on') : lang('installation', 'off');
-$requirements[2]['required'] = lang('installation', 'off');
+$requirements[2]['found'] = lang('system', (bool)ini_get('safe_mode') ? 'on' : 'off');
+$requirements[2]['required'] = lang('system', 'off');
 
 $tpl->assign('requirements', $requirements);
 
@@ -76,10 +76,10 @@ $tpl->assign('files_dirs', $files_dirs);
 // PHP Einstellungen
 $php_settings[0]['setting'] = lang('installation', 'error_messages');
 $php_settings[0]['color'] = (bool)ini_get('display_errors') ? 'f00' : '090';
-$php_settings[0]['value'] = (bool)ini_get('display_errors') ? lang('installation', 'on') : lang('installation', 'off');
+$php_settings[0]['value'] = lang('system', (bool)ini_get('display_errors') ? 'on' : 'off');
 $php_settings[1]['setting'] = lang('installation', 'register_globals');
 $php_settings[1]['color'] = (bool)ini_get('register_globals') ? 'f00' : '090';
-$php_settings[1]['value'] = (bool)ini_get('register_globals') ? lang('installation', 'on') : lang('installation', 'off');
+$php_settings[1]['value'] = lang('system', (bool)ini_get('register_globals') ? 'on' : 'off');
 $php_settings[2]['setting'] = lang('installation', 'maximum_uploadsize');
 $php_settings[2]['color'] = ini_get('post_max_size') > 0 ? '090' : 'f00';
 $php_settings[2]['value'] = ini_get('post_max_size');

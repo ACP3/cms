@@ -222,7 +222,7 @@
 	</item>
 	<item>
 		<name>mod_rewrite_description</name>
-		<message>Bitte nur verwenden, wenn Sie den Apache Webserver verwenden.</message>
+		<message>Bitte nur aktivieren, wenn Sie den Apache Webserver verwenden.</message>
 	</item>
 	<item>
 		<name>module_name</name>

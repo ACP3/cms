@@ -222,7 +222,7 @@
 	</item>
 	<item>
 		<name>mod_rewrite_description</name>
-		<message>Don't enable this, unless you are using the Apache web server.</message>
+		<message>Only enable this, if you are using the Apache web server.</message>
 	</item>
 	<item>
 		<name>module_name</name>
