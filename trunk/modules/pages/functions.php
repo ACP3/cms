@@ -102,9 +102,8 @@ function parentCheck($id, $parent_id)
 function processNavbar($block, $pages = 0)
 {
 	static $navbar = array();
-	$search = "\n<ul>\n</ul>\n";
 	if (empty($pages) && !empty($navbar[$block])) {
-		return str_replace($search, '', $navbar[$block]);
+		return $navbar[$block];
 	} else {
 		if (empty($pages)) {
 			if (!cache::check('pages')) {
@@ -116,26 +115,35 @@ function processNavbar($block, $pages = 0)
 
 		if ($c_pages > 0) {
 			global $modules;
+			static $tabs = '';
+
+			if (!empty($navbar[$block]))
+				$tabs.= "\t\t";
 
 			$i = 0;
-			$navbar[$block].=  empty($navbar[$block]) ?  "<ul id=\"navigation-" . $block . "\">\n" : "\n<ul>\n";
+			$navbar[$block].=  empty($navbar[$block]) ?  "<ul class=\"navigation-" . $block . "\">\n" : $tabs . "<ul>\n";
 			foreach ($pages as $row) {
 				if ($row['block_name'] == $block && !empty($row['block_id']) && $row['start'] == $row['end']  && $row['start'] <= dateAligned(2, time()) || $row['start'] != $row['end'] && $row['start'] <= dateAligned(2, time()) && $row['end'] >= dateAligned(2, time())) {
 					$css = 'navi-' . $row['id'] . ($modules->mod == 'pages' && $modules->page == 'list' && $modules->item == $row['id'] ? ' selected' : '');
 					$href = uri('pages/list/item_' . $row['id']);
 					$target = ($row['mode'] == 2 || $row['mode'] == 3) && $row['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
-					$navbar[$block].= "\t" . '<li><a href="' . $href . '" class="' . $css . '"' . $target . '>' . $row['title'] . '</a>';
-					if (!empty($row['children'])) {
+					$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $row['title'] . '</a>';
+					if (empty($row['children'])) {
+						$navbar[$block].= $tabs . "\t<li>" . $link . "</li>\n";
+					} else {
+						$navbar[$block].= $tabs . "\t<li>\n" . $tabs . "\t\t" . $link . "\n";
 						processNavbar($block, $row['children']);
+						$navbar[$block].= $tabs . "\t</li>\n";
 					}
-					$navbar[$block].= "</li>\n";
 				}
 				if ($i == $c_pages - 1) {
-					$navbar[$block].= "</ul>\n";
+					$navbar[$block].= $tabs . "</ul>\n";
+					$navbar[$block] = str_replace($tabs . "<ul>\n" . $tabs . "</ul>\n", '', $navbar[$block]);
+					$tabs = substr($tabs, 0, -2);
 				}
 				++$i;
 			}
-			return str_replace($search, '', $navbar[$block]);
+			return $navbar[$block];
 		}
 		return '';
 	}
