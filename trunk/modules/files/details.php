@@ -23,6 +23,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'files', 'id = \'' . $
 		if (is_file($path . $file[0]['file'])) {
 			header('Content-Type: application/force-download');
 			header('Content-Transfer-Encoding: binary');
+			header('Content-Length:' . filesize($path . $file[0]['file']));
 			header('Content-Disposition: attachment; filename="' . $file[0]['file'] . '"');
 			readfile($path . $file[0]['file']);
 			exit;
