@@ -42,7 +42,7 @@ class validate
 	 */
 	public static function date($value)
 	{
-		return strtotime($value, dateAligned(2, time())) == -1 ? false : true;
+		return empty($date) || strtotime($value, dateAligned(2, time())) == -1 ? false : true;
 	}
 	/**
 	 * Überprüft, ob eine Standardkonforme E-Mail-Adresse übergeben wurde
