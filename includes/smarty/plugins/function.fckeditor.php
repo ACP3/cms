@@ -39,7 +39,7 @@ function smarty_function_fckeditor($params, &$smarty) {
 	// Test if editor has been loaded before
 	$init = count($base_arguments) ? true : false;
 
-	$base_arguments['BasePath'] = ROOT_DIR . 'includes/fckeditor/';
+	$base_arguments['BasePath'] = ROOT_DIR . '/includes/fckeditor/';
 
 	$base_arguments['InstanceName'] = 'form[' . $params['InstanceName'] . ']';
 

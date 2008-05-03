@@ -28,7 +28,7 @@ function __autoload($className)
 
 // Einige Konstanten definieren
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
-define('ROOT_DIR', dirname(PHP_SELF) . '/');
+define('ROOT_DIR', dirname(PHP_SELF));
 
 // Smarty einbinden
 define('SMARTY_DIR', ACP3_ROOT . 'includes/smarty/');
@@ -42,7 +42,7 @@ $tpl->compile_dir = ACP3_ROOT . 'cache/';
 $tpl->assign('PHP_SELF', PHP_SELF);
 $tpl->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
 $tpl->assign('ROOT_DIR', ROOT_DIR);
-$tpl->assign('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
+$tpl->assign('DESIGN_PATH', ROOT_DIR . '/designs/' . CONFIG_DESIGN . '/');
 $tpl->assign('LANG', CONFIG_LANG);
 $tpl->assign('PAGE_TITLE', CONFIG_TITLE);
 $tpl->assign('KEYWORDS', CONFIG_META_KEYWORDS);

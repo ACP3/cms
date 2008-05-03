@@ -37,7 +37,7 @@ if ($modules->dir) {
 			$languages[$i]['description'] = $lang_info['description'];
 			$languages[$i]['author'] = $lang_info['author'];
 			$languages[$i]['version'] = $lang_info['version'];
-			$languages[$i]['action'] = CONFIG_LANG == $directories[$i] ? '<img src="' . ROOT_DIR . 'images/crystal/16/active.png" alt="" />' : '<a href="' . uri('acp/system/languages/dir_' . $directories[$i]) . '"><img src="' . ROOT_DIR . 'images/crystal/16/inactive.png" alt="" /></a>';
+			$languages[$i]['action'] = CONFIG_LANG == $directories[$i] ? '<img src="' . ROOT_DIR . '/images/crystal/16/active.png" alt="" />' : '<a href="' . uri('acp/system/languages/dir_' . $directories[$i]) . '"><img src="' . ROOT_DIR . '/images/crystal/16/inactive.png" alt="" /></a>';
 		}
 	}
 	$tpl->assign('languages', $languages);
