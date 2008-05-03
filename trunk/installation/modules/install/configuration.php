@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('common', 'select_daylight_saving_time');
 	if (!validate::isNumber($form['time_zone']))
 		$errors[] = lang('common', 'select_time_zone');
-	if (!file_exists($config_path) || !is_writable($config_path))
+	if (!is_file($config_path) || !is_writable($config_path))
 		$errors[] = lang('installation', 'wrong_chmod_for_config_file');
 
 	if (isset($errors)) {
@@ -66,6 +66,7 @@ if (isset($_POST['submit'])) {
 			'dst' => $form['dst'],
 			'entries' => $form['entries'],
 			'flood' => $form['flood'],
+			'homepage' => 'news/list/',
 			'lang' => LANG,
 			'maintenance' => 0,
 			'maintenance_msg' => lang('installation', 'offline_message'),

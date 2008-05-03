@@ -93,6 +93,10 @@
 		<message>Modul deaktivieren</message>
 	</item>
 	<item>
+		<name>enable_disable_mod_rewrite</name>
+		<message>Bitte geben Sie an, ob die suchmaschinenfreundlichen URIs verwendet werden sollen, oder nicht</message>
+	</item>
+	<item>
 		<name>enable_module</name>
 		<message>Modul aktivieren</message>
 	</item>
@@ -145,8 +149,20 @@
 		<message>Allgemeine Einstellungen</message>
 	</item>
 	<item>
+		<name>homepage</name>
+		<message>Startseite</message>
+	</item>
+	<item>
+		<name>homepage_description</name>
+		<message><![CDATA[Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein]]></message>
+	</item>
+	<item>
 		<name>host</name>
 		<message>Hostname</message>
+	</item>
+	<item>
+		<name>incorrect_homepage</name>
+		<message><![CDATA[Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein]]></message>
 	</item>
 	<item>
 		<name>installed_version</name>
@@ -343,10 +359,6 @@
 	<item>
 		<name>select_output</name>
 		<message>Bittw wählen Sie aus, ob die Sicherung der SQL-Tabellen als Datei oder als Text ausgegeben werden soll.</message>
-	</item>
-	<item>
-		<name>select_sef_uris</name>
-		<message>Bitte geben Sie an, ob die suchmaschinenfreundlichen URIs verwendet werden sollen, oder nicht</message>
 	</item>
 	<item>
 		<name>select_sql_tables</name>

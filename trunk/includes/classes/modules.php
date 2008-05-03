@@ -46,6 +46,10 @@ class modules
 		} else {
 			// Definieren, dass man sich im Frontend befindet
 			define('IN_ACP3', true);
+			// Query auf eine beutzerdefinierte Startseite setzen
+			if (empty($this->query) && CONFIG_HOMEPAGE != '') {
+				$this->query = CONFIG_HOMEPAGE;
+			}
 		}
 		$query = !empty($this->query) ? explode('/', $this->query) : 0;
 		$defaultModule = defined('IN_ADM') ? 'acp' : 'news';
@@ -115,7 +119,7 @@ class modules
 		$module = !empty($module) ? $module : $this->mod;
 		$page = !empty($page) ? $page : $this->page;
 
-		if (file_exists(ACP3_ROOT . 'modules/' . $module . '/' . $page . '.php')) {
+		if (is_file(ACP3_ROOT . 'modules/' . $module . '/' . $page . '.php')) {
 			$xml = simplexml_load_file(ACP3_ROOT . 'modules/' . $module . '/module.xml');
 
 			if ((string) $xml->info->active == '1') {

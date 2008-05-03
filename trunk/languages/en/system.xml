@@ -93,6 +93,10 @@
 		<message>Disable module</message>
 	</item>
 	<item>
+		<name>enable_disable_mod_rewrite</name>
+		<message>Please select, wether search engine friendly URIs should be used, or not</message>
+	</item>
+	<item>
 		<name>enable_module</name>
 		<message>Enable module</message>
 	</item>
@@ -145,8 +149,20 @@
 		<message>General settings</message>
 	</item>
 	<item>
+		<name>homepage</name>
+		<message>Homepage</message>
+	</item>
+	<item>
+		<name>homepage_description</name>
+		<message><![CDATA[To specify a custom homepage, please use the format &quot;module/file/optional_parameters/&quot;.]]></message>
+	</item>
+	<item>
 		<name>host</name>
 		<message>Hostname</message>
+	</item>
+	<item>
+		<name>incorrect_homepage</name>
+		<message><![CDATA[To specify a custom homepage, please use the format &quot;module/file/optional_parameters/&quot;.]]></message>
 	</item>
 	<item>
 		<name>installed_version</name>
@@ -343,10 +359,6 @@
 	<item>
 		<name>select_output</name>
 		<message>Please select, wether the backup should be output as a file or a text</message>
-	</item>
-	<item>
-		<name>select_sef_uris</name>
-		<message>Please select, wether search engine friendly URIs should be used, or not</message>
 	</item>
 	<item>
 		<name>select_sql_tables</name>

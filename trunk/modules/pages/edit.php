@@ -11,7 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (validate::isNumber($modules->id) && $db->select('id', 'pages', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
-	//Funktionen einbinden
+	// Funktionen einbinden
 	include_once ACP3_ROOT . 'modules/pages/functions.php';
 
 	if (isset($_POST['submit'])) {

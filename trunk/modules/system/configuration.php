@@ -17,8 +17,8 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('system', 'select_entries_per_page');
 	if (!validate::isNumber($form['flood']))
 		$errors[] = lang('system', 'type_in_flood_barrier');
-	if (!validate::isNumber($form['sef']))
-		$errors[] = lang('system', 'select_sef_uris');
+	if (!preg_match('/^(\w+\/)+$/', $form['homepage']))
+		$errors[] = lang('system', 'incorrect_homepage');
 	if (empty($form['date']))
 		$errors[] = lang('system', 'type_in_date_format');
 	if (!is_numeric($form['time_zone']))
@@ -31,19 +31,46 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('system', 'maintenance_message_to_short');
 	if (empty($form['title']))
 		$errors[] = lang('system', 'title_to_short');
+	if (!validate::isNumber($form['sef']))
+		$errors[] = lang('system', 'enable_disable_mod_rewrite');
 	if (empty($form['db_host']))
 		$errors[] = lang('system', 'type_in_db_host');
 	if (empty($form['db_user']))
 		$errors[] = lang('system', 'type_in_db_username');
 	if (empty($form['db_name']))
 		$errors[] = lang('system', 'type_in_db_name');
-	if (empty($form['db_type']))
+	if ($form['db_type'] != 'mysql' && $form['db_type'] != 'mysqli')
 		$errors[] = lang('system', 'select_db_type');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
-		$bool = config::general($form);
+		// Konfig aktualisieren
+		$config = array(
+			'date' => $db->escape($form['date']),
+			'db_host' => $form['db_host'],
+			'db_name' => $form['db_name'],
+			'db_pre' => $db->escape($form['db_pre']),
+			'db_pwd' => $form['db_pwd'],
+			'db_type' => $form['db_type'],
+			'db_user' => $form['db_user'],
+			'design' => CONFIG_DESIGN,
+			'dst' => $form['dst'],
+			'entries' => $form['entries'],
+			'flood' => $form['flood'],
+			'homepage' => $form['homepage'],
+			'lang' => CONFIG_LANG,
+			'maintenance' => $form['maintenance'],
+			'maintenance_msg' => $db->escape($form['maintenance_msg']),
+			'meta_description' => $db->escape($form['meta_description']),
+			'meta_keywords' => $db->escape($form['meta_keywords']),
+			'sef' => $form['sef'],
+			'time_zone' => $form['time_zone'],
+			'title' => $db->escape($form['title']),
+			'version' => CONFIG_VERSION
+		);
+
+		$bool = config::general($config);
 
 		$content = comboBox($bool ? lang('system', 'config_edit_success') : lang('system', 'config_edit_error'), uri('acp/system/configuration'));
 	}
@@ -88,6 +115,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('db_type', $db_type);
 
 	$current['flood'] = CONFIG_FLOOD;
+	$current['homepage'] = CONFIG_HOMEPAGE;
 	$current['date'] = CONFIG_DATE;
 	$current['maintenance_msg'] = CONFIG_MAINTENANCE_MSG;
 	$current['title'] = CONFIG_TITLE;

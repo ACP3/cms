@@ -1,13 +1,13 @@
 <?php
-error_reporting(E_ALL^E_NOTICE);
+error_reporting(0);
 
 // Standardzeitzone festlegen
 date_default_timezone_set('Europe/Berlin');
 
 define('IN_INSTALL', true);
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
-define('ROOT_DIR', substr(PHP_SELF, 0, strrpos(PHP_SELF, '/') + 1));
-define('CONFIG_VERSION', '4.0b10 SVN');
+define('ROOT_DIR', dirname(PHP_SELF) . '/');
+define('CONFIG_VERSION', '4.0RC1 SVN');
 
 include ACP3_ROOT . 'includes/globals.php';
 
@@ -18,7 +18,7 @@ function __autoload($className)
 
 include ACP3_ROOT . 'installation/includes/functions.php';
 
-$modules = new modules;
+$modules = new modules();
 
 if (empty($modules->query)) {
 	$modules->mod = 'overview';
@@ -33,7 +33,7 @@ include SMARTY_DIR . 'Smarty.class.php';
 $tpl = new smarty;
 $tpl->template_dir = ACP3_ROOT . 'installation/design/';
 $tpl->compile_dir = ACP3_ROOT . 'cache/installation/';
-if (!file_exists($tpl->compile_dir)) {
+if (!is_dir($tpl->compile_dir)) {
 	mkdir($tpl->compile_dir);
 }
 

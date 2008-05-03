@@ -52,7 +52,7 @@ class config
 	public static function module($module, $data)
 	{
 		$path = ACP3_ROOT . 'modules/' . $module . '/module.xml';
-		if (!preg_match('=/=', $module) && file_exists($path) && is_writable($path)) {
+		if (!preg_match('=/=', $module) && is_file($path) && is_writable($path)) {
 			$xml = new DOMDocument();
 			$xml->load($path);
 			$xp = new domxpath($xml);
@@ -88,7 +88,7 @@ class config
 
 		if (!array_key_exists($module, $settings)) {
 			$path = ACP3_ROOT . 'modules/' . $module . '/module.xml';
-			if (!preg_match('=/=', $module) && file_exists($path)) {
+			if (!preg_match('=/=', $module) && is_file($path)) {
 				$xml = simplexml_load_file($path);
 
 				foreach ($xml->xpath('settings') as $row) {
