@@ -14,7 +14,7 @@
 	</item>
 	<item>
 		<name>file_not_found</name>
-		<message>Das angeforderte Modul bzw. die angeforderte Datei ist entweder nicht vorhanden oder wurde noch nicht aktiviert.\nBitte wenden Sie sich an den Administrator dieser Seite, wenn der Fehler wiederholt auftreten sollte.</message>
+		<message><![CDATA[Das angeforderte Modul bzw. die angeforderte Datei ist entweder nicht vorhanden oder wurde noch nicht aktiviert.<br />Bitte wenden Sie sich an den Administrator dieser Seite, wenn der Fehler wiederholt auftreten sollte.]]></message>
 	</item>
 	<item>
 		<name>mod_description</name>

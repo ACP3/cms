@@ -31,7 +31,7 @@ if ($auth->isUser()) {
 			$form['nickname'] = $db->escape($form['nickname']);
 			$host = htmlentities($_SERVER['HTTP_HOST']);
 			$subject = str_replace(array('{title}', '{host}'), array(CONFIG_TITLE, $host), lang('users', 'register_mail_subject'));
-			$message = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}', '\n'), array($form['nickname'], $form['mail'], $form['pwd'], CONFIG_TITLE, $host, "\n"), lang('users', 'register_mail_message'));
+			$message = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($form['nickname'], $form['mail'], $form['pwd'], CONFIG_TITLE, $host), lang('users', 'register_mail_message'));
 			$header = 'Content-type: text/plain; charset=UTF-8';
 			$mail_sent = @mail($form['mail'], $subject, $message, $header);
 
