@@ -110,7 +110,9 @@
 	</item>
 	<item>
 		<name>subscribe_mail_body</name>
-		<message>You successfully subscribed with your E-mail address {mail} to the newsletter of {title} ({host}).\nTo complete the registration process, please click on the hyperlink below.\nIf you haven\'t subscribed this newsletter, please ignore or delete this E-mail.\n\n</message>
+		<message>You successfully subscribed with your E-mail address {mail} to the newsletter of {title} ({host}).
+		To complete the registration process, please click on the hyperlink below.
+		If you haven\'t subscribed this newsletter, please ignore or delete this E-mail.</message>
 	</item>
 	<item>
 		<name>nl_subscribe_mail_subject</name>

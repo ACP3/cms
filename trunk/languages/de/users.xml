@@ -102,7 +102,15 @@
 	</item>
 	<item>
 		<name>forgot_pwd_mail_message</name>
-		<message>Hallo {name},\n\nSie haben auf der Website von {title} ({host}) ein neues Passwort für Ihr Benutzerkonto angefordert.\n\nBenutzername: {name}\nE-Mail-Adresse: {mail}\nPasswort: {password}\n\nBitte ändern Sie, nachdem Sie sich mit obrigem Passwort angemeldet haben, das Passwort zu einem Ihrer Wahl ab.</message>
+		<message>Hallo {name},
+		
+		Sie haben auf der Website von {title} ({host}) ein neues Passwort für Ihr Benutzerkonto angefordert.
+		
+		Benutzername: {name}
+		E-Mail-Adresse: {mail}
+		Passwort: {password}
+		
+		Bitte ändern Sie, nachdem Sie sich mit obrigem Passwort angemeldet haben, das Passwort zu einem Ihrer Wahl ab.</message>
 	</item>
 	<item>
 		<name>forgot_pwd_success</name>
@@ -170,7 +178,14 @@
 	</item>
 	<item>
 		<name>register_mail_message</name>
-		<message>Hallo {name},\n\nSie haben soben auf der Website von {title} ({host}) ein Benutzerkonto erstellt.\nIm Folgenden sehen Sie die Daten, mit welchen Sie sich auf der Seite registriert haben.\n\nBenutzername: {name}\nE-Mail-Adresse: {mail}\nPasswort: {password}</message>
+		<message>Hallo {name},
+		
+		Sie haben soben auf der Website von {title} ({host}) ein Benutzerkonto erstellt.
+		Im Folgenden sehen Sie die Daten, mit welchen Sie sich auf der Seite registriert haben.
+		
+		Benutzername: {name}
+		E-Mail-Adresse: {mail}
+		Passwort: {password}</message>
 	</item>
 	<item>
 		<name>register_success</name>

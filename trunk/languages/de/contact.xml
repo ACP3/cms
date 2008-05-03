@@ -18,7 +18,9 @@
 	</item>
 	<item>
 		<name>contact_body</name>
-		<message>{name} ({mail}) hat folgende Nachricht hinterlassen:\n\n{message}</message>
+		<message>{name} ({mail}) hat folgende Nachricht hinterlassen:
+		
+		{message}</message>
 	</item>
 	<item>
 		<name>edit_error</name>

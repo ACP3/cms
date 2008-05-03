@@ -102,7 +102,15 @@
 	</item>
 	<item>
 		<name>forgot_pwd_mail_message</name>
-		<message>Hello {name},\n\nYou have requested a new password for your user account on the website of {title} ({host}).\n\nUser name: {name}\nE-mail address: {mail}\nPassword: {password}\n\nPlease change the password again, after you logged in to your account.</message>
+		<message>Hello {name},
+		
+		You have requested a new password for your user account on the website of {title} ({host}).
+		
+		User name: {name}
+		E-mail address: {mail}
+		Password: {password}
+		
+		Please change the password again, after you logged in to your account.</message>
 	</item>
 	<item>
 		<name>forgot_pwd_success</name>
@@ -170,7 +178,14 @@
 	</item>
 	<item>
 		<name>register_mail_message</name>
-		<message>Hello {name},\n\nYou have just registered a user account on the website of {title} ({host}).\nBelow you can see the data, with which you has been registered.\n\nUser name: {name}\nE-mail address: {mail}\nPassword: {password}</message>
+		<message>Hello {name},
+		
+		You have just registered a user account on the website of {title} ({host}).
+		Below you can see the data, with which you has been registered.
+		
+		User name: {name}
+		E-mail address: {mail}
+		Password: {password}</message>
 	</item>
 	<item>
 		<name>register_success</name>
