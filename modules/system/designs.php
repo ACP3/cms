@@ -27,7 +27,7 @@ if ($modules->dir) {
 	// Cache leeren und diverse Parameter für die Template Engine abändern
 	cache::purge();
 	$tpl->template_dir = ACP3_ROOT . 'designs/' . $dir . '/';
-	$tpl->assign('design_path', ROOT_DIR . '/designs/' . $dir . '/');
+	$tpl->assign('design_path', ROOT_DIR . 'designs/' . $dir . '/');
 
 	$content = comboBox($text, uri('acp/system/designs'));
 } else {
@@ -42,7 +42,7 @@ if ($modules->dir) {
 			$designs[$i]['description'] = $design_info['description'];
 			$designs[$i]['author'] = $design_info['author'];
 			$designs[$i]['version'] = $design_info['version'];
-			$designs[$i]['action'] = CONFIG_DESIGN == $directories[$i] ? '<img src="' . ROOT_DIR . '/images/crystal/16/active.png" alt="" />' : '<a href="' . uri('acp/system/designs/dir_' . urlencode($directories[$i])) . '"><img src="' . ROOT_DIR . '/images/crystal/16/inactive.png" alt="" /></a>';
+			$designs[$i]['action'] = CONFIG_DESIGN == $directories[$i] ? '<img src="' . ROOT_DIR . 'images/crystal/16/active.png" alt="" />' : '<a href="' . uri('acp/system/designs/dir_' . urlencode($directories[$i])) . '"><img src="' . ROOT_DIR . 'images/crystal/16/inactive.png" alt="" /></a>';
 		}
 	}
 	$tpl->assign('designs', $designs);

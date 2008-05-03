@@ -24,7 +24,7 @@ function emoticonsList($field_id = 0)
 	$c_emoticons = count($emoticons);
 
 	for ($i = 0; $i < $c_emoticons; ++$i) {
-		$emoticons[$i]['img'] = ROOT_DIR . '/uploads/emoticons/' . $emoticons[$i]['img'];
+		$emoticons[$i]['img'] = ROOT_DIR . 'uploads/emoticons/' . $emoticons[$i]['img'];
 	}
 
 	$tpl->assign('emoticons_field_id', empty($field_id) ? 'message' : $field_id);
@@ -49,7 +49,7 @@ function emoticonsReplace($string)
 	$emoticons = cache::output('emoticons');
 
 	foreach ($emoticons as $row) {
-		$string = str_replace($row['code'], '<img src="' . ROOT_DIR . '/uploads/emoticons/' . $row['img'] . '" alt="' . $row['description'] . '" title="' . $row['description'] . '" />', $string);
+		$string = str_replace($row['code'], '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $row['img'] . '" alt="' . $row['description'] . '" title="' . $row['description'] . '" />', $string);
 	}
 	return $string;
 }
