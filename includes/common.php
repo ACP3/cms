@@ -5,9 +5,6 @@
  * @subpackage Core
  */
 
-// Debug - alle Fehler ausgeben
-error_reporting(E_ALL|E_STRICT);
-
 // Standardzeitzone festlegen
 date_default_timezone_set('Europe/Berlin');
 
@@ -21,6 +18,9 @@ if (!defined('INSTALLED')) {
 	exit;
 }
 
+// Wenn der DEBUG Modus aktiv ist, Fehler ausgeben
+error_reporting(defined('DEBUG') && DEBUG ? E_ALL|E_STRICT : 0);
+
 function __autoload($className)
 {
 	require_once ACP3_ROOT . 'includes/classes/' . $className . '.php';
@@ -28,7 +28,7 @@ function __autoload($className)
 
 // Einige Konstanten definieren
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
-define('ROOT_DIR', substr(PHP_SELF, 0, strrpos(PHP_SELF, '/') + 1));
+define('ROOT_DIR', dirname(PHP_SELF) . '/');
 
 // Smarty einbinden
 define('SMARTY_DIR', ACP3_ROOT . 'includes/smarty/');

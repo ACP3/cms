@@ -86,7 +86,7 @@
 	</item>
 	<item>
 		<name>dynamic_page_hints</name>
-		<message><![CDATA[ If you want to include a dynamic page, i.e. a module of the ACP3, please use the format &quot;module/file/additional_statements&quot;, e.g. news/list/id_1. ]]></message>
+		<message><![CDATA[If you want to include a dynamic page, i.e. a module of the ACP3, please use the format &quot;module/file/optional_parameters/&quot;, e.g. news/list/id_1/.]]></message>
 	</item>
 	<item>
 		<name>edit</name>

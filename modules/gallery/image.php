@@ -18,7 +18,7 @@ if (!validate::isNumber($modules->id) || $modules->action != 'mini' && $modules-
 
 	$pic = 'uploads/gallery/' . $pic[0]['file'];
 
-	if (file_exists($pic)) {
+	if (is_file($pic)) {
 		$pic_info = getimagesize($pic);
 		$width = $pic_info[0];
 		$height = $pic_info[1];

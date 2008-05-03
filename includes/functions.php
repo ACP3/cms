@@ -171,7 +171,7 @@ function moveFile($tmp_filename, $filename, $dir)
 	$ext = strrchr($filename, '.');
 	
 	$new_name = 1;
-	while (file_exists($path . $new_name . $ext)) {
+	while (is_file($path . $new_name . $ext)) {
 		$new_name++;
 	}
 	if (is_writable($path)) {
@@ -237,7 +237,7 @@ function redirect($args, $new_page = 0)
 function removeFile($dir, $file)
 {
 	$path = ACP3_ROOT . 'uploads/' . $dir . '/' . $file;
-	if (!empty($dir) && !empty($file) && !preg_match('=/=', $dir) && !preg_match('=/=', $file) && file_exists($path)) {
+	if (!empty($dir) && !empty($file) && !preg_match('=/=', $dir) && !preg_match('=/=', $file) && is_file($path)) {
 		@unlink($path);
 	}
 	return false;

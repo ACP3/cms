@@ -32,7 +32,7 @@ $directories = scandir(ACP3_ROOT . 'languages');
 $count_dir = count($directories);
 for ($i = 0; $i < $count_dir; ++$i) {
 	$lang_info = array();
-	if (file_exists(ACP3_ROOT . 'languages/' . $directories[$i] . '/info.php')) {
+	if (is_file(ACP3_ROOT . 'languages/' . $directories[$i] . '/info.php')) {
 		include ACP3_ROOT . 'languages/' . $directories[$i] . '/info.php';
 		$languages[$i]['dir'] = $directories[$i];
 		$languages[$i]['selected'] = LANG == $directories[$i] ? ' selected="selected"' : '';

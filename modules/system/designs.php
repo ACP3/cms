@@ -36,7 +36,7 @@ if ($modules->dir) {
 	$count_dir = count($directories);
 	for ($i = 0; $i < $count_dir; ++$i) {
 		$design_info = array();
-		if ($directories[$i] != '.' && $directories[$i] != '..' && file_exists('designs/' . $directories[$i] . '/info.php')) {
+		if ($directories[$i] != '.' && $directories[$i] != '..' && is_file('designs/' . $directories[$i] . '/info.php')) {
 			include ACP3_ROOT . 'designs/' . $directories[$i] . '/info.php';
 			$designs[$i]['name'] = $design_info['name'];
 			$designs[$i]['description'] = $design_info['description'];

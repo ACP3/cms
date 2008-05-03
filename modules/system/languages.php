@@ -31,7 +31,7 @@ if ($modules->dir) {
 	$count_dir = count($directories);
 	for ($i = 0; $i < $count_dir; ++$i) {
 		$lang_info = array();
-		if ($directories[$i] != '.' && $directories[$i] != '..' && file_exists(ACP3_ROOT . 'languages/' . $directories[$i] . '/info.php')) {
+		if ($directories[$i] != '.' && $directories[$i] != '..' && is_file(ACP3_ROOT . 'languages/' . $directories[$i] . '/info.php')) {
 			include ACP3_ROOT . 'languages/' . $directories[$i] . '/info.php';
 			$languages[$i]['name'] = $lang_info['name'];
 			$languages[$i]['description'] = $lang_info['description'];

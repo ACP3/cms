@@ -86,7 +86,7 @@
 	</item>
 	<item>
 		<name>dynamic_page_hints</name>
-		<message><![CDATA[ Falls Sie eine dynamische Seite, d.h. ein Modul/eine Seite des ACP3, einbinden möchten, so tragen Sie in &quot;URI&quot; die Seite in der Form &quot;modul/datei/weitere_angaben&quot; ein, also z.B. news/list/id_1. ]]></message>
+		<message><![CDATA[Falls Sie eine dynamische Seite, d.h. ein Modul/eine Seite des ACP3, einbinden möchten, so tragen Sie in &quot;URI&quot; die Seite in der Form &quot;modul/datei/weitere_parameter/&quot; ein, also z.B. news/list/id_1/.]]></message>
 	</item>
 	<item>
 		<name>edit</name>
