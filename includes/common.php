@@ -28,7 +28,8 @@ function __autoload($className)
 
 // Einige Konstanten definieren
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
-define('ROOT_DIR', dirname(PHP_SELF));
+$php_self = dirname(PHP_SELF);
+define('ROOT_DIR', $php_self == '/' ? '' : $php_self);
 
 // Smarty einbinden
 define('SMARTY_DIR', ACP3_ROOT . 'includes/smarty/');
