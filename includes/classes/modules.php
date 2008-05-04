@@ -47,7 +47,7 @@ class modules
 			// Definieren, dass man sich im Frontend befindet
 			define('IN_ACP3', true);
 			// Query auf eine beutzerdefinierte Startseite setzen
-			if (empty($this->query) && CONFIG_HOMEPAGE != '') {
+			if (!defined('IN_INSTALL') && empty($this->query) && CONFIG_HOMEPAGE != '') {
 				$this->query = CONFIG_HOMEPAGE;
 			}
 		}

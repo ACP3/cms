@@ -50,8 +50,8 @@ if (isset($_POST['submit'])) {
 		$tpl->assign('error_msg', $tpl->fetch('error.html'));
 	} else {
 		// Modulkonfigurationsdateien schreiben
-		write_config('contact', array('mail' => $form['mail'], 'address' => '', 'telephone' => '', 'fax' => '', 'disclaimer' => lang('installation', 'disclaimer'), 'miscellaneous' => ''));
-		write_config('newsletter', array('mail' => $form['mail'], 'mailsig' => lang('installation', 'sincerely') . "\n\n" . lang('installation', 'newsletter_mailsig')));
+		config::module('contact', array('mail' => $form['mail'], 'address' => '', 'telephone' => '', 'fax' => '', 'disclaimer' => lang('installation', 'disclaimer'), 'miscellaneous' => ''));
+		config::module('newsletter', array('mail' => $form['mail'], 'mailsig' => lang('installation', 'sincerely') . "\n\n" . lang('installation', 'newsletter_mailsig')));
 
 		// Systemkonfiguration erstellen
 		$config = array(
@@ -78,16 +78,8 @@ if (isset($_POST['submit'])) {
 			'version' => CONFIG_VERSION
 		);
 
-		$pattern = "define('CONFIG_%s', '%s');\n";
-		$config_file = "<?php\n";
-		$config_file.= "define('INSTALLED', true);\n";
-		foreach ($config as $key => $value) {
-			$config_file.= sprintf($pattern, strtoupper($key), $value);
-		}
-		$config_file.= '?>';
-
 		// Daten in die config.php schreiben und diese laden
-		@file_put_contents($config_path, $config_file);
+		config::general($config);
 		require $config_path;
 
 		$db = new db();
