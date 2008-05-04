@@ -42,7 +42,12 @@ class validate
 	 */
 	public static function date($value)
 	{
-		return !empty($value) && strtotime($value, dateAligned(2, time())) >= 0 ? true : false;
+		if (preg_match('/^(\d{4})-(\d{2})-(\d{2})( ([01][0-9]|2[0-3]):([0-5][0-9])){0,1}$/', $value, $matches)) {
+			if (checkdate($matches[2], $matches[3], $matches[1])) {
+				return true;
+			}
+		}
+		return false;
 	}
 	/**
 	 * Überprüft, ob eine Standardkonforme E-Mail-Adresse übergeben wurde
