@@ -76,32 +76,4 @@ function uri($uri)
 {
 	return PHP_SELF . '/' . $uri . (!preg_match('/\/$/', $uri) ? '/' : '') . 'lang_' . LANG . '/';
 }
-// Konfigurationsdateien für die Module erstellen
-function write_config($module, $data)
-{
-	$path = ACP3_ROOT . 'modules/' . $module . '/module.xml';
-	if (!preg_match('=/=', $module) && is_file($path)) {
-		$xml = new DOMDocument();
-		$xml->load($path);
-		$xp = new domxpath($xml);
-		$items = $xp->query('settings/*');
-		$i = $items->length - 1;
-
-		while ($i > -1) {
-			$item = $items->item($i);
-
-			if (array_key_exists($item->nodeName, $data)) {
-				$newitem = $xml->createElement($item->nodeName);
-				$newitem_content = $xml->createCDATASection($data[$item->nodeName]);
-				$newitem->appendChild($newitem_content);
-				$item->parentNode->replaceChild($newitem, $item);
-			}
-			$i--;
-		}
-		$bool = $xml->save($path);
-
-		return $bool ? true : false;
-	}
-	return false;
-}
 ?>
