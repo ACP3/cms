@@ -25,19 +25,19 @@ class config
 	public static function general($data)
 	{
 		$path = ACP3_ROOT . 'includes/config.php';
-		if (is_writable($path))	{
+		if (is_writable($path) && is_array($data))	{
 			// Konfigurationsdatei in ein Array schreiben
-			$config = file($path);
-			foreach ($data as $key => $value) {
-				$old_entry = 'define(\'CONFIG_' . strtoupper($key) . '\', \'' . constant('CONFIG_' . strtoupper($key)) . '\');' . "\n";
-				$new_entry = 'define(\'CONFIG_' . strtoupper($key) . '\', \'' . $value . '\');' . "\n";
-				foreach ($config as $c_key => $c_value) {
-					if ($old_entry == $c_value && $new_entry != $c_value) {
-						$config[$c_key] = $new_entry;
-					}
-				}
+			$content = "<?php\n";
+			$content.= "define('INSTALLED', true);\n";
+			if (defined('DEBUG')) {
+				$content.= "define('DEBUG', " . ((bool) DEBUG) . ");\n"; 
 			}
-			$bool = @file_put_contents($path, $config);
+			$pattern = "define('CONFIG_%s', '%s');\n";
+			foreach ($data as $key => $value) {
+				$content.= sprintf($pattern, strtoupper($key), $value);
+			}
+			$content.= '?>';
+			$bool = @file_put_contents($path, $content);
 			return $bool ? true : false;
 		}
 		return false;
