@@ -39,8 +39,6 @@ if (validate::isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' .
 
 			$bool = $db->update('gallery', $update_values, 'id = \'' . $modules->id . '\'');
 
-			cache::create('gallery_pics_id_' . $modules->id, $db->query('SELECT g.name, p.id FROM ' . CONFIG_DB_PRE . 'gallery g LEFT JOIN ' . CONFIG_DB_PRE . 'galpics p ON g.id = \'' . $modules->id . '\' AND p.gallery_id = \'' . $modules->id . '\' ORDER BY p.pic ASC, p.id ASC'));
-
 			$content = comboBox($bool ? lang('gallery', 'edit_success') : lang('gallery', 'edit_error'), uri('acp/gallery'));
 		}
 	}

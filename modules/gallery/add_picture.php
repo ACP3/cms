@@ -26,8 +26,6 @@ if (validate::isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' .
 		$form = $_POST['form'];
 		$settings = config::output('gallery');
 
-		if (!validate::isNumber($form['gallery']) || $db->select('id', 'gallery', 'id = \'' . $form['gallery'] . '\'', 0, 0, 0, 1) != '1')
-			$errors[] = lang('gallery', 'no_gallery_selected');
 		if (!validate::isNumber($form['pic']))
 			$errors[] = lang('gallery', 'type_in_picture_number');
 		if (empty($file['tmp_name']) || empty($file['size']))
@@ -40,11 +38,11 @@ if (validate::isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' .
 		} else {
 			$result = moveFile($file['tmp_name'], $file['name'], 'gallery');
 
-			$insert_values = array('id' => '', 'pic' => $form['pic'], 'gallery_id' => $form['gallery'], 'file' => $result['name'], 'description' => $db->escape($form['description'], 2));
+			$insert_values = array('id' => '', 'pic' => $form['pic'], 'gallery_id' => $modules->id, 'file' => $result['name'], 'description' => $db->escape($form['description'], 2));
 
 			$bool = $db->insert('galpics', $insert_values);
 
-			cache::create('gallery_pics_id_' . $form['gallery'], $db->select('id', 'galpics', 'gallery_id = \'' . $modules->id . '\'', 'id ASC'));
+			cache::create('gallery_pics_id_' . $modules->id, $db->select('id', 'galpics', 'gallery_id = \'' . $modules->id . '\'', 'pic ASC, id ASC'));
 
 			$content = comboBox($bool ? lang('gallery', 'add_picture_success') : lang('gallery', 'add_picture_error'), uri('acp/gallery/add_picture/id_' . $form['gallery'] . '/pic_' . ($pic + 1)));
 		}

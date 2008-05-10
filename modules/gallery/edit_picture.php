@@ -57,7 +57,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'galpics', 'id = \'' .
 
 			$bool = $db->update('galpics', $update_values, 'id = \'' . $modules->id . '\'');
 
-			cache::create('gallery_pics_id_' . $form['gallery'], $db->select('id', 'galpics', 'gallery_id = \'' . $modules->id . '\'', 'id ASC'));
+			cache::create('gallery_pics_id_' . $form['gallery'], $db->select('id', 'galpics', 'gallery_id = \'' . $form['gallery'] . '\'', 'pic ASC, id ASC'));
 
 			$content = comboBox($bool ? lang('gallery', 'edit_picture_success') : lang('gallery', 'edit_picture_error'), uri('acp/gallery'));
 		}

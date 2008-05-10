@@ -3,15 +3,6 @@
 	<fieldset>
 		<legend>{lang values="gallery|picture_information"}</legend>
 		<dl>
-			<dt><label for="gallery">{lang values="gallery|gallery"}</label></dt>
-			<dd>
-				<select name="form[gallery]" id="gallery">
-					<option value="">{lang values="common|pls_select"}</option>
-{foreach from=$galleries item=row}
-					<option value="{$row.id}"{$row.selected}>{$row.name}</option>
-{/foreach}
-				</select>
-			</dd>
 			<dt><label for="pic">{lang values="gallery|picture_number"}</label></dt>
 			<dd><input type="text" name="form[pic]" id="pic" value="{$form.pic}" maxlength="11" /></dd>
 			<dt><label for="file">{lang values="gallery|select_picture"}</label></dt>
