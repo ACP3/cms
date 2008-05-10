@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$date = " AND ((g.start = g.end AND g.start<='" . dateAligned(2, time()) . "') OR (g.start != g.end AND g.start<='" . dateAligned(2, time()) . "' AND g.end>='" . dateAligned(2, time()) . "'))";
+$date = ' AND (g.start = g.end AND g.start <= \'' . dateAligned(2, time()) . '\' OR g.start != g.end AND g.start <= \'' . dateAligned(2, time()) . '\' AND g.end >= \'' . dateAligned(2, time()) . '\')';
 
 if (validate::isNumber($modules->id) && $db->select('g.id', 'gallery AS g, ' . CONFIG_DB_PRE . 'galpics AS p', 'p.id = \'' . $modules->id . '\' AND p.gallery_id = g.id' . $date, 0, 0, 0, 1) == 1) {
 	$picture = $db->select('g.id AS gallery_id, g.name, p.id, p.pic, p.description', 'gallery AS g, ' . CONFIG_DB_PRE . 'galpics AS p', 'p.id = \'' . $modules->id . '\' AND p.gallery_id = g.id');
