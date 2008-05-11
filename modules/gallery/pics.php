@@ -15,7 +15,7 @@ $date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR st
 if (validate::isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->id . '\'' . $date, 0, 0, 0, 1) == 1) {
 	// Cache für die jeweilige Galerie
 	if (!cache::check('gallery_pics_id_' . $modules->id)) {
-		cache::create('gallery_pics_id_' . $modules->id, $db->select('id', 'galpics', 'gallery_id = \'' . $modules->id . '\'', 'pic ASC, id ASC'));
+		cache::create('gallery_pics_id_' . $modules->id, $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $modules->id . '\'', 'pic ASC, id ASC'));
 	}
 	$gallery = cache::output('gallery_pics_id_' . $modules->id);
 

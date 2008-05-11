@@ -14,7 +14,7 @@ if (!validate::isNumber($modules->id) || $modules->action != 'mini' && $modules-
 	redirect('errors/404');
 } else {
 	@set_time_limit(20);
-	$pic = $db->select('file', 'galpics', 'id = \'' . $modules->id . '\'');
+	$pic = $db->select('file', 'gallery_pictures', 'id = \'' . $modules->id . '\'');
 
 	$pic = 'uploads/gallery/' . $pic[0]['file'];
 

@@ -54,7 +54,7 @@ CREATE TABLE `{pre}gallery` (
 	PRIMARY KEY (`id`)
 ) {engine} ;
 
-CREATE TABLE `{pre}galpics` (
+CREATE TABLE `{pre}gallery_pictures` (
 	`id` int(11) NOT NULL auto_increment,
 	`pic` int(11) NOT NULL,
 	`gallery_id` int(11) NOT NULL,
@@ -88,10 +88,19 @@ CREATE TABLE `{pre}news` (
 	PRIMARY KEY (`id`), FULLTEXT KEY `headline` (`headline`,`text`)
 ) {engine} ;
 
-CREATE TABLE `{pre}nl_accounts` ( 
+CREATE TABLE `{pre}nnewsletter_accounts` ( 
 	`id` int(11) NOT NULL auto_increment, 
 	`mail` varchar(120) NOT NULL, 
 	`hash` varchar(32) NOT NULL, 
+	PRIMARY KEY (`id`)
+) {engine} ;
+
+CREATE TABLE `{pre}newsletter_archive` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`date` VARCHAR(14) NOT NULL, 
+	`subject` VARCHAR(120) NOT NULL, 
+	`text` TEXT NOT NULL, 
+	`status` TINYINT NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine} ;
 

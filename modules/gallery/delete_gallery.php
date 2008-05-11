@@ -27,13 +27,13 @@ if (!isset($entries)) {
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->select('id', 'gallery', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			// Hochgeladene Bilder löschen
-			$pictures = $db->select('file', 'galpics', 'gallery_id = \'' . $entry . '\'');
+			$pictures = $db->select('file', 'gallery_pictures', 'gallery_id = \'' . $entry . '\'');
 			foreach ($pictures as $row) {
 				removeFile('gallery', $row['file']);
 			}
 			// Fotogalerie mitsamt Bildern löschen
 			$bool = $db->delete('gallery', 'id = \'' . $entry . '\'');
-			$bool2 = $db->delete('galpics', 'gallery_id = \'' . $entry . '\'', 0);
+			$bool2 = $db->delete('gallery_pictures', 'gallery_id = \'' . $entry . '\'', 0);
 
 			// Galerie Cache löschen
 			cache::delete('gallery_pics_id_' . $entry);

@@ -40,9 +40,9 @@ if (validate::isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' .
 
 			$insert_values = array('id' => '', 'pic' => $form['pic'], 'gallery_id' => $modules->id, 'file' => $result['name'], 'description' => $db->escape($form['description'], 2));
 
-			$bool = $db->insert('galpics', $insert_values);
+			$bool = $db->insert('gallery_pictures', $insert_values);
 
-			cache::create('gallery_pics_id_' . $modules->id, $db->select('id', 'galpics', 'gallery_id = \'' . $modules->id . '\'', 'pic ASC, id ASC'));
+			cache::create('gallery_pics_id_' . $modules->id, $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $modules->id . '\'', 'pic ASC, id ASC'));
 
 			$content = comboBox($bool ? lang('gallery', 'add_picture_success') : lang('gallery', 'add_picture_error'), uri('acp/gallery/add_picture/id_' . $form['gallery'] . '/pic_' . ($pic + 1)));
 		}

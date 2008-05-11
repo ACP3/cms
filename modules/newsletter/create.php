@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
 
 			if (!validate::email($form['mail']))
 				$errors[] = lang('common', 'wrong_email_format');
-			if (validate::email($form['mail']) && $db->select('id', 'nl_accounts', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) == 1)
+			if (validate::email($form['mail']) && $db->select('id', 'newsletter_accounts', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) == 1)
 				$errors[] = lang('newsletter', 'account_exists');
 			if (!validate::captcha($form['captcha'], $form['hash']))
 				$errors[] = lang('captcha', 'invalid_captcha_entered');
@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
 				// Newsletter-Konto nur erstellen, wenn die E-Mail erfolgreich versendet werden konnte
 				if ($mail_sent) {
 					$insert_values = array('id' => '', 'mail' => $form['mail'], 'hash' => $hash);
-					$bool = $db->insert('nl_accounts', $insert_values);
+					$bool = $db->insert('newsletter_accounts', $insert_values);
 				}
 
 				$content = comboBox($mail_sent && isset($bool) && $bool ? lang('newsletter', 'subscribe_success') : lang('newsletter', 'subscribe_error'), ROOT_DIR);
@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 
 			if (!validate::email($form['mail']))
 				$errors[] = lang('common', 'wrong_email_format');
-			if (validate::email($form['mail']) && $db->select('id', 'nl_accounts', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) != 1)
+			if (validate::email($form['mail']) && $db->select('id', 'newsletter_accounts', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) != 1)
 				$errors[] = lang('newsletter', 'account_not_exists');
 			if (!validate::captcha($form['captcha'], $form['hash']))
 				$errors[] = lang('captcha', 'invalid_captcha_entered');
@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
 			if (isset($errors)) {
 				$tpl->assign('error_msg', comboBox($errors));
 			} else {
-				$bool = $db->delete('nl_accounts', 'mail = \'' . $form['mail'] . '\'');
+				$bool = $db->delete('newsletter_accounts', 'mail = \'' . $form['mail'] . '\'');
 
 				$content = comboBox($bool ? lang('newsletter', 'unsubscribe_success') : lang('newsletter', 'unsubscribe_error'), ROOT_DIR);
 			}
