@@ -4,6 +4,7 @@
 </pre>
 {else}
 {$error_msg}
+<script type="text/javascript" src="{$DESIGN_PATH}system/script.js"></script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" id="tabs">
 	<fieldset>
 		<legend>{lang values="system|sql_tables"}</legend>
@@ -14,6 +15,7 @@
 					<option value="{$row.name}"{$row.selected}>{$row.name}</option>
 {/foreach}
 				</select>
+				<a href="javascript:mark_options('add')">{lang values="common|mark_all"}</a> <span>::</span> <a href="javascript:mark_options('remove')">{lang values="common|unmark_all"}</a>
 			</dd>
 		</dl>
 	</fieldset>

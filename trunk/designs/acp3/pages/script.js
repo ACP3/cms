@@ -1,4 +1,4 @@
-$(function() {
+jQuery(function($) {
 	function GetValue(id) {
 		return $('#' + id).val();
 	}

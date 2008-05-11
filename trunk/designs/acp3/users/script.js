@@ -1,4 +1,4 @@
-$(function() {
+jQuery(function($) {
 	$('#nav-mods-link').click(function() {
 		if (!$('#nav-mods').is(':animated')) {
 			$('#nav-mods').slideToggle('slow');
