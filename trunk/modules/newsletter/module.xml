@@ -28,6 +28,10 @@ das Newsletterteam]]></mailsig>
 			<level>2</level>
 		</item>
 		<item>
+			<file>adm_list_archive</file>
+			<level>2</level>
+		</item>
+		<item>
 			<file>compose</file>
 			<level>2</level>
 		</item>
@@ -37,6 +41,14 @@ das Newsletterteam]]></mailsig>
 		</item>
 		<item>
 			<file>delete</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>delete_archive</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>send</file>
 			<level>2</level>
 		</item>
 		<item>

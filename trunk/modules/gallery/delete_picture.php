@@ -24,14 +24,14 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && validate::isNumber($entry) && $db->select('id', 'galpics', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+		if (!empty($entry) && validate::isNumber($entry) && $db->select('id', 'gallery_pictures', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			// Datei ebenfalls löschen
-			$picture = $db->select('gallery_id, file', 'galpics', 'id = \'' . $entry . '\'');
+			$picture = $db->select('gallery_id, file', 'gallery_pictures', 'id = \'' . $entry . '\'');
 			removeFile('gallery', $picture[0]['file']);
 
-			$bool = $db->delete('galpics', 'id = \'' . $entry . '\'');
+			$bool = $db->delete('gallery_pictures', 'id = \'' . $entry . '\'');
 
-			cache::create('gallery_pics_id_' . $picture[0]['gallery_id'], $db->select('id', 'galpics', 'gallery_id = \'' . $picture[0]['gallery_id'] . '\'', 'pic ASC, id ASC'));
+			cache::create('gallery_pics_id_' . $picture[0]['gallery_id'], $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $picture[0]['gallery_id'] . '\'', 'pic ASC, id ASC'));
 		}
 	}
 	$content = comboBox($bool ? lang('gallery', 'picture_delete_success') : lang('gallery', 'picture_delete_error'), uri('acp/gallery'));

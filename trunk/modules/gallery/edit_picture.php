@@ -10,8 +10,8 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($modules->id) && $db->select('id', 'galpics', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
-	$picture = $db->select('p.pic, p.gallery_id, p.file, p.description, g.name AS gallery_name', 'galpics AS p, ' . CONFIG_DB_PRE . 'gallery AS g', 'p.id = \'' . $modules->id . '\' AND p.gallery_id = g.id');
+if (validate::isNumber($modules->id) && $db->select('id', 'gallery_pictures', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+	$picture = $db->select('p.pic, p.gallery_id, p.file, p.description, g.name AS gallery_name', 'gallery_pictures AS p, ' . CONFIG_DB_PRE . 'gallery AS g', 'p.id = \'' . $modules->id . '\' AND p.gallery_id = g.id');
 
 	breadcrumb::assign(lang('common', 'acp'), uri('acp'));
 	breadcrumb::assign(lang('gallery', 'gallery'), uri('acp/gallery'));
@@ -49,15 +49,15 @@ if (validate::isNumber($modules->id) && $db->select('id', 'galpics', 'id = \'' .
 				'description' => $db->escape($form['description'], 2),
 			);
 			if (is_array($new_file_sql)) {
-				$old_file = $db->select('file', 'galpics', 'id = \'' . $modules->id . '\'');
+				$old_file = $db->select('file', 'gallery_pictures', 'id = \'' . $modules->id . '\'');
 				removeFile('gallery', $old_file[0]['file']);
 
 				$update_values = array_merge($update_values, $new_file_sql);
 			}
 
-			$bool = $db->update('galpics', $update_values, 'id = \'' . $modules->id . '\'');
+			$bool = $db->update('gallery_pictures', $update_values, 'id = \'' . $modules->id . '\'');
 
-			cache::create('gallery_pics_id_' . $form['gallery'], $db->select('id', 'galpics', 'gallery_id = \'' . $form['gallery'] . '\'', 'pic ASC, id ASC'));
+			cache::create('gallery_pics_id_' . $form['gallery'], $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $form['gallery'] . '\'', 'pic ASC, id ASC'));
 
 			$content = comboBox($bool ? lang('gallery', 'edit_picture_success') : lang('gallery', 'edit_picture_error'), uri('acp/gallery'));
 		}

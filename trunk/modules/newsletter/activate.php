@@ -17,13 +17,13 @@ if (validate::email($modules->mail) && validate::isMD5($modules->hash)) {
 	redirect('errors/404');
 }
 
-if ($db->select('id', 'nl_accounts', 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'', 0, 0, 0, 1) != 1)
+if ($db->select('id', 'newsletter_accounts', 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'', 0, 0, 0, 1) != 1)
 	$errors[] = lang('newsletter', 'account_not_exists');
 
 if (isset($errors)) {
 	$tpl->assign('error_msg', comboBox($errors));
 } else {
-	$bool = $db->update('nl_accounts', array('hash', ''), 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'');
+	$bool = $db->update('newsletter_accounts', array('hash', ''), 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'');
 
 	$content = comboBox($bool ? lang('newsletter', 'activate_success') : lang('newsletter', 'activate_error'), ROOT_DIR);
 }

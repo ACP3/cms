@@ -56,11 +56,11 @@ if ($modules->action == 'activate') {
 
 	foreach ($mod_list as $name => $info) {
 		if ($info['protected']) {
-			$mod_list[$name]['action'] = '<img src="' . ROOT_DIR . 'images/crystal/16/forbidden.png" alt="" />';
+			$mod_list[$name]['action'] = '<img src="' . ROOT_DIR . 'images/crystal/16/editdelete.png" alt="" />';
 		} elseif ($info['active']) {
-			$mod_list[$name]['action'] = '<a href="' . uri('acp/system/modules/action_deactivate/dir_' . $info['dir']) . '" title="' . lang('system', 'disable_module') . '"><img src="' . ROOT_DIR . 'images/crystal/16/active.png" alt="" /></a>';
+			$mod_list[$name]['action'] = '<a href="' . uri('acp/system/modules/action_deactivate/dir_' . $info['dir']) . '" title="' . lang('system', 'disable_module') . '"><img src="' . ROOT_DIR . 'images/crystal/16/apply.png" alt="" /></a>';
 		} else {
-			$mod_list[$name]['action'] = '<a href="' . uri('acp/system/modules/action_activate/dir_' . $info['dir']) . '" title="' . lang('system', 'enable_module') . '"><img src="' . ROOT_DIR . 'images/crystal/16/inactive.png" alt="" /></a>';
+			$mod_list[$name]['action'] = '<a href="' . uri('acp/system/modules/action_activate/dir_' . $info['dir']) . '" title="' . lang('system', 'enable_module') . '"><img src="' . ROOT_DIR . 'images/crystal/16/cancel.png" alt="" /></a>';
 		}
 
 	}

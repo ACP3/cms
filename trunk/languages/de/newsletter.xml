@@ -9,6 +9,14 @@
 		<message>Für die angegebene E-Mail-Adresse konnte kein Newsletter-Konto gefunden werden</message>
 	</item>
 	<item>
+		<name>action</name>
+		<message>Aktion</message>
+	</item>
+	<item>
+		<name>action_description</name>
+		<message>Wählen Sie aus, was mit dem verfassten Newsletter geschehen soll.</message>
+	</item>
+	<item>
 		<name>activate</name>
 		<message>Newsletterkonto aktivieren</message>
 	</item>
@@ -29,6 +37,14 @@
 		<message>Newsletterkonto löschen</message>
 	</item>
 	<item>
+		<name>adm_list_archive</name>
+		<message>Newsletterarchiv</message>
+	</item>
+	<item>
+		<name>already_sent</name>
+		<message>Bereits versendet</message>
+	</item>
+	<item>
 		<name>compose</name>
 		<message>Neuen Newsletter erstellen</message>
 	</item>
@@ -45,12 +61,28 @@
 		<message>Sollen die ausgewählten Newsletterkonten wirklich gelöscht werden?</message>
 	</item>
 	<item>
+		<name>confirm_archive_delete</name>
+		<message>Sollen die ausgewählten Newsletter wirklich gelöscht werden?</message>
+	</item>
+	<item>
 		<name>create</name>
 		<message>In Newsletter eintragen/austragen</message>
 	</item>
 	<item>
 		<name>delete</name>
 		<message>Newsletterkonten löschen</message>
+	</item>
+	<item>
+		<name>delete_archive</name>
+		<message>Newsletter löschen</message>
+	</item>
+	<item>
+		<name>delete_archive_error</name>
+		<message>Beim Löschen der ausgewählten Newsletter ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>delete_archive_success</name>
+		<message>Die ausgewählten Newsletter wurden erfolgreich gelöscht.</message>
 	</item>
 	<item>
 		<name>delete_error</name>
@@ -89,8 +121,32 @@
 		<message>Newsletterkonten</message>
 	</item>
 	<item>
+		<name>newsletter_archive</name>
+		<message>Newsletterarchiv</message>
+	</item>
+	<item>
+		<name>not_yet_sent</name>
+		<message>Noch nicht versendet</message>
+	</item>
+	<item>
+		<name>only_save</name>
+		<message>Nur speichern</message>
+	</item>
+	<item>
+		<name>send</name>
+		<message>Newsletter absenden</message>
+	</item>
+	<item>
+		<name>send_and_save</name>
+		<message>Senden und speichern</message>
+	</item>
+	<item>
 		<name>settings</name>
 		<message>Newsletter Einstellungen</message>
+	</item>
+	<item>
+		<name>status</name>
+		<message>Status</message>
 	</item>
 	<item>
 		<name>subject</name>
