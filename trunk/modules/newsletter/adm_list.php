@@ -18,9 +18,9 @@ if ($c_accounts > 0) {
 	
 	for ($i = 0; $i < $c_accounts; ++$i) {
 		if (!empty($accounts[$i]['hash'])) {
-			$accounts[$i]['status'] = '<a href="' . uri('acp/newsletter/adm_activate/id_' . $accounts[$i]['id']) . '" title="' . lang('newsletter', 'activate_account') . '"><img src="' . ROOT_DIR . '/images/crystal/16/cancel.png" alt="" /></a>';
+			$accounts[$i]['status'] = '<a href="' . uri('acp/newsletter/adm_activate/id_' . $accounts[$i]['id']) . '" title="' . lang('newsletter', 'activate_account') . '"><img src="' . ROOT_DIR . 'images/crystal/16/cancel.png" alt="" /></a>';
 		} else {
-			$accounts[$i]['status'] = '<img src="' . ROOT_DIR . '/images/crystal/16/apply.png" alt="" />';
+			$accounts[$i]['status'] = '<img src="' . ROOT_DIR . 'images/crystal/16/apply.png" alt="" />';
 		}
 	}
 	$tpl->assign('accounts', $accounts);
