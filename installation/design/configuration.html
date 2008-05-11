@@ -1,14 +1,4 @@
 {if $sql_queries}
-{literal}
-<script type="text/javascript">
-$(function() {
-	$('#queries-link').click(function() {
-		$('#queries').slideToggle('fast');
-		return false;
-	});
-})
-</script>
-{/literal}
 <div style="text-align:center">
 	<a href="#" id="queries-link">{lang values="installation|show_hide_executed_db_queries"}</a>
 	<hr />

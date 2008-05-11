@@ -19,7 +19,7 @@ function mark_entries(name, action)
 		}
 	});
 }
-$(function() {
+jQuery(function($) {
 	/**
 	 * Tabs
 	 **/
