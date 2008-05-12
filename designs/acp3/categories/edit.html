@@ -1,4 +1,6 @@
+{if isset($error_msg)}
 {$error_msg}
+{/if}
 <form action="{$REQUEST_URI}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 	<fieldset>
 		<dl>
@@ -7,7 +9,7 @@
 			<dt><label for="description">{lang values="common|description"}</label></dt>
 			<dd><input type="text" name="form[description]" id="description" value="{$form.description}" maxlength="120" /></dd>
 			<dt><label for="picture">{lang values="categories|picture"}</label></dt>
-			<dd><input type="file" id="picture" name="picture" value="{$form.picture}" /></dd>
+			<dd><input type="file" id="picture" name="picture" value="" /></dd>
 		</dl>
 	</fieldset>
 	<div class="form-bottom">

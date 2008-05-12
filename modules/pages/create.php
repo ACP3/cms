@@ -103,7 +103,14 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$target[1]['lang'] = lang('common', 'window_blank');
 	$tpl->assign('target', $target);
 
-	$tpl->assign('form', isset($form) ? $form : '');
+	$defaults = array(
+		'title' => '',
+		'sort' => '',
+		'text' => '',
+		'uri' => ''
+	);
+
+	$tpl->assign('form', isset($form) ? $form : $defaults);
 	$tpl->assign('pages_list', pagesList());
 
 	$content = $tpl->fetch('pages/create.html');

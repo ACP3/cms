@@ -41,7 +41,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('start_date', datepicker('start'));
 	$tpl->assign('end_date', datepicker('end'));
 
-	$tpl->assign('form', isset($form) ? $form : '');
+	$tpl->assign('form', isset($form) ? $form : array('name' => ''));
 
 	$content = $tpl->fetch('gallery/create.html');
 }

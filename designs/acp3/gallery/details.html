@@ -1,14 +1,14 @@
-{if $picture}
+{if isset($picture)}
 <div class="picture">
 	<img src="{uri args="gallery/image/id_`$picture.id`/action_thumb"}" alt="" />
 	<div class="picture-description">
 		{$picture.description}
 	</div>
 	<div class="pictures-prev-next">
-{if $picture_back}
+{if isset($picture_back)}
 		<a href="{uri args="gallery/details/id_`$picture_back.id`"}" class="picture-prev"><img src="{uri args="gallery/image/id_`$picture_back.id`/action_mini"}" alt="" /></a>
 {/if}
-{if $picture_next}
+{if isset($picture_next)}
 		<a href="{uri args="gallery/details/id_`$picture_next.id`"}" class="picture-next"><img src="{uri args="gallery/image/id_`$picture_next.id`/action_mini"}" alt="" /></a>
 {/if}
 		<div class="picture-index">

@@ -60,7 +60,12 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	}
 	$tpl->assign('access', $access);
 
-	$tpl->assign('form', isset($form) ? $form : '');
+	$defaults = array(
+		'nickname' => '',
+		'mail' => '',
+	);
+
+	$tpl->assign('form', isset($form) ? $form : $defaults);
 
 	$content = $tpl->fetch('users/create.html');
 }

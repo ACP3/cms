@@ -69,7 +69,7 @@ class auth
 				$user_info[$user_id] = $info[0];
 			}
 
-			return !empty($user_info[$user_id]) == '1' ? $user_info[$user_id] : false;
+			return !empty($user_info[$user_id]) ? $user_info[$user_id] : false;
 		}
 		return false;
 	}

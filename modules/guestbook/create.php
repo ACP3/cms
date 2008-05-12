@@ -68,24 +68,28 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		if (isset($form)) {
 			$form['name'] = $user['nickname'];
 			$form['name_disabled'] = $disabled;
+			$form['mail'] = $user['mail'];
 			$form['mail_disabled'] = $disabled;
-			if (!empty($user['website'])) {
-				$user['website_disabled'] = $disabled;
-			}
+			$form['website_disabled'] = !empty($user['website']) ? $disabled : '';
 		} else {
 			$user['name'] = $user['nickname'];
 			$user['name_disabled'] = $disabled;
 			$user['mail_disabled'] = $disabled;
-			if (!empty($user['website'])) {
-				$user['website_disabled'] = $disabled;
-			}
+			$user['website_disabled'] = !empty($user['website']) ? $disabled : '';
+			$user['message'] = '';
 		}
 		$tpl->assign('form', isset($form) ? $form : $user);
 	} else {
-		$defaults['name_disabled'] = '';
-		$defaults['mail_disabled'] = '';
-		$defaults['website_disabled'] = '';
-		
+		$defaults = array(
+			'name' => '',
+			'name_disabled' => '',
+			'mail' => '',
+			'mail_disabled' => '',
+			'website' => '',
+			'website_disabled' => '',
+			'message' => '',
+		);
+
 		$tpl->assign('form', isset($form) ? $form : $defaults);
 	}
 	

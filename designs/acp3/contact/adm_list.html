@@ -1,4 +1,6 @@
+{if isset($error_msg)}
 {$error_msg}
+{/if}
 <form action="{uri args="acp/contact/adm_list"}" method="post" accept-charset="UTF-8">
 	<fieldset>
 		<legend>{lang values="contact|imprint"}</legend>

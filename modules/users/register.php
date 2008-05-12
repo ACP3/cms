@@ -21,8 +21,8 @@ if ($auth->isUser()) {
 			$errors[] = lang('users', 'user_email_already_exists');
 		if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])
 			$errors[] = lang('users', 'type_in_pwd');
-		//if (!validate::captcha($form['captcha'], $form['hash']))
-		//	$errors[] = lang('captcha', 'invalid_captcha_entered');
+		if (!validate::captcha($form['captcha'], $form['hash']))
+			$errors[] = lang('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -59,7 +59,12 @@ if ($auth->isUser()) {
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$tpl->assign('form', isset($form) ? $form : '');
+		$defaults = array(
+			'nickname' => '',
+			'mail' => '',
+		);
+
+		$tpl->assign('form', isset($form) ? $form : $defaults);
 
 		$tpl->assign('captcha', captcha());
 

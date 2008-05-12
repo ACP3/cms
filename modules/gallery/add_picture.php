@@ -44,7 +44,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' .
 
 			cache::create('gallery_pics_id_' . $modules->id, $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $modules->id . '\'', 'pic ASC, id ASC'));
 
-			$content = comboBox($bool ? lang('gallery', 'add_picture_success') : lang('gallery', 'add_picture_error'), uri('acp/gallery/add_picture/id_' . $form['gallery'] . '/pic_' . ($pic + 1)));
+			$content = comboBox($bool ? lang('gallery', 'add_picture_success') : lang('gallery', 'add_picture_error'), uri('acp/gallery/add_picture/id_' . $modules->id . '/pic_' . ($pic + 1)));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
@@ -58,8 +58,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' .
 		}
 
 		$tpl->assign('galleries', $galleries);
-		$form['pic'] = isset($form['pic']) ? $form['pic'] : $pic;
-		$tpl->assign('form', $form);
+		$tpl->assign('form', isset($form) ? $form : array('pic' => $pic, 'description' => ''));
 
 		$content = $tpl->fetch('gallery/add_picture.html');
 	}

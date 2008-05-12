@@ -88,7 +88,7 @@ function smarty_function_fckeditor($params, &$smarty) {
 	$out.= '//]]>' . "\n";
 	$out.= '</script>' . "\n";
 	$out.= '<noscript>' . "\n";
-	$out.= '<textarea name="' . $base_arguments['InstanceName'] . '" id="' . substr($base_arguments['InstanceName'], 5, strlen($base_arguments['InstanceName']) - 6) . '" cols="50" rows="5">' . $base_arguments['Value'] . "</textarea>\n";
+	$out.= '<textarea name="' . $base_arguments['InstanceName'] . '" id="' . substr($base_arguments['InstanceName'], 5, strlen($base_arguments['InstanceName']) - 6) . '" cols="50" rows="5">' . (!empty($base_arguments['Value']) ? $base_arguments['Value'] : '') . "</textarea>\n";
 	$out.= '</noscript>' . "\n";
 
 	return $out;

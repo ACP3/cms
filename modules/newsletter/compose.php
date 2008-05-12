@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-	$tpl->assign('form', isset($form) ? $form : '');
+	$tpl->assign('form', isset($form) ? $form : array('subject' => '', 'text' => ''));
 
 	$test[0]['value'] = '1';
 	$test[0]['checked'] = selectEntry('test', '1', '0', 'checked');

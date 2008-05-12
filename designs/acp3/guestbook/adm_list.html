@@ -1,4 +1,4 @@
-{if $guestbook}
+{if isset($guestbook)}
 <form action="{uri args="acp/guestbook/delete"}" method="post">
 	<div id="adm-list">
 		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />

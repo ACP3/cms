@@ -1,5 +1,5 @@
 <div class="error">
-{if $update}
+{if isset($update)}
 	<h4>{$update_text}</h4>
 	<ul style="margin-bottom:0">
 		<li><strong>{lang values="system|installed_version"}:</strong> {$update.2}</li>

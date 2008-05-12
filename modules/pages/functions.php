@@ -102,6 +102,8 @@ function parentCheck($id, $parent_id)
 function processNavbar($block, $pages = 0)
 {
 	static $navbar = array();
+
+	// Navigationsleiste sofort ausgeben, falls diese schon einmal verarbeitet wurde
 	if (empty($pages) && !empty($navbar[$block])) {
 		return $navbar[$block];
 	} else {
@@ -121,7 +123,11 @@ function processNavbar($block, $pages = 0)
 				$tabs.= "\t\t";
 
 			$i = 0;
-			$navbar[$block].=  empty($navbar[$block]) ?  "<ul class=\"navigation-" . $block . "\">\n" : $tabs . "<ul>\n";
+			if (empty($navbar[$block])) {
+				$navbar[$block] = "<ul class=\"navigation-" . $block . "\">\n";
+			} else {
+				$navbar[$block] = $tabs . "<ul>\n";
+			}
 			foreach ($pages as $row) {
 				if ($row['block_name'] == $block && !empty($row['block_id']) && $row['start'] == $row['end']  && $row['start'] <= dateAligned(2, time()) || $row['start'] != $row['end'] && $row['start'] <= dateAligned(2, time()) && $row['end'] >= dateAligned(2, time())) {
 					$css = 'navi-' . $row['id'] . ($modules->mod == 'pages' && $modules->page == 'list' && $modules->item == $row['id'] ? ' selected' : '');

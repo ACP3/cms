@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-	$tpl->assign('form', isset($form) ? $form : '');
+	$tpl->assign('form', isset($form) ? $form : array('mail' => ''));
 
 	$field_value = isset($_POST['action']) ? $_POST['action'] : 'subscribe';
 

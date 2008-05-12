@@ -1,4 +1,4 @@
-{if $gallery}
+{if isset($gallery)}
 <p style="text-align:center">
 {foreach from=$gallery item=row}
 	<a href="{uri args="gallery/details/id_`$row.id`"}"><img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" /></a>

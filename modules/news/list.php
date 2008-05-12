@@ -10,11 +10,6 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-// Newsletter
-$tpl->assign('MOD_newsletter', $modules->check('newsletter', 'create'));
-// RSS Feed Icon
-$tpl->assign('MOD_feeds', $modules->check('feeds', 'list'));
-
 if (isset($_POST['form']['cat']) && validate::isNumber($_POST['form']['cat'])) {
 	$cat = $_POST['form']['cat'];
 } elseif (validate::isNumber($modules->cat)) {

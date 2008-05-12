@@ -1,4 +1,4 @@
-{if $comments && $module == '0'}
+{if isset($comments) && $module == '0'}
 <form action="{uri args="acp/comments/delete_comments_per_module"}" method="post">
 	<div id="adm-list">
 		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
@@ -26,7 +26,7 @@
 	</table>
 {mark name="entries"}
 </form>
-{elseif $comments && $module != '0'}
+{elseif isset($comments) && $module != '0'}
 <form action="{uri args="acp/comments/delete_comments"}" method="post">
 	<div id="adm-list">
 		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
