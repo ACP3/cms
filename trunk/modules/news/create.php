@@ -67,7 +67,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$target[1]['lang'] = lang('common', 'window_blank');
 	$tpl->assign('target', $target);
 
-	$tpl->assign('form', isset($form) ? $form : '');
+	$tpl->assign('form', isset($form) ? $form : array('headline' => '', 'text' => '', 'uri' => '', 'link_title' => ''));
 
 	$content = $tpl->fetch('news/create.html');
 }

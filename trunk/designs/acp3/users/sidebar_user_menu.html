@@ -4,7 +4,7 @@
 <h4>{lang values="users|user_menu"}</h4>
 <ul class="admin">
 	<li><a href="{uri args="users/home"}">{lang values="users|home"}</a></li>
-{if $nav_mods}
+{if isset($nav_mods)}
 	<li>
 		<a href="{uri args="acp"}" id="nav-mods-link">{lang values="users|administration"}</a>
 		<ul id="nav-mods">
@@ -14,7 +14,7 @@
 		</ul>
 	</li>
 {/if}
-{if $nav_system}
+{if isset($nav_system)}
 	<li>
 		<a href="{uri args="acp/system"}" id="nav-system-link">{lang values="system|system"}</a>
 		<ul id="nav-system">

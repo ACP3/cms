@@ -25,9 +25,6 @@ if ($c_guestbook > 0) {
 
 	for ($i = 0; $i < $c_guestbook; ++$i) {
 		$guestbook[$i]['date'] = dateAligned(1, $guestbook[$i]['date']);
-		if (empty($guestbook[$i]['user_id'])) {
-			unset($guestbook[$i]['user_id']);
-		}
 		$guestbook[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $guestbook[$i]['message']);
 		if ($emoticons) {
 			$guestbook[$i]['message'] = emoticonsReplace($guestbook[$i]['message']);

@@ -54,7 +54,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 
 			$bool = $db->update('users', $update_values, 'id = \'' . USER_ID . '\'');
 
-			$cookie_arr = explode('|', $_COOKIE['ACP3_AUTH']);
+			$cookie_arr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
 			$cookie_value = base64_encode($form['nickname'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]));
 			setcookie('ACP3_AUTH', $cookie_value, time() + 3600, '/');
 

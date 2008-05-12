@@ -7,7 +7,7 @@
 		<link>{$feed.link}</link>
 		<description>{$feed.description}</description>
 		<language>{$LANG}</language>
-{if $results}
+{if isset($results)}
 {foreach from=$results item=row}
 		<item>
 			<pubDate>{$row.date}</pubDate>

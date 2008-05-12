@@ -1,4 +1,6 @@
+{if isset($error_msg)}
 {$error_msg}
+{/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset style="width:50%">
 		<dl>
@@ -26,7 +28,7 @@
 		<h2>{lang values="gallery|pictures"}</h2>
 	</div>
 	<hr />
-{if $pictures}
+{if isset($pictures)}
 {$pagination}
 	<table>
 		<thead>

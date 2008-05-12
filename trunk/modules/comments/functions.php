@@ -99,9 +99,6 @@ function comments($module, $entry_id)
 			$tpl->assign('pagination', $modules->pagination($db->select('id', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 0, 0, 0, 1)));
 			for ($i = 0; $i < $c_comments; ++$i) {
 				$comments[$i]['date'] = dateAligned(1, $comments[$i]['date']);
-				if (empty($comments[$i]['user_id'])) {
-					unset($comments[$i]['user_id']);
-				}
 				$comments[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $comments[$i]['message']);
 				if ($emoticons) {
 					$comments[$i]['message'] = emoticonsReplace($comments[$i]['message']);
@@ -127,13 +124,15 @@ function comments($module, $entry_id)
 			} else {
 				$default['name'] = $user['nickname'];
 				$default['name_disabled'] = $disabled;
+				$default['message'] = '';
 			}
-			$tpl->assign('form', isset($form) ? $form : $default);
 		} else {
+			$default['name'] = '';
 			$default['name_disabled'] = '';
-			$tpl->assign('form', isset($form) ? $form : $default);
+			$default['message'] = '';
 		}
-
+		$tpl->assign('form', isset($form) ? $form : $default);
+		
 		$tpl->assign('captcha', captcha());
 
 		// Modul und Datensatznummer mit ins Formular einbinden

@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-	$tpl->assign('form', isset($form) ? $form : '');
+	$tpl->assign('form', isset($form) ? $form : array('search_term' => ''));
 
 	$mods = scandir(ACP3_ROOT . 'modules/');
 	$c_mods = count($mods);

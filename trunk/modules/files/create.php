@@ -88,7 +88,15 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	}
 
 	$tpl->assign('checked_external', isset($form['external']) ? ' checked="checked"' : '');
-	$tpl->assign('form', isset($form) ? $form : '');
+
+	$defaults = array(
+		'link_title' => '',
+		'file_internal' => '',
+		'filesize' => '',
+		'text' => '',
+	);
+
+	$tpl->assign('form', isset($form) ? $form : $defaults);
 
 	$content = $tpl->fetch('files/create.html');
 }

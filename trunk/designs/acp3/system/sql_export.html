@@ -1,9 +1,11 @@
-{if $export}
+{if isset($export)}
 <pre>
 {$export}
 </pre>
 {else}
+{if isset($error_msg)}
 {$error_msg}
+{/if}
 <script type="text/javascript" src="{$DESIGN_PATH}system/script.js"></script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" id="tabs">
 	<fieldset>

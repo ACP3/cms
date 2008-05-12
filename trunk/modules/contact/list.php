@@ -40,19 +40,29 @@ if (isset($_POST['submit'])) {
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
 	if ($auth->isUser()) {
-		$user = $auth->getUserInfo();
+		$defaults = $auth->getUserInfo();
 		$disabled = ' readonly="readonly" class="readonly"';
+		$defaults['name'] = !empty($defaults['fullname']) ? $db->escape($defaults['fullname'], 3) : $db->escape($defaults['nickname'], 3);
+		$defaults['message'] = '';
 
 		if (isset($form)) {
+			$form['name_disabled'] = $disabled;
 			$form['mail_disabled'] = $disabled;
 		} else {
-			$user['mail_disabled'] = $disabled;
+			$defaults['name_disabled'] = $disabled;
+			$defaults['mail_disabled'] = $disabled;
 		}
-		$tpl->assign('form', isset($form) ? $form : $user);
 	} else {
-		$tpl->assign('form', isset($form) ? $form : array('mail_disabled' => ''));
+		$defaults = array(
+			'name' => '',
+			'name_disabled' => '',
+			'mail' => '',
+			'mail_disabled' => '',
+			'message' => '',
+		);
 	}
-
+	$tpl->assign('form', isset($form) ? $form : $defaults);
+	
 	$tpl->assign('captcha', captcha());
 
 	$content = $tpl->fetch('contact/list.html');

@@ -1,4 +1,6 @@
+{if isset($error_msg)}
 {$error_msg}
+{/if}
 <script type="text/javascript" src="{$DESIGN_PATH}files/script.js"></script>
 <form action="{$REQUEST_URI}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 	<fieldset>
@@ -25,7 +27,7 @@
 					{lang values="files|external_resource"}
 				</label>
 				<input type="file" name="file_internal" id="file-internal" value="{$form.file_internal}" />
-				<input type="text" name="form[file_external]" id="file-external" value="{$form.file_external}" maxlength="120" />
+				<input type="text" name="form[file_external]" id="file-external" value="" maxlength="120" />
 			</dd>
 		</dl>
 		<dl id="external-filesize" class="hide">

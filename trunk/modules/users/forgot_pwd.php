@@ -48,7 +48,12 @@ if ($auth->isUser()) {
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$tpl->assign('form', isset($form) ? $form : '');
+		$defaults = array(
+			'nickname' => '',
+			'mail' => '',
+		);
+
+		$tpl->assign('form', isset($form) ? $form : $defaults);
 
 		$tpl->assign('captcha', captcha());
 

@@ -1,5 +1,5 @@
 <h1 id="comments">{lang values="comments|comments"}</h1>
-{if $comments}
+{if isset($comments)}
 {$pagination}
 {foreach from=$comments item=row}
 	<div class="gb">
@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		<div class="left">
-			<strong>{lang values="common|name"}:</strong> {if $row.user_id}<a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang values="users|view_profile"}">{$row.name}</a>{else}{$row.name}{/if}<br />
+			<strong>{lang values="common|name"}:</strong> {if !empty($row.user_id)}<a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang values="users|view_profile"}">{$row.name}</a>{else}{$row.name}{/if}<br />
 			<strong>{lang values="common|date"}:</strong> {$row.date}
 		</div>
 		<div class="content">
@@ -29,7 +29,9 @@
 </div>
 {/if}
 <hr />
+{if isset($error_msg)}
 {$error_msg}
+{/if}
 <form action="{$REQUEST_URI}#comments" method="post" accept-charset="UTF-8">
 	<fieldset class="no-border">
 		<dl>
