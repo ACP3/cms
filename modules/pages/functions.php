@@ -126,7 +126,7 @@ function processNavbar($block, $pages = 0)
 			if (empty($navbar[$block])) {
 				$navbar[$block] = "<ul class=\"navigation-" . $block . "\">\n";
 			} else {
-				$navbar[$block] = $tabs . "<ul>\n";
+				$navbar[$block].= $tabs . "<ul>\n";
 			}
 			foreach ($pages as $row) {
 				if ($row['block_name'] == $block && !empty($row['block_id']) && $row['start'] == $row['end']  && $row['start'] <= dateAligned(2, time()) || $row['start'] != $row['end'] && $row['start'] <= dateAligned(2, time()) && $row['end'] >= dateAligned(2, time())) {
