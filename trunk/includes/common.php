@@ -60,9 +60,10 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 // Klassen initialisieren
 $db = new db();
 $modules = new modules();
-$auth = new auth();
 
 $tpl->assign('MODULES', $modules);
 
 require_once ACP3_ROOT . 'includes/functions.php';
+
+$auth = new auth();
 ?>
