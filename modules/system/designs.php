@@ -16,7 +16,7 @@ breadcrumb::assign(lang('system', 'extensions'), uri('acp/system/extensions'));
 breadcrumb::assign(lang('system', 'designs'));
 
 if ($modules->dir) {
-	$dir = is_file(ACP3_ROOT . 'designs/' . $modules->dir . '/info.php') ? $modules->dir : 0;
+	$dir = is_file(ACP3_ROOT . 'designs/' . $modules->dir . '/info.xml') ? $modules->dir : 0;
 	$bool = false;
 
 	if (!empty($dir)) {
@@ -59,9 +59,8 @@ if ($modules->dir) {
 	$directories = scandir(ACP3_ROOT . 'designs');
 	$count_dir = count($directories);
 	for ($i = 0; $i < $count_dir; ++$i) {
-		$design_info = array();
-		if ($directories[$i] != '.' && $directories[$i] != '..' && is_file('designs/' . $directories[$i] . '/info.php')) {
-			include ACP3_ROOT . 'designs/' . $directories[$i] . '/info.php';
+		$design_info = xml::parseXmlFile(ACP3_ROOT . 'designs/' . $directories[$i] . '/info.xml', '/design');
+		if (!empty($design_info)) {
 			$designs[$i] = $design_info;
 			$designs[$i]['action'] = CONFIG_DESIGN == $directories[$i] ? '<img src="' . ROOT_DIR . 'images/crystal/16/apply.png" alt="" />' : '<a href="' . uri('acp/system/designs/dir_' . urlencode($directories[$i])) . '"><img src="' . ROOT_DIR . 'images/crystal/16/cancel.png" alt="" /></a>';
 		}
