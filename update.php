@@ -59,7 +59,8 @@ $config = array(
 	'sef' => CONFIG_SEF,
 	'time_zone' => CONFIG_TIME_ZONE,
 	'title' => CONFIG_TITLE,
-	'version' => 'ACP3 4.0RC1 SVN'
+	'version' => 'ACP3 4.0RC1 SVN',
+	'wysiwyg' => 'fckeditor'
 );
 
 echo config::general($config) ? 'Konfigurationsdatei erfolgreich aktualisiert.' : 'Konfigurationsdatei konnte nicht aktualisiert werden.';

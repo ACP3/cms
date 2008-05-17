@@ -75,7 +75,8 @@ if (isset($_POST['submit'])) {
 			'sef' => 0,
 			'time_zone' => $form['time_zone'],
 			'title' => !empty($form['title']) ? mask($form['title']) : 'ACP3',
-			'version' => CONFIG_VERSION
+			'version' => CONFIG_VERSION,
+			'wysiwyg' => 'fckeditor'
 		);
 
 		// Daten in die config.php schreiben und diese laden

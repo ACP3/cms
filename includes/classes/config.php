@@ -25,7 +25,9 @@ class config
 	public static function general($data)
 	{
 		$path = ACP3_ROOT . 'includes/config.php';
-		if (is_writable($path) && is_array($data))	{
+		if (is_writable($path) && is_array($data)){
+			$data = ksort($data);
+
 			// Konfigurationsdatei in ein Array schreiben
 			$content = "<?php\n";
 			$content.= "define('INSTALLED', true);\n";
