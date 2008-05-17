@@ -116,7 +116,7 @@ function processNavbar($block, $pages = 0)
 		$c_pages = count($pages);
 
 		if ($c_pages > 0) {
-			global $modules;
+			global $uri;
 			static $tabs = '';
 
 			if (!empty($navbar[$block]))
@@ -130,7 +130,7 @@ function processNavbar($block, $pages = 0)
 			}
 			foreach ($pages as $row) {
 				if ($row['block_name'] == $block && !empty($row['block_id']) && $row['start'] == $row['end']  && $row['start'] <= dateAligned(2, time()) || $row['start'] != $row['end'] && $row['start'] <= dateAligned(2, time()) && $row['end'] >= dateAligned(2, time())) {
-					$css = 'navi-' . $row['id'] . ($modules->mod == 'pages' && $modules->page == 'list' && $modules->item == $row['id'] ? ' selected' : '');
+					$css = 'navi-' . $row['id'] . ($uri->mod == 'pages' && $uri->page == 'list' && $uri->item == $row['id'] ? ' selected' : '');
 					$href = uri('pages/list/item_' . $row['id']);
 					$target = ($row['mode'] == 2 || $row['mode'] == 3) && $row['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 					$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $row['title'] . '</a>';

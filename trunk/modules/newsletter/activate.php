@@ -10,9 +10,9 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (validate::email($modules->mail) && validate::isMD5($modules->hash)) {
-	$mail = $modules->mail;
-	$hash = $modules->hash;
+if (validate::email($uri->mail) && validate::isMD5($uri->hash)) {
+	$mail = $uri->mail;
+	$hash = $uri->hash;
 } else {
 	redirect('errors/404');
 }

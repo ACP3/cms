@@ -15,8 +15,8 @@ breadcrumb::assign(lang('system', 'system'), uri('acp/system'));
 breadcrumb::assign(lang('system', 'maintenance'), uri('acp/system/maintenance'));
 breadcrumb::assign(lang('system', 'sql_optimisation'));
 
-if ($modules->action == 'do') {
-	$mod_list = $modules->modulesList();
+if ($uri->action == 'do') {
+	$mod_list = modules::modulesList();
 	$tables = array();
 	$total_overhead = 0;
 	$i = 0;

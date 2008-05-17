@@ -10,11 +10,11 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (!validate::isNumber($modules->id) || $modules->action != 'mini' && $modules->action != 'thumb') {
+if (!validate::isNumber($uri->id) || $uri->action != 'mini' && $uri->action != 'thumb') {
 	redirect('errors/404');
 } else {
 	@set_time_limit(20);
-	$pic = $db->select('file', 'gallery_pictures', 'id = \'' . $modules->id . '\'');
+	$pic = $db->select('file', 'gallery_pictures', 'id = \'' . $uri->id . '\'');
 
 	$pic = 'uploads/gallery/' . $pic[0]['file'];
 
@@ -23,7 +23,7 @@ if (!validate::isNumber($modules->id) || $modules->action != 'mini' && $modules-
 		$width = $pic_info[0];
 		$height = $pic_info[1];
 		$type = $pic_info[2];
-		$action = $modules->action;
+		$action = $uri->action;
 
 		if (extension_loaded('gd') && ($type == '1' || $type == '2' || $type == '3') && ($action == 'mini' && $width > 160 && $height > 120) || ($action == 'thumb' && $width > 640 && $height > 480)) {
 			$t_height = $action == 'mini' ? 120 : 480;

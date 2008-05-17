@@ -14,7 +14,7 @@ $news = $db->select('n.id, n.start, n.end, n.headline, c.name AS cat', 'news AS 
 $c_news = count($news);
 
 if ($c_news > 0) {
-	$tpl->assign('pagination', $modules->pagination($db->select('id', 'news', 0, 0, 0, 0, 1)));
+	$tpl->assign('pagination', pagination($db->select('id', 'news', 0, 0, 0, 0, 1)));
 
 	for ($i = 0; $i < $c_news; ++$i) {
 		$news[$i]['start'] = dateAligned(1, $news[$i]['start']);

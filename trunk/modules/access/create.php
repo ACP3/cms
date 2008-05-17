@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : array('name' => ''));
 
-	$mod_list = $modules->modulesList();
+	$mod_list = modules::modulesList();
 
 	foreach ($mod_list as $name => $info) {
 		if ($info['dir'] == 'errors' || !$info['active']) {

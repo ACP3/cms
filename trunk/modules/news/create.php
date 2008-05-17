@@ -53,7 +53,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('end_date', datepicker('end'));
 
 	// Kategorien
-	if ($modules->check('categories', 'functions')) {
+	if (modules::check('categories', 'functions')) {
 		include_once ACP3_ROOT . 'modules/categories/functions.php';
 		$tpl->assign('categories', categoriesList('news', 'create'));
 	}

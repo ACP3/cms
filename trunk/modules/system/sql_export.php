@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
 	}
 }
 if (!isset($_POST['submit']) || isset($errors)) {
-	$mod_list = $modules->modulesList();
+	$mod_list = modules::modulesList();
 	$tables = array();
 
 	foreach ($mod_list as $info) {

@@ -12,13 +12,13 @@ if (!defined('IN_ADM'))
 
 include_once ACP3_ROOT . 'modules/access/functions.php';
 
-if (validate::isNumber($modules->id) && $db->select('id', 'access', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->select('id', 'access', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
 		if (empty($form['name']))
 			$errors[] = lang('common', 'name_to_short');
-		if (!empty($form['name']) && $db->select('id', 'access', 'id != \'' . $modules->id . '\' AND name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
+		if (!empty($form['name']) && $db->select('id', 'access', 'id != \'' . $uri->id . '\' AND name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
 			$errors[] = lang('access', 'access_level_already_exist');
 		if (emptyCheck($form['modules']))
 			$errors[] = lang('access', 'select_modules');
@@ -31,17 +31,17 @@ if (validate::isNumber($modules->id) && $db->select('id', 'access', 'id = \'' . 
 				'modules' => buildAccessLevel($form['modules']),
 			);
 
-			$bool = $db->update('access', $update_values, 'id = \'' . $modules->id . '\'');
+			$bool = $db->update('access', $update_values, 'id = \'' . $uri->id . '\'');
 
 			$content = comboBox($bool ? lang('access', 'edit_success') : lang('access', 'edit_error'), uri('acp/access'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$access = $db->select('name, modules', 'access', 'id = \'' . $modules->id . '\'');
+		$access = $db->select('name, modules', 'access', 'id = \'' . $uri->id . '\'');
 
 		$tpl->assign('form', isset($form) ? $form : $access[0]);
 
-		$mod_list = $modules->modulesList();
+		$mod_list = modules::modulesList();
 		$mods_arr = explode(',', $access[0]['modules']);
 		$c_mods_arr = count($mods_arr);
 

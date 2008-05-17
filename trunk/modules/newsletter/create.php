@@ -11,7 +11,7 @@ if (!defined('IN_ACP3'))
 	exit();
 
 if (isset($_POST['submit'])) {
-	switch ($modules->action) {
+	switch ($uri->action) {
 		case 'subscribe' :
 			$form = $_POST['form'];
 

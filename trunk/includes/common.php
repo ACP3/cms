@@ -58,12 +58,10 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 	exit;
 }
 // Klassen initialisieren
-$db = new db();
-$modules = new modules();
+$db = new db;
+$uri = new uri;
 
-$tpl->assign('MODULES', $modules);
+$tpl->assign('MODULES', new modules);
 
 require_once ACP3_ROOT . 'includes/functions.php';
-
-$auth = new auth();
 ?>

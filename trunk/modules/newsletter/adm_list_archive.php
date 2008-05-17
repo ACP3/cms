@@ -14,7 +14,7 @@ $newsletter = $db->select('id, date, subject, text, status', 'newsletter_archive
 $c_newsletter = count($newsletter);
 
 if ($c_newsletter > 0) {
-	$tpl->assign('pagination', $modules->pagination($db->select('id', 'newsletter_archive', 0, 0, 0, 0, 1)));
+	$tpl->assign('pagination', pagination($db->select('id', 'newsletter_archive', 0, 0, 0, 0, 1)));
 
 	for ($i = 0; $i < $c_newsletter; ++$i) {
 		$newsletter[$i]['date'] = dateAligned(1, $newsletter[$i]['date']);

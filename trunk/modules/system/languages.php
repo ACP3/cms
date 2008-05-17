@@ -15,8 +15,8 @@ breadcrumb::assign(lang('system', 'system'), uri('acp/system'));
 breadcrumb::assign(lang('system', 'extensions'), uri('acp/system/extensions'));
 breadcrumb::assign(lang('system', 'languages'));
 
-if ($modules->dir) {
-	$dir = is_file(ACP3_ROOT . 'languages/' . $modules->dir . '/info.xml') ? $modules->dir : 0;
+if ($uri->dir) {
+	$dir = is_file(ACP3_ROOT . 'languages/' . $uri->dir . '/info.xml') ? $uri->dir : 0;
 	$bool = false;
 
 	if (!empty($dir)) {

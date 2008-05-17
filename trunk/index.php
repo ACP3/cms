@@ -12,10 +12,12 @@ ob_start();
 define('ACP3_ROOT', './');
 require ACP3_ROOT . 'includes/common.php';
 
-if ($modules->check()) {
-	include ACP3_ROOT . 'modules/' . $modules->mod . '/' . $modules->page . '.php';
+$auth = new auth;
+
+if (modules::check()) {
+	include ACP3_ROOT . 'modules/' . $uri->mod . '/' . $uri->page . '.php';
 	$tpl->assign('CONTENT', !empty($content) ? $content : '');
-} elseif (!$auth->isUser() && defined('IN_ADM') && $modules->mod != 'users' && $modules->page != 'login') {
+} elseif (!$auth->isUser() && defined('IN_ADM') && $uri->mod != 'users' && $uri->page != 'login') {
 	redirect('users/login');
 } else {
 	redirect('errors/404');

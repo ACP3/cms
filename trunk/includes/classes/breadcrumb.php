@@ -63,22 +63,22 @@ class breadcrumb
 	 */
 	public static function output($mode = 1, $id = '')
 	{
-		global $modules, $tpl;
+		global $uri, $tpl;
 
-		$module = $modules->mod;
-		$page = $modules->page;
+		$module = $uri->mod;
+		$page = $uri->page;
 
 		// Brotkrümelspur für die Menüpunkte
 		if ($module == 'pages' && $page == 'list') {
 			global $db;
 
 			if (!validate::isNumber($id))
-				$id = $modules->item;
+				$id = $uri->item;
 
 			$page = $db->select('mode, parent, title', 'pages', 'id = \'' . $id . '\' AND (mode = \'1\' OR mode = \'2\')');
 
 			// Dynamische Seiten (ACP3 intern)
-			if ($id == $modules->item && $page[0]['mode'] == 2 && empty($page[0]['parent']) && !empty(self::$steps) && self::$end != '') {
+			if ($id == $uri->item && $page[0]['mode'] == 2 && empty($page[0]['parent']) && !empty(self::$steps) && self::$end != '') {
 				if ($mode == 1) {
 					$tpl->assign('breadcrumb', self::$steps);
 					$tpl->assign('end', self::$end);
@@ -90,7 +90,7 @@ class breadcrumb
 			} else {
 				// Brotkrümelspur ausgeben
 				if ($mode == 1) {
-					if ($id == $modules->item) {
+					if ($id == $uri->item) {
 						self::$steps = array();
 						self::$end = '';
 					}

@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($modules->id) && $db->select('id', 'files', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->select('id', 'files', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 		if (isset($form['external'])) {
@@ -66,21 +66,21 @@ if (validate::isNumber($modules->id) && $db->select('id', 'files', 'id = \'' . $
 				'text' => $db->escape($form['text'], 2),
 			);
 			if (is_array($new_file_sql)) {
-				$old_file = $db->select('file', 'files', 'id = \'' . $modules->id . '\'');
+				$old_file = $db->select('file', 'files', 'id = \'' . $uri->id . '\'');
 				removeFile('files', $old_file[0]['file']);
 
 				$update_values = array_merge($update_values, $new_file_sql);
 			}
 
-			$bool = $db->update('files', $update_values, 'id = \'' . $modules->id . '\'');
+			$bool = $db->update('files', $update_values, 'id = \'' . $uri->id . '\'');
 
-			cache::create('files_details_id_' . $modules->id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, c.name AS category_name', 'files AS f, ' . CONFIG_DB_PRE . 'categories AS c', 'f.id = \'' . $modules->id . '\' AND f.category_id = c.id'));
+			cache::create('files_details_id_' . $uri->id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, c.name AS category_name', 'files AS f, ' . CONFIG_DB_PRE . 'categories AS c', 'f.id = \'' . $uri->id . '\' AND f.category_id = c.id'));
 
 			$content = comboBox($bool ? lang('files', 'edit_success') : lang('files', 'edit_error'), uri('acp/files'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$dl = $db->select('start, end, category_id, file, size, link_title, text', 'files', 'id = \'' . $modules->id . '\'');
+		$dl = $db->select('start, end, category_id, file, size, link_title, text', 'files', 'id = \'' . $uri->id . '\'');
 		$dl[0]['text'] = $db->escape($dl[0]['text'], 3);
 		// Datumsauswahl
 		$tpl->assign('start_date', datepicker('start', $dl[0]['start']));
@@ -103,7 +103,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'files', 'id = \'' . $
 		$dl[0]['filesize'] = substr($dl[0]['size'], 0, strpos($dl[0]['size'], ' '));
 
 		// Formularelemente
-		if ($modules->check('categories', 'functions')) {
+		if (modules::check('categories', 'functions')) {
 			include_once ACP3_ROOT . 'modules/categories/functions.php';
 			$tpl->assign('categories', categoriesList('files', 'edit', $dl[0]['category_id']));
 		}

@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($modules->id) && $db->select('id', 'emoticons', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->select('id', 'emoticons', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 		if (!empty($_FILES['picture']['tmp_name'])) {
@@ -41,13 +41,13 @@ if (validate::isNumber($modules->id) && $db->select('id', 'emoticons', 'id = \''
 				'description' => $db->escape($form['description']),
 			);
 			if (is_array($new_file_sql)) {
-				$old_file = $db->select('img', 'emoticons', 'id = \'' . $modules->id . '\'');
+				$old_file = $db->select('img', 'emoticons', 'id = \'' . $uri->id . '\'');
 				removeFile('emoticons', $old_file[0]['img']);
 
 				$update_values = array_merge($update_values, $new_file_sql);
 			}
 
-			$bool = $db->update('emoticons', $update_values, 'id = \'' . $modules->id . '\'');
+			$bool = $db->update('emoticons', $update_values, 'id = \'' . $uri->id . '\'');
 
 			cache::create('emoticons', $db->select('code, description, img', 'emoticons'));
 
@@ -55,7 +55,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'emoticons', 'id = \''
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$emoticon = $db->select('code, description, img', 'emoticons', 'id = \'' . $modules->id . '\'');
+		$emoticon = $db->select('code, description, img', 'emoticons', 'id = \'' . $uri->id . '\'');
 
 		$tpl->assign('picture', $emoticon[0]['img']);
 		$tpl->assign('form', isset($form) ? $form : $emoticon[0]);
