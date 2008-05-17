@@ -12,14 +12,14 @@ if (!defined('IN_ACP3'))
 
 if (isset($_POST['form']['cat']) && validate::isNumber($_POST['form']['cat'])) {
 	$cat = $_POST['form']['cat'];
-} elseif (validate::isNumber($modules->cat)) {
-	$cat = $modules->cat;
+} elseif (validate::isNumber($uri->cat)) {
+	$cat = $uri->cat;
 } else {
 	$cat = 0;
 }
 
 // Kategorien auflisten
-if ($modules->check('categories', 'functions')) {
+if (modules::check('categories', 'functions')) {
 	include_once ACP3_ROOT . 'modules/categories/functions.php';
 	$categories = categoriesList('news', 'list', $cat);
 
@@ -35,12 +35,12 @@ $c_news = count($news);
 
 if ($c_news > 0) {
 	// Überprüfen, ob das Kommentare Modul aktiv ist
-	if ($modules->check('comments', 'functions')) {
+	if (modules::check('comments', 'functions')) {
 		include_once ACP3_ROOT . 'modules/comments/functions.php';
 		$comment_check = true;
 		$tpl->assign('comment_check', true);
 	}
-	$tpl->assign('pagination', $modules->pagination($db->select('id', 'news', $where, 0, 0, 0, 1)));
+	$tpl->assign('pagination', pagination($db->select('id', 'news', $where, 0, 0, 0, 1)));
 
 	for ($i = 0; $i < $c_news; ++$i) {
 		$news[$i]['date'] = dateAligned(1, $news[$i]['start']);

@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($modules->id) && $db->select('id', 'news', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
@@ -42,15 +42,15 @@ if (validate::isNumber($modules->id) && $db->select('id', 'news', 'id = \'' . $m
 				'link_title' => $db->escape($form['link_title'])
 			);
 
-			$bool = $db->update('news', $update_values, 'id = \'' . $modules->id . '\'');
+			$bool = $db->update('news', $update_values, 'id = \'' . $uri->id . '\'');
 
-			cache::create('news_details_id_' . $modules->id, $db->select('id, start, headline, text, category_id, uri, target, link_title', 'news', 'id = \'' . $modules->id . '\''));
+			cache::create('news_details_id_' . $uri->id, $db->select('id, start, headline, text, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\''));
 
 			$content = comboBox($bool ? lang('news', 'edit_success') : lang('news', 'edit_error'), uri('acp/news'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$news = $db->select('start, end, headline, text, category_id, uri, target, link_title', 'news', 'id = \'' . $modules->id . '\'');
+		$news = $db->select('start, end, headline, text, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\'');
 		$news[0]['text'] = $db->escape($news[0]['text'], 3);
 
 		// Datumsauswahl
@@ -58,7 +58,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'news', 'id = \'' . $m
 		$tpl->assign('end_date', datepicker('end', $news[0]['end']));
 
 		// Kategorien
-		if ($modules->check('categories', 'functions')) {
+		if (modules::check('categories', 'functions')) {
 			include_once ACP3_ROOT . 'modules/categories/functions.php';
 			$tpl->assign('categories', categoriesList('news', 'edit', $news[0]['category_id']));
 		}

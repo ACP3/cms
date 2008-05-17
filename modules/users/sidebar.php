@@ -12,13 +12,13 @@ if (!defined('IN_ACP3') && !defined('IN_ADM'))
 
 if ($auth->isUser()) {
 	// Module einholen
-	$mod_list = $modules->modulesList();
+	$mod_list = modules::modulesList();
 	$nav_mods = array();
 	$access_system = false;
 
 	foreach ($mod_list as $name => $info) {
 		$dir = $info['dir'];
-		if ($modules->check($dir, 'adm_list') && $dir != 'acp') {
+		if (modules::check($dir, 'adm_list') && $dir != 'acp') {
 			if ($dir == 'system') {
 				$access_system = true;
 			} elseif ($dir == 'home') {

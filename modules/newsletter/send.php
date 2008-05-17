@@ -10,9 +10,9 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($modules->id) && $db->select('id', 'newsletter_archive', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->select('id', 'newsletter_archive', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
 	$settings = config::output('newsletter');
-	$newsletter = $db->select('subject, text', 'newsletter_archive', 'id = \'' . $modules->id . '\'');
+	$newsletter = $db->select('subject, text', 'newsletter_archive', 'id = \'' . $uri->id . '\'');
 	$accounts = $db->select('mail', 'newsletter_accounts', 'hash = \'\'');
 	$c_accounts = count($accounts);
 	$bool = true;
@@ -24,7 +24,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'newsletter_archive', 
 			break;
 	}
 	if ($bool) {
-		$bool2 = $db->update('newsletter_archive', array('status' => '1'), 'id = \'' . $modules->id . '\'');
+		$bool2 = $db->update('newsletter_archive', array('status' => '1'), 'id = \'' . $uri->id . '\'');
 	}
 
 	$content = comboBox($bool ? lang('newsletter', 'compose_success') : lang('newsletter', 'compose_error'), uri('acp/newsletter/adm_list_archive'));

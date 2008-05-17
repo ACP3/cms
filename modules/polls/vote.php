@@ -12,7 +12,7 @@ if (!defined('IN_ACP3'))
 
 $date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
 
-if (validate::isNumber($modules->id) && $db->select('id', 'poll_question', 'id = \'' . $modules->id . '\'' . $date, 0, 0, 0, 1) == 1) {
+if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \'' . $uri->id . '\'' . $date, 0, 0, 0, 1) == 1) {
 	// Brotkrümelspur
 	breadcrumb::assign(lang('polls', 'polls'), uri('polls'));
 	breadcrumb::assign(lang('polls', 'vote'));
@@ -22,9 +22,9 @@ if (validate::isNumber($modules->id) && $db->select('id', 'poll_question', 'id =
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$time = dateAligned(2, time());
 
-		if ($db->select('poll_id', 'poll_votes', 'poll_id = \'' . $modules->id . '\' AND ip = \'' . $ip . '\'', 0, 0, 0, 1) == 0) {
+		if ($db->select('poll_id', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND ip = \'' . $ip . '\'', 0, 0, 0, 1) == 0) {
 			$insert_values = array(
-				'poll_id' => $modules->id,
+				'poll_id' => $uri->id,
 				'answer_id' => $answer,
 				'ip' => $ip,
 				'time' => $time,
@@ -35,10 +35,10 @@ if (validate::isNumber($modules->id) && $db->select('id', 'poll_question', 'id =
 		} else {
 			$text = lang('polls', 'already_voted');
 		}
-		$content = comboBox($text, uri('polls/result/id_' . $modules->id));
+		$content = comboBox($text, uri('polls/result/id_' . $uri->id));
 	} else {
-		$question = $db->select('question', 'poll_question', 'id = \'' . $modules->id . '\'');
-		$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $modules->id . '\'', 'id ASC');
+		$question = $db->select('question', 'poll_question', 'id = \'' . $uri->id . '\'');
+		$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $uri->id . '\'', 'id ASC');
 		$c_answers = count($answers);
 
 		$css_class = 'dark';

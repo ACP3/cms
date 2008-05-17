@@ -10,13 +10,13 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (validate::isNumber($modules->cat) && $db->select('id', 'categories', 'id = \'' . $modules->cat . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->cat) && $db->select('id', 'categories', 'id = \'' . $uri->cat . '\'', 0, 0, 0, 1) == '1') {
 	breadcrumb::assign(lang('files', 'files'), uri('files'));
-	$category = $db->select('name', 'categories', 'id = \'' . $modules->cat . '\'');
+	$category = $db->select('name', 'categories', 'id = \'' . $uri->cat . '\'');
 	breadcrumb::assign($category[0]['name']);
 	$date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
 
-	$files = $db->select('id, start, file, size, link_title', 'files', 'category_id = \'' . $modules->cat . '\'' . $date, 'start DESC, end DESC');
+	$files = $db->select('id, start, file, size, link_title', 'files', 'category_id = \'' . $uri->cat . '\'' . $date, 'start DESC, end DESC');
 	$c_files = count($files);
 
 	if ($c_files > 0) {

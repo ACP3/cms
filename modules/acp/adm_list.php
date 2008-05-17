@@ -13,12 +13,12 @@ if (! defined('IN_ADM'))
 breadcrumb::assign(lang('common', 'acp'));
 
 // Module einholen
-$mod_list = $modules->modulesList();
+$mod_list = modules::modulesList();
 $mods = array();
 
 foreach ($mod_list as $name => $info) {
 	$dir = $info['dir'];
-	if ($modules->check($dir, 'adm_list') && $dir != 'acp' && $dir != 'system' && $dir != 'home') {
+	if (modules::check($dir, 'adm_list') && $dir != 'acp' && $dir != 'system' && $dir != 'home') {
 		$mods[$name]['name'] = $name;
 		$mods[$name]['dir'] = $dir;
 	}
@@ -26,7 +26,7 @@ foreach ($mod_list as $name => $info) {
 $tpl->assign('modules', $mods);
 
 //Server Infos
-if ($modules->check('system', 'server_config')) {
+if (modules::check('system', 'server_config')) {
 	$server_info[0]['col_left'] = lang('system', 'architecture');
 	$server_info[0]['col_right'] = @php_uname('m');
 	$server_info[1]['col_left'] = lang('system', 'operating_system');

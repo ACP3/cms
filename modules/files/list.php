@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if ($modules->check('categories', 'functions')) {
+if (modules::check('categories', 'functions')) {
 	include_once ACP3_ROOT . 'modules/categories/functions.php';
 	$tpl->assign('categories', categoriesList('files', 'list'));
 }

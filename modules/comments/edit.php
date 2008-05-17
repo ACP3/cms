@@ -10,8 +10,8 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($modules->id) && $db->select('id', 'comments', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
-	$comment = $db->select('name, message, module', 'comments', 'id = \'' . $modules->id . '\'');
+if (validate::isNumber($uri->id) && $db->select('id', 'comments', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
+	$comment = $db->select('name, message, module', 'comments', 'id = \'' . $uri->id . '\'');
 
 	$comment[0]['module'] = $db->escape($comment[0]['module'], 3);
 	breadcrumb::assign(lang('common', 'acp'), uri('acp'));
@@ -35,13 +35,13 @@ if (validate::isNumber($modules->id) && $db->select('id', 'comments', 'id = \'' 
 				'message' => $db->escape($form['message']),
 			);
 
-			$bool = $db->update('comments', $update_values, 'id = \'' . $modules->id . '\'');
+			$bool = $db->update('comments', $update_values, 'id = \'' . $uri->id . '\'');
 
 			$content = comboBox($bool ? lang('comments', 'edit_success') : lang('comments', 'edit_error'), uri('acp/comments'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		if ($modules->check('emoticons', 'functions')) {
+		if (modules::check('emoticons', 'functions')) {
 			include_once ACP3_ROOT . 'modules/emoticons/functions.php';
 
 			//Emoticons im Formular anzeigen

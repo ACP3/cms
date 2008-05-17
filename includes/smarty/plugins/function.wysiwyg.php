@@ -13,13 +13,13 @@ function smarty_function_wysiwyg($params) {
 
 		return editor($params);
 	} else {
-		global $modules;
+		global $uri;
 		
 		$out = '';
 		$id = substr($params['name'], 5, -1);
 
 		// Falls aktiv, die Emoticons einbinden
-		if ($modules->check('emoticons', 'functions')) {
+		if (modules::check('emoticons', 'functions')) {
 			include_once ACP3_ROOT . 'modules/emoticons/functions.php';
 			$out.= emoticonsList($id);
 		}

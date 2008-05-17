@@ -17,9 +17,9 @@
  */
 function commentsCount($entry_id, $module = 0)
 {
-	global $db, $modules;
+	global $db, $uri;
 
-	$module = !empty($module) ? $module : $modules->mod;
+	$module = !empty($module) ? $module : $uri->mod;
 
 	return $db->select('id', 'comments', 'module = \'' . $module . '\' AND entry_id =\'' . $entry_id . '\'', 0, 0, 0, 1);
 }
@@ -37,7 +37,7 @@ function commentsCount($entry_id, $module = 0)
  */
 function comments($module, $entry_id)
 {
-	global $auth, $db, $modules, $tpl;
+	global $auth, $db, $uri, $tpl;
 
 	// Formular für das Eintragen von Kommentaren
 	if (isset($_POST['submit'])) {
@@ -57,7 +57,7 @@ function comments($module, $entry_id)
 			$errors[] = lang('common', 'name_to_short');
 		if (strlen($form['message']) < 3)
 			$errors[] = lang('common', 'message_to_short');
-		if (!$modules->check($db->escape($form['module'], 2), 'list') || !validate::isNumber($form['entry_id']))
+		if (!modules::check($db->escape($form['module'], 2), 'list') || !validate::isNumber($form['entry_id']))
 			$errors[] = lang('comments', 'module_doesnt_exist');
 		if (!validate::captcha($form['captcha'], $form['hash']))
 			$errors[] = lang('captcha', 'invalid_captcha_entered');
@@ -78,7 +78,7 @@ function comments($module, $entry_id)
 
 			$bool = $db->insert('comments', $insert_values);
 
-			return comboBox($bool ? lang('comments', 'create_success') : lang('comments', 'create_error'), uri($modules->query));
+			return comboBox($bool ? lang('comments', 'create_success') : lang('comments', 'create_error'), uri($uri->query));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
@@ -87,7 +87,7 @@ function comments($module, $entry_id)
 		$c_comments = count($comments);
 		$emoticons = false;
 
-		if ($modules->check('emoticons', 'functions')) {
+		if (modules::check('emoticons', 'functions')) {
 			include_once ACP3_ROOT . 'modules/emoticons/functions.php';
 			$emoticons = true;
 
@@ -96,7 +96,7 @@ function comments($module, $entry_id)
 		}
 
 		if ($c_comments > 0) {
-			$tpl->assign('pagination', $modules->pagination($db->select('id', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 0, 0, 0, 1)));
+			$tpl->assign('pagination', pagination($db->select('id', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 0, 0, 0, 1)));
 			for ($i = 0; $i < $c_comments; ++$i) {
 				$comments[$i]['date'] = dateAligned(1, $comments[$i]['date']);
 				$comments[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $comments[$i]['message']);

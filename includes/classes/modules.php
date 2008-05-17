@@ -16,94 +16,6 @@
 class modules
 {
 	/**
-	 * Array, welches die URI Parameter enthält
-	 *
-	 * @var array
-	 * @access protected
-	 */
-	protected $params = array();
-	/**
-	 * Die komplette übergebene URL
-	 *
-	 * @var string
-	 */
-	public $query = '';
-
-	/**
-	 * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
-	 *
-	 * @return modules
-	 */
-	function __construct()
-	{
-		$this->query = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
-
-		if (!empty($this->query) && preg_match('/^(acp\/)/', $this->query)) {
-			// Definieren, dass man sich im Administrationsbereich befindet
-			define('IN_ADM', true);
-			// "acp/" entfernen
-			$this->query = substr($this->query, 4);
-		} else {
-			// Definieren, dass man sich im Frontend befindet
-			define('IN_ACP3', true);
-			// Query auf eine beutzerdefinierte Startseite setzen
-			if (!defined('IN_INSTALL') && empty($this->query) && CONFIG_HOMEPAGE != '') {
-				$this->query = CONFIG_HOMEPAGE;
-			}
-		}
-		$query = !empty($this->query) ? explode('/', $this->query) : 0;
-		$defaultModule = defined('IN_ADM') ? 'acp' : 'news';
-		$defaultPage = defined('IN_ADM') ? 'adm_list' : 'list';
-
-		$this->mod = !empty($query[0]) ? $query[0] : $defaultModule;
-		$this->page = !empty($query[1]) ? $query[1] : $defaultPage;
-
-		if (!empty($_POST['cat']))
-			$this->cat = $_POST['cat'];
-		if (!empty($_POST['action']))
-			$this->action = $_POST['action'];
-
-		if (!empty($query[2])) {
-			$c_query = count($query);
-
-			for ($i = 2; $i < $c_query; ++$i) {
-				if (!empty($query[$i])) {
-					if (!defined('POS') && preg_match('/^(pos_(\d+))$/', $query[$i])) {
-						define('POS', substr($query[$i], 4));
-					} elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) {
-						$param = explode('_', $query[$i], 2);
-						$this->$param[0] = $param[1];
-					}
-				}
-			}
-		}
-		if (!defined('POS')) {
-			define('POS', '0');
-		}
-	}
-	/**
-	 * Gibt alle URI Parameter aus
-	 *
-	 * @param string $key
-	 * @return mixed
-	 */
-	public function __get($key)
-	{
-		if (!empty($key) && array_key_exists($key, $this->params))
-			return $this->params[$key];
-		return null;
-	}
-	/**
-	 * Setzt neue URI Parameter
-	 *
-	 * @param string $name
-	 * @param mixed $value
-	 */
-	public function __set($name, $value)
-	{
-		$this->params[$name] = $value;
-	}
-	/**
 	 * Überpüft, ob ein Modul überhaupt existiert, bzw. der Benutzer auf ein Modul Zugriff hat
 	 *
 	 * @param string $module
@@ -112,12 +24,12 @@ class modules
 	 * 	Zu überprüfende Moduldatei
 	 * @return boolean
 	 */
-	public function check($module = 0, $page = 0) {
-		global $auth, $db;
+	public static function check($module = 0, $page = 0) {
+		global $auth, $db, $uri;
 		static $access_level = array();
 
-		$module = !empty($module) ? $module : $this->mod;
-		$page = !empty($page) ? $page : $this->page;
+		$module = !empty($module) ? $module : $uri->mod;
+		$page = !empty($page) ? $page : $uri->page;
 
 		if (is_file(ACP3_ROOT . 'modules/' . $module . '/' . $page . '.php')) {
 			$xml = simplexml_load_file(ACP3_ROOT . 'modules/' . $module . '/module.xml');
@@ -157,13 +69,13 @@ class modules
 	 *
 	 * @return array
 	 */
-	public function modulesList()
+	public static function modulesList()
 	{
-		$modules_dir = scandir(ACP3_ROOT . 'modules/');
+		$uri_dir = scandir(ACP3_ROOT . 'modules/');
 		$mod_list = array();
 
-		foreach ($modules_dir as $module) {
-			$info = $this->parseInfo($module);
+		foreach ($uri_dir as $module) {
+			$info = self::parseInfo($module);
 			if (is_array($info)) {
 				$mod_list[$info['name']] = $info;
 			}
@@ -172,65 +84,13 @@ class modules
 		return $mod_list;
 	}
 	/**
-	 * Gibt eine Seitenauswahl aus
-	 *
-	 * @param integer $rows
-	 *  Anzahl der Datensätze
-	 * @return string
-	 *  Gibt die Seitenauswahl aus
-	 */
-	public function pagination($rows)
-	{
-		global $tpl;
-
-		if ($rows > CONFIG_ENTRIES) {
-			// Alle angegeben URL Parameter mit in die URL einbeziehen
-			$acp = defined('IN_ADM') ? 'acp/' : '';
-			$id = !empty($this->id) ? '/id_' . $this->id : '';
-			$cat = !empty($this->cat) ? '/cat_' . $this->cat : '';
-			$gen = '';
-			if (!empty($this->params)) {
-				foreach ($this->params as $key => $value) {
-					if ($key != 'mod' && $key != 'page' && $key != 'pos') {
-						$gen .= '/' . $key . '_' . $value;
-					}
-				}
-			}
-
-			$tpl->assign('uri', uri($acp . $this->mod . '/' . $this->page . $id . $cat . $gen));
-
-			// Seitenauswahl
-			$c_pages = ceil($rows / CONFIG_ENTRIES);
-			$recent = 0;
-
-			for ($i = 1; $i <= $c_pages; ++$i) {
-				$pages[$i]['selected'] = POS == $recent ? true : false;
-				$pages[$i]['page'] = $i;
-				$pages[$i]['pos'] = 'pos_' . $recent . '/';
-
-				$recent = $recent + CONFIG_ENTRIES;
-			}
-			$tpl->assign('pages', $pages);
-
-			// Vorherige Seite
-			$pos_prev = array('pos' => POS - CONFIG_ENTRIES >= 0 ? 'pos_' . (POS - CONFIG_ENTRIES) . '/' : '', 'selected' => POS == 0 ? true : false);
-			$tpl->assign('pos_prev', $pos_prev);
-
-			// Nächste Seite
-			$pos_next = array('pos' => 'pos_' . (POS + CONFIG_ENTRIES) . '/', 'selected' => POS + CONFIG_ENTRIES >= $rows ? true : false);
-			$tpl->assign('pos_next', $pos_next);
-
-			return $tpl->fetch('common/pagination.html');
-		}
-	}
-	/**
 	 * Durchläuft für das angeforderte Modul den <info> Abschnitt in der
 	 * module.xml und gibt die gefunden Informationen als Array zurück
 	 *
 	 * @param string $module
 	 * @return mixed
 	 */
-	public function parseInfo($module)
+	public static function parseInfo($module)
 	{
 		$mod_info = xml::parseXmlFile(ACP3_ROOT . 'modules/' . $module . '/module.xml', 'info');
 

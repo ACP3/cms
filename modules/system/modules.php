@@ -15,28 +15,28 @@ breadcrumb::assign(lang('system', 'system'), uri('acp/system'));
 breadcrumb::assign(lang('system', 'extensions'), uri('acp/system/extensions'));
 breadcrumb::assign(lang('system', 'modules'));
 
-if ($modules->action == 'activate') {
-	$info = $modules->parseInfo($modules->dir);
+if ($uri->action == 'activate') {
+	$info = modules::parseInfo($uri->dir);
 	if ($info['protected']) {
 		$text = lang('system', 'mod_deactivate_forbidden');
 	} else {
-		$bool = xml::writeToXml(ACP3_ROOT . 'modules/' . $modules->dir . '/module.xml', 'info/*', array('active' => '1'));
+		$bool = xml::writeToXml(ACP3_ROOT . 'modules/' . $uri->dir . '/module.xml', 'info/*', array('active' => '1'));
 
 		$text = $bool ? lang('system', 'mod_activate_success') : lang('system', 'mod_activate_error');
 	}
 	$content = comboBox($text, uri('acp/system/modules'));
-} elseif ($modules->action == 'deactivate') {
-	$info = $modules->parseInfo($modules->dir);
+} elseif ($uri->action == 'deactivate') {
+	$info = modules::parseInfo($uri->dir);
 	if ($info['protected']) {
 		$text = lang('system', 'mod_deactivate_forbidden');
 	} else {
-		$bool = xml::writeToXml(ACP3_ROOT . 'modules/' . $modules->dir . '/module.xml', 'info/*', array('active' => '0'));
+		$bool = xml::writeToXml(ACP3_ROOT . 'modules/' . $uri->dir . '/module.xml', 'info/*', array('active' => '0'));
 
 		$text = $bool ? lang('system', 'mod_deactivate_success') : lang('system', 'mod_deactivate_error');
 	}
 	$content = comboBox($text, uri('acp/system/modules'));
 } else {
-	$mod_list = $modules->modulesList();
+	$mod_list = modules::modulesList();
 
 	foreach ($mod_list as $name => $info) {
 		if ($info['protected']) {

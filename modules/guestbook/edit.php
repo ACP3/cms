@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($modules->id) && $db->select('id', 'guestbook', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->select('id', 'guestbook', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
@@ -27,15 +27,15 @@ if (validate::isNumber($modules->id) && $db->select('id', 'guestbook', 'id = \''
 				'message' => $db->escape($form['message']),
 			);
 
-			$bool = $db->update('guestbook', $update_values, 'id = \'' . $modules->id . '\'');
+			$bool = $db->update('guestbook', $update_values, 'id = \'' . $uri->id . '\'');
 
 			$content = comboBox($bool ? lang('guestbook', 'edit_success') : lang('guestbook', 'edit_error'), uri('acp/guestbook'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$guestbook = $db->select('name, message', 'guestbook', 'id = \'' . $modules->id . '\'');
+		$guestbook = $db->select('name, message', 'guestbook', 'id = \'' . $uri->id . '\'');
 
-		if ($modules->check('emoticons', 'functions')) {
+		if (modules::check('emoticons', 'functions')) {
 			include_once ACP3_ROOT . 'modules/emoticons/functions.php';
 
 			//Emoticons im Formular anzeigen

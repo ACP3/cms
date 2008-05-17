@@ -10,8 +10,8 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
-	$gallery = $db->select('start, end, name', 'gallery', 'id = \'' . $modules->id . '\'');
+if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
+	$gallery = $db->select('start, end, name', 'gallery', 'id = \'' . $uri->id . '\'');
 
 	breadcrumb::assign(lang('common', 'acp'), uri('acp'));
 	breadcrumb::assign(lang('gallery', 'gallery'), uri('acp/gallery'));
@@ -37,13 +37,13 @@ if (validate::isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' .
 				'name' => $db->escape($form['name']),
 			);
 
-			$bool = $db->update('gallery', $update_values, 'id = \'' . $modules->id . '\'');
+			$bool = $db->update('gallery', $update_values, 'id = \'' . $uri->id . '\'');
 
 			$content = comboBox($bool ? lang('gallery', 'edit_success') : lang('gallery', 'edit_error'), uri('acp/gallery'));
 		}
 	}
 	if (!isset($_POST['entries']) && !isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$tpl->assign('gallery_id', $modules->id);
+		$tpl->assign('gallery_id', $uri->id);
 
 		// Datumsauswahl
 		$tpl->assign('start_date', datepicker('start', $gallery[0]['start']));
@@ -51,11 +51,11 @@ if (validate::isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' .
 
 		$tpl->assign('form', isset($form) ? $form : $gallery[0]);
 
-		$pictures = $db->select('id, pic, file, description', 'gallery_pictures', 'gallery_id = \'' . $modules->id . '\'', 'pic ASC', POS, CONFIG_ENTRIES);
+		$pictures = $db->select('id, pic, file, description', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'', 'pic ASC', POS, CONFIG_ENTRIES);
 		$c_pictures = count($pictures);
 
 		if ($c_pictures > 0) {
-			$tpl->assign('pagination', $modules->pagination($db->select('id', 'gallery_pictures', 'gallery_id = \'' . $modules->id . '\'', 0, 0, 0, 1)));
+			$tpl->assign('pagination', pagination($db->select('id', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'', 0, 0, 0, 1)));
 			for ($i = 0; $i < $c_pictures; ++$i) {
 				$pictures[$i]['description'] = $db->escape($pictures[$i]['description'], 3);
 			}

@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($modules->id) && $db->select('id', 'poll_question', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
@@ -42,7 +42,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'poll_question', 'id =
 				'question' => $db->escape($form['question']),
 			);
 
-			$bool = $db->update('poll_question', $update_values, 'id = \'' . $modules->id . '\'');
+			$bool = $db->update('poll_question', $update_values, 'id = \'' . $uri->id . '\'');
 
 			foreach ($form['answers'] as $row) {
 				if (isset($row['delete']) && validate::isNumber($row['id'])) {
@@ -56,7 +56,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'poll_question', 'id =
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$poll = $db->select('start, end, question', 'poll_question', 'id = \'' . $modules->id . '\'');
+		$poll = $db->select('start, end, question', 'poll_question', 'id = \'' . $uri->id . '\'');
 
 		// Datumsauswahl
 		$tpl->assign('start_date', datepicker('start', $poll[0]['start']));
@@ -64,7 +64,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'poll_question', 'id =
 
 		$tpl->assign('question', isset($form['question']) ? $form['question'] : $poll[0]['question']);
 
-		$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $modules->id . '\'');
+		$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $uri->id . '\'');
 		$c_answers = count($answers);
 
 		for ($i = 0; $i < $c_answers; ++$i) {

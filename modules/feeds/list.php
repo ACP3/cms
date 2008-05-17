@@ -2,14 +2,14 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if ($modules->check($modules->feed, 'extensions/feeds')) {
-	$module = $modules->feed;
+if (modules::check($uri->feed, 'extensions/feeds')) {
+	$module = $uri->feed;
 
 	$link = 'http://' . htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES);
 
 	//RSS Kopf Felder
 	$feed['generator'] = CONFIG_VERSION;
-	$feed['atom_link'] = $link . uri($modules->mod . '/' . $modules->page . '/feed_' . $module);
+	$feed['atom_link'] = $link . uri($uri->mod . '/' . $uri->page . '/feed_' . $module);
 	$feed['link'] = $link . ROOT_DIR;
 	$feed['description'] = lang($module, $module);
 

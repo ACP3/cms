@@ -19,14 +19,14 @@ function __autoload($className)
 
 include ACP3_ROOT . 'installation/includes/functions.php';
 
-$modules = new modules();
+$uri = new uri;
 
-if (empty($modules->query)) {
-	$modules->mod = 'overview';
-	$modules->page = 'welcome';
+if (empty($uri->query)) {
+	$uri->mod = 'overview';
+	$uri->page = 'welcome';
 }
-$lang = !empty($_POST['lang']) ? $_POST['lang'] : $modules->lang;
-define('LANG', !empty($lang) && is_file(ACP3_ROOT . 'languages/' . $lang . '/info.php') ? $lang : 'de');
+$lang = !empty($_POST['lang']) ? $_POST['lang'] : $uri->lang;
+define('LANG', !empty($lang) && is_file(ACP3_ROOT . 'languages/' . $lang . '/info.xml') ? $lang : 'de');
 
 // Smarty einbinden
 define('SMARTY_DIR', ACP3_ROOT . 'includes/smarty/');
@@ -77,5 +77,5 @@ $pages = array(
 		),
 	),
 );
-$tpl->assign('currentModule', $modules->mod);
+$tpl->assign('currentModule', $uri->mod);
 ?>

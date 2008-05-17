@@ -10,13 +10,13 @@
 if (!defined('IN_ADM'))
 	exit();
 
-if (validate::isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' . $modules->id . '\'', 0, 0, 0, 1) == '1') {
-	$pic = validate::isNumber($modules->pic) ? $modules->pic : 1;
-	$gallery = $db->select('name', 'gallery', 'id = \'' . $modules->id . '\'');
+if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
+	$pic = validate::isNumber($uri->pic) ? $uri->pic : 1;
+	$gallery = $db->select('name', 'gallery', 'id = \'' . $uri->id . '\'');
 
 	breadcrumb::assign(lang('common', 'acp'), uri('acp'));
 	breadcrumb::assign(lang('gallery', 'gallery'), uri('acp/gallery'));
-	breadcrumb::assign($gallery[0]['name'], uri('acp/gallery/edit_gallery/id_' . $modules->id));
+	breadcrumb::assign($gallery[0]['name'], uri('acp/gallery/edit_gallery/id_' . $uri->id));
 	breadcrumb::assign(lang('gallery', 'add_picture'));
 
 	if (isset($_POST['submit'])) {
@@ -38,13 +38,13 @@ if (validate::isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' .
 		} else {
 			$result = moveFile($file['tmp_name'], $file['name'], 'gallery');
 
-			$insert_values = array('id' => '', 'pic' => $form['pic'], 'gallery_id' => $modules->id, 'file' => $result['name'], 'description' => $db->escape($form['description'], 2));
+			$insert_values = array('id' => '', 'pic' => $form['pic'], 'gallery_id' => $uri->id, 'file' => $result['name'], 'description' => $db->escape($form['description'], 2));
 
 			$bool = $db->insert('gallery_pictures', $insert_values);
 
-			cache::create('gallery_pics_id_' . $modules->id, $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $modules->id . '\'', 'pic ASC, id ASC'));
+			cache::create('gallery_pics_id_' . $uri->id, $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'', 'pic ASC, id ASC'));
 
-			$content = comboBox($bool ? lang('gallery', 'add_picture_success') : lang('gallery', 'add_picture_error'), uri('acp/gallery/add_picture/id_' . $modules->id . '/pic_' . ($pic + 1)));
+			$content = comboBox($bool ? lang('gallery', 'add_picture_success') : lang('gallery', 'add_picture_error'), uri('acp/gallery/add_picture/id_' . $uri->id . '/pic_' . ($pic + 1)));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
@@ -52,7 +52,7 @@ if (validate::isNumber($modules->id) && $db->select('id', 'gallery', 'id = \'' .
 		$c_galleries = count($galleries);
 
 		for ($i = 0; $i < $c_galleries; ++$i) {
-			$galleries[$i]['selected'] = selectEntry('gallery', $galleries[$i]['id'], $modules->id);
+			$galleries[$i]['selected'] = selectEntry('gallery', $galleries[$i]['id'], $uri->id);
 			$galleries[$i]['date'] = dateAligned(1, $galleries[$i]['start']);
 			$galleries[$i]['name'] = $db->escape($galleries[$i]['name'], 3);
 		}

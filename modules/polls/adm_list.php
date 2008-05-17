@@ -14,7 +14,7 @@ $polls = $db->select('id, start, end, question', 'poll_question', 0, 'start DESC
 $c_polls = count($polls);
 
 if ($c_polls > 0) {
-	$tpl->assign('pagination', $modules->pagination($db->select('id', 'poll_question', 0, 0, 0, 0, 1)));
+	$tpl->assign('pagination', pagination($db->select('id', 'poll_question', 0, 0, 0, 0, 1)));
 
 	for ($i = 0; $i < $c_polls; ++$i) {
 		$polls[$i]['start'] = dateAligned(1, $polls[$i]['start']);
