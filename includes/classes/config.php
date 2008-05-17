@@ -22,11 +22,11 @@ class config
 	 * 	Zu schreibende Daten
 	 * @return boolean
 	 */
-	public static function general($data)
+	public static function system($data)
 	{
 		$path = ACP3_ROOT . 'includes/config.php';
 		if (is_writable($path) && is_array($data)){
-			$data = ksort($data);
+			ksort($data);
 
 			// Konfigurationsdatei in ein Array schreiben
 			$content = "<?php\n";
@@ -86,23 +86,7 @@ class config
 	 */
 	public static function output($module)
 	{
-		static $settings = array();
-
-		if (!array_key_exists($module, $settings)) {
-			$path = ACP3_ROOT . 'modules/' . $module . '/module.xml';
-			if (!preg_match('=/=', $module) && is_file($path)) {
-				$xml = simplexml_load_file($path);
-
-				foreach ($xml->xpath('settings') as $row) {
-					foreach ($row as $key => $value) {
-						$settings[$module][$key] = $value;
-					}
-				}
-				return $settings[$module];
-			}
-			return false;
-		}
-		return $settings[$module];
+		return xml::parseXmlFile(ACP3_ROOT . 'modules/' . $module . '/module.xml', 'settings');
 	}
 }
 ?>

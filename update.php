@@ -63,7 +63,7 @@ $config = array(
 	'wysiwyg' => 'fckeditor'
 );
 
-echo config::general($config) ? 'Konfigurationsdatei erfolgreich aktualisiert.' : 'Konfigurationsdatei konnte nicht aktualisiert werden.';
+echo config::system($config) ? 'Konfigurationsdatei erfolgreich aktualisiert.' : 'Konfigurationsdatei konnte nicht aktualisiert werden.';
 
 // Cache leeren
 cache::purge();

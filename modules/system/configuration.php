@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
 			'wysiwyg' => CONFIG_WYSIWYG
 		);
 
-		$bool = config::general($config);
+		$bool = config::system($config);
 
 		$content = comboBox($bool ? lang('system', 'config_edit_success') : lang('system', 'config_edit_error'), uri('acp/system/configuration'));
 	}

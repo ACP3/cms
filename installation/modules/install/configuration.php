@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
 		);
 
 		// Daten in die config.php schreiben und diese laden
-		config::general($config);
+		config::system($config);
 		require $config_path;
 
 		$db = new db();
