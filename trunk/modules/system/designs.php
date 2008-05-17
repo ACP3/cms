@@ -20,7 +20,31 @@ if ($modules->dir) {
 	$bool = false;
 
 	if (!empty($dir)) {
-		$bool = config::general(array('design' => $dir));
+		$config = array(
+			'date' => CONFIG_DATE,
+			'db_host' => CONFIG_DB_HOST,
+			'db_name' => CONFIG_DB_NAME,
+			'db_pre' => CONFIG_DB_PRE,
+			'db_pwd' => CONFIG_DB_PWD,
+			'db_type' => CONFIG_DB_TYPE,
+			'db_user' => CONFIG_DB_USER,
+			'design' => $dir,
+			'dst' => CONFIG_DST,
+			'entries' => CONFIG_ENTRIES,
+			'flood' => CONFIG_FLOOD,
+			'homepage' => CONFIG_HOMEPAGE,
+			'lang' => CONFIG_LANG,
+			'maintenance' => CONFIG_MAINTENANCE,
+			'maintenance_msg' => CONFIG_MAINTENANCE_MSG,
+			'meta_description' => CONFIG_META_DESCRIPTION,
+			'meta_keywords' => CONFIG_META_KEYWORDS,
+			'sef' => CONFIG_SEF,
+			'time_zone' => CONFIG_TIME_ZONE,
+			'title' => CONFIG_TITLE,
+			'version' => CONFIG_VERSION,
+			'wysiwyg' => CONFIG_WYSIWYG
+		);
+		$bool = config::system($config);
 	}
 	$text = $bool ? lang('system', 'designs_edit_success') : lang('system', 'designs_edit_error');
 
@@ -38,10 +62,7 @@ if ($modules->dir) {
 		$design_info = array();
 		if ($directories[$i] != '.' && $directories[$i] != '..' && is_file('designs/' . $directories[$i] . '/info.php')) {
 			include ACP3_ROOT . 'designs/' . $directories[$i] . '/info.php';
-			$designs[$i]['name'] = $design_info['name'];
-			$designs[$i]['description'] = $design_info['description'];
-			$designs[$i]['author'] = $design_info['author'];
-			$designs[$i]['version'] = $design_info['version'];
+			$designs[$i] = $design_info;
 			$designs[$i]['action'] = CONFIG_DESIGN == $directories[$i] ? '<img src="' . ROOT_DIR . 'images/crystal/16/apply.png" alt="" />' : '<a href="' . uri('acp/system/designs/dir_' . urlencode($directories[$i])) . '"><img src="' . ROOT_DIR . 'images/crystal/16/cancel.png" alt="" /></a>';
 		}
 	}

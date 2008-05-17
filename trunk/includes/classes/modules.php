@@ -232,22 +232,16 @@ class modules
 	 */
 	public function parseInfo($module)
 	{
-		$path = ACP3_ROOT . 'modules/' . $module . '/module.xml';
-		if (!preg_match('=/=', $module) && is_file($path)) {
-			$xml = simplexml_load_file($path);
+		$mod_info = xml::parseXmlFile(ACP3_ROOT . 'modules/' . $module . '/module.xml', 'info');
 
-			$info = $xml->info;
-
-			$mod_info = array();
+		if (is_array($mod_info)) {
 			$mod_info['dir'] = $module;
-			$mod_info['author'] = (string) $info->author;
-			$mod_info['description'] = (string) $info->description['lang'] == 'true' ? lang($module, 'mod_description') : (string) $info->description;
-			$mod_info['name'] = (string) $info->name['lang'] == 'true' ? lang($module, $module) : (string) $info->name;
-			$mod_info['version'] = (string) $info->version['core'] == 'true' ? CONFIG_VERSION : (string) $info->version;
-			$mod_info['active'] = (string) $info->active;
-			$mod_info['tables'] = !empty($info->tables) ? explode(',', (string) $info->tables) : false;
-			$mod_info['categories'] = isset($info->categories) ? true : false;
-			$mod_info['protected'] = $info->protected ? true : false;
+			$mod_info['description'] = isset($mod_info['description']['lang']) && $mod_info['description']['lang'] == 'true' ? lang($module, 'mod_description') : $mod_info['description']['lang'];
+			$mod_info['name'] = isset($mod_info['name']['lang']) && $mod_info['name']['lang'] == 'true' ? lang($module, $module) : $mod_info['name'];
+			$mod_info['version'] = isset($mod_info['version']['core']) && $mod_info['version']['core'] == 'true' ? CONFIG_VERSION : $mod_info['version'];
+			$mod_info['tables'] = !empty($mod_info['tables']) ? explode(',', $mod_info['tables']) : false;
+			$mod_info['categories'] = isset($mod_info['categories']) ? true : false;
+			$mod_info['protected'] = isset($mod_info['protected']) ? true : false;
 			return $mod_info;
 		}
 		return false;
