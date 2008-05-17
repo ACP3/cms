@@ -67,7 +67,8 @@ if (isset($_POST['submit'])) {
 			'sef' => $form['sef'],
 			'time_zone' => $form['time_zone'],
 			'title' => $db->escape($form['title']),
-			'version' => CONFIG_VERSION
+			'version' => CONFIG_VERSION,
+			'wysiwyg' => CONFIG_WYSIWYG
 		);
 
 		$bool = config::general($config);

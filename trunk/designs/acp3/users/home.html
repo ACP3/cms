@@ -6,7 +6,7 @@
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset style="width:70%">
 		<legend>{lang values="users|drafts"}</legend>
-		{fckeditor InstanceName="draft" Value="$draft" Width="100%" Height="250px" ToolbarSet="Basic"}
+		{wysiwyg name="draft" value="$draft" height="250" toolbar="simple"}
 	</fieldset>
 	<div class="form-bottom">
 		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />

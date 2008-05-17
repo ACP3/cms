@@ -20,7 +20,7 @@
 			<dt><label for="headline">{lang values="news|headline"}</label></dt>
 			<dd><input type="text" name="form[headline]" id="headline" value="{$form.headline}" maxlength="120" /></dd>
 			<dt><label for="text">{lang values="news|text"}</label></dt>
-			<dd>{fckeditor InstanceName="text" Value="`$form.text`" Width="100%" Height="250px"}</dd>
+			<dd>{wysiwyg name="text" value="`$form.text`" height="250"}</dd>
 			<dt><label for="cat">{lang values="common|category"}</label></dt>
 			<dd>
 				<select name="form[cat]" id="cat">

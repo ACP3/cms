@@ -91,7 +91,7 @@ function comments($module, $entry_id)
 			include_once ACP3_ROOT . 'modules/emoticons/functions.php';
 			$emoticons = true;
 
-			//Emoticons im Formular anzeigen
+			// Emoticons im Formular anzeigen
 			$tpl->assign('emoticons', emoticonsList());
 		}
 
