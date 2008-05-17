@@ -16,39 +16,23 @@ breadcrumb::assign(lang('system', 'extensions'), uri('acp/system/extensions'));
 breadcrumb::assign(lang('system', 'modules'));
 
 if ($modules->action == 'activate') {
-	if ($modules->dir && is_file(ACP3_ROOT . 'modules/' . $modules->dir . '/module.xml')) {
-		$info = $modules->parseInfo($modules->dir);
-		if ($info['protected']) {
-			$text = lang('system', 'mod_deactivate_forbidden');
-		} else {
-			$path = ACP3_ROOT . 'modules/' . $modules->dir . '/module.xml';
-
-			$xml = simplexml_load_file($path);
-			$xml->info->active = '1';
-			$bool = $xml->asXML($path);
-
-			$text = $bool ? lang('system', 'mod_activate_success') : lang('system', 'mod_activate_error');
-		}
+	$info = $modules->parseInfo($modules->dir);
+	if ($info['protected']) {
+		$text = lang('system', 'mod_deactivate_forbidden');
 	} else {
-		$text = lang('system', 'mod_activate_error');
+		$bool = xml::writeToXml(ACP3_ROOT . 'modules/' . $modules->dir . '/module.xml', 'info/*', array('active' => '1'));
+
+		$text = $bool ? lang('system', 'mod_activate_success') : lang('system', 'mod_activate_error');
 	}
 	$content = comboBox($text, uri('acp/system/modules'));
 } elseif ($modules->action == 'deactivate') {
-	if ($modules->dir && is_file(ACP3_ROOT . 'modules/' . $modules->dir . '/module.xml')) {
-		$info = $modules->parseInfo($modules->dir);
-		if ($info['protected']) {
-			$text = lang('system', 'mod_deactivate_forbidden');
-		} else {
-			$path = ACP3_ROOT . 'modules/' . $modules->dir . '/module.xml';
-
-			$xml = simplexml_load_file($path);
-			$xml->info->active = '0';
-			$bool = $xml->asXML($path);
-
-			$text = $bool ? lang('system', 'mod_deactivate_success') : lang('system', 'mod_deactivate_error');
-		}
+	$info = $modules->parseInfo($modules->dir);
+	if ($info['protected']) {
+		$text = lang('system', 'mod_deactivate_forbidden');
 	} else {
-		$text = lang('system', 'mod_deactivate_error');
+		$bool = xml::writeToXml(ACP3_ROOT . 'modules/' . $modules->dir . '/module.xml', 'info/*', array('active' => '0'));
+
+		$text = $bool ? lang('system', 'mod_deactivate_success') : lang('system', 'mod_deactivate_error');
 	}
 	$content = comboBox($text, uri('acp/system/modules'));
 } else {
