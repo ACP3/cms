@@ -16,7 +16,7 @@ breadcrumb::assign(lang('system', 'extensions'), uri('acp/system/extensions'));
 breadcrumb::assign(lang('system', 'languages'));
 
 if ($modules->dir) {
-	$dir = is_file(ACP3_ROOT . 'languages/' . $modules->dir . '/info.php') ? $modules->dir : 0;
+	$dir = is_file(ACP3_ROOT . 'languages/' . $modules->dir . '/info.xml') ? $modules->dir : 0;
 	$bool = false;
 
 	if (!empty($dir)) {
@@ -54,9 +54,8 @@ if ($modules->dir) {
 	$directories = scandir(ACP3_ROOT . 'languages');
 	$count_dir = count($directories);
 	for ($i = 0; $i < $count_dir; ++$i) {
-		$lang_info = array();
-		if ($directories[$i] != '.' && $directories[$i] != '..' && is_file(ACP3_ROOT . 'languages/' . $directories[$i] . '/info.php')) {
-			include ACP3_ROOT . 'languages/' . $directories[$i] . '/info.php';
+		$lang_info = xml::parseXmlFile(ACP3_ROOT . 'languages/' . $directories[$i] . '/info.xml', '/language');
+		if (!empty($lang_info)) {
 			$languages[$i] = $lang_info;
 			$languages[$i]['action'] = CONFIG_LANG == $directories[$i] ? '<img src="' . ROOT_DIR . 'images/crystal/16/apply.png" alt="" />' : '<a href="' . uri('acp/system/languages/dir_' . $directories[$i]) . '"><img src="' . ROOT_DIR . 'images/crystal/16/cancel.png" alt="" /></a>';
 		}

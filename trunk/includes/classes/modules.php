@@ -238,7 +238,6 @@ class modules
 			$mod_info['dir'] = $module;
 			$mod_info['description'] = isset($mod_info['description']['lang']) && $mod_info['description']['lang'] == 'true' ? lang($module, 'mod_description') : $mod_info['description']['lang'];
 			$mod_info['name'] = isset($mod_info['name']['lang']) && $mod_info['name']['lang'] == 'true' ? lang($module, $module) : $mod_info['name'];
-			$mod_info['version'] = isset($mod_info['version']['core']) && $mod_info['version']['core'] == 'true' ? CONFIG_VERSION : $mod_info['version'];
 			$mod_info['tables'] = !empty($mod_info['tables']) ? explode(',', $mod_info['tables']) : false;
 			$mod_info['categories'] = isset($mod_info['categories']) ? true : false;
 			$mod_info['protected'] = isset($mod_info['protected']) ? true : false;

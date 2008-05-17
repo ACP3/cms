@@ -134,10 +134,10 @@ function calcFilesize($value)
  */
 function lang($module, $key)
 {
-	global $auth;
 	static $lang = 0, $lang_data = array();
 
 	if (empty($lang)) {
+		global $auth;
 		$info = $auth->getUserInfo();
 		$lang = !empty($info) ? $info['language'] : CONFIG_LANG;
 	}
