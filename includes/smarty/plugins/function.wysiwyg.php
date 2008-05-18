@@ -8,13 +8,13 @@ function smarty_function_wysiwyg($params) {
 	$path = ACP3_ROOT . 'includes/wysiwyg/' . CONFIG_WYSIWYG . '/editor.php';
 	$params['name'] = 'form[' . $params['name'] . ']';
 
-	if (is_file($path) && !preg_match('=/=', CONFIG_WYSIWYG)) {
+	if (is_file($path) && CONFIG_WYSIWYG != 'textarea' && !preg_match('=/=', CONFIG_WYSIWYG)) {
 		require_once $path;
 
 		return editor($params);
 	} else {
 		global $uri;
-		
+
 		$out = '';
 		$id = substr($params['name'], 5, -1);
 

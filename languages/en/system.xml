@@ -93,6 +93,10 @@
 		<message>Disable module</message>
 	</item>
 	<item>
+		<name>editor</name>
+		<message>Editor</message>
+	</item>
+	<item>
 		<name>enable_disable_mod_rewrite</name>
 		<message>Please select, wether search engine friendly URIs should be used, or not</message>
 	</item>
@@ -341,6 +345,10 @@
 		<message>Please select the database type</message>
 	</item>
 	<item>
+		<name>select_editor</name>
+		<message>Please select, wether you want to use a WYSIWYG editor or a simple textarea</message>
+	</item>
+	<item>
 		<name>select_entries_per_page</name>
 		<message>Please select, how many resultsets per page should be displayed</message>
 	</item>
@@ -419,6 +427,10 @@
 	<item>
 		<name>table_prefix</name>
 		<message>Table prefix</message>
+	</item>
+	<item>
+		<name>textarea</name>
+		<message>Textarea</message>
 	</item>
 	<item>
 		<name>title</name>

@@ -23,6 +23,14 @@
 				<span>({lang values="system|homepage_description"})</span>
 			</dt>
 			<dd><input type="text" name="form[homepage]" id="homepage" value="{$form.homepage}" /></dd>
+			<dt><label for="wysiwyg">{lang values="system|editor"}</label></dt>
+			<dd>
+				<select name="form[wysiwyg]" id="wysiwyg">
+{foreach from=$wysiwyg item=row}
+					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{/foreach}
+				</select>
+			</dd>
 		</dl>
 	</fieldset>
 	<fieldset>
