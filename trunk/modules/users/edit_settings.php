@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (!$auth->isUser() || !preg_match('/\d/', USER_ID)) {
+if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 	redirect('errors/403');
 } else {
 	breadcrumb::assign(lang('users', 'users'), uri('users'));
@@ -48,8 +48,12 @@ if (!$auth->isUser() || !preg_match('/\d/', USER_ID)) {
 		$tpl->assign('time_zone', timeZones($user[0]['time_zone']));
 
 		// Sommerzeit an/aus
+		$dst[0]['value'] = '1';
 		$dst[0]['checked'] = selectEntry('dst', '1', $user[0]['dst'], 'checked');
+		$dst[0]['lang'] = lang('common', 'yes');
+		$dst[1]['value'] = '0';
 		$dst[1]['checked'] = selectEntry('dst', '0', $user[0]['dst'], 'checked');
+		$dst[1]['lang'] = lang('common', 'no');
 		$tpl->assign('dst', $dst);
 
 		// Sprache

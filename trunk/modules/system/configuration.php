@@ -107,23 +107,35 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$wysiwyg[$i]['lang'] = lang('system', 'textarea');
 	$tpl->assign('wysiwyg', $wysiwyg);
 
-	// Sef-URIs
-	$sef[0]['checked'] = selectEntry('sef', '1', CONFIG_SEF, 'checked');
-	$sef[1]['checked'] = selectEntry('sef', '0', CONFIG_SEF, 'checked');
-	$tpl->assign('sef', $sef);
-
 	// Zeitzonen
 	$tpl->assign('time_zone', timeZones(CONFIG_TIME_ZONE));
 
 	// Sommerzeit an/aus
+	$dst[0]['value'] = '1';
 	$dst[0]['checked'] = selectEntry('dst', '1', CONFIG_DST, 'checked');
+	$dst[0]['lang'] = lang('common', 'yes');
+	$dst[1]['value'] = '0';
 	$dst[1]['checked'] = selectEntry('dst', '0', CONFIG_DST, 'checked');
+	$dst[1]['lang'] = lang('common', 'no');
 	$tpl->assign('dst', $dst);
 
 	// Wartungsmodus an/aus
+	$maintenance[0]['value'] = '1';
 	$maintenance[0]['checked'] = selectEntry('maintenance', '1', CONFIG_MAINTENANCE, 'checked');
+	$maintenance[0]['lang'] = lang('common', 'yes');
+	$maintenance[1]['value'] = '0';
 	$maintenance[1]['checked'] = selectEntry('maintenance', '0', CONFIG_MAINTENANCE, 'checked');
+	$maintenance[1]['lang'] = lang('common', 'no');
 	$tpl->assign('maintenance', $maintenance);
+
+	// Sef-URIs
+	$sef[0]['value'] = '1';
+	$sef[0]['checked'] = selectEntry('sef', '1', CONFIG_SEF, 'checked');
+	$sef[0]['lang'] = lang('common', 'yes');
+	$sef[1]['value'] = '0';
+	$sef[1]['checked'] = selectEntry('sef', '0', CONFIG_SEF, 'checked');
+	$sef[1]['lang'] = lang('common', 'no');
+	$tpl->assign('sef', $sef);
 
 	// Datenbank-Typen
 	$db_type[0]['value'] = 'mysql';

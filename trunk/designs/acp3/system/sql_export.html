@@ -26,29 +26,21 @@
 		<dl>
 			<dt><label for="file">{lang values="system|output"}</label></dt>
 			<dd>
-				<label for="file">
-					<input type="radio" name="form[output]" id="file" value="file" class="checkbox"{$output.0.selected} />
-					{lang values="system|output_as_file"}
+{foreach from=$output item=row}
+				<label for="{$row.value}">
+					<input type="radio" name="form[output]" id="{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+					{$row.lang}
 				</label>
-				<label for="text">
-					<input type="radio" name="form[output]" id="text" value="text" class="checkbox"{$output.1.selected} />
-					{lang values="system|output_as_text"}
-				</label>
+{/foreach}
 			</dd>
 			<dt><label for="complete">{lang values="system|export_type"}</label></dt>
 			<dd>
-				<label for="complete">
-					<input type="radio" name="form[export_type]" id="complete" value="complete" class="checkbox"{$export_type.0.selected} />
-					{lang values="system|complete_export"}
+{foreach from=$export_type item=row}
+				<label for="{$row.value}">
+					<input type="radio" name="form[export_type]" id="{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+					{$row.lang}
 				</label>
-				<label for="structure">
-					<input type="radio" name="form[export_type]" id="structure" value="structure" class="checkbox"{$export_type.1.selected} />
-					{lang values="system|export_structure"}
-				</label>
-				<label for="data">
-					<input type="radio" name="form[export_type]" id="data" value="data" class="checkbox"{$export_type.2.selected} />
-					{lang values="system|export_data"}
-				</label>
+{/foreach}
 			</dd>
 		</dl>
 	</fieldset>

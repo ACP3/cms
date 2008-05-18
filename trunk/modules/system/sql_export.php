@@ -75,14 +75,24 @@ if (!isset($_POST['submit']) || isset($errors)) {
 	$tpl->assign('tables', $tables);
 
 	// Ausgabe
-	$output[0]['selected'] = selectEntry('output', 'file', 'file', 'checked');
-	$output[1]['selected'] = selectEntry('output', 'text', 'file', 'checked');
+	$output[0]['value'] = 'file';
+	$output[0]['checked'] = selectEntry('output', 'file', 'file', 'checked');
+	$output[0]['lang'] = lang('system', 'output_as_file');
+	$output[1]['value'] = 'text';
+	$output[1]['checked'] = selectEntry('output', 'text', 'file', 'checked');
+	$output[1]['lang'] = lang('system', 'output_as_text');
 	$tpl->assign('output', $output);
 
 	// Exportart
-	$export_type[0]['selected'] = selectEntry('export_type', 'complete', 'complete', 'checked');
-	$export_type[1]['selected'] = selectEntry('export_type', 'structure', 'complete', 'checked');
-	$export_type[2]['selected'] = selectEntry('export_type', 'data', 'complete', 'checked');
+	$export_type[0]['value'] = 'complete';
+	$export_type[0]['checked'] = selectEntry('export_type', 'complete', 'complete', 'checked');
+	$export_type[0]['lang'] = lang('system', 'complete_export');
+	$export_type[1]['value'] = 'structure';
+	$export_type[1]['checked'] = selectEntry('export_type', 'structure', 'complete', 'checked');
+	$export_type[1]['lang'] = lang('system', 'export_structure');
+	$export_type[2]['value'] = 'data';
+	$export_type[2]['checked'] = selectEntry('export_type', 'data', 'complete', 'checked');
+	$export_type[2]['lang'] = lang('system', 'export_data');
 	$tpl->assign('export_type', $export_type);
 
 }
