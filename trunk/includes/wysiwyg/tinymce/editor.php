@@ -18,8 +18,8 @@ function editor($params) {
 	$out.= 'theme_advanced_toolbar_align : "left",' . "\n";
 
 	if (isset($params['toolbar']) && $params['toolbar'] == 'simple') {
-		$out.= 'plugins : "inlinepopups",' . "\n";
-		$out.= 'theme_advanced_buttons1 : "bold,italic,|,numlist,bullist,|,link,unlink,anchor,|,undo,redo,|,help",' . "\n";
+		$out.= 'plugins : "inlinepopups,contextmenu",' . "\n";
+		$out.= 'theme_advanced_buttons1 : "code,|,bold,italic,|,numlist,bullist,|,link,unlink,anchor,|,undo,redo,|,help",' . "\n";
 		$out.= 'theme_advanced_buttons2 : "",' . "\n";
 		$out.= 'theme_advanced_buttons2 : "",' . "\n";
 	} else {

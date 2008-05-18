@@ -93,6 +93,10 @@
 		<message>Modul deaktivieren</message>
 	</item>
 	<item>
+		<name>editor</name>
+		<message>Editor</message>
+	</item>
+	<item>
 		<name>enable_disable_mod_rewrite</name>
 		<message>Bitte geben Sie an, ob die suchmaschinenfreundlichen URIs verwendet werden sollen, oder nicht</message>
 	</item>
@@ -341,6 +345,10 @@
 		<message>Bitte wählen Sie den Datenbank-Typ aus</message>
 	</item>
 	<item>
+		<name>select_editor</name>
+		<message>Bitte wählen Sie aus, mit welchen Editor Sie Ihre Einträge erstellen wollen</message>
+	</item>
+	<item>
 		<name>select_entries_per_page</name>
 		<message>Bitte wählen Sie aus, wie viele Datensätze pro Seite angezeigt werden sollen</message>
 	</item>
@@ -419,6 +427,10 @@
 	<item>
 		<name>table_prefix</name>
 		<message>Tabellenpräfix</message>
+	</item>
+	<item>
+		<name>textarea</name>
+		<message>Textfeld</message>
 	</item>
 	<item>
 		<name>title</name>

@@ -19,6 +19,8 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('system', 'type_in_flood_barrier');
 	if (!preg_match('/^(\w+\/)+$/', $form['homepage']))
 		$errors[] = lang('system', 'incorrect_homepage');
+	if ($form['wysiwyg'] != 'textarea' && (preg_match('=/=', $form['wysiwyg']) || !is_file(ACP3_ROOT . 'includes/wysiwyg/' . $form['wysiwyg'] . '/info.xml')))
+		$errors[] = lang('system', 'select_editor');
 	if (empty($form['date']))
 		$errors[] = lang('system', 'type_in_date_format');
 	if (!is_numeric($form['time_zone']))
@@ -68,7 +70,7 @@ if (isset($_POST['submit'])) {
 			'time_zone' => $form['time_zone'],
 			'title' => $db->escape($form['title']),
 			'version' => CONFIG_VERSION,
-			'wysiwyg' => CONFIG_WYSIWYG
+			'wysiwyg' => $form['wysiwyg']
 		);
 
 		$bool = config::system($config);
@@ -85,6 +87,25 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$i++;
 	}
 	$tpl->assign('entries', $entries);
+
+	// WYSIWYG-Editoren
+	$editors = scandir(ACP3_ROOT . 'includes/wysiwyg');
+	$c_editors = count($editors);
+	$wysiwyg = array();
+
+	for ($i = 0; $i < $c_editors; ++$i) {
+		$info = xml::parseXmlFile(ACP3_ROOT . 'includes/wysiwyg/' . $editors[$i] . '/info.xml', '/editor');
+		if (!empty($info)) {
+			$wysiwyg[$i]['value'] = $editors[$i];
+			$wysiwyg[$i]['selected'] = selectEntry('wysiwyg', $editors[$i], CONFIG_WYSIWYG);
+			$wysiwyg[$i]['lang'] = $info['name'] . ' ' . $info['version'];
+		}
+	}
+	// Normale <textarea>
+	$wysiwyg[$i]['value'] = 'textarea';
+	$wysiwyg[$i]['selected'] = selectEntry('wysiwyg', 'textarea', CONFIG_WYSIWYG);
+	$wysiwyg[$i]['lang'] = lang('system', 'textarea');
+	$tpl->assign('wysiwyg', $wysiwyg);
 
 	// Sef-URIs
 	$sef[0]['checked'] = selectEntry('sef', '1', CONFIG_SEF, 'checked');
