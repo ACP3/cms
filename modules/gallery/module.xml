@@ -4,7 +4,7 @@
 		<name lang="true"/>
 		<description lang="true"/>
 		<author>Goratsch Webdesign</author>
-		<tables>gallery,galpics</tables>
+		<tables>gallery,gallery_pictures</tables>
 		<version core="true"/>
 		<active>1</active>
 	</info>
