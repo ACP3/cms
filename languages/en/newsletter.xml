@@ -49,8 +49,8 @@
 		<message>Create a new newsletter</message>
 	</item>
 	<item>
-		<name>compose_error</name>
-		<message>While sending the newsletter an error has occured.</message>
+		<name>compose_save_error</name>
+		<message>While sending respectively saving At least one error has occured.</message>
 	</item>
 	<item>
 		<name>compose_success</name>
@@ -93,6 +93,10 @@
 		<message>The marked newsletter accounts have been deleted successfully.</message>
 	</item>
 	<item>
+		<name>edit_archive</name>
+		<message>Edit newsletter</message>
+	</item>
+	<item>
 		<name>edit_error</name>
 		<message>While editing the newsletter settings an error has occured.</message>
 	</item>
@@ -131,6 +135,10 @@
 	<item>
 		<name>only_save</name>
 		<message>Only save</message>
+	</item>
+	<item>
+		<name>save_success</name>
+		<message>The newsletter has been saved successfully.</message>
 	</item>
 	<item>
 		<name>send</name>

@@ -100,7 +100,7 @@ CREATE TABLE `{pre}newsletter_archive` (
 	`date` VARCHAR(14) NOT NULL, 
 	`subject` VARCHAR(120) NOT NULL, 
 	`text` TEXT NOT NULL, 
-	`status` TINYINT NOT NULL,
+	`status` TINYINT(1) NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine} ;
 

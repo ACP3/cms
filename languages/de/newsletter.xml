@@ -49,8 +49,8 @@
 		<message>Neuen Newsletter erstellen</message>
 	</item>
 	<item>
-		<name>compose_error</name>
-		<message>Beim Versenden das Newsletters ist ein Fehler aufgetreten.</message>
+		<name>compose_save_error</name>
+		<message>Beim Versenden bzw. Speichern das Newsletters ist mindestens ein Fehler aufgetreten.</message>
 	</item>
 	<item>
 		<name>compose_success</name>
@@ -93,6 +93,10 @@
 		<message>Die ausgewählten Newsletterkonten wurden erfolgreich gelöscht.</message>
 	</item>
 	<item>
+		<name>edit_archive</name>
+		<message>Newsletter bearbeiten</message>
+	</item>
+	<item>
 		<name>edit_error</name>
 		<message>Beim Bearbeiten der Newsletter Einstellungen ist ein Fehler aufgetreten.</message>
 	</item>
@@ -131,6 +135,10 @@
 	<item>
 		<name>only_save</name>
 		<message>Nur speichern</message>
+	</item>
+	<item>
+		<name>save_success</name>
+		<message>Der Newsletter wurde erfolgreich gespeichert.</message>
 	</item>
 	<item>
 		<name>send</name>

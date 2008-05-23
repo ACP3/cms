@@ -8,7 +8,7 @@ require ACP3_ROOT . 'includes/classes/config.php';
 require ACP3_ROOT . 'includes/classes/db.php';
 
 $queries = array(
-	0 => 'CREATE TABLE `{pre}newsletter_archive` (`id` INT NOT NULL AUTO_INCREMENT, `date` VARCHAR(14) NOT NULL, `subject` VARCHAR(120) NOT NULL, `text` TEXT NOT NULL, `status` TINYINT NOT NULL, PRIMARY KEY (`id`)) {engine} {charset} ;',
+	0 => 'CREATE TABLE `{pre}newsletter_archive` (`id` INT NOT NULL AUTO_INCREMENT, `date` VARCHAR(14) NOT NULL, `subject` VARCHAR(120) NOT NULL, `text` TEXT NOT NULL, `status` TINYINT(1) NOT NULL, PRIMARY KEY (`id`)) {engine} {charset} ;',
 	1 => 'RENAME TABLE `{pre}galpics` TO `{pre}gallery_pictures`, `{pre}nl_accounts` TO `{pre}newsletter_accounts`;',
 );
 

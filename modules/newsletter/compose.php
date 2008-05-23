@@ -49,8 +49,13 @@ if (isset($_POST['submit'])) {
 				}
 			}
 		}
-
-		$content = comboBox($bool && !isset($bool2) || $bool && isset($bool2) && $bool2 ? lang('newsletter', 'compose_success') : lang('newsletter', 'compose_error'), uri('acp/newsletter'));
+		if ($form['action'] == '0' && $bool) {
+			$content = comboBox(lang('newsletter', 'save_success'), uri('acp/newsletter/adm_list_archive'));
+		} elseif ($form['action'] == '1' && $bool && $bool2) {
+			$content = comboBox(lang('newsletter', 'compose_success'), uri('acp/newsletter/adm_list_archive'));
+		} else {
+			$content = comboBox(lang('newsletter', 'compose_save_error'), uri('acp/newsletter/adm_list_archive'));
+		}
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
