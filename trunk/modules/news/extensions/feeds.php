@@ -17,7 +17,7 @@ if ($c_result > 0) {
 	$results = NULL;
 	for ($i = 0; $i < $c_result; ++$i) {
 		$results[$i]['date'] = dateAligned(1, $result[$i]['start'], 'r');
-		$results[$i]['title'] = html_entity_decode($result[$i]['headline']);
+		$results[$i]['title'] = html_entity_decode($result[$i]['headline'], ENT_QUOTES, 'UTF-8');
 
 		$description = strip_tags($db->escape($result[$i]['text'], 3));
 		$description = html_entity_decode($description, ENT_QUOTES, 'UTF-8');
