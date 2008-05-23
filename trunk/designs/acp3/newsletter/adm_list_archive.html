@@ -22,7 +22,7 @@
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
 				<td>{$row.date}</td>
-				<td>{$row.subject}</td>
+				<td><a href="{uri args="acp/newsletter/edit_archive/id_`$row.id`"}" title="{lang values="newsletter|edit_archive"}">{$row.subject}</a></td>
 				<td>{$row.text}</td>
 				<td>{$row.status}</td>
 				<td><a href="{uri args="acp/newsletter/send/id_`$row.id`"}" title="{lang values="newsletter|send"}"><img src="{icon path="16/mail_send"}" alt="{lang values="newsletter|send"}" /></a></td>
