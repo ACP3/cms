@@ -18,7 +18,7 @@ if (modules::check()) {
 	include ACP3_ROOT . 'modules/' . $uri->mod . '/' . $uri->page . '.php';
 	$tpl->assign('CONTENT', !empty($content) ? $content : '');
 } elseif (!$auth->isUser() && defined('IN_ADM') && $uri->mod != 'users' && $uri->page != 'login') {
-	redirect('users/login');
+	redirect('acp/users/login');
 } else {
 	redirect('errors/404');
 }

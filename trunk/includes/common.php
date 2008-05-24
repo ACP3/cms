@@ -56,7 +56,6 @@ $uri = new uri;
 
 // Falls der Wartungsmodus aktiv ist, Wartungsnachricht ausgeben und Skript beenden
 if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
-	echo 'huhu';
 	header('Content-Type: text/html; charset=UTF-8');
 	$tpl->assign('maintenance_msg', CONFIG_MAINTENANCE_MSG);
 	$tpl->display('maintenance.html');

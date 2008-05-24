@@ -376,7 +376,7 @@ function timeZones($value)
  */
 function uri($uri)
 {
-	$prefix = CONFIG_SEF == '0' ? PHP_SELF . '/' : ROOT_DIR;
+	$prefix = CONFIG_SEF == '1' && defined('IN_ACP3') ? ROOT_DIR : PHP_SELF . '/';
 	return $prefix . $uri . (!preg_match('/\/$/', $uri) ? '/' : '');
 }
 ?>
