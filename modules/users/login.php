@@ -40,6 +40,8 @@ if ($auth->isUser()) {
 
 		if (isset($form['redirect_uri'])) {
 			redirect(0, base64_decode($form['redirect_uri']));
+		} elseif (defined('IN_ADM')) {
+			redirect('acp');
 		} else {
 			redirect(0, ROOT_DIR);
 		}
