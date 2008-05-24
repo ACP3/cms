@@ -1,4 +1,4 @@
-﻿/*
+/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
@@ -102,7 +102,7 @@ FCKConfig.ToolbarSets["Default"] = [
 	['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
 	['Form','Checkbox','Radio','TextField','Textarea','Select','Button','ImageButton','HiddenField'],
 	'/',
-	['Source','-','Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript'],
+	[,'Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript'],
 	['OrderedList','UnorderedList','-','Outdent','Indent','Blockquote'],
 	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
 	['Link','Unlink','Anchor'],
@@ -114,7 +114,7 @@ FCKConfig.ToolbarSets["Default"] = [
 ] ;
 
 FCKConfig.ToolbarSets["Basic"] = [
-	['Bold','Italic','-','OrderedList','UnorderedList','-','Link','Unlink','-','Undo','Redo','-','About']
+	['Source','-','Bold','Italic','-','OrderedList','UnorderedList','-','Link','Unlink','-','Undo','Redo','-','About']
 ] ;
 
 FCKConfig.EnterMode = 'p' ;			// p | div | br
