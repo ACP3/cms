@@ -1,5 +1,5 @@
 <?php
-function smarty_function_lang($params, &$smarty)
+function smarty_function_lang($params)
 {
 	$values = explode('|', $params['values']);
 	return lang($values[0], $values[1]);

@@ -1,7 +1,7 @@
 <?php
-function smarty_function_load_module($params, &$smarty)
+function smarty_function_load_module($params)
 {
-	global $auth, $db, $uri, $tpl;
+	global $auth, $db, $tpl, $uri;
 
 	$module = explode('|', $params['module']);
 
