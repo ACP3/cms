@@ -1,7 +1,6 @@
 <?php
-function smarty_function_uri($params, &$smarty)
+function smarty_function_uri($params)
 {
-	global $uri;
 	return uri(!empty($params['args']) ? $params['args'] : '');
 }
 /* vim: set expandtab: */

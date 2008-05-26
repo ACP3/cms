@@ -1,5 +1,5 @@
 <?php
-function smarty_function_icon($params, &$smarty)
+function smarty_function_icon($params)
 {
 	return ROOT_DIR . 'images/crystal/' . $params['path'] . '.png';
 }
