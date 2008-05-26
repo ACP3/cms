@@ -14,7 +14,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
-		if (!validate::date($form['start']) || !validate::date($form['end']))
+		if (!validate::date($form['start'], $form['end']))
 			$errors[] = lang('common', 'select_date');
 		if (strlen($form['headline']) < 3)
 			$errors[] = lang('news', 'headline_to_short');

@@ -36,15 +36,28 @@ class validate
 	/**
 	 * Überprüft, ob alle Daten ein sinnvolles Datum ergeben
 	 *
-	 * @param array $value
-	 *  Der zu überprüfende Wert
-	 * @return boolean
+	 * @param string $start
+	 *  Startdatum
+	 * @param string $end
+	 *  Enddatum
+ 	 * @return boolean
 	 */
-	public static function date($value)
+	public static function date($start, $end = null)
 	{
-		if (preg_match('/^(\d{4})-(\d{2})-(\d{2})( ([01][0-9]|2[0-3]):([0-5][0-9])){0,1}$/', $value, $matches)) {
-			if (checkdate($matches[2], $matches[3], $matches[1])) {
-				return true;
+		$regex = '/^(\d{4})-(\d{2})-(\d{2})( ([01][0-9]|2[0-3]):([0-5][0-9])){0,1}$/';
+		if (preg_match($regex, $start, $matches_start)) {
+			// Wenn ein Enddatum festgelegt wurde, dieses ebenfalls mit überprüfen
+			if ($end != null && preg_match($regex, $end, $matches_end)) {
+				if (checkdate($matches_start[2], $matches_start[3], $matches_start[1]) &&
+					checkdate($matches_end[2], $matches_end[3], $matches_end[1]) &&
+					strtotime($start) <= strtotime($end)) {
+					return true;
+				}
+			// Nur Startdatum überprüfen
+			} else {
+				if (checkdate($matches_start[2], $matches_start[3], $matches_start[1])) {
+					return true;
+				}
 			}
 		}
 		return false;
