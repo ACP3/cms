@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
 		$file['size'] = $_FILES['file_internal']['size'];
 	}
 
-	if (!validate::date($form['start']) || !validate::date($form['end']))
+	if (!validate::date($form['start'], $form['end']))
 		$errors[] = lang('common', 'select_date');
 	if (strlen($form['link_title']) < 3)
 		$errors[] = lang('files', 'type_in_link_title');

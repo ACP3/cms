@@ -16,7 +16,7 @@ include_once ACP3_ROOT . 'modules/pages/functions.php';
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
-	if (!validate::date($form['start']) || !validate::date($form['end']))
+	if (!validate::date($form['start'], $form['end']))
 		$errors[] = lang('common', 'select_date');
 	if (!validate::isNumber($form['mode']))
 		$errors[] = lang('pages', 'select_static_hyperlink');

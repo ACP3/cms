@@ -14,7 +14,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \''
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
-		if (!validate::date($form['start']) || !validate::date($form['end']))
+		if (!validate::date($form['start'], $form['end']))
 			$errors[] = lang('common', 'select_date');
 		if (empty($form['question']))
 			$errors[] = lang('polls', 'type_in_question');
