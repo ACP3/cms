@@ -1,9 +1,6 @@
 <?php
 error_reporting(0);
 
-// Standardzeitzone festlegen
-date_default_timezone_set('Europe/Berlin');
-
 define('IN_INSTALL', true);
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
 $php_self = dirname(PHP_SELF);
@@ -35,7 +32,11 @@ $tpl = new smarty;
 $tpl->template_dir = ACP3_ROOT . 'installation/design/';
 $tpl->compile_dir = ACP3_ROOT . 'cache/installation/';
 if (!is_dir($tpl->compile_dir)) {
-	mkdir($tpl->compile_dir);
+	if (!is_writable(ACP3_ROOT . 'cache/')) {
+		exit('Bitte geben Sie dem "cache"-Ordner den CHMOD 777!');
+	} else {
+		mkdir($tpl->compile_dir, 0777);
+	}
 }
 
 $tpl->assign('PHP_SELF', PHP_SELF);

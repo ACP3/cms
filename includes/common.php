@@ -14,12 +14,11 @@ require_once ACP3_ROOT . 'includes/globals.php';
 // Konfiguration des ACP3 laden
 require_once ACP3_ROOT . 'includes/config.php';
 if (!defined('INSTALLED')) {
-	header('Location:' . ACP3_ROOT . 'installation/');
-	exit;
+	exit('Das ACP3 ist nicht richtig installiert. Bitte führen Sie den <a href="' . ACP3_ROOT . 'installation/">Installationsassistenten</a> aus und folgen Sie den Anweisungen.');
 }
 
 // Wenn der DEBUG Modus aktiv ist, Fehler ausgeben
-error_reporting(defined('DEBUG') && DEBUG ? E_ALL|E_STRICT : null);
+error_reporting(E_ALL);
 
 function __autoload($className)
 {
@@ -37,8 +36,11 @@ include SMARTY_DIR . 'Smarty.class.php';
 $tpl = new smarty;
 $tpl->template_dir = ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/';
 $tpl->compile_dir = ACP3_ROOT . 'cache/';
-$tpl->error_reporting = defined('DEBUG') && DEBUG ? E_ALL|E_STRICT : null;
+$tpl->error_reporting = E_ALL;
 // $tpl->compile_check = false;
+if (!is_writable($tpl->compile_dir)) {
+	exit('Bitte geben Sie dem "cache"-Ordner den CHMOD 777!');
+}
 
 // Einige Template Variablen setzen
 $tpl->assign('PHP_SELF', PHP_SELF);
