@@ -14,9 +14,9 @@ if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
 	if (!validate::date($form['start'], $form['end']))
-		$errors[] = lang('common', 'select_date');
+		$errors[] = $lang->t('common', 'select_date');
 	if (strlen($form['name']) < 3)
-		$errors[] = lang('gallery', 'type_in_gallery_name');
+		$errors[] = $lang->t('gallery', 'type_in_gallery_name');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('gallery', $insert_values);
 
-		$content = comboBox($bool ? lang('gallery', 'create_success') : lang('gallery', 'create_error'), uri('acp/gallery'));
+		$content = comboBox($bool ? $lang->t('gallery', 'create_success') : $lang->t('gallery', 'create_error'), uri('acp/gallery'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

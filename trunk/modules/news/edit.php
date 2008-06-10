@@ -15,15 +15,15 @@ if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->
 		$form = $_POST['form'];
 
 		if (!validate::date($form['start'], $form['end']))
-			$errors[] = lang('common', 'select_date');
+			$errors[] = $lang->t('common', 'select_date');
 		if (strlen($form['headline']) < 3)
-			$errors[] = lang('news', 'headline_to_short');
+			$errors[] = $lang->t('news', 'headline_to_short');
 		if (strlen($form['text']) < 3)
-			$errors[] = lang('news', 'text_to_short');
+			$errors[] = $lang->t('news', 'text_to_short');
 		if (!validate::isNumber($form['cat']) || validate::isNumber($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
-			$errors[] = lang('news', 'select_category');
+			$errors[] = $lang->t('news', 'select_category');
 		if (!empty($form['uri']) && (!validate::isNumber($form['target']) || strlen($form['link_title']) < 3))
-			$errors[] = lang('news', 'complete_additional_hyperlink_statements');
+			$errors[] = $lang->t('news', 'complete_additional_hyperlink_statements');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -46,7 +46,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->
 
 			cache::create('news_details_id_' . $uri->id, $db->select('id, start, headline, text, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\''));
 
-			$content = comboBox($bool ? lang('news', 'edit_success') : lang('news', 'edit_error'), uri('acp/news'));
+			$content = comboBox($bool ? $lang->t('news', 'edit_success') : $lang->t('news', 'edit_error'), uri('acp/news'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
@@ -66,10 +66,10 @@ if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->
 		// Linkziel
 		$target[0]['value'] = '1';
 		$target[0]['selected'] = selectEntry('target', '1', $news[0]['target']);
-		$target[0]['lang'] = lang('common', 'window_self');
+		$target[0]['lang'] = $lang->t('common', 'window_self');
 		$target[1]['value'] = '2';
 		$target[1]['selected'] = selectEntry('target', '2', $news[0]['target']);
-		$target[1]['lang'] = lang('common', 'window_blank');
+		$target[1]['lang'] = $lang->t('common', 'window_blank');
 		$tpl->assign('target', $target);
 
 		$tpl->assign('form', isset($form) ? $form : $news[0]);

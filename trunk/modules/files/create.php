@@ -21,17 +21,17 @@ if (isset($_POST['submit'])) {
 	}
 
 	if (!validate::date($form['start'], $form['end']))
-		$errors[] = lang('common', 'select_date');
+		$errors[] = $lang->t('common', 'select_date');
 	if (strlen($form['link_title']) < 3)
-		$errors[] = lang('files', 'type_in_link_title');
+		$errors[] = $lang->t('files', 'type_in_link_title');
 	if (isset($form['external']) && (empty($file) || empty($form['filesize']) || empty($form['unit'])))
-		$errors[] = lang('files', 'type_in_external_resource');
+		$errors[] = $lang->t('files', 'type_in_external_resource');
 	if (!isset($form['external']) && (empty($file['tmp_name']) || empty($file['size'])))
-		$errors[] = lang('files', 'select_internal_resource');
+		$errors[] = $lang->t('files', 'select_internal_resource');
 	if (strlen($form['text']) < 3)
-		$errors[] = lang('files', 'description_to_short');
+		$errors[] = $lang->t('files', 'description_to_short');
 	if (!validate::isNumber($form['cat']) || validate::isNumber($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
-		$errors[] = lang('files', 'select_category');
+		$errors[] = $lang->t('files', 'select_category');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('files', $insert_values);
 
-		$content = comboBox($bool ? lang('files', 'create_success') : lang('files', 'create_error'), uri('acp/files'));
+		$content = comboBox($bool ? $lang->t('files', 'create_success') : $lang->t('files', 'create_error'), uri('acp/files'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

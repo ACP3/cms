@@ -14,9 +14,9 @@ if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
 	if (strlen($form['subject']) < 3)
-		$errors[] = lang('newsletter', 'subject_to_short');
+		$errors[] = $lang->t('newsletter', 'subject_to_short');
 	if (strlen($form['text']) < 3)
-		$errors[] = lang('newsletter', 'text_to_short');
+		$errors[] = $lang->t('newsletter', 'text_to_short');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -50,11 +50,11 @@ if (isset($_POST['submit'])) {
 			}
 		}
 		if ($form['action'] == '0' && $bool) {
-			$content = comboBox(lang('newsletter', 'save_success'), uri('acp/newsletter'));
+			$content = comboBox($lang->t('newsletter', 'save_success'), uri('acp/newsletter'));
 		} elseif ($form['action'] == '1' && $bool && $bool2) {
-			$content = comboBox(lang('newsletter', 'compose_success'), uri('acp/newsletter'));
+			$content = comboBox($lang->t('newsletter', 'compose_success'), uri('acp/newsletter'));
 		} else {
-			$content = comboBox(lang('newsletter', 'compose_save_error'), uri('acp/newsletter'));
+			$content = comboBox($lang->t('newsletter', 'compose_save_error'), uri('acp/newsletter'));
 		}
 	}
 }
@@ -63,18 +63,18 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 	$test[0]['value'] = '1';
 	$test[0]['checked'] = selectEntry('test', '1', '0', 'checked');
-	$test[0]['lang'] = lang('common', 'yes');
+	$test[0]['lang'] = $lang->t('common', 'yes');
 	$test[1]['value'] = '0';
 	$test[1]['checked'] = selectEntry('test', '0', '0', 'checked');
-	$test[1]['lang'] = lang('common', 'no');
+	$test[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('test', $test);
 
 	$action[0]['value'] = '1';
 	$action[0]['checked'] = selectEntry('action', '1', '1', 'checked');
-	$action[0]['lang'] = lang('newsletter', 'send_and_save');
+	$action[0]['lang'] = $lang->t('newsletter', 'send_and_save');
 	$action[1]['value'] = '0';
 	$action[1]['checked'] = selectEntry('action', '0', '1', 'checked');
-	$action[1]['lang'] = lang('newsletter', 'only_save');
+	$action[1]['lang'] = $lang->t('newsletter', 'only_save');
 	$tpl->assign('action', $action);
 
 	$content = $tpl->fetch('newsletter/compose.html');

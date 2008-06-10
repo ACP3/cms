@@ -17,11 +17,11 @@ if (validate::isNumber($uri->id) && $db->select('id', 'access', 'id = \'' . $uri
 		$form = $_POST['form'];
 
 		if (empty($form['name']))
-			$errors[] = lang('common', 'name_to_short');
+			$errors[] = $lang->t('common', 'name_to_short');
 		if (!empty($form['name']) && $db->select('id', 'access', 'id != \'' . $uri->id . '\' AND name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
-			$errors[] = lang('access', 'access_level_already_exist');
+			$errors[] = $lang->t('access', 'access_level_already_exist');
 		if (emptyCheck($form['modules']))
-			$errors[] = lang('access', 'select_modules');
+			$errors[] = $lang->t('access', 'select_modules');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -33,7 +33,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'access', 'id = \'' . $uri
 
 			$bool = $db->update('access', $update_values, 'id = \'' . $uri->id . '\'');
 
-			$content = comboBox($bool ? lang('access', 'edit_success') : lang('access', 'edit_error'), uri('acp/access'));
+			$content = comboBox($bool ? $lang->t('access', 'edit_success') : $lang->t('access', 'edit_error'), uri('acp/access'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

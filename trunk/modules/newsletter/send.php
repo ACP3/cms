@@ -27,7 +27,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'newsletter_archive', 'id 
 		$bool2 = $db->update('newsletter_archive', array('status' => '1'), 'id = \'' . $uri->id . '\'');
 	}
 
-	$content = comboBox($bool && $bool2 ? lang('newsletter', 'compose_success') : lang('newsletter', 'compose_save_error'), uri('acp/newsletter/adm_list_archive'));
+	$content = comboBox($bool && $bool2 ? $lang->t('newsletter', 'compose_success') : $lang->t('newsletter', 'compose_save_error'), uri('acp/newsletter/adm_list_archive'));
 } else {
 	redirect('errors/404');
 }

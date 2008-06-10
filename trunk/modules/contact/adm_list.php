@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
 	if (!empty($form['mail']) && !validate::email($form['mail']))
-		$errors[] = lang('common', 'wrong_email_format');
+		$errors[] = $lang->t('common', 'wrong_email_format');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = config::module('contact', $form);
 
-		$content = comboBox($bool ? lang('contact', 'edit_success') : lang('contact', 'edit_error'), uri('acp/contact'));
+		$content = comboBox($bool ? $lang->t('contact', 'edit_success') : $lang->t('contact', 'edit_error'), uri('acp/contact'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

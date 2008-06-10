@@ -10,10 +10,10 @@
 if (!defined('IN_ADM'))
 	exit;
 
-breadcrumb::assign(lang('common', 'acp'), uri('acp'));
-breadcrumb::assign(lang('system', 'system'), uri('acp/system'));
-breadcrumb::assign(lang('system', 'maintenance'), uri('acp/system/maintenance'));
-breadcrumb::assign(lang('system', 'sql_optimisation'));
+breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
+breadcrumb::assign($lang->t('system', 'system'), uri('acp/system'));
+breadcrumb::assign($lang->t('system', 'maintenance'), uri('acp/system/maintenance'));
+breadcrumb::assign($lang->t('system', 'sql_optimisation'));
 
 if ($uri->action == 'do') {
 	$mod_list = modules::modulesList();
@@ -35,10 +35,10 @@ if ($uri->action == 'do') {
 						$total_overhead+= $overhead;
 
 						$tables[$i]['overhead'] = calcFilesize($overhead);
-						$tables[$i]['status'] = lang('system', 'optimised');
+						$tables[$i]['status'] = $lang->t('system', 'optimised');
 					} else {
 						$tables[$i]['overhead'] = calcFilesize(0);
-						$tables[$i]['status'] = lang('system', 'not_optimised');
+						$tables[$i]['status'] = $lang->t('system', 'not_optimised');
 					}
 					$i++;
 				}

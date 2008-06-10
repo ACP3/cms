@@ -18,13 +18,13 @@ if (validate::email($uri->mail) && validate::isMD5($uri->hash)) {
 }
 
 if ($db->select('id', 'newsletter_accounts', 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'', 0, 0, 0, 1) != 1)
-	$errors[] = lang('newsletter', 'account_not_exists');
+	$errors[] = $lang->t('newsletter', 'account_not_exists');
 
 if (isset($errors)) {
 	$tpl->assign('error_msg', comboBox($errors));
 } else {
 	$bool = $db->update('newsletter_accounts', array('hash', ''), 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'');
 
-	$content = comboBox($bool ? lang('newsletter', 'activate_success') : lang('newsletter', 'activate_error'), ROOT_DIR);
+	$content = comboBox($bool ? $lang->t('newsletter', 'activate_success') : $lang->t('newsletter', 'activate_error'), ROOT_DIR);
 }
 ?>

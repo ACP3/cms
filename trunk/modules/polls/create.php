@@ -14,9 +14,9 @@ if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
 	if (!validate::date($form['start'], $form['end']))
-		$errors[] = lang('common', 'select_date');
+		$errors[] = $lang->t('common', 'select_date');
 	if (empty($form['question']))
-		$errors[] = lang('polls', 'type_in_question');
+		$errors[] = $lang->t('polls', 'type_in_question');
 	foreach ($form['answers'] as $row) {
 		if (!empty($row)) {
 			$check_answers = true;
@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
 		}
 	}
 	if (!isset($check_answers))
-		$errors[] = lang('polls', 'type_in_answer');
+		$errors[] = $lang->t('polls', 'type_in_answer');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 			}
 		}
 
-		$content = comboBox($bool && $bool2 ? lang('polls', 'create_success') : lang('polls', 'create_error'), uri('acp/polls'));
+		$content = comboBox($bool && $bool2 ? $lang->t('polls', 'create_success') : $lang->t('polls', 'create_error'), uri('acp/polls'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

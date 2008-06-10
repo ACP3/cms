@@ -21,11 +21,11 @@ if (validate::isNumber($uri->id) && $db->select('id', 'emoticons', 'id = \'' . $
 		$settings = config::output('emoticons');
 
 		if (empty($form['code']))
-			$errors[] = lang('emoticons', 'type_in_code');
+			$errors[] = $lang->t('emoticons', 'type_in_code');
 		if (empty($form['description']))
-			$errors[] = lang('emoticons', 'type_in_description');
+			$errors[] = $lang->t('emoticons', 'type_in_description');
 		if (isset($file) && (empty($file['size']) || !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize'])))
-			$errors[] = lang('emoticons', 'invalid_image_selected');
+			$errors[] = $lang->t('emoticons', 'invalid_image_selected');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -51,7 +51,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'emoticons', 'id = \'' . $
 
 			cache::create('emoticons', $db->select('code, description, img', 'emoticons'));
 
-			$content = comboBox($bool ? lang('emoticons', 'edit_success') : lang('emoticons', 'edit_error'), uri('acp/emoticons'));
+			$content = comboBox($bool ? $lang->t('emoticons', 'edit_success') : $lang->t('emoticons', 'edit_error'), uri('acp/emoticons'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

@@ -5,24 +5,24 @@ if (!defined('IN_ACP3'))
 if ($auth->isUser()) {
 	redirect(0, ROOT_DIR);
 } else {
-	breadcrumb::assign(lang('users', 'users'), uri('users'));
-	breadcrumb::assign(lang('users', 'register'));
+	breadcrumb::assign($lang->t('users', 'users'), uri('users'));
+	breadcrumb::assign($lang->t('users', 'register'));
 
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
 		if (empty($form['nickname']))
-			$errors[] = lang('common', 'name_to_short');
+			$errors[] = $lang->t('common', 'name_to_short');
 		if (!empty($form['nickname']) && $db->select('id', 'users', 'nickname = \'' . $db->escape($form['nickname']) . '\'', 0, 0, 0, 1) == '1')
-			$errors[] = lang('users', 'user_name_already_exists');
+			$errors[] = $lang->t('users', 'user_name_already_exists');
 		if (!validate::email($form['mail']))
-			$errors[] = lang('common', 'wrong_email_format');
+			$errors[] = $lang->t('common', 'wrong_email_format');
 		if (validate::email($form['mail']) && $db->select('id', 'users', 'mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
-			$errors[] = lang('users', 'user_email_already_exists');
+			$errors[] = $lang->t('users', 'user_email_already_exists');
 		if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])
-			$errors[] = lang('users', 'type_in_pwd');
+			$errors[] = $lang->t('users', 'type_in_pwd');
 		if (!validate::captcha($form['captcha'], $form['hash']))
-			$errors[] = lang('captcha', 'invalid_captcha_entered');
+			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -30,8 +30,8 @@ if ($auth->isUser()) {
 			// E-Mail mit den Accountdaten zusenden
 			$form['nickname'] = $db->escape($form['nickname']);
 			$host = htmlentities($_SERVER['HTTP_HOST']);
-			$subject = str_replace(array('{title}', '{host}'), array(CONFIG_TITLE, $host), lang('users', 'register_mail_subject'));
-			$message = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($form['nickname'], $form['mail'], $form['pwd'], CONFIG_TITLE, $host), lang('users', 'register_mail_message'));
+			$subject = str_replace(array('{title}', '{host}'), array(CONFIG_TITLE, $host), $lang->t('users', 'register_mail_subject'));
+			$message = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($form['nickname'], $form['mail'], $form['pwd'], CONFIG_TITLE, $host), $lang->t('users', 'register_mail_message'));
 			$header = 'Content-type: text/plain; charset=UTF-8';
 			$mail_sent = @mail($form['mail'], $subject, $message, $header);
 
@@ -55,7 +55,7 @@ if ($auth->isUser()) {
 				$bool = $db->insert('users', $insert_values);
 			}
 
-			$content = comboBox($mail_sent && isset($bool) && $bool ? lang('users', 'register_success') : lang('users', 'register_error'), ROOT_DIR);
+			$content = comboBox($mail_sent && isset($bool) && $bool ? $lang->t('users', 'register_success') : $lang->t('users', 'register_error'), ROOT_DIR);
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

@@ -18,7 +18,7 @@ if ($c_files > 0) {
 	for ($i = 0; $i < $c_files; ++$i) {
 		$files[$i]['start'] = dateAligned(1, $files[$i]['start']);
 		$files[$i]['end'] = dateAligned(1, $files[$i]['end']);
-		$files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : lang('files', 'unknown_filesize');
+		$files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : $lang->t('files', 'unknown_filesize');
 		$files[$i]['link_title'] = $files[$i]['link_title'];
 	}
 	$tpl->assign('files', $files);

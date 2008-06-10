@@ -13,10 +13,10 @@ if (!defined('IN_ADM'))
 if (validate::isNumber($uri->id) && $db->select('id', 'gallery_pictures', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
 	$picture = $db->select('p.pic, p.gallery_id, p.file, p.description, g.name AS gallery_name', 'gallery_pictures AS p, ' . CONFIG_DB_PRE . 'gallery AS g', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
 
-	breadcrumb::assign(lang('common', 'acp'), uri('acp'));
-	breadcrumb::assign(lang('gallery', 'gallery'), uri('acp/gallery'));
+	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
+	breadcrumb::assign($lang->t('gallery', 'gallery'), uri('acp/gallery'));
 	breadcrumb::assign($picture[0]['gallery_name'], uri('acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id']));
-	breadcrumb::assign(lang('gallery', 'edit_picture'));
+	breadcrumb::assign($lang->t('gallery', 'edit_picture'));
 
 	if (isset($_POST['submit'])) {
 		if (!empty($_FILES['file']['tmp_name']) && $_FILES['file']['size'] > '0') {
@@ -28,11 +28,11 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery_pictures', 'id = 
 		$settings = config::output('gallery');
 
 		if (!validate::isNumber($form['gallery']) || $db->select('id', 'gallery', 'id = \'' . $form['gallery'] . '\'', 0, 0, 0, 1) != '1')
-			$errors[] = lang('gallery', 'no_gallery_selected');
+			$errors[] = $lang->t('gallery', 'no_gallery_selected');
 		if (!validate::isNumber($form['pic']))
-			$errors[] = lang('gallery', 'type_in_picture_number');
+			$errors[] = $lang->t('gallery', 'type_in_picture_number');
 		if (isset($file) && is_array($file) && !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']))
-			$errors[] = lang('gallery', 'invalid_image_selected');
+			$errors[] = $lang->t('gallery', 'invalid_image_selected');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -59,7 +59,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery_pictures', 'id = 
 
 			cache::create('gallery_pics_id_' . $form['gallery'], $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $form['gallery'] . '\'', 'pic ASC, id ASC'));
 
-			$content = comboBox($bool ? lang('gallery', 'edit_picture_success') : lang('gallery', 'edit_picture_error'), uri('acp/gallery'));
+			$content = comboBox($bool ? $lang->t('gallery', 'edit_picture_success') : $lang->t('gallery', 'edit_picture_error'), uri('acp/gallery'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

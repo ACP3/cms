@@ -16,11 +16,11 @@ if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
 	if (empty($form['name']))
-		$errors[] = lang('common', 'name_to_short');
+		$errors[] = $lang->t('common', 'name_to_short');
 	if (!empty($form['name']) && $db->select('id', 'access', 'name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
-		$errors[] = lang('access', 'access_level_already_exist');
+		$errors[] = $lang->t('access', 'access_level_already_exist');
 	if (emptyCheck($form['modules']))
-		$errors[] = lang('access', 'select_modules');
+		$errors[] = $lang->t('access', 'select_modules');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('access', $insert_values);
 
-		$content = comboBox($bool ? lang('access', 'create_success') : lang('access', 'create_error'), uri('acp/access'));
+		$content = comboBox($bool ? $lang->t('access', 'create_success') : $lang->t('access', 'create_error'), uri('acp/access'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

@@ -14,10 +14,10 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $ur
 	$pic = validate::isNumber($uri->pic) ? $uri->pic : 1;
 	$gallery = $db->select('name', 'gallery', 'id = \'' . $uri->id . '\'');
 
-	breadcrumb::assign(lang('common', 'acp'), uri('acp'));
-	breadcrumb::assign(lang('gallery', 'gallery'), uri('acp/gallery'));
+	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
+	breadcrumb::assign($lang->t('gallery', 'gallery'), uri('acp/gallery'));
 	breadcrumb::assign($gallery[0]['name'], uri('acp/gallery/edit_gallery/id_' . $uri->id));
-	breadcrumb::assign(lang('gallery', 'add_picture'));
+	breadcrumb::assign($lang->t('gallery', 'add_picture'));
 
 	if (isset($_POST['submit'])) {
 		$file['tmp_name'] = $_FILES['file']['tmp_name'];
@@ -27,11 +27,11 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $ur
 		$settings = config::output('gallery');
 
 		if (!validate::isNumber($form['pic']))
-			$errors[] = lang('gallery', 'type_in_picture_number');
+			$errors[] = $lang->t('gallery', 'type_in_picture_number');
 		if (empty($file['tmp_name']) || empty($file['size']))
-			$errors[] = lang('gallery', 'no_picture_selected');
+			$errors[] = $lang->t('gallery', 'no_picture_selected');
 		if (!empty($file['tmp_name']) && !empty($file['size']) && !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']))
-			$errors[] = lang('gallery', 'invalid_image_selected');
+			$errors[] = $lang->t('gallery', 'invalid_image_selected');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -44,7 +44,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $ur
 
 			cache::create('gallery_pics_id_' . $uri->id, $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'', 'pic ASC, id ASC'));
 
-			$content = comboBox($bool ? lang('gallery', 'add_picture_success') : lang('gallery', 'add_picture_error'), uri('acp/gallery/add_picture/id_' . $uri->id . '/pic_' . ($pic + 1)));
+			$content = comboBox($bool ? $lang->t('gallery', 'add_picture_success') : $lang->t('gallery', 'add_picture_error'), uri('acp/gallery/add_picture/id_' . $uri->id . '/pic_' . ($pic + 1)));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

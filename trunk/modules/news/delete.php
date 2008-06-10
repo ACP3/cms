@@ -16,10 +16,10 @@ elseif (preg_match('/^([\d|]+)$/', $uri->entries))
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
-	$content = comboBox(array(lang('common', 'no_entries_selected')));
+	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox(lang('news', 'confirm_delete'), uri('acp/news/delete/entries_' . $marked_entries), uri('acp/news'));
+	$content = comboBox($lang->t('news', 'confirm_delete'), uri('acp/news/delete/entries_' . $marked_entries), uri('acp/news'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
@@ -32,6 +32,6 @@ if (!isset($entries)) {
 			cache::delete('news_details_id_' . $entry);
 		}
 	}
-	$content = comboBox($bool && $bool2 ? lang('news', 'delete_success') : lang('news', 'delete_error'), uri('acp/news'));
+	$content = comboBox($bool && $bool2 ? $lang->t('news', 'delete_success') : $lang->t('news', 'delete_error'), uri('acp/news'));
 }
 ?>

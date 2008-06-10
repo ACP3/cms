@@ -46,7 +46,7 @@ if ($auth->isUser()) {
 			redirect(0, ROOT_DIR);
 		}
 	} else {
-		$error[] = lang('users', 'nickname_or_password_wrong');
+		$error[] = $lang->t('users', 'nickname_or_password_wrong');
 		$tpl->assign('error_msg', comboBox($error));
 	}
 }

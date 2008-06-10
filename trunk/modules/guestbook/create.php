@@ -10,8 +10,8 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-breadcrumb::assign(lang('guestbook', 'guestbook'), uri('guestbook'));
-breadcrumb::assign(lang('guestbook', 'create'));
+breadcrumb::assign($lang->t('guestbook', 'guestbook'), uri('guestbook'));
+breadcrumb::assign($lang->t('guestbook', 'create'));
 
 if (isset($_POST['submit'])) {
 	$ip = $_SERVER['REMOTE_ADDR'];
@@ -25,15 +25,15 @@ if (isset($_POST['submit'])) {
 	$time = dateAligned(2, time());
 
 	if (isset($flood_time) && $flood_time > $time)
-		$errors[] = sprintf(lang('common', 'flood_no_entry_possible'), $flood_time - $time);
+		$errors[] = sprintf($lang->t('common', 'flood_no_entry_possible'), $flood_time - $time);
 	if (empty($form['name']))
-		$errors[] = lang('common', 'name_to_short');
+		$errors[] = $lang->t('common', 'name_to_short');
 	if (!empty($form['mail']) && !validate::email($form['mail']))
-		$errors[] = lang('common', 'wrong_email_format');
+		$errors[] = $lang->t('common', 'wrong_email_format');
 	if (strlen($form['message']) < 3)
-		$errors[] = lang('common', 'message_to_short');
+		$errors[] = $lang->t('common', 'message_to_short');
 	if (!validate::captcha($form['captcha'], $form['hash']))
-		$errors[] = lang('captcha', 'invalid_captcha_entered');
+		$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('guestbook', $insert_values);
 
-		$content = comboBox($bool ? lang('guestbook', 'create_success') : lang('guestbook', 'create_error'), uri('guestbook'));
+		$content = comboBox($bool ? $lang->t('guestbook', 'create_success') : $lang->t('guestbook', 'create_error'), uri('guestbook'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

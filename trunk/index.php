@@ -6,13 +6,11 @@
  * @package ACP3
  * @subpackage Core
  */
-
+$time_start = microtime(true);
 ob_start();
 
 define('ACP3_ROOT', './');
 require ACP3_ROOT . 'includes/common.php';
-
-$auth = new auth;
 
 if (modules::check()) {
 	include ACP3_ROOT . 'modules/' . $uri->mod . '/' . $uri->page . '.php';
@@ -34,4 +32,5 @@ $tpl->assign('BREADCRUMB', breadcrumb::output());
 $tpl->display(defined('CUSTOM_LAYOUT') ? CUSTOM_LAYOUT : 'layout.html');
 
 ob_end_flush();
+echo microtime(true) - $time_start;
 ?>

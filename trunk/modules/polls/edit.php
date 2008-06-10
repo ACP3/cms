@@ -15,9 +15,9 @@ if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \''
 		$form = $_POST['form'];
 
 		if (!validate::date($form['start'], $form['end']))
-			$errors[] = lang('common', 'select_date');
+			$errors[] = $lang->t('common', 'select_date');
 		if (empty($form['question']))
-			$errors[] = lang('polls', 'type_in_question');
+			$errors[] = $lang->t('polls', 'type_in_question');
 		$j = 0;
 		foreach ($form['answers'] as $row) {
 			if (!empty($row['value']))
@@ -26,9 +26,9 @@ if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \''
 				$j++;
 		}
 		if (!isset($check_answers))
-			$errors[] = lang('polls', 'type_in_answer');
+			$errors[] = $lang->t('polls', 'type_in_answer');
 		if ($j == count($form['answers']))
-			$errors[] = lang('polls', 'can_not_delete_all_answers');
+			$errors[] = $lang->t('polls', 'can_not_delete_all_answers');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -52,7 +52,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \''
 					$bool = $db->update('poll_answers', array('text' =>$db->escape($row['value'])), 'id = \'' . $db->escape($row['id']) . '\'');
 				}
 			}
-			$content = comboBox($bool ? lang('polls', 'edit_success') : lang('polls', 'edit_error'), uri('acp/polls'));
+			$content = comboBox($bool ? $lang->t('polls', 'edit_success') : $lang->t('polls', 'edit_error'), uri('acp/polls'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

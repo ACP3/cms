@@ -16,10 +16,10 @@ elseif (preg_match('/^([\d|]+)$/', $uri->entries))
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
-	$content = comboBox(array(lang('common', 'no_entries_selected')));
+	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox(lang('categories', 'confirm_delete'), uri('acp/categories/delete/entries_' . $marked_entries), uri('acp/categories'));
+	$content = comboBox($lang->t('categories', 'confirm_delete'), uri('acp/categories/delete/entries_' . $marked_entries), uri('acp/categories'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
@@ -45,9 +45,9 @@ if (!isset($entries)) {
 	}
 
 	if ($in_use) {
-		$text = lang('categories', 'category_is_in_use');
+		$text = $lang->t('categories', 'category_is_in_use');
 	} else {
-		$text = $bool ? lang('categories', 'delete_success') : lang('categories', 'delete_error');
+		$text = $bool ? $lang->t('categories', 'delete_success') : $lang->t('categories', 'delete_error');
 	}
 	$content = comboBox($text, uri('acp/categories'));
 }

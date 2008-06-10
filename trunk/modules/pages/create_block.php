@@ -10,20 +10,20 @@
 if (!defined('IN_ADM'))
 	exit;
 
-breadcrumb::assign(lang('common', 'acp'), uri('acp'));
-breadcrumb::assign(lang('pages', 'pages'), uri('acp/pages'));
-breadcrumb::assign(lang('pages', 'adm_list_blocks'), uri('acp/pages/adm_list_blocks'));
-breadcrumb::assign(lang('pages', 'create_block'));
+breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
+breadcrumb::assign($lang->t('pages', 'pages'), uri('acp/pages'));
+breadcrumb::assign($lang->t('pages', 'adm_list_blocks'), uri('acp/pages/adm_list_blocks'));
+breadcrumb::assign($lang->t('pages', 'create_block'));
 
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
 	if (!preg_match('/^[a-zA-Z]+\w/', $form['index_name']))
-		$errors[] = lang('pages', 'type_in_index_name');
+		$errors[] = $lang->t('pages', 'type_in_index_name');
 	if (preg_match('/^[a-zA-Z]+\w/', $form['index_name']) && $db->select('id', 'pages_blocks', 'index_name = \'' . $db->escape($form['index_name']) . '\'', 0, 0, 0, 1) > 0)
-		$errors[] = lang('pages', 'index_name_unique');
+		$errors[] = $lang->t('pages', 'index_name_unique');
 	if (strlen($form['title']) < 3)
-		$errors[] = lang('pages', 'block_title_to_short');
+		$errors[] = $lang->t('pages', 'block_title_to_short');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('pages_blocks', $insert_values);
 
-		$content = comboBox($bool ? lang('pages', 'create_block_success') : lang('pages', 'create_block_error'), uri('acp/pages/adm_list_blocks'));
+		$content = comboBox($bool ? $lang->t('pages', 'create_block_success') : $lang->t('pages', 'create_block_error'), uri('acp/pages/adm_list_blocks'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

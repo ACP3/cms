@@ -10,10 +10,10 @@
 if (!defined('IN_ADM'))
 	exit;
 
-breadcrumb::assign(lang('common', 'acp'), uri('acp'));
-breadcrumb::assign(lang('system', 'system'), uri('acp/system'));
-breadcrumb::assign(lang('system', 'extensions'), uri('acp/system/extensions'));
-breadcrumb::assign(lang('system', 'designs'));
+breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
+breadcrumb::assign($lang->t('system', 'system'), uri('acp/system'));
+breadcrumb::assign($lang->t('system', 'extensions'), uri('acp/system/extensions'));
+breadcrumb::assign($lang->t('system', 'designs'));
 
 if ($uri->dir) {
 	$dir = is_file(ACP3_ROOT . 'designs/' . $uri->dir . '/info.xml') ? $uri->dir : 0;
@@ -46,7 +46,7 @@ if ($uri->dir) {
 		);
 		$bool = config::system($config);
 	}
-	$text = $bool ? lang('system', 'designs_edit_success') : lang('system', 'designs_edit_error');
+	$text = $bool ? $lang->t('system', 'designs_edit_success') : $lang->t('system', 'designs_edit_error');
 
 	// Cache leeren und diverse Parameter für die Template Engine abändern
 	cache::purge();

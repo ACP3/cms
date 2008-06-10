@@ -13,23 +13,23 @@ if (!defined('IN_ACP3'))
 if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 	redirect('errors/403');
 } else {
-	breadcrumb::assign(lang('users', 'users'), uri('users'));
-	breadcrumb::assign(lang('users', 'home'), uri('users/home'));
-	breadcrumb::assign(lang('users', 'edit_profile'));
+	breadcrumb::assign($lang->t('users', 'users'), uri('users'));
+	breadcrumb::assign($lang->t('users', 'home'), uri('users/home'));
+	breadcrumb::assign($lang->t('users', 'edit_profile'));
 
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
 		if (empty($form['nickname']))
-			$errors[] = lang('common', 'name_to_short');
+			$errors[] = $lang->t('common', 'name_to_short');
 		if (!empty($form['nickname']) && $db->select('id', 'users', 'id != \'' . USER_ID . '\' AND nickname = \'' . $db->escape($form['nickname']) . '\'', 0, 0, 0, 1) == '1')
-			$errors[] = lang('users', 'user_name_already_exists');
+			$errors[] = $lang->t('users', 'user_name_already_exists');
 		if (!validate::email($form['mail']))
-			$errors[] = lang('common', 'wrong_email_format');
+			$errors[] = $lang->t('common', 'wrong_email_format');
 		if (validate::email($form['mail']) && $db->select('id', 'users', 'id != \'' . USER_ID . '\' AND mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
-			$errors[] = lang('users', 'user_email_already_exists');
+			$errors[] = $lang->t('users', 'user_email_already_exists');
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
-			$errors[] = lang('users', 'type_in_pwd');
+			$errors[] = $lang->t('users', 'type_in_pwd');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -58,7 +58,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 			$cookie_value = base64_encode($form['nickname'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]));
 			setcookie('ACP3_AUTH', $cookie_value, time() + 3600, '/');
 
-			$content = comboBox($bool ? lang('users', 'edit_profile_success') : lang('users', 'edit_profile_error'), uri('users/home'));
+			$content = comboBox($bool ? $lang->t('users', 'edit_profile_success') : $lang->t('users', 'edit_profile_error'), uri('users/home'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

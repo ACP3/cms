@@ -7,7 +7,7 @@
  * @subpackage Core
  */
 /**
- * Erstellt den Cache für bestimmte SQL Abfragen, um die Leistung des ACP3 zu steigern
+ * lasse zur Ersetllung des Caches, um die Leistung von bestimmten Aktionen des ACP3 zu steigern
  *
  * @author Goratsch Webdesign
  * @package ACP3
@@ -16,31 +16,31 @@
 class cache
 {
 	/**
-	 * Überprüft, ob der SQL Cache für eine bestimmte Abfrage schon erstellt wurde
+	 * Überprüft, ob der Cache für eine bestimmte Abfrage schon erstellt wurde
 	 *
 	 * @param string $filename
 	 * @return boolean
 	 */
 	public static function check($filename)
 	{
-		if (is_file(ACP3_ROOT . 'cache/sql_' . md5($filename) . '.php')) {
+		if (is_file(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php')) {
 			return true;
 		}
 		return false;
 	}
 	/**
-	 * Erstellt den SQL Cache
+	 * Erstellt den Cache
 	 *
 	 * @param string $filename
-	 * 	Gewünschter Dateiname des SQL Caches
-	 * @param array $sql_results
-	 * 	Datensätze der SQL Abfrage
+	 * 	Gewünschter Dateiname des Caches
+	 * @param array $data
+	 * 	Daten, welche gecachet werden sollen
 	 * @return boolean
 	 */
-	public static function create($filename, $sql_results)
+	public static function create($filename, $data)
 	{
-		if (!empty($sql_results)) {
-			$bool = @file_put_contents(ACP3_ROOT . 'cache/sql_' . md5($filename) . '.php', serialize($sql_results));
+		if (!empty($data)) {
+			$bool = @file_put_contents(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php', serialize($data));
 
 			return $bool ? true : false;
 		} elseif (self::check($filename)) {
@@ -49,7 +49,7 @@ class cache
 		return false;
 	}
 	/**
-	 * Löscht den SQL Cache für einen bestimmten SQL Cache
+	 * Löscht eine bestimmte gecachete Datei
 	 *
 	 * @param string $filename
 	 * 	Zu löschende Datei
@@ -58,12 +58,12 @@ class cache
 	public static function delete($filename)
 	{
 		if (self::check($filename)) {
-			return unlink(ACP3_ROOT . 'cache/sql_' . md5($filename) . '.php');
+			return unlink(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php');
 		}
 		return false;
 	}
 	/**
-	 * Ausgabe des SQL Caches
+	 * Ausgabe der gecacheten Aktion
 	 *
 	 * @param string $filename
 	 * 	Auszugebende Datei
@@ -72,12 +72,12 @@ class cache
 	public static function output($filename)
 	{
 		if (self::check($filename)) {
-			return unserialize(@file_get_contents(ACP3_ROOT . 'cache/sql_' . md5($filename) . '.php'));
+			return unserialize(@file_get_contents(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php'));
 		}
 		return array();
 	}
 	/**
-	 * Löscht alle gecacheten SQL Queries
+	 * Löscht en gesamten Cache
 	 */
 	public static function purge()
 	{

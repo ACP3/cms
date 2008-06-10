@@ -11,7 +11,7 @@ if (modules::check($uri->feed, 'extensions/feeds')) {
 	$feed['generator'] = CONFIG_VERSION;
 	$feed['atom_link'] = $link . uri($uri->mod . '/' . $uri->page . '/feed_' . $module);
 	$feed['link'] = $link . ROOT_DIR;
-	$feed['description'] = lang($module, $module);
+	$feed['description'] = $lang->t($module, $module);
 
 	$tpl->assign('feed', $feed);
 

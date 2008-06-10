@@ -11,7 +11,7 @@ if (!defined('IN_ACP3'))
 	exit;
 
 if (validate::isNumber($uri->cat) && $db->select('id', 'categories', 'id = \'' . $uri->cat . '\'', 0, 0, 0, 1) == '1') {
-	breadcrumb::assign(lang('files', 'files'), uri('files'));
+	breadcrumb::assign($lang->t('files', 'files'), uri('files'));
 	$category = $db->select('name', 'categories', 'id = \'' . $uri->cat . '\'');
 	breadcrumb::assign($category[0]['name']);
 	$date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
@@ -21,7 +21,7 @@ if (validate::isNumber($uri->cat) && $db->select('id', 'categories', 'id = \'' .
 
 	if ($c_files > 0) {
 		for ($i = 0; $i < $c_files; ++$i) {
-			$files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : lang('files', 'unknown_filesize');
+			$files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : $lang->t('files', 'unknown_filesize');
 			$files[$i]['date'] = dateAligned(1, $files[$i]['start']);
 		}
 		$tpl->assign('files', $files);

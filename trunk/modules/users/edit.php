@@ -15,17 +15,17 @@ if (validate::isNumber($uri->id) && $db->select('id', 'users', 'id = \'' . $uri-
 		$form = $_POST['form'];
 
 		if (empty($form['nickname']))
-			$errors[] = lang('common', 'name_to_short');
+			$errors[] = $lang->t('common', 'name_to_short');
 		if (!empty($form['nickname']) && $db->select('id', 'users', 'id != \'' . $uri->id . '\' AND nickname = \'' . $db->escape($form['nickname']) . '\'', 0, 0, 0, 1) == '1')
-			$errors[] = lang('users', 'user_name_already_exists');
+			$errors[] = $lang->t('users', 'user_name_already_exists');
 		if (!validate::email($form['mail']))
-			$errors[] = lang('common', 'wrong_email_format');
+			$errors[] = $lang->t('common', 'wrong_email_format');
 		if (validate::email($form['mail']) && $db->select('id', 'users', 'id != \'' . $uri->id . '\' AND mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
-			$errors[] = lang('users', 'user_email_already_exists');
+			$errors[] = $lang->t('users', 'user_email_already_exists');
 		if (!validate::isNumber($form['access']))
-			$errors[] = lang('users', 'select_access_level');
+			$errors[] = $lang->t('users', 'select_access_level');
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
-			$errors[] = lang('users', 'type_in_pwd');
+			$errors[] = $lang->t('users', 'type_in_pwd');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -56,7 +56,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'users', 'id = \'' . $uri-
 				setcookie('ACP3_AUTH', $cookie_value, time() + 3600, '/');
 			}
 
-			$content = comboBox($bool ? lang('users', 'edit_success') : lang('users', 'edit_error'), uri('acp/users'));
+			$content = comboBox($bool ? $lang->t('users', 'edit_success') : $lang->t('users', 'edit_error'), uri('acp/users'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

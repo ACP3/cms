@@ -14,35 +14,35 @@ if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
 	if (!validate::isNumber($form['entries']))
-		$errors[] = lang('system', 'select_entries_per_page');
+		$errors[] = $lang->t('system', 'select_entries_per_page');
 	if (!validate::isNumber($form['flood']))
-		$errors[] = lang('system', 'type_in_flood_barrier');
+		$errors[] = $lang->t('system', 'type_in_flood_barrier');
 	if (!preg_match('/^(\w+\/)+$/', $form['homepage']))
-		$errors[] = lang('system', 'incorrect_homepage');
+		$errors[] = $lang->t('system', 'incorrect_homepage');
 	if ($form['wysiwyg'] != 'textarea' && (preg_match('=/=', $form['wysiwyg']) || !is_file(ACP3_ROOT . 'includes/wysiwyg/' . $form['wysiwyg'] . '/info.xml')))
-		$errors[] = lang('system', 'select_editor');
+		$errors[] = $lang->t('system', 'select_editor');
 	if (empty($form['date']))
-		$errors[] = lang('system', 'type_in_date_format');
+		$errors[] = $lang->t('system', 'type_in_date_format');
 	if (!is_numeric($form['time_zone']))
-		$errors[] = lang('common', 'select_time_zone');
+		$errors[] = $lang->t('common', 'select_time_zone');
 	if (!validate::isNumber($form['dst']))
-		$errors[] = lang('common', 'select_daylight_saving_time');
+		$errors[] = $lang->t('common', 'select_daylight_saving_time');
 	if (!validate::isNumber($form['maintenance']))
-		$errors[] = lang('system', 'select_online_maintenance');
+		$errors[] = $lang->t('system', 'select_online_maintenance');
 	if (strlen($form['maintenance_msg']) < 3)
-		$errors[] = lang('system', 'maintenance_message_to_short');
+		$errors[] = $lang->t('system', 'maintenance_message_to_short');
 	if (empty($form['title']))
-		$errors[] = lang('system', 'title_to_short');
+		$errors[] = $lang->t('system', 'title_to_short');
 	if (!validate::isNumber($form['sef']))
-		$errors[] = lang('system', 'enable_disable_mod_rewrite');
+		$errors[] = $lang->t('system', 'enable_disable_mod_rewrite');
 	if (empty($form['db_host']))
-		$errors[] = lang('system', 'type_in_db_host');
+		$errors[] = $lang->t('system', 'type_in_db_host');
 	if (empty($form['db_user']))
-		$errors[] = lang('system', 'type_in_db_username');
+		$errors[] = $lang->t('system', 'type_in_db_username');
 	if (empty($form['db_name']))
-		$errors[] = lang('system', 'type_in_db_name');
+		$errors[] = $lang->t('system', 'type_in_db_name');
 	if ($form['db_type'] != 'mysql' && $form['db_type'] != 'mysqli')
-		$errors[] = lang('system', 'select_db_type');
+		$errors[] = $lang->t('system', 'select_db_type');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = config::system($config);
 
-		$content = comboBox($bool ? lang('system', 'config_edit_success') : lang('system', 'config_edit_error'), uri('acp/system/configuration'));
+		$content = comboBox($bool ? $lang->t('system', 'config_edit_success') : $lang->t('system', 'config_edit_error'), uri('acp/system/configuration'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
@@ -104,7 +104,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Normale <textarea>
 	$wysiwyg[$i]['value'] = 'textarea';
 	$wysiwyg[$i]['selected'] = selectEntry('wysiwyg', 'textarea', CONFIG_WYSIWYG);
-	$wysiwyg[$i]['lang'] = lang('system', 'textarea');
+	$wysiwyg[$i]['lang'] = $lang->t('system', 'textarea');
 	$tpl->assign('wysiwyg', $wysiwyg);
 
 	// Zeitzonen
@@ -113,28 +113,28 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Sommerzeit an/aus
 	$dst[0]['value'] = '1';
 	$dst[0]['checked'] = selectEntry('dst', '1', CONFIG_DST, 'checked');
-	$dst[0]['lang'] = lang('common', 'yes');
+	$dst[0]['lang'] = $lang->t('common', 'yes');
 	$dst[1]['value'] = '0';
 	$dst[1]['checked'] = selectEntry('dst', '0', CONFIG_DST, 'checked');
-	$dst[1]['lang'] = lang('common', 'no');
+	$dst[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('dst', $dst);
 
 	// Wartungsmodus an/aus
 	$maintenance[0]['value'] = '1';
 	$maintenance[0]['checked'] = selectEntry('maintenance', '1', CONFIG_MAINTENANCE, 'checked');
-	$maintenance[0]['lang'] = lang('common', 'yes');
+	$maintenance[0]['lang'] = $lang->t('common', 'yes');
 	$maintenance[1]['value'] = '0';
 	$maintenance[1]['checked'] = selectEntry('maintenance', '0', CONFIG_MAINTENANCE, 'checked');
-	$maintenance[1]['lang'] = lang('common', 'no');
+	$maintenance[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('maintenance', $maintenance);
 
 	// Sef-URIs
 	$sef[0]['value'] = '1';
 	$sef[0]['checked'] = selectEntry('sef', '1', CONFIG_SEF, 'checked');
-	$sef[0]['lang'] = lang('common', 'yes');
+	$sef[0]['lang'] = $lang->t('common', 'yes');
 	$sef[1]['value'] = '0';
 	$sef[1]['checked'] = selectEntry('sef', '0', CONFIG_SEF, 'checked');
-	$sef[1]['lang'] = lang('common', 'no');
+	$sef[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('sef', $sef);
 
 	// Datenbank-Typen
