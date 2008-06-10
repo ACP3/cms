@@ -6,7 +6,6 @@
  * @package ACP3
  * @subpackage Core
  */
-$time_start = microtime(true);
 ob_start();
 
 define('ACP3_ROOT', './');
@@ -32,5 +31,4 @@ $tpl->assign('BREADCRUMB', breadcrumb::output());
 $tpl->display(defined('CUSTOM_LAYOUT') ? CUSTOM_LAYOUT : 'layout.html');
 
 ob_end_flush();
-echo microtime(true) - $time_start;
 ?>
