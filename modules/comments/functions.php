@@ -37,7 +37,7 @@ function commentsCount($entry_id, $module = 0)
  */
 function comments($module, $entry_id)
 {
-	global $auth, $db, $uri, $tpl;
+	global $auth, $db, $lang, $uri, $tpl;
 
 	// Formular für das Eintragen von Kommentaren
 	if (isset($_POST['submit'])) {
@@ -52,15 +52,15 @@ function comments($module, $entry_id)
 		$time = dateAligned(2, time());
 
 		if (isset($flood_time) && $flood_time > $time)
-			$errors[] = sprintf(lang('common', 'flood_no_entry_possible'), $flood_time - $time);
+			$errors[] = sprintf($lang->t('common', 'flood_no_entry_possible'), $flood_time - $time);
 		if (empty($form['name']))
-			$errors[] = lang('common', 'name_to_short');
+			$errors[] = $lang->t('common', 'name_to_short');
 		if (strlen($form['message']) < 3)
-			$errors[] = lang('common', 'message_to_short');
+			$errors[] = $lang->t('common', 'message_to_short');
 		if (!modules::check($db->escape($form['module'], 2), 'list') || !validate::isNumber($form['entry_id']))
-			$errors[] = lang('comments', 'module_doesnt_exist');
+			$errors[] = $lang->t('comments', 'module_doesnt_exist');
 		if (!validate::captcha($form['captcha'], $form['hash']))
-			$errors[] = lang('captcha', 'invalid_captcha_entered');
+			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -78,7 +78,7 @@ function comments($module, $entry_id)
 
 			$bool = $db->insert('comments', $insert_values);
 
-			return comboBox($bool ? lang('comments', 'create_success') : lang('comments', 'create_error'), uri($uri->query));
+			return comboBox($bool ? $lang->t('comments', 'create_success') : $lang->t('comments', 'create_error'), uri($uri->query));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

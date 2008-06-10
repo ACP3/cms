@@ -33,13 +33,13 @@ if ($auth->isUser()) {
 
 	if ($access_system) {
 		$nav_system[0]['page'] = 'configuration';
-		$nav_system[0]['name'] = lang('system', 'configuration');
+		$nav_system[0]['name'] = $lang->t('system', 'configuration');
 		$nav_system[1]['page'] = 'server_config';
-		$nav_system[1]['name'] = lang('system', 'server_config');
+		$nav_system[1]['name'] = $lang->t('system', 'server_config');
 		$nav_system[2]['page'] = 'extensions';
-		$nav_system[2]['name'] = lang('system', 'extensions');
+		$nav_system[2]['name'] = $lang->t('system', 'extensions');
 		$nav_system[3]['page'] = 'maintenance';
-		$nav_system[3]['name'] = lang('system', 'maintenance');
+		$nav_system[3]['name'] = $lang->t('system', 'maintenance');
 		$tpl->assign('nav_system', $nav_system);
 	}
 

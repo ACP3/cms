@@ -14,27 +14,27 @@ if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
 	if (empty($form['name']))
-		$errors[] = lang('common', 'name_to_short');
+		$errors[] = $lang->t('common', 'name_to_short');
 	if (!validate::email($form['mail']))
-		$errors[] = lang('common', 'wrong_email_format');
+		$errors[] = $lang->t('common', 'wrong_email_format');
 	if (strlen($form['message']) < 3)
-		$errors[] = lang('common', 'message_to_short');
+		$errors[] = $lang->t('common', 'message_to_short');
 	if (!validate::captcha($form['captcha'], $form['hash']))
-		$errors[] = lang('captcha', 'invalid_captcha_entered');
+		$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$contact = config::output('contact');
 
-		$subject = sprintf(lang('contact', 'contact_subject'), CONFIG_TITLE);
-		$body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($form['name'], $form['mail'], $form['message'], "\n"), lang('contact', 'contact_body'));
+		$subject = sprintf($lang->t('contact', 'contact_subject'), CONFIG_TITLE);
+		$body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($form['name'], $form['mail'], $form['message'], "\n"), $lang->t('contact', 'contact_body'));
 		$header = "Content-type: text/plain; charset=UTF-8\r\n";
 		$header.= 'FROM:' . $form['mail'];
 
 		$bool = @mail($contact['mail'], $subject, $body, $header);
 
-		$content = comboBox($bool ? lang('contact', 'send_mail_success') : lang('contact', 'send_mail_error'), uri('contact'));
+		$content = comboBox($bool ? $lang->t('contact', 'send_mail_success') : $lang->t('contact', 'send_mail_error'), uri('contact'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

@@ -14,8 +14,8 @@ $date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR st
 
 if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \'' . $uri->id . '\'' . $date, 0, 0, 0, 1) == 1) {
 	// Brotkrümelspur
-	breadcrumb::assign(lang('polls', 'polls'), uri('polls'));
-	breadcrumb::assign(lang('polls', 'vote'));
+	breadcrumb::assign($lang->t('polls', 'polls'), uri('polls'));
+	breadcrumb::assign($lang->t('polls', 'vote'));
 
 	if (isset($_POST['submit']) && isset($_POST['answer']) && validate::isNumber($_POST['answer'])) {
 		$answer = $_POST['answer'];
@@ -31,9 +31,9 @@ if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \''
 			);
 			$bool = $db->insert('poll_votes', $insert_values);
 
-			$text = $bool ? lang('polls', 'poll_success') : lang('polls', 'poll_error');
+			$text = $bool ? $lang->t('polls', 'poll_success') : $lang->t('polls', 'poll_error');
 		} else {
-			$text = lang('polls', 'already_voted');
+			$text = $lang->t('polls', 'already_voted');
 		}
 		$content = comboBox($text, uri('polls/result/id_' . $uri->id));
 	} else {

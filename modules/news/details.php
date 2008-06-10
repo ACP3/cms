@@ -21,7 +21,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->
 
 	// Brotkrümelspur
 	$category = $db->select('name', 'categories', 'id = \'' . $news[0]['category_id'] . '\'');
-	breadcrumb::assign(lang('news', 'news'), uri('news'));
+	breadcrumb::assign($lang->t('news', 'news'), uri('news'));
 	if (count($category) > 0) {
 		breadcrumb::assign($category[0]['name'], uri('news/list/cat_' . $news[0]['category_id']));
 	}

@@ -16,11 +16,11 @@ if (isset($_POST['submit'])) {
 			$form = $_POST['form'];
 
 			if (!validate::email($form['mail']))
-				$errors[] = lang('common', 'wrong_email_format');
+				$errors[] = $lang->t('common', 'wrong_email_format');
 			if (validate::email($form['mail']) && $db->select('id', 'newsletter_accounts', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) == 1)
-				$errors[] = lang('newsletter', 'account_exists');
+				$errors[] = $lang->t('newsletter', 'account_exists');
 			if (!validate::captcha($form['captcha'], $form['hash']))
-				$errors[] = lang('captcha', 'invalid_captcha_entered');
+				$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
 			if (isset($errors)) {
 				$tpl->assign('error_msg', comboBox($errors));
@@ -29,11 +29,11 @@ if (isset($_POST['submit'])) {
 				$host = htmlentities($_SERVER['HTTP_HOST']);
 				$newsletter = config::output('newsletter');
 
-				$text = str_replace(array('{mail}', '{title}', '{host}'), array($form['mail'], CONFIG_TITLE, $host), lang('newsletter', 'subscribe_mail_body')) . "\n\n";
+				$text = str_replace(array('{mail}', '{title}', '{host}'), array($form['mail'], CONFIG_TITLE, $host), $lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
 				$text .= 'http://' . $host . uri('newsletter/activate/hash_' . $hash . '/mail_' . $form['mail']);
 				$header = "Content-type: text/plain; charset=UTF-8\r\n";
 				$header.= 'FROM:' . $newsletter['mail'];
-				$mail_sent = @mail($form['mail'], sprintf(lang('newsletter', 'subscribe_mail_subject'), $host), $text, $header);
+				$mail_sent = @mail($form['mail'], sprintf($lang->t('newsletter', 'subscribe_mail_subject'), $host), $text, $header);
 
 				// Newsletter-Konto nur erstellen, wenn die E-Mail erfolgreich versendet werden konnte
 				if ($mail_sent) {
@@ -41,25 +41,25 @@ if (isset($_POST['submit'])) {
 					$bool = $db->insert('newsletter_accounts', $insert_values);
 				}
 
-				$content = comboBox($mail_sent && isset($bool) && $bool ? lang('newsletter', 'subscribe_success') : lang('newsletter', 'subscribe_error'), ROOT_DIR);
+				$content = comboBox($mail_sent && isset($bool) && $bool ? $lang->t('newsletter', 'subscribe_success') : $lang->t('newsletter', 'subscribe_error'), ROOT_DIR);
 			}
 			break;
 		case 'unsubscribe' :
 			$form = $_POST['form'];
 
 			if (!validate::email($form['mail']))
-				$errors[] = lang('common', 'wrong_email_format');
+				$errors[] = $lang->t('common', 'wrong_email_format');
 			if (validate::email($form['mail']) && $db->select('id', 'newsletter_accounts', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) != 1)
-				$errors[] = lang('newsletter', 'account_not_exists');
+				$errors[] = $lang->t('newsletter', 'account_not_exists');
 			if (!validate::captcha($form['captcha'], $form['hash']))
-				$errors[] = lang('captcha', 'invalid_captcha_entered');
+				$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
 			if (isset($errors)) {
 				$tpl->assign('error_msg', comboBox($errors));
 			} else {
 				$bool = $db->delete('newsletter_accounts', 'mail = \'' . $form['mail'] . '\'');
 
-				$content = comboBox($bool ? lang('newsletter', 'unsubscribe_success') : lang('newsletter', 'unsubscribe_error'), ROOT_DIR);
+				$content = comboBox($bool ? $lang->t('newsletter', 'unsubscribe_success') : $lang->t('newsletter', 'unsubscribe_error'), ROOT_DIR);
 			}
 			break;
 	}
@@ -71,10 +71,10 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 	$actions[0]['value'] = 'subscribe';
 	$actions[0]['checked'] = selectEntry('action', 'subscribe', $field_value, 'checked');
-	$actions[0]['lang'] = lang('newsletter', 'subscribe');
+	$actions[0]['lang'] = $lang->t('newsletter', 'subscribe');
 	$actions[1]['value'] = 'unsubscribe';
 	$actions[1]['checked'] = selectEntry('action', 'unsubscribe', $field_value, 'checked');
-	$actions[1]['lang'] = lang('newsletter', 'unsubscribe');
+	$actions[1]['lang'] = $lang->t('newsletter', 'unsubscribe');
 	$tpl->assign('actions', $actions);
 
 	$tpl->assign('captcha', captcha());

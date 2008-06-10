@@ -4,7 +4,7 @@ function smarty_function_load_module($params)
 	$module = explode('|', $params['module']);
 
 	if (modules::check($module[0], $module[1])) {
-		global $auth, $db, $tpl, $uri;
+		global $auth, $db, $lang, $tpl, $uri;
 
 		include ACP3_ROOT . 'modules/' . $module[0] . '/' . $module[1] . '.php';
 	}

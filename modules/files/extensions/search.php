@@ -26,7 +26,7 @@ $result_files = $db->select('id, link_title, text', 'files', 'MATCH (' . $fields
 $c_result_files = count($result_files);
 
 if ($c_result_files > 0) {
-	$results_mods['files']['title'] = lang('files', 'files');
+	$results_mods['files']['title'] = $lang->t('files', 'files');
 	for ($i = 0; $i < $c_result_files; ++$i) {
 		$results_mods['files']['results'][$i]['hyperlink'] = uri('files/details/id_' . $result_files[$i]['id']);
 		$results_mods['files']['results'][$i]['headline'] = $result_files[$i]['link_title'];

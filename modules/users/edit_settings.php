@@ -13,19 +13,19 @@ if (!defined('IN_ACP3'))
 if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 	redirect('errors/403');
 } else {
-	breadcrumb::assign(lang('users', 'users'), uri('users'));
-	breadcrumb::assign(lang('users', 'home'), uri('users/home'));
-	breadcrumb::assign(lang('users', 'edit_settings'));
+	breadcrumb::assign($lang->t('users', 'users'), uri('users'));
+	breadcrumb::assign($lang->t('users', 'home'), uri('users/home'));
+	breadcrumb::assign($lang->t('users', 'edit_settings'));
 
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
 		if (!is_numeric($form['time_zone']))
-			$errors[] = lang('common', 'select_time_zone');
+			$errors[] = $lang->t('common', 'select_time_zone');
 		if (!validate::isNumber($form['dst']))
-			$errors[] = lang('common', 'select_daylight_saving_time');
+			$errors[] = $lang->t('common', 'select_daylight_saving_time');
 		if (!is_file('languages/' . $db->escape($form['language'], 2) . '/info.php'))
-			$errors[] = lang('users', 'select_language');
+			$errors[] = $lang->t('users', 'select_language');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -38,7 +38,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 
 			$bool = $db->update('users', $update_values, 'id = \'' . USER_ID . '\'');
 
-			$content = comboBox($bool ? lang('users', 'edit_settings_success') : lang('users', 'edit_settings_error'), uri('users/home'));
+			$content = comboBox($bool ? $lang->t('users', 'edit_settings_success') : $lang->t('users', 'edit_settings_error'), uri('users/home'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
@@ -50,10 +50,10 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 		// Sommerzeit an/aus
 		$dst[0]['value'] = '1';
 		$dst[0]['checked'] = selectEntry('dst', '1', $user[0]['dst'], 'checked');
-		$dst[0]['lang'] = lang('common', 'yes');
+		$dst[0]['lang'] = $lang->t('common', 'yes');
 		$dst[1]['value'] = '0';
 		$dst[1]['checked'] = selectEntry('dst', '0', $user[0]['dst'], 'checked');
-		$dst[1]['lang'] = lang('common', 'no');
+		$dst[1]['lang'] = $lang->t('common', 'no');
 		$tpl->assign('dst', $dst);
 
 		// Sprache

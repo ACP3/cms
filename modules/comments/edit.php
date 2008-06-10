@@ -14,18 +14,18 @@ if (validate::isNumber($uri->id) && $db->select('id', 'comments', 'id = \'' . $u
 	$comment = $db->select('name, message, module', 'comments', 'id = \'' . $uri->id . '\'');
 
 	$comment[0]['module'] = $db->escape($comment[0]['module'], 3);
-	breadcrumb::assign(lang('common', 'acp'), uri('acp'));
-	breadcrumb::assign(lang('comments', 'comments'), uri('acp/comments'));
-	breadcrumb::assign(lang($comment[0]['module'], $comment[0]['module']), uri('acp/comments/adm_list/module_' . $comment[0]['module']));
-	breadcrumb::assign(lang('comments', 'edit'));
+	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
+	breadcrumb::assign($lang->t('comments', 'comments'), uri('acp/comments'));
+	breadcrumb::assign($lang->t($comment[0]['module'], $comment[0]['module']), uri('acp/comments/adm_list/module_' . $comment[0]['module']));
+	breadcrumb::assign($lang->t('comments', 'edit'));
 
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
 		if (empty($form['name']))
-			$errors[] = lang('common', 'name_to_short');
+			$errors[] = $lang->t('common', 'name_to_short');
 		if (strlen($form['message']) < 3)
-			$errors[] = lang('common', 'message_to_short');
+			$errors[] = $lang->t('common', 'message_to_short');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -37,7 +37,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'comments', 'id = \'' . $u
 
 			$bool = $db->update('comments', $update_values, 'id = \'' . $uri->id . '\'');
 
-			$content = comboBox($bool ? lang('comments', 'edit_success') : lang('comments', 'edit_error'), uri('acp/comments'));
+			$content = comboBox($bool ? $lang->t('comments', 'edit_success') : $lang->t('comments', 'edit_error'), uri('acp/comments'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

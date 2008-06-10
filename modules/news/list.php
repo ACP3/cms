@@ -60,7 +60,7 @@ if ($c_news > 0) {
 		if (strlen($striped_news) - $chars >= 50 || $news[$i]['uri'] != '') {
 			$striped_news = substr($striped_news, 0, $chars - 50);
 
-			$news[$i]['text'] = $striped_news . '...<a href="' . uri('news/details/id_' . $news[$i]['id']) . '">[' . lang('news', 'read_on') . ']</a>' . "\n";
+			$news[$i]['text'] = $striped_news . '...<a href="' . uri('news/details/id_' . $news[$i]['id']) . '">[' . $lang->t('news', 'read_on') . ']</a>' . "\n";
 		}
 	}
 	$tpl->assign('news', $news);

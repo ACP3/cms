@@ -20,16 +20,16 @@ if (empty($module) || !empty($module) && $db->select('id', 'comments', 'module =
 	if ($c_comments > 0) {
 		$tpl->assign('pagination', pagination($db->query('SELECT module FROM ' . CONFIG_DB_PRE . 'comments GROUP BY module', 1)));
 		for ($i = 0; $i < $c_comments; ++$i) {
-			$comments[$i]['name'] = lang($comments[$i]['module'], $comments[$i]['module']);
+			$comments[$i]['name'] = $lang->t($comments[$i]['module'], $comments[$i]['module']);
 			$comments[$i]['count'] = $db->select('id', 'comments', 'module = \'' . $comments[$i]['module'] . '\'', 0, 0, 0, 1);
 		}
 		$tpl->assign('comments', $comments);
 	}
 } elseif (!empty($module) && $db->select('id', 'comments', 'module = \'' . $module . '\'', 0, 0, 0, 1) > '0') {
 	//Brotkrümelspur
-	breadcrumb::assign(lang('common', 'acp'), uri('acp'));
-	breadcrumb::assign(lang('comments', 'comments'), uri('acp/comments'));
-	breadcrumb::assign(lang($module, $module));
+	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
+	breadcrumb::assign($lang->t('comments', 'comments'), uri('acp/comments'));
+	breadcrumb::assign($lang->t($module, $module));
 
 	$comments = $db->select('id, ip, date, name, message', 'comments', 'module = \'' . $module . '\'', 'date DESC', POS, CONFIG_ENTRIES);
 	$c_comments = count($comments);

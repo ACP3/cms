@@ -67,4 +67,7 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 $tpl->assign('MODULES', new modules);
 
 require_once ACP3_ROOT . 'includes/functions.php';
+
+$auth = new auth;
+$lang = new lang;
 ?>

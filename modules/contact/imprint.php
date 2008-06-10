@@ -10,8 +10,8 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-breadcrumb::assign(lang('contact', 'contact'), uri('contact'));
-breadcrumb::assign(lang('contact', 'imprint'));
+breadcrumb::assign($lang->t('contact', 'contact'), uri('contact'));
+breadcrumb::assign($lang->t('contact', 'imprint'));
 
 $contact = config::output('contact');
 
@@ -20,7 +20,7 @@ $contact['disclaimer'] = $db->escape($contact['disclaimer'], 3);
 $contact['miscellaneous'] = $db->escape($contact['miscellaneous'], 3);
 
 $tpl->assign('imprint', $contact);
-$tpl->assign('powered_by', sprintf(lang('contact', 'powered_by'), '<a href="http://www.goratsch-webdesign.de/" onclick="window.open(this.href); return false">ACP3</a>'));
+$tpl->assign('powered_by', sprintf($lang->t('contact', 'powered_by'), '<a href="http://www.goratsch-webdesign.de/" onclick="window.open(this.href); return false">ACP3</a>'));
 
 $content = $tpl->fetch('contact/imprint.html');
 ?>

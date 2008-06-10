@@ -13,17 +13,17 @@ if (!defined('IN_ADM'))
 if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
 	$gallery = $db->select('start, end, name', 'gallery', 'id = \'' . $uri->id . '\'');
 
-	breadcrumb::assign(lang('common', 'acp'), uri('acp'));
-	breadcrumb::assign(lang('gallery', 'gallery'), uri('acp/gallery'));
+	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
+	breadcrumb::assign($lang->t('gallery', 'gallery'), uri('acp/gallery'));
 	breadcrumb::assign($gallery[0]['name']);
 
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
 		if (!validate::date($form['start'], $form['end']))
-			$errors[] = lang('common', 'select_date');
+			$errors[] = $lang->t('common', 'select_date');
 		if (strlen($form['name']) < 3)
-			$errors[] = lang('gallery', 'type_in_gallery_name');
+			$errors[] = $lang->t('gallery', 'type_in_gallery_name');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -39,7 +39,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $ur
 
 			$bool = $db->update('gallery', $update_values, 'id = \'' . $uri->id . '\'');
 
-			$content = comboBox($bool ? lang('gallery', 'edit_success') : lang('gallery', 'edit_error'), uri('acp/gallery'));
+			$content = comboBox($bool ? $lang->t('gallery', 'edit_success') : $lang->t('gallery', 'edit_error'), uri('acp/gallery'));
 		}
 	}
 	if (!isset($_POST['entries']) && !isset($_POST['submit']) || isset($errors) && is_array($errors)) {

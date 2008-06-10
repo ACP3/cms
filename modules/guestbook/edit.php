@@ -15,9 +15,9 @@ if (validate::isNumber($uri->id) && $db->select('id', 'guestbook', 'id = \'' . $
 		$form = $_POST['form'];
 
 		if (empty($form['name']))
-			$errors[] = lang('common', 'name_to_short');
+			$errors[] = $lang->t('common', 'name_to_short');
 		if (strlen($form['message']) < 3)
-			$errors[] = lang('common', 'message_to_short');
+			$errors[] = $lang->t('common', 'message_to_short');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -29,7 +29,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'guestbook', 'id = \'' . $
 
 			$bool = $db->update('guestbook', $update_values, 'id = \'' . $uri->id . '\'');
 
-			$content = comboBox($bool ? lang('guestbook', 'edit_success') : lang('guestbook', 'edit_error'), uri('acp/guestbook'));
+			$content = comboBox($bool ? $lang->t('guestbook', 'edit_success') : $lang->t('guestbook', 'edit_error'), uri('acp/guestbook'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

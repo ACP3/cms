@@ -21,13 +21,13 @@ if (validate::isNumber($uri->id) && $db->select('id', 'categories', 'id = \'' . 
 		$settings = config::output('categories');
 
 		if (strlen($form['name']) < 3)
-			$errors[] = lang('categories', 'name_to_short');
+			$errors[] = $lang->t('categories', 'name_to_short');
 		if (strlen($form['description']) < 3)
-			$errors[] = lang('categories', 'description_to_short');
+			$errors[] = $lang->t('categories', 'description_to_short');
 		if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) || !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize'])))
-			$errors[] = lang('categories', 'invalid_image_selected');
+			$errors[] = $lang->t('categories', 'invalid_image_selected');
 		if (strlen($form['name']) > 3 && !empty($form['module']) && $db->select('id', 'categories', 'id != \'' . $uri->id . '\' AND name = \'' . $db->escape($form['name']) . '\' AND module = \'' . $db->escape($form['module'], 2) . '\'', 0, 0, 0, 1) > 0)
-			$errors[] = lang('categories', 'category_already_exists');
+			$errors[] = $lang->t('categories', 'category_already_exists');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -55,7 +55,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'categories', 'id = \'' . 
 
 			cache::create('categories_' . $db->escape($category[0]['module'], 3), $db->select('id, name, picture, description', 'categories', 'module = \'' . $db->escape($category[0]['module'], 3) . '\'', 'name ASC'));
 
-			$content = comboBox($bool ? lang('categories', 'edit_success') : lang('categories', 'edit_error'), uri('acp/categories'));
+			$content = comboBox($bool ? $lang->t('categories', 'edit_success') : $lang->t('categories', 'edit_error'), uri('acp/categories'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

@@ -16,10 +16,10 @@ elseif (preg_match('/^([\d|]+)$/', $uri->entries))
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
-	$content = comboBox(array(lang('common', 'no_entries_selected')));
+	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox(lang('newsletter', 'confirm_archive_delete'), uri('acp/newsletter/delete_archive/entries_' . $marked_entries), uri('acp/newsletter/adm_list_archive'));
+	$content = comboBox($lang->t('newsletter', 'confirm_archive_delete'), uri('acp/newsletter/delete_archive/entries_' . $marked_entries), uri('acp/newsletter/adm_list_archive'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
@@ -28,6 +28,6 @@ if (!isset($entries)) {
 			$bool = $db->delete('newsletter_archive', 'id = \'' . $entry . '\'');
 		}
 	}
-	$content = comboBox($bool ? lang('newsletter', 'delete_archive_success') : lang('newsletter', 'delete_archive_error'), uri('acp/newsletter/adm_list_archive'));
+	$content = comboBox($bool ? $lang->t('newsletter', 'delete_archive_success') : $lang->t('newsletter', 'delete_archive_error'), uri('acp/newsletter/adm_list_archive'));
 }
 ?>

@@ -124,36 +124,6 @@ function calcFilesize($value)
 	return round($value, 3) . ' ' . $units[$i];
 }
 /**
- * Diese Funktion gibt den Inhalt der angeforderten Sprachkonstante aus
- *
- * @param string $mod
- *  Betroffenes Modul
- * @param string $key
- *  Betroffene Konstante
- * @return string
- */
-function lang($module, $key)
-{
-	static $lang = 0, $lang_data = array();
-
-	if (empty($lang)) {
-		global $auth;
-		$info = $auth->getUserInfo();
-		$lang = !empty($info) ? $info['language'] : CONFIG_LANG;
-	}
-
-	$path = ACP3_ROOT . 'languages/' . $lang . '/' . $module . '.xml';
-
-	if (!isset($lang_data[$module][$key]) && is_file($path)) {
-		$xml = simplexml_load_file($path);
-		foreach ($xml->item as $row) {
-			$lang_data[$module][(string) $row->name] = (string) $row->message;
-		}
-	}
-
-	return isset($lang_data[$module][$key]) ? $lang_data[$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
-}
-/**
  * Hochgeladene Dateien verschieben und umbenennen
  *
  * @param string $tmp_filename
@@ -176,7 +146,9 @@ function moveFile($tmp_filename, $filename, $dir)
 	}
 	if (is_writable($path)) {
 		if (!@move_uploaded_file($tmp_filename, $path . $new_name . $ext)) {
-			echo sprintf(lang('common', 'upload_error'), $filename);
+			global $lang;
+
+			echo sprintf($lang->t('common', 'upload_error'), $filename);
 		} else {
 			$new_file['name'] = $new_name . $ext;
 			$new_file['size'] = calcFilesize(filesize($path . $new_file['name']));
@@ -356,13 +328,15 @@ function selectEntry($name, $value, $field_value = '', $attr = 'selected')
  */
 function timeZones($value)
 {
+	global $lang;
+
 	$time_zones = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.75, 13, 14);
 	$time_zone = array();
 	$i = 0;
 	foreach ($time_zones as $row) {
 		$time_zone[$i]['value'] = $row * 3600;
 		$time_zone[$i]['selected'] = selectEntry('time_zone', $row * 3600, $value);
-		$time_zone[$i]['lang'] = lang('common', 'utc' . $row);
+		$time_zone[$i]['lang'] = $lang->t('common', 'utc' . $row);
 		$i++;
 	}
 	return $time_zone;

@@ -63,7 +63,7 @@ class breadcrumb
 	 */
 	public static function output($mode = 1, $id = '')
 	{
-		global $uri, $tpl;
+		global $lang, $uri, $tpl;
 
 		$module = $uri->mod;
 		$page = $uri->page;
@@ -124,27 +124,27 @@ class breadcrumb
 				if (!empty(self::$end)) {
 					$tpl->assign('end', self::$end);
 				} elseif ($page == 'list') {
-					$tpl->assign('end', lang($module, $module));
+					$tpl->assign('end', $lang->t($module, $module));
 				} else {
-					$tpl->assign('end', lang($module, $page));
+					$tpl->assign('end', $lang->t($module, $page));
 				}
 			}
 			return $tpl->fetch('common/breadcrumb.html');
 		// Brotkrümelspur für das Admin Panel
 		} elseif (defined('IN_ADM') && $mode == 1) {
 			if ($page == 'adm_list' && count(self::$steps) == 0 && empty(self::$end)) {
-				self::assign(lang('common', 'acp'), uri('acp'));
+				self::assign($lang->t('common', 'acp'), uri('acp'));
 				$tpl->assign('breadcrumb', self::$steps);
-				$tpl->assign('end', lang($module, $module));
+				$tpl->assign('end', $lang->t($module, $module));
 			} elseif (count(self::$steps) > 0 || !empty(self::$end)) {
 				$tpl->assign('breadcrumb', self::$steps);
 				$tpl->assign('end', self::$end);
 			// Falls keine zusätzlichen Brotkrumen angegeben sind, jeweiligen Seitennamen der Moduldatei ausgeben
 			} else {
-				self::assign(lang('common', 'acp'), uri('acp'));
-				self::assign(lang($module, $module), uri('acp/' . $module));
+				self::assign($lang->t('common', 'acp'), uri('acp'));
+				self::assign($lang->t($module, $module), uri('acp/' . $module));
 				$tpl->assign('breadcrumb', self::$steps);
-				$tpl->assign('end', lang($module, $page));
+				$tpl->assign('end', $lang->t($module, $page));
 			}
 			return $tpl->fetch('common/breadcrumb.html');
 		// Nur Seitentitel ausgeben
@@ -152,7 +152,7 @@ class breadcrumb
 			if (!empty(self::$end)) {
 				return self::$end;
 			} else {
-				return $page != 'list' && $page != 'adm_list' ? lang($module, $page) : lang($module, $module);
+				return $page != 'list' && $page != 'adm_list' ? $lang->t($module, $page) : $lang->t($module, $module);
 			}
 		}
 	}

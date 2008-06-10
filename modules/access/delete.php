@@ -16,10 +16,10 @@ elseif (preg_match('/^([\d|]+)$/', $uri->entries))
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
-	$content = comboBox(array(lang('common', 'no_entries_selected')));
+	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox(lang('access', 'confirm_delete'), uri('acp/access/delete/entries_' . $marked_entries), uri('acp/access'));
+	$content = comboBox($lang->t('access', 'confirm_delete'), uri('acp/access/delete/entries_' . $marked_entries), uri('acp/access'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
@@ -35,9 +35,9 @@ if (!isset($entries)) {
 		}
 	}
 	if ($level_undeletable) {
-		$text = lang('access', 'access_level_undeletable');
+		$text = $lang->t('access', 'access_level_undeletable');
 	} else {
-		$text = $bool ? lang('access', 'delete_success') : lang('access', 'delete_error');
+		$text = $bool ? $lang->t('access', 'delete_success') : $lang->t('access', 'delete_error');
 	}
 	$content = comboBox($text, uri('acp/access'));
 }

@@ -14,7 +14,7 @@ if ($c_users > 0) {
 	}
 	$tpl->assign('users', $users);
 }
-$tpl->assign('LANG_users_found', sprintf(lang('users', 'users_found'), $all_users));
+$tpl->assign('LANG_users_found', sprintf($lang->t('users', 'users_found'), $all_users));
 
 $content = $tpl->fetch('users/list.html');
 ?>

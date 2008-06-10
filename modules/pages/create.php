@@ -17,21 +17,21 @@ if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
 	if (!validate::date($form['start'], $form['end']))
-		$errors[] = lang('common', 'select_date');
+		$errors[] = $lang->t('common', 'select_date');
 	if (!validate::isNumber($form['mode']))
-		$errors[] = lang('pages', 'select_static_hyperlink');
+		$errors[] = $lang->t('pages', 'select_static_hyperlink');
 	if (!validate::isNumber($form['blocks']))
-		$errors[] = lang('pages', 'select_block');
+		$errors[] = $lang->t('pages', 'select_block');
 	if (!empty($form['blocks']) && !validate::isNumber($form['sort']))
-		$errors[] = lang('pages', 'type_in_chronology');
+		$errors[] = $lang->t('pages', 'type_in_chronology');
 	if (strlen($form['title']) < 3)
-		$errors[] = lang('pages', 'title_to_short');
+		$errors[] = $lang->t('pages', 'title_to_short');
 	if ($form['mode'] == '1' && !empty($form['parent']) && !validate::isNumber($form['parent']))
-		$errors[] = lang('pages', 'select_superior_page');
+		$errors[] = $lang->t('pages', 'select_superior_page');
 	if ($form['mode'] == '1' && strlen($form['text']) < 3)
-		$errors[] = lang('pages', 'text_to_short');
+		$errors[] = $lang->t('pages', 'text_to_short');
 	if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !validate::isNumber($form['target'])))
-		$errors[] = lang('pages', 'type_in_uri_and_target');
+		$errors[] = $lang->t('pages', 'type_in_uri_and_target');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 
 		generatePagesCache();
 
-		$content = comboBox($bool ? lang('pages', 'create_success') : lang('pages', 'create_error'), uri('acp/pages'));
+		$content = comboBox($bool ? $lang->t('pages', 'create_success') : $lang->t('pages', 'create_error'), uri('acp/pages'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
@@ -74,13 +74,13 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 	$mode[0]['value'] = 1;
 	$mode[0]['selected'] = selectEntry('mode', '1');
-	$mode[0]['lang'] = lang('pages', 'static_page');
+	$mode[0]['lang'] = $lang->t('pages', 'static_page');
 	$mode[1]['value'] = 2;
 	$mode[1]['selected'] = selectEntry('mode', '2');
-	$mode[1]['lang'] = lang('pages', 'dynamic_page');
+	$mode[1]['lang'] = $lang->t('pages', 'dynamic_page');
 	$mode[2]['value'] = 3;
 	$mode[2]['selected'] = selectEntry('mode', '3');
-	$mode[2]['lang'] = lang('pages', 'hyperlink');
+	$mode[2]['lang'] = $lang->t('pages', 'hyperlink');
 	$tpl->assign('mode', $mode);
 
 	$blocks = $db->select('id, title', 'pages_blocks');
@@ -92,15 +92,15 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$blocks[$c_blocks]['id'] = 0;
 	$blocks[$c_blocks]['index_name'] = 'dot_display';
 	$blocks[$c_blocks]['selected'] = selectEntry('blocks', '0');
-	$blocks[$c_blocks]['title'] = lang('pages', 'do_not_display');
+	$blocks[$c_blocks]['title'] = $lang->t('pages', 'do_not_display');
 	$tpl->assign('blocks', $blocks);
 
 	$target[0]['value'] = 1;
 	$target[0]['selected'] = selectEntry('target', '1');
-	$target[0]['lang'] = lang('common', 'window_self');
+	$target[0]['lang'] = $lang->t('common', 'window_self');
 	$target[1]['value'] = 2;
 	$target[1]['selected'] = selectEntry('target', '2');
-	$target[1]['lang'] = lang('common', 'window_blank');
+	$target[1]['lang'] = $lang->t('common', 'window_blank');
 	$tpl->assign('target', $target);
 
 	$defaults = array(
