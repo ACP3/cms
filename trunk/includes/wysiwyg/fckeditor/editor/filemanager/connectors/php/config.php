@@ -40,6 +40,7 @@ $auth = new auth;
 $Config['Enabled'] = CONFIG_WYSIWYG == 'fckeditor' && $auth->isUser() ? true : false ;
 
 $dirname = dirname($_SERVER['PHP_SELF']);
+$dirname = $dirname != '/' ? $dirname . '/' : '/';
 $dirname = str_replace('/includes/wysiwyg/fckeditor/editor/filemanager/connectors/php/', '', $dirname);
 $userdir = $dirname . '/uploads/';
 
