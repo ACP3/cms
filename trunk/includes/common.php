@@ -52,8 +52,6 @@ $tpl->assign('PAGE_TITLE', CONFIG_TITLE);
 $tpl->assign('KEYWORDS', CONFIG_META_KEYWORDS);
 $tpl->assign('DESCRIPTION', CONFIG_META_DESCRIPTION);
 
-// Klassen initialisieren
-$db = new db;
 $uri = new uri;
 
 // Falls der Wartungsmodus aktiv ist, Wartungsnachricht ausgeben und Skript beenden
@@ -64,10 +62,13 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 	exit;
 }
 
+// Klassen initialisieren
+$db = new db;
 $tpl->assign('MODULES', new modules);
 
 require_once ACP3_ROOT . 'includes/functions.php';
 
 $auth = new auth;
 $lang = new lang;
+$date = new date;
 ?>

@@ -10,9 +10,9 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
+$period = ' AND (start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')';
 
-if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->id . '\'' . $date, 0, 0, 0, 1) == 1) {
+if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->id . '\'' . $period, 0, 0, 0, 1) == 1) {
 	// News Cache erstellen
 	if (!cache::check('news_details_id_' . $uri->id)) {
 		cache::create('news_details_id_' . $uri->id, $db->select('id, start, headline, text, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\''));
@@ -27,7 +27,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->
 	}
 	breadcrumb::assign($news[0]['headline']);
 
-	$news[0]['date'] = dateAligned(1, $news[0]['start']);
+	$news[0]['date'] = $date->format($news[0]['start']);
 	$news[0]['headline'] = $news[0]['headline'];
 	$news[0]['text'] = $db->escape($news[0]['text'], 3);
 	$news[0]['uri'] = $db->escape($news[0]['uri'], 3);

@@ -24,7 +24,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 			$errors[] = $lang->t('common', 'select_time_zone');
 		if (!validate::isNumber($form['dst']))
 			$errors[] = $lang->t('common', 'select_daylight_saving_time');
-		if (!is_file('languages/' . $db->escape($form['language'], 2) . '/info.php'))
+		if (!is_file('languages/' . $db->escape($form['language'], 2) . '/info.xml'))
 			$errors[] = $lang->t('users', 'select_language');
 
 		if (isset($errors)) {
@@ -61,9 +61,8 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 		$lang_dir = scandir(ACP3_ROOT . 'languages');
 		$c_lang_dir = count($lang_dir);
 		for ($i = 0; $i < $c_lang_dir; ++$i) {
-			$lang_info = array();
-			if ($lang_dir[$i] != '.' && $lang_dir[$i] != '..' && is_file('languages/' . $lang_dir[$i] . '/info.php')) {
-				include ACP3_ROOT . 'languages/' . $lang_dir[$i] . '/info.php';
+			$lang_info = xml::parseXmlFile(ACP3_ROOT . 'languages/' . $lang_dir[$i] . '/info.xml', '/language');
+			if (!empty($lang_info)) {
 				$name = $lang_info['name'];
 				$languages[$name]['dir'] = $lang_dir[$i];
 				$languages[$name]['selected'] = selectEntry('language', $lang_dir[$i], $db->escape($user[0]['language'], 3));

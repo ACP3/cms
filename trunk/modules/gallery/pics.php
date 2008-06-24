@@ -10,9 +10,9 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
+$period = ' AND (start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')';
 
-if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $uri->id . '\'' . $date, 0, 0, 0, 1) == 1) {
+if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $uri->id . '\'' . $period, 0, 0, 0, 1) == 1) {
 	// Cache für die jeweilige Galerie
 	if (!cache::check('gallery_pics_id_' . $uri->id)) {
 		cache::create('gallery_pics_id_' . $uri->id, $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'', 'pic ASC, id ASC'));

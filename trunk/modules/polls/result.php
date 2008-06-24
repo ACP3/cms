@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \'' . $uri->id . '\' AND start <= \'' . dateAligned(2, time()) . '\'', 0, 0, 0, 1) == 1) {
+if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \'' . $uri->id . '\' AND start <= \'' . $date->timestamp() . '\'', 0, 0, 0, 1) == 1) {
 	breadcrumb::assign($lang->t('polls', 'polls'), uri('polls'));
 	breadcrumb::assign($lang->t('polls', 'result'));
 

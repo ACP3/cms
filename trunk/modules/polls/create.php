@@ -29,8 +29,8 @@ if (isset($_POST['submit'])) {
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
-		$start_date = strtotime($form['start'], dateAligned(2, time()));
-		$end_date = strtotime($form['end'], dateAligned(2, time()));
+		$start_date = strtotime($form['start'], $date->timestamp());
+		$end_date = strtotime($form['end'], $date->timestamp());
 
 		$insert_values = array(
 			'id' => '',

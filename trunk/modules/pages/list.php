@@ -10,9 +10,9 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
+$period = ' AND (start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')';
 
-if (validate::isNumber($uri->item) && $db->select('id', 'pages', 'id = \'' . $uri->item . '\'' . $date, 0, 0, 0, 1) == 1) {
+if (validate::isNumber($uri->item) && $db->select('id', 'pages', 'id = \'' . $uri->item . '\'' . $period, 0, 0, 0, 1) == 1) {
 	if (!cache::check('pages_list_id_' . $uri->item)) {
 		cache::create('pages_list_id_' . $uri->item, $db->select('mode, uri, text', 'pages', 'id = \'' . $uri->item . '\''));
 	}

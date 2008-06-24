@@ -20,9 +20,9 @@ switch($form['area']) {
 	default:
 		$fields = 'title, text';
 }
-$date = '(start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
+$period = '(start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')';
 
-$result_pages = $db->select('id, title, text', 'pages', 'MATCH (' . $fields . ') AGAINST (\'' .  $db->escape($form['search_term']) . '\' IN BOOLEAN MODE) AND mode = \'1\' AND ' . $date, 'id ' . $form['sort']);
+$result_pages = $db->select('id, title, text', 'pages', 'MATCH (' . $fields . ') AGAINST (\'' .  $db->escape($form['search_term']) . '\' IN BOOLEAN MODE) AND mode = \'1\' AND ' . $period, 'id ' . $form['sort']);
 $c_result_pages = count($result_pages);
 
 if ($c_result_pages > 0) {

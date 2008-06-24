@@ -70,7 +70,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery_pictures', 'id = 
 
 		for ($i = 0; $i < $c_galleries; ++$i) {
 			$galleries[$i]['selected'] = selectEntry('gallery', $galleries[$i]['id'], $picture[0]['gallery_id']);
-			$galleries[$i]['date'] = dateAligned(1, $galleries[$i]['start']);
+			$galleries[$i]['date'] = $date->format($galleries[$i]['start']);
 			$galleries[$i]['name'] = $db->escape($galleries[$i]['name'], 3);
 		}
 		$tpl->assign('galleries', $galleries);

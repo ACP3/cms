@@ -10,9 +10,9 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
+$period = ' AND (start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')';
 
-if (validate::isNumber($uri->id) && $db->select('id', 'files', 'id = \'' . $uri->id . '\'' . $date, 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->select('id', 'files', 'id = \'' . $uri->id . '\'' . $period, 0, 0, 0, 1) == '1') {
 	if (!cache::check('files_details_id_' . $uri->id)) {
 		cache::create('files_details_id_' . $uri->id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, c.name AS category_name', 'files AS f, ' . CONFIG_DB_PRE . 'categories AS c', 'f.id = \'' . $uri->id . '\' AND f.category_id = c.id'));
 	}
@@ -37,7 +37,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'files', 'id = \'' . $uri-
 		breadcrumb::assign($file[0]['link_title']);
 
 		$file[0]['size'] = !empty($file[0]['size']) ? $file[0]['size'] : $lang->t('files', 'unknown_filesize');
-		$file[0]['date'] = dateAligned(1, $file[0]['start']);
+		$file[0]['date'] = $date->format($file[0]['start']);
 		$tpl->assign('file', $file[0]);
 
 		$content = $tpl->fetch('files/details.html');

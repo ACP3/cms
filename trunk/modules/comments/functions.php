@@ -37,7 +37,7 @@ function commentsCount($entry_id, $module = 0)
  */
 function comments($module, $entry_id)
 {
-	global $auth, $db, $lang, $uri, $tpl;
+	global $auth, $date, $db, $lang, $uri, $tpl;
 
 	// Formular für das Eintragen von Kommentaren
 	if (isset($_POST['submit'])) {
@@ -49,7 +49,7 @@ function comments($module, $entry_id)
 		if (count($flood) == '1') {
 			$flood_time = $flood[0]['date'] + CONFIG_FLOOD;
 		}
-		$time = dateAligned(2, time());
+		$time = $date->timestamp();
 
 		if (isset($flood_time) && $flood_time > $time)
 			$errors[] = sprintf($lang->t('common', 'flood_no_entry_possible'), $flood_time - $time);
@@ -98,7 +98,7 @@ function comments($module, $entry_id)
 		if ($c_comments > 0) {
 			$tpl->assign('pagination', pagination($db->select('id', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 0, 0, 0, 1)));
 			for ($i = 0; $i < $c_comments; ++$i) {
-				$comments[$i]['date'] = dateAligned(1, $comments[$i]['date']);
+				$comments[$i]['date'] = $date->format($comments[$i]['date']);
 				$comments[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $comments[$i]['message']);
 				if ($emoticons) {
 					$comments[$i]['message'] = emoticonsReplace($comments[$i]['message']);

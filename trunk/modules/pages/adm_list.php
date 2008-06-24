@@ -19,8 +19,8 @@ if ($c_pages > 0) {
 	$mode_replace = array($lang->t('pages', 'static_page'), $lang->t('pages', 'dynamic_page'), $lang->t('pages', 'hyperlink'));
 
 	for($i = 0; $i < $c_pages; ++$i) {
-		$pages[$i]['start'] = dateAligned(1, $pages[$i]['start']);
-		$pages[$i]['end'] = dateAligned(1, $pages[$i]['end']);
+		$pages[$i]['start'] = $date->format($pages[$i]['start']);
+		$pages[$i]['end'] = $date->format($pages[$i]['end']);
 		$pages[$i]['mode'] = str_replace(array('1', '2', '3'), $mode_replace, $pages[$i]['mode']);
 		$pages[$i]['block'] = $pages[$i]['block_id'] == '0' ? $lang->t('pages', 'do_not_display') : $pages[$i]['block'];
 		$pages[$i]['title'] = $pages[$i]['title'];
