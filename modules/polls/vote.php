@@ -10,9 +10,9 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$date = ' AND (start = end AND start <= \'' . dateAligned(2, time()) . '\' OR start != end AND start <= \'' . dateAligned(2, time()) . '\' AND end >= \'' . dateAligned(2, time()) . '\')';
+$period = ' AND (start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')';
 
-if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \'' . $uri->id . '\'' . $date, 0, 0, 0, 1) == 1) {
+if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \'' . $uri->id . '\'' . $period, 0, 0, 0, 1) == 1) {
 	// Brotkrümelspur
 	breadcrumb::assign($lang->t('polls', 'polls'), uri('polls'));
 	breadcrumb::assign($lang->t('polls', 'vote'));
@@ -20,7 +20,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \''
 	if (isset($_POST['submit']) && isset($_POST['answer']) && validate::isNumber($_POST['answer'])) {
 		$answer = $_POST['answer'];
 		$ip = $_SERVER['REMOTE_ADDR'];
-		$time = dateAligned(2, time());
+		$time = $date->timestamp();
 
 		if ($db->select('poll_id', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND ip = \'' . $ip . '\'', 0, 0, 0, 1) == 0) {
 			$insert_values = array(

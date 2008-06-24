@@ -55,8 +55,8 @@ if (validate::isNumber($uri->id) && $db->select('id', 'files', 'id = \'' . $uri-
 					'size' => $filesize,
 				);
 			}
-			$start_date = strtotime($form['start'], dateAligned(2, time()));
-			$end_date = strtotime($form['end'], dateAligned(2, time()));
+			$start_date = strtotime($form['start'], $date->timestamp());
+			$end_date = strtotime($form['end'], $date->timestamp());
 
 			$update_values = array(
 				'start' => $start_date,

@@ -28,8 +28,8 @@ if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
-			$start_date = strtotime($form['start'], dateAligned(2, time()));
-			$end_date = strtotime($form['end'], dateAligned(2, time()));
+			$start_date = strtotime($form['start'], $date->timestamp());
+			$end_date = strtotime($form['end'], $date->timestamp());
 
 			$update_values = array(
 				'start' => $start_date,

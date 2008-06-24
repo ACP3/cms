@@ -51,56 +51,6 @@ function comboBox($text, $forward = 0, $back = 0)
 	return '';
 }
 /**
- * Datumsausrichtung an den Zeitzonen
- *
- * @param integer $mode
- * 	1 = Gibt ein formatiertes Datum aus
- * 	2 = Gibt einen Zeitstempel aus
- * 	3 = Erstellt einen Zeitstempel anhand der Daten aus den Dropdownmenüs für den Veröffentlichungszeitraum
- * @param mixed $time_stamp
- *  Zu formatierender Zeitstempel
- * @param string $format
- *  Datumsformat
- * @return mixed
- */
-function dateAligned($mode, $time_stamp, $format = 0)
-{
-	global $auth;
-	static $info = array();
-
-	if (!empty($info)) {
-		$time_zone = $info['time_zone'];
-		$dst = $info['dst'];
-	} else {
-		$info = $auth->getUserInfo();
-
-		if (!empty($info)) {
-			$time_zone = $info['time_zone'];
-			$dst = $info['dst'];
-		} else {
-			$time_zone = CONFIG_TIME_ZONE;
-			$dst = CONFIG_DST;
-		}
-	}
-	$offset = $time_zone + ($dst == '1' ? 3600 : 0);
-
-	// Datum in gewünschter Formatierung ausgeben
-	if ($mode == 1) {
-		$format = !empty($format) ? $format : CONFIG_DATE;
-		return gmdate($format, $time_stamp + $offset);
-	// Einfachen Zeitstempel ausgeben
-	} elseif ($mode == 2) {
-		return gmdate('U', $time_stamp);
-	// Zeitstempel aus Dropdownmenü erstellen
-	} elseif ($mode == 3 && is_array($time_stamp)) {
-		$hour = $time_stamp[0] * 3600;
-		$min = $time_stamp[1] * 60;
-		$seconds = $hour + $min - $offset;
-		return gmmktime(0, 0, $seconds, $time_stamp[3], $time_stamp[4], $time_stamp[5]);
-	}
-	return false;
-}
-/**
  * Ermittelt die Dateigröße, gemäß IEC 60027-2
  *
  * @param integer $value
@@ -169,25 +119,25 @@ function moveFile($tmp_filename, $filename, $dir)
  */
 function datepicker($name, $value = '')
 {
-	global $tpl;
+	global $date, $tpl;
 	static $included = false;
 
 	$format = 'Y-m-d H:i';
 	if (!empty($_POST['form'][$name])) {
 		$input = $_POST['form'][$name];
 	} elseif (validate::isNumber($value)) {
-		$input = dateAligned(1, $value, $format);
+		$input = $date->format($value, $format);
 	} else {
-		$input = dateAligned(1, time(), $format);
+		$input = $date->format(time(), $format);
 	}
 
-	$date = array(
+	$datepicker = array(
 		'already_included' => $included,
 		'format' => 'yy-mm-dd',
 		'name' => $name,
 		'input' => $input,
 	);
-	$tpl->assign('date', $date);
+	$tpl->assign('date', $datepicker);
 	// Variable auf 'true' setzen, damit der datepicker nicht unzählige Male eingebunden wird
 	$included = true;
 

@@ -32,7 +32,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'newsletter_archive', 'id 
 
 			// Newsletter archivieren
 			$update_values = array(
-				'date' => dateAligned(2, time()),
+				'date' => $date->timestamp(),
 				'subject' => $db->escape($form['subject']),
 				'text' => $db->escape($form['text']),
 				'status' => (int) $form['action'],

@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
 	if (count($flood) == '1') {
 		$flood_time = $flood[0]['date'] + CONFIG_FLOOD;
 	}
-	$time = dateAligned(2, time());
+	$time = $date->timestamp();
 
 	if (isset($flood_time) && $flood_time > $time)
 		$errors[] = sprintf($lang->t('common', 'flood_no_entry_possible'), $flood_time - $time);
