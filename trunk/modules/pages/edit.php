@@ -39,9 +39,6 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri-
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
-			$start_date = $date->timestamp($form['start']);
-			$end_date = $date->timestamp($form['end']);
-
 			if ($form['mode'] == '1') {
 				$form['uri'] = '';
 				$form['target'] = '';
@@ -50,8 +47,8 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri-
 			}
 
 			$update_values = array(
-				'start' => $start_date,
-				'end' => $end_date,
+				'start' => $date->timestamp($form['start']),
+				'end' => $date->timestamp($form['end']),
 				'mode' => $form['mode'],
 				'parent' => $form['parent'],
 				'block_id' => $form['blocks'],

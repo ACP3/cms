@@ -55,12 +55,10 @@ if (validate::isNumber($uri->id) && $db->select('id', 'files', 'id = \'' . $uri-
 					'size' => $filesize,
 				);
 			}
-			$start_date = $date->timestamp($form['start']);
-			$end_date = $date->timestamp($form['end']);
 
 			$update_values = array(
-				'start' => $start_date,
-				'end' => $end_date,
+				'start' => $date->timestamp($form['start']),
+				'end' => $date->timestamp($form['end']),
 				'category_id' => $form['cat'],
 				'link_title' => $db->escape($form['link_title']),
 				'text' => $db->escape($form['text'], 2),

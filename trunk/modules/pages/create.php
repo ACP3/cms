@@ -36,9 +36,6 @@ if (isset($_POST['submit'])) {
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
-		$start_date = $date->timestamp($form['start']);
-		$end_date = $date->timestamp($form['end']);
-
 		if ($form['mode'] == '1') {
 			$form['uri'] = '';
 			$form['target'] = '';
@@ -48,8 +45,8 @@ if (isset($_POST['submit'])) {
 
 		$insert_values = array(
 			'id' => '',
-			'start' => $start_date,
-			'end' => $end_date,
+			'start' => $date->timestamp($form['start']),
+			'end' => $date->timestamp($form['end']),
 			'mode' => $form['mode'],
 			'parent' => $form['parent'],
 			'block_id' => $form['blocks'],

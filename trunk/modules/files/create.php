@@ -45,13 +45,11 @@ if (isset($_POST['submit'])) {
 			$new_file = $file;
 			$filesize = $form['filesize'] . ' ' . $form['unit'];
 		}
-		$start_date = $date->timestamp($form['start']);
-		$end_date = $date->timestamp($form['end']);
 
 		$insert_values = array(
 			'id' => '',
-			'start' => $start_date,
-			'end' => $end_date,
+			'start' => $date->timestamp($form['start']),
+			'end' => $date->timestamp($form['end']),
 			'category_id' => $form['cat'],
 			'file' => $new_file,
 			'size' => $filesize,
