@@ -45,8 +45,8 @@ if (isset($_POST['submit'])) {
 			$new_file = $file;
 			$filesize = $form['filesize'] . ' ' . $form['unit'];
 		}
-		$start_date = strtotime($form['start'], $date->timestamp());
-		$end_date = strtotime($form['end'], $date->timestamp());
+		$start_date = $date->timestamp($form['start']);
+		$end_date = $date->timestamp($form['end']);
 
 		$insert_values = array(
 			'id' => '',

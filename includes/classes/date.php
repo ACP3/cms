@@ -57,10 +57,15 @@ class date
 	/**
 	 * Gibt einen einfachen Zeitstempel zurück, welcher sich an UTC ausrichtet
 	 *
+	 * @param string $value
 	 * @return integer
 	 */
-	public function timestamp()
+	public function timestamp($value = 0)
 	{
+		// Zeitstempel aus Veröffentlichungszeitraum heraus generieren
+		if (!empty($value) && validate::date($value)) {
+			return strtotime($value, $this->timestamp());
+		}
 		return gmdate('U', time());
 	}
 }

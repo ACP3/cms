@@ -36,8 +36,8 @@ if (isset($_POST['submit'])) {
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
-		$start_date = strtotime($form['start'], $date->timestamp());
-		$end_date = strtotime($form['end'], $date->timestamp());
+		$start_date = $date->timestamp($form['start']);
+		$end_date = $date->timestamp($form['end']);
 
 		if ($form['mode'] == '1') {
 			$form['uri'] = '';
