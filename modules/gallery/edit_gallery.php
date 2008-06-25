@@ -28,12 +28,9 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $ur
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
-			$start_date = $date->timestamp($form['start']);
-			$end_date = $date->timestamp($form['end']);
-
 			$update_values = array(
-				'start' => $start_date,
-				'end' => $end_date,
+				'start' => $date->timestamp($form['start']),
+				'end' => $date->timestamp($form['end']),
 				'name' => $db->escape($form['name']),
 			);
 

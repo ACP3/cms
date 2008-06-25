@@ -33,12 +33,9 @@ if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \''
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
-			$start_date = $date->timestamp($form['start']);
-			$end_date = $date->timestamp($form['end']);
-
 			$update_values = array(
-				'start' => $start_date,
-				'end' => $end_date,
+				'start' => $date->timestamp($form['start']),
+				'end' => $date->timestamp($form['end']),
 				'question' => $db->escape($form['question']),
 			);
 

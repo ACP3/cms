@@ -27,13 +27,10 @@ if (isset($_POST['submit'])) {
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
-		$start_date = $date->timestamp($form['start']);
-		$end_date = $date->timestamp($form['end']);
-
 		$insert_values = array(
 			'id' => '',
-			'start' => $start_date,
-			'end' => $end_date,
+			'start' => $date->timestamp($form['start']),
+			'end' => $date->timestamp($form['end']),
 			'headline' => $db->escape($form['headline']),
 			'text' => $db->escape($form['text'], 2),
 			'category_id' => $form['cat'],
