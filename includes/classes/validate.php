@@ -24,6 +24,8 @@ class validate
 	 */
 	public static function captcha($input, $hash)
 	{
+		global $auth;
+
 		if (preg_match('/^[a-zA-Z0-9]+$/', $input) && self::isMD5($hash)) {
 			$path = ACP3_ROOT . 'uploads/captcha/' . $hash . strtolower($input);
 			if (is_file($path)) {
