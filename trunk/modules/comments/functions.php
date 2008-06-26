@@ -59,7 +59,7 @@ function comments($module, $entry_id)
 			$errors[] = $lang->t('common', 'message_to_short');
 		if (!modules::check($db->escape($form['module'], 2), 'list') || !validate::isNumber($form['entry_id']))
 			$errors[] = $lang->t('comments', 'module_doesnt_exist');
-		if (!validate::captcha($form['captcha'], $form['hash']))
+		if (!$auth->isUser() && !validate::captcha($form['captcha'], $form['hash']))
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors)) {
@@ -108,7 +108,7 @@ function comments($module, $entry_id)
 		}
 
 		// Name des Moduls und Datensatznummer ins Formular einbinden
-		$default = array(
+		$defaults = array(
 			'module' => $module,
 			'entry_id' => $entry_id
 		);
@@ -122,21 +122,18 @@ function comments($module, $entry_id)
 				$form['name'] = $user['nickname'];
 				$form['name_disabled'] = $disabled;
 			} else {
-				$default['name'] = $user['nickname'];
-				$default['name_disabled'] = $disabled;
-				$default['message'] = '';
+				$defaults['name'] = $user['nickname'];
+				$defaults['name_disabled'] = $disabled;
+				$defaults['message'] = '';
 			}
 		} else {
-			$default['name'] = '';
-			$default['name_disabled'] = '';
-			$default['message'] = '';
+			$defaults['name'] = '';
+			$defaults['name_disabled'] = '';
+			$defaults['message'] = '';
 		}
-		$tpl->assign('form', isset($form) ? $form : $default);
-		
-		$tpl->assign('captcha', captcha());
+		$tpl->assign('form', isset($form) ? array_merge($defaults, $form) : $defaults);
 
-		// Modul und Datensatznummer mit ins Formular einbinden
-		$tpl->assign('form', isset($form) ? $form : $default);
+		$tpl->assign('captcha', captcha());
 
 		return $tpl->fetch('comments/list.html');
 	}

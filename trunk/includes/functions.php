@@ -14,12 +14,16 @@
  */
 function captcha($captcha_length = 5)
 {
-	global $tpl;
-	
-	$captcha['hash'] = md5(uniqid(rand(), true));
-	$captcha['length'] = $captcha_length;
-	$tpl->assign('captcha', $captcha);
-	return $tpl->fetch('common/captcha.html');
+	global $auth, $tpl;
+
+	// Wenn man als User angemeldet ist, Captcha nicht anzeigen
+	if (!$auth->isUser()) {
+		$captcha['hash'] = md5(uniqid(rand(), true));
+		$captcha['length'] = $captcha_length;
+		$tpl->assign('captcha', $captcha);
+		return $tpl->fetch('common/captcha.html');
+	}
+	return '';
 }
 /**
  * Gibt je nach angegeben Parametern eine Fehlerbox oder eine Bestätigungsbox aus
