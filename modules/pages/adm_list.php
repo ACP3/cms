@@ -10,24 +10,27 @@
 if (!defined('IN_ADM'))
 	exit;
 
-$pages = $db->query('SELECT p.id, p.start, p.end, p.mode, p.block_id, p.title, b.title AS block FROM ' . CONFIG_DB_PRE . 'pages AS p LEFT JOIN ' . CONFIG_DB_PRE . 'pages_blocks AS b ON p.block_id = b.id ORDER BY b.title ASC, p.sort ASC, p.title ASC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
+include_once ACP3_ROOT . 'modules/pages/functions.php';
+$pages = pagesList();
 $c_pages = count($pages);
 
 if ($c_pages > 0) {
-	$tpl->assign('pagination', pagination($db->query('SELECT p.id FROM ' . CONFIG_DB_PRE . 'pages AS p LEFT JOIN ' . CONFIG_DB_PRE . 'pages_blocks AS b ON p.block_id = b.id', 1)));
+	$tpl->assign('pagination', pagination($c_pages));
 
 	$mode_replace = array($lang->t('pages', 'static_page'), $lang->t('pages', 'dynamic_page'), $lang->t('pages', 'hyperlink'));
 
-	for($i = 0; $i < $c_pages; ++$i) {
-		$pages[$i]['start'] = $date->format($pages[$i]['start']);
-		$pages[$i]['end'] = $date->format($pages[$i]['end']);
-		$pages[$i]['mode'] = str_replace(array('1', '2', '3'), $mode_replace, $pages[$i]['mode']);
-		$pages[$i]['block'] = $pages[$i]['block_id'] == '0' ? $lang->t('pages', 'do_not_display') : $pages[$i]['block'];
-		$pages[$i]['title'] = $pages[$i]['title'];
+	// Einträge pro Seite
+	$epp = POS + CONFIG_ENTRIES <= $c_pages ? CONFIG_ENTRIES : $c_pages;
+	$output = array();
+	for ($i = POS; $i < $epp; ++$i) {
+		$output[$i]['id'] = $pages[$i]['id'];
+		$output[$i]['start'] = $date->format($pages[$i]['start']);
+		$output[$i]['end'] = $date->format($pages[$i]['end']);
+		$output[$i]['mode'] = str_replace(array('1', '2', '3'), $mode_replace, $pages[$i]['mode']);
+		$output[$i]['block'] = $pages[$i]['block_id'] == '0' ? $lang->t('pages', 'do_not_display') : $pages[$i]['block_title'];
+		$output[$i]['title'] = $pages[$i]['title'];
 	}
-	$tpl->assign('pages', $pages);
-
+	$tpl->assign('pages', $output);
 }
-
 $content = $tpl->fetch('pages/adm_list.html');
 ?>

@@ -110,7 +110,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri-
 
 		$tpl->assign('form', isset($form) ? $form : $page[0]);
 
-		$tpl->assign('pages_list', pagesList(0, $page[0]['parent'], $page[0]['id']));
+		$tpl->assign('pages_list', pagesList(2, 0, $page[0]['parent'], $page[0]['id']));
 
 		$content = $tpl->fetch('pages/edit.html');
 	}
