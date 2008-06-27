@@ -46,7 +46,7 @@
 				<select name="form[parent]" id="parent">
 					<option value="">{lang values="pages|no_superior_page"}</option>
 {foreach from=$pages_list item=row}
-					<option value="{$row.id}"{$row.selected}>{$row.title}</option>
+					<option value="{$row.id}"{$row.selected}>{$row.spaces}{$row.title}</option>
 {/foreach}
 				</select>
 			</dd>

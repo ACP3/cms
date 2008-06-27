@@ -9,13 +9,12 @@
 function generatePagesCache()
 {
 	global $db;
-	
-	$pages = $db->query('SELECT p.id, p.start, p.end, p.mode, p.parent, p.block_id, p.sort, p.title, p.target, b.index_name AS block_name FROM ' . CONFIG_DB_PRE . 'pages AS p LEFT JOIN ' . CONFIG_DB_PRE . 'pages_blocks AS b ON (p.block_id = b.id) ORDER BY p.block_id ASC, p.sort ASC, p.title ASC');
+
+	$pages = $db->query('SELECT p.id, p.start, p.end, p.mode, p.parent, p.block_id, p.sort, p.title, p.target, b.title AS block_title, b.index_name AS block_name FROM ' . CONFIG_DB_PRE . 'pages AS p LEFT JOIN ' . CONFIG_DB_PRE . 'pages_blocks AS b ON (p.block_id = b.id) ORDER BY p.block_id ASC, p.sort ASC, p.title ASC');
 	$c_pages = count($pages);
 	$items = array();
-	
+
 	if ($c_pages > 0) {
-		
 		for ($i = 0; $i < $c_pages; ++$i) {
 			foreach ($pages[$i] as $key => $value) {
 				$items[$pages[$i]['id']][$key] = $value;
@@ -26,14 +25,17 @@ function generatePagesCache()
 	cache::create('pages', $items[0]['children']);
 }
 /**
- * Auflistung der übergeordneten Seiten
+ * Auflistung der Seiten
  *
+ * @param integer $mode
+ * 	1 = Seiten für das Admin Panel auflisten
+ * 	2 = Übergeordnete Seiten anzeigen
  * @param array $pages
  * @param integer $parent
  * @param integer $self
  * @return array
  */
-function pagesList($pages = 0, $parent = 0, $self = 0)
+function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0)
 {
 	static $output = array(), $key = 0, $spaces = '';
 
@@ -51,13 +53,19 @@ function pagesList($pages = 0, $parent = 0, $self = 0)
 
 		$i = 0;
 		foreach ($pages as $row) {
-			if ($self != $row['id']) {
+			if ($mode = 2 && $self != $row['id']) {
 				$output[$key]['id'] = $row['id'];
+				$output[$key]['start'] = $row['start'];
+				$output[$key]['end'] = $row['end'];
+				$output[$key]['mode'] = $row['mode'];
+				$output[$key]['block_id'] = $row['block_id'];
+				$output[$key]['title'] = $row['title'];
+				$output[$key]['block_title'] = $row['block_title'];
 				$output[$key]['selected'] = selectEntry('parent', $row['id'], $parent);
-				$output[$key]['title'] = $spaces . $row['title'];
+				$output[$key]['spaces'] = $spaces;
 				$key++;
 				if (!empty($row['children'])) {
-					pagesList($row['children'], $parent, $self);
+					pagesList($mode, $row['children'], $parent, $self);
 				}
 			}
 			if ($i == $c_pages - 1) {
