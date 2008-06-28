@@ -27,9 +27,9 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri-
 			$errors[] = $lang->t('pages', 'type_in_chronology');
 		if (strlen($form['title']) < 3)
 			$errors[] = $lang->t('pages', 'title_to_short');
-		if ($form['mode'] == '1' && !empty($form['parent']) && !validate::isNumber($form['parent']))
+		if (!empty($form['parent']) && !validate::isNumber($form['parent']))
 			$errors[] = $lang->t('pages', 'select_superior_page');
-		if ($form['mode'] == '1' && validate::isNumber($form['parent']) && ($db->select('id', 'pages', "id != '" . $uri->id . "' AND mode='1' AND parent='0'", 0, 0, 0, 1) == 0) || $form['parent'] == $uri->id || parentCheck($uri->id, $form['parent']))
+		if (!empty($form['parent']) && validate::isNumber($form['parent']) && ($db->select('id', 'pages', "id != '" . $uri->id . "' AND parent='0'", 0, 0, 0, 1) == 0) || $form['parent'] == $uri->id || !parentCheck($uri->id, $form['parent'], $form['blocks']))
 			$errors[] = $lang->t('pages', 'superior_page_not_allowed');
 		if ($form['mode'] == '1' && strlen($form['text']) < 3)
 			$errors[] = $lang->t('pages', 'text_to_short');

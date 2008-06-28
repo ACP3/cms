@@ -81,25 +81,26 @@ function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0)
  *
  * @param integer $id
  * @param integer $parent_id
+ * @param integer $block
  * @return boolean
  */
-function parentCheck($id, $parent_id)
+function parentCheck($id, $parent_id, $block)
 {
 	global $db;
 
-	$parents = $db->select('parent', 'pages', 'id = \'' . $parent_id . '\'');
+	$parents = $db->select('parent, block_id', 'pages', 'id = \'' . $parent_id . '\'');
 	$c_parents = count($parents);
 
 	if ($c_parents > 0) {
 		for ($i = 0; $i < $c_parents; ++$i) {
-			if ($parents[$i]['parent'] == $id)
-				return true;
+			if ($parents[$i]['parent'] == $id || $block != '0' && $parents[$i]['block_id'] == '0')
+				return false;
 
 			if ($db->select('id', 'pages', 'id = \'' . $parents[$i]['parent'] . '\'', 0, 0, 0, 1) > 0)
-				parentCheck($id, $parents[$i]['parent']);
+				parentCheck($id, $parents[$i]['parent'], $block);
 		}
 	}
-	return false;
+	return true;
 }
 /**
  * Verarbeitet die Navigationsleiste und selektiert die aktuelle Seite,

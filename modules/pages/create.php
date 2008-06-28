@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('pages', 'type_in_chronology');
 	if (strlen($form['title']) < 3)
 		$errors[] = $lang->t('pages', 'title_to_short');
-	if ($form['mode'] == '1' && !empty($form['parent']) && !validate::isNumber($form['parent']))
+	if (!empty($form['parent']) && !validate::isNumber($form['parent']))
 		$errors[] = $lang->t('pages', 'select_superior_page');
 	if ($form['mode'] == '1' && strlen($form['text']) < 3)
 		$errors[] = $lang->t('pages', 'text_to_short');
