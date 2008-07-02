@@ -6,8 +6,7 @@
  * @package ACP3
  * @subpackage Modules
  */
-function generatePagesCache()
-{
+function generatePagesCache() {
 	global $db;
 
 	$pages = $db->query('SELECT p.id, p.start, p.end, p.mode, p.parent, p.block_id, p.sort, p.title, p.target, b.title AS block_title, b.index_name AS block_name FROM ' . CONFIG_DB_PRE . 'pages AS p LEFT JOIN ' . CONFIG_DB_PRE . 'pages_blocks AS b ON (p.block_id = b.id) ORDER BY p.block_id ASC, p.sort ASC, p.title ASC');
@@ -19,10 +18,10 @@ function generatePagesCache()
 			foreach ($pages[$i] as $key => $value) {
 				$items[$pages[$i]['id']][$key] = $value;
 			}
-			$items[$pages[$i]['parent']]['children'][$pages[$i]['id']] =& $items[$pages[$i]['id']];
+			$items[$pages[$i]['parent']]['children'][$pages[$i]['id']] = & $items[$pages[$i]['id']];
 		}
 	}
-	cache::create('pages', $items[0]['children']);
+	cache::create('pages', !empty($items[0]['children']) ? $items[0]['children'] : array());
 }
 /**
  * Auflistung der Seiten
@@ -35,8 +34,7 @@ function generatePagesCache()
  * @param integer $self
  * @return array
  */
-function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0)
-{
+function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0) {
 	static $output = array(), $key = 0, $spaces = '';
 
 	if (empty($pages)) {
@@ -49,7 +47,7 @@ function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0)
 
 	if ($c_pages > 0) {
 		if ($key != 0)
-			$spaces.= '&nbsp;&nbsp;';
+			$spaces .= '&nbsp;&nbsp;';
 
 		$i = 0;
 		foreach ($pages as $row) {
@@ -84,8 +82,7 @@ function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0)
  * @param integer $block
  * @return boolean
  */
-function parentCheck($id, $parent_id, $block)
-{
+function parentCheck($id, $parent_id, $block) {
 	global $db;
 
 	$parents = $db->select('parent, block_id', 'pages', 'id = \'' . $parent_id . '\'');
@@ -108,12 +105,11 @@ function parentCheck($id, $parent_id, $block)
  *
  * @return mixed
  */
-function processNavbar($block, $pages = 0)
-{
+function processNavbar($block, $pages = 0) {
 	static $navbar = array();
 
 	// Navigationsleiste sofort ausgeben, falls diese schon einmal verarbeitet wurde
-	if (empty($pages) && !empty($navbar[$block])) {
+	if (empty($pages) && isset($navbar[$block])) {
 		return $navbar[$block];
 	} else {
 		if (empty($pages)) {
@@ -129,31 +125,34 @@ function processNavbar($block, $pages = 0)
 			static $tabs = '';
 
 			if (!empty($navbar[$block]))
-				$tabs.= "\t\t";
+				$tabs .= "\t\t";
 
 			$i = 0;
 			if (empty($navbar[$block])) {
 				$navbar[$block] = "<ul class=\"navigation-" . $block . "\">\n";
 			} else {
-				$navbar[$block].= $tabs . "<ul>\n";
+				$navbar[$block] .= $tabs . "<ul>\n";
 			}
 			foreach ($pages as $row) {
-				if ($row['block_name'] == $block && !empty($row['block_id']) && $row['start'] == $row['end']  && $row['start'] <= $date->timestamp() || $row['start'] != $row['end'] && $row['start'] <= $date->timestamp() && $row['end'] >= $date->timestamp()) {
+				if ($row['block_name'] == $block && !empty($row['block_id']) && $row['start'] == $row['end'] && $row['start'] <= $date->timestamp() || $row['start'] != $row['end'] && $row['start'] <= $date->timestamp() && $row['end'] >= $date->timestamp()) {
 					$css = 'navi-' . $row['id'] . ($uri->mod == 'pages' && $uri->page == 'list' && $uri->item == $row['id'] ? ' selected' : '');
 					$href = uri('pages/list/item_' . $row['id']);
 					$target = ($row['mode'] == 2 || $row['mode'] == 3) && $row['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 					$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $row['title'] . '</a>';
 					if (empty($row['children'])) {
-						$navbar[$block].= $tabs . "\t<li>" . $link . "</li>\n";
+						$navbar[$block] .= $tabs . "\t<li>" . $link . "</li>\n";
 					} else {
-						$navbar[$block].= $tabs . "\t<li>\n" . $tabs . "\t\t" . $link . "\n";
+						$navbar[$block] .= $tabs . "\t<li>\n" . $tabs . "\t\t" . $link . "\n";
 						processNavbar($block, $row['children']);
-						$navbar[$block].= $tabs . "\t</li>\n";
+						$navbar[$block] .= $tabs . "\t</li>\n";
 					}
 				}
+				// Navigationsleiste einrücken
 				if ($i == $c_pages - 1) {
-					$navbar[$block].= $tabs . "</ul>\n";
-					$navbar[$block] = str_replace($tabs . "<ul>\n" . $tabs . "</ul>\n", '', $navbar[$block]);
+					// Mögliche HTML Fehler beheben
+					$search = array($tabs . "<ul>\n" . $tabs . "</ul>\n", "<ul class=\"navigation-" . $block . "\">\n</ul>\n");
+					$navbar[$block] .= $tabs . "</ul>\n";
+					$navbar[$block] = str_replace($search, '', $navbar[$block]);
 					$tabs = substr($tabs, 0, -2);
 				}
 				++$i;
