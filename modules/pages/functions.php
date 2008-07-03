@@ -34,10 +34,14 @@ function generatePagesCache() {
  * @param integer $self
  * @return array
  */
-function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0) {
-	static $output = array(), $key = 0, $spaces = '';
+function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0, $indent = 0) {
+	static $output = array(), $key = 0;
 
 	if (empty($pages)) {
+		// Der Baum ist schon verhanden
+		if (!empty($output)) {
+			return $output;
+		}
 		if (!cache::check('pages')) {
 			generatePagesCache();
 		}
@@ -46,10 +50,6 @@ function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0) {
 	$c_pages = count($pages);
 
 	if ($c_pages > 0) {
-		if ($key != 0)
-			$spaces .= '&nbsp;&nbsp;';
-
-		$i = 0;
 		foreach ($pages as $row) {
 			if ($mode = 2 && $self != $row['id']) {
 				$output[$key]['id'] = $row['id'];
@@ -60,16 +60,12 @@ function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0) {
 				$output[$key]['title'] = $row['title'];
 				$output[$key]['block_title'] = $row['block_title'];
 				$output[$key]['selected'] = selectEntry('parent', $row['id'], $parent);
-				$output[$key]['spaces'] = $spaces;
+				$output[$key]['spaces'] = str_repeat('&nbsp;&nbsp;', $indent);
 				$key++;
 				if (!empty($row['children'])) {
-					pagesList($mode, $row['children'], $parent, $self);
+					pagesList($mode, $row['children'], $parent, $self, $indent + 1);
 				}
 			}
-			if ($i == $c_pages - 1) {
-				$spaces = substr($spaces, 0, -12);
-			}
-			++$i;
 		}
 	}
 	return $output;
