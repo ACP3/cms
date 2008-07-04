@@ -15,18 +15,22 @@ $pages = pagesList();
 $c_pages = count($pages);
 
 if ($c_pages > 0) {
-	$replace = array($lang->t('pages', 'static_page'), $lang->t('pages', 'dynamic_page'), $lang->t('pages', 'hyperlink'));
+	$tpl->assign('pagination', pagination($c_pages));
 
-	$i = 0;
-	foreach ($pages as $block => $page) {
-		foreach ($page as $row) {
-			$pages[$block][$i]['start'] = $date->format($page[$i]['start']);
-			$pages[$block][$i]['end'] = $date->format($page[$i]['end']);
-			$pages[$block][$i]['mode'] = str_replace(array('1', '2', '3'), $replace, $page[$i]['mode']);
-			$i++;
-		}
+	$mode_replace = array($lang->t('pages', 'static_page'), $lang->t('pages', 'dynamic_page'), $lang->t('pages', 'hyperlink'));
+
+	// Einträge pro Seite
+	$epp = POS + CONFIG_ENTRIES <= $c_pages ? CONFIG_ENTRIES : $c_pages;
+	$output = array();
+	for ($i = POS; $i < $epp; ++$i) {
+		$output[$i]['id'] = $pages[$i]['id'];
+		$output[$i]['start'] = $date->format($pages[$i]['start']);
+		$output[$i]['end'] = $date->format($pages[$i]['end']);
+		$output[$i]['mode'] = str_replace(array('1', '2', '3'), $mode_replace, $pages[$i]['mode']);
+		$output[$i]['block'] = $pages[$i]['block_id'] == '0' ? $lang->t('pages', 'do_not_display') : $pages[$i]['block_title'];
+		$output[$i]['title'] = $pages[$i]['title'];
 	}
-	$tpl->assign('pages', $pages);
+	$tpl->assign('pages', $output);
 }
 $content = $tpl->fetch('pages/adm_list.html');
 ?>
