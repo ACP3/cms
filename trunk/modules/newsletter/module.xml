@@ -9,7 +9,7 @@
 		<active>1</active>
 	</info>
 	<settings>
-		<mail><![CDATA[tinogo@blue-cable.de]]></mail>
+		<mail></mail>
 		<mailsig><![CDATA[Mit freundlichen Grüßen,
 
 das Newsletterteam]]></mailsig>

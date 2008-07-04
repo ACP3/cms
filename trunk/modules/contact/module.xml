@@ -8,11 +8,11 @@
 		<active>1</active>
 	</info>
 	<settings>
-		<mail><![CDATA[tinogo@blue-cable.de]]></mail>
+		<mail></mail>
 		<address></address>
 		<telephone></telephone>
 		<fax></fax>
-		<disclaimer><![CDATA[Trotz sorgf&auml;ltiger inhaltlicher Kontrolle &uuml;bernehmen wir keine Haftung f&uuml;r die Inhalte externer Links. F&uuml;r den Inhalt der verlinkten Seiten sind ausschlie&szlig;lich deren Betreiber verantwortlich.]]></disclaimer>
+		<disclaimer><![CDATA[Trotz sorgf&#228;ltiger inhaltlicher Kontrolle &#252;bernehmen wir keine Haftung f&#252;r die Inhalte externer Links. F&#252;r den Inhalt der verlinkten Seiten sind ausschlie&#223;lich deren Betreiber verantwortlich.]]></disclaimer>
 		<miscellaneous></miscellaneous>
 	</settings>
 	<access>
