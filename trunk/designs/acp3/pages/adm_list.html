@@ -7,30 +7,26 @@
 	</div>
 	<hr />
 {if isset($pages)}
+{$pagination}
 	<table>
 		<thead>
 			<tr>
 				<th>{lang values="common|mark"}</th>
 				<th>{lang values="common|publication_period"}</th>
 				<th>{lang values="pages|title"}</th>
+				<th>{lang values="pages|blocks"}</th>
 				<th>{lang values="pages|page_type"}</th>
 			</tr>
 		</thead>
 		<tbody>
-{foreach key=block item=pages from=$pages}
-{if !empty($block)}
-			<tr>
-				<td colspan="4" class="sub-table-header">{$block}</td>
-			</tr>
-{/if}
-{foreach from=$pages item="row"}
+{foreach from=$pages item=row}
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
 				<td>{$row.start} {lang values="common|until"} {$row.end}</td>
 				<td><a href="{uri args="acp/pages/edit/id_`$row.id`"}" title="{lang values="pages|edit"}">{$row.title}</a></td>
+				<td>{$row.block}</td>
 				<td>{$row.mode}</td>
 			</tr>
-{/foreach}
 {/foreach}
 		</tbody>
 	</table>
