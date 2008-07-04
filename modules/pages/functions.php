@@ -32,13 +32,15 @@ function generatePagesCache() {
  * @param array $pages
  * @param integer $parent
  * @param integer $self
+ * @param integer $indent
+ * 	Unterseiten einrücken
  * @return array
  */
-function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0, $indent = 0) {
+function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0, $indent = 2) {
 	static $output = array(), $key = 0;
 
 	if (empty($pages)) {
-		// Der Baum ist schon verhanden
+		// Falls der Baum schon vorhanden ist, diesen ausgeben
 		if (!empty($output)) {
 			return $output;
 		}
@@ -52,18 +54,20 @@ function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0, $indent = 0) {
 	if ($c_pages > 0) {
 		foreach ($pages as $row) {
 			if ($mode = 2 && $self != $row['id']) {
-				$output[$key]['id'] = $row['id'];
-				$output[$key]['start'] = $row['start'];
-				$output[$key]['end'] = $row['end'];
-				$output[$key]['mode'] = $row['mode'];
-				$output[$key]['block_id'] = $row['block_id'];
-				$output[$key]['title'] = $row['title'];
-				$output[$key]['block_title'] = $row['block_title'];
-				$output[$key]['selected'] = selectEntry('parent', $row['id'], $parent);
-				$output[$key]['spaces'] = str_repeat('&nbsp;&nbsp;', $indent);
+				$output[$row['block_title']][$key] = array(
+					'id' => $row['id'],
+					'start' => $row['start'],
+					'end' => $row['end'],
+					'mode' => $row['mode'],
+					'block_id' => $row['block_id'],
+					'title' => $row['title'],
+					'block_title' => $row['block_title'],
+					'selected' => selectEntry('parent', $row['id'], $parent),
+					'spaces' => str_repeat('&nbsp;', $indent),
+				);
 				$key++;
 				if (!empty($row['children'])) {
-					pagesList($mode, $row['children'], $parent, $self, $indent + 1);
+					pagesList($mode, $row['children'], $parent, $self, $indent + 2);
 				}
 			}
 		}

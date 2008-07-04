@@ -72,7 +72,7 @@ table {
 	width: 100%;
 	margin: 0 auto;
 }
-tfoot {
+tfoot, .sub-table-header {
 	background: #eee;
 	font-weight: bold;
 }

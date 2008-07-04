@@ -29,8 +29,13 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri-
 			$errors[] = $lang->t('pages', 'title_to_short');
 		if (!empty($form['parent']) && !validate::isNumber($form['parent']))
 			$errors[] = $lang->t('pages', 'select_superior_page');
-		if (!empty($form['parent']) && validate::isNumber($form['parent']) && ($db->select('id', 'pages', "id != '" . $uri->id . "' AND parent='0'", 0, 0, 0, 1) == 0) || $form['parent'] == $uri->id || !parentCheck($uri->id, $form['parent'], $form['blocks']))
-			$errors[] = $lang->t('pages', 'superior_page_not_allowed');
+		if (!empty($form['parent']) && validate::isNumber($form['parent'])) {
+			// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
+			$parent_block = (int) $db->select('block_id', 'pages', 'id = \'' . $form['parent'] . '\'');
+
+			if ($form['parent'] == $uri->id || !parentCheck($uri->id, $form['parent'], $form['blocks']) || $form['blocks'] != 0 && $parent_block != 0 && $parent_block != $form['blocks'])
+				$errors[] = $lang->t('pages', 'superior_page_not_allowed');
+		}
 		if ($form['mode'] == '1' && strlen($form['text']) < 3)
 			$errors[] = $lang->t('pages', 'text_to_short');
 		if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !validate::isNumber($form['target'])))

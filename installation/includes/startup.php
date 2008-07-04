@@ -22,8 +22,9 @@ if (empty($uri->query)) {
 	$uri->mod = 'overview';
 	$uri->page = 'welcome';
 }
-$lang = !empty($_POST['lang']) ? $_POST['lang'] : $uri->lang;
-define('LANG', !empty($lang) && is_file(ACP3_ROOT . 'languages/' . $lang . '/info.xml') ? $lang : 'de');
+$l = !empty($_POST['lang']) ? $_POST['lang'] : $uri->lang;
+define('LANG', !empty($l) && is_file(ACP3_ROOT . 'languages/' . $l . '/info.xml') ? $l : 'de');
+$lang = new lang;
 
 // Smarty einbinden
 define('SMARTY_DIR', ACP3_ROOT . 'includes/smarty/');
