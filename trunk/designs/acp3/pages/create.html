@@ -45,8 +45,12 @@
 			<dd>
 				<select name="form[parent]" id="parent">
 					<option value="">{lang values="pages|no_superior_page"}</option>
-{foreach from=$pages_list item=row}
-					<option value="{$row.id}"{$row.selected}>{$row.spaces}{$row.title}</option>
+{foreach key=block item=pages from=$pages_list}
+					<optgroup label="{$block}">
+{foreach from=$pages item=row}
+						<option value="{$row.id}"{$row.selected}>{$row.spaces}{$row.title}</option>
+{/foreach}
+					</optgroup>
 {/foreach}
 				</select>
 			</dd>

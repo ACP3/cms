@@ -27,9 +27,14 @@ class lang
 	{
 		global $auth;
 
-		$info = $auth->getUserInfo();
-		if (!empty($info)) {
-			$this->lang = $info['language'];
+		// Installer abfangen
+		if (isset($auth)) {
+			$info = $auth->getUserInfo();
+			if (!empty($info)) {
+				$this->lang = $info['language'];
+			}
+		} else {
+			$this->lang = LANG;
 		}
 	}
 	/**

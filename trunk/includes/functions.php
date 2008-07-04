@@ -93,7 +93,7 @@ function moveFile($tmp_filename, $filename, $dir)
 {
 	$path = ACP3_ROOT . 'uploads/' . $dir . '/';
 	$ext = strrchr($filename, '.');
-	
+
 	$new_name = 1;
 	while (is_file($path . $new_name . $ext)) {
 		$new_name++;
@@ -124,7 +124,6 @@ function moveFile($tmp_filename, $filename, $dir)
 function datepicker($name, $value = '')
 {
 	global $date, $tpl;
-	static $included = false;
 
 	$format = 'Y-m-d H:i';
 	if (!empty($_POST['form'][$name])) {
@@ -136,14 +135,11 @@ function datepicker($name, $value = '')
 	}
 
 	$datepicker = array(
-		'already_included' => $included,
 		'format' => 'yy-mm-dd',
 		'name' => $name,
 		'input' => $input,
 	);
 	$tpl->assign('date', $datepicker);
-	// Variable auf 'true' setzen, damit der datepicker nicht unzählige Male eingebunden wird
-	$included = true;
 
 	return $tpl->fetch('common/date.html');
 }
