@@ -36,6 +36,10 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages_blocks', 'id = \'' 
 
 			$bool = $db->update('pages_blocks', $update_values, 'id = \'' . $uri->id . '\'');
 
+			// Cache der Menüpunkte neu erstellen
+			include_once ACP3_ROOT . 'modules/pages/functions.php';
+			generatePagesCache();
+
 			$content = comboBox($bool ? $lang->t('pages', 'edit_block_success') : $lang->t('pages', 'edit_block_error'), uri('acp/pages/adm_list_blocks'));
 		}
 	}
