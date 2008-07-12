@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-$polls = $db->select('id, start, end, question', 'poll_question', 0, 'start DESC', POS, CONFIG_ENTRIES);
+$polls = $db->select('id, start, end, question', 'poll_question', 0, 'start DESC, end DESC, id DESC', POS, CONFIG_ENTRIES);
 $c_polls = count($polls);
 
 if ($c_polls > 0) {

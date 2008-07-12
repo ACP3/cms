@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-$files = $db->select('id, start, end, file, size, link_title', 'files', 0, 'start DESC', POS, CONFIG_ENTRIES);
+$files = $db->select('id, start, end, file, size, link_title', 'files', 0, 'start DESC, end DESC, id DESC', POS, CONFIG_ENTRIES);
 $c_files = count($files);
 
 if ($c_files > 0) {
