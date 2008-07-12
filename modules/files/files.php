@@ -16,7 +16,7 @@ if (validate::isNumber($uri->cat) && $db->select('id', 'categories', 'id = \'' .
 	breadcrumb::assign($category[0]['name']);
 	$period = ' AND (start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')';
 
-	$files = $db->select('id, start, file, size, link_title', 'files', 'category_id = \'' . $uri->cat . '\'' . $period, 'start DESC, end DESC');
+	$files = $db->select('id, start, file, size, link_title', 'files', 'category_id = \'' . $uri->cat . '\'' . $period, 'start DESC, end DESC, id DESC');
 	$c_files = count($files);
 
 	if ($c_files > 0) {

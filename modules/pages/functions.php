@@ -35,7 +35,7 @@ function generatePagesCache() {
  * @return array
  */
 function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0, $indent = 0) {
-	static $output = array(), $key = 0;
+	static $output = array(), $last_block = '', $key = 0;
 
 	if (empty($pages)) {
 		// Der Baum ist schon verhanden
@@ -49,17 +49,24 @@ function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0, $indent = 0) {
 	}
 
 	if (count($pages) > 0) {
+		global $lang;
 		foreach ($pages as $row) {
+			if (!empty($row['block_title']))
+				$last_block = $row['block_title'];
+			elseif (empty($row['parent']) && empty($row['block_title']))
+				$last_block = $lang->t('pages', 'do_not_display');
+
 			if ($mode = 2 && $self != $row['id']) {
-				$output[$key]['id'] = $row['id'];
-				$output[$key]['start'] = $row['start'];
-				$output[$key]['end'] = $row['end'];
-				$output[$key]['mode'] = $row['mode'];
-				$output[$key]['block_id'] = $row['block_id'];
-				$output[$key]['title'] = $row['title'];
-				$output[$key]['block_title'] = $row['block_title'];
-				$output[$key]['selected'] = selectEntry('parent', $row['id'], $parent);
-				$output[$key]['spaces'] = str_repeat('&nbsp;', $indent);
+				$output[$last_block][$key] = array(
+					'id' => $row['id'],
+					'start' => $row['start'],
+					'end' => $row['end'],
+					'mode' => $row['mode'],
+					'block_id' => $row['block_id'],
+					'title' => $row['title'],
+					'selected' => selectEntry('parent', $row['id'], $parent),
+					'spaces' => str_repeat('&nbsp;', $indent),
+				);
 				$key++;
 				if (!empty($row['children'])) {
 					pagesList($mode, $row['children'], $parent, $self, $indent + 2);

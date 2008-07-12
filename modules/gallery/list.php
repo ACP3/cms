@@ -10,11 +10,12 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$galleries = $db->select('id, start, name', 'gallery', '(start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')', 'start DESC, id DESC', POS, CONFIG_ENTRIES);
+$where = '(start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')';
+$galleries = $db->select('id, start, name', 'gallery', $where, 'start DESC, end DESC, id DESC', POS, CONFIG_ENTRIES);
 $c_galleries = count($galleries);
 
 if ($c_galleries > 0) {
-	$tpl->assign('pagination', pagination($db->select('id', 'gallery', '(start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')', 0, 0, 0, 1)));
+	$tpl->assign('pagination', pagination($db->select('id', 'gallery', $where, 0, 0, 0, 1)));
 
 	for ($i = 0; $i < $c_galleries; ++$i) {
 		$galleries[$i]['date'] = $date->format($galleries[$i]['start']);

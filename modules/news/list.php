@@ -30,7 +30,7 @@ if (modules::check('categories', 'functions')) {
 $cat = !empty($cat) ? ' AND category_id = \'' . $cat . '\'' : '';
 $where = '(start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')' . $cat;
 
-$news = $db->select('id, start, headline, text, uri', 'news', $where, 'id DESC', POS, CONFIG_ENTRIES);
+$news = $db->select('id, start, headline, text, uri', 'news', $where, 'start DESC, end DESC, id DESC', POS, CONFIG_ENTRIES);
 $c_news = count($news);
 
 if ($c_news > 0) {
