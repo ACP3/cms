@@ -18,7 +18,7 @@
 	</item>
 	<item>
 		<name>no_area_selected</name>
-		<message>Bitte geben Sie an, welche Bereiche der Einträge druchsucht werden sollen</message>
+		<message>Bitte geben Sie an, welche Bereiche der Einträge durchsucht werden sollen</message>
 	</item>
 	<item>
 		<name>no_hits_sorting_selected</name>
@@ -30,7 +30,7 @@
 	</item>
 	<item>
 		<name>no_search_results</name>
-		<message><![CDATA[ Es konnten keine Einträge mit dem Suchbegriff &quot;%s&quot; gefunden werden. ]]></message>
+		<message><![CDATA[Es konnten keine Einträge mit dem Suchbegriff &quot;%s&quot; gefunden werden.]]></message>
 	</item>
 	<item>
 		<name>search</name>
@@ -38,7 +38,7 @@
 	</item>
 	<item>
 		<name>search_after_areas</name>
-		<message> Zu durchsuchende Bereiche</message>
+		<message>Zu durchsuchende Bereiche</message>
 	</item>
 	<item>
 		<name>search_after_modules</name>
