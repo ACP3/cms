@@ -28,7 +28,7 @@ $c_result_pages = count($result_pages);
 if ($c_result_pages > 0) {
 	$results_mods['pages']['title'] = $lang->t('pages', 'pages');
 	for ($i = 0; $i < $c_result_pages; ++$i) {
-		$results_mods['pages']['results'][$i]['hyperlink'] = uri('pages/list/id_' . $result_pages[$i]['id']);
+		$results_mods['pages']['results'][$i]['hyperlink'] = uri('pages/list/item_' . $result_pages[$i]['id']);
 		$results_mods['pages']['results'][$i]['headline'] = $result_pages[$i]['title'];
 
 		$striped_text = strip_tags($result_pages[$i]['text']);
