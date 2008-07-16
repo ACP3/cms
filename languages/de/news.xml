@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
 	<item>
+		<name>activate_readmore</name>
+		<message>&quot;Weiterlesen...&quot; aktivieren</message>
+	</item>
+	<item>
 		<name>additional_hyperlink</name>
 		<message>Optionaler Hyperlink</message>
+	</item>
+	<item>
+		<name>allow_comments</name>
+		<message>Kommentare erlauben</message>
 	</item>
 	<item>
 		<name>complete_additional_hyperlink_statements</name>

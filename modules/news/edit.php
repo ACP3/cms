@@ -33,6 +33,8 @@ if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->
 				'end' => $date->timestamp($form['end']),
 				'headline' => $db->escape($form['headline']),
 				'text' => $db->escape($form['text'], 2),
+				'readmore' => isset($form['readmore']) ? 1 : 0,
+				'comments' => isset($form['comments']) ? 1 : 0,
 				'category_id' => $form['cat'],
 				'uri' => $db->escape($form['uri'], 2),
 				'target' => $form['target'],
@@ -41,13 +43,13 @@ if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->
 
 			$bool = $db->update('news', $update_values, 'id = \'' . $uri->id . '\'');
 
-			cache::create('news_details_id_' . $uri->id, $db->select('id, start, headline, text, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\''));
+			cache::create('news_details_id_' . $uri->id, $db->select('id, start, headline, text, readmore, comments, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\''));
 
 			$content = comboBox($bool ? $lang->t('news', 'edit_success') : $lang->t('news', 'edit_error'), uri('acp/news'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$news = $db->select('start, end, headline, text, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\'');
+		$news = $db->select('start, end, headline, text, readmore, comments, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\'');
 		$news[0]['text'] = $db->escape($news[0]['text'], 3);
 
 		// Datumsauswahl
@@ -59,6 +61,17 @@ if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->
 			include_once ACP3_ROOT . 'modules/categories/functions.php';
 			$tpl->assign('categories', categoriesList('news', 'edit', $news[0]['category_id']));
 		}
+
+		// Weiterlesen & Kommentare
+		$options[0]['id'] = 'readmore';
+		$options[0]['name'] = 'readmore';
+		$options[0]['checked'] = selectEntry('readmore', '1', $news[0]['readmore'], 'checked');
+		$options[0]['lang'] = $lang->t('news', 'activate_readmore');
+		$options[1]['id'] = 'comments';
+		$options[1]['name'] = 'comments';
+		$options[1]['checked'] = selectEntry('comments', '1', $news[0]['comments'], 'checked');
+		$options[1]['lang'] = $lang->t('news', 'allow_comments');
+		$tpl->assign('options', $options);
 
 		// Linkziel
 		$target[0]['value'] = '1';
