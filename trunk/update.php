@@ -10,6 +10,8 @@ require ACP3_ROOT . 'includes/classes/db.php';
 $queries = array(
 	0 => 'CREATE TABLE `{pre}newsletter_archive` (`id` INT NOT NULL AUTO_INCREMENT, `date` VARCHAR(14) NOT NULL, `subject` VARCHAR(120) NOT NULL, `text` TEXT NOT NULL, `status` TINYINT(1) NOT NULL, PRIMARY KEY (`id`)) {engine} {charset} ;',
 	1 => 'RENAME TABLE `{pre}galpics` TO `{pre}gallery_pictures`, `{pre}nl_accounts` TO `{pre}newsletter_accounts`;',
+	2 => 'ALTER TABLE `{pre}news` ADD `readmore` TINYINT(1) NOT NULL AFTER `text`, ADD `comments` TINYINT(1) NOT NULL AFTER `readmore`;',
+	3 => 'UPDATE `{pre}news` SET readmore = \'1\', comments = \'1\';',
 );
 
 if (count($queries) > 0) {
@@ -63,7 +65,7 @@ $config = array(
 	'wysiwyg' => 'fckeditor'
 );
 
-echo config::system($config) ? 'Konfigurationsdatei erfolgreich aktualisiert.' : 'Konfigurationsdatei konnte nicht aktualisiert werden.';
+print config::system($config) ? 'Konfigurationsdatei erfolgreich aktualisiert.' : 'Konfigurationsdatei konnte nicht aktualisiert werden.';
 
 // Cache leeren
 cache::purge();

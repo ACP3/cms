@@ -15,7 +15,7 @@ $period = ' AND (start = end AND start <= \'' . $date->timestamp() . '\' OR star
 if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->id . '\'' . $period, 0, 0, 0, 1) == 1) {
 	// News Cache erstellen
 	if (!cache::check('news_details_id_' . $uri->id)) {
-		cache::create('news_details_id_' . $uri->id, $db->select('id, start, headline, text, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\''));
+		cache::create('news_details_id_' . $uri->id, $db->select('id, start, headline, text, readmore, comments, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\''));
 	}
 	$news = cache::output('news_details_id_' . $uri->id);
 
@@ -35,7 +35,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->
 
 	$tpl->assign('news', $news[0]);
 
-	if (modules::check('comments', 'functions')) {
+	if ($news[0]['comments'] == '1' && modules::check('comments', 'functions')) {
 		include_once ACP3_ROOT . 'modules/comments/functions.php';
 
 		$tpl->assign('comments', comments('news', $uri->id));

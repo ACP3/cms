@@ -30,7 +30,7 @@ if (modules::check('categories', 'functions')) {
 $cat = !empty($cat) ? ' AND category_id = \'' . $cat . '\'' : '';
 $where = '(start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')' . $cat;
 
-$news = $db->select('id, start, headline, text, uri', 'news', $where, 'start DESC, end DESC, id DESC', POS, CONFIG_ENTRIES);
+$news = $db->select('id, start, headline, text, readmore, comments, uri', 'news', $where, 'start DESC, end DESC, id DESC', POS, CONFIG_ENTRIES);
 $c_news = count($news);
 
 if ($c_news > 0) {
@@ -38,7 +38,6 @@ if ($c_news > 0) {
 	if (modules::check('comments', 'functions')) {
 		include_once ACP3_ROOT . 'modules/comments/functions.php';
 		$comment_check = true;
-		$tpl->assign('comment_check', true);
 	}
 	$tpl->assign('pagination', pagination($db->select('id', 'news', $where, 0, 0, 0, 1)));
 
@@ -47,20 +46,24 @@ if ($c_news > 0) {
 		$news[$i]['headline'] = $news[$i]['headline'];
 		$news[$i]['text'] = $db->escape($news[$i]['text'], 3);
 		$news[$i]['uri'] = $db->escape($news[$i]['uri'], 3);
-		if (isset($comment_check)) {
-			$news[$i]['comments'] = commentsCount($news[$i]['id']);
+		$news[$i]['allow_comments'] = false;
+		if ($news[$i]['comments'] == '1' && isset($comment_check)) {
+			$news[$i]['comments_count'] = commentsCount($news[$i]['id']);
+			$news[$i]['allow_comments'] = true;
 		}
-		// HTML-Code für den "weiterlesen..." Link entfernen
-		$striped_news = strip_tags($news[$i]['text']);
-		$striped_news = $db->escape($striped_news, 3);
-		$striped_news = html_entity_decode($striped_news, ENT_QUOTES, 'UTF-8');
-		$chars = 350;
+		if ($news[$i]['readmore'] == '1') {
+			// HTML-Code für den "weiterlesen..." Link entfernen
+			$striped_news = strip_tags($news[$i]['text']);
+			$striped_news = $db->escape($striped_news, 3);
+			$striped_news = html_entity_decode($striped_news, ENT_QUOTES, 'UTF-8');
+			$chars = 350;
 
-		// Weiterlesen-Link, falls zusätzliche Links zur News angegeben sind oder Zeichenanzahl größer als $chars
-		if (strlen($striped_news) - $chars >= 50 || $news[$i]['uri'] != '') {
-			$striped_news = substr($striped_news, 0, $chars - 50);
+			// Weiterlesen-Link, falls zusätzliche Links zur News angegeben sind oder Zeichenanzahl größer als $chars
+			if (strlen($striped_news) - $chars >= 50 || $news[$i]['uri'] != '') {
+				$striped_news = substr($striped_news, 0, $chars - 50);
 
-			$news[$i]['text'] = $striped_news . '...<a href="' . uri('news/details/id_' . $news[$i]['id']) . '">[' . $lang->t('news', 'read_on') . ']</a>' . "\n";
+				$news[$i]['text'] = $striped_news . '...<a href="' . uri('news/details/id_' . $news[$i]['id']) . '">[' . $lang->t('news', 'read_on') . ']</a>' . "\n";
+			}
 		}
 	}
 	$tpl->assign('news', $news);

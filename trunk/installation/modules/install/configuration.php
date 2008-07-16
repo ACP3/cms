@@ -5,7 +5,7 @@ if (!defined('IN_INSTALL'))
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 	$config_path = ACP3_ROOT . 'includes/config.php';
-	
+
 	if (empty($form['db_host']))
 		$errors[] = lang('system', 'type_in_db_host');
 	if (empty($form['db_user']))
@@ -100,7 +100,7 @@ if (isset($_POST['submit'])) {
 
 		$other_arr = array(
 			1 => 'INSERT INTO `' . CONFIG_DB_PRE . 'users` VALUES (1, \'' . mask($form['user_name']) . '\', \'\', \'' . sha1($salt . sha1($form['user_pwd'])) . ':' . $salt . '\', 1, \'' . $form['mail'] . '\', \'\', \'' . CONFIG_TIME_ZONE . '\', \'' . CONFIG_DST .'\', \'' . CONFIG_LANG . '\', \'\')',
-			2 => 'INSERT INTO `' . CONFIG_DB_PRE . 'news` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', \'' . lang('installation', 'news_headline') . '\', \'' . lang('installation', 'news_text') . '\', \'1\', \'\', \'\', \'\')',
+			2 => 'INSERT INTO `' . CONFIG_DB_PRE . 'news` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', \'' . lang('installation', 'news_headline') . '\', \'' . lang('installation', 'news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\')',
 			3 => 'INSERT INTO `' . CONFIG_DB_PRE . 'pages` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 0, \'' . lang('installation', 'pages_news') . '\', \'news/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 1, \'' . lang('installation', 'pages_files') . '\', \'files/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 2, \'' . lang('installation', 'pages_gallery') . '\', \'gallery/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 3, \'' . lang('installation', 'pages_guestbook') . '\', \'guestbook/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 4, \'' . lang('installation', 'pages_polls') . '\', \'polls/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 1, 5, \'' . lang('installation', 'pages_search') . '\', \'search/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 2, 0, \'' . lang('installation', 'pages_contact') . '\', \'contact/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 0, 2, 1, \'' . lang('installation', 'pages_imprint') . '\', \'contact/imprint\', 1, \'\')',
 			4 => 'INSERT INTO `' . CONFIG_DB_PRE . 'pages_blocks` (`id`, `index_name`, `title`) VALUES (1, \'main\', \'' . lang('installation', 'pages_main') . '\'), (2, \'sidebar\', \'' . lang('installation', 'pages_sidebar') . '\')',
 		);
@@ -166,7 +166,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$defaults['flood'] = '30';
 	$defaults['date'] = 'd.m.y, H:i';
 	$defaults['title'] = 'ACP3';
-	
+
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 
 	$default_db_type = extension_loaded('mysqli') ? 'mysqli' : 'mysql';

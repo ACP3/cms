@@ -33,6 +33,8 @@ if (isset($_POST['submit'])) {
 			'end' => $date->timestamp($form['end']),
 			'headline' => $db->escape($form['headline']),
 			'text' => $db->escape($form['text'], 2),
+			'readmore' => isset($form['readmore']) ? 1 : 0,
+			'comments' => isset($form['comments']) ? 1 : 0,
 			'category_id' => $form['cat'],
 			'uri' => $db->escape($form['uri'], 2),
 			'target' => $form['target'],
@@ -54,7 +56,18 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		include_once ACP3_ROOT . 'modules/categories/functions.php';
 		$tpl->assign('categories', categoriesList('news', 'create'));
 	}
-	
+
+	// Weiterlesen & Kommentare
+	$options[0]['id'] = 'readmore';
+	$options[0]['name'] = 'readmore';
+	$options[0]['checked'] = selectEntry('readmore', '1', '1', 'checked');
+	$options[0]['lang'] = $lang->t('news', 'activate_readmore');
+	$options[1]['id'] = 'comments';
+	$options[1]['name'] = 'comments';
+	$options[1]['checked'] = selectEntry('comments', '1', '1', 'checked');
+	$options[1]['lang'] = $lang->t('news', 'allow_comments');
+	$tpl->assign('options', $options);
+
 	// Linkziel
 	$target[0]['value'] = '1';
 	$target[0]['selected'] = selectEntry('target', '1');

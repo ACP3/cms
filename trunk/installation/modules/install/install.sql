@@ -81,6 +81,8 @@ CREATE TABLE `{pre}news` (
 	`end` varchar(14) NOT NULL, 
 	`headline` varchar(120) NOT NULL, 
 	`text` text NOT NULL, 
+	`readmore` tinyint(1) NOT NULL, 
+	`comments` tinyint(1) NOT NULL, 
 	`category_id` int(11) NOT NULL, 
 	`uri` varchar(120) NOT NULL, 
 	`target` tinyint(1) NOT NULL, 
