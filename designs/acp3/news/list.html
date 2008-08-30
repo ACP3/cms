@@ -37,7 +37,7 @@
 {if $row.allow_comments}
 		<div class="comments">
 			<a href="{uri args="news/details/id_`$row.id`"}#comments">{lang values="comments|comments"}</a>
-			<span>({$row.comments})</span>
+			<span>({$row.comments_count})</span>
 		</div>
 {/if}
 		{$row.date}
