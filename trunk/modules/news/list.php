@@ -48,6 +48,7 @@ if ($c_news > 0) {
 		$news[$i]['uri'] = $db->escape($news[$i]['uri'], 3);
 		$news[$i]['allow_comments'] = false;
 		if ($news[$i]['comments'] == '1' && isset($comment_check)) {
+			unset($news[$i]['comments']);
 			$news[$i]['comments_count'] = commentsCount($news[$i]['id']);
 			$news[$i]['allow_comments'] = true;
 		}
