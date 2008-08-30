@@ -21,7 +21,7 @@
 		<message>Bitte geben Sie an, welche Bereiche der Einträge durchsucht werden sollen</message>
 	</item>
 	<item>
-		<name>no_hits_sorting_selected</name>
+		<name>no_sorting_selected</name>
 		<message>Bitte wählen Sie aus, in welcher Reihenfolge die Treffer sortiert werden sollen</message>
 	</item>
 	<item>
@@ -47,6 +47,10 @@
 	<item>
 		<name>search_options</name>
 		<message>Suchoptionen</message>
+	</item>
+	<item>
+		<name>search_results</name>
+		<message>Suchergebnisse</message>
 	</item>
 	<item>
 		<name>search_term</name>

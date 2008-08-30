@@ -20,11 +20,14 @@ if (isset($_POST['submit'])) {
 	if (empty($form['area']))
 		$errors[] = $lang->t('search', 'no_area_selected');
 	if (empty($form['sort']) || $form['sort'] != 'asc' && $form['sort'] != 'desc')
-		$errors[] = $lang->t('search', 'no_hits_sorting_selected');
+		$errors[] = $lang->t('search', 'no_sorting_selected');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
+		breadcrumb::assign($lang->t('search', 'search'), uri('search'));
+		breadcrumb::assign($lang->t('search', 'search_results'));
+
 		$form['sort'] = strtoupper($form['sort']);
 		$results_mods = array();
 		foreach ($form['mods'] as $module) {

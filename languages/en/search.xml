@@ -21,7 +21,7 @@
 		<message>Please select which areas of the entries should be searched through</message>
 	</item>
 	<item>
-		<name>no_hits_sorting_selected</name>
+		<name>no_sorting_selected</name>
 		<message>Please select, in which order the hits should be displayed</message>
 	</item>
 	<item>
@@ -47,6 +47,10 @@
 	<item>
 		<name>search_options</name>
 		<message>Search options</message>
+	</item>
+	<item>
+		<name>search_results</name>
+		<message>Search results</message>
 	</item>
 	<item>
 		<name>search_term</name>
