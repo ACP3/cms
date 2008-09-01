@@ -16,14 +16,6 @@
 class cache
 {
 	/**
-	 * Dateinamenserweiterung für die gecacheten Dateien
-	 *
-	 * @var string
-	 * @access private
-	 */
-	private static $ext = '.cache';
-
-	/**
 	 * Überprüft, ob der Cache für eine bestimmte Abfrage schon erstellt wurde
 	 *
 	 * @param string $filename
@@ -31,10 +23,7 @@ class cache
 	 */
 	public static function check($filename)
 	{
-		// Datei alle 15 Minuten neu cachen
-		$eol = 900;
-		$path = ACP3_ROOT . 'cache/' . md5($filename) . self::$ext;
-		if (is_file($path) && time() - filemtime($path) <  $eol) {
+		if (is_file(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php')) {
 			return true;
 		}
 		return false;
@@ -51,7 +40,7 @@ class cache
 	public static function create($filename, $data)
 	{
 		if (!empty($data)) {
-			$bool = @file_put_contents(ACP3_ROOT . 'cache/' . md5($filename) . self::$ext, serialize($data));
+			$bool = @file_put_contents(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php', serialize($data));
 
 			return $bool ? true : false;
 		} elseif (self::check($filename)) {
@@ -68,9 +57,8 @@ class cache
 	 */
 	public static function delete($filename)
 	{
-		$path = ACP3_ROOT . 'cache/' . md5($filename) . self::$ext;
-		if (is_file($path)) {
-			return unlink($path);
+		if (self::check($filename)) {
+			return unlink(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php');
 		}
 		return false;
 	}
@@ -84,7 +72,7 @@ class cache
 	public static function output($filename)
 	{
 		if (self::check($filename)) {
-			return unserialize(@file_get_contents(ACP3_ROOT . 'cache/' . md5($filename) . self::$ext));
+			return unserialize(@file_get_contents(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php'));
 		}
 		return array();
 	}
