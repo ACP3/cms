@@ -1,9 +1,8 @@
 <?php
 define('INSTALLED', true);
-define('DEBUG', 1);
 define('CONFIG_DATE', 'd.m.y, H:i');
 define('CONFIG_DB_HOST', 'localhost');
-define('CONFIG_DB_NAME', 'acp3_400');
+define('CONFIG_DB_NAME', 'acp3');
 define('CONFIG_DB_PRE', 'acp3_');
 define('CONFIG_DB_PWD', '');
 define('CONFIG_DB_TYPE', 'mysqli');
@@ -21,6 +20,6 @@ define('CONFIG_META_KEYWORDS', '');
 define('CONFIG_SEF', '0');
 define('CONFIG_TIME_ZONE', '3600');
 define('CONFIG_TITLE', 'ACP3');
-define('CONFIG_VERSION', 'ACP3 4.0RC1 SVN');
+define('CONFIG_VERSION', '4.0RC1 SVN');
 define('CONFIG_WYSIWYG', 'fckeditor');
 ?>
