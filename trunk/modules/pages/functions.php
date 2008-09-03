@@ -9,7 +9,7 @@
 function generatePagesCache() {
 	global $db;
 
-	$pages = $db->query('SELECT p.id, p.start, p.end, p.mode, p.parent, p.block_id, p.sort, p.title, p.target, b.title AS block_title, b.index_name AS block_name FROM ' . CONFIG_DB_PRE . 'pages AS p LEFT JOIN ' . CONFIG_DB_PRE . 'pages_blocks AS b ON (p.block_id = b.id) ORDER BY p.block_id ASC, p.sort ASC, p.title ASC');
+	$pages = $db->query('SELECT p.id, p.start, p.end, p.mode, p.parent, p.block_id, p.sort, p.title, p.uri, p.target, b.title AS block_title, b.index_name AS block_name FROM ' . CONFIG_DB_PRE . 'pages AS p LEFT JOIN ' . CONFIG_DB_PRE . 'pages_blocks AS b ON (p.block_id = b.id) ORDER BY p.block_id ASC, p.sort ASC, p.title ASC');
 	$c_pages = count($pages);
 	$items = array();
 
@@ -38,7 +38,7 @@ function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0, $indent = 0) {
 	static $output = array(), $last_block = '', $key = 0;
 
 	if (empty($pages)) {
-		// Der Baum ist schon verhanden
+		// Der Baum ist schon vorhanden
 		if (!empty($output)) {
 			return $output;
 		}
@@ -56,7 +56,7 @@ function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0, $indent = 0) {
 			elseif (empty($row['parent']) && empty($row['block_title']))
 				$last_block = $lang->t('pages', 'do_not_display');
 
-			if ($mode = 2 && $self != $row['id']) {
+			if ($mode == 2 && $self != $row['id']) {
 				$output[$last_block][$key] = array(
 					'id' => $row['id'],
 					'start' => $row['start'],
@@ -137,7 +137,7 @@ function processNavbar($block, $pages = 0) {
 			}
 			foreach ($pages as $row) {
 				if ($row['block_name'] == $block && !empty($row['block_id']) && $row['start'] == $row['end'] && $row['start'] <= $date->timestamp() || $row['start'] != $row['end'] && $row['start'] <= $date->timestamp() && $row['end'] >= $date->timestamp()) {
-					$css = 'navi-' . $row['id'] . ($uri->mod == 'pages' && $uri->page == 'list' && $uri->item == $row['id'] ? ' selected' : '');
+					$css = 'navi-' . $row['id'] . ($uri->mod == 'pages' && $uri->page == 'list' && $uri->item == $row['id'] || $uri->query == uri($row['uri']) ? ' selected' : '');
 					$href = uri('pages/list/item_' . $row['id']);
 					$target = ($row['mode'] == 2 || $row['mode'] == 3) && $row['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 					$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $row['title'] . '</a>';
