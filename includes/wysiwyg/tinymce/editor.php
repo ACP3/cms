@@ -6,10 +6,10 @@ function editor($params) {
 	$out = '';
 
 	if (!$init) {
-		$out.= '<script language="javascript" type="text/javascript" src="' . ROOT_DIR . 'includes/wysiwyg/tinymce/tiny_mce.js"></script>' . "\n";
+		$out.= '<script type="text/javascript" src="' . ROOT_DIR . 'includes/wysiwyg/tinymce/tiny_mce.js"></script>' . "\n";
 	}
 
-	$out.= '<script language="javascript" type="text/javascript">' . "\n";
+	$out.= '<script type="text/javascript">' . "\n";
 	$out.= "tinyMCE.init({\n";
 	$out.= 'mode : "exact",' . "\n";
 	$out.= 'elements : "' . $id . '",' . "\n";
@@ -20,7 +20,6 @@ function editor($params) {
 	if (isset($params['toolbar']) && $params['toolbar'] == 'simple') {
 		$out.= 'plugins : "inlinepopups,contextmenu",' . "\n";
 		$out.= 'theme_advanced_buttons1 : "code,|,bold,italic,|,numlist,bullist,|,link,unlink,anchor,|,undo,redo,|,help",' . "\n";
-		$out.= 'theme_advanced_buttons2 : "",' . "\n";
 		$out.= 'theme_advanced_buttons2 : "",' . "\n";
 	} else {
 		$out.= 'plugins : "safari,style,layer,table,advhr,advimage,advlink,emotions,inlinepopups,preview,media,searchreplace,contextmenu,paste,noneditable,visualchars,nonbreaking,xhtmlxtras",' . "\n";
