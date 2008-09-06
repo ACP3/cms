@@ -1,0 +1,37 @@
+<form action="{uri args="acp/emoticons/delete"}" method="post">
+	<div id="adm-list">
+		<a href="{uri args="acp/emoticons/create"}" title="{lang values="emoticons|create"}"><img src="{icon path="32/ksmiletris"}" alt="{lang values="emoticons|create"}" /></a>
+		<a href="{uri args="acp/emoticons/settings"}" title="{lang values="emoticons|settings"}"><img src="{icon path="32/advancedsettings"}" alt="{lang values="emoticons|settings"}" /></a>
+		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		<h2>{lang values="emoticons|emoticons_overview"}</h2>
+	</div>
+	<hr />
+{if isset($emoticons)}
+{$pagination}
+	<table>
+		<thead>
+			<tr>
+				<th>{lang values="common|mark"}</th>
+				<th>{lang values="common|description"}</th>
+				<th>{lang values="emoticons|code"}</th>
+				<th>{lang values="emoticons|picture"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$emoticons item=row}
+			<tr>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td><a href="{uri args="acp/emoticons/edit/id_`$row.id`"}" title="{lang values="emoticons|edit"}">{$row.description}</a></td>
+				<td>{$row.code}</td>
+				<td><img src="{$ROOT_DIR}uploads/emoticons/{$row.img}" alt="" /></td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{mark name="entries"}
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}
+</form>

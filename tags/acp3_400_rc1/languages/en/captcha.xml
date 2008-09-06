@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>captcha</name>
+		<message>Captcha</message>
+	</item>
+	<item>
+		<name>invalid_captcha_entered</name>
+		<message>Either you you had a typo in the captcha or the it's outdated</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Captchas can block Spambots</message>
+	</item>
+</language>

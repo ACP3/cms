@@ -1,0 +1,28 @@
+{if isset($nav_mods) || isset($nav_system)}
+<script type="text/javascript" src="{$DESIGN_PATH}users/script.js"></script>
+{/if}
+<h4>{lang values="users|user_menu"}</h4>
+<ul class="admin">
+	<li><a href="{uri args="users/home"}">{lang values="users|home"}</a></li>
+{if isset($nav_mods)}
+	<li>
+		<a href="{uri args="acp"}" id="nav-mods-link">{lang values="users|administration"}</a>
+		<ul id="nav-mods">
+{foreach from=$nav_mods item=row}
+			<li><a href="{uri args="acp/`$row.dir`"}">{$row.name}</a></li>
+{/foreach}
+		</ul>
+	</li>
+{/if}
+{if isset($nav_system)}
+	<li>
+		<a href="{uri args="acp/system"}" id="nav-system-link">{lang values="system|system"}</a>
+		<ul id="nav-system">
+{foreach from=$nav_system item=row}
+			<li><a href="{uri args="acp/system/`$row.page`"}">{$row.name}</a></li>
+{/foreach}
+		</ul>
+	</li>
+{/if}
+	<li><a href="{uri args="acp/users/signoff"}">{lang values="users|sign_off"}</a></li>
+</ul>

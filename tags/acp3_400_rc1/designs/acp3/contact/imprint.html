@@ -1,0 +1,34 @@
+<dl class="imprint">
+{if $imprint.address != ''}
+	<dt>{lang values="contact|address"}</dt>
+	<dd><address>{$imprint.address}</address></dd>
+{/if}
+{if $imprint.mail != ''}
+	<dt>{lang values="common|email}</dt>
+	<dd><a href="{uri args="contact"}">{$imprint.mail}</a></dd>
+{/if}
+{if $imprint.telephone != ''}
+	<dt>{lang values="contact|telephone}</dt>
+	<dd>{$imprint.telephone}</dd>
+{/if}
+{if $imprint.fax != ''}
+	<dt>{lang values="contact|fax}</dt>
+	<dd>{$imprint.fax}</dd>
+{/if}
+{if $imprint.miscellaneous != ''}
+	<dt>{lang values="contact|additional_information"}</dt>
+	<dd>
+		{$imprint.miscellaneous}
+	</dd>
+{/if}
+{if $imprint.disclaimer != ''}
+	<dt>{lang values="contact|disclaimer"}</dt>
+	<dd>
+		{$imprint.disclaimer}
+	</dd>
+{/if}
+</dl>
+<hr />
+<p style="text-align:center">
+	{$powered_by}
+</p>

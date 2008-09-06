@@ -1,0 +1,51 @@
+{if isset($export)}
+<pre>
+{$export}
+</pre>
+{else}
+{if isset($error_msg)}
+{$error_msg}
+{/if}
+<script type="text/javascript" src="{$DESIGN_PATH}system/script.js"></script>
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" id="tabs">
+	<fieldset>
+		<legend>{lang values="system|sql_tables"}</legend>
+		<dl>
+			<dd>
+				<select name="form[tables][]" id="tables" multiple="multiple" style="height:200px">
+{foreach from=$tables item=row}
+					<option value="{$row.name}"{$row.selected}>{$row.name}</option>
+{/foreach}
+				</select>
+				<a href="javascript:mark_options('add')">{lang values="common|mark_all"}</a> <span>::</span> <a href="javascript:mark_options('remove')">{lang values="common|unmark_all"}</a>
+			</dd>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<legend>{lang values="system|export_options"}</legend>
+		<dl>
+			<dt><label for="file">{lang values="system|output"}</label></dt>
+			<dd>
+{foreach from=$output item=row}
+				<label for="{$row.value}">
+					<input type="radio" name="form[output]" id="{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+					{$row.lang}
+				</label>
+{/foreach}
+			</dd>
+			<dt><label for="complete">{lang values="system|export_type"}</label></dt>
+			<dd>
+{foreach from=$export_type item=row}
+				<label for="{$row.value}">
+					<input type="radio" name="form[export_type]" id="{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+					{$row.lang}
+				</label>
+{/foreach}
+			</dd>
+		</dl>
+	</fieldset>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>
+{/if}

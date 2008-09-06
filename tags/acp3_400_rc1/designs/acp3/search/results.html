@@ -1,0 +1,19 @@
+{if isset($results_mods)}
+{foreach from=$results_mods item=result_mod}
+<h4>{$result_mod.title}</h4>
+<ol>
+{foreach from=$result_mod.results item=row}
+	<li class="search">
+		<a href="{$row.hyperlink}">{$row.headline}</a>
+		<p>
+			{$row.text}
+		</p>
+	</li>
+{/foreach}
+</ol>
+{/foreach}
+{else}
+<div class="error">
+	<h5>{$no_search_results}</h5>
+</div>
+{/if}

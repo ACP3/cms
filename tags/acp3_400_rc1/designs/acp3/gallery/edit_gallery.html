@@ -1,0 +1,57 @@
+{if isset($error_msg)}
+{$error_msg}
+{/if}
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+	<fieldset style="width:50%">
+		<dl>
+			<dt><label for="start">{lang values="common|start_date"}</label></dt>
+			<dd>{$start_date}</dd>
+			<dt><label for="end">{lang values="common|end_date"}</label></dt>
+			<dd>{$end_date}</dd>
+		</dl>
+		<p>
+			{lang values="common|date_description"}
+		</p>
+		<dl>
+			<dt><label for="name">{lang values="gallery|title"}</label></dt>
+			<dd><input type="text" name="form[name]" id="name" value="{$form.name}" maxlength="120" /></dd>
+		</dl>
+	</fieldset>
+	<div class="form-bottom" style="margin:20px 0">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>
+<form action="{uri args="acp/gallery/delete_picture/id_$gallery_id"}" method="post">
+	<div id="adm-list">
+		<a href="{uri args="acp/gallery/add_picture/id_$gallery_id"}" title="{lang values="gallery|add_picture"}"><img src="{icon path="32/image"}" alt="{lang values="gallery|add_picture"}" /></a>
+		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		<h2>{lang values="gallery|pictures"}</h2>
+	</div>
+	<hr />
+{if isset($pictures)}
+{$pagination}
+	<table>
+		<thead>
+			<tr>
+				<th>{lang values="common|mark"}</th>
+				<th>{lang values="gallery|picture"}</th>
+				<th>{lang values="common|description"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$pictures item=row}
+			<tr>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td><a href="{uri args="acp/gallery/edit_picture/id_`$row.id`"}" title="{lang values="gallery|edit_picture"}"><img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" /></a></td>
+				<td>{$row.description}</td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{mark name="entries"}
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}
+</form>

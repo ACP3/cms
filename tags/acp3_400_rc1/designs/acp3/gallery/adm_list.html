@@ -1,0 +1,37 @@
+<form action="{uri args="acp/gallery/delete_gallery"}" method="post">
+	<div id="adm-list">
+		<a href="{uri args="acp/gallery/create"}" title="{lang values="gallery|create"}"><img src="{icon path="32/folder_image"}" alt="{lang values="gallery|create"}" /></a>
+		<a href="{uri args="acp/gallery/settings"}" title="{lang values="gallery|settings"}"><img src="{icon path="32/advancedsettings"}" alt="{lang values="gallery|settings"}" /></a>
+		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		<h2>{lang values="gallery|galleries_overview"}</h2>
+	</div>
+	<hr />
+{if isset($galleries)}
+{$pagination}
+	<table>
+		<thead>
+			<tr>
+				<th>{lang values="common|mark"}</th>
+				<th>{lang values="common|publication_period"}</th>
+				<th>{lang values="gallery|title"}</th>
+				<th>{lang values="gallery|pictures"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$galleries item=row}
+			<tr>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td>{$row.start} {lang values="common|until"} {$row.end}</td>
+				<td><a href="{uri args="acp/gallery/edit_gallery/id_`$row.id`"}" title="{lang values="gallery|edit_gallery"}">{$row.name}</a></td>
+				<td>{$row.pictures}</td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{mark name="entries"}
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}
+</form>

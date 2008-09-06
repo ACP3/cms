@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>administration</name>
+		<message>Administration</message>
+	</item>
+	<item>
+		<name>admin_user_undeletable</name>
+		<message>The administrator can\'t be deleted.</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Do you really want to delete the marked user accounts?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Create a new user</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>While creating the user an error has occured.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>The user has been created successfully.</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>Delete users</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>While deleting the marked users an error has occured.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>The marked users have been deleted successfully.</message>
+	</item>
+	<item>
+		<name>draft_error</name>
+		<message>While saving the draft an error has occured.</message>
+	</item>
+	<item>
+		<name>draft_success</name>
+		<message>The draft has been saved successfully.</message>
+	</item>
+	<item>
+		<name>drafts</name>
+		<message>Drafts</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Edit user</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>While editing the user an error has occured.</message>
+	</item>
+	<item>
+		<name>edit_profile</name>
+		<message>Edit profile</message>
+	</item>
+	<item>
+		<name>edit_profile_error</name>
+		<message>While editing you user profile an error has occured.</message>
+	</item>
+	<item>
+		<name>edit_profile_success</name>
+		<message>Your user profile has been edited successfully.</message>
+	</item>
+	<item>
+		<name>edit_settings</name>
+		<message>Edit settings</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>The user has been edited successfully.</message>
+	</item>
+	<item>
+		<name>edit_settings_error</name>
+		<message>While editing the settings of your user account an error has occured.</message>
+	</item>
+	<item>
+		<name>edit_settings_success</name>
+		<message>The settings of you user account have been edited successfully.</message>
+	</item>
+	<item>
+		<name>forgot_pwd</name>
+		<message>Forgot password?</message>
+	</item>
+	<item>
+		<name>forgot_pwd_error</name>
+		<message>While sending the E-mail with your new password an error has occured.</message>
+	</item>
+	<item>
+		<name>forgot_pwd_description</name>
+		<message>Please either enter the E-mail address or the user name you used with the registration in the following fields.</message>
+	</item>
+	<item>
+		<name>forgot_pwd_mail_subject</name>
+		<message>Change of the password on {title} ({host})</message>
+	</item>
+	<item>
+		<name>forgot_pwd_mail_message</name>
+		<message>Hello {name},
+		
+		You have requested a new password for your user account on the website of {title} ({host}).
+		
+		User name: {name}
+		E-mail address: {mail}
+		Password: {password}
+		
+		Please change the password again, after you logged in to your account.</message>
+	</item>
+	<item>
+		<name>forgot_pwd_success</name>
+		<message>An E-mail with you new password has been sent successfully.</message>
+	</item>
+	<item>
+		<name>home</name>
+		<message>Control center</message>
+	</item>
+	<item>
+		<name>language</name>
+		<message>Language</message>
+	</item>
+	<item>
+		<name>login</name>
+		<message>Login</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>With this module you can administer the users.</message>
+	</item>
+	<item>
+		<name>new_pwd</name>
+		<message>New password</message>
+	</item>
+	<item>
+		<name>new_pwd_repeat</name>
+		<message>Repeat new password</message>
+	</item>
+	<item>
+		<name>nickname</name>
+		<message>User name</message>
+	</item>
+	<item>
+		<name>nickname_or_password_wrong</name>
+		<message>Either the user name or the password is wrong.</message>
+	</item>
+	<item>
+		<name>pwd</name>
+		<message>Password</message>
+	</item>
+	<item>
+		<name>pwd_repeat</name>
+		<message>Repeat password</message>
+	</item>
+	<item>
+		<name>realname</name>
+		<message>Real name</message>
+	</item>
+	<item>
+		<name>remember_me</name>
+		<message>Stay logged in</message>
+	</item>
+	<item>
+		<name>register</name>
+		<message>Register</message>
+	</item>
+	<item>
+		<name>register_error</name>
+		<message>While creating the user account an error has occured.</message>
+	</item>
+	<item>
+		<name>register_mail_subject</name>
+		<message>Your registration at {title} ({host})</message>
+	</item>
+	<item>
+		<name>register_mail_message</name>
+		<message>Hello {name},
+		
+		You have just registered a user account on the website of {title} ({host}).
+		Below you can see the data, with which you has been registered.
+		
+		User name: {name}
+		E-mail address: {mail}
+		Password: {password}</message>
+	</item>
+	<item>
+		<name>register_success</name>
+		<message>The user account has been created successfully.</message>
+	</item>
+	<item>
+		<name>select_access_level</name>
+		<message>Please select an access level for this user</message>
+	</item>
+	<item>
+		<name>select_language</name>
+		<message>Please select the language in which you want to see the website</message>
+	</item>
+	<item>
+		<name>send_email</name>
+		<message>Send E-mail</message>
+	</item>
+	<item>
+		<name>sign_off</name>
+		<message>Sign off</message>
+	</item>
+	<item>
+		<name>type_in_nickname_or_email</name>
+		<message>Please either enter the E-mail address or the user name you used with the registration</message>
+	</item>
+	<item>
+		<name>type_in_pwd</name>
+		<message>Either the password is empty or there is a typo in the repetition</message>
+	</item>
+	<item>
+		<name>user_email_already_exists</name>
+		<message>There is already an user account registered with the same E-mail address</message>
+	</item>
+	<item>
+		<name>user_menu</name>
+		<message>User menu</message>
+	</item>
+	<item>
+		<name>user_name_already_exists</name>
+		<message>There is already an user account registered with the same user name</message>
+	</item>
+	<item>
+		<name>user_not_exists</name>
+		<message>There is no user profile registered with the typed in user name respectively the typed in E-mail address</message>
+	</item>
+	<item>
+		<name>user_profile_not_exists</name>
+		<message>The requested user profile doesn\'t exists.</message>
+	</item>
+	<item>
+		<name>users</name>
+		<message>Users</message>
+	</item>
+	<item>
+		<name>users_found</name>
+		<message>In total there are %d users registered on this Website.</message>
+	</item>
+	<item>
+		<name>users_overview</name>
+		<message>Users overview</message>
+	</item>
+	<item>
+		<name>view_profile</name>
+		<message>View user profile</message>
+	</item>
+	<item>
+		<name>visit_website</name>
+		<message>Visit website</message>
+	</item>
+</language>

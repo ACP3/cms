@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>adm_list_blocks</name>
+		<message>Blocks</message>
+	</item>
+	<item>
+		<name>block_title</name>
+		<message>Name of the block</message>
+	</item>
+	<item>
+		<name>block_title_to_short</name>
+		<message>The name of the block should be at least 3 characters long</message>
+	</item>
+	<item>
+		<name>blocks</name>
+		<message>Block</message>
+	</item>
+	<item>
+		<name>blocks_overview</name>
+		<message>Blocks overview</message>
+	</item>
+	<item>
+		<name>chronology</name>
+		<message>Chronology</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Do you really want to delete the marked menu items?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Create a new menu item</message>
+	</item>
+	<item>
+		<name>create_block</name>
+		<message>Create a new block</message>
+	</item>
+	<item>
+		<name>create_block_error</name>
+		<message>While creating the block an error has occured.</message>
+	</item>
+	<item>
+		<name>create_block_success</name>
+		<message>The block has been created successfully.</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>Delete menu items</message>
+	</item>
+	<item>
+		<name>delete_blocks</name>
+		<message>Delete blocks</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>While creating the menu item an error has occured.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>The menu item has been created successfully.</message>
+	</item>
+	<item>
+		<name>delete_block_error</name>
+		<message>While deleting the marked blocks an error has occured.</message>
+	</item>
+	<item>
+		<name>delete_block_success</name>
+		<message>The marked blocks have been deleted successfully.</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>While deleting the marked menu items an error has occured.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>The marked menu items have been deleted successfully.</message>
+	</item>
+	<item>
+		<name>do_not_display</name>
+		<message>Do not display</message>
+	</item>
+	<item>
+		<name>dynamic_page</name>
+		<message>Dynamic page</message>
+	</item>
+	<item>
+		<name>dynamic_page_hints</name>
+		<message><![CDATA[If you want to include a dynamic page, i.e. a module of the ACP3, please use the format &quot;module/file/optional_parameters/&quot;, e.g. news/list/id_1/.]]></message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Edit menu item</message>
+	</item>
+	<item>
+		<name>edit_block</name>
+		<message>Edit block</message>
+	</item>
+	<item>
+		<name>edit_block_error</name>
+		<message>While editing the block an error has occured.</message>
+	</item>
+	<item>
+		<name>edit_block_success</name>
+		<message>The block has been edited successfully.</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>While editing the menu item an error has occured.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>The menu item has been edited successfully.</message>
+	</item>
+	<item>
+		<name>hyperlink</name>
+		<message>Hyperlink</message>
+	</item>
+	<item>
+		<name>index_name</name>
+		<message>Index name</message>
+	</item>
+	<item>
+		<name>index_name_description</name>
+		<message>This describes the name of the Templateplaceholder</message>
+	</item>
+	<item>
+		<name>index_name_unique</name>
+		<message>The name of the template placeholder has to be unique</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>This module is responsible for the both navbars and the static pages.</message>
+	</item>
+	<item>
+		<name>no_superior_page</name>
+		<message>No superior page</message>
+	</item>
+	<item>
+		<name>page_type</name>
+		<message>Page type</message>
+	</item>
+	<item>
+		<name>pages</name>
+		<message>Menu items</message>
+	</item>
+	<item>
+		<name>pages_overview</name>
+		<message>Menu items overview</message>
+	</item>
+	<item>
+		<name>select_block</name>
+		<message>Please select, wether you want to display the menu item in a navbar</message>
+	</item>
+	<item>
+		<name>select_static_hyperlink</name>
+		<message>Please select, wether the page should be at static page or a hyperlink</message>
+	</item>
+	<item>
+		<name>select_superior_page</name>
+		<message>Please select a superior page</message>
+	</item>
+	<item>
+		<name>static_page</name>
+		<message>Static page</message>
+	</item>
+	<item>
+		<name>superior_page</name>
+		<message>Superior page</message>
+	</item>
+	<item>
+		<name>superior_page_not_allowed</name>
+		<message>It is impossible to use the selected page as a superior page</message>
+	</item>
+	<item>
+		<name>target_page</name>
+		<message>Target page</message>
+	</item>
+	<item>
+		<name>text</name>
+		<message>Text</message>
+	</item>
+	<item>
+		<name>text_to_short</name>
+		<message>The text should be at least 3 characters long</message>
+	</item>
+	<item>
+		<name>title</name>
+		<message>Title</message>
+	</item>
+	<item>
+		<name>title_to_short</name>
+		<message>The title should be at least 3 characters long</message>
+	</item>
+	<item>
+		<name>type_in_chronology</name>
+		<message>Please type in the position, where you want to see the menu item</message>
+	</item>
+	<item>
+		<name>type_in_index_name</name>
+		<message>The index name can only contain letters, digits and the underscore</message>
+	</item>
+	<item>
+		<name>type_in_uri_and_target</name>
+		<message>Please type in the URI and the target page</message>
+	</item>
+	<item>
+		<name>uri</name>
+		<message>URI</message>
+	</item>
+</language>

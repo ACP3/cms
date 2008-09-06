@@ -1,0 +1,30 @@
+<p>
+	{$LANG_users_found}
+</p>
+{if isset($users)}
+{$pagination}
+<table>
+	<thead>
+		<tr>
+			<th>{lang values="users|nickname"}</th>
+			<th>{lang values="users|realname"}</th>
+			<th>{lang values="common|email"}</th>
+			<th>{lang values="common|website"}</th>
+		</tr>
+	</thead>
+	<tbody>
+{foreach from=$users item=row}
+		<tr>
+			<td><a href="{uri args="users/view_profile/id_`$row.id`"}" title="{lang values="users|view_profile"}">{$row.nickname}</a></td>
+			<td>{if $row.realname}{$row.realname}{else}-{/if}</td>
+			<td><a href="mailto:{$row.mail}" title="{lang values="users|send_email"}">{$row.mail}</a></td>
+			<td>{if $row.website}<a href="{$row.website}" onclick="window.open(this.href); return false" title="{lang values="users|visit_website"}">{$row.website}</a>{else}-{/if}</td>
+		</tr>
+{/foreach}
+	</tbody>
+</table>
+{else}
+<div class="error">
+	<h5>{lang values="common|no_entries"}</h5>
+</div>
+{/if}

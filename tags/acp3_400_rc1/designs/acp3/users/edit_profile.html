@@ -1,0 +1,30 @@
+{if isset($error_msg)}
+{$error_msg}
+{/if}
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+	<fieldset>
+		<legend>{lang values="common|general_statements"}</legend>
+		<dl>
+			<dt><label for="nickname">{lang values="users|nickname"}</label></dt>
+			<dd><input type="text" name="form[nickname]" id="nickname" value="{$form.nickname}" maxlength="30" /></dd>
+			<dt><label for="realname">{lang values="users|realname"}</label></dt>
+			<dd><input type="text" name="form[realname]" id="realname" value="{$form.realname}" maxlength="80" /></dd>
+			<dt><label for="mail">{lang values="common|email"}</label></dt>
+			<dd><input type="text" name="form[mail]" id="mail" value="{$form.mail}" maxlength="120" /></dd>
+			<dt><label for="website">{lang values="common|website"}</label></dt>
+			<dd><input type="text" name="form[website]" id="website" value="{$form.website}" maxlength="120" /></dd>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<legend>{lang values="users|pwd"}</legend>
+		<dl>
+			<dt><label for="new_pwd">{lang values="users|new_pwd"}</label></dt>
+			<dd><input type="password" name="form[new_pwd]" id="new_pwd" /></dd>
+			<dt><label for="new_pwd_repeat">{lang values="users|new_pwd_repeat"}</label></dt>
+			<dd><input type="password" name="form[new_pwd_repeat]" id="new_pwd_repeat" /></dd>
+		</dl>
+	</fieldset>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>

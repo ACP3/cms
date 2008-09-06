@@ -1,0 +1,36 @@
+<form action="{uri args="acp/users/delete"}" method="post">
+	<div id="adm-list">
+		<a href="{uri args="acp/users/create"}" title="{lang values="users|create"}"><img src="{icon path="32/add_user"}" alt="{lang values="users|create"}" /></a>
+		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		<h2>{lang values="users|users_overview"}</h2>
+	</div>
+	<hr />
+{if isset($users)}
+{$pagination}
+	<table>
+		<thead>
+			<tr>
+				<th>{lang values="common|mark"}</th>
+				<th>{lang values="users|nickname"}</th>
+				<th>{lang values="common|email"}</th>
+				<th>{lang values="access|access"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$users item=row}
+			<tr>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td><a href="{uri args="acp/users/edit/id_`$row.id`"}" title="{lang values="users|edit"}">{$row.nickname}</a></td>
+				<td>{$row.mail}</td>
+				<td>{$row.access}</td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{mark name="entries"}
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}
+</form>

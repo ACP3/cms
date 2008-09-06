@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>categories</name>
+		<message>Kategorien</message>
+	</item>
+	<item>
+		<name>categories_overview</name>
+		<message>Kategorien Übersicht</message>
+	</item>
+	<item>
+		<name>category_already_exists</name>
+		<message>Für das gewählte Modul existiert bereits eine Kategorie mit diesem Namen</message>
+	</item>
+	<item>
+		<name>category_is_in_use</name>
+		<message>Es konnten nicht alle Kategorien gelöscht werden, da sie noch von mindestens einem Datensatz verwendet werden.</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Sollen die ausgewählten Kategorien wirklich gelöscht werden?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Neue Kategorie erstellen</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>Beim Erstellen der Kategorie ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>Die Kategorie wurde erfolgreich erstellt.</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>Kategorien löschen</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>Beim Löschen der ausgewählten Kategorien ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>Die ausgewählten Kategorien wurden erfolgreich gelöscht.</message>
+	</item>
+	<item>
+		<name>description_to_short</name>
+		<message>Der Beschreibungstext der Kategorie sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Kategorie bearbeiten</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>Beim Bearbeiten der Kategorie ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>Die Kategorie wurde erfolgreich bearbeitet.</message>
+	</item>
+	<item>
+		<name>image_filesize</name>
+		<message>Maximale Dateigröße des Bildes</message>
+	</item>
+	<item>
+		<name>image_height</name>
+		<message>Maximale Bildhöhe</message>
+	</item>
+	<item>
+		<name>image_width</name>
+		<message>Maximale Bildbreite</message>
+	</item>
+	<item>
+		<name>invalid_image_filesize_entered</name>
+		<message>Bitte geben Sie die maximale Dateigröße des Bildes in Byte an</message>
+	</item>
+	<item>
+		<name>invalid_image_height_entered</name>
+		<message>Bitte geben Sie die maximale Bildhöhe in Pixel an</message>
+	</item>
+	<item>
+		<name>invalid_image_selected</name>
+		<message>Entweder Sie haben ein unerlaubtes Dateiformat verwendet oder das Bild ist zu breit, zu hoch oder zu groß</message>
+	</item>
+	<item>
+		<name>invalid_image_width_entered</name>
+		<message>Bitte geben Sie die maximale Bildbreite in Pixel an</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Mit diesem Modul können Kategorien für andere Module erstellt werden.</message>
+	</item>
+	<item>
+		<name>module</name>
+		<message>Modul</message>
+	</item>
+	<item>
+		<name>name_to_short</name>
+		<message>Der Name der Kategorie sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>picture</name>
+		<message>Bild</message>
+	</item>
+	<item>
+		<name>select_module</name>
+		<message>Bitte wählen Sie ein Modul aus</message>
+	</item>
+	<item>
+		<name>settings</name>
+		<message>Einstellungen</message>
+	</item>
+	<item>
+		<name>settings_error</name>
+		<message>Beim Bearbeiten der Einstellungen ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>settings_success</name>
+		<message>Die Einstellungen wurden erfolgreich bearbeitet.</message>
+	</item>
+</language>

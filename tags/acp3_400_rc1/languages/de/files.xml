@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>category_select</name>
+		<message>Bitte wählen Sie eine der untenstehenden Kategorien aus.</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Sollen die ausgewählten Downloads wirklich gelöscht werden?</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Neuen Download erstellen</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>Beim Erstellen des Downloads ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>Der Download wurde erfolgreich erstellt.</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>Downloads löschen</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>Beim Löschen der ausgewählten Downloads ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>Die ausgewählten Downloads wurden erfolgreich gelöscht.</message>
+	</item>
+	<item>
+		<name>description_to_short</name>
+		<message>Der Beschreibungstext sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>details</name>
+		<message>Downloads</message>
+	</item>
+	<item>
+		<name>download_file</name>
+		<message>Datei herunterladen</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Download bearbeiten</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>Beim Bearbeiten des Downloads ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>Der Download wurde erfolgreich bearbeitet.</message>
+	</item>
+	<item>
+		<name>external_resource</name>
+		<message>Externe Quelle</message>
+	</item>
+	<item>
+		<name>file_statements</name>
+		<message>Datei Angaben</message>
+	</item>
+	<item>
+		<name>filename</name>
+		<message>Dateiname</message>
+	</item>
+	<item>
+		<name>files</name>
+		<message>Downloads</message>
+	</item>
+	<item>
+		<name>files_overview</name>
+		<message>Downloads Übersicht</message>
+	</item>
+	<item>
+		<name>filesize</name>
+		<message>Dateigröße</message>
+	</item>
+	<item>
+		<name>link_title</name>
+		<message>Linktitel</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Mit diesem Modul können die Downloads verwaltet werden.</message>
+	</item>
+	<item>
+		<name>new_file</name>
+		<message>Neue Datei angeben</message>
+	</item>
+	<item>
+		<name>select_category</name>
+		<message>Bitte wählen Sie die Kategorie aus, in der sich der Download befinden soll</message>
+	</item>
+	<item>
+		<name>select_internal_resource</name>
+		<message>Bitte geben Sie den Pfad zur hochzuladenden Datei an</message>
+	</item>
+	<item>
+		<name>type_in_external_resource</name>
+		<message>Bitte geben Sie den Pfad zur Datei und die Dateigröße ein</message>
+	</item>
+	<item>
+		<name>type_in_link_title</name>
+		<message>Der Linktitel sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>unknown_filesize</name>
+		<message>Dateigröße unbekannt</message>
+	</item>
+</language>

@@ -1,0 +1,95 @@
+<?php
+/**
+ * Cache
+ *
+ * @author Goratsch Webdesign
+ * @package ACP3
+ * @subpackage Core
+ */
+/**
+ * lasse zur Ersetllung des Caches, um die Leistung von bestimmten Aktionen des ACP3 zu steigern
+ *
+ * @author Goratsch Webdesign
+ * @package ACP3
+ * @subpackage Core
+ */
+class cache
+{
+	/**
+	 * Überprüft, ob der Cache für eine bestimmte Abfrage schon erstellt wurde
+	 *
+	 * @param string $filename
+	 * @return boolean
+	 */
+	public static function check($filename)
+	{
+		if (is_file(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php')) {
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * Erstellt den Cache
+	 *
+	 * @param string $filename
+	 * 	Gewünschter Dateiname des Caches
+	 * @param array $data
+	 * 	Daten, welche gecachet werden sollen
+	 * @return boolean
+	 */
+	public static function create($filename, $data)
+	{
+		if (!empty($data)) {
+			$bool = @file_put_contents(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php', serialize($data));
+
+			return $bool ? true : false;
+		} elseif (self::check($filename)) {
+			return self::delete($filename);
+		}
+		return false;
+	}
+	/**
+	 * Löscht eine bestimmte gecachete Datei
+	 *
+	 * @param string $filename
+	 * 	Zu löschende Datei
+	 * @return boolean
+	 */
+	public static function delete($filename)
+	{
+		if (self::check($filename)) {
+			return unlink(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php');
+		}
+		return false;
+	}
+	/**
+	 * Ausgabe der gecacheten Aktion
+	 *
+	 * @param string $filename
+	 * 	Auszugebende Datei
+	 * @return mixed
+	 */
+	public static function output($filename)
+	{
+		if (self::check($filename)) {
+			return unserialize(@file_get_contents(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php'));
+		}
+		return array();
+	}
+	/**
+	 * Löscht en gesamten Cache
+	 */
+	public static function purge()
+	{
+		$cache_dir = scandir(ACP3_ROOT . 'cache');
+		$c_cache_dir = count($cache_dir);
+
+		for ($i = 0; $i < $c_cache_dir; ++$i) {
+			if (is_file(ACP3_ROOT . 'cache/' . $cache_dir[$i]) && $cache_dir[$i] != '.htaccess') {
+				unlink(ACP3_ROOT . 'cache/' . $cache_dir[$i]);
+			}
+		}
+		return;
+	}
+}
+?>

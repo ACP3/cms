@@ -1,0 +1,39 @@
+<form action="{uri args="acp/newsletter/delete_archive"}" method="post">
+	<div id="adm-list">
+		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		<h2>{lang values="newsletter|newsletter_archive"}</h2>
+	</div>
+	<hr />
+{if isset($newsletter)}
+{$pagination}
+	<table>
+		<thead>
+			<tr>
+				<th>{lang values="common|mark"}</th>
+				<th>{lang values="common|date"}</th>
+				<th>{lang values="newsletter|subject"}</th>
+				<th>{lang values="newsletter|text"}</th>
+				<th>{lang values="newsletter|status"}</th>
+				<th>{lang values="common|options"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$newsletter item=row}
+			<tr>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td>{$row.date}</td>
+				<td><a href="{uri args="acp/newsletter/edit_archive/id_`$row.id`"}" title="{lang values="newsletter|edit_archive"}">{$row.subject}</a></td>
+				<td>{$row.text}</td>
+				<td>{$row.status}</td>
+				<td><a href="{uri args="acp/newsletter/send/id_`$row.id`"}" title="{lang values="newsletter|send"}"><img src="{icon path="16/mail_send"}" alt="{lang values="newsletter|send"}" /></a></td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{mark name="entries"}
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}
+</form>

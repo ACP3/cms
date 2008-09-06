@@ -1,0 +1,34 @@
+<form action="{uri args="acp/polls/delete"}" method="post">
+	<div id="adm-list">
+		<a href="{uri args="acp/polls/create"}" title="{lang values="polls|create"}"><img src="{icon path="32/kchart"}" alt="{lang values="polls|create"}" /></a>
+		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		<h2>{lang values="polls|polls_overview"}</h2>
+	</div>
+	<hr />
+{if isset($polls)}
+{$pagination}
+	<table>
+		<thead>
+			<tr>
+				<th>{lang values="common|mark"}</th>
+				<th>{lang values="common|publication_period"}</th>
+				<th>{lang values="polls|question"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$polls item=row}
+			<tr>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td>{$row.start} {lang values="common|until"} {$row.end}</td>
+				<td><a href="{uri args="acp/polls/edit/id_`$row.id`"}" title="{lang values="polls|edit"}">{$row.question}</a></td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{mark name="entries"}
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}
+</form>
