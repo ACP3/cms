@@ -23,6 +23,7 @@ if (isset($_POST['submit'])) {
 		$structure = '';
 		$data = '';
 		foreach ($form['tables'] as $table) {
+			// Struktur ausgeben
 			if ($form['export_type'] == 'complete' || $form['export_type'] == 'structure') {
 				$result = $db->query('SHOW CREATE TABLE ' . $table);
 				if (is_array($result)) {
@@ -30,14 +31,17 @@ if (isset($_POST['submit'])) {
 					$structure.= $result[0]['Create Table'] . ';' . "\n\n";
 				}
 			}
+			// Datensätze ausgeben
 			if ($form['export_type'] == 'complete' || $form['export_type'] == 'data') {
 				$resultsets = $db->select('*', substr($table, strlen(CONFIG_DB_PRE), strlen($table)));
 				if (count($resultsets) > 0) {
 					$data.= "\n" . '-- '. sprintf($lang->t('system', 'data_of_table'), $table) . "\n\n";
 					$fields = '';
+					// Felder der jeweiligen Tabelle auslesen
 					foreach ($resultsets[0] as $field => $content) {
 						$fields.= $field . ', ';
 					}
+					// Datensätze auslesen
 					foreach ($resultsets as $row) {
 						$values = '';
 						foreach ($row as $value) {
@@ -49,11 +53,14 @@ if (isset($_POST['submit'])) {
 			}
 		}
 		$export = $structure . $data;
+
+		// Als Datei ausgeben
 		if ($form['output'] == 'file') {
 			ob_end_clean();
-			define('CUSTOM_CONTENT_TYPE', 'text/sql');
+			header('Content-Type: text/sql');
 			header('Content-Disposition: attachment; filename=' . CONFIG_DB_NAME . '_export.sql');
-			die($export);
+			exit($export);
+		// Im Browser ausgeben
 		} else {
 			$tpl->assign('export', htmlentities($export, ENT_QUOTES, 'UTF-8'));
 		}
@@ -94,7 +101,6 @@ if (!isset($_POST['submit']) || isset($errors)) {
 	$export_type[2]['checked'] = selectEntry('export_type', 'data', 'complete', 'checked');
 	$export_type[2]['lang'] = $lang->t('system', 'export_data');
 	$tpl->assign('export_type', $export_type);
-
 }
 $content = $tpl->fetch('system/sql_export.html');
 ?>
