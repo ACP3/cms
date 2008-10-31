@@ -90,7 +90,7 @@ CREATE TABLE `{pre}news` (
 	PRIMARY KEY (`id`), FULLTEXT KEY `headline` (`headline`,`text`)
 ) {engine} ;
 
-CREATE TABLE `{pre}nnewsletter_accounts` ( 
+CREATE TABLE `{pre}newsletter_accounts` ( 
 	`id` int(11) NOT NULL auto_increment, 
 	`mail` varchar(120) NOT NULL, 
 	`hash` varchar(32) NOT NULL, 

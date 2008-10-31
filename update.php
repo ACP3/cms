@@ -1,17 +1,21 @@
 <?php
 header('Content-type: text/plain; charset=UTF-8');
 
+define('NEW_VERSION', '4.0RC2 SVN');
 define('ACP3_ROOT', './');
+
 require ACP3_ROOT . 'includes/config.php';
+if (NEW_VERSION == CONFIG_VERSION) {
+	print 'Ihre Version ist auf dem aktuellsten Stand' . "\n";
+	exit;
+}
+
 require ACP3_ROOT . 'includes/classes/cache.php';
 require ACP3_ROOT . 'includes/classes/config.php';
 require ACP3_ROOT . 'includes/classes/db.php';
 
 $queries = array(
-	0 => 'CREATE TABLE `{pre}newsletter_archive` (`id` INT NOT NULL AUTO_INCREMENT, `date` VARCHAR(14) NOT NULL, `subject` VARCHAR(120) NOT NULL, `text` TEXT NOT NULL, `status` TINYINT(1) NOT NULL, PRIMARY KEY (`id`)) {engine} {charset} ;',
-	1 => 'RENAME TABLE `{pre}galpics` TO `{pre}gallery_pictures`, `{pre}nl_accounts` TO `{pre}newsletter_accounts`;',
-	2 => 'ALTER TABLE `{pre}news` ADD `readmore` TINYINT(1) NOT NULL AFTER `text`, ADD `comments` TINYINT(1) NOT NULL AFTER `readmore`;',
-	3 => 'UPDATE `{pre}news` SET readmore = \'1\', comments = \'1\';',
+	0 => 'RENAME TABLE `{pre}nnewsletter_accounts` TO `{pre}newsletter_accounts`;',
 );
 
 if (count($queries) > 0) {
@@ -61,7 +65,7 @@ $config = array(
 	'sef' => CONFIG_SEF,
 	'time_zone' => CONFIG_TIME_ZONE,
 	'title' => CONFIG_TITLE,
-	'version' => 'ACP3 4.0RC1 SVN',
+	'version' => NEW_VERSION,
 	'wysiwyg' => 'fckeditor'
 );
 
