@@ -2,7 +2,6 @@
 function editor($params) {
 	static $init = false;
 
-	$id = substr($params['name'], 5, -1);
 	$out = '';
 
 	if (!$init) {
@@ -45,7 +44,7 @@ function editor($params) {
 	$out.= 'height : "' . $params['height'] . '",' . "\n";
 	$out.= "});\n";
 	$out.= "</script>\n";
-	$out.= '<textarea name="' . $params['name'] . '" id="' . $id . '" cols="50" rows="5" style="width:100%">' . (!empty($params['value']) ? $params['value'] : '') . "</textarea>\n";
+	$out.= '<textarea name="' . $params['name'] . '" id="' . $params['id'] . '" cols="50" rows="5" style="width:100%">' . (!empty($params['value']) ? $params['value'] : '') . "</textarea>\n";
 
 	$init = true;
 

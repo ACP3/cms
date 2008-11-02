@@ -17,13 +17,12 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('common', 'select_date');
 	if (empty($form['question']))
 		$errors[] = $lang->t('polls', 'type_in_question');
+	$i = 0;
 	foreach ($form['answers'] as $row) {
-		if (!empty($row)) {
-			$check_answers = true;
-			break;
-		}
+		if (!empty($row))
+			$i++;
 	}
-	if (!isset($check_answers))
+	if ($i <= 1)
 		$errors[] = $lang->t('polls', 'type_in_answer');
 
 	if (isset($errors)) {
@@ -39,7 +38,7 @@ if (isset($_POST['submit'])) {
 		$bool = $db->insert('poll_question', $insert_values);
 
 		if ($bool) {
-			$poll_id = $db->select('id', 'poll_question', 'start = \'' . $start_date . '\' AND end = \'' . $end_date . '\' AND question = \'' . $db->escape($form['question']) . '\'', 'id DESC', 1);
+			$poll_id = $db->select('id', 'poll_question', 'start = \'' . $date->timestamp($form['start']) . '\' AND end = \'' . $date->timestamp($form['end']) . '\' AND question = \'' . $db->escape($form['question']) . '\'', 'id DESC', 1);
 			foreach ($form['answers'] as $row) {
 				$insert_answer = array(
 					'id' => '',
