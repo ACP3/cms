@@ -70,7 +70,7 @@ function editor($params) {
 	$out.= '//]]>' . "\n";
 	$out.= '</script>' . "\n";
 	$out.= '<noscript>' . "\n";
-	$out.= '<textarea name="' . $base_arguments['name'] . '" id="' . substr($base_arguments['name'], 5, -1) . '" cols="50" rows="5">' . (!empty($base_arguments['value']) ? $base_arguments['value'] : '') . "</textarea>\n";
+	$out.= '<textarea name="' . $base_arguments['name'] . '" id="' . $params['id'] . '" cols="50" rows="5">' . (!empty($base_arguments['value']) ? $base_arguments['value'] : '') . "</textarea>\n";
 	$out.= '</noscript>' . "\n";
 
 	return $out;
