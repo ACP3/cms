@@ -46,7 +46,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \''
 					$db->delete('poll_answers', 'id = \'' . $row['id'] . '\'');
 					$db->delete('poll_votes', 'answer_id = \'' . $row['id'] . '\'');
 				} elseif (validate::isNumber($row['id'])) {
-					$bool = $db->update('poll_answers', array('text' =>$db->escape($row['value'])), 'id = \'' . $db->escape($row['id']) . '\'');
+					$bool = $db->update('poll_answers', array('text' => $db->escape($row['value'])), 'id = \'' . $row['id'] . '\'');
 				}
 			}
 			$content = comboBox($bool ? $lang->t('polls', 'edit_success') : $lang->t('polls', 'edit_error'), uri('acp/polls'));
