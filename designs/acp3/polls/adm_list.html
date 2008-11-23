@@ -19,7 +19,7 @@
 {foreach from=$polls item=row}
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
-				<td>{$row.start} {lang values="common|until"} {$row.end}</td>
+				<td>{$row.period}</td>
 				<td><a href="{uri args="acp/polls/edit/id_`$row.id`"}" title="{lang values="polls|edit"}">{$row.question}</a></td>
 			</tr>
 {/foreach}

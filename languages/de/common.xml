@@ -81,6 +81,10 @@
 		<message>Weiter</message>
 	</item>
 	<item>
+		<name>from_start_to_end</name>
+		<message>%1$s bis %2$s</message>
+	</item>
+	<item>
 		<name>general_statements</name>
 		<message>Allgemeine Angaben</message>
 	</item>
@@ -169,6 +173,10 @@
 		<message>Bitte wählen Sie die Zeitzone aus</message>
 	</item>
 	<item>
+		<name>since_date</name>
+		<message>Seit %s</message>
+	</item>
+	<item>
 		<name>start_date</name>
 		<message>Veröffentlichungsdatum</message>
 	</item>
@@ -183,10 +191,6 @@
 	<item>
 		<name>unmark_all</name>
 		<message>Markierung aufheben</message>
-	</item>
-	<item>
-		<name>until</name>
-		<message>bis</message>
 	</item>
 	<item>
 		<name>upload_error</name>

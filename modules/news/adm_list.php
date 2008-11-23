@@ -17,8 +17,7 @@ if ($c_news > 0) {
 	$tpl->assign('pagination', pagination($db->select('id', 'news', 0, 0, 0, 0, 1)));
 
 	for ($i = 0; $i < $c_news; ++$i) {
-		$news[$i]['start'] = $date->format($news[$i]['start']);
-		$news[$i]['end'] = $date->format($news[$i]['end']);
+		$news[$i]['period'] = $date->period($news[$i]['start'], $news[$i]['end']);
 	}
 	$tpl->assign('news', $news);
 }

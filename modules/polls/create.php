@@ -28,17 +28,21 @@ if (isset($_POST['submit'])) {
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
+		$start = $date->timestamp($form['start']);
+		$end = $date->timestamp($form['end']);
+		$question = $db->escape($form['question']);
+
 		$insert_values = array(
 			'id' => '',
-			'start' => $date->timestamp($form['start']),
-			'end' => $date->timestamp($form['end']),
-			'question' => $db->escape($form['question']),
+			'start' => $start,
+			'end' => $end,
+			'question' => $question,
 		);
 
 		$bool = $db->insert('poll_question', $insert_values);
 
 		if ($bool) {
-			$poll_id = $db->select('id', 'poll_question', 'start = \'' . $date->timestamp($form['start']) . '\' AND end = \'' . $date->timestamp($form['end']) . '\' AND question = \'' . $db->escape($form['question']) . '\'', 'id DESC', 1);
+			$poll_id = $db->select('id', 'poll_question', 'start = \'' . $start . '\' AND end = \'' . $end . '\' AND question = \'' . $question . '\'', 'id DESC', 1);
 			foreach ($form['answers'] as $row) {
 				$insert_answer = array(
 					'id' => '',
@@ -57,8 +61,8 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Datumsauswahl
 	$tpl->assign('start_date', datepicker('start'));
 	$tpl->assign('end_date', datepicker('end'));
-
 	$tpl->assign('disable', false);
+
 	if (isset($_POST['form']['answers'])) {
 		$i = 0;
 		foreach ($_POST['form']['answers'] as $row) {
@@ -77,8 +81,9 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$answers[0]['number'] = 1;
 		$answers[0]['value'] = '';
 	}
-	$tpl->assign('answers', $answers);
 
+	// Antworten und Frage an Smarty übergeben
+	$tpl->assign('answers', $answers);
 	$tpl->assign('question', isset($_POST['form']['question']) ? $_POST['form']['question'] : '');
 
 	$content = $tpl->fetch('polls/create.html');
