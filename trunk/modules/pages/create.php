@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 		// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
 		$parent_block = (int) $db->select('block_id', 'pages', 'id = \'' . $form['parent'] . '\'');
 
-		if ($parent_block != 0 && $parent_block != $form['blocks'])
+		if ($form['blocks'] != 0 && $parent_block != 0 && $parent_block != $form['blocks'])
 			$errors[] = $lang->t('pages', 'superior_page_not_allowed');
 	}
 	if ($form['mode'] == '1' && strlen($form['text']) < 3)

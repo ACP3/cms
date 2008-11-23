@@ -21,7 +21,7 @@
 {foreach from=$galleries item=row}
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
-				<td>{$row.start} {lang values="common|until"} {$row.end}</td>
+				<td>{$row.period}</td>
 				<td><a href="{uri args="acp/gallery/edit_gallery/id_`$row.id`"}" title="{lang values="gallery|edit_gallery"}">{$row.name}</a></td>
 				<td>{$row.pictures}</td>
 			</tr>

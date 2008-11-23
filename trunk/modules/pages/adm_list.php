@@ -19,8 +19,7 @@ if (count($pages_list) > 0) {
 	$i = 0;
 	foreach ($pages_list as $block => $pages) {
 		foreach ($pages as $row) {
-			$pages_list[$block][$i]['start'] = $date->format($row['start']);
-			$pages_list[$block][$i]['end'] = $date->format($row['end']);
+			$pages_list[$block][$i]['period'] = $date->period($row['start'], $row['end']);
 			$pages_list[$block][$i]['mode'] = str_replace(array('1', '2', '3'), $mode_replace, $row['mode']);
 			$i++;
 		}

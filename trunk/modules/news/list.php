@@ -28,7 +28,8 @@ if (modules::check('categories', 'functions')) {
 
 // Falls Kategorie angegeben, News nur aus eben jener selektieren
 $cat = !empty($cat) ? ' AND category_id = \'' . $cat . '\'' : '';
-$where = '(start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')' . $cat;
+$time = $date->timestamp();
+$where = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')' . $cat;
 
 $news = $db->select('id, start, headline, text, readmore, comments, uri', 'news', $where, 'start DESC, end DESC, id DESC', POS, CONFIG_ENTRIES);
 $c_news = count($news);

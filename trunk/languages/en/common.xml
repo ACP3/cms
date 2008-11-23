@@ -81,6 +81,10 @@
 		<message>Forward</message>
 	</item>
 	<item>
+		<name>from_start_to_end</name>
+		<message>From %1$s until %2$s</message>
+	</item>
+	<item>
 		<name>general_statements</name>
 		<message>General statements</message>
 	</item>
@@ -169,6 +173,10 @@
 		<message>Please select the time zone</message>
 	</item>
 	<item>
+		<name>since_date</name>
+		<message>Since %s</message>
+	</item>
+	<item>
 		<name>start_date</name>
 		<message>Release date</message>
 	</item>
@@ -183,10 +191,6 @@
 	<item>
 		<name>unmark_all</name>
 		<message>Unmark all</message>
-	</item>
-	<item>
-		<name>until</name>
-		<message>until</message>
 	</item>
 	<item>
 		<name>upload_error</name>

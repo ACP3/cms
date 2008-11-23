@@ -20,7 +20,9 @@ switch($form['area']) {
 	default:
 		$fields = 'link_title, file, text';
 }
-$period = '(start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')';
+
+$time = $date->timestamp();
+$period = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
 $result_files = $db->select('id, link_title, text', 'files', 'MATCH (' . $fields . ') AGAINST (\'' . $db->escape($form['search_term']) . '\' IN BOOLEAN MODE) AND ' . $period, 'start ' . $form['sort'] . ', end ' . $form['sort'] . ', id ' . $form['sort']);
 $c_result_files = count($result_files);

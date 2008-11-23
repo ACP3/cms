@@ -10,7 +10,8 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$period = ' AND (start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')';
+$time = $date->timestamp();
+$period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
 if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $uri->id . '\'' . $period, 0, 0, 0, 1) == 1) {
 	// Cache für die jeweilige Galerie

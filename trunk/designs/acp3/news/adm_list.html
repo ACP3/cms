@@ -20,7 +20,7 @@
 {foreach from=$news item=row}
 			<tr>
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
-				<td>{$row.start} {lang values="common|until"} {$row.end}</td>
+				<td>{$row.period}</td>
 				<td><a href="{uri args="acp/news/edit/id_`$row.id`"}" title="{lang values="news|edit"}">{$row.headline}</a></td>
 				<td>{$row.cat}</td>
 			</tr>

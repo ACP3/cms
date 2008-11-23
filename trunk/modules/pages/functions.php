@@ -135,8 +135,10 @@ function processNavbar($block, $pages = 0) {
 			} else {
 				$navbar[$block] .= $tabs . "<ul>\n";
 			}
+
+			$time = $date->timestamp();
 			foreach ($pages as $row) {
-				if ($row['block_name'] == $block && !empty($row['block_id']) && $row['start'] == $row['end'] && $row['start'] <= $date->timestamp() || $row['start'] != $row['end'] && $row['start'] <= $date->timestamp() && $row['end'] >= $date->timestamp()) {
+				if ($row['block_name'] == $block && !empty($row['block_id']) && $row['start'] == $row['end'] && $row['start'] <= $time || $row['start'] != $row['end'] && $row['start'] <= $time && $row['end'] >= $time) {
 					$css = 'navi-' . $row['id'] . ($uri->mod == 'pages' && $uri->page == 'list' && $uri->item == $row['id'] || $uri->query == uri($row['uri']) ? ' selected' : '');
 					$href = uri('pages/list/item_' . $row['id']);
 					$target = ($row['mode'] == 2 || $row['mode'] == 3) && $row['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';

@@ -54,6 +54,18 @@ class date
 		$format = !empty($format) ? $format : CONFIG_DATE;
 		return gmdate($format, $time_stamp + $this->offset);
 	}
+	public function period($start, $end)
+	{
+		if (validate::isNumber($start) && validate::isNumber($end)) {
+			global $lang;
+			if ($start >= $end) {
+				return sprintf($lang->t('common', 'since_date'), $this->format($start));
+			} else {
+				return sprintf($lang->t('common', 'from_start_to_end'), $this->format($start), $this->format($end));
+			}
+		}
+		return '';
+	}
 	/**
 	 * Gibt einen einfachen Zeitstempel zurück, welcher sich an UTC ausrichtet
 	 *

@@ -10,7 +10,8 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$period = ' AND (g.start = g.end AND g.start <= \'' . $date->timestamp() . '\' OR g.start != g.end AND g.start <= \'' . $date->timestamp() . '\' AND g.end >= \'' . $date->timestamp() . '\')';
+$time = $date->timestamp();
+$period = ' AND (g.start = g.end AND g.start <= \'' . $time . '\' OR g.start != g.end AND g.start <= \'' . $time . '\' AND g.end >= \'' . $time . '\')';
 
 if (validate::isNumber($uri->id) && $db->select('g.id', 'gallery AS g, ' . CONFIG_DB_PRE . 'gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id' . $period, 0, 0, 0, 1) == 1) {
 	$picture = $db->select('g.id AS gallery_id, g.name, p.id, p.pic, p.description', 'gallery AS g, ' . CONFIG_DB_PRE . 'gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');

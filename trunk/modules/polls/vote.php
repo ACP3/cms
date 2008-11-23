@@ -10,7 +10,8 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$period = ' AND (start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')';
+$time = $date->timestamp();
+$period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
 if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \'' . $uri->id . '\'' . $period, 0, 0, 0, 1) == 1) {
 	// Brotkrümelspur
@@ -20,7 +21,6 @@ if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \''
 	if (isset($_POST['submit']) && isset($_POST['answer']) && validate::isNumber($_POST['answer'])) {
 		$answer = $_POST['answer'];
 		$ip = $_SERVER['REMOTE_ADDR'];
-		$time = $date->timestamp();
 
 		if ($db->select('poll_id', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND ip = \'' . $ip . '\'', 0, 0, 0, 1) == 0) {
 			$insert_values = array(
