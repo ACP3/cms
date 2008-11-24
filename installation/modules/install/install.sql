@@ -145,10 +145,11 @@ CREATE TABLE `{pre}poll_question` (
 
 CREATE TABLE `{pre}poll_votes` ( 
 	`poll_id` int(11) NOT NULL, 
-	`answer_id` int(11) NOT NULL, 
+	`answer_id` int(11) NOT NULL,
+	`user_id` int(11) NOT NULL,
 	`ip` varchar(40) NOT NULL, 
 	`time` varchar(14) NOT NULL, 
-	PRIMARY KEY (`answer_id`)
+	INDEX ( `poll_id` , `answer_id` , `user_id` )
 ) {engine} ;
 
 CREATE TABLE `{pre}users` ( 

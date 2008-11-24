@@ -16,7 +16,16 @@ $c_polls = count($polls);
 if ($c_polls > 0) {
 	for ($i = 0; $i < $c_polls; ++$i) {
 		$polls[$i]['question'] = $polls[$i]['question'];
-		if ($db->select('poll_id', 'poll_votes', 'poll_id = \''. $polls[$i]['id'] . '\' AND ip = \'' . $_SERVER['REMOTE_ADDR'] . '\'', 0, 0, 0, 1) == 1 || $polls[$i]['start'] != $polls[$i]['end'] && $polls[$i]['end'] <= $date->timestamp()) {
+
+		// Überprüfen, ob der eingeloogter User schon abgestimmt hat
+		if ($auth->isUser()) {
+			$query = $db->select('poll_id', 'poll_votes', 'poll_id = \'' . $polls[$i]['id'] . '\' AND user_id = \'' . USER_ID . '\'', 0, 0, 0, 1);
+		// Überprüfung für Gäste
+		} else {
+			$query = $db->select('poll_id', 'poll_votes', 'poll_id = \'' . $polls[$i]['id'] . '\' AND ip = \'' . $_SERVER['REMOTE_ADDR'] . '\'', 0, 0, 0, 1);
+		}
+
+		if ($query != 0 || $polls[$i]['start'] != $polls[$i]['end'] && $polls[$i]['end'] <= $date->timestamp()) {
 			$polls[$i]['link'] = 'result';
 		} else {
 			$polls[$i]['link'] = 'vote';
