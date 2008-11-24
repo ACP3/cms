@@ -8,7 +8,7 @@ function editor($params) {
 		$out.= '<script type="text/javascript" src="' . ROOT_DIR . 'includes/wysiwyg/tinymce/tiny_mce_gzip.js"></script>' . "\n";
 	}
 
-	// Gzip Komprimierung aktiviieren
+	// Gzip Komprimierung aktivieren
 	$out.= '<script type="text/javascript">' . "\n";
 	$out.= "tinyMCE_GZ.init({\n";
 	$out.= 'themes: "advanced",' . "\n";
@@ -25,7 +25,7 @@ function editor($params) {
 	$out.= '<script type="text/javascript">' . "\n";
 	$out.= "tinyMCE.init({\n";
 	$out.= 'mode : "exact",' . "\n";
-	$out.= 'elements : "' . $id . '",' . "\n";
+	$out.= 'elements : "' . $params['id'] . '",' . "\n";
 	$out.= 'theme : "advanced",' . "\n";
 	$out.= 'theme_advanced_toolbar_location : "top",' . "\n";
 	$out.= 'theme_advanced_toolbar_align : "left",' . "\n";
