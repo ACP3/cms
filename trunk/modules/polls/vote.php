@@ -18,14 +18,23 @@ if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \''
 	breadcrumb::assign($lang->t('polls', 'polls'), uri('polls'));
 	breadcrumb::assign($lang->t('polls', 'vote'));
 
+	// Wenn abgestimmt wurde
 	if (isset($_POST['submit']) && isset($_POST['answer']) && validate::isNumber($_POST['answer'])) {
-		$answer = $_POST['answer'];
 		$ip = $_SERVER['REMOTE_ADDR'];
 
-		if ($db->select('poll_id', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND ip = \'' . $ip . '\'', 0, 0, 0, 1) == 0) {
+		// Überprüfen, ob der eingeloggter User schon abgestimmt hat
+		if ($auth->isUser()) {
+			$query = $db->select('poll_id', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND user_id = \'' . USER_ID . '\'', 0, 0, 0, 1);
+		// Überprüfung für Gäste
+		} else {
+			$query = $db->select('poll_id', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND ip = \'' . $ip . '\'', 0, 0, 0, 1);
+		}
+
+		if ($query == 0) {
 			$insert_values = array(
 				'poll_id' => $uri->id,
-				'answer_id' => $answer,
+				'answer_id' => $_POST['answer'],
+				'user_id' => $auth->isUser() ? USER_ID : 0,
 				'ip' => $ip,
 				'time' => $time,
 			);

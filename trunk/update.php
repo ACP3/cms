@@ -15,7 +15,12 @@ require ACP3_ROOT . 'includes/classes/config.php';
 require ACP3_ROOT . 'includes/classes/db.php';
 
 $queries = array(
-	0 => 'RENAME TABLE `{pre}nnewsletter_accounts` TO `{pre}newsletter_accounts`;',
+	'RENAME TABLE `{pre}nnewsletter_accounts` TO `{pre}newsletter_accounts`;',
+	'ALTER TABLE `{pre}poll_votes` ADD `user_id` INT NOT NULL AFTER `answer_id`;',
+	'ALTER TABLE `{pre}poll_votes` DROP PRIMARY KEY',
+	'ALTER TABLE `{pre}poll_votes` ADD INDEX (`poll_id`)',
+	'ALTER TABLE `{pre}poll_votes` ADD INDEX (`answer_id`)',
+	'ALTER TABLE `{pre}poll_votes` ADD INDEX (`user_id`)',
 );
 
 if (count($queries) > 0) {
