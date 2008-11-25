@@ -13,9 +13,9 @@ if (!defined('IN_ADM'))
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 	
-	if (!validate::isNumber($form['width']))
+	if (!validate::isNumber($form['thumbwidth']) || !validate::isNumber($form['width']) || !validate::isNumber($form['maxwidth']))
 		$errors[] = $lang->t('gallery', 'invalid_image_width_entered');
-	if (!validate::isNumber($form['height']))
+	if (!validate::isNumber($form['thumbheight']) || !validate::isNumber($form['height']) || !validate::isNumber($form['maxheight']))
 		$errors[] = $lang->t('gallery', 'invalid_image_height_entered');
 	if (!validate::isNumber($form['filesize']))
 		$errors[] = $lang->t('gallery', 'invalid_image_filesize_entered');

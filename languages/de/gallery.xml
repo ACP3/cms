@@ -94,11 +94,11 @@
 	</item>
 	<item>
 		<name>image_height</name>
-		<message>Maximale Bildhöhe</message>
+		<message>Maximal anzuzeigende Bildhöhe</message>
 	</item>
 	<item>
 		<name>image_width</name>
-		<message>Maximale Bildbreite</message>
+		<message>Maximal anzuzeigende Bildbreite</message>
 	</item>
 	<item>
 		<name>invalid_image_filesize_entered</name>
@@ -115,6 +115,14 @@
 	<item>
 		<name>invalid_image_width_entered</name>
 		<message>Bitte geben Sie die maximale Bildbreite in Pixel an</message>
+	</item>
+	<item>
+		<name>max_image_height</name>
+		<message>Maximale Bildhöhe</message>
+	</item>
+	<item>
+		<name>max_image_width</name>
+		<message>Maximale Bildbreite</message>
 	</item>
 	<item>
 		<name>mod_description</name>
@@ -183,6 +191,14 @@
 	<item>
 		<name>settings_success</name>
 		<message>Die Einstellungen wurden erfolgreich bearbeitet.</message>
+	</item>
+	<item>
+		<name>thumb_image_height</name>
+		<message>Maximal anzuzeigende Höhe der Vorschaubilder</message>
+	</item>
+	<item>
+		<name>thumb_image_width</name>
+		<message>Maximal anzuzeigende Breite der Vorschaubilder</message>
 	</item>
 	<item>
 		<name>title</name>

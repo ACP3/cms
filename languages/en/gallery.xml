@@ -94,11 +94,11 @@
 	</item>
 	<item>
 		<name>image_height</name>
-		<message>Maximum image height</message>
+		<message>Maximum image height to be displayed</message>
 	</item>
 	<item>
 		<name>image_width</name>
-		<message>Maximum image width</message>
+		<message>Maximum image width to be displayed</message>
 	</item>
 	<item>
 		<name>invalid_image_filesize_entered</name>
@@ -115,6 +115,14 @@
 	<item>
 		<name>invalid_image_width_entered</name>
 		<message>Please type in the maximum image width in pixels</message>
+	</item>
+	<item>
+		<name>max_image_height</name>
+		<message>Maximum image height</message>
+	</item>
+	<item>
+		<name>max_image_width</name>
+		<message>Maximum image width</message>
 	</item>
 	<item>
 		<name>mod_description</name>
@@ -179,6 +187,14 @@
 	<item>
 		<name>settings_success</name>
 		<message>The settings have been edited successfully.</message>
+	</item>
+	<item>
+		<name>thumb_image_height</name>
+		<message>Maximum thumb image height to be displayed</message>
+	</item>
+	<item>
+		<name>thumb_image_width</name>
+		<message>Maximum thumb image width to be displayed</message>
 	</item>
 	<item>
 		<name>title</name>

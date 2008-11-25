@@ -25,9 +25,16 @@ if (!validate::isNumber($uri->id) || $uri->action != 'mini' && $uri->action != '
 		$type = $pic_info[2];
 		$action = $uri->action;
 
-		if (extension_loaded('gd') && ($type == '1' || $type == '2' || $type == '3') && ($action == 'mini' && $width > 160 && $height > 120) || ($action == 'thumb' && $width > 640 && $height > 480)) {
-			$t_height = $action == 'mini' ? 120 : 480;
-			$t_width = intval($width * $t_height / $height);
+		$settings = config::output('gallery');
+
+		if (extension_loaded('gd') && ($type == '1' || $type == '2' || $type == '3') && ($action == 'mini' && $width > $settings['thumbwidth'] && $height > $settings['thumbheight']) || ($action == 'thumb' && $width > $settings['width'] && $height > $settings['height'])) {
+			if ($width > $height) {
+				$t_width = $action == 'mini' ? $settings['thumbwidth'] : $settings['width'];
+				$t_height = intval($height * $t_width / $width);
+			} else {
+				$t_height = $action == 'mini' ? $settings['thumbheight'] : $settings['height'];
+				$t_width = intval($width * $t_height / $height);
+			}
 
 			$pic_new = imagecreatetruecolor($t_width, $t_height);
 			switch ($type) {

@@ -9,7 +9,7 @@ define('CONFIG_DB_PWD', '');
 define('CONFIG_DB_TYPE', 'mysqli');
 define('CONFIG_DB_USER', 'root');
 define('CONFIG_DESIGN', 'acp3');
-define('CONFIG_DST', '1');
+define('CONFIG_DST', '0');
 define('CONFIG_ENTRIES', '20');
 define('CONFIG_FLOOD', '30');
 define('CONFIG_HOMEPAGE', 'news/list/');

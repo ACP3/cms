@@ -4,10 +4,18 @@
 <form action="{$REQUEST_URI}" method="post">
 	<fieldset>
 		<dl>
+			<dt><label for="thumbwidth">{lang values="gallery|thumb_image_width"}</label></dt>
+			<dd><input type="text" name="form[thumbwidth]" id="thumbwidth" value="{$form.thumbwidth}" /></dd>
+			<dt><label for="thumbheight">{lang values="gallery|thumb_image_height"}</label></dt>
+			<dd><input type="text" name="form[thumbheight]" id="thumbheight" value="{$form.thumbheight}" /></dd>
 			<dt><label for="width">{lang values="gallery|image_width"}</label></dt>
 			<dd><input type="text" name="form[width]" id="width" value="{$form.width}" /></dd>
 			<dt><label for="height">{lang values="gallery|image_height"}</label></dt>
 			<dd><input type="text" name="form[height]" id="height" value="{$form.height}" /></dd>
+			<dt><label for="maxwidth">{lang values="gallery|max_image_width"}</label></dt>
+			<dd><input type="text" name="form[maxwidth]" id="maxwidth" value="{$form.maxwidth}" /></dd>
+			<dt><label for="maxheight">{lang values="gallery|max_image_height"}</label></dt>
+			<dd><input type="text" name="form[maxheight]" id="maxheight" value="{$form.maxheight}" /></dd>
 			<dt><label for="filesize">{lang values="gallery|image_filesize"}</label></dt>
 			<dd><input type="text" name="form[filesize]" id="filesize" value="{$form.filesize}" /></dd>
 		</dl>
