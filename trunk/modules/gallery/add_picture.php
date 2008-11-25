@@ -30,7 +30,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $ur
 			$errors[] = $lang->t('gallery', 'type_in_picture_number');
 		if (empty($file['tmp_name']) || empty($file['size']))
 			$errors[] = $lang->t('gallery', 'no_picture_selected');
-		if (!empty($file['tmp_name']) && !empty($file['size']) && !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']))
+		if (!empty($file['tmp_name']) && !empty($file['size']) && !validate::isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']))
 			$errors[] = $lang->t('gallery', 'invalid_image_selected');
 
 		if (isset($errors)) {

@@ -9,8 +9,12 @@
 		<active>1</active>
 	</info>
 	<settings>
-		<width>1024</width>
-		<height>768</height>
+		<width>640</width>
+		<height>480</height>
+		<thumbwidth>160</thumbwidth>
+		<thumbheight>120</thumbheight>
+		<maxwidth>1024</maxwidth>
+		<maxheight>768</maxheight>
 		<filesize>204800</filesize>
 	</settings>
 	<access>

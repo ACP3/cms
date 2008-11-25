@@ -110,9 +110,10 @@ function parentCheck($id, $parent_id, $block) {
 function processNavbar($block, $pages = 0) {
 	static $navbar = array();
 
-	// Navigationsleiste sofort ausgeben, falls diese schon einmal verarbeitet wurde
+	// Navigationsleiste sofort ausgeben, falls diese schon einmal verarbeitet wurde...
 	if (empty($pages) && isset($navbar[$block])) {
 		return $navbar[$block];
+	// ...ansonsten Verarbeitung starten
 	} else {
 		if (empty($pages)) {
 			if (!cache::check('pages')) {
@@ -126,35 +127,44 @@ function processNavbar($block, $pages = 0) {
 			global $date, $uri;
 			static $tabs = '';
 
+			// HTML-Liste einrücken
 			if (!empty($navbar[$block]))
 				$tabs .= "\t\t";
 
-			$i = 0;
+			// Navgationsleiste als Liste erstellen
 			if (empty($navbar[$block])) {
 				$navbar[$block] = "<ul class=\"navigation-" . $block . "\">\n";
+			// Eine Ebene mehr verschachteln
 			} else {
 				$navbar[$block] .= $tabs . "<ul>\n";
 			}
 
+			// Aktuellen Zeitstempel holen
 			$time = $date->timestamp();
+
+			$i = 0;
 			foreach ($pages as $row) {
 				if ($row['block_name'] == $block && !empty($row['block_id']) && $row['start'] == $row['end'] && $row['start'] <= $time || $row['start'] != $row['end'] && $row['start'] <= $time && $row['end'] >= $time) {
 					$css = 'navi-' . $row['id'] . ($uri->mod == 'pages' && $uri->page == 'list' && $uri->item == $row['id'] || $uri->query == uri($row['uri']) ? ' selected' : '');
 					$href = uri('pages/list/item_' . $row['id']);
 					$target = ($row['mode'] == 2 || $row['mode'] == 3) && $row['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 					$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $row['title'] . '</a>';
+	
+					// Link einfügen
 					if (empty($row['children'])) {
 						$navbar[$block] .= $tabs . "\t<li>" . $link . "</li>\n";
+					// ...wenn Kindelemente existieren, dann eine Ebene tiefer verschachteln
 					} else {
 						$navbar[$block] .= $tabs . "\t<li>\n" . $tabs . "\t\t" . $link . "\n";
 						processNavbar($block, $row['children']);
 						$navbar[$block] .= $tabs . "\t</li>\n";
 					}
 				}
+	
 				// Navigationsleiste einrücken
 				if ($i == $c_pages - 1) {
-					// Mögliche HTML Fehler beheben
-					$search = array($tabs . "<ul>\n" . $tabs . "</ul>\n", "<ul class=\"navigation-" . $block . "\">\n</ul>\n");
+					// Mögliche HTML-Fehler beheben
+					$search = array($tabs . "<ul>\n" . $tabs . "</ul>\n", '<ul class="navigation-' . $block . "\">\n</ul>\n");
 					$navbar[$block] .= $tabs . "</ul>\n";
 					$navbar[$block] = str_replace($search, '', $navbar[$block]);
 					$tabs = substr($tabs, 0, -2);

@@ -86,7 +86,7 @@ $php_settings[2]['value'] = ini_get('post_max_size');
 
 $tpl->assign('php_settings', $php_settings);
 
-if (version_compare(phpversion(), '5.0.5', '<') || version_compare(mysql_get_client_info(), '4.0', '<') || (bool)ini_get('safe_mode')) {
+if (version_compare(phpversion(), '5.1.0', '<') || version_compare(mysql_get_client_info(), '4.0', '<') || (bool)ini_get('safe_mode')) {
 	$tpl->assign('stop_install', true);
 } elseif ($check_again) {
 	$tpl->assign('check_again', true);

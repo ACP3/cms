@@ -31,7 +31,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery_pictures', 'id = 
 			$errors[] = $lang->t('gallery', 'no_gallery_selected');
 		if (!validate::isNumber($form['pic']))
 			$errors[] = $lang->t('gallery', 'type_in_picture_number');
-		if (isset($file) && is_array($file) && !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']))
+		if (isset($file) && is_array($file) && !validate::isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']))
 			$errors[] = $lang->t('gallery', 'invalid_image_selected');
 
 		if (isset($errors)) {
