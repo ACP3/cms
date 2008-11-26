@@ -49,6 +49,10 @@
 		<message>Beschreibung</message>
 	</item>
 	<item>
+		<name>edit_order</name>
+		<message>Reihenfolge bearbeiten</message>
+	</item>
+	<item>
 		<name>email</name>
 		<message>E-Mail-Adresse</message>
 	</item>
@@ -121,6 +125,14 @@
 		<message>Monat</message>
 	</item>
 	<item>
+		<name>move_down</name>
+		<message>Einen Schritt nach unten verschieben</message>
+	</item>
+	<item>
+		<name>move_up</name>
+		<message>Einen Schritt nach oben verschieben</message>
+	</item>
+	<item>
 		<name>name</name>
 		<message>Name</message>
 	</item>
@@ -139,6 +151,18 @@
 	<item>
 		<name>no_entries_selected</name>
 		<message>Bitte wählen Sie die zu löschenden Einträge aus.</message>
+	</item>
+	<item>
+		<name>order</name>
+		<message>Reihenfolge</message>
+	</item>
+	<item>
+		<name>order_error</name>
+		<message>Beim Bearbeiten der Reihenfolge ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>order_success</name>
+		<message>Die Reihenfolge wurde erfolgreich bearbeitet.</message>
 	</item>
 	<item>
 		<name>options</name>

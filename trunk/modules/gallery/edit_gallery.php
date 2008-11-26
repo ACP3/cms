@@ -54,6 +54,8 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $ur
 		if ($c_pictures > 0) {
 			$tpl->assign('pagination', pagination($db->select('id', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'', 0, 0, 0, 1)));
 			for ($i = 0; $i < $c_pictures; ++$i) {
+				$pictures[$i]['first'] = $i == 0 ? true : false;
+				$pictures[$i]['last'] = $i == $c_pictures - 1 ? true : false;
 				$pictures[$i]['description'] = $db->escape($pictures[$i]['description'], 3);
 			}
 			$tpl->assign('pictures', $pictures);
