@@ -129,10 +129,6 @@
 		<message>Mit diesem Modul können die Fotogalerien verwaltet werden.</message>
 	</item>
 	<item>
-		<name>no_gallery_selected</name>
-		<message>Bitte wählen Sie eine Fotogalerie aus</message>
-	</item>
-	<item>
 		<name>no_picture_selected</name>
 		<message>Bitte wählen Sie ein Bild aus</message>
 	</item>
@@ -163,10 +159,6 @@
 	<item>
 		<name>picture_information</name>
 		<message>Bild Informationen</message>
-	</item>
-	<item>
-		<name>picture_number</name>
-		<message>Bildnummer</message>
 	</item>
 	<item>
 		<name>pictures</name>
@@ -207,9 +199,5 @@
 	<item>
 		<name>type_in_gallery_name</name>
 		<message>Der Name der Fotogalerie sollte mindestens 3 Zeichen lang sein</message>
-	</item>
-	<item>
-		<name>type_in_picture_number</name>
-		<message>Bitte geben Sie die Bilnummer an</message>
 	</item>
 </language>

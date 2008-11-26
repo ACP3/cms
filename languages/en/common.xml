@@ -49,6 +49,10 @@
 		<message>Description</message>
 	</item>
 	<item>
+		<name>edit_order</name>
+		<message>Edit order</message>
+	</item>
+	<item>
 		<name>email</name>
 		<message>E-mail address</message>
 	</item>
@@ -121,6 +125,14 @@
 		<message>Month</message>
 	</item>
 	<item>
+		<name>move_down</name>
+		<message>Move entry one step down</message>
+	</item>
+	<item>
+		<name>move_up</name>
+		<message>Move entry one step up</message>
+	</item>
+	<item>
 		<name>name</name>
 		<message>Name</message>
 	</item>
@@ -139,6 +151,18 @@
 	<item>
 		<name>no_entries_selected</name>
 		<message>Please select the entries that should be deleted.</message>
+	</item>
+	<item>
+		<name>order</name>
+		<message>Order</message>
+	</item>
+	<item>
+		<name>order_error</name>
+		<message>While editing the order, an error has occured.</message>
+	</item>
+	<item>
+		<name>order_success</name>
+		<message>The order has been edited successfully.</message>
 	</item>
 	<item>
 		<name>options</name>

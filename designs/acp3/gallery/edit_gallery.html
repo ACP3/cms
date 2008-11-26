@@ -36,6 +36,7 @@
 				<th>{lang values="common|mark"}</th>
 				<th>{lang values="gallery|picture"}</th>
 				<th>{lang values="common|description"}</th>
+				<th>{lang values="common|order"}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -44,6 +45,14 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
 				<td><a href="{uri args="acp/gallery/edit_picture/id_`$row.id`"}" title="{lang values="gallery|edit_picture"}"><img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" /></a></td>
 				<td>{$row.description}</td>
+				<td>
+{if !$row.last}
+					<a href="{uri args="acp/gallery/order/id_`$row.id`/mode_down"}" title="{lang values="common|move_down"}"><img src="{icon path="16/down"}" alt="{lang values="common|move_down"}" /></a>
+{/if}
+{if !$row.first}
+					<a href="{uri args="acp/gallery/order/id_`$row.id`/mode_up"}" title="{lang values="common|move_up"}"><img src="{icon path="16/up"}" alt="{lang values="common|move_up"}" /></a>
+{/if}
+				</td>
 			</tr>
 {/foreach}
 		</tbody>

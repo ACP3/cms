@@ -5,24 +5,11 @@
 	<fieldset>
 		<legend>{lang values="gallery|picture_information"}</legend>
 		<dl>
-			<dt><label for="gallery">{lang values="gallery|gallery"}</label></dt>
-			<dd>
-				<select name="form[gallery]" id="gallery">
-					<option value="">{lang values="common|pls_select"}</option>
-{foreach from=$galleries item=row}
-					<option value="{$row.id}"{$row.selected}>{$row.name}</option>
-{/foreach}
-				</select>
-			</dd>
-			<dt><label for="pic">{lang values="gallery|picture_number"}</label></dt>
-			<dd><input type="text" name="form[pic]" id="pic" value="{$form.pic}" maxlength="11" /></dd>
 			<dt><label for="file">{lang values="gallery|select_new_picture"}</label></dt>
 			<dd><input type="file" name="file" id="file" /></dd>
+			<dt><label for="description">{lang values="common|description"}</label></dt>
+			<dd>{wysiwyg name="description" value="`$form.description`" height="150" toolbar="simple"}</dd>
 		</dl>
-	</fieldset>
-	<fieldset>
-		<legend>{lang values="common|description"}</legend>
-		{wysiwyg name="description" value="`$form.description`" height="150" toolbar="simple"}
 	</fieldset>
 	<div class="form-bottom">
 		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />

@@ -11,7 +11,6 @@ if (!defined('IN_ADM'))
 	exit();
 
 if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
-	$pic = validate::isNumber($uri->pic) ? $uri->pic : 1;
 	$gallery = $db->select('name', 'gallery', 'id = \'' . $uri->id . '\'');
 
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
@@ -26,8 +25,6 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $ur
 		$form = $_POST['form'];
 		$settings = config::output('gallery');
 
-		if (!validate::isNumber($form['pic']))
-			$errors[] = $lang->t('gallery', 'type_in_picture_number');
 		if (empty($file['tmp_name']) || empty($file['size']))
 			$errors[] = $lang->t('gallery', 'no_picture_selected');
 		if (!empty($file['tmp_name']) && !empty($file['size']) && !validate::isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']))
@@ -37,14 +34,15 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $ur
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$result = moveFile($file['tmp_name'], $file['name'], 'gallery');
+			$picNum = $db->select('pic', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'', 'pic DESC', 1);
 
-			$insert_values = array('id' => '', 'pic' => $form['pic'], 'gallery_id' => $uri->id, 'file' => $result['name'], 'description' => $db->escape($form['description'], 2));
+			$insert_values = array('id' => '', 'pic' => $picNum[0]['pic'] + 1, 'gallery_id' => $uri->id, 'file' => $result['name'], 'description' => $db->escape($form['description'], 2));
 
 			$bool = $db->insert('gallery_pictures', $insert_values);
 
 			cache::create('gallery_pics_id_' . $uri->id, $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'', 'pic ASC, id ASC'));
 
-			$content = comboBox($bool ? $lang->t('gallery', 'add_picture_success') : $lang->t('gallery', 'add_picture_error'), uri('acp/gallery/add_picture/id_' . $uri->id . '/pic_' . ($pic + 1)));
+			$content = comboBox($bool ? $lang->t('gallery', 'add_picture_success') : $lang->t('gallery', 'add_picture_error'), uri('acp/gallery/add_picture/id_' . $uri->id));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
@@ -58,7 +56,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $ur
 		}
 
 		$tpl->assign('galleries', $galleries);
-		$tpl->assign('form', isset($form) ? $form : array('pic' => $pic, 'description' => ''));
+		$tpl->assign('form', isset($form) ? $form : array('description' => ''));
 
 		$content = $tpl->fetch('gallery/add_picture.html');
 	}

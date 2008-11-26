@@ -112,6 +112,49 @@ function moveFile($tmp_filename, $filename, $dir)
 	}
 	return array();
 }
+
+function moveOneStepUp($table, $id_field, $sort_field, $id)
+{
+	global $db;
+
+	if ($db->select($id_field, $table, $id_field . ' != \'' . $id . '\' AND ' . $sort_field . ' < (SELECT ' . $sort_field . ' FROM ' . CONFIG_DB_PRE . $table . ' WHERE ' . $id_field . ' = \'' . $id . '\')', 0, 0, 0, 1) > 0) {
+		$elem = $db->select($sort_field, $table, $id_field . ' = \'' . $id . '\'');
+		$pre = $db->select($id_field . ', ' . $sort_field, $table, $sort_field . ' < ' . $elem[0][$sort_field] . '', $sort_field . ' DESC', 1);
+
+		// Sortierung aktualisieren
+		if (count($elem) == 1 && count($pre) == 1) {
+			$bool = $db->update($table, array($sort_field => $pre[0][$sort_field]), $id_field . ' = \'' . $id . '\'');
+			$bool2 = $db->update($table, array($sort_field => $elem[0][$sort_field]), $id_field . ' = \'' . $pre[0][$id_field] . '\'');
+
+			return $bool && $bool2 ? true : false;
+		}
+		return false;
+	} else {
+		return false;
+	}
+}
+
+function moveOneStepDown($table, $id_field, $sort_field, $id)
+{
+	global $db;
+
+	if ($db->select($id_field, $table, $id_field . ' != \'' . $id . '\' AND ' . $sort_field . ' > (SELECT ' . $sort_field . ' FROM ' . CONFIG_DB_PRE . $table . ' WHERE ' . $id_field . ' = \'' . $id . '\')', 0, 0, 0, 1) > 0) {
+		$elem = $db->select($sort_field, $table, $id_field . ' = \'' . $id . '\'');
+		$pre = $db->select($id_field . ',' . $sort_field, $table, $sort_field . ' > ' . $elem[0][$sort_field] . '', $sort_field . ' ASC', 1);
+
+		// Sortierung aktualisieren
+		if (count($elem) == 1 && count($pre) == 1) {
+			$bool = $db->update($table, array($sort_field => $pre[0][$sort_field]), $id_field . ' = \'' . $id . '\'');
+			$bool2 = $db->update($table, array($sort_field => $elem[0][$sort_field]), $id_field . ' = \'' . $pre[0][$id_field] . '\'');
+
+			return $bool && $bool2 ? true : false;
+		}
+		return false;
+	} else {
+		return false;
+	}
+}
+
 /**
  * Zeigt Dropdown-Menüs für die Veröffentlichungsdauer von Inhalten an
  *
