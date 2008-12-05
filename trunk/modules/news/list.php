@@ -49,8 +49,7 @@ if ($c_news > 0) {
 		$news[$i]['uri'] = $db->escape($news[$i]['uri'], 3);
 		$news[$i]['allow_comments'] = false;
 		if ($news[$i]['comments'] == '1' && isset($comment_check)) {
-			unset($news[$i]['comments']);
-			$news[$i]['comments_count'] = commentsCount($news[$i]['id']);
+			$news[$i]['comments'] = commentsCount($news[$i]['id'], 'news');
 			$news[$i]['allow_comments'] = true;
 		}
 		if ($news[$i]['readmore'] == '1') {
@@ -61,9 +60,8 @@ if ($c_news > 0) {
 			$chars = 350;
 
 			// Weiterlesen-Link, falls zusätzliche Links zur News angegeben sind oder Zeichenanzahl größer als $chars
-			if (strlen($striped_news) - $chars >= 50 || $news[$i]['uri'] != '') {
+			if (strlen($striped_news) - $chars >= 50 || !empty($news[$i]['uri'])) {
 				$striped_news = substr($striped_news, 0, $chars - 50);
-
 				$news[$i]['text'] = $striped_news . '...<a href="' . uri('news/details/id_' . $news[$i]['id']) . '">[' . $lang->t('news', 'read_on') . ']</a>' . "\n";
 			}
 		}

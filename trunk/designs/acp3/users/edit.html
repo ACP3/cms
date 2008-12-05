@@ -1,20 +1,55 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" id="tabs">
 	<fieldset>
-		<legend>{lang values="users|nickname"}, {lang values="common|email"} &amp; {lang values="access|access"}</legend>
+		<legend>{lang values="common|general_statements"}</legend>
 		<dl>
 			<dt><label for="nickname">{lang values="users|nickname"}</label></dt>
 			<dd><input type="text" name="form[nickname]" id="nickname" value="{$form.nickname}" maxlength="30" /></dd>
+			<dt><label for="realname">{lang values="users|realname"}</label></dt>
+			<dd><input type="text" name="form[realname]" id="realname" value="{$form.realname}" maxlength="80" /></dd>
 			<dt><label for="mail">{lang values="common|email"}</label></dt>
 			<dd><input type="text" name="form[mail]" id="mail" value="{$form.mail}" maxlength="120" /></dd>
+			<dt><label for="website">{lang values="common|website"}</label></dt>
+			<dd><input type="text" name="form[website]" id="website" value="{$form.website}" maxlength="120" /></dd>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<legend>{lang values="users|settings"}</legend>
+		<dl>
 			<dt><label for="access">{lang values="access|access"}</label></dt>
 			<dd>
 				<select name="form[access]" id="access">
 					<option value="">{lang values="common|pls_select"}</option>
 {foreach from=$access item=row}
 					<option value="{$row.id}"{$row.selected}>{$row.name}</option>
+{/foreach}
+				</select>
+			</dd>
+			<dt><label for="time_zone">{lang values="common|time_zone"}</label></dt>
+			<dd>
+				<select name="form[time_zone]" id="time_zone">
+{foreach from=$time_zone item=row}
+					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{/foreach}
+				</select>
+			</dd>
+			<dt><label for="dst-1">{lang values="common|daylight_saving_time"}</label></dt>
+			<dd>
+{foreach from=$dst item=row}
+				<label for="dst-{$row.value}">
+					<input type="radio" name="form[dst]" id="dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+					{$row.lang}
+				</label>
+{/foreach}
+			</dd>
+			<dt><label for="language">{lang values="users|language"}</label></dt>
+			<dd>
+				<select name="form[language]" id="language">
+					<option value="">{lang values="common|pls_select"}</option>
+{foreach from=$languages item=row}
+					<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
 {/foreach}
 				</select>
 			</dd>

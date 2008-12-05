@@ -204,6 +204,10 @@
 		<message>Send E-mail</message>
 	</item>
 	<item>
+		<name>settings</name>
+		<message>Settings</message>
+	</item>
+	<item>
 		<name>sign_off</name>
 		<message>Sign off</message>
 	</item>
