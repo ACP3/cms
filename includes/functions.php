@@ -157,13 +157,16 @@ function moveFile($tmp_filename, $filename, $dir)
  *	Die ID des Datensatzes, welcher umsortiert werden soll
  * @return boolean
  */
-function moveOneStepUp($table, $id_field, $sort_field, $id)
+function moveOneStepUp($table, $id_field, $sort_field, $id, $where = 0)
 {
 	global $db;
 
-	if ($db->select($id_field, $table, $id_field . ' != \'' . $id . '\' AND ' . $sort_field . ' < (SELECT ' . $sort_field . ' FROM ' . CONFIG_DB_PRE . $table . ' WHERE ' . $id_field . ' = \'' . $id . '\')', 0, 0, 0, 1) > 0) {
-		$elem = $db->select($sort_field, $table, $id_field . ' = \'' . $id . '\'');
-		$pre = $db->select($id_field . ', ' . $sort_field, $table, $sort_field . ' < ' . $elem[0][$sort_field] . '', $sort_field . ' DESC', 1);
+	// Zusätzliche WHERE-Bedingung
+	$where = !empty($where) ? $where . ' AND ' : '';
+
+	if ($db->select($id_field, $table, $where . $id_field . ' != \'' . $id . '\' AND ' . $sort_field . ' < (SELECT ' . $sort_field . ' FROM ' . CONFIG_DB_PRE . $table . ' WHERE ' . $where . $id_field . ' = \'' . $id . '\')', 0, 0, 0, 1) > 0) {
+		$elem = $db->select($sort_field, $table, $where . $id_field . ' = \'' . $id . '\'');
+		$pre = $db->select($id_field . ', ' . $sort_field, $table, $where . $sort_field . ' < ' . $elem[0][$sort_field] . '', $sort_field . ' DESC', 1);
 
 		// Sortierung aktualisieren
 		if (count($elem) == 1 && count($pre) == 1) {
@@ -188,13 +191,16 @@ function moveOneStepUp($table, $id_field, $sort_field, $id)
  *	Die ID des Datensatzes, welcher umsortiert werden soll
  * @return boolean
  */
-function moveOneStepDown($table, $id_field, $sort_field, $id)
+function moveOneStepDown($table, $id_field, $sort_field, $id, $where = 0)
 {
 	global $db;
 
-	if ($db->select($id_field, $table, $id_field . ' != \'' . $id . '\' AND ' . $sort_field . ' > (SELECT ' . $sort_field . ' FROM ' . CONFIG_DB_PRE . $table . ' WHERE ' . $id_field . ' = \'' . $id . '\')', 0, 0, 0, 1) > 0) {
-		$elem = $db->select($sort_field, $table, $id_field . ' = \'' . $id . '\'');
-		$pre = $db->select($id_field . ',' . $sort_field, $table, $sort_field . ' > ' . $elem[0][$sort_field] . '', $sort_field . ' ASC', 1);
+	// Zusätzliche WHERE-Bedingung
+	$where = !empty($where) ? $where . ' AND ' : '';
+
+	if ($db->select($id_field, $table, $where . $id_field . ' != \'' . $id . '\' AND ' . $sort_field . ' > (SELECT ' . $sort_field . ' FROM ' . CONFIG_DB_PRE . $table . ' WHERE ' . $where . $id_field . ' = \'' . $id . '\')', 0, 0, 0, 1) > 0) {
+		$elem = $db->select($sort_field, $table, $where . $id_field . ' = \'' . $id . '\'');
+		$pre = $db->select($id_field . ',' . $sort_field, $table, $where . $sort_field . ' > ' . $elem[0][$sort_field] . '', $sort_field . ' ASC', 1);
 
 		// Sortierung aktualisieren
 		if (count($elem) == 1 && count($pre) == 1) {
