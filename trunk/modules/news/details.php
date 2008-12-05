@@ -14,12 +14,7 @@ $time = $date->timestamp();
 $period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
 if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->id . '\'' . $period, 0, 0, 0, 1) == 1) {
-	// News Cache erstellen
-	if (!cache::check('news_details_id_' . $uri->id)) {
-		cache::create('news_details_id_' . $uri->id, $db->select('id, start, headline, text, readmore, comments, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\''));
-	}
-	$news = cache::output('news_details_id_' . $uri->id);
-
+	$news = getNewsCache($uri->id);
 	// Brotkrümelspur
 	$category = $db->select('name', 'categories', 'id = \'' . $news[0]['category_id'] . '\'');
 	breadcrumb::assign($lang->t('news', 'news'), uri('news'));

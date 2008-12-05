@@ -42,8 +42,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->
 			);
 
 			$bool = $db->update('news', $update_values, 'id = \'' . $uri->id . '\'');
-
-			cache::create('news_details_id_' . $uri->id, $db->select('id, start, headline, text, readmore, comments, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\''));
+			setNewsCache($uri->id);
 
 			$content = comboBox($bool ? $lang->t('news', 'edit_success') : $lang->t('news', 'edit_error'), uri('acp/news'));
 		}
