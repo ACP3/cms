@@ -15,11 +15,9 @@
  * 	Das jeweilige Modul
  * @return integer
  */
-function commentsCount($entry_id, $module = 0)
+function commentsCount($entry_id, $module)
 {
-	global $db, $uri;
-
-	$module = !empty($module) ? $module : $uri->mod;
+	global $db;
 
 	return $db->select('id', 'comments', 'module = \'' . $module . '\' AND entry_id =\'' . $entry_id . '\'', 0, 0, 0, 1);
 }
@@ -85,8 +83,9 @@ function comments($module, $entry_id)
 		// Auflistung der Kommentare
 		$comments = $db->select('name, user_id, date, message', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 'date ASC', POS, CONFIG_ENTRIES);
 		$c_comments = count($comments);
-		$emoticons = false;
 
+		// Emoticons einbinden, falls diese aktiv sind
+		$emoticons = false;
 		if (modules::check('emoticons', 'functions')) {
 			include_once ACP3_ROOT . 'modules/emoticons/functions.php';
 			$emoticons = true;
@@ -132,7 +131,6 @@ function comments($module, $entry_id)
 			$defaults['message'] = '';
 		}
 		$tpl->assign('form', isset($form) ? array_merge($defaults, $form) : $defaults);
-
 		$tpl->assign('captcha', captcha());
 
 		return $tpl->fetch('comments/list.html');
