@@ -13,9 +13,9 @@ function setGalleryCache($id)
 }
 function getGalleryCache($id)
 {
-	if (!cache::check('gallery_pics_id_' . $id)) {
+	if (!cache::check('gallery_pics_id_' . $id))
 		setGalleryCache($id);
-	}
+
 	return cache::output('gallery_pics_id_' . $id);
 }
 ?>
