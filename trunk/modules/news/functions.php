@@ -9,7 +9,7 @@
 function setNewsCache($id)
 {
 	global $db;
-	return cache::create('news_details_id_' . $id, $db->select('id, start, headline, text, readmore, comments, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\''));
+	return cache::create('news_details_id_' . $id, $db->select('id, start, headline, text, readmore, comments, category_id, uri, target, link_title', 'news', 'id = \'' . $id . '\''));
 }
 function getNewsCache($id)
 {
