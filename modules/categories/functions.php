@@ -13,7 +13,6 @@ if (!defined('IN_ACP3') && !defined('IN_ADM'))
 function setCategoriesCache($module)
 {
 	global $db;
-
 	return cache::create('categories_' . $module, $db->select('id, name, picture, description', 'categories', 'module = \'' . $module . '\'', 'name ASC'));
 }
 function getCategoriesCache($module)

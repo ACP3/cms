@@ -8,13 +8,14 @@
  */
 function setEmoticonsCache()
 {
+	global $db;
 	return cache::create('emoticons', $db->select('code, description, img', 'emoticons'));
 }
 function getEmoticonsCache()
 {
-	if (!cache::check('emoticons')) {
+	if (!cache::check('emoticons'))
 		setEmoticonsCache();
-	}
+
 	return cache::output('emoticons');
 }
 /**
