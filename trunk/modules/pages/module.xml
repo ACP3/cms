@@ -12,6 +12,7 @@
 		<item>
 			<file>adm_list</file>
 			<level>2</level>
+			<include>functions</include>
 		</item>
 		<item>
 			<file>adm_list_blocks</file>
@@ -20,6 +21,7 @@
 		<item>
 			<file>create</file>
 			<level>2</level>
+			<include>functions</include>
 		</item>
 		<item>
 			<file>create_block</file>
@@ -28,6 +30,7 @@
 		<item>
 			<file>delete</file>
 			<level>2</level>
+			<include>functions</include>
 		</item>
 		<item>
 			<file>delete_blocks</file>
@@ -36,6 +39,7 @@
 		<item>
 			<file>edit</file>
 			<level>2</level>
+			<include>functions</include>
 		</item>
 		<item>
 			<file>edit_block</file>

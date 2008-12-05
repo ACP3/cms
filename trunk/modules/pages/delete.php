@@ -31,7 +31,6 @@ if (!isset($entries)) {
 			cache::delete('pages_list_id_' . $entry);
 		}
 	}
-	include ACP3_ROOT . 'modules/pages/functions.php';
 	generatePagesCache();
 
 	$content = comboBox($bool ? $lang->t('pages', 'delete_success') : $lang->t('pages', 'delete_error'), uri('acp/pages'));
