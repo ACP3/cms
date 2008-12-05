@@ -39,7 +39,7 @@ class modules
 				if (!isset($access_level[$module])) {
 					// Zugriffslevel für Gäste
 					$access_id = 2;
-					// Zugriffslevel für Benutzer holen
+					// Zugriffslevel des Benutzers holen
 					if ($auth->isUser()) {
 						$info = $auth->getUserInfo();
 						if (!empty($info)) {
@@ -57,6 +57,17 @@ class modules
 				// XML Datei parsen
 				foreach ($xml->access->item as $item) {
 					if ((string) $item->file == $page && (string) $item->level != '0' && isset($access_level[$module]) && (string) $item->level <= $access_level[$module]) {
+						// Zusätzliche include-Files einbinden
+						if (!empty($item->include)) {
+							$includes = explode(',', $item->include);
+							foreach ($includes as $file) {
+								$path = ACP3_ROOT . 'modules/' . (!preg_match('=/=', $file) ? $module . '/' . $file : $file) . '.php';
+								if (is_file($path)) {
+									require_once $path;
+								}
+							}
+						}
+						// User hat Zugriff auf die aktuelle Seite
 						return true;
 					}
 				}
@@ -93,19 +104,26 @@ class modules
 	public static function parseInfo($module)
 	{
 		global $lang;
+		static $parsed_modules = array();
 
-		$mod_info = xml::parseXmlFile(ACP3_ROOT . 'modules/' . $module . '/module.xml', 'info');
+		if (empty($parsed_modules[$module])) {
+			$mod_info = xml::parseXmlFile(ACP3_ROOT . 'modules/' . $module . '/module.xml', 'info');
 
-		if (is_array($mod_info)) {
-			$mod_info['dir'] = $module;
-			$mod_info['description'] = isset($mod_info['description']['lang']) && $mod_info['description']['lang'] == 'true' ? $lang->t($module, 'mod_description') : $mod_info['description']['lang'];
-			$mod_info['name'] = isset($mod_info['name']['lang']) && $mod_info['name']['lang'] == 'true' ? $lang->t($module, $module) : $mod_info['name'];
-			$mod_info['tables'] = !empty($mod_info['tables']) ? explode(',', $mod_info['tables']) : false;
-			$mod_info['categories'] = isset($mod_info['categories']) ? true : false;
-			$mod_info['protected'] = isset($mod_info['protected']) ? true : false;
-			return $mod_info;
+			if (is_array($mod_info)) {
+				$parsed_modules[$module] = array(
+					'dir' => $module,
+					'active' => $mod_info['active'],
+					'description' => isset($mod_info['description']['lang']) && $mod_info['description']['lang'] == 'true' ? $lang->t($module, 'mod_description') : $mod_info['description']['lang'],
+					'name' => isset($mod_info['name']['lang']) && $mod_info['name']['lang'] == 'true' ? $lang->t($module, $module) : $mod_info['name'],
+					'tables' => !empty($mod_info['tables']) ? explode(',', $mod_info['tables']) : false,
+					'categories' => isset($mod_info['categories']) ? true : false,
+					'protected' => isset($mod_info['protected']) ? true : false,
+				);
+				return $parsed_modules[$module];
+			}
+			return false;
 		}
-		return false;
+		return $parsed_modules[$module];
 	}
 }
 ?>

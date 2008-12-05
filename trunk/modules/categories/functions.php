@@ -10,13 +10,22 @@
 if (!defined('IN_ACP3') && !defined('IN_ADM'))
 	exit();
 
+function setCategoriesCache($module)
+{
+	global $db;
+
+	return cache::create('categories_' . $module, $db->select('id, name, picture, description', 'categories', 'module = \'' . $module . '\'', 'name ASC'));
+}
+function getCategoriesCache($module)
+{
+	if (!cache::check('categories_' . $module))
+		setCategoriesCache($module);
+
+	return cache::output('categories_' . $module);
+}
 function categoriesList($module, $page, $category = '') {
 	if (modules::check($module, $page)) {
-		if (!cache::check('categories_' . $module)) {
-			global $db;
-			cache::create('categories_' . $module, $db->select('id, name, picture, description', 'categories', 'module = \'' . $module . '\'', 'name ASC'));
-		}
-		$categories = cache::output('categories_' . $module);
+		$categories = getCategoriesCache($module);
 		$c_categories = count($categories);
 		
 		if ($c_categories > 0) {

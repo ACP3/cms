@@ -71,8 +71,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'files', 'id = \'' . $uri-
 			}
 
 			$bool = $db->update('files', $update_values, 'id = \'' . $uri->id . '\'');
-
-			cache::create('files_details_id_' . $uri->id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, c.name AS category_name', 'files AS f, ' . CONFIG_DB_PRE . 'categories AS c', 'f.id = \'' . $uri->id . '\' AND f.category_id = c.id'));
+			setFilesCache();
 
 			$content = comboBox($bool ? $lang->t('files', 'edit_success') : $lang->t('files', 'edit_error'), uri('acp/files'));
 		}

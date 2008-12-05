@@ -19,6 +19,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'categories', 'id = \'' . 
 			$file['size'] = $_FILES['picture']['size'];
 		}
 		$settings = config::output('categories');
+		$module = $db->select('module', 'categories', 'id = \'' . $uri->id . '\'');
 
 		if (strlen($form['name']) < 3)
 			$errors[] = $lang->t('categories', 'name_to_short');
@@ -26,7 +27,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'categories', 'id = \'' . 
 			$errors[] = $lang->t('categories', 'description_to_short');
 		if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) || !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize'])))
 			$errors[] = $lang->t('categories', 'invalid_image_selected');
-		if (strlen($form['name']) > 3 && !empty($form['module']) && $db->select('id', 'categories', 'id != \'' . $uri->id . '\' AND name = \'' . $db->escape($form['name']) . '\' AND module = \'' . $db->escape($form['module'], 2) . '\'', 0, 0, 0, 1) > 0)
+		if (strlen($form['name']) > 3 && $db->select('id', 'categories', 'id != \'' . $uri->id . '\' AND name = \'' . $db->escape($form['name']) . '\' AND module = \'' . $module[0]['module'] . '\'', 0, 0, 0, 1) > 0)
 			$errors[] = $lang->t('categories', 'category_already_exists');
 
 		if (isset($errors)) {
@@ -51,16 +52,13 @@ if (validate::isNumber($uri->id) && $db->select('id', 'categories', 'id = \'' . 
 
 			$bool = $db->update('categories', $update_values, 'id = \'' . $uri->id . '\'');
 
-			$category = $db->select('module', 'categories', 'id = \'' . $uri->id . '\'');
-
-			cache::create('categories_' . $db->escape($category[0]['module'], 3), $db->select('id, name, picture, description', 'categories', 'module = \'' . $db->escape($category[0]['module'], 3) . '\'', 'name ASC'));
+			setCategoriesCache($db->escape($module[0]['module'], 3));
 
 			$content = comboBox($bool ? $lang->t('categories', 'edit_success') : $lang->t('categories', 'edit_error'), uri('acp/categories'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$category = $db->select('name, description', 'categories', 'id = \'' . $uri->id . '\'');
-
 		$tpl->assign('form', isset($form) ? $form : $category[0]);
 
 		$content = $tpl->fetch('categories/edit.html');
