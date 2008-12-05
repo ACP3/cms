@@ -109,11 +109,19 @@ class validate
 	public static function isPicture($file, $width = '', $height = '', $filesize = '')
 	{
 		$info = getimagesize($file);
-
 		$isPicture = $info[2] >= '1' && $info[2] <= '3' ? true : false;
 
-		if ($isPicture && self::isNumber($width) && self::isNumber($height) && self::isNumber($filesize)) {
-			return $info[0] <= $width && $info[1] <= $height && filesize($file) <= $filesize ? true : false;
+		if ($isPicture) {
+			$bool = true;
+			// Optionale Parameter
+			if (validate::isNumber($width) && $info[0] <= $width)
+				$bool = false;
+			if (validate::isNumber($height) && $info[1] <= $height)
+				$bool = false;
+			if (validate::isNumber($filesize) && filesize($file) <= $filesize)
+				$bool = false;
+
+			return $bool;
 		}
 		return false;
 	}

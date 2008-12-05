@@ -7,6 +7,29 @@
  * @subpackage Core
  */
 /**
+ * Ermittelt die Dateigröße, gemäß IEC 60027-2
+ *
+ * @param integer $value
+ * 	Die Dateigröße in Byte
+ * @return string
+ * 	Die Dateigröße als Fließkommazahl, mit der dazugehörigen Einheit
+ */
+function calcFilesize($value)
+{
+	$units = array(
+		0 => 'Byte',
+		1 => 'KiB',
+		2 => 'MiB',
+		3 => 'GiB',
+		4 => 'TiB',
+	);
+
+	for ($i = 0; $value >= 1024; ++$i) {
+		$value = $value / 1024;
+	}
+	return round($value, 3) . ' ' . $units[$i];
+}
+/**
  * Erzeugt das Captchafeld für das Template
  *
  * @param integer $captcha_length
@@ -55,27 +78,36 @@ function comboBox($text, $forward = 0, $back = 0)
 	return '';
 }
 /**
- * Ermittelt die Dateigröße, gemäß IEC 60027-2
+ * Zeigt Dropdown-Menüs für die Veröffentlichungsdauer von Inhalten an
  *
+ * @param string $mode
+ * 	Start- bzw. Enddatum
  * @param integer $value
- * 	Die Dateigröße in Byte
+ * 	Die Zeitstempel des Eintrages
  * @return string
- * 	Die Dateigröße als Fließkommazahl, mit der dazugehörigen Einheit
  */
-function calcFilesize($value)
+function datepicker($name, $value = '')
 {
-	$units = array(
-		0 => 'Byte',
-		1 => 'KiB',
-		2 => 'MiB',
-		3 => 'GiB',
-		4 => 'TiB',
-	);
+	global $date, $tpl;
 
-	for ($i = 0; $value >= 1024; ++$i) {
-		$value = $value / 1024;
+	// Standarddatumsformat
+	$format = 'Y-m-d H:i';
+	if (!empty($_POST['form'][$name])) {
+		$input = $_POST['form'][$name];
+	} elseif (validate::isNumber($value)) {
+		$input = $date->format($value, $format);
+	} else {
+		$input = $date->format(time(), $format);
 	}
-	return round($value, 3) . ' ' . $units[$i];
+
+	$datepicker = array(
+		'format' => 'yy-mm-dd',
+		'name' => $name,
+		'input' => $input,
+	);
+	$tpl->assign('date', $datepicker);
+
+	return $tpl->fetch('common/date.html');
 }
 /**
  * Hochgeladene Dateien verschieben und umbenennen
@@ -112,7 +144,18 @@ function moveFile($tmp_filename, $filename, $dir)
 	}
 	return array();
 }
-
+/**
+ * Verschiebt einen DB-Eintrag einen Schritt nach oben
+ * @param string $table
+ *	Die betroffene Tabelle
+ * @param string $id_field
+ *	Name des ID-Feldes
+ * @param string $sort_field
+ *	Name des Sortier-Feldes. damit die Sortierung geändert werden kann
+ * @param string $id
+ *	Die ID des Datensatzes, welcher umsortiert werden soll
+ * @return boolean
+ */
 function moveOneStepUp($table, $id_field, $sort_field, $id)
 {
 	global $db;
@@ -129,11 +172,21 @@ function moveOneStepUp($table, $id_field, $sort_field, $id)
 			return $bool && $bool2 ? true : false;
 		}
 		return false;
-	} else {
-		return false;
 	}
+	return false;
 }
-
+/**
+ * Verschiebt einen DB-Eintrag einen Schritt nach unten
+ * @param string $table
+ *	Die betroffene Tabelle
+ * @param string $id_field
+ *	Name des ID-Feldes
+ * @param string $sort_field
+ *	Name des Sortier-Feldes. damit die Sortierung geändert werden kann
+ * @param string $id
+ *	Die ID des Datensatzes, welcher umsortiert werden soll
+ * @return boolean
+ */
 function moveOneStepDown($table, $id_field, $sort_field, $id)
 {
 	global $db;
@@ -150,41 +203,8 @@ function moveOneStepDown($table, $id_field, $sort_field, $id)
 			return $bool && $bool2 ? true : false;
 		}
 		return false;
-	} else {
-		return false;
 	}
-}
-
-/**
- * Zeigt Dropdown-Menüs für die Veröffentlichungsdauer von Inhalten an
- *
- * @param string $mode
- * 	Start- bzw. Enddatum
- * @param integer $value
- * 	Die Zeitstempel des Eintrages
- * @return string
- */
-function datepicker($name, $value = '')
-{
-	global $date, $tpl;
-
-	$format = 'Y-m-d H:i';
-	if (!empty($_POST['form'][$name])) {
-		$input = $_POST['form'][$name];
-	} elseif (validate::isNumber($value)) {
-		$input = $date->format($value, $format);
-	} else {
-		$input = $date->format(time(), $format);
-	}
-
-	$datepicker = array(
-		'format' => 'yy-mm-dd',
-		'name' => $name,
-		'input' => $input,
-	);
-	$tpl->assign('date', $datepicker);
-
-	return $tpl->fetch('common/date.html');
+	return false;
 }
 /**
  * Gibt eine Seitenauswahl aus
@@ -214,23 +234,29 @@ function pagination($rows)
 
 		// Seitenauswahl
 		$c_pages = ceil($rows / CONFIG_ENTRIES);
-		$recent = 0;
+		$currentPage = 0;
 
 		for ($i = 1; $i <= $c_pages; ++$i) {
-			$pages[$i]['selected'] = POS == $recent ? true : false;
+			$pages[$i]['selected'] = POS == $currentPage ? true : false;
 			$pages[$i]['page'] = $i;
-			$pages[$i]['pos'] = 'pos_' . $recent . '/';
+			$pages[$i]['pos'] = 'pos_' . $currentPage . '/';
 
-			$recent = $recent + CONFIG_ENTRIES;
+			$currentPage = $currentPage + CONFIG_ENTRIES;
 		}
 		$tpl->assign('pages', $pages);
 
 		// Vorherige Seite
-		$pos_prev = array('pos' => POS - CONFIG_ENTRIES >= 0 ? 'pos_' . (POS - CONFIG_ENTRIES) . '/' : '', 'selected' => POS == 0 ? true : false);
+		$pos_prev = array(
+			'pos' => POS - CONFIG_ENTRIES >= 0 ? 'pos_' . (POS - CONFIG_ENTRIES) . '/' : '',
+			'selected' => POS == 0 ? true : false
+		);
 		$tpl->assign('pos_prev', $pos_prev);
 
 		// Nächste Seite
-		$pos_next = array('pos' => 'pos_' . (POS + CONFIG_ENTRIES) . '/', 'selected' => POS + CONFIG_ENTRIES >= $rows ? true : false);
+		$pos_next = array(
+			'pos' => 'pos_' . (POS + CONFIG_ENTRIES) . '/',
+			'selected' => POS + CONFIG_ENTRIES >= $rows ? true : false
+		);
 		$tpl->assign('pos_next', $pos_next);
 
 		return $tpl->fetch('common/pagination.html');
@@ -249,6 +275,15 @@ function redirect($args, $new_page = 0)
 	header('Location:' . (empty($args) && !empty($new_page) ? str_replace('&amp;', '&', $new_page) : uri($args)));
 	exit;
 }
+/**
+ * Löscht eine Datei im uploads Ordner
+ *
+ * @param string $dir
+ *	Der Ordner, in welchem die Datei liegt
+ * @param string $file
+ *	Der Name der Datei
+ * @return boolean
+ */
 function removeFile($dir, $file)
 {
 	$path = ACP3_ROOT . 'uploads/' . $dir . '/' . $file;
@@ -279,33 +314,33 @@ function salt($str_length)
  *
  * @param string $name
  *  Name des Feldes im Formular
- * @param mixed $value
+ * @param mixed $defValue
  *  Abzugleichender Parameter mit $field_value
- * @param mixed $field_value
+ * @param mixed $currentValue
  *  Wert aus der SQL Tabelle
  * @param string $attr
  *  HTML-Attribut, um Eintrag zu selektieren
  * @return string
  */
-function selectEntry($name, $value, $field_value = '', $attr = 'selected')
+function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
 {
 	$attr = ' ' . $attr . '="' . $attr . '"';
 
 	if (!isset($_POST['form'][$name])) {
-		if (!is_array($field_value) && $field_value == $value) {
+		if (!is_array($currentValue) && $currentValue == $defValue) {
 			return $attr;
-		} elseif (is_array($field_value)) {
-			foreach ($field_value as $row) {
-				if ($row == $value)
+		} elseif (is_array($currentValue)) {
+			foreach ($currentValue as $row) {
+				if ($row == $defValue)
 					return $attr;
 			}
 		}
 	} elseif (isset($_POST['form'][$name]) && $_POST['form'][$name] != '') {
-		if (!is_array($_POST['form'][$name]) && $_POST['form'][$name] == $value) {
+		if (!is_array($_POST['form'][$name]) && $_POST['form'][$name] == $defValue) {
 			return $attr;
 		} elseif (is_array($_POST['form'][$name])) {
 			foreach ($_POST['form'][$name] as $row) {
-				if ($row == $value)
+				if ($row == $defValue)
 					return $attr;
 			}
 		}
@@ -322,17 +357,21 @@ function selectEntry($name, $value, $field_value = '', $attr = 'selected')
 function timeZones($value)
 {
 	global $lang;
+	static $time_zones = array();
 
-	$time_zones = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.75, 13, 14);
-	$time_zone = array();
-	$i = 0;
-	foreach ($time_zones as $row) {
-		$time_zone[$i]['value'] = $row * 3600;
-		$time_zone[$i]['selected'] = selectEntry('time_zone', $row * 3600, $value);
-		$time_zone[$i]['lang'] = $lang->t('common', 'utc' . $row);
-		$i++;
+	// Nur durchlaufen, falls die Zeitzonen noch nicht gecached sind
+	if (empty($time_zones)) {
+		$areas = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.75, 13, 14);
+
+		$i = 0;
+		foreach ($areas as $row) {
+			$time_zones[$i]['value'] = $row * 3600;
+			$time_zones[$i]['selected'] = selectEntry('time_zone', $time_zones[$i]['value'], $value);
+			$time_zones[$i]['lang'] = $lang->t('common', 'utc' . $row);
+			$i++;
+		}
 	}
-	return $time_zone;
+	return $time_zones;
 }
 /**
  * Generiert die ACP3 internen Hyperlinks

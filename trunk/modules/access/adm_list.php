@@ -16,6 +16,7 @@ $c_access = count($access);
 if ($c_access > 0) {
 	$tpl->assign('pagination', pagination($db->select('id', 'access', 0, 0, 0, 0, 1)));
 
+	// Alle zur Zeit aktiven Module holen
 	$mod_list = modules::modulesList();
 
 	for ($i = 0; $i < $c_access; ++$i) {
