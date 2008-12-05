@@ -27,12 +27,13 @@ function calcFilesize($value)
 	for ($i = 0; $value >= 1024; ++$i) {
 		$value = $value / 1024;
 	}
-	return round($value, 3) . ' ' . $units[$i];
+	return round($value, 2) . ' ' . $units[$i];
 }
 /**
  * Erzeugt das Captchafeld für das Template
  *
  * @param integer $captcha_length
+ *  Anzahl der Zeichen, welche das Captcha haben soll
  * @return string
  */
 function captcha($captcha_length = 5)
@@ -49,28 +50,28 @@ function captcha($captcha_length = 5)
 	return '';
 }
 /**
- * Gibt je nach angegeben Parametern eine Fehlerbox oder eine Bestätigungsbox aus
+ * Gibt je nach angegebenen Parametern eine Fehlerbox oder eine Bestätigungsbox aus
  *
  * @param string $text
  *  Zu übergebender Text
  * @param string $forward
  *  Weiter Hyperlink
- * @param string $back
+ * @param string $backward
  *  Zurück Hyperlink
  * @return string
  */
-function comboBox($text, $forward = 0, $back = 0)
+function comboBox($text, $forward = 0, $backward = 0)
 {
 	global $tpl;
 
-	if (is_array($text) && empty($forward) && empty($back)) {
+	if (is_array($text) && empty($forward) && empty($backward)) {
 		$tpl->assign('text', $text);
 		return $tpl->fetch('common/error.html');
-	} elseif (!empty($text) && (!empty($forward) || !empty($back))) {
+	} elseif (!empty($text) && (!empty($forward) || !empty($backward))) {
 		$tpl->assign('text', $text);
 		$tpl->assign('forward', $forward);
-		if (!empty($back)) {
-			$tpl->assign('back', $back);
+		if (!empty($backward)) {
+			$tpl->assign('backward', $backward);
 		}
 
 		return $tpl->fetch('common/combo.html');

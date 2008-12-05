@@ -1,9 +1,9 @@
 {if isset($gallery)}
-<p style="text-align:center">
+<div class="pictures">
 {foreach from=$gallery item=row}
 	<a href="{uri args="gallery/details/id_`$row.id`"}"><img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" /></a>
 {/foreach}
-</p>
+</div>
 {else}
 <div class="error">
 	<h5>{lang values="gallery|no_pictures"}</h5>

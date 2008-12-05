@@ -4,10 +4,10 @@
 <ol>
 {foreach from=$result_mod.results item=row}
 	<li class="search">
-		<a href="{$row.hyperlink}">{$row.headline}</a>
-		<p>
+		<a href="{$row.hyperlink}" class="header">{$row.headline}</a>
+		<div class="content">
 			{$row.text}
-		</p>
+		</div>
 	</li>
 {/foreach}
 </ol>

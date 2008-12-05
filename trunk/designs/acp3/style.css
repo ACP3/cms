@@ -65,7 +65,7 @@ table, tr, th, td {
 	font-size: 1.0em;
 	text-align: center;
 }
-table.no-border, .no-border tr, .no-border th, .no-border td {
+table.no-border, table.no-border tr, table.no-border th, table.no-border td {
 	border: 0;
 }
 table {
@@ -209,20 +209,20 @@ a.form {
 .error h5 {
 	text-align: center;
 }
-.success {
+.combo-box {
 	width: 70%;
 	margin: 0 auto;
 	border: 1px solid #333;
 	text-align: center;
 }
-.successhead {
+.combo-box .header {
 	background: #069 url('images/common_header.png') repeat-x;
 	border-bottom: 1px solid #333;
 	font-weight: bold;
 	line-height: 25px;
 	color: #f90;
 }
-.forward {
+.combo-box .content {
 	background: #eee;
 	line-height: 28px;
 }
@@ -516,19 +516,19 @@ a.form {
 	background: #069 url('images/common_header.png') repeat-x;
 	border: 1px solid #333;
 }
-.files .title, .files .date {
+.files .header, .files .date {
 	padding: 3px;
 	font-weight: bold;
 	font-size: 1.2em;
 	color: #f90;
 }
-.files .title {
+.files .header {
 	text-align: left;
 }
-.files .title a {
+.files .header a {
 	color: #000;
 }
-.files .title a:hover {
+.files .header a:hover {
 	color: #f00;
 }
 .files .date {
@@ -564,18 +564,21 @@ a.download-file:hover {
 	font-size: 1.2em;
 	color: #f90;
 }
-.galleries .title {
+.galleries .header {
 	font-size: 1.0em;
 	text-align: left;
 }
-.galleries .title a {
+.galleries .header a {
 	color: #000;
 }
-.galleries .title a:hover {
+.galleries .header a:hover {
 	color: #f00;
 }
 .galleries .date {
 	float: right;
+}
+.pictures {
+	text-align: center;
 }
 .picture img {
 	border: 1px dotted #333;
@@ -584,28 +587,28 @@ a.download-file:hover {
 	margin: 10px 0;
 	text-align: center;
 }
-.picture .picture-description {
+.picture .content {
 	margin: 10px 25%;
 }
-.picture .pictures-prev-next {
+.picture .prev-next {
 	height: 120px;
 	line-height: 120px;
 	text-align: center;
 }
-.picture .picture-prev {
+.picture .prev {
 	float: left;
 }
-.picture .picture-next {
+.picture .next {
 	float: right;
 }
-.picture .picture-index {
+.picture .index {
 	padding: 0 130px;
 }
 /* News */
 .news {
 	border: 1px solid #333;
 }
-.news .headline {
+.news .header {
 	padding: 3px;
 	background: #069 url('images/common_header.png') repeat-x;
 	font-weight: bold;
@@ -660,7 +663,7 @@ a.download-file:hover {
 	margin-bottom: 5px;
 	border: 1px solid #333;
 }
-.search a {
+.search .header {
 	padding: 3px;
 	background: #069 url('images/common_header.png') repeat-x;
 	border-bottom: 1px solid #333;
@@ -669,6 +672,7 @@ a.download-file:hover {
 	color: #f90;
 	display: block;
 }
-.search p {
+.search .content {
 	margin: 10px;
+	text-align: justify;
 }
