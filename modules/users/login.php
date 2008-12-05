@@ -27,16 +27,14 @@ if ($auth->isUser()) {
 		$salt = substr($user[0]['pwd'], 41, 53);
 		$form_pwd_hash = sha1($salt . sha1($form['pwd']));
 
-		// Wenn beide Hash Werte gleich sind, Benutzer authentifizieren
-		if ($db_hash == $form_pwd_hash) {
+		// Wenn beide Hashwerte gleich sind, Benutzer authentifizieren
+		if ($db_hash === $form_pwd_hash) {
 			$isUser = true;
 		}
 	}
 	if ($isUser) {
-		// Werte für den Cookie setzen
-		$cookie['value'] = base64_encode($db->escape($form['nickname']) . '|' . $db_hash);
-		$cookie['expires'] = time() + (isset($_POST['remember']) ? 31104000 : 3600);
-		setcookie('ACP3_AUTH', $cookie['value'], $cookie['expires'], '/');
+		// Cookie setzen
+		$auth->setCookie($form['nickname'], $db_hash, isset($_POST['remember']) ? 31104000 : 3600);
 
 		if (isset($form['redirect_uri'])) {
 			redirect(0, base64_decode($form['redirect_uri']));

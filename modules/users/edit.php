@@ -52,8 +52,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'users', 'id = \'' . $uri-
 			// Falls sich der User selbst bearbeitet hat, Cookies und Session aktualisieren
 			if ($uri->id == USER_ID) {
 				$cookie_arr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
-				$cookie_value = base64_encode($form['nickname'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]));
-				setcookie('ACP3_AUTH', $cookie_value, time() + 3600, '/');
+				$auth->setCookie($form['nickname'], isset($new_pwd) ? $new_pwd : $cookie_arr[1], 3600);
 			}
 
 			$content = comboBox($bool ? $lang->t('users', 'edit_success') : $lang->t('users', 'edit_error'), uri('acp/users'));
@@ -62,9 +61,9 @@ if (validate::isNumber($uri->id) && $db->select('id', 'users', 'id = \'' . $uri-
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$user = $db->select('nickname, mail, access', 'users', 'id = \'' . $uri->id . '\'');
 
+		// Zugriffslevel holen
 		$access = $db->select('id, name', 'access', 0, 'name ASC');
 		$c_access = count($access);
-
 		for ($i = 0; $i < $c_access; ++$i) {
 			$access[$i]['name'] = $access[$i]['name'];
 			$access[$i]['selected'] = selectEntry('access', $access[$i]['id'], $user[0]['access']);

@@ -82,5 +82,19 @@ class auth
 	{
 		return $this->isUser && defined('USER_ID') && validate::isNumber(USER_ID) ? true : false;
 	}
+	/**
+	 * Setzt den internen Authentifizierungscookie
+	 *
+	 * @param string $nickname
+	 *  Der Loginname des Users
+	 * @param string $password
+	 *  Die Hashsumme des Passwortes
+	 * @param integer $expiry
+	 *  Zeit in Sekunden, bis der Cookie seine Gültigkeit verliert
+	 */
+	public function setCookie($nickname, $password, $expiry)
+	{
+		setcookie('ACP3_AUTH', base64_encode($nickname . '|' . $password), time() + $expiry, '/');
+	}
 }
 ?>
