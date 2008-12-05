@@ -39,8 +39,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $ur
 			$insert_values = array('id' => '', 'pic' => $picNum[0]['pic'] + 1, 'gallery_id' => $uri->id, 'file' => $result['name'], 'description' => $db->escape($form['description'], 2));
 
 			$bool = $db->insert('gallery_pictures', $insert_values);
-
-			cache::create('gallery_pics_id_' . $uri->id, $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'', 'pic ASC, id ASC'));
+			setGalleryCache($uri->id);
 
 			$content = comboBox($bool ? $lang->t('gallery', 'add_picture_success') : $lang->t('gallery', 'add_picture_error'), uri('acp/gallery/add_picture/id_' . $uri->id));
 		}

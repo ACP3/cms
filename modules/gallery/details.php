@@ -28,9 +28,10 @@ if (validate::isNumber($uri->id) && $db->select('g.id', 'gallery AS g, ' . CONFI
 		$picture_back = $db->select('id', 'gallery_pictures', 'pic < \'' . $picture[0]['pic'] . '\' AND gallery_id = \'' . $picture[0]['gallery_id'] . '\'', 'pic DESC', 1);
 		$picture_next = $db->select('id', 'gallery_pictures', 'pic > \'' . $picture[0]['pic'] . '\' AND gallery_id = \'' . $picture[0]['gallery_id'] . '\'', 'pic ASC', 1);
 
+		// Vorheriges Bild
 		if (count($picture_back) > 0)
 			$tpl->assign('picture_back', $picture_back[0]);
-
+		// Nächstes Bild
 		if (count($picture_next) > 0)
 			$tpl->assign('picture_next', $picture_next[0]);
 	}

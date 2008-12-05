@@ -50,15 +50,13 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery_pictures', 'id = 
 			}
 
 			$bool = $db->update('gallery_pictures', $update_values, 'id = \'' . $uri->id . '\'');
-
-			cache::create('gallery_pics_id_' . $picture[0]['gallery_id'], $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $picture[0]['gallery_id'] . '\'', 'pic ASC, id ASC'));
+			setGalleryCache($picture[0]['gallery_id']);
 
 			$content = comboBox($bool ? $lang->t('gallery', 'edit_picture_success') : $lang->t('gallery', 'edit_picture_error'), uri('acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id']));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
-
 		$tpl->assign('form', isset($form) ? $form : $picture[0]);
 
 		$content = $tpl->fetch('gallery/edit_picture.html');

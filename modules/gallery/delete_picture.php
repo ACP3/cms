@@ -30,8 +30,7 @@ if (!isset($entries)) {
 			removeFile('gallery', $picture[0]['file']);
 
 			$bool = $db->delete('gallery_pictures', 'id = \'' . $entry . '\'');
-
-			cache::create('gallery_pics_id_' . $picture[0]['gallery_id'], $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $picture[0]['gallery_id'] . '\'', 'pic ASC, id ASC'));
+			setGalleryCache($picture[0]['gallery_id']);
 		}
 	}
 	$content = comboBox($bool ? $lang->t('gallery', 'picture_delete_success') : $lang->t('gallery', 'picture_delete_error'), uri('acp/gallery'));
