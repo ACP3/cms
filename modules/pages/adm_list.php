@@ -10,7 +10,6 @@
 if (!defined('IN_ADM'))
 	exit;
 
-include_once ACP3_ROOT . 'modules/pages/functions.php';
 $pages_list = pagesList(2);
 
 if (count($pages_list) > 0) {
