@@ -6,7 +6,7 @@
 {/if}
 {if $categories}
 <div class="news">
-	<div class="headline">
+	<div class="header">
 {if $MODULES->check('feeds', 'list')}
 		<a href="{uri args="feeds/list/feed_news"}" title="{lang values="news|read_newsfeed"}" style="float:left"><img src="{$DESIGN_PATH}images/feed.png" alt="" /></a>
 {/if}
@@ -32,7 +32,7 @@
 {$pagination}
 {foreach from=$news item=row}
 <div class="news">
-	<h3 class="headline">{$row.headline}</h3>
+	<h3 class="header">{$row.headline}</h3>
 	<div class="date">
 {if $row.allow_comments}
 		<div class="comments">
