@@ -6,6 +6,17 @@
  * @package ACP3
  * @subpackage Modules
  */
+function setEmoticonsCache()
+{
+	return cache::create('emoticons', $db->select('code, description, img', 'emoticons'));
+}
+function getEmoticonsCache()
+{
+	if (!cache::check('emoticons')) {
+		setEmoticonsCache();
+	}
+	return cache::output('emoticons');
+}
 /**
  * Erzeugt eine Auflistung der Emoticons
  *
@@ -17,10 +28,7 @@ function emoticonsList($field_id = 0)
 {
 	global $db, $tpl;
 
-	if (!cache::check('emoticons')) {
-		cache::create('emoticons', $db->select('code, description, img', 'emoticons'));
-	}
-	$emoticons = cache::output('emoticons');
+	$emoticons = getEmoticonsCache();
 	$c_emoticons = count($emoticons);
 
 	for ($i = 0; $i < $c_emoticons; ++$i) {

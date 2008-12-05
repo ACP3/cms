@@ -41,7 +41,7 @@ if (!isset($entries)) {
 	// Cache für die Kategorien neu erstellen
 	$mods = $db->query('SELECT module FROM ' . CONFIG_DB_PRE . 'categories GROUP BY module');
 	foreach ($mods as $row) {
-		cache::create('categories_' . $db->escape($row['module'], 3), $db->select('id, name, picture, description', 'categories', 'module = \'' . $db->escape($row['module'], 3) . '\'', 'name ASC'));
+		setCategoriesCache($db->escape($row['module'], 3));
 	}
 
 	if ($in_use) {

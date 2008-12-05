@@ -48,8 +48,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'emoticons', 'id = \'' . $
 			}
 
 			$bool = $db->update('emoticons', $update_values, 'id = \'' . $uri->id . '\'');
-
-			cache::create('emoticons', $db->select('code, description, img', 'emoticons'));
+			setEmoticonsCache();
 
 			$content = comboBox($bool ? $lang->t('emoticons', 'edit_success') : $lang->t('emoticons', 'edit_error'), uri('acp/emoticons'));
 		}

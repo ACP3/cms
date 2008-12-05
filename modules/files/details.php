@@ -13,10 +13,7 @@ if (!defined('IN_ACP3'))
 $period = ' AND (start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')';
 
 if (validate::isNumber($uri->id) && $db->select('id', 'files', 'id = \'' . $uri->id . '\'' . $period, 0, 0, 0, 1) == '1') {
-	if (!cache::check('files_details_id_' . $uri->id)) {
-		cache::create('files_details_id_' . $uri->id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, c.name AS category_name', 'files AS f, ' . CONFIG_DB_PRE . 'categories AS c', 'f.id = \'' . $uri->id . '\' AND f.category_id = c.id'));
-	}
-	$file = cache::output('files_details_id_' . $uri->id);
+	$file = getFilesCache($uri->id);
 
 	if ($uri->action == 'download') {
 		$path = 'uploads/files/';

@@ -50,8 +50,7 @@ if (isset($_POST['submit'])) {
 		}
 
 		$bool = $db->insert('categories', $insert_values);
-
-		cache::create('categories_' . $form['module'], $db->select('id, name, picture, description', 'categories', 'module = \'' . $form['module'] . '\'', 'name ASC'));
+		setCategoriesCache($form['module']);
 
 		$content = comboBox($bool ? $lang->t('categories', 'create_success') : $lang->t('categories', 'create_error'), uri('acp/categories'));
 	}

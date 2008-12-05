@@ -21,14 +21,17 @@
 		<item>
 			<file>create</file>
 			<level>2</level>
+			<include>functions</include>
 		</item>
 		<item>
 			<file>delete</file>
 			<level>2</level>
+			<include>functions</include>
 		</item>
 		<item>
 			<file>edit</file>
 			<level>2</level>
+			<include>functions</include>
 		</item>
 		<item>
 			<file>functions</file>

@@ -31,7 +31,7 @@ if (!isset($entries)) {
 			$bool = $db->delete('emoticons', 'id = \'' . $entry . '\'');
 		}
 	}
-	cache::create('emoticons', $db->select('code, description, img', 'emoticons'));
+	setEmoticonsCache();
 
 	$content = comboBox($bool ? $lang->t('emoticons', 'delete_success') : $lang->t('emoticons', 'delete_error'), uri('acp/emoticons'));
 }
