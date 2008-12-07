@@ -63,8 +63,8 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri-
 
 			$bool = $db->update('pages', $update_values, 'id = \'' . $uri->id . '\'');
 
-			cache::create('pages_list_id_' . $uri->id, $db->select('mode, uri, text', 'pages', 'id = \'' . $uri->id . '\''));
-			generatePagesCache();
+			setPagesCache($uri->id);
+			setNavbarCache();
 
 			$content = comboBox($bool ? $lang->t('pages', 'edit_success') : $lang->t('pages', 'edit_error'), uri('acp/pages'));
 		}

@@ -58,7 +58,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->
 		// Kategorien
 		if (modules::check('categories', 'functions')) {
 			include_once ACP3_ROOT . 'modules/categories/functions.php';
-			$tpl->assign('categories', categoriesList('news', 'edit', $news[0]['category_id']));
+			$tpl->assign('categories', categoriesList('news', $news[0]['category_id']));
 		}
 
 		// Weiterlesen & Kommentare

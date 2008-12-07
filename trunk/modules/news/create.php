@@ -54,7 +54,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Kategorien
 	if (modules::check('categories', 'functions')) {
 		include_once ACP3_ROOT . 'modules/categories/functions.php';
-		$tpl->assign('categories', categoriesList('news', 'create'));
+		$tpl->assign('categories', categoriesList('news'));
 	}
 
 	// Weiterlesen & Kommentare

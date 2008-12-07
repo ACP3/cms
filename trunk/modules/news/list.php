@@ -21,7 +21,7 @@ if (isset($_POST['form']['cat']) && validate::isNumber($_POST['form']['cat'])) {
 // Kategorien auflisten
 if (modules::check('categories', 'functions')) {
 	include_once ACP3_ROOT . 'modules/categories/functions.php';
-	$categories = categoriesList('news', 'list', $cat);
+	$categories = categoriesList('news', $cat);
 
 	$tpl->assign('categories', $categories);
 }

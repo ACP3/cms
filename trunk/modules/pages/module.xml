@@ -52,10 +52,16 @@
 		<item>
 			<file>list</file>
 			<level>1</level>
+			<include>functions</include>
 		</item>
 		<item>
 			<file>extensions/search</file>
 			<level>1</level>
+		</item>
+		<item>
+			<file>order</file>
+			<level>2</level>
+			<include>functions</include>
 		</item>
 	</access>
 </module>

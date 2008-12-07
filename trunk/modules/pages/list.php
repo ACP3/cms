@@ -14,10 +14,7 @@ $time = $date->timestamp();
 $period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
 if (validate::isNumber($uri->item) && $db->select('id', 'pages', 'id = \'' . $uri->item . '\'' . $period, 0, 0, 0, 1) == 1) {
-	if (!cache::check('pages_list_id_' . $uri->item)) {
-		cache::create('pages_list_id_' . $uri->item, $db->select('mode, uri, text', 'pages', 'id = \'' . $uri->item . '\''));
-	}
-	$page = cache::output('pages_list_id_' . $uri->item);
+	$page = getPagesCache($uri->item);
 
 	// Statische Seite
 	if ($page[0]['mode'] == '1') {

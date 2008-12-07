@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('pages', $insert_values);
 
-		generatePagesCache();
+		setNavbarCache();
 
 		$content = comboBox($bool ? $lang->t('pages', 'create_success') : $lang->t('pages', 'create_error'), uri('acp/pages'));
 	}
