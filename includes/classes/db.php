@@ -72,10 +72,10 @@ class db
 	{
 		switch (CONFIG_DB_TYPE) {
 			case 'mysqli':
-				echo 'Fehler ' . mysqli_errno($this->link) . ' - ' . mysqli_error($this->link);
+				echo 'Fehler ' . mysqli_errno($this->link) . ' - ' . mysqli_error($this->link) . '<br />';
 				break;
 			default:
-				echo 'Fehler ' . mysql_errno($this->link) . ' - ' . mysql_error($this->link);
+				echo 'Fehler ' . mysql_errno($this->link) . ' - ' . mysql_error($this->link) . '<br />';
 		}
 	}
 	/**

@@ -14,12 +14,13 @@
 				<th>{lang values="common|publication_period"}</th>
 				<th>{lang values="pages|title"}</th>
 				<th>{lang values="pages|page_type"}</th>
+				<th>{lang values="common|order"}</th>
 			</tr>
 		</thead>
 		<tbody>
 {foreach from=$pages_list key=block item=pages}
 			<tr>
-				<td colspan="4" class="sub-table-header">{$block}</td>
+				<td colspan="5" class="sub-table-header">{$block}</td>
 			</tr>
 {foreach from=$pages item=row}
 			<tr>
@@ -27,6 +28,14 @@
 				<td>{$row.period}</td>
 				<td><a href="{uri args="acp/pages/edit/id_`$row.id`"}" title="{lang values="pages|edit"}">{$row.title}</a></td>
 				<td>{$row.mode}</td>
+				<td>
+{if !$row.last}
+					<a href="{uri args="acp/pages/order/id_`$row.id`/mode_down"}" title="{lang values="common|move_down"}"><img src="{icon path="16/down"}" alt="{lang values="common|move_down"}" /></a>
+{/if}
+{if !$row.first}
+					<a href="{uri args="acp/pages/order/id_`$row.id`/mode_up"}" title="{lang values="common|move_up"}"><img src="{icon path="16/up"}" alt="{lang values="common|move_up"}" /></a>
+{/if}
+				</td>
 			</tr>
 {/foreach}
 {/foreach}

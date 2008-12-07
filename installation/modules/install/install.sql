@@ -1,12 +1,12 @@
 CREATE TABLE `{pre}access` (
-	`id` int(11) NOT NULL auto_increment,
+	`id` INT(11) UNSIGNED NOT NULL auto_increment,
 	`name` varchar(120) NOT NULL,
 	`modules` text NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine} ;
 
 CREATE TABLE `{pre}categories` (
-	`id` int(11) NOT NULL auto_increment,
+	`id` INT(11) UNSIGNED NOT NULL auto_increment,
 	`name` varchar(120) NOT NULL,
 	`picture` varchar(120) NOT NULL,
 	`description` varchar(120) NOT NULL,
@@ -15,19 +15,19 @@ CREATE TABLE `{pre}categories` (
 ) {engine} ;
 
 CREATE TABLE `{pre}comments` (
-	`id` int(11) NOT NULL auto_increment,
+	`id` INT(11) UNSIGNED NOT NULL auto_increment,
 	`ip` varchar(40) NOT NULL,
 	`date` varchar(14) NOT NULL,
 	`name` varchar(20) NOT NULL,
-	`user_id` int(11) NOT NULL,
+	`user_id` INT(11) UNSIGNED NOT NULL,
 	`message` text NOT NULL,
 	`module` varchar(120) NOT NULL,
-	`entry_id` int(11) NOT NULL,
+	`entry_id` INT(11) UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine} ;
 
 CREATE TABLE `{pre}emoticons` (
-	`id` int(11) NOT NULL auto_increment,
+	`id` INT(11) UNSIGNED NOT NULL auto_increment,
 	`code` varchar(10) NOT NULL,
 	`description` varchar(15) NOT NULL,
 	`img` varchar(40) NOT NULL,
@@ -35,10 +35,10 @@ CREATE TABLE `{pre}emoticons` (
 ) {engine} ;
 
 CREATE TABLE `{pre}files` (
-	`id` int(11) NOT NULL auto_increment,
+	`id` INT(11) UNSIGNED NOT NULL auto_increment,
 	`start` varchar(14) NOT NULL,
 	`end` varchar(14) NOT NULL,
-	`category_id` int(11) NOT NULL,
+	`category_id` INT(11) UNSIGNED NOT NULL,
 	`file` varchar(120) NOT NULL,
 	`size` varchar(20) NOT NULL,
 	`link_title` varchar(120) NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE `{pre}files` (
 ) {engine} ;
 
 CREATE TABLE `{pre}gallery` ( 
-	`id` int(11) NOT NULL auto_increment,
+	`id` INT(11) UNSIGNED NOT NULL auto_increment,
 	`start` varchar(14) NOT NULL, 
 	`end` varchar(14) NOT NULL, 
 	`name` varchar(120) NOT NULL,
@@ -55,20 +55,20 @@ CREATE TABLE `{pre}gallery` (
 ) {engine} ;
 
 CREATE TABLE `{pre}gallery_pictures` (
-	`id` int(11) NOT NULL auto_increment,
-	`pic` int(11) NOT NULL,
-	`gallery_id` int(11) NOT NULL,
+	`id` INT(11) UNSIGNED NOT NULL auto_increment,
+	`pic` INT(11) UNSIGNED NOT NULL,
+	`gallery_id` INT(11) UNSIGNED NOT NULL,
 	`file` varchar(120) NOT NULL,
 	`description` text NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine} ;
 
 CREATE TABLE `{pre}guestbook` ( 
-	`id` int(11) NOT NULL auto_increment, 
+	`id` INT(11) UNSIGNED NOT NULL auto_increment,
 	`ip` varchar(40) NOT NULL, 
 	`date` varchar(14) NOT NULL, 
 	`name` varchar(20) NOT NULL, 
-	`user_id` int(11) NOT NULL,
+	`user_id` INT(11) UNSIGNED NOT NULL,
 	`message` text NOT NULL,
 	`website` varchar(120) NOT NULL,
 	`mail` varchar(120) NOT NULL,
@@ -76,14 +76,14 @@ CREATE TABLE `{pre}guestbook` (
 ) {engine} ;
 
 CREATE TABLE `{pre}news` ( 
-	`id` int(11) NOT NULL auto_increment, 
+	`id` INT(11) UNSIGNED NOT NULL auto_increment,
 	`start` varchar(14) NOT NULL, 
 	`end` varchar(14) NOT NULL, 
 	`headline` varchar(120) NOT NULL, 
 	`text` text NOT NULL, 
 	`readmore` tinyint(1) NOT NULL, 
 	`comments` tinyint(1) NOT NULL, 
-	`category_id` int(11) NOT NULL, 
+	`category_id` INT(11) UNSIGNED NOT NULL,
 	`uri` varchar(120) NOT NULL, 
 	`target` tinyint(1) NOT NULL, 
 	`link_title` varchar(120) NOT NULL, 
@@ -91,7 +91,7 @@ CREATE TABLE `{pre}news` (
 ) {engine} ;
 
 CREATE TABLE `{pre}newsletter_accounts` ( 
-	`id` int(11) NOT NULL auto_increment, 
+	`id` INT(11) UNSIGNED NOT NULL auto_increment,
 	`mail` varchar(120) NOT NULL, 
 	`hash` varchar(32) NOT NULL, 
 	PRIMARY KEY (`id`)
@@ -107,13 +107,13 @@ CREATE TABLE `{pre}newsletter_archive` (
 ) {engine} ;
 
 CREATE TABLE `{pre}pages` ( 
-	`id` int(11) NOT NULL auto_increment, 
+	`id` INT(11) UNSIGNED NOT NULL auto_increment,
 	`start` varchar(14) NOT NULL, 
 	`end` varchar(14) NOT NULL, 
 	`mode` tinyint(1) NOT NULL, 
-	`parent` int(11) NOT NULL, 
-	`block_id` int(11) NOT NULL, 
-	`sort` tinyint(2) NOT NULL, 
+	`block_id` INT(11) UNSIGNED NOT NULL,
+	`left_id` INT(11) UNSIGNED NOT NULL,
+	`right_id` INT(11) UNSIGNED NOT NULL,
 	`title` varchar(120) NOT NULL, 
 	`uri` varchar(120) NOT NULL, 
 	`target` tinyint(1) NOT NULL, 
@@ -122,21 +122,21 @@ CREATE TABLE `{pre}pages` (
 ) {engine} ;
 
 CREATE TABLE `{pre}pages_blocks` (
-	`id` int(11) NOT NULL auto_increment, 
+	`id` INT(11) UNSIGNED NOT NULL auto_increment,
 	`index_name` varchar(10) NOT NULL, 
 	`title` varchar(120) NOT NULL, 
 	PRIMARY KEY (`id`)
 ) {engine} ;
 
 CREATE TABLE `{pre}poll_answers` ( 
-	`id` int(11) NOT NULL auto_increment, 
+	`id` INT(11) UNSIGNED NOT NULL auto_increment,
 	`text` varchar(120) NOT NULL, 
-	`poll_id` int(11) NOT NULL, 
+	`poll_id` INT(11) UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine} ;
 
 CREATE TABLE `{pre}poll_question` ( 
-	`id` int(11) NOT NULL auto_increment, 
+	`id` INT(11) UNSIGNED NOT NULL auto_increment,
 	`start` varchar(14) NOT NULL, 
 	`end` varchar(14) NOT NULL, 
 	`question` varchar(120) NOT NULL, 
@@ -144,20 +144,20 @@ CREATE TABLE `{pre}poll_question` (
 ) {engine} ;
 
 CREATE TABLE `{pre}poll_votes` ( 
-	`poll_id` int(11) NOT NULL, 
-	`answer_id` int(11) NOT NULL,
-	`user_id` int(11) NOT NULL,
+	`poll_id` INT(11) UNSIGNED NOT NULL,
+	`answer_id` INT(11) UNSIGNED NOT NULL,
+	`user_id` INT(11) UNSIGNED NOT NULL,
 	`ip` varchar(40) NOT NULL, 
 	`time` varchar(14) NOT NULL, 
 	INDEX ( `poll_id` , `answer_id` , `user_id` )
 ) {engine} ;
 
 CREATE TABLE `{pre}users` ( 
-	`id` int(11) NOT NULL auto_increment,
+	`id` INT(11) UNSIGNED NOT NULL auto_increment,
 	`nickname` varchar(30) NOT NULL,
 	`realname` varchar(80) NOT NULL,
 	`pwd` varchar(53) NOT NULL, 
-	`access` int(11) NOT NULL, 
+	`access` INT(11) UNSIGNED NOT NULL,
 	`mail` varchar(120) NOT NULL, 
 	`website` varchar(120) NOT NULL, 
 	`time_zone` int(5) NOT NULL, 

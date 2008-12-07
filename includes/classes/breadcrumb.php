@@ -61,7 +61,7 @@ class breadcrumb
 	 * 	2 = Nur Seitentitel ausgeben
 	 * @return string
 	 */
-	public static function output($mode = 1, $id = '')
+	public static function output($mode = 1)
 	{
 		global $lang, $uri, $tpl;
 
@@ -72,45 +72,41 @@ class breadcrumb
 		if ($module == 'pages' && $page == 'list') {
 			global $db;
 
-			if (!validate::isNumber($id))
-				$id = $uri->item;
+			$id = $uri->item;
 
-			$page = $db->select('mode, parent, title', 'pages', 'id = \'' . $id . '\' AND (mode = \'1\' OR mode = \'2\')');
+			$chk_page = $db->query('SELECT COUNT(p.id) AS level FROM ' . CONFIG_DB_PRE . 'pages p, ' . CONFIG_DB_PRE . 'pages c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $uri->item . ' AND p.mode = 2 ORDER BY p.left_id DESC LIMIT 1', 1);
 
 			// Dynamische Seiten (ACP3 intern)
-			if ($id == $uri->item && $page[0]['mode'] == 2 && empty($page[0]['parent']) && !empty(self::$steps) && self::$end != '') {
+			if ($chk_page == 1 && !empty(self::$steps) && !empty(self::$end)) {
+				// Die durch das Modul festgelegte Brotkrümelspur ausgeben
 				if ($mode == 1) {
 					$tpl->assign('breadcrumb', self::$steps);
 					$tpl->assign('end', self::$end);
 					return $tpl->fetch('common/breadcrumb.html');
+				// Nur den Titel der Moduldatei ausgeben
 				} else {
 					return self::$end;
 				}
 			// Statische Seiten
 			} else {
+				$pages = $db->query('SELECT p.id, p.title FROM ' . CONFIG_DB_PRE . 'pages p, ' . CONFIG_DB_PRE . 'pages c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $uri->item . ' ORDER BY p.left_id');
+				$c_pages = count($pages);
+
 				// Brotkrümelspur ausgeben
 				if ($mode == 1) {
-					if ($id == $uri->item) {
-						self::$steps = array();
-						self::$end = '';
+					for ($i = 0; $i < $c_pages; ++$i) {
+						if ($i == $c_pages - 1) {
+							self::$end = $pages[$i]['title'];
+						} else {
+							self::assign($pages[$i]['title'], uri('pages/list/item_' . $pages[$i]['id']));
+						}
 					}
-					if (empty(self::$end)) {
-						self::$end = $page[0]['title'];
-					}
-					if ($db->select('parent', 'pages', 'id = \'' . $page[0]['parent'] . '\' AND (mode = \'1\' OR mode = \'2\')', 0, 0, 0, 1) > 0) {
-						$parent = $db->select('title', 'pages', 'id = \'' . $page[0]['parent'] . '\' AND (mode = \'1\' OR mode = \'2\')');
-						self::assign($parent[0]['title'], uri('pages/list/item_' . $page[0]['parent']));
-
-						return self::output(1, $page[0]['parent']);
-					}
-					$pages = self::$steps;
-					krsort($pages);
-					$tpl->assign('breadcrumb', $pages);
+					$tpl->assign('breadcrumb', self::$steps);
 					$tpl->assign('end', self::$end);
 					return $tpl->fetch('common/breadcrumb.html');
 				// Nur Seitentitel ausgeben
 				} else {
-					return $page[0]['title'];
+					return $pages[$c_pages - 1]['title'];
 				}
 			}
 		// Brotkrümelspur für das Frontend

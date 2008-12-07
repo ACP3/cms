@@ -31,7 +31,7 @@ if (!isset($entries)) {
 			cache::delete('pages_list_id_' . $entry);
 		}
 	}
-	generatePagesCache();
+	setNavbarCache();
 
 	$content = comboBox($bool ? $lang->t('pages', 'delete_success') : $lang->t('pages', 'delete_error'), uri('acp/pages'));
 }

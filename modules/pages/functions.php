@@ -6,22 +6,69 @@
  * @package ACP3
  * @subpackage Modules
  */
-function generatePagesCache() {
+/**
+ * Erstellt den Cache für einen Menüpunkt
+ *
+ * @param integer $id
+ *  Die ID des Menüpunktes
+ * @return boolean
+ */
+function setPagesCache($id)
+{
+	global $db;
+	return cache::create('pages_list_id_' . $id, $db->select('mode, uri, text', 'pages', 'id = \'' . $id . '\''));
+}
+/**
+ * Bindet den Cache eines Menüpunktes anhand seiner ID ein
+ *
+ * @param integer $id
+ *  Die ID des Menüpunktes
+ * @return array
+ */
+function getPagesCache($id)
+{
+	if (!cache::check('pages_list_id_' . $id)) {
+		setPagesCache($id);
+	}
+	return cache::output('pages_list_id_' . $id);
+}
+/**
+ * Erstellt den Cache für die Navigationsleisten
+ *
+ * @return boolean
+ */
+function setNavbarCache() {
 	global $db;
 
-	$pages = $db->query('SELECT p.id, p.start, p.end, p.mode, p.parent, p.block_id, p.sort, p.title, p.uri, p.target, b.title AS block_title, b.index_name AS block_name FROM ' . CONFIG_DB_PRE . 'pages AS p LEFT JOIN ' . CONFIG_DB_PRE . 'pages_blocks AS b ON (p.block_id = b.id) ORDER BY p.block_id ASC, p.sort ASC, p.title ASC');
+	$pages = $db->query('SELECT n.id, n.start, n.end, n.mode, n.block_id, n.title, n.uri, n.target, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . CONFIG_DB_PRE . 'pages AS n, ' . CONFIG_DB_PRE . 'pages AS p WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id;');
 	$c_pages = count($pages);
-	$items = array();
 
 	if ($c_pages > 0) {
+		$blocks = $db->select('id, title, index_name', 'pages_blocks');
+		$c_blocks = count($blocks);
+
 		for ($i = 0; $i < $c_pages; ++$i) {
-			foreach ($pages[$i] as $key => $value) {
-				$items[$pages[$i]['id']][$key] = $value;
+			for ($j = 0; $j < $c_blocks; ++$j) {
+				if ($pages[$i]['block_id'] == $blocks[$j]['id']) {
+					$pages[$i]['block_title'] = $blocks[$j]['title'];
+					$pages[$i]['block_name'] = $blocks[$j]['index_name'];
+				}
 			}
-			$items[$pages[$i]['parent']]['children'][$pages[$i]['id']] = & $items[$pages[$i]['id']];
 		}
 	}
-	cache::create('pages', !empty($items[0]['children']) ? $items[0]['children'] : array());
+	return cache::create('pages', $pages);
+}
+/**
+ * Bindet die cacheten Navigationsleisten ein
+ *
+ * @return array
+ */
+function getNavbarCache()
+{
+	if (!cache::check('pages'))
+		setNavbarCache();
+
+	return cache::output('pages');
 }
 /**
  * Auflistung der Seiten
@@ -34,44 +81,39 @@ function generatePagesCache() {
  * @param integer $self
  * @return array
  */
-function pagesList($mode = 1, $pages = 0, $parent = 0, $self = 0, $indent = 0) {
-	static $output = array(), $last_block = '', $key = 0;
+function pagesList($mode = 1, $parent = 0) {
+	static $pages = array();
 
-	if (empty($pages)) {
-		// Der Baum ist schon vorhanden
-		if (!empty($output)) {
-			return $output;
-		}
-		if (!cache::check('pages')) {
-			generatePagesCache();
-		}
-		$pages = cache::output('pages');
+	// Der Baum ist schon vorhanden
+	if (!empty($pages)) {
+		return $pages;
 	}
 
-	if (count($pages) > 0) {
-		global $lang;
-		foreach ($pages as $row) {
-			if (!empty($row['block_title']))
-				$last_block = $row['block_title'];
-			elseif (empty($row['parent']) && empty($row['block_title']))
-				$last_block = $lang->t('pages', 'do_not_display');
+	// Menüpunkte einbinden
+	$pages = getNavbarCache();
+	$c_pages = count($pages);
 
-			if ($mode == 2 && $self != $row['id']) {
-				$output[$last_block][$key] = array(
-					'id' => $row['id'],
-					'start' => $row['start'],
-					'end' => $row['end'],
-					'mode' => $row['mode'],
-					'block_id' => $row['block_id'],
-					'title' => $row['title'],
-					'selected' => selectEntry('parent', $row['id'], $parent),
-					'spaces' => str_repeat('&nbsp;', $indent),
-				);
-				$key++;
-				if (!empty($row['children'])) {
-					pagesList($mode, $row['children'], $parent, $self, $indent + 2);
-				}
+	if ($c_pages > 0) {
+		$last_block = '';
+		for ($i = 0; $i < $c_pages; ++$i) {
+			$first = $last = false;
+			if ($i == 0 || !empty($last_block) && $last_block != $pages[$i]['block_title'])
+				$first = true;
+			if ($i == $c_pages - 1)
+				$last = true;
+
+			// Titel für den aktuellen Block setzen
+			if (!empty($pages[$i]['block_title'])) {
+				$last_block = $pages[$i]['block_title'];
+			} elseif ($pages[$i]['level'] == '0' && empty($pages[$i]['block_title'])) {
+				global $lang;
+				$last_block = $lang->t('pages', 'do_not_display');
 			}
+			$pages[$i]['first'] = $first;
+			$pages[$i]['last'] = $last;
+			$pages[$i]['selected'] = selectEntry('parent', $pages[$i]['id'], $parent);
+			$pages[$i]['spaces'] = str_repeat('&nbsp;', $pages[$i]['level']);
+			$output[$last_block][$i] = $pages[$i];
 		}
 	}
 	return $output;
@@ -107,70 +149,36 @@ function parentCheck($id, $parent_id, $block) {
  *
  * @return mixed
  */
-function processNavbar($block, $pages = 0) {
+function processNavbar($block) {
 	static $navbar = array();
 
 	// Navigationsleiste sofort ausgeben, falls diese schon einmal verarbeitet wurde...
-	if (empty($pages) && isset($navbar[$block])) {
+	if (isset($navbar[$block])) {
 		return $navbar[$block];
 	// ...ansonsten Verarbeitung starten
 	} else {
-		if (empty($pages)) {
-			if (!cache::check('pages')) {
-				generatePagesCache();
-			}
-			$pages = cache::output('pages');
-		}
+		$pages = getNavbarCache();
 		$c_pages = count($pages);
 
 		if ($c_pages > 0) {
 			global $date, $uri;
-			static $tabs = '';
 
-			// HTML-Liste einrücken
-			if (!empty($navbar[$block]))
-				$tabs .= "\t\t";
-
-			// Navgationsleiste als Liste erstellen
-			if (empty($navbar[$block])) {
-				$navbar[$block] = "<ul class=\"navigation-" . $block . "\">\n";
-			// Eine Ebene mehr verschachteln
-			} else {
-				$navbar[$block] .= $tabs . "<ul>\n";
-			}
+			$navbar[$block] = "<ul class=\"navigation-" . $block . "\">\n";
 
 			// Aktuellen Zeitstempel holen
 			$time = $date->timestamp();
 
-			$i = 0;
-			foreach ($pages as $row) {
-				if ($row['block_name'] == $block && !empty($row['block_id']) && $row['start'] == $row['end'] && $row['start'] <= $time || $row['start'] != $row['end'] && $row['start'] <= $time && $row['end'] >= $time) {
-					$css = 'navi-' . $row['id'] . ($uri->mod == 'pages' && $uri->page == 'list' && $uri->item == $row['id'] || $uri->query == uri($row['uri']) ? ' selected' : '');
-					$href = uri('pages/list/item_' . $row['id']);
-					$target = ($row['mode'] == 2 || $row['mode'] == 3) && $row['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
-					$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $row['title'] . '</a>';
-	
-					// Link einfügen
-					if (empty($row['children'])) {
-						$navbar[$block] .= $tabs . "\t<li>" . $link . "</li>\n";
-					// ...wenn Kindelemente existieren, dann eine Ebene tiefer verschachteln
-					} else {
-						$navbar[$block] .= $tabs . "\t<li>\n" . $tabs . "\t\t" . $link . "\n";
-						processNavbar($block, $row['children']);
-						$navbar[$block] .= $tabs . "\t</li>\n";
-					}
+			for ($i = 0; $i < $c_pages; ++$i) {
+				if ($pages[$i]['block_name'] == $block && !empty($pages[$i]['block_id']) && $pages[$i]['start'] == $pages[$i]['end'] && $pages[$i]['start'] <= $time || $pages[$i]['start'] != $pages[$i]['end'] && $pages[$i]['start'] <= $time && $pages[$i]['end'] >= $time) {
+					$css = 'navi-' . $pages[$i]['id'] . ($uri->mod == 'pages' && $uri->page == 'list' && $uri->item == $pages[$i]['id'] || $uri->query == uri($pages[$i]['uri']) ? ' selected' : '');
+					$href = uri('pages/list/item_' . $pages[$i]['id']);
+					$target = ($pages[$i]['mode'] == 2 || $pages[$i]['mode'] == 3) && $pages[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
+					$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $pages[$i]['title'] . '</a>';
+
+					$navbar[$block].= str_repeat("\t", $pages[$i]['level']) . '<li>' . $link . "</li>\n";
 				}
-	
-				// Navigationsleiste einrücken
-				if ($i == $c_pages - 1) {
-					// Mögliche HTML-Fehler beheben
-					$search = array($tabs . "<ul>\n" . $tabs . "</ul>\n", '<ul class="navigation-' . $block . "\">\n</ul>\n");
-					$navbar[$block] .= $tabs . "</ul>\n";
-					$navbar[$block] = str_replace($search, '', $navbar[$block]);
-					$tabs = substr($tabs, 0, -2);
-				}
-				++$i;
 			}
+			$navbar[$block].= "</ul>\n";
 			return $navbar[$block];
 		}
 		return '';

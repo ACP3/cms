@@ -6,11 +6,21 @@
  * @package ACP3
  * @subpackage Modules
  */
+/**
+ * Cache die Emoticons
+ *
+ * @return boolean
+ */
 function setEmoticonsCache()
 {
 	global $db;
 	return cache::create('emoticons', $db->select('code, description, img', 'emoticons'));
 }
+/**
+ * Bindet die gecacheten Emoticons ein
+ *
+ * @return array
+ */
 function getEmoticonsCache()
 {
 	if (!cache::check('emoticons'))

@@ -5,22 +5,44 @@ define('NEW_VERSION', '4.0RC2 SVN');
 define('ACP3_ROOT', './');
 
 require ACP3_ROOT . 'includes/config.php';
-if (NEW_VERSION == CONFIG_VERSION) {
-	print 'Ihre Version ist auf dem aktuellsten Stand' . "\n";
-	exit;
-}
 
 require ACP3_ROOT . 'includes/classes/cache.php';
 require ACP3_ROOT . 'includes/classes/config.php';
 require ACP3_ROOT . 'includes/classes/db.php';
 
 $queries = array(
-	'RENAME TABLE `{pre}nnewsletter_accounts` TO `{pre}newsletter_accounts`;',
-	'ALTER TABLE `{pre}poll_votes` ADD `user_id` INT NOT NULL AFTER `answer_id`;',
+	'ALTER TABLE `{pre}access` CHANGE `id` `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}categories` CHANGE `id` `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}comments` CHANGE `id` `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}comments` CHANGE `user_id` `user_id` INT( 11 ) UNSIGNED NOT NULL',
+	'ALTER TABLE `{pre}comments` CHANGE `entry_id` `entry_id` INT( 11 ) UNSIGNED NOT NULL',
+	'ALTER TABLE `{pre}emoticons` CHANGE `id` `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}files` CHANGE `id` `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}files` CHANGE `category_id` `category_id` INT( 11 ) UNSIGNED NOT NULL',
+	'ALTER TABLE `{pre}gallery` CHANGE `id` `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}gallery_pictures` CHANGE `id` `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}gallery_pictures` CHANGE `gallery_id` `gallery_id` INT( 11 ) UNSIGNED NOT NULL',
+	'ALTER TABLE `{pre}guestbook` CHANGE `id` `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}guestbook` CHANGE `user_id` `user_id` INT( 11 ) UNSIGNED NOT NULL',
+	'ALTER TABLE `{pre}news` CHANGE `id` `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}news` CHANGE `category_id` `category_id` INT( 11 ) UNSIGNED NOT NULL',
+	'RENAME TABLE `{pre}nnewsletter_accounts` TO `{pre}newsletter_accounts`',
+	'ALTER TABLE `{pre}newsletter_accounts` CHANGE `id` `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}newsletter_archive` CHANGE `id` `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}pages` CHANGE `id` `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}pages` DROP COLUMN `parent`',
+	'ALTER TABLE `{pre}pages` ADD `left_id` INT( 11 ) UNSIGNED NOT NULL AFTER `block_id`',
+	'ALTER TABLE `{pre}pages` ADD `right_id` INT( 11 ) UNSIGNED NOT NULL AFTER `block_id`',
+	'ALTER TABLE `{pre}pages_blocks` CHANGE `id` `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}poll_answers` CHANGE `id` `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}poll_answers` CHANGE `poll_id` `poll_id` INT( 11 ) UNSIGNED NOT NULL',
+	'ALTER TABLE `{pre}poll_question` CHANGE `id` `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}poll_votes` CHANGE `poll_id` `poll_id` INT( 11 ) UNSIGNED NOT NULL',
+	'ALTER TABLE `{pre}poll_votes` CHANGE `answer_id` `answer_id` INT( 11 ) UNSIGNED NOT NULL',
+	'ALTER TABLE `{pre}poll_votes` ADD `user_id` INT( 11 ) UNSIGNED NOT NULL AFTER `answer_id`',
 	'ALTER TABLE `{pre}poll_votes` DROP PRIMARY KEY',
-	'ALTER TABLE `{pre}poll_votes` ADD INDEX (`poll_id`)',
-	'ALTER TABLE `{pre}poll_votes` ADD INDEX (`answer_id`)',
-	'ALTER TABLE `{pre}poll_votes` ADD INDEX (`user_id`)',
+	'ALTER TABLE `{pre}poll_votes` ADD INDEX (`poll_id`, `answer_id`, `user_id`)',
+	'ALTER TABLE `{pre}users` CHANGE `id` `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT',
 );
 
 if (count($queries) > 0) {

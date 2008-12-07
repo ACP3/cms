@@ -1,6 +1,6 @@
 <?php
 define('INSTALLED', true);
-define('DEBUG', true);
+define('DEBUG', 1);
 define('CONFIG_DATE', 'd.m.y, H:i');
 define('CONFIG_DB_HOST', 'localhost');
 define('CONFIG_DB_NAME', 'acp3');
