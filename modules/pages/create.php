@@ -19,17 +19,14 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('pages', 'select_static_hyperlink');
 	if (!validate::isNumber($form['blocks']))
 		$errors[] = $lang->t('pages', 'select_block');
-	if (!empty($form['blocks']) && !validate::isNumber($form['sort']))
-		$errors[] = $lang->t('pages', 'type_in_chronology');
 	if (strlen($form['title']) < 3)
 		$errors[] = $lang->t('pages', 'title_to_short');
 	if (!empty($form['parent']) && !validate::isNumber($form['parent']))
 		$errors[] = $lang->t('pages', 'select_superior_page');
 	if (!empty($form['parent']) && validate::isNumber($form['parent'])) {
 		// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
-		$parent_block = (int) $db->select('block_id', 'pages', 'id = \'' . $form['parent'] . '\'');
-
-		if ($form['blocks'] != 0 && $parent_block != 0 && $parent_block != $form['blocks'])
+		$parent_block = $db->select('block_id', 'pages', 'id = \'' . $form['parent'] . '\'');
+		if (!empty($form['blocks']) && !empty($parent_block) && $parent_block[0]['block_id'] != $form['blocks'])
 			$errors[] = $lang->t('pages', 'superior_page_not_allowed');
 	}
 	if ($form['mode'] == '1' && strlen($form['text']) < 3)
@@ -47,14 +44,24 @@ if (isset($_POST['submit'])) {
 			$form['text'] = '';
 		}
 
+		if (empty($form['parent'])) {
+			$left_id = $db->select('left_id', 'pages', 0, 'left_id DESC', 1);
+			$right_id = $left_id[0]['left_id'] + 1;
+		} else {
+			$node = $db->query('SELECT right_id FROM ' . CONFIG_DB_PRE . 'pages WHERE id = \'' . $form['parent'] . '\'');
+			$db->query('UPDATE ' . CONFIG_DB_PRE . 'pages SET right_id = right_id + 2 WHERE right_id >= ' . $node[0]['right_id'], 0);
+			$db->query('UPDATE ' . CONFIG_DB_PRE . 'pages SET left_id = left_id + 2 WHERE left_id > ' . $node[0]['right_id'], 0);
+			$left_id = $node[0]['right_id'];
+			$right_id = $node[0]['right_id'] + 1;
+		}
 		$insert_values = array(
 			'id' => '',
 			'start' => $date->timestamp($form['start']),
 			'end' => $date->timestamp($form['end']),
 			'mode' => $form['mode'],
-			'parent' => $form['parent'],
 			'block_id' => $form['blocks'],
-			'sort' => $form['sort'],
+			'left_id' => $left_id,
+			'right_id' => $right_id,
 			'title' => $db->escape($form['title']),
 			'uri' => $db->escape($form['uri'], 2),
 			'target' => $form['target'],
@@ -73,6 +80,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('start_date', datepicker('start'));
 	$tpl->assign('end_date', datepicker('end'));
 
+	// Seitentyp
 	$mode[0]['value'] = 1;
 	$mode[0]['selected'] = selectEntry('mode', '1');
 	$mode[0]['lang'] = $lang->t('pages', 'static_page');
@@ -84,11 +92,11 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$mode[2]['lang'] = $lang->t('pages', 'hyperlink');
 	$tpl->assign('mode', $mode);
 
+	// Block
 	$blocks = $db->select('id, title', 'pages_blocks');
 	$c_blocks = count($blocks);
-
 	for ($i = 0; $i < $c_blocks; ++$i) {
-		$blocks[$i]['selected'] = selectEntry('block', $blocks[$i]['id']);
+		$blocks[$i]['selected'] = selectEntry('blocks', $blocks[$i]['id']);
 	}
 	$blocks[$c_blocks]['id'] = 0;
 	$blocks[$c_blocks]['index_name'] = 'dot_display';
@@ -96,6 +104,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$blocks[$c_blocks]['title'] = $lang->t('pages', 'do_not_display');
 	$tpl->assign('blocks', $blocks);
 
+	// Ziel des Hyperlinks
 	$target[0]['value'] = 1;
 	$target[0]['selected'] = selectEntry('target', '1');
 	$target[0]['lang'] = $lang->t('common', 'window_self');

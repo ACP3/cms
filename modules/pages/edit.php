@@ -20,8 +20,6 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri-
 			$errors[] = $lang->t('pages', 'select_static_hyperlink');
 		if (!validate::isNumber($form['blocks']))
 			$errors[] = $lang->t('pages', 'select_block');
-		if (!empty($form['blocks']) && !validate::isNumber($form['sort']))
-			$errors[] = $lang->t('pages', 'type_in_chronology');
 		if (strlen($form['title']) < 3)
 			$errors[] = $lang->t('pages', 'title_to_short');
 		if (!empty($form['parent']) && !validate::isNumber($form['parent']))
@@ -79,6 +77,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri-
 		$tpl->assign('start_date', datepicker('start', $page[0]['start']));
 		$tpl->assign('end_date', datepicker('end', $page[0]['end']));
 
+		// Seitentyp
 		$mode[0]['value'] = 1;
 		$mode[0]['selected'] = selectEntry('mode', '1', $page[0]['mode']);
 		$mode[0]['lang'] = $lang->t('pages', 'static_page');
@@ -90,9 +89,9 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri-
 		$mode[2]['lang'] = $lang->t('pages', 'hyperlink');
 		$tpl->assign('mode', $mode);
 
+		// Block
 		$blocks = $db->select('id, title', 'pages_blocks', 0, 'title ASC, id ASC');
 		$c_blocks = count($blocks);
-
 		for ($i = 0; $i < $c_blocks; ++$i) {
 			$blocks[$i]['selected'] = selectEntry('blocks', $blocks[$i]['id'], $page[0]['block_id']);
 		}
@@ -102,6 +101,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri-
 		$blocks[$c_blocks]['title'] = $lang->t('pages', 'do_not_display');
 		$tpl->assign('blocks', $blocks);
 
+		// Ziel des Hyperlinks
 		$target[0]['value'] = 1;
 		$target[0]['selected'] = selectEntry('target', '1', $page[0]['target']);
 		$target[0]['lang'] = $lang->t('common', 'window_self');
