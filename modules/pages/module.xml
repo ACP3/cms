@@ -35,6 +35,7 @@
 		<item>
 			<file>delete_blocks</file>
 			<level>2</level>
+			<include>functions</include>
 		</item>
 		<item>
 			<file>edit</file>
@@ -44,6 +45,7 @@
 		<item>
 			<file>edit_block</file>
 			<level>2</level>
+			<include>functions</include>
 		</item>
 		<item>
 			<file>functions</file>

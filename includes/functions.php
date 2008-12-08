@@ -146,7 +146,11 @@ function moveFile($tmp_filename, $filename, $dir)
 	return array();
 }
 /**
- * Verschiebt einen DB-Eintrag einen Schritt nach oben
+ * Verschiebt einen DB-Eintrag um einen Schritt nach oben bzw. unten
+ *
+ * @param string $action
+ *	up = einen Schritt nach oben verschieben
+ *	down = einen Schritt nach unten verschieben
  * @param string $table
  *	Die betroffene Tabelle
  * @param string $id_field
@@ -157,16 +161,32 @@ function moveFile($tmp_filename, $filename, $dir)
  *	Die ID des Datensatzes, welcher umsortiert werden soll
  * @return boolean
  */
-function moveOneStepUp($table, $id_field, $sort_field, $id, $where = 0)
+function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = 0)
 {
-	global $db;
+	if ($action == 'up' || $action == 'down') {
+		global $db;
 
-	// Zusätzliche WHERE-Bedingung
-	$where = !empty($where) ? $where . ' AND ' : '';
+		// Zusätzliche WHERE-Bedingung
+		$where = !empty($where) ? $where . ' AND ' : '';
 
-	if ($db->select($id_field, $table, $where . $id_field . ' != \'' . $id . '\' AND ' . $sort_field . ' < (SELECT ' . $sort_field . ' FROM ' . CONFIG_DB_PRE . $table . ' WHERE ' . $where . $id_field . ' = \'' . $id . '\')', 0, 0, 0, 1) > 0) {
-		$elem = $db->select($sort_field, $table, $where . $id_field . ' = \'' . $id . '\'');
-		$pre = $db->select($id_field . ', ' . $sort_field, $table, $where . $sort_field . ' < ' . $elem[0][$sort_field] . '', $sort_field . ' DESC', 1);
+		switch ($action) {
+			// Ein Schritt nach oben
+			case 'up':
+				if ($db->select($id_field, $table, $where . $id_field . ' != \'' . $id . '\' AND ' . $sort_field . ' < (SELECT ' . $sort_field . ' FROM ' . CONFIG_DB_PRE . $table . ' WHERE ' . $where . $id_field . ' = \'' . $id . '\')', 0, 0, 0, 1) > 0) {
+					$elem = $db->select($sort_field, $table, $where . $id_field . ' = \'' . $id . '\'');
+					$pre = $db->select($id_field . ', ' . $sort_field, $table, $where . $sort_field . ' < ' . $elem[0][$sort_field] . '', $sort_field . ' DESC', 1);
+				}
+				break;
+			// Ein Schritt nach unten
+			case 'down':
+				if ($db->select($id_field, $table, $where . $id_field . ' != \'' . $id . '\' AND ' . $sort_field . ' > (SELECT ' . $sort_field . ' FROM ' . CONFIG_DB_PRE . $table . ' WHERE ' . $where . $id_field . ' = \'' . $id . '\')', 0, 0, 0, 1) > 0) {
+					$elem = $db->select($sort_field, $table, $where . $id_field . ' = \'' . $id . '\'');
+					$pre = $db->select($id_field . ',' . $sort_field, $table, $where . $sort_field . ' > ' . $elem[0][$sort_field] . '', $sort_field . ' ASC', 1);
+				}
+				break;
+			default:
+				return false;
+		}
 
 		// Sortierung aktualisieren
 		if (count($elem) == 1 && count($pre) == 1) {
@@ -175,43 +195,9 @@ function moveOneStepUp($table, $id_field, $sort_field, $id, $where = 0)
 
 			return $bool && $bool2 ? true : false;
 		}
-		return false;
 	}
 	return false;
-}
-/**
- * Verschiebt einen DB-Eintrag einen Schritt nach unten
- * @param string $table
- *	Die betroffene Tabelle
- * @param string $id_field
- *	Name des ID-Feldes
- * @param string $sort_field
- *	Name des Sortier-Feldes. damit die Sortierung geändert werden kann
- * @param string $id
- *	Die ID des Datensatzes, welcher umsortiert werden soll
- * @return boolean
- */
-function moveOneStepDown($table, $id_field, $sort_field, $id, $where = 0)
-{
-	global $db;
 
-	// Zusätzliche WHERE-Bedingung
-	$where = !empty($where) ? $where . ' AND ' : '';
-
-	if ($db->select($id_field, $table, $where . $id_field . ' != \'' . $id . '\' AND ' . $sort_field . ' > (SELECT ' . $sort_field . ' FROM ' . CONFIG_DB_PRE . $table . ' WHERE ' . $where . $id_field . ' = \'' . $id . '\')', 0, 0, 0, 1) > 0) {
-		$elem = $db->select($sort_field, $table, $where . $id_field . ' = \'' . $id . '\'');
-		$pre = $db->select($id_field . ',' . $sort_field, $table, $where . $sort_field . ' > ' . $elem[0][$sort_field] . '', $sort_field . ' ASC', 1);
-
-		// Sortierung aktualisieren
-		if (count($elem) == 1 && count($pre) == 1) {
-			$bool = $db->update($table, array($sort_field => $pre[0][$sort_field]), $id_field . ' = \'' . $id . '\'');
-			$bool2 = $db->update($table, array($sort_field => $elem[0][$sort_field]), $id_field . ' = \'' . $pre[0][$id_field] . '\'');
-
-			return $bool && $bool2 ? true : false;
-		}
-		return false;
-	}
-	return false;
 }
 /**
  * Gibt eine Seitenauswahl aus
