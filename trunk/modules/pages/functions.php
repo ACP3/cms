@@ -149,7 +149,7 @@ function parentCheck($id, $parent_id, $block) {
  * Verarbeitet die Navigationsleiste und selektiert die aktuelle Seite,
  * falls diese sich ebenfalls in der Navigationsleiste befindet
  *
- * @return mixed
+ * @return string
  */
 function processNavbar($block) {
 	static $navbar = array();
@@ -159,6 +159,7 @@ function processNavbar($block) {
 		return $navbar[$block];
 	// ...ansonsten Verarbeitung starten
 	} else {
+		// Gecachete Navigationsleiste einbinden
 		$pages = getNavbarCache();
 		$c_pages = count($pages);
 
@@ -171,7 +172,7 @@ function processNavbar($block) {
 			$time = $date->timestamp();
 
 			for ($i = 0; $i < $c_pages; ++$i) {
-				// Checken, ob die Seite im angeforderten Block liegt und ob diese auch schon veröffentlicht ist
+				// Checken, ob die Seite im angeforderten Block liegt und ob diese veröffentlicht ist
 				if ($pages[$i]['block_name'] == $block && $pages[$i]['start'] == $pages[$i]['end'] && $pages[$i]['start'] <= $time || $pages[$i]['start'] != $pages[$i]['end'] && $pages[$i]['start'] <= $time && $pages[$i]['end'] >= $time) {
 					$css = 'navi-' . $pages[$i]['id'] . ($uri->mod == 'pages' && $uri->page == 'list' && $uri->item == $pages[$i]['id'] || $uri->query == uri($pages[$i]['uri']) ? ' selected' : '');
 					$href = uri('pages/list/item_' . $pages[$i]['id']);
@@ -184,7 +185,7 @@ function processNavbar($block) {
 						$navbar[$block].= $indent . "\t<li>\n";
 						$navbar[$block].= $indent . "\t\t" . $link . "\n";
 						$navbar[$block].= $indent . "\t\t<ul>\n";
-					// Elemente ohe Kindelemente
+					// Elemente ohne Kindelemente
 					} else {
 						$navbar[$block].= $indent . "\t<li>" . $link . "</li>\n";
 						// Liste für untergeordnete Elemente schließen
@@ -192,8 +193,10 @@ function processNavbar($block) {
 							// Differenz ermitteln, wieviele Level zwischen dem aktuellen und dem nachfolgendem Element liegen
 							$diff = isset($pages[$i + 1]['level']) ? $pages[$i]['level'] - $pages[$i + 1]['level'] : $pages[$i]['level'];
 							$diff+= $diff % 2 == 0 ? 1 : 0;
-							for (; $diff >= 0; --$diff) {
-								$navbar[$block].= str_repeat("\t", $diff) . ($diff % 2 == 0 ? "\t</li>\n" : "\t</ul>\n");
+							$elm = '</ul>';
+							for ($diff; $diff >= 0; --$diff) {
+								$navbar[$block].= str_repeat("\t", $diff) . "\t" . $elm . "\n";
+								$elm = $elm == '</ul>' ? '</li>' : '</ul>';
 							}
 						}
 					}
