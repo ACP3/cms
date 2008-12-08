@@ -191,12 +191,9 @@ function processNavbar($block) {
 						// Liste für untergeordnete Elemente schließen
 						if (isset($pages[$i + 1]) && $pages[$i + 1]['level'] < $pages[$i]['level'] || !isset($pages[$i + 1]) && $pages[$i]['level'] != '0') {
 							// Differenz ermitteln, wieviele Level zwischen dem aktuellen und dem nachfolgendem Element liegen
-							$diff = isset($pages[$i + 1]['level']) ? $pages[$i]['level'] - $pages[$i + 1]['level'] : $pages[$i]['level'];
-							$diff+= $diff % 2 == 0 ? 1 : 0;
-							$elm = '</ul>';
-							for ($diff; $diff >= 0; --$diff) {
-								$navbar[$block].= str_repeat("\t", $diff) . "\t" . $elm . "\n";
-								$elm = $elm == '</ul>' ? '</li>' : '</ul>';
+							$diff = (isset($pages[$i + 1]['level']) ? $pages[$i]['level'] - $pages[$i + 1]['level'] : $pages[$i]['level']) * 2;
+							for ($diff; $diff > 0; --$diff) {
+								$navbar[$block].= str_repeat("\t", $diff) . ($diff % 2 == 0 ? '</ul>' : '</li>') . "\n";
 							}
 						}
 					}
