@@ -34,9 +34,7 @@ if (!isset($entries)) {
 		}
 	}
 
-	// Cache der Menüpunkte neu erstellen
-	include_once ACP3_ROOT . 'modules/pages/functions.php';
-	generatePagesCache();
+	setNavbarCache();
 
 	$content = comboBox($bool ? $lang->t('pages', 'delete_block_success') : $lang->t('pages', 'delete_block_error'), uri('acp/pages/adm_list_blocks'));
 }
