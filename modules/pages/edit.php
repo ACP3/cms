@@ -71,7 +71,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri-
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
-		$page = $db->select('id, start, end, mode, parent, block_id, sort, title, uri, target, text', 'pages', 'id = \'' . $uri->id . '\'');
+		$page = $db->select('id, start, end, mode, block_id, title, uri, target, text', 'pages', 'id = \'' . $uri->id . '\'');
 		$page[0]['text'] = $db->escape($page[0]['text'], 3);
 		$page[0]['uri'] = $db->escape($page[0]['uri'], 3);
 
@@ -112,7 +112,9 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri-
 
 		$tpl->assign('form', isset($form) ? $form : $page[0]);
 
-		$tpl->assign('pages_list', pagesList(2, 0, $page[0]['parent'], $page[0]['id']));
+		// Eltern-Element herausfinden
+		$parent = $db->query('SELECT p.id AS parent FROM ' . CONFIG_DB_PRE . 'pages p, ' . CONFIG_DB_PRE . 'pages c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = \'' . $uri->id . '\' ORDER BY p.left_id DESC LIMIT 2');
+		$tpl->assign('pages_list', pagesList(2, isset($parent[1]['parent']) && $parent[1]['parent'] != $uri->id ? $parent[1]['parent'] : 0));
 
 		$content = $tpl->fetch('pages/edit.html');
 	}
