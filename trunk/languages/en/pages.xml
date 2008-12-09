@@ -133,6 +133,10 @@
 		<message>This module is responsible for the both navbars and the static pages.</message>
 	</item>
 	<item>
+		<name>move_impossible</name>
+		<message>Impossible to move this node</message>
+	</item>
+	<item>
 		<name>no_superior_page</name>
 		<message>No superior page</message>
 	</item>
@@ -191,10 +195,6 @@
 	<item>
 		<name>title_to_short</name>
 		<message>The title should be at least 3 characters long</message>
-	</item>
-	<item>
-		<name>type_in_chronology</name>
-		<message>Please type in the position, where you want to see the menu item</message>
 	</item>
 	<item>
 		<name>type_in_index_name</name>
