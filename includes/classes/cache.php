@@ -19,6 +19,7 @@ class cache
 	 * Überprüft, ob der Cache für eine bestimmte Abfrage schon erstellt wurde
 	 *
 	 * @param string $filename
+	 *  Der Name der Datei, welcher auf Existenz und Gültigkeit geprüft werden soll
 	 * @return boolean
 	 */
 	public static function check($filename)
@@ -34,7 +35,7 @@ class cache
 	 * @param string $filename
 	 * 	Gewünschter Dateiname des Caches
 	 * @param array $data
-	 * 	Daten, welche gecachet werden sollen
+	 * 	Daten, für welche der Cache erstellt werden sollen
 	 * @return boolean
 	 */
 	public static function create($filename, $data)
@@ -77,7 +78,7 @@ class cache
 		return array();
 	}
 	/**
-	 * Löscht en gesamten Cache
+	 * Löscht den gesamten Cache
 	 */
 	public static function purge()
 	{
