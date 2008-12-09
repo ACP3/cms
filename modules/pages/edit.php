@@ -22,15 +22,6 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri-
 			$errors[] = $lang->t('pages', 'select_block');
 		if (strlen($form['title']) < 3)
 			$errors[] = $lang->t('pages', 'title_to_short');
-		if (!empty($form['parent']) && !validate::isNumber($form['parent']))
-			$errors[] = $lang->t('pages', 'select_superior_page');
-		if (!empty($form['parent']) && validate::isNumber($form['parent'])) {
-			// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
-			$parent_block = (int) $db->select('block_id', 'pages', 'id = \'' . $form['parent'] . '\'');
-
-			if ($form['parent'] == $uri->id || !parentCheck($uri->id, $form['parent'], $form['blocks']) || $form['blocks'] != 0 && $parent_block != 0 && $parent_block != $form['blocks'])
-				$errors[] = $lang->t('pages', 'superior_page_not_allowed');
-		}
 		if ($form['mode'] == '1' && strlen($form['text']) < 3)
 			$errors[] = $lang->t('pages', 'text_to_short');
 		if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !validate::isNumber($form['target'])))
@@ -50,9 +41,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri-
 				'start' => $date->timestamp($form['start']),
 				'end' => $date->timestamp($form['end']),
 				'mode' => $form['mode'],
-				'parent' => $form['parent'],
 				'block_id' => $form['blocks'],
-				'sort' => $form['sort'],
 				'title' => $db->escape($form['title']),
 				'uri' => $db->escape($form['uri'], 2),
 				'target' => $form['target'],
@@ -111,10 +100,6 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri-
 		$tpl->assign('target', $target);
 
 		$tpl->assign('form', isset($form) ? $form : $page[0]);
-
-		// Eltern-Element herausfinden
-		$parent = $db->query('SELECT p.id AS parent FROM ' . CONFIG_DB_PRE . 'pages p, ' . CONFIG_DB_PRE . 'pages c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = \'' . $uri->id . '\' ORDER BY p.left_id DESC LIMIT 2');
-		$tpl->assign('pages_list', pagesList(2, isset($parent[1]['parent']) && $parent[1]['parent'] != $uri->id ? $parent[1]['parent'] : 0));
 
 		$content = $tpl->fetch('pages/edit.html');
 	}

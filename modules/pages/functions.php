@@ -114,36 +114,11 @@ function pagesList($mode = 1, $parent = 0) {
 				$block = $lang->t('pages', 'do_not_display');
 			}
 			$pages[$i]['selected'] = selectEntry('parent', $pages[$i]['id'], $parent);
-			$pages[$i]['spaces'] = str_repeat('&nbsp;', $pages[$i]['level']);
+			$pages[$i]['spaces'] = str_repeat('&nbsp;&nbsp;', $pages[$i]['level']);
 			$output[$block][$i] = $pages[$i];
 		}
 	}
 	return $output;
-}
-/**
- * Überprüfung der übergeordneten Seite, damit keine Endlosschleifen entstehen
- *
- * @param integer $id
- * @param integer $parent_id
- * @param integer $block
- * @return boolean
- */
-function parentCheck($id, $parent_id, $block) {
-	global $db;
-
-	$parents = $db->select('parent, block_id', 'pages', 'id = \'' . $parent_id . '\'');
-	$c_parents = count($parents);
-
-	if ($c_parents > 0) {
-		for ($i = 0; $i < $c_parents; ++$i) {
-			if ($parents[$i]['parent'] == $id || $block != '0' && $parents[$i]['block_id'] == '0')
-				return false;
-
-			if ($db->select('id', 'pages', 'id = \'' . $parents[$i]['parent'] . '\'', 0, 0, 0, 1) > 0)
-				parentCheck($id, $parents[$i]['parent'], $block);
-		}
-	}
-	return true;
 }
 /**
  * Verarbeitet die Navigationsleiste und selektiert die aktuelle Seite,
