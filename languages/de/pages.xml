@@ -133,6 +133,10 @@
 		<message>Dieses Modul ist für die beiden Navigationsleisten und für die statischen Seiten zuständig.</message>
 	</item>
 	<item>
+		<name>move_impossible</name>
+		<message>Element kann nicht verschoben werden</message>
+	</item>
+	<item>
 		<name>no_superior_page</name>
 		<message>Keine übergeordnete Seite</message>
 	</item>
@@ -191,10 +195,6 @@
 	<item>
 		<name>title_to_short</name>
 		<message>Der Seitentitel sollte mindestens 3 Zeichen lang sein</message>
-	</item>
-	<item>
-		<name>type_in_chronology</name>
-		<message>Bitte geben Sie die Stelle an, an der der Menüpunkt erscheinen soll</message>
 	</item>
 	<item>
 		<name>type_in_index_name</name>
