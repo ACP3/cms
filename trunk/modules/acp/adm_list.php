@@ -36,7 +36,7 @@ if (modules::check('system', 'server_config')) {
 	$server_info[3]['col_left'] = $lang->t('system', 'php_version');
 	$server_info[3]['col_right'] = phpversion();
 	$server_info[4]['col_left'] = $lang->t('system', 'mysql_version');
-	$server_info[4]['col_right'] = CONFIG_DB_TYPE == 'mysqli' ? mysqli_get_server_info($db->link) : mysql_get_server_info($db->link);
+	$server_info[4]['col_right'] = mysql_get_server_info();
 
 	$tpl->assign('server_info', $server_info);
 }
