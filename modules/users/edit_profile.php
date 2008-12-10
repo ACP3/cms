@@ -26,7 +26,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 			$errors[] = $lang->t('users', 'user_name_already_exists');
 		if (!validate::email($form['mail']))
 			$errors[] = $lang->t('common', 'wrong_email_format');
-		if (userEmailExist($form['mail'], USER_ID))
+		if (userEmailExists($form['mail'], USER_ID))
 			$errors[] = $lang->t('users', 'user_email_already_exists');
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
