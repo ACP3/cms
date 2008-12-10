@@ -82,16 +82,18 @@ class modules
 	 */
 	public static function modulesList()
 	{
+		static $mod_list = array();
 		$uri_dir = scandir(ACP3_ROOT . 'modules/');
-		$mod_list = array();
 
-		foreach ($uri_dir as $module) {
-			$info = self::parseInfo($module);
-			if (is_array($info)) {
-				$mod_list[$info['name']] = $info;
+		if (empty($mod_list)) {
+			foreach ($uri_dir as $module) {
+				$info = self::parseInfo($module);
+				if (is_array($info)) {
+					$mod_list[$info['name']] = $info;
+				}
 			}
+			ksort($mod_list);
 		}
-		ksort($mod_list);
 		return $mod_list;
 	}
 	/**

@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('emoticons', 'type_in_code');
 	if (empty($form['description']))
 		$errors[] = $lang->t('emoticons', 'type_in_description');
-	if (!isset($file) || empty($file['size']) || !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']))
+	if (!isset($file) || !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']))
 		$errors[] = $lang->t('emoticons', 'invalid_image_selected');
 
 	if (isset($errors)) {
