@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('news', 'headline_to_short');
 	if (strlen($form['text']) < 3)
 		$errors[] = $lang->t('news', 'text_to_short');
-	if (!validate::isNumber($form['cat']) || validate::isNumber($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
+	if (!validate::isNumber($form['cat']) || validate::isNumber($form['cat']) && $db->select('COUNT(id)', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
 		$errors[] = $lang->t('news', 'select_category');
 	if (!empty($form['uri']) && (!validate::isNumber($form['target']) || strlen($form['link_title']) < 3))
 		$errors[] = $lang->t('news', 'complete_additional_hyperlink_statements');

@@ -19,7 +19,7 @@ function commentsCount($entry_id, $module)
 {
 	global $db;
 
-	return $db->select('id', 'comments', 'module = \'' . $module . '\' AND entry_id =\'' . $entry_id . '\'', 0, 0, 0, 1);
+	return $db->select('COUNT(id)', 'comments', 'module = \'' . $module . '\' AND entry_id =\'' . $entry_id . '\'', 0, 0, 0, 1);
 }
 /**
  * Zeigt alle Kommentare für das jeweilige Modul und Datensatz
@@ -95,7 +95,7 @@ function comments($module, $entry_id)
 		}
 
 		if ($c_comments > 0) {
-			$tpl->assign('pagination', pagination($db->select('id', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 0, 0, 0, 1)));
+			$tpl->assign('pagination', pagination($db->select('COUNT(id)', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 0, 0, 0, 1)));
 			for ($i = 0; $i < $c_comments; ++$i) {
 				$comments[$i]['date'] = $date->format($comments[$i]['date']);
 				$comments[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $comments[$i]['message']);

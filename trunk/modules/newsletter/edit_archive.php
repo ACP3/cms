@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($uri->id) && $db->select('id', 'newsletter_archive', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'newsletter_archive', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
 	// Brotkrümelspur
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
 	breadcrumb::assign($lang->t('newsletter', 'newsletter'), uri('acp/newsletter'));

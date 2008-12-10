@@ -41,8 +41,6 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('system', 'type_in_db_username');
 	if (empty($form['db_name']))
 		$errors[] = $lang->t('system', 'type_in_db_name');
-	if ($form['db_type'] != 'mysql' && $form['db_type'] != 'mysqli')
-		$errors[] = $lang->t('system', 'select_db_type');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -54,7 +52,6 @@ if (isset($_POST['submit'])) {
 			'db_name' => $form['db_name'],
 			'db_pre' => $db->escape($form['db_pre']),
 			'db_pwd' => $form['db_pwd'],
-			'db_type' => $form['db_type'],
 			'db_user' => $form['db_user'],
 			'design' => CONFIG_DESIGN,
 			'dst' => $form['dst'],
@@ -136,17 +133,6 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$sef[1]['checked'] = selectEntry('sef', '0', CONFIG_SEF, 'checked');
 	$sef[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('sef', $sef);
-
-	// Datenbank-Typen
-	$db_type[0]['value'] = 'mysql';
-	$db_type[0]['selected'] = selectEntry('db_type', 'mysql', CONFIG_DB_TYPE);
-	$db_type[0]['lang'] = 'MySQL';
-	if (extension_loaded('mysqli'))	{
-		$db_type[1]['value'] = 'mysqli';
-		$db_type[1]['selected'] = selectEntry('db_type', 'mysqli', CONFIG_DB_TYPE);
-		$db_type[1]['lang'] = 'MySQLi';
-	}
-	$tpl->assign('db_type', $db_type);
 
 	$current['flood'] = CONFIG_FLOOD;
 	$current['homepage'] = CONFIG_HOMEPAGE;

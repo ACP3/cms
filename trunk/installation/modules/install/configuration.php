@@ -12,18 +12,12 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('system', 'type_in_db_username');
 	if (empty($form['db_name']))
 		$errors[] = lang('system', 'type_in_db_name');
-	if (empty($form['db_type']))
-		$errors[] = lang('system', 'select_db_type');
 	if (!empty($form['db_host']) && !empty($form['db_user']) && !empty($form['db_name'])) {
-		if ($form['db_type'] == 'mysql') {
-			$db = @mysql_connect($form['db_host'], $form['db_user'], $form['db_pwd']);
-			$db_select = @mysql_select_db($form['db_name'], $db);
-			if (!$db || !$db_select)
-				$errors[] = lang('installation', 'db_connection_failed');
-		} elseif ($form['db_type'] == 'mysqli') {
-			$db = @mysqli_connect($form['db_host'], $form['db_user'], $form['db_pwd'], $form['db_name']);
-			if (mysqli_connect_errno())
-				$errors[] = lang('installation', 'db_connection_failed');
+		try {
+			$db = new PDO('mysql:host=' . $form['db_host'] . ';dbname=' . $form['db_name'], $form['db_user'], $form['db_pwd']);
+			$db = null;
+		} catch (PDOException $e) {
+			$errors[] = lang('installation', 'db_connection_failed');
 		}
 	}
 	if (empty($form['user_name']))
@@ -60,7 +54,6 @@ if (isset($_POST['submit'])) {
 			'db_name' => $form['db_name'],
 			'db_pre' => mask($form['db_pre']),
 			'db_pwd' => $form['db_pwd'],
-			'db_type' => mask($form['db_type']),
 			'db_user' => $form['db_user'],
 			'design' => 'acp3',
 			'dst' => $form['dst'],

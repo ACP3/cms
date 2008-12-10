@@ -13,7 +13,7 @@ if (!defined('IN_ACP3'))
 $time = $date->timestamp();
 $period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
-if (validate::isNumber($uri->id) && $db->select('id', 'news', 'id = \'' . $uri->id . '\'' . $period, 0, 0, 0, 1) == 1) {
+if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'news', 'id = \'' . $uri->id . '\'' . $period, 0, 0, 0, 1) == 1) {
 	$news = getNewsCache($uri->id);
 	// Brotkrümelspur
 	$category = $db->select('name', 'categories', 'id = \'' . $news[0]['category_id'] . '\'');

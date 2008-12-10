@@ -16,7 +16,7 @@ $galleries = $db->select('id, start, name', 'gallery', $where, 'start DESC, end 
 $c_galleries = count($galleries);
 
 if ($c_galleries > 0) {
-	$tpl->assign('pagination', pagination($db->select('id', 'gallery', $where, 0, 0, 0, 1)));
+	$tpl->assign('pagination', pagination($db->select('COUNT(id)', 'gallery', $where, 0, 0, 0, 1)));
 
 	for ($i = 0; $i < $c_galleries; ++$i) {
 		$galleries[$i]['date'] = $date->format($galleries[$i]['start']);

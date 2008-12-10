@@ -40,7 +40,7 @@ if ($c_news > 0) {
 		include_once ACP3_ROOT . 'modules/comments/functions.php';
 		$comment_check = true;
 	}
-	$tpl->assign('pagination', pagination($db->select('id', 'news', $where, 0, 0, 0, 1)));
+	$tpl->assign('pagination', pagination($db->select('COUNT(id)', 'news', $where, 0, 0, 0, 1)));
 
 	for ($i = 0; $i < $c_news; ++$i) {
 		$news[$i]['date'] = $date->format($news[$i]['start']);

@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit();
 
-if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'gallery', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
 	$gallery = $db->select('name', 'gallery', 'id = \'' . $uri->id . '\'');
 
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
@@ -36,12 +36,18 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $ur
 			$result = moveFile($file['tmp_name'], $file['name'], 'gallery');
 			$picNum = $db->select('pic', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'', 'pic DESC', 1);
 
-			$insert_values = array('id' => '', 'pic' => $picNum[0]['pic'] + 1, 'gallery_id' => $uri->id, 'file' => $result['name'], 'description' => $db->escape($form['description'], 2));
+			$insert_values = array(
+				'id' => '',
+				'pic' => !empty($picNum) ? $picNum[0]['pic'] + 1 : 1,
+				'gallery_id' => $uri->id,
+				'file' => $result['name'],
+				'description' => $db->escape($form['description'], 2)
+			);
 
 			$bool = $db->insert('gallery_pictures', $insert_values);
 			setGalleryCache($uri->id);
 
-			$content = comboBox($bool ? $lang->t('gallery', 'add_picture_success') : $lang->t('gallery', 'add_picture_error'), uri('acp/gallery/add_picture/id_' . $uri->id));
+			$content = comboBox($bool ? $lang->t('gallery', 'add_picture_success') : $lang->t('gallery', 'add_picture_error'), uri('acp/gallery/edit_gallery/id_' . $uri->id));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

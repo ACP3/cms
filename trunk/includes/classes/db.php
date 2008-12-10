@@ -25,57 +25,32 @@ class db
 
 	/**
 	 * Stellt die Verbindung mit der Datenbank her
-	 *
-	 * @return db
 	 */
 	function __construct()
 	{
-		$error = 'Beim Verbinden mit der Datenbank ist folgender Fehler aufgetreten:<br />' . "\nFehler %d - %s";
-
-		switch (CONFIG_DB_TYPE) {
-			case 'mysqli':
-				$link = @mysqli_connect(CONFIG_DB_HOST, CONFIG_DB_USER, CONFIG_DB_PWD, CONFIG_DB_NAME);
-				if (mysqli_connect_errno()) {
-					printf($error, mysqli_connect_errno(), mysqli_connect_error());
-					exit;
-				}
-				break;
-			default:
-				$link = @mysql_connect(CONFIG_DB_HOST, CONFIG_DB_USER, CONFIG_DB_PWD);
-				$db_select = @mysql_select_db(CONFIG_DB_NAME, $link);
-				if (!$link || !$db_select) {
-					printf($error, mysql_errno(), mysql_error());
-					exit;
-				}
+		try {
+			$this->link = new PDO('mysql:host=' . CONFIG_DB_HOST . ';dbname=' . CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PWD);
+		} catch (PDOException $e) {
+			print "Beim Verbinden mit der Datenbank ist folgender Fehler aufgetreten:<br />\n" . $e->getMessage() . "<br/>\n";
+			die();
 		}
-		$this->link = $link;
 	}
 	/**
 	 * Beendet die Verbindung zur Datenbank
 	 */
 	function __destruct()
 	{
-		if ($this->link) {
-			switch (CONFIG_DB_TYPE) {
-				case 'mysqli':
-					mysqli_close($this->link);
-					break;
-				default:
-					mysql_close($this->link);
-			}
-		}
+		$this->link = null;
 	}
 	/**
 	 * Falls SQL Fehler auftreten, werden diese ausgegeben
 	 */
-	private function error()
+	private function error($query)
 	{
-		switch (CONFIG_DB_TYPE) {
-			case 'mysqli':
-				echo 'Fehler ' . mysqli_errno($this->link) . ' - ' . mysqli_error($this->link) . '<br />';
-				break;
-			default:
-				echo 'Fehler ' . mysql_errno($this->link) . ' - ' . mysql_error($this->link) . '<br />';
+		if (defined('DEBUG') && DEBUG && !$query) {
+			$error = $this->link->errorInfo();
+			print 'Fehler: ' . $error[1] . ' - ' . $error[2] . "<br />\n";
+			exit;
 		}
 	}
 	/**
@@ -114,46 +89,25 @@ class db
 	 */
 	public function query($query, $mode = 2)
 	{
-		switch (CONFIG_DB_TYPE) {
-			case 'mysqli':
-				$result = @mysqli_query($this->link, $query);
-				if ($result) {
-					if ($mode == 1) {
-						return @mysqli_num_rows($result);
-					} elseif ($mode == 2) {
-						$new_result = array();
-
-						while ($data = @mysqli_fetch_assoc($result)) {
-							$new_result[] = $data;
-						}
-						mysqli_free_result($result);
-
-						return $new_result;
-					}
-					return $result;
-				}
+		switch ($mode) {
+			// Anzahl der Reihen zählen
+			case 1:
+				$stmt = $this->link->query($query);
+				$this->error($stmt);
+				$result = $stmt->fetchColumn();
+				break;
+			// Normale Query ausführen
+			case 2:
+				$stmt = $this->link->query($query);
+				$this->error($stmt);
+				$result = $stmt->fetchAll();
 				break;
 			default:
-				$result = @mysql_query($query, $this->link);
-				if ($result) {
-					if ($mode == 1) {
-						return @mysql_num_rows($result);
-					} elseif ($mode == 2) {
-						$new_result = array();
-
-						while ($data = @mysql_fetch_assoc($result)) {
-							$new_result[] = $data;
-						}
-						mysql_free_result($result);
-
-						return $new_result;
-					}
-					return $result;
-				}
+				$stmt = $this->link->prepare($query);
+				$this->error($stmt);
+				$result = $stmt->execute();
 		}
-		if (defined('DEBUG') && DEBUG == true)
-			$this->error();
-		return false;
+		return $result;
 	}
 	/**
 	 * Führt den DELETE Befehl aus

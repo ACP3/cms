@@ -351,10 +351,10 @@ function timeZones($value)
 {
 	global $lang;
 
-	$time_zones = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.75, 13, 14);
+	$areas = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.75, 13, 14);
 
 	$i = 0;
-	foreach ($time_zones as $row) {
+	foreach ($areas as $row) {
 		$time_zones[$i]['value'] = $row * 3600;
 		$time_zones[$i]['selected'] = selectEntry('time_zone', $time_zones[$i]['value'], $value);
 		$time_zones[$i]['lang'] = $lang->t('common', 'utc' . $row);

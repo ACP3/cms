@@ -13,7 +13,7 @@ if (!defined('IN_ACP3'))
 $time = $date->timestamp();
 $period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
-if (validate::isNumber($uri->item) && $db->select('id', 'pages', 'id = \'' . $uri->item . '\'' . $period, 0, 0, 0, 1) == 1) {
+if (validate::isNumber($uri->item) && $db->select('COUNT(id)', 'pages', 'id = \'' . $uri->item . '\'' . $period, 0, 0, 0, 1) == 1) {
 	$page = getPagesCache($uri->item);
 
 	// Statische Seite

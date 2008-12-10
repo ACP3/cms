@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == 1) {
+if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'pages', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == 1) {
 	// Brotkrümelspur setzen
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
 	breadcrumb::assign($lang->t('pages', 'pages'), uri('acp/pages'));
@@ -18,7 +18,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri-
 
 	switch ($uri->mode) {
 		case 'up':
-			if ($db->select('id', 'pages', 'id != \'' . $uri->id . '\' AND left_id < (SELECT left_id FROM ' . CONFIG_DB_PRE . 'pages WHERE id = \'' . $uri->id . '\')', 0, 0, 0, 1) > 0) {
+			if ($db->select('COUNT(id)', 'pages', 'id != \'' . $uri->id . '\' AND left_id < (SELECT left_id FROM ' . CONFIG_DB_PRE . 'pages WHERE id = \'' . $uri->id . '\')', 0, 0, 0, 1) > 0) {
 				$elem = $db->select('left_id, right_id', 'pages', 'id = \'' . $uri->id . '\'');
 				$pre = $db->select('id, left_id, right_id', 'pages', 'id != \'' . $uri->id . '\' AND left_id < \'' . $elem[0]['left_id'] . '\'', 'left_id DESC', 1);
 			} else {
@@ -26,7 +26,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'pages', 'id = \'' . $uri-
 			}
 			break;
 		case 'down':
-			if ($db->select('id', 'pages', 'id != \'' . $uri->id . '\' AND left_id > (SELECT left_id FROM ' . CONFIG_DB_PRE . 'pages WHERE id = \'' . $uri->id . '\')', 0, 0, 0, 1) > 0) {
+			if ($db->select('COUNT(id)', 'pages', 'id != \'' . $uri->id . '\' AND left_id > (SELECT left_id FROM ' . CONFIG_DB_PRE . 'pages WHERE id = \'' . $uri->id . '\')', 0, 0, 0, 1) > 0) {
 				$elem = $db->select('left_id, right_id', 'pages', 'id = \'' . $uri->id . '\'');
 				$pre = $db->select('id, left_id, right_id', 'pages', 'id != \'' . $uri->id . '\' AND left_id > \'' . $elem[0]['left_id'] . '\'', 'left_id ASC', 1);
 			} else {

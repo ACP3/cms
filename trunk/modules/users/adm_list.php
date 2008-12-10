@@ -14,7 +14,7 @@ $users = $db->select('u.id, u.nickname, u.mail, a.name AS access', 'users AS u, 
 $c_users = count($users);
 
 if ($c_users > 0) {
-	$tpl->assign('pagination', pagination($db->select('id', 'users', 0, 0, 0, 0, 1)));
+	$tpl->assign('pagination', pagination($db->select('COUNT(id)', 'users', 0, 0, 0, 0, 1)));
 
 	$tpl->assign('users', $users);
 }

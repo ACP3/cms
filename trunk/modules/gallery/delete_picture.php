@@ -24,7 +24,7 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && validate::isNumber($entry) && $db->select('id', 'gallery_pictures', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+		if (!empty($entry) && validate::isNumber($entry) && $db->select('COUNT(id)', 'gallery_pictures', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			// Datei ebenfalls löschen
 			$picture = $db->select('gallery_id, file', 'gallery_pictures', 'id = \'' . $entry . '\'');
 			removeFile('gallery', $picture[0]['file']);
@@ -33,6 +33,6 @@ if (!isset($entries)) {
 			setGalleryCache($picture[0]['gallery_id']);
 		}
 	}
-	$content = comboBox($bool ? $lang->t('gallery', 'picture_delete_success') : $lang->t('gallery', 'picture_delete_error'), uri('acp/gallery'));
+	$content = comboBox($bool ? $lang->t('gallery', 'picture_delete_success') : $lang->t('gallery', 'picture_delete_error'), uri(!empty($picture[0]['gallery_id']) ? 'acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id'] : 'acp/gallery'));
 }
 ?>

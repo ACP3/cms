@@ -18,7 +18,7 @@ $blocks = $db->select('id, index_name, title', 'pages_blocks', 0, 'title ASC, in
 $c_blocks = count($blocks);
 
 if ($c_blocks > 0) {
-	$tpl->assign('pagination', pagination($db->select('id', 'pages_blocks', 0, 0, 0, 0, 1)));
+	$tpl->assign('pagination', pagination($db->select('COUNT(id)', 'pages_blocks', 0, 0, 0, 0, 1)));
 	$tpl->assign('blocks', $blocks);
 }
 

@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (validate::isNumber($uri->cat) && $db->select('id', 'categories', 'id = \'' . $uri->cat . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->cat) && $db->select('COUNT(id)', 'categories', 'id = \'' . $uri->cat . '\'', 0, 0, 0, 1) == '1') {
 	breadcrumb::assign($lang->t('files', 'files'), uri('files'));
 	$category = $db->select('name', 'categories', 'id = \'' . $uri->cat . '\'');
 	breadcrumb::assign($category[0]['name']);

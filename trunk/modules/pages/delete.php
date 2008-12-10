@@ -24,7 +24,7 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = $bool2 = $bool3 = $bool4 = 0;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && validate::isNumber($entry) && $db->select('id', 'pages', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+		if (!empty($entry) && validate::isNumber($entry) && $db->select('COUNT(id)', 'pages', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			$lr = $db->select('left_id, right_id', 'pages', 'id = \'' . $entry . '\'');
 
 			$bool = $db->delete('pages', 'left_id = \'' . $lr[0]['left_id'] . '\'');

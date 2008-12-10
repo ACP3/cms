@@ -22,11 +22,11 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 
 		if (empty($form['nickname']))
 			$errors[] = $lang->t('common', 'name_to_short');
-		if (!empty($form['nickname']) && $db->select('id', 'users', 'id != \'' . USER_ID . '\' AND nickname = \'' . $db->escape($form['nickname']) . '\'', 0, 0, 0, 1) == '1')
+		if (userNameExists($form['nickname'], USER_ID))
 			$errors[] = $lang->t('users', 'user_name_already_exists');
 		if (!validate::email($form['mail']))
 			$errors[] = $lang->t('common', 'wrong_email_format');
-		if (validate::email($form['mail']) && $db->select('id', 'users', 'id != \'' . USER_ID . '\' AND mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
+		if (userEmailExist($form['mail'], USER_ID))
 			$errors[] = $lang->t('users', 'user_email_already_exists');
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
