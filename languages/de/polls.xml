@@ -101,6 +101,10 @@
 		<message>Frage</message>
 	</item>
 	<item>
+		<name>reset_votes</name>
+		<message>Stimmen zurücksetzen</message>
+	</item>
+	<item>
 		<name>result</name>
 		<message>Ergebnis</message>
 	</item>

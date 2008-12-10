@@ -29,7 +29,7 @@
 				<td style="width:5%;padding:3px 0"><input type="checkbox" name="form[answers][{$row.number}][delete]" value="1" class="checkbox" /></td>
 				<td style="padding:3px 0">
 					<dl>
-						<dt><label for="answer_{$row.number}">{lang values="polls|answer"} {$row.number}</label></dt>
+						<dt><label for="answer_{$row.number}">{lang values="polls|answer"} {$row.number+1}</label></dt>
 						<dd>
 							<input type="text" name="form[answers][{$row.number}][value]" id="answer_{$row.number}" value="{$row.value}" maxlength="120" />
 							<input type="hidden" name="form[answers][{$row.number}][id]" value="{$row.id}" style="display:none" />
@@ -39,8 +39,20 @@
 			</tr>
 {/foreach}
 		</table>
+		<dl>
+			<dt><label for="reset">{lang values="common|options"}</label></dt>
+			<dd style="margin:0 20px">
+				<label for="reset">
+					<input type="checkbox" name="form[reset]" id="reset" value="1" class="checkbox"{$reset} />
+					{lang values="polls|reset_votes"}
+				</label>
+			</dd>
+		</dl>
 	</fieldset>
 	<div class="form-bottom">
+{if !$disable}
+		<input type="submit" name="add_answer" value="{lang values="polls|add_answer"}" class="form" />
+{/if}
 		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
 	</div>
 </form>

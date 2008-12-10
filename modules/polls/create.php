@@ -44,13 +44,14 @@ if (isset($_POST['submit'])) {
 		if ($bool) {
 			$poll_id = $db->select('id', 'poll_question', 'start = \'' . $start . '\' AND end = \'' . $end . '\' AND question = \'' . $question . '\'', 'id DESC', 1);
 			foreach ($form['answers'] as $row) {
-				$insert_answer = array(
-					'id' => '',
-					'text' => $db->escape($row),
-					'poll_id' => $poll_id[0]['id'],
-				);
-				if (!empty($row) && $bool2 = $db->insert('poll_answers', $insert_answer))
-					continue;
+				if (!empty($row)) {
+					$insert_answer = array(
+						'id' => '',
+						'text' => $db->escape($row),
+						'poll_id' => $poll_id[0]['id'],
+					);
+					$bool2 = $db->insert('poll_answers', $insert_answer);
+				}
 			}
 		}
 
@@ -58,33 +59,30 @@ if (isset($_POST['submit'])) {
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-	// Datumsauswahl
-	$tpl->assign('start_date', datepicker('start'));
-	$tpl->assign('end_date', datepicker('end'));
-	$tpl->assign('disable', false);
-
 	if (isset($_POST['form']['answers'])) {
+		// Bisherige Antworten
 		$i = 0;
 		foreach ($_POST['form']['answers'] as $row) {
-			$answers[$i]['number'] = $i + 1;
+			$answers[$i]['number'] = $i;
 			$answers[$i]['value'] = $row;
 			$i++;
 		}
-		if (count($_POST['form']['answers']) <= 9 && !isset($_POST['submit'])) {
-			$answers[$i]['number'] = $i + 1;
+		// Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
+		if (count($_POST['form']['answers']) <= 9 && !empty($_POST['form']['answers'][$i - 1]) && !isset($_POST['submit'])) {
+			$answers[$i]['number'] = $i;
 			$answers[$i]['value'] = '';
 		}
-		if (count($_POST['form']['answers']) >= 9) {
-			$tpl->assign('disable', true);
-		}
 	} else {
-		$answers[0]['number'] = 1;
+		$answers[0]['number'] = 0;
 		$answers[0]['value'] = '';
 	}
 
-	// Antworten und Frage an Smarty übergeben
-	$tpl->assign('answers', $answers);
+	// Übergabe der Daten an Smarty
+	$tpl->assign('start_date', datepicker('start'));
+	$tpl->assign('end_date', datepicker('end'));
 	$tpl->assign('question', isset($_POST['form']['question']) ? $_POST['form']['question'] : '');
+	$tpl->assign('answers', $answers);
+	$tpl->assign('disable', count($answers) < 10 ? false : true);
 
 	$content = $tpl->fetch('polls/create.html');
 }
