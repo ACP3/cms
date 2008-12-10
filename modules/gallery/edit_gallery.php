@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'gallery', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
 	$gallery = $db->select('start, end, name', 'gallery', 'id = \'' . $uri->id . '\'');
 
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
@@ -52,7 +52,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'gallery', 'id = \'' . $ur
 		$c_pictures = count($pictures);
 
 		if ($c_pictures > 0) {
-			$tpl->assign('pagination', pagination($db->select('id', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'', 0, 0, 0, 1)));
+			$tpl->assign('pagination', pagination($db->select('COUNT(id)', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'', 0, 0, 0, 1)));
 			for ($i = 0; $i < $c_pictures; ++$i) {
 				$pictures[$i]['first'] = $i == 0 ? true : false;
 				$pictures[$i]['last'] = $i == $c_pictures - 1 ? true : false;

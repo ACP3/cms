@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('files', 'select_internal_resource');
 	if (strlen($form['text']) < 3)
 		$errors[] = $lang->t('files', 'description_to_short');
-	if (!validate::isNumber($form['cat']) || validate::isNumber($form['cat']) && $db->select('id', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
+	if (!validate::isNumber($form['cat']) || validate::isNumber($form['cat']) && $db->select('COUNT(id)', 'categories', 'id = \'' . $form['cat'] . '\'', 0, 0, 0, 1) != '1')
 		$errors[] = $lang->t('files', 'select_category');
 
 	if (isset($errors)) {

@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
 
 			if (!validate::email($form['mail']))
 				$errors[] = $lang->t('common', 'wrong_email_format');
-			if (validate::email($form['mail']) && $db->select('id', 'newsletter_accounts', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) == 1)
+			if (validate::email($form['mail']) && $db->select('COUNT(id)', 'newsletter_accounts', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) == 1)
 				$errors[] = $lang->t('newsletter', 'account_exists');
 			if (!$auth->isUser() && !validate::captcha($form['captcha'], $form['hash']))
 				$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 
 			if (!validate::email($form['mail']))
 				$errors[] = $lang->t('common', 'wrong_email_format');
-			if (validate::email($form['mail']) && $db->select('id', 'newsletter_accounts', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) != 1)
+			if (validate::email($form['mail']) && $db->select('COUNT(id)', 'newsletter_accounts', 'mail = \'' . $form['mail'] . '\'', 0, 0, 0, 1) != 1)
 				$errors[] = $lang->t('newsletter', 'account_not_exists');
 			if (!$auth->isUser() && !validate::captcha($form['captcha'], $form['hash']))
 				$errors[] = $lang->t('captcha', 'invalid_captcha_entered');

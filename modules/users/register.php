@@ -13,11 +13,11 @@ if ($auth->isUser()) {
 
 		if (empty($form['nickname']))
 			$errors[] = $lang->t('common', 'name_to_short');
-		if (!empty($form['nickname']) && $db->select('id', 'users', 'nickname = \'' . $db->escape($form['nickname']) . '\'', 0, 0, 0, 1) == '1')
+		if (!userNameExists($form['nickname']))
 			$errors[] = $lang->t('users', 'user_name_already_exists');
 		if (!validate::email($form['mail']))
 			$errors[] = $lang->t('common', 'wrong_email_format');
-		if (validate::email($form['mail']) && $db->select('id', 'users', 'mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
+		if (!userEmailExists($form['mail']))
 			$errors[] = $lang->t('users', 'user_email_already_exists');
 		if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');

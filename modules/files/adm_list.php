@@ -14,7 +14,7 @@ $files = $db->select('id, start, end, file, size, link_title', 'files', 0, 'star
 $c_files = count($files);
 
 if ($c_files > 0) {
-	$tpl->assign('pagination', pagination($db->select('id', 'files', 0, 0, 0, 0, 1)));
+	$tpl->assign('pagination', pagination($db->select('COUNT(id)', 'files', 0, 0, 0, 0, 1)));
 	for ($i = 0; $i < $c_files; ++$i) {
 		$files[$i]['period'] = $date->period($files[$i]['start'], $files[$i]['end']);
 		$files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : $lang->t('files', 'unknown_filesize');

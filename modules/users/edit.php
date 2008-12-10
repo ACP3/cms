@@ -10,23 +10,23 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($uri->id) && $db->select('id', 'users', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'users', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
 		if (empty($form['nickname']))
 			$errors[] = $lang->t('common', 'name_to_short');
-		if (!empty($form['nickname']) && $db->select('id', 'users', 'id != \'' . $uri->id . '\' AND nickname = \'' . $db->escape($form['nickname']) . '\'', 0, 0, 0, 1) == '1')
+		if (userNameExists($form['nickname'], $uri->id))
 			$errors[] = $lang->t('users', 'user_name_already_exists');
 		if (!validate::email($form['mail']))
 			$errors[] = $lang->t('common', 'wrong_email_format');
-		if (validate::email($form['mail']) && $db->select('id', 'users', 'id != \'' . $uri->id . '\' AND mail =\'' . $form['mail'] . '\'', 0, 0, 0, 1) > 0)
+		if (userEmailExists($form['mail'], $uri->id))
 			$errors[] = $lang->t('users', 'user_email_already_exists');
 		if (!is_numeric($form['time_zone']))
 			$errors[] = $lang->t('common', 'select_time_zone');
 		if (!validate::isNumber($form['dst']))
 			$errors[] = $lang->t('common', 'select_daylight_saving_time');
-		if (!is_file('languages/' . $db->escape($form['language'], 2) . '/info.xml'))
+		if (preg_match('=/=', $form['language']) || !is_file('languages/' . $form['language'] . '/info.xml'))
 			$errors[] = $lang->t('users', 'select_language');
 		if (!validate::isNumber($form['access']))
 			$errors[] = $lang->t('users', 'select_access_level');

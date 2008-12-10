@@ -12,7 +12,7 @@ if (!defined('IN_ADM'))
 
 include_once ACP3_ROOT . 'modules/access/functions.php';
 
-if (validate::isNumber($uri->id) && $db->select('id', 'access', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'access', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 

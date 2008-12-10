@@ -114,11 +114,11 @@ class validate
 		if ($isPicture) {
 			$bool = true;
 			// Optionale Parameter
-			if (validate::isNumber($width) && $info[0] <= $width)
+			if (validate::isNumber($width) && $info[0] > $width)
 				$bool = false;
-			if (validate::isNumber($height) && $info[1] <= $height)
+			if (validate::isNumber($height) && $info[1] > $height)
 				$bool = false;
-			if (validate::isNumber($filesize) && filesize($file) <= $filesize)
+			if (validate::isNumber($filesize) && filesize($file) > $filesize)
 				$bool = false;
 
 			return $bool;

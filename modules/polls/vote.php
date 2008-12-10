@@ -13,7 +13,7 @@ if (!defined('IN_ACP3'))
 $time = $date->timestamp();
 $period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
-if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \'' . $uri->id . '\'' . $period, 0, 0, 0, 1) == 1) {
+if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'poll_question', 'id = \'' . $uri->id . '\'' . $period, 0, 0, 0, 1) == 1) {
 	// Brotkrümelspur
 	breadcrumb::assign($lang->t('polls', 'polls'), uri('polls'));
 	breadcrumb::assign($lang->t('polls', 'vote'));
@@ -24,10 +24,10 @@ if (validate::isNumber($uri->id) && $db->select('id', 'poll_question', 'id = \''
 
 		// Überprüfen, ob der eingeloggter User schon abgestimmt hat
 		if ($auth->isUser()) {
-			$query = $db->select('poll_id', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND user_id = \'' . USER_ID . '\'', 0, 0, 0, 1);
+			$query = $db->select('COUNT(poll_id)', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND user_id = \'' . USER_ID . '\'', 0, 0, 0, 1);
 		// Überprüfung für Gäste
 		} else {
-			$query = $db->select('poll_id', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND ip = \'' . $ip . '\'', 0, 0, 0, 1);
+			$query = $db->select('COUNT(poll_id)', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND ip = \'' . $ip . '\'', 0, 0, 0, 1);
 		}
 
 		if ($query == 0) {

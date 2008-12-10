@@ -24,7 +24,7 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && validate::isNumber($entry) && $db->select('id', 'files', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+		if (!empty($entry) && validate::isNumber($entry) && $db->select('COUNT(id)', 'files', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			// Datei ebenfalls löschen
 			$file = $db->select('file', 'files', 'id = \'' . $entry . '\'');
 			removeFile('files', $file[0]['file']);

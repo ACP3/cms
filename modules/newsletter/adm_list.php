@@ -14,7 +14,7 @@ $accounts = $db->select('id, mail, hash', 'newsletter_accounts', 0, 'id DESC', P
 $c_accounts = count($accounts);
 
 if ($c_accounts > 0) {
-	$tpl->assign('pagination', pagination($db->select('id', 'newsletter_accounts', 0, 0, 0, 0, 1)));
+	$tpl->assign('pagination', pagination($db->select('COUNT(id)', 'newsletter_accounts', 0, 0, 0, 0, 1)));
 	
 	for ($i = 0; $i < $c_accounts; ++$i) {
 		if (!empty($accounts[$i]['hash'])) {
