@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($uri->id) && $db->select('id', 'emoticons', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'emoticons', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 		if (!empty($_FILES['picture']['tmp_name'])) {
@@ -24,7 +24,7 @@ if (validate::isNumber($uri->id) && $db->select('id', 'emoticons', 'id = \'' . $
 			$errors[] = $lang->t('emoticons', 'type_in_code');
 		if (empty($form['description']))
 			$errors[] = $lang->t('emoticons', 'type_in_description');
-		if (isset($file) && (empty($file['size']) || !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize'])))
+		if (!empty($file['tmp_name']) && !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']))
 			$errors[] = $lang->t('emoticons', 'invalid_image_selected');
 
 		if (isset($errors)) {

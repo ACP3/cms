@@ -118,7 +118,7 @@ class validate
 				$bool = false;
 			if (validate::isNumber($height) && $info[1] > $height)
 				$bool = false;
-			if (validate::isNumber($filesize) && filesize($file) > $filesize)
+			if (filesize($file) == 0 || validate::isNumber($filesize) && filesize($file) > $filesize)
 				$bool = false;
 
 			return $bool;

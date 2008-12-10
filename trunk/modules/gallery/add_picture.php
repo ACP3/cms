@@ -25,9 +25,9 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'gallery', 'id = \'
 		$form = $_POST['form'];
 		$settings = config::output('gallery');
 
-		if (empty($file['tmp_name']) || empty($file['size']))
+		if (empty($file['tmp_name']))
 			$errors[] = $lang->t('gallery', 'no_picture_selected');
-		if (!empty($file['tmp_name']) && !empty($file['size']) && !validate::isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']))
+		if (!empty($file['tmp_name']) && !validate::isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']))
 			$errors[] = $lang->t('gallery', 'invalid_image_selected');
 
 		if (isset($errors)) {
