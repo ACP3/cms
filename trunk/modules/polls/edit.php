@@ -33,6 +33,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'poll_question', 'i
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
+			// Frage aktualisieren
 			$update_values = array(
 				'start' => $date->timestamp($form['start']),
 				'end' => $date->timestamp($form['end']),
@@ -41,11 +42,24 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'poll_question', 'i
 
 			$bool = $db->update('poll_question', $update_values, 'id = \'' . $uri->id . '\'');
 
+			// Stimmen zurücksetzen
+			if (!empty($form['reset']))
+				$db->delete('poll_votes', 'poll_id = \'' . $uri->id . '\'');
+
+			// Antworten
 			foreach ($form['answers'] as $row) {
-				if (isset($row['delete']) && validate::isNumber($row['id'])) {
+				// Neue Antwort hinzufügen
+				if (empty($row['id'])) {
+					// Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
+					if (!empty($row['value']) && !isset($row['delete']))
+						$db->insert('poll_answers', array('text' => $db->escape($row['value']), 'poll_id' => $uri->id));
+				// Antwort mitsamt Stimmen löschen
+				} elseif (isset($row['delete']) && validate::isNumber($row['id'])) {
 					$db->delete('poll_answers', 'id = \'' . $row['id'] . '\'');
-					$db->delete('poll_votes', 'answer_id = \'' . $row['id'] . '\'');
-				} elseif (validate::isNumber($row['id'])) {
+					if (!empty($form['reset']))
+						$db->delete('poll_votes', 'answer_id = \'' . $row['id'] . '\'');
+				// Antwort aktualisieren
+				} elseif (!empty($row['value']) && validate::isNumber($row['id'])) {
 					$bool = $db->update('poll_answers', array('text' => $db->escape($row['value'])), 'id = \'' . $row['id'] . '\'');
 				}
 			}
@@ -53,23 +67,41 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'poll_question', 'i
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+		// Neue Antworten hinzufügen
+		if (isset($_POST['form']['answers'])) {
+			// Bisherige Antworten
+			$i = 0;
+			foreach ($_POST['form']['answers'] as $row) {
+				$answers[$i]['number'] = $i;
+				$answers[$i]['id'] = $row['id'];
+				$answers[$i]['value'] = $row['value'];
+				$i++;
+			}
+			// Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
+			if (count($_POST['form']['answers']) <= 9 && !empty($_POST['form']['answers'][$i - 1]['value']) && !isset($_POST['submit'])) {
+				$answers[$i]['number'] = $i;
+				$answers[$i]['id'] = '0';
+				$answers[$i]['value'] = '';
+			}
+		} else {
+			$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $uri->id . '\'');
+			$c_answers = count($answers);
+
+			for ($i = 0; $i < $c_answers; ++$i) {
+				$answers[$i]['number'] = $i;
+				$answers[$i]['id'] = $answers[$i]['id'];
+				$answers[$i]['value'] = $answers[$i]['text'];
+			}
+		}
 		$poll = $db->select('start, end, question', 'poll_question', 'id = \'' . $uri->id . '\'');
 
-		// Datumsauswahl
+		// Übergabe der Daten an Smarty
 		$tpl->assign('start_date', datepicker('start', $poll[0]['start']));
 		$tpl->assign('end_date', datepicker('end', $poll[0]['end']));
-
 		$tpl->assign('question', isset($form['question']) ? $form['question'] : $poll[0]['question']);
-
-		$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $uri->id . '\'');
-		$c_answers = count($answers);
-
-		for ($i = 0; $i < $c_answers; ++$i) {
-			$answers[$i]['number'] = $i + 1;
-			$answers[$i]['id'] = $answers[$i]['id'];
-			$answers[$i]['value'] = $answers[$i]['text'];
-		}
+		$tpl->assign('reset', selectEntry('reset', '1', '0', 'checked'));
 		$tpl->assign('answers', $answers);
+		$tpl->assign('disable', count($answers) < 10 ? false : true);
 
 		$content = $tpl->fetch('polls/edit.html');
 	}

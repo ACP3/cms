@@ -101,6 +101,10 @@
 		<message>Question</message>
 	</item>
 	<item>
+		<name>reset_votes</name>
+		<message>Reset votes</message>
+	</item>
+	<item>
 		<name>result</name>
 		<message>Result</message>
 	</item>
