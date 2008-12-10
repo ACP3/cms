@@ -89,22 +89,20 @@ class db
 	 */
 	public function query($query, $mode = 2)
 	{
+		$stmt = $this->link->prepare($query);
+		$this->error($stmt);
 		switch ($mode) {
 			// Anzahl der Reihen zählen
 			case 1:
-				$stmt = $this->link->query($query);
-				$this->error($stmt);
+				$stmt->execute();
 				$result = $stmt->fetchColumn();
 				break;
 			// Normale Query ausführen
 			case 2:
-				$stmt = $this->link->query($query);
-				$this->error($stmt);
+				$stmt->execute();
 				$result = $stmt->fetchAll();
 				break;
 			default:
-				$stmt = $this->link->prepare($query);
-				$this->error($stmt);
 				$result = $stmt->execute();
 		}
 		return $result;
