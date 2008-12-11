@@ -40,11 +40,11 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'pages', 'id = \'' 
 	}
 	// Sortierung aktualisieren
 	if (!isset($error)) {
-		$bool = $db->update('pages', array('left_id' => $pre[0]['left_id'], 'right_id' => $pre[0]['right_id'], 'block_id' => $pre[0]['block_id']), 'id = \'' . $uri->id . '\'');
-		$bool2 = $db->update('pages', array('left_id' => $elem[0]['left_id'], 'right_id' => $elem[0]['right_id'], 'block_id' => $elem[0]['block_id']), 'id = \'' . $pre[0]['id'] . '\'');
-
-		$content = comboBox($bool && $bool2 ? $lang->t('common', 'order_success') : $lang->t('common', 'order_error'), uri('acp/pages'));
+		$db->update('pages', array('left_id' => $pre[0]['left_id'], 'right_id' => $pre[0]['right_id'], 'block_id' => $pre[0]['block_id']), 'id = \'' . $uri->id . '\'');
+		$db->update('pages', array('left_id' => $elem[0]['left_id'], 'right_id' => $elem[0]['right_id'], 'block_id' => $elem[0]['block_id']), 'id = \'' . $pre[0]['id'] . '\'');
 		setNavbarCache();
+
+		redirect('acp/pages');
 	}
 }
 if (isset($error)) {
