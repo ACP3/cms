@@ -19,9 +19,10 @@ if (validate::isNumber($uri->id)) {
 		breadcrumb::assign($gallery[0]['name'], uri('acp/gallery/edit_gallery/id_' . $gallery[0]['id']));
 		breadcrumb::assign($lang->t('common', 'edit_order'));
 
-		$bool = moveOneStep($uri->mode, 'gallery_pictures', 'id', 'pic', $uri->id);
+		moveOneStep($uri->mode, 'gallery_pictures', 'id', 'pic', $uri->id);
+		setGalleryCache($gallery[0]['id']);
 
-		$content = comboBox($bool ? $lang->t('common', 'order_success') : $lang->t('common', 'order_error'), uri('acp/gallery/edit_gallery/id_' . $gallery[0]['id']));
+		redirect('acp/gallery/edit_gallery/id_' . $gallery[0]['id']);
 	} else {
 		redirect('errors/404');
 	}
