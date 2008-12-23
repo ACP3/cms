@@ -55,8 +55,8 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'pages', 'id = \'' 
 				$bool = $db->update('pages', $update_values, 'id = \'' . $uri->id . '\'');
 			} else {
 				// Überprüfung, falls Seite kein Root-Element ist, aber keine Veränderung vorgenommen werden soll...
-				$chk_parent = $db->query('SELECT p.id, p.title FROM ' . CONFIG_DB_PRE . 'pages p, ' . CONFIG_DB_PRE . 'pages c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $uri->id . ' ORDER BY p.left_id', 2);
-				if ($chk_parent[1]['id'] == $form['parent']) {
+				$chk_parent = $db->query('SELECT p.id FROM ' . CONFIG_DB_PRE . 'pages p, ' . CONFIG_DB_PRE . 'pages c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $uri->id . ' ORDER BY p.left_id LIMIT 1');
+				if ($chk_parent[0]['id'] == $form['parent']) {
 					$bool = $db->update('pages', $update_values, 'id = \'' . $uri->id . '\'');
 				// ...ansonsten den Baum bearbeiten...
 				} else {
