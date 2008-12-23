@@ -44,32 +44,19 @@ if (isset($_POST['submit'])) {
 			$form['text'] = '';
 		}
 
-		if (empty($form['parent'])) {
-			$left_id = $db->select('left_id', 'pages', 0, 'left_id DESC', 1);
-			$right_id = $left_id[0]['left_id'] + 1;
-		} else {
-			$node = $db->query('SELECT right_id FROM ' . CONFIG_DB_PRE . 'pages WHERE id = \'' . $form['parent'] . '\'');
-			$db->query('UPDATE ' . CONFIG_DB_PRE . 'pages SET right_id = right_id + 2 WHERE right_id >= ' . $node[0]['right_id'], 0);
-			$db->query('UPDATE ' . CONFIG_DB_PRE . 'pages SET left_id = left_id + 2 WHERE left_id > ' . $node[0]['right_id'], 0);
-			$left_id = $node[0]['right_id'];
-			$right_id = $node[0]['right_id'] + 1;
-		}
 		$insert_values = array(
 			'id' => '',
 			'start' => $date->timestamp($form['start']),
 			'end' => $date->timestamp($form['end']),
 			'mode' => $form['mode'],
 			'block_id' => $form['blocks'],
-			'left_id' => $left_id,
-			'right_id' => $right_id,
 			'title' => $db->escape($form['title']),
 			'uri' => $db->escape($form['uri'], 2),
 			'target' => $form['target'],
 			'text' => $db->escape($form['text'], 2),
 		);
 
-		$bool = $db->insert('pages', $insert_values);
-
+		$bool = insertNode($form['parent'], $insert_values);
 		setNavbarCache();
 
 		$content = comboBox($bool ? $lang->t('pages', 'create_success') : $lang->t('pages', 'create_error'), uri('acp/pages'));
@@ -121,7 +108,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	);
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);
-	$tpl->assign('pages_list', pagesList(2));
+	$tpl->assign('pages_list', pagesList());
 
 	$content = $tpl->fetch('pages/create.html');
 }
