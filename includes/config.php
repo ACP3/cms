@@ -5,7 +5,7 @@ define('CONFIG_DATE', 'd.m.y, H:i');
 define('CONFIG_DB_HOST', 'localhost');
 define('CONFIG_DB_NAME', 'acp3');
 define('CONFIG_DB_PRE', 'acp3_');
-define('CONFIG_DB_PWD', '1nyg26');
+define('CONFIG_DB_PWD', '');
 define('CONFIG_DB_USER', 'root');
 define('CONFIG_DESIGN', 'acp3');
 define('CONFIG_DST', '0');

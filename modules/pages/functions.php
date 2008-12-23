@@ -40,7 +40,7 @@ function getPagesCache($id)
 function setNavbarCache() {
 	global $db;
 
-	$pages = $db->query('SELECT n.id, n.start, n.end, n.mode, n.block_id, n.title, n.uri, n.target, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . CONFIG_DB_PRE . 'pages AS n, ' . CONFIG_DB_PRE . 'pages AS p WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id;');
+	$pages = $db->query('SELECT n.id, n.start, n.end, n.mode, n.block_id, n.left_id, n.right_id, n.title, n.uri, n.target, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . CONFIG_DB_PRE . 'pages AS n, ' . CONFIG_DB_PRE . 'pages AS p WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id;');
 	$c_pages = count($pages);
 
 	if ($c_pages > 0) {
@@ -52,6 +52,9 @@ function setNavbarCache() {
 				if ($pages[$i]['block_id'] == $blocks[$j]['id']) {
 					$pages[$i]['block_title'] = $blocks[$j]['title'];
 					$pages[$i]['block_name'] = $blocks[$j]['index_name'];
+				} elseif (empty($pages[$i]['block_id'])) {
+					$pages[$i]['block_title'] = '';
+					$pages[$i]['block_name'] = '';
 				}
 			}
 		}
@@ -76,10 +79,65 @@ function setNavbarCache() {
  */
 function getNavbarCache()
 {
-	if (!cache::check('pages'))
+	//if (!cache::check('pages'))
 		setNavbarCache();
 
 	return cache::output('pages');
+}
+/**
+ * Löscht einen Knoten und aktualisiert die linken und rechten Werte
+ *
+ * @param integer $left_id
+ *  Der linke Wert des zu löschenden Datensatzes
+ * @param integer $right_id
+ *  Der rechte Wert des zu löschenden Datensatzes
+ * @return boolean
+ */
+function deleteNode($id, $left_id, $right_id)
+{
+	global $db;
+
+	$bool = $db->delete('pages', 'left_id = \'' . $left_id . '\'');
+	$bool2 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'pages SET left_id = left_id - 1, right_id = right_id - 1 WHERE left_id BETWEEN ' . $left_id . ' AND ' . $right_id, 0);
+	$bool3 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'pages SET left_id = left_id - 2 WHERE left_id > ' . $right_id, 0);
+	$bool4 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'pages SET right_id = right_id - 2 WHERE right_id > ' . $right_id, 0);
+
+	// Cache löschen
+	cache::delete('pages_list_id_' . $id);
+
+	return $bool && $bool2 && $bool3 && $bool4 ? true : false;
+}
+/**
+ * Erstellt einen neuen Knoten
+ * @param integer $parent
+ * @param array $insert_values
+ * @return boolean
+ */
+function insertNode($parent, $insert_values)
+{
+	global $db;
+
+	if (!validate::isNumber($parent) || $db->select('id', 'pages', 'id = \'' . $parent . '\'', 0, 0, 0, 1) == 0) {
+		$node = $db->select('right_id', 'pages', 0, 'right_id DESC', 1);
+
+		$insert_values['left_id'] = !empty($node) ? $node[0]['right_id'] + 1 : 1;
+		$insert_values['right_id'] = !empty($node) ? $node[0]['right_id'] + 2 : 2;
+
+		$db->insert('pages', $insert_values);
+		$root = $db->select('LAST_INSERT_ID() AS root', 'pages');
+
+		return $db->update('pages', array('root_id' => $root[0]['root']), 'id = \'' . $root[0]['root'] . '\'');
+	} else {
+		$node = $db->select('root_id, right_id', 'pages', 'id = \'' . $parent . '\'');
+		$db->query('UPDATE ' . CONFIG_DB_PRE . 'pages SET right_id = right_id + 2 WHERE right_id >= ' . $node[0]['right_id'], 0);
+		$db->query('UPDATE ' . CONFIG_DB_PRE . 'pages SET left_id = left_id + 2 WHERE left_id > ' . $node[0]['right_id'], 0);
+
+		$insert_values['root_id'] = $node[0]['root_id'];
+		$insert_values['left_id'] = $node[0]['right_id'];
+		$insert_values['right_id'] = $node[0]['right_id'] + 1;
+
+		return $db->insert('pages', $insert_values);
+	}
 }
 /**
  * Auflistung der Seiten
@@ -91,31 +149,32 @@ function getNavbarCache()
  *  ID des Elternknotens
  * @return array
  */
-function pagesList($mode = 1, $parent = 0) {
+function pagesList($parent = 0, $left = 0, $right = 0) {
 	static $pages = array();
 
-	// Der Baum ist schon vorhanden
-	if (!empty($pages)) {
-		return $pages;
-	}
-
 	// Menüpunkte einbinden
-	$pages = getNavbarCache();
-	$c_pages = count($pages);
+	if (empty($pages))
+		$pages = getNavbarCache();
 
-	if ($c_pages > 0) {
+	$output = array();
+
+	if (count($pages) > 0) {
 		global $lang;
 
-		for ($i = 0; $i < $c_pages; ++$i) {
-			// Titel für den aktuellen Block setzen
-			if (!empty($pages[$i]['block_title'])) {
-				$block = $pages[$i]['block_title'];
-			} elseif ($pages[$i]['level'] == '0' && empty($pages[$i]['block_title'])) {
-				$block = $lang->t('pages', 'do_not_display');
+		$i = 0;
+		foreach($pages as $row) {
+			if (!($row['left_id'] >= $left && $row['right_id'] <= $right)) {
+				// Titel für den aktuellen Block setzen
+				if (!empty($row['block_title'])) {
+					$block = $row['block_title'];
+				} elseif ($row['level'] == '0' && empty($row['block_title'])) {
+					$block = $lang->t('pages', 'do_not_display');
+				}
+				$row['selected'] = selectEntry('parent', $row['id'], $parent);
+				$row['spaces'] = str_repeat('&nbsp;&nbsp;', $row['level']);
+				$output[$block][$i] = $row;
+				$i++;
 			}
-			$pages[$i]['selected'] = selectEntry('parent', $pages[$i]['id'], $parent);
-			$pages[$i]['spaces'] = str_repeat('&nbsp;&nbsp;', $pages[$i]['level']);
-			$output[$block][$i] = $pages[$i];
 		}
 	}
 	return $output;
@@ -141,7 +200,7 @@ function processNavbar($block) {
 		if ($c_pages > 0) {
 			global $date, $uri;
 
-			$navbar[$block] = "<ul class=\"navigation-" . $block . "\">\n";
+			$navbar[$block] = '';
 
 			// Aktuellen Zeitstempel holen
 			$time = $date->timestamp();
@@ -156,7 +215,7 @@ function processNavbar($block) {
 					$indent = str_repeat("\t\t", $pages[$i]['level']);
 
 					// Falls für Knoten Kindelemente vorhanden sind, neue Unterliste erstellen
-					if (isset($pages[$i + 1]) && $pages[$i + 1]['level'] > $pages[$i]['level']) {
+					if (isset($pages[$i + 1]) && !empty($pages[$i + 1]['block_name']) && $pages[$i + 1]['level'] > $pages[$i]['level']) {
 						$navbar[$block].= $indent . "\t<li>\n";
 						$navbar[$block].= $indent . "\t\t" . $link . "\n";
 						$navbar[$block].= $indent . "\t\t<ul>\n";
@@ -174,7 +233,7 @@ function processNavbar($block) {
 					}
 				}
 			}
-			$navbar[$block].= "</ul>";
+			$navbar[$block] = !empty($navbar[$block]) ? "<ul class=\"navigation-" . $block . "\">\n" . $navbar[$block] . '</ul>' : '';
 			return $navbar[$block];
 		}
 		return '';

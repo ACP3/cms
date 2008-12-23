@@ -27,16 +27,11 @@ if (!isset($entries)) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->select('COUNT(id)', 'pages', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			$lr = $db->select('left_id, right_id', 'pages', 'id = \'' . $entry . '\'');
 
-			$bool = $db->delete('pages', 'left_id = \'' . $lr[0]['left_id'] . '\'');
-			$bool2 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'pages SET left_id = left_id - 1, right_id = right_id - 1 WHERE left_id BETWEEN ' . $lr[0]['left_id'] . ' AND ' . $lr[0]['right_id'], 0);
-			$bool3 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'pages SET left_id = left_id - 2 WHERE left_id > ' . $lr[0]['right_id'], 0);
-			$bool4 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'pages SET right_id = right_id - 2 WHERE right_id > ' . $lr[0]['right_id'], 0);
-
-			cache::delete('pages_list_id_' . $entry);
+			$bool = deleteNode($entry, $lr[0]['left_id'], $lr[0]['right_id']);
 		}
 	}
 	setNavbarCache();
 
-	$content = comboBox($bool && $bool2 && $bool3 && $bool4 ? $lang->t('pages', 'delete_success') : $lang->t('pages', 'delete_error'), uri('acp/pages'));
+	$content = comboBox($bool ? $lang->t('pages', 'delete_success') : $lang->t('pages', 'delete_error'), uri('acp/pages'));
 }
 ?>
