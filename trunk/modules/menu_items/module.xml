@@ -4,7 +4,7 @@
 		<name lang="true"/>
 		<description lang="true"/>
 		<author>Goratsch Webdesign</author>
-		<tables>pages,pages_blocks</tables>
+		<tables>menu_items,menu_items_blocks</tables>
 		<version core="true"/>
 		<active>1</active>
 	</info>
