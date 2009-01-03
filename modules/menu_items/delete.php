@@ -32,6 +32,6 @@ if (!isset($entries)) {
 	}
 	setNavbarCache();
 
-	$content = comboBox($bool ? $lang->t('menu_items', 'delete_success') : $lang->t('menu_items', 'delete_error'), uri('acp/pages'));
+	$content = comboBox($bool ? $lang->t('menu_items', 'delete_success') : $lang->t('menu_items', 'delete_error'), uri('acp/menu_items'));
 }
 ?>

@@ -49,25 +49,20 @@ if (isset($_POST['submit'])) {
 		$bool = insertNode($form['parent'], $insert_values);
 		setNavbarCache();
 
-		$content = comboBox($bool ? $lang->t('menu_items', 'create_success') : $lang->t('menu_items', 'create_error'), uri('acp/pages'));
+		$content = comboBox($bool ? $lang->t('menu_items', 'create_success') : $lang->t('menu_items', 'create_error'), uri('acp/menu_items'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-	// Datumsauswahl
-	$tpl->assign('start_date', datepicker('start'));
-	$tpl->assign('end_date', datepicker('end'));
-
 	// Seitentyp
 	$mode[0]['value'] = 1;
 	$mode[0]['selected'] = selectEntry('mode', '1');
-	$mode[0]['lang'] = $lang->t('menu_items', 'static_page');
+	$mode[0]['lang'] = $lang->t('menu_items', 'module');
 	$mode[1]['value'] = 2;
 	$mode[1]['selected'] = selectEntry('mode', '2');
 	$mode[1]['lang'] = $lang->t('menu_items', 'dynamic_page');
 	$mode[2]['value'] = 3;
 	$mode[2]['selected'] = selectEntry('mode', '3');
 	$mode[2]['lang'] = $lang->t('menu_items', 'hyperlink');
-	$tpl->assign('mode', $mode);
 
 	// Block
 	$blocks = $db->select('id, title', 'menu_items_blocks');
@@ -75,7 +70,12 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	for ($i = 0; $i < $c_blocks; ++$i) {
 		$blocks[$i]['selected'] = selectEntry('blocks', $blocks[$i]['id']);
 	}
-	$tpl->assign('blocks', $blocks);
+
+	// Module
+	$modules = modules::modulesList();
+	foreach ($modules as $row) {
+		$modules[$row['name']]['selected'] = selectEntry('module', $row['dir']);
+	}
 
 	// Ziel des Hyperlinks
 	$target[0]['value'] = 1;
@@ -84,13 +84,19 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$target[1]['value'] = 2;
 	$target[1]['selected'] = selectEntry('target', '2');
 	$target[1]['lang'] = $lang->t('common', 'window_blank');
-	$tpl->assign('target', $target);
 
 	$defaults = array(
 		'title' => '',
 		'uri' => ''
 	);
 
+	// Daten an Smarty übergeben
+	$tpl->assign('start_date', datepicker('start'));
+	$tpl->assign('end_date', datepicker('end'));
+	$tpl->assign('mode', $mode);
+	$tpl->assign('blocks', $blocks);
+	$tpl->assign('modules', $modules);
+	$tpl->assign('target', $target);
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 	$tpl->assign('pages_list', pagesList());
 

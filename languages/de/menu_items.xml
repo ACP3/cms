@@ -77,16 +77,12 @@
 		<message>Die ausgewählten Menüpunkte wurden erfolgreich gelöscht.</message>
 	</item>
 	<item>
-		<name>do_not_display</name>
-		<message>Nicht anzeigen</message>
-	</item>
-	<item>
 		<name>dynamic_page</name>
 		<message>Dynamische Seite</message>
 	</item>
 	<item>
 		<name>dynamic_page_hints</name>
-		<message><![CDATA[Falls Sie eine dynamische Seite, d.h. ein Modul/eine Seite des ACP3, einbinden möchten, so tragen Sie in &quot;URI&quot; die Seite in der Form &quot;modul/datei/weitere_parameter/&quot; ein, also z.B. news/list/id_1/.]]></message>
+		<message><![CDATA[Um eine ACP3 interne Seite zu verlinken, müssen Sie im Feld &quot;URI&quot; die Seite in der Form &quot;modul/datei/weitere_parameter/&quot; eintragen, also beispielsweise news/details/id_1/.]]></message>
 	</item>
 	<item>
 		<name>edit</name>
@@ -141,6 +137,10 @@
 		<message>Dieses Modul ist für die beiden Navigationsleisten und für die statischen Seiten zuständig.</message>
 	</item>
 	<item>
+		<name>module</name>
+		<message>Modul</message>
+	</item>
+	<item>
 		<name>move_impossible</name>
 		<message>Element kann nicht verschoben werden</message>
 	</item>
@@ -165,10 +165,6 @@
 		<message>Bitte wählen Sie eine übergeordnete Seite aus</message>
 	</item>
 	<item>
-		<name>static_page</name>
-		<message>Statische Seite</message>
-	</item>
-	<item>
 		<name>superior_page</name>
 		<message>Übergeordnete Seite</message>
 	</item>
@@ -179,14 +175,6 @@
 	<item>
 		<name>target_page</name>
 		<message>Zielseite</message>
-	</item>
-	<item>
-		<name>text</name>
-		<message>Text</message>
-	</item>
-	<item>
-		<name>text_to_short</name>
-		<message>Der Text sollte mindestens 3 Zeichen lang sein</message>
 	</item>
 	<item>
 		<name>title</name>

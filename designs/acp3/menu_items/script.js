@@ -1,37 +1,31 @@
 jQuery(function($) {
-	function GetValue(id) {
-		return $('#' + id).val();
-	}
-	function SwitchContainer() {
-		var mode = GetValue('mode');
+	function switchContainer() {
+		var mode = $('#mode').val();
+		var module = $('#module-container');
+		var hints = $('#link-hints');
+		var link = $('#link-container');
 
 		if (mode == '1') {
-			$('#static_page').show();
-			$('#hyperlink').hide();
-		} else if (mode == '2' || mode == '3') {
-			$('#static_page').hide();
-			$('#hyperlink').show();
+			module.show();
+			hints.hide();
+			link.hide();
+		} else if (mode == '2') {
+			module.hide();
+			hints.show();
+			link.show();
+		} else if (mode == '3') {
+			module.hide();
+			hints.hide();
+			link.show();
 		} else {
-			$('#static_page').hide();
-			$('#hyperlink').hide();
-		}
-	}
-	function ShowHideSort() {
-		var blocks = GetValue('blocks');
-		if (blocks != '0' && blocks != '') {
-			$('#ShowHideSort').show();
-		} else {
-			$('#ShowHideSort').hide();
+			module.hide();
+			hints.hide();
+			link.hide();
 		}
 	}
 	// Seitentyp
-	SwitchContainer();
+	switchContainer();
 	$('#mode').change(function() {
-		SwitchContainer();
-	});
-	// Blöcke für die Navigationsleisten
-	ShowHideSort();
-	$('#blocks').change(function() {
-		ShowHideSort();
+		switchContainer();
 	});
 })

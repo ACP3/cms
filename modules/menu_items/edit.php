@@ -87,28 +87,23 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 
 			setNavbarCache();
 
-			$content = comboBox($bool ? $lang->t('menu_items', 'edit_success') : $lang->t('menu_items', 'edit_error'), uri('acp/pages'));
+			$content = comboBox($bool ? $lang->t('menu_items', 'edit_success') : $lang->t('menu_items', 'edit_error'), uri('acp/menu_items'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$page = $db->select('id, start, end, mode, block_id, left_id, right_id, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
 		$page[0]['uri'] = $db->escape($page[0]['uri'], 3);
 
-		// Datumsauswahl
-		$tpl->assign('start_date', datepicker('start', $page[0]['start']));
-		$tpl->assign('end_date', datepicker('end', $page[0]['end']));
-
 		// Seitentyp
 		$mode[0]['value'] = 1;
 		$mode[0]['selected'] = selectEntry('mode', '1', $page[0]['mode']);
-		$mode[0]['lang'] = $lang->t('menu_items', 'static_page');
+		$mode[0]['lang'] = $lang->t('menu_items', 'module');
 		$mode[1]['value'] = 2;
 		$mode[1]['selected'] = selectEntry('mode', '2', $page[0]['mode']);
 		$mode[1]['lang'] = $lang->t('menu_items', 'dynamic_page');
 		$mode[2]['value'] = 3;
 		$mode[2]['selected'] = selectEntry('mode', '3', $page[0]['mode']);
 		$mode[2]['lang'] = $lang->t('menu_items', 'hyperlink');
-		$tpl->assign('mode', $mode);
 
 		// Block
 		$blocks = $db->select('id, title', 'menu_items_blocks', 0, 'title ASC, id ASC');
@@ -116,7 +111,14 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 		for ($i = 0; $i < $c_blocks; ++$i) {
 			$blocks[$i]['selected'] = selectEntry('blocks', $blocks[$i]['id'], $page[0]['block_id']);
 		}
-		$tpl->assign('blocks', $blocks);
+
+		// Module
+		$modules = modules::modulesList();
+		foreach ($modules as $row) {
+			$modules[$row['name']]['selected'] = selectEntry('module', $row['dir'], $page[0]['mode'] == '1' ? $page[0]['uri'] : '');
+		}
+		if ($page[0]['mode'] == '1')
+			$page[0]['uri'] = '';
 
 		// Ziel des Hyperlinks
 		$target[0]['value'] = 1;
@@ -125,8 +127,14 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 		$target[1]['value'] = 2;
 		$target[1]['selected'] = selectEntry('target', '2', $page[0]['target']);
 		$target[1]['lang'] = $lang->t('common', 'window_blank');
-		$tpl->assign('target', $target);
 
+		// Daten an Smarty übergeben
+		$tpl->assign('start_date', datepicker('start', $page[0]['start']));
+		$tpl->assign('end_date', datepicker('end', $page[0]['end']));
+		$tpl->assign('mode', $mode);
+		$tpl->assign('blocks', $blocks);
+		$tpl->assign('modules', $modules);
+		$tpl->assign('target', $target);
 		$tpl->assign('form', isset($form) ? $form : $page[0]);
 
 		// Übergeordnete Seite herausfinden
