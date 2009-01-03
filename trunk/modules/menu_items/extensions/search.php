@@ -23,13 +23,13 @@ switch($form['area']) {
 $time = $date->timestamp();
 $period = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
-$result_pages = $db->select('id, title, text', 'pages', 'MATCH (' . $fields . ') AGAINST (\'' .  $db->escape($form['search_term']) . '\' IN BOOLEAN MODE) AND mode = \'1\' AND ' . $period, 'start ' . $form['sort'] . ', end ' . $form['sort'] . ', id ' . $form['sort']);
+$result_pages = $db->select('id, title, text', 'menu_items', 'MATCH (' . $fields . ') AGAINST (\'' .  $db->escape($form['search_term']) . '\' IN BOOLEAN MODE) AND mode = \'1\' AND ' . $period, 'start ' . $form['sort'] . ', end ' . $form['sort'] . ', id ' . $form['sort']);
 $c_result_pages = count($result_pages);
 
 if ($c_result_pages > 0) {
-	$results_mods['pages']['title'] = $lang->t('pages', 'pages');
+	$results_mods['pages']['title'] = $lang->t('menu_items', 'menu_items');
 	for ($i = 0; $i < $c_result_pages; ++$i) {
-		$results_mods['pages']['results'][$i]['hyperlink'] = uri('pages/list/item_' . $result_pages[$i]['id']);
+		$results_mods['pages']['results'][$i]['hyperlink'] = uri('menu_items/list/item_' . $result_pages[$i]['id']);
 		$results_mods['pages']['results'][$i]['headline'] = $result_pages[$i]['title'];
 
 		$striped_text = strip_tags($result_pages[$i]['text']);

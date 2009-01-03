@@ -75,6 +75,28 @@ CREATE TABLE `{pre}guestbook` (
 	PRIMARY KEY (`id`)
 ) {engine} ;
 
+CREATE TABLE `{pre}menu_items` (
+	`id` INT(11) UNSIGNED NOT NULL auto_increment,
+	`start` varchar(14) NOT NULL,
+	`end` varchar(14) NOT NULL,
+	`mode` tinyint(1) NOT NULL,
+	`block_id` INT(11) UNSIGNED NOT NULL,
+	`left_id` INT(11) UNSIGNED NOT NULL,
+	`right_id` INT(11) UNSIGNED NOT NULL,
+	`title` varchar(120) NOT NULL,
+	`uri` varchar(120) NOT NULL,
+	`target` tinyint(1) NOT NULL,
+	`text` longtext NOT NULL,
+	PRIMARY KEY (`id`), FULLTEXT KEY `title` (`title`,`text`)
+) {engine} ;
+
+CREATE TABLE `{pre}menu_items_blocks` (
+	`id` INT(11) UNSIGNED NOT NULL auto_increment,
+	`index_name` varchar(10) NOT NULL,
+	`title` varchar(120) NOT NULL,
+	PRIMARY KEY (`id`)
+) {engine} ;
+
 CREATE TABLE `{pre}news` ( 
 	`id` INT(11) UNSIGNED NOT NULL auto_increment,
 	`start` varchar(14) NOT NULL, 
@@ -103,28 +125,6 @@ CREATE TABLE `{pre}newsletter_archive` (
 	`subject` VARCHAR(120) NOT NULL, 
 	`text` TEXT NOT NULL, 
 	`status` TINYINT(1) NOT NULL,
-	PRIMARY KEY (`id`)
-) {engine} ;
-
-CREATE TABLE `{pre}pages` ( 
-	`id` INT(11) UNSIGNED NOT NULL auto_increment,
-	`start` varchar(14) NOT NULL, 
-	`end` varchar(14) NOT NULL, 
-	`mode` tinyint(1) NOT NULL, 
-	`block_id` INT(11) UNSIGNED NOT NULL,
-	`left_id` INT(11) UNSIGNED NOT NULL,
-	`right_id` INT(11) UNSIGNED NOT NULL,
-	`title` varchar(120) NOT NULL, 
-	`uri` varchar(120) NOT NULL, 
-	`target` tinyint(1) NOT NULL, 
-	`text` longtext NOT NULL, 
-	PRIMARY KEY (`id`), FULLTEXT KEY `title` (`title`,`text`)
-) {engine} ;
-
-CREATE TABLE `{pre}pages_blocks` (
-	`id` INT(11) UNSIGNED NOT NULL auto_increment,
-	`index_name` varchar(10) NOT NULL, 
-	`title` varchar(120) NOT NULL, 
 	PRIMARY KEY (`id`)
 ) {engine} ;
 

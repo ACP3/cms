@@ -11,10 +11,10 @@ if (!defined('IN_ADM'))
 	exit;
 
 breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
-breadcrumb::assign($lang->t('pages', 'pages'), uri('acp/pages'));
-breadcrumb::assign($lang->t('pages', 'adm_list_blocks'));
+breadcrumb::assign($lang->t('menu_items', 'menu_items'), uri('acp/menu_items'));
+breadcrumb::assign($lang->t('menu_items', 'adm_list_blocks'));
 
-$blocks = $db->select('id, index_name, title', 'pages_blocks', 0, 'title ASC, index_name ASC', POS, CONFIG_ENTRIES);
+$blocks = $db->select('id, index_name, title', 'menu_items_blocks', 0, 'title ASC, index_name ASC', POS, CONFIG_ENTRIES);
 $c_blocks = count($blocks);
 
 if ($c_blocks > 0) {
@@ -22,5 +22,5 @@ if ($c_blocks > 0) {
 	$tpl->assign('blocks', $blocks);
 }
 
-$content = $tpl->fetch('pages/adm_list_blocks.html');
+$content = $tpl->fetch('menu_items/adm_list_blocks.html');
 ?>

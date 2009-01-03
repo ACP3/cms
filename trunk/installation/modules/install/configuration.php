@@ -94,8 +94,8 @@ if (isset($_POST['submit'])) {
 		$other_arr = array(
 			1 => 'INSERT INTO `' . CONFIG_DB_PRE . 'users` VALUES (1, \'' . mask($form['user_name']) . '\', \'\', \'' . sha1($salt . sha1($form['user_pwd'])) . ':' . $salt . '\', 1, \'' . $form['mail'] . '\', \'\', \'' . CONFIG_TIME_ZONE . '\', \'' . CONFIG_DST .'\', \'' . CONFIG_LANG . '\', \'\')',
 			2 => 'INSERT INTO `' . CONFIG_DB_PRE . 'news` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', \'' . lang('installation', 'news_headline') . '\', \'' . lang('installation', 'news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\')',
-			3 => 'INSERT INTO `' . CONFIG_DB_PRE . 'pages` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 1, 1, 2, \'' . lang('installation', 'pages_news') . '\', \'news/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 1, 3, 4, \'' . lang('installation', 'pages_files') . '\', \'files/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 1, 5, 6, \'' . lang('installation', 'pages_gallery') . '\', \'gallery/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 1, 7, 8, \'' . lang('installation', 'pages_guestbook') . '\', \'guestbook/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 1, 9, 10, \'' . lang('installation', 'pages_polls') . '\', \'polls/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 1, 11, 12, \'' . lang('installation', 'pages_search') . '\', \'search/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 2, 13, 14, \'' . lang('installation', 'pages_contact') . '\', \'contact/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 2, 15, 16, \'' . lang('installation', 'pages_imprint') . '\', \'contact/imprint\', 1, \'\')',
-			4 => 'INSERT INTO `' . CONFIG_DB_PRE . 'pages_blocks` (`id`, `index_name`, `title`) VALUES (1, \'main\', \'' . lang('installation', 'pages_main') . '\'), (2, \'sidebar\', \'' . lang('installation', 'pages_sidebar') . '\')',
+			3 => 'INSERT INTO `' . CONFIG_DB_PRE . 'menu_items` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 1, 1, 2, \'' . lang('installation', 'pages_news') . '\', \'news/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 1, 3, 4, \'' . lang('installation', 'pages_files') . '\', \'files/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 1, 5, 6, \'' . lang('installation', 'pages_gallery') . '\', \'gallery/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 1, 7, 8, \'' . lang('installation', 'pages_guestbook') . '\', \'guestbook/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 1, 9, 10, \'' . lang('installation', 'pages_polls') . '\', \'polls/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 1, 11, 12, \'' . lang('installation', 'pages_search') . '\', \'search/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 2, 13, 14, \'' . lang('installation', 'pages_contact') . '\', \'contact/list\', 1, \'\'), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 2, 15, 16, \'' . lang('installation', 'pages_imprint') . '\', \'contact/imprint\', 1, \'\')',
+			4 => 'INSERT INTO `' . CONFIG_DB_PRE . 'menu_items_blocks` (`id`, `index_name`, `title`) VALUES (1, \'main\', \'' . lang('installation', 'pages_main') . '\'), (2, \'sidebar\', \'' . lang('installation', 'pages_sidebar') . '\')',
 		);
 		$queries = array_merge($sql_file_arr, $other_arr);
 
@@ -161,18 +161,6 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$defaults['title'] = 'ACP3';
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);
-
-	$default_db_type = extension_loaded('mysqli') ? 'mysqli' : 'mysql';
-
-	$db_type[0]['value'] = 'mysql';
-	$db_type[0]['selected'] = select_entry('db_type', 'mysql', $default_db_type);
-	$db_type[0]['lang'] = 'MySQL';
-	if (extension_loaded('mysqli'))	{
-		$db_type[1]['value'] = 'mysqli';
-		$db_type[1]['selected'] = select_entry('db_type', 'mysqli', $default_db_type);
-		$db_type[1]['lang'] = 'MySQLi';
-	}
-	$tpl->assign('db_type', $db_type);
 }
 $content = $tpl->fetch('configuration.html');
 ?>

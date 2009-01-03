@@ -69,12 +69,12 @@ class breadcrumb
 		$page = $uri->page;
 
 		// Brotkrümelspur für die Menüpunkte
-		if ($module == 'pages' && $page == 'list') {
+		if ($module == 'menu_items' && $page == 'list') {
 			global $db;
 
 			$id = $uri->item;
 
-			$chk_page = $db->query('SELECT COUNT(p.id) AS level FROM ' . CONFIG_DB_PRE . 'pages p, ' . CONFIG_DB_PRE . 'pages c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $uri->item . ' AND p.mode = 2 ORDER BY p.left_id DESC LIMIT 1', 1);
+			$chk_page = $db->query('SELECT COUNT(p.id) AS level FROM ' . CONFIG_DB_PRE . 'menu_items p, ' . CONFIG_DB_PRE . 'menu_items c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $uri->item . ' AND p.mode = 2 ORDER BY p.left_id DESC LIMIT 1', 1);
 
 			// Dynamische Seiten (ACP3 intern)
 			if ($chk_page == 1 && !empty(self::$steps) && !empty(self::$end)) {
@@ -89,7 +89,7 @@ class breadcrumb
 				}
 			// Statische Seiten
 			} else {
-				$pages = $db->query('SELECT p.id, p.title FROM ' . CONFIG_DB_PRE . 'pages p, ' . CONFIG_DB_PRE . 'pages c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $uri->item . ' ORDER BY p.left_id');
+				$pages = $db->query('SELECT p.id, p.title FROM ' . CONFIG_DB_PRE . 'menu_items p, ' . CONFIG_DB_PRE . 'menu_items c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $uri->item . ' ORDER BY p.left_id');
 				$c_pages = count($pages);
 
 				// Brotkrümelspur ausgeben
@@ -98,7 +98,7 @@ class breadcrumb
 						if ($i == $c_pages - 1) {
 							self::$end = $pages[$i]['title'];
 						} else {
-							self::assign($pages[$i]['title'], uri('pages/list/item_' . $pages[$i]['id']));
+							self::assign($pages[$i]['title'], uri('menu_items/list/item_' . $pages[$i]['id']));
 						}
 					}
 					$tpl->assign('breadcrumb', self::$steps);
