@@ -197,22 +197,32 @@ function pagesList($parent = 0, $left = 0, $right = 0) {
  * Verarbeitet die Navigationsleiste und selektiert die aktuelle Seite,
  * falls diese sich ebenfalls in der Navigationsleiste befindet
  *
+ * @param string $block
+ *	Name des Blocks, für welchen die Navigationspunkte ausgegeben werden sollen
+ *
  * @return string
  */
 function processNavbar($block) {
-	static $navbar = array();
+	static $navbar = array(), $pages = array();
 
 	// Navigationsleiste sofort ausgeben, falls diese schon einmal verarbeitet wurde...
 	if (isset($navbar[$block])) {
 		return $navbar[$block];
 	// ...ansonsten Verarbeitung starten
 	} else {
-		// Gecachete Navigationsleiste einbinden
-		$pages = getNavbarCache();
+		// Cache aller Menüpunkte einbinden
+		if (empty($pages))
+			$pages = getNavbarCache();
 		$c_pages = count($pages);
 
 		if ($c_pages > 0) {
-			global $date, $uri;
+			global $date, $db, $uri;
+
+			if (uri($uri->query) != uri($uri->mod) && $db->select('COUNT(id)', 'menu_items', 'uri = \'' . $uri->query . '\'', 0, 0, 0, 1) > 0) {
+				$select = $db->select('id', 'menu_items', 'uri = \'' . $uri->query . '\'');
+			} else {
+				$select = $db->select('id', 'menu_items', 'uri = \'' . $uri->mod . '\'');
+			}
 
 			$navbar[$block] = '';
 
@@ -222,9 +232,13 @@ function processNavbar($block) {
 			for ($i = 0; $i < $c_pages; ++$i) {
 				// Checken, ob die Seite im angeforderten Block liegt und ob diese veröffentlicht ist
 				if ($pages[$i]['block_name'] == $block && $pages[$i]['start'] == $pages[$i]['end'] && $pages[$i]['start'] <= $time || $pages[$i]['start'] != $pages[$i]['end'] && $pages[$i]['start'] <= $time && $pages[$i]['end'] >= $time) {
-					$css = 'navi-' . $pages[$i]['id'] . ($uri->mod == 'pages' && $uri->page == 'list' && $uri->item == $pages[$i]['id'] || $uri->query == uri($pages[$i]['uri']) ? ' selected' : '');
-					$href = uri('menu_items/list/item_' . $pages[$i]['id']);
-					$target = ($pages[$i]['mode'] == 2 || $pages[$i]['mode'] == 3) && $pages[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
+					$css = 'navi-' . $pages[$i]['id'];
+					// Menüpunkt selektieren
+					if (defined('IN_ACP3') && !empty($select) && $select[0]['id'] == $pages[$i]['id']) {
+						$css.= ' selected';
+					}
+					$href = $pages[$i]['mode'] == '1' || $pages[$i]['mode'] == '2' ? uri($pages[$i]['uri']) : $pages[$i]['uri'];
+					$target = $pages[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 					$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $pages[$i]['title'] . '</a>';
 					$indent = str_repeat("\t\t", $pages[$i]['level']);
 

@@ -666,13 +666,13 @@ a.download-file:hover {
 .search .header {
 	padding: 3px;
 	background: #069 url('images/common_header.png') repeat-x;
-	border-bottom: 1px solid #333;
 	font-weight: bold;
 	font-size: 1.2em;
 	color: #f90;
 	display: block;
 }
 .search .content {
-	margin: 10px;
+	padding: 10px;
+	border-top: 1px solid #333;
 	text-align: justify;
 }

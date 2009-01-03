@@ -29,7 +29,7 @@ $c_result_pages = count($result_pages);
 if ($c_result_pages > 0) {
 	$results_mods['pages']['title'] = $lang->t('menu_items', 'menu_items');
 	for ($i = 0; $i < $c_result_pages; ++$i) {
-		$results_mods['pages']['results'][$i]['hyperlink'] = $result_pages[$i]['uri'];
+		$results_mods['pages']['results'][$i]['hyperlink'] = $result_pages[$i]['mode'] == '1' || $result_pages[$i]['mode'] == '2' ? uri($result_pages[$i]['uri']) : $result_pages[$i]['uri'];
 		$results_mods['pages']['results'][$i]['headline'] = $result_pages[$i]['title'];
 		$results_mods['pages']['results'][$i]['text'] = '';
 	}
