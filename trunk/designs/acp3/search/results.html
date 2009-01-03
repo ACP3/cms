@@ -5,9 +5,11 @@
 {foreach from=$result_mod.results item=row}
 	<li class="search">
 		<a href="{$row.hyperlink}" class="header">{$row.headline}</a>
+{if !empty($row.text)}
 		<div class="content">
 			{$row.text}
 		</div>
+{/if}
 	</li>
 {/foreach}
 </ol>
