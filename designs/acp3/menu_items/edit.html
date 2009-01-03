@@ -1,7 +1,7 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<script type="text/javascript" src="{$DESIGN_PATH}pages/script.js"></script>
+<script type="text/javascript" src="{$DESIGN_PATH}menu_items/script.js"></script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset style="width:70%">
 		<legend>{lang values="common|general_statements"}</legend>
@@ -15,7 +15,7 @@
 			{lang values="common|date_description"}
 		</p>
 		<dl>
-			<dt><label for="mode">{lang values="pages|page_type"}</label></dt>
+			<dt><label for="mode">{lang values="menu_items|page_type"}</label></dt>
 			<dd>
 				<select name="form[mode]" id="mode">
 					<option value="">{lang values="common|pls_select"}</option>
@@ -24,7 +24,7 @@
 {/foreach}
 				</select>
 			</dd>
-			<dt><label for="blocks">{lang values="pages|blocks"}</label></dt>
+			<dt><label for="blocks">{lang values="menu_items|blocks"}</label></dt>
 			<dd>
 				<select name="form[blocks]" id="blocks">
 					<option value="">{lang values="common|pls_select"}</option>
@@ -33,12 +33,12 @@
 {/foreach}
 				</select>
 			</dd>
-			<dt><label for="title">{lang values="pages|title"}</label></dt>
+			<dt><label for="title">{lang values="menu_items|title"}</label></dt>
 			<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120" /></dd>
-			<dt><label for="parent">{lang values="pages|superior_page"}</label></dt>
+			<dt><label for="parent">{lang values="menu_items|superior_page"}</label></dt>
 			<dd>
 				<select name="form[parent]" id="parent">
-					<option value="">{lang values="pages|no_superior_page"}</option>
+					<option value="">{lang values="menu_items|no_superior_page"}</option>
 {foreach from=$pages_list key=block item=pages}
 					<optgroup label="{$block}">
 {foreach from=$pages item=row}
@@ -51,21 +51,21 @@
 		</dl>
 	</fieldset>
 	<fieldset id="static_page" style="width:70%">
-		<legend>{lang values="pages|static_page"}</legend>
+		<legend>{lang values="menu_items|static_page"}</legend>
 		<dl>
-			<dt><label for="text">{lang values="pages|text"}</label></dt>
+			<dt><label for="text">{lang values="menu_items|text"}</label></dt>
 			<dd>{wysiwyg name="text" value="`$form.text`" height="250"}</dd>
 		</dl>
 	</fieldset>
 	<fieldset id="hyperlink" style="width:70%">
-		<legend>{lang values="pages|dynamic_page"} / {lang values="pages|hyperlink"}</legend>
+		<legend>{lang values="menu_items|dynamic_page"} / {lang values="menu_items|hyperlink"}</legend>
 		<p>
-			{lang values="pages|dynamic_page_hints"}
+			{lang values="menu_items|dynamic_page_hints"}
 		</p>
 		<dl>
-			<dt><label for="uri">{lang values="pages|uri"}</label></dt>
+			<dt><label for="uri">{lang values="menu_items|uri"}</label></dt>
 			<dd><input type="text" name="form[uri]" id="uri" value="{$form.uri}" maxlength="120" /></dd>
-			<dt><label for="target">{lang values="pages|target_page"}</label></dt>
+			<dt><label for="target">{lang values="menu_items|target_page"}</label></dt>
 			<dd>
 				<select name="form[target]" id="target">
 					<option value="">{lang values="common|pls_select"}</option>
@@ -78,6 +78,5 @@
 	</fieldset>
 	<div class="form-bottom">
 		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
-		<input type="reset" value="{lang values="common|reset"}" class="form" />
 	</div>
 </form>

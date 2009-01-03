@@ -16,23 +16,23 @@ if (isset($_POST['submit'])) {
 	if (!validate::date($form['start'], $form['end']))
 		$errors[] = $lang->t('common', 'select_date');
 	if (!validate::isNumber($form['mode']))
-		$errors[] = $lang->t('pages', 'select_static_hyperlink');
+		$errors[] = $lang->t('menu_items', 'select_static_hyperlink');
 	if (!validate::isNumber($form['blocks']))
-		$errors[] = $lang->t('pages', 'select_block');
+		$errors[] = $lang->t('menu_items', 'select_block');
 	if (strlen($form['title']) < 3)
-		$errors[] = $lang->t('pages', 'title_to_short');
+		$errors[] = $lang->t('menu_items', 'title_to_short');
 	if (!empty($form['parent']) && !validate::isNumber($form['parent']))
-		$errors[] = $lang->t('pages', 'select_superior_page');
+		$errors[] = $lang->t('menu_items', 'select_superior_page');
 	if (!empty($form['parent']) && validate::isNumber($form['parent'])) {
 		// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
-		$parent_block = $db->select('block_id', 'pages', 'id = \'' . $form['parent'] . '\'');
-		if (!empty($form['blocks']) && !empty($parent_block) && $parent_block[0]['block_id'] != $form['blocks'])
-			$errors[] = $lang->t('pages', 'superior_page_not_allowed');
+		$parent_block = $db->select('block_id', 'menu_items', 'id = \'' . $form['parent'] . '\'');
+		if (!empty($parent_block) && $parent_block[0]['block_id'] != $form['blocks'])
+			$errors[] = $lang->t('menu_items', 'superior_page_not_allowed');
 	}
 	if ($form['mode'] == '1' && strlen($form['text']) < 3)
-		$errors[] = $lang->t('pages', 'text_to_short');
+		$errors[] = $lang->t('menu_items', 'text_to_short');
 	if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !validate::isNumber($form['target'])))
-		$errors[] = $lang->t('pages', 'type_in_uri_and_target');
+		$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 		$bool = insertNode($form['parent'], $insert_values);
 		setNavbarCache();
 
-		$content = comboBox($bool ? $lang->t('pages', 'create_success') : $lang->t('pages', 'create_error'), uri('acp/pages'));
+		$content = comboBox($bool ? $lang->t('menu_items', 'create_success') : $lang->t('menu_items', 'create_error'), uri('acp/pages'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
@@ -70,25 +70,21 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Seitentyp
 	$mode[0]['value'] = 1;
 	$mode[0]['selected'] = selectEntry('mode', '1');
-	$mode[0]['lang'] = $lang->t('pages', 'static_page');
+	$mode[0]['lang'] = $lang->t('menu_items', 'static_page');
 	$mode[1]['value'] = 2;
 	$mode[1]['selected'] = selectEntry('mode', '2');
-	$mode[1]['lang'] = $lang->t('pages', 'dynamic_page');
+	$mode[1]['lang'] = $lang->t('menu_items', 'dynamic_page');
 	$mode[2]['value'] = 3;
 	$mode[2]['selected'] = selectEntry('mode', '3');
-	$mode[2]['lang'] = $lang->t('pages', 'hyperlink');
+	$mode[2]['lang'] = $lang->t('menu_items', 'hyperlink');
 	$tpl->assign('mode', $mode);
 
 	// Block
-	$blocks = $db->select('id, title', 'pages_blocks');
+	$blocks = $db->select('id, title', 'menu_items_blocks');
 	$c_blocks = count($blocks);
 	for ($i = 0; $i < $c_blocks; ++$i) {
 		$blocks[$i]['selected'] = selectEntry('blocks', $blocks[$i]['id']);
 	}
-	$blocks[$c_blocks]['id'] = 0;
-	$blocks[$c_blocks]['index_name'] = 'dot_display';
-	$blocks[$c_blocks]['selected'] = selectEntry('blocks', '0');
-	$blocks[$c_blocks]['title'] = $lang->t('pages', 'do_not_display');
 	$tpl->assign('blocks', $blocks);
 
 	// Ziel des Hyperlinks
@@ -110,6 +106,6 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 	$tpl->assign('pages_list', pagesList());
 
-	$content = $tpl->fetch('pages/create.html');
+	$content = $tpl->fetch('menu_items/create.html');
 }
 ?>
