@@ -29,21 +29,12 @@ if (isset($_POST['submit'])) {
 		if (!empty($parent_block) && $parent_block[0]['block_id'] != $form['blocks'])
 			$errors[] = $lang->t('menu_items', 'superior_page_not_allowed');
 	}
-	if ($form['mode'] == '1' && strlen($form['text']) < 3)
-		$errors[] = $lang->t('menu_items', 'text_to_short');
 	if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !validate::isNumber($form['target'])))
 		$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
-		if ($form['mode'] == '1') {
-			$form['uri'] = '';
-			$form['target'] = '';
-		} else {
-			$form['text'] = '';
-		}
-
 		$insert_values = array(
 			'id' => '',
 			'start' => $date->timestamp($form['start']),
@@ -53,7 +44,6 @@ if (isset($_POST['submit'])) {
 			'title' => $db->escape($form['title']),
 			'uri' => $db->escape($form['uri'], 2),
 			'target' => $form['target'],
-			'text' => $db->escape($form['text'], 2),
 		);
 
 		$bool = insertNode($form['parent'], $insert_values);
@@ -98,8 +88,6 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 	$defaults = array(
 		'title' => '',
-		'sort' => '',
-		'text' => '',
 		'uri' => ''
 	);
 

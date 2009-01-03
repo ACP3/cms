@@ -3,7 +3,7 @@ CREATE TABLE `{pre}access` (
 	`name` VARCHAR(120) NOT NULL,
 	`modules` TEXT NOT NULL,
 	PRIMARY KEY (`id`)
-) {engine} ;
+) {engine};
 
 CREATE TABLE `{pre}categories` (
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
@@ -12,7 +12,7 @@ CREATE TABLE `{pre}categories` (
 	`description` VARCHAR(120) NOT NULL,
 	`module` VARCHAR(120) NOT NULL,
 	PRIMARY KEY (`id`)
-) {engine} ;
+) {engine};
 
 CREATE TABLE `{pre}comments` (
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
@@ -24,7 +24,7 @@ CREATE TABLE `{pre}comments` (
 	`module` VARCHAR(120) NOT NULL,
 	`entry_id` INT(10) UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`)
-) {engine} ;
+) {engine};
 
 CREATE TABLE `{pre}emoticons` (
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
@@ -32,7 +32,7 @@ CREATE TABLE `{pre}emoticons` (
 	`description` VARCHAR(15) NOT NULL,
 	`img` VARCHAR(40) NOT NULL,
 	PRIMARY KEY (`id`)
-) {engine} ;
+) {engine};
 
 CREATE TABLE `{pre}files` (
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
@@ -43,8 +43,8 @@ CREATE TABLE `{pre}files` (
 	`size` VARCHAR(20) NOT NULL,
 	`link_title` VARCHAR(120) NOT NULL,
 	`text` TEXT NOT NULL,
-	PRIMARY KEY (`id`), FULLTEXT KEY `file` (`link_title`,`text`)
-) {engine} ;
+	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`link_title`, `text`)
+) {engine};
 
 CREATE TABLE `{pre}gallery` ( 
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
@@ -52,7 +52,7 @@ CREATE TABLE `{pre}gallery` (
 	`end` VARCHAR(14) NOT NULL,
 	`name` VARCHAR(120) NOT NULL,
 	PRIMARY KEY (`id`)
-) {engine} ;
+) {engine};
 
 CREATE TABLE `{pre}gallery_pictures` (
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
@@ -61,7 +61,7 @@ CREATE TABLE `{pre}gallery_pictures` (
 	`file` VARCHAR(120) NOT NULL,
 	`description` TEXT NOT NULL,
 	PRIMARY KEY (`id`)
-) {engine} ;
+) {engine};
 
 CREATE TABLE `{pre}guestbook` ( 
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
@@ -73,7 +73,7 @@ CREATE TABLE `{pre}guestbook` (
 	`website` VARCHAR(120) NOT NULL,
 	`mail` VARCHAR(120) NOT NULL,
 	PRIMARY KEY (`id`)
-) {engine} ;
+) {engine};
 
 CREATE TABLE `{pre}menu_items` (
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
@@ -88,15 +88,15 @@ CREATE TABLE `{pre}menu_items` (
 	`uri` VARCHAR(120) NOT NULL,
 	`target` TINYINT(1) NOT NULL,
 	`text` TEXT NOT NULL,
-	PRIMARY KEY (`id`), FULLTEXT KEY `title` (`title`,`text`)
-) {engine} ;
+	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`title`, `uri`)
+) {engine};
 
 CREATE TABLE `{pre}menu_items_blocks` (
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
 	`index_name` VARCHAR(10) NOT NULL,
 	`title` VARCHAR(120) NOT NULL,
 	PRIMARY KEY (`id`)
-) {engine} ;
+) {engine};
 
 CREATE TABLE `{pre}news` ( 
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
@@ -110,15 +110,15 @@ CREATE TABLE `{pre}news` (
 	`uri` VARCHAR(120) NOT NULL,
 	`target` TINYINT(1) NOT NULL,
 	`link_title` VARCHAR(120) NOT NULL,
-	PRIMARY KEY (`id`), FULLTEXT KEY `headline` (`headline`,`text`)
-) {engine} ;
+	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`headline`,`text`)
+) {engine};
 
 CREATE TABLE `{pre}newsletter_accounts` ( 
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
 	`mail` VARCHAR(120) NOT NULL,
 	`hash` VARCHAR(32) NOT NULL,
 	PRIMARY KEY (`id`)
-) {engine} ;
+) {engine};
 
 CREATE TABLE `{pre}newsletter_archive` (
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
@@ -127,14 +127,14 @@ CREATE TABLE `{pre}newsletter_archive` (
 	`text` TEXT NOT NULL, 
 	`status` TINYINT(1) NOT NULL,
 	PRIMARY KEY (`id`)
-) {engine} ;
+) {engine};
 
 CREATE TABLE `{pre}poll_answers` ( 
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
 	`text` VARCHAR(120) NOT NULL,
 	`poll_id` INT(10) UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`)
-) {engine} ;
+) {engine};
 
 CREATE TABLE `{pre}poll_question` ( 
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
@@ -142,7 +142,7 @@ CREATE TABLE `{pre}poll_question` (
 	`end` VARCHAR(14) NOT NULL,
 	`question` VARCHAR(120) NOT NULL,
 	PRIMARY KEY (`id`)
-) {engine} ;
+) {engine};
 
 CREATE TABLE `{pre}poll_votes` ( 
 	`poll_id` INT(10) UNSIGNED NOT NULL,
@@ -150,8 +150,8 @@ CREATE TABLE `{pre}poll_votes` (
 	`user_id` INT(10) UNSIGNED NOT NULL,
 	`ip` VARCHAR(40) NOT NULL,
 	`time` VARCHAR(14) NOT NULL,
-	INDEX ( `poll_id` , `answer_id` , `user_id` )
-) {engine} ;
+	INDEX (`poll_id`, `answer_id`, `user_id`)
+) {engine};
 
 CREATE TABLE `{pre}static_pages` (
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
@@ -159,8 +159,8 @@ CREATE TABLE `{pre}static_pages` (
 	`end` VARCHAR( 14 ) NOT NULL,
 	`title` VARCHAR( 120 ) NOT NULL,
 	`text` TEXT NOT NULL,
-	PRIMARY KEY ( `id` )
-) {engine} ;
+	PRIMARY KEY (`id`)
+) {engine};
 
 CREATE TABLE `{pre}users` ( 
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
@@ -175,7 +175,7 @@ CREATE TABLE `{pre}users` (
 	`language` VARCHAR(10) NOT NULL,
 	`draft` TEXT NOT NULL,
 	PRIMARY KEY (`id`)
-) {engine} ;
+) {engine};
 
 INSERT INTO `{pre}access` VALUES ('1', 'Administrator', 'users:2,feeds:2,files:2,emoticons:2,errors:2,gallery:2,guestbook:2,categories:2,comments:2,contact:2,menu_items:2,news:2,newsletter:2,search:2,system:2,polls:2,access:2,acp:2,captcha:2');
 INSERT INTO `{pre}access` VALUES ('2', 'Besucher', 'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:1,categories:1,comments:1,contact:1,menu_items:1,news:1,newsletter:1,search:1,system:0,polls:1,access:0,acp:0,captcha:1');

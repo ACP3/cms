@@ -16,7 +16,7 @@
 function setPagesCache($id)
 {
 	global $db;
-	return cache::create('menu_items_list_id_' . $id, $db->select('mode, uri, text', 'menu_items', 'id = \'' . $id . '\''));
+	return cache::create('menu_items_list_id_' . $id, $db->select('mode, urit', 'menu_items', 'id = \'' . $id . '\''));
 }
 /**
  * Bindet den Cache eines Menüpunktes anhand seiner ID ein

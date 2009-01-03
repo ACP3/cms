@@ -30,6 +30,7 @@ $queries = array(
 	'ALTER TABLE `{pre}newsletter_accounts` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 	'ALTER TABLE `{pre}newsletter_archive` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 	'ALTER TABLE `{pre}pages` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}pages` DROP INDEX `title`, ADD FULLTEXT `index` (`title`, `uri`)',
 	'ALTER TABLE `{pre}pages` DROP COLUMN `parent`',
 	'ALTER TABLE `{pre}pages` DROP COLUMN `sort`',
 	'ALTER TABLE `{pre}pages` ADD `left_id` INT(10) UNSIGNED NOT NULL AFTER `block_id`',
@@ -45,22 +46,24 @@ $queries = array(
 	'ALTER TABLE `{pre}poll_votes` ADD `user_id` INT(10) UNSIGNED NOT NULL AFTER `answer_id`',
 	'ALTER TABLE `{pre}poll_votes` DROP PRIMARY KEY',
 	'ALTER TABLE `{pre}poll_votes` ADD INDEX (`poll_id`, `answer_id`, `user_id`)',
+	'CREATE TABLE `{pre}static_pages` ( `id` INT(10) UNSIGNED NOT NULL auto_increment, `start` VARCHAR(14) NOT NULL, `end` VARCHAR(14) NOT NULL, `title` VARCHAR(120) NOT NULL, `text` TEXT NOT NULL, PRIMARY KEY (`id`)) {engine} {charset};',
 	'ALTER TABLE `{pre}users` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 );
 
 if (count($queries) > 0) {
 	$db = new db();
 
-	if (version_compare(CONFIG_DB_TYPE == 'mysqli' ?  mysqli_get_client_info() : mysql_get_client_info(), '4.1', '>=')) {
+	print "Aktualisierung der Datenbank:\n\n";
+	$bool = false;
+
+	// Änderungen am DB Schema vornehemen
+	if (version_compare(mysql_get_client_info(), '4.1', '>=')) {
 		$engine = 'ENGINE=MyISAM';
 		$charset = 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
 	} else {
 		$engine = 'TYPE=MyISAM';
 		$charset = 'CHARSET=utf-8';
 	}
-
-	print "Aktualisierung der Datenbank:\n\n";
-	$bool = false;
 
 	foreach ($queries as $row) {
 		$row = str_replace(array('{pre}', '{engine}', '{charset}'), array(CONFIG_DB_PRE, $engine, $charset), $row);
@@ -69,6 +72,26 @@ if (count($queries) > 0) {
 			print "\n";
 		}
 	}
+
+	// Statische Seiten in extra Tabelle auslagern
+	$pages = $db->select('id, start, end, title, text, block_id', 'menu_items', 'mode = "1"');
+	$c_pages = count($pages);
+
+	if ($c_pages > 0) {
+		for ($i = 0; $i < $c_pages; ++$i) {
+			$insert_values = array(
+				'start' => $pages[$i]['start'],
+				'end' => $pages[$i]['end'],
+				'title' => $pages[$i]['title'],
+				'text' => $pages[$i]['text'],
+			);
+			$db->insert('static_pages', $insert_values);
+			$last_id = $db->select('LAST_INSERT_ID() AS id', 'static_pages');
+			$db->update('menu_items', array('uri' => 'static_pages/list/id_' . $last_id[0]['id']), 'id = "' . $pages[$i]['id']);
+		}
+		$db->query('ALTER TABLE `' . CONFIG_DB_PRE . 'menu_items` DROP `text`', 3);
+	}
+
 	print "\n" . ($bool ? 'Die Datenbank wurde erfolgreich aktualisiert.' : 'Mindestens eine Datenbankänderung konnte nicht durchgeführt werden.') . "\n";
 	print "\n----------------------------\n\n";
 }
@@ -80,7 +103,6 @@ $config = array(
 	'db_name' => CONFIG_DB_NAME,
 	'db_pre' => CONFIG_DB_PRE,
 	'db_pwd' => CONFIG_DB_PWD,
-	'db_type' => CONFIG_DB_TYPE,
 	'db_user' => CONFIG_DB_USER,
 	'design' => CONFIG_DESIGN,
 	'dst' => CONFIG_DST,
