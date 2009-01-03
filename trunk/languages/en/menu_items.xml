@@ -77,16 +77,12 @@
 		<message>The marked menu items have been deleted successfully.</message>
 	</item>
 	<item>
-		<name>do_not_display</name>
-		<message>Do not display</message>
-	</item>
-	<item>
 		<name>dynamic_page</name>
 		<message>Dynamic page</message>
 	</item>
 	<item>
 		<name>dynamic_page_hints</name>
-		<message><![CDATA[If you want to include a dynamic page, i.e. a module of the ACP3, please use the format &quot;module/file/optional_parameters/&quot;, e.g. news/list/id_1/.]]></message>
+		<message><![CDATA[Please use the format &quot;module/file/optional_parameters/&quot;, to link to a ACP3 internal page, e.g. news/details/id_1/.]]></message>
 	</item>
 	<item>
 		<name>edit</name>
@@ -141,6 +137,10 @@
 		<message>This module is responsible for the both navbars and the static pages.</message>
 	</item>
 	<item>
+		<name>module</name>
+		<message>Module</message>
+	</item>
+	<item>
 		<name>move_impossible</name>
 		<message>Impossible to move this node</message>
 	</item>
@@ -165,10 +165,6 @@
 		<message>Please select a superior page</message>
 	</item>
 	<item>
-		<name>static_page</name>
-		<message>Static page</message>
-	</item>
-	<item>
 		<name>superior_page</name>
 		<message>Superior page</message>
 	</item>
@@ -179,14 +175,6 @@
 	<item>
 		<name>target_page</name>
 		<message>Target page</message>
-	</item>
-	<item>
-		<name>text</name>
-		<message>Text</message>
-	</item>
-	<item>
-		<name>text_to_short</name>
-		<message>The text should be at least 3 characters long</message>
 	</item>
 	<item>
 		<name>title</name>

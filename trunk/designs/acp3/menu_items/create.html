@@ -3,7 +3,7 @@
 {/if}
 <script type="text/javascript" src="{$DESIGN_PATH}menu_items/script.js"></script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
-	<fieldset style="width:70%">
+	<fieldset>
 		<legend>{lang values="common|general_statements"}</legend>
 		<dl>
 			<dt><label for="start">{lang values="common|start_date"}</label></dt>
@@ -50,21 +50,27 @@
 			</dd>
 		</dl>
 	</fieldset>
-	<fieldset id="static_page" style="width:70%">
-		<legend>{lang values="menu_items|static_page"}</legend>
-		<dl>
-			<dt><label for="text">{lang values="menu_items|text"}</label></dt>
-			<dd>{wysiwyg name="text" value="`$form.text`" height="250"}</dd>
+	<fieldset>
+		<legend>{lang values="menu_items|page_type"}</legend>
+		<dl id="module-container">
+			<dt><label for="module">{lang values="menu_items|module"}</label></dt>
+			<dd>
+				<select name="form[module]" id="module">
+					<option value="">{lang values="common|pls_select"}</option>
+{foreach from=$modules item=row}
+					<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
+{/foreach}
+				</select>
+			</dd>
 		</dl>
-	</fieldset>
-	<fieldset id="hyperlink" style="width:70%">
-		<legend>{lang values="menu_items|dynamic_page"} / {lang values="menu_items|hyperlink"}</legend>
-		<p>
+		<p id="link-hints">
 			{lang values="menu_items|dynamic_page_hints"}
 		</p>
-		<dl>
+		<dl id="link-container">
 			<dt><label for="uri">{lang values="menu_items|uri"}</label></dt>
 			<dd><input type="text" name="form[uri]" id="uri" value="{$form.uri}" maxlength="120" /></dd>
+		</dl>
+		<dl>
 			<dt><label for="target">{lang values="menu_items|target_page"}</label></dt>
 			<dd>
 				<select name="form[target]" id="target">

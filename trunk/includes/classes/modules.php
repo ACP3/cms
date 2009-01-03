@@ -22,6 +22,7 @@ class modules
 	 * 	Zu überprüfendes Modul
 	 * @param string $page
 	 * 	Zu überprüfende Moduldatei
+	 *
 	 * @return boolean
 	 */
 	public static function check($module = 0, $page = 0) {
@@ -83,12 +84,12 @@ class modules
 	public static function modulesList()
 	{
 		static $mod_list = array();
-		$uri_dir = scandir(ACP3_ROOT . 'modules/');
 
 		if (empty($mod_list)) {
+			$uri_dir = scandir(ACP3_ROOT . 'modules/');
 			foreach ($uri_dir as $module) {
 				$info = self::parseInfo($module);
-				if (is_array($info)) {
+				if (!empty($info)) {
 					$mod_list[$info['name']] = $info;
 				}
 			}
@@ -98,10 +99,10 @@ class modules
 	}
 	/**
 	 * Durchläuft für das angeforderte Modul den <info> Abschnitt in der
-	 * module.xml und gibt die gefunden Informationen als Array zurück
+	 * module.xml und gibt die gefundenen Informationen als Array zurück
 	 *
 	 * @param string $module
-	 * @return mixed
+	 * @return array
 	 */
 	public static function parseInfo($module)
 	{
@@ -123,7 +124,7 @@ class modules
 				);
 				return $parsed_modules[$module];
 			}
-			return false;
+			return array();
 		}
 		return $parsed_modules[$module];
 	}
