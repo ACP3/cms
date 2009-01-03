@@ -22,21 +22,12 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 			$errors[] = $lang->t('menu_items', 'select_block');
 		if (strlen($form['title']) < 3)
 			$errors[] = $lang->t('menu_items', 'title_to_short');
-		if ($form['mode'] == '1' && strlen($form['text']) < 3)
-			$errors[] = $lang->t('menu_items', 'text_to_short');
 		if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !validate::isNumber($form['target'])))
 			$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
-			if ($form['mode'] == '1') {
-				$form['uri'] = '';
-				$form['target'] = '';
-			} else {
-				$form['text'] = '';
-			}
-
 			// Vorgenommene Änderungen am Datensatz anwenden
 			$update_values = array(
 				'start' => $date->timestamp($form['start']),
@@ -46,7 +37,6 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 				'title' => $db->escape($form['title']),
 				'uri' => $db->escape($form['uri'], 2),
 				'target' => $form['target'],
-				'text' => $db->escape($form['text'], 2),
 			);
 
 			$page = $db->query('SELECT c.id, c.root_id, c.left_id, c.right_id FROM ' . CONFIG_DB_PRE . 'menu_items AS p, ' . CONFIG_DB_PRE . 'menu_items AS c WHERE p.id = \'' . $uri->id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
@@ -101,8 +91,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$page = $db->select('id, start, end, mode, block_id, left_id, right_id, title, uri, target, text', 'menu_items', 'id = \'' . $uri->id . '\'');
-		$page[0]['text'] = $db->escape($page[0]['text'], 3);
+		$page = $db->select('id, start, end, mode, block_id, left_id, right_id, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
 		$page[0]['uri'] = $db->escape($page[0]['uri'], 3);
 
 		// Datumsauswahl
