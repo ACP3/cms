@@ -17,12 +17,15 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 		if (!validate::date($form['start'], $form['end']))
 			$errors[] = $lang->t('common', 'select_date');
 		if (!validate::isNumber($form['mode']))
-			$errors[] = $lang->t('menu_items', 'select_static_hyperlink');
+			$errors[] = $lang->t('menu_items', 'select_page_type');
 		if (!validate::isNumber($form['blocks']))
 			$errors[] = $lang->t('menu_items', 'select_block');
 		if (strlen($form['title']) < 3)
 			$errors[] = $lang->t('menu_items', 'title_to_short');
-		if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !validate::isNumber($form['target'])))
+		if (!validate::isNumber($form['target']) ||
+			$form['mode'] == '1' && (!is_dir(ACP3_ROOT . 'modules/' . $form['module']) || preg_match('=/=', $form['module'])) ||
+			$form['mode'] == '2' && !preg_match('/([A-Za-z_-]\/)*/', $form['uri']) ||
+			$form['mode'] == '3' && empty($form['uri']))
 			$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
 
 		if (isset($errors)) {
@@ -35,7 +38,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 				'mode' => $form['mode'],
 				'block_id' => $form['blocks'],
 				'title' => $db->escape($form['title']),
-				'uri' => $db->escape($form['uri'], 2),
+				'uri' => $form['mode'] == '1' ? $form['module'] : $db->escape($form['uri'], 2),
 				'target' => $form['target'],
 			);
 
@@ -60,7 +63,6 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 					// Neues Elternelement
 					$new_parent = $db->select('root_id, left_id', 'menu_items', 'id = \'' . $form['parent'] . '\'');
 					if (empty($new_parent)) {
-						echo 'huhu';
 						$new_parent = $db->select('right_id', 'menu_items', 0, 'right_id DESC', 1);
 						$root_id = $uri->id;
 						$left_id = $new_parent[0]['right_id'] + 1;
