@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
 	if (!validate::date($form['start'], $form['end']))
 		$errors[] = $lang->t('common', 'select_date');
 	if (!validate::isNumber($form['mode']))
-		$errors[] = $lang->t('menu_items', 'select_static_hyperlink');
+		$errors[] = $lang->t('menu_items', 'select_page_type');
 	if (!validate::isNumber($form['blocks']))
 		$errors[] = $lang->t('menu_items', 'select_block');
 	if (strlen($form['title']) < 3)
@@ -29,7 +29,10 @@ if (isset($_POST['submit'])) {
 		if (!empty($parent_block) && $parent_block[0]['block_id'] != $form['blocks'])
 			$errors[] = $lang->t('menu_items', 'superior_page_not_allowed');
 	}
-	if (($form['mode'] == '2' || $form['mode'] == '3') && (empty($form['uri']) || !validate::isNumber($form['target'])))
+	if (!validate::isNumber($form['target']) ||
+		$form['mode'] == '1' && (!is_dir(ACP3_ROOT . 'modules/' . $form['module']) || preg_match('=/=', $form['module'])) ||
+		$form['mode'] == '2' && !preg_match('/([A-Za-z_-]\/)*/', $form['uri']) ||
+		$form['mode'] == '3' && empty($form['uri']))
 		$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
 
 	if (isset($errors)) {
@@ -42,7 +45,7 @@ if (isset($_POST['submit'])) {
 			'mode' => $form['mode'],
 			'block_id' => $form['blocks'],
 			'title' => $db->escape($form['title']),
-			'uri' => $db->escape($form['uri'], 2),
+			'uri' => $form['mode'] == '1' ? $form['module'] : $db->escape($form['uri'], 2),
 			'target' => $form['target'],
 		);
 

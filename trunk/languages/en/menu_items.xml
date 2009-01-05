@@ -134,7 +134,7 @@
 	</item>
 	<item>
 		<name>mod_description</name>
-		<message>This module is responsible for the both navbars and the static pages.</message>
+		<message>This module is responsible for the navbars.</message>
 	</item>
 	<item>
 		<name>module</name>
@@ -154,11 +154,11 @@
 	</item>
 	<item>
 		<name>select_block</name>
-		<message>Please select, wether you want to display the menu item in a navbar</message>
+		<message>Please select, in which navigation bar you want to display the page</message>
 	</item>
 	<item>
-		<name>select_static_hyperlink</name>
-		<message>Please select, wether the page should be at static page or a hyperlink</message>
+		<name>select_page_type</name>
+		<message>Please select, of which type the page should be</message>
 	</item>
 	<item>
 		<name>select_superior_page</name>
@@ -190,7 +190,7 @@
 	</item>
 	<item>
 		<name>type_in_uri_and_target</name>
-		<message>Please type in the URI and the target page</message>
+		<message>Please type in the target page and the module, resp. the URI you whish to link to</message>
 	</item>
 	<item>
 		<name>uri</name>

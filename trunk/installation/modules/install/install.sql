@@ -87,7 +87,6 @@ CREATE TABLE `{pre}menu_items` (
 	`title` VARCHAR(120) NOT NULL,
 	`uri` VARCHAR(120) NOT NULL,
 	`target` TINYINT(1) NOT NULL,
-	`text` TEXT NOT NULL,
 	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`title`, `uri`)
 ) {engine};
 

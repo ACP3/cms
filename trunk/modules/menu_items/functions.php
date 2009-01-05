@@ -7,38 +7,12 @@
  * @subpackage Modules
  */
 /**
- * Erstellt den Cache für einen Menüpunkt
- *
- * @param integer $id
- *  Die ID des Menüpunktes
- * @return boolean
- */
-function setPagesCache($id)
-{
-	global $db;
-	return cache::create('menu_items_list_id_' . $id, $db->select('mode, urit', 'menu_items', 'id = \'' . $id . '\''));
-}
-/**
- * Bindet den Cache eines Menüpunktes anhand seiner ID ein
- *
- * @param integer $id
- *  Die ID des Menüpunktes
- * @return array
- */
-function getPagesCache($id)
-{
-	if (!cache::check('menu_items_list_id_' . $id))
-		setPagesCache($id);
-
-	return cache::output('menu_items_list_id_' . $id);
-}
-/**
  * Erstellt den Cache für die Navigationsleisten
  *
  * @return boolean
  */
 function setNavbarCache() {
-	global $db;
+	global $date, $db, $lang;
 
 	$pages = $db->query('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . CONFIG_DB_PRE . 'menu_items AS n, ' . CONFIG_DB_PRE . 'menu_items AS p WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
 	$c_pages = count($pages);
@@ -55,7 +29,13 @@ function setNavbarCache() {
 				}
 			}
 		}
+
+		$mode_replace = array($lang->t('menu_items', 'module'), $lang->t('menu_items', 'dynamic_page'), $lang->t('menu_items', 'hyperlink'));
+
 		for ($i = 0; $i < $c_pages; ++$i) {
+			$pages[$i]['period'] = $date->period($pages[$i]['start'], $pages[$i]['end']);
+			$pages[$i]['mode_formated'] = str_replace(array('1', '2', '3'), $mode_replace, $pages[$i]['mode']);
+
 			// Bestimmen, ob die Seite die Erste und/oder Letzte eines Blocks/Knotens ist
 			$first = $last = false;
 			if ($i == 0 ||
@@ -71,18 +51,15 @@ function setNavbarCache() {
 				$last = true;
 
 			// Checken, ob für das aktuelle Element noch Nachfolger existieren
-			if (!$last) {
-				$last = true;
-				$found = false;
-				$j = $i + 1;
-				for ($j = $i + 1; $j < $c_pages; ++$j) {
-					if ($pages[$i]['level'] == $pages[$j]['level'] && $pages[$i]['block_name'] == $pages[$j]['block_name'])
-						$found = true;
-				}
-				if ($found)
-					$last = false;
-				$found = false;
+			$found = false;
+			$j = $i + 1;
+			for ($j = $i + 1; $j < $c_pages; ++$j) {
+				if ($pages[$i]['level'] == $pages[$j]['level'] && $pages[$i]['block_name'] == $pages[$j]['block_name'])
+					$found = true;
 			}
+			if ($found)
+				$last = false;
+			$found = false;
 
 			$pages[$i]['first'] = $first;
 			$pages[$i]['last'] = $last;
@@ -119,9 +96,6 @@ function deleteNode($id, $left_id, $right_id)
 	$bool2 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - 1, right_id = right_id - 1 WHERE left_id BETWEEN ' . $left_id . ' AND ' . $right_id, 0);
 	$bool3 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - 2 WHERE left_id > ' . $right_id, 0);
 	$bool4 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - 2 WHERE right_id > ' . $right_id, 0);
-
-	// Cache löschen
-	cache::delete('menu_items_list_id_' . $id);
 
 	return $bool && $bool2 && $bool3 && $bool4 ? true : false;
 }

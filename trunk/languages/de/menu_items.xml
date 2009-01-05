@@ -134,7 +134,7 @@
 	</item>
 	<item>
 		<name>mod_description</name>
-		<message>Dieses Modul ist für die beiden Navigationsleisten und für die statischen Seiten zuständig.</message>
+		<message>Dieses Modul verwaltet die Navigationsleisten.</message>
 	</item>
 	<item>
 		<name>module</name>
@@ -154,11 +154,11 @@
 	</item>
 	<item>
 		<name>select_block</name>
-		<message>Bitte wählen Sie aus, ob und in welcher Navigationsleiste der Menüpunkt angezeigt werden soll</message>
+		<message>Bitte wählen Sie aus, in welcher Navigationsleiste der Menüpunkt angezeigt werden soll</message>
 	</item>
 	<item>
-		<name>select_static_hyperlink</name>
-		<message>Bitte wählen Sie aus, ob die Seite eine statische Seite oder ein Hyperlink sein soll</message>
+		<name>select_page_type</name>
+		<message>Bitte wählen Sie den Seitentyp aus</message>
 	</item>
 	<item>
 		<name>select_superior_page</name>
@@ -190,7 +190,7 @@
 	</item>
 	<item>
 		<name>type_in_uri_and_target</name>
-		<message>Bitte geben Sie die URI und die Zielseite an</message>
+		<message>Bitte geben Sie die Zielseite und das zu verlinkende Modul, bzw. die zu verlinkende URI an</message>
 	</item>
 	<item>
 		<name>uri</name>
