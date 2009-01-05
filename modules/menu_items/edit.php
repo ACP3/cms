@@ -42,23 +42,26 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 				'target' => $form['target'],
 			);
 
-			$page = $db->query('SELECT c.id, c.root_id, c.left_id, c.right_id FROM ' . CONFIG_DB_PRE . 'menu_items AS p, ' . CONFIG_DB_PRE . 'menu_items AS c WHERE p.id = \'' . $uri->id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
-			// Überprüfen, ob Seite ein Root-Element ist und ob dies auch sop bleiben soll
-			if (empty($form['parent']) && $db->select('id', 'menu_items', 'left_id < ' . $page[0]['left_id'] . ' AND right_id > ' . $page[0]['right_id'], 0, 0, 0, 1) == 0) {
+			// Die aktuelle Seite mit allen untergeordneten Seiten selektieren
+			$pages = $db->query('SELECT c.id, c.root_id, c.left_id, c.right_id FROM ' . CONFIG_DB_PRE . 'menu_items AS p, ' . CONFIG_DB_PRE . 'menu_items AS c WHERE p.id = \'' . $uri->id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
+
+			// Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
+			if (empty($form['parent']) && $db->select('id', 'menu_items', 'left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0, 0, 0, 1) == 0) {
 				$bool = $db->update('menu_items', $update_values, 'id = \'' . $uri->id . '\'');
 			} else {
 				// Überprüfung, falls Seite kein Root-Element ist, aber keine Veränderung vorgenommen werden soll...
-				$chk_parent = $db->query('SELECT p.id FROM ' . CONFIG_DB_PRE . 'menu_items p, ' . CONFIG_DB_PRE . 'menu_items c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $uri->id . ' ORDER BY p.left_id LIMIT 1');
+				$chk_parent = $db->query('SELECT p.id FROM ' . CONFIG_DB_PRE . 'menu_items p, ' . CONFIG_DB_PRE . 'menu_items c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $uri->id . ' ORDER BY p.left_id DESC LIMIT 1');
 				if ($chk_parent[0]['id'] == $form['parent']) {
 					$bool = $db->update('menu_items', $update_values, 'id = \'' . $uri->id . '\'');
 				// ...ansonsten den Baum bearbeiten...
 				} else {
-					$page_diff = $page[0]['right_id'] - $page[0]['left_id'] + 1;
+					// Differenz zwischen linken und rechten Wert bilden
+					$page_diff = $pages[0]['right_id'] - $pages[0]['left_id'] + 1;
 
 					// Elternknoten der aktuellen Seite anpassen
-					$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - ' . $page_diff . ' WHERE root_id = ' . $page[0]['root_id'] . ' AND left_id < ' . $page[0]['left_id'], 0);
+					$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - ' . $page_diff . ' WHERE root_id = ' . $pages[0]['root_id'] . ' AND left_id < ' . $pages[0]['left_id'], 0);
 					// Alle nachfolgenden Seiten anpassen
-					$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $page[0]['right_id'], 0);
+					$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $pages[0]['right_id'], 0);
 
 					// Neues Elternelement
 					$new_parent = $db->select('root_id, left_id', 'menu_items', 'id = \'' . $form['parent'] . '\'');
@@ -75,14 +78,14 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 					}
 
 					$bool = false;
-					$c_page = count($page);
-					for ($i = 0; $i < $c_page; ++$i) {
+					$c_pages = count($pages);
+					for ($i = 0; $i < $c_pages; ++$i) {
 						$position = array(
 							'root_id' => $root_id,
 							'left_id' => $left_id + $i,
-							'right_id' => $left_id + $i + ($page[$i]['right_id'] - $page[$i]['left_id']),
+							'right_id' => $left_id + $i + ($pages[$i]['right_id'] - $pages[$i]['left_id']),
 						);
-						$bool = $db->update('menu_items', $i == 0 ? array_merge($update_values, $position) : $parent, 'id = \'' . $page[$i]['id'] . '\'');
+						$bool = $db->update('menu_items', $i == 0 ? array_merge($update_values, $position) : $position, 'id = \'' . $pages[$i]['id'] . '\'');
 					}
 				}
 			}
