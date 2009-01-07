@@ -50,7 +50,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'emoticons', 'id = 
 			$bool = $db->update('emoticons', $update_values, 'id = \'' . $uri->id . '\'');
 			setEmoticonsCache();
 
-			$content = comboBox($bool ? $lang->t('emoticons', 'edit_success') : $lang->t('emoticons', 'edit_error'), uri('acp/emoticons'));
+			$content = comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/emoticons'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

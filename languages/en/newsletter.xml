@@ -57,14 +57,6 @@
 		<message>The newsletter was successfully sent.</message>
 	</item>
 	<item>
-		<name>confirm_delete</name>
-		<message>Do you really want to delete the marked newsletter accounts?</message>
-	</item>
-	<item>
-		<name>confirm_archive_delete</name>
-		<message>Do you really want to delete the marked newsletters?</message>
-	</item>
-	<item>
 		<name>create</name>
 		<message>Subscribe/Unscribe the newsletter</message>
 	</item>
@@ -75,22 +67,6 @@
 	<item>
 		<name>delete_archive</name>
 		<message>Delete newsletters</message>
-	</item>
-	<item>
-		<name>delete_archive_error</name>
-		<message>While deleting the marked newsletters an error has occured.</message>
-	</item>
-	<item>
-		<name>delete_archive_success</name>
-		<message>The marked newsletters have been deleted successfully.</message>
-	</item>
-	<item>
-		<name>delete_error</name>
-		<message>While deleting the marked newsletter accounts an error has occured.</message>
-	</item>
-	<item>
-		<name>delete_success</name>
-		<message>The marked newsletter accounts have been deleted successfully.</message>
 	</item>
 	<item>
 		<name>edit_archive</name>

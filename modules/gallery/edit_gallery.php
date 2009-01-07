@@ -36,7 +36,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'gallery', 'id = \'
 
 			$bool = $db->update('gallery', $update_values, 'id = \'' . $uri->id . '\'');
 
-			$content = comboBox($bool ? $lang->t('gallery', 'edit_success') : $lang->t('gallery', 'edit_error'), uri('acp/gallery'));
+			$content = comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/gallery'));
 		}
 	}
 	if (!isset($_POST['entries']) && !isset($_POST['submit']) || isset($errors) && is_array($errors)) {

@@ -44,7 +44,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'news', 'id = \'' .
 			$bool = $db->update('news', $update_values, 'id = \'' . $uri->id . '\'');
 			setNewsCache($uri->id);
 
-			$content = comboBox($bool ? $lang->t('news', 'edit_success') : $lang->t('news', 'edit_error'), uri('acp/news'));
+			$content = comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/news'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

@@ -21,20 +21,8 @@
 		<message>It\'s impossible to delete all answers</message>
 	</item>
 	<item>
-		<name>confirm_delete</name>
-		<message>Do you really want to delete the marked polls?</message>
-	</item>
-	<item>
 		<name>create</name>
 		<message>Create a new poll</message>
-	</item>
-	<item>
-		<name>create_error</name>
-		<message>While creating the poll an error has occured!</message>
-	</item>
-	<item>
-		<name>create_success</name>
-		<message>The poll has been created successfully!</message>
 	</item>
 	<item>
 		<name>delete</name>
@@ -45,24 +33,8 @@
 		<message>To delete answer, please click on the checkbox on the left hand side of the form.</message>
 	</item>
 	<item>
-		<name>delete_error</name>
-		<message>While deleting the marked polls an error has occured.</message>
-	</item>
-	<item>
-		<name>delete_success</name>
-		<message>The marked polls have been deleted successfully.</message>
-	</item>
-	<item>
 		<name>edit</name>
 		<message>Edit poll</message>
-	</item>
-	<item>
-		<name>edit_error</name>
-		<message>While editing the poll an error has occured.</message>
-	</item>
-	<item>
-		<name>edit_success</name>
-		<message>The poll has been edited successfully.</message>
 	</item>
 	<item>
 		<name>mod_description</name>

@@ -17,14 +17,14 @@ breadcrumb::assign($lang->t('menu_items', 'delete_blocks'));
 
 if (isset($_POST['entries']) && is_array($_POST['entries']))
 	$entries = $_POST['entries'];
-elseif (preg_match('/^([\d|]+)$/', $uri->entries))
+elseif (validate::deleteEntries($uri->entries))
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
 	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox($lang->t('menu_items', 'confirm_delete'), uri('acp/menu_items/delete_blocks/entries_' . $marked_entries), uri('acp/menu_items/adm_list_blocks'));
+	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/menu_items/delete_blocks/entries_' . $marked_entries), uri('acp/menu_items/adm_list_blocks'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
@@ -36,6 +36,6 @@ if (!isset($entries)) {
 
 	setNavbarCache();
 
-	$content = comboBox($bool ? $lang->t('menu_items', 'delete_block_success') : $lang->t('menu_items', 'delete_block_error'), uri('acp/menu_items/adm_list_blocks'));
+	$content = comboBox($bool ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/menu_items/adm_list_blocks'));
 }
 ?>

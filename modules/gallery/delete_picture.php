@@ -12,14 +12,14 @@ if (!defined('IN_ADM'))
 
 if (isset($_POST['entries']) && is_array($_POST['entries']))
 	$entries = $_POST['entries'];
-elseif (preg_match('/^([\d|]+)$/', $uri->entries))
+elseif (validate::deleteEntries($uri->entries))
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
 	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox($lang->t('gallery', 'confirm_picture_delete'), uri('acp/gallery/delete_picture/entries_' . $marked_entries), uri('acp/gallery/edit_gallery/id_' . $uri->id));
+	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/gallery/delete_picture/entries_' . $marked_entries), uri('acp/gallery/edit_gallery/id_' . $uri->id));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
@@ -33,6 +33,6 @@ if (!isset($entries)) {
 			setGalleryCache($picture[0]['gallery_id']);
 		}
 	}
-	$content = comboBox($bool ? $lang->t('gallery', 'picture_delete_success') : $lang->t('gallery', 'picture_delete_error'), uri(!empty($picture[0]['gallery_id']) ? 'acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id'] : 'acp/gallery'));
+	$content = comboBox($bool ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri(!empty($picture[0]['gallery_id']) ? 'acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id'] : 'acp/gallery'));
 }
 ?>

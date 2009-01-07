@@ -38,7 +38,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'pages_blocks', 'id
 
 			setNavbarCache();
 
-			$content = comboBox($bool ? $lang->t('menu_items', 'edit_block_success') : $lang->t('menu_items', 'edit_block_error'), uri('acp/menu_items/adm_list_blocks'));
+			$content = comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/menu_items/adm_list_blocks'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

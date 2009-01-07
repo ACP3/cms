@@ -17,32 +17,12 @@
 		<message>Es konnten nicht alle Kategorien gelöscht werden, da sie noch von mindestens einem Datensatz verwendet werden.</message>
 	</item>
 	<item>
-		<name>confirm_delete</name>
-		<message>Sollen die ausgewählten Kategorien wirklich gelöscht werden?</message>
-	</item>
-	<item>
 		<name>create</name>
 		<message>Neue Kategorie erstellen</message>
 	</item>
 	<item>
-		<name>create_error</name>
-		<message>Beim Erstellen der Kategorie ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>create_success</name>
-		<message>Die Kategorie wurde erfolgreich erstellt.</message>
-	</item>
-	<item>
 		<name>delete</name>
 		<message>Kategorien löschen</message>
-	</item>
-	<item>
-		<name>delete_error</name>
-		<message>Beim Löschen der ausgewählten Kategorien ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>delete_success</name>
-		<message>Die ausgewählten Kategorien wurden erfolgreich gelöscht.</message>
 	</item>
 	<item>
 		<name>description_to_short</name>
@@ -51,14 +31,6 @@
 	<item>
 		<name>edit</name>
 		<message>Kategorie bearbeiten</message>
-	</item>
-	<item>
-		<name>edit_error</name>
-		<message>Beim Bearbeiten der Kategorie ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>edit_success</name>
-		<message>Die Kategorie wurde erfolgreich bearbeitet.</message>
 	</item>
 	<item>
 		<name>image_filesize</name>

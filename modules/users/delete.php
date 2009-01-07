@@ -12,14 +12,14 @@ if (!defined('IN_ADM'))
 
 if (isset($_POST['entries']) && is_array($_POST['entries']))
 	$entries = $_POST['entries'];
-elseif (preg_match('/^([\d|]+)$/', $uri->entries))
+elseif (validate::deleteEntries($uri->entries))
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
 	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox($lang->t('users', 'confirm_delete'), uri('acp/users/delete/entries_' . $marked_entries), uri('acp/users'));
+	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/users/delete/entries_' . $marked_entries), uri('acp/users'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
@@ -42,7 +42,7 @@ if (!isset($entries)) {
 	if ($admin_user) {
 		$text = $lang->t('users', 'admin_user_undeletable');
 	} else {
-		$text = $bool ? $lang->t('users', 'delete_success') : $lang->t('users', 'delete_error');
+		$text = $bool ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
 	}
 	$content = comboBox($text, $self_delete ? ROOT_DIR : uri('acp/users'));
 }

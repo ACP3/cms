@@ -54,7 +54,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'categories', 'id =
 
 			setCategoriesCache($db->escape($module[0]['module'], 3));
 
-			$content = comboBox($bool ? $lang->t('categories', 'edit_success') : $lang->t('categories', 'edit_error'), uri('acp/categories'));
+			$content = comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/categories'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

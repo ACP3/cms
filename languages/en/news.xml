@@ -17,32 +17,12 @@
 		<message>Please complete the statements for the additional hyperlink</message>
 	</item>
 	<item>
-		<name>confirm_delete</name>
-		<message>Do you really want to delete the marked news?</message>
-	</item>
-	<item>
 		<name>create</name>
 		<message>Create a new news</message>
 	</item>
 	<item>
-		<name>create_error</name>
-		<message>While creating the news anerror has occured.</message>
-	</item>
-	<item>
-		<name>create_success</name>
-		<message>The news has been created successfully.</message>
-	</item>
-	<item>
 		<name>delete</name>
 		<message>Delete news</message>
-	</item>
-	<item>
-		<name>delete_error</name>
-		<message>While deleting the marked news an error has occured.</message>
-	</item>
-	<item>
-		<name>delete_success</name>
-		<message>The marked news have been deleted successfully.</message>
 	</item>
 	<item>
 		<name>details</name>
@@ -51,14 +31,6 @@
 	<item>
 		<name>edit</name>
 		<message>Edit news</message>
-	</item>
-	<item>
-		<name>edit_error</name>
-		<message>While editing the news an error has occured.</message>
-	</item>
-	<item>
-		<name>edit_success</name>
-		<message>The news has been edited successfully.</message>
 	</item>
 	<item>
 		<name>headline</name>

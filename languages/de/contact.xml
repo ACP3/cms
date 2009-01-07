@@ -23,14 +23,6 @@
 		{message}</message>
 	</item>
 	<item>
-		<name>edit_error</name>
-		<message>Beim Bearbeiten der Kontakt Daten ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>edit_success</name>
-		<message>Die Kontakt Daten wurden erfolgreich bearbeitet.</message>
-	</item>
-	<item>
 		<name>contact_information</name>
 		<message>Kontakt Daten</message>
 	</item>

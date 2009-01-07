@@ -1,44 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
 	<item>
-		<name>confirm_delete</name>
-		<message>Do you really want to delete the marked guestbook entries?</message>
-	</item>
-	<item>
 		<name>create</name>
 		<message>New entry</message>
-	</item>
-	<item>
-		<name>create_error</name>
-		<message>While creating the guestbook entry an error has occured.</message>
-	</item>
-	<item>
-		<name>create_success</name>
-		<message>The guestbook entry has been created successfully.</message>
 	</item>
 	<item>
 		<name>delete</name>
 		<message>Delete guestbook entries</message>
 	</item>
 	<item>
-		<name>delete_error</name>
-		<message>While deleting the marked guestbook entries an error has occured.</message>
-	</item>
-	<item>
-		<name>delete_success</name>
-		<message>The marked guestbook entries have been deleted successfully.</message>
-	</item>
-	<item>
 		<name>edit</name>
 		<message>Edit guestbook entry</message>
-	</item>
-	<item>
-		<name>edit_error</name>
-		<message>While editing the guestbook entry an error has occured.</message>
-	</item>
-	<item>
-		<name>edit_success</name>
-		<message>The guestbook entry has been edited successfully.</message>
 	</item>
 	<item>
 		<name>guestbook</name>

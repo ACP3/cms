@@ -19,7 +19,7 @@ if (!isset($entries)) {
 	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox($lang->t('comments', 'confirm_delete'), uri('acp/comments/delete_comments_per_module/entries_' . $marked_entries), uri('acp/comments'));
+	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/comments/delete_comments_per_module/entries_' . $marked_entries), uri('acp/comments'));
 } elseif (preg_match('/^([\w|]+)$/', $entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
@@ -28,6 +28,6 @@ if (!isset($entries)) {
 			$bool = $db->delete('comments', 'module = \'' . $entry . '\'');
 		}
 	}
-	$content = comboBox($bool ? $lang->t('comments', 'delete_success') : $lang->t('comments', 'delete_error'), uri('acp/comments'));
+	$content = comboBox($bool ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/comments'));
 }
 ?>

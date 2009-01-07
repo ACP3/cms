@@ -21,6 +21,18 @@
 		<message>Category</message>
 	</item>
 	<item>
+		<name>confirm_delete</name>
+		<message>Do you really want to delete the marked entries?</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>While creating the entry an error has occured.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>The entry has been created successfully.</message>
+	</item>
+	<item>
 		<name>date</name>
 		<message>Date</message>
 	</item>
@@ -41,16 +53,32 @@
 		<message>Delete</message>
 	</item>
 	<item>
+		<name>delete_error</name>
+		<message>While deleting the marked entries an error has occured.</message>
+	</item>
+	<item>
 		<name>delete_marked</name>
 		<message>Delete marked entries</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>The marked entries have been deleted successfully.</message>
 	</item>
 	<item>
 		<name>description</name>
 		<message>Description</message>
 	</item>
 	<item>
+		<name>edit_error</name>
+		<message>While editing the entry an error has occured.</message>
+	</item>
+	<item>
 		<name>edit_order</name>
 		<message>Edit order</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>The entry has been edited successfully.</message>
 	</item>
 	<item>
 		<name>email</name>

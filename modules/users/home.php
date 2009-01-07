@@ -13,7 +13,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 
 		$bool = $db->update('users', array('draft' => $db->escape($form['draft'], 2)), 'id = \'' . USER_ID . '\'');
 
-		$content = comboBox($bool ? $lang->t('users', 'draft_success') : $lang->t('users', 'draft_error'), uri('users/home'));
+		$content = comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('users/home'));
 	}
 	if (!isset($_POST['submit'])) {
 		$user = $db->select('draft', 'users', 'id = \'' . USER_ID . '\'');

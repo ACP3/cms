@@ -37,44 +37,16 @@
 		<message>It\'s impossible to delete the administrator and guest access levels.</message>
 	</item>
 	<item>
-		<name>confirm_delete</name>
-		<message>Do you really want to delete the marked access levels?</message>
-	</item>
-	<item>
 		<name>create</name>
 		<message>Create a new access level</message>
-	</item>
-	<item>
-		<name>create_error</name>
-		<message>While creating the access level an error has occured.</message>
-	</item>
-	<item>
-		<name>create_success</name>
-		<message>The access level has been created successfully.</message>
 	</item>
 	<item>
 		<name>delete</name>
 		<message>Delete access levels</message>
 	</item>
 	<item>
-		<name>delete_error</name>
-		<message>While deleting the marked access levels an error has occured.</message>
-	</item>
-	<item>
-		<name>delete_success</name>
-		<message>The marked access levels have been deleted successfully.</message>
-	</item>
-	<item>
 		<name>edit</name>
 		<message>Edit access level</message>
-	</item>
-	<item>
-		<name>edit_error</name>
-		<message>While editing the access level an error has occured.</message>
-	</item>
-	<item>
-		<name>edit_success</name>
-		<message>The access level has been edited successfully.</message>
 	</item>
 	<item>
 		<name>mod_description</name>

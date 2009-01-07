@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('news', $insert_values);
 
-		$content = comboBox($bool ? $lang->t('news', 'create_success') : $lang->t('news', 'create_error'), uri('acp/news'));
+		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/news'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

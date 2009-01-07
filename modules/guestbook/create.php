@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('guestbook', $insert_values);
 
-		$content = comboBox($bool ? $lang->t('guestbook', 'create_success') : $lang->t('guestbook', 'create_error'), uri('guestbook'));
+		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('guestbook'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

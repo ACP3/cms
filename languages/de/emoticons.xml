@@ -5,28 +5,8 @@
 		<message>Code</message>
 	</item>
 	<item>
-		<name>confirm_delete</name>
-		<message>Sollen die ausgewählten Emoticons wirklich gelöscht werden?</message>
-	</item>
-	<item>
 		<name>create</name>
 		<message>Emoticon hinzufügen</message>
-	</item>
-	<item>
-		<name>create_error</name>
-		<message>Beim Hinzufügen des Emoticons zur Datenbank ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>create_success</name>
-		<message>Das Emoticon wurde der Datenbank erfolgreich hinzugefügt.</message>
-	</item>
-	<item>
-		<name>delete_error</name>
-		<message>Beim Löschen der ausgewählten Emoticons ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>delete_success</name>
-		<message>Die ausgewählten Emoticons wurde erfolgreich gelöscht.</message>
 	</item>
 	<item>
 		<name>edit</name>
@@ -35,14 +15,6 @@
 	<item>
 		<name>delete</name>
 		<message>Emoticon löschen</message>
-	</item>
-	<item>
-		<name>edit_error</name>
-		<message>Beim Bearbeiten des Emoticons ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>edit_success</name>
-		<message>Das Emoticon wurde erfolgreich bearbeitet.</message>
 	</item>
 	<item>
 		<name>emoticons</name>

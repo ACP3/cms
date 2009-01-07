@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 		$bool = $db->insert('emoticons', $insert_values);
 		setEmoticonsCache();
 
-		$content = comboBox($bool ? $lang->t('emoticons', 'create_success') : $lang->t('emoticons', 'create_error'), uri('acp/emoticons'));
+		$content = comboBox($bool ? $lang->t('ommon', 'create_success') : $lang->t('common', 'create_error'), uri('acp/emoticons'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
