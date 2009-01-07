@@ -5,44 +5,16 @@
 		<message>Code</message>
 	</item>
 	<item>
-		<name>confirm_delete</name>
-		<message>Do you really want to delete the marked emoticons?</message>
-	</item>
-	<item>
 		<name>create</name>
 		<message>Create a new emoticons</message>
-	</item>
-	<item>
-		<name>create_error</name>
-		<message>While creating the emoticon an error has occured.</message>
-	</item>
-	<item>
-		<name>create_success</name>
-		<message>The emoticons has been created successfully.</message>
 	</item>
 	<item>
 		<name>delete</name>
 		<message>Delete emoticons</message>
 	</item>
 	<item>
-		<name>delete_error</name>
-		<message>While deleting the marked emoticons an error has occured.</message>
-	</item>
-	<item>
-		<name>delete_success</name>
-		<message>The marked emoticons have been deleted successfully.</message>
-	</item>
-	<item>
 		<name>edit</name>
 		<message>Edit emoticon</message>
-	</item>
-	<item>
-		<name>edit_error</name>
-		<message>While editing the emoticon an error has occured.</message>
-	</item>
-	<item>
-		<name>edit_success</name>
-		<message>The emoticon has been edited successfully.</message>
 	</item>
 	<item>
 		<name>emoticons</name>

@@ -76,7 +76,7 @@ function comments($module, $entry_id)
 
 			$bool = $db->insert('comments', $insert_values);
 
-			return comboBox($bool ? $lang->t('comments', 'create_success') : $lang->t('comments', 'create_error'), uri($uri->query));
+			return comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri($uri->query));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

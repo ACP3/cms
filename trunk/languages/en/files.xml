@@ -5,32 +5,12 @@
 		<message>Please select one of the below categories.</message>
 	</item>
 	<item>
-		<name>confirm_delete</name>
-		<message>Do you really want to delete the marked downloads?</message>
-	</item>
-	<item>
 		<name>create</name>
 		<message>Create a new download</message>
 	</item>
 	<item>
-		<name>create_error</name>
-		<message>While creating the download an error has occured.</message>
-	</item>
-	<item>
-		<name>create_success</name>
-		<message>The download has been created successfully.</message>
-	</item>
-	<item>
 		<name>delete</name>
 		<message>Delete downloads</message>
-	</item>
-	<item>
-		<name>delete_error</name>
-		<message>While delelting the marked download an error has occured.</message>
-	</item>
-	<item>
-		<name>delete_success</name>
-		<message>The marked have been deleted successfully.</message>
 	</item>
 	<item>
 		<name>description_to_short</name>
@@ -47,14 +27,6 @@
 	<item>
 		<name>edit</name>
 		<message>Edit download</message>
-	</item>
-	<item>
-		<name>edit_error</name>
-		<message>While editing the download an error has occured.</message>
-	</item>
-	<item>
-		<name>edit_success</name>
-		<message>The download has been edited successfully.</message>
 	</item>
 	<item>
 		<name>external_resource</name>

@@ -58,7 +58,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 			$cookie_value = base64_encode($form['nickname'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]));
 			setcookie('ACP3_AUTH', $cookie_value, time() + 3600, '/');
 
-			$content = comboBox($bool ? $lang->t('users', 'edit_profile_success') : $lang->t('users', 'edit_profile_error'), uri('users/home'));
+			$content = comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('users/home'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

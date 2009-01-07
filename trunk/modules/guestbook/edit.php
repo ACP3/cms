@@ -29,7 +29,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'guestbook', 'id = 
 
 			$bool = $db->update('guestbook', $update_values, 'id = \'' . $uri->id . '\'');
 
-			$content = comboBox($bool ? $lang->t('guestbook', 'edit_success') : $lang->t('guestbook', 'edit_error'), uri('acp/guestbook'));
+			$content = comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/guestbook'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

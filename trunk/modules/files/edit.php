@@ -73,7 +73,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'files', 'id = \'' 
 			$bool = $db->update('files', $update_values, 'id = \'' . $uri->id . '\'');
 			setFilesCache($uri->id);
 
-			$content = comboBox($bool ? $lang->t('files', 'edit_success') : $lang->t('files', 'edit_error'), uri('acp/files'));
+			$content = comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/files'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

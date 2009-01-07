@@ -47,7 +47,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'gallery', 'id = \'
 			$bool = $db->insert('gallery_pictures', $insert_values);
 			setGalleryCache($uri->id);
 
-			$content = comboBox($bool ? $lang->t('gallery', 'add_picture_success') : $lang->t('gallery', 'add_picture_error'), uri('acp/gallery/edit_gallery/id_' . $uri->id));
+			$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/gallery/edit_gallery/id_' . $uri->id));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

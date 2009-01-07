@@ -12,14 +12,14 @@ if (!defined('IN_ADM'))
 
 if (isset($_POST['entries']) && is_array($_POST['entries']))
 	$entries = $_POST['entries'];
-elseif (preg_match('/^([\d|]+)$/', $uri->entries))
+elseif (validate::deleteEntries($uri->entries))
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
 	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox($lang->t('files', 'confirm_delete'), uri('acp/files/delete/entries_' . $marked_entries), uri('acp/files'));
+	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/files/delete/entries_' . $marked_entries), uri('acp/files'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
 	$bool = 0;
@@ -33,6 +33,6 @@ if (!isset($entries)) {
 			cache::delete('files_details_id_' . $entry);
 		}
 	}
-	$content = comboBox($bool ? $lang->t('files', 'delete_success') : $lang->t('files', 'delete_error'), uri('acp/files'));
+	$content = comboBox($bool ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/files'));
 }
 ?>

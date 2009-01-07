@@ -5,28 +5,8 @@
 		<message>Add picture</message>
 	</item>
 	<item>
-		<name>add_picture_error</name>
-		<message>While adding the picture to the gallery an error has occured.</message>
-	</item>
-	<item>
-		<name>add_picture_success</name>
-		<message>The picture was successfully added to the gallery.</message>
-	</item>
-	<item>
-		<name>confirm_delete</name>
-		<message>Do you really want to delete the marked galleries?</message>
-	</item>
-	<item>
-		<name>confirm_picture_delete</name>
-		<message>Do you really want to delete the marked pictures?</message>
-	</item>
-	<item>
 		<name>create</name>
 		<message>Create a new gallery</message>
-	</item>
-	<item>
-		<name>create_error</name>
-		<message>While creating the gallery an error has occured.</message>
 	</item>
 	<item>
 		<name>delete_gallery</name>
@@ -37,24 +17,8 @@
 		<message>Delete pictures</message>
 	</item>
 	<item>
-		<name>create_success</name>
-		<message>The gallery has been created successfully.</message>
-	</item>
-	<item>
-		<name>delete_error</name>
-		<message>While deleting the marked galleries an error has occured.</message>
-	</item>
-	<item>
-		<name>delete_success</name>
-		<message>The marked galleries have been deleted successfully.</message>
-	</item>
-	<item>
 		<name>details</name>
 		<message>Picture details</message>
-	</item>
-	<item>
-		<name>edit_error</name>
-		<message>Beim Bearbeiten der Fotogalerie ist ein Fehler aufgetreten.</message>
 	</item>
 	<item>
 		<name>edit_gallery</name>
@@ -63,18 +27,6 @@
 	<item>
 		<name>edit_picture</name>
 		<message>Edit picture</message>
-	</item>
-	<item>
-		<name>edit_picture_error</name>
-		<message>While editing the picture an error has occured.</message>
-	</item>
-	<item>
-		<name>edit_picture_success</name>
-		<message>The picture has been edited successfully.</message>
-	</item>
-	<item>
-		<name>edit_success</name>
-		<message>The gallery has been edited successfully.</message>
 	</item>
 	<item>
 		<name>filename</name>
@@ -143,14 +95,6 @@
 	<item>
 		<name>picture</name>
 		<message>Picture</message>
-	</item>
-	<item>
-		<name>picture_delete_error</name>
-		<message>While deleting the marked picture an error has occured</message>
-	</item>
-	<item>
-		<name>picture_delete_success</name>
-		<message>The marked picture were successfully delted.</message>
 	</item>
 	<item>
 		<name>picture_index</name>

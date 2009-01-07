@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('menu_items_blocks', $insert_values);
 
-		$content = comboBox($bool ? $lang->t('menu_items', 'create_block_success') : $lang->t('menu_items', 'create_block_error'), uri('acp/menu_items/adm_list_blocks'));
+		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/menu_items/adm_list_blocks'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

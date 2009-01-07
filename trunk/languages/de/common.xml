@@ -21,6 +21,18 @@
 		<message>Kategorie</message>
 	</item>
 	<item>
+		<name>confirm_delete</name>
+		<message>Sollen die ausgewählten Datensätze wirklich gelöscht werden?</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>Beim Erstellen des Eintrages ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>Der Eintrag wurde erfolgreich erstellt.</message>
+	</item>
+	<item>
 		<name>date</name>
 		<message>Datum</message>
 	</item>
@@ -41,16 +53,32 @@
 		<message>Löschen</message>
 	</item>
 	<item>
+		<name>delete_error</name>
+		<message>Beim Löschen der ausgewählten Einträge ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
 		<name>delete_marked</name>
 		<message>Markierte Einträge löschen</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>Die ausgewählten Einträgen wurden erfolgreich gelöscht.</message>
 	</item>
 	<item>
 		<name>description</name>
 		<message>Beschreibung</message>
 	</item>
 	<item>
+		<name>edit_error</name>
+		<message>Beim Bearbeiten des Eintrages ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
 		<name>edit_order</name>
 		<message>Reihenfolge bearbeiten</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>Der Eintrag wurde erfolgreich bearbeitet.</message>
 	</item>
 	<item>
 		<name>email</name>

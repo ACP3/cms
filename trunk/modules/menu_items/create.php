@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
 	}
 	if (!validate::isNumber($form['target']) ||
 		$form['mode'] == '1' && (!is_dir(ACP3_ROOT . 'modules/' . $form['module']) || preg_match('=/=', $form['module'])) ||
-		$form['mode'] == '2' && !preg_match('/([A-Za-z_-]\/)*/', $form['uri']) ||
+		$form['mode'] == '2' && !preg_match('/(?i:[a-z_-]+\/){2,}/', $form['uri']) ||
 		$form['mode'] == '3' && empty($form['uri']))
 		$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
 
@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
 		$bool = insertNode($form['parent'], $insert_values);
 		setNavbarCache();
 
-		$content = comboBox($bool ? $lang->t('menu_items', 'create_success') : $lang->t('menu_items', 'create_error'), uri('acp/menu_items'));
+		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/menu_items'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

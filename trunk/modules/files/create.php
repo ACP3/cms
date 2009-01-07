@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = $db->insert('files', $insert_values);
 
-		$content = comboBox($bool ? $lang->t('files', 'create_success') : $lang->t('files', 'create_error'), uri('acp/files'));
+		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/files'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

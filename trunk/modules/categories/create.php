@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
 		$bool = $db->insert('categories', $insert_values);
 		setCategoriesCache($form['module']);
 
-		$content = comboBox($bool ? $lang->t('categories', 'create_success') : $lang->t('categories', 'create_error'), uri('acp/categories'));
+		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/categories'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

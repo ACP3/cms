@@ -17,32 +17,12 @@
 		<message>Not all marked categories have been deleted, because they are used by at least one resultset.</message>
 	</item>
 	<item>
-		<name>confirm_delete</name>
-		<message>Do you really want to delete the marked categories?</message>
-	</item>
-	<item>
 		<name>create</name>
 		<message>Create a new category</message>
 	</item>
 	<item>
-		<name>create_error</name>
-		<message>While creating the category an error has occured.</message>
-	</item>
-	<item>
-		<name>create_success</name>
-		<message>The category has been created successfully.</message>
-	</item>
-	<item>
 		<name>delete</name>
 		<message>Delete categories</message>
-	</item>
-	<item>
-		<name>delete_error</name>
-		<message>While deleting the marked categories an error has occured.</message>
-	</item>
-	<item>
-		<name>delete_success</name>
-		<message>The marked categories have been deleted successfully.</message>
 	</item>
 	<item>
 		<name>description_to_short</name>
@@ -51,14 +31,6 @@
 	<item>
 		<name>edit</name>
 		<message>Edit category</message>
-	</item>
-	<item>
-		<name>edit_error</name>
-		<message>While editing the category an error has occured.</message>
-	</item>
-	<item>
-		<name>edit_success</name>
-		<message>The category has been edited successfully.</message>
 	</item>
 	<item>
 		<name>image_filesize</name>

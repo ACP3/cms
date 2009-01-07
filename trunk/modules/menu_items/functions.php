@@ -68,7 +68,7 @@ function setNavbarCache() {
 	return cache::create('menu_items', $pages);
 }
 /**
- * Bindet die cacheten Navigationsleisten ein
+ * Bindet die gecacheten Navigationsleisten ein
  *
  * @return array
  */
@@ -80,29 +80,36 @@ function getNavbarCache()
 	return cache::output('menu_items');
 }
 /**
- * Löscht einen Knoten und aktualisiert die linken und rechten Werte
+ * Löscht einen Knoten und verschiebt seine Kinder eine Ebene nach oben
  *
- * @param integer $left_id
- *  Der linke Wert des zu löschenden Datensatzes
- * @param integer $right_id
- *  Der rechte Wert des zu löschenden Datensatzes
+ * @param integer $id
+ *  Die ID des zu löschenden Datensatzes
+ *
  * @return boolean
  */
-function deleteNode($id, $left_id, $right_id)
+function deleteNode($id)
 {
-	global $db;
+	if (!empty($id) && validate::isNumber($id)) {
+		global $db;
 
-	$bool = $db->delete('menu_items', 'left_id = \'' . $left_id . '\'');
-	$bool2 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - 1, right_id = right_id - 1 WHERE left_id BETWEEN ' . $left_id . ' AND ' . $right_id, 0);
-	$bool3 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - 2 WHERE left_id > ' . $right_id, 0);
-	$bool4 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - 2 WHERE right_id > ' . $right_id, 0);
+		$lr = $db->select('left_id, right_id', 'menu_items', 'id = \'' . $id . '\'');
+		if (count($lr) == 1) {
+			$bool = $db->delete('menu_items', 'left_id = \'' . $lr[0]['left_id'] . '\'');
+			$bool2 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - 1, right_id = right_id - 1 WHERE left_id BETWEEN ' . $lr[0]['left_id'] . ' AND ' . $lr[0]['right_id'], 0);
+			$bool3 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - 2 WHERE left_id > ' . $lr[0]['right_id'], 0);
+			$bool4 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - 2 WHERE right_id > ' . $lr[0]['right_id'], 0);
 
-	return $bool && $bool2 && $bool3 && $bool4 ? true : false;
+			return $bool && $bool2 && $bool3 && $bool4 ? true : false;
+		}
+	}
+	return false;
 }
 /**
  * Erstellt einen neuen Knoten
+ *
  * @param integer $parent
  * @param array $insert_values
+ *
  * @return boolean
  */
 function insertNode($parent, $insert_values)

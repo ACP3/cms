@@ -57,14 +57,6 @@
 		<message>Der Newsletter wurde erfolgreich versendet.</message>
 	</item>
 	<item>
-		<name>confirm_delete</name>
-		<message>Sollen die ausgewählten Newsletterkonten wirklich gelöscht werden?</message>
-	</item>
-	<item>
-		<name>confirm_archive_delete</name>
-		<message>Sollen die ausgewählten Newsletter wirklich gelöscht werden?</message>
-	</item>
-	<item>
 		<name>create</name>
 		<message>In Newsletter eintragen/austragen</message>
 	</item>
@@ -77,32 +69,8 @@
 		<message>Newsletter löschen</message>
 	</item>
 	<item>
-		<name>delete_archive_error</name>
-		<message>Beim Löschen der ausgewählten Newsletter ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>delete_archive_success</name>
-		<message>Die ausgewählten Newsletter wurden erfolgreich gelöscht.</message>
-	</item>
-	<item>
-		<name>delete_error</name>
-		<message>Beim Löschen der ausgewählten Newsletterkonten ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>delete_success</name>
-		<message>Die ausgewählten Newsletterkonten wurden erfolgreich gelöscht.</message>
-	</item>
-	<item>
 		<name>edit_archive</name>
 		<message>Newsletter bearbeiten</message>
-	</item>
-	<item>
-		<name>edit_error</name>
-		<message>Beim Bearbeiten der Newsletter Einstellungen ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>edit_success</name>
-		<message>Die Newsletter Einstellungen wurden erfolgreich bearbeitet.</message>
 	</item>
 	<item>
 		<name>entry</name>

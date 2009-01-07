@@ -64,6 +64,10 @@ class validate
 		}
 		return false;
 	}
+	public static function deleteEntries($entries)
+	{
+		return preg_match('/^([\d|]+)$/', $entries) ? true : false;
+	}
 	/**
 	 * Überprüft, ob eine Standardkonforme E-Mail-Adresse übergeben wurde
 	 *

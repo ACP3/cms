@@ -21,20 +21,8 @@
 		<message>Es ist nicht möglich alle Antworten zu löschen</message>
 	</item>
 	<item>
-		<name>confirm_delete</name>
-		<message>Sollen die ausgewählten Umfragen wirklich gelöscht werden?</message>
-	</item>
-	<item>
 		<name>create</name>
 		<message>Neue Umfrage erstellen</message>
-	</item>
-	<item>
-		<name>create_error</name>
-		<message>Beim Erstellen der Umfrage ist ein Fehler aufgetreten!</message>
-	</item>
-	<item>
-		<name>create_success</name>
-		<message>Die Umfrage wurde erfolgreich erstellt!</message>
 	</item>
 	<item>
 		<name>delete</name>
@@ -45,24 +33,8 @@
 		<message>Sie können Antworten löschen, indem Sie einfach auf das Auswahlfeld links neben den Antworten klicken.</message>
 	</item>
 	<item>
-		<name>delete_error</name>
-		<message>Beim Löschen der ausgewählten Umfragen ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>delete_success</name>
-		<message>Die ausgewählten Umfragen wurden erfolgreich gelöscht.</message>
-	</item>
-	<item>
 		<name>edit</name>
 		<message>Umfrage bearbeiten</message>
-	</item>
-	<item>
-		<name>edit_error</name>
-		<message>Beim Bearbeiten der Umfrage ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>edit_success</name>
-		<message>Die Umfrage wurde erfolgreich bearbeitet.</message>
 	</item>
 	<item>
 		<name>mod_description</name>

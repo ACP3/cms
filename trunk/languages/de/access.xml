@@ -37,44 +37,16 @@
 		<message>Die Zugriffslevel für Administratoren, Benutzer und Besucher können nicht gelöscht werden.</message>
 	</item>
 	<item>
-		<name>confirm_delete</name>
-		<message>Sollen die ausgewählten Zugriffslevel wirklich gelöscht werden?</message>
-	</item>
-	<item>
 		<name>create</name>
 		<message>Neuen Zugriffslevel erstellen</message>
-	</item>
-	<item>
-		<name>create_error</name>
-		<message>Beim Erstellen des Zugriffslevels ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>create_success</name>
-		<message>Das Zugriffslevel wurde erfolgreich erstellt.</message>
 	</item>
 	<item>
 		<name>delete</name>
 		<message>Zugriffslevel löschen</message>
 	</item>
 	<item>
-		<name>delete_error</name>
-		<message>Beim Löschen der ausgewählten Zugriffslevel ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>delete_success</name>
-		<message>Die ausgewählten Zugriffslevel wurden erfolgreich gelöscht.</message>
-	</item>
-	<item>
 		<name>edit</name>
 		<message>Zugriffslevel bearbeiten</message>
-	</item>
-	<item>
-		<name>edit_error</name>
-		<message>Beim Bearbeiten des Zugriffslevels ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>edit_success</name>
-		<message>Das Zugriffslevel wurde erfolgreich bearbeitet.</message>
 	</item>
 	<item>
 		<name>mod_description</name>

@@ -9,40 +9,12 @@
 		<message>The administrator can\'t be deleted.</message>
 	</item>
 	<item>
-		<name>confirm_delete</name>
-		<message>Do you really want to delete the marked user accounts?</message>
-	</item>
-	<item>
 		<name>create</name>
 		<message>Create a new user</message>
 	</item>
 	<item>
-		<name>create_error</name>
-		<message>While creating the user an error has occured.</message>
-	</item>
-	<item>
-		<name>create_success</name>
-		<message>The user has been created successfully.</message>
-	</item>
-	<item>
 		<name>delete</name>
 		<message>Delete users</message>
-	</item>
-	<item>
-		<name>delete_error</name>
-		<message>While deleting the marked users an error has occured.</message>
-	</item>
-	<item>
-		<name>delete_success</name>
-		<message>The marked users have been deleted successfully.</message>
-	</item>
-	<item>
-		<name>draft_error</name>
-		<message>While saving the draft an error has occured.</message>
-	</item>
-	<item>
-		<name>draft_success</name>
-		<message>The draft has been saved successfully.</message>
 	</item>
 	<item>
 		<name>drafts</name>
@@ -53,36 +25,12 @@
 		<message>Edit user</message>
 	</item>
 	<item>
-		<name>edit_error</name>
-		<message>While editing the user an error has occured.</message>
-	</item>
-	<item>
 		<name>edit_profile</name>
 		<message>Edit profile</message>
 	</item>
 	<item>
-		<name>edit_profile_error</name>
-		<message>While editing you user profile an error has occured.</message>
-	</item>
-	<item>
-		<name>edit_profile_success</name>
-		<message>Your user profile has been edited successfully.</message>
-	</item>
-	<item>
 		<name>edit_settings</name>
 		<message>Edit settings</message>
-	</item>
-	<item>
-		<name>edit_success</name>
-		<message>The user has been edited successfully.</message>
-	</item>
-	<item>
-		<name>edit_settings_error</name>
-		<message>While editing the settings of your user account an error has occured.</message>
-	</item>
-	<item>
-		<name>edit_settings_success</name>
-		<message>The settings of you user account have been edited successfully.</message>
 	</item>
 	<item>
 		<name>forgot_pwd</name>

@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
 			}
 		}
 
-		$content = comboBox($bool && $bool2 ? $lang->t('polls', 'create_success') : $lang->t('polls', 'create_error'), uri('acp/polls'));
+		$content = comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/polls'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
