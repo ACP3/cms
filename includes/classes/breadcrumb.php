@@ -81,12 +81,12 @@ class breadcrumb
 				// übergeordneten Menüpunkten verschmelzen
 				if ($mode == 1) {
 					if (!empty(self::$steps) && !empty(self::$end)) {
-						array_unshift(array_slice($pages, 0, -1), self::$steps);
+						array_unshift(self::$steps, array_slice($pages, 0, -1));
 					} else {
 						self::$steps = array_slice($pages, 0, -1);
 						self::$end = $pages[$c_pages - 1]['title'];
 					}
-				} else {
+				} elseif (empty(self::$end)) {
 					self::$end = $pages[$c_pages - 1]['title'];
 				}
 			// Brotkümelspur erzeugen, falls keine durch das Modul festgelegt wurde
