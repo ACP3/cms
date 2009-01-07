@@ -81,7 +81,10 @@ class breadcrumb
 				// übergeordneten Menüpunkten verschmelzen
 				if ($mode == 1) {
 					if (!empty(self::$steps) && !empty(self::$end)) {
-						array_unshift(self::$steps, array_slice($pages, 0, -1));
+						unset(self::$steps[0]);
+						for ($i = $c_pages - 1; $i >= 0; --$i) {
+							array_unshift(self::$steps, $pages[$i]);
+						}
 					} else {
 						self::$steps = array_slice($pages, 0, -1);
 						self::$end = $pages[$c_pages - 1]['title'];
