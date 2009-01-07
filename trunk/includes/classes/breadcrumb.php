@@ -19,14 +19,14 @@ class breadcrumb
 	 * Enthält alle Schritte der Brotkrümelspur
 	 *
 	 * @var array
-	 * @access protected
+	 * @access private
 	 */
 	protected static $steps = array();
 	/**
 	 * Das Ende der Brotkrümelspur
 	 *
 	 * @var string
-	 * @access protected
+	 * @access private
 	 */
 	protected static $end = '';
 
@@ -37,6 +37,7 @@ class breadcrumb
 	 * 	Bezeichnung der jeweiligen Stufe der Brotkrume
 	 * @param string $uri
 	 * 	Der zum $title zugehörige Hyperlink
+	 *
 	 * @return array
 	 */
 	public static function assign($title, $uri = 0)
@@ -59,98 +60,60 @@ class breadcrumb
 	 * @param integer $mode
 	 * 	1 = Brotkrümelspur ausgeben
 	 * 	2 = Nur Seitentitel ausgeben
+	 *
 	 * @return string
 	 */
 	public static function output($mode = 1)
 	{
-		global $lang, $uri, $tpl;
+		global $db, $lang, $uri, $tpl;
 
 		$module = $uri->mod;
 		$page = $uri->page;
 
-		// Brotkrümelspur für die Menüpunkte
-		if ($module == 'menu_items' && $page == 'list') {
-			global $db;
+		// Frontendbereich
+		if (defined('IN_ACP3')) {
+			$pages = $db->query('SELECT p.title, p.uri FROM ' . CONFIG_DB_PRE . 'menu_items p, ' . CONFIG_DB_PRE . 'menu_items c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND (c.uri = \'' . $module . '\' OR c.uri = \'' . $uri->query . '\') ORDER BY p.left_id ASC');
+			$c_pages = count($pages);
 
-			$id = $uri->item;
-
-			$chk_page = $db->query('SELECT COUNT(p.id) AS level FROM ' . CONFIG_DB_PRE . 'menu_items p, ' . CONFIG_DB_PRE . 'menu_items c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $uri->item . ' AND p.mode = 2 ORDER BY p.left_id DESC LIMIT 1', 1);
-
-			// Dynamische Seiten (ACP3 intern)
-			if ($chk_page == 1 && !empty(self::$steps) && !empty(self::$end)) {
-				// Die durch das Modul festgelegte Brotkrümelspur ausgeben
+			// Dynamische Seite (ACP3 intern)
+			if ($c_pages > 1) {
+				// Die durch das Modul festgelegte Brotkrümelspur mit den
+				// übergeordneten Menüpunkten verschmelzen
 				if ($mode == 1) {
-					$tpl->assign('breadcrumb', self::$steps);
-					$tpl->assign('end', self::$end);
-					return $tpl->fetch('common/breadcrumb.html');
-				// Nur den Titel der Moduldatei ausgeben
-				} else {
-					return self::$end;
-				}
-			// Statische Seiten
-			} else {
-				$pages = $db->query('SELECT p.id, p.title FROM ' . CONFIG_DB_PRE . 'menu_items p, ' . CONFIG_DB_PRE . 'menu_items c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $uri->item . ' ORDER BY p.left_id');
-				$c_pages = count($pages);
-
-				// Brotkrümelspur ausgeben
-				if ($mode == 1) {
-					for ($i = 0; $i < $c_pages; ++$i) {
-						if ($i == $c_pages - 1) {
-							self::$end = $pages[$i]['title'];
-						} else {
-							self::assign($pages[$i]['title'], uri('menu_items/list/item_' . $pages[$i]['id']));
-						}
+					if (!empty(self::$steps) && !empty(self::$end)) {
+						array_unshift(array_slice($pages, 0, -1), self::$steps);
+					} else {
+						self::$steps = array_slice($pages, 0, -1);
+						self::$end = $pages[$c_pages - 1]['title'];
 					}
-					$tpl->assign('breadcrumb', self::$steps);
-					$tpl->assign('end', self::$end);
-					return $tpl->fetch('common/breadcrumb.html');
-				// Nur Seitentitel ausgeben
 				} else {
-					return $pages[$c_pages - 1]['title'];
+					self::$end = $pages[$c_pages - 1]['title'];
 				}
+			// Brotkümelspur erzeugen, falls keine durch das Modul festgelegt wurde
+			} elseif (empty(self::$steps) && empty(self::$end)) {
+				self::$end = $page == 'list' ? $lang->t($module, $module) : $lang->t($module, $page);
 			}
-		// Brotkrümelspur für das Frontend
-		} elseif (defined('IN_ACP3') && $mode == 1) {
-			// Zusätzlich zugewiesene Brotkrumen an Smarty übergeben
-			if (count(self::$steps) > 0) {
-				$tpl->assign('breadcrumb', self::$steps);
-				$tpl->assign('end', self::$end);
-			// Falls keine zusätzlichen Brotkrumen angegeben sind, jeweiligen Seitennamen der Moduldatei ausgeben
+		// ACP
+		} elseif (defined('IN_ADM') && empty(self::$steps) && empty(self::$end)) {
+			self::assign($lang->t('common', 'acp'), uri('acp'));
+			// Modulindex der jeweiligen ACP-Seite
+			if ($page == 'adm_list') {
+				self::assign($lang->t($module, $module));
 			} else {
-				if (!empty(self::$end)) {
-					$tpl->assign('end', self::$end);
-				} elseif ($page == 'list') {
-					$tpl->assign('end', $lang->t($module, $module));
-				} else {
-					$tpl->assign('end', $lang->t($module, $page));
-				}
-			}
-			return $tpl->fetch('common/breadcrumb.html');
-		// Brotkrümelspur für das Admin Panel
-		} elseif (defined('IN_ADM') && $mode == 1) {
-			if ($page == 'adm_list' && count(self::$steps) == 0 && empty(self::$end)) {
-				self::assign($lang->t('common', 'acp'), uri('acp'));
-				$tpl->assign('breadcrumb', self::$steps);
-				$tpl->assign('end', $lang->t($module, $module));
-			} elseif (count(self::$steps) > 0 || !empty(self::$end)) {
-				$tpl->assign('breadcrumb', self::$steps);
-				$tpl->assign('end', self::$end);
-			// Falls keine zusätzlichen Brotkrumen angegeben sind, jeweiligen Seitennamen der Moduldatei ausgeben
-			} else {
-				self::assign($lang->t('common', 'acp'), uri('acp'));
 				self::assign($lang->t($module, $module), uri('acp/' . $module));
-				$tpl->assign('breadcrumb', self::$steps);
-				$tpl->assign('end', $lang->t($module, $page));
-			}
-			return $tpl->fetch('common/breadcrumb.html');
-		// Nur Seitentitel ausgeben
-		} else {
-			if (!empty(self::$end)) {
-				return self::$end;
-			} else {
-				return $page != 'list' && $page != 'adm_list' ? $lang->t($module, $page) : $lang->t($module, $module);
+				self::assign($lang->t($module, $page));
 			}
 		}
+
+		// Brotkrümelspur ausgeben
+		if ($mode == 1) {
+			$tpl->assign('breadcrumb', self::$steps);
+			$tpl->assign('end', self::$end);
+			return $tpl->fetch('common/breadcrumb.html');
+		}
+
+		// Nur Titel ausgeben
+		return self::$end;
 	}
 }
 ?>
