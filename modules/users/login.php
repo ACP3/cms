@@ -16,8 +16,9 @@ if ($auth->isUser()) {
 } elseif (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
-	$user = $db->select('id, pwd', 'users', 'nickname = \'' . $db->escape($form['nickname']) . '\'');
+	$user = $db->select('id, pwd, login_errors', 'users', 'nickname = \'' . $db->escape($form['nickname']) . '\' AND login_errors < 3');
 	$isUser = false;
+	$lock = false;
 
 	if (count($user) == 1) {
 		// Passwort aus Datenbank
@@ -30,6 +31,16 @@ if ($auth->isUser()) {
 		// Wenn beide Hashwerte gleich sind, Benutzer authentifizieren
 		if ($db_hash === $form_pwd_hash) {
 			$isUser = true;
+			// Login-Fehler zurücksetzen
+			if ($user[0]['login_errors'] > 0)
+				$db->update('users', array('login_errors' => 0), 'id = \'' . $user[0]['id'] . '\'');
+		// Beim dritten falschen Login den Account sperren
+		} else {
+			$l_errors = $user[0]['login_errors'] + 1;
+			$db->update('users', array('login_errors' => $l_errors), 'id = \'' . $user[0]['id'] . '\'');
+			if ($l_errors == 3) {
+				$lock = true;
+			}
 		}
 	}
 	if ($isUser) {
@@ -44,7 +55,7 @@ if ($auth->isUser()) {
 			redirect(0, ROOT_DIR);
 		}
 	} else {
-		$error[] = $lang->t('users', 'nickname_or_password_wrong');
+		$error[] = $lang->t('users', $lock ? 'account_locked' : 'nickname_or_password_wrong_or_account_locked');
 		$tpl->assign('error_msg', comboBox($error));
 	}
 }

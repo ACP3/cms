@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
 	<item>
+		<name>account_locked</name>
+		<message>Your user account has been locked. To reactivate it, please you the &quot;forgot password&quot; function, which will send you a new password.</message>
+	</item>
+	<item>
 		<name>administration</name>
 		<message>Administration</message>
 	</item>
@@ -93,8 +97,8 @@
 		<message>User name</message>
 	</item>
 	<item>
-		<name>nickname_or_password_wrong</name>
-		<message>Either the user name or the password is wrong.</message>
+		<name>nickname_or_password_wrong_or_account_locked</name>
+		<message>Either the user name, or the password is wrong or your user account has been deactivated. In this case, please you the &quot;forgot password&quot; which will send you a new password.</message>
 	</item>
 	<item>
 		<name>pwd</name>
