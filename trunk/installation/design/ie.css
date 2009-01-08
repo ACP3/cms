@@ -18,10 +18,3 @@ input.form {
 a.form {
 	padding: 2px 18px;
 }
-#accordion fieldset {
-	width: 100%;
-	padding: 20px 10px 10px;
-}
-#accordion fieldset dl {
-	margin: 0;
-}
