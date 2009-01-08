@@ -21,14 +21,14 @@ class breadcrumb
 	 * @var array
 	 * @access private
 	 */
-	protected static $steps = array();
+	private static $steps = array();
 	/**
 	 * Das Ende der Brotkrümelspur
 	 *
 	 * @var string
 	 * @access private
 	 */
-	protected static $end = '';
+	private static $end = '';
 
 	/**
 	 * Zuweisung der jewiligen Stufen der Brotkrümelspur

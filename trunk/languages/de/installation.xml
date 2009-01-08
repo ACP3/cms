@@ -57,6 +57,10 @@
 		<message>Gefunden</message>
 	</item>
 	<item>
+		<name>gd_library</name>
+		<message>GD Grafikbibliothek</message>
+	</item>
+	<item>
 		<name>hostname_description</name>
 		<message>(meistens "localhost")</message>
 	</item>
@@ -159,6 +163,10 @@
 	<item>
 		<name>pages_sidebar</name>
 		<message>Sidebar</message>
+	</item>
+	<item>
+		<name>pdo_extension</name>
+		<message>PDO Erweiterung</message>
 	</item>
 	<item>
 		<name>query_failed</name>

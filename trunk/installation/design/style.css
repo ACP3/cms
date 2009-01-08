@@ -100,14 +100,14 @@ table {
 #head ul li {
 	float: left;
 }
-#head ul li a {
+#head ul li span {
 	margin-right: 3px;
 	padding: 0 5px;
 	line-height: 30px;
 	color: #fff;
 	display: block;
 }
-#head ul li a:hover, #head ul li a.selected {
+#head ul li span.selected {
 	color: #f00;
 }
 #languages {
@@ -138,47 +138,10 @@ table {
 	color: #f00;
 	text-decoration: none;
 }
-#sidebar {
-	width: 19%;
-	border: 1px solid #333;
-	border-width: 1px 1px 0;
-	font-size: 1.2em;
-	text-align: left;
-	float: left;
-}
-#sidebar h4 {
-	height: 25px;
-	padding-left: 15px;
-	background: url('../../designs/acp3/images/common_header.png') repeat-x;
-	border-bottom: 1px solid #333;
-	font-size: 1.1em;
-	line-height: 25px;
-	color: #f90;
-	clear: both;
-}
-#sidebar ul {
-	margin: 0;
-	list-style: none;
-}
-#sidebar ul li {
-	width: 100%;
-	float: left;
-}
-#sidebar ul li a, #sidebar ul li span {
-	padding-left: 15px;
-	background: #eee;
-	border-bottom: 1px solid #333;
-	line-height: 22px;
-	color: #069;
-	display: block;
-}
-#sidebar ul li a:hover, #sidebar ul li a.selected, #sidebar ul li span.selected {
-	color: #f90;
-}
 #content {
 	width: 80%;
+	margin: 0 auto;
 	font-size: 1.2em;
-	float: right;
 }
 #footer {
 	clear: both;
@@ -285,20 +248,14 @@ a.form {
 	color: #f00000;
 }
 .success {
-	width: 70%;
+	width: 60%;
 	margin: 0 auto;
-	border: 1px solid #333;
+	border: 1px solid #eee;
+	border-color: #eee #c2c2c2 #c2c2c2 #eee;
 	text-align: center;
 }
-.successhead {
-	background: #069 url('../../designs/acp3/images/common_header.png') repeat-x;
-	border-bottom: 1px solid #333;
-	font-weight: bold;
-	line-height: 25px;
-	color: #f90;
-}
 .forward {
-	background: #eee;
+	background: #e5e5e5;
 	line-height: 28px;
 }
 /* Tabs */

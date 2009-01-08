@@ -19,11 +19,11 @@ include ACP3_ROOT . 'installation/includes/functions.php';
 $uri = new uri;
 
 if (empty($uri->query)) {
-	$uri->mod = 'overview';
+	$uri->mod = 'install';
 	$uri->page = 'welcome';
 }
 $l = !empty($_POST['lang']) ? $_POST['lang'] : $uri->lang;
-define('LANG', !empty($l) && is_file(ACP3_ROOT . 'languages/' . $l . '/info.xml') ? $l : 'de');
+define('LANG', !empty($l) && !preg_match('=/=', $l) && is_file(ACP3_ROOT . 'languages/' . $l . '/info.xml') ? $l : 'de');
 $lang = new lang;
 
 // Smarty einbinden
@@ -46,38 +46,25 @@ $tpl->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI'], ENT_QUOTES));
 $tpl->assign('LANG', LANG);
 
 $pages = array(
-	'overview' => array(
-		'title' => lang('installation', 'overview'),
-		'mod' => 'overview',
+	array(
+		'title' => lang('installation', 'welcome'),
+		'page' => 'welcome',
 		'selected' => '',
-		'pages' => array(
-			array(
-				'page' => 'welcome',
-				'selected' => '',
-			),
-			array(
-				'page' => 'licence',
-				'selected' => '',
-			),
-		),
 	),
-	'install' => array(
-		'title' => lang('installation', 'installation'),
-		'mod' => 'install',
+	array(
+		'title' => lang('installation', 'licence'),
+		'page' => 'licence',
 		'selected' => '',
-		'pages' => array(
-			array(
-				'page' => 'requirements',
-				'no_href' => true,
-				'selected' => '',
-			),
-			array(
-				'page' => 'configuration',
-				'no_href' => true,
-				'selected' => '',
-			),
-		),
+	),
+	array(
+		'title' => lang('installation', 'requirements'),
+		'page' => 'requirements',
+		'selected' => '',
+	),
+	array(
+		'title' => lang('installation', 'configuration'),
+		'page' => 'configuration',
+		'selected' => '',
 	),
 );
-$tpl->assign('currentModule', $uri->mod);
 ?>

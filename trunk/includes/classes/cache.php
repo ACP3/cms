@@ -79,15 +79,25 @@ class cache
 	}
 	/**
 	 * Löscht den gesamten Cache
+	 *
+	 * @param string $dir
+	 *	Einen Unterordner des Cache-Ordners löschen
 	 */
-	public static function purge()
+	public static function purge($dir = 0, $delete_folder = 0)
 	{
-		$cache_dir = scandir(ACP3_ROOT . 'cache');
-		$c_cache_dir = count($cache_dir);
+		$path = ACP3_ROOT . 'cache/' . (!empty($dir) ? $dir . '/' : '');
+		if (is_dir($path)) {
+			$cache_dir = scandir($path);
+			$c_cache_dir = count($cache_dir);
 
-		for ($i = 0; $i < $c_cache_dir; ++$i) {
-			if (is_file(ACP3_ROOT . 'cache/' . $cache_dir[$i]) && $cache_dir[$i] != '.htaccess') {
-				unlink(ACP3_ROOT . 'cache/' . $cache_dir[$i]);
+			for ($i = 0; $i < $c_cache_dir; ++$i) {
+				if (is_file($path . $cache_dir[$i]) && $cache_dir[$i] != '.htaccess') {
+					unlink($path . $cache_dir[$i]);
+				}
+			}
+			// Falls angewählt, den Unterordner auch löschen
+			if (!empty($dir) && $delete_folder == 1) {
+				unlink($path);
 			}
 		}
 		return;

@@ -40,12 +40,11 @@
 	</p>
 </fieldset>
 <br />
-<br />
 <div class="success forward">
 {if $stop_install}
 {lang values="installation|stop_installation"}
 {elseif $check_again}
-	<a href="{$request_uri}" class="form">{lang values="installation|check_again"}</a>
+	<a href="{$REQUEST_URI}" class="form">{lang values="installation|check_again"}</a>
 {else}
 	<a href="{uri args="install/configuration"}" class="form">{lang values="installation|configuration"}</a>
 {/if}
