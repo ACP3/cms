@@ -26,10 +26,14 @@ $queries = array(
 	'ALTER TABLE `{pre}guestbook` CHANGE `user_id` `user_id` INT(10) UNSIGNED NOT NULL',
 	'ALTER TABLE `{pre}news` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 	'ALTER TABLE `{pre}news` CHANGE `category_id` `category_id` INT(10) UNSIGNED NOT NULL',
+	'ALTER TABLE `{pre}news` CHANGE `target` `target` TINYINT(1) UNSIGNED NOT NULL',
 	'RENAME TABLE `{pre}nnewsletter_accounts` TO `{pre}newsletter_accounts`',
 	'ALTER TABLE `{pre}newsletter_accounts` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 	'ALTER TABLE `{pre}newsletter_archive` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}newsletter_archive` CHANGE `status` `status` TINYINT(1) UNSIGNED NOT NULL',
 	'ALTER TABLE `{pre}pages` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}pages` CHANGE `mode` `mode` TINYINT(1) UNSIGNED NOT NULL',
+	'ALTER TABLE `{pre}pages` CHANGE `target` `target` TINYINT(1) UNSIGNED NOT NULL',
 	'ALTER TABLE `{pre}pages` DROP INDEX `title`, ADD FULLTEXT `index` (`title`, `uri`)',
 	'ALTER TABLE `{pre}pages` DROP COLUMN `parent`',
 	'ALTER TABLE `{pre}pages` DROP COLUMN `sort`',
@@ -48,6 +52,10 @@ $queries = array(
 	'ALTER TABLE `{pre}poll_votes` ADD INDEX (`poll_id`, `answer_id`, `user_id`)',
 	'CREATE TABLE `{pre}static_pages` ( `id` INT(10) UNSIGNED NOT NULL auto_increment, `start` VARCHAR(14) NOT NULL, `end` VARCHAR(14) NOT NULL, `title` VARCHAR(120) NOT NULL, `text` TEXT NOT NULL, PRIMARY KEY (`id`)) {engine} {charset};',
 	'ALTER TABLE `{pre}users` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'ALTER TABLE `{pre}users` CHANGE `access` `access` INT(10) UNSIGNED NOT NULL',
+	'ALTER TABLE `{pre}users` CHANGE `time_zone` `time_zone` INT(5) UNSIGNED NOT NULL',
+	'ALTER TABLE `{pre}users` CHANGE `dst` `dst` TINYINT(1) UNSIGNED NOT NULL',
+	'ALTER TABLE `{pre}users` ADD `login_errors` TINYINT(1) UNSIGNED NOT NULL AFTER `draft`;',
 );
 
 if (count($queries) > 0) {

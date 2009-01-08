@@ -79,14 +79,14 @@ CREATE TABLE `{pre}menu_items` (
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
 	`start` VARCHAR(14) NOT NULL,
 	`end` VARCHAR(14) NOT NULL,
-	`mode` TINYINT(1) NOT NULL,
+	`mode` TINYINT(1) UNSIGNED NOT NULL,
 	`block_id` INT(10) UNSIGNED NOT NULL,
 	`root_id` INT(10) UNSIGNED NOT NULL,
 	`left_id` INT(10) UNSIGNED NOT NULL,
 	`right_id` INT(10) UNSIGNED NOT NULL,
 	`title` VARCHAR(120) NOT NULL,
 	`uri` VARCHAR(120) NOT NULL,
-	`target` TINYINT(1) NOT NULL,
+	`target` TINYINT(1) UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`title`, `uri`)
 ) {engine};
 
@@ -107,7 +107,7 @@ CREATE TABLE `{pre}news` (
 	`comments` TINYINT(1) NOT NULL,
 	`category_id` INT(10) UNSIGNED NOT NULL,
 	`uri` VARCHAR(120) NOT NULL,
-	`target` TINYINT(1) NOT NULL,
+	`target` TINYINT(1) UNSIGNED NOT NULL,
 	`link_title` VARCHAR(120) NOT NULL,
 	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`headline`,`text`)
 ) {engine};
@@ -124,7 +124,7 @@ CREATE TABLE `{pre}newsletter_archive` (
 	`date` VARCHAR(14) NOT NULL,
 	`subject` VARCHAR(120) NOT NULL,
 	`text` TEXT NOT NULL, 
-	`status` TINYINT(1) NOT NULL,
+	`status` TINYINT(1) UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine};
 
@@ -154,9 +154,9 @@ CREATE TABLE `{pre}poll_votes` (
 
 CREATE TABLE `{pre}static_pages` (
 	`id` INT(10) UNSIGNED NOT NULL auto_increment,
-	`start` VARCHAR( 14 ) NOT NULL,
-	`end` VARCHAR( 14 ) NOT NULL,
-	`title` VARCHAR( 120 ) NOT NULL,
+	`start` VARCHAR(14) NOT NULL,
+	`end` VARCHAR(14) NOT NULL,
+	`title` VARCHAR(120) NOT NULL,
 	`text` TEXT NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine};
@@ -169,10 +169,11 @@ CREATE TABLE `{pre}users` (
 	`access` INT(10) UNSIGNED NOT NULL,
 	`mail` VARCHAR(120) NOT NULL,
 	`website` VARCHAR(120) NOT NULL,
-	`time_zone` int(5) NOT NULL, 
-	`dst` TINYINT(1) NOT NULL,
+	`time_zone` int(5) UNSIGNED NOT NULL,
+	`dst` TINYINT(1) UNSIGNED NOT NULL,
 	`language` VARCHAR(10) NOT NULL,
 	`draft` TEXT NOT NULL,
+	`login_errors` TINYINT(1) UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine};
 
