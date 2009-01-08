@@ -10,20 +10,15 @@ require ACP3_ROOT . 'installation/includes/startup.php';
 // Überprüfen, ob die angeforderte Seite überhaupt existiert
 $i = 0;
 $is_page = false;
-if (array_key_exists($uri->mod, $pages)) {
-	foreach ($pages[$uri->mod]['pages'] as $row) {
-		if ($row['page'] == $uri->page) {
-			$pages[$uri->mod]['pages'][$i]['selected'] = ' class="selected"';
-			$tpl->assign('title', lang('installation', $row['page']));
-			$is_page = true;
-			break;
-		}
-		$i++;
+foreach ($pages as $row) {
+	if ($row['page'] == $uri->page) {
+		$pages[$i]['selected'] = ' class="selected"';
+		$tpl->assign('title', lang('installation', $row['page']));
+		$is_page = true;
+		break;
 	}
+	$i++;
 }
-
-// Selektion eines Menüpunktes in der Navigation
-$pages[$uri->mod]['selected'] = ' class="selected"';
 $tpl->assign('pages', $pages);
 
 // Sprachpakete
@@ -42,15 +37,18 @@ $tpl->assign('languages', $languages);
 
 if ($is_page) {
 	$content = '';
-	include ACP3_ROOT . 'installation/modules/' . $uri->mod . '/' . $uri->page . '.php';
+	include ACP3_ROOT . 'installation/modules/' . $uri->page . '.php';
 	$tpl->assign('content', $content);
 } else {
 	$tpl->assign('title', lang('errors', '404'));
-	$tpl->assign('currentModule', 'overview');
 	$tpl->assign('content', $tpl->fetch('404.html'));
 }
 
 $tpl->display('layout.html');
 
 ob_end_flush();
+
+if ($uri->mod == 'install' && $uri->page == 'configuration') {
+	cache::purge('installation', 1);
+}
 ?>

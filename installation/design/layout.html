@@ -17,7 +17,7 @@
 	<h1 id="page-title">ACP3 {lang values="installation|installation"}</h1>
 	<ul>
 {foreach from=$pages item=row}
-		<li><a href="{uri args="`$row.mod`/`$row.pages.0.page`"}"{$row.selected}>{$row.title}</a></li>
+		<li><span{$row.selected}>{$row.title}</span></li>
 {/foreach}
 	</ul>
 	<form action="{$REQUEST_URI}" method="post" id="languages">
@@ -33,21 +33,7 @@
 	</form>
 </div>
 <div id="breadcrumb">
-	<a href="{$ROOT_DIR}../">ACP3</a> &raquo; <a href="{uri args="overview/welcome"}">{lang values="installation|installation"}</a> &raquo; <span>{$title}</span>
-</div>
-<div id="sidebar">
-	<h4>{lang values="installation|navigation"}</h4>
-	<ul>
-{foreach from=$pages.$currentModule.pages item=row}
-		<li>
-{if !$row.no_href}
-			<a href="{uri args="`$currentModule`/`$row.page`"}"{$row.selected}>{lang values="installation|`$row.page`"}</a>
-{else}
-			<span{$row.selected}>{lang values="installation|`$row.page`"}</span>
-{/if}
-		</li>
-{/foreach}
-	</ul>
+	<a href="{$ROOT_DIR}../">ACP3</a> &raquo; <a href="{uri args="install/welcome"}">{lang values="installation|installation"}</a> &raquo; <span>{$title}</span>
 </div>
 <div id="content">
 	<h1>{$title}</h1>
