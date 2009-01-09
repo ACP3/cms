@@ -60,7 +60,7 @@ p {
 	margin: 10px 0;
 	text-align: justify;
 }
-table {
+table.acp-table {
 	width: 100%;
 	margin: 0 auto;
 	border: 0;
@@ -170,7 +170,7 @@ legend {
 	font: bold 1.1em/20px Arial, sans-serif;
 	color: #069;
 }
-fieldset dl {
+fieldset dl, #tabs div dl {
 	text-align: left;
 }
 fieldset ol {
@@ -184,34 +184,40 @@ label {
 label:hover {
 	color: #f00;
 }
-fieldset dl dt label {
+fieldset dl dt label, #tabs div dl dt label {
 	font-weight: bold;
 }
-fieldset dl dt span {
+fieldset dl dt span, #tabs div dl dt span {
 	font-size: 0.9em;
 }
-fieldset input, fieldset textarea {
+fieldset input, fieldset textarea,
+#tabs div input, #tabs div textarea {
 	display: block;
 }
-fieldset input, fieldset select, fieldset textarea {
+fieldset input, fieldset select, fieldset textarea,
+#tabs div input, #tabs div select, #tabs div textarea {
 	width: 100%;
 	margin: 1px;
 	background: #fff;
 	border: 1px solid #c2c2c2;
+	font: 100% Arial, sans-serif;
 }
-fieldset input:hover, fieldset select:hover, fieldset textarea:hover, fieldset input:focus, fieldset select:focus, fieldset textarea:focus {
+fieldset input:hover, fieldset select:hover, fieldset textarea:hover,
+fieldset input:focus, fieldset select:focus, fieldset textarea:focus,
+#tabs div input:hover, #tabs div select:hover, #tabs div textarea:hover,
+#tabs div input:focus, #tabs div select:focus, #tabs div textarea:focus {
 	background: #ffc;
 }
 input.checkbox {
 	width: auto;
 	background: none;
 	border: 0;
-	display: inline;
+	display: inline !important;
 }
 option {
 	padding: 0 5px 0 3px;
 }
-fieldset textarea {
+fieldset textarea, #tabs div textarea {
 	height: 150px;
 	overflow: auto;
 }
@@ -257,30 +263,4 @@ a.form {
 .forward {
 	background: #e5e5e5;
 	line-height: 28px;
-}
-/* Tabs */
-#tabs fieldset {
-	clear: both;
-}
-#tabs #wrapper {
-	width: 60%;
-	margin: 0 auto;
-}
-#tabs #wrapper a {
-	margin: 0 2px;
-	padding: 2px 3px;
-	background: #eee;
-	border: 1px solid #c2c2c2;
-	font-weight: bold;
-	font-size: 1.1em;
-	color: #000;
-	float: left;
-	display: block;
-	position: relative;
-	bottom: -1px;
-}
-#tabs #wrapper a:hover, #tabs #wrapper a.selected {
-	background: #fff;
-	border-bottom-color: #fff;
-	color: #f00;
 }

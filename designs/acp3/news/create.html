@@ -1,68 +1,72 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" id="tabs">
-	<fieldset>
-		<legend>{lang values="common|publication_period"}</legend>
-		<dl>
-			<dt><label for="start">{lang values="common|start_date"}</label></dt>
-			<dd>{$start_date}</dd>
-			<dt><label for="end">{lang values="common|end_date"}</label></dt>
-			<dd>{$end_date}</dd>
-		</dl>
-		<p>
-			{lang values="common|date_description"}
-		</p>
-	</fieldset>
-	<fieldset>
-		<legend>{lang values="news|news"}</legend>
-		<dl>
-			<dt><label for="headline">{lang values="news|headline"}</label></dt>
-			<dd><input type="text" name="form[headline]" id="headline" value="{$form.headline}" maxlength="120" /></dd>
-			<dt><label for="text">{lang values="news|text"}</label></dt>
-			<dd>{wysiwyg name="text" value="`$form.text`" height="250"}</dd>
-			<dt><label for="cat">{lang values="common|category"}</label></dt>
-			<dd>
-				<select name="form[cat]" id="cat">
-					<option value="">{lang values="common|pls_select"}</option>
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+	<div id="tabs">
+		<ul>
+			<li><a href="#tabs-1">{lang values="common|publication_period"}</a></li>
+			<li><a href="#tabs-2">{lang values="news|news"}</a></li>
+			<li><a href="#tabs-3">{lang values="news|additional_hyperlink"}</a></li>
+		</ul>
+		<div id="tabs-1">
+			<dl>
+				<dt><label for="start">{lang values="common|start_date"}</label></dt>
+				<dd>{$start_date}</dd>
+				<dt><label for="end">{lang values="common|end_date"}</label></dt>
+				<dd>{$end_date}</dd>
+			</dl>
+			<p>
+				{lang values="common|date_description"}
+			</p>
+		</div>
+		<div id="tabs-2">
+			<dl>
+				<dt><label for="headline">{lang values="news|headline"}</label></dt>
+				<dd><input type="text" name="form[headline]" id="headline" value="{$form.headline}" maxlength="120" /></dd>
+				<dt><label for="text">{lang values="news|text"}</label></dt>
+				<dd>{wysiwyg name="text" value="`$form.text`" height="250"}</dd>
+				<dt><label for="cat">{lang values="common|category"}</label></dt>
+				<dd>
+					<select name="form[cat]" id="cat">
+						<option value="">{lang values="common|pls_select"}</option>
 {foreach from=$categories item=row}
-					<option value="{$row.id}"{$row.selected}>{$row.name}</option>
+						<option value="{$row.id}"{$row.selected}>{$row.name}</option>
 {/foreach}
-				</select>
-			</dd>
-			<dt><label for="readmore">{lang values="common|options"}</label></dt>
-			<dd>
-				<ul style="margin:0 20px;list-style:none">
+					</select>
+				</dd>
+				<dt><label for="readmore">{lang values="common|options"}</label></dt>
+				<dd>
+					<ul style="margin:0 20px;list-style:none">
 {foreach from=$options item=row}
-					<li>
-						<label for="{$row.id}">
-							<input type="checkbox" name="form[{$row.name}]" id="{$row.id}" value="1" class="checkbox"{$row.checked} />
-							{$row.lang}
-						</label>
-					</li>
+						<li>
+							<label for="{$row.id}">
+								<input type="checkbox" name="form[{$row.name}]" id="{$row.id}" value="1" class="checkbox"{$row.checked} />
+								{$row.lang}
+							</label>
+						</li>
 {/foreach}
-				</ul>
-			</dd>
-		</dl>
-	</fieldset>
-	<fieldset>
-		<legend>{lang values="news|additional_hyperlink"}</legend>
-		<dl>
-			<dt><label for="uri">{lang values="news|uri"}</label></dt>
-			<dd><input type="text" name="form[uri]" id="uri" value="{$form.uri}" maxlength="120" /></dd>
-			<dt><label for="target">{lang values="news|target_page"}</label></dt>
-			<dd>
-				<select name="form[target]" id="target">
-					<option value="">{lang values="common|pls_select"}</option>
+					</ul>
+				</dd>
+			</dl>
+		</div>
+		<div id="tabs-3">
+			<dl>
+				<dt><label for="uri">{lang values="news|uri"}</label></dt>
+				<dd><input type="text" name="form[uri]" id="uri" value="{$form.uri}" maxlength="120" /></dd>
+				<dt><label for="target">{lang values="news|target_page"}</label></dt>
+				<dd>
+					<select name="form[target]" id="target">
+						<option value="">{lang values="common|pls_select"}</option>
 {foreach from=$target item=row}
-					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
-				</select>
-			</dd>
-			<dt><label for="link_title">{lang values="news|link_title"}</label></dt>
-			<dd><input type="text" name="form[link_title]" id="link_title" value="{$form.link_title}" maxlength="120" /></dd>
-		</dl>
-	</fieldset>
+					</select>
+				</dd>
+				<dt><label for="link_title">{lang values="news|link_title"}</label></dt>
+				<dd><input type="text" name="form[link_title]" id="link_title" value="{$form.link_title}" maxlength="120" /></dd>
+			</dl>
+		</div>
+	</div>
 	<div class="form-bottom">
 		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
 		<input type="reset" value="{lang values="common|reset"}" class="form" />

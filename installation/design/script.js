@@ -10,4 +10,5 @@ jQuery(function($) {
 		$('#queries').slideToggle('fast');
 		return false;
 	});
+	$('#tabs').tabs();
 })
