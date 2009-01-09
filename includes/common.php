@@ -33,7 +33,7 @@ define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
 // Smarty einbinden
 define('SMARTY_DIR', ACP3_ROOT . 'includes/smarty/');
 include SMARTY_DIR . 'Smarty.class.php';
-$tpl = new smarty;
+$tpl = new smarty();
 $tpl->template_dir = ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/';
 $tpl->compile_dir = ACP3_ROOT . 'cache/';
 $tpl->error_reporting = E_ALL;
@@ -52,7 +52,7 @@ $tpl->assign('PAGE_TITLE', CONFIG_TITLE);
 $tpl->assign('KEYWORDS', CONFIG_META_KEYWORDS);
 $tpl->assign('DESCRIPTION', CONFIG_META_DESCRIPTION);
 
-$uri = new uri;
+$uri = new uri();
 
 // Falls der Wartungsmodus aktiv ist, Wartungsnachricht ausgeben und Skript beenden
 if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
@@ -63,11 +63,12 @@ if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
 }
 
 // Klassen initialisieren
-$db = new db;
-$tpl->assign('MODULES', new modules);
+$db = new db();
+$db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PWD);
+$tpl->assign('MODULES', new modules());
 
 require_once ACP3_ROOT . 'includes/functions.php';
-$auth = new auth;
-$lang = new lang;
-$date = new date;
+$auth = new auth();
+$lang = new lang();
+$date = new date();
 ?>

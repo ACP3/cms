@@ -5,6 +5,7 @@ if (!defined('IN_INSTALL'))
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 	$config_path = ACP3_ROOT . 'includes/config.php';
+	$db = new db;
 
 	if (empty($form['db_host']))
 		$errors[] = lang('system', 'type_in_db_host');
@@ -12,14 +13,8 @@ if (isset($_POST['submit'])) {
 		$errors[] = lang('system', 'type_in_db_username');
 	if (empty($form['db_name']))
 		$errors[] = lang('system', 'type_in_db_name');
-	if (!empty($form['db_host']) && !empty($form['db_user']) && !empty($form['db_name'])) {
-		try {
-			$db = new PDO('mysql:host=' . $form['db_host'] . ';dbname=' . $form['db_name'], $form['db_user'], $form['db_pwd']);
-			$db = null;
-		} catch (PDOException $e) {
-			$errors[] = lang('installation', 'db_connection_failed');
-		}
-	}
+	if ($db->connect($form['db_host'], $form['db_name'], $form['db_user'], $form['db_pwd']) !== true)
+		$errors[] = lang('installation', 'db_connection_failed');
 	if (empty($form['user_name']))
 		$errors[] = lang('installation', 'type_in_user_name');
 	if ((empty($form['user_pwd']) || empty($form['user_pwd_wdh'])) || (!empty($form['user_pwd']) && !empty($form['user_pwd_wdh']) && $form['user_pwd'] != $form['user_pwd_wdh']))
@@ -76,7 +71,7 @@ if (isset($_POST['submit'])) {
 		config::system($config);
 		require $config_path;
 
-		$db = new db();
+		$db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PWD);
 
 		$sql_file = file_get_contents(ACP3_ROOT . 'installation/modules/install.sql');
 		$sql_file = str_replace(array("\r\n", "\r"), "\n", $sql_file);

@@ -26,13 +26,14 @@ class db
 	/**
 	 * Stellt die Verbindung mit der Datenbank her
 	 */
-	function __construct()
+	public function connect($db_host, $db_name, $db_user, $db_pwd)
 	{
 		try {
-			$this->link = new PDO('mysql:host=' . CONFIG_DB_HOST . ';dbname=' . CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PWD);
+			$this->link = new PDO('mysql:host=' . $db_host . ';dbname=' . $db_name, $db_user, $db_pwd);
+			$this->link->setAttribute(PDO::ATTR_ERRMODE, defined('DEBUG') && DEBUG ? PDO::ERRMODE_EXCEPTION : PDO::ERRMODE_SILENT);
+			return true;
 		} catch (PDOException $e) {
-			print "Beim Verbinden mit der Datenbank ist folgender Fehler aufgetreten:<br />\n" . $e->getMessage() . "<br/>\n";
-			die();
+			return $e->getMessage();
 		}
 	}
 	/**
@@ -41,17 +42,6 @@ class db
 	function __destruct()
 	{
 		$this->link = null;
-	}
-	/**
-	 * Falls SQL Fehler auftreten, werden diese ausgegeben
-	 */
-	private function error($query)
-	{
-		if (defined('DEBUG') && DEBUG && !$query) {
-			$error = $this->link->errorInfo();
-			print 'Fehler: ' . $error[1] . ' - ' . $error[2] . "<br />\n";
-			exit;
-		}
 	}
 	/**
 	 * Maskiert die Variablen vor dem Eintragen in die Datenbank
@@ -89,23 +79,27 @@ class db
 	 */
 	public function query($query, $mode = 2)
 	{
-		$stmt = $this->link->prepare($query);
-		$this->error($stmt);
-		switch ($mode) {
-			// Anzahl der Reihen zählen
-			case 1:
-				$stmt->execute();
-				$result = $stmt->fetchColumn();
-				break;
-			// Normale Query ausführen
-			case 2:
-				$stmt->execute();
-				$result = $stmt->fetchAll();
-				break;
-			default:
-				$result = $stmt->execute();
+		try {
+			switch ($mode) {
+				// Anzahl der Zeilen zählen
+				case 1:
+					$stmt = $this->link->query($query);
+					$result = $stmt->fetchColumn();
+					break;
+				// Query ausführen, die ein Resultset zurückgibt
+				case 2:
+					$stmt = $this->link->query($query);
+					$result = $stmt->fetchAll();
+					break;
+				// Queries ohne Resultset
+				default:
+					$result = $this->link->exec($query);
+			}
+			return $result;
+		} catch(PDOException $e) {
+			echo $e->getMessage();
+			return null;
 		}
-		return $result;
 	}
 	/**
 	 * Führt den DELETE Befehl aus

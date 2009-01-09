@@ -85,7 +85,7 @@ class cache
 	 */
 	public static function purge($dir = 0, $delete_folder = 0)
 	{
-		$path = ACP3_ROOT . 'cache/' . (!empty($dir) ? $dir . '/' : '');
+		$path = ACP3_ROOT . 'cache/' . (!empty($dir) && !preg_match('=/=', $dir) ? $dir . '/' : '');
 		if (is_dir($path)) {
 			$cache_dir = scandir($path);
 			$c_cache_dir = count($cache_dir);
@@ -97,7 +97,7 @@ class cache
 			}
 			// Falls angewählt, den Unterordner auch löschen
 			if (!empty($dir) && $delete_folder == 1) {
-				unlink($path);
+				rmdir($path);
 			}
 		}
 		return;
