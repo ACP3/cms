@@ -21,7 +21,7 @@ class lang
 	 * @var string
 	 * @access private
 	 */
-	private $lang = CONFIG_LANG;
+	private $lang = '';
 
 	function __construct()
 	{
@@ -30,9 +30,7 @@ class lang
 		// Installer abfangen
 		if (isset($auth)) {
 			$info = $auth->getUserInfo();
-			if (!empty($info)) {
-				$this->lang = $info['language'];
-			}
+			$this->lang = !empty($info) ? $info['language'] : CONFIG_LANG;
 		} else {
 			$this->lang = LANG;
 		}
