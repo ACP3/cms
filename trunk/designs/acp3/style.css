@@ -59,7 +59,7 @@ p {
 	margin: 10px 0;
 	text-align: justify;
 }
-table, tr, th, td {
+table.acp-table, .acp-table tr, .acp-table th, .acp-table td {
 	border: 1px solid #333;
 	border-collapse: collapse;
 	font-size: 1.0em;
@@ -68,7 +68,7 @@ table, tr, th, td {
 table.no-border, table.no-border tr, table.no-border th, table.no-border td {
 	border: 0;
 }
-table {
+table.acp-table {
 	width: 100%;
 	margin: 0 auto;
 }
@@ -76,7 +76,7 @@ tfoot, .sub-table-header {
 	background: #eee;
 	font-weight: bold;
 }
-th {
+.acp-table th {
 	padding: 0 3px;
 	background: #069 url('images/common_header.png') repeat-x;
 	font-weight: bold;
@@ -85,7 +85,7 @@ th {
 	color: #f90;
 	white-space: nowrap;
 }
-td {
+.acp-table td {
 	padding: 3px;
 }
 pre {
@@ -108,7 +108,7 @@ fieldset {
 	border: 1px solid #c2c2c2;
 	font-size: 100%;
 }
-fieldset dl {
+fieldset dl, #tabs div dl {
 	text-align: left;
 }
 fieldset fieldset {
@@ -135,39 +135,44 @@ label {
 label:hover {
 	color: #f00;
 }
-fieldset dl dt label {
+fieldset dl dt label, #tabs div dl dt label {
 	font-weight: bold;
 }
-fieldset dl dt span {
+fieldset dl dt span, #tabs div dl dt span {
 	font-size: 0.9em;
 }
-fieldset input, fieldset textarea {
+fieldset input, fieldset textarea,
+#tabs div input, #tabs div textarea {
 	display: block;
 }
-fieldset input, fieldset select, fieldset textarea {
+fieldset input, fieldset select, fieldset textarea,
+#tabs div input, #tabs div select, #tabs div textarea {
 	width: 100%;
 	margin: 1px;
 	background: #fff;
 	border: 1px solid #c2c2c2;
 	font: 100% Arial, sans-serif;
 }
-fieldset input:hover, fieldset select:hover, fieldset textarea:hover, fieldset input:focus, fieldset select:focus, fieldset textarea:focus {
+fieldset input:hover, fieldset select:hover, fieldset textarea:hover,
+fieldset input:focus, fieldset select:focus, fieldset textarea:focus,
+#tabs div input:hover, #tabs div select:hover, #tabs div textarea:hover,
+#tabs div input:focus, #tabs div select:focus, #tabs div textarea:focus {
 	background: #ffc;
 }
 input.checkbox {
 	width: auto;
 	background: none;
 	border: 0;
-	display: inline;
+	display: inline !important;
 }
-fieldset .readonly, fieldset .readonly:hover, fieldset .readonly:focus {
+.readonly, .readonly:hover, .readonly:focus {
 	background: #eee;
 	color: #888;
 }
 option {
 	padding: 0 5px 0 3px;
 }
-fieldset textarea {
+fieldset textarea, #tabs div textarea {
 	height: 150px;
 	overflow: auto;
 }
@@ -383,32 +388,6 @@ a.form {
 #pagination a, #pagination span {
 	padding: 2px 3px;
 	border: 1px solid #333;
-}
-/* Tabs */
-#tabs fieldset {
-	clear: both;
-}
-#tabs #wrapper {
-	width: 65%;
-	margin: 0 auto;
-}
-#tabs #wrapper a {
-	margin: 0 2px;
-	padding: 2px 3px;
-	background: #eee;
-	border: 1px solid #c2c2c2;
-	font-weight: bold;
-	font-size: 1.1em;
-	color: #000;
-	float: left;
-	display: block;
-	position: relative;
-	bottom: -1px;
-}
-#tabs #wrapper a:hover, #tabs #wrapper a.selected {
-	background: #fff;
-	border-bottom-color: #fff;
-	color: #f00;
 }
 /* ACP */
 #adm-list {
