@@ -22,7 +22,7 @@
 	</item>
 	<item>
 		<name>confirm_delete</name>
-		<message>Sollen die ausgewählten Datensätze wirklich gelöscht werden?</message>
+		<message>Sollen die ausgewählten Einträge wirklich gelöscht werden?</message>
 	</item>
 	<item>
 		<name>create_error</name>
@@ -62,7 +62,7 @@
 	</item>
 	<item>
 		<name>delete_success</name>
-		<message>Die ausgewählten Einträgen wurden erfolgreich gelöscht.</message>
+		<message>Die ausgewählten Einträge wurden erfolgreich gelöscht.</message>
 	</item>
 	<item>
 		<name>description</name>

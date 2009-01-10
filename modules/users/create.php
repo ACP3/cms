@@ -21,6 +21,12 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('common', 'wrong_email_format');
 	if (userEmailExists($form['mail']))
 		$errors[] = $lang->t('users', 'user_email_already_exists');
+	if (!is_numeric($form['time_zone']))
+		$errors[] = $lang->t('common', 'select_time_zone');
+	if (!validate::isNumber($form['dst']))
+		$errors[] = $lang->t('common', 'select_daylight_saving_time');
+	if (preg_match('=/=', $form['language']) || !is_file('languages/' . $form['language'] . '/info.xml'))
+		$errors[] = $lang->t('users', 'select_language');
 	if (!validate::isNumber($form['access']))
 		$errors[] = $lang->t('users', 'select_access_level');
 	if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])
@@ -34,14 +40,14 @@ if (isset($_POST['submit'])) {
 		$insert_values = array(
 			'id' => '',
 			'nickname' => $db->escape($form['nickname']),
-			'realname' => '',
+			'realname' => $db->escape($form['realname']),
 			'pwd' => sha1($salt . sha1($form['pwd'])) . ':' . $salt,
 			'access' => $form['access'],
 			'mail' => $form['mail'],
-			'website' => '',
-			'time_zone' => CONFIG_TIME_ZONE,
-			'dst' => CONFIG_DST,
-			'language' => CONFIG_LANG,
+			'website' => $db->escape($form['website'], 2),
+			'time_zone' => $form['time_zone'],
+			'dst' => $form['dst'],
+			'language' => $db->escape($form['language'], 2),
 			'draft' => '',
 		);
 
@@ -51,6 +57,34 @@ if (isset($_POST['submit'])) {
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+	// Zeitzonen
+	$tpl->assign('time_zone', timeZones(CONFIG_TIME_ZONE));
+
+	// Sommerzeit an/aus
+	$dst[0]['value'] = '1';
+	$dst[0]['checked'] = selectEntry('dst', '1', CONFIG_DST, 'checked');
+	$dst[0]['lang'] = $lang->t('common', 'yes');
+	$dst[1]['value'] = '0';
+	$dst[1]['checked'] = selectEntry('dst', '0', CONFIG_DST, 'checked');
+	$dst[1]['lang'] = $lang->t('common', 'no');
+	$tpl->assign('dst', $dst);
+
+	// Sprache
+	$languages = array();
+	$lang_dir = scandir(ACP3_ROOT . 'languages');
+	$c_lang_dir = count($lang_dir);
+	for ($i = 0; $i < $c_lang_dir; ++$i) {
+		$lang_info = xml::parseXmlFile(ACP3_ROOT . 'languages/' . $lang_dir[$i] . '/info.xml', '/language');
+		if (!empty($lang_info)) {
+			$name = $lang_info['name'];
+			$languages[$name]['dir'] = $lang_dir[$i];
+			$languages[$name]['selected'] = selectEntry('language', $lang_dir[$i], CONFIG_LANG);
+			$languages[$name]['name'] = $lang_info['name'];
+		}
+	}
+	ksort($languages);
+	$tpl->assign('languages', $languages);
+
 	$access = $db->select('id, name', 'access', 0, 'name ASC');
 	$c_access = count($access);
 
@@ -62,7 +96,9 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 	$defaults = array(
 		'nickname' => '',
+		'realname' => '',
 		'mail' => '',
+		'website' => '',
 	);
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);
