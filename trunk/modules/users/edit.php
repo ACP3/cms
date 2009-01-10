@@ -100,7 +100,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'users', 'id = \'' 
 		ksort($languages);
 		$tpl->assign('languages', $languages);
 
-	// Zugriffslevel holen
+		// Zugriffslevel holen
 		$access = $db->select('id, name', 'access', 0, 'name ASC');
 		$c_access = count($access);
 		for ($i = 0; $i < $c_access; ++$i) {

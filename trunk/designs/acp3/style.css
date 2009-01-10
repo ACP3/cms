@@ -103,9 +103,14 @@ form {
 }
 fieldset {
 	width: 65%;
-	margin: 0 auto 1px auto;
+	margin: 0 auto 1px;
 	padding: 10px;
 	border: 1px solid #c2c2c2;
+	font-size: 100%;
+}
+#tabs {
+	width: 60%;
+	margin: 0 auto;
 	font-size: 100%;
 }
 fieldset dl, #tabs div dl {
@@ -159,11 +164,11 @@ fieldset input:focus, fieldset select:focus, fieldset textarea:focus,
 #tabs div input:focus, #tabs div select:focus, #tabs div textarea:focus {
 	background: #ffc;
 }
-input.checkbox {
+fieldset dl dd input.checkbox, #tabs div input.checkbox {
 	width: auto;
 	background: none;
 	border: 0;
-	display: inline !important;
+	display: inline;
 }
 .readonly, .readonly:hover, .readonly:focus {
 	background: #eee;

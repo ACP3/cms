@@ -17,6 +17,7 @@
 		<item>
 			<file>create</file>
 			<level>2</level>
+			<include>functions</include>
 		</item>
 		<item>
 			<file>details</file>
