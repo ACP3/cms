@@ -30,7 +30,10 @@ class lang
 		// Installer abfangen
 		if (isset($auth)) {
 			$info = $auth->getUserInfo();
-			$this->lang = !empty($info) ? $info['language'] : CONFIG_LANG;
+			if (!empty($info) && !preg_match('=/=', $info['language']) && is_dir(ACP3_ROOT . 'languages/' . $info['language'] . '/'))
+				$this->lang = $info['language'];
+			else
+				$this->lang = CONFIG_LANG;
 		} else {
 			$this->lang = LANG;
 		}
