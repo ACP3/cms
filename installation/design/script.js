@@ -10,5 +10,5 @@ jQuery(function($) {
 		$('#queries').slideToggle('fast');
 		return false;
 	});
-	$('#tabs').tabs();
+	$('#tabs').tabs({ cookie: { expires: 30 }});
 })
