@@ -38,7 +38,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 
 			$bool = $db->update('users', $update_values, 'id = \'' . USER_ID . '\'');
 
-			$content = comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('users/home'));
+			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('users/home'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

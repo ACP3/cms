@@ -130,7 +130,7 @@ class db
 	 */
 	public function insert($table, $insert_values)
 	{
-		if (is_array($insert_values)) {
+		if (!empty($insert_values) && is_array($insert_values)) {
 			$fields = '';
 			$values = '';
 			foreach ($insert_values as $field => $value) {
@@ -190,13 +190,13 @@ class db
 	 */
 	public function update($table, $update_values, $where = 0, $limit = 0)
 	{
-		if (is_array($update_values)) {
-			$set_to = '';
+		if (!empty($update_values) && is_array($update_values)) {
+			$set = '';
 			foreach ($update_values as $field => $value) {
-				$set_to.= $field . ' = \'' . $value . '\', ';
+				$set.= $field . ' = \'' . $value . '\', ';
 			}
 
-			$query = 'UPDATE ' . CONFIG_DB_PRE . $table . ' SET ' . substr($set_to, 0, -2);
+			$query = 'UPDATE ' . CONFIG_DB_PRE . $table . ' SET ' . substr($set, 0, -2);
 			$query.= !empty($where) ? ' WHERE ' . $where : '';
 			$query.= !empty($limit) ? ' LIMIT ' . $limit : '';
 

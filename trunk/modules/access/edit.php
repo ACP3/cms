@@ -33,7 +33,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'access', 'id = \''
 
 			$bool = $db->update('access', $update_values, 'id = \'' . $uri->id . '\'');
 
-			$content = comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/access'));
+			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/access'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

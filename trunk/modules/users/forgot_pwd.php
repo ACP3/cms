@@ -44,7 +44,7 @@ if ($auth->isUser()) {
 				$salt = salt(12);
 				$bool = $db->update('users', array('pwd' => sha1($salt . sha1($new_password)) . ':' . $salt, 'login_errors' => 0), 'id = \'' . $user[0]['id'] . '\'');
 			}
-			$content = comboBox($mail_sent && isset($bool) && $bool ? $lang->t('users', 'forgot_pwd_success') : $lang->t('users', 'forgot_pwd_error'), ROOT_DIR);
+			$content = comboBox($mail_sent && isset($bool) && $bool !== null ? $lang->t('users', 'forgot_pwd_success') : $lang->t('users', 'forgot_pwd_error'), ROOT_DIR);
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
