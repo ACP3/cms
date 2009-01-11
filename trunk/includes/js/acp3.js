@@ -20,5 +20,5 @@ function mark_entries(name, action)
 	});
 }
 jQuery(function($) {
-	$('#tabs').tabs();
+	$('#tabs').tabs({ cookie: { expires: 30 }});
 })
