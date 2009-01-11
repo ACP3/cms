@@ -22,12 +22,12 @@ if (!isset($entries)) {
 	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/newsletter/delete_archive/entries_' . $marked_entries), uri('acp/newsletter/adm_list_archive'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
-	$bool = 0;
+	$bool = null;
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->select('COUNT(id)', 'newsletter_archive', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			$bool = $db->delete('newsletter_archive', 'id = \'' . $entry . '\'');
 		}
 	}
-	$content = comboBox($bool ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/newsletter/adm_list_archive'));
+	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/newsletter/adm_list_archive'));
 }
 ?>

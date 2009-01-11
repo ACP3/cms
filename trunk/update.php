@@ -60,20 +60,15 @@ $queries = array(
 	'ALTER TABLE `{pre}users` ADD `login_errors` TINYINT(1) UNSIGNED NOT NULL AFTER `draft`;',
 );
 
+// Änderungen am DB Schema vornehemen
 if (count($queries) > 0) {
 	$db = new db();
 
 	print "Aktualisierung der Datenbank:\n\n";
 	$bool = false;
 
-	// Änderungen am DB Schema vornehemen
-	if (version_compare(mysql_get_client_info(), '4.1', '>=')) {
-		$engine = 'ENGINE=MyISAM';
-		$charset = 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
-	} else {
-		$engine = 'TYPE=MyISAM';
-		$charset = 'CHARSET=utf-8';
-	}
+	$engine = 'ENGINE=MyISAM';
+	$charset = 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
 
 	foreach ($queries as $row) {
 		$row = str_replace(array('{pre}', '{engine}', '{charset}'), array(CONFIG_DB_PRE, $engine, $charset), $row);

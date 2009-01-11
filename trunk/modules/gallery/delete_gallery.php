@@ -22,8 +22,7 @@ if (!isset($entries)) {
 	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/gallery/delete_gallery/entries_' . $marked_entries), uri('acp/gallery'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
-	$bool = 0;
-	$bool2 = 0;
+	$bool = $bool2 = null;
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->select('COUNT(id)', 'gallery', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			// Hochgeladene Bilder löschen
@@ -39,6 +38,6 @@ if (!isset($entries)) {
 			cache::delete('gallery_pics_id_' . $entry);
 		}
 	}
-	$content = comboBox($bool && $bool2 ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/gallery'));
+	$content = comboBox($bool !== null && $bool2 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/gallery'));
 }
 ?>

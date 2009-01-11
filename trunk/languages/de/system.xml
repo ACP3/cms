@@ -257,10 +257,6 @@
 		<message>Es wurden insgesamt %d Module gefunden.</message>
 	</item>
 	<item>
-		<name>mysql_version</name>
-		<message>MySQL Version</message>
-	</item>
-	<item>
 		<name>not_optimal_server_configuration</name>
 		<message>Der Server ist nicht optimal konfiguriert</message>
 	</item>

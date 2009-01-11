@@ -257,10 +257,6 @@
 		<message>All in all, there are %d modules registered.</message>
 	</item>
 	<item>
-		<name>mysql_version</name>
-		<message>MySQL version</message>
-	</item>
-	<item>
 		<name>not_optimal_server_configuration</name>
 		<message>The server isn\'t well configured</message>
 	</item>

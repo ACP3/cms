@@ -22,12 +22,12 @@ if (!isset($entries)) {
 	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/menu_items/delete/entries_' . $marked_entries), uri('acp/menu_items'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
-	$bool = $bool2 = $bool3 = $bool4 = 0;
+	$bool = null;
 	foreach ($marked_entries as $entry) {
 		$bool = deleteNode($entry);
 	}
 	setNavbarCache();
 
-	$content = comboBox($bool ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/menu_items'));
+	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/menu_items'));
 }
 ?>

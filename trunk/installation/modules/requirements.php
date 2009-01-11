@@ -3,7 +3,6 @@ if (!defined('IN_INSTALL'))
 	exit;
 
 define('PHP_VER', '5.2.0');
-define('MYSQL_VER', '4.1');
 define('COLOR_ERROR', 'f00');
 define('COLOR_SUCCESS', '090');
 
@@ -12,18 +11,14 @@ $requirements[0]['name'] = lang('system', 'php_version');
 $requirements[0]['color'] = version_compare(phpversion(), PHP_VER, '>=') ? COLOR_SUCCESS : COLOR_ERROR;
 $requirements[0]['found'] = phpversion();
 $requirements[0]['required'] = PHP_VER;
-$requirements[1]['name'] = lang('system', 'mysql_version');
-$requirements[1]['color'] = version_compare(mysql_get_client_info(), MYSQL_VER, '>=') ? COLOR_SUCCESS : COLOR_ERROR;
-$requirements[1]['found'] = mysql_get_client_info();
-$requirements[1]['required'] = MYSQL_VER;
-$requirements[2]['name'] = lang('installation', 'pdo_extension');
-$requirements[2]['color'] = extension_loaded('pdo') && extension_loaded('pdo_mysql') ? COLOR_SUCCESS : COLOR_ERROR;
-$requirements[2]['found'] = lang('system', $requirements[2]['color'] == COLOR_ERROR ? 'on' : 'off');
+$requirements[1]['name'] = lang('installation', 'pdo_extension');
+$requirements[1]['color'] = extension_loaded('pdo') && extension_loaded('pdo_mysql') ? COLOR_SUCCESS : COLOR_ERROR;
+$requirements[1]['found'] = lang('system', $requirements[2]['color'] == COLOR_ERROR ? 'on' : 'off');
+$requirements[1]['required'] = lang('system', 'on');
+$requirements[2]['name'] = lang('installation', 'gd_library');
+$requirements[2]['color'] = extension_loaded('gd') ? COLOR_SUCCESS : COLOR_ERROR;
+$requirements[2]['found'] = lang('system', $requirements[3]['color'] == COLOR_ERROR ? 'on' : 'off');
 $requirements[2]['required'] = lang('system', 'on');
-$requirements[3]['name'] = lang('installation', 'gd_library');
-$requirements[3]['color'] = extension_loaded('gd') ? COLOR_SUCCESS : COLOR_ERROR;
-$requirements[3]['found'] = lang('system', $requirements[3]['color'] == COLOR_ERROR ? 'on' : 'off');
-$requirements[3]['required'] = lang('system', 'on');
 
 $tpl->assign('requirements', $requirements);
 
@@ -88,7 +83,7 @@ $php_settings[3]['color'] =  (bool)ini_get('safe_mode') ? COLOR_ERROR : COLOR_SU
 $php_settings[3]['value'] = lang('system', (bool)ini_get('safe_mode') ? 'on' : 'off');
 $tpl->assign('php_settings', $php_settings);
 
-if (version_compare(phpversion(), PHP_VER, '<') || version_compare(mysql_get_client_info(), MYSQL_VER, '<') || $requirements[2]['color'] == COLOR_ERROR || $requirements[3]['color'] == COLOR_ERROR) {
+if (version_compare(phpversion(), PHP_VER, '<') || $requirements[1]['color'] == COLOR_ERROR || $requirements[2]['color'] == COLOR_ERROR) {
 	$tpl->assign('stop_install', true);
 } elseif ($check_again) {
 	$tpl->assign('check_again', true);
