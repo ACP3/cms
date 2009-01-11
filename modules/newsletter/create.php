@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 			} else {
 				$bool = $db->delete('newsletter_accounts', 'mail = \'' . $form['mail'] . '\'');
 
-				$content = comboBox($bool ? $lang->t('newsletter', 'unsubscribe_success') : $lang->t('newsletter', 'unsubscribe_error'), ROOT_DIR);
+				$content = comboBox($bool !== null ? $lang->t('newsletter', 'unsubscribe_success') : $lang->t('newsletter', 'unsubscribe_error'), ROOT_DIR);
 			}
 			break;
 	}

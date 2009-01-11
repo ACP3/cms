@@ -76,11 +76,7 @@ if (isset($_POST['submit'])) {
 		$sql_file = file_get_contents(ACP3_ROOT . 'installation/modules/install.sql');
 		$sql_file = str_replace(array("\r\n", "\r"), "\n", $sql_file);
 		$sql_file = str_replace('{pre}', CONFIG_DB_PRE, $sql_file);
-		if (version_compare(mysql_get_client_info(), '4.1', '>=')) {
-			$sql_file = str_replace('{engine}', 'ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`', $sql_file);
-		} else {
-			$sql_file = str_replace('{engine}', 'TYPE=MyISAM CHARSET=utf-8', $sql_file);
-		}
+		$sql_file = str_replace('{engine}', 'ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`', $sql_file);
 
 		$sql_file_arr = explode(";\n", $sql_file);
 		$salt = salt(12);

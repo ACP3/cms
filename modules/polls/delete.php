@@ -22,7 +22,7 @@ if (!isset($entries)) {
 	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/polls/delete/entries_' . $marked_entries), uri('acp/polls'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
-	$bool = 0;
+	$bool = $bool2 = $bool3 = null;
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->select('COUNT(id)', 'poll_question', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			$bool = $db->delete('poll_question', 'id = \'' . $entry . '\'');
@@ -30,6 +30,6 @@ if (!isset($entries)) {
 			$bool3 = $db->delete('poll_votes', 'poll_id = \'' . $entry . '\'');
 		}
 	}
-	$content = comboBox($bool && $bool2 && $bool3 ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/polls'));
+	$content = comboBox($bool !== null && $bool2 !== null && $bool3 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/polls'));
 }
 ?>

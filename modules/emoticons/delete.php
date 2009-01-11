@@ -22,7 +22,7 @@ if (!isset($entries)) {
 	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/emoticons/delete/entries_' . $marked_entries), uri('acp/emoticons'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
-	$bool = 0;
+	$bool = null;
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->select('COUNT(id)', 'emoticons', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			// Datei ebenfalls löschen
@@ -33,6 +33,6 @@ if (!isset($entries)) {
 	}
 	setEmoticonsCache();
 
-	$content = comboBox($bool ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/emoticons'));
+	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/emoticons'));
 }
 ?>

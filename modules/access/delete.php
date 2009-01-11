@@ -22,7 +22,7 @@ if (!isset($entries)) {
 	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/access/delete/entries_' . $marked_entries), uri('acp/access'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
-	$bool = 0;
+	$bool = null;
 	$level_undeletable = 0;
 
 	foreach ($marked_entries as $entry) {
@@ -37,7 +37,7 @@ if (!isset($entries)) {
 	if ($level_undeletable) {
 		$text = $lang->t('access', 'access_level_undeletable');
 	} else {
-		$text = $bool ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
+		$text = $bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
 	}
 	$content = comboBox($text, uri('acp/access'));
 }

@@ -22,8 +22,7 @@ if (!isset($entries)) {
 	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/news/delete/entries_' . $marked_entries), uri('acp/news'));
 } elseif (preg_match('/^([\d|]+)$/', $entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
-	$bool = 0;
-	$bool2 = 0;
+	$bool = $bool2 = null;
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->select('COUNT(id)', 'news', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
 			$bool = $db->delete('news', 'id = \'' . $entry . '\'');
@@ -32,6 +31,6 @@ if (!isset($entries)) {
 			cache::delete('news_details_id_' . $entry);
 		}
 	}
-	$content = comboBox($bool && $bool2 ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/news'));
+	$content = comboBox($bool !== null && $bool2 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/news'));
 }
 ?>

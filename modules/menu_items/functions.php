@@ -99,7 +99,7 @@ function deleteNode($id)
 			$bool3 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - 2 WHERE left_id > ' . $lr[0]['right_id'], 0);
 			$bool4 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - 2 WHERE right_id > ' . $lr[0]['right_id'], 0);
 
-			return $bool && $bool2 && $bool3 && $bool4 ? true : false;
+			return $bool !== null && $bool2 !== null && $bool3 !== null && $bool4 !== null ? true : false;
 		}
 	}
 	return false;
