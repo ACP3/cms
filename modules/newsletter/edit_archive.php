@@ -55,9 +55,9 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'newsletter_archive
 					}
 				}
 			}
-			if ($form['action'] == '0' && $bool) {
+			if ($form['action'] == '0' && $bool !== null) {
 				$content = comboBox($lang->t('newsletter', 'save_success'), uri('acp/newsletter/adm_list_archive'));
-			} elseif ($form['action'] == '1' && $bool && $bool2) {
+			} elseif ($form['action'] == '1' && $bool !== null && $bool2) {
 				$content = comboBox($lang->t('newsletter', 'compose_success'), uri('acp/newsletter/adm_list_archive'));
 			} else {
 				$content = comboBox($lang->t('newsletter', 'compose_save_error'), uri('acp/newsletter/adm_list_archive'));
