@@ -1,3 +1,41 @@
 <div class="mark-entries">
 	<a href="javascript:mark_entries('{$checkbox_name}','add')">{lang values="common|mark_all"}</a> <span>::</span> <a href="javascript:mark_entries('{$checkbox_name}','remove')">{lang values="common|unmark_all"}</a>
 </div>
+{literal}
+<script type="text/javascript">
+jQuery(function($) {
+	$('div.mark-entries').append('<' + 'div id="dialog"><' + 'h5 style="text-align:center">{/literal}{lang values="common|confirm_delete"}{literal}<' + '/h5><' + '/div>');
+	$('#dialog').hide();
+	$('form #adm-list input[type=image]').click(function() {
+		var entries = $('form input:checkbox:checked').val() || [];
+		var ary = '';
+
+		jQuery.each(entries, function() {
+			ary = ary + this + '|';
+		});
+
+		if (ary != '') {
+			$('#dialog').show();
+			$('#dialog').dialog({
+				resizeable : false,
+				height: 140,
+				modal: true,
+				overlay: {
+					backgroundColor: '#000',
+					opacity: 0.5
+				},
+				buttons: {
+					{/literal}{lang values="common|no"}{literal}: function() {
+						location.href = {/literal}'{$REQUEST_URI}'{literal};
+					},
+					{/literal}{lang values="common|yes"}{literal}: function() {
+						location.href = $('form').attr('action') + 'entries_' + ary + '/confirmed_1/';
+					}
+				}
+			});
+			return false;
+		}
+	});
+});
+</script>
+{/literal}
