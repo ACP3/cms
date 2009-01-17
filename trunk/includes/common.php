@@ -18,7 +18,7 @@ if (!defined('INSTALLED')) {
 }
 
 // Wenn der DEBUG Modus aktiv ist, Fehler ausgeben
-error_reporting(E_ALL);
+error_reporting(defined('DEBUG') && DEBUG ? E_ALL : 0);
 
 function __autoload($className)
 {

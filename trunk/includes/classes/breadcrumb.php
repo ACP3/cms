@@ -104,6 +104,8 @@ class breadcrumb
 			// Modulindex der jeweiligen ACP-Seite
 			if ($page == 'adm_list') {
 				self::assign($lang->t($module, $module));
+			} elseif ($module == 'errors') {
+				self::assign($lang->t($module, $page));
 			} else {
 				self::assign($lang->t($module, $module), uri('acp/' . $module));
 				self::assign($lang->t($module, $page));

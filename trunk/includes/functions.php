@@ -265,7 +265,14 @@ function pagination($rows)
  */
 function redirect($args, $new_page = 0)
 {
-	header('Location:' . (empty($args) && !empty($new_page) ? str_replace('&amp;', '&', $new_page) : uri($args)));
+	if (!empty($args)) {
+		if ($args == 'errors/404' || $args == 'errors/403')
+			$args = (defined('IN_ACP3') ? '' : 'acp/') . $args;
+		
+		header('Location: ' . uri($args));
+		exit;
+	}
+	header('Location:' . str_replace('&amp;', '&', $new_page));
 	exit;
 }
 /**
