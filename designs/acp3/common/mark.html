@@ -4,8 +4,6 @@
 {literal}
 <script type="text/javascript">
 jQuery(function($) {
-	$('div.mark-entries').append('<' + 'div id="dialog"><' + 'h5 style="text-align:center">{/literal}{lang values="common|confirm_delete"}{literal}<' + '/h5><' + '/div>');
-	$('#dialog').hide();
 	$('form #adm-list input[type=image]').click(function() {
 		var entries = $('form input:checkbox:checked').val() || [];
 		var ary = '';
@@ -14,11 +12,13 @@ jQuery(function($) {
 			ary = ary + this + '|';
 		});
 
+		$('div.mark-entries').append('<' + 'div id="dialog"><' + 'h5 style="text-align:center"><' + '/h5><' + '/div>');
+
 		if (ary != '') {
-			$('#dialog').show();
+			$('#dialog h5').text('{/literal}{lang values="common|confirm_delete"}{literal}');
 			$('#dialog').dialog({
-				resizeable : false,
-				height: 140,
+				draggable: false,
+				resizable : false,
 				modal: true,
 				overlay: {
 					backgroundColor: '#000',
@@ -33,8 +33,19 @@ jQuery(function($) {
 					}
 				}
 			});
-			return false;
+		} else {
+			$('#dialog h5').text('{/literal}{lang values="common|no_entries_selected"}{literal}');
+			$('#dialog').dialog({
+				draggable: false,
+				resizable : false,
+				modal: true,
+				overlay: {
+					backgroundColor: '#000',
+					opacity: 0.5
+				}
+			});
 		}
+		return false;
 	});
 });
 </script>
