@@ -12,7 +12,7 @@ jQuery(function($) {
 			ary = ary + this + '|';
 		});
 
-		$('div.mark-entries').append('<' + 'div id="dialog"><' + 'h5 style="text-align:center"><' + '/h5><' + '/div>');
+		$('div.mark-entries').after('<' + 'div id="dialog"><' + 'h5 style="text-align:center"><' + '/h5><' + '/div>');
 
 		if (ary != '') {
 			$('#dialog h5').text('{/literal}{lang values="common|confirm_delete"}{literal}');
@@ -26,7 +26,7 @@ jQuery(function($) {
 				},
 				buttons: {
 					{/literal}{lang values="common|no"}{literal}: function() {
-						location.href = {/literal}'{$REQUEST_URI}'{literal};
+						$(this).dialog('close');
 					},
 					{/literal}{lang values="common|yes"}{literal}: function() {
 						location.href = $('form').attr('action') + 'entries_' + ary + '/confirmed_1/';
