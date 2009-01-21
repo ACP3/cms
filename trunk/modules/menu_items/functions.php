@@ -128,8 +128,8 @@ function insertNode($parent, $insert_values)
 		return $db->update('menu_items', array('root_id' => $root[0]['root']), 'id = \'' . $root[0]['root'] . '\'');
 	} else {
 		$node = $db->select('root_id, right_id', 'menu_items', 'id = \'' . $parent . '\'');
-		$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id + 2 WHERE right_id >= ' . $node[0]['right_id'], 0);
-		$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id + 2 WHERE left_id > ' . $node[0]['right_id'], 0);
+		$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id > ' . $node[0]['right_id'], 0);
+		$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id + 2 WHERE right_id = ' . $node[0]['right_id'], 0);
 
 		$insert_values['root_id'] = $node[0]['root_id'];
 		$insert_values['left_id'] = $node[0]['right_id'];
