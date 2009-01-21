@@ -72,9 +72,10 @@ class breadcrumb
 
 		// Frontendbereich
 		if (defined('IN_ACP3')) {
-			$pages = $db->query('SELECT p.title, p.uri FROM ' . CONFIG_DB_PRE . 'menu_items p, ' . CONFIG_DB_PRE . 'menu_items c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND (c.uri = \'' . $uri->query . '\') ORDER BY p.left_id ASC');
+			$pages = $db->query('SELECT p.title, p.uri FROM ' . CONFIG_DB_PRE . 'menu_items p, ' . CONFIG_DB_PRE . 'menu_items c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri = \'' . $uri->query . '\' ORDER BY p.left_id ASC');
 			if (empty($pages))
-				$pages = $db->query('SELECT p.title, p.uri FROM ' . CONFIG_DB_PRE . 'menu_items p, ' . CONFIG_DB_PRE . 'menu_items c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND (c.uri = \'' . $module . '\') ORDER BY p.left_id ASC');
+				$pages = $db->query('SELECT p.title, p.uri FROM ' . CONFIG_DB_PRE . 'menu_items p, ' . CONFIG_DB_PRE . 'menu_items c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri = \'' . $module . '\' ORDER BY p.left_id ASC');
+
 			$c_pages = count($pages);
 
 			// Dynamische Seite (ACP3 intern)
@@ -85,9 +86,13 @@ class breadcrumb
 					if (!empty(self::$steps) && !empty(self::$end)) {
 						unset(self::$steps[0]);
 						for ($i = $c_pages - 1; $i >= 0; --$i) {
+							$pages[$i]['uri'] = uri($pages[$i]['uri']);
 							array_unshift(self::$steps, $pages[$i]);
 						}
 					} else {
+						for ($i = 0; $i < $c_pages; ++$i) {
+							$pages[$i]['uri'] = uri($pages[$i]['uri']);
+						}
 						self::$steps = array_slice($pages, 0, -1);
 						self::$end = $pages[$c_pages - 1]['title'];
 					}
