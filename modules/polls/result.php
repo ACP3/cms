@@ -22,7 +22,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'poll_question', 'i
 	for ($i = 0; $i < $c_answers; ++$i) {
 		$answers[$i]['text'] = $answers[$i]['text'];
 		$answers[$i]['votes'] = $db->select('COUNT(answer_id)', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND answer_id = \'' . $answers[$i]['id'] . '\'', 0, 0, 0, 1);
-		$answers[$i]['percent'] = $total_votes > '0' ? 100 * $answers[$i]['votes'] / $total_votes : '0';
+		$answers[$i]['percent'] = $total_votes > '0' ? round(100 * $answers[$i]['votes'] / $total_votes, 2) : '0';
 	}
 	$tpl->assign('question', $question[0]['question']);
 	$tpl->assign('answers', $answers);

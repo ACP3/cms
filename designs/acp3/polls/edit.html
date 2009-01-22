@@ -44,19 +44,25 @@
 			</table>
 			<dl>
 				<dt><label for="reset">{lang values="common|options"}</label></dt>
-				<dd style="margin:0 20px">
-					<label for="reset">
-						<input type="checkbox" name="form[reset]" id="reset" value="1" class="checkbox"{$reset} />
-						{lang values="polls|reset_votes"}
-					</label>
+				<dd>
+					<ul style="margin:0 20px;list-style:none">
+{foreach from=$options item=row}
+						<li>
+							<label for="{$row.name}">
+								<input type="checkbox" name="form[{$row.name}]" id="{$row.name}" value="1" class="checkbox"{$row.checked} />
+								{$row.lang}
+							</label>
+						</li>
+{/foreach}
+					</ul>
 				</dd>
 			</dl>
 		</div>
 	</div>
 	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
 {if !$disable}
 		<input type="submit" name="add_answer" value="{lang values="polls|add_answer"}" class="form" />
 {/if}
-		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
 	</div>
 </form>

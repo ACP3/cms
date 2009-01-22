@@ -41,6 +41,10 @@
 		<message>Mit diesem Modul können die Umfragen verwaltet werden.</message>
 	</item>
 	<item>
+		<name>multiple_choice</name>
+		<message>Mehrfachauswahl erlauben</message>
+	</item>
+	<item>
 		<name>per_cent</name>
 		<message>Prozent</message>
 	</item>

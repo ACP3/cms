@@ -26,6 +26,13 @@
 				<dt><label for="answer_{$row.number}">{lang values="polls|answer"} {$row.number+1}</label></dt>
 				<dd><input type="text" name="form[answers][]" id="answer_{$row.number}" value="{$row.value}" maxlength="120" /></dd>
 {/foreach}
+				<dt><label for="reset">{lang values="common|options"}</label></dt>
+				<dd style="margin:0 20px">
+					<label for="multiple">
+						<input type="checkbox" name="form[multiple]" id="multiple" value="1" class="checkbox"{$multiple} />
+						{lang values="polls|multiple_choice"}
+					</label>
+				</dd>
 			</dl>
 		</div>
 	</div>

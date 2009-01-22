@@ -12,17 +12,19 @@ if (!defined('IN_ACP3'))
 
 $time = $date->timestamp();
 $period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
+$multiple = !empty($_POST['answer']) && is_array($_POST['answer']) ? ' AND multiple = \'1\'' : '';
 
-if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'poll_question', 'id = \'' . $uri->id . '\'' . $period, 0, 0, 0, 1) == 1) {
+if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'poll_question', 'id = \'' . $uri->id . '\'' . $multiple . $period, 0, 0, 0, 1) == 1) {
 	// Brotkrümelspur
 	breadcrumb::assign($lang->t('polls', 'polls'), uri('polls'));
 	breadcrumb::assign($lang->t('polls', 'vote'));
 
 	// Wenn abgestimmt wurde
-	if (isset($_POST['submit']) && isset($_POST['answer']) && validate::isNumber($_POST['answer'])) {
+	if (isset($_POST['submit']) && !empty($_POST['answer']) && (is_array($_POST['answer']) || validate::isNumber($_POST['answer']))) {
 		$ip = $_SERVER['REMOTE_ADDR'];
+		$answers = $_POST['answer'];
 
-		// Überprüfen, ob der eingeloggter User schon abgestimmt hat
+		// Überprüfen, ob der eingeloggte User schon abgestimmt hat
 		if ($auth->isUser()) {
 			$query = $db->select('COUNT(poll_id)', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND user_id = \'' . USER_ID . '\'', 0, 0, 0, 1);
 		// Überprüfung für Gäste
@@ -31,22 +33,39 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'poll_question', 'i
 		}
 
 		if ($query == 0) {
-			$insert_values = array(
-				'poll_id' => $uri->id,
-				'answer_id' => $_POST['answer'],
-				'user_id' => $auth->isUser() ? USER_ID : 0,
-				'ip' => $ip,
-				'time' => $time,
-			);
-			$bool = $db->insert('poll_votes', $insert_values);
+			$user_id = $auth->isUser() ? USER_ID : 0;
 
-			$text = $bool ? $lang->t('polls', 'poll_success') : $lang->t('polls', 'poll_error');
+			if (is_array($answers)) {
+				foreach ($answers as $answer) {
+					if (validate::isNumber($answer)) {
+						$insert_values = array(
+							'poll_id' => $uri->id,
+							'answer_id' => $answer,
+							'user_id' => $user_id,
+							'ip' => $ip,
+							'time' => $time,
+						);
+						$db->insert('poll_votes', $insert_values);
+					}
+				}
+				$bool = true;
+			} else {
+				$insert_values = array(
+					'poll_id' => $uri->id,
+					'answer_id' => $answers,
+					'user_id' => $user_id,
+					'ip' => $ip,
+					'time' => $time,
+				);
+				$bool = $db->insert('poll_votes', $insert_values);
+			}
+			$text = $bool !== null ? $lang->t('polls', 'poll_success') : $lang->t('polls', 'poll_error');
 		} else {
 			$text = $lang->t('polls', 'already_voted');
 		}
 		$content = comboBox($text, uri('polls/result/id_' . $uri->id));
 	} else {
-		$question = $db->select('question', 'poll_question', 'id = \'' . $uri->id . '\'');
+		$question = $db->select('question, multiple', 'poll_question', 'id = \'' . $uri->id . '\'');
 		$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $uri->id . '\'', 'id ASC');
 		$c_answers = count($answers);
 
@@ -57,6 +76,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'poll_question', 'i
 		}
 
 		$tpl->assign('question', $question[0]['question']);
+		$tpl->assign('multiple', $question[0]['multiple']);
 		$tpl->assign('answers', $answers);
 
 		$content = $tpl->fetch('polls/vote.html');

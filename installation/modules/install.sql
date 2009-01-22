@@ -140,6 +140,7 @@ CREATE TABLE `{pre}poll_question` (
 	`start` VARCHAR(14) NOT NULL,
 	`end` VARCHAR(14) NOT NULL,
 	`question` VARCHAR(120) NOT NULL,
+	`multiple` TINYINT(1) UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine};
 
