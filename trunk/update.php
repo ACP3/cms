@@ -46,6 +46,7 @@ $queries = array(
 	'RENAME TABLE `{pre}pages_blocks` TO `{pre}menu_items_blocks`',
 	'ALTER TABLE `{pre}poll_answers` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 	'ALTER TABLE `{pre}poll_answers` CHANGE `poll_id` `poll_id` INT(10) UNSIGNED NOT NULL',
+	'ALTER TABLE `{pre}poll_question` ADD `multiple` TINYINT(1) UNSIGNED NOT NULL AFTER `question`',
 	'ALTER TABLE `{pre}poll_question` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 	'ALTER TABLE `{pre}poll_votes` CHANGE `poll_id` `poll_id` INT(10) UNSIGNED NOT NULL',
 	'ALTER TABLE `{pre}poll_votes` CHANGE `answer_id` `answer_id` INT(10) UNSIGNED NOT NULL',

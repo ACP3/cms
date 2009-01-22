@@ -5,10 +5,11 @@
 <script type="text/javascript">
 jQuery(function($) {
 	$('form #adm-list input[type=image]').click(function() {
-		var entries = $('form input:checkbox:checked').val() || [];
+		var entries = $('form input:checkbox:checked') || [];
 		var ary = '';
 
 		jQuery.each(entries, function() {
+			alert($(this).val());
 			ary = ary + this + '|';
 		});
 

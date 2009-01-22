@@ -94,10 +94,14 @@ function deleteNode($id)
 
 		$lr = $db->select('left_id, right_id', 'menu_items', 'id = \'' . $id . '\'');
 		if (count($lr) == 1) {
+			$db->link->beginTransaction();
+
 			$bool = $db->delete('menu_items', 'left_id = \'' . $lr[0]['left_id'] . '\'');
 			$bool2 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - 1, right_id = right_id - 1 WHERE left_id BETWEEN ' . $lr[0]['left_id'] . ' AND ' . $lr[0]['right_id'], 0);
 			$bool3 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - 2 WHERE left_id > ' . $lr[0]['right_id'], 0);
 			$bool4 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - 2 WHERE right_id > ' . $lr[0]['right_id'], 0);
+
+			$db->link->commit();
 
 			return $bool !== null && $bool2 !== null && $bool3 !== null && $bool4 !== null ? true : false;
 		}
@@ -128,8 +132,13 @@ function insertNode($parent, $insert_values)
 		return $db->update('menu_items', array('root_id' => $root[0]['root']), 'id = \'' . $root[0]['root'] . '\'');
 	} else {
 		$node = $db->select('root_id, right_id', 'menu_items', 'id = \'' . $parent . '\'');
+
+		$db->link->beginTransaction();
+
 		$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id > ' . $node[0]['right_id'], 0);
 		$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id + 2 WHERE right_id = ' . $node[0]['right_id'], 0);
+
+		$db->link->commit();
 
 		$insert_values['root_id'] = $node[0]['root_id'];
 		$insert_values['left_id'] = $node[0]['right_id'];

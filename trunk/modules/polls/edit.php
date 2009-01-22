@@ -38,6 +38,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'poll_question', 'i
 				'start' => $date->timestamp($form['start']),
 				'end' => $date->timestamp($form['end']),
 				'question' => $db->escape($form['question']),
+				'multiple' => isset($form['multiple']) ? '1' : '0',
 			);
 
 			$bool = $db->update('poll_question', $update_values, 'id = \'' . $uri->id . '\'');
@@ -93,13 +94,20 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'poll_question', 'i
 				$answers[$i]['value'] = $answers[$i]['text'];
 			}
 		}
-		$poll = $db->select('start, end, question', 'poll_question', 'id = \'' . $uri->id . '\'');
+		$poll = $db->select('start, end, question, multiple', 'poll_question', 'id = \'' . $uri->id . '\'');
+
+		$options[0]['name'] = 'reset';
+		$options[0]['checked'] = selectEntry('reset', '1', '0', 'checked');
+		$options[0]['lang'] = $lang->t('polls', 'reset_votes');
+		$options[1]['name'] = 'multiple';
+		$options[1]['checked'] = selectEntry('multiple', '1', $poll[0]['multiple'], 'checked');
+		$options[1]['lang'] = $lang->t('polls', 'multiple_choice');
 
 		// Übergabe der Daten an Smarty
 		$tpl->assign('start_date', datepicker('start', $poll[0]['start']));
 		$tpl->assign('end_date', datepicker('end', $poll[0]['end']));
 		$tpl->assign('question', isset($form['question']) ? $form['question'] : $poll[0]['question']);
-		$tpl->assign('reset', selectEntry('reset', '1', '0', 'checked'));
+		$tpl->assign('options', $options);
 		$tpl->assign('answers', $answers);
 		$tpl->assign('disable', count($answers) < 10 ? false : true);
 

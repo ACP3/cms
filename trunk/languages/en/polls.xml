@@ -41,6 +41,10 @@
 		<message>With this module you can administer the polls.</message>
 	</item>
 	<item>
+		<name>multiple_choice</name>
+		<message>Multiple choice</message>
+	</item>
+	<item>
 		<name>per_cent</name>
 		<message>Per cent</message>
 	</item>
