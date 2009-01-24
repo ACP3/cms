@@ -23,10 +23,7 @@ if (validate::isNumber($uri->id)) {
 		setGalleryCache($gallery[0]['id']);
 
 		redirect('acp/gallery/edit_gallery/id_' . $gallery[0]['id']);
-	} else {
-		redirect('errors/404');
 	}
-} else {
-	redirect('errors/404');
 }
+redirect('acp/errors/404');
 ?>
