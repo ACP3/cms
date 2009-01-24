@@ -21,7 +21,7 @@ foreach ($pages as $row) {
 }
 $tpl->assign('pages', $pages);
 
-// Sprachpakete
+// Dropdown-Menü für die Sprachen
 $languages = array();
 $directories = scandir(ACP3_ROOT . 'languages');
 $count_dir = count($directories);
@@ -50,5 +50,6 @@ ob_end_flush();
 
 if ($uri->mod == 'install' && $uri->page == 'configuration') {
 	cache::purge('installation', 1);
+	cache::purge();
 }
 ?>

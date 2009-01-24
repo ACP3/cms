@@ -47,8 +47,12 @@
 		<message>Imprint</message>
 	</item>
 	<item>
-		<name>miscellaneous</name>
-		<message>Miscellaneous</message>
+		<name>layout</name>
+		<message>Layout</message>
+	</item>
+	<item>
+		<name>layout_placeholders</name>
+		<message>Use can use the following placeholders:</message>
 	</item>
 	<item>
 		<name>mod_description</name>

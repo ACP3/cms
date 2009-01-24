@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
 		$form['telephone'] = $db->escape($form['telephone']);
 		$form['fax'] = $db->escape($form['fax']);
 		$form['disclaimer'] = $db->escape($form['disclaimer'], 2);
-		$form['miscellaneous'] = $db->escape($form['miscellaneous'], 2);
+		$form['layout'] = $db->escape($form['layout'], 2);
 
 		$bool = config::module('contact', $form);
 
@@ -34,7 +34,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$contact = config::output('contact');
 	$contact['address'] = $contact['address'];
 	$contact['disclaimer'] = $db->escape($contact['disclaimer'], 3);
-	$contact['miscellaneous'] = $db->escape($contact['miscellaneous'], 3);
+	$contact['layout'] = $db->escape($contact['layout'], 3);
 
 	$tpl->assign('form', isset($form) ? $form : $contact);
 
