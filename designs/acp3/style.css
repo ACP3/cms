@@ -56,7 +56,7 @@ ul ul, ol ol {
 	margin: 0 20px;
 }
 p {
-	margin: 10px 0;
+	padding: 5px 0;
 	text-align: justify;
 }
 table.acp-table, .acp-table tr, .acp-table th, .acp-table td {
@@ -463,30 +463,38 @@ a.form {
 }
 /* Impressum & Benutzerinfos */
 .imprint, .user-info {
-	width: 80%;
-	margin: 0 auto;
-	padding: 15px 20px 0 20px;
+	width: 70%;
+	margin: 0 auto 10px;
+	padding: 10px;
+	background: #f0f0f0;
+	border: 1px solid #ccc;
 }
 .user-info {
-	width: 100%;
-	padding: 0;
+	width: 60%;
 }
-.imprint dt, .user-info dt {
+.imprint dl, .user-info dl {
+	bottom: 3px;
+	clear: left;
+}
+.user-info dt, .imprint dl dt {
 	width: 20%;
-	padding: 0 3px;
+	margin: 0 0 2px 0;
+	padding-left: 4px;
 	background: #e5e5e5;
-	border-width: 1px;
-	border-style: solid;
+	border: 1px solid #eee;
 	border-color: #eee #ccc #ccc #eee;
 	font-weight: bold;
 	font-size: 1.1em;
 	line-height: 20px;
 	float: left;
 }
-.imprint dd, .user-info dd {
-	margin-bottom: 4px;
+.imprint dl dd, .user-info dd {
 	margin-left: 22%;
+	padding-top: 2px;
 	line-height: 20px;
+}
+.imprint dl dd p {
+	padding-top: 0;
 }
 /* Hyperlink */
 .hyperlink {
