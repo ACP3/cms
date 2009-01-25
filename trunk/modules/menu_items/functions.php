@@ -51,15 +51,19 @@ function setNavbarCache() {
 				$last = true;
 
 			// Checken, ob für das aktuelle Element noch Nachfolger existieren
-			$found = false;
-			$j = $i + 1;
-			for ($j = $i + 1; $j < $c_pages; ++$j) {
-				if ($pages[$i]['level'] == $pages[$j]['level'] && $pages[$i]['block_name'] == $pages[$j]['block_name'])
-					$found = true;
+			if (!$last) {
+				$j = $i + 1;
+				for ($j = $i + 1; $j < $c_pages; ++$j) {
+					if ($pages[$i]['level'] == $pages[$j]['level'] && $pages[$i]['block_name'] == $pages[$j]['block_name']) {
+						$found = true;
+						break;
+					}
+				}
+				if (!isset($found))
+					$last = true;
+				else
+					unset($found);
 			}
-			if ($found)
-				$last = false;
-			$found = false;
 
 			$pages[$i]['first'] = $first;
 			$pages[$i]['last'] = $last;
