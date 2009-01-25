@@ -465,9 +465,6 @@ a.form {
 .imprint, .user-info {
 	width: 70%;
 	margin: 0 auto 10px;
-	padding: 10px;
-	background: #f0f0f0;
-	border: 1px solid #ccc;
 }
 .user-info {
 	width: 60%;
