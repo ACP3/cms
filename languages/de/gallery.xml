@@ -121,14 +121,6 @@
 		<message>Einstellungen</message>
 	</item>
 	<item>
-		<name>settings_error</name>
-		<message>Beim Bearbeiten der Einstellungen ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>settings_success</name>
-		<message>Die Einstellungen wurden erfolgreich bearbeitet.</message>
-	</item>
-	<item>
 		<name>thumb_image_height</name>
 		<message>Maximal anzuzeigende Höhe der Vorschaubilder</message>
 	</item>

@@ -10,6 +10,8 @@
 if (!defined('IN_ADM'))
 	exit;
 
+$settings = config::output('news');
+
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
@@ -33,8 +35,8 @@ if (isset($_POST['submit'])) {
 			'end' => $date->timestamp($form['end']),
 			'headline' => $db->escape($form['headline']),
 			'text' => $db->escape($form['text'], 2),
-			'readmore' => isset($form['readmore']) ? 1 : 0,
-			'comments' => isset($form['comments']) ? 1 : 0,
+			'readmore' => $settings['readmore'] == 1 && isset($form['readmore']) ? 1 : 0,
+			'comments' => $settings['comments'] == 1 && isset($form['comments']) ? 1 : 0,
 			'category_id' => $form['cat'],
 			'uri' => $db->escape($form['uri'], 2),
 			'target' => $form['target'],
@@ -58,15 +60,21 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	}
 
 	// Weiterlesen & Kommentare
-	$options[0]['id'] = 'readmore';
-	$options[0]['name'] = 'readmore';
-	$options[0]['checked'] = selectEntry('readmore', '1', '1', 'checked');
-	$options[0]['lang'] = $lang->t('news', 'activate_readmore');
-	$options[1]['id'] = 'comments';
-	$options[1]['name'] = 'comments';
-	$options[1]['checked'] = selectEntry('comments', '1', '1', 'checked');
-	$options[1]['lang'] = $lang->t('news', 'allow_comments');
-	$tpl->assign('options', $options);
+	if ($settings['readmore'] == 1 || $settings['comments'] == 1) {
+		$i = 0;
+		if ($settings['readmore'] == 1) {
+			$options[$i]['name'] = 'readmore';
+			$options[$i]['checked'] = selectEntry('readmore', '1', '1', 'checked');
+			$options[$i]['lang'] = $lang->t('news', 'activate_readmore');
+			$i++;
+		}
+		if ($settings['comments'] == 1) {
+			$options[$i]['name'] = 'comments';
+			$options[$i]['checked'] = selectEntry('comments', '1', '1', 'checked');
+			$options[$i]['lang'] = $lang->t('news', 'allow_comments');
+		}
+		$tpl->assign('options', $options);
+	}
 
 	// Linkziel
 	$target[0]['value'] = '1';

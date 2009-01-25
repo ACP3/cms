@@ -34,19 +34,21 @@
 {/foreach}
 					</select>
 				</dd>
+{if isset($options)}
 				<dt><label for="readmore">{lang values="common|options"}</label></dt>
 				<dd>
 					<ul style="margin:0 20px;list-style:none">
 {foreach from=$options item=row}
 						<li>
-							<label for="{$row.id}">
-								<input type="checkbox" name="form[{$row.name}]" id="{$row.id}" value="1" class="checkbox"{$row.checked} />
+							<label for="{$row.name}">
+								<input type="checkbox" name="form[{$row.name}]" id="{$row.name}" value="1" class="checkbox"{$row.checked} />
 								{$row.lang}
 							</label>
 						</li>
 {/foreach}
 					</ul>
 				</dd>
+{/if}
 			</dl>
 		</div>
 		<div id="tabs-3">

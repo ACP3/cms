@@ -117,14 +117,6 @@
 		<message>Select picture</message>
 	</item>
 	<item>
-		<name>settings_error</name>
-		<message>While editing the settings an error has occured.</message>
-	</item>
-	<item>
-		<name>settings_success</name>
-		<message>The settings have been edited successfully.</message>
-	</item>
-	<item>
 		<name>thumb_image_height</name>
 		<message>Maximum thumb image height to be displayed</message>
 	</item>

@@ -31,7 +31,9 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'news', 'id = \'' .
 
 	$tpl->assign('news', $news[0]);
 
-	if ($news[0]['comments'] == '1' && modules::check('comments', 'functions')) {
+	$settings = config::output('news');
+
+	if ($settings['comments'] == 1 && $news[0]['comments'] == 1 && modules::check('comments', 'functions')) {
 		include_once ACP3_ROOT . 'modules/comments/functions.php';
 
 		$tpl->assign('comments', comments('news', $uri->id));

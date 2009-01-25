@@ -225,6 +225,14 @@
 		<message>Please select the time zone</message>
 	</item>
 	<item>
+		<name>settings_error</name>
+		<message>While editing the settings an error has occured.</message>
+	</item>
+	<item>
+		<name>settings_success</name>
+		<message>The settings have been edited successfully.</message>
+	</item>
+	<item>
 		<name>since_date</name>
 		<message>Since %s</message>
 	</item>

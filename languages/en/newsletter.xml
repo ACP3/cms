@@ -155,7 +155,7 @@
 		If you haven\'t subscribed this newsletter, please ignore or delete this E-mail.</message>
 	</item>
 	<item>
-		<name>nl_subscribe_mail_subject</name>
+		<name>subscribe_mail_subject</name>
 		<message>Newsletter at %s</message>
 	</item>
 	<item>
