@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
 		$tpl->assign('error_msg', $tpl->fetch('error.html'));
 	} else {
 		// Modulkonfigurationsdateien schreiben
-		config::module('contact', array('mail' => $form['mail'], 'address' => '', 'telephone' => '', 'fax' => '', 'disclaimer' => lang('installation', 'disclaimer'), 'miscellaneous' => ''));
+		config::module('contact', array('mail' => $form['mail'], 'disclaimer' => lang('installation', 'disclaimer')));
 		config::module('newsletter', array('mail' => $form['mail'], 'mailsig' => lang('installation', 'sincerely') . "\n\n" . lang('installation', 'newsletter_mailsig')));
 
 		// Systemkonfiguration erstellen
@@ -96,11 +96,11 @@ if (isset($_POST['submit'])) {
 			if (!empty($query)) {
 				$query.= ';';
 				$data[$i]['query'] = $query;
-				$bool = $db->query($query, 3);
-				$data[$i]['color'] = $bool == true ? '090' : 'f00';
-				$data[$i]['result'] = $bool == true ? lang('installation', 'query_successfully_executed') : lang('installation', 'query_failed');
+				$bool = $db->query($query, 0);
+				$data[$i]['color'] = $bool !== null ? '090' : 'f00';
+				$data[$i]['result'] = $bool !== null ? lang('installation', 'query_successfully_executed') : lang('installation', 'query_failed');
 				$i++;
-				if ($bool != true) {
+				if ($bool === null) {
 					$tpl->assign('install_error', true);
 					break;
 				}

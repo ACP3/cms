@@ -43,7 +43,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 			);
 
 			// Die aktuelle Seite mit allen untergeordneten Seiten selektieren
-			$pages = $db->query('SELECT c.id, c.root_id, c.left_id, c.right_id FROM ' . CONFIG_DB_PRE . 'menu_items AS p, ' . CONFIG_DB_PRE . 'menu_items AS c WHERE p.id = \'' . $uri->id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
+			$pages = $db->query('SELECT c.id, c.root_id, c.left_id, c.right_id, c.block_id FROM ' . CONFIG_DB_PRE . 'menu_items AS p, ' . CONFIG_DB_PRE . 'menu_items AS c WHERE p.id = \'' . $uri->id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
 
 			// Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
 			if (empty($form['parent']) && $db->select('id', 'menu_items', 'left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0, 0, 0, 1) == 0) {
@@ -66,9 +66,10 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 					// Neues Elternelement
 					$new_parent = $db->select('root_id, left_id', 'menu_items', 'id = \'' . $form['parent'] . '\'');
 					if (empty($new_parent)) {
-						$new_parent = $db->select('right_id', 'menu_items', 0, 'right_id DESC', 1);
+						$new_parent = $db->select('right_id', 'menu_items', 'block_id =  \'' . $pages[0]['block_id'] . '\'', 'right_id DESC', 1);
 						$root_id = $uri->id;
 						$left_id = $new_parent[0]['right_id'] + 1;
+						$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id + ' . $page_diff . ', right_id = right_id + ' . $page_diff . ' WHERE block_id > ' . $pages[0]['block_id'], 0);
 					} else {
 						$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id + ' . $page_diff . ' WHERE root_id = \'' . $new_parent[0]['root_id'] . '\' AND left_id <= ' . $new_parent[0]['left_id'], 0);
 						$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id + ' . $page_diff . ', right_id = right_id + ' . $page_diff . ' WHERE left_id > ' . $new_parent[0]['left_id'], 0);
@@ -82,8 +83,8 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 					for ($i = 0; $i < $c_pages; ++$i) {
 						$position = array(
 							'root_id' => $root_id,
-							'left_id' => $left_id + $i,
-							'right_id' => $left_id + $i + ($pages[$i]['right_id'] - $pages[$i]['left_id']),
+							'left_id' => $left_id + $i + ($i > 1 ? 1 : 0),
+							'right_id' => $left_id + $i + ($pages[$i]['right_id'] - $pages[$i]['left_id']) + ($i > 1 ? 1 : 0),
 						);
 						$bool = $db->update('menu_items', $i == 0 ? array_merge($update_values, $position) : $position, 'id = \'' . $pages[$i]['id'] . '\'');
 					}
