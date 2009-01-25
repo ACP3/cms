@@ -9,8 +9,7 @@ jQuery(function($) {
 		var ary = '';
 
 		jQuery.each(entries, function() {
-			alert($(this).val());
-			ary = ary + this + '|';
+			ary = ary + $(this).val() + '|';
 		});
 
 		$('div.mark-entries').after('<' + 'div id="dialog"><' + 'h5 style="text-align:center"><' + '/h5><' + '/div>');

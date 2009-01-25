@@ -1,12 +1,11 @@
 CREATE TABLE `{pre}access` (
-	`id` INT(10) UNSIGNED NOT NULL auto_increment,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(120) NOT NULL,
-	`modules` TEXT NOT NULL,
-	PRIMARY KEY (`id`)
+	`modules` TEXT NOT NULL
 ) {engine};
 
 CREATE TABLE `{pre}categories` (
-	`id` INT(10) UNSIGNED NOT NULL auto_increment,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(120) NOT NULL,
 	`picture` VARCHAR(120) NOT NULL,
 	`description` VARCHAR(120) NOT NULL,
@@ -15,7 +14,7 @@ CREATE TABLE `{pre}categories` (
 ) {engine};
 
 CREATE TABLE `{pre}comments` (
-	`id` INT(10) UNSIGNED NOT NULL auto_increment,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`ip` VARCHAR(40) NOT NULL,
 	`date` VARCHAR(14) NOT NULL,
 	`name` VARCHAR(20) NOT NULL,
@@ -27,7 +26,7 @@ CREATE TABLE `{pre}comments` (
 ) {engine};
 
 CREATE TABLE `{pre}emoticons` (
-	`id` INT(10) UNSIGNED NOT NULL auto_increment,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`code` VARCHAR(10) NOT NULL,
 	`description` VARCHAR(15) NOT NULL,
 	`img` VARCHAR(40) NOT NULL,
@@ -35,7 +34,7 @@ CREATE TABLE `{pre}emoticons` (
 ) {engine};
 
 CREATE TABLE `{pre}files` (
-	`id` INT(10) UNSIGNED NOT NULL auto_increment,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`start` VARCHAR(14) NOT NULL,
 	`end` VARCHAR(14) NOT NULL,
 	`category_id` INT(10) UNSIGNED NOT NULL,
@@ -47,7 +46,7 @@ CREATE TABLE `{pre}files` (
 ) {engine};
 
 CREATE TABLE `{pre}gallery` ( 
-	`id` INT(10) UNSIGNED NOT NULL auto_increment,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`start` VARCHAR(14) NOT NULL,
 	`end` VARCHAR(14) NOT NULL,
 	`name` VARCHAR(120) NOT NULL,
@@ -55,7 +54,7 @@ CREATE TABLE `{pre}gallery` (
 ) {engine};
 
 CREATE TABLE `{pre}gallery_pictures` (
-	`id` INT(10) UNSIGNED NOT NULL auto_increment,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`pic` INT(10) UNSIGNED NOT NULL,
 	`gallery_id` INT(10) UNSIGNED NOT NULL,
 	`file` VARCHAR(120) NOT NULL,
@@ -64,7 +63,7 @@ CREATE TABLE `{pre}gallery_pictures` (
 ) {engine};
 
 CREATE TABLE `{pre}guestbook` ( 
-	`id` INT(10) UNSIGNED NOT NULL auto_increment,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`ip` VARCHAR(40) NOT NULL,
 	`date` VARCHAR(14) NOT NULL,
 	`name` VARCHAR(20) NOT NULL,
@@ -76,7 +75,7 @@ CREATE TABLE `{pre}guestbook` (
 ) {engine};
 
 CREATE TABLE `{pre}menu_items` (
-	`id` INT(10) UNSIGNED NOT NULL auto_increment,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`start` VARCHAR(14) NOT NULL,
 	`end` VARCHAR(14) NOT NULL,
 	`mode` TINYINT(1) UNSIGNED NOT NULL,
@@ -91,14 +90,14 @@ CREATE TABLE `{pre}menu_items` (
 ) {engine};
 
 CREATE TABLE `{pre}menu_items_blocks` (
-	`id` INT(10) UNSIGNED NOT NULL auto_increment,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`index_name` VARCHAR(10) NOT NULL,
 	`title` VARCHAR(120) NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine};
 
 CREATE TABLE `{pre}news` ( 
-	`id` INT(10) UNSIGNED NOT NULL auto_increment,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`start` VARCHAR(14) NOT NULL,
 	`end` VARCHAR(14) NOT NULL,
 	`headline` VARCHAR(120) NOT NULL,
@@ -113,14 +112,14 @@ CREATE TABLE `{pre}news` (
 ) {engine};
 
 CREATE TABLE `{pre}newsletter_accounts` ( 
-	`id` INT(10) UNSIGNED NOT NULL auto_increment,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`mail` VARCHAR(120) NOT NULL,
 	`hash` VARCHAR(32) NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine};
 
 CREATE TABLE `{pre}newsletter_archive` (
-	`id` INT(10) UNSIGNED NOT NULL auto_increment,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`date` VARCHAR(14) NOT NULL,
 	`subject` VARCHAR(120) NOT NULL,
 	`text` TEXT NOT NULL, 
@@ -129,14 +128,14 @@ CREATE TABLE `{pre}newsletter_archive` (
 ) {engine};
 
 CREATE TABLE `{pre}poll_answers` ( 
-	`id` INT(10) UNSIGNED NOT NULL auto_increment,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`text` VARCHAR(120) NOT NULL,
 	`poll_id` INT(10) UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine};
 
 CREATE TABLE `{pre}poll_question` ( 
-	`id` INT(10) UNSIGNED NOT NULL auto_increment,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`start` VARCHAR(14) NOT NULL,
 	`end` VARCHAR(14) NOT NULL,
 	`question` VARCHAR(120) NOT NULL,
@@ -154,7 +153,7 @@ CREATE TABLE `{pre}poll_votes` (
 ) {engine};
 
 CREATE TABLE `{pre}static_pages` (
-	`id` INT(10) UNSIGNED NOT NULL auto_increment,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`start` VARCHAR(14) NOT NULL,
 	`end` VARCHAR(14) NOT NULL,
 	`title` VARCHAR(120) NOT NULL,
@@ -163,7 +162,7 @@ CREATE TABLE `{pre}static_pages` (
 ) {engine};
 
 CREATE TABLE `{pre}users` ( 
-	`id` INT(10) UNSIGNED NOT NULL auto_increment,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`nickname` VARCHAR(30) NOT NULL,
 	`realname` VARCHAR(80) NOT NULL,
 	`pwd` VARCHAR(53) NOT NULL,
