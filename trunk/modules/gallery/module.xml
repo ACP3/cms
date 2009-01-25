@@ -32,10 +32,6 @@
 			<level>2</level>
 		</item>
 		<item>
-			<file>details</file>
-			<level>1</level>
-		</item>
-		<item>
 			<file>delete_gallery</file>
 			<level>2</level>
 		</item>
@@ -43,6 +39,10 @@
 			<file>delete_picture</file>
 			<level>2</level>
 			<include>functions</include>
+		</item>
+		<item>
+			<file>details</file>
+			<level>1</level>
 		</item>
 		<item>
 			<file>edit_gallery</file>

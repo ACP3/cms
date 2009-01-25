@@ -225,6 +225,14 @@
 		<message>Bitte wählen Sie die Zeitzone aus</message>
 	</item>
 	<item>
+		<name>settings_error</name>
+		<message>Beim Bearbeiten der Einstellungen ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>settings_success</name>
+		<message>Die Einstellungen wurden erfolgreich aktualisiert.</message>
+	</item>
+	<item>
 		<name>since_date</name>
 		<message>Seit %s</message>
 	</item>

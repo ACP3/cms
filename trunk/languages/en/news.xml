@@ -61,12 +61,28 @@
 		<message>Read newsfeed</message>
 	</item>
 	<item>
-		<name>read_on</name>
-		<message>read on</message>
+		<name>readmore</name>
+		<message>read more</message>
+	</item>
+	<item>
+		<name>readmore_chars</name>
+		<message><![CDATA[Characters required, to enable &quot;read more...&quot;-function]]></message>
+	</item>
+	<item>
+		<name>select_activate_readmore</name>
+		<message><![CDATA[Please select, wether you want to enable or disable the &quot;read more...&quot;-function]]></message>
+	</item>
+	<item>
+		<name>select_allow_comments</name>
+		<message>Please select, wether you want to allow comments under news</message>
 	</item>
 	<item>
 		<name>select_category</name>
 		<message>Please select the category, where do you want to find the news</message>
+	</item>
+	<item>
+		<name>settings</name>
+		<message>Settings</message>
 	</item>
 	<item>
 		<name>target_page</name>
@@ -79,6 +95,10 @@
 	<item>
 		<name>text_to_short</name>
 		<message>The newstext should be at least 3 characters long</message>
+	</item>
+	<item>
+		<name>type_in_readmore_chars</name>
+		<message><![CDATA[Please type in, how many characters a news should have, to enable the &quot;read more...&quot;-function]]></message>
 	</item>
 	<item>
 		<name>uri</name>

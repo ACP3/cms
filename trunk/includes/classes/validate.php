@@ -91,7 +91,7 @@ class validate
 	 */
 	public static function isMD5($string)
 	{
-		return is_string($sting) && preg_match('/^[a-f0-9]+$/', $string) && strlen($string) == 32 ? true : false;
+		return is_string($string) && preg_match('/^[a-f0-9]+$/', $string) && strlen($string) == 32 ? true : false;
  	}
 	/**
 	 * Überprüft eine Variable, ob diese nur aus Ziffern besteht

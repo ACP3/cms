@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
 	} else {
 		$bool = config::module('categories', $form);
 		
-		$content = comboBox($bool ? $lang->t('categories', 'settings_success') : $lang->t('categories', 'settings_error'), uri('acp/categories'));
+		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), uri('acp/categories'));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
