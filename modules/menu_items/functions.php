@@ -125,15 +125,18 @@ function insertNode($parent, $insert_values)
 	global $db;
 
 	if (!validate::isNumber($parent) || $db->select('id', 'menu_items', 'id = \'' . $parent . '\'', 0, 0, 0, 1) == 0) {
-		$node = $db->select('right_id', 'menu_items', 0, 'right_id DESC', 1);
+		$node = $db->select('right_id', 'menu_items', 'block_id = \'' . $db->escape($insert_values['block_id']) . '\'', 'right_id DESC', 1);
 
 		$insert_values['left_id'] = !empty($node) ? $node[0]['right_id'] + 1 : 1;
 		$insert_values['right_id'] = !empty($node) ? $node[0]['right_id'] + 2 : 2;
 
-		$db->insert('menu_items', $insert_values);
-		$root = $db->select('LAST_INSERT_ID() AS root', 'menu_items');
+		$bool = $db->insert('menu_items', $insert_values);
+		$root = $db->select('LAST_INSERT_ID() AS root_id', 'menu_items');
 
-		return $db->update('menu_items', array('root_id' => $root[0]['root']), 'id = \'' . $root[0]['root'] . '\'');
+		$bool2 = $db->update('menu_items', array('root_id' => $root[0]['root_id']), 'id = \'' . $root[0]['root_id'] . '\'');
+		$bool3 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id + 2, right_id = right_id + 2 WHERE block_id > ' . $db->escape($insert_values['block_id']), 0);
+
+		return $bool !== null && $bool2 !== null && $bool3 !== null ? true : false;
 	} else {
 		$node = $db->select('root_id, right_id', 'menu_items', 'id = \'' . $parent . '\'');
 
