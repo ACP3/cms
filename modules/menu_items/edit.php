@@ -67,14 +67,12 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 					if (empty($new_parent)) {
 						$db->link->beginTransaction();
 						$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - ' . $page_diff . ' WHERE root_id = ' . $pages[0]['root_id'] . ' AND left_id < ' . $pages[0]['left_id'], 0);
-						$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $pages[0]['right_id'], 0);
+						$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $pages[0]['right_id'] . ' AND block_id = \'' . $pages[0]['block_id'] . '\'', 0);
 						$db->link->commit();
 
 						$new_parent = $db->select('right_id', 'menu_items', 'block_id =  \'' . $pages[0]['block_id'] . '\'', 'right_id DESC', 1);
 						$root_id = $uri->id;
-						$diff = $new_parent[0]['right_id'] - $page_diff;
-
-						$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id + ' . $page_diff . ', right_id = right_id + ' . $page_diff . ' WHERE block_id > ' . $pages[0]['block_id'], 0);
+						$diff = $new_parent[0]['right_id'] - $pages[0]['right_id'] + $page_diff;
 
 						$db->link->beginTransaction();
 						for ($i = 0; $i < $c_pages; ++$i) {
