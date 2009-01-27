@@ -78,7 +78,7 @@ function setNavbarCache() {
  */
 function getNavbarCache()
 {
-	//if (!cache::check('pages'))
+	if (!cache::check('pages'))
 		setNavbarCache();
 
 	return cache::output('menu_items');
