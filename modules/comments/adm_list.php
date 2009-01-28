@@ -21,7 +21,7 @@ if (empty($module) || !empty($module) && $db->select('COUNT(id)', 'comments', 'm
 		$tpl->assign('pagination', pagination($db->query('SELECT COUNT(module) FROM ' . CONFIG_DB_PRE . 'comments GROUP BY module', 1)));
 		for ($i = 0; $i < $c_comments; ++$i) {
 			$comments[$i]['name'] = $lang->t($comments[$i]['module'], $comments[$i]['module']);
-			$comments[$i]['count'] = $db->select('id', 'comments', 'module = \'' . $comments[$i]['module'] . '\'', 0, 0, 0, 1);
+			$comments[$i]['count'] = $db->select('COUNT(id)', 'comments', 'module = \'' . $comments[$i]['module'] . '\'', 0, 0, 0, 1);
 		}
 		$tpl->assign('comments', $comments);
 	}
@@ -31,7 +31,7 @@ if (empty($module) || !empty($module) && $db->select('COUNT(id)', 'comments', 'm
 	breadcrumb::assign($lang->t('comments', 'comments'), uri('acp/comments'));
 	breadcrumb::assign($lang->t($module, $module));
 
-	$comments = $db->select('id, ip, date, name, message', 'comments', 'module = \'' . $module . '\'', 'date DESC', POS, CONFIG_ENTRIES);
+	$comments = $db->query('SELECT IF(u.nickname = NULL,c.name,u.nickname) AS name, c.id, c.ip, c.user_id, c.date, c.message FROM ' . CONFIG_DB_PRE . 'comments AS c LEFT JOIN (' . CONFIG_DB_PRE . 'users AS u) ON u.id = c.user_id AND c.module = \'' . $module . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
 	$c_comments = count($comments);
 	$emoticons = false;
 
@@ -44,8 +44,10 @@ if (empty($module) || !empty($module) && $db->select('COUNT(id)', 'comments', 'm
 	if ($c_comments > 0) {
 		$tpl->assign('pagination', pagination($db->select('COUNT(id)', 'comments', 'module = \'' . $module . '\'', 0, 0, 0, 1)));
 		for ($i = 0; $i < $c_comments; ++$i) {
+			if (!empty($comments[$i]['user_id']) && empty($comments[$i]['name'])) {
+				$comments[$i]['name'] = $lang->t('users', 'deleted_user');
+			}
 			$comments[$i]['date'] = $date->format($comments[$i]['date']);
-			$comments[$i]['name'] = $comments[$i]['name'];
 			$comments[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $comments[$i]['message']);
 			if ($emoticons) {
 				$comments[$i]['message'] = emoticonsReplace($comments[$i]['message']);
