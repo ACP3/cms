@@ -5,22 +5,6 @@
  * @author Goratsch Webdesign
  * @package ACP3 Installer
  */
-// Sprachdateien
-function lang($module, $key)
-{
-	static $lang_data = array();
-
-	$path = ACP3_ROOT . 'languages/' . LANG . '/' . $module . '.xml';
-
-	if (!isset($lang_data[$module][$key]) && is_file($path)) {
-		$xml = simplexml_load_file($path);
-		foreach ($xml->item as $row) {
-			$lang_data[$module][(string) $row->name] = (string) $row->message;
-		}
-	}
-
-	return isset($lang_data[$module][$key]) ? $lang_data[$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
-}
 // Variablen escapen
 function mask($var, $mode = 1)
 {

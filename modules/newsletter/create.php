@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
 				$host = htmlentities($_SERVER['HTTP_HOST']);
 				$newsletter = config::output('newsletter');
 
-				$text = str_replace(array('{mail}', '{title}', '{host}'), array($form['mail'], CONFIG_TITLE, $host), $lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
+				$text = str_replace(array('{mail}', '{title}', '{host}'), array($form['mail'], CONFIG_SEO_TITLE, $host), $lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
 				$text .= 'http://' . $host . uri('newsletter/activate/hash_' . $hash . '/mail_' . $form['mail']);
 				$header = "Content-type: text/plain; charset=UTF-8\r\n";
 				$header.= 'FROM:' . $newsletter['mail'];

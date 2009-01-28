@@ -354,7 +354,7 @@ function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
  * 	Der Wert der aktuell eingestellten Zeitzone
  * @return array
  */
-function timeZones($value)
+function timeZones($value, $name = 'time_zone')
 {
 	global $lang;
 
@@ -363,7 +363,7 @@ function timeZones($value)
 	$i = 0;
 	foreach ($areas as $row) {
 		$time_zones[$i]['value'] = $row * 3600;
-		$time_zones[$i]['selected'] = selectEntry('time_zone', $time_zones[$i]['value'], $value);
+		$time_zones[$i]['selected'] = selectEntry($name, $time_zones[$i]['value'], $value);
 		$time_zones[$i]['lang'] = $lang->t('common', 'utc' . $row);
 		$i++;
 	}
@@ -378,7 +378,7 @@ function timeZones($value)
  */
 function uri($uri)
 {
-	$prefix = CONFIG_SEF == '1' && (defined('IN_ACP3') || defined('IN_ADM') && !preg_match('/^acp\//', $uri)) ? ROOT_DIR : PHP_SELF . '/';
+	$prefix = CONFIG_SEO_MOD_REWRITE == '1' && (defined('IN_ACP3') || defined('IN_ADM') && !preg_match('/^acp\//', $uri)) ? ROOT_DIR : PHP_SELF . '/';
 	return $prefix . $uri . (!preg_match('/\/$/', $uri) ? '/' : '');
 }
 ?>

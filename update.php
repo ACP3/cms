@@ -16,6 +16,7 @@ $queries = array(
 	'ALTER TABLE `{pre}comments` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 	'ALTER TABLE `{pre}comments` CHANGE `user_id` `user_id` INT(10) UNSIGNED NOT NULL',
 	'ALTER TABLE `{pre}comments` CHANGE `entry_id` `entry_id` INT(10) UNSIGNED NOT NULL',
+	'UPDATE {pre}comments SET name = \'\' WHERE user_id != 0',
 	'ALTER TABLE `{pre}emoticons` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 	'ALTER TABLE `{pre}files` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 	'ALTER TABLE `{pre}files` CHANGE `category_id` `category_id` INT(10) UNSIGNED NOT NULL',
@@ -66,7 +67,7 @@ if (count($queries) > 0) {
 	$db = new db();
 
 	print "Aktualisierung der Datenbank:\n\n";
-	$bool = false;
+	$bool = null;
 
 	$engine = 'ENGINE=MyISAM';
 	$charset = 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
@@ -74,7 +75,7 @@ if (count($queries) > 0) {
 	foreach ($queries as $row) {
 		$row = str_replace(array('{pre}', '{engine}', '{charset}'), array(CONFIG_DB_PRE, $engine, $charset), $row);
 		$bool = $db->query($row, 3);
-		if (!$bool && defined('DEBUG') && DEBUG) {
+		if ($bool === null && defined('DEBUG') && DEBUG) {
 			print "\n";
 		}
 	}
@@ -104,25 +105,25 @@ if (count($queries) > 0) {
 
 // Konfigurationsdatei aktualisieren
 $config = array(
-	'date' => CONFIG_DATE,
+	'date_dst' => CONFIG_DST,
+	'date_format' => CONFIG_DATE,
+	'date_time_zone' => CONFIG_TIME_ZONE,
 	'db_host' => CONFIG_DB_HOST,
 	'db_name' => CONFIG_DB_NAME,
 	'db_pre' => CONFIG_DB_PRE,
-	'db_pwd' => CONFIG_DB_PWD,
+	'db_password' => CONFIG_DB_PWD,
 	'db_user' => CONFIG_DB_USER,
 	'design' => CONFIG_DESIGN,
-	'dst' => CONFIG_DST,
 	'entries' => CONFIG_ENTRIES,
 	'flood' => CONFIG_FLOOD,
 	'homepage' => CONFIG_HOMEPAGE,
 	'lang' => CONFIG_LANG,
-	'maintenance' => CONFIG_MAINTENANCE,
-	'maintenance_msg' => CONFIG_MAINTENANCE_MSG,
-	'meta_description' => CONFIG_META_DESCRIPTION,
-	'meta_keywords' => CONFIG_META_KEYWORDS,
-	'sef' => CONFIG_SEF,
-	'time_zone' => CONFIG_TIME_ZONE,
-	'title' => CONFIG_TITLE,
+	'maintenance_mode' => CONFIG_MAINTENANCE,
+	'maintenance_message' => CONFIG_MAINTENANCE_MSG,
+	'seo_meta_description' => CONFIG_META_DESCRIPTION,
+	'seo_meta_keywords' => CONFIG_META_KEYWORDS,
+	'seo_mod_rewrite' => CONFIG_SEF,
+	'seo_title' => CONFIG_TITLE,
 	'version' => NEW_VERSION,
 	'wysiwyg' => 'fckeditor'
 );

@@ -21,6 +21,10 @@
 		<message>Benutzer löschen</message>
 	</item>
 	<item>
+		<name>deleted_user</name>
+		<message>Gelöschter Benutzer</message>
+	</item>
+	<item>
 		<name>drafts</name>
 		<message>Entwürfe</message>
 	</item>

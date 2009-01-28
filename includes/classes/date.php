@@ -36,8 +36,8 @@ class date
 			$dst = $info['dst'];
 			$time_zone = $info['time_zone'];
 		} else {
-			$dst = CONFIG_DST;
-			$time_zone = CONFIG_TIME_ZONE;
+			$dst = CONFIG_DATE_DST;
+			$time_zone = CONFIG_DATE_TIME_ZONE;
 		}
 		$this->offset = $time_zone + ($dst == '1' ? 3600 : 0);
 	}
@@ -51,7 +51,7 @@ class date
 	public function format($time_stamp, $format = 0)
 	{
 		// Datum in gewünschter Formatierung ausgeben
-		$format = !empty($format) ? $format : CONFIG_DATE;
+		$format = !empty($format) ? $format : CONFIG_DATE_FORMAT;
 		return gmdate($format, $time_stamp + $this->offset);
 	}
 	public function period($start, $end)

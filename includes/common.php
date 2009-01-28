@@ -48,23 +48,23 @@ $tpl->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
 $tpl->assign('ROOT_DIR', ROOT_DIR);
 $tpl->assign('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
 $tpl->assign('LANG', CONFIG_LANG);
-$tpl->assign('PAGE_TITLE', CONFIG_TITLE);
-$tpl->assign('KEYWORDS', CONFIG_META_KEYWORDS);
-$tpl->assign('DESCRIPTION', CONFIG_META_DESCRIPTION);
+$tpl->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
+$tpl->assign('KEYWORDS', CONFIG_SEO_META_KEYWORDS);
+$tpl->assign('DESCRIPTION', CONFIG_SEO_META_DESCRIPTION);
 
 $uri = new uri();
 
 // Falls der Wartungsmodus aktiv ist, Wartungsnachricht ausgeben und Skript beenden
-if (CONFIG_MAINTENANCE == '1' && defined('IN_ACP3')) {
+if (CONFIG_MAINTENANCE_MODE == '1' && defined('IN_ACP3')) {
 	header('Content-Type: text/html; charset=UTF-8');
-	$tpl->assign('maintenance_msg', CONFIG_MAINTENANCE_MSG);
+	$tpl->assign('maintenance_msg', CONFIG_MAINTENANCE_MESSAGE);
 	$tpl->display('maintenance.html');
 	exit;
 }
 
 // Klassen initialisieren
 $db = new db();
-$db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PWD);
+$db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD);
 $tpl->assign('MODULES', new modules());
 
 require_once ACP3_ROOT . 'includes/functions.php';

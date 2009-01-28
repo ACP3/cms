@@ -30,8 +30,8 @@ if ($auth->isUser()) {
 			// E-Mail mit den Accountdaten zusenden
 			$form['nickname'] = $db->escape($form['nickname']);
 			$host = htmlentities($_SERVER['HTTP_HOST']);
-			$subject = str_replace(array('{title}', '{host}'), array(CONFIG_TITLE, $host), $lang->t('users', 'register_mail_subject'));
-			$message = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($form['nickname'], $form['mail'], $form['pwd'], CONFIG_TITLE, $host), $lang->t('users', 'register_mail_message'));
+			$subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), $lang->t('users', 'register_mail_subject'));
+			$message = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($form['nickname'], $form['mail'], $form['pwd'], CONFIG_SEO_TITLE, $host), $lang->t('users', 'register_mail_message'));
 			$header = 'Content-type: text/plain; charset=UTF-8';
 			$mail_sent = @mail($form['mail'], $subject, $message, $header);
 
@@ -46,8 +46,8 @@ if ($auth->isUser()) {
 					'access' => '3',
 					'mail' => $form['mail'],
 					'website' => '',
-					'time_zone' => CONFIG_TIME_ZONE,
-					'dst' => CONFIG_DST,
+					'time_zone' => CONFIG_DATE_TIME_ZONE,
+					'dst' => CONFIG_DATE_DST,
 					'language' => CONFIG_LANG,
 					'draft' => '',
 				);

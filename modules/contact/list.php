@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
 	} else {
 		$contact = config::output('contact');
 
-		$subject = sprintf($lang->t('contact', 'contact_subject'), CONFIG_TITLE);
+		$subject = sprintf($lang->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
 		$body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($form['name'], $form['mail'], $form['message'], "\n"), $lang->t('contact', 'contact_body'));
 		$header = "Content-type: text/plain; charset=UTF-8\r\n";
 		$header.= 'FROM:' . $form['mail'];
