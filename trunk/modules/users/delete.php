@@ -20,7 +20,7 @@ if (!isset($entries)) {
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
 	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/users/delete/entries_' . $marked_entries), uri('acp/users'));
-} elseif (preg_match('/^([\d|]+)$/', $entries) && $uri->confirmed) {
+} elseif (preg_match('/^((\d+)|)*(\d+)$/', $entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
 	$bool = null;
 	$admin_user = false;

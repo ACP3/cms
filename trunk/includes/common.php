@@ -64,7 +64,10 @@ if (CONFIG_MAINTENANCE_MODE == '1' && defined('IN_ACP3')) {
 
 // Klassen initialisieren
 $db = new db();
-$db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD);
+$handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD);
+if ($handle !== true) {
+	exit($handle);
+}
 $tpl->assign('MODULES', new modules());
 
 require_once ACP3_ROOT . 'includes/functions.php';

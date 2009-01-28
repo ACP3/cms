@@ -29,7 +29,7 @@ jQuery(function($) {
 						$(this).dialog('close');
 					},
 					{/literal}{lang values="common|yes"}{literal}: function() {
-						location.href = $('form').attr('action') + 'entries_' + ary + '/confirmed_1/';
+						location.href = $('form').attr('action') + 'entries_' + ary.substr(0, ary.length - 1) + '/confirmed_1/';
 					}
 				}
 			});
