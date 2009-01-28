@@ -4,7 +4,7 @@
 </div>
 <hr />
 {/if}
-{if $categories}
+{if isset($categories)}
 <div class="news">
 	<div class="header">
 {if $MODULES->check('feeds', 'list')}
@@ -28,7 +28,7 @@
 </div>
 <hr />
 {/if}
-{if $news}
+{if isset($news)}
 {$pagination}
 {foreach from=$news item=row}
 <div class="news">
