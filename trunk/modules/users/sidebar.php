@@ -29,7 +29,9 @@ if ($auth->isUser()) {
 			}
 		}
 	}
-	$tpl->assign('nav_mods', $nav_mods);
+	if (!empty($nav_mods)) {
+		$tpl->assign('nav_mods', $nav_mods);
+	}
 
 	if ($access_system) {
 		$nav_system[0]['page'] = 'configuration';

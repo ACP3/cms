@@ -43,23 +43,23 @@
 		<div id="tabs-2">
 			<dl>
 				<dt>
-					<label for="date">{lang values="system|date_format"}</label>
+					<label for="date-format">{lang values="system|date_format"}</label>
 					<span>({lang values="system|php_date_function"})</span>
 				</dt>
-				<dd><input type="text" name="form[date]" id="date" value="{$form.date}" maxlength="20" /></dd>
-				<dt><label for="time-zone">{lang values="common|time_zone"}</label></dt>
+				<dd><input type="text" name="form[date_format]" id="date-format" value="{$form.date_format}" maxlength="20" /></dd>
+				<dt><label for="date-time-zone">{lang values="common|time_zone"}</label></dt>
 				<dd>
-					<select name="form[time_zone]" id="time-zone">
+					<select name="form[date_time_zone]" id="date-time-zone">
 {foreach from=$time_zone item=row}
 						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 					</select>
 				</dd>
-				<dt><label for="dst-1">{lang values="common|daylight_saving_time"}</label></dt>
+				<dt><label for="date-dst-1">{lang values="common|daylight_saving_time"}</label></dt>
 				<dd>
 {foreach from=$dst item=row}
-					<label for="dst-{$row.value}">
-						<input type="radio" name="form[dst]" id="dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+					<label for="date-dst-{$row.value}">
+						<input type="radio" name="form[date_dst]" id="date-dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
 						{$row.lang}
 					</label>
 {/foreach}
@@ -68,38 +68,38 @@
 		</div>
 		<div id="tabs-3">
 			<dl>
-				<dt><label for="maintenance-1">{lang values="system|maintenance_mode"}</label></dt>
+				<dt><label for="maintenance-mode-1">{lang values="system|maintenance_mode"}</label></dt>
 				<dd>
 {foreach from=$maintenance item=row}
-					<label for="maintenance-{$row.value}">
-						<input type="radio" name="form[maintenance]" id="maintenance-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+					<label for="maintenance-mode-{$row.value}">
+						<input type="radio" name="form[maintenance_mode]" id="maintenance-mode-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
 						{$row.lang}
 					</label>
 {/foreach}
 				</dd>
-				<dt><label for="maintenance-msg">{lang values="system|maintenance_msg"}</label></dt>
-				<dd><textarea name="form[maintenance_msg]" id="maintenance-msg" cols="50" rows="6">{$form.maintenance_msg}</textarea></dd>
+				<dt><label for="maintenance-message">{lang values="system|maintenance_msg"}</label></dt>
+				<dd><textarea name="form[maintenance_message]" id="maintenance-message" cols="50" rows="6">{$form.maintenance_message}</textarea></dd>
 			</dl>
 		</div>
 		<div id="tabs-4">
 			<dl>
-				<dt><label for="title">{lang values="system|title"}</label></dt>
-				<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120" /></dd>
-				<dt><label for="meta-description">{lang values="system|description"}</label></dt>
-				<dd><input type="text" name="form[meta_description]" id="meta-description" value="{$form.meta_description}" maxlength="120" /></dd>
+				<dt><label for="seo-title">{lang values="system|title"}</label></dt>
+				<dd><input type="text" name="form[seo_title]" id="seo-title" value="{$form.seo_title}" maxlength="120" /></dd>
+				<dt><label for="seo-meta-description">{lang values="system|description"}</label></dt>
+				<dd><input type="text" name="form[seo_meta_description]" id="seo-meta-description" value="{$form.seo_meta_description}" maxlength="120" /></dd>
 				<dt>
-					<label for="meta-keywords">{lang values="system|keywords"}</label>
+					<label for="seo-meta-keywords">{lang values="system|keywords"}</label>
 					<span>({lang values="system|separate_with_commas"})</span>
 				</dt>
-				<dd><textarea name="form[meta_keywords]" id="meta-keywords" cols="50" rows="6">{$form.meta_keywords}</textarea></dd>
+				<dd><textarea name="form[seo_meta_keywords]" id="seo-meta-keywords" cols="50" rows="6">{$form.seo_meta_keywords}</textarea></dd>
 				<dt>
-					<label for="sef-1">{lang values="system|mod_rewrite"}</label>
+					<label for="seo-mod-rewrite-1">{lang values="system|mod_rewrite"}</label>
 					<span>({lang values="system|mod_rewrite_description"})</span>
 				</dt>
 				<dd>
 {foreach from=$sef item=row}
-					<label for="sef-{$row.value}">
-						<input type="radio" name="form[sef]" id="sef-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+					<label for="seo-mod-rewrite-{$row.value}">
+						<input type="radio" name="form[seo_mod_rewrite]" id="seo-mod-rewrite-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
 						{$row.lang}
 					</label>
 {/foreach}
@@ -112,8 +112,8 @@
 				<dd><input type="text" name="form[db_host]" id="db-host" value="{$form.db_host}" /></dd>
 				<dt><label for="db-user">{lang values="system|db_username"}</label></dt>
 				<dd><input type="text" name="form[db_user]" id="db-user" value="{$form.db_user}" /></dd>
-				<dt><label for="db-pwd">{lang values="system|db_password"}</label></dt>
-				<dd><input type="text" name="form[db_pwd]" id="db-pwd" value="{$form.db_pwd}" /></dd>
+				<dt><label for="db-password">{lang values="system|db_password"}</label></dt>
+				<dd><input type="text" name="form[db_password]" id="db-password" value="{$form.db_password}" /></dd>
 				<dt><label for="db-name">{lang values="system|db_name"}</label></dt>
 				<dd><input type="text" name="form[db_name]" id="db-name" value="{$form.db_name}" /></dd>
 				<dt><label for="db-pre">{lang values="system|table_prefix"}</label></dt>

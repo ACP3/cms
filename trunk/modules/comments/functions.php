@@ -67,7 +67,7 @@ function comments($module, $entry_id)
 				'id' => '',
 				'ip' => $ip,
 				'date' => $time,
-				'name' => $db->escape($form['name']),
+				'name' => $auth->isUser() && validate::isNumber(USER_ID) ? '' : $db->escape($form['name']),
 				'user_id' => $auth->isUser() && validate::isNumber(USER_ID) ? USER_ID : '',
 				'message' => $db->escape($form['message']),
 				'module' => $db->escape($form['module'], 2),
@@ -81,7 +81,7 @@ function comments($module, $entry_id)
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		// Auflistung der Kommentare
-		$comments = $db->select('name, user_id, date, message', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 'date ASC', POS, CONFIG_ENTRIES);
+		$comments = $db->query('SELECT IF(u.nickname = NULL,c.name,u.nickname) AS name, c.user_id, c.date, c.message FROM ' . CONFIG_DB_PRE . 'comments AS c LEFT JOIN (' . CONFIG_DB_PRE . 'users AS u) ON u.id = c.user_id AND c.module = \'' . $module . '\' AND c.entry_id = \'' . $entry_id . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
 		$c_comments = count($comments);
 
 		// Emoticons einbinden, falls diese aktiv sind
@@ -97,6 +97,10 @@ function comments($module, $entry_id)
 		if ($c_comments > 0) {
 			$tpl->assign('pagination', pagination($db->select('COUNT(id)', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 0, 0, 0, 1)));
 			for ($i = 0; $i < $c_comments; ++$i) {
+				if (!empty($comments[$i]['user_id']) && empty($comments[$i]['name'])) {
+					$comments[$i]['name'] = $lang->t('users', 'deleted_user');
+					$comments[$i]['user_id'] = 0;
+				}
 				$comments[$i]['date'] = $date->format($comments[$i]['date']);
 				$comments[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $comments[$i]['message']);
 				if ($emoticons) {

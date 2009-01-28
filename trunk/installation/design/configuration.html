@@ -50,18 +50,18 @@
 		<div id="tabs-1">
 			<dl>
 				<dt>
-					<label for="db_host">{lang values="system|host"}</label>
+					<label for="db-host">{lang values="system|host"}</label>
 					<span>{lang values="installation|hostname_description"}</span>
 				</dt>
-				<dd><input type="text" name="form[db_host]" id="db_host" value="{$form.db_host}" /></dd>
-				<dt><label for="db_user">{lang values="system|db_username"}</label></dt>
-				<dd><input type="text" name="form[db_user]" id="db_user" value="{$form.db_user}" /></dd>
-				<dt><label for="db_pwd">{lang values="system|db_password"}</label></dt>
-				<dd><input type="text" name="form[db_pwd]" id="db_pwd" value="{$form.db_pwd}" /></dd>
-				<dt><label for="db_name">{lang values="system|db_name"}</label></dt>
-				<dd><input type="text" name="form[db_name]" id="db_name" value="{$form.db_name}" /></dd>
-				<dt><label for="db_pre">{lang values="system|table_prefix"}</label></dt>
-				<dd><input type="text" name="form[db_pre]" id="db_pre" value="{$form.db_pre}" /></dd>
+				<dd><input type="text" name="form[db_host]" id="db-host" value="{$form.db_host}" /></dd>
+				<dt><label for="db-user">{lang values="system|db_username"}</label></dt>
+				<dd><input type="text" name="form[db_user]" id="db-user" value="{$form.db_user}" /></dd>
+				<dt><label for="db-password">{lang values="system|db_password"}</label></dt>
+				<dd><input type="text" name="form[db_password]" id="db-password" value="{$form.db_password}" /></dd>
+				<dt><label for="db-name">{lang values="system|db_name"}</label></dt>
+				<dd><input type="text" name="form[db_name]" id="db-name" value="{$form.db_name}" /></dd>
+				<dt><label for="db-pre">{lang values="system|table_prefix"}</label></dt>
+				<dd><input type="text" name="form[db_pre]" id="db-pre" value="{$form.db_pre}" /></dd>
 			</dl>
 		</div>
 		<div id="tabs-2">
@@ -78,8 +78,8 @@
 		</div>
 		<div id="tabs-3">
 			<dl>
-				<dt><label for="title">{lang values="system|title"}</label></dt>
-				<dd><input type="text" name="form[title]" id="title" value="{$form.title}" /></dd>
+				<dt><label for="seo-title">{lang values="system|title"}</label></dt>
+				<dd><input type="text" name="form[seo_title]" id="seo-title" value="{$form.seo_title}" /></dd>
 				<dt><label for="entries">{lang values="system|entries_per_page"}</label></dt>
 				<dd>
 					<select name="form[entries]" id="entries">
@@ -98,28 +98,26 @@
 		<div id="tabs-4">
 			<dl>
 				<dt>
-					<label for="date">{lang values="system|date_format"}</label>
+					<label for="date-format">{lang values="system|date_format"}</label>
 					<span>({lang values="system|php_date_function"})</span>
 				</dt>
-				<dd><input type="text" name="form[date]" id="date" value="{$form.date}" maxlength="20" /></dd>
-				<dt><label for="time_zone">{lang values="common|time_zone"}</label></dt>
+				<dd><input type="text" name="form[date_format]" id="date-format" value="{$form.date_format}" maxlength="20" /></dd>
+				<dt><label for="date-time-zone">{lang values="common|time_zone"}</label></dt>
 				<dd>
-					<select name="form[time_zone]" id="time_zone">
+					<select name="form[date_time_zone]" id="date-time-zone">
 {foreach from=$time_zone item=row}
 						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 					</select>
 				</dd>
-				<dt><label for="dst_yes">{lang values="common|daylight_saving_time"}</label></dt>
+				<dt><label for="date-dst-1">{lang values="common|daylight_saving_time"}</label></dt>
 				<dd>
-					<label for="dst_yes">
-						<input type="radio" name="form[dst]" id="dst_yes" value="1"{$dst.0.checked} class="checkbox" />
-						{lang values="common|yes"}
+{foreach from=$dst item=row}
+					<label for="date-dst-{$row.value}">
+						<input type="radio" name="form[date_dst]" id="date-dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+						{$row.lang}
 					</label>
-					<label for="dst_no">
-						<input type="radio" name="form[dst]" id="dst_no" value="0"{$dst.1.checked} class="checkbox" />
-						{lang values="common|no"}
-					</label>
+{/foreach}
 				</dd>
 			</dl>
 		</div>

@@ -13,7 +13,7 @@ $is_page = false;
 foreach ($pages as $row) {
 	if ($row['page'] == $uri->page) {
 		$pages[$i]['selected'] = ' class="selected"';
-		$tpl->assign('title', lang('installation', $row['page']));
+		$tpl->assign('title', $lang->t('installation', $row['page']));
 		$is_page = true;
 		break;
 	}
@@ -40,7 +40,7 @@ if ($is_page) {
 	include ACP3_ROOT . 'installation/modules/' . $uri->page . '.php';
 	$tpl->assign('content', $content);
 } else {
-	$tpl->assign('title', lang('errors', '404'));
+	$tpl->assign('title', $lang->t('errors', '404'));
 	$tpl->assign('content', $tpl->fetch('404.html'));
 }
 

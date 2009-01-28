@@ -486,7 +486,7 @@ a.form {
 }
 .imprint dl dd, .user-info dd {
 	margin-left: 22%;
-	padding-top: 2px;
+	padding-top: 1px;
 	line-height: 20px;
 }
 .imprint dl dd p {

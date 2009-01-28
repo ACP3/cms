@@ -21,6 +21,10 @@
 		<message>Delete users</message>
 	</item>
 	<item>
+		<name>deleted_user</name>
+		<message>Deleted user</message>
+	</item>
+	<item>
 		<name>drafts</name>
 		<message>Drafts</message>
 	</item>

@@ -8,61 +8,62 @@ if (isset($_POST['submit'])) {
 	$db = new db;
 
 	if (empty($form['db_host']))
-		$errors[] = lang('system', 'type_in_db_host');
+		$errors[] = $lang->t('system', 'type_in_db_host');
 	if (empty($form['db_user']))
-		$errors[] = lang('system', 'type_in_db_username');
+		$errors[] = $lang->t('system', 'type_in_db_username');
 	if (empty($form['db_name']))
-		$errors[] = lang('system', 'type_in_db_name');
-	if ($db->connect($form['db_host'], $form['db_name'], $form['db_user'], $form['db_pwd']) !== true)
-		$errors[] = lang('installation', 'db_connection_failed');
+		$errors[] = $lang->t('system', 'type_in_db_name');
+	if (!empty($form['db_host']) && !empty($form['db_user']) && !empty($form['db_name']) &&
+		$db->connect($form['db_host'], $form['db_name'], $form['db_user'], $form['db_password']) !== true)
+		$errors[] = $lang->t('installation', 'db_connection_failed');
 	if (empty($form['user_name']))
-		$errors[] = lang('installation', 'type_in_user_name');
+		$errors[] = $lang->t('installation', 'type_in_user_name');
 	if ((empty($form['user_pwd']) || empty($form['user_pwd_wdh'])) || (!empty($form['user_pwd']) && !empty($form['user_pwd_wdh']) && $form['user_pwd'] != $form['user_pwd_wdh']))
-		$errors[] = lang('installation', 'type_in_pwd');
+		$errors[] = $lang->t('installation', 'type_in_pwd');
 	if (!validate::email($form['mail']))
-		$errors[] = lang('common', 'wrong_email_format');
+		$errors[] = $lang->t('common', 'wrong_email_format');
 	if (!validate::isNumber($form['entries']))
-		$errors[] = lang('system', 'select_entries_per_page');
+		$errors[] = $lang->t('system', 'select_entries_per_page');
 	if (!validate::isNumber($form['flood']))
-		$errors[] = lang('system', 'type_in_flood_barrier');
-	if (empty($form['date']))
-		$errors[] = lang('system', 'type_in_date_format');
-	if (!validate::isNumber($form['dst']))
-		$errors[] = lang('common', 'select_daylight_saving_time');
-	if (!validate::isNumber($form['time_zone']))
-		$errors[] = lang('common', 'select_time_zone');
+		$errors[] = $lang->t('system', 'type_in_flood_barrier');
+	if (empty($form['date_format']))
+		$errors[] = $lang->t('system', 'type_in_date_format');
+	if (!validate::isNumber($form['date_dst']))
+		$errors[] = $lang->t('common', 'select_daylight_saving_time');
+	if (!validate::isNumber($form['date_time_zone']))
+		$errors[] = $lang->t('common', 'select_time_zone');
 	if (!is_file($config_path) || !is_writable($config_path))
-		$errors[] = lang('installation', 'wrong_chmod_for_config_file');
+		$errors[] = $lang->t('installation', 'wrong_chmod_for_config_file');
 
 	if (isset($errors)) {
 		$tpl->assign('errors', $errors);
 		$tpl->assign('error_msg', $tpl->fetch('error.html'));
 	} else {
 		// Modulkonfigurationsdateien schreiben
-		config::module('contact', array('mail' => $form['mail'], 'disclaimer' => lang('installation', 'disclaimer')));
-		config::module('newsletter', array('mail' => $form['mail'], 'mailsig' => lang('installation', 'sincerely') . "\n\n" . lang('installation', 'newsletter_mailsig')));
+		config::module('contact', array('mail' => $form['mail'], 'disclaimer' => $lang->t('installation', 'disclaimer')));
+		config::module('newsletter', array('mail' => $form['mail'], 'mailsig' => $lang->t('installation', 'sincerely') . "\n\n" . $lang->t('installation', 'newsletter_mailsig')));
 
 		// Systemkonfiguration erstellen
 		$config = array(
-			'date' => mask($form['date']),
+			'date_dst' => $form['date_dst'],
+			'date_format' => mask($form['date_format']),
+			'date_time_zone' => $form['date_time_zone'],
 			'db_host' => $form['db_host'],
 			'db_name' => $form['db_name'],
 			'db_pre' => mask($form['db_pre']),
-			'db_pwd' => $form['db_pwd'],
+			'db_password' => $form['db_password'],
 			'db_user' => $form['db_user'],
 			'design' => 'acp3',
-			'dst' => $form['dst'],
 			'entries' => $form['entries'],
 			'flood' => $form['flood'],
 			'homepage' => 'news/list/',
 			'lang' => LANG,
-			'maintenance' => 0,
-			'maintenance_msg' => lang('installation', 'offline_message'),
-			'meta_description' => '',
-			'meta_keywords' => '',
-			'sef' => 0,
-			'time_zone' => $form['time_zone'],
-			'title' => !empty($form['title']) ? mask($form['title']) : 'ACP3',
+			'maintenance_mode' => 0,
+			'maintenance_message' => $lang->t('installation', 'offline_message'),
+			'seo_meta_description' => '',
+			'seo_meta_keywords' => '',
+			'seo_mod_rewrite' => 0,
+			'seo_title' => !empty($form['seo_title']) ? mask($form['seo_title']) : 'ACP3',
 			'version' => CONFIG_VERSION,
 			'wysiwyg' => 'fckeditor'
 		);
@@ -71,7 +72,7 @@ if (isset($_POST['submit'])) {
 		config::system($config);
 		require $config_path;
 
-		$db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PWD);
+		$db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD);
 
 		$sql_file = file_get_contents(ACP3_ROOT . 'installation/modules/install.sql');
 		$sql_file = str_replace(array("\r\n", "\r"), "\n", $sql_file);
@@ -83,10 +84,10 @@ if (isset($_POST['submit'])) {
 		$current_date = gmdate('U');
 
 		$other_arr = array(
-			1 => 'INSERT INTO `' . CONFIG_DB_PRE . 'users` VALUES (1, \'' . mask($form['user_name']) . '\', \'\', \'' . sha1($salt . sha1($form['user_pwd'])) . ':' . $salt . '\', 1, \'' . $form['mail'] . '\', \'\', \'' . CONFIG_TIME_ZONE . '\', \'' . CONFIG_DST .'\', \'' . CONFIG_LANG . '\', \'\', \'0\')',
-			2 => 'INSERT INTO `' . CONFIG_DB_PRE . 'news` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', \'' . lang('installation', 'news_headline') . '\', \'' . lang('installation', 'news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\')',
-			3 => 'INSERT INTO `' . CONFIG_DB_PRE . 'menu_items` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 1, 1, 2, \'' . lang('installation', 'pages_news') . '\', \'news\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 2, 3, 4, \'' . lang('installation', 'pages_files') . '\', \'files\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 3, 5, 6, \'' . lang('installation', 'pages_gallery') . '\', \'gallery\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 4, 7, 8, \'' . lang('installation', 'pages_guestbook') . '\', \'guestbook\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 5, 9, 10, \'' . lang('installation', 'pages_polls') . '\', \'polls\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 6, 11, 12, \'' . lang('installation', 'pages_search') . '\', \'search\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 2, 7, 13, 14, \'' . lang('installation', 'pages_contact') . '\', \'contact\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 2, 8, 15, 16, \'' . lang('installation', 'pages_imprint') . '\', \'contact/imprint/\', 1)',
-			4 => 'INSERT INTO `' . CONFIG_DB_PRE . 'menu_items_blocks` (`id`, `index_name`, `title`) VALUES (1, \'main\', \'' . lang('installation', 'pages_main') . '\'), (2, \'sidebar\', \'' . lang('installation', 'pages_sidebar') . '\')',
+			1 => 'INSERT INTO `' . CONFIG_DB_PRE . 'users` VALUES (1, \'' . mask($form['user_name']) . '\', \'\', \'' . sha1($salt . sha1($form['user_pwd'])) . ':' . $salt . '\', 1, \'' . $form['mail'] . '\', \'\', \'' . CONFIG_DATE_TIME_ZONE . '\', \'' . CONFIG_DST .'\', \'' . CONFIG_LANG . '\', \'\', \'0\')',
+			2 => 'INSERT INTO `' . CONFIG_DB_PRE . 'news` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', \'' . $lang->t('installation', 'news_headline') . '\', \'' . $lang->t('installation', 'news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\')',
+			3 => 'INSERT INTO `' . CONFIG_DB_PRE . 'menu_items` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 1, 1, 2, \'' . $lang->t('installation', 'pages_news') . '\', \'news\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 2, 3, 4, \'' . $lang->t('installation', 'pages_files') . '\', \'files\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 3, 5, 6, \'' . $lang->t('installation', 'pages_gallery') . '\', \'gallery\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 4, 7, 8, \'' . $lang->t('installation', 'pages_guestbook') . '\', \'guestbook\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 5, 9, 10, \'' . $lang->t('installation', 'pages_polls') . '\', \'polls\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 6, 11, 12, \'' . $lang->t('installation', 'pages_search') . '\', \'search\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 2, 7, 13, 14, \'' . $lang->t('installation', 'pages_contact') . '\', \'contact\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 2, 8, 15, 16, \'' . $lang->t('installation', 'pages_imprint') . '\', \'contact/imprint/\', 1)',
+			4 => 'INSERT INTO `' . CONFIG_DB_PRE . 'menu_items_blocks` (`id`, `index_name`, `title`) VALUES (1, \'main\', \'' . $lang->t('installation', 'pages_main') . '\'), (2, \'sidebar\', \'' . $lang->t('installation', 'pages_sidebar') . '\')',
 		);
 		$queries = array_merge($sql_file_arr, $other_arr);
 
@@ -98,7 +99,7 @@ if (isset($_POST['submit'])) {
 				$data[$i]['query'] = $query;
 				$bool = $db->query($query, 0);
 				$data[$i]['color'] = $bool !== null ? '090' : 'f00';
-				$data[$i]['result'] = $bool !== null ? lang('installation', 'query_successfully_executed') : lang('installation', 'query_failed');
+				$data[$i]['result'] = $bool !== null ? $lang->t('installation', 'query_successfully_executed') : $lang->t('installation', 'query_failed');
 				$i++;
 				if ($bool === null) {
 					$tpl->assign('install_error', true);
@@ -119,11 +120,6 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	}
 	$tpl->assign('entries', $entries);
 
-	// Sef-URIs
-	$sef[0]['checked'] = select_entry('sef', '1', '0', 'checked');
-	$sef[1]['checked'] = select_entry('sef', '0', '0', 'checked');
-	$tpl->assign('sef', $sef);
-
 	// Zeitzonen
 	$time_zones = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.75, 13, 14);
 	$check_dst = date('I');
@@ -131,22 +127,26 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$i = 0;
 	foreach ($time_zones as $row) {
 		$time_zone[$i]['value'] = $row * 3600;
-		$time_zone[$i]['selected'] = select_entry('time_zone', $row * 3600, $offset);
-		$time_zone[$i]['lang'] = lang('common', 'utc' . $row);
+		$time_zone[$i]['selected'] = select_entry('date_time_zone', $row * 3600, $offset);
+		$time_zone[$i]['lang'] = $lang->t('common', 'utc' . $row);
 		$i++;
 	}
 	$tpl->assign('time_zone', $time_zone);
 
 	// Sommerzeit an/aus
-	$dst[0]['checked'] = select_entry('dst', '1', $check_dst, 'checked');
-	$dst[1]['checked'] = select_entry('dst', '0', $check_dst, 'checked');
+	$dst[0]['value'] = '1';
+	$dst[0]['checked'] = select_entry('date_dst', '1', '1', 'checked');
+	$dst[0]['lang'] = $lang->t('common', 'yes');
+	$dst[1]['value'] = '0';
+	$dst[1]['checked'] = select_entry('date_dst', '0', '1', 'checked');
+	$dst[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('dst', $dst);
 
 	$defaults['db_pre'] = 'acp3_';
 	$defaults['user_name'] = 'admin';
 	$defaults['flood'] = '30';
-	$defaults['date'] = 'd.m.y, H:i';
-	$defaults['title'] = 'ACP3';
+	$defaults['date_format'] = 'd.m.y, H:i';
+	$defaults['seo_title'] = 'ACP3';
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 }

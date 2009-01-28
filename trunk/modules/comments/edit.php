@@ -37,14 +37,14 @@ if (validate::isNumber($uri->id) && $db->select('id', 'comments', 'id = \'' . $u
 
 			$bool = $db->update('comments', $update_values, 'id = \'' . $uri->id . '\'');
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/comments'));
+			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/comments/adm_list/module_' . $comment[0]['module']));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		if (modules::check('emoticons', 'functions')) {
 			include_once ACP3_ROOT . 'modules/emoticons/functions.php';
 
-			//Emoticons im Formular anzeigen
+			// Emoticons im Formular anzeigen
 			$tpl->assign('emoticons', emoticonsList());
 		}
 

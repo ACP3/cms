@@ -47,22 +47,22 @@ $tpl->assign('LANG', LANG);
 
 $pages = array(
 	array(
-		'title' => lang('installation', 'welcome'),
+		'title' => $lang->t('installation', 'welcome'),
 		'page' => 'welcome',
 		'selected' => '',
 	),
 	array(
-		'title' => lang('installation', 'licence'),
+		'title' => $lang->t('installation', 'licence'),
 		'page' => 'licence',
 		'selected' => '',
 	),
 	array(
-		'title' => lang('installation', 'requirements'),
+		'title' => $lang->t('installation', 'requirements'),
 		'page' => 'requirements',
 		'selected' => '',
 	),
 	array(
-		'title' => lang('installation', 'configuration'),
+		'title' => $lang->t('installation', 'configuration'),
 		'page' => 'configuration',
 		'selected' => '',
 	),

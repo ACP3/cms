@@ -58,14 +58,14 @@ if (isset($_POST['submit'])) {
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Zeitzonen
-	$tpl->assign('time_zone', timeZones(CONFIG_TIME_ZONE));
+	$tpl->assign('time_zone', timeZones(CONFIG_DATE_TIME_ZONE));
 
 	// Sommerzeit an/aus
 	$dst[0]['value'] = '1';
-	$dst[0]['checked'] = selectEntry('dst', '1', CONFIG_DST, 'checked');
+	$dst[0]['checked'] = selectEntry('dst', '1', CONFIG_DATE_DST, 'checked');
 	$dst[0]['lang'] = $lang->t('common', 'yes');
 	$dst[1]['value'] = '0';
-	$dst[1]['checked'] = selectEntry('dst', '0', CONFIG_DST, 'checked');
+	$dst[1]['checked'] = selectEntry('dst', '0', CONFIG_DATE_DST, 'checked');
 	$dst[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('dst', $dst);
 
