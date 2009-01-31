@@ -26,8 +26,9 @@ $queries = array(
 	'ALTER TABLE `{pre}guestbook` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 	'ALTER TABLE `{pre}guestbook` CHANGE `user_id` `user_id` INT(10) UNSIGNED NOT NULL',
 	'ALTER TABLE `{pre}news` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
-	'ALTER TABLE `{pre}news` CHANGE `readmore` `readmore` TINYINT(1) UNSIGNED NOT NULL',
-	'ALTER TABLE `{pre}news` CHANGE `comments` `comments` TINYINT(1) UNSIGNED NOT NULL',
+	'ALTER TABLE `{pre}news` ADD `readmore` TINYINT(1) UNSIGNED NOT NULL AFTER `text`',
+	'ALTER TABLE `{pre}news` ADD `comments` TINYINT(1) UNSIGNED NOT NULL AFTER `readmore`',
+	'UPDATE `{pre}news` SET readmore = `1`, comments = `1`',
 	'ALTER TABLE `{pre}news` CHANGE `category_id` `category_id` INT(10) UNSIGNED NOT NULL',
 	'ALTER TABLE `{pre}news` CHANGE `target` `target` TINYINT(1) UNSIGNED NOT NULL',
 	'RENAME TABLE `{pre}nnewsletter_accounts` TO `{pre}newsletter_accounts`',
@@ -65,6 +66,10 @@ $queries = array(
 // Änderungen am DB Schema vornehemen
 if (count($queries) > 0) {
 	$db = new db();
+	$handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD);
+	if (defined(DEBUG) && DEBUG && $handle !== true) {
+		exit($handle);
+	}
 
 	print "Aktualisierung der Datenbank:\n\n";
 	$bool = null;
@@ -94,7 +99,7 @@ if (count($queries) > 0) {
 			);
 			$db->insert('static_pages', $insert_values);
 			$last_id = $db->select('LAST_INSERT_ID() AS id', 'static_pages');
-			$db->update('menu_items', array('uri' => 'static_pages/list/id_' . $last_id[0]['id']), 'id = "' . $pages[$i]['id']);
+			$db->update('menu_items', array('uri' => 'static_pages/list/id_' . $last_id[0]['id']), 'id = "' . $pages[$i]['id'] . '"');
 		}
 		$db->query('ALTER TABLE `' . CONFIG_DB_PRE . 'menu_items` DROP `text`', 3);
 	}
