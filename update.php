@@ -28,7 +28,7 @@ $queries = array(
 	'ALTER TABLE `{pre}news` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 	'ALTER TABLE `{pre}news` ADD `readmore` TINYINT(1) UNSIGNED NOT NULL AFTER `text`',
 	'ALTER TABLE `{pre}news` ADD `comments` TINYINT(1) UNSIGNED NOT NULL AFTER `readmore`',
-	'UPDATE `{pre}news` SET readmore = `1`, comments = `1`',
+	'UPDATE `{pre}news` SET readmore = 1, comments = 1',
 	'ALTER TABLE `{pre}news` CHANGE `category_id` `category_id` INT(10) UNSIGNED NOT NULL',
 	'ALTER TABLE `{pre}news` CHANGE `target` `target` TINYINT(1) UNSIGNED NOT NULL',
 	'RENAME TABLE `{pre}nnewsletter_accounts` TO `{pre}newsletter_accounts`',
