@@ -67,7 +67,7 @@ $queries = array(
 if (count($queries) > 0) {
 	$db = new db();
 	$handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD);
-	if (defined(DEBUG) && DEBUG && $handle !== true) {
+	if ($handle !== true) {
 		exit($handle);
 	}
 
