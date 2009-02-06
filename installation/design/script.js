@@ -10,5 +10,7 @@ jQuery(function($) {
 		$('#queries').slideToggle('fast');
 		return false;
 	});
+
+	// jQuery UI Tabs
 	$('#tabs').tabs({ cookie: { expires: 30 }});
 })
