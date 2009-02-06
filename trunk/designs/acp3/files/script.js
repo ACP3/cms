@@ -1,4 +1,6 @@
 jQuery(function($) {
+	$('#external-filesize').hide();
+
 	if ($('#external')[0].checked) {
 		$('#file-external').show();
 		$('#external-filesize').show();
