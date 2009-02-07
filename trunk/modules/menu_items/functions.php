@@ -216,9 +216,9 @@ function processNavbar($block) {
 			global $date, $db, $uri;
 
 			if (uri($uri->query) != uri($uri->mod) && $db->select('COUNT(id)', 'menu_items', 'uri = \'' . $uri->query . '\'', 0, 0, 0, 1) > 0) {
-				$select = $db->select('id', 'menu_items', 'uri = \'' . $uri->query . '\'');
+				$select = $db->select('id, left_id', 'menu_items', 'uri = \'' . $uri->query . '\'');
 			} else {
-				$select = $db->select('id', 'menu_items', 'uri = \'' . $uri->mod . '\'');
+				$select = $db->select('id, left_id', 'menu_items', 'uri = \'' . $uri->mod . '\'');
 			}
 
 			$navbar[$block] = '';
@@ -231,7 +231,7 @@ function processNavbar($block) {
 				if ($pages[$i]['block_name'] == $block && $pages[$i]['start'] == $pages[$i]['end'] && $pages[$i]['start'] <= $time || $pages[$i]['start'] != $pages[$i]['end'] && $pages[$i]['start'] <= $time && $pages[$i]['end'] >= $time) {
 					$css = 'navi-' . $pages[$i]['id'];
 					// Menüpunkt selektieren
-					if (defined('IN_ACP3') && !empty($select) && $select[0]['id'] == $pages[$i]['id']) {
+					if (defined('IN_ACP3') && !empty($select) && $pages[$i]['left_id'] <= $select[0]['left_id'] && $pages[$i]['right_id'] > $select[0]['left_id']) {
 						$css.= ' selected';
 					}
 					$href = $pages[$i]['mode'] == '1' || $pages[$i]['mode'] == '2' ? uri($pages[$i]['uri']) : $pages[$i]['uri'];
@@ -243,7 +243,7 @@ function processNavbar($block) {
 					if (isset($pages[$i + 1]) && $pages[$i + 1]['level'] > $pages[$i]['level']) {
 						$navbar[$block].= $indent . "\t<li>\n";
 						$navbar[$block].= $indent . "\t\t" . $link . "\n";
-						$navbar[$block].= $indent . "\t\t<ul>\n";
+						$navbar[$block].= $indent . "\t\t<ul class=\"navigation-" . $block . '-subnav-' . $pages[$i]['id'] . "\">\n";
 					// Elemente ohne Kindelemente
 					} else {
 						$navbar[$block].= $indent . "\t<li>" . $link . "</li>\n";
