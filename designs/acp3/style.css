@@ -347,19 +347,10 @@ a.form {
 #sidebar ul li a:hover, #sidebar ul li a.selected {
 	color: #f90;
 }
-#sidebar ul.admin {
-	margin: 0;
-	list-style: none;
-	text-align: center;
-}
-#sidebar ul.admin li a {
-	padding-left: 15px;
-	text-align: left;
-}
 #sidebar ul.admin li ul {
 	display: none;
 }
-#sidebar ul.admin li ul li a {
+#sidebar ul li ul li a {
 	padding-left: 30px;
 }
 #login-sidebar {

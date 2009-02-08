@@ -56,6 +56,10 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'access', 'id = \''
 						$mod_list[$name]['level_1_selected'] = selectAccessLevel($info['dir'], '1', $db_value);
 						$mod_list[$name]['level_2_selected'] = selectAccessLevel($info['dir'], '2', $db_value);
 						break;
+					} else {
+						$mod_list[$name]['level_0_selected'] = '';
+						$mod_list[$name]['level_1_selected'] = '';
+						$mod_list[$name]['level_2_selected'] = '';
 					}
 				}
 			}
