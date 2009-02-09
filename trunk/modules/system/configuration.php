@@ -47,9 +47,9 @@ if (isset($_POST['submit'])) {
 	} else {
 		// Konfig aktualisieren
 		$config = array(
-			'date_dst' => $form['dst'],
+			'date_dst' => $form['date_dst'],
 			'date_format' => $db->escape($form['date_format']),
-			'date_time_zone' => $form['time_zone'],
+			'date_time_zone' => $form['date_time_zone'],
 			'db_host' => $form['db_host'],
 			'db_name' => $form['db_name'],
 			'db_pre' => $db->escape($form['db_pre']),
@@ -62,10 +62,10 @@ if (isset($_POST['submit'])) {
 			'lang' => CONFIG_LANG,
 			'maintenance_mode' => $form['maintenance_mode'],
 			'maintenance_message' => $db->escape($form['maintenance_message']),
-			'seo_meta_description' => $db->escape($form['meta_description']),
-			'seo_meta_keywords' => $db->escape($form['meta_keywords']),
+			'seo_meta_description' => $db->escape($form['seo_meta_description']),
+			'seo_meta_keywords' => $db->escape($form['seo_meta_keywords']),
 			'seo_mod_rewrite' => $form['seo_mod_rewrite'],
-			'seo_title' => $db->escape($form['title']),
+			'seo_title' => $db->escape($form['seo_title']),
 			'version' => CONFIG_VERSION,
 			'wysiwyg' => $form['wysiwyg']
 		);

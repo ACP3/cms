@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'pages_blocks', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items_blocks', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
 	breadcrumb::assign($lang->t('menu_items', 'menu_items'), uri('acp/menu_items'));
 	breadcrumb::assign($lang->t('menu_items', 'adm_list_blocks'), uri('acp/menu_items/adm_list_blocks'));

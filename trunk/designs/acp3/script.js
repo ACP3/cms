@@ -26,4 +26,13 @@ jQuery(function($) {
 
 	// jQuery UI Tabs
 	$('#tabs').tabs({ cookie: { expires: 30 }});
+
+	// Checkbox durch Klick auf Tabellenzeile markieren
+	$('table.acp-table tr').filter(':has(:checkbox:checked)').addClass('selected').end().click(function(event) {
+		if (event.target.type !== 'checkbox') {
+			$(':checkbox', this).trigger('click');
+		}
+	}).find(':checkbox').click(function() {
+		$(this).parents('tr:first').toggleClass('selected');
+	});
 })
