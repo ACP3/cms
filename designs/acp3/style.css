@@ -59,7 +59,7 @@ p {
 	padding: 5px 0;
 	text-align: justify;
 }
-table.acp-table, .acp-table tr, .acp-table th, .acp-table td {
+table.acp-table, table.acp-table tr, table.acp-table th, table.acp-table td {
 	border: 1px solid #333;
 	border-collapse: collapse;
 	font-size: 1.0em;
@@ -72,11 +72,10 @@ table.acp-table {
 	width: 100%;
 	margin: 0 auto;
 }
-tfoot, .sub-table-header {
-	background: #eee;
-	font-weight: bold;
+table.acp-table tr.selected {
+	background: #f5f5f5;
 }
-.acp-table th {
+table.acp-table th {
 	padding: 0 3px;
 	background: #069 url('images/common_header.png') repeat-x;
 	font-weight: bold;
@@ -85,8 +84,12 @@ tfoot, .sub-table-header {
 	color: #f90;
 	white-space: nowrap;
 }
-.acp-table td {
+table.acp-table td {
 	padding: 3px;
+}
+tfoot, .sub-table-header {
+	background: #e7e7e7;
+	font-weight: bold;
 }
 pre {
 	width: 99%;
