@@ -326,7 +326,22 @@ function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
 {
 	$attr = ' ' . $attr . '="' . $attr . '"';
 
-	if (!isset($_POST['form'][$name])) {
+	if (isset($_POST[$name])) {
+		$field = $_POST[$name];
+	} elseif (isset($_POST['form'][$name])) {
+		$field = $_POST['form'][$name];
+	}
+
+	if (isset($field)) {
+		if (!is_array($field) && $field == $defValue) {
+			return $attr;
+		} elseif (is_array($field)) {
+			foreach ($field as $row) {
+				if ($row == $defValue)
+					return $attr;
+			}
+		}
+	} else {
 		if (!is_array($currentValue) && $currentValue == $defValue) {
 			return $attr;
 		} elseif (is_array($currentValue)) {
@@ -335,17 +350,8 @@ function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
 					return $attr;
 			}
 		}
-	} elseif (isset($_POST['form'][$name]) && $_POST['form'][$name] != '') {
-		if (!is_array($_POST['form'][$name]) && $_POST['form'][$name] == $defValue) {
-			return $attr;
-		} elseif (is_array($_POST['form'][$name])) {
-			foreach ($_POST['form'][$name] as $row) {
-				if ($row == $defValue)
-					return $attr;
-			}
-		}
+		return '';
 	}
-	return '';
 }
 /**
  * Gibt eine Liste aller Zeitzonen aus

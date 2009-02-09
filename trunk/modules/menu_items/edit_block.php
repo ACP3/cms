@@ -36,7 +36,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'pages_blocks', 'id
 
 			$bool = $db->update('menu_items_blocks', $update_values, 'id = \'' . $uri->id . '\'');
 
-			setNavbarCache();
+			setMenuItemsCache();
 
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/menu_items/adm_list_blocks'));
 		}

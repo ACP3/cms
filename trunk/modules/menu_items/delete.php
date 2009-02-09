@@ -26,7 +26,7 @@ if (!isset($entries)) {
 	foreach ($marked_entries as $entry) {
 		$bool = deleteNode($entry);
 	}
-	setNavbarCache();
+	setMenuItemsCache();
 
 	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/menu_items'));
 }

@@ -22,11 +22,21 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 			$errors[] = $lang->t('menu_items', 'select_block');
 		if (strlen($form['title']) < 3)
 			$errors[] = $lang->t('menu_items', 'title_to_short');
+		if (!empty($form['parent']) && !validate::isNumber($form['parent']))
+			$errors[] = $lang->t('menu_items', 'select_superior_page');
+		if (!empty($form['parent']) && validate::isNumber($form['parent'])) {
+			// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
+			$parent_block = $db->select('block_id', 'menu_items', 'id = \'' . $form['parent'] . '\'');
+			if (!empty($parent_block) && $parent_block[0]['block_id'] != $form['blocks'])
+				$errors[] = $lang->t('menu_items', 'superior_page_not_allowed');
+		}
 		if (!validate::isNumber($form['target']) ||
 			$form['mode'] == '1' && (!is_dir(ACP3_ROOT . 'modules/' . $form['module']) || preg_match('=/=', $form['module'])) ||
 			$form['mode'] == '2' && !preg_match('/^(?i:[a-z_-]+\/){2,}$/', $form['uri']) ||
 			$form['mode'] == '3' && empty($form['uri']))
 			$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
+		if ($form['display'] != '0' && $form['display'] != '1')
+			$errors[] = $lang->t('menu_items', 'select_item_visibility');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -37,6 +47,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 				'end' => $date->timestamp($form['end']),
 				'mode' => $form['mode'],
 				'block_id' => $form['blocks'],
+				'display' => $form['display'],
 				'title' => $db->escape($form['title']),
 				'uri' => $form['mode'] == '1' ? $form['module'] : $db->escape($form['uri'], 2),
 				'target' => $form['target'],
@@ -110,13 +121,13 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 				}
 			}
 
-			setNavbarCache();
+			setMenuItemsCache();
 
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/menu_items'));
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$page = $db->select('id, start, end, mode, block_id, left_id, right_id, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
+		$page = $db->select('id, start, end, mode, block_id, left_id, right_id, display, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
 		$page[0]['uri'] = $db->escape($page[0]['uri'], 3);
 
 		// Seitentyp
@@ -153,6 +164,13 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 		$target[1]['selected'] = selectEntry('target', '2', $page[0]['target']);
 		$target[1]['lang'] = $lang->t('common', 'window_blank');
 
+		$display[0]['value'] = 1;
+		$display[0]['selected'] = selectEntry('display', 1, $page[0]['display'], 'checked');
+		$display[0]['lang'] = $lang->t('common', 'yes');
+		$display[1]['value'] = 0;
+		$display[1]['selected'] = selectEntry('display', '0', $page[0]['display'], 'checked');
+		$display[1]['lang'] = $lang->t('common', 'no');
+
 		// Daten an Smarty übergeben
 		$tpl->assign('start_date', datepicker('start', $page[0]['start']));
 		$tpl->assign('end_date', datepicker('end', $page[0]['end']));
@@ -160,6 +178,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 		$tpl->assign('blocks', $blocks);
 		$tpl->assign('modules', $modules);
 		$tpl->assign('target', $target);
+		$tpl->assign('display', $display);
 		$tpl->assign('form', isset($form) ? $form : $page[0]);
 
 		// Übergeordnete Seite herausfinden
