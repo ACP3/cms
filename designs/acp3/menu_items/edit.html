@@ -48,9 +48,18 @@
 {/foreach}
 				</select>
 			</dd>
+			<dt><label for="display-1">{lang values="menu_items|display_item"}</label></dt>
+			<dd>
+{foreach from=$display item=row}
+				<label for="display-{$row.value}">
+					<input type="radio" name="form[display]" id="display-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected} />
+					{$row.lang}
+				</label>
+{/foreach}
+			</dd>
 		</dl>
 	</fieldset>
-	<fieldset>
+	<fieldset id="page-type">
 		<legend>{lang values="menu_items|page_type"}</legend>
 		<dl id="module-container">
 			<dt><label for="module">{lang values="menu_items|module"}</label></dt>

@@ -63,7 +63,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 			break;
 	}
 	if ($bool !== null && $bool2 !== null) {
-		setNavbarCache();
+		setMenuItemsCache();
 		redirect('acp/menu_items');
 	}
 } else {

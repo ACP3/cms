@@ -34,7 +34,7 @@ if (!isset($entries)) {
 		}
 	}
 
-	setNavbarCache();
+	setMenuItemsCache();
 
 	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/menu_items/adm_list_blocks'));
 }

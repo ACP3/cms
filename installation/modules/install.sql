@@ -83,6 +83,7 @@ CREATE TABLE `{pre}menu_items` (
 	`root_id` INT(10) UNSIGNED NOT NULL,
 	`left_id` INT(10) UNSIGNED NOT NULL,
 	`right_id` INT(10) UNSIGNED NOT NULL,
+	`display` TINYINT(1) UNSIGNED NOT NULL,
 	`title` VARCHAR(120) NOT NULL,
 	`uri` VARCHAR(120) NOT NULL,
 	`target` TINYINT(1) UNSIGNED NOT NULL,

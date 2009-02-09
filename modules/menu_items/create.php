@@ -34,6 +34,8 @@ if (isset($_POST['submit'])) {
 		$form['mode'] == '2' && !preg_match('/^(?i:[a-z_-]+\/){2,}$/', $form['uri']) ||
 		$form['mode'] == '3' && empty($form['uri']))
 		$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
+	if ($form['display'] != '0' && $form['display'] != '1')
+		$errors[] = $lang->t('menu_items', 'select_item_visibility');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -44,13 +46,14 @@ if (isset($_POST['submit'])) {
 			'end' => $date->timestamp($form['end']),
 			'mode' => $form['mode'],
 			'block_id' => $form['blocks'],
+			'display' => $form['display'],
 			'title' => $db->escape($form['title']),
 			'uri' => $form['mode'] == '1' ? $form['module'] : $db->escape($form['uri'], 2),
 			'target' => $form['target'],
 		);
 
 		$bool = insertNode($form['parent'], $insert_values);
-		setNavbarCache();
+		setMenuItemsCache();
 
 		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/menu_items'));
 	}
@@ -82,11 +85,18 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 	// Ziel des Hyperlinks
 	$target[0]['value'] = 1;
-	$target[0]['selected'] = selectEntry('target', '1');
+	$target[0]['selected'] = selectEntry('target', 1);
 	$target[0]['lang'] = $lang->t('common', 'window_self');
 	$target[1]['value'] = 2;
-	$target[1]['selected'] = selectEntry('target', '2');
+	$target[1]['selected'] = selectEntry('target', 2);
 	$target[1]['lang'] = $lang->t('common', 'window_blank');
+
+	$display[0]['value'] = 1;
+	$display[0]['selected'] = selectEntry('display', 1, 1, 'checked');
+	$display[0]['lang'] = $lang->t('common', 'yes');
+	$display[1]['value'] = 0;
+	$display[1]['selected'] = selectEntry('display', '0', '', 'checked');
+	$display[1]['lang'] = $lang->t('common', 'no');
 
 	$defaults = array(
 		'title' => '',
@@ -100,6 +110,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('blocks', $blocks);
 	$tpl->assign('modules', $modules);
 	$tpl->assign('target', $target);
+	$tpl->assign('display', $display);
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 	$tpl->assign('pages_list', pagesList());
 

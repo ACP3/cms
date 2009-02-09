@@ -41,6 +41,10 @@
 		<message>Blöcke löschen</message>
 	</item>
 	<item>
+		<name>display_item</name>
+		<message>Menüpunkt anzeigen</message>
+	</item>
+	<item>
 		<name>dynamic_page</name>
 		<message>Dynamische Seite</message>
 	</item>
@@ -103,6 +107,10 @@
 	<item>
 		<name>select_block</name>
 		<message>Bitte wählen Sie aus, in welcher Navigationsleiste der Menüpunkt angezeigt werden soll</message>
+	</item>
+	<item>
+		<name>select_item_visibility</name>
+		<message>Bitte wählen Sie aus, ob der Menüpunkt angezeigt werden soll oder nicht</message>
 	</item>
 	<item>
 		<name>select_page_type</name>
