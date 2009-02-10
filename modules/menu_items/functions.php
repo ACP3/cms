@@ -232,17 +232,18 @@ function processNavbar($block) {
 
 		if ($c_pages > 0) {
 			if (uri($uri->query) != uri($uri->mod) && $db->select('COUNT(id)', 'menu_items', 'uri = \'' . $uri->query . '\'', 0, 0, 0, 1) > 0) {
-				$select = $db->select('id, left_id', 'menu_items', 'uri = \'' . $uri->query . '\'');
+				$link = $uri->query;
 			} else {
-				$select = $db->select('id, left_id', 'menu_items', 'uri = \'' . $uri->mod . '\'');
+				$link = $uri->mod;
 			}
+			$select = $db->select('left_id', 'menu_items', 'uri = \'' . $link . '\'');
 
 			$navbar[$block] = '';
 
 			for ($i = 0; $i < $c_pages; ++$i) {
 				$css = 'navi-' . $pages[$i]['id'];
 				// Menüpunkt selektieren
-				if (defined('IN_ACP3') && !empty($select) && $pages[$i]['left_id'] <= $select[0]['left_id'] && $pages[$i]['right_id'] > $select[0]['left_id']) {
+				if (!empty($select) && defined('IN_ACP3') && $pages[$i]['left_id'] <= $select[0]['left_id'] && $pages[$i]['right_id'] > $select[0]['left_id']) {
 					$css.= ' selected';
 				}
 				$href = $pages[$i]['mode'] == '1' || $pages[$i]['mode'] == '2' ? uri($pages[$i]['uri']) : $pages[$i]['uri'];

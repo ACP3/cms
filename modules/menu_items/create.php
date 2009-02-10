@@ -17,25 +17,25 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('common', 'select_date');
 	if (!validate::isNumber($form['mode']))
 		$errors[] = $lang->t('menu_items', 'select_page_type');
-	if (!validate::isNumber($form['blocks']))
-		$errors[] = $lang->t('menu_items', 'select_block');
 	if (strlen($form['title']) < 3)
 		$errors[] = $lang->t('menu_items', 'title_to_short');
+	if (!validate::isNumber($form['block_id']))
+		$errors[] = $lang->t('menu_items', 'select_block');
 	if (!empty($form['parent']) && !validate::isNumber($form['parent']))
 		$errors[] = $lang->t('menu_items', 'select_superior_page');
 	if (!empty($form['parent']) && validate::isNumber($form['parent'])) {
 		// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
 		$parent_block = $db->select('block_id', 'menu_items', 'id = \'' . $form['parent'] . '\'');
-		if (!empty($parent_block) && $parent_block[0]['block_id'] != $form['blocks'])
+		if (!empty($parent_block) && $parent_block[0]['block_id'] != $form['block_id'])
 			$errors[] = $lang->t('menu_items', 'superior_page_not_allowed');
 	}
+	if ($form['display'] != '0' && $form['display'] != '1')
+		$errors[] = $lang->t('menu_items', 'select_item_visibility');
 	if (!validate::isNumber($form['target']) ||
 		$form['mode'] == '1' && (!is_dir(ACP3_ROOT . 'modules/' . $form['module']) || preg_match('=/=', $form['module'])) ||
 		$form['mode'] == '2' && !preg_match('/^(?i:[a-z0-9_\-]+\/){2,}$/', $form['uri']) ||
 		$form['mode'] == '3' && empty($form['uri']))
 		$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
-	if ($form['display'] != '0' && $form['display'] != '1')
-		$errors[] = $lang->t('menu_items', 'select_item_visibility');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 			'start' => $date->timestamp($form['start']),
 			'end' => $date->timestamp($form['end']),
 			'mode' => $form['mode'],
-			'block_id' => $form['blocks'],
+			'block_id' => $form['block_id'],
 			'display' => $form['display'],
 			'title' => $db->escape($form['title']),
 			'uri' => $form['mode'] == '1' ? $form['module'] : $db->escape($form['uri'], 2),
@@ -74,7 +74,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$blocks = $db->select('id, title', 'menu_items_blocks');
 	$c_blocks = count($blocks);
 	for ($i = 0; $i < $c_blocks; ++$i) {
-		$blocks[$i]['selected'] = selectEntry('blocks', $blocks[$i]['id']);
+		$blocks[$i]['selected'] = selectEntry('block_id', $blocks[$i]['id']);
 	}
 
 	// Module
