@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>create</name>
+		<message>Create new static page</message>
+	</item>
+	<item>
+		<name>create_menu_item</name>
+		<message>Create menu item for this page</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>Delete static page</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Edit static page</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>This module manages the static pages.</message>
+	</item>
+	<item>
+		<name>page_statements</name>
+		<message>Page statements</message>
+	</item>
+	<item>
+		<name>select_create_menu_item</name>
+		<message>Please select, wether you want to create an menu item for this static page</message>
+	</item>
+	<item>
+		<name>static_pages</name>
+		<message>Static pages</message>
+	</item>
+	<item>
+		<name>static_pages_overview</name>
+		<message>Static pages overview</message>
+	</item>
+	<item>
+		<name>text</name>
+		<message>Text</message>
+	</item>
+	<item>
+		<name>text_to_short</name>
+		<message>The text should be at least 3 characters long</message>
+	</item>
+	<item>
+		<name>title</name>
+		<message>Title</message>
+	</item>
+	<item>
+		<name>title_to_short</name>
+		<message>The title should be at least 3 characters long</message>
+	</item>
+</language>
