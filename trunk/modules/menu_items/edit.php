@@ -18,25 +18,25 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 			$errors[] = $lang->t('common', 'select_date');
 		if (!validate::isNumber($form['mode']))
 			$errors[] = $lang->t('menu_items', 'select_page_type');
-		if (!validate::isNumber($form['blocks']))
-			$errors[] = $lang->t('menu_items', 'select_block');
 		if (strlen($form['title']) < 3)
 			$errors[] = $lang->t('menu_items', 'title_to_short');
+		if (!validate::isNumber($form['block_id']))
+			$errors[] = $lang->t('menu_items', 'select_block');
 		if (!empty($form['parent']) && !validate::isNumber($form['parent']))
 			$errors[] = $lang->t('menu_items', 'select_superior_page');
 		if (!empty($form['parent']) && validate::isNumber($form['parent'])) {
 			// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
 			$parent_block = $db->select('block_id', 'menu_items', 'id = \'' . $form['parent'] . '\'');
-			if (!empty($parent_block) && $parent_block[0]['block_id'] != $form['blocks'])
+			if (!empty($parent_block) && $parent_block[0]['block_id'] != $form['block_id'])
 				$errors[] = $lang->t('menu_items', 'superior_page_not_allowed');
 		}
+		if ($form['display'] != '0' && $form['display'] != '1')
+			$errors[] = $lang->t('menu_items', 'select_item_visibility');
 		if (!validate::isNumber($form['target']) ||
 			$form['mode'] == '1' && (!is_dir(ACP3_ROOT . 'modules/' . $form['module']) || preg_match('=/=', $form['module'])) ||
 			$form['mode'] == '2' && !preg_match('/^(?i:[a-z0-9_\-]+\/){2,}$/', $form['uri']) ||
 			$form['mode'] == '3' && empty($form['uri']))
 			$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
-		if ($form['display'] != '0' && $form['display'] != '1')
-			$errors[] = $lang->t('menu_items', 'select_item_visibility');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -46,7 +46,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 				'start' => $date->timestamp($form['start']),
 				'end' => $date->timestamp($form['end']),
 				'mode' => $form['mode'],
-				'block_id' => $form['blocks'],
+				'block_id' => $form['block_id'],
 				'display' => $form['display'],
 				'title' => $db->escape($form['title']),
 				'uri' => $form['mode'] == '1' ? $form['module'] : $db->escape($form['uri'], 2),
@@ -78,8 +78,8 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 					if (!empty($new_parent) && $new_parent[0]['left_id'] < $pages[0]['left_id'] && $new_parent[0]['right_id'] > $pages[0]['right_id']) {
 						$bool = null;
 					} else {
-						if ($pages[0]['block_id'] != $form['blocks']) {
-							$db->update('menu_items', array('block_id' => $form['blocks']), 'left_id BETWEEN ' . $pages[0]['left_id'] . ' AND ' . $pages[0]['right_id']);
+						if ($pages[0]['block_id'] != $form['block_id']) {
+							$db->update('menu_items', array('block_id' => $form['block_id']), 'left_id BETWEEN ' . $pages[0]['left_id'] . ' AND ' . $pages[0]['right_id']);
 						}
 						// Element zum neuen Elternknoten machen
 						if (empty($new_parent)) {
@@ -148,7 +148,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 		$blocks = $db->select('id, title', 'menu_items_blocks', 0, 'title ASC, id ASC');
 		$c_blocks = count($blocks);
 		for ($i = 0; $i < $c_blocks; ++$i) {
-			$blocks[$i]['selected'] = selectEntry('blocks', $blocks[$i]['id'], $page[0]['block_id']);
+			$blocks[$i]['selected'] = selectEntry('block_id', $blocks[$i]['id'], $page[0]['block_id']);
 		}
 
 		// Module

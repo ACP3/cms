@@ -1,0 +1,79 @@
+{if isset($error_msg)}
+{$error_msg}
+{/if}
+<script type="text/javascript" src="{$DESIGN_PATH}static_pages/script.js"></script>
+<form action="{$REQUEST_URI}" method="post">
+	<div id="tabs">
+		<ul>
+			<li><a href="#tabs-1">{lang values="common|publication_period"}</a></li>
+			<li><a href="#tabs-2">{lang values="static_pages|page_statements"}</a></li>
+		</ul>
+		<div id="tabs-1">
+			<dl>
+				<dt><label for="start">{lang values="common|start_date"}</label></dt>
+				<dd>{$start_date}</dd>
+				<dt><label for="end">{lang values="common|end_date"}</label></dt>
+				<dd>{$end_date}</dd>
+			</dl>
+			<p>
+				{lang values="common|date_description"}
+			</p>
+		</div>
+		<div id="tabs-2">
+			<dl>
+				<dt><label for="title">{lang values="static_pages|title"}</label></dt>
+				<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120" /></dd>
+				<dt><label for="text">{lang values="static_pages|text"}</label></dt>
+				<dd>{wysiwyg name="text" value="`$form.text`" height="250"}</dd>
+{if isset($create)}
+				<dt><label for="create-item-1">{lang values="static_pages|create_menu_item"}</label></dt>
+				<dd>
+{foreach from=$create item=row}
+					<label for="create-item-{$row.value}">
+						<input type="radio" name="form[create]" id="create-item-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected} />
+						{$row.lang}
+					</label>
+{/foreach}
+				</dd>
+{/if}
+			</dl>
+			<dl id="create-item-container">
+				<dt><label for="block_id">{lang values="menu_items|blocks"}</label></dt>
+				<dd>
+					<select name="form[block_id]" id="block_id">
+						<option value="">{lang values="common|pls_select"}</option>
+{foreach from=$blocks item=row}
+						<option value="{$row.id}"{$row.selected}>{$row.title}</option>
+{/foreach}
+					</select>
+				</dd>
+				<dt><label for="parent">{lang values="menu_items|superior_page"}</label></dt>
+				<dd>
+					<select name="form[parent]" id="parent">
+						<option value="">{lang values="menu_items|no_superior_page"}</option>
+{foreach from=$pages_list key=block item=pages}
+						<optgroup label="{$block}">
+{foreach from=$pages item=row}
+							<option value="{$row.id}"{$row.selected}>{$row.spaces}{$row.title}</option>
+{/foreach}
+						</optgroup>
+{/foreach}
+					</select>
+				</dd>
+				<dt><label for="display-1">{lang values="menu_items|display_item"}</label></dt>
+				<dd>
+{foreach from=$display item=row}
+					<label for="display-{$row.value}">
+						<input type="radio" name="form[display]" id="display-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected} />
+						{$row.lang}
+					</label>
+{/foreach}
+				</dd>
+			</dl>
+		</div>
+	</div>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="reset" value="{lang values="common|reset"}" class="form" />
+	</div>
+</form>
