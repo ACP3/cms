@@ -78,6 +78,9 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 					if (!empty($new_parent) && $new_parent[0]['left_id'] < $pages[0]['left_id'] && $new_parent[0]['right_id'] > $pages[0]['right_id']) {
 						$bool = null;
 					} else {
+						if ($pages[0]['block_id'] != $form['blocks']) {
+							$db->update('menu_items', array('block_id' => $form['blocks']), 'left_id BETWEEN ' . $pages[0]['left_id'] . ' AND ' . $pages[0]['right_id']);
+						}
 						// Element zum neuen Elternknoten machen
 						if (empty($new_parent)) {
 							$new_parent = $db->select('right_id', 'menu_items', 'block_id =  \'' . $pages[0]['block_id'] . '\'', 'right_id DESC', 1);

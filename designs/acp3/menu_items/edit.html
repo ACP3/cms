@@ -24,6 +24,8 @@
 {/foreach}
 				</select>
 			</dd>
+			<dt><label for="title">{lang values="menu_items|title"}</label></dt>
+			<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120" /></dd>
 			<dt><label for="blocks">{lang values="menu_items|blocks"}</label></dt>
 			<dd>
 				<select name="form[blocks]" id="blocks">
@@ -33,8 +35,6 @@
 {/foreach}
 				</select>
 			</dd>
-			<dt><label for="title">{lang values="menu_items|title"}</label></dt>
-			<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120" /></dd>
 			<dt><label for="parent">{lang values="menu_items|superior_page"}</label></dt>
 			<dd>
 				<select name="form[parent]" id="parent">
