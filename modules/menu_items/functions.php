@@ -157,9 +157,6 @@ function insertNode($parent, $insert_values)
 /**
  * Auflistung der Seiten
  *
- * @param integer $mode
- * 	1 = Seiten für das Admin Panel auflisten
- * 	2 = Übergeordnete Seiten anzeigen
  * @param integer $parent
  *  ID des Elternknotens
  * @return array
@@ -174,8 +171,6 @@ function pagesList($parent = 0, $left = 0, $right = 0) {
 	$output = array();
 
 	if (count($pages) > 0) {
-		global $lang;
-
 		$i = 0;
 		foreach($pages as $row) {
 			if (!($row['left_id'] >= $left && $row['right_id'] <= $right)) {
