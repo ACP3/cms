@@ -8,11 +8,11 @@ if (isset($_POST['submit'])) {
 	$db = new db;
 
 	if (empty($form['db_host']))
-		$errors[] = $lang->t('system', 'type_in_db_host');
+		$errors[] = $lang->t('installation', 'type_in_db_host');
 	if (empty($form['db_user']))
-		$errors[] = $lang->t('system', 'type_in_db_username');
+		$errors[] = $lang->t('installation', 'type_in_db_username');
 	if (empty($form['db_name']))
-		$errors[] = $lang->t('system', 'type_in_db_name');
+		$errors[] = $lang->t('installation', 'type_in_db_name');
 	if (!empty($form['db_host']) && !empty($form['db_user']) && !empty($form['db_name']) &&
 		$db->connect($form['db_host'], $form['db_name'], $form['db_user'], $form['db_password']) !== true)
 		$errors[] = $lang->t('installation', 'db_connection_failed');

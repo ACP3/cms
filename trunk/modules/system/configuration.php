@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('system', 'select_entries_per_page');
 	if (!validate::isNumber($form['flood']))
 		$errors[] = $lang->t('system', 'type_in_flood_barrier');
-	if (!preg_match('/^(?i:[a-z_-]+\/){2,}$/', $form['homepage']))
+	if (!preg_match('/^(?i:[a-z0-9_\-]+\/){2,}$/', $form['homepage']))
 		$errors[] = $lang->t('system', 'incorrect_homepage');
 	if ($form['wysiwyg'] != 'textarea' && (preg_match('=/=', $form['wysiwyg']) || !is_file(ACP3_ROOT . 'includes/wysiwyg/' . $form['wysiwyg'] . '/info.xml')))
 		$errors[] = $lang->t('system', 'select_editor');
@@ -35,12 +35,6 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('system', 'title_to_short');
 	if (!validate::isNumber($form['seo_mod_rewrite']))
 		$errors[] = $lang->t('system', 'enable_disable_mod_rewrite');
-	if (empty($form['db_host']))
-		$errors[] = $lang->t('system', 'type_in_db_host');
-	if (empty($form['db_user']))
-		$errors[] = $lang->t('system', 'type_in_db_username');
-	if (empty($form['db_name']))
-		$errors[] = $lang->t('system', 'type_in_db_name');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -50,11 +44,11 @@ if (isset($_POST['submit'])) {
 			'date_dst' => $form['date_dst'],
 			'date_format' => $db->escape($form['date_format']),
 			'date_time_zone' => $form['date_time_zone'],
-			'db_host' => $form['db_host'],
-			'db_name' => $form['db_name'],
-			'db_pre' => $db->escape($form['db_pre']),
-			'db_password' => $form['db_password'],
-			'db_user' => $form['db_user'],
+			'db_host' => CONFIG_DB_HOST,
+			'db_name' => CONFIG_DB_NAME,
+			'db_pre' => CONFIG_DB_PRE,
+			'db_password' => CONFIG_DB_PASSWORD,
+			'db_user' => CONFIG_DB_USER,
 			'design' => CONFIG_DESIGN,
 			'entries' => $form['entries'],
 			'flood' => $form['flood'],
@@ -135,11 +129,6 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('sef', $sef);
 
 	$current['date_format'] = CONFIG_DATE_FORMAT;
-	$current['db_host'] = CONFIG_DB_HOST;
-	$current['db_user'] = CONFIG_DB_USER;
-	$current['db_password'] = CONFIG_DB_PASSWORD;
-	$current['db_name'] = CONFIG_DB_NAME;
-	$current['db_pre'] = CONFIG_DB_PRE;
 	$current['flood'] = CONFIG_FLOOD;
 	$current['homepage'] = CONFIG_HOMEPAGE;
 	$current['maintenance_message'] = CONFIG_MAINTENANCE_MESSAGE;
