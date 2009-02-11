@@ -12,7 +12,7 @@ if (!defined('IN_ADM'))
 
 if (isset($_POST['entries']) && is_array($_POST['entries']))
 	$entries = $_POST['entries'];
-	elseif (validate::deleteEntries($uri->entries))
+elseif (validate::deleteEntries($uri->entries))
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
@@ -20,7 +20,7 @@ if (!isset($entries)) {
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
 	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/access/delete/entries_' . $marked_entries), uri('acp/access'));
-} elseif (preg_match('/^((\d+)|)*(\d+)$/', $entries) && $uri->confirmed) {
+} elseif (validate::deleteEntries($entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
 	$bool = null;
 	$level_undeletable = 0;

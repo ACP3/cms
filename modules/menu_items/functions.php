@@ -126,7 +126,9 @@ function insertNode($parent, $insert_values)
 
 	if (!validate::isNumber($parent) || $db->select('id', 'menu_items', 'id = \'' . $parent . '\'', 0, 0, 0, 1) == 0) {
 		$node = $db->select('right_id', 'menu_items', 'block_id = \'' . $db->escape($insert_values['block_id']) . '\'', 'right_id DESC', 1);
-
+		if (empty($node)) {
+			$node = $db->select('right_id', 'menu_items', 'block_id < \'' . $db->escape($insert_values['block_id']) . '\'', 'block_id DESC, right_id DESC', 1);
+		}
 		$insert_values['left_id'] = !empty($node) ? $node[0]['right_id'] + 1 : 1;
 		$insert_values['right_id'] = !empty($node) ? $node[0]['right_id'] + 2 : 2;
 

@@ -29,10 +29,9 @@ jQuery(function($) {
 		}
 	}
 	// Seitentyp
-	switchContainer();
 	$('#mode').change(function() {
 		switchContainer();
-	});
+	}).change();
 	// Nur die zum Block gehörigen übergeordneten Seiten anzeigen
 	$('#parent optgroup').hide();
 	$('#block_id').change(function() {

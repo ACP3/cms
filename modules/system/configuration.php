@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('system', 'select_entries_per_page');
 	if (!validate::isNumber($form['flood']))
 		$errors[] = $lang->t('system', 'type_in_flood_barrier');
-	if (!preg_match('/^(?i:[a-z0-9_\-]+\/){2,}$/', $form['homepage']))
+	if (!validate::internalURI($form['homepage']))
 		$errors[] = $lang->t('system', 'incorrect_homepage');
 	if ($form['wysiwyg'] != 'textarea' && (preg_match('=/=', $form['wysiwyg']) || !is_file(ACP3_ROOT . 'includes/wysiwyg/' . $form['wysiwyg'] . '/info.xml')))
 		$errors[] = $lang->t('system', 'select_editor');
