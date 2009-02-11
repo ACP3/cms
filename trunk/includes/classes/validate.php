@@ -66,7 +66,7 @@ class validate
 	}
 	public static function deleteEntries($entries)
 	{
-		return preg_match('/^([\d|]+)$/', $entries) ? true : false;
+		return preg_match('/^((\d+)\|)*(\d+)$/', $entries);
 	}
 	/**
 	 * Überprüft, ob eine Standardkonforme E-Mail-Adresse übergeben wurde
@@ -82,6 +82,16 @@ class validate
 		$pattern = '/^((\"[^\"\f\n\r\t\v\b]+\")|([\w\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+(\.[\w\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+)*))@((\[(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))\])|(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))|((([A-Za-z0-9\-])+\.)+[A-Za-z\-]+))$/';
 
 		return preg_match($pattern, $var);
+	}
+	/**
+	 * Überprüft, ob die übergebene URI dem Format des ACP3 entspricht
+	 *
+	 * @param mixed $var
+	 * @return boolean
+	 */
+	public static function internalURI($var)
+	{
+		return preg_match('/^(?i:[a-z0-9_\-]+\/){2,}$/', $var);
 	}
 	/**
 	 * Überprüft, ob ein gültiger MD5-Hash übergeben wurde

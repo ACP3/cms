@@ -20,7 +20,7 @@ if (!isset($entries)) {
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
 	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/news/delete/entries_' . $marked_entries), uri('acp/news'));
-} elseif (preg_match('/^((\d+)|)*(\d+)$/', $entries) && $uri->confirmed) {
+} elseif (validate::deleteEntries($entries) && $uri->confirmed) {
 	$marked_entries = explode('|', $entries);
 	$bool = $bool2 = null;
 	foreach ($marked_entries as $entry) {

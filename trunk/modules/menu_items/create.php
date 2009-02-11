@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('menu_items', 'select_item_visibility');
 	if (!validate::isNumber($form['target']) ||
 		$form['mode'] == '1' && (!is_dir(ACP3_ROOT . 'modules/' . $form['module']) || preg_match('=/=', $form['module'])) ||
-		$form['mode'] == '2' && !preg_match('/^(?i:[a-z0-9_\-]+\/){2,}$/', $form['uri']) ||
+		$form['mode'] == '2' && !validate::internalURI($form['uri']) ||
 		$form['mode'] == '3' && empty($form['uri']))
 		$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
 

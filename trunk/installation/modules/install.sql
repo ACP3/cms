@@ -87,7 +87,7 @@ CREATE TABLE `{pre}menu_items` (
 	`title` VARCHAR(120) NOT NULL,
 	`uri` VARCHAR(120) NOT NULL,
 	`target` TINYINT(1) UNSIGNED NOT NULL,
-	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`title`, `uri`)
+	PRIMARY KEY (`id`)
 ) {engine};
 
 CREATE TABLE `{pre}menu_items_blocks` (
@@ -159,7 +159,7 @@ CREATE TABLE `{pre}static_pages` (
 	`end` VARCHAR(14) NOT NULL,
 	`title` VARCHAR(120) NOT NULL,
 	`text` TEXT NOT NULL,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`title`, `text`)
 ) {engine};
 
 CREATE TABLE `{pre}users` ( 
