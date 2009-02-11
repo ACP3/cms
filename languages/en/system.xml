@@ -53,26 +53,6 @@
 		<message>Date format</message>
 	</item>
 	<item>
-		<name>db_connection_settings</name>
-		<message>Database connection settings</message>
-	</item>
-	<item>
-		<name>db_name</name>
-		<message>Database name</message>
-	</item>
-	<item>
-		<name>db_password</name>
-		<message>Password</message>
-	</item>
-	<item>
-		<name>db_type</name>
-		<message>Database type</message>
-	</item>
-	<item>
-		<name>db_username</name>
-		<message>Username</message>
-	</item>
-	<item>
 		<name>description</name>
 		<message>Description</message>
 	</item>
@@ -159,10 +139,6 @@
 	<item>
 		<name>homepage_description</name>
 		<message><![CDATA[To specify a custom homepage, please use the format &quot;module/file/optional_parameters/&quot;.]]></message>
-	</item>
-	<item>
-		<name>host</name>
-		<message>Hostname</message>
 	</item>
 	<item>
 		<name>incorrect_homepage</name>
@@ -337,10 +313,6 @@
 		<message>Safe mode</message>
 	</item>
 	<item>
-		<name>select_db_type</name>
-		<message>Please select the database type</message>
-	</item>
-	<item>
 		<name>select_editor</name>
 		<message>Please select, wether you want to use a WYSIWYG editor or a simple textarea</message>
 	</item>
@@ -421,10 +393,6 @@
 		<message>Table name</message>
 	</item>
 	<item>
-		<name>table_prefix</name>
-		<message>Table prefix</message>
-	</item>
-	<item>
 		<name>textarea</name>
 		<message>Textarea</message>
 	</item>
@@ -439,18 +407,6 @@
 	<item>
 		<name>type_in_date_format</name>
 		<message>Please type in a date format</message>
-	</item>
-	<item>
-		<name>type_in_db_host</name>
-		<message>Please type in the hostname, which belongs to the database</message>
-	</item>
-	<item>
-		<name>type_in_db_name</name>
-		<message>Please type in the database name</message>
-	</item>
-	<item>
-		<name>type_in_db_username</name>
-		<message>Please type in the user name for the database</message>
 	</item>
 	<item>
 		<name>type_in_flood_barrier</name>

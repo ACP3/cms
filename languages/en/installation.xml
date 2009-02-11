@@ -29,6 +29,30 @@
 		<message>Database connection settings</message>
 	</item>
 	<item>
+		<name>db_hostname</name>
+		<message>Hostname</message>
+	</item>
+	<item>
+		<name>db_hostname_description</name>
+		<message>(usually "localhost")</message>
+	</item>
+	<item>
+		<name>db_name</name>
+		<message>Database name</message>
+	</item>
+	<item>
+		<name>db_password</name>
+		<message>Password</message>
+	</item>
+	<item>
+		<name>db_table_prefix</name>
+		<message>Table prefix</message>
+	</item>
+	<item>
+		<name>db_username</name>
+		<message>Username</message>
+	</item>
+	<item>
 		<name>decline</name>
 		<message>Decline</message>
 	</item>
@@ -59,10 +83,6 @@
 	<item>
 		<name>gd_library</name>
 		<message>GD library</message>
-	</item>
-	<item>
-		<name>hostname_description</name>
-		<message>(usually "localhost")</message>
 	</item>
 	<item>
 		<name>installation</name>
@@ -247,6 +267,18 @@
 	<item>
 		<name>stop_installation</name>
 		<message>The installation can\'t continue, because your webspace/server doesn\'t fulfill the requirements.</message>
+	</item>
+	<item>
+		<name>type_in_db_host</name>
+		<message>Please type in the hostname, which belongs to the database</message>
+	</item>
+	<item>
+		<name>type_in_db_name</name>
+		<message>Please type in the database name</message>
+	</item>
+	<item>
+		<name>type_in_db_username</name>
+		<message>Please type in the user name for the database</message>
 	</item>
 	<item>
 		<name>type_in_pwd</name>

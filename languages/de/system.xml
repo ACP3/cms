@@ -53,26 +53,6 @@
 		<message>Datumsformat</message>
 	</item>
 	<item>
-		<name>db_connection_settings</name>
-		<message>Verbindungsdaten zur Datenbank</message>
-	</item>
-	<item>
-		<name>db_name</name>
-		<message>Datenbankname</message>
-	</item>
-	<item>
-		<name>db_password</name>
-		<message>Passwort</message>
-	</item>
-	<item>
-		<name>db_type</name>
-		<message>Datenbank-Typ</message>
-	</item>
-	<item>
-		<name>db_username</name>
-		<message>Benutzername</message>
-	</item>
-	<item>
 		<name>description</name>
 		<message>Beschreibung</message>
 	</item>
@@ -159,10 +139,6 @@
 	<item>
 		<name>homepage_description</name>
 		<message><![CDATA[Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein]]></message>
-	</item>
-	<item>
-		<name>host</name>
-		<message>Hostname</message>
 	</item>
 	<item>
 		<name>incorrect_homepage</name>
@@ -337,10 +313,6 @@
 		<message>Sicherer Modus</message>
 	</item>
 	<item>
-		<name>select_db_type</name>
-		<message>Bitte wählen Sie den Datenbank-Typ aus</message>
-	</item>
-	<item>
 		<name>select_editor</name>
 		<message>Bitte wählen Sie aus, mit welchen Editor Sie Ihre Einträge erstellen wollen</message>
 	</item>
@@ -421,10 +393,6 @@
 		<message>Tabellenname</message>
 	</item>
 	<item>
-		<name>table_prefix</name>
-		<message>Tabellenpräfix</message>
-	</item>
-	<item>
 		<name>textarea</name>
 		<message>Textfeld</message>
 	</item>
@@ -439,18 +407,6 @@
 	<item>
 		<name>type_in_date_format</name>
 		<message>Bitte geben Sie eine Datumsformatierung ein</message>
-	</item>
-	<item>
-		<name>type_in_db_host</name>
-		<message>Bitte geben Sie den Hostnamen zur Datenbank ein</message>
-	</item>
-	<item>
-		<name>type_in_db_name</name>
-		<message>Bitte geben Sie den Datenbankname ein</message>
-	</item>
-	<item>
-		<name>type_in_db_username</name>
-		<message>Bitte geben Sie den Benutzernamen zur Datenbank ein</message>
 	</item>
 	<item>
 		<name>type_in_flood_barrier</name>
