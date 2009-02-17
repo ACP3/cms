@@ -1,13 +1,7 @@
 jQuery(function($) {
-	$('#nav-mods-link').click(function() {
-		if (!$('#nav-mods').is(':animated')) {
-			$('#nav-mods').slideToggle('slow');
-		}
-		return false;
-	});
-	$('#nav-system-link').click(function() {
-		if (!$('#nav-system').is(':animated')) {
-			$('#nav-system').slideToggle('slow');
+	$('ul.admin > li:has(ul) > a').click(function() {
+		if (!$(this).next('ul').is(':animated')) {
+			$(this).next('ul').slideToggle('slow');
 		}
 		return false;
 	});
