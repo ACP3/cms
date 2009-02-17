@@ -46,7 +46,7 @@ class uri
 		} else {
 			// Definieren, dass man sich im Frontend befindet
 			define('IN_ACP3', true);
-			// Query auf eine beutzerdefinierte Startseite setzen
+			// Query auf eine benutzerdefinierte Startseite setzen
 			if (!defined('IN_INSTALL') && empty($this->query) && CONFIG_HOMEPAGE != '') {
 				$this->query = CONFIG_HOMEPAGE;
 			}
@@ -82,7 +82,7 @@ class uri
 		}
 	}
 	/**
-	 * Gibt alle URI Parameter aus
+	 * Gibt einen URI Parameter aus
 	 *
 	 * @param string $key
 	 * @return mixed
@@ -94,7 +94,7 @@ class uri
 		return null;
 	}
 	/**
-	 * Setzt neue URI Parameter
+	 * Setzt einen neuen URI Parameter
 	 *
 	 * @param string $name
 	 * @param mixed $value
