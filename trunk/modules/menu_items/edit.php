@@ -58,8 +58,13 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 			$c_pages = count($pages);
 
 			// Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
-			if (empty($form['parent']) && $db->select('id', 'menu_items', 'left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0, 0, 0, 1) == 0) {
+			if (empty($form['parent']) && $db->select('COUNT(id)', 'menu_items', 'left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0, 0, 0, 1) == 0) {
+				$db->link->beginTransaction();
 				$bool = $db->update('menu_items', $update_values, 'id = \'' . $uri->id . '\'');
+				if ($form['block_id'] != $pages[0]['block_id']) {
+					$db->update('menu_items', array('block_id' => $form['block_id']), 'left_id > ' . $pages[0]['left_id'] . ' AND right_id < ' . $pages[0]['right_id']);
+				}
+				$db->link->commit();
 			} else {
 				// Überprüfung, falls Seite kein Root-Element ist, aber keine Veränderung vorgenommen werden soll...
 				$chk_parent = $db->query('SELECT p.id FROM ' . CONFIG_DB_PRE . 'menu_items p, ' . CONFIG_DB_PRE . 'menu_items c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $uri->id . ' ORDER BY p.left_id DESC LIMIT 2');
