@@ -59,11 +59,10 @@ if ($c_news > 0) {
 			$striped_news = strip_tags($news[$i]['text']);
 			$striped_news = $db->escape($striped_news, 3);
 			$striped_news = html_entity_decode($striped_news, ENT_QUOTES, 'UTF-8');
-			$chars = 350;
 
 			// Weiterlesen-Link, falls zusätzliche Links zur News angegeben sind oder Zeichenanzahl größer als $chars
-			if (strlen($striped_news) - $chars >= 50 || !empty($news[$i]['uri'])) {
-				$striped_news = substr($striped_news, 0, $chars - 50);
+			if (strlen($striped_news) - $settings['readmore_chars'] >= 50 || !empty($news[$i]['uri'])) {
+				$striped_news = substr($striped_news, 0, $settings['readmore_chars'] - 50);
 				$news[$i]['text'] = $striped_news . '...<a href="' . uri('news/details/id_' . $news[$i]['id']) . '">[' . $lang->t('news', 'readmore') . ']</a>' . "\n";
 			}
 		}
