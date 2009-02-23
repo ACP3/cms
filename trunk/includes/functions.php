@@ -269,7 +269,9 @@ function redirect($args, $new_page = 0)
 		if ($args == 'errors/404' || $args == 'errors/403')
 			$args = (defined('IN_ACP3') ? '' : 'acp/') . $args;
 		
-		header('Location: ' . uri($args));
+		$protocol = empty($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) == 'off' ? 'http://' : 'https://';
+		$host = $_SERVER['HTTP_HOST'];
+		header('Location: ' . $protocol . $host . uri($args));
 		exit;
 	}
 	header('Location:' . str_replace('&amp;', '&', $new_page));
