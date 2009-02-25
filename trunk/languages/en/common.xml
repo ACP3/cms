@@ -105,6 +105,10 @@
 		<message>The following errors have occured:</message>
 	</item>
 	<item>
+		<name>first_page</name>
+		<message>First page</message>
+	</item>
+	<item>
 		<name>flood_no_entry_possible</name>
 		<message>You need to wait %d seconds, to submit a new comment</message>
 	</item>
@@ -123,6 +127,10 @@
 	<item>
 		<name>hour</name>
 		<message>Hour</message>
+	</item>
+	<item>
+		<name>last_page</name>
+		<message>Last page</message>
 	</item>
 	<item>
 		<name>mark</name>
@@ -169,6 +177,10 @@
 		<message>Please type in a name</message>
 	</item>
 	<item>
+		<name>next_page</name>
+		<message>Next page</message>
+	</item>
+	<item>
 		<name>no</name>
 		<message>No</message>
 	</item>
@@ -203,6 +215,10 @@
 	<item>
 		<name>pls_select</name>
 		<message>Please select</message>
+	</item>
+	<item>
+		<name>previous page</name>
+		<message>Previous page</message>
 	</item>
 	<item>
 		<name>publication_period</name>

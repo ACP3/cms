@@ -209,7 +209,7 @@ function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = 0)
  */
 function pagination($rows)
 {
-	global $tpl, $uri;
+	global $lang, $tpl, $uri;
 
 	if ($rows > CONFIG_ENTRIES) {
 		// Alle angegeben URL Parameter mit in die URL einbeziehen
@@ -223,34 +223,60 @@ function pagination($rows)
 			}
 		}
 
-		$tpl->assign('uri', uri($acp . $uri->mod . '/' . $uri->page . $params));
+		$link = uri($acp . $uri->mod . '/' . $uri->page . $params);
 
 		// Seitenauswahl
-		$c_pages = ceil($rows / CONFIG_ENTRIES);
-		$currentPage = 0;
+		$pagination = array();
+		$c_pagination = ceil($rows / CONFIG_ENTRIES);
+		$fl = 5;
+		$pn = 2;
+		$currentPos = 0;
+		$j = 0;
 
-		for ($i = 1; $i <= $c_pages; ++$i) {
-			$pages[$i]['selected'] = POS == $currentPage ? true : false;
-			$pages[$i]['page'] = $i;
-			$pages[$i]['pos'] = 'pos_' . $currentPage . '/';
-
-			$currentPage = $currentPage + CONFIG_ENTRIES;
+		// Erste Seite
+		if ($c_pagination > $fl) {
+			$pagination[$j]['selected'] = POS == 0 ? true : false;
+			$pagination[$j]['title'] = '&laquo;';
+			$pagination[$j]['lang'] = $lang->t('common', 'first_page');
+			$pagination[$j]['uri'] = $link;
+			++$j;
 		}
-		$tpl->assign('pages', $pages);
 
 		// Vorherige Seite
-		$pos_prev = array(
-			'pos' => POS - CONFIG_ENTRIES >= 0 ? 'pos_' . (POS - CONFIG_ENTRIES) . '/' : '',
-			'selected' => POS == 0 ? true : false
-		);
-		$tpl->assign('pos_prev', $pos_prev);
+		if ($c_pagination > $pn) {
+			$pagination[$j]['selected'] = POS == 0 ? true : false;
+			$pagination[$j]['title'] = '&lsaquo;';
+			$pagination[$j]['lang'] = $lang->t('common', 'previous_page');
+			$pagination[$j]['uri'] = $link . (POS - CONFIG_ENTRIES >= 0 ? 'pos_' . (POS - CONFIG_ENTRIES) . '/' : '');
+			++$j;
+		}
+
+		for ($i = 1; $i <= $c_pagination; ++$i, ++$j) {
+			$pagination[$j]['selected'] = POS == $currentPos ? true : false;
+			$pagination[$j]['title'] = $i;
+			$pagination[$j]['uri'] = $link . 'pos_' . $currentPos . '/';
+
+			$currentPos = $currentPos + CONFIG_ENTRIES;
+		}
 
 		// Nächste Seite
-		$pos_next = array(
-			'pos' => 'pos_' . (POS + CONFIG_ENTRIES) . '/',
-			'selected' => POS + CONFIG_ENTRIES >= $rows ? true : false
-		);
-		$tpl->assign('pos_next', $pos_next);
+		if ($c_pagination > $pn) {
+			$pagination[$j]['selected'] = POS + CONFIG_ENTRIES >= $rows ? true : false;
+			$pagination[$j]['title'] = '&rsaquo;';
+			$pagination[$j]['lang'] = $lang->t('common', 'next_page');
+			$pagination[$j]['uri'] = $link . 'pos_' . (POS + CONFIG_ENTRIES) . '/';
+			++$j;
+		}
+
+		// Letzte Seite
+		if ($c_pagination > $fl) {
+			$pagination[$j]['selected'] = POS == ($currentPos - 20) ? true : false;
+			$pagination[$j]['title'] = '&raquo;';
+			$pagination[$j]['lang'] = $lang->t('common', 'last_page');
+			$pagination[$j]['uri'] = $link . 'pos_' . ($currentPos - 20) . '/';
+		}
+
+		$tpl->assign('pagination', $pagination);
 
 		return $tpl->fetch('common/pagination.html');
 	}
