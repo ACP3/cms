@@ -105,6 +105,10 @@
 		<message>Es sind folgende Fehler aufgetreten:</message>
 	</item>
 	<item>
+		<name>first_page</name>
+		<message>Erste Seite</message>
+	</item>
+	<item>
 		<name>flood_no_entry_possible</name>
 		<message>Sie können erst in %d Sekunden wieder einen Kommentar abgeben</message>
 	</item>
@@ -123,6 +127,10 @@
 	<item>
 		<name>hour</name>
 		<message>Stunde</message>
+	</item>
+	<item>
+		<name>last_page</name>
+		<message>Letzte Seite</message>
 	</item>
 	<item>
 		<name>mark</name>
@@ -169,6 +177,10 @@
 		<message>Bitte geben Sie einen Namen an</message>
 	</item>
 	<item>
+		<name>next_page</name>
+		<message>Nächste Seite</message>
+	</item>
+	<item>
 		<name>no</name
 		><message>Nein</message>
 	</item>
@@ -203,6 +215,10 @@
 	<item>
 		<name>pls_select</name>
 		<message>Bitte auswählen</message>
+	</item>
+	<item>
+		<name>previous_page</name>
+		<message>Vorherige Seite</message>
 	</item>
 	<item>
 		<name>publication_period</name>
