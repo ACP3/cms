@@ -212,7 +212,7 @@ function pagination($rows)
 	global $lang, $tpl, $uri;
 
 	if ($rows > CONFIG_ENTRIES) {
-		// Alle angegeben URL Parameter mit in die URL einbeziehen
+		// Alle angegebenen URL Parameter mit in die URL einbeziehen
 		$acp = defined('IN_ADM') ? 'acp/' : '';
 		$params = '';
 		if (!empty($uri->params)) {
@@ -270,10 +270,10 @@ function pagination($rows)
 
 		// Letzte Seite
 		if ($c_pagination > $fl) {
-			$pagination[$j]['selected'] = POS == ($currentPos - 20) ? true : false;
+			$pagination[$j]['selected'] = POS == ($currentPos - CONFIG_ENTRIES) ? true : false;
 			$pagination[$j]['title'] = '&raquo;';
 			$pagination[$j]['lang'] = $lang->t('common', 'last_page');
-			$pagination[$j]['uri'] = $link . 'pos_' . ($currentPos - 20) . '/';
+			$pagination[$j]['uri'] = $link . 'pos_' . ($currentPos - CONFIG_ENTRIES) . '/';
 		}
 
 		$tpl->assign('pagination', $pagination);
