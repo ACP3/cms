@@ -10,8 +10,6 @@
 if (!defined('IN_ADM'))
 	exit;
 
-include_once ACP3_ROOT . 'modules/access/functions.php';
-
 if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'access', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
@@ -49,18 +47,19 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'access', 'id = \''
 			if ($info['dir'] == 'errors' || !$info['active']) {
 				unset($mod_list[$name]);
 			} else {
+				$db_value = '';
 				for ($i = 0; $i < $c_mods_arr; ++$i) {
 					if ($info['dir'] == substr($mods_arr[$i], 0, -2)) {
 						$db_value = substr($mods_arr[$i], -1, 1);
-						$mod_list[$name]['level_0_selected'] = selectAccessLevel($info['dir'], '0', $db_value);
-						$mod_list[$name]['level_1_selected'] = selectAccessLevel($info['dir'], '1', $db_value);
-						$mod_list[$name]['level_2_selected'] = selectAccessLevel($info['dir'], '2', $db_value);
 						break;
-					} else {
-						$mod_list[$name]['level_0_selected'] = '';
-						$mod_list[$name]['level_1_selected'] = '';
-						$mod_list[$name]['level_2_selected'] = '';
 					}
+				}
+				for ($i = 0; $i < 3; ++$i) {
+					$mod_list[$name]['options'][$i] = array(
+						'value' => $i,
+						'selected' => selectAccessLevel($info['dir'], (string) $i, $db_value),
+						'lang' => $lang->t('access', 'access_level_' . $i),
+					);
 				}
 			}
 		}

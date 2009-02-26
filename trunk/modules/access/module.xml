@@ -17,6 +17,7 @@
 		<item>
 			<file>create</file>
 			<level>2</level>
+			<include>functions</include>
 		</item>
 		<item>
 			<file>delete</file>
@@ -25,6 +26,7 @@
 		<item>
 			<file>edit</file>
 			<level>2</level>
+			<include>functions</include>
 		</item>
 	</access>
 </module>

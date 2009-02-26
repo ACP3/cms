@@ -11,14 +11,14 @@
 			{lang values="access|access_level_selection_tip"}
 		</p>
 		<dl>
-{foreach from=$mod_list item=row}
-			<dt><label for="{$row.dir}">{$row.name}</label></dt>
+{foreach from=$mod_list item=mod}
+			<dt><label for="module-{$mod.dir}">{$mod.name}</label></dt>
 			<dd>
-				<select name="form[modules][{$row.dir}]" id="{$row.dir}">
+				<select name="form[modules][{$mod.dir}]" id="module-{$mod.dir}">
 					<option value="">{lang values="common|pls_select"}</option>
-					<option value="0"{$row.level_0_selected}>{lang values="access|access_level_0"}</option>
-					<option value="1"{$row.level_1_selected}>{lang values="access|access_level_1"}</option>
-					<option value="2"{$row.level_2_selected}>{lang values="access|access_level_2"}</option>
+{foreach from=$mod.options item=row}
+					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{/foreach}
 				</select>
 			</dd>
 {/foreach}
