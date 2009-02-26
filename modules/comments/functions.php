@@ -9,13 +9,13 @@
 /**
  * Zählt die Anzahl der Kommentare für einen bestimmten Eintrag eines Modules zusammen
  *
- * @param integer $entry_id
- * 	Die ID des jeweiligen Eintrages
  * @param string $module
  * 	Das jeweilige Modul
+ * @param integer $entry_id
+ * 	Die ID des jeweiligen Eintrages
  * @return integer
  */
-function commentsCount($entry_id, $module)
+function commentsCount($module, $entry_id)
 {
 	global $db;
 
@@ -81,7 +81,7 @@ function comments($module, $entry_id)
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		// Auflistung der Kommentare
-		$comments = $db->query('SELECT IF(u.nickname = NULL,c.name,u.nickname) AS name, c.user_id, c.date, c.message FROM ' . CONFIG_DB_PRE . 'comments AS c LEFT JOIN (' . CONFIG_DB_PRE . 'users AS u) ON u.id = c.user_id AND c.module = \'' . $module . '\' AND c.entry_id = \'' . $entry_id . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
+		$comments = $db->query('SELECT IF(u.nickname = NULL,c.name,u.nickname) AS name, c.user_id, c.date, c.message FROM ' . CONFIG_DB_PRE . 'comments AS c LEFT JOIN (' . CONFIG_DB_PRE . 'users AS u) ON u.id = c.user_id WHERE c.module = \'' . $module . '\' AND c.entry_id = \'' . $entry_id . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
 		$c_comments = count($comments);
 
 		// Emoticons einbinden, falls diese aktiv sind

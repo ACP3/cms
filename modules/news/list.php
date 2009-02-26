@@ -51,7 +51,7 @@ if ($c_news > 0) {
 		$news[$i]['uri'] = $db->escape($news[$i]['uri'], 3);
 		$news[$i]['allow_comments'] = false;
 		if ($settings['comments'] == 1 && $news[$i]['comments'] == 1 && isset($comment_check)) {
-			$news[$i]['comments'] = commentsCount($news[$i]['id'], 'news');
+			$news[$i]['comments'] = commentsCount('news', $news[$i]['id']);
 			$news[$i]['allow_comments'] = true;
 		}
 		if ($settings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
