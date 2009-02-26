@@ -6,6 +6,7 @@
 		<author>Goratsch Webdesign</author>
 		<version core="true"/>
 		<active>1</active>
+		<tables>static_pages</tables>
 	</info>
 	<access>
 		<item>
