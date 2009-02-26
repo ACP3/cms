@@ -10,7 +10,7 @@ breadcrumb::assign($lang->t('system', 'sql_export'));
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
-	if (empty($form['tables']))
+	if (empty($form['tables']) || !is_array($form['tables']))
 		$errors[] = $lang->t('system', 'select_sql_tables');
 	if ($form['output'] != 'file' && $form['output'] != 'text')
 		$errors[] = $lang->t('system', 'select_output');
@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
 					$fields = '';
 					// Felder der jeweiligen Tabelle auslesen
 					foreach ($resultsets[0] as $field => $content) {
-						$fields.= $field . ', ';
+						$fields.= '`' . $field . '`, ';
 					}
 					// Datensätze auslesen
 					foreach ($resultsets as $row) {
@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 						foreach ($row as $value) {
 							$values.= '\'' . $value . '\', ';
 						}
-						$data.= 'INSERT INTO ' . $table . ' (' . substr($fields, 0, -2) . ') VALUES (' . substr($values, 0, -2) . ');' . "\n";
+						$data.= 'INSERT INTO `' . $table . '` (' . substr($fields, 0, -2) . ') VALUES (' . substr($values, 0, -2) . ');' . "\n";
 					}
 				}
 			}
@@ -56,7 +56,6 @@ if (isset($_POST['submit'])) {
 
 		// Als Datei ausgeben
 		if ($form['output'] == 'file') {
-			ob_end_clean();
 			header('Content-Type: text/sql');
 			header('Content-Disposition: attachment; filename=' . CONFIG_DB_NAME . '_export.sql');
 			exit($export);
