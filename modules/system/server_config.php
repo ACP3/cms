@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-//PHP Erweiterungen
+// PHP Erweiterungen
 $ext = get_loaded_extensions();
 $ext_count = count($ext);
 $php_ext = '';

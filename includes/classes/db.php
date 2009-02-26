@@ -89,6 +89,7 @@ class db
 				// Query ausführen, die ein Resultset zurückgibt
 				case 2:
 					$stmt = $this->link->query($query);
+					$stmt->setFetchMode(PDO::FETCH_ASSOC);
 					$result = $stmt->fetchAll();
 					break;
 				// Queries ohne Resultset
