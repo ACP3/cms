@@ -209,9 +209,9 @@ function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = 0)
  */
 function pagination($rows)
 {
-	global $lang, $tpl, $uri;
-
 	if ($rows > CONFIG_ENTRIES) {
+		global $lang, $tpl, $uri;
+
 		// Alle angegebenen URL Parameter mit in die URL einbeziehen
 		$acp = defined('IN_ADM') ? 'acp/' : '';
 		$params = '';
@@ -230,14 +230,13 @@ function pagination($rows)
 		$c_pagination = ceil($rows / CONFIG_ENTRIES);
 		$fl = 5;
 		$pn = 2;
-		$currentPos = 0;
 		$j = 0;
 
 		// Erste Seite
 		if ($c_pagination > $fl) {
 			$pagination[$j]['selected'] = POS == 0 ? true : false;
-			$pagination[$j]['title'] = '&laquo;';
-			$pagination[$j]['lang'] = $lang->t('common', 'first_page');
+			$pagination[$j]['page'] = '&laquo;';
+			$pagination[$j]['title'] = $lang->t('common', 'first_page');
 			$pagination[$j]['uri'] = $link;
 			++$j;
 		}
@@ -245,15 +244,27 @@ function pagination($rows)
 		// Vorherige Seite
 		if ($c_pagination > $pn) {
 			$pagination[$j]['selected'] = POS == 0 ? true : false;
-			$pagination[$j]['title'] = '&lsaquo;';
-			$pagination[$j]['lang'] = $lang->t('common', 'previous_page');
+			$pagination[$j]['page'] = '&lsaquo;';
+			$pagination[$j]['title'] = $lang->t('common', 'previous_page');
 			$pagination[$j]['uri'] = $link . (POS - CONFIG_ENTRIES >= 0 ? 'pos_' . (POS - CONFIG_ENTRIES) . '/' : '');
 			++$j;
 		}
 
-		for ($i = 1; $i <= $c_pagination; ++$i, ++$j) {
+		// Wenn mehr als 9 Seiten vorhanden sind, nur noch einen bestimmten Teil der Seitenauswahl anzeigen
+		if ($c_pagination > 9) {
+			$start = ceil(POS / CONFIG_ENTRIES) - $pn <= 0 ? 1 : ceil(POS / CONFIG_ENTRIES) - $pn;
+			$end = $start + 4 > $c_pagination ? $c_pagination : $start + 4;
+			$currentPos = $start * CONFIG_ENTRIES - CONFIG_ENTRIES;
+		// Pagination komplett anzeigen
+		} else {
+			$start = 1;
+			$end = $c_pagination;
+			$currentPos = 0;
+		}
+
+		for ($i = $start; $i <= $end; ++$i, ++$j) {
 			$pagination[$j]['selected'] = POS == $currentPos ? true : false;
-			$pagination[$j]['title'] = $i;
+			$pagination[$j]['page'] = $i;
 			$pagination[$j]['uri'] = $link . 'pos_' . $currentPos . '/';
 
 			$currentPos = $currentPos + CONFIG_ENTRIES;
@@ -262,8 +273,8 @@ function pagination($rows)
 		// Nächste Seite
 		if ($c_pagination > $pn) {
 			$pagination[$j]['selected'] = POS + CONFIG_ENTRIES >= $rows ? true : false;
-			$pagination[$j]['title'] = '&rsaquo;';
-			$pagination[$j]['lang'] = $lang->t('common', 'next_page');
+			$pagination[$j]['page'] = '&rsaquo;';
+			$pagination[$j]['title'] = $lang->t('common', 'next_page');
 			$pagination[$j]['uri'] = $link . 'pos_' . (POS + CONFIG_ENTRIES) . '/';
 			++$j;
 		}
@@ -271,9 +282,9 @@ function pagination($rows)
 		// Letzte Seite
 		if ($c_pagination > $fl) {
 			$pagination[$j]['selected'] = POS == ($currentPos - CONFIG_ENTRIES) ? true : false;
-			$pagination[$j]['title'] = '&raquo;';
-			$pagination[$j]['lang'] = $lang->t('common', 'last_page');
-			$pagination[$j]['uri'] = $link . 'pos_' . ($currentPos - CONFIG_ENTRIES) . '/';
+			$pagination[$j]['page'] = '&raquo;';
+			$pagination[$j]['title'] = $lang->t('common', 'last_page');
+			$pagination[$j]['uri'] = $link . 'pos_' . ($c_pagination * CONFIG_ENTRIES - CONFIG_ENTRIES) . '/';
 		}
 
 		$tpl->assign('pagination', $pagination);
@@ -285,7 +296,7 @@ function pagination($rows)
  * Umleitung auf andere URLs
  *
  * @param string $args
- *  Leitet auf eine Interne ACP3 Seite weiter
+ *  Leitet auf eine interne ACP3 Seite weiter
  * @param string $new_page
  *  Leitet auf eine externe Seite weiter
  */
