@@ -10,8 +10,6 @@
 if (!defined('IN_ADM'))
 	exit;
 
-include_once ACP3_ROOT . 'modules/access/functions.php';
-
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 
@@ -45,9 +43,13 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		if ($info['dir'] == 'errors' || !$info['active']) {
 			unset($mod_list[$name]);
 		} else {
-			$mod_list[$name]['level_0_selected'] = selectAccessLevel($info['dir'], '0');
-			$mod_list[$name]['level_1_selected'] = selectAccessLevel($info['dir'], '1');
-			$mod_list[$name]['level_2_selected'] = selectAccessLevel($info['dir'], '2');
+			for ($i = 0; $i < 3; ++$i) {
+				$mod_list[$name]['options'][$i] = array(
+					'value' => $i,
+					'selected' => selectAccessLevel($info['dir'], (string) $i),
+					'lang' => $lang->t('access', 'access_level_' . $i),
+				);
+			}
 		}
 	}
 	$tpl->assign('mod_list', $mod_list);
