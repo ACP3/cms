@@ -25,13 +25,13 @@ if (empty($module) || !empty($module) && $db->select('COUNT(id)', 'comments', 'm
 		}
 		$tpl->assign('comments', $comments);
 	}
-} elseif (!empty($module) && $db->select('COUNT(id)', 'comments', 'module = \'' . $module . '\'', 0, 0, 0, 1) > '0') {
+} else {
 	//Brotkrümelspur
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
 	breadcrumb::assign($lang->t('comments', 'comments'), uri('acp/comments'));
 	breadcrumb::assign($lang->t($module, $module));
 
-	$comments = $db->query('SELECT IF(u.nickname = NULL,c.name,u.nickname) AS name, c.id, c.ip, c.user_id, c.date, c.message FROM ' . CONFIG_DB_PRE . 'comments AS c LEFT JOIN (' . CONFIG_DB_PRE . 'users AS u) ON u.id = c.user_id AND c.module = \'' . $module . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
+	$comments = $db->query('SELECT IF(u.nickname = NULL,c.name,u.nickname) AS name, c.id, c.ip, c.user_id, c.date, c.message FROM ' . CONFIG_DB_PRE . 'comments AS c LEFT JOIN (' . CONFIG_DB_PRE . 'users AS u) ON u.id = c.user_id WHERE c.module = \'' . $module . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
 	$c_comments = count($comments);
 	$emoticons = false;
 
