@@ -16,7 +16,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'access', 'id = \''
 
 		if (empty($form['name']))
 			$errors[] = $lang->t('common', 'name_to_short');
-		if (!empty($form['name']) && $db->select('id', 'access', 'id != \'' . $uri->id . '\' AND name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
+		if (!empty($form['name']) && $db->select('COUNT(id)', 'access', 'id != \'' . $uri->id . '\' AND name = \'' . $db->escape($form['name']) . '\'', 0, 0, 0, 1) == '1')
 			$errors[] = $lang->t('access', 'access_level_already_exist');
 		if (emptyCheck($form['modules']))
 			$errors[] = $lang->t('access', 'select_modules');

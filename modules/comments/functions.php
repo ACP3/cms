@@ -81,7 +81,7 @@ function comments($module, $entry_id)
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		// Auflistung der Kommentare
-		$comments = $db->query('SELECT IF(u.nickname = NULL,c.name,u.nickname) AS name, c.user_id, c.date, c.message FROM ' . CONFIG_DB_PRE . 'comments AS c LEFT JOIN (' . CONFIG_DB_PRE . 'users AS u) ON u.id = c.user_id WHERE c.module = \'' . $module . '\' AND c.entry_id = \'' . $entry_id . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
+		$comments = $db->query('SELECT IF(c.name != "" AND c.user_id = 0,c.name,u.nickname) AS name, c.user_id, c.date, c.message FROM ' . CONFIG_DB_PRE . 'comments AS c LEFT JOIN (' . CONFIG_DB_PRE . 'users AS u) ON u.id = c.user_id WHERE c.module = \'' . $module . '\' AND c.entry_id = \'' . $entry_id . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
 		$c_comments = count($comments);
 
 		// Emoticons einbinden, falls diese aktiv sind
