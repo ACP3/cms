@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'gallery_pictures', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id = \'' . $uri->id . '\'') == '1') {
 	$picture = $db->select('p.gallery_id, p.file, p.description, g.name AS gallery_name', 'gallery_pictures AS p, ' . CONFIG_DB_PRE . 'gallery AS g', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
 
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));

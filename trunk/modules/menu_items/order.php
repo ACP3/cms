@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == 1) {
+if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' . $uri->id . '\'') == 1) {
 	// Brotkrümelspur setzen
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
 	breadcrumb::assign($lang->t('menu_items', 'menu_items'), uri('acp/menu_items'));
@@ -21,7 +21,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 	switch ($uri->mode) {
 		case 'up':
 			$pages = $db->query('SELECT c.id, c.block_id, c.left_id, c.right_id FROM ' . CONFIG_DB_PRE . 'menu_items AS p, ' . CONFIG_DB_PRE . 'menu_items AS c WHERE p.id = \'' . $uri->id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id');
-			if ($db->select('COUNT(id)', 'menu_items', 'right_id = ' . ($pages[0]['left_id'] - 1) . ' AND block_id = \'' . $pages[0]['block_id'] . '\'', 0, 0, 0, 1) > 0) {
+			if ($db->countRows('*', 'menu_items', 'right_id = ' . ($pages[0]['left_id'] - 1) . ' AND block_id = \'' . $pages[0]['block_id'] . '\'') > 0) {
 				$elem = $db->query('SELECT c.id, c.left_id, c.right_id FROM ' . CONFIG_DB_PRE . 'menu_items AS p, ' . CONFIG_DB_PRE . 'menu_items AS c WHERE p.right_id = ' . ($pages[0]['left_id'] - 1) . ' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id');
 				$c_elem = count($elem);
 				$c_pages = count($pages);
@@ -42,7 +42,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 			break;
 		case 'down':
 			$pages = $db->query('SELECT c.id, c.block_id, c.left_id, c.right_id FROM ' . CONFIG_DB_PRE . 'menu_items AS p, ' . CONFIG_DB_PRE . 'menu_items AS c WHERE p.id = \'' . $uri->id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id');
-			if ($db->select('COUNT(id)', 'menu_items', 'left_id = ' . ($pages[0]['right_id'] + 1) . ' AND block_id = \'' . $pages[0]['block_id'] . '\'', 0, 0, 0, 1) > 0) {
+			if ($db->countRows('*', 'menu_items', 'left_id = ' . ($pages[0]['right_id'] + 1) . ' AND block_id = \'' . $pages[0]['block_id'] . '\'') > 0) {
 				$elem = $db->query('SELECT c.id, c.left_id, c.right_id FROM ' . CONFIG_DB_PRE . 'menu_items AS p, ' . CONFIG_DB_PRE . 'menu_items AS c WHERE p.left_id = ' . ($pages[0]['right_id'] + 1) . ' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id');
 				$c_elem = count($elem);
 				$c_pages = count($pages);

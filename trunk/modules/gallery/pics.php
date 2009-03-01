@@ -13,7 +13,7 @@ if (!defined('IN_ACP3'))
 $time = $date->timestamp();
 $period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
-if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'gallery', 'id = \'' . $uri->id . '\'' . $period, 0, 0, 0, 1) == 1) {
+if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $uri->id . '\'' . $period) == 1) {
 	// Cache der galerie holen
 	$gallery = getGalleryCache($uri->id);
 

@@ -19,7 +19,7 @@ function commentsCount($module, $entry_id)
 {
 	global $db;
 
-	return $db->select('COUNT(id)', 'comments', 'module = \'' . $module . '\' AND entry_id =\'' . $entry_id . '\'', 0, 0, 0, 1);
+	return $db->countRows('*', 'comments', 'module = \'' . $module . '\' AND entry_id =\'' . $entry_id . '\'');
 }
 /**
  * Zeigt alle Kommentare für das jeweilige Modul und Datensatz
@@ -95,7 +95,7 @@ function comments($module, $entry_id)
 		}
 
 		if ($c_comments > 0) {
-			$tpl->assign('pagination', pagination($db->select('COUNT(id)', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'', 0, 0, 0, 1)));
+			$tpl->assign('pagination', pagination($db->countRows('*', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'')));
 			for ($i = 0; $i < $c_comments; ++$i) {
 				if (!empty($comments[$i]['user_id']) && empty($comments[$i]['name'])) {
 					$comments[$i]['name'] = $lang->t('users', 'deleted_user');

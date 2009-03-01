@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' . $uri->id . '\'') == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
@@ -58,7 +58,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items', 'id =
 			$c_pages = count($pages);
 
 			// Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
-			if (empty($form['parent']) && $db->select('COUNT(id)', 'menu_items', 'left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0, 0, 0, 1) == 0) {
+			if (empty($form['parent']) && $db->countRows('*', 'menu_items', 'left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id']) == 0) {
 				$db->link->beginTransaction();
 				$bool = $db->update('menu_items', $update_values, 'id = \'' . $uri->id . '\'');
 				if ($form['block_id'] != $pages[0]['block_id']) {

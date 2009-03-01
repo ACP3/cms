@@ -14,7 +14,7 @@ $polls = $db->select('id, start, end, question', 'poll_question', 0, 'start DESC
 $c_polls = count($polls);
 
 if ($c_polls > 0) {
-	$tpl->assign('pagination', pagination($db->select('COUNT(id)', 'poll_question', 0, 0, 0, 0, 1)));
+	$tpl->assign('pagination', pagination($db->countRows('*', 'poll_question')));
 
 	for ($i = 0; $i < $c_polls; ++$i) {
 		$polls[$i]['period'] = $date->period($polls[$i]['start'], $polls[$i]['end']);

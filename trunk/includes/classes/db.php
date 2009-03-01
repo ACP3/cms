@@ -94,7 +94,7 @@ class db
 					break;
 				// Queries ohne Resultset
 				default:
-					$result = $this->link->exec($query);
+					$result = $this->link->query($query);
 			}
 			return $result;
 		} catch(PDOException $e) {
@@ -177,6 +177,24 @@ class db
 		}
 
 		return $this->query($query, $mode);
+	}
+	/**
+	 * Gibt die Anzahl der Datensätze zurück
+	 *
+	 * @param string $field
+	 *  Das Feld, anhand welchem gezählt werden soll
+	 * @param string $table
+	 * 	Die betroffene Tabelle der Datenbank
+	 * @param string $where
+	 * 	WHERE Bedingung der SQL Abfrage
+	 * @return @see query()
+	 */
+	public function countRows($field, $table, $where = 0)
+	{
+		$query = 'SELECT COUNT(' . $field . ') FROM ' . CONFIG_DB_PRE . $table;
+		$query.= empty($where) ? '' : ' WHERE ' . $where;
+
+		return $this->query($query, 1);
 	}
 	/**
 	 * Führt den UPDATE Befehl aus

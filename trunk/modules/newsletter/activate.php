@@ -17,7 +17,7 @@ if (validate::email($uri->mail) && validate::isMD5($uri->hash)) {
 	redirect('errors/404');
 }
 
-if ($db->select('COUNT(id)', 'newsletter_accounts', 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'', 0, 0, 0, 1) != 1)
+if ($db->countRows('*', 'newsletter_accounts', 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'') != 1)
 	$errors[] = $lang->t('newsletter', 'account_not_exists');
 
 if (isset($errors)) {

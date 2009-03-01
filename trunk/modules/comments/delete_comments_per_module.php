@@ -24,7 +24,7 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = null;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && preg_match('/^(\w+)$/', $entry) && $db->select('COUNT(id)', 'comments', 'module = \'' . $entry . '\'', 0, 0, 0, 1) > '0') {
+		if (!empty($entry) && preg_match('/^(\w+)$/', $entry) && $db->countRows('*', 'comments', 'module = \'' . $entry . '\'') > '0') {
 			$bool = $db->delete('comments', 'module = \'' . $entry . '\'');
 		}
 	}

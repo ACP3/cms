@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('categories', 'invalid_image_selected');
 	if (empty($form['module']))
 		$errors[] = $lang->t('categories', 'select_module');
-	if (strlen($form['name']) > 3 && !empty($form['module']) && $db->select('COUNT(id)', 'categories', 'name = \'' . $db->escape($form['name']) . '\' AND module = \'' . $db->escape($form['module'], 2) . '\'', 0, 0, 0, 1) > 0)
+	if (strlen($form['name']) > 3 && !empty($form['module']) && $db->countRows('*', 'categories', 'name = \'' . $db->escape($form['name']) . '\' AND module = \'' . $db->escape($form['module'], 2) . '\'') > 0)
 		$errors[] = $lang->t('categories', 'category_already_exists');
 
 	if (isset($errors)) {

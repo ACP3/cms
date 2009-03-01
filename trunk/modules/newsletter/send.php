@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'newsletter_archive', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'id = \'' . $uri->id . '\'') == '1') {
 	$settings = config::output('newsletter');
 	$newsletter = $db->select('subject, text', 'newsletter_archive', 'id = \'' . $uri->id . '\'');
 	$accounts = $db->select('mail', 'newsletter_accounts', 'hash = \'\'');

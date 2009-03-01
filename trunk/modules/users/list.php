@@ -4,7 +4,7 @@ if (!defined('IN_ACP3'))
 
 $users = $db->select('id, nickname, realname, mail, website', 'users', 0, 'nickname ASC, id ASC', POS, CONFIG_ENTRIES);
 $c_users = count($users);
-$all_users = $db->select('COUNT(id)', 'users', 0, 0, 0, 0, 1);
+$all_users = $db->countRows('*', 'users');
 
 if ($c_users > 0) {
 	$tpl->assign('pagination', pagination($all_users));

@@ -14,7 +14,7 @@ $guestbook = $db->select('date, name, user_id, message, website, mail', 'guestbo
 $c_guestbook = count($guestbook);
 
 if ($c_guestbook > 0) {
-	$tpl->assign('pagination', pagination($db->select('COUNT(id)', 'guestbook', 0, 0, 0, 0, 1)));
+	$tpl->assign('pagination', pagination($db->countRows('*', 'guestbook')));
 	$emoticons = false;
 
 	// Emoticons einbinden

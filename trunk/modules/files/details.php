@@ -12,7 +12,7 @@ if (!defined('IN_ACP3'))
 
 $period = ' AND (start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')';
 
-if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'files', 'id = \'' . $uri->id . '\'' . $period, 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $uri->id . '\'' . $period) == '1') {
 	$file = getFilesCache($uri->id);
 
 	if ($uri->action == 'download') {

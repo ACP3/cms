@@ -19,10 +19,10 @@ if ($c_polls > 0) {
 
 		// Überprüfen, ob der eingeloogter User schon abgestimmt hat
 		if ($auth->isUser()) {
-			$query = $db->select('COUNT(poll_id)', 'poll_votes', 'poll_id = \'' . $polls[$i]['id'] . '\' AND user_id = \'' . USER_ID . '\'', 0, 0, 0, 1);
+			$query = $db->select('COUNT(poll_id)', 'poll_votes', 'poll_id = \'' . $polls[$i]['id'] . '\' AND user_id = \'' . USER_ID . '\'');
 		// Überprüfung für Gäste
 		} else {
-			$query = $db->select('COUNT(poll_id)', 'poll_votes', 'poll_id = \'' . $polls[$i]['id'] . '\' AND ip = \'' . $_SERVER['REMOTE_ADDR'] . '\'', 0, 0, 0, 1);
+			$query = $db->select('COUNT(poll_id)', 'poll_votes', 'poll_id = \'' . $polls[$i]['id'] . '\' AND ip = \'' . $_SERVER['REMOTE_ADDR'] . '\'');
 		}
 
 		if ($query != 0 || $polls[$i]['start'] != $polls[$i]['end'] && $polls[$i]['end'] <= $date->timestamp()) {
@@ -30,7 +30,7 @@ if ($c_polls > 0) {
 		} else {
 			$polls[$i]['link'] = 'vote';
 		}
-		$polls[$i]['votes'] = $db->select('COUNT(poll_id)', 'poll_votes', 'poll_id = \'' . $polls[$i]['id'] . '\'', 0, 0, 0, 1);
+		$polls[$i]['votes'] = $db->select('COUNT(poll_id)', 'poll_votes', 'poll_id = \'' . $polls[$i]['id'] . '\'');
 		$polls[$i]['date'] = $polls[$i]['start'] == $polls[$i]['end'] ? '-' : $date->format($polls[$i]['end']);
 	}
 	$tpl->assign('polls', $polls);

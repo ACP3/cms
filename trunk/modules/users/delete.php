@@ -26,7 +26,7 @@ if (!isset($entries)) {
 	$admin_user = false;
 	$self_delete = false;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && validate::isNumber($entry) && $db->select('COUNT(id)', 'users', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'users', 'id = \'' . $entry . '\'') == '1') {
 			if ($entry == '1') {
 				$admin_user = true;
 			} else {
