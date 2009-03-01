@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'categories', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' . $uri->id . '\'') == '1') {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 		if (!empty($_FILES['picture']['name'])) {
@@ -27,7 +27,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'categories', 'id =
 			$errors[] = $lang->t('categories', 'description_to_short');
 		if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) || !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize'])))
 			$errors[] = $lang->t('categories', 'invalid_image_selected');
-		if (strlen($form['name']) > 3 && $db->select('COUNT(id)', 'categories', 'id != \'' . $uri->id . '\' AND name = \'' . $db->escape($form['name']) . '\' AND module = \'' . $module[0]['module'] . '\'', 0, 0, 0, 1) > 0)
+		if (strlen($form['name']) > 3 && $db->countRows('*', 'categories', 'id != \'' . $uri->id . '\' AND name = \'' . $db->escape($form['name']) . '\' AND module = \'' . $module[0]['module'] . '\'') > 0)
 			$errors[] = $lang->t('categories', 'category_already_exists');
 
 		if (isset($errors)) {

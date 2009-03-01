@@ -11,7 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (validate::isNumber($uri->id)) {
-	if (($uri->mode == 'up' || $uri->mode == 'down') && $db->select('COUNT(id)', 'gallery_pictures', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == 1) {
+	if (($uri->mode == 'up' || $uri->mode == 'down') && $db->countRows('*', 'gallery_pictures', 'id = \'' . $uri->id . '\'') == 1) {
 		$gallery = $db->select('g.name, g.id', 'gallery AS g, ' . CONFIG_DB_PRE . 'gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
 
 		breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));

@@ -14,7 +14,7 @@ $newsletter = $db->select('id, date, subject, text, status', 'newsletter_archive
 $c_newsletter = count($newsletter);
 
 if ($c_newsletter > 0) {
-	$tpl->assign('pagination', pagination($db->select('COUNT(id)', 'newsletter_archive', 0, 0, 0, 0, 1)));
+	$tpl->assign('pagination', pagination($db->countRows('*', 'newsletter_archive')));
 
 	for ($i = 0; $i < $c_newsletter; ++$i) {
 		$newsletter[$i]['date'] = $date->format($newsletter[$i]['date']);

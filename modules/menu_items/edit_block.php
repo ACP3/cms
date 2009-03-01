@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items_blocks', 'id = \'' . $uri->id . '\'', 0, 0, 0, 1) == '1') {
+if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id = \'' . $uri->id . '\'') == '1') {
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
 	breadcrumb::assign($lang->t('menu_items', 'menu_items'), uri('acp/menu_items'));
 	breadcrumb::assign($lang->t('menu_items', 'adm_list_blocks'), uri('acp/menu_items/adm_list_blocks'));
@@ -21,7 +21,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(id)', 'menu_items_blocks'
 
 		if (!preg_match('/^[a-zA-Z]+\w/', $form['index_name']))
 			$errors[] = $lang->t('menu_items', 'type_in_index_name');
-		if (preg_match('/^[a-zA-Z]+\w/', $form['index_name']) && $db->select('COUNT(id)', 'menu_items_blocks', 'index_name = \'' . $db->escape($form['index_name']) . '\' AND id != \'' . $uri->id . '\'', 0, 0, 0, 1) > 0)
+		if (preg_match('/^[a-zA-Z]+\w/', $form['index_name']) && $db->countRows('*', 'menu_items_blocks', 'index_name = \'' . $db->escape($form['index_name']) . '\' AND id != \'' . $uri->id . '\'') > 0)
 			$errors[] = $lang->t('menu_items', 'index_name_unique');
 		if (strlen($form['title']) < 3)
 			$errors[] = $lang->t('menu_items', 'block_title_to_short');

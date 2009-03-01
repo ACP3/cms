@@ -18,7 +18,7 @@ function userNameExists($nickname, $id = 0)
 	global $db;
 	$nickname = $db->escape($nickname);
 	$id = validate::isNumber($id) ? ' AND id != \'' . $id . '\'' : '';
-	return !empty($nickname) && $db->select('COUNT(id)', 'users', 'nickname = \'' . $nickname . '\'' . $id, 0, 0, 0, 1) == 1 ? true : false;
+	return !empty($nickname) && $db->countRows('*', 'users', 'nickname = \'' . $nickname . '\'' . $id) == 1 ? true : false;
 }
 /**
  * Überprüft, ob die übergebene E-Mail-Adresse schon existiert
@@ -31,6 +31,6 @@ function userEmailExists($mail, $id = 0)
 {
 	global $db;
 	$id = validate::isNumber($id) ? ' AND id != \'' . $id . '\'' : '';
-	return validate::email($mail) && $db->select('COUNT(id)', 'users', 'mail =\'' . $mail . '\'' . $id, 0, 0, 0, 1) == 1 ? true : false;
+	return validate::email($mail) && $db->countRows('*', 'users', 'mail =\'' . $mail . '\'' . $id) == 1 ? true : false;
 }
 ?>

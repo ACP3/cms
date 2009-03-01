@@ -13,7 +13,7 @@ if (!defined('IN_ADM'))
 $module = $uri->module ? $db->escape($uri->module) : 0;
 $tpl->assign('module', $module);
 
-if (empty($module) || !empty($module) && $db->select('COUNT(id)', 'comments', 'module = \'' . $module . '\'', 0, 0, 0, 1) == '0') {
+if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module = \'' . $module . '\'') == '0') {
 	$comments = $db->query('SELECT module FROM ' . CONFIG_DB_PRE . 'comments GROUP BY module LIMIT ' . POS . ',' . CONFIG_ENTRIES);
 	$c_comments = count($comments);
 
@@ -21,7 +21,7 @@ if (empty($module) || !empty($module) && $db->select('COUNT(id)', 'comments', 'm
 		$tpl->assign('pagination', pagination($db->query('SELECT COUNT(module) FROM ' . CONFIG_DB_PRE . 'comments GROUP BY module', 1)));
 		for ($i = 0; $i < $c_comments; ++$i) {
 			$comments[$i]['name'] = $lang->t($comments[$i]['module'], $comments[$i]['module']);
-			$comments[$i]['count'] = $db->select('COUNT(id)', 'comments', 'module = \'' . $comments[$i]['module'] . '\'', 0, 0, 0, 1);
+			$comments[$i]['count'] = $db->countRows('*', 'comments', 'module = \'' . $comments[$i]['module'] . '\'');
 		}
 		$tpl->assign('comments', $comments);
 	}
@@ -42,7 +42,7 @@ if (empty($module) || !empty($module) && $db->select('COUNT(id)', 'comments', 'm
 	}
 
 	if ($c_comments > 0) {
-		$tpl->assign('pagination', pagination($db->select('COUNT(id)', 'comments', 'module = \'' . $module . '\'', 0, 0, 0, 1)));
+		$tpl->assign('pagination', pagination($db->countRows('*', 'comments', 'module = \'' . $module . '\'')));
 		for ($i = 0; $i < $c_comments; ++$i) {
 			if (!empty($comments[$i]['user_id']) && empty($comments[$i]['name'])) {
 				$comments[$i]['name'] = $lang->t('users', 'deleted_user');

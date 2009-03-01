@@ -26,9 +26,9 @@ if (!isset($entries)) {
 	$in_use = 0;
 
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && validate::isNumber($entry) && $db->select('COUNT(id)', 'categories', 'id = \'' . $entry . '\'', 0, 0, 0, 1) == '1') {
+		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'categories', 'id = \'' . $entry . '\'') == '1') {
 			$category = $db->select('picture, module', 'categories', 'id = \'' . $entry . '\'');
-			if ($db->select('COUNT(id)', $db->escape($category[0]['module'], 3), 'category_id = \'' . $entry . '\'', 0, 0, 0, 1) > 0) {
+			if ($db->countRows('*', $db->escape($category[0]['module'], 3), 'category_id = \'' . $entry . '\'') > 0) {
 				$in_use = 1;
 			} else {
 				// Kategoriebild ebenfalls löschen
