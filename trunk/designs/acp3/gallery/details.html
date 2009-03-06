@@ -1,4 +1,3 @@
-{if isset($picture)}
 <div class="picture">
 	<img src="{uri args="gallery/image/id_`$picture.id`/action_thumb"}" alt="" />
 	<div class="content">
@@ -16,8 +15,7 @@
 		</div>
 	</div>
 </div>
-{else}
-<div class="error">
-	<h5>{lang values="gallery|no_pictures"}</h5>
-</div>
+{if isset($comments)}
+<hr />
+{$comments}
 {/if}
