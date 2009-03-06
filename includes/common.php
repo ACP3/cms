@@ -18,7 +18,8 @@ if (!defined('INSTALLED')) {
 }
 
 // Wenn der DEBUG Modus aktiv ist, Fehler ausgeben
-error_reporting(defined('DEBUG') && DEBUG ? E_ALL : 0);
+$reporting_level =defined('DEBUG') && DEBUG ? E_ALL | E_STRICT : 0;
+error_reporting($reporting_level);
 
 function __autoload($className)
 {
@@ -36,8 +37,9 @@ include SMARTY_DIR . 'Smarty.class.php';
 $tpl = new smarty();
 $tpl->template_dir = ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/';
 $tpl->compile_dir = ACP3_ROOT . 'cache/';
-$tpl->error_reporting = E_ALL;
-// $tpl->compile_check = false;
+$tpl->error_reporting = $reporting_level;
+if (!defined('DEBUG') || !DEBUG)
+	$tpl->compile_check = false;
 if (!is_writable($tpl->compile_dir)) {
 	exit('Bitte geben Sie dem "cache"-Ordner den CHMOD 777!');
 }
