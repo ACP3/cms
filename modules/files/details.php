@@ -37,6 +37,11 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		$file[0]['date'] = $date->format($file[0]['start']);
 		$tpl->assign('file', $file[0]);
 
+		if (modules::check('comments', 'functions')) {
+			include_once ACP3_ROOT . 'modules/comments/functions.php';
+
+			$tpl->assign('comments', comments('files', $uri->id));
+		}
 		$content = $tpl->fetch('files/details.html');
 	}
 } else {
