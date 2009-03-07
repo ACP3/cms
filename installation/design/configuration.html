@@ -34,7 +34,7 @@
 	{lang values="installation|installation_successful_2"}
 </p>
 <div class="success forward">
-	<a href="../../../../../" class="form">{lang values="common|forward"}</a>
+	<a href="{$ROOT_DIR}../" class="form">{lang values="common|forward"}</a>
 </div>
 {/if}
 {else}
@@ -57,14 +57,14 @@
 				<dt><label for="db-user">{lang values="installation|db_username"}</label></dt>
 				<dd><input type="text" name="form[db_user]" id="db-user" value="{$form.db_user}" /></dd>
 				<dt><label for="db-password">{lang values="installation|db_password"}</label></dt>
-				<dd><input type="text" name="form[db_password]" id="db-password" value="{$form.db_password}" /></dd>
+				<dd><input type="password" name="form[db_password]" id="db-password" value="{$form.db_password}" /></dd>
 				<dt><label for="db-name">{lang values="installation|db_name"}</label></dt>
 				<dd><input type="text" name="form[db_name]" id="db-name" value="{$form.db_name}" /></dd>
 				<dt><label for="db-pre">{lang values="installation|db_table_prefix"}</label></dt>
 				<dd><input type="text" name="form[db_pre]" id="db-pre" value="{$form.db_pre}" /></dd>
 			</dl>
 		</div>
-		<div id="tabs-2">
+		<div id="tabs-2" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="user-name">{lang values="users|nickname"}</label></dt>
 				<dd><input type="text" name="form[user_name]" id="user-name" value="{$form.user_name}" /></dd>
@@ -76,7 +76,7 @@
 				<dd><input type="text" name="form[mail]" id="mail" value="{$form.mail}" /></dd>
 			</dl>
 		</div>
-		<div id="tabs-3">
+		<div id="tabs-3" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="seo-title">{lang values="system|title"}</label></dt>
 				<dd><input type="text" name="form[seo_title]" id="seo-title" value="{$form.seo_title}" /></dd>
@@ -95,7 +95,7 @@
 				<dd><input type="text" name="form[flood]" id="flood" value="{$form.flood}" maxlength="3" /></dd>
 			</dl>
 		</div>
-		<div id="tabs-4">
+		<div id="tabs-4" class="ui-tabs-hide">
 			<dl>
 				<dt>
 					<label for="date-format">{lang values="system|date_format"}</label>
