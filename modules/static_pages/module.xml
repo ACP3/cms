@@ -16,17 +16,17 @@
 		<item>
 			<file>create</file>
 			<level>2</level>
-			<include>pages/functions</include>
+			<include>menu_items/functions</include>
 		</item>
 		<item>
 			<file>delete</file>
 			<level>2</level>
-			<include>pages/functions</include>
+			<include>menu_items/functions</include>
 		</item>
 		<item>
 			<file>edit</file>
 			<level>2</level>
-			<include>pages/functions</include>
+			<include>menu_items/functions</include>
 		</item>
 		<item>
 			<file>extensions/search</file>
