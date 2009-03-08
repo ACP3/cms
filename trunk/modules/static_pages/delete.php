@@ -26,8 +26,8 @@ if (!isset($entries)) {
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'static_pages', 'id = \'' . $entry . '\'') == '1') {
 			$bool = $db->delete('static_pages', 'id = \'' . $entry . '\'');
-			$page = $db->select('id', 'static_pages', 'uri = \'static_pages/list/id_' . $entry . '/\'');
-			deleteNode($pages[0]['id']);
+			$page = $db->select('id', 'menu_items', 'uri = \'static_pages/list/id_' . $entry . '/\'');
+			deleteNode($page[0]['id']);
 		}
 	}
 	setMenuItemsCache();
