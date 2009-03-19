@@ -102,7 +102,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		// Formularelemente
 		if (modules::check('categories', 'functions')) {
 			include_once ACP3_ROOT . 'modules/categories/functions.php';
-			$tpl->assign('categories', categoriesList('files', $dl[0]['category_id']));
+			$tpl->assign('categories', categoriesList('files', $dl[0]['category_id'], true));
 		}
 		
 		$tpl->assign('checked_external', isset($form['external']) ? ' checked="checked"' : '');

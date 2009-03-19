@@ -23,7 +23,8 @@ class auth
 	private $isUser = false;
 
 	/**
-	 * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der Seitenbesucher auch wirklich ein registrierter Benutzer des ACP3 ist
+	 * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der
+	 * Seitenbesucher auch wirklich ein registrierter Benutzer des ACP3 ist
 	 */
 	function __construct()
 	{

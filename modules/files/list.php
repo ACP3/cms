@@ -11,7 +11,7 @@ if (!defined('IN_ACP3'))
 	exit;
 
 if (modules::check('categories', 'functions')) {
-	$tpl->assign('categories', categoriesList('files'));
+	$tpl->assign('categories', getCategoriesCache('files'));
 }
 
 $content = $tpl->fetch('files/list.html');
