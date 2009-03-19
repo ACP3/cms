@@ -27,7 +27,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' 
 			$errors[] = $lang->t('categories', 'description_to_short');
 		if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) || !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize'])))
 			$errors[] = $lang->t('categories', 'invalid_image_selected');
-		if (strlen($form['name']) > 3 && $db->countRows('*', 'categories', 'id != \'' . $uri->id . '\' AND name = \'' . $db->escape($form['name']) . '\' AND module = \'' . $module[0]['module'] . '\'') > 0)
+		if (strlen($form['name']) >= 3 && categoriesCheckDuplicate($db->escape($form['name']), $module[0]['module'], $uri->id))
 			$errors[] = $lang->t('categories', 'category_already_exists');
 
 		if (isset($errors)) {

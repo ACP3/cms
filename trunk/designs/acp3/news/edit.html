@@ -27,12 +27,7 @@
 				<dd>{wysiwyg name="text" value="`$form.text`" height="250"}</dd>
 				<dt><label for="cat">{lang values="common|category"}</label></dt>
 				<dd>
-					<select name="form[cat]" id="cat">
-						<option value="">{lang values="common|pls_select"}</option>
-{foreach from=$categories item=row}
-						<option value="{$row.id}"{$row.selected}>{$row.name}</option>
-{/foreach}
-					</select>
+					{$categories}
 				</dd>
 {if isset($options)}
 				<dt><label for="readmore">{lang values="common|options"}</label></dt>

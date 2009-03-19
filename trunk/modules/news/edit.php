@@ -22,8 +22,10 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 			$errors[] = $lang->t('news', 'headline_to_short');
 		if (strlen($form['text']) < 3)
 			$errors[] = $lang->t('news', 'text_to_short');
-		if (!validate::isNumber($form['cat']) || validate::isNumber($form['cat']) && $db->countRows('*', 'categories', 'id = \'' . $form['cat'] . '\'') != '1')
+		if (strlen($form['cat_create']) < 3 && !categoriesCheck($form['cat']))
 			$errors[] = $lang->t('news', 'select_category');
+		if (strlen($form['cat_create']) >= 3 && categoriesCheckDuplicate($form['cat_create'], 'news'))
+			$errors[] = $lang->t('categories', 'category_already_exists');
 		if (!empty($form['uri']) && (!validate::isNumber($form['target']) || strlen($form['link_title']) < 3))
 			$errors[] = $lang->t('news', 'complete_additional_hyperlink_statements');
 
@@ -37,7 +39,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 				'text' => $db->escape($form['text'], 2),
 				'readmore' => $settings['readmore'] == 1 && isset($form['readmore']) ? 1 : 0,
 				'comments' => $settings['comments'] == 1 && isset($form['comments']) ? 1 : 0,
-				'category_id' => $form['cat'],
+				'category_id' => strlen($form['cat_create']) >= 3 ? categoriesCreate($form['cat_create'], 'news') : $form['cat'],
 				'uri' => $db->escape($form['uri'], 2),
 				'target' => $form['target'],
 				'link_title' => $db->escape($form['link_title'])
@@ -60,7 +62,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 		// Kategorien
 		if (modules::check('categories', 'functions')) {
 			include_once ACP3_ROOT . 'modules/categories/functions.php';
-			$tpl->assign('categories', categoriesList('news', $news[0]['category_id']));
+			$tpl->assign('categories', categoriesList('news', $news[0]['category_id'], true));
 		}
 
 		// Weiterlesen & Kommentare

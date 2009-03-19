@@ -83,7 +83,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Formularelemente
 	if (modules::check('categories', 'functions')) {
 		include_once ACP3_ROOT . 'modules/categories/functions.php';
-		$tpl->assign('categories', categoriesList('files'));
+		$tpl->assign('categories', categoriesList('files', '', true));
 	}
 
 	$tpl->assign('checked_external', isset($form['external']) ? ' checked="checked"' : '');

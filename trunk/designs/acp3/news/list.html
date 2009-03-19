@@ -14,12 +14,7 @@
 			<div>
 				<label for="cat" style="font-weight:bold">
 					{lang values="common|category"}:
-					<select name="form[cat]" id="cat">
-						<option value="">{lang values="common|pls_select"}</option>
-{foreach from=$categories item=row}
-						<option value="{$row.id}"{$row.selected}>{$row.name}</option>
-{/foreach}
-					</select>
+					{$categories}
 				</label>
 				<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
 			</div>
