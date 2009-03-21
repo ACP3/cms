@@ -9,10 +9,6 @@
 		<message>Kommentar Anzahl</message>
 	</item>
 	<item>
-		<name>comments_overview</name>
-		<message>Kommentare Übersicht</message>
-	</item>
-	<item>
 		<name>delete_comments</name>
 		<message>Kommentare löschen</message>
 	</item>

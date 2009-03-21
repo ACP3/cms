@@ -25,16 +25,12 @@
 		<message>Bitte wählen Sie aus der untenstehenden Liste die Module aus, auf welche die Benutzer Zugriff erhalten sollen und auf welche nicht. Des Weiteren können Sie für jedes Modul festlegen, ob Benutzer nur Zugriff auf den Frontendbereich erhalten sollen oder auch den Administrationsbereich. D.h. diese Benutzer können dann z.B. neue News erstellen, diese bearbeiten und auch löschen.</message>
 	</item>
 	<item>
-		<name>access_overview</name>
-		<message>Access levels overview</message>
+		<name>access_level_undeletable</name>
+		<message>It\'s impossible to delete the administrator and guest access levels.</message>
 	</item>
 	<item>
 		<name>access_to_following_modules</name>
 		<message>Access to modules</message>
-	</item>
-	<item>
-		<name>access_level_undeletable</name>
-		<message>It\'s impossible to delete the administrator and guest access levels.</message>
 	</item>
 	<item>
 		<name>create</name>

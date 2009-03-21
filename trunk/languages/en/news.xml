@@ -53,10 +53,6 @@
 		<message>News</message>
 	</item>
 	<item>
-		<name>news_overview</name>
-		<message>News overview</message>
-	</item>
-	<item>
 		<name>read_newsfeed</name>
 		<message>Read newsfeed</message>
 	</item>

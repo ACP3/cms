@@ -204,10 +204,6 @@
 		<message>Insgesamt haben sich auf dieser Website %d Benutzer registriert.</message>
 	</item>
 	<item>
-		<name>users_overview</name>
-		<message>Benutzer Übersicht</message>
-	</item>
-	<item>
 		<name>view_profile</name>
 		<message>Benutzerprofil ansehen</message>
 	</item>

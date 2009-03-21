@@ -21,10 +21,6 @@
 		<message>Emoticons</message>
 	</item>
 	<item>
-		<name>emoticons_overview</name>
-		<message>Emoticons Übersicht</message>
-	</item>
-	<item>
 		<name>image_filesize</name>
 		<message>Maximale Dateigröße des Bildes</message>
 	</item>

@@ -209,6 +209,10 @@
 		<message>Optionen</message>
 	</item>
 	<item>
+		<name>overview</name>
+		<message>Übersicht</message>
+	</item>
+	<item>
 		<name>pagination</name>
 		<message>Seitenauswahl</message>
 	</item>

@@ -5,10 +5,6 @@
 		<message>Kategorien</message>
 	</item>
 	<item>
-		<name>categories_overview</name>
-		<message>Kategorien Übersicht</message>
-	</item>
-	<item>
 		<name>category_already_exists</name>
 		<message>Für das gewählte Modul existiert bereits eine Kategorie mit diesem Namen</message>
 	</item>

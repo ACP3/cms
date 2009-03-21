@@ -9,10 +9,6 @@
 		<message>Comments</message>
 	</item>
 	<item>
-		<name>comments_overview</name>
-		<message>Comments overview</message>
-	</item>
-	<item>
 		<name>delete_comments</name>
 		<message>Delete comments</message>
 	</item>
