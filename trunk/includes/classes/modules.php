@@ -16,14 +16,15 @@
 class modules
 {
 	/**
-	 * Überpüft, ob ein Modul überhaupt existiert, bzw. der Benutzer auf ein Modul Zugriff hat
+	 * Überpüft, ob ein Modul überhaupt existiert,
+	 * bzw. der Benutzer auf ein Modul Zugriff hat
 	 *
 	 * @param string $module
 	 * 	Zu überprüfendes Modul
 	 * @param string $page
 	 * 	Zu überprüfende Moduldatei
 	 *
-	 * @return boolean
+	 * @return integer
 	 */
 	public static function check($module = 0, $page = 0) {
 		global $auth, $db, $uri;
@@ -36,7 +37,8 @@ class modules
 			$xml = simplexml_load_file(ACP3_ROOT . 'modules/' . $module . '/module.xml');
 
 			if ((string) $xml->info->active == '1') {
-				// Falls die einzelnen Zugriffslevel auf die Module noch nicht gesetzt sind, diese aus der Datenbank selektieren
+				// Falls die einzelnen Zugriffslevel auf die Module noch nicht
+				// gesetzt sind, diese aus der Datenbank selektieren
 				if (!isset($access_level[$module])) {
 					// Zugriffslevel für Gäste
 					$access_id = 2;
@@ -69,15 +71,17 @@ class modules
 							}
 						}
 						// User hat Zugriff auf die aktuelle Seite
-						return true;
+						return 1;
 					}
 				}
 			}
+			return 0;
 		}
-		return false;
+		return -1;
 	}
 	/**
-	 * Gibt ein alphabetisch sortiertes Array mit allen gefundenen Modulen des ACP3 mitsamt Modulinformationen aus
+	 * Gibt ein alphabetisch sortiertes Array mit allen gefundenen
+	 * Modulen des ACP3 mitsamt Modulinformationen aus
 	 *
 	 * @return array
 	 */

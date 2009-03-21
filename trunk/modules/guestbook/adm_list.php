@@ -18,7 +18,7 @@ if ($c_guestbook > 0) {
 	$emoticons = false;
 
 	// Emoticons einbinden
-	if (modules::check('emoticons', 'functions')) {
+	if (modules::check('emoticons', 'functions') == 1) {
 		include_once ACP3_ROOT . 'modules/emoticons/functions.php';
 		$emoticons = true;
 	}

@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('static_pages', 'title_to_short');
 	if (strlen($form['text']) < 3)
 		$errors[] = $lang->t('static_pages', 'text_to_short');
-	if (modules::check('menu_items', 'create')) {
+	if (modules::check('menu_items', 'create') == 1) {
 		if ($form['create'] != 1 && $form['create'] != '0')
 			$errors[] = $lang->t('static_page', 'select_create_menu_item');
 		if ($form['create'] == 1) {
@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
 		$last_id = $db->link->lastInsertId();
 		$db->link->commit();
 
-		if ($form['create'] == '1' && modules::check('menu_items', 'create')) {
+		if ($form['create'] == '1' && modules::check('menu_items', 'create') == 1) {
 			$insert_values = array(
 				'id' => '',
 				'start' => $time_start,
@@ -78,7 +78,7 @@ if (isset($_POST['submit'])) {
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-	if (modules::check('menu_items', 'create')) {
+	if (modules::check('menu_items', 'create') == 1) {
 		$create[0]['value'] = 1;
 		$create[0]['selected'] = selectEntry('create', '1', '0', 'checked');
 		$create[0]['lang'] = $lang->t('common', 'yes');
