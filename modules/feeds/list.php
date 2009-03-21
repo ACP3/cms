@@ -2,7 +2,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (modules::check($uri->feed, 'extensions/feeds')) {
+if (modules::check($uri->feed, 'extensions/feeds') == 1) {
 	$module = $uri->feed;
 
 	$link = 'http://' . htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES);

@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
 		$form['sort'] = strtoupper($form['sort']);
 		$results_mods = array();
 		foreach ($form['mods'] as $module) {
-			if (modules::check($module, 'extensions/search')) {
+			if (modules::check($module, 'extensions/search') == 1) {
 				include ACP3_ROOT . 'modules/' . $module . '/extensions/search.php';
 			}
 		}
@@ -51,7 +51,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$search_mods = array();
 
 	for ($i = 0; $i < $c_mods; ++$i) {
-		if (modules::check($mods[$i], 'extensions/search')) {
+		if (modules::check($mods[$i], 'extensions/search') == 1) {
 			$info = modules::parseInfo($mods[$i]);
 			$name = $info['name'];
 			$search_mods[$name]['dir'] = $mods[$i];

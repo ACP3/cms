@@ -83,7 +83,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('units', $units);
 
 	// Formularelemente
-	if (modules::check('categories', 'functions')) {
+	if (modules::check('categories', 'functions') == 1) {
 		include_once ACP3_ROOT . 'modules/categories/functions.php';
 		$tpl->assign('categories', categoriesList('files', '', true));
 	}

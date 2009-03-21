@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (modules::check('categories', 'functions')) {
+if (modules::check('categories', 'functions') == 1) {
 	$tpl->assign('categories', getCategoriesCache('files'));
 }
 

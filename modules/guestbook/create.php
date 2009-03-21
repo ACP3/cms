@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Emoticons einbinden
-	if (modules::check('emoticons', 'functions')) {
+	if (modules::check('emoticons', 'functions') == 1) {
 		include_once ACP3_ROOT . 'modules/emoticons/functions.php';
 		$tpl->assign('emoticons', emoticonsList());
 	}

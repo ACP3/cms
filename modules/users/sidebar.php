@@ -18,7 +18,7 @@ if ($auth->isUser()) {
 
 	foreach ($mod_list as $name => $info) {
 		$dir = $info['dir'];
-		if (modules::check($dir, 'adm_list') && $dir != 'acp') {
+		if (modules::check($dir, 'adm_list') == 1 && $dir != 'acp') {
 			if ($dir == 'system') {
 				$access_system = true;
 			} elseif ($dir == 'home') {

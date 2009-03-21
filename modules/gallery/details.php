@@ -34,7 +34,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(g.id)', 'gallery AS g, ' 
 	if (count($picture_next) > 0)
 		$tpl->assign('picture_next', $picture_next[0]);
 
-	if (modules::check('comments', 'functions')) {
+	if (modules::check('comments', 'functions') == 1) {
 		include_once ACP3_ROOT . 'modules/comments/functions.php';
 
 		$tpl->assign('comments', comments('gallery', $uri->id));

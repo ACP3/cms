@@ -55,7 +55,7 @@ function comments($module, $entry_id)
 			$errors[] = $lang->t('common', 'name_to_short');
 		if (strlen($form['message']) < 3)
 			$errors[] = $lang->t('common', 'message_to_short');
-		if (!modules::check($db->escape($form['module'], 2), 'list') || !validate::isNumber($form['entry_id']))
+		if (!modules::check($db->escape($form['module'], 2), 'list') == 1 || !validate::isNumber($form['entry_id']))
 			$errors[] = $lang->t('comments', 'module_doesnt_exist');
 		if (!$auth->isUser() && !validate::captcha($form['captcha'], $form['hash']))
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
@@ -86,7 +86,7 @@ function comments($module, $entry_id)
 
 		// Emoticons einbinden, falls diese aktiv sind
 		$emoticons = false;
-		if (modules::check('emoticons', 'functions')) {
+		if (modules::check('emoticons', 'functions') == 1) {
 			include_once ACP3_ROOT . 'modules/emoticons/functions.php';
 			$emoticons = true;
 
