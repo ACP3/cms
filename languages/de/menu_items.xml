@@ -17,10 +17,6 @@
 		<message>Block</message>
 	</item>
 	<item>
-		<name>blocks_overview</name>
-		<message>Blöcke Übersicht</message>
-	</item>
-	<item>
 		<name>chronology</name>
 		<message>Reihenfolge</message>
 	</item>
@@ -79,10 +75,6 @@
 	<item>
 		<name>menu_items</name>
 		<message>Menüpunkte</message>
-	</item>
-	<item>
-		<name>menu_items_overview</name>
-		<message>Menüpunkte Übersicht</message>
 	</item>
 	<item>
 		<name>mod_description</name>

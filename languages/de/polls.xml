@@ -69,10 +69,6 @@
 		<message>Umfragen Archiv</message>
 	</item>
 	<item>
-		<name>polls_overview</name>
-		<message>Umfragen Übersicht</message>
-	</item>
-	<item>
 		<name>question</name>
 		<message>Frage</message>
 	</item>

@@ -21,10 +21,6 @@
 		<message>Gästebuch Einträge</message>
 	</item>
 	<item>
-		<name>guestbook_entries_overview</name>
-		<message>Gästebuch Einträge Übersicht</message>
-	</item>
-	<item>
 		<name>ip</name>
 		<message>IP Adresse</message>
 	</item>

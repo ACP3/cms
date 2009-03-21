@@ -69,10 +69,6 @@
 		<message>Polls archive</message>
 	</item>
 	<item>
-		<name>polls_overview</name>
-		<message>Polls overview</message>
-	</item>
-	<item>
 		<name>question</name>
 		<message>Question</message>
 	</item>

@@ -204,10 +204,6 @@
 		<message>In total there are %d users registered on this Website.</message>
 	</item>
 	<item>
-		<name>users_overview</name>
-		<message>Users overview</message>
-	</item>
-	<item>
 		<name>view_profile</name>
 		<message>View user profile</message>
 	</item>
