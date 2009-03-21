@@ -30,8 +30,10 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('files', 'select_internal_resource');
 	if (strlen($form['text']) < 3)
 		$errors[] = $lang->t('files', 'description_to_short');
-	if (!validate::isNumber($form['cat']) || $db->countRows('*', 'categories', 'id = \'' . $form['cat'] . '\'') != '1')
+	if (strlen($form['cat_create']) < 3 && !categoriesCheck($form['cat']))
 		$errors[] = $lang->t('files', 'select_category');
+	if (strlen($form['cat_create']) >= 3 && categoriesCheckDuplicate($form['cat_create'], 'files'))
+		$errors[] = $lang->t('categories', 'category_already_exists');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -40,17 +42,17 @@ if (isset($_POST['submit'])) {
 			$result = moveFile($file['tmp_name'], $file['name'], 'files');
 			$new_file = $result['name'];
 			$filesize = $result['size'];
-		} elseif (is_string($file)) {
-			settype($form['filesize'], 'float');
+		} else {
+			$form['filesize'] = (float) $form['filesize'];
 			$new_file = $file;
-			$filesize = $form['filesize'] . ' ' . $form['unit'];
+			$filesize = $form['filesize'] . ' ' . $db->escape($form['unit']);
 		}
 
 		$insert_values = array(
 			'id' => '',
 			'start' => $date->timestamp($form['start']),
 			'end' => $date->timestamp($form['end']),
-			'category_id' => $form['cat'],
+			'category_id' => strlen($form['cat_create']) >= 3 ? categoriesCreate($form['cat_create'], 'files') : $form['cat'],
 			'file' => $new_file,
 			'size' => $filesize,
 			'link_title' => $db->escape($form['link_title']),
