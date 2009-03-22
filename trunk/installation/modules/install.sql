@@ -165,16 +165,16 @@ CREATE TABLE `{pre}static_pages` (
 CREATE TABLE `{pre}users` ( 
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`nickname` VARCHAR(30) NOT NULL,
-	`realname` VARCHAR(80) NOT NULL,
 	`pwd` VARCHAR(53) NOT NULL,
 	`access` INT(10) UNSIGNED NOT NULL,
+	`login_errors` TINYINT(1) UNSIGNED NOT NULL,
+	`realname` VARCHAR(80) NOT NULL,
 	`mail` VARCHAR(120) NOT NULL,
 	`website` VARCHAR(120) NOT NULL,
 	`time_zone` int(5) UNSIGNED NOT NULL,
 	`dst` TINYINT(1) UNSIGNED NOT NULL,
 	`language` VARCHAR(10) NOT NULL,
 	`draft` TEXT NOT NULL,
-	`login_errors` TINYINT(1) UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine};
 

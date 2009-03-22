@@ -11,6 +11,8 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $uri->id . '\'') == '1') {
+	$user = $auth->getUserInfo($uri->id);
+
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
@@ -46,10 +48,10 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 
 			$update_values = array(
 				'nickname' => $db->escape($form['nickname']),
-				'realname' => $db->escape($form['realname']),
 				'access' => $form['access'],
-				'mail' => $form['mail'],
-				'website' => $db->escape($form['website'], 2),
+				'realname' => $db->escape($form['realname']) . ':' . $user['realname_display'],
+				'mail' => $form['mail'] . ':' . $user['mail_display'],
+				'website' => $db->escape($form['website'], 2) . ':' . $user['website_display'],
 				'time_zone' => $form['time_zone'],
 				'dst' => $form['dst'],
 				'language' => $db->escape($form['language'], 2),
@@ -70,8 +72,6 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$user = $auth->getUserInfo($uri->id);
-
 		// Zeitzonen
 		$tpl->assign('time_zone', timeZones($user['time_zone']));
 

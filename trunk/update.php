@@ -64,10 +64,14 @@ $queries = array(
 	'ALTER TABLE `{pre}users` CHANGE `access` `access` INT(10) UNSIGNED NOT NULL',
 	'ALTER TABLE `{pre}users` CHANGE `time_zone` `time_zone` INT(5) UNSIGNED NOT NULL',
 	'ALTER TABLE `{pre}users` CHANGE `dst` `dst` TINYINT(1) UNSIGNED NOT NULL',
-	'ALTER TABLE `{pre}users` ADD `login_errors` TINYINT(1) UNSIGNED NOT NULL AFTER `draft`;',
+	'ALTER TABLE `{pre}users` ADD `login_errors` TINYINT(1) UNSIGNED NOT NULL AFTER `access`',
+	'ALTER TABLE `{pre}users` ADD `realname2` VARCHAR(80) NOT NULL AFTER `access`',
+	'UPDATE {pre}users SET realname2 = CONCAT(realname, \':1\'), mail = CONCAT(mail, \':1\'), website = CONCAT(website, \':1\')',
+	'ALTER TABLE `{pre}users` DROP `realname`',
+	'ALTER TABLE `{pre}users` CHANGE `realname2` `realname` VARCHAR(80) NOT NULL',
 );
 
-// Änderungen am DB Schema vornehemen
+// Änderungen am DB Schema vornehmen
 if (count($queries) > 0) {
 	$db = new db();
 	$handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD);
