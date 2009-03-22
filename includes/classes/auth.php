@@ -62,11 +62,20 @@ class auth
 			$user_id = USER_ID;
 		}
 		if (validate::isNumber($user_id)) {
-			global $db;
 			static $user_info = array();
 
 			if (empty($user_info[$user_id])) {
-				$info = $db->select('nickname, realname, access, mail, website, time_zone, dst, language, draft', 'users', 'id = \'' . $user_id . '\'');
+				global $db;
+				$info = $db->select('nickname, access, realname, mail, website, time_zone, dst, language, draft', 'users', 'id = \'' . $user_id . '\'');
+				$pos = strrpos($info[0]['realname'], ':');
+				$info[0]['realname_display'] = substr($info[0]['realname'], $pos + 1);
+				$info[0]['realname'] = substr($info[0]['realname'], 0, $pos);
+				$pos = strrpos($info[0]['mail'], ':');
+				$info[0]['mail_display'] = substr($info[0]['mail'], $pos + 1);
+				$info[0]['mail'] = substr($info[0]['mail'], 0, $pos);
+				$pos = strrpos($info[0]['website'], ':');
+				$info[0]['website_display'] = substr($info[0]['website'], $pos + 1);
+				$info[0]['website'] = $db->escape(substr($info[0]['website'], 0, $pos), 3);
 				$user_info[$user_id] = $info[0];
 			}
 

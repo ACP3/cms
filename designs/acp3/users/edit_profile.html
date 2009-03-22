@@ -8,16 +8,50 @@
 			<li><a href="#tabs-2">{lang values="users|pwd"}</a></li>
 		</ul>
 		<div id="tabs-1">
-			<dl>
-				<dt><label for="nickname">{lang values="users|nickname"}</label></dt>
-				<dd><input type="text" name="form[nickname]" id="nickname" value="{$form.nickname}" maxlength="30" /></dd>
-				<dt><label for="realname">{lang values="users|realname"}</label></dt>
-				<dd><input type="text" name="form[realname]" id="realname" value="{$form.realname}" maxlength="80" /></dd>
-				<dt><label for="mail">{lang values="common|email"}</label></dt>
-				<dd><input type="text" name="form[mail]" id="mail" value="{$form.mail}" maxlength="120" /></dd>
-				<dt><label for="website">{lang values="common|website"}</label></dt>
-				<dd><input type="text" name="form[website]" id="website" value="{$form.website}" maxlength="120" /></dd>
-			</dl>
+			<table class="acp-table no-border">
+				<tr>
+					<td style="width:5%"></td>
+					<td>
+						<dl>
+							<dt><label for="nickname">{lang values="users|nickname"}</label></dt>
+							<dd><input type="text" name="form[nickname]" id="nickname" value="{$form.nickname}" maxlength="30" /></dd>
+						</dl>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" name="form[realname_display]" id="realname_display" value="1" class="checkbox"{$checked.realname} />
+					</td>
+					<td>
+						<dl>
+							<dt><label for="realname">{lang values="users|realname"}</label></dt>
+							<dd><input type="text" name="form[realname]" id="realname" value="{$form.realname}" maxlength="80" /></dd>
+						</dl>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" name="form[mail_display]" id="mail_display" value="1" class="checkbox"{$checked.mail} />
+					</td>
+					<td>
+						<dl>
+							<dt><label for="mail">{lang values="common|email"}</label></dt>
+							<dd><input type="text" name="form[mail]" id="mail" value="{$form.mail}" maxlength="120" /></dd>
+						</dl>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" name="form[website_display]" id="website_display" value="1" class="checkbox"{$checked.website} />
+					</td>
+					<td>
+						<dl>
+							<dt><label for="website">{lang values="common|website"}</label></dt>
+							<dd><input type="text" name="form[website]" id="website" value="{$form.website}" maxlength="120" /></dd>
+						</dl>
+					</td>
+				</tr>
+			</table>
 		</div>
 		<div id="tabs-2" class="ui-tabs-hide">
 			<dl>

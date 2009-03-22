@@ -44,9 +44,9 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 
 			$update_values = array(
 				'nickname' => $db->escape($form['nickname']),
-				'realname' => $db->escape($form['realname']),
-				'mail' => $form['mail'],
-				'website' => $db->escape($form['website'], 2),
+				'realname' => $db->escape($form['realname']) . ':' . (isset($form['realname_display']) ? '1' : '0'),
+				'mail' => $form['mail'] . ':' . (isset($form['mail_display']) ? '1' : '0'),
+				'website' => $db->escape($form['website'], 2) . ':' . (isset($form['website_display']) ? '1' : '0'),
 			);
 			if (is_array($new_pwd_sql)) {
 				$update_values = array_merge($update_values, $new_pwd_sql);
@@ -62,11 +62,14 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$user = $db->select('nickname, realname, mail, website', 'users', 'id = \'' . USER_ID . '\'');
+		$user = $auth->getUserInfo();
 
-		$user[0]['website'] = $db->escape($user[0]['website'], 3);
+		$checked['realname'] = selectEntry('realname_display', 1, $user['realname_display'], 'checked');
+		$checked['mail'] = selectEntry('mail_display', 1, $user['mail_display'], 'checked');
+		$checked['website'] = selectEntry('website_display', 1, $user['website_display'], 'checked');
+		$tpl->assign('checked', $checked);
 
-		$tpl->assign('form', isset($form) ? $form : $user[0]);
+		$tpl->assign('form', isset($form) ? $form : $user);
 
 		$content = $tpl->fetch('users/edit_profile.html');
 	}

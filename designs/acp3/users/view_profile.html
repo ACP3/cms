@@ -4,17 +4,19 @@
 		<dt><strong>{lang values="users|nickname"}</strong></dt>
 		<dd>{$user.nickname}</dd>
 	</dl>
-{if !empty($user.realname)}
+{if $user.realname != '' && $user.realname_display == 1}
 	<dl>
 		<dt><strong>{lang values="users|realname"}</strong></dt>
 		<dd>{$user.realname}</dd>
 	</dl>
 {/if}
+{if $user.mail_display == 1}
 	<dl>
 		<dt><strong>{lang values="common|email"}</strong></dt>
 		<dd><a href="mailto:{$user.mail}" title="{lang values="users|send_email"}">{$user.mail}</a></dd>
 	</dl>
-{if !empty($user.website)}
+{/if}
+{if $user.website != '' && $user.website_display == 1}
 	<dl>
 		<dt><strong>{lang values="common|website"}</strong></dt>
 		<dd><a href="{$user.website}" onclick="window.open(this.href); return false" title="{lang values="users|visit_website"}">{$user.website}</a></dd>
