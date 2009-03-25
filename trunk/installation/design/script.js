@@ -6,6 +6,7 @@ jQuery(function($) {
 	});
 
 	// Tabelle mit den SQL Abfragen aufklappen/zuklappen
+	$('#queries').hide();
 	$('#queries-link').click(function() {
 		$('#queries').slideToggle('fast');
 		return false;

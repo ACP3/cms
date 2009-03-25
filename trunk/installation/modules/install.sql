@@ -22,7 +22,7 @@ CREATE TABLE `{pre}comments` (
 	`message` TEXT NOT NULL,
 	`module` VARCHAR(120) NOT NULL,
 	`entry_id` INT(10) UNSIGNED NOT NULL,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`), INDEX `foreign_entry_id` (`entry_id`)
 ) {engine};
 
 CREATE TABLE `{pre}emoticons` (
@@ -42,7 +42,7 @@ CREATE TABLE `{pre}files` (
 	`size` VARCHAR(20) NOT NULL,
 	`link_title` VARCHAR(120) NOT NULL,
 	`text` TEXT NOT NULL,
-	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`link_title`, `text`)
+	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`link_title`, `text`), INDEX `foreign_category_id` (`category_id`)
 ) {engine};
 
 CREATE TABLE `{pre}gallery` ( 
@@ -59,7 +59,7 @@ CREATE TABLE `{pre}gallery_pictures` (
 	`gallery_id` INT(10) UNSIGNED NOT NULL,
 	`file` VARCHAR(120) NOT NULL,
 	`description` TEXT NOT NULL,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`), INDEX `foreign_gallery_id` (`gallery_id`)
 ) {engine};
 
 CREATE TABLE `{pre}guestbook` ( 
@@ -71,7 +71,7 @@ CREATE TABLE `{pre}guestbook` (
 	`message` TEXT NOT NULL,
 	`website` VARCHAR(120) NOT NULL,
 	`mail` VARCHAR(120) NOT NULL,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`), INDEX `foreign_user_id` (`user_id`)
 ) {engine};
 
 CREATE TABLE `{pre}menu_items` (
@@ -87,7 +87,7 @@ CREATE TABLE `{pre}menu_items` (
 	`title` VARCHAR(120) NOT NULL,
 	`uri` VARCHAR(120) NOT NULL,
 	`target` TINYINT(1) UNSIGNED NOT NULL,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`), INDEX `foreign_block_id` (`block_id`)
 ) {engine};
 
 CREATE TABLE `{pre}menu_items_blocks` (
@@ -109,7 +109,7 @@ CREATE TABLE `{pre}news` (
 	`uri` VARCHAR(120) NOT NULL,
 	`target` TINYINT(1) UNSIGNED NOT NULL,
 	`link_title` VARCHAR(120) NOT NULL,
-	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`headline`,`text`)
+	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`headline`,`text`), INDEX `foreign_category_id` (`category_id`)
 ) {engine};
 
 CREATE TABLE `{pre}newsletter_accounts` ( 
@@ -132,7 +132,7 @@ CREATE TABLE `{pre}poll_answers` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`text` VARCHAR(120) NOT NULL,
 	`poll_id` INT(10) UNSIGNED NOT NULL,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`), INDEX `foreign_poll_id` (`poll_id`)
 ) {engine};
 
 CREATE TABLE `{pre}poll_question` ( 
