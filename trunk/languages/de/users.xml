@@ -25,6 +25,10 @@
 		<message>Gelöschter Benutzer</message>
 	</item>
 	<item>
+		<name>display_profile_field</name>
+		<message>Ein Profilfeld kann versteckt werden, indem der Haken links neben dem jeweiligen Feld entfernt wird.</message>
+	</item>
+	<item>
 		<name>drafts</name>
 		<message>Entwürfe</message>
 	</item>
