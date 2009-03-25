@@ -11,7 +11,10 @@ if (!defined('IN_ACP3'))
 	exit;
 
 if (modules::check('categories', 'functions') == 1) {
-	$tpl->assign('categories', getCategoriesCache('files'));
+	$categories = getCategoriesCache('files');
+	if (count($categories) > 0) {
+		$tpl->assign('categories', $categories);
+	}
 }
 
 $content = $tpl->fetch('files/list.html');
