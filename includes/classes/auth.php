@@ -66,16 +66,31 @@ class auth
 
 			if (empty($user_info[$user_id])) {
 				global $db;
-				$info = $db->select('nickname, access, realname, mail, website, time_zone, dst, language, draft', 'users', 'id = \'' . $user_id . '\'');
+				$info = $db->select('nickname, access, realname, gender, birthday, birthday_format, mail, website, icq, msn, skype, time_zone, dst, language, draft', 'users', 'id = \'' . $user_id . '\'');
 				$pos = strrpos($info[0]['realname'], ':');
 				$info[0]['realname_display'] = substr($info[0]['realname'], $pos + 1);
 				$info[0]['realname'] = substr($info[0]['realname'], 0, $pos);
+				$pos = strrpos($info[0]['gender'], ':');
+				$info[0]['gender_display'] = substr($info[0]['gender'], $pos + 1);
+				$info[0]['gender'] = substr($info[0]['gender'], 0, $pos);
+				$pos = strrpos($info[0]['birthday'], ':');
+				$info[0]['birthday_display'] = substr($info[0]['birthday'], $pos + 1);
+				$info[0]['birthday'] = substr($info[0]['birthday'], 0, $pos);
 				$pos = strrpos($info[0]['mail'], ':');
 				$info[0]['mail_display'] = substr($info[0]['mail'], $pos + 1);
 				$info[0]['mail'] = substr($info[0]['mail'], 0, $pos);
 				$pos = strrpos($info[0]['website'], ':');
 				$info[0]['website_display'] = substr($info[0]['website'], $pos + 1);
 				$info[0]['website'] = $db->escape(substr($info[0]['website'], 0, $pos), 3);
+				$pos = strrpos($info[0]['icq'], ':');
+				$info[0]['icq_display'] = substr($info[0]['icq'], $pos + 1);
+				$info[0]['icq'] = substr($info[0]['icq'], 0, $pos);
+				$pos = strrpos($info[0]['msn'], ':');
+				$info[0]['msn_display'] = substr($info[0]['msn'], $pos + 1);
+				$info[0]['msn'] = substr($info[0]['msn'], 0, $pos);
+				$pos = strrpos($info[0]['skype'], ':');
+				$info[0]['skype_display'] = substr($info[0]['skype'], $pos + 1);
+				$info[0]['skype'] = substr($info[0]['skype'], 0, $pos);
 				$user_info[$user_id] = $info[0];
 			}
 

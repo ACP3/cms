@@ -5,6 +5,7 @@
 	<div id="tabs">
 		<ul>
 			<li><a href="#tabs-1">{lang values="common|general_statements"}</a></li>
+			<li><a href="#tabs-2">{lang values="users|contact"}</a></li>
 			<li><a href="#tabs-2">{lang values="users|pwd"}</a></li>
 		</ul>
 		<div id="tabs-1">
@@ -34,29 +35,65 @@
 				</tr>
 				<tr>
 					<td>
-						<input type="checkbox" name="form[mail_display]" id="mail_display" value="1" class="checkbox"{$checked.mail} />
+						<input type="checkbox" name="form[gender_display]" id="gender_display" value="1" class="checkbox"{$checked.gender} />
 					</td>
 					<td>
 						<dl>
-							<dt><label for="mail">{lang values="common|email"}</label></dt>
-							<dd><input type="text" name="form[mail]" id="mail" value="{$form.mail}" maxlength="120" /></dd>
+							<dt><label for="gender">{lang values="users|gender"}</label></dt>
+							<dd>
+								<select name="form[gender]" id="gender">
+{foreach from=$gender item=row}
+									<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{/foreach}
+								</select>
+							</dd>
 						</dl>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<input type="checkbox" name="form[website_display]" id="website_display" value="1" class="checkbox"{$checked.website} />
+						<input type="checkbox" name="form[birthday_display]" id="birthday_display" value="1" class="checkbox"{$checked.birthday} />
 					</td>
 					<td>
 						<dl>
-							<dt><label for="website">{lang values="common|website"}</label></dt>
-							<dd><input type="text" name="form[website]" id="website" value="{$form.website}" maxlength="120" /></dd>
+							<dt><label for="birthday">{lang values="users|birthday"}</label></dt>
+							<dd>
+								{$birthday_datepicker}
+								<div>
+{foreach from=$birthday_format item=row}
+									<label for="{$row.name}">
+										<input type="radio" name="form[birthday_format]" id="{$row.name}" value="{$row.value}" class="checkbox"{$row.checked} />
+										{$row.lang}
+									</label>
+{/foreach}
+								</div>
+							</dd>
 						</dl>
 					</td>
 				</tr>
 			</table>
 		</div>
 		<div id="tabs-2" class="ui-tabs-hide">
+			<p>
+				{lang values="users|display_profile_field"}
+			</p>
+			<table class="acp-table no-border">
+{foreach from=$contact item=row}
+				<tr>
+					<td>
+						<input type="checkbox" name="form[{$row.name}_display]" id="{$row.name}_display" value="1" class="checkbox"{$row.checked} />
+					</td>
+					<td>
+						<dl>
+							<dt><label for="{$row.name}">{$row.lang}</label></dt>
+							<dd><input type="text" name="form[{$row.name}]" id="{$row.name}" value="{$row.value}" maxlength="{$row.maxlength}" /></dd>
+						</dl>
+					</td>
+				</tr>
+{/foreach}
+			</table>
+		</div>
+		<div id="tabs-3" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="new_pwd">{lang values="users|new_pwd"}</label></dt>
 				<dd><input type="password" name="form[new_pwd]" id="new_pwd" /></dd>
