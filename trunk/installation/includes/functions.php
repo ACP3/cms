@@ -5,21 +5,6 @@
  * @author Goratsch Webdesign
  * @package ACP3 Installer
  */
-// Variablen escapen
-function mask($var, $mode = 1)
-{
-	switch ($mode) {
-		case 1:
-			return htmlspecialchars($var, ENT_QUOTES, 'UTF-8');
-			break;
-		case 2:
-			return addslashes($var);
-			break;
-		case 3:
-			return stripslashes($var);
-			break;
-	}
-}
 // Funktion zum Salzen von Passwörtern
 function salt($str_length)
 {
