@@ -38,14 +38,6 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
-			$new_pwd_sql = null;
-			// Neues Passwort
-			if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat'])) {
-				$salt = salt(12);
-				$new_pwd = sha1($salt . sha1($form['new_pwd']));
-				$new_pwd_sql = array('pwd' => $new_pwd . ':' . $salt);
-			}
-
 			$update_values = array(
 				'nickname' => $db->escape($form['nickname']),
 				'access' => $form['access'],
@@ -56,8 +48,12 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 				'dst' => $form['dst'],
 				'language' => $db->escape($form['language'], 2),
 			);
-			if (is_array($new_pwd_sql)) {
-				$update_values = array_merge($update_values, $new_pwd_sql);
+
+			// Neues Passwort
+			if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat'])) {
+				$salt = salt(12);
+				$new_pwd = sha1($salt . sha1($form['new_pwd']));
+				$update_values['pwd'] = $new_pwd . ':' . $salt;
 			}
 
 			$bool = $db->update('users', $update_values, 'id = \'' . $uri->id . '\'');

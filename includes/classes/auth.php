@@ -65,7 +65,8 @@ class auth
 			static $user_info = array();
 
 			if (empty($user_info[$user_id])) {
-				global $db;
+				global $auth, $db, $lang;
+
 				$info = $db->select('nickname, access, realname, gender, birthday, birthday_format, mail, website, icq, msn, skype, time_zone, dst, language, draft', 'users', 'id = \'' . $user_id . '\'');
 				$pos = strrpos($info[0]['realname'], ':');
 				$info[0]['realname_display'] = substr($info[0]['realname'], $pos + 1);

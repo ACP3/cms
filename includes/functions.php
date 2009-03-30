@@ -85,14 +85,14 @@ function comboBox($text, $forward = 0, $backward = 0)
  * 	Start- bzw. Enddatum
  * @param integer $value
  * 	Die Zeitstempel des Eintrages
+ * @paran string $format
+ *	Das anzuzeigende Format im Textfeld
  * @return string
  */
-function datepicker($name, $value = '')
+function datepicker($name, $value = '', $format = 'Y-m-d H:i')
 {
 	global $date, $tpl;
 
-	// Standarddatumsformat
-	$format = 'Y-m-d H:i';
 	if (!empty($_POST['form'][$name])) {
 		$input = $_POST['form'][$name];
 	} elseif (validate::isNumber($value)) {
