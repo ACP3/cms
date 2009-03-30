@@ -16,6 +16,24 @@
 class validate
 {
 	/**
+	 * Überprüft einen Geburtstag auf seine Gültigkeit
+	 *
+	 * @param string $var
+	 *  Das zu überprüfende Datum
+	 * @param integer $format
+	 * @return boolean
+	 */
+	public static function birthday($var, $format)
+	{
+		$regex = '/^(\d{4})-(\d{2})-(\d{2})$/';
+		if (preg_match($regex, $var, $matches)) {
+			if (checkdate($matches[2], $matches[3], $matches[1]) && ($format == 1 || $format == 2)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	/**
 	 * Überpürft, ob der eingegebene Captcha mit dem generierten übereinstimmt
 	 *
 	 * @param string $input
@@ -84,6 +102,30 @@ class validate
 		return preg_match($pattern, $var);
 	}
 	/**
+	 * Bestimmung des Geschlechts
+	 *  1 = Keine Angabe
+	 *  2 = Weiblich
+	 *  3 = Männlich
+	 *
+	 * @param string, integer $var
+	 *  Die  zu überprüfende Variable
+	 * @return boolean
+	 */
+	public static function gender($var)
+	{
+		return $var = 1 || $var == 2 || $var == 3 ? true : false;
+	}
+	/**
+	 * Überprüft, ob eine gültige ICQ-Nummer eingegeben wurde
+	 *
+	 * @param integer $var
+	 * @return boolean
+	 */
+	public static function icq($var)
+	{
+		return preg_match('/^(\d{7,9})$/', $var);
+	}
+	/**
 	 * Überprüft, ob die übergebene URI dem Format des ACP3 entspricht
 	 *
 	 * @param mixed $var
@@ -91,7 +133,7 @@ class validate
 	 */
 	public static function internalURI($var)
 	{
-		return preg_match('/^(?i:[a-z0-9_\-]+\/){2,}$/', $var);
+		return preg_match('/^(?i:[a-z\d_\-]+\/){2,}$/', $var);
 	}
 	/**
 	 * Überprüft, ob ein gültiger MD5-Hash übergeben wurde
@@ -101,7 +143,7 @@ class validate
 	 */
 	public static function isMD5($string)
 	{
-		return is_string($string) && preg_match('/^[a-f0-9]+$/', $string) && strlen($string) == 32 ? true : false;
+		return is_string($string) && preg_match('/^[a-f\d]+$/', $string) && strlen($string) == 32 ? true : false;
  	}
 	/**
 	 * Überprüft eine Variable, ob diese nur aus Ziffern besteht
@@ -138,6 +180,15 @@ class validate
 			return $bool;
 		}
 		return false;
+	}
+	/**
+	 * Überprüft eine Skype Nummer auf ihre Gültigkeit
+	 *
+	 * @param string $var
+	 */
+	public static function skype($var)
+	{
+		
 	}
 }
 ?>

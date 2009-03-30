@@ -24,32 +24,44 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 			$errors[] = $lang->t('common', 'name_to_short');
 		if (userNameExists($form['nickname'], USER_ID))
 			$errors[] = $lang->t('users', 'user_name_already_exists');
+		if (!validate::gender($form['gender']))
+			$errors[] = $lang->t('users', 'select_gender');
+		if (!empty($form['birthday']) && !validate::birthday($form['birthday'], $form['birthday_format']))
+			$errors[] = $lang->t('users', 'invalid_birthday');
 		if (!validate::email($form['mail']))
 			$errors[] = $lang->t('common', 'wrong_email_format');
 		if (userEmailExists($form['mail'], USER_ID))
 			$errors[] = $lang->t('users', 'user_email_already_exists');
+		if (!empty($form['icq']) && !validate::icq($form['icq']))
+			$errors[] = $lang->t('users', 'invalid_icq_number');
+		if (!empty($form['msn']) && !validate::email($form['msn']))
+			$errors[] = $lang->t('users', 'invalid_msn_account');
+		if (!empty($form['skype']) && !validate::skype('users', 'skype'))
+			$errors[] = $lang->t('users', 'invalid_skype_account');
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
-			$new_pwd_sql = null;
+			$update_values = array(
+				'nickname' => $db->escape($form['nickname']),
+				'realname' => $db->escape($form['realname']) . ':' . (isset($form['realname_display']) ? '1' : '0'),
+				'gender' => $form['gender'] . ':' . (isset($form['gender_display']) ? '1' : '0'),
+				'birthday' => $date->timestamp($form['birthday']) . ':' . (isset($form['birthday_display']) ? '1' : '0'),
+				'birthday_format' => $form['birthday_format'],
+				'mail' => $form['mail'] . ':' . (isset($form['mail_display']) ? '1' : '0'),
+				'website' => $db->escape($form['website'], 2) . ':' . (isset($form['website_display']) ? '1' : '0'),
+				'icq' => ((int) $form['icq']) . ':' . (isset($form['icq_display']) ? '1' : '0'),
+				'msn' => $db->escape($form['msn'], 2) . ':' . (isset($form['msn_display']) ? '1' : '0'),
+				'skype' => $db->escape($form['skype'], 2) . ':' . (isset($form['skype_display']) ? '1' : '0'),
+			);
+
 			// Neues Passwort
 			if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat'])) {
 				$salt = salt(12);
 				$new_pwd = sha1($salt . sha1($form['new_pwd']));
-				$new_pwd_sql = array('pwd' => $new_pwd . ':' . $salt);
-			}
-
-			$update_values = array(
-				'nickname' => $db->escape($form['nickname']),
-				'realname' => $db->escape($form['realname']) . ':' . (isset($form['realname_display']) ? '1' : '0'),
-				'mail' => $form['mail'] . ':' . (isset($form['mail_display']) ? '1' : '0'),
-				'website' => $db->escape($form['website'], 2) . ':' . (isset($form['website_display']) ? '1' : '0'),
-			);
-			if (is_array($new_pwd_sql)) {
-				$update_values = array_merge($update_values, $new_pwd_sql);
+				$update_values['pwd'] = $new_pwd . ':' . $salt;
 			}
 
 			$bool = $db->update('users', $update_values, 'id = \'' . USER_ID . '\'');
@@ -83,7 +95,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 		$tpl->assign('gender', $gender);
 
 		// Geburtstag
-		$tpl->assign('birthday_datepicker', datepicker('birthday', $user['birthday']));
+		$tpl->assign('birthday_datepicker', datepicker('birthday', $user['birthday'], 'Y-m-d'));
 		$birthday_format = array();
 		$birthday_format[0]['name'] = 'full';
 		$birthday_format[0]['value'] = '1';

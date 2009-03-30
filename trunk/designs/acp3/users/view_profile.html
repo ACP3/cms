@@ -10,10 +10,45 @@
 		<dd>{$user.realname}</dd>
 	</dl>
 {/if}
+{if $user.gender != '1' && $user.gender_display == 1}
+	<dl>
+		<dt><strong>{lang values="users|gender"}</strong></dt>
+		<dd>{$user.gender}</dd>
+	</dl>
+{/if}
+{if $user.birthday != '' && $user.birthday_display == 1}
+	<dl>
+		<dt><strong>{lang values="users|birthday"}</strong></dt>
+		<dd>{$user.birthday}</dd>
+	</dl>
+{/if}
 {if $user.mail_display == 1}
 	<dl>
 		<dt><strong>{lang values="common|email"}</strong></dt>
 		<dd><a href="mailto:{$user.mail}" title="{lang values="users|send_email"}">{$user.mail}</a></dd>
+	</dl>
+{/if}
+{if !empty($user.icq) && $user.icq_display == 1}
+	<dl>
+		<dt><strong>{lang values="users|icq"}</strong></dt>
+		<dd>
+			<a href="http://www.icq.com/{$user.icq}" onclick="window.open(this.href); return false">
+				<img src="http://web.icq.com/whitepages/online?icq={$user.icq}&amp;img=27" alt="" />
+				{$user.icq}
+			</a>
+		</dd>
+	</dl>
+{/if}
+{if $user.msn != '' && $user.msn_display == 1}
+	<dl>
+		<dt><strong>{lang values="users|msn"}</strong></dt>
+		<dd><a href="#" onclick="window.open(this.href); return false">{$user.msn}</a></dd>
+	</dl>
+{/if}
+{if $user.skype != '' && $user.skype_display == 1}
+	<dl>
+		<dt><strong>{lang values="users|skype"}</strong></dt>
+		<dd><a href="#" onclick="window.open(this.href); return false">{$user.skype}</a></dd>
 	</dl>
 {/if}
 {if $user.website != '' && $user.website_display == 1}

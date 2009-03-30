@@ -13,6 +13,22 @@
 		<message>Der Administrator kann nicht gelöscht werden.</message>
 	</item>
 	<item>
+		<name>birthday</name>
+		<message>Geburtstag</message>
+	</item>
+	<item>
+		<name>birthday_display_completely</name>
+		<message>Geburtstag vollständig anzeigen</message>
+	</item>
+	<item>
+		<name>birthday_hide_year</name>
+		<message>Geburtsjahr verstecken</message>
+	</item>
+	<item>
+		<name>contact</name>
+		<message>Kontakt</message>
+	</item>
+	<item>
 		<name>create</name>
 		<message>Neuen Benutzer erstellen</message>
 	</item>
@@ -43,6 +59,10 @@
 	<item>
 		<name>edit_settings</name>
 		<message>Einstellungen bearbeiten</message>
+	</item>
+	<item>
+		<name>female</name>
+		<message>Weiblich</message>
 	</item>
 	<item>
 		<name>forgot_pwd</name>
@@ -77,8 +97,16 @@
 		<message>Das neue Passwort wurde erfolgreich an Ihre E-Mail-Adresse versendet.</message>
 	</item>
 	<item>
+		<name>gender</name>
+		<message>Geschlecht</message>
+	</item>
+	<item>
 		<name>home</name>
 		<message>Kontrollzentrum</message>
+	</item>
+	<item>
+		<name>icq</name>
+		<message>ICQ-Nummer</message>
 	</item>
 	<item>
 		<name>language</name>
@@ -89,8 +117,16 @@
 		<message>Login</message>
 	</item>
 	<item>
+		<name>male</name>
+		<message>Männlich</message>
+	</item>
+	<item>
 		<name>mod_description</name>
 		<message>Mit diesem Modul können die Benutzer verwaltet werden.</message>
+	</item>
+	<item>
+		<name>msn</name>
+		<message>MSN</message>
 	</item>
 	<item>
 		<name>new_pwd</name>
@@ -170,6 +206,10 @@
 	<item>
 		<name>sign_off</name>
 		<message>Abmelden</message>
+	</item>
+	<item>
+		<name>skype</name>
+		<message>Skype</message>
 	</item>
 	<item>
 		<name>type_in_nickname_or_email</name>
