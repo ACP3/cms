@@ -26,10 +26,10 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 
 		// Überprüfen, ob der eingeloggte User schon abgestimmt hat
 		if ($auth->isUser()) {
-			$query = $db->select('COUNT(poll_id)', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND user_id = \'' . USER_ID . '\'');
+			$query = $db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND user_id = \'' . USER_ID . '\'');
 		// Überprüfung für Gäste
 		} else {
-			$query = $db->select('COUNT(poll_id)', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND ip = \'' . $ip . '\'');
+			$query = $db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND ip = \'' . $ip . '\'');
 		}
 
 		if ($query == 0) {

@@ -76,6 +76,8 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	} else {
 		$answers[0]['number'] = 0;
 		$answers[0]['value'] = '';
+		$answers[1]['number'] = 1;
+		$answers[1]['value'] = '';
 	}
 
 	// Übergabe der Daten an Smarty

@@ -27,7 +27,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 		}
 		if (!isset($check_answers))
 			$errors[] = $lang->t('polls', 'type_in_answer');
-		if ($j == count($form['answers']))
+		if (count($form['answers']) - $j < 2)
 			$errors[] = $lang->t('polls', 'can_not_delete_all_answers');
 
 		if (isset($errors)) {
