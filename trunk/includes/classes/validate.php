@@ -123,7 +123,7 @@ class validate
 	 */
 	public static function icq($var)
 	{
-		return preg_match('/^(\d{7,9})$/', $var);
+		return preg_match('/^(\d{6,9})$/', $var);
 	}
 	/**
 	 * Überprüft, ob die übergebene URI dem Format des ACP3 entspricht
@@ -180,15 +180,6 @@ class validate
 			return $bool;
 		}
 		return false;
-	}
-	/**
-	 * Überprüft eine Skype Nummer auf ihre Gültigkeit
-	 *
-	 * @param string $var
-	 */
-	public static function skype($var)
-	{
-		
 	}
 }
 ?>
