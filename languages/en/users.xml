@@ -109,6 +109,14 @@
 		<message>ICQ-Number</message>
 	</item>
 	<item>
+		<name>invalid_icq_number</name>
+		<message>Please type in a valid ICQ number</message>
+	</item>
+	<item>
+		<name>invalid_msn_account</name>
+		<message>Please MSN-Account you have typed in, does not match a valid e-mail address</message>
+	</item>
+	<item>
 		<name>language</name>
 		<message>Language</message>
 	</item>

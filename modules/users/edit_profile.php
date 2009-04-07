@@ -36,8 +36,6 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 			$errors[] = $lang->t('users', 'invalid_icq_number');
 		if (!empty($form['msn']) && !validate::email($form['msn']))
 			$errors[] = $lang->t('users', 'invalid_msn_account');
-		if (!empty($form['skype']) && !validate::skype('users', 'skype'))
-			$errors[] = $lang->t('users', 'invalid_skype_account');
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
 
@@ -54,7 +52,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 				'website' => $db->escape($form['website'], 2) . ':' . (isset($form['website_display']) ? '1' : '0'),
 				'icq' => ((int) $form['icq']) . ':' . (isset($form['icq_display']) ? '1' : '0'),
 				'msn' => $db->escape($form['msn'], 2) . ':' . (isset($form['msn_display']) ? '1' : '0'),
-				'skype' => $db->escape($form['skype'], 2) . ':' . (isset($form['skype_display']) ? '1' : '0'),
+				'skype' => $db->escape($form['skype']) . ':' . (isset($form['skype_display']) ? '1' : '0'),
 			);
 
 			// Neues Passwort

@@ -78,7 +78,7 @@ class date
 		if (!empty($value) && validate::date($value)) {
 			return strtotime($value, $this->timestamp());
 		}
-		return gmdate('U', time());
+		return gmdate('U');
 	}
 }
 ?>

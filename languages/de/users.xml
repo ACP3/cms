@@ -109,6 +109,14 @@
 		<message>ICQ-Nummer</message>
 	</item>
 	<item>
+		<name>invalid_icq_number</name>
+		<message>Sie haben eine ungültige ICQ-Nummer eingegeben</message>
+	</item>
+	<item>
+		<name>invalid_msn_account</name>
+		<message>Der eingegebene Name ihres MSN-Kontos entspricht nicht dem Format einer E-Mail-Adresse</message>
+	</item>
+	<item>
 		<name>language</name>
 		<message>Sprache</message>
 	</item>
