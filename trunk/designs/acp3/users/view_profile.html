@@ -10,7 +10,7 @@
 		<dd>{$user.realname}</dd>
 	</dl>
 {/if}
-{if $user.gender != '1' && $user.gender_display == 1}
+{if $user.gender_display == 1}
 	<dl>
 		<dt><strong>{lang values="users|gender"}</strong></dt>
 		<dd>{$user.gender}</dd>
