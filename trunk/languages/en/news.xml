@@ -9,10 +9,6 @@
 		<message>Additional hpyerlink</message>
 	</item>
 	<item>
-		<name>allow_comments</name>
-		<message>Allow comments</message>
-	</item>
-	<item>
 		<name>complete_additional_hyperlink_statements</name>
 		<message>Please complete the statements for the additional hyperlink</message>
 	</item>

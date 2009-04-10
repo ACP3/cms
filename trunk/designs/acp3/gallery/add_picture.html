@@ -9,6 +9,21 @@
 			<dd><input type="file" name="file" id="file" /></dd>
 			<dt><label for="description">{lang values="common|description"}</label></dt>
 			<dd>{wysiwyg name="description" value="`$form.description`" height="150" toolbar="simple"}</dd>
+{if isset($options)}
+			<dt><label for="comments">{lang values="common|options"}</label></dt>
+			<dd>
+				<ul style="margin:0 20px;list-style:none">
+{foreach from=$options item=row}
+					<li>
+						<label for="{$row.name}">
+							<input type="checkbox" name="form[{$row.name}]" id="{$row.name}" value="1" class="checkbox"{$row.checked} />
+							{$row.lang}
+						</label>
+					</li>
+{/foreach}
+				</ul>
+			</dd>
+{/if}
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
