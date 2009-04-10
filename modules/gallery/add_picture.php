@@ -41,7 +41,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 				'pic' => !empty($picNum) ? $picNum[0]['pic'] + 1 : 1,
 				'gallery_id' => $uri->id,
 				'file' => $result['name'],
-				'description' => $db->escape($form['description'], 2)
+				'description' => $db->escape($form['description'], 2),
+				'comments' => isset($form['comments']) ? 1 : 0,
 			);
 
 			$bool = $db->insert('gallery_pictures', $insert_values);
@@ -53,6 +54,14 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$galleries = $db->select('id, start, name', 'gallery', 0, 'start DESC');
 		$c_galleries = count($galleries);
+
+		if (modules::check('comments', 'functions')) {
+			$options = array();
+			$options[0]['name'] = 'comments';
+			$options[0]['checked'] = selectEntry('comments', '1', '0', 'checked');
+			$options[0]['lang'] = $lang->t('common', 'allow_comments');
+			$tpl->assign('options', $options);
+		}
 
 		for ($i = 0; $i < $c_galleries; ++$i) {
 			$galleries[$i]['selected'] = selectEntry('gallery', $galleries[$i]['id'], $uri->id);

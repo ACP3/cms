@@ -42,6 +42,7 @@ CREATE TABLE `{pre}files` (
 	`size` VARCHAR(20) NOT NULL,
 	`link_title` VARCHAR(120) NOT NULL,
 	`text` TEXT NOT NULL,
+	`comments` TINYINT(1) UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`link_title`, `text`), INDEX `foreign_category_id` (`category_id`)
 ) {engine};
 
@@ -59,6 +60,7 @@ CREATE TABLE `{pre}gallery_pictures` (
 	`gallery_id` INT(10) UNSIGNED NOT NULL,
 	`file` VARCHAR(120) NOT NULL,
 	`description` TEXT NOT NULL,
+	`comments` TINYINT(1) UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`), INDEX `foreign_gallery_id` (`gallery_id`)
 ) {engine};
 

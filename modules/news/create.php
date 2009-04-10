@@ -66,14 +66,14 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$i = 0;
 		if ($settings['readmore'] == 1) {
 			$options[$i]['name'] = 'readmore';
-			$options[$i]['checked'] = selectEntry('readmore', '1', '1', 'checked');
+			$options[$i]['checked'] = selectEntry('readmore', '1', '0', 'checked');
 			$options[$i]['lang'] = $lang->t('news', 'activate_readmore');
 			$i++;
 		}
-		if ($settings['comments'] == 1) {
+		if ($settings['comments'] == 1 && modules::check('comments', 'functions')) {
 			$options[$i]['name'] = 'comments';
-			$options[$i]['checked'] = selectEntry('comments', '1', '1', 'checked');
-			$options[$i]['lang'] = $lang->t('news', 'allow_comments');
+			$options[$i]['checked'] = selectEntry('comments', '1', '0', 'checked');
+			$options[$i]['lang'] = $lang->t('common', 'allow_comments');
 		}
 		$tpl->assign('options', $options);
 	}

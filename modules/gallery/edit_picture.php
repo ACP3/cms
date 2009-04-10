@@ -11,7 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id = \'' . $uri->id . '\'') == '1') {
-	$picture = $db->select('p.gallery_id, p.file, p.description, g.name AS gallery_name', 'gallery_pictures AS p, ' . CONFIG_DB_PRE . 'gallery AS g', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
+	$picture = $db->select('p.gallery_id, p.file, p.description, p.comments, g.name AS gallery_name', 'gallery_pictures AS p, ' . CONFIG_DB_PRE . 'gallery AS g', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
 
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
 	breadcrumb::assign($lang->t('gallery', 'gallery'), uri('acp/gallery'));
@@ -41,6 +41,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 
 			$update_values = array(
 				'description' => $db->escape($form['description'], 2),
+				'comments' => isset($form['comments']) ? 1 : 0,
 			);
 			if (is_array($new_file_sql)) {
 				$old_file = $db->select('file', 'gallery_pictures', 'id = \'' . $uri->id . '\'');
@@ -56,6 +57,14 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+		if (modules::check('comments', 'functions')) {
+			$options = array();
+			$options[0]['name'] = 'comments';
+			$options[0]['checked'] = selectEntry('comments', '1', $picture[0]['comments'], 'checked');
+			$options[0]['lang'] = $lang->t('common', 'allow_comments');
+			$tpl->assign('options', $options);
+		}
+
 		$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
 		$tpl->assign('form', isset($form) ? $form : $picture[0]);
 

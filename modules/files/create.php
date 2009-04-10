@@ -57,6 +57,7 @@ if (isset($_POST['submit'])) {
 			'size' => $filesize,
 			'link_title' => $db->escape($form['link_title']),
 			'text' => $db->escape($form['text'], 2),
+			'comments' => isset($form['comments']) ? 1 : 0,
 		);
 
 		$bool = $db->insert('files', $insert_values);
@@ -86,6 +87,14 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	if (modules::check('categories', 'functions') == 1) {
 		include_once ACP3_ROOT . 'modules/categories/functions.php';
 		$tpl->assign('categories', categoriesList('files', '', true));
+	}
+
+	if (modules::check('comments', 'functions')) {
+		$options = array();
+		$options[0]['name'] = 'comments';
+		$options[0]['checked'] = selectEntry('comments', '1', '0', 'checked');
+		$options[0]['lang'] = $lang->t('common', 'allow_comments');
+		$tpl->assign('options', $options);
 	}
 
 	$tpl->assign('checked_external', isset($form['external']) ? ' checked="checked"' : '');

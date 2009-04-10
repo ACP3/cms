@@ -9,6 +9,10 @@
 		<message><![CDATA[The module &quot;%s&quot; is disabled, whereby certain features can be limited.<br />Please enable the module, to resolve this problem.]]></message>
 	</item>
 	<item>
+		<name>allow_comments</name>
+		<message>Allow comments</message>
+	</item>
+	<item>
 		<name>author</name>
 		<message>Author</message>
 	</item>

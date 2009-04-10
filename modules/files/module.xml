@@ -17,7 +17,7 @@
 		<item>
 			<file>create</file>
 			<level>2</level>
-			<include>functions</include>
+			<include>functions,categories/functions</include>
 		</item>
 		<item>
 			<file>details</file>
@@ -31,7 +31,7 @@
 		<item>
 			<file>edit</file>
 			<level>2</level>
-			<include>functions</include>
+			<include>functions,categories/functions</include>
 		</item>
 		<item>
 			<file>files</file>
