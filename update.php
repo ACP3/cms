@@ -50,7 +50,6 @@ $queries = array(
 	'ALTER TABLE `{pre}pages` ADD `display` TINYINT(1) UNSIGNED NOT NULL AFTER `right_id`',
 	'UPDATE `{pre}pages` SET display = 1 WHERE block_id != "0"',
 	'UPDATE `{pre}pages` SET root_id = id WHERE parent = "0"',
-	'ALTER TABLE `{pre}pages` DROP COLUMN `parent`',
 	'ALTER TABLE `{pre}pages` DROP COLUMN `sort`',
 	'ALTER TABLE `{pre}pages` DROP INDEX `title`',
 	'ALTER TABLE `{pre}pages` ADD INDEX `foreign_block_id` (`block_id`)',
@@ -126,9 +125,40 @@ if (count($queries) > 0) {
 		$db->query('ALTER TABLE `' . CONFIG_DB_PRE . 'menu_items` DROP `text`', 3);
 	}
 
+	// Navigationsleiste auf nested sets umstellen
+	function convertToNestedSet($parent_id = 0) {
+		global $db;
+		static $left_id = 1, $right_id = 2;
+
+		$parents = $db->select('id', 'menu_items', 'parent = \'' . $parent_id . '\'');
+		$c_parents = count($parents);
+
+		for ($i = 0; $i < $c_parents; $i++) {
+			if ($db->countRows('id', 'menu_items', 'parent = \'' . $parents[$i]['id'] . '\'') == 0) {
+				$db->update('menu_items', array('left_id' => $left_id, 'right_id' => $right_id), 'id = ' . $parents[$i]['id']);
+			} else {
+				$left_id_buffer = $left_id;
+				$left_id++;
+				$right_id++;
+				convertToNestedSet($parents[$i]['id']);
+				$right_id++;
+				$db->update('menu_items', array('left_id' => $left_id_buffer, 'right_id' => $right_id), 'id = ' . $parents[$i]['id']);
+			}
+
+			$left_id = $right_id + 1;
+			if ($i < $c_parents - 1)
+				$right_id+= 2;
+
+		}
+	}
+
+	convertToNestedSet();
+	$db->query('ALTER TABLE `' . CONFIG_DB_PRE . 'menu_items` DROP `parent`', 3);
+
 	print "\n" . ($bool ? 'Die Datenbank wurde erfolgreich aktualisiert.' : 'Mindestens eine Datenbankänderung konnte nicht durchgeführt werden.') . "\n";
 	print "\n----------------------------\n\n";
 }
+
 
 // Konfigurationsdatei aktualisieren
 $config = array(
