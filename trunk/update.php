@@ -12,6 +12,9 @@ require ACP3_ROOT . 'includes/classes/db.php';
 
 $queries = array(
 	'ALTER TABLE `{pre}access` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
+	'UPDATE `{pre}access` SET modules = "users:2,feeds:2,files:2,emoticons:2,errors:2,gallery:2,guestbook:2,categories:2,comments:2,contact:2,menu_items:2,news:2,newsletter:2,static_pages:2,search:2,system:2,polls:2,access:2,acp:2,captcha:2" WHERE id = 1',
+	'UPDATE `{pre}access` SET modules = "users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:1,categories:1,comments:1,contact:1,menu_items:1,news:1,newsletter:1,static_pages:1,search:1,system:0,polls:1,access:0,acp:0,captcha:1" WHERE id = 2',
+	'UPDATE `{pre}access` SET modules = "users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:1,categories:1,comments:1,contact:1,menu_items:1,news:1,newsletter:1,static_pages:1,search:1,system:0,polls:1,access:0,acp:0,captcha:1" WHERE id = 3',
 	'ALTER TABLE `{pre}categories` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 	'ALTER TABLE `{pre}comments` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 	'ALTER TABLE `{pre}comments` CHANGE `user_id` `user_id` INT(10) UNSIGNED NOT NULL',
@@ -97,6 +100,8 @@ if (count($queries) > 0) {
 	$engine = 'ENGINE=MyISAM';
 	$charset = 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
 
+	$db->link->beginTransaction();
+
 	foreach ($queries as $row) {
 		$row = str_replace(array('{pre}', '{engine}', '{charset}'), array(CONFIG_DB_PRE, $engine, $charset), $row);
 		$bool = $db->query($row, 3);
@@ -117,11 +122,9 @@ if (count($queries) > 0) {
 				'title' => $pages[$i]['title'],
 				'text' => $pages[$i]['text'],
 			);
-			$db->link->beginTransaction();
 			$db->insert('static_pages', $insert_values);
 			$last_id = $db->select('LAST_INSERT_ID() AS id', 'static_pages');
 			$db->update('menu_items', array('mode' => '2', 'uri' => 'static_pages/list/id_' . $last_id[0]['id'] . '/', 'target' => 1), 'id = "' . $pages[$i]['id'] . '"');
-			$db->link->commit();
 		}
 		$db->query('ALTER TABLE `' . CONFIG_DB_PRE . 'menu_items` DROP `text`', 3);
 	}
@@ -158,11 +161,9 @@ if (count($queries) > 0) {
 	// block_id und root_id fixen
 	$roots = $db->query('SELECT id, block_id, left_id, right_id FROM ' . CONFIG_DB_PRE . 'menu_items WHERE root_id = id');
 	$c_roots = count($roots);
-	$db->link->beginTransaction();
 	for ($i = 0; $i < $c_roots; ++$i) {
 		$db->update('menu_items', array('block_id' => $roots[$i]['block_id'], 'root_id' => $roots[$i]['id']), 'left_id > ' . $roots[$i]['left_id'] . ' AND right_id < ' . $roots[$i]['right_id']);
 	}
-	$db->link->commit();
 
 	// Links fixen
 	$links = $db->select('id, uri', 'menu_items', 'mode = 2');
@@ -174,6 +175,7 @@ if (count($queries) > 0) {
 
 	$db->query('ALTER TABLE `' . CONFIG_DB_PRE . 'menu_items` DROP `parent`', 3);
 	$db->query('ALTER TABLE `' . CONFIG_DB_PRE . 'menu_items` DROP COLUMN `sort`', 3);
+	$db->link->commit();
 
 	print "\n" . ($bool ? 'Die Datenbank wurde erfolgreich aktualisiert.' : 'Mindestens eine Datenbankänderung konnte nicht durchgeführt werden.') . "\n";
 	print "\n----------------------------\n\n";
