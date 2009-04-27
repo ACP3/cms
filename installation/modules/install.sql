@@ -186,7 +186,7 @@ CREATE TABLE `{pre}users` (
 	PRIMARY KEY (`id`)
 ) {engine};
 
-INSERT INTO `{pre}access` VALUES ('1', 'Administrator', 'users:2,feeds:2,files:2,emoticons:2,errors:2,gallery:2,guestbook:2,categories:2,comments:2,contact:2,menu_items:2,news:2,newsletter:2,static_pages:2,search:2,system:2,polls:2,access:2,acp:2,captcha:2');
+INSERT INTO `{pre}access` VALUES ('1', 'Administrator', 'users:15,feeds:15,files:15,emoticons:15,errors:15,gallery:15,guestbook:15,categories:15,comments:15,contact:15,menu_items:15,news:15,newsletter:15,static_pages:15,search:15,system:15,polls:15,access:15,acp:15,captcha:15');
 INSERT INTO `{pre}access` VALUES ('2', 'Besucher', 'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:1,categories:1,comments:1,contact:1,menu_items:1,news:1,newsletter:1,static_pages:1,search:1,system:0,polls:1,access:0,acp:0,captcha:1');
 INSERT INTO `{pre}access` VALUES ('3', 'Benutzer', 'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:1,categories:1,comments:1,contact:1,menu_items:1,news:1,newsletter:1,static_pages:1,search:1,system:0,polls:1,access:0,acp:0,captcha:1');
 INSERT INTO `{pre}categories` VALUES ('', 'Erste Kategorie', '', 'Dies ist die erste Kategorie', 'news');

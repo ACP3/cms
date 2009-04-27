@@ -17,8 +17,6 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('common', 'name_to_short');
 	if (!empty($form['name']) && $db->countRows('*', 'access', 'name = \'' . $db->escape($form['name']) . '\'') == '1')
 		$errors[] = $lang->t('access', 'access_level_already_exist');
-	if (emptyCheck($form['modules']))
-		$errors[] = $lang->t('access', 'select_modules');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -43,13 +41,11 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		if ($info['dir'] == 'errors' || !$info['active']) {
 			unset($mod_list[$name]);
 		} else {
-			for ($i = 0; $i < 3; ++$i) {
-				$mod_list[$name]['options'][$i] = array(
-					'value' => $i,
-					'selected' => selectAccessLevel($info['dir'], (string) $i),
-					'lang' => $lang->t('access', 'access_level_' . $i),
-				);
-			}
+			$dir = $info['dir'];
+			$mod_list[$name]['read_checked'] = isset($form['modules'][$dir]['read']) ? ' checked="checked"' : '';
+			$mod_list[$name]['write_checked'] = isset($form['modules'][$dir]['write']) ? ' checked="checked"' : '';
+			$mod_list[$name]['edit_checked'] = isset($form['modules'][$dir]['edit']) ? ' checked="checked"' : '';
+			$mod_list[$name]['delete_checked'] = isset($form['modules'][$dir]['delete']) ? ' checked="checked"' : '';
 		}
 	}
 	$tpl->assign('mod_list', $mod_list);

@@ -12,14 +12,24 @@
 		</p>
 		<dl>
 {foreach from=$mod_list item=mod}
-			<dt><label for="module-{$mod.dir}">{$mod.name}</label></dt>
+			<dt><label for="access-read-{$mod.dir}">{$mod.name}</label></dt>
 			<dd>
-				<select name="form[modules][{$mod.dir}]" id="module-{$mod.dir}">
-					<option value="">{lang values="common|pls_select"}</option>
-{foreach from=$mod.options item=row}
-					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-{/foreach}
-				</select>
+				<label for="access-read-{$mod.dir}">
+					<input type="checkbox" name="form[modules][{$mod.dir}][read]" id="access-read-{$mod.dir}" value="1" class="checkbox"{$mod.read_checked} />
+					{lang values="access|can_read"}
+				</label>
+				<label for="access-write-{$mod.dir}">
+					<input type="checkbox" name="form[modules][{$mod.dir}][write]" id="access-write-{$mod.dir}" value="2" class="checkbox"{$mod.write_checked} />
+					{lang values="access|can_write"}
+				</label>
+				<label for="access-edit-{$mod.dir}">
+					<input type="checkbox" name="form[modules][{$mod.dir}][edit]" id="access-edit-{$mod.dir}" value="4" class="checkbox"{$mod.edit_checked} />
+					{lang values="access|can_edit"}
+				</label>
+				<label for="access-delete-{$mod.dir}">
+					<input type="checkbox" name="form[modules][{$mod.dir}][delete]" id="access-delete-{$mod.dir}" value="8" class="checkbox"{$mod.delete_checked} />
+					{lang values="access|can_delete"}
+				</label>
 			</dd>
 {/foreach}
 		</dl>
