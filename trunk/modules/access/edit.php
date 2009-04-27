@@ -18,8 +18,6 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'access', 'id = \'' . $u
 			$errors[] = $lang->t('common', 'name_to_short');
 		if (!empty($form['name']) && $db->countRows('*', 'access', 'id != \'' . $uri->id . '\' AND name = \'' . $db->escape($form['name']) . '\'') == '1')
 			$errors[] = $lang->t('access', 'access_level_already_exist');
-		if (emptyCheck($form['modules']))
-			$errors[] = $lang->t('access', 'select_modules');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -47,19 +45,43 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'access', 'id = \'' . $u
 			if ($info['dir'] == 'errors' || !$info['active']) {
 				unset($mod_list[$name]);
 			} else {
-				$db_value = '';
-				for ($i = 0; $i < $c_mods_arr; ++$i) {
-					if ($info['dir'] == substr($mods_arr[$i], 0, -2)) {
-						$db_value = substr($mods_arr[$i], -1, 1);
-						break;
+				$dir = $info['dir'];
+				if (isset($form['modules'])) {
+					$mod_list[$name]['read_checked'] = isset($form['modules'][$dir]['read']) ? ' checked="checked"' : '';
+					$mod_list[$name]['write_checked'] = isset($form['modules'][$dir]['write']) ? ' checked="checked"' : '';
+					$mod_list[$name]['edit_checked'] = isset($form['modules'][$dir]['edit']) ? ' checked="checked"' : '';
+					$mod_list[$name]['delete_checked'] = isset($form['modules'][$dir]['delete']) ? ' checked="checked"' : '';
+				} else {
+					$db_value = '';
+					for ($i = 0; $i < $c_mods_arr; ++$i) {
+						$pos = strrpos($mods_arr[$i], ':');
+						if ($info['dir'] == substr($mods_arr[$i], 0, $pos)) {
+							$db_value = substr($mods_arr[$i], $pos + 1);
+							break;
+						}
 					}
-				}
-				for ($i = 0; $i < 3; ++$i) {
-					$mod_list[$name]['options'][$i] = array(
-						'value' => $i,
-						'selected' => selectAccessLevel($info['dir'], (string) $i, $db_value),
-						'lang' => $lang->t('access', 'access_level_' . $i),
-					);
+
+					$mod_list[$name]['read_checked'] = '';
+					$mod_list[$name]['write_checked'] = '';
+					$mod_list[$name]['edit_checked'] = '';
+					$mod_list[$name]['delete_checked'] = '';
+
+					if ($db_value - 8 >= 0) {
+						$mod_list[$name]['delete_checked'] = ' checked="checked"';
+						$db_value-= 8;
+					}
+					if ($db_value - 4 >= 0) {
+						$mod_list[$name]['edit_checked'] = ' checked="checked"';
+						$db_value-= 4;
+					}
+					if ($db_value - 2 >= 0) {
+						$mod_list[$name]['write_checked'] = ' checked="checked"';
+						$db_value-= 2;
+					}
+					if ($db_value - 1 >= 0) {
+						$mod_list[$name]['read_checked'] = ' checked="checked"';
+						$db_value-= 1;
+					}
 				}
 			}
 		}

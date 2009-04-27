@@ -33,6 +33,22 @@
 		<message>Zugriff auf die Module</message>
 	</item>
 	<item>
+		<name>can_delete</name>
+		<message>Löschen</message>
+	</item>
+	<item>
+		<name>can_edit</name>
+		<message>Bearbeiten</message>
+	</item>
+	<item>
+		<name>can_read</name>
+		<message>Lesen</message>
+	</item>
+	<item>
+		<name>can_write</name>
+		<message>Schreiben</message>
+	</item>
+	<item>
 		<name>create</name>
 		<message>Neuen Zugriffslevel erstellen</message>
 	</item>
