@@ -31,8 +31,8 @@ $queries = array(
 	'ALTER TABLE `{pre}guestbook` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 	'ALTER TABLE `{pre}guestbook` CHANGE `user_id` `user_id` INT(10) UNSIGNED NOT NULL',
 	'ALTER TABLE `{pre}news` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
-	'ALTER TABLE `{pre}news` ADD `readmore` TINYINT(1) UNSIGNED NOT NULL AFTER `text`',
-	'ALTER TABLE `{pre}news` ADD `comments` TINYINT(1) UNSIGNED NOT NULL AFTER `readmore`',
+	'ALTER TABLE `{pre}news` CHANGE `readmore` `readmore` TINYINT(1) UNSIGNED NOT NULL',
+	'ALTER TABLE `{pre}news` CHANGE `comments` `comments` TINYINT(1) UNSIGNED NOT NULL',
 	'UPDATE `{pre}news` SET readmore = 1, comments = 1',
 	'ALTER TABLE `{pre}news` CHANGE `category_id` `category_id` INT(10) UNSIGNED NOT NULL',
 	'ALTER TABLE `{pre}news` CHANGE `target` `target` TINYINT(1) UNSIGNED NOT NULL',
@@ -50,7 +50,6 @@ $queries = array(
 	'ALTER TABLE `{pre}pages` ADD `display` TINYINT(1) UNSIGNED NOT NULL AFTER `right_id`',
 	'UPDATE `{pre}pages` SET display = 1 WHERE block_id != "0"',
 	'UPDATE `{pre}pages` SET root_id = id WHERE parent = "0"',
-	'ALTER TABLE `{pre}pages` DROP COLUMN `sort`',
 	'ALTER TABLE `{pre}pages` DROP INDEX `title`',
 	'ALTER TABLE `{pre}pages` ADD INDEX `foreign_block_id` (`block_id`)',
 	'RENAME TABLE `{pre}pages` TO `{pre}menu_items`',
@@ -118,9 +117,11 @@ if (count($queries) > 0) {
 				'title' => $pages[$i]['title'],
 				'text' => $pages[$i]['text'],
 			);
+			$db->link->beginTransaction();
 			$db->insert('static_pages', $insert_values);
 			$last_id = $db->select('LAST_INSERT_ID() AS id', 'static_pages');
-			$db->update('menu_items', array('uri' => 'static_pages/list/id_' . $last_id[0]['id']), 'id = "' . $pages[$i]['id'] . '"');
+			$db->update('menu_items', array('mode' => '2', 'uri' => 'static_pages/list/id_' . $last_id[0]['id'] . '/', 'target' => 1), 'id = "' . $pages[$i]['id'] . '"');
+			$db->link->commit();
 		}
 		$db->query('ALTER TABLE `' . CONFIG_DB_PRE . 'menu_items` DROP `text`', 3);
 	}
@@ -130,18 +131,18 @@ if (count($queries) > 0) {
 		global $db;
 		static $left_id = 1, $right_id = 2;
 
-		$parents = $db->select('id', 'menu_items', 'parent = \'' . $parent_id . '\'');
+		$parents = $db->select('id', 'menu_items', 'parent = \'' . $parent_id . '\'', 'block_id ASC, sort ASC');
 		$c_parents = count($parents);
 
-		for ($i = 0; $i < $c_parents; $i++) {
+		for ($i = 0; $i < $c_parents; ++$i) {
 			if ($db->countRows('id', 'menu_items', 'parent = \'' . $parents[$i]['id'] . '\'') == 0) {
 				$db->update('menu_items', array('left_id' => $left_id, 'right_id' => $right_id), 'id = ' . $parents[$i]['id']);
 			} else {
 				$left_id_buffer = $left_id;
-				$left_id++;
-				$right_id++;
+				++$left_id;
+				++$right_id;
 				convertToNestedSet($parents[$i]['id']);
-				$right_id++;
+				++$right_id;
 				$db->update('menu_items', array('left_id' => $left_id_buffer, 'right_id' => $right_id), 'id = ' . $parents[$i]['id']);
 			}
 
@@ -153,12 +154,30 @@ if (count($queries) > 0) {
 	}
 
 	convertToNestedSet();
+
+	// block_id und root_id fixen
+	$roots = $db->query('SELECT id, block_id, left_id, right_id FROM ' . CONFIG_DB_PRE . 'menu_items WHERE root_id = id');
+	$c_roots = count($roots);
+	$db->link->beginTransaction();
+	for ($i = 0; $i < $c_roots; ++$i) {
+		$db->update('menu_items', array('block_id' => $roots[$i]['block_id'], 'root_id' => $roots[$i]['id']), 'left_id > ' . $roots[$i]['left_id'] . ' AND right_id < ' . $roots[$i]['right_id']);
+	}
+	$db->link->commit();
+
+	// Links fixen
+	$links = $db->select('id, uri', 'menu_items', 'mode = 2');
+	$c_links = count($links);
+	for ($i = 0; $i < $c_links; ++$i) {
+		if (!preg_match('/\/$/', $links[$i]['uri']))
+			$db->update('menu_items', array('uri' => $links[$i]['uri'] . '/'), 'id = ' . $links[$i]['id']);
+	}
+
 	$db->query('ALTER TABLE `' . CONFIG_DB_PRE . 'menu_items` DROP `parent`', 3);
+	$db->query('ALTER TABLE `' . CONFIG_DB_PRE . 'menu_items` DROP COLUMN `sort`', 3);
 
 	print "\n" . ($bool ? 'Die Datenbank wurde erfolgreich aktualisiert.' : 'Mindestens eine Datenbankänderung konnte nicht durchgeführt werden.') . "\n";
 	print "\n----------------------------\n\n";
 }
-
 
 // Konfigurationsdatei aktualisieren
 $config = array(
@@ -185,7 +204,7 @@ $config = array(
 	'wysiwyg' => 'fckeditor'
 );
 
-print config::system($config) ? 'Konfigurationsdatei erfolgreich aktualisiert.' : 'Konfigurationsdatei konnte nicht aktualisiert werden.';
+//print config::system($config) ? 'Konfigurationsdatei erfolgreich aktualisiert.' : 'Konfigurationsdatei konnte nicht aktualisiert werden.';
 
 // Cache leeren
 cache::purge();
