@@ -1,16 +1,19 @@
 <form action="{uri args="acp/users/delete"}" method="post">
 	<div id="adm-list">
-		<a href="{uri args="acp/users/create"}" title="{lang values="users|create"}"><img src="{icon path="32/add_user"}" alt="{lang values="users|create"}" /></a>
-		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		{check_access mode="link" action="users|create" uri="acp/users/create" icon="32/add_user"}
+		{check_access mode="input" action="users|delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang values="common|overview"}</h2>
 	</div>
 	<hr />
 {if isset($users)}
 {$pagination}
+{assign var="can_delete" value=$MODULES->check("users", "delete")}
 	<table class="acp-table">
 		<thead>
 			<tr>
+{if $can_delete}
 				<th>{lang values="common|mark"}</th>
+{/if}
 				<th>{lang values="users|nickname"}</th>
 				<th>{lang values="common|email"}</th>
 				<th>{lang values="access|access"}</th>
@@ -19,15 +22,19 @@
 		<tbody>
 {foreach from=$users item=row}
 			<tr>
+{if $can_delete}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
-				<td><a href="{uri args="acp/users/edit/id_`$row.id`"}" title="{lang values="users|edit"}">{$row.nickname}</a></td>
+{/if}
+				<td>{check_access mode="link" action="users|edit" uri="acp/users/edit/id_`$row.id`" title=$row.nickname}</td>
 				<td>{$row.mail}</td>
 				<td>{$row.access}</td>
 			</tr>
 {/foreach}
 		</tbody>
 	</table>
+{if $can_delete}
 {mark name="entries"}
+{/if}
 {else}
 	<div class="error">
 		<h5>{lang values="common|no_entries"}</h5>

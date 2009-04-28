@@ -23,17 +23,20 @@
 </form>
 <form action="{uri args="acp/gallery/delete_picture/id_$gallery_id"}" method="post">
 	<div id="adm-list">
-		<a href="{uri args="acp/gallery/add_picture/id_$gallery_id"}" title="{lang values="gallery|add_picture"}"><img src="{icon path="32/image"}" alt="{lang values="gallery|add_picture"}" /></a>
-		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		{check_access mode="link" action="gallery|add_picture" uri="acp/gallery/add_picture/id_`$gallery_id`" icon="32/image"}
+		{check_access mode="input" action="gallery|delete_picture" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang values="gallery|pictures"}</h2>
 	</div>
 	<hr />
 {if isset($pictures)}
 {$pagination}
+{assign var="can_delete" value=$MODULES->check("gallery", "delete_picture")}
 	<table class="acp-table">
 		<thead>
 			<tr>
+{if $can_delete}
 				<th>{lang values="common|mark"}</th>
+{/if}
 				<th>{lang values="gallery|picture"}</th>
 				<th>{lang values="common|description"}</th>
 				<th>{lang values="common|order"}</th>
@@ -42,8 +45,10 @@
 		<tbody>
 {foreach from=$pictures item=row}
 			<tr>
+{if $can_delete}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
-				<td><a href="{uri args="acp/gallery/edit_picture/id_`$row.id`"}" title="{lang values="gallery|edit_picture"}"><img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" /></a></td>
+{/if}
+				<td>{if $MODULES->check("gallery", "edit_picture")}<a href="{uri args="acp/gallery/edit_picture/id_`$row.id`"}" title="{lang values="gallery|edit_picture"}"><img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" /></a>{else}<img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" />{/if}</td>
 				<td>{$row.description}</td>
 				<td>
 {if !$row.last}
@@ -57,7 +62,9 @@
 {/foreach}
 		</tbody>
 	</table>
+{if $can_delete}
 {mark name="entries"}
+{/if}
 {else}
 	<div class="error">
 		<h5>{lang values="common|no_entries"}</h5>

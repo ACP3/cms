@@ -1,7 +1,7 @@
 <div id="adm-list">
-	<a href="{uri args="acp/system/modules"}" title="{lang values="system|modules"}"><img src="{icon path="32/blockdevice"}" alt="{lang values="system|modules"}" /></a>
-	<a href="{uri args="acp/system/languages"}" title="{lang values="system|languages"}"><img src="{icon path="32/locale"}" alt="{lang values="system|languages"}" /></a>
-	<a href="{uri args="acp/system/designs"}" title="{lang values="system|designs"}"><img src="{icon path="32/style"}" alt="{lang values="system|designs"}" /></a>
+	{check_access mode="link" action="system|modules" uri="acp/system/modules" icon="32/blockdevice"}
+	{check_access mode="link" action="system|languages" uri="acp/system/languages" icon="32/locale"}
+	{check_access mode="link" action="system|designs" uri="acp/system/designs" icon="32/style"}
 </div>
 <hr />
 <div class="error">

@@ -17,11 +17,11 @@ das Newsletterteam]]></mailsig>
 	<access>
 		<item>
 			<file>activate</file>
-			<level>2</level>
+			<level>1</level>
 		</item>
 		<item>
 			<file>adm_activate</file>
-			<level>2</level>
+			<level>4</level>
 		</item>
 		<item>
 			<file>adm_list</file>
@@ -41,15 +41,15 @@ das Newsletterteam]]></mailsig>
 		</item>
 		<item>
 			<file>delete</file>
-			<level>2</level>
+			<level>8</level>
 		</item>
 		<item>
 			<file>delete_archive</file>
-			<level>2</level>
+			<level>8</level>
 		</item>
 		<item>
 			<file>edit_archive</file>
-			<level>2</level>
+			<level>4</level>
 		</item>
 		<item>
 			<file>send</file>
@@ -57,7 +57,7 @@ das Newsletterteam]]></mailsig>
 		</item>
 		<item>
 			<file>settings</file>
-			<level>2</level>
+			<level>15</level>
 		</item>
 	</access>
 </module>

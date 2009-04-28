@@ -1,7 +1,7 @@
 <div id="adm-list">
-	<a href="{uri args="acp/system/update_check"}" title="{lang values="system|update_check"}"><img src="{icon path="32/cnr-update"}" alt="{lang values="system|update_check"}" /></a>
-	<a href="{uri args="acp/system/sql_export"}" title="{lang values="system|sql_export"}"><img src="{icon path="32/fileexport"}" alt="{lang values="system|sql_export"}" /></a>
-	<a href="{uri args="acp/system/sql_optimisation"}" title="{lang values="system|sql_optimisation"}"><img src="{icon path="32/database"}" alt="{lang values="system|sql_optimisation"}" /></a>
+	{check_access mode="link" action="system|update_check" uri="acp/system/update_check" icon="32/cnr-update"}
+	{check_access mode="link" action="system|sql_export" uri="acp/system/sql_export" icon="32/fileexport"}
+	{check_access mode="link" action="system|sql_optimisation" uri="acp/system/sql_optimisation" icon="32/database"}
 </div>
 <hr />
 <div class="error">

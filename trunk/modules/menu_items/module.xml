@@ -29,22 +29,22 @@
 		</item>
 		<item>
 			<file>delete</file>
-			<level>2</level>
+			<level>8</level>
 			<include>functions</include>
 		</item>
 		<item>
 			<file>delete_blocks</file>
-			<level>2</level>
+			<level>8</level>
 			<include>functions</include>
 		</item>
 		<item>
 			<file>edit</file>
-			<level>2</level>
+			<level>4</level>
 			<include>functions</include>
 		</item>
 		<item>
 			<file>edit_block</file>
-			<level>2</level>
+			<level>4</level>
 			<include>functions</include>
 		</item>
 		<item>

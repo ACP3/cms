@@ -33,11 +33,11 @@
 		</item>
 		<item>
 			<file>delete_gallery</file>
-			<level>2</level>
+			<level>8</level>
 		</item>
 		<item>
 			<file>delete_picture</file>
-			<level>2</level>
+			<level>8</level>
 			<include>functions</include>
 		</item>
 		<item>
@@ -46,11 +46,11 @@
 		</item>
 		<item>
 			<file>edit_gallery</file>
-			<level>2</level>
+			<level>4</level>
 		</item>
 		<item>
 			<file>edit_picture</file>
-			<level>2</level>
+			<level>4</level>
 			<include>functions</include>
 		</item>
 		<item>
@@ -72,7 +72,7 @@
 		</item>
 		<item>
 			<file>settings</file>
-			<level>2</level>
+			<level>15</level>
 		</item>
 	</access>
 </module>

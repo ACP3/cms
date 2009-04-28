@@ -1,17 +1,20 @@
 <form action="{uri args="acp/emoticons/delete"}" method="post">
 	<div id="adm-list">
-		<a href="{uri args="acp/emoticons/create"}" title="{lang values="emoticons|create"}"><img src="{icon path="32/ksmiletris"}" alt="{lang values="emoticons|create"}" /></a>
-		<a href="{uri args="acp/emoticons/settings"}" title="{lang values="emoticons|settings"}"><img src="{icon path="32/advancedsettings"}" alt="{lang values="emoticons|settings"}" /></a>
-		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		{check_access mode="link" action="emoticons|create" uri="acp/emoticons/create" icon="32/ksmiletris"}
+		{check_access mode="link" action="emoticons|settings" uri="acp/emoticons/settings" icon="32/advancedsettings"}
+		{check_access mode="input" action="emoticons|delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang values="common|overview"}</h2>
 	</div>
 	<hr />
 {if isset($emoticons)}
 {$pagination}
+{assign var="can_delete" value=$MODULES->check("emoticons", "delete")}
 	<table class="acp-table">
 		<thead>
 			<tr>
+{if $can_delete}
 				<th>{lang values="common|mark"}</th>
+{/if}
 				<th>{lang values="common|description"}</th>
 				<th>{lang values="emoticons|code"}</th>
 				<th>{lang values="emoticons|picture"}</th>
@@ -20,15 +23,19 @@
 		<tbody>
 {foreach from=$emoticons item=row}
 			<tr>
+{if $can_delete}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
-				<td><a href="{uri args="acp/emoticons/edit/id_`$row.id`"}" title="{lang values="emoticons|edit"}">{$row.description}</a></td>
+{/if}
+				<td>{check_access mode="link" action="emoticons|edit" uri="acp/emoticons/edit/id_`$row.id`" title=$row.description}</td>
 				<td>{$row.code}</td>
 				<td><img src="{$ROOT_DIR}uploads/emoticons/{$row.img}" alt="" /></td>
 			</tr>
 {/foreach}
 		</tbody>
 	</table>
+{if $can_delete}
 {mark name="entries"}
+{/if}
 {else}
 	<div class="error">
 		<h5>{lang values="common|no_entries"}</h5>

@@ -27,8 +27,9 @@ if ($c_access > 0) {
 
 		foreach ($mod_list as $name => $info) {
 			for ($j = 0; $j < $c_access_to_mods; ++$j) {
-				$mod_name = substr($access_to_mods[$j], 0, -2);
-				if ($info['active'] && $info['dir'] == $mod_name && substr($access_to_mods[$j], -1, 1) != '0') {
+				$pos = strrpos($access_to_mods[$j], ':');
+				$mod_name = substr($access_to_mods[$j], 0, $pos);
+				if ($info['active'] && $info['dir'] == $mod_name && substr($access_to_mods[$j], $pos + 1) != '0') {
 					$access[$i]['access_to_mod'].= $name . ', ';
 				}
 			}

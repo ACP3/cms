@@ -1,16 +1,19 @@
 <form action="{uri args="acp/menu_items/delete"}" method="post">
 	<div id="adm-list">
-		<a href="{uri args="acp/menu_items/create"}" title="{lang values="menu_items|create"}"><img src="{icon path="32/kmenuedit"}" alt="{lang values="menu_items|create"}" /></a>
-		<a href="{uri args="acp/menu_items/adm_list_blocks"}" title="{lang values="menu_items|adm_list_blocks"}"><img src="{icon path="32/blockdevice"}" alt="{lang values="menu_items|adm_list_blocks"}" /></a>
-		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		{check_access mode="link" action="menu_items|create" uri="acp/menu_items/create" icon="32/kmenuedit"}
+		{check_access mode="link" action="menu_items|adm_list_blocks" uri="acp/menu_items/adm_list_blocks" icon="32/blockdevice"}
+		{check_access mode="input" action="menu_items|delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang values="common|overview"}</h2>
 	</div>
 	<hr />
 {if isset($pages_list)}
+{assign var="can_delete" value=$MODULES->check("menu_items", "delete")}
 	<table class="acp-table">
 		<thead>
 			<tr>
+{if $can_delete}
 				<th>{lang values="common|mark"}</th>
+{/if}
 				<th>{lang values="common|publication_period"}</th>
 				<th>{lang values="menu_items|page_type"}</th>
 				<th style="width:30%">{lang values="menu_items|title"}</th>
@@ -24,10 +27,12 @@
 			</tr>
 {foreach from=$pages item=row}
 			<tr>
+{if $can_delete}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+{/if}
 				<td>{$row.period}</td>
 				<td>{$row.mode_formated}</td>
-				<td style="padding-left:10px;text-align:left">{$row.spaces}<a href="{uri args="acp/menu_items/edit/id_`$row.id`"}" title="{lang values="menu_items|edit"}">{$row.title}</a></td>
+				<td style="padding-left:10px;text-align:left">{$row.spaces}{check_access mode="link" action="menu_items|edit" uri="acp/menu_items/edit/id_`$row.id`" title=$row.title}</td>
 				<td>
 {if !$row.last}
 					<a href="{uri args="acp/menu_items/order/id_`$row.id`/mode_down"}" title="{lang values="common|move_down"}"><img src="{icon path="16/down"}" alt="{lang values="common|move_down"}" /></a>
@@ -44,7 +49,9 @@
 {/foreach}
 		</tbody>
 	</table>
+{if $can_delete}
 {mark name="entries"}
+{/if}
 {else}
 	<div class="error">
 		<h5>{lang values="common|no_entries"}</h5>

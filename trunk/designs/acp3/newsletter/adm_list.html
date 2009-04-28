@@ -1,18 +1,21 @@
 <form action="{uri args="acp/newsletter/delete"}" method="post">
 	<div id="adm-list">
-		<a href="{uri args="acp/newsletter/compose"}" title="{lang values="newsletter|compose"}"><img src="{icon path="32/mail_new"}" alt="{lang values="newsletter|compose"}" /></a>
-		<a href="{uri args="acp/newsletter/settings"}" title="{lang values="newsletter|settings"}"><img src="{icon path="32/advancedsettings"}" alt="{lang values="newsletter|settings"}" /></a>
-		<a href="{uri args="acp/newsletter/adm_list_archive"}" title="{lang values="newsletter|newsletter_archive"}"><img src="{icon path="32/mail"}" alt="{lang values="newsletter|newsletter_archive"}" /></a>
-		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		{check_access mode="link" action="newsletter|compose" uri="acp/newsletter/compose" icon="32/mail_new"}
+		{check_access mode="link" action="newsletter|settings" uri="acp/newsletter/settings" icon="32/advancedsettings"}
+		{check_access mode="link" action="newsletter|adm_list_archive" uri="acp/newsletter/adm_list_archive" icon="32/mail"}
+		{check_access mode="input" action="newsletter|delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang values="newsletter|newsletter_accounts"}</h2>
 	</div>
 	<hr />
 {if isset($accounts)}
 {$pagination}
+{assign var="can_delete" value=$MODULES->check("newsletter", "delete")}
 	<table class="acp-table">
 		<thead>
 			<tr>
+{if $can_delete}
 				<th>{lang values="common|mark"}</th>
+{/if}
 				<th>{lang values="common|email"}</th>
 				<th>{lang values="newsletter|status"}</th>
 			</tr>
@@ -20,14 +23,18 @@
 		<tbody>
 {foreach from=$accounts item=row}
 			<tr>
+{if $can_delete}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+{/if}
 				<td>{$row.mail}</td>
 				<td>{$row.status}</td>
 			</tr>
 {/foreach}
 		</tbody>
 	</table>
+{if $can_delete}
 {mark name="entries"}
+{/if}
 {else}
 	<div class="error">
 		<h5>{lang values="common|no_entries"}</h5>

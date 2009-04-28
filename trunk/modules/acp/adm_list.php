@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (! defined('IN_ADM'))
+if (!defined('IN_ADM'))
 	exit();
 
 breadcrumb::assign($lang->t('common', 'acp'));
@@ -18,7 +18,7 @@ $mods = array();
 
 foreach ($mod_list as $name => $info) {
 	$dir = $info['dir'];
-	if (modules::check($dir, 'adm_list') == 1 && $dir != 'acp' && $dir != 'system' && $dir != 'home') {
+	if (modules::check($dir, 'adm_list') == 1 && $dir != 'acp' && $dir != 'system') {
 		$mods[$name]['name'] = $name;
 		$mods[$name]['dir'] = $dir;
 	}
@@ -26,7 +26,7 @@ foreach ($mod_list as $name => $info) {
 $tpl->assign('modules', $mods);
 
 //Server Infos
-if (modules::check('system', 'server_config') == 1) {
+if (modules::check('system', 'server_config')) {
 	$server_info[0]['col_left'] = $lang->t('system', 'architecture');
 	$server_info[0]['col_right'] = @php_uname('m');
 	$server_info[1]['col_left'] = $lang->t('system', 'operating_system');

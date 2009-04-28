@@ -1,6 +1,6 @@
 <div id="adm-list">
-	<a href="{uri args="users/edit_profile"}" title="{lang values="users|edit_profile}"><img src="{icon path="32/edit_user"}" alt="{lang values="users|edit_profile}" /></a>
-	<a href="{uri args="users/edit_settings"}" title="{lang values="users|edit_settings}"><img src="{icon path="32/advancedsettings"}" alt="{lang values="users|edit_settings}" /></a>
+	{check_access mode="link" action="users|edit_profile" uri="acp/users/edit_profile" icon="32/edit_user"}
+	{check_access mode="link" action="users|edit_settings" uri="acp/users/edit_settings" icon="32/advancedsettings"}
 </div>
 <br />
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">

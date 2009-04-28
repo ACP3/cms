@@ -1,16 +1,19 @@
 <form action="{uri args="acp/static_pages/delete"}" method="post">
 	<div id="adm-list">
-		<a href="{uri args="acp/static_pages/create"}" title="{lang values="static_pages|create"}"><img src="{icon path="32/contents"}" alt="{lang values="static_pages|create"}" /></a>
-		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		{check_access mode="link" action="static_pages|create" uri="acp/static_pages/create" icon="32/contents"}
+		{check_access mode="input" action="static_pages|delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang values="common|overview"}</h2>
 	</div>
 	<hr />
 {if isset($pages)}
 {$pagination}
+{assign var="can_delete" value=$MODULES->check("static_pages", "delete")}
 	<table class="acp-table">
 		<thead>
 			<tr>
+{if $can_delete}
 				<th>{lang values="common|mark"}</th>
+{/if}
 				<th>{lang values="common|publication_period"}</th>
 				<th>{lang values="static_pages|title"}</th>
 			</tr>
@@ -18,14 +21,18 @@
 		<tbody>
 {foreach from=$pages item=row}
 			<tr>
+{if $can_delete}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+{/if}
 				<td>{$row.period}</td>
-				<td><a href="{uri args="acp/static_pages/edit/id_`$row.id`"}" title="{lang values="static_pages|edit"}">{$row.title}</a></td>
+				<td>{check_access mode="link" action="static_pages|edit" uri="acp/static_pages/edit/id_`$row.id`" title=$row.title}</td>
 			</tr>
 {/foreach}
 		</tbody>
 	</table>
+{if $can_delete}
 {mark name="entries"}
+{/if}
 {else}
 	<div class="error">
 		<h5>{lang values="common|no_entries"}</h5>

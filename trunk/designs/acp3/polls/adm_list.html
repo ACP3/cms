@@ -1,16 +1,19 @@
 <form action="{uri args="acp/polls/delete"}" method="post">
 	<div id="adm-list">
-		<a href="{uri args="acp/polls/create"}" title="{lang values="polls|create"}"><img src="{icon path="32/kchart"}" alt="{lang values="polls|create"}" /></a>
-		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		{check_access mode="link" action="polls|create" uri="acp/polls/create" icon="32/kchart"}
+		{check_access mode="input" action="polls|delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang values="common|overview"}</h2>
 	</div>
 	<hr />
 {if isset($polls)}
 {$pagination}
+{assign var="can_delete" value=$MODULES->check("polls", "delete")}
 	<table class="acp-table">
 		<thead>
 			<tr>
+{if $can_delete}
 				<th>{lang values="common|mark"}</th>
+{/if}
 				<th>{lang values="common|publication_period"}</th>
 				<th>{lang values="polls|question"}</th>
 			</tr>
@@ -18,14 +21,18 @@
 		<tbody>
 {foreach from=$polls item=row}
 			<tr>
+{if $can_delete}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+{/if}
 				<td>{$row.period}</td>
-				<td><a href="{uri args="acp/polls/edit/id_`$row.id`"}" title="{lang values="polls|edit"}">{$row.question}</a></td>
+				<td>{check_access mode="link" action="polls|edit" uri="acp/polls/edit/id_`$row.id`" title=$row.question}</td>
 			</tr>
 {/foreach}
 		</tbody>
 	</table>
+{if $can_delete}
 {mark name="entries"}
+{/if}
 {else}
 	<div class="error">
 		<h5>{lang values="common|no_entries"}</h5>
