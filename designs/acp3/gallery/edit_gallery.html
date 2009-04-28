@@ -61,6 +61,9 @@
 {if !$row.first}
 					<a href="{uri args="acp/gallery/order/id_`$row.id`/mode_up"}" title="{lang values="common|move_up"}"><img src="{icon path="16/up"}" alt="{lang values="common|move_up"}" /></a>
 {/if}
+{if $row.first && $row.last}
+					<img src="{icon path="16/editdelete"}" alt="{lang values="common|move_impossible"}" title="{lang values="common|move_impossible"}" />
+{/if}
 				</td>
 {/if}
 			</tr>

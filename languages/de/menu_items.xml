@@ -85,10 +85,6 @@
 		<message>Modul</message>
 	</item>
 	<item>
-		<name>move_impossible</name>
-		<message>Element kann nicht verschoben werden</message>
-	</item>
-	<item>
 		<name>no_superior_page</name>
 		<message>Keine übergeordnete Seite</message>
 	</item>

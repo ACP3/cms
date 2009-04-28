@@ -85,10 +85,6 @@
 		<message>Module</message>
 	</item>
 	<item>
-		<name>move_impossible</name>
-		<message>Impossible to move this node</message>
-	</item>
-	<item>
 		<name>no_superior_page</name>
 		<message>No superior page</message>
 	</item>

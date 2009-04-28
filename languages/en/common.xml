@@ -169,6 +169,10 @@
 		<message>Move entry one step down</message>
 	</item>
 	<item>
+		<name>move_impossible</name>
+		<message><![CDATA[It\'s impossible to move this element]]></message>
+	</item>
+	<item>
 		<name>move_up</name>
 		<message>Move entry one step up</message>
 	</item>
