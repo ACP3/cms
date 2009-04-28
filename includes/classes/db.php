@@ -31,6 +31,7 @@ class db
 		try {
 			$this->link = new PDO('mysql:host=' . $db_host . ';dbname=' . $db_name, $db_user, $db_pwd);
 			$this->link->setAttribute(PDO::ATTR_ERRMODE, defined('DEBUG') && DEBUG ? PDO::ERRMODE_EXCEPTION : PDO::ERRMODE_SILENT);
+			$this->link->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
 			return true;
 		} catch (PDOException $e) {
 			return $e->getMessage();
@@ -89,8 +90,7 @@ class db
 				// Query ausführen, die ein Resultset zurückgibt
 				case 2:
 					$stmt = $this->link->query($query);
-					$stmt->setFetchMode(PDO::FETCH_ASSOC);
-					$result = $stmt->fetchAll();
+					$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 					break;
 				// Queries ohne Resultset
 				default:
