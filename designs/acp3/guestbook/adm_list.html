@@ -1,15 +1,18 @@
 {if isset($guestbook)}
 <form action="{uri args="acp/guestbook/delete"}" method="post">
 	<div id="adm-list">
-		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		{check_access mode="input" action="guestbook|delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang values="common|overview"}</h2>
 	</div>
 	<hr />
 {$pagination}
+{assign var="can_delete" value=$MODULES->check("guestbook", "delete")}
 	<table class="acp-table">
 		<thead>
 			<tr>
+{if $can_delete}
 				<th>{lang values="common|mark"}</th>
+{/if}
 				<th>{lang values="common|date"}</th>
 				<th>{lang values="common|name"}</th>
 				<th>{lang values="common|message"}</th>
@@ -19,16 +22,20 @@
 		<tbody>
 {foreach from=$guestbook item=row}
 			<tr>
+{if $can_delete}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+{/if}
 				<td>{$row.date}</td>
-				<td><a href="{uri args="acp/guestbook/edit/id_`$row.id`"}" title="{lang values="guestbook|edit"}">{$row.name}</a></td>
+				<td>{check_access mode="link" action="guestbook|edit" uri="acp/guestbook/edit/id_`$row.id`" title=$row.name}</td>
 				<td>{$row.message}</td>
 				<td>{$row.ip}</td>
 			</tr>
 {/foreach}
 		</tbody>
 	</table>
+{if $can_delete}
 {mark name="entries"}
+{/if}
 </form>
 {else}
 	<div class="error">

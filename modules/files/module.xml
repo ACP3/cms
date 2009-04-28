@@ -26,11 +26,11 @@
 		</item>
 		<item>
 			<file>delete</file>
-			<level>2</level>
+			<level>8</level>
 		</item>
 		<item>
 			<file>edit</file>
-			<level>2</level>
+			<level>4</level>
 			<include>functions,categories/functions</include>
 		</item>
 		<item>

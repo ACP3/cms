@@ -1,17 +1,20 @@
 <form action="{uri args="acp/news/delete"}" method="post">
 	<div id="adm-list">
-		<a href="{uri args="acp/news/create"}" title="{lang values="news|create"}"><img src="{icon path="32/news"}" alt="{lang values="news|create"}" /></a>
-		<a href="{uri args="acp/news/settings"}" title="{lang values="news|settings"}"><img src="{icon path="32/advancedsettings"}" alt="{lang values="news|settings"}" /></a>
-		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		{check_access mode="link" action="news|create" uri="acp/news/create" icon="32/news"}
+		{check_access mode="link" action="news|settings" uri="acp/news/settings" icon="32/advancedsettings"}
+		{check_access mode="input" action="news|delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang values="common|overview"}</h2>
 	</div>
 	<hr />
 {if isset($news)}
 {$pagination}
+{assign var="can_delete" value=$MODULES->check("news", "delete")}
 	<table class="acp-table">
 		<thead>
 			<tr>
+{if $can_delete}
 				<th>{lang values="common|mark"}</th>
+{/if}
 				<th>{lang values="common|publication_period"}</th>
 				<th>{lang values="news|headline"}</th>
 				<th>{lang values="common|category"}</th>
@@ -20,15 +23,19 @@
 		<tbody>
 {foreach from=$news item=row}
 			<tr>
+{if $can_delete}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+{/if}
 				<td>{$row.period}</td>
-				<td><a href="{uri args="acp/news/edit/id_`$row.id`"}" title="{lang values="news|edit"}">{$row.headline}</a></td>
+				<td>{check_access mode="link" action="news|edit" uri="acp/news/edit/id_`$row.id`" title=$row.headline}</td>
 				<td>{$row.cat}</td>
 			</tr>
 {/foreach}
 		</tbody>
 	</table>
+{if $can_delete}
 {mark name="entries"}
+{/if}
 {else}
 	<div class="error">
 		<h5>{lang values="common|no_entries"}</h5>

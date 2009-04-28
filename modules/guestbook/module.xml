@@ -15,15 +15,15 @@
 		</item>
 		<item>
 			<file>create</file>
-			<level>1</level>
+			<level>2</level>
 		</item>
 		<item>
 			<file>delete</file>
-			<level>2</level>
+			<level>8</level>
 		</item>
 		<item>
 			<file>edit</file>
-			<level>2</level>
+			<level>4</level>
 		</item>
 		<item>
 			<file>list</file>

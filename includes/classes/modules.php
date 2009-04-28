@@ -53,25 +53,46 @@ class modules
 					$modules = explode(',', $access_to_modules[0]['modules']);
 
 					foreach ($modules as $row) {
-						$access_level[substr($row, 0, -2)] = substr($row, -1, 1);
+						$pos = strrpos($row, ':');
+						$access_level[substr($row, 0, $pos)] = (int) substr($row, $pos + 1);
 					}
 				}
 
 				// XML Datei parsen
 				foreach ($xml->access->item as $item) {
-					if ((string) $item->file == $page && (string) $item->level != '0' && isset($access_level[$module]) && (string) $item->level <= $access_level[$module]) {
-						// Zusätzliche include-Files einbinden
-						if (!empty($item->include)) {
-							$includes = explode(',', $item->include);
-							foreach ($includes as $file) {
-								$path = ACP3_ROOT . 'modules/' . (!preg_match('=/=', $file) ? $module . '/' . $file : $file) . '.php';
-								if (is_file($path)) {
-									require_once $path;
+					if ((string) $item->file == $page && (string) $item->level != '0') {
+						$levels = array(
+							0 => array(0),
+							1 => array(1),
+							2 => array(2),
+							3 => array(3, 2, 1),
+							4 => array(4),
+							5 => array(5, 4, 1),
+							6 => array(6, 4, 2),
+							7 => array(7, 4, 2, 1),
+							8 => array(8),
+							9 => array(9, 8, 1),
+							10 => array(10, 8, 2),
+							11 => array(11, 8, 2, 1),
+							12 => array(12, 8, 4),
+							13 => array(13, 8, 4, 1),
+							14 => array(14, 8, 4, 2),
+							15 => array(15, 8, 4, 2, 1),
+						);
+						if (in_array($item->level, $levels[$access_level[$module]])) {
+							// Zusätzliche include-Files einbinden
+							if (!empty($item->include)) {
+								$includes = explode(',', $item->include);
+								foreach ($includes as $file) {
+									$path = ACP3_ROOT . 'modules/' . (!preg_match('=/=', $file) ? $module . '/' . $file : $file) . '.php';
+									if (is_file($path)) {
+										require_once $path;
+									}
 								}
 							}
+							return 1;
 						}
-						// User hat Zugriff auf die aktuelle Seite
-						return 1;
+						return 0;
 					}
 				}
 			}

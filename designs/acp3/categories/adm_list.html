@@ -1,17 +1,20 @@
 <form action="{uri args="acp/categories/delete"}" method="post">
 	<div id="adm-list">
-		<a href="{uri args="acp/categories/create"}" title="{lang values="categories|create"}"><img src="{icon path="32/folder_new"}" alt="{lang values="categories|create"}" /></a>
-		<a href="{uri args="acp/categories/settings"}" title="{lang values="categories|settings"}"><img src="{icon path="32/advancedsettings"}" alt="{lang values="categories|settings"}" /></a>
-		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		{check_access mode="link" action="categories|create" uri="acp/categories/create" icon="32/folder_new"}
+		{check_access mode="link" action="categories|settings" uri="acp/categories/settings" icon="32/advancedsettings"}
+		{check_access mode="input" action="categories|delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang values="common|overview"}</h2>
 	</div>
 	<hr />
 {if isset($categories)}
 {$pagination}
+{assign var="can_delete" value=$MODULES->check("categories", "delete")}
 	<table class="acp-table">
 		<thead>
 			<tr>
+{if $can_delete}
 				<th>{lang values="common|mark"}</th>
+{/if}
 				<th>{lang values="common|name"}</th>
 				<th>{lang values="common|description"}</th>
 				<th>{lang values="categories|module"}</th>
@@ -20,15 +23,19 @@
 		<tbody>
 {foreach from=$categories item=row}
 			<tr>
+{if $can_delete}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
-				<td><a href="{uri args="acp/categories/edit/id_`$row.id`"}" title="{lang values="categories|edit"}">{$row.name}</a></td>
+{/if}
+				<td>{check_access mode="link" action="categories|edit" uri="acp/categories/edit/id_`$row.id`" title=$row.name}</td>
 				<td>{$row.description}</td>
 				<td>{$row.module}</td>
 			</tr>
 {/foreach}
 		</tbody>
 	</table>
+{if $can_delete}
 {mark name="entries"}
+{/if}
 {else}
 	<div class="error">
 		<h5>{lang values="common|entries"}</h5>

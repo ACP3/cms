@@ -1,8 +1,8 @@
 <div id="adm-list">
-	<a href="{uri args="acp/system/maintenance"}" title="{lang values="system|maintenance"}"><img src="{icon path="32/package_utilities"}" alt="{lang values="system|maintenance"}" /></a>
-	<a href="{uri args="acp/system/extensions"}" title="{lang values="system|extensions"}"><img src="{icon path="32/package_applications"}" alt="{lang values="system|extensions"}" /></a>
-	<a href="{uri args="acp/system/server_config"}" title="{lang values="system|server_config"}"><img src="{icon path="32/kpackage"}" alt="{lang values="system|server_config"}" /></a>
-	<a href="{uri args="acp/system/configuration"}" title="{lang values="system|configuration"}"><img src="{icon path="32/systemsettings"}" alt="{lang values="system|configuration"}" /></a>
+	{check_access mode="link" action="system|maintenance" uri="acp/system/maintenance" icon="32/package_utilities"}
+	{check_access mode="link" action="system|extensions" uri="acp/system/extensions" icon="32/package_applications"}
+	{check_access mode="link" action="system|server_config" uri="acp/system/server_config" icon="32/kpackage"}
+	{check_access mode="link" action="system|configuration" uri="acp/system/configuration" icon="32/systemsettings"}
 </div>
 <hr />
 <div class="error">

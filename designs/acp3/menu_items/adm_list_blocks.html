@@ -1,16 +1,19 @@
 <form action="{uri args="acp/menu_items/delete_blocks"}" method="post">
 	<div id="adm-list">
-		<a href="{uri args="acp/menu_items/create_block"}" title="{lang values="menu_items|create_block"}"><img src="{icon path="32/source_moc"}" alt="{lang values="menu_items|create_block"}" /></a>
-		<input type="image" src="{icon path="32/cancel"}" alt="{lang values="common|delete_marked"}" title="{lang values="common|delete_marked"}" />
+		{check_access mode="link" action="menu_items|create_block" uri="acp/menu_items/create_block" icon="32/source_moc"}
+		{check_access mode="input" action="menu_items_blocks|delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang values="common|overview"}</h2>
 	</div>
 	<hr />
 {if isset($blocks)}
 {$pagination}
+{assign var="can_delete" value=$MODULES->check("menu_items", "delete_blocks")}
 	<table class="acp-table">
 		<thead>
 			<tr>
+{if $can_delete}
 				<th>{lang values="common|mark"}</th>
+{/if}
 				<th>{lang values="menu_items|title"}</th>
 				<th>{lang values="menu_items|index_name"}</th>
 			</tr>
@@ -18,14 +21,18 @@
 		<tbody>
 {foreach from=$blocks item=row}
 			<tr>
+{if $can_delete}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
-				<td><a href="{uri args="acp/menu_items/edit_block/id_`$row.id`"}" title="{lang values="menu_items|edit_block"}">{$row.title}</a></td>
+{/if}
+				<td>{check_access mode="link" action="menu_items|edit_block" uri="acp/menu_items/edit_block/id_`$row.id`" title=$row.title}</td>
 				<td>{$row.index_name}</td>
 			</tr>
 {/foreach}
 		</tbody>
 	</table>
+{if $can_delete}
 {mark name="entries"}
+{/if}
 {else}
 	<div class="error">
 		<h5>{lang values="common|no_entries"}</h5>
