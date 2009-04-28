@@ -43,7 +43,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		} else {
 			$dir = $info['dir'];
 			$mod_list[$name]['read_checked'] = isset($form['modules'][$dir]['read']) ? ' checked="checked"' : '';
-			$mod_list[$name]['write_checked'] = isset($form['modules'][$dir]['write']) ? ' checked="checked"' : '';
+			$mod_list[$name]['create_checked'] = isset($form['modules'][$dir]['create']) ? ' checked="checked"' : '';
 			$mod_list[$name]['edit_checked'] = isset($form['modules'][$dir]['edit']) ? ' checked="checked"' : '';
 			$mod_list[$name]['delete_checked'] = isset($form['modules'][$dir]['delete']) ? ' checked="checked"' : '';
 		}

@@ -19,14 +19,14 @@ if (!defined('IN_ADM'))
 function buildAccessLevel($modules)
 {
 	if (!empty($modules) && is_array($modules)) {
-		$modules['errors'] = array('read' => 1, 'write' => 2, 'edit' => 4, 'delete' => 8);
+		$modules['errors'] = array('read' => 1, 'create' => 2, 'edit' => 4, 'delete' => 8);
 		ksort($modules);
 		$access_level = '';
 
 		foreach ($modules as $mod => $levels) {
 			$level = 0;
 			$level+= isset($levels['read']) ? 1 : 0;
-			$level+= isset($levels['write']) ? 2 : 0;
+			$level+= isset($levels['create']) ? 2 : 0;
 			$level+= isset($levels['edit']) ? 4 : 0;
 			$level+= isset($levels['delete']) ? 8 : 0;
 			$access_level.= $mod . ':' . $level . ',';

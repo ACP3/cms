@@ -5,18 +5,6 @@
 		<message>Access levels</message>
 	</item>
 	<item>
-		<name>access_level_0</name>
-		<message>No access</message>
-	</item>
-	<item>
-		<name>access_level_1</name>
-		<message>Only access to the frontend area</message>
-	</item>
-	<item>
-		<name>access_level_2</name>
-		<message>With access to the administration area</message>
-	</item>
-	<item>
 		<name>access_level_already_exist</name>
 		<message>There is already an access level with the same name</message>
 	</item>
@@ -33,6 +21,10 @@
 		<message>Access to modules</message>
 	</item>
 	<item>
+		<name>can_create</name>
+		<message>Create</message>
+	</item>
+	<item>
 		<name>can_delete</name>
 		<message>Delete</message>
 	</item>
@@ -43,10 +35,6 @@
 	<item>
 		<name>can_read</name>
 		<message>Read</message>
-	</item>
-	<item>
-		<name>can_write</name>
-		<message>Write</message>
 	</item>
 	<item>
 		<name>create</name>
@@ -63,9 +51,5 @@
 	<item>
 		<name>mod_description</name>
 		<message>With this module you can create different access levels for users.</message>
-	</item>
-	<item>
-		<name>select_modules</name>
-		<message>Please select at least one module</message>
 	</item>
 </language>

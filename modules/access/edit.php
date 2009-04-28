@@ -48,7 +48,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'access', 'id = \'' . $u
 				$dir = $info['dir'];
 				if (isset($form['modules'])) {
 					$mod_list[$name]['read_checked'] = isset($form['modules'][$dir]['read']) ? ' checked="checked"' : '';
-					$mod_list[$name]['write_checked'] = isset($form['modules'][$dir]['write']) ? ' checked="checked"' : '';
+					$mod_list[$name]['create_checked'] = isset($form['modules'][$dir]['create']) ? ' checked="checked"' : '';
 					$mod_list[$name]['edit_checked'] = isset($form['modules'][$dir]['edit']) ? ' checked="checked"' : '';
 					$mod_list[$name]['delete_checked'] = isset($form['modules'][$dir]['delete']) ? ' checked="checked"' : '';
 				} else {
@@ -62,7 +62,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'access', 'id = \'' . $u
 					}
 
 					$mod_list[$name]['read_checked'] = '';
-					$mod_list[$name]['write_checked'] = '';
+					$mod_list[$name]['create_checked'] = '';
 					$mod_list[$name]['edit_checked'] = '';
 					$mod_list[$name]['delete_checked'] = '';
 
@@ -75,7 +75,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'access', 'id = \'' . $u
 						$db_value-= 4;
 					}
 					if ($db_value - 2 >= 0) {
-						$mod_list[$name]['write_checked'] = ' checked="checked"';
+						$mod_list[$name]['create_checked'] = ' checked="checked"';
 						$db_value-= 2;
 					}
 					if ($db_value - 1 >= 0) {
