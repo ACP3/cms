@@ -169,6 +169,10 @@
 		<message>Einen Schritt nach unten verschieben</message>
 	</item>
 	<item>
+		<name>move_impossible</name>
+		<message>Verschieben nicht möglich</message>
+	</item>
+	<item>
 		<name>move_up</name>
 		<message>Einen Schritt nach oben verschieben</message>
 	</item>
