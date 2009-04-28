@@ -31,6 +31,7 @@
 {if isset($pictures)}
 {$pagination}
 {assign var="can_delete" value=$MODULES->check("gallery", "delete_picture")}
+{assign var="can_order" value=$MODULES->check("gallery", "order")}
 	<table class="acp-table">
 		<thead>
 			<tr>
@@ -39,7 +40,9 @@
 {/if}
 				<th>{lang values="gallery|picture"}</th>
 				<th>{lang values="common|description"}</th>
+{if $can_order}
 				<th>{lang values="common|order"}</th>
+{/if}
 			</tr>
 		</thead>
 		<tbody>
@@ -50,6 +53,7 @@
 {/if}
 				<td>{if $MODULES->check("gallery", "edit_picture")}<a href="{uri args="acp/gallery/edit_picture/id_`$row.id`"}" title="{lang values="gallery|edit_picture"}"><img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" /></a>{else}<img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" />{/if}</td>
 				<td>{$row.description}</td>
+{if $can_order}
 				<td>
 {if !$row.last}
 					<a href="{uri args="acp/gallery/order/id_`$row.id`/mode_down"}" title="{lang values="common|move_down"}"><img src="{icon path="16/down"}" alt="{lang values="common|move_down"}" /></a>
@@ -58,6 +62,7 @@
 					<a href="{uri args="acp/gallery/order/id_`$row.id`/mode_up"}" title="{lang values="common|move_up"}"><img src="{icon path="16/up"}" alt="{lang values="common|move_up"}" /></a>
 {/if}
 				</td>
+{/if}
 			</tr>
 {/foreach}
 		</tbody>
