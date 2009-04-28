@@ -10,7 +10,7 @@
 	</item>
 	<item>
 		<name>access_level_selection_tip</name>
-		<message>Bitte wählen Sie aus der untenstehenden Liste die Module aus, auf welche die Benutzer Zugriff erhalten sollen und auf welche nicht. Des Weiteren können Sie für jedes Modul festlegen, ob Benutzer nur Zugriff auf den Frontendbereich erhalten sollen oder auch den Administrationsbereich. D.h. diese Benutzer können dann z.B. neue News erstellen, diese bearbeiten und auch löschen.</message>
+		<message>Bitte wählen Sie aus der untenstehenden Liste aus, welche Aktionen ein Benutzer beim jeweiligen Modul ausführen können.</message>
 	</item>
 	<item>
 		<name>access_level_undeletable</name>
