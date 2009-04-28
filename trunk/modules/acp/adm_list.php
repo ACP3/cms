@@ -26,7 +26,7 @@ foreach ($mod_list as $name => $info) {
 $tpl->assign('modules', $mods);
 
 //Server Infos
-if (modules::check('system', 'server_config')) {
+if (modules::check('system', 'server_config') == 1) {
 	$server_info[0]['col_left'] = $lang->t('system', 'architecture');
 	$server_info[0]['col_right'] = @php_uname('m');
 	$server_info[1]['col_left'] = $lang->t('system', 'operating_system');
