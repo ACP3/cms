@@ -5,7 +5,7 @@
 		<message>Zugriffslevel</message>
 	</item>
 	<item>
-		<name>access_level_already_exist</name>
+		<name>access_level_already_exists</name>
 		<message>Es existiert bereits ein Zugriffslevel mit diesem Namen</message>
 	</item>
 	<item>
