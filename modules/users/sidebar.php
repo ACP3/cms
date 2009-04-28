@@ -34,14 +34,26 @@ if ($auth->isUser()) {
 	}
 
 	if ($access_system) {
-		$nav_system[0]['page'] = 'configuration';
-		$nav_system[0]['name'] = $lang->t('system', 'configuration');
-		$nav_system[1]['page'] = 'server_config';
-		$nav_system[1]['name'] = $lang->t('system', 'server_config');
-		$nav_system[2]['page'] = 'extensions';
-		$nav_system[2]['name'] = $lang->t('system', 'extensions');
-		$nav_system[3]['page'] = 'maintenance';
-		$nav_system[3]['name'] = $lang->t('system', 'maintenance');
+		$i = 0;
+		if (modules::check('system', 'configuration') == 1) {
+			$nav_system[$i]['page'] = 'configuration';
+			$nav_system[$i]['name'] = $lang->t('system', 'configuration');
+		}
+		if (modules::check('system', 'server_config') == 1) {
+			$i++;
+			$nav_system[$i]['page'] = 'server_config';
+			$nav_system[$i]['name'] = $lang->t('system', 'server_config');
+		}
+		if (modules::check('system', 'extensions') == 1) {
+			$i++;
+			$nav_system[$i]['page'] = 'extensions';
+			$nav_system[$i]['name'] = $lang->t('system', 'extensions');
+		}
+		if (modules::check('system', 'maintenance') == 1) {
+			$i++;
+			$nav_system[$i]['page'] = 'maintenance';
+			$nav_system[$i]['name'] = $lang->t('system', 'maintenance');
+		}
 		$tpl->assign('nav_system', $nav_system);
 	}
 
