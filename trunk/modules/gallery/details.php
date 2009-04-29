@@ -35,9 +35,9 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(g.id)', 'gallery AS g, ' 
 		$tpl->assign('picture_next', $picture_next[0]);
 
 	if (modules::check('comments', 'functions') == 1) {
-		include_once ACP3_ROOT . 'modules/comments/functions.php';
+		require_once ACP3_ROOT . 'modules/comments/functions.php';
 
-		$tpl->assign('comments', comments('gallery', $uri->id));
+		$tpl->assign('comments', commentsList('gallery', $uri->id));
 	}
 
 	$content = $tpl->fetch('gallery/details.html');

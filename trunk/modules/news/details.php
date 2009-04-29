@@ -34,9 +34,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 	$settings = config::output('news');
 
 	if ($settings['comments'] == 1 && $news[0]['comments'] == 1 && modules::check('comments', 'functions') == 1) {
-		include_once ACP3_ROOT . 'modules/comments/functions.php';
+		require_once ACP3_ROOT . 'modules/comments/functions.php';
 
-		$tpl->assign('comments', comments('news', $uri->id));
+		$tpl->assign('comments', commentsList('news', $uri->id));
 	}
 	$content = $tpl->fetch('news/details.html');
 } else {

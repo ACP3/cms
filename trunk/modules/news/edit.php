@@ -61,7 +61,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 
 		// Kategorien
 		if (modules::check('categories', 'functions') == 1) {
-			include_once ACP3_ROOT . 'modules/categories/functions.php';
+			require_once ACP3_ROOT . 'modules/categories/functions.php';
 			$tpl->assign('categories', categoriesList('news', $news[0]['category_id'], true));
 		}
 
