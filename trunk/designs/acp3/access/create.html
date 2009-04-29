@@ -1,38 +1,38 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
+<script type="text/javascript" src="{$DESIGN_PATH}access/script.js"></script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset>
 		<dl>
 			<dt><label for="name">{lang values="common|name"}</label></dt>
 			<dd><input type="text" name="form[name]" id="name" value="{$form.name}" maxlength="120" /></dd>
 		</dl>
-		<p>
-			{lang values="access|access_level_selection_tip"}
-		</p>
-		<dl>
+		<table class="acp-table">
+			<caption>
+				{lang values="access|access_level_selection_tip"}
+			</caption>
+			<thead>
+				<tr class="sub-table-header">
+					<th>{lang values="common|modules"}</th>
+					<th><a href="javascript:mark_permissions('read');">{lang values="access|can_read"}</a></th>
+					<th><a href="javascript:mark_permissions('create');">{lang values="access|can_create"}</a></th>
+					<th><a href="javascript:mark_permissions('edit');">{lang values="access|can_edit"}</a></th>
+					<th><a href="javascript:mark_permissions('delete');">{lang values="access|can_delete"}</a></th>
+				</tr>
+			</thead>
+			<tbody>
 {foreach from=$mod_list item=mod}
-			<dt><label for="access-read-{$mod.dir}">{$mod.name}</label></dt>
-			<dd>
-				<label for="access-read-{$mod.dir}">
-					<input type="checkbox" name="form[modules][{$mod.dir}][read]" id="access-read-{$mod.dir}" value="1" class="checkbox"{$mod.read_checked} />
-					{lang values="access|can_read"}
-				</label>
-				<label for="access-create-{$mod.dir}">
-					<input type="checkbox" name="form[modules][{$mod.dir}][create]" id="access-create-{$mod.dir}" value="2" class="checkbox"{$mod.create_checked} />
-					{lang values="access|can_create"}
-				</label>
-				<label for="access-edit-{$mod.dir}">
-					<input type="checkbox" name="form[modules][{$mod.dir}][edit]" id="access-edit-{$mod.dir}" value="4" class="checkbox"{$mod.edit_checked} />
-					{lang values="access|can_edit"}
-				</label>
-				<label for="access-delete-{$mod.dir}">
-					<input type="checkbox" name="form[modules][{$mod.dir}][delete]" id="access-delete-{$mod.dir}" value="8" class="checkbox"{$mod.delete_checked} />
-					{lang values="access|can_delete"}
-				</label>
-			</dd>
+				<tr>
+					<td>{$mod.name}</td>
+					<td><input type="checkbox" name="form[modules][{$mod.dir}][read]" value="1" class="access-read checkbox"{$mod.read_checked} /></td>
+					<td><input type="checkbox" name="form[modules][{$mod.dir}][create]" value="1" class="access-create checkbox"{$mod.create_checked} /></td>
+					<td><input type="checkbox" name="form[modules][{$mod.dir}][edit]" value="1" class="access-edit checkbox"{$mod.edit_checked} /></td>
+					<td><input type="checkbox" name="form[modules][{$mod.dir}][delete]" value="1" class="access-delete checkbox"{$mod.delete_checked} /></td>
+				</tr>
 {/foreach}
-		</dl>
+			</tbody>
+		</table>
 	</fieldset>
 	<div class="form-bottom">
 		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />

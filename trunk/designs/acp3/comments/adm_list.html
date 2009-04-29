@@ -21,7 +21,7 @@
 {foreach from=$comments item=row}
 			<tr>
 {if $can_delete}
-				<td><input type="checkbox" name="entries[]" value="{$row.module}" /></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.module}" class="checkbox" /></td>
 {/if}
 				<td>{check_access mode="link" action="comments|adm_list" uri="acp/comments/adm_list/module_`$row.module`" lang="comments|show_comments" title=$row.name}</td>
 				<td>{$row.count}</td>
@@ -56,7 +56,7 @@
 {foreach from=$comments item=row}
 			<tr>
 {if $can_delete}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
 {/if}
 				<td>{$row.date}</td>
 				<td>{check_access mode="link" action="comments|edit" uri="acp/comments/edit/id_`$row.id`" title=$row.name}</td>

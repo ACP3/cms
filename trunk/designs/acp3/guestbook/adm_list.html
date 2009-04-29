@@ -23,7 +23,7 @@
 {foreach from=$guestbook item=row}
 			<tr>
 {if $can_delete}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
 {/if}
 				<td>{$row.date}</td>
 				<td>{check_access mode="link" action="guestbook|edit" uri="acp/guestbook/edit/id_`$row.id`" title=$row.name}</td>

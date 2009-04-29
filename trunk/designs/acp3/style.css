@@ -55,7 +55,7 @@ ul, ol {
 ul ul, ol ol {
 	margin: 0 20px;
 }
-p {
+p, caption {
 	padding: 5px 0;
 	text-align: justify;
 }
@@ -87,9 +87,13 @@ table.acp-table th {
 table.acp-table td {
 	padding: 3px;
 }
-tfoot, .sub-table-header {
+tfoot,
+.sub-table-header, table.acp-table .sub-table-header th,
+table.acp-table th.sub-table-header,
+.sub-table-header th, th.sub-table-header {
 	background: #e7e7e7;
 	font-weight: bold;
+	color: #333;
 }
 pre {
 	width: 99%;
@@ -167,7 +171,7 @@ fieldset input:focus, fieldset select:focus, fieldset textarea:focus,
 #tabs div input:focus, #tabs div select:focus, #tabs div textarea:focus {
 	background: #ffc;
 }
-fieldset dl dd input.checkbox, #tabs div input.checkbox {
+fieldset dl dd input.checkbox, #tabs div input.checkbox, table input.checkbox {
 	width: auto;
 	background: none;
 	border: 0;
