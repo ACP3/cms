@@ -24,7 +24,7 @@
 {foreach from=$galleries item=row}
 			<tr>
 {if $can_delete}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
 {/if}
 				<td>{$row.period}</td>
 				<td>{check_access mode="link" action="gallery|edit_gallery" uri="acp/gallery/edit_gallery/id_`$row.id`" title=$row.name}</td>

@@ -49,7 +49,7 @@
 {foreach from=$pictures item=row}
 			<tr>
 {if $can_delete}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
 {/if}
 				<td>{if $MODULES->check("gallery", "edit_picture")}<a href="{uri args="acp/gallery/edit_picture/id_`$row.id`"}" title="{lang values="gallery|edit_picture"}"><img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" /></a>{else}<img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" />{/if}</td>
 				<td>{$row.description}</td>

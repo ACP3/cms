@@ -24,7 +24,7 @@ switch (modules::check()) {
 		$tpl->assign('BREADCRUMB', breadcrumb::output());
 		$tpl->assign('CONTENT', !empty($content) ? $content : '');
 
-		// Falls ein Modul ein eigenes Layout verwenden möchte, dieses auch verwenden
+		// Falls ein Modul ein eigenes Layout verwenden möchte, dieses auch zulassen
 		$tpl->display(defined('CUSTOM_LAYOUT') ? CUSTOM_LAYOUT : 'layout.html');
 		break;
 	case 0:

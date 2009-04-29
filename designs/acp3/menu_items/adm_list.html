@@ -31,7 +31,7 @@
 {foreach from=$pages item=row}
 			<tr>
 {if $can_delete}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
 {/if}
 				<td>{$row.period}</td>
 				<td>{$row.mode_formated}</td>

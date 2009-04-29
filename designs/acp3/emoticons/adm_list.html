@@ -24,7 +24,7 @@
 {foreach from=$emoticons item=row}
 			<tr>
 {if $can_delete}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" /></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
 {/if}
 				<td>{check_access mode="link" action="emoticons|edit" uri="acp/emoticons/edit/id_`$row.id`" title=$row.description}</td>
 				<td>{$row.code}</td>
