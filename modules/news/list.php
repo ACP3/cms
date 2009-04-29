@@ -20,7 +20,7 @@ if (isset($_POST['form']['cat']) && validate::isNumber($_POST['form']['cat'])) {
 
 // Kategorien auflisten
 if (modules::check('categories', 'functions') == 1) {
-	include_once ACP3_ROOT . 'modules/categories/functions.php';
+	require_once ACP3_ROOT . 'modules/categories/functions.php';
 	$tpl->assign('categories', categoriesList('news', $cat));
 }
 
@@ -35,7 +35,7 @@ $c_news = count($news);
 if ($c_news > 0) {
 	// Überprüfen, ob das Kommentare Modul aktiv ist
 	if (modules::check('comments', 'functions') == 1) {
-		include_once ACP3_ROOT . 'modules/comments/functions.php';
+		require_once ACP3_ROOT . 'modules/comments/functions.php';
 		$comment_check = true;
 	}
 	$tpl->assign('pagination', pagination($db->countRows('*', 'news', $where)));

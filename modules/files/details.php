@@ -38,9 +38,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		$tpl->assign('file', $file[0]);
 
 		if (modules::check('comments', 'functions') == 1) {
-			include_once ACP3_ROOT . 'modules/comments/functions.php';
+			require_once ACP3_ROOT . 'modules/comments/functions.php';
 
-			$tpl->assign('comments', comments('files', $uri->id));
+			$tpl->assign('comments', commentsList('files', $uri->id));
 		}
 		$content = $tpl->fetch('files/details.html');
 	}

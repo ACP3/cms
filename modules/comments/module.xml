@@ -14,6 +14,10 @@
 			<level>4</level>
 		</item>
 		<item>
+			<file>create</file>
+			<level>2</level>
+		</item>
+		<item>
 			<file>delete_comments</file>
 			<level>8</level>
 		</item>

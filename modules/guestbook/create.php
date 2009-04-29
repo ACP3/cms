@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Emoticons einbinden
 	if (modules::check('emoticons', 'functions') == 1) {
-		include_once ACP3_ROOT . 'modules/emoticons/functions.php';
+		require_once ACP3_ROOT . 'modules/emoticons/functions.php';
 		$tpl->assign('emoticons', emoticonsList());
 	}
 	// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen

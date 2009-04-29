@@ -33,7 +33,7 @@ define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
 
 // Smarty einbinden
 define('SMARTY_DIR', ACP3_ROOT . 'includes/smarty/');
-include SMARTY_DIR . 'Smarty.class.php';
+require SMARTY_DIR . 'Smarty.class.php';
 $tpl = new smarty();
 $tpl->template_dir = ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/';
 $tpl->compile_dir = ACP3_ROOT . 'cache/';

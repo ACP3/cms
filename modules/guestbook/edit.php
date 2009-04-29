@@ -36,7 +36,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 		$guestbook = $db->select('name, message', 'guestbook', 'id = \'' . $uri->id . '\'');
 
 		if (modules::check('emoticons', 'functions') == 1) {
-			include_once ACP3_ROOT . 'modules/emoticons/functions.php';
+			require_once ACP3_ROOT . 'modules/emoticons/functions.php';
 
 			//Emoticons im Formular anzeigen
 			$tpl->assign('emoticons', emoticonsList());

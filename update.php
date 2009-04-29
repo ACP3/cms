@@ -13,8 +13,8 @@ require ACP3_ROOT . 'includes/classes/db.php';
 $queries = array(
 	'ALTER TABLE `{pre}access` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 	'UPDATE `{pre}access` SET modules = "users:15,feeds:15,files:15,emoticons:15,errors:15,gallery:15,guestbook:15,categories:15,comments:15,contact:15,menu_items:15,news:15,newsletter:15,static_pages:15,search:15,system:15,polls:15,access:15,acp:15,captcha:15" WHERE id = 1',
-	'UPDATE `{pre}access` SET modules = "users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:1,categories:1,comments:1,contact:1,menu_items:1,news:1,newsletter:1,static_pages:1,search:1,system:0,polls:1,access:0,acp:0,captcha:1" WHERE id = 2',
-	'UPDATE `{pre}access` SET modules = "users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:1,categories:1,comments:1,contact:1,menu_items:1,news:1,newsletter:1,static_pages:1,search:1,system:0,polls:1,access:0,acp:0,captcha:1" WHERE id = 3',
+	'UPDATE `{pre}access` SET modules = "users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:1,categories:1,comments:3,contact:1,menu_items:1,news:1,newsletter:1,static_pages:1,search:1,system:0,polls:1,access:0,acp:0,captcha:1" WHERE id = 2',
+	'UPDATE `{pre}access` SET modules = "users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:1,categories:1,comments:3,contact:1,menu_items:1,news:1,newsletter:1,static_pages:1,search:1,system:0,polls:1,access:0,acp:0,captcha:1" WHERE id = 3',
 	'ALTER TABLE `{pre}categories` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 	'ALTER TABLE `{pre}comments` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
 	'ALTER TABLE `{pre}comments` CHANGE `user_id` `user_id` INT(10) UNSIGNED NOT NULL',
