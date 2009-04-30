@@ -118,7 +118,7 @@ function categoriesList($module, $category_id = '', $category_create = false, $c
 	} else {
 		$categories['categories'] = array();
 	}
-	if ($category_create === true) {
+	if ($category_create === true && modules::check('categories', 'create') == 1) {
 		$categories['create']['name'] = $category_name . '_create';
 		$categories['create']['value'] = isset($_POST['form'][$categories['create']['name']]) ? $_POST['form'][$categories['create']['name']] : '';
 	}
