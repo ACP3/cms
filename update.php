@@ -111,7 +111,7 @@ if (count($queries) > 0) {
 	}
 
 	// Statische Seiten in extra Tabelle auslagern
-	$pages = $db->select('id, start, end, title, text, block_id', 'menu_items', 'mode = "1"');
+	$pages = $db->select('id, start, end, title, text, block_id', 'menu_items', 'mode = "1"', 'start ASC, title ASC');
 	$c_pages = count($pages);
 
 	if ($c_pages > 0) {
@@ -134,7 +134,7 @@ if (count($queries) > 0) {
 		global $db;
 		static $left_id = 1, $right_id = 2;
 
-		$parents = $db->select('id', 'menu_items', 'parent = \'' . $parent_id . '\'', 'block_id ASC, sort ASC');
+		$parents = $db->select('id', 'menu_items', 'parent = \'' . $parent_id . '\'', 'block_id ASC, sort ASC, start ASC, title ASC');
 		$c_parents = count($parents);
 
 		for ($i = 0; $i < $c_parents; ++$i) {
@@ -181,7 +181,7 @@ if (count($queries) > 0) {
 	print "\n----------------------------\n\n";
 }
 
-// Konfigurationsdatei aktualisieren
+/*// Konfigurationsdatei aktualisieren
 $config = array(
 	'date_dst' => CONFIG_DST,
 	'date_format' => CONFIG_DATE,
@@ -205,7 +205,7 @@ $config = array(
 	'version' => NEW_VERSION,
 	'wysiwyg' => 'fckeditor'
 );
-
+*/
 //print config::system($config) ? 'Konfigurationsdatei erfolgreich aktualisiert.' : 'Konfigurationsdatei konnte nicht aktualisiert werden.';
 
 // Cache leeren
