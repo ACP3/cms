@@ -135,10 +135,10 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 	// Sommerzeit an/aus
 	$dst[0]['value'] = '1';
-	$dst[0]['checked'] = select_entry('date_dst', '1', gmdate('I'), 'checked');
+	$dst[0]['checked'] = select_entry('date_dst', '1', $check_dst, 'checked');
 	$dst[0]['lang'] = $lang->t('common', 'yes');
 	$dst[1]['value'] = '0';
-	$dst[1]['checked'] = select_entry('date_dst', '0', gmdate('I'), 'checked');
+	$dst[1]['checked'] = select_entry('date_dst', '0', $check_dst, 'checked');
 	$dst[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('dst', $dst);
 
