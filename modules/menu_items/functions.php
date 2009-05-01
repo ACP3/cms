@@ -233,12 +233,12 @@ function processNavbar($block) {
 		$c_pages = count($pages);
 
 		if ($c_pages > 0) {
-			if (uri($uri->query) != uri($uri->mod) && $db->countRows('*', 'menu_items', 'uri = \'' . $uri->query . '\'') > 0) {
+			if (uri($uri->query) != uri($uri->mod) && $db->query('SELECT COUNT(*) FROM ' . CONFIG_DB_PRE . 'menu_items AS m JOIN ' . CONFIG_DB_PRE . 'menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->query . '\'', 1) > 0) {
 				$link = $uri->query;
 			} else {
 				$link = $uri->mod;
 			}
-			$select = $db->select('left_id', 'menu_items', 'uri = \'' . $link . '\'');
+			$select = $db->query('SELECT m.left_id FROM ' . CONFIG_DB_PRE . 'menu_items AS m JOIN ' . CONFIG_DB_PRE . 'menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $link . '\'');
 
 			$navbar[$block] = '';
 
