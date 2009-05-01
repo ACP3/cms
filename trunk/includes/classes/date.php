@@ -22,6 +22,13 @@ class date
 	 * @access private
 	 */
 	private $offset = 0;
+	/**
+	 * Sommerzeit an/aus
+	 *
+	 * @var integer
+	 * @access private
+	 */
+	private $dst = 0;
 	
 	/**
 	 * Falls man sich als User authentifiziert hat, eingestellte Zeitzone + Sommerzeiteinstellung holen
@@ -33,13 +40,13 @@ class date
 		$info = $auth->getUserInfo();
 
 		if (!empty($info)) {
-			$dst = $info['dst'];
+			$this->dst = (int) $info['dst'];
 			$time_zone = $info['time_zone'];
 		} else {
-			$dst = CONFIG_DATE_DST;
+			$this->dst = (int) CONFIG_DATE_DST;
 			$time_zone = CONFIG_DATE_TIME_ZONE;
 		}
-		$this->offset = $time_zone + ($dst == '1' ? 3600 : 0);
+		$this->offset = $time_zone + ($this->dst == 1 ? 3600 : 0);
 	}
 	/**
 	 * Gibt ein formatiertes Datum zurück
@@ -76,7 +83,8 @@ class date
 	{
 		// Zeitstempel aus Veröffentlichungszeitraum heraus generieren
 		if (!empty($value) && validate::date($value)) {
-			return strtotime($value, $this->timestamp());
+			$offset = !$this->dst && date('I') || !$this->dst && !date('I') ? 3600 : 0;
+			return gmdate('U', strtotime($value) + $offset);
 		}
 		return gmdate('U');
 	}
