@@ -14,7 +14,7 @@ $time = $date->timestamp();
 $period = ' AND (g.start = g.end AND g.start <= \'' . $time . '\' OR g.start != g.end AND g.start <= \'' . $time . '\' AND g.end >= \'' . $time . '\')';
 
 if (validate::isNumber($uri->id) && $db->select('COUNT(g.id)', 'gallery AS g, ' . CONFIG_DB_PRE . 'gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id' . $period) > 0) {
-	$picture = $db->select('g.id AS gallery_id, g.name, p.id, p.pic, p.description', 'gallery AS g, ' . CONFIG_DB_PRE . 'gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
+	$picture = $db->select('g.id AS gallery_id, g.name, p.id, p.pic, p.description, p.comments', 'gallery AS g, ' . CONFIG_DB_PRE . 'gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
 
 	// Brotkrümelspur
 	breadcrumb::assign($lang->t('gallery', 'gallery'), uri('gallery'));
@@ -34,7 +34,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(g.id)', 'gallery AS g, ' 
 	if (count($picture_next) > 0)
 		$tpl->assign('picture_next', $picture_next[0]);
 
-	if (modules::check('comments', 'functions') == 1) {
+	if ($picture[0]['comments'] == 1 && modules::check('comments', 'functions') == 1) {
 		require_once ACP3_ROOT . 'modules/comments/functions.php';
 
 		$tpl->assign('comments', commentsList('gallery', $uri->id));

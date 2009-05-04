@@ -27,6 +27,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 	$news[0]['headline'] = $news[0]['headline'];
 	$news[0]['text'] = $db->escape($news[0]['text'], 3);
 	$news[0]['uri'] = $db->escape($news[0]['uri'], 3);
+	if (!empty($news[0]['uri']) && strpos($news[0]['uri'], 'http://') === false) {
+		$news[0]['uri'] = 'http://' . $news[0]['uri'];
+	}
 	$news[0]['target'] = $news[0]['target'] == '2' ? ' onclick="window.open(this.href); return false"' : '';
 
 	$tpl->assign('news', $news[0]);
