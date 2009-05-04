@@ -166,6 +166,8 @@ function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = 0)
 	if ($action == 'up' || $action == 'down') {
 		global $db;
 
+		$elem = null;
+
 		// Zusätzliche WHERE-Bedingung
 		$where = !empty($where) ? $where . ' AND ' : '';
 
