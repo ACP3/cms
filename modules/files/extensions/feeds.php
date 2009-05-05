@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$time = $date->timespatm();
+$time = $date->timestamp();
 
 $result = $db->select('id, start, link_title, text', 'files', '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')', 'start DESC, end DESC, id DESC', 10);
 $c_result = count($result);
