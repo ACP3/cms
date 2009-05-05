@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>additional_information</name>
+		<message>Additional information</message>
+	</item>
+	<item>
+		<name>address</name>
+		<message>Address</message>
+	</item>
+	<item>
+		<name>address_to_short</name>
+		<message>The address should be at least 3 characters long</message>
+	</item>
+	<item>
+		<name>contact</name>
+		<message>Contact</message>
+	</item>
+	<item>
+		<name>contact_body</name>
+		<message>{name} ({mail}) left the following message behind:
+		
+		{message}</message>
+	</item>
+	<item>
+		<name>contact_information</name>
+		<message>Contact statements</message>
+	</item>
+	<item>
+		<name>contact_subject</name>
+		<message>Contactform %s</message>
+	</item>
+	<item>
+		<name>disclaimer</name>
+		<message>Disclaimer</message>
+	</item>
+	<item>
+		<name>disclaimer_to_short</name>
+		<message>The disclaimer should be at least 3 characters long</message>
+	</item>
+	<item>
+		<name>fax</name>
+		<message>FAX number</message>
+	</item>
+	<item>
+		<name>imprint</name>
+		<message>Imprint</message>
+	</item>
+	<item>
+		<name>layout</name>
+		<message>Layout</message>
+	</item>
+	<item>
+		<name>layout_placeholders</name>
+		<message>Use can use the following placeholders:</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>This module is reponsible for the contactform and the imprint.</message>
+	</item>
+	<item>
+		<name>powered_by</name>
+		<message>This website is powered by %s</message>
+	</item>
+	<item>
+		<name>send_mail_error</name>
+		<message>While sending the E-mail an error has occured.</message>
+	</item>
+	<item>
+		<name>send_mail_success</name>
+		<message>The E-mail has been sent successfully.</message>
+	</item>
+	<item>
+		<name>telephone</name>
+		<message>Telephone number</message>
+	</item>
+</language>

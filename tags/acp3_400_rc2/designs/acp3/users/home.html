@@ -1,0 +1,15 @@
+<div id="adm-list">
+	{check_access mode="link" action="users|edit_profile" uri="users/edit_profile" icon="32/edit_user"}
+	{check_access mode="link" action="users|edit_settings" uri="users/edit_settings" icon="32/advancedsettings"}
+</div>
+<br />
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+	<fieldset>
+		<legend>{lang values="users|drafts"}</legend>
+		{wysiwyg name="draft" value="$draft" height="250" toolbar="simple"}
+	</fieldset>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="reset" value="{lang values="common|reset"}" class="form" />
+	</div>
+</form>

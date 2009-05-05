@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>additional_information</name>
+		<message>Weitere Informationen</message>
+	</item>
+	<item>
+		<name>address</name>
+		<message>Anschrift</message>
+	</item>
+	<item>
+		<name>address_to_short</name>
+		<message>Die Anschrift sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>contact</name>
+		<message>Kontakt</message>
+	</item>
+	<item>
+		<name>contact_body</name>
+		<message>{name} ({mail}) hat folgende Nachricht hinterlassen:
+		
+		{message}</message>
+	</item>
+	<item>
+		<name>contact_information</name>
+		<message>Kontakt Daten</message>
+	</item>
+	<item>
+		<name>contact_subject</name>
+		<message>Kontaktformular %s</message>
+	</item>
+	<item>
+		<name>disclaimer</name>
+		<message>Haftungshinweise</message>
+	</item>
+	<item>
+		<name>disclaimer_to_short</name>
+		<message>Die Haftungshinweise sollten mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>fax</name>
+		<message>FAX Nummer</message>
+	</item>
+	<item>
+		<name>imprint</name>
+		<message>Impressum</message>
+	</item>
+	<item>
+		<name>layout</name>
+		<message>Aussehen</message>
+	</item>
+	<item>
+		<name>layout_placeholders</name>
+		<message>Es stehen folgende Platzhalter zur Verfügung:</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Dieses Modul ist für das Kontaktformular und das Impressum zuständig.</message>
+	</item>
+	<item>
+		<name>powered_by</name>
+		<message>Diese Website wird angetrieben vom %s</message>
+	</item>
+	<item>
+		<name>send_mail_error</name>
+		<message>Beim Versenden der E-Mail ist ein Fehler aufgetreten.</message>
+	</item>
+	<item>
+		<name>send_mail_success</name>
+		<message>Die E-Mail wurde erfolgreich versendet.</message>
+	</item>
+	<item>
+		<name>telephone</name>
+		<message>Telefonnummer</message>
+	</item>
+</language>

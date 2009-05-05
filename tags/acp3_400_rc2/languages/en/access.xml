@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>access</name>
+		<message>Access levels</message>
+	</item>
+	<item>
+		<name>access_level_already_exists</name>
+		<message>There is already an access level with the same name</message>
+	</item>
+	<item>
+		<name>access_level_selection_tip</name>
+		<message>Please select from the below standing list, which actions an user is allowed to do with a certain module.</message>
+	</item>
+	<item>
+		<name>access_level_undeletable</name>
+		<message>It\'s impossible to delete the administrator and guest access levels.</message>
+	</item>
+	<item>
+		<name>access_to_following_modules</name>
+		<message>Access to modules</message>
+	</item>
+	<item>
+		<name>can_create</name>
+		<message>Create</message>
+	</item>
+	<item>
+		<name>can_delete</name>
+		<message>Delete</message>
+	</item>
+	<item>
+		<name>can_edit</name>
+		<message>Edit</message>
+	</item>
+	<item>
+		<name>can_read</name>
+		<message>Read</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Create a new access level</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>Delete access levels</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Edit access level</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>With this module you can create different access levels for users.</message>
+	</item>
+</language>

@@ -1,0 +1,65 @@
+<form action="{uri args="acp/menu_items/delete"}" method="post">
+	<div id="adm-list">
+		{check_access mode="link" action="menu_items|create" uri="acp/menu_items/create" icon="32/kmenuedit"}
+		{check_access mode="link" action="menu_items|adm_list_blocks" uri="acp/menu_items/adm_list_blocks" icon="32/blockdevice"}
+		{check_access mode="input" action="menu_items|delete" icon="32/cancel" lang="common|delete_marked"}
+		<h2>{lang values="common|overview"}</h2>
+	</div>
+	<hr />
+{if isset($pages_list)}
+{assign var="can_delete" value=$MODULES->check("menu_items", "delete")}
+{assign var="can_order" value=$MODULES->check("menu_items", "order")}
+	<table class="acp-table">
+		<thead>
+			<tr>
+{if $can_delete}
+				<th>{lang values="common|mark"}</th>
+{/if}
+				<th>{lang values="common|publication_period"}</th>
+				<th>{lang values="menu_items|page_type"}</th>
+				<th style="width:30%">{lang values="menu_items|title"}</th>
+{if $can_order}
+				<th>{lang values="common|order"}</th>
+{/if}
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$pages_list key=block item=pages}
+			<tr>
+				<td colspan="{if $can_order}5{else}4{/if}" class="sub-table-header">{$block}</td>
+			</tr>
+{foreach from=$pages item=row}
+			<tr>
+{if $can_delete}
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
+{/if}
+				<td>{$row.period}</td>
+				<td>{$row.mode_formated}</td>
+				<td style="padding-left:10px;text-align:left">{$row.spaces}{check_access mode="link" action="menu_items|edit" uri="acp/menu_items/edit/id_`$row.id`" title=$row.title}</td>
+{if $can_order}
+				<td>
+{if !$row.last}
+					<a href="{uri args="acp/menu_items/order/id_`$row.id`/mode_down"}" title="{lang values="common|move_down"}"><img src="{icon path="16/down"}" alt="{lang values="common|move_down"}" /></a>
+{/if}
+{if !$row.first}
+					<a href="{uri args="acp/menu_items/order/id_`$row.id`/mode_up"}" title="{lang values="common|move_up"}"><img src="{icon path="16/up"}" alt="{lang values="common|move_up"}" /></a>
+{/if}
+{if $row.first && $row.last}
+					<img src="{icon path="16/editdelete"}" alt="{lang values="common|move_impossible"}" title="{lang values="common|move_impossible"}" />
+{/if}
+				</td>
+{/if}
+			</tr>
+{/foreach}
+{/foreach}
+		</tbody>
+	</table>
+{if $can_delete}
+{mark name="entries"}
+{/if}
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}
+</form>

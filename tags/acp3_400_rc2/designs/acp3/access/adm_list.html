@@ -1,0 +1,41 @@
+<form action="{uri args="acp/access/delete"}" method="post">
+	<div id="adm-list">
+		{check_access mode="link" action="access|create" uri="acp/access/create" icon="32/add_group"}
+		{check_access mode="input" action="access|delete" icon="32/cancel" lang="common|delete_marked"}
+		<h2>{lang values="common|overview"}</h2>
+	</div>
+	<hr />
+{if isset($access)}
+{$pagination}
+{assign var="can_delete" value=$MODULES->check("access", "delete")}
+	<table class="acp-table">
+		<thead>
+			<tr>
+{if $can_delete}
+				<th>{lang values="common|mark"}</th>
+{/if}
+				<th>{lang values="common|name"}</th>
+				<th>{lang values="access|access_to_following_modules"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$access item=row}
+			<tr>
+{if $can_delete}
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
+{/if}
+				<td>{check_access mode="link" action="access|edit" uri="acp/access/edit/id_`$row.id`" title=$row.name}</td>
+				<td style="text-align:justify">{$row.access_to_mod}</td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{if $can_delete}
+{mark name="entries"}
+{/if}
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}
+</form>

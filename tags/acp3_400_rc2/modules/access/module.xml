@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<info>
+		<name lang="true"/>
+		<description lang="true"/>
+		<author>Goratsch Webdesign</author>
+		<tables>access</tables>
+		<version core="true"/>
+		<protected/>
+		<active>1</active>
+	</info>
+	<access>
+		<item>
+			<file>adm_list</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>create</file>
+			<level>2</level>
+			<include>functions</include>
+		</item>
+		<item>
+			<file>delete</file>
+			<level>8</level>
+		</item>
+		<item>
+			<file>edit</file>
+			<level>4</level>
+			<include>functions</include>
+		</item>
+	</access>
+</module>

@@ -1,0 +1,46 @@
+{if isset($error_msg)}
+{$error_msg}
+{/if}
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+	<div id="tabs">
+		<ul>
+			<li><a href="#tabs-1">{lang values="common|publication_period"}</a></li>
+			<li><a href="#tabs-2">{lang values="polls|poll"}</a></li>
+		</ul>
+		<div id="tabs-1">
+			<dl>
+				<dt><label for="start">{lang values="common|start_date"}</label></dt>
+				<dd>{$start_date}</dd>
+				<dt><label for="end">{lang values="common|end_date"}</label></dt>
+				<dd>{$end_date}</dd>
+			</dl>
+			<p>
+				{lang values="common|date_description"}
+			</p>
+		</div>
+		<div id="tabs-2" class="ui-tabs-hide">
+			<dl>
+				<dt><label for="question">{lang values="polls|question"}</label></dt>
+				<dd><input type="text" name="form[question]" id="question" value="{$question}" maxlength="120" /></dd>
+{foreach from=$answers item=row}
+				<dt><label for="answer_{$row.number}">{lang values="polls|answer"} {$row.number+1}</label></dt>
+				<dd><input type="text" name="form[answers][]" id="answer_{$row.number}" value="{$row.value}" maxlength="120" /></dd>
+{/foreach}
+				<dt><label for="multiple">{lang values="common|options"}</label></dt>
+				<dd style="margin:0 20px">
+					<label for="multiple">
+						<input type="checkbox" name="form[multiple]" id="multiple" value="1" class="checkbox"{$multiple} />
+						{lang values="polls|multiple_choice"}
+					</label>
+				</dd>
+			</dl>
+		</div>
+	</div>
+	<div class="form-bottom">
+{if !$disable}
+		<input type="submit" name="add_answer" value="{lang values="polls|add_answer"}" class="form" />
+{/if}
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="reset" value="{lang values="common|reset"}" class="form" />
+	</div>
+</form>

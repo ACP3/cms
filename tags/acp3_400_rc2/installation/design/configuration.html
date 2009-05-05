@@ -1,0 +1,131 @@
+{if $sql_queries}
+<div style="text-align:center">
+	<a href="#" id="queries-link">{lang values="installation|show_hide_executed_db_queries"}</a>
+	<hr />
+</div>
+<table id="queries" class="acp-table">
+	<thead>
+		<tr>
+			<th>{lang values="installation|sql_query"}</th>
+			<th style="width:10%">{lang values="installation|result"}</th>
+		</tr>
+	</thead>
+	<tbody>
+{foreach from=$sql_queries item=row}
+		<tr>
+			<td style="text-align:left">{$row.query}</td>
+			<td style="color:#fff;background:#{$row.color}">{$row.result}</td>
+		</tr>
+{/foreach}
+	</tbody>
+</table>
+{if $install_error}
+<p>
+	{lang values="installation|installation_error"}
+</p>
+<div class="success forward">
+	<a href="{uri args="overview/welcome"}" class="form">{lang values="common|back"}</a>
+</div>
+{else}
+<p>
+	{lang values="installation|installation_successful_1"}
+</p>
+<p>
+	{lang values="installation|installation_successful_2"}
+</p>
+<div class="success forward">
+	<a href="{$ROOT_DIR}../" class="form">{lang values="common|forward"}</a>
+</div>
+{/if}
+{else}
+{$error_msg}
+<form action="{uri args="install/configuration"}" method="post" accept-charset="UTF-8">
+	<div id="tabs">
+		<ul>
+			<li><a href="#tabs-1">{lang values="installation|db_connection_settings"}</a></li>
+			<li><a href="#tabs-2">{lang values="installation|admin_account"}</a></li>
+			<li><a href="#tabs-3">{lang values="system|general"}</a></li>
+			<li><a href="#tabs-4">{lang values="common|date"}</a></li>
+		</ul>
+		<div id="tabs-1">
+			<dl>
+				<dt>
+					<label for="db-host">{lang values="installation|db_hostname"}</label>
+					<span>{lang values="installation|db_hostname_description"}</span>
+				</dt>
+				<dd><input type="text" name="form[db_host]" id="db-host" value="{$form.db_host}" /></dd>
+				<dt><label for="db-user">{lang values="installation|db_username"}</label></dt>
+				<dd><input type="text" name="form[db_user]" id="db-user" value="{$form.db_user}" /></dd>
+				<dt><label for="db-password">{lang values="installation|db_password"}</label></dt>
+				<dd><input type="password" name="form[db_password]" id="db-password" value="{$form.db_password}" /></dd>
+				<dt><label for="db-name">{lang values="installation|db_name"}</label></dt>
+				<dd><input type="text" name="form[db_name]" id="db-name" value="{$form.db_name}" /></dd>
+				<dt><label for="db-pre">{lang values="installation|db_table_prefix"}</label></dt>
+				<dd><input type="text" name="form[db_pre]" id="db-pre" value="{$form.db_pre}" /></dd>
+			</dl>
+		</div>
+		<div id="tabs-2" class="ui-tabs-hide">
+			<dl>
+				<dt><label for="user-name">{lang values="users|nickname"}</label></dt>
+				<dd><input type="text" name="form[user_name]" id="user-name" value="{$form.user_name}" /></dd>
+				<dt><label for="user-pwd">{lang values="users|pwd"}</label></dt>
+				<dd><input type="password" name="form[user_pwd]" id="user-pwd" /></dd>
+				<dt><label for="user-pwd-wdh">{lang values="users|pwd_repeat"}</label></dt>
+				<dd><input type="password" name="form[user_pwd_wdh]" id="user-pwd-wdh" /></dd>
+				<dt><label for="mail">{lang values="common|email"}</label></dt>
+				<dd><input type="text" name="form[mail]" id="mail" value="{$form.mail}" /></dd>
+			</dl>
+		</div>
+		<div id="tabs-3" class="ui-tabs-hide">
+			<dl>
+				<dt><label for="seo-title">{lang values="system|title"}</label></dt>
+				<dd><input type="text" name="form[seo_title]" id="seo-title" value="{$form.seo_title}" /></dd>
+				<dt><label for="entries">{lang values="system|entries_per_page"}</label></dt>
+				<dd>
+					<select name="form[entries]" id="entries">
+{foreach from=$entries item=row}
+						<option value="{$row.value}"{$row.selected}>{$row.value}</option>
+{/foreach}
+					</select>
+				</dd>
+				<dt>
+					<label for="flood">{lang values="system|flood_barrier"}</label>
+					<span>({lang values="system|flood_barrier_description"})</span>
+				</dt>
+				<dd><input type="text" name="form[flood]" id="flood" value="{$form.flood}" maxlength="3" /></dd>
+			</dl>
+		</div>
+		<div id="tabs-4" class="ui-tabs-hide">
+			<dl>
+				<dt>
+					<label for="date-format">{lang values="system|date_format"}</label>
+					<span>({lang values="system|php_date_function"})</span>
+				</dt>
+				<dd><input type="text" name="form[date_format]" id="date-format" value="{$form.date_format}" maxlength="20" /></dd>
+				<dt><label for="date-time-zone">{lang values="common|time_zone"}</label></dt>
+				<dd>
+					<select name="form[date_time_zone]" id="date-time-zone">
+{foreach from=$time_zone item=row}
+						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{/foreach}
+					</select>
+				</dd>
+				<dt><label for="date-dst-1">{lang values="common|daylight_saving_time"}</label></dt>
+				<dd>
+{foreach from=$dst item=row}
+					<label for="date-dst-{$row.value}">
+						<input type="radio" name="form[date_dst]" id="date-dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+						{$row.lang}
+					</label>
+{/foreach}
+				</dd>
+			</dl>
+		</div>
+	</div>
+	<br />
+	<div class="success forward">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="reset" value="{lang values="common|reset"}" class="form" />
+	</div>
+</form>
+{/if}

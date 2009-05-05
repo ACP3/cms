@@ -1,0 +1,21 @@
+{if isset($error_msg)}
+{$error_msg}
+{/if}
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+	<fieldset class="no-border">
+		<dl>
+			<dt><label for="mail">{lang values="common|email"}</label></dt>
+			<dd><input type="text" name="form[mail]" id="mail" maxlength="120" value="{$form.mail}" /></dd>
+		</dl>
+{$captcha}
+	</fieldset>
+{foreach from=$actions item="row"}
+		<label for="{$row.value}">
+			<input type="radio" name="action" id="{$row.value}" value="{$row.value}"{$row.checked} class="checkbox" />
+			{$row.lang}
+		</label>
+{/foreach}
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>

@@ -1,0 +1,24 @@
+{if isset($polls)}
+<table class="acp-table">
+	<thead>
+		<tr>
+			<th>{lang values="polls|question"}</th>
+			<th>{lang values="polls|votes"}</th>
+			<th>{lang values="common|end_date"}</th>
+		</tr>
+	</thead>
+	<tbody>
+{foreach from=$polls item=row}
+		<tr>
+			<td><a href="{uri args="polls/`$row.link`/id_`$row.id`"}">{$row.question}</a></td>
+			<td>{$row.votes}</td>
+			<td>{$row.date}</td>
+		</tr>
+{/foreach}
+	</tbody>
+</table>
+{else}
+<div class="error">
+	<h5>{lang values="common|no_entries"}</h5>
+</div>
+{/if}

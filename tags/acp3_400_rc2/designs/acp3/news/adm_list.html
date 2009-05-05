@@ -1,0 +1,44 @@
+<form action="{uri args="acp/news/delete"}" method="post">
+	<div id="adm-list">
+		{check_access mode="link" action="news|create" uri="acp/news/create" icon="32/news"}
+		{check_access mode="link" action="news|settings" uri="acp/news/settings" icon="32/advancedsettings"}
+		{check_access mode="input" action="news|delete" icon="32/cancel" lang="common|delete_marked"}
+		<h2>{lang values="common|overview"}</h2>
+	</div>
+	<hr />
+{if isset($news)}
+{$pagination}
+{assign var="can_delete" value=$MODULES->check("news", "delete")}
+	<table class="acp-table">
+		<thead>
+			<tr>
+{if $can_delete}
+				<th>{lang values="common|mark"}</th>
+{/if}
+				<th>{lang values="common|publication_period"}</th>
+				<th>{lang values="news|headline"}</th>
+				<th>{lang values="common|category"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$news item=row}
+			<tr>
+{if $can_delete}
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
+{/if}
+				<td>{$row.period}</td>
+				<td>{check_access mode="link" action="news|edit" uri="acp/news/edit/id_`$row.id`" title=$row.headline}</td>
+				<td>{$row.cat}</td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{if $can_delete}
+{mark name="entries"}
+{/if}
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}
+</form>

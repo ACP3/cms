@@ -1,0 +1,46 @@
+{if isset($error_msg)}
+{$error_msg}
+{/if}
+<form action="{uri args="search/list"}" method="post" accept-charset="UTF-8">
+	<fieldset class="no-border">
+		<dl>
+			<dt><label for="search_term">{lang values="search|search_term"}</label></dt>
+			<dd><input type="text" name="form[search_term]" id="search_term" value="{$form.search_term}" /></dd>
+		</dl>
+		<fieldset>
+			<legend>{lang values="search|search_options"}</legend>
+			<dl>
+				<dt><label>{lang values="search|search_after_modules"}</label></dt>
+				<dd>
+{foreach from=$search_mods item=row}
+					<label for="{$row.dir}">
+						<input type="checkbox" name="form[mods][]" id="{$row.dir}" value="{$row.dir}"{$row.checked} class="checkbox" />
+						{$row.name}
+					</label>
+{/foreach}
+				</dd>
+				<dt><label for="{$search_areas.0.id}">{lang values="search|search_after_areas"}</label></dt>
+				<dd>
+{foreach from=$search_areas item=row}
+					<label for="{$row.id}">
+						<input type="radio" name="form[area]" id="{$row.id}" value="{$row.value}" class="checkbox"{$row.checked} />
+						{$row.lang}
+					</label>
+{/foreach}
+				</dd>
+				<dt><label for="{$sort_hits.0.id}">{lang values="search|sort_hits"}</label></dt>
+				<dd>
+{foreach from=$sort_hits item=row}
+					<label for="{$row.id}">
+						<input type="radio" name="form[sort]" id="{$row.id}" value="{$row.value}" class="checkbox"{$row.checked} />
+						{$row.lang}
+					</label>
+{/foreach}
+				</dd>
+			</dl>
+		</fieldset>
+	</fieldset>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="search|submit_search"}" class="form" />
+	</div>
+</form>

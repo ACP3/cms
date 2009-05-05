@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<info>
+		<name lang="true"/>
+		<description lang="true"/>
+		<author>Goratsch Webdesign</author>
+		<version core="true"/>
+		<protected/>
+		<active>1</active>
+	</info>
+	<access>
+		<item>
+			<file>adm_list</file>
+			<level>4</level>
+		</item>
+		<item>
+			<file>configuration</file>
+			<level>15</level>
+		</item>
+		<item>
+			<file>designs</file>
+			<level>4</level>
+		</item>
+		<item>
+			<file>extensions</file>
+			<level>4</level>
+		</item>
+		<item>
+			<file>languages</file>
+			<level>4</level>
+		</item>
+		<item>
+			<file>maintenance</file>
+			<level>15</level>
+		</item>
+		<item>
+			<file>modules</file>
+			<level>4</level>
+		</item>
+		<item>
+			<file>server_config</file>
+			<level>15</level>
+		</item>
+		<item>
+			<file>sql_export</file>
+			<level>15</level>
+		</item>
+		<item>
+			<file>sql_optimisation</file>
+			<level>15</level>
+		</item>
+		<item>
+			<file>update_check</file>
+			<level>15</level>
+		</item>
+	</access>
+</module>

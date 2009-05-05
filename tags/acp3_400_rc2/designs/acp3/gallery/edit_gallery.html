@@ -1,0 +1,81 @@
+{if isset($error_msg)}
+{$error_msg}
+{/if}
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+	<fieldset style="width:50%">
+		<dl>
+			<dt><label for="start">{lang values="common|start_date"}</label></dt>
+			<dd>{$start_date}</dd>
+			<dt><label for="end">{lang values="common|end_date"}</label></dt>
+			<dd>{$end_date}</dd>
+		</dl>
+		<p>
+			{lang values="common|date_description"}
+		</p>
+		<dl>
+			<dt><label for="name">{lang values="gallery|title"}</label></dt>
+			<dd><input type="text" name="form[name]" id="name" value="{$form.name}" maxlength="120" /></dd>
+		</dl>
+	</fieldset>
+	<div class="form-bottom" style="margin:20px 0">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>
+<form action="{uri args="acp/gallery/delete_picture/id_$gallery_id"}" method="post">
+	<div id="adm-list">
+		{check_access mode="link" action="gallery|add_picture" uri="acp/gallery/add_picture/id_`$gallery_id`" icon="32/image"}
+		{check_access mode="input" action="gallery|delete_picture" icon="32/cancel" lang="common|delete_marked"}
+		<h2>{lang values="gallery|pictures"}</h2>
+	</div>
+	<hr />
+{if isset($pictures)}
+{$pagination}
+{assign var="can_delete" value=$MODULES->check("gallery", "delete_picture")}
+{assign var="can_order" value=$MODULES->check("gallery", "order")}
+	<table class="acp-table">
+		<thead>
+			<tr>
+{if $can_delete}
+				<th>{lang values="common|mark"}</th>
+{/if}
+				<th>{lang values="gallery|picture"}</th>
+				<th>{lang values="common|description"}</th>
+{if $can_order}
+				<th>{lang values="common|order"}</th>
+{/if}
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$pictures item=row}
+			<tr>
+{if $can_delete}
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
+{/if}
+				<td>{if $MODULES->check("gallery", "edit_picture")}<a href="{uri args="acp/gallery/edit_picture/id_`$row.id`"}" title="{lang values="gallery|edit_picture"}"><img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" /></a>{else}<img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" />{/if}</td>
+				<td>{$row.description}</td>
+{if $can_order}
+				<td>
+{if !$row.last}
+					<a href="{uri args="acp/gallery/order/id_`$row.id`/mode_down"}" title="{lang values="common|move_down"}"><img src="{icon path="16/down"}" alt="{lang values="common|move_down"}" /></a>
+{/if}
+{if !$row.first}
+					<a href="{uri args="acp/gallery/order/id_`$row.id`/mode_up"}" title="{lang values="common|move_up"}"><img src="{icon path="16/up"}" alt="{lang values="common|move_up"}" /></a>
+{/if}
+{if $row.first && $row.last}
+					<img src="{icon path="16/editdelete"}" alt="{lang values="common|move_impossible"}" title="{lang values="common|move_impossible"}" />
+{/if}
+				</td>
+{/if}
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{if $can_delete}
+{mark name="entries"}
+{/if}
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}
+</form>

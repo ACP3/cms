@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>create</name>
+		<message>New entry</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>Delete guestbook entries</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Edit guestbook entry</message>
+	</item>
+	<item>
+		<name>guestbook</name>
+		<message>Guestbook</message>
+	</item>
+	<item>
+		<name>guestbook_entries</name>
+		<message>Guestbook entries</message>
+	</item>
+	<item>
+		<name>ip</name>
+		<message>IP Address</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>With this module you can administer the guestbook.</message>
+	</item>
+	<item>
+		<name>send_email</name>
+		<message>Send E-mail</message>
+	</item>
+	<item>
+		<name>visit_website</name>
+		<message>Visit website</message>
+	</item>
+</language>

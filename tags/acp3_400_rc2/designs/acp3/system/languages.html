@@ -1,0 +1,22 @@
+<table class="acp-table">
+	<thead>
+		<tr>
+			<th>{lang values="system|language"}</th>
+			<th>{lang values="common|description"}</th>
+			<th>{lang values="common|author"}</th>
+			<th>{lang values="system|version"}</th>
+			<th>{lang values="common|options"}</th>
+		</tr>
+	</thead>
+	<tbody>
+{foreach from=$languages item=row}
+		<tr>
+			<td>{$row.name}</td>
+			<td>{$row.description}</td>
+			<td>{$row.author}</td>
+			<td>{$row.version}</td>
+			<td>{$row.action}</td>
+		</tr>
+{/foreach}
+	</tbody>
+</table>

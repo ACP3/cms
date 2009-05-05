@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<info>
+		<name lang="true"/>
+		<description lang="true"/>
+		<author>Goratsch Webdesign</author>
+		<tables>categories</tables>
+		<version core="true"/>
+		<protected/>
+		<active>1</active>
+	</info>
+	<settings>
+		<width>100</width>
+		<height>50</height>
+		<filesize>40960</filesize>
+	</settings>
+	<access>
+		<item>
+			<file>adm_list</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>create</file>
+			<level>2</level>
+			<include>functions</include>
+		</item>
+		<item>
+			<file>delete</file>
+			<level>8</level>
+			<include>functions</include>
+		</item>
+		<item>
+			<file>edit</file>
+			<level>4</level>
+			<include>functions</include>
+		</item>
+		<item>
+			<file>functions</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>settings</file>
+			<level>15</level>
+		</item>
+	</access>
+</module>

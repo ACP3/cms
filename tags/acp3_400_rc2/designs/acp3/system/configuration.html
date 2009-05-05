@@ -1,0 +1,112 @@
+{if isset($error_msg)}
+{$error_msg}
+{/if}
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+	<div id="tabs">
+		<ul>
+			<li><a href="#tabs-1">{lang values="system|general"}</a></li>
+			<li><a href="#tabs-2">{lang values="common|date"}</a></li>
+			<li><a href="#tabs-3">{lang values="system|maintenance"}</a></li>
+			<li><a href="#tabs-4">{lang values="system|seo"}</a></li>
+		</ul>
+		<div id="tabs-1">
+			<dl>
+				<dt><label for="entries">{lang values="system|entries_per_page"}</label></dt>
+				<dd>
+					<select name="form[entries]" id="entries">
+{foreach from=$entries item=row}
+						<option value="{$row.value}"{$row.selected}>{$row.value}</option>
+{/foreach}
+					</select>
+				</dd>
+				<dt>
+					<label for="flood">{lang values="system|flood_barrier"}</label>
+					<span>({lang values="system|flood_barrier_description"})</span>
+				</dt>
+				<dd><input type="text" name="form[flood]" id="flood" value="{$form.flood}" maxlength="3" /></dd>
+				<dt>
+					<label for="homepage">{lang values="system|homepage"}</label>
+					<span>({lang values="system|homepage_description"})</span>
+				</dt>
+				<dd><input type="text" name="form[homepage]" id="homepage" value="{$form.homepage}" /></dd>
+				<dt><label for="wysiwyg">{lang values="system|editor"}</label></dt>
+				<dd>
+					<select name="form[wysiwyg]" id="wysiwyg">
+{foreach from=$wysiwyg item=row}
+						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{/foreach}
+					</select>
+				</dd>
+			</dl>
+		</div>
+		<div id="tabs-2" class="ui-tabs-hide">
+			<dl>
+				<dt>
+					<label for="date-format">{lang values="system|date_format"}</label>
+					<span>({lang values="system|php_date_function"})</span>
+				</dt>
+				<dd><input type="text" name="form[date_format]" id="date-format" value="{$form.date_format}" maxlength="20" /></dd>
+				<dt><label for="date-time-zone">{lang values="common|time_zone"}</label></dt>
+				<dd>
+					<select name="form[date_time_zone]" id="date-time-zone">
+{foreach from=$time_zone item=row}
+						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{/foreach}
+					</select>
+				</dd>
+				<dt><label for="date-dst-1">{lang values="common|daylight_saving_time"}</label></dt>
+				<dd>
+{foreach from=$dst item=row}
+					<label for="date-dst-{$row.value}">
+						<input type="radio" name="form[date_dst]" id="date-dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+						{$row.lang}
+					</label>
+{/foreach}
+				</dd>
+			</dl>
+		</div>
+		<div id="tabs-3" class="ui-tabs-hide">
+			<dl>
+				<dt><label for="maintenance-mode-1">{lang values="system|maintenance_mode"}</label></dt>
+				<dd>
+{foreach from=$maintenance item=row}
+					<label for="maintenance-mode-{$row.value}">
+						<input type="radio" name="form[maintenance_mode]" id="maintenance-mode-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+						{$row.lang}
+					</label>
+{/foreach}
+				</dd>
+				<dt><label for="maintenance-message">{lang values="system|maintenance_msg"}</label></dt>
+				<dd><textarea name="form[maintenance_message]" id="maintenance-message" cols="50" rows="6">{$form.maintenance_message}</textarea></dd>
+			</dl>
+		</div>
+		<div id="tabs-4" class="ui-tabs-hide">
+			<dl>
+				<dt><label for="seo-title">{lang values="system|title"}</label></dt>
+				<dd><input type="text" name="form[seo_title]" id="seo-title" value="{$form.seo_title}" maxlength="120" /></dd>
+				<dt><label for="seo-meta-description">{lang values="system|description"}</label></dt>
+				<dd><input type="text" name="form[seo_meta_description]" id="seo-meta-description" value="{$form.seo_meta_description}" maxlength="120" /></dd>
+				<dt>
+					<label for="seo-meta-keywords">{lang values="system|keywords"}</label>
+					<span>({lang values="system|separate_with_commas"})</span>
+				</dt>
+				<dd><textarea name="form[seo_meta_keywords]" id="seo-meta-keywords" cols="50" rows="6">{$form.seo_meta_keywords}</textarea></dd>
+				<dt>
+					<label for="seo-mod-rewrite-1">{lang values="system|mod_rewrite"}</label>
+					<span>({lang values="system|mod_rewrite_description"})</span>
+				</dt>
+				<dd>
+{foreach from=$sef item=row}
+					<label for="seo-mod-rewrite-{$row.value}">
+						<input type="radio" name="form[seo_mod_rewrite]" id="seo-mod-rewrite-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+						{$row.lang}
+					</label>
+{/foreach}
+				</dd>
+			</dl>
+		</div>
+	</div>
+	<div class="form-bottom">
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>

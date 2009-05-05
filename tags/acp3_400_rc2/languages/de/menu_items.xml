@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>adm_list_blocks</name>
+		<message>Blöcke</message>
+	</item>
+	<item>
+		<name>block_title</name>
+		<message>Name des Blocks</message>
+	</item>
+	<item>
+		<name>block_title_to_short</name>
+		<message>Der Name des Blocks sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>blocks</name>
+		<message>Block</message>
+	</item>
+	<item>
+		<name>chronology</name>
+		<message>Reihenfolge</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Neuen Menüpunkt erstellen</message>
+	</item>
+	<item>
+		<name>create_block</name>
+		<message>Neuen Block erstellen</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>Menüpunkte löschen</message>
+	</item>
+	<item>
+		<name>delete_blocks</name>
+		<message>Blöcke löschen</message>
+	</item>
+	<item>
+		<name>display_item</name>
+		<message>Menüpunkt anzeigen</message>
+	</item>
+	<item>
+		<name>dynamic_page</name>
+		<message>Dynamische Seite</message>
+	</item>
+	<item>
+		<name>dynamic_page_hints</name>
+		<message><![CDATA[Um eine ACP3 interne Seite zu verlinken, müssen Sie im Feld &quot;URI&quot; die Seite in der Form &quot;modul/datei/weitere_parameter/&quot; eintragen, also beispielsweise news/details/id_1/.]]></message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Menüpunkt bearbeiten</message>
+	</item>
+	<item>
+		<name>edit_block</name>
+		<message>Block bearbeiten</message>
+	</item>
+	<item>
+		<name>hyperlink</name>
+		<message>Hyperlink</message>
+	</item>
+	<item>
+		<name>index_name</name>
+		<message>Index Name</message>
+	</item>
+	<item>
+		<name>index_name_description</name>
+		<message>Dies beschreibt den Namen des Platzhalters in den Templates</message>
+	</item>
+	<item>
+		<name>index_name_unique</name>
+		<message>Der Name des Template Platzhalters muss einzigartig sein</message>
+	</item>
+	<item>
+		<name>menu_items</name>
+		<message>Menüpunkte</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Dieses Modul verwaltet die Navigationsleisten.</message>
+	</item>
+	<item>
+		<name>module</name>
+		<message>Modul</message>
+	</item>
+	<item>
+		<name>no_superior_page</name>
+		<message>Keine übergeordnete Seite</message>
+	</item>
+	<item>
+		<name>page_type</name>
+		<message>Seitentyp</message>
+	</item>
+	<item>
+		<name>select_block</name>
+		<message>Bitte wählen Sie aus, in welcher Navigationsleiste der Menüpunkt angezeigt werden soll</message>
+	</item>
+	<item>
+		<name>select_item_visibility</name>
+		<message>Bitte wählen Sie aus, ob der Menüpunkt angezeigt werden soll oder nicht</message>
+	</item>
+	<item>
+		<name>select_page_type</name>
+		<message>Bitte wählen Sie den Seitentyp aus</message>
+	</item>
+	<item>
+		<name>select_superior_page</name>
+		<message>Bitte wählen Sie eine übergeordnete Seite aus</message>
+	</item>
+	<item>
+		<name>superior_page</name>
+		<message>Übergeordnete Seite</message>
+	</item>
+	<item>
+		<name>superior_page_not_allowed</name>
+		<message>Die gerade ausgewählte Seite kann nicht als übergeordnete Seite verwendet werden</message>
+	</item>
+	<item>
+		<name>target_page</name>
+		<message>Zielseite</message>
+	</item>
+	<item>
+		<name>title</name>
+		<message>Seitentitel</message>
+	</item>
+	<item>
+		<name>title_to_short</name>
+		<message>Der Seitentitel sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>type_in_index_name</name>
+		<message>Der Index Name darf nur Buchstaben, Ziffern und den Unterstrich enthalten</message>
+	</item>
+	<item>
+		<name>type_in_uri_and_target</name>
+		<message>Bitte geben Sie die Zielseite und das zu verlinkende Modul, bzw. die zu verlinkende URI an</message>
+	</item>
+	<item>
+		<name>uri</name>
+		<message>URI</message>
+	</item>
+</language>

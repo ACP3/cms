@@ -1,0 +1,45 @@
+<form action="{uri args="acp/files/delete"}" method="post">
+	<div id="adm-list">
+		{check_access mode="link" action="files|create" uri="acp/files/create" icon="32/download"}
+		{check_access mode="input" action="files|delete" icon="32/cancel" lang="common|delete_marked"}
+		<h2>{lang values="common|overview"}</h2>
+	</div>
+	<hr />
+{if isset($files)}
+{$pagination}
+{assign var="can_delete" value=$MODULES->check("files", "delete")}
+	<table class="acp-table">
+		<thead>
+			<tr>
+{if $can_delete}
+				<th>{lang values="common|mark"}</th>
+{/if}
+				<th>{lang values="common|publication_period"}</th>
+				<th>{lang values="files|link_title"}</th>
+				<th>{lang values="files|filename"}</th>
+				<th>{lang values="files|filesize"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$files item=row}
+			<tr>
+{if $can_delete}
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
+{/if}
+				<td>{$row.period}</td>
+				<td>{check_access mode="link" action="files|edit" uri="acp/files/edit/id_`$row.id`" title=$row.link_title}</td>
+				<td>{check_access mode="link" action="files|details" uri="files/details/id_`$row.id`/action_download" lang="files|download_file" title=$row.file}</td>
+				<td>{$row.size}</td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{if $can_delete}
+{mark name="entries"}
+{/if}
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}
+</form>

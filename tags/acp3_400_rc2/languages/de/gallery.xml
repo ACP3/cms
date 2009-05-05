@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>add_picture</name>
+		<message>Bild hinzufügen</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Neue Fotogalerie erstellen</message>
+	</item>
+	<item>
+		<name>delete_gallery</name>
+		<message>Fotogalerien löschen</message>
+	</item>
+	<item>
+		<name>delete_picture</name>
+		<message>Bilder löschen</message>
+	</item>
+	<item>
+		<name>details</name>
+		<message>Bilddetails</message>
+	</item>
+	<item>
+		<name>edit_gallery</name>
+		<message>Fotogalerie bearbeiten</message>
+	</item>
+	<item>
+		<name>edit_picture</name>
+		<message>Bild bearbeiten</message>
+	</item>
+	<item>
+		<name>filename</name>
+		<message>Dateiname</message>
+	</item>
+	<item>
+		<name>gallery</name>
+		<message>Fotogalerien</message>
+	</item>
+	<item>
+		<name>image_filesize</name>
+		<message>Maximale Dateigröße des Bildes</message>
+	</item>
+	<item>
+		<name>image_height</name>
+		<message>Maximal anzuzeigende Bildhöhe</message>
+	</item>
+	<item>
+		<name>image_width</name>
+		<message>Maximal anzuzeigende Bildbreite</message>
+	</item>
+	<item>
+		<name>invalid_image_filesize_entered</name>
+		<message>Bitte geben Sie die maximale Dateigröße des Bildes in Byte an</message>
+	</item>
+	<item>
+		<name>invalid_image_height_entered</name>
+		<message>Bitte geben Sie die maximale Bildhöhe in Pixel an</message>
+	</item>
+	<item>
+		<name>invalid_image_selected</name>
+		<message>Entweder Sie haben ein unerlaubtes Dateiformat verwendet oder das Bild ist zu breit, zu hoch oder zu groß</message>
+	</item>
+	<item>
+		<name>invalid_image_width_entered</name>
+		<message>Bitte geben Sie die maximale Bildbreite in Pixel an</message>
+	</item>
+	<item>
+		<name>max_image_height</name>
+		<message>Maximale Bildhöhe</message>
+	</item>
+	<item>
+		<name>max_image_width</name>
+		<message>Maximale Bildbreite</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Mit diesem Modul können die Fotogalerien verwaltet werden.</message>
+	</item>
+	<item>
+		<name>no_picture_selected</name>
+		<message>Bitte wählen Sie ein Bild aus</message>
+	</item>
+	<item>
+		<name>no_pictures</name>
+		<message>In diese Fotogalerie wurden noch keine Bilder eingetragen.</message>
+	</item>
+	<item>
+		<name>pics</name>
+		<message>Fotogalerien</message>
+	</item>
+	<item>
+		<name>picture</name>
+		<message>Bild</message>
+	</item>
+	<item>
+		<name>picture_index</name>
+		<message>Bild Übersicht</message>
+	</item>
+	<item>
+		<name>picture_information</name>
+		<message>Bild Informationen</message>
+	</item>
+	<item>
+		<name>pictures</name>
+		<message>Bilder</message>
+	</item>
+	<item>
+		<name>select_new_picture</name>
+		<message>Neues Bild auswählen</message>
+	</item>
+	<item>
+		<name>select_picture</name>
+		<message>Bild auswählen</message>
+	</item>
+	<item>
+		<name>settings</name>
+		<message>Einstellungen</message>
+	</item>
+	<item>
+		<name>thumb_image_height</name>
+		<message>Maximal anzuzeigende Höhe der Vorschaubilder</message>
+	</item>
+	<item>
+		<name>thumb_image_width</name>
+		<message>Maximal anzuzeigende Breite der Vorschaubilder</message>
+	</item>
+	<item>
+		<name>title</name>
+		<message>Titel</message>
+	</item>
+	<item>
+		<name>type_in_gallery_name</name>
+		<message>Der Name der Fotogalerie sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+</language>

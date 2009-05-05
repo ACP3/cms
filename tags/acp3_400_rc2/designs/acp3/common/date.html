@@ -1,0 +1,8 @@
+{literal}
+<script type="text/javascript">
+jQuery(function($) {
+	$('#{/literal}{$date.name}{literal}').datepicker({ constrainInput: false, dateFormat: {/literal}'{$date.format}'{literal} });
+});
+</script>
+{/literal}
+<input type="text" name="form[{$date.name}]" id="{$date.name}" value="{$date.input}" maxlength="16" />

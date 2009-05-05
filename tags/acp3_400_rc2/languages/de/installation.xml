@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>accept</name>
+		<message>Akzeptieren</message>
+	</item>
+	<item>
+		<name>admin_account</name>
+		<message>Administrator Konto</message>
+	</item>
+	<item>
+		<name>check_again</name>
+		<message>Erneut prüfen</message>
+	</item>
+	<item>
+		<name>configuration</name>
+		<message>Konfiguration</message>
+	</item>
+	<item>
+		<name>database</name>
+		<message>Datenbank</message>
+	</item>
+	<item>
+		<name>db_connection_failed</name>
+		<message>Es konnte keine Verbindung zur Datenbank hergestellt werden</message>
+	</item>
+	<item>
+		<name>db_connection_settings</name>
+		<message>Verbindungsdaten zur Datenbank</message>
+	</item>
+	<item>
+		<name>db_hostname</name>
+		<message>Hostname</message>
+	</item>
+	<item>
+		<name>db_hostname_description</name>
+		<message>(meistens "localhost")</message>
+	</item>
+	<item>
+		<name>db_name</name>
+		<message>Datenbankname</message>
+	</item>
+	<item>
+		<name>db_password</name>
+		<message>Passwort</message>
+	</item>
+	<item>
+		<name>db_table_prefix</name>
+		<message>Tabellenpräfix</message>
+	</item>
+	<item>
+		<name>db_username</name>
+		<message>Benutzername</message>
+	</item>
+	<item>
+		<name>decline</name>
+		<message>Ablehnen</message>
+	</item>
+	<item>
+		<name>disclaimer</name>
+		<message><![CDATA[Trotz sorgf&auml;ltiger inhaltlicher Kontrolle &uuml;bernehmen wir keine Haftung f&uuml;r die Inhalte externer Links. F&uuml;r den Inhalt der verlinkten Seiten sind ausschlie&szlig;lich deren Betreiber verantwortlich.]]></message>
+	</item>
+	<item>
+		<name>error_messages</name>
+		<message>Ausgabe von Fehlermeldungen:</message>
+	</item>
+	<item>
+		<name>file_folder_not_found</name>
+		<message>Datei bzw. Ordner nicht gefunden</message>
+	</item>
+	<item>
+		<name>file_found</name>
+		<message>Datei gefunden</message>
+	</item>
+	<item>
+		<name>folder_found</name>
+		<message>Ordner gefunden</message>
+	</item>
+	<item>
+		<name>found</name>
+		<message>Gefunden</message>
+	</item>
+	<item>
+		<name>gd_library</name>
+		<message>GD Grafikbibliothek</message>
+	</item>
+	<item>
+		<name>installation</name>
+		<message>Installation</message>
+	</item>
+	<item>
+		<name>installation_error</name>
+		<message><![CDATA[Während der Installation ist ein Fehler aufgetreten, wodurch die Installation nicht fortgesetzt werden kann. Bitte überprüfen Sie nochmals alle Eingaben, insbesondere ob alle Angaben in der Konfigurationsdatei stimmen.<br />Bitte klicken Sie auf "Zurück", um wieder zum Anfang der Installation zu gelangen.]]></message>
+	</item>
+	<item>
+		<name>installation_impossible</name>
+		<message>Installation nicht möglich!</message>
+	</item>
+	<item>
+		<name>installation_successful_1</name>
+		<message><![CDATA[Alle Abfragen wurden erfolgreich durchgeführt, womit die Installation nun abgeschlossen ist.<br />Über die unten stehende Schaltfläche können Sie zum Frontend Ihrer Website gelangen. Anschließend können Sie sich einloggen und weitere Änderungen an der Seite vornehmen, wie z.B. die Sprache wechseln, ein anderes Design wählen oder Inhalte veröffentlichen.]]></message>
+	</item>
+	<item>
+		<name>installation_successful_2</name>
+		<message><strong>Achtung:</strong> Bitte löschen Sie nun den "installation"-Ordner, da dies ein potentielles Sicherheitsrisiko darstellen könnte, falls dieser Ordner in einer Produktiv-Umgebung noch existieren sollte.</message>
+	</item>
+	<item>
+		<name>language</name>
+		<message>Sprache:</message>
+	</item>
+	<item>
+		<name>licence</name>
+		<message>Lizenz</message>
+	</item>
+	<item>
+		<name>maximum_uploadsize</name>
+		<message>Maximale Uploadgröße:</message>
+	</item>
+	<item>
+		<name>navigation</name>
+		<message>Navigation</message>
+	</item>
+	<item>
+		<name>news_headline</name>
+		<message>Installation erfolgreich beendet!</message>
+	</item>
+	<item>
+		<name>news_text</name>
+		<message><![CDATA[So wie es aussieht, hat bei der Installation des ACP3 4.0 alles geklappt.<br />Dies ist nur eine Testnews, die Sie nun im Administrationsbereich bearbeiten oder l&ouml;schen k&ouml;nnen.<br />Ansonsten w&uuml;nscht Ihnen das Team von Goratsch Webdesign viel Spa&szlig; bei der Arbeit mit dem ACP3 4.0!]]></message>
+	</item>
+	<item>
+		<name>newsletter_mailsig</name>
+		<message>das Newsletterteam</message>
+	</item>
+	<item>
+		<name>not_writeable</name>
+		<message>Keine Schreibrechte gefunden</message>
+	</item>
+	<item>
+		<name>offline_message</name>
+		<message>Wegen kurzfristigen Wartungsarbeiten ist diese Website zur Zeit nicht erreichbar. Bitte versuchen Sie es in einigen Minuten erneut.</message>
+	</item>
+	<item>
+		<name>overview</name>
+		<message>Übersicht</message>
+	</item>
+	<item>
+		<name>pages_contact</name>
+		<message>Kontakt</message>
+	</item>
+	<item>
+		<name>pages_files</name>
+		<message>Downloads</message>
+	</item>
+	<item>
+		<name>pages_gallery</name>
+		<message>Fotogalerien</message>
+	</item>
+	<item>
+		<name>pages_guestbook</name>
+		<message>Gästebuch</message>
+	</item>
+	<item>
+		<name>pages_imprint</name>
+		<message>Impressum</message>
+	</item>
+	<item>
+		<name>pages_main</name>
+		<message>Hauptnavigation</message>
+	</item>
+	<item>
+		<name>pages_news</name>
+		<message>News</message>
+	</item>
+	<item>
+		<name>pages_polls</name>
+		<message>Umfragen</message>
+	</item>
+	<item>
+		<name>pages_search</name>
+		<message>Suche</message>
+	</item>
+	<item>
+		<name>pages_sidebar</name>
+		<message>Sidebar</message>
+	</item>
+	<item>
+		<name>pdo_extension</name>
+		<message>PDO Erweiterung</message>
+	</item>
+	<item>
+		<name>query_failed</name>
+		<message>Abfrage fehlgeschalgen!</message>
+	</item>
+	<item>
+		<name>query_successfully_executed</name>
+		<message>Abfrage erfolgreich durchgeführt!</message>
+	</item>
+	<item>
+		<name>register_globals</name>
+		<message>Globale Registrierung von Variablen:</message>
+	</item>
+	<item>
+		<name>required</name>
+		<message>Benötigt</message>
+	</item>
+	<item>
+		<name>requirements</name>
+		<message>Voraussetzungen</message>
+	</item>
+	<item>
+		<name>result</name>
+		<message>Ergebnis</message>
+	</item>
+	<item>
+		<name>show_hide_executed_db_queries</name>
+		<message>Durchgeführte Datenbankabfragen anzeigen/verstecken</message>
+	</item>
+	<item>
+		<name>sincerely</name>
+		<message>Mit freundlichen Grüßen,</message>
+	</item>
+	<item>
+		<name>sql_query</name>
+		<message>SQL Anfrage</message>
+	</item>
+	<item>
+		<name>step_1_legend</name>
+		<message>Im Detail wird Sie die Installationsroutine durch folgende Schritte führen:</message>
+	</item>
+	<item>
+		<name>step_1_list_item_1</name>
+		<message>Einsicht in die Lizenz</message>
+	</item>
+	<item>
+		<name>step_1_list_item_2</name>
+		<message>Überprüfung der Serverkonfiguration, ob alle Anforderungen, die das ACP3 4.0 stellt, erfüllt werden</message>
+	</item>
+	<item>
+		<name>step_1_list_item_3</name>
+		<message>Eingabe der grundlegenden Parameter der Seite</message>
+	</item>
+	<item>
+		<name>step_1_list_item_4</name>
+		<message>Anlegen der Tabellen in der Datenbank</message>
+	</item>
+	<item>
+		<name>step_1_paragraph_1</name>
+		<message>Herzlich willkommen zur Installation des ACP3 4.0. Dieser Installationsassistent wird Ihnen dabei helfen, das ACP3 4.0 zu installieren und grundlegend zu konfigurieren.</message>
+	</item>
+	<item>
+		<name>step_3_legend_1</name>
+		<message><![CDATA[Allgemeine Systemvoraussetzungen &amp; Ordner-Rechte]]></message>
+	</item>
+	<item>
+		<name>step_3_legend_2</name>
+		<message>PHP Einstellungen</message>
+	</item>
+	<item>
+		<name>step_3_paragraph_1</name>
+		<message>Diese Voraussetzungen müssen unbedingt erfüllt sein, da das ACP3 ansonsten nicht einwandfrei installiert und ausgeführt werden kann. Des Weiteren wird überprüft, ob für bestimmte Dateien und Ordner Schreibrechte existieren.</message>
+	</item>
+	<item>
+		<name>step_3_paragraph_2</name>
+		<message>Hier werden die PHP Einstellungen des Webspace/Servers überprüft, welche jedoch nicht relevant für die erfolgreiche Installation des ACP3 sein sollten. Falls bei der Überprüfung ein Feld rot dargestellt werden sollte, so setzen Sie sich bitte mit ihren Provider in Kontakt, um dieses Problem zu beheben.</message>
+	</item>
+	<item>
+		<name>stop_installation</name>
+		<message>Die Installation kann nicht fortgesetzt werden, da dieser Webspace/Server die benötigten Voraussetzungen nicht erfüllt.</message>
+	</item>
+	<item>
+		<name>type_in_db_host</name>
+		<message>Bitte geben Sie den Hostnamen zur Datenbank ein</message>
+	</item>
+	<item>
+		<name>type_in_db_name</name>
+		<message>Bitte geben Sie den Datenbankname ein</message>
+	</item>
+	<item>
+		<name>type_in_db_username</name>
+		<message>Bitte geben Sie den Benutzernamen zur Datenbank ein</message>
+	</item>
+	<item>
+		<name>type_in_pwd</name>
+		<message>Entweder ist das Passwort leer oder in der Wiederholung ist ein Tippfehler</message>
+	</item>
+	<item>
+		<name>type_in_user_name</name>
+		<message>Bitte geben Sie einen Benutzernamen für das Administrator Konto an</message>
+	</item>
+	<item>
+		<name>welcome</name>
+		<message>Willkommen</message>
+	</item>
+	<item>
+		<name>writeable</name>
+		<message>Schreibrechte gefunden</message>
+	</item>
+	<item>
+		<name>wrong_chmod_for_config_file</name>
+		<message>Bitte geben Sie der Datei config.php im "includes"-Ordner den CHMOD 777</message>
+	</item>
+</language>

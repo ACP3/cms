@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>access</name>
+		<message>Zugriffslevel</message>
+	</item>
+	<item>
+		<name>access_level_already_exists</name>
+		<message>Es existiert bereits ein Zugriffslevel mit diesem Namen</message>
+	</item>
+	<item>
+		<name>access_level_selection_tip</name>
+		<message>Bitte wählen Sie aus der untenstehenden Liste aus, welche Aktionen ein Benutzer beim jeweiligen Modul ausführen kann.</message>
+	</item>
+	<item>
+		<name>access_level_undeletable</name>
+		<message>Die Zugriffslevel für Administratoren, Benutzer und Besucher können nicht gelöscht werden.</message>
+	</item>
+	<item>
+		<name>access_to_following_modules</name>
+		<message>Zugriff auf die Module</message>
+	</item>
+	<item>
+		<name>can_create</name>
+		<message>Erstellen</message>
+	</item>
+	<item>
+		<name>can_delete</name>
+		<message>Löschen</message>
+	</item>
+	<item>
+		<name>can_edit</name>
+		<message>Bearbeiten</message>
+	</item>
+	<item>
+		<name>can_read</name>
+		<message>Lesen</message>
+	</item>
+	<item>
+		<name>create</name>
+		<message>Neuen Zugriffslevel erstellen</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>Zugriffslevel löschen</message>
+	</item>
+	<item>
+		<name>edit</name>
+		<message>Zugriffslevel bearbeiten</message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>Mit diesem Modul können verschiedene Zugriffslevel für die Benutzer angelegt werden.</message>
+	</item>
+</language>

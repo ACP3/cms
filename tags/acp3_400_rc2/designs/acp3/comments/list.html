@@ -1,0 +1,30 @@
+<h1 id="comments">{lang values="comments|comments"}</h1>
+{if isset($comments)}
+{$pagination}
+{foreach from=$comments item=row}
+	<div class="gb">
+		<div class="header">
+			<div class="author">
+				{lang values="common|author"}
+			</div>
+			<div class="message">
+				{lang values="common|message"}
+			</div>
+		</div>
+		<div class="left">
+			<strong>{lang values="common|name"}:</strong> {if !empty($row.user_id)}<a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang values="users|view_profile"}">{$row.name}</a>{else}{$row.name}{/if}<br />
+			<strong>{lang values="common|date"}:</strong> {$row.date}
+		</div>
+		<div class="content">
+			{$row.message}
+		</div>
+		<div class="footer"></div>
+	</div>
+	<br />
+	<br />
+{/foreach}
+{else}
+<div class="error">
+	<h5>{lang values="common|no_entries"}</h5>
+</div>
+{/if}

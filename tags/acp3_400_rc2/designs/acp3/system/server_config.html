@@ -1,0 +1,33 @@
+<table class="acp-table">
+	<thead>
+		<tr>
+			<th>{lang values="system|php_extensions"}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>{$php_ext}</td>
+		</tr>
+	</tbody>
+</table>
+<br />
+<table class="acp-table" style="width:35%">
+	<thead>
+		<tr>
+			<th colspan="2">{lang values="system|php_settings"}</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<td colspan="2">{$result_text}</td>
+		</tr>
+	</tfoot>
+	<tbody>
+{foreach from=$php_settings item=setting}
+		<tr>
+			<td style="width:66%">{$setting.col_left}:</td>
+			<td style="background:{$setting.col_color};font-weight:bold;color:#fff">{$setting.col_right}</td>
+		</tr>
+{/foreach}
+	</tbody>
+</table>

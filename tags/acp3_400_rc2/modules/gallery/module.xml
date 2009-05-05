@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<info>
+		<name lang="true"/>
+		<description lang="true"/>
+		<author>Goratsch Webdesign</author>
+		<tables>gallery,gallery_pictures</tables>
+		<version core="true"/>
+		<active>1</active>
+	</info>
+	<settings>
+		<width>640</width>
+		<height>480</height>
+		<thumbwidth>160</thumbwidth>
+		<thumbheight>120</thumbheight>
+		<maxwidth>1024</maxwidth>
+		<maxheight>768</maxheight>
+		<filesize>20971520</filesize>
+	</settings>
+	<access>
+		<item>
+			<file>add_picture</file>
+			<level>2</level>
+			<include>functions</include>
+		</item>
+		<item>
+			<file>adm_list</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>create</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>delete_gallery</file>
+			<level>8</level>
+		</item>
+		<item>
+			<file>delete_picture</file>
+			<level>8</level>
+			<include>functions</include>
+		</item>
+		<item>
+			<file>details</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>edit_gallery</file>
+			<level>4</level>
+		</item>
+		<item>
+			<file>edit_picture</file>
+			<level>4</level>
+			<include>functions</include>
+		</item>
+		<item>
+			<file>image</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>list</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>order</file>
+			<level>2</level>
+			<include>functions</include>
+		</item>
+		<item>
+			<file>pics</file>
+			<level>1</level>
+			<include>functions</include>
+		</item>
+		<item>
+			<file>settings</file>
+			<level>15</level>
+		</item>
+	</access>
+</module>

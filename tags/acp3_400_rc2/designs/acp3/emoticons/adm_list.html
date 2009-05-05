@@ -1,0 +1,44 @@
+<form action="{uri args="acp/emoticons/delete"}" method="post">
+	<div id="adm-list">
+		{check_access mode="link" action="emoticons|create" uri="acp/emoticons/create" icon="32/ksmiletris"}
+		{check_access mode="link" action="emoticons|settings" uri="acp/emoticons/settings" icon="32/advancedsettings"}
+		{check_access mode="input" action="emoticons|delete" icon="32/cancel" lang="common|delete_marked"}
+		<h2>{lang values="common|overview"}</h2>
+	</div>
+	<hr />
+{if isset($emoticons)}
+{$pagination}
+{assign var="can_delete" value=$MODULES->check("emoticons", "delete")}
+	<table class="acp-table">
+		<thead>
+			<tr>
+{if $can_delete}
+				<th>{lang values="common|mark"}</th>
+{/if}
+				<th>{lang values="common|description"}</th>
+				<th>{lang values="emoticons|code"}</th>
+				<th>{lang values="emoticons|picture"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$emoticons item=row}
+			<tr>
+{if $can_delete}
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
+{/if}
+				<td>{check_access mode="link" action="emoticons|edit" uri="acp/emoticons/edit/id_`$row.id`" title=$row.description}</td>
+				<td>{$row.code}</td>
+				<td><img src="{$ROOT_DIR}uploads/emoticons/{$row.img}" alt="" /></td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{if $can_delete}
+{mark name="entries"}
+{/if}
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}
+</form>

@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>acp</name>
+		<message>Administration Control Panel</message>
+	</item>
+	<item>
+		<name>activate_module</name>
+		<message><![CDATA[The module &quot;%s&quot; is disabled, whereby certain features can be limited.<br />Please enable the module, to resolve this problem.]]></message>
+	</item>
+	<item>
+		<name>allow_comments</name>
+		<message>Allow comments</message>
+	</item>
+	<item>
+		<name>author</name>
+		<message>Author</message>
+	</item>
+	<item>
+		<name>back</name>
+		<message>Back</message>
+	</item>
+	<item>
+		<name>category</name>
+		<message>Category</message>
+	</item>
+	<item>
+		<name>confirm_delete</name>
+		<message>Do you really want to delete the marked entries?</message>
+	</item>
+	<item>
+		<name>create_error</name>
+		<message>While creating the entry an error has occured.</message>
+	</item>
+	<item>
+		<name>create_success</name>
+		<message>The entry has been created successfully.</message>
+	</item>
+	<item>
+		<name>date</name>
+		<message>Date</message>
+	</item>
+	<item>
+		<name>date_description</name>
+		<message>If you wouldn\'t like to set a enddate, just set the release date and the end date to the same values.</message>
+	</item>
+	<item>
+		<name>day</name>
+		<message>Day</message>
+	</item>
+	<item>
+		<name>daylight_saving_time</name>
+		<message>Daylight saving time is in effect</message>
+	</item>
+	<item>
+		<name>delete</name>
+		<message>Delete</message>
+	</item>
+	<item>
+		<name>delete_error</name>
+		<message>While deleting the marked entries an error has occured.</message>
+	</item>
+	<item>
+		<name>delete_marked</name>
+		<message>Delete marked entries</message>
+	</item>
+	<item>
+		<name>delete_success</name>
+		<message>The marked entries have been deleted successfully.</message>
+	</item>
+	<item>
+		<name>description</name>
+		<message>Description</message>
+	</item>
+	<item>
+		<name>edit_error</name>
+		<message>While editing the entry an error has occured.</message>
+	</item>
+	<item>
+		<name>edit_order</name>
+		<message>Edit order</message>
+	</item>
+	<item>
+		<name>edit_success</name>
+		<message>The entry has been edited successfully.</message>
+	</item>
+	<item>
+		<name>email</name>
+		<message>E-mail address</message>
+	</item>
+	<item>
+		<name>end_date</name>
+		<message>End date</message>
+	</item>
+	<item>
+		<name>entries</name>
+		<message>Entries</message>
+	</item>
+	<item>
+		<name>entry</name>
+		<message>Entry</message>
+	</item>
+	<item>
+		<name>entry_not_found</name>
+		<message>Sorry, but the requested entry can be found.</message>
+	</item>
+	<item>
+		<name>failure</name>
+		<message>The following errors have occured:</message>
+	</item>
+	<item>
+		<name>first_page</name>
+		<message>First page</message>
+	</item>
+	<item>
+		<name>flood_no_entry_possible</name>
+		<message>You need to wait %d seconds, to submit a new comment</message>
+	</item>
+	<item>
+		<name>forward</name>
+		<message>Forward</message>
+	</item>
+	<item>
+		<name>from_start_to_end</name>
+		<message>From %1$s until %2$s</message>
+	</item>
+	<item>
+		<name>general_statements</name>
+		<message>General statements</message>
+	</item>
+	<item>
+		<name>hour</name>
+		<message>Hour</message>
+	</item>
+	<item>
+		<name>last_page</name>
+		<message>Last page</message>
+	</item>
+	<item>
+		<name>mark</name>
+		<message>Mark</message>
+	</item>
+	<item>
+		<name>mark_all</name>
+		<message>Mark all entries</message>
+	</item>
+	<item>
+		<name>message</name>
+		<message>Message</message>
+	</item>
+	<item>
+		<name>message_to_short</name>
+		<message>The message should be a least 3 characters long</message>
+	</item>
+	<item>
+		<name>min</name>
+		<message>Minute</message>
+	</item>
+	<item>
+		<name>modules</name>
+		<message>Modules</message>
+	</item>
+	<item>
+		<name>month</name>
+		<message>Month</message>
+	</item>
+	<item>
+		<name>move_down</name>
+		<message>Move entry one step down</message>
+	</item>
+	<item>
+		<name>move_impossible</name>
+		<message><![CDATA[It\'s impossible to move this element]]></message>
+	</item>
+	<item>
+		<name>move_up</name>
+		<message>Move entry one step up</message>
+	</item>
+	<item>
+		<name>name</name>
+		<message>Name</message>
+	</item>
+	<item>
+		<name>name_to_short</name>
+		<message>Please type in a name</message>
+	</item>
+	<item>
+		<name>next_page</name>
+		<message>Next page</message>
+	</item>
+	<item>
+		<name>no</name>
+		<message>No</message>
+	</item>
+	<item>
+		<name>no_entries</name>
+		<message>There are no entries registered.</message>
+	</item>
+	<item>
+		<name>no_entries_selected</name>
+		<message>Please select the entries that should be deleted.</message>
+	</item>
+	<item>
+		<name>order</name>
+		<message>Order</message>
+	</item>
+	<item>
+		<name>order_error</name>
+		<message>While editing the order, an error has occured.</message>
+	</item>
+	<item>
+		<name>order_success</name>
+		<message>The order has been edited successfully.</message>
+	</item>
+	<item>
+		<name>options</name>
+		<message>Options</message>
+	</item>
+	<item>
+		<name>overview</name>
+		<message>Overview</message>
+	</item>
+	<item>
+		<name>pagination</name>
+		<message>Pagination</message>
+	</item>
+	<item>
+		<name>pls_select</name>
+		<message>Please select</message>
+	</item>
+	<item>
+		<name>previous page</name>
+		<message>Previous page</message>
+	</item>
+	<item>
+		<name>publication_period</name>
+		<message>Publication period</message>
+	</item>
+	<item>
+		<name>reset</name>
+		<message>Reset</message>
+	</item>
+	<item>
+		<name>select_date</name>
+		<message>Please complete the statements belonging the release date and end date</message>
+	</item>
+	<item>
+		<name>select_daylight_saving_time</name>
+		<message>Please select, wether daylight saving time is in effect or not</message>
+	</item>
+	<item>
+		<name>select_time_zone</name>
+		<message>Please select the time zone</message>
+	</item>
+	<item>
+		<name>settings_error</name>
+		<message>While editing the settings an error has occured.</message>
+	</item>
+	<item>
+		<name>settings_success</name>
+		<message>The settings have been edited successfully.</message>
+	</item>
+	<item>
+		<name>since_date</name>
+		<message>Since %s</message>
+	</item>
+	<item>
+		<name>start_date</name>
+		<message>Release date</message>
+	</item>
+	<item>
+		<name>submit</name>
+		<message>Submit</message>
+	</item>
+	<item>
+		<name>time_zone</name>
+		<message>Time zone</message>
+	</item>
+	<item>
+		<name>unmark_all</name>
+		<message>Unmark all</message>
+	</item>
+	<item>
+		<name>upload_error</name>
+		<message>While moving the file %s an error has occured.</message>
+	</item>
+	<item>
+		<name>utc-12</name>
+		<message>(UTC-12:00) Baker Island Time</message>
+	</item>
+	<item>
+		<name>utc-11</name>
+		<message>(UTC-11:00) Niue Time, Samoa Standard Time</message>
+	</item>
+	<item>
+		<name>utc-10</name>
+		<message>(UTC-10:00) Hawaii-Aleutian Standard Time, Cook Island Time</message>
+	</item>
+	<item>
+		<name>utc-9.5</name>
+		<message>(UTC-09:30) Marquesas Islands Time</message>
+	</item>
+	<item>
+		<name>utc-9</name>
+		<message>(UTC-09:00) Alaska Standard Time, Gambier Island Time</message>
+	</item>
+	<item>
+		<name>utc-8</name>
+		<message>(UTC-08:00) Pacific Standard Time</message>
+	</item>
+	<item>
+		<name>utc-7</name>
+		<message>(UTC-07:00) Mountain Standard Time</message>
+	</item>
+	<item>
+		<name>utc-6</name>
+		<message>(UTC-06:00) Central Standard Time</message>
+	</item>
+	<item>
+		<name>utc-5</name>
+		<message>(UTC-05:00) Eastern Standard Time</message>
+	</item>
+	<item>
+		<name>utc-4</name>
+		<message>(UTC-04:00) Atlantic Standard Time</message>
+	</item>
+	<item>
+		<name>utc-3.5</name>
+		<message>(UTC-03:30) Newfoundland Standard Time</message>
+	</item>
+	<item>
+		<name>utc-3</name>
+		<message>(UTC-03:00) Amazon Standard Time, Central Greenland Time</message>
+	</item>
+	<item>
+		<name>utc-2</name>
+		<message><![CDATA[ (UTC-02:00) Fernando de Noronha Time, South Georgia &amp; the South Sandwich Islands Time ]]></message>
+	</item>
+	<item>
+		<name>utc-1</name>
+		<message>(UTC-01:00) Azores Standard Time, Cape Verde Time, Eastern Greenland Time</message>
+	</item>
+	<item>
+		<name>utc0</name>
+		<message>(UTC) Western European Time, Greenwich Mean Time</message>
+	</item>
+	<item>
+		<name>utc1</name>
+		<message>(UTC+01:00) Central European Time, West African Time</message>
+	</item>
+	<item>
+		<name>utc2</name>
+		<message>(UTC+02:00) Eastern European Time, Central African Time</message>
+	</item>
+	<item>
+		<name>utc3</name>
+		<message>(UTC+03:00) Moscow Standard Time, Eastern African Time</message>
+	</item>
+	<item>
+		<name>utc3.5</name>
+		<message>(UTC+03:30) Iran Standard Time</message>
+	</item>
+	<item>
+		<name>utc4</name>
+		<message>(UTC+04:00) Gulf Standard Time, Samara Standard Time</message>
+	</item>
+	<item>
+		<name>utc4.5</name>
+		<message>(UTC+04:30) Afghanistan Time</message>
+	</item>
+	<item>
+		<name>utc5</name>
+		<message>(UTC+05:00) Pakistan Standard Time, Yekaterinburg Standard Time</message>
+	</item>
+	<item>
+		<name>utc5.5</name>
+		<message>(UTC+05:30) Indian Standard Time, Sri Lanka Time</message>
+	</item>
+	<item>
+		<name>utc5.75</name>
+		<message>(UTC+05:45) Nepal Time</message>
+	</item>
+	<item>
+		<name>utc6</name>
+		<message>(UTC+06:00) Bangladesh Time, Bhutan Time, Novosibirsk Standard Time</message>
+	</item>
+	<item>
+		<name>utc6.5</name>
+		<message>(UTC+06:30) Cocos Islands Time, Myanmar Time</message>
+	</item>
+	<item>
+		<name>utc7</name>
+		<message>(UTC+07:00) Indochina Time, Krasnoyarsk Standard Time</message>
+	</item>
+	<item>
+		<name>utc8</name>
+		<message>(UTC+08:00) Chinese Standard Time, Australian Western Standard Time, Irkutsk Standard Time</message>
+	</item>
+	<item>
+		<name>utc8.75</name>
+		<message>(UTC+08:45) Southeastern Western Australia Standard Time</message>
+	</item>
+	<item>
+		<name>utc9</name>
+		<message>(UTC+09:00) Dili, Jakutsk, Osaka, Pjöngjang, Sapporo, Seoul, Tokyo</message>
+	</item>
+	<item>
+		<name>utc9.5</name>
+		<message>(UTC+09:30) Australian Central Standard Time</message>
+	</item>
+	<item>
+		<name>utc10</name>
+		<message>(UTC+10:00) Australian Eastern Standard Time, Vladivostok Standard Time</message>
+	</item>
+	<item>
+		<name>utc10.5</name>
+		<message>(UTC+10:30) Lord Howe Standard Time</message>
+	</item>
+	<item>
+		<name>utc11</name>
+		<message>(UTC+11:00) Solomon Island Time, Magadan Standard Time</message>
+	</item>
+	<item>
+		<name>utc11.5</name>
+		<message>(UTC+11:30) Norfolk Island Time</message>
+	</item>
+	<item>
+		<name>utc12</name>
+		<message>(UTC+12:00) New Zealand Time, Fiji Time, Kamchatka Standard Time</message>
+	</item>
+	<item>
+		<name>utc12.75</name>
+		<message>(UTC+12:45) Chatham Islands Time</message>
+	</item>
+	<item>
+		<name>utc13</name>
+		<message>(UTC+13:00) Tonga Time, Phoenix Islands Time</message>
+	</item>
+	<item>
+		<name>utc14</name>
+		<message>(UTC+14:00) Line Island Time</message>
+	</item>
+	<item>
+		<name>website</name>
+		<message>Website</message>
+	</item>
+	<item>
+		<name>window_blank</name>
+		<message>New window (_blank)</message>
+	</item>
+	<item>
+		<name>window_self</name>
+		<message>Same window (_self)</message>
+	</item>
+	<item>
+		<name>wrong_email_format</name>
+		<message>The E-mail address doesn\'t match the format name@domain.com</message>
+	</item>
+	<item>
+		<name>year</name>
+		<message>Year</message>
+	</item>
+	<item>
+		<name>yes</name>
+		<message>Yes</message>
+	</item>
+</language>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<info>
+		<name lang="true"/>
+		<description lang="true"/>
+		<author>Goratsch Webdesign</author>
+		<tables>news</tables>
+		<version core="true"/>
+		<categories/>
+		<active>1</active>
+	</info>
+	<settings>
+		<comments>1</comments>
+		<readmore>1</readmore>
+		<readmore_chars>350</readmore_chars>
+	</settings>
+	<access>
+		<item>
+			<file>adm_list</file>
+			<level>2</level>
+		</item>
+		<item>
+			<file>create</file>
+			<level>2</level>
+			<include>categories/functions</include>
+		</item>
+		<item>
+			<file>delete</file>
+			<level>8</level>
+		</item>
+		<item>
+			<file>details</file>
+			<level>1</level>
+			<include>functions</include>
+		</item>
+		<item>
+			<file>edit</file>
+			<level>4</level>
+			<include>functions,categories/functions</include>
+		</item>
+		<item>
+			<file>extensions/feeds</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>extensions/search</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>list</file>
+			<level>1</level>
+		</item>
+		<item>
+			<file>settings</file>
+			<level>15</level>
+		</item>
+	</access>
+</module>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<item>
+		<name>403</name>
+		<message>Access denied</message>
+	</item>
+	<item>
+		<name>404</name>
+		<message>File not found</message>
+	</item>
+	<item>
+		<name>errors</name>
+		<message>Error messages</message>
+	</item>
+	<item>
+		<name>file_not_found</name>
+		<message><![CDATA[The requested module respectively the requested file wasn\'t found or isn\'t enabled at this moment.<br />Please contact the administrators of this Website, if this error occures repeatedly.]]></message>
+	</item>
+	<item>
+		<name>mod_description</name>
+		<message>This module returns useful error messages.</message>
+	</item>
+	<item>
+		<name>no_access</name>
+		<message>You don\'t have the needed rights to view this page.</message>
+	</item>
+</language>
