@@ -11,7 +11,7 @@
 	<access>
 		<item>
 			<file>adm_list</file>
-			<level>2</level>
+			<level>4</level>
 		</item>
 		<item>
 			<file>create</file>
