@@ -1,7 +1,7 @@
 <?php
 header('Content-type: text/plain; charset=UTF-8');
 
-define('NEW_VERSION', '4.0RC2 SVN');
+define('NEW_VERSION', '4.0RC2');
 define('ACP3_ROOT', './');
 
 require ACP3_ROOT . 'includes/config.php';
@@ -181,7 +181,7 @@ if (count($queries) > 0) {
 	print "\n----------------------------\n\n";
 }
 
-/*// Konfigurationsdatei aktualisieren
+// Konfigurationsdatei aktualisieren
 $config = array(
 	'date_dst' => CONFIG_DST,
 	'date_format' => CONFIG_DATE,
@@ -205,8 +205,8 @@ $config = array(
 	'version' => NEW_VERSION,
 	'wysiwyg' => 'fckeditor'
 );
-*/
-//print config::system($config) ? 'Konfigurationsdatei erfolgreich aktualisiert.' : 'Konfigurationsdatei konnte nicht aktualisiert werden.';
+
+print config::system($config) ? 'Konfigurationsdatei erfolgreich aktualisiert.' : 'Konfigurationsdatei konnte nicht aktualisiert werden.';
 
 // Cache leeren
 cache::purge();
