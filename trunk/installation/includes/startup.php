@@ -5,7 +5,7 @@ define('IN_INSTALL', true);
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
 $php_self = dirname(PHP_SELF);
 define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
-define('CONFIG_VERSION', '4.0RC2 SVN');
+define('CONFIG_VERSION', '4.0 SVN');
 
 include ACP3_ROOT . 'includes/globals.php';
 
