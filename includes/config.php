@@ -20,6 +20,6 @@ define('CONFIG_SEO_META_DESCRIPTION', '');
 define('CONFIG_SEO_META_KEYWORDS', '');
 define('CONFIG_SEO_MOD_REWRITE', '0');
 define('CONFIG_SEO_TITLE', 'ACP3');
-define('CONFIG_VERSION', '4.0RC2 SVN');
+define('CONFIG_VERSION', '4.0 SVN');
 define('CONFIG_WYSIWYG', 'fckeditor');
 ?>
