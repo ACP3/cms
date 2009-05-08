@@ -58,13 +58,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 			$c_pages = count($pages);
 
 			// Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
-			if (empty($form['parent']) && $db->countRows('*', 'menu_items', 'left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id']) == 0) {
-				$db->link->beginTransaction();
+			if (empty($form['parent']) && $form['block_id'] == $pages[0]['block_id'] && $db->countRows('*', 'menu_items', 'left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id']) == 0) {
 				$bool = $db->update('menu_items', $update_values, 'id = \'' . $uri->id . '\'');
-				if ($form['block_id'] != $pages[0]['block_id']) {
-					$db->update('menu_items', array('block_id' => $form['block_id']), 'left_id > ' . $pages[0]['left_id'] . ' AND right_id < ' . $pages[0]['right_id']);
-				}
-				$db->link->commit();
 			} else {
 				// Überprüfung, falls Seite kein Root-Element ist, aber keine Veränderung vorgenommen werden soll...
 				$chk_parent = $db->query('SELECT p.id FROM ' . CONFIG_DB_PRE . 'menu_items p, ' . CONFIG_DB_PRE . 'menu_items c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $uri->id . ' ORDER BY p.left_id DESC LIMIT 2');
@@ -83,18 +78,30 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 					if (!empty($new_parent) && $new_parent[0]['left_id'] < $pages[0]['left_id'] && $new_parent[0]['right_id'] > $pages[0]['right_id']) {
 						$bool = null;
 					} else {
-						if ($pages[0]['block_id'] != $form['block_id']) {
-							$db->update('menu_items', array('block_id' => $form['block_id']), 'left_id BETWEEN ' . $pages[0]['left_id'] . ' AND ' . $pages[0]['right_id']);
-						}
-						// Element zum neuen Elternknoten machen
 						if (empty($new_parent)) {
-							$new_parent = $db->select('right_id', 'menu_items', 'block_id =  \'' . $pages[0]['block_id'] . '\'', 'right_id DESC', 1);
-							$root_id = $uri->id;
-							$diff = $new_parent[0]['right_id'] - $pages[0]['right_id'];
+							// Root-Element in anderen Block verschieben
+							if ($pages[0]['block_id'] != $form['block_id']) {
+								$new_block = $db->select('left_id, right_id', 'menu_items', 'block_id = \'' . $form['block_id'] . '\'', 'right_id DESC', 1);
+								$root_id = $uri->id;
 
-							$db->link->beginTransaction();
-							$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - ' . $page_diff . ' WHERE root_id = ' . $pages[0]['root_id'] . ' AND left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0);
-							$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $pages[0]['right_id'] . ' AND block_id = \'' . $pages[0]['block_id'] . '\'', 0);
+								if ($form['block_id'] > $pages[0]['block_id'])
+									$diff = $new_block[0]['left_id'] - $pages[0]['left_id'];
+								else
+									$diff = -1 * ($pages[0]['left_id'] - $new_block[0]['left_id'] - 2);
+
+								$db->link->beginTransaction();
+								$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $pages[0]['right_id'], 0);
+								$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id + ' . $page_diff . ', right_id = right_id + ' . $page_diff . ' WHERE left_id > ' . $new_block[0]['right_id'], 0);
+							// Element zum neuen Elternknoten machen
+							} else {
+								$new_parent = $db->select('right_id', 'menu_items', 'block_id =  \'' . $pages[0]['block_id'] . '\'', 'right_id DESC', 1);
+								$root_id = $uri->id;
+								$diff = $new_parent[0]['right_id'] - $pages[0]['right_id'];
+
+								$db->link->beginTransaction();
+								$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - ' . $page_diff . ' WHERE root_id = ' . $pages[0]['root_id'] . ' AND left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0);
+								$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $pages[0]['right_id'] . ' AND block_id = \'' . $pages[0]['block_id'] . '\'', 0);
+							}
 						// Teilbaum nach unten verschieben
 						} elseif ($new_parent[0]['left_id'] > $pages[0]['left_id']) {
 							$new_parent[0]['left_id'] = $new_parent[0]['left_id'] - $page_diff;
@@ -123,6 +130,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 							$bool = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET root_id = \'' . $root_id . '\', left_id = ' . ($pages[$i]['left_id'] + $diff) . ', right_id = ' . ($pages[$i]['right_id'] + $diff) . ' WHERE id = \'' . $pages[$i]['id'] . '\'', 0);
 							if ($bool == null)
 								break;
+						}
+						if ($pages[0]['block_id'] != $form['block_id']) {
+							$db->update('menu_items', array('block_id' => $form['block_id']), 'left_id BETWEEN ' . ($pages[0]['left_id'] + $diff) . ' AND ' . ($pages[0]['right_id'] + $diff));
 						}
 						$db->link->commit();
 					}
