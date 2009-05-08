@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (validate::isNumber($uri->id) || $db->countRows('*', 'static_pages', 'id = \'' . $uri->id . '\'') == 1) {
+if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'' . $uri->id . '\'') == 1) {
 	$page = $db->select('title, text', 'static_pages', 'id = \'' . $uri->id . '\'');
 
 	breadcrumb::assign($db->escape($page[0]['title'], 3));
