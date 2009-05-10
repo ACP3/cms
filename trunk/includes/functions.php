@@ -79,6 +79,27 @@ function comboBox($text, $forward = 0, $backward = 0)
 	return '';
 }
 /**
+ * Kürzt einen String, welcher im UTF-8-Charset vorliegt
+ * auf eine bestimmte Länge
+ *
+ * @param string $data
+ *	Der zu kürzende String
+ * @param integer $chars
+ *	Die anzuzeigenden Zeichen
+ * @param intger $diff
+ *	Spanne an Zeichen, welche nach strlen($data) - $chars noch kommen müssen
+ * @return string
+ */
+function shortenEntry($data, $chars = 300, $diff = 50, $append = '')
+{
+	$shortened = strip_tags($data);
+	$shortened = utf8_decode(html_entity_decode($shortened, ENT_QUOTES, 'UTF-8'));
+	if ($diff == 0 || strlen($shortened) - $chars >= $diff) {
+		return utf8_encode(substr($shortened, 0, $chars - $diff)) . $append;
+	}
+	return $data;
+}
+/**
  * Zeigt Dropdown-Menüs für die Veröffentlichungsdauer von Inhalten an
  *
  * @param string $mode

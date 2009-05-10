@@ -31,13 +31,7 @@ if ($c_result_pages > 0) {
 	for ($i = 0; $i < $c_result_pages; ++$i) {
 		$results_mods['static_pages']['results'][$i]['hyperlink'] = uri('static_pages/list/id_' . $result_pages[$i]['id']);
 		$results_mods['static_pages']['results'][$i]['headline'] = $result_pages[$i]['title'];
-
-		$striped_text = strip_tags($result_pages[$i]['text']);
-		$striped_text = $db->escape($striped_text, 3);
-		$striped_text = html_entity_decode($striped_text, ENT_QUOTES, 'UTF-8');
-		$striped_text = substr($striped_text, 0, 200);
-
-		$results_mods['static_pages']['results'][$i]['text'] = htmlentities($striped_text, ENT_QUOTES, 'UTF-8') . '...';
+		$results_mods['static_pages']['results'][$i]['text'] = shortenEntry($db->escape($result_pages[$i]['text'], 3), 200, 0, '...');
 	}
 }
 ?>
