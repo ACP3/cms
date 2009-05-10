@@ -79,7 +79,7 @@ class modules
 							14 => array(14, 8, 4, 2),
 							15 => array(15, 8, 4, 2, 1),
 						);
-						if (in_array((int) $item->level, $levels[$access_level[$module]])) {
+						if (!empty($access_level[$module]) && in_array((int) $item->level, $levels[$access_level[$module]])) {
 							// Zusätzliche include-Files einbinden
 							if (!empty($item->include)) {
 								$includes = explode(',', $item->include);
