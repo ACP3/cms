@@ -31,13 +31,7 @@ if ($c_result_news > 0) {
 	for ($i = 0; $i < $c_result_news; ++$i) {
 		$results_mods['news']['results'][$i]['hyperlink'] = uri('news/details/id_' . $result_news[$i]['id']);
 		$results_mods['news']['results'][$i]['headline'] = $result_news[$i]['headline'];
-
-		$striped_text = strip_tags($result_news[$i]['text']);
-		$striped_text = $db->escape($striped_text, 3);
-		$striped_text = html_entity_decode($striped_text, ENT_QUOTES, 'UTF-8');
-		$striped_text = substr($striped_text, 0, 200);
-
-		$results_mods['news']['results'][$i]['text'] = htmlentities($striped_text, ENT_QUOTES, 'UTF-8') . '...';
+		$results_mods['news']['results'][$i]['text'] = shortenEntry($db->escape($result_news[$i]['text'], 3), 200, 0, '...');
 	}
 }
 ?>
