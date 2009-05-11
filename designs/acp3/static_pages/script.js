@@ -1,11 +1,11 @@
 jQuery(function($) {
-	$(':radio[name=\'form[create]\']').change(function() {
-		if ($('#create-item-1:checked').val() == 1) {
+	$(':radio[name=\'form[create]\']').click(function() {
+		if ($(this).val() == 1) {
 			$('#create-item-container').show();
 		} else {
 			$('#create-item-container').hide();
 		}
-	}).change();
+	}).click();
 	// Nur die zum Block gehörigen übergeordneten Seiten anzeigen
 	$('#parent optgroup').hide();
 	$('#block_id').change(function() {
