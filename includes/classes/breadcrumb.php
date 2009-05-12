@@ -76,6 +76,8 @@ class breadcrumb
 
 			$pages = $db->query(sprintf($query, $uri->query));
 			if (empty($pages))
+				$pages = $db->query(sprintf($query, $module . '/' . $page . '/'));
+			if (empty($pages))
 				$pages = $db->query(sprintf($query, $module));
 
 			$c_pages = count($pages);

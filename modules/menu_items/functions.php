@@ -235,6 +235,8 @@ function processNavbar($block) {
 		if ($c_pages > 0) {
 			if (uri($uri->query) != uri($uri->mod) && $db->query('SELECT COUNT(*) FROM ' . CONFIG_DB_PRE . 'menu_items AS m JOIN ' . CONFIG_DB_PRE . 'menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->query . '\'', 1) > 0) {
 				$link = $uri->query;
+			} elseif (uri($uri->mod . '/' . $uri->page . '/') != uri($uri->mod) && $db->query('SELECT COUNT(*) FROM ' . CONFIG_DB_PRE . 'menu_items AS m JOIN ' . CONFIG_DB_PRE . 'menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->mod . '/' . $uri->page . '/\'', 1) > 0) {
+				$link = $uri->mod . '/' . $uri->page . '/';
 			} else {
 				$link = $uri->mod;
 			}
