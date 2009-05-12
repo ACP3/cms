@@ -446,7 +446,8 @@ function timeZones($value, $name = 'time_zone')
  */
 function uri($uri)
 {
-	$prefix = CONFIG_SEO_MOD_REWRITE == '1' && (defined('IN_ACP3') || defined('IN_ADM') && !preg_match('/^acp\//', $uri)) ? ROOT_DIR : PHP_SELF . '/';
-	return $prefix . $uri . (!preg_match('/\/$/', $uri) ? '/' : '');
+	$uri = $uri . (!preg_match('/\/$/', $uri) ? '/' : '');
+	$prefix = CONFIG_SEO_MOD_REWRITE == '0' || preg_match('/^acp\//', $uri) ? PHP_SELF . '/' : ROOT_DIR;
+	return $prefix . $uri;
 }
 ?>
