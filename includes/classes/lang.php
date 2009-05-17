@@ -41,7 +41,7 @@ class lang
 	/**
 	 * Cached die Sprachfiles, um diese schneller verarbeiten zu können
 	 */
-	public function createLangCache()
+	public function setLangCache()
 	{
 		$data = array();
 		$path = ACP3_ROOT . 'languages/' . $this->lang . '/';
@@ -58,6 +58,19 @@ class lang
 		cache::create('language_' . $this->lang, $data);
 	}
 	/**
+	 * Gibt die gecacheten Sprachstrings aus
+	 *
+	 * @return array
+	 */
+	private function getLangCache()
+	{
+		$filename = 'language_' . $this->lang;
+		if (!cache::check($filename))
+			$this->setLangCache();
+
+		return cache::output($filename);
+	}
+	/**
 	 * Gibt den angeforderten Sprachstring aus
 	 *
 	 * @param string $module
@@ -69,24 +82,11 @@ class lang
 		static $lang_data = array();
 
 		if (empty($lang_data)) {
-			$lang_data = $this->outputLangCache();
+			$lang_data = $this->getLangCache();
 		}
 		$path = ACP3_ROOT . 'languages/' . $this->lang . '/' . $module . '.xml';
 
 		return isset($lang_data[$module][$key]) ? $lang_data[$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
-	}
-	/**
-	 * Gibt die gecacheten Sprachstrings aus
-	 *
-	 * @return array
-	 */
-	private function outputLangCache()
-	{
-		$filename = 'language_' . $this->lang;
-		if (!cache::check($filename)) {
-			$this->createLangCache();
-		}
-		return cache::output($filename);
 	}
 }
 ?>
