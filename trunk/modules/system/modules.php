@@ -37,7 +37,7 @@ if ($uri->action == 'activate') {
 	$content = comboBox($text, uri('acp/system/modules'));
 } else {
 	// Languagecache neu erstellen
-	$lang->createLangCache();
+	$lang->setLangCache();
 
 	$mod_list = modules::modulesList();
 

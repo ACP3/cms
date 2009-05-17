@@ -68,31 +68,33 @@ class auth
 				global $auth, $db, $lang;
 
 				$info = $db->select('nickname, access, realname, gender, birthday, birthday_format, mail, website, icq, msn, skype, time_zone, dst, language, draft', 'users', 'id = \'' . $user_id . '\'');
-				$pos = strrpos($info[0]['realname'], ':');
-				$info[0]['realname_display'] = substr($info[0]['realname'], $pos + 1);
-				$info[0]['realname'] = substr($info[0]['realname'], 0, $pos);
-				$pos = strrpos($info[0]['gender'], ':');
-				$info[0]['gender_display'] = substr($info[0]['gender'], $pos + 1);
-				$info[0]['gender'] = substr($info[0]['gender'], 0, $pos);
-				$pos = strrpos($info[0]['birthday'], ':');
-				$info[0]['birthday_display'] = substr($info[0]['birthday'], $pos + 1);
-				$info[0]['birthday'] = substr($info[0]['birthday'], 0, $pos);
-				$pos = strrpos($info[0]['mail'], ':');
-				$info[0]['mail_display'] = substr($info[0]['mail'], $pos + 1);
-				$info[0]['mail'] = substr($info[0]['mail'], 0, $pos);
-				$pos = strrpos($info[0]['website'], ':');
-				$info[0]['website_display'] = substr($info[0]['website'], $pos + 1);
-				$info[0]['website'] = $db->escape(substr($info[0]['website'], 0, $pos), 3);
-				$pos = strrpos($info[0]['icq'], ':');
-				$info[0]['icq_display'] = substr($info[0]['icq'], $pos + 1);
-				$info[0]['icq'] = substr($info[0]['icq'], 0, $pos);
-				$pos = strrpos($info[0]['msn'], ':');
-				$info[0]['msn_display'] = substr($info[0]['msn'], $pos + 1);
-				$info[0]['msn'] = substr($info[0]['msn'], 0, $pos);
-				$pos = strrpos($info[0]['skype'], ':');
-				$info[0]['skype_display'] = substr($info[0]['skype'], $pos + 1);
-				$info[0]['skype'] = substr($info[0]['skype'], 0, $pos);
-				$user_info[$user_id] = $info[0];
+				if (!empty($info)) {
+					$pos = strrpos($info[0]['realname'], ':');
+					$info[0]['realname_display'] = substr($info[0]['realname'], $pos + 1);
+					$info[0]['realname'] = substr($info[0]['realname'], 0, $pos);
+					$pos = strrpos($info[0]['gender'], ':');
+					$info[0]['gender_display'] = substr($info[0]['gender'], $pos + 1);
+					$info[0]['gender'] = substr($info[0]['gender'], 0, $pos);
+					$pos = strrpos($info[0]['birthday'], ':');
+					$info[0]['birthday_display'] = substr($info[0]['birthday'], $pos + 1);
+					$info[0]['birthday'] = substr($info[0]['birthday'], 0, $pos);
+					$pos = strrpos($info[0]['mail'], ':');
+					$info[0]['mail_display'] = substr($info[0]['mail'], $pos + 1);
+					$info[0]['mail'] = substr($info[0]['mail'], 0, $pos);
+					$pos = strrpos($info[0]['website'], ':');
+					$info[0]['website_display'] = substr($info[0]['website'], $pos + 1);
+					$info[0]['website'] = $db->escape(substr($info[0]['website'], 0, $pos), 3);
+					$pos = strrpos($info[0]['icq'], ':');
+					$info[0]['icq_display'] = substr($info[0]['icq'], $pos + 1);
+					$info[0]['icq'] = substr($info[0]['icq'], 0, $pos);
+					$pos = strrpos($info[0]['msn'], ':');
+					$info[0]['msn_display'] = substr($info[0]['msn'], $pos + 1);
+					$info[0]['msn'] = substr($info[0]['msn'], 0, $pos);
+					$pos = strrpos($info[0]['skype'], ':');
+					$info[0]['skype_display'] = substr($info[0]['skype'], $pos + 1);
+					$info[0]['skype'] = substr($info[0]['skype'], 0, $pos);
+					$user_info[$user_id] = $info[0];
+				}
 			}
 
 			return !empty($user_info[$user_id]) ? $user_info[$user_id] : false;
@@ -109,6 +111,70 @@ class auth
 		return $this->isUser && defined('USER_ID') && validate::isNumber(USER_ID) ? true : false;
 	}
 	/**
+	 * Loggt einen User ein
+	 *
+	 * @param string $username
+	 *	Der zu verwendente Username
+	 * @param string $password
+	 *	Das zu verwendente Passwort
+	 * @param integer $expiry
+	 *	Gibt die Zeit in Sekunden an, wie lange der User eingeloggt bleiben soll
+	 * @return integer
+	 */
+	public function login($username, $password, $expiry)
+	{
+		global $db;
+
+		$user = $db->select('id, pwd, login_errors', 'users', 'nickname = \'' . $db->escape($username) . '\'');
+		$lock = false;
+
+		if (count($user) == 1) {
+			// Useraccount ist gesperrt
+			if ($user[0]['login_errors'] >= 3) {
+				return -1;
+			}
+
+			// Passwort aus Datenbank
+			$db_hash = substr($user[0]['pwd'], 0, 40);
+
+			// Hash für eingegebenes Passwort generieren
+			$salt = substr($user[0]['pwd'], 41, 53);
+			$form_pwd_hash = sha1($salt . sha1($password));
+
+			// Wenn beide Hashwerte gleich sind, Benutzer authentifizieren
+			if ($db_hash === $form_pwd_hash) {
+				$isUser = true;
+				// Login-Fehler zurücksetzen
+				if ($user[0]['login_errors'] > 0)
+					$db->update('users', array('login_errors' => 0), 'id = \'' . $user[0]['id'] . '\'');
+
+				$this->setCookie($username, $db_hash, $expiry);
+				$this->isUser = true;
+				define('USER_ID', $user[0]['id']);
+
+				return 1;
+			// Beim dritten falschen Login den Account sperren
+			} else {
+				$login_errors = $user[0]['login_errors'] + 1;
+				$db->update('users', array('login_errors' => $login_errors), 'id = \'' . $user[0]['id'] . '\'');
+				if ($login_errors == 3) {
+					$lock = true;
+					return -1;
+				}
+			}
+		}
+		return 0;
+	}
+	/**
+	 * Loggt einen User aus
+	 *
+	 * @return boolean
+	 */
+	public function logout()
+	{
+		return setcookie('ACP3_AUTH', '', time() - 3600, ROOT_DIR);
+	}
+	/**
 	 * Setzt den internen Authentifizierungscookie
 	 *
 	 * @param string $nickname
@@ -120,7 +186,7 @@ class auth
 	 */
 	public function setCookie($nickname, $password, $expiry)
 	{
-		setcookie('ACP3_AUTH', base64_encode($nickname . '|' . $password), time() + $expiry, '/');
+		return setcookie('ACP3_AUTH', base64_encode($nickname . '|' . $password), time() + $expiry, ROOT_DIR);
 	}
 }
 ?>

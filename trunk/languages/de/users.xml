@@ -149,8 +149,8 @@
 		<message>Benutzername</message>
 	</item>
 	<item>
-		<name>nickname_or_password_wrong_or_account_locked</name>
-		<message>Entweder ist der Benutzername oder das Passwort falsch oder das Benutzerkonto wurde deaktiviert. Nutzen Sie in diesem Fall die &quot;Passwort vergessen&quot; Funktion, welche Ihnen ein neues Passwort zusenden wird.</message>
+		<name>nickname_or_password_wrong</name>
+		<message>Entweder ist der Benutzername oder das Passwort falsch.</message>
 	</item>
 	<item>
 		<name>pwd</name>

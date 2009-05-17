@@ -149,8 +149,8 @@
 		<message>User name</message>
 	</item>
 	<item>
-		<name>nickname_or_password_wrong_or_account_locked</name>
-		<message>Either the user name, or the password is wrong or your user account has been deactivated. In this case, please you the &quot;forgot password&quot; which will send you a new password.</message>
+		<name>nickname_or_password_wrong</name>
+		<message>Either the user name, or the password is wrong.</message>
 	</item>
 	<item>
 		<name>pwd</name>
