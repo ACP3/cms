@@ -10,6 +10,8 @@
 if (!defined('IN_ADM'))
 	exit;
 
+require_once ACP3_ROOT . 'modules/categories/functions.php';
+
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 	if (isset($form['external'])) {
@@ -60,6 +62,8 @@ if (isset($_POST['submit'])) {
 			'comments' => isset($form['comments']) ? 1 : 0,
 		);
 
+		require_once ACP3_ROOT . 'modules/files/functions.php';
+
 		$bool = $db->insert('files', $insert_values);
 		setFilesCache($db->link->lastInsertId());
 
@@ -84,10 +88,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('units', $units);
 
 	// Formularelemente
-	if (modules::check('categories', 'functions') == 1) {
-		require_once ACP3_ROOT . 'modules/categories/functions.php';
-		$tpl->assign('categories', categoriesList('files', '', true));
-	}
+	$tpl->assign('categories', categoriesList('files', '', true));
 
 	if (modules::check('comments', 'functions')) {
 		$options = array();

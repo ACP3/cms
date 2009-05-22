@@ -11,6 +11,8 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri->id . '\'') == '1') {
+	require_once ACP3_ROOT . 'modules/categories/functions.php';
+
 	$settings = config::output('news');
 
 	if (isset($_POST['submit'])) {
@@ -45,6 +47,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 				'link_title' => $db->escape($form['link_title'])
 			);
 
+			require_once ACP3_ROOT . 'modules/news/functions.php';
+
 			$bool = $db->update('news', $update_values, 'id = \'' . $uri->id . '\'');
 			setNewsCache($uri->id);
 
@@ -60,10 +64,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 		$tpl->assign('end_date', datepicker('end', $news[0]['end']));
 
 		// Kategorien
-		if (modules::check('categories', 'functions') == 1) {
-			require_once ACP3_ROOT . 'modules/categories/functions.php';
-			$tpl->assign('categories', categoriesList('news', $news[0]['category_id'], true));
-		}
+		$tpl->assign('categories', categoriesList('news', $news[0]['category_id'], true));
 
 		// Weiterlesen & Kommentare
 		if ($settings['readmore'] == 1 || $settings['comments'] == 1) {

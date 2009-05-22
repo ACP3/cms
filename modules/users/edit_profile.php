@@ -18,6 +18,8 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 	breadcrumb::assign($lang->t('users', 'edit_profile'));
 
 	if (isset($_POST['submit'])) {
+		require_once ACP3_ROOT . 'modules/users/functions.php';
+
 		$form = $_POST['form'];
 
 		if (empty($form['nickname']))

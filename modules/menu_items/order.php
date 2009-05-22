@@ -11,6 +11,8 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' . $uri->id . '\'') == 1) {
+	require_once ACP3_ROOT . 'modules/menu_items/functions.php';
+
 	// Brotkrümelspur setzen
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
 	breadcrumb::assign($lang->t('menu_items', 'menu_items'), uri('acp/menu_items'));

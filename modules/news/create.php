@@ -10,6 +10,8 @@
 if (!defined('IN_ADM'))
 	exit;
 
+require_once ACP3_ROOT . 'modules/categories/functions.php';
+
 $settings = config::output('news');
 
 if (isset($_POST['submit'])) {
@@ -56,10 +58,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('end_date', datepicker('end'));
 
 	// Kategorien
-	if (modules::check('categories', 'functions') == 1) {
-		require_once ACP3_ROOT . 'modules/categories/functions.php';
-		$tpl->assign('categories', categoriesList('news', '', true));
-	}
+	$tpl->assign('categories', categoriesList('news', '', true));
 
 	// Weiterlesen & Kommentare
 	if ($settings['readmore'] == 1 || $settings['comments'] == 1) {

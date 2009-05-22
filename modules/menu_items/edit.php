@@ -11,6 +11,8 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' . $uri->id . '\'') == '1') {
+	require_once ACP3_ROOT . 'modules/menu_items/functions.php';
+
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 

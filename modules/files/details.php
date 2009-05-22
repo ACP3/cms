@@ -13,6 +13,8 @@ if (!defined('IN_ACP3'))
 $period = ' AND (start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')';
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $uri->id . '\'' . $period) == '1') {
+	require_once ACP3_ROOT . 'modules/files/functions.php';
+
 	$file = getFilesCache($uri->id);
 
 	if ($uri->action == 'download') {
