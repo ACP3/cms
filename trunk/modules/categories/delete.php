@@ -21,6 +21,8 @@ if (!isset($entries)) {
 	$marked_entries = implode('|', $entries);
 	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/categories/delete/entries_' . $marked_entries), uri('acp/categories'));
 } elseif (validate::deleteEntries($entries) && $uri->confirmed) {
+	require_once ACP3_ROOT . 'modules/categories/functions.php';
+
 	$marked_entries = explode('|', $entries);
 	$bool = null;
 	$in_use = 0;

@@ -10,6 +10,8 @@
 if (!defined('IN_ADM'))
 	exit;
 
+require_once ACP3_ROOT . 'modules/access/functions.php';
+
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 

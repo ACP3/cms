@@ -79,19 +79,8 @@ class modules
 							14 => array(14, 8, 4, 2),
 							15 => array(15, 8, 4, 2, 1),
 						);
-						if (!empty($access_level[$module]) && in_array((int) $item->level, $levels[$access_level[$module]])) {
-							// Zusätzliche include-Files einbinden
-							if (!empty($item->include)) {
-								$includes = explode(',', $item->include);
-								foreach ($includes as $file) {
-									$path = ACP3_ROOT . 'modules/' . (!preg_match('=/=', $file) ? $module . '/' . $file : $file) . '.php';
-									if (is_file($path)) {
-										require_once $path;
-									}
-								}
-							}
+						if (!empty($access_level[$module]) && in_array((int) $item->level, $levels[$access_level[$module]]))
 							return 1;
-						}
 						return 0;
 					}
 				}

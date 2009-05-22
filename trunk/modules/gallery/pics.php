@@ -14,6 +14,8 @@ $time = $date->timestamp();
 $period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $uri->id . '\'' . $period) == 1) {
+	require_once ACP3_ROOT . 'modules/gallery/functions.php';
+
 	// Cache der galerie holen
 	$gallery = getGalleryCache($uri->id);
 

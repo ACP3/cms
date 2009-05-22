@@ -17,7 +17,6 @@
 		<item>
 			<file>create</file>
 			<level>2</level>
-			<include>functions</include>
 		</item>
 		<item>
 			<file>delete</file>
@@ -26,12 +25,10 @@
 		<item>
 			<file>edit</file>
 			<level>4</level>
-			<include>functions</include>
 		</item>
 		<item>
 			<file>edit_profile</file>
 			<level>1</level>
-			<include>functions</include>
 		</item>
 		<item>
 			<file>edit_settings</file>
@@ -40,7 +37,6 @@
 		<item>
 			<file>forgot_pwd</file>
 			<level>1</level>
-			<include>functions</include>
 		</item>
 		<item>
 			<file>home</file>
@@ -57,7 +53,6 @@
 		<item>
 			<file>register</file>
 			<level>1</level>
-			<include>functions</include>
 		</item>
 		<item>
 			<file>sidebar</file>

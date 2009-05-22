@@ -14,6 +14,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 	$user = $auth->getUserInfo($uri->id);
 
 	if (isset($_POST['submit'])) {
+		require_once ACP3_ROOT . 'modules/users/functions.php';
+
 		$form = $_POST['form'];
 
 		if (empty($form['nickname']))

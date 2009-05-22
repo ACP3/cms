@@ -10,6 +10,8 @@
 if (!defined('IN_ADM'))
 	exit;
 
+require_once ACP3_ROOT . 'modules/menu_items/functions.php';
+
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 

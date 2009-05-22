@@ -11,6 +11,8 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'emoticons', 'id = \'' . $uri->id . '\'') == '1') {
+	require_once ACP3_ROOT . 'modules/emoticons/functions.php';
+
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 		if (!empty($_FILES['picture']['tmp_name'])) {

@@ -11,6 +11,8 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $uri->id . '\'') == '1') {
+	require_once ACP3_ROOT . 'modules/categories/functions.php';
+
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 		if (isset($form['external'])) {
@@ -73,6 +75,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 				$update_values = array_merge($update_values, $new_file_sql);
 			}
 
+			require_once ACP3_ROOT . 'modules/files/functions.php';
+
 			$bool = $db->update('files', $update_values, 'id = \'' . $uri->id . '\'');
 			setFilesCache($uri->id);
 
@@ -104,10 +108,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		$dl[0]['filesize'] = substr($dl[0]['size'], 0, strpos($dl[0]['size'], ' '));
 
 		// Formularelemente
-		if (modules::check('categories', 'functions') == 1) {
-			require_once ACP3_ROOT . 'modules/categories/functions.php';
-			$tpl->assign('categories', categoriesList('files', $dl[0]['category_id'], true));
-		}
+		$tpl->assign('categories', categoriesList('files', $dl[0]['category_id'], true));
 		
 		if (modules::check('comments', 'functions')) {
 			$options = array();

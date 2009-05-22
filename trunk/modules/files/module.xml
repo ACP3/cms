@@ -17,12 +17,10 @@
 		<item>
 			<file>create</file>
 			<level>2</level>
-			<include>functions,categories/functions</include>
 		</item>
 		<item>
 			<file>details</file>
 			<level>1</level>
-			<include>functions</include>
 		</item>
 		<item>
 			<file>delete</file>
@@ -31,7 +29,6 @@
 		<item>
 			<file>edit</file>
 			<level>4</level>
-			<include>functions,categories/functions</include>
 		</item>
 		<item>
 			<file>files</file>
@@ -40,7 +37,6 @@
 		<item>
 			<file>list</file>
 			<level>1</level>
-			<include>categories/functions</include>
 		</item>
 		<item>
 			<file>extensions/feeds</file>
