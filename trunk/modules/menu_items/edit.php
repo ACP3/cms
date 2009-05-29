@@ -83,17 +83,20 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 						if (empty($new_parent)) {
 							// Root-Element in anderen Block verschieben
 							if ($pages[0]['block_id'] != $form['block_id']) {
-								$new_block = $db->select('left_id, right_id', 'menu_items', 'block_id = \'' . $form['block_id'] . '\'', 'right_id DESC', 1);
+								$new_block = $db->select('left_id', 'menu_items', 'block_id = \'' . $form['block_id'] . '\'', 'left_id ASC', 1);
 								$root_id = $uri->id;
 
-								if ($form['block_id'] > $pages[0]['block_id'])
+								if ($form['block_id'] > $pages[0]['block_id']) {
+									$new_block[0]['left_id'] = $new_block[0]['left_id'] - $page_diff;
 									$diff = $new_block[0]['left_id'] - $pages[0]['left_id'];
-								else
-									$diff = -1 * ($pages[0]['left_id'] - $new_block[0]['left_id'] - 2);
+								} else {
+									$diff = -1 * ($pages[0]['left_id'] - $new_block[0]['left_id']);
+								}
 
 								$db->link->beginTransaction();
+								$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0);
 								$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $pages[0]['right_id'], 0);
-								$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id + ' . $page_diff . ', right_id = right_id + ' . $page_diff . ' WHERE left_id > ' . $new_block[0]['right_id'], 0);
+								$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id + ' . $page_diff . ', right_id = right_id + ' . $page_diff . ' WHERE left_id >= ' . $new_block[0]['left_id'], 0);
 							// Element zum neuen Elternknoten machen
 							} else {
 								$new_parent = $db->select('right_id', 'menu_items', 'block_id =  \'' . $pages[0]['block_id'] . '\'', 'right_id DESC', 1);
@@ -101,40 +104,33 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 								$diff = $new_parent[0]['right_id'] - $pages[0]['right_id'];
 
 								$db->link->beginTransaction();
-								$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - ' . $page_diff . ' WHERE root_id = ' . $pages[0]['root_id'] . ' AND left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0);
+								$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0);
 								$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $pages[0]['right_id'] . ' AND block_id = \'' . $pages[0]['block_id'] . '\'', 0);
 							}
-						// Teilbaum nach unten verschieben
-						} elseif ($new_parent[0]['left_id'] > $pages[0]['left_id']) {
-							$new_parent[0]['left_id'] = $new_parent[0]['left_id'] - $page_diff;
-
-							$db->link->beginTransaction();
-							$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - ' . $page_diff . ' WHERE root_id = ' . $pages[0]['root_id'] . ' AND left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0);
-							$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $pages[0]['right_id'], 0);
-							$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id + ' . $page_diff . ' WHERE root_id = \'' . $new_parent[0]['root_id'] . '\' AND left_id <= ' . $new_parent[0]['left_id'], 0);
-							$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id + ' . $page_diff . ', right_id = right_id + ' . $page_diff . ' WHERE left_id > ' . $new_parent[0]['left_id'], 0);
-
-							$root_id = $new_parent[0]['root_id'];
-							$diff = $new_parent[0]['left_id'] - $pages[0]['left_id'] + 1;
-						// Teilbaum nach oben verschieben
 						} else {
+							// Teilbaum nach unten...
+							if ($new_parent[0]['left_id'] > $pages[0]['left_id']) {
+								$new_parent[0]['left_id'] = $new_parent[0]['left_id'] - $page_diff;
+								$new_parent[0]['right_id'] = $new_parent[0]['right_id'] - $page_diff;
+								$diff = $new_parent[0]['left_id'] - $pages[0]['left_id'] + 1;
+							// ...bzw. nach oben verschieben
+							} else {
+								$diff = -1 * ($pages[0]['left_id'] - $new_parent[0]['left_id'] - 1);
+							}
+							$root_id = $new_parent[0]['root_id'];
+
 							$db->link->beginTransaction();
 							$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0);
 							$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $pages[0]['right_id'], 0);
-							$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id + ' . $page_diff . ' WHERE root_id = \'' . $new_parent[0]['root_id'] . '\' AND left_id <= ' . $new_parent[0]['left_id'] . ' AND right_id >= ' . $new_parent[0]['right_id'], 0);
+							$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id + ' . $page_diff . ' WHERE left_id <= ' . $new_parent[0]['left_id'] . ' AND right_id >= ' . $new_parent[0]['right_id'], 0);
 							$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id + ' . $page_diff . ', right_id = right_id + ' . $page_diff . ' WHERE left_id > ' . $new_parent[0]['left_id'], 0);
-
-							$root_id = $new_parent[0]['root_id'];
-							$diff = -1 * ($pages[0]['left_id'] - $new_parent[0]['left_id'] - 1);
 						}
+
 						// Einträge aktualisieren
 						for ($i = 0; $i < $c_pages; ++$i) {
-							$bool = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET root_id = \'' . $root_id . '\', left_id = ' . ($pages[$i]['left_id'] + $diff) . ', right_id = ' . ($pages[$i]['right_id'] + $diff) . ' WHERE id = \'' . $pages[$i]['id'] . '\'', 0);
+							$bool = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET block_id = \'' . $form['block_id'] . '\', root_id = \'' . $root_id . '\', left_id = ' . ($pages[$i]['left_id'] + $diff) . ', right_id = ' . ($pages[$i]['right_id'] + $diff) . ' WHERE id = \'' . $pages[$i]['id'] . '\'', 0);
 							if ($bool == null)
 								break;
-						}
-						if ($pages[0]['block_id'] != $form['block_id']) {
-							$db->update('menu_items', array('block_id' => $form['block_id']), 'left_id BETWEEN ' . ($pages[0]['left_id'] + $diff) . ' AND ' . ($pages[0]['right_id'] + $diff));
 						}
 						$db->link->commit();
 					}
