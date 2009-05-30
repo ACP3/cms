@@ -32,11 +32,26 @@ jQuery(function($) {
 	$('#mode').change(function() {
 		switchContainer();
 	}).change();
+
 	// Nur die zum Block gehörigen übergeordneten Seiten anzeigen
 	$('#parent optgroup').hide();
+
+	var def_block = 0;
+	$('#block_id option').each(function() {
+		if ($(this).is(':selected')) {
+			def_block = $('#block_id option').index(this);
+		}
+	});
+
 	$('#block_id').change(function() {
 		var block = $('#block_id option:selected').eq(0).text();
 		$('#parent optgroup:not([label=\'' + block + '\'])').hide();
 		$('#parent optgroup[label=\'' + block + '\']').show();
+
+		$('#block_id option').each (function() {
+			if ($(this).is(':selected') && $('#block_id option').index(this) != def_block) {
+				$('#parent optgroup option:selected').removeAttr('selected');
+			}
+		});
 	}).change();
 })

@@ -84,14 +84,13 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 							// Root-Element in anderen Block verschieben
 							if ($pages[0]['block_id'] != $form['block_id']) {
 								$new_block = $db->select('left_id', 'menu_items', 'block_id = \'' . $form['block_id'] . '\'', 'left_id ASC', 1);
-								$root_id = $uri->id;
 
 								if ($form['block_id'] > $pages[0]['block_id']) {
 									$new_block[0]['left_id'] = $new_block[0]['left_id'] - $page_diff;
-									$diff = $new_block[0]['left_id'] - $pages[0]['left_id'];
-								} else {
-									$diff = -1 * ($pages[0]['left_id'] - $new_block[0]['left_id']);
 								}
+
+								$diff = $new_block[0]['left_id'] - $pages[0]['left_id'];
+								$root_id = $uri->id;
 
 								$db->link->beginTransaction();
 								$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0);
@@ -100,8 +99,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 							// Element zum neuen Elternknoten machen
 							} else {
 								$new_parent = $db->select('right_id', 'menu_items', 'block_id =  \'' . $pages[0]['block_id'] . '\'', 'right_id DESC', 1);
-								$root_id = $uri->id;
+
 								$diff = $new_parent[0]['right_id'] - $pages[0]['right_id'];
+								$root_id = $uri->id;
 
 								$db->link->beginTransaction();
 								$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0);
@@ -112,11 +112,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 							if ($new_parent[0]['left_id'] > $pages[0]['left_id']) {
 								$new_parent[0]['left_id'] = $new_parent[0]['left_id'] - $page_diff;
 								$new_parent[0]['right_id'] = $new_parent[0]['right_id'] - $page_diff;
-								$diff = $new_parent[0]['left_id'] - $pages[0]['left_id'] + 1;
-							// ...bzw. nach oben verschieben
-							} else {
-								$diff = -1 * ($pages[0]['left_id'] - $new_parent[0]['left_id'] - 1);
 							}
+
+							$diff = $new_parent[0]['left_id'] - $pages[0]['left_id'] + 1;
 							$root_id = $new_parent[0]['root_id'];
 
 							$db->link->beginTransaction();

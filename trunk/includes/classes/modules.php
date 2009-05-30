@@ -60,27 +60,28 @@ class modules
 
 				// XML Datei parsen
 				foreach ($xml->access->item as $item) {
-					if ((string) $item->file == $page && (string) $item->level != '0') {
-						$levels = array(
-							0 => array(0),
-							1 => array(1),
-							2 => array(2),
-							3 => array(3, 2, 1),
-							4 => array(4),
-							5 => array(5, 4, 1),
-							6 => array(6, 4, 2),
-							7 => array(7, 4, 2, 1),
-							8 => array(8),
-							9 => array(9, 8, 1),
-							10 => array(10, 8, 2),
-							11 => array(11, 8, 2, 1),
-							12 => array(12, 8, 4),
-							13 => array(13, 8, 4, 1),
-							14 => array(14, 8, 4, 2),
-							15 => array(15, 8, 4, 2, 1),
-						);
-						if (!empty($access_level[$module]) && in_array((int) $item->level, $levels[$access_level[$module]]))
-							return 1;
+					if ((string) $item->file == $page) {
+						if ((int) $item->level != 0) {
+							$levels = array(
+								1 => array(1),
+								2 => array(2),
+								3 => array(3, 2, 1),
+								4 => array(4),
+								5 => array(5, 4, 1),
+								6 => array(6, 4, 2),
+								7 => array(7, 4, 2, 1),
+								8 => array(8),
+								9 => array(9, 8, 1),
+								10 => array(10, 8, 2),
+								11 => array(11, 8, 2, 1),
+								12 => array(12, 8, 4),
+								13 => array(13, 8, 4, 1),
+								14 => array(14, 8, 4, 2),
+								15 => array(15, 8, 4, 2, 1),
+							);
+							if (!empty($access_level[$module]) && in_array((int) $item->level, $levels[$access_level[$module]]))
+								return 1;
+						}
 						return 0;
 					}
 				}
