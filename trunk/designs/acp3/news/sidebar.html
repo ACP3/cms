@@ -1,0 +1,9 @@
+<ul>
+{if isset($sidebar_news)}
+{foreach from=$sidebar_news item=row}
+	<li><a href="{uri args="news/details/id_`$row.id`"}" title="{$row.start} - {$row.headline}">{$row.headline_short}</a></li>
+{/foreach}
+{else}
+	<li>{lang values="common|no_entries_short"}</li>
+{/if}
+</ul>

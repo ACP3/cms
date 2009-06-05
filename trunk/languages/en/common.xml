@@ -194,11 +194,15 @@
 	</item>
 	<item>
 		<name>no_entries</name>
-		<message>There are no entries registered.</message>
+		<message>There are no entries available.</message>
 	</item>
 	<item>
 		<name>no_entries_selected</name>
 		<message>Please select the entries that should be deleted.</message>
+	</item>
+	<item>
+		<name>no_entries_short</name>
+		<message>No entries available.</message>
 	</item>
 	<item>
 		<name>order</name>

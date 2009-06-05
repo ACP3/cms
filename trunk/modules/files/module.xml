@@ -39,6 +39,10 @@
 			<level>1</level>
 		</item>
 		<item>
+			<file>sidebar</file>
+			<level>1</level>
+		</item>
+		<item>
 			<file>extensions/feeds</file>
 			<level>1</level>
 		</item>

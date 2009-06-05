@@ -1,0 +1,26 @@
+<?php
+/**
+ * Files
+ *
+ * @author Goratsch Webdesign
+ * @package ACP3
+ * @subpackage Modules
+ */
+if (!defined('IN_ACP3') && !defined('IN_ADM'))
+	exit;
+
+$time = $date->timestamp();
+$where = 'start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\'';
+$files = $db->select('id, start, link_title', 'files', $where, 'start DESC', 5);
+$c_files = count($files);
+
+if ($c_files > 0) {
+	for ($i = 0; $i < $c_files; ++$i) {
+		$files[$i]['start'] = $date->format($files[$i]['start']);
+		$files[$i]['link_title_short'] = shortenEntry($db->escape($files[$i]['link_title'], 3), 30, 5, '...');
+	}
+	$tpl->assign('sidebar_files', $files);
+}
+
+$tpl->display('files/sidebar.html');
+?>

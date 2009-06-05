@@ -408,6 +408,9 @@ function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
  */
 function shortenEntry($data, $chars = 300, $diff = 50, $append = '')
 {
+	if ($chars <= $diff)
+		$diff = 0;
+
 	$shortened = strip_tags($data);
 	$shortened = utf8_decode(html_entity_decode($shortened, ENT_QUOTES, 'UTF-8'));
 	if ($diff == 0 || strlen($shortened) - $chars >= $diff) {
