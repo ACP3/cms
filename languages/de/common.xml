@@ -201,6 +201,10 @@
 		<message>Bitte wählen Sie die zu löschenden Einträge aus.</message>
 	</item>
 	<item>
+		<name>no_entries_short</name>
+		<message>Keine Einträge vorhanden.</message>
+	</item>
+	<item>
 		<name>order</name>
 		<message>Reihenfolge</message>
 	</item>

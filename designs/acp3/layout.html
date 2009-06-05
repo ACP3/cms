@@ -28,10 +28,16 @@
 <div id="breadcrumb">
 	{$BREADCRUMB}
 </div>
-<div id="sidebar">
+<div id="sidebar-left">
 	<h4>Navigation</h4>
 {navbar block="sidebar"}
 	{load_module module="users|sidebar"}
+</div>
+<div id="sidebar-right">
+	<h4>Letzte News</h4>
+	{load_module module="news|sidebar"}
+	<h4>Letzte Downloads</h4>
+	{load_module module="files|sidebar"}
 </div>
 <div id="content">
 	<h1>{$TITLE}</h1>

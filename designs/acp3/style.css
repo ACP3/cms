@@ -318,7 +318,7 @@ a.form {
 	color: #f00;
 	text-decoration: none;
 }
-#sidebar {
+#sidebar-left, #sidebar-right {
 	width: 19%;
 	border: 1px solid #333;
 	border-width: 1px 1px 0;
@@ -326,7 +326,11 @@ a.form {
 	text-align: left;
 	float: left;
 }
-#sidebar h4 {
+#sidebar-right {
+	width: 14%;
+	float: right;
+}
+#sidebar-left h4, #sidebar-right h4 {
 	height: 25px;
 	padding-left: 15px;
 	background: url('images/common_header.png') repeat-x;
@@ -336,28 +340,31 @@ a.form {
 	color: #f90;
 	clear: both;
 }
-#sidebar ul {
+#sidebar-left ul, #sidebar-right ul {
 	margin: 0;
 	list-style: none;
 }
-#sidebar ul li {
+#sidebar-left ul li, #sidebar-right ul li {
 	width: 100%;
-	float: left;
-}
-#sidebar ul li a {
-	padding-left: 15px;
 	background: #eee;
 	border-bottom: 1px solid #333;
 	line-height: 22px;
+	text-align: center;
+	float: left;
+}
+#sidebar-left ul li a, #sidebar-right ul li a {
+	padding-left: 15px;
+	text-align: left;
 	display: block;
 }
-#sidebar ul li a:hover, #sidebar ul li a.selected {
+#sidebar-left ul li a:hover, #sidebar-left ul li a.selected,
+#sidebar-right ul li a:hover, #sidebar-right ul li a.selected {
 	color: #f90;
 }
-#sidebar ul.admin li ul {
+#sidebar-left ul.admin li ul {
 	display: none;
 }
-#sidebar ul li ul li a {
+#sidebar-left ul li ul li a {
 	padding-left: 30px;
 }
 #login-sidebar {
@@ -375,9 +382,8 @@ a.form {
 	float: left;
 }
 #content {
-	width: 80%;
+	margin: 0 15% 0 20%;
 	font-size: 1.2em;
-	float: right;
 }
 #footer {
 	clear: both;
