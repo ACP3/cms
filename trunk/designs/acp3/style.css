@@ -382,8 +382,10 @@ a.form {
 	float: left;
 }
 #content {
-	margin: 0 15% 0 20%;
+	width: 65%;
+	margin-left: 1%;
 	font-size: 1.2em;
+	float: left;
 }
 #footer {
 	clear: both;
