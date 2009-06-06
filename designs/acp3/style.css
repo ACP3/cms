@@ -369,7 +369,7 @@ a.form {
 }
 #login-sidebar {
 	padding-bottom: 5px;
-	border-bottom: 1px solid #333;
+	border-top: 1px solid #333;
 }
 #login-sidebar fieldset {
 	width: 80%;
