@@ -12,7 +12,7 @@
 			<dd><input type="text" name="form[website]" id="website" size="35" value="{$form.website}"{$form.website_disabled} /></dd>
 			<dt><label for="message">{lang values="common|message"}</label></dt>
 			<dd>
-{$emoticons}
+				{if isset($emoticons)}{$emoticons}{/if}
 				<textarea name="form[message]" id="message" cols="50" rows="6">{$form.message}</textarea>
 			</dd>
 		</dl>

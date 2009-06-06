@@ -36,7 +36,7 @@ function commentsList($module, $entry_id)
 	global $date, $db, $lang, $tpl;
 
 	// Auflistung der Kommentare
-	$comments = $db->query('SELECT IF(c.name != "" AND c.user_id = 0,c.name,u.nickname) AS name, c.user_id, c.date, c.message FROM ' . CONFIG_DB_PRE . 'comments AS c LEFT JOIN (' . CONFIG_DB_PRE . 'users AS u) ON u.id = c.user_id WHERE c.module = \'' . $module . '\' AND c.entry_id = \'' . $entry_id . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
+	$comments = $db->query('SELECT u.nickname AS user_name, c.name, c.user_id, c.date, c.message FROM ' . CONFIG_DB_PRE . 'comments AS c LEFT JOIN (' . CONFIG_DB_PRE . 'users AS u) ON u.id = c.user_id WHERE c.module = \'' . $module . '\' AND c.entry_id = \'' . $entry_id . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
 	$c_comments = count($comments);
 
 	// Emoticons einbinden, falls diese aktiv sind
@@ -49,10 +49,11 @@ function commentsList($module, $entry_id)
 	if ($c_comments > 0) {
 		$tpl->assign('pagination', pagination($db->countRows('*', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'')));
 		for ($i = 0; $i < $c_comments; ++$i) {
-			if (!empty($comments[$i]['user_id']) && empty($comments[$i]['name'])) {
+			if (empty($comments[$i]['user_name']) && empty($comments[$i]['name'])) {
 				$comments[$i]['name'] = $lang->t('users', 'deleted_user');
 				$comments[$i]['user_id'] = 0;
 			}
+			$comments[$i]['name'] = $db->escape(!empty($comments[$i]['user_name']) ? $comments[$i]['user_name'] : $comments[$i]['name'], 3);
 			$comments[$i]['date'] = $date->format($comments[$i]['date']);
 			$comments[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $comments[$i]['message']);
 			if ($emoticons) {

@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$guestbook = $db->select('date, name, user_id, message, website, mail', 'guestbook', 0, 'id DESC', POS, CONFIG_ENTRIES);
+$guestbook = $db->query('SELECT u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.date, g.name, g.user_id, g.message, g.website, g.mail FROM ' . CONFIG_DB_PRE . 'guestbook AS g LEFT JOIN ' . CONFIG_DB_PRE . 'users AS u ON(u.id = g.user_id) ORDER BY date DESC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
 $c_guestbook = count($guestbook);
 
 if ($c_guestbook > 0) {
@@ -24,16 +24,21 @@ if ($c_guestbook > 0) {
 	}
 
 	for ($i = 0; $i < $c_guestbook; ++$i) {
+		if (empty($guestbook[$i]['user_name']) && empty($guestbook[$i]['name'])) {
+			$guestbook[$i]['name'] = $lang->t('users', 'deleted_user');
+			$guestbook[$i]['user_id'] = 0;
+		}
+		$guestbook[$i]['name'] = $db->escape(!empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'], 3);
 		$guestbook[$i]['date'] = $date->format($guestbook[$i]['date']);
 		$guestbook[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $guestbook[$i]['message']);
 		if ($emoticons) {
 			$guestbook[$i]['message'] = emoticonsReplace($guestbook[$i]['message']);
 		}
-		$guestbook[$i]['website'] = $db->escape($guestbook[$i]['website'], 3);
+		$guestbook[$i]['website'] = $db->escape(strlen($guestbook[$i]['user_website']) > 2 ? substr($guestbook[$i]['user_website'], 0, -2) : $guestbook[$i]['website'], 3);
 		if (!empty($guestbook[$i]['website']) && strpos($guestbook[$i]['website'], 'http://') === false)
 			$guestbook[$i]['website'] = 'http://' . $guestbook[$i]['website'];
 
-		$guestbook[$i]['mail'] = !empty($guestbook[$i]['mail']) ? $guestbook[$i]['mail'] : '';
+		$guestbook[$i]['mail'] = !empty($guestbook[$i]['user_mail']) ? substr($guestbook[$i]['user_mail'], 0, -2) : $guestbook[$i]['mail'];
 	}
 	$tpl->assign('guestbook', $guestbook);
 }

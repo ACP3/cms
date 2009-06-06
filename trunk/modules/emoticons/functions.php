@@ -14,7 +14,7 @@
 function setEmoticonsCache()
 {
 	global $db;
-	return cache::create('emoticons', $db->select('code, description, img', 'emoticons'));
+	return cache::create('emoticons', $db->select('code, description, img', 'emoticons', 0, 'code DESC'));
 }
 /**
  * Bindet die gecacheten Emoticons ein
@@ -62,10 +62,7 @@ function emoticonsReplace($string)
 	global $cache, $db;
 	static $emoticons = array();
 
-	if (!cache::check('emoticons')) {
-		cache::create('emoticons', $db->select('code, description, img', 'emoticons'));
-	}
-	$emoticons = cache::output('emoticons');
+	$emoticons = getEmoticonsCache();
 
 	foreach ($emoticons as $row) {
 		$string = str_replace($row['code'], '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $row['img'] . '" alt="' . $row['description'] . '" title="' . $row['description'] . '" />', $string);
