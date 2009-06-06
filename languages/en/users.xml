@@ -109,6 +109,10 @@
 		<message>ICQ-Number</message>
 	</item>
 	<item>
+		<name>invalid_birthday</name>
+		<message>Please type in a valid birthday and how it should look like</message>
+	</item>
+	<item>
 		<name>invalid_icq_number</name>
 		<message>Please type in a valid ICQ number</message>
 	</item>

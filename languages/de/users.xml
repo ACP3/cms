@@ -109,6 +109,10 @@
 		<message>ICQ-Nummer</message>
 	</item>
 	<item>
+		<name>invalid_birthday</name>
+		<message>Bitte geben Sie ein gültiges Geburtsdatum an und wie dieses dargestellt werden soll</message>
+	</item>
+	<item>
 		<name>invalid_icq_number</name>
 		<message>Sie haben eine ungültige ICQ-Nummer eingegeben</message>
 	</item>

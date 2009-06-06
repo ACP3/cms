@@ -28,7 +28,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 			$errors[] = $lang->t('users', 'user_name_already_exists');
 		if (!validate::gender($form['gender']))
 			$errors[] = $lang->t('users', 'select_gender');
-		if (!empty($form['birthday']) && !validate::birthday($form['birthday'], $form['birthday_format']))
+		if (!isset($form['birthday_format']) || !empty($form['birthday']) && !validate::birthday($form['birthday'], $form['birthday_format']))
 			$errors[] = $lang->t('users', 'invalid_birthday');
 		if (!validate::email($form['mail']))
 			$errors[] = $lang->t('common', 'wrong_email_format');
@@ -67,8 +67,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 			$bool = $db->update('users', $update_values, 'id = \'' . USER_ID . '\'');
 
 			$cookie_arr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
-			$cookie_value = base64_encode($form['nickname'] . '|' . (isset($new_pwd) ? $new_pwd : $cookie_arr[1]));
-			setcookie('ACP3_AUTH', $cookie_value, time() + 3600, '/');
+			$auth->setCookie($form['nickname'], isset($new_pwd) ? $new_pwd : $cookie_arr[1], 3600);
 
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('users/home'));
 		}
