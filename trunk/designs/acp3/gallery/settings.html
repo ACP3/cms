@@ -18,6 +18,15 @@
 			<dd><input type="text" name="form[maxheight]" id="maxheight" value="{$form.maxheight}" /></dd>
 			<dt><label for="filesize">{lang values="gallery|image_filesize"}</label></dt>
 			<dd><input type="text" name="form[filesize]" id="filesize" value="{$form.filesize}" /></dd>
+			<dt><label for="comments-1">{lang values="common|allow_comments"}</label></dt>
+			<dd>
+{foreach from=$comments item=row}
+				<label for="comments-{$row.value}">
+					<input type="radio" name="form[comments]" id="comments-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+					{$row.lang}
+				</label>
+{/foreach}
+			</dd>
 		</dl>
 	</fieldset>
 	<div class="form-bottom">

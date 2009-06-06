@@ -20,6 +20,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 	breadcrumb::assign($picture[0]['gallery_name'], uri('acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id']));
 	breadcrumb::assign($lang->t('gallery', 'edit_picture'));
 
+	$settings = config::output('gallery');
+
 	if (isset($_POST['submit'])) {
 		if (!empty($_FILES['file']['tmp_name']) && $_FILES['file']['size'] > '0') {
 			$file['tmp_name'] = $_FILES['file']['tmp_name'];
@@ -27,7 +29,6 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 			$file['size'] = $_FILES['file']['size'];
 		}
 		$form = $_POST['form'];
-		$settings = config::output('gallery');
 
 		if (!empty($file['tmp_name']) && !validate::isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']))
 			$errors[] = $lang->t('gallery', 'invalid_image_selected');
@@ -43,7 +44,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 
 			$update_values = array(
 				'description' => $db->escape($form['description'], 2),
-				'comments' => isset($form['comments']) ? 1 : 0,
+				'comments' => $settings['comments'] == 1 && isset($form['comments']) && $form['comments'] == 1 ? 1 : 0,
 			);
 			if (is_array($new_file_sql)) {
 				$old_file = $db->select('file', 'gallery_pictures', 'id = \'' . $uri->id . '\'');
@@ -59,7 +60,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		if (modules::check('comments', 'functions')) {
+		if ($settings['comments'] == 1 && modules::check('comments', 'functions') == 1) {
 			$options = array();
 			$options[0]['name'] = 'comments';
 			$options[0]['checked'] = selectEntry('comments', '1', $picture[0]['comments'], 'checked');

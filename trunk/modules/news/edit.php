@@ -75,7 +75,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 				$options[$i]['lang'] = $lang->t('news', 'activate_readmore');
 				$i++;
 			}
-			if ($settings['comments'] == 1 && modules::check('comments', 'functions')) {
+			if ($settings['comments'] == 1 && modules::check('comments', 'functions') == 1) {
 				$options[$i]['name'] = 'comments';
 				$options[$i]['checked'] = selectEntry('comments', '1', $news[0]['comments'], 'checked');
 				$options[$i]['lang'] = $lang->t('common', 'allow_comments');

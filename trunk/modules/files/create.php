@@ -90,7 +90,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Formularelemente
 	$tpl->assign('categories', categoriesList('files', '', true));
 
-	if (modules::check('comments', 'functions')) {
+	if (modules::check('comments', 'functions') == 1) {
 		$options = array();
 		$options[0]['name'] = 'comments';
 		$options[0]['checked'] = selectEntry('comments', '1', '0', 'checked');

@@ -110,7 +110,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		// Formularelemente
 		$tpl->assign('categories', categoriesList('files', $dl[0]['category_id'], true));
 		
-		if (modules::check('comments', 'functions')) {
+		if (modules::check('comments', 'functions') == 1) {
 			$options = array();
 			$options[0]['name'] = 'comments';
 			$options[0]['checked'] = selectEntry('comments', '1', $dl[0]['comments'], 'checked');

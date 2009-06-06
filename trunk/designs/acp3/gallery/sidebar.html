@@ -1,0 +1,9 @@
+<ul>
+{if isset($sidebar_galleries)}
+{foreach from=$sidebar_galleries item=row}
+	<li><a href="{uri args="gallery/pics/id_`$row.id`"}" title="{$row.start} - {$row.name}">{$row.name_short}</a></li>
+{/foreach}
+{else}
+	<li>{lang values="common|no_entries_short"}</li>
+{/if}
+</ul>

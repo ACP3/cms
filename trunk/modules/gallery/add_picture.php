@@ -20,12 +20,13 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 	breadcrumb::assign($gallery[0]['name'], uri('acp/gallery/edit_gallery/id_' . $uri->id));
 	breadcrumb::assign($lang->t('gallery', 'add_picture'));
 
+	$settings = config::output('gallery');
+
 	if (isset($_POST['submit'])) {
 		$file['tmp_name'] = $_FILES['file']['tmp_name'];
 		$file['name'] = $_FILES['file']['name'];
 		$file['size'] = $_FILES['file']['size'];
 		$form = $_POST['form'];
-		$settings = config::output('gallery');
 
 		if (empty($file['tmp_name']))
 			$errors[] = $lang->t('gallery', 'no_picture_selected');
@@ -44,7 +45,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 				'gallery_id' => $uri->id,
 				'file' => $result['name'],
 				'description' => $db->escape($form['description'], 2),
-				'comments' => isset($form['comments']) ? 1 : 0,
+				'comments' => $settings['comments'] == 1 && isset($form['comments']) && $form['comments'] == 1 ? 1 : 0,
 			);
 
 			$bool = $db->insert('gallery_pictures', $insert_values);
@@ -57,7 +58,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 		$galleries = $db->select('id, start, name', 'gallery', 0, 'start DESC');
 		$c_galleries = count($galleries);
 
-		if (modules::check('comments', 'functions')) {
+		if ($settings['comments'] == 1 && modules::check('comments', 'functions') == 1) {
 			$options = array();
 			$options[0]['name'] = 'comments';
 			$options[0]['checked'] = selectEntry('comments', '1', '0', 'checked');
