@@ -19,6 +19,8 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('gallery', 'invalid_image_height_entered');
 	if (!validate::isNumber($form['filesize']))
 		$errors[] = $lang->t('gallery', 'invalid_image_filesize_entered');
+	if (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0)
+		$errors[] = $lang->t('news', 'select_allow_comments');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -31,6 +33,14 @@ if (isset($_POST['submit'])) {
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$settings = config::output('gallery');
 	
+	$comments[0]['value'] = '1';
+	$comments[0]['checked'] = selectEntry('comments', '1', $settings['comments'], 'checked');
+	$comments[0]['lang'] = $lang->t('common', 'yes');
+	$comments[1]['value'] = '0';
+	$comments[1]['checked'] = selectEntry('comments', '0', $settings['comments'], 'checked');
+	$comments[1]['lang'] = $lang->t('common', 'no');
+	$tpl->assign('comments', $comments);
+
 	$tpl->assign('form', isset($form) ? $form : $settings);
 
 	$content = $tpl->fetch('gallery/settings.html');

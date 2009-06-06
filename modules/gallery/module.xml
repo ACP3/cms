@@ -16,6 +16,7 @@
 		<maxwidth>1024</maxwidth>
 		<maxheight>768</maxheight>
 		<filesize>20971520</filesize>
+		<comments>1</comments>
 	</settings>
 	<access>
 		<item>
@@ -69,6 +70,10 @@
 		<item>
 			<file>settings</file>
 			<level>15</level>
+		</item>
+		<item>
+			<file>sidebar</file>
+			<level>1</level>
 		</item>
 	</access>
 </module>
