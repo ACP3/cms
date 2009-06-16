@@ -83,8 +83,13 @@ class date
 	{
 		// Zeitstempel aus Veröffentlichungszeitraum heraus generieren
 		if (!empty($value) && validate::date($value)) {
-			$offset = !$this->dst && date('I') || !$this->dst && !date('I') ? 3600 : 0;
-			return gmdate('U', strtotime($value) + $offset);
+			$value = strtotime($value);
+			if ($this->dst && !date('I', $value)) {
+				$offset = -3600;
+			} else {
+				$offset = !$this->dst && date('I', $value) ? 3600 : 0;
+			}
+			return gmdate('U', $value + $offset);
 		}
 		return gmdate('U');
 	}
