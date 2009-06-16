@@ -5,27 +5,38 @@ jQuery(function($) {
 		var module = $('#module-container');
 		var hints = $('#link-hints');
 		var link = $('#link-container');
+		var static_page = $('#static-pages-container');
 
 		if (mode == '1') {
 			page.show();
 			module.show();
 			hints.hide();
 			link.hide();
+			static_page.hide();
 		} else if (mode == '2') {
 			page.show();
 			module.hide();
 			hints.show();
 			link.show();
+			static_page.hide();
 		} else if (mode == '3') {
 			page.show();
 			module.hide();
 			hints.hide();
 			link.show();
+			static_page.hide();
+		} else if (mode == '4') {
+			page.show();
+			module.hide();
+			hints.hide();
+			link.hide();
+			static_page.show();
 		} else {
 			page.hide();
 			module.hide();
 			hints.hide();
 			link.hide();
+			static_page.hide();
 		}
 	}
 	// Seitentyp
@@ -33,7 +44,7 @@ jQuery(function($) {
 		switchContainer();
 	}).change();
 
-	// Nur die zum Block gehörigen übergeordneten Seiten anzeigen
+	// Nur die dem Block zugehörigen übergeordneten Seiten anzeigen
 	$('#parent optgroup').hide();
 
 	var def_block = 0;

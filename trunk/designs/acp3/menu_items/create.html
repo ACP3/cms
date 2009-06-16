@@ -79,6 +79,19 @@
 			<dt><label for="uri">{lang values="menu_items|uri"}</label></dt>
 			<dd><input type="text" name="form[uri]" id="uri" value="{$form.uri}" maxlength="120" /></dd>
 		</dl>
+{if isset($static_pages)}
+		<dl id="static-pages-container">
+			<dt><label for="static-pages">{lang values="static_pages|static_pages"}</label></dt>
+			<dd>
+				<select name="form[static_pages]" id="static-pages">
+					<option value="">{lang values="common|pls_select"}</option>
+{foreach from=$static_pages item=row}
+					<option value="{$row.id}"{$row.selected}>{$row.title}</option>
+{/foreach}
+				</select>
+			</dd>
+		</dl>
+{/if}
 		<dl>
 			<dt><label for="target">{lang values="menu_items|target_page"}</label></dt>
 			<dd>

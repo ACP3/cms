@@ -109,6 +109,10 @@
 		<message>Bitte wählen Sie eine übergeordnete Seite aus</message>
 	</item>
 	<item>
+		<name>static_page</name>
+		<message>Statische Seite</message>
+	</item>
+	<item>
 		<name>superior_page</name>
 		<message>Übergeordnete Seite</message>
 	</item>

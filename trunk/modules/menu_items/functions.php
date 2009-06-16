@@ -30,11 +30,12 @@ function setMenuItemsCache() {
 			}
 		}
 
-		$mode_replace = array($lang->t('menu_items', 'module'), $lang->t('menu_items', 'dynamic_page'), $lang->t('menu_items', 'hyperlink'));
+		$mode_search = array('1', '2', '3', '4');
+		$mode_replace = array($lang->t('menu_items', 'module'), $lang->t('menu_items', 'dynamic_page'), $lang->t('menu_items', 'hyperlink'), $lang->t('menu_items', 'static_page'));
 
 		for ($i = 0; $i < $c_pages; ++$i) {
 			$pages[$i]['period'] = $date->period($pages[$i]['start'], $pages[$i]['end']);
-			$pages[$i]['mode_formated'] = str_replace(array('1', '2', '3'), $mode_replace, $pages[$i]['mode']);
+			$pages[$i]['mode_formated'] = str_replace($mode_search, $mode_replace, $pages[$i]['mode']);
 
 			// Bestimmen, ob die Seite die Erste und/oder Letzte eines Blocks/Knotens ist
 			$first = $last = false;
@@ -250,7 +251,7 @@ function processNavbar($block) {
 				if (!empty($select) && defined('IN_ACP3') && $pages[$i]['left_id'] <= $select[0]['left_id'] && $pages[$i]['right_id'] > $select[0]['left_id']) {
 					$css.= ' selected';
 				}
-				$href = $pages[$i]['mode'] == '1' || $pages[$i]['mode'] == '2' ? uri($pages[$i]['uri']) : $pages[$i]['uri'];
+				$href = $pages[$i]['mode'] == '1' || $pages[$i]['mode'] == '2' || $pages[$i]['mode'] == '4' ? uri($pages[$i]['uri']) : $pages[$i]['uri'];
 				$target = $pages[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 				$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $pages[$i]['title'] . '</a>';
 				$indent = str_repeat("\t\t", $pages[$i]['level']);
