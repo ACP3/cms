@@ -109,6 +109,10 @@
 		<message>Please select a superior page</message>
 	</item>
 	<item>
+		<name>static_page</name>
+		<message>Static page</message>
+	</item>
+	<item>
 		<name>superior_page</name>
 		<message>Superior page</message>
 	</item>

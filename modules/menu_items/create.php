@@ -36,7 +36,8 @@ if (isset($_POST['submit'])) {
 	if (!validate::isNumber($form['target']) ||
 		$form['mode'] == '1' && (!is_dir(ACP3_ROOT . 'modules/' . $form['module']) || preg_match('=/=', $form['module'])) ||
 		$form['mode'] == '2' && !validate::internalURI($form['uri']) ||
-		$form['mode'] == '3' && empty($form['uri']))
+		$form['mode'] == '3' && empty($form['uri']) ||
+		$form['mode'] == '4' && (!validate::isNumber($form['static_pages']) || $db->countRows('*', 'static_pages', 'id = \'' . $form['static_pages'] . '\'') == 0))
 		$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
 
 	if (isset($errors)) {
@@ -46,11 +47,11 @@ if (isset($_POST['submit'])) {
 			'id' => '',
 			'start' => $date->timestamp($form['start']),
 			'end' => $date->timestamp($form['end']),
-			'mode' => $form['mode'],
+			'mode' => ($form['mode'] == '2' || $form['mode'] == '3') && preg_match('/^(static_pages\/list\/id_([0-9]+)\/)$/', $form['uri']) ? '4' : $form['mode'],
 			'block_id' => $form['block_id'],
 			'display' => $form['display'],
 			'title' => $db->escape($form['title']),
-			'uri' => $form['mode'] == '1' ? $form['module'] : $db->escape($form['uri'], 2),
+			'uri' => $form['mode'] == '1' ? $form['module'] : ($form['mode'] == '4' ? 'static_pages/list/id_' . $form['static_pages'] . '/' : $db->escape($form['uri'], 2)),
 			'target' => $form['target'],
 		);
 
@@ -71,6 +72,11 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$mode[2]['value'] = 3;
 	$mode[2]['selected'] = selectEntry('mode', '3');
 	$mode[2]['lang'] = $lang->t('menu_items', 'hyperlink');
+	if (modules::check('static_pages', 'functions')) {
+		$mode[3]['value'] = 4;
+		$mode[3]['selected'] = selectEntry('mode', '4');
+		$mode[3]['lang'] = $lang->t('menu_items', 'static_page');
+	}
 
 	// Block
 	$blocks = $db->select('id, title', 'menu_items_blocks');
@@ -87,18 +93,24 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 	// Ziel des Hyperlinks
 	$target[0]['value'] = 1;
-	$target[0]['selected'] = selectEntry('target', 1);
+	$target[0]['selected'] = selectEntry('target', '1');
 	$target[0]['lang'] = $lang->t('common', 'window_self');
 	$target[1]['value'] = 2;
-	$target[1]['selected'] = selectEntry('target', 2);
+	$target[1]['selected'] = selectEntry('target', '2');
 	$target[1]['lang'] = $lang->t('common', 'window_blank');
 
 	$display[0]['value'] = 1;
-	$display[0]['selected'] = selectEntry('display', 1, 1, 'checked');
+	$display[0]['selected'] = selectEntry('display', '1', '1', 'checked');
 	$display[0]['lang'] = $lang->t('common', 'yes');
 	$display[1]['value'] = 0;
 	$display[1]['selected'] = selectEntry('display', '0', '', 'checked');
 	$display[1]['lang'] = $lang->t('common', 'no');
+
+	if (modules::check('static_pages', 'functions')) {
+		require_once ACP3_ROOT . 'modules/static_pages/functions.php';
+
+		$tpl->assign('static_pages', getStaticPages());
+	}
 
 	$defaults = array(
 		'title' => '',

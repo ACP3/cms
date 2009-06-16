@@ -26,7 +26,7 @@
 	</item>
 	<item>
 		<name>select_create_menu_item</name>
-		<message>Bitte wählen Sie aus, ob diese statische Seite ein Menüpunkt erstellt werden soll oder nicht</message>
+		<message>Bitte wählen Sie aus, ob für die statische Seite ein Menüpunkt erstellt werden soll oder nicht</message>
 	</item>
 	<item>
 		<name>static_pages</name>

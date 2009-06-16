@@ -20,6 +20,7 @@ function setNewsCache($id)
 }
 /**
  * Bindet die gecachete News ein
+ *
  * @param integer $id
  *  Die ID der News
  * @return array
