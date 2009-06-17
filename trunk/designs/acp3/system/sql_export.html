@@ -46,6 +46,15 @@
 {/foreach}
 				</dd>
 			</dl>
+			<dl id="options-container">
+				<dt><label for="drop">{lang values="common|options"}</label></dt>
+				<dd>
+					<label for="drop">
+						<input type="checkbox" name="form[drop]" id="drop" value="1" class="checkbox"{$drop.checked} />
+						{$drop.lang}
+					</label>
+				</dd>
+			</dl>
 		</div>
 	</div>
 	<div class="form-bottom">

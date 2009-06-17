@@ -46,6 +46,10 @@
 			<level>15</level>
 		</item>
 		<item>
+			<file>sql_import</file>
+			<level>15</level>
+		</item>
+		<item>
 			<file>sql_optimisation</file>
 			<level>15</level>
 		</item>

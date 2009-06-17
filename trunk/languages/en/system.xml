@@ -73,6 +73,10 @@
 		<message>Disable module</message>
 	</item>
 	<item>
+		<name>drop_tables</name>
+		<message><![CDATA[Export with &quot;DROP TABLE&quot; statement]]></message>
+	</item>
+	<item>
 		<name>editor</name>
 		<message>Editor</message>
 	</item>
@@ -115,6 +119,10 @@
 	<item>
 		<name>extensions</name>
 		<message>Extensions</message>
+	</item>
+	<item>
+		<name>file</name>
+		<message>File</message>
 	</item>
 	<item>
 		<name>flood_barrier</name>
@@ -301,6 +309,14 @@
 		<message>PHP version</message>
 	</item>
 	<item>
+		<name>query_failed</name>
+		<message>Query failed!</message>
+	</item>
+	<item>
+		<name>query_successfully_executed</name>
+		<message>Query executed successfully!</message>
+	</item>
+	<item>
 		<name>register_globals</name>
 		<message>Register globals</message>
 	</item>
@@ -337,6 +353,10 @@
 		<message>Please select, wether the backup should be output as a file or a text</message>
 	</item>
 	<item>
+		<name>select_sql_file</name>
+		<message>The uploaded file is not a valid textfile</message>
+	</item>
+	<item>
 		<name>select_sql_tables</name>
 		<message>Please select at least one SQL-table, that should be exported</message>
 	</item>
@@ -365,8 +385,16 @@
 		<message>SQL-table export</message>
 	</item>
 	<item>
+		<name>sql_import</name>
+		<message>SQL-Tabellen-Import</message>
+	</item>
+	<item>
 		<name>sql_optimisation</name>
 		<message>SQL table optimisation</message>
+	</item>
+	<item>
+		<name>sql_query</name>
+		<message>SQL Query</message>
 	</item>
 	<item>
 		<name>sql_table_optimisation_description</name>
@@ -393,6 +421,10 @@
 		<message>Table name</message>
 	</item>
 	<item>
+		<name>text</name>
+		<message>Text</message>
+	</item>
+	<item>
 		<name>textarea</name>
 		<message>Textarea</message>
 	</item>
@@ -411,6 +443,10 @@
 	<item>
 		<name>type_in_flood_barrier</name>
 		<message>Please type in, for how long an user can\'t submit new entries</message>
+	</item>
+	<item>
+		<name>type_in_text_or_select_sql_file</name>
+		<message>Please either type in the sql queries into the textarea oder just upload a file</message>
 	</item>
 	<item>
 		<name>update_check</name>

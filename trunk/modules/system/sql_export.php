@@ -27,7 +27,8 @@ if (isset($_POST['submit'])) {
 			if ($form['export_type'] == 'complete' || $form['export_type'] == 'structure') {
 				$result = $db->query('SHOW CREATE TABLE ' . $table);
 				if (is_array($result)) {
-					$structure.= '-- ' . sprintf($lang->t('system', 'structure_of_table'), $table) . "\n\n";
+					//$structure.= '-- ' . sprintf($lang->t('system', 'structure_of_table'), $table) . "\n\n";
+					$structure.= isset($form['drop']) && $form['drop'] == '1' ? 'DROP TABLE IF EXISTS `' . $table . '`;' . "\n\n" : '';
 					$structure.= $result[0]['Create Table'] . ';' . "\n\n";
 				}
 			}
@@ -35,7 +36,7 @@ if (isset($_POST['submit'])) {
 			if ($form['export_type'] == 'complete' || $form['export_type'] == 'data') {
 				$resultsets = $db->select('*', substr($table, strlen(CONFIG_DB_PRE), strlen($table)));
 				if (count($resultsets) > 0) {
-					$data.= "\n" . '-- '. sprintf($lang->t('system', 'data_of_table'), $table) . "\n\n";
+					//$data.= "\n" . '-- '. sprintf($lang->t('system', 'data_of_table'), $table) . "\n\n";
 					$fields = '';
 					// Felder der jeweiligen Tabelle auslesen
 					foreach ($resultsets[0] as $field => $content) {
@@ -85,7 +86,7 @@ if (!isset($_POST['submit']) || isset($errors)) {
 	$output[0]['checked'] = selectEntry('output', 'file', 'file', 'checked');
 	$output[0]['lang'] = $lang->t('system', 'output_as_file');
 	$output[1]['value'] = 'text';
-	$output[1]['checked'] = selectEntry('output', 'text', 'file', 'checked');
+	$output[1]['checked'] = selectEntry('output', 'text', '', 'checked');
 	$output[1]['lang'] = $lang->t('system', 'output_as_text');
 	$tpl->assign('output', $output);
 
@@ -94,12 +95,16 @@ if (!isset($_POST['submit']) || isset($errors)) {
 	$export_type[0]['checked'] = selectEntry('export_type', 'complete', 'complete', 'checked');
 	$export_type[0]['lang'] = $lang->t('system', 'complete_export');
 	$export_type[1]['value'] = 'structure';
-	$export_type[1]['checked'] = selectEntry('export_type', 'structure', 'complete', 'checked');
+	$export_type[1]['checked'] = selectEntry('export_type', 'structure', '', 'checked');
 	$export_type[1]['lang'] = $lang->t('system', 'export_structure');
 	$export_type[2]['value'] = 'data';
-	$export_type[2]['checked'] = selectEntry('export_type', 'data', 'complete', 'checked');
+	$export_type[2]['checked'] = selectEntry('export_type', 'data', '', 'checked');
 	$export_type[2]['lang'] = $lang->t('system', 'export_data');
 	$tpl->assign('export_type', $export_type);
+
+	$drop['checked'] = selectEntry('drop', '1', '', 'checked');
+	$drop['lang'] = $lang->t('system', 'drop_tables');
+	$tpl->assign('drop', $drop);
 }
 $content = $tpl->fetch('system/sql_export.html');
 ?>
