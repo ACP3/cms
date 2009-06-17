@@ -6,3 +6,13 @@ function mark_options(action)
 		$('form #tables option').removeAttr('selected');
 	}
 }
+
+$(function() {
+	$('input[name="form[export_type]"]').click(function() {
+		if (($(this).attr('id') == 'complete' || $(this).attr('id') == 'structure')) {
+			$('#options-container').show();
+		} else {
+			$('#options-container').hide();
+		}
+	}).click();
+});

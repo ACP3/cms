@@ -181,5 +181,32 @@ class validate
 		}
 		return false;
 	}
+	/**
+	 * Gibt in Abhängigkeit des Parameters $mimetype entweder
+	 * den gefundenen MIMETYPE aus oder ob der gefundene MIMETYPE
+	 * mit dem erwarteten übereinstimmt
+	 *
+	 * @param string $file
+	 *  Die zu überprüfende Datei
+	 * @param string $mimetype
+	 *  Der zu vergleichende MIMETYPE
+	 * @return mixed
+	 */
+	public static function mimeType($file, $mimetype = '') {
+		if (is_file($file)) {
+			if (function_exists('finfo_open') && $fp = finfo_open(FILEINFO_MIME)) {
+				$return = finfo_file($fp, $file);
+				finfo_close($fp);
+			} elseif (function_exists('mime_content_type')) {
+				$return = mime_content_type($file);
+			}
+
+			if (!empty($mimetype)) {
+				return $return == $mimetype ? true : false;
+			} else {
+				return $return;
+			}
+		}
+	}
 }
 ?>

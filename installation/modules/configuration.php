@@ -99,8 +99,8 @@ if (isset($_POST['submit'])) {
 				$data[$i]['query'] = $query;
 				$bool = $db->query($query, 0);
 				$data[$i]['color'] = $bool !== null ? '090' : 'f00';
-				$data[$i]['result'] = $bool !== null ? $lang->t('installation', 'query_successfully_executed') : $lang->t('installation', 'query_failed');
-				$i++;
+				$data[$i]['result'] = $bool !== null ? $lang->t('system', 'query_successfully_executed') : $lang->t('system', 'query_failed');
+				++$i;
 				if ($bool === null) {
 					$tpl->assign('install_error', true);
 					break;

@@ -189,14 +189,6 @@
 		<message>PDO Erweiterung</message>
 	</item>
 	<item>
-		<name>query_failed</name>
-		<message>Abfrage fehlgeschalgen!</message>
-	</item>
-	<item>
-		<name>query_successfully_executed</name>
-		<message>Abfrage erfolgreich durchgeführt!</message>
-	</item>
-	<item>
 		<name>register_globals</name>
 		<message>Globale Registrierung von Variablen:</message>
 	</item>
@@ -209,20 +201,12 @@
 		<message>Voraussetzungen</message>
 	</item>
 	<item>
-		<name>result</name>
-		<message>Ergebnis</message>
-	</item>
-	<item>
 		<name>show_hide_executed_db_queries</name>
 		<message>Durchgeführte Datenbankabfragen anzeigen/verstecken</message>
 	</item>
 	<item>
 		<name>sincerely</name>
 		<message>Mit freundlichen Grüßen,</message>
-	</item>
-	<item>
-		<name>sql_query</name>
-		<message>SQL Anfrage</message>
 	</item>
 	<item>
 		<name>step_1_legend</name>

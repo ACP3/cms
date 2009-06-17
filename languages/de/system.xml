@@ -73,6 +73,10 @@
 		<message>Modul deaktivieren</message>
 	</item>
 	<item>
+		<name>drop_tables</name>
+		<message><![CDATA[Mit &quot;DROP TABLE&quot; exportieren]]></message>
+	</item>
+	<item>
 		<name>editor</name>
 		<message>Editor</message>
 	</item>
@@ -115,6 +119,10 @@
 	<item>
 		<name>extensions</name>
 		<message>Erweiterungen</message>
+	</item>
+	<item>
+		<name>file</name>
+		<message>Datei</message>
 	</item>
 	<item>
 		<name>flood_barrier</name>
@@ -301,6 +309,14 @@
 		<message>PHP Version</message>
 	</item>
 	<item>
+		<name>query_failed</name>
+		<message>Abfrage fehlgeschalgen!</message>
+	</item>
+	<item>
+		<name>query_successfully_executed</name>
+		<message>Abfrage erfolgreich durchgeführt!</message>
+	</item>
+	<item>
 		<name>register_globals</name>
 		<message>Globale Registrierung</message>
 	</item>
@@ -337,6 +353,10 @@
 		<message>Bittw wählen Sie aus, ob die Sicherung der SQL-Tabellen als Datei oder als Text ausgegeben werden soll.</message>
 	</item>
 	<item>
+		<name>select_sql_file</name>
+		<message>Die angegebene Datei ist keine Textdatei</message>
+	</item>
+	<item>
 		<name>select_sql_tables</name>
 		<message>Bitte wählen Sie mindestens eine SQL-Tabelle aus, welche exportiert werden soll</message>
 	</item>
@@ -365,8 +385,16 @@
 		<message>SQL-Tabellen-Export</message>
 	</item>
 	<item>
+		<name>sql_import</name>
+		<message>SQL-Tabellen-Import</message>
+	</item>
+	<item>
 		<name>sql_optimisation</name>
 		<message>SQL-Tabellen-Optimierung</message>
+	</item>
+	<item>
+		<name>sql_query</name>
+		<message>SQL Abfrage</message>
 	</item>
 	<item>
 		<name>sql_table_optimisation_description</name>
@@ -393,6 +421,10 @@
 		<message>Tabellenname</message>
 	</item>
 	<item>
+		<name>text</name>
+		<message>Text</message>
+	</item>
+	<item>
 		<name>textarea</name>
 		<message>Textfeld</message>
 	</item>
@@ -411,6 +443,10 @@
 	<item>
 		<name>type_in_flood_barrier</name>
 		<message>Bitte geben Sie ein, für wieviele Sekunden ein Benutzer keine Beiträge abschicken kann</message>
+	</item>
+	<item>
+		<name>type_in_text_or_select_sql_file</name>
+		<message>Bitte geben Sie die SQL-Abfragen entweder in dem Textfeld ein oder laden Sie eine Datei hoch</message>
 	</item>
 	<item>
 		<name>update_check</name>
