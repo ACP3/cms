@@ -18,7 +18,7 @@ if (!defined('INSTALLED')) {
 }
 
 // Wenn der DEBUG Modus aktiv ist, Fehler ausgeben
-$reporting_level =defined('DEBUG') && DEBUG ? E_ALL | E_STRICT : 0;
+$reporting_level = defined('DEBUG') && DEBUG ? E_ALL | E_STRICT : 0;
 error_reporting($reporting_level);
 
 function __autoload($className)
@@ -30,6 +30,7 @@ function __autoload($className)
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
 $php_self = dirname(PHP_SELF);
 define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
+define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
 
 // Smarty einbinden
 define('SMARTY_DIR', ACP3_ROOT . 'includes/smarty/');
@@ -48,7 +49,7 @@ if (!is_writable($tpl->compile_dir)) {
 $tpl->assign('PHP_SELF', PHP_SELF);
 $tpl->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
 $tpl->assign('ROOT_DIR', ROOT_DIR);
-$tpl->assign('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
+$tpl->assign('DESIGN_PATH', DESIGN_PATH);
 $tpl->assign('LANG', CONFIG_LANG);
 $tpl->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
 $tpl->assign('KEYWORDS', CONFIG_SEO_META_KEYWORDS);
