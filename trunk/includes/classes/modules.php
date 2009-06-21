@@ -15,6 +15,8 @@
  */
 class modules
 {
+	private static $minify = array();
+
 	/**
 	 * Überpüft, ob ein Modul überhaupt existiert,
 	 * bzw. der Benutzer auf ein Modul Zugriff hat
@@ -90,6 +92,11 @@ class modules
 		}
 		return -1;
 	}
+	public static function minify($mode)
+	{
+		$defaults = $mode == 'js' ? 'jquery.js,jquery.cookie.js,jquery.ui.js,script.js' : 'style.css,jquery-ui.css';
+		return ROOT_DIR . 'includes/min/?b=' . substr(DESIGN_PATH, 1, -1) . '&amp;f=' . $defaults . (!empty(self::$minify[$mode]) ? implode(',', $minify[$mode]) : '');
+	}
 	/**
 	 * Gibt ein alphabetisch sortiertes Array mit allen gefundenen
 	 * Modulen des ACP3 mitsamt Modulinformationen aus
@@ -111,6 +118,41 @@ class modules
 			ksort($mod_list);
 		}
 		return $mod_list;
+	}
+	/**
+	 * Gibt die Seite aus
+	 */
+	public static function outputPage() {
+		global $auth, $date, $db, $lang, $tpl, $uri;
+
+		if (!$auth->isUser() && defined('IN_ADM') && uri($uri->query) != uri('acp/users/login')) {
+			redirect('acp/users/login');
+		}
+
+		switch (modules::check()) {
+			// Seite ausgeben
+			case 1:
+				require ACP3_ROOT . 'modules/' . $uri->mod . '/' . $uri->page . '.php';
+
+				// Evtl. gesetzten Content-Type des Servers überschreiben
+				header('Content-Type: ' . (defined('CUSTOM_CONTENT_TYPE') ? CUSTOM_CONTENT_TYPE : 'text/html') . '; charset=UTF-8');
+
+				$tpl->assign('TITLE', breadcrumb::output(2));
+				$tpl->assign('BREADCRUMB', breadcrumb::output());
+				$tpl->assign('CONTENT', !empty($content) ? $content : '');
+
+				// Falls ein Modul ein eigenes Layout verwenden möchte, dieses auch zulassen
+				$output = $tpl->fetch(defined('CUSTOM_LAYOUT') ? CUSTOM_LAYOUT : 'layout.html');
+				echo str_replace(array('<!-- STYLESHEET -->', '<!-- JAVASCRIPT -->'), array(modules::minify('css'), modules::minify('js')), $output);
+				break;
+			// Kein Zugriff auf die Seite
+			case 0:
+				redirect('errors/403');
+				break;
+			// Seite nicht gefunden
+			default:
+				redirect('errors/404');
+		}
 	}
 	/**
 	 * Durchläuft für das angeforderte Modul den <info> Abschnitt in der
@@ -137,6 +179,8 @@ class modules
 					'name' => isset($mod_info['name']['lang']) && $mod_info['name']['lang'] == 'true' ? $lang->t($module, $module) : $mod_info['name'],
 					'tables' => !empty($mod_info['tables']) ? explode(',', $mod_info['tables']) : false,
 					'categories' => isset($mod_info['categories']) ? true : false,
+					'javascript' => isset($mod_info['javascript']) ? true : false,
+					'stylesheet' => isset($mod_info['stylesheet']) ? true : false,
 					'protected' => isset($mod_info['protected']) ? true : false,
 				);
 				return $parsed_modules[$module];
