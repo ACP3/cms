@@ -8,27 +8,20 @@
  * You may wish to use the Minify URI Builder app to suggest
  * changes. http://yourdomain/min/builder/
  **/
+require_once '../config.php';
 
-return array(
-    // 'js' => array('//js/file1.js', '//js/file2.js'),
-    // 'css' => array('//css/file1.css', '//css/file2.css'),
+define('DESIGN_PATH', dirname(__FILE__) . '/../../designs/' . CONFIG_DESIGN . '/');
 
-    // custom source example
-    /*'js2' => array(
-        dirname(__FILE__) . '/../min_unit_tests/_test_files/js/before.js',
-        // do NOT process this file
-        new Minify_Source(array(
-            'filepath' => dirname(__FILE__) . '/../min_unit_tests/_test_files/js/before.js',
-            'minifier' => create_function('$a', 'return $a;')
-        ))
-    ),//*/
+if ($_GET['g'] == 'css') {
+	$modules = scandir(DESIGN_PATH);
+	$styles = array();
+	$styles['css'][] = DESIGN_PATH . '/layout.css';
+	$styles['css'][] = DESIGN_PATH . '/jquery-ui.css';
 
-    /*'js3' => array(
-        dirname(__FILE__) . '/../min_unit_tests/_test_files/js/before.js',
-        // do NOT process this file
-        new Minify_Source(array(
-            'filepath' => dirname(__FILE__) . '/../min_unit_tests/_test_files/js/before.js',
-            'minifier' => array('Minify_Packer', 'minify')
-        ))
-    ),//*/
-);
+	foreach ($modules as $module) {
+		if (is_dir(DESIGN_PATH . $module) && $module != '.' && $module != '..' && is_file(DESIGN_PATH . $module . '/style.css')) {
+			$styles['css'][] = DESIGN_PATH . '/' . $module . '/style.css';
+		}
+	}
+	return $styles;
+}

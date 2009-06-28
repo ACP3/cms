@@ -92,10 +92,19 @@ class modules
 		}
 		return -1;
 	}
-	public static function minify($mode)
+	public static function getMinify($mode)
 	{
 		$defaults = $mode == 'js' ? 'jquery.js,jquery.cookie.js,jquery.ui.js,script.js' : 'style.css,jquery-ui.css';
-		return ROOT_DIR . 'includes/min/?b=' . substr(DESIGN_PATH, 1, -1) . '&amp;f=' . $defaults . (!empty(self::$minify[$mode]) ? implode(',', $minify[$mode]) : '');
+		return ROOT_DIR . 'includes/min/?b=' . substr(DESIGN_PATH, 1, -1) . '&amp;f=' . $defaults . (!empty(self::$minify[$mode]) ? ',' . implode(',', self::$minify[$mode]) : '');
+	}
+	public static function setMinify($mode, $module = '', $path = '')
+	{
+		if (!empty($module) && empty($path)) {
+			self::$minify[$mode][] = $module . ($mode == 'css' ? 'style.css' : 'script.js');
+		} elseif (!empty($path)) {
+			self::$minify[$mode][] = $path;
+		}
+		return;
 	}
 	/**
 	 * Gibt ein alphabetisch sortiertes Array mit allen gefundenen
@@ -143,7 +152,7 @@ class modules
 
 				// Falls ein Modul ein eigenes Layout verwenden möchte, dieses auch zulassen
 				$output = $tpl->fetch(defined('CUSTOM_LAYOUT') ? CUSTOM_LAYOUT : 'layout.html');
-				echo str_replace(array('<!-- STYLESHEET -->', '<!-- JAVASCRIPT -->'), array(modules::minify('css'), modules::minify('js')), $output);
+				echo str_replace(array('<!-- STYLESHEET -->', '<!-- JAVASCRIPT -->'), array(modules::getMinify('css'), modules::getMinify('js')), $output);
 				break;
 			// Kein Zugriff auf die Seite
 			case 0:
@@ -179,8 +188,8 @@ class modules
 					'name' => isset($mod_info['name']['lang']) && $mod_info['name']['lang'] == 'true' ? $lang->t($module, $module) : $mod_info['name'],
 					'tables' => !empty($mod_info['tables']) ? explode(',', $mod_info['tables']) : false,
 					'categories' => isset($mod_info['categories']) ? true : false,
-					'javascript' => isset($mod_info['javascript']) ? true : false,
-					'stylesheet' => isset($mod_info['stylesheet']) ? true : false,
+					'js' => isset($mod_info['js']) ? true : false,
+					'css' => isset($mod_info['css']) ? true : false,
 					'protected' => isset($mod_info['protected']) ? true : false,
 				);
 				return $parsed_modules[$module];
