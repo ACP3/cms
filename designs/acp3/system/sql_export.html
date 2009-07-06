@@ -10,10 +10,10 @@
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<div id="tabs">
 		<ul>
-			<li><a href="#tabs-1">{lang values="system|sql_tables"}</a></li>
-			<li><a href="#tabs-2">{lang values="system|export_options"}</a></li>
+			<li><a href="#tab-1">{lang values="system|sql_tables"}</a></li>
+			<li><a href="#tab-2">{lang values="system|export_options"}</a></li>
 		</ul>
-		<div id="tabs-1">
+		<div id="tab-1">
 			<dl>
 				<dd>
 					<select name="form[tables][]" id="tables" multiple="multiple" style="height:200px">
@@ -25,7 +25,7 @@
 				</dd>
 			</dl>
 		</div>
-		<div id="tabs-2" class="ui-tabs-hide">
+		<div id="tab-2" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="file">{lang values="system|output"}</label></dt>
 				<dd>

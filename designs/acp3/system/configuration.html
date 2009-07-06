@@ -4,12 +4,12 @@
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<div id="tabs">
 		<ul>
-			<li><a href="#tabs-1">{lang values="system|general"}</a></li>
-			<li><a href="#tabs-2">{lang values="common|date"}</a></li>
-			<li><a href="#tabs-3">{lang values="system|maintenance"}</a></li>
-			<li><a href="#tabs-4">{lang values="system|seo"}</a></li>
+			<li><a href="#tab-1">{lang values="system|general"}</a></li>
+			<li><a href="#tab-2">{lang values="common|date"}</a></li>
+			<li><a href="#tab-3">{lang values="system|maintenance"}</a></li>
+			<li><a href="#tab-4">{lang values="system|seo"}</a></li>
 		</ul>
-		<div id="tabs-1">
+		<div id="tab-1">
 			<dl>
 				<dt><label for="entries">{lang values="system|entries_per_page"}</label></dt>
 				<dd>
@@ -39,7 +39,7 @@
 				</dd>
 			</dl>
 		</div>
-		<div id="tabs-2" class="ui-tabs-hide">
+		<div id="tab-2" class="ui-tabs-hide">
 			<dl>
 				<dt>
 					<label for="date-format">{lang values="system|date_format"}</label>
@@ -65,7 +65,7 @@
 				</dd>
 			</dl>
 		</div>
-		<div id="tabs-3" class="ui-tabs-hide">
+		<div id="tab-3" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="maintenance-mode-1">{lang values="system|maintenance_mode"}</label></dt>
 				<dd>
@@ -80,7 +80,7 @@
 				<dd><textarea name="form[maintenance_message]" id="maintenance-message" cols="50" rows="6">{$form.maintenance_message}</textarea></dd>
 			</dl>
 		</div>
-		<div id="tabs-4" class="ui-tabs-hide">
+		<div id="tab-4" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="seo-title">{lang values="system|title"}</label></dt>
 				<dd><input type="text" name="form[seo_title]" id="seo-title" value="{$form.seo_title}" maxlength="120" /></dd>

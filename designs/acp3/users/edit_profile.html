@@ -4,11 +4,11 @@
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<div id="tabs">
 		<ul>
-			<li><a href="#tabs-1">{lang values="common|general_statements"}</a></li>
-			<li><a href="#tabs-2">{lang values="users|contact"}</a></li>
-			<li><a href="#tabs-3">{lang values="users|pwd"}</a></li>
+			<li><a href="#tab-1">{lang values="common|general_statements"}</a></li>
+			<li><a href="#tab-2">{lang values="users|contact"}</a></li>
+			<li><a href="#tab-3">{lang values="users|pwd"}</a></li>
 		</ul>
-		<div id="tabs-1">
+		<div id="tab-1">
 			<p>
 				{lang values="users|display_profile_field"}
 			</p>
@@ -73,7 +73,7 @@
 				</tr>
 			</table>
 		</div>
-		<div id="tabs-2" class="ui-tabs-hide">
+		<div id="tab-2" class="ui-tabs-hide">
 			<p>
 				{lang values="users|display_profile_field"}
 			</p>
@@ -93,7 +93,7 @@
 {/foreach}
 			</table>
 		</div>
-		<div id="tabs-3" class="ui-tabs-hide">
+		<div id="tab-3" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="new_pwd">{lang values="users|new_pwd"}</label></dt>
 				<dd><input type="password" name="form[new_pwd]" id="new_pwd" /></dd>

@@ -4,11 +4,11 @@
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<div id="tabs">
 		<ul>
-			<li><a href="#tabs-1">{lang values="common|publication_period"}</a></li>
-			<li><a href="#tabs-2">{lang values="news|news"}</a></li>
-			<li><a href="#tabs-3">{lang values="news|additional_hyperlink"}</a></li>
+			<li><a href="#tab-1">{lang values="common|publication_period"}</a></li>
+			<li><a href="#tab-2">{lang values="news|news"}</a></li>
+			<li><a href="#tab-3">{lang values="news|additional_hyperlink"}</a></li>
 		</ul>
-		<div id="tabs-1">
+		<div id="tab-1">
 			<dl>
 				<dt><label for="start">{lang values="common|start_date"}</label></dt>
 				<dd>{$start_date}</dd>
@@ -19,7 +19,7 @@
 				{lang values="common|date_description"}
 			</p>
 		</div>
-		<div id="tabs-2" class="ui-tabs-hide">
+		<div id="tab-2" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="headline">{lang values="news|headline"}</label></dt>
 				<dd><input type="text" name="form[headline]" id="headline" value="{$form.headline}" maxlength="120" /></dd>
@@ -46,7 +46,7 @@
 {/if}
 			</dl>
 		</div>
-		<div id="tabs-3" class="ui-tabs-hide">
+		<div id="tab-3" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="uri">{lang values="news|uri"}</label></dt>
 				<dd><input type="text" name="form[uri]" id="uri" value="{$form.uri}" maxlength="120" /></dd>
