@@ -142,28 +142,28 @@ $Config['AllowedExtensions']['File']	= array('7z', 'aiff', 'asf', 'avi', 'bmp', 
 $Config['DeniedExtensions']['File']		= array() ;
 $Config['FileTypesPath']['File']		= $Config['UserFilesPath'] . 'files/' ;
 $Config['FileTypesAbsolutePath']['File']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'] . 'files/' ;
-$Config['QuickUploadPath']['File']		= $Config['UserFilesPath'] ;
+$Config['QuickUploadPath']['File']		= $Config['FileTypesPath']['File'] ;
 $Config['QuickUploadAbsolutePath']['File']= $Config['UserFilesAbsolutePath'] ;
 
 $Config['AllowedExtensions']['Image']	= array('bmp','gif','jpeg','jpg','png') ;
 $Config['DeniedExtensions']['Image']	= array() ;
 $Config['FileTypesPath']['Image']		= $Config['UserFilesPath'] . 'gallery/' ;
 $Config['FileTypesAbsolutePath']['Image']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'] . 'gallery/' ;
-$Config['QuickUploadPath']['Image']		= $Config['UserFilesPath'] ;
+$Config['QuickUploadPath']['Image']		= $Config['FileTypesPath']['Image'] ;
 $Config['QuickUploadAbsolutePath']['Image']= $Config['UserFilesAbsolutePath'] ;
 
 $Config['AllowedExtensions']['Flash']	= array('swf','flv') ;
 $Config['DeniedExtensions']['Flash']	= array() ;
 $Config['FileTypesPath']['Flash']		= $Config['UserFilesPath'] . 'files/' ;
 $Config['FileTypesAbsolutePath']['Flash']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'] . 'files/' ;
-$Config['QuickUploadPath']['Flash']		= $Config['UserFilesPath'] ;
+$Config['QuickUploadPath']['Flash']		= $Config['FileTypesPath']['Flash'] ;
 $Config['QuickUploadAbsolutePath']['Flash']= $Config['UserFilesAbsolutePath'] ;
 
 $Config['AllowedExtensions']['Media']	= array('aiff', 'asf', 'avi', 'bmp', 'fla', 'flv', 'gif', 'jpeg', 'jpg', 'mid', 'mov', 'mp3', 'mp4', 'mpc', 'mpeg', 'mpg', 'png', 'qt', 'ram', 'rm', 'rmi', 'rmvb', 'swf', 'tif', 'tiff', 'wav', 'wma', 'wmv') ;
 $Config['DeniedExtensions']['Media']	= array() ;
 $Config['FileTypesPath']['Media']		= $Config['UserFilesPath'] . 'files/' ;
 $Config['FileTypesAbsolutePath']['Media']= ($Config['UserFilesAbsolutePath'] == '') ? '' : $Config['UserFilesAbsolutePath'] . 'files/' ;
-$Config['QuickUploadPath']['Media']		= $Config['UserFilesPath'] ;
+$Config['QuickUploadPath']['Media']		= $Config['FileTypesPath']['Media'] ;
 $Config['QuickUploadAbsolutePath']['Media']= $Config['UserFilesAbsolutePath'] ;
 
 ?>
