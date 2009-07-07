@@ -11,7 +11,7 @@ require ACP3_ROOT . 'includes/classes/config.php';
 require ACP3_ROOT . 'includes/classes/db.php';
 
 $queries = array(
-	0 => 'UPDATE acp3_menu_items SET mode = 4 WHERE uri LIKE \'static_pages/list/id_%\' AND mode = 2;',
+	0 => 'UPDATE {pre}menu_items SET mode = 4 WHERE uri LIKE \'static_pages/list/id_%\' AND mode = 2;',
 );
 
 // Änderungen am DB Schema vornehmen
@@ -37,6 +37,8 @@ if (count($queries) > 0) {
 			print "\n";
 		}
 	}
+
+	$db->link->commit();
 
 	print "\n" . ($bool ? 'Die Datenbank wurde erfolgreich aktualisiert.' : 'Mindestens eine Datenbankänderung konnte nicht durchgeführt werden.') . "\n";
 	print "\n----------------------------\n\n";
