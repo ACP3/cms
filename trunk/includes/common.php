@@ -6,7 +6,7 @@
  */
 
 // Standardzeitzone festlegen
-date_default_timezone_set('Europe/Berlin');
+date_default_timezone_set('UTC');
 
 // register_globals OFF Emulation
 require_once ACP3_ROOT . 'includes/globals.php';

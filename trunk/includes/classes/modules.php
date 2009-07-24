@@ -132,15 +132,17 @@ class modules
 	 * Gibt die Seite aus
 	 */
 	public static function outputPage() {
-		global $auth, $date, $db, $lang, $tpl, $uri;
+		global $auth, $uri;
 
-		if (!$auth->isUser() && defined('IN_ADM') && uri($uri->query) != uri('acp/users/login')) {
+		if (!$auth->isUser() && defined('IN_ADM') && $uri->mod != 'users' && $uri->page != 'login') {
 			redirect('acp/users/login');
 		}
 
 		switch (modules::check()) {
 			// Seite ausgeben
 			case 1:
+				global $date, $db, $lang, $tpl;
+
 				require ACP3_ROOT . 'modules/' . $uri->mod . '/' . $uri->page . '.php';
 
 				// Evtl. gesetzten Content-Type des Servers überschreiben
