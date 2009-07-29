@@ -40,5 +40,7 @@ if (!isset($entries)) {
 		$text = $bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
 	}
 	$content = comboBox($text, uri('acp/access'));
+} else {
+	redirect('acp/errors/404');
 }
 ?>

@@ -31,5 +31,7 @@ if (!isset($entries)) {
 		}
 	}
 	$content = comboBox($bool !== null && $bool2 !== null && $bool3 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/polls'));
+} else {
+	redirect('acp/errors/404');
 }
 ?>

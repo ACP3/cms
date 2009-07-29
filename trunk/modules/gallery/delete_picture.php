@@ -36,5 +36,7 @@ if (!isset($entries)) {
 		}
 	}
 	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri(!empty($picture[0]['gallery_id']) ? 'acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id'] : 'acp/gallery'));
+} else {
+	redirect('acp/errors/404');
 }
 ?>

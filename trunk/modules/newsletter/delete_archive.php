@@ -29,5 +29,7 @@ if (!isset($entries)) {
 		}
 	}
 	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/newsletter/adm_list_archive'));
+} else {
+	redirect('acp/errors/404');
 }
 ?>

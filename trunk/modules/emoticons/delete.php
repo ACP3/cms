@@ -36,5 +36,7 @@ if (!isset($entries)) {
 	setEmoticonsCache();
 
 	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/emoticons'));
+} else {
+	redirect('acp/errors/404');
 }
 ?>

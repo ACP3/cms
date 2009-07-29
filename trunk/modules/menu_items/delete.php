@@ -31,5 +31,7 @@ if (!isset($entries)) {
 	setMenuItemsCache();
 
 	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/menu_items'));
+} else {
+	redirect('acp/errors/404');
 }
 ?>
