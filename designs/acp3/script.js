@@ -25,5 +25,5 @@ jQuery(function($) {
 	});
 
 	// jQuery UI Tabs
-	$('#tabs').tabs({ cookie: { expires: 30 }});
+	$('#tabs').tabs({ cookie: { expires: 1 }});
 })
