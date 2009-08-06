@@ -1,7 +1,7 @@
 jQuery(function($) {
 	$('#external-filesize').hide();
 
-	if ($('#external')[0].checked) {
+	if ($('#external').is(':checked')) {
 		$('#file-external').show();
 		$('#external-filesize').show();
 		$('#file-internal').hide();

@@ -1,5 +1,3 @@
-
-
 function mark_permissions(action) {
 	var checkbox = '';
 	switch(action) {
@@ -15,10 +13,9 @@ function mark_permissions(action) {
 		case 'delete':
 			checkbox = '.access-delete';
 			break;
-//		default:
-//			checkbox = '.access-read, .access-create, .access-edit, .access-delete';
 	}
-	var boxes = jQuery(checkbox);
+
+	var boxes = jQuery('table.acp-table input' + checkbox);
 	if (boxes.is(':checked')) {
 		boxes.removeAttr('checked');
 	} else {

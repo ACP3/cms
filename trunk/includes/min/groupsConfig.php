@@ -19,9 +19,25 @@ if ($_GET['g'] == 'css') {
 	$styles['css'][] = DESIGN_PATH . '/jquery-ui.css';
 
 	foreach ($modules as $module) {
-		if (is_dir(DESIGN_PATH . $module) && $module != '.' && $module != '..' && is_file(DESIGN_PATH . $module . '/style.css')) {
-			$styles['css'][] = DESIGN_PATH . '/' . $module . '/style.css';
+		$path = DESIGN_PATH . $module . '/style.css';
+		if (is_dir(DESIGN_PATH . $module) && $module != '.' && $module != '..' && is_file($path)) {
+			$styles['css'][] = $path;
 		}
 	}
 	return $styles;
+} elseif ($_GET['g'] == 'js') {
+	$modules = scandir(DESIGN_PATH);
+	$scripts = array();
+	$scripts['js'][] = DESIGN_PATH . '/jquery.js';
+	$scripts['js'][] = DESIGN_PATH . '/jquery.cookie.js';
+	$scripts['js'][] = DESIGN_PATH . '/jquery.ui.js';
+	$scripts['js'][] = DESIGN_PATH . '/script.js';
+
+	foreach ($modules as $module) {
+		$path = DESIGN_PATH . $module . '/script.js';
+		if (is_dir(DESIGN_PATH . $module) && $module != '.' && $module != '..' && is_file($path)) {
+			$scripts['js'][] = $path;
+		}
+	}
+	return $scripts;
 }
