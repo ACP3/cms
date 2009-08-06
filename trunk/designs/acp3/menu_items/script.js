@@ -1,4 +1,4 @@
-jQuery(function($) {
+$(document).ready(function() {
 	function switchContainer() {
 		var mode = $('#mode').val();
 		var page = $('#page-type');

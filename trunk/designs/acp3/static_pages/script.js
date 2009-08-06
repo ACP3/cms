@@ -1,4 +1,4 @@
-jQuery(function($) {
+$(document).ready(function() {
 	$(':radio[name=\'form[create]\']').click(function() {
 		if ($(this).val() == 1) {
 			$('#create-item-container').show();

@@ -1,4 +1,4 @@
-jQuery(function($) {
+$(document).ready(function() {
 	$('#external-filesize').hide();
 
 	if ($('#external').is(':checked')) {
