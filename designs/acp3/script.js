@@ -16,7 +16,7 @@ function mark_entries(name, action)
 	});
 }
 
-jQuery(function($) {
+$(document).ready(function() {
 	// Verschachtelte Navigation
 	$('#head ul li:has(ul)').hover(function() {
 		$(this).children('ul').show();
