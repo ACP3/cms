@@ -115,8 +115,9 @@ class db
 	 */
 	public function delete($table, $field, $limit = 0)
 	{
-		$query = 'DELETE FROM ' . CONFIG_DB_PRE . $table . ' WHERE ' . $field;
-		$query.= !empty($limit) ? ' LIMIT ' . $limit : '';
+		$limit = !empty($limit) ? ' LIMIT ' . $limit : '';
+
+		$query = 'DELETE FROM ' . CONFIG_DB_PRE . $table . ' WHERE ' . $field . $limit;
 
 		return $this->query($query, 0);
 	}
@@ -135,11 +136,11 @@ class db
 			$fields = '';
 			$values = '';
 			foreach ($insert_values as $field => $value) {
-				$fields.= $field . ', ';
+				$fields.= '`' . $field . '`, ';
 				$values.= '\'' . $value . '\', ';
 			}
 
-			$query = 'INSERT INTO ' . CONFIG_DB_PRE . $table . ' (' . substr($fields, 0, -2) . ') VALUES (' . substr($values, 0, -2) . ')';
+			$query = 'INSERT INTO `' . CONFIG_DB_PRE . $table . '` (' . substr($fields, 0, -2) . ') VALUES (' . substr($values, 0, -2) . ')';
 
 			return $this->query($query, 0);
 		}
@@ -148,7 +149,7 @@ class db
 	/**
 	 * Führt die SELECT Abfrage durch
 	 *
-	 * @param string $field
+	 * @param string $fields
 	 * 	Selektiert der Felder
 	 * @param string $table
 	 * 	Die betroffene Tabelle der Datenbank
@@ -163,18 +164,25 @@ class db
 	 * @param integer $mode
 	 * 	@see query()
 	 * @return @see query()
+	 *
+	 * @@todo SQL-Abstraction
 	 */
-	public function select($field, $table, $where = 0, $order = 0, $min = '', $max = '', $mode = 2)
+	public function select($fields, $table, $where = 0, $order = 0, $min = '', $max = '', $mode = 2)
 	{
-		$field = empty($field) ? '*' : $field;
-		$query = 'SELECT ' . $field . ' FROM ' . CONFIG_DB_PRE . $table;
-		$query.= empty($where) ? '' : ' WHERE ' . $where;
-		$query.= empty($order) ? '' : ' ORDER BY ' . $order;
+		$fields = !empty($fields) ? $fields : '*';
+
+		$where = empty($where) ? '' : ' WHERE ' . $where;
+		$order = empty($order) ? '' : ' ORDER BY ' . $order;
+
 		if ($min != '' && $max == '') {
-			$query.= ' LIMIT ' . $min;
+			$limit = ' LIMIT ' . $min;
 		} elseif ($min != '' && $max != '') {
-			$query.= ' LIMIT ' . $min . ',' . $max;
+			$limit = ' LIMIT ' . $min . ',' . $max;
+		} else {
+			$limit = '';
 		}
+
+		$query = 'SELECT ' . $fields . ' FROM `' . CONFIG_DB_PRE . $table . '`' . $where . $order . $limit;
 
 		return $this->query($query, $mode);
 	}
@@ -191,8 +199,9 @@ class db
 	 */
 	public function countRows($field, $table, $where = 0)
 	{
-		$query = 'SELECT COUNT(' . $field . ') FROM ' . CONFIG_DB_PRE . $table;
-		$query.= empty($where) ? '' : ' WHERE ' . $where;
+		$where = !empty($where) ? ' WHERE ' . $where : '';
+
+		$query = 'SELECT COUNT(' . $field . ') FROM `' . CONFIG_DB_PRE . $table . '`' . $where;
 
 		return $this->query($query, 1);
 	}
@@ -212,12 +221,13 @@ class db
 		if (!empty($update_values) && is_array($update_values)) {
 			$set = '';
 			foreach ($update_values as $field => $value) {
-				$set.= $field . ' = \'' . $value . '\', ';
+				$set.= '`' . $field . '` = \'' . $value . '\', ';
 			}
 
-			$query = 'UPDATE ' . CONFIG_DB_PRE . $table . ' SET ' . substr($set, 0, -2);
-			$query.= !empty($where) ? ' WHERE ' . $where : '';
-			$query.= !empty($limit) ? ' LIMIT ' . $limit : '';
+			$where = !empty($where) ? ' WHERE ' . $where : '';
+			$limit = !empty($limit) ? ' LIMIT ' . $limit : '';
+
+			$query = 'UPDATE `' . CONFIG_DB_PRE . $table . '` SET ' . substr($set, 0, -2) . $where . $limit;
 
 			return $this->query($query, 0);
 		}
