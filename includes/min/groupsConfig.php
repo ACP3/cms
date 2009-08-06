@@ -16,7 +16,6 @@ if ($_GET['g'] == 'css') {
 	$modules = scandir(DESIGN_PATH);
 	$styles = array();
 	$styles['css'][] = DESIGN_PATH . '/layout.css';
-	$styles['css'][] = DESIGN_PATH . '/jquery-ui.css';
 
 	foreach ($modules as $module) {
 		$path = DESIGN_PATH . $module . '/style.css';
@@ -24,6 +23,9 @@ if ($_GET['g'] == 'css') {
 			$styles['css'][] = $path;
 		}
 	}
+
+	$styles['css'][] = DESIGN_PATH . '/jquery-ui.css';
+
 	return $styles;
 } elseif ($_GET['g'] == 'js') {
 	$modules = scandir(DESIGN_PATH);
@@ -39,5 +41,6 @@ if ($_GET['g'] == 'css') {
 			$scripts['js'][] = $path;
 		}
 	}
+
 	return $scripts;
 }

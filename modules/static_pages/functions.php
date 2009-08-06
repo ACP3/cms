@@ -37,7 +37,7 @@ function getStaticPagesCache($id)
  *
  * @return array
  */
-function getStaticPages($id)
+function getStaticPages($id = '')
 {
 	global $db;
 

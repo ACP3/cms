@@ -42,7 +42,7 @@ hr {
 	background: #fff url('../images/hr.jpg') no-repeat 50% 50%;
 	border: 0;
 }
-a, a:hover {
+a, a:link {
 	color: #069;
 	text-decoration: none;
 }
@@ -58,6 +58,15 @@ ul ul, ol ol {
 p, caption {
 	padding: 5px 0;
 	text-align: justify;
+}
+pre {
+	width: 99%;
+	height: 500px;
+	padding: 5px;
+	border: 1px solid #ccc;
+	font-size: 1.1em;
+	font-family: 'Courier New', serif;
+	overflow: auto;
 }
 table.acp-table, table.acp-table tr, table.acp-table th, table.acp-table td {
 	border: 1px solid #333;
@@ -94,15 +103,6 @@ table.acp-table th.sub-table-header,
 	background: #e7e7e7;
 	font-weight: bold;
 	color: #333;
-}
-pre {
-	width: 99%;
-	height: 500px;
-	padding: 5px;
-	border: 1px solid #ccc;
-	font-size: 1.1em;
-	font-family: 'Courier New', serif;
-	overflow: auto;
 }
 /* Formulare */
 form {
