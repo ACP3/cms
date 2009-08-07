@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$guestbook = $db->query('SELECT u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.date, g.name, g.user_id, g.message, g.website, g.mail FROM ' . CONFIG_DB_PRE . 'guestbook AS g LEFT JOIN ' . CONFIG_DB_PRE . 'users AS u ON(u.id = g.user_id) ORDER BY date DESC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
+$guestbook = $db->query('SELECT u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.date, g.name, g.user_id, g.message, g.website, g.mail FROM ' . $db->prefix . 'guestbook AS g LEFT JOIN ' . $db->prefix . 'users AS u ON(u.id = g.user_id) ORDER BY date DESC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
 $c_guestbook = count($guestbook);
 
 if ($c_guestbook > 0) {

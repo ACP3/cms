@@ -42,10 +42,12 @@ function editor($params) {
 	$other_arguments = array_diff_assoc($params, $base_arguments);
 	$config_arguments = array_merge($config_arguments, $other_arguments);
 
-	if (!$init)
-		modules::setMinify('js', '', '../../includes/wysiwyg/fckeditor/fckeditor.js');
+	$out = '';
 
-	$out = '<script type="text/javascript">' . "\n";
+	if (!$init)
+		$out.= '<script type="text/javascript" src="' . ROOT_DIR . 'includes/wysiwyg/fckeditor/fckeditor.js"></script>' . "\n";
+
+	$out.= '<script type="text/javascript">' . "\n";
 	$out.= '//<![CDATA[' . "\n";
 	$out.= 'var oFCKeditor = new FCKeditor(\'' . $base_arguments['name'] . '\');' . "\n";
 

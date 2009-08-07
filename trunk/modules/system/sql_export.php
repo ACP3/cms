@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
 			}
 			// Datensätze ausgeben
 			if ($form['export_type'] == 'complete' || $form['export_type'] == 'data') {
-				$resultsets = $db->select('*', substr($table, strlen(CONFIG_DB_PRE), strlen($table)));
+				$resultsets = $db->select('*', substr($table, strlen($db->prefix), strlen($table)));
 				if (count($resultsets) > 0) {
 					//$data.= "\n" . '-- '. sprintf($lang->t('system', 'data_of_table'), $table) . "\n\n";
 					$fields = '';
@@ -73,7 +73,7 @@ if (!isset($_POST['submit']) || isset($errors)) {
 	foreach ($mod_list as $info) {
 		if (is_array($info['tables'])) {
 			foreach ($info['tables'] as $table) {
-				$tables[$table]['name'] = CONFIG_DB_PRE . $table;
+				$tables[$table]['name'] = $db->prefix . $table;
 				$tables[$table]['selected'] = selectEntry('tables', $table);
 			}
 		}

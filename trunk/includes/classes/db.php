@@ -24,6 +24,14 @@ class db
 	public $link = null;
 
 	/**
+	 * Tabellenpräfix
+	 *
+	 * @var string
+	 * @access public
+	 */
+	public $prefix = CONFIG_DB_PRE;
+
+	/**
 	 * Stellt die Verbindung mit der Datenbank her
 	 */
 	public function connect($db_host, $db_name, $db_user, $db_pwd)
@@ -117,7 +125,7 @@ class db
 	{
 		$limit = !empty($limit) ? ' LIMIT ' . $limit : '';
 
-		$query = 'DELETE FROM ' . CONFIG_DB_PRE . $table . ' WHERE ' . $field . $limit;
+		$query = 'DELETE FROM `' . $this->prefix . $table . '` WHERE ' . $field . $limit;
 
 		return $this->query($query, 0);
 	}
@@ -140,7 +148,7 @@ class db
 				$values.= '\'' . $value . '\', ';
 			}
 
-			$query = 'INSERT INTO `' . CONFIG_DB_PRE . $table . '` (' . substr($fields, 0, -2) . ') VALUES (' . substr($values, 0, -2) . ')';
+			$query = 'INSERT INTO `' . $this->prefix . $table . '` (' . substr($fields, 0, -2) . ') VALUES (' . substr($values, 0, -2) . ')';
 
 			return $this->query($query, 0);
 		}
@@ -182,7 +190,7 @@ class db
 			$limit = '';
 		}
 
-		$query = 'SELECT ' . $fields . ' FROM `' . CONFIG_DB_PRE . $table . '`' . $where . $order . $limit;
+		$query = 'SELECT ' . $fields . ' FROM ' . $this->prefix . $table . $where . $order . $limit;
 
 		return $this->query($query, $mode);
 	}
@@ -201,7 +209,7 @@ class db
 	{
 		$where = !empty($where) ? ' WHERE ' . $where : '';
 
-		$query = 'SELECT COUNT(' . $field . ') FROM `' . CONFIG_DB_PRE . $table . '`' . $where;
+		$query = 'SELECT COUNT(' . $field . ') FROM ' . $this->prefix . $table . $where;
 
 		return $this->query($query, 1);
 	}
@@ -227,7 +235,7 @@ class db
 			$where = !empty($where) ? ' WHERE ' . $where : '';
 			$limit = !empty($limit) ? ' LIMIT ' . $limit : '';
 
-			$query = 'UPDATE `' . CONFIG_DB_PRE . $table . '` SET ' . substr($set, 0, -2) . $where . $limit;
+			$query = 'UPDATE `' . $this->prefix . $table . '` SET ' . substr($set, 0, -2) . $where . $limit;
 
 			return $this->query($query, 0);
 		}

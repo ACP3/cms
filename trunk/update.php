@@ -31,7 +31,7 @@ if (count($queries) > 0) {
 	$db->link->beginTransaction();
 
 	foreach ($queries as $row) {
-		$row = str_replace(array('{pre}', '{engine}', '{charset}'), array(CONFIG_DB_PRE, $engine, $charset), $row);
+		$row = str_replace(array('{pre}', '{engine}', '{charset}'), array($db->prefix, $engine, $charset), $row);
 		$bool = $db->query($row, 3);
 		if ($bool === null && defined('DEBUG') && DEBUG) {
 			print "\n";
@@ -51,7 +51,7 @@ $config = array(
 	'date_time_zone' => CONFIG_DATE_TIME_ZONE,
 	'db_host' => CONFIG_DB_HOST,
 	'db_name' => CONFIG_DB_NAME,
-	'db_pre' => CONFIG_DB_PRE,
+	'db_pre' => $db->prefix,
 	'db_password' => CONFIG_DB_PASSWORD,
 	'db_user' => CONFIG_DB_USER,
 	'design' => CONFIG_DESIGN,

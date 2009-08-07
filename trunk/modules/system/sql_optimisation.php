@@ -24,7 +24,7 @@ if ($uri->action == 'do') {
 	foreach ($mod_list as $name => $info) {
 		if (is_array($info['tables'])) {
 			foreach ($info['tables'] as $table) {
-				$table_status = $db->query('SHOW TABLE STATUS FROM ' . CONFIG_DB_NAME . ' LIKE \'' . CONFIG_DB_PRE . $table . '\'');
+				$table_status = $db->query('SHOW TABLE STATUS FROM ' . CONFIG_DB_NAME . ' LIKE \'' . $db->prefix . $table . '\'');
 				$c_table_status = count($table_status);
 				for ($j = 0; $j < $c_table_status; ++$j) {
 					$tables[$i]['name'] = $table_status[$j]['Name'];
