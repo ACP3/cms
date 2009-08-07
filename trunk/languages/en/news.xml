@@ -37,6 +37,10 @@
 		<message>The headline should be at least 3 characters long</message>
 	</item>
 	<item>
+		<name>latest_news</name>
+		<message>Latest news</message>
+	</item>
+	<item>
 		<name>link_title</name>
 		<message>Link title</message>
 	</item>

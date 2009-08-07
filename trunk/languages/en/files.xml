@@ -49,6 +49,10 @@
 		<message>Filesize</message>
 	</item>
 	<item>
+		<name>latest_files</name>
+		<message>Latest download</message>
+	</item>
+	<item>
 		<name>link_title</name>
 		<message>Link title</message>
 	</item>

@@ -65,6 +65,10 @@
 		<message>Bitte geben Sie die maximale Bildbreite in Pixel an</message>
 	</item>
 	<item>
+		<name>latest_galleries</name>
+		<message>Aktuelle Fotogalerien</message>
+	</item>
+	<item>
 		<name>max_image_height</name>
 		<message>Maximale Bildhöhe</message>
 	</item>
