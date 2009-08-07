@@ -37,6 +37,10 @@
 		<message>Die Überschrift sollte mindestens 3 Zeichen lang sein</message>
 	</item>
 	<item>
+		<name>latest_news</name>
+		<message>Aktuelle News</message>
+	</item>
+	<item>
 		<name>link_title</name>
 		<message>Linkbezeichnung</message>
 	</item>

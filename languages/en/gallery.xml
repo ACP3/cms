@@ -65,6 +65,10 @@
 		<message>Please type in the maximum image width in pixels</message>
 	</item>
 	<item>
+		<name>latest_galleries</name>
+		<message>Latest galleries</message>
+	</item>
+	<item>
 		<name>max_image_height</name>
 		<message>Maximum image height</message>
 	</item>
