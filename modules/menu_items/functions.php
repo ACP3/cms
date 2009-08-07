@@ -14,7 +14,7 @@
 function setMenuItemsCache() {
 	global $date, $db, $lang;
 
-	$pages = $db->query('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . CONFIG_DB_PRE . 'menu_items AS n, ' . CONFIG_DB_PRE . 'menu_items AS p WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
+	$pages = $db->query('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . $db->prefix . 'menu_items AS n, ' . $db->prefix . 'menu_items AS p WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
 	$c_pages = count($pages);
 
 	if ($c_pages > 0) {
@@ -102,9 +102,9 @@ function deleteNode($id)
 			$db->link->beginTransaction();
 
 			$bool = $db->delete('menu_items', 'left_id = \'' . $lr[0]['left_id'] . '\'');
-			$bool2 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - 1, right_id = right_id - 1 WHERE left_id BETWEEN ' . $lr[0]['left_id'] . ' AND ' . $lr[0]['right_id'], 0);
-			$bool3 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id - 2 WHERE left_id > ' . $lr[0]['right_id'], 0);
-			$bool4 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id - 2 WHERE right_id > ' . $lr[0]['right_id'], 0);
+			$bool2 = $db->query('UPDATE ' . $db->prefix . 'menu_items SET left_id = left_id - 1, right_id = right_id - 1 WHERE left_id BETWEEN ' . $lr[0]['left_id'] . ' AND ' . $lr[0]['right_id'], 0);
+			$bool3 = $db->query('UPDATE ' . $db->prefix . 'menu_items SET left_id = left_id - 2 WHERE left_id > ' . $lr[0]['right_id'], 0);
+			$bool4 = $db->query('UPDATE ' . $db->prefix . 'menu_items SET right_id = right_id - 2 WHERE right_id > ' . $lr[0]['right_id'], 0);
 
 			$db->link->commit();
 
@@ -137,7 +137,7 @@ function insertNode($parent, $insert_values)
 		$root = $db->select('LAST_INSERT_ID() AS root_id', 'menu_items');
 
 		$bool2 = $db->update('menu_items', array('root_id' => $root[0]['root_id']), 'id = \'' . $root[0]['root_id'] . '\'');
-		$bool3 = $db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id + 2, right_id = right_id + 2 WHERE block_id > ' . $db->escape($insert_values['block_id']), 0);
+		$bool3 = $db->query('UPDATE ' . $db->prefix . 'menu_items SET left_id = left_id + 2, right_id = right_id + 2 WHERE block_id > ' . $db->escape($insert_values['block_id']), 0);
 
 		return $bool !== null && $bool2 !== null && $bool3 !== null ? true : false;
 	} else {
@@ -145,8 +145,8 @@ function insertNode($parent, $insert_values)
 
 		$db->link->beginTransaction();
 
-		$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id > ' . $node[0]['right_id'], 0);
-		$db->query('UPDATE ' . CONFIG_DB_PRE . 'menu_items SET right_id = right_id + 2 WHERE right_id = ' . $node[0]['right_id'], 0);
+		$db->query('UPDATE ' . $db->prefix . 'menu_items SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id > ' . $node[0]['right_id'], 0);
+		$db->query('UPDATE ' . $db->prefix . 'menu_items SET right_id = right_id + 2 WHERE right_id = ' . $node[0]['right_id'], 0);
 
 		$db->link->commit();
 
@@ -234,14 +234,14 @@ function processNavbar($block) {
 		$c_pages = count($pages);
 
 		if ($c_pages > 0) {
-			if (uri($uri->query) != uri($uri->mod) && $db->query('SELECT COUNT(*) FROM ' . CONFIG_DB_PRE . 'menu_items AS m JOIN ' . CONFIG_DB_PRE . 'menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->query . '\'', 1) > 0) {
+			if (uri($uri->query) != uri($uri->mod) && $db->query('SELECT COUNT(*) FROM ' . $db->prefix . 'menu_items AS m JOIN ' . $db->prefix . 'menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->query . '\'', 1) > 0) {
 				$link = $uri->query;
-			} elseif (uri($uri->mod . '/' . $uri->page . '/') != uri($uri->mod) && $db->query('SELECT COUNT(*) FROM ' . CONFIG_DB_PRE . 'menu_items AS m JOIN ' . CONFIG_DB_PRE . 'menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->mod . '/' . $uri->page . '/\'', 1) > 0) {
+			} elseif (uri($uri->mod . '/' . $uri->page . '/') != uri($uri->mod) && $db->query('SELECT COUNT(*) FROM ' . $db->prefix . 'menu_items AS m JOIN ' . $db->prefix . 'menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->mod . '/' . $uri->page . '/\'', 1) > 0) {
 				$link = $uri->mod . '/' . $uri->page . '/';
 			} else {
 				$link = $uri->mod;
 			}
-			$select = $db->query('SELECT m.left_id FROM ' . CONFIG_DB_PRE . 'menu_items AS m JOIN ' . CONFIG_DB_PRE . 'menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $link . '\'');
+			$select = $db->query('SELECT m.left_id FROM ' . $db->prefix . 'menu_items AS m JOIN ' . $db->prefix . 'menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $link . '\'');
 
 			$navbar[$block] = '';
 

@@ -15,8 +15,6 @@
  */
 class modules
 {
-	private static $minify = array();
-
 	/**
 	 * Überpüft, ob ein Modul überhaupt existiert,
 	 * bzw. der Benutzer auf ein Modul Zugriff hat
@@ -92,20 +90,6 @@ class modules
 		}
 		return -1;
 	}
-	public static function getMinify($mode)
-	{
-		$defaults = $mode == 'js' ? 'jquery.js,jquery.cookie.js,jquery.ui.js,script.js' : 'style.css,jquery-ui.css';
-		return ROOT_DIR . 'includes/min/?b=' . substr(DESIGN_PATH, 1, -1) . '&amp;f=' . $defaults . (!empty(self::$minify[$mode]) ? ',' . implode(',', self::$minify[$mode]) : '');
-	}
-	public static function setMinify($mode, $module = '', $path = '')
-	{
-		if (!empty($module) && empty($path)) {
-			self::$minify[$mode][] = $module . ($mode == 'css' ? 'style.css' : 'script.js');
-		} elseif (!empty($path)) {
-			self::$minify[$mode][] = $path;
-		}
-		return;
-	}
 	/**
 	 * Gibt ein alphabetisch sortiertes Array mit allen gefundenen
 	 * Modulen des ACP3 mitsamt Modulinformationen aus
@@ -153,8 +137,7 @@ class modules
 				$tpl->assign('CONTENT', !empty($content) ? $content : '');
 
 				// Falls ein Modul ein eigenes Layout verwenden möchte, dieses auch zulassen
-				$output = $tpl->fetch(defined('CUSTOM_LAYOUT') ? CUSTOM_LAYOUT : 'layout.html');
-				echo str_replace(array('<!-- STYLESHEET -->', '<!-- JAVASCRIPT -->'), array(modules::getMinify('css'), modules::getMinify('js')), $output);
+				$tpl->display(defined('CUSTOM_LAYOUT') ? CUSTOM_LAYOUT : 'layout.html');
 				break;
 			// Kein Zugriff auf die Seite
 			case 0:

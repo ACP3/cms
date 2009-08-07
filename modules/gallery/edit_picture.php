@@ -13,7 +13,7 @@ if (!defined('IN_ADM'))
 if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id = \'' . $uri->id . '\'') == '1') {
 	require_once ACP3_ROOT . 'modules/gallery/functions.php';
 
-	$picture = $db->select('p.gallery_id, p.file, p.description, p.comments, g.name AS gallery_name', 'gallery_pictures AS p, ' . CONFIG_DB_PRE . 'gallery AS g', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
+	$picture = $db->select('p.gallery_id, p.file, p.description, p.comments, g.name AS gallery_name', 'gallery_pictures AS p, ' . $db->prefix . 'gallery AS g', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
 
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
 	breadcrumb::assign($lang->t('gallery', 'gallery'), uri('acp/gallery'));

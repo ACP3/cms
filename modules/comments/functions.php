@@ -36,7 +36,7 @@ function commentsList($module, $entry_id)
 	global $date, $db, $lang, $tpl;
 
 	// Auflistung der Kommentare
-	$comments = $db->query('SELECT u.nickname AS user_name, c.name, c.user_id, c.date, c.message FROM ' . CONFIG_DB_PRE . 'comments AS c LEFT JOIN (' . CONFIG_DB_PRE . 'users AS u) ON u.id = c.user_id WHERE c.module = \'' . $module . '\' AND c.entry_id = \'' . $entry_id . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
+	$comments = $db->query('SELECT u.nickname AS user_name, c.name, c.user_id, c.date, c.message FROM ' . $db->prefix . 'comments AS c LEFT JOIN (' . $db->prefix . 'users AS u) ON u.id = c.user_id WHERE c.module = \'' . $module . '\' AND c.entry_id = \'' . $entry_id . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
 	$c_comments = count($comments);
 
 	// Emoticons einbinden, falls diese aktiv sind
