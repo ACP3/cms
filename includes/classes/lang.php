@@ -84,7 +84,6 @@ class lang
 		if (empty($lang_data)) {
 			$lang_data = $this->getLangCache();
 		}
-		$path = ACP3_ROOT . 'languages/' . $this->lang . '/' . $module . '.xml';
 
 		return isset($lang_data[$module][$key]) ? $lang_data[$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
 	}
