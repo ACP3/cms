@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('system', 'incorrect_homepage');
 	if ($form['wysiwyg'] != 'textarea' && (preg_match('=/=', $form['wysiwyg']) || !is_file(ACP3_ROOT . 'includes/wysiwyg/' . $form['wysiwyg'] . '/info.xml')))
 		$errors[] = $lang->t('system', 'select_editor');
-	if (empty($form['date_format']))
+	if (empty($form['date_format_long']) || empty($form['date_format_short']))
 		$errors[] = $lang->t('system', 'type_in_date_format');
 	if (!is_numeric($form['date_time_zone']))
 		$errors[] = $lang->t('common', 'select_time_zone');
@@ -42,7 +42,8 @@ if (isset($_POST['submit'])) {
 		// Konfig aktualisieren
 		$config = array(
 			'date_dst' => $form['date_dst'],
-			'date_format' => $db->escape($form['date_format']),
+			'date_format_long' => $db->escape($form['date_format_long']),
+			'date_format_short' => $db->escape($form['date_format_short']),
 			'date_time_zone' => $form['date_time_zone'],
 			'db_host' => CONFIG_DB_HOST,
 			'db_name' => CONFIG_DB_NAME,
@@ -128,7 +129,8 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$sef[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('sef', $sef);
 
-	$current['date_format'] = CONFIG_DATE_FORMAT;
+	$current['date_format_long'] = CONFIG_DATE_FORMAT_LONG;
+	$current['date_format_short'] = CONFIG_DATE_FORMAT_SHORT;
 	$current['flood'] = CONFIG_FLOOD;
 	$current['homepage'] = CONFIG_HOMEPAGE;
 	$current['maintenance_message'] = CONFIG_MAINTENANCE_MESSAGE;

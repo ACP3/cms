@@ -49,8 +49,12 @@
 		<message>Database</message>
 	</item>
 	<item>
-		<name>date_format</name>
-		<message>Date format</message>
+		<name>date_format_long</name>
+		<message>Long date format</message>
+	</item>
+	<item>
+		<name>date_format_short</name>
+		<message>Short date format</message>
 	</item>
 	<item>
 		<name>description</name>

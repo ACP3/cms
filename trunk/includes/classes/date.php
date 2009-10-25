@@ -55,10 +55,13 @@ class date
 	 * @param string $format
 	 * @return integer
 	 */
-	public function format($time_stamp, $format = 0)
+	public function format($time_stamp, $format = 1)
 	{
 		// Datum in gewünschter Formatierung ausgeben
-		$format = !empty($format) ? $format : CONFIG_DATE_FORMAT;
+		// 1 = langes Datumsforat
+		// 2 = kurzes Datumsformat
+		// Alles andere = Benutzerdefiniertes Format
+		$format = ($format == 1) ? CONFIG_DATE_FORMAT_LONG : ($format == 2) ? CONFIG_DATE_FORMAT_SHORT : $format;
 		return gmdate($format, $time_stamp + $this->offset);
 	}
 	public function period($start, $end)

@@ -1,8 +1,14 @@
 {literal}
 <script type="text/javascript">
 $(document).ready(function() {
-	$('#{/literal}{$date.name}{literal}').datepicker({ constrainInput: false, dateFormat: {/literal}'{$date.format}'{literal} });
+	$('#{/literal}{$date.name}{literal}').datepicker({
+		showOn: 'button',
+		buttonImage: {/literal}'{$ROOT_DIR}images/crystal/16/cal.png'{literal},
+		buttonImageOnly: true,
+		constrainInput: false,
+		dateFormat: {/literal}'{$date.format}'{literal}
+	});
 });
 </script>
 {/literal}
-<input type="text" name="form[{$date.name}]" id="{$date.name}" value="{$date.input}" maxlength="16" />
+<input type="text" name="form[{$date.name}]" id="{$date.name}" value="{$date.input}" maxlength="16" style="width:96%;margin-right:4px;display:inline" />
