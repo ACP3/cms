@@ -47,7 +47,8 @@ if (count($queries) > 0) {
 // Konfigurationsdatei aktualisieren
 $config = array(
 	'date_dst' => CONFIG_DATE_DST,
-	'date_format' => CONFIG_DATE_FORMAT,
+	'date_format_long' => CONFIG_DATE_FORMAT,
+	'date_format_short' => 'd.m.Y',
 	'date_time_zone' => CONFIG_DATE_TIME_ZONE,
 	'db_host' => CONFIG_DB_HOST,
 	'db_name' => CONFIG_DB_NAME,

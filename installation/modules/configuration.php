@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('system', 'select_entries_per_page');
 	if (!validate::isNumber($form['flood']))
 		$errors[] = $lang->t('system', 'type_in_flood_barrier');
-	if (empty($form['date_format']))
+	if (empty($form['date_format_long']) || empty($form['date_format_short']))
 		$errors[] = $lang->t('system', 'type_in_date_format');
 	if (!validate::isNumber($form['date_dst']))
 		$errors[] = $lang->t('common', 'select_daylight_saving_time');
@@ -46,7 +46,8 @@ if (isset($_POST['submit'])) {
 		// Systemkonfiguration erstellen
 		$config = array(
 			'date_dst' => $form['date_dst'],
-			'date_format' => $db->escape($form['date_format']),
+			'date_format_long' => $db->escape($form['date_format_long']),
+			'date_format_short' => $db->escape($form['date_format_short']),
 			'date_time_zone' => $form['date_time_zone'],
 			'db_host' => $form['db_host'],
 			'db_name' => $form['db_name'],
@@ -145,7 +146,8 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$defaults['db_pre'] = 'acp3_';
 	$defaults['user_name'] = 'admin';
 	$defaults['flood'] = '30';
-	$defaults['date_format'] = 'd.m.y, H:i';
+	$defaults['date_format_long'] = 'd.m.y, H:i';
+	$defaults['date_format_short'] = 'd.m.y';
 	$defaults['seo_title'] = 'ACP3';
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);

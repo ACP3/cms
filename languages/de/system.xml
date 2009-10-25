@@ -49,8 +49,12 @@
 		<message>Datenbank</message>
 	</item>
 	<item>
-		<name>date_format</name>
-		<message>Datumsformat</message>
+		<name>date_format_long</name>
+		<message>Langes Datumsformat</message>
+	</item>
+	<item>
+		<name>date_format_short</name>
+		<message>Kurzes Datumsformat</message>
 	</item>
 	<item>
 		<name>description</name>

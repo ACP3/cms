@@ -2,7 +2,8 @@
 define('INSTALLED', true);
 define('DEBUG', true);
 define('CONFIG_DATE_DST', '0');
-define('CONFIG_DATE_FORMAT', 'd.m.y, H:i');
+define('CONFIG_DATE_FORMAT_LONG', 'd.m.y, H:i');
+define('CONFIG_DATE_FORMAT_SHORT', 'd.m.y');
 define('CONFIG_DATE_TIME_ZONE', '3600');
 define('CONFIG_DB_HOST', 'localhost');
 define('CONFIG_DB_NAME', 'acp3');

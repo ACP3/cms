@@ -22,7 +22,8 @@ if ($uri->dir) {
 	if (!empty($dir)) {
 		$config = array(
 			'date_dst' => CONFIG_DATE_DST,
-			'date_format' => CONFIG_DATE_FORMAT,
+			'date_format_long' => CONFIG_DATE_FORMAT_LONG,
+			'date_format_short' => CONFIG_DATE_FORMAT_SHORT,
 			'date_time_zone' => CONFIG_DATE_TIME_ZONE,
 			'db_host' => CONFIG_DB_HOST,
 			'db_name' => CONFIG_DB_NAME,
