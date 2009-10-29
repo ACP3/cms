@@ -44,7 +44,7 @@ if ($auth->isUser()) {
 					'id' => '',
 					'nickname' => $form['nickname'],
 					'realname' => '',
-					'pwd' => sha1($salt . sha1($form['pwd'])) . ':' . $salt,
+					'pwd' => genSaltedPassword($salt, $form['pwd']) . ':' . $salt,
 					'access' => '3',
 					'mail' => $form['mail'],
 					'website' => '',

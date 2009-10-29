@@ -5,6 +5,18 @@
  * @author Goratsch Webdesign
  * @package ACP3 Installer
  */
+/**
+ * Generiert ein gesalzenes Passwort
+ *
+ * @param string $salt
+ * @param string $plaintext
+ * @param string $algorithm
+ * @return string
+ */
+function genSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
+{
+	return hash($algorithm, $salt . hash($algorithm, $plaintext));
+}
 // Funktion zum Salzen von Passwörtern
 function salt($str_length)
 {
