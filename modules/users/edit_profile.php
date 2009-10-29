@@ -60,7 +60,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 			// Neues Passwort
 			if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat'])) {
 				$salt = salt(12);
-				$new_pwd = sha1($salt . sha1($form['new_pwd']));
+				$new_pwd = genSaltedPassword($salt, $form['new_pwd']);
 				$update_values['pwd'] = $new_pwd . ':' . $salt;
 			}
 

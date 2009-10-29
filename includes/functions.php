@@ -111,6 +111,18 @@ function datepicker($name, $value = '', $format = 'Y-m-d H:i')
 	return $tpl->fetch('common/date.html');
 }
 /**
+ * Generiert ein gesalzenes Passwort
+ *
+ * @param string $salt
+ * @param string $plaintext
+ * @param string $algorithm
+ * @return string
+ */
+function genSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
+{
+	return hash($algorithm, $salt . hash($algorithm, $plaintext));
+}
+/**
  * Hochgeladene Dateien verschieben und umbenennen
  *
  * @param string $tmp_filename

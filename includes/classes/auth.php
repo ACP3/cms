@@ -139,7 +139,7 @@ class auth
 
 			// Hash für eingegebenes Passwort generieren
 			$salt = substr($user[0]['pwd'], 41, 53);
-			$form_pwd_hash = sha1($salt . sha1($password));
+			$form_pwd_hash = genSaltedPassword($salt, $password);
 
 			// Wenn beide Hashwerte gleich sind, Benutzer authentifizieren
 			if ($db_hash === $form_pwd_hash) {

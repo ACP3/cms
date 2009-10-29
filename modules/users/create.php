@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
 		$insert_values = array(
 			'id' => '',
 			'nickname' => $db->escape($form['nickname']),
-			'pwd' => sha1($salt . sha1($form['pwd'])) . ':' . $salt,
+			'pwd' => genSaltedPassword($salt, $form['pwd']) . ':' . $salt,
 			'access' => $form['access'],
 			'realname' => $db->escape($form['realname']) . ':1',
 			'gender' => ':1',
