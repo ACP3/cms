@@ -25,7 +25,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 	}
 	breadcrumb::assign($news[0]['headline']);
 
-	$news[0]['date'] = $date->format($news[0]['start']);
+	$settings = config::output('news');
+
+	$news[0]['date'] = $date->format($news[0]['start'], $settings['dateformat']);
 	$news[0]['headline'] = $news[0]['headline'];
 	$news[0]['text'] = $db->escape($news[0]['text'], 3);
 	$news[0]['uri'] = $db->escape($news[0]['uri'], 3);
@@ -35,8 +37,6 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 	$news[0]['target'] = $news[0]['target'] == '2' ? ' onclick="window.open(this.href); return false"' : '';
 
 	$tpl->assign('news', $news[0]);
-
-	$settings = config::output('news');
 
 	if ($settings['comments'] == 1 && $news[0]['comments'] == 1 && modules::check('comments', 'functions') == 1) {
 		require_once ACP3_ROOT . 'modules/comments/functions.php';

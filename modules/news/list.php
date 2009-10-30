@@ -43,7 +43,7 @@ if ($c_news > 0) {
 	$settings = config::output('news');
 
 	for ($i = 0; $i < $c_news; ++$i) {
-		$news[$i]['date'] = $date->format($news[$i]['start']);
+		$news[$i]['date'] = $date->format($news[$i]['start'], $settings['dateformat']);
 		$news[$i]['headline'] = $news[$i]['headline'];
 		$news[$i]['text'] = $db->escape($news[$i]['text'], 3);
 		$news[$i]['uri'] = $db->escape($news[$i]['uri'], 3);

@@ -15,8 +15,10 @@ $news = $db->select('id, start, headline', 'news', $where, 'start DESC', 5);
 $c_news = count($news);
 
 if ($c_news > 0) {
+	$settings = config::output('news');
+
 	for ($i = 0; $i < $c_news; ++$i) {
-		$news[$i]['start'] = $date->format($news[$i]['start']);
+		$news[$i]['start'] = $date->format($news[$i]['start'], $settings['dateformat']);
 		$news[$i]['headline_short'] = shortenEntry($db->escape($news[$i]['headline'], 3), 30, 5, '...');
 	}
 	$tpl->assign('sidebar_news', $news);
