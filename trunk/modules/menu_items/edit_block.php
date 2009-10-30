@@ -53,4 +53,3 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 } else {
 	redirect('errors/404');
 }
-?>

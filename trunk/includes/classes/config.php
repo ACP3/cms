@@ -66,4 +66,3 @@ class config
 		return xml::parseXmlFile(ACP3_ROOT . 'modules/' . $module . '/module.xml', 'settings');
 	}
 }
-?>

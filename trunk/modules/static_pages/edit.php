@@ -55,4 +55,3 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 } else {
 	redirect('errors/404');
 }
-?>

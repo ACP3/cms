@@ -35,4 +35,3 @@ if ($c_result_files > 0) {
 		$results_mods['files']['results'][$i]['text'] = shortenEntry($db->escape($result_files[$i]['text'], 3), 200, 0, '...');
 	}
 }
-?>

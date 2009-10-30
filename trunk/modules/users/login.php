@@ -31,4 +31,3 @@ if ($auth->isUser()) {
 	}
 }
 $content = $tpl->fetch('users/login.html');
-?>

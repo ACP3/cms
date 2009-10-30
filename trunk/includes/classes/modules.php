@@ -184,4 +184,3 @@ class modules
 		return $parsed_modules[$module];
 	}
 }
-?>

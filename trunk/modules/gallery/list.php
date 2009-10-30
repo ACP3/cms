@@ -27,4 +27,3 @@ if ($c_galleries > 0) {
 	$tpl->assign('galleries', $galleries);
 }
 $content = $tpl->fetch('gallery/list.html');
-?>

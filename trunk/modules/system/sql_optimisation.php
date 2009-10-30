@@ -50,4 +50,3 @@ if ($uri->action == 'do') {
 }
 
 $content = $tpl->fetch('system/sql_optimisation.html');
-?>

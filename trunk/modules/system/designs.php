@@ -69,4 +69,3 @@ if ($uri->dir) {
 
 	$content = $tpl->fetch('system/designs.html');
 }
-?>

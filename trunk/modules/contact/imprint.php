@@ -27,4 +27,3 @@ $tpl->assign('imprint', str_replace($search, $replace, $contact['layout']));
 $tpl->assign('powered_by', sprintf($lang->t('contact', 'powered_by'), '<a href="http://www.acp3-cms.net" onclick="window.open(this.href); return false">ACP3</a>'));
 
 $content = $tpl->fetch('contact/imprint.html');
-?>

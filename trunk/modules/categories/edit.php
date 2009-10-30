@@ -68,4 +68,3 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' 
 } else {
 	redirect('errors/404');
 }
-?>

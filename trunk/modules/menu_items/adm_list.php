@@ -18,4 +18,3 @@ if (count($pages_list) > 0) {
 	$tpl->assign('pages_list', $pages_list);
 }
 $content = $tpl->fetch('menu_items/adm_list.html');
-?>

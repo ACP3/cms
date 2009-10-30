@@ -23,4 +23,3 @@ if ($c_blocks > 0) {
 }
 
 $content = $tpl->fetch('menu_items/adm_list_blocks.html');
-?>

@@ -32,4 +32,3 @@ if (validate::isNumber($uri->cat) && $db->countRows('*', 'categories', 'id = \''
 } else {
 	redirect('errors/404');
 }
-?>

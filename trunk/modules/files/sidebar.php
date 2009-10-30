@@ -23,4 +23,3 @@ if ($c_files > 0) {
 }
 
 $tpl->display('files/sidebar.html');
-?>

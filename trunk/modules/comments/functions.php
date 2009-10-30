@@ -71,4 +71,3 @@ function commentsList($module, $entry_id)
 	}
 	return $content;
 }
-?>

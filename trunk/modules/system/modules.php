@@ -57,4 +57,3 @@ if ($uri->action == 'activate') {
 
 	$content = $tpl->fetch('system/modules.html');
 }
-?>

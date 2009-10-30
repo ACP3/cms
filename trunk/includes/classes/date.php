@@ -97,4 +97,3 @@ class date
 		return gmdate('U');
 	}
 }
-?>

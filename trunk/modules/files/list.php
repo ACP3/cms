@@ -19,4 +19,3 @@ if (modules::check('categories', 'functions') == 1) {
 }
 
 $content = $tpl->fetch('files/list.html');
-?>

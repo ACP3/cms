@@ -49,4 +49,3 @@ if (strlen($uri->hash) == 32 && validate::isMD5($uri->hash)) {
 } else {
 	redirect('errors/404');
 }
-?>

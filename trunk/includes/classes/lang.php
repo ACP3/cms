@@ -88,4 +88,3 @@ class lang
 		return isset($lang_data[$module][$key]) ? $lang_data[$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
 	}
 }
-?>

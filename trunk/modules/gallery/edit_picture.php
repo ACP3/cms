@@ -76,4 +76,3 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 } else {
 	redirect('errors/404');
 }
-?>

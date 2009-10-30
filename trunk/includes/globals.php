@@ -47,4 +47,3 @@ if (get_magic_quotes_gpc()) {
 	$_COOKIE = acp3_strip($_COOKIE);
 	$_REQUEST = acp3_strip($_REQUEST);
 }
-?>

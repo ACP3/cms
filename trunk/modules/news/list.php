@@ -60,4 +60,3 @@ if ($c_news > 0) {
 }
 
 $content = $tpl->fetch('news/list.html');
-?>

@@ -23,4 +23,3 @@ if ($c_galleries > 0) {
 }
 
 $tpl->display('gallery/sidebar.html');
-?>

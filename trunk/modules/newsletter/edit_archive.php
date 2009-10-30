@@ -90,4 +90,3 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 } else {
 	redirect('errors/404');
 }
-?>

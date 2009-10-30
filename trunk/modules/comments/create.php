@@ -100,4 +100,3 @@ function commentsCreate($module, $entry_id)
 		return $tpl->fetch('comments/create.html');
 	}
 }
-?>

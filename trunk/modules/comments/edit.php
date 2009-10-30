@@ -56,4 +56,3 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 } else {
 	redirect('errors/404');
 }
-?>

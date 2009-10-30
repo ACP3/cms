@@ -103,4 +103,3 @@ class cache
 		return;
 	}
 }
-?>

@@ -25,4 +25,3 @@ if ($c_result > 0) {
 	}
 	$tpl->assign('results', $results);
 }
-?>

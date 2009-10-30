@@ -23,4 +23,3 @@ if ($c_users > 0) {
 }
 
 $content = $tpl->fetch('users/adm_list.html');
-?>

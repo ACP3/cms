@@ -94,4 +94,3 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'access', 'id = \'' . $u
 } else {
 	redirect('errors/404');
 }
-?>

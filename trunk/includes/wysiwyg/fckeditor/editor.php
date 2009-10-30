@@ -76,4 +76,3 @@ function editor($params) {
 	return $out;
 	
 }
-?>

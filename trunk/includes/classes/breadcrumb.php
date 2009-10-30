@@ -132,4 +132,3 @@ class breadcrumb
 		return self::$end;
 	}
 }
-?>

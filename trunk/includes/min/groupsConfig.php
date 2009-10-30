@@ -28,19 +28,11 @@ if ($_GET['g'] == 'css') {
 
 	return $styles;
 } elseif ($_GET['g'] == 'js') {
-	$modules = scandir(DESIGN_PATH);
 	$scripts = array();
 	$scripts['js'][] = DESIGN_PATH . '/jquery.js';
 	$scripts['js'][] = DESIGN_PATH . '/jquery.cookie.js';
 	$scripts['js'][] = DESIGN_PATH . '/jquery.ui.js';
 	$scripts['js'][] = DESIGN_PATH . '/script.js';
-
-	foreach ($modules as $module) {
-		$path = DESIGN_PATH . $module . '/script.js';
-		if (is_dir(DESIGN_PATH . $module) && $module != '.' && $module != '..' && is_file($path)) {
-			$scripts['js'][] = $path;
-		}
-	}
 
 	return $scripts;
 }

@@ -57,4 +57,3 @@ if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module
 	}
 }
 $content = $tpl->fetch('comments/adm_list.html');
-?>

@@ -125,4 +125,3 @@ function categoriesList($module, $category_id = '', $category_create = false, $c
 	$tpl->assign('categories', $categories);
 	return $tpl->fetch('categories/create_list.html');
 }
-?>

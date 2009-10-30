@@ -34,4 +34,3 @@ if ($c_result_pages > 0) {
 		$results_mods['static_pages']['results'][$i]['text'] = shortenEntry($db->escape($result_pages[$i]['text'], 3), 200, 0, '...');
 	}
 }
-?>

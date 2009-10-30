@@ -10,4 +10,3 @@ define('ACP3_ROOT', './');
 require ACP3_ROOT . 'includes/common.php';
 
 modules::outputPage();
-?>
