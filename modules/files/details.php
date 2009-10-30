@@ -35,8 +35,10 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		breadcrumb::assign($file[0]['category_name'], uri('files/files/cat_' . $file[0]['category_id']));
 		breadcrumb::assign($file[0]['link_title']);
 
+		$settings = config::output('files');
+
 		$file[0]['size'] = !empty($file[0]['size']) ? $file[0]['size'] : $lang->t('files', 'unknown_filesize');
-		$file[0]['date'] = $date->format($file[0]['start']);
+		$file[0]['date'] = $date->format($file[0]['start'], $settings['dateformat']);
 		$tpl->assign('file', $file[0]);
 
 		if ($file[0]['comments'] == 1 && modules::check('comments', 'functions') == 1) {

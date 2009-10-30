@@ -22,9 +22,11 @@ if (validate::isNumber($uri->cat) && $db->countRows('*', 'categories', 'id = \''
 	$c_files = count($files);
 
 	if ($c_files > 0) {
+		$settings = config::output('files');
+
 		for ($i = 0; $i < $c_files; ++$i) {
 			$files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : $lang->t('files', 'unknown_filesize');
-			$files[$i]['date'] = $date->format($files[$i]['start']);
+			$files[$i]['date'] = $date->format($files[$i]['start'], $settings['dateformat']);
 		}
 		$tpl->assign('files', $files);
 	}

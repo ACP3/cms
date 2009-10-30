@@ -23,13 +23,15 @@ if ($c_guestbook > 0) {
 		$emoticons = true;
 	}
 
+	$settings = config::output('guestbook');
+
 	for ($i = 0; $i < $c_guestbook; ++$i) {
 		if (empty($guestbook[$i]['user_name']) && empty($guestbook[$i]['name'])) {
 			$guestbook[$i]['name'] = $lang->t('users', 'deleted_user');
 			$guestbook[$i]['user_id'] = 0;
 		}
 		$guestbook[$i]['name'] = $db->escape(!empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'], 3);
-		$guestbook[$i]['date'] = $date->format($guestbook[$i]['date']);
+		$guestbook[$i]['date'] = $date->format($guestbook[$i]['date'], $settings['dateformat']);
 		$guestbook[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $guestbook[$i]['message']);
 		if ($emoticons) {
 			$guestbook[$i]['message'] = emoticonsReplace($guestbook[$i]['message']);
