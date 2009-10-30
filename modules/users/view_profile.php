@@ -12,4 +12,3 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 	$tpl->assign('user', $user);
 }
 $content = $tpl->fetch('users/view_profile.html');
-?>

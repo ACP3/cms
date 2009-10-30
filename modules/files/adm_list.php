@@ -24,4 +24,3 @@ if ($c_files > 0) {
 }
 
 $content = $tpl->fetch('files/adm_list.html');
-?>

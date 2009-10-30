@@ -32,4 +32,4 @@ function getNewsCache($id)
 
 	return cache::output('news_details_id_' . $id);
 }
-?>
+

@@ -19,4 +19,4 @@ function getFilesCache($id)
 
 	return cache::output('files_details_id_' . $id);
 }
-?>
+

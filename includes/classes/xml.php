@@ -90,4 +90,3 @@ class xml
 		return false;
 	}
 }
-?>

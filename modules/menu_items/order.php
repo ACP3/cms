@@ -55,4 +55,3 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 } else {
 	redirect('acp/errors/404');
 }
-?>

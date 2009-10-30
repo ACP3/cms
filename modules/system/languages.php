@@ -64,4 +64,3 @@ if ($uri->dir) {
 
 	$content = $tpl->fetch('system/languages.html');
 }
-?>

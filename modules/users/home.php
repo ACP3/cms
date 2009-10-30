@@ -23,4 +23,3 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 		$content = $tpl->fetch('users/home.html');
 	}
 }
-?>

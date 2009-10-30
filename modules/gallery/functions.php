@@ -32,4 +32,4 @@ function getGalleryCache($id)
 
 	return cache::output('gallery_pics_id_' . $id);
 }
-?>
+

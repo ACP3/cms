@@ -27,4 +27,3 @@ if (isset($errors)) {
 
 	$content = comboBox($bool !== null ? $lang->t('newsletter', 'activate_success') : $lang->t('newsletter', 'activate_error'), ROOT_DIR);
 }
-?>

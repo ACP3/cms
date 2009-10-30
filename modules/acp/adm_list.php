@@ -40,4 +40,3 @@ if (modules::check('system', 'server_config') == 1) {
 }
 
 $content = $tpl->fetch('acp/adm_list.html');
-?>

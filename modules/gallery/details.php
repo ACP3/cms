@@ -45,4 +45,3 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(g.id)', 'gallery AS g, ' 
 } else {
 	redirect('errors/404');
 }
-?>

@@ -22,4 +22,3 @@ if ($c_news > 0) {
 	$tpl->assign('news', $news);
 }
 $content = $tpl->fetch('news/adm_list.html');
-?>

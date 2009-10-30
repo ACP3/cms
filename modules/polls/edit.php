@@ -116,4 +116,3 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 } else {
 	redirect('errors/404');
 }
-?>

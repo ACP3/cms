@@ -34,4 +34,3 @@ if ($c_result_news > 0) {
 		$results_mods['news']['results'][$i]['text'] = shortenEntry($db->escape($result_news[$i]['text'], 3), 200, 0, '...');
 	}
 }
-?>

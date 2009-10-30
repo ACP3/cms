@@ -75,4 +75,3 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 		$content = $tpl->fetch('users/edit_settings.html');
 	}
 }
-?>

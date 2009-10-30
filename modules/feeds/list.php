@@ -24,4 +24,3 @@ if (modules::check($uri->feed, 'extensions/feeds') == 1) {
 } else {
 	redirect(0, ROOT_DIR);
 }
-?>

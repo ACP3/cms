@@ -23,4 +23,3 @@ if ($c_pages > 0) {
 	$tpl->assign('pages', $pages);
 }
 $content = $tpl->fetch('static_pages/adm_list.html');
-?>

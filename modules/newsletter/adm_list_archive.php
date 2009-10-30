@@ -25,4 +25,3 @@ if ($c_newsletter > 0) {
 	$tpl->assign('newsletter', $newsletter);
 }
 $content = $tpl->fetch('newsletter/adm_list_archive.html');
-?>

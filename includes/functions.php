@@ -465,4 +465,3 @@ function uri($uri)
 	$prefix = CONFIG_SEO_MOD_REWRITE == '0' || preg_match('/^acp\//', $uri) ? PHP_SELF . '/' : ROOT_DIR;
 	return $prefix . $uri;
 }
-?>

@@ -37,4 +37,3 @@ if ($c_polls > 0) {
 }
 
 $content = $tpl->fetch('polls/list.html');
-?>

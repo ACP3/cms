@@ -74,7 +74,7 @@
 	</item>
 	<item>
 		<name>forgot_pwd_description</name>
-		<message>Please either enter the E-mail address or the user name you used with the registration in the following fields.</message>
+		<message>Please either enter the E-mail address or the user name you used with the registration in the following input field.</message>
 	</item>
 	<item>
 		<name>forgot_pwd_mail_subject</name>
@@ -147,6 +147,10 @@
 	<item>
 		<name>new_pwd_repeat</name>
 		<message>Repeat new password</message>
+	</item>
+	<item>
+		<name>nickname_or_email</name>
+		<message>Benutzername oder E-Mail-Adresse</message>
 	</item>
 	<item>
 		<name>nickname</name>

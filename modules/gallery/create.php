@@ -42,4 +42,3 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 	$content = $tpl->fetch('gallery/create.html');
 }
-?>

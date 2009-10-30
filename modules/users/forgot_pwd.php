@@ -13,13 +13,13 @@ if ($auth->isUser()) {
 
 		$form = $_POST['form'];
 
-		if (empty($form['nickname']) && empty($form['mail']))
+		if (empty($form['nick_mail']))
 			$errors[] = $lang->t('users', 'type_in_nickname_or_email');
-		if (!userNameExists($form['nickname']))
+		if (!empty($form['nick_mail']) && !validate::email($form['nick_mail']) && !userNameExists($form['nick_mail']))
 			$errors[] = $lang->t('users', 'user_not_exists');
-		if (!empty($form['mail']) && !validate::email($form['mail']))
+		if (!empty($form['nick_mail']) && !validate::email($form['nick_mail']))
 			$errors[] = $lang->t('common', 'wrong_email_format');
-		if (!userEmailExists($form['mail']))
+		if (validate::email($form['nick_mail']) && !userEmailExists($form['nick_mail']))
 			$errors[] = $lang->t('users', 'user_not_exists');
 		if (!$auth->isUser() && !validate::captcha($form['captcha'], $form['hash']))
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
@@ -32,7 +32,7 @@ if ($auth->isUser()) {
 			$host = htmlentities($_SERVER['HTTP_HOST']);
 
 			// Je nachdem welches Feld ausgefüllt wurde, dieses auswählen
-			$where = !empty($form['mail']) ? 'mail = \'' . $form['mail'] . '\'' : 'nickname = \'' . $db->escape($form['nickname']) . '\'';
+			$where = validate::email($form['nick_mail']) && userEmailExists($form['nick_mail']) ? 'mail = \'' . $form['nick_mail'] . '\'' : 'nickname = \'' . $db->escape($form['nick_mail']) . '\'';
 			$user = $db->select('id, nickname, mail', 'users', $where);
 
 			// E-Mail mit dem neuen Passwort versenden
@@ -50,10 +50,7 @@ if ($auth->isUser()) {
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$defaults = array(
-			'nickname' => '',
-			'mail' => '',
-		);
+		$defaults = array('nick_mail' => '');
 
 		$tpl->assign('form', isset($form) ? $form : $defaults);
 
@@ -62,4 +59,3 @@ if ($auth->isUser()) {
 		$content = $tpl->fetch('users/forgot_pwd.html');
 	}
 }
-?>

@@ -49,4 +49,3 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 } else {
 	redirect('errors/404');
 }
-?>

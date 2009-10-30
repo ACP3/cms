@@ -23,4 +23,3 @@ if ($c_news > 0) {
 }
 
 $tpl->display('news/sidebar.html');
-?>

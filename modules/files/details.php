@@ -49,4 +49,3 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 } else {
 	redirect('errors/404');
 }
-?>

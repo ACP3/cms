@@ -69,4 +69,3 @@ function emoticonsReplace($string)
 	}
 	return $string;
 }
-?>

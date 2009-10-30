@@ -33,4 +33,4 @@ function userEmailExists($mail, $id = 0)
 	$id = validate::isNumber($id) ? ' AND id != \'' . $id . '\'' : '';
 	return validate::email($mail) && $db->countRows('*', 'users', '(mail =\'' . $mail . ':1\' OR mail =\'' . $mail . ':0\')' . $id) > 0 ? true : false;
 }
-?>
+

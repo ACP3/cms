@@ -220,4 +220,3 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 } else {
 	redirect('errors/404');
 }
-?>

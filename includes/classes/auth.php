@@ -189,4 +189,3 @@ class auth
 		return setcookie('ACP3_AUTH', base64_encode($nickname . '|' . $password), time() + $expiry, ROOT_DIR);
 	}
 }
-?>

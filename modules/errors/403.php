@@ -12,4 +12,3 @@ if (!defined('IN_ACP3') && !defined('IN_ADM'))
 
 header('HTTP/1.0 403 Forbidden');
 $content = $tpl->fetch('errors/403.html');
-?>

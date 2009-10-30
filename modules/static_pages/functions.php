@@ -53,4 +53,4 @@ function getStaticPages($id = '')
 	}
 	return $static_pages;
 }
-?>
+

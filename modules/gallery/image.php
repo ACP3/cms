@@ -79,4 +79,3 @@ if (!validate::isNumber($uri->id) || $uri->action != 'mini' && $uri->action != '
 	}
 	exit;
 }
-?>

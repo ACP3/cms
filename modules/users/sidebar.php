@@ -68,4 +68,3 @@ if ($auth->isUser()) {
 
 	$tpl->display('users/sidebar_login.html');
 }
-?>

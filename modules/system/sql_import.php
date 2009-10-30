@@ -51,4 +51,3 @@ if (!isset($_POST['submit']) || isset($errors)) {
 	$tpl->assign('form', isset($form) ? $form : array('text' => ''));
 }
 $content = $tpl->fetch('system/sql_import.html');
-?>

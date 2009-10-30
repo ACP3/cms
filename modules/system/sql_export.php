@@ -107,4 +107,3 @@ if (!isset($_POST['submit']) || isset($errors)) {
 	$tpl->assign('drop', $drop);
 }
 $content = $tpl->fetch('system/sql_export.html');
-?>

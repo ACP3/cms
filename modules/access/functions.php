@@ -35,4 +35,3 @@ function buildAccessLevel($modules)
 	}
 	return '';
 }
-?>

@@ -73,4 +73,3 @@ if ($auth->isUser()) {
 		$content = $tpl->fetch('users/register.html');
 	}
 }
-?>

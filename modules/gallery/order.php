@@ -28,4 +28,3 @@ if (validate::isNumber($uri->id)) {
 	}
 }
 redirect('acp/errors/404');
-?>

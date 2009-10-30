@@ -48,4 +48,3 @@ if (!isset($entries)) {
 } else {
 	redirect('acp/errors/404');
 }
-?>

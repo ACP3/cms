@@ -66,4 +66,3 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'emoticons', 'id = \'' .
 } else {
 	redirect('errors/404');
 }
-?>

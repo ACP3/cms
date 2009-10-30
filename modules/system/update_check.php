@@ -30,4 +30,3 @@ if ($file) {
 	}
 }
 $content = $tpl->fetch('system/update_check.html');
-?>

@@ -24,4 +24,3 @@ if ($c_categories > 0) {
 	$tpl->assign('categories', $categories);
 }
 $content = $tpl->fetch('categories/adm_list.html');
-?>

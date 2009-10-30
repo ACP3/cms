@@ -74,4 +74,3 @@ print config::system($config) ? 'Konfigurationsdatei erfolgreich aktualisiert.' 
 
 // Cache leeren
 cache::purge();
-?>

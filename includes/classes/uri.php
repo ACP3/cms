@@ -104,4 +104,3 @@ class uri
 		$this->params[$name] = $value;
 	}
 }
-?>
