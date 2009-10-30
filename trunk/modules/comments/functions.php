@@ -48,13 +48,16 @@ function commentsList($module, $entry_id)
 
 	if ($c_comments > 0) {
 		$tpl->assign('pagination', pagination($db->countRows('*', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'')));
+
+		$settings = config::output('comments');
+
 		for ($i = 0; $i < $c_comments; ++$i) {
 			if (empty($comments[$i]['user_name']) && empty($comments[$i]['name'])) {
 				$comments[$i]['name'] = $lang->t('users', 'deleted_user');
 				$comments[$i]['user_id'] = 0;
 			}
 			$comments[$i]['name'] = $db->escape(!empty($comments[$i]['user_name']) ? $comments[$i]['user_name'] : $comments[$i]['name'], 3);
-			$comments[$i]['date'] = $date->format($comments[$i]['date']);
+			$comments[$i]['date'] = $date->format($comments[$i]['date'], $settings['dateformat']);
 			$comments[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $comments[$i]['message']);
 			if ($emoticons) {
 				$comments[$i]['message'] = emoticonsReplace($comments[$i]['message']);
