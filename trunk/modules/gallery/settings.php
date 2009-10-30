@@ -21,6 +21,8 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('gallery', 'invalid_image_filesize_entered');
 	if (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0)
 		$errors[] = $lang->t('news', 'select_allow_comments');
+	if (empty($form['dateformat']) || ($form['dateformat'] != 'long' && $form['dateformat'] != 'short'))
+		$errors[] = $lang->t('common', 'select_date_format');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -40,6 +42,14 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$comments[1]['checked'] = selectEntry('comments', '0', $settings['comments'], 'checked');
 	$comments[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('comments', $comments);
+
+	$dateformat[0]['value'] = 'short';
+	$dateformat[0]['selected'] = selectEntry('dateformat', 'short', $settings['dateformat']);
+	$dateformat[0]['lang'] = $lang->t('common', 'date_format_short');
+	$dateformat[1]['value'] = 'long';
+	$dateformat[1]['selected'] = selectEntry('dateformat', 'long', $settings['dateformat']);
+	$dateformat[1]['lang'] = $lang->t('common', 'date_format_long');
+	$tpl->assign('dateformat', $dateformat);
 
 	$tpl->assign('form', isset($form) ? $form : $settings);
 

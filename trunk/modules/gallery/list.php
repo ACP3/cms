@@ -18,8 +18,10 @@ $c_galleries = count($galleries);
 if ($c_galleries > 0) {
 	$tpl->assign('pagination', pagination($db->countRows('*', 'gallery', $where)));
 
+	$settings = config::output('gallery');
+
 	for ($i = 0; $i < $c_galleries; ++$i) {
-		$galleries[$i]['date'] = $date->format($galleries[$i]['start']);
+		$galleries[$i]['date'] = $date->format($galleries[$i]['start'], $settings['dateformat']);
 		$galleries[$i]['name'] = $galleries[$i]['name'];
 		$pictures = $db->countRows('*', 'gallery_pictures', 'gallery_id = \'' . $galleries[$i]['id'] . '\'');
 		$galleries[$i]['pics'] = $pictures == '1' ? '1 ' . $lang->t('gallery', 'picture') : $pictures . ' ' . $lang->t('gallery', 'pictures');
