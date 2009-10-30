@@ -45,6 +45,18 @@
 		<message>Wenn Sie kein Enddatum festlegen möchten, so setzen Sie bitte das Veröffentlichungsdatum und das Enddatum auf die gleichen Werte.</message>
 	</item>
 	<item>
+		<name>date_format</name>
+		<message>Datumsformat</message>
+	</item>
+	<item>
+		<name>date_format_long</name>
+		<message>Langes Datumsformat</message>
+	</item>
+	<item>
+		<name>date_format_short</name>
+		<message>Kurzes Datumsformat</message>
+	</item>
+	<item>
 		<name>day</name>
 		<message>Tag</message>
 	</item>
@@ -247,6 +259,10 @@
 	<item>
 		<name>select_date</name>
 		<message>Bitte vervollständigen Sie die Angaben zum Veröffentlichungsdatum bzw. dem Enddatum dieses Eintrages</message>
+	</item>
+	<item>
+		<name>select_date_format</name>
+		<message>Bitte wählen Sie aus, ob das lange oder das kurze Datumsformat verwendet werden soll</message>
 	</item>
 	<item>
 		<name>select_daylight_saving_time</name>

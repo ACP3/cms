@@ -45,6 +45,18 @@
 		<message>If you wouldn\'t like to set a enddate, just set the release date and the end date to the same values.</message>
 	</item>
 	<item>
+		<name>date_format</name>
+		<message>Date format</message>
+	</item>
+	<item>
+		<name>date_format_long</name>
+		<message>Short date format</message>
+	</item>
+	<item>
+		<name>date_format_short</name>
+		<message>Long date format</message>
+	</item>
+	<item>
 		<name>day</name>
 		<message>Day</message>
 	</item>
@@ -247,6 +259,10 @@
 	<item>
 		<name>select_date</name>
 		<message>Please complete the statements belonging the release date and end date</message>
+	</item>
+	<item>
+		<name>select_date_format</name>
+		<message>Please select, wether you want to display the date in short or long format</message>
 	</item>
 	<item>
 		<name>select_daylight_saving_time</name>
