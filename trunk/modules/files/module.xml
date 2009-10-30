@@ -10,7 +10,7 @@
 		<active>1</active>
 	</info>
 	<settings>
-		<dateformat>short</dateformat>
+		<dateformat>long</dateformat>
 	</settings>
 	<access>
 		<item>
