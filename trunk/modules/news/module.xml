@@ -13,7 +13,7 @@
 		<comments>1</comments>
 		<readmore>1</readmore>
 		<readmore_chars>350</readmore_chars>
-		<dateformat>short</dateformat>
+		<dateformat><![CDATA[short]]></dateformat>
 	</settings>
 	<access>
 		<item>

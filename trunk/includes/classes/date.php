@@ -55,23 +55,30 @@ class date
 	 * @param string $format
 	 * @return integer
 	 */
-	public function format($time_stamp, $format = 1)
+	public function format($time_stamp, $format = 'long')
 	{
 		// Datum in gewünschter Formatierung ausgeben
 		// 1 = langes Datumsforat
 		// 2 = kurzes Datumsformat
 		// Alles andere = Benutzerdefiniertes Format
-		$format = ($format == 1) ? CONFIG_DATE_FORMAT_LONG : ($format == 2) ? CONFIG_DATE_FORMAT_SHORT : $format;
+		switch ($format) {
+			case 'long':
+				$format = CONFIG_DATE_FORMAT_LONG;
+				break;
+			case 'short':
+				$format = CONFIG_DATE_FORMAT_SHORT;
+				break;
+		}
 		return gmdate($format, $time_stamp + $this->offset);
 	}
-	public function period($start, $end)
+	public function period($start, $end, $format = 'long')
 	{
 		if (validate::isNumber($start) && validate::isNumber($end)) {
 			global $lang;
 			if ($start >= $end) {
-				return sprintf($lang->t('common', 'since_date'), $this->format($start));
+				return sprintf($lang->t('common', 'since_date'), $this->format($start, $format));
 			} else {
-				return sprintf($lang->t('common', 'from_start_to_end'), $this->format($start), $this->format($end));
+				return sprintf($lang->t('common', 'from_start_to_end'), $this->format($start, $format), $this->format($end, $format));
 			}
 		}
 		return '';

@@ -24,6 +24,15 @@
 				</label>
 {/foreach}
 			</dd>
+			<dt><label for="date-format">{lang values="common|date_format"}</label></dt>
+			<dd>
+				<select name="form[dateformat]" id="date-format">
+					<option value="">{lang values="common|pls_select"}</option>
+{foreach from=$dateformat item=row}
+					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{/foreach}
+				</select>
+			</dd>
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
