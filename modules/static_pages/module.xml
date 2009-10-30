@@ -8,6 +8,9 @@
 		<active>1</active>
 		<tables>static_pages</tables>
 	</info>
+	<settings>
+		<dateformat>short</dateformat>
+	</settings>
 	<access>
 		<item>
 			<file>adm_list</file>
