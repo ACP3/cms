@@ -89,24 +89,32 @@ function comboBox($text, $forward = 0, $backward = 0)
  *	Das anzuzeigende Format im Textfeld
  * @return string
  */
-function datepicker($name, $value = '', $format = 'Y-m-d H:i')
+function datepicker($name, $value = '', $format = 'Y-m-d H:i', $params = array())
 {
 	global $date, $tpl;
 
 	if (!empty($_POST['form'][$name])) {
-		$input = $_POST['form'][$name];
+		$value = $_POST['form'][$name];
 	} elseif (validate::isNumber($value)) {
-		$input = $date->format($value, $format);
+		$value = $date->format($value, $format);
 	} else {
-		$input = $date->format(time(), $format);
+		$value = $date->format(time(), $format);
 	}
 
 	$datepicker = array(
-		'format' => 'yy-mm-dd',
 		'name' => $name,
-		'input' => $input,
+		'value' => $value,
+		'params' => array(
+			'firstDay' => '\'1\'',
+			'format' => '\'yy-mm-dd\'',
+			'showOn' => '\'button\'',
+			'buttonImage' => '\'' . ROOT_DIR . 'images/crystal/16/cal.png\'',
+			'buttonImageOnly' => 'true',
+			'constrainInput' => 'false',
+		)
 	);
-	$tpl->assign('date', $datepicker);
+	$datepicker['params'] = array_merge($datepicker['params'], $params);
+	$tpl->assign('datepicker', $datepicker);
 
 	return $tpl->fetch('common/date.html');
 }
