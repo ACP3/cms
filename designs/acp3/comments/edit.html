@@ -3,6 +3,7 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset>
+		<legend>{lang values="comments|edit"}</legend>
 		<dl>
 {if isset($form.user_id) && $form.user_id == '0'}
 			<dt><label for="name">{lang values="common|name"}</label></dt>

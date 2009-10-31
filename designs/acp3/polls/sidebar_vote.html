@@ -1,0 +1,22 @@
+<form action="{uri args="poll/vote/id_{$sidebar_poll_question.id"}" method="post" accept-charset="UTF-8">
+	<fieldset class="no-border">
+		<dl>
+			<dt><label>{$sidebar_poll_question.question}</label></dt>
+			<dd>
+{foreach from=$sidebar_poll_answers item=row}
+				<label for="answer_{$row.id}" class="{$row.css_class}">
+{if $sidebar_poll_question.multiple == '1'}
+					<input type="checkbox" name="answer[]" id="answer_{$row.id}" value="{$row.id}" class="checkbox" />
+{else}
+					<input type="radio" name="answer" id="answer_{$row.id}" value="{$row.id}" class="checkbox" />
+{/if}
+					{$row.text}
+				</label>
+{/foreach}
+			</dd>
+		</dl>
+	</fieldset>
+	<div>
+		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+	</div>
+</form>

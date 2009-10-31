@@ -18,13 +18,15 @@ if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module
 	$c_comments = count($comments);
 
 	if ($c_comments > 0) {
-		$tpl->assign('pagination', pagination($db->query('SELECT COUNT(module) FROM ' . $db->prefix . 'comments GROUP BY module', 1)));
+		$tpl->assign('pagination', pagination($db->query('SELECT COUNT(*) FROM ' . $db->prefix . 'comments GROUP BY module', 1)));
 		for ($i = 0; $i < $c_comments; ++$i) {
 			$comments[$i]['name'] = $lang->t($comments[$i]['module'], $comments[$i]['module']);
 			$comments[$i]['count'] = $db->countRows('*', 'comments', 'module = \'' . $comments[$i]['module'] . '\'');
 		}
 		$tpl->assign('comments', $comments);
 	}
+
+	$content = $tpl->fetch('comments/adm_list_module.html');
 } else {
 	//Brotkrümelspur
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
@@ -33,15 +35,15 @@ if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module
 
 	$comments = $db->query('SELECT IF(c.name != "" AND c.user_id = 0,c.name,u.nickname) AS name, c.id, c.ip, c.user_id, c.date, c.message FROM ' . $db->prefix . 'comments AS c LEFT JOIN (' . $db->prefix . 'users AS u) ON u.id = c.user_id WHERE c.module = \'' . $module . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
 	$c_comments = count($comments);
-	$emoticons = false;
-
-	// Emoticons einbinden
-	if (modules::check('emoticons', 'functions') == 1) {
-		require_once ACP3_ROOT . 'modules/emoticons/functions.php';
-		$emoticons = true;
-	}
 
 	if ($c_comments > 0) {
+		$emoticons = false;
+		// Emoticons einbinden
+		if (modules::check('emoticons', 'functions') == 1) {
+			require_once ACP3_ROOT . 'modules/emoticons/functions.php';
+			$emoticons = true;
+		}
+
 		$tpl->assign('pagination', pagination($db->countRows('*', 'comments', 'module = \'' . $module . '\'')));
 		for ($i = 0; $i < $c_comments; ++$i) {
 			if (!empty($comments[$i]['user_id']) && empty($comments[$i]['name'])) {
@@ -55,5 +57,6 @@ if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module
 		}
 		$tpl->assign('comments', $comments);
 	}
+
+	$content = $tpl->fetch('comments/adm_list_comments.html');
 }
-$content = $tpl->fetch('comments/adm_list.html');

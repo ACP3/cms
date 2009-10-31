@@ -1,0 +1,41 @@
+<form action="{uri args="acp/comments/delete_comments_per_module"}" method="post">
+	<div id="adm-list">
+		{check_access mode="link" action="comments|settings" uri="acp/comments/settings" icon="32/advancedsettings"}
+		{check_access mode="input" action="comments|delete_comments_per_module" icon="32/cancel" lang="common|delete_marked"}
+		<h2>{lang values="common|overview"}</h2>
+	</div>
+	<hr />
+{if isset($comments)}
+{$pagination}
+{assign var="can_delete" value=$MODULES->check("comments", "delete_comments_per_module")}
+	<table class="acp-table">
+		<thead>
+			<tr>
+{if $can_delete}
+				<th>{lang values="common|mark"}</th>
+{/if}
+				<th>{lang values="comments|module"}</th>
+				<th>{lang values="comments|comments_count"}</th>
+			</tr>
+		</thead>
+		<tbody>
+{foreach from=$comments item=row}
+			<tr>
+{if $can_delete}
+				<td><input type="checkbox" name="entries[]" value="{$row.module}" class="checkbox" /></td>
+{/if}
+				<td>{check_access mode="link" action="comments|adm_list" uri="acp/comments/adm_list/module_`$row.module`" lang="comments|show_comments" title=$row.name}</td>
+				<td>{$row.count}</td>
+			</tr>
+{/foreach}
+		</tbody>
+	</table>
+{if $can_delete}
+{mark name="entries"}
+{/if}
+{else}
+	<div class="error">
+		<h5>{lang values="common|no_entries"}</h5>
+	</div>
+{/if}
+</form>

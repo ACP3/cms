@@ -1,6 +1,7 @@
 <form action="{uri args="acp/files/delete"}" method="post">
 	<div id="adm-list">
 		{check_access mode="link" action="files|create" uri="acp/files/create" icon="32/download"}
+		{check_access mode="link" action="files|settings" uri="acp/files/settings" icon="32/advancedsettings"}
 		{check_access mode="input" action="files|delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang values="common|overview"}</h2>
 	</div>

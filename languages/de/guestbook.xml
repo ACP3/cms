@@ -33,6 +33,10 @@
 		<message>E-Mail senden</message>
 	</item>
 	<item>
+		<name>settings</name>
+		<message>Einstellungen</message>
+	</item>
+	<item>
 		<name>visit_website</name>
 		<message>Website besuchen</message>
 	</item>

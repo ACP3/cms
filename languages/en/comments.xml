@@ -40,4 +40,8 @@
 		<name>show_comments</name>
 		<message>Show comments</message>
 	</item>
+	<item>
+		<name>settings</name>
+		<message>Settings</message>
+	</item>
 </language>
