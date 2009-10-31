@@ -3,6 +3,7 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset>
+		<legend>{lang values="gallery|settings"}</legend>
 		<dl>
 			<dt><label for="thumbwidth">{lang values="gallery|thumb_image_width"}</label></dt>
 			<dd><input type="text" name="form[thumbwidth]" id="thumbwidth" value="{$form.thumbwidth}" /></dd>
@@ -40,6 +41,5 @@
 	</fieldset>
 	<div class="form-bottom">
 		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
-		<input type="reset" value="{lang values="common|reset"}" class="form" />
 	</div>
 </form>

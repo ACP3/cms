@@ -3,6 +3,7 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset>
+		<legend>{lang values="emoticons|settings"}</legend>
 		<dl>
 			<dt><label for="width">{lang values="emoticons|image_width"}</label></dt>
 			<dd><input type="text" name="form[width]" id="width" value="{$form.width}" /></dd>
@@ -14,6 +15,5 @@
 	</fieldset>
 	<div class="form-bottom">
 		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
-		<input type="reset" value="{lang values="common|reset"}" class="form" />
 	</div>
 </form>

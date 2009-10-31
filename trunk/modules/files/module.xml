@@ -42,6 +42,10 @@
 			<level>1</level>
 		</item>
 		<item>
+			<file>settings</file>
+			<level>15</level>
+		</item>
+		<item>
 			<file>sidebar</file>
 			<level>1</level>
 		</item>

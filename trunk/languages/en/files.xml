@@ -73,6 +73,10 @@
 		<message>Please select the path to the file, which you want to upload</message>
 	</item>
 	<item>
+		<name>settings</name>
+		<message>Settings</message>
+	</item>
+	<item>
 		<name>type_in_external_resource</name>
 		<message>Please type in the external resource for the file</message>
 	</item>

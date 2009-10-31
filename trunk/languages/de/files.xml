@@ -73,6 +73,10 @@
 		<message>Bitte geben Sie den Pfad zur hochzuladenden Datei an</message>
 	</item>
 	<item>
+		<name>settings</name>
+		<message>Einstellungen</message>
+	</item>
+	<item>
 		<name>type_in_external_resource</name>
 		<message>Bitte geben Sie den Pfad zur Datei und die Dateigröße ein</message>
 	</item>
