@@ -10,7 +10,8 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$period = ' AND (start = end AND start <= \'' . $date->timestamp() . '\' OR start != end AND start <= \'' . $date->timestamp() . '\' AND end >= \'' . $date->timestamp() . '\')';
+$time = $date->timestamp();
+$period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $uri->id . '\'' . $period) == '1') {
 	require_once ACP3_ROOT . 'modules/files/functions.php';
@@ -41,7 +42,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		$file[0]['date'] = $date->format($file[0]['start'], $settings['dateformat']);
 		$tpl->assign('file', $file[0]);
 
-		if ($file[0]['comments'] == 1 && modules::check('comments', 'functions') == 1) {
+		if ($settings['comments'] == 1 && $file[0]['comments'] == 1 && modules::check('comments', 'functions') == 1) {
 			require_once ACP3_ROOT . 'modules/comments/functions.php';
 
 			$tpl->assign('comments', commentsList('files', $uri->id));

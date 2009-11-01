@@ -65,6 +65,10 @@
 		<message>Replace current file</message>
 	</item>
 	<item>
+		<name>select_allow_comments</name>
+		<message>Please select, wether you want to allow comments under downloads</message>
+	</item>
+	<item>
 		<name>select_category</name>
 		<message>Please select a category, where do you want to find the download</message>
 	</item>
