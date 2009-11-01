@@ -12,6 +12,8 @@ if (!defined('IN_ADM'))
 
 require_once ACP3_ROOT . 'modules/categories/functions.php';
 
+$settings = config::output('files');
+
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 	if (isset($form['external'])) {
@@ -59,7 +61,7 @@ if (isset($_POST['submit'])) {
 			'size' => $filesize,
 			'link_title' => $db->escape($form['link_title']),
 			'text' => $db->escape($form['text'], 2),
-			'comments' => isset($form['comments']) ? 1 : 0,
+			'comments' => $settings['comments'] == 1 && isset($form['comments']) ? 1 : 0,
 		);
 
 		require_once ACP3_ROOT . 'modules/files/functions.php';
@@ -90,7 +92,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Formularelemente
 	$tpl->assign('categories', categoriesList('files', '', true));
 
-	if (modules::check('comments', 'functions') == 1) {
+	if (modules::check('comments', 'functions') == 1 && $settings['comments'] == 1) {
 		$options = array();
 		$options[0]['name'] = 'comments';
 		$options[0]['checked'] = selectEntry('comments', '1', '0', 'checked');

@@ -11,9 +11,9 @@
 	</info>
 	<settings>
 		<comments>1</comments>
+		<dateformat>long</dateformat>
 		<readmore>1</readmore>
 		<readmore_chars>350</readmore_chars>
-		<dateformat>long</dateformat>
 	</settings>
 	<access>
 		<item>

@@ -41,10 +41,10 @@ class date
 
 		if (!empty($info)) {
 			$this->dst = (int) $info['dst'];
-			$time_zone = $info['time_zone'];
+			$time_zone = (int) $info['time_zone'];
 		} else {
 			$this->dst = (int) CONFIG_DATE_DST;
-			$time_zone = CONFIG_DATE_TIME_ZONE;
+			$time_zone = (int) CONFIG_DATE_TIME_ZONE;
 		}
 		$this->offset = $time_zone + ($this->dst == 1 ? 3600 : 0);
 	}
@@ -94,11 +94,12 @@ class date
 		// Zeitstempel aus Veröffentlichungszeitraum heraus generieren
 		if (!empty($value) && validate::date($value)) {
 			$value = strtotime($value);
-			if ($this->dst && !date('I', $value)) {
+			if ($this->dst && date('I', $value) == 0) {
 				$offset = -3600;
 			} else {
-				$offset = !$this->dst && date('I', $value) ? 3600 : 0;
+				$offset = !$this->dst && date('I', $value) == 1 ? 3600 : 0;
 			}
+			echo date('I', $value);
 			return gmdate('U', $value + $offset);
 		}
 		return gmdate('U');

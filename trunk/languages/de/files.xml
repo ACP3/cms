@@ -65,6 +65,10 @@
 		<message>Neue Datei angeben</message>
 	</item>
 	<item>
+		<name>select_allow_comments</name>
+		<message>Bitte wählen Sie aus, ob Kommentare unter Downloads zugelassen werden sollen oder nicht</message>
+	</item>
+	<item>
 		<name>select_category</name>
 		<message>Bitte wählen Sie die Kategorie aus, in der sich der Download befinden soll</message>
 	</item>

@@ -13,6 +13,8 @@ if (!defined('IN_ADM'))
 if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $uri->id . '\'') == '1') {
 	require_once ACP3_ROOT . 'modules/categories/functions.php';
 
+	$settings = config::output('files');
+
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 		if (isset($form['external'])) {
@@ -66,7 +68,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 				'category_id' => strlen($form['cat_create']) >= 3 ? categoriesCreate($form['cat_create'], 'files') : $form['cat'],
 				'link_title' => $db->escape($form['link_title']),
 				'text' => $db->escape($form['text'], 2),
-				'comments' => isset($form['comments']) ? 1 : 0,
+				'comments' => $settings['comments'] == 1 && isset($form['comments']) ? 1 : 0,
 			);
 			if (is_array($new_file_sql)) {
 				$old_file = $db->select('file', 'files', 'id = \'' . $uri->id . '\'');
@@ -110,7 +112,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		// Formularelemente
 		$tpl->assign('categories', categoriesList('files', $dl[0]['category_id'], true));
 		
-		if (modules::check('comments', 'functions') == 1) {
+		if (modules::check('comments', 'functions') == 1 && $settings['comments'] == 1) {
 			$options = array();
 			$options[0]['name'] = 'comments';
 			$options[0]['checked'] = selectEntry('comments', '1', $dl[0]['comments'], 'checked');
