@@ -99,7 +99,6 @@ class date
 			} else {
 				$offset = !$this->dst && date('I', $value) == 1 ? 3600 : 0;
 			}
-			echo date('I', $value);
 			return gmdate('U', $value + $offset);
 		}
 		return gmdate('U');
