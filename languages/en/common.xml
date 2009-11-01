@@ -474,7 +474,7 @@
 	</item>
 	<item>
 		<name>wrong_email_format</name>
-		<message>The E-mail address doesn\'t match the format name@domain.com</message>
+		<message>The E-mail address doesn\'t match the format name@domain.tld</message>
 	</item>
 	<item>
 		<name>year</name>

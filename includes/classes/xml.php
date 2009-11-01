@@ -73,7 +73,10 @@ class xml
 
 				if (array_key_exists($item->nodeName, $data)) {
 					$newitem = $xml->createElement($item->nodeName);
-					if (empty($data[$item->nodeName]) || validate::isNumber($data[$item->nodeName])) {
+					if (empty($data[$item->nodeName]) ||
+						validate::isNumber($data[$item->nodeName]) ||
+						validate::email($data[$item->nodeName]) ||
+						preg_match('/^(\w+)$/', $data[$item->nodeName])) {
 						$newitem_content = $xml->createTextNode($data[$item->nodeName]);
 					} else {
 						$newitem_content = $xml->createCDATASection($data[$item->nodeName]);	
