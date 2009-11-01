@@ -6,11 +6,11 @@
 	</item>
 	<item>
 		<name>acp3_not_up_to_date</name>
-		<message>Es ist eine neuere Version des ACP3 verfügbar. Die neue Version kann %1$shier%2$s heruntergeladen werden.</message>
+		<message>Es ist eine neue Version des ACP3 verfügbar. Sie kann %1$shier%2$s heruntergeladen werden.</message>
 	</item>
 	<item>
 		<name>acp3_up_to_date</name>
-		<message>Sie verwenden bereits die aktuellste Version des ACP3.</message>
+		<message>Sie verwenden bereits die aktuelle Version des ACP3.</message>
 	</item>
 	<item>
 		<name>architecture</name>

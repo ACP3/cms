@@ -106,7 +106,7 @@ function datepicker($name, $value = '', $format = 'Y-m-d H:i', $params = array()
 		'value' => $value,
 		'params' => array(
 			'firstDay' => '\'1\'',
-			'format' => '\'yy-mm-dd\'',
+			'dateFormat' => '\'yy-mm-dd\'',
 			'showOn' => '\'button\'',
 			'buttonImage' => '\'' . ROOT_DIR . 'images/crystal/16/cal.png\'',
 			'buttonImageOnly' => 'true',
