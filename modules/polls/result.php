@@ -20,8 +20,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 	$total_votes = $db->countRows('answer_id', 'poll_votes', 'poll_id = \'' . $uri->id . '\'');
 
 	for ($i = 0; $i < $c_answers; ++$i) {
-		$answers[$i]['text'] = $answers[$i]['text'];
-		$answers[$i]['votes'] = $db->countRows('answer_id', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND answer_id = \'' . $answers[$i]['id'] . '\'');
+		$answers[$i]['text'] = $db->escape($answers[$i]['text'], 3);
+		$answers[$i]['votes'] = $db->countRows('answer_id', 'poll_votes', 'answer_id = \'' . $answers[$i]['id'] . '\'');
 		$answers[$i]['percent'] = $total_votes > '0' ? round(100 * $answers[$i]['votes'] / $total_votes, 2) : '0';
 	}
 	$tpl->assign('question', $question[0]['question']);

@@ -1,22 +1,23 @@
-<form action="{uri args="poll/vote/id_{$sidebar_poll_question.id"}" method="post" accept-charset="UTF-8">
-	<fieldset class="no-border">
-		<dl>
-			<dt><label>{$sidebar_poll_question.question}</label></dt>
-			<dd>
+<h4>{lang values="polls|latest_poll"}</h4>
+<div id="sidebar-polls">
+	<h5>{$sidebar_poll_question.question}</h5>
+	<form action="{uri args="polls/vote/id_`$sidebar_poll_question.id`"}" method="post" accept-charset="UTF-8">
+		<ul>
+			<li>
 {foreach from=$sidebar_poll_answers item=row}
-				<label for="answer_{$row.id}" class="{$row.css_class}">
+				<label for="answer-{$row.id}" class="{$row.css_class}">
 {if $sidebar_poll_question.multiple == '1'}
-					<input type="checkbox" name="answer[]" id="answer_{$row.id}" value="{$row.id}" class="checkbox" />
+					<input type="checkbox" name="answer[]" id="answer-{$row.id}" value="{$row.id}" class="checkbox" />
 {else}
-					<input type="radio" name="answer" id="answer_{$row.id}" value="{$row.id}" class="checkbox" />
+					<input type="radio" name="answer" id="answer-{$row.id}" value="{$row.id}" class="checkbox" />
 {/if}
 					{$row.text}
-				</label>
+				</label><br />
 {/foreach}
-			</dd>
-		</dl>
-	</fieldset>
-	<div>
-		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
-	</div>
-</form>
+			</li>
+		</ul>
+		<div>
+			<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
+		</div>
+	</form>
+</div>
