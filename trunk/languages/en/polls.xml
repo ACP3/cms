@@ -37,12 +37,28 @@
 		<message>Edit poll</message>
 	</item>
 	<item>
+		<name>latest_poll</name>
+		<message>Latest poll</message>
+	</item>
+	<item>
 		<name>mod_description</name>
 		<message>With this module you can administer the polls.</message>
 	</item>
 	<item>
 		<name>multiple_choice</name>
 		<message>Multiple choice</message>
+	</item>
+	<item>
+		<name>no_votes</name>
+		<message>No votes</message>
+	</item>
+	<item>
+		<name>number_of_votes</name>
+		<message>%s votes</message>
+	</item>
+	<item>
+		<name>one_vote</name>
+		<message>1 vote</message>
 	</item>
 	<item>
 		<name>per_cent</name>

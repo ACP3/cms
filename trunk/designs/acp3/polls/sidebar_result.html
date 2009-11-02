@@ -1,1 +1,10 @@
-<a href="{uri args="polls/list"}">{lang values="polls|archive"}</a>
+<h4>{lang values="polls|latest_poll"}</h4>
+<div id="sidebar-polls">
+	<h5>{$sidebar_poll_question.question}</h5>
+	<ul>
+{foreach from=$sidebar_poll_answers item=row}
+		<li><strong>{$row.text}:</strong> {$row.percent}% ({$row.votes})</li>
+{/foreach}
+	</ul>
+	<a href="{uri args="polls/list"}">{lang values="polls|polls_archive"}</a>
+</div>

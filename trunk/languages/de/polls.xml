@@ -37,12 +37,28 @@
 		<message>Umfrage bearbeiten</message>
 	</item>
 	<item>
+		<name>latest_poll</name>
+		<message>Aktuelle Umfrage</message>
+	</item>
+	<item>
 		<name>mod_description</name>
 		<message>Mit diesem Modul können die Umfragen verwaltet werden.</message>
 	</item>
 	<item>
 		<name>multiple_choice</name>
 		<message>Mehrfachauswahl erlauben</message>
+	</item>
+	<item>
+		<name>no_votes</name>
+		<message>Keine Stimmen</message>
+	</item>
+	<item>
+		<name>number_of_votes</name>
+		<message>%s Stimmen</message>
+	</item>
+	<item>
+		<name>one_vote</name>
+		<message>Eine Stimme</message>
 	</item>
 	<item>
 		<name>per_cent</name>

@@ -25,3 +25,18 @@
 .poll label input {
 	margin: 0 5px;
 }
+#sidebar-polls {
+	padding: 5px 0;
+	background: #eee;
+	text-align: center;
+}
+#sidebar-polls ul {
+	margin: 5px 0;
+}
+#sidebar-polls ul li {
+	width: auto;
+	padding-left: 15px;
+	border: 0;
+	text-align: left;
+	float: none;
+}
