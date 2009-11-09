@@ -109,12 +109,20 @@
 		<message>Bilder</message>
 	</item>
 	<item>
+		<name>select_allow_comments</name>
+		<message>Bitte wählen Sie aus, ob Kommentare unter Bildern zugelassen werden sollen oder nicht</message>
+	</item>
+	<item>
 		<name>select_new_picture</name>
 		<message>Neues Bild auswählen</message>
 	</item>
 	<item>
 		<name>select_picture</name>
 		<message>Bild auswählen</message>
+	</item>
+	<item>
+		<name>select_use_colorbox</name>
+		<message>Bitte wählen Sie aus, ob für die Bildpräsentation die Colorbox eingesetzt werden soll oder nicht</message>
 	</item>
 	<item>
 		<name>settings</name>
@@ -135,5 +143,13 @@
 	<item>
 		<name>type_in_gallery_name</name>
 		<message>Der Name der Fotogalerie sollte mindestens 3 Zeichen lang sein</message>
+	</item>
+	<item>
+		<name>use_colorbox</name>
+		<message>Colorbox verwenden</message>
+	</item>
+	<item>
+		<name>use_colorbox_description</name>
+		<message>Wenn die Colorbox aktiv ist, können keine Kommentare zu Bildern abgegeben werden</message>
 	</item>
 </language>

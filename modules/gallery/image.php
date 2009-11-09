@@ -27,7 +27,10 @@ if (!validate::isNumber($uri->id) || $uri->action != 'mini' && $uri->action != '
 
 		$settings = config::output('gallery');
 
-		if (extension_loaded('gd') && ($type == '1' || $type == '2' || $type == '3') && ($action == 'mini' && $width > $settings['thumbwidth'] && $height > $settings['thumbheight']) || ($action == 'thumb' && $width > $settings['width'] && $height > $settings['height'])) {
+		if (extension_loaded('gd') &&
+			($type == '1' || $type == '2' || $type == '3') &&
+			($action == 'mini' && $width > $settings['thumbwidth'] && $height > $settings['thumbheight']) ||
+			($action == 'thumb' && $width > $settings['width'] && $height > $settings['height'])) {
 			if ($width > $height) {
 				$t_width = $action == 'mini' ? $settings['thumbwidth'] : $settings['width'];
 				$t_height = intval($height * $t_width / $width);

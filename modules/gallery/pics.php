@@ -17,16 +17,24 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 	require_once ACP3_ROOT . 'modules/gallery/functions.php';
 
 	// Cache der galerie holen
-	$gallery = getGalleryCache($uri->id);
+	$pictures = getGalleryCache($uri->id);
+	$c_pictures = count($pictures);
 
-	if (count($gallery) > 0 ) {
+	if ($c_pictures > 0) {
 		$gallery_name = $db->select('name', 'gallery', 'id = \'' . $uri->id . '\'');
 
 		// Brotkrümelspur
 		breadcrumb::assign($lang->t('gallery', 'gallery'), uri('gallery'));
 		breadcrumb::assign($gallery_name[0]['name']);
 
-		$tpl->assign('gallery', $gallery);
+		$settings = config::output('gallery');
+
+		for ($i = 0; $i < $c_pictures; ++$i) {
+			$pictures[$i]['uri'] = $settings['colorbox'] == 1 ? uri('gallery/image/id_' . $pictures[$i]['id'] . '/action_thumb') : uri('gallery/details/id_' . $pictures[$i]['id']);
+			$pictures[$i]['description'] = strip_tags($pictures[$i]['description']);
+		}
+
+		$tpl->assign('pictures', $pictures);
 	}
 	$content = $tpl->fetch('gallery/pics.html');
 } else {

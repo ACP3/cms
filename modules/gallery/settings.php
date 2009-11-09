@@ -20,7 +20,9 @@ if (isset($_POST['submit'])) {
 	if (!validate::isNumber($form['filesize']))
 		$errors[] = $lang->t('gallery', 'invalid_image_filesize_entered');
 	if (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0)
-		$errors[] = $lang->t('news', 'select_allow_comments');
+		$errors[] = $lang->t('gallery', 'select_allow_comments');
+	if (!isset($form['colorbox']) || $form['colorbox'] != 1 && $form['colorbox'] != 0)
+		$errors[] = $lang->t('gallery', 'select_use_colorbox');
 	if (empty($form['dateformat']) || ($form['dateformat'] != 'long' && $form['dateformat'] != 'short'))
 		$errors[] = $lang->t('common', 'select_date_format');
 
@@ -42,6 +44,14 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$comments[1]['checked'] = selectEntry('comments', '0', $settings['comments'], 'checked');
 	$comments[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('comments', $comments);
+
+	$colorbox[0]['value'] = '1';
+	$colorbox[0]['checked'] = selectEntry('colorbox', '1', $settings['colorbox'], 'checked');
+	$colorbox[0]['lang'] = $lang->t('common', 'yes');
+	$colorbox[1]['value'] = '0';
+	$colorbox[1]['checked'] = selectEntry('colorbox', '0', $settings['colorbox'], 'checked');
+	$colorbox[1]['lang'] = $lang->t('common', 'no');
+	$tpl->assign('colorbox', $colorbox);
 
 	$dateformat[0]['value'] = 'short';
 	$dateformat[0]['selected'] = selectEntry('dateformat', 'short', $settings['dateformat']);

@@ -1,7 +1,8 @@
-{if isset($gallery)}
+<script type="text/javascript" src="{$DESIGN_PATH}gallery/script.js"></script>
+{if isset($pictures)}
 <div class="pictures">
-{foreach from=$gallery item=row}
-	<a href="{uri args="gallery/details/id_`$row.id`"}"><img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" /></a>
+{foreach from=$pictures item=row}
+	<a href="{$row.uri}"{if !empty($row.description)} title="{$row.description}"{/if} rel="pictures"><img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" /></a>
 {/foreach}
 </div>
 {else}
