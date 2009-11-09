@@ -16,6 +16,7 @@
 		<maxwidth>1024</maxwidth>
 		<maxheight>768</maxheight>
 		<filesize>20971520</filesize>
+		<colorbox>1</colorbox>
 		<comments>1</comments>
 		<dateformat>long</dateformat>
 	</settings>

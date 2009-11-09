@@ -58,7 +58,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 		$galleries = $db->select('id, start, name', 'gallery', 0, 'start DESC');
 		$c_galleries = count($galleries);
 
-		if ($settings['comments'] == 1 && modules::check('comments', 'functions') == 1) {
+		if ($settings['colorbox'] == 0 && $settings['comments'] == 1 && modules::check('comments', 'functions') == 1) {
 			$options = array();
 			$options[0]['name'] = 'comments';
 			$options[0]['checked'] = selectEntry('comments', '1', '0', 'checked');
