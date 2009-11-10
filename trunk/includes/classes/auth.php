@@ -21,6 +21,12 @@ class auth
 	 * @var boolean
 	 */
 	private $isUser = false;
+	/**
+	 * Einträge pro Seite
+	 *
+	 * @var integer
+	 */
+	 public $entries = CONFIG_ENTRIES;
 
 	/**
 	 * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der
@@ -34,16 +40,17 @@ class auth
 			$cookie = base64_decode($_COOKIE['ACP3_AUTH']);
 			$cookie_arr = explode('|', $cookie);
 
-			$user_check = $db->select('id, pwd', 'users', 'nickname = \'' . $db->escape($cookie_arr[0]) . '\' AND login_errors < 3');
+			$user_check = $db->select('id, pwd, entries', 'users', 'nickname = \'' . $db->escape($cookie_arr[0]) . '\' AND login_errors < 3');
 			if (count($user_check) == 1) {
 				$db_password = substr($user_check[0]['pwd'], 0, 40);
 				if ($db_password == $cookie_arr[1]) {
 					$this->isUser = true;
+					$this->entries = (int) $user_check[0]['entries'];
 					define('USER_ID', $user_check[0]['id']);
 				}
 			}
 			if (!$this->isUser) {
-				setcookie('ACP3_AUTH', '', time() - 3600, '/');
+				$this->logout();
 
 				redirect(0, ROOT_DIR);
 			}
@@ -172,7 +179,7 @@ class auth
 	 */
 	public function logout()
 	{
-		return setcookie('ACP3_AUTH', '', time() - 3600, ROOT_DIR);
+		return setcookie('ACP3_AUTH', '', time() - 50400, ROOT_DIR);
 	}
 	/**
 	 * Setzt den internen Authentifizierungscookie

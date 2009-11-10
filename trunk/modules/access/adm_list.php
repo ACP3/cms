@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-$access = $db->select('id, name, modules', 'access', 0, 'name ASC', POS, CONFIG_ENTRIES);
+$access = $db->select('id, name, modules', 'access', 0, 'name ASC', POS, $auth->entries);
 $c_access = count($access);
 
 if ($c_access > 0) {

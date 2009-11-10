@@ -179,9 +179,12 @@ CREATE TABLE `{pre}users` (
 	`icq` VARCHAR(11) NOT NULL,
 	`msn` VARCHAR(120) NOT NULL,
 	`skype` VARCHAR(30) NOT NULL,
+	`date_format_long` VARCHAR(30) NOT NULL,
+	`date_format_short` VARCHAR(30) NOT NULL,
 	`time_zone` int(5) UNSIGNED NOT NULL,
 	`dst` TINYINT(1) UNSIGNED NOT NULL,
 	`language` VARCHAR(10) NOT NULL,
+	`entries` TINYINT(2) UNSIGNED NOT NULL,
 	`draft` TEXT NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine};

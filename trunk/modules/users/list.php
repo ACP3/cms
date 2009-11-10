@@ -2,7 +2,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$users = $db->select('id, nickname, realname, mail, website', 'users', 0, 'nickname ASC, id ASC', POS, CONFIG_ENTRIES);
+$users = $db->select('id, nickname, realname, mail, website', 'users', 0, 'nickname ASC, id ASC', POS, $auth->entries);
 $c_users = count($users);
 $all_users = $db->countRows('*', 'users');
 

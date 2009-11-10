@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-$accounts = $db->select('id, mail, hash', 'newsletter_accounts', 0, 'id DESC', POS, CONFIG_ENTRIES);
+$accounts = $db->select('id, mail, hash', 'newsletter_accounts', 0, 'id DESC', POS, $auth->entries);
 $c_accounts = count($accounts);
 
 if ($c_accounts > 0) {

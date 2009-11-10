@@ -14,7 +14,7 @@ $module = $uri->module ? $db->escape($uri->module) : 0;
 $tpl->assign('module', $module);
 
 if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module = \'' . $module . '\'') == '0') {
-	$comments = $db->query('SELECT module FROM ' . $db->prefix . 'comments GROUP BY module LIMIT ' . POS . ',' . CONFIG_ENTRIES);
+	$comments = $db->query('SELECT module FROM ' . $db->prefix . 'comments GROUP BY module LIMIT ' . POS . ',' . $auth->entries);
 	$c_comments = count($comments);
 
 	if ($c_comments > 0) {
@@ -33,7 +33,7 @@ if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module
 	breadcrumb::assign($lang->t('comments', 'comments'), uri('acp/comments'));
 	breadcrumb::assign($lang->t($module, $module));
 
-	$comments = $db->query('SELECT IF(c.name != "" AND c.user_id = 0,c.name,u.nickname) AS name, c.id, c.ip, c.user_id, c.date, c.message FROM ' . $db->prefix . 'comments AS c LEFT JOIN (' . $db->prefix . 'users AS u) ON u.id = c.user_id WHERE c.module = \'' . $module . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . CONFIG_ENTRIES);
+	$comments = $db->query('SELECT IF(c.name != "" AND c.user_id = 0,c.name,u.nickname) AS name, c.id, c.ip, c.user_id, c.date, c.message FROM ' . $db->prefix . 'comments AS c LEFT JOIN (' . $db->prefix . 'users AS u) ON u.id = c.user_id WHERE c.module = \'' . $module . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . $auth->entries);
 	$c_comments = count($comments);
 
 	if ($c_comments > 0) {

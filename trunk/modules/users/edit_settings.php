@@ -20,20 +20,27 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 	if (isset($_POST['submit'])) {
 		$form = $_POST['form'];
 
+		if (!is_file('languages/' . $db->escape($form['language'], 2) . '/info.xml'))
+			$errors[] = $lang->t('users', 'select_language');
+		if (!validate::isNumber($form['entries']))
+			$errors[] = $lang->t('system', 'select_entries_per_page');
+		if (empty($form['date_format_long']) || empty($form['date_format_short']))
+			$errors[] = $lang->t('system', 'type_in_date_format');
 		if (!is_numeric($form['time_zone']))
 			$errors[] = $lang->t('common', 'select_time_zone');
 		if (!validate::isNumber($form['dst']))
 			$errors[] = $lang->t('common', 'select_daylight_saving_time');
-		if (!is_file('languages/' . $db->escape($form['language'], 2) . '/info.xml'))
-			$errors[] = $lang->t('users', 'select_language');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
+				'date_format_long' => $db->escape($form['date_format_long']),
+				'date_format_short' => $db->escape($form['date_format_short']),
 				'time_zone' => $form['time_zone'],
 				'dst' => $form['dst'],
 				'language' => $db->escape($form['language'], 2),
+				'entries' => (int) $form['entries'],
 			);
 
 			$bool = $db->update('users', $update_values, 'id = \'' . USER_ID . '\'');
@@ -42,19 +49,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 		}
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-		$user = $db->select('time_zone, dst, language', 'users', 'id = \'' . USER_ID . '\'');
-
-		// Zeitzonen
-		$tpl->assign('time_zone', timeZones($user[0]['time_zone']));
-
-		// Sommerzeit an/aus
-		$dst[0]['value'] = '1';
-		$dst[0]['checked'] = selectEntry('dst', '1', $user[0]['dst'], 'checked');
-		$dst[0]['lang'] = $lang->t('common', 'yes');
-		$dst[1]['value'] = '0';
-		$dst[1]['checked'] = selectEntry('dst', '0', $user[0]['dst'], 'checked');
-		$dst[1]['lang'] = $lang->t('common', 'no');
-		$tpl->assign('dst', $dst);
+		$user = $db->select('date_format_long, date_format_short, time_zone, dst, language, entries', 'users', 'id = \'' . USER_ID . '\'');
 
 		// Sprache
 		$languages = array();
@@ -72,6 +67,31 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 		ksort($languages);
 		$tpl->assign('languages', $languages);
 
+		// Einträge pro Seite
+		$i = 0;
+		for ($j = 10; $j <= 50; $j = $j + 10) {
+			$entries[$i]['value'] = $j;
+			$entries[$i]['selected'] = selectEntry('entries', $j, $auth->entries);
+			$i++;
+		}
+		$tpl->assign('entries', $entries);
+
+		// Zeitzonen
+		$tpl->assign('time_zone', timeZones($user[0]['time_zone']));
+
+		// Sommerzeit an/aus
+		$dst[0]['value'] = '1';
+		$dst[0]['checked'] = selectEntry('dst', '1', $user[0]['dst'], 'checked');
+		$dst[0]['lang'] = $lang->t('common', 'yes');
+		$dst[1]['value'] = '0';
+		$dst[1]['checked'] = selectEntry('dst', '0', $user[0]['dst'], 'checked');
+		$dst[1]['lang'] = $lang->t('common', 'no');
+		$tpl->assign('dst', $dst);
+
+		$user[0]['date_format_long'] = $db->escape($user[0]['date_format_long'], 3);
+		$user[0]['date_format_short'] = $db->escape($user[0]['date_format_short'], 3);
+
+		$tpl->assign('form', isset($form) ? $form : $user[0]);
 		$content = $tpl->fetch('users/edit_settings.html');
 	}
 }
