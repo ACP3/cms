@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-$guestbook = $db->select('id, ip, date, name, message', 'guestbook', 0, 'date DESC', POS, CONFIG_ENTRIES);
+$guestbook = $db->select('id, ip, date, name, message', 'guestbook', 0, 'date DESC', POS, $auth->entries);
 $c_guestbook = count($guestbook);
 
 if ($c_guestbook > 0) {

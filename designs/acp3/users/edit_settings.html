@@ -2,36 +2,61 @@
 {$error_msg}
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
-	<fieldset>
-		<dl>
-			<dt><label for="time_zone">{lang values="common|time_zone"}</label></dt>
-			<dd>
-				<select name="form[time_zone]" id="time_zone">
-{foreach from=$time_zone item=row}
-					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-{/foreach}
-				</select>
-			</dd>
-			<dt><label for="dst-1">{lang values="common|daylight_saving_time"}</label></dt>
-			<dd>
-{foreach from=$dst item=row}
-				<label for="dst-{$row.value}">
-					<input type="radio" name="form[dst]" id="dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
-					{$row.lang}
-				</label>
-{/foreach}
-			</dd>
-			<dt><label for="language">{lang values="users|language"}</label></dt>
-			<dd>
-				<select name="form[language]" id="language">
-					<option value="">{lang values="common|pls_select"}</option>
+	<div id="tabs">
+		<ul>
+			<li><a href="#tab-1">{lang values="system|general"}</a></li>
+			<li><a href="#tab-2">{lang values="common|date"}</a></li>
+		</ul>
+		<div id="tab-1">
+			<dl>
+				<dt><label for="language">{lang values="users|language"}</label></dt>
+				<dd>
+					<select name="form[language]" id="language">
+						<option value="">{lang values="common|pls_select"}</option>
 {foreach from=$languages item=row}
-					<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
+						<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
 {/foreach}
-				</select>
-			</dd>
-		</dl>
-	</fieldset>
+					</select>
+				</dd>
+				<dt><label for="entries">{lang values="system|entries_per_page"}</label></dt>
+				<dd>
+					<select name="form[entries]" id="entries">
+{foreach from=$entries item=row}
+						<option value="{$row.value}"{$row.selected}>{$row.value}</option>
+{/foreach}
+					</select>
+				</dd>
+			</dl>
+		</div>
+		<div id="tab-2">
+			<dl>
+				<dt>
+					<label for="date-format-long">{lang values="common|date_format_long"}</label>
+					<span>({lang values="system|php_date_function"})</span>
+				</dt>
+				<dd><input type="text" name="form[date_format_long]" id="date-format-long" value="{$form.date_format_long}" maxlength="20" /></dd>
+				<dt><label for="date-format-short">{lang values="common|date_format_short"}</label></dt>
+				<dd><input type="text" name="form[date_format_short]" id="date-format-short" value="{$form.date_format_short}" maxlength="20" /></dd>
+				<dt><label for="time_zone">{lang values="common|time_zone"}</label></dt>
+				<dd>
+					<select name="form[time_zone]" id="time_zone">
+{foreach from=$time_zone item=row}
+						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{/foreach}
+					</select>
+				</dd>
+				<dt><label for="dst-1">{lang values="common|daylight_saving_time"}</label></dt>
+				<dd>
+{foreach from=$dst item=row}
+					<label for="dst-{$row.value}">
+						<input type="radio" name="form[dst]" id="dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+						{$row.lang}
+					</label>
+{/foreach}
+				</dd>
+			</dl>
+		</div>
+	</div>
 	<div class="form-bottom">
 		<input type="submit" name="submit" value="{lang values="common|submit"}" class="form" />
 	</div>

@@ -35,6 +35,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 		}
 
 		$tpl->assign('pictures', $pictures);
+		$tpl->assign('colorbox', (int) $settings['colorbox']);
 	}
 	$content = $tpl->fetch('gallery/pics.html');
 } else {

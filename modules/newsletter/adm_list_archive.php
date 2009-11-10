@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-$newsletter = $db->select('id, date, subject, text, status', 'newsletter_archive', 0, 'id DESC', POS, CONFIG_ENTRIES);
+$newsletter = $db->select('id, date, subject, text, status', 'newsletter_archive', 0, 'id DESC', POS, $auth->entries);
 $c_newsletter = count($newsletter);
 
 if ($c_newsletter > 0) {
