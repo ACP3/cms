@@ -67,7 +67,7 @@ if (CONFIG_MAINTENANCE_MODE == '1' && defined('IN_ACP3')) {
 
 // Klassen initialisieren
 $db = new db();
-$handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD);
+$handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
 if ($handle !== true) {
 	exit($handle);
 }

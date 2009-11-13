@@ -1,4 +1,5 @@
 <h4>{lang values="polls|latest_poll"}</h4>
+{if isset($sidebar_poll_question)}
 <div id="sidebar-polls">
 	<h5>{$sidebar_poll_question.question}</h5>
 	<form action="{uri args="polls/vote/id_`$sidebar_poll_question.id`"}" method="post" accept-charset="UTF-8">
@@ -21,3 +22,8 @@
 		</div>
 	</form>
 </div>
+{else}
+<ul>
+	<li>{lang values="common|no_entries_short"}</li>
+</ul>
+{/if}
