@@ -18,7 +18,8 @@ if (isset($_POST['submit'])) {
 		$errors[] = $lang->t('installation', 'db_connection_failed');
 	if (empty($form['user_name']))
 		$errors[] = $lang->t('installation', 'type_in_user_name');
-	if ((empty($form['user_pwd']) || empty($form['user_pwd_wdh'])) || (!empty($form['user_pwd']) && !empty($form['user_pwd_wdh']) && $form['user_pwd'] != $form['user_pwd_wdh']))
+	if ((empty($form['user_pwd']) || empty($form['user_pwd_wdh'])) ||
+		(!empty($form['user_pwd']) && !empty($form['user_pwd_wdh']) && $form['user_pwd'] != $form['user_pwd_wdh']))
 		$errors[] = $lang->t('installation', 'type_in_pwd');
 	if (!validate::email($form['mail']))
 		$errors[] = $lang->t('common', 'wrong_email_format');
@@ -73,7 +74,7 @@ if (isset($_POST['submit'])) {
 		config::system($config);
 		require $config_path;
 
-		$db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD);
+		$db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
 
 		$sql_file = file_get_contents(ACP3_ROOT . 'installation/modules/install.sql');
 		$sql_file = str_replace(array("\r\n", "\r"), "\n", $sql_file);
