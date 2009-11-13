@@ -29,7 +29,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' 
 			$errors[] = $lang->t('categories', 'description_to_short');
 		if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) || !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize'])))
 			$errors[] = $lang->t('categories', 'invalid_image_selected');
-		if (strlen($form['name']) >= 3 && categoriesCheckDuplicate($db->escape($form['name']), $module[0]['module'], $uri->id))
+		if (strlen($form['name']) >= 3 && categoriesCheckDuplicate(db::escape($form['name']), $module[0]['module'], $uri->id))
 			$errors[] = $lang->t('categories', 'category_already_exists');
 
 		if (isset($errors)) {
@@ -42,8 +42,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' 
 			}
 
 			$update_values = array(
-				'name' => $db->escape($form['name']),
-				'description' => $db->escape($form['description']),
+				'name' => db::escape($form['name']),
+				'description' => db::escape($form['description']),
 			);
 			if (is_array($new_file_sql)) {
 				$old_file = $db->select('picture', 'categories', 'id = \'' . $uri->id . '\'');
@@ -54,7 +54,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' 
 
 			$bool = $db->update('categories', $update_values, 'id = \'' . $uri->id . '\'');
 
-			setCategoriesCache($db->escape($module[0]['module'], 3));
+			setCategoriesCache(db::escape($module[0]['module'], 3));
 
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/categories'));
 		}

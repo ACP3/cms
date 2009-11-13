@@ -19,7 +19,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 	$bool2 = true;
 
 	for ($i = 0; $i < $c_accounts; ++$i) {
-		$bool = @mail($accounts[$i]['mail'], $db->escape($newsletter[0]['subject'], 3), $db->escape($newsletter[0]['text'], 3) . $settings['mailsig'], 'FROM:' . $settings['mail'] . "\r\n" . 'Content-Type: text/plain; charset: UTF-8');
+		$bool = @mail($accounts[$i]['mail'], db::escape($newsletter[0]['subject'], 3), db::escape($newsletter[0]['text'], 3) . $settings['mailsig'], 'FROM:' . $settings['mail'] . "\r\n" . 'Content-Type: text/plain; charset: UTF-8');
 		if (!$bool)
 			break;
 	}

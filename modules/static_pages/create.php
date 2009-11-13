@@ -51,8 +51,8 @@ if (isset($_POST['submit'])) {
 			'id' => '',
 			'start' => $time_start,
 			'end' => $time_end,
-			'title' => $db->escape($form['title']),
-			'text' => $db->escape($form['text'], 2),
+			'title' => db::escape($form['title']),
+			'text' => db::escape($form['text'], 2),
 		);
 
 		$db->link->beginTransaction();
@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
 				'mode' => 2,
 				'block_id' => $form['block_id'],
 				'display' => $form['display'],
-				'title' => $db->escape($form['title']),
+				'title' => db::escape($form['title']),
 				'uri' => 'static_pages/list/id_' . $last_id . '/',
 				'target' => 1,
 			);

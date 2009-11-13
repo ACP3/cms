@@ -41,21 +41,21 @@ if (isset($_POST['submit'])) {
 
 		$insert_values = array(
 			'id' => '',
-			'nickname' => $db->escape($form['nickname']),
+			'nickname' => db::escape($form['nickname']),
 			'pwd' => genSaltedPassword($salt, $form['pwd']) . ':' . $salt,
 			'access' => $form['access'],
-			'realname' => $db->escape($form['realname']) . ':1',
+			'realname' => db::escape($form['realname']) . ':1',
 			'gender' => ':1',
 			'birthday' => ':1',
 			'birthday_format' => '1',
 			'mail' => $form['mail'] . ':1',
-			'website' => $db->escape($form['website'], 2) . ':1',
+			'website' => db::escape($form['website'], 2) . ':1',
 			'icq' => ':1',
 			'msn' => ':1',
 			'skype' => ':1',
 			'time_zone' => $form['time_zone'],
 			'dst' => $form['dst'],
-			'language' => $db->escape($form['language'], 2),
+			'language' => db::escape($form['language'], 2),
 			'draft' => '',
 		);
 

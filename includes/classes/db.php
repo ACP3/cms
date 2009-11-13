@@ -63,7 +63,7 @@ class db
 	 * 	3 = Slashes entfernen
 	 * @return string
 	 */
-	public function escape($value, $mode = 1)
+	public static function escape($value, $mode = 1)
 	{
 		$value = trim($value);
 

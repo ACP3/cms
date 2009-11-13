@@ -29,7 +29,15 @@ class date
 	 * @access private
 	 */
 	private $dst = 0;
-	
+	/**
+	 * Lanes Datumsformat
+	 */
+	private $date_format_long = CONFIG_DATE_FORMAT_LONG;
+	/**
+	 * Kurzes Datumsformat
+	 */
+	private $date_format_short = CONFIG_DATE_FORMAT_SHORT;
+
 	/**
 	 * Falls man sich als User authentifiziert hat, eingestellte Zeitzone + Sommerzeiteinstellung holen
 	 *
@@ -41,6 +49,8 @@ class date
 
 		if (!empty($info)) {
 			$this->dst = (int) $info['dst'];
+			$this->date_format_long = db::escape($info['date_format_long'], 3);
+			$this->date_format_short = db::escape($info['date_format_short'], 3);
 			$time_zone = (int) $info['time_zone'];
 		} else {
 			$this->dst = (int) CONFIG_DATE_DST;
@@ -64,10 +74,10 @@ class date
 		// Alles andere = Benutzerdefiniertes Format
 		switch ($format) {
 			case 'long':
-				$format = CONFIG_DATE_FORMAT_LONG;
+				$format = $this->date_format_long;
 				break;
 			case 'short':
-				$format = CONFIG_DATE_FORMAT_SHORT;
+				$format = $this->date_format_short;
 				break;
 		}
 		return gmdate($format, $time_stamp + $this->offset);

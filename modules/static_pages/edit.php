@@ -29,8 +29,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 			$update_values = array(
 				'start' => $date->timestamp($form['start']),
 				'end' => $date->timestamp($form['end']),
-				'title' => $db->escape($form['title']),
-				'text' => $db->escape($form['text'], 2),
+				'title' => db::escape($form['title']),
+				'text' => db::escape($form['text'], 2),
 			);
 
 			$bool = $db->update('static_pages', $update_values, 'id = \'' . $uri->id . '\'');
@@ -42,7 +42,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$page = getStaticPagesCache($uri->id);
-		$page[0]['text'] = $db->escape($page[0]['text'], 3);
+		$page[0]['text'] = db::escape($page[0]['text'], 3);
 
 		// Datumsauswahl
 		$tpl->assign('start_date', datepicker('start', $page[0]['start']));

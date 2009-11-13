@@ -18,7 +18,7 @@ if ($c_categories > 0) {
 	for ($i = 0; $i < $c_categories; ++$i) {
 		$categories[$i]['name'] = $categories[$i]['name'];
 		$categories[$i]['description'] = $categories[$i]['description'];
-		$info = modules::parseInfo($db->escape($categories[$i]['module'], 3));
+		$info = modules::parseInfo(db::escape($categories[$i]['module'], 3));
 		$categories[$i]['module'] = $info['name'];
 	}
 	$tpl->assign('categories', $categories);

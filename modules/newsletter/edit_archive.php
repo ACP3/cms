@@ -33,8 +33,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 			// Newsletter archivieren
 			$update_values = array(
 				'date' => $date->timestamp(),
-				'subject' => $db->escape($form['subject']),
-				'text' => $db->escape($form['text']),
+				'subject' => db::escape($form['subject']),
+				'text' => db::escape($form['text']),
 				'status' => (int) $form['action'],
 			);
 			$bool = $db->update('newsletter_archive', $update_values, 'id = \'' . $uri->id . '\'');
@@ -42,14 +42,14 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 			if ($form['action'] == '1' && $bool) {
 				// Testnewsletter
 				if ($form['test'] == '1') {
-					$bool2 = @mail($settings['mail'], $db->escape($form['subject']), $db->escape($form['text']) . $settings['mailsig'], 'FROM:' . $settings['mail'] . "\r\n" . 'Content-Type: text/plain; charset: UTF-8');
+					$bool2 = @mail($settings['mail'], db::escape($form['subject']), db::escape($form['text']) . $settings['mailsig'], 'FROM:' . $settings['mail'] . "\r\n" . 'Content-Type: text/plain; charset: UTF-8');
 				// An alle versenden
 				} else {
 					$accounts = $db->select('mail', 'newsletter_accounts', 'hash = \'\'');
 					$c_accounts = count($accounts);
 
 					for ($i = 0; $i < $c_accounts; ++$i) {
-						$bool2 = @mail($accounts[$i]['mail'], $db->escape($form['subject']), $db->escape($form['text']) . $settings['mailsig'], 'FROM:' . $settings['mail'] . "\r\n" . 'Content-Type: text/plain; charset: UTF-8');
+						$bool2 = @mail($accounts[$i]['mail'], db::escape($form['subject']), db::escape($form['text']) . $settings['mailsig'], 'FROM:' . $settings['mail'] . "\r\n" . 'Content-Type: text/plain; charset: UTF-8');
 						if (!$bool2)
 							break;
 					}

@@ -42,10 +42,10 @@ if (isset($_POST['submit'])) {
 			'id' => '',
 			'ip' => $ip,
 			'date' => $time,
-			'name' => $db->escape($form['name']),
+			'name' => db::escape($form['name']),
 			'user_id' => $auth->isUser() ? USER_ID : '',
-			'message' => $db->escape($form['message']),
-			'website' => $db->escape($form['website'], 2),
+			'message' => db::escape($form['message']),
+			'website' => db::escape($form['website'], 2),
 			'mail' => $form['mail'],
 		);
 

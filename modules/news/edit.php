@@ -37,14 +37,14 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 			$update_values = array(
 				'start' => $date->timestamp($form['start']),
 				'end' => $date->timestamp($form['end']),
-				'headline' => $db->escape($form['headline']),
-				'text' => $db->escape($form['text'], 2),
+				'headline' => db::escape($form['headline']),
+				'text' => db::escape($form['text'], 2),
 				'readmore' => $settings['readmore'] == 1 && isset($form['readmore']) ? 1 : 0,
 				'comments' => $settings['comments'] == 1 && isset($form['comments']) ? 1 : 0,
 				'category_id' => strlen($form['cat_create']) >= 3 ? categoriesCreate($form['cat_create'], 'news') : $form['cat'],
-				'uri' => $db->escape($form['uri'], 2),
+				'uri' => db::escape($form['uri'], 2),
 				'target' => $form['target'],
-				'link_title' => $db->escape($form['link_title'])
+				'link_title' => db::escape($form['link_title'])
 			);
 
 			require_once ACP3_ROOT . 'modules/news/functions.php';
@@ -57,7 +57,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$news = $db->select('start, end, headline, text, readmore, comments, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\'');
-		$news[0]['text'] = $db->escape($news[0]['text'], 3);
+		$news[0]['text'] = db::escape($news[0]['text'], 3);
 
 		// Datumsauswahl
 		$tpl->assign('start_date', datepicker('start', $news[0]['start']));

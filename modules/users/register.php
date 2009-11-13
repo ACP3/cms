@@ -30,7 +30,7 @@ if ($auth->isUser()) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			// E-Mail mit den Accountdaten zusenden
-			$form['nickname'] = $db->escape($form['nickname']);
+			$form['nickname'] = db::escape($form['nickname']);
 			$host = htmlentities($_SERVER['HTTP_HOST']);
 			$subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), $lang->t('users', 'register_mail_subject'));
 			$message = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($form['nickname'], $form['mail'], $form['pwd'], CONFIG_SEO_TITLE, $host), $lang->t('users', 'register_mail_message'));

@@ -37,7 +37,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 			$update_values = array(
 				'start' => $date->timestamp($form['start']),
 				'end' => $date->timestamp($form['end']),
-				'question' => $db->escape($form['question']),
+				'question' => db::escape($form['question']),
 				'multiple' => isset($form['multiple']) ? '1' : '0',
 			);
 
@@ -53,7 +53,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 				if (empty($row['id'])) {
 					// Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
 					if (!empty($row['value']) && !isset($row['delete']))
-						$db->insert('poll_answers', array('text' => $db->escape($row['value']), 'poll_id' => $uri->id));
+						$db->insert('poll_answers', array('text' => db::escape($row['value']), 'poll_id' => $uri->id));
 				// Antwort mitsamt Stimmen löschen
 				} elseif (isset($row['delete']) && validate::isNumber($row['id'])) {
 					$db->delete('poll_answers', 'id = \'' . $row['id'] . '\'');
@@ -61,7 +61,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 						$db->delete('poll_votes', 'answer_id = \'' . $row['id'] . '\'');
 				// Antwort aktualisieren
 				} elseif (!empty($row['value']) && validate::isNumber($row['id'])) {
-					$bool = $db->update('poll_answers', array('text' => $db->escape($row['value'])), 'id = \'' . $row['id'] . '\'');
+					$bool = $db->update('poll_answers', array('text' => db::escape($row['value'])), 'id = \'' . $row['id'] . '\'');
 				}
 			}
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/polls'));
