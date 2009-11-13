@@ -53,7 +53,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 				} else {
 					$form['filesize'] = (float) $form['filesize'];
 					$new_file = $file;
-					$filesize = $form['filesize'] . ' ' . $db->escape($form['unit']);
+					$filesize = $form['filesize'] . ' ' . db::escape($form['unit']);
 				}
 				// SQL Query für die Änderungen
 				$new_file_sql = array(
@@ -66,8 +66,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 				'start' => $date->timestamp($form['start']),
 				'end' => $date->timestamp($form['end']),
 				'category_id' => strlen($form['cat_create']) >= 3 ? categoriesCreate($form['cat_create'], 'files') : $form['cat'],
-				'link_title' => $db->escape($form['link_title']),
-				'text' => $db->escape($form['text'], 2),
+				'link_title' => db::escape($form['link_title']),
+				'text' => db::escape($form['text'], 2),
 				'comments' => $settings['comments'] == 1 && isset($form['comments']) ? 1 : 0,
 			);
 			if (is_array($new_file_sql)) {
@@ -87,7 +87,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$dl = $db->select('start, end, category_id, file, size, link_title, text, comments', 'files', 'id = \'' . $uri->id . '\'');
-		$dl[0]['text'] = $db->escape($dl[0]['text'], 3);
+		$dl[0]['text'] = db::escape($dl[0]['text'], 3);
 
 		// Datumsauswahl
 		$tpl->assign('start_date', datepicker('start', $dl[0]['start']));

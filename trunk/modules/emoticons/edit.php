@@ -39,8 +39,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'emoticons', 'id = \'' .
 			}
 
 			$update_values = array(
-				'code' => $db->escape($form['code']),
-				'description' => $db->escape($form['description']),
+				'code' => db::escape($form['code']),
+				'description' => db::escape($form['description']),
 			);
 			if (is_array($new_file_sql)) {
 				$old_file = $db->select('img', 'emoticons', 'id = \'' . $uri->id . '\'');

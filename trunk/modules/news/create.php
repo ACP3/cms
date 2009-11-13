@@ -37,14 +37,14 @@ if (isset($_POST['submit'])) {
 			'id' => '',
 			'start' => $date->timestamp($form['start']),
 			'end' => $date->timestamp($form['end']),
-			'headline' => $db->escape($form['headline']),
-			'text' => $db->escape($form['text'], 2),
+			'headline' => db::escape($form['headline']),
+			'text' => db::escape($form['text'], 2),
 			'readmore' => $settings['readmore'] == 1 && isset($form['readmore']) ? 1 : 0,
 			'comments' => $settings['comments'] == 1 && isset($form['comments']) ? 1 : 0,
 			'category_id' => strlen($form['cat_create']) >= 3 ? categoriesCreate($form['cat_create'], 'news') : $form['cat'],
-			'uri' => $db->escape($form['uri'], 2),
+			'uri' => db::escape($form['uri'], 2),
 			'target' => $form['target'],
-			'link_title' => $db->escape($form['link_title'])
+			'link_title' => db::escape($form['link_title'])
 		);
 
 		$bool = $db->insert('news', $insert_values);

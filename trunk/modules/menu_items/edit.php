@@ -51,8 +51,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 				'mode' => ($form['mode'] == '2' || $form['mode'] == '3') && preg_match('/^(static_pages\/list\/id_([0-9]+)\/)$/', $form['uri']) ? '4' : $form['mode'],
 				'block_id' => $form['block_id'],
 				'display' => $form['display'],
-				'title' => $db->escape($form['title']),
-				'uri' => $form['mode'] == '1' ? $form['module'] : ($form['mode'] == '4' ? 'static_pages/list/id_' . $form['static_pages'] . '/' : $db->escape($form['uri'], 2)),
+				'title' => db::escape($form['title']),
+				'uri' => $form['mode'] == '1' ? $form['module'] : ($form['mode'] == '4' ? 'static_pages/list/id_' . $form['static_pages'] . '/' : db::escape($form['uri'], 2)),
 				'target' => $form['target'],
 			);
 
@@ -143,7 +143,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 	}
 	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		$page = $db->select('id, start, end, mode, block_id, left_id, right_id, display, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
-		$page[0]['uri'] = $db->escape($page[0]['uri'], 3);
+		$page[0]['uri'] = db::escape($page[0]['uri'], 3);
 
 		// Seitentyp
 		$mode[0]['value'] = 1;

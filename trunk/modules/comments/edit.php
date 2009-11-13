@@ -13,7 +13,7 @@ if (!defined('IN_ADM'))
 if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . $uri->id . '\'') == '1') {
 	$comment = $db->select('name, user_id, message, module', 'comments', 'id = \'' . $uri->id . '\'');
 
-	$comment[0]['module'] = $db->escape($comment[0]['module'], 3);
+	$comment[0]['module'] = db::escape($comment[0]['module'], 3);
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
 	breadcrumb::assign($lang->t('comments', 'comments'), uri('acp/comments'));
 	breadcrumb::assign($lang->t($comment[0]['module'], $comment[0]['module']), uri('acp/comments/adm_list/module_' . $comment[0]['module']));
@@ -31,9 +31,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array();
-			$update_values['message'] = $db->escape($form['message']);
+			$update_values['message'] = db::escape($form['message']);
 			if ((empty($comment[0]['user_id']) || !validate::isNumber($comment[0]['user_id'])) && !empty($form['name'])) {
-				$update_values['name'] = $db->escape($form['name']);
+				$update_values['name'] = db::escape($form['name']);
 			}
 
 			$bool = $db->update('comments', $update_values, 'id = \'' . $uri->id . '\'');

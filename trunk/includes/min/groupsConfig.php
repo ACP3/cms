@@ -24,16 +24,16 @@ if ($_GET['g'] == 'css') {
 		}
 	}
 
-	$styles['css'][] = DESIGN_PATH . '/jquery-ui.css';
-	$styles['css'][] = DESIGN_PATH . '/jquery-colorbox.css';
+	$styles['css'][] = DESIGN_PATH . '/jquery-css/jquery-ui.css';
+	$styles['css'][] = DESIGN_PATH . '/jquery-css/jquery-colorbox.css';
 
 	return $styles;
 } elseif ($_GET['g'] == 'js') {
 	$scripts = array();
-	$scripts['js'][] = DESIGN_PATH . '/jquery.js';
-	$scripts['js'][] = DESIGN_PATH . '/jquery.cookie.js';
-	$scripts['js'][] = DESIGN_PATH . '/jquery.ui.js';
-	$scripts['js'][] = DESIGN_PATH . '/jquery.colorbox.js';
+	$scripts['js'][] = DESIGN_PATH . '/jquery-js/jquery.js';
+	$scripts['js'][] = DESIGN_PATH . '/jquery-js/jquery.cookie.js';
+	$scripts['js'][] = DESIGN_PATH . '/jquery-js/jquery.ui.js';
+	$scripts['js'][] = DESIGN_PATH . '/jquery-js/jquery.colorbox.js';
 	$scripts['js'][] = DESIGN_PATH . '/script.js';
 
 	return $scripts;

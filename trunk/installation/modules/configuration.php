@@ -46,12 +46,12 @@ if (isset($_POST['submit'])) {
 		// Systemkonfiguration erstellen
 		$config = array(
 			'date_dst' => $form['date_dst'],
-			'date_format_long' => $db->escape($form['date_format_long']),
-			'date_format_short' => $db->escape($form['date_format_short']),
+			'date_format_long' => db::escape($form['date_format_long']),
+			'date_format_short' => db::escape($form['date_format_short']),
 			'date_time_zone' => $form['date_time_zone'],
 			'db_host' => $form['db_host'],
 			'db_name' => $form['db_name'],
-			'db_pre' => $db->escape($form['db_pre']),
+			'db_pre' => db::escape($form['db_pre']),
 			'db_password' => $form['db_password'],
 			'db_user' => $form['db_user'],
 			'design' => 'acp3',
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 			'seo_meta_description' => '',
 			'seo_meta_keywords' => '',
 			'seo_mod_rewrite' => 0,
-			'seo_title' => !empty($form['seo_title']) ? $db->escape($form['seo_title']) : 'ACP3',
+			'seo_title' => !empty($form['seo_title']) ? db::escape($form['seo_title']) : 'ACP3',
 			'version' => CONFIG_VERSION,
 			'wysiwyg' => 'fckeditor'
 		);
@@ -85,7 +85,7 @@ if (isset($_POST['submit'])) {
 		$current_date = gmdate('U');
 
 		$other_arr = array(
-			1 => 'INSERT INTO `' . $db->prefix . 'users` VALUES (\'\', \'' . $db->escape($form['user_name']) . '\', \'' . genSaltedPassword($salt, $form['user_pwd']) . ':' . $salt . '\', 1, \'0\', \':1\', \'1:1\', \':1\', \'1\', \'' . $form['mail'] . ':1\', \':1\', \':1\', \':1\', \':1\', \'' . $db->escape($form['date_format_long']) . '\', \'' . $db->escape($form['date_format_short']) . '\', \'' . CONFIG_DATE_TIME_ZONE . '\', \'' . CONFIG_DST .'\', \'' . CONFIG_LANG . '\', \'' . $form['entries'] . '\', \'\')',
+			1 => 'INSERT INTO `' . $db->prefix . 'users` VALUES (\'\', \'' . db::escape($form['user_name']) . '\', \'' . genSaltedPassword($salt, $form['user_pwd']) . ':' . $salt . '\', 1, \'0\', \':1\', \'1:1\', \':1\', \'1\', \'' . $form['mail'] . ':1\', \':1\', \':1\', \':1\', \':1\', \'' . db::escape($form['date_format_long']) . '\', \'' . db::escape($form['date_format_short']) . '\', \'' . CONFIG_DATE_TIME_ZONE . '\', \'' . CONFIG_DST .'\', \'' . CONFIG_LANG . '\', \'' . $form['entries'] . '\', \'\')',
 			2 => 'INSERT INTO `' . $db->prefix . 'news` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', \'' . $lang->t('installation', 'news_headline') . '\', \'' . $lang->t('installation', 'news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\')',
 			3 => 'INSERT INTO `' . $db->prefix . 'menu_items` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 1, 1, 2, 1, \'' . $lang->t('installation', 'pages_news') . '\', \'news\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 2, 3, 4, 1, \'' . $lang->t('installation', 'pages_files') . '\', \'files\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 3, 5, 6, 1, \'' . $lang->t('installation', 'pages_gallery') . '\', \'gallery\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 4, 7, 8, 1, \'' . $lang->t('installation', 'pages_guestbook') . '\', \'guestbook\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 5, 9, 10, 1, \'' . $lang->t('installation', 'pages_polls') . '\', \'polls\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 6, 11, 12, 1, \'' . $lang->t('installation', 'pages_search') . '\', \'search\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 2, 7, 13, 14, 1, \'' . $lang->t('installation', 'pages_contact') . '\', \'contact\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 2, 8, 15, 16, 1, \'' . $lang->t('installation', 'pages_imprint') . '\', \'contact/imprint/\', 1)',
 			4 => 'INSERT INTO `' . $db->prefix . 'menu_items_blocks` (`id`, `index_name`, `title`) VALUES (1, \'main\', \'' . $lang->t('installation', 'pages_main') . '\'), (2, \'sidebar\', \'' . $lang->t('installation', 'pages_sidebar') . '\')',

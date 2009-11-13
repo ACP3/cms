@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
 
 	if (empty($form['name']))
 		$errors[] = $lang->t('common', 'name_to_short');
-	if (!empty($form['name']) && $db->countRows('*', 'access', 'name = \'' . $db->escape($form['name']) . '\'') == '1')
+	if (!empty($form['name']) && $db->countRows('*', 'access', 'name = \'' . db::escape($form['name']) . '\'') == '1')
 		$errors[] = $lang->t('access', 'access_level_already_exists');
 
 	if (isset($errors)) {
@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
 	} else {
 		$insert_values = array(
 			'id' => '',
-			'name' => $db->escape($form['name']),
+			'name' => db::escape($form['name']),
 			'modules' => buildAccessLevel($form['modules']),
 		);
 

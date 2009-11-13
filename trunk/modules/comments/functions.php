@@ -56,7 +56,7 @@ function commentsList($module, $entry_id)
 				$comments[$i]['name'] = $lang->t('users', 'deleted_user');
 				$comments[$i]['user_id'] = 0;
 			}
-			$comments[$i]['name'] = $db->escape(!empty($comments[$i]['user_name']) ? $comments[$i]['user_name'] : $comments[$i]['name'], 3);
+			$comments[$i]['name'] = db::escape(!empty($comments[$i]['user_name']) ? $comments[$i]['user_name'] : $comments[$i]['name'], 3);
 			$comments[$i]['date'] = $date->format($comments[$i]['date'], $settings['dateformat']);
 			$comments[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $comments[$i]['message']);
 			if ($emoticons) {

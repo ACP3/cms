@@ -17,7 +17,7 @@ $c_galleries = count($galleries);
 if ($c_galleries > 0) {
 	for ($i = 0; $i < $c_galleries; ++$i) {
 		$galleries[$i]['start'] = $date->format($galleries[$i]['start']);
-		$galleries[$i]['name_short'] = shortenEntry($db->escape($galleries[$i]['name'], 3), 30, 5, '...');
+		$galleries[$i]['name_short'] = shortenEntry(db::escape($galleries[$i]['name'], 3), 30, 5, '...');
 	}
 	$tpl->assign('sidebar_galleries', $galleries);
 }

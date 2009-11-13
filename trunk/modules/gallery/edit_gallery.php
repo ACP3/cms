@@ -31,7 +31,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			$update_values = array(
 				'start' => $date->timestamp($form['start']),
 				'end' => $date->timestamp($form['end']),
-				'name' => $db->escape($form['name']),
+				'name' => db::escape($form['name']),
 			);
 
 			$bool = $db->update('gallery', $update_values, 'id = \'' . $uri->id . '\'');
@@ -56,7 +56,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			for ($i = 0; $i < $c_pictures; ++$i) {
 				$pictures[$i]['first'] = $i == 0 ? true : false;
 				$pictures[$i]['last'] = $i == $c_pictures - 1 ? true : false;
-				$pictures[$i]['description'] = $db->escape($pictures[$i]['description'], 3);
+				$pictures[$i]['description'] = db::escape($pictures[$i]['description'], 3);
 			}
 			$tpl->assign('pictures', $pictures);
 		}

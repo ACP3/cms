@@ -23,7 +23,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 
 		if (!preg_match('/^[a-zA-Z]+\w/', $form['index_name']))
 			$errors[] = $lang->t('menu_items', 'type_in_index_name');
-		if (preg_match('/^[a-zA-Z]+\w/', $form['index_name']) && $db->countRows('*', 'menu_items_blocks', 'index_name = \'' . $db->escape($form['index_name']) . '\' AND id != \'' . $uri->id . '\'') > 0)
+		if (preg_match('/^[a-zA-Z]+\w/', $form['index_name']) && $db->countRows('*', 'menu_items_blocks', 'index_name = \'' . db::escape($form['index_name']) . '\' AND id != \'' . $uri->id . '\'') > 0)
 			$errors[] = $lang->t('menu_items', 'index_name_unique');
 		if (strlen($form['title']) < 3)
 			$errors[] = $lang->t('menu_items', 'block_title_to_short');
@@ -32,8 +32,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
-				'index_name' => $db->escape($form['index_name']),
-				'title' => $db->escape($form['title']),
+				'index_name' => db::escape($form['index_name']),
+				'title' => db::escape($form['title']),
 			);
 
 			$bool = $db->update('menu_items_blocks', $update_values, 'id = \'' . $uri->id . '\'');
