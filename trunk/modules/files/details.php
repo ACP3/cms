@@ -20,11 +20,14 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 
 	if ($uri->action == 'download') {
 		$path = 'uploads/files/';
+		// Schönen Dateinamen generieren
+		$ext = strrchr($file[0]['file'], '.');
+		$filename = makeStringUrlSafe($file[0]['link_title']) . $ext;
 		if (is_file($path . $file[0]['file'])) {
 			header('Content-Type: application/force-download');
 			header('Content-Transfer-Encoding: binary');
 			header('Content-Length:' . filesize($path . $file[0]['file']));
-			header('Content-Disposition: attachment; filename="' . $file[0]['file'] . '"');
+			header('Content-Disposition: attachment; filename="' . $filename . '"');
 			readfile($path . $file[0]['file']);
 			exit;
 		} else {

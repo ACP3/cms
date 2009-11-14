@@ -131,6 +131,32 @@ function genSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
 	return hash($algorithm, $salt . hash($algorithm, $plaintext));
 }
 /**
+ * Macht einen String URL sicher
+ *
+ * @param string $var
+ *	Die unzuwandelnde Variable
+ * @return string
+ */
+function makeStringUrlSafe($var)
+{
+	$var = strip_tags($var);
+	$var = htmlentities($var, ENT_QUOTES, 'UTF-8');
+	$var = strtolower($var);
+	$search = array(
+		'/&([a-z]{1})uml;/',
+		'/&szlig;/',
+		'/\s/',
+		'/[^a-z0-9-]/',
+	);
+	$replace = array(
+		'${1}e',
+		'ss',
+		'-',
+		''
+	);
+	return preg_replace($search, $replace, $var);
+}
+/**
  * Hochgeladene Dateien verschieben und umbenennen
  *
  * @param string $tmp_filename
