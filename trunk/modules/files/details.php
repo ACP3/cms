@@ -20,18 +20,21 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 
 	if ($uri->action == 'download') {
 		$path = 'uploads/files/';
-		// Schönen Dateinamen generieren
-		$ext = strrchr($file[0]['file'], '.');
-		$filename = makeStringUrlSafe($file[0]['link_title']) . $ext;
 		if (is_file($path . $file[0]['file'])) {
+			// Schönen Dateinamen generieren
+			$ext = strrchr($file[0]['file'], '.');
+			$filename = makeStringUrlSafe($file[0]['link_title']) . $ext;
+
 			header('Content-Type: application/force-download');
 			header('Content-Transfer-Encoding: binary');
 			header('Content-Length:' . filesize($path . $file[0]['file']));
 			header('Content-Disposition: attachment; filename="' . $filename . '"');
 			readfile($path . $file[0]['file']);
 			exit;
-		} else {
+		} elseif (preg_match('/^([a-z]+):\/\//', $file[0]['file'])) {
 			redirect(0, $file[0]['file']);
+		} else {
+		    redirect('errors/404');
 		}
 	} else {
 		// Brotkrümelspur
