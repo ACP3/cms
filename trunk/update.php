@@ -15,13 +15,13 @@ $queries = array(
 	1 => 'ALTER TABLE `{pre}users` ADD `date_format_long` VARCHAR(30) NOT NULL AFTER `skype`;',
 	2 => 'ALTER TABLE `{pre}users` ADD `date_format_short` VARCHAR(30) NOT NULL AFTER `date_format_long`;',
 	3 => 'ALTER TABLE `{pre}users` ADD `entries` TINYINT(2) UNSIGNED NOT NULL AFTER `language`;',
-	4 => 'UPDATE {pre}users SET date_format_long = \'' . CONFIG_DATE_FORMAT . '\', date_format_short = \'d.m.Y\, entries = ' . ((int) CONFIG_ENTRIES) . ';',
+	4 => 'UPDATE {pre}users SET date_format_long = \'' . CONFIG_DATE_FORMAT . '\', date_format_short = \'d.m.Y\', entries = ' . ((int) CONFIG_ENTRIES) . ';',
 );
 
 // Änderungen am DB Schema vornehmen
 if (count($queries) > 0) {
 	$db = new db();
-	$handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD);
+	$handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
 	if ($handle !== true) {
 		exit($handle);
 	}

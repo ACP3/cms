@@ -34,13 +34,13 @@ class db
 	/**
 	 * Stellt die Verbindung mit der Datenbank her
 	 */
-	public function connect($db_host, $db_name, $db_user, $db_pwd, $db_prefix = '')
+	public function connect($db_host, $db_name, $db_user, $db_pwd, $db_pre = '')
 	{
 		try {
 			$this->link = new PDO('mysql:host=' . $db_host . ';dbname=' . $db_name, $db_user, $db_pwd);
 			$this->link->setAttribute(PDO::ATTR_ERRMODE, defined('DEBUG') && DEBUG ? PDO::ERRMODE_EXCEPTION : PDO::ERRMODE_SILENT);
 			$this->link->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
-			$this->prefix = $db_prefix;
+			$this->prefix = $db_pre;
 			return true;
 		} catch (PDOException $e) {
 			return $e->getMessage();
