@@ -17,12 +17,16 @@ if (isset($_POST['submit'])) {
 
 	if (empty($form['nickname']))
 		$errors[] = $lang->t('common', 'name_to_short');
-	if (userNameExists($form['nickname']))
-		$errors[] = $lang->t('users', 'user_name_already_exists');
 	if (!validate::email($form['mail']))
 		$errors[] = $lang->t('common', 'wrong_email_format');
+	if (userNameExists($form['nickname']))
+		$errors[] = $lang->t('users', 'user_name_already_exists');
 	if (userEmailExists($form['mail']))
 		$errors[] = $lang->t('users', 'user_email_already_exists');
+	if (!validate::isNumber($form['entries']))
+		$errors[] = $lang->t('system', 'select_entries_per_page');
+	if (empty($form['date_format_long']) || empty($form['date_format_short']))
+		$errors[] = $lang->t('system', 'type_in_date_format');
 	if (!is_numeric($form['time_zone']))
 		$errors[] = $lang->t('common', 'select_time_zone');
 	if (!validate::isNumber($form['dst']))
@@ -53,9 +57,12 @@ if (isset($_POST['submit'])) {
 			'icq' => ':1',
 			'msn' => ':1',
 			'skype' => ':1',
+			'date_format_long' => db::escape($form['date_format_long']),
+			'date_format_short' => db::escape($form['date_format_short']),
 			'time_zone' => $form['time_zone'],
 			'dst' => $form['dst'],
 			'language' => db::escape($form['language'], 2),
+			'entries' => (int) $form['entries'],
 			'draft' => '',
 		);
 
@@ -65,17 +72,14 @@ if (isset($_POST['submit'])) {
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
-	// Zeitzonen
-	$tpl->assign('time_zone', timeZones(CONFIG_DATE_TIME_ZONE));
+	$access = $db->select('id, name', 'access', 0, 'name ASC');
+	$c_access = count($access);
 
-	// Sommerzeit an/aus
-	$dst[0]['value'] = '1';
-	$dst[0]['checked'] = selectEntry('dst', '1', CONFIG_DATE_DST, 'checked');
-	$dst[0]['lang'] = $lang->t('common', 'yes');
-	$dst[1]['value'] = '0';
-	$dst[1]['checked'] = selectEntry('dst', '0', CONFIG_DATE_DST, 'checked');
-	$dst[1]['lang'] = $lang->t('common', 'no');
-	$tpl->assign('dst', $dst);
+	for ($i = 0; $i < $c_access; ++$i) {
+		$access[$i]['name'] = $access[$i]['name'];
+		$access[$i]['selected'] = selectEntry('access', $access[$i]['id']);
+	}
+	$tpl->assign('access', $access);
 
 	// Sprache
 	$languages = array();
@@ -93,20 +97,32 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	ksort($languages);
 	$tpl->assign('languages', $languages);
 
-	$access = $db->select('id, name', 'access', 0, 'name ASC');
-	$c_access = count($access);
-
-	for ($i = 0; $i < $c_access; ++$i) {
-		$access[$i]['name'] = $access[$i]['name'];
-		$access[$i]['selected'] = selectEntry('access', $access[$i]['id']);
+	// Einträge pro Seite
+	for ($i = 0, $j = 10; $j <= 50; $i++, $j = $j + 10) {
+		$entries[$i]['value'] = $j;
+		$entries[$i]['selected'] = selectEntry('entries', $j);
 	}
-	$tpl->assign('access', $access);
+	$tpl->assign('entries', $entries);
+
+	// Zeitzonen
+	$tpl->assign('time_zone', timeZones(CONFIG_DATE_TIME_ZONE));
+
+	// Sommerzeit an/aus
+	$dst[0]['value'] = '1';
+	$dst[0]['checked'] = selectEntry('dst', '1', CONFIG_DATE_DST, 'checked');
+	$dst[0]['lang'] = $lang->t('common', 'yes');
+	$dst[1]['value'] = '0';
+	$dst[1]['checked'] = selectEntry('dst', '0', CONFIG_DATE_DST, 'checked');
+	$dst[1]['lang'] = $lang->t('common', 'no');
+	$tpl->assign('dst', $dst);
 
 	$defaults = array(
 		'nickname' => '',
 		'realname' => '',
 		'mail' => '',
 		'website' => '',
+		'date_format_long' => '',
+		'date_format_short' => ''
 	);
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);

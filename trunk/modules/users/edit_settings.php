@@ -68,11 +68,9 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 		$tpl->assign('languages', $languages);
 
 		// Einträge pro Seite
-		$i = 0;
-		for ($j = 10; $j <= 50; $j = $j + 10) {
+		for ($i = 0, $j = 10; $j <= 50; $i++, $j = $j + 10) {
 			$entries[$i]['value'] = $j;
 			$entries[$i]['selected'] = selectEntry('entries', $j, $auth->entries);
-			$i++;
 		}
 		$tpl->assign('entries', $entries);
 

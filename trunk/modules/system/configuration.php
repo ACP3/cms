@@ -72,11 +72,9 @@ if (isset($_POST['submit'])) {
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Einträge pro Seite
-	$i = 0;
-	for ($j = 10; $j <= 50; $j = $j + 10) {
+	for ($i = 0, $j = 10; $j <= 50; $i++, $j = $j + 10) {
 		$entries[$i]['value'] = $j;
 		$entries[$i]['selected'] = selectEntry('entries', $j, CONFIG_ENTRIES);
-		$i++;
 	}
 	$tpl->assign('entries', $entries);
 
