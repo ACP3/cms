@@ -4,9 +4,10 @@
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<div id="tabs">
 		<ul>
-			<li><a href="#tab-1">{lang values="common|general_statements"}</a></li>
+			<li><a href="#tab-1">{lang values="system|general"}</a></li>
 			<li><a href="#tab-2">{lang values="users|settings"}</a></li>
-			<li><a href="#tab-3">{lang values="users|pwd"}</a></li>
+			<li><a href="#tab-3">{lang values="common|date"}</a></li>
+			<li><a href="#tab-4">{lang values="users|pwd"}</a></li>
 		</ul>
 		<div id="tab-1">
 			<dl>
@@ -31,6 +32,34 @@
 {/foreach}
 					</select>
 				</dd>
+				<dt><label for="language">{lang values="users|language"}</label></dt>
+				<dd>
+					<select name="form[language]" id="language">
+						<option value="">{lang values="common|pls_select"}</option>
+{foreach from=$languages item=row}
+						<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
+{/foreach}
+					</select>
+				</dd>
+				<dt><label for="entries">{lang values="system|entries_per_page"}</label></dt>
+				<dd>
+					<select name="form[entries]" id="entries">
+{foreach from=$entries item=row}
+						<option value="{$row.value}"{$row.selected}>{$row.value}</option>
+{/foreach}
+					</select>
+				</dd>
+			</dl>
+		</div>
+		<div id="tab-3" class="ui-tabs-hide">
+			<dl>
+				<dt>
+					<label for="date-format-long">{lang values="common|date_format_long"}</label>
+					<span>({lang values="system|php_date_function"})</span>
+				</dt>
+				<dd><input type="text" name="form[date_format_long]" id="date-format-long" value="{$form.date_format_long}" maxlength="20" /></dd>
+				<dt><label for="date-format-short">{lang values="common|date_format_short"}</label></dt>
+				<dd><input type="text" name="form[date_format_short]" id="date-format-short" value="{$form.date_format_short}" maxlength="20" /></dd>
 				<dt><label for="time_zone">{lang values="common|time_zone"}</label></dt>
 				<dd>
 					<select name="form[time_zone]" id="time_zone">
@@ -48,18 +77,9 @@
 					</label>
 {/foreach}
 				</dd>
-				<dt><label for="language">{lang values="users|language"}</label></dt>
-				<dd>
-					<select name="form[language]" id="language">
-						<option value="">{lang values="common|pls_select"}</option>
-{foreach from=$languages item=row}
-						<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
-{/foreach}
-					</select>
-				</dd>
 			</dl>
 		</div>
-		<div id="tab-3" class="ui-tabs-hide">
+		<div id="tab-4" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="pwd">{lang values="users|pwd"}</label></dt>
 				<dd><input type="password" name="form[pwd]" id="pwd" /></dd>
