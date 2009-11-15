@@ -121,8 +121,8 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 		'realname' => '',
 		'mail' => '',
 		'website' => '',
-		'date_format_long' => '',
-		'date_format_short' => ''
+		'date_format_long' => CONFIG_DATE_FORMAT_LONG,
+		'date_format_short' => CONFIG_DATE_FORMAT_SHORT
 	);
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);
