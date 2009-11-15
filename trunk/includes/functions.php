@@ -140,17 +140,21 @@ function genSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
 function makeStringUrlSafe($var)
 {
 	$var = strip_tags($var);
-	$var = htmlentities($var, ENT_QUOTES, 'UTF-8');
+	if (!preg_match('/&([a-z]+);/', $var)) {
+		$var = htmlentities($var, ENT_QUOTES, 'UTF-8');
+	}
 	$var = strtolower($var);
 	$search = array(
 		'/&([a-z]{1})uml;/',
 		'/&szlig;/',
-		'/\s/',
-		'/[^a-z0-9-]/',
+		'/&([a-z0-9]+);/',
+		'/(\s+)/',
+		'/[^a-z0-9-]/'
 	);
 	$replace = array(
 		'${1}e',
 		'ss',
+		'',
 		'-',
 		''
 	);
