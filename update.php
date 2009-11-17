@@ -44,7 +44,7 @@ if (count($queries) > 0) {
 
 	$db->link->commit();
 
-	print "\n" . ($bool ? 'Die Datenbank wurde erfolgreich aktualisiert.' : 'Mindestens eine Datenbankänderung konnte nicht durchgeführt werden.') . "\n";
+	print "\n" . ($bool ? 'Die Datenbank wurde erfolgreich aktualisiert!' : 'Mindestens eine Datenbankänderung konnte nicht durchgeführt werden!') . "\n";
 	print "\n----------------------------\n\n";
 }
 
@@ -74,7 +74,7 @@ $config = array(
 	'wysiwyg' => CONFIG_WYSIWYG
 );
 
-print config::system($config) ? 'Konfigurationsdatei erfolgreich aktualisiert.' : 'Konfigurationsdatei konnte nicht aktualisiert werden.';
+print config::system($config) ? 'Konfigurationsdatei erfolgreich aktualisiert!' : 'Die Konfigurationsdatei konnte nicht aktualisiert werden!';
 
 // Cache leeren
 cache::purge();
