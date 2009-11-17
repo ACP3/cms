@@ -52,7 +52,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 				'birthday_format' => $form['birthday_format'],
 				'mail' => $form['mail'] . ':' . (isset($form['mail_display']) ? '1' : '0'),
 				'website' => db::escape($form['website'], 2) . ':' . (isset($form['website_display']) ? '1' : '0'),
-				'icq' => ((int) $form['icq']) . ':' . (isset($form['icq_display']) ? '1' : '0'),
+				'icq' => $form['icq'] . ':' . (isset($form['icq_display']) ? '1' : '0'),
 				'msn' => db::escape($form['msn'], 2) . ':' . (isset($form['msn_display']) ? '1' : '0'),
 				'skype' => db::escape($form['skype']) . ':' . (isset($form['skype_display']) ? '1' : '0'),
 			);
