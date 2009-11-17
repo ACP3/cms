@@ -1,4 +1,11 @@
 <?php
+/**
+ * Updater
+ *
+ * @author Goratsch Webdesign
+ * @package ACP3
+ * @subpackage Core
+ */
 header('Content-type: text/plain; charset=UTF-8');
 
 define('NEW_VERSION', '4.0 SVN');
@@ -56,7 +63,7 @@ $config = array(
 	'date_time_zone' => CONFIG_DATE_TIME_ZONE,
 	'db_host' => CONFIG_DB_HOST,
 	'db_name' => CONFIG_DB_NAME,
-	'db_pre' => $db->prefix,
+	'db_pre' => CONFIG_DB_PRE,
 	'db_password' => CONFIG_DB_PASSWORD,
 	'db_user' => CONFIG_DB_USER,
 	'design' => CONFIG_DESIGN,
