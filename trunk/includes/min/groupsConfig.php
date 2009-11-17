@@ -19,7 +19,7 @@ if ($_GET['g'] == 'css') {
 
 	foreach ($modules as $module) {
 		$path = DESIGN_PATH . $module . '/style.css';
-		if (is_dir(DESIGN_PATH . $module) && $module != '.' && $module != '..' && is_file($path)) {
+		if (is_file($path) && $module != '.' && $module != '..') {
 			$styles['css'][] = $path;
 		}
 	}
