@@ -39,6 +39,9 @@ if (!validate::isNumber($uri->id) || $uri->action != 'mini' && $uri->action != '
 				$t_width = intval($width * $t_height / $height);
 			}
 
+			header('Pragma: public');
+			header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 31536000));
+
 			$pic_new = imagecreatetruecolor($t_width, $t_height);
 			switch ($type) {
 				case '1':

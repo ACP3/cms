@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
 				'id' => '',
 				'start' => $time_start,
 				'end' => $time_end,
-				'mode' => 2,
+				'mode' => 4,
 				'block_id' => $form['block_id'],
 				'display' => $form['display'],
 				'title' => db::escape($form['title']),
