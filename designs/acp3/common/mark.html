@@ -1,5 +1,21 @@
 {literal}
 <script type="text/javascript">
+function mark_entries(name, action)
+{
+	var fields = $('form :checkbox');
+
+	jQuery.each(fields, function() {
+		if ($(this).attr('name') == name + '[]') {
+			if (action == 'add') {
+				$(this).attr('checked', 'checked');
+				//if ($(this).parent().parent())
+			} else {
+				$(this).removeAttr('checked');
+			}
+		}
+	});
+}
+
 $(document).ready(function() {
 	// Checkbox durch Klick auf Tabellenzeile markieren
 	$('table.acp-table tr').filter(':has(:checkbox:checked)').addClass('selected').end().click(function(event) {

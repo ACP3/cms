@@ -1,21 +1,3 @@
-/**
- * Einträge markieren bzw. Markierung aufheben
- **/
-function mark_entries(name, action)
-{
-	var fields = $('form :checkbox');
-
-	jQuery.each(fields, function() {
-		if ($(this).attr('name') == name + '[]') {
-			if (action == 'add') {
-				$(this).attr('checked', 'checked');
-			} else {
-				$(this).removeAttr('checked');
-			}
-		}
-	});
-}
-
 $(document).ready(function() {
 	// Verschachtelte Navigation
 	$('#head ul li:has(ul)').hover(function() {
