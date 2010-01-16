@@ -85,6 +85,12 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 							// Root-Element in anderen Block verschieben
 							if ($pages[0]['block_id'] != $form['block_id']) {
 								$new_block = $db->select('left_id', 'menu_items', 'block_id = \'' . $form['block_id'] . '\'', 'left_id ASC', 1);
+								// Falls Navigationselemente in einen leeren Block verschoben werden sollen,
+								// die right_id des letzten Elementes verwenden
+								if (empty($new_block)) {
+									$new_block = $db->select('right_id AS left_id', 'menu_items', 0, 'right_id DESC', 1);
+									$new_block[0]['left_id']+= 1;
+								}
 
 								if ($form['block_id'] > $pages[0]['block_id']) {
 									$new_block[0]['left_id'] = $new_block[0]['left_id'] - $page_diff;
