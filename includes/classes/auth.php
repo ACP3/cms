@@ -133,7 +133,6 @@ class auth
 		global $db;
 
 		$user = $db->select('id, pwd, login_errors', 'users', 'nickname = \'' . db::escape($username) . '\'');
-		$lock = false;
 
 		if (count($user) == 1) {
 			// Useraccount ist gesperrt
@@ -150,7 +149,6 @@ class auth
 
 			// Wenn beide Hashwerte gleich sind, Benutzer authentifizieren
 			if ($db_hash === $form_pwd_hash) {
-				$isUser = true;
 				// Login-Fehler zurücksetzen
 				if ($user[0]['login_errors'] > 0)
 					$db->update('users', array('login_errors' => 0), 'id = \'' . $user[0]['id'] . '\'');
@@ -165,7 +163,6 @@ class auth
 				$login_errors = $user[0]['login_errors'] + 1;
 				$db->update('users', array('login_errors' => $login_errors), 'id = \'' . $user[0]['id'] . '\'');
 				if ($login_errors == 3) {
-					$lock = true;
 					return -1;
 				}
 			}
@@ -179,7 +176,7 @@ class auth
 	 */
 	public function logout()
 	{
-		return setcookie('ACP3_AUTH', '', time() - 50400, ROOT_DIR);
+		return $this->setCookie('', '', -50400);
 	}
 	/**
 	 * Setzt den internen Authentifizierungscookie
