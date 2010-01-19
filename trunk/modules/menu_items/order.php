@@ -15,11 +15,11 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 
 	$pages = $db->query('SELECT c.id, c.block_id, c.left_id, c.right_id FROM ' . $db->prefix . 'menu_items AS p, ' . $db->prefix . 'menu_items AS c WHERE p.id = \'' . $uri->id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
 
-	if ($uri->mode == 'up' && $db->countRows('*', 'menu_items', 'right_id = ' . ($pages[0]['left_id'] - 1) . ' AND block_id = \'' . $pages[0]['block_id'] . '\'') > 0) {
+	if ($uri->action == 'up' && $db->countRows('*', 'menu_items', 'right_id = ' . ($pages[0]['left_id'] - 1) . ' AND block_id = \'' . $pages[0]['block_id'] . '\'') > 0) {
 		$elem = $db->query('SELECT c.id, c.left_id, c.right_id FROM ' . $db->prefix . 'menu_items AS p, ' . $db->prefix . 'menu_items AS c WHERE p.right_id = ' . ($pages[0]['left_id'] - 1) . ' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
 		$diff_left = $pages[0]['left_id'] - $elem[0]['left_id'];
 		$diff_right = $pages[0]['right_id'] - $elem[0]['right_id'];
-	} elseif ($uri->mode == 'down' && $db->countRows('*', 'menu_items', 'left_id = ' . ($pages[0]['right_id'] + 1) . ' AND block_id = \'' . $pages[0]['block_id'] . '\'') > 0) {
+	} elseif ($uri->action == 'down' && $db->countRows('*', 'menu_items', 'left_id = ' . ($pages[0]['right_id'] + 1) . ' AND block_id = \'' . $pages[0]['block_id'] . '\'') > 0) {
 		$elem = $db->query('SELECT c.id, c.left_id, c.right_id FROM ' . $db->prefix . 'menu_items AS p, ' . $db->prefix . 'menu_items AS c WHERE p.left_id = ' . ($pages[0]['right_id'] + 1) . ' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
 		$diff_left = $elem[0]['left_id'] - $pages[0]['left_id'];
 		$diff_right = $elem[0]['right_id'] - $pages[0]['right_id'];
@@ -40,10 +40,10 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 
 	$db->link->beginTransaction();
 
-	if ($uri->mode == 'up') {
+	if ($uri->action == 'up') {
 		$bool = $db->query('UPDATE ' . $db->prefix . 'menu_items SET left_id = left_id + ' . $diff_right . ', right_id = right_id + ' . $diff_right . ' WHERE ' . substr($elem_ids, 0, -4), 0);
 		$bool2 = $db->query('UPDATE ' . $db->prefix . 'menu_items SET left_id = left_id - ' . $diff_left . ', right_id = right_id - ' . $diff_left . ' WHERE ' . substr($pages_ids, 0, -4), 0);
-	} elseif ($uri->mode == 'down') {
+	} elseif ($uri->action == 'down') {
 		$bool = $db->query('UPDATE ' . $db->prefix . 'menu_items SET left_id = left_id - ' . $diff_left . ', right_id = right_id - ' . $diff_left . ' WHERE ' . substr($elem_ids, 0, -4), 0);
 		$bool2 = $db->query('UPDATE ' . $db->prefix . 'menu_items SET left_id = left_id + ' . $diff_right . ', right_id = right_id + ' . $diff_right . ' WHERE ' . substr($pages_ids, 0, -4), 0);
 	}
