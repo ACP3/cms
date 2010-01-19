@@ -17,7 +17,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 	breadcrumb::assign($lang->t('gallery', 'gallery'), uri('acp/gallery'));
 	breadcrumb::assign($gallery[0]['name']);
 
-	if (isset($_POST['submit'])) {
+	if (isset($_POST['form'])) {
 		$form = $_POST['form'];
 
 		if (!validate::date($form['start'], $form['end']))
@@ -39,7 +39,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/gallery'));
 		}
 	}
-	if (!isset($_POST['entries']) && !isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+	if (!isset($_POST['entries']) && !isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$tpl->assign('gallery_id', $uri->id);
 
 		// Datumsauswahl

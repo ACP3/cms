@@ -11,7 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' . $uri->id . '\'') == '1') {
-	if (isset($_POST['submit'])) {
+	if (isset($_POST['form'])) {
 		$form = $_POST['form'];
 
 		if (empty($form['name']))
@@ -32,7 +32,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/guestbook'));
 		}
 	}
-	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$guestbook = $db->select('name, message', 'guestbook', 'id = \'' . $uri->id . '\'');
 
 		if (modules::check('emoticons', 'functions') == 1) {

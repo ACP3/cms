@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['form'])) {
 	$form = $_POST['form'];
 
 	if (!validate::isNumber($form['entries']))
@@ -70,7 +70,7 @@ if (isset($_POST['submit'])) {
 		$content = comboBox($bool ? $lang->t('system', 'config_edit_success') : $lang->t('system', 'config_edit_error'), uri('acp/system/configuration'));
 	}
 }
-if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	// Einträge pro Seite
 	for ($i = 0, $j = 10; $j <= 50; $i++, $j = $j + 10) {
 		$entries[$i]['value'] = $j;

@@ -7,7 +7,7 @@ breadcrumb::assign($lang->t('system', 'system'), uri('acp/system'));
 breadcrumb::assign($lang->t('system', 'maintenance'), uri('acp/system/maintenance'));
 breadcrumb::assign($lang->t('system', 'sql_export'));
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['form'])) {
 	$form = $_POST['form'];
 
 	if (empty($form['tables']) || !is_array($form['tables']))
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 		}
 	}
 }
-if (!isset($_POST['submit']) || isset($errors)) {
+if (!isset($_POST['form']) || isset($errors)) {
 	$mod_list = modules::modulesList();
 	$tables = array();
 

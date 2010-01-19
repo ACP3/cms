@@ -13,7 +13,7 @@ if (!defined('IN_ADM'))
 if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $uri->id . '\'') == '1') {
 	$user = $auth->getUserInfo($uri->id);
 
-	if (isset($_POST['submit'])) {
+	if (isset($_POST['form'])) {
 		require_once ACP3_ROOT . 'modules/users/functions.php';
 
 		$form = $_POST['form'];
@@ -76,7 +76,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/users'));
 		}
 	}
-	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		// Zugriffslevel holen
 		$access = $db->select('id, name', 'access', 0, 'name ASC');
 		$c_access = count($access);

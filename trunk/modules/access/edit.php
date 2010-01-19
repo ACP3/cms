@@ -13,7 +13,7 @@ if (!defined('IN_ADM'))
 require_once ACP3_ROOT . 'modules/access/functions.php';
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'access', 'id = \'' . $uri->id . '\'') == '1') {
-	if (isset($_POST['submit'])) {
+	if (isset($_POST['form'])) {
 		$form = $_POST['form'];
 
 		if (empty($form['name']))
@@ -34,7 +34,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'access', 'id = \'' . $u
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/access'));
 		}
 	}
-	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$access = $db->select('name, modules', 'access', 'id = \'' . $uri->id . '\'');
 
 		$tpl->assign('form', isset($form) ? $form : $access[0]);

@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['form'])) {
 	$form = $_POST['form'];
 
 	if (!validate::date($form['start'], $form['end']))
@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 		$content = comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/polls'));
 	}
 }
-if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	if (isset($_POST['form']['answers'])) {
 		// Bisherige Antworten
 		$i = 0;
@@ -69,7 +69,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 			$i++;
 		}
 		// Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
-		if (count($_POST['form']['answers']) <= 9 && !empty($_POST['form']['answers'][$i - 1]) && !isset($_POST['submit'])) {
+		if (count($_POST['form']['answers']) <= 9 && !empty($_POST['form']['answers'][$i - 1]) && !isset($_POST['form'])) {
 			$answers[$i]['number'] = $i;
 			$answers[$i]['value'] = '';
 		}

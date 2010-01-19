@@ -58,11 +58,6 @@ class uri
 		$this->mod = !empty($query[0]) ? $query[0] : $defaultModule;
 		$this->page = !empty($query[1]) ? $query[1] : $defaultPage;
 
-		if (!empty($_POST['cat']))
-			$this->cat = $_POST['cat'];
-		if (!empty($_POST['action']))
-			$this->action = $_POST['action'];
-
 		if (!empty($query[2])) {
 			$c_query = count($query);
 
@@ -77,9 +72,13 @@ class uri
 				}
 			}
 		}
-		if (!defined('POS')) {
+
+		if (!empty($_POST['cat']))
+			$this->cat = $_POST['cat'];
+		if (!empty($_POST['action']))
+			$this->action = $_POST['action'];
+		if (!defined('POS'))
 			define('POS', '0');
-		}
 	}
 	/**
 	 * Gibt einen URI Parameter aus

@@ -13,7 +13,7 @@ if (!defined('IN_ACP3'))
 breadcrumb::assign($lang->t('guestbook', 'guestbook'), uri('guestbook'));
 breadcrumb::assign($lang->t('guestbook', 'create'));
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['form'])) {
 	$ip = $_SERVER['REMOTE_ADDR'];
 	$form = $_POST['form'];
 
@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('guestbook'));
 	}
 }
-if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	// Emoticons einbinden
 	if (modules::check('emoticons', 'functions') == 1) {
 		require_once ACP3_ROOT . 'modules/emoticons/functions.php';

@@ -13,7 +13,7 @@ if (!defined('IN_ADM'))
 if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' . $uri->id . '\'') == '1') {
 	require_once ACP3_ROOT . 'modules/menu_items/functions.php';
 
-	if (isset($_POST['submit'])) {
+	if (isset($_POST['form'])) {
 		$form = $_POST['form'];
 
 		if (!validate::date($form['start'], $form['end']))
@@ -147,7 +147,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/menu_items'));
 		}
 	}
-	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$page = $db->select('id, start, end, mode, block_id, left_id, right_id, display, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
 		$page[0]['uri'] = db::escape($page[0]['uri'], 3);
 

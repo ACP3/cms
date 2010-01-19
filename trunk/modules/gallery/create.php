@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['form'])) {
 	$form = $_POST['form'];
 
 	if (!validate::date($form['start'], $form['end']))
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/gallery'));
 	}
 }
-if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	// Datumsauswahl
 	$tpl->assign('start_date', datepicker('start'));
 	$tpl->assign('end_date', datepicker('end'));

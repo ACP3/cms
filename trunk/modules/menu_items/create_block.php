@@ -15,7 +15,7 @@ breadcrumb::assign($lang->t('menu_items', 'menu_items'), uri('acp/menu_items'));
 breadcrumb::assign($lang->t('menu_items', 'adm_list_blocks'), uri('acp/menu_items/adm_list_blocks'));
 breadcrumb::assign($lang->t('menu_items', 'create_block'));
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['form'])) {
 	$form = $_POST['form'];
 
 	if (!preg_match('/^[a-zA-Z]+\w/', $form['index_name']))
@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
 		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/menu_items/adm_list_blocks'));
 	}
 }
-if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : array('index_name' => '', 'title' => ''));
 
 	$content = $tpl->fetch('menu_items/create_block.html');

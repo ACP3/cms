@@ -20,7 +20,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 	breadcrumb::assign($lang->t('polls', 'vote'));
 
 	// Wenn abgestimmt wurde
-	if (isset($_POST['submit']) && !empty($_POST['answer']) && (is_array($_POST['answer']) || validate::isNumber($_POST['answer']))) {
+	if (!empty($_POST['answer']) && (is_array($_POST['answer']) || validate::isNumber($_POST['answer']))) {
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$answers = $_POST['answer'];
 

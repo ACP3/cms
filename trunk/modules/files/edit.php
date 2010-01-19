@@ -15,7 +15,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 
 	$settings = config::output('files');
 
-	if (isset($_POST['submit'])) {
+	if (isset($_POST['form'])) {
 		$form = $_POST['form'];
 		if (isset($form['external'])) {
 			$file = $form['file_external'];
@@ -85,7 +85,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/files'));
 		}
 	}
-	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$dl = $db->select('start, end, category_id, file, size, link_title, text, comments', 'files', 'id = \'' . $uri->id . '\'');
 		$dl[0]['text'] = db::escape($dl[0]['text'], 3);
 

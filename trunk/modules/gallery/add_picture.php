@@ -22,7 +22,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 
 	$settings = config::output('gallery');
 
-	if (isset($_POST['submit'])) {
+	if (isset($_POST['form'])) {
 		$file['tmp_name'] = $_FILES['file']['tmp_name'];
 		$file['name'] = $_FILES['file']['name'];
 		$file['size'] = $_FILES['file']['size'];
@@ -54,7 +54,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/gallery/edit_gallery/id_' . $uri->id));
 		}
 	}
-	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$galleries = $db->select('id, start, name', 'gallery', 0, 'start DESC');
 		$c_galleries = count($galleries);
 

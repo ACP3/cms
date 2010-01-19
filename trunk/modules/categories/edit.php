@@ -13,7 +13,7 @@ if (!defined('IN_ADM'))
 if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' . $uri->id . '\'') == '1') {
 	require_once ACP3_ROOT . 'modules/categories/functions.php';
 
-	if (isset($_POST['submit'])) {
+	if (isset($_POST['form'])) {
 		$form = $_POST['form'];
 		if (!empty($_FILES['picture']['name'])) {
 			$file['tmp_name'] = $_FILES['picture']['tmp_name'];
@@ -59,7 +59,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' 
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/categories'));
 		}
 	}
-	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$category = $db->select('name, description', 'categories', 'id = \'' . $uri->id . '\'');
 		$tpl->assign('form', isset($form) ? $form : $category[0]);
 
