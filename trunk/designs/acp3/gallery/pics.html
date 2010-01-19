@@ -7,7 +7,7 @@
 {if $colorbox == 1}
 	<a href="{$row.uri}"{if !empty($row.description)} title="{$row.description}"{/if} rel="pictures"><img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" /></a>
 {else}
-	<a href="{$row.uri}"><img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" /></a>
+	<a href="{$row.uri}"><img src="{uri args="gallery/image/id_`$row.id`/action_thumb"}" alt="" /></a>
 {/if}
 {/foreach}
 </div>

@@ -10,9 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (!validate::isNumber($uri->id) || $uri->action != 'mini' && $uri->action != 'thumb') {
-	redirect('errors/404');
-} else {
+if (validate::isNumber($uri->id) && ($uri->action == 'thumb' || $uri->action == 'normal')) {
 	@set_time_limit(20);
 	$pic = $db->select('file', 'gallery_pictures', 'id = \'' . $uri->id . '\'');
 
@@ -29,13 +27,13 @@ if (!validate::isNumber($uri->id) || $uri->action != 'mini' && $uri->action != '
 
 		if (extension_loaded('gd') &&
 			($type == '1' || $type == '2' || $type == '3') &&
-			($action == 'mini' && $width > $settings['thumbwidth'] && $height > $settings['thumbheight']) ||
-			($action == 'thumb' && $width > $settings['width'] && $height > $settings['height'])) {
+			($action == 'thumb' && $width > $settings['thumbwidth'] && $height > $settings['thumbheight']) ||
+			($action == 'normal' && $width > $settings['width'] && $height > $settings['height'])) {
 			if ($width > $height) {
-				$t_width = $action == 'mini' ? $settings['thumbwidth'] : $settings['width'];
+				$t_width = $action == 'thumb' ? $settings['thumbwidth'] : $settings['width'];
 				$t_height = intval($height * $t_width / $width);
 			} else {
-				$t_height = $action == 'mini' ? $settings['thumbheight'] : $settings['height'];
+				$t_height = $action == 'thumb' ? $settings['thumbheight'] : $settings['height'];
 				$t_width = intval($width * $t_height / $height);
 			}
 

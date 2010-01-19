@@ -30,7 +30,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 		$settings = config::output('gallery');
 
 		for ($i = 0; $i < $c_pictures; ++$i) {
-			$pictures[$i]['uri'] = $settings['colorbox'] == 1 ? uri('gallery/image/id_' . $pictures[$i]['id'] . '/action_thumb') : uri('gallery/details/id_' . $pictures[$i]['id']);
+			$pictures[$i]['uri'] = $settings['colorbox'] == 1 ? uri('gallery/image/id_' . $pictures[$i]['id'] . '/action_normal') : uri('gallery/details/id_' . $pictures[$i]['id']);
 			$pictures[$i]['description'] = strip_tags($pictures[$i]['description']);
 		}
 
