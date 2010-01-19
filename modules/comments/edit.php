@@ -19,7 +19,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 	breadcrumb::assign($lang->t($comment[0]['module'], $comment[0]['module']), uri('acp/comments/adm_list/module_' . $comment[0]['module']));
 	breadcrumb::assign($lang->t('comments', 'edit'));
 
-	if (isset($_POST['submit'])) {
+	if (isset($_POST['form'])) {
 		$form = $_POST['form'];
 
 		if ((empty($comment[0]['user_id']) || !validate::isNumber($comment[0]['user_id'])) && empty($form['name']))
@@ -41,7 +41,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/comments/adm_list/module_' . $comment[0]['module']));
 		}
 	}
-	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		if (modules::check('emoticons', 'functions') == 1) {
 			require_once ACP3_ROOT . 'modules/emoticons/functions.php';
 

@@ -11,7 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \'' . $uri->id . '\'') == '1') {
-	if (isset($_POST['submit'])) {
+	if (isset($_POST['form'])) {
 		$form = $_POST['form'];
 
 		if (!validate::date($form['start'], $form['end']))
@@ -67,7 +67,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/polls'));
 		}
 	}
-	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		// Neue Antworten hinzufügen
 		if (isset($_POST['form']['answers'])) {
 			// Bisherige Antworten
@@ -79,7 +79,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 				$i++;
 			}
 			// Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
-			if (count($_POST['form']['answers']) <= 9 && !empty($_POST['form']['answers'][$i - 1]['value']) && !isset($_POST['submit'])) {
+			if (count($_POST['form']['answers']) <= 9 && !empty($_POST['form']['answers'][$i - 1]['value']) && !isset($_POST['form'])) {
 				$answers[$i]['number'] = $i;
 				$answers[$i]['id'] = '0';
 				$answers[$i]['value'] = '';

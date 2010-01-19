@@ -17,7 +17,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 	breadcrumb::assign($lang->t('users', 'home'), uri('users/home'));
 	breadcrumb::assign($lang->t('users', 'edit_profile'));
 
-	if (isset($_POST['submit'])) {
+	if (isset($_POST['form'])) {
 		require_once ACP3_ROOT . 'modules/users/functions.php';
 
 		$form = $_POST['form'];
@@ -72,7 +72,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('users/home'));
 		}
 	}
-	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$user = $auth->getUserInfo();
 
 		$checked['realname'] = selectEntry('realname_display', 1, $user['realname_display'], 'checked');

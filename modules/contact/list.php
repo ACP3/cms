@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['form'])) {
 	$form = $_POST['form'];
 
 	if (empty($form['name']))
@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
 		$content = comboBox($bool ? $lang->t('contact', 'send_mail_success') : $lang->t('contact', 'send_mail_error'), uri('contact'));
 	}
 }
-if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
 	if ($auth->isUser()) {
 		$defaults = $auth->getUserInfo();

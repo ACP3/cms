@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['form'])) {
 	$form = $_POST['form'];
 	
 	if (!validate::isNumber($form['width']))
@@ -28,7 +28,7 @@ if (isset($_POST['submit'])) {
 		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), uri('acp/categories'));
 	}
 }
-if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$settings = config::output('categories');
 	
 	$tpl->assign('form', isset($form) ? $form : $settings);

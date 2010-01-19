@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['form'])) {
 	$form = $_POST['form'];
 
 	if (!empty($form['mail']) && !validate::email($form['mail']))
@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
 		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), uri('acp/contact'));
 	}
 }
-if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$contact = config::output('contact');
 	$contact['address'] = $contact['address'];
 	$contact['disclaimer'] = db::escape($contact['disclaimer'], 3);

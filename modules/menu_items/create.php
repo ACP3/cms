@@ -12,7 +12,7 @@ if (!defined('IN_ADM'))
 
 require_once ACP3_ROOT . 'modules/menu_items/functions.php';
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['form'])) {
 	$form = $_POST['form'];
 
 	if (!validate::date($form['start'], $form['end']))
@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
 		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/menu_items'));
 	}
 }
-if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	// Seitentyp
 	$mode[0]['value'] = 1;
 	$mode[0]['selected'] = selectEntry('mode', '1');

@@ -22,7 +22,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 
 	$settings = config::output('gallery');
 
-	if (isset($_POST['submit'])) {
+	if (isset($_POST['form'])) {
 		if (!empty($_FILES['file']['tmp_name']) && $_FILES['file']['size'] > '0') {
 			$file['tmp_name'] = $_FILES['file']['tmp_name'];
 			$file['name'] = $_FILES['file']['name'];
@@ -59,7 +59,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id']));
 		}
 	}
-	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		if ($settings['colorbox'] == 0 && $settings['comments'] == 1 && modules::check('comments', 'functions') == 1) {
 			$options = array();
 			$options[0]['name'] = 'comments';

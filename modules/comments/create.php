@@ -20,7 +20,7 @@ function commentsCreate($module, $entry_id)
 	global $auth, $date, $db, $lang, $uri, $tpl;
 
 	// Formular für das Eintragen von Kommentaren
-	if (isset($_POST['submit'])) {
+	if (isset($_POST['form'])) {
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$form = $_POST['form'];
 
@@ -61,7 +61,7 @@ function commentsCreate($module, $entry_id)
 			return comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri($uri->query));
 		}
 	}
-	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		// Emoticons einbinden, falls diese aktiv sind
 		if (modules::check('emoticons', 'functions') == 1) {
 			require_once ACP3_ROOT . 'modules/emoticons/functions.php';

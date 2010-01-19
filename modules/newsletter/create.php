@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit();
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['form'])) {
 	switch ($uri->action) {
 		case 'subscribe' :
 			$form = $_POST['form'];
@@ -62,12 +62,14 @@ if (isset($_POST['submit'])) {
 				$content = comboBox($bool !== null ? $lang->t('newsletter', 'unsubscribe_success') : $lang->t('newsletter', 'unsubscribe_error'), ROOT_DIR);
 			}
 			break;
+		default:
+			redirect('errors/404');
 	}
 }
-if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : array('mail' => ''));
 
-	$field_value = isset($_POST['action']) ? $_POST['action'] : 'subscribe';
+	$field_value = $uri->action ? $uri->action : 'subscribe';
 
 	$actions[0]['value'] = 'subscribe';
 	$actions[0]['checked'] = selectEntry('action', 'subscribe', $field_value, 'checked');

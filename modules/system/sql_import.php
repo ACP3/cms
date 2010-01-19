@@ -7,7 +7,7 @@ breadcrumb::assign($lang->t('system', 'system'), uri('acp/system'));
 breadcrumb::assign($lang->t('system', 'maintenance'), uri('acp/system/maintenance'));
 breadcrumb::assign($lang->t('system', 'sql_import'));
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['form'])) {
 	$form = $_POST['form'];
 	if (isset($_FILES['file'])) {
 		$file['tmp_name'] = $_FILES['file']['tmp_name'];
@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 		cache::purge();
 	}
 }
-if (!isset($_POST['submit']) || isset($errors)) {
+if (!isset($_POST['form']) || isset($errors)) {
 	$tpl->assign('form', isset($form) ? $form : array('text' => ''));
 }
 $content = $tpl->fetch('system/sql_import.html');

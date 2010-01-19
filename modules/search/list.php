@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['form'])) {
 	$form = $_POST['form'];
 
 	if (strlen($form['search_term']) < 3)
@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
 		$content = $tpl->fetch('search/results.html');
 	}
 }
-if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : array('search_term' => ''));
 
 	$mods = scandir(ACP3_ROOT . 'modules/');

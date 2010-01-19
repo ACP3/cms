@@ -14,7 +14,7 @@ require_once ACP3_ROOT . 'modules/categories/functions.php';
 
 $settings = config::output('files');
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['form'])) {
 	$form = $_POST['form'];
 	if (isset($form['external'])) {
 		$file = $form['file_external'];
@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
 		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/files'));
 	}
 }
-if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	// Datumsauswahl
 	$tpl->assign('start_date', datepicker('start'));
 	$tpl->assign('end_date', datepicker('end'));

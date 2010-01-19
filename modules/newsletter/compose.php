@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['form'])) {
 	$form = $_POST['form'];
 
 	if (strlen($form['subject']) < 3)
@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
 		}
 	}
 }
-if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : array('subject' => '', 'text' => ''));
 
 	$test[0]['value'] = '1';

@@ -8,7 +8,7 @@ if ($auth->isUser()) {
 	breadcrumb::assign($lang->t('users', 'users'), uri('users'));
 	breadcrumb::assign($lang->t('users', 'register'));
 
-	if (isset($_POST['submit'])) {
+	if (isset($_POST['form'])) {
 		require_once ACP3_ROOT . 'modules/users/functions.php';
 
 		$form = $_POST['form'];
@@ -60,7 +60,7 @@ if ($auth->isUser()) {
 			$content = comboBox($mail_sent && isset($bool) && $bool ? $lang->t('users', 'register_success') : $lang->t('users', 'register_error'), ROOT_DIR);
 		}
 	}
-	if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
+	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$defaults = array(
 			'nickname' => '',
 			'mail' => '',
