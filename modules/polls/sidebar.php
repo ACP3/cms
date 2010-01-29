@@ -27,7 +27,7 @@ if (count($question) > 0) {
 		$alreadyVoted = $db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . $question[0]['id'] . '\' AND user_id = \'' . USER_ID . '\'');
 	// Überprüfung für Gäste
 	else
-		$alreadyVoted = $db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . $question[0]['id'] . '\' AND ip = \'' . $ip . '\'');
+		$alreadyVoted = $db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . $question[0]['id'] . '\' AND ip = \'' . $_SERVER['REMOTE_ADDR'] . '\'');
 
 	if ($alreadyVoted > 0) {
 		$total_votes = $db->countRows('answer_id', 'poll_votes', 'poll_id = \'' . $question[0]['id'] . '\'');
