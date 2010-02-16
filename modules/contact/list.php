@@ -30,7 +30,7 @@ if (isset($_POST['form'])) {
 		$subject = sprintf($lang->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
 		$body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($form['name'], $form['mail'], $form['message'], "\n"), $lang->t('contact', 'contact_body'));
 
-		$bool = genEmail($form['name'], $form['mail'], $setting['mail'], $subject, $body);
+		$bool = genEmail($form['name'], $form['mail'], $settings['mail'], $subject, $body);
 
 		$content = comboBox($bool ? $lang->t('contact', 'send_mail_success') : $lang->t('contact', 'send_mail_error'), uri('contact'));
 	}

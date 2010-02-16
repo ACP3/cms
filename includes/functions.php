@@ -135,7 +135,7 @@ function datepicker($name, $value = '', $format = 'Y-m-d H:i', $params = array()
  */
 function genEmail($recipient_name, $recipient_email, $from, $subject, $body)
 {
-	require_once './phpmailer/class.phpmailer.php';
+	require_once './includes/phpmailer/class.phpmailer.php';
 
 	$mail = new PHPMailer();
 	$mail->SetFrom($from);
