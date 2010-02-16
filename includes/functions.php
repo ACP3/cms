@@ -138,6 +138,7 @@ function genEmail($recipient_name, $recipient_email, $from, $subject, $body)
 	require_once './includes/phpmailer/class.phpmailer.php';
 
 	$mail = new PHPMailer();
+	$mail->CharSet = 'UTF-8';
 	$mail->SetFrom($from);
 	$mail->AddAddress($recipient_email, $recipient_name);
 	$mail->Subject = $subject;
