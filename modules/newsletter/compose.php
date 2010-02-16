@@ -36,14 +36,14 @@ if (isset($_POST['form'])) {
 		if ($form['action'] == '1' && $bool) {
 			// Testnewsletter
 			if ($form['test'] == '1') {
-				$bool2 = @mail($settings['mail'], db::escape($form['subject']), db::escape($form['text']) . $settings['mailsig'], 'FROM:' . $settings['mail'] . "\r\n" . 'Content-Type: text/plain; charset: UTF-8');
+				$bool2 = genEmail('', $settings['mail'], $settings['mail'], db::escape($form['subject']), db::escape($form['text']) . $settings['mailsig']);
 			// An alle versenden
 			} else {
 				$accounts = $db->select('mail', 'newsletter_accounts', 'hash = \'\'');
 				$c_accounts = count($accounts);
 
 				for ($i = 0; $i < $c_accounts; ++$i) {
-					$bool2 = @mail($accounts[$i]['mail'], db::escape($form['subject']), db::escape($form['text']) . $settings['mailsig'], 'FROM:' . $settings['mail'] . "\r\n" . 'Content-Type: text/plain; charset: UTF-8');
+					$bool2 = genEmail('', $accounts[$i]['mail'], $settings['mail'], db::escape($form['subject']), db::escape($form['text']) . $settings['mailsig']);
 					if (!$bool2)
 						break;
 				}
