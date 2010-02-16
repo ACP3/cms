@@ -119,11 +119,41 @@ function datepicker($name, $value = '', $format = 'Y-m-d H:i', $params = array()
 	return $tpl->fetch('common/date.html');
 }
 /**
+ * Generiert eine E-Mail und versendet diese
+ *
+ * @param string $recipient_name
+ *	Name des Empfängers
+ * @param string $recipient_email
+ *	E-Mail-Adresse des Empfängers
+ * @param string $from
+ *	E-mail-Adresse des Versenders
+ * @param string $subject
+ *	Betreff der E-Mail
+ * @param string $body
+ *	E-Mail-Body
+ * @return boolean
+ */
+function genEmail($recipient_name, $recipient_email, $from, $subject, $body)
+{
+	require_once './phpmailer/class.phpmailer.php';
+
+	$mail = new PHPMailer();
+	$mail->SetFrom($from);
+	$mail->AddAddress($recipient_email, $recipient_name);
+	$mail->Subject = $subject;
+	$mail->Body = $body;
+
+	return $mail->Send();
+}
+/**
  * Generiert ein gesalzenes Passwort
  *
  * @param string $salt
+ *	Das zu versendende Salz
  * @param string $plaintext
+ *	Das Passwort in Klartextform, welches verschlüsselt werden soll
  * @param string $algorithm
+ *	Der zu verwendete Hash-Algorithmus
  * @return string
  */
 function genSaltedPassword($salt, $plaintext, $algorithm = 'sha1')

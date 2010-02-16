@@ -44,7 +44,9 @@ class validate
 	{
 		global $auth;
 
-		if (preg_match('/^[a-zA-Z0-9]+$/', $input) && self::isMD5($hash)) {
+		if ($auth->isUser()) {
+			return true;
+		} elseif (preg_match('/^[a-zA-Z0-9]+$/', $input) && self::isMD5($hash)) {
 			$path = ACP3_ROOT . 'uploads/captcha/' . $hash . strtolower($input);
 			if (is_file($path)) {
 				@unlink($path);
