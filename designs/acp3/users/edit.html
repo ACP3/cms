@@ -19,10 +19,6 @@
 				<dd><input type="text" name="form[realname]" id="realname" value="{$form.realname}" maxlength="80" /></dd>
 				<dt><label for="website">{lang values="common|website"}</label></dt>
 				<dd><input type="text" name="form[website]" id="website" value="{$form.website}" maxlength="120" /></dd>
-			</dl>
-		</div>
-		<div id="tab-2" class="ui-tabs-hide">
-			<dl>
 				<dt><label for="access">{lang values="access|access"}</label></dt>
 				<dd>
 					<select name="form[access]" id="access">
@@ -32,6 +28,10 @@
 {/foreach}
 					</select>
 				</dd>
+			</dl>
+		</div>
+		<div id="tab-2" class="ui-tabs-hide">
+			<dl>
 				<dt><label for="language">{lang values="users|language"}</label></dt>
 				<dd>
 					<select name="form[language]" id="language">

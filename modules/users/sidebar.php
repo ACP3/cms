@@ -10,9 +10,11 @@
 if (!defined('IN_ACP3') && !defined('IN_ADM'))
 	exit;
 
+$currentPage = base64_encode(substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1));
+
 if ($auth->isUser()) {
 	$user_sidebar = array();
-	$user_sidebar['page'] = base64_encode($uri->query);
+	$user_sidebar['page'] = $currentPage;
 
 	// Module holen
 	$mod_list = modules::modulesList();
@@ -69,7 +71,7 @@ if ($auth->isUser()) {
 	elseif (defined('IN_ACP3'))
 		$tpl->assign('uri', uri('users/login'));
 
-	$tpl->assign('redirect_uri', isset($_POST['form']['redirect_uri']) ? $_POST['form']['redirect_uri'] : base64_encode($uri->query));
+	$tpl->assign('redirect_uri', isset($_POST['form']['redirect_uri']) ? $_POST['form']['redirect_uri'] : $currentPage);
 
 	$tpl->display('users/sidebar_login.html');
 }

@@ -13,7 +13,7 @@ if (!defined('IN_ACP3') && !defined('IN_ADM'))
 $auth->logout();
 
 if ($uri->last && !preg_match('/^(acp\/)/', base64_decode($uri->last))) {
-	$lastPage = redirect(base64_decode($uri->last));
+	redirect(base64_decode($uri->last));
 } else {
-	$lastPage = recirect('');
+	redirect(0, ROOT_DIR);
 }
