@@ -22,11 +22,16 @@ function calcFilesize($value)
 		2 => 'MiB',
 		3 => 'GiB',
 		4 => 'TiB',
+		5 => 'PiB',
+		6 => 'EiB',
+		7 => 'ZiB',
+		8 => 'YiB',
 	);
 
 	for ($i = 0; $value >= 1024; ++$i) {
 		$value = $value / 1024;
 	}
+
 	return round($value, 2) . ' ' . $units[$i];
 }
 /**
@@ -207,11 +212,13 @@ function moveFile($tmp_filename, $filename, $dir)
 {
 	$path = ACP3_ROOT . 'uploads/' . $dir . '/';
 	$ext = strrchr($filename, '.');
-
 	$new_name = 1;
+
+	// Dateiname solange ändern, wie die Datei im aktuellen Ordner vorhanden ist
 	while (is_file($path . $new_name . $ext)) {
 		$new_name++;
 	}
+
 	if (is_writable($path)) {
 		if (!@move_uploaded_file($tmp_filename, $path . $new_name . $ext)) {
 			global $lang;
@@ -390,7 +397,7 @@ function redirect($args, $new_page = 0)
 	if (!empty($args)) {
 		if ($args == 'errors/404' || $args == 'errors/403')
 			$args = (defined('IN_ACP3') ? '' : 'acp/') . $args;
-		
+
 		$protocol = empty($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) == 'off' ? 'http://' : 'https://';
 		$host = $_SERVER['HTTP_HOST'];
 		header('Location: ' . $protocol . $host . uri($args));
@@ -439,7 +446,7 @@ function salt($str_length)
  * @param string $name
  *  Name des Feldes im Formular
  * @param mixed $defValue
- *  Abzugleichender Parameter mit $field_value
+ *  Abzugleichender Parameter mit $currentvalue
  * @param mixed $currentValue
  *  Wert aus der SQL Tabelle
  * @param string $attr
@@ -485,8 +492,8 @@ function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
  *	Der zu kürzende String
  * @param integer $chars
  *	Die anzuzeigenden Zeichen
- * @param intger $diff
- *	Spanne an Zeichen, welche nach strlen($data) - $chars noch kommen müssen
+ * @param integer $diff
+ *	Anzahl der Zeichen, welche nach strlen($data) - $chars noch kommen müssen
  * @return string
  */
 function shortenEntry($data, $chars = 300, $diff = 50, $append = '')
