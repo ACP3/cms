@@ -129,6 +129,10 @@
 		<message>Login</message>
 	</item>
 	<item>
+		<name>logout</name>
+		<message>Abmelden</message>
+	</item>
+	<item>
 		<name>male</name>
 		<message>Männlich</message>
 	</item>
@@ -218,10 +222,6 @@
 	<item>
 		<name>settings</name>
 		<message>Einstellungen</message>
-	</item>
-	<item>
-		<name>sign_off</name>
-		<message>Abmelden</message>
 	</item>
 	<item>
 		<name>skype</name>

@@ -65,7 +65,7 @@ class uri
 				if (!empty($query[$i])) {
 					if (!defined('POS') && preg_match('/^(pos_(\d+))$/', $query[$i])) {
 						define('POS', substr($query[$i], 4));
-					} elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) {
+					} elseif (preg_match('/^(([a-z0-9-\+=]+)_(.+))$/', $query[$i])) {
 						$param = explode('_', $query[$i], 2);
 						$this->$param[0] = $param[1];
 					}
