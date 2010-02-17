@@ -19,7 +19,7 @@ if ($auth->isUser()) {
 	$result = $auth->login($form['nickname'], $form['pwd'], isset($_POST['remember']) ? 31104000 : 3600);
 	if ($result == 1) {
 		if (isset($form['redirect_uri'])) {
-			redirect(0, base64_decode($form['redirect_uri']));
+			redirect(base64_decode($form['redirect_uri']));
 		} elseif (defined('IN_ADM')) {
 			redirect('acp');
 		} else {

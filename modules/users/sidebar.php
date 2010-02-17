@@ -11,7 +11,10 @@ if (!defined('IN_ACP3') && !defined('IN_ADM'))
 	exit;
 
 if ($auth->isUser()) {
-	// Module einholen
+	$user_sidebar = array();
+	$user_sidebar['page'] = base64_encode($uri->query);
+
+	// Module holen
 	$mod_list = modules::modulesList();
 	$nav_mods = array();
 	$access_system = false;
@@ -30,7 +33,7 @@ if ($auth->isUser()) {
 		}
 	}
 	if (!empty($nav_mods)) {
-		$tpl->assign('nav_mods', $nav_mods);
+		$user_sidebar['modules'] = $nav_mods;
 	}
 
 	if ($access_system) {
@@ -54,8 +57,10 @@ if ($auth->isUser()) {
 			$nav_system[$i]['page'] = 'maintenance';
 			$nav_system[$i]['name'] = $lang->t('system', 'maintenance');
 		}
-		$tpl->assign('nav_system', $nav_system);
+		$user_sidebar['system'] = $nav_system;
 	}
+
+	$tpl->assign('user_sidebar', $user_sidebar);
 
 	$tpl->display('users/sidebar_user_menu.html');
 } else {
@@ -64,7 +69,7 @@ if ($auth->isUser()) {
 	elseif (defined('IN_ACP3'))
 		$tpl->assign('uri', uri('users/login'));
 
-	$tpl->assign('redirect_uri', isset($_POST['form']['redirect_uri']) ? $_POST['form']['redirect_uri'] : base64_encode(htmlentities($_SERVER['REQUEST_URI'])));
+	$tpl->assign('redirect_uri', isset($_POST['form']['redirect_uri']) ? $_POST['form']['redirect_uri'] : base64_encode($uri->query));
 
 	$tpl->display('users/sidebar_login.html');
 }

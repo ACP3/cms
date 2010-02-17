@@ -51,15 +51,15 @@
 			<level>1</level>
 		</item>
 		<item>
+			<file>logout</file>
+			<level>1</level>
+		</item>
+		<item>
 			<file>register</file>
 			<level>1</level>
 		</item>
 		<item>
 			<file>sidebar</file>
-			<level>1</level>
-		</item>
-		<item>
-			<file>signoff</file>
 			<level>1</level>
 		</item>
 		<item>

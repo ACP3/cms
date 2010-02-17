@@ -2,25 +2,25 @@
 <script type="text/javascript" src="{$DESIGN_PATH}users/script.js"></script>
 <ul class="admin">
 	<li><a href="{uri args="users/home"}">{lang values="users|home"}</a></li>
-{if isset($nav_mods)}
+{if isset($user_sidebar.modules)}
 	<li>
 		<a href="{uri args="acp"}">{lang values="users|administration"}</a>
 		<ul>
-{foreach from=$nav_mods item=row}
+{foreach from=$user_sidebar.modules item=row}
 			<li><a href="{uri args="acp/`$row.dir`"}">{$row.name}</a></li>
 {/foreach}
 		</ul>
 	</li>
 {/if}
-{if isset($nav_system)}
+{if isset($user_sidebar.system)}
 	<li>
 		<a href="{uri args="acp/system"}">{lang values="system|system"}</a>
 		<ul>
-{foreach from=$nav_system item=row}
+{foreach from=$user_sidebar.system item=row}
 			<li><a href="{uri args="acp/system/`$row.page`"}">{$row.name}</a></li>
 {/foreach}
 		</ul>
 	</li>
 {/if}
-	<li><a href="{uri args="acp/users/signoff"}">{lang values="users|sign_off"}</a></li>
+	<li><a href="{uri args="users/logout/last_`$user_sidebar.page`"}">{lang values="users|logout"}</a></li>
 </ul>

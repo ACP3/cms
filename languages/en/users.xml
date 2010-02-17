@@ -129,6 +129,10 @@
 		<message>Login</message>
 	</item>
 	<item>
+		<name>logout</name>
+		<message>Logout</message>
+	</item>
+	<item>
 		<name>male</name>
 		<message>Male</message>
 	</item>
