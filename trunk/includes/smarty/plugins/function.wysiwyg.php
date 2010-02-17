@@ -9,7 +9,7 @@ function smarty_function_wysiwyg($params) {
 	$params['name'] = 'form[' . $params['name'] . ']';
 	$params['id'] = !empty($params['id']) ? $params['id'] : substr($params['name'], 5, -1);
 	
-	if (is_file($path) && CONFIG_WYSIWYG != 'textarea' && !preg_match('=/=', CONFIG_WYSIWYG)) {
+	if (CONFIG_WYSIWYG != 'textarea' && is_file($path) && !preg_match('=/=', CONFIG_WYSIWYG)) {
 		require_once $path;
 
 		return editor($params);
@@ -21,7 +21,7 @@ function smarty_function_wysiwyg($params) {
 		// Falls aktiv, die Emoticons einbinden
 		if (modules::check('emoticons', 'functions')) {
 			include_once ACP3_ROOT . 'modules/emoticons/functions.php';
-			$out.= emoticonsList($id);
+			$out.= emoticonsList($params['id']);
 		}
 		$out.= '<textarea name="' . $params['name'] . '" id="' . $params['id'] . '" cols="50" rows="6">' . (!empty($params['value']) ? $params['value'] : '') . '</textarea>';
 		return $out;
