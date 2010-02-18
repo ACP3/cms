@@ -37,8 +37,7 @@ $tpl = new Smarty();
 $tpl->template_dir = ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/';
 $tpl->compile_dir = ACP3_ROOT . 'cache/';
 $tpl->error_reporting = $reporting_level;
-if (!defined('DEBUG') || !DEBUG)
-	$tpl->compile_check = false;
+$tpl->compile_check = defined('DEBUG') && DEBUG ? true : false;
 if (!is_writable($tpl->compile_dir)) {
 	exit('Bitte geben Sie dem "cache"-Ordner den CHMOD 777!');
 }
