@@ -1,15 +1,11 @@
 <script type="text/javascript">
-{literal}
 $(document).ready(function() {
-	$('#{/literal}{$datepicker.name}{literal}').datepicker({
-{/literal}
+	$('#{$datepicker.name}').datepicker({
 {foreach from=$datepicker.params item=paramValue key=paramKey}
 		{$paramKey}: {$paramValue},
 {/foreach}
-{literal}
 	});
 });
-{/literal}
 </script>
 <span style="white-space:nowrap">
 	<input type="text" name="form[{$datepicker.name}]" id="{$datepicker.name}" value="{$datepicker.value}" maxlength="16" style="width:96%;margin-right:4px;display:inline" />

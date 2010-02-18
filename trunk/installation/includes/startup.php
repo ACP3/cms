@@ -9,10 +9,9 @@ define('CONFIG_VERSION', '4.0 SVN');
 
 include ACP3_ROOT . 'includes/globals.php';
 
-function __autoload($className)
-{
-	require_once ACP3_ROOT . 'includes/classes/' . $className . '.php';
-}
+set_include_path(get_include_path() . PATH_SEPARATOR . ACP3_ROOT . 'includes/classes/');
+spl_autoload_extensions('.class.php');
+spl_autoload_register();
 
 include ACP3_ROOT . 'installation/includes/functions.php';
 
@@ -27,9 +26,8 @@ define('LANG', !empty($l) && !preg_match('=/=', $l) && is_file(ACP3_ROOT . 'lang
 $lang = new lang();
 
 // Smarty einbinden
-define('SMARTY_DIR', ACP3_ROOT . 'includes/smarty/');
-include SMARTY_DIR . 'Smarty.class.php';
-$tpl = new smarty();
+include ACP3_ROOT . 'includes/smarty3/Smarty.class.php';
+$tpl = new Smarty();
 $tpl->template_dir = ACP3_ROOT . 'installation/design/';
 $tpl->compile_dir = ACP3_ROOT . 'cache/installation/';
 if (!is_dir($tpl->compile_dir)) {
