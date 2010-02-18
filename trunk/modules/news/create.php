@@ -54,8 +54,7 @@ if (isset($_POST['form'])) {
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	// Datumsauswahl
-	$tpl->assign('start_date', datepicker('start'));
-	$tpl->assign('end_date', datepicker('end'));
+	$tpl->assign('publication_period', datepicker(array('start', 'end')));
 
 	// Kategorien
 	$tpl->assign('categories', categoriesList('news', '', true));

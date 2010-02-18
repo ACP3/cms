@@ -86,29 +86,25 @@ function comboBox($text, $forward = 0, $backward = 0)
 /**
  * Zeigt Dropdown-Menüs für die Veröffentlichungsdauer von Inhalten an
  *
- * @param string $mode
- * 	Start- bzw. Enddatum
- * @param integer $value
- * 	Die Zeitstempel des Eintrages
- * @paran string $format
+ * @param mixed $name
+ * 	Name des jeweiligen Inputfeldes
+ * @param mixed $value
+ * 	Der Zeitstempel des jeweiligen Eintrages
+ * @param string $format
  *	Das anzuzeigende Format im Textfeld
+ * @param string $params
+ *	Dient dem Festlegen von weiteren Parametern
+ * @param integer $range
+ *	1 = Start- und Enddatum anzeigen
+ *	2 = Einfaches Inputfeld mitsamt Datepicker anzeigen
  * @return string
  */
-function datepicker($name, $value = '', $format = 'Y-m-d H:i', $params = array())
+function datepicker($name, $value = '', $format = 'Y-m-d H:i', $params = array(), $range = 1)
 {
 	global $date, $tpl;
 
-	if (!empty($_POST['form'][$name])) {
-		$value = $_POST['form'][$name];
-	} elseif (validate::isNumber($value)) {
-		$value = $date->format($value, $format);
-	} else {
-		$value = $date->format(time(), $format);
-	}
-
 	$datepicker = array(
-		'name' => $name,
-		'value' => $value,
+		'range' => $range,
 		'params' => array(
 			'firstDay' => '\'1\'',
 			'dateFormat' => '\'yy-mm-dd\'',
@@ -118,7 +114,43 @@ function datepicker($name, $value = '', $format = 'Y-m-d H:i', $params = array()
 			'constrainInput' => 'false',
 		)
 	);
-	$datepicker['params'] = array_merge($datepicker['params'], $params);
+
+	// Zusätzliche Datepicker-Parameter hinzufügen
+	if (!empty($params) && is_array($params)) {
+		$datepicker['params'] = array_merge($datepicker['params'], $params);
+	}
+
+	// Veröffentlichungszeitraum
+	if ($range == 1 && is_array($name)) {
+		if (!empty($_POST['form'][$name[0]]) && !empty($_POST['form'][$name[1]])) {
+			$value_start = $_POST['form'][$name[0]];
+			$value_end = $_POST['form'][$name[1]];
+		} elseif (is_array($value) && validate::isNumber($value[0]) && validate::isNumber($value[1])) {
+			$value_start = $date->format($value[0], $format);
+			$value_end = $date->format($value[1], $format);
+		} else {
+			$value_start = $date->format(time(), $format);
+			$value_end = $date->format(time(), $format);
+		}
+
+		$datepicker['name_start'] = $name[0];
+		$datepicker['name_end'] = $name[1];
+		$datepicker['value_start'] = $value_start;
+		$datepicker['value_end'] = $value_end;
+	// Einfaches Inputfeld mit Datepicker
+	} else {
+		if (!empty($_POST['form'][$name])) {
+			$value = $_POST['form'][$name];
+		} elseif (validate::isNumber($value)) {
+			$value = $date->format($value, $format);
+		} else {
+			$value = $date->format(time(), $format);
+		}
+
+		$datepicker['name'] = $name;
+		$datepicker['value'] = $value;
+	}
+
 	$tpl->assign('datepicker', $datepicker);
 
 	return $tpl->fetch('common/date.html');
