@@ -1,4 +1,4 @@
-{literal}
+
 <script type="text/javascript">
 function mark_entries(name, action)
 {
@@ -25,9 +25,9 @@ $(document).ready(function() {
 	}).find(':checkbox').click(function() {
 		$(this).parents('tr:first').toggleClass('selected');
 	});
-{/literal}
+
 	$('form .acp-table').after('<' + 'div class="mark-entries"><' + 'a href="javascript:mark_entries(\'{$checkbox_name}\',\'add\')">{lang values="common|mark_all"}<' + '/a> <' + 'span>::<' + '/span> <' + 'a href="javascript:mark_entries(\'{$checkbox_name}\',\'remove\')">{lang values="common|unmark_all"}<' + '/a><' + '/div>');
-{literal}
+
 	$('form #adm-list input[type=image]').click(function() {
 		var entries = $('form .acp-table input:checkbox:checked') || [];
 		var ary = '';
@@ -39,7 +39,7 @@ $(document).ready(function() {
 		$('div.mark-entries').after('<' + 'div id="dialog"><' + 'h5 style="text-align:center"><' + '/h5><' + '/div>');
 
 		if (ary != '') {
-			$('#dialog h5').text('{/literal}{lang values="common|confirm_delete"}{literal}');
+			$('#dialog h5').text('{lang values="common|confirm_delete"}');
 			$('#dialog').dialog({
 				draggable: false,
 				resizable : false,
@@ -49,16 +49,16 @@ $(document).ready(function() {
 					opacity: 0.5
 				},
 				buttons: {
-					{/literal}{lang values="common|no"}{literal}: function() {
+					{lang values="common|no"}: function() {
 						$(this).dialog('close');
 					},
-					{/literal}{lang values="common|yes"}{literal}: function() {
-						location.href = $('.acp-table').parent('form').attr('action') + 'entries_' + ary.substr(0, ary.length - 1) + '/confirmed_1/';
+					{lang values="common|yes"}: function() {
+						location.href = $('.acp-table').parent('form').attr('action') + 'entries_' + ary.substr(0, ary.length - 1) + '/action_confirmed/';
 					}
 				}
 			});
 		} else {
-			$('#dialog h5').text('{/literal}{lang values="common|no_entries_selected"}{literal}');
+			$('#dialog h5').text('{lang values="common|no_entries_selected"}');
 			$('#dialog').dialog({
 				draggable: false,
 				resizable : false,
@@ -73,4 +73,3 @@ $(document).ready(function() {
 	});
 });
 </script>
-{/literal}

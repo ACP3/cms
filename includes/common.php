@@ -21,10 +21,9 @@ if (!defined('INSTALLED')) {
 $reporting_level = defined('DEBUG') && DEBUG ? E_ALL | E_STRICT : 0;
 error_reporting($reporting_level);
 
-function __autoload($className)
-{
-	require_once ACP3_ROOT . 'includes/classes/' . $className . '.php';
-}
+set_include_path(get_include_path() . PATH_SEPARATOR . ACP3_ROOT . 'includes/classes/');
+spl_autoload_extensions('.class.php');
+spl_autoload_register();
 
 // Einige Konstanten definieren
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
@@ -33,9 +32,8 @@ define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
 define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
 
 // Smarty einbinden
-define('SMARTY_DIR', ACP3_ROOT . 'includes/smarty/');
-require SMARTY_DIR . 'Smarty.class.php';
-$tpl = new smarty();
+require ACP3_ROOT . 'includes/smarty3/Smarty.class.php';
+$tpl = new Smarty();
 $tpl->template_dir = ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/';
 $tpl->compile_dir = ACP3_ROOT . 'cache/';
 $tpl->error_reporting = $reporting_level;

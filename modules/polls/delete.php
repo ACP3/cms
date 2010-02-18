@@ -19,8 +19,8 @@ if (!isset($entries)) {
 	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/polls/delete/entries_' . $marked_entries), uri('acp/polls'));
-} elseif (validate::deleteEntries($entries) && $uri->confirmed) {
+	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/polls/delete/entries_' . $marked_entries . '/action_confirmed/'), uri('acp/polls'));
+} elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = $bool2 = $bool3 = null;
 	foreach ($marked_entries as $entry) {

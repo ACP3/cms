@@ -19,8 +19,8 @@ if (!isset($entries)) {
 	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/static_pages/delete/entries_' . $marked_entries), uri('acp/static_pages'));
-} elseif (validate::deleteEntries($entries) && $uri->confirmed) {
+	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/static_pages/delete/entries_' . $marked_entries . '/action_confirmed/'), uri('acp/static_pages'));
+} elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	require_once ACP3_ROOT . 'modules/menu_items/functions.php';
 
 	$marked_entries = explode('|', $entries);
