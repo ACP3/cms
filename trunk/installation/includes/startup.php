@@ -26,7 +26,7 @@ define('LANG', !empty($l) && !preg_match('=/=', $l) && is_file(ACP3_ROOT . 'lang
 $lang = new lang();
 
 // Smarty einbinden
-include ACP3_ROOT . 'includes/smarty3/Smarty.class.php';
+include ACP3_ROOT . 'includes/smarty/Smarty.class.php';
 $tpl = new Smarty();
 $tpl->template_dir = ACP3_ROOT . 'installation/design/';
 $tpl->compile_dir = ACP3_ROOT . 'cache/installation/';
