@@ -90,8 +90,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		$dl[0]['text'] = db::escape($dl[0]['text'], 3);
 
 		// Datumsauswahl
-		$tpl->assign('start_date', datepicker('start', $dl[0]['start']));
-		$tpl->assign('end_date', datepicker('end', $dl[0]['end']));
+		$tpl->assign('publication_period', datepicker(array('start', 'end'), array($dl[0]['start'], $dl[0]['end'])));
 
 		$unit = trim(strrchr($dl[0]['size'], ' '));
 

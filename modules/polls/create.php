@@ -81,8 +81,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	}
 
 	// Übergabe der Daten an Smarty
-	$tpl->assign('start_date', datepicker('start'));
-	$tpl->assign('end_date', datepicker('end'));
+	$tpl->assign('publication_period', datepicker(array('start', 'end')));
 	$tpl->assign('question', isset($_POST['form']['question']) ? $_POST['form']['question'] : '');
 	$tpl->assign('answers', $answers);
 	$tpl->assign('multiple', selectEntry('multiple', '1', '0', 'checked'));

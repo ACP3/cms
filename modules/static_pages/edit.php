@@ -45,8 +45,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 		$page[0]['text'] = db::escape($page[0]['text'], 3);
 
 		// Datumsauswahl
-		$tpl->assign('start_date', datepicker('start', $page[0]['start']));
-		$tpl->assign('end_date', datepicker('end', $page[0]['end']));
+		$tpl->assign('publication_period', datepicker(array('start', 'end'), array($page[0]['start'], $page[0]['end'])));
 
 		$tpl->assign('form', isset($form) ? $form : $page[0]);
 
