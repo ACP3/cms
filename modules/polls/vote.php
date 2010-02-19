@@ -26,14 +26,14 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 
 		// Überprüfen, ob der eingeloggte User schon abgestimmt hat
 		if ($auth->isUser()) {
-			$query = $db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND user_id = \'' . USER_ID . '\'');
+			$query = $db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND user_id = \'' . $auth->getUserId() . '\'');
 		// Überprüfung für Gäste
 		} else {
 			$query = $db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . $uri->id . '\' AND ip = \'' . $ip . '\'');
 		}
 
 		if ($query == 0) {
-			$user_id = $auth->isUser() ? USER_ID : 0;
+			$user_id = $auth->isUser() ? $auth->getUserId() : 0;
 
 			if (is_array($answers)) {
 				foreach ($answers as $answer) {

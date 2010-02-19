@@ -68,7 +68,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 			$bool = $db->update('users', $update_values, 'id = \'' . $uri->id . '\'');
 
 			// Falls sich der User selbst bearbeitet hat, Cookie aktualisieren
-			if ($uri->id == USER_ID) {
+			if ($uri->id == $auth->getUserId()) {
 				$cookie_arr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
 				$auth->setCookie($form['nickname'], isset($new_pwd) ? $new_pwd : $cookie_arr[1], 3600);
 			}

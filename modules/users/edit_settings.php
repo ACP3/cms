@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
+if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 	redirect('errors/403');
 } else {
 	breadcrumb::assign($lang->t('users', 'users'), uri('users'));
@@ -43,13 +43,13 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 				'entries' => (int) $form['entries'],
 			);
 
-			$bool = $db->update('users', $update_values, 'id = \'' . USER_ID . '\'');
+			$bool = $db->update('users', $update_values, 'id = \'' . $auth->getUserId() . '\'');
 
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('users/home'));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
-		$user = $db->select('date_format_long, date_format_short, time_zone, dst, language, entries', 'users', 'id = \'' . USER_ID . '\'');
+		$user = $db->select('date_format_long, date_format_short, time_zone, dst, language, entries', 'users', 'id = \'' . $auth->getUserId() . '\'');
 
 		// Sprache
 		$languages = array();
