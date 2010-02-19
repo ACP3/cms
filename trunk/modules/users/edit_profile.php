@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
+if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 	redirect('errors/403');
 } else {
 	breadcrumb::assign($lang->t('users', 'users'), uri('users'));
@@ -24,7 +24,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 
 		if (empty($form['nickname']))
 			$errors[] = $lang->t('common', 'name_to_short');
-		if (userNameExists($form['nickname'], USER_ID))
+		if (userNameExists($form['nickname'], $auth->getUserId()))
 			$errors[] = $lang->t('users', 'user_name_already_exists');
 		if (!validate::gender($form['gender']))
 			$errors[] = $lang->t('users', 'select_gender');
@@ -32,7 +32,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 			$errors[] = $lang->t('users', 'invalid_birthday');
 		if (!validate::email($form['mail']))
 			$errors[] = $lang->t('common', 'wrong_email_format');
-		if (userEmailExists($form['mail'], USER_ID))
+		if (userEmailExists($form['mail'], $auth->getUserId()))
 			$errors[] = $lang->t('users', 'user_email_already_exists');
 		if (!empty($form['icq']) && !validate::icq($form['icq']))
 			$errors[] = $lang->t('users', 'invalid_icq_number');
@@ -64,7 +64,7 @@ if (!$auth->isUser() || !validate::isNumber(USER_ID)) {
 				$update_values['pwd'] = $new_pwd . ':' . $salt;
 			}
 
-			$bool = $db->update('users', $update_values, 'id = \'' . USER_ID . '\'');
+			$bool = $db->update('users', $update_values, 'id = \'' . $auth->getUserId() . '\'');
 
 			$cookie_arr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
 			$auth->setCookie($form['nickname'], isset($new_pwd) ? $new_pwd : $cookie_arr[1], 3600);

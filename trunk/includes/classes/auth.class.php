@@ -22,11 +22,17 @@ class auth
 	 */
 	private $isUser = false;
 	/**
+	 * Die ID des Users
+	 *
+	 * @var integer
+	 */
+	private $userId = 0;
+	/**
 	 * Einträge pro Seite
 	 *
 	 * @var integer
 	 */
-	 public $entries = CONFIG_ENTRIES;
+	public $entries = CONFIG_ENTRIES;
 
 	/**
 	 * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der
@@ -46,7 +52,7 @@ class auth
 				if ($db_password == $cookie_arr[1]) {
 					$this->isUser = true;
 					$this->entries = (int) $user_check[0]['entries'];
-					define('USER_ID', $user_check[0]['id']);
+					$this->userId = $user_check[0]['id'];
 				}
 			}
 			if (!$this->isUser) {
@@ -66,7 +72,7 @@ class auth
 	public function getUserInfo($user_id = '')
 	{
 		if (empty($user_id) && $this->isUser()) {
-			$user_id = USER_ID;
+			$user_id = $this->userId;
 		}
 		if (validate::isNumber($user_id)) {
 			static $user_info = array();
@@ -108,6 +114,10 @@ class auth
 		}
 		return false;
 	}
+	public function getUserId()
+	{
+		return $this->userId;
+	}
 	/**
 	 * Gibt den Status von $isUser zurück
 	 *
@@ -115,7 +125,7 @@ class auth
 	 */
 	public function isUser()
 	{
-		return $this->isUser && defined('USER_ID') && validate::isNumber(USER_ID) ? true : false;
+		return $this->isUser && !empty($this->userId) && validate::isNumber($this->userId) ? true : false;
 	}
 	/**
 	 * Loggt einen User ein
@@ -155,7 +165,7 @@ class auth
 
 				$this->setCookie($username, $db_hash, $expiry);
 				$this->isUser = true;
-				define('USER_ID', $user[0]['id']);
+				$this->userId = $user[0]['id'];
 
 				return 1;
 			// Beim dritten falschen Login den Account sperren
@@ -176,6 +186,7 @@ class auth
 	 */
 	public function logout()
 	{
+		$this->userId = 0;
 		return $this->setCookie('', '', -50400);
 	}
 	/**

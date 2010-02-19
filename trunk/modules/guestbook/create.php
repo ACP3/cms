@@ -43,7 +43,7 @@ if (isset($_POST['form'])) {
 			'ip' => $ip,
 			'date' => $time,
 			'name' => db::escape($form['name']),
-			'user_id' => $auth->isUser() ? USER_ID : '',
+			'user_id' => $auth->isUser() ? $auth->getUserId() : '',
 			'message' => db::escape($form['message']),
 			'website' => db::escape($form['website'], 2),
 			'mail' => $form['mail'],

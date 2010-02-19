@@ -31,7 +31,7 @@ if (!isset($entries)) {
 				$admin_user = true;
 			} else {
 				// Falls sich der User selbst gelöscht hat, diesen auch gleich abmelden
-				if ($entry == USER_ID) {
+				if ($entry == $auth->getUserId()) {
 					setcookie('ACP3_AUTH', '', time() - 3600, '/');
 					$self_delete = true;
 				}

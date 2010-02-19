@@ -19,7 +19,7 @@ if ($c_polls > 0) {
 
 		// Überprüfen, ob der eingeloogter User schon abgestimmt hat
 		if ($auth->isUser()) {
-			$query = $db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . $polls[$i]['id'] . '\' AND user_id = \'' . USER_ID . '\'');
+			$query = $db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . $polls[$i]['id'] . '\' AND user_id = \'' . $auth->getUserId() . '\'');
 		// Überprüfung für Gäste
 		} else {
 			$query = $db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . $polls[$i]['id'] . '\' AND ip = \'' . $_SERVER['REMOTE_ADDR'] . '\'');
