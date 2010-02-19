@@ -186,6 +186,7 @@ class auth
 	 */
 	public function logout()
 	{
+		$this->isUser = false;
 		$this->userId = 0;
 		return $this->setCookie('', '', -50400);
 	}
