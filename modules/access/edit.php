@@ -53,6 +53,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'access', 'id = \'' . $u
 					$mod_list[$name]['create_checked'] = isset($form['modules'][$dir]['create']) ? ' checked="checked"' : '';
 					$mod_list[$name]['edit_checked'] = isset($form['modules'][$dir]['edit']) ? ' checked="checked"' : '';
 					$mod_list[$name]['delete_checked'] = isset($form['modules'][$dir]['delete']) ? ' checked="checked"' : '';
+					$mod_list[$name]['full_checked'] = isset($form['modules'][$dir]['full']) ? ' checked="checked"' : '';
 				} else {
 					$db_value = '';
 					for ($i = 0; $i < $c_mods_arr; ++$i) {
@@ -67,22 +68,31 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'access', 'id = \'' . $u
 					$mod_list[$name]['create_checked'] = '';
 					$mod_list[$name]['edit_checked'] = '';
 					$mod_list[$name]['delete_checked'] = '';
+					$mod_list[$name]['full_checked'] = '';
 
-					if ($db_value - 8 >= 0) {
-						$mod_list[$name]['delete_checked'] = ' checked="checked"';
-						$db_value-= 8;
-					}
-					if ($db_value - 4 >= 0) {
-						$mod_list[$name]['edit_checked'] = ' checked="checked"';
-						$db_value-= 4;
-					}
-					if ($db_value - 2 >= 0) {
-						$mod_list[$name]['create_checked'] = ' checked="checked"';
-						$db_value-= 2;
-					}
-					if ($db_value - 1 >= 0) {
+					if ($db_value == 16) {
 						$mod_list[$name]['read_checked'] = ' checked="checked"';
-						$db_value-= 1;
+						$mod_list[$name]['create_checked'] = ' checked="checked"';
+						$mod_list[$name]['edit_checked'] = ' checked="checked"';
+						$mod_list[$name]['delete_checked'] = ' checked="checked"';
+						$mod_list[$name]['full_checked'] = ' checked="checked"';
+					} else {
+						if ($db_value - 8 >= 0) {
+							$mod_list[$name]['delete_checked'] = ' checked="checked"';
+							$db_value-= 8;
+						}
+						if ($db_value - 4 >= 0) {
+							$mod_list[$name]['edit_checked'] = ' checked="checked"';
+							$db_value-= 4;
+						}
+						if ($db_value - 2 >= 0) {
+							$mod_list[$name]['create_checked'] = ' checked="checked"';
+							$db_value-= 2;
+						}
+						if ($db_value - 1 >= 0) {
+							$mod_list[$name]['read_checked'] = ' checked="checked"';
+							$db_value-= 1;
+						}
 					}
 				}
 			}

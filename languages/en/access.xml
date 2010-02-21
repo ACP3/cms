@@ -49,6 +49,10 @@
 		<message>Edit access level</message>
 	</item>
 	<item>
+		<name>full_access</name>
+		<message>Full access</message>
+	</item>
+	<item>
 		<name>mod_description</name>
 		<message>With this module you can create different access levels for users.</message>
 	</item>

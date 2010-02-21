@@ -49,6 +49,10 @@
 		<message>Zugriffslevel bearbeiten</message>
 	</item>
 	<item>
+		<name>full_access</name>
+		<message>Vollzugriff</message>
+	</item>
+	<item>
 		<name>mod_description</name>
 		<message>Mit diesem Modul können verschiedene Zugriffslevel für die Benutzer angelegt werden.</message>
 	</item>

@@ -189,7 +189,7 @@ CREATE TABLE `{pre}users` (
 	PRIMARY KEY (`id`)
 ) {engine};
 
-INSERT INTO `{pre}access` VALUES ('1', 'Administrator', 'users:15,feeds:15,files:15,emoticons:15,errors:15,gallery:15,guestbook:15,categories:15,comments:15,contact:15,menu_items:15,news:15,newsletter:15,static_pages:15,search:15,system:15,polls:15,access:15,acp:15,captcha:15');
+INSERT INTO `{pre}access` VALUES ('1', 'Administrator', 'users:16,feeds:16,files:16,emoticons:16,errors:16,gallery:16,guestbook:16,categories:16,comments:16,contact:16,menu_items:16,news:16,newsletter:16,static_pages:16,search:16,system:16,polls:16,access:16,acp:16,captcha:16');
 INSERT INTO `{pre}access` VALUES ('2', 'Besucher', 'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:3,categories:1,comments:3,contact:1,menu_items:1,news:1,newsletter:1,static_pages:1,search:1,system:0,polls:1,access:0,acp:0,captcha:1');
 INSERT INTO `{pre}access` VALUES ('3', 'Benutzer', 'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:3,categories:1,comments:3,contact:1,menu_items:1,news:1,newsletter:1,static_pages:1,search:1,system:0,polls:1,access:0,acp:0,captcha:1');
 INSERT INTO `{pre}categories` VALUES ('', 'Erste Kategorie', '', 'Dies ist die erste Kategorie', 'news');

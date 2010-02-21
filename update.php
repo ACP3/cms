@@ -18,11 +18,12 @@ require ACP3_ROOT . 'includes/classes/config.php';
 require ACP3_ROOT . 'includes/classes/db.php';
 
 $queries = array(
-	0 => 'UPDATE {pre}menu_items SET mode = 4 WHERE uri LIKE \'static_pages/list/id_%\' AND mode = 2;',
+	0 => 'UPDATE `{pre}menu_items` SET `mode` = 4 WHERE `uri` LIKE \'static_pages/list/id_%\' AND `mode` = 2;',
 	1 => 'ALTER TABLE `{pre}users` ADD `date_format_long` VARCHAR(30) NOT NULL AFTER `skype`;',
 	2 => 'ALTER TABLE `{pre}users` ADD `date_format_short` VARCHAR(30) NOT NULL AFTER `date_format_long`;',
 	3 => 'ALTER TABLE `{pre}users` ADD `entries` TINYINT(2) UNSIGNED NOT NULL AFTER `language`;',
-	4 => 'UPDATE {pre}users SET date_format_long = \'' . CONFIG_DATE_FORMAT . '\', date_format_short = \'d.m.Y\', entries = ' . ((int) CONFIG_ENTRIES) . ';',
+	4 => 'UPDATE `{pre}users` SET `date_format_long` = \'' . CONFIG_DATE_FORMAT . '\', `date_format_short` = \'d.m.Y\', `entries` = ' . ((int) CONFIG_ENTRIES) . ';',
+	5 => 'UPDATE {pre}access` SET `modules` =  \'access:16,acp:16,captcha:16,categories:16,comments:16,contact:16,emoticons:16,errors:16,feeds:16,files:16,gallery:16,guestbook:16,menu_items:16,news:16,newsletter:16,polls:16,search:16,static_pages:16,system:16,users:16\'  WHERE `id` = 1;',
 );
 
 // Änderungen am DB Schema vornehmen
