@@ -63,23 +63,25 @@ class modules
 					if ((string) $item->file == $page) {
 						if ((int) $item->level != 0) {
 							$levels = array(
-								1 => array(1),
-								2 => array(2),
-								3 => array(3, 2, 1),
-								4 => array(4),
-								5 => array(5, 4, 1),
-								6 => array(6, 4, 2),
-								7 => array(7, 4, 2, 1),
-								8 => array(8),
-								9 => array(9, 8, 1),
-								10 => array(10, 8, 2),
-								11 => array(11, 8, 2, 1),
-								12 => array(12, 8, 4),
-								13 => array(13, 8, 4, 1),
-								14 => array(14, 8, 4, 2),
-								15 => array(15, 8, 4, 2, 1),
+								1 => array(1), // Lesen
+								2 => array(2), // Erstellen
+								3 => array(3, 2, 1), // Lesen und Erstellen
+								4 => array(4), // Bearbeiten
+								5 => array(5, 4, 1), // Bearbeiten und Lesen
+								6 => array(6, 4, 2), // Bearbeiten und Erstellen
+								7 => array(7, 4, 2, 1), // Bearbeiten, Erstellen und Lesen
+								8 => array(8), // Löschen
+								9 => array(9, 8, 1), // Löschen und Lesen
+								10 => array(10, 8, 2), // Löschen und Erstellen
+								11 => array(11, 8, 2, 1), // Löschen, Erstellen und Lesen
+								12 => array(12, 8, 4), // Löschen und Bearbeiten
+								13 => array(13, 8, 4, 1), // Löschen, Bearbeiten und Lesen
+								14 => array(14, 8, 4, 2), // Löschen, Bearbeiten und Erstellen
+								15 => array(15, 8, 4, 2, 1), // Löschen, Bearbeiten, Erstellen und Lesen
+								16 => array(16, 8, 4, 2, 1), // Vollzugriff
 							);
-							if (!empty($access_level[$module]) && in_array((int) $item->level, $levels[$access_level[$module]]))
+							if (!empty($access_level[$module]) && !empty($levels[$access_level[$module]]) &&
+								in_array((int) $item->level, $levels[$access_level[$module]]))
 								return 1;
 						}
 						return 0;

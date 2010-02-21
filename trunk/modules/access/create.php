@@ -48,6 +48,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 			$mod_list[$name]['create_checked'] = isset($form['modules'][$dir]['create']) ? ' checked="checked"' : '';
 			$mod_list[$name]['edit_checked'] = isset($form['modules'][$dir]['edit']) ? ' checked="checked"' : '';
 			$mod_list[$name]['delete_checked'] = isset($form['modules'][$dir]['delete']) ? ' checked="checked"' : '';
+			$mod_list[$name]['full_checked'] = isset($form['modules'][$dir]['full']) ? ' checked="checked"' : '';
 		}
 	}
 	$tpl->assign('mod_list', $mod_list);

@@ -16,10 +16,11 @@
 			<thead>
 				<tr class="sub-table-header">
 					<th>{lang values="common|modules"}</th>
-					<th><a href="javascript:mark_permissions('read','toggle');">{lang values="access|can_read"}</a></th>
-					<th><a href="javascript:mark_permissions('create','toggle');">{lang values="access|can_create"}</a></th>
-					<th><a href="javascript:mark_permissions('edit','toggle');">{lang values="access|can_edit"}</a></th>
-					<th><a href="javascript:mark_permissions('delete','toggle');">{lang values="access|can_delete"}</a></th>
+					<th><a href="javascript:mark_permissions('read');">{lang values="access|can_read"}</a></th>
+					<th><a href="javascript:mark_permissions('create');">{lang values="access|can_create"}</a></th>
+					<th><a href="javascript:mark_permissions('edit');">{lang values="access|can_edit"}</a></th>
+					<th><a href="javascript:mark_permissions('delete');">{lang values="access|can_delete"}</a></th>
+					<th><a href="javascript:mark_permissions('full');">{lang values="access|full_access"}</a></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -30,6 +31,7 @@
 					<td><input type="checkbox" name="form[modules][{$mod.dir}][create]" value="1" class="access-create checkbox"{$mod.create_checked} /></td>
 					<td><input type="checkbox" name="form[modules][{$mod.dir}][edit]" value="1" class="access-edit checkbox"{$mod.edit_checked} /></td>
 					<td><input type="checkbox" name="form[modules][{$mod.dir}][delete]" value="1" class="access-delete checkbox"{$mod.delete_checked} /></td>
+					<td><input type="checkbox" name="form[modules][{$mod.dir}][full]" value="1" class="access-full checkbox"{$mod.full_checked} /></td>
 				</tr>
 {/foreach}
 			</tbody>

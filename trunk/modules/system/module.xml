@@ -15,7 +15,7 @@
 		</item>
 		<item>
 			<file>configuration</file>
-			<level>15</level>
+			<level>16</level>
 		</item>
 		<item>
 			<file>designs</file>
@@ -31,7 +31,7 @@
 		</item>
 		<item>
 			<file>maintenance</file>
-			<level>15</level>
+			<level>16</level>
 		</item>
 		<item>
 			<file>modules</file>
@@ -39,23 +39,23 @@
 		</item>
 		<item>
 			<file>server_config</file>
-			<level>15</level>
+			<level>16</level>
 		</item>
 		<item>
 			<file>sql_export</file>
-			<level>15</level>
+			<level>16</level>
 		</item>
 		<item>
 			<file>sql_import</file>
-			<level>15</level>
+			<level>16</level>
 		</item>
 		<item>
 			<file>sql_optimisation</file>
-			<level>15</level>
+			<level>16</level>
 		</item>
 		<item>
 			<file>update_check</file>
-			<level>15</level>
+			<level>16</level>
 		</item>
 	</access>
 </module>
