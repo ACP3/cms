@@ -18,8 +18,11 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 	$bool = true;
 	$bool2 = true;
 
+	$subject = db::escape($newsletter[0]['subject'], 3);
+	$body = db::escape($newsletter[0]['text'], 3) . "\n" . $settings['mailsig'];
+
 	for ($i = 0; $i < $c_accounts; ++$i) {
-		$bool = genEmail('', $accounts[$i]['mail'], $settings['mail'], db::escape($newsletter[0]['subject'], 3), db::escape($newsletter[0]['text'], 3) . $settings['mailsig']);
+		$bool = genEmail('', $accounts[$i]['mail'], $settings['mail'], $subject, $body);
 		if (!$bool)
 			break;
 	}

@@ -27,13 +27,12 @@ if (isset($_POST['form'])) {
 			} else {
 				$hash = md5(mt_rand(0, microtime(true)));
 				$host = htmlentities($_SERVER['HTTP_HOST']);
-				$newsletter = config::output('newsletter');
+				$settings = config::output('newsletter');
 
-				$text = str_replace(array('{mail}', '{title}', '{host}'), array($form['mail'], CONFIG_SEO_TITLE, $host), $lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
-				$text .= 'http://' . $host . uri('newsletter/activate/hash_' . $hash . '/mail_' . $form['mail']);
-				$header = "Content-type: text/plain; charset=UTF-8\r\n";
-				$header.= 'FROM:' . $newsletter['mail'];
-				$mail_sent = @mail($form['mail'], sprintf($lang->t('newsletter', 'subscribe_mail_subject'), $host), $text, $header);
+				$subject = sprintf($lang->t('newsletter', 'subscribe_mail_subject'), $host);
+				$body = str_replace(array('{mail}', '{title}', '{host}'), array($form['mail'], CONFIG_SEO_TITLE, $host), $lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
+				$body.= 'http://' . $host . uri('newsletter/activate/hash_' . $hash . '/mail_' . $form['mail']);
+				$mail_sent = genEmail('', $form['mail'], $settings['mail'], $subject, $body);
 
 				// Newsletter-Konto nur erstellen, wenn die E-Mail erfolgreich versendet werden konnte
 				if ($mail_sent) {

@@ -33,9 +33,8 @@ if ($auth->isUser()) {
 			$form['nickname'] = db::escape($form['nickname']);
 			$host = htmlentities($_SERVER['HTTP_HOST']);
 			$subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), $lang->t('users', 'register_mail_subject'));
-			$message = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($form['nickname'], $form['mail'], $form['pwd'], CONFIG_SEO_TITLE, $host), $lang->t('users', 'register_mail_message'));
-			$header = 'Content-type: text/plain; charset=UTF-8';
-			$mail_sent = @mail($form['mail'], $subject, $message, $header);
+			$body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($form['nickname'], $form['mail'], $form['pwd'], CONFIG_SEO_TITLE, $host), $lang->t('users', 'register_mail_message'));
+			$mail_sent = genEmail('', $form['mail'], $subject, $body);
 
 			// Das Benutzerkonto nur erstellen, wenn die E-Mail erfolgreich versendet werden konnte
 			if ($mail_sent) {
