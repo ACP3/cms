@@ -51,6 +51,8 @@ $tpl->assign('LANG', CONFIG_LANG);
 $tpl->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
 $tpl->assign('KEYWORDS', CONFIG_SEO_META_KEYWORDS);
 $tpl->assign('DESCRIPTION', CONFIG_SEO_META_DESCRIPTION);
+$tpl->assign('MIN_JAVASCRIPT', ROOT_DIR . 'includes/min/?g=js&amp;' . CONFIG_DESIGN);
+$tpl->assign('MIN_STYLESHEET', ROOT_DIR . 'includes/min/?g=css&amp;' . CONFIG_DESIGN);
 
 $uri = new uri();
 
