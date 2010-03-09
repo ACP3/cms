@@ -526,6 +526,8 @@ function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
  *	Die anzuzeigenden Zeichen
  * @param integer $diff
  *	Anzahl der Zeichen, welche nach strlen($data) - $chars noch kommen müssen
+ * @param string append
+ *	Kann bspw. dazu genutzt werden, um an den gekürzten Text noch einen Weiterlesen-Link anzuhängen
  * @return string
  */
 function shortenEntry($data, $chars = 300, $diff = 50, $append = '')
