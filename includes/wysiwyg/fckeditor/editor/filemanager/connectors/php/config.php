@@ -24,10 +24,9 @@
 define('ACP3_ROOT', '../../../../../../../');
 include ACP3_ROOT . 'includes/config.php';
 
-function __autoload($className)
-{
-	require_once ACP3_ROOT . 'includes/classes/' . $className . '.php';
-}
+set_include_path(get_include_path() . PATH_SEPARATOR . ACP3_ROOT . 'includes/classes/');
+spl_autoload_extensions('.class.php');
+spl_autoload_register();
 
 global $Config ;
 
