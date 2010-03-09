@@ -6,7 +6,7 @@
 		<ul>
 			<li>
 {foreach from=$sidebar_poll_answers item=row}
-				<label for="answer-{$row.id}" class="{$row.css_class}">
+				<label for="answer-{$row.id}">
 {if $sidebar_poll_question.multiple == '1'}
 					<input type="checkbox" name="answer[]" id="answer-{$row.id}" value="{$row.id}" class="checkbox" />
 {else}
