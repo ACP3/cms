@@ -11,7 +11,7 @@ if (!defined('IN_ACP3') && !defined('IN_ADM'))
 
 $time = $date->timestamp();
 $where = 'start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\'';
-$news = $db->select('id, start, headline', 'news', $where, 'start DESC', 5);
+$news = $db->select('id, start, headline', 'news', $where, 'start DESC, end DESC, id DESC', 5);
 $c_news = count($news);
 
 if ($c_news > 0) {
