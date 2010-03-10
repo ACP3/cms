@@ -49,7 +49,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 
 		$tpl->assign('form', isset($form) ? $form : $page[0]);
 
-		$content = $tpl->fetch('static_pages/edit.html');
+		$content = modules::fetchTemplate('static_pages/edit.html');
 	}
 } else {
 	redirect('errors/404');

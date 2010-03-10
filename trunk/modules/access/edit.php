@@ -99,7 +99,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'access', 'id = \'' . $u
 		}
 		$tpl->assign('mod_list', $mod_list);
 
-		$content = $tpl->fetch('access/edit.html');
+		$content = modules::fetchTemplate('access/edit.html');
 	}
 } else {
 	redirect('errors/404');

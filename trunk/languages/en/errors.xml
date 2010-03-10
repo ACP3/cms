@@ -24,4 +24,8 @@
 		<name>no_access</name>
 		<message>You don\'t have the needed rights to view this page.</message>
 	</item>
+	<item>
+		<name>tpl_not_found</name>
+		<message>The desired template %s was not found.</message>
+	</item>
 </language>

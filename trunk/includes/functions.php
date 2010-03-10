@@ -50,7 +50,7 @@ function captcha($captcha_length = 5)
 		$captcha['hash'] = md5(uniqid(rand(), true));
 		$captcha['length'] = $captcha_length;
 		$tpl->assign('captcha', $captcha);
-		return $tpl->fetch('common/captcha.html');
+		return modules::fetchTemplate('common/captcha.html');
 	}
 	return '';
 }
@@ -71,7 +71,7 @@ function comboBox($text, $forward = 0, $backward = 0)
 
 	if (is_array($text) && empty($forward) && empty($backward)) {
 		$tpl->assign('text', $text);
-		return $tpl->fetch('common/error.html');
+		return modules::fetchTemplate('common/error.html');
 	} elseif (!empty($text) && (!empty($forward) || !empty($backward))) {
 		$tpl->assign('text', $text);
 		$tpl->assign('forward', $forward);
@@ -79,7 +79,7 @@ function comboBox($text, $forward = 0, $backward = 0)
 			$tpl->assign('backward', $backward);
 		}
 
-		return $tpl->fetch('common/combo.html');
+		return modules::fetchTemplate('common/combo.html');
 	}
 	return '';
 }
@@ -153,7 +153,7 @@ function datepicker($name, $value = '', $format = 'Y-m-d H:i', $params = array()
 
 	$tpl->assign('datepicker', $datepicker);
 
-	return $tpl->fetch('common/date.html');
+	return modules::fetchTemplate('common/date.html');
 }
 /**
  * Generiert eine E-Mail und versendet diese
@@ -413,7 +413,7 @@ function pagination($rows)
 
 		$tpl->assign('pagination', $pagination);
 
-		return $tpl->fetch('common/pagination.html');
+		return modules::fetchTemplate('common/pagination.html');
 	}
 }
 /**

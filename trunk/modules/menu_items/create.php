@@ -127,5 +127,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 	$tpl->assign('pages_list', pagesList());
 
-	$content = $tpl->fetch('menu_items/create.html');
+	$content = modules::fetchTemplate('menu_items/create.html');
 }

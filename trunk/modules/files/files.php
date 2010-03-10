@@ -30,7 +30,7 @@ if (validate::isNumber($uri->cat) && $db->countRows('*', 'categories', 'id = \''
 		}
 		$tpl->assign('files', $files);
 	}
-	$content = $tpl->fetch('files/files.html');
+	$content = modules::fetchTemplate('files/files.html');
 } else {
 	redirect('errors/404');
 }

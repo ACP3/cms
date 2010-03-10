@@ -24,4 +24,8 @@
 		<name>no_access</name>
 		<message>Es ist ihnen nicht gestattet auf diese Seite zuzugreifen, da Sie die dafür benötigten Zugriffsrechte nicht besitzen.</message>
 	</item>
+	<item>
+		<name>tpl_not_found</name>
+		<message>Das angeforderte Template %s konnte leider nicht gefunden werden.</message>
+	</item>
 </language>

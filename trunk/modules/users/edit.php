@@ -123,7 +123,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 
 		$tpl->assign('form', isset($form) ? $form : $user);
 
-		$content = $tpl->fetch('users/edit.html');
+		$content = modules::fetchTemplate('users/edit.html');
 	}
 } else {
 	redirect('errors/404');

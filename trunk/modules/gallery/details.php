@@ -41,7 +41,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(g.id)', 'gallery AS g, ' 
 		$tpl->assign('comments', commentsList('gallery', $uri->id));
 	}
 
-	$content = $tpl->fetch('gallery/details.html');
+	$content = modules::fetchTemplate('gallery/details.html');
 } else {
 	redirect('errors/404');
 }

@@ -80,5 +80,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('captcha', captcha());
 
-	$content = $tpl->fetch('newsletter/create.html');
+	$content = modules::fetchTemplate('newsletter/create.html');
 }

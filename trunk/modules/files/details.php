@@ -53,7 +53,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 
 			$tpl->assign('comments', commentsList('files', $uri->id));
 		}
-		$content = $tpl->fetch('files/details.html');
+		$content = modules::fetchTemplate('files/details.html');
 	}
 } else {
 	redirect('errors/404');

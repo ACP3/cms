@@ -23,4 +23,4 @@ if ($c_files > 0) {
 	$tpl->assign('files', $files);
 }
 
-$content = $tpl->fetch('files/adm_list.html');
+$content = modules::fetchTemplate('files/adm_list.html');

@@ -30,4 +30,4 @@ if ($auth->isUser()) {
 		$tpl->assign('error_msg', comboBox($error));
 	}
 }
-$content = $tpl->fetch('users/login.html');
+$content = modules::fetchTemplate('users/login.html');

@@ -38,5 +38,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : $contact);
 
-	$content = $tpl->fetch('contact/adm_list.html');
+	$content = modules::fetchTemplate('contact/adm_list.html');
 }

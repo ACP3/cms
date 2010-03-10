@@ -127,5 +127,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 
-	$content = $tpl->fetch('users/create.html');
+	$content = modules::fetchTemplate('users/create.html');
 }

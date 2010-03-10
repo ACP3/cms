@@ -28,8 +28,8 @@ $lang = new lang();
 // Smarty einbinden
 include ACP3_ROOT . 'includes/smarty/Smarty.class.php';
 $tpl = new Smarty();
-$tpl->template_dir = ACP3_ROOT . 'installation/design/';
-$tpl->compile_dir = ACP3_ROOT . 'cache/installation/';
+$tpl->setTemplateDir(ACP3_ROOT . 'installation/design/');
+$tpl->setCompileDir(ACP3_ROOT . 'cache/installation/');
 if (!is_dir($tpl->compile_dir)) {
 	if (!is_writable(ACP3_ROOT . 'cache/')) {
 		exit('Bitte geben Sie dem "cache"-Ordner den CHMOD 777!');

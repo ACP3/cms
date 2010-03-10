@@ -22,4 +22,4 @@ if ($c_blocks > 0) {
 	$tpl->assign('blocks', $blocks);
 }
 
-$content = $tpl->fetch('menu_items/adm_list_blocks.html');
+$content = modules::fetchTemplate('menu_items/adm_list_blocks.html');

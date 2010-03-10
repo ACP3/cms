@@ -18,4 +18,4 @@ if (modules::check('categories', 'functions') == 1) {
 	}
 }
 
-$content = $tpl->fetch('files/list.html');
+$content = modules::fetchTemplate('files/list.html');

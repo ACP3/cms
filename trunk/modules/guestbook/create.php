@@ -95,5 +95,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	
 	$tpl->assign('captcha', captcha());
 
-	$content = $tpl->fetch('guestbook/create.html');
+	$content = modules::fetchTemplate('guestbook/create.html');
 }

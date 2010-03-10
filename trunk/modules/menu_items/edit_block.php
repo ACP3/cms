@@ -48,7 +48,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 
 		$tpl->assign('form', isset($form) ? $form : $block[0]);
 
-		$content = $tpl->fetch('menu_items/edit_block.html');
+		$content = modules::fetchTemplate('menu_items/edit_block.html');
 	}
 } else {
 	redirect('errors/404');

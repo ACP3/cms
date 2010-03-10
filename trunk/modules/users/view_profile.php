@@ -11,4 +11,4 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 	$user['birthday'] = $date->format($user['birthday'], $user['birthday_format'] == 1 ? 'd.m.Y' : 'd.m');
 	$tpl->assign('user', $user);
 }
-$content = $tpl->fetch('users/view_profile.html');
+$content = modules::fetchTemplate('users/view_profile.html');

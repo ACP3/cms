@@ -21,4 +21,4 @@ if ($c_news > 0) {
 	}
 	$tpl->assign('news', $news);
 }
-$content = $tpl->fetch('news/adm_list.html');
+$content = modules::fetchTemplate('news/adm_list.html');

@@ -220,7 +220,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 		$parent = $db->select('id', 'menu_items', 'left_id < ' . $page[0]['left_id'] . ' AND right_id > ' . $page[0]['right_id'], 'left_id DESC', 1);
 		$tpl->assign('pages_list', pagesList(!empty($parent) ? $parent[0]['id'] : 0, $page[0]['left_id'], $page[0]['right_id']));
 
-		$content = $tpl->fetch('menu_items/edit.html');
+		$content = modules::fetchTemplate('menu_items/edit.html');
 	}
 } else {
 	redirect('errors/404');

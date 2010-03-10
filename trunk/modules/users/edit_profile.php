@@ -137,6 +137,6 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 
 		$tpl->assign('form', isset($form) ? $form : $user);
 
-		$content = $tpl->fetch('users/edit_profile.html');
+		$content = modules::fetchTemplate('users/edit_profile.html');
 	}
 }

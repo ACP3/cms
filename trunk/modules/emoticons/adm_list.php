@@ -21,4 +21,4 @@ if ($c_emoticons > 0) {
 	}
 	$tpl->assign('emoticons', $emoticons);
 }
-$content = $tpl->fetch('emoticons/adm_list.html');
+$content = modules::fetchTemplate('emoticons/adm_list.html');
