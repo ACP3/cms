@@ -90,6 +90,6 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 		$user[0]['date_format_short'] = db::escape($user[0]['date_format_short'], 3);
 
 		$tpl->assign('form', isset($form) ? $form : $user[0]);
-		$content = $tpl->fetch('users/edit_settings.html');
+		$content = modules::fetchTemplate('users/edit_settings.html');
 	}
 }

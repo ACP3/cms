@@ -33,5 +33,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	
 	$tpl->assign('form', isset($form) ? $form : $settings);
 
-	$content = $tpl->fetch('categories/settings.html');
+	$content = modules::fetchTemplate('categories/settings.html');
 }

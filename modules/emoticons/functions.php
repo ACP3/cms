@@ -48,7 +48,7 @@ function emoticonsList($field_id = 0)
 
 	$tpl->assign('emoticons_field_id', empty($field_id) ? 'message' : $field_id);
 	$tpl->assign('emoticons', $emoticons);
-	return $tpl->fetch('emoticons/list.html');
+	return modules::fetchTemplate('emoticons/list.html');
 }
 /**
  * Ersetzt bestimmte Zeichen durch Emoticons

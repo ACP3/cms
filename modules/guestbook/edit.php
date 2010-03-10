@@ -44,7 +44,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 
 		$tpl->assign('form', isset($form) ? $form : $guestbook[0]);
 
-		$content = $tpl->fetch('guestbook/edit.html');
+		$content = modules::fetchTemplate('guestbook/edit.html');
 	}
 } else {
 	redirect('errors/404');

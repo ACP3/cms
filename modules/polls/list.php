@@ -36,4 +36,4 @@ if ($c_polls > 0) {
 	$tpl->assign('polls', $polls);
 }
 
-$content = $tpl->fetch('polls/list.html');
+$content = modules::fetchTemplate('polls/list.html');

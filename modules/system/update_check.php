@@ -29,4 +29,4 @@ if ($file) {
 		$tpl->assign('update', $content);
 	}
 }
-$content = $tpl->fetch('system/update_check.html');
+$content = modules::fetchTemplate('system/update_check.html');

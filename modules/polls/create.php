@@ -87,5 +87,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('multiple', selectEntry('multiple', '1', '0', 'checked'));
 	$tpl->assign('disable', count($answers) < 10 ? false : true);
 
-	$content = $tpl->fetch('polls/create.html');
+	$content = modules::fetchTemplate('polls/create.html');
 }

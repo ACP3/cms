@@ -42,5 +42,5 @@ if (isset($_POST['form'])) {
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : array('index_name' => '', 'title' => ''));
 
-	$content = $tpl->fetch('menu_items/create_block.html');
+	$content = modules::fetchTemplate('menu_items/create_block.html');
 }

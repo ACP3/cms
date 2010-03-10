@@ -87,5 +87,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : array('headline' => '', 'text' => '', 'uri' => '', 'link_title' => ''));
 
-	$content = $tpl->fetch('news/create.html');
+	$content = modules::fetchTemplate('news/create.html');
 }

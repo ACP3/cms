@@ -20,6 +20,6 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 
 		$tpl->assign('draft', db::escape($user[0]['draft'], 3));
 
-		$content = $tpl->fetch('users/home.html');
+		$content = modules::fetchTemplate('users/home.html');
 	}
 }

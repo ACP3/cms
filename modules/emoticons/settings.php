@@ -33,5 +33,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	
 	$tpl->assign('form', isset($form) ? $form : $settings);
 
-	$content = $tpl->fetch('emoticons/settings.html');
+	$content = modules::fetchTemplate('emoticons/settings.html');
 }

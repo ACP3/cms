@@ -34,10 +34,10 @@ define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
 // Smarty einbinden
 require ACP3_ROOT . 'includes/smarty/Smarty.class.php';
 $tpl = new Smarty();
-$tpl->template_dir = ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/';
-$tpl->compile_dir = ACP3_ROOT . 'cache/';
+$tpl->setTemplateDir(ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/');
+$tpl->setCompileDir(ACP3_ROOT . 'cache/');
 $tpl->error_reporting = $reporting_level;
-$tpl->compile_check = defined('DEBUG') && DEBUG ? true : false;
+$tpl->compile_check = defined('DEBUG') && DEBUG ? true : null;
 if (!is_writable($tpl->compile_dir)) {
 	exit('Bitte geben Sie dem "cache"-Ordner den CHMOD 777!');
 }

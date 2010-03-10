@@ -106,4 +106,4 @@ if (!isset($_POST['form']) || isset($errors)) {
 	$drop['lang'] = $lang->t('system', 'drop_tables');
 	$tpl->assign('drop', $drop);
 }
-$content = $tpl->fetch('system/sql_export.html');
+$content = modules::fetchTemplate('system/sql_export.html');

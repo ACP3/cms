@@ -61,7 +61,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'emoticons', 'id = \'' .
 		$tpl->assign('picture', $emoticon[0]['img']);
 		$tpl->assign('form', isset($form) ? $form : $emoticon[0]);
 
-		$content = $tpl->fetch('emoticons/edit.html');
+		$content = modules::fetchTemplate('emoticons/edit.html');
 	}
 } else {
 	redirect('errors/404');

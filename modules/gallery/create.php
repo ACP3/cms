@@ -39,5 +39,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : array('name' => ''));
 
-	$content = $tpl->fetch('gallery/create.html');
+	$content = modules::fetchTemplate('gallery/create.html');
 }

@@ -46,4 +46,4 @@ if (!$errors && !$register_globals && !$safe_mode && $php_settings[3]['col_right
 
 $tpl->assign('php_settings', $php_settings);
 
-$content = $tpl->fetch('system/server_config.html');
+$content = modules::fetchTemplate('system/server_config.html');

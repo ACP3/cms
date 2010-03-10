@@ -59,5 +59,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('readmore_chars', isset($form) ? $form['readmore_chars'] : $settings['readmore_chars']);
 
-	$content = $tpl->fetch('news/settings.html');
+	$content = modules::fetchTemplate('news/settings.html');
 }

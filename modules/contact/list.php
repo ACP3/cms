@@ -63,5 +63,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	
 	$tpl->assign('captcha', captcha());
 
-	$content = $tpl->fetch('contact/list.html');
+	$content = modules::fetchTemplate('contact/list.html');
 }

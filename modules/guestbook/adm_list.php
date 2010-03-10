@@ -33,4 +33,4 @@ if ($c_guestbook > 0) {
 	}
 	$tpl->assign('guestbook', $guestbook);
 }
-$content = $tpl->fetch('guestbook/adm_list.html');
+$content = modules::fetchTemplate('guestbook/adm_list.html');

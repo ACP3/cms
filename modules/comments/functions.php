@@ -66,7 +66,7 @@ function commentsList($module, $entry_id)
 		$tpl->assign('comments', $comments);
 	}
 
-	$content = $tpl->fetch('comments/list.html');
+	$content = modules::fetchTemplate('comments/list.html');
 
 	if (modules::check('comments', 'create') == 1) {
 		require_once ACP3_ROOT . 'modules/comments/create.php';

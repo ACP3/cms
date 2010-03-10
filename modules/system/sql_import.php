@@ -50,4 +50,4 @@ if (isset($_POST['form'])) {
 if (!isset($_POST['form']) || isset($errors)) {
 	$tpl->assign('form', isset($form) ? $form : array('text' => ''));
 }
-$content = $tpl->fetch('system/sql_import.html');
+$content = modules::fetchTemplate('system/sql_import.html');

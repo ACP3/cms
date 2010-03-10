@@ -39,4 +39,4 @@ if (modules::check('system', 'server_config') == 1) {
 	$tpl->assign('server_info', $server_info);
 }
 
-$content = $tpl->fetch('acp/adm_list.html');
+$content = modules::fetchTemplate('acp/adm_list.html');

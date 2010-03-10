@@ -51,7 +51,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 
 		$tpl->assign('form', isset($form) ? $form : $comment[0]);
 
-		$content = $tpl->fetch('comments/edit.html');
+		$content = modules::fetchTemplate('comments/edit.html');
 	}
 } else {
 	redirect('errors/404');

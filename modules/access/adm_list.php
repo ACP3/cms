@@ -38,4 +38,4 @@ if ($c_access > 0) {
 	}
 	$tpl->assign('access', $access);
 }
-$content = $tpl->fetch('access/adm_list.html');
+$content = modules::fetchTemplate('access/adm_list.html');

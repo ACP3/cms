@@ -139,7 +139,7 @@ class modules
 				$tpl->assign('CONTENT', !empty($content) ? $content : '');
 
 				// Falls ein Modul ein eigenes Layout verwenden möchte, dieses auch zulassen
-				$tpl->display(defined('CUSTOM_LAYOUT') ? CUSTOM_LAYOUT : 'layout.html');
+				self::fetchTemplate(defined('CUSTOM_LAYOUT') ? CUSTOM_LAYOUT : 'layout.html', null, null, null, true);
 				break;
 			// Kein Zugriff auf die Seite
 			case 0:
@@ -149,6 +149,28 @@ class modules
 			default:
 				redirect('errors/404');
 		}
+	}
+	/**
+	 * Gibt ein Template aus
+	 *
+	 * @param string $template
+	 * @param mixed $cache_id
+	 * @param mixed $compile_id
+	 * @param object $parent
+	 * @param boolean $display
+	 * @return string
+	 */
+	public static function fetchTemplate($template, $cache_id = null, $compile_id = null, $parent = null, $display = false)
+	{
+		global $lang, $tpl;
+
+		if ($tpl->templateExists($template)) {
+			return $tpl->fetch($template, $cache_id, $compile_id, $parent, $display);
+		} elseif (defined('DEBUG') && DEBUG) {
+			return sprintf($lang->t('errors', 'tpl_not_found'), $template);
+		}
+
+		return '';
 	}
 	/**
 	 * Durchläuft für das angeforderte Modul den <info> Abschnitt in der

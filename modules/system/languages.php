@@ -62,5 +62,5 @@ if ($uri->dir) {
 	}
 	$tpl->assign('languages', $languages);
 
-	$content = $tpl->fetch('system/languages.html');
+	$content = modules::fetchTemplate('system/languages.html');
 }
