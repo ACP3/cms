@@ -110,6 +110,8 @@ if (isset($_POST['submit'])) {
 			}
 		}
 		$tpl->assign('sql_queries', $data);
+
+		// Compilierte Templates löschen
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

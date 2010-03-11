@@ -47,9 +47,4 @@ if ($is_page) {
 $tpl->display('layout.html');
 
 ob_end_flush();
-
-if ($uri->mod == 'install' && $uri->page == 'configuration') {
-	cache::purge('installation', 1);
-	cache::purge();
-}
 ?>
