@@ -77,14 +77,14 @@ class db
 		}
 	}
 	/**
-	 * Führt die SQL Abfragen durch
+	 * Führt die SQL-Abfragen aus
 	 *
 	 * @param string $query
-	 * 	Die durchzuführende SQL Abfrage
+	 * 	Die durchzuführende SQL-Abfrage
 	 * @param integer $mode
 	 * 	1 = Nur Datensätze zählen
 	 *  2 = Datensätze als assoziatives Array ausgeben
-	 *  3 = Rückgabewert der SQL Abfrage
+	 *  3 = Rückgabewert der SQL-Abfrage
 	 * @return mixed
 	 */
 	public function query($query, $mode = 2)
@@ -163,13 +163,13 @@ class db
 	 * @param string $table
 	 * 	Die betroffene Tabelle der Datenbank
 	 * @param string $where
-	 * 	WHERE Bedingung der SQL Abfrage
+	 * 	WHERE Bedingung der SQL-Abfrage
 	 * @param string $order
-	 * 	ORDER BY Bedingung der SQL Abfrage
+	 * 	ORDER BY Bedingung der SQL-Abfrage
 	 * @param integer $min
-	 * 	Erster Parameter der LIMIT Bedingung der SQL Abfrage
+	 * 	Erster Parameter der LIMIT Bedingung der SQL-Abfrage
 	 * @param integer $max
-	 * 	Zweiter Parameter der LIMIT Bedingung der SQL Abfrage
+	 * 	Zweiter Parameter der LIMIT Bedingung der SQL-Abfrage
 	 * @param integer $mode
 	 * 	@see query()
 	 * @return @see query()
@@ -203,7 +203,7 @@ class db
 	 * @param string $table
 	 * 	Die betroffene Tabelle der Datenbank
 	 * @param string $where
-	 * 	WHERE Bedingung der SQL Abfrage
+	 * 	WHERE Bedingung der SQL-Abfrage
 	 * @return @see query()
 	 */
 	public function countRows($field, $table, $where = 0)
@@ -220,9 +220,9 @@ class db
 	 * @param string $table
 	 *  Die betroffene Tabelle der Datenbank
 	 * @param array $update_values
-	 *  Erwartet ein Array mit den betroffenen Feldern als Schlüssel und dazugehörigem Inhalt
+	 *  Erwartet ein assoziatives Array mit den betroffenen Feldern als Schlüssel und dazugehörigem Inhalt
 	 * @param string $where
-	 *  WHERE Bedingung der SQL Abfrage
+	 *  WHERE Bedingung der SQL-Abfrage
 	 * @return boolean
 	 */
 	public function update($table, $update_values, $where = 0, $limit = 0)
