@@ -38,6 +38,7 @@ $tpl->setTemplateDir(ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/');
 $tpl->setCompileDir(ACP3_ROOT . 'cache/');
 $tpl->error_reporting = $reporting_level;
 $tpl->compile_check = defined('DEBUG') && DEBUG ? true : null;
+$tpl->compile_id = CONFIG_DESIGN;
 if (!is_writable($tpl->compile_dir)) {
 	exit('Bitte geben Sie dem "cache"-Ordner den CHMOD 777!');
 }

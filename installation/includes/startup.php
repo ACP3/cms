@@ -29,12 +29,11 @@ $lang = new lang();
 include ACP3_ROOT . 'includes/smarty/Smarty.class.php';
 $tpl = new Smarty();
 $tpl->setTemplateDir(ACP3_ROOT . 'installation/design/');
-$tpl->setCompileDir(ACP3_ROOT . 'cache/installation/');
+$tpl->setCompileDir(ACP3_ROOT . 'cache/');
+$tpl->compile_id = 'installation';
 if (!is_dir($tpl->compile_dir)) {
 	if (!is_writable(ACP3_ROOT . 'cache/')) {
 		exit('Bitte geben Sie dem "cache"-Ordner den CHMOD 777!');
-	} else {
-		mkdir($tpl->compile_dir, 0777);
 	}
 }
 
