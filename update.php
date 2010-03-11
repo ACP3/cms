@@ -13,9 +13,9 @@ define('ACP3_ROOT', './');
 
 require ACP3_ROOT . 'includes/config.php';
 
-require ACP3_ROOT . 'includes/classes/cache.php';
-require ACP3_ROOT . 'includes/classes/config.php';
-require ACP3_ROOT . 'includes/classes/db.php';
+require ACP3_ROOT . 'includes/classes/cache.class.php';
+require ACP3_ROOT . 'includes/classes/config.class.php';
+require ACP3_ROOT . 'includes/classes/db.class.php';
 
 $queries = array(
 	0 => 'UPDATE `{pre}menu_items` SET `mode` = 4 WHERE `uri` LIKE \'static_pages/list/id_%\' AND `mode` = 2;',
