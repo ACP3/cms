@@ -20,7 +20,7 @@
 			</tr>
 		</thead>
 		<tbody>
-{foreach from=$users item=row}
+{foreach $users as $row}
 			<tr>
 {if $can_delete}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>

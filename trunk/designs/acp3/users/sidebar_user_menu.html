@@ -6,7 +6,7 @@
 	<li>
 		<a href="{uri args="acp"}">{lang values="users|administration"}</a>
 		<ul>
-{foreach from=$user_sidebar.modules item=row}
+{foreach $user_sidebar.modules as $row}
 			<li><a href="{uri args="acp/`$row.dir`"}">{$row.name}</a></li>
 {/foreach}
 		</ul>
@@ -16,7 +16,7 @@
 	<li>
 		<a href="{uri args="acp/system"}">{lang values="system|system"}</a>
 		<ul>
-{foreach from=$user_sidebar.system item=row}
+{foreach $user_sidebar.system as $row}
 			<li><a href="{uri args="acp/system/`$row.page`"}">{$row.name}</a></li>
 {/foreach}
 		</ul>

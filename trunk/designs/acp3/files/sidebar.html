@@ -1,7 +1,7 @@
 <h4>{lang values="files|latest_files"}</h4>
 <ul>
 {if isset($sidebar_files)}
-{foreach from=$sidebar_files item=row}
+{foreach $sidebar_files as $row}
 	<li><a href="{uri args="files/details/id_`$row.id`"}" title="{$row.start} - {$row.link_title}">{$row.link_title_short}</a></li>
 {/foreach}
 {else}

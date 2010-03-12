@@ -1,6 +1,6 @@
 <div id="pagination">
 	{lang values="common|pagination"}:
-{foreach from=$pagination item=row}
+{foreach $pagination as $row}
 {if $row.selected}
 	<span>{$row.page}</span>
 {else}

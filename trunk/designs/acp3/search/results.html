@@ -1,8 +1,8 @@
 {if isset($results_mods)}
-{foreach from=$results_mods item=result_mod}
+{foreach $results_mods as $result_mod}
 <h4>{$result_mod.title}</h4>
 <ol>
-{foreach from=$result_mod.results item=row}
+{foreach $result_mod.results as $row}
 	<li class="search">
 		<a href="{$row.hyperlink}" class="header">{$row.headline}</a>
 {if !empty($row.text)}

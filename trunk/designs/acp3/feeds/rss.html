@@ -8,7 +8,7 @@
 		<description>{$feed.description}</description>
 		<language>{$LANG}</language>
 {if isset($results)}
-{foreach from=$results item=row}
+{foreach $results as $row}
 		<item>
 			<pubDate>{$row.date}</pubDate>
 			<title>{$row.title}</title>

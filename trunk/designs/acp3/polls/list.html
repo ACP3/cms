@@ -8,7 +8,7 @@
 		</tr>
 	</thead>
 	<tbody>
-{foreach from=$polls item=row}
+{foreach $polls as $row}
 		<tr>
 			<td><a href="{uri args="polls/`$row.link`/id_`$row.id`"}">{$row.question}</a></td>
 			<td>{$row.votes}</td>

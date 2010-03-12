@@ -31,7 +31,7 @@
 				<dt><label for="readmore">{lang values="common|options"}</label></dt>
 				<dd>
 					<ul style="margin:0 20px;list-style:none">
-{foreach from=$options item=row}
+{foreach $options as $row}
 						<li>
 							<label for="{$row.name}">
 								<input type="checkbox" name="form[{$row.name}]" id="{$row.name}" value="1" class="checkbox"{$row.checked} />
@@ -52,7 +52,7 @@
 				<dd>
 					<select name="form[target]" id="target">
 						<option value="">{lang values="common|pls_select"}</option>
-{foreach from=$target item=row}
+{foreach $target as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 					</select>

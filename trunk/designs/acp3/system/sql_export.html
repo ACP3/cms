@@ -17,7 +17,7 @@
 			<dl>
 				<dd>
 					<select name="form[tables][]" id="tables" multiple="multiple" style="height:200px">
-{foreach from=$tables item=row}
+{foreach $tables as $row}
 						<option value="{$row.name}"{$row.selected}>{$row.name}</option>
 {/foreach}
 					</select>
@@ -29,7 +29,7 @@
 			<dl>
 				<dt><label for="file">{lang values="system|output"}</label></dt>
 				<dd>
-{foreach from=$output item=row}
+{foreach $output as $row}
 					<label for="{$row.value}">
 						<input type="radio" name="form[output]" id="{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
 						{$row.lang}
@@ -38,7 +38,7 @@
 				</dd>
 				<dt><label for="complete">{lang values="system|export_type"}</label></dt>
 				<dd>
-{foreach from=$export_type item=row}
+{foreach $export_type as $row}
 					<label for="{$row.value}">
 						<input type="radio" name="form[export_type]" id="{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
 						{$row.lang}

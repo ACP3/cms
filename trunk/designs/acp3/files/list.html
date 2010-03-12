@@ -6,7 +6,7 @@
 		</tr>
 	</thead>
 	<tbody>
-{foreach from=$categories item=cat}
+{foreach $categories as $cat}
 		<tr>
 			<td style="width:25%"><a href="{uri args="files/files/cat_`$cat.id`"}">{$cat.name}</a></td>
 			<td>{$cat.description}</td>

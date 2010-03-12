@@ -24,7 +24,7 @@
 				</tr>
 			</thead>
 			<tbody>
-{foreach from=$mod_list item=mod}
+{foreach $mod_list as $mod}
 				<tr>
 					<td>{$mod.name}</td>
 					<td><input type="checkbox" name="form[modules][{$mod.dir}][read]" value="1" class="access-read checkbox"{$mod.read_checked} /></td>

@@ -13,7 +13,7 @@
 		</tr>
 	</thead>
 	<tbody>
-{foreach from=$users item=row}
+{foreach $users as $row}
 		<tr>
 			<td><a href="{uri args="users/view_profile/id_`$row.id`"}" title="{lang values="users|view_profile"}">{$row.nickname}</a></td>
 			<td>{if $row.realname != '' && $row.realname_display == 1}{$row.realname}{else}-{/if}</td>

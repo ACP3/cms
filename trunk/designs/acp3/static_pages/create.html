@@ -26,7 +26,7 @@
 {if isset($create)}
 				<dt><label for="create-item-1">{lang values="static_pages|create_menu_item"}</label></dt>
 				<dd>
-{foreach from=$create item=row}
+{foreach $create as $row}
 					<label for="create-item-{$row.value}">
 						<input type="radio" name="form[create]" id="create-item-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected} />
 						{$row.lang}
@@ -40,7 +40,7 @@
 				<dd>
 					<select name="form[block_id]" id="block_id">
 						<option value="">{lang values="common|pls_select"}</option>
-{foreach from=$blocks item=row}
+{foreach $blocks as $row}
 						<option value="{$row.id}"{$row.selected}>{$row.title}</option>
 {/foreach}
 					</select>
@@ -49,9 +49,9 @@
 				<dd>
 					<select name="form[parent]" id="parent">
 						<option value="">{lang values="menu_items|no_superior_page"}</option>
-{foreach from=$pages_list key=block item=pages}
+{foreach $pages_list as $block => $pages}
 						<optgroup label="{$block}">
-{foreach from=$pages item=row}
+{foreach $pages as $row}
 							<option value="{$row.id}"{$row.selected}>{$row.spaces}{$row.title}</option>
 {/foreach}
 						</optgroup>
@@ -60,7 +60,7 @@
 				</dd>
 				<dt><label for="display-1">{lang values="menu_items|display_item"}</label></dt>
 				<dd>
-{foreach from=$display item=row}
+{foreach $display as $row}
 					<label for="display-{$row.value}">
 						<input type="radio" name="form[display]" id="display-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected} />
 						{$row.lang}

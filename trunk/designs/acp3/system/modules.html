@@ -12,7 +12,7 @@
 		</tr>
 	</thead>
 	<tbody>
-{foreach from=$modules item=row}
+{foreach $modules as $row}
 		<tr>
 			<td>{$row.name}</td>
 			<td>{$row.description}</td>

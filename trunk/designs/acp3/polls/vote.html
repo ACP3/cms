@@ -1,7 +1,7 @@
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<div class="poll">
 		<h4>{$question}</h4>
-{foreach from=$answers item=row}
+{foreach $answers as $row}
 		<label for="answer_{$row.id}" class="{$row.css_class}">
 {if $multiple == '1'}
 			<input type="checkbox" name="answer[]" id="answer_{$row.id}" value="{$row.id}" />

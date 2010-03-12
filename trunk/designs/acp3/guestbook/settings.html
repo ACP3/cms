@@ -9,7 +9,7 @@
 			<dd>
 				<select name="form[dateformat]" id="date-format">
 					<option value="">{lang values="common|pls_select"}</option>
-{foreach from=$dateformat item=row}
+{foreach $dateformat as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 				</select>

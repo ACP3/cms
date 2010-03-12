@@ -1,7 +1,7 @@
 <h1 id="comments">{lang values="comments|comments"}</h1>
 {if isset($comments)}
 {$pagination}
-{foreach from=$comments item=row}
+{foreach $comments as $row}
 <div class="comments">
 	<div class="header">
 		<div class="author">

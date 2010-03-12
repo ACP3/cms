@@ -14,7 +14,7 @@
 				<dt><label for="entries">{lang values="system|entries_per_page"}</label></dt>
 				<dd>
 					<select name="form[entries]" id="entries">
-{foreach from=$entries item=row}
+{foreach $entries as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.value}</option>
 {/foreach}
 					</select>
@@ -32,7 +32,7 @@
 				<dt><label for="wysiwyg">{lang values="system|editor"}</label></dt>
 				<dd>
 					<select name="form[wysiwyg]" id="wysiwyg">
-{foreach from=$wysiwyg item=row}
+{foreach $wysiwyg as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 					</select>
@@ -51,14 +51,14 @@
 				<dt><label for="date-time-zone">{lang values="common|time_zone"}</label></dt>
 				<dd>
 					<select name="form[date_time_zone]" id="date-time-zone">
-{foreach from=$time_zone item=row}
+{foreach $time_zone as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 					</select>
 				</dd>
 				<dt><label for="date-dst-1">{lang values="common|daylight_saving_time"}</label></dt>
 				<dd>
-{foreach from=$dst item=row}
+{foreach $dst as $row}
 					<label for="date-dst-{$row.value}">
 						<input type="radio" name="form[date_dst]" id="date-dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
 						{$row.lang}
@@ -71,7 +71,7 @@
 			<dl>
 				<dt><label for="maintenance-mode-1">{lang values="system|maintenance_mode"}</label></dt>
 				<dd>
-{foreach from=$maintenance item=row}
+{foreach $maintenance as $row}
 					<label for="maintenance-mode-{$row.value}">
 						<input type="radio" name="form[maintenance_mode]" id="maintenance-mode-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
 						{$row.lang}
@@ -98,7 +98,7 @@
 					<span>({lang values="system|mod_rewrite_description"})</span>
 				</dt>
 				<dd>
-{foreach from=$sef item=row}
+{foreach $sef as $row}
 					<label for="seo-mod-rewrite-{$row.value}">
 						<input type="radio" name="form[seo_mod_rewrite]" id="seo-mod-rewrite-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
 						{$row.lang}

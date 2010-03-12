@@ -24,11 +24,11 @@
 			</tr>
 		</thead>
 		<tbody>
-{foreach from=$pages_list key=block item=pages}
+{foreach $pages_list as $block => $pages}
 			<tr>
 				<td colspan="{if $can_order}5{else}4{/if}" class="sub-table-header">{$block}</td>
 			</tr>
-{foreach from=$pages item=row}
+{foreach $pages as $row}
 			<tr>
 {if $can_delete}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
