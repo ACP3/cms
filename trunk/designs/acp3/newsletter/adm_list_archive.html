@@ -6,8 +6,8 @@
 	<hr />
 {if isset($newsletter)}
 {$pagination}
-{assign var="can_delete" value=$MODULES->check("newsletter", "delete_archive")}
-{assign var="can_send" value=$MODULES->check("newsletter", "send")}
+{assign var="can_delete" value=modules::check("newsletter", "delete_archive")}
+{assign var="can_send" value=modules::check("newsletter", "send")}
 	<table class="acp-table">
 		<thead>
 			<tr>

@@ -7,7 +7,7 @@
 	<hr />
 {if isset($guestbook)}
 {$pagination}
-{assign var="can_delete" value=$MODULES->check("guestbook", "delete")}
+{assign var="can_delete" value=modules::check("guestbook", "delete")}
 	<table class="acp-table">
 		<thead>
 			<tr>

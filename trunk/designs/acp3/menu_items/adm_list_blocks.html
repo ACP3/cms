@@ -7,7 +7,7 @@
 	<hr />
 {if isset($blocks)}
 {$pagination}
-{assign var="can_delete" value=$MODULES->check("menu_items", "delete_blocks")}
+{assign var="can_delete" value=modules::check("menu_items", "delete_blocks")}
 	<table class="acp-table">
 		<thead>
 			<tr>
