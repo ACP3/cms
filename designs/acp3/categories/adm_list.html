@@ -8,7 +8,7 @@
 	<hr />
 {if isset($categories)}
 {$pagination}
-{assign var="can_delete" value=$MODULES->check("categories", "delete")}
+{assign var="can_delete" value=modules::check("categories", "delete")}
 	<table class="acp-table">
 		<thead>
 			<tr>

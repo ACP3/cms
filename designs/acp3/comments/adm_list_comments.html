@@ -6,7 +6,7 @@
 	</div>
 	<hr />
 {$pagination}
-{assign var="can_delete" value=$MODULES->check("comments", "delete_comments")}
+{assign var="can_delete" value=modules::check("comments", "delete_comments")}
 	<table class="acp-table">
 		<thead>
 			<tr>

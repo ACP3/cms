@@ -71,7 +71,6 @@ $handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB
 if ($handle !== true) {
 	exit($handle);
 }
-$tpl->assign('MODULES', new modules());
 
 require_once ACP3_ROOT . 'includes/functions.php';
 $auth = new auth();

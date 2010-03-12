@@ -8,7 +8,7 @@
 	<hr />
 {if isset($galleries)}
 {$pagination}
-{assign var="can_delete" value=$MODULES->check("gallery", "delete")}
+{assign var="can_delete" value=modules::check("gallery", "delete")}
 	<table class="acp-table">
 		<thead>
 			<tr>

@@ -7,7 +7,7 @@
 	<hr />
 {if isset($access)}
 {$pagination}
-{assign var="can_delete" value=$MODULES->check("access", "delete")}
+{assign var="can_delete" value=modules::check("access", "delete")}
 	<table class="acp-table">
 		<thead>
 			<tr>

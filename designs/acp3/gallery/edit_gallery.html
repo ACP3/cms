@@ -29,9 +29,9 @@
 	<hr />
 {if isset($pictures)}
 {$pagination}
-{assign var="can_delete" value=$MODULES->check("gallery", "delete_picture")}
-{assign var="can_order" value=$MODULES->check("gallery", "order")}
-{assign var="can_edit_picture" value=$MODULES->check("gallery", "edit_picture")}
+{assign var="can_delete" value=modules::check("gallery", "delete_picture")}
+{assign var="can_order" value=modules::check("gallery", "order")}
+{assign var="can_edit_picture" value=modules::check("gallery", "edit_picture")}
 	<table class="acp-table">
 		<thead>
 			<tr>

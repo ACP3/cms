@@ -1,4 +1,4 @@
-{if $MODULES->check('newsletter', 'create')}
+{if modules::check('newsletter', 'create')}
 <div style="text-align:center">
 	<a href="{uri args="newsletter/create"}">{lang values="newsletter|create"}</a>
 </div>
@@ -7,7 +7,7 @@
 {if isset($categories)}
 <div class="news">
 	<div class="header">
-{if $MODULES->check('feeds', 'list')}
+{if modules::check('feeds', 'list')}
 		<a href="{uri args="feeds/list/feed_news"}" title="{lang values="news|read_newsfeed"}" style="float:left"><img src="{$DESIGN_PATH}images/feed.png" alt="" /></a>
 {/if}
 		<form action="{uri args="news/list"}" method="post" style="text-align:right">
@@ -27,7 +27,10 @@
 {$pagination}
 {foreach $news as $row}
 <div class="news">
-	<h3 class="header">{$row.headline}</h3>
+	<h3 class="header">
+		<span style="float:right"><a href="{uri args="acp/news/edit/id_`$row.id`/action_dialog"}">Bearbeiten</a></span>
+		{$row.headline}
+	</h3>
 	<div class="date">
 {if $row.allow_comments}
 		<div class="comments">
