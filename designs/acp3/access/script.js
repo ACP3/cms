@@ -1,6 +1,6 @@
-function mark_permissions(action) {
+function mark_permissions(permission) {
 	var checkbox = '';
-	switch(action) {
+	switch(permission) {
 		case 'read':
 			checkbox = '.access-read';
 			break;
@@ -20,16 +20,14 @@ function mark_permissions(action) {
 
 	var boxes = jQuery('table.acp-table input' + checkbox);
 	if (boxes.is(':checked')) {
-		if (action != 'full' && jQuery('table.acp-table input.access-full').is(':checked')) {
+		if (permission != 'full' && jQuery('table.acp-table input.access-full').is(':checked')) {
 			jQuery('table.acp-table input.access-full').removeAttr('checked');
 		}
 		boxes.removeAttr('checked');
+	} else if (permission == 'full') {
+		jQuery('table.acp-table input.access-read, table.acp-table input.access-create, table.acp-table input.access-edit, table.acp-table input.access-delete, table.acp-table input.access-full').attr('checked', 'checked');
 	} else {
-		if (action == 'full') {
-			jQuery('table.acp-table input.access-read, table.acp-table input.access-create, table.acp-table input.access-edit, table.acp-table input.access-delete, table.acp-table input.access-full').attr('checked', 'checked');
-		} else {
-			boxes.attr('checked', 'checked');
-		}
+		boxes.attr('checked', 'checked');
 	}
 }
 
@@ -41,6 +39,14 @@ $(document).ready(function() {
 			$(this).removeAttr('checked');
 		} else if ($(this).attr('class') == 'access-full checkbox' && $(this).is(':checked')) {
 			$(this).parent('td').parent('tr').children('td').children('input').attr('checked', 'checked');
+		}
+	});
+
+	$('table.acp-table a.mark-horizontal').click(function() {
+		if ($(this).parent().nextAll().children('input').is(':checked')) {
+			$(this).parent().nextAll().children('input').removeAttr('checked');
+		} else {
+			$(this).parent().nextAll().children('input').attr('checked', 'checked');
 		}
 	});
 });
