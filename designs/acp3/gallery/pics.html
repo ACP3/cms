@@ -3,7 +3,7 @@
 {/if}
 {if isset($pictures)}
 <div class="pictures">
-{foreach from=$pictures item=row}
+{foreach $pictures as $row}
 {if $colorbox == 1}
 	<a href="{$row.uri}"{if !empty($row.description)} title="{$row.description}"{/if} rel="pictures"><img src="{uri args="gallery/image/id_`$row.id`/action_mini"}" alt="" /></a>
 {else}

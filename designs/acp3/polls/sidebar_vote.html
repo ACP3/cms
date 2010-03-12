@@ -5,7 +5,7 @@
 	<form action="{uri args="polls/vote/id_`$sidebar_poll_question.id`"}" method="post" accept-charset="UTF-8">
 		<ul>
 			<li>
-{foreach from=$sidebar_poll_answers item=row}
+{foreach $sidebar_poll_answers as $row}
 				<label for="answer-{$row.id}">
 {if $sidebar_poll_question.multiple == '1'}
 					<input type="checkbox" name="answer[]" id="answer-{$row.id}" value="{$row.id}" class="checkbox" />

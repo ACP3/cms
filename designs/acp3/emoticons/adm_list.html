@@ -21,7 +21,7 @@
 			</tr>
 		</thead>
 		<tbody>
-{foreach from=$emoticons item=row}
+{foreach $emoticons as $row}
 			<tr>
 {if $can_delete}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>

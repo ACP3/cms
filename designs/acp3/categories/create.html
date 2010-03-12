@@ -14,7 +14,7 @@
 			<dd>
 				<select name="form[module]" id="module">
 					<option value="">{lang values="common|pls_select"}</option>
-{foreach from=$mod_list item=row}
+{foreach $mod_list as $row}
 					<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
 {/foreach}
 				</select>

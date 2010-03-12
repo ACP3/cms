@@ -17,7 +17,7 @@
 			<dd>
 				<select name="form[mode]" id="mode">
 					<option value="">{lang values="common|pls_select"}</option>
-{foreach from=$mode item=row}
+{foreach $mode as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 				</select>
@@ -28,7 +28,7 @@
 			<dd>
 				<select name="form[block_id]" id="block_id">
 					<option value="">{lang values="common|pls_select"}</option>
-{foreach from=$blocks item=row}
+{foreach $blocks as $row}
 					<option value="{$row.id}"{$row.selected}>{$row.title}</option>
 {/foreach}
 				</select>
@@ -37,9 +37,9 @@
 			<dd>
 				<select name="form[parent]" id="parent">
 					<option value="">{lang values="menu_items|no_superior_page"}</option>
-{foreach from=$pages_list key=block item=pages}
+{foreach $pages_list as $block => $pages}
 					<optgroup label="{$block}">
-{foreach from=$pages item=row}
+{foreach $pages as $row}
 						<option value="{$row.id}"{$row.selected}>{$row.spaces}{$row.title}</option>
 {/foreach}
 					</optgroup>
@@ -48,7 +48,7 @@
 			</dd>
 			<dt><label for="display-1">{lang values="menu_items|display_item"}</label></dt>
 			<dd>
-{foreach from=$display item=row}
+{foreach $display as $row}
 				<label for="display-{$row.value}">
 					<input type="radio" name="form[display]" id="display-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected} />
 					{$row.lang}
@@ -64,7 +64,7 @@
 			<dd>
 				<select name="form[module]" id="module">
 					<option value="">{lang values="common|pls_select"}</option>
-{foreach from=$modules item=row}
+{foreach $modules as $row}
 					<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
 {/foreach}
 				</select>
@@ -83,7 +83,7 @@
 			<dd>
 				<select name="form[static_pages]" id="static-pages">
 					<option value="">{lang values="common|pls_select"}</option>
-{foreach from=$static_pages item=row}
+{foreach $static_pages as $row}
 					<option value="{$row.id}"{$row.selected}>{$row.title}</option>
 {/foreach}
 				</select>
@@ -95,7 +95,7 @@
 			<dd>
 				<select name="form[target]" id="target">
 					<option value="">{lang values="common|pls_select"}</option>
-{foreach from=$target item=row}
+{foreach $target as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 				</select>

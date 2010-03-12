@@ -1,6 +1,6 @@
 {if isset($sql_queries)}
 <pre>
-{foreach from=$sql_queries item=row}
+{foreach $sql_queries as $row}
 <span style="color:#{$row.color}">{$row.query}</span>
 {/foreach}
 </pre>

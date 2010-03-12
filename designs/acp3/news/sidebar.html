@@ -1,7 +1,7 @@
 <h4>{lang values="news|latest_news"}</h4>
 <ul>
 {if isset($sidebar_news)}
-{foreach from=$sidebar_news item=row}
+{foreach $sidebar_news as $row}
 	<li><a href="{uri args="news/details/id_`$row.id`"}" title="{$row.start} - {$row.headline}">{$row.headline_short}</a></li>
 {/foreach}
 {else}

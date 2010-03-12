@@ -1,6 +1,6 @@
 {if isset($galleries)}
 {$pagination}
-{foreach from=$galleries item=row}
+{foreach $galleries as $row}
 <div class="galleries">
 	<div class="date">
 		{$row.date}

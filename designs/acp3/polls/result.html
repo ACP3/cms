@@ -14,7 +14,7 @@
 		</tr>
 	</tfoot>
 	<tbody>
-{foreach from=$answers item=row}
+{foreach $answers as $row}
 		<tr>
 			<td>{$row.text}</td>
 			<td>{$row.percent}%</td>

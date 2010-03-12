@@ -1,7 +1,7 @@
 <div class="error">
 	<h4>{lang values="common|failure"}</h4>
 	<ul>
-{foreach from=$text item=error}
+{foreach $text as $error}
 		<li>{$error}</li>
 {/foreach}
 	</ul>

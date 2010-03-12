@@ -25,7 +25,7 @@
 				{lang values="polls|delete_answer_description"}
 			</p>
 			<table class="acp-table no-border">
-{foreach from=$answers item=row}
+{foreach $answers as $row}
 				<tr>
 					<td style="width:5%;padding:3px 0"><input type="checkbox" name="form[answers][{$row.number}][delete]" value="1" class="checkbox" /></td>
 					<td style="padding:3px 0">
@@ -44,7 +44,7 @@
 				<dt><label for="reset">{lang values="common|options"}</label></dt>
 				<dd>
 					<ul style="margin:0 20px;list-style:none">
-{foreach from=$options item=row}
+{foreach $options as $row}
 						<li>
 							<label for="{$row.name}">
 								<input type="checkbox" name="form[{$row.name}]" id="{$row.name}" value="1" class="checkbox"{$row.checked} />

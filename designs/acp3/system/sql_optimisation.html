@@ -24,7 +24,7 @@
 		</tr>
 	</tfoot>
 	<tbody>
-{foreach from=$tables item=table}
+{foreach $tables as $table}
 		<tr>
 			<td>{$table.name}</td>
 			<td>{$table.status}</td>

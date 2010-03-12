@@ -39,7 +39,7 @@
 					<input type="text" name="form[filesize]" id="filesize" value="{$form.filesize}" maxlength="15" style="width:49%;display:inline" />
 					<select name="form[unit]" id="unit" style="width:49%;display:inline">
 						<option value="">{lang values="common|pls_select"}</option>
-{foreach from=$units item=row}
+{foreach $units as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.value}</option>
 {/foreach}
 					</select>
@@ -56,7 +56,7 @@
 				<dt><label for="comments">{lang values="common|options"}</label></dt>
 				<dd>
 					<ul style="margin:0 20px;list-style:none">
-{foreach from=$options item=row}
+{foreach $options as $row}
 						<li>
 							<label for="{$row.name}">
 								<input type="checkbox" name="form[{$row.name}]" id="{$row.name}" value="1" class="checkbox"{$row.checked} />

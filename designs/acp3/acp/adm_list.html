@@ -9,7 +9,7 @@
 {/if}
 				<h4>{lang values="acp|access_to_modules"}</h4>
 				<ul>
-{foreach from=$modules item=module}
+{foreach $modules as $module}
 					<li><a href="{uri args="acp/`$module.dir`"}">{$module.name}</a></li>
 {/foreach}
 				</ul>
@@ -18,7 +18,7 @@
 			<td style="text-align:left;vertical-align:top">
 				<h4>{lang values="system|server_infos"}</h4>
 				<dl style="margin:10px 20px">
-{foreach from=$server_info item=row}
+{foreach $server_info as $row}
 					<dt><strong>{$row.col_left}</strong></dt>
 					<dd style="margin-left:10px">{$row.col_right}</dd>
 {/foreach}

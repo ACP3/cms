@@ -23,7 +23,7 @@
 		</tr>
 	</tfoot>
 	<tbody>
-{foreach from=$php_settings item=setting}
+{foreach $php_settings as $setting}
 		<tr>
 			<td style="width:66%">{$setting.col_left}:</td>
 			<td style="background:{$setting.col_color};font-weight:bold;color:#fff">{$setting.col_right}</td>
