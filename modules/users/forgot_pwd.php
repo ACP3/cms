@@ -21,7 +21,7 @@ if ($auth->isUser()) {
 			$errors[] = $lang->t('common', 'wrong_email_format');
 		if (validate::email($form['nick_mail']) && !userEmailExists($form['nick_mail']))
 			$errors[] = $lang->t('users', 'user_not_exists');
-		if (!validate::captcha($form['captcha'], $form['hash']))
+		if (!$auth->isUser() && !validate::captcha($form['captcha'], $form['hash']))
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors)) {

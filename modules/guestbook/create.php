@@ -32,7 +32,7 @@ if (isset($_POST['form'])) {
 		$errors[] = $lang->t('common', 'wrong_email_format');
 	if (strlen($form['message']) < 3)
 		$errors[] = $lang->t('common', 'message_to_short');
-	if (!validate::captcha($form['captcha'], $form['hash']))
+	if (!$auth->isUser() && !validate::captcha($form['captcha'], $form['hash']))
 		$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
 	if (isset($errors)) {
