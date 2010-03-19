@@ -9,9 +9,11 @@
 if (!defined('IN_ACP3') && !defined('IN_ADM'))
 	exit;
 
+$settings = config::output('gallery');
+
 $time = $date->timestamp();
 $where = 'start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\'';
-$galleries = $db->select('id, start, name', 'gallery', $where, 'start DESC', 5);
+$galleries = $db->select('id, start, name', 'gallery', $where, 'start DESC', $settings['sidebar']);
 $c_galleries = count($galleries);
 
 if ($c_galleries > 0) {

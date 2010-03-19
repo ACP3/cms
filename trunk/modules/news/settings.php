@@ -21,6 +21,8 @@ if (isset($_POST['form'])) {
 		$errors[] = $lang->t('news', 'type_in_readmore_chars');
 	if (empty($form['dateformat']) || ($form['dateformat'] != 'long' && $form['dateformat'] != 'short'))
 		$errors[] = $lang->t('common', 'select_date_format');
+	if (!validate::isNumber($form['sidebar']))
+		$errors[] = $lang->t('common', 'select_sidebar_entries');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -41,6 +43,8 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$readmore[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('readmore', $readmore);
 	
+	$tpl->assign('readmore_chars', isset($form) ? $form['readmore_chars'] : $settings['readmore_chars']);
+
 	$comments[0]['value'] = '1';
 	$comments[0]['checked'] = selectEntry('comments', '1', $settings['comments'], 'checked');
 	$comments[0]['lang'] = $lang->t('common', 'yes');
@@ -57,7 +61,12 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$dateformat[1]['lang'] = $lang->t('common', 'date_format_long');
 	$tpl->assign('dateformat', $dateformat);
 
-	$tpl->assign('readmore_chars', isset($form) ? $form['readmore_chars'] : $settings['readmore_chars']);
+	$sidebar_entries = array();
+	for ($i = 0, $j = 1; $i < 10; ++$i, ++$j) {
+		$sidebar_entries[$i]['value'] = $j;
+		$sidebar_entries[$i]['selected'] = selectEntry('sidebar', $j, $settings['sidebar']);
+	}
+	$tpl->assign('sidebar_entries', $sidebar_entries);
 
 	$content = modules::fetchTemplate('news/settings.html');
 }

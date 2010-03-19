@@ -269,6 +269,10 @@
 		<message>Please select, wether daylight saving time is in effect or not</message>
 	</item>
 	<item>
+		<name>select_sidebar_entries</name>
+		<message>Please select, how many entries you want to display inside the Module-Sidebar</message>
+	</item>
+	<item>
 		<name>select_time_zone</name>
 		<message>Please select the time zone</message>
 	</item>
@@ -279,6 +283,10 @@
 	<item>
 		<name>settings_success</name>
 		<message>The settings have been edited successfully.</message>
+	</item>
+	<item>
+		<name>sidebar_entries_to_display</name>
+		<message>Sidebar entries to display</message>
 	</item>
 	<item>
 		<name>since_date</name>

@@ -9,9 +9,11 @@
 if (!defined('IN_ACP3') && !defined('IN_ADM'))
 	exit;
 
+$settings = config::output('files');
+
 $time = $date->timestamp();
 $where = 'start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\'';
-$files = $db->select('id, start, link_title', 'files', $where, 'start DESC', 5);
+$files = $db->select('id, start, link_title', 'files', $where, 'start DESC', $settings['sidebar']);
 $c_files = count($files);
 
 if ($c_files > 0) {
