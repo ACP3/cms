@@ -269,6 +269,10 @@
 		<message>Bitte wählen Sie aus, ob gerade Sommerzeit ist oder nicht</message>
 	</item>
 	<item>
+		<name>select_sidebar_entries</name>
+		<message>Bitte wählen Sie aus, wie viele Einträge in der Modul-Sidebar angezeigt werden sollen</message>
+	</item>
+	<item>
 		<name>select_time_zone</name>
 		<message>Bitte wählen Sie die Zeitzone aus</message>
 	</item>
@@ -279,6 +283,10 @@
 	<item>
 		<name>settings_success</name>
 		<message>Die Einstellungen wurden erfolgreich aktualisiert.</message>
+	</item>
+	<item>
+		<name>sidebar_entries_to_display</name>
+		<message>Anzuzeigende Sidebareinträge</message>
 	</item>
 	<item>
 		<name>since_date</name>

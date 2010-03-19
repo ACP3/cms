@@ -14,6 +14,7 @@
 		<dateformat>long</dateformat>
 		<readmore>1</readmore>
 		<readmore_chars>350</readmore_chars>
+		<sidebar>5</sidebar>
 	</settings>
 	<access>
 		<item>

@@ -49,6 +49,15 @@
 {/foreach}
 				</select>
 			</dd>
+			<dt><label for="sidebar-entries">{lang values="common|sidebar_entries_to_display"}</label></dt>
+			<dd>
+				<select name="form[sidebar]" id="sidebar-entries">
+					<option>{lang values="common|pls_select"}</option>
+{foreach $sidebar_entries as $row}
+					<option value="{$row.value}"{$row.selected}>{$row.value}</option>
+{/foreach}
+				</select>
+			</dd>
 		</dl>
 	</fieldset>
 	<div class="form-bottom">

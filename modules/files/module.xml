@@ -12,6 +12,7 @@
 	<settings>
 		<comments>1</comments>
 		<dateformat>long</dateformat>
+		<sidebar>5</sidebar>
 	</settings>
 	<access>
 		<item>

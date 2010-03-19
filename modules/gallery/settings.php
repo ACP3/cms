@@ -25,6 +25,8 @@ if (isset($_POST['form'])) {
 		$errors[] = $lang->t('gallery', 'select_use_colorbox');
 	if (empty($form['dateformat']) || ($form['dateformat'] != 'long' && $form['dateformat'] != 'short'))
 		$errors[] = $lang->t('common', 'select_date_format');
+	if (!validate::isNumber($form['sidebar']))
+		$errors[] = $lang->t('common', 'select_sidebar_entries');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -60,6 +62,13 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$dateformat[1]['selected'] = selectEntry('dateformat', 'long', $settings['dateformat']);
 	$dateformat[1]['lang'] = $lang->t('common', 'date_format_long');
 	$tpl->assign('dateformat', $dateformat);
+
+	$sidebar_entries = array();
+	for ($i = 0, $j = 1; $i < 10; ++$i, ++$j) {
+		$sidebar_entries[$i]['value'] = $j;
+		$sidebar_entries[$i]['selected'] = selectEntry('sidebar', $j, $settings['sidebar']);
+	}
+	$tpl->assign('sidebar_entries', $sidebar_entries);
 
 	$tpl->assign('form', isset($form) ? $form : $settings);
 
