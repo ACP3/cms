@@ -26,6 +26,7 @@ class validate
 	public static function birthday($var, $format)
 	{
 		$regex = '/^(\d{4})-(\d{2})-(\d{2})$/';
+		$matches = array();
 		if (preg_match($regex, $var, $matches)) {
 			if (checkdate($matches[2], $matches[3], $matches[1]) && ($format == 1 || $format == 2)) {
 				return true;
@@ -42,11 +43,7 @@ class validate
 	 */
 	public static function captcha($input, $hash)
 	{
-		global $auth;
-
-		if ($auth->isUser()) {
-			return true;
-		} elseif (preg_match('/^[a-zA-Z0-9]+$/', $input) && self::isMD5($hash)) {
+		if (preg_match('/^[a-zA-Z0-9]+$/', $input) && self::isMD5($hash)) {
 			$path = ACP3_ROOT . 'uploads/captcha/' . $hash . strtolower($input);
 			if (is_file($path)) {
 				@unlink($path);
