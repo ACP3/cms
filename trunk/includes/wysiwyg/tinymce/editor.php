@@ -17,7 +17,7 @@ function editor($params) {
 	if (isset($params['toolbar']) && $params['toolbar'] == 'simple') {
 		$out.= 'plugins : "inlinepopups,contextmenu",' . "\n";
 	} else {
-		$out.= 'plugins : "safari,style,layer,table,advhr,advimage,advlink,emotions,inlinepopups,preview,media,searchreplace,contextmenu,paste,noneditable,visualchars,nonbreaking,xhtmlxtras",' . "\n";
+		$out.= 'plugins : "safari,style,layer,table,advhr,advimage,advlink,advlist,emotions,inlinepopups,preview,media,searchreplace,contextmenu,paste,noneditable,visualchars,nonbreaking,xhtmlxtras",' . "\n";
 	}
 	$out.= "});\n";
 	$out.= "</script>\n";
@@ -35,7 +35,7 @@ function editor($params) {
 		$out.= 'theme_advanced_buttons1 : "code,|,bold,italic,|,numlist,bullist,|,link,unlink,anchor,|,undo,redo,|,help",' . "\n";
 		$out.= 'theme_advanced_buttons2 : "",' . "\n";
 	} else {
-		$out.= 'plugins : "safari,style,layer,table,advhr,advimage,advlink,emotions,inlinepopups,preview,media,searchreplace,contextmenu,paste,noneditable,visualchars,nonbreaking,xhtmlxtras",' . "\n";
+		$out.= 'plugins : "safari,style,layer,table,advhr,advimage,advlink,advlist,emotions,inlinepopups,preview,media,searchreplace,contextmenu,paste,noneditable,visualchars,nonbreaking,xhtmlxtras",' . "\n";
 		$out.= 'theme_advanced_buttons1 : "code,|,newdocument,preview,|,cut,copy,paste,pastetext,pasteword,|,undo,redo,|,search,replace,|,cleanup,removeformat",' . "\n";
 		$out.= 'theme_advanced_buttons2 : "bold,italic,underline,strikethrough,|,sub,sup,|,numlist,bullist,|,outdent,indent,blockquote,|,justifyleft,justifycenter,justifyright,justifyfull,|,link,unlink,anchor,|,image,media,advhr,emotions,charmap",' . "\n";
 		$out.= 'theme_advanced_buttons3 : "styleselect,formatselect,fontselect,fontsizeselect,|,forecolor,backcolor,|,visualaid,|,tablecontrols",' . "\n";
