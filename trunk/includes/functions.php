@@ -537,7 +537,7 @@ function shortenEntry($data, $chars = 300, $diff = 50, $append = '')
 
 	$shortened = strip_tags($data);
 	$shortened = utf8_decode(html_entity_decode($shortened, ENT_QUOTES, 'UTF-8'));
-	if ($diff == 0 || strlen($shortened) - $chars >= $diff) {
+	if (strlen($shortened) > $chars && strlen($shortened) - $chars >= $diff) {
 		return utf8_encode(substr($shortened, 0, $chars - $diff)) . $append;
 	}
 	return $data;
