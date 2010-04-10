@@ -15,7 +15,7 @@ define('DESIGN_PATH', dirname(__FILE__) . '/../../designs/' . CONFIG_DESIGN . '/
 if ($_GET['g'] == 'css') {
 	$modules = scandir(DESIGN_PATH);
 	$styles = array();
-	$styles['css'][] = DESIGN_PATH . '/layout.css';
+	$styles['css'][] = DESIGN_PATH . 'layout.css';
 
 	foreach ($modules as $module) {
 		$path = DESIGN_PATH . $module . '/style.css';
