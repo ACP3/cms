@@ -38,7 +38,7 @@ if (validate::isNumber($uri->id) && ($uri->action == 'thumb' || $uri->action == 
 			}
 
 			header('Pragma: public');
-			header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 31536000));
+			header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 31536000) . ' GMT');
 
 			$pic_new = imagecreatetruecolor($t_width, $t_height);
 			switch ($type) {
