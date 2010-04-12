@@ -116,17 +116,17 @@ class db
 	 *
 	 * @param string $table
 	 *  Die betroffene Tabelle der Datenbank
-	 * @param string $field
+	 * @param string $where
 	 *  Die betroffenen Felder der Tabelle
 	 * @param integer $limit
 	 *  Die maximal zu löschenden Einträge, falls mehr als ein Eintrag gelöscht werden könnte
 	 * @return boolean
 	 */
-	public function delete($table, $field, $limit = 0)
+	public function delete($table, $where, $limit = 0)
 	{
-		$limit = !empty($limit) ? ' LIMIT ' . $limit : '';
+		$limit = !empty($limit) && validate::isNumber($limit) ? ' LIMIT ' . $limit : '';
 
-		$query = 'DELETE FROM `' . $this->prefix . $table . '` WHERE ' . $field . $limit;
+		$query = 'DELETE FROM `' . $this->prefix . $table . '` WHERE ' . $where . $limit;
 
 		return $this->query($query, 0);
 	}
@@ -139,7 +139,7 @@ class db
 	 *  Erwartet ein Array mit den betroffenen Feldern als Schlüssel und dazugehörigem Inhalt
 	 * @return boolean
 	 */
-	public function insert($table, $insert_values)
+	public function insert($table, array $insert_values)
 	{
 		if (!empty($insert_values) && is_array($insert_values)) {
 			$fields = '';
@@ -183,9 +183,9 @@ class db
 		$where = empty($where) ? '' : ' WHERE ' . $where;
 		$order = empty($order) ? '' : ' ORDER BY ' . $order;
 
-		if ($min != '' && $max == '') {
+		if (validate::isNumber($min) && $max == '') {
 			$limit = ' LIMIT ' . $min;
-		} elseif ($min != '' && $max != '') {
+		} elseif (validate::isNumber($min) && validate::isNumber($max)) {
 			$limit = ' LIMIT ' . $min . ',' . $max;
 		} else {
 			$limit = '';
@@ -225,7 +225,7 @@ class db
 	 *  WHERE Bedingung der SQL-Abfrage
 	 * @return boolean
 	 */
-	public function update($table, $update_values, $where = 0, $limit = 0)
+	public function update($table, array $update_values, $where = 0, $limit = 0)
 	{
 		if (!empty($update_values) && is_array($update_values)) {
 			$set = '';
