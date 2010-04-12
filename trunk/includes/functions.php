@@ -92,14 +92,14 @@ function comboBox($text, $forward = 0, $backward = 0)
  * 	Der Zeitstempel des jeweiligen Eintrages
  * @param string $format
  *	Das anzuzeigende Format im Textfeld
- * @param string $params
+ * @param array $params
  *	Dient dem Festlegen von weiteren Parametern
  * @param integer $range
  *	1 = Start- und Enddatum anzeigen
  *	2 = Einfaches Inputfeld mitsamt Datepicker anzeigen
  * @return string
  */
-function datepicker($name, $value = '', $format = 'Y-m-d H:i', $params = array(), $range = 1)
+function datepicker($name, $value = '', $format = 'Y-m-d H:i', array $params = array(), $range = 1)
 {
 	global $date, $tpl;
 
