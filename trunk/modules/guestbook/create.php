@@ -56,8 +56,8 @@ if (isset($_POST['form'])) {
 
 		if ($settings['notify'] == 1 || $settings['notify'] == 2) {
 			$host = 'http://' . htmlentities($_SERVER['HTTP_HOST']);
-			$fullPath = $host . uri('acp/guestbook/edit/id_' . $db->link->lastInsertId);
-			$body = sprintf($settings['notify'] == 1 ? $lang->t('guestbook', 'notification_email_body_1') : $lang->t('guestbook', 'notification_email_body_2'), $host, $fullpath);
+			$fullPath = $host . uri('acp/guestbook/edit/id_' . $db->link->lastInsertId());
+			$body = sprintf($settings['notify'] == 1 ? $lang->t('guestbook', 'notification_email_body_1') : $lang->t('guestbook', 'notification_email_body_2'), $host, $fullPath);
 			genEmail('', $settings['notify_email'], $settings['notify_email'], $lang->t('guestbook', 'notification_email_subject'), $body);
 		}
 
