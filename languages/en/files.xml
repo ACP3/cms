@@ -1,95 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>category_select</name>
-		<message>Please select one of the below categories.</message>
-	</item>
-	<item>
-		<name>create</name>
-		<message>Create a new download</message>
-	</item>
-	<item>
-		<name>delete</name>
-		<message>Delete downloads</message>
-	</item>
-	<item>
-		<name>description_to_short</name>
-		<message>The description should be at least 3 characters long</message>
-	</item>
-	<item>
-		<name>details</name>
-		<message>Downloads</message>
-	</item>
-	<item>
-		<name>download_file</name>
-		<message>Download file</message>
-	</item>
-	<item>
-		<name>edit</name>
-		<message>Edit download</message>
-	</item>
-	<item>
-		<name>external_resource</name>
-		<message>External resource</message>
-	</item>
-	<item>
-		<name>file_statements</name>
-		<message>File statements</message>
-	</item>
-	<item>
-		<name>filename</name>
-		<message>Filename</message>
-	</item>
-	<item>
-		<name>files</name>
-		<message>Downloads</message>
-	</item>
-	<item>
-		<name>filesize</name>
-		<message>Filesize</message>
-	</item>
-	<item>
-		<name>latest_files</name>
-		<message>Latest download</message>
-	</item>
-	<item>
-		<name>link_title</name>
-		<message>Link title</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>With this module you are able to administer the downloads.</message>
-	</item>
-	<item>
-		<name>new_file</name>
-		<message>Replace current file</message>
-	</item>
-	<item>
-		<name>select_allow_comments</name>
-		<message>Please select, wether you want to allow comments under downloads</message>
-	</item>
-	<item>
-		<name>select_category</name>
-		<message>Please select a category, where do you want to find the download</message>
-	</item>
-	<item>
-		<name>select_internal_resource</name>
-		<message>Please select the path to the file, which you want to upload</message>
-	</item>
-	<item>
-		<name>settings</name>
-		<message>Settings</message>
-	</item>
-	<item>
-		<name>type_in_external_resource</name>
-		<message>Please type in the external resource for the file</message>
-	</item>
-	<item>
-		<name>type_in_link_title</name>
-		<message>The link title should be at least 3 characters long</message>
-	</item>
-	<item>
-		<name>unknown_filesize</name>
-		<message>Unknown filesize</message>
-	</item>
+	<item key="category_select">Please select one of the below categories.</item>
+	<item key="create">Create a new download</item>
+	<item key="delete">Delete downloads</item>
+	<item key="description_to_short">The description should be at least 3 characters long</item>
+	<item key="details">Downloads</item>
+	<item key="download_file">Download file</item>
+	<item key="edit">Edit download</item>
+	<item key="external_resource">External resource</item>
+	<item key="file_statements">File statements</item>
+	<item key="filename">Filename</item>
+	<item key="files">Downloads</item>
+	<item key="filesize">Filesize</item>
+	<item key="latest_files">Latest download</item>
+	<item key="link_title">Link title</item>
+	<item key="mod_description">With this module you are able to administer the downloads.</item>
+	<item key="new_file">Replace current file</item>
+	<item key="select_allow_comments">Please select, wether you want to allow comments under downloads</item>
+	<item key="select_category">Please select a category, where do you want to find the download</item>
+	<item key="select_internal_resource">Please select the path to the file, which you want to upload</item>
+	<item key="settings">Settings</item>
+	<item key="type_in_external_resource">Please type in the external resource for the file</item>
+	<item key="type_in_link_title">The link title should be at least 3 characters long</item>
+	<item key="unknown_filesize">Unknown filesize</item>
 </language>

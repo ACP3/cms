@@ -1,119 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>add_answer</name>
-		<message>Add answer</message>
-	</item>
-	<item>
-		<name>already_voted</name>
-		<message>You have already at this poll.</message>
-	</item>
-	<item>
-		<name>answer</name>
-		<message>Answer</message>
-	</item>
-	<item>
-		<name>answers</name>
-		<message>Answers</message>
-	</item>
-	<item>
-		<name>can_not_delete_all_answers</name>
-		<message>It\'s impossible to delete all answers</message>
-	</item>
-	<item>
-		<name>create</name>
-		<message>Create a new poll</message>
-	</item>
-	<item>
-		<name>delete</name>
-		<message>Delete polls</message>
-	</item>
-	<item>
-		<name>delete_answer_description</name>
-		<message>To delete answer, please click on the checkbox on the left hand side of the form.</message>
-	</item>
-	<item>
-		<name>edit</name>
-		<message>Edit poll</message>
-	</item>
-	<item>
-		<name>latest_poll</name>
-		<message>Latest poll</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>With this module you can administer the polls.</message>
-	</item>
-	<item>
-		<name>multiple_choice</name>
-		<message>Multiple choice</message>
-	</item>
-	<item>
-		<name>no_votes</name>
-		<message>No votes</message>
-	</item>
-	<item>
-		<name>number_of_votes</name>
-		<message>%s votes</message>
-	</item>
-	<item>
-		<name>one_vote</name>
-		<message>1 vote</message>
-	</item>
-	<item>
-		<name>per_cent</name>
-		<message>Per cent</message>
-	</item>
-	<item>
-		<name>poll</name>
-		<message>Poll</message>
-	</item>
-	<item>
-		<name>poll_error</name>
-		<message>While saving your vote an error has occured.</message>
-	</item>
-	<item>
-		<name>poll_success</name>
-		<message>You vote was successfully counted.</message>
-	</item>
-	<item>
-		<name>polls</name>
-		<message>Polls</message>
-	</item>
-	<item>
-		<name>polls_archive</name>
-		<message>Polls archive</message>
-	</item>
-	<item>
-		<name>question</name>
-		<message>Question</message>
-	</item>
-	<item>
-		<name>reset_votes</name>
-		<message>Reset votes</message>
-	</item>
-	<item>
-		<name>result</name>
-		<message>Result</message>
-	</item>
-	<item>
-		<name>total_votes</name>
-		<message>Total votes</message>
-	</item>
-	<item>
-		<name>type_in_answer</name>
-		<message>Please type in at least one anwers</message>
-	</item>
-	<item>
-		<name>type_in_question</name>
-		<message>Please type in a question</message>
-	</item>
-	<item>
-		<name>vote</name>
-		<message>Vote</message>
-	</item>
-	<item>
-		<name>votes</name>
-		<message>Votes</message>
-	</item>
+	<item key="add_answer">Add answer</item>
+	<item key="already_voted">You have already at this poll.</item>
+	<item key="answer">Answer</item>
+	<item key="answers">Answers</item>
+	<item key="can_not_delete_all_answers">It\'s impossible to delete all answers</item>
+	<item key="create">Create a new poll</item>
+	<item key="delete">Delete polls</item>
+	<item key="delete_answer_description">To delete answer, please click on the checkbox on the left hand side of the form.</item>
+	<item key="edit">Edit poll</item>
+	<item key="latest_poll">Latest poll</item>
+	<item key="mod_description">With this module you can administer the polls.</item>
+	<item key="multiple_choice">Multiple choice</item>
+	<item key="no_votes">No votes</item>
+	<item key="number_of_votes">%s votes</item>
+	<item key="one_vote">1 vote</item>
+	<item key="per_cent">Per cent</item>
+	<item key="poll">Poll</item>
+	<item key="poll_error">While saving your vote an error has occured.</item>
+	<item key="poll_success">You vote was successfully counted.</item>
+	<item key="polls">Polls</item>
+	<item key="polls_archive">Polls archive</item>
+	<item key="question">Question</item>
+	<item key="reset_votes">Reset votes</item>
+	<item key="result">Result</item>
+	<item key="total_votes">Total votes</item>
+	<item key="type_in_answer">Please type in at least one anwers</item>
+	<item key="type_in_question">Please type in a question</item>
+	<item key="vote">Vote</item>
+	<item key="votes">Votes</item>
 </language>

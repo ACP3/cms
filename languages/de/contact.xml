@@ -1,77 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>additional_information</name>
-		<message>Weitere Informationen</message>
-	</item>
-	<item>
-		<name>address</name>
-		<message>Anschrift</message>
-	</item>
-	<item>
-		<name>address_to_short</name>
-		<message>Die Anschrift sollte mindestens 3 Zeichen lang sein</message>
-	</item>
-	<item>
-		<name>contact</name>
-		<message>Kontakt</message>
-	</item>
-	<item>
-		<name>contact_body</name>
-		<message>{name} ({mail}) hat folgende Nachricht hinterlassen:
+	<item key="additional_information">Weitere Informationen</item>
+	<item key="address">Anschrift</item>
+	<item key="address_to_short">Die Anschrift sollte mindestens 3 Zeichen lang sein</item>
+	<item key="contact">Kontakt</item>
+	<item key="contact_body">{name} ({mail}) hat folgende Nachricht hinterlassen:
 		
-		{message}</message>
-	</item>
-	<item>
-		<name>contact_information</name>
-		<message>Kontakt Daten</message>
-	</item>
-	<item>
-		<name>contact_subject</name>
-		<message>Kontaktformular %s</message>
-	</item>
-	<item>
-		<name>disclaimer</name>
-		<message>Haftungshinweise</message>
-	</item>
-	<item>
-		<name>disclaimer_to_short</name>
-		<message>Die Haftungshinweise sollten mindestens 3 Zeichen lang sein</message>
-	</item>
-	<item>
-		<name>fax</name>
-		<message>FAX Nummer</message>
-	</item>
-	<item>
-		<name>imprint</name>
-		<message>Impressum</message>
-	</item>
-	<item>
-		<name>layout</name>
-		<message>Aussehen</message>
-	</item>
-	<item>
-		<name>layout_placeholders</name>
-		<message>Es stehen folgende Platzhalter zur Verfügung:</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>Dieses Modul ist für das Kontaktformular und das Impressum zuständig.</message>
-	</item>
-	<item>
-		<name>powered_by</name>
-		<message>Diese Website wird angetrieben vom %s</message>
-	</item>
-	<item>
-		<name>send_mail_error</name>
-		<message>Beim Versenden der E-Mail ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>send_mail_success</name>
-		<message>Die E-Mail wurde erfolgreich versendet.</message>
-	</item>
-	<item>
-		<name>telephone</name>
-		<message>Telefonnummer</message>
-	</item>
+	{message}</item>
+	<item key="contact_information">Kontakt Daten</item>
+	<item key="contact_subject">Kontaktformular %s</item>
+	<item key="disclaimer">Haftungshinweise</item>
+	<item key="disclaimer_to_short">Die Haftungshinweise sollten mindestens 3 Zeichen lang sein</item>
+	<item key="fax">FAX Nummer</item>
+	<item key="imprint">Impressum</item>
+	<item key="layout">Aussehen</item>
+	<item key="layout_placeholders">Es stehen folgende Platzhalter zur Verfügung:</item>
+	<item key="mod_description">Dieses Modul ist für das Kontaktformular und das Impressum zuständig.</item>
+	<item key="powered_by">Diese Website wird angetrieben vom %s</item>
+	<item key="send_mail_error">Beim Versenden der E-Mail ist ein Fehler aufgetreten.</item>
+	<item key="send_mail_success">Die E-Mail wurde erfolgreich versendet.</item>
+	<item key="telephone">Telefonnummer</item>
 </language>

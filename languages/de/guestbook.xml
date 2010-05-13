@@ -1,95 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>activate_entry</name>
-		<message>Eintrag freischalten</message>
-	</item>
-	<item>
-		<name>allow_emoticons</name>
-		<message>Emoticons erlauben</message>
-	</item>
-	<item>
-		<name>create</name>
-		<message>Neuer Eintrag</message>
-	</item>
-	<item>
-		<name>delete</name>
-		<message>Gästebucheinträge löschen</message>
-	</item>
-	<item>
-		<name>edit</name>
-		<message>Gästebucheintrag bearbeiten</message>
-	</item>
-	<item>
-		<name>guestbook</name>
-		<message>Gästebuch</message>
-	</item>
-	<item>
-		<name>guestbook_entries</name>
-		<message>Gästebucheinträge</message>
-	</item>
-	<item>
-		<name>ip</name>
-		<message>IP Adresse</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>Mit diesem Modul kann das Gästebuch verwaltet werden.</message>
-	</item>
-	<item>
-		<name>no_notification</name>
-		<message>Keine Benachrichtigung</message>
-	</item>
-	<item>
-		<name>notification</name>
-		<message>Benachrichtigung</message>
-	</item>
-	<item>
-		<name>notification_email</name>
-		<message>Zu verwendende E-Mail-Adresse bei Benachrichtigungen</message>
-	</item>
-	<item>
-		<name>notification_email_subject</name>
-		<message>Benachrichtigung bei neuen Gästebucheinträgen</message>
-	</item>
-	<item>
-		<name>notification_email_body_1</name>
-		<message>Es wurde ein neuer Gästebucheintrag auf der Website %1$s verfasst.
+	<item key="activate_entry">Eintrag freischalten</item>
+	<item key="allow_emoticons">Emoticons erlauben</item>
+	<item key="create">Neuer Eintrag</item>
+	<item key="delete">Gästebucheinträge löschen</item>
+	<item key="edit">Gästebucheintrag bearbeiten</item>
+	<item key="guestbook">Gästebuch</item>
+	<item key="guestbook_entries">Gästebucheinträge</item>
+	<item key="ip">IP Adresse</item>
+	<item key="mod_description">Mit diesem Modul kann das Gästebuch verwaltet werden.</item>
+	<item key="no_notification">Keine Benachrichtigung</item>
+	<item key="notification">Benachrichtigung</item>
+	<item key="notification_email">Zu verwendende E-Mail-Adresse bei Benachrichtigungen</item>
+	<item key="notification_email_subject">Benachrichtigung bei neuen Gästebucheinträgen</item>
+	<item key="notification_email_body_1">Es wurde ein neuer Gästebucheintrag auf der Website %1$s verfasst.
 		Bitte klicken Sie auf den unten stehenden Link, um sich den Eintrag anzusehen (eventuell ist ein Login erforderlich):
-		%2$s</message>
-	</item>
-	<item>
-		<name>notification_email_body_2</name>
-		<message>Es wurde ein neuer Gästebucheintrag auf der Website %1$s verfasst.
+		%2$s</item>
+	<item key="notification_email_body_2">Es wurde ein neuer Gästebucheintrag auf der Website %1$s verfasst.
 		Bitte klicken Sie auf den unten stehenden Link, um sich den Eintrag anzusehen und gegebenenfalls freizuschalten (eventuell ist ein Login erforderlich):
-		%2$s</message>
-	</item>
-	<item>
-		<name>notify_and_enable</name>
-		<message>Benachrichtigen und durch Administrator freischalten</message>
-	</item>
-	<item>
-		<name>notify_on_new_entry</name>
-		<message>Bei neuen Einträgen benachrichtigen</message>
-	</item>
-	<item>
-		<name>select_emoticons</name>
-		<message>Bitte wählen Sie aus, ob Emoticons verwendet werden dürfen oder nicht.</message>
-	</item>
-	<item>
-		<name>select_notification_type</name>
-		<message>Bitte wählen Sie aus, ob auf neue Gästebucheinträge per E-Mail hingewiesen werden soll oder nicht.</message>
-	</item>
-	<item>
-		<name>send_email</name>
-		<message>E-Mail senden</message>
-	</item>
-	<item>
-		<name>settings</name>
-		<message>Einstellungen</message>
-	</item>
-	<item>
-		<name>visit_website</name>
-		<message>Website besuchen</message>
-	</item>
+		%2$s</item>
+	<item key="notify_and_enable">Benachrichtigen und durch Administrator freischalten</item>
+	<item key="notify_on_new_entry">Bei neuen Einträgen benachrichtigen</item>
+	<item key="select_emoticons">Bitte wählen Sie aus, ob Emoticons verwendet werden dürfen oder nicht.</item>
+	<item key="select_notification_type">Bitte wählen Sie aus, ob auf neue Gästebucheinträge per E-Mail hingewiesen werden soll oder nicht.</item>
+	<item key="send_email">E-Mail senden</item>
+	<item key="settings">Einstellungen</item>
+	<item key="visit_website">Website besuchen</item>
 </language>

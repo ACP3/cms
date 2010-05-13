@@ -51,7 +51,7 @@ class lang
 			if (is_file($path . $module . '.xml')) {
 				$xml = simplexml_load_file($path . $module . '.xml');
 				foreach ($xml->item as $row) {
-					$data[$module][(string) $row->name] = (string) $row->message;
+					$data[$module][(string) $row['key']] = (string) $row;
 				}
 			}
 		}

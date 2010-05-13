@@ -1,103 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>activate_readmore</name>
-		<message>Activate &quot;readmore...&quot;</message>
-	</item>
-	<item>
-		<name>additional_hyperlink</name>
-		<message>Additional hpyerlink</message>
-	</item>
-	<item>
-		<name>complete_additional_hyperlink_statements</name>
-		<message>Please complete the statements for the additional hyperlink</message>
-	</item>
-	<item>
-		<name>create</name>
-		<message>Create a new news</message>
-	</item>
-	<item>
-		<name>delete</name>
-		<message>Delete news</message>
-	</item>
-	<item>
-		<name>details</name>
-		<message>News</message>
-	</item>
-	<item>
-		<name>edit</name>
-		<message>Edit news</message>
-	</item>
-	<item>
-		<name>headline</name>
-		<message>Headline</message>
-	</item>
-	<item>
-		<name>headline_to_short</name>
-		<message>The headline should be at least 3 characters long</message>
-	</item>
-	<item>
-		<name>latest_news</name>
-		<message>Latest news</message>
-	</item>
-	<item>
-		<name>link_title</name>
-		<message>Link title</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>With this module you can adminster the news.</message>
-	</item>
-	<item>
-		<name>news</name>
-		<message>News</message>
-	</item>
-	<item>
-		<name>read_newsfeed</name>
-		<message>Read newsfeed</message>
-	</item>
-	<item>
-		<name>readmore</name>
-		<message>read more</message>
-	</item>
-	<item>
-		<name>readmore_chars</name>
-		<message><![CDATA[Characters required, to enable &quot;read more...&quot;-function]]></message>
-	</item>
-	<item>
-		<name>select_activate_readmore</name>
-		<message><![CDATA[Please select, wether you want to enable or disable the &quot;read more...&quot;-function]]></message>
-	</item>
-	<item>
-		<name>select_allow_comments</name>
-		<message>Please select, wether you want to allow comments under news</message>
-	</item>
-	<item>
-		<name>select_category</name>
-		<message>Please select the category, where do you want to find the news</message>
-	</item>
-	<item>
-		<name>settings</name>
-		<message>Settings</message>
-	</item>
-	<item>
-		<name>target_page</name>
-		<message>Target page</message>
-	</item>
-	<item>
-		<name>text</name>
-		<message>Text</message>
-	</item>
-	<item>
-		<name>text_to_short</name>
-		<message>The newstext should be at least 3 characters long</message>
-	</item>
-	<item>
-		<name>type_in_readmore_chars</name>
-		<message><![CDATA[Please type in, how many characters a news should have, to enable the &quot;read more...&quot;-function]]></message>
-	</item>
-	<item>
-		<name>uri</name>
-		<message>URI</message>
-	</item>
+	<item key="activate_readmore">Activate &quot;readmore...&quot;</item>
+	<item key="additional_hyperlink">Additional hpyerlink</item>
+	<item key="complete_additional_hyperlink_statements">Please complete the statements for the additional hyperlink</item>
+	<item key="create">Create a new news</item>
+	<item key="delete">Delete news</item>
+	<item key="details">News</item>
+	<item key="edit">Edit news</item>
+	<item key="headline">Headline</item>
+	<item key="headline_to_short">The headline should be at least 3 characters long</item>
+	<item key="latest_news">Latest news</item>
+	<item key="link_title">Link title</item>
+	<item key="mod_description">With this module you can adminster the news.</item>
+	<item key="news">News</item>
+	<item key="read_newsfeed">Read newsfeed</item>
+	<item key="readmore">read more</item>
+	<item key="readmore_chars"><![CDATA[Characters required, to enable &quot;read more...&quot;-function]]></item>
+	<item key="select_activate_readmore"><![CDATA[Please select, wether you want to enable or disable the &quot;read more...&quot;-function]]></item>
+	<item key="select_allow_comments">Please select, wether you want to allow comments under news</item>
+	<item key="select_category">Please select the category, where do you want to find the news</item>
+	<item key="settings">Settings</item>
+	<item key="target_page">Target page</item>
+	<item key="text">Text</item>
+	<item key="text_to_short">The newstext should be at least 3 characters long</item>
+	<item key="type_in_readmore_chars"><![CDATA[Please type in, how many characters a news should have, to enable the &quot;read more...&quot;-function]]></item>
+	<item key="uri">URI</item>
 </language>

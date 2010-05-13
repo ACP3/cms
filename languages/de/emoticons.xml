@@ -1,75 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>code</name>
-		<message>Code</message>
-	</item>
-	<item>
-		<name>create</name>
-		<message>Emoticon hinzufügen</message>
-	</item>
-	<item>
-		<name>edit</name>
-		<message>Emoticon bearbeiten</message>
-	</item>
-	<item>
-		<name>delete</name>
-		<message>Emoticon löschen</message>
-	</item>
-	<item>
-		<name>emoticons</name>
-		<message>Emoticons</message>
-	</item>
-	<item>
-		<name>image_filesize</name>
-		<message>Maximale Dateigröße des Bildes</message>
-	</item>
-	<item>
-		<name>image_height</name>
-		<message>Maximale Bildhöhe</message>
-	</item>
-	<item>
-		<name>image_width</name>
-		<message>Maximale Bildbreite</message>
-	</item>
-	<item>
-		<name>invalid_image_filesize_entered</name>
-		<message>Bitte geben Sie die maximale Dateigröße des Bildes in Byte an</message>
-	</item>
-	<item>
-		<name>invalid_image_height_entered</name>
-		<message>Bitte geben Sie die maximale Bildhöhe in Pixel an</message>
-	</item>
-	<item>
-		<name>invalid_image_selected</name>
-		<message>Entweder Sie haben ein unerlaubtes Dateiformat verwendet oder das Bild ist zu breit, zu hoch oder zu groß</message>
-	</item>
-	<item>
-		<name>invalid_image_width_entered</name>
-		<message>Bitte geben Sie die maximale Bildbreite in Pixel an</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>Mit diesem Modul können Emoticons z.B. in Kommentare eingefügt werden.</message>
-	</item>
-	<item>
-		<name>picture</name>
-		<message>Bild</message>
-	</item>
-	<item>
-		<name>replace_picture</name>
-		<message>Bild ersetzen</message>
-	</item>
-	<item>
-		<name>settings</name>
-		<message>Einstellungen</message>
-	</item>
-	<item>
-		<name>type_in_code</name>
-		<message>Bitte geben Sie einen Code an, der dann durch ein Bild ersetzt werden soll</message>
-	</item>
-	<item>
-		<name>type_in_description</name>
-		<message>Bitte geben Sie zum Code eine kurze Beschreibung an</message>
-	</item>
+	<item key="code">Code</item>
+	<item key="create">Emoticon hinzufügen</item>
+	<item key="edit">Emoticon bearbeiten</item>
+	<item key="delete">Emoticon löschen</item>
+	<item key="emoticons">Emoticons</item>
+	<item key="image_filesize">Maximale Dateigröße des Bildes</item>
+	<item key="image_height">Maximale Bildhöhe</item>
+	<item key="image_width">Maximale Bildbreite</item>
+	<item key="invalid_image_filesize_entered">Bitte geben Sie die maximale Dateigröße des Bildes in Byte an</item>
+	<item key="invalid_image_height_entered">Bitte geben Sie die maximale Bildhöhe in Pixel an</item>
+	<item key="invalid_image_selected">Entweder Sie haben ein unerlaubtes Dateiformat verwendet oder das Bild ist zu breit, zu hoch oder zu groß</item>
+	<item key="invalid_image_width_entered">Bitte geben Sie die maximale Bildbreite in Pixel an</item>
+	<item key="mod_description">Mit diesem Modul können Emoticons z.B. in Kommentare eingefügt werden.</item>
+	<item key="picture">Bild</item>
+	<item key="replace_picture">Bild ersetzen</item>
+	<item key="settings">Einstellungen</item>
+	<item key="type_in_code">Bitte geben Sie einen Code an, der dann durch ein Bild ersetzt werden soll</item>
+	<item key="type_in_description">Bitte geben Sie zum Code eine kurze Beschreibung an</item>
 </language>

@@ -1,51 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>create</name>
-		<message>Neue statische Seite erstellen</message>
-	</item>
-	<item>
-		<name>create_menu_item</name>
-		<message>Für Seite einen Menüpunkt erstellen</message>
-	</item>
-	<item>
-		<name>delete</name>
-		<message>Statische Seite löschen</message>
-	</item>
-	<item>
-		<name>edit</name>
-		<message>Statische Seite bearbeiten</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>Dieses Modul verwaltet die statischen Seiten.</message>
-	</item>
-	<item>
-		<name>page_statements</name>
-		<message>Seitenangaben</message>
-	</item>
-	<item>
-		<name>select_create_menu_item</name>
-		<message>Bitte wählen Sie aus, ob für die statische Seite ein Menüpunkt erstellt werden soll oder nicht</message>
-	</item>
-	<item>
-		<name>static_pages</name>
-		<message>Statische Seiten</message>
-	</item>
-	<item>
-		<name>text</name>
-		<message>Text</message>
-	</item>
-	<item>
-		<name>text_to_short</name>
-		<message>Der Text sollte mindestens 3 Zeichen lang sein</message>
-	</item>
-	<item>
-		<name>title</name>
-		<message>Titel</message>
-	</item>
-	<item>
-		<name>title_to_short</name>
-		<message>Der Titel sollte mindestens 3 Zeichen lang sein</message>
-	</item>
+	<item key="create">Neue statische Seite erstellen</item>
+	<item key="create_menu_item">Für Seite einen Menüpunkt erstellen</item>
+	<item key="delete">Statische Seite löschen</item>
+	<item key="edit">Statische Seite bearbeiten</item>
+	<item key="mod_description">Dieses Modul verwaltet die statischen Seiten.</item>
+	<item key="page_statements">Seitenangaben</item>
+	<item key="select_create_menu_item">Bitte wählen Sie aus, ob für die statische Seite ein Menüpunkt erstellt werden soll oder nicht</item>
+	<item key="static_pages">Statische Seiten</item>
+	<item key="text">Text</item>
+	<item key="text_to_short">Der Text sollte mindestens 3 Zeichen lang sein</item>
+	<item key="title">Titel</item>
+	<item key="title_to_short">Der Titel sollte mindestens 3 Zeichen lang sein</item>
 </language>
