@@ -72,7 +72,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$mode[2]['value'] = 3;
 	$mode[2]['selected'] = selectEntry('mode', '3');
 	$mode[2]['lang'] = $lang->t('menu_items', 'hyperlink');
-	if (modules::check('static_pages', 'functions')) {
+	if (modules::isActive('static_pages')) {
 		$mode[3]['value'] = 4;
 		$mode[3]['selected'] = selectEntry('mode', '4');
 		$mode[3]['lang'] = $lang->t('menu_items', 'static_page');

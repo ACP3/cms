@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-$emoticons = modules::check('emoticons', 'functions') == 1 ? true : false;
+$emoticons = modules::isActive('emoticons');
 
 if (isset($_POST['form'])) {
 	$form = $_POST['form'];

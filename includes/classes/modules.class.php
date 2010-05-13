@@ -93,6 +93,17 @@ class modules
 		return -1;
 	}
 	/**
+	 * Gibt zurück, ob ein Modul aktiv ist oder nicht
+	 *
+	 * @param string $module
+	 * @return boolean
+	 */
+	public static function isActive($module)
+	{
+		$info = self::parseInfo($module);
+		return $info['active'] == 1 ? true : false;
+	}
+	/**
 	 * Gibt ein alphabetisch sortiertes Array mit allen gefundenen
 	 * Modulen des ACP3 mitsamt Modulinformationen aus
 	 *
@@ -181,13 +192,14 @@ class modules
 	 */
 	public static function parseInfo($module)
 	{
-		global $lang;
 		static $parsed_modules = array();
 
-		if (empty($parsed_modules[$module])) {
+		if (empty($parsed_modules[$module]) && !preg_match('=/=', $module)) {
 			$mod_info = xml::parseXmlFile(ACP3_ROOT . 'modules/' . $module . '/module.xml', 'info');
 
 			if (is_array($mod_info)) {
+				global $lang;
+
 				$parsed_modules[$module] = array(
 					'dir' => $module,
 					'active' => $mod_info['active'],

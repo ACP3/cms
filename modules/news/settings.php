@@ -10,10 +10,12 @@
 if (!defined('IN_ADM'))
 	exit;
 
+$comments = modules::isActive('comments');
+
 if (isset($_POST['form'])) {
 	$form = $_POST['form'];
 	
-	if (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0)
+	if ($comments && (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0))
 		$errors[] = $lang->t('news', 'select_allow_comments');
 	if (!isset($form['readmore']) || $form['readmore'] != 1 && $form['readmore'] != 0)
 		$errors[] = $lang->t('news', 'select_activate_readmore');
@@ -45,13 +47,15 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	
 	$tpl->assign('readmore_chars', isset($form) ? $form['readmore_chars'] : $settings['readmore_chars']);
 
-	$comments[0]['value'] = '1';
-	$comments[0]['checked'] = selectEntry('comments', '1', $settings['comments'], 'checked');
-	$comments[0]['lang'] = $lang->t('common', 'yes');
-	$comments[1]['value'] = '0';
-	$comments[1]['checked'] = selectEntry('comments', '0', $settings['comments'], 'checked');
-	$comments[1]['lang'] = $lang->t('common', 'no');
-	$tpl->assign('comments', $comments);
+	if ($comments) {
+		$allow_comments[0]['value'] = '1';
+		$allow_comments[0]['checked'] = selectEntry('comments', '1', $settings['comments'], 'checked');
+		$allow_comments[0]['lang'] = $lang->t('common', 'yes');
+		$allow_comments[1]['value'] = '0';
+		$allow_comments[1]['checked'] = selectEntry('comments', '0', $settings['comments'], 'checked');
+		$allow_comments[1]['lang'] = $lang->t('common', 'no');
+		$tpl->assign('allow_comments', $allow_comments);
+	}
 
 	$dateformat[0]['value'] = 'short';
 	$dateformat[0]['selected'] = selectEntry('dateformat', 'short', $settings['dateformat']);

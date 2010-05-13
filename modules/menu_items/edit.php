@@ -45,102 +45,21 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			// Vorgenommene Änderungen am Datensatz anwenden
+			$mode = ($form['mode'] == '2' || $form['mode'] == '3') && preg_match('/^(static_pages\/list\/id_([0-9]+)\/)$/', $form['uri']) ? '4' : $form['mode'];
+			$uri_type = $form['mode'] == '4' ? 'static_pages/list/id_' . $form['static_pages'] . '/' : db::escape($form['uri'], 2);
+
 			$update_values = array(
 				'start' => $date->timestamp($form['start']),
 				'end' => $date->timestamp($form['end']),
-				'mode' => ($form['mode'] == '2' || $form['mode'] == '3') && preg_match('/^(static_pages\/list\/id_([0-9]+)\/)$/', $form['uri']) ? '4' : $form['mode'],
+				'mode' => $mode,
 				'block_id' => $form['block_id'],
 				'display' => $form['display'],
 				'title' => db::escape($form['title']),
-				'uri' => $form['mode'] == '1' ? $form['module'] : ($form['mode'] == '4' ? 'static_pages/list/id_' . $form['static_pages'] . '/' : db::escape($form['uri'], 2)),
+				'uri' => $form['mode'] == '1' ? $form['module'] : $uri_type,
 				'target' => $form['target'],
 			);
 
-			// Die aktuelle Seite mit allen untergeordneten Seiten selektieren
-			$pages = $db->query('SELECT c.id, c.root_id, c.left_id, c.right_id, c.block_id FROM ' . $db->prefix . 'menu_items AS p, ' . $db->prefix . 'menu_items AS c WHERE p.id = \'' . $uri->id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
-			$c_pages = count($pages);
-
-			// Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
-			if (empty($form['parent']) && $form['block_id'] == $pages[0]['block_id'] && $db->countRows('*', 'menu_items', 'left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id']) == 0) {
-				$bool = $db->update('menu_items', $update_values, 'id = \'' . $uri->id . '\'');
-			} else {
-				// Überprüfung, falls Seite kein Root-Element ist, aber keine Veränderung vorgenommen werden soll...
-				$chk_parent = $db->query('SELECT p.id FROM ' . $db->prefix . 'menu_items p, ' . $db->prefix . 'menu_items c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $uri->id . ' ORDER BY p.left_id DESC LIMIT 2');
-				if (isset($chk_parent[1]) && $chk_parent[1]['id'] == $form['parent']) {
-					$bool = $db->update('menu_items', $update_values, 'id = \'' . $uri->id . '\'');
-				// ...ansonsten den Baum bearbeiten...
-				} else {
-					$bool = null;
-					// Differenz zwischen linken und rechten Wert bilden
-					$page_diff = $pages[0]['right_id'] - $pages[0]['left_id'] + 1;
-
-					// Neues Elternelement
-					$new_parent = $db->select('root_id, left_id, right_id', 'menu_items', 'id = \'' . $form['parent'] . '\'');
-
-					// Rekursion verhindern
-					if (!empty($new_parent) && $new_parent[0]['left_id'] < $pages[0]['left_id'] && $new_parent[0]['right_id'] > $pages[0]['right_id']) {
-						$bool = null;
-					} else {
-						if (empty($new_parent)) {
-							// Root-Element in anderen Block verschieben
-							if ($pages[0]['block_id'] != $form['block_id']) {
-								$new_block = $db->select('left_id', 'menu_items', 'block_id = \'' . $form['block_id'] . '\'', 'left_id ASC', 1);
-								// Falls Navigationselemente in einen leeren Block verschoben werden sollen,
-								// die right_id des letzten Elementes verwenden
-								if (empty($new_block)) {
-									$new_block = $db->select('right_id AS left_id', 'menu_items', 0, 'right_id DESC', 1);
-									$new_block[0]['left_id']+= 1;
-								}
-
-								if ($form['block_id'] > $pages[0]['block_id']) {
-									$new_block[0]['left_id'] = $new_block[0]['left_id'] - $page_diff;
-								}
-
-								$diff = $new_block[0]['left_id'] - $pages[0]['left_id'];
-								$root_id = $uri->id;
-
-								$db->link->beginTransaction();
-								$db->query('UPDATE ' . $db->prefix . 'menu_items SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0);
-								$db->query('UPDATE ' . $db->prefix . 'menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $pages[0]['right_id'], 0);
-								$db->query('UPDATE ' . $db->prefix . 'menu_items SET left_id = left_id + ' . $page_diff . ', right_id = right_id + ' . $page_diff . ' WHERE left_id >= ' . $new_block[0]['left_id'], 0);
-							// Element zum neuen Elternknoten machen
-							} else {
-								$new_parent = $db->select('right_id', 'menu_items', 'block_id =  \'' . $pages[0]['block_id'] . '\'', 'right_id DESC', 1);
-
-								$diff = $new_parent[0]['right_id'] - $pages[0]['right_id'];
-								$root_id = $uri->id;
-
-								$db->link->beginTransaction();
-								$db->query('UPDATE ' . $db->prefix . 'menu_items SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0);
-								$db->query('UPDATE ' . $db->prefix . 'menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $pages[0]['right_id'] . ' AND block_id = \'' . $pages[0]['block_id'] . '\'', 0);
-							}
-						} else {
-							// Teilbaum nach unten...
-							if ($new_parent[0]['left_id'] > $pages[0]['left_id']) {
-								$new_parent[0]['left_id'] = $new_parent[0]['left_id'] - $page_diff;
-								$new_parent[0]['right_id'] = $new_parent[0]['right_id'] - $page_diff;
-							}
-
-							$diff = $new_parent[0]['left_id'] - $pages[0]['left_id'] + 1;
-							$root_id = $new_parent[0]['root_id'];
-
-							$db->link->beginTransaction();
-							$db->query('UPDATE ' . $db->prefix . 'menu_items SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0);
-							$db->query('UPDATE ' . $db->prefix . 'menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $pages[0]['right_id'], 0);
-							$db->query('UPDATE ' . $db->prefix . 'menu_items SET right_id = right_id + ' . $page_diff . ' WHERE left_id <= ' . $new_parent[0]['left_id'] . ' AND right_id >= ' . $new_parent[0]['right_id'], 0);
-							$db->query('UPDATE ' . $db->prefix . 'menu_items SET left_id = left_id + ' . $page_diff . ', right_id = right_id + ' . $page_diff . ' WHERE left_id > ' . $new_parent[0]['left_id'], 0);
-						}
-
-						// Einträge aktualisieren
-						for ($i = 0; $i < $c_pages; ++$i) {
-							$bool = $db->query('UPDATE ' . $db->prefix . 'menu_items SET block_id = \'' . $form['block_id'] . '\', root_id = \'' . $root_id . '\', left_id = ' . ($pages[$i]['left_id'] + $diff) . ', right_id = ' . ($pages[$i]['right_id'] + $diff) . ' WHERE id = \'' . $pages[$i]['id'] . '\'', 0);
-							if ($bool == null)
-								break;
-						}
-						$db->link->commit();
-					}
-				}
-			}
+			$bool = editNode($uri->id, $form['parent'], $form['block_id'], $update_values);
 
 			setMenuItemsCache();
 
@@ -161,7 +80,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 		$mode[2]['value'] = 3;
 		$mode[2]['selected'] = selectEntry('mode', '3', $page[0]['mode']);
 		$mode[2]['lang'] = $lang->t('menu_items', 'hyperlink');
-		if (modules::check('static_pages', 'functions')) {
+		if (modules::isActive('static_pages')) {
 			$mode[3]['value'] = 4;
 			$mode[3]['selected'] = selectEntry('mode', '4', $page[0]['mode']);
 			$mode[3]['lang'] = $lang->t('menu_items', 'static_page');
