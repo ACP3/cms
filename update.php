@@ -24,6 +24,8 @@ $queries = array(
 	3 => 'ALTER TABLE `{pre}users` ADD `entries` TINYINT(2) UNSIGNED NOT NULL AFTER `language`;',
 	4 => 'UPDATE `{pre}users` SET `date_format_long` = \'' . CONFIG_DATE_FORMAT . '\', `date_format_short` = \'d.m.Y\', `entries` = ' . ((int) CONFIG_ENTRIES) . ';',
 	5 => 'UPDATE {pre}access` SET `modules` =  \'access:16,acp:16,captcha:16,categories:16,comments:16,contact:16,emoticons:16,errors:16,feeds:16,files:16,gallery:16,guestbook:16,menu_items:16,news:16,newsletter:16,polls:16,search:16,static_pages:16,system:16,users:16\'  WHERE `id` = 1;',
+	6 => 'ALTER TABLE `{pre}guestbook` ADD `active` TINYINT(1) UNSIGNED NOT NULL AFTER `mail`;',
+	7 => 'UPDATE `{pre}guestbook` SET `active` = 1;',
 );
 
 // Änderungen am DB Schema vornehmen

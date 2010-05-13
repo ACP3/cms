@@ -10,6 +10,9 @@
 	</info>
 	<settings>
 		<dateformat>long</dateformat>
+		<notify>0</notify>
+		<notify_email></notify_email>
+		<emoticons>1</emoticons>
 	</settings>
 	<access>
 		<item>

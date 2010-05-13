@@ -10,20 +10,19 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$guestbook = $db->query('SELECT u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.date, g.name, g.user_id, g.message, g.website, g.mail FROM ' . $db->prefix . 'guestbook AS g LEFT JOIN ' . $db->prefix . 'users AS u ON(u.id = g.user_id) ORDER BY date DESC LIMIT ' . POS . ', ' . $auth->entries);
+$settings = config::output('guestbook');
+
+$guestbook = $db->query('SELECT u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.date, g.name, g.user_id, g.message, g.website, g.mail FROM ' . $db->prefix . 'guestbook AS g LEFT JOIN ' . $db->prefix . 'users AS u ON(u.id = g.user_id) ' . ($settings['notify'] == 2 ? 'WHERE active = 1' : '') . ' ORDER BY date DESC LIMIT ' . POS . ', ' . $auth->entries);
 $c_guestbook = count($guestbook);
 
 if ($c_guestbook > 0) {
 	$tpl->assign('pagination', pagination($db->countRows('*', 'guestbook')));
-	$emoticons = false;
 
 	// Emoticons einbinden
-	if (modules::check('emoticons', 'functions') == 1) {
+	$emoticons = modules::check('emoticons', 'functions') == 1 && $settings['emoticons'] == 1 ? true : false;
+	if ($emoticons) {
 		require_once ACP3_ROOT . 'modules/emoticons/functions.php';
-		$emoticons = true;
 	}
-
-	$settings = config::output('guestbook');
 
 	for ($i = 0; $i < $c_guestbook; ++$i) {
 		if (empty($guestbook[$i]['user_name']) && empty($guestbook[$i]['name'])) {

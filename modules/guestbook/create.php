@@ -13,6 +13,8 @@ if (!defined('IN_ACP3'))
 breadcrumb::assign($lang->t('guestbook', 'guestbook'), uri('guestbook'));
 breadcrumb::assign($lang->t('guestbook', 'create'));
 
+$settings = config::output('guestbook');
+
 if (isset($_POST['form'])) {
 	$ip = $_SERVER['REMOTE_ADDR'];
 	$form = $_POST['form'];
@@ -47,16 +49,24 @@ if (isset($_POST['form'])) {
 			'message' => db::escape($form['message']),
 			'website' => db::escape($form['website'], 2),
 			'mail' => $form['mail'],
+			'active' => $settings['notify'] == 2 ? 0 : 1,
 		);
 
 		$bool = $db->insert('guestbook', $insert_values);
+
+		if ($settings['notify'] == 1 || $settings['notify'] == 2) {
+			$host = 'http://' . htmlentities($_SERVER['HTTP_HOST']);
+			$fullPath = $host . uri('acp/guestbook/edit/id_' . $db->link->lastInsertId);
+			$body = sprintf($settings['notify'] == 1 ? $lang->t('guestbook', 'notification_email_body_1') : $lang->t('guestbook', 'notification_email_body_2'), $host, $fullpath);
+			genEmail('', $settings['notify_email'], $settings['notify_email'], $lang->t('guestbook', 'notification_email_subject'), $body);
+		}
 
 		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('guestbook'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	// Emoticons einbinden
-	if (modules::check('emoticons', 'functions') == 1) {
+	if (modules::check('emoticons', 'functions') == 1 && $settings['emoticons'] == 1) {
 		require_once ACP3_ROOT . 'modules/emoticons/functions.php';
 		$tpl->assign('emoticons', emoticonsList());
 	}
