@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
 	<item>
+		<name>activate_entry</name>
+		<message>Eintrag freischalten</message>
+	</item>
+	<item>
+		<name>allow_emoticons</name>
+		<message>Emoticons erlauben</message>
+	</item>
+	<item>
 		<name>create</name>
 		<message>Neuer Eintrag</message>
 	</item>
 	<item>
 		<name>delete</name>
-		<message>Gästebuch Einträge löschen</message>
+		<message>Gästebucheinträge löschen</message>
 	</item>
 	<item>
 		<name>edit</name>
-		<message>Gästebuch Eintrag bearbeiten</message>
+		<message>Gästebucheintrag bearbeiten</message>
 	</item>
 	<item>
 		<name>guestbook</name>
@@ -18,7 +26,7 @@
 	</item>
 	<item>
 		<name>guestbook_entries</name>
-		<message>Gästebuch Einträge</message>
+		<message>Gästebucheinträge</message>
 	</item>
 	<item>
 		<name>ip</name>
@@ -27,6 +35,50 @@
 	<item>
 		<name>mod_description</name>
 		<message>Mit diesem Modul kann das Gästebuch verwaltet werden.</message>
+	</item>
+	<item>
+		<name>no_notification</name>
+		<message>Keine Benachrichtigung</message>
+	</item>
+	<item>
+		<name>notification</name>
+		<message>Benachrichtigung</message>
+	</item>
+	<item>
+		<name>notification_email</name>
+		<message>Zu verwendende E-Mail-Adresse bei Benachrichtigungen</message>
+	</item>
+	<item>
+		<name>notification_email_subject</name>
+		<message>Benachrichtigung bei neuen Gästebucheinträgen</message>
+	</item>
+	<item>
+		<name>notification_email_body_1</name>
+		<message>Es wurde ein neuer Gästebucheintrag auf der Website %1$s verfasst.
+		Bitte klicken Sie auf den unten stehenden Link, um sich den Eintrag anzusehen (eventuell ist ein Login erforderlich):
+		%2$s</message>
+	</item>
+	<item>
+		<name>notification_email_body_2</name>
+		<message>Es wurde ein neuer Gästebucheintrag auf der Website %1$s verfasst.
+		Bitte klicken Sie auf den unten stehenden Link, um sich den Eintrag anzusehen und gegebenenfalls freizuschalten (eventuell ist ein Login erforderlich):
+		%2$s</message>
+	</item>
+	<item>
+		<name>notify_and_enable</name>
+		<message>Benachrichtigen und durch Administrator freischalten</message>
+	</item>
+	<item>
+		<name>notify_on_new_entry</name>
+		<message>Bei neuen Einträgen benachrichtigen</message>
+	</item>
+	<item>
+		<name>select_emoticons</name>
+		<message>Bitte wählen Sie aus, ob Emoticons verwendet werden dürfen oder nicht.</message>
+	</item>
+	<item>
+		<name>select_notification_type</name>
+		<message>Bitte wählen Sie aus, ob auf neue Gästebucheinträge per E-Mail hingewiesen werden soll oder nicht.</message>
 	</item>
 	<item>
 		<name>send_email</name>
