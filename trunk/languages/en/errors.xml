@@ -1,31 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>403</name>
-		<message>Access denied</message>
-	</item>
-	<item>
-		<name>404</name>
-		<message>File not found</message>
-	</item>
-	<item>
-		<name>errors</name>
-		<message>Error messages</message>
-	</item>
-	<item>
-		<name>file_not_found</name>
-		<message><![CDATA[The requested module respectively the requested file wasn\'t found or isn\'t enabled at this moment.<br />Please contact the administrators of this Website, if this error occures repeatedly.]]></message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>This module returns useful error messages.</message>
-	</item>
-	<item>
-		<name>no_access</name>
-		<message>You don\'t have the needed rights to view this page.</message>
-	</item>
-	<item>
-		<name>tpl_not_found</name>
-		<message>The desired template %s was not found.</message>
-	</item>
+	<item key="403">Access denied</item>
+	<item key="404">File not found</item>
+	<item key="errors">Error messages</item>
+	<item key="file_not_found"><![CDATA[The requested module respectively the requested file wasn\'t found or isn\'t enabled at this moment.<br />Please contact the administrators of this Website, if this error occures repeatedly.]]></item>
+	<item key="mod_description">This module returns useful error messages.</item>
+	<item key="no_access">You don\'t have the needed rights to view this page.</item>
+	<item key="tpl_not_found">The desired template %s was not found.</item>
 </language>

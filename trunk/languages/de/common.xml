@@ -1,495 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>acp</name>
-		<message>Administration Control Panel</message>
-	</item>
-	<item>
-		<name>activate_module</name>
-		<message><![CDATA[Das Modul &quot;%s&quot; ist deaktiviert, wodurch bestimmte Funktionen eingeschränkt sein könnten.<br />Bitte aktivieren Sie dieses Modul, um diesen Fehler zu beheben.]]></message>
-	</item>
-	<item>
-		<name>allow_comments</name>
-		<message>Kommentare erlauben</message>
-	</item>
-	<item>
-		<name>author</name>
-		<message>Autor</message>
-	</item>
-	<item>
-		<name>back</name>
-		<message>Zurück</message>
-	</item>
-	<item>
-		<name>category</name>
-		<message>Kategorie</message>
-	</item>
-	<item>
-		<name>confirm_delete</name>
-		<message>Sollen die ausgewählten Einträge wirklich gelöscht werden?</message>
-	</item>
-	<item>
-		<name>create_error</name>
-		<message>Beim Erstellen des Eintrages ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>create_success</name>
-		<message>Der Eintrag wurde erfolgreich erstellt.</message>
-	</item>
-	<item>
-		<name>date</name>
-		<message>Datum</message>
-	</item>
-	<item>
-		<name>date_description</name>
-		<message>Wenn Sie kein Enddatum festlegen möchten, so setzen Sie bitte das Veröffentlichungsdatum und das Enddatum auf die gleichen Werte.</message>
-	</item>
-	<item>
-		<name>date_format</name>
-		<message>Datumsformat</message>
-	</item>
-	<item>
-		<name>date_format_long</name>
-		<message>Langes Datumsformat</message>
-	</item>
-	<item>
-		<name>date_format_short</name>
-		<message>Kurzes Datumsformat</message>
-	</item>
-	<item>
-		<name>day</name>
-		<message>Tag</message>
-	</item>
-	<item>
-		<name>daylight_saving_time</name>
-		<message>Sommerzeit</message>
-	</item>
-	<item>
-		<name>delete</name>
-		<message>Löschen</message>
-	</item>
-	<item>
-		<name>delete_error</name>
-		<message>Beim Löschen der ausgewählten Einträge ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>delete_marked</name>
-		<message>Markierte Einträge löschen</message>
-	</item>
-	<item>
-		<name>delete_success</name>
-		<message>Die ausgewählten Einträge wurden erfolgreich gelöscht.</message>
-	</item>
-	<item>
-		<name>description</name>
-		<message>Beschreibung</message>
-	</item>
-	<item>
-		<name>edit_error</name>
-		<message>Beim Bearbeiten des Eintrages ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>edit_order</name>
-		<message>Reihenfolge bearbeiten</message>
-	</item>
-	<item>
-		<name>edit_success</name>
-		<message>Der Eintrag wurde erfolgreich bearbeitet.</message>
-	</item>
-	<item>
-		<name>email</name>
-		<message>E-Mail-Adresse</message>
-	</item>
-	<item>
-		<name>end_date</name>
-		<message>Enddatum</message>
-	</item>
-	<item>
-		<name>entries</name>
-		<message>Einträge</message>
-	</item>
-	<item>
-		<name>entry</name>
-		<message>Eintrag</message>
-	</item>
-	<item>
-		<name>entry_not_found</name>
-		<message>Der angeforderte Eintrag konnte leider nicht gefunden werden.</message>
-	</item>
-	<item>
-		<name>failure</name>
-		<message>Es sind folgende Fehler aufgetreten:</message>
-	</item>
-	<item>
-		<name>first_page</name>
-		<message>Erste Seite</message>
-	</item>
-	<item>
-		<name>flood_no_entry_possible</name>
-		<message>Sie können erst in %d Sekunden wieder einen Kommentar abgeben</message>
-	</item>
-	<item>
-		<name>forward</name>
-		<message>Weiter</message>
-	</item>
-	<item>
-		<name>from_start_to_end</name>
-		<message>%1$s bis %2$s</message>
-	</item>
-	<item>
-		<name>general_statements</name>
-		<message>Allgemeine Angaben</message>
-	</item>
-	<item>
-		<name>hour</name>
-		<message>Stunde</message>
-	</item>
-	<item>
-		<name>last_page</name>
-		<message>Letzte Seite</message>
-	</item>
-	<item>
-		<name>mark</name>
-		<message>Markieren</message>
-	</item>
-	<item>
-		<name>mark_all</name>
-		<message>Alle Einträge markieren</message>
-	</item>
-	<item>
-		<name>message</name>
-		<message>Nachricht</message>
-	</item>
-	<item>
-		<name>message_to_short</name
-		><message>Die Nachricht sollte mindestens 3 Zeichen lang sein</message>
-	</item>
-	<item>
-		<name>min</name>
-		<message>Minute</message>
-	</item>
-	<item>
-		<name>modules</name>
-		<message>Module</message>
-	</item>
-	<item>
-		<name>month</name>
-		<message>Monat</message>
-	</item>
-	<item>
-		<name>move_down</name>
-		<message>Einen Schritt nach unten verschieben</message>
-	</item>
-	<item>
-		<name>move_impossible</name>
-		<message>Verschieben nicht möglich</message>
-	</item>
-	<item>
-		<name>move_up</name>
-		<message>Einen Schritt nach oben verschieben</message>
-	</item>
-	<item>
-		<name>name</name>
-		<message>Name</message>
-	</item>
-	<item>
-		<name>name_to_short</name>
-		<message>Bitte geben Sie einen Namen an</message>
-	</item>
-	<item>
-		<name>next_page</name>
-		<message>Nächste Seite</message>
-	</item>
-	<item>
-		<name>no</name
-		><message>Nein</message>
-	</item>
-	<item>
-		<name>no_entries</name>
-		<message>Es konnten keine Einträge gefunden werden.</message>
-	</item>
-	<item>
-		<name>no_entries_selected</name>
-		<message>Bitte wählen Sie die zu löschenden Einträge aus.</message>
-	</item>
-	<item>
-		<name>no_entries_short</name>
-		<message>Keine Einträge vorhanden.</message>
-	</item>
-	<item>
-		<name>order</name>
-		<message>Reihenfolge</message>
-	</item>
-	<item>
-		<name>order_error</name>
-		<message>Beim Bearbeiten der Reihenfolge ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>order_success</name>
-		<message>Die Reihenfolge wurde erfolgreich bearbeitet.</message>
-	</item>
-	<item>
-		<name>options</name>
-		<message>Optionen</message>
-	</item>
-	<item>
-		<name>overview</name>
-		<message>Übersicht</message>
-	</item>
-	<item>
-		<name>pagination</name>
-		<message>Seitenauswahl</message>
-	</item>
-	<item>
-		<name>pls_select</name>
-		<message>Bitte auswählen</message>
-	</item>
-	<item>
-		<name>previous_page</name>
-		<message>Vorherige Seite</message>
-	</item>
-	<item>
-		<name>publication_period</name>
-		<message>Veröffentlichungszeitraum</message>
-	</item>
-	<item>
-		<name>reset</name>
-		<message>Zurücksetzen</message>
-	</item>
-	<item>
-		<name>select_date</name>
-		<message>Bitte vervollständigen Sie die Angaben zum Veröffentlichungsdatum bzw. dem Enddatum dieses Eintrages</message>
-	</item>
-	<item>
-		<name>select_date_format</name>
-		<message>Bitte wählen Sie aus, ob das lange oder das kurze Datumsformat verwendet werden soll</message>
-	</item>
-	<item>
-		<name>select_daylight_saving_time</name>
-		<message>Bitte wählen Sie aus, ob gerade Sommerzeit ist oder nicht</message>
-	</item>
-	<item>
-		<name>select_sidebar_entries</name>
-		<message>Bitte wählen Sie aus, wie viele Einträge in der Modul-Sidebar angezeigt werden sollen</message>
-	</item>
-	<item>
-		<name>select_time_zone</name>
-		<message>Bitte wählen Sie die Zeitzone aus</message>
-	</item>
-	<item>
-		<name>settings_error</name>
-		<message>Beim Bearbeiten der Einstellungen ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>settings_success</name>
-		<message>Die Einstellungen wurden erfolgreich aktualisiert.</message>
-	</item>
-	<item>
-		<name>sidebar_entries_to_display</name>
-		<message>Anzuzeigende Sidebareinträge</message>
-	</item>
-	<item>
-		<name>since_date</name>
-		<message>Seit %s</message>
-	</item>
-	<item>
-		<name>start_date</name>
-		<message>Veröffentlichungsdatum</message>
-	</item>
-	<item>
-		<name>submit</name>
-		<message>Senden</message>
-	</item>
-	<item>
-		<name>time_zone</name>
-		<message>Zeitzone</message>
-	</item>
-	<item>
-		<name>unmark_all</name>
-		<message>Markierung aufheben</message>
-	</item>
-	<item>
-		<name>upload_error</name>
-		<message>Die Datei %s konnte leider nicht verschoben werden.</message>
-	</item>
-	<item>
-		<name>utc-12</name>
-		<message>(UTC-12:00) Baker Island Time</message>
-	</item>
-	<item>
-		<name>utc-11</name>
-		<message>(UTC-11:00) Niue Time, Samoa Standard Time</message>
-	</item>
-	<item>
-		<name>utc-10</name>
-		<message>(UTC-10:00) Hawaii-Aleutian Standard Time, Cook Island Time</message>
-	</item>
-	<item>
-		<name>utc-9.5</name>
-		<message>(UTC-09:30) Marquesas Islands Time</message>
-	</item>
-	<item>
-		<name>utc-9</name>
-		<message>(UTC-09:00) Alaska Standard Time, Gambier Island Time</message>
-	</item>
-	<item>
-		<name>utc-8</name>
-		<message>(UTC-08:00) Pacific Standard Time</message>
-	</item>
-	<item>
-		<name>utc-7</name>
-		<message>(UTC-07:00) Mountain Standard Time</message>
-	</item>
-	<item>
-		<name>utc-6</name>
-		<message>(UTC-06:00) Central Standard Time</message>
-	</item>
-	<item>
-		<name>utc-5</name>
-		<message>(UTC-05:00) Eastern Standard Time</message>
-	</item>
-	<item>
-		<name>utc-4</name>
-		<message>(UTC-04:00) Atlantic Standard Time</message>
-	</item>
-	<item>
-		<name>utc-3.5</name>
-		<message>(UTC-03:30) Newfoundland Standard Time</message>
-	</item>
-	<item>
-		<name>utc-3</name>
-		<message>(UTC-03:00) Amazon Standard Time, Central Greenland Time</message>
-	</item>
-	<item>
-		<name>utc-2</name>
-		<message><![CDATA[ (UTC-02:00) Fernando de Noronha Time, South Georgia &amp; the South Sandwich Islands Time ]]></message>
-	</item>
-	<item>
-		<name>utc-1</name>
-		<message>(UTC-01:00) Azores Standard Time, Cape Verde Time, Eastern Greenland Time</message>
-	</item>
-	<item>
-		<name>utc0</name>
-		<message>(UTC) Westeuropäische Zeit, Greenwich Mean Time</message>
-	</item>
-	<item>
-		<name>utc1</name>
-		<message>(UTC+01:00) Mitteleuropäische Zeit, West African Time</message>
-	</item>
-	<item>
-		<name>utc2</name>
-		<message>(UTC+02:00) Osteuropäische Zeit, Central African Time</message>
-	</item>
-	<item>
-		<name>utc3</name>
-		<message>(UTC+03:00) Moscow Standard Time, Eastern African Time</message>
-	</item>
-	<item>
-		<name>utc3.5</name>
-		<message>(UTC+03:30) Iran Standard Time</message>
-	</item>
-	<item>
-		<name>utc4</name>
-		<message>(UTC+04:00) Gulf Standard Time, Samara Standard Time</message>
-	</item>
-	<item>
-		<name>utc4.5</name>
-		<message>(UTC+04:30) Afghanistan Time</message>
-	</item>
-	<item>
-		<name>utc5</name>
-		<message>(UTC+05:00) Pakistan Standard Time, Yekaterinburg Standard Time</message>
-	</item>
-	<item>
-		<name>utc5.5</name>
-		<message>(UTC+05:30) Indian Standard Time, Sri Lanka Time</message>
-	</item>
-	<item>
-		<name>utc5.75</name>
-		<message>(UTC+05:45) Nepal Time</message>
-	</item>
-	<item>
-		<name>utc6</name>
-		<message>(UTC+06:00) Bangladesh Time, Bhutan Time, Novosibirsk Standard Time</message>
-	</item>
-	<item>
-		<name>utc6.5</name>
-		<message>(UTC+06:30) Cocos Islands Time, Myanmar Time</message>
-	</item>
-	<item>
-		<name>utc7</name>
-		<message>(UTC+07:00) Indochina Time, Krasnoyarsk Standard Time</message>
-	</item>
-	<item>
-		<name>utc8</name>
-		<message>(UTC+08:00) Chinese Standard Time, Australian Western Standard Time, Irkutsk Standard Time</message>
-	</item>
-	<item>
-		<name>utc8.75</name
-		><message>(UTC+08:45) Southeastern Western Australia Standard Time</message>
-	</item>
-	<item>
-		<name>utc9</name>
-		<message>(UTC+09:00) Dili, Jakutsk, Osaka, Pjöngjang, Sapporo, Seoul, Tokyo</message>
-		</item>
-	<item>
-		<name>utc9.5</name>
-		<message>(UTC+09:30) Australian Central Standard Time</message>
-	</item>
-	<item>
-		<name>utc10</name>
-		<message>(UTC+10:00) Australian Eastern Standard Time, Vladivostok Standard Time</message>
-	</item>
-	<item>
-		<name>utc10.5</name
-		><message>(UTC+10:30) Lord Howe Standard Time</message>
-	</item>
-	<item>
-		<name>utc11</name>
-		<message>(UTC+11:00) Solomon Island Time, Magadan Standard Time</message>
-	</item>
-	<item>
-		<name>utc11.5</name>
-		<message>(UTC+11:30) Norfolk Island Time</message>
-	</item>
-	<item>
-		<name>utc12</name>
-		<message>(UTC+12:00) New Zealand Time, Fiji Time, Kamchatka Standard Time</message>
-	</item>
-	<item>
-		<name>utc12.75</name>
-		<message>(UTC+12:45) Chatham Islands Time</message>
-	</item>
-	<item>
-		<name>utc13</name>
-		<message>(UTC+13:00) Tonga Time, Phoenix Islands Time</message>
-	</item>
-	<item>
-		<name>utc14</name>
-		<message>(UTC+14:00) Line Island Time</message>
-	</item>
-	<item>
-		<name>website</name>
-		<message>Website</message>
-	</item>
-	<item>
-		<name>window_blank</name>
-		<message>Neues Fenster (_blank)</message>
-	</item>
-	<item>
-		<name>window_self</name>
-		<message>Selbes Fenster (_self)</message>
-	</item>
-	<item>
-		<name>wrong_email_format</name>
-		<message>Die angegebene E-Mail-Adresse entspricht nicht dem Format name@domain.tld</message>
-	</item>
-	<item>
-		<name>year</name>
-		<message>Jahr</message>
-	</item>
-	<item>
-		<name>yes</name>
-		<message>Ja</message>
-	</item>
+	<item key="acp">Administration Control Panel</item>
+	<item key="activate_module"><![CDATA[Das Modul &quot;%s&quot; ist deaktiviert, wodurch bestimmte Funktionen eingeschränkt sein könnten.<br />Bitte aktivieren Sie dieses Modul, um diesen Fehler zu beheben.]]></item>
+	<item key="allow_comments">Kommentare erlauben</item>
+	<item key="author">Autor</item>
+	<item key="back">Zurück</item>
+	<item key="category">Kategorie</item>
+	<item key="confirm_delete">Sollen die ausgewählten Einträge wirklich gelöscht werden?</item>
+	<item key="create_error">Beim Erstellen des Eintrages ist ein Fehler aufgetreten.</item>
+	<item key="create_success">Der Eintrag wurde erfolgreich erstellt.</item>
+	<item key="date">Datum</item>
+	<item key="date_description">Wenn Sie kein Enddatum festlegen möchten, so setzen Sie bitte das Veröffentlichungsdatum und das Enddatum auf die gleichen Werte.</item>
+	<item key="date_format">Datumsformat</item>
+	<item key="date_format_long">Langes Datumsformat</item>
+	<item key="date_format_short">Kurzes Datumsformat</item>
+	<item key="day">Tag</item>
+	<item key="daylight_saving_time">Sommerzeit</item>
+	<item key="delete">Löschen</item>
+	<item key="delete_error">Beim Löschen der ausgewählten Einträge ist ein Fehler aufgetreten.</item>
+	<item key="delete_marked">Markierte Einträge löschen</item>
+	<item key="delete_success">Die ausgewählten Einträge wurden erfolgreich gelöscht.</item>
+	<item key="description">Beschreibung</item>
+	<item key="edit_error">Beim Bearbeiten des Eintrages ist ein Fehler aufgetreten.</item>
+	<item key="edit_order">Reihenfolge bearbeiten</item>
+	<item key="edit_success">Der Eintrag wurde erfolgreich bearbeitet.</item>
+	<item key="email">E-Mail-Adresse</item>
+	<item key="end_date">Enddatum</item>
+	<item key="entries">Einträge</item>
+	<item key="entry">Eintrag</item>
+	<item key="entry_not_found">Der angeforderte Eintrag konnte leider nicht gefunden werden.</item>
+	<item key="failure">Es sind folgende Fehler aufgetreten:</item>
+	<item key="first_page">Erste Seite</item>
+	<item key="flood_no_entry_possible">Sie können erst in %d Sekunden wieder einen Kommentar abgeben</item>
+	<item key="forward">Weiter</item>
+	<item key="from_start_to_end">%1$s bis %2$s</item>
+	<item key="general_statements">Allgemeine Angaben</item>
+	<item key="hour">Stunde</item>
+	<item key="last_page">Letzte Seite</item>
+	<item key="mark">Markieren</item>
+	<item key="mark_all">Alle Einträge markieren</item>
+	<item key="message">Nachricht</item>
+	<item key="message_to_short">Die Nachricht sollte mindestens 3 Zeichen lang sein</item>
+	<item key="min">Minute</item>
+	<item key="modules">Module</item>
+	<item key="month">Monat</item>
+	<item key="move_down">Einen Schritt nach unten verschieben</item>
+	<item key="move_impossible">Verschieben nicht möglich</item>
+	<item key="move_up">Einen Schritt nach oben verschieben</item>
+	<item key="name">Name</item>
+	<item key="name_to_short">Bitte geben Sie einen Namen an</item>
+	<item key="next_page">Nächste Seite</item>
+	<item key="no">Nein</item>
+	<item key="no_entries">Es konnten keine Einträge gefunden werden.</item>
+	<item key="no_entries_selected">Bitte wählen Sie die zu löschenden Einträge aus.</item>
+	<item key="no_entries_short">Keine Einträge vorhanden.</item>
+	<item key="order">Reihenfolge</item>
+	<item key="order_error">Beim Bearbeiten der Reihenfolge ist ein Fehler aufgetreten.</item>
+	<item key="order_success">Die Reihenfolge wurde erfolgreich bearbeitet.</item>
+	<item key="options">Optionen</item>
+	<item key="overview">Übersicht</item>
+	<item key="pagination">Seitenauswahl</item>
+	<item key="pls_select">Bitte auswählen</item>
+	<item key="previous_page">Vorherige Seite</item>
+	<item key="publication_period">Veröffentlichungszeitraum</item>
+	<item key="reset">Zurücksetzen</item>
+	<item key="select_date">Bitte vervollständigen Sie die Angaben zum Veröffentlichungsdatum bzw. dem Enddatum dieses Eintrages</item>
+	<item key="select_date_format">Bitte wählen Sie aus, ob das lange oder das kurze Datumsformat verwendet werden soll</item>
+	<item key="select_daylight_saving_time">Bitte wählen Sie aus, ob gerade Sommerzeit ist oder nicht</item>
+	<item key="select_sidebar_entries">Bitte wählen Sie aus, wie viele Einträge in der Modul-Sidebar angezeigt werden sollen</item>
+	<item key="select_time_zone">Bitte wählen Sie die Zeitzone aus</item>
+	<item key="settings_error">Beim Bearbeiten der Einstellungen ist ein Fehler aufgetreten.</item>
+	<item key="settings_success">Die Einstellungen wurden erfolgreich aktualisiert.</item>
+	<item key="sidebar_entries_to_display">Anzuzeigende Sidebareinträge</item>
+	<item key="since_date">Seit %s</item>
+	<item key="start_date">Veröffentlichungsdatum</item>
+	<item key="submit">Senden</item>
+	<item key="time_zone">Zeitzone</item>
+	<item key="unmark_all">Markierung aufheben</item>
+	<item key="upload_error">Die Datei %s konnte leider nicht verschoben werden.</item>
+	<item key="utc-12">(UTC-12:00) Baker Island Time</item>
+	<item key="utc-11">(UTC-11:00) Niue Time, Samoa Standard Time</item>
+	<item key="utc-10">(UTC-10:00) Hawaii-Aleutian Standard Time, Cook Island Time</item>
+	<item key="utc-9.5">(UTC-09:30) Marquesas Islands Time</item>
+	<item key="utc-9">(UTC-09:00) Alaska Standard Time, Gambier Island Time</item>
+	<item key="utc-8">(UTC-08:00) Pacific Standard Time</item>
+	<item key="utc-7">(UTC-07:00) Mountain Standard Time</item>
+	<item key="utc-6">(UTC-06:00) Central Standard Time</item>
+	<item key="utc-5">(UTC-05:00) Eastern Standard Time</item>
+	<item key="utc-4">(UTC-04:00) Atlantic Standard Time</item>
+	<item key="utc-3.5">(UTC-03:30) Newfoundland Standard Time</item>
+	<item key="utc-3">(UTC-03:00) Amazon Standard Time, Central Greenland Time</item>
+	<item key="utc-2"><![CDATA[ (UTC-02:00) Fernando de Noronha Time, South Georgia &amp; the South Sandwich Islands Time ]]></item>
+	<item key="utc-1">(UTC-01:00) Azores Standard Time, Cape Verde Time, Eastern Greenland Time</item>
+	<item key="utc0">(UTC) Westeuropäische Zeit, Greenwich Mean Time</item>
+	<item key="utc1">(UTC+01:00) Mitteleuropäische Zeit, West African Time</item>
+	<item key="utc2">(UTC+02:00) Osteuropäische Zeit, Central African Time</item>
+	<item key="utc3">(UTC+03:00) Moscow Standard Time, Eastern African Time</item>
+	<item key="utc3.5">(UTC+03:30) Iran Standard Time</item>
+	<item key="utc4">(UTC+04:00) Gulf Standard Time, Samara Standard Time</item>
+	<item key="utc4.5">(UTC+04:30) Afghanistan Time</item>
+	<item key="utc5">(UTC+05:00) Pakistan Standard Time, Yekaterinburg Standard Time</item>
+	<item key="utc5.5">(UTC+05:30) Indian Standard Time, Sri Lanka Time</item>
+	<item key="utc5.75">(UTC+05:45) Nepal Time</item>
+	<item key="utc6">(UTC+06:00) Bangladesh Time, Bhutan Time, Novosibirsk Standard Time</item>
+	<item key="utc6.5">(UTC+06:30) Cocos Islands Time, Myanmar Time</item>
+	<item key="utc7">(UTC+07:00) Indochina Time, Krasnoyarsk Standard Time</item>
+	<item key="utc8">(UTC+08:00) Chinese Standard Time, Australian Western Standard Time, Irkutsk Standard Time</item>
+	<item key="utc8.75">(UTC+08:45) Southeastern Western Australia Standard Time</item>
+	<item key="utc9">(UTC+09:00) Dili, Jakutsk, Osaka, Pjöngjang, Sapporo, Seoul, Tokyo</item>
+	<item key="utc9.5">(UTC+09:30) Australian Central Standard Time</item>
+	<item key="utc10">(UTC+10:00) Australian Eastern Standard Time, Vladivostok Standard Time</item>
+	<item key="utc10.5">(UTC+10:30) Lord Howe Standard Time</item>
+	<item key="utc11">(UTC+11:00) Solomon Island Time, Magadan Standard Time</item>
+	<item key="utc11.5">(UTC+11:30) Norfolk Island Time</item>
+	<item key="utc12">(UTC+12:00) New Zealand Time, Fiji Time, Kamchatka Standard Time</item>
+	<item key="utc12.75">(UTC+12:45) Chatham Islands Time</item>
+	<item key="utc13">(UTC+13:00) Tonga Time, Phoenix Islands Time</item>
+	<item key="utc14">(UTC+14:00) Line Island Time</item>
+	<item key="website">Website</item>
+	<item key="window_blank">Neues Fenster (_blank)</item>
+	<item key="window_self">Selbes Fenster (_self)</item>
+	<item key="wrong_email_format">Die angegebene E-Mail-Adresse entspricht nicht dem Format name@domain.tld</item>
+	<item key="year">Jahr</item>
+	<item key="yes">Ja</item>
 </language>

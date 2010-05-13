@@ -1,193 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>account_exists</name>
-		<message>There is already an newsletter account with the same E-Mail address registered</message>
-	</item>
-	<item>
-		<name>account_not_exists</name>
-		<message>For the stated E-mail address is no newsletter account registered</message>
-	</item>
-	<item>
-		<name>action</name>
-		<message>Action</message>
-	</item>
-	<item>
-		<name>action_description</name>
-		<message>Please select, what you want to do with this newsletter.</message>
-	</item>
-	<item>
-		<name>activate</name>
-		<message>Activate newsletter account</message>
-	</item>
-	<item>
-		<name>activate_account</name>
-		<message>Active newsletter account</message>
-	</item>
-	<item>
-		<name>activate_error</name>
-		<message>While activating the newsletter account an error has occured.</message>
-	</item>
-	<item>
-		<name>activate_success</name>
-		<message>The newsletter account was successfully activated and can now be used.</message>
-	</item>
-	<item>
-		<name>adm_activate</name>
-		<message>Activate newsletter account</message>
-	</item>
-	<item>
-		<name>adm_list_archive</name>
-		<message>Newsletter archive</message>
-	</item>
-	<item>
-		<name>already_sent</name>
-		<message>Already sent</message>
-	</item>
-	<item>
-		<name>compose</name>
-		<message>Create a new newsletter</message>
-	</item>
-	<item>
-		<name>compose_save_error</name>
-		<message>While sending respectively saving At least one error has occured.</message>
-	</item>
-	<item>
-		<name>compose_success</name>
-		<message>The newsletter was successfully sent.</message>
-	</item>
-	<item>
-		<name>create</name>
-		<message>Subscribe/Unscribe the newsletter</message>
-	</item>
-	<item>
-		<name>delete</name>
-		<message>Delete newsletter accounts</message>
-	</item>
-	<item>
-		<name>delete_archive</name>
-		<message>Delete newsletters</message>
-	</item>
-	<item>
-		<name>edit_archive</name>
-		<message>Edit newsletter</message>
-	</item>
-	<item>
-		<name>edit_error</name>
-		<message>While editing the newsletter settings an error has occured.</message>
-	</item>
-	<item>
-		<name>edit_success</name>
-		<message>The newsletter settings were successfully edited.</message>
-	</item>
-	<item>
-		<name>entry</name>
-		<message>Subscribe/Unsubscribe the newsletter</message>
-	</item>
-	<item>
-		<name>mailsig</name>
-		<message>E-mail signature</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>This module is responsible for the newsletter.</message>
-	</item>
-	<item>
-		<name>newsletter</name>
-		<message>Newsletter</message>
-	</item>
-	<item>
-		<name>newsletter_accounts</name>
-		<message>Newsletter accounts</message>
-	</item>
-	<item>
-		<name>newsletter_archive</name>
-		<message>Newsletter archive</message>
-	</item>
-	<item>
-		<name>not_yet_sent</name>
-		<message>Not yet sent</message>
-	</item>
-	<item>
-		<name>only_save</name>
-		<message>Only save</message>
-	</item>
-	<item>
-		<name>save_success</name>
-		<message>The newsletter has been saved successfully.</message>
-	</item>
-	<item>
-		<name>send</name>
-		<message>Send newsletter</message>
-	</item>
-	<item>
-		<name>send_and_save</name>
-		<message>Send and save</message>
-	</item>
-	<item>
-		<name>settings</name>
-		<message>Newsletter settings</message>
-	</item>
-	<item>
-		<name>status</name>
-		<message>Status</message>
-	</item>
-	<item>
-		<name>subject</name>
-		<message>Subject</message>
-	</item>
-	<item>
-		<name>subject_to_short</name>
-		<message>The subject should be at least 3 characters long</message>
-	</item>
-	<item>
-		<name>subscribe</name>
-		<message>Subscribe</message>
-	</item>
-	<item>
-		<name>subscribe_error</name>
-		<message>While creating your newsletter account an error has occured.</message>
-	</item>
-	<item>
-		<name>subscribe_mail_body</name>
-		<message>You successfully subscribed with your E-mail address {mail} to the newsletter of {title} ({host}).
+	<item key="account_exists">There is already an newsletter account with the same E-Mail address registered</item>
+	<item key="account_not_exists">For the stated E-mail address is no newsletter account registered</item>
+	<item key="action">Action</item>
+	<item key="action_description">Please select, what you want to do with this newsletter.</item>
+	<item key="activate">Activate newsletter account</item>
+	<item key="activate_account">Active newsletter account</item>
+	<item key="activate_error">While activating the newsletter account an error has occured.</item>
+	<item key="activate_success">The newsletter account was successfully activated and can now be used.</item>
+	<item key="adm_activate">Activate newsletter account</item>
+	<item key="adm_list_archive">Newsletter archive</item>
+	<item key="already_sent">Already sent</item>
+	<item key="compose">Create a new newsletter</item>
+	<item key="compose_save_error">While sending respectively saving At least one error has occured.</item>
+	<item key="compose_success">The newsletter was successfully sent.</item>
+	<item key="create">Subscribe/Unscribe the newsletter</item>
+	<item key="delete">Delete newsletter accounts</item>
+	<item key="delete_archive">Delete newsletters</item>
+	<item key="edit_archive">Edit newsletter</item>
+	<item key="edit_error">While editing the newsletter settings an error has occured.</item>
+	<item key="edit_success">The newsletter settings were successfully edited.</item>
+	<item key="entry">Subscribe/Unsubscribe the newsletter</item>
+	<item key="mailsig">E-mail signature</item>
+	<item key="mod_description">This module is responsible for the newsletter.</item>
+	<item key="newsletter">Newsletter</item>
+	<item key="newsletter_accounts">Newsletter accounts</item>
+	<item key="newsletter_archive">Newsletter archive</item>
+	<item key="not_yet_sent">Not yet sent</item>
+	<item key="only_save">Only save</item>
+	<item key="save_success">The newsletter has been saved successfully.</item>
+	<item key="send">Send newsletter</item>
+	<item key="send_and_save">Send and save</item>
+	<item key="settings">Newsletter settings</item>
+	<item key="status">Status</item>
+	<item key="subject">Subject</item>
+	<item key="subject_to_short">The subject should be at least 3 characters long</item>
+	<item key="subscribe">Subscribe</item>
+	<item key="subscribe_error">While creating your newsletter account an error has occured.</item>
+	<item key="subscribe_mail_body">You successfully subscribed with your E-mail address {mail} to the newsletter of {title} ({host}).
 		To complete the registration process, please click on the hyperlink below.
-		If you haven\'t subscribed this newsletter, please ignore or delete this E-mail.</message>
-	</item>
-	<item>
-		<name>subscribe_mail_subject</name>
-		<message>Newsletter at %s</message>
-	</item>
-	<item>
-		<name>subscribe_success</name>
-		<message>The newsletter account has been successfully created.</message>
-	</item>
-	<item>
-		<name>test_newsletter</name>
-		<message>Test newsletter</message>
-	</item>
-	<item>
-		<name>test_nl_description</name>
-		<message>Will only be send to the E-mail adress which is stated in the newsletter settings</message>
-	</item>
-	<item>
-		<name>text</name>
-		<message>Text</message>
-	</item>
-	<item>
-		<name>text_to_short</name>
-		<message>The text should be at least 3 characters long</message>
-	</item>
-	<item>
-		<name>unsubscribe</name>
-		<message>Unsubsribe</message>
-	</item>
-	<item>
-		<name>unsubscribe_error</name>
-		<message>While deleting the newsletter account an error has occured.</message>
-	</item>
-	<item>
-		<name>unsubscribe_success</name>
-		<message>The newsletter account was successfully deleted.</message>
-	</item>
+		If you haven\'t subscribed this newsletter, please ignore or delete this E-mail.</item>
+	<item key="subscribe_mail_subject">Newsletter at %s</item>
+	<item key="subscribe_success">The newsletter account has been successfully created.</item>
+	<item key="test_newsletter">Test newsletter</item>
+	<item key="test_nl_description">Will only be send to the E-mail adress which is stated in the newsletter settings</item>
+	<item key="text">Text</item>
+	<item key="text_to_short">The text should be at least 3 characters long</item>
+	<item key="unsubscribe">Unsubsribe</item>
+	<item key="unsubscribe_error">While deleting the newsletter account an error has occured.</item>
+	<item key="unsubscribe_success">The newsletter account was successfully deleted.</item>
 </language>

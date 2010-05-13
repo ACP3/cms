@@ -1,95 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>activate_entry</name>
-		<message>Enable entry</message>
-	</item>
-	<item>
-		<name>allow_emoticons</name>
-		<message>Allow Emoticons</message>
-	</item>
-	<item>
-		<name>create</name>
-		<message>New entry</message>
-	</item>
-	<item>
-		<name>delete</name>
-		<message>Delete guestbook entries</message>
-	</item>
-	<item>
-		<name>edit</name>
-		<message>Edit guestbook entry</message>
-	</item>
-	<item>
-		<name>guestbook</name>
-		<message>Guestbook</message>
-	</item>
-	<item>
-		<name>guestbook_entries</name>
-		<message>Guestbook entries</message>
-	</item>
-	<item>
-		<name>ip</name>
-		<message>IP Address</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>With this module you can administer the guestbook.</message>
-	</item>
-	<item>
-		<name>no_notification</name>
-		<message>No notification</message>
-	</item>
-	<item>
-		<name>notification</name>
-		<message>Notification</message>
-	</item>
-	<item>
-		<name>notification_email</name>
-		<message>Notification e-mail address</message>
-	</item>
-	<item>
-		<name>notification_email_subject</name>
-		<message>Notification on new guestbook entries</message>
-	</item>
-	<item>
-		<name>notification_email_body_1</name>
-		<message>Someone has written a new guestbook entry on the website %1$s.
+	<item key="activate_entry">Enable entry</item>
+	<item key="allow_emoticons">Allow Emoticons</item>
+	<item key="create">New entry</item>
+	<item key="delete">Delete guestbook entries</item>
+	<item key="edit">Edit guestbook entry</item>
+	<item key="guestbook">Guestbook</item>
+	<item key="guestbook_entries">Guestbook entries</item>
+	<item key="ip">IP Address</item>
+	<item key="mod_description">With this module you can administer the guestbook.</item>
+	<item key="no_notification">No notification</item>
+	<item key="notification">Notification</item>
+	<item key="notification_email">Notification e-mail address</item>
+	<item key="notification_email_subject">Notification on new guestbook entries</item>
+	<item key="notification_email_body_1">Someone has written a new guestbook entry on the website %1$s.
 		Please click on the link below to review the entry (maybe it is necessary to login before):
-		%2$s</message>
-	</item>
-	<item>
-		<name>notification_email_body_2</name>
-		<message>Someone has written a new guestbook entry on the website %1$s.
+		%2$s</item>
+	<item key="notification_email_body_2">Someone has written a new guestbook entry on the website %1$s.
 		Please click on the link below to review and activate the entry (maybe it is necessary to login before):
-		%2$s</message>
-	</item>
-	<item>
-		<name>notify_and_enable</name>
-		<message>Nitify and activate through administrator</message>
-	</item>
-	<item>
-		<name>notify_on_new_entry</name>
-		<message>Notify on new entries</message>
-	</item>
-	<item>
-		<name>select_emoticons</name>
-		<message>Please select, wether you want to allow emoticons or not.</message>
-	</item>
-	<item>
-		<name>select_notification_type</name>
-		<message>Please select, wether you want to be notified about new guestbook entries or not.</message>
-	</item>
-	<item>
-		<name>send_email</name>
-		<message>Send E-mail</message>
-	</item>
-	<item>
-		<name>settings</name>
-		<message>Settings</message>
-	</item>
-	<item>
-		<name>visit_website</name>
-		<message>Visit website</message>
-	</item>
+		%2$s</item>
+	<item key="notify_and_enable">Nitify and activate through administrator</item>
+	<item key="notify_on_new_entry">Notify on new entries</item>
+	<item key="select_emoticons">Please select, wether you want to allow emoticons or not.</item>
+	<item key="select_notification_type">Please select, wether you want to be notified about new guestbook entries or not.</item>
+	<item key="send_email">Send E-mail</item>
+	<item key="settings">Settings</item>
+	<item key="visit_website">Visit website</item>
 </language>

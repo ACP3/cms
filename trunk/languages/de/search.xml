@@ -1,79 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>asc</name>
-		<message>Aufsteigend</message>
-	</item>
-	<item>
-		<name>content_only</name>
-		<message>Nur Inhalt</message>
-	</item>
-	<item>
-		<name>desc</name>
-		<message>Absteigend</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>Mit diesem Modul können andere Module durchsucht werden.</message>
-	</item>
-	<item>
-		<name>no_area_selected</name>
-		<message>Bitte geben Sie an, welche Bereiche der Einträge durchsucht werden sollen</message>
-	</item>
-	<item>
-		<name>no_sorting_selected</name>
-		<message>Bitte wählen Sie aus, in welcher Reihenfolge die Treffer sortiert werden sollen</message>
-	</item>
-	<item>
-		<name>no_module_selected</name>
-		<message>Bitte wählen Sie mindestens ein Modul aus, welches durchsucht werden soll</message>
-	</item>
-	<item>
-		<name>no_search_results</name>
-		<message><![CDATA[Es konnten keine Einträge mit dem Suchbegriff &quot;%s&quot; gefunden werden.]]></message>
-	</item>
-	<item>
-		<name>search</name>
-		<message>Suche</message>
-	</item>
-	<item>
-		<name>search_after_areas</name>
-		<message>Zu durchsuchende Bereiche</message>
-	</item>
-	<item>
-		<name>search_after_modules</name>
-		<message>Zu durchsuchende Module</message>
-	</item>
-	<item>
-		<name>search_options</name>
-		<message>Suchoptionen</message>
-	</item>
-	<item>
-		<name>search_results</name>
-		<message>Suchergebnisse</message>
-	</item>
-	<item>
-		<name>search_term</name>
-		<message>Suchbegriff</message>
-	</item>
-	<item>
-		<name>search_term_to_short</name>
-		<message>Der Suchbegriff sollte mindestens 3 Zeichen lang sein</message>
-	</item>
-	<item>
-		<name>sort_hits</name>
-		<message>Reihenfolge der Treffer</message>
-	</item>
-	<item>
-		<name>submit_search</name>
-		<message>Suche starten</message>
-	</item>
-	<item>
-		<name>title_and_content</name>
-		<message>Titel und Inhalt</message>
-	</item>
-	<item>
-		<name>title_only</name>
-		<message>Nur Titel</message>
-	</item>
+	<item key="asc">Aufsteigend</item>
+	<item key="content_only">Nur Inhalt</item>
+	<item key="desc">Absteigend</item>
+	<item key="mod_description">Mit diesem Modul können andere Module durchsucht werden.</item>
+	<item key="no_area_selected">Bitte geben Sie an, welche Bereiche der Einträge durchsucht werden sollen</item>
+	<item key="no_sorting_selected">Bitte wählen Sie aus, in welcher Reihenfolge die Treffer sortiert werden sollen</item>
+	<item key="no_module_selected">Bitte wählen Sie mindestens ein Modul aus, welches durchsucht werden soll</item>
+	<item key="no_search_results"><![CDATA[Es konnten keine Einträge mit dem Suchbegriff &quot;%s&quot; gefunden werden.]]></item>
+	<item key="search">Suche</item>
+	<item key="search_after_areas">Zu durchsuchende Bereiche</item>
+	<item key="search_after_modules">Zu durchsuchende Module</item>
+	<item key="search_options">Suchoptionen</item>
+	<item key="search_results">Suchergebnisse</item>
+	<item key="search_term">Suchbegriff</item>
+	<item key="search_term_to_short">Der Suchbegriff sollte mindestens 3 Zeichen lang sein</item>
+	<item key="sort_hits">Reihenfolge der Treffer</item>
+	<item key="submit_search">Suche starten</item>
+	<item key="title_and_content">Titel und Inhalt</item>
+	<item key="title_only">Nur Titel</item>
 </language>

@@ -1,79 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>asc</name>
-		<message>Ascending</message>
-	</item>
-	<item>
-		<name>content_only</name>
-		<message>Content only</message>
-	</item>
-	<item>
-		<name>desc</name>
-		<message>Descending</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>With this module it is possible to search thorugh other modules.</message>
-	</item>
-	<item>
-		<name>no_area_selected</name>
-		<message>Please select which areas of the entries should be searched through</message>
-	</item>
-	<item>
-		<name>no_sorting_selected</name>
-		<message>Please select, in which order the hits should be displayed</message>
-	</item>
-	<item>
-		<name>no_module_selected</name>
-		<message>Please select at least one module, which should be search through</message>
-	</item>
-	<item>
-		<name>no_search_results</name>
-		<message><![CDATA[ No entries matched search term &quot;%s&quot;. ]]></message>
-	</item>
-	<item>
-		<name>search</name>
-		<message>Search</message>
-	</item>
-	<item>
-		<name>search_after_areas</name>
-		<message>Search through following areas</message>
-	</item>
-	<item>
-		<name>search_after_modules</name>
-		<message>Search through following modules</message>
-	</item>
-	<item>
-		<name>search_options</name>
-		<message>Search options</message>
-	</item>
-	<item>
-		<name>search_results</name>
-		<message>Search results</message>
-	</item>
-	<item>
-		<name>search_term</name>
-		<message>Search term</message>
-	</item>
-	<item>
-		<name>search_term_to_short</name>
-		<message>The search term should be at least 3 characters long</message>
-	</item>
-	<item>
-		<name>sort_hits</name>
-		<message>Order of hits</message>
-	</item>
-	<item>
-		<name>submit_search</name>
-		<message>Start search</message>
-	</item>
-	<item>
-		<name>title_and_content</name>
-		<message>Title and content</message>
-	</item>
-	<item>
-		<name>title_only</name>
-		<message>Title only</message>
-	</item>
+	<item key="asc">Ascending</item>
+	<item key="content_only">Content only</item>
+	<item key="desc">Descending</item>
+	<item key="mod_description">With this module it is possible to search thorugh other modules.</item>
+	<item key="no_area_selected">Please select which areas of the entries should be searched through</item>
+	<item key="no_sorting_selected">Please select, in which order the hits should be displayed</item>
+	<item key="no_module_selected">Please select at least one module, which should be search through</item>
+	<item key="no_search_results"><![CDATA[ No entries matched search term &quot;%s&quot;. ]]></item>
+	<item key="search">Search</item>
+	<item key="search_after_areas">Search through following areas</item>
+	<item key="search_after_modules">Search through following modules</item>
+	<item key="search_options">Search options</item>
+	<item key="search_results">Search results</item>
+	<item key="search_term">Search term</item>
+	<item key="search_term_to_short">The search term should be at least 3 characters long</item>
+	<item key="sort_hits">Order of hits</item>
+	<item key="submit_search">Start search</item>
+	<item key="title_and_content">Title and content</item>
+	<item key="title_only">Title only</item>
 </language>

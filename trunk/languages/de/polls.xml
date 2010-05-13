@@ -1,119 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>add_answer</name>
-		<message>Antwort hinzufügen</message>
-	</item>
-	<item>
-		<name>already_voted</name>
-		<message>Sie haben bereits an dieser Umfrage teilgenommen.</message>
-	</item>
-	<item>
-		<name>answer</name>
-		<message>Antwort</message>
-	</item>
-	<item>
-		<name>answers</name>
-		<message>Antworten</message>
-	</item>
-	<item>
-		<name>can_not_delete_all_answers</name>
-		<message>Es ist nicht möglich alle Antworten zu löschen</message>
-	</item>
-	<item>
-		<name>create</name>
-		<message>Neue Umfrage erstellen</message>
-	</item>
-	<item>
-		<name>delete</name>
-		<message>Umfragen löschen</message>
-	</item>
-	<item>
-		<name>delete_answer_description</name>
-		<message>Sie können Antworten löschen, indem Sie einfach auf das Auswahlfeld links neben den Antworten klicken.</message>
-	</item>
-	<item>
-		<name>edit</name>
-		<message>Umfrage bearbeiten</message>
-	</item>
-	<item>
-		<name>latest_poll</name>
-		<message>Aktuelle Umfrage</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>Mit diesem Modul können die Umfragen verwaltet werden.</message>
-	</item>
-	<item>
-		<name>multiple_choice</name>
-		<message>Mehrfachauswahl erlauben</message>
-	</item>
-	<item>
-		<name>no_votes</name>
-		<message>Keine Stimmen</message>
-	</item>
-	<item>
-		<name>number_of_votes</name>
-		<message>%s Stimmen</message>
-	</item>
-	<item>
-		<name>one_vote</name>
-		<message>Eine Stimme</message>
-	</item>
-	<item>
-		<name>per_cent</name>
-		<message>Prozent</message>
-	</item>
-	<item>
-		<name>poll</name>
-		<message>Umfrage</message>
-	</item>
-	<item>
-		<name>poll_error</name>
-		<message>Beim Speichern Ihrer Stimme ist ein Fehler aufgetreten.</message>
-	</item>
-	<item>
-		<name>poll_success</name>
-		<message>Ihre Stimme wurde erfolgreich gezählt.</message>
-	</item>
-	<item>
-		<name>polls</name>
-		<message>Umfragen</message>
-	</item>
-	<item>
-		<name>polls_archive</name>
-		<message>Umfragen Archiv</message>
-	</item>
-	<item>
-		<name>question</name>
-		<message>Frage</message>
-	</item>
-	<item>
-		<name>reset_votes</name>
-		<message>Stimmen zurücksetzen</message>
-	</item>
-	<item>
-		<name>result</name>
-		<message>Ergebnis</message>
-	</item>
-	<item>
-		<name>total_votes</name>
-		<message>Gesamt</message>
-	</item>
-	<item>
-		<name>type_in_answer</name>
-		<message>Bitte geben Sie zumindest eine Antwort ein</message>
-	</item>
-	<item>
-		<name>type_in_question</name>
-		<message>Bitte geben Sie eine Frage ein</message>
-	</item>
-	<item>
-		<name>vote</name>
-		<message>Abstimmen</message>
-	</item>
-	<item>
-		<name>votes</name>
-		<message>Stimmen</message>
-	</item>
+	<item key="add_answer">Antwort hinzufügen</item>
+	<item key="already_voted">Sie haben bereits an dieser Umfrage teilgenommen.</item>
+	<item key="answer">Antwort</item>
+	<item key="answers">Antworten</item>
+	<item key="can_not_delete_all_answers">Es ist nicht möglich alle Antworten zu löschen</item>
+	<item key="create">Neue Umfrage erstellen</item>
+	<item key="delete">Umfragen löschen</item>
+	<item key="delete_answer_description">Sie können Antworten löschen, indem Sie einfach auf das Auswahlfeld links neben den Antworten klicken.</item>
+	<item key="edit">Umfrage bearbeiten</item>
+	<item key="latest_poll">Aktuelle Umfrage</item>
+	<item key="mod_description">Mit diesem Modul können die Umfragen verwaltet werden.</item>
+	<item key="multiple_choice">Mehrfachauswahl erlauben</item>
+	<item key="no_votes">Keine Stimmen</item>
+	<item key="number_of_votes">%s Stimmen</item>
+	<item key="one_vote">Eine Stimme</item>
+	<item key="per_cent">Prozent</item>
+	<item key="poll">Umfrage</item>
+	<item key="poll_error">Beim Speichern Ihrer Stimme ist ein Fehler aufgetreten.</item>
+	<item key="poll_success">Ihre Stimme wurde erfolgreich gezählt.</item>
+	<item key="polls">Umfragen</item>
+	<item key="polls_archive">Umfragen Archiv</item>
+	<item key="question">Frage</item>
+	<item key="reset_votes">Stimmen zurücksetzen</item>
+	<item key="result">Ergebnis</item>
+	<item key="total_votes">Gesamt</item>
+	<item key="type_in_answer">Bitte geben Sie zumindest eine Antwort ein</item>
+	<item key="type_in_question">Bitte geben Sie eine Frage ein</item>
+	<item key="vote">Abstimmen</item>
+	<item key="votes">Stimmen</item>
 </language>

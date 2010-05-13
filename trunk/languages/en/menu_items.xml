@@ -1,147 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>adm_list_blocks</name>
-		<message>Blocks</message>
-	</item>
-	<item>
-		<name>block_title</name>
-		<message>Name of the block</message>
-	</item>
-	<item>
-		<name>block_title_to_short</name>
-		<message>The name of the block should be at least 3 characters long</message>
-	</item>
-	<item>
-		<name>blocks</name>
-		<message>Block</message>
-	</item>
-	<item>
-		<name>chronology</name>
-		<message>Chronology</message>
-	</item>
-	<item>
-		<name>create</name>
-		<message>Create a new menu item</message>
-	</item>
-	<item>
-		<name>create_block</name>
-		<message>Create a new block</message>
-	</item>
-	<item>
-		<name>delete</name>
-		<message>Delete menu items</message>
-	</item>
-	<item>
-		<name>delete_blocks</name>
-		<message>Delete blocks</message>
-	</item>
-	<item>
-		<name>display_item</name>
-		<message>Display menu item</message>
-	</item>
-	<item>
-		<name>dynamic_page</name>
-		<message>Dynamic page</message>
-	</item>
-	<item>
-		<name>dynamic_page_hints</name>
-		<message><![CDATA[Please use the format &quot;module/file/optional_parameters/&quot;, to link to a ACP3 internal page, e.g. news/details/id_1/.]]></message>
-	</item>
-	<item>
-		<name>edit</name>
-		<message>Edit menu item</message>
-	</item>
-	<item>
-		<name>edit_block</name>
-		<message>Edit block</message>
-	</item>
-	<item>
-		<name>hyperlink</name>
-		<message>Hyperlink</message>
-	</item>
-	<item>
-		<name>index_name</name>
-		<message>Index name</message>
-	</item>
-	<item>
-		<name>index_name_description</name>
-		<message>This describes the name of the Templateplaceholder</message>
-	</item>
-	<item>
-		<name>index_name_unique</name>
-		<message>The name of the template placeholder has to be unique</message>
-	</item>
-	<item>
-		<name>menu_items</name>
-		<message>Menu items</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>This module is responsible for the navbars.</message>
-	</item>
-	<item>
-		<name>module</name>
-		<message>Module</message>
-	</item>
-	<item>
-		<name>no_superior_page</name>
-		<message>No superior page</message>
-	</item>
-	<item>
-		<name>page_type</name>
-		<message>Page type</message>
-	</item>
-	<item>
-		<name>select_block</name>
-		<message>Please select, in which navigation bar you want to display the page</message>
-	</item>
-	<item>
-		<name>select_item_visibility</name>
-		<message>Please select, wether you want to display to menu item or not</message>
-	</item>
-	<item>
-		<name>select_page_type</name>
-		<message>Please select, of which type the page should be</message>
-	</item>
-	<item>
-		<name>select_superior_page</name>
-		<message>Please select a superior page</message>
-	</item>
-	<item>
-		<name>static_page</name>
-		<message>Static page</message>
-	</item>
-	<item>
-		<name>superior_page</name>
-		<message>Superior page</message>
-	</item>
-	<item>
-		<name>superior_page_not_allowed</name>
-		<message>It is impossible to use the selected page as a superior page</message>
-	</item>
-	<item>
-		<name>target_page</name>
-		<message>Target page</message>
-	</item>
-	<item>
-		<name>title</name>
-		<message>Title</message>
-	</item>
-	<item>
-		<name>title_to_short</name>
-		<message>The title should be at least 3 characters long</message>
-	</item>
-	<item>
-		<name>type_in_index_name</name>
-		<message>The index name can only contain letters, digits and the underscore</message>
-	</item>
-	<item>
-		<name>type_in_uri_and_target</name>
-		<message>Please type in the target page and the module, resp. the URI you whish to link to</message>
-	</item>
-	<item>
-		<name>uri</name>
-		<message>URI</message>
-	</item>
+	<item key="adm_list_blocks">Blocks</item>
+	<item key="block_title">Name of the block</item>
+	<item key="block_title_to_short">The name of the block should be at least 3 characters long</item>
+	<item key="blocks">Block</item>
+	<item key="chronology">Chronology</item>
+	<item key="create">Create a new menu item</item>
+	<item key="create_block">Create a new block</item>
+	<item key="delete">Delete menu items</item>
+	<item key="delete_blocks">Delete blocks</item>
+	<item key="display_item">Display menu item</item>
+	<item key="dynamic_page">Dynamic page</item>
+	<item key="dynamic_page_hints"><![CDATA[Please use the format &quot;module/file/optional_parameters/&quot;, to link to a ACP3 internal page, e.g. news/details/id_1/.]]></item>
+	<item key="edit">Edit menu item</item>
+	<item key="edit_block">Edit block</item>
+	<item key="hyperlink">Hyperlink</item>
+	<item key="index_name">Index name</item>
+	<item key="index_name_description">This describes the name of the Templateplaceholder</item>
+	<item key="index_name_unique">The name of the template placeholder has to be unique</item>
+	<item key="menu_items">Menu items</item>
+	<item key="mod_description">This module is responsible for the navbars.</item>
+	<item key="module">Module</item>
+	<item key="no_superior_page">No superior page</item>
+	<item key="page_type">Page type</item>
+	<item key="select_block">Please select, in which navigation bar you want to display the page</item>
+	<item key="select_item_visibility">Please select, wether you want to display to menu item or not</item>
+	<item key="select_page_type">Please select, of which type the page should be</item>
+	<item key="select_superior_page">Please select a superior page</item>
+	<item key="static_page">Static page</item>
+	<item key="superior_page">Superior page</item>
+	<item key="superior_page_not_allowed">It is impossible to use the selected page as a superior page</item>
+	<item key="target_page">Target page</item>
+	<item key="title">Title</item>
+	<item key="title_to_short">The title should be at least 3 characters long</item>
+	<item key="type_in_index_name">The index name can only contain letters, digits and the underscore</item>
+	<item key="type_in_uri_and_target">Please type in the target page and the module, resp. the URI you whish to link to</item>
+	<item key="uri">URI</item>
 </language>

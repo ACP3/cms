@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>captcha</name>
-		<message>Captcha</message>
-	</item>
-	<item>
-		<name>invalid_captcha_entered</name>
-		<message>Entweder wurde das Captcha falsch eingegeben oder es ist nicht mehr gültig</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>Captchas bieten wirkungsvollen Schutz gegen Spambots.</message>
-	</item>
+	<item key="captcha">Captcha</item>
+	<item key="invalid_captcha_entered">Entweder wurde das Captcha falsch eingegeben oder es ist nicht mehr gültig</item>
+	<item key="mod_description">Captchas bieten wirkungsvollen Schutz gegen Spambots.</item>
 </language>

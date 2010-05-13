@@ -1,95 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>category_select</name>
-		<message>Bitte wählen Sie eine der untenstehenden Kategorien aus.</message>
-	</item>
-	<item>
-		<name>create</name>
-		<message>Neuen Download erstellen</message>
-	</item>
-	<item>
-		<name>delete</name>
-		<message>Downloads löschen</message>
-	</item>
-	<item>
-		<name>description_to_short</name>
-		<message>Der Beschreibungstext sollte mindestens 3 Zeichen lang sein</message>
-	</item>
-	<item>
-		<name>details</name>
-		<message>Downloads</message>
-	</item>
-	<item>
-		<name>download_file</name>
-		<message>Datei herunterladen</message>
-	</item>
-	<item>
-		<name>edit</name>
-		<message>Download bearbeiten</message>
-	</item>
-	<item>
-		<name>external_resource</name>
-		<message>Externe Quelle</message>
-	</item>
-	<item>
-		<name>file_statements</name>
-		<message>Datei Angaben</message>
-	</item>
-	<item>
-		<name>filename</name>
-		<message>Dateiname</message>
-	</item>
-	<item>
-		<name>files</name>
-		<message>Downloads</message>
-	</item>
-	<item>
-		<name>filesize</name>
-		<message>Dateigröße</message>
-	</item>
-	<item>
-		<name>latest_files</name>
-		<message>Aktuelle Downloads</message>
-	</item>
-	<item>
-		<name>link_title</name>
-		<message>Linktitel</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>Mit diesem Modul können die Downloads verwaltet werden.</message>
-	</item>
-	<item>
-		<name>new_file</name>
-		<message>Neue Datei angeben</message>
-	</item>
-	<item>
-		<name>select_allow_comments</name>
-		<message>Bitte wählen Sie aus, ob Kommentare unter Downloads zugelassen werden sollen oder nicht</message>
-	</item>
-	<item>
-		<name>select_category</name>
-		<message>Bitte wählen Sie die Kategorie aus, in der sich der Download befinden soll</message>
-	</item>
-	<item>
-		<name>select_internal_resource</name>
-		<message>Bitte geben Sie den Pfad zur hochzuladenden Datei an</message>
-	</item>
-	<item>
-		<name>settings</name>
-		<message>Einstellungen</message>
-	</item>
-	<item>
-		<name>type_in_external_resource</name>
-		<message>Bitte geben Sie den Pfad zur Datei und die Dateigröße ein</message>
-	</item>
-	<item>
-		<name>type_in_link_title</name>
-		<message>Der Linktitel sollte mindestens 3 Zeichen lang sein</message>
-	</item>
-	<item>
-		<name>unknown_filesize</name>
-		<message>Dateigröße unbekannt</message>
-	</item>
+	<item key="category_select">Bitte wählen Sie eine der untenstehenden Kategorien aus.</item>
+	<item key="create">Neuen Download erstellen</item>
+	<item key="delete">Downloads löschen</item>
+	<item key="description_to_short">Der Beschreibungstext sollte mindestens 3 Zeichen lang sein</item>
+	<item key="details">Downloads</item>
+	<item key="download_file">Datei herunterladen</item>
+	<item key="edit">Download bearbeiten</item>
+	<item key="external_resource">Externe Quelle</item>
+	<item key="file_statements">Datei Angaben</item>
+	<item key="filename">Dateiname</item>
+	<item key="files">Downloads</item>
+	<item key="filesize">Dateigröße</item>
+	<item key="latest_files">Aktuelle Downloads</item>
+	<item key="link_title">Linktitel</item>
+	<item key="mod_description">Mit diesem Modul können die Downloads verwaltet werden.</item>
+	<item key="new_file">Neue Datei angeben</item>
+	<item key="select_allow_comments">Bitte wählen Sie aus, ob Kommentare unter Downloads zugelassen werden sollen oder nicht</item>
+	<item key="select_category">Bitte wählen Sie die Kategorie aus, in der sich der Download befinden soll</item>
+	<item key="select_internal_resource">Bitte geben Sie den Pfad zur hochzuladenden Datei an</item>
+	<item key="settings">Einstellungen</item>
+	<item key="type_in_external_resource">Bitte geben Sie den Pfad zur Datei und die Dateigröße ein</item>
+	<item key="type_in_link_title">Der Linktitel sollte mindestens 3 Zeichen lang sein</item>
+	<item key="unknown_filesize">Dateigröße unbekannt</item>
 </language>

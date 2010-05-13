@@ -1,103 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>activate_readmore</name>
-		<message>&quot;Weiterlesen...&quot; aktivieren</message>
-	</item>
-	<item>
-		<name>additional_hyperlink</name>
-		<message>Optionaler Hyperlink</message>
-	</item>
-	<item>
-		<name>complete_additional_hyperlink_statements</name>
-		<message>Bitte vervollständigen Sie die Angaben zum optionalen Hyperlink</message>
-	</item>
-	<item>
-		<name>create</name>
-		<message>Neue News erstellen</message>
-	</item>
-	<item>
-		<name>delete</name>
-		<message>News löschen</message>
-	</item>
-	<item>
-		<name>details</name>
-		<message>News</message>
-	</item>
-	<item>
-		<name>edit</name>
-		<message>News bearbeiten</message>
-	</item>
-	<item>
-		<name>headline</name>
-		<message>Überschrift</message>
-	</item>
-	<item>
-		<name>headline_to_short</name>
-		<message>Die Überschrift sollte mindestens 3 Zeichen lang sein</message>
-	</item>
-	<item>
-		<name>latest_news</name>
-		<message>Aktuelle News</message>
-	</item>
-	<item>
-		<name>link_title</name>
-		<message>Linkbezeichnung</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>Mit diesem Modul können die News verwaltet werden.</message>
-	</item>
-	<item>
-		<name>news</name>
-		<message>News</message>
-	</item>
-	<item>
-		<name>read_newsfeed</name>
-		<message>Newsfeed ansehen</message>
-	</item>
-	<item>
-		<name>readmore</name>
-		<message>weiterlesen</message>
-	</item>
-	<item>
-		<name>readmore_chars</name>
-		<message><![CDATA[Benötigte Anzahl an Zeichen für &quot;weiterlesen...&quot;-Funktion]]></message>
-	</item>
-	<item>
-		<name>select_activate_readmore</name>
-		<message><![CDATA[Bitte wählen Sie aus, ob die &quot;weiterlesen...&quot;-Funktion aktiviert werden soll oder nicht]]></message>
-	</item>
-	<item>
-		<name>select_allow_comments</name>
-		<message>Bitte wählen Sie aus, ob Kommentare unter News zugelassen werden sollen oder nicht</message>
-	</item>
-	<item>
-		<name>select_category</name>
-		<message>Bitte wählen Sie die Kategorie aus, in der sich die News befinden soll</message>
-	</item>
-	<item>
-		<name>settings</name>
-		<message>Einstellungen</message>
-	</item>
-	<item>
-		<name>target_page</name>
-		<message>Zielseite</message>
-	</item>
-	<item>
-		<name>text</name>
-		<message>Text</message>
-	</item>
-	<item>
-		<name>text_to_short</name>
-		<message>Der Text sollte mindestens 3 Zeichen lang sein</message>
-	</item>
-	<item>
-		<name>type_in_readmore_chars</name>
-		<message><![CDATA[Bitte geben Sie ein, wieviele Zeichen die News mindestens haben muss, um die &quot;weiterlesen...&quot;-Funktion zu aktivieren]]></message>
-	</item>
-	<item>
-		<name>uri</name>
-		<message>URI</message>
-	</item>
+	<item key="activate_readmore">&quot;Weiterlesen...&quot; aktivieren</item>
+	<item key="additional_hyperlink">Optionaler Hyperlink</item>
+	<item key="complete_additional_hyperlink_statements">Bitte vervollständigen Sie die Angaben zum optionalen Hyperlink</item>
+	<item key="create">Neue News erstellen</item>
+	<item key="delete">News löschen</item>
+	<item key="details">News</item>
+	<item key="edit">News bearbeiten</item>
+	<item key="headline">Überschrift</item>
+	<item key="headline_to_short">Die Überschrift sollte mindestens 3 Zeichen lang sein</item>
+	<item key="latest_news">Aktuelle News</item>
+	<item key="link_title">Linkbezeichnung</item>
+	<item key="mod_description">Mit diesem Modul können die News verwaltet werden.</item>
+	<item key="news">News</item>
+	<item key="read_newsfeed">Newsfeed ansehen</item>
+	<item key="readmore">weiterlesen</item>
+	<item key="readmore_chars"><![CDATA[Benötigte Anzahl an Zeichen für &quot;weiterlesen...&quot;-Funktion]]></item>
+	<item key="select_activate_readmore"><![CDATA[Bitte wählen Sie aus, ob die &quot;weiterlesen...&quot;-Funktion aktiviert werden soll oder nicht]]></item>
+	<item key="select_allow_comments">Bitte wählen Sie aus, ob Kommentare unter News zugelassen werden sollen oder nicht</item>
+	<item key="select_category">Bitte wählen Sie die Kategorie aus, in der sich die News befinden soll</item>
+	<item key="settings">Einstellungen</item>
+	<item key="target_page">Zielseite</item>
+	<item key="text">Text</item>
+	<item key="text_to_short">Der Text sollte mindestens 3 Zeichen lang sein</item>
+	<item key="type_in_readmore_chars"><![CDATA[Bitte geben Sie ein, wieviele Zeichen die News mindestens haben muss, um die &quot;weiterlesen...&quot;-Funktion zu aktivieren]]></item>
+	<item key="uri">URI</item>
 </language>

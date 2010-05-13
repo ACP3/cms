@@ -1,135 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>add_picture</name>
-		<message>Add picture</message>
-	</item>
-	<item>
-		<name>create</name>
-		<message>Create a new gallery</message>
-	</item>
-	<item>
-		<name>delete_gallery</name>
-		<message>Delete galleries</message>
-	</item>
-	<item>
-		<name>delete_picture</name>
-		<message>Delete pictures</message>
-	</item>
-	<item>
-		<name>details</name>
-		<message>Picture details</message>
-	</item>
-	<item>
-		<name>edit_gallery</name>
-		<message>Edit gallery</message>
-	</item>
-	<item>
-		<name>edit_picture</name>
-		<message>Edit picture</message>
-	</item>
-	<item>
-		<name>filename</name>
-		<message>Filename</message>
-	</item>
-	<item>
-		<name>gallery</name>
-		<message>Gallery</message>
-	</item>
-	<item>
-		<name>image_filesize</name>
-		<message>Maximum image filesize</message>
-	</item>
-	<item>
-		<name>image_height</name>
-		<message>Maximum image height to be displayed</message>
-	</item>
-	<item>
-		<name>image_width</name>
-		<message>Maximum image width to be displayed</message>
-	</item>
-	<item>
-		<name>invalid_image_filesize_entered</name>
-		<message>Please type in the maximum image filesize in bytes</message>
-	</item>
-	<item>
-		<name>invalid_image_height_entered</name>
-		<message>Please type in the maximum image height in pixels</message>
-	</item>
-	<item>
-		<name>invalid_image_selected</name>
-		<message>Either you selected an image with a invalid filesize, or the image is to wide, to tall or the filsize is to big</message>
-	</item>
-	<item>
-		<name>invalid_image_width_entered</name>
-		<message>Please type in the maximum image width in pixels</message>
-	</item>
-	<item>
-		<name>latest_galleries</name>
-		<message>Latest galleries</message>
-	</item>
-	<item>
-		<name>max_image_height</name>
-		<message>Maximum image height</message>
-	</item>
-	<item>
-		<name>max_image_width</name>
-		<message>Maximum image width</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>With this module you can administer the galleries.</message>
-	</item>
-	<item>
-		<name>no_picture_selected</name>
-		<message>Please select a picture</message>
-	</item>
-	<item>
-		<name>no_pictures</name>
-		<message>There are no pictures registered for this gallery.</message>
-	</item>
-	<item>
-		<name>pics</name>
-		<message>Gallery</message>
-	</item>
-	<item>
-		<name>picture</name>
-		<message>Picture</message>
-	</item>
-	<item>
-		<name>picture_index</name>
-		<message>Picture overview</message>
-	</item>
-	<item>
-		<name>picture_information</name>
-		<message>Picture information</message>
-	</item>
-	<item>
-		<name>pictures</name>
-		<message>Pictures</message>
-	</item>
-	<item>
-		<name>select_new_picture</name>
-		<message>Select a new picture</message>
-	</item>
-	<item>
-		<name>select_picture</name>
-		<message>Select picture</message>
-	</item>
-	<item>
-		<name>thumb_image_height</name>
-		<message>Maximum thumb image height to be displayed</message>
-	</item>
-	<item>
-		<name>thumb_image_width</name>
-		<message>Maximum thumb image width to be displayed</message>
-	</item>
-	<item>
-		<name>title</name>
-		<message>Title</message>
-	</item>
-	<item>
-		<name>type_in_gallery_name</name>
-		<message>The name of the gallery should be at least 3 characters long</message>
-	</item>
+	<item key="add_picture">Add picture</item>
+	<item key="create">Create a new gallery</item>
+	<item key="delete_gallery">Delete galleries</item>
+	<item key="delete_picture">Delete pictures</item>
+	<item key="details">Picture details</item>
+	<item key="edit_gallery">Edit gallery</item>
+	<item key="edit_picture">Edit picture</item>
+	<item key="filename">Filename</item>
+	<item key="gallery">Gallery</item>
+	<item key="image_filesize">Maximum image filesize</item>
+	<item key="image_height">Maximum image height to be displayed</item>
+	<item key="image_width">Maximum image width to be displayed</item>
+	<item key="invalid_image_filesize_entered">Please type in the maximum image filesize in bytes</item>
+	<item key="invalid_image_height_entered">Please type in the maximum image height in pixels</item>
+	<item key="invalid_image_selected">Either you selected an image with a invalid filesize, or the image is to wide, to tall or the filsize is to big</item>
+	<item key="invalid_image_width_entered">Please type in the maximum image width in pixels</item>
+	<item key="latest_galleries">Latest galleries</item>
+	<item key="max_image_height">Maximum image height</item>
+	<item key="max_image_width">Maximum image width</item>
+	<item key="mod_description">With this module you can administer the galleries.</item>
+	<item key="no_picture_selected">Please select a picture</item>
+	<item key="no_pictures">There are no pictures registered for this gallery.</item>
+	<item key="pics">Gallery</item>
+	<item key="picture">Picture</item>
+	<item key="picture_index">Picture overview</item>
+	<item key="picture_information">Picture information</item>
+	<item key="pictures">Pictures</item>
+	<item key="select_new_picture">Select a new picture</item>
+	<item key="select_picture">Select picture</item>
+	<item key="thumb_image_height">Maximum thumb image height to be displayed</item>
+	<item key="thumb_image_width">Maximum thumb image width to be displayed</item>
+	<item key="title">Title</item>
+	<item key="type_in_gallery_name">The name of the gallery should be at least 3 characters long</item>
 </language>

@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>feeds</name>
-		<message>Feeds</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>Mit diesem Modul können Feeds erstellt werden, welche z.B. die aktuellsten News und Downloads anzeigen.</message>
-	</item>
+	<item key="feeds">Feeds</item>
+	<item key="mod_description">Mit diesem Modul können Feeds erstellt werden, welche z.B. die aktuellsten News und Downloads anzeigen.</item>
 </language>

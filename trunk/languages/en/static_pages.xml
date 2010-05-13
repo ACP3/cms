@@ -1,51 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item>
-		<name>create</name>
-		<message>Create new static page</message>
-	</item>
-	<item>
-		<name>create_menu_item</name>
-		<message>Create menu item for this page</message>
-	</item>
-	<item>
-		<name>delete</name>
-		<message>Delete static page</message>
-	</item>
-	<item>
-		<name>edit</name>
-		<message>Edit static page</message>
-	</item>
-	<item>
-		<name>mod_description</name>
-		<message>This module manages the static pages.</message>
-	</item>
-	<item>
-		<name>page_statements</name>
-		<message>Page statements</message>
-	</item>
-	<item>
-		<name>select_create_menu_item</name>
-		<message>Please select, wether you want to create an menu item for this static page</message>
-	</item>
-	<item>
-		<name>static_pages</name>
-		<message>Static pages</message>
-	</item>
-	<item>
-		<name>text</name>
-		<message>Text</message>
-	</item>
-	<item>
-		<name>text_to_short</name>
-		<message>The text should be at least 3 characters long</message>
-	</item>
-	<item>
-		<name>title</name>
-		<message>Title</message>
-	</item>
-	<item>
-		<name>title_to_short</name>
-		<message>The title should be at least 3 characters long</message>
-	</item>
+	<item key="create">Create new static page</item>
+	<item key="create_menu_item">Create menu item for this page</item>
+	<item key="delete">Delete static page</item>
+	<item key="edit">Edit static page</item>
+	<item key="mod_description">This module manages the static pages.</item>
+	<item key="page_statements">Page statements</item>
+	<item key="select_create_menu_item">Please select, wether you want to create an menu item for this static page</item>
+	<item key="static_pages">Static pages</item>
+	<item key="text">Text</item>
+	<item key="text_to_short">The text should be at least 3 characters long</item>
+	<item key="title">Title</item>
+	<item key="title_to_short">The title should be at least 3 characters long</item>
 </language>
