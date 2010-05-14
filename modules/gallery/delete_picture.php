@@ -28,7 +28,8 @@ if (!isset($entries)) {
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'gallery_pictures', 'id = \'' . $entry . '\'') == '1') {
 			// Datei ebenfalls löschen
-			$picture = $db->select('gallery_id, file', 'gallery_pictures', 'id = \'' . $entry . '\'');
+			$picture = $db->select('pic, gallery_id, file', 'gallery_pictures', 'id = \'' . $entry . '\'');
+			$db->query('UPDATE ' . CONFIG_DB_PRE . 'gallery_pictures SET pic = pic - 1 WHERE pic > ' . $picture[0]['pic'] . ' AND gallery_id = ' . $picture[0]['gallery_id'], 0);
 			removeFile('gallery', $picture[0]['file']);
 
 			$bool = $db->delete('gallery_pictures', 'id = \'' . $entry . '\'');
