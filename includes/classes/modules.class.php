@@ -132,7 +132,8 @@ class modules
 		global $auth, $uri;
 
 		if (!$auth->isUser() && defined('IN_ADM') && $uri->mod != 'users' && $uri->page != 'login') {
-			redirect('acp/users/login');
+			$redirect_uri = base64_encode(substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1));
+			redirect('acp/users/login/redirect_' . $redirect_uri);
 		}
 
 		switch (modules::check()) {
