@@ -68,23 +68,23 @@ pre {
 	font-family: 'Courier New', serif;
 	overflow: auto;
 }
-table.acp-table, table.acp-table tr, table.acp-table th, table.acp-table td {
+.acp-table, .acp-table tr, .acp-table th, .acp-table td {
 	border: 1px solid #333;
 	border-collapse: collapse;
 	font-size: 1.0em;
 	text-align: center;
 }
-table.no-border, table.no-border tr, table.no-border th, table.no-border td {
+.no-border, .no-border tr, .no-border th, .no-border td {
 	border: 0;
 }
-table.acp-table {
+.acp-table {
 	width: 100%;
 	margin: 0 auto;
 }
-table.acp-table tr.selected {
+.acp-table .selected {
 	background: #f5f5f5;
 }
-table.acp-table th {
+.acp-table th {
 	padding: 0 3px;
 	background: #069 url('images/common_header.png') repeat-x;
 	font-weight: bold;
@@ -93,19 +93,18 @@ table.acp-table th {
 	color: #f90;
 	white-space: nowrap;
 }
-table.acp-table td {
+.acp-table td {
 	padding: 3px;
 }
 tfoot,
-.sub-table-header, table.acp-table .sub-table-header th,
-table.acp-table th.sub-table-header,
+.sub-table-header,
 .sub-table-header th, th.sub-table-header {
 	background: #e7e7e7;
 	font-weight: bold;
 	color: #333;
 }
 /* Layout */
-#head #page-title {
+#page-title {
 	padding-left: 15px;
 	font-size: 2.4em;
 	line-height: 30px;
@@ -120,11 +119,11 @@ table.acp-table th.sub-table-header,
 	font: bold 1.3em Verdana, Arial, sans-serif;
 	list-style: none;
 }
-#head ul li {
+#head li {
 	float: left;
 	position: relative;
 }
-#head ul li a {
+#head li a {
 	margin-right: 3px;
 	padding: 0 5px;
 	line-height: 30px;
@@ -133,7 +132,7 @@ table.acp-table th.sub-table-header,
 	white-space: nowrap;
 	display: block;
 }
-#head ul li a:hover, #head ul li a.selected {
+#head li a:hover, #head li .selected {
 	color: #f00;
 }
 #head ul ul {
@@ -153,7 +152,7 @@ table.acp-table th.sub-table-header,
 #head ul ul li {
 	border-bottom: 1px solid #333;
 }
-#head ul ul li a {
+#head ul ul a {
 	margin: 0;
 	width: 140px;
 }
@@ -205,7 +204,7 @@ table.acp-table th.sub-table-header,
 	margin: 0;
 	list-style: none;
 }
-#sidebar-left ul li, #sidebar-right ul li {
+#sidebar-left li, #sidebar-right li {
 	width: 100%;
 	background: #eee;
 	border-top: 1px solid #333;
@@ -213,19 +212,19 @@ table.acp-table th.sub-table-header,
 	text-align: center;
 	float: left;
 }
-#sidebar-left ul li a, #sidebar-right ul li a {
+#sidebar-left li a, #sidebar-right li a {
 	padding-left: 15px;
 	text-align: left;
 	display: block;
 }
-#sidebar-left ul li a:hover, #sidebar-left ul li a.selected,
-#sidebar-right ul li a:hover, #sidebar-right ul li a.selected {
+#sidebar-left li a:hover, #sidebar-left li .selected,
+#sidebar-right li a:hover, #sidebar-right li .selected {
 	color: #f90;
 }
-#sidebar-left ul.admin li ul {
+#sidebar-left .admin ul {
 	display: none;
 }
-#sidebar-left ul li ul li a {
+#sidebar-left ul ul a {
 	padding-left: 30px;
 }
 #content {
@@ -253,7 +252,7 @@ fieldset {
 	margin: 0 auto;
 	font-size: 100%;
 }
-fieldset dl, #tabs div dl {
+fieldset dl, #tabs dl {
 	text-align: left;
 }
 fieldset fieldset {
@@ -280,18 +279,18 @@ label {
 label:hover {
 	color: #f00;
 }
-fieldset dl dt label, #tabs div dl dt label {
+fieldset dt label, #tabs dt label {
 	font-weight: bold;
 }
-fieldset dl dt span, #tabs div dl dt span {
+fieldset dt span, #tabs dt span {
 	font-size: 0.9em;
 }
 fieldset input, fieldset textarea,
-#tabs div input, #tabs div textarea {
+#tabs input, #tabs textarea {
 	display: block;
 }
 fieldset input, fieldset select, fieldset textarea,
-#tabs div input, #tabs div select, #tabs div textarea {
+#tabs input, #tabs select, #tabs textarea {
 	width: 100%;
 	margin: 1px;
 	background: #fff;
@@ -300,11 +299,11 @@ fieldset input, fieldset select, fieldset textarea,
 }
 fieldset input:hover, fieldset select:hover, fieldset textarea:hover,
 fieldset input:focus, fieldset select:focus, fieldset textarea:focus,
-#tabs div input:hover, #tabs div select:hover, #tabs div textarea:hover,
-#tabs div input:focus, #tabs div select:focus, #tabs div textarea:focus {
+#tabs input:hover, #tabs select:hover, #tabs textarea:hover,
+#tabs input:focus, #tabs select:focus, #tabs textarea:focus {
 	background: #ffc;
 }
-fieldset dl dd input.checkbox, #tabs div input.checkbox, table input.checkbox {
+fieldset input.checkbox, #tabs input.checkbox, table input.checkbox {
 	width: auto;
 	background: none;
 	border: 0;
@@ -317,7 +316,7 @@ fieldset dl dd input.checkbox, #tabs div input.checkbox, table input.checkbox {
 option {
 	padding: 0 5px 0 3px;
 }
-fieldset textarea, #tabs div textarea {
+fieldset textarea, #tabs textarea {
 	height: 150px;
 	overflow: auto;
 }
