@@ -12,58 +12,60 @@ if (!defined('IN_ACP3'))
 
 if (validate::isNumber($uri->id) && ($uri->action == 'thumb' || $uri->action == 'normal')) {
 	@set_time_limit(20);
-	$pic = $db->select('file', 'gallery_pictures', 'id = \'' . $uri->id . '\'');
+	$picture = $db->select('file', 'gallery_pictures', 'id = \'' . $uri->id . '\'');
 
-	$pic = 'uploads/gallery/' . $pic[0]['file'];
+	$path = ACP3_ROOT . 'uploads/gallery/' . $picture[0]['file'];
 
-	if (is_file($pic)) {
-		$pic_info = getimagesize($pic);
-		$width = $pic_info[0];
-		$height = $pic_info[1];
-		$type = $pic_info[2];
+	if (is_file($path)) {
+		$picInfo = getimagesize($path);
+		$width = $picInfo[0];
+		$height = $picInfo[1];
+		$type = $picInfo[2];
 		$action = $uri->action;
 
 		$settings = config::output('gallery');
+
+		header('Cache-Control: public');
+		header('Pragma: public');
+		header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT');
+		header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 31536000) . ' GMT');
 
 		if (extension_loaded('gd') &&
 			($type == '1' || $type == '2' || $type == '3') &&
 			($action == 'thumb' && $width > $settings['thumbwidth'] && $height > $settings['thumbheight']) ||
 			($action == 'normal' && $width > $settings['width'] && $height > $settings['height'])) {
 			if ($width > $height) {
-				$t_width = $action == 'thumb' ? $settings['thumbwidth'] : $settings['width'];
-				$t_height = intval($height * $t_width / $width);
+				$newWidth = $action == 'thumb' ? $settings['thumbwidth'] : $settings['width'];
+				$newHeight = intval($height * $newWidth / $width);
 			} else {
-				$t_height = $action == 'thumb' ? $settings['thumbheight'] : $settings['height'];
-				$t_width = intval($width * $t_height / $height);
+				$newHeight = $action == 'thumb' ? $settings['thumbheight'] : $settings['height'];
+				$newWidth = intval($width * $newHeight / $height);
 			}
 
-			header('Pragma: public');
-			header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 31536000) . ' GMT');
-
-			$pic_new = imagecreatetruecolor($t_width, $t_height);
+			$newPic = imagecreatetruecolor($newWidth, $newHeight);
 			switch ($type) {
 				case '1':
 					header('Content-type: image/gif');
-					$pic_old = imagecreatefromgif($pic);
-					imagecopyresampled($pic_new, $pic_old, 0, 0, 0, 0, $t_width, $t_height, $width, $height);
-					imagegif($pic_new);
+					$oldPic = imagecreatefromgif($path);
+					imagecopyresampled($newPic, $oldPic, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+					imagegif($newPic);
 					break;
 				case '2':
 					header('Content-type: image/jpeg');
-					$pic_old = imagecreatefromjpeg($pic);
-					imagecopyresampled($pic_new, $pic_old, 0, 0, 0, 0, $t_width, $t_height, $width, $height);
-					imagejpeg($pic_new, NULL, 90);
+					$oldPic = imagecreatefromjpeg($path);
+					imagecopyresampled($newPic, $oldPic, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+					imagejpeg($newPic, NULL, 90);
 					break;
 				case '3':
 					header('Content-type: image/png');
-					imagealphablending($pic_new, false);
-					$pic_old = imagecreatefrompng($pic);
-					imagecopyresampled($pic_new, $pic_old, 0, 0, 0, 0, $t_width, $t_height, $width, $height);
-					imagesavealpha($pic_new, true);
-					imagepng($pic_new);
+					imagealphablending($newPic, false);
+					$oldPic = imagecreatefrompng($path);
+					imagecopyresampled($newPic, $oldPic, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+					imagesavealpha($newPic, true);
+					imagepng($newPic);
 					break;
 			}
-			imagedestroy($pic_new);
+			imagedestroy($newPic);
 		} else {
 			switch ($type) {
 				case '1':
@@ -78,7 +80,7 @@ if (validate::isNumber($uri->id) && ($uri->action == 'thumb' || $uri->action == 
 				default:
 					exit;
 			}
-			readfile($pic);
+			readfile($path);
 		}
 	}
 	exit;
