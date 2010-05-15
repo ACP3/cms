@@ -3,7 +3,7 @@
 		{check_access mode="link" action="emoticons|create" uri="acp/emoticons/create" icon="32/ksmiletris"}
 		{check_access mode="link" action="emoticons|settings" uri="acp/emoticons/settings" icon="32/advancedsettings"}
 		{check_access mode="input" action="emoticons|delete" icon="32/cancel" lang="common|delete_marked"}
-		<h2>{lang values="common|overview"}</h2>
+		<h2>{lang t="common|overview"}</h2>
 	</div>
 	<hr />
 {if isset($emoticons)}
@@ -13,11 +13,11 @@
 		<thead>
 			<tr>
 {if $can_delete}
-				<th>{lang values="common|mark"}</th>
+				<th>{lang t="common|mark"}</th>
 {/if}
-				<th>{lang values="common|description"}</th>
-				<th>{lang values="emoticons|code"}</th>
-				<th>{lang values="emoticons|picture"}</th>
+				<th>{lang t="common|description"}</th>
+				<th>{lang t="emoticons|code"}</th>
+				<th>{lang t="emoticons|picture"}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -38,7 +38,7 @@
 {/if}
 {else}
 	<div class="error">
-		<h5>{lang values="common|no_entries"}</h5>
+		<h5>{lang t="common|no_entries"}</h5>
 	</div>
 {/if}
 </form>

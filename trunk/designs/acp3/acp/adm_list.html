@@ -1,13 +1,13 @@
 <div class="error">
 	<p>
-		{lang values="acp|description"}
+		{lang t="acp|description"}
 	</p>
 {if isset($server_info)}
 	<table class="no-border">
 		<tr>
 			<td style="width:50%;text-align:left;vertical-align:top">
 {/if}
-				<h4>{lang values="acp|access_to_modules"}</h4>
+				<h4>{lang t="acp|access_to_modules"}</h4>
 				<ul>
 {foreach $modules as $module}
 					<li><a href="{uri args="acp/`$module.dir`"}">{$module.name}</a></li>
@@ -16,7 +16,7 @@
 {if isset($server_info)}
 			</td>
 			<td style="text-align:left;vertical-align:top">
-				<h4>{lang values="system|server_infos"}</h4>
+				<h4>{lang t="system|server_infos"}</h4>
 				<dl style="margin:10px 20px">
 {foreach $server_info as $row}
 					<dt><strong>{$row.col_left}</strong></dt>

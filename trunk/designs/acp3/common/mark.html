@@ -26,7 +26,7 @@ $(document).ready(function() {
 		$(this).parents('tr:first').toggleClass('selected');
 	});
 
-	$('form .acp-table').after('<' + 'div class="mark-entries"><' + 'a href="javascript:mark_entries(\'{$checkbox_name}\',\'add\')">{lang values="common|mark_all"}<' + '/a> <' + 'span>::<' + '/span> <' + 'a href="javascript:mark_entries(\'{$checkbox_name}\',\'remove\')">{lang values="common|unmark_all"}<' + '/a><' + '/div>');
+	$('form > .acp-table').after('<' + 'div class="mark-entries"><' + 'a href="javascript:mark_entries(\'{$checkbox_name}\',\'add\')">{lang t="common|mark_all"}<' + '/a> <' + 'span>::<' + '/span> <' + 'a href="javascript:mark_entries(\'{$checkbox_name}\',\'remove\')">{lang t="common|unmark_all"}<' + '/a><' + '/div>');
 
 	$('form #adm-list input[type=image]').click(function() {
 		var entries = $('form .acp-table input:checkbox:checked') || [];
@@ -39,7 +39,7 @@ $(document).ready(function() {
 		$('div.mark-entries').after('<' + 'div id="dialog"><' + 'h5 style="text-align:center"><' + '/h5><' + '/div>');
 
 		if (ary != '') {
-			$('#dialog h5').text('{lang values="common|confirm_delete"}');
+			$('#dialog h5').text('{lang t="common|confirm_delete"}');
 			$('#dialog').dialog({
 				draggable: false,
 				resizable : false,
@@ -49,16 +49,16 @@ $(document).ready(function() {
 					opacity: 0.5
 				},
 				buttons: {
-					{lang values="common|no"}: function() {
+					{lang t="common|no"}: function() {
 						$(this).dialog('close');
 					},
-					{lang values="common|yes"}: function() {
+					{lang t="common|yes"}: function() {
 						location.href = $('.acp-table').parent('form').attr('action') + 'entries_' + ary.substr(0, ary.length - 1) + '/action_confirmed/';
 					}
 				}
 			});
 		} else {
-			$('#dialog h5').text('{lang values="common|no_entries_selected"}');
+			$('#dialog h5').text('{lang t="common|no_entries_selected"}');
 			$('#dialog').dialog({
 				draggable: false,
 				resizable : false,
