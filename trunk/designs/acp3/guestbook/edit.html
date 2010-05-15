@@ -3,17 +3,17 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset>
-		<legend>{lang values="guestbook|edit"}</legend>
+		<legend>{lang t="guestbook|edit"}</legend>
 		<dl>
-			<dt><label for="name">{lang values="common|name"}</label></dt>
+			<dt><label for="name">{lang t="common|name"}</label></dt>
 			<dd><input type="text" name="form[name]" id="name" value="{$form.name}" /></dd>
-			<dt><label for="message">{lang values="common|message"}</label></dt>
+			<dt><label for="message">{lang t="common|message"}</label></dt>
 			<dd>
 				{if isset($emoticons)}{$emoticons}{/if}
 				<textarea name="form[message]" id="message" cols="50" rows="5">{$form.message}</textarea>
 			</dd>
 {if isset($activate)}
-			<dt><label for="active-1">{lang values="guestbook|activate_entry"}</label></dt>
+			<dt><label for="active-1">{lang t="guestbook|activate_entry"}</label></dt>
 			<dd>
 {foreach $activate as $row}
 				<label for="active-{$row.value}">
@@ -26,6 +26,6 @@
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form" />
 	</div>
 </form>

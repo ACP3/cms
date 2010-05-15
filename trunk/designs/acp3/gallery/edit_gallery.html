@@ -3,28 +3,28 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset>
-		<legend>{lang values="gallery|edit_gallery"}</legend>
+		<legend>{lang t="gallery|edit_gallery"}</legend>
 		<dl>
-				<dt><label for="start">{lang values="common|publication_period"}</label></dt>
+				<dt><label for="start">{lang t="common|publication_period"}</label></dt>
 				<dd>{$publication_period}</dd>
 		</dl>
 		<p>
-			{lang values="common|date_description"}
+			{lang t="common|date_description"}
 		</p>
 		<dl>
-			<dt><label for="name">{lang values="gallery|title"}</label></dt>
+			<dt><label for="name">{lang t="gallery|title"}</label></dt>
 			<dd><input type="text" name="form[name]" id="name" value="{$form.name}" maxlength="120" /></dd>
 		</dl>
 	</fieldset>
 	<div class="form-bottom" style="margin:20px 0">
-		<input type="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form" />
 	</div>
 </form>
 <form action="{uri args="acp/gallery/delete_picture/id_$gallery_id"}" method="post">
 	<div id="adm-list">
 		{check_access mode="link" action="gallery|add_picture" uri="acp/gallery/add_picture/id_`$gallery_id`" icon="32/image"}
 		{check_access mode="input" action="gallery|delete_picture" icon="32/cancel" lang="common|delete_marked"}
-		<h2>{lang values="gallery|pictures"}</h2>
+		<h2>{lang t="gallery|pictures"}</h2>
 	</div>
 	<hr />
 {if isset($pictures)}
@@ -36,12 +36,12 @@
 		<thead>
 			<tr>
 {if $can_delete}
-				<th>{lang values="common|mark"}</th>
+				<th>{lang t="common|mark"}</th>
 {/if}
-				<th>{lang values="gallery|picture"}</th>
-				<th>{lang values="common|description"}</th>
+				<th>{lang t="gallery|picture"}</th>
+				<th>{lang t="common|description"}</th>
 {if $can_order}
-				<th>{lang values="common|order"}</th>
+				<th>{lang t="common|order"}</th>
 {/if}
 			</tr>
 		</thead>
@@ -51,18 +51,18 @@
 {if $can_delete}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
 {/if}
-				<td>{if $can_edit_picture}<a href="{uri args="acp/gallery/edit_picture/id_`$row.id`"}" title="{lang values="gallery|edit_picture"}"><img src="{uri args="gallery/image/id_`$row.id`/action_thumb"}" alt="" /></a>{else}<img src="{uri args="gallery/image/id_`$row.id`/action_thumb"}" alt="" />{/if}</td>
+				<td>{if $can_edit_picture}<a href="{uri args="acp/gallery/edit_picture/id_`$row.id`"}" title="{lang t="gallery|edit_picture"}"><img src="{uri args="gallery/image/id_`$row.id`/action_thumb"}" alt="" /></a>{else}<img src="{uri args="gallery/image/id_`$row.id`/action_thumb"}" alt="" />{/if}</td>
 				<td>{$row.description}</td>
 {if $can_order}
 				<td>
 {if !$row.last}
-					<a href="{uri args="acp/gallery/order/id_`$row.id`/action_down"}" title="{lang values="common|move_down"}"><img src="{icon path="16/down"}" alt="{lang values="common|move_down"}" /></a>
+					<a href="{uri args="acp/gallery/order/id_`$row.id`/action_down"}" title="{lang t="common|move_down"}"><img src="{icon path="16/down"}" alt="{lang t="common|move_down"}" /></a>
 {/if}
 {if !$row.first}
-					<a href="{uri args="acp/gallery/order/id_`$row.id`/action_up"}" title="{lang values="common|move_up"}"><img src="{icon path="16/up"}" alt="{lang values="common|move_up"}" /></a>
+					<a href="{uri args="acp/gallery/order/id_`$row.id`/action_up"}" title="{lang t="common|move_up"}"><img src="{icon path="16/up"}" alt="{lang t="common|move_up"}" /></a>
 {/if}
 {if $row.first && $row.last}
-					<img src="{icon path="16/editdelete"}" alt="{lang values="common|move_impossible"}" title="{lang values="common|move_impossible"}" />
+					<img src="{icon path="16/editdelete"}" alt="{lang t="common|move_impossible"}" title="{lang t="common|move_impossible"}" />
 {/if}
 				</td>
 {/if}
@@ -75,7 +75,7 @@
 {/if}
 {else}
 	<div class="error">
-		<h5>{lang values="common|no_entries"}</h5>
+		<h5>{lang t="common|no_entries"}</h5>
 	</div>
 {/if}
 </form>

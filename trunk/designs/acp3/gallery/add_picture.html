@@ -3,14 +3,14 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 	<fieldset>
-		<legend>{lang values="gallery|picture_information"}</legend>
+		<legend>{lang t="gallery|picture_information"}</legend>
 		<dl>
-			<dt><label for="file">{lang values="gallery|select_picture"}</label></dt>
+			<dt><label for="file">{lang t="gallery|select_picture"}</label></dt>
 			<dd><input type="file" name="file" id="file" /></dd>
-			<dt><label for="description">{lang values="common|description"}</label></dt>
+			<dt><label for="description">{lang t="common|description"}</label></dt>
 			<dd>{wysiwyg name="description" value="`$form.description`" height="150" toolbar="simple"}</dd>
 {if isset($options)}
-			<dt><label for="comments">{lang values="common|options"}</label></dt>
+			<dt><label for="comments">{lang t="common|options"}</label></dt>
 			<dd>
 				<ul style="margin:0 20px;list-style:none">
 {foreach $options as $row}
@@ -27,7 +27,7 @@
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang values="common|submit"}" class="form" />
-		<input type="reset" value="{lang values="common|reset"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form" />
+		<input type="reset" value="{lang t="common|reset"}" class="form" />
 	</div>
 </form>

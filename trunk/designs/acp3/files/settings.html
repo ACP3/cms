@@ -3,9 +3,9 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset>
-		<legend>{lang values="files|settings"}</legend>
+		<legend>{lang t="files|settings"}</legend>
 		<dl>
-			<dt><label for="comments-1">{lang values="common|allow_comments"}</label></dt>
+			<dt><label for="comments-1">{lang t="common|allow_comments"}</label></dt>
 			<dd>
 {foreach $comments as $row}
 				<label for="comments-{$row.value}">
@@ -14,19 +14,19 @@
 				</label>
 {/foreach}
 			</dd>
-			<dt><label for="date-format">{lang values="common|date_format"}</label></dt>
+			<dt><label for="date-format">{lang t="common|date_format"}</label></dt>
 			<dd>
 				<select name="form[dateformat]" id="date-format">
-					<option value="">{lang values="common|pls_select"}</option>
+					<option value="">{lang t="common|pls_select"}</option>
 {foreach $dateformat as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 				</select>
 			</dd>
-			<dt><label for="sidebar-entries">{lang values="common|sidebar_entries_to_display"}</label></dt>
+			<dt><label for="sidebar-entries">{lang t="common|sidebar_entries_to_display"}</label></dt>
 			<dd>
 				<select name="form[sidebar]" id="sidebar-entries">
-					<option>{lang values="common|pls_select"}</option>
+					<option>{lang t="common|pls_select"}</option>
 {foreach $sidebar_entries as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.value}</option>
 {/foreach}
@@ -35,6 +35,6 @@
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form" />
 	</div>
 </form>
