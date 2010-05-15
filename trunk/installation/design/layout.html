@@ -2,7 +2,7 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$LANG}" lang="{$LANG}">
 <head>
-<title>ACP3 {lang values="installation|installation"} :: {$title}</title>
+<title>ACP3 {lang t="installation|installation"} :: {$title}</title>
 <script type="text/javascript" src="{$ROOT_DIR}../designs/acp3/jquery/jquery.js"></script>
 <script type="text/javascript" src="{$ROOT_DIR}../designs/acp3/jquery/jquery.cookie.js"></script>
 <script type="text/javascript" src="{$ROOT_DIR}../designs/acp3/jquery/jquery.ui.js"></script>
@@ -16,7 +16,7 @@
 
 <body>
 <div id="head">
-	<h1 id="page-title">ACP3 {lang values="installation|installation"}</h1>
+	<h1 id="page-title">ACP3 {lang t="installation|installation"}</h1>
 	<ul>
 {foreach from=$pages item=row}
 		<li><span{$row.selected}>{$row.title}</span></li>
@@ -24,18 +24,18 @@
 	</ul>
 	<form action="{$REQUEST_URI}" method="post" id="languages">
 		<label for="lang">
-			{lang values="installation|language"}
+			{lang t="installation|language"}
 			<select name="lang" id="lang">
 {foreach from=$languages item=row}
 				<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
 {/foreach}
 			</select>
 		</label>
-		<input type="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form" />
 	</form>
 </div>
 <div id="breadcrumb">
-	<a href="{$ROOT_DIR}../">ACP3</a> &raquo; <a href="{uri args="install/welcome"}">{lang values="installation|installation"}</a> &raquo; <span>{$title}</span>
+	<a href="{$ROOT_DIR}../">ACP3</a> &raquo; <a href="{uri args="install/welcome"}">{lang t="installation|installation"}</a> &raquo; <span>{$title}</span>
 </div>
 <div id="content">
 	<h1>{$title}</h1>

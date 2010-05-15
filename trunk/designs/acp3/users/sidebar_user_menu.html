@@ -1,10 +1,10 @@
-<h4>{lang values="users|user_menu"}</h4>
+<h4>{lang t="users|user_menu"}</h4>
 <script type="text/javascript" src="{$DESIGN_PATH}users/script.js"></script>
 <ul class="admin">
-	<li><a href="{uri args="users/home"}">{lang values="users|home"}</a></li>
+	<li><a href="{uri args="users/home"}">{lang t="users|home"}</a></li>
 {if isset($user_sidebar.modules)}
 	<li>
-		<a href="{uri args="acp"}">{lang values="users|administration"}</a>
+		<a href="{uri args="acp"}">{lang t="users|administration"}</a>
 		<ul>
 {foreach $user_sidebar.modules as $row}
 			<li><a href="{uri args="acp/`$row.dir`"}">{$row.name}</a></li>
@@ -14,7 +14,7 @@
 {/if}
 {if isset($user_sidebar.system)}
 	<li>
-		<a href="{uri args="acp/system"}">{lang values="system|system"}</a>
+		<a href="{uri args="acp/system"}">{lang t="system|system"}</a>
 		<ul>
 {foreach $user_sidebar.system as $row}
 			<li><a href="{uri args="acp/system/`$row.page`"}">{$row.name}</a></li>
@@ -22,5 +22,5 @@
 		</ul>
 	</li>
 {/if}
-	<li><a href="{uri args="users/logout/last_`$user_sidebar.page`"}">{lang values="users|logout"}</a></li>
+	<li><a href="{uri args="users/logout/last_`$user_sidebar.page`"}">{lang t="users|logout"}</a></li>
 </ul>
