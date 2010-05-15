@@ -3,12 +3,12 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset>
-		<legend>{lang values="guestbook|settings"}</legend>
+		<legend>{lang t="guestbook|settings"}</legend>
 		<dl>
-			<dt><label for="date-format">{lang values="common|date_format"}</label></dt>
+			<dt><label for="date-format">{lang t="common|date_format"}</label></dt>
 			<dd>
 				<select name="form[dateformat]" id="date-format">
-					<option value="">{lang values="common|pls_select"}</option>
+					<option value="">{lang t="common|pls_select"}</option>
 {foreach $dateformat as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
@@ -17,6 +17,6 @@
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form" />
 	</div>
 </form>

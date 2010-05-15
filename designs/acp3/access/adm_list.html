@@ -2,7 +2,7 @@
 	<div id="adm-list">
 		{check_access mode="link" action="access|create" uri="acp/access/create" icon="32/add_group"}
 		{check_access mode="input" action="access|delete" icon="32/cancel" lang="common|delete_marked"}
-		<h2>{lang values="common|overview"}</h2>
+		<h2>{lang t="common|overview"}</h2>
 	</div>
 	<hr />
 {if isset($access)}
@@ -12,10 +12,10 @@
 		<thead>
 			<tr>
 {if $can_delete}
-				<th>{lang values="common|mark"}</th>
+				<th>{lang t="common|mark"}</th>
 {/if}
-				<th>{lang values="common|name"}</th>
-				<th>{lang values="access|access_to_following_modules"}</th>
+				<th>{lang t="common|name"}</th>
+				<th>{lang t="access|access_to_following_modules"}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -35,7 +35,7 @@
 {/if}
 {else}
 	<div class="error">
-		<h5>{lang values="common|no_entries"}</h5>
+		<h5>{lang t="common|no_entries"}</h5>
 	</div>
 {/if}
 </form>

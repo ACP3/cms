@@ -4,18 +4,18 @@
 <form action="{$REQUEST_URI}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 	<fieldset style="width:30%">
 		<dl>
-			<dt><label for="code">{lang values="emoticons|code"}</label></dt>
+			<dt><label for="code">{lang t="emoticons|code"}</label></dt>
 			<dd><input type="text" name="form[code]" id="code" value="{$form.code}" maxlength="10" /></dd>
-			<dt><label for="description">{lang values="common|description"}</label></dt>
+			<dt><label for="description">{lang t="common|description"}</label></dt>
 			<dd><input type="text" name="form[description]" id="description" value="{$form.description}" maxlength="15" /></dd>
 			<dt>
-				<label for="picture">{lang values="emoticons|replace_picture"}</label>
+				<label for="picture">{lang t="emoticons|replace_picture"}</label>
 				<img src="{$ROOT_DIR}uploads/emoticons/{$picture}" alt="" />
 			</dt>
 			<dd><input type="file" name="picture" id="picture" /></dd>
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form" />
 	</div>
 </form>

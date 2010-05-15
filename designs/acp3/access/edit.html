@@ -4,23 +4,23 @@
 <script type="text/javascript" src="{$DESIGN_PATH}access/script.js"></script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset>
-		<legend>{lang values="access|edit"}</legend>
+		<legend>{lang t="access|edit"}</legend>
 		<dl>
-			<dt><label for="name">{lang values="common|name"}</label></dt>
+			<dt><label for="name">{lang t="common|name"}</label></dt>
 			<dd><input type="text" name="form[name]" id="name" value="{$form.name}" maxlength="120" /></dd>
 		</dl>
 		<table class="acp-table">
 			<caption>
-				{lang values="access|access_level_selection_tip"}
+				{lang t="access|access_level_selection_tip"}
 			</caption>
 			<thead>
 				<tr class="sub-table-header">
-					<th>{lang values="common|modules"}</th>
-					<th><a href="javascript:mark_permissions('read');">{lang values="access|can_read"}</a></th>
-					<th><a href="javascript:mark_permissions('create');">{lang values="access|can_create"}</a></th>
-					<th><a href="javascript:mark_permissions('edit');">{lang values="access|can_edit"}</a></th>
-					<th><a href="javascript:mark_permissions('delete');">{lang values="access|can_delete"}</a></th>
-					<th><a href="javascript:mark_permissions('full');">{lang values="access|full_access"}</a></th>
+					<th>{lang t="common|modules"}</th>
+					<th><a href="javascript:mark_permissions('read');">{lang t="access|can_read"}</a></th>
+					<th><a href="javascript:mark_permissions('create');">{lang t="access|can_create"}</a></th>
+					<th><a href="javascript:mark_permissions('edit');">{lang t="access|can_edit"}</a></th>
+					<th><a href="javascript:mark_permissions('delete');">{lang t="access|can_delete"}</a></th>
+					<th><a href="javascript:mark_permissions('full');">{lang t="access|full_access"}</a></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -38,6 +38,6 @@
 		</table>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form" />
 	</div>
 </form>

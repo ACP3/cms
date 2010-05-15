@@ -3,7 +3,7 @@
 		{check_access mode="link" action="categories|create" uri="acp/categories/create" icon="32/folder_new"}
 		{check_access mode="link" action="categories|settings" uri="acp/categories/settings" icon="32/advancedsettings"}
 		{check_access mode="input" action="categories|delete" icon="32/cancel" lang="common|delete_marked"}
-		<h2>{lang values="common|overview"}</h2>
+		<h2>{lang t="common|overview"}</h2>
 	</div>
 	<hr />
 {if isset($categories)}
@@ -13,11 +13,11 @@
 		<thead>
 			<tr>
 {if $can_delete}
-				<th>{lang values="common|mark"}</th>
+				<th>{lang t="common|mark"}</th>
 {/if}
-				<th>{lang values="common|name"}</th>
-				<th>{lang values="common|description"}</th>
-				<th>{lang values="categories|module"}</th>
+				<th>{lang t="common|name"}</th>
+				<th>{lang t="common|description"}</th>
+				<th>{lang t="categories|module"}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -38,7 +38,7 @@
 {/if}
 {else}
 	<div class="error">
-		<h5>{lang values="common|entries"}</h5>
+		<h5>{lang t="common|entries"}</h5>
 	</div>
 {/if}
 </form>
