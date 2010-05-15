@@ -1,7 +1,7 @@
 <form action="{uri args="acp/newsletter/delete_archive"}" method="post">
 	<div id="adm-list">
 		{check_access mode="input" action="newsletter|delete_archive" icon="32/cancel" lang="common|delete_marked"}
-		<h2>{lang values="newsletter|newsletter_archive"}</h2>
+		<h2>{lang t="newsletter|newsletter_archive"}</h2>
 	</div>
 	<hr />
 {if isset($newsletter)}
@@ -12,14 +12,14 @@
 		<thead>
 			<tr>
 {if $can_delete}
-				<th>{lang values="common|mark"}</th>
+				<th>{lang t="common|mark"}</th>
 {/if}
-				<th>{lang values="common|date"}</th>
-				<th>{lang values="newsletter|subject"}</th>
-				<th>{lang values="newsletter|text"}</th>
-				<th>{lang values="newsletter|status"}</th>
+				<th>{lang t="common|date"}</th>
+				<th>{lang t="newsletter|subject"}</th>
+				<th>{lang t="newsletter|text"}</th>
+				<th>{lang t="newsletter|status"}</th>
 {if $can_send}
-				<th>{lang values="common|options"}</th>
+				<th>{lang t="common|options"}</th>
 {/if}
 			</tr>
 		</thead>
@@ -34,7 +34,7 @@
 				<td>{$row.text}</td>
 				<td>{$row.status}</td>
 {if $can_send}
-				<td><a href="{uri args="acp/newsletter/send/id_`$row.id`"}" title="{lang values="newsletter|send"}"><img src="{icon path="16/mail_send"}" alt="{lang values="newsletter|send"}" /></a></td>
+				<td><a href="{uri args="acp/newsletter/send/id_`$row.id`"}" title="{lang t="newsletter|send"}"><img src="{icon path="16/mail_send"}" alt="{lang t="newsletter|send"}" /></a></td>
 {/if}
 			</tr>
 {/foreach}
@@ -45,7 +45,7 @@
 {/if}
 {else}
 	<div class="error">
-		<h5>{lang values="common|no_entries"}</h5>
+		<h5>{lang t="common|no_entries"}</h5>
 	</div>
 {/if}
 </form>

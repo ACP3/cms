@@ -3,7 +3,7 @@
 		{check_access mode="link" action="news|create" uri="acp/news/create" icon="32/news"}
 		{check_access mode="link" action="news|settings" uri="acp/news/settings" icon="32/advancedsettings"}
 		{check_access mode="input" action="news|delete" icon="32/cancel" lang="common|delete_marked"}
-		<h2>{lang values="common|overview"}</h2>
+		<h2>{lang t="common|overview"}</h2>
 	</div>
 	<hr />
 {if isset($news)}
@@ -13,11 +13,11 @@
 		<thead>
 			<tr>
 {if $can_delete}
-				<th>{lang values="common|mark"}</th>
+				<th>{lang t="common|mark"}</th>
 {/if}
-				<th>{lang values="common|publication_period"}</th>
-				<th>{lang values="news|headline"}</th>
-				<th>{lang values="common|category"}</th>
+				<th>{lang t="common|publication_period"}</th>
+				<th>{lang t="news|headline"}</th>
+				<th>{lang t="common|category"}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -38,7 +38,7 @@
 {/if}
 {else}
 	<div class="error">
-		<h5>{lang values="common|no_entries"}</h5>
+		<h5>{lang t="common|no_entries"}</h5>
 	</div>
 {/if}
 </form>
