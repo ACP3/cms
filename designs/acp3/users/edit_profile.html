@@ -4,20 +4,20 @@
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<div id="tabs">
 		<ul>
-			<li><a href="#tab-1">{lang values="common|general_statements"}</a></li>
-			<li><a href="#tab-2">{lang values="users|contact"}</a></li>
-			<li><a href="#tab-3">{lang values="users|pwd"}</a></li>
+			<li><a href="#tab-1">{lang t="common|general_statements"}</a></li>
+			<li><a href="#tab-2">{lang t="users|contact"}</a></li>
+			<li><a href="#tab-3">{lang t="users|pwd"}</a></li>
 		</ul>
 		<div id="tab-1">
 			<p>
-				{lang values="users|display_profile_field"}
+				{lang t="users|display_profile_field"}
 			</p>
 			<table class="acp-table no-border">
 				<tr>
 					<td style="width:5%"></td>
 					<td>
 						<dl>
-							<dt><label for="nickname">{lang values="users|nickname"}</label></dt>
+							<dt><label for="nickname">{lang t="users|nickname"}</label></dt>
 							<dd><input type="text" name="form[nickname]" id="nickname" value="{$form.nickname}" maxlength="30" /></dd>
 						</dl>
 					</td>
@@ -28,7 +28,7 @@
 					</td>
 					<td>
 						<dl>
-							<dt><label for="realname">{lang values="users|realname"}</label></dt>
+							<dt><label for="realname">{lang t="users|realname"}</label></dt>
 							<dd><input type="text" name="form[realname]" id="realname" value="{$form.realname}" maxlength="80" /></dd>
 						</dl>
 					</td>
@@ -39,7 +39,7 @@
 					</td>
 					<td>
 						<dl>
-							<dt><label for="gender">{lang values="users|gender"}</label></dt>
+							<dt><label for="gender">{lang t="users|gender"}</label></dt>
 							<dd>
 								<select name="form[gender]" id="gender">
 {foreach $gender as $row}
@@ -56,7 +56,7 @@
 					</td>
 					<td>
 						<dl>
-							<dt><label for="birthday">{lang values="users|birthday"}</label></dt>
+							<dt><label for="birthday">{lang t="users|birthday"}</label></dt>
 							<dd>
 								{$birthday_datepicker}
 								<div>
@@ -75,7 +75,7 @@
 		</div>
 		<div id="tab-2" class="ui-tabs-hide">
 			<p>
-				{lang values="users|display_profile_field"}
+				{lang t="users|display_profile_field"}
 			</p>
 			<table class="acp-table no-border">
 {foreach $contact as $row}
@@ -95,14 +95,14 @@
 		</div>
 		<div id="tab-3" class="ui-tabs-hide">
 			<dl>
-				<dt><label for="new_pwd">{lang values="users|new_pwd"}</label></dt>
+				<dt><label for="new_pwd">{lang t="users|new_pwd"}</label></dt>
 				<dd><input type="password" name="form[new_pwd]" id="new_pwd" /></dd>
-				<dt><label for="new_pwd_repeat">{lang values="users|new_pwd_repeat"}</label></dt>
+				<dt><label for="new_pwd_repeat">{lang t="users|new_pwd_repeat"}</label></dt>
 				<dd><input type="password" name="form[new_pwd_repeat]" id="new_pwd_repeat" /></dd>
 			</dl>
 		</div>
 	</div>
 	<div class="form-bottom">
-		<input type="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form" />
 	</div>
 </form>

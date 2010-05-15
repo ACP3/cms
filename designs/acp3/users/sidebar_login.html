@@ -2,24 +2,24 @@
 <form action="{$uri}" method="post" accept-charset="UTF-8" id="login-sidebar">
 	<fieldset>
 		<dl>
-			<dt><label for="nav_nickname">{lang values="users|nickname"}</label></dt>
+			<dt><label for="nav_nickname">{lang t="users|nickname"}</label></dt>
 			<dd><input type="text" name="form[nickname]" id="nav_nickname" maxlength="30" /></dd>
 		</dl>
 		<dl>
-			<dt><label for="nav_pwd">{lang values="users|pwd"}</label></dt>
+			<dt><label for="nav_pwd">{lang t="users|pwd"}</label></dt>
 			<dd><input type="password" name="form[pwd]" id="nav_pwd" /></dd>
 		</dl>
 	</fieldset>
 	<div>
 		<label for="nav_remember">
 			<input type="checkbox" name="remember" id="nav_remember" value="1" class="checkbox" />
-			{lang values="users|remember_me"}
+			{lang t="users|remember_me"}
 		</label>
 		<p style="text-align:center">
 			<input type="hidden" name="form[redirect_uri]" value="{$redirect_uri}" />
-			<input type="submit" value="{lang values="common|submit"}" class="form" />
+			<input type="submit" value="{lang t="common|submit"}" class="form" />
 		</p>
-		<a href="{uri args="users/forgot_pwd"}">{lang values="users|forgot_pwd"}</a><br />
-		<a href="{uri args="users/register"}">{lang values="users|register"}</a>
+		<a href="{uri args="users/forgot_pwd"}">{lang t="users|forgot_pwd"}</a><br />
+		<a href="{uri args="users/register"}">{lang t="users|register"}</a>
 	</div>
 </form>
