@@ -4,13 +4,13 @@
 <form action="{uri args="search/list"}" method="post" accept-charset="UTF-8">
 	<fieldset class="no-border">
 		<dl>
-			<dt><label for="search_term">{lang values="search|search_term"}</label></dt>
+			<dt><label for="search_term">{lang t="search|search_term"}</label></dt>
 			<dd><input type="text" name="form[search_term]" id="search_term" value="{$form.search_term}" /></dd>
 		</dl>
 		<fieldset>
-			<legend>{lang values="search|search_options"}</legend>
+			<legend>{lang t="search|search_options"}</legend>
 			<dl>
-				<dt><label>{lang values="search|search_after_modules"}</label></dt>
+				<dt><label>{lang t="search|search_after_modules"}</label></dt>
 				<dd>
 {foreach $search_mods as $row}
 					<label for="{$row.dir}">
@@ -19,7 +19,7 @@
 					</label>
 {/foreach}
 				</dd>
-				<dt><label for="{$search_areas.0.id}">{lang values="search|search_after_areas"}</label></dt>
+				<dt><label for="{$search_areas.0.id}">{lang t="search|search_after_areas"}</label></dt>
 				<dd>
 {foreach $search_areas as $row}
 					<label for="{$row.id}">
@@ -28,7 +28,7 @@
 					</label>
 {/foreach}
 				</dd>
-				<dt><label for="{$sort_hits.0.id}">{lang values="search|sort_hits"}</label></dt>
+				<dt><label for="{$sort_hits.0.id}">{lang t="search|sort_hits"}</label></dt>
 				<dd>
 {foreach $sort_hits as $row}
 					<label for="{$row.id}">
@@ -41,6 +41,6 @@
 		</fieldset>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang values="search|submit_search"}" class="form" />
+		<input type="submit" value="{lang t="search|submit_search"}" class="form" />
 	</div>
 </form>

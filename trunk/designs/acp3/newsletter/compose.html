@@ -3,13 +3,13 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset>
-		<legend>{lang values="newsletter|newsletter"}</legend>
+		<legend>{lang t="newsletter|newsletter"}</legend>
 		<dl>
-			<dt><label for="subject">{lang values="newsletter|subject"}</label></dt>
+			<dt><label for="subject">{lang t="newsletter|subject"}</label></dt>
 			<dd><input type="text" name="form[subject]" id="subject" value="{$form.subject}" /></dd>
-			<dt><label for="text">{lang values="newsletter|text"}</label></dt>
+			<dt><label for="text">{lang t="newsletter|text"}</label></dt>
 			<dd><textarea name="form[text]" id="text" cols="50" rows="5">{$form.text}</textarea></dd>
-			<dt><label for="test-1">{lang values="newsletter|test_newsletter"}</label> <span>({lang values="newsletter|test_nl_description"})</span></dt>
+			<dt><label for="test-1">{lang t="newsletter|test_newsletter"}</label> <span>({lang t="newsletter|test_nl_description"})</span></dt>
 			<dd>
 {foreach $test as $row}
 				<label for="test-{$row.value}">
@@ -19,8 +19,8 @@
 {/foreach}
 			</dd>
 			<dt>
-				<label for="action-1">{lang values="newsletter|action"}</label>
-				<span>({lang values="newsletter|action_description"})</span>
+				<label for="action-1">{lang t="newsletter|action"}</label>
+				<span>({lang t="newsletter|action_description"})</span>
 			</dt>
 			<dd>
 {foreach $action as $row}
@@ -33,7 +33,7 @@
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang values="common|submit"}" class="form" />
-		<input type="reset" value="{lang values="common|reset"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form" />
+		<input type="reset" value="{lang t="common|reset"}" class="form" />
 	</div>
 </form>

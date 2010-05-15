@@ -4,7 +4,7 @@
 		{check_access mode="link" action="newsletter|settings" uri="acp/newsletter/settings" icon="32/advancedsettings"}
 		{check_access mode="link" action="newsletter|adm_list_archive" uri="acp/newsletter/adm_list_archive" icon="32/mail"}
 		{check_access mode="input" action="newsletter|delete" icon="32/cancel" lang="common|delete_marked"}
-		<h2>{lang values="newsletter|newsletter_accounts"}</h2>
+		<h2>{lang t="newsletter|newsletter_accounts"}</h2>
 	</div>
 	<hr />
 {if isset($accounts)}
@@ -14,10 +14,10 @@
 		<thead>
 			<tr>
 {if $can_delete}
-				<th>{lang values="common|mark"}</th>
+				<th>{lang t="common|mark"}</th>
 {/if}
-				<th>{lang values="common|email"}</th>
-				<th>{lang values="newsletter|status"}</th>
+				<th>{lang t="common|email"}</th>
+				<th>{lang t="newsletter|status"}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -37,7 +37,7 @@
 {/if}
 {else}
 	<div class="error">
-		<h5>{lang values="common|no_entries"}</h5>
+		<h5>{lang t="common|no_entries"}</h5>
 	</div>
 {/if}
 </form>

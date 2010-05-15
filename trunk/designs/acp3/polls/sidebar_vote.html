@@ -1,4 +1,4 @@
-<h4>{lang values="polls|latest_poll"}</h4>
+<h4>{lang t="polls|latest_poll"}</h4>
 {if isset($sidebar_poll_question)}
 <div id="sidebar-polls">
 	<h5>{$sidebar_poll_question.question}</h5>
@@ -18,12 +18,12 @@
 			</li>
 		</ul>
 		<div>
-			<input type="submit" value="{lang values="common|submit"}" class="form" />
+			<input type="submit" value="{lang t="common|submit"}" class="form" />
 		</div>
 	</form>
 </div>
 {else}
 <ul>
-	<li>{lang values="common|no_entries_short"}</li>
+	<li>{lang t="common|no_entries_short"}</li>
 </ul>
 {/if}

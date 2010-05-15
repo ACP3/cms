@@ -1,6 +1,6 @@
 {if modules::check('newsletter', 'create')}
 <div style="text-align:center">
-	<a href="{uri args="newsletter/create"}">{lang values="newsletter|create"}</a>
+	<a href="{uri args="newsletter/create"}">{lang t="newsletter|create"}</a>
 </div>
 <hr />
 {/if}
@@ -8,15 +8,15 @@
 <div class="news">
 	<div class="header">
 {if modules::check('feeds', 'list')}
-		<a href="{uri args="feeds/list/feed_news"}" title="{lang values="news|read_newsfeed"}" style="float:left"><img src="{$DESIGN_PATH}images/feed.png" alt="" /></a>
+		<a href="{uri args="feeds/list/feed_news"}" title="{lang t="news|read_newsfeed"}" style="float:left"><img src="{$DESIGN_PATH}images/feed.png" alt="" /></a>
 {/if}
 		<form action="{uri args="news/list"}" method="post" style="text-align:right">
 			<div>
 				<label for="cat" style="font-weight:bold">
-					{lang values="common|category"}:
+					{lang t="common|category"}:
 					{$categories}
 				</label>
-				<input type="submit" value="{lang values="common|submit"}" class="form" />
+				<input type="submit" value="{lang t="common|submit"}" class="form" />
 			</div>
 		</form>
 	</div>
@@ -34,7 +34,7 @@
 	<div class="date">
 {if $row.allow_comments}
 		<div class="comments">
-			<a href="{uri args="news/details/id_`$row.id`"}#comments">{lang values="comments|comments"}</a>
+			<a href="{uri args="news/details/id_`$row.id`"}#comments">{lang t="comments|comments"}</a>
 			<span>({$row.comments})</span>
 		</div>
 {/if}
@@ -48,6 +48,6 @@
 {/foreach}
 {else}
 <div class="error">
-	<h5>{lang values="common|no_entries"}</h5>
+	<h5>{lang t="common|no_entries"}</h5>
 </div>
 {/if}

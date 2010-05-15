@@ -5,26 +5,26 @@
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<div id="tabs">
 		<ul>
-			<li><a href="#tab-1">{lang values="common|publication_period"}</a></li>
-			<li><a href="#tab-2">{lang values="static_pages|page_statements"}</a></li>
+			<li><a href="#tab-1">{lang t="common|publication_period"}</a></li>
+			<li><a href="#tab-2">{lang t="static_pages|page_statements"}</a></li>
 		</ul>
 		<div id="tab-1">
 			<dl>
-				<dt><label for="start">{lang values="common|publication_period"}</label></dt>
+				<dt><label for="start">{lang t="common|publication_period"}</label></dt>
 				<dd>{$publication_period}</dd>
 			</dl>
 			<p>
-				{lang values="common|date_description"}
+				{lang t="common|date_description"}
 			</p>
 		</div>
 		<div id="tab-2" class="ui-tabs-hide">
 			<dl>
-				<dt><label for="title">{lang values="static_pages|title"}</label></dt>
+				<dt><label for="title">{lang t="static_pages|title"}</label></dt>
 				<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120" /></dd>
-				<dt><label for="text">{lang values="static_pages|text"}</label></dt>
+				<dt><label for="text">{lang t="static_pages|text"}</label></dt>
 				<dd>{wysiwyg name="text" value="`$form.text`" height="250"}</dd>
 {if isset($create)}
-				<dt><label for="create-item-1">{lang values="static_pages|create_menu_item"}</label></dt>
+				<dt><label for="create-item-1">{lang t="static_pages|create_menu_item"}</label></dt>
 				<dd>
 {foreach $create as $row}
 					<label for="create-item-{$row.value}">
@@ -36,19 +36,19 @@
 {/if}
 			</dl>
 			<dl id="create-item-container">
-				<dt><label for="block_id">{lang values="menu_items|blocks"}</label></dt>
+				<dt><label for="block_id">{lang t="menu_items|blocks"}</label></dt>
 				<dd>
 					<select name="form[block_id]" id="block_id">
-						<option value="">{lang values="common|pls_select"}</option>
+						<option value="">{lang t="common|pls_select"}</option>
 {foreach $blocks as $row}
 						<option value="{$row.id}"{$row.selected}>{$row.title}</option>
 {/foreach}
 					</select>
 				</dd>
-				<dt><label for="parent">{lang values="menu_items|superior_page"}</label></dt>
+				<dt><label for="parent">{lang t="menu_items|superior_page"}</label></dt>
 				<dd>
 					<select name="form[parent]" id="parent">
-						<option value="">{lang values="menu_items|no_superior_page"}</option>
+						<option value="">{lang t="menu_items|no_superior_page"}</option>
 {foreach $pages_list as $block => $pages}
 						<optgroup label="{$block}">
 {foreach $pages as $row}
@@ -58,7 +58,7 @@
 {/foreach}
 					</select>
 				</dd>
-				<dt><label for="display-1">{lang values="menu_items|display_item"}</label></dt>
+				<dt><label for="display-1">{lang t="menu_items|display_item"}</label></dt>
 				<dd>
 {foreach $display as $row}
 					<label for="display-{$row.value}">
@@ -71,7 +71,7 @@
 		</div>
 	</div>
 	<div class="form-bottom">
-		<input type="submit" value="{lang values="common|submit"}" class="form" />
-		<input type="reset" value="{lang values="common|reset"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form" />
+		<input type="reset" value="{lang t="common|reset"}" class="form" />
 	</div>
 </form>
