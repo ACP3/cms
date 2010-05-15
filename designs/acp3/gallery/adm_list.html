@@ -3,7 +3,7 @@
 		{check_access mode="link" action="gallery|create" uri="acp/gallery/create" icon="32/folder_image"}
 		{check_access mode="link" action="gallery|settings" uri="acp/gallery/settings" icon="32/advancedsettings"}
 		{check_access mode="input" action="gallery|delete_gallery" icon="32/cancel" lang="common|delete_marked"}
-		<h2>{lang values="common|overview"}</h2>
+		<h2>{lang t="common|overview"}</h2>
 	</div>
 	<hr />
 {if isset($galleries)}
@@ -13,11 +13,11 @@
 		<thead>
 			<tr>
 {if $can_delete}
-				<th>{lang values="common|mark"}</th>
+				<th>{lang t="common|mark"}</th>
 {/if}
-				<th>{lang values="common|publication_period"}</th>
-				<th>{lang values="gallery|title"}</th>
-				<th>{lang values="gallery|pictures"}</th>
+				<th>{lang t="common|publication_period"}</th>
+				<th>{lang t="gallery|title"}</th>
+				<th>{lang t="gallery|pictures"}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -38,7 +38,7 @@
 {/if}
 {else}
 	<div class="error">
-		<h5>{lang values="common|no_entries"}</h5>
+		<h5>{lang t="common|no_entries"}</h5>
 	</div>
 {/if}
 </form>

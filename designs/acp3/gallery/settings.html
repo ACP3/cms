@@ -3,23 +3,23 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset>
-		<legend>{lang values="gallery|settings"}</legend>
+		<legend>{lang t="gallery|settings"}</legend>
 		<dl>
-			<dt><label for="thumbwidth">{lang values="gallery|thumb_image_width"}</label></dt>
+			<dt><label for="thumbwidth">{lang t="gallery|thumb_image_width"}</label></dt>
 			<dd><input type="text" name="form[thumbwidth]" id="thumbwidth" value="{$form.thumbwidth}" /></dd>
-			<dt><label for="thumbheight">{lang values="gallery|thumb_image_height"}</label></dt>
+			<dt><label for="thumbheight">{lang t="gallery|thumb_image_height"}</label></dt>
 			<dd><input type="text" name="form[thumbheight]" id="thumbheight" value="{$form.thumbheight}" /></dd>
-			<dt><label for="width">{lang values="gallery|image_width"}</label></dt>
+			<dt><label for="width">{lang t="gallery|image_width"}</label></dt>
 			<dd><input type="text" name="form[width]" id="width" value="{$form.width}" /></dd>
-			<dt><label for="height">{lang values="gallery|image_height"}</label></dt>
+			<dt><label for="height">{lang t="gallery|image_height"}</label></dt>
 			<dd><input type="text" name="form[height]" id="height" value="{$form.height}" /></dd>
-			<dt><label for="maxwidth">{lang values="gallery|max_image_width"}</label></dt>
+			<dt><label for="maxwidth">{lang t="gallery|max_image_width"}</label></dt>
 			<dd><input type="text" name="form[maxwidth]" id="maxwidth" value="{$form.maxwidth}" /></dd>
-			<dt><label for="maxheight">{lang values="gallery|max_image_height"}</label></dt>
+			<dt><label for="maxheight">{lang t="gallery|max_image_height"}</label></dt>
 			<dd><input type="text" name="form[maxheight]" id="maxheight" value="{$form.maxheight}" /></dd>
-			<dt><label for="filesize">{lang values="gallery|image_filesize"}</label></dt>
+			<dt><label for="filesize">{lang t="gallery|image_filesize"}</label></dt>
 			<dd><input type="text" name="form[filesize]" id="filesize" value="{$form.filesize}" /></dd>
-			<dt><label for="comments-1">{lang values="common|allow_comments"}</label></dt>
+			<dt><label for="comments-1">{lang t="common|allow_comments"}</label></dt>
 			<dd>
 {foreach $comments as $row}
 				<label for="comments-{$row.value}">
@@ -29,8 +29,8 @@
 {/foreach}
 			</dd>
 			<dt>
-				<label for="colorbox-1">{lang values="gallery|use_colorbox"}</label>
-				<span>({lang values="gallery|use_colorbox_description"})</span>
+				<label for="colorbox-1">{lang t="gallery|use_colorbox"}</label>
+				<span>({lang t="gallery|use_colorbox_description"})</span>
 			</dt>
 			<dd>
 {foreach $colorbox as $row}
@@ -40,19 +40,19 @@
 				</label>
 {/foreach}
 			</dd>
-			<dt><label for="date-format">{lang values="common|date_format"}</label></dt>
+			<dt><label for="date-format">{lang t="common|date_format"}</label></dt>
 			<dd>
 				<select name="form[dateformat]" id="date-format">
-					<option value="">{lang values="common|pls_select"}</option>
+					<option value="">{lang t="common|pls_select"}</option>
 {foreach $dateformat as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 				</select>
 			</dd>
-			<dt><label for="sidebar-entries">{lang values="common|sidebar_entries_to_display"}</label></dt>
+			<dt><label for="sidebar-entries">{lang t="common|sidebar_entries_to_display"}</label></dt>
 			<dd>
 				<select name="form[sidebar]" id="sidebar-entries">
-					<option>{lang values="common|pls_select"}</option>
+					<option>{lang t="common|pls_select"}</option>
 {foreach $sidebar_entries as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.value}</option>
 {/foreach}
@@ -61,6 +61,6 @@
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form" />
 	</div>
 </form>

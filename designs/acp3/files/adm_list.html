@@ -3,7 +3,7 @@
 		{check_access mode="link" action="files|create" uri="acp/files/create" icon="32/download"}
 		{check_access mode="link" action="files|settings" uri="acp/files/settings" icon="32/advancedsettings"}
 		{check_access mode="input" action="files|delete" icon="32/cancel" lang="common|delete_marked"}
-		<h2>{lang values="common|overview"}</h2>
+		<h2>{lang t="common|overview"}</h2>
 	</div>
 	<hr />
 {if isset($files)}
@@ -13,12 +13,12 @@
 		<thead>
 			<tr>
 {if $can_delete}
-				<th>{lang values="common|mark"}</th>
+				<th>{lang t="common|mark"}</th>
 {/if}
-				<th>{lang values="common|publication_period"}</th>
-				<th>{lang values="files|link_title"}</th>
-				<th>{lang values="files|filename"}</th>
-				<th>{lang values="files|filesize"}</th>
+				<th>{lang t="common|publication_period"}</th>
+				<th>{lang t="files|link_title"}</th>
+				<th>{lang t="files|filename"}</th>
+				<th>{lang t="files|filesize"}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -40,7 +40,7 @@
 {/if}
 {else}
 	<div class="error">
-		<h5>{lang values="common|no_entries"}</h5>
+		<h5>{lang t="common|no_entries"}</h5>
 	</div>
 {/if}
 </form>

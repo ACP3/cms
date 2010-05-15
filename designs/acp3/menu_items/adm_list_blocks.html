@@ -2,7 +2,7 @@
 	<div id="adm-list">
 		{check_access mode="link" action="menu_items|create_block" uri="acp/menu_items/create_block" icon="32/source_moc"}
 		{check_access mode="input" action="menu_items|delete_blocks" icon="32/cancel" lang="common|delete_marked"}
-		<h2>{lang values="common|overview"}</h2>
+		<h2>{lang t="common|overview"}</h2>
 	</div>
 	<hr />
 {if isset($blocks)}
@@ -12,10 +12,10 @@
 		<thead>
 			<tr>
 {if $can_delete}
-				<th>{lang values="common|mark"}</th>
+				<th>{lang t="common|mark"}</th>
 {/if}
-				<th>{lang values="menu_items|title"}</th>
-				<th>{lang values="menu_items|index_name"}</th>
+				<th>{lang t="menu_items|title"}</th>
+				<th>{lang t="menu_items|index_name"}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -35,7 +35,7 @@
 {/if}
 {else}
 	<div class="error">
-		<h5>{lang values="common|no_entries"}</h5>
+		<h5>{lang t="common|no_entries"}</h5>
 	</div>
 {/if}
 </form>

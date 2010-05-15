@@ -3,30 +3,30 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset>
-		<legend>{lang values="guestbook|settings"}</legend>
+		<legend>{lang t="guestbook|settings"}</legend>
 		<dl>
-			<dt><label for="date-format">{lang values="common|date_format"}</label></dt>
+			<dt><label for="date-format">{lang t="common|date_format"}</label></dt>
 			<dd>
 				<select name="form[dateformat]" id="date-format">
-					<option value="">{lang values="common|pls_select"}</option>
+					<option value="">{lang t="common|pls_select"}</option>
 {foreach $dateformat as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 				</select>
 			</dd>
-			<dt><label for="notify">{lang values="guestbook|notification"}</label></dt>
+			<dt><label for="notify">{lang t="guestbook|notification"}</label></dt>
 			<dd>
 				<select name="form[notify]" id="notify">
-					<option value="">{lang values="common|pls_select"}</option>
+					<option value="">{lang t="common|pls_select"}</option>
 {foreach $notify as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 				</select>
 			</dd>
-			<dt><label for="notify-email">{lang values="guestbook|notification_email"}</label></dt>
+			<dt><label for="notify-email">{lang t="guestbook|notification_email"}</label></dt>
 			<dd><input type="text" name="form[notify_email]" id="notify-email" value="{$form.notify_email}" /></dd>
 {if isset($allow_emoticons)}
-			<dt><label for="emoticons-1">{lang values="guestbook|allow_emoticons"}</label></dt>
+			<dt><label for="emoticons-1">{lang t="guestbook|allow_emoticons"}</label></dt>
 			<dd>
 {foreach $allow_emoticons as $row}
 				<label for="emoticons-{$row.value}">
@@ -39,6 +39,6 @@
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang values="common|submit"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form" />
 	</div>
 </form>

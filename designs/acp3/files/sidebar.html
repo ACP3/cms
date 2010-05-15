@@ -1,10 +1,10 @@
-<h4>{lang values="files|latest_files"}</h4>
+<h4>{lang t="files|latest_files"}</h4>
 <ul>
 {if isset($sidebar_files)}
 {foreach $sidebar_files as $row}
 	<li><a href="{uri args="files/details/id_`$row.id`"}" title="{$row.start} - {$row.link_title}">{$row.link_title_short}</a></li>
 {/foreach}
 {else}
-	<li>{lang values="common|no_entries_short"}</li>
+	<li>{lang t="common|no_entries_short"}</li>
 {/if}
 </ul>
