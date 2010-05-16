@@ -37,6 +37,7 @@ class uri
 	function __construct()
 	{
 		$this->query = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
+		$this->query.= (!preg_match('/\/$/', $this->query) ? '/' : '');
 
 		if (!empty($this->query) && preg_match('/^(acp\/)/', $this->query)) {
 			// Definieren, dass man sich im Administrationsbereich befindet
