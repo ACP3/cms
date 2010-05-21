@@ -30,7 +30,7 @@ if (isset($_POST['form'])) {
 				$settings = config::output('newsletter');
 
 				$subject = sprintf($lang->t('newsletter', 'subscribe_mail_subject'), $host);
-				$body = str_replace(array('{mail}', '{title}', '{host}'), array($form['mail'], CONFIG_SEO_TITLE, $host), $lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
+				$body = str_replace('{host}', $host, $lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
 				$body.= 'http://' . $host . uri('newsletter/activate/hash_' . $hash . '/mail_' . $form['mail']);
 				$mail_sent = genEmail('', $form['mail'], $settings['mail'], $subject, $body);
 

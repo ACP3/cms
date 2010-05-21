@@ -37,9 +37,9 @@
 	<item key="subject_to_short">The subject should be at least 3 characters long</item>
 	<item key="subscribe">Subscribe</item>
 	<item key="subscribe_error">While creating your newsletter account an error has occured.</item>
-	<item key="subscribe_mail_body">You successfully subscribed with your E-mail address {mail} to the newsletter of {title} ({host}).
-		To complete the registration process, please click on the hyperlink below.
-		If you haven\'t subscribed this newsletter, please ignore or delete this E-mail.</item>
+	<item key="subscribe_mail_body">You have successfully subscribed to the newsletter of {host}.
+To complete the registration process, please click on the hyperlink below.
+If you haven\'t subscribed this newsletter, please ignore or delete this E-mail.</item>
 	<item key="subscribe_mail_subject">Newsletter at %s</item>
 	<item key="subscribe_success">The newsletter account has been successfully created.</item>
 	<item key="test_newsletter">Test newsletter</item>

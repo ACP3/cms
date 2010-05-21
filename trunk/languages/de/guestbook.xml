@@ -14,11 +14,11 @@
 	<item key="notification_email">Zu verwendende E-Mail-Adresse bei Benachrichtigungen</item>
 	<item key="notification_email_subject">Benachrichtigung bei neuen Gästebucheinträgen</item>
 	<item key="notification_email_body_1">Es wurde ein neuer Gästebucheintrag auf der Website %1$s verfasst.
-		Bitte klicken Sie auf den unten stehenden Link, um sich den Eintrag anzusehen (eventuell ist ein Login erforderlich):
-		%2$s</item>
+Bitte klicken Sie auf den unten stehenden Link, um sich den Eintrag anzusehen (eventuell ist ein Login erforderlich):
+%2$s</item>
 	<item key="notification_email_body_2">Es wurde ein neuer Gästebucheintrag auf der Website %1$s verfasst.
-		Bitte klicken Sie auf den unten stehenden Link, um sich den Eintrag anzusehen und gegebenenfalls freizuschalten (eventuell ist ein Login erforderlich):
-		%2$s</item>
+Bitte klicken Sie auf den unten stehenden Link, um sich den Eintrag anzusehen und gegebenenfalls freizuschalten (eventuell ist ein Login erforderlich):
+%2$s</item>
 	<item key="notify_and_enable">Benachrichtigen und durch Administrator freischalten</item>
 	<item key="notify_on_new_entry">Bei neuen Einträgen benachrichtigen</item>
 	<item key="select_emoticons">Bitte wählen Sie aus, ob Emoticons verwendet werden dürfen oder nicht.</item>
