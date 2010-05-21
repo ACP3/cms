@@ -21,14 +21,14 @@
 	<item key="forgot_pwd_description">Please either enter the E-mail address or the user name you used with the registration in the following input field.</item>
 	<item key="forgot_pwd_mail_subject">Change of the password on {title} ({host})</item>
 	<item key="forgot_pwd_mail_message">Hello {name},
-		
-		You have requested a new password for your user account on the website of {title} ({host}).
-		
-		User name: {name}
-		E-mail address: {mail}
-		Password: {password}
-		
-		Please change the password again, after you logged in to your account.</item>
+
+You have requested a new password for your user account on the website of {title} ({host}).
+
+User name: {name}
+E-mail address: {mail}
+Password: {password}
+
+Please change the password again, after you logged in to your account.</item>
 	<item key="forgot_pwd_success">An E-mail with you new password has been sent successfully.</item>
 	<item key="gender">Gender</item>
 	<item key="home">Control center</item>
@@ -55,13 +55,13 @@
 	<item key="register_error">While creating the user account an error has occured.</item>
 	<item key="register_mail_subject">Your registration at {title} ({host})</item>
 	<item key="register_mail_message">Hello {name},
-		
-		You have just registered a user account on the website of {title} ({host}).
-		Below you can see the data, with which you has been registered.
-		
-		User name: {name}
-		E-mail address: {mail}
-		Password: {password}</item>
+
+You have just registered a user account on the website of {title} ({host}).
+Below you can see the data, with which you has been registered.
+
+User name: {name}
+E-mail address: {mail}
+Password: {password}</item>
 	<item key="register_success">The user account has been created successfully.</item>
 	<item key="select_access_level">Please select an access level for this user</item>
 	<item key="select_language">Please select the language in which you want to see the website</item>

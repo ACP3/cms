@@ -35,9 +35,9 @@
 	<item key="subject_to_short">Der Betreff sollte mindestens 3 Zeichen lang sein</item>
 	<item key="subscribe">Eintragen</item>
 	<item key="subscribe_error">Es ist ein Fehler beim Erstellen des Newsletterkontos aufgetreten.</item>
-	<item key="subscribe_mail_body">Sie haben sich mit der E-Mail-Adresse {mail} auf {title} ({host}) erfolgreich beim Newsletter angemeldet.
-		Um die Registrierung abzuschließen, klicken Sie bitte auf den untenstehenden Link.
-		Wenn es sich um einen Irrtum handelt, dann ignorieren/löschen Sie diese E-Mail einfach.</item>
+	<item key="subscribe_mail_body">Sie haben sich erfolgreich auf der Website {host} beim Newsletter angemeldet.
+Um die Registrierung abzuschließen, klicken Sie bitte auf den untenstehenden Link.
+Falls Sie diese E-Mail fälschlicherweise zugestellt bekommen haben sollten, so ignorieren/löschen Sie sie bitte einfach.</item>
 	<item key="subscribe_mail_subject">Newsletter auf %s</item>
 	<item key="subscribe_success">Das Newsletter wurde erfolgreich erstellt.</item>
 	<item key="test_newsletter">Testnewsletter</item>

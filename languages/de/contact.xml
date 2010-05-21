@@ -5,8 +5,8 @@
 	<item key="address_to_short">Die Anschrift sollte mindestens 3 Zeichen lang sein</item>
 	<item key="contact">Kontakt</item>
 	<item key="contact_body">{name} ({mail}) hat folgende Nachricht hinterlassen:
-		
-	{message}</item>
+
+{message}</item>
 	<item key="contact_information">Kontakt Daten</item>
 	<item key="contact_subject">Kontaktformular %s</item>
 	<item key="disclaimer">Haftungshinweise</item>

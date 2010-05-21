@@ -23,7 +23,7 @@ if ($db->countRows('*', 'newsletter_accounts', 'mail = \'' . $mail . '\' AND has
 if (isset($errors)) {
 	$tpl->assign('error_msg', comboBox($errors));
 } else {
-	$bool = $db->update('newsletter_accounts', array('hash', ''), 'mail = \'' . $mail . '\' AND hash = \'' . db::escape($hash, 2) . '\'');
+	$bool = $db->update('newsletter_accounts', array('hash' => ''), 'mail = \'' . $mail . '\' AND hash = \'' . db::escape($hash, 2) . '\'');
 
 	$content = comboBox($bool !== null ? $lang->t('newsletter', 'activate_success') : $lang->t('newsletter', 'activate_error'), ROOT_DIR);
 }

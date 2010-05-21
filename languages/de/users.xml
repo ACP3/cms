@@ -21,14 +21,14 @@
 	<item key="forgot_pwd_description">Bitte geben Sie im folgenden Feld entweder Ihren bei der Registrierung verwendeten Benutzernamen oder die E-Mail-Adresse ein.</item>
 	<item key="forgot_pwd_mail_subject">Passwortänderung bei {title} ({host})</item>
 	<item key="forgot_pwd_mail_message">Hallo {name},
-		
-		Sie haben auf der Website von {title} ({host}) ein neues Passwort für Ihr Benutzerkonto angefordert.
-		
-		Benutzername: {name}
-		E-Mail-Adresse: {mail}
-		Passwort: {password}
-		
-		Bitte ändern Sie, nachdem Sie sich mit obrigem Passwort angemeldet haben, das Passwort zu einem Ihrer Wahl ab.</item>
+
+Sie haben auf der Website von {title} ({host}) ein neues Passwort für Ihr Benutzerkonto angefordert.
+
+Benutzername: {name}
+E-Mail-Adresse: {mail}
+Passwort: {password}
+
+Bitte ändern Sie, nachdem Sie sich mit obrigem Passwort angemeldet haben, das Passwort zu einem Ihrer Wahl ab.</item>
 	<item key="forgot_pwd_success">Das neue Passwort wurde erfolgreich an Ihre E-Mail-Adresse versendet.</item>
 	<item key="gender">Geschlecht</item>
 	<item key="home">Kontrollzentrum</item>
@@ -55,13 +55,13 @@
 	<item key="register_error">Beim Erstellen des Benutzerkontos ist ein Fehler aufgetreten.</item>
 	<item key="register_mail_subject">Ihr Registrierung bei {title} ({host})</item>
 	<item key="register_mail_message">Hallo {name},
-		
-		Sie haben soben auf der Website von {title} ({host}) ein Benutzerkonto erstellt.
-		Im Folgenden sehen Sie die Daten, mit welchen Sie sich auf der Seite registriert haben.
-		
-		Benutzername: {name}
-		E-Mail-Adresse: {mail}
-		Passwort: {password}</item>
+
+Sie haben soben auf der Website von {title} ({host}) ein Benutzerkonto erstellt.
+Im Folgenden sehen Sie die Daten, mit welchen Sie sich auf der Seite registriert haben.
+
+Benutzername: {name}
+E-Mail-Adresse: {mail}
+Passwort: {password}</item>
 	<item key="register_success">Ihr Benutzerkonto wurde erfolgreich erstellt.</item>
 	<item key="select_access_level">Bitte wählen Sie einen Zugriffslevel für den Benutzer aus</item>
 	<item key="select_language">Bitte wählen Sie aus, in welcher Sprache Sie die Website angezeigt bekommen möchten</item>

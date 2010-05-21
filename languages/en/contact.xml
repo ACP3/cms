@@ -5,8 +5,8 @@
 	<item key="address_to_short">The address should be at least 3 characters long</item>
 	<item key="contact">Contact</item>
 	<item key="contact_body">{name} ({mail}) left the following message behind:
-		
-		{message}</item>
+
+{message}</item>
 	<item key="contact_information">Contact statements</item>
 	<item key="contact_subject">Contactform %s</item>
 	<item key="disclaimer">Disclaimer</item>

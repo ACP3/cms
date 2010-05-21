@@ -14,11 +14,11 @@
 	<item key="notification_email">Notification e-mail address</item>
 	<item key="notification_email_subject">Notification on new guestbook entries</item>
 	<item key="notification_email_body_1">Someone has written a new guestbook entry on the website %1$s.
-		Please click on the link below to review the entry (maybe it is necessary to login before):
-		%2$s</item>
+Please click on the link below to review the entry (maybe it is necessary to login before):
+%2$s</item>
 	<item key="notification_email_body_2">Someone has written a new guestbook entry on the website %1$s.
-		Please click on the link below to review and activate the entry (maybe it is necessary to login before):
-		%2$s</item>
+Please click on the link below to review and activate the entry (maybe it is necessary to login before):
+%2$s</item>
 	<item key="notify_and_enable">Nitify and activate through administrator</item>
 	<item key="notify_on_new_entry">Notify on new entries</item>
 	<item key="select_emoticons">Please select, wether you want to allow emoticons or not.</item>
