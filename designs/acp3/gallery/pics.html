@@ -5,11 +5,11 @@
 {foreach $pictures as $row}
 	<a href="{$row.uri}"{if !empty($row.description)} title="{$row.description}"{/if} rel="pictures"><img src="{uri args="gallery/image/id_`$row.id`/action_thumb"}" alt="" width="{$row.width}" height="{$row.height}" /></a>
 {/foreach}
-{/if}
+{else}
 {foreach $pictures as $row}
 	<a href="{$row.uri}"><img src="{uri args="gallery/image/id_`$row.id`/action_thumb"}" alt="" width="{$row.width}" height="{$row.height}" /></a>
 {/foreach}
-{else}
+{/if}
 </div>
 {else}
 <div class="error">
