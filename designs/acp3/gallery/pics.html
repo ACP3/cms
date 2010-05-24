@@ -1,15 +1,15 @@
-{if $colorbox == 1}
-<script type="text/javascript" src="{$DESIGN_PATH}gallery/script.js"></script>
-{/if}
 {if isset($pictures)}
 <div class="pictures">
-{foreach $pictures as $row}
 {if $colorbox == 1}
-	<a href="{$row.uri}"{if !empty($row.description)} title="{$row.description}"{/if} rel="pictures"><img src="{uri args="gallery/image/id_`$row.id`/action_thumb"}" width="{$row.width}" height="{$row.height}" alt="" /></a>
-{else}
-	<a href="{$row.uri}"><img src="{uri args="gallery/image/id_`$row.id`/action_thumb"}" width="{$row.width}" height="{$row.height}" alt="" /></a>
-{/if}
+	<script type="text/javascript" src="{$DESIGN_PATH}gallery/script.js"></script>
+{foreach $pictures as $row}
+	<a href="{$row.uri}"{if !empty($row.description)} title="{$row.description}"{/if} rel="pictures"><img src="{uri args="gallery/image/id_`$row.id`/action_thumb"}" alt="" width="{$row.width}" height="{$row.height}" /></a>
 {/foreach}
+{/if}
+{foreach $pictures as $row}
+	<a href="{$row.uri}"><img src="{uri args="gallery/image/id_`$row.id`/action_thumb"}" alt="" width="{$row.width}" height="{$row.height}" /></a>
+{/foreach}
+{else}
 </div>
 {else}
 <div class="error">
