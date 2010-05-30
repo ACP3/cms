@@ -9,7 +9,7 @@ function smarty_function_icon($params)
 		$width = ' width="' . $params['width'] . '"';
 		$height = ' height="' . $params['height'] . '"';
 	} elseif (is_file(ACP3_ROOT . $path)) {
-		$picInfos = getimagesize(ACP_ROOT . $path);
+		$picInfos = getimagesize(ACP3_ROOT . $path);
 		$width = ' width="' . $picInfos[0] . '"';
 		$height = ' height="' . $picInfos[1] . '"';
 	}
