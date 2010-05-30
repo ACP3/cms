@@ -34,7 +34,7 @@
 				<td>{$row.text}</td>
 				<td>{$row.status}</td>
 {if $can_send}
-				<td><a href="{uri args="acp/newsletter/send/id_`$row.id`"}" title="{lang t="newsletter|send"}"><img src="{icon path="16/mail_send"}" alt="{lang t="newsletter|send"}" /></a></td>
+				<td><a href="{uri args="acp/newsletter/send/id_`$row.id`"}" title="{lang t="newsletter|send"}">{icon path="16/mail_send" width="16" height="16" alt="{lang t="newsletter|send"}"}</a></td>
 {/if}
 			</tr>
 {/foreach}
