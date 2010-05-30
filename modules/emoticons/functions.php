@@ -14,7 +14,16 @@
 function setEmoticonsCache()
 {
 	global $db;
-	return cache::create('emoticons', $db->select('code, description, img', 'emoticons', 0, 'code DESC'));
+	$emoticons = $db->select('code, description, img', 'emoticons', 0, 'code DESC');
+	$c_emoticons = count($emoticons);
+
+	for ($i = 0; $i < $c_emoticons; ++$i) {
+		$picInfos = getimagesize(ACP3_ROOT . 'uploads/emoticons/' . $emoticons[$i]['img']);
+		$emoticons[$i]['width'] = $picInfos[0];
+		$emoticons[$i]['height'] = $picInfos[1];
+	}
+
+	return cache::create('emoticons', $emoticons);
 }
 /**
  * Bindet die gecacheten Emoticons ein
@@ -65,7 +74,7 @@ function emoticonsReplace($string)
 	$emoticons = getEmoticonsCache();
 
 	foreach ($emoticons as $row) {
-		$string = str_replace($row['code'], '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $row['img'] . '" alt="' . $row['description'] . '" title="' . $row['description'] . '" />', $string);
+		$string = str_replace($row['code'], '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $row['img'] . '" width="' . $row['width'] . '" height="' . $row['height'] . '" alt="' . $row['description'] . '" title="' . $row['description'] . '" />', $string);
 	}
 	return $string;
 }

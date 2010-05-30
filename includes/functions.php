@@ -49,6 +49,8 @@ function captcha($captcha_length = 5)
 	if (!$auth->isUser()) {
 		$captcha['hash'] = md5(uniqid(rand(), true));
 		$captcha['length'] = $captcha_length;
+		$captcha['width'] = $captcha_length * 25;
+		$captcha['height'] = 30;
 		$tpl->assign('captcha', $captcha);
 		return modules::fetchTemplate('common/captcha.html');
 	}
