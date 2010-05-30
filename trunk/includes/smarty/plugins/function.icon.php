@@ -4,7 +4,8 @@ function smarty_function_icon($params)
 	$path = 'images/crystal/' . $params['path'] . '.png';
 	$width = $height = '';
 
-	if (validate::isNumber($params['width']) && validate::isNumber($params['height'])) {
+	if (!empty($params['width']) && !empty($params['height']) &&
+		validate::isNumber($params['width']) && validate::isNumber($params['height'])) {
 		$width = ' width="' . $params['width'] . '"';
 		$height = ' height="' . $params['height'] . '"';
 	} elseif (is_file(ACP3_ROOT . $path)) {
