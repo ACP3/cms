@@ -6,7 +6,7 @@
 	<item key="edit">Edit static page</item>
 	<item key="mod_description">This module manages the static pages.</item>
 	<item key="page_statements">Page statements</item>
-	<item key="select_create_menu_item">Please select, wether you want to create an menu item for this static page</item>
+	<item key="select_create_menu_item">Please select, whether you want to create an menu item for this static page</item>
 	<item key="static_pages">Static pages</item>
 	<item key="text">Text</item>
 	<item key="text_to_short">The text should be at least 3 characters long</item>
