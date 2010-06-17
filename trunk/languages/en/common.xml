@@ -65,8 +65,8 @@
 	<item key="publication_period">Publication period</item>
 	<item key="reset">Reset</item>
 	<item key="select_date">Please complete the statements belonging the release date and end date</item>
-	<item key="select_date_format">Please select, wether you want to display the date in short or long format</item>
-	<item key="select_daylight_saving_time">Please select, wether daylight saving time is in effect or not</item>
+	<item key="select_date_format">Please select, whether you want to display the date in short or long format</item>
+	<item key="select_daylight_saving_time">Please select, whether daylight saving time is in effect or not</item>
 	<item key="select_sidebar_entries">Please select, how many entries you want to display inside the Module-Sidebar</item>
 	<item key="select_time_zone">Please select the time zone</item>
 	<item key="settings_error">While editing the settings an error has occured.</item>

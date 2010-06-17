@@ -21,8 +21,8 @@ Please click on the link below to review and activate the entry (maybe it is nec
 %2$s</item>
 	<item key="notify_and_enable">Nitify and activate through administrator</item>
 	<item key="notify_on_new_entry">Notify on new entries</item>
-	<item key="select_emoticons">Please select, wether you want to allow emoticons or not.</item>
-	<item key="select_notification_type">Please select, wether you want to be notified about new guestbook entries or not.</item>
+	<item key="select_emoticons">Please select, whether you want to allow emoticons or not.</item>
+	<item key="select_notification_type">Please select, whether you want to be notified about new guestbook entries or not.</item>
 	<item key="send_email">Send E-mail</item>
 	<item key="settings">Settings</item>
 	<item key="visit_website">Visit website</item>

@@ -24,7 +24,7 @@
 	<item key="no_superior_page">No superior page</item>
 	<item key="page_type">Page type</item>
 	<item key="select_block">Please select, in which navigation bar you want to display the page</item>
-	<item key="select_item_visibility">Please select, wether you want to display to menu item or not</item>
+	<item key="select_item_visibility">Please select, whether you want to display to menu item or not</item>
 	<item key="select_page_type">Please select, of which type the page should be</item>
 	<item key="select_superior_page">Please select a superior page</item>
 	<item key="static_page">Static page</item>
