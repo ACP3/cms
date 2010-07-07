@@ -14,7 +14,7 @@
 function setMenuItemsCache() {
 	global $date, $db, $lang;
 
-	$pages = $db->query('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . $db->prefix . 'menu_items AS n, ' . $db->prefix . 'menu_items AS p WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
+	$pages = $db->query('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, a.alias FROM ' . $db->prefix . 'menu_items AS p, ' . $db->prefix . 'menu_items AS n LEFT JOIN ' . $db->prefix . 'aliases AS a ON(a.uri = n.uri) WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
 	$c_pages = count($pages);
 
 	if ($c_pages > 0) {
@@ -342,9 +342,11 @@ function processNavbar($block) {
 		$c_pages = count($pages);
 
 		if ($c_pages > 0) {
-			if (uri($uri->query) != uri($uri->mod) && $db->query('SELECT COUNT(*) FROM ' . $db->prefix . 'menu_items AS m JOIN ' . $db->prefix . 'menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->query . '\'', 1) > 0) {
+			if (uri($uri->query) != uri($uri->mod) &&
+				$db->query('SELECT COUNT(*) FROM ' . $db->prefix . 'menu_items AS m JOIN ' . $db->prefix . 'menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->query . '\'', 1) > 0) {
 				$link = $uri->query;
-			} elseif (uri($uri->mod . '/' . $uri->page . '/') != uri($uri->mod) && $db->query('SELECT COUNT(*) FROM ' . $db->prefix . 'menu_items AS m JOIN ' . $db->prefix . 'menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->mod . '/' . $uri->page . '/\'', 1) > 0) {
+			} elseif (uri($uri->mod . '/' . $uri->page . '/') != uri($uri->mod) &&
+				$db->query('SELECT COUNT(*) FROM ' . $db->prefix . 'menu_items AS m JOIN ' . $db->prefix . 'menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->mod . '/' . $uri->page . '/\'', 1) > 0) {
 				$link = $uri->mod . '/' . $uri->page . '/';
 			} else {
 				$link = $uri->mod;
@@ -359,7 +361,7 @@ function processNavbar($block) {
 				if (!empty($select) && defined('IN_ACP3') && $pages[$i]['left_id'] <= $select[0]['left_id'] && $pages[$i]['right_id'] > $select[0]['left_id']) {
 					$css.= ' selected';
 				}
-				$href = $pages[$i]['mode'] == '1' || $pages[$i]['mode'] == '2' || $pages[$i]['mode'] == '4' ? uri($pages[$i]['uri']) : $pages[$i]['uri'];
+				$href = $pages[$i]['mode'] == '1' || $pages[$i]['mode'] == '2' || $pages[$i]['mode'] == '4' ? uri(!empty($pages[$i]['alias']) ? $pages[$i]['alias'] : $pages[$i]['uri']) : $pages[$i]['uri'];
 				$target = $pages[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 				$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $pages[$i]['title'] . '</a>';
 				$indent = str_repeat("\t\t", $pages[$i]['level']);

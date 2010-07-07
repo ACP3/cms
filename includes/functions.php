@@ -571,11 +571,24 @@ function timeZones($value, $name = 'time_zone')
  *
  * @param string $uri
  *  Inhalt der zu generierenden URL
+ * @param integer $alias
+ *	Gibt an, ob für die auszugebende Seite überprüft werden soll, ob ein Alias
+ *	existier und dieser ausgegeben werden soll
  * @return string
  */
-function uri($uri)
+function uri($uri, $alias = 0)
 {
 	$uri = $uri . (!preg_match('/\/$/', $uri) ? '/' : '');
+
+	// Überprüfen, ob Alias vorhanden ist und diesen als URI verwenden
+	if ($alias == 1 && !preg_match('/^acp\//', $uri)) {
+		global $db;
+
+		$alias = $db->select('alias', 'aliases', 'uri = \'' . db::escape($uri) . '\'');
+		if (!empty($alias)) {
+			$uri = $alias[0]['alias'] . '/';
+		}
+	}
 	$prefix = CONFIG_SEO_MOD_REWRITE == '0' || preg_match('/^acp\//', $uri) ? PHP_SELF . '/' : ROOT_DIR;
 	return $prefix . $uri;
 }
