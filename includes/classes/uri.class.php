@@ -114,4 +114,51 @@ class uri
 	{
 		$this->params[$name] = $value;
 	}
+	/**
+	 * Setzt den Cache für die URI-Aliase
+	 *
+	 * @return boolean
+	 */
+	public static function setAliasCache()
+	{
+		global $db;
+
+		$aliases = $db->select('uri, alias', 'aliases');
+		$c_aliases = count($aliases);
+		$data = array();
+
+		for ($i = 0; $i < $c_aliases; ++$i) {
+			$data[$aliases[$i]['uri']] = $aliases[$i]['alias'];
+		}
+
+		return cache::create('aliases', $data);
+	}
+	/**
+	 * Gibt den Cache der URI-Aliase aus
+	 *
+	 * @return array
+	 */
+	public static function getAliasCache()
+	{
+		if (!cache::check('aliases'))
+			self::setAliasCache();
+
+		return cache::output('aliases');
+	}
+	/**
+	 * Gibt einen URI-Alias aus
+	 * 
+	 * @param string $uri
+	 * @return string
+	 */
+	public static function getUriAlias($uri)
+	{
+		static $aliases = array();
+
+		if (empty($aliases)) {
+			$aliases = self::getAliasCache();
+		}
+
+		return !empty($aliases[$uri]) ? $aliases[$uri] : $uri;
+	}
 }
