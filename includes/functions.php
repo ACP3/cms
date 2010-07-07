@@ -189,11 +189,11 @@ function genEmail($recipient_name, $recipient_email, $from, $subject, $body)
  * Generiert ein gesalzenes Passwort
  *
  * @param string $salt
- *	Das zu versendende Salz
+ *	Das zu verwendende Salz
  * @param string $plaintext
  *	Das Passwort in Klartextform, welches verschlüsselt werden soll
  * @param string $algorithm
- *	Der zu verwendete Hash-Algorithmus
+ *	Der zu verwendende Hash-Algorithmus
  * @return string
  */
 function genSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
