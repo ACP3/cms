@@ -336,20 +336,20 @@ function pagination($rows)
 	global $auth;
 
 	if ($rows > $auth->entries) {
-		global $lang, $tpl, $uri;
+		global $lang, $tpl, $path;
 
 		// Alle angegebenen URL Parameter mit in die URL einbeziehen
 		$acp = defined('IN_ADM') ? 'acp/' : '';
 		$params = '';
-		if (!empty($uri->params)) {
-			foreach ($uri->params as $key => $value) {
+		if (!empty($path->params)) {
+			foreach ($path->params as $key => $value) {
 				if ($key != 'mod' && $key != 'page' && $key != 'pos') {
 					$params.= '/' . $key . '_' . $value;
 				}
 			}
 		}
 
-		$link = uri($acp . $uri->mod . '/' . $uri->page . $params);
+		$link = uri($acp . $path->mod . '/' . $path->page . $params);
 
 		// Seitenauswahl
 		$pagination = array();
@@ -576,19 +576,16 @@ function timeZones($value, $name = 'time_zone')
  *	existier und dieser ausgegeben werden soll
  * @return string
  */
-function uri($uri, $alias = 0)
+function uri($path, $alias = 0)
 {
-	$uri = $uri . (!preg_match('/\/$/', $uri) ? '/' : '');
+	$path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
 
 	// Überprüfen, ob Alias vorhanden ist und diesen als URI verwenden
-	if ($alias == 1 && !preg_match('/^acp\//', $uri)) {
-		global $db;
+	if ($alias == 1 && !preg_match('/^acp\//', $path)) {
+		global $uri;
 
-		$alias = $db->select('alias', 'aliases', 'uri = \'' . db::escape($uri) . '\'');
-		if (!empty($alias)) {
-			$uri = $alias[0]['alias'] . '/';
-		}
+		$path = $uri->getUriAlias($path) . '/';
 	}
-	$prefix = CONFIG_SEO_MOD_REWRITE == '0' || preg_match('/^acp\//', $uri) ? PHP_SELF . '/' : ROOT_DIR;
-	return $prefix . $uri;
+	$prefix = CONFIG_SEO_MOD_REWRITE == '0' || preg_match('/^acp\//', $path) ? PHP_SELF . '/' : ROOT_DIR;
+	return $prefix . $path;
 }
