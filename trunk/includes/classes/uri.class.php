@@ -52,6 +52,17 @@ class uri
 				$this->query = CONFIG_HOMEPAGE;
 			}
 		}
+
+		// Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
+		if (defined('IN_ACP3')) {
+			global $db;
+
+			$alias = $db->select('uri', 'aliases', 'alias = \'' . db::escape(substr($this->query, 0, -1)) . '\'');
+			if (!empty($alias)) {
+				$this->query = $alias[0]['uri'];
+			}
+		}
+
 		$query = !empty($this->query) ? explode('/', $this->query) : 0;
 		$defaultModule = defined('IN_ADM') ? 'acp' : 'news';
 		$defaultPage = defined('IN_ADM') ? 'adm_list' : 'list';

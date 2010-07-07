@@ -43,8 +43,6 @@ if (!is_writable($tpl->compile_dir)) {
 	exit('Bitte geben Sie dem "cache"-Ordner den CHMOD 777!');
 }
 
-$uri = new uri();
-
 // Einige Template Variablen setzen
 $tpl->assign('PHP_SELF', PHP_SELF);
 $tpl->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
@@ -73,6 +71,8 @@ $handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB
 if ($handle !== true) {
 	exit($handle);
 }
+
+$uri = new uri();
 
 require_once ACP3_ROOT . 'includes/functions.php';
 $auth = new auth();

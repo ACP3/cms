@@ -72,7 +72,7 @@ class breadcrumb
 
 		// Frontendbereich
 		if (defined('IN_ACP3')) {
-			$query = 'SELECT p.title, p.uri FROM ' . $db->prefix . 'menu_items p, ' . $db->prefix . 'menu_items c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri = \'%s\' GROUP BY p.uri ORDER BY p.left_id ASC';
+			$query = 'SELECT p.title, p.uri, a.alias FROM ' . $db->prefix . 'menu_items AS c, ' . $db->prefix . 'menu_items AS p LEFT JOIN ' . $db->prefix . 'aliases AS a ON(a.uri = p.uri) WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri = \'%s\' GROUP BY p.uri ORDER BY p.left_id ASC';
 
 			$pages = $db->query(sprintf($query, $uri->query));
 			if (empty($pages))
@@ -90,12 +90,12 @@ class breadcrumb
 					if (!empty(self::$steps) && !empty(self::$end)) {
 						unset(self::$steps[0]);
 						for ($i = $c_pages - 1; $i >= 0; --$i) {
-							$pages[$i]['uri'] = uri($pages[$i]['uri']);
+							$pages[$i]['uri'] = uri(!empty($pages[$i]['alias']) ? $pages[$i]['alias'] : $pages[$i]['uri']);
 							array_unshift(self::$steps, $pages[$i]);
 						}
 					} else {
 						for ($i = 0; $i < $c_pages; ++$i) {
-							$pages[$i]['uri'] = uri($pages[$i]['uri']);
+							$pages[$i]['uri'] = uri(!empty($pages[$i]['alias']) ? $pages[$i]['alias'] : $pages[$i]['uri']);
 						}
 						self::$steps = array_slice($pages, 0, -1);
 						self::$end = $pages[$c_pages - 1]['title'];
