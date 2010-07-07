@@ -181,6 +181,17 @@ class validate
 		return false;
 	}
 	/**
+	 *	Überprüft, ob der eingegebene URI-Alias sicher ist, d.h. es dürfen nur
+	 *	die Kleinbuchstaben von a-z, Zahlen und der Bindestrich eingegeben werden
+	 * 
+	 * @param string $var
+	 * @return boolean 
+	 */
+	public static function isUriSafe($var)
+	{
+		return preg_match('/^([a-z0-9\-)$/', $var);
+	}
+	/**
 	 * Gibt in Abhängigkeit des Parameters $mimetype entweder
 	 * den gefundenen MIMETYPE aus oder ob der gefundene MIMETYPE
 	 * mit dem erwarteten übereinstimmt
