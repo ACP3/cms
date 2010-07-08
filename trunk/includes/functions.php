@@ -336,20 +336,20 @@ function pagination($rows)
 	global $auth;
 
 	if ($rows > $auth->entries) {
-		global $lang, $tpl, $path;
+		global $lang, $tpl, $uri;
 
 		// Alle angegebenen URL Parameter mit in die URL einbeziehen
 		$acp = defined('IN_ADM') ? 'acp/' : '';
 		$params = '';
-		if (!empty($path->params)) {
-			foreach ($path->params as $key => $value) {
+		if (!empty($uri->params)) {
+			foreach ($uri->params as $key => $value) {
 				if ($key != 'mod' && $key != 'page' && $key != 'pos') {
 					$params.= '/' . $key . '_' . $value;
 				}
 			}
 		}
 
-		$link = uri($acp . $path->mod . '/' . $path->page . $params);
+		$link = uri($acp . $uri->mod . '/' . $uri->page . $params);
 
 		// Seitenauswahl
 		$pagination = array();
