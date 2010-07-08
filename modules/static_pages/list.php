@@ -20,6 +20,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 
 	breadcrumb::assign(db::escape($page[0]['title'], 3));
 
+	$page[0]['text'] = preg_replace_callback('/<a href="((' . str_replace('/', '\/', ROOT_DIR) . ')?)((index\.php)?)(\/?)((?i:[a-z\d_\-]+\/){2,})"/', 'replaceUriWithAlias', $page[0]['text']);
 	$tpl->assign('text', db::escape($page[0]['text'], 3));
 	$content = modules::fetchTemplate('static_pages/list.html');
 } else {

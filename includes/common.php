@@ -18,7 +18,7 @@ if (!defined('INSTALLED')) {
 }
 
 // Wenn der DEBUG Modus aktiv ist, Fehler ausgeben
-$reporting_level = defined('DEBUG') && DEBUG ? E_ALL | E_STRICT : 0;
+$reporting_level = defined('DEBUG') && DEBUG ? E_ALL : 0;
 error_reporting($reporting_level);
 
 set_include_path(get_include_path() . PATH_SEPARATOR . ACP3_ROOT . 'includes/classes/');
