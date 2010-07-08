@@ -22,6 +22,8 @@ if (isset($_POST['form'])) {
 		$errors[] = $lang->t('static_pages', 'title_to_short');
 	if (strlen($form['text']) < 3)
 		$errors[] = $lang->t('static_pages', 'text_to_short');
+	if (!validate::isUriSafe($form['alias']) || validate::UriAliasExists($form['alias']))
+		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 	if (modules::check('menu_items', 'create') == 1) {
 		if ($form['create'] != 1 && $form['create'] != '0')
 			$errors[] = $lang->t('static_page', 'select_create_menu_item');
@@ -58,6 +60,7 @@ if (isset($_POST['form'])) {
 		$db->link->beginTransaction();
 		$bool = $db->insert('static_pages', $insert_values);
 		$last_id = $db->link->lastInsertId();
+		$bool2 = $uri->insertUriAlias($form['alias'], 'static_pages/list/id_' . $last_id);
 		$db->link->commit();
 
 		if ($form['create'] == '1' && modules::check('menu_items', 'create') == 1) {
@@ -73,7 +76,7 @@ if (isset($_POST['form'])) {
 				'target' => 1,
 			);
 
-			$bool = insertNode($form['parent'], $insert_values);
+			insertNode($form['parent'], $insert_values);
 			setMenuItemsCache();
 		}
 
@@ -113,7 +116,8 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$defaults = array(
 		'title' => '',
-		'text' => ''
+		'text' => '',
+		'alias' => '',
 	);
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);
