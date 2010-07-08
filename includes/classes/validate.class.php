@@ -228,13 +228,17 @@ class validate
 	public static function UriAliasExists($alias, $path = '')
 	{
 		if (self::isUriSafe($alias)) {
-			global $db;
-
-			$path.= !preg_match('/\/$/', $path) ? '/' : '';
-			if ($path != '/' && self::internalURI($path)) {
-				return $db->countRows('*', 'aliases', 'alias = \'' . $alias . '\' AND uri != \'' . $path . '\'') > 0 ? true : false;
-			} elseif ($db->countRows('*', 'aliases', 'alias = \'' . $alias . '\'') > 0) {
+			if (is_dir(ACP3_ROOT . 'modules/' . $alias)) {
 				return true;
+			} else {
+				global $db;
+
+				$path.= !preg_match('/\/$/', $path) ? '/' : '';
+				if ($path != '/' && self::internalURI($path)) {
+					return $db->countRows('*', 'aliases', 'alias = \'' . $alias . '\' AND uri != \'' . $path . '\'') > 0 ? true : false;
+				} elseif ($db->countRows('*', 'aliases', 'alias = \'' . $alias . '\'') > 0) {
+					return true;
+				}
 			}
 		}
 		return false;
