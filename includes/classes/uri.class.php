@@ -75,8 +75,10 @@ class uri
 
 			for ($i = 2; $i < $c_query; ++$i) {
 				if (!empty($query[$i])) {
+					// Position
 					if (!defined('POS') && preg_match('/^(pos_(\d+))$/', $query[$i])) {
 						define('POS', substr($query[$i], 4));
+					// Additional URI parameters
 					} elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) {
 						$param = explode('_', $query[$i], 2);
 						$this->$param[0] = $param[1];
