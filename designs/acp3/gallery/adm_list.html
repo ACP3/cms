@@ -18,6 +18,7 @@
 				<th>{lang t="common|publication_period"}</th>
 				<th>{lang t="gallery|title"}</th>
 				<th>{lang t="gallery|pictures"}</th>
+				<th style="width:3%">{lang t="common|id"}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -29,6 +30,7 @@
 				<td>{$row.period}</td>
 				<td>{check_access mode="link" action="gallery|edit_gallery" uri="acp/gallery/edit_gallery/id_`$row.id`" title=$row.name}</td>
 				<td>{$row.pictures}</td>
+				<td>{$row.id}</td>
 			</tr>
 {/foreach}
 		</tbody>

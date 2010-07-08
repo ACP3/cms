@@ -36,6 +36,7 @@
 	<item key="from_start_to_end">%1$s bis %2$s</item>
 	<item key="general_statements">Allgemeine Angaben</item>
 	<item key="hour">Stunde</item>
+	<item key="id">ID</item>
 	<item key="last_page">Letzte Seite</item>
 	<item key="mark">Markieren</item>
 	<item key="mark_all">Alle Einträge markieren</item>

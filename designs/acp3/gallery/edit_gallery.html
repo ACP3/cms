@@ -43,6 +43,7 @@
 {if $can_order}
 				<th>{lang t="common|order"}</th>
 {/if}
+				<th style="width:3%">{lang t="common|id"}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -66,6 +67,7 @@
 {/if}
 				</td>
 {/if}
+				<td>{$row.id}</td>
 			</tr>
 {/foreach}
 		</tbody>

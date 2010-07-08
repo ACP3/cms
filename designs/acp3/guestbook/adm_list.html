@@ -18,6 +18,7 @@
 				<th>{lang t="common|name"}</th>
 				<th>{lang t="common|message"}</th>
 				<th>{lang t="guestbook|ip"}</th>
+				<th style="width:3%">{lang t="common|id"}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -30,6 +31,7 @@
 				<td>{check_access mode="link" action="guestbook|edit" uri="acp/guestbook/edit/id_`$row.id`" title=$row.name}</td>
 				<td>{$row.message}</td>
 				<td>{$row.ip}</td>
+				<td>{$row.id}</td>
 			</tr>
 {/foreach}
 		</tbody>
