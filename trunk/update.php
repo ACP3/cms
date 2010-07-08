@@ -22,11 +22,11 @@ $queries = array(
 	1 => 'ALTER TABLE `{pre}users` ADD `date_format_long` VARCHAR(30) NOT NULL AFTER `skype`;',
 	2 => 'ALTER TABLE `{pre}users` ADD `date_format_short` VARCHAR(30) NOT NULL AFTER `date_format_long`;',
 	3 => 'ALTER TABLE `{pre}users` ADD `entries` TINYINT(2) UNSIGNED NOT NULL AFTER `language`;',
-	4 => 'UPDATE `{pre}users` SET `date_format_long` = \'' . CONFIG_DATE_FORMAT . '\', `date_format_short` = \'d.m.Y\', `entries` = ' . ((int) CONFIG_ENTRIES) . ';',
-	5 => 'UPDATE {pre}access` SET `modules` =  \'access:16,acp:16,captcha:16,categories:16,comments:16,contact:16,emoticons:16,errors:16,feeds:16,files:16,gallery:16,guestbook:16,menu_items:16,news:16,newsletter:16,polls:16,search:16,static_pages:16,system:16,users:16\'  WHERE `id` = 1;',
+	4 => 'UPDATE `{pre}users` SET `date_format_long` = \'' . (defined('CONFIG_DATE_FORMAT_LONG') ? CONFIG_DATE_FORMAT_LONG : CONFIG_DATE_FORMAT) . '\', `date_format_short` = \'' . (defined('CONFIG_DATE_FORMAT_SHORT') ? CONFIG_DATE_FORMAT_SHORT : 'd.m.Y') . '\', `entries` = ' . ((int) CONFIG_ENTRIES) . ';',
+	5 => 'UPDATE `{pre}access` SET `modules` =  \'access:16,acp:16,captcha:16,categories:16,comments:16,contact:16,emoticons:16,errors:16,feeds:16,files:16,gallery:16,guestbook:16,menu_items:16,news:16,newsletter:16,polls:16,search:16,static_pages:16,system:16,users:16\'  WHERE `id` = 1;',
 	6 => 'ALTER TABLE `{pre}guestbook` ADD `active` TINYINT(1) UNSIGNED NOT NULL AFTER `mail`;',
 	7 => 'UPDATE `{pre}guestbook` SET `active` = 1;',
-	8 => 'CREATE TABLE `acp3_aliases` (`uri` varchar(255) NOT NULL, `alias` varchar(100) NOT NULL, PRIMARY KEY (`uri`), UNIQUE KEY `alias` (`alias`)) {engine} {charset}',
+	8 => 'CREATE TABLE `acp3_aliases` (`uri` varchar(255) NOT NULL, `alias` varchar(100) NOT NULL, PRIMARY KEY (`uri`), UNIQUE KEY `alias` (`alias`)) {engine} {charset};',
 );
 
 // Änderungen am DB Schema vornehmen
@@ -66,6 +66,18 @@ if (count($queries) > 0) {
 
 	for ($i = 0; $i < $c_news; ++$i) {
 		$uri->insertUriAlias(makeStringUrlSafe($news[$i]['headline']), 'news/details/id_' . $news[$i]['id']);
+	}
+
+	$db->link->commit();
+
+	// URI-Aliase für die Statische Seiten erzeugen
+	$pages = $db->select('id, title', 'static_pages');
+	$c_pages = count($pages);
+
+	$db->link->beginTransaction();
+
+	for ($i = 0; $i < $c_pages; ++$i) {
+		$uri->insertUriAlias(makeStringUrlSafe($pages[$i]['title']), 'static_pages/list/id_' . $pages[$i]['id']);
 	}
 
 	$db->link->commit();
