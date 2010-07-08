@@ -28,6 +28,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 			$errors[] = $lang->t('news', 'select_category');
 		if (strlen($form['cat_create']) >= 3 && categoriesCheckDuplicate($form['cat_create'], 'news'))
 			$errors[] = $lang->t('categories', 'category_already_exists');
+		if (!validate::isUriSafe($form['alias']) || validate::UriAliasExists($form['alias'], 'news/details/id_' . $uri->id))
+			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 		if (!empty($form['uri']) && (!validate::isNumber($form['target']) || strlen($form['link_title']) < 3))
 			$errors[] = $lang->t('news', 'complete_additional_hyperlink_statements');
 
@@ -47,17 +49,19 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 				'link_title' => db::escape($form['link_title'])
 			);
 
-			require_once ACP3_ROOT . 'modules/news/functions.php';
-
 			$bool = $db->update('news', $update_values, 'id = \'' . $uri->id . '\'');
+			$bool2 = $uri->insertUriAlias($form['alias'], 'news/details/id_' . $uri->id);
+
+			require_once ACP3_ROOT . 'modules/news/functions.php';
 			setNewsCache($uri->id);
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/news'));
+			$content = comboBox($bool && $bool2 ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/news'));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$news = $db->select('start, end, headline, text, readmore, comments, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\'');
 		$news[0]['text'] = db::escape($news[0]['text'], 3);
+		$news[0]['alias'] = $uri->getUriAlias('news/details/id_' . $uri->id);
 
 		// Datumsauswahl
 		$tpl->assign('publication_period', datepicker(array('start', 'end'), array($news[0]['start'], $news[0]['end'])));

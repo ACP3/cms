@@ -33,7 +33,7 @@
 	<div class="date">
 {if $row.allow_comments}
 		<div class="comments">
-			<a href="{uri args="news/details/id_`$row.id`"}#comments">{lang t="comments|comments"}</a>
+			<a href="{uri args="news/details/id_`$row.id`" alias="1"}#comments">{lang t="comments|comments"}</a>
 			<span>({$row.comments})</span>
 		</div>
 {/if}

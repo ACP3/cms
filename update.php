@@ -13,9 +13,9 @@ define('ACP3_ROOT', './');
 
 require ACP3_ROOT . 'includes/config.php';
 
-require ACP3_ROOT . 'includes/classes/cache.class.php';
-require ACP3_ROOT . 'includes/classes/config.class.php';
-require ACP3_ROOT . 'includes/classes/db.class.php';
+set_include_path(get_include_path() . PATH_SEPARATOR . ACP3_ROOT . 'includes/classes/');
+spl_autoload_extensions('.class.php');
+spl_autoload_register();
 
 $queries = array(
 	0 => 'UPDATE `{pre}menu_items` SET `mode` = 4 WHERE `uri` LIKE \'static_pages/list/id_%\' AND `mode` = 2;',
@@ -26,7 +26,7 @@ $queries = array(
 	5 => 'UPDATE {pre}access` SET `modules` =  \'access:16,acp:16,captcha:16,categories:16,comments:16,contact:16,emoticons:16,errors:16,feeds:16,files:16,gallery:16,guestbook:16,menu_items:16,news:16,newsletter:16,polls:16,search:16,static_pages:16,system:16,users:16\'  WHERE `id` = 1;',
 	6 => 'ALTER TABLE `{pre}guestbook` ADD `active` TINYINT(1) UNSIGNED NOT NULL AFTER `mail`;',
 	7 => 'UPDATE `{pre}guestbook` SET `active` = 1;',
-	8 => 'CREATE TABLE `{pre}aliases` (`uri` varchar(255) NOT NULL, `alias` varchar(255) NOT NULL, UNIQUE KEY `alias` (`alias`)) {engine}',
+	8 => 'CREATE TABLE `acp3_aliases` (`uri` varchar(255) NOT NULL, `alias` varchar(100) NOT NULL, PRIMARY KEY (`uri`), UNIQUE KEY `alias` (`alias`)) {engine} {charset}',
 );
 
 // Änderungen am DB Schema vornehmen
@@ -55,6 +55,21 @@ if (count($queries) > 0) {
 
 	$db->link->commit();
 
+	// URI-Aliase für die News erzeugen
+	$uri = new uri();
+	require ACP3_ROOT . 'includes/functions.php';
+
+	$news = $db->select('id, headline', 'news');
+	$c_news = count($news);
+
+	$db->link->beginTransaction();
+
+	for ($i = 0; $i < $c_news; ++$i) {
+		$uri->insertUriAlias(makeStringUrlSafe($news[$i]['headline']), 'news/details/id_' . $news[$i]['id']);
+	}
+
+	$db->link->commit();
+
 	print "\n" . ($bool ? 'Die Datenbank wurde erfolgreich aktualisiert!' : 'Mindestens eine Datenbankänderung konnte nicht durchgeführt werden!') . "\n";
 	print "\n----------------------------\n\n";
 }
@@ -62,8 +77,6 @@ if (count($queries) > 0) {
 // Konfigurationsdatei aktualisieren
 $config = array(
 	'date_dst' => CONFIG_DATE_DST,
-	'date_format_long' => CONFIG_DATE_FORMAT,
-	'date_format_short' => 'd.m.Y',
 	'date_time_zone' => CONFIG_DATE_TIME_ZONE,
 	'db_host' => CONFIG_DB_HOST,
 	'db_name' => CONFIG_DB_NAME,
@@ -84,6 +97,14 @@ $config = array(
 	'version' => NEW_VERSION,
 	'wysiwyg' => CONFIG_WYSIWYG
 );
+
+if (defined('CONFIG_DATE_FORMAT')) {
+	$config['date_format_long'] = CONFIG_DATE_FORMAT;
+	$config['date_format_short'] = 'd.m.Y';
+} else {
+	$config['date_format_long'] = CONFIG_DATE_FORMAT_LONG;
+	$config['date_format_short'] = CONFIG_DATE_FORMAT_SHORT;
+}
 
 print config::system($config) ? 'Konfigurationsdatei erfolgreich aktualisiert!' : 'Die Konfigurationsdatei konnte nicht aktualisiert werden!';
 

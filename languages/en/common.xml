@@ -78,6 +78,9 @@
 	<item key="time_zone">Time zone</item>
 	<item key="unmark_all">Unmark all</item>
 	<item key="upload_error">While moving the file %s an error has occured.</item>
+	<item key="uri_alias">URI-Alias</item>
+	<item key="uri_alias_description">(Please use only lower case letter, numbers and the hyphen)</item>
+	<item key="uri_alias_unallowed_characters_or_exists">Either you have typed in unallowed characters or there is already an URI-Alias with the given name</item>
 	<item key="utc-12">(UTC-12:00) Baker Island Time</item>
 	<item key="utc-11">(UTC-11:00) Niue Time, Samoa Standard Time</item>
 	<item key="utc-10">(UTC-10:00) Hawaii-Aleutian Standard Time, Cook Island Time</item>

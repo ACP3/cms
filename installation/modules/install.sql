@@ -1,6 +1,7 @@
-CREATE TABLE `{pre}aliases` (
+)CREATE TABLE `{pre}aliases` (
 	`uri` varchar(255) NOT NULL,
-	`alias` varchar(255) NOT NULL,
+	`alias` varchar(100) NOT NULL,
+	PRIMARY KEY (`uri`),
 	UNIQUE KEY `alias` (`alias`)
 ) {engine}
 

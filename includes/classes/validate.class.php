@@ -189,7 +189,7 @@ class validate
 	 */
 	public static function isUriSafe($var)
 	{
-		return preg_match('/^([a-z0-9\-)$/', $var);
+		return preg_match('/^([a-z]{1}[a-z0-9\-]*)$/', $var);
 	}
 	/**
 	 * Gibt in Abhängigkeit des Parameters $mimetype entweder
@@ -217,5 +217,26 @@ class validate
 				return $return;
 			}
 		}
+	}
+	/**
+	 * Überprüft, ob ein URI-Alias bereits existiert
+	 *
+	 * @param string $alias
+	 * @param string $path
+	 * @return boolean
+	 */
+	public static function UriAliasExists($alias, $path = '')
+	{
+		if (self::isUriSafe($alias)) {
+			global $db;
+
+			$path.= !preg_match('/\/$/', $path) ? '/' : '';
+			if ($path != '/' && self::internalURI($path)) {
+				return $db->countRows('*', 'aliases', 'alias = \'' . $alias . '\' AND uri != \'' . $path . '\'') > 0 ? true : false;
+			} elseif ($db->countRows('*', 'aliases', 'alias = \'' . $alias . '\'') > 0) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
