@@ -37,7 +37,7 @@ class uri
 	function __construct()
 	{
 		$this->query = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
-		$this->query.= (!preg_match('/\/$/', $this->query) ? '/' : '');
+		$this->query.= !preg_match('/\/$/', $this->query) ? '/' : '';
 
 		if (!empty($this->query) && preg_match('/^(acp\/)/', $this->query)) {
 			// Definieren, dass man sich im Administrationsbereich befindet
@@ -148,10 +148,10 @@ class uri
 	/**
 	 * Gibt einen URI-Alias aus
 	 * 
-	 * @param string $uri
+	 * @param string $path
 	 * @return string
 	 */
-	public static function getUriAlias($uri)
+	public static function getUriAlias($path)
 	{
 		static $aliases = array();
 
@@ -159,6 +159,52 @@ class uri
 			$aliases = self::getAliasCache();
 		}
 
-		return !empty($aliases[$uri]) ? $aliases[$uri] : $uri;
+		$path.= !preg_match('/\/$/', $path) ? '/' : '';
+
+		return !empty($aliases[$path]) ? $aliases[$path] : $path;
+	}
+	/**
+	 * Trägt einen URI-Alias in die Datenbank ein bzw. aktualisiert den Eintrag
+	 *
+	 * @param string $alias
+	 * @param string $path
+	 * @return boolean
+	 */
+	public static function insertUriAlias($alias, $path)
+	{
+		global $db;
+
+		$path = db::escape($path);
+		$path.= !preg_match('/\/$/', $path) ? '/' : '';
+
+		// Vorhandenen Alias aktualisieren bzw. wenn der Alias leer ist, diesen löschen
+		if ($db->countRows('*', 'aliases', 'uri = \'' . db::escape($path) . '\'') == 1) {
+			if ($alias == '') {
+				$bool = self::deleteUriAlias($path);
+			} else {
+				$bool = $db->update('aliases', array('alias' => $alias), 'uri = \'' . $path . '\'');
+			}
+		// Neuer Eintrag in DB
+		} else {
+			$bool = $db->insert('aliases', array('alias' => $alias, 'uri' => db::escape($path)));
+		}
+
+		$bool2 = self::setAliasCache();
+		return $bool && $bool2 ? true : false;
+	}
+	/**
+	 * Löscht einen URI-Alias
+	 *
+	 * @param string $alias
+	 * @param string $uri
+	 * @return boolean
+	 */
+	public static function deleteUriAlias($uri)
+	{
+		global $db;
+
+		$bool = $db->delete('aliases', 'uri = \'' . db::escape($uri) . '\'');
+		$bool2 = self::setAliasCache();
+		return $bool && $bool2 ? true : false;
 	}
 }
