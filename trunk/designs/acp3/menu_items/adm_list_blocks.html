@@ -16,6 +16,7 @@
 {/if}
 				<th>{lang t="menu_items|title"}</th>
 				<th>{lang t="menu_items|index_name"}</th>
+				<th style="width:3%">{lang t="common|id"}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -26,6 +27,7 @@
 {/if}
 				<td>{check_access mode="link" action="menu_items|edit_block" uri="acp/menu_items/edit_block/id_`$row.id`" title=$row.title}</td>
 				<td>{$row.index_name}</td>
+				<td>{$row.id}</td>
 			</tr>
 {/foreach}
 		</tbody>

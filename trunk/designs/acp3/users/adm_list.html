@@ -17,6 +17,7 @@
 				<th>{lang t="users|nickname"}</th>
 				<th>{lang t="common|email"}</th>
 				<th>{lang t="access|access"}</th>
+				<th style="width:3%">{lang t="common|id"}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -28,6 +29,7 @@
 				<td>{check_access mode="link" action="users|edit" uri="acp/users/edit/id_`$row.id`" title=$row.nickname}</td>
 				<td>{$row.mail}</td>
 				<td>{$row.access}</td>
+				<td>{$row.id}</td>
 			</tr>
 {/foreach}
 		</tbody>

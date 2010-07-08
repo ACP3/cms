@@ -17,6 +17,7 @@
 				<th>{lang t="common|name"}</th>
 				<th>{lang t="common|message"}</th>
 				<th>{lang t="comments|ip}</th>
+				<th style="width:3%">{lang t="common|id"}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -29,6 +30,7 @@
 				<td>{check_access mode="link" action="comments|edit" uri="acp/comments/edit/id_`$row.id`" title=$row.name}</td>
 				<td>{$row.message}</td>
 				<td>{$row.ip}</td>
+				<td>{$row.id}</td>
 			</tr>
 {/foreach}
 		</tbody>
