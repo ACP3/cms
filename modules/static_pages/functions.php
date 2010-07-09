@@ -53,13 +53,3 @@ function getStaticPages($id = '')
 	}
 	return $static_pages;
 }
-/**
- * Callback-Funktion zum Ersetzen der ACP3 internen URIs gegen ihre Aliase
- *
- * @param string $matches
- * @return string
- */
-function replaceUriWithAlias($matches)
-{
-	return '<a href="' . uri($matches[6], 1) . '"';
-}

@@ -458,6 +458,26 @@ function removeFile($dir, $file)
 	return false;
 }
 /**
+ * Ersetzt interne ACP3 interne URIs in Texten mit ihren jeweiligen Aliasen
+ *
+ * @param string $text
+ * @return string 
+ */
+function rewriteInternalUri($text)
+{
+	$root_dir = str_replace('/', '\/', ROOT_DIR);
+	return preg_replace_callback('/<a href="((' . $root_dir . ')?)((index\.php)?)(\/?)((?i:[a-z\d_\-]+\/){2,})"/', 'rewriteInternalUriCallback', $text);
+}
+/**
+ * Callback-Funktion zum Ersetzen der ACP3 internen URIs gegen ihre Aliase
+ *
+ * @param string $matches
+ * @return string
+ */
+function rewriteInternalUriCallback($matches)
+{
+	return '<a href="' . uri($matches[6], 1) . '"';
+}/**
  * Funktion zum Salzen von Passwörtern, damit diese nicht so leicht entschlüsselt werden können
  *
  * @param integer $str_length
