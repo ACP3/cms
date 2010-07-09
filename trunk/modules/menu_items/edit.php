@@ -20,6 +20,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 			$errors[] = $lang->t('common', 'select_date');
 		if (!validate::isNumber($form['mode']))
 			$errors[] = $lang->t('menu_items', 'select_page_type');
+		if (($form['mode'] == 2 || $form['mode'] == 4) && !validate::isUriSafe($form['alias']) || validate::UriAliasExists($form['alias'], db::escape($form['uri'])))
+			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 		if (strlen($form['title']) < 3)
 			$errors[] = $lang->t('menu_items', 'title_to_short');
 		if (!validate::isNumber($form['block_id']))
@@ -60,6 +62,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 			);
 
 			$bool = editNode($uri->id, $form['parent'], $form['block_id'], $update_values);
+			if ($form['mode'] == 2 || $form['mode'] == 4) {
+				$uri->insertUriAlias($form['alias'], $form['uri']);
+			}
 
 			setMenuItemsCache();
 
@@ -69,6 +74,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$page = $db->select('id, start, end, mode, block_id, left_id, right_id, display, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
 		$page[0]['uri'] = db::escape($page[0]['uri'], 3);
+		$page[0]['alias'] = $page[0]['mode'] == 2 || $page[0]['mode'] == 4 ? $uri->getUriAlias($page[0]['uri']) : '';
 
 		// Seitentyp
 		$mode[0]['value'] = 1;
