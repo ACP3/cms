@@ -22,7 +22,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 			$errors[] = $lang->t('static_pages', 'title_to_short');
 		if (strlen($form['text']) < 3)
 			$errors[] = $lang->t('static_pages', 'text_to_short');
-		if (!validate::isUriSafe($form['alias']) || validate::UriAliasExists($form['alias']))
+		if (!validate::isUriSafe($form['alias']) || validate::UriAliasExists($form['alias'], 'static_pages/list/id_' . $uri->id))
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 		if (isset($errors)) {
@@ -39,6 +39,10 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 			$bool2 = $uri->insertUriAlias($form['alias'], 'static_pages/list/id_' . $uri->id);
 
 			setStaticPagesCache($uri->id);
+
+			// Aliase in der Navigation aktualisieren
+			require_once ACP3_ROOT . 'modules/menu_items/functions.php';
+			setMenuItemsCache();
 
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/static_pages'));
 		}
