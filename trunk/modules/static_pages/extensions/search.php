@@ -29,7 +29,7 @@ $c_result_pages = count($result_pages);
 if ($c_result_pages > 0) {
 	$results_mods['static_pages']['title'] = $lang->t('static_pages', 'static_pages');
 	for ($i = 0; $i < $c_result_pages; ++$i) {
-		$results_mods['static_pages']['results'][$i]['hyperlink'] = uri('static_pages/list/id_' . $result_pages[$i]['id']);
+		$results_mods['static_pages']['results'][$i]['hyperlink'] = uri('static_pages/list/id_' . $result_pages[$i]['id'], 1);
 		$results_mods['static_pages']['results'][$i]['headline'] = $result_pages[$i]['title'];
 		$results_mods['static_pages']['results'][$i]['text'] = shortenEntry(db::escape($result_pages[$i]['text'], 3), 200, 0, '...');
 	}
