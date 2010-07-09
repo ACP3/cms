@@ -42,6 +42,7 @@
 	<item key="pages_gallery">Fotogalerien</item>
 	<item key="pages_guestbook">Gästebuch</item>
 	<item key="pages_imprint">Impressum</item>
+	<item key="pages_imprint_alias">impressum</item>
 	<item key="pages_main">Hauptnavigation</item>
 	<item key="pages_news">News</item>
 	<item key="pages_polls">Umfragen</item>

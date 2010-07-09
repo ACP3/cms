@@ -19,6 +19,8 @@ if (isset($_POST['form'])) {
 		$errors[] = $lang->t('common', 'select_date');
 	if (!validate::isNumber($form['mode']))
 		$errors[] = $lang->t('menu_items', 'select_page_type');
+	if ($form['mode'] == 2 && !validate::isUriSafe($form['alias']) || validate::UriAliasExists($form['alias']))
+		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 	if (strlen($form['title']) < 3)
 		$errors[] = $lang->t('menu_items', 'title_to_short');
 	if (!validate::isNumber($form['block_id']))
@@ -56,6 +58,10 @@ if (isset($_POST['form'])) {
 		);
 
 		$bool = insertNode($form['parent'], $insert_values);
+		if ($form['mode'] == 2) {
+			$uri->insertUriAlias($form['alias'], $form['uri']);
+		}
+
 		setMenuItemsCache();
 
 		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/menu_items'));
@@ -114,6 +120,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$defaults = array(
 		'title' => '',
+		'alias' => '',
 		'uri' => ''
 	);
 

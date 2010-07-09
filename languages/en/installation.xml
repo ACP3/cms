@@ -42,6 +42,7 @@
 	<item key="pages_gallery">Galleries</item>
 	<item key="pages_guestbook">Guestbook</item>
 	<item key="pages_imprint">Imprint</item>
+	<item key="pages_imprint_alias">imprint</item>
 	<item key="pages_main">Mainnavigation</item>
 	<item key="pages_news">News</item>
 	<item key="pages_polls">Polls</item>
