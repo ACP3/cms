@@ -15,6 +15,13 @@ breadcrumb::assign($lang->t('guestbook', 'create'));
 
 $settings = config::output('guestbook');
 
+if ($uri->design == 'simple') {
+	$comboColorbox = 1;
+	define('CUSTOM_LAYOUT', 'simple.html');
+} else {
+	$comboColorbox = 0;
+}
+
 if (isset($_POST['form'])) {
 	$ip = $_SERVER['REMOTE_ADDR'];
 	$form = $_POST['form'];
@@ -61,7 +68,7 @@ if (isset($_POST['form'])) {
 			genEmail('', $settings['notify_email'], $settings['notify_email'], $lang->t('guestbook', 'notification_email_subject'), $body);
 		}
 
-		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('guestbook'));
+		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('guestbook'), 0, $comboColorbox);
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

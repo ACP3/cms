@@ -65,9 +65,11 @@ function captcha($captcha_length = 5)
  *  Weiter Hyperlink
  * @param string $backward
  *  Zurück Hyperlink
+ * @param integer $colorbox
+ *	Wenn Wert "1", dann wird das Fenster geschlossen
  * @return string
  */
-function comboBox($text, $forward = 0, $backward = 0)
+function comboBox($text, $forward = 0, $backward = 0, $colorbox = 0)
 {
 	global $tpl;
 
@@ -75,11 +77,14 @@ function comboBox($text, $forward = 0, $backward = 0)
 		$tpl->assign('text', $text);
 		return modules::fetchTemplate('common/error.html');
 	} elseif (!empty($text) && (!empty($forward) || !empty($backward))) {
-		$tpl->assign('text', $text);
-		$tpl->assign('forward', $forward);
-		if (!empty($backward)) {
-			$tpl->assign('backward', $backward);
-		}
+		$combo = array(
+			'text' => $text,
+			'forward' => $forward,
+			'colorbox' => $colorbox,
+		);
+		if (!empty($backward))
+			$combo['backward'] = $backward;
+		$tpl->assign('combo', $combo);
 
 		return modules::fetchTemplate('common/combo.html');
 	}

@@ -7,6 +7,7 @@
 	<item key="back">Zurück</item>
 	<item key="category">Kategorie</item>
 	<item key="confirm_delete">Sollen die ausgewählten Einträge wirklich gelöscht werden?</item>
+	<item key="close_window">Fenster schließen</item>
 	<item key="create_error">Beim Erstellen des Eintrages ist ein Fehler aufgetreten.</item>
 	<item key="create_success">Der Eintrag wurde erfolgreich erstellt.</item>
 	<item key="date">Datum</item>
