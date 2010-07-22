@@ -7,6 +7,7 @@
 	<item key="back">Back</item>
 	<item key="category">Category</item>
 	<item key="confirm_delete">Do you really want to delete the marked entries?</item>
+	<item key="close_window">Close window</item>
 	<item key="create_error">While creating the entry an error has occured.</item>
 	<item key="create_success">The entry has been created successfully.</item>
 	<item key="date">Date</item>

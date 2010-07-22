@@ -332,8 +332,9 @@ fieldset textarea, #tabs textarea {
 	color: #000;
 	cursor: pointer;
 }
-a.form {
+a.form, a:link.form {
 	padding: 2px 10px;
+	color: #000;
 }
 .form:hover {
 	background: #eee;
