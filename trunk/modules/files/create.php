@@ -38,6 +38,8 @@ if (isset($_POST['form'])) {
 		$errors[] = $lang->t('files', 'select_category');
 	if (strlen($form['cat_create']) >= 3 && categoriesCheckDuplicate($form['cat_create'], 'files'))
 		$errors[] = $lang->t('categories', 'category_already_exists');
+	if (!validate::isUriSafe($form['alias']) || validate::UriAliasExists($form['alias']))
+		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -64,12 +66,14 @@ if (isset($_POST['form'])) {
 			'comments' => $settings['comments'] == 1 && isset($form['comments']) ? 1 : 0,
 		);
 
-		require_once ACP3_ROOT . 'modules/files/functions.php';
 
 		$bool = $db->insert('files', $insert_values);
+		$bool2 = $uri->insertUriAlias($form['alias'], 'files/details/id_' . $db->link->lastInsertID());
+
+		require_once ACP3_ROOT . 'modules/files/functions.php';
 		setFilesCache($db->link->lastInsertId());
 
-		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/files'));
+		$content = comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/files'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -107,6 +111,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		'file_external' => '',
 		'filesize' => '',
 		'text' => '',
+		'alias' => '',
 	);
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);

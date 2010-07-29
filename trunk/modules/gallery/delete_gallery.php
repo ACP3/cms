@@ -36,6 +36,7 @@ if (!isset($entries)) {
 
 			// Galerie Cache löschen
 			cache::delete('gallery_pics_id_' . $entry);
+			$uri->deleteUriAlias('gallery/pics/id_' . $entry);
 		}
 	}
 	$content = comboBox($bool !== null && $bool2 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/gallery'));

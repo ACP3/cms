@@ -33,6 +33,7 @@ if (!isset($entries)) {
 			$bool = $db->delete('files', 'id = \'' . $entry . '\'');
 
 			cache::delete('files_details_id_' . $entry);
+			$uri->deleteUriAlias('files/details/id_' . $entry);
 		}
 	}
 	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/files'));

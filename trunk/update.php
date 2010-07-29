@@ -82,6 +82,30 @@ if (count($queries) > 0) {
 
 	$db->link->commit();
 
+	// URI-Aliase für die Fotogalerien erzeugen
+	$galleries = $db->select('id, name', 'gallery');
+	$c_galleries = count($galleries);
+
+	$db->link->beginTransaction();
+
+	for ($i = 0; $i < $c_galleries; ++$i) {
+		$uri->insertUriAlias(makeStringUrlSafe($galleries[$i]['name']), 'gallery/pics/id_' . $galleries[$i]['id']);
+	}
+
+	$db->link->commit();
+
+	// URI-Aliase für die Downloads erzeugen
+	$files = $db->select('id, link_title', 'files');
+	$c_files = count($files);
+
+	$db->link->beginTransaction();
+
+	for ($i = 0; $i < $c_files; ++$i) {
+		$uri->insertUriAlias(makeStringUrlSafe($files[$i]['link_title']), 'files/details/id_' . $files[$i]['id']);
+	}
+
+	$db->link->commit();
+
 	print "\n" . ($bool ? 'Die Datenbank wurde erfolgreich aktualisiert!' : 'Mindestens eine Datenbankänderung konnte nicht durchgeführt werden!') . "\n";
 	print "\n----------------------------\n\n";
 }
