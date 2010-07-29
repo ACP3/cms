@@ -52,6 +52,11 @@
 				<dd>
 					{$categories}
 				</dd>
+				<dt>
+					<label for="alias">{lang t="common|uri_alias"}</label>
+					<span>{lang t="common|uri_alias_description"}</span>
+				</dt>
+				<dd><input type="text" name="form[alias]" id="alias" value="{$form.alias}" /></dd>
 {if isset($options)}
 				<dt><label for="comments">{lang t="common|options"}</label></dt>
 				<dd>

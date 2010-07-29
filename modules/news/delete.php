@@ -29,6 +29,7 @@ if (!isset($entries)) {
 			$bool2 = $db->delete('comments', 'module = \'news\' AND entry_id = \'' . $entry . '\'');
 			// News Cache löschen
 			cache::delete('news_details_id_' . $entry);
+			$uri->deleteUriAlias('news/details/id_' . $entry);
 		}
 	}
 	$content = comboBox($bool !== null && $bool2 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/news'));

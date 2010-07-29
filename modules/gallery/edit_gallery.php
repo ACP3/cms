@@ -12,6 +12,7 @@ if (!defined('IN_ADM'))
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $uri->id . '\'') == '1') {
 	$gallery = $db->select('start, end, name', 'gallery', 'id = \'' . $uri->id . '\'');
+	$gallery[0]['alias'] = $uri->getUriAlias('gallery/pics/id_' . $uri->id);
 
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
 	breadcrumb::assign($lang->t('gallery', 'gallery'), uri('acp/gallery'));
@@ -24,6 +25,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			$errors[] = $lang->t('common', 'select_date');
 		if (strlen($form['name']) < 3)
 			$errors[] = $lang->t('gallery', 'type_in_gallery_name');
+		if (!validate::isUriSafe($form['alias']) || validate::UriAliasExists($form['alias'], 'gallery/pics/id_' . $uri->id))
+			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -35,8 +38,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			);
 
 			$bool = $db->update('gallery', $update_values, 'id = \'' . $uri->id . '\'');
+			$bool2 = $uri->insertUriAlias($form['alias'], 'gallery/pics/id_' . $uri->id);
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/gallery'));
+			$content = comboBox($bool && $bool2 ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/gallery'));
 		}
 	}
 	if (!isset($_POST['entries']) && !isset($_POST['form']) || isset($errors) && is_array($errors)) {
