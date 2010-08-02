@@ -12,7 +12,7 @@
  * @param integer $value
  * 	Die Dateigröße in Byte
  * @return string
- * 	Die Dateigröße als Fließkommazahl, mit der dazugehörigen Einheit
+ * 	Die Dateigröße als Fließkommazahl mit der dazugehörigen Einheit
  */
 function calcFilesize($value)
 {
@@ -224,14 +224,16 @@ function makeStringUrlSafe($var)
 		'/&szlig;/',
 		'/&([a-z0-9]+);/',
 		'/(\s+)/',
-		'/[^a-z0-9-]/'
+		'/-{2,}/',
+		'/[^a-z0-9-]/',
 	);
 	$replace = array(
 		'${1}e',
 		'ss',
 		'',
 		'-',
-		''
+		'-',
+		'',
 	);
 	return preg_replace($search, $replace, $var);
 }

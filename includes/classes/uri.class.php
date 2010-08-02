@@ -39,7 +39,7 @@ class uri
 		$this->query = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
 		$this->query.= !preg_match('/\/$/', $this->query) ? '/' : '';
 
-		if (!empty($this->query) && preg_match('/^(acp\/)/', $this->query)) {
+		if (preg_match('/^(acp\/)/', $this->query)) {
 			// Definieren, dass man sich im Administrationsbereich befindet
 			define('IN_ADM', true);
 			// "acp/" entfernen
@@ -48,7 +48,7 @@ class uri
 			// Definieren, dass man sich im Frontend befindet
 			define('IN_ACP3', true);
 			// Query auf eine benutzerdefinierte Startseite setzen
-			if (!defined('IN_INSTALL') && empty($this->query) && CONFIG_HOMEPAGE != '') {
+			if (!defined('IN_INSTALL') && $this->query == '/' && CONFIG_HOMEPAGE != '') {
 				$this->query = CONFIG_HOMEPAGE;
 			}
 		}
@@ -63,7 +63,7 @@ class uri
 			}
 		}
 
-		$query = !empty($this->query) ? explode('/', $this->query) : 0;
+		$query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
 		$defaultModule = defined('IN_ADM') ? 'acp' : 'news';
 		$defaultPage = defined('IN_ADM') ? 'adm_list' : 'list';
 
@@ -74,15 +74,13 @@ class uri
 			$c_query = count($query);
 
 			for ($i = 2; $i < $c_query; ++$i) {
-				if (!empty($query[$i])) {
-					// Position
-					if (!defined('POS') && preg_match('/^(pos_(\d+))$/', $query[$i])) {
-						define('POS', substr($query[$i], 4));
-					// Additional URI parameters
-					} elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) {
-						$param = explode('_', $query[$i], 2);
-						$this->$param[0] = $param[1];
-					}
+				// Position
+				if (!defined('POS') && preg_match('/^(pos_(\d+))$/', $query[$i])) {
+					define('POS', substr($query[$i], 4));
+				// Additional URI parameters
+				} elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) {
+					$param = explode('_', $query[$i], 2);
+					$this->$param[0] = $param[1];
 				}
 			}
 		}
@@ -149,7 +147,7 @@ class uri
 	}
 	/**
 	 * Gibt einen URI-Alias aus
-	 * 
+	 *
 	 * @param string $path
 	 * @return string
 	 */
