@@ -55,31 +55,27 @@ if (count($queries) > 0) {
 
 	$db->link->commit();
 
-	// URI-Aliase für die News erzeugen
 	$uri = new uri();
 	require ACP3_ROOT . 'includes/functions.php';
 
-	$news = $db->select('id, headline', 'news');
-	$c_news = count($news);
-
-	$db->link->beginTransaction();
-
-	for ($i = 0; $i < $c_news; ++$i) {
-		$uri->insertUriAlias(makeStringUrlSafe($news[$i]['headline']), 'news/details/id_' . $news[$i]['id']);
-	}
-
-	$db->link->commit();
-
-	// URI-Aliase für die Statische Seiten erzeugen
+	// URI-Aliase für die Statischen Seiten erzeugen
 	$pages = $db->select('id, title', 'static_pages');
 	$c_pages = count($pages);
 
 	$db->link->beginTransaction();
-
 	for ($i = 0; $i < $c_pages; ++$i) {
 		$uri->insertUriAlias(makeStringUrlSafe($pages[$i]['title']), 'static_pages/list/id_' . $pages[$i]['id']);
 	}
+	$db->link->commit();
 
+	// URI-Aliase für die News erzeugen
+	$news = $db->select('id, headline', 'news');
+	$c_news = count($news);
+
+	$db->link->beginTransaction();
+	for ($i = 0; $i < $c_news; ++$i) {
+		$uri->insertUriAlias(makeStringUrlSafe($news[$i]['headline']), 'news/details/id_' . $news[$i]['id']);
+	}
 	$db->link->commit();
 
 	// URI-Aliase für die Fotogalerien erzeugen
@@ -87,11 +83,9 @@ if (count($queries) > 0) {
 	$c_galleries = count($galleries);
 
 	$db->link->beginTransaction();
-
 	for ($i = 0; $i < $c_galleries; ++$i) {
 		$uri->insertUriAlias(makeStringUrlSafe($galleries[$i]['name']), 'gallery/pics/id_' . $galleries[$i]['id']);
 	}
-
 	$db->link->commit();
 
 	// URI-Aliase für die Downloads erzeugen
@@ -99,11 +93,9 @@ if (count($queries) > 0) {
 	$c_files = count($files);
 
 	$db->link->beginTransaction();
-
 	for ($i = 0; $i < $c_files; ++$i) {
 		$uri->insertUriAlias(makeStringUrlSafe($files[$i]['link_title']), 'files/details/id_' . $files[$i]['id']);
 	}
-
 	$db->link->commit();
 
 	print "\n" . ($bool ? 'Die Datenbank wurde erfolgreich aktualisiert!' : 'Mindestens eine Datenbankänderung konnte nicht durchgeführt werden!') . "\n";
