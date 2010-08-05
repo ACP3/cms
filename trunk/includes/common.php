@@ -53,10 +53,6 @@ $tpl->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
 $tpl->assign('KEYWORDS', CONFIG_SEO_META_KEYWORDS);
 $tpl->assign('DESCRIPTION', CONFIG_SEO_META_DESCRIPTION);
 
-$minify = ROOT_DIR . 'includes/min/' . (CONFIG_SEO_MOD_REWRITE == 1 && defined('IN_ACP3') ? '' : '?') . 'g=%s&amp;' . CONFIG_DESIGN;
-$tpl->assign('MIN_JAVASCRIPT', sprintf($minify, 'js'));
-$tpl->assign('MIN_STYLESHEET', sprintf($minify, 'css'));
-
 // Falls der Wartungsmodus aktiv ist, Wartungsnachricht ausgeben und Skript beenden
 if (CONFIG_MAINTENANCE_MODE == '1' && defined('IN_ACP3')) {
 	header('Content-Type: text/html; charset=UTF-8');
@@ -73,6 +69,10 @@ if ($handle !== true) {
 }
 
 $uri = new uri();
+
+$minify = ROOT_DIR . 'includes/min/' . (CONFIG_SEO_MOD_REWRITE == 1 && defined('IN_ACP3') ? '' : '?') . 'g=%s&amp;' . CONFIG_DESIGN;
+$tpl->assign('MIN_JAVASCRIPT', sprintf($minify, 'js'));
+$tpl->assign('MIN_STYLESHEET', sprintf($minify, 'css'));
 
 require_once ACP3_ROOT . 'includes/functions.php';
 $auth = new auth();
