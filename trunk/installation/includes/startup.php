@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+error_reporting(E_ALL);
 
 define('IN_INSTALL', true);
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
@@ -17,7 +17,7 @@ include ACP3_ROOT . 'installation/includes/functions.php';
 
 $uri = new uri();
 
-if (empty($uri->query)) {
+if ($uri->query == '/') {
 	$uri->mod = 'install';
 	$uri->page = 'welcome';
 }
@@ -64,4 +64,3 @@ $pages = array(
 		'selected' => '',
 	),
 );
-?>
