@@ -37,11 +37,11 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$result = moveFile($file['tmp_name'], $file['name'], 'gallery');
-			$picNum = $db->select('pic', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'', 'pic DESC', 1);
+			$picNum = $db->select('MAX(pic)+1 AS pic', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'');
 
 			$insert_values = array(
 				'id' => '',
-				'pic' => !empty($picNum) ? $picNum[0]['pic'] + 1 : 1,
+				'pic' => !empty($picNum) ? $picNum[0]['pic'] : 1,
 				'gallery_id' => $uri->id,
 				'file' => $result['name'],
 				'description' => db::escape($form['description'], 2),
