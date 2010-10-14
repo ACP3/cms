@@ -54,7 +54,7 @@ class uri
 		}
 
 		// Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-		if (defined('IN_ACP3')) {
+		if (defined('IN_ACP3') && !defined('IN_INSTALL')) {
 			global $db;
 
 			$alias = $db->select('uri', 'aliases', 'alias = \'' . db::escape(substr($this->query, 0, -1)) . '\'');

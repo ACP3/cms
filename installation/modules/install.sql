@@ -1,9 +1,9 @@
-)CREATE TABLE `{pre}aliases` (
+CREATE TABLE `{pre}aliases` (
 	`uri` varchar(255) NOT NULL,
 	`alias` varchar(100) NOT NULL,
 	PRIMARY KEY (`uri`),
 	UNIQUE KEY `alias` (`alias`)
-) {engine}
+) {engine};
 
 CREATE TABLE `{pre}access` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
