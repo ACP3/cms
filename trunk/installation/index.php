@@ -1,10 +1,12 @@
 <?php
 ob_start();
+$time_start = microtime();
 
 // Evtl. gesetzten Content-Type des Servers überschreiben
 header('Content-type: text/html; charset=UTF-8');
 
-define('ACP3_ROOT', '../');
+//define('ACP3_ROOT', '../');
+define('ACP3_ROOT', dirname(__FILE__) . '/../');
 require ACP3_ROOT . 'installation/includes/startup.php';
 
 // Überprüfen, ob die angeforderte Seite überhaupt existiert
@@ -17,7 +19,7 @@ foreach ($pages as $row) {
 		$is_page = true;
 		break;
 	}
-	$i++;
+	++$i;
 }
 $tpl->assign('pages', $pages);
 
@@ -46,5 +48,5 @@ if ($is_page) {
 
 $tpl->display('layout.html');
 
+echo microtime() - $time_start;
 ob_end_flush();
-?>
