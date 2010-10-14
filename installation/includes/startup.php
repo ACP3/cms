@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+error_reporting(0);
 
 define('IN_INSTALL', true);
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
