@@ -126,9 +126,9 @@ function insertNode($parent, $insert_values)
 	global $db;
 
 	if (!validate::isNumber($parent) || $db->countRows('*', 'menu_items', 'id = \'' . $parent . '\'') == 0) {
-		$node = $db->select('right_id', 'menu_items', 'block_id = \'' . db::escape($insert_values['block_id']) . '\'', 'right_id DESC', 1);
+		$node = $db->select('MAX(right_id) AS right_id', 'menu_items', 'block_id = \'' . db::escape($insert_values['block_id']) . '\'');
 		if (empty($node)) {
-			$node = $db->select('right_id', 'menu_items', 'block_id < \'' . db::escape($insert_values['block_id']) . '\'', 'block_id DESC, right_id DESC', 1);
+			$node = $db->select('MAX(right_id) AS right_id', 'menu_items', 'block_id < \'' . db::escape($insert_values['block_id']) . '\'', 'block_id DESC');
 		}
 		$insert_values['left_id'] = !empty($node) ? $node[0]['right_id'] + 1 : 1;
 		$insert_values['right_id'] = !empty($node) ? $node[0]['right_id'] + 2 : 2;
@@ -203,11 +203,11 @@ function editNode($id, $parent, $block_id, array $update_values)
 					if (empty($new_parent)) {
 						// Root-Element in anderen Block verschieben
 						if ($pages[0]['block_id'] != $block_id) {
-							$new_block = $db->select('left_id', 'menu_items', 'block_id = \'' . $block_id . '\'', 'left_id ASC', 1);
+							$new_block = $db->select('MIN(left_id) AS left_id', 'menu_items', 'block_id = \'' . $block_id . '\'');
 							// Falls Navigationselemente in einen leeren Block verschoben werden sollen,
 							// die right_id des letzten Elementes verwenden
-							if (empty($new_block)) {
-								$new_block = $db->select('right_id AS left_id', 'menu_items', 0, 'right_id DESC', 1);
+							if (empty($new_block) || is_null($new_block[0]['left_id'])) {
+								$new_block = $db->select('MAX(right_id) AS left_id', 'menu_items');
 								$new_block[0]['left_id']+= 1;
 							}
 
@@ -224,7 +224,7 @@ function editNode($id, $parent, $block_id, array $update_values)
 							$db->query('UPDATE ' . $db->prefix . 'menu_items SET left_id = left_id + ' . $page_diff . ', right_id = right_id + ' . $page_diff . ' WHERE left_id >= ' . $new_block[0]['left_id'], 0);
 						// Element zum neuen Elternknoten machen
 						} else {
-							$new_parent = $db->select('right_id', 'menu_items', 'block_id =  \'' . $pages[0]['block_id'] . '\'', 'right_id DESC', 1);
+							$new_parent = $db->select('MAX(right_id) AS right_id', 'menu_items', 'block_id =  \'' . $pages[0]['block_id'] . '\'');
 
 							$diff = $new_parent[0]['right_id'] - $pages[0]['right_id'];
 							$root_id = $id;
