@@ -54,3 +54,68 @@ function getGalleryCache($id)
 
 	return cache::output('gallery_pics_id_' . $id);
 }
+/**
+ * Setzt einen einzelnen Alias für ein Bild einer Fotogalerie
+ *
+ * @param integer $picture_id
+ * @return boolean
+ */
+function generatePictureAlias($picture_id)
+{
+	global $db, $lang, $uri;
+
+	$picture = $db->select('pic, gallery_id', 'gallery_pictures', 'id = \'' . $picture_id . '\'');
+	$gallery_alias = $uri->getUriAlias('gallery/pics/id_' . $picture[0]['gallery_id']);
+	$bool = $uri->deleteUriAlias('gallery/details/id_' . $picture_id);
+	echo 'huhu';
+	$bool2 = $uri->insertUriAlias($gallery_alias . '-' . makeStringUrlSafe($lang->t('gallery', 'picture')) . '-' . $picture[0]['pic'], 'gallery/details/id_' . $picture_id);
+
+	return $bool && $bool2 ? true : false;
+}
+/**
+ * Setzt alle Bildaliase eine Fotogalerie neu
+ *
+ * @param integer $gallery_id
+ * @return boolean
+ */
+function generatePictureAliases($gallery_id)
+{
+	global $db, $lang, $uri;
+
+	$gallery_alias = $uri->getUriAlias('gallery/pics/id_' . $gallery_id);
+	$pictures = $db->select('id, pic', 'gallery_pictures', 'gallery_id = \'' . $gallery_id . '\'');
+	$c_pictures = count($pictures);
+	$bool = $bool2 = false;
+
+	for ($i = 0; $i < $c_pictures; ++$i) {
+		$bool = $uri->deleteUriAlias('gallery/details/id_' . $pictures[$i]['id']);
+		$bool2 = $uri->insertUriAlias($gallery_alias . '-' . makeStringUrlSafe($lang->t('gallery', 'picture')) . '-' . $pictures[$i]['pic'], 'gallery/details/id_' . $pictures[$i]['id']);
+		if (!$bool || !$bool2)
+			break;
+	}
+
+	return $bool && $bool2 ? true : false;
+}
+/**
+ * Sorgt dafür, dass wenn eine Fotogalerie gelöscht wird,
+ * auch alle Bildaliase gelöscht werden
+ *
+ * @param integer $gallery_id
+ * @return boolean
+ */
+function deletePictureAliases($gallery_id)
+{
+	global $db, $uri;
+
+	$pictures = $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $gallery_id . '\'');
+	$c_pictures = count($pictures);
+	$bool = false;
+
+	for ($i = 0; $i < $c_pictures; ++$i) {
+		$bool = $uri->deleteUriAlias('gallery/details/id_' . $pictures[$i]['id']);
+		if (!$bool)
+			break;
+	}
+
+	return $bool ? true : false;
+}

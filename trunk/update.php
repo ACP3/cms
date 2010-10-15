@@ -9,7 +9,7 @@
 header('Content-type: text/plain; charset=UTF-8');
 
 define('NEW_VERSION', '4.0 SVN');
-define('ACP3_ROOT', './');
+define('ACP3_ROOT', dirname(__FILE__));
 
 require ACP3_ROOT . 'includes/config.php';
 
@@ -79,12 +79,14 @@ if (count($queries) > 0) {
 	$db->link->commit();
 
 	// URI-Aliase für die Fotogalerien erzeugen
+	require_once ACP3_ROOT . 'modules/gallery/functions.php';
 	$galleries = $db->select('id, name', 'gallery');
 	$c_galleries = count($galleries);
 
 	$db->link->beginTransaction();
 	for ($i = 0; $i < $c_galleries; ++$i) {
 		$uri->insertUriAlias(makeStringUrlSafe($galleries[$i]['name']), 'gallery/pics/id_' . $galleries[$i]['id']);
+		generatePictureAliases($gallery[$i]['id']);
 	}
 	$db->link->commit();
 
