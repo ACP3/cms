@@ -23,6 +23,9 @@ if (!isset($entries)) {
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = $bool2 = null;
+
+	require_once ACP3_ROOT . 'modules/gallery/functions.php';
+
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'gallery', 'id = \'' . $entry . '\'') == '1') {
 			// Hochgeladene Bilder löschen
@@ -30,16 +33,17 @@ if (!isset($entries)) {
 			foreach ($pictures as $row) {
 				removeFile('gallery', $row['file']);
 			}
-			// Fotogalerie mitsamt Bildern löschen
-			$bool = $db->delete('gallery', 'id = \'' . $entry . '\'');
-			$bool2 = $db->delete('gallery_pictures', 'gallery_id = \'' . $entry . '\'', 0);
-
 			// Galerie Cache löschen
 			cache::delete('gallery_pics_id_' . $entry);
 			$uri->deleteUriAlias('gallery/pics/id_' . $entry);
+			deletePictureAliases($entry);
+
+			// Fotogalerie mitsamt Bildern löschen
+			$bool = $db->delete('gallery', 'id = \'' . $entry . '\'');
+			$bool2 = $db->delete('gallery_pictures', 'gallery_id = \'' . $entry . '\'', 0);
 		}
 	}
-	$content = comboBox($bool !== null && $bool2 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/gallery'));
+	$content = comboBox($bool && $bool2 ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/gallery'));
 } else {
 	redirect('acp/errors/404');
 }

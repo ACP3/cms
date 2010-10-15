@@ -54,9 +54,10 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 			}
 
 			$bool = $db->update('gallery_pictures', $update_values, 'id = \'' . $uri->id . '\'');
+			$bool2 = generatePictureAlias($uri->id);
 			setGalleryCache($picture[0]['gallery_id']);
 
-			$content = comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id']));
+			$content = comboBox($bool && $bool2 ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id']));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

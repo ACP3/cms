@@ -37,11 +37,11 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$result = moveFile($file['tmp_name'], $file['name'], 'gallery');
-			$picNum = $db->select('MAX(pic)+1 AS pic', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'');
+			$picNum = $db->select('MAX(pic) AS pic', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'');
 
 			$insert_values = array(
 				'id' => '',
-				'pic' => !empty($picNum) ? $picNum[0]['pic'] : 1,
+				'pic' => !empty($picNum) && !is_null($picNum[0]['pic']) ? $picNum[0]['pic'] + 1 : 1,
 				'gallery_id' => $uri->id,
 				'file' => $result['name'],
 				'description' => db::escape($form['description'], 2),
@@ -49,9 +49,10 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			);
 
 			$bool = $db->insert('gallery_pictures', $insert_values);
+			$bool2 = generatePictureAlias($uri->id, $db->link->lastInsertId());
 			setGalleryCache($uri->id);
 
-			$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/gallery/edit_gallery/id_' . $uri->id));
+			$content = comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/gallery/edit_gallery/id_' . $uri->id));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

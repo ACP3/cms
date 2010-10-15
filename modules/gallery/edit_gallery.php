@@ -40,7 +40,10 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			$bool = $db->update('gallery', $update_values, 'id = \'' . $uri->id . '\'');
 			$bool2 = $uri->insertUriAlias($form['alias'], 'gallery/pics/id_' . $uri->id);
 
-			$content = comboBox($bool && $bool2 ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/gallery'));
+			require_once ACP3_ROOT . 'modules/gallery/functions.php';
+			$bool3 = generatePictureAliases($uri->id);
+
+			$content = comboBox($bool && $bool2 && $bool3 ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/gallery'));
 		}
 	}
 	if (!isset($_POST['entries']) && !isset($_POST['form']) || isset($errors) && is_array($errors)) {
