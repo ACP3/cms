@@ -1,6 +1,5 @@
 <?php
 ob_start();
-$time_start = microtime();
 
 // Evtl. gesetzten Content-Type des Servers überschreiben
 header('Content-type: text/html; charset=UTF-8');
@@ -48,5 +47,4 @@ if ($is_page) {
 
 $tpl->display('layout.html');
 
-echo microtime() - $time_start;
 ob_end_flush();

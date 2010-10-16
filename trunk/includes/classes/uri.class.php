@@ -44,19 +44,17 @@ class uri
 			define('IN_ADM', true);
 			// "acp/" entfernen
 			$this->query = substr($this->query, 4);
-		} else {
+		} elseif (!defined('IN_INSTALL')) {
+			global $db;
+
 			// Definieren, dass man sich im Frontend befindet
 			define('IN_ACP3', true);
 			// Query auf eine benutzerdefinierte Startseite setzen
-			if (!defined('IN_INSTALL') && $this->query == '/' && CONFIG_HOMEPAGE != '') {
+			if ($this->query == '/' && CONFIG_HOMEPAGE != '') {
 				$this->query = CONFIG_HOMEPAGE;
 			}
-		}
 
-		// Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-		if (defined('IN_ACP3') && !defined('IN_INSTALL')) {
-			global $db;
-
+			// Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
 			$alias = $db->select('uri', 'aliases', 'alias = \'' . db::escape(substr($this->query, 0, -1)) . '\'');
 			if (!empty($alias)) {
 				$this->query = $alias[0]['uri'];
@@ -174,7 +172,6 @@ class uri
 	{
 		global $db;
 
-		$path = db::escape($path);
 		$path.= !preg_match('/\/$/', $path) ? '/' : '';
 
 		// Vorhandenen Alias aktualisieren bzw. wenn der Alias leer ist, diesen löschen
@@ -182,7 +179,7 @@ class uri
 			if ($alias == '') {
 				$bool = self::deleteUriAlias($path);
 			} else {
-				$bool = $db->update('aliases', array('alias' => $alias), 'uri = \'' . $path . '\'');
+				$bool = $db->update('aliases', array('alias' => $alias), 'uri = \'' . db::escape($path) . '\'');
 			}
 		// Neuer Eintrag in DB
 		} else {
@@ -196,14 +193,16 @@ class uri
 	 * Löscht einen URI-Alias
 	 *
 	 * @param string $alias
-	 * @param string $uri
+	 * @param string $path
 	 * @return boolean
 	 */
-	public static function deleteUriAlias($uri)
+	public static function deleteUriAlias($path)
 	{
 		global $db;
 
-		$bool = $db->delete('aliases', 'uri = \'' . db::escape($uri) . '\'');
+		$path.= !preg_match('/\/$/', $path) ? '/' : '';
+
+		$bool = $db->delete('aliases', 'uri = \'' . db::escape($path) . '\'');
 		$bool2 = self::setAliasCache();
 		return $bool && $bool2 ? true : false;
 	}

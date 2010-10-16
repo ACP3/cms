@@ -64,13 +64,9 @@ function generatePictureAlias($picture_id)
 {
 	global $db, $lang, $uri;
 
-	$picture = $db->select('pic, gallery_id', 'gallery_pictures', 'id = \'' . $picture_id . '\'');
+	$picture = $db->select('gallery_id', 'gallery_pictures', 'id = \'' . $picture_id . '\'');
 	$gallery_alias = $uri->getUriAlias('gallery/pics/id_' . $picture[0]['gallery_id']);
-	$bool = $uri->deleteUriAlias('gallery/details/id_' . $picture_id);
-	echo 'huhu';
-	$bool2 = $uri->insertUriAlias($gallery_alias . '-' . makeStringUrlSafe($lang->t('gallery', 'picture')) . '-' . $picture[0]['pic'], 'gallery/details/id_' . $picture_id);
-
-	return $bool && $bool2 ? true : false;
+	return $uri->insertUriAlias($gallery_alias . '-' . makeStringUrlSafe($lang->t('gallery', 'picture')) . '-' . $picture_id, 'gallery/details/id_' . $picture_id);
 }
 /**
  * Setzt alle Bildaliase eine Fotogalerie neu
@@ -83,18 +79,17 @@ function generatePictureAliases($gallery_id)
 	global $db, $lang, $uri;
 
 	$gallery_alias = $uri->getUriAlias('gallery/pics/id_' . $gallery_id);
-	$pictures = $db->select('id, pic', 'gallery_pictures', 'gallery_id = \'' . $gallery_id . '\'');
+	$pictures = $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $gallery_id . '\'');
 	$c_pictures = count($pictures);
-	$bool = $bool2 = false;
+	$bool = false;
 
 	for ($i = 0; $i < $c_pictures; ++$i) {
-		$bool = $uri->deleteUriAlias('gallery/details/id_' . $pictures[$i]['id']);
-		$bool2 = $uri->insertUriAlias($gallery_alias . '-' . makeStringUrlSafe($lang->t('gallery', 'picture')) . '-' . $pictures[$i]['pic'], 'gallery/details/id_' . $pictures[$i]['id']);
-		if (!$bool || !$bool2)
+		$bool = $uri->insertUriAlias($gallery_alias . '-' . makeStringUrlSafe($lang->t('gallery', 'picture')) . '-' . $pictures[$i]['id'], 'gallery/details/id_' . $pictures[$i]['id']);
+		if (!$bool)
 			break;
 	}
 
-	return $bool && $bool2 ? true : false;
+	return $bool;
 }
 /**
  * Sorgt dafür, dass wenn eine Fotogalerie gelöscht wird,

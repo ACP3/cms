@@ -49,7 +49,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			);
 
 			$bool = $db->insert('gallery_pictures', $insert_values);
-			$bool2 = generatePictureAlias($uri->id, $db->link->lastInsertId());
+			$bool2 = generatePictureAlias($db->link->lastInsertId());
 			setGalleryCache($uri->id);
 
 			$content = comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/gallery/edit_gallery/id_' . $uri->id));
