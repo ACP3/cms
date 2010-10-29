@@ -111,7 +111,7 @@ function datepicker($name, $value = '', $format = 'Y-m-d H:i', array $params = a
 	global $date, $tpl;
 
 	$datepicker = array(
-		'range' => $range,
+		'range' => is_array($name) && $range == 1 ? 1 : 0,
 		'params' => array(
 			'firstDay' => '\'1\'',
 			'dateFormat' => '\'yy-mm-dd\'',
@@ -128,7 +128,7 @@ function datepicker($name, $value = '', $format = 'Y-m-d H:i', array $params = a
 	}
 
 	// Veröffentlichungszeitraum
-	if ($range == 1 && is_array($name)) {
+	if (is_array($name) && $range == 1) {
 		if (!empty($_POST['form'][$name[0]]) && !empty($_POST['form'][$name[1]])) {
 			$value_start = $_POST['form'][$name[0]];
 			$value_end = $_POST['form'][$name[1]];
