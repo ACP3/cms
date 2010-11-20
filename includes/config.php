@@ -1,6 +1,6 @@
 <?php
 define('INSTALLED', true);
-define('DEBUG', true);
+define('DEBUG', 1);
 define('CONFIG_DATE_DST', '0');
 define('CONFIG_DATE_FORMAT_LONG', 'd.m.y, H:i');
 define('CONFIG_DATE_FORMAT_SHORT', 'd.m.y');
@@ -22,5 +22,5 @@ define('CONFIG_SEO_META_KEYWORDS', '');
 define('CONFIG_SEO_MOD_REWRITE', '0');
 define('CONFIG_SEO_TITLE', 'ACP3');
 define('CONFIG_VERSION', '4.0 SVN');
-define('CONFIG_WYSIWYG', 'fckeditor');
+define('CONFIG_WYSIWYG', 'ckeditor');
 ?>
