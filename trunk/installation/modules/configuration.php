@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
 			'seo_mod_rewrite' => 0,
 			'seo_title' => !empty($form['seo_title']) ? db::escape($form['seo_title']) : 'ACP3',
 			'version' => CONFIG_VERSION,
-			'wysiwyg' => 'fckeditor'
+			'wysiwyg' => 'ckeditor'
 		);
 
 		// Daten in die config.php schreiben und diese laden

@@ -125,7 +125,7 @@ $config = array(
 	'seo_mod_rewrite' => CONFIG_SEO_MOD_REWRITE,
 	'seo_title' => CONFIG_SEO_TITLE,
 	'version' => NEW_VERSION,
-	'wysiwyg' => CONFIG_WYSIWYG
+	'wysiwyg' => CONFIG_WYSIWYG == 'fckeditor' ? 'ckeditor' : CONFIG_WYSIWYG,
 );
 
 if (defined('CONFIG_DATE_FORMAT')) {
