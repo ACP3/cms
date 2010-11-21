@@ -54,6 +54,10 @@ function editor($params) {
 		$config['smiley_images'] = '@@[' . substr($config['smiley_images'], 0, -1) . ']';
 		$config['smiley_descriptions'] = '@@[' . substr($config['smiley_descriptions'], 0, -1) . ']';
 	}
+	// Basic Toolbar erweitern
+	if (isset($config['toolbar']) && $config['toolbar'] == 'Basic') {
+		$config['toolbar_Basic'] = '@@[ [\'Source\',\'-\',\'Undo\',\'Redo\',\'-\',\'Bold\',\'Italic\',\'-\',\'NumberedList\',\'BulletedList\',\'-\',\'Link\',\'Unlink\',\'-\',\'About\'] ]';
+	}
 
 	return $ckeditor->editor($params['name'], $params['id'], $params['value'], $config);
 }
