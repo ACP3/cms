@@ -35,7 +35,25 @@ function editor($params) {
 	if (isset($params['height']))
 		$config['height'] = $params['height'] . 'px';
 	if (isset($params['toolbar']))
-		$config['ToolbarSet'] = $params['toolbar'] == 'simple' ? 'Basic' : 'Full';
+		$config['toolbar'] = $params['toolbar'] == 'simple' ? 'Basic' : 'Full';
+
+	// Smilies
+	if (!isset($config['toolbar']) || $config['toolbar'] != 'simple') {
+		global $db;
+
+		$config['smiley_path'] = ROOT_DIR . 'uploads/emoticons/';
+		$config['smiley_images'] = $config['smiley_descriptions'] = '';
+		$emoticons = $db->select('description, img', 'emoticons');
+		$c_emoticons = count($emoticons);
+
+		for ($i = 0; $i < $c_emoticons; ++$i) {
+			$config['smiley_images'].= '\'' . $emoticons[$i]['img'] . '\',';
+			$config['smiley_descriptions'].= '\'' . $emoticons[$i]['description'] . '\',';
+		}
+
+		$config['smiley_images'] = '@@[' . substr($config['smiley_images'], 0, -1) . ']';
+		$config['smiley_descriptions'] = '@@[' . substr($config['smiley_descriptions'], 0, -1) . ']';
+	}
 
 	return $ckeditor->editor($params['name'], $params['id'], $params['value'], $config);
 }
