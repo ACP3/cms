@@ -484,7 +484,8 @@ function rewriteInternalUri($text)
 function rewriteInternalUriCallback($matches)
 {
 	return '<a href="' . uri($matches[6], 1) . '"';
-}/**
+}
+/**
  * Funktion zum Salzen von Passwörtern, damit diese nicht so leicht entschlüsselt werden können
  *
  * @param integer $str_length
