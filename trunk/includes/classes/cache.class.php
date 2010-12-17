@@ -41,7 +41,7 @@ class cache
 	public static function create($filename, $data)
 	{
 		if (!empty($data)) {
-			$bool = @file_put_contents(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php', serialize($data));
+			$bool = @file_put_contents(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php', serialize($data), LOCK_EX);
 
 			return $bool ? true : false;
 		} elseif (self::check($filename)) {
@@ -73,7 +73,12 @@ class cache
 	public static function output($filename)
 	{
 		if (self::check($filename)) {
-			return unserialize(@file_get_contents(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php'));
+			$handle = fopen(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php', 'r');
+			flock($handle, LOCK_SH);
+			$data = unserialize(stream_get_contents($handle));
+			flock($handle, LOCK_UN); // Release the lock
+			fclose($handle);
+			return $data;
 		}
 		return array();
 	}
