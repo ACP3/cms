@@ -28,22 +28,24 @@ if ((bool)@ini_get('register_globals')) {
 }
 
 // Magic Quotes deaktivieren
-set_magic_quotes_runtime(0);
+if (version_compare(PHP_VERSION, '5.3', '<')) {
+	@set_magic_quotes_runtime(0);
 
-if (get_magic_quotes_gpc()) {
-	/**
-	 * Falls magic_quotes an sind, Slashes entfernen
-	 * wir haben selbst eine Funktion dafür...
-	 *
-	 * @param mixed $global
-	 * @return mixed
-	 */
-	function acp3_strip($global) {
-		$result = is_array($global) ? array_map('acp3_strip', $global) : stripslashes($global);
-		return $result;
+	if (get_magic_quotes_gpc()) {
+		/**
+		 * Falls magic_quotes an sind, Slashes entfernen
+		 * wir haben selbst eine Funktion dafür...
+		 *
+		 * @param mixed $global
+		 * @return mixed
+		 */
+		function acp3_strip($global) {
+			$result = is_array($global) ? array_map('acp3_strip', $global) : stripslashes($global);
+			return $result;
+		}
+		$_GET = acp3_strip($_GET);
+		$_POST = acp3_strip($_POST);
+		$_COOKIE = acp3_strip($_COOKIE);
+		$_REQUEST = acp3_strip($_REQUEST);
 	}
-	$_GET = acp3_strip($_GET);
-	$_POST = acp3_strip($_POST);
-	$_COOKIE = acp3_strip($_COOKIE);
-	$_REQUEST = acp3_strip($_REQUEST);
 }
