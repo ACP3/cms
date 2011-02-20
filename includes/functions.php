@@ -356,7 +356,7 @@ function pagination($rows)
 			}
 		}
 
-		$link = uri($acp . $uri->mod . '/' . $uri->page . $params);
+		$link = uri($acp . $uri->mod . '/' . $uri->page . $params, 1);
 
 		// Seitenauswahl
 		$pagination = array();
@@ -484,8 +484,7 @@ function rewriteInternalUri($text)
 function rewriteInternalUriCallback($matches)
 {
 	return '<a href="' . uri($matches[6], 1) . '"';
-}
-/**
+}/**
  * Funktion zum Salzen von Passwörtern, damit diese nicht so leicht entschlüsselt werden können
  *
  * @param integer $str_length
