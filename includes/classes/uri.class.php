@@ -57,7 +57,7 @@ class uri
 			// Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
 			$alias = $db->select('uri', 'aliases', 'alias = \'' . db::escape(substr($this->query, 0, -1)) . '\' OR alias = \'' . db::escape(substr($this->query, 0, strpos($this->query, '/'))) . '\'');
 			if (!empty($alias)) {
-				$this->query = $alias[0]['uri'] . substr($this->query, strpos($this->query, '/', 1));
+				$this->query = $alias[0]['uri'] . substr($this->query, strpos($this->query, '/', 1) + 1);
 			}
 		}
 
