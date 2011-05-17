@@ -112,7 +112,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$tpl->assign('pages_list', pagesList());
 	}
 
-	$tpl->assign('publication_period', datepicker(array('start', 'end')));
+	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));
 
 	$defaults = array(
 		'title' => '',

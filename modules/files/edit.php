@@ -94,7 +94,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		$dl[0]['alias'] = $uri->getUriAlias('files/details/id_' . $uri->id);
 
 		// Datumsauswahl
-		$tpl->assign('publication_period', datepicker(array('start', 'end'), array($dl[0]['start'], $dl[0]['end'])));
+		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($dl[0]['start'], $dl[0]['end'])));
 
 		$unit = trim(strrchr($dl[0]['size'], ' '));
 

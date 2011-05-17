@@ -78,7 +78,7 @@ if (isset($_POST['form'])) {
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	// Datumsauswahl
-	$tpl->assign('publication_period', datepicker(array('start', 'end')));
+	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));
 
 	$units[0]['value'] = 'Byte';
 	$units[0]['selected'] = selectEntry('unit', 'Byte');
