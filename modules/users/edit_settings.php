@@ -20,7 +20,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 	if (isset($_POST['form'])) {
 		$form = $_POST['form'];
 
-		if (!is_file('languages/' . db::escape($form['language'], 2) . '/info.xml'))
+		if (!is_file('languages/' . $db->escape($form['language'], 2) . '/info.xml'))
 			$errors[] = $lang->t('users', 'select_language');
 		if (!validate::isNumber($form['entries']))
 			$errors[] = $lang->t('system', 'select_entries_per_page');
@@ -35,11 +35,11 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
-				'date_format_long' => db::escape($form['date_format_long']),
-				'date_format_short' => db::escape($form['date_format_short']),
+				'date_format_long' => $db->escape($form['date_format_long']),
+				'date_format_short' => $db->escape($form['date_format_short']),
 				'time_zone' => $form['time_zone'],
 				'dst' => $form['dst'],
-				'language' => db::escape($form['language'], 2),
+				'language' => $db->escape($form['language'], 2),
 				'entries' => (int) $form['entries'],
 			);
 
@@ -60,7 +60,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 			if (!empty($lang_info)) {
 				$name = $lang_info['name'];
 				$languages[$name]['dir'] = $lang_dir[$i];
-				$languages[$name]['selected'] = selectEntry('language', $lang_dir[$i], db::escape($user[0]['language'], 3));
+				$languages[$name]['selected'] = selectEntry('language', $lang_dir[$i], $db->escape($user[0]['language'], 3));
 				$languages[$name]['name'] = $lang_info['name'];
 			}
 		}
@@ -86,8 +86,8 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 		$dst[1]['lang'] = $lang->t('common', 'no');
 		$tpl->assign('dst', $dst);
 
-		$user[0]['date_format_long'] = db::escape($user[0]['date_format_long'], 3);
-		$user[0]['date_format_short'] = db::escape($user[0]['date_format_short'], 3);
+		$user[0]['date_format_long'] = $db->escape($user[0]['date_format_long'], 3);
+		$user[0]['date_format_short'] = $db->escape($user[0]['date_format_short'], 3);
 
 		$tpl->assign('form', isset($form) ? $form : $user[0]);
 		$content = modules::fetchTemplate('users/edit_settings.html');

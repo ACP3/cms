@@ -24,7 +24,7 @@ switch($form['area']) {
 $time = $date->timestamp();
 $period = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
-$result_files = $db->select('id, link_title, text', 'files', 'MATCH (' . $fields . ') AGAINST (\'' . db::escape($form['search_term']) . '\' IN BOOLEAN MODE) AND ' . $period, 'start ' . $form['sort'] . ', end ' . $form['sort'] . ', id ' . $form['sort']);
+$result_files = $db->select('id, link_title, text', 'files', 'MATCH (' . $fields . ') AGAINST (\'' . $db->escape($form['search_term']) . '\' IN BOOLEAN MODE) AND ' . $period, 'start ' . $form['sort'] . ', end ' . $form['sort'] . ', id ' . $form['sort']);
 $c_result_files = count($result_files);
 
 if ($c_result_files > 0) {
@@ -32,6 +32,6 @@ if ($c_result_files > 0) {
 	for ($i = 0; $i < $c_result_files; ++$i) {
 		$results_mods['files']['results'][$i]['hyperlink'] = uri('files/details/id_' . $result_files[$i]['id'], 1);
 		$results_mods['files']['results'][$i]['headline'] = $result_files[$i]['link_title'];
-		$results_mods['files']['results'][$i]['text'] = shortenEntry(db::escape($result_files[$i]['text'], 3), 200, 0, '...');
+		$results_mods['files']['results'][$i]['text'] = shortenEntry($db->escape($result_files[$i]['text'], 3), 200, 0, '...');
 	}
 }

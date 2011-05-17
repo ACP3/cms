@@ -55,7 +55,7 @@ class uri
 			}
 
 			// Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-			$alias = $db->select('uri', 'aliases', 'alias = \'' . db::escape(substr($this->query, 0, -1)) . '\' OR alias = \'' . db::escape(substr($this->query, 0, strpos($this->query, '/'))) . '\'');
+			$alias = $db->select('uri', 'aliases', 'alias = \'' . $db->escape(substr($this->query, 0, -1)) . '\' OR alias = \'' . $db->escape(substr($this->query, 0, strpos($this->query, '/'))) . '\'');
 			if (!empty($alias)) {
 				$this->query = $alias[0]['uri'] . substr($this->query, strpos($this->query, '/', 1) + 1);
 			}
@@ -175,15 +175,15 @@ class uri
 		$path.= !preg_match('/\/$/', $path) ? '/' : '';
 
 		// Vorhandenen Alias aktualisieren bzw. wenn der Alias leer ist, diesen löschen
-		if ($db->countRows('*', 'aliases', 'uri = \'' . db::escape($path) . '\'') == 1) {
+		if ($db->countRows('*', 'aliases', 'uri = \'' . $db->escape($path) . '\'') == 1) {
 			if ($alias == '') {
 				$bool = self::deleteUriAlias($path);
 			} else {
-				$bool = $db->update('aliases', array('alias' => $alias), 'uri = \'' . db::escape($path) . '\'');
+				$bool = $db->update('aliases', array('alias' => $alias), 'uri = \'' . $db->escape($path) . '\'');
 			}
 		// Neuer Eintrag in DB
 		} else {
-			$bool = $db->insert('aliases', array('alias' => $alias, 'uri' => db::escape($path)));
+			$bool = $db->insert('aliases', array('alias' => $alias, 'uri' => $db->escape($path)));
 		}
 
 		$bool2 = self::setAliasCache();
@@ -202,7 +202,7 @@ class uri
 
 		$path.= !preg_match('/\/$/', $path) ? '/' : '';
 
-		$bool = $db->delete('aliases', 'uri = \'' . db::escape($path) . '\'');
+		$bool = $db->delete('aliases', 'uri = \'' . $db->escape($path) . '\'');
 		$bool2 = self::setAliasCache();
 		return $bool && $bool2 ? true : false;
 	}

@@ -29,13 +29,13 @@ if ($c_guestbook > 0) {
 			$guestbook[$i]['name'] = $lang->t('users', 'deleted_user');
 			$guestbook[$i]['user_id'] = 0;
 		}
-		$guestbook[$i]['name'] = db::escape(!empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'], 3);
+		$guestbook[$i]['name'] = $db->escape(!empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'], 3);
 		$guestbook[$i]['date'] = $date->format($guestbook[$i]['date'], $settings['dateformat']);
 		$guestbook[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $guestbook[$i]['message']);
 		if ($emoticons) {
 			$guestbook[$i]['message'] = emoticonsReplace($guestbook[$i]['message']);
 		}
-		$guestbook[$i]['website'] = db::escape(strlen($guestbook[$i]['user_website']) > 2 ? substr($guestbook[$i]['user_website'], 0, -2) : $guestbook[$i]['website'], 3);
+		$guestbook[$i]['website'] = $db->escape(strlen($guestbook[$i]['user_website']) > 2 ? substr($guestbook[$i]['user_website'], 0, -2) : $guestbook[$i]['website'], 3);
 		if (!empty($guestbook[$i]['website']) && strpos($guestbook[$i]['website'], 'http://') === false)
 			$guestbook[$i]['website'] = 'http://' . $guestbook[$i]['website'];
 

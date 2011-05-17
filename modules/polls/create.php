@@ -30,7 +30,7 @@ if (isset($_POST['form'])) {
 	} else {
 		$start = $date->timestamp($form['start']);
 		$end = $date->timestamp($form['end']);
-		$question = db::escape($form['question']);
+		$question = $db->escape($form['question']);
 
 		$insert_values = array(
 			'id' => '',
@@ -48,7 +48,7 @@ if (isset($_POST['form'])) {
 				if (!empty($row)) {
 					$insert_answer = array(
 						'id' => '',
-						'text' => db::escape($row),
+						'text' => $db->escape($row),
 						'poll_id' => $poll_id[0]['id'],
 					);
 					$bool2 = $db->insert('poll_answers', $insert_answer);

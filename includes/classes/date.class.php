@@ -49,8 +49,8 @@ class date
 
 		if (!empty($info)) {
 			$this->dst = (int) $info['dst'];
-			$this->date_format_long = db::escape($info['date_format_long'], 3);
-			$this->date_format_short = db::escape($info['date_format_short'], 3);
+			$this->date_format_long = $info['date_format_long'];
+			$this->date_format_short = $info['date_format_short'];
 			$time_zone = (int) $info['time_zone'];
 		} else {
 			$this->dst = (int) CONFIG_DATE_DST;

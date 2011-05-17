@@ -44,7 +44,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 				'pic' => !empty($picNum) && !is_null($picNum[0]['pic']) ? $picNum[0]['pic'] + 1 : 1,
 				'gallery_id' => $uri->id,
 				'file' => $result['name'],
-				'description' => db::escape($form['description'], 2),
+				'description' => $db->escape($form['description'], 2),
 				'comments' => $settings['comments'] == 1 && isset($form['comments']) && $form['comments'] == 1 ? 1 : 0,
 			);
 
@@ -70,7 +70,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 		for ($i = 0; $i < $c_galleries; ++$i) {
 			$galleries[$i]['selected'] = selectEntry('gallery', $galleries[$i]['id'], $uri->id);
 			$galleries[$i]['date'] = $date->format($galleries[$i]['start']);
-			$galleries[$i]['name'] = db::escape($galleries[$i]['name'], 3);
+			$galleries[$i]['name'] = $db->escape($galleries[$i]['name'], 3);
 		}
 
 		$tpl->assign('galleries', $galleries);

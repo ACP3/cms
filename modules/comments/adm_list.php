@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-$module = $uri->module ? db::escape($uri->module) : 0;
+$module = $uri->module ? $db->escape($uri->module) : 0;
 $tpl->assign('module', $module);
 
 if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module = \'' . $module . '\'') == '0') {

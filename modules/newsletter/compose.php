@@ -27,15 +27,15 @@ if (isset($_POST['form'])) {
 		$insert_values = array(
 			'id' => '',
 			'date' => $date->timestamp(),
-			'subject' => db::escape($form['subject']),
-			'text' => db::escape($form['text']),
+			'subject' => $db->escape($form['subject']),
+			'text' => $db->escape($form['text']),
 			'status' => (int) $form['action'],
 		);
 		$bool = $db->insert('newsletter_archive', $insert_values);
 
 		if ($form['action'] == '1' && $bool) {
-			$subject = db::escape($form['subject']);
-			$body = db::escape($form['text']) . "\n" . $settings['mailsig'];
+			$subject = $db->escape($form['subject']);
+			$body = $db->escape($form['text']) . "\n" . $settings['mailsig'];
 
 			// Testnewsletter
 			if ($form['test'] == '1') {

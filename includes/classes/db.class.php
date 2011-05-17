@@ -64,14 +64,14 @@ class db
 	 * 	3 = Slashes entfernen
 	 * @return string
 	 */
-	public static function escape($value, $mode = 1)
+	public function escape($value, $mode = 1)
 	{
 		$value = trim($value);
 
-		if ($mode == 1) {
-			return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-		} elseif ($mode == 2) {
-			return addslashes($value);
+		if ($mode == 1 || $mode == 2) {
+			global $db;
+			$value = $mode == 1 ? htmlspecialchars($value, ENT_QUOTES, 'UTF-8') : $value;
+			return substr($db->link->quote($value), 1, -1);
 		} else {
 			return stripslashes($value);
 		}

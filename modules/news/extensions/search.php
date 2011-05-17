@@ -23,7 +23,7 @@ switch($form['area']) {
 $time = $date->timestamp();
 $period = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
-$result_news = $db->select('id, headline, text', 'news', 'MATCH (' . $fields . ') AGAINST (\'' . db::escape($form['search_term']) . '\' IN BOOLEAN MODE) AND ' . $period, 'start ' . $form['sort'] . ', end ' . $form['sort'] . ', id ' . $form['sort']);
+$result_news = $db->select('id, headline, text', 'news', 'MATCH (' . $fields . ') AGAINST (\'' . $db->escape($form['search_term']) . '\' IN BOOLEAN MODE) AND ' . $period, 'start ' . $form['sort'] . ', end ' . $form['sort'] . ', id ' . $form['sort']);
 $c_result_news = count($result_news);
 
 if ($c_result_news > 0) {
@@ -31,6 +31,6 @@ if ($c_result_news > 0) {
 	for ($i = 0; $i < $c_result_news; ++$i) {
 		$results_mods['news']['results'][$i]['hyperlink'] = uri('news/details/id_' . $result_news[$i]['id'], 1);
 		$results_mods['news']['results'][$i]['headline'] = $result_news[$i]['headline'];
-		$results_mods['news']['results'][$i]['text'] = shortenEntry(db::escape($result_news[$i]['text'], 3), 200, 0, '...');
+		$results_mods['news']['results'][$i]['text'] = shortenEntry($db->escape($result_news[$i]['text'], 3), 200, 0, '...');
 	}
 }

@@ -126,9 +126,9 @@ function insertNode($parent, $insert_values)
 	global $db;
 
 	if (!validate::isNumber($parent) || $db->countRows('*', 'menu_items', 'id = \'' . $parent . '\'') == 0) {
-		$node = $db->select('MAX(right_id) AS right_id', 'menu_items', 'block_id = \'' . db::escape($insert_values['block_id']) . '\'');
+		$node = $db->select('MAX(right_id) AS right_id', 'menu_items', 'block_id = \'' . $db->escape($insert_values['block_id']) . '\'');
 		if (empty($node)) {
-			$node = $db->select('MAX(right_id) AS right_id', 'menu_items', 'block_id < \'' . db::escape($insert_values['block_id']) . '\'', 'block_id DESC');
+			$node = $db->select('MAX(right_id) AS right_id', 'menu_items', 'block_id < \'' . $db->escape($insert_values['block_id']) . '\'', 'block_id DESC');
 		}
 		$insert_values['left_id'] = !empty($node) ? $node[0]['right_id'] + 1 : 1;
 		$insert_values['right_id'] = !empty($node) ? $node[0]['right_id'] + 2 : 2;
@@ -137,7 +137,7 @@ function insertNode($parent, $insert_values)
 		$root = $db->select('LAST_INSERT_ID() AS root_id', 'menu_items');
 
 		$bool2 = $db->update('menu_items', array('root_id' => $root[0]['root_id']), 'id = \'' . $root[0]['root_id'] . '\'');
-		$bool3 = $db->query('UPDATE ' . $db->prefix . 'menu_items SET left_id = left_id + 2, right_id = right_id + 2 WHERE block_id > ' . db::escape($insert_values['block_id']), 0);
+		$bool3 = $db->query('UPDATE ' . $db->prefix . 'menu_items SET left_id = left_id + 2, right_id = right_id + 2 WHERE block_id > ' . $db->escape($insert_values['block_id']), 0);
 
 		return $bool !== null && $bool2 !== null && $bool3 !== null ? true : false;
 	} else {

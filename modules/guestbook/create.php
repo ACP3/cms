@@ -51,10 +51,10 @@ if (isset($_POST['form'])) {
 			'id' => '',
 			'ip' => $ip,
 			'date' => $time,
-			'name' => db::escape($form['name']),
+			'name' => $db->escape($form['name']),
 			'user_id' => $auth->isUser() ? $auth->getUserId() : '',
-			'message' => db::escape($form['message']),
-			'website' => db::escape($form['website'], 2),
+			'message' => $db->escape($form['message']),
+			'website' => $db->escape($form['website'], 2),
 			'mail' => $form['mail'],
 			'active' => $settings['notify'] == 2 ? 0 : 1,
 		);

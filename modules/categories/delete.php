@@ -30,20 +30,20 @@ if (!isset($entries)) {
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'categories', 'id = \'' . $entry . '\'') == '1') {
 			$category = $db->select('picture, module', 'categories', 'id = \'' . $entry . '\'');
-			if ($db->countRows('*', db::escape($category[0]['module'], 3), 'category_id = \'' . $entry . '\'') > 0) {
+			if ($db->countRows('*', $db->escape($category[0]['module'], 3), 'category_id = \'' . $entry . '\'') > 0) {
 				$in_use = 1;
 			} else {
 				// Kategoriebild ebenfalls löschen
 				removeFile('categories', $category[0]['picture']);
 				$bool = $db->delete('categories', 'id = \'' . $entry . '\'');
-				cache::delete('categories_' . db::escape($category[0]['module'], 3));
+				cache::delete('categories_' . $db->escape($category[0]['module'], 3));
 			}
 		}
 	}
 	// Cache für die Kategorien neu erstellen
 	$mods = $db->query('SELECT module FROM ' . $db->prefix . 'categories GROUP BY module');
 	foreach ($mods as $row) {
-		setCategoriesCache(db::escape($row['module'], 3));
+		setCategoriesCache($db->escape($row['module'], 3));
 	}
 
 	if ($in_use) {

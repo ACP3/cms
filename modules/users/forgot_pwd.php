@@ -32,7 +32,7 @@ if ($auth->isUser()) {
 			$host = htmlentities($_SERVER['HTTP_HOST']);
 
 			// Je nachdem welches Feld ausgefüllt wurde, dieses auswählen
-			$where = validate::email($form['nick_mail']) && userEmailExists($form['nick_mail']) ? 'mail = \'' . $form['nick_mail'] . '\'' : 'nickname = \'' . db::escape($form['nick_mail']) . '\'';
+			$where = validate::email($form['nick_mail']) && userEmailExists($form['nick_mail']) ? 'mail = \'' . $form['nick_mail'] . '\'' : 'nickname = \'' . $db->escape($form['nick_mail']) . '\'';
 			$user = $db->select('id, nickname, mail', 'users', $where);
 
 			// E-Mail mit dem neuen Passwort versenden

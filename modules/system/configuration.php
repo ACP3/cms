@@ -42,8 +42,8 @@ if (isset($_POST['form'])) {
 		// Konfig aktualisieren
 		$config = array(
 			'date_dst' => $form['date_dst'],
-			'date_format_long' => db::escape($form['date_format_long']),
-			'date_format_short' => db::escape($form['date_format_short']),
+			'date_format_long' => $db->escape($form['date_format_long']),
+			'date_format_short' => $db->escape($form['date_format_short']),
 			'date_time_zone' => $form['date_time_zone'],
 			'db_host' => CONFIG_DB_HOST,
 			'db_name' => CONFIG_DB_NAME,
@@ -55,12 +55,12 @@ if (isset($_POST['form'])) {
 			'flood' => $form['flood'],
 			'homepage' => $form['homepage'],
 			'lang' => CONFIG_LANG,
-			'maintenance_message' => db::escape($form['maintenance_message']),
+			'maintenance_message' => $db->escape($form['maintenance_message']),
 			'maintenance_mode' => $form['maintenance_mode'],
-			'seo_meta_description' => db::escape($form['seo_meta_description']),
-			'seo_meta_keywords' => db::escape($form['seo_meta_keywords']),
+			'seo_meta_description' => $db->escape($form['seo_meta_description']),
+			'seo_meta_keywords' => $db->escape($form['seo_meta_keywords']),
 			'seo_mod_rewrite' => $form['seo_mod_rewrite'],
-			'seo_title' => db::escape($form['seo_title']),
+			'seo_title' => $db->escape($form['seo_title']),
 			'version' => CONFIG_VERSION,
 			'wysiwyg' => $form['wysiwyg']
 		);

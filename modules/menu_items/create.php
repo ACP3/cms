@@ -52,8 +52,8 @@ if (isset($_POST['form'])) {
 			'mode' => ($form['mode'] == '2' || $form['mode'] == '3') && preg_match('/^(static_pages\/list\/id_([0-9]+)\/)$/', $form['uri']) ? '4' : $form['mode'],
 			'block_id' => $form['block_id'],
 			'display' => $form['display'],
-			'title' => db::escape($form['title']),
-			'uri' => $form['mode'] == '1' ? $form['module'] : ($form['mode'] == '4' ? 'static_pages/list/id_' . $form['static_pages'] . '/' : db::escape($form['uri'], 2)),
+			'title' => $db->escape($form['title']),
+			'uri' => $form['mode'] == '1' ? $form['module'] : ($form['mode'] == '4' ? 'static_pages/list/id_' . $form['static_pages'] . '/' : $db->escape($form['uri'], 2)),
 			'target' => $form['target'],
 		);
 

@@ -45,16 +45,16 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
-				'nickname' => db::escape($form['nickname']),
+				'nickname' => $db->escape($form['nickname']),
 				'access' => $form['access'],
-				'realname' => db::escape($form['realname']) . ':' . $user['realname_display'],
+				'realname' => $db->escape($form['realname']) . ':' . $user['realname_display'],
 				'mail' => $form['mail'] . ':' . $user['mail_display'],
-				'website' => db::escape($form['website'], 2) . ':' . $user['website_display'],
-				'date_format_long' => db::escape($form['date_format_long']),
-				'date_format_short' => db::escape($form['date_format_short']),
+				'website' => $db->escape($form['website'], 2) . ':' . $user['website_display'],
+				'date_format_long' => $db->escape($form['date_format_long']),
+				'date_format_short' => $db->escape($form['date_format_short']),
 				'time_zone' => $form['time_zone'],
 				'dst' => $form['dst'],
-				'language' => db::escape($form['language'], 2),
+				'language' => $db->escape($form['language'], 2),
 				'entries' => (int) $form['entries'],
 			);
 
@@ -95,7 +95,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 			if (!empty($lang_info)) {
 				$name = $lang_info['name'];
 				$languages[$name]['dir'] = $lang_dir[$i];
-				$languages[$name]['selected'] = selectEntry('language', $lang_dir[$i], db::escape($user['language'], 3));
+				$languages[$name]['selected'] = selectEntry('language', $lang_dir[$i], $db->escape($user['language'], 3));
 				$languages[$name]['name'] = $lang_info['name'];
 			}
 		}

@@ -51,7 +51,7 @@ if (isset($_POST['form'])) {
 		} else {
 			$form['filesize'] = (float) $form['filesize'];
 			$new_file = $file;
-			$filesize = $form['filesize'] . ' ' . db::escape($form['unit']);
+			$filesize = $form['filesize'] . ' ' . $db->escape($form['unit']);
 		}
 
 		$insert_values = array(
@@ -61,8 +61,8 @@ if (isset($_POST['form'])) {
 			'category_id' => strlen($form['cat_create']) >= 3 ? categoriesCreate($form['cat_create'], 'files') : $form['cat'],
 			'file' => $new_file,
 			'size' => $filesize,
-			'link_title' => db::escape($form['link_title']),
-			'text' => db::escape($form['text'], 2),
+			'link_title' => $db->escape($form['link_title']),
+			'text' => $db->escape($form['text'], 2),
 			'comments' => $settings['comments'] == 1 && isset($form['comments']) ? 1 : 0,
 		);
 
