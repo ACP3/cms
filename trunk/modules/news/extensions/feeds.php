@@ -19,7 +19,7 @@ if ($c_result > 0) {
 	for ($i = 0; $i < $c_result; ++$i) {
 		$results[$i]['date'] = $date->format($result[$i]['start'], 'r');
 		$results[$i]['title'] = html_entity_decode($result[$i]['headline'], ENT_QUOTES, 'UTF-8');
-		$results[$i]['description'] = shortenEntry(db::escape($result[$i]['text'], 3), 300, 0);
+		$results[$i]['description'] = shortenEntry($db->escape($result[$i]['text'], 3), 300, 0);
 		$results[$i]['uri'] = $link . uri('news/details/id_' . $result[$i]['id'], 1);
 	}
 	$tpl->assign('results', $results);

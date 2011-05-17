@@ -45,16 +45,16 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
-				'nickname' => db::escape($form['nickname']),
-				'realname' => db::escape($form['realname']) . ':' . (isset($form['realname_display']) ? '1' : '0'),
+				'nickname' => $db->escape($form['nickname']),
+				'realname' => $db->escape($form['realname']) . ':' . (isset($form['realname_display']) ? '1' : '0'),
 				'gender' => $form['gender'] . ':' . (isset($form['gender_display']) ? '1' : '0'),
 				'birthday' => $date->timestamp($form['birthday']) . ':' . (isset($form['birthday_display']) ? '1' : '0'),
 				'birthday_format' => $form['birthday_format'],
 				'mail' => $form['mail'] . ':' . (isset($form['mail_display']) ? '1' : '0'),
-				'website' => db::escape($form['website'], 2) . ':' . (isset($form['website_display']) ? '1' : '0'),
+				'website' => $db->escape($form['website'], 2) . ':' . (isset($form['website_display']) ? '1' : '0'),
 				'icq' => $form['icq'] . ':' . (isset($form['icq_display']) ? '1' : '0'),
-				'msn' => db::escape($form['msn'], 2) . ':' . (isset($form['msn_display']) ? '1' : '0'),
-				'skype' => db::escape($form['skype']) . ':' . (isset($form['skype_display']) ? '1' : '0'),
+				'msn' => $db->escape($form['msn'], 2) . ':' . (isset($form['msn_display']) ? '1' : '0'),
+				'skype' => $db->escape($form['skype']) . ':' . (isset($form['skype_display']) ? '1' : '0'),
 			);
 
 			// Neues Passwort

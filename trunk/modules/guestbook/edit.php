@@ -27,8 +27,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
-				'name' => db::escape($form['name']),
-				'message' => db::escape($form['message']),
+				'name' => $db->escape($form['name']),
+				'message' => $db->escape($form['message']),
 				'active' => $settings['notify'] == 2 ? $form['active'] : 1,
 			);
 

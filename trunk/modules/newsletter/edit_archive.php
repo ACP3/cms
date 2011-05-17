@@ -33,15 +33,15 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 			// Newsletter archivieren
 			$update_values = array(
 				'date' => $date->timestamp(),
-				'subject' => db::escape($form['subject']),
-				'text' => db::escape($form['text']),
+				'subject' => $db->escape($form['subject']),
+				'text' => $db->escape($form['text']),
 				'status' => (int) $form['action'],
 			);
 			$bool = $db->update('newsletter_archive', $update_values, 'id = \'' . $uri->id . '\'');
 
 			if ($form['action'] == '1' && $bool) {
-				$subject = db::escape($form['subject']);
-				$body = db::escape($form['text']) . "\n" . $settings['mailsig'];
+				$subject = $db->escape($form['subject']);
+				$body = $db->escape($form['text']) . "\n" . $settings['mailsig'];
 
 				// Testnewsletter
 				if ($form['test'] == '1') {

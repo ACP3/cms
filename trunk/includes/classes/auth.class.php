@@ -46,7 +46,7 @@ class auth
 			$cookie = base64_decode($_COOKIE['ACP3_AUTH']);
 			$cookie_arr = explode('|', $cookie);
 
-			$user_check = $db->select('id, pwd, entries', 'users', 'nickname = \'' . db::escape($cookie_arr[0]) . '\' AND login_errors < 3');
+			$user_check = $db->select('id, pwd, entries', 'users', 'nickname = \'' . $db->escape($cookie_arr[0]) . '\' AND login_errors < 3');
 			if (count($user_check) == 1) {
 				$db_password = substr($user_check[0]['pwd'], 0, 40);
 				if ($db_password == $cookie_arr[1]) {
@@ -96,7 +96,7 @@ class auth
 					$info[0]['mail'] = substr($info[0]['mail'], 0, $pos);
 					$pos = strrpos($info[0]['website'], ':');
 					$info[0]['website_display'] = substr($info[0]['website'], $pos + 1);
-					$info[0]['website'] = db::escape(substr($info[0]['website'], 0, $pos), 3);
+					$info[0]['website'] = $db->escape(substr($info[0]['website'], 0, $pos), 3);
 					$pos = strrpos($info[0]['icq'], ':');
 					$info[0]['icq_display'] = substr($info[0]['icq'], $pos + 1);
 					$info[0]['icq'] = substr($info[0]['icq'], 0, $pos);
@@ -142,7 +142,7 @@ class auth
 	{
 		global $db;
 
-		$user = $db->select('id, pwd, login_errors', 'users', 'nickname = \'' . db::escape($username) . '\'');
+		$user = $db->select('id, pwd, login_errors', 'users', 'nickname = \'' . $db->escape($username) . '\'');
 
 		if (count($user) == 1) {
 			// Useraccount ist gesperrt

@@ -46,7 +46,7 @@ function categoriesCheck($category_id)
 {
 	global $db;
 
-	return $db->countRows('id', 'categories', 'id = \'' . db::escape($category_id) . '\'') == 1 ? true : false;
+	return $db->countRows('id', 'categories', 'id = \'' . $db->escape($category_id) . '\'') == 1 ? true : false;
 }
 /**
  * Überprüft, ob bereits eine Kategorie mit dem selben Namen existiert
@@ -61,7 +61,7 @@ function categoriesCheckDuplicate($name, $module, $category_id = '')
 	global $db;
 
 	$id = validate::isNumber($category_id) ? ' AND id != \'' . $category_id . '\'' : '';
-	return $db->countRows('id', 'categories', 'name = \'' . db::escape($name) . '\' AND module = \'' . db::escape($module) . '\'' . $id) != 0 ? true : false;
+	return $db->countRows('id', 'categories', 'name = \'' . $db->escape($name) . '\' AND module = \'' . $db->escape($module) . '\'' . $id) != 0 ? true : false;
 }
 /**
  * Erzeugt eine neue Kategorie und gibt ihre ID zurück
@@ -77,10 +77,10 @@ function categoriesCreate($name, $module)
 	if (!categoriesCheckDuplicate($name, $module)) {
 		$insert_values = array(
 			'id' => '',
-			'name' => db::escape($name),
+			'name' => $db->escape($name),
 			'picture' => '',
 			'description' => '',
-			'module' => db::escape($module),
+			'module' => $db->escape($module),
 		);
 		$db->link->beginTransaction();
 		$db->insert('categories', $insert_values);

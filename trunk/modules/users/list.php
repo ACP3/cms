@@ -18,7 +18,7 @@ if ($c_users > 0) {
 		$users[$i]['mail'] = substr($users[$i]['mail'], 0, $pos);
 		$pos = strrpos($users[$i]['website'], ':');
 		$users[$i]['website_display'] = substr($users[$i]['website'], $pos + 1);
-		$users[$i]['website'] = db::escape(substr($users[$i]['website'], 0, $pos), 3);
+		$users[$i]['website'] = $db->escape(substr($users[$i]['website'], 0, $pos), 3);
 	}
 	$tpl->assign('users', $users);
 }

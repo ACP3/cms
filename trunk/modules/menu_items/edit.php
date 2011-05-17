@@ -20,7 +20,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 			$errors[] = $lang->t('common', 'select_date');
 		if (!validate::isNumber($form['mode']))
 			$errors[] = $lang->t('menu_items', 'select_page_type');
-		if (($form['mode'] == 2 || $form['mode'] == 4) && !validate::isUriSafe($form['alias']) || validate::UriAliasExists($form['alias'], db::escape($form['uri'])))
+		if (($form['mode'] == 2 || $form['mode'] == 4) && !validate::isUriSafe($form['alias']) || validate::UriAliasExists($form['alias'], $db->escape($form['uri'])))
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 		if (strlen($form['title']) < 3)
 			$errors[] = $lang->t('menu_items', 'title_to_short');
@@ -48,7 +48,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 		} else {
 			// Vorgenommene Änderungen am Datensatz anwenden
 			$mode = ($form['mode'] == '2' || $form['mode'] == '3') && preg_match('/^(static_pages\/list\/id_([0-9]+)\/)$/', $form['uri']) ? '4' : $form['mode'];
-			$uri_type = $form['mode'] == '4' ? 'static_pages/list/id_' . $form['static_pages'] . '/' : db::escape($form['uri'], 2);
+			$uri_type = $form['mode'] == '4' ? 'static_pages/list/id_' . $form['static_pages'] . '/' : $db->escape($form['uri'], 2);
 
 			$update_values = array(
 				'start' => $date->timestamp($form['start']),
@@ -56,7 +56,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 				'mode' => $mode,
 				'block_id' => $form['block_id'],
 				'display' => $form['display'],
-				'title' => db::escape($form['title']),
+				'title' => $db->escape($form['title']),
 				'uri' => $form['mode'] == '1' ? $form['module'] : $uri_type,
 				'target' => $form['target'],
 			);
@@ -73,7 +73,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$page = $db->select('id, start, end, mode, block_id, left_id, right_id, display, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
-		$page[0]['uri'] = db::escape($page[0]['uri'], 3);
+		$page[0]['uri'] = $db->escape($page[0]['uri'], 3);
 		$page[0]['alias'] = $page[0]['mode'] == 2 || $page[0]['mode'] == 4 ? $uri->getUriAlias($page[0]['uri']) : '';
 
 		// Seitentyp

@@ -29,7 +29,7 @@ if (isset($_POST['form'])) {
 		$errors[] = $lang->t('categories', 'invalid_image_selected');
 	if (empty($form['module']))
 		$errors[] = $lang->t('categories', 'select_module');
-	if (strlen($form['name']) >= 3 && categoriesCheckDuplicate(db::escape($form['name']), $form['module']))
+	if (strlen($form['name']) >= 3 && categoriesCheckDuplicate($db->escape($form['name']), $form['module']))
 		$errors[] = $lang->t('categories', 'category_already_exists');
 
 	if (isset($errors)) {
@@ -43,9 +43,9 @@ if (isset($_POST['form'])) {
 
 		$insert_values = array(
 			'id' => '',
-			'name' => db::escape($form['name']),
-			'description' => db::escape($form['description']),
-			'module' => db::escape($form['module'], 2),
+			'name' => $db->escape($form['name']),
+			'description' => $db->escape($form['description']),
+			'module' => $db->escape($form['module'], 2),
 		);
 		if (is_array($file_sql)) {
 			$insert_values = array_merge($insert_values, $file_sql);

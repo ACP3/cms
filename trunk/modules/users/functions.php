@@ -16,7 +16,7 @@
 function userNameExists($nickname, $id = 0)
 {
 	global $db;
-	$nickname = db::escape($nickname);
+	$nickname = $db->escape($nickname);
 	$id = validate::isNumber($id) ? ' AND id != \'' . $id . '\'' : '';
 	return !empty($nickname) && $db->countRows('*', 'users', 'nickname = \'' . $nickname . '\'' . $id) == 1 ? true : false;
 }

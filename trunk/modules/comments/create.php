@@ -37,7 +37,7 @@ function commentsCreate($module, $entry_id)
 			$errors[] = $lang->t('common', 'name_to_short');
 		if (strlen($form['message']) < 3)
 			$errors[] = $lang->t('common', 'message_to_short');
-		if (!modules::check(db::escape($form['module'], 2), 'list') == 1 || !validate::isNumber($form['entry_id']))
+		if (!modules::check($db->escape($form['module'], 2), 'list') == 1 || !validate::isNumber($form['entry_id']))
 			$errors[] = $lang->t('comments', 'module_doesnt_exist');
 		if (!$auth->isUser() && !validate::captcha($form['captcha'], $form['hash']))
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
@@ -49,10 +49,10 @@ function commentsCreate($module, $entry_id)
 				'id' => '',
 				'ip' => $ip,
 				'date' => $time,
-				'name' => $auth->isUser() && validate::isNumber($auth->getUserId()) ? '' : db::escape($form['name']),
+				'name' => $auth->isUser() && validate::isNumber($auth->getUserId()) ? '' : $db->escape($form['name']),
 				'user_id' => $auth->isUser() && validate::isNumber($auth->getUserId()) ? $auth->getUserId() : '',
-				'message' => db::escape($form['message']),
-				'module' => db::escape($form['module'], 2),
+				'message' => $db->escape($form['message']),
+				'module' => $db->escape($form['module'], 2),
 				'entry_id' => $form['entry_id'],
 			);
 

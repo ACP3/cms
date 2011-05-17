@@ -35,8 +35,8 @@ if (isset($_POST['form'])) {
 
 		$insert_values = array(
 		'id' => '',
-		'code' => db::escape($form['code']),
-		'description' => db::escape($form['description']),
+		'code' => $db->escape($form['code']),
+		'description' => $db->escape($form['description']),
 		'img' => $result['name'],
 		);
 

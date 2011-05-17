@@ -27,7 +27,7 @@ if (isset($_POST['form'])) {
 			'id' => '',
 			'start' => $date->timestamp($form['start']),
 			'end' => $date->timestamp($form['end']),
-			'name' => db::escape($form['name']),
+			'name' => $db->escape($form['name']),
 		);
 
 		$bool = $db->insert('gallery', $insert_values);

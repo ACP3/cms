@@ -18,14 +18,14 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'access', 'id = \'' . $u
 
 		if (empty($form['name']))
 			$errors[] = $lang->t('common', 'name_to_short');
-		if (!empty($form['name']) && $db->countRows('*', 'access', 'id != \'' . $uri->id . '\' AND name = \'' . db::escape($form['name']) . '\'') == '1')
+		if (!empty($form['name']) && $db->countRows('*', 'access', 'id != \'' . $uri->id . '\' AND name = \'' . $db->escape($form['name']) . '\'') == '1')
 			$errors[] = $lang->t('access', 'access_level_already_exists');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
-				'name' => db::escape($form['name']),
+				'name' => $db->escape($form['name']),
 				'modules' => buildAccessLevel($form['modules']),
 			);
 

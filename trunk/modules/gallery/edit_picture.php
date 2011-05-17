@@ -43,7 +43,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 			}
 
 			$update_values = array(
-				'description' => db::escape($form['description'], 2),
+				'description' => $db->escape($form['description'], 2),
 				'comments' => $settings['comments'] == 1 && isset($form['comments']) && $form['comments'] == 1 ? 1 : 0,
 			);
 			if (is_array($new_file_sql)) {
@@ -68,7 +68,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 			$tpl->assign('options', $options);
 		}
 
-		$picture[0]['description'] = db::escape($picture[0]['description'], 3);
+		$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
 		$tpl->assign('form', isset($form) ? $form : $picture[0]);
 
 		$content = modules::fetchTemplate('gallery/edit_picture.html');

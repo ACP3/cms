@@ -22,7 +22,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(g.id)', 'gallery AS g, ' 
 	breadcrumb::assign($picture[0]['name'], uri('gallery/pics/id_' . $picture[0]['gallery_id']));
 	breadcrumb::assign($lang->t('gallery', 'details'));
 
-	$picture[0]['description'] = db::escape($picture[0]['description'], 3);
+	$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
 	$tpl->assign('picture', $picture[0]);
 
 	$picture_back = $db->select('id', 'gallery_pictures', 'pic < \'' . $picture[0]['pic'] . '\' AND gallery_id = \'' . $picture[0]['gallery_id'] . '\'', 'pic DESC', 1);
