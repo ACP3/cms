@@ -104,7 +104,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 		$options[1]['lang'] = $lang->t('polls', 'multiple_choice');
 
 		// Übergabe der Daten an Smarty
-		$tpl->assign('publication_period', datepicker(array('start', 'end'), array($poll[0]['start'], $poll[0]['end'])));
+		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($poll[0]['start'], $poll[0]['end'])));
 		$tpl->assign('question', isset($form['question']) ? $form['question'] : $poll[0]['question']);
 		$tpl->assign('options', $options);
 		$tpl->assign('answers', $answers);

@@ -64,7 +64,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 		$news[0]['alias'] = $uri->getUriAlias('news/details/id_' . $uri->id);
 
 		// Datumsauswahl
-		$tpl->assign('publication_period', datepicker(array('start', 'end'), array($news[0]['start'], $news[0]['end'])));
+		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($news[0]['start'], $news[0]['end'])));
 
 		// Kategorien
 		$tpl->assign('categories', categoriesList('news', $news[0]['category_id'], true));

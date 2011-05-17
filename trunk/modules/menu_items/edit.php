@@ -133,7 +133,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 		}
 
 		// Daten an Smarty übergeben
-		$tpl->assign('publication_period', datepicker(array('start', 'end'), array($page[0]['start'], $page[0]['end'])));
+		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($page[0]['start'], $page[0]['end'])));
 		$tpl->assign('mode', $mode);
 		$tpl->assign('blocks', $blocks);
 		$tpl->assign('modules', $modules);

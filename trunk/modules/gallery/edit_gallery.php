@@ -50,7 +50,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 		$tpl->assign('gallery_id', $uri->id);
 
 		// Datumsauswahl
-		$tpl->assign('publication_period', datepicker(array('start', 'end'), array($gallery[0]['start'], $gallery[0]['end'])));
+		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($gallery[0]['start'], $gallery[0]['end'])));
 
 		$tpl->assign('form', isset($form) ? $form : $gallery[0]);
 

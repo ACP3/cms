@@ -60,6 +60,78 @@ class date
 		$this->offset = $time_zone + ($this->dst == 1 ? 3600 : 0);
 	}
 	/**
+	 * Zeigt Dropdown-Menüs für die Veröffentlichungsdauer von Inhalten an
+	 *
+	 * @param mixed $name
+	 * 	Name des jeweiligen Inputfeldes
+	 * @param mixed $value
+	 * 	Der Zeitstempel des jeweiligen Eintrages
+	 * @param string $format
+	 *	Das anzuzeigende Format im Textfeld
+	 * @param array $params
+	 *	Dient dem Festlegen von weiteren Parametern
+	 * @param integer $range
+	 *	1 = Start- und Enddatum anzeigen
+	 *	2 = Einfaches Inputfeld mitsamt Datepicker anzeigen
+	 * @return string
+	 */
+	public function datepicker($name, $value = '', $format = 'Y-m-d H:i', array $params = array(), $range = 1)
+	{
+		global $tpl;
+
+		$datepicker = array(
+			'range' => is_array($name) && $range == 1 ? 1 : 0,
+			'params' => array(
+				'firstDay' => '\'1\'',
+				'dateFormat' => '\'yy-mm-dd\'',
+				'showOn' => '\'button\'',
+				'buttonImage' => '\'' . ROOT_DIR . 'images/crystal/16/cal.png\'',
+				'buttonImageOnly' => 'true',
+				'constrainInput' => 'false',
+			)
+		);
+
+		// Zusätzliche Datepicker-Parameter hinzufügen
+		if (!empty($params) && is_array($params)) {
+			$datepicker['params'] = array_merge($datepicker['params'], $params);
+		}
+
+		// Veröffentlichungszeitraum
+		if (is_array($name) && $range == 1) {
+			if (!empty($_POST['form'][$name[0]]) && !empty($_POST['form'][$name[1]])) {
+				$value_start = $_POST['form'][$name[0]];
+				$value_end = $_POST['form'][$name[1]];
+			} elseif (is_array($value) && validate::isNumber($value[0]) && validate::isNumber($value[1])) {
+				$value_start = $this->format($value[0], $format);
+				$value_end = $this->format($value[1], $format);
+			} else {
+				$value_start = $this->format(time(), $format);
+				$value_end = $this->format(time(), $format);
+			}
+
+			$datepicker['name_start'] = $name[0];
+			$datepicker['name_end'] = $name[1];
+			$datepicker['value_start'] = $value_start;
+			$datepicker['value_end'] = $value_end;
+		// Einfaches Inputfeld mit Datepicker
+		} else {
+			if (!empty($_POST['form'][$name])) {
+				$value = $_POST['form'][$name];
+			} elseif (validate::isNumber($value)) {
+				$value = $this->format($value, $format);
+			} else {
+				$value = $this->format(time(), $format);
+			}
+
+			$datepicker['name'] = $name;
+			$datepicker['value'] = $value;
+		}
+
+		$tpl->assign('datepicker', $datepicker);
+
+		return modules::fetchTemplate('common/date.html');
+	}
+	/**
 	 * Gibt ein formatiertes Datum zurück
 	 *
 	 * @param mixed $time_stamp
