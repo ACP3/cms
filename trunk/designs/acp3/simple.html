@@ -3,15 +3,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$LANG}" lang="{$LANG}">
 <head>
 <title>{$PAGE_TITLE} :: {$TITLE}</title>
-<meta name="description" content="{$DESCRIPTION}" />
-<meta name="keywords" content="{$KEYWORDS}" />
-<script type="text/javascript" src="{$MIN_JAVASCRIPT}"></script>
 <link rel="stylesheet" type="text/css" href="{$DESIGN_PATH}simple.css" />
+<script type="text/javascript" src="{$MIN_JAVASCRIPT}"></script>
+<!--[if lte IE 6]>
+<link rel="stylesheet" type="text/css" href="{$DESIGN_PATH}ie.css" />
+<script type="text/javascript" defer="defer" src="{$DESIGN_PATH}pngfix.js"></script>
+<![endif]-->
 </head>
 
 <body>
-	<div id="content">
-		{$CONTENT}
-	</div>
+<div id="content">
+	{$CONTENT}
+</div>
 </body>
 </html>
