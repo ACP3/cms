@@ -30,7 +30,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 
 		if (empty($file['tmp_name']))
 			$errors[] = $lang->t('gallery', 'no_picture_selected');
-		if (!empty($file['tmp_name']) && !validate::isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']))
+		if (!empty($file['tmp_name']) &&
+			(!validate::isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) ||
+			$_FILES['file']['error'] !== UPLOAD_ERR_OK))
 			$errors[] = $lang->t('gallery', 'invalid_image_selected');
 
 		if (isset($errors)) {
