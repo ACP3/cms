@@ -26,7 +26,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'emoticons', 'id = \'' .
 			$errors[] = $lang->t('emoticons', 'type_in_code');
 		if (empty($form['description']))
 			$errors[] = $lang->t('emoticons', 'type_in_description');
-		if (!empty($file['tmp_name']) && !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']))
+		if (!empty($file['tmp_name']) &&
+			(!validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) ||
+			$_FILES['picture']['error'] !== UPLOAD_ERR_OK))
 			$errors[] = $lang->t('emoticons', 'invalid_image_selected');
 
 		if (isset($errors)) {

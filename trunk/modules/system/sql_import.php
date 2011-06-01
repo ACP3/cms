@@ -17,7 +17,9 @@ if (isset($_POST['form'])) {
 
 	if (empty($form['text']) && empty($file['size']))
 		$errors[] = $lang->t('system', 'type_in_text_or_select_sql_file');
-	if (!empty($file['size']) && !validate::mimeType($file['tmp_name'], 'text/plain'))
+	if (!empty($file['size']) &&
+		(!validate::mimeType($file['tmp_name'], 'text/plain') ||
+		$_FILES['file']['error'] !== UPLOAD_ERR_OK))
 		$errors[] = $lang->t('system', 'select_sql_file');
 
 	if (isset($errors)) {

@@ -30,7 +30,8 @@ if (isset($_POST['form'])) {
 		$errors[] = $lang->t('files', 'type_in_link_title');
 	if (isset($form['external']) && (empty($file) || empty($form['filesize']) || empty($form['unit'])))
 		$errors[] = $lang->t('files', 'type_in_external_resource');
-	if (!isset($form['external']) && (empty($file['tmp_name']) || empty($file['size'])))
+	if (!isset($form['external']) &&
+		(empty($file['tmp_name']) || empty($file['size']) || $_FILES['file_internal']['error'] !== UPLOAD_ERR_OK))
 		$errors[] = $lang->t('files', 'select_internal_resource');
 	if (strlen($form['text']) < 3)
 		$errors[] = $lang->t('files', 'description_to_short');

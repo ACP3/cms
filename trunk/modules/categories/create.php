@@ -25,7 +25,11 @@ if (isset($_POST['form'])) {
 		$errors[] = $lang->t('categories', 'name_to_short');
 	if (strlen($form['description']) < 3)
 		$errors[] = $lang->t('categories', 'description_to_short');
-	if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) || !validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize'])))
+	if (!empty($file) &&
+		(empty($file['tmp_name']) ||
+		empty($file['size']) ||
+		!validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) ||
+		$_FILES['picture']['error'] !== UPLOAD_ERR_OK))
 		$errors[] = $lang->t('categories', 'invalid_image_selected');
 	if (empty($form['module']))
 		$errors[] = $lang->t('categories', 'select_module');
