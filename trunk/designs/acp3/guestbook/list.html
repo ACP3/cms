@@ -6,7 +6,7 @@
 {if isset($guestbook)}
 {$pagination}
 {foreach $guestbook as $row}
-<div class="gb">
+<div id="gb-entry-{$row.id}" class="gb">
 	<div class="header">
 		<div class="author">
 			{lang t="common|author"}

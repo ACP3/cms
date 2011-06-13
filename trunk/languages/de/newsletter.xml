@@ -38,8 +38,8 @@
 	<item key="subscribe_mail_body">Sie haben sich erfolgreich auf der Website {host} beim Newsletter angemeldet.
 Um die Registrierung abzuschließen, klicken Sie bitte auf den untenstehenden Link.
 Falls Sie diese E-Mail fälschlicherweise zugestellt bekommen haben sollten, so ignorieren/löschen Sie sie bitte einfach.</item>
-	<item key="subscribe_mail_subject">Newsletter auf %s</item>
-	<item key="subscribe_success">Das Newsletter wurde erfolgreich erstellt.</item>
+	<item key="subscribe_mail_subject">Willkommen beim Newsletter von %s</item>
+	<item key="subscribe_success">Das Newsletterkonto wurde erfolgreich erstellt.</item>
 	<item key="test_newsletter">Testnewsletter</item>
 	<item key="test_nl_description">Wird nur an die E-Mail-Adresse der Newsletter Einstellungen gesendet</item>
 	<item key="text">Text</item>

@@ -14,6 +14,7 @@ breadcrumb::assign($lang->t('guestbook', 'guestbook'), uri('guestbook'));
 breadcrumb::assign($lang->t('guestbook', 'create'));
 
 $settings = config::output('guestbook');
+$newsletterAccess = modules::check('newsletter', 'create') == 1 && $settings['newsletter_integration'] == 1;
 
 if ($uri->design == 'simple') {
 	$comboColorbox = 1;
@@ -43,6 +44,11 @@ if (isset($_POST['form'])) {
 		$errors[] = $lang->t('common', 'message_to_short');
 	if (!$auth->isUser() && !validate::captcha($form['captcha'], $form['hash']))
 		$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
+	if ($form['subscribe_newsletter'] == 1 && !validate::email($form['mail']))
+		$errors[] = $lang->t('guestbook', 'type_in_email_address_to_subscribe_to_newsletter');
+	if ($form['subscribe_newsletter'] == 1 && validate::email($form['mail']) &&
+		$db->countRows('*', 'newsletter_accounts', 'mail = \'' . $form['mail'] . '\'') == 1)
+		$errors[] = $lang->t('newsletter', 'account_exists');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -61,11 +67,19 @@ if (isset($_POST['form'])) {
 
 		$bool = $db->insert('guestbook', $insert_values);
 
+		// E-Mail-Benachrichtigung bei neuem Eintrag der hinterlegten
+		// E-Mail-Adresse zusenden
 		if ($settings['notify'] == 1 || $settings['notify'] == 2) {
 			$host = 'http://' . htmlentities($_SERVER['HTTP_HOST']);
-			$fullPath = $host . uri('acp/guestbook/edit/id_' . $db->link->lastInsertId());
+			$fullPath = $host . uri('guestbook/list', 1) . '#gb-entry-' . $db->link->lastInsertId();
 			$body = sprintf($settings['notify'] == 1 ? $lang->t('guestbook', 'notification_email_body_1') : $lang->t('guestbook', 'notification_email_body_2'), $host, $fullPath);
 			genEmail('', $settings['notify_email'], $settings['notify_email'], $lang->t('guestbook', 'notification_email_subject'), $body);
+		}
+
+		// Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen
+		if ($newsletterAccess == 1 && $form['subscribe_newsletter'] == 1) {
+			require ACP3_ROOT . 'modules/newsletter/functions.php';
+			subscribeToNewsletter($form['mail']);
 		}
 
 		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('guestbook'), 0, $comboColorbox);
@@ -77,6 +91,13 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		require_once ACP3_ROOT . 'modules/emoticons/functions.php';
 		$tpl->assign('emoticons', emoticonsList());
 	}
+
+	// In Newsletter integrieren
+	if ($newsletterAccess == 1) {
+		$tpl->assign('subscribe_newsletter', selectEntry('subscribe_newsletter', '1', '1', 'checked'));
+		$tpl->assign('LANG_subscribe_to_newsletter', sprintf($lang->t('guestbook', 'subscribe_to_newsletter'), CONFIG_SEO_TITLE));
+	}
+
 	// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
 	if ($auth->isUser()) {
 		$user = $auth->getUserInfo();

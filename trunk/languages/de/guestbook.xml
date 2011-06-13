@@ -9,6 +9,7 @@
 	<item key="guestbook_entries">Gästebucheinträge</item>
 	<item key="ip">IP Adresse</item>
 	<item key="mod_description">Mit diesem Modul kann das Gästebuch verwaltet werden.</item>
+	<item key="newsletter_integration">In Newsletter integrieren</item>
 	<item key="no_notification">Keine Benachrichtigung</item>
 	<item key="notification">Benachrichtigung</item>
 	<item key="notification_email">Zu verwendende E-Mail-Adresse bei Benachrichtigungen</item>
@@ -22,8 +23,11 @@ Bitte klicken Sie auf den unten stehenden Link, um sich den Eintrag anzusehen un
 	<item key="notify_and_enable">Benachrichtigen und durch Administrator freischalten</item>
 	<item key="notify_on_new_entry">Bei neuen Einträgen benachrichtigen</item>
 	<item key="select_emoticons">Bitte wählen Sie aus, ob Emoticons verwendet werden dürfen oder nicht.</item>
+	<item key="select_newsletter_integration">Bitte wählen Sie aus, ob neue Gästebucheinträge in den Newsletter integriert werden sollen, oder nicht.</item>
 	<item key="select_notification_type">Bitte wählen Sie aus, ob auf neue Gästebucheinträge per E-Mail hingewiesen werden soll oder nicht.</item>
 	<item key="send_email">E-Mail senden</item>
 	<item key="settings">Einstellungen</item>
+	<item key="subscribe_to_newsletter">Ja, ich möchte in Zukunft den Newsletter von %s erhalten.</item>
+	<item key="type_in_email_address_to_subscribe_to_newsletter">Um den Newsletter erhalten zu können, müssen Sie ihre E-Mail-Adresse angeben.</item>
 	<item key="visit_website">Website besuchen</item>
 </language>
