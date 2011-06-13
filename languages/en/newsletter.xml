@@ -18,8 +18,6 @@
 	<item key="delete">Delete newsletter accounts</item>
 	<item key="delete_archive">Delete newsletters</item>
 	<item key="edit_archive">Edit newsletter</item>
-	<item key="edit_error">While editing the newsletter settings an error has occured.</item>
-	<item key="edit_success">The newsletter settings were successfully edited.</item>
 	<item key="entry">Subscribe/Unsubscribe the newsletter</item>
 	<item key="mailsig">E-mail signature</item>
 	<item key="mod_description">This module is responsible for the newsletter.</item>
@@ -40,7 +38,7 @@
 	<item key="subscribe_mail_body">You have successfully subscribed to the newsletter of {host}.
 To complete the registration process, please click on the hyperlink below.
 If you haven\'t subscribed this newsletter, please ignore or delete this E-mail.</item>
-	<item key="subscribe_mail_subject">Newsletter at %s</item>
+	<item key="subscribe_mail_subject">Welcome to the newsletter of %s</item>
 	<item key="subscribe_success">The newsletter account has been successfully created.</item>
 	<item key="test_newsletter">Test newsletter</item>
 	<item key="test_nl_description">Will only be send to the E-mail adress which is stated in the newsletter settings</item>

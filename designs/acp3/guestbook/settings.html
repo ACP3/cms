@@ -36,6 +36,17 @@
 {/foreach}
 			</dd>
 {/if}
+{if isset($newsletter_integration)}
+			<dt><label for="newsletter-integration-1">{lang t="guestbook|newsletter_integration"}</label></dt>
+			<dd>
+{foreach $newsletter_integration as $row}
+				<label for="newsletter-integration-{$row.value}">
+					<input type="radio" name="form[newsletter_integration]" id="newsletter-integration-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+					{$row.lang}
+				</label>
+{/foreach}
+			</dd>
+{/if}
 		</dl>
 	</fieldset>
 	<div class="form-bottom">

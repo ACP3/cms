@@ -25,22 +25,10 @@ if (isset($_POST['form'])) {
 			if (isset($errors)) {
 				$tpl->assign('error_msg', comboBox($errors));
 			} else {
-				$hash = md5(mt_rand(0, microtime(true)));
-				$host = htmlentities($_SERVER['HTTP_HOST']);
-				$settings = config::output('newsletter');
+				require ACP3_ROOT . 'modules/newsletter/functions.php';
+				$bool = subscribeToNewsletter($form['mail']);
 
-				$subject = sprintf($lang->t('newsletter', 'subscribe_mail_subject'), $host);
-				$body = str_replace('{host}', $host, $lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
-				$body.= 'http://' . $host . uri('newsletter/activate/hash_' . $hash . '/mail_' . $form['mail']);
-				$mail_sent = genEmail('', $form['mail'], $settings['mail'], $subject, $body);
-
-				// Newsletter-Konto nur erstellen, wenn die E-Mail erfolgreich versendet werden konnte
-				if ($mail_sent) {
-					$insert_values = array('id' => '', 'mail' => $form['mail'], 'hash' => $hash);
-					$bool = $db->insert('newsletter_accounts', $insert_values);
-				}
-
-				$content = comboBox($mail_sent && isset($bool) && $bool ? $lang->t('newsletter', 'subscribe_success') : $lang->t('newsletter', 'subscribe_error'), ROOT_DIR);
+				$content = comboBox($bool ? $lang->t('newsletter', 'subscribe_success') : $lang->t('newsletter', 'subscribe_error'), ROOT_DIR);
 			}
 			break;
 		case 'unsubscribe' :

@@ -16,6 +16,14 @@
 				<textarea name="form[message]" id="message" cols="50" rows="6">{$form.message}</textarea>
 			</dd>
 		</dl>
+{if isset($subscribe_newsletter)}
+<div style="margin:10px 0 0">
+	<label for="subscribe-newsletter">
+		<input type="checkbox" name="form[subscribe_newsletter]" id="subscribe-newsletter" value="1" class="checkbox"{$subscribe_newsletter} />
+		{$LANG_subscribe_to_newsletter}
+	</label>
+</div>
+{/if}
 {$captcha}
 	</fieldset>
 	<div class="form-bottom">

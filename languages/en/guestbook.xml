@@ -9,6 +9,7 @@
 	<item key="guestbook_entries">Guestbook entries</item>
 	<item key="ip">IP Address</item>
 	<item key="mod_description">With this module you can administer the guestbook.</item>
+	<item key="newsletter_integration">Integrate into the newsletter</item>
 	<item key="no_notification">No notification</item>
 	<item key="notification">Notification</item>
 	<item key="notification_email">Notification e-mail address</item>
@@ -22,8 +23,11 @@ Please click on the link below to review and activate the entry (maybe it is nec
 	<item key="notify_and_enable">Nitify and activate through administrator</item>
 	<item key="notify_on_new_entry">Notify on new entries</item>
 	<item key="select_emoticons">Please select, whether you want to allow emoticons or not.</item>
+	<item key="select_newsletter_integration">Bitte wählen Sie aus, ob neue Gästebucheinträge in den Newsletter integriert werden sollen, oder nicht.</item>
 	<item key="select_notification_type">Please select, whether you want to be notified about new guestbook entries or not.</item>
 	<item key="send_email">Send E-mail</item>
 	<item key="settings">Settings</item>
+	<item key="subscribe_to_newsletter">Yes, I want to subscibe to the newsletter of %s.</item>
+	<item key="type_in_email_address_to_subscribe_to_newsletter">The subscribe to this newsletter, you must type in a valid E-mail address.</item>
 	<item key="visit_website">Visit website</item>
 </language>
