@@ -107,10 +107,13 @@ function comboBox($text, $forward = 0, $backward = 0, $colorbox = 0)
  */
 function genEmail($recipient_name, $recipient_email, $from, $subject, $body)
 {
-	require_once './includes/phpmailer/class.phpmailer.php';
+	require_once ACP3_ROOT . 'includes/phpmailer/class.phpmailer.php';
 
 	$mail = new PHPMailer();
+	$mail->IsMail();
 	$mail->CharSet = 'UTF-8';
+	$mail->WordWrap = 80;
+	$mail->Encoding = 'quoted-printable';
 	$mail->SetFrom($from);
 	$mail->AddAddress($recipient_email, $recipient_name);
 	$mail->Subject = $subject;
