@@ -31,7 +31,7 @@ if ($c_guestbook > 0) {
 		}
 		$guestbook[$i]['name'] = $db->escape(!empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'], 3);
 		$guestbook[$i]['date'] = $date->format($guestbook[$i]['date'], $settings['dateformat']);
-		$guestbook[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $guestbook[$i]['message']);
+		$guestbook[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $db->escape($guestbook[$i]['message'], 3));
 		if ($emoticons) {
 			$guestbook[$i]['message'] = emoticonsReplace($guestbook[$i]['message']);
 		}

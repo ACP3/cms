@@ -39,6 +39,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$guestbook = $db->select('name, message, active', 'guestbook', 'id = \'' . $uri->id . '\'');
+		$guestbook[0]['message'] = $db->escape($guestbook[0]['message'], 3);
 
 		if (modules::check('emoticons', 'functions') == 1 && $settings['emoticons'] == 1) {
 			require_once ACP3_ROOT . 'modules/emoticons/functions.php';
