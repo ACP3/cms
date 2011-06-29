@@ -70,7 +70,7 @@ class db
 
 		if ($mode == 1 || $mode == 2) {
 			global $db;
-			$value = $mode == 1 ? htmlspecialchars($value, ENT_QUOTES, 'UTF-8') : $value;
+			$value = $mode == 1 ? htmlentities($value, ENT_QUOTES, 'UTF-8') : $value;
 			return substr($db->link->quote($value), 1, -1);
 		} else {
 			return stripslashes($value);
