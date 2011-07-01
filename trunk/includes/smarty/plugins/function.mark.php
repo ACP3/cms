@@ -1,8 +1,8 @@
 <?php
-function smarty_function_mark($params, &$smarty)
+function smarty_function_mark($params, $template)
 {
-	$smarty->assign('checkbox_name', $params['name']);
-	return $smarty->fetch('common/mark.html');
+	$template->assign('checkbox_name', $params['name']);
+	return $template->fetch('common/mark.html');
 }
 /* vim: set expandtab: */
 ?>

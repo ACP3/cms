@@ -1,5 +1,5 @@
 <?php
-function smarty_function_check_access($params, &$smarty)
+function smarty_function_check_access($params, $template)
 {
 	$action = explode('|', $params['action']);
 	if ($params['mode'] == 'bool') {
@@ -24,7 +24,7 @@ function smarty_function_check_access($params, &$smarty)
 			$access_check['lang'] = $lang->t($action[0], $action[1]);
 		}
 
-		// Dimensionen der Grafik
+		// Dimensionen der Grafik bestimmen
 		if ($params['mode'] == 'link' && isset($params['icon'])) {
 			$access_check['width'] = $access_check['height'] = '';
 
@@ -40,8 +40,8 @@ function smarty_function_check_access($params, &$smarty)
 		}
 
 		$access_check['mode'] = $params['mode'];
-		$smarty->assign('access_check', $access_check);
-		return $smarty->fetch('common/access_check.html');
+		$template->assign('access_check', $access_check);
+		return $template->fetch('common/access_check.html');
 	} elseif ($params['mode'] == 'link' && isset($params['title'])) {
 		return $params['title'];
 	}
