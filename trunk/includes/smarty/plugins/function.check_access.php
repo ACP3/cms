@@ -40,8 +40,8 @@ function smarty_function_check_access($params, $template)
 		}
 
 		$access_check['mode'] = $params['mode'];
-		$template->assign('access_check', $access_check);
-		return $template->fetch('common/access_check.html');
+		$template->smarty->assign('access_check', $access_check);
+		return $template->smarty->fetch('common/access_check.html');
 	} elseif ($params['mode'] == 'link' && isset($params['title'])) {
 		return $params['title'];
 	}
