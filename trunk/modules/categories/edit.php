@@ -65,6 +65,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' 
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$category = $db->select('name, description', 'categories', 'id = \'' . $uri->id . '\'');
+		$category[0]['name'] = $db->escape($category[0]['name'], 3);
+		$category[0]['description'] = $db->escape($category[0]['description'], 3);
+
 		$tpl->assign('form', isset($form) ? $form : $category[0]);
 
 		$content = modules::fetchTemplate('categories/edit.html');

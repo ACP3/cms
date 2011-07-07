@@ -16,8 +16,8 @@ $c_emoticons = count($emoticons);
 if ($c_emoticons > 0) {
 	$tpl->assign('pagination', pagination($db->countRows('*', 'emoticons')));
 	for ($i = 0; $i < $c_emoticons; ++$i) {
-		$emoticons[$i]['code'] = $emoticons[$i]['code'];
-		$emoticons[$i]['description'] = $emoticons[$i]['description'];
+		$emoticons[$i]['code'] = $db->escape($emoticons[$i]['code'], 3);
+		$emoticons[$i]['description'] = $db->escape($emoticons[$i]['description'], 3);
 	}
 	$tpl->assign('emoticons', $emoticons);
 }
