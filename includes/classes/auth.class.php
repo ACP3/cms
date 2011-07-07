@@ -96,7 +96,7 @@ class auth
 					$info[0]['mail'] = substr($info[0]['mail'], 0, $pos);
 					$pos = strrpos($info[0]['website'], ':');
 					$info[0]['website_display'] = substr($info[0]['website'], $pos + 1);
-					$info[0]['website'] = $db->escape(substr($info[0]['website'], 0, $pos), 3);
+					$info[0]['website'] = substr($info[0]['website'], 0, $pos);
 					$pos = strrpos($info[0]['icq'], ':');
 					$info[0]['icq_display'] = substr($info[0]['icq'], $pos + 1);
 					$info[0]['icq'] = substr($info[0]['icq'], 0, $pos);
