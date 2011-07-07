@@ -18,7 +18,7 @@ if ($c_files > 0) {
 	for ($i = 0; $i < $c_files; ++$i) {
 		$files[$i]['period'] = $date->period($files[$i]['start'], $files[$i]['end']);
 		$files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : $lang->t('files', 'unknown_filesize');
-		$files[$i]['link_title'] = $files[$i]['link_title'];
+		$files[$i]['link_title'] = $db->escape($files[$i]['link_title'], 3);
 	}
 	$tpl->assign('files', $files);
 }

@@ -102,7 +102,7 @@ function categoriesCreate($name, $module)
  * @return string
  */
 function categoriesList($module, $category_id = '', $category_create = false, $category_name = 'cat') {
-	global $tpl;
+	global $db, $tpl;
 
 	$categories = array();
 	$data = getCategoriesCache($module);

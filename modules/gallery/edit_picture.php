@@ -14,6 +14,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 	require_once ACP3_ROOT . 'modules/gallery/functions.php';
 
 	$picture = $db->select('p.gallery_id, p.file, p.description, p.comments, g.name AS gallery_name', 'gallery_pictures AS p, ' . $db->prefix . 'gallery AS g', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
+	$picture[0]['gallery_name'] = $db->escape($picture[0]['gallery_name'], 3);
+	$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
 
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
 	breadcrumb::assign($lang->t('gallery', 'gallery'), uri('acp/gallery'));
@@ -70,7 +72,6 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 			$tpl->assign('options', $options);
 		}
 
-		$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
 		$tpl->assign('form', isset($form) ? $form : $picture[0]);
 
 		$content = modules::fetchTemplate('gallery/edit_picture.html');

@@ -73,6 +73,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$page = $db->select('id, start, end, mode, block_id, left_id, right_id, display, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
+		$page[0]['title'] = $db->escape($page[0]['title'], 3);
 		$page[0]['uri'] = $db->escape($page[0]['uri'], 3);
 		$page[0]['alias'] = $page[0]['mode'] == 2 || $page[0]['mode'] == 4 ? $uri->getUriAlias($page[0]['uri']) : '';
 
@@ -91,19 +92,24 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 			$mode[3]['selected'] = selectEntry('mode', '4', $page[0]['mode']);
 			$mode[3]['lang'] = $lang->t('menu_items', 'static_page');
 		}
+		$tpl->assign('mode', $mode);
 
 		// Block
 		$blocks = $db->select('id, title', 'menu_items_blocks', 0, 'title ASC, id ASC');
 		$c_blocks = count($blocks);
 		for ($i = 0; $i < $c_blocks; ++$i) {
+			$blocks[$i]['title'] = $db->escape($blocks[$i]['title'], 3);
 			$blocks[$i]['selected'] = selectEntry('block_id', $blocks[$i]['id'], $page[0]['block_id']);
 		}
+		$tpl->assign('blocks', $blocks);
 
 		// Module
 		$modules = modules::modulesList();
 		foreach ($modules as $row) {
 			$modules[$row['name']]['selected'] = selectEntry('module', $row['dir'], $page[0]['mode'] == '1' ? $page[0]['uri'] : '');
 		}
+		$tpl->assign('modules', $modules);
+
 		if ($page[0]['mode'] == '1')
 			$page[0]['uri'] = '';
 
@@ -114,6 +120,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 		$target[1]['value'] = 2;
 		$target[1]['selected'] = selectEntry('target', '2', $page[0]['target']);
 		$target[1]['lang'] = $lang->t('common', 'window_blank');
+		$tpl->assign('target', $target);
 
 		$display[0]['value'] = 1;
 		$display[0]['selected'] = selectEntry('display', '1', $page[0]['display'], 'checked');
@@ -121,6 +128,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 		$display[1]['value'] = 0;
 		$display[1]['selected'] = selectEntry('display', '0', $page[0]['display'], 'checked');
 		$display[1]['lang'] = $lang->t('common', 'no');
+		$tpl->assign('display', $display);
 
 		if (modules::check('static_pages', 'functions')) {
 			require_once ACP3_ROOT . 'modules/static_pages/functions.php';
@@ -134,11 +142,6 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 
 		// Daten an Smarty übergeben
 		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($page[0]['start'], $page[0]['end'])));
-		$tpl->assign('mode', $mode);
-		$tpl->assign('blocks', $blocks);
-		$tpl->assign('modules', $modules);
-		$tpl->assign('target', $target);
-		$tpl->assign('display', $display);
 		$tpl->assign('form', isset($form) ? $form : $page[0]);
 
 		// Übergeordnete Seite herausfinden
