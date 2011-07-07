@@ -60,7 +60,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$news = $db->select('start, end, headline, text, readmore, comments, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\'');
+		$news[0]['headline'] = $db->escape($news[0]['headline'], 3);
 		$news[0]['text'] = $db->escape($news[0]['text'], 3);
+		$news[0]['link_title'] = $db->escape($news[0]['link_title'], 3);
 		$news[0]['alias'] = $uri->getUriAlias('news/details/id_' . $uri->id);
 
 		// Datumsauswahl
