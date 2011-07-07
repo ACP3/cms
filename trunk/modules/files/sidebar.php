@@ -20,6 +20,7 @@ if ($c_files > 0) {
 	for ($i = 0; $i < $c_files; ++$i) {
 		$files[$i]['start'] = $date->format($files[$i]['start']);
 		$files[$i]['link_title_short'] = shortenEntry($db->escape($files[$i]['link_title'], 3), 30, 5, '...');
+		$files[$i]['link_title'] = $db->escape($files[$i]['link_title'], 3);
 	}
 	$tpl->assign('sidebar_files', $files);
 }

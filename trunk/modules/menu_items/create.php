@@ -83,6 +83,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$mode[3]['selected'] = selectEntry('mode', '4');
 		$mode[3]['lang'] = $lang->t('menu_items', 'static_page');
 	}
+	$tpl->assign('mode', $mode);
 
 	// Block
 	$blocks = $db->select('id, title', 'menu_items_blocks');
@@ -90,12 +91,14 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	for ($i = 0; $i < $c_blocks; ++$i) {
 		$blocks[$i]['selected'] = selectEntry('block_id', $blocks[$i]['id']);
 	}
+	$tpl->assign('blocks', $blocks);
 
 	// Module
 	$modules = modules::modulesList();
 	foreach ($modules as $row) {
 		$modules[$row['name']]['selected'] = selectEntry('module', $row['dir']);
 	}
+	$tpl->assign('modules', $modules);
 
 	// Ziel des Hyperlinks
 	$target[0]['value'] = 1;
@@ -104,6 +107,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$target[1]['value'] = 2;
 	$target[1]['selected'] = selectEntry('target', '2');
 	$target[1]['lang'] = $lang->t('common', 'window_blank');
+	$tpl->assign('target', $target);
 
 	$display[0]['value'] = 1;
 	$display[0]['selected'] = selectEntry('display', '1', '1', 'checked');
@@ -111,6 +115,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$display[1]['value'] = 0;
 	$display[1]['selected'] = selectEntry('display', '0', '', 'checked');
 	$display[1]['lang'] = $lang->t('common', 'no');
+	$tpl->assign('display', $display);
 
 	if (modules::check('static_pages', 'functions')) {
 		require_once ACP3_ROOT . 'modules/static_pages/functions.php';
@@ -126,11 +131,6 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	// Daten an Smarty übergeben
 	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));
-	$tpl->assign('mode', $mode);
-	$tpl->assign('blocks', $blocks);
-	$tpl->assign('modules', $modules);
-	$tpl->assign('target', $target);
-	$tpl->assign('display', $display);
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 	$tpl->assign('pages_list', pagesList());
 

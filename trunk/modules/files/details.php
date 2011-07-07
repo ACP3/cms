@@ -37,6 +37,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		    redirect('errors/404');
 		}
 	} else {
+		$file[0]['link_title'] = $db->escape($file[0]['link_title'], 3);
+		$file[0]['text'] = $db->escape($file[0]['text'], 3);
+
 		// Brotkrümelspur
 		breadcrumb::assign($lang->t('files', 'files'), uri('files'));
 		breadcrumb::assign($file[0]['category_name'], uri('files/files/cat_' . $file[0]['category_id']));

@@ -18,6 +18,11 @@ $blocks = $db->select('id, index_name, title', 'menu_items_blocks', 0, 'title AS
 $c_blocks = count($blocks);
 
 if ($c_blocks > 0) {
+	for ($i = 0; $i < $c_blocks; ++$i) {
+		$blocks[$i]['index_name'] = $db->escape($blocks[$i]['index_name'], 3);
+		$blocks[$i]['title'] = $db->escape($blocks[$i]['title'], 3);
+	}
+
 	$tpl->assign('pagination', pagination($db->countRows('*', 'menu_items_blocks')));
 	$tpl->assign('blocks', $blocks);
 }
