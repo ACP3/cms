@@ -24,7 +24,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 		$answers[$i]['votes'] = $db->countRows('answer_id', 'poll_votes', 'answer_id = \'' . $answers[$i]['id'] . '\'');
 		$answers[$i]['percent'] = $total_votes > '0' ? round(100 * $answers[$i]['votes'] / $total_votes, 2) : '0';
 	}
-	$tpl->assign('question', $question[0]['question']);
+	$tpl->assign('question', $db->escape($question[0]['question'], 3));
 	$tpl->assign('answers', $answers);
 	$tpl->assign('total_votes', $total_votes);
 

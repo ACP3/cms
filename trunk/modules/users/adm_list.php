@@ -17,6 +17,7 @@ if ($c_users > 0) {
 	$tpl->assign('pagination', pagination($db->countRows('*', 'users')));
 
 	for ($i = 0; $i < $c_users; ++$i) {
+		$users[$i]['nickname'] = $db->escape($users[$i]['nickname'], 3);
 		$users[$i]['mail'] = substr($users[$i]['mail'], 0, -2);
 	}
 	$tpl->assign('users', $users);

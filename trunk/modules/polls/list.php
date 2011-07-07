@@ -15,7 +15,7 @@ $c_polls = count($polls);
 
 if ($c_polls > 0) {
 	for ($i = 0; $i < $c_polls; ++$i) {
-		$polls[$i]['question'] = $polls[$i]['question'];
+		$polls[$i]['question'] = $db->escape($polls[$i]['question'], 3);
 
 		// Überprüfen, ob der eingeloogter User schon abgestimmt hat
 		if ($auth->isUser()) {

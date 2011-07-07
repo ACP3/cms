@@ -18,7 +18,7 @@ if ($c_polls > 0) {
 
 	for ($i = 0; $i < $c_polls; ++$i) {
 		$polls[$i]['period'] = $date->period($polls[$i]['start'], $polls[$i]['end']);
-		$polls[$i]['question'] = $polls[$i]['question'];
+		$polls[$i]['question'] = $db->escape($polls[$i]['question'], 3);
 	}
 	$tpl->assign('polls', $polls);
 }
