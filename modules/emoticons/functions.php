@@ -14,6 +14,7 @@
 function setEmoticonsCache()
 {
 	global $db;
+
 	$emoticons = $db->select('code, description, img', 'emoticons', 0, 'code DESC');
 	$c_emoticons = count($emoticons);
 
@@ -52,6 +53,8 @@ function emoticonsList($field_id = 0)
 	$c_emoticons = count($emoticons);
 
 	for ($i = 0; $i < $c_emoticons; ++$i) {
+		$emoticons[$i]['code'] = $db->escape($emoticons[$i]['code'], 3);
+		$emoticons[$i]['description'] = $db->escape($emoticons[$i]['description'], 3);
 		$emoticons[$i]['img'] = ROOT_DIR . 'uploads/emoticons/' . $emoticons[$i]['img'];
 	}
 
@@ -68,13 +71,15 @@ function emoticonsList($field_id = 0)
  */
 function emoticonsReplace($string)
 {
-	global $cache, $db;
+	global $db;
 	static $emoticons = array();
 
-	$emoticons = getEmoticonsCache();
+	if (empty($emoticons))
+		$emoticons = getEmoticonsCache();
 
 	foreach ($emoticons as $row) {
-		$string = str_replace($row['code'], '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $row['img'] . '" width="' . $row['width'] . '" height="' . $row['height'] . '" alt="' . $row['description'] . '" title="' . $row['description'] . '" />', $string);
+		$row['description'] = $db->escape($row['description'], 3);
+		$string = str_replace($db->escape($row['code'], 3), '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $row['img'] . '" width="' . $row['width'] . '" height="' . $row['height'] . '" alt="' . $row['description'] . '" title="' . $row['description'] . '" />', $string);
 	}
 	return $string;
 }

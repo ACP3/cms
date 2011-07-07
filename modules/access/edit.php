@@ -36,6 +36,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'access', 'id = \'' . $u
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$access = $db->select('name, modules', 'access', 'id = \'' . $uri->id . '\'');
+		$access[0]['name'] = $db->escape($access[0]['name'], 3);
 
 		$tpl->assign('form', isset($form) ? $form : $access[0]);
 
