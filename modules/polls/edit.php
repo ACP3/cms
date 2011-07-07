@@ -94,6 +94,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 				$answers[$i]['value'] = $answers[$i]['text'];
 			}
 		}
+		$tpl->assign('answers', $answers);
+
 		$poll = $db->select('start, end, question, multiple', 'poll_question', 'id = \'' . $uri->id . '\'');
 
 		$options[0]['name'] = 'reset';
@@ -102,12 +104,11 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 		$options[1]['name'] = 'multiple';
 		$options[1]['checked'] = selectEntry('multiple', '1', $poll[0]['multiple'], 'checked');
 		$options[1]['lang'] = $lang->t('polls', 'multiple_choice');
+		$tpl->assign('options', $options);
 
 		// Übergabe der Daten an Smarty
 		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($poll[0]['start'], $poll[0]['end'])));
-		$tpl->assign('question', isset($form['question']) ? $form['question'] : $poll[0]['question']);
-		$tpl->assign('options', $options);
-		$tpl->assign('answers', $answers);
+		$tpl->assign('question', isset($form['question']) ? $form['question'] : $db->escape($poll[0]['question'], 3));
 		$tpl->assign('disable', count($answers) < 10 ? false : true);
 
 		$content = modules::fetchTemplate('polls/edit.html');

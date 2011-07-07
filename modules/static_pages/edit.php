@@ -49,6 +49,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$page = getStaticPagesCache($uri->id);
+		$page[0]['title'] = $db->escape($page[0]['title'], 3);
 		$page[0]['text'] = $db->escape($page[0]['text'], 3);
 		$page[0]['alias'] = $uri->getUriAlias('static_pages/list/id_' . $uri->id);
 

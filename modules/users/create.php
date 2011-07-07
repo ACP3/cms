@@ -76,7 +76,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$c_access = count($access);
 
 	for ($i = 0; $i < $c_access; ++$i) {
-		$access[$i]['name'] = $access[$i]['name'];
+		$access[$i]['name'] = $db->escape($access[$i]['name'], 3);
 		$access[$i]['selected'] = selectEntry('access', $access[$i]['id']);
 	}
 	$tpl->assign('access', $access);
