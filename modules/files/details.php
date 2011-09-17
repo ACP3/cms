@@ -23,7 +23,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		if (is_file($path . $file[0]['file'])) {
 			// Schönen Dateinamen generieren
 			$ext = strrchr($file[0]['file'], '.');
-			$filename = makeStringUrlSafe($file[0]['link_title']) . $ext;
+			$filename = makeStringUrlSafe($db->escape($file[0]['link_title'], 3)) . $ext;
 
 			header('Content-Type: application/force-download');
 			header('Content-Transfer-Encoding: binary');
