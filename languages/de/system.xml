@@ -12,7 +12,6 @@
 	<item key="current_version">Aktuelle Version</item>
 	<item key="data_of_table">Daten der Tabelle %s</item>
 	<item key="database">Datenbank</item>
-	<item key="description">Beschreibung</item>
 	<item key="designs">Designs</item>
 	<item key="designs_edit_error">Beim Verändern des Designs ist ein Fehler aufgetreten.</item>
 	<item key="designs_edit_success">Das Design wurde erfolgreich ausgewählt und kann nun verwendet werden.</item>
@@ -38,7 +37,6 @@
 	<item key="homepage_description"><![CDATA[Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein]]></item>
 	<item key="incorrect_homepage"><![CDATA[Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein]]></item>
 	<item key="installed_version">Installierte Version</item>
-	<item key="keywords">Schlüsselwörter</item>
 	<item key="language">Sprache</item>
 	<item key="languages">Sprachen</item>
 	<item key="languages_edit_error">Beim Verändern der Sprache ist ein Fehler aufgetreten.</item>
@@ -89,8 +87,6 @@
 	<item key="select_output">Bittw wählen Sie aus, ob die Sicherung der SQL-Tabellen als Datei oder als Text ausgegeben werden soll.</item>
 	<item key="select_sql_file">Die angegebene Datei ist keine Textdatei</item>
 	<item key="select_sql_tables">Bitte wählen Sie mindestens eine SQL-Tabelle aus, welche exportiert werden soll</item>
-	<item key="seo">SEO</item>
-	<item key="separate_with_commas">Bitte mit Kommata trennen</item>
 	<item key="server_config">Serverkonfiguration</item>
 	<item key="server_infos">Server Informationen</item>
 	<item key="server_software">Server Software</item>

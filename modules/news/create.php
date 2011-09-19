@@ -50,7 +50,7 @@ if (isset($_POST['form'])) {
 		);
 
 		$bool = $db->insert('news', $insert_values);
-		$bool2 = $uri->insertUriAlias($form['alias'], 'news/details/id_' . $db->link->lastInsertID());
+		$bool2 = seo::insertUriAlias($form['alias'], 'news/details/id_' . $db->link->lastInsertID(), $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
 		$content = comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/news'));
 	}
@@ -88,7 +88,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$target[1]['lang'] = $lang->t('common', 'window_blank');
 	$tpl->assign('target', $target);
 
-	$tpl->assign('form', isset($form) ? $form : array('headline' => '', 'text' => '', 'alias' => '', 'uri' => '', 'link_title' => ''));
+	$tpl->assign('form', isset($form) ? $form : array('headline' => '', 'text' => '', 'uri' => '', 'link_title' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => ''));
 
 	$content = modules::fetchTemplate('news/create.html');
 }

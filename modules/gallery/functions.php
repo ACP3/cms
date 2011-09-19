@@ -62,52 +62,52 @@ function getGalleryCache($id)
  */
 function generatePictureAlias($picture_id)
 {
-	global $db, $lang, $uri;
+	global $db, $lang;
 
 	$picture = $db->select('gallery_id', 'gallery_pictures', 'id = \'' . $picture_id . '\'');
-	$gallery_alias = $uri->getUriAlias('gallery/pics/id_' . $picture[0]['gallery_id']);
-	return $uri->insertUriAlias($gallery_alias . '-' . makeStringUrlSafe($lang->t('gallery', 'picture')) . '-' . $picture_id, 'gallery/details/id_' . $picture_id);
+	$alias = seo::getUriAlias('gallery/pics/id_' . $picture[0]['gallery_id']);
+	$alias.= '-' . makeStringUrlSafe($lang->t('gallery', 'picture')) . '-' . $picture_id;
+	$seo_keywords = seo::getKeywordsOrDescription('gallery/pics/id_' . $picture[0]['gallery_id']);
+	$seo_description = seo::getKeywordsOrDescription('gallery/pics/id_' . $picture[0]['gallery_id'], 'description');
+	return seo::insertUriAlias($alias, 'gallery/details/id_' . $picture_id, $seo_keywords, $seo_description);
 }
 /**
- * Setzt alle Bildaliase eine Fotogalerie neu
+ * Setzt alle Bild-Aliase einer Fotogalerie neu
  *
  * @param integer $gallery_id
  * @return boolean
  */
 function generatePictureAliases($gallery_id)
 {
-	global $db, $lang, $uri;
+	global $db;
 
-	$gallery_alias = $uri->getUriAlias('gallery/pics/id_' . $gallery_id);
 	$pictures = $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $gallery_id . '\'');
 	$c_pictures = count($pictures);
 	$bool = false;
 
 	for ($i = 0; $i < $c_pictures; ++$i) {
-		$bool = $uri->insertUriAlias($gallery_alias . '-' . makeStringUrlSafe($lang->t('gallery', 'picture')) . '-' . $pictures[$i]['id'], 'gallery/details/id_' . $pictures[$i]['id']);
-		if (!$bool)
-			break;
+		$bool = generatePictureAlias($pictures[$i]['id']);
 	}
 
 	return $bool;
 }
 /**
  * Sorgt dafür, dass wenn eine Fotogalerie gelöscht wird,
- * auch alle Bildaliase gelöscht werden
+ * auch alle Bild-Aliase gelöscht werden
  *
  * @param integer $gallery_id
  * @return boolean
  */
 function deletePictureAliases($gallery_id)
 {
-	global $db, $uri;
+	global $db;
 
 	$pictures = $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $gallery_id . '\'');
 	$c_pictures = count($pictures);
 	$bool = false;
 
 	for ($i = 0; $i < $c_pictures; ++$i) {
-		$bool = $uri->deleteUriAlias('gallery/details/id_' . $pictures[$i]['id']);
+		$bool = seo::deleteUriAlias('gallery/details/id_' . $pictures[$i]['id']);
 		if (!$bool)
 			break;
 	}

@@ -14,7 +14,7 @@
 function setMenuItemsCache() {
 	global $date, $db, $lang;
 
-	$pages = $db->query('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, a.alias FROM ' . $db->prefix . 'menu_items AS p, ' . $db->prefix . 'menu_items AS n LEFT JOIN ' . $db->prefix . 'aliases AS a ON(a.uri = n.uri) WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
+	$pages = $db->query('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, a.alias FROM ' . $db->prefix . 'menu_items AS p, ' . $db->prefix . 'menu_items AS n LEFT JOIN ' . $db->prefix . 'seo AS a ON(a.uri = n.uri) WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
 	$c_pages = count($pages);
 
 	if ($c_pages > 0) {

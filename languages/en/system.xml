@@ -40,7 +40,6 @@
 	<item key="homepage_description"><![CDATA[To specify a custom homepage, please use the format &quot;module/file/optional_parameters/&quot;.]]></item>
 	<item key="incorrect_homepage"><![CDATA[To specify a custom homepage, please use the format &quot;module/file/optional_parameters/&quot;.]]></item>
 	<item key="installed_version">Installed version</item>
-	<item key="keywords">Keywords</item>
 	<item key="language">Language</item>
 	<item key="languages">Languages</item>
 	<item key="languages_edit_error">While switching the language an error has occured.</item>
@@ -91,8 +90,6 @@
 	<item key="select_output">Please select, whether the backup should be output as a file or a text</item>
 	<item key="select_sql_file">The uploaded file is not a valid textfile</item>
 	<item key="select_sql_tables">Please select at least one SQL-table, that should be exported</item>
-	<item key="seo">SEO</item>
-	<item key="separate_with_commas">Please seperate with commas</item>
 	<item key="server_config">Serverconfiguration</item>
 	<item key="server_infos">Server information</item>
 	<item key="server_software">Server software</item>

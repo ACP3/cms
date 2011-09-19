@@ -183,9 +183,9 @@ class validate
 	/**
 	 *	Überprüft, ob der eingegebene URI-Alias sicher ist, d.h. es dürfen nur
 	 *	die Kleinbuchstaben von a-z, Zahlen und der Bindestrich eingegeben werden
-	 * 
+	 *
 	 * @param string $var
-	 * @return boolean 
+	 * @return boolean
 	 */
 	public static function isUriSafe($var)
 	{
@@ -235,8 +235,8 @@ class validate
 
 				$path.= !preg_match('/\/$/', $path) ? '/' : '';
 				if ($path != '/' && self::internalURI($path)) {
-					return $db->countRows('*', 'aliases', 'alias = \'' . $alias . '\' AND uri != \'' . $path . '\'') > 0 ? true : false;
-				} elseif ($db->countRows('*', 'aliases', 'alias = \'' . $alias . '\'') > 0) {
+					return $db->countRows('*', 'seo', 'alias = \'' . $alias . '\' AND uri != \'' . $path . '\'') > 0 ? true : false;
+				} elseif ($db->countRows('*', 'seo', 'alias = \'' . $alias . '\'') > 0) {
 					return true;
 				}
 			}

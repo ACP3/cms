@@ -55,7 +55,7 @@ class uri
 			}
 
 			// Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-			$alias = $db->select('uri', 'aliases', 'alias = \'' . $db->escape(substr($this->query, 0, -1)) . '\' OR alias = \'' . $db->escape(substr($this->query, 0, strpos($this->query, '/'))) . '\'');
+			$alias = $db->select('uri', 'seo', 'alias = \'' . $db->escape(substr($this->query, 0, -1)) . '\' OR alias = \'' . $db->escape(substr($this->query, 0, strpos($this->query, '/'))) . '\'');
 			if (!empty($alias)) {
 				$this->query = $alias[0]['uri'] . substr($this->query, strpos($this->query, '/', 1) + 1);
 			}
@@ -111,99 +111,5 @@ class uri
 	public function __set($name, $value)
 	{
 		$this->params[$name] = $value;
-	}
-	/**
-	 * Setzt den Cache für die URI-Aliase
-	 *
-	 * @return boolean
-	 */
-	public static function setAliasCache()
-	{
-		global $db;
-
-		$aliases = $db->select('uri, alias', 'aliases');
-		$c_aliases = count($aliases);
-		$data = array();
-
-		for ($i = 0; $i < $c_aliases; ++$i) {
-			$data[$aliases[$i]['uri']] = $aliases[$i]['alias'];
-		}
-
-		return cache::create('aliases', $data);
-	}
-	/**
-	 * Gibt den Cache der URI-Aliase aus
-	 *
-	 * @return array
-	 */
-	public static function getAliasCache()
-	{
-		if (!cache::check('aliases'))
-			self::setAliasCache();
-
-		return cache::output('aliases');
-	}
-	/**
-	 * Gibt einen URI-Alias aus
-	 *
-	 * @param string $path
-	 * @return string
-	 */
-	public static function getUriAlias($path)
-	{
-		static $aliases = array();
-
-		if (empty($aliases)) {
-			$aliases = self::getAliasCache();
-		}
-
-		$path.= !preg_match('/\/$/', $path) ? '/' : '';
-
-		return !empty($aliases[$path]) ? $aliases[$path] : $path;
-	}
-	/**
-	 * Trägt einen URI-Alias in die Datenbank ein bzw. aktualisiert den Eintrag
-	 *
-	 * @param string $alias
-	 * @param string $path
-	 * @return boolean
-	 */
-	public static function insertUriAlias($alias, $path)
-	{
-		global $db;
-
-		$path.= !preg_match('/\/$/', $path) ? '/' : '';
-
-		// Vorhandenen Alias aktualisieren bzw. wenn der Alias leer ist, diesen löschen
-		if ($db->countRows('*', 'aliases', 'uri = \'' . $db->escape($path) . '\'') == 1) {
-			if ($alias == '') {
-				$bool = self::deleteUriAlias($path);
-			} else {
-				$bool = $db->update('aliases', array('alias' => $alias), 'uri = \'' . $db->escape($path) . '\'');
-			}
-		// Neuer Eintrag in DB
-		} else {
-			$bool = $db->insert('aliases', array('alias' => $alias, 'uri' => $db->escape($path)));
-		}
-
-		$bool2 = self::setAliasCache();
-		return $bool && $bool2 ? true : false;
-	}
-	/**
-	 * Löscht einen URI-Alias
-	 *
-	 * @param string $alias
-	 * @param string $path
-	 * @return boolean
-	 */
-	public static function deleteUriAlias($path)
-	{
-		global $db;
-
-		$path.= !preg_match('/\/$/', $path) ? '/' : '';
-
-		$bool = $db->delete('aliases', 'uri = \'' . $db->escape($path) . '\'');
-		$bool2 = self::setAliasCache();
-		return $bool && $bool2 ? true : false;
 	}
 }

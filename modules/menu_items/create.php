@@ -59,7 +59,7 @@ if (isset($_POST['form'])) {
 
 		$bool = insertNode($form['parent'], $insert_values);
 		if ($form['mode'] == 2) {
-			$uri->insertUriAlias($form['alias'], $form['uri']);
+			seo::insertUriAlias($form['alias'], $form['uri']);
 		}
 
 		setMenuItemsCache();

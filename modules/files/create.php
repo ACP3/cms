@@ -69,7 +69,7 @@ if (isset($_POST['form'])) {
 
 
 		$bool = $db->insert('files', $insert_values);
-		$bool2 = $uri->insertUriAlias($form['alias'], 'files/details/id_' . $db->link->lastInsertID());
+		$bool2 = seo::insertUriAlias($form['alias'], 'files/details/id_' . $db->link->lastInsertID(), $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
 		require_once ACP3_ROOT . 'modules/files/functions.php';
 		setFilesCache($db->link->lastInsertId());

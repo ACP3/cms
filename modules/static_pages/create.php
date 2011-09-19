@@ -60,7 +60,7 @@ if (isset($_POST['form'])) {
 		$db->link->beginTransaction();
 		$bool = $db->insert('static_pages', $insert_values);
 		$last_id = $db->link->lastInsertId();
-		$bool2 = $uri->insertUriAlias($form['alias'], 'static_pages/list/id_' . $last_id);
+		$bool2 = seo::insertUriAlias($form['alias'], 'static_pages/list/id_' . $last_id, $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 		$db->link->commit();
 
 		if ($form['create'] == '1' && modules::check('menu_items', 'create') == 1) {
@@ -118,6 +118,8 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		'title' => '',
 		'text' => '',
 		'alias' => '',
+		'seo_keywords' => '',
+		'seo_description' => ''
 	);
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);

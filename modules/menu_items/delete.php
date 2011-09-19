@@ -28,7 +28,7 @@ if (!isset($entries)) {
 	foreach ($marked_entries as $entry) {
 		// URI-Alias löschen
 		$menu_item = $db->select('uri', 'menu_items', 'id = \'' . $entry . '\'');
-		$uri->deleteUriAlias($menu_item[0]['uri']);
+		seo::deleteUriAlias($menu_item[0]['uri']);
 
 		$bool = deleteNode($entry);
 	}

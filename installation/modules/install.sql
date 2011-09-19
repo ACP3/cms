@@ -1,10 +1,3 @@
-CREATE TABLE `{pre}aliases` (
-	`uri` varchar(255) NOT NULL,
-	`alias` varchar(100) NOT NULL,
-	PRIMARY KEY (`uri`),
-	UNIQUE KEY `alias` (`alias`)
-) {engine};
-
 CREATE TABLE `{pre}access` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` VARCHAR(120) NOT NULL,
@@ -53,7 +46,7 @@ CREATE TABLE `{pre}files` (
 	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`link_title`, `text`), INDEX `foreign_category_id` (`category_id`)
 ) {engine};
 
-CREATE TABLE `{pre}gallery` ( 
+CREATE TABLE `{pre}gallery` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`start` VARCHAR(14) NOT NULL,
 	`end` VARCHAR(14) NOT NULL,
@@ -71,7 +64,7 @@ CREATE TABLE `{pre}gallery_pictures` (
 	PRIMARY KEY (`id`), INDEX `foreign_gallery_id` (`gallery_id`)
 ) {engine};
 
-CREATE TABLE `{pre}guestbook` ( 
+CREATE TABLE `{pre}guestbook` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`ip` VARCHAR(40) NOT NULL,
 	`date` VARCHAR(14) NOT NULL,
@@ -107,7 +100,7 @@ CREATE TABLE `{pre}menu_items_blocks` (
 	PRIMARY KEY (`id`)
 ) {engine};
 
-CREATE TABLE `{pre}news` ( 
+CREATE TABLE `{pre}news` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`start` VARCHAR(14) NOT NULL,
 	`end` VARCHAR(14) NOT NULL,
@@ -122,7 +115,7 @@ CREATE TABLE `{pre}news` (
 	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`headline`,`text`), INDEX `foreign_category_id` (`category_id`)
 ) {engine};
 
-CREATE TABLE `{pre}newsletter_accounts` ( 
+CREATE TABLE `{pre}newsletter_accounts` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`mail` VARCHAR(120) NOT NULL,
 	`hash` VARCHAR(32) NOT NULL,
@@ -133,19 +126,19 @@ CREATE TABLE `{pre}newsletter_archive` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`date` VARCHAR(14) NOT NULL,
 	`subject` VARCHAR(120) NOT NULL,
-	`text` TEXT NOT NULL, 
+	`text` TEXT NOT NULL,
 	`status` TINYINT(1) UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine};
 
-CREATE TABLE `{pre}poll_answers` ( 
+CREATE TABLE `{pre}poll_answers` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`text` VARCHAR(120) NOT NULL,
 	`poll_id` INT(10) UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`), INDEX `foreign_poll_id` (`poll_id`)
 ) {engine};
 
-CREATE TABLE `{pre}poll_question` ( 
+CREATE TABLE `{pre}poll_question` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`start` VARCHAR(14) NOT NULL,
 	`end` VARCHAR(14) NOT NULL,
@@ -154,13 +147,22 @@ CREATE TABLE `{pre}poll_question` (
 	PRIMARY KEY (`id`)
 ) {engine};
 
-CREATE TABLE `{pre}poll_votes` ( 
+CREATE TABLE `{pre}poll_votes` (
 	`poll_id` INT(10) UNSIGNED NOT NULL,
 	`answer_id` INT(10) UNSIGNED NOT NULL,
 	`user_id` INT(10) UNSIGNED NOT NULL,
 	`ip` VARCHAR(40) NOT NULL,
 	`time` VARCHAR(14) NOT NULL,
 	INDEX (`poll_id`, `answer_id`, `user_id`)
+) {engine};
+
+CREATE TABLE `{pre}seo` (
+	`uri` varchar(255) NOT NULL,
+	`alias` varchar(100) NOT NULL,
+	`keywords` varchar(255) NOT NULL,
+	`description` varchar(255) NOT NULL,
+	PRIMARY KEY (`uri`),
+	UNIQUE KEY `alias` (`alias`)
 ) {engine};
 
 CREATE TABLE `{pre}static_pages` (
@@ -172,7 +174,7 @@ CREATE TABLE `{pre}static_pages` (
 	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`title`, `text`)
 ) {engine};
 
-CREATE TABLE `{pre}users` ( 
+CREATE TABLE `{pre}users` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`nickname` VARCHAR(30) NOT NULL,
 	`pwd` VARCHAR(53) NOT NULL,

@@ -31,7 +31,7 @@ if (isset($_POST['form'])) {
 		);
 
 		$bool = $db->insert('gallery', $insert_values);
-		$bool2 = $uri->insertUriAlias($form['alias'], 'gallery/pics/id_' . $db->link->lastInsertID());
+		$bool2 = seo::insertUriAlias($form['alias'], 'gallery/pics/id_' . $db->link->lastInsertID(), $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
 		$content = comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/gallery'));
 	}
@@ -40,7 +40,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	// Datumsauswahl
 	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));
 
-	$tpl->assign('form', isset($form) ? $form : array('name' => '', 'alias' => ''));
+	$tpl->assign('form', isset($form) ? $form : array('name' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => ''));
 
 	$content = modules::fetchTemplate('gallery/create.html');
 }

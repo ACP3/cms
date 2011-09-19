@@ -38,6 +38,8 @@
 	<item key="general_statements">General statements</item>
 	<item key="hour">Hour</item>
 	<item key="id">ID</item>
+	<item key="keywords">Keywords</item>
+	<item key="keywords_separate_with_commas">Please seperate with commas</item>
 	<item key="last_page">Last page</item>
 	<item key="mark">Mark</item>
 	<item key="mark_all">Mark all entries</item>
@@ -71,6 +73,7 @@
 	<item key="select_daylight_saving_time">Please select, whether daylight saving time is in effect or not</item>
 	<item key="select_sidebar_entries">Please select, how many entries you want to display inside the Module-Sidebar</item>
 	<item key="select_time_zone">Please select the time zone</item>
+	<item key="seo">SEO</item>
 	<item key="settings_error">While editing the settings an error has occured.</item>
 	<item key="settings_success">The settings have been edited successfully.</item>
 	<item key="sidebar_entries_to_display">Sidebar entries to display</item>
