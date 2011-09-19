@@ -50,6 +50,7 @@ if (isset($_POST['form'])) {
 			'db_password' => CONFIG_DB_PASSWORD,
 			'db_pre' => CONFIG_DB_PRE,
 			'db_user' => CONFIG_DB_USER,
+			'db_version' => CONFIG_DB_VERSION,
 			'design' => CONFIG_DESIGN,
 			'entries' => $form['entries'],
 			'flood' => $form['flood'],

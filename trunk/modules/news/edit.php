@@ -50,7 +50,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 			);
 
 			$bool = $db->update('news', $update_values, 'id = \'' . $uri->id . '\'');
-			$bool2 = $uri->insertUriAlias($form['alias'], 'news/details/id_' . $uri->id);
+			$bool2 = seo::insertUriAlias($form['alias'], 'news/details/id_' . $uri->id, $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
 			require_once ACP3_ROOT . 'modules/news/functions.php';
 			setNewsCache($uri->id);
@@ -63,7 +63,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 		$news[0]['headline'] = $db->escape($news[0]['headline'], 3);
 		$news[0]['text'] = $db->escape($news[0]['text'], 3);
 		$news[0]['link_title'] = $db->escape($news[0]['link_title'], 3);
-		$news[0]['alias'] = $uri->getUriAlias('news/details/id_' . $uri->id);
+		$news[0]['alias'] = seo::getUriAlias('news/details/id_' . $uri->id);
+		$news[0]['seo_keywords'] = seo::getKeywordsOrDescription('news/details/id_' . $uri->id);
+		$news[0]['seo_description'] = seo::getKeywordsOrDescription('news/details/id_' . $uri->id, 'description');
 
 		// Datumsauswahl
 		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($news[0]['start'], $news[0]['end'])));

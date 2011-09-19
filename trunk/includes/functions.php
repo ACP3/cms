@@ -542,7 +542,7 @@ function uri($path, $alias = 0)
 	if ($alias == 1 && !preg_match('/^acp\//', $path)) {
 		global $uri;
 
-		$alias = $uri->getUriAlias($path);
+		$alias = seo::getUriAlias($path);
 		$path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
 	}
 	$prefix = CONFIG_SEO_MOD_REWRITE == '0' || preg_match('/^acp\//', $path) ? PHP_SELF . '/' : ROOT_DIR;

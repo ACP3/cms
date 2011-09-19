@@ -13,7 +13,9 @@ if (!defined('IN_ADM'))
 if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $uri->id . '\'') == '1') {
 	$gallery = $db->select('start, end, name', 'gallery', 'id = \'' . $uri->id . '\'');
 	$gallery[0]['name'] = $db->escape($gallery[0]['name'], 3);
-	$gallery[0]['alias'] = $uri->getUriAlias('gallery/pics/id_' . $uri->id);
+	$gallery[0]['alias'] = seo::getUriAlias('gallery/pics/id_' . $uri->id);
+	$gallery[0]['seo_keywords'] = seo::getKeywordsOrDescription('gallery/pics/id_' . $uri->id);
+	$gallery[0]['seo_description'] = seo::getKeywordsOrDescription('gallery/pics/id_' . $uri->id, 'description');
 
 	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
 	breadcrumb::assign($lang->t('gallery', 'gallery'), uri('acp/gallery'));
@@ -39,7 +41,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			);
 
 			$bool = $db->update('gallery', $update_values, 'id = \'' . $uri->id . '\'');
-			$bool2 = $uri->insertUriAlias($form['alias'], 'gallery/pics/id_' . $uri->id);
+			$bool2 = seo::insertUriAlias($form['alias'], 'gallery/pics/id_' . $uri->id, $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
 			require_once ACP3_ROOT . 'modules/gallery/functions.php';
 			$bool3 = generatePictureAliases($uri->id);

@@ -35,7 +35,7 @@ if (!isset($entries)) {
 			}
 			// Galerie Cache löschen
 			cache::delete('gallery_pics_id_' . $entry);
-			$uri->deleteUriAlias('gallery/pics/id_' . $entry);
+			seo::deleteUriAlias('gallery/pics/id_' . $entry);
 			deletePictureAliases($entry);
 
 			// Fotogalerie mitsamt Bildern löschen

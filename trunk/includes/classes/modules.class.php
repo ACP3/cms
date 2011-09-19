@@ -148,6 +148,8 @@ class modules
 
 				$tpl->assign('TITLE', breadcrumb::output(2));
 				$tpl->assign('BREADCRUMB', breadcrumb::output());
+				$tpl->assign('KEYWORDS', seo::getCurrentKeywordsOrDescription());
+				$tpl->assign('DESCRIPTION', seo::getCurrentKeywordsOrDescription(2));
 				$tpl->assign('CONTENT', !empty($content) ? $content : '');
 
 				// Falls ein Modul ein eigenes Layout verwenden möchte, dieses auch zulassen

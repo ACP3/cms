@@ -81,7 +81,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 			}
 
 			$bool = $db->update('files', $update_values, 'id = \'' . $uri->id . '\'');
-			$bool2 = $uri->insertUriAlias($form['alias'], 'files/details/id_' . $uri->id);
+			$bool2 = seo::insertUriAlias($form['alias'], 'files/details/id_' . $uri->id, $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
 			require_once ACP3_ROOT . 'modules/files/functions.php';
 			setFilesCache($uri->id);
@@ -93,7 +93,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		$dl = $db->select('start, end, category_id, file, size, link_title, text, comments', 'files', 'id = \'' . $uri->id . '\'');
 		$dl[0]['link_title'] = $db->escape($dl[0]['link_title'], 3);
 		$dl[0]['text'] = $db->escape($dl[0]['text'], 3);
-		$dl[0]['alias'] = $uri->getUriAlias('files/details/id_' . $uri->id);
+		$dl[0]['alias'] = seo::getUriAlias('files/details/id_' . $uri->id);
+		$dl[0]['seo_keywords'] = seo::getKeywordsOrDescription('files/details/id_' . $uri->id);
+		$dl[0]['seo_description'] = seo::getKeywordsOrDescription('files/details/id_' . $uri->id, 'description');
 
 		// Datumsauswahl
 		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($dl[0]['start'], $dl[0]['end'])));
@@ -116,7 +118,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 
 		// Formularelemente
 		$tpl->assign('categories', categoriesList('files', $dl[0]['category_id'], true));
-		
+
 		if (modules::check('comments', 'functions') == 1 && $settings['comments'] == 1) {
 			$options = array();
 			$options[0]['name'] = 'comments';

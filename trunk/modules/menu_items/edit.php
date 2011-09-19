@@ -63,7 +63,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 
 			$bool = editNode($uri->id, $form['parent'], $form['block_id'], $update_values);
 			if ($form['mode'] == 2 || $form['mode'] == 4) {
-				$uri->insertUriAlias($form['alias'], $form['uri']);
+				seo::insertUriAlias($form['alias'], $form['uri']);
 			}
 
 			setMenuItemsCache();
@@ -75,7 +75,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 		$page = $db->select('id, start, end, mode, block_id, left_id, right_id, display, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
 		$page[0]['title'] = $db->escape($page[0]['title'], 3);
 		$page[0]['uri'] = $db->escape($page[0]['uri'], 3);
-		$page[0]['alias'] = $page[0]['mode'] == 2 || $page[0]['mode'] == 4 ? $uri->getUriAlias($page[0]['uri']) : '';
+		$page[0]['alias'] = $page[0]['mode'] == 2 || $page[0]['mode'] == 4 ? seo::getUriAlias($page[0]['uri']) : '';
 
 		// Seitentyp
 		$mode[0]['value'] = 1;

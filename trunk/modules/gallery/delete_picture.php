@@ -33,7 +33,7 @@ if (!isset($entries)) {
 			removeFile('gallery', $picture[0]['file']);
 
 			$bool = $db->delete('gallery_pictures', 'id = \'' . $entry . '\'');
-			$uri->deleteUriAlias('gallery/details/id_' . $entry);
+			seo::deleteUriAlias('gallery/details/id_' . $entry);
 			setGalleryCache($picture[0]['gallery_id']);
 		}
 	}

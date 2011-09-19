@@ -38,6 +38,8 @@
 	<item key="general_statements">Allgemeine Angaben</item>
 	<item key="hour">Stunde</item>
 	<item key="id">ID</item>
+	<item key="keywords">Schlüsselwörter</item>
+	<item key="keywords_separate_with_commas">Bitte mit Kommata trennen</item>
 	<item key="last_page">Letzte Seite</item>
 	<item key="mark">Markieren</item>
 	<item key="mark_all">Alle Einträge markieren</item>
@@ -71,6 +73,7 @@
 	<item key="select_daylight_saving_time">Bitte wählen Sie aus, ob gerade Sommerzeit ist oder nicht</item>
 	<item key="select_sidebar_entries">Bitte wählen Sie aus, wie viele Einträge in der Modul-Sidebar angezeigt werden sollen</item>
 	<item key="select_time_zone">Bitte wählen Sie die Zeitzone aus</item>
+	<item key="seo">SEO</item>
 	<item key="settings_error">Beim Bearbeiten der Einstellungen ist ein Fehler aufgetreten.</item>
 	<item key="settings_success">Die Einstellungen wurden erfolgreich aktualisiert.</item>
 	<item key="sidebar_entries_to_display">Anzuzeigende Sidebareinträge</item>

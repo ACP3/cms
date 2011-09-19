@@ -32,7 +32,7 @@ if (!isset($entries)) {
 			if (!empty($page))
 				deleteNode($page[0]['id']);
 			cache::delete('static_pages_list_id_' . $entry);
-			$uri->deleteUriAlias('static_pages/list/id_' . $entry);
+			seo::deleteUriAlias('static_pages/list/id_' . $entry);
 		}
 	}
 	setMenuItemsCache();

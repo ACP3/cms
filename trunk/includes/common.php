@@ -50,8 +50,6 @@ $tpl->assign('ROOT_DIR', ROOT_DIR);
 $tpl->assign('DESIGN_PATH', DESIGN_PATH);
 $tpl->assign('LANG', CONFIG_LANG);
 $tpl->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
-$tpl->assign('KEYWORDS', CONFIG_SEO_META_KEYWORDS);
-$tpl->assign('DESCRIPTION', CONFIG_SEO_META_DESCRIPTION);
 
 // Falls der Wartungsmodus aktiv ist, Wartungsnachricht ausgeben und Skript beenden
 if (CONFIG_MAINTENANCE_MODE == '1' && defined('IN_ACP3')) {

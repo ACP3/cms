@@ -36,7 +36,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 			);
 
 			$bool = $db->update('static_pages', $update_values, 'id = \'' . $uri->id . '\'');
-			$bool2 = $uri->insertUriAlias($form['alias'], 'static_pages/list/id_' . $uri->id);
+			$bool2 = seo::insertUriAlias($form['alias'], 'static_pages/list/id_' . $uri->id, $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
 			setStaticPagesCache($uri->id);
 
@@ -51,7 +51,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 		$page = getStaticPagesCache($uri->id);
 		$page[0]['title'] = $db->escape($page[0]['title'], 3);
 		$page[0]['text'] = $db->escape($page[0]['text'], 3);
-		$page[0]['alias'] = $uri->getUriAlias('static_pages/list/id_' . $uri->id);
+		$page[0]['alias'] = seo::getUriAlias('static_pages/list/id_' . $uri->id);
+		$page[0]['seo_keywords'] = seo::getKeywordsOrDescription('static_pages/list/id_' . $uri->id);
+		$page[0]['seo_description'] = seo::getKeywordsOrDescription('static_pages/list/id_' . $uri->id, 'description');
 
 		// Datumsauswahl
 		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($page[0]['start'], $page[0]['end'])));
