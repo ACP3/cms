@@ -21,7 +21,7 @@ if (!isset($entries)) {
 	$marked_entries = implode('|', $entries);
 	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/files/delete/entries_' . $marked_entries . '/action_confirmed/'), uri('acp/files'));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
-	require_once ACP3_ROOT . 'modules/files/functions.php';
+	require_once MODULES_DIR . 'files/functions.php';
 
 	$marked_entries = explode('|', $entries);
 	$bool = null;

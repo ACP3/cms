@@ -11,7 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' . $uri->id . '\'') == '1') {
-	require_once ACP3_ROOT . 'modules/menu_items/functions.php';
+	require_once MODULES_DIR . 'menu_items/functions.php';
 
 	if (isset($_POST['form'])) {
 		$form = $_POST['form'];
@@ -37,7 +37,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 		if ($form['display'] != '0' && $form['display'] != '1')
 			$errors[] = $lang->t('menu_items', 'select_item_visibility');
 		if (!validate::isNumber($form['target']) ||
-			$form['mode'] == '1' && (!is_dir(ACP3_ROOT . 'modules/' . $form['module']) || preg_match('=/=', $form['module'])) ||
+			$form['mode'] == '1' && (!is_dir(MODULES_DIR . '' . $form['module']) || preg_match('=/=', $form['module'])) ||
 			$form['mode'] == '2' && !validate::internalURI($form['uri']) ||
 			$form['mode'] == '3' && empty($form['uri']) ||
 			$form['mode'] == '4' && (!validate::isNumber($form['static_pages']) || $db->countRows('*', 'static_pages', 'id = \'' . $form['static_pages'] . '\'') == 0))
@@ -131,7 +131,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 		$tpl->assign('display', $display);
 
 		if (modules::check('static_pages', 'functions')) {
-			require_once ACP3_ROOT . 'modules/static_pages/functions.php';
+			require_once MODULES_DIR . 'static_pages/functions.php';
 
 			if (!isset($form) && $page[0]['mode'] == '4') {
 				preg_match_all('/^(static_pages\/list\/id_([0-9]+)\/)$/', $page[0]['uri'], $matches);

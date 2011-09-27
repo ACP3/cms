@@ -14,7 +14,7 @@ $time = $date->timestamp();
 $period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri->id . '\'' . $period) == 1) {
-	require_once ACP3_ROOT . 'modules/news/functions.php';
+	require_once MODULES_DIR . 'news/functions.php';
 
 	$news = getNewsCache($uri->id);
 	// Brotkrümelspur
@@ -40,7 +40,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 	$tpl->assign('news', $news[0]);
 
 	if ($settings['comments'] == 1 && $news[0]['comments'] == 1 && modules::check('comments', 'functions') == 1) {
-		require_once ACP3_ROOT . 'modules/comments/functions.php';
+		require_once MODULES_DIR . 'comments/functions.php';
 
 		$tpl->assign('comments', commentsList('news', $uri->id));
 	}

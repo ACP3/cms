@@ -43,7 +43,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			$bool = $db->update('gallery', $update_values, 'id = \'' . $uri->id . '\'');
 			$bool2 = seo::insertUriAlias($form['alias'], 'gallery/pics/id_' . $uri->id, $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
-			require_once ACP3_ROOT . 'modules/gallery/functions.php';
+			require_once MODULES_DIR . 'gallery/functions.php';
 			$bool3 = generatePictureAliases($uri->id);
 
 			$content = comboBox($bool && $bool2 && $bool3 ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/gallery'));

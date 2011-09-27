@@ -16,7 +16,7 @@ if (modules::check($uri->feed, 'extensions/feeds') == 1) {
 	$tpl->assign('feed', $feed);
 
 	//Einträge einbinden
-	include ACP3_ROOT . 'modules/' . $module . '/extensions/feeds.php';
+	include MODULES_DIR . '' . $module . '/extensions/feeds.php';
 
 	// Content-Type setzen und Layout für den RSS-Feed laden
 	define('CUSTOM_CONTENT_TYPE', 'application/xml');

@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-require_once ACP3_ROOT . 'modules/categories/functions.php';
+require_once MODULES_DIR . 'categories/functions.php';
 
 $settings = config::output('files');
 
@@ -71,7 +71,7 @@ if (isset($_POST['form'])) {
 		$bool = $db->insert('files', $insert_values);
 		$bool2 = seo::insertUriAlias($form['alias'], 'files/details/id_' . $db->link->lastInsertID(), $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
-		require_once ACP3_ROOT . 'modules/files/functions.php';
+		require_once MODULES_DIR . 'files/functions.php';
 		setFilesCache($db->link->lastInsertId());
 
 		$content = comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/files'));

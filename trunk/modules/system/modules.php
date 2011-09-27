@@ -20,7 +20,7 @@ if ($uri->action == 'activate') {
 	if ($info['protected']) {
 		$text = $lang->t('system', 'mod_deactivate_forbidden');
 	} else {
-		$bool = xml::writeToXml(ACP3_ROOT . 'modules/' . $uri->dir . '/module.xml', 'info/*', array('active' => '1'));
+		$bool = xml::writeToXml(MODULES_DIR . '' . $uri->dir . '/module.xml', 'info/*', array('active' => '1'));
 
 		$text = $bool ? $lang->t('system', 'mod_activate_success') : $lang->t('system', 'mod_activate_error');
 	}
@@ -30,7 +30,7 @@ if ($uri->action == 'activate') {
 	if ($info['protected']) {
 		$text = $lang->t('system', 'mod_deactivate_forbidden');
 	} else {
-		$bool = xml::writeToXml(ACP3_ROOT . 'modules/' . $uri->dir . '/module.xml', 'info/*', array('active' => '0'));
+		$bool = xml::writeToXml(MODULES_DIR . '' . $uri->dir . '/module.xml', 'info/*', array('active' => '0'));
 
 		$text = $bool ? $lang->t('system', 'mod_deactivate_success') : $lang->t('system', 'mod_deactivate_error');
 	}

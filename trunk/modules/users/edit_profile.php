@@ -18,7 +18,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 	breadcrumb::assign($lang->t('users', 'edit_profile'));
 
 	if (isset($_POST['form'])) {
-		require_once ACP3_ROOT . 'modules/users/functions.php';
+		require_once MODULES_DIR . 'users/functions.php';
 
 		$form = $_POST['form'];
 

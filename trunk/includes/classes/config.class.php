@@ -24,7 +24,7 @@ class config
 	 */
 	public static function system($data)
 	{
-		$path = ACP3_ROOT . 'includes/config.php';
+		$path = INCLUDES_DIR . 'config.php';
 		if (is_writable($path) && is_array($data)){
 			ksort($data);
 
@@ -53,7 +53,7 @@ class config
 	 */
 	public static function module($module, $data)
 	{
-		return xml::writeToXml(ACP3_ROOT . 'modules/' . $module . '/module.xml', 'settings/*', $data);
+		return xml::writeToXml(MODULES_DIR . '' . $module . '/module.xml', 'settings/*', $data);
 	}
 	/**
 	 * Gibt den Inhalt der Konfigurationsdateien der Module aus
@@ -63,6 +63,6 @@ class config
 	 */
 	public static function output($module)
 	{
-		return xml::parseXmlFile(ACP3_ROOT . 'modules/' . $module . '/module.xml', 'settings');
+		return xml::parseXmlFile(MODULES_DIR . '' . $module . '/module.xml', 'settings');
 	}
 }

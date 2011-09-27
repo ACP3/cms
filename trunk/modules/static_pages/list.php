@@ -14,7 +14,7 @@ $time = $date->timestamp();
 $period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'' . $uri->id . '\'' . $period) == 1) {
-	require_once ACP3_ROOT . 'modules/static_pages/functions.php';
+	require_once MODULES_DIR . 'static_pages/functions.php';
 
 	$page = getStaticPagesCache($uri->id);
 

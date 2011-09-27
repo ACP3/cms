@@ -78,7 +78,7 @@ if (isset($_POST['form'])) {
 
 		// Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen
 		if ($newsletterAccess == 1 && $form['subscribe_newsletter'] == 1) {
-			require ACP3_ROOT . 'modules/newsletter/functions.php';
+			require MODULES_DIR . 'newsletter/functions.php';
 			subscribeToNewsletter($form['mail']);
 		}
 
@@ -88,7 +88,7 @@ if (isset($_POST['form'])) {
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	// Emoticons einbinden
 	if (modules::check('emoticons', 'functions') == 1 && $settings['emoticons'] == 1) {
-		require_once ACP3_ROOT . 'modules/emoticons/functions.php';
+		require_once MODULES_DIR . 'emoticons/functions.php';
 		$tpl->assign('emoticons', emoticonsList());
 	}
 

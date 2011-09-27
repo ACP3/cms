@@ -38,7 +38,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(g.id)', 'gallery AS g, ' 
 		$tpl->assign('picture_next', $picture_next[0]);
 
 	if ($settings['colorbox'] == 0 && $settings['comments'] == 1 && $picture[0]['comments'] == 1 && modules::check('comments', 'functions') == 1) {
-		require_once ACP3_ROOT . 'modules/comments/functions.php';
+		require_once MODULES_DIR . 'comments/functions.php';
 
 		$tpl->assign('comments', commentsList('gallery', $uri->id));
 	}

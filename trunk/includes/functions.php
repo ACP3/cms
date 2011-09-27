@@ -107,7 +107,7 @@ function comboBox($text, $forward = 0, $backward = 0, $colorbox = 0)
  */
 function genEmail($recipient_name, $recipient_email, $from, $subject, $body)
 {
-	require_once ACP3_ROOT . 'includes/phpmailer/class.phpmailer.php';
+	require_once INCLUDES_DIR . 'phpmailer/class.phpmailer.php';
 
 	$mail = new PHPMailer();
 	$mail->IsMail();

@@ -11,7 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $uri->id . '\'') == '1') {
-	require_once ACP3_ROOT . 'modules/categories/functions.php';
+	require_once MODULES_DIR . 'categories/functions.php';
 
 	$settings = config::output('files');
 
@@ -83,7 +83,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 			$bool = $db->update('files', $update_values, 'id = \'' . $uri->id . '\'');
 			$bool2 = seo::insertUriAlias($form['alias'], 'files/details/id_' . $uri->id, $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
-			require_once ACP3_ROOT . 'modules/files/functions.php';
+			require_once MODULES_DIR . 'files/functions.php';
 			setFilesCache($uri->id);
 
 			$content = comboBox($bool && $bool2 ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/files'));

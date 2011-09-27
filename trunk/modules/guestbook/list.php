@@ -21,7 +21,7 @@ if ($c_guestbook > 0) {
 	// Emoticons einbinden
 	$emoticons = modules::check('emoticons', 'functions') == 1 && $settings['emoticons'] == 1 ? true : false;
 	if ($emoticons) {
-		require_once ACP3_ROOT . 'modules/emoticons/functions.php';
+		require_once MODULES_DIR . 'emoticons/functions.php';
 	}
 
 	for ($i = 0; $i < $c_guestbook; ++$i) {

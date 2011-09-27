@@ -31,7 +31,7 @@ if (strlen($uri->hash) == 32 && validate::isMD5($uri->hash)) {
 		$angle = rand(0, 30);
 		$posLeft = 22 * $i + 10;
 		$posTop = rand(20, 25);
-		ImageTTFText($im, $textSize, $angle, $posLeft, $posTop, $textColor, ACP3_ROOT . 'modules/captcha/DejaVuSans.ttf', $captcha[$i]);
+		ImageTTFText($im, $textSize, $angle, $posLeft, $posTop, $textColor, MODULES_DIR . 'captcha/DejaVuSans.ttf', $captcha[$i]);
 	}
 	ImageGif($im, $file);
 	ImageDestroy($im);

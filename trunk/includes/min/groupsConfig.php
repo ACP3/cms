@@ -4,7 +4,7 @@
  * @package Minify
  */
 
-/** 
+/**
  * You may wish to use the Minify URI Builder app to suggest
  * changes. http://yourdomain/min/builder/
  **/
@@ -14,6 +14,7 @@ define('DESIGN_PATH', dirname(__FILE__) . '/../../designs/' . CONFIG_DESIGN . '/
 
 if ($_GET['g'] == 'css') {
 	define('ACP3_ROOT', '../../');
+	define('MODULES_DIR', ACP3_ROOT . 'modules/');
 
 	set_include_path(get_include_path() . PATH_SEPARATOR . ACP3_ROOT . 'includes/classes/');
 	spl_autoload_extensions('.class.php');

@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-require_once ACP3_ROOT . 'modules/access/functions.php';
+require_once MODULES_DIR . 'access/functions.php';
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'access', 'id = \'' . $uri->id . '\'') == '1') {
 	if (isset($_POST['form'])) {

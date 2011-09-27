@@ -11,7 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'' . $uri->id . '\'') == '1') {
-	require_once ACP3_ROOT . 'modules/static_pages/functions.php';
+	require_once MODULES_DIR . 'static_pages/functions.php';
 
 	if (isset($_POST['form'])) {
 		$form = $_POST['form'];
@@ -41,7 +41,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 			setStaticPagesCache($uri->id);
 
 			// Aliase in der Navigation aktualisieren
-			require_once ACP3_ROOT . 'modules/menu_items/functions.php';
+			require_once MODULES_DIR . 'menu_items/functions.php';
 			setMenuItemsCache();
 
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/static_pages'));

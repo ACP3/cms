@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-require_once ACP3_ROOT . 'modules/emoticons/functions.php';
+require_once MODULES_DIR . 'emoticons/functions.php';
 
 if (isset($_POST['form'])) {
 	$form = $_POST['form'];

@@ -21,7 +21,7 @@ if (!isset($entries)) {
 	$marked_entries = implode('|', $entries);
 	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/emoticons/delete/entries_' . $marked_entries . '/action_confirmed/'), uri('acp/emoticons'));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
-	require_once ACP3_ROOT . 'modules/emoticons/functions.php';
+	require_once MODULES_DIR . 'emoticons/functions.php';
 
 	$marked_entries = explode('|', $entries);
 	$bool = null;

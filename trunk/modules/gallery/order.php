@@ -11,7 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (validate::isNumber($uri->id)) {
-	require_once ACP3_ROOT . 'modules/gallery/functions.php';
+	require_once MODULES_DIR . 'gallery/functions.php';
 
 	if (($uri->action == 'up' || $uri->action == 'down') && $db->countRows('*', 'gallery_pictures', 'id = \'' . $uri->id . '\'') == 1) {
 		$gallery = $db->select('g.name, g.id', 'gallery AS g, ' . $db->prefix . 'gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');

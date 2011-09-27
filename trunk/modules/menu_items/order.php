@@ -11,7 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' . $uri->id . '\'') == 1) {
-	require_once ACP3_ROOT . 'modules/menu_items/functions.php';
+	require_once MODULES_DIR . 'menu_items/functions.php';
 
 	$pages = $db->query('SELECT c.id, c.block_id, c.left_id, c.right_id FROM ' . $db->prefix . 'menu_items AS p, ' . $db->prefix . 'menu_items AS c WHERE p.id = \'' . $uri->id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
 
