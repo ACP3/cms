@@ -64,7 +64,7 @@ function commentsCreate($module, $entry_id)
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		// Emoticons einbinden, falls diese aktiv sind
 		if (modules::check('emoticons', 'functions') == 1) {
-			require_once ACP3_ROOT . 'modules/emoticons/functions.php';
+			require_once MODULES_DIR . 'emoticons/functions.php';
 
 			// Emoticons im Formular anzeigen
 			$tpl->assign('emoticons', emoticonsList());

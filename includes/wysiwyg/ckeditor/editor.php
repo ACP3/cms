@@ -22,7 +22,7 @@
 * See http://wiki.fckeditor.net/Developer%27s_Guide/Configuration/Configurations_File for more configuration info.
 */
 function editor($params) {
-	require_once ACP3_ROOT . 'includes/wysiwyg/ckeditor/ckeditor_php5.php';
+	require_once INCLUDES_DIR . 'wysiwyg/ckeditor/ckeditor_php5.php';
 
 	$basepath = ROOT_DIR . 'includes/wysiwyg/ckeditor/';
 	$ckeditor = new CKEditor(ROOT_DIR . 'includes/wysiwyg/ckeditor/');

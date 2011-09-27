@@ -1,12 +1,13 @@
 <?php
 function editor($params) {
 	// Load the TinyMCE compressor class
-	require_once ACP3_ROOT . 'includes/wysiwyg/tinymce/tiny_mce_gzip.php';
+	require_once INCLUDES_DIR . 'wysiwyg/tinymce/tiny_mce_gzip.php';
 
 	$tinymce_options = array(
 		'url' => ROOT_DIR . 'includes/wysiwyg/tinymce/tiny_mce_gzip.php',
 		'themes' => 'advanced',
 		'languages' => 'en',
+		'cache_dir' => ACP3_ROOT . 'cache/',
 	);
 
 	if (isset($params['toolbar']) && $params['toolbar'] == 'simple') {

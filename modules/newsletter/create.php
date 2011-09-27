@@ -25,7 +25,7 @@ if (isset($_POST['form'])) {
 			if (isset($errors)) {
 				$tpl->assign('error_msg', comboBox($errors));
 			} else {
-				require ACP3_ROOT . 'modules/newsletter/functions.php';
+				require MODULES_DIR . 'newsletter/functions.php';
 				$bool = subscribeToNewsletter($form['mail']);
 
 				$content = comboBox($bool ? $lang->t('newsletter', 'subscribe_success') : $lang->t('newsletter', 'subscribe_error'), ROOT_DIR);

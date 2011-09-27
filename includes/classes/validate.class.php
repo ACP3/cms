@@ -228,7 +228,7 @@ class validate
 	public static function UriAliasExists($alias, $path = '')
 	{
 		if (self::isUriSafe($alias)) {
-			if (is_dir(ACP3_ROOT . 'modules/' . $alias)) {
+			if (is_dir(MODULES_DIR . '' . $alias)) {
 				return true;
 			} else {
 				global $db;

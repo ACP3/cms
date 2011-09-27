@@ -24,7 +24,7 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = $bool2 = null;
 
-	require_once ACP3_ROOT . 'modules/gallery/functions.php';
+	require_once MODULES_DIR . 'gallery/functions.php';
 
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'gallery', 'id = \'' . $entry . '\'') == '1') {

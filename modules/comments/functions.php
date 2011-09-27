@@ -42,7 +42,7 @@ function commentsList($module, $entry_id)
 	// Emoticons einbinden, falls diese aktiv sind
 	$emoticons = modules::check('emoticons', 'functions') == 1 ? true : false;
 	if ($emoticons) {
-		require_once ACP3_ROOT . 'modules/emoticons/functions.php';
+		require_once MODULES_DIR . 'emoticons/functions.php';
 	}
 
 	if ($c_comments > 0) {
@@ -68,7 +68,7 @@ function commentsList($module, $entry_id)
 	$content = modules::fetchTemplate('comments/list.html');
 
 	if (modules::check('comments', 'create') == 1) {
-		require_once ACP3_ROOT . 'modules/comments/create.php';
+		require_once MODULES_DIR . 'comments/create.php';
 		$content.= commentsCreate($module, $entry_id);
 	}
 

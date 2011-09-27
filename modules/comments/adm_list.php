@@ -40,7 +40,7 @@ if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module
 		$emoticons = false;
 		// Emoticons einbinden
 		if (modules::check('emoticons', 'functions') == 1) {
-			require_once ACP3_ROOT . 'modules/emoticons/functions.php';
+			require_once MODULES_DIR . 'emoticons/functions.php';
 			$emoticons = true;
 		}
 

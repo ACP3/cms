@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-require_once ACP3_ROOT . 'modules/categories/functions.php';
+require_once MODULES_DIR . 'categories/functions.php';
 
 $settings = config::output('news');
 

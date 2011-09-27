@@ -9,7 +9,7 @@ if ($auth->isUser()) {
 	breadcrumb::assign($lang->t('users', 'forgot_pwd'));
 
 	if (isset($_POST['form'])) {
-		require_once ACP3_ROOT . 'modules/users/functions.php';
+		require_once MODULES_DIR . 'users/functions.php';
 
 		$form = $_POST['form'];
 

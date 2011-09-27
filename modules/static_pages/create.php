@@ -11,7 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (modules::check('menu_items', 'create') == 1)
-	require_once ACP3_ROOT . 'modules/menu_items/functions.php';
+	require_once MODULES_DIR . 'menu_items/functions.php';
 
 if (isset($_POST['form'])) {
 	$form = $_POST['form'];

@@ -21,18 +21,20 @@ if (!defined('INSTALLED')) {
 $reporting_level = defined('DEBUG') && DEBUG ? E_ALL : 0;
 error_reporting($reporting_level);
 
-set_include_path(get_include_path() . PATH_SEPARATOR . ACP3_ROOT . 'includes/classes/');
-spl_autoload_extensions('.class.php');
-spl_autoload_register();
-
 // Einige Konstanten definieren
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
 $php_self = dirname(PHP_SELF);
 define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
 define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
+define('MODULES_DIR', ACP3_ROOT . 'modules/');
+define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
+
+set_include_path(get_include_path() . PATH_SEPARATOR . INCLUDES_DIR . 'classes/');
+spl_autoload_extensions('.class.php');
+spl_autoload_register();
 
 // Smarty einbinden
-require ACP3_ROOT . 'includes/smarty/Smarty.class.php';
+require INCLUDES_DIR . 'smarty/Smarty.class.php';
 $tpl = new Smarty();
 $tpl->setTemplateDir(ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/');
 $tpl->setCompileDir(ACP3_ROOT . 'cache/');
@@ -72,7 +74,7 @@ $minify = ROOT_DIR . 'includes/min/' . (CONFIG_SEO_MOD_REWRITE == 1 && defined('
 $tpl->assign('MIN_JAVASCRIPT', sprintf($minify, 'js'));
 $tpl->assign('MIN_STYLESHEET', sprintf($minify, 'css'));
 
-require_once ACP3_ROOT . 'includes/functions.php';
+require_once INCLUDES_DIR . 'functions.php';
 $auth = new auth();
 $lang = new lang();
 $date = new date();

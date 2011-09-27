@@ -33,8 +33,8 @@ class modules
 		$module = !empty($module) ? $module : $uri->mod;
 		$page = !empty($page) ? $page : $uri->page;
 
-		if (is_file(ACP3_ROOT . 'modules/' . $module . '/' . $page . '.php')) {
-			$xml = simplexml_load_file(ACP3_ROOT . 'modules/' . $module . '/module.xml');
+		if (is_file(MODULES_DIR . '' . $module . '/' . $page . '.php')) {
+			$xml = simplexml_load_file(MODULES_DIR . '' . $module . '/module.xml');
 
 			if ((string) $xml->info->active == '1') {
 				// Falls die einzelnen Zugriffslevel auf die Module noch nicht
@@ -114,7 +114,7 @@ class modules
 		static $mod_list = array();
 
 		if (empty($mod_list)) {
-			$uri_dir = scandir(ACP3_ROOT . 'modules/');
+			$uri_dir = scandir(MODULES_DIR);
 			foreach ($uri_dir as $module) {
 				$info = self::parseInfo($module);
 				if (!empty($info)) {
@@ -141,7 +141,7 @@ class modules
 			case 1:
 				global $date, $db, $lang, $tpl;
 
-				require ACP3_ROOT . 'modules/' . $uri->mod . '/' . $uri->page . '.php';
+				require MODULES_DIR . '' . $uri->mod . '/' . $uri->page . '.php';
 
 				// Evtl. gesetzten Content-Type des Servers überschreiben
 				header('Content-Type: ' . (defined('CUSTOM_CONTENT_TYPE') ? CUSTOM_CONTENT_TYPE : 'text/html') . '; charset=UTF-8');
@@ -198,7 +198,7 @@ class modules
 		static $parsed_modules = array();
 
 		if (empty($parsed_modules[$module]) && !preg_match('=/=', $module)) {
-			$mod_info = xml::parseXmlFile(ACP3_ROOT . 'modules/' . $module . '/module.xml', 'info');
+			$mod_info = xml::parseXmlFile(MODULES_DIR . '' . $module . '/module.xml', 'info');
 
 			if (is_array($mod_info)) {
 				global $lang;

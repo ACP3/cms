@@ -43,7 +43,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		if (modules::check('emoticons', 'functions') == 1) {
-			require_once ACP3_ROOT . 'modules/emoticons/functions.php';
+			require_once MODULES_DIR . 'emoticons/functions.php';
 
 			// Emoticons im Formular anzeigen
 			$tpl->assign('emoticons', emoticonsList());

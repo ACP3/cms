@@ -71,6 +71,9 @@ if (!empty($queries[CONFIG_DB_VERSION + 1])) {
 	}
 
 	$db->link->commit();
+
+	print "\n" . ($bool ? 'Die Datenbank wurde erfolgreich aktualisiert!' : 'Mindestens eine Datenbankänderung konnte nicht durchgeführt werden!') . "\n";
+	print "\n----------------------------\n\n";
 }
 
 if (CONFIG_DB_VERSION < 1) {
@@ -120,9 +123,6 @@ if (CONFIG_DB_VERSION < 1) {
 		seo::insertUriAlias(makeStringUrlSafe($files[$i]['link_title']), 'files/details/id_' . $files[$i]['id']);
 	}
 	$db->link->commit();
-
-	print "\n" . ($bool ? 'Die Datenbank wurde erfolgreich aktualisiert!' : 'Mindestens eine Datenbankänderung konnte nicht durchgeführt werden!') . "\n";
-	print "\n----------------------------\n\n";
 }
 
 // Konfigurationsdatei aktualisieren
