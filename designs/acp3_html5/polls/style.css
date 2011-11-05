@@ -1,0 +1,42 @@
+.poll {
+	width: 40%;
+	margin: 0 auto;
+	border: 1px solid #333;
+	text-align: left;
+}
+.poll h4 {
+	padding: 0 5px;
+	background: url('../images/common_header.png') repeat-x;
+	border-bottom: 1px solid #333;
+	line-height: 25px;
+	color: #f90;
+	text-align: center;
+}
+.poll label {
+	padding: 5px;
+	display: block;
+}
+.poll label.light {
+	background: #fefefe;
+}
+.poll label.dark {
+	background: #eee;
+}
+.poll label input {
+	margin: 0 5px;
+}
+#sidebar-polls {
+	padding: 5px 0;
+	background: #eee;
+	text-align: center;
+}
+#sidebar-polls ul {
+	margin: 5px 0;
+}
+#sidebar-polls ul li {
+	width: auto;
+	padding-left: 15px;
+	border: 0;
+	text-align: left;
+	float: none;
+}
