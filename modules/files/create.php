@@ -113,6 +113,8 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		'filesize' => '',
 		'text' => '',
 		'alias' => '',
+		'seo_keywords' => '',
+		'seo_description' => '',
 	);
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);
