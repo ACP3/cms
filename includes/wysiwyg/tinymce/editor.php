@@ -27,6 +27,9 @@ function editor($params) {
 	$out.= 'theme : "advanced",' . "\n";
 	$out.= 'theme_advanced_toolbar_location : "top",' . "\n";
 	$out.= 'theme_advanced_toolbar_align : "left",' . "\n";
+	$out.= 'convert_urls : false,' . "\n";
+	$out.= 'entity_encoding : "raw",' . "\n";
+	$out.= 'constrain_menus : true,' . "\n";
 
 	if (isset($params['toolbar']) && $params['toolbar'] == 'simple') {
 		$out.= 'plugins : "inlinepopups,contextmenu",' . "\n";
