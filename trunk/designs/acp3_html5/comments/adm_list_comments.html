@@ -4,7 +4,7 @@
 		{check_access mode="input" action="comments|delete_comments" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
-	<hr />
+	<hr>
 {$pagination}
 {assign var="can_delete" value=modules::check("comments", "delete_comments")}
 	<table class="acp-table">
@@ -24,7 +24,7 @@
 {foreach $comments as $row}
 			<tr>
 {if $can_delete}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td>{$row.date}</td>
 				<td>{check_access mode="link" action="comments|edit" uri="acp/comments/edit/id_`$row.id`" title=$row.name}</td>

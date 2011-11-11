@@ -6,7 +6,7 @@
 		<legend>{lang t="gallery|picture_information"}</legend>
 		<dl>
 			<dt><label for="file">{lang t="gallery|select_new_picture"}</label></dt>
-			<dd><input type="file" name="file" id="file" /></dd>
+			<dd><input type="file" name="file" id="file"></dd>
 			<dt><label for="description">{lang t="common|description"}</label></dt>
 			<dd>{wysiwyg name="description" value="`$form.description`" height="150" toolbar="simple"}</dd>
 {if isset($options)}
@@ -16,7 +16,7 @@
 {foreach $options as $row}
 					<li>
 						<label for="{$row.name}">
-							<input type="checkbox" name="form[{$row.name}]" id="{$row.name}" value="1" class="checkbox"{$row.checked} />
+							<input type="checkbox" name="form[{$row.name}]" id="{$row.name}" value="1" class="checkbox"{$row.checked}>
 							{$row.lang}
 						</label>
 					</li>
@@ -27,6 +27,6 @@
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form">
 	</div>
 </form>

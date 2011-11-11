@@ -34,9 +34,9 @@
 					<label for="date-format-long">{lang t="common|date_format_long"}</label>
 					<span>({lang t="system|php_date_function"})</span>
 				</dt>
-				<dd><input type="text" name="form[date_format_long]" id="date-format-long" value="{$form.date_format_long}" maxlength="20" required /></dd>
+				<dd><input type="text" name="form[date_format_long]" id="date-format-long" value="{$form.date_format_long}" maxlength="20" required></dd>
 				<dt><label for="date-format-short">{lang t="common|date_format_short"}</label></dt>
-				<dd><input type="text" name="form[date_format_short]" id="date-format-short" value="{$form.date_format_short}" maxlength="20" required /></dd>
+				<dd><input type="text" name="form[date_format_short]" id="date-format-short" value="{$form.date_format_short}" maxlength="20" required></dd>
 				<dt><label for="time_zone">{lang t="common|time_zone"}</label></dt>
 				<dd>
 					<select name="form[time_zone]" id="time_zone" required>
@@ -49,7 +49,7 @@
 				<dd>
 {foreach $dst as $row}
 					<label for="dst-{$row.value}">
-						<input type="radio" name="form[dst]" id="dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+						<input type="radio" name="form[dst]" id="dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 						{$row.lang}
 					</label>
 {/foreach}
@@ -58,6 +58,6 @@
 		</div>
 	</div>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form">
 	</div>
 </form>

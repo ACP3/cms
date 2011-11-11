@@ -12,13 +12,13 @@
 		<div id="tab-1">
 			<dl>
 				<dt><label for="nickname">{lang t="users|nickname"}</label></dt>
-				<dd><input type="text" name="form[nickname]" id="nickname" value="{$form.nickname}" maxlength="30" required /></dd>
+				<dd><input type="text" name="form[nickname]" id="nickname" value="{$form.nickname}" maxlength="30" required></dd>
 				<dt><label for="realname">{lang t="users|realname"}</label></dt>
-				<dd><input type="text" name="form[realname]" id="realname" value="{$form.realname}" maxlength="80" /></dd>
+				<dd><input type="text" name="form[realname]" id="realname" value="{$form.realname}" maxlength="80"></dd>
 				<dt><label for="mail">{lang t="common|email"}</label></dt>
-				<dd><input type="email" name="form[mail]" id="mail" value="{$form.mail}" maxlength="120" required /></dd>
+				<dd><input type="email" name="form[mail]" id="mail" value="{$form.mail}" maxlength="120" required></dd>
 				<dt><label for="website">{lang t="common|website"}</label></dt>
-				<dd><input type="url" name="form[website]" id="website" value="{$form.website}" maxlength="120" /></dd>
+				<dd><input type="url" name="form[website]" id="website" value="{$form.website}" maxlength="120"></dd>
 				<dt><label for="access">{lang t="access|access"}</label></dt>
 				<dd>
 					<select name="form[access]" id="access" required>
@@ -57,9 +57,9 @@
 					<label for="date-format-long">{lang t="common|date_format_long"}</label>
 					<span>({lang t="system|php_date_function"})</span>
 				</dt>
-				<dd><input type="text" name="form[date_format_long]" id="date-format-long" value="{$form.date_format_long}" maxlength="20" required /></dd>
+				<dd><input type="text" name="form[date_format_long]" id="date-format-long" value="{$form.date_format_long}" maxlength="20" required></dd>
 				<dt><label for="date-format-short">{lang t="common|date_format_short"}</label></dt>
-				<dd><input type="text" name="form[date_format_short]" id="date-format-short" value="{$form.date_format_short}" maxlength="20" required /></dd>
+				<dd><input type="text" name="form[date_format_short]" id="date-format-short" value="{$form.date_format_short}" maxlength="20" required></dd>
 				<dt><label for="time_zone">{lang t="common|time_zone"}</label></dt>
 				<dd>
 					<select name="form[time_zone]" id="time_zone" required>
@@ -72,7 +72,7 @@
 				<dd>
 {foreach $dst as $row}
 					<label for="dst-{$row.value}">
-						<input type="radio" name="form[dst]" id="dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+						<input type="radio" name="form[dst]" id="dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 						{$row.lang}
 					</label>
 {/foreach}
@@ -82,13 +82,13 @@
 		<div id="tab-4" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="new_pwd">{lang t="users|new_pwd"}</label></dt>
-				<dd><input type="password" name="form[new_pwd]" id="new_pwd" required /></dd>
+				<dd><input type="password" name="form[new_pwd]" id="new_pwd" required></dd>
 				<dt><label for="new_pwd_repeat">{lang t="users|new_pwd_repeat"}</label></dt>
-				<dd><input type="password" name="form[new_pwd_repeat]" id="new_pwd_repeat" required /></dd>
+				<dd><input type="password" name="form[new_pwd_repeat]" id="new_pwd_repeat" required></dd>
 			</dl>
 		</div>
 	</div>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form">
 	</div>
 </form>

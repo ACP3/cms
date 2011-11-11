@@ -7,7 +7,7 @@
 		<legend>{lang t="access|edit"}</legend>
 		<dl>
 			<dt><label for="name">{lang t="common|name"}</label></dt>
-			<dd><input type="text" name="form[name]" id="name" value="{$form.name}" maxlength="120" required /></dd>
+			<dd><input type="text" name="form[name]" id="name" value="{$form.name}" maxlength="120" required></dd>
 		</dl>
 		<table class="acp-table">
 			<caption>
@@ -27,17 +27,17 @@
 {foreach $mod_list as $mod}
 				<tr>
 					<td><a href="#" class="mark-horizontal">{$mod.name}</a></td>
-					<td><input type="checkbox" name="form[modules][{$mod.dir}][read]" value="1" class="access-read checkbox"{$mod.read_checked} /></td>
-					<td><input type="checkbox" name="form[modules][{$mod.dir}][create]" value="1" class="access-create checkbox"{$mod.create_checked} /></td>
-					<td><input type="checkbox" name="form[modules][{$mod.dir}][edit]" value="1" class="access-edit checkbox"{$mod.edit_checked} /></td>
-					<td><input type="checkbox" name="form[modules][{$mod.dir}][delete]" value="1" class="access-delete checkbox"{$mod.delete_checked} /></td>
-					<td><input type="checkbox" name="form[modules][{$mod.dir}][full]" value="1" class="access-full checkbox"{$mod.full_checked} /></td>
+					<td><input type="checkbox" name="form[modules][{$mod.dir}][read]" value="1" class="access-read checkbox"{$mod.read_checked}></td>
+					<td><input type="checkbox" name="form[modules][{$mod.dir}][create]" value="1" class="access-create checkbox"{$mod.create_checked}></td>
+					<td><input type="checkbox" name="form[modules][{$mod.dir}][edit]" value="1" class="access-edit checkbox"{$mod.edit_checked}></td>
+					<td><input type="checkbox" name="form[modules][{$mod.dir}][delete]" value="1" class="access-delete checkbox"{$mod.delete_checked}></td>
+					<td><input type="checkbox" name="form[modules][{$mod.dir}][full]" value="1" class="access-full checkbox"{$mod.full_checked}></td>
 				</tr>
 {/foreach}
 			</tbody>
 		</table>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form">
 	</div>
 </form>

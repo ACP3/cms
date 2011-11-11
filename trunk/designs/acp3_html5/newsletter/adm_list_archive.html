@@ -3,7 +3,7 @@
 		{check_access mode="input" action="newsletter|delete_archive" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="newsletter|newsletter_archive"}</h2>
 	</div>
-	<hr />
+	<hr>
 {if isset($newsletter)}
 {$pagination}
 {assign var="can_delete" value=modules::check("newsletter", "delete_archive")}
@@ -28,7 +28,7 @@
 {foreach $newsletter as $row}
 			<tr>
 {if $can_delete}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td>{$row.date}</td>
 				<td>{check_access mode="link" action="newsletter|edit_archive" uri="acp/newsletter/edit_archive/id_`$row.id`" title=$row.subject}</td>

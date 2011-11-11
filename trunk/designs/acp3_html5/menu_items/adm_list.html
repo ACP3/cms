@@ -5,7 +5,7 @@
 		{check_access mode="input" action="menu_items|delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
-	<hr />
+	<hr>
 {if isset($pages_list)}
 {assign var="can_delete" value=modules::check("menu_items", "delete")}
 {assign var="can_order" value=modules::check("menu_items", "order")}
@@ -32,7 +32,7 @@
 {foreach $pages as $row}
 			<tr>
 {if $can_delete}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td>{$row.period}</td>
 				<td>{$row.mode_formated}</td>

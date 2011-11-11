@@ -6,7 +6,7 @@
 		{check_access mode="input" action="newsletter|delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="newsletter|newsletter_accounts"}</h2>
 	</div>
-	<hr />
+	<hr>
 {if isset($accounts)}
 {$pagination}
 {assign var="can_delete" value=modules::check("newsletter", "delete")}
@@ -25,7 +25,7 @@
 {foreach $accounts as $row}
 			<tr>
 {if $can_delete}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td>{$row.mail}</td>
 				<td>{$row.status}</td>
