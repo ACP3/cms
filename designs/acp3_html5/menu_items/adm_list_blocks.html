@@ -4,7 +4,7 @@
 		{check_access mode="input" action="menu_items|delete_blocks" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
-	<hr />
+	<hr>
 {if isset($blocks)}
 {$pagination}
 {assign var="can_delete" value=modules::check("menu_items", "delete_blocks")}
@@ -23,7 +23,7 @@
 {foreach $blocks as $row}
 			<tr>
 {if $can_delete}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td>{check_access mode="link" action="menu_items|edit_block" uri="acp/menu_items/edit_block/id_`$row.id`" title=$row.title}</td>
 				<td>{$row.index_name}</td>

@@ -4,7 +4,7 @@
 		{check_access mode="input" action="comments|delete_comments_per_module" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
-	<hr />
+	<hr>
 {if isset($comments)}
 {$pagination}
 {assign var="can_delete" value=modules::check("comments", "delete_comments_per_module")}
@@ -22,7 +22,7 @@
 {foreach $comments as $row}
 			<tr>
 {if $can_delete}
-				<td><input type="checkbox" name="entries[]" value="{$row.module}" class="checkbox" /></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.module}" class="checkbox"></td>
 {/if}
 				<td>{check_access mode="link" action="comments|adm_list" uri="acp/comments/adm_list/module_`$row.module`" lang="comments|show_comments" title=$row.name}</td>
 				<td>{$row.count}</td>

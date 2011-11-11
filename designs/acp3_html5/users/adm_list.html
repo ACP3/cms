@@ -4,7 +4,7 @@
 		{check_access mode="input" action="users|delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
-	<hr />
+	<hr>
 {if isset($users)}
 {$pagination}
 {assign var="can_delete" value=modules::check("users", "delete")}
@@ -24,7 +24,7 @@
 {foreach $users as $row}
 			<tr>
 {if $can_delete}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td>{check_access mode="link" action="users|edit" uri="acp/users/edit/id_`$row.id`" title=$row.nickname}</td>
 				<td>{$row.mail}</td>

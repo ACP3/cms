@@ -23,14 +23,14 @@
 				</select>
 			</dd>
 			<dt><label for="title">{lang t="menu_items|title"}</label></dt>
-			<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120" required /></dd>
+			<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120" required></dd>
 		</dl>
 		<dl id="uri-alias">
 			<dt>
 				<label for="alias">{lang t="common|uri_alias"}</label>
 				<span>{lang t="common|uri_alias_description"}</span>
 			</dt>
-			<dd><input type="text" name="form[alias]" id="alias" value="{$form.alias}" required /></dd>
+			<dd><input type="text" name="form[alias]" id="alias" value="{$form.alias}" required></dd>
 		</dl>
 		<dl>
 			<dt><label for="block_id">{lang t="menu_items|blocks"}</label></dt>
@@ -59,7 +59,7 @@
 			<dd>
 {foreach $display as $row}
 				<label for="display-{$row.value}">
-					<input type="radio" name="form[display]" id="display-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected} />
+					<input type="radio" name="form[display]" id="display-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected}>
 					{$row.lang}
 				</label>
 {/foreach}
@@ -84,7 +84,7 @@
 		</p>
 		<dl id="link-container">
 			<dt><label for="uri">{lang t="menu_items|uri"}</label></dt>
-			<dd><input type="text" name="form[uri]" id="uri" value="{$form.uri}" maxlength="120" /></dd>
+			<dd><input type="text" name="form[uri]" id="uri" value="{$form.uri}" maxlength="120"></dd>
 		</dl>
 {if isset($static_pages)}
 		<dl id="static-pages-container">
@@ -112,7 +112,7 @@
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form" />
-		<input type="reset" value="{lang t="common|reset"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="reset" value="{lang t="common|reset"}" class="form">
 	</div>
 </form>

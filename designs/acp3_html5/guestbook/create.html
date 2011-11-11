@@ -5,11 +5,11 @@
 	<fieldset class="no-border">
 		<dl>
 			<dt><label for="name">{lang t="common|name"}</label></dt>
-			<dd><input type="text" name="form[name]" id="name" size="35" value="{$form.name}" required{$form.name_disabled} /></dd>
+			<dd><input type="text" name="form[name]" id="name" size="35" value="{$form.name}" required{$form.name_disabled}></dd>
 			<dt><label for="mail">{lang t="common|email"}</label></dt>
-			<dd><input type="email" name="form[mail]" id="mail" size="35" value="{$form.mail}"{$form.mail_disabled} /></dd>
+			<dd><input type="email" name="form[mail]" id="mail" size="35" value="{$form.mail}"{$form.mail_disabled}></dd>
 			<dt><label for="website">{lang t="common|website"}</label></dt>
-			<dd><input type="url" name="form[website]" id="website" size="35" value="{$form.website}"{$form.website_disabled} /></dd>
+			<dd><input type="url" name="form[website]" id="website" size="35" value="{$form.website}"{$form.website_disabled}></dd>
 			<dt><label for="message">{lang t="common|message"}</label></dt>
 			<dd>
 				{if isset($emoticons)}{$emoticons}{/if}
@@ -19,7 +19,7 @@
 {if isset($subscribe_newsletter)}
 <div style="margin:10px 0 0">
 	<label for="subscribe-newsletter">
-		<input type="checkbox" name="form[subscribe_newsletter]" id="subscribe-newsletter" value="1" class="checkbox"{$subscribe_newsletter} />
+		<input type="checkbox" name="form[subscribe_newsletter]" id="subscribe-newsletter" value="1" class="checkbox"{$subscribe_newsletter}>
 		{$LANG_subscribe_to_newsletter}
 	</label>
 </div>
@@ -27,7 +27,7 @@
 {$captcha}
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form" />
-		<input type="reset" value="{lang t="common|reset"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="reset" value="{lang t="common|reset"}" class="form">
 	</div>
 </form>

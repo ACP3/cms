@@ -4,7 +4,7 @@
 		{check_access mode="input" action="guestbook|delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
-	<hr />
+	<hr>
 {if isset($guestbook)}
 {$pagination}
 {assign var="can_delete" value=modules::check("guestbook", "delete")}
@@ -25,7 +25,7 @@
 {foreach $guestbook as $row}
 			<tr>
 {if $can_delete}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td>{$row.date}</td>
 				<td>{check_access mode="link" action="guestbook|edit" uri="acp/guestbook/edit/id_`$row.id`" title=$row.name}</td>

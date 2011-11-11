@@ -5,7 +5,7 @@
 		{check_access mode="input" action="categories|delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
-	<hr />
+	<hr>
 {if isset($categories)}
 {$pagination}
 {assign var="can_delete" value=modules::check("categories", "delete")}
@@ -25,7 +25,7 @@
 {foreach $categories as $row}
 			<tr>
 {if $can_delete}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox" /></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td>{check_access mode="link" action="categories|edit" uri="acp/categories/edit/id_`$row.id`" title=$row.name}</td>
 				<td>{$row.description}</td>
