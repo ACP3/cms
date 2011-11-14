@@ -2,7 +2,7 @@
 /**
 * Project:     Smarty: the PHP compiling template engine
 * File:        Smarty.class.php
-* SVN:         $Id: Smarty.class.php 4426 2011-10-19 19:20:58Z monte.ohrt $
+* SVN:         $Id: Smarty.class.php 4445 2011-10-21 18:40:16Z rodneyrehm $
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -28,7 +28,7 @@
 * @author Uwe Tews
 * @author Rodney Rehm
 * @package Smarty
-* @version 3.1.4
+* @version 3.1.5
 */
 
 /**
@@ -107,7 +107,7 @@ class Smarty extends Smarty_Internal_TemplateBase {
     /**
     * smarty version
     */
-    const SMARTY_VERSION = 'Smarty 3.1.4';
+    const SMARTY_VERSION = 'Smarty-3.1.5';
 
     /**
     * define variable scopes
@@ -251,6 +251,11 @@ class Smarty extends Smarty_Internal_TemplateBase {
     * @var boolean
     */
     public $use_sub_dirs = false;
+    /**
+     * allow ambiguous resources (that are made unique by the resource handler)
+     * @var boolean
+     */
+    public $allow_ambiguous_resources = false;
     /**
     * caching enabled
     * @var boolean
@@ -1172,8 +1177,14 @@ class Smarty extends Smarty_Internal_TemplateBase {
         $cache_id = $cache_id === null ? $this->cache_id : $cache_id;
         $compile_id = $compile_id === null ? $this->compile_id : $compile_id;
         // already in template cache?
-        $unique_template_name = Smarty_Resource::getUniqueTemplateName($this, $template);
-        $_templateId =  sha1($unique_template_name . $cache_id . $compile_id);
+        if ($this->allow_ambiguous_resources) {
+            $_templateId = Smarty_Resource::getUniqueTemplateName($this, $template) . $cache_id . $compile_id;
+        } else {
+            $_templateId = $this->joined_template_dir . '#' . $template . $cache_id . $compile_id;
+        }
+        if (isset($_templateId[150])) {
+            $_templateId = sha1($_templateId);
+        }
         if ($do_clone) {
             if (isset($this->template_objects[$_templateId])) {
                 // return cached template object
