@@ -1,0 +1,74 @@
+<script type="text/javascript">
+function mark_entries(name, action)
+{
+	var fields = $('form :checkbox');
+
+	jQuery.each(fields, function() {
+		if ($(this).attr('name') == name + '[]') {
+			if (action == 'add') {
+				$(this).attr('checked', 'checked');
+				//if ($(this).parent().parent())
+			} else {
+				$(this).removeAttr('checked');
+			}
+		}
+	});
+}
+
+$(document).ready(function() {
+	// Checkbox durch Klick auf Tabellenzeile markieren
+	$('form > table.acp-table > tbody > tr').filter(':has(:checkbox:checked)').addClass('selected').end().click(function(event) {
+		if (event.target.type !== 'checkbox') {
+			$(':checkbox', this).trigger('click');
+		}
+	}).find(':checkbox').click(function() {
+		$(this).parents('tr:first').toggleClass('selected');
+	});
+
+	$('form > .acp-table').after('<' + 'div class="mark-entries"><' + 'a href="javascript:mark_entries(\'{$checkbox_name}\',\'add\')">{lang t="common|mark_all"}<' + '/a> <' + 'span>::<' + '/span> <' + 'a href="javascript:mark_entries(\'{$checkbox_name}\',\'remove\')">{lang t="common|unmark_all"}<' + '/a><' + '/div>');
+
+	$('form #adm-list input[type=image]').click(function() {
+		var entries = $('form .acp-table input:checkbox:checked') || [];
+		var ary = '';
+
+		jQuery.each(entries, function() {
+			ary = ary + $(this).val() + '|';
+		});
+
+		$('div.mark-entries').after('<' + 'div id="dialog"><' + 'h5 style="text-align:center"><' + '/h5><' + '/div>');
+
+		if (ary != '') {
+			$('#dialog h5').text('{lang t="common|confirm_delete"}');
+			$('#dialog').dialog({
+				draggable: false,
+				resizable : false,
+				modal: true,
+				overlay: {
+					backgroundColor: '#000',
+					opacity: 0.5
+				},
+				buttons: {
+					{lang t="common|no"}: function() {
+						$(this).dialog('close');
+					},
+					{lang t="common|yes"}: function() {
+						location.href = $('.acp-table').parent('form').attr('action') + 'entries_' + ary.substr(0, ary.length - 1) + '/action_confirmed/';
+					}
+				}
+			});
+		} else {
+			$('#dialog h5').text('{lang t="common|no_entries_selected"}');
+			$('#dialog').dialog({
+				draggable: false,
+				resizable : false,
+				modal: true,
+				overlay: {
+					backgroundColor: '#000',
+					opacity: 0.5
+				}
+			});
+		}
+		return false;
+	});
+});
+</script>
