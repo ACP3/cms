@@ -1,0 +1,10 @@
+<h4>{lang t="gallery|latest_galleries"}</h4>
+<ul>
+{if isset($sidebar_galleries)}
+{foreach $sidebar_galleries as $row}
+	<li><a href="{uri args="gallery/pics/id_`$row.id`" alias="1"}" title="{$row.start} - {$row.name}">{$row.name_short}</a></li>
+{/foreach}
+{else}
+	<li>{lang t="common|no_entries_short"}</li>
+{/if}
+</ul>
