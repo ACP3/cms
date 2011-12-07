@@ -44,11 +44,13 @@ if (isset($_POST['form'])) {
 		$errors[] = $lang->t('common', 'message_to_short');
 	if (!$auth->isUser() && !validate::captcha($form['captcha'], $form['hash']))
 		$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
-	if ($form['subscribe_newsletter'] == 1 && !validate::email($form['mail']))
-		$errors[] = $lang->t('guestbook', 'type_in_email_address_to_subscribe_to_newsletter');
-	if ($form['subscribe_newsletter'] == 1 && validate::email($form['mail']) &&
-		$db->countRows('*', 'newsletter_accounts', 'mail = \'' . $form['mail'] . '\'') == 1)
-		$errors[] = $lang->t('newsletter', 'account_exists');
+	if ($newsletterAccess) {
+		if ($form['subscribe_newsletter'] == 1 && !validate::email($form['mail']))
+			$errors[] = $lang->t('guestbook', 'type_in_email_address_to_subscribe_to_newsletter');
+		if ($form['subscribe_newsletter'] == 1 && validate::email($form['mail']) &&
+			$db->countRows('*', 'newsletter_accounts', 'mail = \'' . $form['mail'] . '\'') == 1)
+			$errors[] = $lang->t('newsletter', 'account_exists');
+	}
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));

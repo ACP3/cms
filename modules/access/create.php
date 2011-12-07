@@ -19,6 +19,8 @@ if (isset($_POST['form'])) {
 		$errors[] = $lang->t('common', 'name_to_short');
 	if (!empty($form['name']) && $db->countRows('*', 'access', 'name = \'' . $db->escape($form['name']) . '\'') == '1')
 		$errors[] = $lang->t('access', 'access_level_already_exists');
+	if (empty($form['modules']))
+		$errors[] = $lang->t('access', 'no_module_selected');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -51,7 +53,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 			$mod_list[$name]['full_checked'] = isset($form['modules'][$dir]['full']) ? ' checked="checked"' : '';
 		}
 	}
-	$tpl->assign('mod_list', $mod_list);
+	$tpl->assign('mod_list', $mod_list, true);
 
 	$content = modules::fetchTemplate('access/create.html');
 }
