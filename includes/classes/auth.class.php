@@ -146,7 +146,7 @@ class auth
 	public function getUserLanguage()
 	{
 		$info = $this->getUserInfo();
-		return $info['language'];
+		return !empty($info['language']) ? $info['language'] : CONFIG_LANG;
 	}
 	/**
 	 * Gibt den Status von $isUser zurück
