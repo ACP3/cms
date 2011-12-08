@@ -51,7 +51,7 @@ class auth
 				$db_password = substr($user_check[0]['pwd'], 0, 40);
 				if ($db_password == $cookie_arr[1]) {
 					$this->isUser = true;
-					$this->entries = (int) $user_check[0]['entries'];
+					$this->entries = (int) ($user_check[0]['entries'] == 0 ? CONFIG_ENTRIES : $user_check[0]['entries']);
 					$this->userId = $user_check[0]['id'];
 				}
 			}
@@ -61,6 +61,30 @@ class auth
 				redirect(0, ROOT_DIR);
 			}
 		}
+	}
+	/**
+	 * Gibt die ID des Zugriffslevels eines jeweiligen Benutzer zurück
+	 *
+	 * @param integer $user_id 
+	 */
+	public function getAccessLevel($user_id = '')
+	{
+		if (empty($user_id) && $this->isUser()) {
+			$user_id = $this->userId;
+		}
+		if (validate::isNumber($user_id)) {
+			$info = $this->getUserInfo($user_id);
+			return $info['access'];
+		}
+		return '';
+	}
+	/**
+	 * Gibt die UserId des eingeloggten Benutzers zurück
+	 * @return integer
+	 */
+	public function getUserId()
+	{
+		return $this->userId;
 	}
 	/**
 	 * Gibt ein Array mit den angeforderten Daten eines Benutzers zurück
@@ -114,9 +138,15 @@ class auth
 		}
 		return false;
 	}
-	public function getUserId()
+	/**
+	 * Gibt die eingestellte Standardsprache des Benutzers aus
+	 *
+	 * @return string
+	 */
+	public function getUserLanguage()
 	{
-		return $this->userId;
+		$info = $this->getUserInfo();
+		return $info['language'];
 	}
 	/**
 	 * Gibt den Status von $isUser zurück
