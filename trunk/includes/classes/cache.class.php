@@ -15,6 +15,8 @@
  */
 class cache
 {
+	private static $cache_dir = 'cache/sql/';
+
 	/**
 	 * Überprüft, ob der Cache für eine bestimmte Abfrage schon erstellt wurde
 	 *
@@ -24,7 +26,7 @@ class cache
 	 */
 	public static function check($filename)
 	{
-		if (is_file(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php')) {
+		if (is_file(ACP3_ROOT . self::$cache_dir . 'cache_' . md5($filename) . '.php')) {
 			return true;
 		}
 		return false;
@@ -41,7 +43,7 @@ class cache
 	public static function create($filename, $data)
 	{
 		if (!empty($data)) {
-			$bool = @file_put_contents(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php', serialize($data), LOCK_EX);
+			$bool = @file_put_contents(ACP3_ROOT . self::$cache_dir . 'cache_' . md5($filename) . '.php', serialize($data), LOCK_EX);
 
 			return $bool ? true : false;
 		} elseif (self::check($filename)) {
@@ -59,7 +61,7 @@ class cache
 	public static function delete($filename)
 	{
 		if (self::check($filename)) {
-			return unlink(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php');
+			return unlink(ACP3_ROOT . self::$cache_dir . 'cache_' . md5($filename) . '.php');
 		}
 		return false;
 	}
@@ -73,7 +75,7 @@ class cache
 	public static function output($filename)
 	{
 		if (self::check($filename)) {
-			$handle = fopen(ACP3_ROOT . 'cache/cache_' . md5($filename) . '.php', 'r');
+			$handle = fopen(ACP3_ROOT . self::$cache_dir . 'cache_' . md5($filename) . '.php', 'r');
 			flock($handle, LOCK_SH);
 			$data = unserialize(stream_get_contents($handle));
 			flock($handle, LOCK_UN); // Release the lock
@@ -90,7 +92,7 @@ class cache
 	 */
 	public static function purge($dir = 0, $delete_folder = 0)
 	{
-		$path = ACP3_ROOT . 'cache/' . (!empty($dir) && !preg_match('=/=', $dir) ? $dir . '/' : '');
+		$path = ACP3_ROOT . self::$cache_dir . (!empty($dir) && !preg_match('=/=', $dir) ? $dir . '/' : '');
 		if (is_dir($path)) {
 			$cache_dir = scandir($path);
 			$c_cache_dir = count($cache_dir);
