@@ -146,14 +146,19 @@ class modules
 				// Evtl. gesetzten Content-Type des Servers überschreiben
 				header('Content-Type: ' . (defined('CUSTOM_CONTENT_TYPE') ? CUSTOM_CONTENT_TYPE : 'text/html') . '; charset=UTF-8');
 
+				$tpl->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
 				$tpl->assign('TITLE', breadcrumb::output(2));
 				$tpl->assign('BREADCRUMB', breadcrumb::output());
 				$tpl->assign('KEYWORDS', seo::getCurrentKeywordsOrDescription());
 				$tpl->assign('DESCRIPTION', seo::getCurrentKeywordsOrDescription(2));
 				$tpl->assign('CONTENT', !empty($content) ? $content : '');
 
+				$minify = ROOT_DIR . 'includes/min/' . (CONFIG_SEO_MOD_REWRITE == 1 && defined('IN_ACP3') ? '' : '?') . 'g=%s&amp;' . CONFIG_DESIGN;
+				$tpl->assign('MIN_JAVASCRIPT', sprintf($minify, 'js'));
+				$tpl->assign('MIN_STYLESHEET', sprintf($minify, 'css'));
+
 				// Falls ein Modul ein eigenes Layout verwenden möchte, dieses auch zulassen
-				self::fetchTemplate(defined('CUSTOM_LAYOUT') ? CUSTOM_LAYOUT : 'layout.html', null, null, null, true);
+				self::displayTemplate(defined('CUSTOM_LAYOUT') ? CUSTOM_LAYOUT : 'layout.html');
 				break;
 			// Kein Zugriff auf die Seite
 			case 0:
@@ -163,6 +168,17 @@ class modules
 			default:
 				redirect('errors/404');
 		}
+	}
+	/**
+	 * Gibt ein Template direkt aus
+	 *
+	 * @param string $template
+	 * @param mixed $cache_id
+	 * @param integer $cache_lifetime
+	 */
+	public static function displayTemplate($template, $cache_id = null, $compile_id = null, $parent = null)
+	{
+		self::fetchTemplate($template, $cache_id, $compile_id, $parent, true);
 	}
 	/**
 	 * Gibt ein Template aus
