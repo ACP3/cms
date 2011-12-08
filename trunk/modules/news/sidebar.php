@@ -27,4 +27,4 @@ if ($c_news > 0) {
 	$tpl->assign('sidebar_news', $news);
 }
 
-$tpl->display('news/sidebar.html');
+modules::displayTemplate('news/sidebar.html');
