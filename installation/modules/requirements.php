@@ -25,20 +25,23 @@ $tpl->assign('requirements', $requirements);
 $defaults = array(
 	'includes/config.php',
 	'cache/',
+	'cache/sql/',
+	'cache/tpl_cached/',
+	'cache/tpl_compiled/',
 );
 // Module
-$modules = scandir('../modules/');
+$modules = scandir(ACP3_ROOT . 'modules/');
 foreach ($modules as $row) {
 	$path = 'modules/' . $row . '/module.xml';
-	if (is_file('../' . $path)) {
+	if (is_file(ACP3_ROOT . $path)) {
 		$defaults[] = $path;
 	}
 }
 // Uploadordner
-$uploads = scandir('../uploads/');
+$uploads = scandir(ACP3_ROOT . 'uploads/');
 foreach ($uploads as $row) {
 	$path = 'uploads/' . $row . '/';
-	if ($row != '.' && $row != '..' && $row != '.svn' &&  is_dir('../' . $path)) {
+	if ($row != '.' && $row != '..' && $row != '.svn' &&  is_dir(ACP3_ROOT . $path)) {
 		$defaults[] = $path;
 	}
 }

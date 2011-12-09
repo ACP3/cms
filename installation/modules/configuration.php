@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
 		);
 
 		// Daten in die config.php schreiben und diese laden
-		config::system($config);
+		writeConfigFile($config);
 		require $config_path;
 
 		$db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
