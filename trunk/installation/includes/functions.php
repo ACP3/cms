@@ -57,4 +57,32 @@ function uri($uri)
 {
 	return PHP_SELF . '/' . $uri . (!preg_match('/\/$/', $uri) ? '/' : '') . 'lang_' . LANG . '/';
 }
+/**
+ * Schreibt die Systemkonfigurationsdatei
+ *
+ * @param array $data
+ * @return boolean
+ */
+function writeConfigFile(array $data)
+{
+	$path = ACP3_ROOT . 'includes/config.php';
+	if (is_writable($path)){
+		// Konfigurationsdatei in ein Array schreiben
+		ksort($data);
+
+		$content = "<?php\n";
+		$content.= "define('INSTALLED', true);\n";
+		if (defined('DEBUG')) {
+			$content.= "define('DEBUG', " . ((bool) DEBUG) . ");\n";
+		}
+		$pattern = "define('CONFIG_%s', '%s');\n";
+		foreach ($data as $key => $value) {
+			$content.= sprintf($pattern, strtoupper($key), $value);
+		}
+		$content.= '?>';
+		$bool = @file_put_contents($path, $content, LOCK_EX);
+		return $bool ? true : false;
+	}
+	return false;
+}
 ?>

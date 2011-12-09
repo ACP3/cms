@@ -22,10 +22,10 @@ class config
 	 * 	Zu schreibende Daten
 	 * @return boolean
 	 */
-	public static function system($data)
+	public static function system(array $data)
 	{
 		$path = INCLUDES_DIR . 'config.php';
-		if (is_writable($path) && is_array($data)){
+		if (is_writable($path)){
 			// Konfigurationsdatei in ein Array schreiben
 			$config = array(
 				'date_dst' => CONFIG_DATE_DST,
@@ -67,7 +67,7 @@ class config
 					$content.= sprintf($pattern, strtoupper($key), $value);
 			}
 			$content.= '?>';
-			$bool = @file_put_contents($path, $content);
+			$bool = @file_put_contents($path, $content, LOCK_EX);
 			return $bool ? true : false;
 		}
 		return false;

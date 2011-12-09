@@ -78,7 +78,7 @@ class cache
 			$handle = fopen(ACP3_ROOT . self::$cache_dir . 'cache_' . md5($filename) . '.php', 'r');
 			flock($handle, LOCK_SH);
 			$data = unserialize(stream_get_contents($handle));
-			flock($handle, LOCK_UN); // Release the lock
+			flock($handle, LOCK_UN);
 			fclose($handle);
 			return $data;
 		}
