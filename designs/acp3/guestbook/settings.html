@@ -7,7 +7,7 @@
 		<dl>
 			<dt><label for="date-format">{lang t="common|date_format"}</label></dt>
 			<dd>
-				<select name="form[dateformat]" id="date-format" required>
+				<select name="form[dateformat]" id="date-format">
 					<option value="">{lang t="common|pls_select"}</option>
 {foreach $dateformat as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
@@ -16,7 +16,7 @@
 			</dd>
 			<dt><label for="notify">{lang t="guestbook|notification"}</label></dt>
 			<dd>
-				<select name="form[notify]" id="notify" required>
+				<select name="form[notify]" id="notify">
 					<option value="">{lang t="common|pls_select"}</option>
 {foreach $notify as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>

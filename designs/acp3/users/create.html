@@ -12,16 +12,16 @@
 		<div id="tab-1">
 			<dl>
 				<dt><label for="nickname">{lang t="users|nickname"}</label></dt>
-				<dd><input type="text" name="form[nickname]" id="nickname" value="{$form.nickname}" maxlength="30" required></dd>
+				<dd><input type="text" name="form[nickname]" id="nickname" value="{$form.nickname}" maxlength="30"></dd>
 				<dt><label for="realname">{lang t="users|realname"}</label></dt>
 				<dd><input type="text" name="form[realname]" id="realname" value="{$form.realname}" maxlength="80"></dd>
 				<dt><label for="mail">{lang t="common|email"}</label></dt>
-				<dd><input type="email" name="form[mail]" id="mail" value="{$form.mail}" maxlength="120" required></dd>
+				<dd><input type="email" name="form[mail]" id="mail" value="{$form.mail}" maxlength="120"></dd>
 				<dt><label for="website">{lang t="common|website"}</label></dt>
 				<dd><input type="url" name="form[website]" id="website" value="{$form.website}" maxlength="120"></dd>
 				<dt><label for="access">{lang t="access|access"}</label></dt>
 				<dd>
-					<select name="form[access]" id="access" required>
+					<select name="form[access]" id="access">
 						<option value="">{lang t="common|pls_select"}</option>
 {foreach $access as $row}
 						<option value="{$row.id}"{$row.selected}>{$row.name}</option>
@@ -34,7 +34,7 @@
 			<dl>
 				<dt><label for="language">{lang t="users|language"}</label></dt>
 				<dd>
-					<select name="form[language]" id="language" required>
+					<select name="form[language]" id="language">
 						<option value="">{lang t="common|pls_select"}</option>
 {foreach $languages as $row}
 						<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
@@ -43,7 +43,7 @@
 				</dd>
 				<dt><label for="entries">{lang t="system|entries_per_page"}</label></dt>
 				<dd>
-					<select name="form[entries]" id="entries" required>
+					<select name="form[entries]" id="entries">
 {foreach $entries as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.value}</option>
 {/foreach}
@@ -57,12 +57,12 @@
 					<label for="date-format-long">{lang t="common|date_format_long"}</label>
 					<span>({lang t="system|php_date_function"})</span>
 				</dt>
-				<dd><input type="text" name="form[date_format_long]" id="date-format-long" value="{$form.date_format_long}" maxlength="20" required></dd>
+				<dd><input type="text" name="form[date_format_long]" id="date-format-long" value="{$form.date_format_long}" maxlength="20"></dd>
 				<dt><label for="date-format-short">{lang t="common|date_format_short"}</label></dt>
-				<dd><input type="text" name="form[date_format_short]" id="date-format-short" value="{$form.date_format_short}" maxlength="20" required></dd>
+				<dd><input type="text" name="form[date_format_short]" id="date-format-short" value="{$form.date_format_short}" maxlength="20"></dd>
 				<dt><label for="time_zone">{lang t="common|time_zone"}</label></dt>
 				<dd>
-					<select name="form[time_zone]" id="time_zone" required>
+					<select name="form[time_zone]" id="time_zone">
 {foreach $time_zone as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
@@ -82,9 +82,9 @@
 		<div id="tab-4" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="pwd">{lang t="users|pwd"}</label></dt>
-				<dd><input type="password" name="form[pwd]" id="pwd" required></dd>
+				<dd><input type="password" name="form[pwd]" id="pwd"></dd>
 				<dt><label for="pwd_repeat">{lang t="users|pwd_repeat"}</label></dt>
-				<dd><input type="password" name="form[pwd_repeat]" id="pwd_repeat" required></dd>
+				<dd><input type="password" name="form[pwd_repeat]" id="pwd_repeat"></dd>
 			</dl>
 		</div>
 	</div>

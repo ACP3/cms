@@ -18,7 +18,7 @@
 					<td>
 						<dl>
 							<dt><label for="nickname">{lang t="users|nickname"}</label></dt>
-							<dd><input type="text" name="form[nickname]" id="nickname" value="{$form.nickname}" maxlength="30" required></dd>
+							<dd><input type="text" name="form[nickname]" id="nickname" value="{$form.nickname}" maxlength="30"></dd>
 						</dl>
 					</td>
 				</tr>
@@ -41,7 +41,7 @@
 						<dl>
 							<dt><label for="gender">{lang t="users|gender"}</label></dt>
 							<dd>
-								<select name="form[gender]" id="gender" required>
+								<select name="form[gender]" id="gender">
 {foreach $gender as $row}
 									<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}

@@ -6,9 +6,9 @@
 		<legend>{lang t="newsletter|newsletter"}</legend>
 		<dl>
 			<dt><label for="subject">{lang t="newsletter|subject"}</label></dt>
-			<dd><input type="text" name="form[subject]" id="subject" value="{$form.subject}" required></dd>
+			<dd><input type="text" name="form[subject]" id="subject" value="{$form.subject}"></dd>
 			<dt><label for="text">{lang t="newsletter|text"}</label></dt>
-			<dd><textarea name="form[text]" id="text" cols="50" rows="5" required>{$form.text}</textarea></dd>
+			<dd><textarea name="form[text]" id="text" cols="50" rows="5">{$form.text}</textarea></dd>
 			<dt><label for="test-1">{lang t="newsletter|test_newsletter"}</label> <span>({lang t="newsletter|test_nl_description"})</span></dt>
 			<dd>
 {foreach $test as $row}
