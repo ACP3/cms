@@ -3,6 +3,8 @@
 	<item key="account_locked">Ihr Benutzerkonto wurde gesperrt. Um es wieder zu aktivieren, verwenden Sie bitte die &quot;Passwort vergessen&quot; Funktion, welche Ihnen dann ein neues Passwort zusenden wird.</item>
 	<item key="administration">Verwaltung</item>
 	<item key="admin_user_undeletable">Der Administrator kann nicht gelöscht werden.</item>
+	<item key="allow_language_override">Benutzern erlauben, Sprache selber festzulegen</item>
+	<item key="allow_entries_override">Benutzern erlauben, angezeigte Datensätze pro Seite selber festzulegen</item>
 	<item key="birthday">Geburtstag</item>
 	<item key="birthday_display_completely">Geburtstag vollständig anzeigen</item>
 	<item key="birthday_hide_year">Geburtsjahr verstecken</item>
@@ -64,7 +66,9 @@ E-Mail-Adresse: {mail}
 Passwort: {password}</item>
 	<item key="register_success">Ihr Benutzerkonto wurde erfolgreich erstellt.</item>
 	<item key="select_access_level">Bitte wählen Sie einen Zugriffslevel für den Benutzer aus</item>
+	<item key="select_entries_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die angezeigten Datensätze pro Seite selber festzulegen.</item>
 	<item key="select_language">Bitte wählen Sie aus, in welcher Sprache Sie die Website angezeigt bekommen möchten</item>
+	<item key="select_language_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die Anzeigesprache selber festzulegen.</item>
 	<item key="send_email">E-Mail senden</item>
 	<item key="settings">Einstellungen</item>
 	<item key="skype">Skype</item>

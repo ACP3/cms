@@ -30,7 +30,7 @@ class lang
 		// Installer abfangen
 		if (isset($auth)) {
 			$lang = $auth->getUserLanguage();
-			if (!preg_match('=/=', $lang) && is_dir(ACP3_ROOT . 'languages/' . $lang . '/'))
+			if ($this->languagePackExists($lang))
 				$this->lang = $lang;
 			else
 				$this->lang = CONFIG_LANG;
@@ -86,5 +86,15 @@ class lang
 		}
 
 		return isset($lang_data[$module][$key]) ? $lang_data[$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
+	}
+	/**
+	 * Überprüft, ob das angegebene Sprachpaket existiert
+	 *
+	 * @param string $lang
+	 * @return boolean
+	 */
+	public function languagePackExists($lang)
+	{
+		return !preg_match('=/=', $lang) && is_file(ACP3_ROOT . 'languages/' . $lang . '/info.xml');
 	}
 }

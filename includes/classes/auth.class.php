@@ -33,6 +33,12 @@ class auth
 	 * @var integer
 	 */
 	public $entries = CONFIG_ENTRIES;
+	/**
+	 * Standardsprache des Benutzers
+	 *
+	 * @var string
+	 */
+	private $language = CONFIG_LANG;
 
 	/**
 	 * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der
@@ -41,18 +47,22 @@ class auth
 	function __construct()
 	{
 		if (isset($_COOKIE['ACP3_AUTH'])) {
-			global $db;
+			global $db, $lang;
 
 			$cookie = base64_decode($_COOKIE['ACP3_AUTH']);
 			$cookie_arr = explode('|', $cookie);
 
-			$user_check = $db->select('id, pwd, entries', 'users', 'nickname = \'' . $db->escape($cookie_arr[0]) . '\' AND login_errors < 3');
+			$user_check = $db->select('id, pwd, entries, language', 'users', 'nickname = \'' . $db->escape($cookie_arr[0]) . '\' AND login_errors < 3');
 			if (count($user_check) == 1) {
 				$db_password = substr($user_check[0]['pwd'], 0, 40);
 				if ($db_password == $cookie_arr[1]) {
+					$settings = config::output('users');
 					$this->isUser = true;
-					$this->entries = (int) ($user_check[0]['entries'] == 0 ? CONFIG_ENTRIES : $user_check[0]['entries']);
-					$this->userId = $user_check[0]['id'];
+					$this->userId = (int) $user_check[0]['id'];
+					if ($settings['entries_override'] == 1 && $user_check[0]['entries'] > 0)
+						$this->entries = (int)$user_check[0]['entries'];
+					if ($settings['language_override'] == 1)
+						$this->language = $user_check[0]['language'];
 				}
 			}
 			if (!$this->isUser) {
@@ -65,7 +75,7 @@ class auth
 	/**
 	 * Gibt die ID des Zugriffslevels eines jeweiligen Benutzer zurück
 	 *
-	 * @param integer $user_id 
+	 * @param integer $user_id
 	 */
 	public function getAccessLevel($user_id = '')
 	{
@@ -145,8 +155,7 @@ class auth
 	 */
 	public function getUserLanguage()
 	{
-		$info = $this->getUserInfo();
-		return !empty($info['language']) ? $info['language'] : CONFIG_LANG;
+		return $this->language;
 	}
 	/**
 	 * Gibt den Status von $isUser zurück
