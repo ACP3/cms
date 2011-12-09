@@ -11,7 +11,7 @@
 			<dl>
 				<dt><label for="language">{lang t="users|language"}</label></dt>
 				<dd>
-					<select name="form[language]" id="language">
+					<select name="form[language]" id="language"{if $language_override == 0} disabled{/if}>
 						<option value="">{lang t="common|pls_select"}</option>
 {foreach $languages as $row}
 						<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
@@ -20,7 +20,7 @@
 				</dd>
 				<dt><label for="entries">{lang t="system|entries_per_page"}</label></dt>
 				<dd>
-					<select name="form[entries]" id="entries">
+					<select name="form[entries]" id="entries"{if $language_override == 0} disabled{/if}>
 {foreach $entries as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.value}</option>
 {/foreach}

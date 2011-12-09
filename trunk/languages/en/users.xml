@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="account_locked">Your user account has been locked. To reactivate it, please you the &quot;forgot password&quot; function, which will send you a new password.</item>
+	<item key="account_locked">Your user account has been locked. To reactivate it, please use the &quot;forgot password&quot; function, to get a new password.</item>
 	<item key="administration">Administration</item>
 	<item key="admin_user_undeletable">The administrator can\'t be deleted.</item>
+	<item key="allow_language_override">Allow users to override the default language</item>
+	<item key="allow_entries_override">Allow users to override the number of displayed resultsets per page</item>
 	<item key="birthday">Birthday</item>
 	<item key="birthday_display_completely">Display birthday completely</item>
 	<item key="birthday_hide_year">Hide year of birth</item>
@@ -29,13 +31,13 @@ E-mail address: {mail}
 Password: {password}
 
 Please change the password again, after you logged in to your account.</item>
-	<item key="forgot_pwd_success">An E-mail with you new password has been sent successfully.</item>
+	<item key="forgot_pwd_success">An E-mail with your new password has been sent successfully.</item>
 	<item key="gender">Gender</item>
 	<item key="home">Control center</item>
 	<item key="icq">ICQ-Number</item>
 	<item key="invalid_birthday">Please type in a valid birthday and how it should look like</item>
 	<item key="invalid_icq_number">Please type in a valid ICQ number</item>
-	<item key="invalid_msn_account">Please MSN-Account you have typed in, does not match a valid e-mail address</item>
+	<item key="invalid_msn_account">The MSN-Account you have typed in, does not match a valid e-mail address</item>
 	<item key="language">Language</item>
 	<item key="login">Login</item>
 	<item key="logout">Logout</item>
@@ -64,10 +66,11 @@ E-mail address: {mail}
 Password: {password}</item>
 	<item key="register_success">The user account has been created successfully.</item>
 	<item key="select_access_level">Please select an access level for this user</item>
+	<item key="select_entries_override">Please select whether users should be allowed to override the number of displayed resultsets per page.</item>
 	<item key="select_language">Please select the language in which you want to see the website</item>
+	<item key="select_language_override">Please select whether to users should be allowed to override the default language.</item>
 	<item key="send_email">Send E-mail</item>
 	<item key="settings">Settings</item>
-	<item key="sign_off">Sign off</item>
 	<item key="skype">Skype</item>
 	<item key="type_in_nickname_or_email">Please either enter the E-mail address or the user name you used with the registration</item>
 	<item key="type_in_pwd">Either the password is empty or there is a typo in the repetition</item>

@@ -13,6 +13,8 @@ if (!defined('IN_ACP3'))
 if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 	redirect('errors/403');
 } else {
+	$settings = config::output('users');
+
 	breadcrumb::assign($lang->t('users', 'users'), uri('users'));
 	breadcrumb::assign($lang->t('users', 'home'), uri('users/home'));
 	breadcrumb::assign($lang->t('users', 'edit_settings'));
@@ -20,9 +22,9 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 	if (isset($_POST['form'])) {
 		$form = $_POST['form'];
 
-		if (!is_file('languages/' . $db->escape($form['language'], 2) . '/info.xml'))
+		if ($settings['language_override'] == 1 && !$lang->languagePackExists($form['language']))
 			$errors[] = $lang->t('users', 'select_language');
-		if (!validate::isNumber($form['entries']))
+		if ($settings['entries_override'] == 1 && !validate::isNumber($form['entries']))
 			$errors[] = $lang->t('system', 'select_entries_per_page');
 		if (empty($form['date_format_long']) || empty($form['date_format_short']))
 			$errors[] = $lang->t('system', 'type_in_date_format');
@@ -39,9 +41,11 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 				'date_format_short' => $db->escape($form['date_format_short']),
 				'time_zone' => $form['time_zone'],
 				'dst' => $form['dst'],
-				'language' => $db->escape($form['language'], 2),
-				'entries' => (int) $form['entries'],
 			);
+			if ($settings['language_override'] == 1)
+				$update_values['language'] = $form['language'];
+			if ($settings['entries_override'] == 1)
+				$update_values['entries'] = (int) $form['entries'];
 
 			$bool = $db->update('users', $update_values, 'id = \'' . $auth->getUserId() . '\'');
 
@@ -50,6 +54,9 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$user = $db->select('date_format_long, date_format_short, time_zone, dst, language, entries', 'users', 'id = \'' . $auth->getUserId() . '\'');
+
+		$tpl->assign('language_override', $settings['language_override']);
+		$tpl->assign('entries_override', $settings['entries_override']);
 
 		// Sprache
 		$languages = array();
