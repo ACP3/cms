@@ -19,7 +19,7 @@
 		<div id="tab-2" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="question">{lang t="polls|question"}</label></dt>
-				<dd><input type="text" name="form[question]" id="question" value="{$question}" maxlength="120" required></dd>
+				<dd><input type="text" name="form[question]" id="question" value="{$question}" maxlength="120"></dd>
 {foreach $answers as $row}
 				<dt><label for="answer_{$row.number}">{lang t="polls|answer"} {$row.number+1}</label></dt>
 				<dd><input type="text" name="form[answers][]" id="answer_{$row.number}" value="{$row.value}" maxlength="120"></dd>

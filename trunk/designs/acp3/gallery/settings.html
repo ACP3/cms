@@ -6,19 +6,19 @@
 		<legend>{lang t="gallery|settings"}</legend>
 		<dl>
 			<dt><label for="thumbwidth">{lang t="gallery|thumb_image_width"}</label></dt>
-			<dd><input type="number" name="form[thumbwidth]" id="thumbwidth" value="{$form.thumbwidth}" required></dd>
+			<dd><input type="number" name="form[thumbwidth]" id="thumbwidth" value="{$form.thumbwidth}"></dd>
 			<dt><label for="thumbheight">{lang t="gallery|thumb_image_height"}</label></dt>
-			<dd><input type="number" name="form[thumbheight]" id="thumbheight" value="{$form.thumbheight}" required></dd>
+			<dd><input type="number" name="form[thumbheight]" id="thumbheight" value="{$form.thumbheight}"></dd>
 			<dt><label for="width">{lang t="gallery|image_width"}</label></dt>
-			<dd><input type="number" name="form[width]" id="width" value="{$form.width}" required></dd>
+			<dd><input type="number" name="form[width]" id="width" value="{$form.width}"></dd>
 			<dt><label for="height">{lang t="gallery|image_height"}</label></dt>
-			<dd><input type="number" name="form[height]" id="height" value="{$form.height}" required></dd>
+			<dd><input type="number" name="form[height]" id="height" value="{$form.height}"></dd>
 			<dt><label for="maxwidth">{lang t="gallery|max_image_width"}</label></dt>
-			<dd><input type="number" name="form[maxwidth]" id="maxwidth" value="{$form.maxwidth}" required></dd>
+			<dd><input type="number" name="form[maxwidth]" id="maxwidth" value="{$form.maxwidth}"></dd>
 			<dt><label for="maxheight">{lang t="gallery|max_image_height"}</label></dt>
-			<dd><input type="number" name="form[maxheight]" id="maxheight" value="{$form.maxheight}" required></dd>
+			<dd><input type="number" name="form[maxheight]" id="maxheight" value="{$form.maxheight}"></dd>
 			<dt><label for="filesize">{lang t="gallery|image_filesize"}</label></dt>
-			<dd><input type="number" name="form[filesize]" id="filesize" value="{$form.filesize}" required></dd>
+			<dd><input type="number" name="form[filesize]" id="filesize" value="{$form.filesize}"></dd>
 			<dt><label for="comments-1">{lang t="common|allow_comments"}</label></dt>
 			<dd>
 {foreach $comments as $row}
@@ -42,7 +42,7 @@
 			</dd>
 			<dt><label for="date-format">{lang t="common|date_format"}</label></dt>
 			<dd>
-				<select name="form[dateformat]" id="date-format" required>
+				<select name="form[dateformat]" id="date-format">
 					<option value="">{lang t="common|pls_select"}</option>
 {foreach $dateformat as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
@@ -51,7 +51,7 @@
 			</dd>
 			<dt><label for="sidebar-entries">{lang t="common|sidebar_entries_to_display"}</label></dt>
 			<dd>
-				<select name="form[sidebar]" id="sidebar-entries" required>
+				<select name="form[sidebar]" id="sidebar-entries">
 					<option>{lang t="common|pls_select"}</option>
 {foreach $sidebar_entries as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.value}</option>

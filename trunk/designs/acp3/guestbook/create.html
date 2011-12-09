@@ -5,7 +5,7 @@
 	<fieldset class="no-border">
 		<dl>
 			<dt><label for="name">{lang t="common|name"}</label></dt>
-			<dd><input type="text" name="form[name]" id="name" size="35" value="{$form.name}" required{$form.name_disabled}></dd>
+			<dd><input type="text" name="form[name]" id="name" size="35" value="{$form.name}"{$form.name_disabled}></dd>
 			<dt><label for="mail">{lang t="common|email"}</label></dt>
 			<dd><input type="email" name="form[mail]" id="mail" size="35" value="{$form.mail}"{$form.mail_disabled}></dd>
 			<dt><label for="website">{lang t="common|website"}</label></dt>
@@ -13,7 +13,7 @@
 			<dt><label for="message">{lang t="common|message"}</label></dt>
 			<dd>
 				{if isset($emoticons)}{$emoticons}{/if}
-				<textarea name="form[message]" id="message" cols="50" rows="6" required>{$form.message}</textarea>
+				<textarea name="form[message]" id="message" cols="50" rows="6">{$form.message}</textarea>
 			</dd>
 		</dl>
 {if isset($subscribe_newsletter)}
