@@ -48,7 +48,7 @@ function commentsList($module, $entry_id)
 	if ($c_comments > 0) {
 		$tpl->assign('pagination', pagination($db->countRows('*', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'')));
 
-		$settings = config::output('comments');
+		$settings = config::getModuleSettings('comments');
 
 		for ($i = 0; $i < $c_comments; ++$i) {
 			if (empty($comments[$i]['user_name']) && empty($comments[$i]['name'])) {

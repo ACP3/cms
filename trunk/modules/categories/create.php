@@ -19,7 +19,7 @@ if (isset($_POST['form'])) {
 		$file['name'] = $_FILES['picture']['name'];
 		$file['size'] = $_FILES['picture']['size'];
 	}
-	$settings = config::output('categories');
+	$settings = config::getModuleSettings('categories');
 	
 	if (strlen($form['name']) < 3)
 		$errors[] = $lang->t('categories', 'name_to_short');

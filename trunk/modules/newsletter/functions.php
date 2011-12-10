@@ -12,7 +12,7 @@ function subscribeToNewsletter($emailAddress)
 
 	$hash = md5(mt_rand(0, microtime(true)));
 	$host = htmlentities($_SERVER['HTTP_HOST']);
-	$settings = config::output('newsletter');
+	$settings = config::getModuleSettings('newsletter');
 
 	$subject = sprintf($lang->t('newsletter', 'subscribe_mail_subject'), CONFIG_SEO_TITLE);
 	$body = str_replace('{host}', $host, $lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";

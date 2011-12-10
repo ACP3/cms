@@ -28,7 +28,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
-			$settings = config::output('newsletter');
+			$settings = config::getModuleSettings('newsletter');
 
 			// Newsletter archivieren
 			$update_values = array(

@@ -13,7 +13,7 @@ if (!defined('IN_ADM'))
 if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri->id . '\'') == '1') {
 	require_once MODULES_DIR . 'categories/functions.php';
 
-	$settings = config::output('news');
+	$settings = config::getModuleSettings('news');
 
 	if (isset($_POST['form'])) {
 		$form = $_POST['form'];

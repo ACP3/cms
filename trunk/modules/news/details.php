@@ -25,7 +25,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 	}
 	breadcrumb::assign($news[0]['headline']);
 
-	$settings = config::output('news');
+	$settings = config::getModuleSettings('news');
 
 	$news[0]['date'] = $date->format($news[0]['start'], $settings['dateformat']);
 	$news[0]['headline'] = $db->escape($news[0]['headline'], 3);

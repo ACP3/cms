@@ -56,7 +56,7 @@ class auth
 			if (count($user_check) == 1) {
 				$db_password = substr($user_check[0]['pwd'], 0, 40);
 				if ($db_password == $cookie_arr[1]) {
-					$settings = config::output('users');
+					$settings = config::getModuleSettings('users');
 					$this->isUser = true;
 					$this->userId = (int) $user_check[0]['id'];
 					if ($settings['entries_override'] == 1 && $user_check[0]['entries'] > 0)

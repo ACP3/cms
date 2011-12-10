@@ -20,7 +20,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'emoticons', 'id = \'' .
 			$file['name'] = $_FILES['picture']['name'];
 			$file['size'] = $_FILES['picture']['size'];
 		}
-		$settings = config::output('emoticons');
+		$settings = config::getModuleSettings('emoticons');
 
 		if (empty($form['code']))
 			$errors[] = $lang->t('emoticons', 'type_in_code');

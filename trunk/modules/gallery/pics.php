@@ -28,7 +28,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 		breadcrumb::assign($lang->t('gallery', 'gallery'), uri('gallery'));
 		breadcrumb::assign($gallery_name[0]['name']);
 
-		$settings = config::output('gallery');
+		$settings = config::getModuleSettings('gallery');
 
 		for ($i = 0; $i < $c_pictures; ++$i) {
 			$pictures[$i]['uri'] = $settings['colorbox'] == 1 ? uri('gallery/image/id_' . $pictures[$i]['id'] . '/action_normal') : uri('gallery/details/id_' . $pictures[$i]['id'], 1);

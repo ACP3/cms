@@ -22,7 +22,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 	breadcrumb::assign($picture[0]['gallery_name'], uri('acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id']));
 	breadcrumb::assign($lang->t('gallery', 'edit_picture'));
 
-	$settings = config::output('gallery');
+	$settings = config::getModuleSettings('gallery');
 
 	if (isset($_POST['form'])) {
 		if (!empty($_FILES['file']['tmp_name']) && $_FILES['file']['size'] > '0') {

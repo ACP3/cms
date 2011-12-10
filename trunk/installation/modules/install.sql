@@ -165,6 +165,15 @@ CREATE TABLE `{pre}seo` (
 	UNIQUE KEY `alias` (`alias`)
 ) {engine};
 
+CREATE TABLE `{pre}settings` (
+ `id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
+ `module` VARCHAR(40) NOT NULL,
+ `name` VARCHAR(40) NOT NULL,
+ `value` TEXT NOT NULL,
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `module` (`module`,`name`)
+) {engine};
+
 CREATE TABLE `{pre}static_pages` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`start` VARCHAR(14) NOT NULL,
@@ -204,3 +213,14 @@ INSERT INTO `{pre}access` VALUES ('2', 'Besucher', 'users:1,feeds:1,files:1,emot
 INSERT INTO `{pre}access` VALUES ('3', 'Benutzer', 'users:1,feeds:1,files:1,emoticons:1,errors:1,gallery:1,guestbook:3,categories:1,comments:3,contact:1,menu_items:1,news:1,newsletter:1,static_pages:1,search:1,system:0,polls:1,access:0,acp:0,captcha:1');
 INSERT INTO `{pre}categories` VALUES ('', 'Erste Kategorie', '', 'Dies ist die erste Kategorie', 'news');
 INSERT INTO `{pre}emoticons` VALUES ('', ':D', 'Very Happy', '1.gif'), ('', ':)', 'Smile', '2.gif'), ('', ':(', 'Sad', '3.gif'), ('', ':o', 'Surprised', '4.gif'), ('', ':shocked:', 'Shocked', '5.gif'), ('', ':?', 'Confused', '6.gif'), ('', ':8)', 'Cool', '7.gif'), ('', ':lol:', 'Laughing', '8.gif'), ('', ':x', 'Mad', '9.gif'), ('', ':P', 'Razz', '10.gif'), ('', ':oops:', 'Embarassed', '11.gif'), ('', ':cry:', 'Crying', '12.gif'), ('', ':evil:', 'Evil', '13.gif'), ('', ':twisted:', 'Twisted Evil', '14.gif'), ('', ':roll:', 'Rolling Eyes', '15.gif'), ('', ':wink:', 'Wink', '16.gif'), ('', ':!:', 'Exclamation', '17.gif'), ('', ':?:', 'Question', '18.gif'), ('', ':idea:', 'Idea', '19.gif'), ('', ':arrow:', 'Arrow', '20.gif'), ('', ':|', 'Neutral', '21.gif'), ('', ':mrgreen:', 'Mr. Green', '22.gif');
+INSERT INTO `{pre}settings` VALUES (1, 'categories', 'width', '100');
+INSERT INTO `{pre}settings` VALUES (2, 'categories', 'height', '50'), (3, 'categories', 'filesize', '40960');
+INSERT INTO `{pre}settings` VALUES (4, 'comments', 'dateformat', 'long');
+INSERT INTO `{pre}settings` VALUES (5, 'contact', 'mail', ''), (6, 'contact', 'address', ''), (7, 'contact', 'telephone', ''), (8, 'contact', 'fax', ''), (9, 'contact', 'disclaimer', ''), (10, 'contact', 'layout', '<div class="imprint"><dl><dt>{address_lang}</dt><dd>{address_value}</dd></dl><dl><dt>{email_lang}</dt><dd>{email_value}</dd></dl><dl><dt>{telephone_lang}</dt><dd>{telephone_value}</dd></dl><dl><dt>{fax_lang}</dt><dd>{fax_value}</dd></dl><dl><dt>{disclaimer_lang}</dt><dd>{disclaimer_value}</dd></dl></div>');
+INSERT INTO `{pre}settings` VALUES (11, 'emoticons', 'width', '32'), (12, 'emoticons', 'height', '32'), (13, 'emoticons', 'filesize', '10240');
+INSERT INTO `{pre}settings` VALUES (14, 'files', 'comments', '1'), (15, 'files', 'dateformat', 'long'), (16, 'files', 'sidebar', '5');
+INSERT INTO `{pre}settings` VALUES (17, 'gallery', 'width', '640'), (18, 'gallery', 'height', '480'), (19, 'gallery', 'thumbwidth', '160'), (20, 'gallery', 'thumbheight', '120'), (21, 'gallery', 'maxwidth', '1024'), (22, 'gallery', 'maxheight', '768'), (23, 'gallery', 'filesize', '20971520'), (24, 'gallery', 'colorbox', '1'), (25, 'gallery', 'comments', '1'), (26, 'gallery', 'dateformat', 'long'), (27, 'gallery', 'sidebar', '5');
+INSERT INTO `{pre}settings` VALUES (28, 'guestbook', 'dateformat', 'long'), (29, 'guestbook', 'notify', '0'), (30, 'guestbook', 'notify_email', ''), (31, 'guestbook', 'emoticons', '1'), (32, 'guestbook', 'newsletter_integration', '0');
+INSERT INTO `{pre}settings` VALUES (33, 'news', 'comments', '1'), (34, 'news', 'dateformat', 'long'), (35, 'news', 'readmore', '1'), (36, 'news', 'readmore_chars', '350'), (37, 'news', 'sidebar', '5');
+INSERT INTO `{pre}settings` VALUES (38, 'newsletter', 'mail', ''), (39, 'newsletter', 'mailsig', '');
+INSERT INTO `{pre}settings` VALUES (40, 'users', 'language_override', '1'), (41, 'users', 'entries_override', '1');

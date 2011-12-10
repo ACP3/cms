@@ -29,7 +29,7 @@ if (isset($_POST['form'])) {
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
-	$settings = config::output('files');
+	$settings = config::getModuleSettings('files');
 
 	$comments[0]['value'] = '1';
 	$comments[0]['checked'] = selectEntry('comments', '1', $settings['comments'], 'checked');

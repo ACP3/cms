@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$settings = config::output('guestbook');
+$settings = config::getModuleSettings('guestbook');
 
 $guestbook = $db->query('SELECT u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.id, g.date, g.name, g.user_id, g.message, g.website, g.mail FROM ' . $db->prefix . 'guestbook AS g LEFT JOIN ' . $db->prefix . 'users AS u ON(u.id = g.user_id) ' . ($settings['notify'] == 2 ? 'WHERE active = 1' : '') . ' ORDER BY date DESC LIMIT ' . POS . ', ' . $auth->entries);
 $c_guestbook = count($guestbook);

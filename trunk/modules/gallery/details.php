@@ -18,7 +18,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(g.id)', 'gallery AS g, ' 
 	$picture[0]['name'] = $db->escape($picture[0]['name'], 3);
 	$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
 	
-	$settings = config::output('gallery');
+	$settings = config::getModuleSettings('gallery');
 
 	// Brotkrümelspur
 	breadcrumb::assign($lang->t('gallery', 'gallery'), uri('gallery'));

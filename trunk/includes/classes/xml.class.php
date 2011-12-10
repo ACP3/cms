@@ -32,22 +32,24 @@ class xml
 			$xml = simplexml_load_file($path);
 			$data = $xml->xpath($xpath);
 
-			foreach ($data as $row) {
-				foreach ($row as $key => $value) {
-					if ($value->attributes()) {
-						foreach ($value->attributes() as $attr_key => $attr_val) {
-							if ($key == 'version' && $attr_key == 'core' && $attr_val == 'true') {
-								$info[$path][$xpath]['version'] = CONFIG_VERSION;
-							} else {
-								$info[$path][$xpath][(string) $key][(string) $attr_key] = (string) $attr_val;
+			if (!empty($data)) {
+				foreach ($data as $row) {
+					foreach ($row as $key => $value) {
+						if ($value->attributes()) {
+							foreach ($value->attributes() as $attr_key => $attr_val) {
+								if ($key == 'version' && $attr_key == 'core' && $attr_val == 'true') {
+									$info[$path][$xpath]['version'] = CONFIG_VERSION;
+								} else {
+									$info[$path][$xpath][(string) $key][(string) $attr_key] = (string) $attr_val;
+								}
 							}
+						} else {
+							$info[$path][$xpath][(string) $key] = (string) $value;
 						}
-					} else {
-						$info[$path][$xpath][(string) $key] = (string) $value;
 					}
 				}
+				return $info[$path][$xpath];
 			}
-			return $info[$path][$xpath];
 		}
 		return false;
 	}
@@ -79,7 +81,7 @@ class xml
 						preg_match('/^(\w+)$/', $data[$item->nodeName])) {
 						$newitem_content = $xml->createTextNode($data[$item->nodeName]);
 					} else {
-						$newitem_content = $xml->createCDATASection($data[$item->nodeName]);	
+						$newitem_content = $xml->createCDATASection($data[$item->nodeName]);
 					}
 					$newitem->appendChild($newitem_content);
 					$item->parentNode->replaceChild($newitem, $item);

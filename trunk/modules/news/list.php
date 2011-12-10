@@ -40,7 +40,7 @@ if ($c_news > 0) {
 	}
 	$tpl->assign('pagination', pagination($db->countRows('*', 'news', $where)));
 
-	$settings = config::output('news');
+	$settings = config::getModuleSettings('news');
 
 	for ($i = 0; $i < $c_news; ++$i) {
 		$news[$i]['date'] = $date->format($news[$i]['start'], $settings['dateformat']);

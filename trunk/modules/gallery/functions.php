@@ -20,7 +20,7 @@ function setGalleryCache($id)
 	$pictures = $db->select('id, file, description', 'gallery_pictures', 'gallery_id = \'' . $id . '\'', 'pic ASC, id ASC');
 	$c_pictures = count($pictures);
 
-	$settings = config::output('gallery');
+	$settings = config::getModuleSettings('gallery');
 
 	for ($i = 0; $i < $c_pictures; ++$i) {
 		$picInfos = getimagesize(ACP3_ROOT . 'uploads/gallery/' . $pictures[$i]['file']);

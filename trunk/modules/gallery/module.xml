@@ -8,19 +8,6 @@
 		<version core="true"/>
 		<active>1</active>
 	</info>
-	<settings>
-		<width>640</width>
-		<height>480</height>
-		<thumbwidth>160</thumbwidth>
-		<thumbheight>120</thumbheight>
-		<maxwidth>1024</maxwidth>
-		<maxheight>768</maxheight>
-		<filesize>20971520</filesize>
-		<colorbox>1</colorbox>
-		<comments>1</comments>
-		<dateformat>long</dateformat>
-		<sidebar>5</sidebar>
-	</settings>
 	<access>
 		<item>
 			<file>add_picture</file>
