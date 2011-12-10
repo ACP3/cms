@@ -9,10 +9,6 @@
 		<protected/>
 		<active>1</active>
 	</info>
-	<settings>
-		<language_override>0</language_override>
-		<entries_override>0</entries_override>
-	</settings>
 	<access>
 		<item>
 			<file>adm_list</file>

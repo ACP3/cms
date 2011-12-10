@@ -8,13 +8,6 @@
 		<version core="true"/>
 		<active>1</active>
 	</info>
-	<settings>
-		<dateformat>long</dateformat>
-		<notify>0</notify>
-		<notify_email></notify_email>
-		<emoticons>1</emoticons>
-		<newsletter_integration>0</newsletter_integration>
-	</settings>
 	<access>
 		<item>
 			<file>adm_list</file>

@@ -69,6 +69,6 @@ $tpl->assign('LANG', CONFIG_LANG);
 
 // Falls der Wartungsmodus aktiv ist, Wartungsnachricht ausgeben
 if (CONFIG_MAINTENANCE_MODE == '1' && defined('IN_ACP3')) {
-	$tpl->assign('maintenance_msg', CONFIG_MAINTENANCE_MESSAGE);
+	$tpl->assign('MAINTENANCE_MSG', CONFIG_MAINTENANCE_MESSAGE);
 	define('CUSTOM_LAYOUT', 'maintenance.html');
 }

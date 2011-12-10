@@ -25,7 +25,7 @@ if (isset($_POST['form'])) {
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
-	$settings = config::output('comments');
+	$settings = config::getModuleSettings('comments');
 
 	$dateformat[0]['value'] = 'short';
 	$dateformat[0]['selected'] = selectEntry('dateformat', 'short', $settings['dateformat']);

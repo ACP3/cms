@@ -20,7 +20,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' 
 			$file['name'] = $_FILES['picture']['name'];
 			$file['size'] = $_FILES['picture']['size'];
 		}
-		$settings = config::output('categories');
+		$settings = config::getModuleSettings('categories');
 		$module = $db->select('module', 'categories', 'id = \'' . $uri->id . '\'');
 
 		if (strlen($form['name']) < 3)

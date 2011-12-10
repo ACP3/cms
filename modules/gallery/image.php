@@ -24,7 +24,7 @@ if (validate::isNumber($uri->id) && ($uri->action == 'thumb' || $uri->action == 
 			$width = $picInfo[0];
 			$height = $picInfo[1];
 			$action = $uri->action;
-			$settings = config::output('gallery');
+			$settings = config::getModuleSettings('gallery');
 
 			header('Cache-Control: public');
 			header('Pragma: public');

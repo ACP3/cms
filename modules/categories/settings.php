@@ -29,7 +29,7 @@ if (isset($_POST['form'])) {
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
-	$settings = config::output('categories');
+	$settings = config::getModuleSettings('categories');
 	
 	$tpl->assign('form', isset($form) ? $form : $settings);
 

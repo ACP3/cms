@@ -11,7 +11,7 @@ if (!defined('IN_ADM'))
 	exit;
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' . $uri->id . '\'') == '1') {
-	$settings = config::output('guestbook');
+	$settings = config::getModuleSettings('guestbook');
 
 	if (isset($_POST['form'])) {
 		$form = $_POST['form'];

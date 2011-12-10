@@ -19,8 +19,11 @@ if (isset($_POST['form'])) {
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
+		$form['address'] = $db->escape($form['address'], 2);
 		$form['telephone'] = $db->escape($form['telephone']);
 		$form['fax'] = $db->escape($form['fax']);
+		$form['disclaimer'] = $db->escape($form['disclaimer'], 2);
+		$form['layout'] = $db->escape($form['layout'], 2);
 
 		$bool = config::module('contact', $form);
 
@@ -28,7 +31,7 @@ if (isset($_POST['form'])) {
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
-	$contact = config::output('contact');
+	$contact = config::getModuleSettings('contact');
 
 	$tpl->assign('form', isset($form) ? $form : $contact);
 

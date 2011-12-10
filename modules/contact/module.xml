@@ -7,14 +7,6 @@
 		<version core="true"/>
 		<active>1</active>
 	</info>
-	<settings>
-		<mail></mail>
-		<address></address>
-		<telephone></telephone>
-		<fax></fax>
-		<disclaimer><![CDATA[<p>Trotz sorgf&#228;ltiger inhaltlicher Kontrolle &#252;bernehmen wir keine Haftung f&#252;r die Inhalte externer Links. F&#252;r den Inhalt der verlinkten Seiten sind ausschlie&#223;lich deren Betreiber verantwortlich.</p>]]></disclaimer>
-		<layout><![CDATA[<div class=\"imprint\"><dl><dt>{address_lang}</dt><dd>{address_value}</dd></dl><dl><dt>{email_lang}</dt><dd>{email_value}</dd></dl><dl><dt>{telephone_lang}</dt><dd>{telephone_value}</dd></dl><dl><dt>{fax_lang}</dt><dd>{fax_value}</dd></dl><dl><dt>{disclaimer_lang}</dt><dd>{disclaimer_value}</dd></dl></div>]]></layout>
-	</settings>
 	<access>
 		<item>
 			<file>adm_list</file>

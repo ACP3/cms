@@ -9,7 +9,7 @@
 if (!defined('IN_ACP3') && !defined('IN_ADM'))
 	exit;
 
-$settings = config::output('files');
+$settings = config::getModuleSettings('files');
 
 $time = $date->timestamp();
 $where = 'start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\'';

@@ -20,7 +20,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 	breadcrumb::assign($gallery[0]['name'], uri('acp/gallery/edit_gallery/id_' . $uri->id));
 	breadcrumb::assign($lang->t('gallery', 'add_picture'));
 
-	$settings = config::output('gallery');
+	$settings = config::getModuleSettings('gallery');
 
 	if (isset($_POST['form'])) {
 		$file['tmp_name'] = $_FILES['file']['tmp_name'];

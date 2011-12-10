@@ -13,7 +13,7 @@ if (!defined('IN_ACP3'))
 breadcrumb::assign($lang->t('contact', 'contact'), uri('contact'));
 breadcrumb::assign($lang->t('contact', 'imprint'));
 
-$contact = config::output('contact');
+$contact = config::getModuleSettings('contact');
 $contact['address'] = $db->escape($contact['address'], 3);
 $contact['mail'] = '<a href="' . uri('contact') . '">' . $contact['mail'] . '</a>';
 $contact['disclaimer'] = $db->escape($contact['disclaimer'], 3);

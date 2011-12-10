@@ -45,7 +45,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		breadcrumb::assign($file[0]['category_name'], uri('files/files/cat_' . $file[0]['category_id']));
 		breadcrumb::assign($file[0]['link_title']);
 
-		$settings = config::output('files');
+		$settings = config::getModuleSettings('files');
 
 		$file[0]['size'] = !empty($file[0]['size']) ? $file[0]['size'] : $lang->t('files', 'unknown_filesize');
 		$file[0]['date'] = $date->format($file[0]['start'], $settings['dateformat']);

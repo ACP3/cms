@@ -8,9 +8,6 @@
 		<version core="true"/>
 		<active>1</active>
 	</info>
-	<settings>
-		<dateformat>long</dateformat>
-	</settings>
 	<access>
 		<item>
 			<file>adm_list</file>

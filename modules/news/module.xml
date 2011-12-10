@@ -9,13 +9,6 @@
 		<categories/>
 		<active>1</active>
 	</info>
-	<settings>
-		<comments>1</comments>
-		<dateformat>long</dateformat>
-		<readmore>1</readmore>
-		<readmore_chars>350</readmore_chars>
-		<sidebar>5</sidebar>
-	</settings>
 	<access>
 		<item>
 			<file>adm_list</file>

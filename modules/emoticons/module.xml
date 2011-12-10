@@ -8,11 +8,6 @@
 		<version core="true"/>
 		<active>1</active>
 	</info>
-	<settings>
-		<width>32</width>
-		<height>32</height>
-		<filesize>10240</filesize>
-	</settings>
 	<access>
 		<item>
 			<file>adm_list</file>

@@ -27,7 +27,7 @@ if (isset($_POST['form'])) {
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
-	$settings = config::output('users');
+	$settings = config::getModuleSettings('users');
 
 	$languages[0]['value'] = '1';
 	$languages[0]['checked'] = selectEntry('language_override', '1', $settings['language_override'], 'checked');

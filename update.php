@@ -9,6 +9,8 @@
 header('Content-type: text/plain; charset=UTF-8');
 
 define('ACP3_ROOT', dirname(__FILE__) . '/');
+define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
+define('MODULES_DIR', ACP3_ROOT . 'modules/');
 
 set_include_path(get_include_path() . PATH_SEPARATOR . ACP3_ROOT . 'includes/classes/');
 spl_autoload_extensions('.class.php');
@@ -36,15 +38,18 @@ $queries = array(
 		2 => 'ALTER TABLE `{pre}users` ADD `date_format_short` VARCHAR(30) NOT NULL AFTER `date_format_long`;',
 		3 => 'ALTER TABLE `{pre}users` ADD `entries` TINYINT(2) UNSIGNED NOT NULL AFTER `language`;',
 		4 => 'UPDATE `{pre}users` SET `date_format_long` = \'' . (defined('CONFIG_DATE_FORMAT_LONG') ? CONFIG_DATE_FORMAT_LONG : CONFIG_DATE_FORMAT) . '\', `date_format_short` = \'' . (defined('CONFIG_DATE_FORMAT_SHORT') ? CONFIG_DATE_FORMAT_SHORT : 'd.m.Y') . '\', `entries` = ' . ((int) CONFIG_ENTRIES) . ';',
-		5 => 'UPDATE `{pre}access` SET `modules` =  \'access:16,acp:16,captcha:16,categories:16,comments:16,contact:16,emoticons:16,errors:16,feeds:16,files:16,gallery:16,guestbook:16,menu_items:16,news:16,newsletter:16,polls:16,search:16,static_pages:16,system:16,users:16\'  WHERE `id` = 1;',
+		5 => 'UPDATE `{pre}access` SET `modules` =  \'access:16,acp:16,captcha:16,categories:16,comments:16,contact:16,emoticons:16,errors:16,feeds:16,files:16,gallery:16,guestbook:16,menu_items:16,news:16,newsletter:16,polls:16,search:16,static_pages:16,system:16,users:16\' WHERE `id` = 1;',
 		6 => 'ALTER TABLE `{pre}guestbook` ADD `active` TINYINT(1) UNSIGNED NOT NULL AFTER `mail`;',
 		7 => 'UPDATE `{pre}guestbook` SET `active` = 1;',
-		8 => 'CREATE TABLE `{pre}aliases` (`uri` varchar(255) NOT NULL, `alias` varchar(100) NOT NULL, PRIMARY KEY (`uri`), UNIQUE KEY `alias` (`alias`)) {engine} {charset};',
+		8 => 'CREATE TABLE `{pre}aliases` (`uri` VARCHAR(255) NOT NULL, `alias` VARCHAR(100) NOT NULL, PRIMARY KEY (`uri`), UNIQUE KEY `alias` (`alias`)) {engine} {charset};',
 	),
 	2 => array(
 		0 => 'RENAME TABLE `{pre}aliases` TO `{pre}seo`;',
 		1 => 'ALTER TABLE `{pre}seo` ADD `keywords` VARCHAR(255) NOT NULL AFTER `alias`;',
 		2 => 'ALTER TABLE `{pre}seo` ADD `description` VARCHAR(255) NOT NULL AFTER `keywords`;',
+	),
+	3 => array(
+		0 => 'CREATE TABLE `{pre}settings` (`id` INT(10) unsigned NOT NULL AUTO_INCREMENT, `module` VARCHAR(40) NOT NULL, `name` VARCHAR(40) NOT NULL, `value` TEXT NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `module` (`module`,`name`)) {engine};',
 	)
 );
 
@@ -124,38 +129,31 @@ if (CONFIG_DB_VERSION < 1) {
 	}
 	$db->link->commit();
 }
+if (CONFIG_DB_VERSION < 3) {
+	$directories = scandir(MODULES_DIR);
+	$count_dir = count($directories);
+	for ($i = 0; $i < $count_dir; ++$i) {
+		$settings = xml::parseXmlFile(MODULES_DIR . $directories[$i] . '/module.xml', 'settings');
+		if (!empty($settings)) {
+			foreach ($settings as $key => $value) {
+				$db->insert('settings', array('id' => '','module' => $directories[$i], 'name' => $key, 'value' => $value));
+			}
+		}
+	}
+}
 
 // Konfigurationsdatei aktualisieren
 $config = array(
-	'date_dst' => CONFIG_DATE_DST,
-	'date_time_zone' => CONFIG_DATE_TIME_ZONE,
-	'db_host' => CONFIG_DB_HOST,
-	'db_name' => CONFIG_DB_NAME,
-	'db_pre' => CONFIG_DB_PRE,
-	'db_password' => CONFIG_DB_PASSWORD,
-	'db_user' => CONFIG_DB_USER,
-	'db_version' => 2,
-	'design' => CONFIG_DESIGN,
-	'entries' => CONFIG_ENTRIES,
-	'flood' => CONFIG_FLOOD,
-	'homepage' => CONFIG_HOMEPAGE,
-	'lang' => CONFIG_LANG,
-	'maintenance_mode' => CONFIG_MAINTENANCE_MODE,
-	'maintenance_message' => CONFIG_MAINTENANCE_MESSAGE,
-	'seo_meta_description' => CONFIG_SEO_META_DESCRIPTION,
-	'seo_meta_keywords' => CONFIG_SEO_META_KEYWORDS,
-	'seo_mod_rewrite' => CONFIG_SEO_MOD_REWRITE,
-	'seo_title' => CONFIG_SEO_TITLE,
-	'version' => NEW_VERSION,
+	'db_version' => 3,
 	'wysiwyg' => CONFIG_WYSIWYG == 'fckeditor' ? 'ckeditor' : CONFIG_WYSIWYG,
 );
 
 if (defined('CONFIG_DATE_FORMAT')) {
 	$config['date_format_long'] = CONFIG_DATE_FORMAT;
 	$config['date_format_short'] = 'd.m.Y';
-} else {
-	$config['date_format_long'] = CONFIG_DATE_FORMAT_LONG;
-	$config['date_format_short'] = CONFIG_DATE_FORMAT_SHORT;
+
+	define('CONFIG_DATE_FORMAT_LONG', CONFIG_DATE_FORMAT);
+	define('CONFIG_DATE_FORMAT_SHORT', $config['date_format_short']);
 }
 
 print config::system($config) ? 'Konfigurationsdatei erfolgreich aktualisiert!' : 'Die Konfigurationsdatei konnte nicht aktualisiert werden!';

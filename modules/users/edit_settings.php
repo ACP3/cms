@@ -13,7 +13,7 @@ if (!defined('IN_ACP3'))
 if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 	redirect('errors/403');
 } else {
-	$settings = config::output('users');
+	$settings = config::getModuleSettings('users');
 
 	breadcrumb::assign($lang->t('users', 'users'), uri('users'));
 	breadcrumb::assign($lang->t('users', 'home'), uri('users/home'));

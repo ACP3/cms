@@ -13,7 +13,7 @@ if (!defined('IN_ACP3'))
 breadcrumb::assign($lang->t('guestbook', 'guestbook'), uri('guestbook'));
 breadcrumb::assign($lang->t('guestbook', 'create'));
 
-$settings = config::output('guestbook');
+$settings = config::getModuleSettings('guestbook');
 $newsletterAccess = modules::check('newsletter', 'create') == 1 && $settings['newsletter_integration'] == 1;
 
 if ($uri->design == 'simple') {

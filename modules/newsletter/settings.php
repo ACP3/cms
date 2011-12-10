@@ -25,7 +25,7 @@ if (isset($_POST['form'])) {
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
-	$settings = config::output('newsletter');
+	$settings = config::getModuleSettings('newsletter');
 
 	$tpl->assign('form', isset($form) ? $form : $settings);
 

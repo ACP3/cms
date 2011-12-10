@@ -21,7 +21,7 @@ if (isset($_POST['form'])) {
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
-		$settings = config::output('newsletter');
+		$settings = config::getModuleSettings('newsletter');
 
 		// Newsletter archivieren
 		$insert_values = array(

@@ -81,16 +81,47 @@ class config
 	 */
 	public static function module($module, $data)
 	{
-		return xml::writeToXml(MODULES_DIR . '' . $module . '/module.xml', 'settings/*', $data);
+		global $db;
+
+		$bool = false;
+		foreach ($data as $key => $value) {
+			$bool = $db->update('settings', array('value' => $value), 'module = \'' . $db->escape($module) . '\' AND name = \'' . $key . '\'');
+		}
+		$bool2 = self::setModuleCache($module);
+
+		return $bool && $bool2;
 	}
 	/**
 	 * Gibt den Inhalt der Konfigurationsdateien der Module aus
 	 *
 	 * @param string $module
-	 * @return mixed
+	 * @return array
 	 */
-	public static function output($module)
+	public static function getModuleSettings($module)
 	{
-		return xml::parseXmlFile(MODULES_DIR . '' . $module . '/module.xml', 'settings');
+		if (!cache::check($module . '_settings'))
+			self::setModuleCache($module);
+
+		return cache::output($module . '_settings');
+	}
+	/**
+	 * Setzt den Cache für die Einstellungen eines Moduls
+	 *
+	 * @param string $module
+	 * @return boolean
+	 */
+	private static function setModuleCache($module)
+	{
+		global $db;
+
+		$settings = $db->select('name, value', 'settings', 'module = \'' . $db->escape($module) . '\'');
+		$c_settings = count($settings);
+
+		$cache_ary = array();
+		for ($i = 0; $i < $c_settings; ++$i) {
+			$cache_ary[$settings[$i]['name']] = $settings[$i]['value'];
+		}
+
+		return cache::create($module . '_settings', $cache_ary);
 	}
 }

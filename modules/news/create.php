@@ -12,7 +12,7 @@ if (!defined('IN_ADM'))
 
 require_once MODULES_DIR . 'categories/functions.php';
 
-$settings = config::output('news');
+$settings = config::getModuleSettings('news');
 
 if (isset($_POST['form'])) {
 	$form = $_POST['form'];

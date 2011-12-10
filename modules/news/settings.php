@@ -35,7 +35,7 @@ if (isset($_POST['form'])) {
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
-	$settings = config::output('news');
+	$settings = config::getModuleSettings('news');
 
 	$readmore[0]['value'] = '1';
 	$readmore[0]['checked'] = selectEntry('readmore', '1', $settings['readmore'], 'checked');

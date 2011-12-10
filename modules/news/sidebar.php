@@ -9,7 +9,7 @@
 if (!defined('IN_ACP3') && !defined('IN_ADM'))
 	exit;
 
-$settings = config::output('news');
+$settings = config::getModuleSettings('news');
 
 $time = $date->timestamp();
 $where = 'start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\'';
@@ -17,7 +17,7 @@ $news = $db->select('id, start, headline', 'news', $where, 'start DESC, end DESC
 $c_news = count($news);
 
 if ($c_news > 0) {
-	$settings = config::output('news');
+	$settings = config::getModuleSettings('news');
 
 	for ($i = 0; $i < $c_news; ++$i) {
 		$news[$i]['start'] = $date->format($news[$i]['start'], $settings['dateformat']);
