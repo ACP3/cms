@@ -58,8 +58,13 @@ if (isset($_POST['form'])) {
 		);
 
 		$bool = insertNode($form['parent'], $insert_values);
-		if ($form['mode'] == 2) {
-			seo::insertUriAlias($form['alias'], $form['uri']);
+		if ($form['mode'] == 2 && !empty($form['alias'])) {
+			$keywords = $description = '';
+			if (seo::uriAliasExists($form['uri'])) {
+				$keywords = seo::getKeywordsOrDescription($form['uri']);
+				$description = seo::getKeywordsOrDescription($form['uri'], 'description');
+			}
+			seo::insertUriAlias($form['alias'], $form['uri'], $keywords, $description);
 		}
 
 		setMenuItemsCache();

@@ -63,7 +63,12 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 
 			$bool = editNode($uri->id, $form['parent'], $form['block_id'], $update_values);
 			if ($form['mode'] == 2 || $form['mode'] == 4) {
-				seo::insertUriAlias($form['alias'], $form['uri']);
+				$keywords = $description = '';
+				if (seo::uriAliasExists($form['uri'])) {
+					$keywords = seo::getKeywordsOrDescription($form['uri']);
+					$description = seo::getKeywordsOrDescription($form['uri'], 'description');
+				}
+				seo::insertUriAlias($form['alias'], $form['uri'], $keywords, $description);
 			}
 
 			setMenuItemsCache();
