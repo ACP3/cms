@@ -84,6 +84,19 @@ class seo
 		}
 	}
 	/**
+	 * Überprüft, ob ein URI-Alias existiert
+	 *
+	 * @param string $path
+	 * @return boolean
+	 */
+	public static function uriAliasExists($path)
+	{
+		if (empty(self::$aliases))
+			self::$aliases = self::getSEOCache();
+
+		return array_key_exists($path, self::$aliases) ? true : false;
+	}
+	/**
 	 * Gibt einen URI-Alias aus
 	 *
 	 * @param string $path
