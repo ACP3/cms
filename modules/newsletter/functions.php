@@ -8,7 +8,7 @@
  */
 function subscribeToNewsletter($emailAddress)
 {
-	global $lang;
+	global $lang, $uri;
 
 	$hash = md5(mt_rand(0, microtime(true)));
 	$host = htmlentities($_SERVER['HTTP_HOST']);
