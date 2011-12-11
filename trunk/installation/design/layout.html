@@ -1,16 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$LANG}" lang="{$LANG}">
+<!DOCTYPE html>
+<html lang="{$LANG}">
 <head>
 <title>ACP3 {lang t="installation|installation"} :: {$title}</title>
+<meta charset="UTF-8">
 <script type="text/javascript" src="{$ROOT_DIR}../designs/acp3/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="{$ROOT_DIR}../designs/acp3/jquery/jquery.cookie.js"></script>
 <script type="text/javascript" src="{$ROOT_DIR}../designs/acp3/jquery/jquery.ui.min.js"></script>
 <script type="text/javascript" src="{$ROOT_DIR}design/script.js"></script>
-<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}design/style.css" />
-<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}../designs/acp3/jquery/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}design/style.css">
+<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}../designs/acp3/jquery/jquery-ui.css">
 <!--[if lte IE 6]>
-<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}design/ie.css" />
+<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}design/ie.css">
 <![endif]-->
 </head>
 
@@ -31,11 +31,11 @@
 {/foreach}
 			</select>
 		</label>
-		<input type="submit" value="{lang t="common|submit"}" class="form" />
+		<input type="submit" value="{lang t="common|submit"}" class="form">
 	</form>
 </div>
 <div id="breadcrumb">
-	<a href="{$ROOT_DIR}../">ACP3</a> &raquo; <a href="{uri args="install/welcome"}">{lang t="installation|installation"}</a> &raquo; <span>{$title}</span>
+	<a href="../">ACP3</a> &raquo; <a href="{uri args="install/welcome"}">{lang t="installation|installation"}</a> &raquo; <span>{$title}</span>
 </div>
 <div id="content">
 	<h1>{$title}</h1>

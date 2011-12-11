@@ -47,5 +47,5 @@ if (strlen($uri->hash) == 32 && validate::isMD5($uri->hash)) {
 	}
 	exit(readfile($file));
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }

@@ -16,15 +16,15 @@ if (validate::isNumber($uri->id)) {
 	if (($uri->action == 'up' || $uri->action == 'down') && $db->countRows('*', 'gallery_pictures', 'id = \'' . $uri->id . '\'') == 1) {
 		$gallery = $db->select('g.name, g.id', 'gallery AS g, ' . $db->prefix . 'gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
 
-		breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
-		breadcrumb::assign($lang->t('gallery', 'gallery'), uri('acp/gallery'));
-		breadcrumb::assign($gallery[0]['name'], uri('acp/gallery/edit_gallery/id_' . $gallery[0]['id']));
+		breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
+		breadcrumb::assign($lang->t('gallery', 'gallery'), $uri->route('acp/gallery'));
+		breadcrumb::assign($gallery[0]['name'], $uri->route('acp/gallery/edit_gallery/id_' . $gallery[0]['id']));
 		breadcrumb::assign($lang->t('common', 'edit_order'));
 
 		moveOneStep($uri->action, 'gallery_pictures', 'id', 'pic', $uri->id);
 		setGalleryCache($gallery[0]['id']);
 
-		redirect('acp/gallery/edit_gallery/id_' . $gallery[0]['id']);
+		$uri->redirect('acp/gallery/edit_gallery/id_' . $gallery[0]['id']);
 	}
 }
-redirect('acp/errors/404');
+$uri->redirect('acp/errors/404');

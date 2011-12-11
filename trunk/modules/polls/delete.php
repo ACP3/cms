@@ -19,7 +19,7 @@ if (!isset($entries)) {
 	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/polls/delete/entries_' . $marked_entries . '/action_confirmed/'), uri('acp/polls'));
+	$content = comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/polls/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/polls'));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = $bool2 = $bool3 = null;
@@ -30,7 +30,7 @@ if (!isset($entries)) {
 			$bool3 = $db->delete('poll_votes', 'poll_id = \'' . $entry . '\'');
 		}
 	}
-	$content = comboBox($bool !== null && $bool2 !== null && $bool3 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/polls'));
+	$content = comboBox($bool !== null && $bool2 !== null && $bool3 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route('acp/polls'));
 } else {
-	redirect('acp/errors/404');
+	$uri->redirect('acp/errors/404');
 }

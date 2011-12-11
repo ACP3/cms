@@ -133,7 +133,7 @@ class modules
 
 		if (!$auth->isUser() && defined('IN_ADM') && $uri->mod != 'users' && $uri->page != 'login') {
 			$redirect_uri = base64_encode(substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1));
-			redirect('acp/users/login/redirect_' . $redirect_uri);
+			$uri->redirect('acp/users/login/redirect_' . $redirect_uri);
 		}
 
 		switch (modules::check()) {
@@ -162,11 +162,11 @@ class modules
 				break;
 			// Kein Zugriff auf die Seite
 			case 0:
-				redirect('errors/403');
+				$uri->redirect('errors/403');
 				break;
 			// Seite nicht gefunden
 			default:
-				redirect('errors/404');
+				$uri->redirect('errors/404');
 		}
 	}
 	/**

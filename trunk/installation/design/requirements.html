@@ -12,7 +12,7 @@
 			</tr>
 		</thead>
 		<tbody>
-{foreach from=$requirements item=row}
+{foreach $requirements as $row}
 			<tr>
 				<td>{$row.name}</td>
 				<td>{$row.required}</td>
@@ -21,10 +21,10 @@
 {/foreach}
 		</tbody>
 	</table>
-	<hr />
+	<hr>
 	<p>
-{foreach from=$files_dirs item=row}
-		<strong>{$row.path}</strong> <span style="color:#{$row.color_1}">{$row.exists}</span>, <span style="color:#{$row.color_2}">{$row.writeable}</span><br />
+{foreach $files_dirs as $row}
+		<strong>{$row.path}</strong> <span style="color:#{$row.color_1}">{$row.exists}</span>, <span style="color:#{$row.color_2}">{$row.writeable}</span><br>
 {/foreach}
 	</p>
 </fieldset>
@@ -34,16 +34,17 @@
 		{lang t="installation|step_3_paragraph_2"}
 	</p>
 	<p>
-{foreach from=$php_settings item=row}
-		<strong>{$row.setting}</strong> <span style="color:#{$row.color}">{$row.value}</span><br />
+{foreach $php_settings as $row}
+		<strong>{$row.setting}</strong>
+		<span style="color:#{$row.color}">{$row.value}</span><br>
 {/foreach}
 	</p>
 </fieldset>
-<br />
+<br>
 <div class="success forward">
-{if $stop_install}
+{if isset($stop_install)}
 {lang t="installation|stop_installation"}
-{elseif $check_again}
+{elseif isset($check_again)}
 	<a href="{$REQUEST_URI}" class="form">{lang t="installation|check_again"}</a>
 {else}
 	<a href="{uri args="install/configuration"}" class="form">{lang t="installation|configuration"}</a>

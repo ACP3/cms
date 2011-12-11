@@ -10,9 +10,9 @@
 if (!defined('IN_ADM'))
 	exit;
 
-breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
-breadcrumb::assign($lang->t('system', 'system'), uri('acp/system'));
-breadcrumb::assign($lang->t('system', 'extensions'), uri('acp/system/extensions'));
+breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
+breadcrumb::assign($lang->t('system', 'system'), $uri->route('acp/system'));
+breadcrumb::assign($lang->t('system', 'extensions'), $uri->route('acp/system/extensions'));
 breadcrumb::assign($lang->t('system', 'designs'));
 
 if ($uri->dir) {
@@ -29,7 +29,7 @@ if ($uri->dir) {
 	}
 	$text = $bool ? $lang->t('system', 'designs_edit_success') : $lang->t('system', 'designs_edit_error');
 
-	$content = comboBox($text, uri('acp/system/designs'));
+	$content = comboBox($text, $uri->route('acp/system/designs'));
 } else {
 	$designs = array();
 	$directories = scandir(ACP3_ROOT . 'designs');

@@ -11,7 +11,7 @@ if (!defined('IN_ACP3'))
 	exit;
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \'' . $uri->id . '\' AND start <= \'' . $date->timestamp() . '\'') == 1) {
-	breadcrumb::assign($lang->t('polls', 'polls'), uri('polls'));
+	breadcrumb::assign($lang->t('polls', 'polls'), $uri->route('polls'));
 	breadcrumb::assign($lang->t('polls', 'result'));
 
 	$question = $db->select('question', 'poll_question');
@@ -30,5 +30,5 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 
 	$content = modules::fetchTemplate('polls/result.html');
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }

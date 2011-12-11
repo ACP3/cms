@@ -11,12 +11,12 @@ if (!defined('IN_ACP3'))
 	exit;
 
 if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
-	redirect('errors/403');
+	$uri->redirect('errors/403');
 } else {
 	$settings = config::getModuleSettings('users');
 
-	breadcrumb::assign($lang->t('users', 'users'), uri('users'));
-	breadcrumb::assign($lang->t('users', 'home'), uri('users/home'));
+	breadcrumb::assign($lang->t('users', 'users'), $uri->route('users'));
+	breadcrumb::assign($lang->t('users', 'home'), $uri->route('users/home'));
 	breadcrumb::assign($lang->t('users', 'edit_settings'));
 
 	if (isset($_POST['form'])) {
@@ -49,7 +49,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 
 			$bool = $db->update('users', $update_values, 'id = \'' . $auth->getUserId() . '\'');
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('users/home'));
+			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home'));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

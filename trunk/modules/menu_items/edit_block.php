@@ -13,9 +13,9 @@ if (!defined('IN_ADM'))
 if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id = \'' . $uri->id . '\'') == '1') {
 	require_once MODULES_DIR . 'menu_items/functions.php';
 
-	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
-	breadcrumb::assign($lang->t('menu_items', 'menu_items'), uri('acp/menu_items'));
-	breadcrumb::assign($lang->t('menu_items', 'adm_list_blocks'), uri('acp/menu_items/adm_list_blocks'));
+	breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
+	breadcrumb::assign($lang->t('menu_items', 'menu_items'), $uri->route('acp/menu_items'));
+	breadcrumb::assign($lang->t('menu_items', 'adm_list_blocks'), $uri->route('acp/menu_items/adm_list_blocks'));
 	breadcrumb::assign($lang->t('menu_items', 'edit_block'));
 
 	if (isset($_POST['form'])) {
@@ -40,7 +40,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 
 			setMenuItemsCache();
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/menu_items/adm_list_blocks'));
+			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/menu_items/adm_list_blocks'));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -53,5 +53,5 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 		$content = modules::fetchTemplate('menu_items/edit_block.html');
 	}
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }

@@ -16,7 +16,7 @@ $multiple = !empty($_POST['answer']) && is_array($_POST['answer']) ? ' AND multi
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \'' . $uri->id . '\'' . $multiple . $period) == 1) {
 	// Brotkrümelspur
-	breadcrumb::assign($lang->t('polls', 'polls'), uri('polls'));
+	breadcrumb::assign($lang->t('polls', 'polls'), $uri->route('polls'));
 	breadcrumb::assign($lang->t('polls', 'vote'));
 
 	// Wenn abgestimmt wurde
@@ -63,7 +63,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 		} else {
 			$text = $lang->t('polls', 'already_voted');
 		}
-		$content = comboBox($text, uri('polls/result/id_' . $uri->id));
+		$content = comboBox($text, $uri->route('polls/result/id_' . $uri->id));
 	} else {
 		$question = $db->select('question, multiple', 'poll_question', 'id = \'' . $uri->id . '\'');
 		$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $uri->id . '\'', 'id ASC');
@@ -83,5 +83,5 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 		$content = modules::fetchTemplate('polls/vote.html');
 	}
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }

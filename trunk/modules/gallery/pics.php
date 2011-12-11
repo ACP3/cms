@@ -25,13 +25,13 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 		$gallery_name[0]['name'] = $db->escape($gallery_name[0]['name'], 3);
 
 		// Brotkrümelspur
-		breadcrumb::assign($lang->t('gallery', 'gallery'), uri('gallery'));
+		breadcrumb::assign($lang->t('gallery', 'gallery'), $uri->route('gallery'));
 		breadcrumb::assign($gallery_name[0]['name']);
 
 		$settings = config::getModuleSettings('gallery');
 
 		for ($i = 0; $i < $c_pictures; ++$i) {
-			$pictures[$i]['uri'] = $settings['colorbox'] == 1 ? uri('gallery/image/id_' . $pictures[$i]['id'] . '/action_normal') : uri('gallery/details/id_' . $pictures[$i]['id'], 1);
+			$pictures[$i]['uri'] = $settings['colorbox'] == 1 ? $uri->route('gallery/image/id_' . $pictures[$i]['id'] . '/action_normal') : $uri->route('gallery/details/id_' . $pictures[$i]['id'], 1);
 			$pictures[$i]['description'] = strip_tags($db->escape($pictures[$i]['description'], 3));
 		}
 
@@ -40,5 +40,5 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 	}
 	$content = modules::fetchTemplate('gallery/pics.html');
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }

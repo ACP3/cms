@@ -33,7 +33,7 @@ if (isset($_POST['form'])) {
 
 		$bool = $db->insert('access', $insert_values);
 
-		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/access'));
+		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/access'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

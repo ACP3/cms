@@ -21,8 +21,8 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(g.id)', 'gallery AS g, ' 
 	$settings = config::getModuleSettings('gallery');
 
 	// Brotkrümelspur
-	breadcrumb::assign($lang->t('gallery', 'gallery'), uri('gallery'));
-	breadcrumb::assign($picture[0]['name'], uri('gallery/pics/id_' . $picture[0]['gallery_id']));
+	breadcrumb::assign($lang->t('gallery', 'gallery'), $uri->route('gallery'));
+	breadcrumb::assign($picture[0]['name'], $uri->route('gallery/pics/id_' . $picture[0]['gallery_id']));
 	breadcrumb::assign($lang->t('gallery', 'details'));
 
 	$tpl->assign('picture', $picture[0]);
@@ -45,5 +45,5 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(g.id)', 'gallery AS g, ' 
 
 	$content = modules::fetchTemplate('gallery/details.html');
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }

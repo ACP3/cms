@@ -33,7 +33,7 @@ if (isset($_POST['form'])) {
 		$bool = $db->insert('gallery', $insert_values);
 		$bool2 = seo::insertUriAlias($form['alias'], 'gallery/pics/id_' . $db->link->lastInsertID(), $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
-		$content = comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/gallery'));
+		$content = comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/gallery'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

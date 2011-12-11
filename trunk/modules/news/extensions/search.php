@@ -29,7 +29,7 @@ $c_result_news = count($result_news);
 if ($c_result_news > 0) {
 	$results_mods['news']['title'] = $lang->t('news', 'news');
 	for ($i = 0; $i < $c_result_news; ++$i) {
-		$results_mods['news']['results'][$i]['hyperlink'] = uri('news/details/id_' . $result_news[$i]['id'], 1);
+		$results_mods['news']['results'][$i]['hyperlink'] = $uri->route('news/details/id_' . $result_news[$i]['id'], 1);
 		$results_mods['news']['results'][$i]['headline'] = $db->escape($result_news[$i]['headline'], 3);
 		$results_mods['news']['results'][$i]['text'] = shortenEntry($db->escape($result_news[$i]['text'], 3), 200, 0, '...');
 	}

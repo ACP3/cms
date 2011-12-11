@@ -2,7 +2,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-breadcrumb::assign($lang->t('users', 'users'), uri('users'));
+breadcrumb::assign($lang->t('users', 'users'), $uri->route('users'));
 breadcrumb::assign($lang->t('users', 'view_profile'));
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $uri->id . '\'') == '1') {

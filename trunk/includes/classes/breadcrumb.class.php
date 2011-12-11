@@ -90,12 +90,12 @@ class breadcrumb
 					if (!empty(self::$steps) && !empty(self::$end)) {
 						unset(self::$steps[0]);
 						for ($i = $c_pages - 1; $i >= 0; --$i) {
-							$pages[$i]['uri'] = uri(!empty($pages[$i]['alias']) ? $pages[$i]['alias'] : $pages[$i]['uri']);
+							$pages[$i]['uri'] = $uri->route(!empty($pages[$i]['alias']) ? $pages[$i]['alias'] : $pages[$i]['uri']);
 							array_unshift(self::$steps, $pages[$i]);
 						}
 					} else {
 						for ($i = 0; $i < $c_pages; ++$i) {
-							$pages[$i]['uri'] = uri(!empty($pages[$i]['alias']) ? $pages[$i]['alias'] : $pages[$i]['uri']);
+							$pages[$i]['uri'] = $uri->route(!empty($pages[$i]['alias']) ? $pages[$i]['alias'] : $pages[$i]['uri']);
 						}
 						self::$steps = array_slice($pages, 0, -1);
 						self::$end = $pages[$c_pages - 1]['title'];
@@ -109,14 +109,14 @@ class breadcrumb
 			}
 		// ACP
 		} elseif (defined('IN_ADM') && empty(self::$steps) && empty(self::$end)) {
-			self::assign($lang->t('common', 'acp'), uri('acp'));
+			self::assign($lang->t('common', 'acp'), $uri->route('acp'));
 			// Modulindex der jeweiligen ACP-Seite
 			if ($page == 'adm_list') {
 				self::assign($lang->t($module, $module));
 			} elseif ($module == 'errors') {
 				self::assign($lang->t($module, $page));
 			} else {
-				self::assign($lang->t($module, $module), uri('acp/' . $module));
+				self::assign($lang->t($module, $module), $uri->route('acp/' . $module));
 				self::assign($lang->t($module, $page));
 			}
 		}

@@ -59,7 +59,7 @@ if (isset($_POST['form'])) {
 
 		$bool = config::system($config);
 
-		$content = comboBox($bool ? $lang->t('system', 'config_edit_success') : $lang->t('system', 'config_edit_error'), uri('acp/system/configuration'));
+		$content = comboBox($bool ? $lang->t('system', 'config_edit_success') : $lang->t('system', 'config_edit_error'), $uri->route('acp/system/configuration'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

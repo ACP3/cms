@@ -10,12 +10,12 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-breadcrumb::assign($lang->t('contact', 'contact'), uri('contact'));
+breadcrumb::assign($lang->t('contact', 'contact'), $uri->route('contact'));
 breadcrumb::assign($lang->t('contact', 'imprint'));
 
 $contact = config::getModuleSettings('contact');
 $contact['address'] = $db->escape($contact['address'], 3);
-$contact['mail'] = '<a href="' . uri('contact') . '">' . $contact['mail'] . '</a>';
+$contact['mail'] = '<a href="' . $uri->route('contact') . '">' . $contact['mail'] . '</a>';
 $contact['disclaimer'] = $db->escape($contact['disclaimer'], 3);
 $contact['layout'] = $db->escape($contact['layout'], 3);
 

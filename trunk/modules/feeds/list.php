@@ -9,7 +9,7 @@ if (modules::check($uri->feed, 'extensions/feeds') == 1) {
 
 	//RSS Kopf Felder
 	$feed['generator'] = CONFIG_VERSION;
-	$feed['atom_link'] = $link . uri($uri->mod . '/' . $uri->page . '/feed_' . $module);
+	$feed['atom_link'] = $link . $uri->route($uri->mod . '/' . $uri->page . '/feed_' . $module);
 	$feed['link'] = $link . ROOT_DIR;
 	$feed['description'] = $lang->t($module, $module);
 
@@ -22,5 +22,5 @@ if (modules::check($uri->feed, 'extensions/feeds') == 1) {
 	define('CUSTOM_CONTENT_TYPE', 'application/xml');
 	define('CUSTOM_LAYOUT', 'feeds/rss.html');
 } else {
-	redirect(0, ROOT_DIR);
+	$uri->redirect(0, ROOT_DIR);
 }

@@ -286,7 +286,7 @@ function pagination($rows)
 			}
 		}
 
-		$link = uri($acp . $uri->mod . '/' . $uri->page . $params, 1);
+		$link = $uri->route($acp . $uri->mod . '/' . $uri->page . $params, 1);
 
 		// Seitenauswahl
 		$pagination = array();
@@ -356,28 +356,6 @@ function pagination($rows)
 	}
 }
 /**
- * Umleitung auf andere URLs
- *
- * @param string $args
- *  Leitet auf eine interne ACP3 Seite weiter
- * @param string $new_page
- *  Leitet auf eine externe Seite weiter
- */
-function redirect($args, $new_page = 0)
-{
-	if (!empty($args)) {
-		if ($args == 'errors/404' || $args == 'errors/403')
-			$args = (defined('IN_ACP3') ? '' : 'acp/') . $args;
-
-		$protocol = empty($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) == 'off' ? 'http://' : 'https://';
-		$host = $_SERVER['HTTP_HOST'];
-		header('Location: ' . $protocol . $host . uri($args));
-		exit;
-	}
-	header('Location:' . str_replace('&amp;', '&', $new_page));
-	exit;
-}
-/**
  * Löscht eine Datei im uploads Ordner
  *
  * @param string $dir
@@ -398,7 +376,7 @@ function removeFile($dir, $file)
  * Ersetzt interne ACP3 interne URIs in Texten mit ihren jeweiligen Aliasen
  *
  * @param string $text
- * @return string 
+ * @return string
  */
 function rewriteInternalUri($text)
 {
@@ -413,9 +391,12 @@ function rewriteInternalUri($text)
  */
 function rewriteInternalUriCallback($matches)
 {
-	return '<a href="' . uri($matches[6], 1) . '"';
-}/**
- * Funktion zum Salzen von Passwörtern, damit diese nicht so leicht entschlüsselt werden können
+	global $uri;
+
+	return '<a href="' . $uri->route($matches[6], 1) . '"';
+}
+/**
+ * Generiert einen Zufallsstring beliebiger Länge
  *
  * @param integer $str_length
  *  Länge des zufälligen Strings
@@ -522,28 +503,4 @@ function timeZones($value, $name = 'time_zone')
 		$i++;
 	}
 	return $time_zones;
-}
-/**
- * Generiert die ACP3 internen Hyperlinks
- *
- * @param string $uri
- *  Inhalt der zu generierenden URL
- * @param integer $alias
- *	Gibt an, ob für die auszugebende Seite überprüft werden soll, ob ein Alias
- *	existier und dieser ausgegeben werden soll
- * @return string
- */
-function uri($path, $alias = 0)
-{
-	$path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
-
-	// Überprüfen, ob Alias vorhanden ist und diesen als URI verwenden
-	if ($alias == 1 && !preg_match('/^acp\//', $path)) {
-		global $uri;
-
-		$alias = seo::getUriAlias($path);
-		$path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
-	}
-	$prefix = CONFIG_SEO_MOD_REWRITE == '0' || preg_match('/^acp\//', $path) ? PHP_SELF . '/' : ROOT_DIR;
-	return $prefix . $path;
 }

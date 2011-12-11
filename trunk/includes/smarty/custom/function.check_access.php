@@ -5,7 +5,7 @@ function smarty_function_check_access($params, $template)
 	if ($params['mode'] == 'bool') {
 		return modules::check($action[0], $action[1]) == 1 ? true : false;
 	} elseif (modules::check($action[0], $action[1]) == 1) {
-		global $lang;
+		global $lang, $uri;
 
 		$access_check = array();
 
@@ -16,7 +16,7 @@ function smarty_function_check_access($params, $template)
 		if (isset($params['title']))
 			$access_check['title'] = $params['title'];
 		if (isset($params['uri']))
-			$access_check['uri'] = uri($params['uri']);
+			$access_check['uri'] = $uri->route($params['uri']);
 		if (isset($params['lang'])) {
 			$lang_ary = explode('|', $params['lang']);
 			$access_check['lang'] = $lang->t($lang_ary[0], $lang_ary[1]);
