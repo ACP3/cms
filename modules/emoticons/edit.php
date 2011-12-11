@@ -54,7 +54,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'emoticons', 'id = \'' .
 			$bool = $db->update('emoticons', $update_values, 'id = \'' . $uri->id . '\'');
 			setEmoticonsCache();
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/emoticons'));
+			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/emoticons'));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -68,5 +68,5 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'emoticons', 'id = \'' .
 		$content = modules::fetchTemplate('emoticons/edit.html');
 	}
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }

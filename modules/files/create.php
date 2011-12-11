@@ -74,7 +74,7 @@ if (isset($_POST['form'])) {
 		require_once MODULES_DIR . 'files/functions.php';
 		setFilesCache($db->link->lastInsertId());
 
-		$content = comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/files'));
+		$content = comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/files'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

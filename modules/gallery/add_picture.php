@@ -15,9 +15,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 
 	$gallery = $db->select('name', 'gallery', 'id = \'' . $uri->id . '\'');
 
-	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
-	breadcrumb::assign($lang->t('gallery', 'gallery'), uri('acp/gallery'));
-	breadcrumb::assign($gallery[0]['name'], uri('acp/gallery/edit_gallery/id_' . $uri->id));
+	breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
+	breadcrumb::assign($lang->t('gallery', 'gallery'), $uri->route('acp/gallery'));
+	breadcrumb::assign($gallery[0]['name'], $uri->route('acp/gallery/edit_gallery/id_' . $uri->id));
 	breadcrumb::assign($lang->t('gallery', 'add_picture'));
 
 	$settings = config::getModuleSettings('gallery');
@@ -54,7 +54,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			$bool2 = generatePictureAlias($db->link->lastInsertId());
 			setGalleryCache($uri->id);
 
-			$content = comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/gallery/edit_gallery/id_' . $uri->id));
+			$content = comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/gallery/edit_gallery/id_' . $uri->id));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -81,5 +81,5 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 		$content = modules::fetchTemplate('gallery/add_picture.html');
 	}
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }

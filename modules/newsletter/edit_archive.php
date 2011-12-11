@@ -12,9 +12,9 @@ if (!defined('IN_ADM'))
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'id = \'' . $uri->id . '\'') == '1') {
 	// Brotkrümelspur
-	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
-	breadcrumb::assign($lang->t('newsletter', 'newsletter'), uri('acp/newsletter'));
-	breadcrumb::assign($lang->t('newsletter', 'adm_list_archive'), uri('acp/newsletter/adm_list_archive'));
+	breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
+	breadcrumb::assign($lang->t('newsletter', 'newsletter'), $uri->route('acp/newsletter'));
+	breadcrumb::assign($lang->t('newsletter', 'adm_list_archive'), $uri->route('acp/newsletter/adm_list_archive'));
 	breadcrumb::assign($lang->t('newsletter', 'edit_archive'));
 
 	if (isset($_POST['form'])) {
@@ -59,11 +59,11 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 				}
 			}
 			if ($form['action'] == '0' && $bool !== null) {
-				$content = comboBox($lang->t('newsletter', 'save_success'), uri('acp/newsletter/adm_list_archive'));
+				$content = comboBox($lang->t('newsletter', 'save_success'), $uri->route('acp/newsletter/adm_list_archive'));
 			} elseif ($form['action'] == '1' && $bool !== null && $bool2) {
-				$content = comboBox($lang->t('newsletter', 'compose_success'), uri('acp/newsletter/adm_list_archive'));
+				$content = comboBox($lang->t('newsletter', 'compose_success'), $uri->route('acp/newsletter/adm_list_archive'));
 			} else {
-				$content = comboBox($lang->t('newsletter', 'compose_save_error'), uri('acp/newsletter/adm_list_archive'));
+				$content = comboBox($lang->t('newsletter', 'compose_save_error'), $uri->route('acp/newsletter/adm_list_archive'));
 			}
 		}
 	}
@@ -93,5 +93,5 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 		$content = $tpl->fetch('newsletter/edit_archive.html');
 	}
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }

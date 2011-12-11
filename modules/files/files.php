@@ -11,7 +11,7 @@ if (!defined('IN_ACP3'))
 	exit;
 
 if (validate::isNumber($uri->cat) && $db->countRows('*', 'categories', 'id = \'' . $uri->cat . '\'') == '1') {
-	breadcrumb::assign($lang->t('files', 'files'), uri('files'));
+	breadcrumb::assign($lang->t('files', 'files'), $uri->route('files'));
 	$category = $db->select('name', 'categories', 'id = \'' . $uri->cat . '\'');
 	breadcrumb::assign($category[0]['name']);
 
@@ -33,5 +33,5 @@ if (validate::isNumber($uri->cat) && $db->countRows('*', 'categories', 'id = \''
 	}
 	$content = modules::fetchTemplate('files/files.html');
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }

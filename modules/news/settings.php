@@ -31,7 +31,7 @@ if (isset($_POST['form'])) {
 	} else {
 		$bool = config::module('news', $form);
 		
-		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), uri('acp/news'));
+		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/news'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

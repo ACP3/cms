@@ -23,19 +23,19 @@ class lang
 	 */
 	private $lang = '';
 
-	function __construct()
+	function __construct($lang = '')
 	{
-		global $auth;
-
 		// Installer abfangen
-		if (isset($auth)) {
+		if (empty($lang)) {
+			global $auth;
+
 			$lang = $auth->getUserLanguage();
 			if ($this->languagePackExists($lang))
 				$this->lang = $lang;
 			else
 				$this->lang = CONFIG_LANG;
 		} else {
-			$this->lang = LANG;
+			$this->lang = $lang;
 		}
 	}
 	/**

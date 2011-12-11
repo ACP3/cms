@@ -329,7 +329,7 @@ function processNavbar($block) {
 				if ($pages[$i]['display'] == 0 && $pages[$i]['right_id'] > $hide_until) {
 					$hide_until = $pages[$i]['right_id'];
 				}
-				// Checken, ob die Seite im angeforderten Block liegt und ob diese veröffentlicht ist
+				// Checken, ob der Menüpunkt im angeforderten Block liegt und ob dieser veröffentlicht ist
 				if ($pages[$i]['display'] == 1 && $pages[$i]['right_id'] > $hide_until &&
 					$pages[$i]['start'] == $pages[$i]['end'] && $pages[$i]['start'] <= $time ||
 					$pages[$i]['start'] != $pages[$i]['end'] && $pages[$i]['start'] <= $time && $pages[$i]['end'] >= $time) {
@@ -342,10 +342,10 @@ function processNavbar($block) {
 		$c_pages = count($pages);
 
 		if ($c_pages > 0) {
-			if (uri($uri->query) != uri($uri->mod) &&
+			if ($uri->route($uri->query) != $uri->route($uri->mod) &&
 				$db->query('SELECT COUNT(*) FROM ' . $db->prefix . 'menu_items AS m JOIN ' . $db->prefix . 'menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->query . '\'', 1) > 0) {
 				$link = $uri->query;
-			} elseif (uri($uri->mod . '/' . $uri->page . '/') != uri($uri->mod) &&
+			} elseif ($uri->route($uri->mod . '/' . $uri->page . '/') != $uri->route($uri->mod) &&
 				$db->query('SELECT COUNT(*) FROM ' . $db->prefix . 'menu_items AS m JOIN ' . $db->prefix . 'menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->mod . '/' . $uri->page . '/\'', 1) > 0) {
 				$link = $uri->mod . '/' . $uri->page . '/';
 			} else {
@@ -358,10 +358,12 @@ function processNavbar($block) {
 			for ($i = 0; $i < $c_pages; ++$i) {
 				$css = 'navi-' . $pages[$i]['id'];
 				// Menüpunkt selektieren
-				if (!empty($select) && defined('IN_ACP3') && $pages[$i]['left_id'] <= $select[0]['left_id'] && $pages[$i]['right_id'] > $select[0]['left_id']) {
+				if (!empty($select) && defined('IN_ACP3') &&
+					$pages[$i]['left_id'] <= $select[0]['left_id'] &&
+					$pages[$i]['right_id'] > $select[0]['left_id']) {
 					$css.= ' selected';
 				}
-				$href = $pages[$i]['mode'] == '1' || $pages[$i]['mode'] == '2' || $pages[$i]['mode'] == '4' ? uri(!empty($pages[$i]['alias']) ? $pages[$i]['alias'] : $pages[$i]['uri']) : $pages[$i]['uri'];
+				$href = $pages[$i]['mode'] == '1' || $pages[$i]['mode'] == '2' || $pages[$i]['mode'] == '4' ? $uri->route(!empty($pages[$i]['alias']) ? $pages[$i]['alias'] : $pages[$i]['uri']) : $pages[$i]['uri'];
 				$target = $pages[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 				$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $db->escape($pages[$i]['title'], 3) . '</a>';
 				$indent = str_repeat("\t\t", $pages[$i]['level']);

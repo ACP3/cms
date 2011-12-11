@@ -27,7 +27,7 @@ if (isset($_POST['form'])) {
 
 		$bool = config::module('contact', $form);
 
-		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), uri('acp/contact'));
+		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/contact'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

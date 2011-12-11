@@ -24,7 +24,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 		$diff_left = $elem[0]['left_id'] - $pages[0]['left_id'];
 		$diff_right = $elem[0]['right_id'] - $pages[0]['right_id'];
 	} else {
-		redirect('acp/errors/404');
+		$uri->redirect('acp/errors/404');
 	}
 
 	$c_elem = count($elem);
@@ -51,7 +51,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 	$db->link->commit();
 
 	setMenuItemsCache();
-	redirect('acp/menu_items');
+	$uri->redirect('acp/menu_items');
 } else {
-	redirect('acp/errors/404');
+	$uri->redirect('acp/errors/404');
 }

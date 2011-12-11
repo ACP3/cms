@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-breadcrumb::assign($lang->t('guestbook', 'guestbook'), uri('guestbook'));
+breadcrumb::assign($lang->t('guestbook', 'guestbook'), $uri->route('guestbook'));
 breadcrumb::assign($lang->t('guestbook', 'create'));
 
 $settings = config::getModuleSettings('guestbook');
@@ -73,7 +73,7 @@ if (isset($_POST['form'])) {
 		// E-Mail-Adresse zusenden
 		if ($settings['notify'] == 1 || $settings['notify'] == 2) {
 			$host = 'http://' . htmlentities($_SERVER['HTTP_HOST']);
-			$fullPath = $host . uri('guestbook/list', 1) . '#gb-entry-' . $db->link->lastInsertId();
+			$fullPath = $host . $uri->route('guestbook/list', 1) . '#gb-entry-' . $db->link->lastInsertId();
 			$body = sprintf($settings['notify'] == 1 ? $lang->t('guestbook', 'notification_email_body_1') : $lang->t('guestbook', 'notification_email_body_2'), $host, $fullPath);
 			genEmail('', $settings['notify_email'], $settings['notify_email'], $lang->t('guestbook', 'notification_email_subject'), $body);
 		}
@@ -84,7 +84,7 @@ if (isset($_POST['form'])) {
 			subscribeToNewsletter($form['mail']);
 		}
 
-		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('guestbook'), 0, $comboColorbox);
+		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('guestbook'), 0, $comboColorbox);
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

@@ -19,7 +19,7 @@ if (!isset($entries)) {
 	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/access/delete/entries_' . $marked_entries . '/action_confirmed/'), uri('acp/access'));
+	$content = comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/access/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/access'));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = null;
@@ -39,7 +39,7 @@ if (!isset($entries)) {
 	} else {
 		$text = $bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
 	}
-	$content = comboBox($text, uri('acp/access'));
+	$content = comboBox($text, $uri->route('acp/access'));
 } else {
-	redirect('acp/errors/404');
+	$uri->redirect('acp/errors/404');
 }

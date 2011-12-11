@@ -44,7 +44,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 			require_once MODULES_DIR . 'menu_items/functions.php';
 			setMenuItemsCache();
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/static_pages'));
+			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/static_pages'));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -63,5 +63,5 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 		$content = modules::fetchTemplate('static_pages/edit.html');
 	}
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }

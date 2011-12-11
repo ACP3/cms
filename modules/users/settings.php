@@ -23,7 +23,7 @@ if (isset($_POST['form'])) {
 	} else {
 		$bool = config::module('users', $form);
 
-		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), uri('acp/users'));
+		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/users'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

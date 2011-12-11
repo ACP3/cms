@@ -25,7 +25,7 @@ if (isset($_POST['form'])) {
 	} else {
 		$bool = config::module('emoticons', $form);
 		
-		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), uri('acp/emoticons'));
+		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/emoticons'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

@@ -19,7 +19,7 @@ if (!isset($entries)) {
 	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/emoticons/delete/entries_' . $marked_entries . '/action_confirmed/'), uri('acp/emoticons'));
+	$content = comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/emoticons/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/emoticons'));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	require_once MODULES_DIR . 'emoticons/functions.php';
 
@@ -35,7 +35,7 @@ if (!isset($entries)) {
 	}
 	setEmoticonsCache();
 
-	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/emoticons'));
+	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route('acp/emoticons'));
 } else {
-	redirect('acp/errors/404');
+	$uri->redirect('acp/errors/404');
 }

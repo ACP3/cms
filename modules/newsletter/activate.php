@@ -14,7 +14,7 @@ if (validate::email($uri->mail) && validate::isMD5($uri->hash)) {
 	$mail = $uri->mail;
 	$hash = $uri->hash;
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }
 
 if ($db->countRows('*', 'newsletter_accounts', 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'') != 1)

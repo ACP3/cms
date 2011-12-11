@@ -86,7 +86,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 			require_once MODULES_DIR . 'files/functions.php';
 			setFilesCache($uri->id);
 
-			$content = comboBox($bool && $bool2 ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/files'));
+			$content = comboBox($bool && $bool2 ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/files'));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -134,5 +134,5 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		$content = modules::fetchTemplate('files/edit.html');
 	}
 } else {
-	redirect('errors/403');
+	$uri->redirect('errors/403');
 }

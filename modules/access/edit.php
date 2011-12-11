@@ -33,7 +33,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'access', 'id = \'' . $u
 
 			$bool = $db->update('access', $update_values, 'id = \'' . $uri->id . '\'');
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/access'));
+			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/access'));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -105,5 +105,5 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'access', 'id = \'' . $u
 		$content = modules::fetchTemplate('access/edit.html');
 	}
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }

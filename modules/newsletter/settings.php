@@ -21,7 +21,7 @@ if (isset($_POST['form'])) {
 	} else {
 		$bool = config::module('newsletter', $form);
 
-		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), uri('acp/newsletter'));
+		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/newsletter'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

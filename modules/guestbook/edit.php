@@ -34,7 +34,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 
 			$bool = $db->update('guestbook', $update_values, 'id = \'' . $uri->id . '\'');
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/guestbook'));
+			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/guestbook'));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -64,5 +64,5 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 		$content = modules::fetchTemplate('guestbook/edit.html');
 	}
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }

@@ -1,13 +1,15 @@
 <?php
-error_reporting(0);
+error_reporting(E_ALL);
 
 define('IN_INSTALL', true);
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
 $php_self = dirname(PHP_SELF);
 define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
+define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 define('CONFIG_VERSION', '4.0 SVN');
+define('CONFIG_SEO_MOD_REWRITE', 0);
 
-include ACP3_ROOT . 'includes/globals.php';
+include INCLUDES_DIR . 'globals.php';
 
 set_include_path(get_include_path() . PATH_SEPARATOR . ACP3_ROOT . 'includes/classes/');
 spl_autoload_extensions('.class.php');
@@ -21,16 +23,26 @@ if ($uri->query == '/') {
 	$uri->mod = 'install';
 	$uri->page = 'welcome';
 }
-$l = !empty($_POST['lang']) ? $_POST['lang'] : $uri->lang;
-define('LANG', !empty($l) && !preg_match('=/=', $l) && is_file(ACP3_ROOT . 'languages/' . $l . '/info.xml') ? $l : 'de');
-$lang = new lang();
+
+if (!empty($_POST['lang'])) {
+	setcookie('ACP3_INSTALLER_LANG', $_POST['lang'], time() + 3600, ROOT_DIR);
+	$uri->redirect($uri->query);
+}
+if (!empty($_COOKIE['ACP3_INSTALLER_LANG']) &&
+	!preg_match('=/=', $_COOKIE['ACP3_INSTALLER_LANG']) &&
+	is_file(ACP3_ROOT . 'languages/' . $_COOKIE['ACP3_INSTALLER_LANG'] . '/info.xml'))
+	define('LANG', $_COOKIE['ACP3_INSTALLER_LANG']);
+else
+	define('LANG', 'de');
+
+$lang = new lang(LANG);
 
 // Smarty einbinden
-include ACP3_ROOT . 'includes/smarty/Smarty.class.php';
+include INCLUDES_DIR . 'smarty/Smarty.class.php';
 $tpl = new Smarty();
 $tpl->compile_id = 'installation_' . LANG;
 $tpl->setTemplateDir(ACP3_ROOT . 'installation/design/')
-	->addPluginsDir(ACP3_ROOT . 'includes/smarty/custom/')
+	->addPluginsDir(INCLUDES_DIR . 'smarty/custom/')
 	->setCompileDir(ACP3_ROOT . 'cache/tpl_compiled/')
 	->setCacheDir(ACP3_ROOT . 'cache/tpl_cached/');
 if (!is_writable($tpl->getCompileDir()) || !is_writable($tpl->getCacheDir())) {

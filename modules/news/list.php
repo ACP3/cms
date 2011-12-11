@@ -53,7 +53,7 @@ if ($c_news > 0) {
 			$news[$i]['allow_comments'] = true;
 		}
 		if ($settings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
-			$news[$i]['text'] = shortenEntry($news[$i]['text'], $settings['readmore_chars'], 50, '...<a href="' . uri('news/details/id_' . $news[$i]['id'], 1) . '">[' . $lang->t('news', 'readmore') . "]</a>\n");
+			$news[$i]['text'] = shortenEntry($news[$i]['text'], $settings['readmore_chars'], 50, '...<a href="' . $uri->route('news/details/id_' . $news[$i]['id'], 1) . '">[' . $lang->t('news', 'readmore') . "]</a>\n");
 		}
 	}
 	$tpl->assign('news', $news);

@@ -24,5 +24,5 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 	$tpl->assign('text', $page[0]['text']);
 	$content = modules::fetchTemplate('static_pages/list.html');
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }

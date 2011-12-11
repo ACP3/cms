@@ -10,9 +10,9 @@
 if (!defined('IN_ADM'))
 	exit;
 
-breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
-breadcrumb::assign($lang->t('menu_items', 'menu_items'), uri('acp/menu_items'));
-breadcrumb::assign($lang->t('menu_items', 'adm_list_blocks'), uri('acp/menu_items/adm_list_blocks'));
+breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
+breadcrumb::assign($lang->t('menu_items', 'menu_items'), $uri->route('acp/menu_items'));
+breadcrumb::assign($lang->t('menu_items', 'adm_list_blocks'), $uri->route('acp/menu_items/adm_list_blocks'));
 breadcrumb::assign($lang->t('menu_items', 'create_block'));
 
 if (isset($_POST['form'])) {
@@ -36,7 +36,7 @@ if (isset($_POST['form'])) {
 
 		$bool = $db->insert('menu_items_blocks', $insert_values);
 
-		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/menu_items/adm_list_blocks'));
+		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/menu_items/adm_list_blocks'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

@@ -50,7 +50,7 @@ if (isset($_POST['form'])) {
 			}
 			break;
 		default:
-			redirect('errors/404');
+			$uri->redirect('errors/404');
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

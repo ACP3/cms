@@ -32,7 +32,7 @@ if (isset($_POST['form'])) {
 	} else {
 		$bool = config::module('guestbook', $form);
 
-		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), uri('acp/guestbook'));
+		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/guestbook'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

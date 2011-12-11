@@ -17,8 +17,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 	$gallery[0]['seo_keywords'] = seo::getKeywordsOrDescription('gallery/pics/id_' . $uri->id);
 	$gallery[0]['seo_description'] = seo::getKeywordsOrDescription('gallery/pics/id_' . $uri->id, 'description');
 
-	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
-	breadcrumb::assign($lang->t('gallery', 'gallery'), uri('acp/gallery'));
+	breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
+	breadcrumb::assign($lang->t('gallery', 'gallery'), $uri->route('acp/gallery'));
 	breadcrumb::assign($gallery[0]['name']);
 
 	if (isset($_POST['form'])) {
@@ -46,7 +46,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			require_once MODULES_DIR . 'gallery/functions.php';
 			$bool3 = generatePictureAliases($uri->id);
 
-			$content = comboBox($bool && $bool2 && $bool3 ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/gallery'));
+			$content = comboBox($bool && $bool2 && $bool3 ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/gallery'));
 		}
 	}
 	if (!isset($_POST['entries']) && !isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -73,5 +73,5 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 		$content = modules::fetchTemplate('gallery/edit_gallery.html');
 	}
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }

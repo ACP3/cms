@@ -1,7 +1,7 @@
-{if $sql_queries}
+{if isset($sql_queries)}
 <div style="text-align:center">
 	<a href="#" id="queries-link">{lang t="installation|show_hide_executed_db_queries"}</a>
-	<hr />
+	<hr>
 </div>
 <table id="queries" class="acp-table">
 	<thead>
@@ -11,7 +11,7 @@
 		</tr>
 	</thead>
 	<tbody>
-{foreach from=$sql_queries item=row}
+{foreach $sql_queries as $row}
 		<tr>
 			<td style="text-align:left">{$row.query}</td>
 			<td style="color:#fff;background:#{$row.color}">{$row.result}</td>
@@ -19,7 +19,7 @@
 {/foreach}
 	</tbody>
 </table>
-{if $install_error}
+{if isset($install_error)}
 <p>
 	{lang t="installation|installation_error"}
 </p>
@@ -38,7 +38,9 @@
 </div>
 {/if}
 {else}
+{if isset($error_msg)}
 {$error_msg}
+{/if}
 <form action="{uri args="install/configuration"}" method="post" accept-charset="UTF-8">
 	<div id="tabs">
 		<ul>
@@ -53,37 +55,37 @@
 					<label for="db-host">{lang t="installation|db_hostname"}</label>
 					<span>{lang t="installation|db_hostname_description"}</span>
 				</dt>
-				<dd><input type="text" name="form[db_host]" id="db-host" value="{$form.db_host}" /></dd>
+				<dd><input type="text" name="form[db_host]" id="db-host" value="{$form.db_host}"></dd>
 				<dt><label for="db-user">{lang t="installation|db_username"}</label></dt>
-				<dd><input type="text" name="form[db_user]" id="db-user" value="{$form.db_user}" /></dd>
+				<dd><input type="text" name="form[db_user]" id="db-user" value="{$form.db_user}"></dd>
 				<dt><label for="db-password">{lang t="installation|db_password"}</label></dt>
-				<dd><input type="password" name="form[db_password]" id="db-password" value="{$form.db_password}" /></dd>
+				<dd><input type="password" name="form[db_password]" id="db-password" value=""></dd>
 				<dt><label for="db-name">{lang t="installation|db_name"}</label></dt>
-				<dd><input type="text" name="form[db_name]" id="db-name" value="{$form.db_name}" /></dd>
+				<dd><input type="text" name="form[db_name]" id="db-name" value="{$form.db_name}"></dd>
 				<dt><label for="db-pre">{lang t="installation|db_table_prefix"}</label></dt>
-				<dd><input type="text" name="form[db_pre]" id="db-pre" value="{$form.db_pre}" /></dd>
+				<dd><input type="text" name="form[db_pre]" id="db-pre" value="{$form.db_pre}"></dd>
 			</dl>
 		</div>
 		<div id="tabs-2" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="user-name">{lang t="users|nickname"}</label></dt>
-				<dd><input type="text" name="form[user_name]" id="user-name" value="{$form.user_name}" /></dd>
+				<dd><input type="text" name="form[user_name]" id="user-name" value="{$form.user_name}"></dd>
 				<dt><label for="user-pwd">{lang t="users|pwd"}</label></dt>
-				<dd><input type="password" name="form[user_pwd]" id="user-pwd" /></dd>
+				<dd><input type="password" name="form[user_pwd]" id="user-pwd"></dd>
 				<dt><label for="user-pwd-wdh">{lang t="users|pwd_repeat"}</label></dt>
-				<dd><input type="password" name="form[user_pwd_wdh]" id="user-pwd-wdh" /></dd>
+				<dd><input type="password" name="form[user_pwd_wdh]" id="user-pwd-wdh"></dd>
 				<dt><label for="mail">{lang t="common|email"}</label></dt>
-				<dd><input type="text" name="form[mail]" id="mail" value="{$form.mail}" /></dd>
+				<dd><input type="text" name="form[mail]" id="mail" value="{$form.mail}"></dd>
 			</dl>
 		</div>
 		<div id="tabs-3" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="seo-title">{lang t="system|title"}</label></dt>
-				<dd><input type="text" name="form[seo_title]" id="seo-title" value="{$form.seo_title}" /></dd>
+				<dd><input type="text" name="form[seo_title]" id="seo-title" value="{$form.seo_title}"></dd>
 				<dt><label for="entries">{lang t="system|entries_per_page"}</label></dt>
 				<dd>
 					<select name="form[entries]" id="entries">
-{foreach from=$entries item=row}
+{foreach $entries as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.value}</option>
 {/foreach}
 					</select>
@@ -92,7 +94,7 @@
 					<label for="flood">{lang t="system|flood_barrier"}</label>
 					<span>({lang t="system|flood_barrier_description"})</span>
 				</dt>
-				<dd><input type="text" name="form[flood]" id="flood" value="{$form.flood}" maxlength="3" /></dd>
+				<dd><input type="text" name="form[flood]" id="flood" value="{$form.flood}" maxlength="3"></dd>
 			</dl>
 		</div>
 		<div id="tabs-4" class="ui-tabs-hide">
@@ -101,22 +103,22 @@
 					<label for="date-format-long">{lang t="common|date_format_long"}</label>
 					<span>({lang t="system|php_date_function"})</span>
 				</dt>
-				<dd><input type="text" name="form[date_format_long]" id="date-format-long" value="{$form.date_format_long}" maxlength="20" /></dd>
+				<dd><input type="text" name="form[date_format_long]" id="date-format-long" value="{$form.date_format_long}" maxlength="20"></dd>
 				<dt><label for="date-format-short">{lang t="common|date_format_short"}</label></dt>
-				<dd><input type="text" name="form[date_format_short]" id="date-format-short" value="{$form.date_format_short}" maxlength="20" /></dd>
+				<dd><input type="text" name="form[date_format_short]" id="date-format-short" value="{$form.date_format_short}" maxlength="20"></dd>
 				<dt><label for="date-time-zone">{lang t="common|time_zone"}</label></dt>
 				<dd>
 					<select name="form[date_time_zone]" id="date-time-zone">
-{foreach from=$time_zone item=row}
+{foreach $time_zone as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 					</select>
 				</dd>
 				<dt><label for="date-dst-1">{lang t="common|daylight_saving_time"}</label></dt>
 				<dd>
-{foreach from=$dst item=row}
+{foreach $dst as $row}
 					<label for="date-dst-{$row.value}">
-						<input type="radio" name="form[date_dst]" id="date-dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked} />
+						<input type="radio" name="form[date_dst]" id="date-dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 						{$row.lang}
 					</label>
 {/foreach}
@@ -124,10 +126,10 @@
 			</dl>
 		</div>
 	</div>
-	<br />
+	<br>
 	<div class="success forward">
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form" />
-		<input type="reset" value="{lang t="common|reset"}" class="form" />
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
+		<input type="reset" value="{lang t="common|reset"}" class="form">
 	</div>
 </form>
 {/if}

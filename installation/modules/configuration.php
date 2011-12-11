@@ -5,7 +5,7 @@ if (!defined('IN_INSTALL'))
 if (isset($_POST['submit'])) {
 	$form = $_POST['form'];
 	$config_path = ACP3_ROOT . 'includes/config.php';
-	$db = new db;
+	$db = new db();
 
 	if (empty($form['db_host']))
 		$errors[] = $lang->t('installation', 'type_in_db_host');
@@ -40,10 +40,6 @@ if (isset($_POST['submit'])) {
 		$tpl->assign('errors', $errors);
 		$tpl->assign('error_msg', $tpl->fetch('error.html'));
 	} else {
-		// Modulkonfigurationsdateien schreiben
-		config::module('contact', array('mail' => $form['mail'], 'disclaimer' => $lang->t('installation', 'disclaimer')));
-		config::module('newsletter', array('mail' => $form['mail'], 'mailsig' => $lang->t('installation', 'sincerely') . "\n\n" . $lang->t('installation', 'newsletter_mailsig')));
-
 		// Systemkonfiguration erstellen
 		$config = array(
 			'date_dst' => $form['date_dst'],
@@ -73,9 +69,8 @@ if (isset($_POST['submit'])) {
 
 		// Daten in die config.php schreiben und diese laden
 		writeConfigFile($config);
-		require $config_path;
 
-		$db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
+		$db->connect($form['db_host'], $form['db_name'], $form['db_user'], $form['db_password'], $form['db_pre']);
 
 		$sql_file = file_get_contents(ACP3_ROOT . 'installation/modules/install.sql');
 		$sql_file = str_replace(array("\r\n", "\r"), "\n", $sql_file);
@@ -87,7 +82,7 @@ if (isset($_POST['submit'])) {
 		$current_date = gmdate('U');
 
 		$other_arr = array(
-			1 => 'INSERT INTO `' . $db->prefix . 'users` VALUES (\'\', \'' . $db->escape($form['user_name']) . '\', \'' . genSaltedPassword($salt, $form['user_pwd']) . ':' . $salt . '\', 1, \'0\', \':1\', \'1:1\', \':1\', \'1\', \'' . $form['mail'] . ':1\', \':1\', \':1\', \':1\', \':1\', \'' . $db->escape($form['date_format_long']) . '\', \'' . $db->escape($form['date_format_short']) . '\', \'' . CONFIG_DATE_TIME_ZONE . '\', \'' . CONFIG_DST .'\', \'' . CONFIG_LANG . '\', \'' . $form['entries'] . '\', \'\')',
+			1 => 'INSERT INTO `' . $db->prefix . 'users` VALUES (\'\', \'' . $db->escape($form['user_name']) . '\', \'' . genSaltedPassword($salt, $form['user_pwd']) . ':' . $salt . '\', 1, \'0\', \':1\', \'1:1\', \':1\', \'1\', \'' . $form['mail'] . ':1\', \':1\', \':1\', \':1\', \':1\', \'' . $db->escape($form['date_format_long']) . '\', \'' . $db->escape($form['date_format_short']) . '\', \'' . $form['date_time_zone'] . '\', \'' . $form['date_dst'] .'\', \'' . LANG . '\', \'' . $form['entries'] . '\', \'\')',
 			2 => 'INSERT INTO `' . $db->prefix . 'news` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', \'' . $lang->t('installation', 'news_headline') . '\', \'' . $lang->t('installation', 'news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\')',
 			3 => 'INSERT INTO `' . $db->prefix . 'menu_items` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 1, 1, 2, 1, \'' . $lang->t('installation', 'pages_news') . '\', \'news\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 2, 3, 4, 1, \'' . $lang->t('installation', 'pages_files') . '\', \'files\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 3, 5, 6, 1, \'' . $lang->t('installation', 'pages_gallery') . '\', \'gallery\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 4, 7, 8, 1, \'' . $lang->t('installation', 'pages_guestbook') . '\', \'guestbook\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 5, 9, 10, 1, \'' . $lang->t('installation', 'pages_polls') . '\', \'polls\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 6, 11, 12, 1, \'' . $lang->t('installation', 'pages_search') . '\', \'search\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 2, 7, 13, 14, 1, \'' . $lang->t('installation', 'pages_contact') . '\', \'contact\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 2, 8, 15, 16, 1, \'' . $lang->t('installation', 'pages_imprint') . '\', \'contact/imprint/\', 1)',
 			4 => 'INSERT INTO `' . $db->prefix . 'menu_items_blocks` (`id`, `index_name`, `title`) VALUES (1, \'main\', \'' . $lang->t('installation', 'pages_main') . '\'), (2, \'sidebar\', \'' . $lang->t('installation', 'pages_sidebar') . '\')',
@@ -101,8 +96,8 @@ if (isset($_POST['submit'])) {
 		foreach ($queries as $query) {
 			if (!empty($query)) {
 				$query.= ';';
-				$data[$i]['query'] = $query;
-				$bool = $db->query($query, 0);
+				$data[$i]['query'] = htmlentities($query, ENT_QUOTES, 'UTF-8');
+				$bool = $db->query($query, 3);
 				$data[$i]['color'] = $bool !== null ? '090' : 'f00';
 				$data[$i]['result'] = $bool !== null ? $lang->t('system', 'query_successfully_executed') : $lang->t('system', 'query_failed');
 				++$i;
@@ -113,6 +108,10 @@ if (isset($_POST['submit'])) {
 			}
 		}
 		$tpl->assign('sql_queries', $data);
+
+		// Modulkonfigurationsdateien schreiben
+		config::module('contact', array('mail' => $form['mail'], 'disclaimer' => $lang->t('installation', 'disclaimer')));
+		config::module('newsletter', array('mail' => $form['mail'], 'mailsig' => $lang->t('installation', 'sincerely') . "\n\n" . $lang->t('installation', 'newsletter_mailsig')));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
@@ -120,7 +119,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$i = 0;
 	for ($j = 10; $j <= 50; $j = $j + 10) {
 		$entries[$i]['value'] = $j;
-		$entries[$i]['selected'] = select_entry('entries', $j, '20');
+		$entries[$i]['selected'] = selectEntry('entries', $j, '20');
 		$i++;
 	}
 	$tpl->assign('entries', $entries);
@@ -132,7 +131,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$i = 0;
 	foreach ($time_zones as $row) {
 		$time_zone[$i]['value'] = $row * 3600;
-		$time_zone[$i]['selected'] = select_entry('date_time_zone', $row * 3600, $offset);
+		$time_zone[$i]['selected'] = selectEntry('date_time_zone', $row * 3600, $offset);
 		$time_zone[$i]['lang'] = $lang->t('common', 'utc' . $row);
 		$i++;
 	}
@@ -140,19 +139,25 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 	// Sommerzeit an/aus
 	$dst[0]['value'] = '1';
-	$dst[0]['checked'] = select_entry('date_dst', '1', $check_dst, 'checked');
+	$dst[0]['checked'] = selectEntry('date_dst', '1', $check_dst, 'checked');
 	$dst[0]['lang'] = $lang->t('common', 'yes');
 	$dst[1]['value'] = '0';
-	$dst[1]['checked'] = select_entry('date_dst', '0', $check_dst, 'checked');
+	$dst[1]['checked'] = selectEntry('date_dst', '0', $check_dst, 'checked');
 	$dst[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('dst', $dst);
 
-	$defaults['db_pre'] = 'acp3_';
-	$defaults['user_name'] = 'admin';
-	$defaults['flood'] = '30';
-	$defaults['date_format_long'] = 'd.m.y, H:i';
-	$defaults['date_format_short'] = 'd.m.y';
-	$defaults['seo_title'] = 'ACP3';
+	$defaults = array(
+		'db_host' => 'localhost',
+		'db_pre' => 'acp3_',
+		'db_user' => '',
+		'db_name' => '',
+		'user_name' => 'admin',
+		'mail' => '',
+		'flood' => '30',
+		'date_format_long' => 'd.m.y, H:i',
+		'date_format_short' => 'd.m.y',
+		'seo_title' => 'ACP3',
+	);
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 }

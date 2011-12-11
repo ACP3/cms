@@ -80,7 +80,7 @@ if (isset($_POST['form'])) {
 			setMenuItemsCache();
 		}
 
-		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/static_pages'));
+		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/static_pages'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

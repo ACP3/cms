@@ -69,7 +69,7 @@ if (isset($_POST['form'])) {
 
 		setMenuItemsCache();
 
-		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), uri('acp/menu_items'));
+		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/menu_items'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

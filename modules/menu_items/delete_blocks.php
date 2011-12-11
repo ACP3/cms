@@ -10,9 +10,9 @@
 if (!defined('IN_ADM'))
 	exit;
 
-breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
-breadcrumb::assign($lang->t('menu_items', 'menu_items'), uri('acp/menu_items'));
-breadcrumb::assign($lang->t('menu_items', 'adm_list_blocks'), uri('acp/menu_items/adm_list_blocks'));
+breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
+breadcrumb::assign($lang->t('menu_items', 'menu_items'), $uri->route('acp/menu_items'));
+breadcrumb::assign($lang->t('menu_items', 'adm_list_blocks'), $uri->route('acp/menu_items/adm_list_blocks'));
 breadcrumb::assign($lang->t('menu_items', 'delete_blocks'));
 
 if (isset($_POST['entries']) && is_array($_POST['entries']))
@@ -24,7 +24,7 @@ if (!isset($entries)) {
 	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/menu_items/delete_blocks/entries_' . $marked_entries . '/action_confirmed/'), uri('acp/menu_items/adm_list_blocks'));
+	$content = comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/menu_items/delete_blocks/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/menu_items/adm_list_blocks'));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	require_once MODULES_DIR . 'menu_items/functions.php';
 
@@ -38,7 +38,7 @@ if (!isset($entries)) {
 
 	setMenuItemsCache();
 
-	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri('acp/menu_items/adm_list_blocks'));
+	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route('acp/menu_items/adm_list_blocks'));
 } else {
-	redirect('acp/errors/404');
+	$uri->redirect('acp/errors/404');
 }

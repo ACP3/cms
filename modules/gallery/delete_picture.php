@@ -19,7 +19,7 @@ if (!isset($entries)) {
 	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox($lang->t('common', 'confirm_delete'), uri('acp/gallery/delete_picture/entries_' . $marked_entries . '/action_confirmed/'), uri('acp/gallery/edit_gallery/id_' . $uri->id));
+	$content = comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/gallery/delete_picture/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/gallery/edit_gallery/id_' . $uri->id));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	require_once MODULES_DIR . 'gallery/functions.php';
 
@@ -37,7 +37,7 @@ if (!isset($entries)) {
 			setGalleryCache($picture[0]['gallery_id']);
 		}
 	}
-	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), uri(!empty($picture[0]['gallery_id']) ? 'acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id'] : 'acp/gallery'));
+	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route(!empty($picture[0]['gallery_id']) ? 'acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id'] : 'acp/gallery'));
 } else {
-	redirect('acp/errors/404');
+	$uri->redirect('acp/errors/404');
 }

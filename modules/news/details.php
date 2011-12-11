@@ -19,9 +19,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 	$news = getNewsCache($uri->id);
 	// Brotkrümelspur
 	$category = $db->select('name', 'categories', 'id = \'' . $news[0]['category_id'] . '\'');
-	breadcrumb::assign($lang->t('news', 'news'), uri('news'));
+	breadcrumb::assign($lang->t('news', 'news'), $uri->route('news'));
 	if (count($category) > 0) {
-		breadcrumb::assign($category[0]['name'], uri('news/list/cat_' . $news[0]['category_id']));
+		breadcrumb::assign($category[0]['name'], $uri->route('news/list/cat_' . $news[0]['category_id']));
 	}
 	breadcrumb::assign($news[0]['headline']);
 
@@ -46,5 +46,5 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 	}
 	$content = modules::fetchTemplate('news/details.html');
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }

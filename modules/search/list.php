@@ -25,7 +25,7 @@ if (isset($_POST['form'])) {
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
-		breadcrumb::assign($lang->t('search', 'search'), uri('search'));
+		breadcrumb::assign($lang->t('search', 'search'), $uri->route('search'));
 		breadcrumb::assign($lang->t('search', 'search_results'));
 
 		$form['sort'] = strtoupper($form['sort']);

@@ -11,10 +11,10 @@ if (!defined('IN_ACP3'))
 	exit;
 
 if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
-	redirect('errors/403');
+	$uri->redirect('errors/403');
 } else {
-	breadcrumb::assign($lang->t('users', 'users'), uri('users'));
-	breadcrumb::assign($lang->t('users', 'home'), uri('users/home'));
+	breadcrumb::assign($lang->t('users', 'users'), $uri->route('users'));
+	breadcrumb::assign($lang->t('users', 'home'), $uri->route('users/home'));
 	breadcrumb::assign($lang->t('users', 'edit_profile'));
 
 	if (isset($_POST['form'])) {
@@ -69,7 +69,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 			$cookie_arr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
 			$auth->setCookie($form['nickname'], isset($new_pwd) ? $new_pwd : $cookie_arr[1], 3600);
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('users/home'));
+			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home'));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

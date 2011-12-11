@@ -14,9 +14,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 	$comment = $db->select('name, user_id, message, module', 'comments', 'id = \'' . $uri->id . '\'');
 
 	$comment[0]['module'] = $db->escape($comment[0]['module'], 3);
-	breadcrumb::assign($lang->t('common', 'acp'), uri('acp'));
-	breadcrumb::assign($lang->t('comments', 'comments'), uri('acp/comments'));
-	breadcrumb::assign($lang->t($comment[0]['module'], $comment[0]['module']), uri('acp/comments/adm_list/module_' . $comment[0]['module']));
+	breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
+	breadcrumb::assign($lang->t('comments', 'comments'), $uri->route('acp/comments'));
+	breadcrumb::assign($lang->t($comment[0]['module'], $comment[0]['module']), $uri->route('acp/comments/adm_list/module_' . $comment[0]['module']));
 	breadcrumb::assign($lang->t('comments', 'edit'));
 
 	if (isset($_POST['form'])) {
@@ -38,7 +38,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 
 			$bool = $db->update('comments', $update_values, 'id = \'' . $uri->id . '\'');
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), uri('acp/comments/adm_list/module_' . $comment[0]['module']));
+			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/comments/adm_list/module_' . $comment[0]['module']));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -54,5 +54,5 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 		$content = modules::fetchTemplate('comments/edit.html');
 	}
 } else {
-	redirect('errors/404');
+	$uri->redirect('errors/404');
 }

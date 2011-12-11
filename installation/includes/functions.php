@@ -17,7 +17,13 @@ function genSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
 {
 	return hash($algorithm, $salt . hash($algorithm, $plaintext));
 }
-// Funktion zum Salzen von Passwörtern
+/**
+ * Generiert einen Zufallsstring beliebiger Länge
+ *
+ * @param integer $str_length
+ *  Länge des zufälligen Strings
+ * @return string
+ */
 function salt($str_length)
 {
 	$chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -28,34 +34,49 @@ function salt($str_length)
 	}
 	return $key;
 }
-// Selektion eines Eintrages in einem Dropdown-Menü
-function select_entry($name, $value, $field_value = '', $attr = 'selected') {
+/**
+ * Selektion eines Eintrages in einem Dropdown-Menü
+ *
+ * @param string $name
+ *  Name des Feldes im Formular
+ * @param mixed $defValue
+ *  Abzugleichender Parameter mit $currentvalue
+ * @param mixed $currentValue
+ *  Wert aus der SQL Tabelle
+ * @param string $attr
+ *  HTML-Attribut, um Eintrag zu selektieren
+ * @return string
+ */
+function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
+{
 	$attr = ' ' . $attr . '="' . $attr . '"';
 
-	if (!isset($_POST['form'][$name])) {
-		if (!is_array($field_value) && $field_value == $value) {
-			return $attr;
-		} elseif (is_array($field_value)) {
-			foreach ($field_value as $row) {
-				if ($row == $value)
-					return $attr;
-			}
-		}
-	} elseif (isset($_POST['form'][$name]) && $_POST['form'][$name] != '') {
-		if (!is_array($_POST['form'][$name]) && $_POST['form'][$name] == $value) {
-			return $attr;
-		} elseif (is_array($_POST['form'][$name])) {
-			foreach ($_POST['form'][$name] as $row) {
-				if ($row == $value)
-					return $attr;
-			}
-		}
+	if (isset($_POST[$name])) {
+		$field = $_POST[$name];
+	} elseif (isset($_POST['form'][$name])) {
+		$field = $_POST['form'][$name];
 	}
-}
-// URIs
-function uri($uri)
-{
-	return PHP_SELF . '/' . $uri . (!preg_match('/\/$/', $uri) ? '/' : '') . 'lang_' . LANG . '/';
+
+	if (isset($field)) {
+		if (!is_array($field) && $field == $defValue) {
+			return $attr;
+		} elseif (is_array($field)) {
+			foreach ($field as $row) {
+				if ($row == $defValue)
+					return $attr;
+			}
+		}
+	} else {
+		if (!is_array($currentValue) && $currentValue == $defValue) {
+			return $attr;
+		} elseif (is_array($currentValue)) {
+			foreach ($currentValue as $row) {
+				if ($row == $defValue)
+					return $attr;
+			}
+		}
+		return '';
+	}
 }
 /**
  * Schreibt die Systemkonfigurationsdatei

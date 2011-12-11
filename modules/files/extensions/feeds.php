@@ -21,7 +21,7 @@ if ($c_result > 0) {
 		$results[$i]['date'] = $date->format($result[$i]['start'], 'r');
 		$results[$i]['title'] = html_entity_decode($db->escape($result[$i]['link_title'], 3), ENT_QUOTES, 'UTF-8');
 		$results[$i]['description'] = shortenEntry($db->escape($result[$i]['text'], 3), 300, 0);
-		$results[$i]['uri'] = $link . uri('files/details/id_' . $result[$i]['id'], 1);
+		$results[$i]['uri'] = $link . $uri->route('files/details/id_' . $result[$i]['id'], 1);
 	}
 	$tpl->assign('results', $results);
 }

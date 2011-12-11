@@ -12,4 +12,4 @@ if (!defined('IN_ADM'))
 
 $bool = validate::isNumber($uri->id) ? $db->update('newsletter_accounts', array('hash' => ''), 'id = \'' . $uri->id . '\'') : false;
 
-$content = comboBox($bool !== null ? $lang->t('newsletter', 'activate_success') : $lang->t('newsletter', 'activate_error'), uri('acp/newsletter'));
+$content = comboBox($bool !== null ? $lang->t('newsletter', 'activate_success') : $lang->t('newsletter', 'activate_error'), $uri->route('acp/newsletter'));

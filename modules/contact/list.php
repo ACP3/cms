@@ -32,7 +32,7 @@ if (isset($_POST['form'])) {
 
 		$bool = genEmail('', $settings['mail'], $form['mail'], $subject, $body);
 
-		$content = comboBox($bool ? $lang->t('contact', 'send_mail_success') : $lang->t('contact', 'send_mail_error'), uri('contact'));
+		$content = comboBox($bool ? $lang->t('contact', 'send_mail_success') : $lang->t('contact', 'send_mail_error'), $uri->route('contact'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
