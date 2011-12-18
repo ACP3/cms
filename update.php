@@ -157,7 +157,7 @@ if (CONFIG_DB_VERSION < 4) {
 	$db->update('gallery', array('user_id' => $user[0]['id']));
 	$db->update('news', array('user_id' => $user[0]['id']));
 	$db->update('newsletter_archive', array('user_id' => $user[0]['id']));
-	$db->update('poll_question', array('user_id' => $user[0]['id']));
+	$db->update('polls', array('user_id' => $user[0]['id']));
 	$db->update('static_pages', array('user_id' => $user[0]['id']));
 }
 
