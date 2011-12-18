@@ -72,6 +72,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 				'link_title' => $db->escape($form['link_title']),
 				'text' => $db->escape($form['text'], 2),
 				'comments' => $settings['comments'] == 1 && isset($form['comments']) ? 1 : 0,
+				'user_id' => $auth->getUserId(),
 			);
 			if (is_array($new_file_sql)) {
 				$old_file = $db->select('file', 'files', 'id = \'' . $uri->id . '\'');

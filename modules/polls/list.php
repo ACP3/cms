@@ -10,7 +10,7 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-$polls = $db->select('id, start, end, question', 'poll_question', 'start <= \'' . $date->timestamp() . '\'', 'start DESC, end DESC, id DESC');
+$polls = $db->select('id, start, end, question', 'polls', 'start <= \'' . $date->timestamp() . '\'', 'start DESC, end DESC, id DESC');
 $c_polls = count($polls);
 
 if ($c_polls > 0) {

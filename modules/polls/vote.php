@@ -14,7 +14,7 @@ $time = $date->timestamp();
 $period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 $multiple = !empty($_POST['answer']) && is_array($_POST['answer']) ? ' AND multiple = \'1\'' : '';
 
-if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \'' . $uri->id . '\'' . $multiple . $period) == 1) {
+if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $uri->id . '\'' . $multiple . $period) == 1) {
 	// Brotkrümelspur
 	breadcrumb::assign($lang->t('polls', 'polls'), $uri->route('polls'));
 	breadcrumb::assign($lang->t('polls', 'vote'));
@@ -65,7 +65,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 		}
 		$content = comboBox($text, $uri->route('polls/result/id_' . $uri->id));
 	} else {
-		$question = $db->select('question, multiple', 'poll_question', 'id = \'' . $uri->id . '\'');
+		$question = $db->select('question, multiple', 'polls', 'id = \'' . $uri->id . '\'');
 		$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $uri->id . '\'', 'id ASC');
 		$c_answers = count($answers);
 

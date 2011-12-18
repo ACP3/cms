@@ -30,6 +30,7 @@ if (isset($_POST['form'])) {
 			'subject' => $db->escape($form['subject']),
 			'text' => $db->escape($form['text']),
 			'status' => $form['test'] == '1' ? '0' : (int) $form['action'],
+			'user_id' => $auth->getUserId(),
 		);
 		$bool = $db->insert('newsletter_archive', $insert_values);
 

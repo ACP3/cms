@@ -33,6 +33,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 				'end' => $date->timestamp($form['end']),
 				'title' => $db->escape($form['title']),
 				'text' => $db->escape($form['text'], 2),
+				'user_id' => $auth->getUserId(),
 			);
 
 			$bool = $db->update('static_pages', $update_values, 'id = \'' . $uri->id . '\'');

@@ -43,6 +43,7 @@ CREATE TABLE `{pre}files` (
 	`link_title` VARCHAR(120) NOT NULL,
 	`text` TEXT NOT NULL,
 	`comments` TINYINT(1) UNSIGNED NOT NULL,
+	`user_id` INT UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`link_title`, `text`), INDEX `foreign_category_id` (`category_id`)
 ) {engine};
 
@@ -51,6 +52,7 @@ CREATE TABLE `{pre}gallery` (
 	`start` VARCHAR(14) NOT NULL,
 	`end` VARCHAR(14) NOT NULL,
 	`name` VARCHAR(120) NOT NULL,
+	`user_id` INT UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine};
 
@@ -112,6 +114,7 @@ CREATE TABLE `{pre}news` (
 	`uri` VARCHAR(120) NOT NULL,
 	`target` TINYINT(1) UNSIGNED NOT NULL,
 	`link_title` VARCHAR(120) NOT NULL,
+	`user_id` INT UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`headline`,`text`), INDEX `foreign_category_id` (`category_id`)
 ) {engine};
 
@@ -128,6 +131,7 @@ CREATE TABLE `{pre}newsletter_archive` (
 	`subject` VARCHAR(120) NOT NULL,
 	`text` TEXT NOT NULL,
 	`status` TINYINT(1) UNSIGNED NOT NULL,
+	`user_id` INT UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine};
 
@@ -138,12 +142,13 @@ CREATE TABLE `{pre}poll_answers` (
 	PRIMARY KEY (`id`), INDEX `foreign_poll_id` (`poll_id`)
 ) {engine};
 
-CREATE TABLE `{pre}poll_question` (
+CREATE TABLE `{pre}polls` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`start` VARCHAR(14) NOT NULL,
 	`end` VARCHAR(14) NOT NULL,
 	`question` VARCHAR(120) NOT NULL,
 	`multiple` TINYINT(1) UNSIGNED NOT NULL,
+	`user_id` INT UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`)
 ) {engine};
 
@@ -180,6 +185,7 @@ CREATE TABLE `{pre}static_pages` (
 	`end` VARCHAR(14) NOT NULL,
 	`title` VARCHAR(120) NOT NULL,
 	`text` TEXT NOT NULL,
+	`user_id` INT UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`title`, `text`)
 ) {engine};
 

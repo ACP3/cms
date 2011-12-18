@@ -36,6 +36,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 				'subject' => $db->escape($form['subject']),
 				'text' => $db->escape($form['text']),
 				'status' => $form['test'] == '1' ? '0' : (int) $form['action'],
+				'user_id' => $auth->getUserId(),
 			);
 			$bool = $db->update('newsletter_archive', $update_values, 'id = \'' . $uri->id . '\'');
 

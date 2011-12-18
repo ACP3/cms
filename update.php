@@ -50,6 +50,15 @@ $queries = array(
 	),
 	3 => array(
 		0 => 'CREATE TABLE `{pre}settings` (`id` INT(10) unsigned NOT NULL AUTO_INCREMENT, `module` VARCHAR(40) NOT NULL, `name` VARCHAR(40) NOT NULL, `value` TEXT NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `module` (`module`,`name`)) {engine};',
+	),
+	4 => array(
+		0 => 'ALTER TABLE `{pre}news` ADD `user_id` INT UNSIGNED NOT NULL;',
+		1 => 'ALTER TABLE `{pre}files` ADD `user_id` INT UNSIGNED NOT NULL;',
+		2 => 'ALTER TABLE `{pre}gallery` ADD `user_id` INT UNSIGNED NOT NULL;',
+		3 => 'ALTER TABLE `{pre}poll_question` ADD `user_id` INT UNSIGNED NOT NULL;',
+		4 => 'ALTER TABLE `{pre}static_pages` ADD `user_id` INT UNSIGNED NOT NULL;',
+		5 => 'ALTER TABLE `{pre}newsletter_archive` ADD `user_id` INT UNSIGNED NOT NULL;',
+		6 => 'RENAME TABLE `{pre}poll_question` TO `{pre}polls`;',
 	)
 );
 
@@ -141,10 +150,20 @@ if (CONFIG_DB_VERSION < 3) {
 		}
 	}
 }
+if (CONFIG_DB_VERSION < 4) {
+	$user = $db->select('MIN(id) AS id', 'users');
+
+	$db->update('files', array('user_id' => $user[0]['id']));
+	$db->update('gallery', array('user_id' => $user[0]['id']));
+	$db->update('news', array('user_id' => $user[0]['id']));
+	$db->update('newsletter_archive', array('user_id' => $user[0]['id']));
+	$db->update('poll_question', array('user_id' => $user[0]['id']));
+	$db->update('static_pages', array('user_id' => $user[0]['id']));
+}
 
 // Konfigurationsdatei aktualisieren
 $config = array(
-	'db_version' => 3,
+	'db_version' => 4,
 	'wysiwyg' => CONFIG_WYSIWYG == 'fckeditor' ? 'ckeditor' : CONFIG_WYSIWYG,
 );
 

@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $uri->id . '\'') == '1') {
 	if (isset($_POST['form'])) {
 		$form = $_POST['form'];
 
@@ -39,9 +39,10 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 				'end' => $date->timestamp($form['end']),
 				'question' => $db->escape($form['question']),
 				'multiple' => isset($form['multiple']) ? '1' : '0',
+				'user_id' => $auth->getUserId(),
 			);
 
-			$bool = $db->update('poll_question', $update_values, 'id = \'' . $uri->id . '\'');
+			$bool = $db->update('polls', $update_values, 'id = \'' . $uri->id . '\'');
 
 			// Stimmen zurücksetzen
 			if (!empty($form['reset']))
@@ -96,7 +97,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \
 		}
 		$tpl->assign('answers', $answers);
 
-		$poll = $db->select('start, end, question, multiple', 'poll_question', 'id = \'' . $uri->id . '\'');
+		$poll = $db->select('start, end, question, multiple', 'polls', 'id = \'' . $uri->id . '\'');
 
 		$options[0]['name'] = 'reset';
 		$options[0]['checked'] = selectEntry('reset', '1', '0', 'checked');

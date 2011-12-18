@@ -38,6 +38,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 				'start' => $date->timestamp($form['start']),
 				'end' => $date->timestamp($form['end']),
 				'name' => $db->escape($form['name']),
+				'user_id' => $auth->getUserId(),
 			);
 
 			$bool = $db->update('gallery', $update_values, 'id = \'' . $uri->id . '\'');
