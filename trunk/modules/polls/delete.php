@@ -24,8 +24,8 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = $bool2 = $bool3 = null;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'poll_question', 'id = \'' . $entry . '\'') == '1') {
-			$bool = $db->delete('poll_question', 'id = \'' . $entry . '\'');
+		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'polls', 'id = \'' . $entry . '\'') == '1') {
+			$bool = $db->delete('polls', 'id = \'' . $entry . '\'');
 			$bool2 = $db->delete('poll_answers', 'poll_id = \'' . $entry . '\'');
 			$bool3 = $db->delete('poll_votes', 'poll_id = \'' . $entry . '\'');
 		}

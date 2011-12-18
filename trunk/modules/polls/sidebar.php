@@ -13,14 +13,14 @@ if (!defined('IN_ACP3') && !defined('IN_ADM'))
 $time = $date->timestamp();
 $period = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
-$question = $db->select('id, question, multiple', 'poll_question', $period, 'start DESC');
+$question = $db->select('id, question, multiple', 'polls', $period, 'start DESC');
 
 if (count($question) > 0) {
 	$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $question[0]['id'] . '\'', 'id ASC');
 	$c_answers = count($answers);
 
 	$question[0]['question'] = $db->escape($question[0]['question'], 3);
-	$tpl->assign('sidebar_poll_question', $question[0]);
+	$tpl->assign('sidebar_polls', $question[0]);
 
 	// Überprüfen, ob der eingeloggte User schon abgestimmt hat
 	if ($auth->isUser())

@@ -10,11 +10,11 @@
 if (!defined('IN_ACP3'))
 	exit;
 
-if (validate::isNumber($uri->id) && $db->countRows('*', 'poll_question', 'id = \'' . $uri->id . '\' AND start <= \'' . $date->timestamp() . '\'') == 1) {
+if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $uri->id . '\' AND start <= \'' . $date->timestamp() . '\'') == 1) {
 	breadcrumb::assign($lang->t('polls', 'polls'), $uri->route('polls'));
 	breadcrumb::assign($lang->t('polls', 'result'));
 
-	$question = $db->select('question', 'poll_question');
+	$question = $db->select('question', 'polls');
 	$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $uri->id . '\'', 'id ASC');
 	$c_answers = count($answers);
 	$total_votes = $db->countRows('answer_id', 'poll_votes', 'poll_id = \'' . $uri->id . '\'');

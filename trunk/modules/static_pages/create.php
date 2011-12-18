@@ -55,6 +55,7 @@ if (isset($_POST['form'])) {
 			'end' => $time_end,
 			'title' => $db->escape($form['title']),
 			'text' => $db->escape($form['text'], 2),
+			'user_id' => $auth->getUserId(),
 		);
 
 		$db->link->beginTransaction();

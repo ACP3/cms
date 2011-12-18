@@ -65,6 +65,7 @@ if (isset($_POST['form'])) {
 			'link_title' => $db->escape($form['link_title']),
 			'text' => $db->escape($form['text'], 2),
 			'comments' => $settings['comments'] == 1 && isset($form['comments']) ? 1 : 0,
+			'user_id' => $auth->getUserId(),
 		);
 
 

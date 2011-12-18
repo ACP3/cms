@@ -4,7 +4,7 @@
 		<name lang="true"/>
 		<description lang="true"/>
 		<author>Goratsch Webdesign</author>
-		<tables>poll_answers,poll_question,poll_votes</tables>
+		<tables>poll_answers,polls,poll_votes</tables>
 		<version core="true"/>
 		<active>1</active>
 	</info>

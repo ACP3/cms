@@ -38,12 +38,13 @@ if (isset($_POST['form'])) {
 			'end' => $end,
 			'question' => $question,
 			'multiple' => isset($form['multiple']) ? '1' : '0',
+			'user_id' => $auth->getUserId(),
 		);
 
-		$bool = $db->insert('poll_question', $insert_values);
+		$bool = $db->insert('polls', $insert_values);
 
 		if ($bool) {
-			$poll_id = $db->select('id', 'poll_question', 'start = \'' . $start . '\' AND end = \'' . $end . '\' AND question = \'' . $question . '\'', 'id DESC', 1);
+			$poll_id = $db->select('id', 'polls', 'start = \'' . $start . '\' AND end = \'' . $end . '\' AND question = \'' . $question . '\'', 'id DESC', 1);
 			foreach ($form['answers'] as $row) {
 				if (!empty($row)) {
 					$insert_answer = array(

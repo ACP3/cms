@@ -28,6 +28,7 @@ if (isset($_POST['form'])) {
 			'start' => $date->timestamp($form['start']),
 			'end' => $date->timestamp($form['end']),
 			'name' => $db->escape($form['name']),
+			'user_id' => $auth->getUserId(),
 		);
 
 		$bool = $db->insert('gallery', $insert_values);

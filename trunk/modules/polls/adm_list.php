@@ -10,11 +10,11 @@
 if (!defined('IN_ADM'))
 	exit;
 
-$polls = $db->select('id, start, end, question', 'poll_question', 0, 'start DESC, end DESC, id DESC', POS, $auth->entries);
+$polls = $db->select('id, start, end, question', 'polls', 0, 'start DESC, end DESC, id DESC', POS, $auth->entries);
 $c_polls = count($polls);
 
 if ($c_polls > 0) {
-	$tpl->assign('pagination', pagination($db->countRows('*', 'poll_question')));
+	$tpl->assign('pagination', pagination($db->countRows('*', 'polls')));
 
 	for ($i = 0; $i < $c_polls; ++$i) {
 		$polls[$i]['period'] = $date->period($polls[$i]['start'], $polls[$i]['end']);

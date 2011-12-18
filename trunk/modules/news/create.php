@@ -46,7 +46,8 @@ if (isset($_POST['form'])) {
 			'category_id' => strlen($form['cat_create']) >= 3 ? categoriesCreate($form['cat_create'], 'news') : $form['cat'],
 			'uri' => $db->escape($form['uri'], 2),
 			'target' => $form['target'],
-			'link_title' => $db->escape($form['link_title'])
+			'link_title' => $db->escape($form['link_title']),
+			'user_id' => $auth->getUserId(),
 		);
 
 		$bool = $db->insert('news', $insert_values);
