@@ -16,12 +16,19 @@
 class date
 {
 	/**
-	 * Zeitverschiebung
+	 * Zeitverschiebung von Greenwich mit eventueller Sommerzeit
 	 *
 	 * @var integer
 	 * @access private
 	 */
-	private $offset = 0;
+	private $offset_dst = 0;
+	/**
+	 * Zeitverschiebung von Greenwich ohne Sommerzeit
+	 * 
+	 * @var integer
+	 * @access private
+	 */
+	private $offset_real = 0;
 	/**
 	 * Sommerzeit an/aus
 	 *
@@ -57,7 +64,8 @@ class date
 			$time_zone = (int) CONFIG_DATE_TIME_ZONE;
 		}
 
-		$this->offset = $time_zone + ($this->dst == 1 ? 3600 : 0);
+		$this->offset_real = $time_zone;
+		$this->offset_dst = $time_zone + ($this->dst == 1 ? 3600 : 0);
 	}
 	/**
 	 * Zeigt Dropdown-Menüs für die Veröffentlichungsdauer von Inhalten an
@@ -75,7 +83,7 @@ class date
 	 *	2 = Einfaches Inputfeld mitsamt Datepicker anzeigen
 	 * @return string
 	 */
-	public function datepicker($name, $value = '', $format = 'Y-m-d H:i', array $params = array(), $range = 1)
+	public function datepicker($name, $value = '', $format = 'Y-m-d H:i', array $params = array(), $range = 1, $mode = 1)
 	{
 		global $tpl;
 
@@ -102,11 +110,11 @@ class date
 				$value_start = $_POST['form'][$name[0]];
 				$value_end = $_POST['form'][$name[1]];
 			} elseif (is_array($value) && validate::isNumber($value[0]) && validate::isNumber($value[1])) {
-				$value_start = $this->format($value[0], $format);
-				$value_end = $this->format($value[1], $format);
+				$value_start = $this->format($value[0], $format, $mode);
+				$value_end = $this->format($value[1], $format, $mode);
 			} else {
-				$value_start = $this->format(time(), $format);
-				$value_end = $this->format(time(), $format);
+				$value_start = $this->format(time(), $format, $mode);
+				$value_end = $this->format(time(), $format, $mode);
 			}
 
 			$datepicker['name_start'] = $name[0];
@@ -118,9 +126,9 @@ class date
 			if (!empty($_POST['form'][$name])) {
 				$value = $_POST['form'][$name];
 			} elseif (validate::isNumber($value)) {
-				$value = $this->format($value, $format);
+				$value = $this->format($value, $format, $mode);
 			} else {
-				$value = $this->format(time(), $format);
+				$value = $this->format(time(), $format, $mode);
 			}
 
 			$datepicker['name'] = $name;
@@ -134,16 +142,16 @@ class date
 	/**
 	 * Gibt ein formatiertes Datum zurück
 	 *
-	 * @param mixed $time_stamp
+	 * @param integer $time_stamp
 	 * @param string $format
-	 * @return integer
+	 * @param integer $mode
+	 *	1 = Sommerzeit beachten
+	 *	2 = Sommerzeit nicht beachten
+	 * @return string
 	 */
-	public function format($time_stamp, $format = 'long')
+	public function format($time_stamp, $format = 'long', $mode = 1)
 	{
 		// Datum in gewünschter Formatierung ausgeben
-		// 1 = langes Datumsforat
-		// 2 = kurzes Datumsformat
-		// Alles andere = Benutzerdefiniertes Format
 		switch ($format) {
 			case 'long':
 				$format = $this->date_format_long;
@@ -152,8 +160,16 @@ class date
 				$format = $this->date_format_short;
 				break;
 		}
-		return gmdate($format, $time_stamp + $this->offset);
+		return gmdate($format, $time_stamp + ($mode == 1 ? $this->offset_dst : $this->offset_real));
 	}
+	/**
+	 * Gibt die Formularfelder für den Veröffentlichungszeitraum aus
+	 * 
+	 * @param integer $start
+	 * @param integer $end
+	 * @param string $format
+	 * @return string
+	 */
 	public function period($start, $end, $format = 'long')
 	{
 		if (validate::isNumber($start) && validate::isNumber($end)) {
@@ -180,7 +196,7 @@ class date
 
 			$offset = (date('I', $value) == 1) ? -3600 : 0;
 
-			return gmdate('U', $value + $offset - $this->offset);
+			return gmdate('U', $value + $offset - $this->offset_dst);
 		}
 		return gmdate('U');
 	}
