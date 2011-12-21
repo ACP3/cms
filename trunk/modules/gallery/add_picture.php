@@ -72,7 +72,6 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 		for ($i = 0; $i < $c_galleries; ++$i) {
 			$galleries[$i]['selected'] = selectEntry('gallery', $galleries[$i]['id'], $uri->id);
 			$galleries[$i]['date'] = $date->format($galleries[$i]['start']);
-			$galleries[$i]['name'] = $db->escape($galleries[$i]['name'], 3);
 		}
 
 		$tpl->assign('galleries', $galleries);

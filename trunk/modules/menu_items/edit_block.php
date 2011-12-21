@@ -45,8 +45,6 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$block = $db->select('index_name, title', 'menu_items_blocks', 'id = \'' . $uri->id . '\'');
-		$block[0]['index_name'] = $db->escape($block[0]['index_name'], 3);
-		$block[0]['title'] = $db->escape($block[0]['title'], 3);
 
 		$tpl->assign('form', isset($form) ? $form : $block[0]);
 

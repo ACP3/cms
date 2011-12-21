@@ -21,7 +21,6 @@ if ($c_news > 0) {
 
 	for ($i = 0; $i < $c_news; ++$i) {
 		$news[$i]['start'] = $date->format($news[$i]['start'], $settings['dateformat']);
-		$news[$i]['headline'] = $db->escape($news[$i]['headline'], 3);
 		$news[$i]['headline_short'] = shortenEntry($news[$i]['headline'], 30, 5, '...');
 	}
 	$tpl->assign('sidebar_news', $news);

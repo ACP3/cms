@@ -12,7 +12,6 @@ if (!defined('IN_ADM'))
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $uri->id . '\'') == '1') {
 	$gallery = $db->select('start, end, name', 'gallery', 'id = \'' . $uri->id . '\'');
-	$gallery[0]['name'] = $db->escape($gallery[0]['name'], 3);
 	$gallery[0]['alias'] = seo::getUriAlias('gallery/pics/id_' . $uri->id);
 	$gallery[0]['seo_keywords'] = seo::getKeywordsOrDescription('gallery/pics/id_' . $uri->id);
 	$gallery[0]['seo_description'] = seo::getKeywordsOrDescription('gallery/pics/id_' . $uri->id, 'description');
@@ -66,7 +65,6 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			for ($i = 0; $i < $c_pictures; ++$i) {
 				$pictures[$i]['first'] = $i == 0 ? true : false;
 				$pictures[$i]['last'] = $i == $c_pictures - 1 ? true : false;
-				$pictures[$i]['description'] = $db->escape($pictures[$i]['description'], 3);
 			}
 			$tpl->assign('pictures', $pictures);
 		}

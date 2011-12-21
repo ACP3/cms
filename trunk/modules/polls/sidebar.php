@@ -19,7 +19,6 @@ if (count($question) > 0) {
 	$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $question[0]['id'] . '\'', 'id ASC');
 	$c_answers = count($answers);
 
-	$question[0]['question'] = $db->escape($question[0]['question'], 3);
 	$tpl->assign('sidebar_polls', $question[0]);
 
 	// Überprüfen, ob der eingeloggte User schon abgestimmt hat
@@ -33,7 +32,6 @@ if (count($question) > 0) {
 		$total_votes = $db->countRows('answer_id', 'poll_votes', 'poll_id = \'' . $question[0]['id'] . '\'');
 
 		for ($i = 0; $i < $c_answers; ++$i) {
-			$answers[$i]['text'] = $db->escape($answers[$i]['text'], 3);
 			$votes = $db->countRows('answer_id', 'poll_votes', 'answer_id = \'' . $answers[$i]['id'] . '\'');
 			$answers[$i]['votes'] = ($votes > 1) ? sprintf($lang->t('polls', 'number_of_votes'), $votes) : (($votes == 1) ? $lang->t('polls', 'one_vote') : $lang->t('polls', 'no_votes'));
 			$answers[$i]['percent'] = $total_votes > 0 ? round(100 * $votes / $total_votes, 2) : '0';
@@ -42,10 +40,6 @@ if (count($question) > 0) {
 		$tpl->assign('sidebar_poll_answers', $answers);
 		modules::displayTemplate('polls/sidebar_result.html');
 	} else {
-		for ($i = 0; $i < $c_answers; ++$i) {
-			$answers[$i]['text'] = $db->escape($answers[$i]['text'], 3);
-		}
-
 		$tpl->assign('sidebar_poll_answers', $answers);
 		modules::displayTemplate('polls/sidebar_vote.html');
 	}

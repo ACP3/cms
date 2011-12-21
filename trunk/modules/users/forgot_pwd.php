@@ -37,7 +37,7 @@ if ($auth->isUser()) {
 
 			// E-Mail mit dem neuen Passwort versenden
 			$subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), $lang->t('users', 'forgot_pwd_mail_subject'));
-			$body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($db->escape($user[0]['nickname'], 3), $user[0]['mail'], $new_password, CONFIG_SEO_TITLE, $host), $lang->t('users', 'forgot_pwd_mail_message'));
+			$body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($user[0]['nickname'], $user[0]['mail'], $new_password, CONFIG_SEO_TITLE, $host), $lang->t('users', 'forgot_pwd_mail_message'));
 			$mail_sent = genEmail('', $user[0]['mail'], $subject, $body);
 
 			// Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte

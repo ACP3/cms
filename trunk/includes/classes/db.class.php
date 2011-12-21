@@ -61,20 +61,14 @@ class db
 	 * @param integer $mode
 	 *	1 = Variablen komplett maskieren
 	 * 	2 = Nur Slashes hinzufügen (wichtig für die WYSIWYG-Editoren Eingaben)
-	 * 	3 = Slashes entfernen
 	 * @return string
 	 */
 	public function escape($value, $mode = 1)
 	{
 		$value = trim($value);
+		$value = $mode == 1 ? htmlentities($value, ENT_QUOTES, 'UTF-8') : $value;
 
-		if ($mode == 1 || $mode == 2) {
-			global $db;
-			$value = $mode == 1 ? htmlentities($value, ENT_QUOTES, 'UTF-8') : $value;
-			return substr($db->link->quote($value), 1, -1);
-		} else {
-			return stripslashes($value);
-		}
+		return substr($this->link->quote($value), 1, -1);
 	}
 	/**
 	 * Führt die SQL-Abfragen aus
