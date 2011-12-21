@@ -14,7 +14,9 @@ $time = $date->timestamp();
 $period = ' AND (g.start = g.end AND g.start <= \'' . $time . '\' OR g.start != g.end AND g.start <= \'' . $time . '\' AND g.end >= \'' . $time . '\')';
 
 if (validate::isNumber($uri->id) && $db->select('COUNT(g.id)', 'gallery AS g, ' . $db->prefix . 'gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id' . $period) > 0) {
-	$picture = $db->select('g.id AS gallery_id, g.name, p.id, p.pic, p.description, p.comments', 'gallery AS g, ' . $db->prefix . 'gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');	
+	$picture = $db->select('g.id AS gallery_id, g.name, p.id, p.pic, p.description, p.comments', 'gallery AS g, ' . $db->prefix . 'gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
+	$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
+	
 	$settings = config::getModuleSettings('gallery');
 
 	// Brotkrümelspur

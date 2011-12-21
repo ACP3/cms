@@ -18,7 +18,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 	if (!isset($_POST['form'])) {
 		$user = $db->select('draft', 'users', 'id = \'' . $auth->getUserId() . '\'');
 
-		$tpl->assign('draft', $user[0]['draft']);
+		$tpl->assign('draft', $db->escape($user[0]['draft'], 3));
 
 		$content = modules::fetchTemplate('users/home.html');
 	}

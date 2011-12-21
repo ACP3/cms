@@ -31,7 +31,7 @@ if ($c_result_files > 0) {
 	$results_mods['files']['title'] = $lang->t('files', 'files');
 	for ($i = 0; $i < $c_result_files; ++$i) {
 		$results_mods['files']['results'][$i]['hyperlink'] = $uri->route('files/details/id_' . $result_files[$i]['id'], 1);
-		$results_mods['files']['results'][$i]['headline'] = $result_files[$i]['link_title'];
-		$results_mods['files']['results'][$i]['text'] = shortenEntry($result_files[$i]['text'], 200, 0, '...');
+		$results_mods['files']['results'][$i]['headline'] = $db->escape($result_files[$i]['link_title'], 3);
+		$results_mods['files']['results'][$i]['text'] = shortenEntry($db->escape($result_files[$i]['text'], 3), 200, 0, '...');
 	}
 }

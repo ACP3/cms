@@ -14,7 +14,10 @@ breadcrumb::assign($lang->t('contact', 'contact'), $uri->route('contact'));
 breadcrumb::assign($lang->t('contact', 'imprint'));
 
 $contact = config::getModuleSettings('contact');
+$contact['address'] = $db->escape($contact['address'], 3);
 $contact['mail'] = '<a href="' . $uri->route('contact') . '">' . $contact['mail'] . '</a>';
+$contact['disclaimer'] = $db->escape($contact['disclaimer'], 3);
+$contact['layout'] = $db->escape($contact['layout'], 3);
 
 // Platzhalteer ersetzen
 $search = array('{address_lang}', '{address_value}', '{email_lang}', '{email_value}', '{telephone_lang}', '{telephone_value}', '{fax_lang}', '{fax_value}', '{disclaimer_lang}', '{disclaimer_value}');
