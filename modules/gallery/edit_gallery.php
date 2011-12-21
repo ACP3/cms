@@ -65,6 +65,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			for ($i = 0; $i < $c_pictures; ++$i) {
 				$pictures[$i]['first'] = $i == 0 ? true : false;
 				$pictures[$i]['last'] = $i == $c_pictures - 1 ? true : false;
+				$pictures[$i]['description'] = $db->escape($pictures[$i]['description'], 3);
 			}
 			$tpl->assign('pictures', $pictures);
 		}

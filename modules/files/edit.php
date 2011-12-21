@@ -92,6 +92,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$dl = $db->select('start, end, category_id, file, size, link_title, text, comments', 'files', 'id = \'' . $uri->id . '\'');
+		$dl[0]['text'] = $db->escape($dl[0]['text'], 3);
 		$dl[0]['alias'] = seo::getUriAlias('files/details/id_' . $uri->id);
 		$dl[0]['seo_keywords'] = seo::getKeywordsOrDescription('files/details/id_' . $uri->id);
 		$dl[0]['seo_description'] = seo::getKeywordsOrDescription('files/details/id_' . $uri->id, 'description');

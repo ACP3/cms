@@ -44,7 +44,8 @@ if ($c_news > 0) {
 
 	for ($i = 0; $i < $c_news; ++$i) {
 		$news[$i]['date'] = $date->format($news[$i]['start'], $settings['dateformat']);
-		$news[$i]['text'] = rewriteInternalUri($news[$i]['text']);
+		$news[$i]['text'] = rewriteInternalUri($db->escape($news[$i]['text'], 3));
+		$news[$i]['uri'] = $db->escape($news[$i]['uri'], 3);
 		$news[$i]['allow_comments'] = false;
 		if ($settings['comments'] == 1 && $news[$i]['comments'] == 1 && isset($comment_check)) {
 			$news[$i]['comments'] = commentsCount('news', $news[$i]['id']);

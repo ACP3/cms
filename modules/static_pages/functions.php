@@ -46,6 +46,7 @@ function getStaticPages($id = '')
 
 	if ($c_static_pages > 0) {
 		for ($i = 0; $i < $c_static_pages; ++$i) {
+			$static_pages[$i]['text'] = $db->escape($static_pages[$i]['text'], 3);
 			$static_pages[$i]['selected'] = selectEntry('static_pages', $static_pages[$i]['id'], $id);
 		}
 	}
