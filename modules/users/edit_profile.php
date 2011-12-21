@@ -74,8 +74,6 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$user = $auth->getUserInfo();
-		$user['nickname'] = $db->escape($user['nickname'], 3);
-		$user['realname'] = $db->escape($user['realname'], 3);
 
 		$checked['realname'] = selectEntry('realname_display', 1, $user['realname_display'], 'checked');
 		$checked['gender'] = selectEntry('gender_display', 1, $user['gender_display'], 'checked');
@@ -118,7 +116,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 		$contact[1]['name'] = 'website';
 		$contact[1]['lang'] = $lang->t('common', 'website');
 		$contact[1]['checked'] = selectEntry('website_display', 1, $user['website_display'], 'checked');
-		$contact[1]['value'] = isset($form) ? $form['website'] : $db->escape($user['website'], 3);
+		$contact[1]['value'] = isset($form) ? $form['website'] : $user['website'];
 		$contact[1]['maxlength'] = '118';
 		$contact[2]['name'] = 'icq';
 		$contact[2]['lang'] = $lang->t('users', 'icq');
@@ -128,12 +126,12 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 		$contact[3]['name'] = 'msn';
 		$contact[3]['lang'] = $lang->t('users', 'msn');
 		$contact[3]['checked'] = selectEntry('msn_display', 1, $user['msn_display'], 'checked');
-		$contact[3]['value'] = isset($form) ? $form['msn'] : $db->escape($user['msn'], 3);
+		$contact[3]['value'] = isset($form) ? $form['msn'] : $user['msn'];
 		$contact[3]['maxlength'] = '118';
 		$contact[4]['name'] = 'skype';
 		$contact[4]['lang'] = $lang->t('users', 'skype');
 		$contact[4]['checked'] = selectEntry('skype_display', 1, $user['skype_display'], 'checked');
-		$contact[4]['value'] = isset($form) ? $form['skype'] : $db->escape($user['skype'], 3);
+		$contact[4]['value'] = isset($form) ? $form['skype'] : $user['skype'];
 		$contact[4]['maxlength'] = '28';
 		$tpl->assign('contact', $contact);
 

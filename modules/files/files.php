@@ -27,7 +27,6 @@ if (validate::isNumber($uri->cat) && $db->countRows('*', 'categories', 'id = \''
 		for ($i = 0; $i < $c_files; ++$i) {
 			$files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : $lang->t('files', 'unknown_filesize');
 			$files[$i]['date'] = $date->format($files[$i]['start'], $settings['dateformat']);
-			$files[$i]['link_title'] = $db->escape($files[$i]['link_title'], 3);
 		}
 		$tpl->assign('files', $files);
 	}

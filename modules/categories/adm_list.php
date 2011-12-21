@@ -16,9 +16,7 @@ $c_categories = count($categories);
 if ($c_categories > 0) {
 	$tpl->assign('pagination', pagination($db->countRows('*', 'categories')));
 	for ($i = 0; $i < $c_categories; ++$i) {
-		$categories[$i]['name'] = $db->escape($categories[$i]['name'], 3);
-		$categories[$i]['description'] = $db->escape($categories[$i]['description'], 3);
-		$info = modules::parseInfo($db->escape($categories[$i]['module'], 3));
+		$info = modules::parseInfo($categories[$i]['module']);
 		$categories[$i]['module'] = $info['name'];
 	}
 	$tpl->assign('categories', $categories);

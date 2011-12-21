@@ -30,7 +30,7 @@ if ($c_result_pages > 0) {
 	$results_mods['static_pages']['title'] = $lang->t('static_pages', 'static_pages');
 	for ($i = 0; $i < $c_result_pages; ++$i) {
 		$results_mods['static_pages']['results'][$i]['hyperlink'] = $uri->route('static_pages/list/id_' . $result_pages[$i]['id'], 1);
-		$results_mods['static_pages']['results'][$i]['headline'] = $db->escape($result_pages[$i]['title'], 3);
-		$results_mods['static_pages']['results'][$i]['text'] = shortenEntry($db->escape($result_pages[$i]['text'], 3), 200, 0, '...');
+		$results_mods['static_pages']['results'][$i]['headline'] = $result_pages[$i]['title'];
+		$results_mods['static_pages']['results'][$i]['text'] = shortenEntry($result_pages[$i]['text'], 200, 0, '...');
 	}
 }

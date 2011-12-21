@@ -35,7 +35,6 @@ if ($c_access > 0) {
 			}
 		}
 		$access[$i]['access_to_mod'] = substr($access[$i]['access_to_mod'], 0, -2);
-		$access[$i]['name'] = $db->escape($access[$i]['name'], 3);
 	}
 	$tpl->assign('access', $access);
 }
