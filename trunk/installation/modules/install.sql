@@ -102,6 +102,12 @@ CREATE TABLE `{pre}menu_items_blocks` (
 	PRIMARY KEY (`id`)
 ) {engine};
 
+CREATE TABLE `{pre}modules` (
+	`name` varchar(100) NOT NULL,
+	`active` tinyint(1) unsigned NOT NULL,
+	PRIMARY KEY (`name`)
+) {engine};
+
 CREATE TABLE `{pre}news` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`start` VARCHAR(14) NOT NULL,
@@ -230,3 +236,4 @@ INSERT INTO `{pre}settings` VALUES (28, 'guestbook', 'dateformat', 'long'), (29,
 INSERT INTO `{pre}settings` VALUES (33, 'news', 'comments', '1'), (34, 'news', 'dateformat', 'long'), (35, 'news', 'readmore', '1'), (36, 'news', 'readmore_chars', '350'), (37, 'news', 'sidebar', '5');
 INSERT INTO `{pre}settings` VALUES (38, 'newsletter', 'mail', ''), (39, 'newsletter', 'mailsig', '');
 INSERT INTO `{pre}settings` VALUES (40, 'users', 'language_override', '1'), (41, 'users', 'entries_override', '1');
+INSERT INTO `{pre}modules` (`name`, `active`) VALUES ('access', 1), ('acp', 1), ('captcha', 1), ('categories', 1), ('comments', 1), ('contact', 1), ('emoticons', 1), ('errors', 1), ('feeds', 1), ('files', 1), ('gallery', 1), ('guestbook', 1), ('menu_items', 1), ('news', 1), ('newsletter', 1), ('polls', 1), ('search', 1), ('static_pages', 1), ('system', 1), ('users', 1);

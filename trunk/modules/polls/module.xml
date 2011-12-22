@@ -6,7 +6,6 @@
 		<author>Goratsch Webdesign</author>
 		<tables>poll_answers,polls,poll_votes</tables>
 		<version core="true"/>
-		<active>1</active>
 	</info>
 	<access>
 		<item>

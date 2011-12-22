@@ -29,14 +29,6 @@ $defaults = array(
 	'cache/tpl_cached/',
 	'cache/tpl_compiled/',
 );
-// Module
-$modules = scandir(ACP3_ROOT . 'modules/');
-foreach ($modules as $row) {
-	$path = 'modules/' . $row . '/module.xml';
-	if (is_file(ACP3_ROOT . $path)) {
-		$defaults[] = $path;
-	}
-}
 // Uploadordner
 $uploads = scandir(ACP3_ROOT . 'uploads/');
 foreach ($uploads as $row) {

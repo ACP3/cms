@@ -4,9 +4,8 @@
 		<name lang="true"/>
 		<description lang="true"/>
 		<author>Goratsch Webdesign</author>
-		<version core="true"/>
-		<active>1</active>
 		<tables>static_pages</tables>
+		<version core="true"/>
 	</info>
 	<access>
 		<item>
