@@ -78,6 +78,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$page = $db->select('id, start, end, mode, block_id, left_id, right_id, display, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
+		$page[0]['title'] = $db->escape($page[0]['title'], 3);
+		$page[0]['uri'] = $db->escape($page[0]['uri'], 3);
 		$page[0]['alias'] = $page[0]['mode'] == 2 || $page[0]['mode'] == 4 ? seo::getUriAlias($page[0]['uri']) : '';
 
 		// Seitentyp
@@ -101,6 +103,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 		$blocks = $db->select('id, title', 'menu_items_blocks', 0, 'title ASC, id ASC');
 		$c_blocks = count($blocks);
 		for ($i = 0; $i < $c_blocks; ++$i) {
+			$blocks[$i]['title'] = $db->escape($blocks[$i]['title'], 3);
 			$blocks[$i]['selected'] = selectEntry('block_id', $blocks[$i]['id'], $page[0]['block_id']);
 		}
 		$tpl->assign('blocks', $blocks);

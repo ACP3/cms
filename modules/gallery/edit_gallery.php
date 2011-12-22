@@ -12,6 +12,7 @@ if (!defined('IN_ADM'))
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $uri->id . '\'') == '1') {
 	$gallery = $db->select('start, end, name', 'gallery', 'id = \'' . $uri->id . '\'');
+	$gallery[0]['name'] = $db->escape($gallery[0]['name'], 3);
 	$gallery[0]['alias'] = seo::getUriAlias('gallery/pics/id_' . $uri->id);
 	$gallery[0]['seo_keywords'] = seo::getKeywordsOrDescription('gallery/pics/id_' . $uri->id);
 	$gallery[0]['seo_description'] = seo::getKeywordsOrDescription('gallery/pics/id_' . $uri->id, 'description');

@@ -109,7 +109,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 
 		// Übergabe der Daten an Smarty
 		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($poll[0]['start'], $poll[0]['end'])));
-		$tpl->assign('question', isset($form['question']) ? $form['question'] : $poll[0]['question']);
+		$tpl->assign('question', isset($form['question']) ? $form['question'] : $db->escape($poll[0]['question'], 3));
 		$tpl->assign('disable', count($answers) < 10 ? false : true);
 
 		$content = modules::fetchTemplate('polls/edit.html');

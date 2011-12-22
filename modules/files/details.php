@@ -23,7 +23,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		if (is_file($path . $file[0]['file'])) {
 			// Schönen Dateinamen generieren
 			$ext = strrchr($file[0]['file'], '.');
-			$filename = makeStringUrlSafe($file[0]['link_title']) . $ext;
+			$filename = makeStringUrlSafe($db->escape($file[0]['link_title'], 3)) . $ext;
 
 			header('Content-Type: application/force-download');
 			header('Content-Transfer-Encoding: binary');
@@ -37,6 +37,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		    $uri->redirect('errors/404');
 		}
 	} else {
+		$file[0]['link_title'] = $db->escape($file[0]['link_title'], 3);
+		$file[0]['text'] = $db->escape($file[0]['text'], 3);
+
 		// Brotkrümelspur
 		breadcrumb::assign($lang->t('files', 'files'), $uri->route('files'));
 		breadcrumb::assign($file[0]['category_name'], $uri->route('files/files/cat_' . $file[0]['category_id']));

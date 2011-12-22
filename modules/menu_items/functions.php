@@ -370,7 +370,7 @@ function processNavbar($block) {
 				// Link zusammenbauen
 				$href = $pages[$i]['mode'] == '1' || $pages[$i]['mode'] == '2' || $pages[$i]['mode'] == '4' ? $uri->route(!empty($pages[$i]['alias']) ? $pages[$i]['alias'] : $pages[$i]['uri']) : $pages[$i]['uri'];
 				$target = $pages[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
-				$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $pages[$i]['title'] . '</a>';
+				$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $db->escape($pages[$i]['title'], 3) . '</a>';
 				$indent = str_repeat("\t\t", $pages[$i]['level']);
 
 				// Falls für Knoten Kindelemente vorhanden sind, neue Unterliste erstellen
