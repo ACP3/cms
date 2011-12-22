@@ -17,6 +17,7 @@ if ($c_galleries > 0) {
 	$tpl->assign('pagination', pagination($db->countRows('*', 'gallery')));
 	for ($i = 0; $i < $c_galleries; ++$i) {
 		$galleries[$i]['period'] = $date->period($galleries[$i]['start'], $galleries[$i]['end']);
+		$galleries[$i]['name'] = $db->escape($galleries[$i]['name'], 3);
 		$galleries[$i]['pictures'] = $db->countRows('*', 'gallery_pictures', 'gallery_id = \'' . $galleries[$i]['id'] . '\'');
 	}
 	$tpl->assign('galleries', $galleries);

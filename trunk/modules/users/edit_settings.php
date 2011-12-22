@@ -67,7 +67,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 			if (!empty($lang_info)) {
 				$name = $lang_info['name'];
 				$languages[$name]['dir'] = $lang_dir[$i];
-				$languages[$name]['selected'] = selectEntry('language', $lang_dir[$i], $user[0]['language']);
+				$languages[$name]['selected'] = selectEntry('language', $lang_dir[$i], $db->escape($user[0]['language'], 3));
 				$languages[$name]['name'] = $lang_info['name'];
 			}
 		}
@@ -92,6 +92,9 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 		$dst[1]['checked'] = selectEntry('dst', '0', $user[0]['dst'], 'checked');
 		$dst[1]['lang'] = $lang->t('common', 'no');
 		$tpl->assign('dst', $dst);
+
+		$user[0]['date_format_long'] = $db->escape($user[0]['date_format_long'], 3);
+		$user[0]['date_format_short'] = $db->escape($user[0]['date_format_short'], 3);
 
 		$tpl->assign('form', isset($form) ? $form : $user[0]);
 		$content = modules::fetchTemplate('users/edit_settings.html');

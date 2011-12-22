@@ -22,6 +22,7 @@ if ($c_galleries > 0) {
 
 	for ($i = 0; $i < $c_galleries; ++$i) {
 		$galleries[$i]['date'] = $date->format($galleries[$i]['start'], $settings['dateformat']);
+		$galleries[$i]['name'] = $db->escape($galleries[$i]['name'], 3);
 		$pictures = $db->countRows('*', 'gallery_pictures', 'gallery_id = \'' . $galleries[$i]['id'] . '\'');
 		$galleries[$i]['pics'] = $pictures == '1' ? '1 ' . $lang->t('gallery', 'picture') : $pictures . ' ' . $lang->t('gallery', 'pictures');
 	}

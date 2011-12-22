@@ -77,15 +77,21 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+		$user['nickname'] = $db->escape($user['nickname'], 3);
+		$user['date_format_long'] = $db->escape($user['date_format_long'], 3);
+		$user['date_format_short'] = $db->escape($user['date_format_short'], 3);
+
 		// Zugriffslevel holen
 		$access = $db->select('id, name', 'access', 0, 'name ASC');
 		$c_access = count($access);
 		for ($i = 0; $i < $c_access; ++$i) {
+			$access[$i]['name'] = $db->escape($access[$i]['name'], 3);
 			$access[$i]['selected'] = selectEntry('access', $access[$i]['id'], $user['access']);
 		}
 		$tpl->assign('access', $access);
 
 		// Sprache
+		$user['language'] = $db->escape($user['language'], 3);
 		$languages = array();
 		$lang_dir = scandir(ACP3_ROOT . 'languages');
 		$c_lang_dir = count($lang_dir);

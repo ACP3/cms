@@ -40,7 +40,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	if ($auth->isUser()) {
 		$defaults = $auth->getUserInfo();
 		$disabled = ' readonly="readonly" class="readonly"';
-		$defaults['name'] = !empty($defaults['realname']) ? $defaults['realname'] : $defaults['nickname'];
+		$defaults['name'] = !empty($defaults['realname']) ? $db->escape($defaults['realname'], 3) : $db->escape($defaults['nickname'], 3);
 		$defaults['message'] = '';
 
 		if (isset($form)) {

@@ -112,6 +112,7 @@ function categoriesList($module, $category_id = '', $category_create = false, $c
 	if ($c_data > 0) {
 		for ($i = 0; $i < $c_data; ++$i) {
 			$data[$i]['selected'] = selectEntry('cat', $data[$i]['id'], $category_id);
+			$data[$i]['name'] = $db->escape($data[$i]['name'], 3);
 		}
 		$categories['categories'] = $data;
 	} else {

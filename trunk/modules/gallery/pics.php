@@ -22,6 +22,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 
 	if ($c_pictures > 0) {
 		$gallery_name = $db->select('name', 'gallery', 'id = \'' . $uri->id . '\'');
+		$gallery_name[0]['name'] = $db->escape($gallery_name[0]['name'], 3);
 
 		// Brotkrümelspur
 		breadcrumb::assign($lang->t('gallery', 'gallery'), $uri->route('gallery'));
@@ -31,7 +32,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 
 		for ($i = 0; $i < $c_pictures; ++$i) {
 			$pictures[$i]['uri'] = $settings['colorbox'] == 1 ? $uri->route('gallery/image/id_' . $pictures[$i]['id'] . '/action_normal') : $uri->route('gallery/details/id_' . $pictures[$i]['id'], 1);
-			$pictures[$i]['description'] = strip_tags($pictures[$i]['description']);
+			$pictures[$i]['description'] = strip_tags($db->escape($pictures[$i]['description'], 3));
 		}
 
 		$tpl->assign('pictures', $pictures);

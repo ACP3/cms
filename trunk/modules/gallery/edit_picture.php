@@ -15,6 +15,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 
 	$picture = $db->select('p.gallery_id, p.file, p.description, p.comments, g.name AS gallery_name', 'gallery_pictures AS p, {pre}gallery AS g', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
 	$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
+	$picture[0]['gallery_name'] = $db->escape($picture[0]['gallery_name'], 3);
+	$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
 
 	breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
 	breadcrumb::assign($lang->t('gallery', 'gallery'), $uri->route('acp/gallery'));

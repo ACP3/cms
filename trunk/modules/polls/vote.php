@@ -73,9 +73,10 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 		for ($i = 0; $i < $c_answers; ++$i) {
 			$css_class = $css_class == 'dark' ? 'light' : 'dark';
 			$answers[$i]['css_class'] = $css_class;
+			$answers[$i]['text'] = $db->escape($answers[$i]['text'], 3);
 		}
 
-		$tpl->assign('question', $question[0]['question']);
+		$tpl->assign('question', $db->escape($question[0]['question'], 3));
 		$tpl->assign('multiple', $question[0]['multiple']);
 		$tpl->assign('answers', $answers);
 

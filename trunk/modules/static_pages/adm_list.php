@@ -18,6 +18,7 @@ if ($c_pages > 0) {
 
 	for ($i = 0; $i < $c_pages; ++$i) {
 		$pages[$i]['period'] = $date->period($pages[$i]['start'], $pages[$i]['end']);
+		$pages[$i]['title'] = $db->escape($pages[$i]['title'], 3);
 	}
 	$tpl->assign('pages', $pages);
 }

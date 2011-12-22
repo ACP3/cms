@@ -70,6 +70,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$newsletter = $db->select('subject, text', 'newsletter_archive', 'id = \'' . $uri->id . '\'');
+		$newsletter[0]['subject'] = $db->escape($newsletter[0]['subject'], 3);
+		$newsletter[0]['text'] = $db->escape($newsletter[0]['text'], 3);
 
 		$tpl->assign('form', isset($form) ? $form : $newsletter[0]);
 

@@ -58,13 +58,15 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' 
 
 			$bool = $db->update('categories', $update_values, 'id = \'' . $uri->id . '\'');
 
-			setCategoriesCache($module[0]['module']);
+			setCategoriesCache($db->escape($module[0]['module'], 3));
 
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/categories'));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$category = $db->select('name, description', 'categories', 'id = \'' . $uri->id . '\'');
+		$category[0]['name'] = $db->escape($category[0]['name'], 3);
+		$category[0]['description'] = $db->escape($category[0]['description'], 3);
 
 		$tpl->assign('form', isset($form) ? $form : $category[0]);
 
