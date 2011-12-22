@@ -342,16 +342,19 @@ function processNavbar($block) {
 		$c_pages = count($pages);
 
 		if ($c_pages > 0) {
-			if ($uri->route($uri->query) != $uri->route($uri->mod) &&
-				$db->query('SELECT COUNT(*) FROM {pre}menu_items AS m JOIN {pre}menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->query . '\'', 1) > 0) {
-				$link = $uri->query;
-			} elseif ($uri->route($uri->mod . '/' . $uri->page . '/') != $uri->route($uri->mod) &&
-				$db->query('SELECT COUNT(*) FROM {pre}menu_items AS m JOIN {pre}menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->mod . '/' . $uri->page . '/\'', 1) > 0) {
-				$link = $uri->mod . '/' . $uri->page . '/';
-			} else {
-				$link = $uri->mod;
+			// Selektion nur vornehmen, wenn man sich im Frontend befindet
+			if (defined('IN_ACP3')) {
+				if ($uri->route($uri->query) != $uri->route($uri->mod) &&
+					$db->query('SELECT COUNT(*) FROM {pre}menu_items AS m JOIN {pre}menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->query . '\'', 1) > 0) {
+					$link = $uri->query;
+				} elseif ($uri->route($uri->mod . '/' . $uri->page . '/') != $uri->route($uri->mod) &&
+					$db->query('SELECT COUNT(*) FROM {pre}menu_items AS m JOIN {pre}menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->mod . '/' . $uri->page . '/\'', 1) > 0) {
+					$link = $uri->mod . '/' . $uri->page . '/';
+				} else {
+					$link = $uri->mod;
+				}
+				$select = $db->query('SELECT m.left_id FROM {pre}menu_items AS m JOIN {pre}menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $link . '\'');
 			}
-			$select = $db->query('SELECT m.left_id FROM {pre}menu_items AS m JOIN {pre}menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $link . '\'');
 
 			$navbar[$block] = '';
 
@@ -363,6 +366,8 @@ function processNavbar($block) {
 					$pages[$i]['right_id'] > $select[0]['left_id']) {
 					$css.= ' selected';
 				}
+
+				// Link zusammenbauen
 				$href = $pages[$i]['mode'] == '1' || $pages[$i]['mode'] == '2' || $pages[$i]['mode'] == '4' ? $uri->route(!empty($pages[$i]['alias']) ? $pages[$i]['alias'] : $pages[$i]['uri']) : $pages[$i]['uri'];
 				$target = $pages[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 				$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $pages[$i]['title'] . '</a>';
