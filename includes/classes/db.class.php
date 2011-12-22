@@ -89,6 +89,7 @@ class db
 	public function query($query, $mode = 2)
 	{
 		try {
+			$query = str_replace('{pre}', $this->prefix, $query);
 			switch ($mode) {
 				// Anzahl der Zeilen zählen
 				case 1:

@@ -72,7 +72,7 @@ class breadcrumb
 
 		// Frontendbereich
 		if (defined('IN_ACP3')) {
-			$query = 'SELECT p.title, p.uri, a.alias FROM ' . $db->prefix . 'menu_items AS c, ' . $db->prefix . 'menu_items AS p LEFT JOIN ' . $db->prefix . 'seo AS a ON(a.uri = p.uri) WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri = \'%s\' GROUP BY p.uri ORDER BY p.left_id ASC';
+			$query = 'SELECT p.title, p.uri, a.alias FROM {pre}menu_items AS c, {pre}menu_items AS p LEFT JOIN {pre}seo AS a ON(a.uri = p.uri) WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri = \'%s\' GROUP BY p.uri ORDER BY p.left_id ASC';
 
 			$pages = $db->query(sprintf($query, $uri->query));
 			if (empty($pages))

@@ -10,7 +10,7 @@
 function setFilesCache($id)
 {
 	global $db;
-	return cache::create('files_details_id_' . $id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, f.comments, c.name AS category_name', 'files AS f, ' . $db->prefix . 'categories AS c', 'f.id = \'' . $id . '\' AND f.category_id = c.id'));
+	return cache::create('files_details_id_' . $id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, f.comments, c.name AS category_name', 'files AS f, {pre}categories AS c', 'f.id = \'' . $id . '\' AND f.category_id = c.id'));
 }
 function getFilesCache($id)
 {
