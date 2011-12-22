@@ -69,7 +69,8 @@ class db
 		$value = trim($value);
 
 		if ($mode == 1 || $mode == 2) {
-			$value = $mode == 1 ? htmlentities($value, ENT_QUOTES, 'UTF-8') : $value;
+			if ($mode == 1)
+				$value = htmlentities($value, ENT_QUOTES, 'UTF-8');
 			return substr($this->link->quote($value), 1, -1);
 		} else {
 			return stripslashes($value);
