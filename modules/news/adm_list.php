@@ -18,6 +18,8 @@ if ($c_news > 0) {
 
 	for ($i = 0; $i < $c_news; ++$i) {
 		$news[$i]['period'] = $date->period($news[$i]['start'], $news[$i]['end']);
+		$news[$i]['headline'] = $db->escape($news[$i]['headline'], 3);
+		$news[$i]['cat'] = $db->escape($news[$i]['cat'], 3);
 	}
 	$tpl->assign('news', $news);
 }
