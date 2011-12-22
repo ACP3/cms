@@ -4,6 +4,7 @@
 		<name lang="true"/>
 		<description lang="true"/>
 		<author>Goratsch Webdesign</author>
+		<tables>modules,seo,settings</tables>
 		<version core="true"/>
 		<protected/>
 	</info>
