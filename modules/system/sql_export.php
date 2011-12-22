@@ -34,7 +34,7 @@ if (isset($_POST['form'])) {
 			}
 			// Datensätze ausgeben
 			if ($form['export_type'] == 'complete' || $form['export_type'] == 'data') {
-				$resultsets = $db->select('*', substr($table, strlen($db->prefix), strlen($table)));
+				$resultsets = $db->select('*', substr($table, strlen($db->prefix)));
 				if (count($resultsets) > 0) {
 					//$data.= "\n" . '-- '. sprintf($lang->t('system', 'data_of_table'), $table) . "\n\n";
 					$fields = '';
@@ -42,6 +42,7 @@ if (isset($_POST['form'])) {
 					foreach ($resultsets[0] as $field => $content) {
 						$fields.= '`' . $field . '`, ';
 					}
+
 					// Datensätze auslesen
 					foreach ($resultsets as $row) {
 						$values = '';
