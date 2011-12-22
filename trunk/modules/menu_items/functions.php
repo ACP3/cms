@@ -361,7 +361,7 @@ function processNavbar($block) {
 			for ($i = 0; $i < $c_pages; ++$i) {
 				$css = 'navi-' . $pages[$i]['id'];
 				// Menüpunkt selektieren
-				if (!empty($select) && defined('IN_ACP3') &&
+				if (!empty($select) &&
 					$pages[$i]['left_id'] <= $select[0]['left_id'] &&
 					$pages[$i]['right_id'] > $select[0]['left_id']) {
 					$css.= ' selected';
