@@ -10,7 +10,7 @@
 if (!defined('IN_ADM'))
 	exit;
 
-$news = $db->select('n.id, n.start, n.end, n.headline, c.name AS cat', 'news AS n, ' . $db->prefix . 'categories AS c', 'n.category_id = c.id', 'n.start DESC, n.end DESC, n.id DESC', POS, $auth->entries);
+$news = $db->select('n.id, n.start, n.end, n.headline, c.name AS cat', 'news AS n, {pre}categories AS c', 'n.category_id = c.id', 'n.start DESC, n.end DESC, n.id DESC', POS, $auth->entries);
 $c_news = count($news);
 
 if ($c_news > 0) {

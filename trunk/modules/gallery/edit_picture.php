@@ -13,7 +13,7 @@ if (!defined('IN_ADM'))
 if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id = \'' . $uri->id . '\'') == '1') {
 	require_once MODULES_DIR . 'gallery/functions.php';
 
-	$picture = $db->select('p.gallery_id, p.file, p.description, p.comments, g.name AS gallery_name', 'gallery_pictures AS p, ' . $db->prefix . 'gallery AS g', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
+	$picture = $db->select('p.gallery_id, p.file, p.description, p.comments, g.name AS gallery_name', 'gallery_pictures AS p, {pre}gallery AS g', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
 	$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
 
 	breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
