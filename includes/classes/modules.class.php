@@ -34,9 +34,7 @@ class modules
 		$page = !empty($page) ? $page : $uri->page;
 
 		if (is_file(MODULES_DIR . '' . $module . '/' . $page . '.php')) {
-			$xml = simplexml_load_file(MODULES_DIR . '' . $module . '/module.xml');
-
-			if ((string) $xml->info->active == '1') {
+			if (self::isActive($module)) {
 				// Falls die einzelnen Zugriffslevel auf die Module noch nicht
 				// gesetzt sind, diese aus der Datenbank selektieren
 				if (!isset($access_level[$module])) {
@@ -59,6 +57,7 @@ class modules
 				}
 
 				// XML Datei parsen
+				$xml = simplexml_load_file(MODULES_DIR . '' . $module . '/module.xml');
 				foreach ($xml->access->item as $item) {
 					if ((string) $item->file == $page) {
 						if ((int) $item->level != 0) {
@@ -213,29 +212,44 @@ class modules
 	{
 		static $parsed_modules = array();
 
-		if (empty($parsed_modules[$module]) && !preg_match('=/=', $module)) {
-			$mod_info = xml::parseXmlFile(MODULES_DIR . '' . $module . '/module.xml', 'info');
-
-			if (is_array($mod_info)) {
-				global $lang;
-
-				$parsed_modules[$module] = array(
-					'dir' => $module,
-					'active' => $mod_info['active'],
-					'description' => isset($mod_info['description']['lang']) && $mod_info['description']['lang'] == 'true' ? $lang->t($module, 'mod_description') : $mod_info['description']['lang'],
-					'author' => $mod_info['author'],
-					'version' => isset($mod_info['version']['core']) && $mod_info['version']['core'] == 'true' ? CONFIG_VERSION : $mod_info['version'],
-					'name' => isset($mod_info['name']['lang']) && $mod_info['name']['lang'] == 'true' ? $lang->t($module, $module) : $mod_info['name'],
-					'tables' => !empty($mod_info['tables']) ? explode(',', $mod_info['tables']) : false,
-					'categories' => isset($mod_info['categories']) ? true : false,
-					'js' => isset($mod_info['js']) ? true : false,
-					'css' => isset($mod_info['css']) ? true : false,
-					'protected' => isset($mod_info['protected']) ? true : false,
-				);
-				return $parsed_modules[$module];
-			}
-			return array();
+		if (empty($parsed_modules)) {
+			if (!cache::check('modules_infos'))
+				self::setModulesCache();
+			$parsed_modules = cache::output('modules_infos');
 		}
-		return $parsed_modules[$module];
+		return !empty($parsed_modules[$module]) ? $parsed_modules[$module] : array();
+	}
+	/**
+	 * Setzt den Cache für alle vorliegenden Modulinformationen
+	 */
+	public static function setModulesCache()
+	{
+		$infos = array();
+		$dirs = scandir(MODULES_DIR);
+		foreach ($dirs as $dir) {
+			if ($dir != '.' && $dir != '..' && is_file(MODULES_DIR . '/' . $dir . '/module.xml')) {
+				$mod_info = xml::parseXmlFile(MODULES_DIR . '' . $dir . '/module.xml', 'info');
+
+				if (is_array($mod_info)) {
+					global $db, $lang;
+
+					$infos[$dir] = array(
+						'dir' => $dir,
+						'active' => $db->countRows('*', 'modules', 'name = \'' . $db->escape($dir, 2) . '\' AND active = 1') == 1 ? true : false,
+						'description' => isset($mod_info['description']['lang']) && $mod_info['description']['lang'] == 'true' ? $lang->t($dir, 'mod_description') : $mod_info['description']['lang'],
+						'author' => $mod_info['author'],
+						'version' => isset($mod_info['version']['core']) && $mod_info['version']['core'] == 'true' ? CONFIG_VERSION : $mod_info['version'],
+						'name' => isset($mod_info['name']['lang']) && $mod_info['name']['lang'] == 'true' ? $lang->t($dir, $dir) : $mod_info['name'],
+						'tables' => !empty($mod_info['tables']) ? explode(',', $mod_info['tables']) : false,
+						'categories' => isset($mod_info['categories']) ? true : false,
+						'js' => isset($mod_info['js']) ? true : false,
+						'css' => isset($mod_info['css']) ? true : false,
+						'protected' => isset($mod_info['protected']) ? true : false,
+					);
+					$infos[$dir];
+				}
+			}
+		}
+		cache::create('modules_infos', $infos);
 	}
 }

@@ -6,7 +6,6 @@
 		<author>Goratsch Webdesign</author>
 		<tables>menu_items,menu_items_blocks</tables>
 		<version core="true"/>
-		<active>1</active>
 	</info>
 	<access>
 		<item>

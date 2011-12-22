@@ -6,7 +6,6 @@
 		<author>Goratsch Webdesign</author>
 		<tables>newsletter_accounts,newsletter_archive</tables>
 		<version core="true"/>
-		<active>1</active>
 	</info>
 	<access>
 		<item>

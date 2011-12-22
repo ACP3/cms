@@ -59,6 +59,9 @@ $queries = array(
 		4 => 'ALTER TABLE `{pre}static_pages` ADD `user_id` INT UNSIGNED NOT NULL;',
 		5 => 'ALTER TABLE `{pre}newsletter_archive` ADD `user_id` INT UNSIGNED NOT NULL;',
 		6 => 'RENAME TABLE `{pre}poll_question` TO `{pre}polls`;',
+	),
+	5 => array(
+		0 => 'CREATE TABLE `{pre}modules` (`name` varchar(100) NOT NULL, `active` tinyint(1) unsigned NOT NULL, PRIMARY KEY (`name`)) {engine}',
 	)
 );
 
@@ -160,14 +163,20 @@ if (CONFIG_DB_VERSION < 4) {
 	$db->update('polls', array('user_id' => $user[0]['id']));
 	$db->update('static_pages', array('user_id' => $user[0]['id']));
 }
+if (CONFIG_DB_VERSION < 5) {
+	$dir = scandir(MODULES_DIR);
+	foreach ($dir as $row) {
+		if ($row != '.' && $row != '..' && is_file(MODULES_DIR . '/' . $row . '/module.xml')) {
+			$db->insert('modules', array('name' => $row, 'active' => 1));
+		}
+	}
+}
 
 // Konfigurationsdatei aktualisieren
-$config = array(
-	'db_version' => 4,
-	'wysiwyg' => CONFIG_WYSIWYG == 'fckeditor' ? 'ckeditor' : CONFIG_WYSIWYG,
-);
+$config = array('db_version' => 5);
 
-if (defined('CONFIG_DATE_FORMAT')) {
+if (defined('CONFIG_DATE_FORMAT') && CONFIG_DB_VERSION == 0) {
+	$config['wysiwyg'] = CONFIG_WYSIWYG == 'fckeditor' ? 'ckeditor' : CONFIG_WYSIWYG;
 	$config['date_format_long'] = CONFIG_DATE_FORMAT;
 	$config['date_format_short'] = 'd.m.Y';
 
