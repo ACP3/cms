@@ -31,7 +31,12 @@ function setMenuItemsCache() {
 		}
 
 		$mode_search = array('1', '2', '3', '4');
-		$mode_replace = array($lang->t('menu_items', 'module'), $lang->t('menu_items', 'dynamic_page'), $lang->t('menu_items', 'hyperlink'), $lang->t('menu_items', 'static_page'));
+		$mode_replace = array(
+			$lang->t('menu_items', 'module'),
+			$lang->t('menu_items', 'dynamic_page'),
+			$lang->t('menu_items', 'hyperlink'),
+			$lang->t('menu_items', 'static_page')
+		);
 
 		for ($i = 0; $i < $c_pages; ++$i) {
 			$pages[$i]['period'] = $date->period($pages[$i]['start'], $pages[$i]['end']);
@@ -53,7 +58,6 @@ function setMenuItemsCache() {
 
 			// Checken, ob für das aktuelle Element noch Nachfolger existieren
 			if (!$last) {
-				$j = $i + 1;
 				for ($j = $i + 1; $j < $c_pages; ++$j) {
 					if ($pages[$i]['level'] == $pages[$j]['level'] && $pages[$i]['block_name'] == $pages[$j]['block_name']) {
 						$found = true;
@@ -319,27 +323,24 @@ function processNavbar($block) {
 		$c_pages = count($pages);
 		$hide_until = 0;
 		$visible_pages = array();
-		$j = 0;
 
 		// Aktuellen Zeitstempel holen
 		$time = $date->timestamp();
 
 		for ($i = 0; $i < $c_pages; ++$i) {
 			if ($pages[$i]['block_name'] == $block) {
-				if ($pages[$i]['display'] == 0 && $pages[$i]['right_id'] > $hide_until) {
+				// Nicht anzuzeigende Menüpunkte
+				if ($pages[$i]['display'] == 0 && $pages[$i]['right_id'] > $hide_until)
 					$hide_until = $pages[$i]['right_id'];
-				}
 				// Checken, ob der Menüpunkt im angeforderten Block liegt und ob dieser veröffentlicht ist
 				if ($pages[$i]['display'] == 1 && $pages[$i]['right_id'] > $hide_until &&
 					$pages[$i]['start'] == $pages[$i]['end'] && $pages[$i]['start'] <= $time ||
-					$pages[$i]['start'] != $pages[$i]['end'] && $pages[$i]['start'] <= $time && $pages[$i]['end'] >= $time) {
-					$visible_pages[$j] = $pages[$i];
-					$j++;
-				}
+					$pages[$i]['start'] != $pages[$i]['end'] && $pages[$i]['start'] <= $time && $pages[$i]['end'] >= $time)
+					$visible_pages[] = $pages[$i];
 			}
 		}
-		$pages = $visible_pages;
-		$c_pages = count($pages);
+
+		$c_pages = count($visible_pages);
 
 		if ($c_pages > 0) {
 			// Selektion nur vornehmen, wenn man sich im Frontend befindet
@@ -359,39 +360,36 @@ function processNavbar($block) {
 			$navbar[$block] = '';
 
 			for ($i = 0; $i < $c_pages; ++$i) {
-				$css = 'navi-' . $pages[$i]['id'];
+				$css = 'navi-' . $visible_pages[$i]['id'];
 				// Menüpunkt selektieren
-				if (!empty($select) &&
-					$pages[$i]['left_id'] <= $select[0]['left_id'] &&
-					$pages[$i]['right_id'] > $select[0]['left_id']) {
+				if (isset($select[0]) &&
+					$visible_pages[$i]['left_id'] <= $select[0]['left_id'] &&
+					$visible_pages[$i]['right_id'] > $select[0]['left_id']) {
 					$css.= ' selected';
 				}
 
 				// Link zusammenbauen
-				$href = $pages[$i]['mode'] == '1' || $pages[$i]['mode'] == '2' || $pages[$i]['mode'] == '4' ? $uri->route(!empty($pages[$i]['alias']) ? $pages[$i]['alias'] : $pages[$i]['uri']) : $pages[$i]['uri'];
-				$target = $pages[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
-				$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $db->escape($pages[$i]['title'], 3) . '</a>';
-				$indent = str_repeat("\t\t", $pages[$i]['level']);
+				$href = $visible_pages[$i]['mode'] == '1' || $visible_pages[$i]['mode'] == '2' || $visible_pages[$i]['mode'] == '4' ? $uri->route(!empty($visible_pages[$i]['alias']) ? $visible_pages[$i]['alias'] : $visible_pages[$i]['uri']) : $visible_pages[$i]['uri'];
+				$target = $visible_pages[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
+				$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $db->escape($visible_pages[$i]['title'], 3) . '</a>';
 
 				// Falls für Knoten Kindelemente vorhanden sind, neue Unterliste erstellen
-				if (isset($pages[$i + 1]) && $pages[$i + 1]['level'] > $pages[$i]['level']) {
-					$navbar[$block].= $indent . "\t<li>\n";
-					$navbar[$block].= $indent . "\t\t" . $link . "\n";
-					$navbar[$block].= $indent . "\t\t<ul class=\"navigation-" . $block . '-subnav-' . $pages[$i]['id'] . "\">\n";
+				if (isset($visible_pages[$i + 1]) && $visible_pages[$i + 1]['level'] > $visible_pages[$i]['level']) {
+					$navbar[$block].= '<li>' . $link . '<ul class="navigation-' . $block . '-subnav-' . $visible_pages[$i]['id'] . '">';
 				// Elemente ohne Kindelemente
 				} else {
-					$navbar[$block].= $indent . "\t<li>" . $link . "</li>\n";
+					$navbar[$block].= '<li>' . $link . '</li>';
 					// Liste für untergeordnete Elemente schließen
-					if (isset($pages[$i + 1]) && $pages[$i + 1]['level'] < $pages[$i]['level'] || !isset($pages[$i + 1]) && $pages[$i]['level'] != '0') {
+					if (isset($visible_pages[$i + 1]) && $visible_pages[$i + 1]['level'] < $visible_pages[$i]['level'] || !isset($visible_pages[$i + 1]) && $visible_pages[$i]['level'] != '0') {
 						// Differenz ermitteln, wieviele Level zwischen dem aktuellen und dem nachfolgendem Element liegen
-						$diff = (isset($pages[$i + 1]['level']) ? $pages[$i]['level'] - $pages[$i + 1]['level'] : $pages[$i]['level']) * 2;
+						$diff = (isset($visible_pages[$i + 1]['level']) ? $visible_pages[$i]['level'] - $visible_pages[$i + 1]['level'] : $visible_pages[$i]['level']) * 2;
 						for ($diff; $diff > 0; --$diff) {
-							$navbar[$block].= str_repeat("\t", $diff) . ($diff % 2 == 0 ? '</ul>' : '</li>') . "\n";
+							$navbar[$block].= ($diff % 2 == 0 ? '</ul>' : '</li>');
 						}
 					}
 				}
 			}
-			$navbar[$block] = !empty($navbar[$block]) ? "<ul class=\"navigation-" . $block . "\">\n" . $navbar[$block] . '</ul>' : '';
+			$navbar[$block] = !empty($navbar[$block]) ? '<ul class="navigation-' . $block . '">' . $navbar[$block] . '</ul>' : '';
 			return $navbar[$block];
 		}
 		return '';
