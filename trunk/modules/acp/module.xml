@@ -7,10 +7,4 @@
 		<version core="true"/>
 		<protected/>
 	</info>
-	<access>
-		<item>
-			<file>adm_list</file>
-			<level>2</level>
-		</item>
-	</access>
 </module>

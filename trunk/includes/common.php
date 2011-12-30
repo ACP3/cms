@@ -41,6 +41,7 @@ if ($handle !== true) {
 }
 $uri = new uri();
 $auth = new auth();
+$acl = new acl();
 $lang = new lang();
 $date = new date();
 

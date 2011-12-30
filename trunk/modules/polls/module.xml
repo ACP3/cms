@@ -7,38 +7,4 @@
 		<tables>poll_answers,polls,poll_votes</tables>
 		<version core="true"/>
 	</info>
-	<access>
-		<item>
-			<file>adm_list</file>
-			<level>2</level>
-		</item>
-		<item>
-			<file>create</file>
-			<level>2</level>
-		</item>
-		<item>
-			<file>delete</file>
-			<level>8</level>
-		</item>
-		<item>
-			<file>edit</file>
-			<level>4</level>
-		</item>
-		<item>
-			<file>list</file>
-			<level>1</level>
-		</item>
-		<item>
-			<file>result</file>
-			<level>1</level>
-		</item>
-		<item>
-			<file>sidebar</file>
-			<level>1</level>
-		</item>
-		<item>
-			<file>vote</file>
-			<level>1</level>
-		</item>
-	</access>
 </module>

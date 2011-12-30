@@ -7,34 +7,4 @@
 		<tables>comments</tables>
 		<version core="true"/>
 	</info>
-	<access>
-		<item>
-			<file>adm_list</file>
-			<level>4</level>
-		</item>
-		<item>
-			<file>create</file>
-			<level>2</level>
-		</item>
-		<item>
-			<file>delete_comments</file>
-			<level>8</level>
-		</item>
-		<item>
-			<file>delete_comments_per_module</file>
-			<level>8</level>
-		</item>
-		<item>
-			<file>edit</file>
-			<level>4</level>
-		</item>
-		<item>
-			<file>functions</file>
-			<level>1</level>
-		</item>
-		<item>
-			<file>settings</file>
-			<level>16</level>
-		</item>
-	</access>
 </module>

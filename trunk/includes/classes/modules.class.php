@@ -27,7 +27,7 @@ class modules
 	 * @return integer
 	 */
 	public static function check($module = 0, $page = 0) {
-		global $auth, $db, $uri;
+		global $uri;
 		static $access_level = array();
 
 		$module = !empty($module) ? $module : $uri->mod;
@@ -35,57 +35,9 @@ class modules
 
 		if (is_file(MODULES_DIR . '' . $module . '/' . $page . '.php')) {
 			if (self::isActive($module)) {
-				// Falls die einzelnen Zugriffslevel auf die Module noch nicht
-				// gesetzt sind, diese aus der Datenbank selektieren
-				if (!isset($access_level[$module])) {
-					// Zugriffslevel für Gäste
-					$access_id = 2;
-					// Zugriffslevel des Benutzers holen
-					if ($auth->isUser()) {
-						$info = $auth->getUserInfo();
-						if (!empty($info)) {
-							$access_id = $info['access'];
-						}
-					}
-					$access_to_modules = $db->select('modules', 'access', 'id = \'' . $access_id . '\'');
-					$modules = explode(',', $access_to_modules[0]['modules']);
+				global $acl;
 
-					foreach ($modules as $row) {
-						$pos = strrpos($row, ':');
-						$access_level[substr($row, 0, $pos)] = (int) substr($row, $pos + 1);
-					}
-				}
-
-				// XML Datei parsen
-				$xml = simplexml_load_file(MODULES_DIR . '' . $module . '/module.xml');
-				foreach ($xml->access->item as $item) {
-					if ((string) $item->file == $page) {
-						if ((int) $item->level != 0) {
-							$levels = array(
-								1 => array(1), // Lesen
-								2 => array(2), // Erstellen
-								3 => array(3, 2, 1), // Lesen und Erstellen
-								4 => array(4), // Bearbeiten
-								5 => array(5, 4, 1), // Bearbeiten und Lesen
-								6 => array(6, 4, 2), // Bearbeiten und Erstellen
-								7 => array(7, 4, 2, 1), // Bearbeiten, Erstellen und Lesen
-								8 => array(8), // Löschen
-								9 => array(9, 8, 1), // Löschen und Lesen
-								10 => array(10, 8, 2), // Löschen und Erstellen
-								11 => array(11, 8, 2, 1), // Löschen, Erstellen und Lesen
-								12 => array(12, 8, 4), // Löschen und Bearbeiten
-								13 => array(13, 8, 4, 1), // Löschen, Bearbeiten und Lesen
-								14 => array(14, 8, 4, 2), // Löschen, Bearbeiten und Erstellen
-								15 => array(15, 8, 4, 2, 1), // Löschen, Bearbeiten, Erstellen und Lesen
-								16 => array(16, 8, 4, 2, 1), // Vollzugriff
-							);
-							if (!empty($access_level[$module]) && !empty($levels[$access_level[$module]]) &&
-								in_array((int) $item->level, $levels[$access_level[$module]]))
-								return 1;
-						}
-						return 0;
-					}
-				}
+				return $acl->canAccessResource($module . '/' . $page . '/');
 			}
 			return 0;
 		}

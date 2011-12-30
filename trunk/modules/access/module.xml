@@ -8,22 +8,4 @@
 		<version core="true"/>
 		<protected/>
 	</info>
-	<access>
-		<item>
-			<file>adm_list</file>
-			<level>2</level>
-		</item>
-		<item>
-			<file>create</file>
-			<level>2</level>
-		</item>
-		<item>
-			<file>delete</file>
-			<level>8</level>
-		</item>
-		<item>
-			<file>edit</file>
-			<level>4</level>
-		</item>
-	</access>
 </module>

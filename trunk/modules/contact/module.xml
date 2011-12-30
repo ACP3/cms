@@ -6,18 +6,4 @@
 		<author>Goratsch Webdesign</author>
 		<version core="true"/>
 	</info>
-	<access>
-		<item>
-			<file>adm_list</file>
-			<level>16</level>
-		</item>
-		<item>
-			<file>imprint</file>
-			<level>1</level>
-		</item>
-		<item>
-			<file>list</file>
-			<level>1</level>
-		</item>
-	</access>
 </module>
