@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (defined('IN_ACP3') === false)
 	exit;
 
 if (validate::email($uri->mail) && validate::isMD5($uri->hash)) {

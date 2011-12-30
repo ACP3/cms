@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (defined('IN_ACP3') === false)
 	exit();
 
 if (strlen($uri->hash) == 32 && validate::isMD5($uri->hash)) {

@@ -1,5 +1,5 @@
 <?php
-if (!defined('IN_ACP3'))
+if (defined('IN_ACP3') === false)
 	exit;
 
 if (modules::check($uri->feed, 'extensions/feeds') == 1) {

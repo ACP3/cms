@@ -6,6 +6,10 @@
  * @package ACP3
  * @subpackage Core
  */
+
+if (defined('IN_ACP3') === false)
+	exit;
+
 /**
  * Klasse zum Setzen von URI Aliases, Keywords und Beschreibungen für Seiten
  *

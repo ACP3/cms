@@ -6,6 +6,10 @@
  * @package ACP3
  * @subpackage Core
  */
+
+if (defined('IN_ACP3') === false)
+	exit;
+
 /**
  * Stellt Funktionen zur Datumsformatierung und Ausrichtung an den Zeitzonen bereit
  *
@@ -24,7 +28,7 @@ class date
 	private $offset_dst = 0;
 	/**
 	 * Zeitverschiebung von Greenwich ohne Sommerzeit
-	 * 
+	 *
 	 * @var integer
 	 * @access private
 	 */
@@ -164,7 +168,7 @@ class date
 	}
 	/**
 	 * Gibt die Formularfelder für den Veröffentlichungszeitraum aus
-	 * 
+	 *
 	 * @param integer $start
 	 * @param integer $end
 	 * @param string $format

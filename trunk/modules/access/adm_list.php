@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (defined('IN_ADM') === false)
 	exit;
 
 $access = $db->select('id, name, modules', 'access', 0, 'name ASC', POS, $auth->entries);

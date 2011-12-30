@@ -6,6 +6,10 @@
  * @package ACP3
  * @subpackage Core
  */
+
+if (defined('IN_ACP3') === false)
+	exit;
+
 /**
  * Diese Klasse ist für die Datenbankabfragen zuständig
  *

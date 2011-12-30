@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (defined('IN_ADM') === false)
 	exit;
 
 $users = $db->select('u.id, u.nickname, u.mail, a.name AS access', 'users AS u, {pre}access AS a', 'u.access = a.id', 'u.nickname ASC', POS, $auth->entries);

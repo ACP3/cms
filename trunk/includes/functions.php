@@ -6,6 +6,10 @@
  * @package ACP3
  * @subpackage Core
  */
+
+if (defined('IN_ACP3') === false)
+	exit;
+
 /**
  * Ermittelt die Dateigröße, gemäß IEC 60027-2
  *

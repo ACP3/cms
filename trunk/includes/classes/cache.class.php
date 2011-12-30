@@ -6,6 +6,10 @@
  * @package ACP3
  * @subpackage Core
  */
+
+if (defined('IN_ACP3') === false)
+	exit;
+
 /**
  * lasse zur Ersetllung des Caches, um die Leistung von bestimmten Aktionen des ACP3 zu steigern
  *

@@ -1,5 +1,5 @@
 <?php
-if (!defined('IN_ACP3'))
+if (defined('IN_ACP3') === false)
 	exit;
 
 if ($auth->isUser()) {

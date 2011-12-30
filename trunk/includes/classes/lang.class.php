@@ -6,6 +6,10 @@
  * @package ACP3
  * @subpackage Core
  */
+
+if (defined('IN_ACP3') === false)
+	exit;
+
 /**
  * Stellt Funktionen bereit, um das ACP3 in verschiendene Sprachen zu übersetzen
  *

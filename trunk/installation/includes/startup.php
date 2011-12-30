@@ -1,7 +1,9 @@
 <?php
+if (defined('IN_INSTALL') === false)
+	exit;
+
 error_reporting(E_ALL);
 
-define('IN_INSTALL', true);
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
 $php_self = dirname(PHP_SELF);
 define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');

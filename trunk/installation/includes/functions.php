@@ -5,6 +5,10 @@
  * @author Goratsch Webdesign
  * @package ACP3 Installer
  */
+
+if (defined('IN_INSTALL') === false)
+	exit;
+
 /**
  * Generiert ein gesalzenes Passwort
  *

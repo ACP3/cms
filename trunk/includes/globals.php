@@ -6,6 +6,10 @@
  * @subpackage Core
  * @copyright http://www.php.net/manual/faq.misc.php#53961
  */
+
+if (defined('IN_ACP3') === false)
+	exit;
+
 if ((bool)@ini_get('register_globals')) {
 	// Superglobal
 	$superglobals = array($_ENV, $_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);

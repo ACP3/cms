@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (defined('IN_ACP3') === false)
 	exit;
 
 if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
