@@ -6,6 +6,10 @@
  * @package ACP3
  * @subpackage Core
  */
+
+if (defined('IN_ACP3') === false)
+	exit;
+
 /**
  * Erzeugt die Brotkrümelspur und gibt den Titel der jeweiligen Seite aus
  *

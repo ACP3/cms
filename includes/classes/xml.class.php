@@ -6,6 +6,10 @@
  * @package ACP3
  * @subpackage Core
  */
+
+if (defined('IN_ACP3') === false)
+	exit;
+
 /**
  * Parst XML Dateien, z.B. die diversen info.xml bzw. module.xml Dateien
  *

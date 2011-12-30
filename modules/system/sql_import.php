@@ -1,5 +1,5 @@
 <?php
-if (!defined('IN_ADM'))
+if (defined('IN_ADM') === false)
 	exit;
 
 breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));

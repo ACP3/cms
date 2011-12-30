@@ -1,5 +1,5 @@
 <?php
-if (!defined('IN_ACP3'))
+if (defined('IN_ACP3') === false)
 	exit;
 
 breadcrumb::assign($lang->t('users', 'users'), $uri->route('users'));

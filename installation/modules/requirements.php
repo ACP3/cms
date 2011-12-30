@@ -1,5 +1,5 @@
 <?php
-if (!defined('IN_INSTALL'))
+if (defined('IN_INSTALL') === false)
 	exit;
 
 define('PHP_VER', '5.2.0');

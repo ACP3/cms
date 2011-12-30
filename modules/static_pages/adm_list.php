@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (defined('IN_ADM') === false)
 	exit;
 
 $pages = $db->select('id, start, end, title', 'static_pages', 0, 'start DESC', POS, $auth->entries);

@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ACP3'))
+if (defined('IN_ACP3') === false)
 	exit;
 
 $polls = $db->select('id, start, end, question', 'polls', 'start <= \'' . $date->timestamp() . '\'', 'start DESC, end DESC, id DESC');

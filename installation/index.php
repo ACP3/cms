@@ -1,6 +1,8 @@
 <?php
 ob_start();
 
+define('IN_INSTALL', true);
+
 // Evtl. gesetzten Content-Type des Servers überschreiben
 header('Content-type: text/html; charset=UTF-8');
 

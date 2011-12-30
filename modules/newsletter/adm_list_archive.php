@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (!defined('IN_ADM'))
+if (defined('IN_ADM') === false)
 	exit;
 
 $newsletter = $db->select('id, date, subject, text, status', 'newsletter_archive', 0, 'id DESC', POS, $auth->entries);

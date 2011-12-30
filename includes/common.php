@@ -5,6 +5,9 @@
  * @subpackage Core
  */
 
+if (defined('IN_ACP3') === false)
+	exit;
+
 // Standardzeitzone festlegen
 date_default_timezone_set('UTC');
 

@@ -6,7 +6,7 @@
  * @package ACP3
  * @subpackage Modules
  */
-if (!defined('IN_ACP3') && !defined('IN_ADM'))
+if (defined('IN_ACP3') === false)
 	exit;
 
 $settings = config::getModuleSettings('news');

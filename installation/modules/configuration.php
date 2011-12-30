@@ -1,5 +1,5 @@
 <?php
-if (!defined('IN_INSTALL'))
+if (defined('IN_INSTALL') === false)
 	exit;
 
 if (isset($_POST['submit'])) {

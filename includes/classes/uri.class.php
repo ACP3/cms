@@ -6,6 +6,10 @@
  * @package ACP3
  * @subpackage Core
  */
+
+if (defined('IN_ACP3') === false)
+	exit;
+
 /**
  * Verarbeitet die URI Query
  *
@@ -47,8 +51,6 @@ class uri
 		} elseif (!defined('IN_INSTALL')) {
 			global $db;
 
-			// Definieren, dass man sich im Frontend befindet
-			define('IN_ACP3', true);
 			// Query auf eine benutzerdefinierte Startseite setzen
 			if ($this->query == '/' && CONFIG_HOMEPAGE != '') {
 				$this->query = CONFIG_HOMEPAGE;
