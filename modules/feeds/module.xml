@@ -6,10 +6,4 @@
 		<author>Goratsch Webdesign</author>
 		<version core="true"/>
 	</info>
-	<access>
-		<item>
-			<file>list</file>
-			<level>1</level>
-		</item>
-	</access>
 </module>

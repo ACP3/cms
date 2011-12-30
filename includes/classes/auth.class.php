@@ -73,22 +73,6 @@ class auth
 		}
 	}
 	/**
-	 * Gibt die ID des Zugriffslevels eines jeweiligen Benutzer zurück
-	 *
-	 * @param integer $user_id
-	 */
-	public function getAccessLevel($user_id = '')
-	{
-		if (empty($user_id) && $this->isUser()) {
-			$user_id = $this->userId;
-		}
-		if (validate::isNumber($user_id)) {
-			$info = $this->getUserInfo($user_id);
-			return $info['access'];
-		}
-		return '';
-	}
-	/**
 	 * Gibt die UserId des eingeloggten Benutzers zurück
 	 * @return integer
 	 */
@@ -114,7 +98,7 @@ class auth
 			if (empty($user_info[$user_id])) {
 				global $auth, $db, $lang;
 
-				$info = $db->select('nickname, access, realname, gender, birthday, birthday_format, mail, website, icq, msn, skype, date_format_long, date_format_short, time_zone, dst, language, draft', 'users', 'id = \'' . $user_id . '\'');
+				$info = $db->select('nickname, realname, gender, birthday, birthday_format, mail, website, icq, msn, skype, date_format_long, date_format_short, time_zone, dst, language, draft', 'users', 'id = \'' . $user_id . '\'');
 				if (!empty($info)) {
 					$pos = strrpos($info[0]['realname'], ':');
 					$info[0]['realname_display'] = substr($info[0]['realname'], $pos + 1);
