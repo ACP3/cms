@@ -29,7 +29,6 @@ if ($_GET['g'] == 'css') {
 	}
 
 	$auth = new auth();
-	$acl = new acl();
 	$lang = new lang();
 
 	$modules = scandir(DESIGN_PATH);
