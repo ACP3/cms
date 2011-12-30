@@ -13,6 +13,7 @@ require_once '../config.php';
 define('DESIGN_PATH', dirname(__FILE__) . '/../../designs/' . CONFIG_DESIGN . '/');
 
 if ($_GET['g'] == 'css') {
+	define('IN_ACP3', true);
 	define('ACP3_ROOT', '../../');
 	define('MODULES_DIR', ACP3_ROOT . 'modules/');
 
@@ -28,6 +29,7 @@ if ($_GET['g'] == 'css') {
 	}
 
 	$auth = new auth();
+	$acl = new acl();
 	$lang = new lang();
 
 	$modules = scandir(DESIGN_PATH);
