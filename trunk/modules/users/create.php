@@ -33,7 +33,7 @@ if (isset($_POST['form'])) {
 		$errors[] = $lang->t('common', 'select_daylight_saving_time');
 	if (preg_match('=/=', $form['language']) || !is_file('languages/' . $form['language'] . '/info.xml'))
 		$errors[] = $lang->t('users', 'select_language');
-	if (!validate::isNumber($form['access']))
+	if (empty($form['roles']) || !is_array($form['roles']) || !validate::aclRolesExist($form['roles']))
 		$errors[] = $lang->t('users', 'select_access_level');
 	if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])
 		$errors[] = $lang->t('users', 'type_in_pwd');
@@ -43,11 +43,11 @@ if (isset($_POST['form'])) {
 	} else {
 		$salt = salt(12);
 
+		$db->link->beginTransaction();
 		$insert_values = array(
 			'id' => '',
 			'nickname' => $db->escape($form['nickname']),
 			'pwd' => genSaltedPassword($salt, $form['pwd']) . ':' . $salt,
-			'access' => $form['access'],
 			'realname' => $db->escape($form['realname']) . ':1',
 			'gender' => ':1',
 			'birthday' => ':1',
@@ -68,18 +68,25 @@ if (isset($_POST['form'])) {
 
 		$bool = $db->insert('users', $insert_values);
 
+		// Rollen aktualisieren
+		$user_id = $db->link->lastInsertId();
+		foreach ($form['roles'] as $row) {
+			$db->insert('acl_user_roles', array('user_id' => $user_id, 'role_id' => $row));
+		}
+		$db->link->commit();
+
 		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/users'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
-	$access = $db->select('id, name', 'access', 0, 'name ASC');
-	$c_access = count($access);
-
-	for ($i = 0; $i < $c_access; ++$i) {
-		$access[$i]['name'] = $db->escape($access[$i]['name'], 3);
-		$access[$i]['selected'] = selectEntry('access', $access[$i]['id']);
+	// Zugriffslevel holen
+	$roles = $acl->getAllRoles();
+	$c_roles = count($roles);
+	for ($i = 0; $i < $c_roles; ++$i) {
+		$roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
+		$roles[$i]['selected'] = selectEntry('roles', $roles[$i]['id']);
 	}
-	$tpl->assign('access', $access);
+	$tpl->assign('roles', $roles);
 
 	// Sprache
 	$languages = array();

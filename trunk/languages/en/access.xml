@@ -15,4 +15,5 @@
 	<item key="full_access">Full access</item>
 	<item key="mod_description">With this module you can create different access levels for users.</item>
 	<item key="no_module_selected">Please select a least one module, at which the user should have access.</item>
+	<item key="roles">Assigned roles</item>
 </language>

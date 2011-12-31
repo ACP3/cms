@@ -36,7 +36,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 			$errors[] = $lang->t('common', 'select_daylight_saving_time');
 		if (preg_match('=/=', $form['language']) || !is_file('languages/' . $form['language'] . '/info.xml'))
 			$errors[] = $lang->t('users', 'select_language');
-		if (!validate::isNumber($form['access']))
+		if (empty($form['roles']) || !is_array($form['roles']) || !validate::aclRolesExist($form['roles']))
 			$errors[] = $lang->t('users', 'select_access_level');
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
@@ -46,7 +46,6 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 		} else {
 			$update_values = array(
 				'nickname' => $db->escape($form['nickname']),
-				'access' => $form['access'],
 				'realname' => $db->escape($form['realname']) . ':' . $user['realname_display'],
 				'mail' => $form['mail'] . ':' . $user['mail_display'],
 				'website' => $db->escape($form['website'], 2) . ':' . $user['website_display'],
@@ -57,6 +56,14 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 				'language' => $db->escape($form['language'], 2),
 				'entries' => (int) $form['entries'],
 			);
+
+			// Rollen aktualisieren
+			$db->link->beginTransaction();
+			$db->delete('acl_user_roles', 'user_id = \'' . $uri->id . '\'');
+			foreach ($form['roles'] as $row) {
+				$db->insert('acl_user_roles', array('user_id' => $uri->id, 'role_id' => $row));
+			}
+			$db->link->commit();
 
 			// Neues Passwort
 			if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat'])) {
@@ -82,13 +89,14 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 		$user['date_format_short'] = $db->escape($user['date_format_short'], 3);
 
 		// Zugriffslevel holen
-		$access = $db->select('id, name', 'access', 0, 'name ASC');
-		$c_access = count($access);
-		for ($i = 0; $i < $c_access; ++$i) {
-			$access[$i]['name'] = $db->escape($access[$i]['name'], 3);
-			$access[$i]['selected'] = selectEntry('access', $access[$i]['id'], $user['access']);
+		$roles = $acl->getAllRoles();
+		$c_roles = count($roles);
+		$user_roles = $acl->getUserRoles($uri->id);
+		for ($i = 0; $i < $c_roles; ++$i) {
+			$roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
+			$roles[$i]['selected'] = selectEntry('roles', $roles[$i]['id'], in_array($roles[$i]['id'], $user_roles) ? $roles[$i]['id'] : '');
 		}
-		$tpl->assign('access', $access);
+		$tpl->assign('roles', $roles);
 
 		// Sprache
 		$user['language'] = $db->escape($user['language'], 3);
