@@ -94,7 +94,7 @@ class modules
 		switch (modules::check()) {
 			// Seite ausgeben
 			case 1:
-				global $date, $db, $lang, $tpl;
+				global $acl, $date, $db, $lang, $tpl;
 
 				require MODULES_DIR . '' . $uri->mod . '/' . $uri->page . '.php';
 

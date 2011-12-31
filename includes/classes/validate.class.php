@@ -20,6 +20,28 @@ if (defined('IN_ACP3') === false)
 class validate
 {
 	/**
+	 * Überprüft, ob die Selektierten Rollen überhaupt existieren
+	 *
+	 * @param array $roles Die zu überprüfenden Rollen
+	 * @return boolean
+	 */
+	public static function aclRolesExist(array $roles)
+	{
+		global $acl;
+
+		$all_roles = $acl->getAllRoles();
+		$good = array();
+		foreach ($all_roles as $row) {
+			$good[] = $row['id'];
+		}
+
+		foreach ($roles as $row) {
+			if (!in_array($row, $good))
+				return false;
+		}
+		return true;
+	}
+	/**
 	 * Überprüft einen Geburtstag auf seine Gültigkeit
 	 *
 	 * @param string $var

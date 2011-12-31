@@ -47,11 +47,11 @@ class acl
 	/**
 	 *
 	 */
-	public function __construct($user_id = '')
+	public function __construct($user_id = 0)
 	{
 		global $auth;
 
-		$this->userId = $user_id === '' ? $auth->getUserId() : (int) $user_id;
+		$this->userId = $user_id === 0 ? $auth->getUserId() : (int) $user_id;
 		$this->userRoles = $this->getUserRoles();
 		$this->resources = $this->getResources();
 		$this->privileges = $this->getRolePrivileges($this->userRoles);
@@ -77,20 +77,20 @@ class acl
 		}
 		return $return;
 	}
-	/**
-	 *
-	 * @return array
-	 */
-	public function getUserRoles()
+
+	public function getUserRoles($user_id = 0, $mode = 1)
 	{
 		global $db;
 
-		$user_roles = $db->query('SELECT ur.role_id FROM {pre}acl_user_roles AS ur JOIN {pre}acl_roles AS r ON(ur.role_id = r.id) WHERE ur.user_id = \'' . $this->userId . '\' ORDER BY r.left_id DESC');
+		$user_id = $user_id === 0 ? $this->userId : $user_id;
+		$field = $mode === 2 ? 'r.name' : 'r.id';
+		$key = substr($field, 2);
+		$user_roles = $db->query('SELECT ' . $field . ' FROM {pre}acl_user_roles AS ur JOIN {pre}acl_roles AS r ON(ur.role_id = r.id) WHERE ur.user_id = \'' . $user_id . '\' ORDER BY r.left_id DESC');
 		$c_user_roles = count($user_roles);
 		$roles = array();
 
 		for ($i = 0; $i < $c_user_roles; ++$i) {
-			$roles[] = $user_roles[$i]['role_id'];
+			$roles[] = $user_roles[$i][$key];
 		}
 		return $roles;
 	}
@@ -102,7 +102,7 @@ class acl
 	{
 		global $db;
 
-		$roles = $db->select('id, name', 'acl_roles', 0, 'left_id ASC');
+		$roles = $db->query('SELECT n.id, n.name, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM {pre}acl_roles AS p, {pre}acl_roles AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
 		$c_roles = count($roles);
 
 		for ($i = 0; $i < $c_roles; ++$i) {

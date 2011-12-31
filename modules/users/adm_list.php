@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$users = $db->select('u.id, u.nickname, u.mail, a.name AS access', 'users AS u, {pre}access AS a', 'u.access = a.id', 'u.nickname ASC', POS, $auth->entries);
+$users = $db->select('u.id, u.nickname, u.mail', 'users AS u', 0, 'u.nickname ASC', POS, $auth->entries);
 $c_users = count($users);
 
 if ($c_users > 0) {
@@ -18,6 +18,7 @@ if ($c_users > 0) {
 
 	for ($i = 0; $i < $c_users; ++$i) {
 		$users[$i]['nickname'] = $db->escape($users[$i]['nickname'], 3);
+		$users[$i]['roles'] = implode(', ', $acl->getUserRoles($users[$i]['id'], 2));
 		$users[$i]['mail'] = substr($users[$i]['mail'], 0, -2);
 	}
 	$tpl->assign('users', $users);
