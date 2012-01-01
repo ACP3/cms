@@ -14,6 +14,8 @@
 	<item key="edit">Zugriffslevel bearbeiten</item>
 	<item key="full_access">Vollzugriff</item>
 	<item key="mod_description">Mit diesem Modul können verschiedene Zugriffslevel für die Benutzer angelegt werden.</item>
-	<item key="no_module_selected">Bitte wählen Sie zumindest ein Modul aus, auf welches der Benutzer Zugriff erhalten soll.</item>
+	<item key="no_privilege_selected">Bitte setzen Sie die Berechtiungen für die einzelnen Aktionen, die ein Benutzer ausführen darf.</item>
+	<item key="no_superior_role">Keine übergeordnete Rolle</item>
 	<item key="roles">Zugeordnete Rollen</item>
+	<item key="superior_role">Übergeordnete Rolle</item>
 </language>

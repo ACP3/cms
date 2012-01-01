@@ -40,3 +40,32 @@ function buildAccessLevel($modules)
 	}
 	return '';
 }
+/**
+ * Löscht einen Knoten und verschiebt seine Kinder eine Ebene nach oben
+ *
+ * @param integer $id
+ *  Die ID des zu löschenden Datensatzes
+ *
+ * @return boolean
+ */
+function aclDeleteNode($id)
+{
+	if (!empty($id) && validate::isNumber($id)) {
+		global $db;
+
+		$lr = $db->select('left_id, right_id', 'acl_roles', 'id = \'' . $id . '\'');
+		if (count($lr) == 1) {
+			$db->link->beginTransaction();
+
+			$bool = $db->delete('acl_roles', 'left_id = \'' . $lr[0]['left_id'] . '\'');
+			$bool2 = $db->query('UPDATE {pre}acl_roles SET left_id = left_id - 1, right_id = right_id - 1 WHERE left_id BETWEEN ' . $lr[0]['left_id'] . ' AND ' . $lr[0]['right_id'], 0);
+			$bool3 = $db->query('UPDATE {pre}acl_roles SET left_id = left_id - 2 WHERE left_id > ' . $lr[0]['right_id'], 0);
+			$bool4 = $db->query('UPDATE {pre}acl_roles SET right_id = right_id - 2 WHERE right_id > ' . $lr[0]['right_id'], 0);
+
+			$db->link->commit();
+
+			return $bool !== null && $bool2 !== null && $bool3 !== null && $bool4 !== null ? true : false;
+		}
+	}
+	return false;
+}

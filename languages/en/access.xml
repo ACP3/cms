@@ -14,6 +14,8 @@
 	<item key="edit">Edit access level</item>
 	<item key="full_access">Full access</item>
 	<item key="mod_description">With this module you can create different access levels for users.</item>
-	<item key="no_module_selected">Please select a least one module, at which the user should have access.</item>
+	<item key="no_privilege_selected">Please select the privileges, to which the user should have access</item>
+	<item key="no_superior_role">No superior role</item>
 	<item key="roles">Assigned roles</item>
+	<item key="superior_role">Superior role</item>
 </language>
