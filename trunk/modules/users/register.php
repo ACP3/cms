@@ -37,34 +37,35 @@ if ($auth->isUser()) {
 			$mail_sent = genEmail('', $form['mail'], $subject, $body);
 
 			// Das Benutzerkonto nur erstellen, wenn die E-Mail erfolgreich versendet werden konnte
-			if ($mail_sent) {
-				$salt = salt(12);
-				$insert_values = array(
-					'id' => '',
-					'nickname' => $form['nickname'],
-					'pwd' => genSaltedPassword($salt, $form['pwd']) . ':' . $salt,
-					'access' => '3',
-					'realname' => ':1',
-					'gender' => ':1',
-					'birthday' => ':1',
-					'birthday_format' => '1',
-					'mail' => $form['mail'] . ':1',
-					'website' => ':1',
-					'icq' => ':1',
-					'msn' => ':1',
-					'skype' => ':1',
-					'date_format_long' => CONFIG_DATE_FORMAT_LONG,
-					'date_format_short' => CONFIG_DATE_FORMAT_SHORT,
-					'time_zone' => CONFIG_DATE_TIME_ZONE,
-					'dst' => CONFIG_DATE_DST,
-					'language' => CONFIG_LANG,
-					'draft' => '',
-				);
+			$salt = salt(12);
+			$insert_values = array(
+				'id' => '',
+				'nickname' => $form['nickname'],
+				'pwd' => genSaltedPassword($salt, $form['pwd']) . ':' . $salt,
+				'realname' => ':1',
+				'gender' => ':1',
+				'birthday' => ':1',
+				'birthday_format' => '1',
+				'mail' => $form['mail'] . ':1',
+				'website' => ':1',
+				'icq' => ':1',
+				'msn' => ':1',
+				'skype' => ':1',
+				'date_format_long' => CONFIG_DATE_FORMAT_LONG,
+				'date_format_short' => CONFIG_DATE_FORMAT_SHORT,
+				'time_zone' => CONFIG_DATE_TIME_ZONE,
+				'dst' => CONFIG_DATE_DST,
+				'language' => CONFIG_LANG,
+				'draft' => '',
+			);
 
-				$bool = $db->insert('users', $insert_values);
-			}
+			$db->link->beginTransaction();
+			$bool = $db->insert('users', $insert_values);
+			$user_id = $db->link->lastInsertId();
+			$bool2 = $db->insert('acl_user_roles', array('user_id' => $user_id, 'role_id' => 2));
+			$db->link->commit();
 
-			$content = comboBox($mail_sent && isset($bool) && $bool ? $lang->t('users', 'register_success') : $lang->t('users', 'register_error'), ROOT_DIR);
+			$content = comboBox($mail_sent && $bool && $bool2 ? $lang->t('users', 'register_success') : $lang->t('users', 'register_error'), ROOT_DIR);
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

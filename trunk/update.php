@@ -8,6 +8,8 @@
  */
 header('Content-type: text/plain; charset=UTF-8');
 
+define('IN_ACP3', true);
+
 define('ACP3_ROOT', dirname(__FILE__) . '/');
 define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 define('MODULES_DIR', ACP3_ROOT . 'modules/');
@@ -219,6 +221,9 @@ $queries = array(
 		10 => "INSERT INTO `{pre}acl_role_privileges` (`id`, `role_id`, `privilege_id`, `value`) VALUES (1, 1, 1, 1), (2, 1, 2, 1), (3, 1, 3, 0), (4, 1, 4, 0), (5, 1, 5, 0), (6, 1, 6, 0), (7, 1, 7, 0), (8, 2, 1, 2), (9, 2, 2, 2), (10, 2, 3, 2), (11, 2, 4, 2), (12, 2, 5, 2), (13, 2, 6, 2), (14, 2, 7, 2), (15, 3, 1, 2), (16, 3, 2, 2), (17, 3, 3, 1), (18, 3, 4, 1), (19, 3, 5, 1), (20, 3, 6, 1), (21, 3, 7, 2), (22, 4, 1, 2), (23, 4, 2, 2), (24, 4, 3, 2), (25, 4, 4, 2), (26, 4, 5, 2), (27, 4, 6, 2), (28, 4, 7, 1);",
 		11 => "INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (0, 1), (1, 4);",
 	),
+	7 => array(
+		0 => "INSERT INTO {pre}acl_resources (`id`, `path`, `privilege_id`) VALUES (\'\', 'access/order/', 5);"
+	)
 );
 
 // Änderungen am DB Schema vornehmen
@@ -329,7 +334,7 @@ if (CONFIG_DB_VERSION < 5) {
 }
 
 // Konfigurationsdatei aktualisieren
-$config = array('db_version' => 6);
+$config = array('db_version' => $queries[count($queries)]);
 
 if (defined('CONFIG_DATE_FORMAT') && CONFIG_DB_VERSION == 0) {
 	$config['wysiwyg'] = CONFIG_WYSIWYG == 'fckeditor' ? 'ckeditor' : CONFIG_WYSIWYG;

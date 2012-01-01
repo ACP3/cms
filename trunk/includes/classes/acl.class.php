@@ -77,7 +77,12 @@ class acl
 		}
 		return $return;
 	}
-
+	/**
+	 *
+	 * @param integer $user_id
+	 * @param integer $mode
+	 * @return array
+	 */
 	public function getUserRoles($user_id = 0, $mode = 1)
 	{
 		global $db;
@@ -98,17 +103,54 @@ class acl
 	 *
 	 * @return array
 	 */
-	public function getAllRoles()
+	public function getAllRoles($reset_cache = false)
 	{
 		global $db;
 
-		$roles = $db->query('SELECT n.id, n.name, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM {pre}acl_roles AS p, {pre}acl_roles AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
-		$c_roles = count($roles);
+		$filename = 'acl_all_roles';
+		if (!cache::check($filename) || $reset_cache === true) {
+			$roles = $db->query('SELECT n.id, n.name, n.left_id, n.right_id, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM {pre}acl_roles AS p, {pre}acl_roles AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
+			$c_roles = count($roles);
 
-		for ($i = 0; $i < $c_roles; ++$i) {
-			$roles[$i]['name'] = $db->escape($roles[$i]['name'], 3);
+			for ($i = 0; $i < $c_roles; ++$i) {
+				$roles[$i]['name'] = $db->escape($roles[$i]['name'], 3);
+
+				// Bestimmen, ob die Seite die Erste und/oder Letzte eines Blocks/Knotens ist
+				$first = $last = false;
+				if ($i == 0 ||
+					isset($roles[$i - 1]) &&
+					($roles[$i - 1]['level'] < $roles[$i]['level'] ||
+					$roles[$i]['level'] < $roles[$i - 1]['level'] ||
+					$roles[$i]['level'] == $roles[$i - 1]['level']))
+					$first = true;
+				if ($i == $c_roles - 1 ||
+					isset($roles[$i + 1]) &&
+					($roles[$i]['level'] == 0 && $roles[$i + 1]['level'] == 0 ||
+					$roles[$i]['level'] > $roles[$i + 1]['level']))
+					$last = true;
+
+				// Checken, ob für das aktuelle Element noch Nachfolger existieren
+				if (!$last) {
+					for ($j = $i + 1; $j < $c_roles; ++$j) {
+						if ($roles[$i]['level'] == $roles[$j]['level']) {
+							$found = true;
+							break;
+						}
+					}
+					if (!isset($found))
+						$last = true;
+					else
+						unset($found);
+				}
+
+				$roles[$i]['first'] = $first;
+				$roles[$i]['last'] = $last;
+			}
+
+			cache::create($filename, $roles);
 		}
-		return $roles;
+
+		return cache::output($filename);
 	}
 	/**
 	 *
@@ -139,6 +181,7 @@ class acl
 	{
 		global $db;
 
+		// Berechtigungen einlesen, auf die der Benutzer laut seinen Rollen Zugriff hat
 		$roles = $db->query('SELECT rp.role_id, rp.privilege_id, rp.value, p.key, p.name FROM {pre}acl_role_privileges AS rp JOIN {pre}acl_privileges AS p ON(rp.privilege_id = p.id) WHERE rp.role_id IN(' . implode(',', $role) . ')');
 		$c_roles = count($roles);
 		$privileges = array();

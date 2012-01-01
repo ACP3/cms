@@ -12,95 +12,47 @@ if (defined('IN_ADM') === false)
 
 require_once MODULES_DIR . 'access/functions.php';
 
-if (validate::isNumber($uri->id) && $db->countRows('*', 'access', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' . $uri->id . '\'') == '1') {
 	if (isset($_POST['form'])) {
 		$form = $_POST['form'];
 
 		if (empty($form['name']))
 			$errors[] = $lang->t('common', 'name_to_short');
-		if (!empty($form['name']) && $db->countRows('*', 'access', 'id != \'' . $uri->id . '\' AND name = \'' . $db->escape($form['name']) . '\'') == '1')
-			$errors[] = $lang->t('access', 'access_level_already_exists');
-		if (empty($form['modules']))
-			$errors[] = $lang->t('access', 'no_module_selected');
+		if (!empty($form['name']) && $db->countRows('*', 'acl_roles', 'id != \'' . $uri->id . '\' AND name = \'' . $db->escape($form['name']) . '\'') == '1')
+			$errors[] = $lang->t('access', 'role_already_exists');
+		if (empty($form['privliges']))
+			$errors[] = $lang->t('access', 'no_privilege_selected');
 
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
 				'name' => $db->escape($form['name']),
-				'modules' => buildAccessLevel($form['modules']),
 			);
 
-			$bool = $db->update('access', $update_values, 'id = \'' . $uri->id . '\'');
+			$bool = $db->update('acl_roles', $update_values, 'id = \'' . $uri->id . '\'');
 
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/access'));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
-		$access = $db->select('name, modules', 'access', 'id = \'' . $uri->id . '\'');
-		$access[0]['name'] = $db->escape($access[0]['name'], 3);
+		$role = $db->select('name, left_id, right_id', 'acl_roles', 'id = \'' . $uri->id . '\'');
+		$role[0]['name'] = $db->escape($role[0]['name'], 3);
 
-		$tpl->assign('form', isset($form) ? $form : $access[0]);
-
-		$mod_list = modules::modulesList();
-		$mods_arr = explode(',', $access[0]['modules']);
-		$c_mods_arr = count($mods_arr);
-
-		foreach ($mod_list as $name => $info) {
-			if ($info['dir'] == 'errors' || !$info['active']) {
-				unset($mod_list[$name]);
+		$roles = $acl->getAllRoles();
+		$c_roles = count($roles);
+		$parent = $db->select('id', 'acl_roles', 'left_id < ' . $role[0]['left_id'] . ' AND right_id > ' . $role[0]['right_id'], 'left_id DESC', 1);
+		for ($i = 0; $i < $c_roles; ++$i) {
+			if ($roles[$i]['left_id'] >= $role[0]['left_id'] && $roles[$i]['right_id'] <= $role[0]['right_id']) {
+				unset($roles[$i]);
 			} else {
-				$dir = $info['dir'];
-				if (isset($form['modules'])) {
-					$mod_list[$name]['read_checked'] = isset($form['modules'][$dir]['read']) ? ' checked="checked"' : '';
-					$mod_list[$name]['create_checked'] = isset($form['modules'][$dir]['create']) ? ' checked="checked"' : '';
-					$mod_list[$name]['edit_checked'] = isset($form['modules'][$dir]['edit']) ? ' checked="checked"' : '';
-					$mod_list[$name]['delete_checked'] = isset($form['modules'][$dir]['delete']) ? ' checked="checked"' : '';
-					$mod_list[$name]['full_checked'] = isset($form['modules'][$dir]['full']) ? ' checked="checked"' : '';
-				} else {
-					$db_value = '';
-					for ($i = 0; $i < $c_mods_arr; ++$i) {
-						$pos = strrpos($mods_arr[$i], ':');
-						if ($info['dir'] == substr($mods_arr[$i], 0, $pos)) {
-							$db_value = substr($mods_arr[$i], $pos + 1);
-							break;
-						}
-					}
-
-					$mod_list[$name]['read_checked'] = '';
-					$mod_list[$name]['create_checked'] = '';
-					$mod_list[$name]['edit_checked'] = '';
-					$mod_list[$name]['delete_checked'] = '';
-					$mod_list[$name]['full_checked'] = '';
-
-					if ($db_value == 16) {
-						$mod_list[$name]['read_checked'] = ' checked="checked"';
-						$mod_list[$name]['create_checked'] = ' checked="checked"';
-						$mod_list[$name]['edit_checked'] = ' checked="checked"';
-						$mod_list[$name]['delete_checked'] = ' checked="checked"';
-						$mod_list[$name]['full_checked'] = ' checked="checked"';
-					} else {
-						if ($db_value - 8 >= 0) {
-							$mod_list[$name]['delete_checked'] = ' checked="checked"';
-							$db_value-= 8;
-						}
-						if ($db_value - 4 >= 0) {
-							$mod_list[$name]['edit_checked'] = ' checked="checked"';
-							$db_value-= 4;
-						}
-						if ($db_value - 2 >= 0) {
-							$mod_list[$name]['create_checked'] = ' checked="checked"';
-							$db_value-= 2;
-						}
-						if ($db_value - 1 >= 0) {
-							$mod_list[$name]['read_checked'] = ' checked="checked"';
-							$db_value-= 1;
-						}
-					}
-				}
+				$roles[$i]['selected'] = selectEntry('roles', $roles[$i]['id'], !empty($parent[0]['id']) ? $parent[0]['id'] : 0);
+				$roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
 			}
 		}
-		$tpl->assign('mod_list', $mod_list);
+		$tpl->assign('roles', $roles);
+
+		$tpl->assign('form', isset($form) ? $form : $role[0]);
 
 		$content = modules::fetchTemplate('access/edit.html');
 	}

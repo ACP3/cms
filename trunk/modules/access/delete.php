@@ -21,23 +21,27 @@ if (!isset($entries)) {
 	$marked_entries = implode('|', $entries);
 	$content = comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/access/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/access'));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
+	require_once MODULES_DIR . 'access/functions.php';
+
 	$marked_entries = explode('|', $entries);
-	$bool = null;
-	$level_undeletable = 0;
+	$bool = $bool2 = null;
+	$level_undeletable = false;
 
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'access', 'id = \'' . $entry . '\'') == '1') {
-			if ($entry == '1' || $entry == '2' || $entry == '3') {
-				$level_undeletable = 1;
-			} else {
-				$bool = $db->delete('access', 'id = \'' . $entry . '\'');
-			}
+		if (in_array($entry, array(1, 2, 4)) === true) {
+			$level_undeletable = true;
+		} else {
+			$bool = aclDeleteNode($entry);
+			$bool2 = $db->delete('acl_role_privileges', 'role_id = \'' . $entry . '\'');
 		}
 	}
-	if ($level_undeletable) {
+
+	$acl->getAllRoles(true);
+
+	if ($level_undeletable === true) {
 		$text = $lang->t('access', 'access_level_undeletable');
 	} else {
-		$text = $bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
+		$text = $bool !== null && $bool2 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
 	}
 	$content = comboBox($text, $uri->route('acp/access'));
 } else {

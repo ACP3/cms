@@ -43,7 +43,6 @@ if (isset($_POST['form'])) {
 	} else {
 		$salt = salt(12);
 
-		$db->link->beginTransaction();
 		$insert_values = array(
 			'id' => '',
 			'nickname' => $db->escape($form['nickname']),
@@ -66,13 +65,14 @@ if (isset($_POST['form'])) {
 			'draft' => '',
 		);
 
+		$db->link->beginTransaction();
 		$bool = $db->insert('users', $insert_values);
 
-		// Rollen aktualisieren
 		$user_id = $db->link->lastInsertId();
 		foreach ($form['roles'] as $row) {
 			$db->insert('acl_user_roles', array('user_id' => $user_id, 'role_id' => $row));
 		}
+
 		$db->link->commit();
 
 		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/users'));
