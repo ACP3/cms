@@ -153,7 +153,7 @@ class acl
 	 */
 	public function getAllRoles()
 	{
-		if (cache::check('acl_all_roles'))
+		if (!cache::check('acl_all_roles'))
 			$this->setRolesCache();
 
 		return cache::output('acl_all_roles');
