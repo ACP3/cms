@@ -337,7 +337,7 @@ if (CONFIG_DB_VERSION < 5) {
 }
 
 // Konfigurationsdatei aktualisieren
-$config = array('db_version' => $queries[count($queries)]);
+$config = array('db_version' => count($queries));
 
 if (defined('CONFIG_DATE_FORMAT') && CONFIG_DB_VERSION == 0) {
 	$config['wysiwyg'] = CONFIG_WYSIWYG == 'fckeditor' ? 'ckeditor' : CONFIG_WYSIWYG;
