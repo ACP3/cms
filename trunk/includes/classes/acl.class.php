@@ -81,6 +81,8 @@ class acl
 	 *
 	 * @param integer $user_id
 	 * @param integer $mode
+	 *  1 = IDs der Rollen ausgeben
+	 *	2 = Namen der Rollen ausgeben
 	 * @return array
 	 */
 	public function getUserRoles($user_id = 0, $mode = 1)
@@ -145,7 +147,33 @@ class acl
 			$roles[$i]['last'] = $last;
 		}
 
-		return cache::create('acl_all_roles', $roles);
+		return cache::create('acl_all_roles', $roles, 'acl');
+	}
+	/**
+	 *
+	 * @param array $roles
+	 * @return boolean
+	 */
+	public function setRolePrivilegesCache(array $roles)
+	{
+		global $db;
+
+		// Berechtigungen einlesen, auf die der Benutzer laut seinen Rollen Zugriff hat
+		$role_privs = $db->query('SELECT rp.role_id, rp.privilege_id, rp.value, p.key, p.name FROM {pre}acl_role_privileges AS rp JOIN {pre}acl_privileges AS p ON(rp.privilege_id = p.id) WHERE rp.role_id IN(' . implode(',', $roles) . ')');
+		$c_role_privs = count($role_privs);
+		$privileges = array();
+		for ($i = 0; $i < $c_role_privs; ++$i) {
+			$key = strtolower($role_privs[$i]['key']);
+			if ($role_privs[$i]['value'] == 2)
+				$role_privs[$i]['value'] = $this->getRolePrivilegeValue($key, $role_privs[$i]['role_id']);
+			$privileges[$key] = array(
+				'id' => $role_privs[$i]['privilege_id'],
+				'name' => $db->escape($role_privs[$i]['name'], 3),
+				'value' => $role_privs[$i]['value'] == 1 ? true : false,
+			);
+		}
+
+		return cache::create('acl_role_privileges_' . implode(',', $roles), $privileges, 'acl');
 	}
 	/**
 	 *
@@ -153,10 +181,10 @@ class acl
 	 */
 	public function getAllRoles()
 	{
-		if (!cache::check('acl_all_roles'))
+		if (!cache::check('acl_all_roles', 'acl'))
 			$this->setRolesCache();
 
-		return cache::output('acl_all_roles');
+		return cache::output('acl_all_roles', 'acl');
 	}
 	/**
 	 *
@@ -193,28 +221,16 @@ class acl
 	}
 	/**
 	 *
-	 * @param array $role
+	 * @param array $roles
 	 * @return boolean
 	 */
-	public function getRolePrivileges(array $role)
+	public function getRolePrivileges(array $roles)
 	{
-		global $db;
+		$filename = 'acl_role_privileges_' . implode(',', $roles);
+		if (!cache::check($filename, 'acl'))
+			$this->setRolePrivilegesCache($roles);
 
-		// Berechtigungen einlesen, auf die der Benutzer laut seinen Rollen Zugriff hat
-		$roles = $db->query('SELECT rp.role_id, rp.privilege_id, rp.value, p.key, p.name FROM {pre}acl_role_privileges AS rp JOIN {pre}acl_privileges AS p ON(rp.privilege_id = p.id) WHERE rp.role_id IN(' . implode(',', $role) . ')');
-		$c_roles = count($roles);
-		$privileges = array();
-		for ($i = 0; $i < $c_roles; ++$i) {
-			$key = strtolower($roles[$i]['key']);
-			if ($roles[$i]['value'] == 2)
-				$roles[$i]['value'] = $this->getRolePrivilegeValue($key, $roles[$i]['role_id']);
-			$privileges[$key] = array(
-				'id' => $roles[$i]['privilege_id'],
-				'name' => $db->escape($roles[$i]['name'], 3),
-				'value' => $roles[$i]['value'] == 1 ? true : false,
-			);
-		}
-		return $privileges;
+		return cache::output($filename, 'acl');
 	}
 	/**
 	 *
