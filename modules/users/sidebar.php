@@ -44,11 +44,6 @@ if ($auth->isUser()) {
 			$nav_system[$i]['page'] = 'configuration';
 			$nav_system[$i]['name'] = $lang->t('system', 'configuration');
 		}
-		if (modules::check('system', 'server_config') == 1) {
-			$i++;
-			$nav_system[$i]['page'] = 'server_config';
-			$nav_system[$i]['name'] = $lang->t('system', 'server_config');
-		}
 		if (modules::check('system', 'extensions') == 1) {
 			$i++;
 			$nav_system[$i]['page'] = 'extensions';

@@ -384,7 +384,6 @@ INSERT INTO `{pre}acl_resources` (`id`, `path`, `privilege_id`) VALUES
 (116, 'system/languages/', 1),
 (117, 'system/maintenance/', 1),
 (118, 'system/modules/', 1),
-(119, 'system/server_config/', 1),
 (120, 'system/sql_export/', 1),
 (121, 'system/sql_import/', 1),
 (122, 'system/sql_optimisation/', 1),

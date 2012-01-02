@@ -223,6 +223,9 @@ $queries = array(
 	),
 	7 => array(
 		0 => "INSERT INTO {pre}acl_resources (`id`, `path`, `privilege_id`) VALUES (\'\', 'access/order/', 5);"
+	),
+	8 => array(
+		0 => 'DELETE FROM {pre}acl_resources WHERE path = "system/server_config/"',
 	)
 );
 
