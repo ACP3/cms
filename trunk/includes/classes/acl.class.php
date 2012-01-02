@@ -101,56 +101,62 @@ class acl
 	}
 	/**
 	 *
-	 * @return array
+	 * @return boolean
 	 */
-	public function getAllRoles($reset_cache = false)
+	public function setRolesCache()
 	{
 		global $db;
 
-		$filename = 'acl_all_roles';
-		if (!cache::check($filename) || $reset_cache === true) {
-			$roles = $db->query('SELECT n.id, n.name, n.left_id, n.right_id, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM {pre}acl_roles AS p, {pre}acl_roles AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
-			$c_roles = count($roles);
+		$roles = $db->query('SELECT n.id, n.name, n.left_id, n.right_id, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM {pre}acl_roles AS p, {pre}acl_roles AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
+		$c_roles = count($roles);
 
-			for ($i = 0; $i < $c_roles; ++$i) {
-				$roles[$i]['name'] = $db->escape($roles[$i]['name'], 3);
+		for ($i = 0; $i < $c_roles; ++$i) {
+			$roles[$i]['name'] = $db->escape($roles[$i]['name'], 3);
 
-				// Bestimmen, ob die Seite die Erste und/oder Letzte eines Blocks/Knotens ist
-				$first = $last = false;
-				if ($i == 0 ||
-					isset($roles[$i - 1]) &&
-					($roles[$i - 1]['level'] < $roles[$i]['level'] ||
-					$roles[$i]['level'] < $roles[$i - 1]['level'] ||
-					$roles[$i]['level'] == $roles[$i - 1]['level']))
-					$first = true;
-				if ($i == $c_roles - 1 ||
-					isset($roles[$i + 1]) &&
-					($roles[$i]['level'] == 0 && $roles[$i + 1]['level'] == 0 ||
-					$roles[$i]['level'] > $roles[$i + 1]['level']))
-					$last = true;
+			// Bestimmen, ob die Seite die Erste und/oder Letzte eines Blocks/Knotens ist
+			$first = $last = false;
+			if ($i == 0 ||
+				isset($roles[$i - 1]) &&
+				($roles[$i - 1]['level'] < $roles[$i]['level'] ||
+				$roles[$i]['level'] < $roles[$i - 1]['level'] ||
+				$roles[$i]['level'] == $roles[$i - 1]['level']))
+				$first = true;
+			if ($i == $c_roles - 1 ||
+				isset($roles[$i + 1]) &&
+				($roles[$i]['level'] == 0 && $roles[$i + 1]['level'] == 0 ||
+				$roles[$i]['level'] > $roles[$i + 1]['level']))
+				$last = true;
 
-				// Checken, ob für das aktuelle Element noch Nachfolger existieren
-				if (!$last) {
-					for ($j = $i + 1; $j < $c_roles; ++$j) {
-						if ($roles[$i]['level'] == $roles[$j]['level']) {
-							$found = true;
-							break;
-						}
+			// Checken, ob für das aktuelle Element noch Nachfolger existieren
+			if (!$last) {
+				for ($j = $i + 1; $j < $c_roles; ++$j) {
+					if ($roles[$i]['level'] == $roles[$j]['level']) {
+						$found = true;
+						break;
 					}
-					if (!isset($found))
-						$last = true;
-					else
-						unset($found);
 				}
-
-				$roles[$i]['first'] = $first;
-				$roles[$i]['last'] = $last;
+				if (!isset($found))
+					$last = true;
+				else
+					unset($found);
 			}
 
-			cache::create($filename, $roles);
+			$roles[$i]['first'] = $first;
+			$roles[$i]['last'] = $last;
 		}
 
-		return cache::output($filename);
+		return cache::create('acl_all_roles', $roles);
+	}
+	/**
+	 *
+	 * @return array
+	 */
+	public function getAllRoles()
+	{
+		if (cache::check('acl_all_roles'))
+			$this->setRolesCache();
+
+		return cache::output('acl_all_roles');
 	}
 	/**
 	 *
@@ -174,6 +180,19 @@ class acl
 	}
 	/**
 	 *
+	 * @param string $key
+	 * @param integer $role_id
+	 * @return integer
+	 */
+	public function getRolePrivilegeValue($key, $role_id)
+	{
+		global $db;
+
+		$value = $db->query('SELECT rp.value FROM {pre}acl_roles AS r, {pre}acl_roles AS parent JOIN {pre}acl_role_privileges AS rp ON(parent.id = rp.role_id) JOIN {pre}acl_privileges AS p ON(rp.privilege_id = p.id) WHERE r.id = \'' . $db->escape($role_id) . '\' AND p.key = \'' . $db->escape($key) . '\' AND rp.value != 2 AND parent.left_id < r.left_id AND parent.right_id > r.right_id ORDER BY parent.left_id DESC LIMIT 1');
+		return isset($value[0]['value']) ? $value[0]['value'] : 0;
+	}
+	/**
+	 *
 	 * @param array $role
 	 * @return boolean
 	 */
@@ -187,10 +206,12 @@ class acl
 		$privileges = array();
 		for ($i = 0; $i < $c_roles; ++$i) {
 			$key = strtolower($roles[$i]['key']);
+			if ($roles[$i]['value'] == 2)
+				$roles[$i]['value'] = $this->getRolePrivilegeValue($key, $roles[$i]['role_id']);
 			$privileges[$key] = array(
 				'id' => $roles[$i]['privilege_id'],
 				'name' => $db->escape($roles[$i]['name'], 3),
-				'value' => $roles[$i]['value'] === '1' || $roles[$i]['value'] === '2' ? true : false,
+				'value' => $roles[$i]['value'] == 1 ? true : false,
 			);
 		}
 		return $privileges;

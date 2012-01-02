@@ -36,7 +36,7 @@ if (!isset($entries)) {
 		}
 	}
 
-	$acl->getAllRoles(true);
+	$acl->setRolesCache();
 
 	if ($level_undeletable === true) {
 		$text = $lang->t('access', 'access_level_undeletable');
