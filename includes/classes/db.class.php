@@ -35,6 +35,7 @@ class db
 	 */
 	public $prefix = '';
 
+	public $queries = array();
 	/**
 	 * Stellt die Verbindung mit der Datenbank her
 	 */
@@ -95,6 +96,7 @@ class db
 	{
 		try {
 			$query = str_replace('{pre}', $this->prefix, $query);
+			$this->queries[] = $query;
 			switch ($mode) {
 				// Anzahl der Zeilen zählen
 				case 1:

@@ -28,9 +28,10 @@ class cache
 	 *  Der Name der Datei, welcher auf Existenz und Gültigkeit geprüft werden soll
 	 * @return boolean
 	 */
-	public static function check($filename)
+	public static function check($filename, $cache_id = '')
 	{
-		if (is_file(ACP3_ROOT . self::$cache_dir . 'cache_' . md5($filename) . '.php')) {
+		$cache_id.= $cache_id !== '' ? '_' : '';
+		if (is_file(ACP3_ROOT . self::$cache_dir . 'cache_' . $cache_id . md5($filename) . '.php')) {
 			return true;
 		}
 		return false;
@@ -44,14 +45,15 @@ class cache
 	 * 	Daten, für welche der Cache erstellt werden sollen
 	 * @return boolean
 	 */
-	public static function create($filename, $data)
+	public static function create($filename, $data, $cache_id = '')
 	{
 		if (!empty($data)) {
-			$bool = @file_put_contents(ACP3_ROOT . self::$cache_dir . 'cache_' . md5($filename) . '.php', serialize($data), LOCK_EX);
+			$cache_id.= $cache_id !== '' ? '_' : '';
+			$bool = @file_put_contents(ACP3_ROOT . self::$cache_dir . 'cache_' . $cache_id . md5($filename) . '.php', serialize($data), LOCK_EX);
 
 			return $bool ? true : false;
-		} elseif (self::check($filename)) {
-			return self::delete($filename);
+		} elseif (self::check($filename, $cache_id)) {
+			return self::delete($filename, $cache_id);
 		}
 		return false;
 	}
@@ -62,10 +64,11 @@ class cache
 	 * 	Zu löschende Datei
 	 * @return boolean
 	 */
-	public static function delete($filename)
+	public static function delete($filename, $cache_id = '')
 	{
 		if (self::check($filename)) {
-			return unlink(ACP3_ROOT . self::$cache_dir . 'cache_' . md5($filename) . '.php');
+			$cache_id.= $cache_id !== '' ? '_' : '';
+			return unlink(ACP3_ROOT . self::$cache_dir . 'cache_' . $cache_id . md5($filename) . '.php');
 		}
 		return false;
 	}
@@ -76,10 +79,11 @@ class cache
 	 * 	Auszugebende Datei
 	 * @return mixed
 	 */
-	public static function output($filename)
+	public static function output($filename, $cache_id = '')
 	{
-		if (self::check($filename)) {
-			$handle = fopen(ACP3_ROOT . self::$cache_dir . 'cache_' . md5($filename) . '.php', 'r');
+		if (self::check($filename, $cache_id)) {
+			$cache_id.= $cache_id !== '' ? '_' : '';
+			$handle = fopen(ACP3_ROOT . self::$cache_dir . 'cache_' . $cache_id . md5($filename) . '.php', 'r');
 			flock($handle, LOCK_SH);
 			$data = unserialize(stream_get_contents($handle));
 			flock($handle, LOCK_UN);
@@ -94,15 +98,19 @@ class cache
 	 * @param string $dir
 	 *	Einen Unterordner des Cache-Ordners löschen
 	 */
-	public static function purge($dir = 0, $delete_folder = 0)
+	public static function purge($dir = 0, $delete_folder = 0, $cache_id = '')
 	{
 		$path = ACP3_ROOT . self::$cache_dir . (!empty($dir) && !preg_match('=/=', $dir) ? $dir . '/' : '');
 		if (is_dir($path)) {
+			$cache_id.= $cache_id !== '' ? '_' : '';
 			$cache_dir = scandir($path);
 			$c_cache_dir = count($cache_dir);
 
 			for ($i = 0; $i < $c_cache_dir; ++$i) {
 				if (is_file($path . $cache_dir[$i]) && $cache_dir[$i] != '.htaccess') {
+					// Wenn eine $cache_id gesetzt wurde, nur diese Dateien löschen
+					if ($cache_id !== '' && strpos($cache_dir[$i], 'cache_' . $cache_id) === false)
+						continue;
 					unlink($path . $cache_dir[$i]);
 				}
 			}
