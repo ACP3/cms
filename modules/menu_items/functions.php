@@ -344,7 +344,7 @@ function processNavbar($block) {
 
 		if ($c_pages > 0) {
 			// Selektion nur vornehmen, wenn man sich im Frontend befindet
-			if (defined('IN_ACP3')) {
+			if (defined('IN_ADM') === false) {
 				if ($uri->route($uri->query) != $uri->route($uri->mod) &&
 					$db->query('SELECT COUNT(*) FROM {pre}menu_items AS m JOIN {pre}menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->query . '\'', 1) > 0) {
 					$link = $uri->query;

@@ -4,7 +4,7 @@
 		<name lang="true"/>
 		<description lang="true"/>
 		<author>Goratsch Webdesign</author>
-		<tables>access</tables>
+		<tables>acl_privileges,acl_resources,acl_roles,acl_role_privileges,acl_user_roles</tables>
 		<version core="true"/>
 		<protected/>
 	</info>
