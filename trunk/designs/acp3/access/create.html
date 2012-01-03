@@ -12,10 +12,10 @@
 			<dl>
 				<dt><label for="name">{lang t="common|name"}</label></dt>
 				<dd><input type="text" name="form[name]" id="name" value="{$form.name}" maxlength="120"></dd>
-				<dt><label for="roles">{lang t="access|superior_role"}</label></dt>
+				<dt><label for="parent">{lang t="access|superior_role"}</label></dt>
 				<dd>
-					<select name="form[roles]" id="roles">
-{foreach $roles as $row}
+					<select name="form[parent]" id="parent">
+{foreach $parent as $row}
 						<option value="{$row.id}"{$row.selected}>{$row.name}</option>
 {/foreach}
 					</select>

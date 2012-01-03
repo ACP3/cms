@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 			'db_pre' => $form['db_pre'],
 			'db_password' => $form['db_password'],
 			'db_user' => $form['db_user'],
-			'db_version' => 8,
+			'db_version' => 9,
 			'design' => 'acp3',
 			'entries' => $form['entries'],
 			'flood' => $form['flood'],

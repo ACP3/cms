@@ -42,32 +42,22 @@ function setMenuItemsCache() {
 			$pages[$i]['period'] = $date->period($pages[$i]['start'], $pages[$i]['end']);
 			$pages[$i]['mode_formated'] = str_replace($mode_search, $mode_replace, $pages[$i]['mode']);
 
-			// Bestimmen, ob die Seite die Erste und/oder Letzte eines Blocks/Knotens ist
-			$first = $last = false;
-			if ($i == 0 ||
-				isset($pages[$i - 1]) &&
-				($pages[$i - 1]['level'] < $pages[$i]['level'] ||
-				$pages[$i]['level'] < $pages[$i - 1]['level'] && $pages[$i]['block_name'] != $pages[$i - 1]['block_name'] ||
-				$pages[$i]['level'] == $pages[$i - 1]['level'] && $pages[$i]['block_name'] != $pages[$i - 1]['block_name']))
-				$first = true;
-			if ($i == $c_pages - 1 ||
-				isset($pages[$i + 1]) &&
-				($pages[$i]['level'] == 0 && $pages[$i + 1]['level'] == 0 && $pages[$i]['block_name'] != $pages[$i + 1]['block_name'] ||
-				$pages[$i]['level'] > $pages[$i + 1]['level']))
-				$last = true;
-
-			// Checken, ob für das aktuelle Element noch Nachfolger existieren
-			if (!$last) {
-				for ($j = $i + 1; $j < $c_pages; ++$j) {
-					if ($pages[$i]['level'] == $pages[$j]['level'] && $pages[$i]['block_name'] == $pages[$j]['block_name']) {
-						$found = true;
+			// Bestimmen, ob die Seite die Erste und/oder Letzte eines Knotens ist
+			$first = $last = true;
+			if ($i > 0) {
+				for ($j = $i - 1; $j >= 0; --$j) {
+					if ($pages[$j]['parent_id'] == $pages[$i]['parent_id'] && $pages[$j]['block_name'] == $pages[$i]['block_name']) {
+						$first = false;
 						break;
 					}
 				}
-				if (!isset($found))
-					$last = true;
-				else
-					unset($found);
+			}
+			
+			for ($j = $i + 1; $j < $c_pages; ++$j) {
+				if ($pages[$i]['parent_id'] == $pages[$j]['parent_id'] && $pages[$j]['block_name'] == $pages[$i]['block_name']) {
+					$last = false;
+					break;
+				}
 			}
 
 			$pages[$i]['first'] = $first;
@@ -145,12 +135,12 @@ function insertNode($parent, $insert_values)
 
 		return $bool !== null && $bool2 !== null && $bool3 !== null ? true : false;
 	} else {
-		$node = $db->select('root_id, right_id', 'menu_items', 'id = \'' . $parent . '\'');
+		$node = $db->select('root_id, left_id, right_id', 'menu_items', 'id = \'' . $parent . '\'');
 
 		$db->link->beginTransaction();
 
 		$db->query('UPDATE {pre}menu_items SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id > ' . $node[0]['right_id'], 0);
-		$db->query('UPDATE {pre}menu_items SET right_id = right_id + 2 WHERE right_id = ' . $node[0]['right_id'], 0);
+		$db->query('UPDATE {pre}menu_items SET right_id = right_id + 2 WHERE left_id <= ' . $node[0]['left_id'] . ' AND right_id - left_id > 1', 0);
 
 		$db->link->commit();
 
@@ -181,7 +171,6 @@ function editNode($id, $parent, $block_id, array $update_values)
 	if (validate::isNumber($id) && (validate::isNumber($parent) || $parent == '') && validate::isNumber($block_id)) {
 		// Die aktuelle Seite mit allen untergeordneten Seiten selektieren
 		$pages = $db->query('SELECT c.id, c.root_id, c.left_id, c.right_id, c.block_id FROM {pre}menu_items AS p, {pre}menu_items AS c WHERE p.id = \'' . $id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
-		$c_pages = count($pages);
 
 		// Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
 		if (empty($parent) && $block_id == $pages[0]['block_id'] && $db->countRows('*', 'menu_items', 'left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id']) == 0) {
@@ -255,6 +244,7 @@ function editNode($id, $parent, $block_id, array $update_values)
 					}
 
 					// Einträge aktualisieren
+					$c_pages = count($pages);
 					for ($i = 0; $i < $c_pages; ++$i) {
 						$bool = $db->query('UPDATE {pre}menu_items SET block_id = \'' . $block_id . '\', root_id = \'' . $root_id . '\', left_id = ' . ($pages[$i]['left_id'] + $diff) . ', right_id = ' . ($pages[$i]['right_id'] + $diff) . ' WHERE id = \'' . $pages[$i]['id'] . '\'', 0);
 						if ($bool == null)

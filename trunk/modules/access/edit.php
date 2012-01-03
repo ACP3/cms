@@ -28,10 +28,13 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
+			require_once MODULES_DIR . 'access/functions.php';
+
 			$update_values = array(
 				'name' => $db->escape($form['name']),
+				'parent_id' => $uri->id == 1 ? 0 : $form['parent'],
 			);
-			$bool = $db->update('acl_roles', $update_values, 'id = \'' . $uri->id . '\'');
+			$bool = aclEditNode($uri->id, $uri->id == 1 ? '' : $form['parent'], $update_values);
 
 			$db->link->beginTransaction();
 			// Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugkommen sein könnten
@@ -41,7 +44,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 			}
 			$db->link->commit();
 
-			// Cache der ACl zurücksetzen
+			// Cache der ACL zurücksetzen
 			cache::purge(0, 0, 'acl');
 
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/access'));
@@ -63,7 +66,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 					$roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
 				}
 			}
-			$tpl->assign('roles', $roles);
+			$tpl->assign('parent', $roles);
 		}
 
 		$role_privileges = $acl->getRolePrivileges(array($uri->id));

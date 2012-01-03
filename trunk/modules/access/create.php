@@ -17,7 +17,7 @@ if (isset($_POST['form'])) {
 
 	if (empty($form['name']))
 		$errors[] = $lang->t('common', 'name_to_short');
-	if (!empty($form['name']) && $db->countRows('*', 'roles', 'name = \'' . $db->escape($form['name']) . '\'') == '1')
+	if (!empty($form['name']) && $db->countRows('*', 'acl_roles', 'name = \'' . $db->escape($form['name']) . '\'') == '1')
 		$errors[] = $lang->t('access', 'role_already_exists');
 	if (empty($form['privileges']) || !is_array($form['privileges']))
 		$errors[] = $lang->t('access', 'no_privilege_selected');
@@ -27,14 +27,17 @@ if (isset($_POST['form'])) {
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
+		require_once MODULES_DIR . 'access/functions.php';
+
 		$db->link->beginTransaction();
 
 		$insert_values = array(
 			'id' => '',
 			'name' => $db->escape($form['name']),
+			'parent_id' => $form['parent'],
 		);
 
-		$bool = $db->insert('roles', $insert_values);
+		$bool = aclInsertNode($form['parent'], $insert_values);
 		$role_id = $db->link->lastInsertId();
 
 		foreach ($form['privileges'] as $id => $value) {
@@ -42,6 +45,8 @@ if (isset($_POST['form'])) {
 		}
 
 		$db->link->commit();
+
+		$acl->setRolesCache();
 
 		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/access'));
 	}
@@ -55,7 +60,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$roles[$i]['selected'] = selectEntry('roles', $roles[$i]['id'], !empty($parent[0]['id']) ? $parent[0]['id'] : 0);
 		$roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
 	}
-	$tpl->assign('roles', $roles);
+	$tpl->assign('parent', $roles);
 
 	$privileges = $acl->getAllPrivileges();
 	$c_privileges = count($privileges);

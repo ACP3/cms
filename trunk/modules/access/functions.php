@@ -11,36 +11,6 @@ if (defined('IN_ADM') === false)
 	exit();
 
 /**
- * Baut den String des zu erstellenden /
- * verändernden Zugriffslevels zusammen
- *
- * @param array $modules
- * @return string
- */
-function buildAccessLevel($modules)
-{
-	if (!empty($modules) && is_array($modules)) {
-		$modules['errors'] = array('read' => 1, 'create' => 2, 'edit' => 4, 'delete' => 8, 'full' => 16);
-		ksort($modules);
-		$access_level = '';
-
-		foreach ($modules as $mod => $levels) {
-			if (isset($levels['full'])) {
-				$level = 16;
-			} else {
-				$level = 0;
-				$level+= isset($levels['read']) ? 1 : 0;
-				$level+= isset($levels['create']) ? 2 : 0;
-				$level+= isset($levels['edit']) ? 4 : 0;
-				$level+= isset($levels['delete']) ? 8 : 0;
-			}
-			$access_level.= $mod . ':' . $level . ',';
-		}
-		return substr($access_level, 0, -1);
-	}
-	return '';
-}
-/**
  * Löscht einen Knoten und verschiebt seine Kinder eine Ebene nach oben
  *
  * @param integer $id
@@ -68,4 +38,108 @@ function aclDeleteNode($id)
 		}
 	}
 	return false;
+}
+/**
+ * Sorgt dafür, das ein Knoten in einen anderen Block verschoben werden kann
+ *
+ * @param integer $id
+ *	ID des zu verschiebenden Knotens
+ * @param integer $parent
+ *	ID des neuen Elternelements
+ * @param array $update_values
+ *
+ * @return
+ */
+function aclEditNode($id, $parent, array $update_values)
+{
+	global $db;
+
+	if (validate::isNumber($id) && (validate::isNumber($parent) || $parent == '')) {
+		// Die aktuelle Seite mit allen untergeordneten Seiten selektieren
+		$roles = $db->query('SELECT c.id, c.left_id, c.right_id FROM {pre}acl_roles AS p, {pre}acl_roles AS c WHERE p.id = \'' . $id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
+
+		// Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
+		if (empty($parent) && $db->countRows('*', 'acl_roles', 'left_id < ' . $roles[0]['left_id'] . ' AND right_id > ' . $roles[0]['right_id']) == 0) {
+			$bool = $db->update('acl_roles', $update_values, 'id = \'' . $id . '\'');
+		} else {
+			// Überprüfung, falls Seite kein Root-Element ist, aber keine Veränderung vorgenommen werden soll...
+			$chk_parent = $db->query('SELECT p.id FROM {pre}acl_roles p, {pre}acl_roles c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $id . ' ORDER BY p.left_id DESC LIMIT 2');
+			if (isset($chk_parent[1]) && $chk_parent[1]['id'] == $parent) {
+				$bool = $db->update('acl_roles', $update_values, 'id = \'' . $id . '\'');
+			// ...ansonsten den Baum bearbeiten...
+			} else {
+				$bool = null;
+				// Differenz zwischen linken und rechten Wert bilden
+				$page_diff = $roles[0]['right_id'] - $roles[0]['left_id'] + 1;
+
+				// Neues Elternelement
+				$new_parent = $db->select('left_id, right_id', 'acl_roles', 'id = \'' . $parent . '\'');
+
+				// Rekursion verhindern
+				if (!empty($new_parent) && $new_parent[0]['left_id'] < $roles[0]['left_id'] && $new_parent[0]['right_id'] > $roles[0]['right_id']) {
+					$bool = null;
+				} else {
+					if (empty($new_parent)) {
+						$new_parent = $db->select('MAX(right_id) AS right_id', 'acl_roles', 'block_id =  \'' . $roles[0]['block_id'] . '\'');
+
+						$diff = $new_parent[0]['right_id'] - $roles[0]['right_id'];
+
+						$db->link->beginTransaction();
+						$db->query('UPDATE {pre}acl_roles SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $roles[0]['left_id'] . ' AND right_id > ' . $roles[0]['right_id'], 0);
+						$db->query('UPDATE {pre}acl_roles SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $roles[0]['right_id'] . ' AND block_id = \'' . $roles[0]['block_id'] . '\'', 0);
+					} else {
+						// Teilbaum nach unten...
+						if ($new_parent[0]['left_id'] > $roles[0]['left_id']) {
+							$new_parent[0]['left_id'] = $new_parent[0]['left_id'] - $page_diff;
+							$new_parent[0]['right_id'] = $new_parent[0]['right_id'] - $page_diff;
+						}
+
+						$diff = $new_parent[0]['left_id'] - $roles[0]['left_id'] + 1;
+
+						$db->link->beginTransaction();
+						$db->query('UPDATE {pre}acl_roles SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $roles[0]['left_id'] . ' AND right_id > ' . $roles[0]['right_id'], 0);
+						$db->query('UPDATE {pre}acl_roles SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $roles[0]['right_id'], 0);
+						$db->query('UPDATE {pre}acl_roles SET right_id = right_id + ' . $page_diff . ' WHERE left_id <= ' . $new_parent[0]['left_id'] . ' AND right_id >= ' . $new_parent[0]['right_id'], 0);
+						$db->query('UPDATE {pre}acl_roles SET left_id = left_id + ' . $page_diff . ', right_id = right_id + ' . $page_diff . ' WHERE left_id > ' . $new_parent[0]['left_id'], 0);
+					}
+
+					// Einträge aktualisieren
+					$c_roles = count($roles);
+					for ($i = 0; $i < $c_roles; ++$i) {
+						$bool = $db->query('UPDATE {pre}acl_roles SET left_id = ' . ($roles[$i]['left_id'] + $diff) . ', right_id = ' . ($roles[$i]['right_id'] + $diff) . ' WHERE id = \'' . $roles[$i]['id'] . '\'', 0);
+						if ($bool == null)
+							break;
+					}
+					$db->update('acl_roles', $update_values, 'id = \'' . $id . '\'');
+					$db->link->commit();
+				}
+			}
+		}
+		return $bool;
+	}
+	return false;
+}
+/**
+ * Erstellt einen neuen Knoten
+ *
+ * @param integer $parent
+ * @param array $insert_values
+ *
+ * @return boolean
+ */
+function aclInsertNode($parent, array $insert_values)
+{
+	if (validate::isNumber($parent)) {
+		global $db;
+
+		$node = $db->select('left_id, right_id', 'acl_roles', 'id = \'' . $parent . '\'');
+
+		$db->query('UPDATE {pre}acl_roles SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id > ' . $node[0]['right_id'], 0);
+		$db->query('UPDATE {pre}acl_roles SET right_id = right_id + 2 WHERE left_id <= ' . $node[0]['left_id'] . ' AND right_id - left_id > 1', 0);
+
+		$insert_values['left_id'] = $node[0]['right_id'];
+		$insert_values['right_id'] = $node[0]['right_id'] + 1;
+
+		return $db->insert('acl_roles', $insert_values);
+	}
 }
