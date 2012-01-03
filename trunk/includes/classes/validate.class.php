@@ -20,7 +20,29 @@ if (defined('IN_ACP3') === false)
 class validate
 {
 	/**
-	 * Überprüft, ob die Selektierten Rollen überhaupt existieren
+	 * Überprüft, ob die bergebenen Privilegien überhaupt existieren
+	 * und plausible Werte enthalten
+	 * 
+	 * @param array $privileges
+	 * @return boolean 
+	 */
+	public static function aclPrivilegesExist(array $privileges)
+	{
+		global $acl;
+
+		$all_privs = $acl->getAllPrivileges();
+		$c_all_privs = count($all_privs);
+		for ($i = 0; $i < $c_all_privs; ++$i) {
+			$valid = false;
+			foreach ($privileges as $id => $value) {
+				if ($id == $all_privs[$i]['id'] && $value >= 0 && $value <= 2)
+					$valid = true;
+			}
+		}
+		return $valid;
+	}
+	/**
+	 * Überprüft, ob die selektierten Rollen überhaupt existieren
 	 *
 	 * @param array $roles Die zu überprüfenden Rollen
 	 * @return boolean
