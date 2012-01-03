@@ -39,7 +39,7 @@ if (!isset($entries)) {
 	cache::purge(0, 0, 'acl');
 
 	if ($level_undeletable === true) {
-		$text = $lang->t('access', 'access_level_undeletable');
+		$text = $lang->t('access', 'role_undeletable');
 	} else {
 		$text = $bool !== null && $bool2 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
 	}

@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="access">Zugriffslevel</item>
-	<item key="access_level_already_exists">Es existiert bereits ein Zugriffslevel mit diesem Namen</item>
-	<item key="access_level_selection_tip">Bitte wählen Sie aus der untenstehenden Liste aus, welche Aktionen Benutzer im jeweiligen Modul ausführen können sollen.</item>
-	<item key="access_level_undeletable">Die Zugriffslevel für Administratoren, Benutzer und Besucher können nicht gelöscht werden.</item>
-	<item key="access_to_following_modules">Zugriff auf die Module</item>
-	<item key="can_create">Erstellen</item>
-	<item key="can_delete">Löschen</item>
-	<item key="can_edit">Bearbeiten</item>
-	<item key="can_read">Lesen</item>
-	<item key="create">Neuen Zugriffslevel erstellen</item>
-	<item key="delete">Zugriffslevel löschen</item>
-	<item key="edit">Zugriffslevel bearbeiten</item>
-	<item key="full_access">Vollzugriff</item>
-	<item key="mod_description">Mit diesem Modul können verschiedene Zugriffslevel für die Benutzer angelegt werden.</item>
-	<item key="no_privilege_selected">Bitte setzen Sie die Berechtiungen für die einzelnen Aktionen, die ein Benutzer ausführen darf.</item>
-	<item key="no_superior_role">Keine übergeordnete Rolle</item>
+	<item key="access">Berechtigungen</item>
+	<item key="allow_access">Zugriff erlauben</item>
+	<item key="permissions">Berechtigungen</item>
+	<item key="role_already_exists">Es existiert bereits ein Rolle mit diesem Namen.</item>
+	<item key="role_undeletable">Die Rollen für Gäste, Benutzer und Administratoren können nicht gelöscht werden!</item>
+	<item key="calculated_permission">Errechnete Berechtigung: %s</item>
+	<item key="create">Neue Rolle erstellen</item>
+	<item key="delete">Rolle löschen</item>
+	<item key="deny_access">Zugriff verbieten</item>
+	<item key="edit">Rolle bearbeiten</item>
+	<item key="inherit_access">Zugriff erben</item>
+	<item key="invalid_privileges">Die übergebenen Berechtigungen enthalten nicht erlaubte Werte.</item>
+	<item key="mod_description">Mit diesem Modul können Berechtigungen für die Benutzer festgelegt werden.</item>
+	<item key="no_privilege_selected">Bitte setzen Sie die Berechtigungen für die einzelnen Aktionen, die ein Benutzer ausführen darf.</item>
 	<item key="roles">Zugeordnete Rollen</item>
 	<item key="superior_role">Übergeordnete Rolle</item>
 </language>

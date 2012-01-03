@@ -17,21 +17,31 @@ if (isset($_POST['form'])) {
 
 	if (empty($form['name']))
 		$errors[] = $lang->t('common', 'name_to_short');
-	if (!empty($form['name']) && $db->countRows('*', 'access', 'name = \'' . $db->escape($form['name']) . '\'') == '1')
-		$errors[] = $lang->t('access', 'access_level_already_exists');
-	if (empty($form['modules']))
-		$errors[] = $lang->t('access', 'no_module_selected');
+	if (!empty($form['name']) && $db->countRows('*', 'roles', 'name = \'' . $db->escape($form['name']) . '\'') == '1')
+		$errors[] = $lang->t('access', 'role_already_exists');
+	if (empty($form['privileges']) || !is_array($form['privileges']))
+		$errors[] = $lang->t('access', 'no_privilege_selected');
+	if (!empty($form['privileges']) && !validate::aclPrivilegesExist($form['privileges']))
+		$errors[] = $lang->t('access', 'invalid_privileges');
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
+		$db->link->beginTransaction();
+
 		$insert_values = array(
 			'id' => '',
 			'name' => $db->escape($form['name']),
-			'modules' => buildAccessLevel($form['modules']),
 		);
 
-		$bool = $db->insert('access', $insert_values);
+		$bool = $db->insert('roles', $insert_values);
+		$role_id = $db->link->lastInsertId();
+
+		foreach ($form['privileges'] as $id => $value) {
+			$db->insert('acl_role_privileges', array('id' => '', 'role_id' => $role_id, 'privilege_id' => $id, 'value' => $value));
+		}
+
+		$db->link->commit();
 
 		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/access'));
 	}
@@ -39,21 +49,30 @@ if (isset($_POST['form'])) {
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : array('name' => ''));
 
-	$mod_list = modules::modulesList();
-
-	foreach ($mod_list as $name => $info) {
-		if ($info['dir'] == 'errors' || !$info['active']) {
-			unset($mod_list[$name]);
-		} else {
-			$dir = $info['dir'];
-			$mod_list[$name]['read_checked'] = isset($form['modules'][$dir]['read']) ? ' checked="checked"' : '';
-			$mod_list[$name]['create_checked'] = isset($form['modules'][$dir]['create']) ? ' checked="checked"' : '';
-			$mod_list[$name]['edit_checked'] = isset($form['modules'][$dir]['edit']) ? ' checked="checked"' : '';
-			$mod_list[$name]['delete_checked'] = isset($form['modules'][$dir]['delete']) ? ' checked="checked"' : '';
-			$mod_list[$name]['full_checked'] = isset($form['modules'][$dir]['full']) ? ' checked="checked"' : '';
-		}
+	$roles = $acl->getAllRoles();
+	$c_roles = count($roles);
+	for ($i = 0; $i < $c_roles; ++$i) {
+		$roles[$i]['selected'] = selectEntry('roles', $roles[$i]['id'], !empty($parent[0]['id']) ? $parent[0]['id'] : 0);
+		$roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
 	}
-	$tpl->assign('mod_list', $mod_list, true);
+	$tpl->assign('roles', $roles);
+
+	$privileges = $acl->getAllPrivileges();
+	$c_privileges = count($privileges);
+	for ($i = 0; $i < $c_privileges; ++$i) {
+		$select[0]['value'] = 0;
+		$select[0]['checked'] = isset($form) && $form['privileges'][$privileges[$i]['id']] == 0 ? ' checked="checked"' : '';
+		$select[0]['lang'] = $lang->t('access', 'deny_access');
+		$select[1]['value'] = 1;
+		$select[1]['checked'] = isset($form) && $form['privileges'][$privileges[$i]['id']] == 1 ? ' checked="checked"' : '';
+		$select[1]['lang'] = $lang->t('access', 'allow_access');
+		$select[2]['value'] = 2;
+		$select[2]['checked'] = !isset($form) || isset($form) && $form['privileges'][$privileges[$i]['id']] == 2 ? ' checked="checked"' : '';
+		$select[2]['lang'] = $lang->t('access', 'inherit_access');
+		$privileges[$i]['select'] = $select;
+		$privileges[$i]['name'] = empty($privileges[$i]['name']) ? $privileges[$i]['key'] : $privileges[$i]['name'];
+	}
+	$tpl->assign('privileges', $privileges);
 
 	$content = modules::fetchTemplate('access/create.html');
 }

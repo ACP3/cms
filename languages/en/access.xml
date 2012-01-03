@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
 	<item key="access">Access levels</item>
-	<item key="access_level_already_exists">There is already an access level with the same name</item>
-	<item key="access_level_selection_tip">Please select from the below standing list, which actions an user is allowed to do with a certain module.</item>
-	<item key="access_level_undeletable">It\'s impossible to delete the administrator and guest access levels.</item>
-	<item key="access_to_following_modules">Access to modules</item>
-	<item key="can_create">Create</item>
-	<item key="can_delete">Delete</item>
-	<item key="can_edit">Edit</item>
-	<item key="can_read">Read</item>
-	<item key="create">Create a new access level</item>
-	<item key="delete">Delete access levels</item>
-	<item key="edit">Edit access level</item>
-	<item key="full_access">Full access</item>
-	<item key="mod_description">With this module you can create different access levels for users.</item>
+	<item key="allow_access">Allow</item>
+	<item key="permissions">Permissions</item>
+	<item key="role_already_exists">There is already an role with the same name</item>
+	<item key="role_undeletable">It\'s impossible to delete the guest, user and administrator roles!</item>
+	<item key="calculated_permission">Calculated permission: %s</item>
+	<item key="create">Create a new role</item>
+	<item key="delete">Delete roles</item>
+	<item key="deny_access">Deny</item>
+	<item key="edit">Edit role</item>
+	<item key="inherit_access">Inherit</item>
+	<item key="invalid_privileges">The submitted permissions contain unallowed values.</item>
+	<item key="mod_description">With this module you can set permissions for the users.</item>
 	<item key="no_privilege_selected">Please select the privileges, to which the user should have access</item>
-	<item key="no_superior_role">No superior role</item>
 	<item key="roles">Assigned roles</item>
 	<item key="superior_role">Superior role</item>
 </language>

@@ -164,12 +164,11 @@ class acl
 		$privileges = array();
 		for ($i = 0; $i < $c_role_privs; ++$i) {
 			$key = strtolower($role_privs[$i]['key']);
-			if ($role_privs[$i]['value'] == 2)
-				$role_privs[$i]['value'] = $this->getRolePrivilegeValue($key, $role_privs[$i]['role_id']);
 			$privileges[$key] = array(
 				'id' => $role_privs[$i]['privilege_id'],
 				'name' => $db->escape($role_privs[$i]['name'], 3),
-				'value' => $role_privs[$i]['value'] == 1 ? true : false,
+				'value' => $role_privs[$i]['value'],
+				'access' => $role_privs[$i]['value'] == 1 || ($role_privs[$i]['value'] == 2 && $this->getRolePrivilegeValue($key, $role_privs[$i]['role_id']) == 1) ? true : false,
 			);
 		}
 
@@ -194,17 +193,13 @@ class acl
 	{
 		global $db;
 
-		$privileges = $db->select('id, key, name', 'acl_privileges', 0, 'key ASC');
+		$privileges = $db->select('id, `key`, name', 'acl_privileges', 0, '`key` ASC');
 		$c_privileges = count($privileges);
-		$return = array();
 
 		for ($i = 0; $i < $c_privileges; ++$i) {
-			$return[$privileges[$i]['key']] = array(
-				'id' => $privileges[$i]['id'],
-				'name' => $db->escape($privileges[$i]['name'], 3),
-			);
+			$privileges[$i]['name'] = $db->escape($privileges[$i]['name'], 3);
 		}
-		return $return;
+		return $privileges;
 	}
 	/**
 	 *
@@ -250,7 +245,7 @@ class acl
 	{
 		$key = strtolower($key);
 		if (isset($this->privileges[$key]))
-			return $this->privileges[$key]['value'] === true ? true : false;
+			return $this->privileges[$key]['access'];
 		return false;
 	}
 	/**
