@@ -226,6 +226,10 @@ $queries = array(
 	),
 	8 => array(
 		0 => 'DELETE FROM {pre}acl_resources WHERE path = "system/server_config/"',
+	),
+	9 => array(
+		0 => 'ALTER TABLE `{pre}acl_roles` ADD `parent_id` INT(10) NOT NULL AFTER `name`;',
+		1 => 'ALTER TABLE `{pre}menu_items` ADD `parent_id` INT(10) NOT NULL AFTER `root_id`;',
 	)
 );
 
@@ -333,6 +337,19 @@ if (CONFIG_DB_VERSION < 5) {
 		if ($row != '.' && $row != '..' && is_file(MODULES_DIR . '/' . $row . '/module.xml')) {
 			$db->insert('modules', array('name' => $row, 'active' => 1));
 		}
+	}
+}
+if (CONFIG_DB_VERSION < 9) {
+	$roles = $db->select('id, left_id, right_id', 'acl_roles');
+	foreach ($roles as $row) {
+		$parent = $db->select('id', 'acl_roles', 'left_id < ' . $row['left_id'] . ' AND right_id > ' . $row['right_id'], 'left_id DESC', 1);
+		$db->update('acl_roles', array('parent_id' => !empty($parent) ? $parent[0]['id'] : 0), 'id = \'' . $row['id'] . '\'');
+	}
+
+	$pages = $db->select('id, left_id, right_id', 'menu_items');
+	foreach ($pages as $row) {
+		$parent = $db->select('id', 'menu_items', 'left_id < ' . $row['left_id'] . ' AND right_id > ' . $row['right_id'], 'left_id DESC', 1);
+		$db->update('menu_items', array('parent_id' => !empty($parent) ? $parent[0]['id'] : 0), 'id = \'' . $row['id'] . '\'');
 	}
 }
 

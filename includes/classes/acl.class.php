@@ -109,38 +109,28 @@ class acl
 	{
 		global $db;
 
-		$roles = $db->query('SELECT n.id, n.name, n.left_id, n.right_id, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM {pre}acl_roles AS p, {pre}acl_roles AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
+		$roles = $db->query('SELECT n.id, n.name, n.parent_id, n.left_id, n.right_id, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM {pre}acl_roles AS p, {pre}acl_roles AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
 		$c_roles = count($roles);
 
 		for ($i = 0; $i < $c_roles; ++$i) {
 			$roles[$i]['name'] = $db->escape($roles[$i]['name'], 3);
 
-			// Bestimmen, ob die Seite die Erste und/oder Letzte eines Blocks/Knotens ist
-			$first = $last = false;
-			if ($i == 0 ||
-				isset($roles[$i - 1]) &&
-				($roles[$i - 1]['level'] < $roles[$i]['level'] ||
-				$roles[$i]['level'] < $roles[$i - 1]['level'] ||
-				$roles[$i]['level'] == $roles[$i - 1]['level']))
-				$first = true;
-			if ($i == $c_roles - 1 ||
-				isset($roles[$i + 1]) &&
-				($roles[$i]['level'] == 0 && $roles[$i + 1]['level'] == 0 ||
-				$roles[$i]['level'] > $roles[$i + 1]['level']))
-				$last = true;
-
-			// Checken, ob für das aktuelle Element noch Nachfolger existieren
-			if (!$last) {
-				for ($j = $i + 1; $j < $c_roles; ++$j) {
-					if ($roles[$i]['level'] == $roles[$j]['level']) {
-						$found = true;
+			// Bestimmen, ob die Seite die Erste und/oder Letzte eines Knotens ist
+			$first = $last = true;
+			if ($i > 0) {
+				for ($j = $i - 1; $j >= 0; --$j) {
+					if ($roles[$j]['parent_id'] == $roles[$i]['parent_id']) {
+						$first = false;
 						break;
 					}
 				}
-				if (!isset($found))
-					$last = true;
-				else
-					unset($found);
+			}
+			
+			for ($j = $i + 1; $j < $c_roles; ++$j) {
+				if ($roles[$i]['parent_id'] == $roles[$j]['parent_id']) {
+					$last = false;
+					break;
+				}
 			}
 
 			$roles[$i]['first'] = $first;

@@ -17,6 +17,7 @@ CREATE TABLE`{pre}acl_resources` (
 CREATE TABLE`{pre}acl_roles` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
+  `parent_id` int(10) unsigned NOT NULL,
   `left_id` int(10) unsigned NOT NULL,
   `right_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
@@ -410,6 +411,6 @@ INSERT INTO `{pre}acl_resources` (`id`, `path`, `privilege_id`) VALUES
 (143, 'files/extensions/search/', 1),
 (144, 'static_pages/extensions/search/', 1);
 (145, 'access/order/', 5);
-INSERT INTO `{pre}acl_roles` (`id`, `name`, `left_id`, `right_id`) VALUES (1, 'Gast', 1, 8), (2, 'Mitglied', 2, 7), (3, 'Autor', 3, 6), (4, 'Administrator', 4, 5);
+INSERT INTO `{pre}acl_roles` (`id`, `name`, `parent_id`, `left_id`, `right_id`) VALUES (1, 'Gast', 0, 1, 8), (2, 'Mitglied', 1, 2, 7), (3, 'Autor', 2, 3, 6), (4, 'Administrator', 3, 4, 5);
 INSERT INTO `{pre}acl_role_privileges` (`id`, `role_id`, `privilege_id`, `value`) VALUES (1, 1, 1, 1), (2, 1, 2, 1), (3, 1, 3, 0), (4, 1, 4, 0), (5, 1, 5, 0), (6, 1, 6, 0), (7, 1, 7, 0), (8, 2, 1, 2), (9, 2, 2, 2), (10, 2, 3, 2), (11, 2, 4, 2), (12, 2, 5, 2), (13, 2, 6, 2), (14, 2, 7, 2), (15, 3, 1, 2), (16, 3, 2, 2), (17, 3, 3, 1), (18, 3, 4, 1), (19, 3, 5, 1), (20, 3, 6, 1), (21, 3, 7, 2), (22, 4, 1, 2), (23, 4, 2, 2), (24, 4, 3, 2), (25, 4, 4, 2), (26, 4, 5, 2), (27, 4, 6, 2), (28, 4, 7, 1);
 INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (0, 1), (1, 4);
