@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 			'db_pre' => $form['db_pre'],
 			'db_password' => $form['db_password'],
 			'db_user' => $form['db_user'],
-			'db_version' => 9,
+			'db_version' => 10,
 			'design' => 'acp3',
 			'entries' => $form['entries'],
 			'flood' => $form['flood'],
@@ -70,6 +70,7 @@ if (isset($_POST['submit'])) {
 		// Daten in die config.php schreiben und diese laden
 		writeConfigFile($config);
 
+		$db = new db();
 		$db->connect($form['db_host'], $form['db_name'], $form['db_user'], $form['db_password'], $form['db_pre']);
 
 		$sql_file = file_get_contents(ACP3_ROOT . 'installation/modules/install.sql');
@@ -84,7 +85,7 @@ if (isset($_POST['submit'])) {
 		$other_arr = array(
 			1 => 'INSERT INTO `{pre}users` VALUES (\'\', \'' . $db->escape($form['user_name']) . '\', \'' . genSaltedPassword($salt, $form['user_pwd']) . ':' . $salt . '\', \'0\', \':1\', \'1:1\', \':1\', \'1\', \'' . $form['mail'] . ':1\', \':1\', \':1\', \':1\', \':1\', \'' . $db->escape($form['date_format_long']) . '\', \'' . $db->escape($form['date_format_short']) . '\', \'' . $form['date_time_zone'] . '\', \'' . $form['date_dst'] .'\', \'' . LANG . '\', \'' . $form['entries'] . '\', \'\')',
 			2 => 'INSERT INTO `{pre}news` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', \'' . $lang->t('installation', 'news_headline') . '\', \'' . $lang->t('installation', 'news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\', \'\')',
-			3 => 'INSERT INTO `{pre}menu_items` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 1, 1, 2, 1, \'' . $lang->t('installation', 'pages_news') . '\', \'news\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 2, 3, 4, 1, \'' . $lang->t('installation', 'pages_files') . '\', \'files\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 3, 5, 6, 1, \'' . $lang->t('installation', 'pages_gallery') . '\', \'gallery\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 4, 7, 8, 1, \'' . $lang->t('installation', 'pages_guestbook') . '\', \'guestbook\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 5, 9, 10, 1, \'' . $lang->t('installation', 'pages_polls') . '\', \'polls\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 6, 11, 12, 1, \'' . $lang->t('installation', 'pages_search') . '\', \'search\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 2, 7, 13, 14, 1, \'' . $lang->t('installation', 'pages_contact') . '\', \'contact\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 2, 8, 15, 16, 1, \'' . $lang->t('installation', 'pages_imprint') . '\', \'contact/imprint/\', 1)',
+			3 => 'INSERT INTO `{pre}menu_items` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 1, 0, 1, 2, 1, \'' . $lang->t('installation', 'pages_news') . '\', \'news\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 2, 0, 3, 4, 1, \'' . $lang->t('installation', 'pages_files') . '\', \'files\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 3, 0, 5, 6, 1, \'' . $lang->t('installation', 'pages_gallery') . '\', \'gallery\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 4, 0, 7, 8, 1, \'' . $lang->t('installation', 'pages_guestbook') . '\', \'guestbook\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 5, 0, 9, 10, 1, \'' . $lang->t('installation', 'pages_polls') . '\', \'polls\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 1, 6, 0, 11, 12, 1, \'' . $lang->t('installation', 'pages_search') . '\', \'search\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 1, 2, 7, 0, 13, 14, 1, \'' . $lang->t('installation', 'pages_contact') . '\', \'contact\', 1), (\'\', \'' . $current_date . '\', \'' . $current_date . '\', 2, 2, 8, 0, 15, 16, 1, \'' . $lang->t('installation', 'pages_imprint') . '\', \'contact/imprint/\', 1)',
 			4 => 'INSERT INTO `{pre}menu_items_blocks` (`id`, `index_name`, `title`) VALUES (1, \'main\', \'' . $lang->t('installation', 'pages_main') . '\'), (2, \'sidebar\', \'' . $lang->t('installation', 'pages_sidebar') . '\')',
 			5 => 'INSERT INTO `{pre}seo` VALUES (\'news/details/id_1/\', \'' . $lang->t('installation', 'news_headline_alias') . '\', \'\', \'\')',
 			6 => 'INSERT INTO `{pre}seo` VALUES (\'contact/imprint/\', \'' . $lang->t('installation', 'pages_imprint_alias') . '\', \'\', \'\')',
@@ -108,6 +109,59 @@ if (isset($_POST['submit'])) {
 			}
 		}
 		$tpl->assign('sql_queries', $data);
+
+		// Moduldaten in die ACL schreiben
+		$modules = scandir(MODULES_DIR);
+		foreach ($modules as $row) {
+			if ($row !== '.' && $row !== '..' && is_dir(MODULES_DIR . $row . '/')) {
+				$module = scandir(MODULES_DIR . $row . '/');
+				$mod_id = $db->select('id', 'modules', 'name = \'' . $row . '\'');
+				if (is_file(MODULES_DIR . $row . '/extensions/search.php'))
+					$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id[0]['id'], 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
+				if (is_file(MODULES_DIR . $row . '/extensions/feeds.php'))
+					$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id[0]['id'], 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
+
+				foreach ($module as $file) {
+					if ($file !== '.' && $file !== '..' && is_file(MODULES_DIR . $row . '/' . $file) && strpos($file, '.php') !== false) {
+						$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id[0]['id'], 'page' => substr($file, 0, -4), 'params' => '', 'privilege_id' => 1));
+					}
+				}
+			}
+		}
+
+		$special_mods = $db->select('id', 'modules', 'name = "comments" OR name = "guestbook" OR name = "newsletter"');
+		$where = '';
+		foreach ($special_mods as $row) {
+			$where.= ' AND module_id != ' . $row['id'];
+		}
+
+		$db->update('acl_resources', array('privilege_id' => 3), '`page` LIKE "adm_list%"');
+		$db->update('acl_resources', array('privilege_id' => 4), '(`page` LIKE "create%" OR `page` LIKE "order%")' . $where);
+		$db->update('acl_resources', array('privilege_id' => 5), '`page` LIKE "edit%"');
+		$db->update('acl_resources', array('privilege_id' => 6), '`page` LIKE "delete%"');
+		$db->update('acl_resources', array('privilege_id' => 7), '`page` LIKE "settings%"');
+
+		$roles = $db->select('id', 'acl_roles');
+		$modules = $db->select('id', 'modules');
+		$privileges = $db->select('id', 'acl_privileges');
+
+		foreach ($roles as $role) {
+			foreach ($modules as $module) {
+				foreach ($privileges as $privilege) {
+					$permission = 0;
+					if ($role['id'] == 1 && $privilege['id'] == 1)
+						$permission = 1;
+					if ($role['id'] > 1 && $role['id'] < 4)
+						$permission = 2;
+					if ($role['id'] == 3 && $privilege['id'] == 3)
+						$permission = 1;
+					if ($role['id'] == 4)
+						$permission = 1;
+
+					$db->insert('acl_rules', array('id' => '', 'role_id' => $role['id'], 'module_id' => $module['id'], 'privilege_id' => $privilege['id'], 'permission' => $permission));
+				}
+			}
+		}
 
 		// Modulkonfigurationsdateien schreiben
 		config::module('contact', array('mail' => $form['mail'], 'disclaimer' => $lang->t('installation', 'disclaimer')));

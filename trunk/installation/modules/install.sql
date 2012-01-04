@@ -1,17 +1,18 @@
 CREATE TABLE `{pre}acl_privileges` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(100) NOT NULL,
-  `name` varchar(100) NOT NULL,
+  `description` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `key` (`key`)
 ) {engine};
 
 CREATE TABLE`{pre}acl_resources` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `path` varchar(255) NOT NULL,
+  `module_id` int(10) unsigned NOT NULL,
+  `page` varchar(255) NOT NULL,
+  `params` varchar(255) NOT NULL,
   `privilege_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `path` (`path`)
+  PRIMARY KEY (`id`)
 ) {engine};
 
 CREATE TABLE`{pre}acl_roles` (
@@ -23,13 +24,14 @@ CREATE TABLE`{pre}acl_roles` (
   PRIMARY KEY (`id`)
 ) {engine};
 
-CREATE TABLE`{pre}acl_role_privileges` (
+CREATE TABLE`{pre}acl_rules` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `role_id` int(10) unsigned NOT NULL,
+  `module_id` int(10) unsigned NOT NULL,
   `privilege_id` int(10) unsigned NOT NULL,
-  `value` tinyint(1) unsigned NOT NULL,
+  `permission` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `role_id` (`role_id`,`privilege_id`)
+  UNIQUE KEY `role_id` (`role_id`,`module_id`,`privilege_id`)
 ) {engine};
 
 CREATE TABLE`{pre}acl_user_roles` (
@@ -120,6 +122,7 @@ CREATE TABLE `{pre}menu_items` (
 	`mode` TINYINT(1) UNSIGNED NOT NULL,
 	`block_id` INT(10) UNSIGNED NOT NULL,
 	`root_id` INT(10) UNSIGNED NOT NULL,
+	`parent_id` INT(10) UNSIGNED NOT NULL,
 	`left_id` INT(10) UNSIGNED NOT NULL,
 	`right_id` INT(10) UNSIGNED NOT NULL,
 	`display` TINYINT(1) UNSIGNED NOT NULL,
@@ -137,9 +140,10 @@ CREATE TABLE `{pre}menu_items_blocks` (
 ) {engine};
 
 CREATE TABLE `{pre}modules` (
+	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 	`name` varchar(100) NOT NULL,
 	`active` tinyint(1) unsigned NOT NULL,
-	PRIMARY KEY (`name`)
+	PRIMARY KEY (`id`)
 ) {engine};
 
 CREATE TABLE `{pre}news` (
@@ -266,151 +270,7 @@ INSERT INTO `{pre}settings` VALUES (28, 'guestbook', 'dateformat', 'long'), (29,
 INSERT INTO `{pre}settings` VALUES (33, 'news', 'comments', '1'), (34, 'news', 'dateformat', 'long'), (35, 'news', 'readmore', '1'), (36, 'news', 'readmore_chars', '350'), (37, 'news', 'sidebar', '5');
 INSERT INTO `{pre}settings` VALUES (38, 'newsletter', 'mail', ''), (39, 'newsletter', 'mailsig', '');
 INSERT INTO `{pre}settings` VALUES (40, 'users', 'language_override', '1'), (41, 'users', 'entries_override', '1');
-INSERT INTO `{pre}modules` (`name`, `active`) VALUES ('access', 1), ('acp', 1), ('captcha', 1), ('categories', 1), ('comments', 1), ('contact', 1), ('emoticons', 1), ('errors', 1), ('feeds', 1), ('files', 1), ('gallery', 1), ('guestbook', 1), ('menu_items', 1), ('news', 1), ('newsletter', 1), ('polls', 1), ('search', 1), ('static_pages', 1), ('system', 1), ('users', 1);
-INSERT INTO `{pre}acl_privileges` (`id`, `key`, `name`) VALUES (1, 'view', ''), (2, 'create', ''), (3, 'admin_view', ''), (4, 'admin_create', ''), (5, 'admin_edit', ''), (6, 'admin_delete', ''), (7, 'admin_settings', '');
-INSERT INTO `{pre}acl_resources` (`id`, `path`, `privilege_id`) VALUES
-(3, 'access/adm_list/', 3),
-(4, 'access/create/', 4),
-(5, 'access/delete/', 6),
-(6, 'access/edit/', 5),
-(7, 'access/functions/', 1),
-(8, 'acp/adm_list/', 3),
-(9, 'captcha/image/', 1),
-(10, 'categories/adm_list/', 3),
-(11, 'categories/create/', 4),
-(12, 'categories/delete/', 6),
-(13, 'categories/edit/', 5),
-(14, 'categories/functions/', 1),
-(15, 'categories/settings/', 7),
-(16, 'comments/adm_list/', 3),
-(17, 'comments/create/', 2),
-(18, 'comments/delete_comments/', 1),
-(19, 'comments/delete_comments_per_module/', 1),
-(20, 'comments/edit/', 5),
-(21, 'comments/functions/', 1),
-(22, 'comments/settings/', 7),
-(23, 'contact/adm_list/', 3),
-(24, 'contact/imprint/', 1),
-(25, 'contact/list/', 1),
-(26, 'emoticons/adm_list/', 3),
-(27, 'emoticons/create/', 4),
-(28, 'emoticons/delete/', 6),
-(29, 'emoticons/edit/', 5),
-(30, 'emoticons/functions/', 1),
-(31, 'emoticons/settings/', 7),
-(32, 'errors/403/', 1),
-(33, 'errors/404/', 1),
-(34, 'feeds/list/', 1),
-(35, 'files/adm_list/', 3),
-(36, 'files/create/', 4),
-(37, 'files/delete/', 6),
-(38, 'files/details/', 1),
-(39, 'files/edit/', 5),
-(40, 'files/files/', 1),
-(41, 'files/functions/', 1),
-(42, 'files/list/', 1),
-(43, 'files/settings/', 7),
-(44, 'files/sidebar/', 1),
-(45, 'gallery/add_picture/', 1),
-(46, 'gallery/adm_list/', 3),
-(47, 'gallery/create/', 4),
-(48, 'gallery/delete_gallery/', 1),
-(49, 'gallery/delete_picture/', 1),
-(50, 'gallery/details/', 1),
-(51, 'gallery/edit_gallery/', 1),
-(52, 'gallery/edit_picture/', 1),
-(53, 'gallery/functions/', 1),
-(54, 'gallery/image/', 1),
-(55, 'gallery/list/', 1),
-(56, 'gallery/order/', 1),
-(57, 'gallery/pics/', 1),
-(58, 'gallery/settings/', 7),
-(59, 'gallery/sidebar/', 1),
-(60, 'guestbook/adm_list/', 3),
-(61, 'guestbook/create/', 4),
-(62, 'guestbook/delete/', 6),
-(63, 'guestbook/edit/', 5),
-(64, 'guestbook/list/', 1),
-(65, 'guestbook/settings/', 7),
-(66, 'menu_items/adm_list/', 3),
-(67, 'menu_items/adm_list_blocks/', 1),
-(68, 'menu_items/create/', 4),
-(69, 'menu_items/create_block/', 1),
-(70, 'menu_items/delete/', 6),
-(71, 'menu_items/delete_blocks/', 1),
-(72, 'menu_items/edit/', 5),
-(73, 'menu_items/edit_block/', 1),
-(74, 'menu_items/functions/', 1),
-(75, 'menu_items/order/', 1),
-(76, 'news/adm_list/', 3),
-(77, 'news/create/', 4),
-(78, 'news/delete/', 6),
-(79, 'news/details/', 1),
-(80, 'news/edit/', 5),
-(81, 'news/functions/', 1),
-(82, 'news/list/', 1),
-(83, 'news/settings/', 7),
-(84, 'news/sidebar/', 1),
-(85, 'newsletter/activate/', 1),
-(86, 'newsletter/adm_activate/', 1),
-(87, 'newsletter/adm_list/', 3),
-(88, 'newsletter/adm_list_archive/', 1),
-(89, 'newsletter/compose/', 1),
-(90, 'newsletter/create/', 4),
-(91, 'newsletter/delete/', 6),
-(92, 'newsletter/delete_archive/', 1),
-(93, 'newsletter/edit_archive/', 1),
-(94, 'newsletter/functions/', 1),
-(95, 'newsletter/send/', 1),
-(96, 'newsletter/settings/', 7),
-(97, 'polls/adm_list/', 3),
-(98, 'polls/create/', 4),
-(99, 'polls/delete/', 6),
-(100, 'polls/edit/', 5),
-(101, 'polls/list/', 1),
-(102, 'polls/result/', 1),
-(103, 'polls/sidebar/', 1),
-(104, 'polls/vote/', 1),
-(105, 'search/list/', 1),
-(106, 'static_pages/adm_list/', 3),
-(107, 'static_pages/create/', 4),
-(108, 'static_pages/delete/', 6),
-(109, 'static_pages/edit/', 5),
-(110, 'static_pages/functions/', 1),
-(111, 'static_pages/list/', 1),
-(112, 'system/adm_list/', 3),
-(113, 'system/configuration/', 1),
-(114, 'system/designs/', 1),
-(115, 'system/extensions/', 1),
-(116, 'system/languages/', 1),
-(117, 'system/maintenance/', 1),
-(118, 'system/modules/', 1),
-(120, 'system/sql_export/', 1),
-(121, 'system/sql_import/', 1),
-(122, 'system/sql_optimisation/', 1),
-(123, 'system/update_check/', 1),
-(124, 'users/adm_list/', 3),
-(125, 'users/create/', 4),
-(126, 'users/delete/', 6),
-(127, 'users/edit/', 5),
-(128, 'users/edit_profile/', 1),
-(129, 'users/edit_settings/', 7),
-(130, 'users/forgot_pwd/', 1),
-(131, 'users/functions/', 1),
-(132, 'users/home/', 1),
-(133, 'users/list/', 1),
-(134, 'users/login/', 1),
-(135, 'users/logout/', 1),
-(136, 'users/register/', 1),
-(137, 'users/settings/', 7),
-(138, 'users/sidebar/', 1),
-(139, 'users/view_profile/', 1),
-(140, 'news/extensions/feeds/', 1),
-(141, 'news/extensions/search/', 1),
-(142, 'files/extensions/feeds/', 1),
-(143, 'files/extensions/search/', 1),
-(144, 'static_pages/extensions/search/', 1);
-(145, 'access/order/', 5);
+INSERT INTO `{pre}modules` (`id`, `name`, `active`) VALUES (1, 'access', 1), (2, 'acp', 1), (3, 'captcha', 1), (4, 'categories', 1), (5, 'comments', 1), (6, 'contact', 1), (7, 'emoticons', 1), (8,'errors', 1), (9, 'feeds', 1), (10, 'files', 1), (11, 'gallery', 1), (12, 'guestbook', 1), (13, 'menu_items', 1), (14, 'news', 1), (15, 'newsletter', 1), (16, 'polls', 1), (17, 'search', 1), (18, 'static_pages', 1), (19, 'system', 1), (20, 'users', 1);
+INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (1, 'view', ''), (2, 'create', ''), (3, 'admin_view', ''), (4, 'admin_create', ''), (5, 'admin_edit', ''), (6, 'admin_delete', ''), (7, 'admin_settings', '');
 INSERT INTO `{pre}acl_roles` (`id`, `name`, `parent_id`, `left_id`, `right_id`) VALUES (1, 'Gast', 0, 1, 8), (2, 'Mitglied', 1, 2, 7), (3, 'Autor', 2, 3, 6), (4, 'Administrator', 3, 4, 5);
-INSERT INTO `{pre}acl_role_privileges` (`id`, `role_id`, `privilege_id`, `value`) VALUES (1, 1, 1, 1), (2, 1, 2, 1), (3, 1, 3, 0), (4, 1, 4, 0), (5, 1, 5, 0), (6, 1, 6, 0), (7, 1, 7, 0), (8, 2, 1, 2), (9, 2, 2, 2), (10, 2, 3, 2), (11, 2, 4, 2), (12, 2, 5, 2), (13, 2, 6, 2), (14, 2, 7, 2), (15, 3, 1, 2), (16, 3, 2, 2), (17, 3, 3, 1), (18, 3, 4, 1), (19, 3, 5, 1), (20, 3, 6, 1), (21, 3, 7, 2), (22, 4, 1, 2), (23, 4, 2, 2), (24, 4, 3, 2), (25, 4, 4, 2), (26, 4, 5, 2), (27, 4, 6, 2), (28, 4, 7, 1);
 INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (0, 1), (1, 4);

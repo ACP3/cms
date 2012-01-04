@@ -35,9 +35,11 @@ class validate
 		$c_all_privs = count($all_privs);
 		for ($i = 0; $i < $c_all_privs; ++$i) {
 			$valid = false;
-			foreach ($privileges as $id => $value) {
-				if ($id == $all_privs[$i]['id'] && $value >= 0 && $value <= 2)
-					$valid = true;
+			foreach ($privileges as $module) {
+				foreach ($module as $priv_id => $value) {
+					if ($priv_id == $all_privs[$i]['id'] && $value >= 0 && $value <= 2)
+						$valid = true;
+				}
 			}
 		}
 		return $valid;
