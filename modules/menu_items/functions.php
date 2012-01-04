@@ -111,11 +111,12 @@ function deleteNode($id)
  * Erstellt einen neuen Knoten
  *
  * @param integer $parent
+ *	ID der übergeordneten Seite
  * @param array $insert_values
  *
  * @return boolean
  */
-function insertNode($parent, $insert_values)
+function insertNode($parent, array $insert_values)
 {
 	global $db;
 
@@ -264,6 +265,8 @@ function editNode($id, $parent, $block_id, array $update_values)
  *
  * @param integer $parent
  *  ID des Elternknotens
+ * @param integer $left_id
+ * @param integer $right_id
  * @return array
  */
 function pagesList($parent = 0, $left = 0, $right = 0) {

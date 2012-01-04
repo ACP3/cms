@@ -24,6 +24,7 @@ class validate
 	 * und plausible Werte enthalten
 	 * 
 	 * @param array $privileges
+	 *	Array mit den IDs der zu überprüfenden Privilegien mit ihren Berechtigungen
 	 * @return boolean 
 	 */
 	public static function aclPrivilegesExist(array $privileges)
@@ -44,7 +45,8 @@ class validate
 	/**
 	 * Überprüft, ob die selektierten Rollen überhaupt existieren
 	 *
-	 * @param array $roles Die zu überprüfenden Rollen
+	 * @param array $roles
+	 *	Die zu überprüfenden Rollen
 	 * @return boolean
 	 */
 	public static function aclRolesExist(array $roles)

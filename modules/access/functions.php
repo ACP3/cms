@@ -1,6 +1,6 @@
 <?php
 /**
- * Access
+ ** Access Control List
  *
  * @author Goratsch Webdesign
  * @package ACP3
@@ -123,6 +123,7 @@ function aclEditNode($id, $parent, array $update_values)
  * Erstellt einen neuen Knoten
  *
  * @param integer $parent
+ *	ID der übergeordneten Rolle
  * @param array $insert_values
  *
  * @return boolean

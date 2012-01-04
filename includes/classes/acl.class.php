@@ -45,7 +45,9 @@ class acl
 	private $resources = array();
 
 	/**
+	 * Konstruktor - erzeugt die ACL für den jeweiligen User
 	 *
+	 * @param integer $user_id
 	 */
 	public function __construct($user_id = 0)
 	{
@@ -57,6 +59,7 @@ class acl
 		$this->privileges = $this->getRolePrivileges($this->userRoles);
 	}
 	/**
+	 * Gibt alle in der Datenbank vorhandenen Ressourcen zurück
 	 *
 	 * @return array
 	 */
@@ -78,8 +81,10 @@ class acl
 		return $return;
 	}
 	/**
-	 *
+	 * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
+	 * 
 	 * @param integer $user_id
+	 *	ID des Benutzers, dessen Rollen ausgegeben werden sollen
 	 * @param integer $mode
 	 *  1 = IDs der Rollen ausgeben
 	 *	2 = Namen der Rollen ausgeben
@@ -102,7 +107,8 @@ class acl
 		return $roles;
 	}
 	/**
-	 *
+	 * Setzt den Cache für alle existierenden Rollen
+	 * 
 	 * @return boolean
 	 */
 	public function setRolesCache()
@@ -140,8 +146,10 @@ class acl
 		return cache::create('acl_all_roles', $roles, 'acl');
 	}
 	/**
+	 * Setzt den Cache für die einzelnen Berechtigungen einer Rolle
 	 *
 	 * @param array $roles
+	 *	Array mit den IDs der zu cachenden Rollen
 	 * @return boolean
 	 */
 	public function setRolePrivilegesCache(array $roles)
@@ -165,6 +173,7 @@ class acl
 		return cache::create('acl_role_privileges_' . implode(',', $roles), $privileges, 'acl');
 	}
 	/**
+	 * Gibt alle existieren Rollen aus
 	 *
 	 * @return array
 	 */
@@ -176,6 +185,7 @@ class acl
 		return cache::output('acl_all_roles', 'acl');
 	}
 	/**
+	 * Gibt alle existierenden Privilegien/Berechtigungen aus
 	 *
 	 * @return array
 	 */
@@ -192,12 +202,15 @@ class acl
 		return $privileges;
 	}
 	/**
+	 * Ermittelt die Berechtigung einer Privilegie von einer übergeordneten Rolle
 	 *
 	 * @param string $key
+	 *	Schlüssel der Privilegie
 	 * @param integer $role_id
+	 *	ID der Rolle, dessen übergeordnete Rolle sucht werden soll
 	 * @return integer
 	 */
-	public function getRolePrivilegeValue($key, $role_id)
+	private function getRolePrivilegeValue($key, $role_id)
 	{
 		global $db;
 
@@ -205,8 +218,10 @@ class acl
 		return isset($value[0]['value']) ? $value[0]['value'] : 0;
 	}
 	/**
+	 * Gibt die Rollen-Berechtigungen aus
 	 *
 	 * @param array $roles
+	 *	Array mit den IDs der Rollen
 	 * @return boolean
 	 */
 	public function getRolePrivileges(array $roles)
@@ -218,8 +233,10 @@ class acl
 		return cache::output($filename, 'acl');
 	}
 	/**
+	 * Gibt aus ob dem Benutzer die jeweilige Rolle zugeordnet ist
 	 *
 	 * @param integer $role_id
+	 *	ID der zu überprüfenden Rolle
 	 * @return boolean
 	 */
 	public function userHasRole($role_id)
@@ -227,8 +244,10 @@ class acl
 		return in_array($role_id, $this->userRoles);
 	}
 	/**
+	 * Gibt aus, ob ein Benutzer die Berechtigung auf eine Privilegie besitzt
 	 *
 	 * @param string $key
+	 *	Der Schlssel der Privilegie
 	 * @return boolean
 	 */
 	public function userHasPrivilege($key)
@@ -239,8 +258,10 @@ class acl
 		return false;
 	}
 	/**
+	 * Gibt aus, ob ein Benutzer berichtigt ist, eine Resource zu betreten
 	 *
 	 * @param string $resource
+	 *	Pfad der Ressource im Stile einer ACP3 internen URI
 	 * @return boolean
 	 */
 	public function canAccessResource($resource)
