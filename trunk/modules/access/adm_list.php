@@ -1,6 +1,6 @@
 <?php
 /**
- * Access
+ ** Access Control List
  *
  * @author Goratsch Webdesign
  * @package ACP3
