@@ -3,7 +3,7 @@
 {/if}
 <script type="text/javascript" src="{$DESIGN_PATH}access/script.js"></script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
-	<div id="tabs">
+	<div id="tabs" style="width:85%">
 		<ul>
 			<li><a href="#tab-1">{lang t="common|general_statements"}</a></li>
 			<li><a href="#tab-2">{lang t="access|permissions"}</a></li>
@@ -25,24 +25,32 @@
 			</dl>
 		</div>
 		<div id="tab-2">
-			<dl>
-{foreach $privileges as $privilege}
-				<dt>
-					<label for="privileges-{$privilege.id}-{$privilege.select.0.value}">{$privilege.name}</label>
-{if isset($privilege.calculated)}
-					<span>({$privilege.calculated})</span>
-{/if}
-				</dt>
-				<dd style="margin:0 0 10px">
+			<table class="acp-table">
+				<thead>
+					<tr>
+						<th>{lang t="access|module_name"}</th>
+{foreach $privileges as $row}
+						<th>{$row.key}</th>
+{/foreach}
+					</tr>
+				</thead>
+				<tbody>
+{foreach $modules as $module}
+					<tr>
+						<td><strong>{$module.name}</strong></td>
+{foreach $module.privileges as $privilege}
+						<td>
+							<select name="form[privileges][{$module.id}][{$privilege.id}]">
 {foreach $privilege.select as $row}
-					<label for="privileges-{$privilege.id}-{$row.value}">
-						<input type="radio" name="form[privileges][{$privilege.id}]" id="privileges-{$privilege.id}-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
-						{$row.lang}
-					</label>
+								<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
-				</dd>
+							</select>
+						</td>
 {/foreach}
-			</dl>
+					</tr>
+{/foreach}
+				</tbody>
+			</table>
 		</div>
 	</div>
 	<div class="form-bottom">

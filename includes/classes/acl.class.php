@@ -56,7 +56,30 @@ class acl
 		$this->userId = $user_id === 0 ? $auth->getUserId() : (int) $user_id;
 		$this->userRoles = $this->getUserRoles();
 		$this->resources = $this->getResources();
-		$this->privileges = $this->getRolePrivileges($this->userRoles);
+		$this->privileges = $this->getRules($this->userRoles);
+	}
+	/**
+	 * Erstellt den Cache für alle existierenden Ressourcen
+	 *
+	 * @return boolean
+	 */
+	public function setResourcesCache()
+	{
+		global $db;
+
+		$resources = $db->query('SELECT r.id AS resource_id, r.module_id, m.name AS module, r.page, r.params, r.privilege_id, p.key FROM {pre}acl_resources AS r JOIN {pre}acl_privileges AS p ON(r.privilege_id = p.id) JOIN {pre}modules AS m ON(r.module_id = m.id) ORDER BY r.module_id ASC, r.page ASC');
+		$c_resources = count($resources);
+		$data = array();
+
+		for ($i = 0; $i < $c_resources; ++$i) {
+			$path = $resources[$i]['module'] . '/' . $resources[$i]['page'] . '/' . (!empty($resources[$i]['params']) ? $resources[$i]['params'] . '/' : '');
+			$data[$path] = array(
+				'resource_id' => $resources[$i]['resource_id'],
+				'privilege_id' => $resources[$i]['privilege_id'],
+				'key' => $resources[$i]['key'],
+			);
+		}
+		return cache::create('acl_resources', $data, 'acl');
 	}
 	/**
 	 * Gibt alle in der Datenbank vorhandenen Ressourcen zurück
@@ -65,20 +88,10 @@ class acl
 	 */
 	public function getResources()
 	{
-		global $db;
+		if (!cache::check('acl_resources', 'acl'))
+			$this->setResourcesCache();
 
-		$resources = $db->query('SELECT r.path, r.privilege_id, p.key FROM {pre}acl_resources AS r JOIN {pre}acl_privileges AS p ON(r.privilege_id = p.id) ORDER BY r.path ASC');
-		$c_resources = count($resources);
-		$return = array();
-
-		for ($i = 0; $i < $c_resources; ++$i) {
-			$resources[$i]['path'] = $db->escape($resources[$i]['path'], 3);
-			$return[$resources[$i]['path']] = array(
-				'id' => $resources[$i]['privilege_id'],
-				'key' => $resources[$i]['key'],
-			);
-		}
-		return $return;
+		return cache::output('acl_resources', 'acl');
 	}
 	/**
 	 * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
@@ -152,25 +165,25 @@ class acl
 	 *	Array mit den IDs der zu cachenden Rollen
 	 * @return boolean
 	 */
-	public function setRolePrivilegesCache(array $roles)
+	public function setRulesCache(array $roles)
 	{
 		global $db;
 
 		// Berechtigungen einlesen, auf die der Benutzer laut seinen Rollen Zugriff hat
-		$role_privs = $db->query('SELECT rp.role_id, rp.privilege_id, rp.value, p.key, p.name FROM {pre}acl_role_privileges AS rp JOIN {pre}acl_privileges AS p ON(rp.privilege_id = p.id) WHERE rp.role_id IN(' . implode(',', $roles) . ')');
-		$c_role_privs = count($role_privs);
+		$rules = $db->query('SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM {pre}acl_rules AS ru JOIN {pre}modules AS m ON (ru.module_id = m.id) JOIN {pre}acl_privileges AS p ON(ru.privilege_id = p.id) WHERE ru.role_id IN(' . implode(',', $roles) . ')');
+		$c_rules = count($rules);
 		$privileges = array();
-		for ($i = 0; $i < $c_role_privs; ++$i) {
-			$key = strtolower($role_privs[$i]['key']);
-			$privileges[$key] = array(
-				'id' => $role_privs[$i]['privilege_id'],
-				'name' => $db->escape($role_privs[$i]['name'], 3),
-				'value' => $role_privs[$i]['value'],
-				'access' => $role_privs[$i]['value'] == 1 || ($role_privs[$i]['value'] == 2 && $this->getRolePrivilegeValue($key, $role_privs[$i]['role_id']) == 1) ? true : false,
+		for ($i = 0; $i < $c_rules; ++$i) {
+			$key = strtolower($rules[$i]['key']);
+			$privileges[$rules[$i]['module_name']][$key] = array(
+				'id' => $rules[$i]['privilege_id'],
+				'description' => $db->escape($rules[$i]['description'], 3),
+				'permission' => $rules[$i]['permission'],
+				'access' => $rules[$i]['permission'] == 1 || ($rules[$i]['permission'] == 2 && $this->getPermissionValue($key, $rules[$i]['role_id']) == 1) ? true : false,
 			);
 		}
 
-		return cache::create('acl_role_privileges_' . implode(',', $roles), $privileges, 'acl');
+		return cache::create('acl_rules_' . implode(',', $roles), $privileges, 'acl');
 	}
 	/**
 	 * Gibt alle existieren Rollen aus
@@ -193,11 +206,11 @@ class acl
 	{
 		global $db;
 
-		$privileges = $db->select('id, `key`, name', 'acl_privileges', 0, '`key` ASC');
+		$privileges = $db->select('id, `key`, description', 'acl_privileges', 0, '`key` ASC');
 		$c_privileges = count($privileges);
 
 		for ($i = 0; $i < $c_privileges; ++$i) {
-			$privileges[$i]['name'] = $db->escape($privileges[$i]['name'], 3);
+			$privileges[$i]['description'] = $db->escape($privileges[$i]['description'], 3);
 		}
 		return $privileges;
 	}
@@ -210,12 +223,12 @@ class acl
 	 *	ID der Rolle, dessen übergeordnete Rolle sucht werden soll
 	 * @return integer
 	 */
-	private function getRolePrivilegeValue($key, $role_id)
+	private function getPermissionValue($key, $role_id)
 	{
 		global $db;
 
-		$value = $db->query('SELECT rp.value FROM {pre}acl_roles AS r, {pre}acl_roles AS parent JOIN {pre}acl_role_privileges AS rp ON(parent.id = rp.role_id) JOIN {pre}acl_privileges AS p ON(rp.privilege_id = p.id) WHERE r.id = \'' . $db->escape($role_id) . '\' AND p.key = \'' . $db->escape($key) . '\' AND rp.value != 2 AND parent.left_id < r.left_id AND parent.right_id > r.right_id ORDER BY parent.left_id DESC LIMIT 1');
-		return isset($value[0]['value']) ? $value[0]['value'] : 0;
+		$value = $db->query('SELECT ru.permission FROM {pre}acl_roles AS r, {pre}acl_roles AS parent JOIN {pre}acl_rules AS ru ON(parent.id = ru.role_id) JOIN {pre}acl_privileges AS p ON(ru.privilege_id = p.id) WHERE r.id = \'' . $db->escape($role_id) . '\' AND p.key = \'' . $db->escape($key) . '\' AND ru.permission != 2 AND parent.left_id < r.left_id AND parent.right_id > r.right_id ORDER BY parent.left_id DESC LIMIT 1');
+		return isset($value[0]['permission']) ? $value[0]['permission'] : 0;
 	}
 	/**
 	 * Gibt die Rollen-Berechtigungen aus
@@ -224,11 +237,11 @@ class acl
 	 *	Array mit den IDs der Rollen
 	 * @return boolean
 	 */
-	public function getRolePrivileges(array $roles)
+	public function getRules(array $roles)
 	{
-		$filename = 'acl_role_privileges_' . implode(',', $roles);
+		$filename = 'acl_rules_' . implode(',', $roles);
 		if (!cache::check($filename, 'acl'))
-			$this->setRolePrivilegesCache($roles);
+			$this->setRulesCache($roles);
 
 		return cache::output($filename, 'acl');
 	}
@@ -250,11 +263,11 @@ class acl
 	 *	Der Schlssel der Privilegie
 	 * @return boolean
 	 */
-	public function userHasPrivilege($key)
+	public function userHasPrivilege($module, $key)
 	{
 		$key = strtolower($key);
-		if (isset($this->privileges[$key]))
-			return $this->privileges[$key]['access'];
+		if (isset($this->privileges[$module][$key]))
+			return $this->privileges[$module][$key]['access'];
 		return false;
 	}
 	/**
@@ -267,7 +280,7 @@ class acl
 	public function canAccessResource($resource)
 	{
 		if (isset($this->resources[$resource]))
-			return $this->userHasPrivilege($this->resources[$resource]['key']);
+			return $this->userHasPrivilege(substr($resource, 0, strpos($resource, '/')), $this->resources[$resource]['key']);
 		return false;
 	}
 }

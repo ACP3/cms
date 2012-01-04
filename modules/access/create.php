@@ -40,8 +40,10 @@ if (isset($_POST['form'])) {
 		$bool = aclInsertNode($form['parent'], $insert_values);
 		$role_id = $db->link->lastInsertId();
 
-		foreach ($form['privileges'] as $id => $value) {
-			$db->insert('acl_role_privileges', array('id' => '', 'role_id' => $role_id, 'privilege_id' => $id, 'value' => $value));
+		foreach ($form['privileges'] as $module_id => $privileges) {
+			foreach ($privileges as $id => $permission) {
+				$db->insert('acl_rules', array('id' => '', 'role_id' => $role_id, 'module_id' => $module_id, 'privilege_id' => $id, 'permission' => $permission));
+			}
 		}
 
 		$db->link->commit();
@@ -62,22 +64,29 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	}
 	$tpl->assign('parent', $roles);
 
+	$modules = $db->select('id, name', 'modules', 'active = 1');
+	$c_modules = count($modules);
 	$privileges = $acl->getAllPrivileges();
 	$c_privileges = count($privileges);
-	for ($i = 0; $i < $c_privileges; ++$i) {
-		$select[0]['value'] = 0;
-		$select[0]['checked'] = isset($form) && $form['privileges'][$privileges[$i]['id']] == 0 ? ' checked="checked"' : '';
-		$select[0]['lang'] = $lang->t('access', 'deny_access');
-		$select[1]['value'] = 1;
-		$select[1]['checked'] = isset($form) && $form['privileges'][$privileges[$i]['id']] == 1 ? ' checked="checked"' : '';
-		$select[1]['lang'] = $lang->t('access', 'allow_access');
-		$select[2]['value'] = 2;
-		$select[2]['checked'] = !isset($form) || isset($form) && $form['privileges'][$privileges[$i]['id']] == 2 ? ' checked="checked"' : '';
-		$select[2]['lang'] = $lang->t('access', 'inherit_access');
-		$privileges[$i]['select'] = $select;
-		$privileges[$i]['name'] = empty($privileges[$i]['name']) ? $privileges[$i]['key'] : $privileges[$i]['name'];
-	}
 	$tpl->assign('privileges', $privileges);
+
+	for ($i = 0; $i < $c_modules; ++$i) {
+		for ($j = 0; $j < $c_privileges; ++$j) {
+			$select[0]['value'] = 0;
+			$select[0]['selected'] = isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['key']] == 0 ? ' selected="selected"' : '';
+			$select[0]['lang'] = $lang->t('access', 'deny_access');
+			$select[1]['value'] = 1;
+			$select[1]['selected'] = isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['key']] == 1 ? ' selected="selected"' : '';
+			$select[1]['lang'] = $lang->t('access', 'allow_access');
+			$select[2]['value'] = 2;
+			$select[2]['selected'] = !isset($form) || isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['key']] == 2 ? ' selected="selected"' : '';
+			$select[2]['lang'] = $lang->t('access', 'inherit_access');
+			$privileges[$j]['select'] = $select;
+		}
+		$modules[$i]['privileges'] = $privileges;
+		$modules[$i]['name'] = $lang->t($modules[$i]['name'], $modules[$i]['name']);
+	}
+	$tpl->assign('modules', $modules);
 
 	$content = modules::fetchTemplate('access/create.html');
 }

@@ -230,6 +230,14 @@ $queries = array(
 	9 => array(
 		0 => 'ALTER TABLE `{pre}acl_roles` ADD `parent_id` INT(10) NOT NULL AFTER `name`;',
 		1 => 'ALTER TABLE `{pre}menu_items` ADD `parent_id` INT(10) NOT NULL AFTER `root_id`;',
+	),
+	10 => array(
+		0 => 'ALTER TABLE `{pre}modules` DROP PRIMARY KEY;',
+		1 => 'ALTER TABLE `{pre}modules` ADD COLUMN `id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;',
+		2 => 'DROP TABLE `{pre}acl_role_privileges`;',
+		3 => 'CREATE TABLE`{pre}acl_rules` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `role_id` int(10) unsigned NOT NULL, `module_id` int(10) unsigned NOT NULL, `privilege_id` int(10) unsigned NOT NULL, `permission` tinyint(1) unsigned NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `role_id` (`role_id`,`module_id`,`privilege_id`)) {engine};',
+		4 => 'DROP TABLE `{pre}acl_resources`;',
+		5 => 'CREATE TABLE`{pre}acl_resources` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `module_id` int(10) unsigned NOT NULL, `page` varchar(255) NOT NULL, `params` varchar(255) NOT NULL, `privilege_id` int(10) unsigned NOT NULL, PRIMARY KEY (`id`)) {engine};'
 	)
 );
 
@@ -351,6 +359,71 @@ if (CONFIG_DB_VERSION < 9) {
 		$parent = $db->select('id', 'menu_items', 'left_id < ' . $row['left_id'] . ' AND right_id > ' . $row['right_id'], 'left_id DESC', 1);
 		$db->update('menu_items', array('parent_id' => !empty($parent) ? $parent[0]['id'] : 0), 'id = \'' . $row['id'] . '\'');
 	}
+}
+if (CONFIG_DB_VERSION < 10) {
+	$db->link->beginTransaction();
+
+	// Bestehende Tabellen leeren
+	$db->query('TRUNCATE TABLE {pre}modules', 0);
+	$db->query('TRUNCATE TABLE {pre}acl_resources', 0);
+	$db->query('TRUNCATE TABLE {pre}acl_rules', 0);
+
+	// Moduldaten in die ACL schreiben
+	$modules = scandir(MODULES_DIR);
+	foreach ($modules as $row) {
+		if ($row !== '.' && $row !== '..' && is_file(MODULES_DIR . $row . '/module.xml')) {
+			$module = scandir(MODULES_DIR . $row . '/');
+			$db->insert('modules', array('id' => '', 'name' => $row));
+			$mod_id = $db->link->lastInsertId();
+			
+			if (is_file(MODULES_DIR . $row . '/extensions/search.php'))
+				$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
+			if (is_file(MODULES_DIR . $row . '/extensions/feeds.php'))
+				$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
+
+			foreach ($module as $file) {
+				if ($file !== '.' && $file !== '..' && is_file(MODULES_DIR . $row . '/' . $file) && strpos($file, '.php') !== false) {
+					$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => substr($file, 0, -4), 'params' => '', 'privilege_id' => 1));
+				}
+			}
+		}
+	}
+
+	$special_mods = $db->select('id', 'modules', 'name = "comments" OR name = "guestbook" OR name = "newsletter"');
+	$where = '';
+	foreach ($special_mods as $row) {
+		$where.= ' AND module_id != ' . $row['id'];
+	}
+
+	$db->update('acl_resources', array('privilege_id' => 3), '`page` LIKE "adm_list%"');
+	$db->update('acl_resources', array('privilege_id' => 4), '(`page` LIKE "create%" OR `page` LIKE "order%")' . $where);
+	$db->update('acl_resources', array('privilege_id' => 5), '`page` LIKE "edit%"');
+	$db->update('acl_resources', array('privilege_id' => 6), '`page` LIKE "delete%"');
+	$db->update('acl_resources', array('privilege_id' => 7), '`page` LIKE "settings%"');
+
+	$roles = $db->select('id', 'acl_roles');
+	$modules = $db->select('id', 'modules');
+	$privileges = $db->select('id', 'acl_privileges');
+
+	foreach ($roles as $role) {
+		foreach ($modules as $module) {
+			foreach ($privileges as $privilege) {
+				$permission = 0;
+				if ($role['id'] == 1 && $privilege['id'] == 1)
+					$permission = 1;
+				if ($role['id'] > 1 && $role['id'] < 4)
+					$permission = 2;
+				if ($role['id'] == 3 && $privilege['id'] == 3)
+					$permission = 1;
+				if ($role['id'] == 4)
+					$permission = 1;
+
+				$db->insert('acl_rules', array('id' => '', 'role_id' => $role['id'], 'module_id' => $module['id'], 'privilege_id' => $privilege['id'], 'permission' => $permission));
+			}
+		}
+	}
+
+	$db->link->commit();
 }
 
 // Konfigurationsdatei aktualisieren

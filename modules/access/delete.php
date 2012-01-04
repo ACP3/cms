@@ -32,7 +32,7 @@ if (!isset($entries)) {
 			$level_undeletable = true;
 		} else {
 			$bool = aclDeleteNode($entry);
-			$bool2 = $db->delete('acl_role_privileges', 'role_id = \'' . $entry . '\'');
+			$bool2 = $db->delete('acl_rules', 'role_id = \'' . $entry . '\'');
 		}
 	}
 

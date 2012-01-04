@@ -1,6 +1,7 @@
 <?php
 ob_start();
 
+define('IN_ACP3', true);
 define('IN_INSTALL', true);
 
 // Evtl. gesetzten Content-Type des Servers überschreiben
