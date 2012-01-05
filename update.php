@@ -373,7 +373,7 @@ if (CONFIG_DB_VERSION < 10) {
 	foreach ($modules as $row) {
 		if ($row !== '.' && $row !== '..' && is_file(MODULES_DIR . $row . '/module.xml')) {
 			$module = scandir(MODULES_DIR . $row . '/');
-			$db->insert('modules', array('id' => '', 'name' => $row));
+			$db->insert('modules', array('id' => '', 'name' => $row, 'active' => 1));
 			$mod_id = $db->link->lastInsertId();
 			
 			if (is_file(MODULES_DIR . $row . '/extensions/search.php'))
