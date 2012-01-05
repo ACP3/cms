@@ -29,9 +29,7 @@ class validate
 	 */
 	public static function aclPrivilegesExist(array $privileges)
 	{
-		global $acl;
-
-		$all_privs = $acl->getAllPrivileges();
+		$all_privs = acl::getAllPrivileges();
 		$c_all_privs = count($all_privs);
 		for ($i = 0; $i < $c_all_privs; ++$i) {
 			$valid = false;
@@ -53,9 +51,7 @@ class validate
 	 */
 	public static function aclRolesExist(array $roles)
 	{
-		global $acl;
-
-		$all_roles = $acl->getAllRoles();
+		$all_roles = acl::getAllRoles();
 		$good = array();
 		foreach ($all_roles as $row) {
 			$good[] = $row['id'];

@@ -80,7 +80,7 @@ if (isset($_POST['form'])) {
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	// Zugriffslevel holen
-	$roles = $acl->getAllRoles();
+	$roles = acl::getAllRoles();
 	$c_roles = count($roles);
 	for ($i = 0; $i < $c_roles; ++$i) {
 		$roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];

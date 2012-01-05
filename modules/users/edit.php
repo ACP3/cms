@@ -89,9 +89,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 		$user['date_format_short'] = $db->escape($user['date_format_short'], 3);
 
 		// Zugriffslevel holen
-		$roles = $acl->getAllRoles();
+		$roles = acl::getAllRoles();
 		$c_roles = count($roles);
-		$user_roles = $acl->getUserRoles($uri->id);
+		$user_roles = acl::getUserRoles($uri->id);
 		for ($i = 0; $i < $c_roles; ++$i) {
 			$roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
 			$roles[$i]['selected'] = selectEntry('roles', $roles[$i]['id'], in_array($roles[$i]['id'], $user_roles) ? $roles[$i]['id'] : '');

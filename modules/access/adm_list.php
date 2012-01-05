@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$roles = $acl->getAllRoles();
+$roles = acl::getAllRoles();
 $c_roles = count($roles);
 
 if ($c_roles > 0) {
