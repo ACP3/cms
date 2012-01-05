@@ -10,7 +10,7 @@ header('Content-type: text/plain; charset=UTF-8');
 
 define('IN_ACP3', true);
 
-define('ACP3_ROOT', dirname(__FILE__) . '/');
+define('ACP3_ROOT', dirname(__FILE__) . '/../');
 define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 define('MODULES_DIR', ACP3_ROOT . 'modules/');
 
