@@ -44,9 +44,10 @@ if ($handle !== true) {
 }
 $uri = new uri();
 $auth = new auth();
-$acl = new acl();
 $lang = new lang();
 $date = new date();
+
+acl::initialize($auth->getUserId());
 
 // Smarty einbinden
 require INCLUDES_DIR . 'smarty/Smarty.class.php';

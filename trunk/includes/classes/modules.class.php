@@ -39,9 +39,7 @@ class modules
 
 		if (is_file(MODULES_DIR . '' . $module . '/' . $page . '.php')) {
 			if (self::isActive($module)) {
-				global $acl;
-
-				return $acl->canAccessResource($module . '/' . $page . '/');
+				return acl::canAccessResource($module . '/' . $page . '/');
 			}
 			return 0;
 		}
@@ -94,7 +92,7 @@ class modules
 		switch (modules::check()) {
 			// Seite ausgeben
 			case 1:
-				global $acl, $date, $db, $lang, $tpl;
+				global $date, $db, $lang, $tpl;
 
 				require MODULES_DIR . '' . $uri->mod . '/' . $uri->page . '.php';
 

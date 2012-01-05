@@ -48,7 +48,7 @@ if (isset($_POST['form'])) {
 
 		$db->link->commit();
 
-		$acl->setRolesCache();
+		acl::setRolesCache();
 
 		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/access'));
 	}
@@ -56,7 +56,7 @@ if (isset($_POST['form'])) {
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : array('name' => ''));
 
-	$roles = $acl->getAllRoles();
+	$roles = acl::getAllRoles();
 	$c_roles = count($roles);
 	for ($i = 0; $i < $c_roles; ++$i) {
 		$roles[$i]['selected'] = selectEntry('roles', $roles[$i]['id'], !empty($parent[0]['id']) ? $parent[0]['id'] : 0);
@@ -66,7 +66,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$modules = $db->select('id, name', 'modules', 'active = 1');
 	$c_modules = count($modules);
-	$privileges = $acl->getAllPrivileges();
+	$privileges = acl::getAllPrivileges();
 	$c_privileges = count($privileges);
 	$tpl->assign('privileges', $privileges);
 

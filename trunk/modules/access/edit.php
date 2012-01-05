@@ -57,7 +57,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 		$role[0]['name'] = $db->escape($role[0]['name'], 3);
 
 		if ($uri->id != 1) {
-			$roles = $acl->getAllRoles();
+			$roles = acl::getAllRoles();
 			$c_roles = count($roles);
 			$parent = $db->select('id', 'acl_roles', 'left_id < ' . $role[0]['left_id'] . ' AND right_id > ' . $role[0]['right_id'], 'left_id DESC', 1);
 			for ($i = 0; $i < $c_roles; ++$i) {
@@ -71,10 +71,10 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 			$tpl->assign('parent', $roles);
 		}
 
-		$rules = $acl->getRules(array($uri->id));
+		$rules = acl::getRules(array($uri->id));
 		$modules = $db->select('id, name', 'modules', 'active = 1');
 		$c_modules = count($modules);
-		$privileges = $acl->getAllPrivileges();
+		$privileges = acl::getAllPrivileges();
 		$c_privileges = count($privileges);
 		$tpl->assign('privileges', $privileges);
 
