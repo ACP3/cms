@@ -11,11 +11,10 @@
 			<dt><label for="message">{lang t="common|message"}</label></dt>
 			<dd><textarea name="form[message]" id="message" cols="50" rows="5" required>{$form.message}</textarea></dd>
 		</dl>
-{$captcha}
 	</fieldset>
+{$captcha}
 	<div class="form-bottom">
 		<input type="submit" value="{lang t="common|submit"}" class="form">
 		<input type="reset" value="{lang t="common|reset"}" class="form">
-		<input type="hidden" name="action" value="send_mail">
 	</div>
 </form>
