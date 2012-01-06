@@ -35,6 +35,7 @@ function getStaticPagesCache($id)
 /**
  * Liest alle statischen Seiten ein
  *
+ * @param integer $id
  * @return array
  */
 function staticPagesList($id = '')
