@@ -53,18 +53,17 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
-		$role = $db->select('name, left_id, right_id', 'acl_roles', 'id = \'' . $uri->id . '\'');
+		$role = $db->select('name, parent_id, left_id, right_id', 'acl_roles', 'id = \'' . $uri->id . '\'');
 		$role[0]['name'] = $db->escape($role[0]['name'], 3);
 
 		if ($uri->id != 1) {
 			$roles = acl::getAllRoles();
 			$c_roles = count($roles);
-			$parent = $db->select('id', 'acl_roles', 'left_id < ' . $role[0]['left_id'] . ' AND right_id > ' . $role[0]['right_id'], 'left_id DESC', 1);
 			for ($i = 0; $i < $c_roles; ++$i) {
 				if ($roles[$i]['left_id'] >= $role[0]['left_id'] && $roles[$i]['right_id'] <= $role[0]['right_id']) {
 					unset($roles[$i]);
 				} else {
-					$roles[$i]['selected'] = selectEntry('roles', $roles[$i]['id'], !empty($parent[0]['id']) ? $parent[0]['id'] : 0);
+					$roles[$i]['selected'] = selectEntry('roles', $roles[$i]['id'], $role[0]['parent_id']);
 					$roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
 				}
 			}
@@ -95,9 +94,15 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 				}
 				$privileges[$j]['select'] = $select;
 			}
-			$modules[$i]['privileges'] = $privileges;
-			$modules[$i]['name'] = $lang->t($modules[$i]['name'], $modules[$i]['name']);
+			$name = $lang->t($modules[$i]['name'], $modules[$i]['name']);
+			$modules[$name] = array(
+				'id' => $modules[$i]['id'],
+				'privileges' => $privileges,
+			);
+			unset($modules[$i]);
 		}
+
+		ksort($modules);
 		$tpl->assign('modules', $modules);
 
 		$tpl->assign('form', isset($form) ? $form : $role[0]);

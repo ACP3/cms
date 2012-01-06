@@ -22,6 +22,7 @@ if ($uri->action == 'activate') {
 	} else {
 		$bool = $db->update('modules', array('active' => 1), 'name = \'' . $uri->dir . '\'');
 		modules::setModulesCache();
+		acl::setResourcesCache();
 
 		$text = $bool ? $lang->t('system', 'mod_activate_success') : $lang->t('system', 'mod_activate_error');
 	}
@@ -33,6 +34,7 @@ if ($uri->action == 'activate') {
 	} else {
 		$bool = $db->update('modules', array('active' => 0), 'name = \'' . $uri->dir . '\'');
 		modules::setModulesCache();
+		acl::setResourcesCache();
 
 		$text = $bool ? $lang->t('system', 'mod_deactivate_success') : $lang->t('system', 'mod_deactivate_error');
 	}

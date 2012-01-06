@@ -61,7 +61,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 				'target' => $form['target'],
 			);
 
-			$bool = editNode($uri->id, $form['parent'], $form['block_id'], $update_values);
+			$bool = menuItemsEditNode($uri->id, $form['parent'], $form['block_id'], $update_values);
 			if ($form['mode'] == 2 || $form['mode'] == 4) {
 				$keywords = $description = '';
 				if (seo::uriAliasExists($form['uri'])) {
@@ -77,7 +77,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
-		$page = $db->select('id, start, end, mode, block_id, left_id, right_id, display, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
+		$page = $db->select('id, start, end, mode, block_id, parent_id, left_id, right_id, display, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
 		$page[0]['title'] = $db->escape($page[0]['title'], 3);
 		$page[0]['uri'] = $db->escape($page[0]['uri'], 3);
 		$page[0]['alias'] = $page[0]['mode'] == 2 || $page[0]['mode'] == 4 ? seo::getUriAlias($page[0]['uri']) : '';
@@ -142,16 +142,14 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 				preg_match_all('/^(static_pages\/list\/id_([0-9]+)\/)$/', $page[0]['uri'], $matches);
 			}
 
-			$tpl->assign('static_pages', getStaticPages(!empty($matches[2]) ? $matches[2][0] : ''));
+			$tpl->assign('static_pages', staticPagesList(!empty($matches[2]) ? $matches[2][0] : ''));
 		}
 
 		// Daten an Smarty übergeben
 		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($page[0]['start'], $page[0]['end'])));
 		$tpl->assign('form', isset($form) ? $form : $page[0]);
 
-		// Übergeordnete Seite herausfinden
-		$parent = $db->select('id', 'menu_items', 'left_id < ' . $page[0]['left_id'] . ' AND right_id > ' . $page[0]['right_id'], 'left_id DESC', 1);
-		$tpl->assign('pages_list', pagesList(!empty($parent) ? $parent[0]['id'] : 0, $page[0]['left_id'], $page[0]['right_id']));
+		$tpl->assign('pages_list', menuItemsList($page[0]['parent_id'], $page[0]['left_id'], $page[0]['right_id']));
 
 		$content = modules::fetchTemplate('menu_items/edit.html');
 	}

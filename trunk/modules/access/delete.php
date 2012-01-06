@@ -24,7 +24,7 @@ if (!isset($entries)) {
 	require_once MODULES_DIR . 'access/functions.php';
 
 	$marked_entries = explode('|', $entries);
-	$bool = $bool2 = null;
+	$bool = $bool2 = $bool3 = null;
 	$level_undeletable = false;
 
 	foreach ($marked_entries as $entry) {
@@ -33,6 +33,7 @@ if (!isset($entries)) {
 		} else {
 			$bool = aclDeleteNode($entry);
 			$bool2 = $db->delete('acl_rules', 'role_id = \'' . $entry . '\'');
+			$bool3 = $db->delete('acl_user_roles', 'role_id = \'' . $entry . '\'');
 		}
 	}
 
@@ -41,7 +42,7 @@ if (!isset($entries)) {
 	if ($level_undeletable === true) {
 		$text = $lang->t('access', 'role_undeletable');
 	} else {
-		$text = $bool !== null && $bool2 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
+		$text = $bool !== null && $bool2 !== null && $bool3 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
 	}
 	$content = comboBox($text, $uri->route('acp/access'));
 } else {

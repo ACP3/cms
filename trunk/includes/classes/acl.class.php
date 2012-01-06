@@ -67,7 +67,7 @@ class acl
 	{
 		global $db;
 
-		$resources = $db->query('SELECT r.id AS resource_id, r.module_id, m.name AS module, r.page, r.params, r.privilege_id, p.key FROM {pre}acl_resources AS r JOIN {pre}acl_privileges AS p ON(r.privilege_id = p.id) JOIN {pre}modules AS m ON(r.module_id = m.id) ORDER BY r.module_id ASC, r.page ASC');
+		$resources = $db->query('SELECT r.id AS resource_id, r.module_id, m.name AS module, r.page, r.params, r.privilege_id, p.key FROM {pre}acl_resources AS r JOIN {pre}acl_privileges AS p ON(r.privilege_id = p.id) JOIN {pre}modules AS m ON(r.module_id = m.id) WHERE m.active = 1 ORDER BY r.module_id ASC, r.page ASC');
 		$c_resources = count($resources);
 		$data = array();
 
@@ -95,7 +95,7 @@ class acl
 	}
 	/**
 	 * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
-	 * 
+	 *
 	 * @param integer $user_id
 	 *	ID des Benutzers, dessen Rollen ausgegeben werden sollen
 	 * @param integer $mode
@@ -121,7 +121,7 @@ class acl
 	}
 	/**
 	 * Setzt den Cache für alle existierenden Rollen
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public static function setRolesCache()
@@ -144,7 +144,7 @@ class acl
 					}
 				}
 			}
-			
+
 			for ($j = $i + 1; $j < $c_roles; ++$j) {
 				if ($roles[$i]['parent_id'] == $roles[$j]['parent_id']) {
 					$last = false;

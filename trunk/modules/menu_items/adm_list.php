@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 require_once MODULES_DIR . 'menu_items/functions.php';
 
-$pages_list = pagesList();
+$pages_list = menuItemsList();
 
 if (count($pages_list) > 0) {
 	$tpl->assign('pages_list', $pages_list);

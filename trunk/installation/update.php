@@ -222,7 +222,7 @@ $queries = array(
 		11 => "INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (0, 1), (1, 4);",
 	),
 	7 => array(
-		0 => "INSERT INTO {pre}acl_resources (`id`, `path`, `privilege_id`) VALUES (\'\', 'access/order/', 5);"
+		0 => "INSERT INTO {pre}acl_resources (`id`, `path`, `privilege_id`) VALUES ('', 'access/order/', 5);"
 	),
 	8 => array(
 		0 => 'DELETE FROM {pre}acl_resources WHERE path = "system/server_config/"',
@@ -237,8 +237,9 @@ $queries = array(
 		2 => 'DROP TABLE `{pre}acl_role_privileges`;',
 		3 => 'CREATE TABLE`{pre}acl_rules` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `role_id` int(10) unsigned NOT NULL, `module_id` int(10) unsigned NOT NULL, `privilege_id` int(10) unsigned NOT NULL, `permission` tinyint(1) unsigned NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `role_id` (`role_id`,`module_id`,`privilege_id`)) {engine};',
 		4 => 'DROP TABLE `{pre}acl_resources`;',
-		5 => 'CREATE TABLE`{pre}acl_resources` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `module_id` int(10) unsigned NOT NULL, `page` varchar(255) NOT NULL, `params` varchar(255) NOT NULL, `privilege_id` int(10) unsigned NOT NULL, PRIMARY KEY (`id`)) {engine};'
-	)
+		5 => 'CREATE TABLE`{pre}acl_resources` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `module_id` int(10) unsigned NOT NULL, `page` varchar(255) NOT NULL, `params` varchar(255) NOT NULL, `privilege_id` int(10) unsigned NOT NULL, PRIMARY KEY (`id`)) {engine};',
+		6 => 'ALTER TABLE `{pre}acl_privileges` CHANGE `name` `description` VARCHAR(100) NOT NULL;',
+	),
 );
 
 // Änderungen am DB Schema vornehmen
@@ -375,7 +376,7 @@ if (CONFIG_DB_VERSION < 10) {
 			$module = scandir(MODULES_DIR . $row . '/');
 			$db->insert('modules', array('id' => '', 'name' => $row, 'active' => 1));
 			$mod_id = $db->link->lastInsertId();
-			
+
 			if (is_file(MODULES_DIR . $row . '/extensions/search.php'))
 				$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
 			if (is_file(MODULES_DIR . $row . '/extensions/feeds.php'))

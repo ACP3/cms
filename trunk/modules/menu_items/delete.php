@@ -30,7 +30,7 @@ if (!isset($entries)) {
 		$menu_item = $db->select('uri', 'menu_items', 'id = \'' . $entry . '\'');
 		seo::deleteUriAlias($menu_item[0]['uri']);
 
-		$bool = deleteNode($entry);
+		$bool = menuItemsDeleteNode($entry);
 	}
 	setMenuItemsCache();
 

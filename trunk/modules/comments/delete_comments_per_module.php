@@ -7,7 +7,7 @@
  * @subpackage Modules
  */
 
-if (defined('IN_ACP3') === false && defined('IN_ADM') === false)
+if (defined('IN_ADM') === false)
 	exit;
 
 if (isset($_POST['entries']) && is_array($_POST['entries']))
