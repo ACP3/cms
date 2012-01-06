@@ -52,7 +52,7 @@ function setMenuItemsCache() {
 					}
 				}
 			}
-			
+
 			for ($j = $i + 1; $j < $c_pages; ++$j) {
 				if ($pages[$i]['parent_id'] == $pages[$j]['parent_id'] && $pages[$j]['block_name'] == $pages[$i]['block_name']) {
 					$last = false;
@@ -86,7 +86,7 @@ function getMenuItemsCache()
  *
  * @return boolean
  */
-function deleteNode($id)
+function menuItemsDeleteNode($id)
 {
 	if (!empty($id) && validate::isNumber($id)) {
 		global $db;
@@ -116,7 +116,7 @@ function deleteNode($id)
  *
  * @return boolean
  */
-function insertNode($parent, array $insert_values)
+function menuItemsInsertNode($parent, array $insert_values)
 {
 	global $db;
 
@@ -165,7 +165,7 @@ function insertNode($parent, array $insert_values)
  *
  * @return
  */
-function editNode($id, $parent, $block_id, array $update_values)
+function menuItemsEditNode($id, $parent, $block_id, array $update_values)
 {
 	global $db;
 
@@ -263,13 +263,13 @@ function editNode($id, $parent, $block_id, array $update_values)
 /**
  * Auflistung der Seiten
  *
- * @param integer $parent
+ * @param integer $parent_id
  *  ID des Elternknotens
  * @param integer $left_id
  * @param integer $right_id
  * @return array
  */
-function pagesList($parent = 0, $left = 0, $right = 0) {
+function menuItemsList($parent_id = 0, $left_id = 0, $right_id = 0) {
 	static $pages = array();
 
 	// Menüpunkte einbinden
@@ -281,8 +281,8 @@ function pagesList($parent = 0, $left = 0, $right = 0) {
 	if (count($pages) > 0) {
 		$i = 0;
 		foreach($pages as $row) {
-			if (!($row['left_id'] >= $left && $row['right_id'] <= $right)) {
-				$row['selected'] = selectEntry('parent', $row['id'], $parent);
+			if (!($row['left_id'] >= $left_id && $row['right_id'] <= $right_id)) {
+				$row['selected'] = selectEntry('parent', $row['id'], $parent_id);
 				$row['spaces'] = str_repeat('&nbsp;&nbsp;', $row['level']);
 
 				// Titel für den aktuellen Block setzen

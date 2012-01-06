@@ -35,12 +35,12 @@
 					</tr>
 				</thead>
 				<tbody>
-{foreach $modules as $module}
+{foreach $modules as $module => $values}
 					<tr>
-						<td><strong>{$module.name}</strong></td>
-{foreach $module.privileges as $privilege}
+						<td><strong>{$module}</strong></td>
+{foreach $values.privileges as $privilege}
 						<td>
-							<select name="form[privileges][{$module.id}][{$privilege.id}]">
+							<select name="form[privileges][{$values.id}][{$privilege.id}]">
 {foreach $privilege.select as $row}
 								<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}

@@ -77,7 +77,7 @@ if (isset($_POST['form'])) {
 				'target' => 1,
 			);
 
-			insertNode($form['parent'], $insert_values);
+			menuItemsInsertNode($form['parent'], $insert_values);
 			setMenuItemsCache();
 		}
 
@@ -110,7 +110,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$tpl->assign('create', $create);
 		$tpl->assign('blocks', $blocks);
 		$tpl->assign('display', $display);
-		$tpl->assign('pages_list', pagesList());
+		$tpl->assign('pages_list', menuItemsList());
 	}
 
 	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));

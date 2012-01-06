@@ -30,7 +30,7 @@ if (!isset($entries)) {
 			$bool = $db->delete('static_pages', 'id = \'' . $entry . '\'');
 			$page = $db->select('id', 'menu_items', 'uri = \'static_pages/list/id_' . $entry . '/\'');
 			if (!empty($page))
-				deleteNode($page[0]['id']);
+				menuItemsDeleteNode($page[0]['id']);
 			cache::delete('static_pages_list_id_' . $entry);
 			seo::deleteUriAlias('static_pages/list/id_' . $entry);
 		}

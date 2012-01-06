@@ -6,6 +6,17 @@
  * @package ACP3
  * @subpackage Modules
  */
+
+if (defined('IN_ACP3') === false)
+	exit;
+
+/**
+ * Meldet eine E-Mail-Adresse beim Newsletter an
+ *
+ * @param string $emailAddress
+ *	Die anzumeldente E-Mail-Adresse
+ * @return boolean
+ */
 function subscribeToNewsletter($emailAddress)
 {
 	global $lang, $uri;

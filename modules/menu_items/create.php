@@ -57,7 +57,7 @@ if (isset($_POST['form'])) {
 			'target' => $form['target'],
 		);
 
-		$bool = insertNode($form['parent'], $insert_values);
+		$bool = menuItemsInsertNode($form['parent'], $insert_values);
 		if ($form['mode'] == 2 && !empty($form['alias'])) {
 			$keywords = $description = '';
 			if (seo::uriAliasExists($form['uri'])) {
@@ -125,7 +125,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	if (modules::check('static_pages', 'functions')) {
 		require_once MODULES_DIR . 'static_pages/functions.php';
 
-		$tpl->assign('static_pages', getStaticPages());
+		$tpl->assign('static_pages', staticPagesList());
 	}
 
 	$defaults = array(
@@ -137,7 +137,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	// Daten an Smarty übergeben
 	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));
 	$tpl->assign('form', isset($form) ? $form : $defaults);
-	$tpl->assign('pages_list', pagesList());
+	$tpl->assign('pages_list', menuItemsList());
 
 	$content = modules::fetchTemplate('menu_items/create.html');
 }

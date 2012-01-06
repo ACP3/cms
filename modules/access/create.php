@@ -83,9 +83,15 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 			$select[2]['lang'] = $lang->t('access', 'inherit_access');
 			$privileges[$j]['select'] = $select;
 		}
-		$modules[$i]['privileges'] = $privileges;
-		$modules[$i]['name'] = $lang->t($modules[$i]['name'], $modules[$i]['name']);
+		$name = $lang->t($modules[$i]['name'], $modules[$i]['name']);
+		$modules[$name] = array(
+			'id' => $modules[$i]['id'],
+			'privileges' => $privileges,
+		);
+		unset($modules[$i]);
 	}
+
+	ksort($modules);
 	$tpl->assign('modules', $modules);
 
 	$content = modules::fetchTemplate('access/create.html');
