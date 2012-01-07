@@ -369,6 +369,40 @@ if (CONFIG_DB_VERSION < 10) {
 	$db->query('TRUNCATE TABLE {pre}acl_resources', 0);
 	$db->query('TRUNCATE TABLE {pre}acl_rules', 0);
 
+	$special_resources = array(
+		'comments' => array(
+			'create' => 2,
+		),
+		'gallery' => array(
+			'add_picture' => 4,
+		),
+		'guestbook' => array(
+			'create' => 2,
+		),
+		'newsletter' => array(
+			'compose' => 4,
+			'create' => 2,
+			'adm_activate' => 3,
+			'sent' => 4,
+		),
+		'system' => array(
+			'configuration' => 7,
+			'designs' => 7,
+			'extensions' => 7,
+			'languages' => 7,
+			'maintenance' => 7,
+			'modules' => 7,
+			'sql_export' => 7,
+			'sql_import' => 7,
+			'sql_optimisation' => 7,
+			'update_check' => 3,
+		),
+		'users' => array(
+			'edit_profile' => 1,
+			'edit_settings' => 1,
+		),
+	);
+
 	// Moduldaten in die ACL schreiben
 	$modules = scandir(MODULES_DIR);
 	foreach ($modules as $row) {
@@ -384,23 +418,27 @@ if (CONFIG_DB_VERSION < 10) {
 
 			foreach ($module as $file) {
 				if ($file !== '.' && $file !== '..' && is_file(MODULES_DIR . $row . '/' . $file) && strpos($file, '.php') !== false) {
-					$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => substr($file, 0, -4), 'params' => '', 'privilege_id' => 1));
+					$file = substr($file, 0, -4);
+					if (isset($special_resources[$row][$file])) {
+						$privilege_id = $special_resources[$row][$file];
+					} else {
+						$privilege_id = 1;
+						if (strpos($file, 'adm_list') === 0)
+							$privilege_id = 3;
+						if (strpos($file, 'create') === 0 || strpos($file, 'order') === 0)
+							$privilege_id = 4;
+						if (strpos($file, 'edit') === 0)
+							$privilege_id = 5;
+						if (strpos($file, 'delete') === 0)
+							$privilege_id = 6;
+						if (strpos($file, 'settings') === 0)
+							$privilege_id = 7;
+					}
+					$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => $file, 'params' => '', 'privilege_id' => $privilege_id));
 				}
 			}
 		}
 	}
-
-	$special_mods = $db->select('id', 'modules', 'name = "comments" OR name = "guestbook" OR name = "newsletter"');
-	$where = '';
-	foreach ($special_mods as $row) {
-		$where.= ' AND module_id != ' . $row['id'];
-	}
-
-	$db->update('acl_resources', array('privilege_id' => 3), '`page` LIKE "adm_list%"');
-	$db->update('acl_resources', array('privilege_id' => 4), '(`page` LIKE "create%" OR `page` LIKE "order%")' . $where);
-	$db->update('acl_resources', array('privilege_id' => 5), '`page` LIKE "edit%"');
-	$db->update('acl_resources', array('privilege_id' => 6), '`page` LIKE "delete%"');
-	$db->update('acl_resources', array('privilege_id' => 7), '`page` LIKE "settings%"');
 
 	$roles = $db->select('id', 'acl_roles');
 	$modules = $db->select('id', 'modules');
