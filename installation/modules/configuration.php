@@ -75,7 +75,6 @@ if (isset($_POST['submit'])) {
 
 		$sql_file = file_get_contents(ACP3_ROOT . 'installation/modules/install.sql');
 		$sql_file = str_replace(array("\r\n", "\r"), "\n", $sql_file);
-		$sql_file = str_replace('{pre}', $db->prefix, $sql_file);
 		$sql_file = str_replace('{engine}', 'ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`', $sql_file);
 
 		$sql_file_arr = explode(";\n", $sql_file);
