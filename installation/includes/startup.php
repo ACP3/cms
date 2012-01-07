@@ -24,7 +24,7 @@ $uri = new uri();
 
 if ($uri->query == '/') {
 	$uri->mod = 'install';
-	$uri->page = 'welcome';
+	$uri->file = 'welcome';
 }
 
 if (!empty($_POST['lang'])) {
@@ -60,22 +60,22 @@ $tpl->assign('LANG', LANG);
 $pages = array(
 	array(
 		'title' => $lang->t('installation', 'welcome'),
-		'page' => 'welcome',
+		'file' => 'welcome',
 		'selected' => '',
 	),
 	array(
 		'title' => $lang->t('installation', 'licence'),
-		'page' => 'licence',
+		'file' => 'licence',
 		'selected' => '',
 	),
 	array(
 		'title' => $lang->t('installation', 'requirements'),
-		'page' => 'requirements',
+		'file' => 'requirements',
 		'selected' => '',
 	),
 	array(
 		'title' => $lang->t('installation', 'configuration'),
-		'page' => 'configuration',
+		'file' => 'configuration',
 		'selected' => '',
 	),
 );

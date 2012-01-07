@@ -55,6 +55,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 				'end' => $date->timestamp($form['end']),
 				'mode' => $mode,
 				'block_id' => $form['block_id'],
+				'parent_id' => $form['parent'],
 				'display' => $form['display'],
 				'title' => $db->escape($form['title']),
 				'uri' => $form['mode'] == '1' ? $form['module'] : $uri_type,

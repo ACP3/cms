@@ -25,21 +25,21 @@ class modules
 	 *
 	 * @param string $module
 	 * 	Zu überprüfendes Modul
-	 * @param string $page
+	 * @param string $file
 	 * 	Zu überprüfende Moduldatei
 	 *
 	 * @return integer
 	 */
-	public static function check($module = 0, $page = 0) {
+	public static function check($module = 0, $file = 0) {
 		global $uri;
 		static $access_level = array();
 
 		$module = !empty($module) ? $module : $uri->mod;
-		$page = !empty($page) ? $page : $uri->page;
+		$file = !empty($file) ? $file : $uri->file;
 
-		if (is_file(MODULES_DIR . '' . $module . '/' . $page . '.php')) {
+		if (is_file(MODULES_DIR . '' . $module . '/' . $file . '.php')) {
 			if (self::isActive($module)) {
-				return acl::canAccessResource($module . '/' . $page . '/');
+				return acl::canAccessResource($module . '/' . $file . '/');
 			}
 			return 0;
 		}
@@ -84,7 +84,7 @@ class modules
 	public static function outputPage() {
 		global $auth, $uri;
 
-		if (!$auth->isUser() && defined('IN_ADM') && $uri->mod != 'users' && $uri->page != 'login') {
+		if (!$auth->isUser() && defined('IN_ADM') && $uri->mod != 'users' && $uri->file != 'login') {
 			$redirect_uri = base64_encode(substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1));
 			$uri->redirect('acp/users/login/redirect_' . $redirect_uri);
 		}
@@ -94,7 +94,7 @@ class modules
 			case 1:
 				global $date, $db, $lang, $tpl;
 
-				require MODULES_DIR . '' . $uri->mod . '/' . $uri->page . '.php';
+				require MODULES_DIR . '' . $uri->mod . '/' . $uri->file . '.php';
 
 				// Evtl. gesetzten Content-Type des Servers überschreiben
 				header('Content-Type: ' . (defined('CUSTOM_CONTENT_TYPE') ? CUSTOM_CONTENT_TYPE : 'text/html') . '; charset=UTF-8');
