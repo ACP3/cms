@@ -51,7 +51,7 @@ class auth
 	function __construct()
 	{
 		if (isset($_COOKIE['ACP3_AUTH'])) {
-			global $db, $lang, $uri;
+			global $db, $lang;
 
 			$cookie = base64_decode($_COOKIE['ACP3_AUTH']);
 			$cookie_arr = explode('|', $cookie);
@@ -71,8 +71,6 @@ class auth
 			}
 			if (!$this->isUser) {
 				$this->logout();
-
-				$uri->redirect(0, ROOT_DIR);
 			}
 		}
 	}

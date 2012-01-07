@@ -78,10 +78,12 @@ class uri
 
 			for ($i = 2; $i < $c_query; ++$i) {
 				// Position
-				if (!defined('POS') && preg_match('/^(pos_(\d+))$/', $query[$i])) {
-					define('POS', substr($query[$i], 4));
+				if (!defined('POS') && preg_match('/^(page_(\d+))$/', $query[$i])) {
+					global $auth;
+					define('POS', (substr($query[$i], 5) - 1) * $auth->entries);
+				}
 				// Additional URI parameters
-				} elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) {
+				if (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) {
 					$param = explode('_', $query[$i], 2);
 					$this->$param[0] = $param[1];
 				}
