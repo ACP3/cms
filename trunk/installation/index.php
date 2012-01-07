@@ -13,12 +13,12 @@ require ACP3_ROOT . 'installation/includes/startup.php';
 
 // Überprüfen, ob die angeforderte Seite überhaupt existiert
 $i = 0;
-$is_page = false;
+$is_file = false;
 foreach ($pages as $row) {
-	if ($row['page'] == $uri->page) {
+	if ($row['file'] == $uri->file) {
 		$pages[$i]['selected'] = ' class="selected"';
-		$tpl->assign('title', $lang->t('installation', $row['page']));
-		$is_page = true;
+		$tpl->assign('title', $lang->t('installation', $row['file']));
+		$is_file = true;
 		break;
 	}
 	++$i;
@@ -39,9 +39,9 @@ for ($i = 0; $i < $count_dir; ++$i) {
 }
 $tpl->assign('languages', $languages);
 
-if ($is_page) {
+if ($is_file) {
 	$content = '';
-	include ACP3_ROOT . 'installation/modules/' . $uri->page . '.php';
+	include ACP3_ROOT . 'installation/modules/' . $uri->file . '.php';
 	$tpl->assign('content', $content);
 } else {
 	$tpl->assign('title', $lang->t('errors', '404'));

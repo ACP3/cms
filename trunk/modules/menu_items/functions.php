@@ -341,9 +341,9 @@ function processNavbar($block) {
 				if ($uri->route($uri->query) != $uri->route($uri->mod) &&
 					$db->query('SELECT COUNT(*) FROM {pre}menu_items AS m JOIN {pre}menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->query . '\'', 1) > 0) {
 					$link = $uri->query;
-				} elseif ($uri->route($uri->mod . '/' . $uri->page . '/') != $uri->route($uri->mod) &&
-					$db->query('SELECT COUNT(*) FROM {pre}menu_items AS m JOIN {pre}menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->mod . '/' . $uri->page . '/\'', 1) > 0) {
-					$link = $uri->mod . '/' . $uri->page . '/';
+				} elseif ($uri->route($uri->mod . '/' . $uri->file . '/') != $uri->route($uri->mod) &&
+					$db->query('SELECT COUNT(*) FROM {pre}menu_items AS m JOIN {pre}menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri = \'' . $uri->mod . '/' . $uri->file . '/\'', 1) > 0) {
+					$link = $uri->mod . '/' . $uri->file . '/';
 				} else {
 					$link = $uri->mod;
 				}

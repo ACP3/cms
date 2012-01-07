@@ -72,7 +72,7 @@ class breadcrumb
 		global $db, $lang, $uri, $tpl;
 
 		$module = $uri->mod;
-		$page = $uri->page;
+		$file = $uri->file;
 
 		// Frontendbereich
 		if (defined('IN_ADM') === false) {
@@ -80,7 +80,7 @@ class breadcrumb
 
 			$pages = $db->query(sprintf($query, $uri->query));
 			if (empty($pages))
-				$pages = $db->query(sprintf($query, $module . '/' . $page . '/'));
+				$pages = $db->query(sprintf($query, $module . '/' . $file . '/'));
 			if (empty($pages))
 				$pages = $db->query(sprintf($query, $module));
 
@@ -109,19 +109,19 @@ class breadcrumb
 				}
 			// Brotkümelspur erzeugen, falls keine durch das Modul festgelegt wurde
 			} elseif (empty(self::$steps) && empty(self::$end)) {
-				self::$end = $page == 'list' ? $lang->t($module, $module) : $lang->t($module, $page);
+				self::$end = $file == 'list' ? $lang->t($module, $module) : $lang->t($module, $file);
 			}
 		// ACP
 		} elseif (empty(self::$steps) && empty(self::$end)) {
 			self::assign($lang->t('common', 'acp'), $uri->route('acp'));
 			// Modulindex der jeweiligen ACP-Seite
-			if ($page == 'adm_list') {
+			if ($file == 'adm_list') {
 				self::assign($lang->t($module, $module));
 			} elseif ($module == 'errors') {
-				self::assign($lang->t($module, $page));
+				self::assign($lang->t($module, $file));
 			} else {
 				self::assign($lang->t($module, $module), $uri->route('acp/' . $module));
-				self::assign($lang->t($module, $page));
+				self::assign($lang->t($module, $file));
 			}
 		}
 

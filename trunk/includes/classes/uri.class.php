@@ -52,10 +52,10 @@ class uri
 			global $db;
 
 			// Query auf eine benutzerdefinierte Startseite setzen
-			if ($this->query == '/' && CONFIG_HOMEPAGE != '') {
+			if ($this->query == '/' && CONFIG_HOMEPAGE != '')
 				$this->query = CONFIG_HOMEPAGE;
-			}
 
+			// Falls für Query ein Alias existiert, zu diesem weiterleiten
 			if (seo::uriAliasExists($this->query))
 				$this->redirect(seo::getUriAlias($this->query));
 
@@ -71,7 +71,7 @@ class uri
 		$defaultPage = defined('IN_ADM') ? 'adm_list' : 'list';
 
 		$this->mod = !empty($query[0]) ? $query[0] : $defaultModule;
-		$this->page = !empty($query[1]) ? $query[1] : $defaultPage;
+		$this->file = !empty($query[1]) ? $query[1] : $defaultPage;
 
 		if (!empty($query[2])) {
 			$c_query = count($query);
@@ -99,11 +99,11 @@ class uri
 	 * Gibt einen URI Parameter aus
 	 *
 	 * @param string $key
-	 * @return mixed
+	 * @return string|integer|null
 	 */
 	public function __get($key)
 	{
-		if (!empty($key) && array_key_exists($key, $this->params))
+		if (isset($this->params[$key]))
 			return $this->params[$key];
 		return null;
 	}
@@ -111,7 +111,7 @@ class uri
 	 * Setzt einen neuen URI Parameter
 	 *
 	 * @param string $name
-	 * @param mixed $value
+	 * @param string|integer $value
 	 */
 	public function __set($name, $value)
 	{

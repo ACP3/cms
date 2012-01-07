@@ -9,7 +9,7 @@ if (modules::check($uri->feed, 'extensions/feeds') == 1) {
 
 	//RSS Kopf Felder
 	$feed['generator'] = CONFIG_VERSION;
-	$feed['atom_link'] = $link . $uri->route($uri->mod . '/' . $uri->page . '/feed_' . $module);
+	$feed['atom_link'] = $link . $uri->route($uri->mod . '/' . $uri->file . '/feed_' . $module);
 	$feed['link'] = $link . ROOT_DIR;
 	$feed['description'] = $lang->t($module, $module);
 

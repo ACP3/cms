@@ -290,7 +290,7 @@ function pagination($rows)
 			}
 		}
 
-		$link = $uri->route($acp . $uri->mod . '/' . $uri->page . $params, 1);
+		$link = $uri->route($acp . $uri->mod . '/' . $uri->file . $params, 1);
 
 		// Seitenauswahl
 		$pagination = array();
