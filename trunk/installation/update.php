@@ -448,7 +448,7 @@ if (CONFIG_DB_VERSION < 10) {
 		foreach ($modules as $module) {
 			foreach ($privileges as $privilege) {
 				$permission = 0;
-				if ($role['id'] == 1 && $privilege['id'] == 1)
+				if ($role['id'] == 1 && ($privilege['id'] == 1 || $privilege['id'] == 2))
 					$permission = 1;
 				if ($role['id'] > 1 && $role['id'] < 4)
 					$permission = 2;
