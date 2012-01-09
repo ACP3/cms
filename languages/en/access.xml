@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="access">Access levels</item>
+	<item key="access">Permissions</item>
+	<item key="adm_list_resources">Manage resources</item>
 	<item key="allow_access">Allow</item>
-	<item key="permissions">Permissions</item>
-	<item key="role_already_exists">There is already an role with the same name</item>
-	<item key="role_undeletable">It\'s impossible to delete the guest, user and administrator roles!</item>
-	<item key="calculated_permission">Calculated permission: %s</item>
+	<item key="assigned_privilege">Assigned privilege</item>
+	<item key="filename">Filename</item>
 	<item key="create">Create a new role</item>
 	<item key="delete">Delete roles</item>
 	<item key="deny_access">Deny</item>
 	<item key="edit">Edit role</item>
+	<item key="edit_resource">Edit resource</item>
 	<item key="inherit_access">Inherit</item>
 	<item key="invalid_privileges">The submitted permissions contain unallowed values.</item>
 	<item key="mod_description">With this module you can set permissions for the users.</item>
+	<item key="module_name">Module name</item>
 	<item key="no_privilege_selected">Please select the privileges, to which the user should have access</item>
+	<item key="permissions">Permissions</item>
+	<item key="privilege_does_not_exist">The selected privilege does not exist.</item>
+	<item key="role_already_exists">There is already an role with the same name</item>
+	<item key="role_undeletable">It\'s impossible to delete the guest, user and administrator roles!</item>
 	<item key="roles">Assigned roles</item>
 	<item key="superior_role">Superior role</item>
+	<item key="select_privilege">Please select a privilege for this resource.</item>
 </language>

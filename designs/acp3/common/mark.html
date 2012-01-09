@@ -4,7 +4,7 @@ function mark_entries(name, action)
 	var fields = $('form :checkbox');
 
 	jQuery.each(fields, function() {
-		if ($(this).attr('name') == name + '[]') {
+		if ($(this).attr('name') == name + '[]' && $(this).is(':visible')) {
 			if (action == 'add') {
 				$(this).attr('checked', 'checked');
 				//if ($(this).parent().parent())

@@ -11,7 +11,7 @@
 	<table class="acp-table">
 		<thead>
 			<tr>
-{if $can_delete}
+{if $can_delete === true}
 				<th>{lang t="common|mark"}</th>
 {/if}
 				<th>{lang t="comments|module"}</th>
@@ -21,7 +21,7 @@
 		<tbody>
 {foreach $comments as $row}
 			<tr>
-{if $can_delete}
+{if $can_delete === true}
 				<td><input type="checkbox" name="entries[]" value="{$row.module}" class="checkbox"></td>
 {/if}
 				<td>{check_access mode="link" action="comments|adm_list" uri="acp/comments/adm_list/module_`$row.module`" lang="comments|show_comments" title=$row.name}</td>
@@ -30,7 +30,7 @@
 {/foreach}
 		</tbody>
 	</table>
-{if $can_delete}
+{if $can_delete === true}
 {mark name="entries"}
 {/if}
 {else}

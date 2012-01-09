@@ -12,11 +12,11 @@
 	<table class="acp-table">
 		<thead>
 			<tr>
-{if $can_delete}
+{if $can_delete === true}
 				<th>{lang t="common|mark"}</th>
 {/if}
 				<th>{lang t="common|name"}</th>
-{if $can_order}
+{if $can_order === true}
 				<th>{lang t="common|order"}</th>
 {/if}
 				<th style="width:3%">{lang t="common|id"}</th>
@@ -25,11 +25,11 @@
 		<tbody>
 {foreach $roles as $row}
 			<tr>
-{if $can_delete}
+{if $can_delete === true}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td style="text-align:left">{check_access mode="link" action="access|edit" uri="acp/access/edit/id_`$row.id`" title=$row.name}</td>
-{if $can_order}
+{if $can_order === true}
 				<td>
 {if !$row.last}
 					<a href="{uri args="acp/access/order/id_`$row.id`/action_down"}" title="{lang t="common|move_down"}">{icon path="16/down" width="16" height="16" alt="{lang t="common|move_down"}"}</a>
@@ -47,7 +47,7 @@
 {/foreach}
 		</tbody>
 	</table>
-{if $can_delete}
+{if $can_delete === true}
 {mark name="entries"}
 {/if}
 {else}
