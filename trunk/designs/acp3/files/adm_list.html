@@ -12,7 +12,7 @@
 	<table class="acp-table">
 		<thead>
 			<tr>
-{if $can_delete}
+{if $can_delete === true}
 				<th>{lang t="common|mark"}</th>
 {/if}
 				<th>{lang t="common|publication_period"}</th>
@@ -25,7 +25,7 @@
 		<tbody>
 {foreach $files as $row}
 			<tr>
-{if $can_delete}
+{if $can_delete === true}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td>{$row.period}</td>
@@ -37,7 +37,7 @@
 {/foreach}
 		</tbody>
 	</table>
-{if $can_delete}
+{if $can_delete === true}
 {mark name="entries"}
 {/if}
 {else}

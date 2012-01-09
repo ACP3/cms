@@ -4,10 +4,7 @@
 	<item key="adm_list_resources">Ressourcen verwalten</item>
 	<item key="allow_access">Zugriff erlauben</item>
 	<item key="assigned_privilege">Zugeordnete Privilegie</item>
-	<item key="permissions">Berechtigungen</item>
-	<item key="role_already_exists">Es existiert bereits ein Rolle mit diesem Namen.</item>
-	<item key="role_undeletable">Die Rollen für Gäste, Benutzer und Administratoren können nicht gelöscht werden!</item>
-	<item key="calculated_permission">Errechnete Berechtigung: %s</item>
+	<item key="filename">Dateiname</item>
 	<item key="create">Neue Rolle erstellen</item>
 	<item key="delete">Rolle löschen</item>
 	<item key="deny_access">Zugriff verbieten</item>
@@ -18,7 +15,11 @@
 	<item key="mod_description">Mit diesem Modul können Berechtigungen für die Benutzer festgelegt werden.</item>
 	<item key="module_name">Modul Name</item>
 	<item key="no_privilege_selected">Bitte setzen Sie die Berechtigungen für die einzelnen Aktionen, die ein Benutzer ausführen darf.</item>
-	<item key="resource_path">Pfad der Ressource</item>
+	<item key="permissions">Berechtigungen</item>
+	<item key="privilege_does_not_exist">Die ausgewählte Privilegie existiert nicht.</item>
+	<item key="role_already_exists">Es existiert bereits ein Rolle mit diesem Namen.</item>
+	<item key="role_undeletable">Die Rollen für Gäste, Benutzer und Administratoren können nicht gelöscht werden!</item>
 	<item key="roles">Zugeordnete Rollen</item>
 	<item key="superior_role">Übergeordnete Rolle</item>
+	<item key="select_privilege">Bitte wählen Sie für die gewählte Ressource eine Privilegie aus.</item>
 </language>

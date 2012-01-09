@@ -240,6 +240,7 @@ $queries = array(
 		5 => 'CREATE TABLE`{pre}acl_resources` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `module_id` int(10) unsigned NOT NULL, `page` varchar(255) NOT NULL, `params` varchar(255) NOT NULL, `privilege_id` int(10) unsigned NOT NULL, PRIMARY KEY (`id`)) {engine};',
 		6 => 'ALTER TABLE `{pre}acl_privileges` CHANGE `name` `description` VARCHAR(100) NOT NULL;',
 	),
+	11 => array(),
 );
 
 // Änderungen am DB Schema vornehmen
@@ -255,11 +256,13 @@ if (!empty($queries[CONFIG_DB_VERSION + 1])) {
 
 	$c_queries = count($queries);
 	for ($i = CONFIG_DB_VERSION + 1; $i <= $c_queries; ++$i) {
-		foreach ($queries[$i] as $row) {
-			$row = str_replace(array('{pre}', '{engine}', '{charset}'), array($db->prefix, $engine, $charset), $row);
-			$bool = $db->query($row, 3);
-			if ($bool === null && defined('DEBUG') && DEBUG) {
-				print "\n";
+		if (!empty($queries[$i])) {
+			foreach ($queries[$i] as $row) {
+				$row = str_replace(array('{engine}', '{charset}'), array($db->prefix, $engine, $charset), $row);
+				$bool = $db->query($row, 3);
+				if ($bool === null && defined('DEBUG') && DEBUG) {
+					print "\n";
+				}
 			}
 		}
 	}
@@ -463,6 +466,13 @@ if (CONFIG_DB_VERSION < 10) {
 	}
 
 	$db->link->commit();
+}
+if (CONFIG_DB_VERSION < 11) {
+	$mod_id = $db->select('id', 'modules', 'name = \'access\'');
+
+	$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id[0]['id'], 'page' => 'adm_list_resources', 'privilege_id' => 3));
+	$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id[0]['id'], 'page' => 'edit_resource', 'privilege_id' => 5));
+	$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id[0]['id'], 'page' => 'delete_resources', 'privilege_id' => 6));
 }
 
 // Konfigurationsdatei aktualisieren

@@ -28,8 +28,6 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 		if (isset($errors)) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
-			require_once MODULES_DIR . 'access/functions.php';
-
 			$update_values = array(
 				'name' => $db->escape($form['name']),
 				'parent_id' => $uri->id == 1 ? 0 : $form['parent'],

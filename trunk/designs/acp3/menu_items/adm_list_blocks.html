@@ -11,7 +11,7 @@
 	<table class="acp-table">
 		<thead>
 			<tr>
-{if $can_delete}
+{if $can_delete === true}
 				<th>{lang t="common|mark"}</th>
 {/if}
 				<th>{lang t="menu_items|title"}</th>
@@ -22,7 +22,7 @@
 		<tbody>
 {foreach $blocks as $row}
 			<tr>
-{if $can_delete}
+{if $can_delete === true}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td>{check_access mode="link" action="menu_items|edit_block" uri="acp/menu_items/edit_block/id_`$row.id`" title=$row.title}</td>
@@ -32,7 +32,7 @@
 {/foreach}
 		</tbody>
 	</table>
-{if $can_delete}
+{if $can_delete === true}
 {mark name="entries"}
 {/if}
 {else}

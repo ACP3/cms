@@ -3,8 +3,8 @@ function smarty_function_check_access($params, $template)
 {
 	$action = explode('|', $params['action']);
 	if ($params['mode'] == 'bool') {
-		return modules::check($action[0], $action[1]) == 1 ? true : false;
-	} elseif (modules::check($action[0], $action[1]) == 1) {
+		return modules::check($action[0], $action[1]) === true ? true : false;
+	} elseif (modules::check($action[0], $action[1]) === true) {
 		global $lang, $uri;
 
 		$access_check = array();
