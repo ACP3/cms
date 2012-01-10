@@ -1,0 +1,7 @@
+#resources-table .sub-table-header {
+	padding: 0 5px;
+	cursor: pointer;
+}
+#resources-table .sub-table-header:hover {
+	background: #eee;
+}
