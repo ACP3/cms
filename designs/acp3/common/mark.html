@@ -1,21 +1,26 @@
 <script type="text/javascript">
 function mark_entries(name, action)
 {
-	var fields = $('form :checkbox');
+	var fields = $('form .acp-table tbody input[name="' + name + '[]"]:visible');
 
 	jQuery.each(fields, function() {
-		if ($(this).attr('name') == name + '[]' && $(this).is(':visible')) {
-			if (action == 'add') {
-				$(this).attr('checked', 'checked');
-				//if ($(this).parent().parent())
-			} else {
-				$(this).removeAttr('checked');
-			}
+		if (action == 'add') {
+			$(this).prop('checked', true).parents('tr:first').addClass('selected');
+		} else {
+			$(this).prop('checked', false).parents('tr:first').removeClass('selected');
 		}
 	});
 }
 
 $(document).ready(function() {
+	$('#mark-all').click(function() {
+		if ($(this).is(':checked')) {
+			mark_entries('{$checkbox_name}', 'add');
+		} else {
+			mark_entries('{$checkbox_name}', 'remove');
+		}
+	});
+
 	// Checkbox durch Klick auf Tabellenzeile markieren
 	$('form > table.acp-table > tbody > tr').filter(':has(:checkbox:checked)').addClass('selected').end().click(function(event) {
 		if (event.target.type !== 'checkbox') {
@@ -23,9 +28,12 @@ $(document).ready(function() {
 		}
 	}).find(':checkbox').click(function() {
 		$(this).parents('tr:first').toggleClass('selected');
+		if ($('.acp-table tbody tr:has(:checkbox):visible').length == $('.acp-table tbody tr.selected:visible').length) {
+			$('#mark-all').prop('checked', true);
+		} else {
+			$('#mark-all').prop('checked', false);
+		}
 	});
-
-	$('form > .acp-table').after('<' + 'div class="mark-entries"><' + 'a href="javascript:mark_entries(\'{$checkbox_name}\',\'add\')">{lang t="common|mark_all"}<' + '/a> <' + 'span>::<' + '/span> <' + 'a href="javascript:mark_entries(\'{$checkbox_name}\',\'remove\')">{lang t="common|unmark_all"}<' + '/a><' + '/div>');
 
 	$('form #adm-list input[type=image]').click(function() {
 		var entries = $('form .acp-table input:checkbox:checked') || [];
