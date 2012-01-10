@@ -6,19 +6,7 @@
 	<hr>
 {if isset($resources)}
 {assign var="can_delete_resource" value=modules::check("access", "delete_resources")}
-	<script type="text/javascript">
-	$(document).ready(function() {
-		$('.hide:not(:first)').hide();
-		$('.sub-table-header').click(function() {
-			$('.' + $(this).prop('id')).toggle();
-			if ($('.acp-table tbody tr:has(:checkbox):visible').length == $('.acp-table tbody tr.selected:visible').length) {
-				$('#mark-all').prop('checked', true);
-			} else {
-				$('#mark-all').prop('checked', false);
-			}
-		});
-	});
-	</script>
+	<script type="text/javascript" src="{$DESIGN_PATH}access/script.js"></script>
 	<table id="resources-table" class="acp-table">
 		<thead>
 			<tr>
