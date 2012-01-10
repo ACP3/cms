@@ -36,14 +36,14 @@ $(document).ready(function() {
 	});
 
 	$('form #adm-list input[type=image]').click(function() {
-		var entries = $('form .acp-table input:checkbox:checked') || [];
+		var entries = $('form .acp-table :checkbox:checked') || [];
 		var ary = '';
 
 		jQuery.each(entries, function() {
 			ary = ary + $(this).val() + '|';
 		});
 
-		$('div.mark-entries').after('<' + 'div id="dialog"><' + 'h5 style="text-align:center"><' + '/h5><' + '/div>');
+		$('.acp-table').after('<' + 'div id="dialog"><' + 'h5 style="text-align:center"><' + '/h5><' + '/div>');
 
 		if (ary != '') {
 			$('#dialog h5').text('{lang t="common|confirm_delete"}');
