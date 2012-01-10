@@ -14,11 +14,11 @@
 		});
 	});
 	</script>
-	<table class="acp-table">
+	<table id="resources-table" class="acp-table">
 		<thead>
 			<tr>
 {if $can_delete_resource === true}
-				<th>{lang t="common|mark"}</th>
+				<th><input type="checkbox" id="mark-all" value="1" class="checkbox"></th>
 {/if}
 				<th>{lang t="access|filename"}</th>
 				<th>{lang t="access|assigned_privilege"}</th>
