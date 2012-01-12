@@ -112,7 +112,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 		$tpl->assign('question', isset($form['question']) ? $form['question'] : $db->escape($poll[0]['question'], 3));
 		$tpl->assign('disable', count($answers) < 10 ? false : true);
 
-		$content = modules::fetchTemplate('polls/edit.html');
+		$content = modules::fetchTemplate('polls/edit.tpl');
 	}
 } else {
 	$uri->redirect('errors/404');

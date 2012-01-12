@@ -130,5 +130,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : $current);
 
-	$content = modules::fetchTemplate('system/configuration.html');
+	$content = modules::fetchTemplate('system/configuration.tpl');
 }

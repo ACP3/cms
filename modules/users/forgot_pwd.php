@@ -55,6 +55,6 @@ if ($auth->isUser()) {
 
 		$tpl->assign('captcha', captcha());
 
-		$content = modules::fetchTemplate('users/forgot_pwd.html');
+		$content = modules::fetchTemplate('users/forgot_pwd.tpl');
 	}
 }

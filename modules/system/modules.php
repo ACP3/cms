@@ -59,5 +59,5 @@ if ($uri->action == 'activate') {
 	$tpl->assign('LANG_modules_found', sprintf($lang->t('system', 'modules_found'), count($mod_list)));
 	$tpl->assign('modules', $mod_list);
 
-	$content = modules::fetchTemplate('system/modules.html');
+	$content = modules::fetchTemplate('system/modules.tpl');
 }

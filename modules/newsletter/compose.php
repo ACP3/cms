@@ -81,5 +81,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$action[1]['lang'] = $lang->t('newsletter', 'only_save');
 	$tpl->assign('action', $action);
 
-	$content = modules::fetchTemplate('newsletter/compose.html');
+	$content = modules::fetchTemplate('newsletter/compose.tpl');
 }

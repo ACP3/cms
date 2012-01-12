@@ -129,7 +129,7 @@ class breadcrumb
 		if ($mode == 1) {
 			$tpl->assign('breadcrumb', self::$steps);
 			$tpl->assign('end', self::$end);
-			return $tpl->fetch('common/breadcrumb.html');
+			return $tpl->fetch('common/breadcrumb.tpl');
 		}
 
 		// Nur Titel ausgeben

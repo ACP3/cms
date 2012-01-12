@@ -54,5 +54,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	}
 	$tpl->assign('sidebar_entries', $sidebar_entries);
 
-	$content = modules::fetchTemplate('files/settings.html');
+	$content = modules::fetchTemplate('files/settings.tpl');
 }

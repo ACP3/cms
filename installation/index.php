@@ -45,9 +45,9 @@ if ($is_file) {
 	$tpl->assign('content', $content);
 } else {
 	$tpl->assign('title', $lang->t('errors', '404'));
-	$tpl->assign('content', $tpl->fetch('404.html'));
+	$tpl->assign('content', $tpl->fetch('404.tpl'));
 }
 
-$tpl->display('layout.html');
+$tpl->display('layout.tpl');
 
 ob_end_flush();

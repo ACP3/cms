@@ -20,7 +20,7 @@ if (modules::check($uri->feed, 'extensions/feeds') == 1) {
 
 	// Content-Type setzen und Layout für den RSS-Feed laden
 	define('CUSTOM_CONTENT_TYPE', 'application/xml');
-	define('CUSTOM_LAYOUT', 'feeds/rss.html');
+	define('CUSTOM_LAYOUT', 'feeds/rss.tpl');
 } else {
 	$uri->redirect(0, ROOT_DIR);
 }

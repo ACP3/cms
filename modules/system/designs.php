@@ -44,5 +44,5 @@ if ($uri->dir) {
 	}
 	$tpl->assign('designs', $designs);
 
-	$content = modules::fetchTemplate('system/designs.html');
+	$content = modules::fetchTemplate('system/designs.tpl');
 }

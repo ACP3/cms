@@ -105,7 +105,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 
 		$tpl->assign('form', isset($form) ? $form : $role[0]);
 
-		$content = modules::fetchTemplate('access/edit.html');
+		$content = modules::fetchTemplate('access/edit.tpl');
 	}
 } else {
 	$uri->redirect('errors/404');

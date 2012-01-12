@@ -101,7 +101,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 
 		$tpl->assign('form', isset($form) ? $form : $news[0]);
 
-		$content = modules::fetchTemplate('news/edit.html');
+		$content = modules::fetchTemplate('news/edit.tpl');
 	}
 } else {
 	$uri->redirect('errors/404');

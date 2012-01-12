@@ -10,4 +10,4 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$content = modules::fetchTemplate('system/maintenance.html');
+$content = modules::fetchTemplate('system/maintenance.tpl');

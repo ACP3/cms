@@ -75,5 +75,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	}
 	$tpl->assign('mod_list', $mod_list);
 
-	$content = modules::fetchTemplate('categories/create.html');
+	$content = modules::fetchTemplate('categories/create.tpl');
 }

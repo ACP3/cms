@@ -24,4 +24,4 @@ if ($c_users > 0) {
 }
 $tpl->assign('LANG_users_found', sprintf($lang->t('users', 'users_found'), $all_users));
 
-$content = modules::fetchTemplate('users/list.html');
+$content = modules::fetchTemplate('users/list.tpl');

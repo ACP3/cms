@@ -70,7 +70,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' 
 
 		$tpl->assign('form', isset($form) ? $form : $category[0]);
 
-		$content = modules::fetchTemplate('categories/edit.html');
+		$content = modules::fetchTemplate('categories/edit.tpl');
 	}
 } else {
 	$uri->redirect('errors/404');

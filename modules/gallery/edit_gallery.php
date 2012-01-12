@@ -71,7 +71,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			$tpl->assign('pictures', $pictures);
 		}
 
-		$content = modules::fetchTemplate('gallery/edit_gallery.html');
+		$content = modules::fetchTemplate('gallery/edit_gallery.tpl');
 	}
 } else {
 	$uri->redirect('errors/404');

@@ -123,5 +123,5 @@ function categoriesList($module, $category_id = '', $category_create = false, $c
 		$categories['create']['value'] = isset($_POST['form'][$categories['create']['name']]) ? $_POST['form'][$categories['create']['name']] : '';
 	}
 	$tpl->assign('categories', $categories);
-	return modules::fetchTemplate('categories/create_list.html');
+	return modules::fetchTemplate('categories/create_list.tpl');
 }

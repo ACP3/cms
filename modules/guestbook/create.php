@@ -18,7 +18,7 @@ $newsletterAccess = modules::check('newsletter', 'create') == 1 && $settings['ne
 
 if ($uri->design == 'simple') {
 	$comboColorbox = 1;
-	define('CUSTOM_LAYOUT', 'simple.html');
+	define('CUSTOM_LAYOUT', 'simple.tpl');
 } else {
 	$comboColorbox = 0;
 }
@@ -135,5 +135,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	
 	$tpl->assign('captcha', captcha());
 
-	$content = modules::fetchTemplate('guestbook/create.html');
+	$content = modules::fetchTemplate('guestbook/create.tpl');
 }

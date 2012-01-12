@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
 
 	if (isset($errors)) {
 		$tpl->assign('errors', $errors);
-		$tpl->assign('error_msg', $tpl->fetch('error.html'));
+		$tpl->assign('error_msg', $tpl->fetch('error.tpl'));
 	} else {
 		// Systemkonfiguration erstellen
 		$config = array(
@@ -252,5 +252,5 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 }
-$content = $tpl->fetch('configuration.html');
+$content = $tpl->fetch('configuration.tpl');
 ?>

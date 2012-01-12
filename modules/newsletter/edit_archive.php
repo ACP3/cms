@@ -91,7 +91,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 		$action[1]['lang'] = $lang->t('newsletter', 'only_save');
 		$tpl->assign('action', $action);
 
-		$content = $tpl->fetch('newsletter/edit_archive.html');
+		$content = $tpl->fetch('newsletter/edit_archive.tpl');
 	}
 } else {
 	$uri->redirect('errors/404');

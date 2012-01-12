@@ -24,4 +24,4 @@ if ($c_newsletter > 0) {
 	}
 	$tpl->assign('newsletter', $newsletter);
 }
-$content = modules::fetchTemplate('newsletter/adm_list_archive.html');
+$content = modules::fetchTemplate('newsletter/adm_list_archive.tpl');
