@@ -1,5 +1,5 @@
 <div class="licence">
-	{include file="gpl.html"}
+	{include file="gpl.tpl"}
 </div>
 <br>
 <div class="success forward">
