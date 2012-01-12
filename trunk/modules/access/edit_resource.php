@@ -49,7 +49,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_resources', 'id = \
 		}
 		$tpl->assign('privileges', $privileges);
 
-		$content = modules::fetchTemplate('access/edit_resource.html');
+		$content = modules::fetchTemplate('access/edit_resource.tpl');
 	}
 } else {
 	$uri->redirect('errors/404');

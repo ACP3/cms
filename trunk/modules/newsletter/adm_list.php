@@ -25,4 +25,4 @@ if ($c_accounts > 0) {
 	}
 	$tpl->assign('accounts', $accounts);
 }
-$content = modules::fetchTemplate('newsletter/adm_list.html');
+$content = modules::fetchTemplate('newsletter/adm_list.tpl');

@@ -78,6 +78,6 @@ if ($auth->isUser()) {
 
 		$tpl->assign('captcha', captcha());
 
-		$content = modules::fetchTemplate('users/register.html');
+		$content = modules::fetchTemplate('users/register.tpl');
 	}
 }

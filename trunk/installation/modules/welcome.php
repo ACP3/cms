@@ -2,5 +2,5 @@
 if (defined('IN_INSTALL') === false)
 	exit;
 
-$content = $tpl->fetch('welcome.html');
+$content = $tpl->fetch('welcome.tpl');
 ?>

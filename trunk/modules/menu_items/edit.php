@@ -152,7 +152,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 
 		$tpl->assign('pages_list', menuItemsList($page[0]['parent_id'], $page[0]['left_id'], $page[0]['right_id']));
 
-		$content = modules::fetchTemplate('menu_items/edit.html');
+		$content = modules::fetchTemplate('menu_items/edit.tpl');
 	}
 } else {
 	$uri->redirect('errors/404');

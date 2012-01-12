@@ -81,5 +81,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : array('notify_email' => $settings['notify_email']));
 
-	$content = modules::fetchTemplate('guestbook/settings.html');
+	$content = modules::fetchTemplate('guestbook/settings.tpl');
 }

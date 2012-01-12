@@ -86,5 +86,5 @@ if (version_compare(phpversion(), PHP_VER, '<') ||
 	$tpl->assign('check_again', true);
 }
 
-$content = $tpl->fetch('requirements.html');
+$content = $tpl->fetch('requirements.tpl');
 ?>

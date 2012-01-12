@@ -22,7 +22,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 
 	$page[0]['text'] = rewriteInternalUri($db->escape($page[0]['text'], 3));
 	$tpl->assign('text', $page[0]['text']);
-	$content = modules::fetchTemplate('static_pages/list.html');
+	$content = modules::fetchTemplate('static_pages/list.tpl');
 } else {
 	$uri->redirect('errors/404');
 }

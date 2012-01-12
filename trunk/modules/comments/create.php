@@ -97,6 +97,6 @@ function commentsCreate($module, $entry_id)
 		$tpl->assign('form', isset($form) ? array_merge($defaults, $form) : $defaults);
 		$tpl->assign('captcha', captcha());
 
-		return modules::fetchTemplate('comments/create.html');
+		return modules::fetchTemplate('comments/create.tpl');
 	}
 }

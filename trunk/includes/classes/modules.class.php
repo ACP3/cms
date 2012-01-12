@@ -112,7 +112,7 @@ class modules
 				$tpl->assign('MIN_STYLESHEET_SIMPLE', sprintf($minify, 'css_simple'));
 
 				// Falls ein Modul ein eigenes Layout verwenden möchte, dieses auch zulassen
-				self::displayTemplate(defined('CUSTOM_LAYOUT') ? CUSTOM_LAYOUT : 'layout.html');
+				self::displayTemplate(defined('CUSTOM_LAYOUT') ? CUSTOM_LAYOUT : 'layout.tpl');
 				break;
 			// Kein Zugriff auf die Seite
 			case 0:

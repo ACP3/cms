@@ -45,5 +45,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$entries[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('entries', $entries);
 
-	$content = modules::fetchTemplate('users/settings.html');
+	$content = modules::fetchTemplate('users/settings.tpl');
 }

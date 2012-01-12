@@ -19,4 +19,4 @@ if ($c_roles > 0) {
 	}
 	$tpl->assign('roles', $roles);
 }
-$content = modules::fetchTemplate('access/adm_list.html');
+$content = modules::fetchTemplate('access/adm_list.tpl');

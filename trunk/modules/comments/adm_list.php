@@ -26,7 +26,7 @@ if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module
 		$tpl->assign('comments', $comments);
 	}
 
-	$content = modules::fetchTemplate('comments/adm_list_module.html');
+	$content = modules::fetchTemplate('comments/adm_list_module.tpl');
 } else {
 	//Brotkrümelspur
 	breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
@@ -58,5 +58,5 @@ if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module
 		$tpl->assign('comments', $comments);
 	}
 
-	$content = modules::fetchTemplate('comments/adm_list_comments.html');
+	$content = modules::fetchTemplate('comments/adm_list_comments.tpl');
 }

@@ -80,7 +80,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 		$tpl->assign('multiple', $question[0]['multiple']);
 		$tpl->assign('answers', $answers);
 
-		$content = modules::fetchTemplate('polls/vote.html');
+		$content = modules::fetchTemplate('polls/vote.tpl');
 	}
 } else {
 	$uri->redirect('errors/404');

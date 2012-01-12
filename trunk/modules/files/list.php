@@ -18,4 +18,4 @@ if (modules::check('categories', 'functions') == 1) {
 	}
 }
 
-$content = modules::fetchTemplate('files/list.html');
+$content = modules::fetchTemplate('files/list.tpl');

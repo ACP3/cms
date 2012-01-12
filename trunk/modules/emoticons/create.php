@@ -51,5 +51,5 @@ if (isset($_POST['form'])) {
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : array('code' => '', 'description' => ''));
 
-	$content = modules::fetchTemplate('emoticons/create.html');
+	$content = modules::fetchTemplate('emoticons/create.tpl');
 }

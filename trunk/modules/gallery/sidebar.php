@@ -25,4 +25,4 @@ if ($c_galleries > 0) {
 	$tpl->assign('sidebar_galleries', $galleries);
 }
 
-modules::displayTemplate('gallery/sidebar.html');
+modules::displayTemplate('gallery/sidebar.tpl');

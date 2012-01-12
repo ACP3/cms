@@ -94,5 +94,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	ksort($modules);
 	$tpl->assign('modules', $modules);
 
-	$content = modules::fetchTemplate('access/create.html');
+	$content = modules::fetchTemplate('access/create.tpl');
 }

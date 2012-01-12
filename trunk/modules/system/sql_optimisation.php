@@ -49,4 +49,4 @@ if ($uri->action == 'do') {
 	$tpl->assign('total_overhead', calcFilesize($total_overhead));
 }
 
-$content = modules::fetchTemplate('system/sql_optimisation.html');
+$content = modules::fetchTemplate('system/sql_optimisation.tpl');

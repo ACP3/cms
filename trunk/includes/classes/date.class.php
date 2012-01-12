@@ -141,7 +141,7 @@ class date
 
 		$tpl->assign('datepicker', $datepicker);
 
-		return modules::fetchTemplate('common/date.html');
+		return modules::fetchTemplate('common/date.tpl');
 	}
 	/**
 	 * Gibt ein formatiertes Datum zurück

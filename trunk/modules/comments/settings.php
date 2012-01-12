@@ -35,5 +35,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$dateformat[1]['lang'] = $lang->t('common', 'date_format_long');
 	$tpl->assign('dateformat', $dateformat);
 
-	$content = modules::fetchTemplate('comments/settings.html');
+	$content = modules::fetchTemplate('comments/settings.tpl');
 }

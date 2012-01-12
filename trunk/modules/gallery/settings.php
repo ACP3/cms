@@ -72,5 +72,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : $settings);
 
-	$content = modules::fetchTemplate('gallery/settings.html');
+	$content = modules::fetchTemplate('gallery/settings.tpl');
 }

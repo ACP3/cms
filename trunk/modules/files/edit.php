@@ -131,7 +131,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		$tpl->assign('current_file', $dl[0]['file']);
 		$tpl->assign('form', isset($form) ? $form : $dl[0]);
 
-		$content = modules::fetchTemplate('files/edit.html');
+		$content = modules::fetchTemplate('files/edit.tpl');
 	}
 } else {
 	$uri->redirect('errors/403');

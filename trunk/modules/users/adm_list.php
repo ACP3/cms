@@ -24,4 +24,4 @@ if ($c_users > 0) {
 	$tpl->assign('users', $users);
 }
 
-$content = modules::fetchTemplate('users/adm_list.html');
+$content = modules::fetchTemplate('users/adm_list.tpl');

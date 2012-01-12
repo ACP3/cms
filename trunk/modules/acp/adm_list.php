@@ -25,4 +25,4 @@ foreach ($mod_list as $name => $info) {
 }
 $tpl->assign('modules', $mods);
 
-$content = modules::fetchTemplate('acp/adm_list.html');
+$content = modules::fetchTemplate('acp/adm_list.tpl');
