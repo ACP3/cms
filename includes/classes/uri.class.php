@@ -25,7 +25,7 @@ class uri
 	 * @var array
 	 * @access protected
 	 */
-	public $params = array();
+	private $params = array();
 	/**
 	 * Die komplette übergebene URL
 	 *
@@ -35,10 +35,8 @@ class uri
 
 	/**
 	 * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
-	 *
-	 * @return modules
 	 */
-	function __construct()
+	function __construct($defaultModule = '', $defaultFile = '')
 	{
 		$this->query = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
 		$this->query.= !preg_match('/\/$/', $this->query) ? '/' : '';
@@ -67,11 +65,14 @@ class uri
 		}
 
 		$query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
-		$defaultModule = defined('IN_ADM') ? 'acp' : 'news';
-		$defaultPage = defined('IN_ADM') ? 'adm_list' : 'list';
+
+		if (empty($defaultModule) || empty($defaultFile)) {
+			$defaultModule = defined('IN_ADM') ? 'acp' : 'news';
+			$defaultFile = defined('IN_ADM') ? 'adm_list' : 'list';
+		}
 
 		$this->mod = !empty($query[0]) ? $query[0] : $defaultModule;
-		$this->file = !empty($query[1]) ? $query[1] : $defaultPage;
+		$this->file = !empty($query[1]) ? $query[1] : $defaultFile;
 
 		if (!empty($query[2])) {
 			$c_query = count($query);
@@ -81,16 +82,18 @@ class uri
 				if (!defined('POS') && preg_match('/^(page_(\d+))$/', $query[$i])) {
 					global $auth;
 					define('POS', (substr($query[$i], 5) - 1) * $auth->entries);
-				}
+				// ID eines Datensatzes
+				} elseif (preg_match('/^(id_(\d+))$/', $query[$i])) {
+					$this->id = (int) substr($query[$i], 3);
 				// Additional URI parameters
-				if (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) {
+				} elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) {
 					$param = explode('_', $query[$i], 2);
 					$this->$param[0] = $param[1];
 				}
 			}
 		}
 
-		if (!empty($_POST['cat']))
+		if (!empty($_POST['cat']) && validate::isNumber($_POST['cat']))
 			$this->cat = $_POST['cat'];
 		if (!empty($_POST['action']))
 			$this->action = $_POST['action'];
@@ -117,7 +120,18 @@ class uri
 	 */
 	public function __set($name, $value)
 	{
-		$this->params[$name] = $value;
+		// Parameter sollten nicht überschrieben werden können
+		if (!isset($this->params[$name]))
+			$this->params[$name] = $value;
+	}
+	/**
+	 * Gibt die URI-Parameter aus
+	 *
+	 * @return array 
+	 */
+	public function getParameters()
+	{
+		return $this->params;
 	}
 	/**
 	 * Umleitung auf andere URLs
