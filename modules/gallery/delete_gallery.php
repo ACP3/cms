@@ -31,7 +31,7 @@ if (!isset($entries)) {
 			// Hochgeladene Bilder löschen
 			$pictures = $db->select('file', 'gallery_pictures', 'gallery_id = \'' . $entry . '\'');
 			foreach ($pictures as $row) {
-				removeFile('gallery', $row['file']);
+				removePicture($row['file']);
 			}
 			// Galerie Cache löschen
 			cache::delete('gallery_pics_id_' . $entry);

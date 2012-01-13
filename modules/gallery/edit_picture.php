@@ -53,7 +53,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 			);
 			if (is_array($new_file_sql)) {
 				$old_file = $db->select('file', 'gallery_pictures', 'id = \'' . $uri->id . '\'');
-				removeFile('gallery', $old_file[0]['file']);
+				removePicture($old_file[0]['file']);
 
 				$update_values = array_merge($update_values, $new_file_sql);
 			}
