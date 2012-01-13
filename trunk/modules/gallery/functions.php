@@ -114,3 +114,14 @@ function deletePictureAliases($gallery_id)
 
 	return $bool ? true : false;
 }
+/**
+ * Löscht ein Bild aus dem Dateisystem
+ *
+ * @param string $file 
+ */
+function removePicture($file)
+{
+	removeFile('gallery', $file);
+	removeFile('gallery/cache', 'thumb' . $file);
+	removeFile('gallery/cache', $file);
+}

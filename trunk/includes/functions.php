@@ -368,7 +368,7 @@ function pagination($rows, $fragment = '')
 function removeFile($dir, $file)
 {
 	$path = ACP3_ROOT . 'uploads/' . $dir . '/' . $file;
-	if (!empty($dir) && !empty($file) && !preg_match('=/=', $dir) && !preg_match('=/=', $file) && is_file($path)) {
+	if (!empty($dir) && !empty($file) && !preg_match('=/=', $file) && is_file($path)) {
 		@unlink($path);
 	}
 	return false;
