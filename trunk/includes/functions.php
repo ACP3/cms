@@ -339,7 +339,7 @@ function pagination($rows, $fragment = '')
 			$pagination[$j]['selected'] = POS + $auth->entries >= $rows ? true : false;
 			$pagination[$j]['page'] = '&rsaquo;';
 			$pagination[$j]['title'] = $lang->t('common', 'next_page');
-			$pagination[$j]['uri'] = $link . 'page_' . ((POS + $auth->entries) / $auth->entries) . '/' . $fragment;
+			$pagination[$j]['uri'] = $link . 'page_' . ((POS + $auth->entries) / $auth->entries + 1) . '/' . $fragment;
 			++$j;
 		}
 
