@@ -20,12 +20,7 @@ spl_autoload_register();
 
 include ACP3_ROOT . 'installation/includes/functions.php';
 
-$uri = new uri();
-
-if ($uri->query == '/') {
-	$uri->mod = 'install';
-	$uri->file = 'welcome';
-}
+$uri = new uri('install', 'welcome');
 
 if (!empty($_POST['lang'])) {
 	setcookie('ACP3_INSTALLER_LANG', $_POST['lang'], time() + 3600, ROOT_DIR);

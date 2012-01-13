@@ -272,7 +272,7 @@ function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = 0)
  * @return string
  *  Gibt die Seitenauswahl aus
  */
-function pagination($rows)
+function pagination($rows, $fragment = '')
 {
 	global $auth;
 
@@ -282,12 +282,9 @@ function pagination($rows)
 		// Alle angegebenen URL Parameter mit in die URL einbeziehen
 		$acp = defined('IN_ADM') ? 'acp/' : '';
 		$params = '';
-		if (!empty($uri->params)) {
-			foreach ($uri->params as $key => $value) {
-				if ($key != 'mod' && $key != 'file' && $key != 'page') {
-					$params.= '/' . $key . '_' . $value;
-				}
-			}
+		foreach ($uri->getParameters() as $key => $value) {
+			if ($key != 'mod' && $key != 'file' && $key != 'page')
+				$params.= '/' . $key . '_' . $value;
 		}
 
 		$link = $uri->route($acp . $uri->mod . '/' . $uri->file . $params, 1);
@@ -304,7 +301,7 @@ function pagination($rows)
 			$pagination[$j]['selected'] = POS == 0 ? true : false;
 			$pagination[$j]['page'] = '&laquo;';
 			$pagination[$j]['title'] = $lang->t('common', 'first_page');
-			$pagination[$j]['uri'] = $link;
+			$pagination[$j]['uri'] = $link . $fragment;
 			++$j;
 		}
 
@@ -313,7 +310,7 @@ function pagination($rows)
 			$pagination[$j]['selected'] = POS == 0 ? true : false;
 			$pagination[$j]['page'] = '&lsaquo;';
 			$pagination[$j]['title'] = $lang->t('common', 'previous_page');
-			$pagination[$j]['uri'] = $link . (POS / $auth->entries >= 0 ? 'page_' . (POS / $auth->entries) . '/' : '');
+			$pagination[$j]['uri'] = $link . (POS / $auth->entries >= 0 ? 'page_' . (POS / $auth->entries) . '/' . $fragment : '');
 			++$j;
 		}
 
@@ -332,7 +329,7 @@ function pagination($rows)
 		for ($i = $start; $i <= $end; ++$i, ++$j) {
 			$pagination[$j]['selected'] = POS == $currentPos ? true : false;
 			$pagination[$j]['page'] = $i;
-			$pagination[$j]['uri'] = $link . 'page_' . $i . '/';
+			$pagination[$j]['uri'] = $link . 'page_' . $i . '/' . $fragment;
 
 			$currentPos = $currentPos + $auth->entries;
 		}
@@ -342,7 +339,7 @@ function pagination($rows)
 			$pagination[$j]['selected'] = POS + $auth->entries >= $rows ? true : false;
 			$pagination[$j]['page'] = '&rsaquo;';
 			$pagination[$j]['title'] = $lang->t('common', 'next_page');
-			$pagination[$j]['uri'] = $link . 'page_' . ((POS + $auth->entries) / $auth->entries) . '/';
+			$pagination[$j]['uri'] = $link . 'page_' . ((POS + $auth->entries) / $auth->entries) . '/' . $fragment;
 			++$j;
 		}
 
@@ -351,7 +348,7 @@ function pagination($rows)
 			$pagination[$j]['selected'] = POS == ($currentPos - $auth->entries) ? true : false;
 			$pagination[$j]['page'] = '&raquo;';
 			$pagination[$j]['title'] = $lang->t('common', 'last_page');
-			$pagination[$j]['uri'] = $link . 'page_' . $c_pagination . '/';
+			$pagination[$j]['uri'] = $link . 'page_' . $c_pagination . '/' . $fragment;
 		}
 
 		$tpl->assign('pagination', $pagination);
