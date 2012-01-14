@@ -41,8 +41,8 @@ $tpl = new Smarty();
 $tpl->compile_id = 'installation_' . LANG;
 $tpl->setTemplateDir(ACP3_ROOT . 'installation/design/')
 	->addPluginsDir(INCLUDES_DIR . 'smarty/custom/')
-	->setCompileDir(ACP3_ROOT . 'cache/tpl_compiled/')
-	->setCacheDir(ACP3_ROOT . 'cache/tpl_cached/');
+	->setCompileDir(ACP3_ROOT . 'uploads/cache/tpl_compiled/')
+	->setCacheDir(ACP3_ROOT . 'uploads/cache/tpl_cached/');
 if (!is_writable($tpl->getCompileDir()) || !is_writable($tpl->getCacheDir())) {
 	exit('Bitte geben Sie dem "cache"-Ordner den CHMOD 777!');
 }

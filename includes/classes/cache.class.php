@@ -19,7 +19,7 @@ if (defined('IN_ACP3') === false)
  */
 class cache
 {
-	private static $cache_dir = 'cache/sql/';
+	private static $cache_dir = 'uploads/cache/sql/';
 
 	/**
 	 * Überprüft, ob der Cache für eine bestimmte Abfrage schon erstellt wurde

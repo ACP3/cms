@@ -22,13 +22,8 @@ $requirements[2]['required'] = $lang->t('system', 'on');
 
 $tpl->assign('requirements', $requirements);
 
-$defaults = array(
-	'includes/config.php',
-	'cache/',
-	'cache/sql/',
-	'cache/tpl_cached/',
-	'cache/tpl_compiled/',
-);
+$defaults = array('includes/config.php');
+
 // Uploadordner
 $uploads = scandir(ACP3_ROOT . 'uploads/');
 foreach ($uploads as $row) {
