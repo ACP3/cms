@@ -34,7 +34,7 @@ if (!isset($entries)) {
 				$in_use = 1;
 			} else {
 				// Kategoriebild ebenfalls löschen
-				removeFile('categories', $category[0]['picture']);
+				removeUploadedFile('categories', $category[0]['picture']);
 				$bool = $db->delete('categories', 'id = \'' . $entry . '\'');
 				cache::delete('categories_' . $db->escape($category[0]['module'], 3));
 			}

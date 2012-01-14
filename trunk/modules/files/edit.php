@@ -76,7 +76,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 			);
 			if (is_array($new_file_sql)) {
 				$old_file = $db->select('file', 'files', 'id = \'' . $uri->id . '\'');
-				removeFile('files', $old_file[0]['file']);
+				removeUploadedFile('files', $old_file[0]['file']);
 
 				$update_values = array_merge($update_values, $new_file_sql);
 			}

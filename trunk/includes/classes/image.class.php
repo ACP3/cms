@@ -23,12 +23,12 @@ class image
 	 *
 	 * @var boolean 
 	 */
-	private $cache_picture = false;
+	private $enable_cache = false;
 	/**
 	 *
 	 * @var string 
 	 */
-	private $cache_dir = '';
+	private $cache_dir = 'uploads/cache/images/';
 	/**
 	 *
 	 * @var string 
@@ -56,6 +56,11 @@ class image
 	private $prefer_width = false;
 	/**
 	 *
+	 * @var boolean 
+	 */
+	private $prefer_height = false;
+	/**
+	 *
 	 * @var string 
 	 */
 	private $file = '';
@@ -78,18 +83,20 @@ class image
 	 */
 	public function __construct(array $options)
 	{
-		if (isset($options['cache_picture']) && is_bool($options['cache_picture']))
-			$this->cache_picture = $options['cache_picture'];
-		if (isset($options['cache_dir']) && is_dir($options['cache_dir']))
-			$this->cache_dir = $options['cache_dir'] . (!preg_match('/\/$/', $options['cache_dir']) ? '/' : '');
+		if (isset($options['enable_cache']) && is_bool($options['enable_cache']))
+			$this->enable_cache = $options['enable_cache'];
 		if (isset($options['cache_prefix']))
 			$this->cache_prefix = $options['cache_prefix'];
+		if ($this->cache_prefix !== '' && !preg_match('/_$/', $this->cache_prefix))
+			$this->cache_prefix.= '_';
 		if (isset($options['max_width']) && validate::isNumber($options['max_width']))
 			$this->max_width = $options['max_width'];
 		if (isset($options['max_height']) && validate::isNumber($options['max_height']))
 			$this->max_height = $options['max_height'];
 		if (isset($options['prefer_width']) && is_bool($options['prefer_width']))
 			$this->prefer_width = $options['prefer_width'];
+		if (isset($options['prefer_height']) && is_bool($options['prefer_height']))
+			$this->prefer_height = $options['prefer_height'];
 		if (isset($options['jpg_quality']) && validate::isNumber($options['jpg_quality']))
 			$this->jpg_quality = $options['jpg_quality'];
 		if (isset($options['force_resample']) && is_bool($options['force_resample']))
@@ -115,7 +122,7 @@ class image
 	 */
 	private function calcNewDimensions($width, $height)
 	{
-		if ($width > $height || $this->prefer_width === true) {
+		if (($width >= $height || $this->prefer_width === true) && $this->prefer_height === false) {
 			$newWidth = $this->max_width;
 			$newHeight = intval($height * $newWidth / $width);
 		} else {
@@ -126,15 +133,13 @@ class image
 		return array('width' => $newWidth, 'height' => $newHeight);
 	}
 	/**
+	 * Generiert den Namen des zu cachenden Bildes
 	 *
-	 * @param type $width
-	 * @param type $height
-	 * @param type $type
-	 * @return type 
+	 * @return string 
 	 */
 	private function setCacheName()
 	{
-		return $this->cache_prefix . '_' . substr($this->file, strrpos($this->file, '/') + 1);
+		return $this->cache_prefix . substr($this->file, strrpos($this->file, '/') + 1);
 	}
 	/**
 	 * Führt die Größenanpassung des Bildes durch
@@ -195,15 +200,15 @@ class image
 			header('Content-type: ' . $picInfo['mime']);
 
 			// Falls Cache aktiviert ist und das Bild bereits gecachet wurde, dieses direkt ausgeben
-			if ($this->cache_picture === true && is_file($this->cache_dir . $this->setCacheName())) {
-				$this->file = $this->cache_dir . $this->setCacheName();
+			if ($this->enable_cache === true && is_file(ACP3_ROOT . $this->cache_dir . $this->setCacheName())) {
+				$this->file = ACP3_ROOT . $this->cache_dir . $this->setCacheName();
 				$this->readFromFile();
 			// Bild resampeln
 			} elseif (($this->force_resample === true || ($width > $this->max_width && $height > $this->max_height)) && ($type === 1 || $type === 2 || $type === 3)) {
 				$dimensions = $this->calcNewDimensions($width, $height);
 				$cache_file = null;
-				if ($this->cache_picture === true && is_dir($this->cache_dir) && !is_file($this->cache_dir . $this->setCacheName()))
-					$cache_file = $this->cache_dir . $this->setCacheName();
+				if ($this->enable_cache === true && is_dir(ACP3_ROOT . $this->cache_dir) && !is_file(ACP3_ROOT . $this->cache_dir . $this->setCacheName()))
+					$cache_file = ACP3_ROOT . $this->cache_dir . $this->setCacheName();
 
 				$this->resample($dimensions['width'], $dimensions['height'], $width, $height, $type, $cache_file);
 

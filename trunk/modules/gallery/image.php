@@ -13,14 +13,14 @@ if (defined('IN_ACP3') === false)
 if (validate::isNumber($uri->id)) {
 	@set_time_limit(20);
 	$picture = $db->select('file', 'gallery_pictures', 'id = \'' . $uri->id . '\'');
+	$action = $uri->action === 'thumb' ? 'thumb' : '';
 
 	$settings = config::getModuleSettings('gallery');
 	$options = array(
-		'cache_picture' => true,
-		'cache_dir' => ACP3_ROOT . 'uploads/gallery/cache/',
-		'cache_prefix' => $uri->action === 'thumb' ? 'thumb' : '',
-		'max_width' => $uri->action === 'thumb' ? $settings['thumbwidth'] : $settings['width'],
-		'max_height' => $uri->action === 'thumb' ? $settings['thumbheight'] : $settings['height'],
+		'enable_cache' => true,
+		'cache_prefix' => 'gallery_' . $action,
+		'max_width' => $settings[$action . 'width'],
+		'max_height' => $settings[$action . 'height'],
 		'file' => ACP3_ROOT . 'uploads/gallery/' . $picture[0]['file'],
 	);
 

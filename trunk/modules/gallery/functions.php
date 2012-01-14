@@ -121,7 +121,7 @@ function deletePictureAliases($gallery_id)
  */
 function removePicture($file)
 {
-	removeFile('gallery', $file);
-	removeFile('gallery/cache', 'thumb' . $file);
-	removeFile('gallery/cache', $file);
+	removeUploadedFile('cache/images', 'gallery_thumb_' . $file);
+	removeUploadedFile('cache/images', 'gallery_' . $file);
+	removeUploadedFile('gallery', $file);
 }
