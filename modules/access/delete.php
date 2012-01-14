@@ -37,7 +37,7 @@ if (!isset($entries)) {
 		}
 	}
 
-	cache::purge(0, 0, 'acl');
+	cache::purge(0, 'acl');
 
 	if ($level_undeletable === true) {
 		$text = $lang->t('access', 'role_undeletable');
