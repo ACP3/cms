@@ -45,7 +45,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 			$db->link->commit();
 
 			// Cache der ACL zurücksetzen
-			cache::purge(0, 0, 'acl');
+			cache::purge(0, 'acl');
 
 			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/access'));
 		}

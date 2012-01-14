@@ -19,7 +19,16 @@ if (defined('IN_ACP3') === false)
  */
 class cache
 {
-	private static $cache_dir = 'uploads/cache/sql/';
+	/**
+	 *
+	 * @var string 
+	 */
+	private static $cache_dir = 'uploads/cache/';
+	/**
+	 *
+	 * @var string 
+	 */
+	private static $sql_cache_dir = 'uploads/cache/sql/';
 
 	/**
 	 * Überprüft, ob der Cache für eine bestimmte Abfrage schon erstellt wurde
@@ -31,7 +40,7 @@ class cache
 	public static function check($filename, $cache_id = '')
 	{
 		$cache_id.= $cache_id !== '' ? '_' : '';
-		if (is_file(ACP3_ROOT . self::$cache_dir . 'cache_' . $cache_id . md5($filename) . '.php')) {
+		if (is_file(ACP3_ROOT . self::$sql_cache_dir . $cache_id . md5($filename) . '.php')) {
 			return true;
 		}
 		return false;
@@ -49,7 +58,7 @@ class cache
 	{
 		if (!empty($data)) {
 			$cache_id.= $cache_id !== '' ? '_' : '';
-			$bool = @file_put_contents(ACP3_ROOT . self::$cache_dir . 'cache_' . $cache_id . md5($filename) . '.php', serialize($data), LOCK_EX);
+			$bool = @file_put_contents(ACP3_ROOT . self::$sql_cache_dir . $cache_id . md5($filename) . '.php', serialize($data), LOCK_EX);
 
 			return $bool ? true : false;
 		} elseif (self::check($filename, $cache_id)) {
@@ -68,7 +77,7 @@ class cache
 	{
 		if (self::check($filename)) {
 			$cache_id.= $cache_id !== '' ? '_' : '';
-			return unlink(ACP3_ROOT . self::$cache_dir . 'cache_' . $cache_id . md5($filename) . '.php');
+			return unlink(ACP3_ROOT . self::$sql_cache_dir . $cache_id . md5($filename) . '.php');
 		}
 		return false;
 	}
@@ -83,7 +92,7 @@ class cache
 	{
 		if (self::check($filename, $cache_id)) {
 			$cache_id.= $cache_id !== '' ? '_' : '';
-			$handle = fopen(ACP3_ROOT . self::$cache_dir . 'cache_' . $cache_id . md5($filename) . '.php', 'r');
+			$handle = fopen(ACP3_ROOT . self::$sql_cache_dir . $cache_id . md5($filename) . '.php', 'r');
 			flock($handle, LOCK_SH);
 			$data = unserialize(stream_get_contents($handle));
 			flock($handle, LOCK_UN);
@@ -98,7 +107,7 @@ class cache
 	 * @param string $dir
 	 *	Einen Unterordner des Cache-Ordners löschen
 	 */
-	public static function purge($dir = 0, $delete_folder = 0, $cache_id = '')
+	public static function purge($dir = 'sql', $cache_id = '')
 	{
 		$path = ACP3_ROOT . self::$cache_dir . (!empty($dir) && !preg_match('=/=', $dir) ? $dir . '/' : '');
 		if (is_dir($path)) {
@@ -107,16 +116,12 @@ class cache
 			$c_cache_dir = count($cache_dir);
 
 			for ($i = 0; $i < $c_cache_dir; ++$i) {
-				if (is_file($path . $cache_dir[$i]) && $cache_dir[$i] != '.htaccess') {
+				if (is_file($path . $cache_dir[$i]) && $cache_dir[$i] !== '.htaccess') {
 					// Wenn eine $cache_id gesetzt wurde, nur diese Dateien löschen
-					if ($cache_id !== '' && strpos($cache_dir[$i], 'cache_' . $cache_id) === false)
+					if ($cache_id !== '' && preg_match('/^(' . $cache_id . ')/', $cache_dir[$i]) === true)
 						continue;
 					unlink($path . $cache_dir[$i]);
 				}
-			}
-			// Falls angewählt, den Unterordner auch löschen
-			if (!empty($dir) && $delete_folder == 1) {
-				rmdir($path);
 			}
 		}
 		return;

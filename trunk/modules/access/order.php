@@ -48,7 +48,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 
 	$db->link->commit();
 
-	cache::purge(0, 0, 'acl');
+	cache::purge(0, 'acl');
 
 	$uri->redirect('acp/access');
 } else {

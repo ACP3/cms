@@ -10,6 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
+$settings = config::getModuleSettings('gallery');
+
 if (isset($_POST['form'])) {
 	$form = $_POST['form'];
 	
@@ -32,13 +34,18 @@ if (isset($_POST['form'])) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$bool = config::module('gallery', $form);
+
+		// Falls sich die anzuzeigenden Bildgrößen geändert haben, die gecacheten Bilder löschen
+		if ($form['thumbwidth'] !== $settings['thumbwidth'] || $form['thumbheight'] !== $settings['thumbheight'] ||
+			$form['width'] !== $settings['width'] || $form['height'] !== $settings['height']) {
+			cache::purge('images', 'gallery');
+		}
 		
 		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/gallery'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
-	$settings = config::getModuleSettings('gallery');
-	
+	$comments = array();
 	$comments[0]['value'] = '1';
 	$comments[0]['checked'] = selectEntry('comments', '1', $settings['comments'], 'checked');
 	$comments[0]['lang'] = $lang->t('common', 'yes');
@@ -47,6 +54,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$comments[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('comments', $comments);
 
+	$colorbox = array();
 	$colorbox[0]['value'] = '1';
 	$colorbox[0]['checked'] = selectEntry('colorbox', '1', $settings['colorbox'], 'checked');
 	$colorbox[0]['lang'] = $lang->t('common', 'yes');
@@ -55,6 +63,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$colorbox[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('colorbox', $colorbox);
 
+	$dateformat = array();
 	$dateformat[0]['value'] = 'short';
 	$dateformat[0]['selected'] = selectEntry('dateformat', 'short', $settings['dateformat']);
 	$dateformat[0]['lang'] = $lang->t('common', 'date_format_short');

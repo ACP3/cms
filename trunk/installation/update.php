@@ -491,3 +491,4 @@ print config::system($config) ? 'Konfigurationsdatei erfolgreich aktualisiert!' 
 
 // Cache leeren
 cache::purge();
+cache::purge('tpl_compiled');

@@ -14,7 +14,7 @@ function smarty_function_icon($params)
 		$height = ' height="' . $picInfos[1] . '"';
 	}
 
-	$alt = !empty($params['alt']) ? ' alt="' . $params['alt'] . '"' : '';
+	$alt = ' alt="' . (!empty($params['alt']) ? $params['alt'] : '') . '"';
 	$title = !empty($params['title']) ? ' title="' . $params['title'] . '"' : '';
 
 	return '<img src="' . ROOT_DIR . $path . '"' . $width . $height . $alt . $title . ' />';
