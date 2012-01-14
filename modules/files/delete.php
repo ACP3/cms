@@ -29,7 +29,7 @@ if (!isset($entries)) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'files', 'id = \'' . $entry . '\'') == '1') {
 			// Datei ebenfalls löschen
 			$file = $db->select('file', 'files', 'id = \'' . $entry . '\'');
-			removeFile('files', $file[0]['file']);
+			removeUploadedFile('files', $file[0]['file']);
 			$bool = $db->delete('files', 'id = \'' . $entry . '\'');
 
 			cache::delete('files_details_id_' . $entry);

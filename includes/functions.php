@@ -365,7 +365,7 @@ function pagination($rows, $fragment = '')
  *	Der Name der Datei
  * @return boolean
  */
-function removeFile($dir, $file)
+function removeUploadedFile($dir, $file)
 {
 	$path = ACP3_ROOT . 'uploads/' . $dir . '/' . $file;
 	if (!empty($dir) && !empty($file) && !preg_match('=/=', $file) && is_file($path)) {

@@ -29,7 +29,7 @@ if (!isset($entries)) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'emoticons', 'id = \'' . $entry . '\'') == '1') {
 			// Datei ebenfalls löschen
 			$file = $db->select('img', 'emoticons', 'id = \'' . $entry . '\'');
-			removeFile('emoticons', $file[0]['img']);
+			removeUploadedFile('emoticons', $file[0]['img']);
 			$bool = $db->delete('emoticons', 'id = \'' . $entry . '\'');
 		}
 	}
