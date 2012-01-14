@@ -49,7 +49,7 @@ $min_enableBuilder = false;
 //$min_cachePath = 'c:\\WINDOWS\\Temp';
 //$min_cachePath = '/tmp';
 //$min_cachePath = preg_replace('/^\\d+;/', '', session_save_path());
-$min_cachePath = dirname(__FILE__) . '/../../cache';
+$min_cachePath = dirname(__FILE__) . '/../../uploads/cache';
 
 /**
  * Leave an empty string to use PHP's $_SERVER['DOCUMENT_ROOT'].
