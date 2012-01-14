@@ -51,6 +51,11 @@ class image
 	private $jpg_quality = 85;
 	/**
 	 *
+	 * @var boolean 
+	 */
+	private $prefer_width = false;
+	/**
+	 *
 	 * @var string 
 	 */
 	private $file = '';
@@ -83,6 +88,8 @@ class image
 			$this->max_width = $options['max_width'];
 		if (isset($options['max_height']) && validate::isNumber($options['max_height']))
 			$this->max_height = $options['max_height'];
+		if (isset($options['prefer_width']) && is_bool($options['prefer_width']))
+			$this->prefer_width = $options['prefer_width'];
 		if (isset($options['jpg_quality']) && validate::isNumber($options['jpg_quality']))
 			$this->jpg_quality = $options['jpg_quality'];
 		if (isset($options['force_resample']) && is_bool($options['force_resample']))
@@ -95,7 +102,7 @@ class image
 	public function __destruct()
 	{
 		if (is_resource($this->image))
-			imagedestroy ($this->image);
+			imagedestroy($this->image);
 	}
 	/**
 	 * Berechnet die neue Breite/Höhe eines Bildes
@@ -108,7 +115,7 @@ class image
 	 */
 	private function calcNewDimensions($width, $height)
 	{
-		if ($width > $height) {
+		if ($width > $height || $this->prefer_width === true) {
 			$newWidth = $this->max_width;
 			$newHeight = intval($height * $newWidth / $width);
 		} else {
@@ -192,7 +199,7 @@ class image
 				$this->file = $this->cache_dir . $this->setCacheName();
 				$this->readFromFile();
 			// Bild resampeln
-			} elseif (($width > $this->max_width && $height > $this->max_height || $this->force_resample === true) && ($type === 1 || $type === 2 || $type === 3)) {
+			} elseif (($this->force_resample === true || ($width > $this->max_width && $height > $this->max_height)) && ($type === 1 || $type === 2 || $type === 3)) {
 				$dimensions = $this->calcNewDimensions($width, $height);
 				$cache_file = null;
 				if ($this->cache_picture === true && is_dir($this->cache_dir) && !is_file($this->cache_dir . $this->setCacheName()))
