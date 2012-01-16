@@ -16,12 +16,11 @@ require_once ACP3_ROOT . 'includes/globals.php';
 
 // Konfiguration des ACP3 laden
 require_once ACP3_ROOT . 'includes/config.php';
-if (!defined('INSTALLED')) {
+if (defined('INSTALLED') === false)
 	exit('Das ACP3 ist nicht richtig installiert. Bitte führen Sie den <a href="' . ACP3_ROOT . 'installation/">Installationsassistenten</a> aus und folgen Sie den Anweisungen.');
-}
 
 // Wenn der DEBUG Modus aktiv ist, Fehler ausgeben
-$reporting_level = defined('DEBUG') && DEBUG ? E_ALL : 0;
+$reporting_level = defined('DEBUG') === true && DEBUG === true ? E_ALL : 0;
 error_reporting($reporting_level);
 
 // Einige Konstanten definieren
@@ -54,12 +53,12 @@ require INCLUDES_DIR . 'smarty/Smarty.class.php';
 $tpl = new Smarty();
 $tpl->error_reporting = $reporting_level;
 $tpl->compile_id = CONFIG_DESIGN . '_' . $auth->getUserLanguage();
-$tpl->setCompileCheck(defined('DEBUG') && DEBUG ? true : false);
+$tpl->setCompileCheck(defined('DEBUG') === true && DEBUG === true);
 $tpl->setTemplateDir(ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/')
 	->addPluginsDir(INCLUDES_DIR . 'smarty/custom/')
 	->setCompileDir(ACP3_ROOT . 'uploads/cache/tpl_compiled/')
 	->setCacheDir(ACP3_ROOT . 'uploads/cache/tpl_cached/');
-if (!is_writable($tpl->getCompileDir()) || !is_writable($tpl->getCacheDir())) {
+if (is_writable($tpl->getCompileDir()) === false || is_writable($tpl->getCacheDir()) === false) {
 	exit('Bitte geben Sie dem "cache"-Ordner den CHMOD 777!');
 }
 
@@ -73,7 +72,7 @@ $tpl->assign('DESIGN_PATH', DESIGN_PATH);
 $tpl->assign('LANG', CONFIG_LANG);
 
 // Falls der Wartungsmodus aktiv ist, Wartungsnachricht ausgeben
-if (CONFIG_MAINTENANCE_MODE == '1' && defined('IN_ACP3')) {
+if (defined('IN_ADM') === false && CONFIG_MAINTENANCE_MODE === true) {
 	$tpl->assign('MAINTENANCE_MSG', CONFIG_MAINTENANCE_MESSAGE);
 	define('CUSTOM_LAYOUT', 'maintenance.tpl');
 }
