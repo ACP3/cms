@@ -218,18 +218,18 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('entries', $entries);
 
 	// Zeitzonen
-	$time_zones = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.75, 13, 14);
+	$areas = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.75, 13, 14);
 	$check_dst = date('I');
 	$offset = date('Z') - ($check_dst == '1' ? 3600 : 0);
-	$time_zone = array();
+	$time_zones = array();
 	$i = 0;
-	foreach ($time_zones as $row) {
-		$time_zone[$i]['value'] = $row * 3600;
-		$time_zone[$i]['selected'] = selectEntry('date_time_zone', $row * 3600, $offset);
-		$time_zone[$i]['lang'] = $lang->t('common', 'utc' . $row);
+	foreach ($areas as $row) {
+		$time_zones[$i]['value'] = $row * 3600;
+		$time_zones[$i]['selected'] = selectEntry('date_time_zone', $row * 3600, $offset);
+		$time_zones[$i]['lang'] = $lang->t('common', 'utc' . $row);
 		$i++;
 	}
-	$tpl->assign('time_zone', $time_zone);
+	$tpl->assign('time_zones', $time_zones);
 
 	// Sommerzeit an/aus
 	$dst = array();

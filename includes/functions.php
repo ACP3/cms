@@ -50,7 +50,8 @@ function captcha($captcha_length = 5)
 	global $auth, $tpl;
 
 	// Wenn man als User angemeldet ist, Captcha nicht anzeigen
-	if (!$auth->isUser()) {
+	if ($auth->isUser() === false) {
+		$captcha = array();
 		$captcha['hash'] = md5(uniqid(rand(), true));
 		$captcha['length'] = $captcha_length;
 		$captcha['width'] = $captcha_length * 25;
@@ -149,9 +150,8 @@ function genSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
 function makeStringUrlSafe($var)
 {
 	$var = strip_tags($var);
-	if (!preg_match('/&([a-z]+);/', $var)) {
+	if (!preg_match('/&([a-z]+);/', $var))
 		$var = htmlentities($var, ENT_QUOTES, 'UTF-8');
-	}
 	$var = strtolower($var);
 	$search = array(
 		'/&([a-z]{1})uml;/',
@@ -190,16 +190,17 @@ function moveFile($tmp_filename, $filename, $dir)
 	$new_name = 1;
 
 	// Dateiname solange ändern, wie die Datei im aktuellen Ordner vorhanden ist
-	while (is_file($path . $new_name . $ext)) {
+	while (is_file($path . $new_name . $ext) === true) {
 		$new_name++;
 	}
 
-	if (is_writable($path)) {
+	if (is_writable($path) === true) {
 		if (!@move_uploaded_file($tmp_filename, $path . $new_name . $ext)) {
 			global $lang;
 
 			echo sprintf($lang->t('common', 'upload_error'), $filename);
 		} else {
+			$new_file = array();
 			$new_file['name'] = $new_name . $ext;
 			$new_file['size'] = calcFilesize(filesize($path . $new_file['name']));
 
@@ -226,7 +227,7 @@ function moveFile($tmp_filename, $filename, $dir)
  */
 function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = 0)
 {
-	if ($action == 'up' || $action == 'down') {
+	if ($action === 'up' || $action === 'down') {
 		global $db;
 
 		$elem = null;
@@ -234,27 +235,22 @@ function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = 0)
 		// Zusätzliche WHERE-Bedingung
 		$where = !empty($where) ? $where . ' AND ' : '';
 
-		switch ($action) {
-			// Ein Schritt nach oben
-			case 'up':
-				if ($db->countRows($id_field, $table, $where . $id_field . ' != \'' . $id . '\' AND ' . $sort_field . ' > (SELECT ' . $sort_field . ' FROM ' . $db->prefix . $table . ' WHERE ' . $where . $id_field . ' = \'' . $id . '\')') > 0) {
-					$elem = $db->select($sort_field, $table, $where . $id_field . ' = \'' . $id . '\'');
-					$pre = $db->select($id_field . ', ' . $sort_field, $table, $where . $sort_field . ' > ' . $elem[0][$sort_field] . '', $sort_field . ' ASC', 1);
-				}
-				break;
-			// Ein Schritt nach unten
-			case 'down':
-				if ($db->countRows($id_field, $table, $where . $id_field . ' != \'' . $id . '\' AND (' . $sort_field . ' < (SELECT ' . $sort_field . ' FROM ' . $db->prefix . $table . ' WHERE ' . $where . $id_field . ' = \'' . $id . '\'))') > 0) {
-					$elem = $db->select($sort_field, $table, $where . $id_field . ' = \'' . $id . '\'');
-					$pre = $db->select($id_field . ',' . $sort_field, $table, $where . $sort_field . ' < ' . $elem[0][$sort_field] . '', $sort_field . ' DESC', 1);
-				}
-				break;
-			default:
-				return false;
+		// Ein Schritt nach oben
+		if ($action === 'up') {
+			if ($db->countRows($id_field, $table, $where . $id_field . ' != \'' . $id . '\' AND ' . $sort_field . ' > (SELECT ' . $sort_field . ' FROM ' . $db->prefix . $table . ' WHERE ' . $where . $id_field . ' = \'' . $id . '\')') > 0) {
+				$elem = $db->select($sort_field, $table, $where . $id_field . ' = \'' . $id . '\'');
+				$pre = $db->select($id_field . ', ' . $sort_field, $table, $where . $sort_field . ' > ' . $elem[0][$sort_field] . '', $sort_field . ' ASC', 1);
+			}
+		// Ein Schritt nach unten
+		} else {
+			if ($db->countRows($id_field, $table, $where . $id_field . ' != \'' . $id . '\' AND (' . $sort_field . ' < (SELECT ' . $sort_field . ' FROM ' . $db->prefix . $table . ' WHERE ' . $where . $id_field . ' = \'' . $id . '\'))') > 0) {
+				$elem = $db->select($sort_field, $table, $where . $id_field . ' = \'' . $id . '\'');
+				$pre = $db->select($id_field . ',' . $sort_field, $table, $where . $sort_field . ' < ' . $elem[0][$sort_field] . '', $sort_field . ' DESC', 1);
+			}
 		}
 
 		// Sortierung aktualisieren
-		if (count($elem) == 1 && count($pre) == 1) {
+		if (count($elem) === 1 && count($pre) === 1) {
 			$bool = $db->update($table, array($sort_field => $pre[0][$sort_field]), $id_field . ' = \'' . $id . '\'');
 			$bool2 = $db->update($table, array($sort_field => $elem[0][$sort_field]), $id_field . ' = \'' . $pre[0][$id_field] . '\'');
 
@@ -368,9 +364,8 @@ function pagination($rows, $fragment = '')
 function removeUploadedFile($dir, $file)
 {
 	$path = ACP3_ROOT . 'uploads/' . $dir . '/' . $file;
-	if (!empty($dir) && !empty($file) && !preg_match('=/=', $file) && is_file($path)) {
-		@unlink($path);
-	}
+	if (!empty($dir) && !empty($file) && !preg_match('=/=', $file) && is_file($path) === true)
+		return @unlink($path);
 	return false;
 }
 /**
@@ -495,7 +490,7 @@ function timeZones($value, $name = 'time_zone')
 	global $lang;
 
 	$areas = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.75, 13, 14);
-
+	$time_zones = array();
 	$i = 0;
 	foreach ($areas as $row) {
 		$time_zones[$i]['value'] = $row * 3600;
