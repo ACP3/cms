@@ -42,6 +42,8 @@ if (isset($_POST['submit'])) {
 	} else {
 		// Systemkonfiguration erstellen
 		$config = array(
+			'cache_images' => true,
+			'cache_minify' => 3600,
 			'date_dst' => $form['date_dst'],
 			'date_format_long' => $form['date_format_long'],
 			'date_format_short' => $form['date_format_short'],
@@ -57,11 +59,12 @@ if (isset($_POST['submit'])) {
 			'flood' => $form['flood'],
 			'homepage' => 'news/list/',
 			'lang' => LANG,
-			'maintenance_mode' => 0,
+			'maintenance_mode' => false,
 			'maintenance_message' => $lang->t('installation', 'offline_message'),
+			'seo_aliases' => true,
 			'seo_meta_description' => '',
 			'seo_meta_keywords' => '',
-			'seo_mod_rewrite' => 0,
+			'seo_mod_rewrite' => false,
 			'seo_title' => !empty($form['seo_title']) ? $form['seo_title'] : 'ACP3',
 			'version' => CONFIG_VERSION,
 			'wysiwyg' => 'ckeditor'
@@ -207,11 +210,10 @@ if (isset($_POST['submit'])) {
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	// Einträge pro Seite
-	$i = 0;
-	for ($j = 10; $j <= 50; $j = $j + 10) {
+	$entries = array();
+	for ($i = 0, $j = 10; $j <= 50; $j = $j + 10, ++$i) {
 		$entries[$i]['value'] = $j;
 		$entries[$i]['selected'] = selectEntry('entries', $j, '20');
-		$i++;
 	}
 	$tpl->assign('entries', $entries);
 
@@ -219,6 +221,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$time_zones = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.75, 13, 14);
 	$check_dst = date('I');
 	$offset = date('Z') - ($check_dst == '1' ? 3600 : 0);
+	$time_zone = array();
 	$i = 0;
 	foreach ($time_zones as $row) {
 		$time_zone[$i]['value'] = $row * 3600;
@@ -229,6 +232,7 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('time_zone', $time_zone);
 
 	// Sommerzeit an/aus
+	$dst = array();
 	$dst[0]['value'] = '1';
 	$dst[0]['checked'] = selectEntry('date_dst', '1', $check_dst, 'checked');
 	$dst[0]['lang'] = $lang->t('common', 'yes');

@@ -46,11 +46,11 @@ class uri
 			define('IN_ADM', true);
 			// "acp/" entfernen
 			$this->query = substr($this->query, 4);
-		} elseif (!defined('IN_INSTALL')) {
+		} elseif (defined('IN_INSTALL') === false) {
 			global $db;
 
 			// Query auf eine benutzerdefinierte Startseite setzen
-			if ($this->query == '/' && CONFIG_HOMEPAGE != '')
+			if ($this->query === '/' && CONFIG_HOMEPAGE !== '')
 				$this->query = CONFIG_HOMEPAGE;
 
 			// Falls für Query ein Alias existiert, zu diesem weiterleiten
@@ -79,7 +79,7 @@ class uri
 
 			for ($i = 2; $i < $c_query; ++$i) {
 				// Position
-				if (!defined('POS') && preg_match('/^(page_(\d+))$/', $query[$i])) {
+				if (defined('POS') === false && preg_match('/^(page_(\d+))$/', $query[$i])) {
 					global $auth;
 					define('POS', (substr($query[$i], 5) - 1) * $auth->entries);
 				// ID eines Datensatzes
@@ -97,7 +97,7 @@ class uri
 			$this->cat = $_POST['cat'];
 		if (!empty($_POST['action']))
 			$this->action = $_POST['action'];
-		if (!defined('POS'))
+		if (defined('POS') === false)
 			define('POS', '0');
 	}
 	/**
@@ -108,7 +108,7 @@ class uri
 	 */
 	public function __get($key)
 	{
-		if (isset($this->params[$key]))
+		if (isset($this->params[$key]) === true)
 			return $this->params[$key];
 		return null;
 	}
@@ -121,7 +121,7 @@ class uri
 	public function __set($name, $value)
 	{
 		// Parameter sollten nicht überschrieben werden können
-		if (!isset($this->params[$name]))
+		if (isset($this->params[$name]) === false)
 			$this->params[$name] = $value;
 	}
 	/**
@@ -144,10 +144,10 @@ class uri
 	public function redirect($args, $new_page = 0)
 	{
 		if (!empty($args)) {
-			if ($args == 'errors/404' || $args == 'errors/403')
+			if ($args === 'errors/404' || $args === 'errors/403')
 				$args = (defined('IN_ACP3') ? '' : 'acp/') . $args;
 
-			$protocol = empty($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) == 'off' ? 'http://' : 'https://';
+			$protocol = empty($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) === 'off' ? 'http://' : 'https://';
 			$host = $_SERVER['HTTP_HOST'];
 			header('Location: ' . $protocol . $host . $this->route($args));
 			exit;
@@ -170,13 +170,13 @@ class uri
 		$path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
 
 		// Überprüfen, ob Alias vorhanden ist und diesen als URI verwenden
-		if ($alias == 1 && !preg_match('/^acp\//', $path)) {
+		if (CONFIG_SEO_ALIASES === true && $alias === 1 && !preg_match('/^acp\//', $path)) {
 			global $uri;
 
 			$alias = seo::getUriAlias($path);
 			$path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
 		}
-		$prefix = CONFIG_SEO_MOD_REWRITE == '0' || preg_match('/^acp\//', $path) ? PHP_SELF . '/' : ROOT_DIR;
+		$prefix = CONFIG_SEO_MOD_REWRITE === false || preg_match('/^acp\//', $path) ? PHP_SELF . '/' : ROOT_DIR;
 		return $prefix . $path;
 	}
 }

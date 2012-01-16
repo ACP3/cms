@@ -10,7 +10,8 @@ define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
 define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 define('MODULES_DIR', ACP3_ROOT . 'modules/');
 define('CONFIG_VERSION', '4.0 SVN');
-define('CONFIG_SEO_MOD_REWRITE', 0);
+define('CONFIG_SEO_ALIASES', false);
+define('CONFIG_SEO_MOD_REWRITE', false);
 
 include INCLUDES_DIR . 'globals.php';
 

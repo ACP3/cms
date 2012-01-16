@@ -7,7 +7,7 @@ define('IN_INSTALL', true);
 // Evtl. gesetzten Content-Type des Servers überschreiben
 header('Content-type: text/html; charset=UTF-8');
 
-define('ACP3_ROOT', dirname(__FILE__) . '/../');
+define('ACP3_ROOT', realpath(dirname(__FILE__) . '/../') . '/');
 require ACP3_ROOT . 'installation/includes/startup.php';
 
 // Überprüfen, ob die angeforderte Seite überhaupt existiert

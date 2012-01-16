@@ -8,6 +8,7 @@
 			<li><a href="#tab-2">{lang t="common|date"}</a></li>
 			<li><a href="#tab-3">{lang t="system|maintenance"}</a></li>
 			<li><a href="#tab-4">{lang t="common|seo"}</a></li>
+			<li><a href="#tab-5">{lang t="system|performance"}</a></li>
 		</ul>
 		<div id="tab-1">
 			<dl>
@@ -93,18 +94,45 @@
 					<span>({lang t="common|keywords_separate_with_commas"})</span>
 				</dt>
 				<dd><textarea name="form[seo_meta_keywords]" id="seo-meta-keywords" cols="50" rows="6">{$form.seo_meta_keywords}</textarea></dd>
+				<dt><label for="seo-aliases-1">{lang t="system|enable_seo_aliases"}</label></dt>
+				<dd>
+{foreach $aliases as $row}
+					<label for="seo-aliases-{$row.value}">
+						<input type="radio" name="form[seo_aliases]" id="seo-aliases-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+						{$row.lang}
+					</label>
+{/foreach}
+				</dd>
 				<dt>
 					<label for="seo-mod-rewrite-1">{lang t="system|mod_rewrite"}</label>
 					<span>({lang t="system|mod_rewrite_description"})</span>
 				</dt>
 				<dd>
-{foreach $sef as $row}
+{foreach $mod_rewrite as $row}
 					<label for="seo-mod-rewrite-{$row.value}">
 						<input type="radio" name="form[seo_mod_rewrite]" id="seo-mod-rewrite-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 						{$row.lang}
 					</label>
 {/foreach}
 				</dd>
+			</dl>
+		</div>
+		<div id="tab-5" class="ui-tabs-hide">
+			<dl>
+				<dt><label for="cache-images-1">{lang t="system|cache_images"}</label></dt>
+				<dd>
+{foreach $cache_images as $row}
+					<label for="cache_images-{$row.value}">
+						<input type="radio" name="form[cache_images]" id="cache-images-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+						{$row.lang}
+					</label>
+{/foreach}
+				</dd>
+				<dt>
+					<label for="cache-minify">{lang t="system|minify_cache_lifetime"}</label>
+					<span>({lang t="system|minify_cache_lifetime_description"})</span>
+				</dt>
+				<dd><input type="text" name="form[cache_minify]" id="cache-minify" value="{$form.cache_minify}" maxlength="20"></dd>
 			</dl>
 		</div>
 	</div>

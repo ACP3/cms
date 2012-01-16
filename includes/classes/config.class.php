@@ -32,6 +32,8 @@ class config
 		if (is_writable($path)){
 			// Konfigurationsdatei in ein Array schreiben
 			$config = array(
+				'cache_images' => CONFIG_CACHE_IMAGES,
+				'cache_minify' => CONFIG_CACHE_MINIFY,
 				'date_dst' => CONFIG_DATE_DST,
 				'date_format_long' => CONFIG_DATE_FORMAT_LONG,
 				'date_format_short' => CONFIG_DATE_FORMAT_SHORT,
@@ -49,6 +51,7 @@ class config
 				'lang' => CONFIG_LANG,
 				'maintenance_message' => CONFIG_MAINTENANCE_MESSAGE,
 				'maintenance_mode' => CONFIG_MAINTENANCE_MODE,
+				'seo_aliases' => CONFIG_SEO_ALIASES,
 				'seo_meta_description' => CONFIG_SEO_META_DESCRIPTION,
 				'seo_meta_keywords' => CONFIG_SEO_META_KEYWORDS,
 				'seo_mod_rewrite' => CONFIG_SEO_MOD_REWRITE,
@@ -63,16 +66,22 @@ class config
 			$content = "<?php\n";
 			$content.= "define('INSTALLED', true);\n";
 			if (defined('DEBUG')) {
-				$content.= "define('DEBUG', " . ((bool) DEBUG) . ");\n";
+				$content.= "define('DEBUG', " . ((bool) DEBUG === true ? 'true' : 'false') . ");\n";
 			}
-			$pattern = "define('CONFIG_%s', '%s');\n";
+			$pattern = "define('CONFIG_%s', %s);\n";
 			foreach ($data as $key => $value) {
 				if (array_key_exists($key, $config))
+					if (is_numeric($value) === true)
+						$value = $value;
+					elseif (is_bool($value) === true)
+						$value = $value === true ? 'true' : 'false';
+					else
+						$value = '\'' . $value . '\'';
 					$content.= sprintf($pattern, strtoupper($key), $value);
 			}
 			$content.= '?>';
 			$bool = @file_put_contents($path, $content, LOCK_EX);
-			return $bool ? true : false;
+			return $bool !== false ? true : false;
 		}
 		return false;
 	}
@@ -103,7 +112,7 @@ class config
 	 */
 	public static function getModuleSettings($module)
 	{
-		if (!cache::check($module . '_settings'))
+		if (cache::check($module . '_settings') === false)
 			self::setModuleCache($module);
 
 		return cache::output($module . '_settings');
