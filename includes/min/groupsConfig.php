@@ -9,7 +9,7 @@
  * changes. http://yourdomain/min/builder/
  **/
 
-define('ACP3_ROOT', dirname(__FILE__) . '/../../');
+define('ACP3_ROOT', realpath(dirname(__FILE__) . '/../../') . '/');
 
 require_once ACP3_ROOT . 'includes/config.php';
 

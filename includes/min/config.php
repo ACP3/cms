@@ -49,7 +49,7 @@ $min_enableBuilder = false;
 //$min_cachePath = 'c:\\WINDOWS\\Temp';
 //$min_cachePath = '/tmp';
 //$min_cachePath = preg_replace('/^\\d+;/', '', session_save_path());
-$min_cachePath = dirname(__FILE__) . '/../../uploads/cache';
+$min_cachePath = realpath(dirname(__FILE__) . '/../../uploads/cache');
 
 /**
  * Leave an empty string to use PHP's $_SERVER['DOCUMENT_ROOT'].
@@ -93,7 +93,8 @@ $min_serveOptions['bubbleCssImports'] = false;
  * Note: Despite this setting, if you include a number at the end of the
  * querystring, maxAge will be set to one year. E.g. /min/f=hello.css&123456
  */
-$min_serveOptions['maxAge'] = 1800;
+require_once realpath(dirname(__FILE__) . '/../../') . '/includes/config.php';
+$min_serveOptions['maxAge'] = CONFIG_CACHE_MINIFY;
 
 
 /**
