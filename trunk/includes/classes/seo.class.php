@@ -57,7 +57,7 @@ class seo
 	 */
 	private static function getSEOCache()
 	{
-		if (!cache::check('aliases'))
+		if (cache::check('aliases') === false)
 			self::setSEOCache();
 
 		return cache::output('aliases');
@@ -75,15 +75,15 @@ class seo
 
 		if ($mode === 1) {
 			$keywords = self::getKeywordsOrDescription($uri->query);
-			if (empty($keywords)) {
+			if (empty($keywords))
 				$keywords = self::getKeywordsOrDescription($uri->mod);
-			}
+
 			return !empty($keywords) ? $keywords : CONFIG_SEO_META_KEYWORDS;
 		} else {
 			$description = self::getKeywordsOrDescription($uri->query, 'description');
-			if (empty($description)) {
+			if (empty($description))
 				$description = self::getKeywordsOrDescription($uri->mod, 'description');
-			}
+
 			return !empty($description) ? $description : CONFIG_SEO_META_DESCRIPTION;
 		}
 	}

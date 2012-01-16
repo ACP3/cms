@@ -88,7 +88,7 @@ class acl
 	 */
 	public static function getResources()
 	{
-		if (!cache::check('acl_resources', 'acl'))
+		if (cache::check('acl_resources', 'acl') === false)
 			self::setResourcesCache();
 
 		return cache::output('acl_resources', 'acl');
@@ -138,7 +138,7 @@ class acl
 			$first = $last = true;
 			if ($i > 0) {
 				for ($j = $i - 1; $j >= 0; --$j) {
-					if ($roles[$j]['parent_id'] == $roles[$i]['parent_id']) {
+					if ($roles[$j]['parent_id'] === $roles[$i]['parent_id']) {
 						$first = false;
 						break;
 					}
@@ -146,7 +146,7 @@ class acl
 			}
 
 			for ($j = $i + 1; $j < $c_roles; ++$j) {
-				if ($roles[$i]['parent_id'] == $roles[$j]['parent_id']) {
+				if ($roles[$i]['parent_id'] === $roles[$j]['parent_id']) {
 					$last = false;
 					break;
 				}
@@ -192,7 +192,7 @@ class acl
 	 */
 	public static function getAllRoles()
 	{
-		if (!cache::check('acl_all_roles', 'acl'))
+		if (cache::check('acl_all_roles', 'acl') === false)
 			self::setRolesCache();
 
 		return cache::output('acl_all_roles', 'acl');
@@ -240,7 +240,7 @@ class acl
 	public static function getRules(array $roles)
 	{
 		$filename = 'acl_rules_' . implode(',', $roles);
-		if (!cache::check($filename, 'acl'))
+		if (cache::check($filename, 'acl') === false)
 			self::setRulesCache($roles);
 
 		return cache::output($filename, 'acl');

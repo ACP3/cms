@@ -29,7 +29,7 @@ class config
 	public static function system(array $data)
 	{
 		$path = INCLUDES_DIR . 'config.php';
-		if (is_writable($path)){
+		if (is_writable($path) === true){
 			// Konfigurationsdatei in ein Array schreiben
 			$config = array(
 				'cache_images' => CONFIG_CACHE_IMAGES,
@@ -65,12 +65,11 @@ class config
 
 			$content = "<?php\n";
 			$content.= "define('INSTALLED', true);\n";
-			if (defined('DEBUG')) {
+			if (defined('DEBUG') === true)
 				$content.= "define('DEBUG', " . ((bool) DEBUG === true ? 'true' : 'false') . ");\n";
-			}
 			$pattern = "define('CONFIG_%s', %s);\n";
 			foreach ($data as $key => $value) {
-				if (array_key_exists($key, $config))
+				if (array_key_exists($key, $config) === true)
 					if (is_numeric($value) === true)
 						$value = $value;
 					elseif (is_bool($value) === true)

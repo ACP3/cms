@@ -32,13 +32,12 @@ class modules
 	 */
 	public static function check($module = 0, $file = 0) {
 		global $uri;
-		static $access_level = array();
 
 		$module = !empty($module) ? $module : $uri->mod;
 		$file = !empty($file) ? $file : $uri->file;
 
-		if (is_file(MODULES_DIR . '' . $module . '/' . $file . '.php')) {
-			if (self::isActive($module)) {
+		if (is_file(MODULES_DIR . '' . $module . '/' . $file . '.php') === true) {
+			if (self::isActive($module) === true) {
 				return acl::canAccessResource($module . '/' . $file . '/');
 			}
 			return 0;
@@ -70,9 +69,8 @@ class modules
 			$uri_dir = scandir(MODULES_DIR);
 			foreach ($uri_dir as $module) {
 				$info = self::parseInfo($module);
-				if (!empty($info)) {
+				if (!empty($info))
 					$mod_list[$info['name']] = $info;
-				}
 			}
 			ksort($mod_list);
 		}
@@ -84,7 +82,7 @@ class modules
 	public static function outputPage() {
 		global $auth, $uri;
 
-		if (!$auth->isUser() && defined('IN_ADM') && $uri->mod != 'users' && $uri->file != 'login') {
+		if (!$auth->isUser() === true && defined('IN_ADM') === true && $uri->mod !== 'users' && $uri->file !== 'login') {
 			$redirect_uri = base64_encode(substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1));
 			$uri->redirect('acp/users/login/redirect_' . $redirect_uri);
 		}
@@ -106,13 +104,13 @@ class modules
 				$tpl->assign('DESCRIPTION', seo::getCurrentKeywordsOrDescription(2));
 				$tpl->assign('CONTENT', !empty($content) ? $content : '');
 
-				$minify = ROOT_DIR . 'includes/min/' . (CONFIG_SEO_MOD_REWRITE == 1 && defined('IN_ACP3') ? '' : '?') . 'g=%s&amp;' . CONFIG_DESIGN;
+				$minify = ROOT_DIR . 'includes/min/' . (CONFIG_SEO_MOD_REWRITE === true && defined('IN_ADM') === false ? '' : '?') . 'g=%s&amp;' . CONFIG_DESIGN;
 				$tpl->assign('MIN_JAVASCRIPT', sprintf($minify, 'js'));
 				$tpl->assign('MIN_STYLESHEET', sprintf($minify, 'css'));
 				$tpl->assign('MIN_STYLESHEET_SIMPLE', sprintf($minify, 'css_simple'));
 
 				// Falls ein Modul ein eigenes Layout verwenden möchte, dieses auch zulassen
-				self::displayTemplate(defined('CUSTOM_LAYOUT') ? CUSTOM_LAYOUT : 'layout.tpl');
+				self::displayTemplate(defined('CUSTOM_LAYOUT') === true ? CUSTOM_LAYOUT : 'layout.tpl');
 				break;
 			// Kein Zugriff auf die Seite
 			case 0:
@@ -150,7 +148,7 @@ class modules
 
 		if ($tpl->templateExists($template)) {
 			return $tpl->fetch($template, $cache_id, $compile_id, $parent, $display);
-		} elseif (defined('DEBUG') && DEBUG) {
+		} elseif (defined('DEBUG') === true && DEBUG === true) {
 			return sprintf($lang->t('errors', 'tpl_not_found'), $template);
 		}
 
@@ -168,7 +166,7 @@ class modules
 		static $parsed_modules = array();
 
 		if (empty($parsed_modules)) {
-			if (!cache::check('modules_infos'))
+			if (cache::check('modules_infos') === false)
 				self::setModulesCache();
 			$parsed_modules = cache::output('modules_infos');
 		}
@@ -182,7 +180,7 @@ class modules
 		$infos = array();
 		$dirs = scandir(MODULES_DIR);
 		foreach ($dirs as $dir) {
-			if ($dir != '.' && $dir != '..' && is_file(MODULES_DIR . '/' . $dir . '/module.xml')) {
+			if ($dir !== '.' && $dir !== '..' && is_file(MODULES_DIR . '/' . $dir . '/module.xml') === true) {
 				$mod_info = xml::parseXmlFile(MODULES_DIR . '' . $dir . '/module.xml', 'info');
 
 				if (is_array($mod_info)) {
@@ -201,7 +199,6 @@ class modules
 						'css' => isset($mod_info['css']) ? true : false,
 						'protected' => isset($mod_info['protected']) ? true : false,
 					);
-					$infos[$dir];
 				}
 			}
 		}

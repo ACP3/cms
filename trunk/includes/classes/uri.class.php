@@ -145,7 +145,7 @@ class uri
 	{
 		if (!empty($args)) {
 			if ($args === 'errors/404' || $args === 'errors/403')
-				$args = (defined('IN_ACP3') ? '' : 'acp/') . $args;
+				$args = (defined('IN_ADM') === false ? '' : 'acp/') . $args;
 
 			$protocol = empty($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) === 'off' ? 'http://' : 'https://';
 			$host = $_SERVER['HTTP_HOST'];
@@ -171,8 +171,6 @@ class uri
 
 		// Überprüfen, ob Alias vorhanden ist und diesen als URI verwenden
 		if (CONFIG_SEO_ALIASES === true && $alias === 1 && !preg_match('/^acp\//', $path)) {
-			global $uri;
-
 			$alias = seo::getUriAlias($path);
 			$path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
 		}

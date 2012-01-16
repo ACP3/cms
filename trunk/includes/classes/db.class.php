@@ -42,7 +42,7 @@ class db
 	{
 		try {
 			$this->link = new PDO('mysql:host=' . $db_host . ';dbname=' . $db_name, $db_user, $db_pwd);
-			$this->link->setAttribute(PDO::ATTR_ERRMODE, defined('DEBUG') && DEBUG ? PDO::ERRMODE_EXCEPTION : PDO::ERRMODE_SILENT);
+			$this->link->setAttribute(PDO::ATTR_ERRMODE, defined('DEBUG') === true && DEBUG === true ? PDO::ERRMODE_EXCEPTION : PDO::ERRMODE_SILENT);
 			$this->link->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
 			$this->prefix = $db_pre;
 			return true;
@@ -72,8 +72,8 @@ class db
 	{
 		$value = trim($value);
 
-		if ($mode == 1 || $mode == 2) {
-			if ($mode == 1)
+		if ($mode === 1 || $mode === 2) {
+			if ($mode === 1)
 				$value = htmlentities($value, ENT_QUOTES, 'UTF-8');
 			return substr($this->link->quote($value), 1, -1);
 		} else {

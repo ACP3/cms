@@ -51,15 +51,15 @@ class auth
 	function __construct()
 	{
 		if (isset($_COOKIE['ACP3_AUTH'])) {
-			global $db, $lang;
+			global $db;
 
 			$cookie = base64_decode($_COOKIE['ACP3_AUTH']);
 			$cookie_arr = explode('|', $cookie);
 
 			$user_check = $db->select('id, pwd, entries, language', 'users', 'nickname = \'' . $db->escape($cookie_arr[0]) . '\' AND login_errors < 3');
-			if (count($user_check) == 1) {
+			if (count($user_check) === 1) {
 				$db_password = substr($user_check[0]['pwd'], 0, 40);
-				if ($db_password == $cookie_arr[1]) {
+				if ($db_password === $cookie_arr[1]) {
 					$settings = config::getModuleSettings('users');
 					$this->isUser = true;
 					$this->userId = (int) $user_check[0]['id'];
@@ -69,7 +69,7 @@ class auth
 						$this->language = $user_check[0]['language'];
 				}
 			}
-			if (!$this->isUser) {
+			if ($this->isUser === false) {
 				$this->logout();
 			}
 		}
@@ -91,7 +91,7 @@ class auth
 	 */
 	public function getUserInfo($user_id = '')
 	{
-		if (empty($user_id) && $this->isUser()) {
+		if (empty($user_id) && $this->isUser() === true) {
 			$user_id = $this->userId;
 		}
 		if (validate::isNumber($user_id)) {
@@ -150,7 +150,7 @@ class auth
 	 */
 	public function isUser()
 	{
-		return $this->isUser && !empty($this->userId) && validate::isNumber($this->userId) ? true : false;
+		return $this->isUser === true && !empty($this->userId) && validate::isNumber($this->userId) ? true : false;
 	}
 	/**
 	 * Loggt einen User ein
@@ -169,11 +169,10 @@ class auth
 
 		$user = $db->select('id, pwd, login_errors', 'users', 'nickname = \'' . $db->escape($username) . '\'');
 
-		if (count($user) == 1) {
+		if (count($user) === 1) {
 			// Useraccount ist gesperrt
-			if ($user[0]['login_errors'] >= 3) {
+			if ($user[0]['login_errors'] >= 3)
 				return -1;
-			}
 
 			// Passwort aus Datenbank
 			$db_hash = substr($user[0]['pwd'], 0, 40);
@@ -197,7 +196,7 @@ class auth
 			} else {
 				$login_errors = $user[0]['login_errors'] + 1;
 				$db->update('users', array('login_errors' => $login_errors), 'id = \'' . $user[0]['id'] . '\'');
-				if ($login_errors == 3) {
+				if ($login_errors === 3) {
 					return -1;
 				}
 			}
