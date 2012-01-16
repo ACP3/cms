@@ -73,7 +73,7 @@ class seo
 	{
 		global $uri;
 
-		if ($mode == 1) {
+		if ($mode === 1) {
 			$keywords = self::getKeywordsOrDescription($uri->query);
 			if (empty($keywords)) {
 				$keywords = self::getKeywordsOrDescription($uri->mod);
@@ -98,7 +98,7 @@ class seo
 		if (empty(self::$aliases))
 			self::$aliases = self::getSEOCache();
 
-		return array_key_exists($path, self::$aliases) ? true : false;
+		return array_key_exists($path, self::$aliases);
 	}
 	/**
 	 * Gibt einen URI-Alias aus

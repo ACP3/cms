@@ -98,15 +98,21 @@ function writeConfigFile(array $data)
 		$content = "<?php\n";
 		$content.= "define('INSTALLED', true);\n";
 		if (defined('DEBUG')) {
-			$content.= "define('DEBUG', " . ((bool) DEBUG) . ");\n";
+			$content.= "define('DEBUG', " . ((bool) DEBUG === true ? 'true' : 'false') . ");\n";
 		}
-		$pattern = "define('CONFIG_%s', '%s');\n";
+		$pattern = "define('CONFIG_%s', %s);\n";
 		foreach ($data as $key => $value) {
+			if (is_numeric($value) === true)
+				$value = $value;
+			elseif (is_bool($value) === true)
+				$value = $value === true ? 'true' : 'false';
+			else
+				$value = '\'' . $value . '\'';
 			$content.= sprintf($pattern, strtoupper($key), $value);
 		}
 		$content.= '?>';
 		$bool = @file_put_contents($path, $content, LOCK_EX);
-		return $bool ? true : false;
+		return $bool !== false ? true : false;
 	}
 	return false;
 }

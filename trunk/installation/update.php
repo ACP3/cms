@@ -476,7 +476,11 @@ if (CONFIG_DB_VERSION < 11) {
 }
 
 // Konfigurationsdatei aktualisieren
-$config = array('db_version' => count($queries));
+$config = array(
+	'db_version' => count($queries),
+	'maintenance_mode' => (bool) CONFIG_MAINTENANCE_MODE,
+	'seo_mod_rewrite' => (bool) CONFIG_SEO_MOD_REWRITE,
+);
 
 if (defined('CONFIG_DATE_FORMAT') && CONFIG_DB_VERSION == 0) {
 	$config['wysiwyg'] = CONFIG_WYSIWYG == 'fckeditor' ? 'ckeditor' : CONFIG_WYSIWYG;
@@ -486,6 +490,12 @@ if (defined('CONFIG_DATE_FORMAT') && CONFIG_DB_VERSION == 0) {
 	define('CONFIG_DATE_FORMAT_LONG', CONFIG_DATE_FORMAT);
 	define('CONFIG_DATE_FORMAT_SHORT', $config['date_format_short']);
 }
+if (defined('CONFIG_CACHE_IMAGES') == false)
+	define('CONFIG_CACHE_IMAGES', true);
+if (defined('CONFIG_CACHE_MINIFY') == false)
+	define('CONFIG_CACHE_MINIFY', 3600);
+if (defined('CONFIG_SEO_ALIASES') == false)
+	define('CONFIG_SEO_ALIASES', true);
 
 print config::system($config) ? 'Konfigurationsdatei erfolgreich aktualisiert!' : 'Die Konfigurationsdatei konnte nicht aktualisiert werden!';
 

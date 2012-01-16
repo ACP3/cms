@@ -40,10 +40,7 @@ class cache
 	public static function check($filename, $cache_id = '')
 	{
 		$cache_id.= $cache_id !== '' ? '_' : '';
-		if (is_file(ACP3_ROOT . self::$sql_cache_dir . $cache_id . md5($filename) . '.php')) {
-			return true;
-		}
-		return false;
+		return is_file(ACP3_ROOT . self::$sql_cache_dir . $cache_id . md5($filename) . '.php');
 	}
 	/**
 	 * Erstellt den Cache
@@ -60,8 +57,8 @@ class cache
 			$cache_id.= $cache_id !== '' ? '_' : '';
 			$bool = @file_put_contents(ACP3_ROOT . self::$sql_cache_dir . $cache_id . md5($filename) . '.php', serialize($data), LOCK_EX);
 
-			return $bool ? true : false;
-		} elseif (self::check($filename, $cache_id)) {
+			return $bool !== false ? true : false;
+		} elseif (self::check($filename, $cache_id) === true) {
 			return self::delete($filename, $cache_id);
 		}
 		return false;
@@ -75,7 +72,7 @@ class cache
 	 */
 	public static function delete($filename, $cache_id = '')
 	{
-		if (self::check($filename)) {
+		if (self::check($filename) === true) {
 			$cache_id.= $cache_id !== '' ? '_' : '';
 			return unlink(ACP3_ROOT . self::$sql_cache_dir . $cache_id . md5($filename) . '.php');
 		}
@@ -90,7 +87,7 @@ class cache
 	 */
 	public static function output($filename, $cache_id = '')
 	{
-		if (self::check($filename, $cache_id)) {
+		if (self::check($filename, $cache_id) === true) {
 			$cache_id.= $cache_id !== '' ? '_' : '';
 			$handle = fopen(ACP3_ROOT . self::$sql_cache_dir . $cache_id . md5($filename) . '.php', 'r');
 			flock($handle, LOCK_SH);

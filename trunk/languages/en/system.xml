@@ -5,6 +5,7 @@
 	<item key="acp3_up_to_date">You already use the most recent version of the ACP3.</item>
 	<item key="architecture">Architecture</item>
 	<item key="attention">Attention</item>
+	<item key="cache_images">Cache pictures</item>
 	<item key="complete_export">Complete</item>
 	<item key="config_edit_error">While editing the ACP3 configuration an error has occured.</item>
 	<item key="config_edit_success">The ACP3 configuration has been edited successfully.</item>
@@ -12,17 +13,14 @@
 	<item key="current_version">Current version</item>
 	<item key="data_of_table">Data of table %s</item>
 	<item key="database">Database</item>
-	<item key="date_format_long">Long date format</item>
-	<item key="date_format_short">Short date format</item>
-	<item key="description">Description</item>
 	<item key="designs">Designs</item>
 	<item key="designs_edit_error">While switching the design an error has occured.</item>
 	<item key="designs_edit_success">The design was successfully selected and can now be used.</item>
 	<item key="disable_module">Disable module</item>
 	<item key="drop_tables"><![CDATA[Export with &quot;DROP TABLE&quot; statement]]></item>
 	<item key="editor">Editor</item>
-	<item key="enable_disable_mod_rewrite">Please select, whether search engine friendly URIs should be used, or not</item>
 	<item key="enable_module">Enable module</item>
+	<item key="enable_seo_aliases">Enable URI-Aliases</item>
 	<item key="entries_per_page">Resultsets per page</item>
 	<item key="error_messages">Output of error messages</item>
 	<item key="error_update_check">It wasn\'t possible to establish a connection to the update server.</item>
@@ -49,6 +47,8 @@
 	<item key="maintenance_mode">Turn maintenance mode on</item>
 	<item key="maintenance_msg">Maintenance message</item>
 	<item key="max_upload_size">Maximum upload size</item>
+	<item key="minify_cache_lifetime">Cache lifetime of CSS and JavaScript files</item>
+	<item key="minify_cache_lifetime_description">Statements in seconds</item>
 	<item key="mod_activate_error">While enabling the module an error has occured.</item>
 	<item key="mod_activate_success">The module was successfully enabled and can now be used.</item>
 	<item key="mod_deactivate_error">While disabling the module an error has occured.</item>
@@ -73,6 +73,7 @@
 	<item key="output_as_file">As file</item>
 	<item key="overall_overhead">Overall overhead</item>
 	<item key="overhead">Overhead</item>
+	<item key="performance">Performance</item>
 	<item key="php_date_function"><![CDATA[see <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a> function of PHP]]></item>
 	<item key="php_extensions">Available PHP extensions</item>
 	<item key="php_settings">PHP settings</item>
@@ -82,12 +83,15 @@
 	<item key="register_globals">Register globals</item>
 	<item key="result">Result</item>
 	<item key="safe_mode">Safe mode</item>
+	<item key="select_cache_images">Please select, whether you want to cache pictures.</item>
 	<item key="select_editor">Please select, whether you want to use a WYSIWYG editor or a simple textarea</item>
 	<item key="select_entries_per_page">Please select, how many resultsets per page should be displayed</item>
 	<item key="select_export_type">Please select the export type</item>
 	<item key="select_menu_item">Please select one of the above-noted menu items, to reach the desired action.</item>
+	<item key="select_mod_rewrite">Please select, whether search engine friendly URIs should be used, or not</item>
 	<item key="select_online_maintenance">Please selecr, whether the maintenance mode should be turned on or off</item>
 	<item key="select_output">Please select, whether the backup should be output as a file or a text</item>
+	<item key="select_seo_aliases">Please select, whether to enable URI-Aliases or not.</item>
 	<item key="select_sql_file">The uploaded file is not a valid textfile</item>
 	<item key="select_sql_tables">Please select at least one SQL-table, that should be exported</item>
 	<item key="server_config">Serverconfiguration</item>
@@ -109,6 +113,7 @@
 	<item key="title_to_short">Please type in a title</item>
 	<item key="type_in_date_format">Please type in a date format</item>
 	<item key="type_in_flood_barrier">Please type in, for how long an user can\'t submit new entries</item>
+	<item key="type_in_minify_cache_lifetime">Please type in the cache lifetime of CSS and JavaScript files.</item>
 	<item key="type_in_text_or_select_sql_file">Please either type in the sql queries into the textarea oder just upload a file</item>
 	<item key="update_check">Version check</item>
 	<item key="version">Version</item>

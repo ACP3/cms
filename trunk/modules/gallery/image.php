@@ -17,7 +17,7 @@ if (validate::isNumber($uri->id)) {
 
 	$settings = config::getModuleSettings('gallery');
 	$options = array(
-		'enable_cache' => true,
+		'enable_cache' => CONFIG_CACHE_IMAGES,
 		'cache_prefix' => 'gallery_' . $action,
 		'max_width' => $settings[$action . 'width'],
 		'max_height' => $settings[$action . 'height'],
