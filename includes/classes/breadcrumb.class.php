@@ -90,7 +90,7 @@ class breadcrumb
 			if ($c_pages > 1) {
 				// Die durch das Modul festgelegte Brotkrümelspur mit den
 				// übergeordneten Menüpunkten verschmelzen
-				if ($mode == 1) {
+				if ($mode === 1) {
 					if (!empty(self::$steps) && !empty(self::$end)) {
 						unset(self::$steps[0]);
 						for ($i = $c_pages - 1; $i >= 0; --$i) {
@@ -126,7 +126,7 @@ class breadcrumb
 		}
 
 		// Brotkrümelspur ausgeben
-		if ($mode == 1) {
+		if ($mode === 1) {
 			$tpl->assign('breadcrumb', self::$steps);
 			$tpl->assign('end', self::$end);
 			return $tpl->fetch('common/breadcrumb.tpl');

@@ -34,10 +34,7 @@ class lang
 			global $auth;
 
 			$lang = $auth->getUserLanguage();
-			if ($this->languagePackExists($lang))
-				$this->lang = $lang;
-			else
-				$this->lang = CONFIG_LANG;
+			$this->lang = $this->languagePackExists($lang) === true ? $lang : CONFIG_LANG;
 		} else {
 			$this->lang = $lang;
 		}
@@ -52,7 +49,7 @@ class lang
 		$dir = scandir($path);
 		foreach ($dir as $row) {
 			$module = substr($row, 0, strrpos($row, '.'));
-			if (is_file($path . $module . '.xml')) {
+			if (is_file($path . $module . '.xml') === true) {
 				$xml = simplexml_load_file($path . $module . '.xml');
 				foreach ($xml->item as $row) {
 					$data[$module][(string) $row['key']] = (string) $row;
@@ -69,7 +66,7 @@ class lang
 	private function getLangCache()
 	{
 		$filename = 'language_' . $this->lang;
-		if (!cache::check($filename))
+		if (cache::check($filename) === false)
 			$this->setLangCache();
 
 		return cache::output($filename);
@@ -99,6 +96,6 @@ class lang
 	 */
 	public function languagePackExists($lang)
 	{
-		return !preg_match('=/=', $lang) && is_file(ACP3_ROOT . 'languages/' . $lang . '/info.xml');
+		return !preg_match('=/=', $lang) && is_file(ACP3_ROOT . 'languages/' . $lang . '/info.xml') === true;
 	}
 }

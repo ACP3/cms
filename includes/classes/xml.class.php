@@ -32,7 +32,7 @@ class xml
 
 		if (!empty($info[$path][$xpath])) {
 			return $info[$path][$xpath];
-		} elseif (is_file($path)) {
+		} elseif (is_file($path) === true) {
 			$xml = simplexml_load_file($path);
 			$data = $xml->xpath($xpath);
 
@@ -41,7 +41,7 @@ class xml
 					foreach ($row as $key => $value) {
 						if ($value->attributes()) {
 							foreach ($value->attributes() as $attr_key => $attr_val) {
-								if ($key == 'version' && $attr_key == 'core' && $attr_val == 'true') {
+								if ($key === 'version' && $attr_key === 'core' && $attr_val === 'true') {
 									$info[$path][$xpath]['version'] = CONFIG_VERSION;
 								} else {
 									$info[$path][$xpath][(string) $key][(string) $attr_key] = (string) $attr_val;
@@ -67,7 +67,7 @@ class xml
 	 */
 	public static function writeToXml($path, $xpath, $data)
 	{
-		if (is_file($path) && is_writable($path) && is_array($data)) {
+		if (is_file($path) === true && is_writable($path) === true && is_array($data) === true) {
 			$xml = new DOMDocument();
 			$xml->load($path);
 			$xp = new domxpath($xml);
@@ -77,7 +77,7 @@ class xml
 			while ($i > -1) {
 				$item = $items->item($i);
 
-				if (array_key_exists($item->nodeName, $data)) {
+				if (array_key_exists($item->nodeName, $data) === true) {
 					$newitem = $xml->createElement($item->nodeName);
 					if (empty($data[$item->nodeName]) ||
 						validate::isNumber($data[$item->nodeName]) ||

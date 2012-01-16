@@ -58,7 +58,7 @@ class validate
 		}
 
 		foreach ($roles as $row) {
-			if (!in_array($row, $good))
+			if (in_array($row, $good) === false)
 				return false;
 		}
 		return true;
@@ -93,7 +93,7 @@ class validate
 	{
 		if (preg_match('/^[a-zA-Z0-9]+$/', $input) && self::isMD5($hash)) {
 			$path = ACP3_ROOT . 'uploads/captcha/' . $hash . strtolower($input);
-			if (is_file($path)) {
+			if (is_file($path) === true) {
 				@unlink($path);
 				return true;
 			}
@@ -214,14 +214,14 @@ class validate
 		$info = getimagesize($file);
 		$isPicture = $info[2] >= '1' && $info[2] <= '3' ? true : false;
 
-		if ($isPicture) {
+		if ($isPicture === true) {
 			$bool = true;
 			// Optionale Parameter
 			if (validate::isNumber($width) && $info[0] > $width)
 				$bool = false;
 			if (validate::isNumber($height) && $info[1] > $height)
 				$bool = false;
-			if (filesize($file) == 0 || validate::isNumber($filesize) && filesize($file) > $filesize)
+			if (filesize($file) === 0 || validate::isNumber($filesize) && filesize($file) > $filesize)
 				$bool = false;
 
 			return $bool;
@@ -251,11 +251,11 @@ class validate
 	 * @return mixed
 	 */
 	public static function mimeType($file, $mimetype = '') {
-		if (is_file($file)) {
-			if (function_exists('finfo_open') && $fp = finfo_open(FILEINFO_MIME)) {
+		if (is_file($file) === true) {
+			if (function_exists('finfo_open') === true && $fp = finfo_open(FILEINFO_MIME)) {
 				$return = finfo_file($fp, $file);
 				finfo_close($fp);
-			} elseif (function_exists('mime_content_type')) {
+			} elseif (function_exists('mime_content_type') === true) {
 				$return = mime_content_type($file);
 			}
 
@@ -276,13 +276,13 @@ class validate
 	public static function UriAliasExists($alias, $path = '')
 	{
 		if (self::isUriSafe($alias)) {
-			if (is_dir(MODULES_DIR . '' . $alias)) {
+			if (is_dir(MODULES_DIR . '' . $alias) === true) {
 				return true;
 			} else {
 				global $db;
 
 				$path.= !preg_match('/\/$/', $path) ? '/' : '';
-				if ($path != '/' && self::internalURI($path)) {
+				if ($path !== '/' && self::internalURI($path) === true) {
 					return $db->countRows('*', 'seo', 'alias = \'' . $alias . '\' AND uri != \'' . $path . '\'') > 0 ? true : false;
 				} elseif ($db->countRows('*', 'seo', 'alias = \'' . $alias . '\'') > 0) {
 					return true;

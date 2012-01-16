@@ -64,8 +64,8 @@ class date
 			$this->date_format_short = $info['date_format_short'];
 			$time_zone = (int) $info['time_zone'];
 		} else {
-			$this->dst = (int) CONFIG_DATE_DST;
-			$time_zone = (int) CONFIG_DATE_TIME_ZONE;
+			$this->dst = CONFIG_DATE_DST;
+			$time_zone = CONFIG_DATE_TIME_ZONE;
 		}
 
 		$this->offset_real = $time_zone;
@@ -92,7 +92,7 @@ class date
 		global $tpl;
 
 		$datepicker = array(
-			'range' => is_array($name) && $range == 1 ? 1 : 0,
+			'range' => is_array($name) && $range === 1 ? 1 : 0,
 			'params' => array(
 				'firstDay' => '\'1\'',
 				'dateFormat' => '\'yy-mm-dd\'',
@@ -109,7 +109,7 @@ class date
 		}
 
 		// Veröffentlichungszeitraum
-		if (is_array($name) && $range == 1) {
+		if (is_array($name) && $range === 1) {
 			if (!empty($_POST['form'][$name[0]]) && !empty($_POST['form'][$name[1]])) {
 				$value_start = $_POST['form'][$name[0]];
 				$value_end = $_POST['form'][$name[1]];
@@ -164,7 +164,7 @@ class date
 				$format = $this->date_format_short;
 				break;
 		}
-		return gmdate($format, $time_stamp + ($mode == 1 ? $this->offset_dst : $this->offset_real));
+		return gmdate($format, $time_stamp + ($mode === 1 ? $this->offset_dst : $this->offset_real));
 	}
 	/**
 	 * Gibt die Formularfelder für den Veröffentlichungszeitraum aus
