@@ -204,7 +204,7 @@ class image
 				$this->file = ACP3_ROOT . $this->cache_dir . $this->setCacheName();
 				$this->readFromFile();
 			// Bild resampeln
-			} elseif (($this->force_resample === true || ($width > $this->max_width && $height > $this->max_height)) && ($type === 1 || $type === 2 || $type === 3)) {
+			} elseif (($this->force_resample === true || ($width > $this->max_width || $height > $this->max_height)) && ($type === 1 || $type === 2 || $type === 3)) {
 				$dimensions = $this->calcNewDimensions($width, $height);
 				$cache_file = null;
 				if ($this->enable_cache === true && is_dir(ACP3_ROOT . $this->cache_dir) && !is_file(ACP3_ROOT . $this->cache_dir . $this->setCacheName()))
