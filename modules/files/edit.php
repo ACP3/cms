@@ -40,7 +40,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 			$errors[] = $lang->t('files', 'select_category');
 		if (strlen($form['cat_create']) >= 3 && categoriesCheckDuplicate($form['cat_create'], 'files'))
 			$errors[] = $lang->t('categories', 'category_already_exists');
-		if (!validate::isUriSafe($form['alias']) || validate::UriAliasExists($form['alias'], 'files/details/id_' . $uri->id))
+		if (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'], 'files/details/id_' . $uri->id))
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 		if (isset($errors)) {

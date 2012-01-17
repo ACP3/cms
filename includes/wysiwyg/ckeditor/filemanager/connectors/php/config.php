@@ -22,6 +22,7 @@
  * Configuration file for the File Manager Connector for PHP.
  */
 define('ACP3_ROOT', '../../../../../../');
+define('IN_ACP3', true);
 include ACP3_ROOT . 'includes/config.php';
 
 set_include_path(get_include_path() . PATH_SEPARATOR . ACP3_ROOT . 'includes/classes/');

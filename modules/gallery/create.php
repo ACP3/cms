@@ -17,7 +17,7 @@ if (isset($_POST['form'])) {
 		$errors[] = $lang->t('common', 'select_date');
 	if (strlen($form['name']) < 3)
 		$errors[] = $lang->t('gallery', 'type_in_gallery_name');
-	if (!validate::isUriSafe($form['alias']) || validate::UriAliasExists($form['alias']))
+	if (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias']))
 		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 	if (isset($errors)) {

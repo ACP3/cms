@@ -178,9 +178,9 @@ class validate
 	 * @param mixed $var
 	 * @return boolean
 	 */
-	public static function internalURI($var)
+	public static function isInternalURI($var)
 	{
-		return preg_match('/^(?i:[a-z\d_\-]+\/){2,}$/', $var);
+		return (bool) preg_match('/^([a-z0-9_\-]+\/){2,}$/', $var);
 	}
 	/**
 	 * Überprüft, ob ein gültiger MD5-Hash übergeben wurde
@@ -273,7 +273,7 @@ class validate
 	 * @param string $path
 	 * @return boolean
 	 */
-	public static function UriAliasExists($alias, $path = '')
+	public static function uriAliasExists($alias, $path = '')
 	{
 		if (self::isUriSafe($alias)) {
 			if (is_dir(MODULES_DIR . '' . $alias) === true) {
@@ -282,7 +282,7 @@ class validate
 				global $db;
 
 				$path.= !preg_match('/\/$/', $path) ? '/' : '';
-				if ($path !== '/' && self::internalURI($path) === true) {
+				if ($path !== '/' && validate::isInternalURI($path) === true) {
 					return $db->countRows('*', 'seo', 'alias = \'' . $alias . '\' AND uri != \'' . $path . '\'') > 0 ? true : false;
 				} elseif ($db->countRows('*', 'seo', 'alias = \'' . $alias . '\'') > 0) {
 					return true;
