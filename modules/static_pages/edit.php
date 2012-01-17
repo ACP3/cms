@@ -22,7 +22,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 			$errors[] = $lang->t('static_pages', 'title_to_short');
 		if (strlen($form['text']) < 3)
 			$errors[] = $lang->t('static_pages', 'text_to_short');
-		if (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'], 'static_pages/list/id_' . $uri->id))
+		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'], 'static_pages/list/id_' . $uri->id)))
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 		if (isset($errors)) {
@@ -37,7 +37,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 			);
 
 			$bool = $db->update('static_pages', $update_values, 'id = \'' . $uri->id . '\'');
-			$bool2 = seo::insertUriAlias($form['alias'], 'static_pages/list/id_' . $uri->id, $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
+			if (CONFIG_SEO_ALIASES === true && !empty($form['alias']))
+				seo::insertUriAlias($form['alias'], 'static_pages/list/id_' . $uri->id, $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
 			setStaticPagesCache($uri->id);
 

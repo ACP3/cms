@@ -28,7 +28,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			$errors[] = $lang->t('common', 'select_date');
 		if (strlen($form['name']) < 3)
 			$errors[] = $lang->t('gallery', 'type_in_gallery_name');
-		if (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'], 'gallery/pics/id_' . $uri->id))
+		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'], 'gallery/pics/id_' . $uri->id)))
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 		if (isset($errors)) {
@@ -42,12 +42,13 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			);
 
 			$bool = $db->update('gallery', $update_values, 'id = \'' . $uri->id . '\'');
-			$bool2 = seo::insertUriAlias($form['alias'], 'gallery/pics/id_' . $uri->id, $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
+			if (CONFIG_SEO_ALIASES === true && !empty($form['alias'])) {
+				seo::insertUriAlias($form['alias'], 'gallery/pics/id_' . $uri->id, $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
+				require_once MODULES_DIR . 'gallery/functions.php';
+				generatePictureAliases($uri->id);
+			}
 
-			require_once MODULES_DIR . 'gallery/functions.php';
-			$bool3 = generatePictureAliases($uri->id);
-
-			$content = comboBox($bool && $bool2 && $bool3 ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/gallery'));
+			$content = comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/gallery'));
 		}
 	}
 	if (!isset($_POST['entries']) && !isset($_POST['form']) || isset($errors) && is_array($errors)) {

@@ -28,7 +28,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 			$errors[] = $lang->t('news', 'select_category');
 		if (strlen($form['cat_create']) >= 3 && categoriesCheckDuplicate($form['cat_create'], 'news'))
 			$errors[] = $lang->t('categories', 'category_already_exists');
-		if (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'], 'news/details/id_' . $uri->id))
+		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'], 'news/details/id_' . $uri->id)))
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 		if (!empty($form['uri']) && (!validate::isNumber($form['target']) || strlen($form['link_title']) < 3))
 			$errors[] = $lang->t('news', 'complete_additional_hyperlink_statements');
@@ -51,12 +51,13 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 			);
 
 			$bool = $db->update('news', $update_values, 'id = \'' . $uri->id . '\'');
-			$bool2 = seo::insertUriAlias($form['alias'], 'news/details/id_' . $uri->id, $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
+			if (CONFIG_SEO_ALIASES === true && !empty($form['alias']))
+				seo::insertUriAlias($form['alias'], 'news/details/id_' . $uri->id, $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
 			require_once MODULES_DIR . 'news/functions.php';
 			setNewsCache($uri->id);
 
-			$content = comboBox($bool && $bool2 ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/news'));
+			$content = comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/news'));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

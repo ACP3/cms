@@ -17,7 +17,7 @@ if (isset($_POST['form'])) {
 		$errors[] = $lang->t('common', 'select_date');
 	if (strlen($form['name']) < 3)
 		$errors[] = $lang->t('gallery', 'type_in_gallery_name');
-	if (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias']))
+	if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'])))
 		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 	if (isset($errors)) {
@@ -32,9 +32,10 @@ if (isset($_POST['form'])) {
 		);
 
 		$bool = $db->insert('gallery', $insert_values);
-		$bool2 = seo::insertUriAlias($form['alias'], 'gallery/pics/id_' . $db->link->lastInsertID(), $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
+		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']))
+			seo::insertUriAlias($form['alias'], 'gallery/pics/id_' . $db->link->lastInsertID(), $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
-		$content = comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/gallery'));
+		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/gallery'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {

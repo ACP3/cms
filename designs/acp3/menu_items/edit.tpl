@@ -25,6 +25,7 @@
 			<dt><label for="title">{lang t="menu_items|title"}</label></dt>
 			<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120"></dd>
 		</dl>
+{if $enable_uri_aliases === true}
 		<dl id="uri-alias">
 			<dt>
 				<label for="alias">{lang t="common|uri_alias"}</label>
@@ -32,6 +33,7 @@
 			</dt>
 			<dd><input type="text" name="form[alias]" id="alias" value="{$form.alias}"></dd>
 		</dl>
+{/if}
 		<dl>
 			<dt><label for="block_id">{lang t="menu_items|blocks"}</label></dt>
 			<dd>
