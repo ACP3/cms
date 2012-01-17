@@ -20,7 +20,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 			$errors[] = $lang->t('common', 'select_date');
 		if (!validate::isNumber($form['mode']))
 			$errors[] = $lang->t('menu_items', 'select_page_type');
-		if (($form['mode'] == 2 || $form['mode'] == 4) && !validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'], $db->escape($form['uri'])))
+		if (($form['mode'] == 2 || $form['mode'] == 4) && CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'], $db->escape($form['uri']))))
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 		if (strlen($form['title']) < 3)
 			$errors[] = $lang->t('menu_items', 'title_to_short');
@@ -63,7 +63,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 			);
 
 			$bool = menuItemsEditNode($uri->id, $form['parent'], $form['block_id'], $update_values);
-			if ($form['mode'] == 2 || $form['mode'] == 4) {
+			if (CONFIG_SEO_ALIASES === true && ($form['mode'] == 2 || $form['mode'] == 4)) {
 				$keywords = $description = '';
 				if (seo::uriAliasExists($form['uri'])) {
 					$keywords = seo::getKeywordsOrDescription($form['uri']);
@@ -84,6 +84,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 		$page[0]['alias'] = $page[0]['mode'] == 2 || $page[0]['mode'] == 4 ? seo::getUriAlias($page[0]['uri']) : '';
 
 		// Seitentyp
+		$mode = array();
 		$mode[0]['value'] = 1;
 		$mode[0]['selected'] = selectEntry('mode', '1', $page[0]['mode']);
 		$mode[0]['lang'] = $lang->t('menu_items', 'module');
@@ -120,6 +121,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 			$page[0]['uri'] = '';
 
 		// Ziel des Hyperlinks
+		$target = array();
 		$target[0]['value'] = 1;
 		$target[0]['selected'] = selectEntry('target', '1', $page[0]['target']);
 		$target[0]['lang'] = $lang->t('common', 'window_self');
@@ -128,6 +130,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 		$target[1]['lang'] = $lang->t('common', 'window_blank');
 		$tpl->assign('target', $target);
 
+		$display = array();
 		$display[0]['value'] = 1;
 		$display[0]['selected'] = selectEntry('display', '1', $page[0]['display'], 'checked');
 		$display[0]['lang'] = $lang->t('common', 'yes');
@@ -147,6 +150,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 		}
 
 		// Daten an Smarty übergeben
+		$tpl->assign('enable_uri_aliases', CONFIG_SEO_ALIASES);
 		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($page[0]['start'], $page[0]['end'])));
 		$tpl->assign('form', isset($form) ? $form : $page[0]);
 

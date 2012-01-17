@@ -19,7 +19,7 @@ if (isset($_POST['form'])) {
 		$errors[] = $lang->t('common', 'select_date');
 	if (!validate::isNumber($form['mode']))
 		$errors[] = $lang->t('menu_items', 'select_page_type');
-	if ($form['mode'] == 2 && !validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias']))
+	if ($form['mode'] == 2 && CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'])))
 		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 	if (strlen($form['title']) < 3)
 		$errors[] = $lang->t('menu_items', 'title_to_short');
@@ -59,7 +59,7 @@ if (isset($_POST['form'])) {
 		);
 
 		$bool = menuItemsInsertNode($form['parent'], $insert_values);
-		if ($form['mode'] == 2 && !empty($form['alias'])) {
+		if (CONFIG_SEO_ALIASES === true && $form['mode'] == 2 && !empty($form['alias'])) {
 			$keywords = $description = '';
 			if (seo::uriAliasExists($form['uri'])) {
 				$keywords = seo::getKeywordsOrDescription($form['uri']);
@@ -75,6 +75,7 @@ if (isset($_POST['form'])) {
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	// Seitentyp
+	$mode = array();
 	$mode[0]['value'] = 1;
 	$mode[0]['selected'] = selectEntry('mode', '1');
 	$mode[0]['lang'] = $lang->t('menu_items', 'module');
@@ -107,6 +108,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('modules', $modules);
 
 	// Ziel des Hyperlinks
+	$target = array();
 	$target[0]['value'] = 1;
 	$target[0]['selected'] = selectEntry('target', '1');
 	$target[0]['lang'] = $lang->t('common', 'window_self');
@@ -115,6 +117,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$target[1]['lang'] = $lang->t('common', 'window_blank');
 	$tpl->assign('target', $target);
 
+	$display = array();
 	$display[0]['value'] = 1;
 	$display[0]['selected'] = selectEntry('display', '1', '1', 'checked');
 	$display[0]['lang'] = $lang->t('common', 'yes');
@@ -136,6 +139,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	);
 
 	// Daten an Smarty übergeben
+	$tpl->assign('enable_uri_aliases', CONFIG_SEO_ALIASES);
 	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 	$tpl->assign('pages_list', menuItemsList());

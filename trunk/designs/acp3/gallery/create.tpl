@@ -21,20 +21,7 @@
 			</dl>
 		</div>
 		<div id="tab-2" class="ui-tabs-hide">
-			<dl>
-				<dt>
-					<label for="alias">{lang t="common|uri_alias"}</label>
-					<span>{lang t="common|uri_alias_description"}</span>
-				</dt>
-				<dd><input type="text" name="form[alias]" id="alias" value="{$form.alias}"></dd>
-				<dt>
-					<label for="seo-keywords">{lang t="common|keywords"}</label>
-					<span>({lang t="common|keywords_separate_with_commas"})</span>
-				</dt>
-				<dd><input type="text" name="form[seo_keywords]" id="seo-keywords" value="{$form.seo_keywords}"></dd>
-				<dt><label for="seo-description">{lang t="common|description"}</label></dt>
-				<dd><input type="text" name="form[seo_description]" id="seo-description" value="{$form.seo_description}"></dd>
-			</dl>
+			{seo_fields alias="`$form.alias`" keywords="`$form.seo_keywords`" description="`$form.seo_description`"}
 		</div>
 	</div>
 	<div class="form-bottom">
