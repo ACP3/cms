@@ -85,7 +85,7 @@
 	<item key="upload_error">Die Datei %s konnte leider nicht verschoben werden.</item>
 	<item key="uri_alias">URI-Alias</item>
 	<item key="uri_alias_description">(Bitte nur Kleinbuchstaben von a-z, Zahlen und den Bindestrich verwenden)</item>
-	<item key="uri_alias_unallowed_characters_or_exists">Entweder haben Sie für den URI-Alias unerlaubte Zeichen eingegeben oder es exitisert bereits einer mit diesem Namen</item>
+	<item key="uri_alias_unallowed_characters_or_exists">Entweder haben Sie für den URI-Alias unerlaubte Zeichen eingegeben oder es existiert bereits einer mit diesem Namen</item>
 	<item key="utc-12">(UTC-12:00) Baker Island Time</item>
 	<item key="utc-11">(UTC-11:00) Niue Time, Samoa Standard Time</item>
 	<item key="utc-10">(UTC-10:00) Hawaii-Aleutian Standard Time, Cook Island Time</item>
