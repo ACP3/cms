@@ -131,7 +131,7 @@ class validate
 	}
 	public static function deleteEntries($entries)
 	{
-		return preg_match('/^((\d+)\|)*(\d+)$/', $entries);
+		return (bool) preg_match('/^((\d+)\|)*(\d+)$/', $entries);
 	}
 	/**
 	 * Überprüft, ob eine Standardkonforme E-Mail-Adresse übergeben wurde
@@ -146,7 +146,7 @@ class validate
 	{
 		$pattern = '/^((\"[^\"\f\n\r\t\v\b]+\")|([\w\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+(\.[\w\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+)*))@((\[(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))\])|(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))|((([A-Za-z0-9\-])+\.)+[A-Za-z\-]+))$/';
 
-		return preg_match($pattern, $var);
+		return (bool) preg_match($pattern, $var);
 	}
 	/**
 	 * Bestimmung des Geschlechts
@@ -160,7 +160,7 @@ class validate
 	 */
 	public static function gender($var)
 	{
-		return $var = 1 || $var == 2 || $var == 3 ? true : false;
+		return $var == 1 || $var == 2 || $var == 3 ? true : false;
 	}
 	/**
 	 * Überprüft, ob eine gültige ICQ-Nummer eingegeben wurde
@@ -170,7 +170,7 @@ class validate
 	 */
 	public static function icq($var)
 	{
-		return preg_match('/^(\d{6,9})$/', $var);
+		return (bool) preg_match('/^(\d{6,9})$/', $var);
 	}
 	/**
 	 * Überprüft, ob die übergebene URI dem Format des ACP3 entspricht
@@ -180,7 +180,7 @@ class validate
 	 */
 	public static function isInternalURI($var)
 	{
-		return (bool) preg_match('/^([a-z0-9_\-]+\/){2,}$/', $var);
+		return (bool) preg_match('/^([a-z\d_\-]+\/){2,}$/', $var);
 	}
 	/**
 	 * Überprüft, ob ein gültiger MD5-Hash übergeben wurde
@@ -190,7 +190,7 @@ class validate
 	 */
 	public static function isMD5($string)
 	{
-		return is_string($string) && preg_match('/^[a-f\d]+$/', $string) && strlen($string) == 32 ? true : false;
+		return is_string($string) === true && preg_match('/^[a-f\d]+$/', $string) && strlen($string) === 32 ? true : false;
  	}
 	/**
 	 * Überprüft eine Variable, ob diese nur aus Ziffern besteht
@@ -200,7 +200,7 @@ class validate
 	 */
 	public static function isNumber($var)
 	{
-		return preg_match('/^(\d+)$/', $var);
+		return (bool) preg_match('/^(\d+)$/', $var);
 	}
 	/**
 	 * Überprüfen, ob es ein unterstütztes Bildformat ist
@@ -212,7 +212,7 @@ class validate
 	public static function isPicture($file, $width = '', $height = '', $filesize = '')
 	{
 		$info = getimagesize($file);
-		$isPicture = $info[2] >= '1' && $info[2] <= '3' ? true : false;
+		$isPicture = $info[2] >= 1 && $info[2] <= 3 ? true : false;
 
 		if ($isPicture === true) {
 			$bool = true;
@@ -237,7 +237,7 @@ class validate
 	 */
 	public static function isUriSafe($var)
 	{
-		return preg_match('/^([a-z]{1}[a-z0-9\-]*)$/', $var);
+		return (bool) preg_match('/^([a-z]{1}[a-z\d\-]*)$/', $var);
 	}
 	/**
 	 * Gibt in Abhängigkeit des Parameters $mimetype entweder

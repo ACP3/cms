@@ -1,4 +1,4 @@
-﻿$(document).ready(function() {
+$(document).ready(function() {
 	$('.hide:not(:first)').hide();
 	$('.sub-table-header').click(function() {
 		$('.' + $(this).prop('id')).toggle();
