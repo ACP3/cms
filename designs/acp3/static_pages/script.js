@@ -13,4 +13,4 @@ $(document).ready(function() {
 		$('#parent optgroup:not([label=\'' + block + '\'])').hide();
 		$('#parent optgroup[label=\'' + block + '\']').show();
 	}).change();
-})
+});
