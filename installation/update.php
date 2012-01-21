@@ -490,13 +490,20 @@ if (defined('CONFIG_DATE_FORMAT') && CONFIG_DB_VERSION == 0) {
 	define('CONFIG_DATE_FORMAT_LONG', CONFIG_DATE_FORMAT);
 	define('CONFIG_DATE_FORMAT_SHORT', $config['date_format_short']);
 }
-if (defined('CONFIG_CACHE_IMAGES') == false)
+if (defined('CONFIG_CACHE_IMAGES') == false) {
 	define('CONFIG_CACHE_IMAGES', true);
-if (defined('CONFIG_CACHE_MINIFY') == false)
 	define('CONFIG_CACHE_MINIFY', 3600);
-if (defined('CONFIG_SEO_ALIASES') == false)
 	define('CONFIG_SEO_ALIASES', true);
-
+}
+if (!defined('CONFIG_MAILER_TYPE') === false) {
+	define('CONFIG_MAILER_SMTP_AUTH', false);
+	define('CONFIG_MAILER_SMTP_HOST', '');
+	define('CONFIG_MAILER_SMTP_PASSWORD', '');
+	define('CONFIG_MAILER_SMTP_PORT', 25);
+	define('CONFIG_MAILER_SMTP_SECURITY', 'none');
+	define('CONFIG_MAILER_SMTP_USER', '');
+	define('CONFIG_MAILER_TYPE', 'mail');
+}
 print config::system($config) ? 'Konfigurationsdatei erfolgreich aktualisiert!' : 'Die Konfigurationsdatei konnte nicht aktualisiert werden!';
 
 // Cache leeren

@@ -42,7 +42,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 
 			if ($form['action'] == '1' && $bool) {
 				$subject = $form['subject'];
-				$body = $form['text'] . "\n" . $settings['mailsig'];
+				$body = $form['text'] . "\n" . html_entity_decode($db->escape($settings['mailsig'], 3), ENT_QUOTES, 'UTF-8');
 
 				// Testnewsletter
 				if ($form['test'] == '1') {

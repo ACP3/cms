@@ -31,9 +31,14 @@ if (isset($_POST['form'])) {
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
-	$contact = config::getModuleSettings('contact');
+	$settings = config::getModuleSettings('contact');
+	$settings['address'] = $db->escape($settings['address'], 3);
+	$settings['telephone'] = $db->escape($settings['telephone'], 3);
+	$settings['fax'] = $db->escape($settings['fax'], 3);
+	$settings['disclaimer'] = $db->escape($settings['disclaimer'], 3);
+	$settings['layout'] = $db->escape($settings['layout'], 3);
 
-	$tpl->assign('form', isset($form) ? $form : $contact);
+	$tpl->assign('form', isset($form) ? $form : $settings);
 
 	$content = modules::fetchTemplate('contact/adm_list.tpl');
 }

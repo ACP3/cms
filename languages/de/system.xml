@@ -19,6 +19,7 @@
 	<item key="disable_module">Modul deaktivieren</item>
 	<item key="drop_tables"><![CDATA[Mit &quot;DROP TABLE&quot; exportieren]]></item>
 	<item key="editor">Editor</item>
+	<item key="email">E-Mail</item>
 	<item key="enable_module">Modul aktivieren</item>
 	<item key="enable_seo_aliases">URI-Aliase aktivieren</item>
 	<item key="entries_per_page">Datensätze pro Seite</item>
@@ -42,6 +43,18 @@
 	<item key="languages">Sprachen</item>
 	<item key="languages_edit_error">Beim Verändern der Sprache ist ein Fehler aufgetreten.</item>
 	<item key="languages_edit_success">Die Sprache wurde erfolgreich ausgewählt und kann nun verwendet werden.</item>
+	<item key="mailer_smtp_auth">SMTP-Authentifizierung</item>
+	<item key="mailer_smtp_hostname">SMTP Hostname</item>
+	<item key="mailer_smtp_port">SMTP Port</item>
+	<item key="mailer_smtp_security">SMTP Sicherheit</item>
+	<item key="mailer_smtp_security_none">Keine</item>
+	<item key="mailer_smtp_security_ssl">SSL</item>
+	<item key="mailer_smtp_security_tls">TLS</item>
+	<item key="mailer_smtp_username">SMTP Benutzername</item>
+	<item key="mailer_smtp_password">SMTP Passwort</item>
+	<item key="mailer_type">Mailertyp</item>
+	<item key="mailer_type_php_mail">PHP Mail</item>
+	<item key="mailer_type_smtp">SMTP</item>
 	<item key="maintenance">Wartung</item>
 	<item key="maintenance_message_to_short">Die Wartungsnachricht sollte mindestens 3 Zeichen lanng sein.</item>
 	<item key="maintenance_mode">In Wartungsmodus versetzen</item>
@@ -113,6 +126,9 @@
 	<item key="title_to_short">Bitte geben Sie einen Seitentitel ein.</item>
 	<item key="type_in_date_format">Bitte geben Sie eine Datumsformatierung ein.</item>
 	<item key="type_in_flood_barrier">Bitte geben Sie ein, für wieviele Sekunden ein Benutzer keine Beiträge abschicken kann.</item>
+	<item key="type_in_mailer_smtp_host">Bitte geben Sie den Hostnamen des SMTP-Servers an.</item>
+	<item key="type_in_mailer_smtp_port">Bitte geben Sie die Portnummer des SMTP-Servers an.</item>
+	<item key="type_in_mailer_smtp_username">Bitte geben Sie den Benutzernamen des SMTP-Servers an.</item>
 	<item key="type_in_minify_cache_lifetime">Bitte geben Sie die Cache-Lebenszeit der CSS- und JavaScript-Dateien ein.</item>
 	<item key="type_in_text_or_select_sql_file">Bitte geben Sie die SQL-Abfragen entweder in dem Textfeld ein oder laden Sie eine Datei hoch.</item>
 	<item key="update_check">Versionsüberprüfung</item>

@@ -41,6 +41,14 @@ if (isset($_POST['form'])) {
 		$errors[] = $lang->t('system', 'select_cache_images');
 	if (!validate::isNumber($form['cache_minify']))
 		$errors[] = $lang->t('system', 'type_in_minify_cache_lifetime');
+	if ($form['mailer_type'] === 'smtp') {
+		if (empty($form['mailer_smtp_host']))
+			$errors[] = $lang->t('system', 'type_in_mailer_smtp_host');
+		if (!validate::isNumber($form['mailer_smtp_port']))
+			$errors[] = $lant->t('system', 'type_in_mailer_smtp_port');
+		if ($form['mailer_smtp_auth'] == 1 && empty($form['mailer_smtp_user']))
+			$errors[] = $lang->t('system', 'type_in_mailer_smtp_username');
+	}
 
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -56,6 +64,13 @@ if (isset($_POST['form'])) {
 			'entries' => $form['entries'],
 			'flood' => $form['flood'],
 			'homepage' => $form['homepage'],
+			'mailer_smtp_auth' => (bool) $form['mailer_smtp_auth'],
+			'mailer_smtp_host' => $form['mailer_smtp_host'],
+			'mailer_smtp_password' => $form['mailer_smtp_password'],
+			'mailer_smtp_port' => (int) $form['mailer_smtp_port'],
+			'mailer_smtp_security' => $form['mailer_smtp_security'],
+			'mailer_smtp_user' => $form['mailer_smtp_user'],
+			'mailer_type' => $form['mailer_type'],
 			'maintenance_message' => $db->escape($form['maintenance_message']),
 			'maintenance_mode' => (bool) $form['maintenance_mode'],
 			'seo_aliases' => (bool) $form['seo_aliases'],
@@ -141,7 +156,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$aliases[1]['checked'] = selectEntry('seo_aliases', '0', CONFIG_SEO_ALIASES, 'checked');
 	$aliases[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('aliases', $aliases);
-	
+
 	// Caching von Bildern
 	$cache_images = array();
 	$cache_images[0]['value'] = '1';
@@ -152,12 +167,49 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$cache_images[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('cache_images', $cache_images);
 
+	// Mailertyp
+	$mailer_type = array();
+	$mailer_type[0]['value'] = 'mail';
+	$mailer_type[0]['selected'] = selectEntry('mailer_type', 'mail', CONFIG_MAILER_TYPE);
+	$mailer_type[0]['lang'] = $lang->t('system', 'mailer_type_php_mail');
+	$mailer_type[1]['value'] = 'smtp';
+	$mailer_type[1]['selected'] = selectEntry('mailer_type', 'smtp', CONFIG_MAILER_TYPE);
+	$mailer_type[1]['lang'] = $lang->t('system', 'mailer_type_smtp');
+	$tpl->assign('mailer_type', $mailer_type);
+
+	// Mailer SMTP Authentifizierung
+	$mailer_smtp_auth = array();
+	$mailer_smtp_auth[0]['value'] = '1';
+	$mailer_smtp_auth[0]['checked'] = selectEntry('seo_aliases', '1', CONFIG_MAILER_SMTP_AUTH, 'checked');
+	$mailer_smtp_auth[0]['lang'] = $lang->t('common', 'yes');
+	$mailer_smtp_auth[1]['value'] = '0';
+	$mailer_smtp_auth[1]['checked'] = selectEntry('seo_aliases', '0', CONFIG_MAILER_SMTP_AUTH, 'checked');
+	$mailer_smtp_auth[1]['lang'] = $lang->t('common', 'no');
+	$tpl->assign('mailer_smtp_auth', $mailer_smtp_auth);
+
+	// Mailer SMTP Verschlüsselung
+	$mailer_smtp_security = array();
+	$mailer_smtp_security[0]['value'] = 'none';
+	$mailer_smtp_security[0]['selected'] = selectEntry('mailer_smtp_security', '', CONFIG_MAILER_SMTP_SECURITY);
+	$mailer_smtp_security[0]['lang'] = $lang->t('system', 'mailer_smtp_security_none');
+	$mailer_smtp_security[1]['value'] = 'ssl';
+	$mailer_smtp_security[1]['selected'] = selectEntry('mailer_smtp_security', 'ssl', CONFIG_MAILER_SMTP_SECURITY);
+	$mailer_smtp_security[1]['lang'] = $lang->t('system', 'mailer_smtp_security_ssl');
+	$mailer_smtp_security[2]['value'] = 'tls';
+	$mailer_smtp_security[2]['selected'] = selectEntry('mailer_smtp_security', 'tls', CONFIG_MAILER_SMTP_SECURITY);
+	$mailer_smtp_security[2]['lang'] = $lang->t('system', 'mailer_smtp_security_tls');
+	$tpl->assign('mailer_smtp_security', $mailer_smtp_security);
+
 	$current = array(
 		'cache_minify' => CONFIG_CACHE_MINIFY,
 		'date_format_long' => CONFIG_DATE_FORMAT_LONG,
 		'date_format_short' => CONFIG_DATE_FORMAT_SHORT,
 		'flood' => CONFIG_FLOOD,
 		'homepage' => CONFIG_HOMEPAGE,
+		'mailer_smtp_host' => CONFIG_MAILER_SMTP_HOST,
+		'mailer_smtp_password' => CONFIG_MAILER_SMTP_PASSWORD,
+		'mailer_smtp_port' => CONFIG_MAILER_SMTP_PORT,
+		'mailer_smtp_user' => CONFIG_MAILER_SMTP_USER,
 		'maintenance_message' => CONFIG_MAINTENANCE_MESSAGE,
 		'seo_meta_description' => CONFIG_SEO_META_DESCRIPTION,
 		'seo_meta_keywords' => CONFIG_SEO_META_KEYWORDS,

@@ -59,6 +59,13 @@ if (isset($_POST['submit'])) {
 			'flood' => $form['flood'],
 			'homepage' => 'news/list/',
 			'lang' => LANG,
+			'mailer_smtp_auth' => false,
+			'mailer_smtp_host' => '',
+			'mailer_smtp_password' => '',
+			'mailer_smtp_port' => 25,
+			'mailer_smtp_security' => '',
+			'mailer_smtp_user' => '',
+			'mailer_type' => 'mail',
 			'maintenance_mode' => false,
 			'maintenance_message' => $lang->t('installation', 'offline_message'),
 			'seo_aliases' => true,
@@ -204,8 +211,8 @@ if (isset($_POST['submit'])) {
 		}
 
 		// Modulkonfigurationsdateien schreiben
-		config::module('contact', array('mail' => $form['mail'], 'disclaimer' => $lang->t('installation', 'disclaimer')));
-		config::module('newsletter', array('mail' => $form['mail'], 'mailsig' => $lang->t('installation', 'sincerely') . "\n\n" . $lang->t('installation', 'newsletter_mailsig')));
+		config::module('contact', array('mail' => $form['mail'], 'disclaimer' => $db->escape($lang->t('installation', 'disclaimer'), 2)));
+		config::module('newsletter', array('mail' => $form['mail'], 'mailsig' => $db->escape($lang->t('installation', 'sincerely') . "\n\n" . $lang->t('installation', 'newsletter_mailsig'))));
 	}
 }
 if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {

@@ -13,17 +13,19 @@ if (defined('IN_ACP3') === false)
 breadcrumb::assign($lang->t('contact', 'contact'), $uri->route('contact'));
 breadcrumb::assign($lang->t('contact', 'imprint'));
 
-$contact = config::getModuleSettings('contact');
-$contact['address'] = $db->escape($contact['address'], 3);
-$contact['mail'] = '<a href="' . $uri->route('contact') . '">' . $contact['mail'] . '</a>';
-$contact['disclaimer'] = $db->escape($contact['disclaimer'], 3);
-$contact['layout'] = $db->escape($contact['layout'], 3);
+$settings = config::getModuleSettings('contact');
+$settings['address'] = $db->escape($settings['address'], 3);
+$settings['telephone'] = $db->escape($settings['telephone'], 3);
+$settings['fax'] = $db->escape($settings['fax'], 3);
+$settings['mail'] = '<a href="' . $uri->route('contact') . '">' . $settings['mail'] . '</a>';
+$settings['disclaimer'] = $db->escape($settings['disclaimer'], 3);
+$settings['layout'] = $db->escape($settings['layout'], 3);
 
 // Platzhalteer ersetzen
 $search = array('{address_lang}', '{address_value}', '{email_lang}', '{email_value}', '{telephone_lang}', '{telephone_value}', '{fax_lang}', '{fax_value}', '{disclaimer_lang}', '{disclaimer_value}');
-$replace = array($lang->t('contact', 'address'), $contact['address'], $lang->t('common', 'email'), $contact['mail'], $lang->t('contact', 'telephone'), $contact['telephone'], $lang->t('contact', 'fax'), $contact['fax'], $lang->t('contact', 'disclaimer'), $contact['disclaimer']);
+$replace = array($lang->t('contact', 'address'), $settings['address'], $lang->t('common', 'email'), $settings['mail'], $lang->t('contact', 'telephone'), $settings['telephone'], $lang->t('contact', 'fax'), $settings['fax'], $lang->t('contact', 'disclaimer'), $settings['disclaimer']);
 
-$tpl->assign('imprint', str_replace($search, $replace, $contact['layout']));
+$tpl->assign('imprint', str_replace($search, $replace, $settings['layout']));
 $tpl->assign('powered_by', sprintf($lang->t('contact', 'powered_by'), '<a href="http://www.acp3-cms.net" onclick="window.open(this.href); return false">ACP3</a>'));
 
 $content = modules::fetchTemplate('contact/imprint.tpl');
