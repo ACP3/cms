@@ -49,6 +49,13 @@ class config
 				'flood' => CONFIG_FLOOD,
 				'homepage' => CONFIG_HOMEPAGE,
 				'lang' => CONFIG_LANG,
+				'mailer_smtp_auth' => CONFIG_MAILER_SMTP_AUTH,
+				'mailer_smtp_host' => CONFIG_MAILER_SMTP_HOST,
+				'mailer_smtp_password' => CONFIG_MAILER_SMTP_HOST,
+				'mailer_smtp_port' => CONFIG_MAILER_SMTP_PORT,
+				'mailer_smtp_security' => CONFIG_MAILER_SMTP_SECURITY,
+				'mailer_smtp_user' => CONFIG_MAILER_SMTP_HOST,
+				'mailer_type' => CONFIG_MAILER_TYPE,
 				'maintenance_message' => CONFIG_MAINTENANCE_MESSAGE,
 				'maintenance_mode' => CONFIG_MAINTENANCE_MODE,
 				'seo_aliases' => CONFIG_SEO_ALIASES,
@@ -70,7 +77,7 @@ class config
 			$pattern = "define('CONFIG_%s', %s);\n";
 			foreach ($data as $key => $value) {
 				if (array_key_exists($key, $config) === true)
-					if (is_numeric($value) === true)
+					if ($value !== '' && is_numeric($value) === true)
 						$value = $value;
 					elseif (is_bool($value) === true)
 						$value = $value === true ? 'true' : 'false';

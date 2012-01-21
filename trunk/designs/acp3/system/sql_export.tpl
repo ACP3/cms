@@ -6,7 +6,7 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<script type="text/javascript" src="{$DESIGN_PATH}system/script.js"></script>
+<script type="text/javascript" src="{$DESIGN_PATH}system/export.js"></script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<div id="tabs">
 		<ul>

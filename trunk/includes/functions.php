@@ -115,13 +115,26 @@ function genEmail($recipient_name, $recipient_email, $from, $subject, $body)
 	require_once INCLUDES_DIR . 'phpmailer/class.phpmailer.php';
 
 	$mail = new PHPMailer();
-	$mail->IsMail();
+	if (strtolower(CONFIG_MAILER_TYPE) === 'smtp') {
+		$mail->IsSMTP();
+		$mail->Host = CONFIG_MAILER_SMTP_HOST;
+		$mail->Port = CONFIG_MAILER_SMTP_PORT;
+		$mail->SMTPSecure = CONFIG_MAILER_SMTP_SECURITY === 'ssl' || CONFIG_MAILER_SMTP_SECURITY === 'tls' ? CONFIG_MAILER_SMTP_SECURITY : '';
+		if (CONFIG_MAILER_SMTP_AUTH === true) {
+			$mail->SMTPAuth = true;
+			$mail->Username = CONFIG_MAILER_SMTP_USER;
+			$mail->Password = CONFIG_MAILER_SMTP_PASSWORD;
+		}
+	} else {
+		$mail->IsMail();
+	}
 	$mail->CharSet = 'UTF-8';
 	$mail->Encoding = 'quoted-printable';
-	$mail->SetFrom($from);
-	$mail->AddAddress($recipient_email, $recipient_name);
 	$mail->Subject = $subject;
 	$mail->Body = $body;
+	$mail->WordWrap = 70;
+	$mail->SetFrom($from);
+	$mail->AddAddress($recipient_email, $recipient_name);
 
 	return $mail->Send();
 }

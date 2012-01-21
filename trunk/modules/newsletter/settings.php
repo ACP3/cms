@@ -19,6 +19,8 @@ if (isset($_POST['form'])) {
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
+		$form['mailsig'] = $db->escape($form['mailsig']);
+
 		$bool = config::module('newsletter', $form);
 
 		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/newsletter'));
@@ -26,6 +28,7 @@ if (isset($_POST['form'])) {
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$settings = config::getModuleSettings('newsletter');
+	$settings['mailsig'] = $db->escape($settings['mailsig'], 3);
 
 	$tpl->assign('form', isset($form) ? $form : $settings);
 

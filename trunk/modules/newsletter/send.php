@@ -19,7 +19,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 	$bool2 = true;
 
 	$subject = $db->escape($newsletter[0]['subject'], 3);
-	$body = $db->escape($newsletter[0]['text'], 3) . "\n" . $settings['mailsig'];
+	$body = html_entity_decode($db->escape($newsletter[0]['text'], 3) . "\n" . $db->escape($settings['mailsig'], 3), ENT_QUOTES, 'UTF-8');
 
 	for ($i = 0; $i < $c_accounts; ++$i) {
 		$bool = genEmail('', $accounts[$i]['mail'], $settings['mail'], $subject, $body);

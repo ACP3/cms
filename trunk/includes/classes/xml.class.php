@@ -41,7 +41,7 @@ class xml
 					foreach ($row as $key => $value) {
 						if ($value->attributes()) {
 							foreach ($value->attributes() as $attr_key => $attr_val) {
-								if ($key === 'version' && $attr_key === 'core' && $attr_val === 'true') {
+								if ($key === 'version' && $attr_key === 'core' && (string) $attr_val === 'true') {
 									$info[$path][$xpath]['version'] = CONFIG_VERSION;
 								} else {
 									$info[$path][$xpath][(string) $key][(string) $attr_key] = (string) $attr_val;
