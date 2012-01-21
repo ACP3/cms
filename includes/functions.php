@@ -129,10 +129,10 @@ function genEmail($recipient_name, $recipient_email, $from, $subject, $body)
 		$mail->IsMail();
 	}
 	$mail->CharSet = 'UTF-8';
-	$mail->Encoding = 'quoted-printable';
+	$mail->Encoding = '8bit';
 	$mail->Subject = $subject;
 	$mail->Body = $body;
-	$mail->WordWrap = 70;
+	$mail->WordWrap = 76;
 	$mail->SetFrom($from);
 	$mail->AddAddress($recipient_email, $recipient_name);
 
