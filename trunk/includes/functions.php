@@ -279,22 +279,23 @@ function pagination($rows, $fragment = '')
 		$acp = defined('IN_ADM') ? 'acp/' : '';
 		$params = '';
 		foreach ($uri->getParameters() as $key => $value) {
-			if ($key != 'mod' && $key != 'file' && $key != 'page')
+			if ($key !== 'mod' && $key !== 'file' && $key !== 'page')
 				$params.= '/' . $key . '_' . $value;
 		}
 
 		$link = $uri->route($acp . $uri->mod . '/' . $uri->file . $params, 1);
 
 		// Seitenauswahl
+		$current_page = validate::isNumber($uri->page) ? (int) $uri->page : 1;
 		$pagination = array();
-		$c_pagination = ceil($rows / $auth->entries);
+		$c_pagination = (int) ceil($rows / $auth->entries);
 		$show_first_last = 5;
 		$show_previous_next = 2;
 		$j = 0;
 
 		// Erste Seite
 		if ($c_pagination > $show_first_last) {
-			$pagination[$j]['selected'] = POS == 0 ? true : false;
+			$pagination[$j]['selected'] = $current_page === 1 ? true : false;
 			$pagination[$j]['page'] = '&laquo;';
 			$pagination[$j]['title'] = $lang->t('common', 'first_page');
 			$pagination[$j]['uri'] = $link . $fragment;
@@ -303,45 +304,35 @@ function pagination($rows, $fragment = '')
 
 		// Vorherige Seite
 		if ($c_pagination > $show_previous_next) {
-			$pagination[$j]['selected'] = POS == 0 ? true : false;
+			$pagination[$j]['selected'] = $current_page === 1 ? true : false;
 			$pagination[$j]['page'] = '&lsaquo;';
 			$pagination[$j]['title'] = $lang->t('common', 'previous_page');
-			$pagination[$j]['uri'] = $link . (POS / $auth->entries >= 0 ? 'page_' . (POS / $auth->entries) . '/' . $fragment : '');
+			$pagination[$j]['uri'] = $link . ($current_page - 1 > 1 ? 'page_' . ($current_page - 1) . '/' : '') . $fragment;
 			++$j;
 		}
 
 		// Wenn mehr als 9 Seiten vorhanden sind, nur noch einen bestimmten Teil der Seitenauswahl anzeigen
-		if ($c_pagination > 9) {
-			$start = ceil(POS / $auth->entries) - $show_previous_next <= 0 ? 1 : ceil(POS / $auth->entries) - $show_previous_next;
-			$end = $start + 4 > $c_pagination ? $c_pagination : $start + 4;
-			$currentPos = $start * $auth->entries - $auth->entries;
-		// Pagination komplett anzeigen
-		} else {
-			$start = 1;
-			$end = $c_pagination;
-			$currentPos = 0;
-		}
+		$start = $c_pagination > 9 && $current_page - $show_previous_next > 0 ? $current_page - $show_previous_next : 1;
+		$end = $c_pagination > 9 && $start + 5 <= $c_pagination ? $start + 5 : $c_pagination;
 
-		for ($i = $start; $i <= $end; ++$i, ++$j) {
-			$pagination[$j]['selected'] = POS == $currentPos ? true : false;
+		for ($i = (int) $start; $i <= $end; ++$i, ++$j) {
+			$pagination[$j]['selected'] = $current_page === $i ? true : false;
 			$pagination[$j]['page'] = $i;
 			$pagination[$j]['uri'] = $link . 'page_' . $i . '/' . $fragment;
-
-			$currentPos = $currentPos + $auth->entries;
 		}
 
 		// Nächste Seite
 		if ($c_pagination > $show_previous_next) {
-			$pagination[$j]['selected'] = POS + $auth->entries >= $rows ? true : false;
+			$pagination[$j]['selected'] = $current_page === $c_pagination ? true : false;
 			$pagination[$j]['page'] = '&rsaquo;';
 			$pagination[$j]['title'] = $lang->t('common', 'next_page');
-			$pagination[$j]['uri'] = $link . 'page_' . ((POS + $auth->entries) / $auth->entries + 1) . '/' . $fragment;
+			$pagination[$j]['uri'] = $link . 'page_' . ($current_page + 1) . '/' . $fragment;
 			++$j;
 		}
 
 		// Letzte Seite
 		if ($c_pagination > $show_first_last) {
-			$pagination[$j]['selected'] = POS == ($currentPos - $auth->entries) ? true : false;
+			$pagination[$j]['selected'] = $current_page === $c_pagination ? true : false;
 			$pagination[$j]['page'] = '&raquo;';
 			$pagination[$j]['title'] = $lang->t('common', 'last_page');
 			$pagination[$j]['uri'] = $link . 'page_' . $c_pagination . '/' . $fragment;

@@ -82,6 +82,7 @@ class uri
 				if (defined('POS') === false && preg_match('/^(page_(\d+))$/', $query[$i])) {
 					global $auth;
 					define('POS', (substr($query[$i], 5) - 1) * $auth->entries);
+					$this->page = (int) substr($query[$i], 5);
 				// ID eines Datensatzes
 				} elseif (preg_match('/^(id_(\d+))$/', $query[$i])) {
 					$this->id = (int) substr($query[$i], 3);
@@ -127,7 +128,7 @@ class uri
 	/**
 	 * Gibt die URI-Parameter aus
 	 *
-	 * @return array 
+	 * @return array
 	 */
 	public function getParameters()
 	{
