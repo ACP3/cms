@@ -16,10 +16,10 @@ elseif (validate::deleteEntries($uri->entries))
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
-	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
+	view::setContent(comboBox(array($lang->t('common', 'no_entries_selected'))));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/users/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/users'));
+	view::setContent(comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/users/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/users')));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = null;
@@ -44,7 +44,7 @@ if (!isset($entries)) {
 	} else {
 		$text = $bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
 	}
-	$content = comboBox($text, $self_delete ? ROOT_DIR : $uri->route('acp/users'));
+	view::setContent(comboBox($text, $self_delete ? ROOT_DIR : $uri->route('acp/users')));
 } else {
 	$uri->redirect('acp/errors/404');
 }

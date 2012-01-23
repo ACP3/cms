@@ -36,4 +36,4 @@ if ($c_polls > 0) {
 	$tpl->assign('polls', $polls);
 }
 
-$content = modules::fetchTemplate('polls/list.tpl');
+view::setContent(view::fetchTemplate('polls/list.tpl'));

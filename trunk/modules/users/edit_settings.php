@@ -49,7 +49,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 
 			$bool = $db->update('users', $update_values, 'id = \'' . $auth->getUserId() . '\'');
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home'));
+			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home')));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -97,6 +97,6 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 		$user[0]['date_format_short'] = $db->escape($user[0]['date_format_short'], 3);
 
 		$tpl->assign('form', isset($form) ? $form : $user[0]);
-		$content = modules::fetchTemplate('users/edit_settings.tpl');
+		view::setContent(view::fetchTemplate('users/edit_settings.tpl'));
 	}
 }

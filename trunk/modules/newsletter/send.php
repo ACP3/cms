@@ -30,7 +30,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 		$bool2 = $db->update('newsletter_archive', array('status' => '1'), 'id = \'' . $uri->id . '\'');
 	}
 
-	$content = comboBox($bool && $bool2 !== null ? $lang->t('newsletter', 'compose_success') : $lang->t('newsletter', 'compose_save_error'), $uri->route('acp/newsletter/adm_list_archive'));
+	view::setContent(comboBox($bool && $bool2 !== null ? $lang->t('newsletter', 'compose_success') : $lang->t('newsletter', 'compose_save_error'), $uri->route('acp/newsletter/adm_list_archive')));
 } else {
 	$uri->redirect('errors/404');
 }

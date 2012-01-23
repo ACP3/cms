@@ -38,7 +38,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 		$tpl->assign('pictures', $pictures);
 		$tpl->assign('colorbox', (int) $settings['colorbox']);
 	}
-	$content = modules::fetchTemplate('gallery/pics.tpl');
+	view::setContent(view::fetchTemplate('gallery/pics.tpl'));
 } else {
 	$uri->redirect('errors/404');
 }

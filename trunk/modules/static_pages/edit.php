@@ -46,22 +46,22 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 			require_once MODULES_DIR . 'menu_items/functions.php';
 			setMenuItemsCache();
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/static_pages'));
+			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/static_pages')));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$page = getStaticPagesCache($uri->id);
 		$page[0]['text'] = $db->escape($page[0]['text'], 3);
 		$page[0]['alias'] = seo::getUriAlias('static_pages/list/id_' . $uri->id);
-		$page[0]['seo_keywords'] = seo::getKeywordsOrDescription('static_pages/list/id_' . $uri->id);
-		$page[0]['seo_description'] = seo::getKeywordsOrDescription('static_pages/list/id_' . $uri->id, 'description');
+		$page[0]['seo_keywords'] = seo::getKeywords('static_pages/list/id_' . $uri->id);
+		$page[0]['seo_description'] = seo::getDescription('static_pages/list/id_' . $uri->id);
 
 		// Datumsauswahl
 		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($page[0]['start'], $page[0]['end'])));
 
 		$tpl->assign('form', isset($form) ? $form : $page[0]);
 
-		$content = modules::fetchTemplate('static_pages/edit.tpl');
+		view::setContent(view::fetchTemplate('static_pages/edit.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

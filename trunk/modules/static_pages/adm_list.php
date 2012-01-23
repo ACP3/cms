@@ -22,4 +22,4 @@ if ($c_pages > 0) {
 	}
 	$tpl->assign('pages', $pages);
 }
-$content = modules::fetchTemplate('static_pages/adm_list.tpl');
+view::setContent(view::fetchTemplate('static_pages/adm_list.tpl'));

@@ -16,10 +16,10 @@ elseif (validate::deleteEntries($uri->entries))
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
-	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
+	view::setContent(comboBox(array($lang->t('common', 'no_entries_selected'))));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/files/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/files'));
+	view::setContent(comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/files/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/files')));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	require_once MODULES_DIR . 'files/functions.php';
 
@@ -36,7 +36,7 @@ if (!isset($entries)) {
 			seo::deleteUriAlias('files/details/id_' . $entry);
 		}
 	}
-	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route('acp/files'));
+	view::setContent(comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route('acp/files')));
 } else {
 	$uri->redirect('acp/errors/404');
 }

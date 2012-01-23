@@ -75,7 +75,7 @@ if (isset($_POST['form'])) {
 
 		$db->link->commit();
 
-		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/users'));
+		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/users')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -134,5 +134,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 
-	$content = modules::fetchTemplate('users/create.tpl');
+	view::setContent(view::fetchTemplate('users/create.tpl'));
 }

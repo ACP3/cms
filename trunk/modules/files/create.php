@@ -76,7 +76,7 @@ if (isset($_POST['form'])) {
 		require_once MODULES_DIR . 'files/functions.php';
 		setFilesCache($db->link->lastInsertId());
 
-		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/files'));
+		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/files')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -121,5 +121,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 
-	$content = modules::fetchTemplate('files/create.tpl');
+	view::setContent(view::fetchTemplate('files/create.tpl'));
 }

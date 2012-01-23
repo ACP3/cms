@@ -22,4 +22,4 @@ if ($c_polls > 0) {
 	}
 	$tpl->assign('polls', $polls);
 }
-$content = modules::fetchTemplate('polls/adm_list.tpl');
+view::setContent(view::fetchTemplate('polls/adm_list.tpl'));

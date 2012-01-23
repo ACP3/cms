@@ -65,7 +65,7 @@ if ($auth->isUser()) {
 			$bool2 = $db->insert('acl_user_roles', array('user_id' => $user_id, 'role_id' => 2));
 			$db->link->commit();
 
-			$content = comboBox($mail_sent && $bool && $bool2 ? $lang->t('users', 'register_success') : $lang->t('users', 'register_error'), ROOT_DIR);
+			view::setContent(comboBox($mail_sent && $bool && $bool2 ? $lang->t('users', 'register_success') : $lang->t('users', 'register_error'), ROOT_DIR));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -78,6 +78,6 @@ if ($auth->isUser()) {
 
 		$tpl->assign('captcha', captcha());
 
-		$content = modules::fetchTemplate('users/register.tpl');
+		view::setContent(view::fetchTemplate('users/register.tpl'));
 	}
 }

@@ -21,7 +21,7 @@ if (isset($_POST['form'])) {
 	} else {
 		$bool = config::module('comments', $form);
 		
-		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/files'));
+		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/files')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -35,5 +35,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$dateformat[1]['lang'] = $lang->t('common', 'date_format_long');
 	$tpl->assign('dateformat', $dateformat);
 
-	$content = modules::fetchTemplate('comments/settings.tpl');
+	view::setContent(view::fetchTemplate('comments/settings.tpl'));
 }

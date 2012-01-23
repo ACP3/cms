@@ -23,4 +23,4 @@ if ($c_files > 0) {
 	$tpl->assign('files', $files);
 }
 
-$content = modules::fetchTemplate('files/adm_list.tpl');
+view::setContent(view::fetchTemplate('files/adm_list.tpl'));

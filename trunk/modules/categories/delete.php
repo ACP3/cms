@@ -16,10 +16,10 @@ elseif (validate::deleteEntries($uri->entries))
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
-	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
+	view::setContent(comboBox(array($lang->t('common', 'no_entries_selected'))));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/categories/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/categories'));
+	view::setContent(comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/categories/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/categories')));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	require_once MODULES_DIR . 'categories/functions.php';
 
@@ -51,7 +51,7 @@ if (!isset($entries)) {
 	} else {
 		$text = $bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
 	}
-	$content = comboBox($text, $uri->route('acp/categories'));
+	view::setContent(comboBox($text, $uri->route('acp/categories')));
 } else {
 	$uri->redirect('acp/errors/404');
 }

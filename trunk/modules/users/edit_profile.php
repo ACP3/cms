@@ -69,7 +69,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 			$cookie_arr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
 			$auth->setCookie($form['nickname'], isset($new_pwd) ? $new_pwd : $cookie_arr[1], 3600);
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home'));
+			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home')));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -139,6 +139,6 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 
 		$tpl->assign('form', isset($form) ? $form : $user);
 
-		$content = modules::fetchTemplate('users/edit_profile.tpl');
+		view::setContent(view::fetchTemplate('users/edit_profile.tpl'));
 	}
 }

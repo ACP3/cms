@@ -27,7 +27,7 @@ if (isset($_POST['form'])) {
 
 		$bool = config::module('contact', $form);
 
-		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/contact'));
+		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/contact')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -40,5 +40,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : $settings);
 
-	$content = modules::fetchTemplate('contact/adm_list.tpl');
+	view::setContent(view::fetchTemplate('contact/adm_list.tpl'));
 }

@@ -57,7 +57,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 			require_once MODULES_DIR . 'news/functions.php';
 			setNewsCache($uri->id);
 
-			$content = comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/news'));
+			view::setContent(comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/news')));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -65,8 +65,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 		$news[0]['headline'] = $db->escape($news[0]['headline'], 3);
 		$news[0]['text'] = $db->escape($news[0]['text'], 3);
 		$news[0]['alias'] = seo::getUriAlias('news/details/id_' . $uri->id);
-		$news[0]['seo_keywords'] = seo::getKeywordsOrDescription('news/details/id_' . $uri->id);
-		$news[0]['seo_description'] = seo::getKeywordsOrDescription('news/details/id_' . $uri->id, 'description');
+		$news[0]['seo_keywords'] = seo::getKeywords('news/details/id_' . $uri->id);
+		$news[0]['seo_description'] = seo::getDescription('news/details/id_' . $uri->id);
 
 		// Datumsauswahl
 		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($news[0]['start'], $news[0]['end'])));
@@ -102,7 +102,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 
 		$tpl->assign('form', isset($form) ? $form : $news[0]);
 
-		$content = modules::fetchTemplate('news/edit.tpl');
+		view::setContent(view::fetchTemplate('news/edit.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

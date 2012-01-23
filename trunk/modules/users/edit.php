@@ -80,7 +80,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 				$auth->setCookie($form['nickname'], isset($new_pwd) ? $new_pwd : $cookie_arr[1], 3600);
 			}
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/users'));
+			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/users')));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -136,7 +136,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 
 		$tpl->assign('form', isset($form) ? $form : $user);
 
-		$content = modules::fetchTemplate('users/edit.tpl');
+		view::setContent(view::fetchTemplate('users/edit.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

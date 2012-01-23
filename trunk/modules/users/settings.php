@@ -23,7 +23,7 @@ if (isset($_POST['form'])) {
 	} else {
 		$bool = config::module('users', $form);
 
-		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/users'));
+		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/users')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -45,5 +45,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$entries[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('entries', $entries);
 
-	$content = modules::fetchTemplate('users/settings.tpl');
+	view::setContent(view::fetchTemplate('users/settings.tpl'));
 }

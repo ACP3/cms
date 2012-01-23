@@ -31,7 +31,7 @@ if (isset($_POST['form'])) {
 	} else {
 		$bool = config::module('news', $form);
 		
-		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/news'));
+		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/news')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -72,5 +72,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	}
 	$tpl->assign('sidebar_entries', $sidebar_entries);
 
-	$content = modules::fetchTemplate('news/settings.tpl');
+	view::setContent(view::fetchTemplate('news/settings.tpl'));
 }

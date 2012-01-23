@@ -28,4 +28,4 @@ $replace = array($lang->t('contact', 'address'), $settings['address'], $lang->t(
 $tpl->assign('imprint', str_replace($search, $replace, $settings['layout']));
 $tpl->assign('powered_by', sprintf($lang->t('contact', 'powered_by'), '<a href="http://www.acp3-cms.net" onclick="window.open(this.href); return false">ACP3</a>'));
 
-$content = modules::fetchTemplate('contact/imprint.tpl');
+view::setContent(view::fetchTemplate('contact/imprint.tpl'));

@@ -65,7 +65,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 					$bool = $db->update('poll_answers', array('text' => $db->escape($row['value'])), 'id = \'' . $row['id'] . '\'');
 				}
 			}
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/polls'));
+			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/polls')));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -112,7 +112,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 		$tpl->assign('question', isset($form['question']) ? $form['question'] : $db->escape($poll[0]['question'], 3));
 		$tpl->assign('disable', count($answers) < 10 ? false : true);
 
-		$content = modules::fetchTemplate('polls/edit.tpl');
+		view::setContent(view::fetchTemplate('polls/edit.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

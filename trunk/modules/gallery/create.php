@@ -35,7 +35,7 @@ if (isset($_POST['form'])) {
 		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']))
 			seo::insertUriAlias($form['alias'], 'gallery/pics/id_' . $db->link->lastInsertID(), $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
-		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/gallery'));
+		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/gallery')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -44,5 +44,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : array('name' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => ''));
 
-	$content = modules::fetchTemplate('gallery/create.tpl');
+	view::setContent(view::fetchTemplate('gallery/create.tpl'));
 }

@@ -50,7 +50,7 @@ if (isset($_POST['form'])) {
 
 		acl::setRolesCache();
 
-		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/access'));
+		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/access')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -94,5 +94,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	ksort($modules);
 	$tpl->assign('modules', $modules);
 
-	$content = modules::fetchTemplate('access/create.tpl');
+	view::setContent(view::fetchTemplate('access/create.tpl'));
 }

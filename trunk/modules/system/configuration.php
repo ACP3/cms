@@ -83,7 +83,7 @@ if (isset($_POST['form'])) {
 
 		$bool = config::system($config);
 
-		$content = comboBox($bool ? $lang->t('system', 'config_edit_success') : $lang->t('system', 'config_edit_error'), $uri->route('acp/system/configuration'));
+		view::setContent(comboBox($bool ? $lang->t('system', 'config_edit_success') : $lang->t('system', 'config_edit_error'), $uri->route('acp/system/configuration')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -218,5 +218,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : $current);
 
-	$content = modules::fetchTemplate('system/configuration.tpl');
+	view::setContent(view::fetchTemplate('system/configuration.tpl'));
 }

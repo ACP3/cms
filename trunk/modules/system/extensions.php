@@ -2,4 +2,4 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$content = modules::fetchTemplate('system/extensions.tpl');
+view::setContent(view::fetchTemplate('system/extensions.tpl'));

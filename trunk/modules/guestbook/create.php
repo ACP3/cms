@@ -18,7 +18,7 @@ $newsletterAccess = modules::check('newsletter', 'create') == 1 && $settings['ne
 
 if ($uri->design == 'simple') {
 	$comboColorbox = 1;
-	define('CUSTOM_LAYOUT', 'simple.tpl');
+	view::assignLayout('simple.tpl');
 } else {
 	$comboColorbox = 0;
 }
@@ -84,7 +84,7 @@ if (isset($_POST['form'])) {
 			subscribeToNewsletter($form['mail']);
 		}
 
-		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('guestbook'), 0, $comboColorbox);
+		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('guestbook'), 0, $comboColorbox));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -135,5 +135,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	
 	$tpl->assign('captcha', captcha());
 
-	$content = modules::fetchTemplate('guestbook/create.tpl');
+	view::setContent(view::fetchTemplate('guestbook/create.tpl'));
 }

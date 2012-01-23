@@ -41,7 +41,7 @@ if (isset($_POST['form'])) {
 			cache::purge('images', 'gallery');
 		}
 		
-		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/gallery'));
+		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/gallery')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -81,5 +81,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : $settings);
 
-	$content = modules::fetchTemplate('gallery/settings.tpl');
+	view::setContent(view::fetchTemplate('gallery/settings.tpl'));
 }

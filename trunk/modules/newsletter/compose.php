@@ -54,11 +54,11 @@ if (isset($_POST['form'])) {
 			}
 		}
 		if ($form['action'] == '0' && $bool) {
-			$content = comboBox($lang->t('newsletter', 'save_success'), $uri->route('acp/newsletter'));
+			view::setContent(comboBox($lang->t('newsletter', 'save_success'), $uri->route('acp/newsletter')));
 		} elseif ($form['action'] == '1' && $bool && $bool2) {
-			$content = comboBox($lang->t('newsletter', 'compose_success'), $uri->route('acp/newsletter'));
+			view::setContent(comboBox($lang->t('newsletter', 'compose_success'), $uri->route('acp/newsletter')));
 		} else {
-			$content = comboBox($lang->t('newsletter', 'compose_save_error'), $uri->route('acp/newsletter'));
+			view::setContent(comboBox($lang->t('newsletter', 'compose_save_error'), $uri->route('acp/newsletter')));
 		}
 	}
 }
@@ -81,5 +81,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$action[1]['lang'] = $lang->t('newsletter', 'only_save');
 	$tpl->assign('action', $action);
 
-	$content = modules::fetchTemplate('newsletter/compose.tpl');
+	view::setContent(view::fetchTemplate('newsletter/compose.tpl'));
 }

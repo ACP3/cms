@@ -88,15 +88,15 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 			require_once MODULES_DIR . 'files/functions.php';
 			setFilesCache($uri->id);
 
-			$content = comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/files'));
+			view::setContent(comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/files')));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 		$dl = $db->select('start, end, category_id, file, size, link_title, text, comments', 'files', 'id = \'' . $uri->id . '\'');
 		$dl[0]['text'] = $db->escape($dl[0]['text'], 3);
 		$dl[0]['alias'] = seo::getUriAlias('files/details/id_' . $uri->id);
-		$dl[0]['seo_keywords'] = seo::getKeywordsOrDescription('files/details/id_' . $uri->id);
-		$dl[0]['seo_description'] = seo::getKeywordsOrDescription('files/details/id_' . $uri->id, 'description');
+		$dl[0]['seo_keywords'] = seo::getKeywords('files/details/id_' . $uri->id);
+		$dl[0]['seo_description'] = seo::getDescription('files/details/id_' . $uri->id);
 
 		// Datumsauswahl
 		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($dl[0]['start'], $dl[0]['end'])));
@@ -132,7 +132,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		$tpl->assign('current_file', $dl[0]['file']);
 		$tpl->assign('form', isset($form) ? $form : $dl[0]);
 
-		$content = modules::fetchTemplate('files/edit.tpl');
+		view::setContent(view::fetchTemplate('files/edit.tpl'));
 	}
 } else {
 	$uri->redirect('errors/403');

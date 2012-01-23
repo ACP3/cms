@@ -16,10 +16,10 @@ elseif (validate::deleteEntries($uri->entries))
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
-	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
+	view::setContent(comboBox(array($lang->t('common', 'no_entries_selected'))));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/newsletter/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/newsletter'));
+	view::setContent(comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/newsletter/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/newsletter')));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = null;
@@ -28,7 +28,7 @@ if (!isset($entries)) {
 			$bool = $db->delete('newsletter_accounts', 'id = \'' . $entry . '\'');
 		}
 	}
-	$content = comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route('acp/newsletter'));
+	view::setContent(comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route('acp/newsletter')));
 } else {
 	$uri->redirect('acp/errors/404');
 }

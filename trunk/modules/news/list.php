@@ -59,4 +59,4 @@ if ($c_news > 0) {
 	$tpl->assign('news', $news);
 }
 
-$content = modules::fetchTemplate('news/list.tpl');
+view::setContent(view::fetchTemplate('news/list.tpl'));

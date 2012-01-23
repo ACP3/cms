@@ -23,4 +23,4 @@ if ($c_news > 0) {
 	}
 	$tpl->assign('news', $news);
 }
-$content = modules::fetchTemplate('news/adm_list.tpl');
+view::setContent(view::fetchTemplate('news/adm_list.tpl'));

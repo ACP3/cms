@@ -60,7 +60,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' 
 
 			setCategoriesCache($db->escape($module[0]['module'], 3));
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/categories'));
+			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/categories')));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -70,7 +70,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' 
 
 		$tpl->assign('form', isset($form) ? $form : $category[0]);
 
-		$content = modules::fetchTemplate('categories/edit.tpl');
+		view::setContent(view::fetchTemplate('categories/edit.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');
