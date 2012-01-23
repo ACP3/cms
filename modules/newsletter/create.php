@@ -28,7 +28,7 @@ if (isset($_POST['form'])) {
 				require MODULES_DIR . 'newsletter/functions.php';
 				$bool = subscribeToNewsletter($form['mail']);
 
-				$content = comboBox($bool ? $lang->t('newsletter', 'subscribe_success') : $lang->t('newsletter', 'subscribe_error'), ROOT_DIR);
+				view::setContent(comboBox($bool ? $lang->t('newsletter', 'subscribe_success') : $lang->t('newsletter', 'subscribe_error'), ROOT_DIR));
 			}
 			break;
 		case 'unsubscribe' :
@@ -46,7 +46,7 @@ if (isset($_POST['form'])) {
 			} else {
 				$bool = $db->delete('newsletter_accounts', 'mail = \'' . $form['mail'] . '\'');
 
-				$content = comboBox($bool !== null ? $lang->t('newsletter', 'unsubscribe_success') : $lang->t('newsletter', 'unsubscribe_error'), ROOT_DIR);
+				view::setContent(comboBox($bool !== null ? $lang->t('newsletter', 'unsubscribe_success') : $lang->t('newsletter', 'unsubscribe_error'), ROOT_DIR));
 			}
 			break;
 		default:
@@ -68,5 +68,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('captcha', captcha());
 
-	$content = modules::fetchTemplate('newsletter/create.tpl');
+	view::setContent(view::fetchTemplate('newsletter/create.tpl'));
 }

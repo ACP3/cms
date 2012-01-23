@@ -40,7 +40,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 
 			setMenuItemsCache();
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/menu_items/adm_list_blocks'));
+			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/menu_items/adm_list_blocks')));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -50,7 +50,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 
 		$tpl->assign('form', isset($form) ? $form : $block[0]);
 
-		$content = modules::fetchTemplate('menu_items/edit_block.tpl');
+		view::setContent(view::fetchTemplate('menu_items/edit_block.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

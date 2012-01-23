@@ -57,7 +57,7 @@ if (isset($_POST['form'])) {
 			}
 		}
 
-		$content = comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/polls'));
+		view::setContent(comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/polls')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -88,5 +88,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('multiple', selectEntry('multiple', '1', '0', 'checked'));
 	$tpl->assign('disable', count($answers) < 10 ? false : true);
 
-	$content = modules::fetchTemplate('polls/create.tpl');
+	view::setContent(view::fetchTemplate('polls/create.tpl'));
 }

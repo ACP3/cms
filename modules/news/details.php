@@ -42,7 +42,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 
 		$tpl->assign('comments', commentsList('news', $uri->id));
 	}
-	$content = modules::fetchTemplate('news/details.tpl');
+	view::setContent(view::fetchTemplate('news/details.tpl'));
 } else {
 	$uri->redirect('errors/404');
 }

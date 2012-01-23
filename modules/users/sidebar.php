@@ -59,7 +59,7 @@ if ($auth->isUser()) {
 
 	$tpl->assign('user_sidebar', $user_sidebar);
 
-	modules::displayTemplate('users/sidebar_user_menu.tpl');
+	view::displayTemplate('users/sidebar_user_menu.tpl');
 } else {
 	if (defined('IN_ADM'))
 		$tpl->assign('uri', $uri->route('acp/users/login'));
@@ -68,5 +68,5 @@ if ($auth->isUser()) {
 
 	$tpl->assign('redirect_uri', isset($_POST['form']['redirect_uri']) ? $_POST['form']['redirect_uri'] : $currentPage);
 
-	modules::displayTemplate('users/sidebar_login.tpl');
+	view::displayTemplate('users/sidebar_login.tpl');
 }

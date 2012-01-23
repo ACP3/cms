@@ -36,7 +36,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_resources', 'id = \
 
 			acl::setResourcesCache();
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/access/adm_list_resources'));
+			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/access/adm_list_resources')));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -49,7 +49,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_resources', 'id = \
 		}
 		$tpl->assign('privileges', $privileges);
 
-		$content = modules::fetchTemplate('access/edit_resource.tpl');
+		view::setContent(view::fetchTemplate('access/edit_resource.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

@@ -54,7 +54,7 @@ if (isset($_POST['form'])) {
 		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']))
 			seo::insertUriAlias($form['alias'], 'news/details/id_' . $db->link->lastInsertID(), $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
-		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/news'));
+		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/news')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -92,5 +92,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : array('headline' => '', 'text' => '', 'uri' => '', 'link_title' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => ''));
 
-	$content = modules::fetchTemplate('news/create.tpl');
+	view::setContent(view::fetchTemplate('news/create.tpl'));
 }

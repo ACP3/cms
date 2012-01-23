@@ -45,11 +45,11 @@ if (isset($_POST['form'])) {
 		$bool = $db->insert('emoticons', $insert_values);
 		setEmoticonsCache();
 
-		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/emoticons'));
+		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/emoticons')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : array('code' => '', 'description' => ''));
 
-	$content = modules::fetchTemplate('emoticons/create.tpl');
+	view::setContent(view::fetchTemplate('emoticons/create.tpl'));
 }

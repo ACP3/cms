@@ -63,7 +63,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 		} else {
 			$text = $lang->t('polls', 'already_voted');
 		}
-		$content = comboBox($text, $uri->route('polls/result/id_' . $uri->id));
+		view::setContent(comboBox($text, $uri->route('polls/result/id_' . $uri->id)));
 	} else {
 		$question = $db->select('question, multiple', 'polls', 'id = \'' . $uri->id . '\'');
 		$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $uri->id . '\'', 'id ASC');
@@ -80,7 +80,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 		$tpl->assign('multiple', $question[0]['multiple']);
 		$tpl->assign('answers', $answers);
 
-		$content = modules::fetchTemplate('polls/vote.tpl');
+		view::setContent(view::fetchTemplate('polls/vote.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

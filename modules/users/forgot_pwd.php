@@ -45,7 +45,7 @@ if ($auth->isUser()) {
 				$salt = salt(12);
 				$bool = $db->update('users', array('pwd' => genSaltedPassword($salt, $new_password) . ':' . $salt, 'login_errors' => 0), 'id = \'' . $user[0]['id'] . '\'');
 			}
-			$content = comboBox($mail_sent && isset($bool) && $bool !== null ? $lang->t('users', 'forgot_pwd_success') : $lang->t('users', 'forgot_pwd_error'), ROOT_DIR);
+			view::setContent(comboBox($mail_sent && isset($bool) && $bool !== null ? $lang->t('users', 'forgot_pwd_success') : $lang->t('users', 'forgot_pwd_error'), ROOT_DIR));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -55,6 +55,6 @@ if ($auth->isUser()) {
 
 		$tpl->assign('captcha', captcha());
 
-		$content = modules::fetchTemplate('users/forgot_pwd.tpl');
+		view::setContent(view::fetchTemplate('users/forgot_pwd.tpl'));
 	}
 }

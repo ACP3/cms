@@ -38,7 +38,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 
 			$bool = $db->update('comments', $update_values, 'id = \'' . $uri->id . '\'');
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/comments/adm_list/module_' . $comment[0]['module']));
+			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/comments/adm_list/module_' . $comment[0]['module'])));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -51,7 +51,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 
 		$tpl->assign('form', isset($form) ? $form : $comment[0]);
 
-		$content = modules::fetchTemplate('comments/edit.tpl');
+		view::setContent(view::fetchTemplate('comments/edit.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

@@ -28,7 +28,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 	$tpl->assign('answers', $answers);
 	$tpl->assign('total_votes', $total_votes);
 
-	$content = modules::fetchTemplate('polls/result.tpl');
+	view::setContent(view::fetchTemplate('polls/result.tpl'));
 } else {
 	$uri->redirect('errors/404');
 }

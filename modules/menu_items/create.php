@@ -62,15 +62,15 @@ if (isset($_POST['form'])) {
 		if (CONFIG_SEO_ALIASES === true && $form['mode'] == 2 && !empty($form['alias'])) {
 			$keywords = $description = '';
 			if (seo::uriAliasExists($form['uri'])) {
-				$keywords = seo::getKeywordsOrDescription($form['uri']);
-				$description = seo::getKeywordsOrDescription($form['uri'], 'description');
+				$keywords = seo::getKeywords($form['uri']);
+				$description = seo::getDescription($form['uri']);
 			}
 			seo::insertUriAlias($form['alias'], $form['uri'], $keywords, $description);
 		}
 
 		setMenuItemsCache();
 
-		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/menu_items'));
+		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/menu_items')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -144,5 +144,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 	$tpl->assign('pages_list', menuItemsList());
 
-	$content = modules::fetchTemplate('menu_items/create.tpl');
+	view::setContent(view::fetchTemplate('menu_items/create.tpl'));
 }

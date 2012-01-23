@@ -25,7 +25,7 @@ if (isset($_POST['form'])) {
 	} else {
 		$bool = config::module('files', $form);
 
-		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/files'));
+		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/files')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -54,5 +54,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	}
 	$tpl->assign('sidebar_entries', $sidebar_entries);
 
-	$content = modules::fetchTemplate('files/settings.tpl');
+	view::setContent(view::fetchTemplate('files/settings.tpl'));
 }

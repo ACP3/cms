@@ -29,7 +29,7 @@ if ($uri->dir) {
 	}
 	$text = $bool ? $lang->t('system', 'designs_edit_success') : $lang->t('system', 'designs_edit_error');
 
-	$content = comboBox($text, $uri->route('acp/system/designs'));
+	view::setContent(comboBox($text, $uri->route('acp/system/designs')));
 } else {
 	$designs = array();
 	$directories = scandir(ACP3_ROOT . 'designs');
@@ -44,5 +44,5 @@ if ($uri->dir) {
 	}
 	$tpl->assign('designs', $designs);
 
-	$content = modules::fetchTemplate('system/designs.tpl');
+	view::setContent(view::fetchTemplate('system/designs.tpl'));
 }

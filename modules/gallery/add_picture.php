@@ -54,7 +54,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			$bool2 = generatePictureAlias($db->link->lastInsertId());
 			setGalleryCache($uri->id);
 
-			$content = comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/gallery/edit_gallery/id_' . $uri->id));
+			view::setContent(comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/gallery/edit_gallery/id_' . $uri->id)));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -78,7 +78,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 		$tpl->assign('galleries', $galleries);
 		$tpl->assign('form', isset($form) ? $form : array('description' => ''));
 
-		$content = modules::fetchTemplate('gallery/add_picture.tpl');
+		view::setContent(view::fetchTemplate('gallery/add_picture.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

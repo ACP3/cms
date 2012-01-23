@@ -58,7 +58,7 @@ if (isset($_POST['form'])) {
 		$bool = $db->insert('categories', $insert_values);
 		setCategoriesCache($form['module']);
 
-		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/categories'));
+		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/categories')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -75,5 +75,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	}
 	$tpl->assign('mod_list', $mod_list);
 
-	$content = modules::fetchTemplate('categories/create.tpl');
+	view::setContent(view::fetchTemplate('categories/create.tpl'));
 }

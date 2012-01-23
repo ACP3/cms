@@ -60,11 +60,11 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 				}
 			}
 			if ($form['action'] == '0' && $bool !== null) {
-				$content = comboBox($lang->t('newsletter', 'save_success'), $uri->route('acp/newsletter/adm_list_archive'));
+				view::setContent(comboBox($lang->t('newsletter', 'save_success'), $uri->route('acp/newsletter/adm_list_archive')));
 			} elseif ($form['action'] == '1' && $bool !== null && $bool2) {
-				$content = comboBox($lang->t('newsletter', 'compose_success'), $uri->route('acp/newsletter/adm_list_archive'));
+				view::setContent(comboBox($lang->t('newsletter', 'compose_success'), $uri->route('acp/newsletter/adm_list_archive')));
 			} else {
-				$content = comboBox($lang->t('newsletter', 'compose_save_error'), $uri->route('acp/newsletter/adm_list_archive'));
+				view::setContent(comboBox($lang->t('newsletter', 'compose_save_error'), $uri->route('acp/newsletter/adm_list_archive')));
 			}
 		}
 	}
@@ -91,7 +91,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 		$action[1]['lang'] = $lang->t('newsletter', 'only_save');
 		$tpl->assign('action', $action);
 
-		$content = $tpl->fetch('newsletter/edit_archive.tpl');
+		view::setContent(view::fetchTemplate('newsletter/edit_archive.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

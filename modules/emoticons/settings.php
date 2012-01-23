@@ -25,7 +25,7 @@ if (isset($_POST['form'])) {
 	} else {
 		$bool = config::module('emoticons', $form);
 		
-		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/emoticons'));
+		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/emoticons')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -33,5 +33,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	
 	$tpl->assign('form', isset($form) ? $form : $settings);
 
-	$content = modules::fetchTemplate('emoticons/settings.tpl');
+	view::setContent(view::fetchTemplate('emoticons/settings.tpl'));
 }

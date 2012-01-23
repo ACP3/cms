@@ -57,7 +57,7 @@ function captcha($captcha_length = 5)
 		$captcha['width'] = $captcha_length * 25;
 		$captcha['height'] = 30;
 		$tpl->assign('captcha', $captcha);
-		return modules::fetchTemplate('common/captcha.tpl');
+		return view::fetchTemplate('common/captcha.tpl');
 	}
 	return '';
 }
@@ -80,7 +80,7 @@ function comboBox($text, $forward = 0, $backward = 0, $colorbox = 0)
 
 	if (is_array($text) && empty($forward) && empty($backward)) {
 		$tpl->assign('text', $text);
-		return modules::fetchTemplate('common/error.tpl');
+		return view::fetchTemplate('common/error.tpl');
 	} elseif (!empty($text) && (!empty($forward) || !empty($backward))) {
 		$combo = array(
 			'text' => $text,
@@ -91,7 +91,7 @@ function comboBox($text, $forward = 0, $backward = 0, $colorbox = 0)
 			$combo['backward'] = $backward;
 		$tpl->assign('combo', $combo);
 
-		return modules::fetchTemplate('common/combo.tpl');
+		return view::fetchTemplate('common/combo.tpl');
 	}
 	return '';
 }
@@ -353,7 +353,7 @@ function pagination($rows, $fragment = '')
 
 		$tpl->assign('pagination', $pagination);
 
-		return modules::fetchTemplate('common/pagination.tpl');
+		return view::fetchTemplate('common/pagination.tpl');
 	}
 }
 /**

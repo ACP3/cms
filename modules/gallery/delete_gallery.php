@@ -16,10 +16,10 @@ elseif (validate::deleteEntries($uri->entries))
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
-	$content = comboBox(array($lang->t('common', 'no_entries_selected')));
+	view::setContent(comboBox(array($lang->t('common', 'no_entries_selected'))));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	$content = comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/gallery/delete_gallery/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/gallery'));
+	view::setContent(comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/gallery/delete_gallery/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/gallery')));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = $bool2 = null;
@@ -43,7 +43,7 @@ if (!isset($entries)) {
 			$bool2 = $db->delete('gallery_pictures', 'gallery_id = \'' . $entry . '\'', 0);
 		}
 	}
-	$content = comboBox($bool && $bool2 ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route('acp/gallery'));
+	view::setContent(comboBox($bool && $bool2 ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route('acp/gallery')));
 } else {
 	$uri->redirect('acp/errors/404');
 }

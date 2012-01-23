@@ -21,4 +21,4 @@ if ($c_emoticons > 0) {
 	}
 	$tpl->assign('emoticons', $emoticons);
 }
-$content = modules::fetchTemplate('emoticons/adm_list.tpl');
+view::setContent(view::fetchTemplate('emoticons/adm_list.tpl'));

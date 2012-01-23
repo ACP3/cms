@@ -23,4 +23,4 @@ if ($c_categories > 0) {
 	}
 	$tpl->assign('categories', $categories);
 }
-$content = modules::fetchTemplate('categories/adm_list.tpl');
+view::setContent(view::fetchTemplate('categories/adm_list.tpl'));

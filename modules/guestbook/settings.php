@@ -32,7 +32,7 @@ if (isset($_POST['form'])) {
 	} else {
 		$bool = config::module('guestbook', $form);
 
-		$content = comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/guestbook'));
+		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/guestbook')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -81,5 +81,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 
 	$tpl->assign('form', isset($form) ? $form : array('notify_email' => $settings['notify_email']));
 
-	$content = modules::fetchTemplate('guestbook/settings.tpl');
+	view::setContent(view::fetchTemplate('guestbook/settings.tpl'));
 }

@@ -63,31 +63,6 @@ class seo
 		return cache::output('aliases');
 	}
 	/**
-	 * Gibt die Keywords und Beschreibung der aktuell angezeigten Seite oder der
-	 * Elternseite aus
-	 *
-	 * @param integer $mode
-	 * @return string
-	 */
-	public static function getCurrentKeywordsOrDescription($mode = 1)
-	{
-		global $uri;
-
-		if ($mode === 1) {
-			$keywords = self::getKeywordsOrDescription($uri->query);
-			if (empty($keywords))
-				$keywords = self::getKeywordsOrDescription($uri->mod);
-
-			return !empty($keywords) ? $keywords : CONFIG_SEO_META_KEYWORDS;
-		} else {
-			$description = self::getKeywordsOrDescription($uri->query, 'description');
-			if (empty($description))
-				$description = self::getKeywordsOrDescription($uri->mod, 'description');
-
-			return !empty($description) ? $description : CONFIG_SEO_META_DESCRIPTION;
-		}
-	}
-	/**
 	 * Überprüft, ob ein URI-Alias existiert
 	 *
 	 * @param string $path
@@ -116,20 +91,66 @@ class seo
 		return !empty(self::$aliases[$path]['alias']) ? self::$aliases[$path]['alias'] : $path;
 	}
 	/**
-	 * Gibt die Schlüsselwörter oder Beschreibung der Seite aus
+	 * Gibt die Beschreibung der aktuell angezeigten Seite oder der
+	 * Elternseite aus
 	 *
-	 * @param string $path
-	 * @param string $field
 	 * @return string
 	 */
-	public static function getKeywordsOrDescription($path, $field = 'keywords')
+	public static function getCurrentDescription()
+	{
+		global $uri;
+
+		$description = self::getDescription($uri->query);
+		if (empty($description))
+			$description = self::getDescription($uri->mod);
+
+		return !empty($description) ? $description : CONFIG_SEO_META_DESCRIPTION;
+	}
+	/**
+	 * Gibt die Keywords der aktuell angezeigten Seite oder der
+	 * Elternseite aus
+	 *
+	 * @return string
+	 */
+	public static function getCurrentKeywords()
+	{
+		global $uri;
+
+		$keywords = self::getKeywords($uri->query);
+		if (empty($keywords))
+			$keywords = self::getKeywords($uri->mod);
+
+		return !empty($keywords) ? $keywords : CONFIG_SEO_META_KEYWORDS;
+	}
+	/**
+	 * Gibt die Schlüsselwörter der Seite aus
+	 *
+	 * @param string $path
+	 * @return string
+	 */
+	public static function getKeywords($path)
 	{
 		if (empty(self::$aliases))
 			self::$aliases = self::getSEOCache();
 
 		$path.= !preg_match('/\/$/', $path) ? '/' : '';
 
-		return !empty(self::$aliases[$path][$field]) ? self::$aliases[$path][$field] : '';
+		return !empty(self::$aliases[$path]['keywords']) ? self::$aliases[$path]['keywords'] : '';
+	}
+	/**
+	 * Gibt die Beschreibung der Seite aus
+	 *
+	 * @param string $path
+	 * @return string
+	 */
+	public static function getDescription($path)
+	{
+		if (empty(self::$aliases))
+			self::$aliases = self::getSEOCache();
+
+		$path.= !preg_match('/\/$/', $path) ? '/' : '';
+
+		return !empty(self::$aliases[$path]['description']) ? self::$aliases[$path]['description'] : '';
 	}
 	/**
 	 * Trägt einen URI-Alias in die Datenbank ein bzw. aktualisiert den Eintrag

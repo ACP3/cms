@@ -40,7 +40,7 @@ if (isset($_POST['form'])) {
 		else
 			$tpl->assign('no_search_results', sprintf($lang->t('search', 'no_search_results'), $form['search_term']));
 
-		$content = modules::fetchTemplate('search/results.tpl');
+		view::setContent(view::fetchTemplate('search/results.tpl'));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -88,5 +88,5 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$sort_hits[1]['lang'] = $lang->t('search', 'desc');
 	$tpl->assign('sort_hits', $sort_hits);
 
-	$content = modules::fetchTemplate('search/list.tpl');
+	view::setContent(view::fetchTemplate('search/list.tpl'));
 }

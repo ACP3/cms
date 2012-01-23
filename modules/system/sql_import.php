@@ -25,13 +25,13 @@ if (isset($_POST['form'])) {
 	if (isset($errors)) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
-		$content = isset($file) ? file_get_contents($file['tmp_name']) : $form['text'];
-		$content = str_replace(array("\r\n", "\r", "\n"), "\n", $content);
-		$content_ary = explode(";\n", $content);
+		$data = isset($file) ? file_get_contents($file['tmp_name']) : $form['text'];
+		$data = str_replace(array("\r\n", "\r", "\n"), "\n", $data);
+		$data_ary = explode(";\n", $data);
 		$sql_queries = array();
 
 		$i = 0;
-		foreach ($content_ary as $row) {
+		foreach ($data_ary as $row) {
 			if (!empty($row)) {
 				$bool = $db->query($row, 3);
 				$sql_queries[$i]['query'] = str_replace("\n", '<br />', $row);
@@ -52,4 +52,4 @@ if (isset($_POST['form'])) {
 if (!isset($_POST['form']) || isset($errors)) {
 	$tpl->assign('form', isset($form) ? $form : array('text' => ''));
 }
-$content = modules::fetchTemplate('system/sql_import.tpl');
+view::setContent(view::fetchTemplate('system/sql_import.tpl'));

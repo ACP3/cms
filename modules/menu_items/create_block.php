@@ -36,11 +36,11 @@ if (isset($_POST['form'])) {
 
 		$bool = $db->insert('menu_items_blocks', $insert_values);
 
-		$content = comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/menu_items/adm_list_blocks'));
+		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/menu_items/adm_list_blocks')));
 	}
 }
 if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : array('index_name' => '', 'title' => ''));
 
-	$content = modules::fetchTemplate('menu_items/create_block.tpl');
+	view::setContent(view::fetchTemplate('menu_items/create_block.tpl'));
 }

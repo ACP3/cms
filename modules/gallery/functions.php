@@ -67,8 +67,8 @@ function generatePictureAlias($picture_id)
 	$picture = $db->select('gallery_id', 'gallery_pictures', 'id = \'' . $picture_id . '\'');
 	$alias = seo::getUriAlias('gallery/pics/id_' . $picture[0]['gallery_id']);
 	$alias.= '-' . makeStringUrlSafe($lang->t('gallery', 'picture')) . '-' . $picture_id;
-	$seo_keywords = seo::getKeywordsOrDescription('gallery/pics/id_' . $picture[0]['gallery_id']);
-	$seo_description = seo::getKeywordsOrDescription('gallery/pics/id_' . $picture[0]['gallery_id'], 'description');
+	$seo_keywords = seo::getKeywords('gallery/pics/id_' . $picture[0]['gallery_id']);
+	$seo_description = seo::getDescription('gallery/pics/id_' . $picture[0]['gallery_id']);
 	return seo::insertUriAlias($alias, 'gallery/details/id_' . $picture_id, $seo_keywords, $seo_description);
 }
 /**

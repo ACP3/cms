@@ -66,15 +66,15 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 			if (CONFIG_SEO_ALIASES === true && ($form['mode'] == 2 || $form['mode'] == 4)) {
 				$keywords = $description = '';
 				if (seo::uriAliasExists($form['uri'])) {
-					$keywords = seo::getKeywordsOrDescription($form['uri']);
-					$description = seo::getKeywordsOrDescription($form['uri'], 'description');
+					$keywords = seo::getKeywords($form['uri']);
+					$description = seo::getDescription($form['uri']);
 				}
 				seo::insertUriAlias($form['alias'], $form['uri'], $keywords, $description);
 			}
 
 			setMenuItemsCache();
 
-			$content = comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/menu_items'));
+			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/menu_items')));
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
@@ -156,7 +156,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 
 		$tpl->assign('pages_list', menuItemsList($page[0]['parent_id'], $page[0]['left_id'], $page[0]['right_id']));
 
-		$content = modules::fetchTemplate('menu_items/edit.tpl');
+		view::setContent(view::fetchTemplate('menu_items/edit.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

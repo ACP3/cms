@@ -22,4 +22,4 @@ if ($c_galleries > 0) {
 	}
 	$tpl->assign('galleries', $galleries);
 }
-$content = modules::fetchTemplate('gallery/adm_list.tpl');
+view::setContent(view::fetchTemplate('gallery/adm_list.tpl'));

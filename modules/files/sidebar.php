@@ -25,4 +25,4 @@ if ($c_files > 0) {
 	$tpl->assign('sidebar_files', $files);
 }
 
-modules::displayTemplate('files/sidebar.tpl');
+view::displayTemplate('files/sidebar.tpl');
