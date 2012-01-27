@@ -13,6 +13,13 @@ if (defined('IN_ADM') === false)
 if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' . $uri->id . '\'') == '1') {
 	require_once MODULES_DIR . 'menu_items/functions.php';
 
+	$page = $db->select('id, start, end, mode, block_id, parent_id, left_id, right_id, display, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
+	$page[0]['title'] = $db->escape($page[0]['title'], 3);
+	$page[0]['uri'] = $db->escape($page[0]['uri'], 3);
+	$page[0]['alias'] = $page[0]['mode'] == 2 || $page[0]['mode'] == 4 ? seo::getUriAlias($page[0]['uri']) : '';
+	$page[0]['seo_keywords'] = seo::getKeywords($page[0]['uri']);
+	$page[0]['seo_description'] = seo::getDescription($page[0]['uri']);
+
 	if (isset($_POST['form'])) {
 		$form = $_POST['form'];
 
@@ -37,7 +44,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 		if ($form['display'] != '0' && $form['display'] != '1')
 			$errors[] = $lang->t('menu_items', 'select_item_visibility');
 		if (!validate::isNumber($form['target']) ||
-			$form['mode'] == '1' && (!is_dir(MODULES_DIR . '' . $form['module']) || preg_match('=/=', $form['module'])) ||
+			$form['mode'] == '1' && (!is_dir(MODULES_DIR . $form['module']) || preg_match('=/=', $form['module'])) ||
 			$form['mode'] == '2' && !validate::isInternalURI($form['uri']) ||
 			$form['mode'] == '3' && empty($form['uri']) ||
 			$form['mode'] == '4' && (!validate::isNumber($form['static_pages']) || $db->countRows('*', 'static_pages', 'id = \'' . $form['static_pages'] . '\'') == 0))
@@ -63,13 +70,13 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 			);
 
 			$bool = menuItemsEditNode($uri->id, $form['parent'], $form['block_id'], $update_values);
-			if (CONFIG_SEO_ALIASES === true && ($form['mode'] == 2 || $form['mode'] == 4)) {
-				$keywords = $description = '';
-				if (seo::uriAliasExists($form['uri'])) {
-					$keywords = seo::getKeywords($form['uri']);
-					$description = seo::getDescription($form['uri']);
-				}
-				seo::insertUriAlias($form['alias'], $form['uri'], $keywords, $description);
+
+			// Verhindern, dass externe URIs Aliase, Keywords, etc zugewiesen bekommen
+			if ($form['mode'] != 3) {
+				$alias = $form['alias'] === $page[0]['alias'] ? $page[0]['alias'] : $form['alias'];
+				$keywords = $form['seo_keywords'] === $page[0]['seo_keywords'] ? $page[0]['seo_keywords'] : $form['seo_keywords'];
+				$description = $form['seo_description'] === $page[0]['seo_description'] ? $page[0]['seo_description'] : $form['seo_description'];
+				seo::insertUriAlias($form['mode'] == 1 ? '' : $alias, $form['mode'] == 1 ? $form['module'] : $form['uri'], $keywords, $description);
 			}
 
 			setMenuItemsCache();
@@ -78,11 +85,6 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 		}
 	}
 	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
-		$page = $db->select('id, start, end, mode, block_id, parent_id, left_id, right_id, display, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
-		$page[0]['title'] = $db->escape($page[0]['title'], 3);
-		$page[0]['uri'] = $db->escape($page[0]['uri'], 3);
-		$page[0]['alias'] = $page[0]['mode'] == 2 || $page[0]['mode'] == 4 ? seo::getUriAlias($page[0]['uri']) : '';
-
 		// Seitentyp
 		$mode = array();
 		$mode[0]['value'] = 1;

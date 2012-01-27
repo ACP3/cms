@@ -73,7 +73,9 @@ class seo
 		if (empty(self::$aliases))
 			self::$aliases = self::getSEOCache();
 
-		return array_key_exists($path, self::$aliases);
+		$path.= !preg_match('/\/$/', $path) ? '/' : '';
+
+		return array_key_exists($path, self::$aliases) && !empty(self::$aliases[$path]['alias']);
 	}
 	/**
 	 * Gibt einen URI-Alias aus
@@ -167,7 +169,7 @@ class seo
 
 		$path.= !preg_match('/\/$/', $path) ? '/' : '';
 
-		// Vorhandenen Alias aktualisieren bzw. wenn der Alias leer ist, diesen löschen
+		// Vorhandenen Alias aktualisieren
 		if ($db->countRows('*', 'seo', 'uri = \'' . $db->escape($path) . '\'') == 1) {
 			$bool = $db->update('seo', array('alias' => $alias, 'keywords' => $keywords, 'description' => $description), 'uri = \'' . $db->escape($path) . '\'');
 		// Neuer Eintrag in DB

@@ -59,13 +59,19 @@ if (isset($_POST['form'])) {
 		);
 
 		$bool = menuItemsInsertNode($form['parent'], $insert_values);
-		if (CONFIG_SEO_ALIASES === true && $form['mode'] == 2 && !empty($form['alias'])) {
-			$keywords = $description = '';
+
+		// Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
+		if ($form['mode'] != 3) {
 			if (seo::uriAliasExists($form['uri'])) {
+				$alias = !empty($form['alias']) ? $form['alias'] : seo::getUriAlias($form['uri']);
 				$keywords = seo::getKeywords($form['uri']);
 				$description = seo::getDescription($form['uri']);
+			} else {
+				$alias = $form['alias'];
+				$keywords = $form['seo_keywords'];
+				$description = $form['seo_description'];
 			}
-			seo::insertUriAlias($form['alias'], $form['uri'], $keywords, $description);
+			seo::insertUriAlias($form['mode'] == 1 ? '' : $alias, $form['mode'] == 1 ? $form['module'] : $form['uri'], $keywords, $description);
 		}
 
 		setMenuItemsCache();
@@ -135,7 +141,9 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 	$defaults = array(
 		'title' => '',
 		'alias' => '',
-		'uri' => ''
+		'uri' => '',
+		'seo_keywords' => '',
+		'seo_description' => '',
 	);
 
 	// Daten an Smarty übergeben
