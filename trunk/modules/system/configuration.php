@@ -45,7 +45,7 @@ if (isset($_POST['form'])) {
 		if (empty($form['mailer_smtp_host']))
 			$errors[] = $lang->t('system', 'type_in_mailer_smtp_host');
 		if (!validate::isNumber($form['mailer_smtp_port']))
-			$errors[] = $lant->t('system', 'type_in_mailer_smtp_port');
+			$errors[] = $lang->t('system', 'type_in_mailer_smtp_port');
 		if ($form['mailer_smtp_auth'] == 1 && empty($form['mailer_smtp_user']))
 			$errors[] = $lang->t('system', 'type_in_mailer_smtp_username');
 	}
