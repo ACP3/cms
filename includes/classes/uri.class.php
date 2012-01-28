@@ -57,10 +57,28 @@ class uri
 			if (seo::uriAliasExists($this->query))
 				$this->redirect(seo::getUriAlias($this->query));
 
+			// Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
+			if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)+(([a-z0-9\-]+)_(.+)\/)+$/', $this->query)) {
+				$query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
+				// Annahme bestätigt
+				if (is_file(MODULES_DIR . $query[0] . '/' . $query[1] . '.php') === false) {
+					$length = 0;
+					foreach ($query as $row) {
+						if (strpos($row, '_') === false) {
+							$length+= strlen($row) + 1;
+						} else {
+							break;
+						}
+					}
+					$params = substr($this->query, $length);
+					$this->query = substr($this->query, 0, $length);
+				}
+			}
+
 			// Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
 			$alias = $db->select('uri', 'seo', 'alias = \'' . $db->escape(substr($this->query, 0, -1)) . '\'');
 			if (!empty($alias)) {
-				$this->query = $alias[0]['uri'];
+				$this->query = $alias[0]['uri'] . (!empty($params) ? $params : '');
 			}
 		}
 
