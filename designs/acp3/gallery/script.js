@@ -1,3 +1,3 @@
 $(document).ready(function() {
-	$(".pictures a[rel='pictures']").colorbox({ photo: true });
+	$(".pictures a").colorbox({ rel: 'pictures', photo: true });
 });
