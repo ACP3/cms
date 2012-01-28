@@ -60,7 +60,7 @@ class uri
 			// Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
 			$alias = $db->select('uri', 'seo', 'alias = \'' . $db->escape(substr($this->query, 0, -1)) . '\'');
 			if (!empty($alias)) {
-				echo $this->query = $alias[0]['uri'];
+				$this->query = $alias[0]['uri'];
 			}
 		}
 
