@@ -58,9 +58,9 @@ class uri
 				$this->redirect(seo::getUriAlias($this->query));
 
 			// Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-			$alias = $db->select('uri', 'seo', 'alias = \'' . $db->escape(substr($this->query, 0, -1)) . '\' OR alias = \'' . $db->escape(substr($this->query, 0, strpos($this->query, '/'))) . '\'');
+			$alias = $db->select('uri', 'seo', 'alias = \'' . $db->escape(substr($this->query, 0, -1)) . '\'');
 			if (!empty($alias)) {
-				$this->query = $alias[0]['uri'] . substr($this->query, strpos($this->query, '/', 1) + 1);
+				echo $this->query = $alias[0]['uri'];
 			}
 		}
 
