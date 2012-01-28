@@ -25,7 +25,7 @@ $settings['layout'] = $db->escape($settings['layout'], 3);
 $search = array('{address_lang}', '{address_value}', '{email_lang}', '{email_value}', '{telephone_lang}', '{telephone_value}', '{fax_lang}', '{fax_value}', '{disclaimer_lang}', '{disclaimer_value}');
 $replace = array($lang->t('contact', 'address'), $settings['address'], $lang->t('common', 'email'), $settings['mail'], $lang->t('contact', 'telephone'), $settings['telephone'], $lang->t('contact', 'fax'), $settings['fax'], $lang->t('contact', 'disclaimer'), $settings['disclaimer']);
 
-$tpl->assign('imprint', str_replace($search, $replace, $settings['layout']));
+$tpl->assign('imprint', rewriteInternalUri(str_replace($search, $replace, $settings['layout'])));
 $tpl->assign('powered_by', sprintf($lang->t('contact', 'powered_by'), '<a href="http://www.acp3-cms.net" onclick="window.open(this.href); return false">ACP3</a>'));
 
 view::setContent(view::fetchTemplate('contact/imprint.tpl'));
