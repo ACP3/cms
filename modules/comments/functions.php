@@ -65,7 +65,7 @@ function commentsList($module, $entry_id)
 		$tpl->assign('comments', $comments);
 	}
 
-	view::setContent(view::fetchTemplate('comments/list.tpl'));
+	$content = view::fetchTemplate('comments/list.tpl');
 
 	if (modules::check('comments', 'create') == 1) {
 		require_once MODULES_DIR . 'comments/create.php';

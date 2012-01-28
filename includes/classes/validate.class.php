@@ -230,14 +230,14 @@ class validate
 	}
 	/**
 	 *	Überprüft, ob der eingegebene URI-Alias sicher ist, d.h. es dürfen nur
-	 *	die Kleinbuchstaben von a-z, Zahlen und der Bindestrich eingegeben werden
+	 *	die Kleinbuchstaben von a-z, Zahlen, der Bindestrich und das Slash eingegeben werden
 	 *
 	 * @param string $var
 	 * @return boolean
 	 */
 	public static function isUriSafe($var)
 	{
-		return (bool) preg_match('/^([a-z]{1}[a-z\d\-]*)$/', $var);
+		return (bool) preg_match('/^([a-z]{1}[a-z\d\-]*(\/[a-z\d\-]+)*)$/', $var);
 	}
 	/**
 	 * Gibt in Abhängigkeit des Parameters $mimetype entweder
