@@ -78,7 +78,7 @@ class view
 		switch (modules::check()) {
 			// Seite ausgeben
 			case 1:
-				global $date, $db, $lang, $tpl;
+				global $session, $date, $db, $lang, $tpl;
 
 				require MODULES_DIR . '' . $uri->mod . '/' . $uri->file . '.php';
 

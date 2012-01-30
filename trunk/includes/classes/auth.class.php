@@ -20,58 +20,39 @@ if (defined('IN_ACP3') === false)
 class auth
 {
 	/**
-	 * User oder nicht
-	 *
-	 * @var boolean
-	 */
-	private $isUser = false;
-	/**
-	 * Die ID des Users
-	 *
-	 * @var integer
-	 */
-	private $userId = 0;
-	/**
-	 * Einträge pro Seite
-	 *
-	 * @var integer
-	 */
-	public $entries = CONFIG_ENTRIES;
-	/**
-	 * Standardsprache des Benutzers
-	 *
-	 * @var string
-	 */
-	private $language = CONFIG_LANG;
-
-	/**
 	 * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der
 	 * Seitenbesucher auch wirklich ein registrierter Benutzer des ACP3 ist
 	 */
 	function __construct()
 	{
 		if (isset($_COOKIE['ACP3_AUTH'])) {
-			global $db;
+			global $db, $session;
 
 			$cookie = base64_decode($_COOKIE['ACP3_AUTH']);
 			$cookie_arr = explode('|', $cookie);
 
-			$user_check = $db->select('id, pwd, entries, language', 'users', 'nickname = \'' . $db->escape($cookie_arr[0]) . '\' AND login_errors < 3');
-			if (count($user_check) === 1) {
-				$db_password = substr($user_check[0]['pwd'], 0, 40);
+			$user = $db->select('id, pwd, entries, language', 'users', 'nickname = \'' . $db->escape($cookie_arr[0]) . '\' AND login_errors < 3');
+			if (count($user) === 1) {
+				$db_password = substr($user[0]['pwd'], 0, 40);
 				if ($db_password === $cookie_arr[1]) {
-					$settings = config::getModuleSettings('users');
-					$this->isUser = true;
-					$this->userId = (int) $user_check[0]['id'];
-					if ($settings['entries_override'] == 1 && $user_check[0]['entries'] > 0)
-						$this->entries = (int)$user_check[0]['entries'];
-					if ($settings['language_override'] == 1)
-						$this->language = $user_check[0]['language'];
+					
+					if (count($_SESSION) === 1 && $session->get('acp3_init') === true) {
+						$session->set('isUser', true);
+						$session->set('userId', (int) $user[0]['id']);
+						$settings = config::getModuleSettings('users');
+						if ($settings['entries_override'] == 1 && $user[0]['entries'] > 0)
+							$session->set('entries', (int) $user[0]['entries']);
+						if ($settings['language_override'] == 1)
+							$session->set('language', $user[0]['language']);
+					}
 				}
-			}
-			if ($this->isUser === false) {
+			} else {
 				$this->logout();
 			}
+		} else {
+			global $session;
+			$session->set('language', CONFIG_LANG);
+			$session->set('entries', (int) CONFIG_ENTRIES);
 		}
 	}
 	/**
@@ -80,7 +61,8 @@ class auth
 	 */
 	public function getUserId()
 	{
-		return $this->userId;
+		global $session;
+		return $session->get('userId');
 	}
 	/**
 	 * Gibt ein Array mit den angeforderten Daten eines Benutzers zurück
@@ -91,14 +73,16 @@ class auth
 	 */
 	public function getUserInfo($user_id = '')
 	{
-		if (empty($user_id) && $this->isUser() === true) {
-			$user_id = $this->userId;
-		}
+		global $session;
+
+		if (empty($user_id) && $this->isUser() === true)
+			$user_id = $session->get('userId');
+
 		if (validate::isNumber($user_id)) {
 			static $user_info = array();
 
 			if (empty($user_info[$user_id])) {
-				global $auth, $db, $lang;
+				global $db;
 
 				$info = $db->select('nickname, realname, gender, birthday, birthday_format, mail, website, icq, msn, skype, date_format_long, date_format_short, time_zone, dst, language, draft', 'users', 'id = \'' . $user_id . '\'');
 				if (!empty($info)) {
@@ -141,7 +125,8 @@ class auth
 	 */
 	public function getUserLanguage()
 	{
-		return $this->language;
+		global $session;
+		return $session->get('language');
 	}
 	/**
 	 * Gibt den Status von $isUser zurück
@@ -150,7 +135,8 @@ class auth
 	 */
 	public function isUser()
 	{
-		return $this->isUser === true && !empty($this->userId) && validate::isNumber($this->userId) ? true : false;
+		global $session;
+		return $session->get('isUser') === true && validate::isNumber($session->get('userId')) ? true : false;
 	}
 	/**
 	 * Loggt einen User ein
@@ -165,7 +151,7 @@ class auth
 	 */
 	public function login($username, $password, $expiry)
 	{
-		global $db;
+		global $db, $session;
 
 		$user = $db->select('id, pwd, login_errors', 'users', 'nickname = \'' . $db->escape($username) . '\'');
 
@@ -188,8 +174,8 @@ class auth
 					$db->update('users', array('login_errors' => 0), 'id = \'' . $user[0]['id'] . '\'');
 
 				$this->setCookie($username, $db_hash, $expiry);
-				$this->isUser = true;
-				$this->userId = $user[0]['id'];
+				$session->set('isUser', true);
+				$session->set('userId', (int) $user[0]['id']);
 
 				return 1;
 			// Beim dritten falschen Login den Account sperren
@@ -210,8 +196,8 @@ class auth
 	 */
 	public function logout()
 	{
-		$this->isUser = false;
-		$this->userId = 0;
+		global $session;
+		$session->session_destroy();
 		return $this->setCookie('', '', -50400);
 	}
 	/**

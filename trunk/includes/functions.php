@@ -283,9 +283,9 @@ function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = 0)
  */
 function pagination($rows, $fragment = '')
 {
-	global $auth;
+	global $session;
 
-	if ($rows > $auth->entries) {
+	if ($rows > $session->get('entries')) {
 		global $lang, $tpl, $uri;
 
 		// Alle angegebenen URL Parameter mit in die URL einbeziehen
@@ -301,7 +301,7 @@ function pagination($rows, $fragment = '')
 		// Seitenauswahl
 		$current_page = validate::isNumber($uri->page) ? (int) $uri->page : 1;
 		$pagination = array();
-		$c_pagination = (int) ceil($rows / $auth->entries);
+		$c_pagination = (int) ceil($rows / $session->get('entries'));
 		$show_first_last = 5;
 		$show_previous_next = 2;
 		$j = 0;
@@ -404,13 +404,24 @@ function rewriteInternalUriCallback($matches)
  */
 function salt($str_length)
 {
-	$chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-	$c_chars = strlen($chars) - 1;
-	$key = '';
-	for ($i = 0; $i < $str_length; ++$i) {
-		$key.= $chars[mt_rand(0, $c_chars)];
+	$salt = '';
+	if (function_exists('openssl_random_pseudo_bytes') === true) {   
+		$bytes = openssl_random_pseudo_bytes($str_length);
+		$string = base64_encode($bytes);
+		$salt = substr($string, 0, $str_length);                
+	} else {
+		$chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+		$c_chars = strlen($chars) - 1;
+		while (strlen($salt) < $str_length) {
+			$char = $chars[mt_rand(0, $c_chars)];
+			// Zeichen nur hinzufügen, wenn sich dieses nicht bereits im Salz befindet
+			if (strpos($salt, $char) === false) {
+				$salt.= $chars[$char];
+			}
+		}
 	}
-	return $key;
+
+	return $salt;
 }
 /**
  * Selektion eines Eintrages in einem Dropdown-Menü

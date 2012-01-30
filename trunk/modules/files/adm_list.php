@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$files = $db->select('id, start, end, file, size, link_title', 'files', 0, 'start DESC, end DESC, id DESC', POS, $auth->entries);
+$files = $db->select('id, start, end, file, size, link_title', 'files', 0, 'start DESC, end DESC, id DESC', POS, $session->get('entries'));
 $c_files = count($files);
 
 if ($c_files > 0) {

@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$emoticons = $db->select('id, code, description, img', 'emoticons', 0, 'id DESC', POS, $auth->entries);
+$emoticons = $db->select('id, code, description, img', 'emoticons', 0, 'id DESC', POS, $session->get('entries'));
 $c_emoticons = count($emoticons);
 
 if ($c_emoticons > 0) {

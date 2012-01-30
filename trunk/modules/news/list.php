@@ -29,7 +29,7 @@ $cat = !empty($cat) ? ' AND category_id = \'' . $cat . '\'' : '';
 $time = $date->timestamp();
 $where = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')' . $cat;
 
-$news = $db->select('id, start, headline, text, readmore, comments, uri', 'news', $where, 'start DESC, end DESC, id DESC', POS, $auth->entries);
+$news = $db->select('id, start, headline, text, readmore, comments, uri', 'news', $where, 'start DESC, end DESC, id DESC', POS, $session->get('entries'));
 $c_news = count($news);
 
 if ($c_news > 0) {

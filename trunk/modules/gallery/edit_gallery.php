@@ -59,7 +59,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 
 		$tpl->assign('form', isset($form) ? $form : $gallery[0]);
 
-		$pictures = $db->select('id, pic, file, description', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'', 'pic ASC', POS, $auth->entries);
+		$pictures = $db->select('id, pic, file, description', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'', 'pic ASC', POS, $session->get('entries'));
 		$c_pictures = count($pictures);
 
 		if ($c_pictures > 0) {

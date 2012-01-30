@@ -41,6 +41,7 @@ $handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB
 if ($handle !== true) {
 	exit($handle);
 }
+$session = new session();
 $auth = new auth();
 $uri = new uri();
 $lang = new lang();
