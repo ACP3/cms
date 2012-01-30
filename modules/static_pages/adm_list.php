@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$pages = $db->select('id, start, end, title', 'static_pages', 0, 'start DESC', POS, $auth->entries);
+$pages = $db->select('id, start, end, title', 'static_pages', 0, 'start DESC', POS, $session->get('entries'));
 $c_pages = count($pages);
 
 if ($c_pages > 0) {

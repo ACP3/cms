@@ -12,7 +12,7 @@ if (defined('IN_ACP3') === false)
 
 $time = $date->timestamp();
 $where = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
-$galleries = $db->select('id, start, name', 'gallery', $where, 'start DESC, end DESC, id DESC', POS, $auth->entries);
+$galleries = $db->select('id, start, name', 'gallery', $where, 'start DESC, end DESC, id DESC', POS, $session->get('entries'));
 $c_galleries = count($galleries);
 
 if ($c_galleries > 0) {

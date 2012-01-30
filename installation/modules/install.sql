@@ -214,6 +214,13 @@ CREATE TABLE `{pre}seo` (
 	UNIQUE KEY `alias` (`alias`)
 ) {engine};
 
+CREATE TABLE `{pre}sessions` (
+	`session_id` varchar(32) NOT NULL,
+	`session_starttime` int(10) unsigned NOT NULL,
+	`session_data` text NOT NULL,
+	PRIMARY KEY (`session_id`)
+) {engine}
+
 CREATE TABLE `{pre}settings` (
  `id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
  `module` VARCHAR(40) NOT NULL,

@@ -14,7 +14,7 @@ breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
 breadcrumb::assign($lang->t('menu_items', 'menu_items'), $uri->route('acp/menu_items'));
 breadcrumb::assign($lang->t('menu_items', 'adm_list_blocks'));
 
-$blocks = $db->select('id, index_name, title', 'menu_items_blocks', 0, 'title ASC, index_name ASC', POS, $auth->entries);
+$blocks = $db->select('id, index_name, title', 'menu_items_blocks', 0, 'title ASC, index_name ASC', POS, $session->get('entries'));
 $c_blocks = count($blocks);
 
 if ($c_blocks > 0) {

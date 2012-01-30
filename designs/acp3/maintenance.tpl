@@ -8,7 +8,7 @@
 
 <body>
 	<div id="maintenance">
-		{$content}
+		{$CONTENT}
 	</div>
 </body>
 </html>

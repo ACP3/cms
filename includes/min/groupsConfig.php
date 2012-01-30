@@ -17,6 +17,9 @@ define('DESIGN_PATH', ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/');
 
 if ($_GET['g'] === 'css' || $_GET['g'] === 'css_simple') {
 	define('IN_ACP3', true);
+	define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
+	$php_self = dirname(PHP_SELF);
+	define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
 	define('MODULES_DIR', ACP3_ROOT . 'modules/');
 
 	set_include_path(get_include_path() . PATH_SEPARATOR . ACP3_ROOT . 'includes/classes/');
@@ -30,6 +33,7 @@ if ($_GET['g'] === 'css' || $_GET['g'] === 'css_simple') {
 		exit($handle);
 	}
 
+	$session = new session();
 	$auth = new auth();
 	$lang = new lang();
 

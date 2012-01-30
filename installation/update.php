@@ -241,6 +241,9 @@ $queries = array(
 		6 => 'ALTER TABLE `{pre}acl_privileges` CHANGE `name` `description` VARCHAR(100) NOT NULL;',
 	),
 	11 => array(),
+	12 => array(
+		0 => 'CREATE TABLE `{pre}sessions` (`session_id` varchar(32) NOT NULL, `session_starttime` int(10) unsigned NOT NULL, `session_data` text NOT NULL, PRIMARY KEY (`session_id`)) {engine}'
+	),
 );
 
 // Änderungen am DB Schema vornehmen
