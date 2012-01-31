@@ -98,8 +98,8 @@ class uri
 			for ($i = 2; $i < $c_query; ++$i) {
 				// Position
 				if (defined('POS') === false && preg_match('/^(page_(\d+))$/', $query[$i])) {
-					global $auth;
-					define('POS', (substr($query[$i], 5) - 1) * $auth->entries);
+					global $session;
+					define('POS', (substr($query[$i], 5) - 1) * (int) $session->get('entries'));
 					$this->page = (int) substr($query[$i], 5);
 				// ID eines Datensatzes
 				} elseif (preg_match('/^(id_(\d+))$/', $query[$i])) {

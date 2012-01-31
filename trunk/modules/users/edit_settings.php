@@ -49,6 +49,9 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 
 			$bool = $db->update('users', $update_values, 'id = \'' . $auth->getUserId() . '\'');
 
+			$session->set('language', $form['language']);
+			$session->set('entries', (int) $form['entries']);
+
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home')));
 		}
 	}

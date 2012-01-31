@@ -77,7 +77,7 @@ class session {
 	 */
 	private static function secureSession() {
 		// Neue session_id generieren, falls Ungereimtheiten bei Überprüfung entstehen
-		if (strlen(session_id()) !== 32 || isset($_SESSION['acp3_init']) === false) {
+		if (isset($_SESSION['acp3_init']) === false) {
 			session_regenerate_id(true);
 			$_SESSION['acp3_init'] = true;
 		}
