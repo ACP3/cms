@@ -51,7 +51,7 @@ $queries = array(
 		2 => 'ALTER TABLE `{pre}seo` ADD `description` VARCHAR(255) NOT NULL AFTER `keywords`;',
 	),
 	3 => array(
-		0 => 'CREATE TABLE `{pre}settings` (`id` INT(10) unsigned NOT NULL AUTO_INCREMENT, `module` VARCHAR(40) NOT NULL, `name` VARCHAR(40) NOT NULL, `value` TEXT NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `module` (`module`,`name`)) {engine};',
+		0 => 'CREATE TABLE `{pre}settings` (`id` INT(10) unsigned NOT NULL AUTO_INCREMENT, `module` VARCHAR(40) NOT NULL, `name` VARCHAR(40) NOT NULL, `value` TEXT NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `module` (`module`,`name`)) {engine} {charset};',
 	),
 	4 => array(
 		0 => 'ALTER TABLE `{pre}news` ADD `user_id` INT UNSIGNED NOT NULL;',
@@ -63,16 +63,16 @@ $queries = array(
 		6 => 'RENAME TABLE `{pre}poll_question` TO `{pre}polls`;',
 	),
 	5 => array(
-		0 => 'CREATE TABLE `{pre}modules` (`name` varchar(100) NOT NULL, `active` tinyint(1) unsigned NOT NULL, PRIMARY KEY (`name`)) {engine}',
+		0 => 'CREATE TABLE `{pre}modules` (`name` varchar(100) NOT NULL, `active` tinyint(1) unsigned NOT NULL, PRIMARY KEY (`name`)) {engine} {charset}',
 	),
 	6 => array(
 		0 => 'DROP TABLE `{pre}access`',
 		1 => 'ALTER TABLE `{pre}users` DROP COLUMN `access`',
-		2 => 'CREATE TABLE `{pre}acl_privileges` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `key` varchar(100) NOT NULL, `name` varchar(100) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `key` (`key`)) {engine};',
-		3 => 'CREATE TABLE `{pre}acl_resources` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `path` varchar(255) NOT NULL, `privilege_id` int(10) unsigned NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `path` (`path`)) {engine};',
-		4 => 'CREATE TABLE `{pre}acl_roles` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `name` varchar(100) NOT NULL, `left_id` int(10) unsigned NOT NULL, `right_id` int(10) unsigned NOT NULL, PRIMARY KEY (`id`)) {engine};',
-		5 => 'CREATE TABLE `{pre}acl_role_privileges` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `role_id` int(10) unsigned NOT NULL, `privilege_id` int(10) unsigned NOT NULL, `value` tinyint(1) unsigned NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `role_id` (`role_id`,`privilege_id`)) {engine};',
-		6 => 'CREATE TABLE `{pre}acl_user_roles` (`user_id` int(10) unsigned NOT NULL, `role_id` int(10) unsigned NOT NULL, PRIMARY KEY (`user_id`,`role_id`)) {engine};',
+		2 => 'CREATE TABLE `{pre}acl_privileges` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `key` varchar(100) NOT NULL, `name` varchar(100) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `key` (`key`)) {engine} {charset};',
+		3 => 'CREATE TABLE `{pre}acl_resources` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `path` varchar(255) NOT NULL, `privilege_id` int(10) unsigned NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `path` (`path`)) {engine} {charset};',
+		4 => 'CREATE TABLE `{pre}acl_roles` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `name` varchar(100) NOT NULL, `left_id` int(10) unsigned NOT NULL, `right_id` int(10) unsigned NOT NULL, PRIMARY KEY (`id`)) {engine} {charset};',
+		5 => 'CREATE TABLE `{pre}acl_role_privileges` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `role_id` int(10) unsigned NOT NULL, `privilege_id` int(10) unsigned NOT NULL, `value` tinyint(1) unsigned NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `role_id` (`role_id`,`privilege_id`)) {engine} {charset};',
+		6 => 'CREATE TABLE `{pre}acl_user_roles` (`user_id` int(10) unsigned NOT NULL, `role_id` int(10) unsigned NOT NULL, PRIMARY KEY (`user_id`,`role_id`)) {engine} {charset};',
 		7 => "INSERT INTO `{pre}acl_privileges` (`id`, `key`, `name`) VALUES (1, 'view', ''), (2, 'create', ''), (3, 'admin_view', ''), (4, 'admin_create', ''), (5, 'admin_edit', ''), (6, 'admin_delete', ''), (7, 'admin_settings', '');",
 		8 => "INSERT INTO `{pre}acl_resources` (`id`, `path`, `privilege_id`) VALUES
 			(3, 'access/adm_list/', 3),
@@ -235,14 +235,14 @@ $queries = array(
 		0 => 'ALTER TABLE `{pre}modules` DROP PRIMARY KEY;',
 		1 => 'ALTER TABLE `{pre}modules` ADD COLUMN `id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;',
 		2 => 'DROP TABLE `{pre}acl_role_privileges`;',
-		3 => 'CREATE TABLE`{pre}acl_rules` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `role_id` int(10) unsigned NOT NULL, `module_id` int(10) unsigned NOT NULL, `privilege_id` int(10) unsigned NOT NULL, `permission` tinyint(1) unsigned NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `role_id` (`role_id`,`module_id`,`privilege_id`)) {engine};',
+		3 => 'CREATE TABLE `{pre}acl_rules` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `role_id` int(10) unsigned NOT NULL, `module_id` int(10) unsigned NOT NULL, `privilege_id` int(10) unsigned NOT NULL, `permission` tinyint(1) unsigned NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `role_id` (`role_id`,`module_id`,`privilege_id`)) {engine} {charset};',
 		4 => 'DROP TABLE `{pre}acl_resources`;',
-		5 => 'CREATE TABLE`{pre}acl_resources` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `module_id` int(10) unsigned NOT NULL, `page` varchar(255) NOT NULL, `params` varchar(255) NOT NULL, `privilege_id` int(10) unsigned NOT NULL, PRIMARY KEY (`id`)) {engine};',
+		5 => 'CREATE TABLE `{pre}acl_resources` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `module_id` int(10) unsigned NOT NULL, `page` varchar(255) NOT NULL, `params` varchar(255) NOT NULL, `privilege_id` int(10) unsigned NOT NULL, PRIMARY KEY (`id`)) {engine} {charset};',
 		6 => 'ALTER TABLE `{pre}acl_privileges` CHANGE `name` `description` VARCHAR(100) NOT NULL;',
 	),
 	11 => array(),
 	12 => array(
-		0 => 'CREATE TABLE `{pre}sessions` (`session_id` varchar(32) NOT NULL, `session_starttime` int(10) unsigned NOT NULL, `session_data` text NOT NULL, PRIMARY KEY (`session_id`)) {engine}'
+		0 => 'CREATE TABLE `{pre}sessions` (`session_id` varchar(32) NOT NULL, `session_starttime` int(10) unsigned NOT NULL, `session_data` text NOT NULL, PRIMARY KEY (`session_id`)) {engine} {charset};'
 	),
 );
 
@@ -263,7 +263,7 @@ if (!empty($queries[CONFIG_DB_VERSION + 1])) {
 			foreach ($queries[$i] as $row) {
 				$row = str_replace(array('{engine}', '{charset}'), array($db->prefix, $engine, $charset), $row);
 				$bool = $db->query($row, 3);
-				if ($bool === null && defined('DEBUG') && DEBUG) {
+				if ($bool === null && defined('DEBUG') && DEBUG === true) {
 					print "\n";
 				}
 			}
@@ -498,7 +498,7 @@ if (defined('CONFIG_CACHE_IMAGES') == false) {
 	define('CONFIG_CACHE_MINIFY', 3600);
 	define('CONFIG_SEO_ALIASES', true);
 }
-if (!defined('CONFIG_MAILER_TYPE') === false) {
+if (defined('CONFIG_MAILER_TYPE') === false) {
 	define('CONFIG_MAILER_SMTP_AUTH', false);
 	define('CONFIG_MAILER_SMTP_HOST', '');
 	define('CONFIG_MAILER_SMTP_PASSWORD', '');
