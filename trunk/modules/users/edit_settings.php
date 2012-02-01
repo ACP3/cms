@@ -78,6 +78,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 		$tpl->assign('languages', $languages);
 
 		// Einträge pro Seite
+		$entries = array();
 		for ($i = 0, $j = 10; $j <= 50; $i++, $j = $j + 10) {
 			$entries[$i]['value'] = $j;
 			$entries[$i]['selected'] = selectEntry('entries', $j, $session->get('entries'));
@@ -88,6 +89,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 		$tpl->assign('time_zone', timeZones($user[0]['time_zone']));
 
 		// Sommerzeit an/aus
+		$dst = array();
 		$dst[0]['value'] = '1';
 		$dst[0]['checked'] = selectEntry('dst', '1', $user[0]['dst'], 'checked');
 		$dst[0]['lang'] = $lang->t('common', 'yes');

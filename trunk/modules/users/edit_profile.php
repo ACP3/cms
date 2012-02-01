@@ -77,6 +77,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 		$user['nickname'] = $db->escape($user['nickname'], 3);
 		$user['realname'] = $db->escape($user['realname'], 3);
 
+		$checked = array();
 		$checked['realname'] = selectEntry('realname_display', 1, $user['realname_display'], 'checked');
 		$checked['gender'] = selectEntry('gender_display', 1, $user['gender_display'], 'checked');
 		$checked['birthday'] = selectEntry('birthday_display', 1, $user['birthday_display'], 'checked');
