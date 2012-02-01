@@ -47,38 +47,41 @@ class uri
 			// "acp/" entfernen
 			$this->query = substr($this->query, 4);
 		} elseif (defined('IN_INSTALL') === false) {
-			global $db;
-
 			// Query auf eine benutzerdefinierte Startseite setzen
 			if ($this->query === '/' && CONFIG_HOMEPAGE !== '')
 				$this->query = CONFIG_HOMEPAGE;
 
-			// Falls für Query ein Alias existiert, zu diesem weiterleiten
-			if (seo::uriAliasExists($this->query))
-				$this->redirect(seo::getUriAlias($this->query));
+			// Nur ausführen, falls URI-Aliase aktiviert sind
+			if (CONFIG_SEO_ALIASES === true) {
+				// Falls für Query ein Alias existiert, zu diesem weiterleiten
+				if (seo::uriAliasExists($this->query))
+					$this->redirect(seo::getUriAlias($this->query), 0, 1);
 
-			// Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
-			if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)+(([a-z0-9\-]+)_(.+)\/)+$/', $this->query)) {
-				$query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
-				// Annahme bestätigt
-				if (is_file(MODULES_DIR . $query[0] . '/' . $query[1] . '.php') === false) {
-					$length = 0;
-					foreach ($query as $row) {
-						if (strpos($row, '_') === false) {
-							$length+= strlen($row) + 1;
-						} else {
-							break;
+				// Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
+				if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)+(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
+					$query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
+					// Annahme bestätigt
+					if (is_file(MODULES_DIR . $query[0] . '/' . $query[1] . '.php') === false) {
+						$length = 0;
+						foreach ($query as $row) {
+							if (strpos($row, '_') === false) {
+								$length+= strlen($row) + 1;
+							} else {
+								break;
+							}
 						}
+						$params = substr($this->query, $length);
+						$this->query = substr($this->query, 0, $length);
 					}
-					$params = substr($this->query, $length);
-					$this->query = substr($this->query, 0, $length);
 				}
-			}
 
-			// Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-			$alias = $db->select('uri', 'seo', 'alias = \'' . $db->escape(substr($this->query, 0, -1)) . '\'');
-			if (!empty($alias)) {
-				$this->query = $alias[0]['uri'] . (!empty($params) ? $params : '');
+				global $db;
+
+				// Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
+				$alias = $db->select('uri', 'seo', 'alias = \'' . $db->escape(substr($this->query, 0, -1)) . '\'');
+				if (!empty($alias)) {
+					$this->query = $alias[0]['uri'] . (!empty($params) ? $params : '');
+				}
 			}
 		}
 
@@ -99,7 +102,7 @@ class uri
 				// Position
 				if (defined('POS') === false && preg_match('/^(page_(\d+))$/', $query[$i])) {
 					global $session;
-					define('POS', (substr($query[$i], 5) - 1) * (int) $session->get('entries'));
+					define('POS', (substr($query[$i], 5) - 1) * $session->get('entries'));
 					$this->page = (int) substr($query[$i], 5);
 				// ID eines Datensatzes
 				} elseif (preg_match('/^(id_(\d+))$/', $query[$i])) {
@@ -160,7 +163,7 @@ class uri
 	 * @param string $new_page
 	 *  Leitet auf eine externe Seite weiter
 	 */
-	public function redirect($args, $new_page = 0)
+	public function redirect($args, $new_page = 0, $moved_permanently = 0)
 	{
 		if (!empty($args)) {
 			if ($args === 'errors/404' || $args === 'errors/403')
@@ -168,6 +171,9 @@ class uri
 
 			$protocol = empty($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) === 'off' ? 'http://' : 'https://';
 			$host = $_SERVER['HTTP_HOST'];
+			if ($moved_permanently === 1) {
+				header('HTTP/1.0 301 Moved Permanently');
+			}
 			header('Location: ' . $protocol . $host . $this->route($args));
 			exit;
 		}
