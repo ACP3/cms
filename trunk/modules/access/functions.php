@@ -122,24 +122,24 @@ function aclEditNode($id, $parent, array $update_values)
 /**
  * Erstellt einen neuen Knoten
  *
- * @param integer $parent
+ * @param integer $parent_id
  *	ID der übergeordneten Rolle
  * @param array $insert_values
  *
  * @return boolean
  */
-function aclInsertNode($parent, array $insert_values)
+function aclInsertNode($parent_id, array $insert_values)
 {
-	if (validate::isNumber($parent)) {
+	if (validate::isNumber($parent_id)) {
 		global $db;
 
-		$node = $db->select('left_id, right_id', 'acl_roles', 'id = \'' . $parent . '\'');
+		$parent = $db->select('left_id, right_id', 'acl_roles', 'id = \'' . $parent_id . '\'');
 
-		$db->query('UPDATE {pre}acl_roles SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id > ' . $node[0]['right_id'], 0);
-		$db->query('UPDATE {pre}acl_roles SET right_id = right_id + 2 WHERE left_id <= ' . $node[0]['left_id'] . ' AND right_id - left_id > 1', 0);
+		$db->query('UPDATE {pre}acl_roles SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id > ' . $parent[0]['right_id'], 0);
+		$db->query('UPDATE {pre}acl_roles SET right_id = right_id + 2 WHERE left_id <= ' . $parent[0]['left_id'] . ' AND right_id >= ' . $parent[0]['right_id'], 0);
 
-		$insert_values['left_id'] = $node[0]['right_id'];
-		$insert_values['right_id'] = $node[0]['right_id'] + 1;
+		$insert_values['left_id'] = $parent[0]['right_id'];
+		$insert_values['right_id'] = $parent[0]['right_id'] + 1;
 
 		return $db->insert('acl_roles', $insert_values);
 	}

@@ -110,23 +110,27 @@ function menuItemsDeleteNode($id)
 /**
  * Erstellt einen neuen Knoten
  *
- * @param integer $parent
+ * @param integer $parent_id
  *	ID der übergeordneten Seite
  * @param array $insert_values
  *
  * @return boolean
  */
-function menuItemsInsertNode($parent, array $insert_values)
+function menuItemsInsertNode($parent_id, array $insert_values)
 {
 	global $db;
 
-	if (!validate::isNumber($parent) || $db->countRows('*', 'menu_items', 'id = \'' . $parent . '\'') == 0) {
+	// Keine übergeordnete Seite zugewiesen
+	if (!validate::isNumber($parent_id) || $db->countRows('*', 'menu_items', 'id = \'' . $parent_id . '\'') == 0) {
 		$db->link->beginTransaction();
 
+		// Letzten Eintrag des zugewiesenen Blocks holen
 		$node = $db->select('MAX(right_id) AS right_id', 'menu_items', 'block_id = \'' . $db->escape($insert_values['block_id']) . '\'');
 		if (empty($node)) {
 			$node = $db->select('MAX(right_id) AS right_id', 'menu_items', 'block_id < \'' . $db->escape($insert_values['block_id']) . '\'', 'block_id DESC');
 		}
+
+		// left_id und right_id Werte für das Anhängen entsprechend erhöhen
 		$insert_values['left_id'] = !empty($node) ? $node[0]['right_id'] + 1 : 1;
 		$insert_values['right_id'] = !empty($node) ? $node[0]['right_id'] + 2 : 2;
 
@@ -134,24 +138,27 @@ function menuItemsInsertNode($parent, array $insert_values)
 		$root_id = $db->link->lastInsertId();
 
 		$bool2 = $db->update('menu_items', array('root_id' => $root_id), 'id = \'' . $root_id . '\'');
-		$bool3 = $db->query('UPDATE {pre}menu_items SET left_id = left_id + 2, right_id = right_id + 2 WHERE block_id > ' . $db->escape($insert_values['block_id']), 0);
+		$bool3 = $db->query('UPDATE {pre}menu_items SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id > ' . $insert_values['left_id'], 0);
 
 		$db->link->commit();
 
 		return $bool !== null && $bool2 !== null && $bool3 !== null ? true : false;
+	// Übergeordnete Seite zugewiesen
 	} else {
-		$node = $db->select('root_id, left_id, right_id', 'menu_items', 'id = \'' . $parent . '\'');
+		$parent = $db->select('root_id, left_id, right_id', 'menu_items', 'id = \'' . $parent_id . '\'');
 
 		$db->link->beginTransaction();
 
-		$db->query('UPDATE {pre}menu_items SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id > ' . $node[0]['right_id'], 0);
-		$db->query('UPDATE {pre}menu_items SET right_id = right_id + 2 WHERE root_id = ' . $node[0]['root_id'] . ' AND left_id <= ' . $node[0]['left_id'] . ' AND right_id >= ' . $node[0]['right_id'], 0);
+		// Alle nachfolgenden Menüeinträge anpassen
+		$db->query('UPDATE {pre}menu_items SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id > ' . $parent[0]['right_id'], 0);
+		// Übergeordnete Menüpunkte anpassen
+		$db->query('UPDATE {pre}menu_items SET right_id = right_id + 2 WHERE root_id = ' . $parent[0]['root_id'] . ' AND left_id <= ' . $parent[0]['left_id'] . ' AND right_id >= ' . $parent[0]['right_id'], 0);
 
 		$db->link->commit();
 
-		$insert_values['root_id'] = $node[0]['root_id'];
-		$insert_values['left_id'] = $node[0]['right_id'];
-		$insert_values['right_id'] = $node[0]['right_id'] + 1;
+		$insert_values['root_id'] = $parent[0]['root_id'];
+		$insert_values['left_id'] = $parent[0]['right_id'];
+		$insert_values['right_id'] = $parent[0]['right_id'] + 1;
 
 		return $db->insert('menu_items', $insert_values);
 	}
