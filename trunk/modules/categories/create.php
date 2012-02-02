@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 require_once MODULES_DIR . 'categories/functions.php';
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 	if (!empty($_FILES['picture']['name'])) {
 		$file['tmp_name'] = $_FILES['picture']['tmp_name'];
@@ -36,7 +36,7 @@ if (isset($_POST['form'])) {
 	if (strlen($form['name']) >= 3 && categoriesCheckDuplicate($db->escape($form['name']), $form['module']))
 		$errors[] = $lang->t('categories', 'category_already_exists');
 
-	if (isset($errors)) {
+	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$file_sql = null;
@@ -61,7 +61,7 @@ if (isset($_POST['form'])) {
 		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/categories')));
 	}
 }
-if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$tpl->assign('form', isset($form) ? $form : array('name' => '', 'description' => ''));
 
 	$mod_list = modules::modulesList();

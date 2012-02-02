@@ -13,7 +13,7 @@ if (defined('IN_ADM') === false)
 if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' . $uri->id . '\'') == '1') {
 	require_once MODULES_DIR . 'categories/functions.php';
 
-	if (isset($_POST['form'])) {
+	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 		if (!empty($_FILES['picture']['name'])) {
 			$file['tmp_name'] = $_FILES['picture']['tmp_name'];
@@ -36,7 +36,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' 
 		if (strlen($form['name']) >= 3 && categoriesCheckDuplicate($db->escape($form['name']), $module[0]['module'], $uri->id))
 			$errors[] = $lang->t('categories', 'category_already_exists');
 
-		if (isset($errors)) {
+		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$new_file_sql = null;
@@ -63,7 +63,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' 
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/categories')));
 		}
 	}
-	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		$category = $db->select('name, description', 'categories', 'id = \'' . $uri->id . '\'');
 		$category[0]['name'] = $db->escape($category[0]['name'], 3);
 		$category[0]['description'] = $db->escape($category[0]['description'], 3);

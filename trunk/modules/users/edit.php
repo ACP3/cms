@@ -13,7 +13,7 @@ if (defined('IN_ADM') === false)
 if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $uri->id . '\'') == '1') {
 	$user = $auth->getUserInfo($uri->id);
 
-	if (isset($_POST['form'])) {
+	if (isset($_POST['form']) === true) {
 		require_once MODULES_DIR . 'users/functions.php';
 
 		$form = $_POST['form'];
@@ -41,7 +41,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
 
-		if (isset($errors)) {
+		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
@@ -83,7 +83,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/users')));
 		}
 	}
-	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		$user['nickname'] = $db->escape($user['nickname'], 3);
 		$user['date_format_long'] = $db->escape($user['date_format_long'], 3);
 		$user['date_format_short'] = $db->escape($user['date_format_short'], 3);

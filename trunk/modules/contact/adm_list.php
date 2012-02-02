@@ -10,13 +10,13 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (!empty($form['mail']) && !validate::email($form['mail']))
 		$errors[] = $lang->t('common', 'wrong_email_format');
 
-	if (isset($errors)) {
+	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$form['address'] = $db->escape($form['address'], 2);
@@ -30,7 +30,7 @@ if (isset($_POST['form'])) {
 		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/contact')));
 	}
 }
-if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$settings = config::getModuleSettings('contact');
 	$settings['address'] = $db->escape($settings['address'], 3);
 	$settings['telephone'] = $db->escape($settings['telephone'], 3);

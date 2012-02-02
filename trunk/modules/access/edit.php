@@ -13,7 +13,7 @@ if (defined('IN_ADM') === false)
 require_once MODULES_DIR . 'access/functions.php';
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' . $uri->id . '\'') == '1') {
-	if (isset($_POST['form'])) {
+	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
 		if (empty($form['name']))
@@ -25,7 +25,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 		if (!empty($form['privileges']) && !validate::aclPrivilegesExist($form['privileges']))
 			$errors[] = $lang->t('access', 'invalid_privileges');
 
-		if (isset($errors)) {
+		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
@@ -50,7 +50,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/access')));
 		}
 	}
-	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		$role = $db->select('name, parent_id, left_id, right_id', 'acl_roles', 'id = \'' . $uri->id . '\'');
 		$role[0]['name'] = $db->escape($role[0]['name'], 3);
 

@@ -17,7 +17,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 	breadcrumb::assign($lang->t('newsletter', 'adm_list_archive'), $uri->route('acp/newsletter/adm_list_archive'));
 	breadcrumb::assign($lang->t('newsletter', 'edit_archive'));
 
-	if (isset($_POST['form'])) {
+	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
 		if (strlen($form['subject']) < 3)
@@ -25,7 +25,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 		if (strlen($form['text']) < 3)
 			$errors[] = $lang->t('newsletter', 'text_to_short');
 
-		if (isset($errors)) {
+		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$settings = config::getModuleSettings('newsletter');
@@ -68,7 +68,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 			}
 		}
 	}
-	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		$newsletter = $db->select('subject, text', 'newsletter_archive', 'id = \'' . $uri->id . '\'');
 		$newsletter[0]['subject'] = $db->escape($newsletter[0]['subject'], 3);
 		$newsletter[0]['text'] = $db->escape($newsletter[0]['text'], 3);

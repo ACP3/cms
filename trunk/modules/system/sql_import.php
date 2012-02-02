@@ -7,7 +7,7 @@ breadcrumb::assign($lang->t('system', 'system'), $uri->route('acp/system'));
 breadcrumb::assign($lang->t('system', 'maintenance'), $uri->route('acp/system/maintenance'));
 breadcrumb::assign($lang->t('system', 'sql_import'));
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 	if (isset($_FILES['file'])) {
 		$file['tmp_name'] = $_FILES['file']['tmp_name'];
@@ -22,7 +22,7 @@ if (isset($_POST['form'])) {
 		$_FILES['file']['error'] !== UPLOAD_ERR_OK))
 		$errors[] = $lang->t('system', 'select_sql_file');
 
-	if (isset($errors)) {
+	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$data = isset($file) ? file_get_contents($file['tmp_name']) : $form['text'];
@@ -49,7 +49,7 @@ if (isset($_POST['form'])) {
 		cache::purge();
 	}
 }
-if (!isset($_POST['form']) || isset($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$tpl->assign('form', isset($form) ? $form : array('text' => ''));
 }
 view::setContent(view::fetchTemplate('system/sql_import.tpl'));

@@ -14,7 +14,7 @@ require_once MODULES_DIR . 'categories/functions.php';
 
 $settings = config::getModuleSettings('files');
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 	if (isset($form['external'])) {
 		$file = $form['file_external'];
@@ -42,7 +42,7 @@ if (isset($_POST['form'])) {
 	if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'])))
 		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
-	if (isset($errors)) {
+	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		if (is_array($file)) {
@@ -79,7 +79,7 @@ if (isset($_POST['form'])) {
 		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/files')));
 	}
 }
-if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	// Datumsauswahl
 	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));
 

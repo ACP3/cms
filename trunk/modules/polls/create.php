@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (!validate::date($form['start'], $form['end']))
@@ -25,7 +25,7 @@ if (isset($_POST['form'])) {
 	if ($i <= 1)
 		$errors[] = $lang->t('polls', 'type_in_answer');
 
-	if (isset($errors)) {
+	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$start = $date->timestamp($form['start']);
@@ -60,7 +60,7 @@ if (isset($_POST['form'])) {
 		view::setContent(comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/polls')));
 	}
 }
-if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	if (isset($_POST['form']['answers'])) {
 		// Bisherige Antworten
 		$i = 0;
@@ -70,7 +70,7 @@ if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
 			$i++;
 		}
 		// Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
-		if (count($_POST['form']['answers']) <= 9 && !empty($_POST['form']['answers'][$i - 1]) && !isset($_POST['form'])) {
+		if (count($_POST['form']['answers']) <= 9 && !empty($_POST['form']['answers'][$i - 1]) && isset($_POST['form']) === false) {
 			$answers[$i]['number'] = $i;
 			$answers[$i]['value'] = '';
 		}

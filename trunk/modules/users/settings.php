@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (!isset($form['language_override']) || $form['language_override'] != 1 && $form['language_override'] != 0)
@@ -18,7 +18,7 @@ if (isset($_POST['form'])) {
 	if (!isset($form['entries_override']) || $form['entries_override'] != 1 && $form['entries_override'] != 0)
 		$errors[] = $lang->t('users', 'select_entries_override');
 
-	if (isset($errors)) {
+	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$bool = config::module('users', $form);
@@ -26,7 +26,7 @@ if (isset($_POST['form'])) {
 		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/users')));
 	}
 }
-if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$settings = config::getModuleSettings('users');
 
 	$languages[0]['value'] = '1';

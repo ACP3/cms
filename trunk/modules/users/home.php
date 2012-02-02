@@ -8,14 +8,14 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 	breadcrumb::assign($lang->t('users', 'users'), $uri->route('users'));
 	breadcrumb::assign($lang->t('users', 'home'));
 
-	if (isset($_POST['form'])) {
+	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
 		$bool = $db->update('users', array('draft' => $db->escape($form['draft'], 2)), 'id = \'' . $auth->getUserId() . '\'');
 
 		view::setContent(comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home')));
 	}
-	if (!isset($_POST['form'])) {
+	if (isset($_POST['form']) === false) {
 		$user = $db->select('draft', 'users', 'id = \'' . $auth->getUserId() . '\'');
 
 		$tpl->assign('draft', $db->escape($user[0]['draft'], 3));

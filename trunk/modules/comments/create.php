@@ -20,7 +20,7 @@ function commentsCreate($module, $entry_id)
 	global $auth, $date, $db, $lang, $uri, $tpl;
 
 	// Formular für das Eintragen von Kommentaren
-	if (isset($_POST['form'])) {
+	if (isset($_POST['form']) === true) {
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$form = $_POST['form'];
 
@@ -42,7 +42,7 @@ function commentsCreate($module, $entry_id)
 		if (!$auth->isUser() && !validate::captcha($form['captcha'], $form['hash']))
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
-		if (isset($errors)) {
+		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$insert_values = array(
@@ -61,7 +61,7 @@ function commentsCreate($module, $entry_id)
 			return comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route($uri->query));
 		}
 	}
-	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		// Emoticons einbinden, falls diese aktiv sind
 		if (modules::check('emoticons', 'functions') == 1) {
 			require_once MODULES_DIR . 'emoticons/functions.php';

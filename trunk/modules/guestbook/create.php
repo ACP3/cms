@@ -23,7 +23,7 @@ if ($uri->design == 'simple') {
 	$comboColorbox = 0;
 }
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	$ip = $_SERVER['REMOTE_ADDR'];
 	$form = $_POST['form'];
 
@@ -52,7 +52,7 @@ if (isset($_POST['form'])) {
 			$errors[] = $lang->t('newsletter', 'account_exists');
 	}
 
-	if (isset($errors)) {
+	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$insert_values = array(
@@ -87,7 +87,7 @@ if (isset($_POST['form'])) {
 		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('guestbook'), 0, $comboColorbox));
 	}
 }
-if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	// Emoticons einbinden
 	if (modules::check('emoticons', 'functions') == 1 && $settings['emoticons'] == 1) {
 		require_once MODULES_DIR . 'emoticons/functions.php';

@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (strlen($form['subject']) < 3)
@@ -18,7 +18,7 @@ if (isset($_POST['form'])) {
 	if (strlen($form['text']) < 3)
 		$errors[] = $lang->t('newsletter', 'text_to_short');
 
-	if (isset($errors)) {
+	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$settings = config::getModuleSettings('newsletter');
@@ -62,7 +62,7 @@ if (isset($_POST['form'])) {
 		}
 	}
 }
-if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$tpl->assign('form', isset($form) ? $form : array('subject' => '', 'text' => ''));
 
 	$test[0]['value'] = '1';

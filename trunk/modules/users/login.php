@@ -13,7 +13,7 @@ if (defined('IN_ACP3') === false)
 // Falls der Benutzer schon eingeloggt ist, diesen zur Startseite weiterleiten
 if ($auth->isUser()) {
 	$uri->redirect(0, ROOT_DIR);
-} elseif (isset($_POST['form'])) {
+} elseif (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	$result = $auth->login($form['nickname'], $form['pwd'], isset($_POST['remember']) ? 31104000 : 3600);

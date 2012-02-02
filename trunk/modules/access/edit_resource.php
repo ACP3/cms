@@ -18,7 +18,7 @@ breadcrumb::assign($lang->t('access', 'edit_resource'));
 require_once MODULES_DIR . 'access/functions.php';
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_resources', 'id = \'' . $uri->id . '\'') == '1') {
-	if (isset($_POST['form'])) {
+	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
 		if (empty($form['privileges']) || !validate::isNumber($form['privileges']))
@@ -26,7 +26,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_resources', 'id = \
 		if (validate::isNumber($form['privileges']) && $db->countRows('*', 'acl_resources', 'id = \'' . $form['privileges'] . '\'') == 0)
 			$errors[] = $lang->t('access', 'privilege_does_not_exist');
 
-		if (isset($errors)) {
+		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
@@ -39,7 +39,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_resources', 'id = \
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/access/adm_list_resources')));
 		}
 	}
-	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		$resource = $db->select('privilege_id', 'acl_resources', 'id =\'' . $uri->id . '\'');
 
 		$privileges = acl::getAllPrivileges();
