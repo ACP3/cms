@@ -60,8 +60,7 @@ class session {
 	/**
 	 * Session starten
 	 *
-	 * @param integer $expire_time
-	 *	Angaben in Sekunden
+	 * @param integer $expire_time Angaben in Sekunden
 	 */
 	private static function startSession($expire_time = 1800) {
 		// Session Cookie Parameter setzen
@@ -76,7 +75,7 @@ class session {
 	 * Sichert die aktuelle Session
 	 */
 	private static function secureSession() {
-		// Neue session_id generieren, falls Ungereimtheiten bei Überprüfung entstehen
+		// Session Fixation verhindern
 		if (isset($_SESSION['acp3_init']) === false) {
 			session_regenerate_id(true);
 			$_SESSION['acp3_init'] = true;
@@ -104,23 +103,22 @@ class session {
 	 * Liest eine Session aus der Datenbank
 	 *
 	 * @param integer $session_id
-	 * @return string string of the session data
+	 * @return string
 	 */
 	public function session_read($session_id) {
 		global $db;
 
 		$session = $db->select('session_data', 'sessions', 'session_id = \'' . $db->escape($session_id) . '\'');
 
-		if (!empty($session))
-			return (string) $session[0]['session_data'];
+		// Wenn keine Session gefunden wurde, dann einen leeren String zurückgeben
+		return !empty($session) ? (string) $session[0]['session_data'] : '';
 	}
 
 	/**
-	 * Session in Datenbank schrieben
+	 * Session in Datenbank schreiben
 	 *
 	 * @param integer $session_id
-	 * @param array $data
-	 *	Enthält die Session-Daten
+	 * @param array $data Enthält die Session-Daten
 	 *
 	 * @return bool
 	 */
@@ -133,7 +131,7 @@ class session {
 	}
 
 	/**
-	 * Aktuelle Session zerstören
+	 * Aktuelle Session löschen
 	 *
 	 * @param integer $session_id
 	 */
@@ -169,8 +167,8 @@ class session {
 	/**
 	 * Setzt eine Session Variable
 	 *
-	 * @param string key
-	 * @param mixed value
+	 * @param string $key
+	 * @param mixed $value
 	 */
 	public function set($key, $value) {
 		$_SESSION[$key] = $value;
@@ -178,7 +176,7 @@ class session {
 	/**
 	 * Liest Daten aus der Session aus
 	 *
-	 * @param string key
+	 * @param string $key
 	 *
 	 * @return mixed
 	 */
