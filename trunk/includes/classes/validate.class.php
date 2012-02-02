@@ -276,7 +276,7 @@ class validate
 	public static function uriAliasExists($alias, $path = '')
 	{
 		if (self::isUriSafe($alias)) {
-			if (is_dir(MODULES_DIR . '' . $alias) === true) {
+			if (is_dir(MODULES_DIR . $alias) === true) {
 				return true;
 			} else {
 				global $db;
