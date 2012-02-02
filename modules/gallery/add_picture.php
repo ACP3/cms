@@ -22,7 +22,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 
 	$settings = config::getModuleSettings('gallery');
 
-	if (isset($_POST['form'])) {
+	if (isset($_POST['form']) === true) {
 		$file['tmp_name'] = $_FILES['file']['tmp_name'];
 		$file['name'] = $_FILES['file']['name'];
 		$file['size'] = $_FILES['file']['size'];
@@ -35,7 +35,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			$_FILES['file']['error'] !== UPLOAD_ERR_OK))
 			$errors[] = $lang->t('gallery', 'invalid_image_selected');
 
-		if (isset($errors)) {
+		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$result = moveFile($file['tmp_name'], $file['name'], 'gallery');
@@ -57,7 +57,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			view::setContent(comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/gallery/edit_gallery/id_' . $uri->id)));
 		}
 	}
-	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		$galleries = $db->select('id, start, name', 'gallery', 0, 'start DESC');
 		$c_galleries = count($galleries);
 

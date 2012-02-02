@@ -13,7 +13,7 @@ if (defined('IN_ADM') === false)
 if (validate::isNumber($uri->id) && $db->countRows('*', 'emoticons', 'id = \'' . $uri->id . '\'') == '1') {
 	require_once MODULES_DIR . 'emoticons/functions.php';
 
-	if (isset($_POST['form'])) {
+	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 		if (!empty($_FILES['picture']['tmp_name'])) {
 			$file['tmp_name'] = $_FILES['picture']['tmp_name'];
@@ -31,7 +31,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'emoticons', 'id = \'' .
 			$_FILES['picture']['error'] !== UPLOAD_ERR_OK))
 			$errors[] = $lang->t('emoticons', 'invalid_image_selected');
 
-		if (isset($errors)) {
+		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$new_file_sql = null;
@@ -57,7 +57,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'emoticons', 'id = \'' .
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/emoticons')));
 		}
 	}
-	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		$emoticon = $db->select('code, description, img', 'emoticons', 'id = \'' . $uri->id . '\'');
 		$emoticon[0]['code'] = $db->escape($emoticon[0]['code'], 3);
 		$emoticon[0]['description'] = $db->escape($emoticon[0]['description'], 3);

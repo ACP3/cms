@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 $settings = config::getModuleSettings('gallery');
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 	
 	if (!validate::isNumber($form['thumbwidth']) || !validate::isNumber($form['width']) || !validate::isNumber($form['maxwidth']))
@@ -30,7 +30,7 @@ if (isset($_POST['form'])) {
 	if (!validate::isNumber($form['sidebar']))
 		$errors[] = $lang->t('common', 'select_sidebar_entries');
 
-	if (isset($errors)) {
+	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$bool = config::module('gallery', $form);
@@ -44,7 +44,7 @@ if (isset($_POST['form'])) {
 		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/gallery')));
 	}
 }
-if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$comments = array();
 	$comments[0]['value'] = '1';
 	$comments[0]['checked'] = selectEntry('comments', '1', $settings['comments'], 'checked');

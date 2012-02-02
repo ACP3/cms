@@ -20,7 +20,7 @@ if (validate::email($uri->mail) && validate::isMD5($uri->hash)) {
 if ($db->countRows('*', 'newsletter_accounts', 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'') != 1)
 	$errors[] = $lang->t('newsletter', 'account_not_exists');
 
-if (isset($errors)) {
+if (isset($errors) === true) {
 	$tpl->assign('error_msg', comboBox($errors));
 } else {
 	$bool = $db->update('newsletter_accounts', array('hash' => ''), 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'');

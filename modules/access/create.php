@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 require_once MODULES_DIR . 'access/functions.php';
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (empty($form['name']))
@@ -24,7 +24,7 @@ if (isset($_POST['form'])) {
 	if (!empty($form['privileges']) && !validate::aclPrivilegesExist($form['privileges']))
 		$errors[] = $lang->t('access', 'invalid_privileges');
 
-	if (isset($errors)) {
+	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		require_once MODULES_DIR . 'access/functions.php';
@@ -53,7 +53,7 @@ if (isset($_POST['form'])) {
 		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/access')));
 	}
 }
-if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$tpl->assign('form', isset($form) ? $form : array('name' => ''));
 
 	$roles = acl::getAllRoles();

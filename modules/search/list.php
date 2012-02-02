@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (strlen($form['search_term']) < 3)
@@ -22,7 +22,7 @@ if (isset($_POST['form'])) {
 	if (empty($form['sort']) || $form['sort'] != 'asc' && $form['sort'] != 'desc')
 		$errors[] = $lang->t('search', 'no_sorting_selected');
 
-	if (isset($errors)) {
+	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		breadcrumb::assign($lang->t('search', 'search'), $uri->route('search'));
@@ -43,7 +43,7 @@ if (isset($_POST['form'])) {
 		view::setContent(view::fetchTemplate('search/results.tpl'));
 	}
 }
-if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$tpl->assign('form', isset($form) ? $form : array('search_term' => ''));
 
 	$mods = scandir(MODULES_DIR . '');

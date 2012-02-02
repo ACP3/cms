@@ -11,7 +11,7 @@ if (defined('IN_ADM') === false)
 	exit;
 
 if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $uri->id . '\'') == '1') {
-	if (isset($_POST['form'])) {
+	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
 		if (!validate::date($form['start'], $form['end']))
@@ -30,7 +30,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 		if (count($form['answers']) - $j < 2)
 			$errors[] = $lang->t('polls', 'can_not_delete_all_answers');
 
-		if (isset($errors)) {
+		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			// Frage aktualisieren
@@ -68,7 +68,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/polls')));
 		}
 	}
-	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		// Neue Antworten hinzufügen
 		if (isset($_POST['form']['answers'])) {
 			// Bisherige Antworten
@@ -80,7 +80,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 				$i++;
 			}
 			// Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
-			if (count($_POST['form']['answers']) <= 9 && !empty($_POST['form']['answers'][$i - 1]['value']) && !isset($_POST['form'])) {
+			if (count($_POST['form']['answers']) <= 9 && !empty($_POST['form']['answers'][$i - 1]['value']) && isset($_POST['form']) === false) {
 				$answers[$i]['number'] = $i;
 				$answers[$i]['id'] = '0';
 				$answers[$i]['value'] = '';

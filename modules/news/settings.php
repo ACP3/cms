@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 $comments = modules::isActive('comments');
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 	
 	if ($comments && (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0))
@@ -26,7 +26,7 @@ if (isset($_POST['form'])) {
 	if (!validate::isNumber($form['sidebar']))
 		$errors[] = $lang->t('common', 'select_sidebar_entries');
 
-	if (isset($errors)) {
+	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$bool = config::module('news', $form);
@@ -34,7 +34,7 @@ if (isset($_POST['form'])) {
 		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/news')));
 	}
 }
-if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$settings = config::getModuleSettings('news');
 
 	$readmore[0]['value'] = '1';

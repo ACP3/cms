@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit();
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	switch ($uri->action) {
 		case 'subscribe' :
 			$form = $_POST['form'];
@@ -22,7 +22,7 @@ if (isset($_POST['form'])) {
 			if (!$auth->isUser() && !validate::captcha($form['captcha'], $form['hash']))
 				$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
-			if (isset($errors)) {
+			if (isset($errors) === true) {
 				$tpl->assign('error_msg', comboBox($errors));
 			} else {
 				require MODULES_DIR . 'newsletter/functions.php';
@@ -41,7 +41,7 @@ if (isset($_POST['form'])) {
 			if (!$auth->isUser() && !validate::captcha($form['captcha'], $form['hash']))
 				$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
-			if (isset($errors)) {
+			if (isset($errors) === true) {
 				$tpl->assign('error_msg', comboBox($errors));
 			} else {
 				$bool = $db->delete('newsletter_accounts', 'mail = \'' . $form['mail'] . '\'');
@@ -53,7 +53,7 @@ if (isset($_POST['form'])) {
 			$uri->redirect('errors/404');
 	}
 }
-if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$tpl->assign('form', isset($form) ? $form : array('mail' => ''));
 
 	$field_value = $uri->action ? $uri->action : 'subscribe';

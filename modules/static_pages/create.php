@@ -13,7 +13,7 @@ if (defined('IN_ADM') === false)
 if (modules::check('menu_items', 'create') == 1)
 	require_once MODULES_DIR . 'menu_items/functions.php';
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (!validate::date($form['start'], $form['end']))
@@ -43,7 +43,7 @@ if (isset($_POST['form'])) {
 		}
 	}
 
-	if (isset($errors)) {
+	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$time_start = $date->timestamp($form['start']);
@@ -85,7 +85,7 @@ if (isset($_POST['form'])) {
 		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/static_pages')));
 	}
 }
-if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	if (modules::check('menu_items', 'create') == 1) {
 		$create[0]['value'] = 1;
 		$create[0]['selected'] = selectEntry('create', '1', '0', 'checked');

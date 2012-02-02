@@ -19,7 +19,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 	breadcrumb::assign($lang->t('users', 'home'), $uri->route('users/home'));
 	breadcrumb::assign($lang->t('users', 'edit_settings'));
 
-	if (isset($_POST['form'])) {
+	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
 		if ($settings['language_override'] == 1 && !$lang->languagePackExists($form['language']))
@@ -33,7 +33,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 		if (!validate::isNumber($form['dst']))
 			$errors[] = $lang->t('common', 'select_daylight_saving_time');
 
-		if (isset($errors)) {
+		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
@@ -55,7 +55,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home')));
 		}
 	}
-	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		$user = $db->select('date_format_long, date_format_short, time_zone, dst, language, entries', 'users', 'id = \'' . $auth->getUserId() . '\'');
 
 		$tpl->assign('language_override', $settings['language_override']);

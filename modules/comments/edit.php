@@ -19,7 +19,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 	breadcrumb::assign($lang->t($comment[0]['module'], $comment[0]['module']), $uri->route('acp/comments/adm_list/module_' . $comment[0]['module']));
 	breadcrumb::assign($lang->t('comments', 'edit'));
 
-	if (isset($_POST['form'])) {
+	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
 		if ((empty($comment[0]['user_id']) || !validate::isNumber($comment[0]['user_id'])) && empty($form['name']))
@@ -27,7 +27,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 		if (strlen($form['message']) < 3)
 			$errors[] = $lang->t('common', 'message_to_short');
 
-		if (isset($errors)) {
+		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array();
@@ -41,7 +41,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/comments/adm_list/module_' . $comment[0]['module'])));
 		}
 	}
-	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		if (modules::check('emoticons', 'functions') == 1) {
 			require_once MODULES_DIR . 'emoticons/functions.php';
 

@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (!validate::isNumber($form['entries']))
@@ -50,7 +50,7 @@ if (isset($_POST['form'])) {
 			$errors[] = $lang->t('system', 'type_in_mailer_smtp_username');
 	}
 
-	if (isset($errors)) {
+	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		// Konfig aktualisieren
@@ -86,7 +86,7 @@ if (isset($_POST['form'])) {
 		view::setContent(comboBox($bool ? $lang->t('system', 'config_edit_success') : $lang->t('system', 'config_edit_error'), $uri->route('acp/system/configuration')));
 	}
 }
-if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	// Einträge pro Seite
 	$entries = array();
 	for ($i = 0, $j = 10; $j <= 50; $i++, $j = $j + 10) {

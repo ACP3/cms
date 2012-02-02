@@ -17,7 +17,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 	breadcrumb::assign($lang->t('users', 'home'), $uri->route('users/home'));
 	breadcrumb::assign($lang->t('users', 'edit_profile'));
 
-	if (isset($_POST['form'])) {
+	if (isset($_POST['form']) === true) {
 		require_once MODULES_DIR . 'users/functions.php';
 
 		$form = $_POST['form'];
@@ -41,7 +41,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
 
-		if (isset($errors)) {
+		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
@@ -72,7 +72,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home')));
 		}
 	}
-	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		$user = $auth->getUserInfo();
 		$user['nickname'] = $db->escape($user['nickname'], 3);
 		$user['realname'] = $db->escape($user['realname'], 3);

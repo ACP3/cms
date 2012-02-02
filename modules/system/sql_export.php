@@ -7,7 +7,7 @@ breadcrumb::assign($lang->t('system', 'system'), $uri->route('acp/system'));
 breadcrumb::assign($lang->t('system', 'maintenance'), $uri->route('acp/system/maintenance'));
 breadcrumb::assign($lang->t('system', 'sql_export'));
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (empty($form['tables']) || !is_array($form['tables']))
@@ -17,7 +17,7 @@ if (isset($_POST['form'])) {
 	if ($form['export_type'] != 'complete' && $form['export_type'] != 'structure' && $form['export_type'] != 'data')
 		$errors[] = $lang->t('system', 'select_export_type');
 
-	if (isset($errors)) {
+	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$structure = '';
@@ -67,7 +67,7 @@ if (isset($_POST['form'])) {
 		}
 	}
 }
-if (!isset($_POST['form']) || isset($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$mod_list = modules::modulesList();
 	$tables = array();
 

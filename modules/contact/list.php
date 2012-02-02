@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (empty($form['name']))
@@ -22,7 +22,7 @@ if (isset($_POST['form'])) {
 	if (!$auth->isUser() && !validate::captcha($form['captcha'], $form['hash']))
 		$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
-	if (isset($errors)) {
+	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$settings = config::getModuleSettings('contact');
@@ -35,7 +35,7 @@ if (isset($_POST['form'])) {
 		view::setContent(comboBox($bool ? $lang->t('contact', 'send_mail_success') : $lang->t('contact', 'send_mail_error'), $uri->route('contact')));
 	}
 }
-if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
 	if ($auth->isUser()) {
 		$defaults = $auth->getUserInfo();

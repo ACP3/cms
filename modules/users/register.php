@@ -8,7 +8,7 @@ if ($auth->isUser()) {
 	breadcrumb::assign($lang->t('users', 'users'), $uri->route('users'));
 	breadcrumb::assign($lang->t('users', 'register'));
 
-	if (isset($_POST['form'])) {
+	if (isset($_POST['form']) === true) {
 		require_once MODULES_DIR . 'users/functions.php';
 
 		$form = $_POST['form'];
@@ -26,7 +26,7 @@ if ($auth->isUser()) {
 		if (!$auth->isUser() && !validate::captcha($form['captcha'], $form['hash']))
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
-		if (isset($errors)) {
+		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			// E-Mail mit den Accountdaten zusenden
@@ -68,7 +68,7 @@ if ($auth->isUser()) {
 			view::setContent(comboBox($mail_sent && $bool && $bool2 ? $lang->t('users', 'register_success') : $lang->t('users', 'register_error'), ROOT_DIR));
 		}
 	}
-	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		$defaults = array(
 			'nickname' => '',
 			'mail' => '',

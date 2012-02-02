@@ -13,7 +13,7 @@ if (defined('IN_ADM') === false)
 if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' . $uri->id . '\'') == '1') {
 	$settings = config::getModuleSettings('guestbook');
 
-	if (isset($_POST['form'])) {
+	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
 		if (empty($form['name']))
@@ -23,7 +23,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 		if ($settings['notify'] == 2 && (!isset($form['active']) || ($form['active'] != 0 && $form['active'] != 1)))
 			$errors[] = $lang->t('guestbook', 'select_activate');
 
-		if (isset($errors)) {
+		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
@@ -37,7 +37,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/guestbook')));
 		}
 	}
-	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		$guestbook = $db->select('name, message, active', 'guestbook', 'id = \'' . $uri->id . '\'');
 		$guestbook[0]['name'] = $db->escape($guestbook[0]['name'], 3);
 		$guestbook[0]['message'] = $db->escape($guestbook[0]['message'], 3);

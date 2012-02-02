@@ -14,7 +14,7 @@ require_once MODULES_DIR . 'categories/functions.php';
 
 $settings = config::getModuleSettings('news');
 
-if (isset($_POST['form'])) {
+if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (!validate::date($form['start'], $form['end']))
@@ -32,7 +32,7 @@ if (isset($_POST['form'])) {
 	if (!empty($form['uri']) && (!validate::isNumber($form['target']) || strlen($form['link_title']) < 3))
 		$errors[] = $lang->t('news', 'complete_additional_hyperlink_statements');
 
-	if (isset($errors)) {
+	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$insert_values = array(
@@ -57,7 +57,7 @@ if (isset($_POST['form'])) {
 		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/news')));
 	}
 }
-if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	// Datumsauswahl
 	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));
 

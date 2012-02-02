@@ -18,7 +18,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 	breadcrumb::assign($lang->t('menu_items', 'adm_list_blocks'), $uri->route('acp/menu_items/adm_list_blocks'));
 	breadcrumb::assign($lang->t('menu_items', 'edit_block'));
 
-	if (isset($_POST['form'])) {
+	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
 		if (!preg_match('/^[a-zA-Z]+\w/', $form['index_name']))
@@ -28,7 +28,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 		if (strlen($form['title']) < 3)
 			$errors[] = $lang->t('menu_items', 'block_title_to_short');
 
-		if (isset($errors)) {
+		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$update_values = array(
@@ -43,7 +43,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/menu_items/adm_list_blocks')));
 		}
 	}
-	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		$block = $db->select('index_name, title', 'menu_items_blocks', 'id = \'' . $uri->id . '\'');
 		$block[0]['index_name'] = $db->escape($block[0]['index_name'], 3);
 		$block[0]['title'] = $db->escape($block[0]['title'], 3);

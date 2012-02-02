@@ -15,7 +15,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 
 	$settings = config::getModuleSettings('files');
 
-	if (isset($_POST['form'])) {
+	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 		if (isset($form['external'])) {
 			$file = $form['file_external'];
@@ -43,7 +43,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'], 'files/details/id_' . $uri->id)))
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
-		if (isset($errors)) {
+		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
 		} else {
 			$new_file_sql = null;
@@ -91,7 +91,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 			view::setContent(comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/files')));
 		}
 	}
-	if (!isset($_POST['form']) || isset($errors) && is_array($errors)) {
+	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		$dl = $db->select('start, end, category_id, file, size, link_title, text, comments', 'files', 'id = \'' . $uri->id . '\'');
 		$dl[0]['text'] = $db->escape($dl[0]['text'], 3);
 		$dl[0]['alias'] = seo::getUriAlias('files/details/id_' . $uri->id);
