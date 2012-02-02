@@ -18,7 +18,7 @@ if (modules::check($uri->feed, 'extensions/feeds') == 1) {
 	$tpl->assign('feed', $feed);
 
 	//Einträge einbinden
-	include MODULES_DIR . '' . $module . '/extensions/feeds.php';
+	include MODULES_DIR . $module . '/extensions/feeds.php';
 
 	// Content-Type setzen und Layout für den RSS-Feed laden
 	view::setContentType('Content-Type: application/xml; charset="UTF-8"');

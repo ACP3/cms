@@ -36,7 +36,7 @@ if (isset($_POST['form']) === true) {
 	if ($form['display'] != '0' && $form['display'] != '1')
 		$errors[] = $lang->t('menu_items', 'select_item_visibility');
 	if (!validate::isNumber($form['target']) ||
-		$form['mode'] == '1' && (!is_dir(MODULES_DIR . '' . $form['module']) || preg_match('=/=', $form['module'])) ||
+		$form['mode'] == '1' && (!is_dir(MODULES_DIR . $form['module']) || preg_match('=/=', $form['module'])) ||
 		$form['mode'] == '2' && !validate::isInternalURI($form['uri']) ||
 		$form['mode'] == '3' && empty($form['uri']) ||
 		$form['mode'] == '4' && (!validate::isNumber($form['static_pages']) || $db->countRows('*', 'static_pages', 'id = \'' . $form['static_pages'] . '\'') == 0))

@@ -36,7 +36,7 @@ class modules
 		$module = !empty($module) ? $module : $uri->mod;
 		$file = !empty($file) ? $file : $uri->file;
 
-		if (is_file(MODULES_DIR . '' . $module . '/' . $file . '.php') === true) {
+		if (is_file(MODULES_DIR . $module . '/' . $file . '.php') === true) {
 			if (self::isActive($module) === true) {
 				return acl::canAccessResource($module . '/' . $file . '/');
 			}
@@ -103,7 +103,7 @@ class modules
 		$dirs = scandir(MODULES_DIR);
 		foreach ($dirs as $dir) {
 			if ($dir !== '.' && $dir !== '..' && is_file(MODULES_DIR . '/' . $dir . '/module.xml') === true) {
-				$mod_info = xml::parseXmlFile(MODULES_DIR . '' . $dir . '/module.xml', 'info');
+				$mod_info = xml::parseXmlFile(MODULES_DIR . $dir . '/module.xml', 'info');
 
 				if (is_array($mod_info)) {
 					global $db, $lang;

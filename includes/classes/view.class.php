@@ -80,7 +80,7 @@ class view
 			case 1:
 				global $session, $date, $db, $lang, $tpl;
 
-				require MODULES_DIR . '' . $uri->mod . '/' . $uri->file . '.php';
+				require MODULES_DIR . $uri->mod . '/' . $uri->file . '.php';
 
 				// Evtl. gesetzten Content-Type des Servers überschreiben
 				header(self::$content_type);

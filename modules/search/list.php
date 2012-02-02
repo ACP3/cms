@@ -32,7 +32,7 @@ if (isset($_POST['form']) === true) {
 		$results_mods = array();
 		foreach ($form['mods'] as $module) {
 			if (modules::check($module, 'extensions/search') == 1) {
-				include MODULES_DIR . '' . $module . '/extensions/search.php';
+				include MODULES_DIR . $module . '/extensions/search.php';
 			}
 		}
 		if (!empty($results_mods))
@@ -46,7 +46,7 @@ if (isset($_POST['form']) === true) {
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$tpl->assign('form', isset($form) ? $form : array('search_term' => ''));
 
-	$mods = scandir(MODULES_DIR . '');
+	$mods = scandir(MODULES_DIR);
 	$c_mods = count($mods);
 	$search_mods = array();
 

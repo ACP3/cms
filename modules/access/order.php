@@ -13,11 +13,11 @@ if (defined('IN_ADM') === false)
 if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' . $uri->id . '\'') == 1) {
 	$roles = $db->query('SELECT c.id, c.left_id, c.right_id FROM {pre}acl_roles AS p, {pre}acl_roles AS c WHERE p.id = \'' . $uri->id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
 
-	if ($uri->action == 'up' && $db->countRows('*', 'acl_roles', 'right_id = ' . ($roles[0]['left_id'] - 1) . '') > 0) {
+	if ($uri->action == 'up' && $db->countRows('*', 'acl_roles', 'right_id = ' . ($roles[0]['left_id'] - 1)) > 0) {
 		$elem = $db->query('SELECT c.id, c.left_id, c.right_id FROM {pre}acl_roles AS p, {pre}acl_roles AS c WHERE p.right_id = ' . ($roles[0]['left_id'] - 1) . ' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
 		$diff_left = $roles[0]['left_id'] - $elem[0]['left_id'];
 		$diff_right = $roles[0]['right_id'] - $elem[0]['right_id'];
-	} elseif ($uri->action == 'down' && $db->countRows('*', 'acl_roles', 'left_id = ' . ($roles[0]['right_id'] + 1) . '') > 0) {
+	} elseif ($uri->action == 'down' && $db->countRows('*', 'acl_roles', 'left_id = ' . ($roles[0]['right_id'] + 1)) > 0) {
 		$elem = $db->query('SELECT c.id, c.left_id, c.right_id FROM {pre}acl_roles AS p, {pre}acl_roles AS c WHERE p.left_id = ' . ($roles[0]['right_id'] + 1) . ' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
 		$diff_left = $elem[0]['left_id'] - $roles[0]['left_id'];
 		$diff_right = $elem[0]['right_id'] - $roles[0]['right_id'];
