@@ -47,13 +47,13 @@ function calcFilesize($value)
  */
 function captcha($captcha_length = 5)
 {
-	global $auth, $tpl;
+	global $auth, $session, $tpl;
 
 	// Wenn man als User angemeldet ist, Captcha nicht anzeigen
 	if ($auth->isUser() === false) {
+		$session->set('captcha', salt($captcha_length));
+
 		$captcha = array();
-		$captcha['hash'] = md5(uniqid(rand(), true));
-		$captcha['length'] = $captcha_length;
 		$captcha['width'] = $captcha_length * 25;
 		$captcha['height'] = 30;
 		$tpl->assign('captcha', $captcha);
@@ -405,10 +405,10 @@ function rewriteInternalUriCallback($matches)
 function salt($str_length)
 {
 	$salt = '';
-	if (function_exists('openssl_random_pseudo_bytes') === true) {   
+	if (function_exists('openssl_random_pseudo_bytes') === true) {
 		$bytes = openssl_random_pseudo_bytes($str_length);
 		$string = base64_encode($bytes);
-		$salt = substr($string, 0, $str_length);                
+		$salt = substr($string, 0, $str_length);
 	} else {
 		$chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 		$c_chars = strlen($chars) - 1;
@@ -416,11 +416,10 @@ function salt($str_length)
 			$char = $chars[mt_rand(0, $c_chars)];
 			// Zeichen nur hinzufügen, wenn sich dieses nicht bereits im Salz befindet
 			if (strpos($salt, $char) === false) {
-				$salt.= $chars[$char];
+				$salt.= $char;
 			}
 		}
 	}
-
 	return $salt;
 }
 /**

@@ -42,7 +42,7 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('common', 'wrong_email_format');
 	if (strlen($form['message']) < 3)
 		$errors[] = $lang->t('common', 'message_to_short');
-	if (!$auth->isUser() && !validate::captcha($form['captcha'], $form['hash']))
+	if (!$auth->isUser() && !validate::captcha($form['captcha']))
 		$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 	if ($newsletterAccess) {
 		if ($form['subscribe_newsletter'] == 1 && !validate::email($form['mail']))
@@ -132,7 +132,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 		$tpl->assign('form', isset($form) ? array_merge($defaults, $form) : $defaults);
 	}
-	
+
 	$tpl->assign('captcha', captcha());
 
 	view::setContent(view::fetchTemplate('guestbook/create.tpl'));

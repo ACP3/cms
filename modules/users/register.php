@@ -23,7 +23,7 @@ if ($auth->isUser()) {
 			$errors[] = $lang->t('users', 'user_email_already_exists');
 		if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
-		if (!$auth->isUser() && !validate::captcha($form['captcha'], $form['hash']))
+		if (!$auth->isUser() && !validate::captcha($form['captcha']))
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors) === true) {
