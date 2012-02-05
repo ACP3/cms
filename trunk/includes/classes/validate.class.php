@@ -22,10 +22,10 @@ class validate
 	/**
 	 * Überprüft, ob die bergebenen Privilegien überhaupt existieren
 	 * und plausible Werte enthalten
-	 * 
+	 *
 	 * @param array $privileges
 	 *	Array mit den IDs der zu überprüfenden Privilegien mit ihren Berechtigungen
-	 * @return boolean 
+	 * @return boolean
 	 */
 	public static function aclPrivilegesExist(array $privileges)
 	{
@@ -86,19 +86,13 @@ class validate
 	 * Überpürft, ob der eingegebene Captcha mit dem generierten übereinstimmt
 	 *
 	 * @param string $input
-	 * @param string $hash
 	 * @return boolean
 	 */
-	public static function captcha($input, $hash)
+	public static function captcha($input)
 	{
-		if (preg_match('/^[a-zA-Z0-9]+$/', $input) && self::isMD5($hash)) {
-			$path = ACP3_ROOT . 'uploads/captcha/' . $hash . strtolower($input);
-			if (is_file($path) === true) {
-				@unlink($path);
-				return true;
-			}
-		}
-		return false;
+		global $session;
+
+		return preg_match('/^[a-zA-Z0-9]+$/', $input) && $input === $session->get('captcha') ? true : false;
 	}
 	/**
 	 * Überprüft, ob alle Daten ein sinnvolles Datum ergeben

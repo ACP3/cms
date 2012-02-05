@@ -1,10 +1,9 @@
 <fieldset class="captcha">
 	<legend>{lang t="captcha|captcha"}</legend>
 	<dl style="text-align:center">
-		<dt><img src="{uri args="captcha/image/hash_`$captcha.hash`/length_`$captcha.length`"}" width="{$captcha.width}" height="{$captcha.height}" alt=""></dt>
+		<dt><img src="{uri args="captcha/image"}" width="{$captcha.width}" height="{$captcha.height}" alt=""></dt>
 		<dd>
-			<input type="text" name="form[captcha]" id="captcha" value="" maxlength="{$captcha.length}" style="width:auto;display:inline" required>
-			<input type="hidden" name="form[hash]" value="{$captcha.hash}" class="checkbox">
+			<input type="text" name="form[captcha]" id="captcha" value="" style="width:auto;display:inline" required>
 		</dd>
 	</dl>
 </fieldset>

@@ -10,42 +10,28 @@
 if (defined('IN_ACP3') === false)
 	exit();
 
-if (strlen($uri->hash) == 32 && validate::isMD5($uri->hash)) {
+if ($session->get('captcha') !== '') {
 	header('Cache-Control: no-cache, must-revalidate');
 	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 	header('Content-Type: image/gif');
-	$hash = $uri->hash;
-	$captcha = salt(!empty($uri->length) && validate::isNumber($uri->length) ? $uri->length : 5);
+	$captcha = $session->get('captcha');
 	$captchaLength = strlen($captcha);
-	$dir = ACP3_ROOT . 'uploads/captcha/';
-	$file = $dir . $hash . strtolower($captcha);
+	$width = $captchaLength * 25;
+	$height = 30;
 
-	$im = imagecreate($captchaLength * 25, 30);
+	$im = imagecreate($width, $height);
 	// Hintergrundfarbe
-	ImageColorAllocate($im, 255, 255, 255);
-	// Textfarbe
-	$textColor = ImageColorAllocate($im, 0, 0, 0);
-	
+	imagecolorallocate($im, 255, 255, 255);
+
+	$textColor = imagecolorallocate($im, 0, 0, 0);
+
 	for ($i = 0; $i < $captchaLength; ++$i) {
-		$textSize = rand(10, 15);
-		$angle = rand(0, 30);
+		$font = mt_rand(2, 5);
 		$posLeft = 22 * $i + 10;
-		$posTop = rand(20, 25);
-		ImageTTFText($im, $textSize, $angle, $posLeft, $posTop, $textColor, MODULES_DIR . 'captcha/DejaVuSans.ttf', $captcha[$i]);
+		$posTop = mt_rand(1, $height - imagefontheight($font) - 3);
+		imagestring($im, $font, $posLeft, $posTop, $captcha[$i], $textColor);
 	}
-	ImageGif($im, $file);
-	ImageDestroy($im);
-	
-	// Alte Captchas löschen
-	$captchas = scandir($dir);
-	$c_captchas = count($captchas);
-	
-	for ($i = 0; $i < $c_captchas; ++$i) {
-		if (time() - filemtime($dir . $captchas[$i]) > 900) {
-			@unlink($dir . $captchas[$i]);
-		}
-	}
-	exit(readfile($file));
-} else {
-	$uri->redirect('errors/404');
+	imagegif($im);
+	imagedestroy($im);
+	exit;
 }
