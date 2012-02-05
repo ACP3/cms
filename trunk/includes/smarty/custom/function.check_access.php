@@ -10,8 +10,8 @@ function smarty_function_check_access($params, $template)
 		$access_check = array();
 
 		if (isset($params['icon'])) {
-			$path = 'images/crystal/' . $params['icon'] . '.png';
-			$access_check['icon'] = ROOT_DIR . $path;
+			$path = DESIGN_PATH . 'images/' . $params['icon'] . '.png';
+			$access_check['icon'] = $path;
 		}
 		if (isset($params['title']))
 			$access_check['title'] = $params['title'];

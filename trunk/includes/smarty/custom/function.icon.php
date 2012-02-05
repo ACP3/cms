@@ -1,7 +1,7 @@
 <?php
 function smarty_function_icon($params)
 {
-	$path = 'images/crystal/' . $params['path'] . '.png';
+	$path = DESIGN_PATH . 'images/' . $params['path'] . '.png';
 	$width = $height = '';
 
 	if (!empty($params['width']) && !empty($params['height']) &&
@@ -17,7 +17,7 @@ function smarty_function_icon($params)
 	$alt = ' alt="' . (!empty($params['alt']) ? $params['alt'] : '') . '"';
 	$title = !empty($params['title']) ? ' title="' . $params['title'] . '"' : '';
 
-	return '<img src="' . ROOT_DIR . $path . '"' . $width . $height . $alt . $title . ' />';
+	return '<img src="' . $path . '"' . $width . $height . $alt . $title . ' />';
 }
 /* vim: set expandtab: */
 ?>
