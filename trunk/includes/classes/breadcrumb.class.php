@@ -76,13 +76,8 @@ class breadcrumb
 
 		// Frontendbereich
 		if (defined('IN_ADM') === false) {
-			$query = 'SELECT p.title, p.uri, a.alias FROM {pre}menu_items AS c, {pre}menu_items AS p LEFT JOIN {pre}seo AS a ON(a.uri = p.uri) WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri = \'%s\' GROUP BY p.uri ORDER BY p.left_id ASC';
-
-			$pages = $db->query(sprintf($query, $uri->query));
-			if (empty($pages))
-				$pages = $db->query(sprintf($query, $module . '/' . $file . '/'));
-			if (empty($pages))
-				$pages = $db->query(sprintf($query, $module));
+			$in = "'" . $uri->query . "', '" . $uri->mod . '/' . $uri->file . "/', '" . $uri->mod . "'";
+			$pages = $db->query('SELECT p.title, p.uri, a.alias FROM {pre}menu_items AS c, {pre}menu_items AS p LEFT JOIN {pre}seo AS a ON(a.uri = p.uri) WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(' . $in . ') GROUP BY p.uri ORDER BY LENGTH(c.uri) DESC, p.left_id ASC');
 
 			$c_pages = count($pages);
 
