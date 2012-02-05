@@ -34,7 +34,7 @@ class session {
 	 */
 	public $gc_probability = 10;
 
-	function __construct() {
+	public function __construct() {
 		// php.ini Session Einstellungen konfigurieren
 		ini_set('session.name', self::session_name);
 		ini_set('session.use_trans_sid', 0);
@@ -52,24 +52,20 @@ class session {
 		session_set_save_handler(array($this, 'session_open'), array($this, 'session_close'), array($this, 'session_read'), array($this, 'session_write'), array($this, 'session_destroy'), array($this, 'session_gc'));
 
 		// Session starten und anschließend sichern
-		self::startSession($this->expire_time);
+		self::startSession();
 		self::secureSession();
 
 		register_shutdown_function('session_write_close');
 	}
 	/**
 	 * Session starten
-	 *
-	 * @param integer $expire_time Angaben in Sekunden
 	 */
-	private static function startSession($expire_time = 1800) {
+	private static function startSession() {
 		// Session Cookie Parameter setzen
-		session_set_cookie_params($expire_time);
+		session_set_cookie_params(0, ROOT_DIR);
 
-		// Session starten und bei Erfolg Session-Cookie setzen
-		if (session_start() === true) {
-			setcookie(self::session_name, session_id(), time() + $expire_time, ROOT_DIR);
-		}
+		// Session starten
+		session_start();
 	}
 	/**
 	 * Sichert die aktuelle Session
@@ -152,7 +148,7 @@ class session {
 	 * Session Garbage Collector
 	 *
 	 * @param integer $session_lifetime Angaben in Sekunden
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function session_gc($session_lifetime = 1800) {
