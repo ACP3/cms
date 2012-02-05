@@ -35,7 +35,6 @@ class auth
 			if (count($user) === 1) {
 				$db_password = substr($user[0]['pwd'], 0, 40);
 				if ($db_password === $cookie_arr[1]) {
-					
 					if (count($_SESSION) === 1 && $session->get('acp3_init') === true) {
 						$session->set('isUser', true);
 						$session->set('userId', (int) $user[0]['id']);
@@ -174,6 +173,7 @@ class auth
 					$db->update('users', array('login_errors' => 0), 'id = \'' . $user[0]['id'] . '\'');
 
 				$this->setCookie($username, $db_hash, $expiry);
+
 				$session->set('isUser', true);
 				$session->set('userId', (int) $user[0]['id']);
 
