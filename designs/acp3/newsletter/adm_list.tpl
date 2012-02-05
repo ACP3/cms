@@ -28,7 +28,13 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td>{$row.mail}</td>
-				<td>{$row.status}</td>
+				<td>
+{if !empty($row.has)}
+					<a href="{uri args="acp/newsletter/adm_activate/id_`$row.id`"}" title="{lang t="newsletter|activate_account"}">{icon path="16/cancel"}</a>
+{else}
+					{icon path="16/apply"}
+{/if}
+				</td>
 				<td>{$row.id}</td>
 			</tr>
 {/foreach}

@@ -261,7 +261,7 @@ if (!empty($queries[CONFIG_DB_VERSION + 1])) {
 	for ($i = CONFIG_DB_VERSION + 1; $i <= $c_queries; ++$i) {
 		if (!empty($queries[$i])) {
 			foreach ($queries[$i] as $row) {
-				$row = str_replace(array('{engine}', '{charset}'), array($db->prefix, $engine, $charset), $row);
+				$row = str_replace(array('{engine}', '{charset}'), array($engine, $charset), $row);
 				$bool = $db->query($row, 3);
 				if ($bool === null && defined('DEBUG') && DEBUG === true) {
 					print "\n";
