@@ -405,19 +405,13 @@ function rewriteInternalUriCallback($matches)
 function salt($str_length)
 {
 	$salt = '';
-	if (function_exists('openssl_random_pseudo_bytes') === true) {
-		$bytes = openssl_random_pseudo_bytes($str_length);
-		$string = base64_encode($bytes);
-		$salt = substr($string, 0, $str_length);
-	} else {
-		$chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-		$c_chars = strlen($chars) - 1;
-		while (strlen($salt) < $str_length) {
-			$char = $chars[mt_rand(0, $c_chars)];
-			// Zeichen nur hinzufügen, wenn sich dieses nicht bereits im Salz befindet
-			if (strpos($salt, $char) === false) {
-				$salt.= $char;
-			}
+	$chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+	$c_chars = strlen($chars) - 1;
+	while (strlen($salt) < $str_length) {
+		$char = $chars[mt_rand(0, $c_chars)];
+		// Zeichen nur hinzufügen, wenn sich dieses nicht bereits im Salz befindet
+		if (strpos($salt, $char) === false) {
+			$salt.= $char;
 		}
 	}
 	return $salt;
