@@ -21,7 +21,7 @@ breadcrumb::assign($lang->t('access', 'adm_list_resources'), $uri->route('acp/ac
 breadcrumb::assign($lang->t('access', 'delete_resources'));
 
 if (!isset($entries)) {
-	view::setContent(comboBox(array($lang->t('common', 'no_entries_selected'))));
+	view::setContent(comboBox($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
 	view::setContent(comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/access/delete_resources/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/access/adm_list_resources')));

@@ -19,11 +19,11 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('emoticons', 'invalid_image_height_entered');
 	if (!validate::isNumber($form['filesize']))
 		$errors[] = $lang->t('emoticons', 'invalid_image_filesize_entered');
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$bool = config::module('emoticons', $form);
 

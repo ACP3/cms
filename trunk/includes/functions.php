@@ -78,8 +78,8 @@ function comboBox($text, $forward = 0, $backward = 0, $colorbox = 0)
 {
 	global $tpl;
 
-	if (is_array($text) && empty($forward) && empty($backward)) {
-		$tpl->assign('text', $text);
+	if (empty($forward) && empty($backward)) {
+		$tpl->assign('text', is_array($text) === true ? $text : array($text));
 		return view::fetchTemplate('common/error.tpl');
 	} elseif (!empty($text) && (!empty($forward) || !empty($backward))) {
 		$combo = array(
@@ -108,35 +108,42 @@ function comboBox($text, $forward = 0, $backward = 0, $colorbox = 0)
  *	Betreff der E-Mail
  * @param string $body
  *	E-Mail-Body
- * @return boolean
+ * @return boolean|string
  */
 function generateEmail($recipient_name, $recipient_email, $from, $subject, $body)
 {
 	require_once INCLUDES_DIR . 'phpmailer/class.phpmailer.php';
 
-	$mail = new PHPMailer();
-	if (strtolower(CONFIG_MAILER_TYPE) === 'smtp') {
-		$mail->IsSMTP();
-		$mail->Host = CONFIG_MAILER_SMTP_HOST;
-		$mail->Port = CONFIG_MAILER_SMTP_PORT;
-		$mail->SMTPSecure = CONFIG_MAILER_SMTP_SECURITY === 'ssl' || CONFIG_MAILER_SMTP_SECURITY === 'tls' ? CONFIG_MAILER_SMTP_SECURITY : '';
-		if (CONFIG_MAILER_SMTP_AUTH === true) {
-			$mail->SMTPAuth = true;
-			$mail->Username = CONFIG_MAILER_SMTP_USER;
-			$mail->Password = CONFIG_MAILER_SMTP_PASSWORD;
+	$mail = new PHPMailer(true);
+	try {
+		if (strtolower(CONFIG_MAILER_TYPE) === 'smtp') {
+			$mail->IsSMTP();
+			$mail->Host = CONFIG_MAILER_SMTP_HOST;
+			$mail->Port = CONFIG_MAILER_SMTP_PORT;
+			$mail->SMTPSecure = CONFIG_MAILER_SMTP_SECURITY === 'ssl' || CONFIG_MAILER_SMTP_SECURITY === 'tls' ? CONFIG_MAILER_SMTP_SECURITY : '';
+			if (CONFIG_MAILER_SMTP_AUTH === true) {
+				$mail->SMTPAuth = true;
+				$mail->Username = CONFIG_MAILER_SMTP_USER;
+				$mail->Password = CONFIG_MAILER_SMTP_PASSWORD;
+			}
+		} else {
+			$mail->IsMail();
 		}
-	} else {
-		$mail->IsMail();
-	}
-	$mail->CharSet = 'UTF-8';
-	$mail->Encoding = '8bit';
-	$mail->Subject = $subject;
-	$mail->Body = $body;
-	$mail->WordWrap = 76;
-	$mail->SetFrom($from);
-	$mail->AddAddress($recipient_email, $recipient_name);
+		$mail->CharSet = 'UTF-8';
+		$mail->Encoding = '8bit';
+		$mail->Subject = $subject;
+		$mail->Body = $body;
+		$mail->WordWrap = 76;
+		$mail->SetFrom($from);
+		$mail->AddAddress($recipient_email, $recipient_name);
+		$mail->Send();
 
-	return $mail->Send();
+		return true;
+	} catch(phpmailerException $e) {
+		return $e->errorMessage();
+	} catch (Exception $e) {
+		return $e->getMessage();
+	}
 }
 /**
  * Generiert ein gesalzenes Passwort

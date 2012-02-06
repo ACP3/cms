@@ -23,11 +23,11 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('access', 'no_privilege_selected');
 	if (!empty($form['privileges']) && !validate::aclPrivilegesExist($form['privileges']))
 		$errors[] = $lang->t('access', 'invalid_privileges');
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		require_once MODULES_DIR . 'access/functions.php';
 

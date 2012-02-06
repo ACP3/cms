@@ -29,11 +29,11 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 			$errors[] = $lang->t('polls', 'type_in_answer');
 		if (count($form['answers']) - $j < 2)
 			$errors[] = $lang->t('polls', 'can_not_delete_all_answers');
-		if (!validate::formToken())
-			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
+		} elseif (!validate::formToken()) {
+			view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			// Frage aktualisieren
 			$update_values = array(

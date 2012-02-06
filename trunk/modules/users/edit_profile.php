@@ -40,11 +40,11 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 			$errors[] = $lang->t('users', 'invalid_msn_account');
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
-		if (!validate::formToken())
-			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
+		} elseif (!validate::formToken()) {
+			view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
 				'nickname' => $db->escape($form['nickname']),

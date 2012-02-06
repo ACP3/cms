@@ -15,11 +15,11 @@ if (isset($_POST['form']) === true) {
 
 	if (!empty($form['mail']) && !validate::email($form['mail']))
 		$errors[] = $lang->t('common', 'wrong_email_format');
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$form['address'] = $db->escape($form['address'], 2);
 		$form['telephone'] = $db->escape($form['telephone']);

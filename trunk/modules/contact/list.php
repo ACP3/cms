@@ -21,11 +21,11 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('common', 'message_to_short');
 	if (!$auth->isUser() && !validate::captcha($form['captcha']))
 		$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$settings = config::getModuleSettings('contact');
 
@@ -36,7 +36,7 @@ if (isset($_POST['form']) === true) {
 
 		$session->unsetFormToken();
 
-		view::setContent(comboBox($bool ? $lang->t('contact', 'send_mail_success') : $lang->t('contact', 'send_mail_error'), $uri->route('contact')));
+		view::setContent(comboBox($bool === true ? $lang->t('contact', 'send_mail_success') : $lang->t('contact', 'send_mail_error'), $uri->route('contact')));
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

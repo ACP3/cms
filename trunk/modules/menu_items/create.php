@@ -41,11 +41,11 @@ if (isset($_POST['form']) === true) {
 		$form['mode'] == '3' && empty($form['uri']) ||
 		$form['mode'] == '4' && (!validate::isNumber($form['static_pages']) || $db->countRows('*', 'static_pages', 'id = \'' . $form['static_pages'] . '\'') == 0))
 		$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$insert_values = array(
 			'id' => '',

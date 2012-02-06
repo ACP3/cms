@@ -41,11 +41,11 @@ function commentsCreate($module, $entry_id)
 			$errors[] = $lang->t('comments', 'module_doesnt_exist');
 		if (!$auth->isUser() && !validate::captcha($form['captcha']))
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
-		if (!validate::formToken())
-			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
+		} elseif (!validate::formToken()) {
+			return comboBox($lang->t('common', 'form_already_submitted'));
 		} else {
 			$insert_values = array(
 				'id' => '',

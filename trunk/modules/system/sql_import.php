@@ -21,11 +21,11 @@ if (isset($_POST['form']) === true) {
 		(!validate::mimeType($file['tmp_name'], 'text/plain') ||
 		$_FILES['file']['error'] !== UPLOAD_ERR_OK))
 		$errors[] = $lang->t('system', 'select_sql_file');
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$session->unsetFormToken();
 

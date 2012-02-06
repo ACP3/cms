@@ -37,11 +37,11 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 			(!validate::isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) ||
 			$_FILES['file']['error'] !== UPLOAD_ERR_OK))
 			$errors[] = $lang->t('gallery', 'invalid_image_selected');
-		if (!validate::formToken())
-			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
+		} elseif (!validate::formToken()) {
+			view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$new_file_sql = null;
 			if (isset($file) && is_array($file)) {

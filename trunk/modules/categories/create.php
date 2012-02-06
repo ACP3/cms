@@ -35,11 +35,11 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('categories', 'select_module');
 	if (strlen($form['name']) >= 3 && categoriesCheckDuplicate($db->escape($form['name']), $form['module']))
 		$errors[] = $lang->t('categories', 'category_already_exists');
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$file_sql = null;
 		if (!empty($file)) {

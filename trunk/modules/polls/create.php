@@ -24,11 +24,11 @@ if (isset($_POST['form']) === true) {
 	}
 	if ($i <= 1)
 		$errors[] = $lang->t('polls', 'type_in_answer');
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$start = $date->timestamp($form['start']);
 		$end = $date->timestamp($form['end']);
