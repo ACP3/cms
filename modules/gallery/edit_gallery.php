@@ -30,6 +30,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			$errors[] = $lang->t('gallery', 'type_in_gallery_name');
 		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'], 'gallery/pics/id_' . $uri->id)))
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -47,6 +49,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 				require_once MODULES_DIR . 'gallery/functions.php';
 				generatePictureAliases($uri->id);
 			}
+
+			$session->unsetFormToken();
 
 			view::setContent(comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/gallery')));
 		}
@@ -71,6 +75,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			}
 			$tpl->assign('pictures', $pictures);
 		}
+
+		$session->generateFormToken();
 
 		view::setContent(view::fetchTemplate('gallery/edit_gallery.tpl'));
 	}

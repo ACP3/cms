@@ -25,6 +25,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_resources', 'id = \
 			$errors[] = $lang->t('access', 'select_privilege');
 		if (validate::isNumber($form['privileges']) && $db->countRows('*', 'acl_resources', 'id = \'' . $form['privileges'] . '\'') == 0)
 			$errors[] = $lang->t('access', 'privilege_does_not_exist');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -35,6 +37,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_resources', 'id = \
 			$bool = $db->update('acl_resources', $update_values, 'id = \'' . $uri->id . '\'');
 
 			acl::setResourcesCache();
+
+			$session->unsetFormToken();
 
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/access/adm_list_resources')));
 		}
@@ -48,6 +52,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_resources', 'id = \
 			$privileges[$i]['selected'] = selectEntry('privileges', $privileges[$i]['id'], $resource[0]['privilege_id']);
 		}
 		$tpl->assign('privileges', $privileges);
+
+		$session->generateFormToken();
 
 		view::setContent(view::fetchTemplate('access/edit_resource.tpl'));
 	}

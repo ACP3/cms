@@ -19,6 +19,8 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('gallery', 'type_in_gallery_name');
 	if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'])))
 		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -35,6 +37,8 @@ if (isset($_POST['form']) === true) {
 		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']))
 			seo::insertUriAlias($form['alias'], 'gallery/pics/id_' . $db->link->lastInsertID(), $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
+		$session->unsetFormToken();
+
 		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/gallery')));
 	}
 }
@@ -43,6 +47,8 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));
 
 	$tpl->assign('form', isset($form) ? $form : array('name' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => ''));
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('gallery/create.tpl'));
 }

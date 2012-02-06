@@ -41,6 +41,8 @@ if (isset($_POST['form']) === true) {
 		$form['mode'] == '3' && empty($form['uri']) ||
 		$form['mode'] == '4' && (!validate::isNumber($form['static_pages']) || $db->countRows('*', 'static_pages', 'id = \'' . $form['static_pages'] . '\'') == 0))
 		$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -75,6 +77,8 @@ if (isset($_POST['form']) === true) {
 		}
 
 		setMenuItemsCache();
+
+		$session->unsetFormToken();
 
 		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/menu_items')));
 	}
@@ -151,6 +155,8 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 	$tpl->assign('pages_list', menuItemsList());
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('menu_items/create.tpl'));
 }

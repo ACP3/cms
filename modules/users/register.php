@@ -25,6 +25,8 @@ if ($auth->isUser()) {
 			$errors[] = $lang->t('users', 'type_in_pwd');
 		if (!$auth->isUser() && !validate::captcha($form['captcha']))
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -34,14 +36,14 @@ if ($auth->isUser()) {
 			$host = htmlentities($_SERVER['HTTP_HOST']);
 			$subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), $lang->t('users', 'register_mail_subject'));
 			$body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($form['nickname'], $form['mail'], $form['pwd'], CONFIG_SEO_TITLE, $host), $lang->t('users', 'register_mail_message'));
-			$mail_sent = genEmail('', $form['mail'], $subject, $body);
+			$mail_sent = generateEmail('', $form['mail'], $subject, $body);
 
 			// Das Benutzerkonto nur erstellen, wenn die E-Mail erfolgreich versendet werden konnte
 			$salt = salt(12);
 			$insert_values = array(
 				'id' => '',
 				'nickname' => $form['nickname'],
-				'pwd' => genSaltedPassword($salt, $form['pwd']) . ':' . $salt,
+				'pwd' => generateSaltedPassword($salt, $form['pwd']) . ':' . $salt,
 				'realname' => ':1',
 				'gender' => ':1',
 				'birthday' => ':1',
@@ -65,6 +67,8 @@ if ($auth->isUser()) {
 			$bool2 = $db->insert('acl_user_roles', array('user_id' => $user_id, 'role_id' => 2));
 			$db->link->commit();
 
+			$session->unsetFormToken();
+
 			view::setContent(comboBox($mail_sent && $bool && $bool2 ? $lang->t('users', 'register_success') : $lang->t('users', 'register_error'), ROOT_DIR));
 		}
 	}
@@ -77,6 +81,8 @@ if ($auth->isUser()) {
 		$tpl->assign('form', isset($form) ? $form : $defaults);
 
 		$tpl->assign('captcha', captcha());
+
+		$session->generateFormToken();
 
 		view::setContent(view::fetchTemplate('users/register.tpl'));
 	}

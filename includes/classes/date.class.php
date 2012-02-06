@@ -97,7 +97,7 @@ class date
 				'firstDay' => '\'1\'',
 				'dateFormat' => '\'yy-mm-dd\'',
 				'showOn' => '\'button\'',
-				'buttonImage' => '\'' . ROOT_DIR . 'images/crystal/16/cal.png\'',
+				'buttonImage' => '\'' . DESIGN_PATH . 'images/16/cal.png\'',
 				'buttonImageOnly' => 'true',
 				'constrainInput' => 'false',
 			)

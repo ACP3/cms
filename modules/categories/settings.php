@@ -12,26 +12,32 @@ if (defined('IN_ADM') === false)
 
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
-	
+
 	if (!validate::isNumber($form['width']))
 		$errors[] = $lang->t('categories', 'invalid_image_width_entered');
 	if (!validate::isNumber($form['height']))
 		$errors[] = $lang->t('categories', 'invalid_image_height_entered');
 	if (!validate::isNumber($form['filesize']))
 		$errors[] = $lang->t('categories', 'invalid_image_filesize_entered');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$bool = config::module('categories', $form);
-		
+
+		$session->unsetFormToken();
+
 		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/categories')));
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$settings = config::getModuleSettings('categories');
-	
+
 	$tpl->assign('form', isset($form) ? $form : $settings);
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('categories/settings.tpl'));
 }

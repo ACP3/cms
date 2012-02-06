@@ -42,6 +42,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 			$errors[] = $lang->t('categories', 'category_already_exists');
 		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'], 'files/details/id_' . $uri->id)))
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -88,6 +90,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 			require_once MODULES_DIR . 'files/functions.php';
 			setFilesCache($uri->id);
 
+			$session->unsetFormToken();
+
 			view::setContent(comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/files')));
 		}
 	}
@@ -103,6 +107,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 
 		$unit = trim(strrchr($dl[0]['size'], ' '));
 
+		$units = array();
 		$units[0]['value'] = 'Byte';
 		$units[0]['selected'] = selectEntry('unit', 'Byte', $unit);
 		$units[1]['value'] = 'KiB';
@@ -131,6 +136,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		$tpl->assign('checked_external', isset($form['external']) ? ' checked="checked"' : '');
 		$tpl->assign('current_file', $dl[0]['file']);
 		$tpl->assign('form', isset($form) ? $form : $dl[0]);
+
+		$session->generateFormToken();
 
 		view::setContent(view::fetchTemplate('files/edit.tpl'));
 	}

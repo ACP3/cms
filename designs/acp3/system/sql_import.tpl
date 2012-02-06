@@ -20,6 +20,7 @@
 	</fieldset>
 	<div class="form-bottom">
 		<input type="submit" value="{lang t="common|submit"}" class="form">
+		{$form_token}
 	</div>
 </form>
 {/if}

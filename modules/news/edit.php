@@ -32,6 +32,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 		if (!empty($form['uri']) && (!validate::isNumber($form['target']) || strlen($form['link_title']) < 3))
 			$errors[] = $lang->t('news', 'complete_additional_hyperlink_statements');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -57,6 +59,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 			require_once MODULES_DIR . 'news/functions.php';
 			setNewsCache($uri->id);
 
+			$session->unsetFormToken();
+
 			view::setContent(comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/news')));
 		}
 	}
@@ -77,6 +81,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 		// Weiterlesen & Kommentare
 		if ($settings['readmore'] == 1 || $settings['comments'] == 1) {
 			$i = 0;
+			$options = array();
 			if ($settings['readmore'] == 1) {
 				$options[$i]['name'] = 'readmore';
 				$options[$i]['checked'] = selectEntry('readmore', '1', $news[0]['readmore'], 'checked');
@@ -92,6 +97,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 		}
 
 		// Linkziel
+		$target = array();
 		$target[0]['value'] = '1';
 		$target[0]['selected'] = selectEntry('target', '1', $news[0]['target']);
 		$target[0]['lang'] = $lang->t('common', 'window_self');
@@ -101,6 +107,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 		$tpl->assign('target', $target);
 
 		$tpl->assign('form', isset($form) ? $form : $news[0]);
+
+		$session->generateFormToken();
 
 		view::setContent(view::fetchTemplate('news/edit.tpl'));
 	}

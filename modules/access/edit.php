@@ -24,6 +24,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 			$errors[] = $lang->t('access', 'no_privilege_selected');
 		if (!empty($form['privileges']) && !validate::aclPrivilegesExist($form['privileges']))
 			$errors[] = $lang->t('access', 'invalid_privileges');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -46,6 +48,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 
 			// Cache der ACL zurücksetzen
 			cache::purge(0, 'acl');
+
+			$session->unsetFormToken();
 
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/access')));
 		}
@@ -79,14 +83,14 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 			for ($j = 0; $j < $c_privileges; ++$j) {
 				$priv_val = $rules[$modules[$i]['name']][$privileges[$j]['key']]['permission'];
 				$select[0]['value'] = 0;
-				$select[0]['selected'] = !isset($form) && $priv_val == 0 || isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['key']] == 0 ? ' selected="selected"' : '';
+				$select[0]['selected'] = !isset($form) && $priv_val == 0 || isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 0 ? ' selected="selected"' : '';
 				$select[0]['lang'] = $lang->t('access', 'deny_access');
 				$select[1]['value'] = 1;
-				$select[1]['selected'] = !isset($form) && $priv_val == 1 || isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['key']] == 1 ? ' selected="selected"' : '';
+				$select[1]['selected'] = !isset($form) && $priv_val == 1 || isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 1 ? ' selected="selected"' : '';
 				$select[1]['lang'] = $lang->t('access', 'allow_access');
 				if ($uri->id != 1) {
 					$select[2]['value'] = 2;
-					$select[2]['selected'] = !isset($form) && $priv_val == 2 || isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['key']] == 2 ? ' selected="selected"' : '';
+					$select[2]['selected'] = !isset($form) && $priv_val == 2 || isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 2 ? ' selected="selected"' : '';
 					$select[2]['lang'] = $lang->t('access', 'inherit_access');
 					//$privileges[$j]['calculated'] = sprintf($lang->t('access', 'calculated_permission'), $rules[$privileges[$j]['key']]['access'] === true ? $lang->t('access', 'allow_access') :  $lang->t('access', 'deny_access'));
 				}
@@ -104,6 +108,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 		$tpl->assign('modules', $modules);
 
 		$tpl->assign('form', isset($form) ? $form : $role[0]);
+
+		$session->generateFormToken();
 
 		view::setContent(view::fetchTemplate('access/edit.tpl'));
 	}

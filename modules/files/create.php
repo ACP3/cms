@@ -41,6 +41,8 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('categories', 'category_already_exists');
 	if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'])))
 		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -76,6 +78,8 @@ if (isset($_POST['form']) === true) {
 		require_once MODULES_DIR . 'files/functions.php';
 		setFilesCache($db->link->lastInsertId());
 
+		$session->unsetFormToken();
+
 		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/files')));
 	}
 }
@@ -83,6 +87,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	// Datumsauswahl
 	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));
 
+	$units = array();
 	$units[0]['value'] = 'Byte';
 	$units[0]['selected'] = selectEntry('unit', 'Byte');
 	$units[1]['value'] = 'KiB';
@@ -120,6 +125,8 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	);
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('files/create.tpl'));
 }

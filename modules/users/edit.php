@@ -40,6 +40,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 			$errors[] = $lang->t('users', 'select_access_level');
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -68,7 +70,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 			// Neues Passwort
 			if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat'])) {
 				$salt = salt(12);
-				$new_pwd = genSaltedPassword($salt, $form['new_pwd']);
+				$new_pwd = generateSaltedPassword($salt, $form['new_pwd']);
 				$update_values['pwd'] = $new_pwd . ':' . $salt;
 			}
 
@@ -79,6 +81,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 				$cookie_arr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
 				$auth->setCookie($form['nickname'], isset($new_pwd) ? $new_pwd : $cookie_arr[1], 3600);
 			}
+
+			$session->unsetFormToken();
 
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/users')));
 		}
@@ -135,6 +139,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'users', 'id = \'' . $ur
 		$tpl->assign('dst', $dst);
 
 		$tpl->assign('form', isset($form) ? $form : $user);
+
+		$session->generateFormToken();
 
 		view::setContent(view::fetchTemplate('users/edit.tpl'));
 	}

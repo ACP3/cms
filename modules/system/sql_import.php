@@ -21,10 +21,14 @@ if (isset($_POST['form']) === true) {
 		(!validate::mimeType($file['tmp_name'], 'text/plain') ||
 		$_FILES['file']['error'] !== UPLOAD_ERR_OK))
 		$errors[] = $lang->t('system', 'select_sql_file');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
+		$session->unsetFormToken();
+
 		$data = isset($file) ? file_get_contents($file['tmp_name']) : $form['text'];
 		$data = str_replace(array("\r\n", "\r", "\n"), "\n", $data);
 		$data_ary = explode(";\n", $data);
@@ -51,5 +55,7 @@ if (isset($_POST['form']) === true) {
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$tpl->assign('form', isset($form) ? $form : array('text' => ''));
+
+	$session->generateFormToken();
 }
 view::setContent(view::fetchTemplate('system/sql_import.tpl'));

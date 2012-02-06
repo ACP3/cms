@@ -33,6 +33,7 @@
 	<item key="failure">Es sind folgende Fehler aufgetreten:</item>
 	<item key="first_page">Erste Seite</item>
 	<item key="flood_no_entry_possible">Sie können erst in %d Sekunden wieder einen Kommentar abgeben</item>
+	<item key="form_already_submitted">Das Formular wurde bereits abgesendet.</item>
 	<item key="forward">Weiter</item>
 	<item key="from_start_to_end">%1$s bis %2$s</item>
 	<item key="general_statements">Allgemeine Angaben</item>

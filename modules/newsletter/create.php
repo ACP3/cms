@@ -21,12 +21,16 @@ if (isset($_POST['form']) === true) {
 				$errors[] = $lang->t('newsletter', 'account_exists');
 			if (!$auth->isUser() && !validate::captcha($form['captcha']))
 				$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
+			if (!validate::formToken())
+				$errors[] = $lang->t('common', 'form_already_submitted');
 
 			if (isset($errors) === true) {
 				$tpl->assign('error_msg', comboBox($errors));
 			} else {
 				require MODULES_DIR . 'newsletter/functions.php';
 				$bool = subscribeToNewsletter($form['mail']);
+
+				$session->unsetFormToken();
 
 				view::setContent(comboBox($bool ? $lang->t('newsletter', 'subscribe_success') : $lang->t('newsletter', 'subscribe_error'), ROOT_DIR));
 			}
@@ -40,11 +44,15 @@ if (isset($_POST['form']) === true) {
 				$errors[] = $lang->t('newsletter', 'account_not_exists');
 			if (!$auth->isUser() && !validate::captcha($form['captcha']))
 				$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
+			if (!validate::formToken())
+				$errors[] = $lang->t('common', 'form_already_submitted');
 
 			if (isset($errors) === true) {
 				$tpl->assign('error_msg', comboBox($errors));
 			} else {
 				$bool = $db->delete('newsletter_accounts', 'mail = \'' . $form['mail'] . '\'');
+
+				$session->unsetFormToken();
 
 				view::setContent(comboBox($bool !== null ? $lang->t('newsletter', 'unsubscribe_success') : $lang->t('newsletter', 'unsubscribe_error'), ROOT_DIR));
 			}
@@ -58,6 +66,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	$field_value = $uri->action ? $uri->action : 'subscribe';
 
+	$actions = array();
 	$actions[0]['value'] = 'subscribe';
 	$actions[0]['checked'] = selectEntry('action', 'subscribe', $field_value, 'checked');
 	$actions[0]['lang'] = $lang->t('newsletter', 'subscribe');
@@ -67,6 +76,8 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$tpl->assign('actions', $actions);
 
 	$tpl->assign('captcha', captcha());
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('newsletter/create.tpl'));
 }

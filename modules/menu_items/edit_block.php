@@ -27,6 +27,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 			$errors[] = $lang->t('menu_items', 'index_name_unique');
 		if (strlen($form['title']) < 3)
 			$errors[] = $lang->t('menu_items', 'block_title_to_short');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -40,6 +42,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 
 			setMenuItemsCache();
 
+			$session->unsetFormToken();
+
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/menu_items/adm_list_blocks')));
 		}
 	}
@@ -49,6 +53,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 		$block[0]['title'] = $db->escape($block[0]['title'], 3);
 
 		$tpl->assign('form', isset($form) ? $form : $block[0]);
+
+		$session->generateFormToken();
 
 		view::setContent(view::fetchTemplate('menu_items/edit_block.tpl'));
 	}

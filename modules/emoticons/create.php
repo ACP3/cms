@@ -29,6 +29,8 @@ if (isset($_POST['form']) === true) {
 		!validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) ||
 		$_FILES['picture']['error'] !== UPLOAD_ERR_OK)
 		$errors[] = $lang->t('emoticons', 'invalid_image_selected');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -45,11 +47,15 @@ if (isset($_POST['form']) === true) {
 		$bool = $db->insert('emoticons', $insert_values);
 		setEmoticonsCache();
 
+		$session->unsetFormToken();
+
 		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/emoticons')));
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$tpl->assign('form', isset($form) ? $form : array('code' => '', 'description' => ''));
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('emoticons/create.tpl'));
 }
