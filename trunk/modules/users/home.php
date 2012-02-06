@@ -13,7 +13,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 
 		$bool = $db->update('users', array('draft' => $db->escape($form['draft'], 2)), 'id = \'' . $auth->getUserId() . '\'');
 
-		view::setContent(comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home')));
+		view::setContent(confirmBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home')));
 	}
 	if (isset($_POST['form']) === false) {
 		getRedirectMessage();

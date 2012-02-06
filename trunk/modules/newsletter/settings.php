@@ -19,7 +19,7 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
-		$tpl->assign('error_msg', comboBox($errors));
+		$tpl->assign('error_msg', errorBox($errors));
 	} else {
 		$form['mailsig'] = $db->escape($form['mailsig']);
 

@@ -31,9 +31,9 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('common', 'select_sidebar_entries');
 
 	if (isset($errors) === true) {
-		$tpl->assign('error_msg', comboBox($errors));
+		$tpl->assign('error_msg', errorBox($errors));
 	} elseif (!validate::formToken()) {
-		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
+		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$bool = config::module('gallery', $form);
 

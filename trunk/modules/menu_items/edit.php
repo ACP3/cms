@@ -51,9 +51,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items', 'id = \'' 
 			$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
 
 		if (isset($errors) === true) {
-			$tpl->assign('error_msg', comboBox($errors));
+			$tpl->assign('error_msg', errorBox($errors));
 		} elseif (!validate::formToken()) {
-			view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
+			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			// Vorgenommene Änderungen am Datensatz anwenden
 			$mode = ($form['mode'] == '2' || $form['mode'] == '3') && preg_match('/^(static_pages\/list\/id_([0-9]+)\/)$/', $form['uri']) ? '4' : $form['mode'];

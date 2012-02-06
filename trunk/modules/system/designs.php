@@ -29,7 +29,7 @@ if ($uri->dir) {
 	}
 	$text = $bool ? $lang->t('system', 'designs_edit_success') : $lang->t('system', 'designs_edit_error');
 
-	view::setContent(comboBox($text, $uri->route('acp/system/designs')));
+	view::setContent(confirmBox($text, $uri->route('acp/system/designs')));
 } else {
 	$designs = array();
 	$directories = scandir(ACP3_ROOT . 'designs');

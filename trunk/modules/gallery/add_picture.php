@@ -36,9 +36,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			$errors[] = $lang->t('gallery', 'invalid_image_selected');
 
 		if (isset($errors) === true) {
-			$tpl->assign('error_msg', comboBox($errors));
+			$tpl->assign('error_msg', errorBox($errors));
 		} elseif (!validate::formToken()) {
-			view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
+			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$result = moveFile($file['tmp_name'], $file['name'], 'gallery');
 			$picNum = $db->select('MAX(pic) AS pic', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'');
@@ -58,7 +58,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 
 			$session->unsetFormToken();
 
-			view::setContent(comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/gallery/edit_gallery/id_' . $uri->id)));
+			view::setContent(confirmBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/gallery/edit_gallery/id_' . $uri->id)));
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

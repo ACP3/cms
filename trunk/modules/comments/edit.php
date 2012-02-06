@@ -28,9 +28,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 			$errors[] = $lang->t('common', 'message_to_short');
 
 		if (isset($errors) === true) {
-			$tpl->assign('error_msg', comboBox($errors));
+			$tpl->assign('error_msg', errorBox($errors));
 		} elseif (!validate::formToken()) {
-			view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
+			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array();
 			$update_values['message'] = $db->escape($form['message']);

@@ -37,9 +37,9 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('categories', 'category_already_exists');
 
 	if (isset($errors) === true) {
-		$tpl->assign('error_msg', comboBox($errors));
+		$tpl->assign('error_msg', errorBox($errors));
 	} elseif (!validate::formToken()) {
-		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
+		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$file_sql = null;
 		if (!empty($file)) {

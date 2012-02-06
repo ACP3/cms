@@ -25,9 +25,9 @@ if ($auth->isUser()) {
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors) === true) {
-			$tpl->assign('error_msg', comboBox($errors));
+			$tpl->assign('error_msg', errorBox($errors));
 		} elseif (!validate::formToken()) {
-			view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
+			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			// Neues Passwort und neuen Zufallsschlüssel erstellen
 			$new_password = salt(8);
@@ -50,7 +50,7 @@ if ($auth->isUser()) {
 
 			$session->unsetFormToken();
 
-			view::setContent(comboBox($mail_sent === true && isset($bool) && $bool !== null ? $lang->t('users', 'forgot_pwd_success') : $lang->t('users', 'forgot_pwd_error'), ROOT_DIR));
+			view::setContent(confirmBox($mail_sent === true && isset($bool) && $bool !== null ? $lang->t('users', 'forgot_pwd_success') : $lang->t('users', 'forgot_pwd_error'), ROOT_DIR));
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

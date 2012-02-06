@@ -44,9 +44,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 		if (isset($errors) === true) {
-			$tpl->assign('error_msg', comboBox($errors));
+			$tpl->assign('error_msg', errorBox($errors));
 		} elseif (!validate::formToken()) {
-			view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
+			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$new_file_sql = null;
 			// Falls eine neue Datei angegeben wurde, Änderungen durchführen

@@ -27,9 +27,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_resources', 'id = \
 			$errors[] = $lang->t('access', 'privilege_does_not_exist');
 
 		if (isset($errors) === true) {
-			$tpl->assign('error_msg', comboBox($errors));
+			$tpl->assign('error_msg', errorBox($errors));
 		} elseif (!validate::formToken()) {
-			view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
+			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
 				'privilege_id' => $form['privileges'],

@@ -42,9 +42,9 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 			$errors[] = $lang->t('users', 'type_in_pwd');
 
 		if (isset($errors) === true) {
-			$tpl->assign('error_msg', comboBox($errors));
+			$tpl->assign('error_msg', errorBox($errors));
 		} elseif (!validate::formToken()) {
-			view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
+			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
 				'nickname' => $db->escape($form['nickname']),
