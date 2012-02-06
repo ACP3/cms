@@ -40,7 +40,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_resources', 'id = \
 
 			$session->unsetFormToken();
 
-			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/access/adm_list_resources')));
+			setRedirectMessage($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/access/adm_list_resources');
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

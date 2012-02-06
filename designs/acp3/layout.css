@@ -376,6 +376,16 @@ a.form, a:link.form {
 	background: #eee;
 	line-height: 28px;
 }
+.redirect-message {
+	margin: 10px 0;
+	padding: 5px 0;
+	background: #eee;
+	border: 1px solid #ccc;
+	border-width: 1px 0;
+}
+.redirect-message h4 {
+	text-align: center;
+}
 /* Seitenauswahl */
 #pagination {
 	padding: 5px 0;

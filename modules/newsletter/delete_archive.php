@@ -28,7 +28,7 @@ if (!isset($entries)) {
 			$bool = $db->delete('newsletter_archive', 'id = \'' . $entry . '\'');
 		}
 	}
-	view::setContent(comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route('acp/newsletter/adm_list_archive')));
+	setRedirectMessage($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/newsletter/adm_list_archive');
 } else {
 	$uri->redirect('acp/errors/404');
 }

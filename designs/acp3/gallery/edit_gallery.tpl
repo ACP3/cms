@@ -36,6 +36,9 @@
 		<h2>{lang t="gallery|pictures"}</h2>
 	</div>
 	<hr>
+{if isset($redirect_message)}
+{$redirect_message}
+{/if}
 {if isset($pictures)}
 {$pagination}
 {assign var="can_delete" value=modules::check("gallery", "delete_picture")}

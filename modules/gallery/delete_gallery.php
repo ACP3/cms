@@ -43,7 +43,7 @@ if (!isset($entries)) {
 			$bool2 = $db->delete('gallery_pictures', 'gallery_id = \'' . $entry . '\'', 0);
 		}
 	}
-	view::setContent(comboBox($bool && $bool2 ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route('acp/gallery')));
+	setRedirectMessage($bool && $bool2 ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/gallery');
 } else {
 	$uri->redirect('acp/errors/404');
 }

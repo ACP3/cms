@@ -10,6 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
+getRedirectMessage();
+
 $roles = acl::getAllRoles();
 $c_roles = count($roles);
 

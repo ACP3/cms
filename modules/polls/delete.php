@@ -30,7 +30,7 @@ if (!isset($entries)) {
 			$bool3 = $db->delete('poll_votes', 'poll_id = \'' . $entry . '\'');
 		}
 	}
-	view::setContent(comboBox($bool !== null && $bool2 !== null && $bool3 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route('acp/polls')));
+	setRedirectMessage($bool !== null && $bool2 !== null && $bool3 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/polls');
 } else {
 	$uri->redirect('acp/errors/404');
 }

@@ -10,6 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
+getRedirectMessage();
+
 $galleries = $db->select('id, start, end, name', 'gallery', 0, 'start DESC, end DESC, id DESC', POS, $session->get('entries'));
 $c_galleries = count($galleries);
 

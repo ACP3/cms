@@ -10,6 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
+getRedirectMessage();
+
 require_once MODULES_DIR . 'menu_items/functions.php';
 
 $pages_list = menuItemsList();

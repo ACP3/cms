@@ -37,7 +37,7 @@ if (!isset($entries)) {
 	}
 	setMenuItemsCache();
 
-	view::setContent(comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route('acp/static_pages')));
+	setRedirectMessage($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/static_pages');
 } else {
 	$uri->redirect('acp/errors/404');
 }

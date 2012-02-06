@@ -10,6 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
+getRedirectMessage();
+
 $polls = $db->select('id, start, end, question', 'polls', 0, 'start DESC, end DESC, id DESC', POS, $session->get('entries'));
 $c_polls = count($polls);
 

@@ -6,6 +6,9 @@
 		<h2>{lang t="common|overview"}</h2>
 	</div>
 	<hr>
+{if isset($redirect_message)}
+{$redirect_message}
+{/if}
 {if isset($emoticons)}
 {$pagination}
 {assign var="can_delete" value=modules::check("emoticons", "delete")}

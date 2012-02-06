@@ -65,11 +65,11 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 			$session->unsetFormToken();
 
 			if ($form['action'] == '0' && $bool !== null) {
-				view::setContent(comboBox($lang->t('newsletter', 'save_success'), $uri->route('acp/newsletter/adm_list_archive')));
+				setRedirectMessage($lang->t('newsletter', 'save_success'), 'acp/newsletter/adm_list_archive');
 			} elseif ($form['action'] == '1' && $bool !== null && $bool2 === true) {
-				view::setContent(comboBox($lang->t('newsletter', 'compose_success'), $uri->route('acp/newsletter/adm_list_archive')));
+				setRedirectMessage($lang->t('newsletter', 'compose_success'), 'acp/newsletter/adm_list_archive');
 			} else {
-				view::setContent(comboBox($lang->t('newsletter', 'compose_save_error'), $uri->route('acp/newsletter/adm_list_archive')));
+				setRedirectMessage($lang->t('newsletter', 'compose_save_error'), 'acp/newsletter/adm_list_archive');
 			}
 		}
 	}

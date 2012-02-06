@@ -6,6 +6,9 @@
 		<h2>{lang t="common|overview"}</h2>
 	</div>
 	<hr>
+{if isset($redirect_message)}
+{$redirect_message}
+{/if}
 {if isset($pages_list)}
 {assign var="can_delete" value=modules::check("menu_items", "delete")}
 {assign var="can_order" value=modules::check("menu_items", "order")}

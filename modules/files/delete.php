@@ -36,7 +36,7 @@ if (!isset($entries)) {
 			seo::deleteUriAlias('files/details/id_' . $entry);
 		}
 	}
-	view::setContent(comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route('acp/files')));
+	setRedirectMessage($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/files');
 } else {
 	$uri->redirect('acp/errors/404');
 }

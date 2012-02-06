@@ -28,7 +28,7 @@ if (!isset($entries)) {
 			$bool = $db->delete('guestbook', 'id = \'' . $entry . '\'');
 		}
 	}
-	view::setContent(comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route('acp/guestbook')));
+	setRedirectMessage($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/guestbook');
 } else {
 	$uri->redirect('acp/errors/404');
 }

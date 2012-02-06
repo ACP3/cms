@@ -76,7 +76,7 @@ function captcha($captcha_length = 5)
  */
 function comboBox($text, $forward = 0, $backward = 0, $colorbox = 0)
 {
-	global $tpl;
+	global $session, $tpl, $uri;
 
 	if (empty($forward) && empty($backward)) {
 		$tpl->assign('text', is_array($text) === true ? $text : array($text));
@@ -159,6 +159,35 @@ function generateEmail($recipient_name, $recipient_email, $from, $subject, $body
 function generateSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
 {
 	return hash($algorithm, $salt . hash($algorithm, $plaintext));
+}
+/**
+ * Holt sich die von setRedirectMatch() erzeugte Redirect Nachricht
+ */
+function getRedirectMessage()
+{
+	global $session, $tpl;
+
+	if ($session->get('redirect_message') !== false) {
+		$tpl->assign('redirect', array('text' => $session->get('redirect_message')));
+		$tpl->assign('redirect_message', view::fetchTemplate('common/redirect_message.tpl'));
+
+		$session->set('redirect_message', '');
+	}
+}
+/**
+ * Setzt eine Redirect Nachricht
+ *
+ * @param string $text
+ * @param string $path
+ */
+function setRedirectMessage($text, $path)
+{
+	global $session, $uri;
+
+	if (empty($text) === false && empty($path) === false) {
+		$session->set('redirect_message', $text);
+		$uri->redirect($path);
+	}
 }
 /**
  * Macht einen String URL sicher

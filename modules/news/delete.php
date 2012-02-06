@@ -32,7 +32,7 @@ if (!isset($entries)) {
 			seo::deleteUriAlias('news/details/id_' . $entry);
 		}
 	}
-	view::setContent(comboBox($bool !== null && $bool2 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route('acp/news')));
+	setRedirectMessage($bool !== null && $bool2 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/news');
 } else {
 	$uri->redirect('acp/errors/404');
 }
