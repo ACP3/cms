@@ -24,7 +24,7 @@ if ($uri->dir) {
 	}
 	$text = $bool ? $lang->t('system', 'languages_edit_success') : $lang->t('system', 'languages_edit_error');
 
-	view::setContent(comboBox($text, $uri->route('acp/system/languages')));
+	view::setContent(confirmBox($text, $uri->route('acp/system/languages')));
 } else {
 	$languages = array();
 	$directories = scandir(ACP3_ROOT . 'languages');

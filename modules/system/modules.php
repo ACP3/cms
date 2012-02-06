@@ -26,7 +26,7 @@ if ($uri->action == 'activate') {
 
 		$text = $bool ? $lang->t('system', 'mod_activate_success') : $lang->t('system', 'mod_activate_error');
 	}
-	view::setContent(comboBox($text, $uri->route('acp/system/modules')));
+	view::setContent(confirmBox($text, $uri->route('acp/system/modules')));
 } elseif ($uri->action == 'deactivate') {
 	$info = modules::parseInfo($uri->dir);
 	if ($info['protected']) {
@@ -38,7 +38,7 @@ if ($uri->action == 'activate') {
 
 		$text = $bool ? $lang->t('system', 'mod_deactivate_success') : $lang->t('system', 'mod_deactivate_error');
 	}
-	view::setContent(comboBox($text, $uri->route('acp/system/modules')));
+	view::setContent(confirmBox($text, $uri->route('acp/system/modules')));
 } else {
 	// Languagecache neu erstellen
 	$lang->setLangCache();

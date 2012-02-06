@@ -63,7 +63,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 		} else {
 			$text = $lang->t('polls', 'already_voted');
 		}
-		view::setContent(comboBox($text, $uri->route('polls/result/id_' . $uri->id)));
+		view::setContent(confirmBox($text, $uri->route('polls/result/id_' . $uri->id)));
 	} else {
 		$question = $db->select('question, multiple', 'polls', 'id = \'' . $uri->id . '\'');
 		$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $uri->id . '\'', 'id ASC');

@@ -44,9 +44,9 @@ if (isset($_POST['form']) === true) {
 	}
 
 	if (isset($errors) === true) {
-		$tpl->assign('error_msg', comboBox($errors));
+		$tpl->assign('error_msg', errorBox($errors));
 	} elseif (!validate::formToken()) {
-		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
+		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$time_start = $date->timestamp($form['start']);
 		$time_end = $date->timestamp($form['end']);

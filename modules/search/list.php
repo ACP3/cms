@@ -23,7 +23,7 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('search', 'no_sorting_selected');
 
 	if (isset($errors) === true) {
-		$tpl->assign('error_msg', comboBox($errors));
+		$tpl->assign('error_msg', errorBox($errors));
 	} else {
 		breadcrumb::assign($lang->t('search', 'search'), $uri->route('search'));
 		breadcrumb::assign($lang->t('search', 'search_results'));

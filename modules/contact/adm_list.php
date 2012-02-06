@@ -17,9 +17,9 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('common', 'wrong_email_format');
 
 	if (isset($errors) === true) {
-		$tpl->assign('error_msg', comboBox($errors));
+		$tpl->assign('error_msg', errorBox($errors));
 	} elseif (!validate::formToken()) {
-		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
+		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$form['address'] = $db->escape($form['address'], 2);
 		$form['telephone'] = $db->escape($form['telephone']);
@@ -31,7 +31,7 @@ if (isset($_POST['form']) === true) {
 
 		$session->unsetFormToken();
 
-		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/contact')));
+		view::setContent(confirmBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/contact')));
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

@@ -53,9 +53,9 @@ if (isset($_POST['form']) === true) {
 	}
 
 	if (isset($errors) === true) {
-		$tpl->assign('error_msg', comboBox($errors));
+		$tpl->assign('error_msg', errorBox($errors));
 	} elseif (!validate::formToken()) {
-		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
+		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$insert_values = array(
 			'id' => '',
@@ -88,7 +88,7 @@ if (isset($_POST['form']) === true) {
 
 		$session->unsetFormToken();
 
-		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('guestbook'), 0, $comboColorbox));
+		view::setContent(confirmBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('guestbook'), 0, $comboColorbox));
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

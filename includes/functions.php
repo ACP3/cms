@@ -74,14 +74,11 @@ function captcha($captcha_length = 5)
  *	Wenn Wert "1", dann wird das Fenster geschlossen
  * @return string
  */
-function comboBox($text, $forward = 0, $backward = 0, $colorbox = 0)
+function confirmBox($text, $forward = 0, $backward = 0, $colorbox = 0)
 {
-	global $session, $tpl, $uri;
+	global $tpl;
 
-	if (empty($forward) && empty($backward)) {
-		$tpl->assign('text', is_array($text) === true ? $text : array($text));
-		return view::fetchTemplate('common/error.tpl');
-	} elseif (!empty($text) && (!empty($forward) || !empty($backward))) {
+	if (!empty($text)) {
 		$combo = array(
 			'text' => $text,
 			'forward' => $forward,
@@ -94,6 +91,19 @@ function comboBox($text, $forward = 0, $backward = 0, $colorbox = 0)
 		return view::fetchTemplate('common/combo.tpl');
 	}
 	return '';
+}
+/**
+ * Gibt eine Box mit den aufgetretenen Fehlern aus
+ *
+ * @param string|array $text
+ * @return string
+ */
+function errorBox($text)
+{
+	global $tpl;
+
+	$tpl->assign('text', is_array($text) === true ? $text : array($text));
+	return view::fetchTemplate('common/error.tpl');
 }
 /**
  * Generiert eine E-Mail und versendet diese

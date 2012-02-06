@@ -16,10 +16,10 @@ elseif (validate::deleteEntries($uri->entries))
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
-	view::setContent(comboBox($lang->t('common', 'no_entries_selected')));
+	view::setContent(errorBox($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
-	view::setContent(comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/emoticons/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/emoticons')));
+	view::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/emoticons/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/emoticons')));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	require_once MODULES_DIR . 'emoticons/functions.php';
 

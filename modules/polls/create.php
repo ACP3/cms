@@ -26,9 +26,9 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('polls', 'type_in_answer');
 
 	if (isset($errors) === true) {
-		$tpl->assign('error_msg', comboBox($errors));
+		$tpl->assign('error_msg', errorBox($errors));
 	} elseif (!validate::formToken()) {
-		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
+		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$start = $date->timestamp($form['start']);
 		$end = $date->timestamp($form['end']);

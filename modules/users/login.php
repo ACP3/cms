@@ -27,7 +27,7 @@ if ($auth->isUser()) {
 		}
 	} else {
 		$error[] = $lang->t('users', $result == -1 ? 'account_locked' : 'nickname_or_password_wrong');
-		$tpl->assign('error_msg', comboBox($error));
+		$tpl->assign('error_msg', confirmBox($error));
 	}
 }
 view::setContent(view::fetchTemplate('users/login.tpl'));
