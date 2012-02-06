@@ -30,11 +30,11 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 			$errors[] = $lang->t('gallery', 'type_in_gallery_name');
 		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'], 'gallery/pics/id_' . $uri->id)))
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
-		if (!validate::formToken())
-			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
+		} elseif (!validate::formToken()) {
+			view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
 				'start' => $date->timestamp($form['start']),

@@ -23,11 +23,11 @@ if ($auth->isUser()) {
 			$errors[] = $lang->t('users', 'user_not_exists');
 		if (!$auth->isUser() && !validate::captcha($form['captcha']))
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
-		if (!validate::formToken())
-			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
+		} elseif (!validate::formToken()) {
+			view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			// Neues Passwort und neuen Zufallsschlüssel erstellen
 			$new_password = salt(8);
@@ -43,14 +43,14 @@ if ($auth->isUser()) {
 			$mail_sent = generateEmail('', $user[0]['mail'], $subject, $body);
 
 			// Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
-			if ($mail_sent) {
+			if ($mail_sent === true) {
 				$salt = salt(12);
 				$bool = $db->update('users', array('pwd' => generateSaltedPassword($salt, $new_password) . ':' . $salt, 'login_errors' => 0), 'id = \'' . $user[0]['id'] . '\'');
 			}
 
 			$session->unsetFormToken();
 
-			view::setContent(comboBox($mail_sent && isset($bool) && $bool !== null ? $lang->t('users', 'forgot_pwd_success') : $lang->t('users', 'forgot_pwd_error'), ROOT_DIR));
+			view::setContent(comboBox($mail_sent === true && isset($bool) && $bool !== null ? $lang->t('users', 'forgot_pwd_success') : $lang->t('users', 'forgot_pwd_error'), ROOT_DIR));
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

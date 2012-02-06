@@ -32,11 +32,11 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 			$errors[] = $lang->t('common', 'select_time_zone');
 		if (!validate::isNumber($form['dst']))
 			$errors[] = $lang->t('common', 'select_daylight_saving_time');
-		if (!validate::formToken())
-			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
+		} elseif (!validate::formToken()) {
+			view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
 				'date_format_long' => $db->escape($form['date_format_long']),

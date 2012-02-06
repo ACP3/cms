@@ -200,7 +200,6 @@ class session {
 	 * Liest Daten aus der Session aus
 	 *
 	 * @param string $key
-	 *
 	 * @return mixed
 	 */
 	public function get($key) {

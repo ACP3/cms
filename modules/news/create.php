@@ -31,11 +31,11 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 	if (!empty($form['uri']) && (!validate::isNumber($form['target']) || strlen($form['link_title']) < 3))
 		$errors[] = $lang->t('news', 'complete_additional_hyperlink_statements');
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$insert_values = array(
 			'id' => '',

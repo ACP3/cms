@@ -26,11 +26,11 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('guestbook', 'select_emoticons');
 	if ($newsletter && (!isset($form['newsletter_integration']) || ($form['newsletter_integration'] != 0 && $form['newsletter_integration'] != 1)))
 		$errors[] = $lang->t('guestbook', 'select_newsletter_integration');
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$bool = config::module('guestbook', $form);
 

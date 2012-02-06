@@ -25,11 +25,11 @@ if ($auth->isUser()) {
 			$errors[] = $lang->t('users', 'type_in_pwd');
 		if (!$auth->isUser() && !validate::captcha($form['captcha']))
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
-		if (!validate::formToken())
-			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
+		} elseif (!validate::formToken()) {
+			view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			// E-Mail mit den Accountdaten zusenden
 			$form['nickname'] = $db->escape($form['nickname']);
@@ -38,7 +38,6 @@ if ($auth->isUser()) {
 			$body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($form['nickname'], $form['mail'], $form['pwd'], CONFIG_SEO_TITLE, $host), $lang->t('users', 'register_mail_message'));
 			$mail_sent = generateEmail('', $form['mail'], $subject, $body);
 
-			// Das Benutzerkonto nur erstellen, wenn die E-Mail erfolgreich versendet werden konnte
 			$salt = salt(12);
 			$insert_values = array(
 				'id' => '',
@@ -69,7 +68,7 @@ if ($auth->isUser()) {
 
 			$session->unsetFormToken();
 
-			view::setContent(comboBox($mail_sent && $bool && $bool2 ? $lang->t('users', 'register_success') : $lang->t('users', 'register_error'), ROOT_DIR));
+			view::setContent(comboBox($mail_sent === true && $bool && $bool2 ? $lang->t('users', 'register_success') : $lang->t('users', 'register_error'), ROOT_DIR));
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

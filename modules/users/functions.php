@@ -10,7 +10,7 @@
  * Überprüft, ob der übergebene Username schon existiert
  *
  * @param string $nickname
- *  Der überprüfende Nickname
+ *  Der zu überprüfende Nickname
  * @return boolean
  */
 function userNameExists($nickname, $id = 0)
@@ -31,6 +31,5 @@ function userEmailExists($mail, $id = 0)
 {
 	global $db;
 	$id = validate::isNumber($id) ? ' AND id != \'' . $id . '\'' : '';
-	return validate::email($mail) && $db->countRows('*', 'users', '(mail =\'' . $mail . ':1\' OR mail =\'' . $mail . ':0\')' . $id) > 0 ? true : false;
+	return validate::email($mail) && $db->countRows('*', 'users', 'mail IN(\'' . $mail . ':1\', \'' . $mail . ':0\')' . $id) > 0 ? true : false;
 }
-

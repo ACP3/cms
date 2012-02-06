@@ -29,11 +29,11 @@ if (isset($_POST['form']) === true) {
 		!validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) ||
 		$_FILES['picture']['error'] !== UPLOAD_ERR_OK)
 		$errors[] = $lang->t('emoticons', 'invalid_image_selected');
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$result = moveFile($file['tmp_name'], $file['name'], 'emoticons');
 

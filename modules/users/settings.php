@@ -17,11 +17,11 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('users', 'select_languages_override');
 	if (!isset($form['entries_override']) || $form['entries_override'] != 1 && $form['entries_override'] != 0)
 		$errors[] = $lang->t('users', 'select_entries_override');
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$bool = config::module('users', $form);
 

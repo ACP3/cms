@@ -37,11 +37,11 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('users', 'select_access_level');
 	if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])
 		$errors[] = $lang->t('users', 'type_in_pwd');
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$salt = salt(12);
 

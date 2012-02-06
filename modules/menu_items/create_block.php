@@ -24,11 +24,11 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('menu_items', 'index_name_unique');
 	if (strlen($form['title']) < 3)
 		$errors[] = $lang->t('menu_items', 'block_title_to_short');
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$insert_values = array(
 			'id' => '',

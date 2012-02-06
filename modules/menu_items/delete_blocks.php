@@ -21,7 +21,7 @@ elseif (validate::deleteEntries($uri->entries))
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
-	view::setContent(comboBox(array($lang->t('common', 'no_entries_selected'))));
+	view::setContent(comboBox($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries)) {
 	$marked_entries = implode('|', $entries);
 	view::setContent(comboBox($lang->t('common', 'confirm_delete'), $uri->route('acp/menu_items/delete_blocks/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/menu_items/adm_list_blocks')));

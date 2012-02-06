@@ -16,11 +16,11 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('system', 'select_output');
 	if ($form['export_type'] != 'complete' && $form['export_type'] != 'structure' && $form['export_type'] != 'data')
 		$errors[] = $lang->t('system', 'select_export_type');
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$session->unsetFormToken();
 

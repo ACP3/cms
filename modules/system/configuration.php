@@ -49,11 +49,11 @@ if (isset($_POST['form']) === true) {
 		if ($form['mailer_smtp_auth'] == 1 && empty($form['mailer_smtp_user']))
 			$errors[] = $lang->t('system', 'type_in_mailer_smtp_username');
 	}
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		// Konfig aktualisieren
 		$config = array(

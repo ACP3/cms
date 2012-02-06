@@ -31,12 +31,12 @@ function subscribeToNewsletter($emailAddress)
 	$mail_sent = generateEmail('', $emailAddress, $settings['mail'], $subject, $body);
 
 	// Newsletter-Konto nur erstellen, wenn die E-Mail erfolgreich versendet werden konnte
-	if ($mail_sent) {
+	if ($mail_sent === true) {
 		global $db;
 
 		$insert_values = array('id' => '', 'mail' => $emailAddress, 'hash' => $hash);
 		$bool = $db->insert('newsletter_accounts', $insert_values);
 	}
 
-	return $mail_sent && isset($bool) && $bool;
+	return $mail_sent === true && isset($bool) && $bool;
 }

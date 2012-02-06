@@ -21,11 +21,11 @@ if (isset($_POST['form']) === true) {
 				$errors[] = $lang->t('newsletter', 'account_exists');
 			if (!$auth->isUser() && !validate::captcha($form['captcha']))
 				$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
-			if (!validate::formToken())
-				$errors[] = $lang->t('common', 'form_already_submitted');
 
 			if (isset($errors) === true) {
 				$tpl->assign('error_msg', comboBox($errors));
+			} elseif (!validate::formToken()) {
+				view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 			} else {
 				require MODULES_DIR . 'newsletter/functions.php';
 				$bool = subscribeToNewsletter($form['mail']);
@@ -44,11 +44,11 @@ if (isset($_POST['form']) === true) {
 				$errors[] = $lang->t('newsletter', 'account_not_exists');
 			if (!$auth->isUser() && !validate::captcha($form['captcha']))
 				$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
-			if (!validate::formToken())
-				$errors[] = $lang->t('common', 'form_already_submitted');
 
 			if (isset($errors) === true) {
 				$tpl->assign('error_msg', comboBox($errors));
+			} elseif (!validate::formToken()) {
+				view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 			} else {
 				$bool = $db->delete('newsletter_accounts', 'mail = \'' . $form['mail'] . '\'');
 

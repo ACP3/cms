@@ -42,11 +42,11 @@ if (isset($_POST['form']) === true) {
 				$errors[] = $lang->t('menu_items', 'select_item_visibility');
 		}
 	}
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$time_start = $date->timestamp($form['start']);
 		$time_end = $date->timestamp($form['end']);

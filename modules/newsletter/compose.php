@@ -17,11 +17,11 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('newsletter', 'subject_to_short');
 	if (strlen($form['text']) < 3)
 		$errors[] = $lang->t('newsletter', 'text_to_short');
-	if (!validate::formToken())
-		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
+	} elseif (!validate::formToken()) {
+		view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$settings = config::getModuleSettings('newsletter');
 
@@ -50,7 +50,7 @@ if (isset($_POST['form']) === true) {
 
 				for ($i = 0; $i < $c_accounts; ++$i) {
 					$bool2 = generateEmail('', $accounts[$i]['mail'], $settings['mail'], $subject, $body);
-					if (!$bool2)
+					if ($bool2 !== true)
 						break;
 				}
 			}
@@ -60,7 +60,7 @@ if (isset($_POST['form']) === true) {
 
 		if ($form['action'] == '0' && $bool) {
 			view::setContent(comboBox($lang->t('newsletter', 'save_success'), $uri->route('acp/newsletter')));
-		} elseif ($form['action'] == '1' && $bool && $bool2) {
+		} elseif ($form['action'] == '1' && $bool && $bool2 === true) {
 			view::setContent(comboBox($lang->t('newsletter', 'compose_success'), $uri->route('acp/newsletter')));
 		} else {
 			view::setContent(comboBox($lang->t('newsletter', 'compose_save_error'), $uri->route('acp/newsletter')));

@@ -27,11 +27,11 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 			$errors[] = $lang->t('menu_items', 'index_name_unique');
 		if (strlen($form['title']) < 3)
 			$errors[] = $lang->t('menu_items', 'block_title_to_short');
-		if (!validate::formToken())
-			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
+		} elseif (!validate::formToken()) {
+			view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
 				'index_name' => $db->escape($form['index_name']),

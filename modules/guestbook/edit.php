@@ -22,11 +22,11 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 			$errors[] = $lang->t('common', 'message_to_short');
 		if ($settings['notify'] == 2 && (!isset($form['active']) || ($form['active'] != 0 && $form['active'] != 1)))
 			$errors[] = $lang->t('guestbook', 'select_activate');
-		if (!validate::formToken())
-			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
+		} elseif (!validate::formToken()) {
+			view::setContent(comboBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
 				'name' => $db->escape($form['name']),
