@@ -18,15 +18,16 @@ if (defined('IN_ACP3') === false)
  * @subpackage Core
  */
 class session {
-	const session_name = 'ACP3_SID';
-
+	/**
+	 * Name der Session
+	 */
+	const SESSION_NAME = 'ACP3_SID';
 	/**
 	 * Zeit, bis Session ungültig wird
 	 *
 	 * @var integer
 	 */
 	public $expire_time = 1800;
-
 	/**
 	 * Wahrscheinlichkeit, dass Session Garbage Collector anspringt
 	 *
@@ -36,7 +37,7 @@ class session {
 
 	public function __construct() {
 		// php.ini Session Einstellungen konfigurieren
-		ini_set('session.name', self::session_name);
+		ini_set('session.name', self::SESSION_NAME);
 		ini_set('session.use_trans_sid', 0);
 		ini_set('session.use_cookies', 1);
 		ini_set('session.use_only_cookies', 1);
@@ -62,18 +63,21 @@ class session {
 	 */
 	private static function startSession() {
 		// Session Cookie Parameter setzen
-		session_set_cookie_params(0, ROOT_DIR);
+		session_set_cookie_params(0, '/');
 
 		// Session starten
 		session_start();
 	}
 	/**
 	 * Sichert die aktuelle Session
+	 *
+	 * @param boolean $force
 	 */
-	private static function secureSession() {
+	public static function secureSession($force = false) {
 		// Session Fixation verhindern
-		if (isset($_SESSION['acp3_init']) === false) {
+		if (isset($_SESSION['acp3_init']) === false || $force === true) {
 			session_regenerate_id(true);
+			$_SESSION = array();
 			$_SESSION['acp3_init'] = true;
 		}
 	}
@@ -136,8 +140,8 @@ class session {
 		$_SESSION = array();
 
 		// Session-Cookie löschen
-		if (isset($_COOKIE[self::session_name]))
-			setcookie(self::session_name, '', time() - 3600, ROOT_DIR);
+		if (isset($_COOKIE[self::SESSION_NAME]))
+			setcookie(self::SESSION_NAME, '', time() - 3600, '/');
 
 		// Session aus Datenbank löschen
 		global $db;
