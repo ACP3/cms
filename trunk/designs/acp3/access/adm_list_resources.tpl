@@ -4,6 +4,9 @@
 		<h2>{lang t="common|overview"}</h2>
 	</div>
 	<hr>
+{if isset($redirect_message)}
+{$redirect_message}
+{/if}
 {if isset($resources)}
 {assign var="can_delete_resource" value=modules::check("access", "delete_resources")}
 	<script type="text/javascript" src="{$DESIGN_PATH}access/script.js"></script>

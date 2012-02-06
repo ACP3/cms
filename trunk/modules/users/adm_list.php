@@ -10,6 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
+getRedirectMessage();
+
 $users = $db->select('u.id, u.nickname, u.mail', 'users AS u', 0, 'u.nickname ASC', POS, $session->get('entries'));
 $c_users = count($users);
 

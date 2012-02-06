@@ -52,10 +52,12 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 
 			$session->unsetFormToken();
 
-			view::setContent(comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/gallery')));
+			setRedirectMessage($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/gallery');
 		}
 	}
 	if (isset($_POST['entries']) === false && isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
+		getRedirectMessage();
+
 		$tpl->assign('gallery_id', $uri->id);
 
 		// Datumsauswahl

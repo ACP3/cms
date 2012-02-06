@@ -10,6 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
+getRedirectMessage();
+
 $pages = $db->select('id, start, end, title', 'static_pages', 0, 'start DESC', POS, $session->get('entries'));
 $c_pages = count($pages);
 

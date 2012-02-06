@@ -10,6 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
+getRedirectMessage();
+
 $guestbook = $db->select('id, ip, date, name, message', 'guestbook', 0, 'date DESC', POS, $session->get('entries'));
 $c_guestbook = count($guestbook);
 

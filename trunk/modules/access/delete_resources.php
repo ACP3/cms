@@ -37,7 +37,7 @@ if (!isset($entries)) {
 	acl::setResourcesCache();
 
 	$text = $bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
-	view::setContent(comboBox($text, $uri->route('acp/access/adm_list_resources')));
+	setRedirectMessage($text, 'acp/access/adm_list_resources');
 } else {
 	$uri->redirect('acp/errors/404');
 }

@@ -44,7 +44,7 @@ if (!isset($entries)) {
 	} else {
 		$text = $bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
 	}
-	view::setContent(comboBox($text, $self_delete ? ROOT_DIR : $uri->route('acp/users')));
+	setRedirectMessage($text, $self_delete ? ROOT_DIR : 'acp/users');
 } else {
 	$uri->redirect('acp/errors/404');
 }

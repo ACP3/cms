@@ -16,6 +16,8 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 		view::setContent(comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home')));
 	}
 	if (isset($_POST['form']) === false) {
+		getRedirectMessage();
+
 		$user = $db->select('draft', 'users', 'id = \'' . $auth->getUserId() . '\'');
 
 		$tpl->assign('draft', $db->escape($user[0]['draft'], 3));

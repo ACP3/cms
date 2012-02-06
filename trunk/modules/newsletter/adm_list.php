@@ -10,6 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
+getRedirectMessage();
+
 $accounts = $db->select('id, mail, hash', 'newsletter_accounts', 0, 'id DESC', POS, $session->get('entries'));
 $c_accounts = count($accounts);
 

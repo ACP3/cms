@@ -6,6 +6,9 @@
 		<h2>{lang t="common|overview"}</h2>
 	</div>
 	<hr>
+{if isset($redirect_message)}
+{$redirect_message}
+{/if}
 {if isset($categories)}
 {$pagination}
 {assign var="can_delete" value=modules::check("categories", "delete")}

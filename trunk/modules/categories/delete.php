@@ -51,7 +51,7 @@ if (!isset($entries)) {
 	} else {
 		$text = $bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
 	}
-	view::setContent(comboBox($text, $uri->route('acp/categories')));
+	setRedirectMessage($text, 'acp/categories');
 } else {
 	$uri->redirect('acp/errors/404');
 }

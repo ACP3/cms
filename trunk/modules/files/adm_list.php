@@ -10,6 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
+getRedirectMessage();
+
 $files = $db->select('id, start, end, file, size, link_title', 'files', 0, 'start DESC, end DESC, id DESC', POS, $session->get('entries'));
 $c_files = count($files);
 

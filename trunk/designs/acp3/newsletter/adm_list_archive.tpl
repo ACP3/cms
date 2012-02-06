@@ -4,6 +4,9 @@
 		<h2>{lang t="newsletter|newsletter_archive"}</h2>
 	</div>
 	<hr>
+{if isset($redirect_message)}
+{$redirect_message}
+{/if}
 {if isset($newsletter)}
 {$pagination}
 {assign var="can_delete" value=modules::check("newsletter", "delete_archive")}

@@ -28,7 +28,7 @@ if (!isset($entries)) {
 			$bool = $db->delete('comments', 'module = \'' . $entry . '\'');
 		}
 	}
-	view::setContent(comboBox($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), $uri->route('acp/comments')));
+	setRedirectMessage($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/comments');
 } else {
 	$uri->redirect('acp/errors/404');
 }

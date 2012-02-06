@@ -5,6 +5,9 @@
 		<h2>{lang t="common|overview"}</h2>
 	</div>
 	<hr>
+{if isset($redirect_message)}
+{$redirect_message}
+{/if}
 {$pagination}
 {assign var="can_delete" value=modules::check("comments", "delete_comments")}
 	<table class="acp-table">

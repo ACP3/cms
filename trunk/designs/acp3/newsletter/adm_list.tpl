@@ -7,6 +7,9 @@
 		<h2>{lang t="newsletter|newsletter_accounts"}</h2>
 	</div>
 	<hr>
+{if isset($redirect_message)}
+{$redirect_message}
+{/if}
 {if isset($accounts)}
 {$pagination}
 {assign var="can_delete" value=modules::check("newsletter", "delete")}

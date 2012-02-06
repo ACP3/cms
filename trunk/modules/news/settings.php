@@ -33,9 +33,9 @@ if (isset($_POST['form']) === true) {
 	} else {
 		$bool = config::module('news', $form);
 
-			$session->unsetFormToken();
+		$session->unsetFormToken();
 
-		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/news')));
+		setRedirectMessage($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), 'acp/news');
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

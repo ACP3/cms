@@ -59,11 +59,11 @@ if (isset($_POST['form']) === true) {
 		$session->unsetFormToken();
 
 		if ($form['action'] == '0' && $bool) {
-			view::setContent(comboBox($lang->t('newsletter', 'save_success'), $uri->route('acp/newsletter')));
+			setRedirectMessage($lang->t('newsletter', 'save_success'), 'acp/newsletter');
 		} elseif ($form['action'] == '1' && $bool && $bool2 === true) {
-			view::setContent(comboBox($lang->t('newsletter', 'compose_success'), $uri->route('acp/newsletter')));
+			setRedirectMessage($lang->t('newsletter', 'compose_success'), 'acp/newsletter');
 		} else {
-			view::setContent(comboBox($lang->t('newsletter', 'compose_save_error'), $uri->route('acp/newsletter')));
+			setRedirectMessage($lang->t('newsletter', 'compose_save_error'), 'acp/newsletter');
 		}
 	}
 }

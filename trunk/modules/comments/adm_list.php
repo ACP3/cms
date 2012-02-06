@@ -10,6 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
+getRedirectMessage();
+
 $module = $uri->module ? $db->escape($uri->module) : 0;
 $tpl->assign('module', $module);
 
