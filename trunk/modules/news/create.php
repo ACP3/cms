@@ -31,6 +31,8 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 	if (!empty($form['uri']) && (!validate::isNumber($form['target']) || strlen($form['link_title']) < 3))
 		$errors[] = $lang->t('news', 'complete_additional_hyperlink_statements');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -54,6 +56,8 @@ if (isset($_POST['form']) === true) {
 		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']))
 			seo::insertUriAlias($form['alias'], 'news/details/id_' . $db->link->lastInsertID(), $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 
+		$session->unsetFormToken();
+
 		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/news')));
 	}
 }
@@ -67,6 +71,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	// Weiterlesen & Kommentare
 	if ($settings['readmore'] == 1 || $settings['comments'] == 1) {
 		$i = 0;
+		$options = array();
 		if ($settings['readmore'] == 1) {
 			$options[$i]['name'] = 'readmore';
 			$options[$i]['checked'] = selectEntry('readmore', '1', '0', 'checked');
@@ -82,6 +87,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	}
 
 	// Linkziel
+	$target = array();
 	$target[0]['value'] = '1';
 	$target[0]['selected'] = selectEntry('target', '1');
 	$target[0]['lang'] = $lang->t('common', 'window_self');
@@ -91,6 +97,8 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$tpl->assign('target', $target);
 
 	$tpl->assign('form', isset($form) ? $form : array('headline' => '', 'text' => '', 'uri' => '', 'link_title' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => ''));
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('news/create.tpl'));
 }

@@ -17,7 +17,7 @@ if (defined('IN_INSTALL') === false)
  * @param string $algorithm
  * @return string
  */
-function genSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
+function generateSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
 {
 	return hash($algorithm, $salt . hash($algorithm, $plaintext));
 }

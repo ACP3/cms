@@ -42,6 +42,8 @@ if (isset($_POST['form']) === true) {
 				$errors[] = $lang->t('menu_items', 'select_item_visibility');
 		}
 	}
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -82,11 +84,14 @@ if (isset($_POST['form']) === true) {
 			setMenuItemsCache();
 		}
 
+		$session->unsetFormToken();
+
 		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/static_pages')));
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	if (modules::check('menu_items', 'create') == 1) {
+		$create = array();
 		$create[0]['value'] = 1;
 		$create[0]['selected'] = selectEntry('create', '1', '0', 'checked');
 		$create[0]['lang'] = $lang->t('common', 'yes');
@@ -101,6 +106,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 			$blocks[$i]['selected'] = selectEntry('block_id', $blocks[$i]['id']);
 		}
 
+		$display = array();
 		$display[0]['value'] = 1;
 		$display[0]['selected'] = selectEntry('display', 1, 1, 'checked');
 		$display[0]['lang'] = $lang->t('common', 'yes');
@@ -125,6 +131,8 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	);
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('static_pages/create.tpl'));
 }

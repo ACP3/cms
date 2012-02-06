@@ -23,6 +23,8 @@ if ($auth->isUser()) {
 			$errors[] = $lang->t('users', 'user_not_exists');
 		if (!$auth->isUser() && !validate::captcha($form['captcha']))
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -38,13 +40,16 @@ if ($auth->isUser()) {
 			// E-Mail mit dem neuen Passwort versenden
 			$subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), $lang->t('users', 'forgot_pwd_mail_subject'));
 			$body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($db->escape($user[0]['nickname'], 3), $user[0]['mail'], $new_password, CONFIG_SEO_TITLE, $host), $lang->t('users', 'forgot_pwd_mail_message'));
-			$mail_sent = genEmail('', $user[0]['mail'], $subject, $body);
+			$mail_sent = generateEmail('', $user[0]['mail'], $subject, $body);
 
 			// Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
 			if ($mail_sent) {
 				$salt = salt(12);
-				$bool = $db->update('users', array('pwd' => genSaltedPassword($salt, $new_password) . ':' . $salt, 'login_errors' => 0), 'id = \'' . $user[0]['id'] . '\'');
+				$bool = $db->update('users', array('pwd' => generateSaltedPassword($salt, $new_password) . ':' . $salt, 'login_errors' => 0), 'id = \'' . $user[0]['id'] . '\'');
 			}
+
+			$session->unsetFormToken();
+
 			view::setContent(comboBox($mail_sent && isset($bool) && $bool !== null ? $lang->t('users', 'forgot_pwd_success') : $lang->t('users', 'forgot_pwd_error'), ROOT_DIR));
 		}
 	}
@@ -54,6 +59,8 @@ if ($auth->isUser()) {
 		$tpl->assign('form', isset($form) ? $form : $defaults);
 
 		$tpl->assign('captcha', captcha());
+
+		$session->generateFormToken();
 
 		view::setContent(view::fetchTemplate('users/forgot_pwd.tpl'));
 	}

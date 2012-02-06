@@ -21,5 +21,6 @@
 		<input type="hidden" name="form[user_id]" value="{$form.user_id}">
 {/if}
 		<input type="submit" value="{lang t="common|submit"}" class="form">
+		{$form_token}
 	</div>
 </form>

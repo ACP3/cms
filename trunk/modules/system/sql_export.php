@@ -16,10 +16,14 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('system', 'select_output');
 	if ($form['export_type'] != 'complete' && $form['export_type'] != 'structure' && $form['export_type'] != 'data')
 		$errors[] = $lang->t('system', 'select_export_type');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
+		$session->unsetFormToken();
+
 		$structure = '';
 		$data = '';
 		foreach ($form['tables'] as $table) {
@@ -83,6 +87,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$tpl->assign('tables', $tables);
 
 	// Ausgabe
+	$output = array();
 	$output[0]['value'] = 'file';
 	$output[0]['checked'] = selectEntry('output', 'file', 'file', 'checked');
 	$output[0]['lang'] = $lang->t('system', 'output_as_file');
@@ -92,6 +97,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$tpl->assign('output', $output);
 
 	// Exportart
+	$export_type = array();
 	$export_type[0]['value'] = 'complete';
 	$export_type[0]['checked'] = selectEntry('export_type', 'complete', 'complete', 'checked');
 	$export_type[0]['lang'] = $lang->t('system', 'complete_export');
@@ -103,8 +109,11 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$export_type[2]['lang'] = $lang->t('system', 'export_data');
 	$tpl->assign('export_type', $export_type);
 
+	$drop = array();
 	$drop['checked'] = selectEntry('drop', '1', '', 'checked');
 	$drop['lang'] = $lang->t('system', 'drop_tables');
 	$tpl->assign('drop', $drop);
+
+	$session->generateFormToken();
 }
 view::setContent(view::fetchTemplate('system/sql_export.tpl'));

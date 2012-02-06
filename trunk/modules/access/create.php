@@ -23,6 +23,8 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('access', 'no_privilege_selected');
 	if (!empty($form['privileges']) && !validate::aclPrivilegesExist($form['privileges']))
 		$errors[] = $lang->t('access', 'invalid_privileges');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -50,6 +52,8 @@ if (isset($_POST['form']) === true) {
 
 		acl::setRolesCache();
 
+		$session->unsetFormToken();
+
 		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/access')));
 	}
 }
@@ -73,13 +77,13 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	for ($i = 0; $i < $c_modules; ++$i) {
 		for ($j = 0; $j < $c_privileges; ++$j) {
 			$select[0]['value'] = 0;
-			$select[0]['selected'] = isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['key']] == 0 ? ' selected="selected"' : '';
+			$select[0]['selected'] = isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 0 ? ' selected="selected"' : '';
 			$select[0]['lang'] = $lang->t('access', 'deny_access');
 			$select[1]['value'] = 1;
-			$select[1]['selected'] = isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['key']] == 1 ? ' selected="selected"' : '';
+			$select[1]['selected'] = isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 1 ? ' selected="selected"' : '';
 			$select[1]['lang'] = $lang->t('access', 'allow_access');
 			$select[2]['value'] = 2;
-			$select[2]['selected'] = !isset($form) || isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['key']] == 2 ? ' selected="selected"' : '';
+			$select[2]['selected'] = !isset($form) || isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 2 ? ' selected="selected"' : '';
 			$select[2]['lang'] = $lang->t('access', 'inherit_access');
 			$privileges[$j]['select'] = $select;
 		}
@@ -93,6 +97,8 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	ksort($modules);
 	$tpl->assign('modules', $modules);
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('access/create.tpl'));
 }

@@ -29,6 +29,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 			$errors[] = $lang->t('polls', 'type_in_answer');
 		if (count($form['answers']) - $j < 2)
 			$errors[] = $lang->t('polls', 'can_not_delete_all_answers');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -65,10 +67,14 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 					$bool = $db->update('poll_answers', array('text' => $db->escape($row['value'])), 'id = \'' . $row['id'] . '\'');
 				}
 			}
+
+			$session->unsetFormToken();
+
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/polls')));
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
+		$answers = array();
 		// Neue Antworten hinzufügen
 		if (isset($_POST['form']['answers'])) {
 			// Bisherige Antworten
@@ -99,6 +105,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 
 		$poll = $db->select('start, end, question, multiple', 'polls', 'id = \'' . $uri->id . '\'');
 
+		$options = array();
 		$options[0]['name'] = 'reset';
 		$options[0]['checked'] = selectEntry('reset', '1', '0', 'checked');
 		$options[0]['lang'] = $lang->t('polls', 'reset_votes');
@@ -111,6 +118,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($poll[0]['start'], $poll[0]['end'])));
 		$tpl->assign('question', isset($form['question']) ? $form['question'] : $db->escape($poll[0]['question'], 3));
 		$tpl->assign('disable', count($answers) < 10 ? false : true);
+
+		$session->generateFormToken();
 
 		view::setContent(view::fetchTemplate('polls/edit.tpl'));
 	}

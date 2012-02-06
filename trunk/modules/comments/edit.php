@@ -26,6 +26,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 			$errors[] = $lang->t('common', 'name_to_short');
 		if (strlen($form['message']) < 3)
 			$errors[] = $lang->t('common', 'message_to_short');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -37,6 +39,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 			}
 
 			$bool = $db->update('comments', $update_values, 'id = \'' . $uri->id . '\'');
+
+			$session->unsetFormToken();
 
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/comments/adm_list/module_' . $comment[0]['module'])));
 		}
@@ -50,6 +54,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 		}
 
 		$tpl->assign('form', isset($form) ? $form : $comment[0]);
+
+		$session->generateFormToken();
 
 		view::setContent(view::fetchTemplate('comments/edit.tpl'));
 	}

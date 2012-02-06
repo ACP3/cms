@@ -35,6 +35,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' 
 			$errors[] = $lang->t('categories', 'invalid_image_selected');
 		if (strlen($form['name']) >= 3 && categoriesCheckDuplicate($db->escape($form['name']), $module[0]['module'], $uri->id))
 			$errors[] = $lang->t('categories', 'category_already_exists');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -60,6 +62,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' 
 
 			setCategoriesCache($db->escape($module[0]['module'], 3));
 
+			$session->unsetFormToken();
+
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/categories')));
 		}
 	}
@@ -69,6 +73,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'categories', 'id = \'' 
 		$category[0]['description'] = $db->escape($category[0]['description'], 3);
 
 		$tpl->assign('form', isset($form) ? $form : $category[0]);
+
+		$session->generateFormToken();
 
 		view::setContent(view::fetchTemplate('categories/edit.tpl'));
 	}

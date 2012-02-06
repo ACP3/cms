@@ -165,13 +165,36 @@ class session {
 		return true;
 	}
 	/**
+	 * Generiert für ein Formular ein Securitytoken
+	 */
+	public function generateFormToken()
+	{
+		global $session, $tpl;
+
+		$token = md5(uniqid(mt_rand(), true));
+		$session->set('security_token', $token);
+
+		$tpl->assign('form_token', '<input type="hidden" name="security_token" value="' . $token . '" />');
+	}
+	/**
+	 * Entfernt das Securitytoken aus der Session
+	 */
+	public function unsetFormToken()
+	{
+		$this->set('security_token', '');
+	}
+	/**
 	 * Setzt eine Session Variable
 	 *
 	 * @param string $key
 	 * @param mixed $value
 	 */
 	public function set($key, $value) {
-		$_SESSION[$key] = $value;
+		if (isset($_SESSION[$key]) && $value === '') {
+			unset($_SESSION[$key]);
+		} else {
+			$_SESSION[$key] = $value;
+		}
 	}
 	/**
 	 * Liest Daten aus der Session aus

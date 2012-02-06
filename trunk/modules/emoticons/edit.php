@@ -30,6 +30,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'emoticons', 'id = \'' .
 			(!validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) ||
 			$_FILES['picture']['error'] !== UPLOAD_ERR_OK))
 			$errors[] = $lang->t('emoticons', 'invalid_image_selected');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -54,6 +56,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'emoticons', 'id = \'' .
 			$bool = $db->update('emoticons', $update_values, 'id = \'' . $uri->id . '\'');
 			setEmoticonsCache();
 
+			$session->unsetFormToken();
+
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/emoticons')));
 		}
 	}
@@ -64,6 +68,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'emoticons', 'id = \'' .
 
 		$tpl->assign('picture', $emoticon[0]['img']);
 		$tpl->assign('form', isset($form) ? $form : $emoticon[0]);
+
+		$session->generateFormToken();
 
 		view::setContent(view::fetchTemplate('emoticons/edit.tpl'));
 	}

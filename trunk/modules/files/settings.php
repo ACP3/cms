@@ -19,11 +19,15 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('common', 'select_date_format');
 	if (!validate::isNumber($form['sidebar']))
 		$errors[] = $lang->t('common', 'select_sidebar_entries');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$bool = config::module('files', $form);
+
+		$session->unsetFormToken();
 
 		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/files')));
 	}
@@ -31,6 +35,7 @@ if (isset($_POST['form']) === true) {
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$settings = config::getModuleSettings('files');
 
+	$comments = array();
 	$comments[0]['value'] = '1';
 	$comments[0]['checked'] = selectEntry('comments', '1', $settings['comments'], 'checked');
 	$comments[0]['lang'] = $lang->t('common', 'yes');
@@ -39,6 +44,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$comments[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('comments', $comments);
 
+	$dateformat = array();
 	$dateformat[0]['value'] = 'short';
 	$dateformat[0]['selected'] = selectEntry('dateformat', 'short', $settings['dateformat']);
 	$dateformat[0]['lang'] = $lang->t('common', 'date_format_short');
@@ -53,6 +59,8 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 		$sidebar_entries[$i]['selected'] = selectEntry('sidebar', $j, $settings['sidebar']);
 	}
 	$tpl->assign('sidebar_entries', $sidebar_entries);
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('files/settings.tpl'));
 }

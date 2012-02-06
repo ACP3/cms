@@ -17,6 +17,8 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('newsletter', 'subject_to_short');
 	if (strlen($form['text']) < 3)
 		$errors[] = $lang->t('newsletter', 'text_to_short');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -40,19 +42,22 @@ if (isset($_POST['form']) === true) {
 
 			// Testnewsletter
 			if ($form['test'] == '1') {
-				$bool2 = genEmail('', $settings['mail'], $settings['mail'], $subject, $body);
+				$bool2 = generateEmail('', $settings['mail'], $settings['mail'], $subject, $body);
 			// An alle versenden
 			} else {
 				$accounts = $db->select('mail', 'newsletter_accounts', 'hash = \'\'');
 				$c_accounts = count($accounts);
 
 				for ($i = 0; $i < $c_accounts; ++$i) {
-					$bool2 = genEmail('', $accounts[$i]['mail'], $settings['mail'], $subject, $body);
+					$bool2 = generateEmail('', $accounts[$i]['mail'], $settings['mail'], $subject, $body);
 					if (!$bool2)
 						break;
 				}
 			}
 		}
+
+		$session->unsetFormToken();
+
 		if ($form['action'] == '0' && $bool) {
 			view::setContent(comboBox($lang->t('newsletter', 'save_success'), $uri->route('acp/newsletter')));
 		} elseif ($form['action'] == '1' && $bool && $bool2) {
@@ -65,6 +70,7 @@ if (isset($_POST['form']) === true) {
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$tpl->assign('form', isset($form) ? $form : array('subject' => '', 'text' => ''));
 
+	$test = array();
 	$test[0]['value'] = '1';
 	$test[0]['checked'] = selectEntry('test', '1', '0', 'checked');
 	$test[0]['lang'] = $lang->t('common', 'yes');
@@ -73,6 +79,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$test[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('test', $test);
 
+	$action = array();
 	$action[0]['value'] = '1';
 	$action[0]['checked'] = selectEntry('action', '1', '1', 'checked');
 	$action[0]['lang'] = $lang->t('newsletter', 'send_and_save');
@@ -80,6 +87,8 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$action[1]['checked'] = selectEntry('action', '0', '1', 'checked');
 	$action[1]['lang'] = $lang->t('newsletter', 'only_save');
 	$tpl->assign('action', $action);
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('newsletter/compose.tpl'));
 }

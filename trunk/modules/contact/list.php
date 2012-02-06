@@ -21,6 +21,8 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('common', 'message_to_short');
 	if (!$auth->isUser() && !validate::captcha($form['captcha']))
 		$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -30,7 +32,9 @@ if (isset($_POST['form']) === true) {
 		$subject = sprintf($lang->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
 		$body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($form['name'], $form['mail'], $form['message'], "\n"), $lang->t('contact', 'contact_body'));
 
-		$bool = genEmail('', $settings['mail'], $form['mail'], $subject, $body);
+		$bool = generateEmail('', $settings['mail'], $form['mail'], $subject, $body);
+
+		$session->unsetFormToken();
 
 		view::setContent(comboBox($bool ? $lang->t('contact', 'send_mail_success') : $lang->t('contact', 'send_mail_error'), $uri->route('contact')));
 	}
@@ -60,8 +64,10 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 		);
 	}
 	$tpl->assign('form', isset($form) ? array_merge($defaults, $form) : $defaults);
-	
+
 	$tpl->assign('captcha', captcha());
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('contact/list.tpl'));
 }

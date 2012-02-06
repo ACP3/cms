@@ -24,6 +24,8 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('menu_items', 'index_name_unique');
 	if (strlen($form['title']) < 3)
 		$errors[] = $lang->t('menu_items', 'block_title_to_short');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -36,11 +38,15 @@ if (isset($_POST['form']) === true) {
 
 		$bool = $db->insert('menu_items_blocks', $insert_values);
 
+		$session->unsetFormToken();
+
 		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/menu_items/adm_list_blocks')));
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$tpl->assign('form', isset($form) ? $form : array('index_name' => '', 'title' => ''));
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('menu_items/create_block.tpl'));
 }

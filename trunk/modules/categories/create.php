@@ -20,7 +20,7 @@ if (isset($_POST['form']) === true) {
 		$file['size'] = $_FILES['picture']['size'];
 	}
 	$settings = config::getModuleSettings('categories');
-	
+
 	if (strlen($form['name']) < 3)
 		$errors[] = $lang->t('categories', 'name_to_short');
 	if (strlen($form['description']) < 3)
@@ -35,6 +35,8 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('categories', 'select_module');
 	if (strlen($form['name']) >= 3 && categoriesCheckDuplicate($db->escape($form['name']), $form['module']))
 		$errors[] = $lang->t('categories', 'category_already_exists');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -58,6 +60,8 @@ if (isset($_POST['form']) === true) {
 		$bool = $db->insert('categories', $insert_values);
 		setCategoriesCache($form['module']);
 
+		$session->unsetFormToken();
+
 		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/categories')));
 	}
 }
@@ -74,6 +78,8 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 		}
 	}
 	$tpl->assign('mod_list', $mod_list);
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('categories/create.tpl'));
 }

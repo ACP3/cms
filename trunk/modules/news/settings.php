@@ -14,7 +14,7 @@ $comments = modules::isActive('comments');
 
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
-	
+
 	if ($comments && (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0))
 		$errors[] = $lang->t('news', 'select_allow_comments');
 	if (!isset($form['readmore']) || $form['readmore'] != 1 && $form['readmore'] != 0)
@@ -25,18 +25,23 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('common', 'select_date_format');
 	if (!validate::isNumber($form['sidebar']))
 		$errors[] = $lang->t('common', 'select_sidebar_entries');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$bool = config::module('news', $form);
-		
+
+			$session->unsetFormToken();
+
 		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/news')));
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$settings = config::getModuleSettings('news');
 
+	$readmore = array();
 	$readmore[0]['value'] = '1';
 	$readmore[0]['checked'] = selectEntry('readmore', '1', $settings['readmore'], 'checked');
 	$readmore[0]['lang'] = $lang->t('common', 'yes');
@@ -44,10 +49,11 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$readmore[1]['checked'] = selectEntry('readmore', '0', $settings['readmore'], 'checked');
 	$readmore[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('readmore', $readmore);
-	
+
 	$tpl->assign('readmore_chars', isset($form) ? $form['readmore_chars'] : $settings['readmore_chars']);
 
 	if ($comments) {
+		$allow_comments = array();
 		$allow_comments[0]['value'] = '1';
 		$allow_comments[0]['checked'] = selectEntry('comments', '1', $settings['comments'], 'checked');
 		$allow_comments[0]['lang'] = $lang->t('common', 'yes');
@@ -57,6 +63,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 		$tpl->assign('allow_comments', $allow_comments);
 	}
 
+	$dateformat = array();
 	$dateformat[0]['value'] = 'short';
 	$dateformat[0]['selected'] = selectEntry('dateformat', 'short', $settings['dateformat']);
 	$dateformat[0]['lang'] = $lang->t('common', 'date_format_short');
@@ -71,6 +78,8 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 		$sidebar_entries[$i]['selected'] = selectEntry('sidebar', $j, $settings['sidebar']);
 	}
 	$tpl->assign('sidebar_entries', $sidebar_entries);
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('news/settings.tpl'));
 }

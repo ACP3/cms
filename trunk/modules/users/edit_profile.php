@@ -40,6 +40,8 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 			$errors[] = $lang->t('users', 'invalid_msn_account');
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -60,7 +62,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 			// Neues Passwort
 			if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat'])) {
 				$salt = salt(12);
-				$new_pwd = genSaltedPassword($salt, $form['new_pwd']);
+				$new_pwd = generateSaltedPassword($salt, $form['new_pwd']);
 				$update_values['pwd'] = $new_pwd . ':' . $salt;
 			}
 
@@ -68,6 +70,8 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 
 			$cookie_arr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
 			$auth->setCookie($form['nickname'], isset($new_pwd) ? $new_pwd : $cookie_arr[1], 3600);
+
+			$session->unsetFormToken();
 
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home')));
 		}
@@ -139,6 +143,8 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 		$tpl->assign('contact', $contact);
 
 		$tpl->assign('form', isset($form) ? $form : $user);
+
+		$session->generateFormToken();
 
 		view::setContent(view::fetchTemplate('users/edit_profile.tpl'));
 	}

@@ -22,6 +22,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 			$errors[] = $lang->t('common', 'message_to_short');
 		if ($settings['notify'] == 2 && (!isset($form['active']) || ($form['active'] != 0 && $form['active'] != 1)))
 			$errors[] = $lang->t('guestbook', 'select_activate');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -33,6 +35,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 			);
 
 			$bool = $db->update('guestbook', $update_values, 'id = \'' . $uri->id . '\'');
+
+			$session->unsetFormToken();
 
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/guestbook')));
 		}
@@ -50,6 +54,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 		}
 
 		if ($settings['notify'] == 2) {
+			$activate = array();
 			$activate[0]['value'] = '1';
 			$activate[0]['checked'] = selectEntry('active', '1', $guestbook[0]['active'], 'checked');
 			$activate[0]['lang'] = $lang->t('common', 'yes');
@@ -60,6 +65,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 		}
 
 		$tpl->assign('form', isset($form) ? $form : $guestbook[0]);
+
+		$session->generateFormToken();
 
 		view::setContent(view::fetchTemplate('guestbook/edit.tpl'));
 	}

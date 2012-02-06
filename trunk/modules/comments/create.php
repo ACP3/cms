@@ -17,7 +17,7 @@
  */
 function commentsCreate($module, $entry_id)
 {
-	global $auth, $date, $db, $lang, $uri, $tpl;
+	global $auth, $date, $db, $lang, $session, $uri, $tpl;
 
 	// Formular für das Eintragen von Kommentaren
 	if (isset($_POST['form']) === true) {
@@ -41,6 +41,8 @@ function commentsCreate($module, $entry_id)
 			$errors[] = $lang->t('comments', 'module_doesnt_exist');
 		if (!$auth->isUser() && !validate::captcha($form['captcha']))
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -57,6 +59,8 @@ function commentsCreate($module, $entry_id)
 			);
 
 			$bool = $db->insert('comments', $insert_values);
+
+			$session->unsetFormToken();
 
 			return comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route($uri->query));
 		}
@@ -96,6 +100,8 @@ function commentsCreate($module, $entry_id)
 		}
 		$tpl->assign('form', isset($form) ? array_merge($defaults, $form) : $defaults);
 		$tpl->assign('captcha', captcha());
+
+		$session->generateFormToken();
 
 		return view::fetchTemplate('comments/create.tpl');
 	}

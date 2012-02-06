@@ -143,13 +143,24 @@ class validate
 		return (bool) preg_match($pattern, $var);
 	}
 	/**
+	 * Validiert das Formtoken auf seine Gültigkeit
+	 *
+	 * @return boolean
+	 */
+	public static function formToken()
+	{
+		global $session;
+
+		return isset($_POST['security_token']) && $session->get('security_token') === $_POST['security_token'] ? true : false;
+	}
+	/**
 	 * Bestimmung des Geschlechts
 	 *  1 = Keine Angabe
 	 *  2 = Weiblich
 	 *  3 = Männlich
 	 *
 	 * @param string, integer $var
-	 *  Die  zu überprüfende Variable
+	 *  Die zu überprüfende Variable
 	 * @return boolean
 	 */
 	public static function gender($var)

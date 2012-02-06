@@ -37,6 +37,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 			(!validate::isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) ||
 			$_FILES['file']['error'] !== UPLOAD_ERR_OK))
 			$errors[] = $lang->t('gallery', 'invalid_image_selected');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -61,6 +63,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 			$bool = $db->update('gallery_pictures', $update_values, 'id = \'' . $uri->id . '\'');
 			setGalleryCache($picture[0]['gallery_id']);
 
+			$session->unsetFormToken();
+
 			view::setContent(comboBox($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id'])));
 		}
 	}
@@ -74,6 +78,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 		}
 
 		$tpl->assign('form', isset($form) ? $form : $picture[0]);
+
+		$session->generateFormToken();
 
 		view::setContent(view::fetchTemplate('gallery/edit_picture.tpl'));
 	}

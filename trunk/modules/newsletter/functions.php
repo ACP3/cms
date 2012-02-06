@@ -28,7 +28,7 @@ function subscribeToNewsletter($emailAddress)
 	$subject = sprintf($lang->t('newsletter', 'subscribe_mail_subject'), CONFIG_SEO_TITLE);
 	$body = str_replace('{host}', $host, $lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
 	$body.= 'http://' . $host . $uri->route('newsletter/activate/hash_' . $hash . '/mail_' . $emailAddress);
-	$mail_sent = genEmail('', $emailAddress, $settings['mail'], $subject, $body);
+	$mail_sent = generateEmail('', $emailAddress, $settings['mail'], $subject, $body);
 
 	// Newsletter-Konto nur erstellen, wenn die E-Mail erfolgreich versendet werden konnte
 	if ($mail_sent) {

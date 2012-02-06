@@ -32,6 +32,8 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 			$errors[] = $lang->t('common', 'select_time_zone');
 		if (!validate::isNumber($form['dst']))
 			$errors[] = $lang->t('common', 'select_daylight_saving_time');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -51,6 +53,8 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 
 			$session->set('language', $form['language']);
 			$session->set('entries', (int) $form['entries']);
+
+			$session->unsetFormToken();
 
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home')));
 		}
@@ -102,6 +106,9 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 		$user[0]['date_format_short'] = $db->escape($user[0]['date_format_short'], 3);
 
 		$tpl->assign('form', isset($form) ? $form : $user[0]);
+
+		$session->generateFormToken();
+
 		view::setContent(view::fetchTemplate('users/edit_settings.tpl'));
 	}
 }

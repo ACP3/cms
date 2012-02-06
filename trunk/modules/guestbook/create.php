@@ -51,6 +51,8 @@ if (isset($_POST['form']) === true) {
 			$db->countRows('*', 'newsletter_accounts', 'mail = \'' . $form['mail'] . '\'') == 1)
 			$errors[] = $lang->t('newsletter', 'account_exists');
 	}
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -75,7 +77,7 @@ if (isset($_POST['form']) === true) {
 			$host = 'http://' . htmlentities($_SERVER['HTTP_HOST']);
 			$fullPath = $host . $uri->route('guestbook/list', 1) . '#gb-entry-' . $db->link->lastInsertId();
 			$body = sprintf($settings['notify'] == 1 ? $lang->t('guestbook', 'notification_email_body_1') : $lang->t('guestbook', 'notification_email_body_2'), $host, $fullPath);
-			genEmail('', $settings['notify_email'], $settings['notify_email'], $lang->t('guestbook', 'notification_email_subject'), $body);
+			generateEmail('', $settings['notify_email'], $settings['notify_email'], $lang->t('guestbook', 'notification_email_subject'), $body);
 		}
 
 		// Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen
@@ -83,6 +85,8 @@ if (isset($_POST['form']) === true) {
 			require MODULES_DIR . 'newsletter/functions.php';
 			subscribeToNewsletter($form['mail']);
 		}
+
+		$session->unsetFormToken();
 
 		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('guestbook'), 0, $comboColorbox));
 	}
@@ -134,6 +138,8 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	}
 
 	$tpl->assign('captcha', captcha());
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('guestbook/create.tpl'));
 }

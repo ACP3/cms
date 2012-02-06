@@ -14,7 +14,7 @@ $settings = config::getModuleSettings('gallery');
 
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
-	
+
 	if (!validate::isNumber($form['thumbwidth']) || !validate::isNumber($form['width']) || !validate::isNumber($form['maxwidth']))
 		$errors[] = $lang->t('gallery', 'invalid_image_width_entered');
 	if (!validate::isNumber($form['thumbheight']) || !validate::isNumber($form['height']) || !validate::isNumber($form['maxheight']))
@@ -29,6 +29,8 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('common', 'select_date_format');
 	if (!validate::isNumber($form['sidebar']))
 		$errors[] = $lang->t('common', 'select_sidebar_entries');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -40,7 +42,9 @@ if (isset($_POST['form']) === true) {
 			$form['width'] !== $settings['width'] || $form['height'] !== $settings['height']) {
 			cache::purge('images', 'gallery');
 		}
-		
+
+		$session->unsetFormToken();
+
 		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/gallery')));
 	}
 }
@@ -80,6 +84,8 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$tpl->assign('sidebar_entries', $sidebar_entries);
 
 	$tpl->assign('form', isset($form) ? $form : $settings);
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('gallery/settings.tpl'));
 }

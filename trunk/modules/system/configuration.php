@@ -49,6 +49,8 @@ if (isset($_POST['form']) === true) {
 		if ($form['mailer_smtp_auth'] == 1 && empty($form['mailer_smtp_user']))
 			$errors[] = $lang->t('system', 'type_in_mailer_smtp_username');
 	}
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -82,6 +84,8 @@ if (isset($_POST['form']) === true) {
 		);
 
 		$bool = config::system($config);
+
+		$session->unsetFormToken();
 
 		view::setContent(comboBox($bool ? $lang->t('system', 'config_edit_success') : $lang->t('system', 'config_edit_error'), $uri->route('acp/system/configuration')));
 	}
@@ -217,6 +221,8 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	);
 
 	$tpl->assign('form', isset($form) ? $form : $current);
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('system/configuration.tpl'));
 }

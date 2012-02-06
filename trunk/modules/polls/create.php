@@ -24,6 +24,8 @@ if (isset($_POST['form']) === true) {
 	}
 	if ($i <= 1)
 		$errors[] = $lang->t('polls', 'type_in_answer');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -57,10 +59,13 @@ if (isset($_POST['form']) === true) {
 			}
 		}
 
+		$session->unsetFormToken();
+
 		view::setContent(comboBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/polls')));
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
+	$answers = array();
 	if (isset($_POST['form']['answers'])) {
 		// Bisherige Antworten
 		$i = 0;
@@ -87,6 +92,8 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$tpl->assign('answers', $answers);
 	$tpl->assign('multiple', selectEntry('multiple', '1', '0', 'checked'));
 	$tpl->assign('disable', count($answers) < 10 ? false : true);
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('polls/create.tpl'));
 }

@@ -22,7 +22,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 	$body = html_entity_decode($db->escape($newsletter[0]['text'], 3) . "\n" . $db->escape($settings['mailsig'], 3), ENT_QUOTES, 'UTF-8');
 
 	for ($i = 0; $i < $c_accounts; ++$i) {
-		$bool = genEmail('', $accounts[$i]['mail'], $settings['mail'], $subject, $body);
+		$bool = generateEmail('', $accounts[$i]['mail'], $settings['mail'], $subject, $body);
 		if (!$bool)
 			break;
 	}

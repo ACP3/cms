@@ -110,7 +110,7 @@ function comboBox($text, $forward = 0, $backward = 0, $colorbox = 0)
  *	E-Mail-Body
  * @return boolean
  */
-function genEmail($recipient_name, $recipient_email, $from, $subject, $body)
+function generateEmail($recipient_name, $recipient_email, $from, $subject, $body)
 {
 	require_once INCLUDES_DIR . 'phpmailer/class.phpmailer.php';
 
@@ -149,7 +149,7 @@ function genEmail($recipient_name, $recipient_email, $from, $subject, $body)
  *	Der zu verwendende Hash-Algorithmus
  * @return string
  */
-function genSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
+function generateSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
 {
 	return hash($algorithm, $salt . hash($algorithm, $plaintext));
 }

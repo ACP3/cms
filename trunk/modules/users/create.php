@@ -37,6 +37,8 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('users', 'select_access_level');
 	if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])
 		$errors[] = $lang->t('users', 'type_in_pwd');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
@@ -46,7 +48,7 @@ if (isset($_POST['form']) === true) {
 		$insert_values = array(
 			'id' => '',
 			'nickname' => $db->escape($form['nickname']),
-			'pwd' => genSaltedPassword($salt, $form['pwd']) . ':' . $salt,
+			'pwd' => generateSaltedPassword($salt, $form['pwd']) . ':' . $salt,
 			'realname' => $db->escape($form['realname']) . ':1',
 			'gender' => ':1',
 			'birthday' => ':1',
@@ -74,6 +76,8 @@ if (isset($_POST['form']) === true) {
 		}
 
 		$db->link->commit();
+
+		$session->unsetFormToken();
 
 		view::setContent(comboBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/users')));
 	}
@@ -105,6 +109,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$tpl->assign('languages', $languages);
 
 	// Einträge pro Seite
+	$entries = array();
 	for ($i = 0, $j = 10; $j <= 50; $i++, $j = $j + 10) {
 		$entries[$i]['value'] = $j;
 		$entries[$i]['selected'] = selectEntry('entries', $j, CONFIG_ENTRIES);
@@ -115,6 +120,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$tpl->assign('time_zone', timeZones(CONFIG_DATE_TIME_ZONE));
 
 	// Sommerzeit an/aus
+	$dst = array();
 	$dst[0]['value'] = '1';
 	$dst[0]['checked'] = selectEntry('dst', '1', CONFIG_DATE_DST, 'checked');
 	$dst[0]['lang'] = $lang->t('common', 'yes');
@@ -133,6 +139,8 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	);
 
 	$tpl->assign('form', isset($form) ? $form : $defaults);
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('users/create.tpl'));
 }

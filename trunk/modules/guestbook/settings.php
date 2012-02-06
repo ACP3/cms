@@ -26,11 +26,15 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('guestbook', 'select_emoticons');
 	if ($newsletter && (!isset($form['newsletter_integration']) || ($form['newsletter_integration'] != 0 && $form['newsletter_integration'] != 1)))
 		$errors[] = $lang->t('guestbook', 'select_newsletter_integration');
+	if (!validate::formToken())
+		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', comboBox($errors));
 	} else {
 		$bool = config::module('guestbook', $form);
+
+		$session->unsetFormToken();
 
 		view::setContent(comboBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/guestbook')));
 	}
@@ -38,6 +42,7 @@ if (isset($_POST['form']) === true) {
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$settings = config::getModuleSettings('guestbook');
 
+	$dateformat = array();
 	$dateformat[0]['value'] = 'short';
 	$dateformat[0]['selected'] = selectEntry('dateformat', 'short', $settings['dateformat']);
 	$dateformat[0]['lang'] = $lang->t('common', 'date_format_short');
@@ -48,6 +53,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	// Emoticons erlauben
 	if ($emoticons) {
+		$allow_emoticons = array();
 		$allow_emoticons[0]['value'] = '1';
 		$allow_emoticons[0]['checked'] = selectEntry('emoticons', '1', $settings['emoticons'], 'checked');
 		$allow_emoticons[0]['lang'] = $lang->t('common', 'yes');
@@ -59,6 +65,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	// In Newsletter integrieren
 	if ($newsletter) {
+		$newsletter_integration = array();
 		$newsletter_integration[0]['value'] = '1';
 		$newsletter_integration[0]['checked'] = selectEntry('newsletter_integration', '1', $settings['newsletter_integration'], 'checked');
 		$newsletter_integration[0]['lang'] = $lang->t('common', 'yes');
@@ -68,6 +75,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 		$tpl->assign('newsletter_integration', $newsletter_integration);
 	}
 
+	$notify = array();
 	$notify[0]['value'] = '0';
 	$notify[0]['selected'] = selectEntry('notify', '0', $settings['notify']);
 	$notify[0]['lang'] = $lang->t('guestbook', 'no_notification');
@@ -80,6 +88,8 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$tpl->assign('notify', $notify);
 
 	$tpl->assign('form', isset($form) ? $form : array('notify_email' => $settings['notify_email']));
+
+	$session->generateFormToken();
 
 	view::setContent(view::fetchTemplate('guestbook/settings.tpl'));
 }

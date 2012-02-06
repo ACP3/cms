@@ -24,6 +24,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 			$errors[] = $lang->t('static_pages', 'text_to_short');
 		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'], 'static_pages/list/id_' . $uri->id)))
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
+		if (!validate::formToken())
+			$errors[] = $lang->t('common', 'form_already_submitted');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', comboBox($errors));
@@ -46,6 +48,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 			require_once MODULES_DIR . 'menu_items/functions.php';
 			setMenuItemsCache();
 
+			$session->unsetFormToken();
+
 			view::setContent(comboBox($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('acp/static_pages')));
 		}
 	}
@@ -60,6 +64,8 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'static_pages', 'id = \'
 		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($page[0]['start'], $page[0]['end'])));
 
 		$tpl->assign('form', isset($form) ? $form : $page[0]);
+
+		$session->generateFormToken();
 
 		view::setContent(view::fetchTemplate('static_pages/edit.tpl'));
 	}
