@@ -20,15 +20,20 @@ if (defined('IN_ACP3') === false)
 class auth
 {
 	/**
+	 * Name des Authentifizierungscookies
+	 */
+	const COOKIE_NAME = 'ACP3_AUTH';
+
+	/**
 	 * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der
 	 * Seitenbesucher auch wirklich ein registrierter Benutzer des ACP3 ist
 	 */
 	function __construct()
 	{
-		if (isset($_COOKIE['ACP3_AUTH'])) {
+		if (isset($_COOKIE[self::COOKIE_NAME])) {
 			global $db, $session;
 
-			$cookie = base64_decode($_COOKIE['ACP3_AUTH']);
+			$cookie = base64_decode($_COOKIE[self::COOKIE_NAME]);
 			$cookie_arr = explode('|', $cookie);
 
 			$user = $db->select('id, pwd, entries, language', 'users', 'nickname = \'' . $db->escape($cookie_arr[0]) . '\' AND login_errors < 3');
@@ -39,10 +44,8 @@ class auth
 						$session->set('isUser', true);
 						$session->set('userId', (int) $user[0]['id']);
 						$settings = config::getModuleSettings('users');
-						if ($settings['entries_override'] == 1 && $user[0]['entries'] > 0)
-							$session->set('entries', (int) $user[0]['entries']);
-						if ($settings['language_override'] == 1)
-							$session->set('language', $user[0]['language']);
+						$session->set('entries', $settings['entries_override'] == 1 && $user[0]['entries'] > 0 ? (int) $user[0]['entries'] : (int) CONFIG_ENTRIES);
+						$session->set('language', $settings['language_override'] == 1 ? $user[0]['language'] : CONFIG_LANG);
 					}
 				}
 			} else {
@@ -50,6 +53,9 @@ class auth
 			}
 		} else {
 			global $session;
+			// Falls der Cookie manuell gelöscht wurde, dann auch die Session zurücksetzen
+			if ($this->isUser() === true)
+				session::secureSession(true);
 			$session->set('language', CONFIG_LANG);
 			$session->set('entries', (int) CONFIG_ENTRIES);
 		}
@@ -212,6 +218,6 @@ class auth
 	 */
 	public function setCookie($nickname, $password, $expiry)
 	{
-		return setcookie('ACP3_AUTH', base64_encode($nickname . '|' . $password), time() + $expiry, ROOT_DIR, strpos($_SERVER['HTTP_HOST'],'.') !== false ? $_SERVER['HTTP_HOST'] : '');
+		return setcookie('ACP3_AUTH', base64_encode($nickname . '|' . $password), time() + $expiry, '/', strpos($_SERVER['HTTP_HOST'],'.') !== false ? $_SERVER['HTTP_HOST'] : '');
 	}
 }
