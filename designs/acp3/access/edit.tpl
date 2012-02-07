@@ -2,7 +2,7 @@
 {$error_msg}
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
-	<div id="tabs" style="width:85%">
+	<div id="tabs">
 		<ul>
 			<li><a href="#tab-1">{lang t="common|general_statements"}</a></li>
 			<li><a href="#tab-2">{lang t="access|permissions"}</a></li>

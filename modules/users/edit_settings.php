@@ -56,7 +56,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'users/home');
+			setRedirectMessage($bool !== null ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), 'users/home');
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

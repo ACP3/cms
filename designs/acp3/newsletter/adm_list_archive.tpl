@@ -3,7 +3,6 @@
 		{check_access mode="input" action="newsletter|delete_archive" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="newsletter|newsletter_archive"}</h2>
 	</div>
-	<hr>
 {if isset($redirect_message)}
 {$redirect_message}
 {/if}

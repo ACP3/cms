@@ -31,12 +31,6 @@ h5 {
 h6 {
 	font-size: 1.0em;
 }
-hr {
-	height: 1px;
-	margin: 2px 0;
-	background: #fff url('images/hr.jpg') no-repeat 50% 50%;
-	border: 0;
-}
 a, a:link {
 	color: #069;
 	text-decoration: none;
@@ -247,6 +241,16 @@ a.form {
 	background: #eee;
 	line-height: 28px;
 }
+.redirect-message {
+	margin: 10px 0;
+	background: #eee;
+	border: 1px solid #ccc;
+	border-width: 1px 0;
+}
+.redirect-message h4 {
+	margin: 5px 0;
+	text-align: center;
+}
 /* Seitenauswahl */
 #pagination {
 	padding: 5px 0;
@@ -269,6 +273,7 @@ a.form {
 }
 #adm-list a, #adm-list input {
 	margin: 4px 0 0 8px;
+	line-height: normal;
 	float: right;
 }
 .mark-entries {

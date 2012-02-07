@@ -4,7 +4,6 @@
 		{check_access mode="input" action="comments|delete_comments" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
-	<hr>
 {if isset($redirect_message)}
 {$redirect_message}
 {/if}
@@ -19,7 +18,7 @@
 				<th>{lang t="common|date"}</th>
 				<th>{lang t="common|name"}</th>
 				<th>{lang t="common|message"}</th>
-				<th>{lang t="comments|ip}</th>
+				<th>{lang t="comments|ip"}</th>
 				<th style="width:3%">{lang t="common|id"}</th>
 			</tr>
 		</thead>

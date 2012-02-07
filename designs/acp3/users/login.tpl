@@ -2,7 +2,7 @@
 {$error_msg}
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
-	<fieldset style="width:30%">
+	<fieldset>
 		<legend>{lang t="users|login"}</legend>
 		<dl>
 			<dt><label for="nickname">{lang t="users|nickname"}</label></dt>

@@ -25,3 +25,10 @@
 .imprint dl dd p {
 	padding: 0;
 }
+.powered-by {
+	width: 70%;
+	margin: 5px auto;
+	padding: 5px 0 0;
+	border-top: 1px dotted #333;
+	text-align: center;
+}

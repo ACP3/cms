@@ -1,4 +1,4 @@
-<h1 id="comments">{lang t="comments|comments"}</h1>
+<h2 id="comments" style="margin:5px 0;text-align:center">{lang t="comments|comments"}</h2>
 {if isset($comments)}
 {$pagination}
 {foreach $comments as $row}
@@ -20,8 +20,6 @@
 	</div>
 	<div class="footer"></div>
 </div>
-<br>
-<br>
 {/foreach}
 {else}
 <div class="error">
@@ -29,5 +27,4 @@
 </div>
 {/if}
 {if modules::check('comments', 'create')}
-<hr>
 {/if}

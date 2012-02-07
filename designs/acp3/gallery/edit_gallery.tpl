@@ -35,7 +35,6 @@
 		{check_access mode="input" action="gallery|delete_picture" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="gallery|pictures"}</h2>
 	</div>
-	<hr>
 {if isset($redirect_message)}
 {$redirect_message}
 {/if}

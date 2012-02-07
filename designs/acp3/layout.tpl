@@ -12,29 +12,30 @@
 </head>
 
 <body>
-<a id="top"></a>
-<div id="head">
-	<h1 id="page-title">{$PAGE_TITLE}</h1>
-	{navbar block="main"}
-</div>
-<div id="breadcrumb">
-	{$BREADCRUMB}
-</div>
-<div id="sidebar-left">
-	<h4>Navigation</h4>
-	{navbar block="sidebar"}
-	{load_module module="users|sidebar"}
-</div>
-<div id="sidebar-right">
-	{load_module module="news|sidebar"}
-	{load_module module="files|sidebar"}
-	{load_module module="gallery|sidebar"}
-	{load_module module="polls|sidebar"}
-</div>
-<div id="content">
-	<h1>{$TITLE}</h1>
-{$CONTENT}
-</div>
-<div id="footer"></div>
+	<div id="box">
+		<div id="header">
+			<h1 id="page-title">{$PAGE_TITLE}</h1>
+			{navbar block="main"}
+		</div>
+		<div id="breadcrumb">
+			{$BREADCRUMB}
+		</div>
+		<div id="sidebar-left">
+			<h4>Navigation</h4>
+			{navbar block="sidebar"}
+			{load_module module="users|sidebar"}
+		</div>
+		<div id="sidebar-right">
+			{load_module module="news|sidebar"}
+			{load_module module="files|sidebar"}
+			{load_module module="gallery|sidebar"}
+			{load_module module="polls|sidebar"}
+		</div>
+		<div id="content">
+			<h1>{$TITLE}</h1>
+			{$CONTENT}
+		</div>
+		<div id="footer"></div>
+	</div>
 </body>
 </html>

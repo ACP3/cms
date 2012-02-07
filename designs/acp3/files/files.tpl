@@ -8,7 +8,6 @@
 		<a href="{uri args="files/details/id_`$file.id`" alias="1"}">{$file.link_title} ({$file.size})</a>
 	</div>
 </div>
-<hr>
 {/foreach}
 {else}
 <div class="error">

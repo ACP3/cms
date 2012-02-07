@@ -1,5 +1,4 @@
 {$imprint}
-<hr>
-<p style="text-align:center">
+<p class="powered-by">
 	{$powered_by}
 </p>

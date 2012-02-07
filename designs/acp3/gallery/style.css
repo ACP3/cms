@@ -1,4 +1,5 @@
 .galleries {
+	margin: 2px 0;
 	padding: 3px;
 	background: #069 url('../images/common_header.png') repeat-x;
 	border: 1px solid #333;

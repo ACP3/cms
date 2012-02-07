@@ -6,7 +6,6 @@
 		{check_access mode="input" action="newsletter|delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="newsletter|newsletter_accounts"}</h2>
 	</div>
-	<hr>
 {if isset($redirect_message)}
 {$redirect_message}
 {/if}

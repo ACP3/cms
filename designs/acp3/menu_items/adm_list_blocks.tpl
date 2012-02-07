@@ -4,7 +4,6 @@
 		{check_access mode="input" action="menu_items|delete_blocks" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
-	<hr>
 {if isset($redirect_message)}
 {$redirect_message}
 {/if}

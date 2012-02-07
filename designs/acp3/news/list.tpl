@@ -2,7 +2,6 @@
 <div style="text-align:center">
 	<a href="{uri args="newsletter/create"}">{lang t="newsletter|create"}</a>
 </div>
-<hr>
 {/if}
 {if isset($categories)}
 <div class="news">
@@ -21,7 +20,6 @@
 		</form>
 	</div>
 </div>
-<hr>
 {/if}
 {if isset($news)}
 {$pagination}
@@ -43,7 +41,6 @@
 		{$row.text}
 	</div>
 </div>
-<hr>
 {/foreach}
 {else}
 <div class="error">
