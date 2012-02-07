@@ -17,15 +17,15 @@ if (isset($_POST['form']) === true) {
 
 	if (!validate::date($form['start'], $form['end']))
 		$errors[] = $lang->t('common', 'select_date');
-	if (!validate::isNumber($form['mode']))
+	if (validate::isNumber($form['mode']) === false)
 		$errors[] = $lang->t('menu_items', 'select_page_type');
 	if ($form['mode'] == 2 && CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'])))
 		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 	if (strlen($form['title']) < 3)
 		$errors[] = $lang->t('menu_items', 'title_to_short');
-	if (!validate::isNumber($form['block_id']))
+	if (validate::isNumber($form['block_id']) === false)
 		$errors[] = $lang->t('menu_items', 'select_block');
-	if (!empty($form['parent']) && !validate::isNumber($form['parent']))
+	if (!empty($form['parent']) && validate::isNumber($form['parent']) === false)
 		$errors[] = $lang->t('menu_items', 'select_superior_page');
 	if (!empty($form['parent']) && validate::isNumber($form['parent'])) {
 		// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
@@ -35,11 +35,11 @@ if (isset($_POST['form']) === true) {
 	}
 	if ($form['display'] != '0' && $form['display'] != '1')
 		$errors[] = $lang->t('menu_items', 'select_item_visibility');
-	if (!validate::isNumber($form['target']) ||
+	if (validate::isNumber($form['target']) === false ||
 		$form['mode'] == '1' && (!is_dir(MODULES_DIR . $form['module']) || preg_match('=/=', $form['module'])) ||
 		$form['mode'] == '2' && !validate::isInternalURI($form['uri']) ||
 		$form['mode'] == '3' && empty($form['uri']) ||
-		$form['mode'] == '4' && (!validate::isNumber($form['static_pages']) || $db->countRows('*', 'static_pages', 'id = \'' . $form['static_pages'] . '\'') == 0))
+		$form['mode'] == '4' && (validate::isNumber($form['static_pages']) === false || $db->countRows('*', 'static_pages', 'id = \'' . $form['static_pages'] . '\'') == 0))
 		$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
 
 	if (isset($errors) === true) {

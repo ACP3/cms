@@ -30,7 +30,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'id = \
 			$errors[] = $lang->t('categories', 'category_already_exists');
 		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'], 'news/details/id_' . $uri->id)))
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
-		if (!empty($form['uri']) && (!validate::isNumber($form['target']) || strlen($form['link_title']) < 3))
+		if (!empty($form['uri']) && (validate::isNumber($form['target']) === false || strlen($form['link_title']) < 3))
 			$errors[] = $lang->t('news', 'complete_additional_hyperlink_statements');
 
 		if (isset($errors) === true) {

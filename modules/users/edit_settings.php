@@ -24,13 +24,13 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 
 		if ($settings['language_override'] == 1 && !$lang->languagePackExists($form['language']))
 			$errors[] = $lang->t('users', 'select_language');
-		if ($settings['entries_override'] == 1 && !validate::isNumber($form['entries']))
+		if ($settings['entries_override'] == 1 && validate::isNumber($form['entries']) === false)
 			$errors[] = $lang->t('system', 'select_entries_per_page');
 		if (empty($form['date_format_long']) || empty($form['date_format_short']))
 			$errors[] = $lang->t('system', 'type_in_date_format');
 		if (!is_numeric($form['time_zone']))
 			$errors[] = $lang->t('common', 'select_time_zone');
-		if (!validate::isNumber($form['dst']))
+		if (validate::isNumber($form['dst']) === false)
 			$errors[] = $lang->t('common', 'select_daylight_saving_time');
 
 		if (isset($errors) === true) {

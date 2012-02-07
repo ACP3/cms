@@ -47,7 +47,7 @@ if (isset($_POST['form']) === true) {
 	} elseif (validate::formToken() === false) {
 		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
-		if (is_array($file)) {
+		if (is_array($file) === true) {
 			$result = moveFile($file['tmp_name'], $file['name'], 'files');
 			$new_file = $result['name'];
 			$filesize = $result['size'];

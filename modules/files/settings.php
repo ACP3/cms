@@ -17,7 +17,7 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('files', 'select_allow_comments');
 	if (empty($form['dateformat']) || ($form['dateformat'] != 'long' && $form['dateformat'] != 'short'))
 		$errors[] = $lang->t('common', 'select_date_format');
-	if (!validate::isNumber($form['sidebar']))
+	if (validate::isNumber($form['sidebar']) === false)
 		$errors[] = $lang->t('common', 'select_sidebar_entries');
 
 	if (isset($errors) === true) {

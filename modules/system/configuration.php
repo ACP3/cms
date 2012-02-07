@@ -13,9 +13,9 @@ if (defined('IN_ADM') === false)
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
-	if (!validate::isNumber($form['entries']))
+	if (validate::isNumber($form['entries']) === false)
 		$errors[] = $lang->t('system', 'select_entries_per_page');
-	if (!validate::isNumber($form['flood']))
+	if (validate::isNumber($form['flood']) === false)
 		$errors[] = $lang->t('system', 'type_in_flood_barrier');
 	if (!validate::isInternalURI($form['homepage']))
 		$errors[] = $lang->t('system', 'incorrect_homepage');
@@ -25,26 +25,26 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('system', 'type_in_date_format');
 	if (!is_numeric($form['date_time_zone']))
 		$errors[] = $lang->t('common', 'select_time_zone');
-	if (!validate::isNumber($form['date_dst']))
+	if (validate::isNumber($form['date_dst']) === false)
 		$errors[] = $lang->t('common', 'select_daylight_saving_time');
-	if (!validate::isNumber($form['maintenance_mode']))
+	if (validate::isNumber($form['maintenance_mode']) === false)
 		$errors[] = $lang->t('system', 'select_online_maintenance');
 	if (strlen($form['maintenance_message']) < 3)
 		$errors[] = $lang->t('system', 'maintenance_message_to_short');
 	if (empty($form['seo_title']))
 		$errors[] = $lang->t('system', 'title_to_short');
-	if (!validate::isNumber($form['seo_aliases']))
+	if (validate::isNumber($form['seo_aliases']) === false)
 		$errors[] = $lang->t('system', 'select_seo_aliases');
-	if (!validate::isNumber($form['seo_mod_rewrite']))
+	if (validate::isNumber($form['seo_mod_rewrite']) === false)
 		$errors[] = $lang->t('system', 'select_mod_rewrite');
-	if (!validate::isNumber($form['cache_images']))
+	if (validate::isNumber($form['cache_images']) === false)
 		$errors[] = $lang->t('system', 'select_cache_images');
-	if (!validate::isNumber($form['cache_minify']))
+	if (validate::isNumber($form['cache_minify']) === false)
 		$errors[] = $lang->t('system', 'type_in_minify_cache_lifetime');
 	if ($form['mailer_type'] === 'smtp') {
 		if (empty($form['mailer_smtp_host']))
 			$errors[] = $lang->t('system', 'type_in_mailer_smtp_host');
-		if (!validate::isNumber($form['mailer_smtp_port']))
+		if (validate::isNumber($form['mailer_smtp_port']) === false)
 			$errors[] = $lang->t('system', 'type_in_mailer_smtp_port');
 		if ($form['mailer_smtp_auth'] == 1 && empty($form['mailer_smtp_user']))
 			$errors[] = $lang->t('system', 'type_in_mailer_smtp_username');

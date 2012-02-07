@@ -21,7 +21,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_resources'
 	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
-		if (empty($form['privileges']) || !validate::isNumber($form['privileges']))
+		if (empty($form['privileges']) || validate::isNumber($form['privileges']) === false)
 			$errors[] = $lang->t('access', 'select_privilege');
 		if (validate::isNumber($form['privileges']) && $db->countRows('*', 'acl_resources', 'id = \'' . $form['privileges'] . '\'') == 0)
 			$errors[] = $lang->t('access', 'privilege_does_not_exist');

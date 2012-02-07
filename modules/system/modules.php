@@ -15,7 +15,7 @@ breadcrumb::assign($lang->t('system', 'system'), $uri->route('acp/system'));
 breadcrumb::assign($lang->t('system', 'extensions'), $uri->route('acp/system/extensions'));
 breadcrumb::assign($lang->t('system', 'modules'));
 
-if ($uri->action == 'activate') {
+if ($uri->action === 'activate') {
 	$info = modules::parseInfo($uri->dir);
 	if ($info['protected']) {
 		$text = $lang->t('system', 'mod_deactivate_forbidden');
@@ -27,7 +27,7 @@ if ($uri->action == 'activate') {
 		$text = $bool !== false ? $lang->t('system', 'mod_activate_success') : $lang->t('system', 'mod_activate_error');
 	}
 	view::setContent(confirmBox($text, $uri->route('acp/system/modules')));
-} elseif ($uri->action == 'deactivate') {
+} elseif ($uri->action === 'deactivate') {
 	$info = modules::parseInfo($uri->dir);
 	if ($info['protected']) {
 		$text = $lang->t('system', 'mod_deactivate_forbidden');

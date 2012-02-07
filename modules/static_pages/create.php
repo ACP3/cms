@@ -28,9 +28,9 @@ if (isset($_POST['form']) === true) {
 		if ($form['create'] != 1 && $form['create'] != '0')
 			$errors[] = $lang->t('static_page', 'select_create_menu_item');
 		if ($form['create'] == 1) {
-			if (!validate::isNumber($form['block_id']))
+			if (validate::isNumber($form['block_id']) === false)
 				$errors[] = $lang->t('menu_items', 'select_block');
-			if (!empty($form['parent']) && !validate::isNumber($form['parent']))
+			if (!empty($form['parent']) && validate::isNumber($form['parent']) === false)
 				$errors[] = $lang->t('menu_items', 'select_superior_page');
 			if (!empty($form['parent']) && validate::isNumber($form['parent'])) {
 				// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet

@@ -53,7 +53,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery_pictur
 				'description' => $db->escape($form['description'], 2),
 				'comments' => $settings['comments'] == 1 && isset($form['comments']) && $form['comments'] == 1 ? 1 : 0,
 			);
-			if (is_array($new_file_sql)) {
+			if (is_array($new_file_sql) === true) {
 				$old_file = $db->select('file', 'gallery_pictures', 'id = \'' . $uri->id . '\'');
 				removePicture($old_file[0]['file']);
 
