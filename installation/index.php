@@ -32,13 +32,13 @@ for ($i = 0; $i < $count_dir; ++$i) {
 	$lang_info = xml::parseXmlFile(ACP3_ROOT . 'languages/' . $directories[$i] . '/info.xml', '/language');
 	if (!empty($lang_info)) {
 		$languages[$i]['dir'] = $directories[$i];
-		$languages[$i]['selected'] = LANG == $directories[$i] ? ' selected="selected"' : '';
+		$languages[$i]['selected'] = LANG === $directories[$i] ? ' selected="selected"' : '';
 		$languages[$i]['name'] = $lang_info['name'];
 	}
 }
 $tpl->assign('languages', $languages);
 
-if ($is_file) {
+if ($is_file === true) {
 	$content = '';
 	include ACP3_ROOT . 'installation/modules/' . $uri->file . '.php';
 	$tpl->assign('content', $content);

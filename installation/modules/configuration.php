@@ -21,19 +21,19 @@ if (isset($_POST['submit'])) {
 	if ((empty($form['user_pwd']) || empty($form['user_pwd_wdh'])) ||
 		(!empty($form['user_pwd']) && !empty($form['user_pwd_wdh']) && $form['user_pwd'] != $form['user_pwd_wdh']))
 		$errors[] = $lang->t('installation', 'type_in_pwd');
-	if (!validate::email($form['mail']))
+	if (validate::email($form['mail']) === false)
 		$errors[] = $lang->t('common', 'wrong_email_format');
-	if (!validate::isNumber($form['entries']))
+	if (validate::isNumber($form['entries']) === false)
 		$errors[] = $lang->t('system', 'select_entries_per_page');
-	if (!validate::isNumber($form['flood']))
+	if (validate::isNumber($form['flood']) === false)
 		$errors[] = $lang->t('system', 'type_in_flood_barrier');
 	if (empty($form['date_format_long']) || empty($form['date_format_short']))
 		$errors[] = $lang->t('system', 'type_in_date_format');
-	if (!validate::isNumber($form['date_dst']))
+	if (validate::isNumber($form['date_dst']) === false)
 		$errors[] = $lang->t('common', 'select_daylight_saving_time');
-	if (!validate::isNumber($form['date_time_zone']))
+	if (validate::isNumber($form['date_time_zone']) === false)
 		$errors[] = $lang->t('common', 'select_time_zone');
-	if (!is_file($config_path) || !is_writable($config_path))
+	if (is_file($config_path) === false || is_writable($config_path) === false)
 		$errors[] = $lang->t('installation', 'wrong_chmod_for_config_file');
 
 	if (isset($errors)) {
@@ -108,10 +108,10 @@ if (isset($_POST['submit'])) {
 				$query.= ';';
 				$data[$i]['query'] = htmlentities($query, ENT_QUOTES, 'UTF-8');
 				$bool = $db->query($query, 3);
-				$data[$i]['color'] = $bool !== null ? '090' : 'f00';
-				$data[$i]['result'] = $bool !== null ? $lang->t('system', 'query_successfully_executed') : $lang->t('system', 'query_failed');
+				$data[$i]['color'] = $bool !== false ? '090' : 'f00';
+				$data[$i]['result'] = $bool !== false ? $lang->t('system', 'query_successfully_executed') : $lang->t('system', 'query_failed');
 				++$i;
-				if ($bool === null) {
+				if ($bool === false) {
 					$tpl->assign('install_error', true);
 					break;
 				}
@@ -156,16 +156,16 @@ if (isset($_POST['submit'])) {
 		// Moduldaten in die ACL schreiben
 		$modules = scandir(MODULES_DIR);
 		foreach ($modules as $row) {
-			if ($row !== '.' && $row !== '..' && is_dir(MODULES_DIR . $row . '/')) {
+			if ($row !== '.' && $row !== '..' && is_dir(MODULES_DIR . $row . '/') === true) {
 				$module = scandir(MODULES_DIR . $row . '/');
 				$mod_id = $db->select('id', 'modules', 'name = \'' . $row . '\'');
-				if (is_file(MODULES_DIR . $row . '/extensions/search.php'))
+				if (is_file(MODULES_DIR . $row . '/extensions/search.php') === true)
 					$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id[0]['id'], 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
-				if (is_file(MODULES_DIR . $row . '/extensions/feeds.php'))
+				if (is_file(MODULES_DIR . $row . '/extensions/feeds.php') === true)
 					$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id[0]['id'], 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
 
 				foreach ($module as $file) {
-					if ($file !== '.' && $file !== '..' && is_file(MODULES_DIR . $row . '/' . $file) && strpos($file, '.php') !== false) {
+					if ($file !== '.' && $file !== '..' && is_file(MODULES_DIR . $row . '/' . $file) === true && strpos($file, '.php') !== false) {
 						$file = substr($file, 0, -4);
 						if (isset($special_resources[$row][$file])) {
 							$privilege_id = $special_resources[$row][$file];
@@ -264,4 +264,3 @@ if (!isset($_POST['submit']) || isset($errors) && is_array($errors)) {
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 }
 $content = $tpl->fetch('configuration.tpl');
-?>

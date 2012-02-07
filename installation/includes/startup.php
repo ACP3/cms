@@ -24,12 +24,12 @@ include ACP3_ROOT . 'installation/includes/functions.php';
 $uri = new uri('install', 'welcome');
 
 if (!empty($_POST['lang'])) {
-	setcookie('ACP3_INSTALLER_LANG', $_POST['lang'], time() + 3600, ROOT_DIR);
+	setcookie('ACP3_INSTALLER_LANG', $_POST['lang'], time() + 3600, '/');
 	$uri->redirect($uri->query);
 }
 if (!empty($_COOKIE['ACP3_INSTALLER_LANG']) &&
 	!preg_match('=/=', $_COOKIE['ACP3_INSTALLER_LANG']) &&
-	is_file(ACP3_ROOT . 'languages/' . $_COOKIE['ACP3_INSTALLER_LANG'] . '/info.xml'))
+	is_file(ACP3_ROOT . 'languages/' . $_COOKIE['ACP3_INSTALLER_LANG'] . '/info.xml') === true)
 	define('LANG', $_COOKIE['ACP3_INSTALLER_LANG']);
 else
 	define('LANG', 'de');
@@ -44,7 +44,7 @@ $tpl->setTemplateDir(ACP3_ROOT . 'installation/design/')
 	->addPluginsDir(INCLUDES_DIR . 'smarty/custom/')
 	->setCompileDir(ACP3_ROOT . 'uploads/cache/tpl_compiled/')
 	->setCacheDir(ACP3_ROOT . 'uploads/cache/tpl_cached/');
-if (!is_writable($tpl->getCompileDir()) || !is_writable($tpl->getCacheDir())) {
+if (is_writable($tpl->getCompileDir()) === false || is_writable($tpl->getCacheDir()) === false) {
 	exit('Bitte geben Sie dem "cache"-Ordner den CHMOD 777!');
 }
 
