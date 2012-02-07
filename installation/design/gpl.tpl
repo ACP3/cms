@@ -9,7 +9,6 @@
 		</ul>
 	</li>
 </ul>
-<hr>
 <h3><a href="#TOC1" name="SEC1">GNU GENERAL PUBLIC LICENSE</a></h3>
 <p>
 	Version 2, June 1991

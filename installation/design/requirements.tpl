@@ -21,7 +21,6 @@
 {/foreach}
 		</tbody>
 	</table>
-	<hr>
 	<p>
 {foreach $files_dirs as $row}
 		<strong>{$row.path}</strong> <span style="color:#{$row.color_1}">{$row.exists}</span>, <span style="color:#{$row.color_2}">{$row.writeable}</span><br>
