@@ -1,7 +1,6 @@
 {if isset($sql_queries)}
 <div style="text-align:center">
 	<a href="#" id="queries-link">{lang t="installation|show_hide_executed_db_queries"}</a>
-	<hr>
 </div>
 <table id="queries" class="acp-table">
 	<thead>

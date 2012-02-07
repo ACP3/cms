@@ -31,12 +31,6 @@ h5 {
 h6 {
 	font-size: 1.0em;
 }
-hr {
-	height: 1px;
-	margin: 2px 0;
-	background: #fff url('../../designs/acp3/images/hr.jpg') no-repeat 50% 50%;
-	border: 0;
-}
 a, a:hover {
 	color: #069;
 	text-decoration: none;
