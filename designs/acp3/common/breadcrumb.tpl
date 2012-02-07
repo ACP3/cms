@@ -1,1 +1,1 @@
-<a href="{$ROOT_DIR}">{$PAGE_TITLE}</a> &raquo; {if isset($breadcrumb)}{foreach $breadcrumb as $row}<a href="{$row.uri}">{$row.title}</a> &raquo; {/foreach}{/if}<span>{$end}</span>
+<a href="{$ROOT_DIR}">{lang t="common|home"}</a> &raquo; {if isset($breadcrumb)}{foreach $breadcrumb as $row}<a href="{$row.uri}">{$row.title}</a> &raquo; {/foreach}{/if}<span>{$end}</span>

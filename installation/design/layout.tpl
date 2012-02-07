@@ -35,9 +35,6 @@
 				<input type="submit" value="{lang t="common|submit"}" class="form">
 			</form>
 		</div>
-		<div id="breadcrumb">
-			<a href="../">ACP3</a> &raquo; <a href="{uri args="install/welcome"}">{lang t="installation|installation"}</a> &raquo; <span>{$title}</span>
-		</div>
 		<div id="content">
 			<h1>{$title}</h1>
 			{$content}
