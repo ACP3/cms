@@ -22,7 +22,7 @@ if (!isset($entries)) {
 	view::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/polls/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/polls')));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	$marked_entries = explode('|', $entries);
-	$bool = $bool2 = $bool3 = null;
+	$bool = $bool2 = $bool3 = false;
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'polls', 'id = \'' . $entry . '\'') == '1') {
 			$bool = $db->delete('polls', 'id = \'' . $entry . '\'');
@@ -30,7 +30,7 @@ if (!isset($entries)) {
 			$bool3 = $db->delete('poll_votes', 'poll_id = \'' . $entry . '\'');
 		}
 	}
-	setRedirectMessage($bool !== null && $bool2 !== null && $bool3 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/polls');
+	setRedirectMessage($bool !== false && $bool2 !== false && $bool3 !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/polls');
 } else {
 	$uri->redirect('acp/errors/404');
 }

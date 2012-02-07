@@ -22,7 +22,7 @@ if (!isset($entries)) {
 	view::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/users/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/users')));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	$marked_entries = explode('|', $entries);
-	$bool = null;
+	$bool = false;
 	$admin_user = false;
 	$self_delete = false;
 	foreach ($marked_entries as $entry) {
@@ -42,7 +42,7 @@ if (!isset($entries)) {
 	if ($admin_user) {
 		$text = $lang->t('users', 'admin_user_undeletable');
 	} else {
-		$text = $bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
+		$text = $bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
 	}
 	setRedirectMessage($text, $self_delete ? ROOT_DIR : 'acp/users');
 } else {

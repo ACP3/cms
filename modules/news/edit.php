@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'id = \'' . $uri->id . '\'') == '1') {
 	require_once MODULES_DIR . 'categories/functions.php';
 
 	$settings = config::getModuleSettings('news');
@@ -35,7 +35,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (!validate::formToken()) {
+		} elseif (validate::formToken() === false) {
 			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
@@ -61,7 +61,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/news');
+			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/news');
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -88,7 +88,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'news', 'id = \'' . $uri
 				$options[$i]['lang'] = $lang->t('news', 'activate_readmore');
 				$i++;
 			}
-			if ($settings['comments'] == 1 && modules::check('comments', 'functions') == 1) {
+			if ($settings['comments'] == 1 && modules::check('comments', 'functions') === true) {
 				$options[$i]['name'] = 'comments';
 				$options[$i]['checked'] = selectEntry('comments', '1', $news[0]['comments'], 'checked');
 				$options[$i]['lang'] = $lang->t('common', 'allow_comments');

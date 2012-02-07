@@ -13,10 +13,10 @@ if (defined('IN_ACP3') === false)
 $time = $date->timestamp();
 $period = ' AND (g.start = g.end AND g.start <= \'' . $time . '\' OR g.start != g.end AND g.start <= \'' . $time . '\' AND g.end >= \'' . $time . '\')';
 
-if (validate::isNumber($uri->id) && $db->select('COUNT(g.id)', 'gallery AS g, {pre}gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id' . $period) > 0) {
+if (validate::isNumber($uri->id) === true && $db->select('COUNT(g.id)', 'gallery AS g, {pre}gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id' . $period) > 0) {
 	$picture = $db->select('g.id AS gallery_id, g.name, p.id, p.pic, p.description, p.comments', 'gallery AS g, {pre}gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
 	$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
-	
+
 	$settings = config::getModuleSettings('gallery');
 
 	// Brotkrümelspur
@@ -36,7 +36,7 @@ if (validate::isNumber($uri->id) && $db->select('COUNT(g.id)', 'gallery AS g, {p
 	if (count($picture_next) > 0)
 		$tpl->assign('picture_next', $picture_next[0]);
 
-	if ($settings['colorbox'] == 0 && $settings['comments'] == 1 && $picture[0]['comments'] == 1 && modules::check('comments', 'functions') == 1) {
+	if ($settings['colorbox'] == 0 && $settings['comments'] == 1 && $picture[0]['comments'] == 1 && modules::check('comments', 'functions') === true) {
 		require_once MODULES_DIR . 'comments/functions.php';
 
 		$tpl->assign('comments', commentsList('gallery', $uri->id));

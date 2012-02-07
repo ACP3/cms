@@ -105,7 +105,7 @@ class modules
 			if ($dir !== '.' && $dir !== '..' && is_file(MODULES_DIR . '/' . $dir . '/module.xml') === true) {
 				$mod_info = xml::parseXmlFile(MODULES_DIR . $dir . '/module.xml', 'info');
 
-				if (is_array($mod_info)) {
+				if (is_array($mod_info) === true) {
 					global $db, $lang;
 
 					$infos[$dir] = array(

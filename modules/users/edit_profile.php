@@ -43,7 +43,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (!validate::formToken()) {
+		} elseif (validate::formToken() === false) {
 			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
@@ -73,7 +73,7 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'users/home');
+			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'users/home');
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

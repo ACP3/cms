@@ -15,12 +15,11 @@ if (defined('IN_ADM') === false)
  *
  * @param integer $id
  *  Die ID des zu löschenden Datensatzes
- *
  * @return boolean
  */
 function aclDeleteNode($id)
 {
-	if (!empty($id) && validate::isNumber($id)) {
+	if (!empty($id) && validate::isNumber($id) === true) {
 		global $db;
 
 		$lr = $db->select('left_id, right_id', 'acl_roles', 'id = \'' . $id . '\'');
@@ -34,7 +33,7 @@ function aclDeleteNode($id)
 
 			$db->link->commit();
 
-			return $bool !== null && $bool2 !== null && $bool3 !== null && $bool4 !== null ? true : false;
+			return $bool !== false && $bool2 !== false && $bool3 !== false && $bool4 !== false ? true : false;
 		}
 	}
 	return false;
@@ -47,14 +46,13 @@ function aclDeleteNode($id)
  * @param integer $parent
  *	ID des neuen Elternelements
  * @param array $update_values
- *
  * @return
  */
 function aclEditNode($id, $parent, array $update_values)
 {
 	global $db;
 
-	if (validate::isNumber($id) && (validate::isNumber($parent) || $parent == '')) {
+	if (validate::isNumber($id) === true && (validate::isNumber($parent) || $parent == '')) {
 		// Die aktuelle Seite mit allen untergeordneten Seiten selektieren
 		$roles = $db->query('SELECT c.id, c.left_id, c.right_id FROM {pre}acl_roles AS p, {pre}acl_roles AS c WHERE p.id = \'' . $id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
 
@@ -68,7 +66,7 @@ function aclEditNode($id, $parent, array $update_values)
 				$bool = $db->update('acl_roles', $update_values, 'id = \'' . $id . '\'');
 			// ...ansonsten den Baum bearbeiten...
 			} else {
-				$bool = null;
+				$bool = false;
 				// Differenz zwischen linken und rechten Wert bilden
 				$page_diff = $roles[0]['right_id'] - $roles[0]['left_id'] + 1;
 
@@ -77,7 +75,7 @@ function aclEditNode($id, $parent, array $update_values)
 
 				// Rekursion verhindern
 				if (!empty($new_parent) && $new_parent[0]['left_id'] < $roles[0]['left_id'] && $new_parent[0]['right_id'] > $roles[0]['right_id']) {
-					$bool = null;
+					$bool = false;
 				} else {
 					if (empty($new_parent)) {
 						$new_parent = $db->select('MAX(right_id) AS right_id', 'acl_roles', 'block_id =  \'' . $roles[0]['block_id'] . '\'');
@@ -107,7 +105,7 @@ function aclEditNode($id, $parent, array $update_values)
 					$c_roles = count($roles);
 					for ($i = 0; $i < $c_roles; ++$i) {
 						$bool = $db->query('UPDATE {pre}acl_roles SET left_id = ' . ($roles[$i]['left_id'] + $diff) . ', right_id = ' . ($roles[$i]['right_id'] + $diff) . ' WHERE id = \'' . $roles[$i]['id'] . '\'', 0);
-						if ($bool == null)
+						if ($bool === false)
 							break;
 					}
 					$db->update('acl_roles', $update_values, 'id = \'' . $id . '\'');
@@ -125,12 +123,11 @@ function aclEditNode($id, $parent, array $update_values)
  * @param integer $parent_id
  *	ID der übergeordneten Rolle
  * @param array $insert_values
- *
  * @return boolean
  */
 function aclInsertNode($parent_id, array $insert_values)
 {
-	if (validate::isNumber($parent_id)) {
+	if (validate::isNumber($parent_id) === true) {
 		global $db;
 
 		$parent = $db->select('left_id, right_id', 'acl_roles', 'id = \'' . $parent_id . '\'');

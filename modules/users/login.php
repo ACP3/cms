@@ -26,8 +26,7 @@ if ($auth->isUser()) {
 			$uri->redirect(0, ROOT_DIR);
 		}
 	} else {
-		$error[] = $lang->t('users', $result == -1 ? 'account_locked' : 'nickname_or_password_wrong');
-		$tpl->assign('error_msg', confirmBox($error));
+		$tpl->assign('error_msg', errorBox($lang->t('users', $result == -1 ? 'account_locked' : 'nickname_or_password_wrong')));
 	}
 }
 view::setContent(view::fetchTemplate('users/login.tpl'));

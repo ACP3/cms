@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'files', 'id = \'' . $uri->id . '\'') == '1') {
 	require_once MODULES_DIR . 'categories/functions.php';
 
 	$settings = config::getModuleSettings('files');
@@ -45,7 +45,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (!validate::formToken()) {
+		} elseif (validate::formToken() === false) {
 			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$new_file_sql = null;
@@ -92,7 +92,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/files');
+			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/files');
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -125,7 +125,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'files', 'id = \'' . $ur
 		// Formularelemente
 		$tpl->assign('categories', categoriesList('files', $dl[0]['category_id'], true));
 
-		if (modules::check('comments', 'functions') == 1 && $settings['comments'] == 1) {
+		if (modules::check('comments', 'functions') === true && $settings['comments'] == 1) {
 			$options = array();
 			$options[0]['name'] = 'comments';
 			$options[0]['checked'] = selectEntry('comments', '1', $dl[0]['comments'], 'checked');

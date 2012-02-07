@@ -32,16 +32,16 @@ if (isset($_POST['form']) === true) {
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (!validate::formToken()) {
+	} elseif (validate::formToken() === false) {
 		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$result = moveFile($file['tmp_name'], $file['name'], 'emoticons');
 
 		$insert_values = array(
-		'id' => '',
-		'code' => $db->escape($form['code']),
-		'description' => $db->escape($form['description']),
-		'img' => $result['name'],
+			'id' => '',
+			'code' => $db->escape($form['code']),
+			'description' => $db->escape($form['description']),
+			'img' => $result['name'],
 		);
 
 		$bool = $db->insert('emoticons', $insert_values);
@@ -49,7 +49,7 @@ if (isset($_POST['form']) === true) {
 
 		$session->unsetFormToken();
 
-		setRedirectMessage($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/emoticons');
+		setRedirectMessage($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/emoticons');
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

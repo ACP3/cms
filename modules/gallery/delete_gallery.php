@@ -22,7 +22,7 @@ if (!isset($entries)) {
 	view::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/gallery/delete_gallery/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/gallery')));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	$marked_entries = explode('|', $entries);
-	$bool = $bool2 = null;
+	$bool = $bool2 = false;
 
 	require_once MODULES_DIR . 'gallery/functions.php';
 
@@ -43,7 +43,7 @@ if (!isset($entries)) {
 			$bool2 = $db->delete('gallery_pictures', 'gallery_id = \'' . $entry . '\'', 0);
 		}
 	}
-	setRedirectMessage($bool && $bool2 ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/gallery');
+	setRedirectMessage($bool !== false && $bool2 !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/gallery');
 } else {
 	$uri->redirect('acp/errors/404');
 }

@@ -24,7 +24,7 @@ if (!isset($entries)) {
 	require_once MODULES_DIR . 'gallery/functions.php';
 
 	$marked_entries = explode('|', $entries);
-	$bool = null;
+	$bool = false;
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'gallery_pictures', 'id = \'' . $entry . '\'') == '1') {
 			// Datei ebenfalls löschen
@@ -37,7 +37,7 @@ if (!isset($entries)) {
 			setGalleryCache($picture[0]['gallery_id']);
 		}
 	}
-	setRedirectMessage($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), !empty($picture[0]['gallery_id']) ? 'acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id'] : 'acp/gallery');
+	setRedirectMessage($bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), !empty($picture[0]['gallery_id']) ? 'acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id'] : 'acp/gallery');
 } else {
 	$uri->redirect('acp/errors/404');
 }

@@ -27,7 +27,7 @@ function setNewsCache($id)
  */
 function getNewsCache($id)
 {
-	if (!cache::check('news_details_id_' . $id))
+	if (cache::check('news_details_id_' . $id) === false)
 		setNewsCache($id);
 
 	return cache::output('news_details_id_' . $id);

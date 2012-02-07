@@ -24,7 +24,7 @@ if (isset($_POST['form']) === true) {
 
 			if (isset($errors) === true) {
 				$tpl->assign('error_msg', errorBox($errors));
-			} elseif (!validate::formToken()) {
+			} elseif (validate::formToken() === false) {
 				view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 			} else {
 				require MODULES_DIR . 'newsletter/functions.php';
@@ -32,7 +32,7 @@ if (isset($_POST['form']) === true) {
 
 				$session->unsetFormToken();
 
-				view::setContent(confirmBox($bool ? $lang->t('newsletter', 'subscribe_success') : $lang->t('newsletter', 'subscribe_error'), ROOT_DIR));
+				view::setContent(confirmBox($bool !== false ? $lang->t('newsletter', 'subscribe_success') : $lang->t('newsletter', 'subscribe_error'), ROOT_DIR));
 			}
 			break;
 		case 'unsubscribe' :
@@ -47,14 +47,14 @@ if (isset($_POST['form']) === true) {
 
 			if (isset($errors) === true) {
 				$tpl->assign('error_msg', errorBox($errors));
-			} elseif (!validate::formToken()) {
+			} elseif (validate::formToken() === false) {
 				view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 			} else {
 				$bool = $db->delete('newsletter_accounts', 'mail = \'' . $form['mail'] . '\'');
 
 				$session->unsetFormToken();
 
-				view::setContent(confirmBox($bool !== null ? $lang->t('newsletter', 'unsubscribe_success') : $lang->t('newsletter', 'unsubscribe_error'), ROOT_DIR));
+				view::setContent(confirmBox($bool !== false ? $lang->t('newsletter', 'unsubscribe_success') : $lang->t('newsletter', 'unsubscribe_error'), ROOT_DIR));
 			}
 			break;
 		default:

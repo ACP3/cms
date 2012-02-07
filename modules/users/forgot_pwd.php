@@ -26,7 +26,7 @@ if ($auth->isUser()) {
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (!validate::formToken()) {
+		} elseif (validate::formToken() === false) {
 			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			// Neues Passwort und neuen Zufallsschlüssel erstellen
@@ -50,7 +50,7 @@ if ($auth->isUser()) {
 
 			$session->unsetFormToken();
 
-			view::setContent(confirmBox($mail_sent === true && isset($bool) && $bool !== null ? $lang->t('users', 'forgot_pwd_success') : $lang->t('users', 'forgot_pwd_error'), ROOT_DIR));
+			view::setContent(confirmBox($mail_sent === true && isset($bool) && $bool !== false ? $lang->t('users', 'forgot_pwd_success') : $lang->t('users', 'forgot_pwd_error'), ROOT_DIR));
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

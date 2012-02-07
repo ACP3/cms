@@ -36,7 +36,7 @@ if (!isset($entries)) {
 	require_once MODULES_DIR . 'access/functions.php';
 	acl::setResourcesCache();
 
-	$text = $bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
+	$text = $bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
 	setRedirectMessage($text, 'acp/access/adm_list_resources');
 } else {
 	$uri->redirect('acp/errors/404');

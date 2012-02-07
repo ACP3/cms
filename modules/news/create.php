@@ -34,7 +34,7 @@ if (isset($_POST['form']) === true) {
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (!validate::formToken()) {
+	} elseif (validate::formToken() === false) {
 		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$insert_values = array(
@@ -58,7 +58,7 @@ if (isset($_POST['form']) === true) {
 
 		$session->unsetFormToken();
 
-		setRedirectMessage($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/news');
+		setRedirectMessage($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/news');
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -78,7 +78,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 			$options[$i]['lang'] = $lang->t('news', 'activate_readmore');
 			$i++;
 		}
-		if ($settings['comments'] == 1 && modules::check('comments', 'functions') == 1) {
+		if ($settings['comments'] == 1 && modules::check('comments', 'functions') === true) {
 			$options[$i]['name'] = 'comments';
 			$options[$i]['checked'] = selectEntry('comments', '1', '0', 'checked');
 			$options[$i]['lang'] = $lang->t('common', 'allow_comments');

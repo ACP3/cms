@@ -25,5 +25,5 @@ if (isset($errors) === true) {
 } else {
 	$bool = $db->update('newsletter_accounts', array('hash' => ''), 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'');
 
-	view::setContent(confirmBox($bool !== null ? $lang->t('newsletter', 'activate_success') : $lang->t('newsletter', 'activate_error'), ROOT_DIR));
+	view::setContent(confirmBox($bool !== false ? $lang->t('newsletter', 'activate_success') : $lang->t('newsletter', 'activate_error'), ROOT_DIR));
 }

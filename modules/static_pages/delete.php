@@ -24,7 +24,7 @@ if (!isset($entries)) {
 	require_once MODULES_DIR . 'menu_items/functions.php';
 
 	$marked_entries = explode('|', $entries);
-	$bool = null;
+	$bool = false;
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'static_pages', 'id = \'' . $entry . '\'') == '1') {
 			$bool = $db->delete('static_pages', 'id = \'' . $entry . '\'');
@@ -37,7 +37,7 @@ if (!isset($entries)) {
 	}
 	setMenuItemsCache();
 
-	setRedirectMessage($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/static_pages');
+	setRedirectMessage($bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/static_pages');
 } else {
 	$uri->redirect('acp/errors/404');
 }

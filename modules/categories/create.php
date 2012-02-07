@@ -38,7 +38,7 @@ if (isset($_POST['form']) === true) {
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (!validate::formToken()) {
+	} elseif (validate::formToken() === false) {
 		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$file_sql = null;
@@ -62,7 +62,7 @@ if (isset($_POST['form']) === true) {
 
 		$session->unsetFormToken();
 
-		setRedirectMessage($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/categories');
+		setRedirectMessage($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/categories');
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

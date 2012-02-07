@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id = \'' . $uri->id . '\'') == '1') {
 	$gallery = $db->select('start, end, name', 'gallery', 'id = \'' . $uri->id . '\'');
 	$gallery[0]['name'] = $db->escape($gallery[0]['name'], 3);
 	$gallery[0]['alias'] = seo::getUriAlias('gallery/pics/id_' . $uri->id);
@@ -33,7 +33,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (!validate::formToken()) {
+		} elseif (validate::formToken() === false) {
 			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
@@ -52,7 +52,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/gallery');
+			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/gallery');
 		}
 	}
 	if (isset($_POST['entries']) === false && isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

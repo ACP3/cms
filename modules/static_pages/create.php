@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (modules::check('menu_items', 'create') == 1)
+if (modules::check('menu_items', 'create') === true)
 	require_once MODULES_DIR . 'menu_items/functions.php';
 
 if (isset($_POST['form']) === true) {
@@ -24,7 +24,7 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('static_pages', 'text_to_short');
 	if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'])))
 		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
-	if (modules::check('menu_items', 'create') == 1) {
+	if (modules::check('menu_items', 'create') === true) {
 		if ($form['create'] != 1 && $form['create'] != '0')
 			$errors[] = $lang->t('static_page', 'select_create_menu_item');
 		if ($form['create'] == 1) {
@@ -45,7 +45,7 @@ if (isset($_POST['form']) === true) {
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (!validate::formToken()) {
+	} elseif (validate::formToken() === false) {
 		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$time_start = $date->timestamp($form['start']);
@@ -67,7 +67,7 @@ if (isset($_POST['form']) === true) {
 			seo::insertUriAlias($form['alias'], 'static_pages/list/id_' . $last_id, $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 		$db->link->commit();
 
-		if ($form['create'] == '1' && modules::check('menu_items', 'create') == 1) {
+		if ($form['create'] == '1' && modules::check('menu_items', 'create') === true) {
 			$insert_values = array(
 				'id' => '',
 				'start' => $time_start,
@@ -86,11 +86,11 @@ if (isset($_POST['form']) === true) {
 
 		$session->unsetFormToken();
 
-		setRedirectMessage($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/static_pages');
+		setRedirectMessage($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/static_pages');
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-	if (modules::check('menu_items', 'create') == 1) {
+	if (modules::check('menu_items', 'create') === true) {
 		$create = array();
 		$create[0]['value'] = 1;
 		$create[0]['selected'] = selectEntry('create', '1', '0', 'checked');

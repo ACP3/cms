@@ -19,7 +19,7 @@ if (isset($_POST['form']['cat']) && validate::isNumber($_POST['form']['cat'])) {
 }
 
 // Kategorien auflisten
-if (modules::check('categories', 'functions') == 1) {
+if (modules::check('categories', 'functions') === true) {
 	require_once MODULES_DIR . 'categories/functions.php';
 	$tpl->assign('categories', categoriesList('news', $cat));
 }
@@ -34,7 +34,7 @@ $c_news = count($news);
 
 if ($c_news > 0) {
 	// Überprüfen, ob das Kommentare Modul aktiv ist
-	if (modules::check('comments', 'functions') == 1) {
+	if (modules::check('comments', 'functions') === true) {
 		require_once MODULES_DIR . 'comments/functions.php';
 		$comment_check = true;
 	}

@@ -31,7 +31,7 @@ if (isset($_POST['form']) === true) {
 		$form['sort'] = strtoupper($form['sort']);
 		$results_mods = array();
 		foreach ($form['mods'] as $module) {
-			if (modules::check($module, 'extensions/search') == 1) {
+			if (modules::check($module, 'extensions/search') === true) {
 				include MODULES_DIR . $module . '/extensions/search.php';
 			}
 		}
@@ -51,7 +51,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$search_mods = array();
 
 	for ($i = 0; $i < $c_mods; ++$i) {
-		if (modules::check($mods[$i], 'extensions/search') == 1) {
+		if (modules::check($mods[$i], 'extensions/search') === true) {
 			$info = modules::parseInfo($mods[$i]);
 			$name = $info['name'];
 			$search_mods[$name]['dir'] = $mods[$i];
@@ -63,6 +63,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$tpl->assign('search_mods', $search_mods);
 
 	// Zu durchsuchende Bereiche
+	$search_areas = array();
 	$search_areas[0]['id'] = 'title_only';
 	$search_areas[0]['value'] = 'title';
 	$search_areas[0]['checked'] = selectEntry('area', 'title', 'title', 'checked');
@@ -78,6 +79,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$tpl->assign('search_areas', $search_areas);
 
 	// Treffer sortieren
+	$sort_hits = array();
 	$sort_hits[0]['id'] = 'asc';
 	$sort_hits[0]['value'] = 'asc';
 	$sort_hits[0]['checked'] = selectEntry('sort', 'asc', 'asc', 'checked');

@@ -14,7 +14,7 @@ $time = $date->timestamp();
 $period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 $multiple = !empty($_POST['answer']) && is_array($_POST['answer']) ? ' AND multiple = \'1\'' : '';
 
-if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $uri->id . '\'' . $multiple . $period) == 1) {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = \'' . $uri->id . '\'' . $multiple . $period) == 1) {
 	// Brotkrümelspur
 	breadcrumb::assign($lang->t('polls', 'polls'), $uri->route('polls'));
 	breadcrumb::assign($lang->t('polls', 'vote'));
@@ -35,7 +35,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 		if ($query == 0) {
 			$user_id = $auth->isUser() ? $auth->getUserId() : 0;
 
-			if (is_array($answers)) {
+			if (is_array($answers) === true) {
 				foreach ($answers as $answer) {
 					if (validate::isNumber($answer)) {
 						$insert_values = array(
@@ -59,7 +59,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $ur
 				);
 				$bool = $db->insert('poll_votes', $insert_values);
 			}
-			$text = $bool !== null ? $lang->t('polls', 'poll_success') : $lang->t('polls', 'poll_error');
+			$text = $bool !== false ? $lang->t('polls', 'poll_success') : $lang->t('polls', 'poll_error');
 		} else {
 			$text = $lang->t('polls', 'already_voted');
 		}

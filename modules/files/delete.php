@@ -24,7 +24,7 @@ if (!isset($entries)) {
 	require_once MODULES_DIR . 'files/functions.php';
 
 	$marked_entries = explode('|', $entries);
-	$bool = null;
+	$bool = false;
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'files', 'id = \'' . $entry . '\'') == '1') {
 			// Datei ebenfalls löschen
@@ -36,7 +36,7 @@ if (!isset($entries)) {
 			seo::deleteUriAlias('files/details/id_' . $entry);
 		}
 	}
-	setRedirectMessage($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/files');
+	setRedirectMessage($bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/files');
 } else {
 	$uri->redirect('acp/errors/404');
 }

@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (validate::isNumber($uri->id)) {
+if (validate::isNumber($uri->id) === true) {
 	@set_time_limit(20);
 	$picture = $db->select('file', 'gallery_pictures', 'id = \'' . $uri->id . '\'');
 	$action = $uri->action === 'thumb' ? 'thumb' : '';

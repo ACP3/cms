@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'newsletter_archive', 'id = \'' . $uri->id . '\'') == '1') {
 	// Brotkrümelspur
 	breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
 	breadcrumb::assign($lang->t('newsletter', 'newsletter'), $uri->route('acp/newsletter'));
@@ -27,7 +27,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (!validate::formToken()) {
+		} elseif (validate::formToken() === false) {
 			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$settings = config::getModuleSettings('newsletter');
@@ -42,7 +42,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 			);
 			$bool = $db->update('newsletter_archive', $update_values, 'id = \'' . $uri->id . '\'');
 
-			if ($form['action'] == '1' && $bool) {
+			if ($form['action'] == '1' && $bool !== false) {
 				$subject = $form['subject'];
 				$body = $form['text'] . "\n" . html_entity_decode($db->escape($settings['mailsig'], 3), ENT_QUOTES, 'UTF-8');
 
@@ -56,7 +56,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 
 					for ($i = 0; $i < $c_accounts; ++$i) {
 						$bool2 = generateEmail('', $accounts[$i]['mail'], $settings['mail'], $subject, $body);
-						if ($bool2 !== true)
+						if ($bool2 === false)
 							break;
 					}
 				}
@@ -64,9 +64,9 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'newsletter_archive', 'i
 
 			$session->unsetFormToken();
 
-			if ($form['action'] == '0' && $bool !== null) {
+			if ($form['action'] == '0' && $bool !== false) {
 				setRedirectMessage($lang->t('newsletter', 'save_success'), 'acp/newsletter/adm_list_archive');
-			} elseif ($form['action'] == '1' && $bool !== null && $bool2 === true) {
+			} elseif ($form['action'] == '1' && $bool !== false && $bool2 === true) {
 				setRedirectMessage($lang->t('newsletter', 'compose_success'), 'acp/newsletter/adm_list_archive');
 			} else {
 				setRedirectMessage($lang->t('newsletter', 'compose_save_error'), 'acp/newsletter/adm_list_archive');

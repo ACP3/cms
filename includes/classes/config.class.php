@@ -108,7 +108,7 @@ class config
 		}
 		$bool2 = self::setModuleCache($module);
 
-		return $bool && $bool2;
+		return $bool !== false && $bool2 !== false ? true : false;
 	}
 	/**
 	 * Gibt den Inhalt der Konfigurationsdateien der Module aus

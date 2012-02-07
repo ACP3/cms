@@ -31,7 +31,7 @@ function setCategoriesCache($module)
  */
 function getCategoriesCache($module)
 {
-	if (!cache::check('categories_' . $module))
+	if (cache::check('categories_' . $module) === false)
 		setCategoriesCache($module);
 
 	return cache::output('categories_' . $module);
@@ -74,7 +74,7 @@ function categoriesCreate($name, $module)
 {
 	global $db;
 
-	if (!categoriesCheckDuplicate($name, $module)) {
+	if (categoriesCheckDuplicate($name, $module) === false) {
 		$insert_values = array(
 			'id' => '',
 			'name' => $db->escape($name),
@@ -107,7 +107,7 @@ function categoriesList($module, $category_id = '', $category_create = false, $c
 	$categories = array();
 	$data = getCategoriesCache($module);
 	$c_data = count($data);
-	
+
 	$categories['name'] = $category_name;
 	if ($c_data > 0) {
 		for ($i = 0; $i < $c_data; ++$i) {
@@ -118,7 +118,7 @@ function categoriesList($module, $category_id = '', $category_create = false, $c
 	} else {
 		$categories['categories'] = array();
 	}
-	if ($category_create === true && modules::check('categories', 'create') == 1) {
+	if ($category_create === true && modules::check('categories', 'create') === true) {
 		$categories['create']['name'] = $category_name . '_create';
 		$categories['create']['value'] = isset($_POST['form'][$categories['create']['name']]) ? $_POST['form'][$categories['create']['name']] : '';
 	}

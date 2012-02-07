@@ -24,7 +24,7 @@ if (!isset($entries)) {
 	require_once MODULES_DIR . 'categories/functions.php';
 
 	$marked_entries = explode('|', $entries);
-	$bool = null;
+	$bool = false;
 	$in_use = 0;
 
 	foreach ($marked_entries as $entry) {
@@ -49,7 +49,7 @@ if (!isset($entries)) {
 	if ($in_use) {
 		$text = $lang->t('categories', 'category_is_in_use');
 	} else {
-		$text = $bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
+		$text = $bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
 	}
 	setRedirectMessage($text, 'acp/categories');
 } else {

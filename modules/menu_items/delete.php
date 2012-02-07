@@ -24,7 +24,7 @@ if (!isset($entries)) {
 	require_once MODULES_DIR . 'menu_items/functions.php';
 
 	$marked_entries = explode('|', $entries);
-	$bool = null;
+	$bool = false;
 	foreach ($marked_entries as $entry) {
 		// URI-Alias löschen
 		$menu_item = $db->select('uri', 'menu_items', 'id = \'' . $entry . '\'');
@@ -34,7 +34,7 @@ if (!isset($entries)) {
 	}
 	setMenuItemsCache();
 
-	setRedirectMessage($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/menu_items');
+	setRedirectMessage($bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/menu_items');
 } else {
 	$uri->redirect('acp/errors/404');
 }

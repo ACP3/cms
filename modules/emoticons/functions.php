@@ -33,7 +33,7 @@ function setEmoticonsCache()
  */
 function getEmoticonsCache()
 {
-	if (!cache::check('emoticons'))
+	if (cache::check('emoticons') === false)
 		setEmoticonsCache();
 
 	return cache::output('emoticons');
