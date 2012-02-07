@@ -3,14 +3,8 @@
 	margin: 0;
 	padding: 0;
 }
-html {
-	background: #333;
-}
 body {
-	margin: 1%;
-	padding: 1%;
-	background: #fff;
-	border: 2px solid #ccc;
+	background: #333;
 	font: 62.5% 'Lucida Grande', 'Trebuchet MS', Arial, sans-serif;
 	color: #333;
 }
@@ -79,16 +73,25 @@ table.acp-table {
 	color: #f90;
 }
 /* Layout */
-#head {
+#box {
+	width: 75%;
+	min-width: 1250px;
+	margin: 1% auto;
+	padding: 1%;
+	background: #fff;
+	border: 2px solid #ccc;
+}
+#page-title {
+	width: 104px;
+	height: 45px;
+	padding: 0 0 0 15px;
+	background: url('../../designs/acp3/images/logo.png') no-repeat;
+	text-indent: -9999px;
+}
+#header {
 	position: relative;
 }
-#head #page-title {
-	padding-left: 15px;
-	font-size: 2.4em;
-	line-height: 30px;
-	text-align: left;
-}
-#head ul {
+#header ul {
 	height: 30px;
 	margin: 0;
 	padding-left: 10px;
@@ -97,24 +100,25 @@ table.acp-table {
 	font: bold 1.3em Verdana, Arial, sans-serif;
 	list-style: none;
 }
-#head ul li {
+#header ul li {
 	float: left;
 }
-#head ul li span {
+#header ul li span {
 	margin-right: 3px;
 	padding: 0 5px;
 	line-height: 30px;
 	color: #fff;
 	display: block;
 }
-#head ul li span.selected {
+#header ul li span.selected {
 	color: #f00;
 }
 #languages {
 	font-size: 1.2em;
 	position: absolute;
-	top: 5px;
+	top: 0;
 	right: 10px;
+	line-height: 45px;
 }
 #languages label {
 	font-weight: bold;
@@ -159,14 +163,14 @@ form {
 	text-align: center;
 }
 fieldset {
-	width: 60%;
+	width: 70%;
 	margin: 0 auto 1px;
 	padding: 10px;
 	border: 1px solid #c2c2c2;
 	font-size: 100%;
 }
 #tabs {
-	width: 60%;
+	width: 70%;
 	margin: 0 auto;
 	font-size: 100%;
 }
@@ -259,7 +263,7 @@ a.form {
 	color: #f00000;
 }
 .success {
-	width: 60%;
+	width: 70%;
 	margin: 0 auto;
 	border: 1px solid #eee;
 	border-color: #eee #c2c2c2 #c2c2c2 #eee;

@@ -1,8 +1,8 @@
 <div class="error">
 	<h4>{lang t="common|failure"}</h4>
 	<ul>
-{foreach $text as $error}
-		<li>{$error}</li>
+{foreach $errors as $row}
+		<li>{$row}</li>
 {/foreach}
 	</ul>
 </div>

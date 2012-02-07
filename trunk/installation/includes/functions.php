@@ -30,13 +30,17 @@ function generateSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
  */
 function salt($str_length)
 {
+	$salt = '';
 	$chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 	$c_chars = strlen($chars) - 1;
-	$key = '';
-	for ($i = 0; $i < $str_length; ++$i) {
-		$key.= $chars[mt_rand(0, $c_chars)];
+	while (strlen($salt) < $str_length) {
+		$char = $chars[mt_rand(0, $c_chars)];
+		// Zeichen nur hinzufügen, wenn sich dieses nicht bereits im Salz befindet
+		if (strpos($salt, $char) === false) {
+			$salt.= $char;
+		}
 	}
-	return $key;
+	return $salt;
 }
 /**
  * Selektion eines Eintrages in einem Dropdown-Menü
