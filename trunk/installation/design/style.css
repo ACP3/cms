@@ -118,27 +118,9 @@ table.acp-table {
 	font-weight: bold;
 	font-size: 1.1em;
 }
-#breadcrumb {
-	padding-left: 15px;
-	font-weight: bold;
-	font-size: 1.3em;
-	line-height: 40px;
-	color: #f00;
-	clear: both;
-}
-#breadcrumb a {
-	text-decoration: underline;
-}
-#breadcrumb a, #breadcrumb span {
-	color: #333;
-}
-#breadcrumb a:hover {
-	color: #f00;
-	text-decoration: none;
-}
 #content {
 	width: 80%;
-	margin: 0 auto;
+	margin: 10px auto 0;
 	font-size: 1.2em;
 }
 #footer {
