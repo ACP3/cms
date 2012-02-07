@@ -7,6 +7,7 @@ define('COLOR_ERROR', 'f00');
 define('COLOR_SUCCESS', '090');
 
 // Allgemeine Voraussetzungen
+$requirements = array();
 $requirements[0]['name'] = $lang->t('system', 'php_version');
 $requirements[0]['color'] = version_compare(phpversion(), PHP_VER, '>=') ? COLOR_SUCCESS : COLOR_ERROR;
 $requirements[0]['found'] = phpversion();
@@ -28,7 +29,7 @@ $defaults = array('includes/config.php');
 $uploads = scandir(ACP3_ROOT . 'uploads/');
 foreach ($uploads as $row) {
 	$path = 'uploads/' . $row . '/';
-	if ($row != '.' && $row != '..' && $row != '.svn' &&  is_dir(ACP3_ROOT . $path)) {
+	if ($row !== '.' && $row !== '..' && $row !== '.svn' &&  is_dir(ACP3_ROOT . $path) === true) {
 		$defaults[] = $path;
 	}
 }
@@ -39,17 +40,17 @@ $i = 0;
 foreach ($defaults as $row) {
 	$files_dirs[$i]['path'] = $row;
 	// Überprüfen, ob es eine Datei oder ein Ordner ist
-	if (is_file(ACP3_ROOT . $row)) {
+	if (is_file(ACP3_ROOT . $row) === true) {
 		$files_dirs[$i]['color_1'] = COLOR_SUCCESS;
 		$files_dirs[$i]['exists'] = $lang->t('installation', 'file_found');
-	} elseif (is_dir(ACP3_ROOT . $row)) {
+	} elseif (is_dir(ACP3_ROOT . $row) === true) {
 		$files_dirs[$i]['color_1'] = COLOR_SUCCESS;
 		$files_dirs[$i]['exists'] = $lang->t('installation', 'folder_found');
 	} else {
 		$files_dirs[$i]['color_1'] = COLOR_ERROR;
 		$files_dirs[$i]['exists'] = $lang->t('installation', 'file_folder_not_found');
 	}
-	$files_dirs[$i]['color_2'] = is_writable(ACP3_ROOT . $row) ? COLOR_SUCCESS : COLOR_ERROR;
+	$files_dirs[$i]['color_2'] = is_writable(ACP3_ROOT . $row) === true ? COLOR_SUCCESS : COLOR_ERROR;
 	$files_dirs[$i]['writeable'] = $files_dirs[$i]['color_2'] == COLOR_SUCCESS ? $lang->t('installation', 'writeable') : $lang->t('installation', 'not_writeable');
 	if ($files_dirs[$i]['color_1'] == COLOR_ERROR || $files_dirs[$i]['color_2'] == COLOR_ERROR) {
 		$check_again = true;
@@ -59,6 +60,7 @@ foreach ($defaults as $row) {
 $tpl->assign('files_dirs', $files_dirs);
 
 // PHP Einstellungen
+$php_settings = array();
 $php_settings[0]['setting'] = $lang->t('installation', 'error_messages');
 $php_settings[0]['color'] = (bool)ini_get('display_errors') ? COLOR_ERROR : COLOR_SUCCESS;
 $php_settings[0]['value'] = $lang->t('system', (bool)ini_get('display_errors') ? 'on' : 'off');
@@ -82,4 +84,3 @@ if (version_compare(phpversion(), PHP_VER, '<') ||
 }
 
 $content = $tpl->fetch('requirements.tpl');
-?>

@@ -10,7 +10,7 @@ header('Content-type: text/plain; charset=UTF-8');
 
 define('IN_ACP3', true);
 
-define('ACP3_ROOT', dirname(__FILE__) . '/../');
+define('ACP3_ROOT', realpath(dirname(__FILE__) . '/../') . '/');
 define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 define('MODULES_DIR', ACP3_ROOT . 'modules/');
 
@@ -23,7 +23,7 @@ require ACP3_ROOT . 'includes/config.php';
 define('NEW_VERSION', '4.0 SVN');
 define('PHP_SELF', '');
 
-if (!defined('CONFIG_DB_VERSION')) {
+if (defined('CONFIG_DB_VERSION') === false) {
 	define('CONFIG_DB_VERSION', 0);
 }
 
@@ -39,7 +39,7 @@ $queries = array(
 		1 => 'ALTER TABLE `{pre}users` ADD `date_format_long` VARCHAR(30) NOT NULL AFTER `skype`;',
 		2 => 'ALTER TABLE `{pre}users` ADD `date_format_short` VARCHAR(30) NOT NULL AFTER `date_format_long`;',
 		3 => 'ALTER TABLE `{pre}users` ADD `entries` TINYINT(2) UNSIGNED NOT NULL AFTER `language`;',
-		4 => 'UPDATE `{pre}users` SET `date_format_long` = \'' . (defined('CONFIG_DATE_FORMAT_LONG') ? CONFIG_DATE_FORMAT_LONG : CONFIG_DATE_FORMAT) . '\', `date_format_short` = \'' . (defined('CONFIG_DATE_FORMAT_SHORT') ? CONFIG_DATE_FORMAT_SHORT : 'd.m.Y') . '\', `entries` = ' . ((int) CONFIG_ENTRIES) . ';',
+		4 => 'UPDATE `{pre}users` SET `date_format_long` = \'' . (defined('CONFIG_DATE_FORMAT_LONG') === true ? CONFIG_DATE_FORMAT_LONG : CONFIG_DATE_FORMAT) . '\', `date_format_short` = \'' . (defined('CONFIG_DATE_FORMAT_SHORT') === true ? CONFIG_DATE_FORMAT_SHORT : 'd.m.Y') . '\', `entries` = ' . ((int) CONFIG_ENTRIES) . ';',
 		5 => 'UPDATE `{pre}access` SET `modules` =  \'access:16,acp:16,captcha:16,categories:16,comments:16,contact:16,emoticons:16,errors:16,feeds:16,files:16,gallery:16,guestbook:16,menu_items:16,news:16,newsletter:16,polls:16,search:16,static_pages:16,system:16,users:16\' WHERE `id` = 1;',
 		6 => 'ALTER TABLE `{pre}guestbook` ADD `active` TINYINT(1) UNSIGNED NOT NULL AFTER `mail`;',
 		7 => 'UPDATE `{pre}guestbook` SET `active` = 1;',
@@ -263,7 +263,7 @@ if (!empty($queries[CONFIG_DB_VERSION + 1])) {
 			foreach ($queries[$i] as $row) {
 				$row = str_replace(array('{engine}', '{charset}'), array($engine, $charset), $row);
 				$bool = $db->query($row, 3);
-				if ($bool === null && defined('DEBUG') && DEBUG === true) {
+				if ($bool === false && defined('DEBUG') === true && DEBUG === true) {
 					print "\n";
 				}
 			}
@@ -412,18 +412,18 @@ if (CONFIG_DB_VERSION < 10) {
 	// Moduldaten in die ACL schreiben
 	$modules = scandir(MODULES_DIR);
 	foreach ($modules as $row) {
-		if ($row !== '.' && $row !== '..' && is_file(MODULES_DIR . $row . '/module.xml')) {
+		if ($row !== '.' && $row !== '..' && is_file(MODULES_DIR . $row . '/module.xml') === true) {
 			$module = scandir(MODULES_DIR . $row . '/');
 			$db->insert('modules', array('id' => '', 'name' => $row, 'active' => 1));
 			$mod_id = $db->link->lastInsertId();
 
-			if (is_file(MODULES_DIR . $row . '/extensions/search.php'))
+			if (is_file(MODULES_DIR . $row . '/extensions/search.php') === true)
 				$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
-			if (is_file(MODULES_DIR . $row . '/extensions/feeds.php'))
+			if (is_file(MODULES_DIR . $row . '/extensions/feeds.php') === true)
 				$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
 
 			foreach ($module as $file) {
-				if ($file !== '.' && $file !== '..' && is_file(MODULES_DIR . $row . '/' . $file) && strpos($file, '.php') !== false) {
+				if ($file !== '.' && $file !== '..' && is_file(MODULES_DIR . $row . '/' . $file) === true && strpos($file, '.php') !== false) {
 					$file = substr($file, 0, -4);
 					if (isset($special_resources[$row][$file])) {
 						$privilege_id = $special_resources[$row][$file];
@@ -485,7 +485,7 @@ $config = array(
 	'seo_mod_rewrite' => (bool) CONFIG_SEO_MOD_REWRITE,
 );
 
-if (defined('CONFIG_DATE_FORMAT') && CONFIG_DB_VERSION == 0) {
+if (defined('CONFIG_DATE_FORMAT') === true && CONFIG_DB_VERSION == 0) {
 	$config['wysiwyg'] = CONFIG_WYSIWYG == 'fckeditor' ? 'ckeditor' : CONFIG_WYSIWYG;
 	$config['date_format_long'] = CONFIG_DATE_FORMAT;
 	$config['date_format_short'] = 'd.m.Y';
@@ -507,7 +507,7 @@ if (defined('CONFIG_MAILER_TYPE') === false) {
 	define('CONFIG_MAILER_SMTP_USER', '');
 	define('CONFIG_MAILER_TYPE', 'mail');
 }
-print config::system($config) ? 'Konfigurationsdatei erfolgreich aktualisiert!' : 'Die Konfigurationsdatei konnte nicht aktualisiert werden!';
+print config::system($config) === true ? 'Konfigurationsdatei erfolgreich aktualisiert!' : 'Die Konfigurationsdatei konnte nicht aktualisiert werden!';
 
 // Cache leeren
 cache::purge();

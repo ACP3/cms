@@ -66,18 +66,18 @@ function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
 	}
 
 	if (isset($field)) {
-		if (!is_array($field) && $field == $defValue) {
+		if (is_array($field) === false && $field == $defValue) {
 			return $attr;
-		} elseif (is_array($field)) {
+		} elseif (is_array($field) === true) {
 			foreach ($field as $row) {
 				if ($row == $defValue)
 					return $attr;
 			}
 		}
 	} else {
-		if (!is_array($currentValue) && $currentValue == $defValue) {
+		if (is_array($currentValue) === false && $currentValue == $defValue) {
 			return $attr;
-		} elseif (is_array($currentValue)) {
+		} elseif (is_array($currentValue) === true) {
 			foreach ($currentValue as $row) {
 				if ($row == $defValue)
 					return $attr;
@@ -95,15 +95,14 @@ function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
 function writeConfigFile(array $data)
 {
 	$path = ACP3_ROOT . 'includes/config.php';
-	if (is_writable($path)){
+	if (is_writable($path) === true){
 		// Konfigurationsdatei in ein Array schreiben
 		ksort($data);
 
 		$content = "<?php\n";
 		$content.= "define('INSTALLED', true);\n";
-		if (defined('DEBUG')) {
+		if (defined('DEBUG') === true)
 			$content.= "define('DEBUG', " . ((bool) DEBUG === true ? 'true' : 'false') . ");\n";
-		}
 		$pattern = "define('CONFIG_%s', %s);\n";
 		foreach ($data as $key => $value) {
 			if (is_numeric($value) === true)
@@ -120,4 +119,3 @@ function writeConfigFile(array $data)
 	}
 	return false;
 }
-?>
