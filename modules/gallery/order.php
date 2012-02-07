@@ -27,4 +27,4 @@ if (validate::isNumber($uri->id) === true) {
 		$uri->redirect('acp/gallery/edit_gallery/id_' . $gallery[0]['id']);
 	}
 }
-$uri->redirect('acp/errors/404');
+$uri->redirect('errors/404');

@@ -38,14 +38,14 @@ if (isset($_POST['form']) === true) {
 		$errors[] = sprintf($lang->t('common', 'flood_no_entry_possible'), $flood_time - $time);
 	if (empty($form['name']))
 		$errors[] = $lang->t('common', 'name_to_short');
-	if (!empty($form['mail']) && !validate::email($form['mail']))
+	if (!empty($form['mail']) && validate::email($form['mail']) === false)
 		$errors[] = $lang->t('common', 'wrong_email_format');
 	if (strlen($form['message']) < 3)
 		$errors[] = $lang->t('common', 'message_to_short');
-	if (!$auth->isUser() && !validate::captcha($form['captcha']))
+	if ($auth->isUser() === false && validate::captcha($form['captcha']) === false)
 		$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 	if ($newsletterAccess) {
-		if ($form['subscribe_newsletter'] == 1 && !validate::email($form['mail']))
+		if ($form['subscribe_newsletter'] == 1 && validate::email($form['mail']) === false)
 			$errors[] = $lang->t('guestbook', 'type_in_email_address_to_subscribe_to_newsletter');
 		if ($form['subscribe_newsletter'] == 1 && validate::email($form['mail']) &&
 			$db->countRows('*', 'newsletter_accounts', 'mail = \'' . $form['mail'] . '\'') == 1)

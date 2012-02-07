@@ -39,5 +39,5 @@ if (!isset($entries)) {
 	$text = $bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
 	setRedirectMessage($text, 'acp/access/adm_list_resources');
 } else {
-	$uri->redirect('acp/errors/404');
+	$uri->redirect('errors/404');
 }

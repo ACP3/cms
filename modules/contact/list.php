@@ -15,11 +15,11 @@ if (isset($_POST['form']) === true) {
 
 	if (empty($form['name']))
 		$errors[] = $lang->t('common', 'name_to_short');
-	if (!validate::email($form['mail']))
+	if (validate::email($form['mail']) === false)
 		$errors[] = $lang->t('common', 'wrong_email_format');
 	if (strlen($form['message']) < 3)
 		$errors[] = $lang->t('common', 'message_to_short');
-	if (!$auth->isUser() && !validate::captcha($form['captcha']))
+	if ($auth->isUser() === false && validate::captcha($form['captcha']) === false)
 		$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
 	if (isset($errors) === true) {

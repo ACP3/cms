@@ -46,5 +46,5 @@ if (!isset($entries)) {
 	}
 	setRedirectMessage($text, $self_delete ? ROOT_DIR : 'acp/users');
 } else {
-	$uri->redirect('acp/errors/404');
+	$uri->redirect('errors/404');
 }

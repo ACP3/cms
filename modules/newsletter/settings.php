@@ -13,7 +13,7 @@ if (defined('IN_ADM') === false)
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
-	if (!validate::email($form['mail']))
+	if (validate::email($form['mail']) === false)
 		$errors[] = $lang->t('common', 'wrong_email_format');
 	if (validate::formToken() === false)
 		$errors[] = $lang->t('common', 'form_already_submitted');

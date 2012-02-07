@@ -39,7 +39,7 @@ function commentsCreate($module, $entry_id)
 			$errors[] = $lang->t('common', 'message_to_short');
 		if (!modules::check($db->escape($form['module'], 2), 'list') === true || validate::isNumber($form['entry_id']) === false)
 			$errors[] = $lang->t('comments', 'module_doesnt_exist');
-		if (!$auth->isUser() && !validate::captcha($form['captcha']))
+		if ($auth->isUser() === false && validate::captcha($form['captcha']) === false)
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors) === true) {
