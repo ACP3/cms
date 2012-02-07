@@ -13,11 +13,11 @@ if (defined('IN_ADM') === false)
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
-	if (!validate::isNumber($form['width']))
+	if (validate::isNumber($form['width']) === false)
 		$errors[] = $lang->t('categories', 'invalid_image_width_entered');
-	if (!validate::isNumber($form['height']))
+	if (validate::isNumber($form['height']) === false)
 		$errors[] = $lang->t('categories', 'invalid_image_height_entered');
-	if (!validate::isNumber($form['filesize']))
+	if (validate::isNumber($form['filesize']) === false)
 		$errors[] = $lang->t('categories', 'invalid_image_filesize_entered');
 
 	if (isset($errors) === true) {

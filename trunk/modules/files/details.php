@@ -18,7 +18,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'files', 'id = 
 
 	$file = getFilesCache($uri->id);
 
-	if ($uri->action == 'download') {
+	if ($uri->action === 'download') {
 		$path = 'uploads/files/';
 		if (is_file($path . $file[0]['file'])) {
 			// Schönen Dateinamen generieren

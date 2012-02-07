@@ -30,7 +30,7 @@ if (isset($_POST['form']) === true) {
 			// Struktur ausgeben
 			if ($form['export_type'] == 'complete' || $form['export_type'] == 'structure') {
 				$result = $db->query('SHOW CREATE TABLE ' . $table);
-				if (is_array($result)) {
+				if (is_array($result) === true) {
 					//$structure.= '-- ' . sprintf($lang->t('system', 'structure_of_table'), $table) . "\n\n";
 					$structure.= isset($form['drop']) && $form['drop'] == '1' ? 'DROP TABLE IF EXISTS `' . $table . '`;' . "\n\n" : '';
 					$structure.= $result[0]['Create Table'] . ';' . "\n\n";
@@ -76,7 +76,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$tables = array();
 
 	foreach ($mod_list as $info) {
-		if (is_array($info['tables'])) {
+		if (is_array($info['tables']) === true) {
 			foreach ($info['tables'] as $table) {
 				$tables[$table]['name'] = $db->prefix . $table;
 				$tables[$table]['selected'] = selectEntry('tables', $table);

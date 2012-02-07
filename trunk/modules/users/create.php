@@ -23,13 +23,13 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('users', 'user_name_already_exists');
 	if (userEmailExists($form['mail']))
 		$errors[] = $lang->t('users', 'user_email_already_exists');
-	if (!validate::isNumber($form['entries']))
+	if (validate::isNumber($form['entries']) === false)
 		$errors[] = $lang->t('system', 'select_entries_per_page');
 	if (empty($form['date_format_long']) || empty($form['date_format_short']))
 		$errors[] = $lang->t('system', 'type_in_date_format');
 	if (!is_numeric($form['time_zone']))
 		$errors[] = $lang->t('common', 'select_time_zone');
-	if (!validate::isNumber($form['dst']))
+	if (validate::isNumber($form['dst']) === false)
 		$errors[] = $lang->t('common', 'select_daylight_saving_time');
 	if (preg_match('=/=', $form['language']) || !is_file('languages/' . $form['language'] . '/info.xml'))
 		$errors[] = $lang->t('users', 'select_language');

@@ -51,7 +51,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'files', 'id = 
 			$new_file_sql = null;
 			// Falls eine neue Datei angegeben wurde, Änderungen durchführen
 			if (isset($file)) {
-				if (is_array($file)) {
+				if (is_array($file) === true) {
 					$result = moveFile($file['tmp_name'], $file['name'], 'files');
 					$new_file = $result['name'];
 					$filesize = $result['size'];
@@ -76,7 +76,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'files', 'id = 
 				'comments' => $settings['comments'] == 1 && isset($form['comments']) ? 1 : 0,
 				'user_id' => $auth->getUserId(),
 			);
-			if (is_array($new_file_sql)) {
+			if (is_array($new_file_sql) === true) {
 				$old_file = $db->select('file', 'files', 'id = \'' . $uri->id . '\'');
 				removeUploadedFile('files', $old_file[0]['file']);
 

@@ -19,11 +19,11 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('news', 'select_allow_comments');
 	if (!isset($form['readmore']) || $form['readmore'] != 1 && $form['readmore'] != 0)
 		$errors[] = $lang->t('news', 'select_activate_readmore');
-	if (!validate::isNumber($form['readmore_chars']) || $form['readmore_chars'] == 0)
+	if (validate::isNumber($form['readmore_chars']) === false || $form['readmore_chars'] == 0)
 		$errors[] = $lang->t('news', 'type_in_readmore_chars');
 	if (empty($form['dateformat']) || ($form['dateformat'] != 'long' && $form['dateformat'] != 'short'))
 		$errors[] = $lang->t('common', 'select_date_format');
-	if (!validate::isNumber($form['sidebar']))
+	if (validate::isNumber($form['sidebar']) === false)
 		$errors[] = $lang->t('common', 'select_sidebar_entries');
 
 	if (isset($errors) === true) {

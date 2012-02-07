@@ -15,11 +15,11 @@ $settings = config::getModuleSettings('gallery');
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
-	if (!validate::isNumber($form['thumbwidth']) || !validate::isNumber($form['width']) || !validate::isNumber($form['maxwidth']))
+	if (validate::isNumber($form['thumbwidth']) === false || validate::isNumber($form['width']) === false || validate::isNumber($form['maxwidth']) === false)
 		$errors[] = $lang->t('gallery', 'invalid_image_width_entered');
-	if (!validate::isNumber($form['thumbheight']) || !validate::isNumber($form['height']) || !validate::isNumber($form['maxheight']))
+	if (validate::isNumber($form['thumbheight']) === false || validate::isNumber($form['height']) === false || validate::isNumber($form['maxheight']) === false)
 		$errors[] = $lang->t('gallery', 'invalid_image_height_entered');
-	if (!validate::isNumber($form['filesize']))
+	if (validate::isNumber($form['filesize']) === false)
 		$errors[] = $lang->t('gallery', 'invalid_image_filesize_entered');
 	if (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0)
 		$errors[] = $lang->t('gallery', 'select_allow_comments');
@@ -27,7 +27,7 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('gallery', 'select_use_colorbox');
 	if (empty($form['dateformat']) || ($form['dateformat'] != 'long' && $form['dateformat'] != 'short'))
 		$errors[] = $lang->t('common', 'select_date_format');
-	if (!validate::isNumber($form['sidebar']))
+	if (validate::isNumber($form['sidebar']) === false)
 		$errors[] = $lang->t('common', 'select_sidebar_entries');
 
 	if (isset($errors) === true) {

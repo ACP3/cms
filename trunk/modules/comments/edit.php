@@ -22,7 +22,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'comments', 'id
 	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
-		if ((empty($comment[0]['user_id']) || !validate::isNumber($comment[0]['user_id'])) && empty($form['name']))
+		if ((empty($comment[0]['user_id']) || validate::isNumber($comment[0]['user_id']) === false) && empty($form['name']))
 			$errors[] = $lang->t('common', 'name_to_short');
 		if (strlen($form['message']) < 3)
 			$errors[] = $lang->t('common', 'message_to_short');
@@ -34,7 +34,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'comments', 'id
 		} else {
 			$update_values = array();
 			$update_values['message'] = $db->escape($form['message']);
-			if ((empty($comment[0]['user_id']) || !validate::isNumber($comment[0]['user_id'])) && !empty($form['name'])) {
+			if ((empty($comment[0]['user_id']) || validate::isNumber($comment[0]['user_id']) === false) && !empty($form['name'])) {
 				$update_values['name'] = $db->escape($form['name']);
 			}
 

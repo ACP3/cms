@@ -51,7 +51,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'categories', '
 				'name' => $db->escape($form['name']),
 				'description' => $db->escape($form['description']),
 			);
-			if (is_array($new_file_sql)) {
+			if (is_array($new_file_sql) === true) {
 				$old_file = $db->select('picture', 'categories', 'id = \'' . $uri->id . '\'');
 				removeUploadedFile('categories', $old_file[0]['picture']);
 

@@ -53,7 +53,7 @@ if (isset($_POST['form']) === true) {
 			'description' => $db->escape($form['description']),
 			'module' => $db->escape($form['module'], 2),
 		);
-		if (is_array($file_sql)) {
+		if (is_array($file_sql) === true) {
 			$insert_values = array_merge($insert_values, $file_sql);
 		}
 
