@@ -2,7 +2,7 @@
 {$error_msg}
 {/if}
 <form action="{$REQUEST_URI}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
-	<fieldset style="width:30%">
+	<fieldset>
 		<dl>
 			<dt><label for="code">{lang t="emoticons|code"}</label></dt>
 			<dd><input type="text" name="form[code]" id="code" value="{$form.code}" maxlength="10"></dd>

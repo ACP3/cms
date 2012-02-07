@@ -20,7 +20,7 @@
 				</dd>
 				<dt><label for="entries">{lang t="system|entries_per_page"}</label></dt>
 				<dd>
-					<select name="form[entries]" id="entries"{if $language_override == 0} disabled{/if}>
+					<select name="form[entries]" id="entries"{if $entries_override == 0} disabled{/if}>
 {foreach $entries as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.value}</option>
 {/foreach}

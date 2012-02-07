@@ -8,4 +8,3 @@
 {/if}
 {/foreach}
 </div>
-<hr>

@@ -2,7 +2,6 @@
 <div style="text-align:center">
 	<a href="{uri args="guestbook/create"}" id="create-link" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>
 </div>
-<hr>
 {if isset($guestbook)}
 {$pagination}
 {foreach $guestbook as $row}
@@ -30,8 +29,6 @@
 	</div>
 	<div class="footer"></div>
 </div>
-<br>
-<br>
 {/foreach}
 {else}
 <div class="error">

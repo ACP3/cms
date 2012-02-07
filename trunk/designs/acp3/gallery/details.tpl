@@ -16,6 +16,5 @@
 	</div>
 </div>
 {if isset($comments)}
-<hr>
 {$comments}
 {/if}
