@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (modules::check('categories', 'functions') == 1) {
+if (modules::check('categories', 'functions') === true) {
 	require_once MODULES_DIR . 'categories/functions.php';
 	$categories = getCategoriesCache('files');
 	if (count($categories) > 0) {

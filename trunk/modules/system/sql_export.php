@@ -19,7 +19,7 @@ if (isset($_POST['form']) === true) {
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (!validate::formToken()) {
+	} elseif (validate::formToken() === false) {
 		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$session->unsetFormToken();

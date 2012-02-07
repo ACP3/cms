@@ -18,7 +18,7 @@ if (isset($_POST['form']) === true) {
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (!validate::formToken()) {
+	} elseif (validate::formToken() === false) {
 		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$form['address'] = $db->escape($form['address'], 2);
@@ -31,7 +31,7 @@ if (isset($_POST['form']) === true) {
 
 		$session->unsetFormToken();
 
-		view::setContent(confirmBox($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/contact')));
+		view::setContent(confirmBox($bool === true ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), $uri->route('acp/contact')));
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

@@ -22,7 +22,7 @@ if (!isset($entries)) {
 	view::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/news/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/news')));
 } elseif (validate::deleteEntries($entries) && $uri->action == 'confirmed') {
 	$marked_entries = explode('|', $entries);
-	$bool = $bool2 = null;
+	$bool = $bool2 = false;
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'news', 'id = \'' . $entry . '\'') == '1') {
 			$bool = $db->delete('news', 'id = \'' . $entry . '\'');
@@ -32,7 +32,7 @@ if (!isset($entries)) {
 			seo::deleteUriAlias('news/details/id_' . $entry);
 		}
 	}
-	setRedirectMessage($bool !== null && $bool2 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/news');
+	setRedirectMessage($bool !== false && $bool2 !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/news');
 } else {
 	$uri->redirect('acp/errors/404');
 }

@@ -37,14 +37,14 @@ function commentsCreate($module, $entry_id)
 			$errors[] = $lang->t('common', 'name_to_short');
 		if (strlen($form['message']) < 3)
 			$errors[] = $lang->t('common', 'message_to_short');
-		if (!modules::check($db->escape($form['module'], 2), 'list') == 1 || !validate::isNumber($form['entry_id']))
+		if (!modules::check($db->escape($form['module'], 2), 'list') === true || validate::isNumber($form['entry_id']) === false)
 			$errors[] = $lang->t('comments', 'module_doesnt_exist');
 		if (!$auth->isUser() && !validate::captcha($form['captcha']))
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (!validate::formToken()) {
+		} elseif (validate::formToken() === false) {
 			return errorBox($lang->t('common', 'form_already_submitted'));
 		} else {
 			$insert_values = array(
@@ -62,12 +62,12 @@ function commentsCreate($module, $entry_id)
 
 			$session->unsetFormToken();
 
-			return confirmBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route($uri->query));
+			return confirmBox($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route($uri->query));
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		// Emoticons einbinden, falls diese aktiv sind
-		if (modules::check('emoticons', 'functions') == 1) {
+		if (modules::check('emoticons', 'functions') === true) {
 			require_once MODULES_DIR . 'emoticons/functions.php';
 
 			// Emoticons im Formular anzeigen

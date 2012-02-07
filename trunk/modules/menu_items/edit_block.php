@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_items_blocks', 'id = \'' . $uri->id . '\'') == '1') {
 	require_once MODULES_DIR . 'menu_items/functions.php';
 
 	breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
@@ -30,7 +30,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (!validate::formToken()) {
+		} elseif (validate::formToken() === false) {
 			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
@@ -44,7 +44,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'menu_items_blocks', 'id
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/menu_items/adm_list_blocks');
+			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/menu_items/adm_list_blocks');
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

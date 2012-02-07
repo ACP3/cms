@@ -38,5 +38,5 @@ function subscribeToNewsletter($emailAddress)
 		$bool = $db->insert('newsletter_accounts', $insert_values);
 	}
 
-	return $mail_sent === true && isset($bool) && $bool;
+	return $mail_sent === true && isset($bool) && $bool !== false;
 }

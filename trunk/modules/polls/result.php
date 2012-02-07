@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (validate::isNumber($uri->id) && $db->countRows('*', 'polls', 'id = \'' . $uri->id . '\' AND start <= \'' . $date->timestamp() . '\'') == 1) {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = \'' . $uri->id . '\' AND start <= \'' . $date->timestamp() . '\'') == 1) {
 	breadcrumb::assign($lang->t('polls', 'polls'), $uri->route('polls'));
 	breadcrumb::assign($lang->t('polls', 'result'));
 

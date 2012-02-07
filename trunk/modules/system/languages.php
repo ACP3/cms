@@ -22,7 +22,7 @@ if ($uri->dir) {
 	if (!empty($dir)) {
 		$bool = config::system(array('lang' => $dir));
 	}
-	$text = $bool ? $lang->t('system', 'languages_edit_success') : $lang->t('system', 'languages_edit_error');
+	$text = $bool === true ? $lang->t('system', 'languages_edit_success') : $lang->t('system', 'languages_edit_error');
 
 	view::setContent(confirmBox($text, $uri->route('acp/system/languages')));
 } else {

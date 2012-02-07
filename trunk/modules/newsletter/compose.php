@@ -20,7 +20,7 @@ if (isset($_POST['form']) === true) {
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (!validate::formToken()) {
+	} elseif (validate::formToken() === false) {
 		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$settings = config::getModuleSettings('newsletter');
@@ -36,7 +36,7 @@ if (isset($_POST['form']) === true) {
 		);
 		$bool = $db->insert('newsletter_archive', $insert_values);
 
-		if ($form['action'] == '1' && $bool) {
+		if ($form['action'] == '1' && $bool !== false) {
 			$subject = $form['subject'];
 			$body = $form['text'] . "\n" . html_entity_decode($db->escape($settings['mailsig'], 3), ENT_QUOTES, 'UTF-8');
 
@@ -50,7 +50,7 @@ if (isset($_POST['form']) === true) {
 
 				for ($i = 0; $i < $c_accounts; ++$i) {
 					$bool2 = generateEmail('', $accounts[$i]['mail'], $settings['mail'], $subject, $body);
-					if ($bool2 !== true)
+					if ($bool2 === false)
 						break;
 				}
 			}
@@ -58,9 +58,9 @@ if (isset($_POST['form']) === true) {
 
 		$session->unsetFormToken();
 
-		if ($form['action'] == '0' && $bool) {
+		if ($form['action'] == '0' && $bool !== false) {
 			setRedirectMessage($lang->t('newsletter', 'save_success'), 'acp/newsletter');
-		} elseif ($form['action'] == '1' && $bool && $bool2 === true) {
+		} elseif ($form['action'] == '1' && $bool !== false && $bool2 === true) {
 			setRedirectMessage($lang->t('newsletter', 'compose_success'), 'acp/newsletter');
 		} else {
 			setRedirectMessage($lang->t('newsletter', 'compose_save_error'), 'acp/newsletter');

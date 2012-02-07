@@ -27,7 +27,7 @@ function setStaticPagesCache($id)
  */
 function getStaticPagesCache($id)
 {
-	if (!cache::check('static_pages_list_id_' . $id))
+	if (cache::check('static_pages_list_id_' . $id) === false)
 		setStaticPagesCache($id);
 
 	return cache::output('static_pages_list_id_' . $id);

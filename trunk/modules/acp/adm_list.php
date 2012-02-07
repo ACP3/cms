@@ -18,7 +18,7 @@ $mods = array();
 
 foreach ($mod_list as $name => $info) {
 	$dir = $info['dir'];
-	if (modules::check($dir, 'adm_list') == 1 && $dir != 'acp' && $dir != 'system') {
+	if (modules::check($dir, 'adm_list') === true && $dir !== 'acp' && $dir !== 'system') {
 		$mods[$name]['name'] = $name;
 		$mods[$name]['dir'] = $dir;
 	}

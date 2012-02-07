@@ -14,7 +14,7 @@ breadcrumb::assign($lang->t('guestbook', 'guestbook'), $uri->route('guestbook'))
 breadcrumb::assign($lang->t('guestbook', 'create'));
 
 $settings = config::getModuleSettings('guestbook');
-$newsletterAccess = modules::check('newsletter', 'create') == 1 && $settings['newsletter_integration'] == 1;
+$newsletterAccess = modules::check('newsletter', 'create') === true && $settings['newsletter_integration'] == 1;
 
 if ($uri->design == 'simple') {
 	$comboColorbox = 1;
@@ -54,7 +54,7 @@ if (isset($_POST['form']) === true) {
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (!validate::formToken()) {
+	} elseif (validate::formToken() === false) {
 		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$insert_values = array(
@@ -88,12 +88,12 @@ if (isset($_POST['form']) === true) {
 
 		$session->unsetFormToken();
 
-		view::setContent(confirmBox($bool ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('guestbook'), 0, $comboColorbox));
+		view::setContent(confirmBox($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('guestbook'), 0, $comboColorbox));
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	// Emoticons einbinden
-	if (modules::check('emoticons', 'functions') == 1 && $settings['emoticons'] == 1) {
+	if (modules::check('emoticons', 'functions') === true && $settings['emoticons'] == 1) {
 		require_once MODULES_DIR . 'emoticons/functions.php';
 		$tpl->assign('emoticons', emoticonsList());
 	}

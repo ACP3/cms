@@ -22,7 +22,7 @@ if ($uri->action == 'do') {
 	$i = 0;
 
 	foreach ($mod_list as $name => $info) {
-		if (is_array($info['tables'])) {
+		if (is_array($info['tables']) === true) {
 			foreach ($info['tables'] as $table) {
 				$table_status = $db->query('SHOW TABLE STATUS FROM ' . CONFIG_DB_NAME . ' LIKE \'' . $db->prefix . $table . '\'');
 				$c_table_status = count($table_status);

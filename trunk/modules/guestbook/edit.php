@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'guestbook', 'id = \'' . $uri->id . '\'') == '1') {
 	$settings = config::getModuleSettings('guestbook');
 
 	if (isset($_POST['form']) === true) {
@@ -25,7 +25,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (!validate::formToken()) {
+		} elseif (validate::formToken() === false) {
 			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
@@ -38,7 +38,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/guestbook');
+			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/guestbook');
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -46,7 +46,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'guestbook', 'id = \'' .
 		$guestbook[0]['name'] = $db->escape($guestbook[0]['name'], 3);
 		$guestbook[0]['message'] = $db->escape($guestbook[0]['message'], 3);
 
-		if (modules::check('emoticons', 'functions') == 1 && $settings['emoticons'] == 1) {
+		if (modules::check('emoticons', 'functions') === true && $settings['emoticons'] == 1) {
 			require_once MODULES_DIR . 'emoticons/functions.php';
 
 			//Emoticons im Formular anzeigen

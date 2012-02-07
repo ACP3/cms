@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery_pictures', 'id = \'' . $uri->id . '\'') == '1') {
 	require_once MODULES_DIR . 'gallery/functions.php';
 
 	$picture = $db->select('p.gallery_id, p.file, p.description, p.comments, g.name AS gallery_name', 'gallery_pictures AS p, {pre}gallery AS g', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
@@ -40,7 +40,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (!validate::formToken()) {
+		} elseif (validate::formToken() === false) {
 			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$new_file_sql = null;
@@ -65,11 +65,11 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery_pictures', 'id 
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id']);
+			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id']);
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-		if ($settings['colorbox'] == 0 && $settings['comments'] == 1 && modules::check('comments', 'functions') == 1) {
+		if ($settings['colorbox'] == 0 && $settings['comments'] == 1 && modules::check('comments', 'functions') === true) {
 			$options = array();
 			$options[0]['name'] = 'comments';
 			$options[0]['checked'] = selectEntry('comments', '1', $picture[0]['comments'], 'checked');

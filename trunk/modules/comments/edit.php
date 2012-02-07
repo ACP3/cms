@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'comments', 'id = \'' . $uri->id . '\'') == '1') {
 	$comment = $db->select('name, user_id, message, module', 'comments', 'id = \'' . $uri->id . '\'');
 
 	$comment[0]['module'] = $db->escape($comment[0]['module'], 3);
@@ -29,7 +29,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (!validate::formToken()) {
+		} elseif (validate::formToken() === false) {
 			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array();
@@ -42,11 +42,11 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'comments', 'id = \'' . 
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/comments/adm_list/module_' . $comment[0]['module']);
+			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/comments/adm_list/module_' . $comment[0]['module']);
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-		if (modules::check('emoticons', 'functions') == 1) {
+		if (modules::check('emoticons', 'functions') === true) {
 			require_once MODULES_DIR . 'emoticons/functions.php';
 
 			// Emoticons im Formular anzeigen

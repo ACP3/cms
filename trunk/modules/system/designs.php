@@ -27,7 +27,7 @@ if ($uri->dir) {
 		$tpl->setTemplateDir(ACP3_ROOT . 'designs/' . $dir . '/');
 		$tpl->assign('DESIGN_PATH', ROOT_DIR . 'designs/' . $dir . '/');
 	}
-	$text = $bool ? $lang->t('system', 'designs_edit_success') : $lang->t('system', 'designs_edit_error');
+	$text = $bool === true ? $lang->t('system', 'designs_edit_success') : $lang->t('system', 'designs_edit_error');
 
 	view::setContent(confirmBox($text, $uri->route('acp/system/designs')));
 } else {

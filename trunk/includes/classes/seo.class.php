@@ -178,7 +178,7 @@ class seo
 		}
 
 		$bool2 = self::setSEOCache();
-		return $bool && $bool2 ? true : false;
+		return $bool !== false && $bool2 !== false ? true : false;
 	}
 	/**
 	 * Löscht einen URI-Alias
@@ -195,6 +195,6 @@ class seo
 
 		$bool = $db->delete('seo', 'uri = \'' . $db->escape($path) . '\'');
 		$bool2 = self::setSEOCache();
-		return $bool && $bool2 ? true : false;
+		return $bool !== false && $bool2 !== false ? true : false;
 	}
 }

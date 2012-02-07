@@ -40,7 +40,7 @@ function commentsList($module, $entry_id)
 	$c_comments = count($comments);
 
 	// Emoticons einbinden, falls diese aktiv sind
-	$emoticons = modules::check('emoticons', 'functions') == 1 ? true : false;
+	$emoticons = modules::check('emoticons', 'functions') === true ? true : false;
 	if ($emoticons) {
 		require_once MODULES_DIR . 'emoticons/functions.php';
 	}
@@ -67,7 +67,7 @@ function commentsList($module, $entry_id)
 
 	$content = view::fetchTemplate('comments/list.tpl');
 
-	if (modules::check('comments', 'create') == 1) {
+	if (modules::check('comments', 'create') === true) {
 		require_once MODULES_DIR . 'comments/create.php';
 		$content.= commentsCreate($module, $entry_id);
 	}

@@ -42,7 +42,7 @@ if (!isset($entries)) {
 	if ($level_undeletable === true) {
 		$text = $lang->t('access', 'role_undeletable');
 	} else {
-		$text = $bool !== null && $bool2 !== null && $bool3 !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
+		$text = $bool !== false && $bool2 !== false && $bool3 !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
 	}
 	setRedirectMessage($text, 'acp/access');
 } else {

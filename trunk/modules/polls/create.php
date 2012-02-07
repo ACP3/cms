@@ -27,7 +27,7 @@ if (isset($_POST['form']) === true) {
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (!validate::formToken()) {
+	} elseif (validate::formToken() === false) {
 		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$start = $date->timestamp($form['start']);
@@ -44,8 +44,9 @@ if (isset($_POST['form']) === true) {
 		);
 
 		$bool = $db->insert('polls', $insert_values);
+		$bool2 = false;
 
-		if ($bool) {
+		if ($bool !== false) {
 			$poll_id = $db->select('id', 'polls', 'start = \'' . $start . '\' AND end = \'' . $end . '\' AND question = \'' . $question . '\'', 'id DESC', 1);
 			foreach ($form['answers'] as $row) {
 				if (!empty($row)) {
@@ -61,7 +62,7 @@ if (isset($_POST['form']) === true) {
 
 		$session->unsetFormToken();
 
-		setRedirectMessage($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/polls');
+		setRedirectMessage($bool !== false && $bool2 !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/polls');
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

@@ -73,7 +73,7 @@ function setMenuItemsCache() {
  */
 function getMenuItemsCache()
 {
-	if (!cache::check('menu_items'))
+	if (cache::check('menu_items') === false)
 		setMenuItemsCache();
 
 	return cache::output('menu_items');
@@ -88,7 +88,7 @@ function getMenuItemsCache()
  */
 function menuItemsDeleteNode($id)
 {
-	if (!empty($id) && validate::isNumber($id)) {
+	if (!empty($id) && validate::isNumber($id) === true) {
 		global $db;
 
 		$lr = $db->select('left_id, right_id', 'menu_items', 'id = \'' . $id . '\'');
@@ -102,7 +102,7 @@ function menuItemsDeleteNode($id)
 
 			$db->link->commit();
 
-			return $bool !== null && $bool2 !== null && $bool3 !== null && $bool4 !== null ? true : false;
+			return $bool !== false && $bool2 !== false && $bool3 !== false && $bool4 !== false ? true : false;
 		}
 	}
 	return false;
@@ -121,7 +121,7 @@ function menuItemsInsertNode($parent_id, array $insert_values)
 	global $db;
 
 	// Keine übergeordnete Seite zugewiesen
-	if (!validate::isNumber($parent_id) || $db->countRows('*', 'menu_items', 'id = \'' . $parent_id . '\'') == 0) {
+	if (validate::isNumber($parent_id) === false || $db->countRows('*', 'menu_items', 'id = \'' . $parent_id . '\'') == 0) {
 		$db->link->beginTransaction();
 
 		// Letzten Eintrag des zugewiesenen Blocks holen
@@ -180,7 +180,7 @@ function menuItemsEditNode($id, $parent, $block_id, array $update_values)
 {
 	global $db;
 
-	if (validate::isNumber($id) && (validate::isNumber($parent) || $parent == '') && validate::isNumber($block_id)) {
+	if (validate::isNumber($id) === true && (validate::isNumber($parent) === true || $parent == '') && validate::isNumber($block_id) === true) {
 		// Die aktuelle Seite mit allen untergeordneten Seiten selektieren
 		$pages = $db->query('SELECT c.id, c.root_id, c.left_id, c.right_id, c.block_id FROM {pre}menu_items AS p, {pre}menu_items AS c WHERE p.id = \'' . $id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
 
@@ -194,7 +194,7 @@ function menuItemsEditNode($id, $parent, $block_id, array $update_values)
 				$bool = $db->update('menu_items', $update_values, 'id = \'' . $id . '\'');
 			// ...ansonsten den Baum bearbeiten...
 			} else {
-				$bool = null;
+				$bool = false;
 				// Differenz zwischen linken und rechten Wert bilden
 				$page_diff = $pages[0]['right_id'] - $pages[0]['left_id'] + 1;
 
@@ -203,7 +203,7 @@ function menuItemsEditNode($id, $parent, $block_id, array $update_values)
 
 				// Rekursion verhindern
 				if (!empty($new_parent) && $new_parent[0]['left_id'] < $pages[0]['left_id'] && $new_parent[0]['right_id'] > $pages[0]['right_id']) {
-					$bool = null;
+					$bool = false;
 				} else {
 					if (empty($new_parent)) {
 						// Root-Element in anderen Block verschieben
@@ -259,7 +259,7 @@ function menuItemsEditNode($id, $parent, $block_id, array $update_values)
 					$c_pages = count($pages);
 					for ($i = 0; $i < $c_pages; ++$i) {
 						$bool = $db->query('UPDATE {pre}menu_items SET block_id = \'' . $block_id . '\', root_id = \'' . $root_id . '\', left_id = ' . ($pages[$i]['left_id'] + $diff) . ', right_id = ' . ($pages[$i]['right_id'] + $diff) . ' WHERE id = \'' . $pages[$i]['id'] . '\'', 0);
-						if ($bool == null)
+						if ($bool === false)
 							break;
 					}
 					$db->update('menu_items', $update_values, 'id = \'' . $id . '\'');

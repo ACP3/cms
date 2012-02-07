@@ -28,7 +28,7 @@ function setFilesCache($id)
  */
 function getFilesCache($id)
 {
-	if (!cache::check('files_details_id_' . $id))
+	if (cache::check('files_details_id_' . $id) === false)
 		setFilesCache($id);
 
 	return cache::output('files_details_id_' . $id);

@@ -15,7 +15,7 @@ if (isset($_POST['form']) === true) {
 
 	if (!validate::email($form['mail']))
 		$errors[] = $lang->t('common', 'wrong_email_format');
-	if (!validate::formToken())
+	if (validate::formToken() === false)
 		$errors[] = $lang->t('common', 'form_already_submitted');
 
 	if (isset($errors) === true) {
@@ -27,7 +27,7 @@ if (isset($_POST['form']) === true) {
 
 		$session->unsetFormToken();
 
-		setRedirectMessage($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), 'acp/newsletter');
+		setRedirectMessage($bool === true ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), 'acp/newsletter');
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

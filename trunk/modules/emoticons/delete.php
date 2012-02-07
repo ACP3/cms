@@ -24,7 +24,7 @@ if (!isset($entries)) {
 	require_once MODULES_DIR . 'emoticons/functions.php';
 
 	$marked_entries = explode('|', $entries);
-	$bool = null;
+	$bool = false;
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'emoticons', 'id = \'' . $entry . '\'') == '1') {
 			// Datei ebenfalls löschen
@@ -35,7 +35,7 @@ if (!isset($entries)) {
 	}
 	setEmoticonsCache();
 
-	setRedirectMessage($bool !== null ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/emoticons');
+	setRedirectMessage($bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/emoticons');
 } else {
 	$uri->redirect('acp/errors/404');
 }

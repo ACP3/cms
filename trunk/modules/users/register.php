@@ -28,7 +28,7 @@ if ($auth->isUser()) {
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (!validate::formToken()) {
+		} elseif (validate::formToken() === false) {
 			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			// E-Mail mit den Accountdaten zusenden
@@ -68,7 +68,7 @@ if ($auth->isUser()) {
 
 			$session->unsetFormToken();
 
-			view::setContent(confirmBox($mail_sent === true && $bool && $bool2 ? $lang->t('users', 'register_success') : $lang->t('users', 'register_error'), ROOT_DIR));
+			view::setContent(confirmBox($mail_sent === true && $bool !== false && $bool2 !== false ? $lang->t('users', 'register_success') : $lang->t('users', 'register_error'), ROOT_DIR));
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

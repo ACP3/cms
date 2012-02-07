@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 require_once MODULES_DIR . 'access/functions.php';
 
-if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles', 'id = \'' . $uri->id . '\'') == '1') {
 	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
@@ -27,7 +27,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (!validate::formToken()) {
+		} elseif (validate::formToken() === false) {
 			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
@@ -51,7 +51,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'acl_roles', 'id = \'' .
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool !== null ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/access');
+			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/access');
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

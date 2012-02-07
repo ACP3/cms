@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit();
 
-if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id = \'' . $uri->id . '\'') == '1') {
 	require_once MODULES_DIR . 'gallery/functions.php';
 
 	$gallery = $db->select('name', 'gallery', 'id = \'' . $uri->id . '\'');
@@ -37,7 +37,7 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (!validate::formToken()) {
+		} elseif (validate::formToken() === false) {
 			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$result = moveFile($file['tmp_name'], $file['name'], 'gallery');
@@ -58,14 +58,14 @@ if (validate::isNumber($uri->id) && $db->countRows('*', 'gallery', 'id = \'' . $
 
 			$session->unsetFormToken();
 
-			view::setContent(confirmBox($bool && $bool2 ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/gallery/edit_gallery/id_' . $uri->id)));
+			view::setContent(confirmBox($bool !== false && $bool2 !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('acp/gallery/edit_gallery/id_' . $uri->id)));
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		$galleries = $db->select('id, start, name', 'gallery', 0, 'start DESC');
 		$c_galleries = count($galleries);
 
-		if ($settings['colorbox'] == 0 && $settings['comments'] == 1 && modules::check('comments', 'functions') == 1) {
+		if ($settings['colorbox'] == 0 && $settings['comments'] == 1 && modules::check('comments', 'functions') === true) {
 			$options = array();
 			$options[0]['name'] = 'comments';
 			$options[0]['checked'] = selectEntry('comments', '1', '0', 'checked');

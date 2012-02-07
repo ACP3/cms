@@ -19,7 +19,7 @@ if ($c_guestbook > 0) {
 	$tpl->assign('pagination', pagination($db->countRows('*', 'guestbook')));
 
 	// Emoticons einbinden
-	$emoticons = modules::check('emoticons', 'functions') == 1 && $settings['emoticons'] == 1 ? true : false;
+	$emoticons = modules::check('emoticons', 'functions') === true && $settings['emoticons'] == 1 ? true : false;
 	if ($emoticons) {
 		require_once MODULES_DIR . 'emoticons/functions.php';
 	}

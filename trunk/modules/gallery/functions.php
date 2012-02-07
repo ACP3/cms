@@ -49,7 +49,7 @@ function setGalleryCache($id)
  */
 function getGalleryCache($id)
 {
-	if (!cache::check('gallery_pics_id_' . $id))
+	if (cache::check('gallery_pics_id_' . $id) === false)
 		setGalleryCache($id);
 
 	return cache::output('gallery_pics_id_' . $id);
@@ -69,6 +69,7 @@ function generatePictureAlias($picture_id)
 	$alias.= '-' . makeStringUrlSafe($lang->t('gallery', 'picture')) . '-' . $picture_id;
 	$seo_keywords = seo::getKeywords('gallery/pics/id_' . $picture[0]['gallery_id']);
 	$seo_description = seo::getDescription('gallery/pics/id_' . $picture[0]['gallery_id']);
+
 	return seo::insertUriAlias($alias, 'gallery/details/id_' . $picture_id, $seo_keywords, $seo_description);
 }
 /**
@@ -117,7 +118,7 @@ function deletePictureAliases($gallery_id)
 /**
  * Löscht ein Bild aus dem Dateisystem
  *
- * @param string $file 
+ * @param string $file
  */
 function removePicture($file)
 {

@@ -20,7 +20,7 @@ if ($c_guestbook > 0) {
 	$emoticons = false;
 
 	// Emoticons einbinden
-	if (modules::check('emoticons', 'functions') == 1) {
+	if (modules::check('emoticons', 'functions') === true) {
 		require_once MODULES_DIR . 'emoticons/functions.php';
 		$emoticons = true;
 	}

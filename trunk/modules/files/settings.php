@@ -22,14 +22,14 @@ if (isset($_POST['form']) === true) {
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (!validate::formToken()) {
+	} elseif (validate::formToken() === false) {
 		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$bool = config::module('files', $form);
 
 		$session->unsetFormToken();
 
-		setRedirectMessage($bool ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), 'acp/files');
+		setRedirectMessage($bool === true ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), 'acp/files');
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

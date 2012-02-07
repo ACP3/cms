@@ -23,10 +23,10 @@ if ($auth->isUser()) {
 
 	foreach ($mod_list as $name => $info) {
 		$dir = $info['dir'];
-		if (modules::check($dir, 'adm_list') == 1 && $dir != 'acp') {
-			if ($dir == 'system') {
+		if (modules::check($dir, 'adm_list') === true && $dir !== 'acp') {
+			if ($dir === 'system') {
 				$access_system = true;
-			} elseif ($dir == 'home') {
+			} elseif ($dir === 'home') {
 				$tpl->assign('access_home', true);
 			} else {
 				$nav_mods[$name]['name'] = $name;
@@ -40,16 +40,16 @@ if ($auth->isUser()) {
 
 	if ($access_system) {
 		$i = 0;
-		if (modules::check('system', 'configuration') == 1) {
+		if (modules::check('system', 'configuration') === true) {
 			$nav_system[$i]['page'] = 'configuration';
 			$nav_system[$i]['name'] = $lang->t('system', 'configuration');
 		}
-		if (modules::check('system', 'extensions') == 1) {
+		if (modules::check('system', 'extensions') === true) {
 			$i++;
 			$nav_system[$i]['page'] = 'extensions';
 			$nav_system[$i]['name'] = $lang->t('system', 'extensions');
 		}
-		if (modules::check('system', 'maintenance') == 1) {
+		if (modules::check('system', 'maintenance') === true) {
 			$i++;
 			$nav_system[$i]['page'] = 'maintenance';
 			$nav_system[$i]['name'] = $lang->t('system', 'maintenance');

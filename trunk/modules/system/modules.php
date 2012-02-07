@@ -24,7 +24,7 @@ if ($uri->action == 'activate') {
 		modules::setModulesCache();
 		acl::setResourcesCache();
 
-		$text = $bool ? $lang->t('system', 'mod_activate_success') : $lang->t('system', 'mod_activate_error');
+		$text = $bool !== false ? $lang->t('system', 'mod_activate_success') : $lang->t('system', 'mod_activate_error');
 	}
 	view::setContent(confirmBox($text, $uri->route('acp/system/modules')));
 } elseif ($uri->action == 'deactivate') {
@@ -36,7 +36,7 @@ if ($uri->action == 'activate') {
 		modules::setModulesCache();
 		acl::setResourcesCache();
 
-		$text = $bool ? $lang->t('system', 'mod_deactivate_success') : $lang->t('system', 'mod_deactivate_error');
+		$text = $bool !== false ? $lang->t('system', 'mod_deactivate_success') : $lang->t('system', 'mod_deactivate_error');
 	}
 	view::setContent(confirmBox($text, $uri->route('acp/system/modules')));
 } else {
