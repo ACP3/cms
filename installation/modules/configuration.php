@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
 
 	if (isset($errors)) {
 		$tpl->assign('errors', $errors);
-		$tpl->assign('error_msg', $tpl->fetch('error.tpl'));
+		$tpl->assign('error_msg', $tpl->fetch('error_box.tpl'));
 	} else {
 		// Systemkonfiguration erstellen
 		$config = array(

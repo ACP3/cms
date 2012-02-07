@@ -79,31 +79,31 @@ function confirmBox($text, $forward = 0, $backward = 0, $colorbox = 0)
 	global $tpl;
 
 	if (!empty($text)) {
-		$combo = array(
+		$confirm = array(
 			'text' => $text,
 			'forward' => $forward,
 			'colorbox' => $colorbox,
 		);
 		if (!empty($backward))
-			$combo['backward'] = $backward;
-		$tpl->assign('combo', $combo);
+			$confirm['backward'] = $backward;
+		$tpl->assign('confirm', $confirm);
 
-		return view::fetchTemplate('common/combo.tpl');
+		return view::fetchTemplate('common/confirm_box.tpl');
 	}
 	return '';
 }
 /**
  * Gibt eine Box mit den aufgetretenen Fehlern aus
  *
- * @param string|array $text
+ * @param string|array $errors
  * @return string
  */
-function errorBox($text)
+function errorBox($errors)
 {
 	global $tpl;
 
-	$tpl->assign('text', is_array($text) === true ? $text : array($text));
-	return view::fetchTemplate('common/error.tpl');
+	$tpl->assign('errors', is_array($errors) === true ? $errors : array($errors));
+	return view::fetchTemplate('common/error_box.tpl');
 }
 /**
  * Generiert eine E-Mail und versendet diese

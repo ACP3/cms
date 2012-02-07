@@ -15,32 +15,34 @@
 </head>
 
 <body>
-<div id="head">
-	<h1 id="page-title">ACP3 {lang t="installation|installation"}</h1>
-	<ul>
+	<div id="box">
+		<div id="header">
+			<h1 id="page-title">ACP3 {lang t="installation|installation"}</h1>
+			<ul>
 {foreach from=$pages item=row}
-		<li><span{$row.selected}>{$row.title}</span></li>
+				<li><span{$row.selected}>{$row.title}</span></li>
 {/foreach}
-	</ul>
-	<form action="{$REQUEST_URI}" method="post" id="languages">
-		<label for="lang">
-			{lang t="installation|language"}
-			<select name="lang" id="lang">
+			</ul>
+			<form action="{$REQUEST_URI}" method="post" id="languages">
+				<label for="lang">
+					{lang t="installation|language"}
+					<select name="lang" id="lang">
 {foreach from=$languages item=row}
-				<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
+						<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
 {/foreach}
-			</select>
-		</label>
-		<input type="submit" value="{lang t="common|submit"}" class="form">
-	</form>
-</div>
-<div id="breadcrumb">
-	<a href="../">ACP3</a> &raquo; <a href="{uri args="install/welcome"}">{lang t="installation|installation"}</a> &raquo; <span>{$title}</span>
-</div>
-<div id="content">
-	<h1>{$title}</h1>
-{$content}
-</div>
-<div id="footer"></div>
+					</select>
+				</label>
+				<input type="submit" value="{lang t="common|submit"}" class="form">
+			</form>
+		</div>
+		<div id="breadcrumb">
+			<a href="../">ACP3</a> &raquo; <a href="{uri args="install/welcome"}">{lang t="installation|installation"}</a> &raquo; <span>{$title}</span>
+		</div>
+		<div id="content">
+			<h1>{$title}</h1>
+			{$content}
+		</div>
+		<div id="footer"></div>
+	</div>
 </body>
 </html>
