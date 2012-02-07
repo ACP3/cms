@@ -24,10 +24,10 @@
 			</dl>
 		</div>
 		<div id="tab-2">
-			<table class="acp-table">
+			<script type="text/javascript" src="{$DESIGN_PATH}access/script.js"></script>
+			<table id="resources-table" class="acp-table">
 				<thead>
 					<tr>
-						<th>{lang t="access|module_name"}</th>
 {foreach $privileges as $row}
 						<th>{$row.key}</th>
 {/foreach}
@@ -36,7 +36,9 @@
 				<tbody>
 {foreach $modules as $module => $values}
 					<tr>
-						<td><strong>{$module}</strong></td>
+						<th id="{$values.id}-resources" class="sub-table-header" colspan="{count($privileges)}" style="text-align:left">{$module}</th>
+					</tr>
+					<tr class="hide {$values.id}-resources">
 {foreach $values.privileges as $privilege}
 						<td>
 							<select name="form[privileges][{$values.id}][{$privilege.id}]">

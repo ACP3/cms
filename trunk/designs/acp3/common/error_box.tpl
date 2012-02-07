@@ -1,4 +1,4 @@
-<div class="error">
+<div class="error" style="margin:2px auto 10px">
 	<h4>{lang t="common|failure"}</h4>
 	<ul>
 {foreach $errors as $row}
@@ -6,4 +6,3 @@
 {/foreach}
 	</ul>
 </div>
-<br>

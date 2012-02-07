@@ -6,4 +6,3 @@
 {/foreach}
 	</ul>
 </div>
-<br>
