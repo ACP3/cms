@@ -237,13 +237,20 @@ form {
 	text-align: center;
 }
 fieldset {
+	width: 90%;
 	margin: 0 auto 1px;
 	padding: 10px;
 	border: 1px solid #c2c2c2;
-	font-size: 100%;
+	font-size: 1em;
 }
 #tabs {
-	font-size: 100%;
+	width: 90%;
+	margin: 0 auto;
+	font-size: 1em;
+}
+#tabs table {
+	font-family: 'Lucida Grande', 'Trebuchet MS', Arial, sans-serif;
+	font-size: 1em
 }
 fieldset dl, #tabs dl {
 	text-align: left;
@@ -335,7 +342,7 @@ a.form, a:link.form {
 }
 .error {
 	width: 85%;
-	margin: 0 auto;
+	margin: 2px auto;
 	padding: 10px;
 	background: #ffc;
 	border: 1px solid #ddd;
