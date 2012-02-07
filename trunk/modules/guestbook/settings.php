@@ -20,7 +20,7 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('common', 'select_date_format');
 	if (!isset($form['notify']) || ($form['notify'] != 0 && $form['notify'] != 1 && $form['notify'] != 2))
 		$errors[] = $lang->t('guestbook', 'select_notification_type');
-	if (!validate::email($form['notify_email']))
+	if (validate::email($form['notify_email']) === false)
 		$errors[] = $lang->t('common', 'wrong_email_format');
 	if ($emoticons && (!isset($form['notify']) || ($form['notify'] != 0 && $form['notify'] != 1)))
 		$errors[] = $lang->t('guestbook', 'select_emoticons');

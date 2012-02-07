@@ -45,5 +45,5 @@ if (!isset($entries)) {
 	}
 	setRedirectMessage($bool !== false && $bool2 !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/gallery');
 } else {
-	$uri->redirect('acp/errors/404');
+	$uri->redirect('errors/404');
 }

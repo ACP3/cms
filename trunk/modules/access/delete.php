@@ -46,5 +46,5 @@ if (!isset($entries)) {
 	}
 	setRedirectMessage($text, 'acp/access');
 } else {
-	$uri->redirect('acp/errors/404');
+	$uri->redirect('errors/404');
 }

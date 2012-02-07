@@ -39,5 +39,5 @@ if (!isset($entries)) {
 
 	setRedirectMessage($bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/static_pages');
 } else {
-	$uri->redirect('acp/errors/404');
+	$uri->redirect('errors/404');
 }

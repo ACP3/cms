@@ -40,5 +40,5 @@ if (!isset($entries)) {
 
 	setRedirectMessage($bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/menu_items/adm_list_blocks');
 } else {
-	$uri->redirect('acp/errors/404');
+	$uri->redirect('errors/404');
 }

@@ -22,7 +22,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles', 'i
 		$diff_left = $elem[0]['left_id'] - $roles[0]['left_id'];
 		$diff_right = $elem[0]['right_id'] - $roles[0]['right_id'];
 	} else {
-		$uri->redirect('acp/errors/404');
+		$uri->redirect('errors/404');
 	}
 
 	$c_elem = count($elem);
@@ -52,5 +52,5 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles', 'i
 
 	$uri->redirect('acp/access');
 } else {
-	$uri->redirect('acp/errors/404');
+	$uri->redirect('errors/404');
 }

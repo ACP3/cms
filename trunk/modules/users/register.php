@@ -17,13 +17,13 @@ if ($auth->isUser()) {
 			$errors[] = $lang->t('common', 'name_to_short');
 		if (!userNameExists($form['nickname']))
 			$errors[] = $lang->t('users', 'user_name_already_exists');
-		if (!validate::email($form['mail']))
+		if (validate::email($form['mail']) === false)
 			$errors[] = $lang->t('common', 'wrong_email_format');
 		if (!userEmailExists($form['mail']))
 			$errors[] = $lang->t('users', 'user_email_already_exists');
 		if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
-		if (!$auth->isUser() && !validate::captcha($form['captcha']))
+		if ($auth->isUser() === false && validate::captcha($form['captcha']) === false)
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors) === true) {

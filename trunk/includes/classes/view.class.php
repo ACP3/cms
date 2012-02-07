@@ -21,26 +21,26 @@ class view
 {
 	/**
 	 * Der auszugebende Inhalt der Seite
-	 * 
+	 *
 	 * @var string
 	 */
 	private static $content = '';
 	/**
 	 * Der auszugebende Content-Type der Seite
-	 * @var string 
+	 * @var string
 	 */
 	private static $content_type = 'Content-Type: text/html; charset=UTF-8';
 	/**
 	 * Das zuverwendende Seitenlayout
 	 *
-	 * @var string 
+	 * @var string
 	 */
 	private static $layout = 'layout.tpl';
 
 	/**
 	 * Weist dem Template den auszugebenden Inhalt zu
 	 *
-	 * @param string $data 
+	 * @param string $data
 	 */
 	public static function setContent($data)
 	{
@@ -57,8 +57,8 @@ class view
 	}
 	/**
 	 * Weist der aktuell auszugebenden Seite ein Layout zu
-	 * 
-	 * @param string $file 
+	 *
+	 * @param string $file
 	 */
 	public static function assignLayout($file)
 	{
@@ -70,7 +70,7 @@ class view
 	public static function outputPage() {
 		global $auth, $uri;
 
-		if (!$auth->isUser() === true && defined('IN_ADM') === true && $uri->mod !== 'users' && $uri->file !== 'login') {
+		if ($auth->isUser() === false && defined('IN_ADM') === true && $uri->mod !== 'users' && $uri->file !== 'login') {
 			$redirect_uri = base64_encode(substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1));
 			$uri->redirect('acp/users/login/redirect_' . $redirect_uri);
 		}

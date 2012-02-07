@@ -20,7 +20,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'users', 'id = 
 
 		if (empty($form['nickname']))
 			$errors[] = $lang->t('common', 'name_to_short');
-		if (!validate::email($form['mail']))
+		if (validate::email($form['mail']) === false)
 			$errors[] = $lang->t('common', 'wrong_email_format');
 		if (userEmailExists($form['mail'], $uri->id))
 			$errors[] = $lang->t('users', 'user_email_already_exists');

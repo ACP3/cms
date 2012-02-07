@@ -13,7 +13,7 @@ if (defined('IN_ADM') === false)
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
-	if (!empty($form['mail']) && !validate::email($form['mail']))
+	if (!empty($form['mail']) && validate::email($form['mail']) === false)
 		$errors[] = $lang->t('common', 'wrong_email_format');
 
 	if (isset($errors) === true) {

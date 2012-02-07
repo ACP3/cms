@@ -32,5 +32,5 @@ if (!isset($entries)) {
 	}
 	setRedirectMessage($bool !== false && $bool2 !== false && $bool3 !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/polls');
 } else {
-	$uri->redirect('acp/errors/404');
+	$uri->redirect('errors/404');
 }

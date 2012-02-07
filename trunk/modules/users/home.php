@@ -2,7 +2,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
+if ($auth->isUser() === false || !validate::isNumber($auth->getUserId())) {
 	$uri->redirect('errors/403');
 } else {
 	breadcrumb::assign($lang->t('users', 'users'), $uri->route('users'));

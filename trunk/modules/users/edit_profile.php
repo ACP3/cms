@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
+if ($auth->isUser() === false || !validate::isNumber($auth->getUserId())) {
 	$uri->redirect('errors/403');
 } else {
 	breadcrumb::assign($lang->t('users', 'users'), $uri->route('users'));
@@ -26,17 +26,17 @@ if (!$auth->isUser() || !validate::isNumber($auth->getUserId())) {
 			$errors[] = $lang->t('common', 'name_to_short');
 		if (userNameExists($form['nickname'], $auth->getUserId()))
 			$errors[] = $lang->t('users', 'user_name_already_exists');
-		if (!validate::gender($form['gender']))
+		if (validate::gender($form['gender']) === false)
 			$errors[] = $lang->t('users', 'select_gender');
 		if (!isset($form['birthday_format']) || !empty($form['birthday']) && !validate::birthday($form['birthday'], $form['birthday_format']))
 			$errors[] = $lang->t('users', 'invalid_birthday');
-		if (!validate::email($form['mail']))
+		if (validate::email($form['mail']) === false)
 			$errors[] = $lang->t('common', 'wrong_email_format');
 		if (userEmailExists($form['mail'], $auth->getUserId()))
 			$errors[] = $lang->t('users', 'user_email_already_exists');
-		if (!empty($form['icq']) && !validate::icq($form['icq']))
+		if (!empty($form['icq']) && validate::icq($form['icq']) === false)
 			$errors[] = $lang->t('users', 'invalid_icq_number');
-		if (!empty($form['msn']) && !validate::email($form['msn']))
+		if (!empty($form['msn']) && validate::email($form['msn']) === false)
 			$errors[] = $lang->t('users', 'invalid_msn_account');
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
