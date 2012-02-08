@@ -329,9 +329,9 @@ function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = 0)
  */
 function pagination($rows, $fragment = '')
 {
-	global $session;
+	global $auth;
 
-	if ($rows > $session->get('entries')) {
+	if ($rows > $auth->entries) {
 		global $lang, $tpl, $uri;
 
 		// Alle angegebenen URL Parameter mit in die URL einbeziehen
@@ -347,7 +347,7 @@ function pagination($rows, $fragment = '')
 		// Seitenauswahl
 		$current_page = validate::isNumber($uri->page) ? (int) $uri->page : 1;
 		$pagination = array();
-		$c_pagination = (int) ceil($rows / $session->get('entries'));
+		$c_pagination = (int) ceil($rows / $auth->entries);
 		$show_first_last = 5;
 		$show_previous_next = 2;
 		$j = 0;
@@ -486,18 +486,18 @@ function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
 	}
 
 	if (isset($field)) {
-		if (!is_array($field) && $field == $defValue) {
+		if (is_array($field) === false && $field == $defValue) {
 			return $attr;
-		} elseif (is_array($field)) {
+		} elseif (is_array($field) === true) {
 			foreach ($field as $row) {
 				if ($row == $defValue)
 					return $attr;
 			}
 		}
 	} else {
-		if (!is_array($currentValue) && $currentValue == $defValue) {
+		if (is_array($currentValue) === false && $currentValue == $defValue) {
 			return $attr;
-		} elseif (is_array($currentValue)) {
+		} elseif (is_array($currentValue) === true) {
 			foreach ($currentValue as $row) {
 				if ($row == $defValue)
 					return $attr;

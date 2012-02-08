@@ -92,7 +92,7 @@ class date
 		global $tpl;
 
 		$datepicker = array(
-			'range' => is_array($name) && $range === 1 ? 1 : 0,
+			'range' => is_array($name) === true && $range === 1 ? 1 : 0,
 			'params' => array(
 				'firstDay' => '\'1\'',
 				'dateFormat' => '\'yy-mm-dd\'',
@@ -104,16 +104,16 @@ class date
 		);
 
 		// Zusätzliche Datepicker-Parameter hinzufügen
-		if (!empty($params) && is_array($params)) {
+		if (!empty($params) && is_array($params) === true) {
 			$datepicker['params'] = array_merge($datepicker['params'], $params);
 		}
 
 		// Veröffentlichungszeitraum
-		if (is_array($name) && $range === 1) {
+		if (is_array($name) === true && $range === 1) {
 			if (!empty($_POST['form'][$name[0]]) && !empty($_POST['form'][$name[1]])) {
 				$value_start = $_POST['form'][$name[0]];
 				$value_end = $_POST['form'][$name[1]];
-			} elseif (is_array($value) && validate::isNumber($value[0]) && validate::isNumber($value[1])) {
+			} elseif (is_array($value) === true && validate::isNumber($value[0]) === true && validate::isNumber($value[1]) === true) {
 				$value_start = $this->format($value[0], $format, $mode);
 				$value_end = $this->format($value[1], $format, $mode);
 			} else {
@@ -129,7 +129,7 @@ class date
 		} else {
 			if (!empty($_POST['form'][$name])) {
 				$value = $_POST['form'][$name];
-			} elseif (validate::isNumber($value)) {
+			} elseif (validate::isNumber($value) === true) {
 				$value = $this->format($value, $format, $mode);
 			} else {
 				$value = $this->format(time(), $format, $mode);
@@ -176,7 +176,7 @@ class date
 	 */
 	public function period($start, $end, $format = 'long')
 	{
-		if (validate::isNumber($start) && validate::isNumber($end)) {
+		if (validate::isNumber($start) === true && validate::isNumber($end) === true) {
 			global $lang;
 			if ($start >= $end) {
 				return sprintf($lang->t('common', 'since_date'), $this->format($start, $format));
@@ -195,7 +195,7 @@ class date
 	public function timestamp($value = 0)
 	{
 		// Zeitstempel aus Veröffentlichungszeitraum heraus generieren
-		if (!empty($value) && validate::date($value)) {
+		if (!empty($value) && validate::date($value) === true) {
 			$value = strtotime($value);
 
 			$offset = (date('I', $value) == 1) ? -3600 : 0;

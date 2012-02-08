@@ -75,7 +75,7 @@ class seo
 
 		$path.= !preg_match('/\/$/', $path) ? '/' : '';
 
-		return array_key_exists($path, self::$aliases) && !empty(self::$aliases[$path]['alias']);
+		return array_key_exists($path, self::$aliases) === true && !empty(self::$aliases[$path]['alias']);
 	}
 	/**
 	 * Gibt einen URI-Alias aus

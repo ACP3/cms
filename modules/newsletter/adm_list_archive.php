@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$newsletter = $db->select('id, date, subject, text, status', 'newsletter_archive', 0, 'id DESC', POS, $session->get('entries'));
+$newsletter = $db->select('id, date, subject, text, status', 'newsletter_archive', 0, 'id DESC', POS, $auth->entries);
 $c_newsletter = count($newsletter);
 
 if ($c_newsletter > 0) {

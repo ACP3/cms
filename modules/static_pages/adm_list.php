@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$pages = $db->select('id, start, end, title', 'static_pages', 0, 'start DESC', POS, $session->get('entries'));
+$pages = $db->select('id, start, end, title', 'static_pages', 0, 'start DESC', POS, $auth->entries);
 $c_pages = count($pages);
 
 if ($c_pages > 0) {

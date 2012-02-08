@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$accounts = $db->select('id, mail, hash', 'newsletter_accounts', 0, 'id DESC', POS, $session->get('entries'));
+$accounts = $db->select('id, mail, hash', 'newsletter_accounts', 0, 'id DESC', POS, $auth->entries);
 $c_accounts = count($accounts);
 
 if ($c_accounts > 0) {

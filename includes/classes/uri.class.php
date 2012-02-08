@@ -54,7 +54,7 @@ class uri
 			// Nur ausführen, falls URI-Aliase aktiviert sind
 			if (CONFIG_SEO_ALIASES === true) {
 				// Falls für Query ein Alias existiert, zu diesem weiterleiten
-				if (seo::uriAliasExists($this->query))
+				if (seo::uriAliasExists($this->query) === true)
 					$this->redirect(seo::getUriAlias($this->query), 0, 1);
 
 				// Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
@@ -101,8 +101,8 @@ class uri
 			for ($i = 2; $i < $c_query; ++$i) {
 				// Position
 				if (defined('POS') === false && preg_match('/^(page_(\d+))$/', $query[$i])) {
-					global $session;
-					define('POS', (substr($query[$i], 5) - 1) * $session->get('entries'));
+					global $auth;
+					define('POS', (substr($query[$i], 5) - 1) * $auth->entries);
 					$this->page = (int) substr($query[$i], 5);
 				// ID eines Datensatzes
 				} elseif (preg_match('/^(id_(\d+))$/', $query[$i])) {
@@ -115,7 +115,7 @@ class uri
 			}
 		}
 
-		if (!empty($_POST['cat']) && validate::isNumber($_POST['cat']))
+		if (!empty($_POST['cat']) && validate::isNumber($_POST['cat']) === true)
 			$this->cat = $_POST['cat'];
 		if (!empty($_POST['action']))
 			$this->action = $_POST['action'];

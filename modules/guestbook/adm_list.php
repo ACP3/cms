@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$guestbook = $db->select('id, ip, date, name, message', 'guestbook', 0, 'date DESC', POS, $session->get('entries'));
+$guestbook = $db->select('id, ip, date, name, message', 'guestbook', 0, 'date DESC', POS, $auth->entries);
 $c_guestbook = count($guestbook);
 
 if ($c_guestbook > 0) {
