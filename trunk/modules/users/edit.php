@@ -122,7 +122,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'users', 'id = 
 		// Einträge pro Seite
 		for ($i = 0, $j = 10; $j <= 50; $i++, $j = $j + 10) {
 			$entries[$i]['value'] = $j;
-			$entries[$i]['selected'] = selectEntry('entries', $j, $session->get('entries'));
+			$entries[$i]['selected'] = selectEntry('entries', $j, $auth->entries);
 		}
 		$tpl->assign('entries', $entries);
 

@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$users = $db->select('u.id, u.nickname, u.mail', 'users AS u', 0, 'u.nickname ASC', POS, $session->get('entries'));
+$users = $db->select('u.id, u.nickname, u.mail', 'users AS u', 0, 'u.nickname ASC', POS, $auth->entries);
 $c_users = count($users);
 
 if ($c_users > 0) {

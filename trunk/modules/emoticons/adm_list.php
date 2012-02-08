@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$emoticons = $db->select('id, code, description, img', 'emoticons', 0, 'id DESC', POS, $session->get('entries'));
+$emoticons = $db->select('id, code, description, img', 'emoticons', 0, 'id DESC', POS, $auth->entries);
 $c_emoticons = count($emoticons);
 
 if ($c_emoticons > 0) {

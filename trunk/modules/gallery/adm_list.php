@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$galleries = $db->select('id, start, end, name', 'gallery', 0, 'start DESC, end DESC, id DESC', POS, $session->get('entries'));
+$galleries = $db->select('id, start, end, name', 'gallery', 0, 'start DESC, end DESC, id DESC', POS, $auth->entries);
 $c_galleries = count($galleries);
 
 if ($c_galleries > 0) {

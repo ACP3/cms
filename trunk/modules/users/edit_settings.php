@@ -51,9 +51,6 @@ if ($auth->isUser() === false || !validate::isNumber($auth->getUserId())) {
 
 			$bool = $db->update('users', $update_values, 'id = \'' . $auth->getUserId() . '\'');
 
-			$session->set('language', $form['language']);
-			$session->set('entries', (int) $form['entries']);
-
 			$session->unsetFormToken();
 
 			setRedirectMessage($bool !== false ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), 'users/home');
@@ -85,7 +82,7 @@ if ($auth->isUser() === false || !validate::isNumber($auth->getUserId())) {
 		$entries = array();
 		for ($i = 0, $j = 10; $j <= 50; $i++, $j = $j + 10) {
 			$entries[$i]['value'] = $j;
-			$entries[$i]['selected'] = selectEntry('entries', $j, $session->get('entries'));
+			$entries[$i]['selected'] = selectEntry('entries', $j, $auth->entries);
 		}
 		$tpl->assign('entries', $entries);
 
