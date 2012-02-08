@@ -212,7 +212,7 @@ class auth
 	public function logout()
 	{
 		global $session;
-		$session->session_destroy();
+		$session->session_destroy(session_id());
 		return $this->setCookie('', '', -50400);
 	}
 	/**
