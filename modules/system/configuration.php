@@ -17,7 +17,7 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('system', 'select_entries_per_page');
 	if (validate::isNumber($form['flood']) === false)
 		$errors[] = $lang->t('system', 'type_in_flood_barrier');
-	if (!validate::isInternalURI($form['homepage']))
+	if (validate::isInternalURI($form['homepage']) === false)
 		$errors[] = $lang->t('system', 'incorrect_homepage');
 	if ($form['wysiwyg'] != 'textarea' && (preg_match('=/=', $form['wysiwyg']) || is_file(INCLUDES_DIR . 'wysiwyg/' . $form['wysiwyg'] . '/info.xml') === false))
 		$errors[] = $lang->t('system', 'select_editor');

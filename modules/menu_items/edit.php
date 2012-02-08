@@ -27,7 +27,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_items', '
 			$errors[] = $lang->t('common', 'select_date');
 		if (validate::isNumber($form['mode']) === false)
 			$errors[] = $lang->t('menu_items', 'select_page_type');
-		if (($form['mode'] == 2 || $form['mode'] == 4) && CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'], $db->escape($form['uri']))))
+		if (($form['mode'] == 2 || $form['mode'] == 4) && CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias'], $db->escape($form['uri']))))
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 		if (strlen($form['title']) < 3)
 			$errors[] = $lang->t('menu_items', 'title_to_short');
@@ -45,7 +45,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_items', '
 			$errors[] = $lang->t('menu_items', 'select_item_visibility');
 		if (validate::isNumber($form['target']) === false ||
 			$form['mode'] == '1' && (!is_dir(MODULES_DIR . $form['module']) || preg_match('=/=', $form['module'])) ||
-			$form['mode'] == '2' && !validate::isInternalURI($form['uri']) ||
+			$form['mode'] == '2' && validate::isInternalURI($form['uri']) === false ||
 			$form['mode'] == '3' && empty($form['uri']) ||
 			$form['mode'] == '4' && (validate::isNumber($form['static_pages']) === false || $db->countRows('*', 'static_pages', 'id = \'' . $form['static_pages'] . '\'') == 0))
 			$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');

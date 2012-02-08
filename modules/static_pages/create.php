@@ -22,7 +22,7 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('static_pages', 'title_to_short');
 	if (strlen($form['text']) < 3)
 		$errors[] = $lang->t('static_pages', 'text_to_short');
-	if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'])))
+	if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias'])))
 		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 	if (modules::check('menu_items', 'create') === true) {
 		if ($form['create'] != 1 && $form['create'] != '0')

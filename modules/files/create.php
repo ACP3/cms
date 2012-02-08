@@ -39,7 +39,7 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('files', 'select_category');
 	if (strlen($form['cat_create']) >= 3 && categoriesCheckDuplicate($form['cat_create'], 'files'))
 		$errors[] = $lang->t('categories', 'category_already_exists');
-	if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'])))
+	if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias'])))
 		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 	if (isset($errors) === true) {
