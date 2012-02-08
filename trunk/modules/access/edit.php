@@ -22,7 +22,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles', 'i
 			$errors[] = $lang->t('access', 'role_already_exists');
 		if (empty($form['privileges']) || !is_array($form['privileges']))
 			$errors[] = $lang->t('access', 'no_privilege_selected');
-		if (!empty($form['privileges']) && !validate::aclPrivilegesExist($form['privileges']))
+		if (!empty($form['privileges']) && validate::aclPrivilegesExist($form['privileges']) === false)
 			$errors[] = $lang->t('access', 'invalid_privileges');
 
 		if (isset($errors) === true) {

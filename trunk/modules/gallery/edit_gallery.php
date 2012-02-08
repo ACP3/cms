@@ -28,7 +28,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id 
 			$errors[] = $lang->t('common', 'select_date');
 		if (strlen($form['name']) < 3)
 			$errors[] = $lang->t('gallery', 'type_in_gallery_name');
-		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (!validate::isUriSafe($form['alias']) || validate::uriAliasExists($form['alias'], 'gallery/pics/id_' . $uri->id)))
+		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias'], 'gallery/pics/id_' . $uri->id)))
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 		if (isset($errors) === true) {

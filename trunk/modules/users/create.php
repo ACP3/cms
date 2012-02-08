@@ -33,7 +33,7 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('common', 'select_daylight_saving_time');
 	if (preg_match('=/=', $form['language']) || !is_file('languages/' . $form['language'] . '/info.xml'))
 		$errors[] = $lang->t('users', 'select_language');
-	if (empty($form['roles']) || !is_array($form['roles']) || !validate::aclRolesExist($form['roles']))
+	if (empty($form['roles']) || !is_array($form['roles']) || validate::aclRolesExist($form['roles']) === false)
 		$errors[] = $lang->t('users', 'select_access_level');
 	if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])
 		$errors[] = $lang->t('users', 'type_in_pwd');
