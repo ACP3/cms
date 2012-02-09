@@ -20,13 +20,13 @@ if (!isset($entries)) {
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
 	view::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/emoticons/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/emoticons')));
-} elseif (validate::deleteEntries($entries) === true && $uri->action === 'confirmed') {
+} elseif ($uri->action === 'confirmed') {
 	require_once MODULES_DIR . 'emoticons/functions.php';
 
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'emoticons', 'id = \'' . $entry . '\'') == '1') {
+		if (!empty($entry) && $db->countRows('*', 'emoticons', 'id = \'' . $entry . '\'') == '1') {
 			// Datei ebenfalls löschen
 			$file = $db->select('img', 'emoticons', 'id = \'' . $entry . '\'');
 			removeUploadedFile('emoticons', $file[0]['img']);

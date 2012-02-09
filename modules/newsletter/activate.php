@@ -21,7 +21,7 @@ if ($db->countRows('*', 'newsletter_accounts', 'mail = \'' . $mail . '\' AND has
 	$errors[] = $lang->t('newsletter', 'account_not_exists');
 
 if (isset($errors) === true) {
-	$tpl->assign('error_msg', errorBox($errors));
+	view::setContent(errorBox($errors));
 } else {
 	$bool = $db->update('newsletter_accounts', array('hash' => ''), 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'');
 

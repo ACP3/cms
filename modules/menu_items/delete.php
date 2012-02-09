@@ -20,7 +20,7 @@ if (!isset($entries)) {
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
 	view::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/menu_items/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/menu_items')));
-} elseif (validate::deleteEntries($entries) === true && $uri->action === 'confirmed') {
+} elseif ($uri->action === 'confirmed') {
 	require_once MODULES_DIR . 'menu_items/functions.php';
 
 	$marked_entries = explode('|', $entries);
