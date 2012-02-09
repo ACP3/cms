@@ -38,7 +38,7 @@ if (isset($_POST['form']) === true) {
 
 		if ($form['action'] == '1' && $bool !== false) {
 			$subject = $form['subject'];
-			$body = $form['text'] . "\n" . html_entity_decode($db->escape($settings['mailsig'], 3), ENT_QUOTES, 'UTF-8');
+			$body = $form['text'] . "\n-- \n" . html_entity_decode($db->escape($settings['mailsig'], 3), ENT_QUOTES, 'UTF-8');
 
 			// Testnewsletter
 			if ($form['test'] == '1') {

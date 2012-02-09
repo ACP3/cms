@@ -20,14 +20,14 @@ if (!isset($entries)) {
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
 	view::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/gallery/delete_gallery/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/gallery')));
-} elseif (validate::deleteEntries($entries) === true && $uri->action === 'confirmed') {
+} elseif ($uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = $bool2 = false;
 
 	require_once MODULES_DIR . 'gallery/functions.php';
 
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'gallery', 'id = \'' . $entry . '\'') == '1') {
+		if (!empty($entry) && $db->countRows('*', 'gallery', 'id = \'' . $entry . '\'') == '1') {
 			// Hochgeladene Bilder löschen
 			$pictures = $db->select('file', 'gallery_pictures', 'gallery_id = \'' . $entry . '\'');
 			foreach ($pictures as $row) {

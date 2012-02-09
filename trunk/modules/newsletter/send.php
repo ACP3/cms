@@ -18,7 +18,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'newsletter_arc
 	$bool = $bool2 = false;
 
 	$subject = $db->escape($newsletter[0]['subject'], 3);
-	$body = html_entity_decode($db->escape($newsletter[0]['text'], 3) . "\n" . $db->escape($settings['mailsig'], 3), ENT_QUOTES, 'UTF-8');
+	$body = html_entity_decode($db->escape($newsletter[0]['text'], 3) . "\n-- \n" . $db->escape($settings['mailsig'], 3), ENT_QUOTES, 'UTF-8');
 
 	for ($i = 0; $i < $c_accounts; ++$i) {
 		$bool = generateEmail('', $accounts[$i]['mail'], $settings['mail'], $subject, $body);
@@ -29,7 +29,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'newsletter_arc
 		$bool2 = $db->update('newsletter_archive', array('status' => '1'), 'id = \'' . $uri->id . '\'');
 	}
 
-	view::setContent(confirmBox($bool === true && $bool2 !== false ? $lang->t('newsletter', 'compose_success') : $lang->t('newsletter', 'compose_save_error'), $uri->route('acp/newsletter/adm_list_archive')));
+	setRedirectMessage($bool === true && $bool2 !== false ? $lang->t('newsletter', 'compose_success') : $lang->t('newsletter', 'compose_save_error'), 'acp/newsletter/adm_list_archive');
 } else {
 	$uri->redirect('errors/404');
 }

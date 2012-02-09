@@ -20,11 +20,11 @@ if (!isset($entries)) {
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
 	view::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/news/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/news')));
-} elseif (validate::deleteEntries($entries) === true && $uri->action === 'confirmed') {
+} elseif ($uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = $bool2 = false;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'news', 'id = \'' . $entry . '\'') == '1') {
+		if (!empty($entry) && $db->countRows('*', 'news', 'id = \'' . $entry . '\'') == '1') {
 			$bool = $db->delete('news', 'id = \'' . $entry . '\'');
 			$bool2 = $db->delete('comments', 'module = \'news\' AND entry_id = \'' . $entry . '\'');
 			// News Cache löschen

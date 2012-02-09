@@ -20,11 +20,11 @@ if (!isset($entries)) {
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
 	view::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/polls/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/polls')));
-} elseif (validate::deleteEntries($entries) === true && $uri->action === 'confirmed') {
+} elseif ($uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = $bool2 = $bool3 = false;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'polls', 'id = \'' . $entry . '\'') == '1') {
+		if (!empty($entry) && $db->countRows('*', 'polls', 'id = \'' . $entry . '\'') == '1') {
 			$bool = $db->delete('polls', 'id = \'' . $entry . '\'');
 			$bool2 = $db->delete('poll_answers', 'poll_id = \'' . $entry . '\'');
 			$bool3 = $db->delete('poll_votes', 'poll_id = \'' . $entry . '\'');

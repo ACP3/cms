@@ -20,11 +20,11 @@ if (!isset($entries)) {
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
 	view::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/guestbook/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/guestbook')));
-} elseif (validate::deleteEntries($entries) === true && $uri->action === 'confirmed') {
+} elseif ($uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && validate::isNumber($entry) && $db->countRows('*', 'guestbook', 'id = \'' . $entry . '\'') == '1') {
+		if (!empty($entry) && $db->countRows('*', 'guestbook', 'id = \'' . $entry . '\'') == '1') {
 			$bool = $db->delete('guestbook', 'id = \'' . $entry . '\'');
 		}
 	}
