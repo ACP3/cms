@@ -6,6 +6,7 @@
 	<item key="create">Create a new news</item>
 	<item key="delete">Delete news</item>
 	<item key="details">News</item>
+	<item key="display_category_in_breadcrumb">Display category in breadcrumb</item>
 	<item key="edit">Edit news</item>
 	<item key="headline">Headline</item>
 	<item key="headline_to_short">The headline should be at least 3 characters long</item>
@@ -19,6 +20,7 @@
 	<item key="select_activate_readmore"><![CDATA[Please select, whether you want to enable or disable the &quot;read more...&quot;-function]]></item>
 	<item key="select_allow_comments">Please select, whether you want to allow comments under news</item>
 	<item key="select_category">Please select the category, where do you want to find the news</item>
+	<item key="select_display_category_in_breadcrumb">Please select, whether you want to display the category name of a news in the breadcrumb</item>
 	<item key="settings">Settings</item>
 	<item key="target_page">Target page</item>
 	<item key="text">Text</item>

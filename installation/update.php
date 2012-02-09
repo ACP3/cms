@@ -244,6 +244,9 @@ $queries = array(
 	12 => array(
 		0 => 'CREATE TABLE `{pre}sessions` (`session_id` varchar(32) NOT NULL, `session_starttime` int(10) unsigned NOT NULL, `session_data` text NOT NULL, PRIMARY KEY (`session_id`)) {engine} {charset};'
 	),
+	13 => array(
+		0 => "INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'news', 'category_in_breadcrumb', '1');",
+	),
 );
 
 // Änderungen am DB Schema vornehmen

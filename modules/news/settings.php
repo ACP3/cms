@@ -15,16 +15,18 @@ $comments = modules::isActive('comments');
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
-	if ($comments && (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0))
-		$errors[] = $lang->t('news', 'select_allow_comments');
-	if (!isset($form['readmore']) || $form['readmore'] != 1 && $form['readmore'] != 0)
-		$errors[] = $lang->t('news', 'select_activate_readmore');
-	if (validate::isNumber($form['readmore_chars']) === false || $form['readmore_chars'] == 0)
-		$errors[] = $lang->t('news', 'type_in_readmore_chars');
 	if (empty($form['dateformat']) || ($form['dateformat'] != 'long' && $form['dateformat'] != 'short'))
 		$errors[] = $lang->t('common', 'select_date_format');
 	if (validate::isNumber($form['sidebar']) === false)
 		$errors[] = $lang->t('common', 'select_sidebar_entries');
+	if (!isset($form['readmore']) || $form['readmore'] != 1 && $form['readmore'] != 0)
+		$errors[] = $lang->t('news', 'select_activate_readmore');
+	if (validate::isNumber($form['readmore_chars']) === false || $form['readmore_chars'] == 0)
+		$errors[] = $lang->t('news', 'type_in_readmore_chars');
+	if (!isset($form['category_in_breadcrumb']) || $form['category_in_breadcrumb'] != 1 && $form['category_in_breadcrumb'] != 0)
+		$errors[] = $lang->t('news', 'select_display_category_in_breadcrumb');
+	if ($comments && (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0))
+		$errors[] = $lang->t('news', 'select_allow_comments');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
@@ -40,6 +42,15 @@ if (isset($_POST['form']) === true) {
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$settings = config::getModuleSettings('news');
+
+	$dateformat = array();
+	$dateformat[0]['value'] = 'short';
+	$dateformat[0]['selected'] = selectEntry('dateformat', 'short', $settings['dateformat']);
+	$dateformat[0]['lang'] = $lang->t('common', 'date_format_short');
+	$dateformat[1]['value'] = 'long';
+	$dateformat[1]['selected'] = selectEntry('dateformat', 'long', $settings['dateformat']);
+	$dateformat[1]['lang'] = $lang->t('common', 'date_format_long');
+	$tpl->assign('dateformat', $dateformat);
 
 	$readmore = array();
 	$readmore[0]['value'] = '1';
@@ -63,21 +74,21 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 		$tpl->assign('allow_comments', $allow_comments);
 	}
 
-	$dateformat = array();
-	$dateformat[0]['value'] = 'short';
-	$dateformat[0]['selected'] = selectEntry('dateformat', 'short', $settings['dateformat']);
-	$dateformat[0]['lang'] = $lang->t('common', 'date_format_short');
-	$dateformat[1]['value'] = 'long';
-	$dateformat[1]['selected'] = selectEntry('dateformat', 'long', $settings['dateformat']);
-	$dateformat[1]['lang'] = $lang->t('common', 'date_format_long');
-	$tpl->assign('dateformat', $dateformat);
-
 	$sidebar_entries = array();
 	for ($i = 0, $j = 1; $i < 10; ++$i, ++$j) {
 		$sidebar_entries[$i]['value'] = $j;
 		$sidebar_entries[$i]['selected'] = selectEntry('sidebar', $j, $settings['sidebar']);
 	}
 	$tpl->assign('sidebar_entries', $sidebar_entries);
+
+	$category_in_breadcrumb = array();
+	$category_in_breadcrumb[0]['value'] = '1';
+	$category_in_breadcrumb[0]['checked'] = selectEntry('category_in_breadcrumb', '1', $settings['category_in_breadcrumb'], 'checked');
+	$category_in_breadcrumb[0]['lang'] = $lang->t('common', 'yes');
+	$category_in_breadcrumb[1]['value'] = '0';
+	$category_in_breadcrumb[1]['checked'] = selectEntry('category_in_breadcrumb', '0', $settings['category_in_breadcrumb'], 'checked');
+	$category_in_breadcrumb[1]['lang'] = $lang->t('common', 'no');
+	$tpl->assign('category_in_breadcrumb', $category_in_breadcrumb);
 
 	$session->generateFormToken();
 

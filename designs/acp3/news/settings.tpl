@@ -5,28 +5,6 @@
 	<fieldset>
 		<legend>{lang t="news|settings"}</legend>
 		<dl>
-			<dt><label for="readmore-1">{lang t="news|activate_readmore"}</label></dt>
-			<dd>
-{foreach $readmore as $row}
-				<label for="readmore-{$row.value}">
-					<input type="radio" name="form[readmore]" id="readmore-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
-					{$row.lang}
-				</label>
-{/foreach}
-			</dd>
-			<dt><label for="readmore_chars">{lang t="news|readmore_chars"}</label></dt>
-			<dd><input type="number" name="form[readmore_chars]" id="readmore_chars" value="{$readmore_chars}"></dd>
-{if isset($allow_comments)}
-			<dt><label for="comments-1">{lang t="common|allow_comments"}</label></dt>
-			<dd>
-{foreach $allow_comments as $row}
-				<label for="comments-{$row.value}">
-					<input type="radio" name="form[comments]" id="comments-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
-					{$row.lang}
-				</label>
-{/foreach}
-			</dd>
-{/if}
 			<dt><label for="date-format">{lang t="common|date_format"}</label></dt>
 			<dd>
 				<select name="form[dateformat]" id="date-format">
@@ -45,6 +23,37 @@
 {/foreach}
 				</select>
 			</dd>
+			<dt><label for="readmore-1">{lang t="news|activate_readmore"}</label></dt>
+			<dd>
+{foreach $readmore as $row}
+				<label for="readmore-{$row.value}">
+					<input type="radio" name="form[readmore]" id="readmore-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+					{$row.lang}
+				</label>
+{/foreach}
+			</dd>
+			<dt><label for="readmore_chars">{lang t="news|readmore_chars"}</label></dt>
+			<dd><input type="number" name="form[readmore_chars]" id="readmore_chars" value="{$readmore_chars}"></dd>
+			<dt><label for="category-in-breadcrumb-1">{lang t="news|display_category_in_breadcrumb"}</label></dt>
+			<dd>
+{foreach $category_in_breadcrumb as $row}
+				<label for="category-in-breadcrumb-{$row.value}">
+					<input type="radio" name="form[category_in_breadcrumb]" id="category-in-breadcrumb-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+					{$row.lang}
+				</label>
+{/foreach}
+			</dd>
+{if isset($allow_comments)}
+			<dt><label for="comments-1">{lang t="common|allow_comments"}</label></dt>
+			<dd>
+{foreach $allow_comments as $row}
+				<label for="comments-{$row.value}">
+					<input type="radio" name="form[comments]" id="comments-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+					{$row.lang}
+				</label>
+{/foreach}
+			</dd>
+{/if}
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
