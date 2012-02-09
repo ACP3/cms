@@ -16,16 +16,18 @@ $period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND 
 if (validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'id = \'' . $uri->id . '\'' . $period) == 1) {
 	require_once MODULES_DIR . 'news/functions.php';
 
+	$settings = config::getModuleSettings('news');
 	$news = getNewsCache($uri->id);
-	// Brotkrümelspur
-	$category = $db->select('name', 'categories', 'id = \'' . $news[0]['category_id'] . '\'');
+
 	breadcrumb::assign($lang->t('news', 'news'), $uri->route('news'));
-	if (count($category) > 0) {
-		breadcrumb::assign($category[0]['name'], $uri->route('news/list/cat_' . $news[0]['category_id']));
+	if ($settings['category_in_breadcrumb'] == 1) {
+		// Brotkrümelspur
+		$category = $db->select('name', 'categories', 'id = \'' . $news[0]['category_id'] . '\'');
+		if (count($category) > 0) {
+			breadcrumb::assign($category[0]['name'], $uri->route('news/list/cat_' . $news[0]['category_id']));
+		}
 	}
 	breadcrumb::assign($news[0]['headline']);
-
-	$settings = config::getModuleSettings('news');
 
 	$news[0]['date'] = $date->format($news[0]['start'], $settings['dateformat']);
 	$news[0]['text'] = rewriteInternalUri($db->escape($news[0]['text'], 3));
@@ -33,7 +35,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'id = \
 	if (!empty($news[0]['uri']) && strpos($news[0]['uri'], 'http://') === false) {
 		$news[0]['uri'] = 'http://' . $news[0]['uri'];
 	}
-	$news[0]['target'] = $news[0]['target'] == '2' ? ' onclick="window.open(this.href); return false"' : '';
+	$news[0]['target'] = $news[0]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 
 	$tpl->assign('news', $news[0]);
 

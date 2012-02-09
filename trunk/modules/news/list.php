@@ -10,22 +10,31 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (isset($_POST['form']['cat']) && validate::isNumber($_POST['form']['cat'])) {
-	$cat = $_POST['form']['cat'];
-} elseif (validate::isNumber($uri->cat)) {
-	$cat = $uri->cat;
+if (isset($_POST['form']['cat']) && validate::isNumber($_POST['form']['cat']) === true) {
+	$cat = (int) $_POST['form']['cat'];
+} elseif (validate::isNumber($uri->cat) === true) {
+	$cat = (int) $uri->cat;
 } else {
 	$cat = 0;
 }
 
-// Kategorien auflisten
 if (modules::check('categories', 'functions') === true) {
 	require_once MODULES_DIR . 'categories/functions.php';
 	$tpl->assign('categories', categoriesList('news', $cat));
 }
 
+$settings = config::getModuleSettings('news');
+// Kategorie in Brotkrümelspur anzeigen
+if ($cat !== 0 && $settings['category_in_breadcrumb'] == 1) {
+	breadcrumb::assign($lang->t('news', 'news'), $uri->route('news'));
+	$category = $db->select('name', 'categories', 'id = \'' . $cat . '\'');
+	if (count($category) > 0) {
+		breadcrumb::assign($category[0]['name']);
+	}
+}
+
 // Falls Kategorie angegeben, News nur aus eben jener selektieren
-$cat = !empty($cat) ? ' AND category_id = \'' . $cat . '\'' : '';
+$cat = !empty($cat) ? ' AND category_id = ' . $cat : '';
 $time = $date->timestamp();
 $where = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')' . $cat;
 
@@ -38,9 +47,8 @@ if ($c_news > 0) {
 		require_once MODULES_DIR . 'comments/functions.php';
 		$comment_check = true;
 	}
-	$tpl->assign('pagination', pagination($db->countRows('*', 'news', $where)));
 
-	$settings = config::getModuleSettings('news');
+	$tpl->assign('pagination', pagination($db->countRows('*', 'news', $where)));
 
 	for ($i = 0; $i < $c_news; ++$i) {
 		$news[$i]['date'] = $date->format($news[$i]['start'], $settings['dateformat']);

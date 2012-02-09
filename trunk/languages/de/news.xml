@@ -6,6 +6,7 @@
 	<item key="create">Neue News erstellen</item>
 	<item key="delete">News löschen</item>
 	<item key="details">News</item>
+	<item key="display_category_in_breadcrumb">Kategorie in Brotkrümelspur anzeigen</item>
 	<item key="edit">News bearbeiten</item>
 	<item key="headline">Überschrift</item>
 	<item key="headline_to_short">Die Überschrift sollte mindestens 3 Zeichen lang sein</item>
@@ -19,6 +20,7 @@
 	<item key="select_activate_readmore"><![CDATA[Bitte wählen Sie aus, ob die &quot;weiterlesen...&quot;-Funktion aktiviert werden soll oder nicht]]></item>
 	<item key="select_allow_comments">Bitte wählen Sie aus, ob Kommentare unter News zugelassen werden sollen oder nicht</item>
 	<item key="select_category">Bitte wählen Sie die Kategorie aus, in der sich die News befinden soll</item>
+	<item key="select_display_category_in_breadcrumb">Bitte wählen Sie aus, ob der Kategoriename einer News in der Brotkrümelspur angezeigt werden soll.</item>
 	<item key="settings">Einstellungen</item>
 	<item key="target_page">Zielseite</item>
 	<item key="text">Text</item>
