@@ -5,15 +5,6 @@
 	<fieldset>
 		<legend>{lang t="files|settings"}</legend>
 		<dl>
-			<dt><label for="comments-1">{lang t="common|allow_comments"}</label></dt>
-			<dd>
-{foreach $comments as $row}
-				<label for="comments-{$row.value}">
-					<input type="radio" name="form[comments]" id="comments-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
-					{$row.lang}
-				</label>
-{/foreach}
-			</dd>
 			<dt><label for="date-format">{lang t="common|date_format"}</label></dt>
 			<dd>
 				<select name="form[dateformat]" id="date-format">
@@ -32,6 +23,17 @@
 {/foreach}
 				</select>
 			</dd>
+{if isset($comments)}
+			<dt><label for="comments-1">{lang t="common|allow_comments"}</label></dt>
+			<dd>
+{foreach $comments as $row}
+				<label for="comments-{$row.value}">
+					<input type="radio" name="form[comments]" id="comments-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+					{$row.lang}
+				</label>
+{/foreach}
+			</dd>
+{/if}
 		</dl>
 	</fieldset>
 	<div class="form-bottom">

@@ -10,15 +10,17 @@
 if (defined('IN_ADM') === false)
 	exit;
 
+$comments_active = modules::isActive('comments');
+
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
-	if (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0)
-		$errors[] = $lang->t('files', 'select_allow_comments');
 	if (empty($form['dateformat']) || ($form['dateformat'] != 'long' && $form['dateformat'] != 'short'))
 		$errors[] = $lang->t('common', 'select_date_format');
 	if (validate::isNumber($form['sidebar']) === false)
 		$errors[] = $lang->t('common', 'select_sidebar_entries');
+	if ($comments_active === true && (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0))
+		$errors[] = $lang->t('files', 'select_allow_comments');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
@@ -35,14 +37,16 @@ if (isset($_POST['form']) === true) {
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$settings = config::getModuleSettings('files');
 
-	$comments = array();
-	$comments[0]['value'] = '1';
-	$comments[0]['checked'] = selectEntry('comments', '1', $settings['comments'], 'checked');
-	$comments[0]['lang'] = $lang->t('common', 'yes');
-	$comments[1]['value'] = '0';
-	$comments[1]['checked'] = selectEntry('comments', '0', $settings['comments'], 'checked');
-	$comments[1]['lang'] = $lang->t('common', 'no');
-	$tpl->assign('comments', $comments);
+	if ($comments_active === true) {
+		$comments = array();
+		$comments[0]['value'] = '1';
+		$comments[0]['checked'] = selectEntry('comments', '1', $settings['comments'], 'checked');
+		$comments[0]['lang'] = $lang->t('common', 'yes');
+		$comments[1]['value'] = '0';
+		$comments[1]['checked'] = selectEntry('comments', '0', $settings['comments'], 'checked');
+		$comments[1]['lang'] = $lang->t('common', 'no');
+		$tpl->assign('comments', $comments);
+	}
 
 	$dateformat = array();
 	$dateformat[0]['value'] = 'short';

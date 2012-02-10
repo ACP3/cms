@@ -10,8 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$emoticons = modules::isActive('emoticons');
-$newsletter = modules::isActive('newsletter');
+$emoticons_active = modules::isActive('emoticons');
+$newsletter_active = modules::isActive('newsletter');
 
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
@@ -22,9 +22,9 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('guestbook', 'select_notification_type');
 	if (validate::email($form['notify_email']) === false)
 		$errors[] = $lang->t('common', 'wrong_email_format');
-	if ($emoticons && (!isset($form['notify']) || ($form['notify'] != 0 && $form['notify'] != 1)))
+	if ($emoticons_active === true && (!isset($form['emoticons']) || ($form['emoticons'] != 0 && $form['emoticons'] != 1)))
 		$errors[] = $lang->t('guestbook', 'select_emoticons');
-	if ($newsletter && (!isset($form['newsletter_integration']) || ($form['newsletter_integration'] != 0 && $form['newsletter_integration'] != 1)))
+	if ($newsletter_active === true && (!isset($form['newsletter_integration']) || ($form['newsletter_integration'] != 0 && $form['newsletter_integration'] != 1)))
 		$errors[] = $lang->t('guestbook', 'select_newsletter_integration');
 
 	if (isset($errors) === true) {
@@ -52,7 +52,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$tpl->assign('dateformat', $dateformat);
 
 	// Emoticons erlauben
-	if ($emoticons) {
+	if ($emoticons_active === true) {
 		$allow_emoticons = array();
 		$allow_emoticons[0]['value'] = '1';
 		$allow_emoticons[0]['checked'] = selectEntry('emoticons', '1', $settings['emoticons'], 'checked');
@@ -64,7 +64,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	}
 
 	// In Newsletter integrieren
-	if ($newsletter) {
+	if ($newsletter_active === true) {
 		$newsletter_integration = array();
 		$newsletter_integration[0]['value'] = '1';
 		$newsletter_integration[0]['checked'] = selectEntry('newsletter_integration', '1', $settings['newsletter_integration'], 'checked');

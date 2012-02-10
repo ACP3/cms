@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$comments = modules::isActive('comments');
+$comments_active = modules::isActive('comments');
 
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
@@ -25,7 +25,7 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('news', 'type_in_readmore_chars');
 	if (!isset($form['category_in_breadcrumb']) || $form['category_in_breadcrumb'] != 1 && $form['category_in_breadcrumb'] != 0)
 		$errors[] = $lang->t('news', 'select_display_category_in_breadcrumb');
-	if ($comments && (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0))
+	if ($comments_active === true && (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0))
 		$errors[] = $lang->t('news', 'select_allow_comments');
 
 	if (isset($errors) === true) {
@@ -63,7 +63,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	$tpl->assign('readmore_chars', isset($form) ? $form['readmore_chars'] : $settings['readmore_chars']);
 
-	if ($comments) {
+	if ($comments_active === true) {
 		$allow_comments = array();
 		$allow_comments[0]['value'] = '1';
 		$allow_comments[0]['checked'] = selectEntry('comments', '1', $settings['comments'], 'checked');
