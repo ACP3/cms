@@ -23,6 +23,10 @@ class session {
 	 */
 	const SESSION_NAME = 'ACP3_SID';
 	/**
+	 * Name des XSRF-Token
+	 */
+	const XSRF_TOKEN_NAME = 'security_token';
+	/**
 	 * Zeit, bis Session ungültig wird
 	 *
 	 * @var integer
@@ -171,23 +175,29 @@ class session {
 	{
 		global $tpl;
 
-		if (!isset($_SESSION['security_token']) || is_array($_SESSION['security_token']) === false) {
-			$_SESSION['security_token'] = array();
+		if (!isset($_SESSION[self::XSRF_TOKEN_NAME]) || is_array($_SESSION[self::XSRF_TOKEN_NAME]) === false) {
+			$_SESSION[self::XSRF_TOKEN_NAME] = array();
 		}
 
 		$token = md5(uniqid(mt_rand(), true));
-		$_SESSION['security_token'][] = $token;
+		$_SESSION[self::XSRF_TOKEN_NAME][] = $token;
 
-		$tpl->assign('form_token', '<input type="hidden" name="security_token" value="' . $token . '" />');
+		$tpl->assign('form_token', '<input type="hidden" name="' . self::XSRF_TOKEN_NAME . '" value="' . $token . '" />');
 	}
 	/**
 	 * Entfernt das Securitytoken aus der Session
 	 */
 	public function unsetFormToken($token = '')
 	{
-		if (empty($token) && isset($_POST['security_token']))
-			$token = $_POST['security_token'];
-		if (!empty($token))
-			unset($_SESSION['security_token'][$token]);
+		if (empty($token) && isset($_POST[self::XSRF_TOKEN_NAME]))
+			$token = $_POST[self::XSRF_TOKEN_NAME];
+		if (!empty($token) && is_array($_SESSION[self::XSRF_TOKEN_NAME])) {
+			foreach ($_SESSION[self::XSRF_TOKEN_NAME] as $key => $value) {
+				if ($value === $token) {
+					unset($_SESSION[self::XSRF_TOKEN_NAME][$key]);
+					break;
+				}
+			}
+		}
 	}
 }
