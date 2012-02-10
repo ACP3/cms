@@ -147,7 +147,7 @@ class validate
 	 */
 	public static function formToken()
 	{
-		return isset($_POST['security_token']) && isset($_SESSION['security_token']) && is_array($_SESSION['security_token']) && in_array($_POST['security_token'], $_SESSION['security_token']) ? true : false;
+		return isset($_POST[session::XSRF_TOKEN_NAME]) && isset($_SESSION[session::XSRF_TOKEN_NAME]) && is_array($_SESSION[session::XSRF_TOKEN_NAME]) && in_array($_POST[session::XSRF_TOKEN_NAME], $_SESSION[session::XSRF_TOKEN_NAME]) ? true : false;
 	}
 	/**
 	 * Bestimmung des Geschlechts
