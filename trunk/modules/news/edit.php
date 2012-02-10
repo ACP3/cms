@@ -68,7 +68,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'id = \
 		$news = $db->select('start, end, headline, text, readmore, comments, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\'');
 		$news[0]['headline'] = $db->escape($news[0]['headline'], 3);
 		$news[0]['text'] = $db->escape($news[0]['text'], 3);
-		$news[0]['alias'] = seo::getUriAlias('news/details/id_' . $uri->id);
+		$news[0]['alias'] = seo::getUriAlias('news/details/id_' . $uri->id, true);
 		$news[0]['seo_keywords'] = seo::getKeywords('news/details/id_' . $uri->id);
 		$news[0]['seo_description'] = seo::getDescription('news/details/id_' . $uri->id);
 

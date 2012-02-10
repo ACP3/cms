@@ -16,7 +16,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_items', '
 	$page = $db->select('id, start, end, mode, block_id, parent_id, left_id, right_id, display, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
 	$page[0]['title'] = $db->escape($page[0]['title'], 3);
 	$page[0]['uri'] = $db->escape($page[0]['uri'], 3);
-	$page[0]['alias'] = $page[0]['mode'] == 2 || $page[0]['mode'] == 4 ? seo::getUriAlias($page[0]['uri']) : '';
+	$page[0]['alias'] = $page[0]['mode'] == 2 || $page[0]['mode'] == 4 ? seo::getUriAlias($page[0]['uri'], true) : '';
 	$page[0]['seo_keywords'] = seo::getKeywords($page[0]['uri']);
 	$page[0]['seo_description'] = seo::getDescription($page[0]['uri']);
 
@@ -145,7 +145,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_items', '
 		$display[1]['lang'] = $lang->t('common', 'no');
 		$tpl->assign('display', $display);
 
-		if (modules::check('static_pages', 'functions')) {
+		if (modules::check('static_pages', 'functions') === true) {
 			require_once MODULES_DIR . 'static_pages/functions.php';
 
 			if (!isset($form) && $page[0]['mode'] == '4') {

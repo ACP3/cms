@@ -175,13 +175,12 @@ function generateSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
  */
 function getRedirectMessage()
 {
-	global $session, $tpl;
+	global $tpl;
 
-	if ($session->get('redirect_message') !== false) {
-		$tpl->assign('redirect', array('text' => $session->get('redirect_message')));
+	if (isset($_SESSION['redirect_message'])) {
+		$tpl->assign('redirect', array('text' => $_SESSION['redirect_message']));
 		$tpl->assign('redirect_message', view::fetchTemplate('common/redirect_message.tpl'));
-
-		$session->set('redirect_message', '');
+		unset($_SESSION['redirect_message']);
 	}
 }
 /**
@@ -192,10 +191,10 @@ function getRedirectMessage()
  */
 function setRedirectMessage($text, $path)
 {
-	global $session, $uri;
+	global $uri;
 
 	if (empty($text) === false && empty($path) === false) {
-		$session->set('redirect_message', $text);
+		$_SESSION['redirect_message'] = $text;
 		$uri->redirect($path);
 	}
 }

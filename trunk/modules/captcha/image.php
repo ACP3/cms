@@ -10,11 +10,11 @@
 if (defined('IN_ACP3') === false)
 	exit();
 
-if ($session->get('captcha') !== '') {
+if (!empty($_SESSION['captcha'])) {
 	header('Cache-Control: no-cache, must-revalidate');
 	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 	header('Content-Type: image/gif');
-	$captcha = $session->get('captcha');
+	$captcha = $_SESSION['captcha'];
 	$captchaLength = strlen($captcha);
 	$width = $captchaLength * 25;
 	$height = 30;
