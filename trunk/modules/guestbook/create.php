@@ -105,7 +105,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	}
 
 	// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
-	if ($auth->isUser()) {
+	if ($auth->isUser() === true) {
 		$user = $auth->getUserInfo();
 		$disabled = ' readonly="readonly" class="readonly"';
 

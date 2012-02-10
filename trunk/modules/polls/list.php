@@ -18,7 +18,7 @@ if ($c_polls > 0) {
 		$polls[$i]['question'] = $db->escape($polls[$i]['question'], 3);
 
 		// Überprüfen, ob der eingeloogter User schon abgestimmt hat
-		if ($auth->isUser()) {
+		if ($auth->isUser() === true) {
 			$query = $db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . $polls[$i]['id'] . '\' AND user_id = \'' . $auth->getUserId() . '\'');
 		// Überprüfung für Gäste
 		} else {

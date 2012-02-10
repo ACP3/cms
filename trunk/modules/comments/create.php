@@ -81,7 +81,7 @@ function commentsCreate($module, $entry_id)
 		);
 
 		// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
-		if ($auth->isUser()) {
+		if ($auth->isUser() === true) {
 			$user = $auth->getUserInfo();
 			$disabled = ' readonly="readonly" class="readonly"';
 

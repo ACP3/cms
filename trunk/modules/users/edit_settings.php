@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if ($auth->isUser() === false || !validate::isNumber($auth->getUserId())) {
+if ($auth->isUser() === false || !validate::isNumber($auth->getUserId()) === false) {
 	$uri->redirect('errors/403');
 } else {
 	$settings = config::getModuleSettings('users');

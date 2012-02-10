@@ -90,7 +90,7 @@ class validate
 	 */
 	public static function captcha($input)
 	{
-		return preg_match('/^[a-zA-Z0-9]+$/', $input) && isset($_SESSION['captcha']) && $input === $_SESSION['captcha'] ? true : false;
+		return preg_match('/^[a-zA-Z0-9]+$/', $input) && isset($_SESSION['captcha']) && strtolower($input) === strtolower($_SESSION['captcha']) ? true : false;
 	}
 	/**
 	 * Überprüft, ob alle Daten ein sinnvolles Datum ergeben

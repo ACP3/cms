@@ -41,7 +41,7 @@ if (isset($_POST['form']) === true) {
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
-	if ($auth->isUser()) {
+	if ($auth->isUser() === true) {
 		$defaults = $auth->getUserInfo();
 		$disabled = ' readonly="readonly" class="readonly"';
 		$defaults['name'] = !empty($defaults['realname']) ? $db->escape($defaults['realname'], 3) : $db->escape($defaults['nickname'], 3);

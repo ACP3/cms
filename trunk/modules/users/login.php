@@ -11,7 +11,7 @@ if (defined('IN_ACP3') === false)
 	exit;
 
 // Falls der Benutzer schon eingeloggt ist, diesen zur Startseite weiterleiten
-if ($auth->isUser()) {
+if ($auth->isUser() === true) {
 	$uri->redirect(0, ROOT_DIR);
 } elseif (isset($_POST['form']) === true) {
 	$form = $_POST['form'];

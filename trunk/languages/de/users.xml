@@ -17,6 +17,7 @@
 	<item key="edit">Benutzer bearbeiten</item>
 	<item key="edit_profile">Profil bearbeiten</item>
 	<item key="edit_settings">Einstellungen bearbeiten</item>
+	<item key="enable_registration">Registrierung neuer Benutzer erlauben</item>
 	<item key="female">Weiblich</item>
 	<item key="forgot_pwd">Passwort vergessen?</item>
 	<item key="forgot_pwd_error">Beim Versenden der E-Mail-Adresse mit Ihrem neuen Passwort ist ein Fehler aufgetreten.</item>
@@ -65,20 +66,22 @@ Benutzername: {name}
 E-Mail-Adresse: {mail}
 Passwort: {password}</item>
 	<item key="register_success">Ihr Benutzerkonto wurde erfolgreich erstellt.</item>
-	<item key="select_access_level">Bitte wählen Sie einen Zugriffslevel für den Benutzer aus</item>
+	<item key="select_access_level">Bitte wählen Sie einen Zugriffslevel für den Benutzer aus.</item>
+	<item key="select_enable_registration">Bitten wählen Sie aus, ob die Registrierung neuer Benutzer erlaubt werden soll oder nicht.</item>
 	<item key="select_entries_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die angezeigten Datensätze pro Seite selber festzulegen.</item>
-	<item key="select_language">Bitte wählen Sie aus, in welcher Sprache Sie die Website angezeigt bekommen möchten</item>
+	<item key="select_language">Bitte wählen Sie aus, in welcher Sprache Sie die Website angezeigt bekommen möchten.</item>
 	<item key="select_language_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die Anzeigesprache selber festzulegen.</item>
 	<item key="send_email">E-Mail senden</item>
 	<item key="settings">Einstellungen</item>
 	<item key="skype">Skype</item>
-	<item key="type_in_nickname_or_email">Bitte geben Sie entweder den bei der Registrierung verwendeten Benutzernamen oder die E-Mail-Adresse ein</item>
-	<item key="type_in_pwd">Entweder ist das Passwort leer oder in der Wiederholung ist ein Tippfehler</item>
-	<item key="user_email_already_exists">Für die angegebene E-Mail-Adresse existiert bereits ein Benutzerkonto</item>
+	<item key="type_in_nickname_or_email">Bitte geben Sie entweder den bei der Registrierung verwendeten Benutzernamen oder die E-Mail-Adresse ein.</item>
+	<item key="type_in_pwd">Entweder ist das Passwort leer oder in der Wiederholung ist ein Tippfehler.</item>
+	<item key="user_email_already_exists">Für die angegebene E-Mail-Adresse existiert bereits ein Benutzerkonto.</item>
 	<item key="user_menu">Benutzermenü</item>
-	<item key="user_name_already_exists">Für den angegebenen Benutzernamen existiert bereits ein Benutzerkonto</item>
-	<item key="user_not_exists">Für den eingegebenen Benutzernamen bzw. die eingegebene E-Mail-Adresse konnte kein Benutzerprofil gefunden werden</item>
+	<item key="user_name_already_exists">Für den angegebenen Benutzernamen existiert bereits ein Benutzerkonto.</item>
+	<item key="user_not_exists">Für den eingegebenen Benutzernamen bzw. die eingegebene E-Mail-Adresse konnte kein Benutzerprofil gefunden werden.</item>
 	<item key="user_profile_not_exists">Das angeforderte Benutzerprofil konnte nicht gefunden werden.</item>
+	<item key="user_registration_disabled">Die Registrierung für neue Benutzer ist derzeit deaktiviert!</item>
 	<item key="users">Benutzer</item>
 	<item key="users_found">Insgesamt haben sich auf dieser Website %d Benutzer registriert.</item>
 	<item key="view_profile">Benutzerprofil ansehen</item>

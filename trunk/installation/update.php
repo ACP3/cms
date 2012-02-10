@@ -247,6 +247,9 @@ $queries = array(
 	13 => array(
 		0 => "INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'news', 'category_in_breadcrumb', '1');",
 	),
+	14 => array(
+		0 => "INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'users', 'enable_registration', '1');",
+	),
 );
 
 // Änderungen am DB Schema vornehmen

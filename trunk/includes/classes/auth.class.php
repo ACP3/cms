@@ -189,6 +189,9 @@ class auth
 
 				$this->setCookie($username, $db_hash, $expiry);
 
+				// Neue Session-ID generieren
+				session::secureSession(true);
+
 				$this->isUser = true;
 				$this->userId = (int) $user[0]['id'];
 

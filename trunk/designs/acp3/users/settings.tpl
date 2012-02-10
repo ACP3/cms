@@ -23,6 +23,15 @@
 				</label>
 {/foreach}
 			</dd>
+			<dt><label for="enable-registration-1">{lang t="users|enable_registration"}</label></dt>
+			<dd>
+{foreach $registration as $row}
+				<label for="enable-registration-{$row.value}">
+					<input type="radio" name="form[enable_registration]" id="enable-registration-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+					{$row.lang}
+				</label>
+{/foreach}
+			</dd>
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
