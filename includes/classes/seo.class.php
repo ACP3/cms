@@ -83,14 +83,14 @@ class seo
 	 * @param string $path
 	 * @return string
 	 */
-	public static function getUriAlias($path)
+	public static function getUriAlias($path, $for_form = false)
 	{
 		if (empty(self::$aliases))
 			self::$aliases = self::getSEOCache();
 
 		$path.= !preg_match('/\/$/', $path) ? '/' : '';
 
-		return !empty(self::$aliases[$path]['alias']) ? self::$aliases[$path]['alias'] : $path;
+		return !empty(self::$aliases[$path]['alias']) ? self::$aliases[$path]['alias'] : ($for_form === true ? '' : $path);
 	}
 	/**
 	 * Gibt die Beschreibung der aktuell angezeigten Seite oder der

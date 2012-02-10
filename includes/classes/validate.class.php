@@ -90,9 +90,7 @@ class validate
 	 */
 	public static function captcha($input)
 	{
-		global $session;
-
-		return preg_match('/^[a-zA-Z0-9]+$/', $input) && $input === $session->get('captcha') ? true : false;
+		return preg_match('/^[a-zA-Z0-9]+$/', $input) && isset($_SESSION['captcha']) && $input === $_SESSION['captcha'] ? true : false;
 	}
 	/**
 	 * Überprüft, ob alle Daten ein sinnvolles Datum ergeben
@@ -149,9 +147,7 @@ class validate
 	 */
 	public static function formToken()
 	{
-		global $session;
-
-		return isset($_POST['security_token']) && $session->get('security_token') === $_POST['security_token'] ? true : false;
+		return isset($_POST['security_token']) && isset($_SESSION['security_token']) && is_array($_SESSION['security_token']) && in_array($_POST['security_token'], $_SESSION['security_token']) ? true : false;
 	}
 	/**
 	 * Bestimmung des Geschlechts

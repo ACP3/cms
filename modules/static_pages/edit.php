@@ -56,7 +56,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'static_pages',
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 		$page = getStaticPagesCache($uri->id);
 		$page[0]['text'] = $db->escape($page[0]['text'], 3);
-		$page[0]['alias'] = seo::getUriAlias('static_pages/list/id_' . $uri->id);
+		$page[0]['alias'] = seo::getUriAlias('static_pages/list/id_' . $uri->id, true);
 		$page[0]['seo_keywords'] = seo::getKeywords('static_pages/list/id_' . $uri->id);
 		$page[0]['seo_description'] = seo::getDescription('static_pages/list/id_' . $uri->id);
 
