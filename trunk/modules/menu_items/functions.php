@@ -189,8 +189,8 @@ function menuItemsEditNode($id, $parent, $block_id, array $update_values)
 			$bool = $db->update('menu_items', $update_values, 'id = \'' . $id . '\'');
 		} else {
 			// Überprüfung, falls Seite kein Root-Element ist, aber keine Veränderung vorgenommen werden soll...
-			$chk_parent = $db->query('SELECT p.id FROM {pre}menu_items p, {pre}menu_items c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $id . ' ORDER BY p.left_id DESC LIMIT 2');
-			if (isset($chk_parent[1]) && $chk_parent[1]['id'] == $parent) {
+			$chk_parent = $db->query('SELECT id FROM {pre}menu_items WHERE left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'] . ' ORDER BY left_id DESC LIMIT 1');
+			if (isset($chk_parent[0]) && $chk_parent[0]['id'] == $parent) {
 				$bool = $db->update('menu_items', $update_values, 'id = \'' . $id . '\'');
 			// ...ansonsten den Baum bearbeiten...
 			} else {
@@ -205,11 +205,12 @@ function menuItemsEditNode($id, $parent, $block_id, array $update_values)
 				if (!empty($new_parent) && $new_parent[0]['left_id'] < $pages[0]['left_id'] && $new_parent[0]['right_id'] > $pages[0]['right_id']) {
 					$bool = false;
 				} else {
+					// Knoten werden eigenes Root-Element
 					if (empty($new_parent)) {
-						// Root-Element in anderen Block verschieben
+						// Knoten in anderen Block verschieben
 						if ($pages[0]['block_id'] != $block_id) {
 							$new_block = $db->select('MIN(left_id) AS left_id', 'menu_items', 'block_id = \'' . $block_id . '\'');
-							// Falls Navigationselemente in einen leeren Block verschoben werden sollen,
+							// Falls die Knoten in einen leeren Block verschoben werden sollen,
 							// die right_id des letzten Elementes verwenden
 							if (empty($new_block) || is_null($new_block[0]['left_id'])) {
 								$new_block = $db->select('MAX(right_id) AS left_id', 'menu_items');
@@ -238,6 +239,7 @@ function menuItemsEditNode($id, $parent, $block_id, array $update_values)
 							$db->query('UPDATE {pre}menu_items SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0);
 							$db->query('UPDATE {pre}menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $pages[0]['right_id'] . ' AND block_id = \'' . $pages[0]['block_id'] . '\'', 0);
 						}
+					// Knoten werden wieder Kinder von einem anderen Knoten
 					} else {
 						// Teilbaum nach unten...
 						if ($new_parent[0]['left_id'] > $pages[0]['left_id']) {

@@ -61,8 +61,8 @@ function aclEditNode($id, $parent, array $update_values)
 			$bool = $db->update('acl_roles', $update_values, 'id = \'' . $id . '\'');
 		} else {
 			// Überprüfung, falls Seite kein Root-Element ist, aber keine Veränderung vorgenommen werden soll...
-			$chk_parent = $db->query('SELECT p.id FROM {pre}acl_roles p, {pre}acl_roles c WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.id = ' . $id . ' ORDER BY p.left_id DESC LIMIT 2');
-			if (isset($chk_parent[1]) && $chk_parent[1]['id'] == $parent) {
+			$chk_parent = $db->query('SELECT id FROM {pre}acl_roles WHERE left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'] . ' ORDER BY left_id DESC LIMIT 1');
+			if (isset($chk_parent[0]) && $chk_parent[0]['id'] == $parent) {
 				$bool = $db->update('acl_roles', $update_values, 'id = \'' . $id . '\'');
 			// ...ansonsten den Baum bearbeiten...
 			} else {
@@ -77,6 +77,7 @@ function aclEditNode($id, $parent, array $update_values)
 				if (!empty($new_parent) && $new_parent[0]['left_id'] < $roles[0]['left_id'] && $new_parent[0]['right_id'] > $roles[0]['right_id']) {
 					$bool = false;
 				} else {
+					// Knoten werden eigenes Root-Element
 					if (empty($new_parent)) {
 						$new_parent = $db->select('MAX(right_id) AS right_id', 'acl_roles', 'block_id =  \'' . $roles[0]['block_id'] . '\'');
 
@@ -85,6 +86,7 @@ function aclEditNode($id, $parent, array $update_values)
 						$db->link->beginTransaction();
 						$db->query('UPDATE {pre}acl_roles SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $roles[0]['left_id'] . ' AND right_id > ' . $roles[0]['right_id'], 0);
 						$db->query('UPDATE {pre}acl_roles SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $roles[0]['right_id'] . ' AND block_id = \'' . $roles[0]['block_id'] . '\'', 0);
+					// Knoten werden wieder Kinder von einem anderen Knoten
 					} else {
 						// Teilbaum nach unten...
 						if ($new_parent[0]['left_id'] > $roles[0]['left_id']) {
