@@ -19,7 +19,10 @@
 			<input type="hidden" name="form[redirect_uri]" value="{$redirect_uri}">
 			<input type="submit" value="{lang t="common|submit"}" class="form">
 		</p>
-		<a href="{uri args="users/forgot_pwd"}">{lang t="users|forgot_pwd"}</a><br>
+		<a href="{uri args="users/forgot_pwd"}">{lang t="users|forgot_pwd"}</a>
+{if $enable_registration == 1}
+		<br>
 		<a href="{uri args="users/register"}">{lang t="users|register"}</a>
+{/if}
 	</div>
 </form>

@@ -12,7 +12,7 @@ if (defined('IN_ACP3') === false)
 
 $currentPage = base64_encode(substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1));
 
-if ($auth->isUser()) {
+if ($auth->isUser() === true) {
 	$user_sidebar = array();
 	$user_sidebar['page'] = $currentPage;
 
@@ -61,11 +61,10 @@ if ($auth->isUser()) {
 
 	view::displayTemplate('users/sidebar_user_menu.tpl');
 } else {
-	if (defined('IN_ADM'))
-		$tpl->assign('uri', $uri->route('acp/users/login'));
-	elseif (defined('IN_ACP3'))
-		$tpl->assign('uri', $uri->route('users/login'));
+	$settings = config::getModuleSettings('users');
 
+	$tpl->assign('enable_registration', $settings['enable_registration']);
+	$tpl->assign('uri', $uri->route(defined('IN_ADM') === true ? 'acp/users/login' : 'users/login'));
 	$tpl->assign('redirect_uri', isset($_POST['form']['redirect_uri']) ? $_POST['form']['redirect_uri'] : $currentPage);
 
 	view::displayTemplate('users/sidebar_login.tpl');

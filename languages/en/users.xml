@@ -17,6 +17,7 @@
 	<item key="edit">Edit user</item>
 	<item key="edit_profile">Edit profile</item>
 	<item key="edit_settings">Edit settings</item>
+	<item key="enable_registration">Enable registration of new users</item>
 	<item key="female">Female</item>
 	<item key="forgot_pwd">Forgot password?</item>
 	<item key="forgot_pwd_error">While sending the E-mail with your new password an error has occured.</item>
@@ -65,20 +66,22 @@ User name: {name}
 E-mail address: {mail}
 Password: {password}</item>
 	<item key="register_success">The user account has been created successfully.</item>
-	<item key="select_access_level">Please select an access level for this user</item>
+	<item key="select_access_level">Please select an access level for this user.</item>
+	<item key="select_enable_registration">Please select whether users should be allowed to register on this website.</item>
 	<item key="select_entries_override">Please select whether users should be allowed to override the number of displayed resultsets per page.</item>
-	<item key="select_language">Please select the language in which you want to see the website</item>
+	<item key="select_language">Please select the language in which you want to see the website.</item>
 	<item key="select_language_override">Please select whether to users should be allowed to override the default language.</item>
 	<item key="send_email">Send E-mail</item>
 	<item key="settings">Settings</item>
 	<item key="skype">Skype</item>
-	<item key="type_in_nickname_or_email">Please either enter the E-mail address or the user name you used with the registration</item>
-	<item key="type_in_pwd">Either the password is empty or there is a typo in the repetition</item>
-	<item key="user_email_already_exists">There is already an user account registered with the same E-mail address</item>
+	<item key="type_in_nickname_or_email">Please either enter the E-mail address or the user name you used with the registration.</item>
+	<item key="type_in_pwd">Either the password is empty or there is a typo in the repetition.</item>
+	<item key="user_email_already_exists">There is already an user account registered with the same E-mail address.</item>
 	<item key="user_menu">User menu</item>
-	<item key="user_name_already_exists">There is already an user account registered with the same user name</item>
-	<item key="user_not_exists">There is no user profile registered with the typed in user name respectively the typed in E-mail address</item>
+	<item key="user_name_already_exists">There is already an user account registered with the same user name.</item>
+	<item key="user_not_exists">There is no user profile registered with the typed in user name respectively the typed in E-mail address.</item>
 	<item key="user_profile_not_exists">The requested user profile doesn\'t exists.</item>
+	<item key="user_registration_disabled">The registration for new users is currently diabled!</item>
 	<item key="users">Users</item>
 	<item key="users_found">In total there are %d users registered on this Website.</item>
 	<item key="view_profile">View user profile</item>

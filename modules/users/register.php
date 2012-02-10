@@ -2,8 +2,12 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if ($auth->isUser()) {
+$settings = config::getModuleSettings('users');
+
+if ($auth->isUser() === true) {
 	$uri->redirect(0, ROOT_DIR);
+} elseif ($settings['enable_registration'] == 0) {
+	view::setContent(errorBox($lang->t('users', 'user_registration_disabled')));
 } else {
 	breadcrumb::assign($lang->t('users', 'users'), $uri->route('users'));
 	breadcrumb::assign($lang->t('users', 'register'));
@@ -15,11 +19,11 @@ if ($auth->isUser()) {
 
 		if (empty($form['nickname']))
 			$errors[] = $lang->t('common', 'name_to_short');
-		if (!userNameExists($form['nickname']))
+		if (userNameExists($form['nickname']) === true)
 			$errors[] = $lang->t('users', 'user_name_already_exists');
 		if (validate::email($form['mail']) === false)
 			$errors[] = $lang->t('common', 'wrong_email_format');
-		if (!userEmailExists($form['mail']))
+		if (userEmailExists($form['mail']) === true)
 			$errors[] = $lang->t('users', 'user_email_already_exists');
 		if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');

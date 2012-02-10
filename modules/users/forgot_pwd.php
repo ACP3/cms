@@ -2,7 +2,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if ($auth->isUser()) {
+if ($auth->isUser() === true) {
 	$uri->redirect(0, ROOT_DIR);
 } else {
 	breadcrumb::assign($lang->t('users', 'users'), $uri->route('users'));
@@ -15,11 +15,11 @@ if ($auth->isUser()) {
 
 		if (empty($form['nick_mail']))
 			$errors[] = $lang->t('users', 'type_in_nickname_or_email');
-		if (!empty($form['nick_mail']) && validate::email($form['nick_mail']) === false && !userNameExists($form['nick_mail']))
+		if (!empty($form['nick_mail']) && validate::email($form['nick_mail']) === false && userNameExists($form['nick_mail']) === false)
 			$errors[] = $lang->t('users', 'user_not_exists');
 		if (!empty($form['nick_mail']) && validate::email($form['nick_mail']) === false)
 			$errors[] = $lang->t('common', 'wrong_email_format');
-		if (validate::email($form['nick_mail']) && !userEmailExists($form['nick_mail']))
+		if (validate::email($form['nick_mail']) && userEmailExists($form['nick_mail']) === false)
 			$errors[] = $lang->t('users', 'user_not_exists');
 		if ($auth->isUser() === false && validate::captcha($form['captcha']) === false)
 			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
@@ -34,7 +34,7 @@ if ($auth->isUser()) {
 			$host = htmlentities($_SERVER['HTTP_HOST']);
 
 			// Je nachdem welches Feld ausgefüllt wurde, dieses auswählen
-			$where = validate::email($form['nick_mail']) && userEmailExists($form['nick_mail']) ? 'mail = \'' . $form['nick_mail'] . '\'' : 'nickname = \'' . $db->escape($form['nick_mail']) . '\'';
+			$where = validate::email($form['nick_mail']) && userEmailExists($form['nick_mail']) === true ? 'mail = \'' . $form['nick_mail'] . '\'' : 'nickname = \'' . $db->escape($form['nick_mail']) . '\'';
 			$user = $db->select('id, nickname, mail', 'users', $where);
 
 			// E-Mail mit dem neuen Passwort versenden

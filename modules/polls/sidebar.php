@@ -23,7 +23,7 @@ if (count($question) > 0) {
 	$tpl->assign('sidebar_polls', $question[0]);
 
 	// Überprüfen, ob der eingeloggte User schon abgestimmt hat
-	if ($auth->isUser())
+	if ($auth->isUser() === true)
 		$alreadyVoted = $db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . $question[0]['id'] . '\' AND user_id = \'' . $auth->getUserId() . '\'');
 	// Überprüfung für Gäste
 	else

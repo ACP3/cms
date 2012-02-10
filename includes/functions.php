@@ -47,11 +47,11 @@ function calcFilesize($value)
  */
 function captcha($captcha_length = 5)
 {
-	global $auth, $session, $tpl;
+	global $auth, $tpl;
 
 	// Wenn man als User angemeldet ist, Captcha nicht anzeigen
 	if ($auth->isUser() === false) {
-		$session->set('captcha', salt($captcha_length));
+		$_SESSION['captcha'] = salt($captcha_length);
 
 		$captcha = array();
 		$captcha['width'] = $captcha_length * 25;
