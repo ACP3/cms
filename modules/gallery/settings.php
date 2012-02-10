@@ -11,6 +11,7 @@ if (defined('IN_ADM') === false)
 	exit;
 
 $settings = config::getModuleSettings('gallery');
+$comments_active = modules::isActive('comments');
 
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
@@ -21,7 +22,7 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('gallery', 'invalid_image_height_entered');
 	if (validate::isNumber($form['filesize']) === false)
 		$errors[] = $lang->t('gallery', 'invalid_image_filesize_entered');
-	if (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0)
+	if ($comments_active === true && (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0))
 		$errors[] = $lang->t('gallery', 'select_allow_comments');
 	if (!isset($form['colorbox']) || $form['colorbox'] != 1 && $form['colorbox'] != 0)
 		$errors[] = $lang->t('gallery', 'select_use_colorbox');
@@ -49,14 +50,16 @@ if (isset($_POST['form']) === true) {
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-	$comments = array();
-	$comments[0]['value'] = '1';
-	$comments[0]['checked'] = selectEntry('comments', '1', $settings['comments'], 'checked');
-	$comments[0]['lang'] = $lang->t('common', 'yes');
-	$comments[1]['value'] = '0';
-	$comments[1]['checked'] = selectEntry('comments', '0', $settings['comments'], 'checked');
-	$comments[1]['lang'] = $lang->t('common', 'no');
-	$tpl->assign('comments', $comments);
+	if ($comments_active === true) {
+		$comments = array();
+		$comments[0]['value'] = '1';
+		$comments[0]['checked'] = selectEntry('comments', '1', $settings['comments'], 'checked');
+		$comments[0]['lang'] = $lang->t('common', 'yes');
+		$comments[1]['value'] = '0';
+		$comments[1]['checked'] = selectEntry('comments', '0', $settings['comments'], 'checked');
+		$comments[1]['lang'] = $lang->t('common', 'no');
+		$tpl->assign('comments', $comments);
+	}
 
 	$colorbox = array();
 	$colorbox[0]['value'] = '1';

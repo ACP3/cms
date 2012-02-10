@@ -19,6 +19,7 @@
 			<dd><input type="number" name="form[maxheight]" id="maxheight" value="{$form.maxheight}"></dd>
 			<dt><label for="filesize">{lang t="gallery|image_filesize"}</label></dt>
 			<dd><input type="number" name="form[filesize]" id="filesize" value="{$form.filesize}"></dd>
+{if isset($comments)}
 			<dt><label for="comments-1">{lang t="common|allow_comments"}</label></dt>
 			<dd>
 {foreach $comments as $row}
@@ -28,6 +29,7 @@
 				</label>
 {/foreach}
 			</dd>
+{/if}
 			<dt>
 				<label for="colorbox-1">{lang t="gallery|use_colorbox"}</label>
 				<span>({lang t="gallery|use_colorbox_description"})</span>
