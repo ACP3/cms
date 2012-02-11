@@ -11,8 +11,8 @@ if (defined('IN_ACP3') === false)
 	exit;
 
 if (validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = \'' . $uri->id . '\' AND start <= \'' . $date->timestamp() . '\'') == 1) {
-	breadcrumb::assign($lang->t('polls', 'polls'), $uri->route('polls'));
-	breadcrumb::assign($lang->t('polls', 'result'));
+	$breadcrumb->assign($lang->t('polls', 'polls'), $uri->route('polls'));
+	$breadcrumb->assign($lang->t('polls', 'result'));
 
 	$question = $db->select('question', 'polls');
 	$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $uri->id . '\'', 'id ASC');

@@ -31,9 +31,8 @@ if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module
 	view::setContent(view::fetchTemplate('comments/adm_list_module.tpl'));
 } else {
 	//Brotkrümelspur
-	breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
-	breadcrumb::assign($lang->t('comments', 'comments'), $uri->route('acp/comments'));
-	breadcrumb::assign($lang->t($module, $module));
+	$breadcrumb->assign($lang->t('comments', 'comments'), $uri->route('acp/comments'))
+			   ->assign($lang->t($module, $module));
 
 	$comments = $db->query('SELECT IF(c.name != "" AND c.user_id = 0,c.name,u.nickname) AS name, c.id, c.ip, c.user_id, c.date, c.message FROM {pre}comments AS c LEFT JOIN ({pre}users AS u) ON u.id = c.user_id WHERE c.module = \'' . $module . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . $auth->entries);
 	$c_comments = count($comments);

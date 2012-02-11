@@ -1,6 +1,6 @@
 <h4>{lang t="polls|latest_poll"}</h4>
 <div id="sidebar-polls">
-	<h5>{$sidebar_poll_question.question}</h5>
+	<h5>{$sidebar_polls.question}</h5>
 	<ul>
 {foreach $sidebar_poll_answers as $row}
 		<li><strong>{$row.text}:</strong> {$row.percent}% ({$row.votes})</li>

@@ -32,19 +32,19 @@ if (!isset($entries)) {
 			} else {
 				// Falls sich der User selbst gelöscht hat, diesen auch gleich abmelden
 				if ($entry == $auth->getUserId()) {
-					setcookie('ACP3_AUTH', '', time() - 3600, '/');
+					$auth->logout();
 					$self_delete = true;
 				}
 				$bool = $db->delete('users', 'id = \'' . $entry . '\'');
 			}
 		}
 	}
-	if ($admin_user) {
+	if ($admin_user === true) {
 		$text = $lang->t('users', 'admin_user_undeletable');
 	} else {
 		$text = $bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
 	}
-	setRedirectMessage($text, $self_delete ? ROOT_DIR : 'acp/users');
+	setRedirectMessage($text, $self_delete === true ? ROOT_DIR : 'acp/users');
 } else {
 	$uri->redirect('errors/404');
 }

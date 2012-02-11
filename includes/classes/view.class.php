@@ -78,7 +78,9 @@ class view
 		switch (modules::check()) {
 			// Seite ausgeben
 			case 1:
-				global $session, $date, $db, $lang, $tpl;
+				global $date, $db, $lang, $session, $tpl;
+
+				$breadcrumb = new breadcrumb();
 
 				require MODULES_DIR . $uri->mod . '/' . $uri->file . '.php';
 
@@ -87,8 +89,8 @@ class view
 
 				if (self::$layout !== '') {
 					$tpl->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
-					$tpl->assign('TITLE', breadcrumb::output(2));
-					$tpl->assign('BREADCRUMB', breadcrumb::output());
+					$tpl->assign('TITLE', $breadcrumb->output(2));
+					$tpl->assign('BREADCRUMB', $breadcrumb->output());
 					$tpl->assign('KEYWORDS', seo::getCurrentKeywords());
 					$tpl->assign('DESCRIPTION', seo::getCurrentDescription());
 					$tpl->assign('CONTENT', self::$content);

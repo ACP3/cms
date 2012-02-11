@@ -10,10 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
-breadcrumb::assign($lang->t('menu_items', 'menu_items'), $uri->route('acp/menu_items'));
-breadcrumb::assign($lang->t('menu_items', 'adm_list_blocks'), $uri->route('acp/menu_items/adm_list_blocks'));
-breadcrumb::assign($lang->t('menu_items', 'create_block'));
+$breadcrumb->assign($lang->t('menu_items', 'adm_list_blocks'), $uri->route('acp/menu_items/adm_list_blocks'))
+		   ->assign($lang->t('menu_items', 'create_block'));
 
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];

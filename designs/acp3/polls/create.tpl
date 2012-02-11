@@ -40,5 +40,6 @@
 {/if}
 		<input type="submit" value="{lang t="common|submit"}" class="form">
 		<input type="reset" value="{lang t="common|reset"}" class="form">
+		{$form_token}
 	</div>
 </form>

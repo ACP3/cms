@@ -11,9 +11,9 @@ if (defined('IN_ACP3') === false)
 	exit;
 
 if (validate::isNumber($uri->cat) && $db->countRows('*', 'categories', 'id = \'' . $uri->cat . '\'') == '1') {
-	breadcrumb::assign($lang->t('files', 'files'), $uri->route('files'));
 	$category = $db->select('name', 'categories', 'id = \'' . $uri->cat . '\'');
-	breadcrumb::assign($category[0]['name']);
+	$breadcrumb->assign($lang->t('files', 'files'), $uri->route('files'))
+			   ->assign($category[0]['name']);
 
 	$time = $date->timestamp();
 	$period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';

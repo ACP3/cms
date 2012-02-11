@@ -15,10 +15,8 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id 
 
 	$gallery = $db->select('name', 'gallery', 'id = \'' . $uri->id . '\'');
 
-	breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
-	breadcrumb::assign($lang->t('gallery', 'gallery'), $uri->route('acp/gallery'));
-	breadcrumb::assign($gallery[0]['name'], $uri->route('acp/gallery/edit_gallery/id_' . $uri->id));
-	breadcrumb::assign($lang->t('gallery', 'add_picture'));
+	$breadcrumb->assign($gallery[0]['name'], $uri->route('acp/gallery/edit_gallery/id_' . $uri->id))
+			   ->assign($lang->t('gallery', 'add_picture'));
 
 	$settings = config::getModuleSettings('gallery');
 
