@@ -62,5 +62,6 @@
 {if !$disable}
 		<input type="submit" name="add_answer" value="{lang t="polls|add_answer"}" class="form">
 {/if}
+		{$form_token}
 	</div>
 </form>

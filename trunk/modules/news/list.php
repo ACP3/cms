@@ -26,10 +26,10 @@ if (modules::check('categories', 'functions') === true) {
 $settings = config::getModuleSettings('news');
 // Kategorie in Brotkrümelspur anzeigen
 if ($cat !== 0 && $settings['category_in_breadcrumb'] == 1) {
-	breadcrumb::assign($lang->t('news', 'news'), $uri->route('news'));
+	$breadcrumb->assign($lang->t('news', 'news'), $uri->route('news'));
 	$category = $db->select('name', 'categories', 'id = \'' . $cat . '\'');
 	if (count($category) > 0) {
-		breadcrumb::assign($category[0]['name']);
+		$breadcrumb->assign($category[0]['name']);
 	}
 }
 

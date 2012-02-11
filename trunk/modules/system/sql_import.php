@@ -2,10 +2,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
-breadcrumb::assign($lang->t('system', 'system'), $uri->route('acp/system'));
-breadcrumb::assign($lang->t('system', 'maintenance'), $uri->route('acp/system/maintenance'));
-breadcrumb::assign($lang->t('system', 'sql_import'));
+$breadcrumb->assign($lang->t('system', 'maintenance'), $uri->route('acp/system/maintenance'))
+		   ->assign($lang->t('system', 'sql_import'));
 
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];

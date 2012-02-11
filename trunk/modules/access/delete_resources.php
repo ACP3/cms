@@ -15,10 +15,8 @@ if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
 elseif (validate::deleteEntries($uri->entries) === true)
 	$entries = $uri->entries;
 
-breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
-breadcrumb::assign($lang->t('access', 'access'), $uri->route('acp/access'));
-breadcrumb::assign($lang->t('access', 'adm_list_resources'), $uri->route('acp/access/adm_list_resources'));
-breadcrumb::assign($lang->t('access', 'delete_resources'));
+$breadcrumb->assign($lang->t('access', 'adm_list_resources'), $uri->route('acp/access/adm_list_resources'))
+		   ->assign($lang->t('access', 'delete_resources'));
 
 if (!isset($entries)) {
 	view::setContent(errorBox($lang->t('common', 'no_entries_selected')));

@@ -10,9 +10,6 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-breadcrumb::assign($lang->t('contact', 'contact'), $uri->route('contact'));
-breadcrumb::assign($lang->t('contact', 'imprint'));
-
 $settings = config::getModuleSettings('contact');
 $settings['address'] = $db->escape($settings['address'], 3);
 $settings['telephone'] = $db->escape($settings['telephone'], 3);

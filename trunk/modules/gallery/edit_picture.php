@@ -18,10 +18,8 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery_pictur
 	$picture[0]['gallery_name'] = $db->escape($picture[0]['gallery_name'], 3);
 	$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
 
-	breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
-	breadcrumb::assign($lang->t('gallery', 'gallery'), $uri->route('acp/gallery'));
-	breadcrumb::assign($picture[0]['gallery_name'], $uri->route('acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id']));
-	breadcrumb::assign($lang->t('gallery', 'edit_picture'));
+	$breadcrumb->assign($picture[0]['gallery_name'], $uri->route('acp/gallery/edit_gallery/id_' . $picture[0]['gallery_id']))
+			   ->assign($lang->t('gallery', 'edit_picture'));
 
 	$settings = config::getModuleSettings('gallery');
 

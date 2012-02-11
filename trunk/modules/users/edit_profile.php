@@ -13,9 +13,8 @@ if (defined('IN_ACP3') === false)
 if ($auth->isUser() === false || validate::isNumber($auth->getUserId()) === false) {
 	$uri->redirect('errors/403');
 } else {
-	breadcrumb::assign($lang->t('users', 'users'), $uri->route('users'));
-	breadcrumb::assign($lang->t('users', 'home'), $uri->route('users/home'));
-	breadcrumb::assign($lang->t('users', 'edit_profile'));
+	$breadcrumb->assign($lang->t('users', 'home'), $uri->route('users/home'));
+	$breadcrumb->assign($lang->t('users', 'edit_profile'));
 
 	if (isset($_POST['form']) === true) {
 		require_once MODULES_DIR . 'users/functions.php';

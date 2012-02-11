@@ -20,9 +20,9 @@ if (validate::isNumber($uri->id) === true && $db->select('COUNT(g.id)', 'gallery
 	$settings = config::getModuleSettings('gallery');
 
 	// Brotkrümelspur
-	breadcrumb::assign($lang->t('gallery', 'gallery'), $uri->route('gallery'));
-	breadcrumb::assign($picture[0]['name'], $uri->route('gallery/pics/id_' . $picture[0]['gallery_id']));
-	breadcrumb::assign($lang->t('gallery', 'details'));
+	$breadcrumb->assign($lang->t('gallery', 'gallery'), $uri->route('gallery'))
+			   ->assign($picture[0]['name'], $uri->route('gallery/pics/id_' . $picture[0]['gallery_id']))
+			   ->assign($lang->t('gallery', 'details'));
 
 	$tpl->assign('picture', $picture[0]);
 

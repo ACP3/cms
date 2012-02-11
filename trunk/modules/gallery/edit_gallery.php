@@ -17,9 +17,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id 
 	$gallery[0]['seo_keywords'] = seo::getKeywords('gallery/pics/id_' . $uri->id);
 	$gallery[0]['seo_description'] = seo::getDescription('gallery/pics/id_' . $uri->id);
 
-	breadcrumb::assign($lang->t('common', 'acp'), $uri->route('acp'));
-	breadcrumb::assign($lang->t('gallery', 'gallery'), $uri->route('acp/gallery'));
-	breadcrumb::assign($gallery[0]['name']);
+	$breadcrumb->assign($gallery[0]['name']);
 
 	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];

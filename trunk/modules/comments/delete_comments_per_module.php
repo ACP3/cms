@@ -20,7 +20,7 @@ if (!isset($entries)) {
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
 	view::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/comments/delete_comments_per_module/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/comments')));
-} elseif (preg_match('/^([\w|]+)$/', $entries) && $uri->action === 'confirmed') {
+} elseif ($uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	foreach ($marked_entries as $entry) {
