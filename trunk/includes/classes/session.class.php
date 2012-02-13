@@ -173,14 +173,14 @@ class session {
 	 */
 	public function generateFormToken()
 	{
-		global $tpl;
+		global $tpl, $uri;
 
 		if (!isset($_SESSION[self::XSRF_TOKEN_NAME]) || is_array($_SESSION[self::XSRF_TOKEN_NAME]) === false) {
 			$_SESSION[self::XSRF_TOKEN_NAME] = array();
 		}
 
 		$token = md5(uniqid(mt_rand(), true));
-		$_SESSION[self::XSRF_TOKEN_NAME][] = $token;
+		$_SESSION[self::XSRF_TOKEN_NAME][$uri->query] = $token;
 
 		$tpl->assign('form_token', '<input type="hidden" name="' . self::XSRF_TOKEN_NAME . '" value="' . $token . '" />');
 	}
@@ -189,14 +189,13 @@ class session {
 	 */
 	public function unsetFormToken($token = '')
 	{
+		global $uri;
+
 		if (empty($token) && isset($_POST[self::XSRF_TOKEN_NAME]))
 			$token = $_POST[self::XSRF_TOKEN_NAME];
 		if (!empty($token) && is_array($_SESSION[self::XSRF_TOKEN_NAME])) {
-			foreach ($_SESSION[self::XSRF_TOKEN_NAME] as $key => $value) {
-				if ($value === $token) {
-					unset($_SESSION[self::XSRF_TOKEN_NAME][$key]);
-					break;
-				}
+			if (isset($_SESSION[self::XSRF_TOKEN_NAME][$uri->query])) {
+				unset($_SESSION[self::XSRF_TOKEN_NAME][$uri->query]);
 			}
 		}
 	}
