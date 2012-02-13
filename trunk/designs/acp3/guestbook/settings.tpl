@@ -25,6 +25,15 @@
 			</dd>
 			<dt><label for="notify-email">{lang t="guestbook|notification_email"}</label></dt>
 			<dd><input type="text" name="form[notify_email]" id="notify-email" value="{$form.notify_email}"></dd>
+			<dt><label for="overlay-1">{lang t="guestbook|use_overlay"}</label>	</dt>
+			<dd>
+{foreach $overlay as $row}
+				<label for="overlay-{$row.value}">
+					<input type="radio" name="form[overlay]" id="overlay-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+					{$row.lang}
+				</label>
+{/foreach}
+			</dd>
 {if isset($allow_emoticons)}
 			<dt><label for="emoticons-1">{lang t="guestbook|allow_emoticons"}</label></dt>
 			<dd>

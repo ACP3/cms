@@ -23,11 +23,13 @@ Please click on the link below to review and activate the entry (maybe it is nec
 	<item key="notify_and_enable">Nitify and activate through administrator</item>
 	<item key="notify_on_new_entry">Notify on new entries</item>
 	<item key="select_emoticons">Please select, whether you want to allow emoticons or not.</item>
-	<item key="select_newsletter_integration">Bitte wählen Sie aus, ob neue Gästebucheinträge in den Newsletter integriert werden sollen, oder nicht.</item>
+	<item key="select_newsletter_integration">Please select, whether you want to allow users to subsribe into the newsletter, when creating a new guestbook entry.</item>
 	<item key="select_notification_type">Please select, whether you want to be notified about new guestbook entries or not.</item>
+	<item key="select_use_overlay">Please select, whether user shoud be allowed the create guestbook entries in an overlay.</item>
 	<item key="send_email">Send E-mail</item>
 	<item key="settings">Settings</item>
 	<item key="subscribe_to_newsletter">Yes, I want to subscibe to the newsletter of %s.</item>
 	<item key="type_in_email_address_to_subscribe_to_newsletter">The subscribe to this newsletter, you must type in a valid E-mail address.</item>
+	<item key="use_overlay">Create guestbook entries in an overlay</item>
 	<item key="visit_website">Visit website</item>
 </language>

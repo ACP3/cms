@@ -20,8 +20,10 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('common', 'select_date_format');
 	if (!isset($form['notify']) || ($form['notify'] != 0 && $form['notify'] != 1 && $form['notify'] != 2))
 		$errors[] = $lang->t('guestbook', 'select_notification_type');
-	if (validate::email($form['notify_email']) === false)
+	if ($form['notify'] != 0 && validate::email($form['notify_email']) === false)
 		$errors[] = $lang->t('common', 'wrong_email_format');
+	if (!isset($form['overlay']) || $form['overlay'] != 1 && $form['overlay'] != 0)
+		$errors[] = $lang->t('guestbook', 'select_use_overlay');
 	if ($emoticons_active === true && (!isset($form['emoticons']) || ($form['emoticons'] != 0 && $form['emoticons'] != 1)))
 		$errors[] = $lang->t('guestbook', 'select_emoticons');
 	if ($newsletter_active === true && (!isset($form['newsletter_integration']) || ($form['newsletter_integration'] != 0 && $form['newsletter_integration'] != 1)))
@@ -51,6 +53,27 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$dateformat[1]['lang'] = $lang->t('common', 'date_format_long');
 	$tpl->assign('dateformat', $dateformat);
 
+	$notify = array();
+	$notify[0]['value'] = '0';
+	$notify[0]['selected'] = selectEntry('notify', '0', $settings['notify']);
+	$notify[0]['lang'] = $lang->t('guestbook', 'no_notification');
+	$notify[1]['value'] = '1';
+	$notify[1]['selected'] = selectEntry('notify', '1', $settings['notify']);
+	$notify[1]['lang'] = $lang->t('guestbook', 'notify_on_new_entry');
+	$notify[2]['value'] = '2';
+	$notify[2]['selected'] = selectEntry('notify', '2', $settings['notify']);
+	$notify[2]['lang'] = $lang->t('guestbook', 'notify_and_enable');
+	$tpl->assign('notify', $notify);
+
+	$overlay = array();
+	$overlay[0]['value'] = '1';
+	$overlay[0]['checked'] = selectEntry('overlay', '1', $settings['overlay'], 'checked');
+	$overlay[0]['lang'] = $lang->t('common', 'yes');
+	$overlay[1]['value'] = '0';
+	$overlay[1]['checked'] = selectEntry('overlay', '0', $settings['overlay'], 'checked');
+	$overlay[1]['lang'] = $lang->t('common', 'no');
+	$tpl->assign('overlay', $overlay);
+
 	// Emoticons erlauben
 	if ($emoticons_active === true) {
 		$allow_emoticons = array();
@@ -74,18 +97,6 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 		$newsletter_integration[1]['lang'] = $lang->t('common', 'no');
 		$tpl->assign('newsletter_integration', $newsletter_integration);
 	}
-
-	$notify = array();
-	$notify[0]['value'] = '0';
-	$notify[0]['selected'] = selectEntry('notify', '0', $settings['notify']);
-	$notify[0]['lang'] = $lang->t('guestbook', 'no_notification');
-	$notify[1]['value'] = '1';
-	$notify[1]['selected'] = selectEntry('notify', '1', $settings['notify']);
-	$notify[1]['lang'] = $lang->t('guestbook', 'notify_on_new_entry');
-	$notify[2]['value'] = '2';
-	$notify[2]['selected'] = selectEntry('notify', '2', $settings['notify']);
-	$notify[2]['lang'] = $lang->t('guestbook', 'notify_and_enable');
-	$tpl->assign('notify', $notify);
 
 	$tpl->assign('form', isset($form) ? $form : array('notify_email' => $settings['notify_email']));
 

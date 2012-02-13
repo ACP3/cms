@@ -17,10 +17,12 @@ $c_guestbook = count($guestbook);
 
 if ($c_guestbook > 0) {
 	$tpl->assign('pagination', pagination($db->countRows('*', 'guestbook')));
+	
+	$tpl->assign('overlay', $settings['overlay']);
 
 	// Emoticons einbinden
 	$emoticons = modules::check('emoticons', 'functions') === true && $settings['emoticons'] == 1 ? true : false;
-	if ($emoticons) {
+	if ($emoticons === true) {
 		require_once MODULES_DIR . 'emoticons/functions.php';
 	}
 
@@ -32,7 +34,7 @@ if ($c_guestbook > 0) {
 		$guestbook[$i]['name'] = $db->escape(!empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'], 3);
 		$guestbook[$i]['date'] = $date->format($guestbook[$i]['date'], $settings['dateformat']);
 		$guestbook[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $db->escape($guestbook[$i]['message'], 3));
-		if ($emoticons) {
+		if ($emoticons === true) {
 			$guestbook[$i]['message'] = emoticonsReplace($guestbook[$i]['message']);
 		}
 		$guestbook[$i]['website'] = $db->escape(strlen($guestbook[$i]['user_website']) > 2 ? substr($guestbook[$i]['user_website'], 0, -2) : $guestbook[$i]['website'], 3);

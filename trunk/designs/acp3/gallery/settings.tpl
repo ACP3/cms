@@ -31,13 +31,13 @@
 			</dd>
 {/if}
 			<dt>
-				<label for="colorbox-1">{lang t="gallery|use_colorbox"}</label>
-				<span>({lang t="gallery|use_colorbox_description"})</span>
+				<label for="overlay-1">{lang t="gallery|use_overlay"}</label>
+				<span>({lang t="gallery|use_overlay_description"})</span>
 			</dt>
 			<dd>
-{foreach $colorbox as $row}
-				<label for="colorbox-{$row.value}">
-					<input type="radio" name="form[colorbox]" id="colorbox-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+{foreach $overlay as $row}
+				<label for="overlay-{$row.value}">
+					<input type="radio" name="form[overlay]" id="overlay-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 					{$row.lang}
 				</label>
 {/foreach}

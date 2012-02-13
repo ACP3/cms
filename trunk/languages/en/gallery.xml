@@ -27,10 +27,15 @@
 	<item key="picture_index">Picture overview</item>
 	<item key="picture_information">Picture information</item>
 	<item key="pictures">Pictures</item>
+	<item key="select_allow_comments">Please select, whether you to allow users to comment pictures</item>
 	<item key="select_new_picture">Select a new picture</item>
 	<item key="select_picture">Select picture</item>
+	<item key="select_use_overlay">Please select, whether use want to use the image overlay or not</item>
+	<item key="settings">Settings</item>
 	<item key="thumb_image_height">Maximum thumb image height to be displayed</item>
 	<item key="thumb_image_width">Maximum thumb image width to be displayed</item>
 	<item key="title">Title</item>
 	<item key="type_in_gallery_name">The name of the gallery should be at least 3 characters long</item>
+	<item key="use_overlay">Use image overlay</item>
+	<item key="use_overlay_description">If the image overlay is active, it\'s not possible view and post comments</item>
 </language>

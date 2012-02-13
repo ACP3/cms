@@ -31,12 +31,12 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id 
 		$settings = config::getModuleSettings('gallery');
 
 		for ($i = 0; $i < $c_pictures; ++$i) {
-			$pictures[$i]['uri'] = $settings['colorbox'] == 1 ? $uri->route('gallery/image/id_' . $pictures[$i]['id'] . '/action_normal') : $uri->route('gallery/details/id_' . $pictures[$i]['id'], 1);
+			$pictures[$i]['uri'] = $settings['overlay'] == 1 ? $uri->route('gallery/image/id_' . $pictures[$i]['id'] . '/action_normal') : $uri->route('gallery/details/id_' . $pictures[$i]['id'], 1);
 			$pictures[$i]['description'] = strip_tags($db->escape($pictures[$i]['description'], 3));
 		}
 
 		$tpl->assign('pictures', $pictures);
-		$tpl->assign('colorbox', (int) $settings['colorbox']);
+		$tpl->assign('overlay', (int) $settings['overlay']);
 	}
 	view::setContent(view::fetchTemplate('gallery/pics.tpl'));
 } else {

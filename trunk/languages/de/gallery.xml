@@ -30,12 +30,12 @@
 	<item key="select_allow_comments">Bitte wählen Sie aus, ob Kommentare unter Bildern zugelassen werden sollen oder nicht</item>
 	<item key="select_new_picture">Neues Bild auswählen</item>
 	<item key="select_picture">Bild auswählen</item>
-	<item key="select_use_colorbox">Bitte wählen Sie aus, ob für die Bildpräsentation die Colorbox eingesetzt werden soll oder nicht</item>
+	<item key="select_use_overlay">Bitte wählen Sie aus, ob für die Bildpräsentation das Bildoverlay eingesetzt werden soll oder nicht</item>
 	<item key="settings">Einstellungen</item>
 	<item key="thumb_image_height">Maximal anzuzeigende Höhe der Vorschaubilder</item>
 	<item key="thumb_image_width">Maximal anzuzeigende Breite der Vorschaubilder</item>
 	<item key="title">Titel</item>
 	<item key="type_in_gallery_name">Der Name der Fotogalerie sollte mindestens 3 Zeichen lang sein</item>
-	<item key="use_colorbox">Colorbox verwenden</item>
-	<item key="use_colorbox_description">Wenn die Colorbox aktiv ist, können keine Kommentare zu Bildern abgegeben werden</item>
+	<item key="use_overlay">Bildoverlay verwenden</item>
+	<item key="use_overlay_description">Wenn das Bildoverlay aktiv ist, können keine Kommentare zu Bildern abgegeben werden</item>
 </language>

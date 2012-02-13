@@ -70,11 +70,11 @@ function captcha($captcha_length = 5)
  *  Weiter Hyperlink
  * @param string $backward
  *  Zurück Hyperlink
- * @param integer $colorbox
+ * @param integer $overlay
  *	Wenn Wert "1", dann wird das Fenster geschlossen
  * @return string
  */
-function confirmBox($text, $forward = 0, $backward = 0, $colorbox = 0)
+function confirmBox($text, $forward = 0, $backward = 0, $overlay = 0)
 {
 	global $tpl;
 
@@ -82,7 +82,7 @@ function confirmBox($text, $forward = 0, $backward = 0, $colorbox = 0)
 		$confirm = array(
 			'text' => $text,
 			'forward' => $forward,
-			'colorbox' => $colorbox,
+			'overlay' => $overlay,
 		);
 		if (!empty($backward))
 			$confirm['backward'] = $backward;

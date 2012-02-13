@@ -1,4 +1,6 @@
+{if $overlay == 1}
 <script type="text/javascript" src="{$DESIGN_PATH}guestbook/script.js"></script>
+{/if}
 <div style="text-align:center">
 	<a href="{uri args="guestbook/create"}" id="create-link" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>
 </div>

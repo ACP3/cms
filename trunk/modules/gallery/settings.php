@@ -24,8 +24,8 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('gallery', 'invalid_image_filesize_entered');
 	if ($comments_active === true && (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0))
 		$errors[] = $lang->t('gallery', 'select_allow_comments');
-	if (!isset($form['colorbox']) || $form['colorbox'] != 1 && $form['colorbox'] != 0)
-		$errors[] = $lang->t('gallery', 'select_use_colorbox');
+	if (!isset($form['overlay']) || $form['overlay'] != 1 && $form['overlay'] != 0)
+		$errors[] = $lang->t('gallery', 'select_use_overlay');
 	if (empty($form['dateformat']) || ($form['dateformat'] != 'long' && $form['dateformat'] != 'short'))
 		$errors[] = $lang->t('common', 'select_date_format');
 	if (validate::isNumber($form['sidebar']) === false)
@@ -61,14 +61,14 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 		$tpl->assign('comments', $comments);
 	}
 
-	$colorbox = array();
-	$colorbox[0]['value'] = '1';
-	$colorbox[0]['checked'] = selectEntry('colorbox', '1', $settings['colorbox'], 'checked');
-	$colorbox[0]['lang'] = $lang->t('common', 'yes');
-	$colorbox[1]['value'] = '0';
-	$colorbox[1]['checked'] = selectEntry('colorbox', '0', $settings['colorbox'], 'checked');
-	$colorbox[1]['lang'] = $lang->t('common', 'no');
-	$tpl->assign('colorbox', $colorbox);
+	$overlay = array();
+	$overlay[0]['value'] = '1';
+	$overlay[0]['checked'] = selectEntry('overlay', '1', $settings['overlay'], 'checked');
+	$overlay[0]['lang'] = $lang->t('common', 'yes');
+	$overlay[1]['value'] = '0';
+	$overlay[1]['checked'] = selectEntry('overlay', '0', $settings['overlay'], 'checked');
+	$overlay[1]['lang'] = $lang->t('common', 'no');
+	$tpl->assign('overlay', $overlay);
 
 	$dateformat = array();
 	$dateformat[0]['value'] = 'short';
