@@ -1,3 +1,9 @@
 $(document).ready(function() {
-	$(".pictures a").colorbox({ rel: 'pictures', photo: true });
+	$(".pictures a").fancybox({
+		type: 'image',
+		padding: 0,
+		nextClick: true,
+		arrows: true,
+		loop: true
+	});
 });

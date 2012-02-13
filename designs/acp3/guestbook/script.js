@@ -1,9 +1,10 @@
 $(document).ready(function() {
-	$('#create-link').colorbox({
+	$('#create-link').fancybox({
+		type: 'iframe',
 		width: '40%',
 		height: '68%',
-		iframe: true,
-		onClosed: function() {
+		padding: 0,
+		afterClose: function() {
 			window.location.reload();
 		}
 	});

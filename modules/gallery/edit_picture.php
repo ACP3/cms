@@ -67,7 +67,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery_pictur
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-		if ($settings['colorbox'] == 0 && $settings['comments'] == 1 && modules::check('comments', 'functions') === true) {
+		if ($settings['overlay'] == 0 && $settings['comments'] == 1 && modules::check('comments', 'functions') === true) {
 			$options = array();
 			$options[0]['name'] = 'comments';
 			$options[0]['checked'] = selectEntry('comments', '1', $picture[0]['comments'], 'checked');

@@ -40,17 +40,17 @@ if ($_GET['g'] === 'css' || $_GET['g'] === 'css_simple') {
 	$key = $_GET['g'];
 
 	$styles = array();
-	$styles[$key][] = DESIGN_PATH . ($_GET['g'] === 'css' ? 'layout.css' : 'simple.css');
+	$styles[$key][] = DESIGN_PATH . ($key === 'css' ? 'layout.css' : 'simple.css');
 
 	$modules = scandir(DESIGN_PATH);
 	foreach ($modules as $module) {
 		$path = DESIGN_PATH . $module . '/style.css';
-		if (is_file($path) && $module !== '.' && $module !== '..' && modules::isActive($module))
+		if ($module !== '.' && $module !== '..' && is_file($path) === true && modules::isActive($module) === true)
 			$styles[$key][] = $path;
 	}
 
 	$styles[$key][] = DESIGN_PATH . 'jquery/jquery-ui.css';
-	$styles[$key][] = DESIGN_PATH . 'jquery/jquery-colorbox.css';
+	$styles[$key][] = DESIGN_PATH . 'jquery/jquery-fancybox.css';
 
 	return $styles;
 } elseif ($_GET['g'] === 'js') {
@@ -58,7 +58,7 @@ if ($_GET['g'] === 'css' || $_GET['g'] === 'css_simple') {
 	$scripts['js'][] = DESIGN_PATH . 'jquery/jquery.min.js';
 	$scripts['js'][] = DESIGN_PATH . 'jquery/jquery.cookie.js';
 	$scripts['js'][] = DESIGN_PATH . 'jquery/jquery.ui.min.js';
-	$scripts['js'][] = DESIGN_PATH . 'jquery/jquery.colorbox.min.js';
+	$scripts['js'][] = DESIGN_PATH . 'jquery/jquery.fancybox.js';
 	$scripts['js'][] = DESIGN_PATH . 'script.js';
 
 	return $scripts;

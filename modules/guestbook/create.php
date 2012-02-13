@@ -17,10 +17,10 @@ $settings = config::getModuleSettings('guestbook');
 $newsletterAccess = modules::check('newsletter', 'create') === true && $settings['newsletter_integration'] == 1;
 
 if ($uri->design == 'simple') {
-	$comboColorbox = 1;
+	$combooverlay = 1;
 	view::assignLayout('simple.tpl');
 } else {
-	$comboColorbox = 0;
+	$combooverlay = 0;
 }
 
 if (isset($_POST['form']) === true) {
@@ -88,7 +88,7 @@ if (isset($_POST['form']) === true) {
 
 		$session->unsetFormToken();
 
-		view::setContent(confirmBox($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('guestbook'), 0, $comboColorbox));
+		view::setContent(confirmBox($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('guestbook'), 0, $combooverlay));
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {

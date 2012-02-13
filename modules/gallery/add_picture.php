@@ -63,7 +63,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id 
 		$galleries = $db->select('id, start, name', 'gallery', 0, 'start DESC');
 		$c_galleries = count($galleries);
 
-		if ($settings['colorbox'] == 0 && $settings['comments'] == 1 && modules::check('comments', 'functions') === true) {
+		if ($settings['overlay'] == 0 && $settings['comments'] == 1 && modules::check('comments', 'functions') === true) {
 			$options = array();
 			$options[0]['name'] = 'comments';
 			$options[0]['checked'] = selectEntry('comments', '1', '0', 'checked');
