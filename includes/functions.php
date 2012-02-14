@@ -281,33 +281,38 @@ function moveFile($tmp_filename, $filename, $dir)
  *	Name des Sortier-Feldes. damit die Sortierung geändert werden kann
  * @param string $id
  *	Die ID des Datensatzes, welcher umsortiert werden soll
+ * @param string $where
+ *	Optionales Vergleichsfeld, um den richtigen Vorgänger/Nachfolger bestimmen zu können
  * @return boolean
  */
-function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = 0)
+function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = '')
 {
 	if ($action === 'up' || $action === 'down') {
 		global $db;
 
-		$bool = $bool2 = false;
+		$bool = $bool2 = $bool3 = false;
 		$id = (int) $id;
 
 		// Zusätzliche WHERE-Bedingung
-		$where = !empty($where) ? $where . ' AND ' : '';
+		$where = !empty($where) ? 'a.' . $where . ' = b.' . $where . ' AND ' : '';
 
 		// Ein Schritt nach oben
 		if ($action === 'up') {
-			$query = $db->query('SELECT a.' . $id_field . ' AS prev_id, a.' . $sort_field . ' AS prev_pic, b.' . $sort_field . ' AS elem_pic FROM {pre}' . $table . ' AS a, {pre}' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' < b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' DESC LIMIT 1');
-			if (!empty($query)) {
-				$bool = $db->update($table, array($sort_field => $query[0]['prev_pic']), $id_field . ' = ' . $id);
-				$bool2 = $db->update($table, array($sort_field => $query[0]['elem_pic']), $id_field . ' = ' . $query[0]['prev_id']);
-			}
+			// Aktuelles Element und das vorherige Element selektieren
+			$query = $db->query('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM {pre}' . $table . ' AS a, {pre}' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' < b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' DESC LIMIT 1');
 		// Ein Schritt nach unten
 		} else {
-			$query = $db->query('SELECT a.' . $id_field . ' AS next_id, a.' . $sort_field . ' AS next_pic, b.' . $sort_field . ' AS elem_pic FROM {pre}' . $table . ' AS a, {pre}' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' > b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' ASC LIMIT 1');
-			if (!empty($query)) {
-				$bool = $db->update($table, array($sort_field => $query[0]['next_pic']), $id_field . ' = ' . $id);
-				$bool2 = $db->update($table, array($sort_field => $query[0]['elem_pic']), $id_field . ' = ' . $query[0]['next_id']);
-			}
+			// Aktuelles Element und das nachfolgende Element selektieren
+			$query = $db->query('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM {pre}' . $table . ' AS a, {pre}' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' > b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' ASC LIMIT 1');
+		}
+
+		if (!empty($query)) {
+			// Sortierreihenfolge des aktuellen Elementes zunächst auf 0 setzen
+			// um Probleme mit möglichen Duplicate-Keys zu umgehen
+			$bool = $db->update($table, array($sort_field => 0), $id_field . ' = ' . $id);
+			$bool2 = $db->update($table, array($sort_field => $query[0]['elem_sort']), $id_field . ' = ' . $query[0]['other_id']);
+			// Element nun den richtigen Wert zuweisen
+			$bool3 = $db->update($table, array($sort_field => $query[0]['other_sort']), $id_field . ' = ' . $id);
 		}
 		return $bool !== false && $bool2 !== false ? true : false;
 	}
