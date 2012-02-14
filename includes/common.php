@@ -56,6 +56,14 @@ $tpl->assign('ROOT_DIR', ROOT_DIR);
 $tpl->assign('DESIGN_PATH', DESIGN_PATH);
 $tpl->assign('LANG', CONFIG_LANG);
 
+// Klassen initialisieren
+$db = new db();
+$handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
+if ($handle !== true) {
+	exit($handle);
+}
+$uri = new uri();
+
 // Falls der Wartungsmodus aktiv ist, Wartungsnachricht ausgeben
 if (defined('IN_ADM') === false && CONFIG_MAINTENANCE_MODE === true) {
 	$tpl->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
@@ -65,14 +73,8 @@ if (defined('IN_ADM') === false && CONFIG_MAINTENANCE_MODE === true) {
 }
 
 // Klassen initialisieren
-$db = new db();
-$handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
-if ($handle !== true) {
-	exit($handle);
-}
 $session = new session();
 $auth = new auth();
-$uri = new uri();
 $lang = new lang();
 $date = new date();
 
