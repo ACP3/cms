@@ -8,11 +8,11 @@ $breadcrumb->assign($lang->t('system', 'maintenance'), $uri->route('acp/system/m
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
-	if (empty($form['tables']) || !is_array($form['tables']))
+	if (empty($form['tables']) || is_array($form['tables']) === false)
 		$errors[] = $lang->t('system', 'select_sql_tables');
-	if ($form['output'] != 'file' && $form['output'] != 'text')
+	if ($form['output'] !== 'file' && $form['output'] !== 'text')
 		$errors[] = $lang->t('system', 'select_output');
-	if ($form['export_type'] != 'complete' && $form['export_type'] != 'structure' && $form['export_type'] != 'data')
+	if (in_array($form['export_type'], array('complete', 'structure', 'data')) === false)
 		$errors[] = $lang->t('system', 'select_export_type');
 
 	if (isset($errors) === true) {
@@ -26,7 +26,7 @@ if (isset($_POST['form']) === true) {
 		$data = '';
 		foreach ($form['tables'] as $table) {
 			// Struktur ausgeben
-			if ($form['export_type'] == 'complete' || $form['export_type'] == 'structure') {
+			if ($form['export_type'] === 'complete' || $form['export_type'] === 'structure') {
 				$result = $db->query('SHOW CREATE TABLE ' . $table);
 				if (is_array($result) === true) {
 					//$structure.= '-- ' . sprintf($lang->t('system', 'structure_of_table'), $table) . "\n\n";
@@ -35,7 +35,7 @@ if (isset($_POST['form']) === true) {
 				}
 			}
 			// Datensätze ausgeben
-			if ($form['export_type'] == 'complete' || $form['export_type'] == 'data') {
+			if ($form['export_type'] === 'complete' || $form['export_type'] === 'data') {
 				$resultsets = $db->select('*', substr($table, strlen($db->prefix)));
 				if (count($resultsets) > 0) {
 					//$data.= "\n" . '-- '. sprintf($lang->t('system', 'data_of_table'), $table) . "\n\n";
@@ -59,7 +59,7 @@ if (isset($_POST['form']) === true) {
 		$export = $structure . $data;
 
 		// Als Datei ausgeben
-		if ($form['output'] == 'file') {
+		if ($form['output'] === 'file') {
 			header('Content-Type: text/sql');
 			header('Content-Disposition: attachment; filename=' . CONFIG_DB_NAME . '_export.sql');
 			exit($export);

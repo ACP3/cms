@@ -288,35 +288,30 @@ function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = 0)
 	if ($action === 'up' || $action === 'down') {
 		global $db;
 
-		$elem = null;
+		$bool = $bool2 = false;
+		$id = (int) $id;
 
 		// Zusätzliche WHERE-Bedingung
 		$where = !empty($where) ? $where . ' AND ' : '';
 
 		// Ein Schritt nach oben
 		if ($action === 'up') {
-			if ($db->countRows($id_field, $table, $where . $id_field . ' != \'' . $id . '\' AND ' . $sort_field . ' > (SELECT ' . $sort_field . ' FROM ' . $db->prefix . $table . ' WHERE ' . $where . $id_field . ' = \'' . $id . '\')') > 0) {
-				$elem = $db->select($sort_field, $table, $where . $id_field . ' = \'' . $id . '\'');
-				$pre = $db->select($id_field . ', ' . $sort_field, $table, $where . $sort_field . ' > ' . $elem[0][$sort_field], $sort_field . ' ASC', 1);
+			$query = $db->query('SELECT a.' . $id_field . ' AS prev_id, a.' . $sort_field . ' AS prev_pic, b.' . $sort_field . ' AS elem_pic FROM {pre}' . $table . ' AS a, {pre}' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' < b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' DESC LIMIT 1');
+			if (!empty($query)) {
+				$bool = $db->update($table, array($sort_field => $query[0]['prev_pic']), $id_field . ' = ' . $id);
+				$bool2 = $db->update($table, array($sort_field => $query[0]['elem_pic']), $id_field . ' = ' . $query[0]['prev_id']);
 			}
 		// Ein Schritt nach unten
 		} else {
-			if ($db->countRows($id_field, $table, $where . $id_field . ' != \'' . $id . '\' AND (' . $sort_field . ' < (SELECT ' . $sort_field . ' FROM ' . $db->prefix . $table . ' WHERE ' . $where . $id_field . ' = \'' . $id . '\'))') > 0) {
-				$elem = $db->select($sort_field, $table, $where . $id_field . ' = \'' . $id . '\'');
-				$pre = $db->select($id_field . ',' . $sort_field, $table, $where . $sort_field . ' < ' . $elem[0][$sort_field], $sort_field . ' DESC', 1);
+			$query = $db->query('SELECT a.' . $id_field . ' AS next_id, a.' . $sort_field . ' AS next_pic, b.' . $sort_field . ' AS elem_pic FROM {pre}' . $table . ' AS a, {pre}' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' > b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' ASC LIMIT 1');
+			if (!empty($query)) {
+				$bool = $db->update($table, array($sort_field => $query[0]['next_pic']), $id_field . ' = ' . $id);
+				$bool2 = $db->update($table, array($sort_field => $query[0]['elem_pic']), $id_field . ' = ' . $query[0]['next_id']);
 			}
 		}
-
-		// Sortierung aktualisieren
-		if (count($elem) === 1 && count($pre) === 1) {
-			$bool = $db->update($table, array($sort_field => $pre[0][$sort_field]), $id_field . ' = \'' . $id . '\'');
-			$bool2 = $db->update($table, array($sort_field => $elem[0][$sort_field]), $id_field . ' = \'' . $pre[0][$id_field] . '\'');
-
-			return $bool && $bool2 ? true : false;
-		}
+		return $bool !== false && $bool2 !== false ? true : false;
 	}
 	return false;
-
 }
 /**
  * Gibt eine Seitenauswahl aus
