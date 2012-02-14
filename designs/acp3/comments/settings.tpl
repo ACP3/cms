@@ -14,6 +14,17 @@
 {/foreach}
 				</select>
 			</dd>
+{if isset($allow_emoticons)}
+			<dt><label for="emoticons-1">{lang t="comments|allow_emoticons"}</label></dt>
+			<dd>
+{foreach $allow_emoticons as $row}
+				<label for="emoticons-{$row.value}">
+					<input type="radio" name="form[emoticons]" id="emoticons-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+					{$row.lang}
+				</label>
+{/foreach}
+			</dd>
+{/if}
 		</dl>
 	</fieldset>
 	<div class="form-bottom">

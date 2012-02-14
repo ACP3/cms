@@ -14,9 +14,9 @@ $breadcrumb->assign($lang->t('system', 'maintenance'), $uri->route('acp/system/m
 		   ->assign($lang->t('system', 'update_check'));
 
 $file = @file_get_contents('http://www.acp3-cms.net/update.txt');
-if ($file) {
+if ($file !== false) {
 	$data = explode('||', $file);
-	if (count($data) == 2) {
+	if (count($data) === 2) {
 		$data[2] = CONFIG_VERSION;
 
 		if (version_compare($data[2], $data[0], '>=')) {

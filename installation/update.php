@@ -253,7 +253,10 @@ $queries = array(
 	15 => array(
 		0 => "UPDATE `{pre}settings` SET name = 'overlay' WHERE module = 'gallery' AND name = 'colorbox';",
 		1 => "INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'guestbook', 'overlay', '1');",
-	)
+	),
+	16 => array(
+		0 => "INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'comments', 'emoticons', '1');",
+	),
 );
 
 // Änderungen am DB Schema vornehmen

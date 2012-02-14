@@ -92,7 +92,7 @@ function menuItemsDeleteNode($id)
 		global $db;
 
 		$lr = $db->select('left_id, right_id', 'menu_items', 'id = \'' . $id . '\'');
-		if (count($lr) == 1) {
+		if (count($lr) === 1) {
 			$db->link->beginTransaction();
 
 			$bool = $db->delete('menu_items', 'left_id = \'' . $lr[0]['left_id'] . '\'');

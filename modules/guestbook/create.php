@@ -29,7 +29,7 @@ if (isset($_POST['form']) === true) {
 
 	// Flood Sperre
 	$flood = $db->select('date', 'guestbook', 'ip = \'' . $ip . '\'', 'id DESC', '1');
-	if (count($flood) == '1') {
+	if (count($flood) === 1) {
 		$flood_time = $flood[0]['date'] + CONFIG_FLOOD;
 	}
 	$time = $date->timestamp();
