@@ -72,6 +72,28 @@ class date
 		$this->offset_dst = $time_zone + ($this->dst == 1 ? 3600 : 0);
 	}
 	/**
+	 * Gibts ein Array mit den möglichen Datumsformaten aus,
+	 * um diese als Dropdownmenü darstellen zu können
+	 *
+	 * @param string $format
+	 *	Optionaler Parameter für das aktuelle Datumsformat
+	 * @return array 
+	 */
+	public function dateformatDropdown($format = '')
+	{
+		global $lang;
+
+		$dateformat = array();
+		$dateformat[0]['value'] = 'short';
+		$dateformat[0]['selected'] = selectEntry('dateformat', 'short', $format);
+		$dateformat[0]['lang'] = $lang->t('common', 'date_format_short');
+		$dateformat[1]['value'] = 'long';
+		$dateformat[1]['selected'] = selectEntry('dateformat', 'long', $format);
+		$dateformat[1]['lang'] = $lang->t('common', 'date_format_long');
+
+		return $dateformat;
+	}
+	/**
 	 * Zeigt Dropdown-Menüs für die Veröffentlichungsdauer von Inhalten an
 	 *
 	 * @param mixed $name
