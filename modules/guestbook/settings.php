@@ -44,14 +44,7 @@ if (isset($_POST['form']) === true) {
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
 	$settings = config::getModuleSettings('guestbook');
 
-	$dateformat = array();
-	$dateformat[0]['value'] = 'short';
-	$dateformat[0]['selected'] = selectEntry('dateformat', 'short', $settings['dateformat']);
-	$dateformat[0]['lang'] = $lang->t('common', 'date_format_short');
-	$dateformat[1]['value'] = 'long';
-	$dateformat[1]['selected'] = selectEntry('dateformat', 'long', $settings['dateformat']);
-	$dateformat[1]['lang'] = $lang->t('common', 'date_format_long');
-	$tpl->assign('dateformat', $dateformat);
+	$tpl->assign('dateformat', $date->dateformatDropdown($settings['dateformat']));
 
 	$notify = array();
 	$notify[0]['value'] = '0';
