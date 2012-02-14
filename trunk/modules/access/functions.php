@@ -23,7 +23,7 @@ function aclDeleteNode($id)
 		global $db;
 
 		$lr = $db->select('left_id, right_id', 'acl_roles', 'id = \'' . $id . '\'');
-		if (count($lr) == 1) {
+		if (count($lr) === 1) {
 			$db->link->beginTransaction();
 
 			$bool = $db->delete('acl_roles', 'left_id = \'' . $lr[0]['left_id'] . '\'');

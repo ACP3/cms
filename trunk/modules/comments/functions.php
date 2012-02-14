@@ -35,20 +35,23 @@ function commentsList($module, $entry_id)
 {
 	global $auth, $date, $db, $lang, $tpl;
 
+	$settings = config::getModuleSettings('comments');
+
 	// Auflistung der Kommentare
 	$comments = $db->query('SELECT u.nickname AS user_name, c.name, c.user_id, c.date, c.message FROM {pre}comments AS c LEFT JOIN ({pre}users AS u) ON u.id = c.user_id WHERE c.module = \'' . $module . '\' AND c.entry_id = \'' . $entry_id . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . $auth->entries);
 	$c_comments = count($comments);
 
-	// Emoticons einbinden, falls diese aktiv sind
-	$emoticons = modules::check('emoticons', 'functions') === true ? true : false;
-	if ($emoticons) {
-		require_once MODULES_DIR . 'emoticons/functions.php';
-	}
-
 	if ($c_comments > 0) {
-		$tpl->assign('pagination', pagination($db->countRows('*', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'')));
+		// Falls in den Moduleinstellungen aktiviert und Emoticons überhaupt aktiv sind, diese einbinden
+		$emoticons_active = false;
+		if ($settings['emoticons'] == 1) {
+			$emoticons_active = modules::check('emoticons', 'functions') === true ? true : false;
+			if ($emoticons_active === true) {
+				require_once MODULES_DIR . 'emoticons/functions.php';
+			}
+		}
 
-		$settings = config::getModuleSettings('comments');
+		$tpl->assign('pagination', pagination($db->countRows('*', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'')));
 
 		for ($i = 0; $i < $c_comments; ++$i) {
 			if (empty($comments[$i]['user_name']) && empty($comments[$i]['name'])) {
@@ -58,7 +61,7 @@ function commentsList($module, $entry_id)
 			$comments[$i]['name'] = $db->escape(!empty($comments[$i]['user_name']) ? $comments[$i]['user_name'] : $comments[$i]['name'], 3);
 			$comments[$i]['date'] = $date->format($comments[$i]['date'], $settings['dateformat']);
 			$comments[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $db->escape($comments[$i]['message'], 3));
-			if ($emoticons) {
+			if ($emoticons_active === true) {
 				$comments[$i]['message'] = emoticonsReplace($comments[$i]['message']);
 			}
 		}

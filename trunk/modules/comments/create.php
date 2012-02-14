@@ -26,7 +26,7 @@ function commentsCreate($module, $entry_id)
 
 		// Flood Sperre
 		$flood = $db->select('date', 'comments', 'ip = \'' . $ip . '\'', 'id DESC', '1');
-		if (count($flood) == '1') {
+		if (count($flood) === 1) {
 			$flood_time = $flood[0]['date'] + CONFIG_FLOOD;
 		}
 		$time = $date->timestamp();
@@ -51,8 +51,8 @@ function commentsCreate($module, $entry_id)
 				'id' => '',
 				'ip' => $ip,
 				'date' => $time,
-				'name' => $auth->isUser() && validate::isNumber($auth->getUserId()) ? '' : $db->escape($form['name']),
-				'user_id' => $auth->isUser() && validate::isNumber($auth->getUserId()) ? $auth->getUserId() : '',
+				'name' => $auth->isUser() === true && validate::isNumber($auth->getUserId() === true) ? '' : $db->escape($form['name']),
+				'user_id' => $auth->isUser() === trze && validate::isNumber($auth->getUserId() === true) ? $auth->getUserId() : '',
 				'message' => $db->escape($form['message']),
 				'module' => $db->escape($form['module'], 2),
 				'entry_id' => $form['entry_id'],
@@ -66,8 +66,10 @@ function commentsCreate($module, $entry_id)
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
+		$settings = config::getModuleSettings('comments');
+
 		// Emoticons einbinden, falls diese aktiv sind
-		if (modules::check('emoticons', 'functions') === true) {
+		if (modules::check('emoticons', 'functions') === true && $settings['emoticons'] == 1) {
 			require_once MODULES_DIR . 'emoticons/functions.php';
 
 			// Emoticons im Formular anzeigen

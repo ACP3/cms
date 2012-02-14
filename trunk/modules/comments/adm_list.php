@@ -37,12 +37,16 @@ if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module
 	$comments = $db->query('SELECT IF(c.name != "" AND c.user_id = 0,c.name,u.nickname) AS name, c.id, c.ip, c.user_id, c.date, c.message FROM {pre}comments AS c LEFT JOIN ({pre}users AS u) ON u.id = c.user_id WHERE c.module = \'' . $module . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . $auth->entries);
 	$c_comments = count($comments);
 
+	$settings = config::getModuleSettings('comments');
+
 	if ($c_comments > 0) {
-		$emoticons = false;
 		// Emoticons einbinden
-		if (modules::check('emoticons', 'functions') === true) {
-			require_once MODULES_DIR . 'emoticons/functions.php';
-			$emoticons = true;
+		$emoticons_active = false;
+		if ($settings['emoticons'] == 1) {
+			if (modules::check('emoticons', 'functions') === true) {
+				require_once MODULES_DIR . 'emoticons/functions.php';
+				$emoticons_active = true;
+			}
 		}
 
 		$tpl->assign('pagination', pagination($db->countRows('*', 'comments', 'module = \'' . $module . '\'')));
@@ -52,7 +56,7 @@ if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module
 			}
 			$comments[$i]['date'] = $date->format($comments[$i]['date']);
 			$comments[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $comments[$i]['message']);
-			if ($emoticons) {
+			if ($emoticons_active === true) {
 				$comments[$i]['message'] = emoticonsReplace($comments[$i]['message']);
 			}
 		}
