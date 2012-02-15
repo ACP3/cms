@@ -130,9 +130,7 @@ class uri
 	 */
 	public function __get($key)
 	{
-		if (isset($this->params[$key]) === true)
-			return $this->params[$key];
-		return null;
+		return isset($this->params[$key]) === true ? $this->params[$key] : null;
 	}
 	/**
 	 * Setzt einen neuen URI Parameter

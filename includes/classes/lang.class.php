@@ -51,8 +51,9 @@ class lang
 			$module = substr($row, 0, strrpos($row, '.'));
 			if (is_file($path . $module . '.xml') === true) {
 				$xml = simplexml_load_file($path . $module . '.xml');
-				foreach ($xml->item as $row) {
-					$data[$module][(string) $row['key']] = (string) $row;
+				// Über die einzelnen Sprachstrings iterieren
+				foreach ($xml->item as $item) {
+					$data[$module][(string) $item['key']] = (string) $item;
 				}
 			}
 		}
