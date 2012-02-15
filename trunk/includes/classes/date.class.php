@@ -177,6 +177,8 @@ class date
 	 */
 	public function format($time_stamp, $format = 'long', $mode = 1)
 	{
+		global $lang;
+
 		// Datum in gewünschter Formatierung ausgeben
 		switch ($format) {
 			case 'long':
@@ -186,7 +188,62 @@ class date
 				$format = $this->date_format_short;
 				break;
 		}
-		return gmdate($format, $time_stamp + ($mode === 1 ? $this->offset_dst : $this->offset_real));
+
+		// Wochen- und Monatstage lokalisieren
+		$replace = array();
+		if (strpos($format, 'D') !== false) {
+			$replace = array(
+				'Mon' => $lang->t('common', 'date_mon'),
+				'Tue' => $lang->t('common', 'date_tue'),
+				'Wed' => $lang->t('common', 'date_wed'),
+				'Thu' => $lang->t('common', 'date_thu'),
+				'Fri' => $lang->t('common', 'date_fri'),
+				'Sat' => $lang->t('common', 'date_sat'),
+				'Sun' => $lang->t('common', 'date_sun')
+			);
+		} elseif (strpos($format, 'l') !== false) {
+			$replace = array(
+				'Monday' => $lang->t('common', 'date_monday'),
+				'Tuesday' => $lang->t('common', 'date_tuesday'),
+				'Wednesday' => $lang->t('common', 'date_wednesday'),
+				'Thursday' => $lang->t('common', 'date_thursday'),
+				'Friday' => $lang->t('common', 'date_friday'),
+				'Saturday' => $lang->t('common', 'date_saturday'),
+				'Sunday' => $lang->t('common', 'date_sunday')
+			);
+		}
+		if (strpos($format, 'M') !== false) {
+			$replace = array_merge($replace, array(
+				'Jan' => $lang->t('common', 'date_jan'),
+				'Feb' => $lang->t('common', 'date_feb'),
+				'Mar' => $lang->t('common', 'date_mar'),
+				'Apr' => $lang->t('common', 'date_apr'),
+				'May' => $lang->t('common', 'date_may_abbr'),
+				'Jun' => $lang->t('common', 'date_jun'),
+				'Jul' => $lang->t('common', 'date_jul'),
+				'Aug' => $lang->t('common', 'date_aug'),
+				'Sep' => $lang->t('common', 'date_sep'),
+				'Oct' => $lang->t('common', 'date_oct'),
+				'Nov' => $lang->t('common', 'date_nov'),
+				'Dec' => $lang->t('common', 'date_dec')
+			));
+		} elseif (strpos($format, 'F') !== false) {
+			$replace = array_merge($replace, array(
+				'January' => $lang->t('common', 'date_january'),
+				'February' => $lang->t('common', 'date_february'),
+				'March' => $lang->t('common', 'date_march'),
+				'April' => $lang->t('common', 'date_april'),
+				'May' => $lang->t('common', 'date_may_full'),
+				'June' => $lang->t('common', 'date_june'),
+				'July' => $lang->t('common', 'date_july'),
+				'August' => $lang->t('common', 'date_august'),
+				'September' => $lang->t('common', 'date_september'),
+				'October' => $lang->t('common', 'date_october'),
+				'November' => $lang->t('common', 'date_november'),
+				'December' => $lang->t('common', 'date_december')
+			));
+		}
+		return strtr(gmdate($format, $time_stamp + ($mode === 1 ? $this->offset_dst : $this->offset_real)), $replace);
 	}
 	/**
 	 * Gibt die Formularfelder für den Veröffentlichungszeitraum aus
