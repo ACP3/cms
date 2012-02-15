@@ -100,9 +100,7 @@ class uri
 
 			for ($i = 2; $i < $c_query; ++$i) {
 				// Position
-				if (defined('POS') === false && preg_match('/^(page_(\d+))$/', $query[$i])) {
-					global $auth;
-					define('POS', (substr($query[$i], 5) - 1) * $auth->entries);
+				if (preg_match('/^(page_(\d+))$/', $query[$i])) {
 					$this->page = (int) substr($query[$i], 5);
 				// ID eines Datensatzes
 				} elseif (preg_match('/^(id_(\d+))$/', $query[$i])) {
@@ -119,8 +117,6 @@ class uri
 			$this->cat = $_POST['cat'];
 		if (!empty($_POST['action']))
 			$this->action = $_POST['action'];
-		if (defined('POS') === false)
-			define('POS', '0');
 	}
 	/**
 	 * Gibt einen URI Parameter aus
