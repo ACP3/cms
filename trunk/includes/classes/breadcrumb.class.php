@@ -57,13 +57,15 @@ class breadcrumb
 		} else {
 			$this->assign($lang->t('common', 'acp'), $uri->route('acp'));
 			// Modulindex der jeweiligen ACP-Seite
-			if ($file === 'adm_list') {
-				$this->assign($lang->t($module, $module));
-			} elseif ($module === 'errors') {
-				$this->assign($lang->t($module, $file));
-			} else {
-				$this->assign($lang->t($module, $module), $uri->route('acp/' . $module));
-				$this->assign($lang->t($module, $file));
+			if ($module !== 'acp') {
+				if ($file === 'adm_list') {
+					$this->assign($lang->t($module, $module));
+				} elseif ($module === 'errors') {
+					$this->assign($lang->t($module, $file));
+				} else {
+					$this->assign($lang->t($module, $module), $uri->route('acp/' . $module));
+					$this->assign($lang->t($module, $file));
+				}
 			}
 		}
 	}
@@ -81,7 +83,8 @@ class breadcrumb
 	{
 		static $i = 0;
 
-		if (empty($this->steps) || isset($this->steps[$i - 1]) && $this->steps[$i - 1]['title'] !== $title) {
+		// Neue Brotkrume nur hinzufügen, falls noch keine mit dem gleichen Namen angelegt wurde
+		if ($i === 0 || $this->steps[$i - 1]['title'] !== $title) {
 			$this->steps[$i]['title'] = $title;
 			$this->steps[$i]['uri'] = $uri;
 			$this->steps[$i]['last'] = true;
