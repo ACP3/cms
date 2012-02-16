@@ -56,16 +56,14 @@ class breadcrumb
 		// ACP
 		} else {
 			$this->assign($lang->t('common', 'acp'), $uri->route('acp'));
-			// Modulindex der jeweiligen ACP-Seite
-			if ($module !== 'acp') {
-				if ($file === 'adm_list') {
+			if ($module !== 'errors') {
+				if ($module !== 'acp') {
 					$this->assign($lang->t($module, $module), $uri->route('acp/' . $module));
-				} elseif ($module === 'errors') {
-					$this->assign($lang->t($module, $file));
-				} else {
-					$this->assign($lang->t($module, $module), $uri->route('acp/' . $module));
-					$this->assign($lang->t($module, $file));
+					if ($file !== 'adm_list')
+						$this->assign($lang->t($module, $file));
 				}
+			} else {
+				$this->assign($lang->t($module, $file));
 			}
 		}
 	}
