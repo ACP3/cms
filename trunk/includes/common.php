@@ -77,6 +77,7 @@ $session = new session();
 $auth = new auth();
 $lang = new lang();
 $date = new date();
+$breadcrumb = new breadcrumb();
 
 acl::initialize($auth->getUserId());
 
