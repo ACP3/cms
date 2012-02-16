@@ -27,7 +27,7 @@ if (!isset($entries)) {
 	require_once MODULES_DIR . 'gallery/functions.php';
 
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $db->countRows('*', 'gallery', 'id = \'' . $entry . '\'') == '1') {
+		if (!empty($entry) && $db->countRows('*', 'gallery', 'id = \'' . $entry . '\'') == 1) {
 			// Hochgeladene Bilder löschen
 			$pictures = $db->select('file', 'gallery_pictures', 'gallery_id = \'' . $entry . '\'');
 			foreach ($pictures as $row) {

@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'guestbook', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'guestbook', 'id = \'' . $uri->id . '\'') == 1) {
 	$settings = config::getModuleSettings('guestbook');
 
 	if (isset($_POST['form']) === true) {

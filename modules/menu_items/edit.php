@@ -10,10 +10,10 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_items', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_items', 'id = \'' . $uri->id . '\'') == 1) {
 	require_once MODULES_DIR . 'menu_items/functions.php';
 
-	$page = $db->select('id, start, end, mode, block_id, parent_id, left_id, right_id, display, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
+	$page = $db->select('id, mode, block_id, parent_id, left_id, right_id, display, title, uri, target', 'menu_items', 'id = \'' . $uri->id . '\'');
 	$page[0]['title'] = $db->escape($page[0]['title'], 3);
 	$page[0]['uri'] = $db->escape($page[0]['uri'], 3);
 	$page[0]['alias'] = $page[0]['mode'] == 2 || $page[0]['mode'] == 4 ? seo::getUriAlias($page[0]['uri'], true) : '';
@@ -23,8 +23,6 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_items', '
 	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
-		if (!validate::date($form['start'], $form['end']))
-			$errors[] = $lang->t('common', 'select_date');
 		if (validate::isNumber($form['mode']) === false)
 			$errors[] = $lang->t('menu_items', 'select_page_type');
 		if (($form['mode'] == 2 || $form['mode'] == 4) && CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias'], $db->escape($form['uri']))))
@@ -35,19 +33,19 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_items', '
 			$errors[] = $lang->t('menu_items', 'select_block');
 		if (!empty($form['parent']) && validate::isNumber($form['parent']) === false)
 			$errors[] = $lang->t('menu_items', 'select_superior_page');
-		if (!empty($form['parent']) && validate::isNumber($form['parent'])) {
+		if (!empty($form['parent']) && validate::isNumber($form['parent']) === true) {
 			// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
 			$parent_block = $db->select('block_id', 'menu_items', 'id = \'' . $form['parent'] . '\'');
 			if (!empty($parent_block) && $parent_block[0]['block_id'] != $form['block_id'])
 				$errors[] = $lang->t('menu_items', 'superior_page_not_allowed');
 		}
-		if ($form['display'] != '0' && $form['display'] != '1')
+		if ($form['display'] != 0 && $form['display'] != 1)
 			$errors[] = $lang->t('menu_items', 'select_item_visibility');
 		if (validate::isNumber($form['target']) === false ||
-			$form['mode'] == '1' && (!is_dir(MODULES_DIR . $form['module']) || preg_match('=/=', $form['module'])) ||
-			$form['mode'] == '2' && validate::isInternalURI($form['uri']) === false ||
-			$form['mode'] == '3' && empty($form['uri']) ||
-			$form['mode'] == '4' && (validate::isNumber($form['static_pages']) === false || $db->countRows('*', 'static_pages', 'id = \'' . $form['static_pages'] . '\'') == 0))
+			$form['mode'] == 1 && (is_dir(MODULES_DIR . $form['module']) === false || preg_match('=/=', $form['module'])) ||
+			$form['mode'] == 2 && validate::isInternalURI($form['uri']) === false ||
+			$form['mode'] == 3 && empty($form['uri']) ||
+			$form['mode'] == 4 && (validate::isNumber($form['static_pages']) === false || $db->countRows('*', 'static_pages', 'id = \'' . $form['static_pages'] . '\'') == 0))
 			$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
 
 		if (isset($errors) === true) {
@@ -56,24 +54,22 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_items', '
 			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			// Vorgenommene Änderungen am Datensatz anwenden
-			$mode = ($form['mode'] == '2' || $form['mode'] == '3') && preg_match('/^(static_pages\/list\/id_([0-9]+)\/)$/', $form['uri']) ? '4' : $form['mode'];
-			$uri_type = $form['mode'] == '4' ? 'static_pages/list/id_' . $form['static_pages'] . '/' : $db->escape($form['uri'], 2);
+			$mode = ($form['mode'] == 2 || $form['mode'] == 3) && preg_match('/^(static_pages\/list\/id_([0-9]+)\/)$/', $form['uri']) ? '4' : $form['mode'];
+			$uri_type = $form['mode'] == 4 ? 'static_pages/list/id_' . $form['static_pages'] . '/' : $db->escape($form['uri'], 2);
 
 			$update_values = array(
-				'start' => $date->timestamp($form['start']),
-				'end' => $date->timestamp($form['end']),
 				'mode' => $mode,
 				'block_id' => $form['block_id'],
 				'parent_id' => $form['parent'],
 				'display' => $form['display'],
 				'title' => $db->escape($form['title']),
-				'uri' => $form['mode'] == '1' ? $form['module'] : $uri_type,
+				'uri' => $form['mode'] == 1 ? $form['module'] : $uri_type,
 				'target' => $form['target'],
 			);
 
 			$bool = menuItemsEditNode($uri->id, $form['parent'], $form['block_id'], $update_values);
 
-			// Verhindern, dass externe URIs Aliase, Keywords, etc zugewiesen bekommen
+			// Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
 			if ($form['mode'] != 3) {
 				$alias = $form['alias'] === $page[0]['alias'] ? $page[0]['alias'] : $form['alias'];
 				$keywords = $form['seo_keywords'] === $page[0]['seo_keywords'] ? $page[0]['seo_keywords'] : $form['seo_keywords'];
@@ -119,11 +115,11 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_items', '
 		// Module
 		$modules = modules::modulesList();
 		foreach ($modules as $row) {
-			$modules[$row['name']]['selected'] = selectEntry('module', $row['dir'], $page[0]['mode'] == '1' ? $page[0]['uri'] : '');
+			$modules[$row['name']]['selected'] = selectEntry('module', $row['dir'], $page[0]['mode'] == 1 ? $page[0]['uri'] : '');
 		}
 		$tpl->assign('modules', $modules);
 
-		if ($page[0]['mode'] == '1')
+		if ($page[0]['mode'] == 1)
 			$page[0]['uri'] = '';
 
 		// Ziel des Hyperlinks
@@ -148,7 +144,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_items', '
 		if (modules::check('static_pages', 'functions') === true) {
 			require_once MODULES_DIR . 'static_pages/functions.php';
 
-			if (!isset($form) && $page[0]['mode'] == '4') {
+			if (!isset($form) && $page[0]['mode'] == 4) {
 				preg_match_all('/^(static_pages\/list\/id_([0-9]+)\/)$/', $page[0]['uri'], $matches);
 			}
 
@@ -157,7 +153,6 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_items', '
 
 		// Daten an Smarty übergeben
 		$tpl->assign('enable_uri_aliases', CONFIG_SEO_ALIASES);
-		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($page[0]['start'], $page[0]['end'])));
 		$tpl->assign('form', isset($form) ? $form : $page[0]);
 
 		$tpl->assign('pages_list', menuItemsList($page[0]['parent_id'], $page[0]['left_id'], $page[0]['right_id']));

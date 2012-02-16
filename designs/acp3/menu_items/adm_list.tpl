@@ -17,7 +17,6 @@
 {if $can_delete === true}
 				<th><input type="checkbox" id="mark-all" value="1" class="checkbox"></th>
 {/if}
-				<th>{lang t="common|publication_period"}</th>
 				<th>{lang t="menu_items|page_type"}</th>
 				<th style="width:30%">{lang t="menu_items|title"}</th>
 {if $can_order === true}
@@ -29,14 +28,13 @@
 		<tbody>
 {foreach $pages_list as $block => $pages}
 			<tr>
-				<td colspan="{if $can_order === true}6{else}5{/if}" class="sub-table-header">{$block}</td>
+				<td colspan="{if $can_order === true}5{else}4{/if}" class="sub-table-header">{$block}</td>
 			</tr>
 {foreach $pages as $row}
 			<tr>
 {if $can_delete === true}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
-				<td>{$row.period}</td>
 				<td>{$row.mode_formated}</td>
 				<td style="padding-left:10px;text-align:left">{$row.spaces}{check_access mode="link" action="menu_items|edit" uri="acp/menu_items/edit/id_`$row.id`" title=$row.title}</td>
 {if $can_order === true}

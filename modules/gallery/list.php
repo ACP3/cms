@@ -24,7 +24,7 @@ if ($c_galleries > 0) {
 		$galleries[$i]['date'] = $date->format($galleries[$i]['start'], $settings['dateformat']);
 		$galleries[$i]['name'] = $db->escape($galleries[$i]['name'], 3);
 		$pictures = $db->countRows('*', 'gallery_pictures', 'gallery_id = \'' . $galleries[$i]['id'] . '\'');
-		$galleries[$i]['pics'] = $pictures == '1' ? '1 ' . $lang->t('gallery', 'picture') : $pictures . ' ' . $lang->t('gallery', 'pictures');
+		$galleries[$i]['pics'] = $pictures == 1 ? '1 ' . $lang->t('gallery', 'picture') : $pictures . ' ' . $lang->t('gallery', 'pictures');
 	}
 	$tpl->assign('galleries', $galleries);
 }

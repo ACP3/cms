@@ -26,7 +26,7 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $db->countRows('*', 'gallery_pictures', 'id = \'' . $entry . '\'') == '1') {
+		if (!empty($entry) && $db->countRows('*', 'gallery_pictures', 'id = \'' . $entry . '\'') == 1) {
 			// Datei ebenfalls löschen
 			$picture = $db->select('pic, gallery_id, file', 'gallery_pictures', 'id = \'' . $entry . '\'');
 			$db->query('UPDATE {pre}gallery_pictures SET pic = pic - 1 WHERE pic > ' . $picture[0]['pic'] . ' AND gallery_id = ' . $picture[0]['gallery_id'], 0);

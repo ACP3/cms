@@ -15,8 +15,6 @@ require_once MODULES_DIR . 'menu_items/functions.php';
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
-	if (!validate::date($form['start'], $form['end']))
-		$errors[] = $lang->t('common', 'select_date');
 	if (validate::isNumber($form['mode']) === false)
 		$errors[] = $lang->t('menu_items', 'select_page_type');
 	if ($form['mode'] == 2 && CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias'])))
@@ -27,19 +25,19 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('menu_items', 'select_block');
 	if (!empty($form['parent']) && validate::isNumber($form['parent']) === false)
 		$errors[] = $lang->t('menu_items', 'select_superior_page');
-	if (!empty($form['parent']) && validate::isNumber($form['parent'])) {
+	if (!empty($form['parent']) && validate::isNumber($form['parent']) === true) {
 		// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
 		$parent_block = $db->select('block_id', 'menu_items', 'id = \'' . $form['parent'] . '\'');
 		if (!empty($parent_block) && $parent_block[0]['block_id'] != $form['block_id'])
 			$errors[] = $lang->t('menu_items', 'superior_page_not_allowed');
 	}
-	if ($form['display'] != '0' && $form['display'] != '1')
+	if ($form['display'] != 0 && $form['display'] != 1)
 		$errors[] = $lang->t('menu_items', 'select_item_visibility');
 	if (validate::isNumber($form['target']) === false ||
-		$form['mode'] == '1' && (!is_dir(MODULES_DIR . $form['module']) || preg_match('=/=', $form['module'])) ||
-		$form['mode'] == '2' && validate::isInternalURI($form['uri']) === false ||
-		$form['mode'] == '3' && empty($form['uri']) ||
-		$form['mode'] == '4' && (validate::isNumber($form['static_pages']) === false || $db->countRows('*', 'static_pages', 'id = \'' . $form['static_pages'] . '\'') == 0))
+		$form['mode'] == 1 && (is_dir(MODULES_DIR . $form['module']) === false || preg_match('=/=', $form['module'])) ||
+		$form['mode'] == 2 && validate::isInternalURI($form['uri']) === false ||
+		$form['mode'] == 3 && empty($form['uri']) ||
+		$form['mode'] == 4 && (validate::isNumber($form['static_pages']) === false || $db->countRows('*', 'static_pages', 'id = \'' . $form['static_pages'] . '\'') == 0))
 		$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
 
 	if (isset($errors) === true) {
@@ -49,14 +47,12 @@ if (isset($_POST['form']) === true) {
 	} else {
 		$insert_values = array(
 			'id' => '',
-			'start' => $date->timestamp($form['start']),
-			'end' => $date->timestamp($form['end']),
-			'mode' => ($form['mode'] == '2' || $form['mode'] == '3') && preg_match('/^(static_pages\/list\/id_([0-9]+)\/)$/', $form['uri']) ? '4' : $form['mode'],
+			'mode' => ($form['mode'] == 2 || $form['mode'] == 3) && preg_match('/^(static_pages\/list\/id_([0-9]+)\/)$/', $form['uri']) ? '4' : $form['mode'],
 			'block_id' => $form['block_id'],
 			'parent_id' => $form['parent'],
 			'display' => $form['display'],
 			'title' => $db->escape($form['title']),
-			'uri' => $form['mode'] == '1' ? $form['module'] : ($form['mode'] == '4' ? 'static_pages/list/id_' . $form['static_pages'] . '/' : $db->escape($form['uri'], 2)),
+			'uri' => $form['mode'] == 1 ? $form['module'] : ($form['mode'] == 4 ? 'static_pages/list/id_' . $form['static_pages'] . '/' : $db->escape($form['uri'], 2)),
 			'target' => $form['target'],
 		);
 
@@ -152,7 +148,6 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	// Daten an Smarty übergeben
 	$tpl->assign('enable_uri_aliases', CONFIG_SEO_ALIASES);
-	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));
 	$tpl->assign('form', isset($form) ? $form : $defaults);
 	$tpl->assign('pages_list', menuItemsList());
 

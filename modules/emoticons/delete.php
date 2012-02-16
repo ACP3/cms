@@ -26,7 +26,7 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $db->countRows('*', 'emoticons', 'id = \'' . $entry . '\'') == '1') {
+		if (!empty($entry) && $db->countRows('*', 'emoticons', 'id = \'' . $entry . '\'') == 1) {
 			// Datei ebenfalls löschen
 			$file = $db->select('img', 'emoticons', 'id = \'' . $entry . '\'');
 			removeUploadedFile('emoticons', $file[0]['img']);

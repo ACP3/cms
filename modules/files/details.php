@@ -13,7 +13,7 @@ if (defined('IN_ACP3') === false)
 $time = $date->timestamp();
 $period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'files', 'id = \'' . $uri->id . '\'' . $period) == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'files', 'id = \'' . $uri->id . '\'' . $period) == 1) {
 	require_once MODULES_DIR . 'files/functions.php';
 
 	$file = getFilesCache($uri->id);

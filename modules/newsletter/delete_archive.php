@@ -24,7 +24,7 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $db->countRows('*', 'newsletter_archive', 'id = \'' . $entry . '\'') == '1') {
+		if (!empty($entry) && $db->countRows('*', 'newsletter_archive', 'id = \'' . $entry . '\'') == 1) {
 			$bool = $db->delete('newsletter_archive', 'id = \'' . $entry . '\'');
 		}
 	}

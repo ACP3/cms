@@ -15,7 +15,7 @@ getRedirectMessage();
 $module = $uri->module ? $db->escape($uri->module) : 0;
 $tpl->assign('module', $module);
 
-if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module = \'' . $module . '\'') == '0') {
+if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module = \'' . $module . '\'') == 0) {
 	$comments = $db->query('SELECT module FROM {pre}comments GROUP BY module LIMIT ' . POS . ',' . $auth->entries);
 	$c_comments = count($comments);
 

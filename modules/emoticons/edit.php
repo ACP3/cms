@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'emoticons', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'emoticons', 'id = \'' . $uri->id . '\'') == 1) {
 	require_once MODULES_DIR . 'emoticons/functions.php';
 
 	if (isset($_POST['form']) === true) {

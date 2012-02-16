@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit();
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id = \'' . $uri->id . '\'') == 1) {
 	require_once MODULES_DIR . 'gallery/functions.php';
 
 	$gallery = $db->select('name', 'gallery', 'id = \'' . $uri->id . '\'');

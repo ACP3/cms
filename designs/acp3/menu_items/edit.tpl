@@ -11,13 +11,6 @@
 		</ul>
 		<div id="tab-1">
 			<dl>
-				<dt><label for="start">{lang t="common|publication_period"}</label></dt>
-				<dd>{$publication_period}</dd>
-			</dl>
-			<p>
-				{lang t="common|date_description"}
-			</p>
-			<dl>
 				<dt><label for="mode">{lang t="menu_items|page_type"}</label></dt>
 				<dd>
 					<select name="form[mode]" id="mode">

@@ -15,7 +15,7 @@ $breadcrumb->assign($lang->t('access', 'adm_list_resources'), $uri->route('acp/a
 
 require_once MODULES_DIR . 'access/functions.php';
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_resources', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_resources', 'id = \'' . $uri->id . '\'') == 1) {
 	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 

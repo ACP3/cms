@@ -30,7 +30,7 @@ if (isset($_POST['form']) === true) {
 				$result = $db->query('SHOW CREATE TABLE ' . $table);
 				if (is_array($result) === true) {
 					//$structure.= '-- ' . sprintf($lang->t('system', 'structure_of_table'), $table) . "\n\n";
-					$structure.= isset($form['drop']) && $form['drop'] == '1' ? 'DROP TABLE IF EXISTS `' . $table . '`;' . "\n\n" : '';
+					$structure.= isset($form['drop']) && $form['drop'] == 1 ? 'DROP TABLE IF EXISTS `' . $table . '`;' . "\n\n" : '';
 					$structure.= $result[0]['Create Table'] . ';' . "\n\n";
 				}
 			}

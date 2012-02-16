@@ -22,23 +22,23 @@ if (isset($_POST['form']) === true) {
 		$errors[] = $lang->t('static_pages', 'title_to_short');
 	if (strlen($form['text']) < 3)
 		$errors[] = $lang->t('static_pages', 'text_to_short');
-	if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias'])))
+	if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias']) === true))
 		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 	if (modules::check('menu_items', 'create') === true) {
-		if ($form['create'] != 1 && $form['create'] != '0')
+		if ($form['create'] != 1 && $form['create'] != 0)
 			$errors[] = $lang->t('static_page', 'select_create_menu_item');
 		if ($form['create'] == 1) {
 			if (validate::isNumber($form['block_id']) === false)
 				$errors[] = $lang->t('menu_items', 'select_block');
 			if (!empty($form['parent']) && validate::isNumber($form['parent']) === false)
 				$errors[] = $lang->t('menu_items', 'select_superior_page');
-			if (!empty($form['parent']) && validate::isNumber($form['parent'])) {
+			if (!empty($form['parent']) && validate::isNumber($form['parent']) === true) {
 				// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
 				$parent_block = $db->select('block_id', 'menu_items', 'id = \'' . $form['parent'] . '\'');
 				if (!empty($parent_block) && $parent_block[0]['block_id'] != $form['block_id'])
 					$errors[] = $lang->t('menu_items', 'superior_page_not_allowed');
 			}
-			if ($form['display'] != '0' && $form['display'] != '1')
+			if ($form['display'] != 0 && $form['display'] != 1)
 				$errors[] = $lang->t('menu_items', 'select_item_visibility');
 		}
 	}
@@ -48,13 +48,10 @@ if (isset($_POST['form']) === true) {
 	} elseif (validate::formToken() === false) {
 		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
-		$time_start = $date->timestamp($form['start']);
-		$time_end = $date->timestamp($form['end']);
-
 		$insert_values = array(
 			'id' => '',
-			'start' => $time_start,
-			'end' => $time_end,
+			'start' => $date->timestamp($form['start']),
+			'end' => $date->timestamp($form['end']),
 			'title' => $db->escape($form['title']),
 			'text' => $db->escape($form['text'], 2),
 			'user_id' => $auth->getUserId(),
@@ -67,11 +64,9 @@ if (isset($_POST['form']) === true) {
 			seo::insertUriAlias($form['alias'], 'static_pages/list/id_' . $last_id, $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
 		$db->link->commit();
 
-		if ($form['create'] == '1' && modules::check('menu_items', 'create') === true) {
+		if ($form['create'] == 1 && modules::check('menu_items', 'create') === true) {
 			$insert_values = array(
 				'id' => '',
-				'start' => $time_start,
-				'end' => $time_end,
 				'mode' => 4,
 				'block_id' => $form['block_id'],
 				'display' => $form['display'],

@@ -17,7 +17,7 @@ if (isset($_POST['form']) === true) {
 
 	if (empty($form['name']))
 		$errors[] = $lang->t('common', 'name_to_short');
-	if (!empty($form['name']) && $db->countRows('*', 'acl_roles', 'name = \'' . $db->escape($form['name']) . '\'') == '1')
+	if (!empty($form['name']) && $db->countRows('*', 'acl_roles', 'name = \'' . $db->escape($form['name']) . '\'') == 1)
 		$errors[] = $lang->t('access', 'role_already_exists');
 	if (empty($form['privileges']) || !is_array($form['privileges']))
 		$errors[] = $lang->t('access', 'no_privilege_selected');

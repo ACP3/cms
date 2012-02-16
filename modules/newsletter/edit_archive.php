@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'newsletter_archive', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'newsletter_archive', 'id = \'' . $uri->id . '\'') == 1) {
 	// Brotkrümelspur
 	$breadcrumb->assign($lang->t('newsletter', 'adm_list_archive'), $uri->route('acp/newsletter/adm_list_archive'))
 			   ->assign($lang->t('newsletter', 'edit_archive'));
@@ -35,17 +35,17 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'newsletter_arc
 				'date' => $date->timestamp(),
 				'subject' => $db->escape($form['subject']),
 				'text' => $db->escape($form['text']),
-				'status' => $form['test'] == '1' ? '0' : (int) $form['action'],
+				'status' => $form['test'] == 1 ? '0' : (int) $form['action'],
 				'user_id' => $auth->getUserId(),
 			);
 			$bool = $db->update('newsletter_archive', $update_values, 'id = \'' . $uri->id . '\'');
 
-			if ($form['action'] == '1' && $bool !== false) {
+			if ($form['action'] == 1 && $bool !== false) {
 				$subject = $form['subject'];
 				$body = $form['text'] . "\n" . html_entity_decode($db->escape($settings['mailsig'], 3), ENT_QUOTES, 'UTF-8');
 
 				// Testnewsletter
-				if ($form['test'] == '1') {
+				if ($form['test'] == 1) {
 					$bool2 = generateEmail('', $settings['mail'], $settings['mail'], $subject, $body);
 				// An alle versenden
 				} else {
@@ -62,9 +62,9 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'newsletter_arc
 
 			$session->unsetFormToken();
 
-			if ($form['action'] == '0' && $bool !== false) {
+			if ($form['action'] == 0 && $bool !== false) {
 				setRedirectMessage($lang->t('newsletter', 'save_success'), 'acp/newsletter/adm_list_archive');
-			} elseif ($form['action'] == '1' && $bool !== false && $bool2 === true) {
+			} elseif ($form['action'] == 1 && $bool !== false && $bool2 === true) {
 				setRedirectMessage($lang->t('newsletter', 'compose_success'), 'acp/newsletter/adm_list_archive');
 			} else {
 				setRedirectMessage($lang->t('newsletter', 'compose_save_error'), 'acp/newsletter/adm_list_archive');
