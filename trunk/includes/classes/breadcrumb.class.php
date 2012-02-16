@@ -59,7 +59,7 @@ class breadcrumb
 			// Modulindex der jeweiligen ACP-Seite
 			if ($module !== 'acp') {
 				if ($file === 'adm_list') {
-					$this->assign($lang->t($module, $module));
+					$this->assign($lang->t($module, $module), $uri->route('acp/' . $module));
 				} elseif ($module === 'errors') {
 					$this->assign($lang->t($module, $file));
 				} else {
