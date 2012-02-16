@@ -81,6 +81,6 @@ $date = new date();
 acl::initialize($auth->getUserId());
 
 // Aktuelle Datensatzposition bestimmen
-define('POS', (int) (validate::isNumber($uri->page) ? $uri->page * $auth->entries : 1));
+define('POS', (int) (validate::isNumber($uri->page) && $uri->page >= 1 ? ($uri->page - 1) * $auth->entries : 0));
 
 require_once INCLUDES_DIR . 'functions.php';
