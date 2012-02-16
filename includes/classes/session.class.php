@@ -193,7 +193,7 @@ class session {
 
 		if (empty($token) && isset($_POST[self::XSRF_TOKEN_NAME]))
 			$token = $_POST[self::XSRF_TOKEN_NAME];
-		if (!empty($token) && is_array($_SESSION[self::XSRF_TOKEN_NAME])) {
+		if (!empty($token) && is_array($_SESSION[self::XSRF_TOKEN_NAME]) === true) {
 			if (isset($_SESSION[self::XSRF_TOKEN_NAME][$uri->query])) {
 				unset($_SESSION[self::XSRF_TOKEN_NAME][$uri->query]);
 			}
