@@ -26,13 +26,6 @@ class breadcrumb
 	 * @access private
 	 */
 	private $steps = array();
-	/**
-	 * Das Ende der Brotkrümelspur
-	 *
-	 * @var string
-	 * @access private
-	 */
-	private $end = '';
 
 	public function __construct()
 	{
@@ -43,37 +36,30 @@ class breadcrumb
 
 		// Frontendbereich
 		if (defined('IN_ADM') === false) {
-			$pages = $db->query('SELECT p.title, p.uri, a.alias FROM {pre}menu_items AS c, {pre}menu_items AS p LEFT JOIN {pre}seo AS a ON(a.uri = p.uri) WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri = \'' . $db->escape($uri->query) . '\' GROUP BY p.uri ORDER BY p.left_id ASC');
+			$in = "'" . $uri->query . "', '" . $uri->mod . '/' . $uri->file . "/', '" . $uri->mod . "'";
+			$pages = $db->query('SELECT p.title, p.uri, p.left_id, p.right_id FROM {pre}menu_items AS c, {pre}menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(' . $in . ') ORDER BY p.left_id DESC');
 			$c_pages = count($pages);
 
 			// Dynamische Seite (ACP3 intern)
-			if ($c_pages > 1) {
-				// Die durch das Modul festgelegte Brotkrümelspur mit den
-				// übergeordneten Menüpunkten verschmelzen
-				if (!empty($this->steps) && !empty($this->end)) {
-					unset($this->steps[0]);
-					for ($i = $c_pages - 1; $i >= 0; --$i) {
-						$pages[$i]['uri'] = $uri->route(!empty($pages[$i]['alias']) ? $pages[$i]['alias'] : $pages[$i]['uri']);
-						array_unshift($this->steps, $pages[$i]);
+			if ($c_pages > 0) {
+				$left_id = $pages[0]['left_id'];
+				$right_id = $pages[0]['right_id'];
+				for ($i = $c_pages - 1; $i >= 0; --$i) {
+					if ($left_id >= $pages[$i]['left_id'] && $right_id <= $pages[$i]['right_id']) {
+						$this->assign($pages[$i]['title'], $uri->route($pages[$i]['uri'], 1));
 					}
-				} else {
-					for ($i = 0; $i < $c_pages; ++$i) {
-						$pages[$i]['uri'] = $uri->route(!empty($pages[$i]['alias']) ? $pages[$i]['alias'] : $pages[$i]['uri']);
-					}
-					$this->steps = array_slice($pages, 0, -1);
-					$this->assign($pages[$c_pages - 1]['title']);
 				}
-			// Brotkümelspur erzeugen, falls keine durch das Modul festgelegt wurde
-			} elseif (empty($this->steps) && empty($this->end)) {
-				$this->end = $file == 'list' ? $lang->t($module, $module) : $lang->t($module, $file);
+			// Standardkrümelspur für den Frontendbereich erzeugen
+			} elseif ($module !== 'static_pages') {
+				$this->assign($file === 'list' ? $lang->t($module, $module) : $lang->t($module, $file), $uri->route($module . '/' . $file, 1));
 			}
 		// ACP
 		} else {
 			$this->assign($lang->t('common', 'acp'), $uri->route('acp'));
 			// Modulindex der jeweiligen ACP-Seite
-			if ($file == 'adm_list') {
+			if ($file === 'adm_list') {
 				$this->assign($lang->t($module, $module));
-			} elseif ($module == 'errors') {
+			} elseif ($module === 'errors') {
 				$this->assign($lang->t($module, $file));
 			} else {
 				$this->assign($lang->t($module, $module), $uri->route('acp/' . $module));
@@ -95,12 +81,14 @@ class breadcrumb
 	{
 		static $i = 0;
 
-		if (!empty($uri)) {
+		if (empty($this->steps) || isset($this->steps[$i - 1]) && $this->steps[$i - 1]['title'] !== $title) {
 			$this->steps[$i]['title'] = $title;
 			$this->steps[$i]['uri'] = $uri;
+			$this->steps[$i]['last'] = true;
+			// Die vorherige Brotkrume ist nun nicht mehr das letzte Element
+			if (isset($this->steps[$i - 1]))
+				$this->steps[$i - 1]['last'] = false;
 			++$i;
-		} else {
-			$this->end = $title;
 		}
 
 		return $this;
@@ -121,11 +109,11 @@ class breadcrumb
 			global $tpl;
 
 			$tpl->assign('breadcrumb', $this->steps);
-			$tpl->assign('end', $this->end);
 			return $tpl->fetch('common/breadcrumb.tpl');
-		}
-
 		// Nur Titel ausgeben
-		return $this->end;
+		} else {
+			// Letzter Eintrag der Brotkrümelspur ist der Seitentitel
+			return $this->steps[count($this->steps) - 1]['title'];
+		}
 	}
 }
