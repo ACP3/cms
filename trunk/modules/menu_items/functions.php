@@ -325,30 +325,10 @@ function processNavbar($block) {
 	} else {
 		global $date, $db, $uri;
 
-		$pages = getMenuItemsCache();
-		$c_pages = count($pages);
-		$hide_until = 0;
-		$visible_pages = array();
+		$items = getMenuItemsCache();
+		$c_items = count($items);
 
-		// Aktuellen Zeitstempel holen
-		$time = $date->timestamp();
-
-		for ($i = 0; $i < $c_pages; ++$i) {
-			if ($pages[$i]['block_name'] == $block) {
-				// Nicht anzuzeigende Menüpunkte
-				if ($pages[$i]['display'] == 0 && $pages[$i]['right_id'] > $hide_until)
-					$hide_until = $pages[$i]['right_id'];
-				// Checken, ob der Menüpunkt im angeforderten Block liegt und ob dieser veröffentlicht ist
-				if ($pages[$i]['display'] == 1 && $pages[$i]['right_id'] > $hide_until &&
-					$pages[$i]['start'] == $pages[$i]['end'] && $pages[$i]['start'] <= $time ||
-					$pages[$i]['start'] != $pages[$i]['end'] && $pages[$i]['start'] <= $time && $pages[$i]['end'] >= $time)
-					$visible_pages[] = $pages[$i];
-			}
-		}
-
-		$c_pages = count($visible_pages);
-
-		if ($c_pages > 0) {
+		if ($c_items > 0) {
 			// Selektion nur vornehmen, wenn man sich im Frontend befindet
 			if (defined('IN_ADM') === false) {
 				$in = "'" . $uri->query . "', '" . $uri->mod . '/' . $uri->file . "/', '" . $uri->mod . "'";
@@ -357,34 +337,45 @@ function processNavbar($block) {
 
 			$navbar[$block] = '';
 
-			for ($i = 0; $i < $c_pages; ++$i) {
-				$css = 'navi-' . $visible_pages[$i]['id'];
-				// Menüpunkt selektieren
-				if (isset($select[0]) &&
-					$visible_pages[$i]['left_id'] <= $select[0]['left_id'] &&
-					$visible_pages[$i]['right_id'] > $select[0]['left_id']) {
-					$css.= ' selected';
-				}
+			$hide_until = 0;
+			$time = $date->timestamp();
 
-				// Link zusammenbauen
-				$href = $visible_pages[$i]['mode'] == '1' || $visible_pages[$i]['mode'] == '2' || $visible_pages[$i]['mode'] == '4' ? $uri->route(!empty($visible_pages[$i]['alias']) ? $visible_pages[$i]['alias'] : $visible_pages[$i]['uri']) : $visible_pages[$i]['uri'];
-				$target = $visible_pages[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
-				$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $db->escape($visible_pages[$i]['title'], 3) . '</a>';
+			for ($i = 0; $i < $c_items; ++$i) {
+				// Menüpunkt nur aufnehmen, wenn dieser bereits veröffentlicht ist und auch angezeigt werden soll
+				if ($items[$i]['block_name'] === $block && $items[$i]['display'] == 1 && $items[$i]['right_id'] > $hide_until &&
+					$items[$i]['start'] == $items[$i]['end'] && $items[$i]['start'] <= $time ||
+					$items[$i]['start'] != $items[$i]['end'] && $items[$i]['start'] <= $time && $items[$i]['end'] >= $time) {
+					$css = 'navi-' . $items[$i]['id'];
+					// Menüpunkt selektieren
+					if (isset($select[0]) &&
+						$items[$i]['left_id'] <= $select[0]['left_id'] &&
+						$items[$i]['right_id'] > $select[0]['left_id']) {
+						$css.= ' selected';
+					}
 
-				// Falls für Knoten Kindelemente vorhanden sind, neue Unterliste erstellen
-				if (isset($visible_pages[$i + 1]) && $visible_pages[$i + 1]['level'] > $visible_pages[$i]['level']) {
-					$navbar[$block].= '<li>' . $link . '<ul class="navigation-' . $block . '-subnav-' . $visible_pages[$i]['id'] . '">';
-				// Elemente ohne Kindelemente
-				} else {
-					$navbar[$block].= '<li>' . $link . '</li>';
-					// Liste für untergeordnete Elemente schließen
-					if (isset($visible_pages[$i + 1]) && $visible_pages[$i + 1]['level'] < $visible_pages[$i]['level'] || !isset($visible_pages[$i + 1]) && $visible_pages[$i]['level'] != '0') {
-						// Differenz ermitteln, wieviele Level zwischen dem aktuellen und dem nachfolgendem Element liegen
-						$diff = (isset($visible_pages[$i + 1]['level']) ? $visible_pages[$i]['level'] - $visible_pages[$i + 1]['level'] : $visible_pages[$i]['level']) * 2;
-						for ($diff; $diff > 0; --$diff) {
-							$navbar[$block].= ($diff % 2 == 0 ? '</ul>' : '</li>');
+					// Link zusammenbauen
+					$href = $items[$i]['mode'] == '1' || $items[$i]['mode'] == '2' || $items[$i]['mode'] == '4' ? $uri->route(!empty($items[$i]['alias']) ? $items[$i]['alias'] : $items[$i]['uri']) : $items[$i]['uri'];
+					$target = $items[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
+					$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $db->escape($items[$i]['title'], 3) . '</a>';
+
+					// Falls für Knoten Kindelemente vorhanden sind, neue Unterliste erstellen
+					if (menuItemHasVisibleChildren($items, $i, $time)) {
+						$navbar[$block].= '<li>' . $link . '<ul class="navigation-' . $block . '-subnav-' . $items[$i]['id'] . '">';
+					// Elemente ohne Kindelemente
+					} else {
+						$navbar[$block].= '<li>' . $link . '</li>';
+						// Liste für untergeordnete Elemente schließen
+						if (isset($items[$i + 1]) && $items[$i + 1]['level'] < $items[$i]['level'] || !isset($items[$i + 1]) && $items[$i]['level'] != '0') {
+							// Differenz ermitteln, wieviele Level zwischen dem aktuellen und dem nachfolgendem Element liegen
+							$diff = (isset($items[$i + 1]['level']) ? $items[$i]['level'] - $items[$i + 1]['level'] : $items[$i]['level']) * 2;
+							for ($diff; $diff > 0; --$diff) {
+								$navbar[$block].= ($diff % 2 == 0 ? '</ul>' : '</li>');
+							}
 						}
 					}
+				// Falls ein Menüpunkt, welcher nicht angezeigt werden soll, Kinder besitzt, diese ebenfalls nicht anzeigen
+				} elseif ($items[$i]['block_name'] === $block) {
+					$hide_until = $items[$i]['right_id'];
 				}
 			}
 			$navbar[$block] = !empty($navbar[$block]) ? '<ul class="navigation-' . $block . '">' . $navbar[$block] . '</ul>' : '';
@@ -392,4 +383,32 @@ function processNavbar($block) {
 		}
 		return '';
 	}
+}
+/**
+ * Findet heraus, ob für einen Menüpunkt sichtbare untergeordnete Menüpunkte existieren
+ * @param array $items
+ * @param integer $index
+ * @return boolean 
+ */
+function menuItemHasVisibleChildren(array $items, $index, $timestamp)
+{
+	if (!empty($items) && validate::isNumber($index) === true) {
+		$i = $index + 1;
+		// Nachfolgender Menüpunkt ist kein Kind -> "return early"
+		if (!isset($items[$i]) || $items[$i]['left_id'] > $items[$index]['left_id'] && $items[$i]['right_id'] > $items[$index]['right_id']) {
+			return false;
+		} else {
+			$right_id = $items[$index]['right_id'];
+			$c_items = count($items);
+			while ($i < $c_items) {
+				// "true" zurückgeben, falls sichtbarer Menüpunkt vorhanden ist, der direktes Kind vom Menüpunkt ist
+				if ($items[$i]['display'] == 1 && $items[$i]['right_id'] < $right_id &&
+					$items[$i]['start'] == $items[$i]['end'] && $items[$i]['start'] <= $timestamp ||
+					$items[$i]['start'] != $items[$i]['end'] && $items[$i]['start'] <= $timestamp && $items[$i]['end'] >= $timestamp)
+					return true;
+				++$i;
+			}
+		}
+	}
+	return false;
 }
