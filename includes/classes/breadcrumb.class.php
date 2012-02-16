@@ -42,10 +42,8 @@ class breadcrumb
 
 			// Dynamische Seite (ACP3 intern)
 			if ($c_pages > 0) {
-				$left_id = $pages[0]['left_id'];
-				$right_id = $pages[0]['right_id'];
 				for ($i = $c_pages - 1; $i >= 0; --$i) {
-					if ($left_id >= $pages[$i]['left_id'] && $right_id <= $pages[$i]['right_id']) {
+					if ($pages[0]['left_id'] >= $pages[$i]['left_id'] && $pages[0]['right_id'] <= $pages[$i]['right_id']) {
 						$this->assign($pages[$i]['title'], $uri->route($pages[$i]['uri'], 1));
 					}
 				}
@@ -68,23 +66,22 @@ class breadcrumb
 		}
 	}
 	/**
-	 * Zuweisung der jewiligen Stufen der Brotkrümelspur
+	 * Zuweisung der jeweiligen Stufen der Brotkrümelspur
 	 *
 	 * @param string $title
 	 * 	Bezeichnung der jeweiligen Stufe der Brotkrume
-	 * @param string $uri
-	 * 	Der zum $title zugehörige Hyperlink
-	 *
-	 * @return array
+	 * @param string $path
+	 * 	Die zum $title zugehörige ACP3-interne URI
+	 * @return object
 	 */
-	public function assign($title, $uri = 0)
+	public function assign($title, $path = 0)
 	{
 		static $i = 0;
 
 		// Neue Brotkrume nur hinzufügen, falls noch keine mit dem gleichen Namen angelegt wurde
 		if ($i === 0 || $this->steps[$i - 1]['title'] !== $title) {
 			$this->steps[$i]['title'] = $title;
-			$this->steps[$i]['uri'] = $uri;
+			$this->steps[$i]['uri'] = $path;
 			$this->steps[$i]['last'] = true;
 			// Die vorherige Brotkrume ist nun nicht mehr das letzte Element
 			if (isset($this->steps[$i - 1]))
@@ -100,7 +97,6 @@ class breadcrumb
 	 * @param integer $mode
 	 * 	1 = Brotkrümelspur ausgeben
 	 * 	2 = Nur Seitentitel ausgeben
-	 *
 	 * @return string
 	 */
 	public function output($mode = 1)

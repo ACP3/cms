@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	// Verschachtelte Navigation
-	$('#head ul li:has(ul)').hover(function() {
+	$('#header ul li:has(ul)').hover(function() {
 		$(this).children('ul').show();
 	}, function() {
 		$(this).children('ul').hide();
