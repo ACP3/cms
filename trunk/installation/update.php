@@ -257,6 +257,10 @@ $queries = array(
 	16 => array(
 		0 => "INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'comments', 'emoticons', '1');",
 	),
+	17 => array(
+		0 => "ALTER TABLE `{pre}menu_items` DROP `start`, DROP `end`;",
+		1 => "ALTER TABLE `{pre}seo` DROP INDEX `alias`, ADD INDEX (`alias`);",
+	)
 );
 
 // Änderungen am DB Schema vornehmen

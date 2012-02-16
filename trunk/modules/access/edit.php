@@ -12,13 +12,13 @@ if (defined('IN_ADM') === false)
 
 require_once MODULES_DIR . 'access/functions.php';
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles', 'id = \'' . $uri->id . '\'') == 1) {
 	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
 		if (empty($form['name']))
 			$errors[] = $lang->t('common', 'name_to_short');
-		if (!empty($form['name']) && $db->countRows('*', 'acl_roles', 'id != \'' . $uri->id . '\' AND name = \'' . $db->escape($form['name']) . '\'') == '1')
+		if (!empty($form['name']) && $db->countRows('*', 'acl_roles', 'id != \'' . $uri->id . '\' AND name = \'' . $db->escape($form['name']) . '\'') == 1)
 			$errors[] = $lang->t('access', 'role_already_exists');
 		if (empty($form['privileges']) || !is_array($form['privileges']))
 			$errors[] = $lang->t('access', 'no_privilege_selected');

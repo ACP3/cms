@@ -28,7 +28,7 @@ if (!isset($entries)) {
 	$in_use = 0;
 
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $db->countRows('*', 'categories', 'id = \'' . $entry . '\'') == '1') {
+		if (!empty($entry) && $db->countRows('*', 'categories', 'id = \'' . $entry . '\'') == 1) {
 			$category = $db->select('picture, module', 'categories', 'id = \'' . $entry . '\'');
 			if ($db->countRows('*', $db->escape($category[0]['module'], 3), 'category_id = \'' . $entry . '\'') > 0) {
 				$in_use = 1;

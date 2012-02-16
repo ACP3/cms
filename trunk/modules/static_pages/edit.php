@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'static_pages', 'id = \'' . $uri->id . '\'') == '1') {
+if (validate::isNumber($uri->id) === true && $db->countRows('*', 'static_pages', 'id = \'' . $uri->id . '\'') == 1) {
 	require_once MODULES_DIR . 'static_pages/functions.php';
 
 	if (isset($_POST['form']) === true) {
@@ -22,7 +22,8 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'static_pages',
 			$errors[] = $lang->t('static_pages', 'title_to_short');
 		if (strlen($form['text']) < 3)
 			$errors[] = $lang->t('static_pages', 'text_to_short');
-		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias'], 'static_pages/list/id_' . $uri->id)))
+		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) &&
+			(validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias'], 'static_pages/list/id_' . $uri->id) === true))
 			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 		if (isset($errors) === true) {

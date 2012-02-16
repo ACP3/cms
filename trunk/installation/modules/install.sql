@@ -117,8 +117,6 @@ CREATE TABLE `{pre}guestbook` (
 
 CREATE TABLE `{pre}menu_items` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`start` VARCHAR(14) NOT NULL,
-	`end` VARCHAR(14) NOT NULL,
 	`mode` TINYINT(1) UNSIGNED NOT NULL,
 	`block_id` INT(10) UNSIGNED NOT NULL,
 	`root_id` INT(10) UNSIGNED NOT NULL,
@@ -211,7 +209,7 @@ CREATE TABLE `{pre}seo` (
 	`keywords` varchar(255) NOT NULL,
 	`description` varchar(255) NOT NULL,
 	PRIMARY KEY (`uri`),
-	UNIQUE KEY `alias` (`alias`)
+	INDEX (`alias`)
 ) {engine};
 
 CREATE TABLE `{pre}sessions` (

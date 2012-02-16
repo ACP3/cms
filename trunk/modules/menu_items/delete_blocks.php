@@ -29,7 +29,7 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $db->countRows('*', 'menu_items_blocks', 'id = \'' . $entry . '\'') == '1') {
+		if (!empty($entry) && $db->countRows('*', 'menu_items_blocks', 'id = \'' . $entry . '\'') == 1) {
 			$bool = $db->delete('menu_items_blocks', 'id = \'' . $entry . '\'');
 		}
 	}

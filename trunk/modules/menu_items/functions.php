@@ -12,20 +12,20 @@
  * @return boolean
  */
 function setMenuItemsCache() {
-	global $date, $db, $lang;
+	global $db, $lang;
 
-	$pages = $db->query('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, a.alias FROM {pre}menu_items AS p, {pre}menu_items AS n LEFT JOIN {pre}seo AS a ON(a.uri = n.uri) WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
-	$c_pages = count($pages);
+	$items = $db->query('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM {pre}menu_items AS p, {pre}menu_items AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
+	$c_items = count($items);
 
-	if ($c_pages > 0) {
+	if ($c_items > 0) {
 		$blocks = $db->select('id, title, index_name', 'menu_items_blocks');
 		$c_blocks = count($blocks);
 
-		for ($i = 0; $i < $c_pages; ++$i) {
+		for ($i = 0; $i < $c_items; ++$i) {
 			for ($j = 0; $j < $c_blocks; ++$j) {
-				if ($pages[$i]['block_id'] == $blocks[$j]['id']) {
-					$pages[$i]['block_title'] = $blocks[$j]['title'];
-					$pages[$i]['block_name'] = $blocks[$j]['index_name'];
+				if ($items[$i]['block_id'] == $blocks[$j]['id']) {
+					$items[$i]['block_title'] = $blocks[$j]['title'];
+					$items[$i]['block_name'] = $blocks[$j]['index_name'];
 				}
 			}
 		}
@@ -38,33 +38,60 @@ function setMenuItemsCache() {
 			$lang->t('menu_items', 'static_page')
 		);
 
-		for ($i = 0; $i < $c_pages; ++$i) {
-			$pages[$i]['period'] = $date->period($pages[$i]['start'], $pages[$i]['end']);
-			$pages[$i]['mode_formated'] = str_replace($mode_search, $mode_replace, $pages[$i]['mode']);
+		for ($i = 0; $i < $c_items; ++$i) {
+			$items[$i]['mode_formated'] = str_replace($mode_search, $mode_replace, $items[$i]['mode']);
+			$items[$i]['has_visible_children'] = menuItemHasVisibleChildren($items, $i);
 
 			// Bestimmen, ob die Seite die Erste und/oder Letzte eines Knotens ist
 			$first = $last = true;
 			if ($i > 0) {
 				for ($j = $i - 1; $j >= 0; --$j) {
-					if ($pages[$j]['parent_id'] == $pages[$i]['parent_id'] && $pages[$j]['block_name'] == $pages[$i]['block_name']) {
+					if ($items[$j]['parent_id'] == $items[$i]['parent_id'] && $items[$j]['block_name'] == $items[$i]['block_name']) {
 						$first = false;
 						break;
 					}
 				}
 			}
 
-			for ($j = $i + 1; $j < $c_pages; ++$j) {
-				if ($pages[$i]['parent_id'] == $pages[$j]['parent_id'] && $pages[$j]['block_name'] == $pages[$i]['block_name']) {
+			for ($j = $i + 1; $j < $c_items; ++$j) {
+				if ($items[$i]['parent_id'] == $items[$j]['parent_id'] && $items[$j]['block_name'] == $items[$i]['block_name']) {
 					$last = false;
 					break;
 				}
 			}
 
-			$pages[$i]['first'] = $first;
-			$pages[$i]['last'] = $last;
+			$items[$i]['first'] = $first;
+			$items[$i]['last'] = $last;
 		}
 	}
-	return cache::create('menu_items', $pages);
+	return cache::create('menu_items', $items);
+}
+/**
+ * Findet heraus, ob für einen Menüpunkt sichtbare untergeordnete Menüpunkte existieren
+ * @param array $items
+ * @param integer $index
+ * @return boolean 
+ */
+function menuItemHasVisibleChildren(array $items, $index)
+{
+	if (!empty($items) && validate::isNumber($index) === true) {
+		$i = $index + 1;
+		// Nachfolgender Menüpunkt ist kein Kind -> "return early"
+		if (!isset($items[$i]) || $items[$i]['left_id'] > $items[$index]['left_id'] && $items[$i]['right_id'] > $items[$index]['right_id']) {
+			return false;
+		} else {
+			$item_level = $items[$index]['level'] + 1;
+			$c_items = count($items);
+			while ($i < $c_items) {
+				if ($items[$i]['display'] == 1 && $items[$i]['right_id'] < $items[$index]['right_id'] && $items[$i]['level'] == $item_level)
+					return true;
+				elseif ($items[$i]['left_id'] > $items[$index]['right_id'])
+					return false;
+				++$i;
+			}
+		}
+	}
+	return false;
 }
 /**
  * Bindet die gecacheten Menüpunkte ein
@@ -182,91 +209,86 @@ function menuItemsEditNode($id, $parent, $block_id, array $update_values)
 
 	if (validate::isNumber($id) === true && (validate::isNumber($parent) === true || $parent == '') && validate::isNumber($block_id) === true) {
 		// Die aktuelle Seite mit allen untergeordneten Seiten selektieren
-		$pages = $db->query('SELECT c.id, c.root_id, c.left_id, c.right_id, c.block_id FROM {pre}menu_items AS p, {pre}menu_items AS c WHERE p.id = \'' . $id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
+		$items = $db->query('SELECT c.id, c.root_id, c.left_id, c.right_id, c.block_id FROM {pre}menu_items AS p, {pre}menu_items AS c WHERE p.id = \'' . $id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
 
 		// Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
-		if (empty($parent) && $block_id == $pages[0]['block_id'] && $db->countRows('*', 'menu_items', 'left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id']) == 0) {
+		if (empty($parent) && $block_id == $items[0]['block_id'] && $db->countRows('*', 'menu_items', 'left_id < ' . $items[0]['left_id'] . ' AND right_id > ' . $items[0]['right_id']) == 0) {
 			$bool = $db->update('menu_items', $update_values, 'id = \'' . $id . '\'');
 		} else {
 			// Überprüfung, falls Seite kein Root-Element ist, aber keine Veränderung vorgenommen werden soll...
-			$chk_parent = $db->query('SELECT id FROM {pre}menu_items WHERE left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'] . ' ORDER BY left_id DESC LIMIT 1');
+			$chk_parent = $db->query('SELECT id FROM {pre}menu_items WHERE left_id < ' . $items[0]['left_id'] . ' AND right_id > ' . $items[0]['right_id'] . ' ORDER BY left_id DESC LIMIT 1');
 			if (isset($chk_parent[0]) && $chk_parent[0]['id'] == $parent) {
 				$bool = $db->update('menu_items', $update_values, 'id = \'' . $id . '\'');
 			// ...ansonsten den Baum bearbeiten...
 			} else {
 				$bool = false;
 				// Differenz zwischen linken und rechten Wert bilden
-				$page_diff = $pages[0]['right_id'] - $pages[0]['left_id'] + 1;
+				$page_diff = $items[0]['right_id'] - $items[0]['left_id'] + 1;
 
 				// Neues Elternelement
 				$new_parent = $db->select('root_id, left_id, right_id', 'menu_items', 'id = \'' . $parent . '\'');
 
-				// Rekursion verhindern
-				if (!empty($new_parent) && $new_parent[0]['left_id'] < $pages[0]['left_id'] && $new_parent[0]['right_id'] > $pages[0]['right_id']) {
-					$bool = false;
-				} else {
-					// Knoten werden eigenes Root-Element
-					if (empty($new_parent)) {
-						// Knoten in anderen Block verschieben
-						if ($pages[0]['block_id'] != $block_id) {
-							$new_block = $db->select('MIN(left_id) AS left_id', 'menu_items', 'block_id = \'' . $block_id . '\'');
-							// Falls die Knoten in einen leeren Block verschoben werden sollen,
-							// die right_id des letzten Elementes verwenden
-							if (empty($new_block) || is_null($new_block[0]['left_id'])) {
-								$new_block = $db->select('MAX(right_id) AS left_id', 'menu_items');
-								$new_block[0]['left_id']+= 1;
-							}
-
-							if ($block_id > $pages[0]['block_id']) {
-								$new_block[0]['left_id'] = $new_block[0]['left_id'] - $page_diff;
-							}
-
-							$diff = $new_block[0]['left_id'] - $pages[0]['left_id'];
-							$root_id = $id;
-
-							$db->link->beginTransaction();
-							$db->query('UPDATE {pre}menu_items SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0);
-							$db->query('UPDATE {pre}menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $pages[0]['right_id'], 0);
-							$db->query('UPDATE {pre}menu_items SET left_id = left_id + ' . $page_diff . ', right_id = right_id + ' . $page_diff . ' WHERE left_id >= ' . $new_block[0]['left_id'], 0);
-						// Element zum neuen Elternknoten machen
-						} else {
-							$new_parent = $db->select('MAX(right_id) AS right_id', 'menu_items', 'block_id =  \'' . $pages[0]['block_id'] . '\'');
-
-							$diff = $new_parent[0]['right_id'] - $pages[0]['right_id'];
-							$root_id = $id;
-
-							$db->link->beginTransaction();
-							$db->query('UPDATE {pre}menu_items SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0);
-							$db->query('UPDATE {pre}menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $pages[0]['right_id'] . ' AND block_id = \'' . $pages[0]['block_id'] . '\'', 0);
-						}
-					// Knoten werden wieder Kinder von einem anderen Knoten
-					} else {
-						// Teilbaum nach unten...
-						if ($new_parent[0]['left_id'] > $pages[0]['left_id']) {
-							$new_parent[0]['left_id'] = $new_parent[0]['left_id'] - $page_diff;
-							$new_parent[0]['right_id'] = $new_parent[0]['right_id'] - $page_diff;
+				// Knoten werden eigenes Root-Element
+				if (empty($new_parent)) {
+					// Knoten in anderen Block verschieben
+					if ($items[0]['block_id'] != $block_id) {
+						$new_block = $db->select('MIN(left_id) AS left_id', 'menu_items', 'block_id = \'' . $block_id . '\'');
+						// Falls die Knoten in einen leeren Block verschoben werden sollen,
+						// die right_id des letzten Elementes verwenden
+						if (empty($new_block) || is_null($new_block[0]['left_id']) === true) {
+							$new_block = $db->select('MAX(right_id) AS left_id', 'menu_items');
+							$new_block[0]['left_id']+= 1;
 						}
 
-						$diff = $new_parent[0]['left_id'] - $pages[0]['left_id'] + 1;
-						$root_id = $new_parent[0]['root_id'];
+						if ($block_id > $items[0]['block_id']) {
+							$new_block[0]['left_id'] = $new_block[0]['left_id'] - $page_diff;
+						}
+
+						$diff = $new_block[0]['left_id'] - $items[0]['left_id'];
+						$root_id = $id;
 
 						$db->link->beginTransaction();
-						$db->query('UPDATE {pre}menu_items SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'], 0);
-						$db->query('UPDATE {pre}menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $pages[0]['right_id'], 0);
-						$db->query('UPDATE {pre}menu_items SET right_id = right_id + ' . $page_diff . ' WHERE left_id <= ' . $new_parent[0]['left_id'] . ' AND right_id >= ' . $new_parent[0]['right_id'], 0);
-						$db->query('UPDATE {pre}menu_items SET left_id = left_id + ' . $page_diff . ', right_id = right_id + ' . $page_diff . ' WHERE left_id > ' . $new_parent[0]['left_id'], 0);
+						$db->query('UPDATE {pre}menu_items SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $items[0]['left_id'] . ' AND right_id > ' . $items[0]['right_id'], 0);
+						$db->query('UPDATE {pre}menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $items[0]['right_id'], 0);
+						$db->query('UPDATE {pre}menu_items SET left_id = left_id + ' . $page_diff . ', right_id = right_id + ' . $page_diff . ' WHERE left_id >= ' . $new_block[0]['left_id'], 0);
+					// Element zum neuen Elternknoten machen
+					} else {
+						$new_parent = $db->select('MAX(right_id) AS right_id', 'menu_items', 'block_id =  \'' . $items[0]['block_id'] . '\'');
+
+						$diff = $new_parent[0]['right_id'] - $items[0]['right_id'];
+						$root_id = $id;
+
+						$db->link->beginTransaction();
+						$db->query('UPDATE {pre}menu_items SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $items[0]['left_id'] . ' AND right_id > ' . $items[0]['right_id'], 0);
+						$db->query('UPDATE {pre}menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $items[0]['right_id'] . ' AND block_id = \'' . $items[0]['block_id'] . '\'', 0);
+					}
+				// Knoten werden wieder Kinder von einem anderen Knoten
+				} else {
+					// Teilbaum nach unten...
+					if ($new_parent[0]['left_id'] > $items[0]['left_id']) {
+						$new_parent[0]['left_id'] = $new_parent[0]['left_id'] - $page_diff;
+						$new_parent[0]['right_id'] = $new_parent[0]['right_id'] - $page_diff;
 					}
 
-					// Einträge aktualisieren
-					$c_pages = count($pages);
-					for ($i = 0; $i < $c_pages; ++$i) {
-						$bool = $db->query('UPDATE {pre}menu_items SET block_id = \'' . $block_id . '\', root_id = \'' . $root_id . '\', left_id = ' . ($pages[$i]['left_id'] + $diff) . ', right_id = ' . ($pages[$i]['right_id'] + $diff) . ' WHERE id = \'' . $pages[$i]['id'] . '\'', 0);
-						if ($bool === false)
-							break;
-					}
-					$db->update('menu_items', $update_values, 'id = \'' . $id . '\'');
-					$db->link->commit();
+					$diff = $new_parent[0]['left_id'] - $items[0]['left_id'] + 1;
+					$root_id = $new_parent[0]['root_id'];
+
+					$db->link->beginTransaction();
+					$db->query('UPDATE {pre}menu_items SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $items[0]['left_id'] . ' AND right_id > ' . $items[0]['right_id'], 0);
+					$db->query('UPDATE {pre}menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $items[0]['right_id'], 0);
+					$db->query('UPDATE {pre}menu_items SET right_id = right_id + ' . $page_diff . ' WHERE left_id <= ' . $new_parent[0]['left_id'] . ' AND right_id >= ' . $new_parent[0]['right_id'], 0);
+					$db->query('UPDATE {pre}menu_items SET left_id = left_id + ' . $page_diff . ', right_id = right_id + ' . $page_diff . ' WHERE left_id > ' . $new_parent[0]['left_id'], 0);
 				}
+
+				// Einträge aktualisieren
+				$c_items = count($items);
+				for ($i = 0; $i < $c_items; ++$i) {
+					$bool = $db->query('UPDATE {pre}menu_items SET block_id = \'' . $block_id . '\', root_id = \'' . $root_id . '\', left_id = ' . ($items[$i]['left_id'] + $diff) . ', right_id = ' . ($items[$i]['right_id'] + $diff) . ' WHERE id = \'' . $items[$i]['id'] . '\'', 0);
+					if ($bool === false)
+						break;
+				}
+				$db->update('menu_items', $update_values, 'id = \'' . $id . '\'');
+				$db->link->commit();
 			}
 		}
 		return $bool;
@@ -300,7 +322,7 @@ function menuItemsList($parent_id = 0, $left_id = 0, $right_id = 0) {
 
 				// Titel für den aktuellen Block setzen
 				$output[$row['block_title']][$i] = $row;
-				$i++;
+				++$i;
 			}
 		}
 	}
@@ -323,7 +345,7 @@ function processNavbar($block) {
 		return $navbar[$block];
 	// ...ansonsten Verarbeitung starten
 	} else {
-		global $date, $db, $uri;
+		global $db, $uri;
 
 		$items = getMenuItemsCache();
 		$c_items = count($items);
@@ -338,13 +360,10 @@ function processNavbar($block) {
 			$navbar[$block] = '';
 
 			$hide_until = 0;
-			$time = $date->timestamp();
 
 			for ($i = 0; $i < $c_items; ++$i) {
 				// Menüpunkt nur aufnehmen, wenn dieser bereits veröffentlicht ist und auch angezeigt werden soll
-				if ($items[$i]['block_name'] === $block && $items[$i]['display'] == 1 && $items[$i]['right_id'] > $hide_until &&
-					$items[$i]['start'] == $items[$i]['end'] && $items[$i]['start'] <= $time ||
-					$items[$i]['start'] != $items[$i]['end'] && $items[$i]['start'] <= $time && $items[$i]['end'] >= $time) {
+				if ($items[$i]['block_name'] === $block && $items[$i]['display'] == 1 && $items[$i]['right_id'] > $hide_until) {
 					$css = 'navi-' . $items[$i]['id'];
 					// Menüpunkt selektieren
 					if (isset($select[0]) &&
@@ -354,18 +373,18 @@ function processNavbar($block) {
 					}
 
 					// Link zusammenbauen
-					$href = $items[$i]['mode'] == '1' || $items[$i]['mode'] == '2' || $items[$i]['mode'] == '4' ? $uri->route(!empty($items[$i]['alias']) ? $items[$i]['alias'] : $items[$i]['uri']) : $items[$i]['uri'];
+					$href = $items[$i]['mode'] == 1 || $items[$i]['mode'] == 2 || $items[$i]['mode'] == 4 ? $uri->route($items[$i]['uri'], 1) : $items[$i]['uri'];
 					$target = $items[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 					$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $db->escape($items[$i]['title'], 3) . '</a>';
 
 					// Falls für Knoten Kindelemente vorhanden sind, neue Unterliste erstellen
-					if (menuItemHasVisibleChildren($items, $i, $time)) {
+					if ($items[$i]['has_visible_children'] === true) {
 						$navbar[$block].= '<li>' . $link . '<ul class="navigation-' . $block . '-subnav-' . $items[$i]['id'] . '">';
 					// Elemente ohne Kindelemente
 					} else {
 						$navbar[$block].= '<li>' . $link . '</li>';
 						// Liste für untergeordnete Elemente schließen
-						if (isset($items[$i + 1]) && $items[$i + 1]['level'] < $items[$i]['level'] || !isset($items[$i + 1]) && $items[$i]['level'] != '0') {
+						if (isset($items[$i + 1]) && $items[$i + 1]['level'] < $items[$i]['level'] || !isset($items[$i + 1]) && $items[$i]['level'] != 0) {
 							// Differenz ermitteln, wieviele Level zwischen dem aktuellen und dem nachfolgendem Element liegen
 							$diff = (isset($items[$i + 1]['level']) ? $items[$i]['level'] - $items[$i + 1]['level'] : $items[$i]['level']) * 2;
 							for ($diff; $diff > 0; --$diff) {
@@ -383,32 +402,4 @@ function processNavbar($block) {
 		}
 		return '';
 	}
-}
-/**
- * Findet heraus, ob für einen Menüpunkt sichtbare untergeordnete Menüpunkte existieren
- * @param array $items
- * @param integer $index
- * @return boolean 
- */
-function menuItemHasVisibleChildren(array $items, $index, $timestamp)
-{
-	if (!empty($items) && validate::isNumber($index) === true) {
-		$i = $index + 1;
-		// Nachfolgender Menüpunkt ist kein Kind -> "return early"
-		if (!isset($items[$i]) || $items[$i]['left_id'] > $items[$index]['left_id'] && $items[$i]['right_id'] > $items[$index]['right_id']) {
-			return false;
-		} else {
-			$right_id = $items[$index]['right_id'];
-			$c_items = count($items);
-			while ($i < $c_items) {
-				// "true" zurückgeben, falls sichtbarer Menüpunkt vorhanden ist, der direktes Kind vom Menüpunkt ist
-				if ($items[$i]['display'] == 1 && $items[$i]['right_id'] < $right_id &&
-					$items[$i]['start'] == $items[$i]['end'] && $items[$i]['start'] <= $timestamp ||
-					$items[$i]['start'] != $items[$i]['end'] && $items[$i]['start'] <= $timestamp && $items[$i]['end'] >= $timestamp)
-					return true;
-				++$i;
-			}
-		}
-	}
-	return false;
 }
