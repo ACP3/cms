@@ -78,9 +78,7 @@ class view
 		switch (modules::check()) {
 			// Seite ausgeben
 			case 1:
-				global $date, $db, $lang, $session, $tpl;
-
-				$breadcrumb = new breadcrumb();
+				global $breadcrumb, $date, $db, $lang, $session, $tpl;
 
 				require MODULES_DIR . $uri->mod . '/' . $uri->file . '.php';
 
