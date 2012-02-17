@@ -76,7 +76,7 @@ class breadcrumb
 		static $i = 0;
 
 		// Neue Brotkrume nur hinzufügen, falls noch keine mit dem gleichen Namen angelegt wurde
-		if ($i === 0 || ($this->steps[$i - 1]['title'] !== $title && $this->steps[$i - 1]['uri'] !== $path)) {
+		if ($i === 0 || $this->searchForDuplicates($title, $path) === false) {
 			$this->steps[$i]['title'] = $title;
 			$this->steps[$i]['uri'] = $path;
 			$this->steps[$i]['last'] = true;
@@ -87,6 +87,25 @@ class breadcrumb
 		}
 
 		return $this;
+	}
+	/**
+	 * Sucht nach bereits vorhandenen Brotkrumen, damit keine Dopplungen auftreten
+	 *
+	 * @param string $title
+	 *	Der zu überprüfende Seitentitel
+	 * @param string $path
+	 *	Die zu überprüfende ACP3-interne URI
+	 * @return boolean 
+	 */
+	private function searchForDuplicates($title, $path)
+	{
+		if (!empty($this->steps)) {
+			foreach ($this->steps as $row) {
+				if ($row['title'] === $title || $row['uri'] === $path)
+					return true;
+			}
+		}
+		return false;
 	}
 	/**
 	 * Gibt je nach Modus entweder die Brotkrümelspur oder den Seitentitel aus
