@@ -76,14 +76,16 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	for ($i = 0; $i < $c_modules; ++$i) {
 		for ($j = 0; $j < $c_privileges; ++$j) {
+			// Für jede Privilegie ein Input-Felder zuweisen
+			$select = array();
 			$select[0]['value'] = 0;
-			$select[0]['selected'] = isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 0 ? ' selected="selected"' : '';
+			$select[0]['selected'] = isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 0 ? ' checked="checked"' : '';
 			$select[0]['lang'] = $lang->t('access', 'deny_access');
 			$select[1]['value'] = 1;
-			$select[1]['selected'] = isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 1 ? ' selected="selected"' : '';
+			$select[1]['selected'] = isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 1 ? ' checked="checked"' : '';
 			$select[1]['lang'] = $lang->t('access', 'allow_access');
 			$select[2]['value'] = 2;
-			$select[2]['selected'] = !isset($form) || isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 2 ? ' selected="selected"' : '';
+			$select[2]['selected'] = !isset($form) || isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 2 ? ' checked="checked"' : '';
 			$select[2]['lang'] = $lang->t('access', 'inherit_access');
 			$privileges[$j]['select'] = $select;
 		}

@@ -16,10 +16,12 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_items', '
 	$pages = $db->query('SELECT c.id, c.block_id, c.left_id, c.right_id FROM {pre}menu_items AS p, {pre}menu_items AS c WHERE p.id = \'' . $uri->id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
 
 	if ($uri->action === 'up' && $db->countRows('*', 'menu_items', 'right_id = ' . ($pages[0]['left_id'] - 1) . ' AND block_id = \'' . $pages[0]['block_id'] . '\'') > 0) {
+		// Vorherigen Menüpunkt mit allen Kindern selektieren
 		$elem = $db->query('SELECT c.id, c.left_id, c.right_id FROM {pre}menu_items AS p, {pre}menu_items AS c WHERE p.right_id = ' . ($pages[0]['left_id'] - 1) . ' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
 		$diff_left = $pages[0]['left_id'] - $elem[0]['left_id'];
 		$diff_right = $pages[0]['right_id'] - $elem[0]['right_id'];
 	} elseif ($uri->action === 'down' && $db->countRows('*', 'menu_items', 'left_id = ' . ($pages[0]['right_id'] + 1) . ' AND block_id = \'' . $pages[0]['block_id'] . '\'') > 0) {
+		// Nachfolgenden Menüpunkt mit allen Kindern selektieren
 		$elem = $db->query('SELECT c.id, c.left_id, c.right_id FROM {pre}menu_items AS p, {pre}menu_items AS c WHERE p.left_id = ' . ($pages[0]['right_id'] + 1) . ' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
 		$diff_left = $elem[0]['left_id'] - $pages[0]['left_id'];
 		$diff_right = $elem[0]['right_id'] - $pages[0]['right_id'];

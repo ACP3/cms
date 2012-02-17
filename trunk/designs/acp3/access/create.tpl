@@ -22,34 +22,30 @@
 			</dl>
 		</div>
 		<div id="tab-2">
-			<script type="text/javascript" src="{$DESIGN_PATH}access/script.js"></script>
-			<table id="resources-table" class="acp-table">
+{foreach $modules as $module => $values}
+			<table class="privileges">
 				<thead>
 					<tr>
-{foreach $privileges as $row}
-						<th>{$row.key}</th>
-{/foreach}
+						<th colspan="4">{$module}</th>
 					</tr>
 				</thead>
 				<tbody>
-{foreach $modules as $module => $values}
-					<tr>
-						<th id="{$values.id}-resources" class="sub-table-header" colspan="{count($privileges)}" style="text-align:left">{$module}</th>
-					</tr>
-					<tr class="hide {$values.id}-resources">
 {foreach $values.privileges as $privilege}
-						<td>
-							<select name="form[privileges][{$values.id}][{$privilege.id}]">
+					<tr>
+						<td class="privilege-name"{if !empty($privilege.description)} title="{$privilege.description}"{/if}>{$privilege.key}</td>
 {foreach $privilege.select as $row}
-								<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-{/foreach}
-							</select>
+						<td>
+							<label for="privileges-{$values.id}-{$privilege.id}-{$row.value}">
+								<input type="radio" name="form[privileges][{$values.id}][{$privilege.id}]" id="privileges-{$values.id}-{$privilege.id}-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected}>
+								{$row.lang}
+							</label>
 						</td>
 {/foreach}
 					</tr>
 {/foreach}
 				</tbody>
 			</table>
+{/foreach}
 		</div>
 	</div>
 	<div class="form-bottom">
