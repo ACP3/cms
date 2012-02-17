@@ -10,8 +10,8 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$breadcrumb->assign($lang->t('guestbook', 'guestbook'), $uri->route('guestbook'));
-$breadcrumb->assign($lang->t('guestbook', 'create'));
+$breadcrumb->assign($lang->t('guestbook', 'guestbook'), $uri->route('guestbook'))
+		   ->assign($lang->t('guestbook', 'create'));
 
 $settings = config::getModuleSettings('guestbook');
 $newsletterAccess = modules::check('newsletter', 'create') === true && $settings['newsletter_integration'] == 1;
