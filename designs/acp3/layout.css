@@ -388,22 +388,24 @@ a.form, a:link.form {
 }
 /* Seitenauswahl */
 #pagination {
-	padding: 5px 0;
+	margin: 4px 0;
+	padding: 7px 0;
+	border: 1px dotted #ccc;
+	border-width: 1px 0;
 	font: bold 0.9em Verdana, Arial, sans-serif;
 	text-align: center;
 }
 #pagination a, #pagination span {
-	padding: 2px 3px;
-	border: 1px solid #333;
+	padding: 2px;
 }
 /* ACP */
 #adm-list {
 	height: 40px;
 	margin: 0 0 5px;
 	padding: 0 10px;
-	background: #e5e5e5;
-	border: 2px solid #ccc;
-	border-color: #eee #c2c2c2 #c2c2c2 #eee;
+	background: #eee;
+	border: 1px dotted #ccc;
+	border-width: 1px 0;
 	line-height: 40px;
 	text-align: left;
 }

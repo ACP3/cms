@@ -5,3 +5,23 @@
 #resources-table .sub-table-header:hover {
 	background: #eee;
 }
+.privileges {
+	width: 100%;
+	text-align: left;
+}
+.privileges th {
+	padding: 3px 5px;
+	background: #eee;
+	border: 1px dotted #ccc;
+	border-width: 1px 0;
+	font-weight: bold;
+	font-size: 1.1em;
+}
+.privileges td {
+	width: 25%;
+}
+.privileges .privilege-name {
+	padding: 0 0 0 5px;
+	font-size: 1.1em;
+	font-weight: bold;
+}
