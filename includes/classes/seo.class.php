@@ -122,7 +122,7 @@ class seo
 		if (empty($keywords))
 			$keywords = self::getKeywords($uri->mod);
 
-		return !empty($keywords) ? $keywords : CONFIG_SEO_META_KEYWORDS;
+		return strtolower(!empty($keywords) ? $keywords : CONFIG_SEO_META_KEYWORDS);
 	}
 	/**
 	 * Gibt die Schlüsselwörter der Seite aus

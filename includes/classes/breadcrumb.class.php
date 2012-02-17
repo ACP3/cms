@@ -47,9 +47,6 @@ class breadcrumb
 						$this->assign($pages[$i]['title'], $uri->route($pages[$i]['uri'], 1));
 					}
 				}
-			// Standardkrümelspur für den Frontendbereich erzeugen
-			} elseif ($module !== 'static_pages') {
-				$this->assign($file === 'list' ? $lang->t($module, $module) : $lang->t($module, $file), $uri->route($module . '/' . $file, 1));
 			}
 		// ACP
 		} else {
@@ -79,7 +76,7 @@ class breadcrumb
 		static $i = 0;
 
 		// Neue Brotkrume nur hinzufügen, falls noch keine mit dem gleichen Namen angelegt wurde
-		if ($i === 0 || $this->steps[$i - 1]['title'] !== $title) {
+		if ($i === 0 || ($this->steps[$i - 1]['title'] !== $title && $this->steps[$i - 1]['uri'] !== $path)) {
 			$this->steps[$i]['title'] = $title;
 			$this->steps[$i]['uri'] = $path;
 			$this->steps[$i]['last'] = true;
@@ -101,6 +98,16 @@ class breadcrumb
 	 */
 	public function output($mode = 1)
 	{
+		// Falls noch keine Brotkrümelspur gesetzt sein sollte, dies nun tun
+		if (empty($this->steps)) {
+			global $lang, $uri;
+
+			$module = $uri->mod;
+			$file = $uri->file;
+
+			$this->assign($file === 'list' ? $lang->t($module, $module) : $lang->t($module, $file), $uri->route($module . '/' . $file, 1));
+		}
+
 		// Brotkrümelspur ausgeben
 		if ($mode === 1) {
 			global $tpl;

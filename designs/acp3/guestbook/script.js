@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	$('#create-link').attr('href', $('#create-link').attr('href').replace('create', 'create/design_simple'));
 	$('#create-link').fancybox({
 		type: 'iframe',
 		width: '40%',
@@ -8,5 +9,4 @@ $(document).ready(function() {
 			window.location.reload();
 		}
 	});
-	$('#create-link').attr('href', $('#create-link').attr('href').replace('create', 'create/design_simple'));
 });
