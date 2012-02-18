@@ -112,8 +112,10 @@ class db
 			}
 			return $result;
 		} catch(PDOException $e) {
-			echo $e->getMessage();
-			return null;
+			// SQL-Fehler nur ausgeben, wenn Debugmodus aktiv ist
+			if (defined('DEBUG') === true && DEBUG === true)
+				echo $e->getMessage();
+			return false;
 		}
 	}
 	/**
