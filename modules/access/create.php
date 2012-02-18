@@ -16,10 +16,10 @@ if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (empty($form['name']))
-		$errors[] = $lang->t('common', 'name_to_short');
+		$errors['name'] = $lang->t('common', 'name_to_short');
 	if (!empty($form['name']) && $db->countRows('*', 'acl_roles', 'name = \'' . $db->escape($form['name']) . '\'') == 1)
-		$errors[] = $lang->t('access', 'role_already_exists');
-	if (empty($form['privileges']) || !is_array($form['privileges']))
+		$errors['name'] = $lang->t('access', 'role_already_exists');
+	if (empty($form['privileges']) || is_array($form['privileges']) === false)
 		$errors[] = $lang->t('access', 'no_privilege_selected');
 	if (!empty($form['privileges']) && validate::aclPrivilegesExist($form['privileges']) === false)
 		$errors[] = $lang->t('access', 'invalid_privileges');

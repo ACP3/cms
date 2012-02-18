@@ -6,6 +6,6 @@
 {/foreach}
 	</select>
 {if isset($categories.create)}
-	- <input type="text" name="form[{$categories.create.name}]" id="{$categories.create.name}" value="{$categories.create.value}" style="width:29%;display:inline">
+	- <input type="text" name="form[{$categories.create.name}]" id="{$categories.create.name|replace:'_':'-'}" value="{$categories.create.value}" style="width:29%;display:inline">
 {/if}
 </span>

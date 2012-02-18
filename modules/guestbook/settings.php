@@ -16,12 +16,12 @@ $newsletter_active = modules::isActive('newsletter');
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
-	if (empty($form['dateformat']) || ($form['dateformat'] != 'long' && $form['dateformat'] != 'short'))
-		$errors[] = $lang->t('common', 'select_date_format');
+	if (empty($form['dateformat']) || ($form['dateformat'] !== 'long' && $form['dateformat'] !== 'short'))
+		$errors['dateformat'] = $lang->t('common', 'select_date_format');
 	if (!isset($form['notify']) || ($form['notify'] != 0 && $form['notify'] != 1 && $form['notify'] != 2))
-		$errors[] = $lang->t('guestbook', 'select_notification_type');
+		$errors['notify'] = $lang->t('guestbook', 'select_notification_type');
 	if ($form['notify'] != 0 && validate::email($form['notify_email']) === false)
-		$errors[] = $lang->t('common', 'wrong_email_format');
+		$errors['notify-email'] = $lang->t('common', 'wrong_email_format');
 	if (!isset($form['overlay']) || $form['overlay'] != 1 && $form['overlay'] != 0)
 		$errors[] = $lang->t('guestbook', 'select_use_overlay');
 	if ($emoticons_active === true && (!isset($form['emoticons']) || ($form['emoticons'] != 0 && $form['emoticons'] != 1)))

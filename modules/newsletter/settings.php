@@ -14,12 +14,12 @@ if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (validate::email($form['mail']) === false)
-		$errors[] = $lang->t('common', 'wrong_email_format');
-	if (validate::formToken() === false)
-		$errors[] = $lang->t('common', 'form_already_submitted');
+		$errors['mail'] = $lang->t('common', 'wrong_email_format');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
+	} elseif (validate::formToken() === false) {
+		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$form['mailsig'] = $db->escape($form['mailsig']);
 

@@ -15,8 +15,8 @@ $emoticons_active = modules::isActive('emoticons');
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
-	if (empty($form['dateformat']) || ($form['dateformat'] != 'long' && $form['dateformat'] != 'short'))
-		$errors[] = $lang->t('common', 'select_date_format');
+	if (empty($form['dateformat']) || ($form['dateformat'] !== 'long' && $form['dateformat'] !== 'short'))
+		$errors['dateformat'] = $lang->t('common', 'select_date_format');
 	if ($emoticons_active === true && (!isset($form['emoticons']) || ($form['emoticons'] != 0 && $form['emoticons'] != 1)))
 		$errors[] = $lang->t('comments', 'select_emoticons');
 

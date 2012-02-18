@@ -230,6 +230,6 @@ class auth
 	 */
 	public function setCookie($nickname, $password, $expiry)
 	{
-		return setcookie('ACP3_AUTH', base64_encode($nickname . '|' . $password), time() + $expiry, '/', strpos($_SERVER['HTTP_HOST'],'.') !== false ? $_SERVER['HTTP_HOST'] : '');
+		return setcookie(self::COOKIE_NAME, base64_encode($nickname . '|' . $password), time() + $expiry, '/', strpos($_SERVER['HTTP_HOST'],'.') !== false ? $_SERVER['HTTP_HOST'] : '');
 	}
 }

@@ -9,7 +9,7 @@ if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (empty($form['tables']) || is_array($form['tables']) === false)
-		$errors[] = $lang->t('system', 'select_sql_tables');
+		$errors['tables'] = $lang->t('system', 'select_sql_tables');
 	if ($form['output'] !== 'file' && $form['output'] !== 'text')
 		$errors[] = $lang->t('system', 'select_output');
 	if (in_array($form['export_type'], array('complete', 'structure', 'data')) === false)

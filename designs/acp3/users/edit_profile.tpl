@@ -24,7 +24,7 @@
 				</tr>
 				<tr>
 					<td>
-						<input type="checkbox" name="form[realname_display]" id="realname_display" value="1" class="checkbox"{$checked.realname}>
+						<input type="checkbox" name="form[realname_display]" id="realname-display" value="1" class="checkbox"{$checked.realname}>
 					</td>
 					<td>
 						<dl>
@@ -35,7 +35,7 @@
 				</tr>
 				<tr>
 					<td>
-						<input type="checkbox" name="form[gender_display]" id="gender_display" value="1" class="checkbox"{$checked.gender}>
+						<input type="checkbox" name="form[gender_display]" id="gender-display" value="1" class="checkbox"{$checked.gender}>
 					</td>
 					<td>
 						<dl>
@@ -52,7 +52,7 @@
 				</tr>
 				<tr>
 					<td>
-						<input type="checkbox" name="form[birthday_display]" id="birthday_display" value="1" class="checkbox"{$checked.birthday}>
+						<input type="checkbox" name="form[birthday_display]" id="birthday-display" value="1" class="checkbox"{$checked.birthday}>
 					</td>
 					<td>
 						<dl>
@@ -95,8 +95,8 @@
 		</div>
 		<div id="tab-3" class="ui-tabs-hide">
 			<dl>
-				<dt><label for="new_pwd">{lang t="users|new_pwd"}</label></dt>
-				<dd><input type="password" name="form[new_pwd]" id="new_pwd"></dd>
+				<dt><label for="new-pwd">{lang t="users|new_pwd"}</label></dt>
+				<dd><input type="password" name="form[new_pwd]" id="new-pwd"></dd>
 				<dt><label for="new_pwd_repeat">{lang t="users|new_pwd_repeat"}</label></dt>
 				<dd><input type="password" name="form[new_pwd_repeat]" id="new_pwd_repeat"></dd>
 			</dl>

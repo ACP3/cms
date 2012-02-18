@@ -16,20 +16,20 @@ $comments_active = modules::isActive('comments');
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
+	if (empty($form['dateformat']) || ($form['dateformat'] !== 'long' && $form['dateformat'] !== 'short'))
+		$errors['dateformat'] = $lang->t('common', 'select_date_format');
+	if (validate::isNumber($form['sidebar']) === false)
+		$errors['sidebar'] = $lang->t('common', 'select_sidebar_entries');
+	if (!isset($form['overlay']) || $form['overlay'] != 1 && $form['overlay'] != 0)
+		$errors[] = $lang->t('gallery', 'select_use_overlay');
+	if ($comments_active === true && (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0))
+		$errors[] = $lang->t('gallery', 'select_allow_comments');
 	if (validate::isNumber($form['thumbwidth']) === false || validate::isNumber($form['width']) === false || validate::isNumber($form['maxwidth']) === false)
 		$errors[] = $lang->t('gallery', 'invalid_image_width_entered');
 	if (validate::isNumber($form['thumbheight']) === false || validate::isNumber($form['height']) === false || validate::isNumber($form['maxheight']) === false)
 		$errors[] = $lang->t('gallery', 'invalid_image_height_entered');
 	if (validate::isNumber($form['filesize']) === false)
-		$errors[] = $lang->t('gallery', 'invalid_image_filesize_entered');
-	if ($comments_active === true && (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0))
-		$errors[] = $lang->t('gallery', 'select_allow_comments');
-	if (!isset($form['overlay']) || $form['overlay'] != 1 && $form['overlay'] != 0)
-		$errors[] = $lang->t('gallery', 'select_use_overlay');
-	if (empty($form['dateformat']) || ($form['dateformat'] != 'long' && $form['dateformat'] != 'short'))
-		$errors[] = $lang->t('common', 'select_date_format');
-	if (validate::isNumber($form['sidebar']) === false)
-		$errors[] = $lang->t('common', 'select_sidebar_entries');
+		$errors['filesize'] = $lang->t('gallery', 'invalid_image_filesize_entered');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));

@@ -14,7 +14,7 @@ if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (strlen($form['search_term']) < 3)
-		$errors[] = $lang->t('search', 'search_term_to_short');
+		$errors['search-term'] = $lang->t('search', 'search_term_to_short');
 	if (empty($form['mods']))
 		$errors[] = $lang->t('search', 'no_module_selected');
 	if (empty($form['area']))
@@ -25,8 +25,8 @@ if (isset($_POST['form']) === true) {
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
 	} else {
-		$breadcrumb->assign($lang->t('search', 'search'), $uri->route('search'));
-		$breadcrumb->assign($lang->t('search', 'search_results'));
+		$breadcrumb->assign($lang->t('search', 'search'), $uri->route('search'))
+				   ->assign($lang->t('search', 'search_results'));
 
 		$form['sort'] = strtoupper($form['sort']);
 		$results_mods = array();

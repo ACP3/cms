@@ -16,11 +16,11 @@ if (isset($_POST['form']) === true) {
 			$form = $_POST['form'];
 
 			if (validate::email($form['mail']) === false)
-				$errors[] = $lang->t('common', 'wrong_email_format');
+				$errors['mail'] = $lang->t('common', 'wrong_email_format');
 			if (validate::email($form['mail']) && $db->countRows('*', 'newsletter_accounts', 'mail = \'' . $form['mail'] . '\'') == 1)
-				$errors[] = $lang->t('newsletter', 'account_exists');
+				$errors['mail'] = $lang->t('newsletter', 'account_exists');
 			if ($auth->isUser() === false && validate::captcha($form['captcha']) === false)
-				$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
+				$errors['captcha'] = $lang->t('captcha', 'invalid_captcha_entered');
 
 			if (isset($errors) === true) {
 				$tpl->assign('error_msg', errorBox($errors));

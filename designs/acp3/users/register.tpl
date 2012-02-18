@@ -19,8 +19,8 @@
 			<dl>
 				<dt><label for="pwd">{lang t="users|pwd"}</label></dt>
 				<dd><input type="password" name="form[pwd]" id="pwd" value=""></dd>
-				<dt><label for="pwd_repeat">{lang t="users|pwd_repeat"}</label></dt>
-				<dd><input type="password" name="form[pwd_repeat]" id="pwd_repeat" value=""></dd>
+				<dt><label for="pwd-repeat">{lang t="users|pwd_repeat"}</label></dt>
+				<dd><input type="password" name="form[pwd_repeat]" id="pwd-repeat" value=""></dd>
 			</dl>
 		</div>
 	</div>

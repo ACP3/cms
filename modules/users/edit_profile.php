@@ -22,21 +22,21 @@ if ($auth->isUser() === false || validate::isNumber($auth->getUserId()) === fals
 		$form = $_POST['form'];
 
 		if (empty($form['nickname']))
-			$errors[] = $lang->t('common', 'name_to_short');
+			$errors['nnickname'] = $lang->t('common', 'name_to_short');
 		if (userNameExists($form['nickname'], $auth->getUserId()) === true)
-			$errors[] = $lang->t('users', 'user_name_already_exists');
+			$errors['nickname'] = $lang->t('users', 'user_name_already_exists');
 		if (validate::gender($form['gender']) === false)
-			$errors[] = $lang->t('users', 'select_gender');
+			$errors['gender'] = $lang->t('users', 'select_gender');
 		if (!isset($form['birthday_format']) || !empty($form['birthday']) && validate::birthday($form['birthday'], $form['birthday_format']) === false)
 			$errors[] = $lang->t('users', 'invalid_birthday');
 		if (validate::email($form['mail']) === false)
-			$errors[] = $lang->t('common', 'wrong_email_format');
+			$errors['mail'] = $lang->t('common', 'wrong_email_format');
 		if (userEmailExists($form['mail'], $auth->getUserId()) === true)
-			$errors[] = $lang->t('users', 'user_email_already_exists');
+			$errors['mail'] = $lang->t('users', 'user_email_already_exists');
 		if (!empty($form['icq']) && validate::icq($form['icq']) === false)
-			$errors[] = $lang->t('users', 'invalid_icq_number');
+			$errors['icq'] = $lang->t('users', 'invalid_icq_number');
 		if (!empty($form['msn']) && validate::email($form['msn']) === false)
-			$errors[] = $lang->t('users', 'invalid_msn_account');
+			$errors['msn'] = $lang->t('users', 'invalid_msn_account');
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
 

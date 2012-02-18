@@ -16,25 +16,25 @@ if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (empty($form['nickname']))
-		$errors[] = $lang->t('common', 'name_to_short');
+		$errors['nickname'] = $lang->t('common', 'name_to_short');
+	if (userNameExists($form['nickname']) === true)
+		$errors['nickname'] = $lang->t('users', 'user_name_already_exists');
 	if (validate::email($form['mail']) === false)
-		$errors[] = $lang->t('common', 'wrong_email_format');
-	if (userNameExists($form['nickname']))
-		$errors[] = $lang->t('users', 'user_name_already_exists');
-	if (userEmailExists($form['mail']))
-		$errors[] = $lang->t('users', 'user_email_already_exists');
+		$errors['mail'] = $lang->t('common', 'wrong_email_format');
+	if (userEmailExists($form['mail']) === true)
+		$errors['mail'] = $lang->t('users', 'user_email_already_exists');
 	if (validate::isNumber($form['entries']) === false)
-		$errors[] = $lang->t('system', 'select_entries_per_page');
+		$errors['entries'] = $lang->t('system', 'select_entries_per_page');
 	if (empty($form['date_format_long']) || empty($form['date_format_short']))
 		$errors[] = $lang->t('system', 'type_in_date_format');
-	if (!is_numeric($form['time_zone']))
-		$errors[] = $lang->t('common', 'select_time_zone');
+	if (is_numeric($form['time_zone']) === false)
+		$errors['time-zone'] = $lang->t('common', 'select_time_zone');
 	if (validate::isNumber($form['dst']) === false)
 		$errors[] = $lang->t('common', 'select_daylight_saving_time');
-	if (preg_match('=/=', $form['language']) || !is_file('languages/' . $form['language'] . '/info.xml'))
-		$errors[] = $lang->t('users', 'select_language');
-	if (empty($form['roles']) || !is_array($form['roles']) || validate::aclRolesExist($form['roles']) === false)
-		$errors[] = $lang->t('users', 'select_access_level');
+	if ($lang->languagePackExists($form['language']) === false)
+		$errors['language'] = $lang->t('users', 'select_language');
+	if (empty($form['roles']) || is_array($form['roles']) === false || validate::aclRolesExist($form['roles']) === false)
+		$errors['roles'] = $lang->t('users', 'select_access_level');
 	if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])
 		$errors[] = $lang->t('users', 'type_in_pwd');
 

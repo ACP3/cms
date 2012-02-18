@@ -15,10 +15,10 @@ $comments_active = modules::isActive('comments');
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
-	if (empty($form['dateformat']) || ($form['dateformat'] != 'long' && $form['dateformat'] != 'short'))
-		$errors[] = $lang->t('common', 'select_date_format');
+	if (empty($form['dateformat']) || ($form['dateformat'] !== 'long' && $form['dateformat'] !== 'short'))
+		$errors['dateformat'] = $lang->t('common', 'select_date_format');
 	if (validate::isNumber($form['sidebar']) === false)
-		$errors[] = $lang->t('common', 'select_sidebar_entries');
+		$errors['sidebar'] = $lang->t('common', 'select_sidebar_entries');
 	if ($comments_active === true && (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0))
 		$errors[] = $lang->t('files', 'select_allow_comments');
 

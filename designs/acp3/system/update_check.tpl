@@ -1,4 +1,4 @@
-<div class="error">
+<div class="error-box">
 {if isset($update)}
 	<h4>{$update_text}</h4>
 	<ul style="margin-bottom:0">

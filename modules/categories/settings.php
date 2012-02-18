@@ -14,11 +14,11 @@ if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (validate::isNumber($form['width']) === false)
-		$errors[] = $lang->t('categories', 'invalid_image_width_entered');
+		$errors['width'] = $lang->t('categories', 'invalid_image_width_entered');
 	if (validate::isNumber($form['height']) === false)
-		$errors[] = $lang->t('categories', 'invalid_image_height_entered');
+		$errors['height'] = $lang->t('categories', 'invalid_image_height_entered');
 	if (validate::isNumber($form['filesize']) === false)
-		$errors[] = $lang->t('categories', 'invalid_image_filesize_entered');
+		$errors['filesize'] = $lang->t('categories', 'invalid_image_filesize_entered');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));

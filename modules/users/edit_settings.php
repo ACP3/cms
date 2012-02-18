@@ -22,14 +22,14 @@ if ($auth->isUser() === false || validate::isNumber($auth->getUserId()) === fals
 	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
-		if ($settings['language_override'] == 1 && !$lang->languagePackExists($form['language']))
-			$errors[] = $lang->t('users', 'select_language');
+		if ($settings['language_override'] == 1 && $lang->languagePackExists($form['language']) === false)
+			$errors['language'] = $lang->t('users', 'select_language');
 		if ($settings['entries_override'] == 1 && validate::isNumber($form['entries']) === false)
-			$errors[] = $lang->t('system', 'select_entries_per_page');
+			$errors['entries'] = $lang->t('system', 'select_entries_per_page');
 		if (empty($form['date_format_long']) || empty($form['date_format_short']))
 			$errors[] = $lang->t('system', 'type_in_date_format');
-		if (!is_numeric($form['time_zone']))
-			$errors[] = $lang->t('common', 'select_time_zone');
+		if (is_numeric($form['time_zone']) === false)
+			$errors['time-zone'] = $lang->t('common', 'select_time_zone');
 		if (validate::isNumber($form['dst']) === false)
 			$errors[] = $lang->t('common', 'select_daylight_saving_time');
 

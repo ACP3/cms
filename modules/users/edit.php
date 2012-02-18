@@ -19,25 +19,25 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'users', 'id = 
 		$form = $_POST['form'];
 
 		if (empty($form['nickname']))
-			$errors[] = $lang->t('common', 'name_to_short');
-		if (validate::email($form['mail']) === false)
-			$errors[] = $lang->t('common', 'wrong_email_format');
-		if (userEmailExists($form['mail'], $uri->id))
-			$errors[] = $lang->t('users', 'user_email_already_exists');
+			$errors['nickname'] = $lang->t('common', 'name_to_short');
 		if (userNameExists($form['nickname'], $uri->id))
-			$errors[] = $lang->t('users', 'user_name_already_exists');
+			$errors['nickname'] = $lang->t('users', 'user_name_already_exists');
+		if (validate::email($form['mail']) === false)
+			$errors['mail'] = $lang->t('common', 'wrong_email_format');
+		if (userEmailExists($form['mail'], $uri->id))
+			$errors['mail'] = $lang->t('users', 'user_email_already_exists');
 		if (validate::isNumber($form['entries']) === false)
-			$errors[] = $lang->t('system', 'select_entries_per_page');
+			$errors['entries'] = $lang->t('system', 'select_entries_per_page');
 		if (empty($form['date_format_long']) || empty($form['date_format_short']))
 			$errors[] = $lang->t('system', 'type_in_date_format');
-		if (!is_numeric($form['time_zone']))
-			$errors[] = $lang->t('common', 'select_time_zone');
+		if (is_numeric($form['time_zone']) === false)
+			$errors['time-zone'] = $lang->t('common', 'select_time_zone');
 		if (validate::isNumber($form['dst']) === false)
 			$errors[] = $lang->t('common', 'select_daylight_saving_time');
-		if (preg_match('=/=', $form['language']) || !is_file('languages/' . $form['language'] . '/info.xml'))
-			$errors[] = $lang->t('users', 'select_language');
-		if (empty($form['roles']) || !is_array($form['roles']) || validate::aclRolesExist($form['roles']) === false)
-			$errors[] = $lang->t('users', 'select_access_level');
+		if ($lang->languagePackExists($form['language']) === false)
+			$errors['language'] = $lang->t('users', 'select_language');
+		if (empty($form['roles']) || is_array($form['roles']) === false || validate::aclRolesExist($form['roles']) === false)
+			$errors['roles'] = $lang->t('users', 'select_access_level');
 		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
 
@@ -120,6 +120,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'users', 'id = 
 		$tpl->assign('languages', $languages);
 
 		// Einträge pro Seite
+		$entries = array();
 		for ($i = 0, $j = 10; $j <= 50; $i++, $j = $j + 10) {
 			$entries[$i]['value'] = $j;
 			$entries[$i]['selected'] = selectEntry('entries', $j, $auth->entries);
@@ -130,6 +131,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'users', 'id = 
 		$tpl->assign('time_zone', timeZones($user['time_zone']));
 
 		// Sommerzeit an/aus
+		$dst = array();
 		$dst[0]['value'] = '1';
 		$dst[0]['checked'] = selectEntry('dst', '1', $user['dst'], 'checked');
 		$dst[0]['lang'] = $lang->t('common', 'yes');

@@ -14,15 +14,15 @@ if ($auth->isUser() === true) {
 		$form = $_POST['form'];
 
 		if (empty($form['nick_mail']))
-			$errors[] = $lang->t('users', 'type_in_nickname_or_email');
+			$errors['nick-mail'] = $lang->t('users', 'type_in_nickname_or_email');
 		if (!empty($form['nick_mail']) && validate::email($form['nick_mail']) === false && userNameExists($form['nick_mail']) === false)
-			$errors[] = $lang->t('users', 'user_not_exists');
+			$errors['nick-mail'] = $lang->t('users', 'user_not_exists');
 		if (!empty($form['nick_mail']) && validate::email($form['nick_mail']) === false)
-			$errors[] = $lang->t('common', 'wrong_email_format');
+			$errors['nick-mail'] = $lang->t('common', 'wrong_email_format');
 		if (validate::email($form['nick_mail']) && userEmailExists($form['nick_mail']) === false)
-			$errors[] = $lang->t('users', 'user_not_exists');
+			$errors['nick-mail'] = $lang->t('users', 'user_not_exists');
 		if ($auth->isUser() === false && validate::captcha($form['captcha']) === false)
-			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
+			$errors['captcha'] = $lang->t('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));

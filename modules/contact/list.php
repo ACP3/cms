@@ -14,13 +14,13 @@ if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (empty($form['name']))
-		$errors[] = $lang->t('common', 'name_to_short');
+		$errors['name'] = $lang->t('common', 'name_to_short');
 	if (validate::email($form['mail']) === false)
-		$errors[] = $lang->t('common', 'wrong_email_format');
+		$errors['mail'] = $lang->t('common', 'wrong_email_format');
 	if (strlen($form['message']) < 3)
-		$errors[] = $lang->t('common', 'message_to_short');
+		$errors['message'] = $lang->t('common', 'message_to_short');
 	if ($auth->isUser() === false && validate::captcha($form['captcha']) === false)
-		$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
+		$errors['captcha'] = $lang->t('captcha', 'invalid_captcha_entered');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));

@@ -1,5 +1,5 @@
 {if !isset($tables)}
-<div class="error" style="padding-top:0">
+<div class="error-box" style="padding-top:0">
 	<p>
 		{lang t="system|sql_table_optimisation_description"}
 	</p>

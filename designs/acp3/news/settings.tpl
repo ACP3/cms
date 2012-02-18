@@ -32,8 +32,8 @@
 				</label>
 {/foreach}
 			</dd>
-			<dt><label for="readmore_chars">{lang t="news|readmore_chars"}</label></dt>
-			<dd><input type="number" name="form[readmore_chars]" id="readmore_chars" value="{$readmore_chars}"></dd>
+			<dt><label for="readmore-chars">{lang t="news|readmore_chars"}</label></dt>
+			<dd><input type="number" name="form[readmore_chars]" id="readmore-chars" value="{$readmore_chars}"></dd>
 			<dt><label for="category-in-breadcrumb-1">{lang t="news|display_category_in_breadcrumb"}</label></dt>
 			<dd>
 {foreach $category_in_breadcrumb as $row}

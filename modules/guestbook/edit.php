@@ -17,11 +17,11 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'guestbook', 'i
 		$form = $_POST['form'];
 
 		if (empty($form['name']))
-			$errors[] = $lang->t('common', 'name_to_short');
+			$errors['name'] = $lang->t('common', 'name_to_short');
 		if (strlen($form['message']) < 3)
-			$errors[] = $lang->t('common', 'message_to_short');
+			$errors['message'] = $lang->t('common', 'message_to_short');
 		if ($settings['notify'] == 2 && (!isset($form['active']) || ($form['active'] != 0 && $form['active'] != 1)))
-			$errors[] = $lang->t('guestbook', 'select_activate');
+			$errors['notify'] = $lang->t('guestbook', 'select_activate');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));

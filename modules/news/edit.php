@@ -18,20 +18,20 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'id = \
 	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
-		if (!validate::date($form['start'], $form['end']))
+		if (validate::date($form['start'], $form['end']) === false)
 			$errors[] = $lang->t('common', 'select_date');
 		if (strlen($form['headline']) < 3)
-			$errors[] = $lang->t('news', 'headline_to_short');
+			$errors['headline'] = $lang->t('news', 'headline_to_short');
 		if (strlen($form['text']) < 3)
-			$errors[] = $lang->t('news', 'text_to_short');
-		if (strlen($form['cat_create']) < 3 && !categoriesCheck($form['cat']))
-			$errors[] = $lang->t('news', 'select_category');
-		if (strlen($form['cat_create']) >= 3 && categoriesCheckDuplicate($form['cat_create'], 'news'))
-			$errors[] = $lang->t('categories', 'category_already_exists');
-		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias'], 'news/details/id_' . $uri->id)))
-			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
+			$errors['text'] = $lang->t('news', 'text_to_short');
+		if (strlen($form['cat_create']) < 3 && categoriesCheck($form['cat']) === false)
+			$errors['cat'] = $lang->t('news', 'select_category');
+		if (strlen($form['cat_create']) >= 3 && categoriesCheckDuplicate($form['cat_create'], 'news') === true)
+			$errors['cat-create'] = $lang->t('categories', 'category_already_exists');
 		if (!empty($form['uri']) && (validate::isNumber($form['target']) === false || strlen($form['link_title']) < 3))
 			$errors[] = $lang->t('news', 'complete_additional_hyperlink_statements');
+		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias'], 'news/details/id_' . $uri->id) === true))
+			$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));

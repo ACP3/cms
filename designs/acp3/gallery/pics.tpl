@@ -12,7 +12,7 @@
 {/if}
 </div>
 {else}
-<div class="error">
+<div class="error-box">
 	<h5>{lang t="gallery|no_pictures"}</h5>
 </div>
 {/if}
