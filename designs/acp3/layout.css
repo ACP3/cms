@@ -308,7 +308,8 @@ fieldset input.error, fieldset select.error, fieldset textarea.error,
 :-moz-ui-invalid {
 	box-shadow: 0 0 1.5px 1px #f00;
 }
-fieldset input.checkbox, #tabs input.checkbox, table input.checkbox, input[type="file"] {
+fieldset input.checkbox, #tabs input.checkbox, table input.checkbox,
+fieldset input[type="file"], #tabs input[type="file"] {
 	width: auto;
 	background: none;
 	border: 0;
