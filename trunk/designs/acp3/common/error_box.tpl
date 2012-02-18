@@ -14,7 +14,7 @@ $(document).ready(function() {
 	<h4>{lang t="common|failure"}</h4>
 	<ul>
 {foreach $error_box.errors as $key => $value}
-		<li{if $error_box.non_integer_keys === true} class="error-{$key}"{/if}>{$value}</li>
+		<li{if validate::isNumber($key) === false} class="error-{$key}"{/if}>{$value}</li>
 {/foreach}
 	</ul>
 </div>
