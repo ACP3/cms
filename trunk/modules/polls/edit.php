@@ -14,10 +14,10 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = 
 	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
-		if (!validate::date($form['start'], $form['end']))
+		if (validate::date($form['start'], $form['end']) === false)
 			$errors[] = $lang->t('common', 'select_date');
 		if (empty($form['question']))
-			$errors[] = $lang->t('polls', 'type_in_question');
+			$errors['question'] = $lang->t('polls', 'type_in_question');
 		$j = 0;
 		foreach ($form['answers'] as $row) {
 			if (!empty($row['value']))

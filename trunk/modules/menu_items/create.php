@@ -16,20 +16,18 @@ if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (validate::isNumber($form['mode']) === false)
-		$errors[] = $lang->t('menu_items', 'select_page_type');
-	if ($form['mode'] == 2 && CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias'])))
-		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
+		$errors['mode'] = $lang->t('menu_items', 'select_page_type');
 	if (strlen($form['title']) < 3)
-		$errors[] = $lang->t('menu_items', 'title_to_short');
+		$errors['title'] = $lang->t('menu_items', 'title_to_short');
 	if (validate::isNumber($form['block_id']) === false)
-		$errors[] = $lang->t('menu_items', 'select_block');
+		$errors['block-id'] = $lang->t('menu_items', 'select_block');
 	if (!empty($form['parent']) && validate::isNumber($form['parent']) === false)
-		$errors[] = $lang->t('menu_items', 'select_superior_page');
+		$errors['parent'] = $lang->t('menu_items', 'select_superior_page');
 	if (!empty($form['parent']) && validate::isNumber($form['parent']) === true) {
 		// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
 		$parent_block = $db->select('block_id', 'menu_items', 'id = \'' . $form['parent'] . '\'');
 		if (!empty($parent_block) && $parent_block[0]['block_id'] != $form['block_id'])
-			$errors[] = $lang->t('menu_items', 'superior_page_not_allowed');
+			$errors['parent'] = $lang->t('menu_items', 'superior_page_not_allowed');
 	}
 	if ($form['display'] != 0 && $form['display'] != 1)
 		$errors[] = $lang->t('menu_items', 'select_item_visibility');
@@ -39,6 +37,8 @@ if (isset($_POST['form']) === true) {
 		$form['mode'] == 3 && empty($form['uri']) ||
 		$form['mode'] == 4 && (validate::isNumber($form['static_pages']) === false || $db->countRows('*', 'static_pages', 'id = \'' . $form['static_pages'] . '\'') == 0))
 		$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
+	if ($form['mode'] == 2 && CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias']) === true))
+		$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));

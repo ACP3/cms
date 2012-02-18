@@ -15,14 +15,14 @@ $comments_active = modules::isActive('comments');
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
-	if (empty($form['dateformat']) || ($form['dateformat'] != 'long' && $form['dateformat'] != 'short'))
-		$errors[] = $lang->t('common', 'select_date_format');
+	if (empty($form['dateformat']) || ($form['dateformat'] !== 'long' && $form['dateformat'] !== 'short'))
+		$errors['dateformat'] = $lang->t('common', 'select_date_format');
 	if (validate::isNumber($form['sidebar']) === false)
-		$errors[] = $lang->t('common', 'select_sidebar_entries');
+		$errors['sideabr'] = $lang->t('common', 'select_sidebar_entries');
 	if (!isset($form['readmore']) || $form['readmore'] != 1 && $form['readmore'] != 0)
 		$errors[] = $lang->t('news', 'select_activate_readmore');
 	if (validate::isNumber($form['readmore_chars']) === false || $form['readmore_chars'] == 0)
-		$errors[] = $lang->t('news', 'type_in_readmore_chars');
+		$errors['readmore-chars'] = $lang->t('news', 'type_in_readmore_chars');
 	if (!isset($form['category_in_breadcrumb']) || $form['category_in_breadcrumb'] != 1 && $form['category_in_breadcrumb'] != 0)
 		$errors[] = $lang->t('news', 'select_display_category_in_breadcrumb');
 	if ($comments_active === true && (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0))

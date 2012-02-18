@@ -22,13 +22,13 @@ if (isset($_POST['form']) === true) {
 	$settings = config::getModuleSettings('emoticons');
 
 	if (empty($form['code']))
-		$errors[] = $lang->t('emoticons', 'type_in_code');
+		$errors['code'] = $lang->t('emoticons', 'type_in_code');
 	if (empty($form['description']))
-		$errors[] = $lang->t('emoticons', 'type_in_description');
+		$errors['description'] = $lang->t('emoticons', 'type_in_description');
 	if (!isset($file) ||
-		!validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) ||
+		validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
 		$_FILES['picture']['error'] !== UPLOAD_ERR_OK)
-		$errors[] = $lang->t('emoticons', 'invalid_image_selected');
+		$errors['picture'] = $lang->t('emoticons', 'invalid_image_selected');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));

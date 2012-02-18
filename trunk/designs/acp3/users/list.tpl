@@ -24,7 +24,7 @@
 	</tbody>
 </table>
 {else}
-<div class="error">
+<div class="error-box">
 	<h5>{lang t="common|no_entries"}</h5>
 </div>
 {/if}

@@ -14,7 +14,7 @@ if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (!empty($form['mail']) && validate::email($form['mail']) === false)
-		$errors[] = $lang->t('common', 'wrong_email_format');
+		$errors['mail'] = $lang->t('common', 'wrong_email_format');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));

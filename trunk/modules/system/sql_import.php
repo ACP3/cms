@@ -14,11 +14,11 @@ if (isset($_POST['form']) === true) {
 	}
 
 	if (empty($form['text']) && empty($file['size']))
-		$errors[] = $lang->t('system', 'type_in_text_or_select_sql_file');
+		$errors['text'] = $lang->t('system', 'type_in_text_or_select_sql_file');
 	if (!empty($file['size']) &&
 		(!validate::mimeType($file['tmp_name'], 'text/plain') ||
 		$_FILES['file']['error'] !== UPLOAD_ERR_OK))
-		$errors[] = $lang->t('system', 'select_sql_file');
+		$errors['file'] = $lang->t('system', 'select_sql_file');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));

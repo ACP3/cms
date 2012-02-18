@@ -20,8 +20,8 @@
 		</div>
 		<div id="tab-2" class="ui-tabs-hide">
 			<dl>
-				<dt><label for="link_title">{lang t="files|link_title"}</label></dt>
-				<dd><input type="text" name="form[link_title]" id="link_title" value="{$form.link_title}" maxlength="120"></dd>
+				<dt><label for="link-title">{lang t="files|link_title"}</label></dt>
+				<dd><input type="text" name="form[link_title]" id="link-title" value="{$form.link_title}" maxlength="120"></dd>
 				<dt><label for="file-internal">{lang t="files|filename"}</label></dt>
 				<dd>
 					<label for="external">

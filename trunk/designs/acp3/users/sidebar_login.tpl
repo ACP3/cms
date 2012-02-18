@@ -2,17 +2,17 @@
 <form action="{$uri}" method="post" accept-charset="UTF-8" id="login-sidebar">
 	<fieldset>
 		<dl>
-			<dt><label for="nav_nickname">{lang t="users|nickname"}</label></dt>
-			<dd><input type="text" name="form[nickname]" id="nav_nickname" maxlength="30" required></dd>
+			<dt><label for="nav-nickname">{lang t="users|nickname"}</label></dt>
+			<dd><input type="text" name="form[nickname]" id="nav-nickname" maxlength="30" required></dd>
 		</dl>
 		<dl>
-			<dt><label for="nav_pwd">{lang t="users|pwd"}</label></dt>
-			<dd><input type="password" name="form[pwd]" id="nav_pwd" required></dd>
+			<dt><label for="nav-pwd">{lang t="users|pwd"}</label></dt>
+			<dd><input type="password" name="form[pwd]" id="nav-pwd" required></dd>
 		</dl>
 	</fieldset>
 	<div>
-		<label for="nav_remember">
-			<input type="checkbox" name="remember" id="nav_remember" value="1" class="checkbox">
+		<label for="nav-remember">
+			<input type="checkbox" name="remember" id="nav-remember" value="1" class="checkbox">
 			{lang t="users|remember_me"}
 		</label>
 		<p style="text-align:center">

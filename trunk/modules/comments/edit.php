@@ -21,9 +21,9 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'comments', 'id
 		$form = $_POST['form'];
 
 		if ((empty($comment[0]['user_id']) || validate::isNumber($comment[0]['user_id']) === false) && empty($form['name']))
-			$errors[] = $lang->t('common', 'name_to_short');
+			$errors['name'] = $lang->t('common', 'name_to_short');
 		if (strlen($form['message']) < 3)
-			$errors[] = $lang->t('common', 'message_to_short');
+			$errors['message'] = $lang->t('common', 'message_to_short');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));

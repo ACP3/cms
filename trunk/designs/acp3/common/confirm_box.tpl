@@ -1,4 +1,4 @@
-<div class="combo-box">
+<div class="confirm-box">
 	<div class="header">{$confirm.text}</div>
 	<div class="content">
 {if isset($confirm.backward)}

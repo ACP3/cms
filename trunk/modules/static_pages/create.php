@@ -16,32 +16,32 @@ if (modules::check('menu_items', 'create') === true)
 if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
-	if (!validate::date($form['start'], $form['end']))
+	if (validate::date($form['start'], $form['end']) === false)
 		$errors[] = $lang->t('common', 'select_date');
 	if (strlen($form['title']) < 3)
-		$errors[] = $lang->t('static_pages', 'title_to_short');
+		$errors['title'] = $lang->t('static_pages', 'title_to_short');
 	if (strlen($form['text']) < 3)
-		$errors[] = $lang->t('static_pages', 'text_to_short');
-	if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias']) === true))
-		$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
+		$errors['text'] = $lang->t('static_pages', 'text_to_short');
 	if (modules::check('menu_items', 'create') === true) {
 		if ($form['create'] != 1 && $form['create'] != 0)
 			$errors[] = $lang->t('static_page', 'select_create_menu_item');
 		if ($form['create'] == 1) {
 			if (validate::isNumber($form['block_id']) === false)
-				$errors[] = $lang->t('menu_items', 'select_block');
+				$errors['block-id'] = $lang->t('menu_items', 'select_block');
 			if (!empty($form['parent']) && validate::isNumber($form['parent']) === false)
-				$errors[] = $lang->t('menu_items', 'select_superior_page');
+				$errors['parent'] = $lang->t('menu_items', 'select_superior_page');
 			if (!empty($form['parent']) && validate::isNumber($form['parent']) === true) {
 				// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
 				$parent_block = $db->select('block_id', 'menu_items', 'id = \'' . $form['parent'] . '\'');
 				if (!empty($parent_block) && $parent_block[0]['block_id'] != $form['block_id'])
-					$errors[] = $lang->t('menu_items', 'superior_page_not_allowed');
+					$errors['parent'] = $lang->t('menu_items', 'superior_page_not_allowed');
 			}
 			if ($form['display'] != 0 && $form['display'] != 1)
 				$errors[] = $lang->t('menu_items', 'select_item_visibility');
 		}
 	}
+	if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias']) === true))
+		$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));

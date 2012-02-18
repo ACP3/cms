@@ -24,17 +24,17 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'categories', '
 		$module = $db->select('module', 'categories', 'id = \'' . $uri->id . '\'');
 
 		if (strlen($form['name']) < 3)
-			$errors[] = $lang->t('categories', 'name_to_short');
+			$errors['name'] = $lang->t('categories', 'name_to_short');
 		if (strlen($form['description']) < 3)
-			$errors[] = $lang->t('categories', 'description_to_short');
+			$errors['description'] = $lang->t('categories', 'description_to_short');
 		if (!empty($file) &&
 			(empty($file['tmp_name']) ||
 			empty($file['size']) ||
-			!validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) ||
+			validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
 			$_FILES['file']['error'] !== UPLOAD_ERR_OK))
-			$errors[] = $lang->t('categories', 'invalid_image_selected');
+			$errors['picture'] = $lang->t('categories', 'invalid_image_selected');
 		if (strlen($form['name']) >= 3 && categoriesCheckDuplicate($db->escape($form['name']), $module[0]['module'], $uri->id))
-			$errors[] = $lang->t('categories', 'category_already_exists');
+			$errors['name'] = $lang->t('categories', 'category_already_exists');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));

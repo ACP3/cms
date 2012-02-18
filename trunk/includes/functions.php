@@ -102,7 +102,18 @@ function errorBox($errors)
 {
 	global $tpl;
 
-	$tpl->assign('errors', is_array($errors) === true ? $errors : array($errors));
+	$non_integer_keys = false;
+	if (is_array($errors) === true) {
+		foreach(array_keys($errors) as $key) {
+			if (validate::isNumber($key) === false) {
+				$non_integer_keys = true;
+				break;
+			}
+		}
+	} else {
+		$errors = array($errors);
+	}
+	$tpl->assign('error_box', array('non_integer_keys' => $non_integer_keys, 'errors' => $errors));
 	return view::fetchTemplate('common/error_box.tpl');
 }
 /**

@@ -58,8 +58,8 @@
 {/foreach}
 					</select>
 				</dd>
-				<dt><label for="link_title">{lang t="news|link_title"}</label></dt>
-				<dd><input type="text" name="form[link_title]" id="link_title" value="{$form.link_title}" maxlength="120"></dd>
+				<dt><label for="link-title">{lang t="news|link_title"}</label></dt>
+				<dd><input type="text" name="form[link_title]" id="link-title" value="{$form.link_title}" maxlength="120"></dd>
 			</dl>
 		</div>
 		<div id="tab-4" class="ui-tabs-hide">

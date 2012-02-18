@@ -41,7 +41,7 @@
 {mark name="entries"}
 {/if}
 {else}
-	<div class="error">
+	<div class="error-box">
 		<h5>{lang t="common|entries"}</h5>
 	</div>
 {/if}

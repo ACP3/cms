@@ -222,7 +222,7 @@ a.form {
 	background: #eee;
 	color: #f00;
 }
-.error {
+.error-box {
 	width: 70%;
 	margin: 2px auto 10px;
 	padding: 10px;
@@ -230,10 +230,10 @@ a.form {
 	border: 1px solid #ddd;
 	text-align: justify;
 }
-.error ul {
+.error-box ul {
 	margin-bottom: 0;
 }
-.error h4 {
+.error-box h4 {
 	padding-bottom: 5px;
 	border-bottom: 1px dashed #ddd;
 	color: #f00000;

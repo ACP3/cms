@@ -23,9 +23,9 @@
 				<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120"></dd>
 			</dl>
 			<dl>
-				<dt><label for="block_id">{lang t="menu_items|blocks"}</label></dt>
+				<dt><label for="block-id">{lang t="menu_items|blocks"}</label></dt>
 				<dd>
-					<select name="form[block_id]" id="block_id">
+					<select name="form[block_id]" id="block-id">
 						<option value="">{lang t="common|pls_select"}</option>
 {foreach $blocks as $row}
 						<option value="{$row.id}"{$row.selected}>{$row.title}</option>

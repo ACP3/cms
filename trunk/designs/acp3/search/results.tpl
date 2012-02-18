@@ -15,7 +15,7 @@
 </ol>
 {/foreach}
 {else}
-<div class="error">
+<div class="error-box">
 	<h5>{$no_search_results}</h5>
 </div>
 {/if}

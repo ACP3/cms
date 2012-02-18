@@ -64,7 +64,7 @@
 {/if}
 </div>
 {else}
-<div class="error">
+<div class="error-box">
 	<h5>{lang t="users|user_profile_not_exists"}</h5>
 </div>
 {/if}

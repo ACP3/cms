@@ -59,9 +59,9 @@
 				<dd><input type="text" name="form[date_format_long]" id="date-format-long" value="{$form.date_format_long}" maxlength="20"></dd>
 				<dt><label for="date-format-short">{lang t="common|date_format_short"}</label></dt>
 				<dd><input type="text" name="form[date_format_short]" id="date-format-short" value="{$form.date_format_short}" maxlength="20"></dd>
-				<dt><label for="time_zone">{lang t="common|time_zone"}</label></dt>
+				<dt><label for="time-zone">{lang t="common|time_zone"}</label></dt>
 				<dd>
-					<select name="form[time_zone]" id="time_zone">
+					<select name="form[time_zone]" id="time-zone">
 {foreach $time_zone as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
@@ -80,8 +80,8 @@
 		</div>
 		<div id="tab-4" class="ui-tabs-hide">
 			<dl>
-				<dt><label for="new_pwd">{lang t="users|new_pwd"}</label></dt>
-				<dd><input type="password" name="form[new_pwd]" id="new_pwd"></dd>
+				<dt><label for="new-pwd">{lang t="users|new_pwd"}</label></dt>
+				<dd><input type="password" name="form[new_pwd]" id="new-pwd"></dd>
 				<dt><label for="new_pwd_repeat">{lang t="users|new_pwd_repeat"}</label></dt>
 				<dd><input type="password" name="form[new_pwd_repeat]" id="new_pwd_repeat"></dd>
 			</dl>

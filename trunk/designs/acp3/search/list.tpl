@@ -4,8 +4,8 @@
 <form action="{uri args="search/list"}" method="post" accept-charset="UTF-8">
 	<fieldset class="no-border">
 		<dl>
-			<dt><label for="search_term">{lang t="search|search_term"}</label></dt>
-			<dd><input type="text" name="form[search_term]" id="search_term" value="{$form.search_term}" required></dd>
+			<dt><label for="search-term">{lang t="search|search_term"}</label></dt>
+			<dd><input type="text" name="form[search_term]" id="search-term" value="{$form.search_term}" required></dd>
 		</dl>
 		<fieldset>
 			<legend>{lang t="search|search_options"}</legend>

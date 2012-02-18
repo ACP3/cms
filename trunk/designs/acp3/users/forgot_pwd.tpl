@@ -8,8 +8,8 @@
 			{lang t="users|forgot_pwd_description"}
 		</p>
 		<dl>
-			<dt><label for="nick_mail">{lang t="users|nickname_or_email"}</label></dt>
-			<dd><input type="text" name="form[nick_mail]" id="nick_mail" value="{$form.nick_mail}" maxlength="120"></dd>
+			<dt><label for="nick-mail">{lang t="users|nickname_or_email"}</label></dt>
+			<dd><input type="text" name="form[nick_mail]" id="nick-mail" value="{$form.nick_mail}" maxlength="120"></dd>
 		</dl>
 	</fieldset>
 {$captcha}

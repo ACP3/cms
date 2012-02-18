@@ -18,17 +18,17 @@ if ($auth->isUser() === true) {
 		$form = $_POST['form'];
 
 		if (empty($form['nickname']))
-			$errors[] = $lang->t('common', 'name_to_short');
+			$errors['nickname'] = $lang->t('common', 'name_to_short');
 		if (userNameExists($form['nickname']) === true)
-			$errors[] = $lang->t('users', 'user_name_already_exists');
+			$errors['nickname'] = $lang->t('users', 'user_name_already_exists');
 		if (validate::email($form['mail']) === false)
-			$errors[] = $lang->t('common', 'wrong_email_format');
+			$errors['mail'] = $lang->t('common', 'wrong_email_format');
 		if (userEmailExists($form['mail']) === true)
-			$errors[] = $lang->t('users', 'user_email_already_exists');
+			$errors['mail'] = $lang->t('users', 'user_email_already_exists');
 		if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
 		if ($auth->isUser() === false && validate::captcha($form['captcha']) === false)
-			$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
+			$errors['captcha'] = $lang->t('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));

@@ -14,9 +14,9 @@ if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (strlen($form['subject']) < 3)
-		$errors[] = $lang->t('newsletter', 'subject_to_short');
+		$errors['subject'] = $lang->t('newsletter', 'subject_to_short');
 	if (strlen($form['text']) < 3)
-		$errors[] = $lang->t('newsletter', 'text_to_short');
+		$errors['text'] = $lang->t('newsletter', 'text_to_short');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));

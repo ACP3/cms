@@ -25,23 +25,23 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'files', 'id = 
 			$file['size'] = $_FILES['file_internal']['size'];
 		}
 
-		if (!validate::date($form['start'], $form['end']))
+		if (validate::date($form['start'], $form['end']) === false)
 			$errors[] = $lang->t('common', 'select_date');
 		if (strlen($form['link_title']) < 3)
-			$errors[] = $lang->t('files', 'type_in_link_title');
+			$errors['link-title'] = $lang->t('files', 'type_in_link_title');
 		if (isset($form['external']) && (empty($file) || empty($form['filesize']) || empty($form['unit'])))
-			$errors[] = $lang->t('files', 'type_in_external_resource');
+			$errors['external'] = $lang->t('files', 'type_in_external_resource');
 		if (!isset($form['external']) && isset($file) && is_array($file) &&
 			(empty($file['tmp_name']) || empty($file['size']) || $_FILES['file_internal']['error'] !== UPLOAD_ERR_OK))
-			$errors[] = $lang->t('files', 'select_internal_resource');
+			$errors['file-internal'] = $lang->t('files', 'select_internal_resource');
 		if (strlen($form['text']) < 3)
-			$errors[] = $lang->t('files', 'description_to_short');
-		if (strlen($form['cat_create']) < 3 && !categoriesCheck($form['cat']))
-			$errors[] = $lang->t('files', 'select_category');
-		if (strlen($form['cat_create']) >= 3 && categoriesCheckDuplicate($form['cat_create'], 'files'))
-			$errors[] = $lang->t('categories', 'category_already_exists');
-		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias'], 'files/details/id_' . $uri->id)))
-			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
+			$errors['text'] = $lang->t('files', 'description_to_short');
+		if (strlen($form['cat_create']) < 3 && categoriesCheck($form['cat']) === false)
+			$errors['cat'] = $lang->t('files', 'select_category');
+		if (strlen($form['cat_create']) >= 3 && categoriesCheckDuplicate($form['cat_create'], 'files') === true)
+			$errors['cat-create'] = $lang->t('categories', 'category_already_exists');
+		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias'], 'files/details/id_' . $uri->id) === true))
+			$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));

@@ -16,15 +16,15 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'static_pages',
 	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
 
-		if (!validate::date($form['start'], $form['end']))
+		if (validate::date($form['start'], $form['end']) === false)
 			$errors[] = $lang->t('common', 'select_date');
 		if (strlen($form['title']) < 3)
-			$errors[] = $lang->t('static_pages', 'title_to_short');
+			$errors['title'] = $lang->t('static_pages', 'title_to_short');
 		if (strlen($form['text']) < 3)
-			$errors[] = $lang->t('static_pages', 'text_to_short');
+			$errors['text'] = $lang->t('static_pages', 'text_to_short');
 		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) &&
 			(validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias'], 'static_pages/list/id_' . $uri->id) === true))
-			$errors[] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
+			$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));

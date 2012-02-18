@@ -1,4 +1,4 @@
-<div class="error">
+<div class="error-box">
 	<h4>{lang t="common|failure"}</h4>
 	<ul>
 {foreach $errors as $row}

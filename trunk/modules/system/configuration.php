@@ -14,25 +14,25 @@ if (isset($_POST['form']) === true) {
 	$form = $_POST['form'];
 
 	if (validate::isNumber($form['entries']) === false)
-		$errors[] = $lang->t('system', 'select_entries_per_page');
+		$errors['entries'] = $lang->t('system', 'select_entries_per_page');
 	if (validate::isNumber($form['flood']) === false)
-		$errors[] = $lang->t('system', 'type_in_flood_barrier');
+		$errors['flood'] = $lang->t('system', 'type_in_flood_barrier');
 	if (validate::isInternalURI($form['homepage']) === false)
-		$errors[] = $lang->t('system', 'incorrect_homepage');
+		$errors['homepage'] = $lang->t('system', 'incorrect_homepage');
 	if ($form['wysiwyg'] != 'textarea' && (preg_match('=/=', $form['wysiwyg']) || is_file(INCLUDES_DIR . 'wysiwyg/' . $form['wysiwyg'] . '/info.xml') === false))
-		$errors[] = $lang->t('system', 'select_editor');
+		$errors['wysiwyg'] = $lang->t('system', 'select_editor');
 	if (empty($form['date_format_long']) || empty($form['date_format_short']))
 		$errors[] = $lang->t('system', 'type_in_date_format');
-	if (!is_numeric($form['date_time_zone']))
-		$errors[] = $lang->t('common', 'select_time_zone');
+	if (is_numeric($form['date_time_zone']) === false)
+		$errors['date-time-zone'] = $lang->t('common', 'select_time_zone');
 	if (validate::isNumber($form['date_dst']) === false)
 		$errors[] = $lang->t('common', 'select_daylight_saving_time');
 	if (validate::isNumber($form['maintenance_mode']) === false)
 		$errors[] = $lang->t('system', 'select_online_maintenance');
 	if (strlen($form['maintenance_message']) < 3)
-		$errors[] = $lang->t('system', 'maintenance_message_to_short');
+		$errors['maintenance-message'] = $lang->t('system', 'maintenance_message_to_short');
 	if (empty($form['seo_title']))
-		$errors[] = $lang->t('system', 'title_to_short');
+		$errors['seo-title'] = $lang->t('system', 'title_to_short');
 	if (validate::isNumber($form['seo_aliases']) === false)
 		$errors[] = $lang->t('system', 'select_seo_aliases');
 	if (validate::isNumber($form['seo_mod_rewrite']) === false)
@@ -40,14 +40,14 @@ if (isset($_POST['form']) === true) {
 	if (validate::isNumber($form['cache_images']) === false)
 		$errors[] = $lang->t('system', 'select_cache_images');
 	if (validate::isNumber($form['cache_minify']) === false)
-		$errors[] = $lang->t('system', 'type_in_minify_cache_lifetime');
+		$errors['cache-minify'] = $lang->t('system', 'type_in_minify_cache_lifetime');
 	if ($form['mailer_type'] === 'smtp') {
 		if (empty($form['mailer_smtp_host']))
-			$errors[] = $lang->t('system', 'type_in_mailer_smtp_host');
+			$errors['mailer-smtp-host'] = $lang->t('system', 'type_in_mailer_smtp_host');
 		if (validate::isNumber($form['mailer_smtp_port']) === false)
-			$errors[] = $lang->t('system', 'type_in_mailer_smtp_port');
+			$errors['mailer-smtp-port'] = $lang->t('system', 'type_in_mailer_smtp_port');
 		if ($form['mailer_smtp_auth'] == 1 && empty($form['mailer_smtp_user']))
-			$errors[] = $lang->t('system', 'type_in_mailer_smtp_username');
+			$errors['mailer-smtp-username'] = $lang->t('system', 'type_in_mailer_smtp_username');
 	}
 
 	if (isset($errors) === true) {

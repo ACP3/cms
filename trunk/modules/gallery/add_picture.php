@@ -27,11 +27,11 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id 
 		$form = $_POST['form'];
 
 		if (empty($file['tmp_name']))
-			$errors[] = $lang->t('gallery', 'no_picture_selected');
+			$errors['file'] = $lang->t('gallery', 'no_picture_selected');
 		if (!empty($file['tmp_name']) &&
-			(!validate::isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) ||
+			(validate::isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) === false ||
 			$_FILES['file']['error'] !== UPLOAD_ERR_OK))
-			$errors[] = $lang->t('gallery', 'invalid_image_selected');
+			$errors['file'] = $lang->t('gallery', 'invalid_image_selected');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
