@@ -11,7 +11,7 @@
 	<item key="delete_blocks">Delete blocks</item>
 	<item key="display_item">Display menu item</item>
 	<item key="dynamic_page">Dynamic page</item>
-	<item key="dynamic_page_hints"><![CDATA[Please use the format &quot;module/file/optional_parameters/&quot;, to link to a ACP3 internal page, e.g. news/details/id_1/.]]></item>
+	<item key="dynamic_page_hints"><![CDATA[Please use the format &quot;module/file/optional_parameters/&quot;, e.g. news/details/id_1/]]></item>
 	<item key="edit">Edit menu item</item>
 	<item key="edit_block">Edit block</item>
 	<item key="hyperlink">Hyperlink</item>

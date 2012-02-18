@@ -11,7 +11,7 @@
 	<item key="delete_blocks">Blöcke löschen</item>
 	<item key="display_item">Menüpunkt anzeigen</item>
 	<item key="dynamic_page">Dynamische Seite</item>
-	<item key="dynamic_page_hints"><![CDATA[Um eine ACP3 interne Seite zu verlinken, müssen Sie im Feld &quot;URI&quot; die Seite in der Form &quot;modul/datei/weitere_parameter/&quot; eintragen, also beispielsweise news/details/id_1/.]]></item>
+	<item key="dynamic_page_hints"><![CDATA[Bitte in der Form &quot;modul/datei/weitere_parameter/&quot; eintragen, also beispielsweise news/details/id_1/]]></item>
 	<item key="edit">Menüpunkt bearbeiten</item>
 	<item key="edit_block">Block bearbeiten</item>
 	<item key="hyperlink">Hyperlink</item>

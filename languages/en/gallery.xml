@@ -9,6 +9,7 @@
 	<item key="edit_picture">Edit picture</item>
 	<item key="filename">Filename</item>
 	<item key="gallery">Gallery</item>
+	<item key="image_dimensions">Image dimensions</item>
 	<item key="image_filesize">Maximum image filesize</item>
 	<item key="image_height">Maximum image height to be displayed</item>
 	<item key="image_width">Maximum image width to be displayed</item>
