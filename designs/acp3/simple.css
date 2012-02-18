@@ -162,7 +162,12 @@ fieldset input:focus, fieldset select:focus, fieldset textarea:focus,
 #tabs input:focus, #tabs select:focus, #tabs textarea:focus {
 	background: #ffc;
 }
-fieldset input.checkbox, #tabs input.checkbox, table input.checkbox {
+fieldset input.error, fieldset select.error, fieldset textarea.error,
+#tabs input.error, #tabs select.error, #tabs textarea.error,
+:-moz-ui-invalid {
+	box-shadow: 0 0 1.5px 1px #f00;
+}
+fieldset input.checkbox, #tabs input.checkbox, table input.checkbox, input[type="file"] {
 	width: auto;
 	background: none;
 	border: 0;
@@ -198,7 +203,7 @@ a.form {
 	background: #eee;
 	color: #f00;
 }
-.error {
+.error-box {
 	width: 90%;
 	margin: 0 auto;
 	padding: 10px;
@@ -206,18 +211,18 @@ a.form {
 	border: 1px solid #ddd;
 	text-align: justify;
 }
-.error ul {
+.error-box ul {
 	margin-bottom: 0;
 }
-.error h4 {
+.error-box h4 {
 	padding-bottom: 5px;
 	border-bottom: 1px dashed #ddd;
 	color: #f00000;
 }
-.error h5 {
+.error-box h5 {
 	text-align: center;
 }
-.combo-box {
+.confirm-box {
 	width: 80%;
 	height: 54px;
 	margin: -28px auto;
@@ -228,7 +233,7 @@ a.form {
 	left: 10%;
 
 }
-.combo-box .header {
+.confirm-box .header {
 	height: 25px;
 	background: #069 url('images/common_header.png') repeat-x;
 	border-bottom: 1px solid #333;
@@ -236,7 +241,7 @@ a.form {
 	line-height: 25px;
 	color: #f90;
 }
-.combo-box .content {
+.confirm-box .content {
 	height: 28px;
 	background: #eee;
 	line-height: 28px;
