@@ -24,7 +24,7 @@ define('NEW_VERSION', '4.0 SVN');
 define('PHP_SELF', '');
 
 if (defined('CONFIG_DB_VERSION') === false) {
-	define('CONFIG_DB_VERSION', 0);
+	define('CONFIG_DB_VERSION', (int) 0);
 }
 
 $db = new db();
@@ -33,327 +33,101 @@ if ($handle !== true) {
 	exit($handle);
 }
 
-$queries = array(
-	1 => array(
-		0 => 'UPDATE `{pre}menu_items` SET `mode` = 4 WHERE `uri` LIKE \'static_pages/list/id_%\' AND `mode` = 2;',
-		1 => 'ALTER TABLE `{pre}users` ADD `date_format_long` VARCHAR(30) NOT NULL AFTER `skype`;',
-		2 => 'ALTER TABLE `{pre}users` ADD `date_format_short` VARCHAR(30) NOT NULL AFTER `date_format_long`;',
-		3 => 'ALTER TABLE `{pre}users` ADD `entries` TINYINT(2) UNSIGNED NOT NULL AFTER `language`;',
-		4 => 'UPDATE `{pre}users` SET `date_format_long` = \'' . (defined('CONFIG_DATE_FORMAT_LONG') === true ? CONFIG_DATE_FORMAT_LONG : CONFIG_DATE_FORMAT) . '\', `date_format_short` = \'' . (defined('CONFIG_DATE_FORMAT_SHORT') === true ? CONFIG_DATE_FORMAT_SHORT : 'd.m.Y') . '\', `entries` = ' . ((int) CONFIG_ENTRIES) . ';',
-		5 => 'UPDATE `{pre}access` SET `modules` =  \'access:16,acp:16,captcha:16,categories:16,comments:16,contact:16,emoticons:16,errors:16,feeds:16,files:16,gallery:16,guestbook:16,menu_items:16,news:16,newsletter:16,polls:16,search:16,static_pages:16,system:16,users:16\' WHERE `id` = 1;',
-		6 => 'ALTER TABLE `{pre}guestbook` ADD `active` TINYINT(1) UNSIGNED NOT NULL AFTER `mail`;',
-		7 => 'UPDATE `{pre}guestbook` SET `active` = 1;',
-		8 => 'CREATE TABLE `{pre}aliases` (`uri` VARCHAR(255) NOT NULL, `alias` VARCHAR(100) NOT NULL, PRIMARY KEY (`uri`), UNIQUE KEY `alias` (`alias`)) {engine} {charset};',
-	),
-	2 => array(
-		0 => 'RENAME TABLE `{pre}aliases` TO `{pre}seo`;',
-		1 => 'ALTER TABLE `{pre}seo` ADD `keywords` VARCHAR(255) NOT NULL AFTER `alias`;',
-		2 => 'ALTER TABLE `{pre}seo` ADD `description` VARCHAR(255) NOT NULL AFTER `keywords`;',
-	),
-	3 => array(
-		0 => 'CREATE TABLE `{pre}settings` (`id` INT(10) unsigned NOT NULL AUTO_INCREMENT, `module` VARCHAR(40) NOT NULL, `name` VARCHAR(40) NOT NULL, `value` TEXT NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `module` (`module`,`name`)) {engine} {charset};',
-	),
-	4 => array(
-		0 => 'ALTER TABLE `{pre}news` ADD `user_id` INT UNSIGNED NOT NULL;',
-		1 => 'ALTER TABLE `{pre}files` ADD `user_id` INT UNSIGNED NOT NULL;',
-		2 => 'ALTER TABLE `{pre}gallery` ADD `user_id` INT UNSIGNED NOT NULL;',
-		3 => 'ALTER TABLE `{pre}poll_question` ADD `user_id` INT UNSIGNED NOT NULL;',
-		4 => 'ALTER TABLE `{pre}static_pages` ADD `user_id` INT UNSIGNED NOT NULL;',
-		5 => 'ALTER TABLE `{pre}newsletter_archive` ADD `user_id` INT UNSIGNED NOT NULL;',
-		6 => 'RENAME TABLE `{pre}poll_question` TO `{pre}polls`;',
-	),
-	5 => array(
-		0 => 'CREATE TABLE `{pre}modules` (`name` varchar(100) NOT NULL, `active` tinyint(1) unsigned NOT NULL, PRIMARY KEY (`name`)) {engine} {charset}',
-	),
-	6 => array(
-		0 => 'DROP TABLE `{pre}access`',
-		1 => 'ALTER TABLE `{pre}users` DROP COLUMN `access`',
-		2 => 'CREATE TABLE `{pre}acl_privileges` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `key` varchar(100) NOT NULL, `name` varchar(100) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `key` (`key`)) {engine} {charset};',
-		3 => 'CREATE TABLE `{pre}acl_resources` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `path` varchar(255) NOT NULL, `privilege_id` int(10) unsigned NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `path` (`path`)) {engine} {charset};',
-		4 => 'CREATE TABLE `{pre}acl_roles` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `name` varchar(100) NOT NULL, `left_id` int(10) unsigned NOT NULL, `right_id` int(10) unsigned NOT NULL, PRIMARY KEY (`id`)) {engine} {charset};',
-		5 => 'CREATE TABLE `{pre}acl_role_privileges` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `role_id` int(10) unsigned NOT NULL, `privilege_id` int(10) unsigned NOT NULL, `value` tinyint(1) unsigned NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `role_id` (`role_id`,`privilege_id`)) {engine} {charset};',
-		6 => 'CREATE TABLE `{pre}acl_user_roles` (`user_id` int(10) unsigned NOT NULL, `role_id` int(10) unsigned NOT NULL, PRIMARY KEY (`user_id`,`role_id`)) {engine} {charset};',
-		7 => "INSERT INTO `{pre}acl_privileges` (`id`, `key`, `name`) VALUES (1, 'view', ''), (2, 'create', ''), (3, 'admin_view', ''), (4, 'admin_create', ''), (5, 'admin_edit', ''), (6, 'admin_delete', ''), (7, 'admin_settings', '');",
-		8 => "INSERT INTO `{pre}acl_resources` (`id`, `path`, `privilege_id`) VALUES
-			(3, 'access/adm_list/', 3),
-			(4, 'access/create/', 4),
-			(5, 'access/delete/', 6),
-			(6, 'access/edit/', 5),
-			(7, 'access/functions/', 1),
-			(8, 'acp/adm_list/', 3),
-			(9, 'captcha/image/', 1),
-			(10, 'categories/adm_list/', 3),
-			(11, 'categories/create/', 4),
-			(12, 'categories/delete/', 6),
-			(13, 'categories/edit/', 5),
-			(14, 'categories/functions/', 1),
-			(15, 'categories/settings/', 7),
-			(16, 'comments/adm_list/', 3),
-			(17, 'comments/create/', 2),
-			(18, 'comments/delete_comments/', 1),
-			(19, 'comments/delete_comments_per_module/', 1),
-			(20, 'comments/edit/', 5),
-			(21, 'comments/functions/', 1),
-			(22, 'comments/settings/', 7),
-			(23, 'contact/adm_list/', 3),
-			(24, 'contact/imprint/', 1),
-			(25, 'contact/list/', 1),
-			(26, 'emoticons/adm_list/', 3),
-			(27, 'emoticons/create/', 4),
-			(28, 'emoticons/delete/', 6),
-			(29, 'emoticons/edit/', 5),
-			(30, 'emoticons/functions/', 1),
-			(31, 'emoticons/settings/', 7),
-			(32, 'errors/403/', 1),
-			(33, 'errors/404/', 1),
-			(34, 'feeds/list/', 1),
-			(35, 'files/adm_list/', 3),
-			(36, 'files/create/', 4),
-			(37, 'files/delete/', 6),
-			(38, 'files/details/', 1),
-			(39, 'files/edit/', 5),
-			(40, 'files/files/', 1),
-			(41, 'files/functions/', 1),
-			(42, 'files/list/', 1),
-			(43, 'files/settings/', 7),
-			(44, 'files/sidebar/', 1),
-			(45, 'gallery/add_picture/', 1),
-			(46, 'gallery/adm_list/', 3),
-			(47, 'gallery/create/', 4),
-			(48, 'gallery/delete_gallery/', 1),
-			(49, 'gallery/delete_picture/', 1),
-			(50, 'gallery/details/', 1),
-			(51, 'gallery/edit_gallery/', 1),
-			(52, 'gallery/edit_picture/', 1),
-			(53, 'gallery/functions/', 1),
-			(54, 'gallery/image/', 1),
-			(55, 'gallery/list/', 1),
-			(56, 'gallery/order/', 1),
-			(57, 'gallery/pics/', 1),
-			(58, 'gallery/settings/', 7),
-			(59, 'gallery/sidebar/', 1),
-			(60, 'guestbook/adm_list/', 3),
-			(61, 'guestbook/create/', 4),
-			(62, 'guestbook/delete/', 6),
-			(63, 'guestbook/edit/', 5),
-			(64, 'guestbook/list/', 1),
-			(65, 'guestbook/settings/', 7),
-			(66, 'menu_items/adm_list/', 3),
-			(67, 'menu_items/adm_list_blocks/', 1),
-			(68, 'menu_items/create/', 4),
-			(69, 'menu_items/create_block/', 1),
-			(70, 'menu_items/delete/', 6),
-			(71, 'menu_items/delete_blocks/', 1),
-			(72, 'menu_items/edit/', 5),
-			(73, 'menu_items/edit_block/', 1),
-			(74, 'menu_items/functions/', 1),
-			(75, 'menu_items/order/', 1),
-			(76, 'news/adm_list/', 3),
-			(77, 'news/create/', 4),
-			(78, 'news/delete/', 6),
-			(79, 'news/details/', 1),
-			(80, 'news/edit/', 5),
-			(81, 'news/functions/', 1),
-			(82, 'news/list/', 1),
-			(83, 'news/settings/', 7),
-			(84, 'news/sidebar/', 1),
-			(85, 'newsletter/activate/', 1),
-			(86, 'newsletter/adm_activate/', 1),
-			(87, 'newsletter/adm_list/', 3),
-			(88, 'newsletter/adm_list_archive/', 1),
-			(89, 'newsletter/compose/', 1),
-			(90, 'newsletter/create/', 4),
-			(91, 'newsletter/delete/', 6),
-			(92, 'newsletter/delete_archive/', 1),
-			(93, 'newsletter/edit_archive/', 1),
-			(94, 'newsletter/functions/', 1),
-			(95, 'newsletter/send/', 1),
-			(96, 'newsletter/settings/', 7),
-			(97, 'polls/adm_list/', 3),
-			(98, 'polls/create/', 4),
-			(99, 'polls/delete/', 6),
-			(100, 'polls/edit/', 5),
-			(101, 'polls/list/', 1),
-			(102, 'polls/result/', 1),
-			(103, 'polls/sidebar/', 1),
-			(104, 'polls/vote/', 1),
-			(105, 'search/list/', 1),
-			(106, 'static_pages/adm_list/', 3),
-			(107, 'static_pages/create/', 4),
-			(108, 'static_pages/delete/', 6),
-			(109, 'static_pages/edit/', 5),
-			(110, 'static_pages/functions/', 1),
-			(111, 'static_pages/list/', 1),
-			(112, 'system/adm_list/', 3),
-			(113, 'system/configuration/', 1),
-			(114, 'system/designs/', 1),
-			(115, 'system/extensions/', 1),
-			(116, 'system/languages/', 1),
-			(117, 'system/maintenance/', 1),
-			(118, 'system/modules/', 1),
-			(119, 'system/server_config/', 1),
-			(120, 'system/sql_export/', 1),
-			(121, 'system/sql_import/', 1),
-			(122, 'system/sql_optimisation/', 1),
-			(123, 'system/update_check/', 1),
-			(124, 'users/adm_list/', 3),
-			(125, 'users/create/', 4),
-			(126, 'users/delete/', 6),
-			(127, 'users/edit/', 5),
-			(128, 'users/edit_profile/', 1),
-			(129, 'users/edit_settings/', 7),
-			(130, 'users/forgot_pwd/', 1),
-			(131, 'users/functions/', 1),
-			(132, 'users/home/', 1),
-			(133, 'users/list/', 1),
-			(134, 'users/login/', 1),
-			(135, 'users/logout/', 1),
-			(136, 'users/register/', 1),
-			(137, 'users/settings/', 7),
-			(138, 'users/sidebar/', 1),
-			(139, 'users/view_profile/', 1),
-			(140, 'news/extensions/feeds/', 1),
-			(141, 'news/extensions/search/', 1),
-			(142, 'files/extensions/feeds/', 1),
-			(143, 'files/extensions/search/', 1),
-			(144, 'static_pages/extensions/search/', 1);",
-		9 => "INSERT INTO `{pre}acl_roles` (`id`, `name`, `left_id`, `right_id`) VALUES (1, 'Gast', 1, 8), (2, 'Mitglied', 2, 7), (3, 'Autor', 3, 6), (4, 'Administrator', 4, 5);",
-		10 => "INSERT INTO `{pre}acl_role_privileges` (`id`, `role_id`, `privilege_id`, `value`) VALUES (1, 1, 1, 1), (2, 1, 2, 1), (3, 1, 3, 0), (4, 1, 4, 0), (5, 1, 5, 0), (6, 1, 6, 0), (7, 1, 7, 0), (8, 2, 1, 2), (9, 2, 2, 2), (10, 2, 3, 2), (11, 2, 4, 2), (12, 2, 5, 2), (13, 2, 6, 2), (14, 2, 7, 2), (15, 3, 1, 2), (16, 3, 2, 2), (17, 3, 3, 1), (18, 3, 4, 1), (19, 3, 5, 1), (20, 3, 6, 1), (21, 3, 7, 2), (22, 4, 1, 2), (23, 4, 2, 2), (24, 4, 3, 2), (25, 4, 4, 2), (26, 4, 5, 2), (27, 4, 6, 2), (28, 4, 7, 1);",
-		11 => "INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (0, 1), (1, 4);",
-	),
-	7 => array(
-		0 => "INSERT INTO {pre}acl_resources (`id`, `path`, `privilege_id`) VALUES ('', 'access/order/', 5);"
-	),
-	8 => array(
-		0 => 'DELETE FROM {pre}acl_resources WHERE path = "system/server_config/"',
-	),
-	9 => array(
-		0 => 'ALTER TABLE `{pre}acl_roles` ADD `parent_id` INT(10) NOT NULL AFTER `name`;',
-		1 => 'ALTER TABLE `{pre}menu_items` ADD `parent_id` INT(10) NOT NULL AFTER `root_id`;',
-	),
-	10 => array(
-		0 => 'ALTER TABLE `{pre}modules` DROP PRIMARY KEY;',
-		1 => 'ALTER TABLE `{pre}modules` ADD COLUMN `id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;',
-		2 => 'DROP TABLE `{pre}acl_role_privileges`;',
-		3 => 'CREATE TABLE `{pre}acl_rules` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `role_id` int(10) unsigned NOT NULL, `module_id` int(10) unsigned NOT NULL, `privilege_id` int(10) unsigned NOT NULL, `permission` tinyint(1) unsigned NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `role_id` (`role_id`,`module_id`,`privilege_id`)) {engine} {charset};',
-		4 => 'DROP TABLE `{pre}acl_resources`;',
-		5 => 'CREATE TABLE `{pre}acl_resources` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `module_id` int(10) unsigned NOT NULL, `page` varchar(255) NOT NULL, `params` varchar(255) NOT NULL, `privilege_id` int(10) unsigned NOT NULL, PRIMARY KEY (`id`)) {engine} {charset};',
-		6 => 'ALTER TABLE `{pre}acl_privileges` CHANGE `name` `description` VARCHAR(100) NOT NULL;',
-	),
-	11 => array(),
-	12 => array(
-		0 => 'CREATE TABLE `{pre}sessions` (`session_id` varchar(32) NOT NULL, `session_starttime` int(10) unsigned NOT NULL, `session_data` text NOT NULL, PRIMARY KEY (`session_id`)) {engine} {charset};'
-	),
-	13 => array(
-		0 => "INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'news', 'category_in_breadcrumb', '1');",
-	),
-	14 => array(
-		0 => "INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'users', 'enable_registration', '1');",
-	),
-	15 => array(
-		0 => "UPDATE `{pre}settings` SET name = 'overlay' WHERE module = 'gallery' AND name = 'colorbox';",
-		1 => "INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'guestbook', 'overlay', '1');",
-	),
-	16 => array(
-		0 => "INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'comments', 'emoticons', '1');",
-	),
-	17 => array(
-		0 => "ALTER TABLE `{pre}menu_items` DROP `start`, DROP `end`;",
-		1 => "ALTER TABLE `{pre}seo` DROP INDEX `alias`, ADD INDEX (`alias`);",
-	)
-);
+/**
+ * Führt die Datenbankschema-Änderungen durch
+ *
+ * @param array $queries
+ *	Array mit durchführenden Datenbankschema-Änderungen
+ * @param integer $version 
+ *	Version der Datenbank, auf welche aktualisiert werden soll
+ */
+function executeSqlQueries(array $queries, $version)
+{
+	global $db;
+	static $current_version = 0;
 
-// Änderungen am DB Schema vornehmen
-if (!empty($queries[CONFIG_DB_VERSION + 1])) {
-	print "Aktualisierung der Datenbank:\n\n";
+	if ($current_version === 0)
+		$current_version = (int) CONFIG_DB_VERSION;
 
-	$bool = null;
+	printf('Aktualisierung der Datenbank von Version %d auf %d: ', $current_version, $version);
+	$success = true;
 
 	$engine = 'ENGINE=MyISAM';
 	$charset = 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
 
 	$db->link->beginTransaction();
 
-	$c_queries = count($queries);
-	for ($i = CONFIG_DB_VERSION + 1; $i <= $c_queries; ++$i) {
-		if (!empty($queries[$i])) {
-			foreach ($queries[$i] as $row) {
-				$row = str_replace(array('{engine}', '{charset}'), array($engine, $charset), $row);
-				$bool = $db->query($row, 3);
-				if ($bool === false && defined('DEBUG') === true && DEBUG === true) {
-					print "\n";
-				}
+	foreach($queries as $row) {
+		if (!empty($row)) {
+			$row = str_replace(array('{engine}', '{charset}'), array($engine, $charset), $row);
+			$bool = $db->query($row, 3);
+			if ($bool === false && defined('DEBUG') === true && DEBUG === true) {
+				$success = false;
+				print "\n";
 			}
 		}
 	}
 
 	$db->link->commit();
 
-	print "\n" . ($bool ? 'Die Datenbank wurde erfolgreich aktualisiert!' : 'Mindestens eine Datenbankänderung konnte nicht durchgeführt werden!') . "\n";
-	print "\n----------------------------\n\n";
+	echo ($success === true ? 'Die Datenbank wurde erfolgreich aktualisiert!' : 'Mindestens eine Datenbankänderung konnte nicht durchgeführt werden!') . "\n\n";
+	echo '----------------------------' . "\n\n";
+
+	$current_version = $version;
 }
 
 if (CONFIG_DB_VERSION < 1) {
-	$auth = new auth();
-	$uri = new uri();
-	$lang = new lang();
-	require ACP3_ROOT . 'includes/functions.php';
-
-	// URI-Aliase für die Statischen Seiten erzeugen
-	$pages = $db->select('id, title', 'static_pages');
-	$c_pages = count($pages);
-
-	$db->link->beginTransaction();
-	for ($i = 0; $i < $c_pages; ++$i) {
-		seo::insertUriAlias(makeStringUrlSafe($pages[$i]['title']), 'static_pages/list/id_' . $pages[$i]['id']);
-	}
-	$db->link->commit();
-
-	// URI-Aliase für die News erzeugen
-	$news = $db->select('id, headline', 'news');
-	$c_news = count($news);
-
-	$db->link->beginTransaction();
-	for ($i = 0; $i < $c_news; ++$i) {
-		seo::insertUriAlias(makeStringUrlSafe($news[$i]['headline']), 'news/details/id_' . $news[$i]['id']);
-	}
-	$db->link->commit();
-
-	// URI-Aliase für die Fotogalerien erzeugen
-	require_once ACP3_ROOT . 'modules/gallery/functions.php';
-	$galleries = $db->select('id, name', 'gallery');
-	$c_galleries = count($galleries);
-
-	$db->link->beginTransaction();
-	for ($i = 0; $i < $c_galleries; ++$i) {
-		seo::insertUriAlias(makeStringUrlSafe($galleries[$i]['name']), 'gallery/pics/id_' . $galleries[$i]['id']);
-		generatePictureAliases($galleries[$i]['id']);
-	}
-	$db->link->commit();
-
-	// URI-Aliase für die Downloads erzeugen
-	$files = $db->select('id, link_title', 'files');
-	$c_files = count($files);
-
-	$db->link->beginTransaction();
-	for ($i = 0; $i < $c_files; ++$i) {
-		seo::insertUriAlias(makeStringUrlSafe($files[$i]['link_title']), 'files/details/id_' . $files[$i]['id']);
-	}
-	$db->link->commit();
+	$queries = array(
+		'UPDATE `{pre}menu_items` SET `mode` = 4 WHERE `uri` LIKE \'static_pages/list/id_%\' AND `mode` = 2;',
+		'ALTER TABLE `{pre}users` ADD `date_format_long` VARCHAR(30) NOT NULL AFTER `skype`;',
+		'ALTER TABLE `{pre}users` ADD `date_format_short` VARCHAR(30) NOT NULL AFTER `date_format_long`;',
+		'ALTER TABLE `{pre}users` ADD `entries` TINYINT(2) UNSIGNED NOT NULL AFTER `language`;',
+		'UPDATE `{pre}users` SET `date_format_long` = \'' . (defined('CONFIG_DATE_FORMAT_LONG') === true ? CONFIG_DATE_FORMAT_LONG : CONFIG_DATE_FORMAT) . '\', `date_format_short` = \'' . (defined('CONFIG_DATE_FORMAT_SHORT') === true ? CONFIG_DATE_FORMAT_SHORT : 'd.m.Y') . '\', `entries` = ' . ((int) CONFIG_ENTRIES) . ';',
+		'UPDATE `{pre}access` SET `modules` =  \'access:16,acp:16,captcha:16,categories:16,comments:16,contact:16,emoticons:16,errors:16,feeds:16,files:16,gallery:16,guestbook:16,menu_items:16,news:16,newsletter:16,polls:16,search:16,static_pages:16,system:16,users:16\' WHERE `id` = 1;',
+		'ALTER TABLE `{pre}guestbook` ADD `active` TINYINT(1) UNSIGNED NOT NULL AFTER `mail`;',
+		'UPDATE `{pre}guestbook` SET `active` = 1;',
+		'CREATE TABLE `{pre}aliases` (`uri` VARCHAR(255) NOT NULL, `alias` VARCHAR(100) NOT NULL, PRIMARY KEY (`uri`), UNIQUE KEY `alias` (`alias`)) {engine} {charset};',
+	);
+	echo executeSqlQueries($queries, 1);
+}
+if (CONFIG_DB_VERSION < 2) {
+	$queries = array(
+		'RENAME TABLE `{pre}aliases` TO `{pre}seo`;',
+		'ALTER TABLE `{pre}seo` ADD `keywords` VARCHAR(255) NOT NULL AFTER `alias`;',
+		'ALTER TABLE `{pre}seo` ADD `description` VARCHAR(255) NOT NULL AFTER `keywords`;',
+	);
+	echo executeSqlQueries($queries, 2);
 }
 if (CONFIG_DB_VERSION < 3) {
-	$directories = scandir(MODULES_DIR);
-	$count_dir = count($directories);
-	for ($i = 0; $i < $count_dir; ++$i) {
-		$settings = xml::parseXmlFile(MODULES_DIR . $directories[$i] . '/module.xml', 'settings');
-		if (!empty($settings)) {
-			foreach ($settings as $key => $value) {
-				$db->insert('settings', array('id' => '','module' => $directories[$i], 'name' => $key, 'value' => $value));
+	$queries = array(
+		'CREATE TABLE `{pre}settings` (`id` INT(10) unsigned NOT NULL AUTO_INCREMENT, `module` VARCHAR(40) NOT NULL, `name` VARCHAR(40) NOT NULL, `value` TEXT NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `module` (`module`,`name`)) {engine} {charset};',
+	);
+	echo executeSqlQueries($queries, 3);
+
+	$dir = scandir(MODULES_DIR);
+	foreach ($dir as $row) {
+		if ($row !== '.' && $row !== '..' && is_file(MODULES_DIR . $row . '/module.xml') === true) {
+			$settings = xml::parseXmlFile(MODULES_DIR . $row . '/module.xml', 'settings');
+			if (!empty($settings)) {
+				foreach ($settings as $key => $value) {
+					$db->insert('settings', array('id' => '','module' => $row, 'name' => $key, 'value' => $value));
+				}
 			}
 		}
 	}
 }
 if (CONFIG_DB_VERSION < 4) {
+	$queries = array(
+		'ALTER TABLE `{pre}news` ADD `user_id` INT UNSIGNED NOT NULL;',
+		'ALTER TABLE `{pre}files` ADD `user_id` INT UNSIGNED NOT NULL;',
+		'ALTER TABLE `{pre}gallery` ADD `user_id` INT UNSIGNED NOT NULL;',
+		'ALTER TABLE `{pre}poll_question` ADD `user_id` INT UNSIGNED NOT NULL;',
+		'ALTER TABLE `{pre}static_pages` ADD `user_id` INT UNSIGNED NOT NULL;',
+		'ALTER TABLE `{pre}newsletter_archive` ADD `user_id` INT UNSIGNED NOT NULL;',
+		'RENAME TABLE `{pre}poll_question` TO `{pre}polls`;',
+	);
+	echo executeSqlQueries($queries, 4);
+
 	$user = $db->select('MIN(id) AS id', 'users');
 
 	$db->update('files', array('user_id' => $user[0]['id']));
@@ -364,14 +138,38 @@ if (CONFIG_DB_VERSION < 4) {
 	$db->update('static_pages', array('user_id' => $user[0]['id']));
 }
 if (CONFIG_DB_VERSION < 5) {
+	$queries = array(
+		'CREATE TABLE `{pre}modules` (`name` varchar(100) NOT NULL, `active` tinyint(1) unsigned NOT NULL, PRIMARY KEY (`name`)) {engine} {charset}',
+	);
+	echo executeSqlQueries($queries, 5);
+
 	$dir = scandir(MODULES_DIR);
 	foreach ($dir as $row) {
-		if ($row != '.' && $row != '..' && is_file(MODULES_DIR . '/' . $row . '/module.xml')) {
+		if ($row !== '.' && $row !== '..' && is_file(MODULES_DIR . $row . '/module.xml') === true) {
 			$db->insert('modules', array('name' => $row, 'active' => 1));
 		}
 	}
 }
-if (CONFIG_DB_VERSION < 9) {
+if (CONFIG_DB_VERSION < 10) {
+	$queries = array(
+		'DROP TABLE `{pre}access`',
+		'DROP TABLE IF EXISTS `{pre}acl_role_privileges`;',
+		'DROP TABLE IF EXISTS `{pre}acl_resources`;',
+		'ALTER TABLE `{pre}users` DROP COLUMN `access`',
+		'ALTER TABLE `{pre}modules` DROP PRIMARY KEY;',
+		'ALTER TABLE `{pre}modules` ADD COLUMN `id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;',
+		'CREATE TABLE `{pre}acl_rules` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `role_id` int(10) unsigned NOT NULL, `module_id` int(10) unsigned NOT NULL, `privilege_id` int(10) unsigned NOT NULL, `permission` tinyint(1) unsigned NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `role_id` (`role_id`,`module_id`,`privilege_id`)) {engine} {charset};',
+		'CREATE TABLE `{pre}acl_resources` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `module_id` int(10) unsigned NOT NULL, `page` varchar(255) NOT NULL, `params` varchar(255) NOT NULL, `privilege_id` int(10) unsigned NOT NULL, PRIMARY KEY (`id`)) {engine} {charset};',
+		'CREATE TABLE `{pre}acl_privileges` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `key` varchar(100) NOT NULL, `description` varchar(100) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `key` (`key`)) {engine} {charset};',
+		"INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (1, 'view', ''), (2, 'create', ''), (3, 'admin_view', ''), (4, 'admin_create', ''), (5, 'admin_edit', ''), (6, 'admin_delete', ''), (7, 'admin_settings', '');",
+		'CREATE TABLE `{pre}acl_roles` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT, `name` varchar(100) NOT NULL, `parent_id` INT(10) NOT NULL, `left_id` int(10) unsigned NOT NULL, `right_id` int(10) unsigned NOT NULL, PRIMARY KEY (`id`)) {engine} {charset};',
+		"INSERT INTO `{pre}acl_roles` (`id`, `name`, `parent_id`, `left_id`, `right_id`) VALUES (1, 'Gast', 0, 1, 8), (2, 'Mitglied', 1, 2, 7), (3, 'Autor', 2, 3, 6), (4, 'Administrator', 3, 4, 5);",
+		'CREATE TABLE `{pre}acl_user_roles` (`user_id` int(10) unsigned NOT NULL, `role_id` int(10) unsigned NOT NULL, PRIMARY KEY (`user_id`,`role_id`)) {engine} {charset};',
+		"INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (0, 1), (1, 4);",
+		'ALTER TABLE `{pre}menu_items` ADD `parent_id` INT(10) NOT NULL AFTER `root_id`;',
+	);
+	echo executeSqlQueries($queries, 10);
+
 	$roles = $db->select('id, left_id, right_id', 'acl_roles');
 	foreach ($roles as $row) {
 		$parent = $db->select('id', 'acl_roles', 'left_id < ' . $row['left_id'] . ' AND right_id > ' . $row['right_id'], 'left_id DESC', 1);
@@ -383,8 +181,7 @@ if (CONFIG_DB_VERSION < 9) {
 		$parent = $db->select('id', 'menu_items', 'left_id < ' . $row['left_id'] . ' AND right_id > ' . $row['right_id'], 'left_id DESC', 1);
 		$db->update('menu_items', array('parent_id' => !empty($parent) ? $parent[0]['id'] : 0), 'id = \'' . $row['id'] . '\'');
 	}
-}
-if (CONFIG_DB_VERSION < 10) {
+
 	$db->link->beginTransaction();
 
 	// Bestehende Tabellen leeren
@@ -488,16 +285,59 @@ if (CONFIG_DB_VERSION < 10) {
 	$db->link->commit();
 }
 if (CONFIG_DB_VERSION < 11) {
+	$queries = array(
+		"INSERT INTO {pre}acl_resources (`id`, `path`, `privilege_id`) VALUES ('', 'access/order/', 5);"
+	);
+	echo executeSqlQueries($queries, 11);
+
 	$mod_id = $db->select('id', 'modules', 'name = \'access\'');
 
 	$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id[0]['id'], 'page' => 'adm_list_resources', 'privilege_id' => 3));
 	$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id[0]['id'], 'page' => 'edit_resource', 'privilege_id' => 5));
 	$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id[0]['id'], 'page' => 'delete_resources', 'privilege_id' => 6));
 }
+if (CONFIG_DB_VERSION < 12) {
+	$queries = array(
+		'CREATE TABLE `{pre}sessions` (`session_id` varchar(32) NOT NULL, `session_starttime` int(10) unsigned NOT NULL, `session_data` text NOT NULL, PRIMARY KEY (`session_id`)) {engine} {charset};'
+	);
+	echo executeSqlQueries($queries, 12);
+}
+if (CONFIG_DB_VERSION < 13) {
+	$queries = array(
+		"INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'news', 'category_in_breadcrumb', '1');",
+	);
+	echo executeSqlQueries($queries, 13);
+}
+if (CONFIG_DB_VERSION < 14) {
+	$queries = array(
+		"INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'users', 'enable_registration', '1');",
+	);
+	echo executeSqlQueries($queries, 14);
+}
+if (CONFIG_DB_VERSION < 15) {
+	$queries = array(
+		"UPDATE `{pre}settings` SET name = 'overlay' WHERE module = 'gallery' AND name = 'colorbox';",
+		"INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'guestbook', 'overlay', '1');",
+	);
+	echo executeSqlQueries($queries, 15);
+}
+if (CONFIG_DB_VERSION < 16) {
+	$queries = array(
+		"INSERT INTO `{pre}settings` (`id`, `module`, `name`, `value`) VALUES ('', 'comments', 'emoticons', '1');",
+	);
+	echo executeSqlQueries($queries, 16);
+}
+if (CONFIG_DB_VERSION < 17) {
+	$queries = array(
+		"ALTER TABLE `{pre}menu_items` DROP `start`, DROP `end`;",
+		"ALTER TABLE `{pre}seo` DROP INDEX `alias`, ADD INDEX (`alias`);",
+	);
+	echo executeSqlQueries($queries, 17);
+}
 
 // Konfigurationsdatei aktualisieren
 $config = array(
-	'db_version' => count($queries),
+	'db_version' => 17,
 	'maintenance_mode' => (bool) CONFIG_MAINTENANCE_MODE,
 	'seo_mod_rewrite' => (bool) CONFIG_SEO_MOD_REWRITE,
 );
