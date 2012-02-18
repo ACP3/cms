@@ -29,10 +29,7 @@ class breadcrumb
 
 	public function __construct()
 	{
-		global $db, $lang, $uri;
-
-		$module = $uri->mod;
-		$file = $uri->file;
+		global $db, $uri;
 
 		// Frontendbereich
 		if (defined('IN_ADM') === false) {
@@ -47,18 +44,6 @@ class breadcrumb
 						$this->assign($pages[$i]['title'], $uri->route($pages[$i]['uri'], 1));
 					}
 				}
-			}
-		// ACP
-		} else {
-			$this->assign($lang->t('common', 'acp'), $uri->route('acp'));
-			if ($module !== 'errors') {
-				if ($module !== 'acp') {
-					$this->assign($lang->t($module, $module), $uri->route('acp/' . $module));
-					if ($file !== 'adm_list')
-						$this->assign($lang->t($module, $file));
-				}
-			} else {
-				$this->assign($lang->t($module, $file));
 			}
 		}
 	}
@@ -87,6 +72,15 @@ class breadcrumb
 		}
 
 		return $this;
+	}
+	private function prepend($title, $path)
+	{
+		$step = array(
+			'title' => $title,
+			'uri' => $path,
+			'last' => false,
+		);
+		array_unshift($this->steps, $step);
 	}
 	/**
 	 * Sucht nach bereits vorhandenen Brotkrumen, damit keine Dopplungen auftreten
@@ -117,20 +111,39 @@ class breadcrumb
 	 */
 	public function output($mode = 1)
 	{
+		global $lang, $tpl, $uri;
+
+		$module = $uri->mod;
+		$file = $uri->file;
+
+		// Brotkrümelspur für das Admin-Panel
+		if (defined('IN_ADM') === true) {
+			// Wenn noch keine Brotkrümelspur gesetzt ist, dies nun tun
+			if (empty($this->steps)) {
+				$this->assign($lang->t('common', 'acp'), $uri->route('acp'));
+				if ($module !== 'errors') {
+					if ($module !== 'acp') {
+						$this->assign($lang->t($module, $module), $uri->route('acp/' . $module));
+						if ($file !== 'adm_list')
+							$this->assign($lang->t($module, $file));
+					}
+				} else {
+					$this->assign($lang->t($module, $file));
+				}
+			// Falls bereits Stufen gesetzt wurden, Links für das Admin-Panel und
+			// die Modulverwaltung in ungedrehter Reihenfolge voranstellen
+			} elseif ($this->searchForDuplicates($lang->t('common', 'acp'), $uri->route('acp')) === false) {
+				if ($module !== 'acp')
+					$this->prepend($lang->t($module, $module), $uri->route('acp/' . $module));
+				$this->prepend($lang->t('common', 'acp'), $uri->route('acp'));
+			}
 		// Falls noch keine Brotkrümelspur gesetzt sein sollte, dies nun tun
-		if (empty($this->steps)) {
-			global $lang, $uri;
-
-			$module = $uri->mod;
-			$file = $uri->file;
-
+		} elseif (empty($this->steps)) {
 			$this->assign($file === 'list' ? $lang->t($module, $module) : $lang->t($module, $file), $uri->route($module . '/' . $file, 1));
 		}
 
 		// Brotkrümelspur ausgeben
 		if ($mode === 1) {
-			global $tpl;
-
 			$tpl->assign('breadcrumb', $this->steps);
 			return $tpl->fetch('common/breadcrumb.tpl');
 		// Nur Titel ausgeben
