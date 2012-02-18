@@ -68,11 +68,11 @@
 					</select>
 				</dd>
 			</dl>
-			<p id="link-hints">
-				{lang t="menu_items|dynamic_page_hints"}
-			</p>
 			<dl id="link-container">
-				<dt><label for="uri">{lang t="menu_items|uri"}</label></dt>
+				<dt>
+					<label for="uri">{lang t="menu_items|uri"}</label>
+					<span id="link-hints">({lang t="menu_items|dynamic_page_hints"})</span>
+				</dt>
 				<dd><input type="text" name="form[uri]" id="uri" value="{$form.uri}" maxlength="120"></dd>
 			</dl>
 {if isset($static_pages)}
@@ -88,7 +88,7 @@
 				</dd>
 			</dl>
 {/if}
-			<dl>
+			<dl id="target-container">
 				<dt><label for="target">{lang t="menu_items|target_page"}</label></dt>
 				<dd>
 					<select name="form[target]" id="target">

@@ -9,6 +9,7 @@
 	<item key="edit_picture">Bild bearbeiten</item>
 	<item key="filename">Dateiname</item>
 	<item key="gallery">Fotogalerien</item>
+	<item key="image_dimensions">Bildabmessungen</item>
 	<item key="image_filesize">Maximale Dateigröße des Bildes</item>
 	<item key="image_height">Maximal anzuzeigende Bildhöhe</item>
 	<item key="image_width">Maximal anzuzeigende Bildbreite</item>

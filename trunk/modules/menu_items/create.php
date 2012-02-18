@@ -53,7 +53,7 @@ if (isset($_POST['form']) === true) {
 			'display' => $form['display'],
 			'title' => $db->escape($form['title']),
 			'uri' => $form['mode'] == 1 ? $form['module'] : ($form['mode'] == 4 ? 'static_pages/list/id_' . $form['static_pages'] . '/' : $db->escape($form['uri'], 2)),
-			'target' => $form['target'],
+			'target' => $form['display'] == 0 ? 1 : $form['target'],
 		);
 
 		$bool = menuItemsInsertNode($form['parent'], $insert_values);

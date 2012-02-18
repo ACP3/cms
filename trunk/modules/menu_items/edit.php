@@ -64,7 +64,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_items', '
 				'display' => $form['display'],
 				'title' => $db->escape($form['title']),
 				'uri' => $form['mode'] == 1 ? $form['module'] : $uri_type,
-				'target' => $form['target'],
+				'target' => $form['display'] == 0 ? 1 : $form['target'],
 			);
 
 			$bool = menuItemsEditNode($uri->id, $form['parent'], $form['block_id'], $update_values);
@@ -144,6 +144,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_items', '
 		if (modules::check('static_pages', 'functions') === true) {
 			require_once MODULES_DIR . 'static_pages/functions.php';
 
+			$matches = array();
 			if (!isset($form) && $page[0]['mode'] == 4) {
 				preg_match_all('/^(static_pages\/list\/id_([0-9]+)\/)$/', $page[0]['uri'], $matches);
 			}
