@@ -80,15 +80,15 @@ $(document).ready(function() {
 	// Nur die dem Block zugehörigen übergeordneten Seiten anzeigen
 	$('#parent optgroup').hide();
 
-	var def_block = $('#block_id option:selected').index() || 0;
+	var def_block = $('#block-id option:selected').index() || 0;
 
-	$('#block_id').change(function() {
-		var block = $('#block_id option:selected').eq(0).text();
+	$('#block-id').change(function() {
+		var block = $('#block-id option:selected').eq(0).text();
 		$('#parent optgroup:not([label=\'' + block + '\'])').hide();
 		$('#parent optgroup[label=\'' + block + '\']').show();
 
-		$('#block_id option').each(function() {
-			if ($(this).is(':selected') && $('#block_id option').index(this) != def_block) {
+		$('#block-id option').each(function() {
+			if ($(this).is(':selected') && $('#block-id option').index(this) != def_block) {
 				$('#parent optgroup option:selected').removeAttr('selected');
 			}
 		});

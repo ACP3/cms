@@ -88,9 +88,12 @@ class modules
 		static $parsed_modules = array();
 
 		if (empty($parsed_modules)) {
-			if (cache::check('modules_infos') === false)
+			global $auth;
+
+			$filename = 'modules_infos_' . $auth->getUserLanguage();
+			if (cache::check($filename) === false)
 				self::setModulesCache();
-			$parsed_modules = cache::output('modules_infos');
+			$parsed_modules = cache::output($filename);
 		}
 		return !empty($parsed_modules[$module]) ? $parsed_modules[$module] : array();
 	}
@@ -106,7 +109,7 @@ class modules
 				$mod_info = xml::parseXmlFile(MODULES_DIR . $dir . '/module.xml', 'info');
 
 				if (is_array($mod_info) === true) {
-					global $db, $lang;
+					global $auth, $db, $lang;
 
 					$infos[$dir] = array(
 						'dir' => $dir,
@@ -124,6 +127,6 @@ class modules
 				}
 			}
 		}
-		cache::create('modules_infos', $infos);
+		cache::create('modules_infos_' . $auth->getUserLanguage(), $infos);
 	}
 }

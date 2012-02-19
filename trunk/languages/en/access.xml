@@ -18,7 +18,7 @@
 	<item key="permissions">Permissions</item>
 	<item key="privilege_does_not_exist">The selected privilege does not exist.</item>
 	<item key="role_already_exists">There is already an role with the same name</item>
-	<item key="role_undeletable">It\'s impossible to delete the guest, user and administrator roles!</item>
+	<item key="role_undeletable">It's impossible to delete the guest, user and administrator roles!</item>
 	<item key="roles">Assigned roles</item>
 	<item key="superior_role">Superior role</item>
 	<item key="select_privilege">Please select a privilege for this resource.</item>

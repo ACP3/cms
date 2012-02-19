@@ -17,7 +17,7 @@
 	<item key="date_august">August</item>
 	<item key="date_dec">Dec</item>
 	<item key="date_december">December</item>
-	<item key="date_description">If you wouldn\'t like to set a enddate, just set the release date and the end date to the same values.</item>
+	<item key="date_description">If you wouldn't like to set a enddate, just set the release date and the end date to the same values.</item>
 	<item key="date_feb">Feb</item>
 	<item key="date_february">February</item>
 	<item key="date_format">Date format</item>
@@ -89,7 +89,7 @@
 	<item key="modules">Modules</item>
 	<item key="month">Month</item>
 	<item key="move_down">Move entry one step down</item>
-	<item key="move_impossible"><![CDATA[It\'s impossible to move this element]]></item>
+	<item key="move_impossible"><![CDATA[It's impossible to move this element]]></item>
 	<item key="move_up">Move entry one step up</item>
 	<item key="name">Name</item>
 	<item key="name_to_short">Please type in a name</item>
@@ -168,7 +168,7 @@
 	<item key="website">Website</item>
 	<item key="window_blank">New window (_blank)</item>
 	<item key="window_self">Same window (_self)</item>
-	<item key="wrong_email_format">The E-mail address doesn\'t match the format name@domain.tld</item>
+	<item key="wrong_email_format">The E-mail address doesn't match the format name@domain.tld</item>
 	<item key="year">Year</item>
 	<item key="yes">Yes</item>
 </language>

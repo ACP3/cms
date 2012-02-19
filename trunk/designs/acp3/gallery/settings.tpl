@@ -1,6 +1,7 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
+<script type="text/javascript" src="{$DESIGN_PATH}gallery/settings.js"></script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<div id="tabs">
 		<ul>
@@ -39,6 +40,8 @@
 					</label>
 {/foreach}
 				</dd>
+			</dl>
+			<dl id="comments-container">
 {if isset($comments)}
 				<dt><label for="comments-1">{lang t="common|allow_comments"}</label></dt>
 				<dd>

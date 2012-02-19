@@ -2,7 +2,7 @@
 <language>
 	<item key="account_locked">Your user account has been locked. To reactivate it, please use the &quot;forgot password&quot; function, to get a new password.</item>
 	<item key="administration">Administration</item>
-	<item key="admin_user_undeletable">The administrator can\'t be deleted.</item>
+	<item key="admin_user_undeletable">The administrator can't be deleted.</item>
 	<item key="allow_language_override">Allow users to override the default language</item>
 	<item key="allow_entries_override">Allow users to override the number of displayed resultsets per page</item>
 	<item key="birthday">Birthday</item>
@@ -12,7 +12,7 @@
 	<item key="create">Create a new user</item>
 	<item key="delete">Delete users</item>
 	<item key="deleted_user">Deleted user</item>
-	<item key="display_profile_field"><![CDATA[When you don\'t want to display a certain profile field, just remove the tick from the respective field.]]></item>
+	<item key="display_profile_field"><![CDATA[When you don't want to display a certain profile field, just remove the tick from the respective field.]]></item>
 	<item key="drafts">Drafts</item>
 	<item key="edit">Edit user</item>
 	<item key="edit_profile">Edit profile</item>
@@ -80,7 +80,7 @@ Password: {password}</item>
 	<item key="user_menu">User menu</item>
 	<item key="user_name_already_exists">There is already an user account registered with the same user name.</item>
 	<item key="user_not_exists">There is no user profile registered with the typed in user name respectively the typed in E-mail address.</item>
-	<item key="user_profile_not_exists">The requested user profile doesn\'t exists.</item>
+	<item key="user_profile_not_exists">The requested user profile doesn't exists.</item>
 	<item key="user_registration_disabled">The registration for new users is currently diabled!</item>
 	<item key="users">Users</item>
 	<item key="users_found">In total there are %d users registered on this Website.</item>

@@ -17,7 +17,7 @@ define('CONFIG_DESIGN', 'acp3');
 define('CONFIG_ENTRIES', 20);
 define('CONFIG_FLOOD', 30);
 define('CONFIG_HOMEPAGE', 'news/list/');
-define('CONFIG_LANG', 'de');
+define('CONFIG_LANG', 'en');
 define('CONFIG_MAILER_SMTP_AUTH', false);
 define('CONFIG_MAILER_SMTP_HOST', '');
 define('CONFIG_MAILER_SMTP_PASSWORD', '');
