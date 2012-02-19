@@ -38,5 +38,5 @@
 	<item key="title">Title</item>
 	<item key="type_in_gallery_name">The name of the gallery should be at least 3 characters long</item>
 	<item key="use_overlay">Use image overlay</item>
-	<item key="use_overlay_description">If the image overlay is active, it\'s not possible view and post comments</item>
+	<item key="use_overlay_description">If the image overlay is active, it's not possible view and post comments</item>
 </language>

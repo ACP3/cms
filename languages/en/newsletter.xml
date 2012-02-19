@@ -37,7 +37,7 @@
 	<item key="subscribe_error">While creating your newsletter account an error has occured.</item>
 	<item key="subscribe_mail_body">You have successfully subscribed to the newsletter of {host}.
 To complete the registration process, please click on the hyperlink below.
-If you haven\'t subscribed this newsletter, please ignore or delete this E-mail.</item>
+If you haven't subscribed this newsletter, please ignore or delete this E-mail.</item>
 	<item key="subscribe_mail_subject">Welcome to the newsletter of %s</item>
 	<item key="subscribe_success">The newsletter account has been successfully created.</item>
 	<item key="test_newsletter">Test newsletter</item>

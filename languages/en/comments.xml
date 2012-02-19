@@ -8,7 +8,7 @@
 	<item key="edit">Edit comment</item>
 	<item key="ip">IP address</item>
 	<item key="mod_description">With this module it is possible to create comments for other modules.</item>
-	<item key="module_doesnt_exist">Either the selected module doesn\'t exist or is currently deactivated</item>
+	<item key="module_doesnt_exist">Either the selected module doesn't exist or is currently deactivated</item>
 	<item key="module">Module</item>
 	<item key="select_emoticons">Please select, whether you want to allow emoticons or not.</item>
 	<item key="show_comments">Show comments</item>

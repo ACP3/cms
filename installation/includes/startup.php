@@ -32,7 +32,7 @@ if (!empty($_COOKIE['ACP3_INSTALLER_LANG']) &&
 	is_file(ACP3_ROOT . 'languages/' . $_COOKIE['ACP3_INSTALLER_LANG'] . '/info.xml') === true)
 	define('LANG', $_COOKIE['ACP3_INSTALLER_LANG']);
 else
-	define('LANG', 'de');
+	define('LANG', 'en');
 
 $lang = new lang(LANG);
 

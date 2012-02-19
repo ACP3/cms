@@ -22,10 +22,10 @@
 	<item key="found">Found</item>
 	<item key="gd_library">GD library</item>
 	<item key="installation">Installation</item>
-	<item key="installation_error"><![CDATA[During the installation an error has occured, whereby the installation can\'t continue. Please check all petitions again, especially, whether all statements inside the configuration file are right.<br />Please click on the "Back"-button, to go back to the start of the installation process.]]></item>
+	<item key="installation_error"><![CDATA[During the installation an error has occured, whereby the installation can't continue. Please check all petitions again, especially, whether all statements inside the configuration file are right.<br />Please click on the "Back"-button, to go back to the start of the installation process.]]></item>
 	<item key="installation_impossible">Installation impossible!</item>
 	<item key="installation_successful_1"><![CDATA[All queries has been executed successfully, whereby the installation is now finished.<br />By the following button you can reach the frontend of your website. Afterwards you can log in and do further changes to your site, eg. changing the language, choosing an other design or publishing content.]]></item>
-	<item key="installation_successful_2"><strong>Attention:</strong> Please delete the "installation"-folder, because it\'s a possible security risk, if this folders exists in a production environment.</item>
+	<item key="installation_successful_2"><strong>Attention:</strong> Please delete the "installation"-folder, because it's a possible security risk, if this folders exists in a production environment.</item>
 	<item key="language">Language:</item>
 	<item key="licence">Licence</item>
 	<item key="maximum_uploadsize">Maximum uploadsize:</item>
@@ -62,9 +62,9 @@
 	<item key="step_1_paragraph_1">Welcome to the installation of the ACP3. This assistant will guide you through the hole installation process, so that you can successfully install this web content management system.</item>
 	<item key="step_3_legend_1"><![CDATA[General requirements &amp; write access]]></item>
 	<item key="step_3_legend_2">PHP Settings</item>
-	<item key="step_3_paragraph_1">These requirements have to be fulfilled, otherwise you can\'t install the ACP3 successfully. Additionally we check, whether the correct CHMOD for certain files and folders is set.</item>
-	<item key="step_3_paragraph_2">Here we check the PHP settings of your webspace/server, which shouldn\'t be relevant to successfully install the ACP3. If one field is displayed in red, please contact your hosting provider to solve this problem.</item>
-	<item key="stop_installation">The installation can\'t continue, because your webspace/server doesn\'t fulfill the requirements.</item>
+	<item key="step_3_paragraph_1">These requirements have to be fulfilled, otherwise you can't install the ACP3 successfully. Additionally we check, whether the correct CHMOD for certain files and folders is set.</item>
+	<item key="step_3_paragraph_2">Here we check the PHP settings of your webspace/server, which shouldn't be relevant to successfully install the ACP3. If one field is displayed in red, please contact your hosting provider to solve this problem.</item>
+	<item key="stop_installation">The installation can't continue, because your webspace/server doesn't fulfill the requirements.</item>
 	<item key="type_in_db_host">Please type in the hostname, which belongs to the database</item>
 	<item key="type_in_db_name">Please type in the database name</item>
 	<item key="type_in_db_username">Please type in the user name for the database</item>

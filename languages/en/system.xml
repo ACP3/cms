@@ -24,7 +24,7 @@
 	<item key="enable_seo_aliases">Enable URI-Aliases</item>
 	<item key="entries_per_page">Resultsets per page</item>
 	<item key="error_messages">Output of error messages</item>
-	<item key="error_update_check">It wasn\'t possible to establish a connection to the update server.</item>
+	<item key="error_update_check">It wasn't possible to establish a connection to the update server.</item>
 	<item key="export_data">Data only</item>
 	<item key="export_options">Exportoptions</item>
 	<item key="export_structure">Struture only</item>
@@ -73,13 +73,13 @@
 	<item key="module_name">Module name</item>
 	<item key="modules">Modules</item>
 	<item key="modules_found">All in all, there are %d modules registered.</item>
-	<item key="not_optimal_server_configuration">The server isn\'t well configured</item>
+	<item key="not_optimal_server_configuration">The server isn't well configured</item>
 	<item key="not_optimised">Optimisation unnecessary</item>
 	<item key="off">off</item>
 	<item key="on">on</item>
 	<item key="operating_system">Operating system</item>
 	<item key="optimal_server_configuration">The server is well configured</item>
-	<item key="optimisation_access_forbidden">During the optimisation process you don\'t have any access to the database!</item>
+	<item key="optimisation_access_forbidden">During the optimisation process you don't have any access to the database!</item>
 	<item key="optimised">Table successfully optimised</item>
 	<item key="output">Output</item>
 	<item key="output_as_text">As text</item>
@@ -125,7 +125,7 @@
 	<item key="title">Title</item>
 	<item key="title_to_short">Please type in a title.</item>
 	<item key="type_in_date_format">Please type in a date format.</item>
-	<item key="type_in_flood_barrier">Please type in, for how long an user can\'t submit new entries.</item>
+	<item key="type_in_flood_barrier">Please type in, for how long an user can't submit new entries.</item>
 	<item key="type_in_mailer_smtp_host">Please type in the hostname of the SMTP server.</item>
 	<item key="type_in_mailer_smtp_port">Please type in the portnumber of the SMTP server.</item>
 	<item key="type_in_mailer_smtp_username">Please type in the username of the SMTP server.</item>
