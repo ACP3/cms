@@ -74,8 +74,12 @@ function emoticonsReplace($string)
 	static $emoticons = array();
 
 	if (empty($emoticons)) {
+		global $db;
+
 		$cache = getEmoticonsCache();
 		foreach($cache as $row) {
+			$row['code'] = $db->escape($row['code'], 3);
+			$row['description'] = $db->escape($row['description'], 3);
 			$emoticons[$row['code']] = '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $row['img'] . '" width="' . $row['width'] . '" height="' . $row['height'] . '" alt="' . $row['description'] . '" title="' . $row['description'] . '" />';
 		}
 	}
