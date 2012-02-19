@@ -111,6 +111,10 @@ class uri
 					$this->$param[0] = $param[1];
 				}
 			}
+		// Workaround für Securitytoken-Generierung,
+		// falls die URL nur aus dem Modulnamen besteht
+		} elseif (empty($query[1])) {
+			$this->query.= $defaultFile . '/';
 		}
 
 		if (!empty($_POST['cat']) && validate::isNumber($_POST['cat']) === true)
