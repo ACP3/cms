@@ -15,7 +15,7 @@ require_once ACP3_ROOT . 'includes/config.php';
 
 define('DESIGN_PATH', ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/');
 
-if ($_GET['g'] === 'css' || $_GET['g'] === 'css_simple') {
+if ($_GET['g'] === 'css') {
 	define('IN_ACP3', true);
 	define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
 	$php_self = dirname(PHP_SELF);
@@ -37,20 +37,20 @@ if ($_GET['g'] === 'css' || $_GET['g'] === 'css_simple') {
 	$auth = new auth();
 	$lang = new lang();
 
-	$key = $_GET['g'];
+	$layout = isset($_GET['layout']) && !preg_match('=/=', $_GET['layout']) && is_file(DESIGN_PATH . $_GET['layout'] . '.css') === true ? $_GET['layout']: 'layout';
 
 	$styles = array();
-	$styles[$key][] = DESIGN_PATH . ($key === 'css' ? 'layout.css' : 'simple.css');
+	$styles['css'][] = DESIGN_PATH . $layout . '.css';
 
 	$modules = scandir(DESIGN_PATH);
 	foreach ($modules as $module) {
 		$path = DESIGN_PATH . $module . '/style.css';
 		if ($module !== '.' && $module !== '..' && is_file($path) === true && modules::isActive($module) === true)
-			$styles[$key][] = $path;
+			$styles['css'][] = $path;
 	}
 
-	$styles[$key][] = DESIGN_PATH . 'jquery/jquery-ui.css';
-	$styles[$key][] = DESIGN_PATH . 'jquery/jquery-fancybox.css';
+	$styles['css'][] = DESIGN_PATH . 'jquery/jquery-ui.css';
+	$styles['css'][] = DESIGN_PATH . 'jquery/jquery-fancybox.css';
 
 	return $styles;
 } elseif ($_GET['g'] === 'js') {

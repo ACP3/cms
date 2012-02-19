@@ -95,8 +95,7 @@ class view
 
 					$minify = ROOT_DIR . 'includes/min/' . (CONFIG_SEO_MOD_REWRITE === true && defined('IN_ADM') === false ? '' : '?') . 'g=%s&amp;' . CONFIG_DESIGN;
 					$tpl->assign('MIN_JAVASCRIPT', sprintf($minify, 'js'));
-					$tpl->assign('MIN_STYLESHEET', sprintf($minify, 'css'));
-					$tpl->assign('MIN_STYLESHEET_SIMPLE', sprintf($minify, 'css_simple'));
+					$tpl->assign('MIN_STYLESHEET', sprintf($minify, 'css') . '&amp;layout=' . substr(self::$layout, 0, strpos(self::$layout, '.')));
 
 					self::displayTemplate(self::$layout);
 				} else {

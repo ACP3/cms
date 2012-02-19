@@ -16,11 +16,11 @@ $breadcrumb->assign($lang->t('guestbook', 'guestbook'), $uri->route('guestbook')
 $settings = config::getModuleSettings('guestbook');
 $newsletterAccess = modules::check('newsletter', 'create') === true && $settings['newsletter_integration'] == 1;
 
-if ($uri->design == 'simple') {
-	$combooverlay = 1;
+if ($uri->layout === 'simple') {
+	$overlay_active = 1;
 	view::assignLayout('simple.tpl');
 } else {
-	$combooverlay = 0;
+	$overlay_active = 0;
 }
 
 if (isset($_POST['form']) === true) {
@@ -88,7 +88,7 @@ if (isset($_POST['form']) === true) {
 
 		$session->unsetFormToken();
 
-		view::setContent(confirmBox($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('guestbook'), 0, $combooverlay));
+		view::setContent(confirmBox($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('guestbook'), 0, $overlay_active));
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
