@@ -10,8 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$breadcrumb->assign($lang->t('menu_items', 'adm_list_blocks'), $uri->route('acp/menu_items/adm_list_blocks'))
-		   ->assign($lang->t('menu_items', 'delete_blocks'));
+$breadcrumb->append($lang->t('menu_items', 'adm_list_blocks'), $uri->route('acp/menu_items/adm_list_blocks'))
+		   ->append($lang->t('menu_items', 'delete_blocks'));
 
 if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
 	$entries = $_POST['entries'];

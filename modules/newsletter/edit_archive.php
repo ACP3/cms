@@ -12,8 +12,8 @@ if (defined('IN_ADM') === false)
 
 if (validate::isNumber($uri->id) === true && $db->countRows('*', 'newsletter_archive', 'id = \'' . $uri->id . '\'') == 1) {
 	// Brotkrümelspur
-	$breadcrumb->assign($lang->t('newsletter', 'adm_list_archive'), $uri->route('acp/newsletter/adm_list_archive'))
-			   ->assign($lang->t('newsletter', 'edit_archive'));
+	$breadcrumb->append($lang->t('newsletter', 'adm_list_archive'), $uri->route('acp/newsletter/adm_list_archive'))
+			   ->append($lang->t('newsletter', 'edit_archive'));
 
 	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];

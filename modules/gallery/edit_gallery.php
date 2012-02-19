@@ -17,7 +17,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id 
 	$gallery[0]['seo_keywords'] = seo::getKeywords('gallery/pics/id_' . $uri->id);
 	$gallery[0]['seo_description'] = seo::getDescription('gallery/pics/id_' . $uri->id);
 
-	$breadcrumb->assign($gallery[0]['name']);
+	$breadcrumb->append($gallery[0]['name']);
 
 	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];

@@ -25,8 +25,8 @@ if (isset($_POST['form']) === true) {
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
 	} else {
-		$breadcrumb->assign($lang->t('search', 'search'), $uri->route('search'))
-				   ->assign($lang->t('search', 'search_results'));
+		$breadcrumb->append($lang->t('search', 'search'), $uri->route('search'))
+				   ->append($lang->t('search', 'search_results'));
 
 		$form['sort'] = strtoupper($form['sort']);
 		$results_mods = array();

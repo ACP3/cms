@@ -10,8 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$breadcrumb->assign($lang->t('system', 'maintenance'), $uri->route('acp/system/maintenance'))
-		   ->assign($lang->t('system', 'update_check'));
+$breadcrumb->append($lang->t('system', 'maintenance'), $uri->route('acp/system/maintenance'))
+		   ->append($lang->t('system', 'update_check'));
 
 $file = @file_get_contents('http://www.acp3-cms.net/update.txt');
 if ($file !== false) {

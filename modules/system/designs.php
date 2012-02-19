@@ -10,8 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$breadcrumb->assign($lang->t('system', 'extensions'), $uri->route('acp/system/extensions'))
-		   ->assign($lang->t('system', 'designs'));
+$breadcrumb->append($lang->t('system', 'extensions'), $uri->route('acp/system/extensions'))
+		   ->append($lang->t('system', 'designs'));
 
 if ($uri->dir) {
 	$dir = is_file(ACP3_ROOT . 'designs/' . $uri->dir . '/info.xml') ? $uri->dir : 0;

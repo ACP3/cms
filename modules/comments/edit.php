@@ -14,8 +14,8 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'comments', 'id
 	$comment = $db->select('name, user_id, message, module', 'comments', 'id = \'' . $uri->id . '\'');
 
 	$comment[0]['module'] = $db->escape($comment[0]['module'], 3);
-	$breadcrumb->assign($lang->t($comment[0]['module'], $comment[0]['module']), $uri->route('acp/comments/adm_list/module_' . $comment[0]['module']))
-			   ->assign($lang->t('comments', 'edit'));
+	$breadcrumb->append($lang->t($comment[0]['module'], $comment[0]['module']), $uri->route('acp/comments/adm_list/module_' . $comment[0]['module']))
+			   ->append($lang->t('comments', 'edit'));
 
 	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];

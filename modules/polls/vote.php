@@ -16,8 +16,8 @@ $multiple = !empty($_POST['answer']) && is_array($_POST['answer']) ? ' AND multi
 
 if (validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = \'' . $uri->id . '\'' . $multiple . $period) == 1) {
 	// Brotkrümelspur
-	$breadcrumb->assign($lang->t('polls', 'polls'), $uri->route('polls'))
-			   ->assign($lang->t('polls', 'vote'));
+	$breadcrumb->append($lang->t('polls', 'polls'), $uri->route('polls'))
+			   ->append($lang->t('polls', 'vote'));
 
 	// Wenn abgestimmt wurde
 	if (!empty($_POST['answer']) && (is_array($_POST['answer']) === true || validate::isNumber($_POST['answer']) === true)) {

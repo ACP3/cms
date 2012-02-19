@@ -18,13 +18,15 @@ function setEmoticonsCache()
 	$emoticons = $db->select('code, description, img', 'emoticons', 0, 'code DESC');
 	$c_emoticons = count($emoticons);
 
+	$data = array();
 	for ($i = 0; $i < $c_emoticons; ++$i) {
 		$picInfos = getimagesize(ACP3_ROOT . 'uploads/emoticons/' . $emoticons[$i]['img']);
-		$emoticons[$i]['width'] = $picInfos[0];
-		$emoticons[$i]['height'] = $picInfos[1];
+		$code = $db->escape($emoticons[$i]['code'], 3);
+		$description = $db->escape($emoticons[$i]['description'], 3);
+		$data[$code] = '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $emoticons[$i]['img'] . '" width="' . $picInfos[0] . '" height="' . $picInfos[1] . '" alt="' . $description . '" title="' . $description . '" />';
 	}
 
-	return cache::create('emoticons', $emoticons);
+	return cache::create('emoticons', $data);
 }
 /**
  * Bindet die gecacheten Emoticons ein
@@ -48,15 +50,10 @@ function getEmoticonsCache()
 function emoticonsList($field_id = 0)
 {
 	global $db, $tpl;
+	static $emoticons = array();
 
-	$emoticons = getEmoticonsCache();
-	$c_emoticons = count($emoticons);
-
-	for ($i = 0; $i < $c_emoticons; ++$i) {
-		$emoticons[$i]['code'] = $db->escape($emoticons[$i]['code'], 3);
-		$emoticons[$i]['description'] = $db->escape($emoticons[$i]['description'], 3);
-		$emoticons[$i]['img'] = ROOT_DIR . 'uploads/emoticons/' . $emoticons[$i]['img'];
-	}
+	if (empty($emoticons))
+		$emoticons = getEmoticonsCache();
 
 	$tpl->assign('emoticons_field_id', empty($field_id) ? 'message' : $field_id);
 	$tpl->assign('emoticons', $emoticons);
@@ -73,16 +70,8 @@ function emoticonsReplace($string)
 {
 	static $emoticons = array();
 
-	if (empty($emoticons)) {
-		global $db;
-
-		$cache = getEmoticonsCache();
-		foreach($cache as $row) {
-			$row['code'] = $db->escape($row['code'], 3);
-			$row['description'] = $db->escape($row['description'], 3);
-			$emoticons[$row['code']] = '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $row['img'] . '" width="' . $row['width'] . '" height="' . $row['height'] . '" alt="' . $row['description'] . '" title="' . $row['description'] . '" />';
-		}
-	}
+	if (empty($emoticons))
+		$emoticons = getEmoticonsCache();
 
 	return strtr($string, $emoticons);
 }

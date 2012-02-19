@@ -19,15 +19,15 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'id = \
 	$settings = config::getModuleSettings('news');
 	$news = getNewsCache($uri->id);
 
-	$breadcrumb->assign($lang->t('news', 'news'), $uri->route('news'));
+	$breadcrumb->append($lang->t('news', 'news'), $uri->route('news'));
 	if ($settings['category_in_breadcrumb'] == 1) {
 		// Brotkrümelspur
 		$category = $db->select('name', 'categories', 'id = \'' . $news[0]['category_id'] . '\'');
 		if (count($category) > 0) {
-			$breadcrumb->assign($category[0]['name'], $uri->route('news/list/cat_' . $news[0]['category_id']));
+			$breadcrumb->append($category[0]['name'], $uri->route('news/list/cat_' . $news[0]['category_id']));
 		}
 	}
-	$breadcrumb->assign($news[0]['headline']);
+	$breadcrumb->append($news[0]['headline']);
 
 	$news[0]['date'] = $date->format($news[0]['start'], $settings['dateformat']);
 	$news[0]['text'] = rewriteInternalUri($db->escape($news[0]['text'], 3));

@@ -25,8 +25,8 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id 
 		$gallery_name[0]['name'] = $db->escape($gallery_name[0]['name'], 3);
 
 		// Brotkrümelspur
-		$breadcrumb->assign($lang->t('gallery', 'gallery'), $uri->route('gallery'))
-				   ->assign($gallery_name[0]['name']);
+		$breadcrumb->append($lang->t('gallery', 'gallery'), $uri->route('gallery'))
+				   ->append($gallery_name[0]['name']);
 
 		$settings = config::getModuleSettings('gallery');
 
