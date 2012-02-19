@@ -94,8 +94,9 @@ class view
 					$tpl->assign('CONTENT', self::$content);
 
 					$minify = ROOT_DIR . 'includes/min/' . (CONFIG_SEO_MOD_REWRITE === true && defined('IN_ADM') === false ? '' : '?') . 'g=%s&amp;' . CONFIG_DESIGN;
+					$layout = substr(self::$layout, 0, strpos(self::$layout, '.'));
+					$tpl->assign('MIN_STYLESHEET', sprintf($minify, 'css') . ($layout !== 'layout' ? '&amp;layout=' . $layout : ''));
 					$tpl->assign('MIN_JAVASCRIPT', sprintf($minify, 'js'));
-					$tpl->assign('MIN_STYLESHEET', sprintf($minify, 'css') . '&amp;layout=' . substr(self::$layout, 0, strpos(self::$layout, '.')));
 
 					self::displayTemplate(self::$layout);
 				} else {
