@@ -20,7 +20,7 @@ if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module
 	$c_comments = count($comments);
 
 	if ($c_comments > 0) {
-		$tpl->assign('pagination', pagination($db->query('SELECT COUNT(*) FROM {pre}comments GROUP BY module', 1)));
+		$tpl->assign('pagination', pagination($db->query('SELECT COUNT(DISTINCT module) FROM {pre}comments', 1)));
 		for ($i = 0; $i < $c_comments; ++$i) {
 			$comments[$i]['name'] = $lang->t($comments[$i]['module'], $comments[$i]['module']);
 			$comments[$i]['count'] = $db->countRows('*', 'comments', 'module = \'' . $comments[$i]['module'] . '\'');
