@@ -71,15 +71,14 @@ function emoticonsList($field_id = 0)
  */
 function emoticonsReplace($string)
 {
-	global $db;
 	static $emoticons = array();
 
-	if (empty($emoticons))
-		$emoticons = getEmoticonsCache();
-
-	foreach ($emoticons as $row) {
-		$row['description'] = $db->escape($row['description'], 3);
-		$string = str_replace($db->escape($row['code'], 3), '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $row['img'] . '" width="' . $row['width'] . '" height="' . $row['height'] . '" alt="' . $row['description'] . '" title="' . $row['description'] . '" />', $string);
+	if (empty($emoticons)) {
+		$cache = getEmoticonsCache();
+		foreach($cache as $row) {
+			$emoticons[$row['code']] = '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $row['img'] . '" width="' . $row['width'] . '" height="' . $row['height'] . '" alt="' . $row['description'] . '" title="' . $row['description'] . '" />';
+		}
 	}
-	return $string;
+
+	return strtr($string, $emoticons);
 }
