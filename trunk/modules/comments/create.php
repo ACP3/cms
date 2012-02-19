@@ -52,7 +52,7 @@ function commentsCreate($module, $entry_id)
 				'ip' => $ip,
 				'date' => $time,
 				'name' => $auth->isUser() === true && validate::isNumber($auth->getUserId() === true) ? '' : $db->escape($form['name']),
-				'user_id' => $auth->isUser() === trze && validate::isNumber($auth->getUserId() === true) ? $auth->getUserId() : '',
+				'user_id' => $auth->isUser() === true && validate::isNumber($auth->getUserId() === true) ? $auth->getUserId() : '',
 				'message' => $db->escape($form['message']),
 				'module' => $db->escape($form['module'], 2),
 				'entry_id' => $form['entry_id'],
