@@ -10,8 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$breadcrumb->assign($lang->t('system', 'extensions'), $uri->route('acp/system/extensions'))
-		   ->assign($lang->t('system', 'languages'));
+$breadcrumb->append($lang->t('system', 'extensions'), $uri->route('acp/system/extensions'))
+		   ->append($lang->t('system', 'languages'));
 
 if ($uri->dir) {
 	$dir = $lang->languagePackExists($uri->dir) ? $uri->dir : 0;

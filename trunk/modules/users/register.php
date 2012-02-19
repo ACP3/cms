@@ -9,8 +9,8 @@ if ($auth->isUser() === true) {
 } elseif ($settings['enable_registration'] == 0) {
 	view::setContent(errorBox($lang->t('users', 'user_registration_disabled')));
 } else {
-	$breadcrumb->assign($lang->t('users', 'users'), $uri->route('users'))
-			   ->assign($lang->t('users', 'register'));
+	$breadcrumb->append($lang->t('users', 'users'), $uri->route('users'))
+			   ->append($lang->t('users', 'register'));
 
 	if (isset($_POST['form']) === true) {
 		require_once MODULES_DIR . 'users/functions.php';

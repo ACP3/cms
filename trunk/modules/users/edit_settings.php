@@ -15,9 +15,9 @@ if ($auth->isUser() === false || validate::isNumber($auth->getUserId()) === fals
 } else {
 	$settings = config::getModuleSettings('users');
 
-	$breadcrumb->assign($lang->t('users', 'users'), $uri->route('users'));
-	$breadcrumb->assign($lang->t('users', 'home'), $uri->route('users/home'));
-	$breadcrumb->assign($lang->t('users', 'edit_settings'));
+	$breadcrumb->append($lang->t('users', 'users'), $uri->route('users'));
+	$breadcrumb->append($lang->t('users', 'home'), $uri->route('users/home'));
+	$breadcrumb->append($lang->t('users', 'edit_settings'));
 
 	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];

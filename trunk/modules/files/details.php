@@ -41,9 +41,9 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'files', 'id = 
 		$file[0]['text'] = $db->escape($file[0]['text'], 3);
 
 		// Brotkrümelspur
-		$breadcrumb->assign($lang->t('files', 'files'), $uri->route('files'))
-				   ->assign($file[0]['category_name'], $uri->route('files/files/cat_' . $file[0]['category_id']))
-				   ->assign($file[0]['link_title']);
+		$breadcrumb->append($lang->t('files', 'files'), $uri->route('files'))
+				   ->append($file[0]['category_name'], $uri->route('files/files/cat_' . $file[0]['category_id']))
+				   ->append($file[0]['link_title']);
 
 		$settings = config::getModuleSettings('files');
 

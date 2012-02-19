@@ -10,8 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$breadcrumb->assign($lang->t('system', 'maintenance'), $uri->route('acp/system/maintenance'))
-		   ->assign($lang->t('system', 'sql_optimisation'));
+$breadcrumb->append($lang->t('system', 'maintenance'), $uri->route('acp/system/maintenance'))
+		   ->append($lang->t('system', 'sql_optimisation'));
 
 if ($uri->action === 'do') {
 	$mod_list = modules::modulesList();

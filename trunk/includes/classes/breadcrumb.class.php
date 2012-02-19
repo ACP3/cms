@@ -41,7 +41,7 @@ class breadcrumb
 			if ($c_pages > 0) {
 				for ($i = $c_pages - 1; $i >= 0; --$i) {
 					if ($pages[0]['left_id'] >= $pages[$i]['left_id'] && $pages[0]['right_id'] <= $pages[$i]['right_id']) {
-						$this->assign($pages[$i]['title'], $uri->route($pages[$i]['uri'], 1));
+						$this->append($pages[$i]['title'], $uri->route($pages[$i]['uri'], 1));
 					}
 				}
 			}
@@ -56,7 +56,7 @@ class breadcrumb
 	 * 	Die zum $title zugehörige ACP3-interne URI
 	 * @return object
 	 */
-	public function assign($title, $path = 0)
+	public function append($title, $path = 0)
 	{
 		static $i = 0;
 
@@ -120,15 +120,15 @@ class breadcrumb
 		if (defined('IN_ADM') === true) {
 			// Wenn noch keine Brotkrümelspur gesetzt ist, dies nun tun
 			if (empty($this->steps)) {
-				$this->assign($lang->t('common', 'acp'), $uri->route('acp'));
+				$this->append($lang->t('common', 'acp'), $uri->route('acp'));
 				if ($module !== 'errors') {
 					if ($module !== 'acp') {
-						$this->assign($lang->t($module, $module), $uri->route('acp/' . $module));
+						$this->append($lang->t($module, $module), $uri->route('acp/' . $module));
 						if ($file !== 'adm_list')
-							$this->assign($lang->t($module, $file));
+							$this->append($lang->t($module, $file));
 					}
 				} else {
-					$this->assign($lang->t($module, $file));
+					$this->append($lang->t($module, $file));
 				}
 			// Falls bereits Stufen gesetzt wurden, Links für das Admin-Panel und
 			// die Modulverwaltung in ungedrehter Reihenfolge voranstellen
@@ -139,7 +139,7 @@ class breadcrumb
 			}
 		// Falls noch keine Brotkrümelspur gesetzt sein sollte, dies nun tun
 		} elseif (empty($this->steps)) {
-			$this->assign($file === 'list' ? $lang->t($module, $module) : $lang->t($module, $file), $uri->route($module . '/' . $file, 1));
+			$this->append($file === 'list' ? $lang->t($module, $module) : $lang->t($module, $file), $uri->route($module . '/' . $file, 1));
 		}
 
 		// Brotkrümelspur ausgeben

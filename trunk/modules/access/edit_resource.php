@@ -10,8 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$breadcrumb->assign($lang->t('access', 'adm_list_resources'), $uri->route('acp/access/adm_list_resources'))
-		   ->assign($lang->t('access', 'edit_resource'));
+$breadcrumb->append($lang->t('access', 'adm_list_resources'), $uri->route('acp/access/adm_list_resources'))
+		   ->append($lang->t('access', 'edit_resource'));
 
 require_once MODULES_DIR . 'access/functions.php';
 

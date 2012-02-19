@@ -2,8 +2,8 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$breadcrumb->assign($lang->t('users', 'users'), $uri->route('users'))
-		   ->assign($lang->t('users', 'view_profile'));
+$breadcrumb->append($lang->t('users', 'users'), $uri->route('users'))
+		   ->append($lang->t('users', 'view_profile'));
 
 if (validate::isNumber($uri->id) === true && $db->countRows('*', 'users', 'id = \'' . $uri->id . '\'') == 1) {
 	$user = $auth->getUserInfo($uri->id);

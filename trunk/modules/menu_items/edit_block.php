@@ -13,8 +13,8 @@ if (defined('IN_ADM') === false)
 if (validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_items_blocks', 'id = \'' . $uri->id . '\'') == 1) {
 	require_once MODULES_DIR . 'menu_items/functions.php';
 
-	$breadcrumb->assign($lang->t('menu_items', 'adm_list_blocks'), $uri->route('acp/menu_items/adm_list_blocks'))
-			   ->assign($lang->t('menu_items', 'edit_block'));
+	$breadcrumb->append($lang->t('menu_items', 'adm_list_blocks'), $uri->route('acp/menu_items/adm_list_blocks'))
+			   ->append($lang->t('menu_items', 'edit_block'));
 
 	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];

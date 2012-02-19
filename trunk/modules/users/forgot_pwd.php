@@ -5,8 +5,8 @@ if (defined('IN_ACP3') === false)
 if ($auth->isUser() === true) {
 	$uri->redirect(0, ROOT_DIR);
 } else {
-	$breadcrumb->assign($lang->t('users', 'users'), $uri->route('users'))
-			   ->assign($lang->t('users', 'forgot_pwd'));
+	$breadcrumb->append($lang->t('users', 'users'), $uri->route('users'))
+			   ->append($lang->t('users', 'forgot_pwd'));
 
 	if (isset($_POST['form']) === true) {
 		require_once MODULES_DIR . 'users/functions.php';

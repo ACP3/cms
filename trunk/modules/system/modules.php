@@ -10,8 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$breadcrumb->assign($lang->t('system', 'extensions'), $uri->route('acp/system/extensions'))
-		   ->assign($lang->t('system', 'modules'));
+$breadcrumb->append($lang->t('system', 'extensions'), $uri->route('acp/system/extensions'))
+		   ->append($lang->t('system', 'modules'));
 
 if ($uri->action === 'activate') {
 	$info = modules::parseInfo($uri->dir);

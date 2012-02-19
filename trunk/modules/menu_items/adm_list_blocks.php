@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$breadcrumb->assign($lang->t('menu_items', 'adm_list_blocks'));
+$breadcrumb->append($lang->t('menu_items', 'adm_list_blocks'));
 
 getRedirectMessage();
 

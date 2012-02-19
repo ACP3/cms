@@ -18,7 +18,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'static_pages',
 
 	$page = getStaticPagesCache($uri->id);
 
-	$breadcrumb->assign($db->escape($page[0]['title'], 3));
+	$breadcrumb->append($db->escape($page[0]['title'], 3));
 
 	$page[0]['text'] = rewriteInternalUri($db->escape($page[0]['text'], 3));
 	$tpl->assign('text', $page[0]['text']);

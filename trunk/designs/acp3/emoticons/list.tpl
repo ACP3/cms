@@ -59,7 +59,7 @@ $(document).ready(function() {
 });
 </script>
 <div class="icons">
-{foreach $emoticons as $row}
-	<a href="#" title="{$row.code}"><img src="{$row.img}" width="{$row.width}" height="{$row.height}" alt="{$row.description}" title="{$row.description}"></a>
+{foreach $emoticons as $key => $value}
+	<a href="#" title="{$key}">{$value}</a>
 {/foreach}
 </div>
