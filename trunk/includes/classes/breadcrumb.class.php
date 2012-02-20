@@ -33,7 +33,7 @@ class breadcrumb
 
 		// Frontendbereich
 		if (defined('IN_ADM') === false) {
-			$in = "'" . $uri->query . "', '" . $uri->mod . '/' . $uri->file . "/', '" . $uri->mod . "'";
+			$in = "'" . $uri->query . "', '" . $uri->getCleanQuery() . "', '" . $uri->mod . '/' . $uri->file . "/', '" . $uri->mod . "'";
 			$pages = $db->query('SELECT p.title, p.uri, p.left_id, p.right_id FROM {pre}menu_items AS c, {pre}menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(' . $in . ') ORDER BY p.left_id DESC');
 			$c_pages = count($pages);
 
@@ -54,7 +54,7 @@ class breadcrumb
 	 * 	Bezeichnung der jeweiligen Stufe der Brotkrume
 	 * @param string $path
 	 * 	Die zum $title zugehörige ACP3-interne URI
-	 * @return object
+	 * @return \breadcrumb
 	 */
 	public function append($title, $path = 0)
 	{
@@ -73,6 +73,15 @@ class breadcrumb
 
 		return $this;
 	}
+	/**
+	 * Fügt Brotkrumen an den Anfang an
+	 *
+	 * @param string $title
+	 * 	Bezeichnung der jeweiligen Stufe der Brotkrume
+	 * @param string $path
+	 * 	Die zum $title zugehörige ACP3-interne URI
+	 * @return \breadcrumb 
+	 */
 	private function prepend($title, $path)
 	{
 		$step = array(
@@ -81,6 +90,26 @@ class breadcrumb
 			'last' => false,
 		);
 		array_unshift($this->steps, $step);
+
+		return $this;
+	}
+	/**
+	 * Ersetzt die aktuell letzte Brotkrume mit neuen Werten
+	 * 
+	 * @param string $title
+	 * 	Bezeichnung der jeweiligen Stufe der Brotkrume
+	 * @param string $path
+	 * 	Die zum $title zugehörige ACP3-interne URI
+	 * @return \breadcrumb 
+	 */
+	public function replaceAnchestor($title, $path = 0)
+	{
+		$index = count($this->steps) - 1;
+		$this->steps[$index]['title'] = $title;
+		$this->steps[$index]['uri'] = $path;
+		$this->steps[$index]['last'] = true;
+
+		return $this;
 	}
 	/**
 	 * Sucht nach bereits vorhandenen Brotkrumen, damit keine Dopplungen auftreten
