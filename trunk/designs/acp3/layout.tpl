@@ -2,9 +2,7 @@
 <html lang="{$LANG}">
 <head>
 <title>{$PAGE_TITLE} :: {$TITLE}</title>
-<meta charset="UTF-8">
-<meta name="description" content="{$DESCRIPTION}">
-<meta name="keywords" content="{$KEYWORDS}">
+{$META}
 <link rel="stylesheet" type="text/css" href="{$MIN_STYLESHEET}">
 <script type="text/javascript" src="{$MIN_JAVASCRIPT}"></script>
 <link rel="alternate" type="application/rss+xml" href="{uri args="feeds/list/feed_news"}" title="{$PAGE_TITLE} - {lang t="news|news"}">

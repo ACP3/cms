@@ -26,6 +26,18 @@ class seo
 	 * @var array
 	 */
 	private static $aliases = array();
+	/**
+	 * Gibt die nächste Seite an
+	 * 
+	 * @var string 
+	 */
+	private static $next_page = '';
+	/**
+	 * Gibt die vorherige Seite an
+	 *
+	 * @var string 
+	 */
+	private static $previous_page = '';
 
 	/**
 	 * Setzt den Cache für die URI-Aliase
@@ -76,6 +88,21 @@ class seo
 		$path.= !preg_match('/\/$/', $path) ? '/' : '';
 
 		return array_key_exists($path, self::$aliases) === true && !empty(self::$aliases[$path]['alias']);
+	}
+	public static function getMetaTags()
+	{
+		global $tpl;
+
+		$meta = array(
+			'description' => self::getCurrentDescription(),
+			'keywords' => self::getCurrentKeywords(),
+			'robots' => defined('IN_ADM') === true ? 'noindex,nofollow' : '',
+			'previous_page' => self::$previous_page,
+			'next_page' => self::$next_page,
+		);
+		$tpl->assign('meta', $meta);
+
+		return view::fetchTemplate('common/meta.tpl');
 	}
 	/**
 	 * Gibt einen URI-Alias aus
@@ -196,5 +223,23 @@ class seo
 		$bool = $db->delete('seo', 'uri = \'' . $db->escape($path) . '\'');
 		$bool2 = self::setSEOCache();
 		return $bool !== false && $bool2 !== false ? true : false;
+	}
+	/**
+	 * Setzt die nächste Seite
+	 *
+	 * @param string $path 
+	 */
+	public static function setNextPage($path)
+	{
+		self::$next_page = $path;
+	}
+	/**
+	 * Setzt die vorherige Seite
+	 *
+	 * @param string $path 
+	 */
+	public static function setPreviousPage($path)
+	{
+		self::$previous_page = $path;
 	}
 }

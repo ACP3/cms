@@ -16,7 +16,7 @@ if (validate::isNumber($uri->cat) && $db->countRows('*', 'categories', 'id = \''
 			   ->append($category[0]['name']);
 
 	$time = $date->timestamp();
-	$period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
+	$period = ' AND (start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time . ')';
 
 	$files = $db->select('id, start, file, size, link_title', 'files', 'category_id = \'' . $uri->cat . '\'' . $period, 'start DESC, end DESC, id DESC');
 	$c_files = count($files);

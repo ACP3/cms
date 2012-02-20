@@ -36,7 +36,7 @@ if ($cat !== 0 && $settings['category_in_breadcrumb'] == 1) {
 // Falls Kategorie angegeben, News nur aus eben jener selektieren
 $cat = !empty($cat) ? ' AND category_id = ' . $cat : '';
 $time = $date->timestamp();
-$where = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')' . $cat;
+$where = '(start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time . ')' . $cat;
 
 $news = $db->select('id, start, headline, text, readmore, comments, uri', 'news', $where, 'start DESC, end DESC, id DESC', POS, $auth->entries);
 $c_news = count($news);

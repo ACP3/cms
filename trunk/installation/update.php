@@ -334,10 +334,20 @@ if (CONFIG_DB_VERSION < 17) {
 	);
 	echo executeSqlQueries($queries, 17);
 }
+if (CONFIG_DB_VERSION < 18) {
+	$queries = array(
+		"ALTER TABLE `{pre}files` CHANGE `start` `start` INT UNSIGNED NOT NULL, CHANGE `end` `end` INT UNSIGNED NOT NULL;",
+		"ALTER TABLE `{pre}gallery` CHANGE `start` `start` INT UNSIGNED NOT NULL, CHANGE `end` `end` INT UNSIGNED NOT NULL;",
+		"ALTER TABLE `{pre}news` CHANGE `start` `start` INT UNSIGNED NOT NULL, CHANGE `end` `end` INT UNSIGNED NOT NULL;",
+		"ALTER TABLE `{pre}polls` CHANGE `start` `start` INT UNSIGNED NOT NULL, CHANGE `end` `end` INT UNSIGNED NOT NULL;",
+		"ALTER TABLE `{pre}static_pages` CHANGE `start` `start` INT UNSIGNED NOT NULL, CHANGE `end` `end` INT UNSIGNED NOT NULL;",
+	);
+	echo executeSqlQueries($queries, 18);
+}
 
 // Konfigurationsdatei aktualisieren
 $config = array(
-	'db_version' => 17,
+	'db_version' => 18,
 	'maintenance_mode' => (bool) CONFIG_MAINTENANCE_MODE,
 	'seo_mod_rewrite' => (bool) CONFIG_SEO_MOD_REWRITE,
 );
