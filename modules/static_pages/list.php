@@ -20,14 +20,8 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'static_pages',
 
 	$breadcrumb->replaceAnchestor($db->escape($page[0]['title'], 3));
 
-	$page = splitTextIntoPages(rewriteInternalUri($db->escape($page[0]['text'], 3)), $uri->getCleanQuery());
-
-	if (is_array($page) === true) {
-		$tpl->assign('page', $page);
-		view::setContent(view::fetchTemplate('static_pages/list.tpl'));
-	} else {
-		view::setContent($page);
-	}
+	$tpl->assign('page', splitTextIntoPages(rewriteInternalUri($db->escape($page[0]['text'], 3)), $uri->getCleanQuery()));
+	view::setContent(view::fetchTemplate('static_pages/list.tpl'));
 } else {
 	$uri->redirect('errors/404');
 }

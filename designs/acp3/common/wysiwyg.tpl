@@ -16,18 +16,18 @@ $(document).ready(function() {
 
 	$('#{$wysiwyg.id}').after(pagebreak);
 	$('#page-break-form').hide();
-	$('#page-break-link a').click(function() {
+	$('#page-break-link a').click(function(e) {
 		$.fancybox.open($('#page-break-form'), { type: 'inline', autoSize: false, width: '20%', height: 'auto' });
+		e.preventDefault();
 	});
 
 	$('#page-break-form button').click(function(e) {
 		if ($('#toc-title').val().length > 0) {
-			var page_separator = '<hr class="page-break" title="' + $('#toc-title').val() + '" />';
+			var text = '<hr class="page-break" title="' + $('#toc-title').val() + '" />';
 		} else {
-			var page_separator = '<hr class="page-break" />';
+			var text = '<hr class="page-break" />';
 		}
 
-		var text = $('#{$wysiwyg.id}').val() + page_separator;
 		{$wysiwyg.advanced_replace_content}
 		$.fancybox.close();
 
