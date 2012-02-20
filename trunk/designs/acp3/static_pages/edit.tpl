@@ -22,7 +22,7 @@
 				<dt><label for="title">{lang t="static_pages|title"}</label></dt>
 				<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120"></dd>
 				<dt><label for="text">{lang t="static_pages|text"}</label></dt>
-				<dd>{wysiwyg name="text" value="`$form.text`" height="250"}</dd>
+				<dd>{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</dd>
 			</dl>
 		</div>
 		<div id="tab-3" class="ui-tabs-hide">
