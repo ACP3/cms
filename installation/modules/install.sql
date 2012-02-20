@@ -71,8 +71,8 @@ CREATE TABLE `{pre}emoticons` (
 
 CREATE TABLE `{pre}files` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`start` VARCHAR(14) NOT NULL,
-	`end` VARCHAR(14) NOT NULL,
+	`start` INT(10) UNSIGNED NOT NULL,
+	`end` INT(10) UNSIGNED NOT NULL,
 	`category_id` INT(10) UNSIGNED NOT NULL,
 	`file` VARCHAR(120) NOT NULL,
 	`size` VARCHAR(20) NOT NULL,
@@ -85,8 +85,8 @@ CREATE TABLE `{pre}files` (
 
 CREATE TABLE `{pre}gallery` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`start` VARCHAR(14) NOT NULL,
-	`end` VARCHAR(14) NOT NULL,
+	`start` INT(10) UNSIGNED NOT NULL,
+	`end` INT(10) UNSIGNED NOT NULL,
 	`name` VARCHAR(120) NOT NULL,
 	`user_id` INT UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`)
@@ -146,8 +146,8 @@ CREATE TABLE `{pre}modules` (
 
 CREATE TABLE `{pre}news` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`start` VARCHAR(14) NOT NULL,
-	`end` VARCHAR(14) NOT NULL,
+	`start` INT(10) UNSIGNED NOT NULL,
+	`end` INT(10) UNSIGNED NOT NULL,
 	`headline` VARCHAR(120) NOT NULL,
 	`text` TEXT NOT NULL,
 	`readmore` TINYINT(1) UNSIGNED NOT NULL,
@@ -177,21 +177,21 @@ CREATE TABLE `{pre}newsletter_archive` (
 	PRIMARY KEY (`id`)
 ) {engine};
 
+CREATE TABLE `{pre}polls` (
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`start` INT(10) UNSIGNED NOT NULL,
+	`end` INT(10) UNSIGNED NOT NULL,
+	`question` VARCHAR(120) NOT NULL,
+	`multiple` TINYINT(1) UNSIGNED NOT NULL,
+	`user_id` INT UNSIGNED NOT NULL,
+	PRIMARY KEY (`id`)
+) {engine};
+
 CREATE TABLE `{pre}poll_answers` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`text` VARCHAR(120) NOT NULL,
 	`poll_id` INT(10) UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`), INDEX `foreign_poll_id` (`poll_id`)
-) {engine};
-
-CREATE TABLE `{pre}polls` (
-	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`start` VARCHAR(14) NOT NULL,
-	`end` VARCHAR(14) NOT NULL,
-	`question` VARCHAR(120) NOT NULL,
-	`multiple` TINYINT(1) UNSIGNED NOT NULL,
-	`user_id` INT UNSIGNED NOT NULL,
-	PRIMARY KEY (`id`)
 ) {engine};
 
 CREATE TABLE `{pre}poll_votes` (
@@ -230,8 +230,8 @@ CREATE TABLE `{pre}settings` (
 
 CREATE TABLE `{pre}static_pages` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`start` VARCHAR(14) NOT NULL,
-	`end` VARCHAR(14) NOT NULL,
+	`start` INT(10) UNSIGNED NOT NULL,
+	`end` INT(10) UNSIGNED NOT NULL,
 	`title` VARCHAR(120) NOT NULL,
 	`text` TEXT NOT NULL,
 	`user_id` INT UNSIGNED NOT NULL,

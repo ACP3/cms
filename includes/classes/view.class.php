@@ -89,8 +89,7 @@ class view
 					$tpl->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
 					$tpl->assign('TITLE', $breadcrumb->output(2));
 					$tpl->assign('BREADCRUMB', $breadcrumb->output());
-					$tpl->assign('KEYWORDS', seo::getCurrentKeywords());
-					$tpl->assign('DESCRIPTION', seo::getCurrentDescription());
+					$tpl->assign('META', seo::getMetaTags());
 					$tpl->assign('CONTENT', self::$content);
 
 					$minify = ROOT_DIR . 'includes/min/' . (CONFIG_SEO_MOD_REWRITE === true && defined('IN_ADM') === false ? '' : '?') . 'g=%s&amp;' . CONFIG_DESIGN;

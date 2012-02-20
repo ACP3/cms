@@ -21,7 +21,7 @@ switch($form['area']) {
 		$fields = 'headline, text';
 }
 $time = $date->timestamp();
-$period = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
+$period = '(start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time . ')';
 
 $result_news = $db->select('id, headline, text', 'news', 'MATCH (' . $fields . ') AGAINST (\'' . $db->escape($form['search_term']) . '\' IN BOOLEAN MODE) AND ' . $period, 'start ' . $form['sort'] . ', end ' . $form['sort'] . ', id ' . $form['sort']);
 $c_result_news = count($result_news);

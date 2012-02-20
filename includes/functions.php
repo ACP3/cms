@@ -345,14 +345,7 @@ function pagination($rows, $fragment = '')
 		global $lang, $tpl, $uri;
 
 		// Alle angegebenen URL Parameter mit in die URL einbeziehen
-		$acp = defined('IN_ADM') ? 'acp/' : '';
-		$params = '';
-		foreach ($uri->getParameters() as $key => $value) {
-			if ($key !== 'mod' && $key !== 'file' && $key !== 'page')
-				$params.= '/' . $key . '_' . $value;
-		}
-
-		$link = $uri->route($acp . $uri->mod . '/' . $uri->file . $params, 1);
+		$link = $uri->route((defined('IN_ADM') ? 'acp/' : '') . $uri->getCleanQuery(), 1);
 
 		// Seitenauswahl
 		$current_page = validate::isNumber($uri->page) ? (int) $uri->page : 1;
@@ -361,6 +354,14 @@ function pagination($rows, $fragment = '')
 		$show_first_last = 5;
 		$show_previous_next = 2;
 		$j = 0;
+
+		// Vorherige und nächste Seite für Suchmaschinen und Prefetching propagieren
+		if (defined('IN_ADM') === false) {
+			if ($current_page - 1 > 0)
+				seo::setPreviousPage($link . 'page_' . ($current_page - 1) . '/');
+			if ($current_page + 1 <= $c_pagination)
+				seo::setNextPage($link . 'page_' . ($current_page + 1) . '/');
+		}
 
 		// Erste Seite
 		if ($c_pagination > $show_first_last) {

@@ -21,7 +21,7 @@ switch($form['area']) {
 		$fields = 'title, text';
 }
 $time = $date->timestamp();
-$period = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
+$period = '(start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time . ')';
 
 $result_pages = $db->select('id, title, text', 'static_pages', 'MATCH (' . $fields . ') AGAINST (\'' .  $db->escape($form['search_term']) . '\' IN BOOLEAN MODE) AND ' . $period, 'start ' . $form['sort'] . ', end ' . $form['sort'] . ', title ' . $form['sort']);
 $c_result_pages = count($result_pages);

@@ -11,7 +11,7 @@ if (defined('IN_ACP3') === false)
 	exit;
 
 $time = $date->timestamp();
-$period = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
+$period = '(start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time . ')';
 
 $question = $db->select('id, question, multiple', 'polls', $period, 'start DESC');
 
