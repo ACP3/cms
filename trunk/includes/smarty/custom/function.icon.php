@@ -5,10 +5,10 @@ function smarty_function_icon($params)
 	$width = $height = '';
 
 	if (!empty($params['width']) && !empty($params['height']) &&
-		validate::isNumber($params['width']) && validate::isNumber($params['height'])) {
+		validate::isNumber($params['width']) === true && validate::isNumber($params['height']) === true) {
 		$width = ' width="' . $params['width'] . '"';
 		$height = ' height="' . $params['height'] . '"';
-	} elseif (is_file(ACP3_ROOT . $path)) {
+	} elseif (is_file(ACP3_ROOT . $path) === true) {
 		$picInfos = getimagesize(ACP3_ROOT . $path);
 		$width = ' width="' . $picInfos[0] . '"';
 		$height = ' height="' . $picInfos[1] . '"';
@@ -20,4 +20,3 @@ function smarty_function_icon($params)
 	return '<img src="' . $path . '"' . $width . $height . $alt . $title . ' />';
 }
 /* vim: set expandtab: */
-?>

@@ -182,6 +182,102 @@ function generateSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
 	return hash($algorithm, $salt . hash($algorithm, $plaintext));
 }
 /**
+ * Generiert das Inhaltsverzeichnis
+ *
+ * @param string $pages 
+ */
+function generateTOC(array $pages, $path)
+{
+	if (!empty($pages)) {
+		global $lang, $tpl, $uri;
+
+		$toc = array();
+		$i = 0;
+		foreach ($pages as $page) {
+			$attributes = getHtmlAttributes($page);
+			$page_num = $i + 1;
+			$toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf($lang->t('static_pages', 'page'), $page_num);
+			$toc[$i]['uri'] = $uri->route($path, 1) . 'page_' . $page_num . '/';
+			$toc[$i]['selected'] = (validate::isNumber($uri->page) === false && $i === 0) || $uri->page === $page_num ? true : false;
+			++$i;
+		}
+		$tpl->assign('toc', $toc);
+		return view::fetchTemplate('common/toc.tpl');
+	}
+	return '';
+}
+/**
+ * Liest aus einem String alle vorhandenen HTML-Attribute ein und
+ * liefert diese als assoziatives Array zurück
+ *
+ * @param string $string
+ * @return array 
+ */
+function getHtmlAttributes($string)
+{
+	$matches = array();
+	preg_match_all('/([\w:-]+)[\s]?=[\s]?"([^"]*)"/i', $string, $matches);
+
+	$return = array();
+	if (!empty($matches)) {
+		$c_matches = count($matches[1]);
+		for ($i = 0; $i < $c_matches; ++$i)
+			$return[$matches[1][$i]] = $matches[2][$i];
+	}
+
+	return $return;
+}
+/**
+ * Parst einen Text und zerlegt diesen bei Bedarf mehrere Seiten
+ *
+ * @param string $text
+ *	Der zu parsende Text
+ * @param string $path
+ *	Der ACP3-interne URI-Pfad, um die Links zu generieren
+ * @return string|array 
+ */
+function splitTextIntoPages($text, $path)
+{
+	// Falls keine Seitenumbrüche vorhanden sein sollten, Text nicht unnötig bearbeiten
+	if (strpos($text, 'class="page-break"') === false) {
+		return $text;
+	} else {
+		$regex = '/<hr(.+)class="page-break"(.*)(\/>|>)/iU';
+
+		$pages = preg_split($regex, $text, -1, PREG_SPLIT_NO_EMPTY);
+		$c_pages = count($pages);
+
+		// Falls zwar Seitenumbruch gesetzt ist, aber danach
+		// kein weiterer Text kommt, den unbearbeiteten Text ausgeben
+		if ($c_pages == 1) {
+			return $text;
+		} else {
+			global $uri;
+
+			$matches = array();
+			preg_match_all($regex, $text, $matches);
+
+			$currentPage = validate::isNumber($uri->page) === true && $uri->page <= $c_pages ? $uri->page - 1 : 0;
+			$next_page = $currentPage + 2 <= $c_pages ? $uri->route($path, 1) . 'page_' . ($currentPage + 2) . '/' : '';
+			$previous_page = $currentPage > 0 ? $uri->route($path, 1) . 'page_' . $currentPage . '/' : '';
+
+			if (!empty($next_page))
+				seo::setNextPage($next_page);
+			if (!empty($previous_page))
+				seo::setPreviousPage($previous_page);
+
+			$page = array(
+				'toc' => generateTOC($matches[0], $path),
+				'text' => $pages[$currentPage],
+				'next' => $next_page,
+				'previous' => $previous_page,
+			);
+
+			return $page;
+		}
+	}
+}
+/**
  * Holt sich die von setRedirectMatch() erzeugte Redirect Nachricht
  */
 function getRedirectMessage()

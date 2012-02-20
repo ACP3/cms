@@ -22,23 +22,28 @@
 * See http://wiki.fckeditor.net/Developer%27s_Guide/Configuration/Configurations_File for more configuration info.
 */
 function editor($params) {
+	global $tpl;
 	require_once INCLUDES_DIR . 'wysiwyg/ckeditor/ckeditor_php5.php';
 
-	$basepath = ROOT_DIR . 'includes/wysiwyg/ckeditor/';
+
 	$ckeditor = new CKEditor(ROOT_DIR . 'includes/wysiwyg/ckeditor/');
+	$ckeditor->returnOutput = true;
+
+	$basepath = ROOT_DIR . 'includes/wysiwyg/ckeditor/';
+	$filebrowser_uri = $basepath . 'filemanager/browser/default/browser.html%sConnector=http://' . $_SERVER['HTTP_HOST'] . $basepath. 'filemanager/connectors/php/connector.php';
 
 	$config = array();
-	$config['filebrowserBrowseUrl'] = $basepath . 'filemanager/browser/default/browser.html?Connector=http://' . $_SERVER['HTTP_HOST'] . $basepath. 'filemanager/connectors/php/connector.php';
-	$config['filebrowserImageBrowseUrl'] = $basepath . 'filemanager/browser/default/browser.html?Type=Image&Connector=http://' . $_SERVER['HTTP_HOST'] . $basepath. 'filemanager/connectors/php/connector.php';
-	$config['filebrowserFlashBrowseUrl'] = $basepath . 'filemanager/browser/default/browser.html?Type=Flash&Connector=http://' . $_SERVER['HTTP_HOST'] . $basepath. 'filemanager/connectors/php/connector.php';
+	$config['filebrowserBrowseUrl'] = sprintf($filebrowser_uri, '?');
+	$config['filebrowserImageBrowseUrl'] = sprintf($filebrowser_uri, '?Type=Image&');
+	$config['filebrowserFlashBrowseUrl'] = sprintf($filebrowser_uri, '?Type=Flash&');
 
 	if (isset($params['height']))
 		$config['height'] = $params['height'] . 'px';
 	if (isset($params['toolbar']))
-		$config['toolbar'] = $params['toolbar'] == 'simple' ? 'Basic' : 'Full';
+		$config['toolbar'] = $params['toolbar'] === 'simple' ? 'Basic' : 'Full';
 
 	// Smilies
-	if (!isset($config['toolbar']) || $config['toolbar'] != 'simple') {
+	if ((!isset($config['toolbar']) || $config['toolbar'] !== 'simple') && modules::check('emoticons', 'functions') === true) {
 		global $db;
 
 		$config['smiley_path'] = ROOT_DIR . 'uploads/emoticons/';
@@ -48,7 +53,7 @@ function editor($params) {
 
 		for ($i = 0; $i < $c_emoticons; ++$i) {
 			$config['smiley_images'].= '\'' . $emoticons[$i]['img'] . '\',';
-			$config['smiley_descriptions'].= '\'' . $emoticons[$i]['description'] . '\',';
+			$config['smiley_descriptions'].= '\'' . $db->escape($emoticons[$i]['description'], 3) . '\',';
 		}
 
 		$config['smiley_images'] = '@@[' . substr($config['smiley_images'], 0, -1) . ']';
@@ -56,8 +61,18 @@ function editor($params) {
 	}
 	// Basic Toolbar erweitern
 	if (isset($config['toolbar']) && $config['toolbar'] == 'Basic') {
-		$config['toolbar_Basic'] = '@@[ [\'Source\',\'-\',\'Undo\',\'Redo\',\'-\',\'Bold\',\'Italic\',\'-\',\'NumberedList\',\'BulletedList\',\'-\',\'Link\',\'Unlink\',\'-\',\'About\'] ]';
+		$config['toolbar_Basic'] = "@@[ ['Source','-','Undo','Redo','-','Bold','Italic','-','NumberedList','BulletedList','-','Link','Unlink','-','About'] ]";
 	}
 
-	return $ckeditor->editor($params['name'], $params['id'], $params['value'], $config);
+	$wysiwyg = array(
+		'id' => $params['id'],
+		'editor' => $ckeditor->editor($params['name'], $params['id'], $params['value'], $config),
+		'advanced' => isset($params['advanced']) && $params['advanced'] == 1 ? true : false,
+	);
+
+	if ($wysiwyg['advanced'] === true)
+		$wysiwyg['advanced_replace_content'] = 'CKEDITOR.instances.' . $wysiwyg['id'] . '.insertHtml(text);';
+
+	$tpl->assign('wysiwyg', $wysiwyg);
+	return view::fetchTemplate('common/wysiwyg.tpl');
 }

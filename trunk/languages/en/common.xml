@@ -78,6 +78,7 @@
 	<item key="home">Home</item>
 	<item key="hour">Hour</item>
 	<item key="id">ID</item>
+	<item key="insert_page_break">Insert page break</item>
 	<item key="keywords">Keywords</item>
 	<item key="keywords_separate_with_commas">Please seperate with commas</item>
 	<item key="last_page">Last page</item>
@@ -121,6 +122,7 @@
 	<item key="start_date">Release date</item>
 	<item key="submit">Submit</item>
 	<item key="time_zone">Time zone</item>
+	<item key="title_for_toc">Title for table of contents</item>
 	<item key="unmark_all">Unmark all</item>
 	<item key="upload_error">While moving the file %s an error has occured.</item>
 	<item key="uri_alias">URI-Alias</item>

@@ -12,4 +12,3 @@ function smarty_function_seo_fields($params, $template)
 	return $template->smarty->fetch('common/seo_fields.tpl');;
 }
 /* vim: set expandtab: */
-?>

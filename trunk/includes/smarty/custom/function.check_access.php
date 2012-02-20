@@ -29,10 +29,10 @@ function smarty_function_check_access($params, $template)
 			$access_check['width'] = $access_check['height'] = '';
 
 			if (!empty($params['width']) && !empty($params['height']) &&
-				validate::isNumber($params['width']) && validate::isNumber($params['height'])) {
+				validate::isNumber($params['width']) === true && validate::isNumber($params['height']) === true) {
 				$access_check['width'] = ' width="' . $params['width'] . '"';
 				$access_check['height'] = ' height="' . $params['height'] . '"';
-			} elseif (is_file(ACP3_ROOT . $path)) {
+			} elseif (is_file(ACP3_ROOT . $path) === true) {
 				$picInfos = getimagesize(ACP3_ROOT . $path);
 				$access_check['width'] = ' width="' . $picInfos[0] . '"';
 				$access_check['height'] = ' height="' . $picInfos[1] . '"';
@@ -48,4 +48,3 @@ function smarty_function_check_access($params, $template)
 	return '';
 }
 /* vim: set expandtab: */
-?>

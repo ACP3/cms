@@ -1,11 +1,13 @@
 $(document).ready(function() {
-	$(':radio[name=\'form[create]\']').click(function() {
+	$(':radio[name="form[create]"]').bind('click', function() {
 		if ($(this).val() == 1) {
 			$('#create-item-container').show();
 		} else {
 			$('#create-item-container').hide();
 		}
-	}).click();
+	});
+	$(':radio[name="form[create]"]:checked').trigger('click');
+
 	// Nur die zum Block gehörigen übergeordneten Seiten anzeigen
 	$('#parent optgroup').hide();
 	$('#block-id').change(function() {

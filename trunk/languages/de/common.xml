@@ -78,6 +78,7 @@
 	<item key="home">Home</item>
 	<item key="hour">Stunde</item>
 	<item key="id">ID</item>
+	<item key="insert_page_break">Seitenumbruch einfügen</item>
 	<item key="keywords">Schlüsselwörter</item>
 	<item key="keywords_separate_with_commas">Bitte mit Kommata trennen</item>
 	<item key="last_page">Letzte Seite</item>
@@ -121,6 +122,7 @@
 	<item key="start_date">Veröffentlichungsdatum</item>
 	<item key="submit">Senden</item>
 	<item key="time_zone">Zeitzone</item>
+	<item key="title_for_toc">Seitentitel für das Inhaltsverzeichnis</item>
 	<item key="unmark_all">Markierung aufheben</item>
 	<item key="upload_error">Die Datei %s konnte leider nicht verschoben werden.</item>
 	<item key="uri_alias">URI-Alias</item>

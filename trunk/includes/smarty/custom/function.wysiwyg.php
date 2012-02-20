@@ -6,11 +6,11 @@
  */
 function smarty_function_wysiwyg($params) {
 	$path = INCLUDES_DIR . 'wysiwyg/' . CONFIG_WYSIWYG . '/editor.php';
+	$params['id'] = !empty($params['id']) ? $params['id'] : $params['name'];
 	$params['name'] = 'form[' . $params['name'] . ']';
-	$params['id'] = !empty($params['id']) ? $params['id'] : substr($params['name'], 5, -1);
 
 	// WYSIWYG Editor einbinden
-	if (CONFIG_WYSIWYG != 'textarea' && is_file($path) && !preg_match('=/=', CONFIG_WYSIWYG)) {
+	if (CONFIG_WYSIWYG !== 'textarea' && is_file($path) === true && !preg_match('=/=', CONFIG_WYSIWYG)) {
 		require_once $path;
 
 		return editor($params);
@@ -19,7 +19,7 @@ function smarty_function_wysiwyg($params) {
 		$out = '';
 
 		// Falls aktiv, die Emoticons einbinden
-		if (modules::check('emoticons', 'functions')) {
+		if (modules::check('emoticons', 'functions') === true) {
 			include_once MODULES_DIR . 'emoticons/functions.php';
 			$out.= emoticonsList($params['id']);
 		}
@@ -28,4 +28,3 @@ function smarty_function_wysiwyg($params) {
 	}
 }
 /* vim: set expandtab: */
-?>
