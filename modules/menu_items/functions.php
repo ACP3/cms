@@ -340,7 +340,7 @@ function processNavbar($block) {
 
 			// Selektion nur vornehmen, wenn man sich im Frontend befindet
 			if (defined('IN_ADM') === false) {
-				$in = "'" . $uri->query . "', '" . $uri->mod . '/' . $uri->file . "/', '" . $uri->mod . "'";
+				$in = "'" . $uri->query . "', '" . $uri->getCleanQuery() . "', '" . $uri->mod . '/' . $uri->file . "/', '" . $uri->mod . "'";
 				$select = $db->query('SELECT m.left_id FROM {pre}menu_items AS m JOIN {pre}menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri IN(' . $in . ') ORDER BY LENGTH(m.uri) DESC');
 			}
 

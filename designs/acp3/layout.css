@@ -394,15 +394,20 @@ a.form, a:link.form {
 }
 /* Seitenauswahl */
 #pagination {
+	height: 25px;
 	margin: 4px 0;
-	padding: 7px 0;
+	padding: 0 5px;
 	border: 1px dotted #ccc;
 	border-width: 1px 0;
-	font: bold 0.9em Verdana, Arial, sans-serif;
+	font: bold 0.9em/25px Verdana, Arial, sans-serif;
 	text-align: center;
+	clear: both;
 }
-#pagination a, #pagination span {
-	padding: 2px;
+#pagination a.next {
+	float: right;
+}
+#pagination a.previous {
+	float: left;
 }
 /* ACP */
 #adm-list {

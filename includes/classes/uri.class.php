@@ -154,6 +154,15 @@ class uri
 		return $this->params;
 	}
 	/**
+	 * Gibt die bereinigte URI-Query aus, d.h. ohne die anzuzeigende Seite
+	 *
+	 * @return string 
+	 */
+	public function getCleanQuery()
+	{
+		return preg_replace('/\/page_(\d+)\//', '/', $this->query);
+	}
+	/**
 	 * Umleitung auf andere URLs
 	 *
 	 * @param string $args
