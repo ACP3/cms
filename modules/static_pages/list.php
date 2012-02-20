@@ -20,7 +20,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'static_pages',
 
 	$breadcrumb->replaceAnchestor($db->escape($page[0]['title'], 3));
 
-	$page = staticPagesSplit(rewriteInternalUri($db->escape($page[0]['text'], 3)), $uri->getCleanQuery());
+	$page = splitTextIntoPages(rewriteInternalUri($db->escape($page[0]['text'], 3)), $uri->getCleanQuery());
 
 	if (is_array($page) === true) {
 		$tpl->assign('page', $page);

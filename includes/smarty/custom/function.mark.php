@@ -5,4 +5,3 @@ function smarty_function_mark($params, $template)
 	return $template->smarty->fetch('common/mark.tpl');
 }
 /* vim: set expandtab: */
-?>

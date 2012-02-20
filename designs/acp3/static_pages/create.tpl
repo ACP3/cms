@@ -23,7 +23,7 @@
 				<dt><label for="title">{lang t="static_pages|title"}</label></dt>
 				<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120"></dd>
 				<dt><label for="text">{lang t="static_pages|text"}</label></dt>
-				<dd>{wysiwyg name="text" value="`$form.text`" height="250"}</dd>
+				<dd>{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</dd>
 {if isset($create)}
 				<dt><label for="create-item-1">{lang t="static_pages|create_menu_item"}</label></dt>
 				<dd>
