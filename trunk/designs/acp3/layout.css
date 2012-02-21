@@ -304,7 +304,9 @@ fieldset input:focus, fieldset select:focus, fieldset textarea:focus,
 	background: #ffc;
 }
 fieldset input.error, fieldset select.error, fieldset textarea.error,
-#tabs input.error, #tabs select.error, #tabs textarea.error,
+#tabs input.error, #tabs select.error, #tabs textarea.error {
+	box-shadow: 0 0 1.5px 1px #f00;
+}
 :-moz-ui-invalid {
 	box-shadow: 0 0 1.5px 1px #f00;
 }
