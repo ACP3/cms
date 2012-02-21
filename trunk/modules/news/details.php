@@ -18,6 +18,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'id = \
 
 	$settings = config::getModuleSettings('news');
 	$news = getNewsCache($uri->id);
+	$news[0]['headline'] = $db->escape($news[0]['headline'], 3);
 
 	$breadcrumb->append($lang->t('news', 'news'), $uri->route('news'));
 	if ($settings['category_in_breadcrumb'] == 1) {
