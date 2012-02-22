@@ -164,7 +164,7 @@ class session {
 			return;
 
 		global $db;
-		$db->delete('sessions', 'session_starttime < ' . (time() + $session_lifetime));
+		$db->delete('sessions', 'session_starttime + ' . $session_lifetime . ' < ' . time());
 
 		return true;
 	}
