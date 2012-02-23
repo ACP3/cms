@@ -18,7 +18,7 @@
 	<item key="per_cent">Per cent</item>
 	<item key="poll">Poll</item>
 	<item key="poll_error">While saving your vote an error has occured.</item>
-	<item key="poll_success">You vote was successfully counted.</item>
+	<item key="poll_success">Your vote has been successfully counted.</item>
 	<item key="polls">Polls</item>
 	<item key="polls_archive">Polls archive</item>
 	<item key="question">Question</item>

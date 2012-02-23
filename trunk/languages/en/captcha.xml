@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
 	<item key="captcha">Captcha</item>
-	<item key="invalid_captcha_entered">Either you you had a typo in the captcha or the it's outdated</item>
+	<item key="invalid_captcha_entered">Either you had a typo in the captcha or the it's outdated</item>
 	<item key="mod_description">Captchas can block Spambots</item>
 </language>
