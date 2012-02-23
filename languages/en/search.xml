@@ -5,9 +5,9 @@
 	<item key="desc">Descending</item>
 	<item key="mod_description">With this module it is possible to search thorugh other modules.</item>
 	<item key="no_area_selected">Please select which areas of the entries should be searched through</item>
-	<item key="no_sorting_selected">Please select, in which order the hits should be displayed</item>
+	<item key="no_sorting_selected">Please select in which order the hits should be displayed</item>
 	<item key="no_module_selected">Please select at least one module, which should be search through</item>
-	<item key="no_search_results"><![CDATA[ No entries matched search term &quot;%s&quot;. ]]></item>
+	<item key="no_search_results"><![CDATA[No entries matched search term &quot;%s&quot;.]]></item>
 	<item key="search">Search</item>
 	<item key="search_after_areas">Search through following areas</item>
 	<item key="search_after_modules">Search through following modules</item>
