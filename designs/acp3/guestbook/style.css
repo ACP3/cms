@@ -1,13 +1,13 @@
 /* GB */
 .gb {
-	width: 70%;
+	width: 80%;
 	margin: 2px auto;
 	background: #eee;
-	border: 1px solid #333;
+	border: 1px solid #bbb;
 }
 .gb .header {
 	background: #069 url('../images/common_header.png') repeat-x;
-	border-bottom: 1px solid #333;
+	border-bottom: 1px solid #bbb;
 	font-weight: bold;
 	font-size: 1.1em;
 	line-height: 25px;
@@ -26,7 +26,7 @@
 	max-width: 200px;
 	width: 190px;
 	padding: 5px;
-	border-right: 1px solid #333;
+	border-right: 1px solid #bbb;
 	float: left;
 }
 .gb .left span {
@@ -35,12 +35,12 @@
 .gb .content {
 	margin-left: 200px;
 	padding: 5px;
-	border-left: 1px solid #333;
+	border-left: 1px solid #bbb;
 }
 .gb .footer {
 	height: 25px;
-	background: #ccc url('../images/common_footer.png') repeat-x;
-	border-top: 1px solid #333;
+	background: #bbb url('../images/common_footer.png') repeat-x;
+	border-top: 1px solid #bbb;
 	line-height: 18px;
 	clear: both;
 }

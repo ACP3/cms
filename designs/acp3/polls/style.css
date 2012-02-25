@@ -1,13 +1,13 @@
 .poll {
 	width: 40%;
 	margin: 0 auto;
-	border: 1px solid #333;
+	border: 1px solid #bbb;
 	text-align: left;
 }
 .poll h4 {
 	padding: 0 5px;
 	background: url('../images/common_header.png') repeat-x;
-	border-bottom: 1px solid #333;
+	border-bottom: 1px solid #bbb;
 	line-height: 25px;
 	color: #f90;
 	text-align: center;
@@ -28,7 +28,7 @@
 #sidebar-polls {
 	padding: 5px 0;
 	background: #eee;
-	border: 1px solid #333;
+	border: 1px solid #bbb;
 	border-width: 1px 0 0;
 	text-align: center;
 }

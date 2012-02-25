@@ -1,7 +1,7 @@
 .files {
 	margin: 2px 0;
 	background: #069 url('../images/common_header.png') repeat-x;
-	border: 1px solid #333;
+	border: 1px solid #bbb;
 }
 .files .header, .files .date {
 	padding: 3px;
@@ -24,12 +24,13 @@
 .files .content {
 	padding: 10px;
 	background: #fff;
-	border-top: 1px solid #333;
+	border-top: 1px solid #bbb;
 }
 .files .content .hyperlink {
 	padding: 0 4px;
 	background: #eee;
-	border: 1px solid #333;
+	border: 1px dotted #ccc;
+	border-width: 1px 0;
 	line-height: 20px;
 }
 a.download-file {

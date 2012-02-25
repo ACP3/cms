@@ -58,7 +58,7 @@ pre {
 	overflow: auto;
 }
 .acp-table, .acp-table tr, .acp-table th, .acp-table td {
-	border: 1px solid #333;
+	border: 1px solid #bbb;
 	border-collapse: collapse;
 	font-size: 1.0em;
 	text-align: center;
@@ -229,7 +229,7 @@ a.form {
 	width: 80%;
 	height: 54px;
 	margin: -28px auto;
-	border: 1px solid #333;
+	border: 1px solid #bbb;
 	text-align: center;
 	position: absolute;
 	top: 50%;
@@ -239,7 +239,7 @@ a.form {
 .confirm-box .header {
 	height: 25px;
 	background: #069 url('images/common_header.png') repeat-x;
-	border-bottom: 1px solid #333;
+	border-bottom: 1px solid #bbb;
 	font-weight: bold;
 	line-height: 25px;
 	color: #f90;

@@ -56,7 +56,7 @@ table.acp-table {
 	text-align: center;
 }
 #queries, #queries tr, #queries th, #queries td {
-	border: 1px solid #333;
+	border: 1px solid #bbb;
 	border-collapse: collapse;
 }
 #queries th {
@@ -90,7 +90,6 @@ table.acp-table {
 	margin: 0;
 	padding-left: 10px;
 	background: url('../../designs/acp3/images/header.png') repeat-x;
-	border-bottom: 1px solid #333;
 	font: bold 1.3em Verdana, Arial, sans-serif;
 	list-style: none;
 }
@@ -182,9 +181,13 @@ fieldset input, fieldset textarea,
 fieldset input, fieldset select, fieldset textarea,
 #tabs div input, #tabs div select, #tabs div textarea {
 	width: 100%;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
 	margin: 1px;
+	padding: 2px;
 	background: #fff;
-	border: 1px solid #c2c2c2;
+	border: 1px solid #ccc;
+	border-color: #c0c0c0 #eee #eee #c0c0c0;
 	font: 100% Arial, sans-serif;
 }
 fieldset input:hover, fieldset select:hover, fieldset textarea:hover,
