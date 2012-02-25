@@ -240,6 +240,7 @@ CREATE TABLE `{pre}static_pages` (
 
 CREATE TABLE `{pre}users` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`super_user` TINYINT(1) UNSIGNED NOT NULL,
 	`nickname` VARCHAR(30) NOT NULL,
 	`pwd` VARCHAR(53) NOT NULL,
 	`login_errors` TINYINT(1) UNSIGNED NOT NULL,

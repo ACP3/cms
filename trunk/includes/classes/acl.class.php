@@ -271,7 +271,7 @@ class acl
 		return false;
 	}
 	/**
-	 * Gibt aus, ob ein Benutzer berichtigt ist, eine Resource zu betreten
+	 * Gibt aus, ob ein Benutzer berichtigt ist, eine Ressource zu betreten
 	 *
 	 * @param string $resource
 	 *	Pfad der Ressource im Stile einer ACP3 internen URI
@@ -279,8 +279,11 @@ class acl
 	 */
 	public static function canAccessResource($resource)
 	{
-		if (isset(self::$resources[$resource]))
-			return self::userHasPrivilege(substr($resource, 0, strpos($resource, '/')), self::$resources[$resource]['key']);
+		if (isset(self::$resources[$resource])) {
+			global $auth;
+
+			return self::userHasPrivilege(substr($resource, 0, strpos($resource, '/')), self::$resources[$resource]['key']) === true || $auth->isSuperUser() === true ? true : false;
+		}
 		return false;
 	}
 }

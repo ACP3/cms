@@ -71,9 +71,11 @@ Passwort: {password}</item>
 	<item key="select_entries_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die angezeigten Datensätze pro Seite selber festzulegen.</item>
 	<item key="select_language">Bitte wählen Sie aus, in welcher Sprache Sie die Website angezeigt bekommen möchten.</item>
 	<item key="select_language_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die Anzeigesprache selber festzulegen.</item>
+	<item key="select_super_user">Bitte geben Sie an, ob der gewählte Benutzer Super User sein soll, oder nicht.</item>
 	<item key="send_email">E-Mail senden</item>
 	<item key="settings">Einstellungen</item>
 	<item key="skype">Skype</item>
+	<item key="super_user">Super User</item>
 	<item key="type_in_nickname_or_email">Bitte geben Sie entweder den bei der Registrierung verwendeten Benutzernamen oder die E-Mail-Adresse ein.</item>
 	<item key="type_in_pwd">Entweder ist das Passwort leer oder in der Wiederholung ist ein Tippfehler.</item>
 	<item key="user_email_already_exists">Für die angegebene E-Mail-Adresse existiert bereits ein Benutzerkonto.</item>

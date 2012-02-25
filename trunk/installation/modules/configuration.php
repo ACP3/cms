@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 			'db_pre' => $form['db_pre'],
 			'db_password' => $form['db_password'],
 			'db_user' => $form['db_user'],
-			'db_version' => 18,
+			'db_version' => 19,
 			'design' => 'acp3',
 			'entries' => $form['entries'],
 			'flood' => $form['flood'],
@@ -92,7 +92,7 @@ if (isset($_POST['submit'])) {
 		$current_date = gmdate('U');
 
 		$other_arr = array(
-			1 => 'INSERT INTO `{pre}users` VALUES (\'\', \'' . $db->escape($form['user_name']) . '\', \'' . generateSaltedPassword($salt, $form['user_pwd']) . ':' . $salt . '\', \'0\', \':1\', \'1:1\', \':1\', \'1\', \'' . $form['mail'] . ':1\', \':1\', \':1\', \':1\', \':1\', \'' . $db->escape($form['date_format_long']) . '\', \'' . $db->escape($form['date_format_short']) . '\', \'' . $form['date_time_zone'] . '\', \'' . $form['date_dst'] .'\', \'' . LANG . '\', \'' . $form['entries'] . '\', \'\')',
+			1 => 'INSERT INTO `{pre}users` VALUES (\'\', 1, \'' . $db->escape($form['user_name']) . '\', \'' . generateSaltedPassword($salt, $form['user_pwd']) . ':' . $salt . '\', \'0\', \':1\', \'1:1\', \':1\', \'1\', \'' . $form['mail'] . ':1\', \':1\', \':1\', \':1\', \':1\', \'' . $db->escape($form['date_format_long']) . '\', \'' . $db->escape($form['date_format_short']) . '\', \'' . $form['date_time_zone'] . '\', \'' . $form['date_dst'] .'\', \'' . LANG . '\', \'' . $form['entries'] . '\', \'\')',
 			2 => 'INSERT INTO `{pre}news` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', \'' . $lang->t('installation', 'news_headline') . '\', \'' . $lang->t('installation', 'news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\', \'\')',
 			3 => 'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 1, 0, 1, 2, 1, \'' . $lang->t('installation', 'pages_news') . '\', \'news\', 1), (\'\', 1, 1, 2, 0, 3, 4, 1, \'' . $lang->t('installation', 'pages_files') . '\', \'files\', 1), (\'\', 1, 1, 3, 0, 5, 6, 1, \'' . $lang->t('installation', 'pages_gallery') . '\', \'gallery\', 1), (\'\', 1, 1, 4, 0, 7, 8, 1, \'' . $lang->t('installation', 'pages_guestbook') . '\', \'guestbook\', 1), (\'\', 1, 1, 5, 0, 9, 10, 1, \'' . $lang->t('installation', 'pages_polls') . '\', \'polls\', 1), (\'\', 1, 1, 6, 0, 11, 12, 1, \'' . $lang->t('installation', 'pages_search') . '\', \'search\', 1), (\'\', 1, 2, 7, 0, 13, 14, 1, \'' . $lang->t('installation', 'pages_contact') . '\', \'contact\', 1), (\'\', 2, 2, 8, 0, 15, 16, 1, \'' . $lang->t('installation', 'pages_imprint') . '\', \'contact/imprint/\', 1)',
 			4 => 'INSERT INTO `{pre}menu_items_blocks` (`id`, `index_name`, `title`) VALUES (1, \'main\', \'' . $lang->t('installation', 'pages_main') . '\'), (2, \'sidebar\', \'' . $lang->t('installation', 'pages_sidebar') . '\')',

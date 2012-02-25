@@ -38,7 +38,7 @@ if ($handle !== true) {
  *
  * @param array $queries
  *	Array mit durchführenden Datenbankschema-Änderungen
- * @param integer $version 
+ * @param integer $version
  *	Version der Datenbank, auf welche aktualisiert werden soll
  */
 function executeSqlQueries(array $queries, $version)
@@ -344,10 +344,16 @@ if (CONFIG_DB_VERSION < 18) {
 	);
 	echo executeSqlQueries($queries, 18);
 }
+if (CONFIG_DB_VERSION < 19) {
+	$queries = array(
+		"ALTER TABLE `{pre}users` ADD `super_user` TINYINT(1) UNSIGNED NOT NULL,",
+	);
+	echo executeSqlQueries($queries, 19);
+}
 
 // Konfigurationsdatei aktualisieren
 $config = array(
-	'db_version' => 18,
+	'db_version' => 19,
 	'maintenance_mode' => (bool) CONFIG_MAINTENANCE_MODE,
 	'seo_mod_rewrite' => (bool) CONFIG_SEO_MOD_REWRITE,
 );

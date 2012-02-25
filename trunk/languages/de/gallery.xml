@@ -21,6 +21,7 @@
 	<item key="max_image_height">Maximale Bildhöhe</item>
 	<item key="max_image_width">Maximale Bildbreite</item>
 	<item key="mod_description">Mit diesem Modul können die Fotogalerien verwaltet werden.</item>
+	<item key="next_image">Nächstes Bild</item>
 	<item key="no_picture_selected">Bitte wählen Sie ein Bild aus</item>
 	<item key="no_pictures">In diese Fotogalerie wurden noch keine Bilder eingetragen.</item>
 	<item key="pics">Fotogalerien</item>
@@ -28,6 +29,7 @@
 	<item key="picture_index">Bild Übersicht</item>
 	<item key="picture_information">Bild Informationen</item>
 	<item key="pictures">Bilder</item>
+	<item key="previous_image">Vorheriges Bild</item>
 	<item key="select_allow_comments">Bitte wählen Sie aus, ob Kommentare unter Bildern zugelassen werden sollen oder nicht</item>
 	<item key="select_new_picture">Neues Bild auswählen</item>
 	<item key="select_picture">Bild auswählen</item>

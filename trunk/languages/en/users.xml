@@ -71,9 +71,11 @@ Password: {password}</item>
 	<item key="select_entries_override">Please select whether users should be allowed to override the number of displayed resultsets per page.</item>
 	<item key="select_language">Please select the language in which you want to see the website.</item>
 	<item key="select_language_override">Please select whether to users should be allowed to override the default language.</item>
+	<item key="select_super_user">Please select, whether the user should be a super user or not.</item>
 	<item key="send_email">Send E-mail</item>
 	<item key="settings">Settings</item>
 	<item key="skype">Skype</item>
+	<item key="super_user">Super user</item>
 	<item key="type_in_nickname_or_email">Please either enter the E-mail address or the user name you used with the registration.</item>
 	<item key="type_in_pwd">Either the password is empty or there is a typo in the repetition.</item>
 	<item key="user_email_already_exists">There is already an user account registered with the same E-mail address.</item>

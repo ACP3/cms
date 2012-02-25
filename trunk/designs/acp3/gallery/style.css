@@ -23,27 +23,15 @@
 .pictures {
 	text-align: center;
 }
-.picture img {
-	border: 1px dotted #333;
+.picture img, .pictures img {
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
 }
 .picture {
 	margin: 10px 0;
 	text-align: center;
 }
-.picture .content {
+.picture .description {
 	margin: 10px 25%;
-}
-.picture .prev-next {
-	height: 120px;
-	line-height: 120px;
-	text-align: center;
-}
-.picture .prev {
-	float: left;
-}
-.picture .next {
-	float: right;
-}
-.picture .index {
-	padding: 0 130px;
 }

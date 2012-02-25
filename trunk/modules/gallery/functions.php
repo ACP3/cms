@@ -34,8 +34,8 @@ function setGalleryCache($id)
 			}
 		}
 
-       	$pictures[$i]['width'] = isset($newWidth) ? $newWidth : $width;
-       	$pictures[$i]['height'] = isset($newHeight) ? $newHeight : $height;
+		$pictures[$i]['width'] = isset($newWidth) ? $newWidth : $picInfos[0];
+		$pictures[$i]['height'] = isset($newHeight) ? $newHeight : $picInfos[1];
 	}
 
 	return cache::create('gallery_pics_id_' . $id, $pictures);

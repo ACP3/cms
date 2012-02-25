@@ -12,7 +12,7 @@ define('CONFIG_DB_NAME', 'acp3');
 define('CONFIG_DB_PASSWORD', '');
 define('CONFIG_DB_PRE', 'acp3_');
 define('CONFIG_DB_USER', 'root');
-define('CONFIG_DB_VERSION', 18);
+define('CONFIG_DB_VERSION', 19);
 define('CONFIG_DESIGN', 'acp3');
 define('CONFIG_ENTRIES', 20);
 define('CONFIG_FLOOD', 30);

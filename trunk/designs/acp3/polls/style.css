@@ -28,6 +28,8 @@
 #sidebar-polls {
 	padding: 5px 0;
 	background: #eee;
+	border: 1px solid #333;
+	border-width: 1px 0 0;
 	text-align: center;
 }
 #sidebar-polls ul {

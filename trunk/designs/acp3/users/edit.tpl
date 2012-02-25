@@ -27,6 +27,15 @@
 {/foreach}
 					</select>
 				</dd>
+				<dt><label for="super-user-1">{lang t="users|super_user"}</label></dt>
+				<dd>
+{foreach $super_user as $row}
+					<label for="super-user-{$row.value}">
+						<input type="radio" name="form[super_user]" id="super-user-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+						{$row.lang}
+					</label>
+{/foreach}
+				</dd>
 			</dl>
 		</div>
 		<div id="tab-2" class="ui-tabs-hide">
