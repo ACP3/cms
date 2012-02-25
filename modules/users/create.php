@@ -23,6 +23,12 @@ if (isset($_POST['form']) === true) {
 		$errors['mail'] = $lang->t('common', 'wrong_email_format');
 	if (userEmailExists($form['mail']) === true)
 		$errors['mail'] = $lang->t('users', 'user_email_already_exists');
+	if (empty($form['roles']) || is_array($form['roles']) === false || validate::aclRolesExist($form['roles']) === false)
+		$errors['roles'] = $lang->t('users', 'select_access_level');
+	if (!isset($form['super_user']) || ($form['super_user'] != 1 && $form['super_user'] != 0))
+		$errors['super-user'] = $lang->t('users', 'select_super_user');
+	if ($lang->languagePackExists($form['language']) === false)
+		$errors['language'] = $lang->t('users', 'select_language');
 	if (validate::isNumber($form['entries']) === false)
 		$errors['entries'] = $lang->t('system', 'select_entries_per_page');
 	if (empty($form['date_format_long']) || empty($form['date_format_short']))
@@ -31,10 +37,6 @@ if (isset($_POST['form']) === true) {
 		$errors['time-zone'] = $lang->t('common', 'select_time_zone');
 	if (validate::isNumber($form['dst']) === false)
 		$errors[] = $lang->t('common', 'select_daylight_saving_time');
-	if ($lang->languagePackExists($form['language']) === false)
-		$errors['language'] = $lang->t('users', 'select_language');
-	if (empty($form['roles']) || is_array($form['roles']) === false || validate::aclRolesExist($form['roles']) === false)
-		$errors['roles'] = $lang->t('users', 'select_access_level');
 	if (empty($form['pwd']) || empty($form['pwd_repeat']) || $form['pwd'] != $form['pwd_repeat'])
 		$errors[] = $lang->t('users', 'type_in_pwd');
 
@@ -47,6 +49,7 @@ if (isset($_POST['form']) === true) {
 
 		$insert_values = array(
 			'id' => '',
+			'super_user' => (int) $form['super_user'],
 			'nickname' => $db->escape($form['nickname']),
 			'pwd' => generateSaltedPassword($salt, $form['pwd']) . ':' . $salt,
 			'realname' => $db->escape($form['realname']) . ':1',
@@ -91,6 +94,16 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 		$roles[$i]['selected'] = selectEntry('roles', $roles[$i]['id']);
 	}
 	$tpl->assign('roles', $roles);
+
+	// Super User
+	$super_user = array();
+	$super_user[0]['value'] = '1';
+	$super_user[0]['checked'] = selectEntry('super_user', '1', '0', 'checked');
+	$super_user[0]['lang'] = $lang->t('common', 'yes');
+	$super_user[1]['value'] = '0';
+	$super_user[1]['checked'] = selectEntry('super_user', '0', '0', 'checked');
+	$super_user[1]['lang'] = $lang->t('common', 'no');
+	$tpl->assign('super_user', $super_user);
 
 	// Sprache
 	$languages = array();

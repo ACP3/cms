@@ -36,6 +36,12 @@ class auth
 	 */
 	private $userId = 0;
 	/**
+	 * Super User oder nicht
+	 *
+	 * @var boolean
+	 */
+	private $superUser = false;
+	/**
 	 * Anzuzeigende Datensätze  pro Seite
 	 *
 	 * @var integer
@@ -59,12 +65,13 @@ class auth
 			$cookie = base64_decode($_COOKIE[self::COOKIE_NAME]);
 			$cookie_arr = explode('|', $cookie);
 
-			$user = $db->select('id, pwd, entries, language', 'users', 'nickname = \'' . $db->escape($cookie_arr[0]) . '\' AND login_errors < 3');
+			$user = $db->select('id, super_user, pwd, entries, language', 'users', 'nickname = \'' . $db->escape($cookie_arr[0]) . '\' AND login_errors < 3');
 			if (count($user) === 1) {
 				$db_password = substr($user[0]['pwd'], 0, 40);
 				if ($db_password === $cookie_arr[1]) {
 					$this->isUser = true;
 					$this->userId = (int) $user[0]['id'];
+					$this->superUser = (bool) $user[0]['super_user'];
 					$settings = config::getModuleSettings('users');
 					$this->entries = $settings['entries_override'] == 1 && $user[0]['entries'] > 0 ? (int) $user[0]['entries'] : (int) CONFIG_ENTRIES;
 					$this->language = $settings['language_override'] == 1 ? $user[0]['language'] : CONFIG_LANG;
@@ -100,7 +107,7 @@ class auth
 			if (empty($user_info[$user_id])) {
 				global $db;
 
-				$info = $db->select('nickname, realname, gender, birthday, birthday_format, mail, website, icq, msn, skype, date_format_long, date_format_short, time_zone, dst, language, draft', 'users', 'id = \'' . $user_id . '\'');
+				$info = $db->select('super_user, nickname, realname, gender, birthday, birthday_format, mail, website, icq, msn, skype, date_format_long, date_format_short, time_zone, dst, language, draft', 'users', 'id = \'' . $user_id . '\'');
 				if (!empty($info)) {
 					$pos = strrpos($info[0]['realname'], ':');
 					$info[0]['realname_display'] = substr($info[0]['realname'], $pos + 1);
@@ -151,6 +158,15 @@ class auth
 	public function isUser()
 	{
 		return $this->isUser === true && validate::isNumber($this->getUserId()) === true ? true : false;
+	}
+	/**
+	 * Gibt aus, ob der aktuell eingeloggte Benutzer der Super User ist, oder nicht
+	 *
+	 * @return boolean
+	 */
+	public function isSuperUser()
+	{
+		return $this->superUser;
 	}
 	/**
 	 * Loggt einen User ein

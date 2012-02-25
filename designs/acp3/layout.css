@@ -30,11 +30,13 @@ h5 {
 h6 {
 	font-size: 1.0em;
 }
-a, a:link {
+a, a:link,
+#tabs dl a, #tabs dl a:link {
 	color: #069;
 	text-decoration: none;
 }
-a:hover {
+a:hover,
+#tabs dl a:hover {
 	color: #f90;
 }
 ul, ol {
@@ -387,7 +389,7 @@ a.form, a:link.form {
 .redirect-message {
 	margin: 10px 0;
 	background: #eee;
-	border: 1px solid #ccc;
+	border: 1px dotted #ccc;
 	border-width: 1px 0;
 }
 .redirect-message h4 {
@@ -402,14 +404,18 @@ a.form, a:link.form {
 	border: 1px dotted #ccc;
 	border-width: 1px 0;
 	font: bold 0.9em/25px Verdana, Arial, sans-serif;
+	position: relative;
 	text-align: center;
-	clear: both;
 }
 #pagination a.next {
-	float: right;
+	position: absolute;
+	top: 0;
+	right: 0;
 }
 #pagination a.previous {
-	float: left;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 /* Inhaltsverzeichnis */
 #toc {

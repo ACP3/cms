@@ -21,6 +21,7 @@
 	<item key="max_image_height">Maximum image height</item>
 	<item key="max_image_width">Maximum image width</item>
 	<item key="mod_description">With this module you can administer the galleries.</item>
+	<item key="next_image">Next image</item>
 	<item key="no_picture_selected">Please select a picture</item>
 	<item key="no_pictures">There are no pictures registered for this gallery.</item>
 	<item key="pics">Gallery</item>
@@ -28,6 +29,7 @@
 	<item key="picture_index">Picture overview</item>
 	<item key="picture_information">Picture information</item>
 	<item key="pictures">Pictures</item>
+	<item key="previous_image">Previous image</item>
 	<item key="select_allow_comments">Please select, whether you to allow users to comment pictures</item>
 	<item key="select_new_picture">Select a new picture</item>
 	<item key="select_picture">Select picture</item>
