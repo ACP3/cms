@@ -66,9 +66,8 @@ function generatePictureAlias($picture_id)
 
 	$picture = $db->select('gallery_id', 'gallery_pictures', 'id = \'' . $picture_id . '\'');
 	$alias = seo::getUriAlias('gallery/pics/id_' . $picture[0]['gallery_id'], true);
-	if (!empty($alias)) {
-		$alias.= '-' . makeStringUrlSafe($lang->t('gallery', 'picture')) . '-' . $picture_id;
-	}
+	if (!empty($alias))
+		$alias.= '/' . makeStringUrlSafe($lang->t('gallery', 'picture')) . '-' . $picture_id;
 	$seo_keywords = seo::getKeywords('gallery/pics/id_' . $picture[0]['gallery_id']);
 	$seo_description = seo::getDescription('gallery/pics/id_' . $picture[0]['gallery_id']);
 
@@ -82,14 +81,20 @@ function generatePictureAlias($picture_id)
  */
 function generatePictureAliases($gallery_id)
 {
-	global $db;
+	global $db, $lang;
 
 	$pictures = $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $gallery_id . '\'');
 	$c_pictures = count($pictures);
 	$bool = false;
 
+	$alias = seo::getUriAlias('gallery/pics/id_' . $gallery_id, true);
+	if (!empty($alias))
+		$alias.= '/' . makeStringUrlSafe($lang->t('gallery', 'picture'));
+	$seo_keywords = seo::getKeywords('gallery/pics/id_' . $picture[0]['gallery_id']);
+	$seo_description = seo::getDescription('gallery/pics/id_' . $picture[0]['gallery_id']);
+
 	for ($i = 0; $i < $c_pictures; ++$i) {
-		$bool = generatePictureAlias($pictures[$i]['id']);
+		$bool = seo::insertUriAlias(!empty($alias) ? $alias . '-' . $pictures[$i]['id'] : '', 'gallery/details/id_' . $pictures[$i]['id'], $seo_keywords, $seo_description);
 	}
 
 	return $bool;
@@ -111,7 +116,7 @@ function deletePictureAliases($gallery_id)
 
 	for ($i = 0; $i < $c_pictures; ++$i) {
 		$bool = seo::deleteUriAlias('gallery/details/id_' . $pictures[$i]['id']);
-		if (!$bool)
+		if ($bool === false)
 			break;
 	}
 

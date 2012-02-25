@@ -26,15 +26,19 @@ if (validate::isNumber($uri->id) === true && $db->select('COUNT(g.id)', 'gallery
 
 	$tpl->assign('picture', $picture[0]);
 
-	$picture_back = $db->select('id', 'gallery_pictures', 'pic < \'' . $picture[0]['pic'] . '\' AND gallery_id = \'' . $picture[0]['gallery_id'] . '\'', 'pic DESC', 1);
-	$picture_next = $db->select('id', 'gallery_pictures', 'pic > \'' . $picture[0]['pic'] . '\' AND gallery_id = \'' . $picture[0]['gallery_id'] . '\'', 'pic ASC', 1);
-
 	// Vorheriges Bild
-	if (count($picture_back) > 0)
+	$picture_back = $db->select('id', 'gallery_pictures', 'pic < \'' . $picture[0]['pic'] . '\' AND gallery_id = \'' . $picture[0]['gallery_id'] . '\'', 'pic DESC', 1);
+	if (count($picture_back) > 0) {
+		seo::setPreviousPage($uri->route('gallery/details/id_' . $picture_back[0]['id'], 1));
 		$tpl->assign('picture_back', $picture_back[0]);
+	}
+
 	// Nächstes Bild
-	if (count($picture_next) > 0)
+	$picture_next = $db->select('id', 'gallery_pictures', 'pic > \'' . $picture[0]['pic'] . '\' AND gallery_id = \'' . $picture[0]['gallery_id'] . '\'', 'pic ASC', 1);
+	if (count($picture_next) > 0) {
+		seo::setNextPage($uri->route('gallery/details/id_' . $picture_next[0]['id'], 1));
 		$tpl->assign('picture_next', $picture_next[0]);
+	}
 
 	if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $picture[0]['comments'] == 1 && modules::check('comments', 'functions') === true) {
 		require_once MODULES_DIR . 'comments/functions.php';
