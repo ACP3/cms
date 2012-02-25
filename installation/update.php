@@ -346,7 +346,7 @@ if (CONFIG_DB_VERSION < 18) {
 }
 if (CONFIG_DB_VERSION < 19) {
 	$queries = array(
-		"ALTER TABLE `{pre}users` ADD `super_user` TINYINT(1) UNSIGNED NOT NULL,",
+		"ALTER TABLE `{pre}users` ADD COLUMN `super_user` TINYINT(1) UNSIGNED NOT NULL AFTER `id`;",
 	);
 	echo executeSqlQueries($queries, 19);
 }
