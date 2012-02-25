@@ -6,9 +6,6 @@
 {if isset($categories)}
 <div class="news">
 	<div class="header">
-{if modules::check('feeds', 'list')}
-		<a href="{uri args="feeds/list/feed_news"}" title="{lang t="news|read_newsfeed"}" style="float:left"><img src="{$DESIGN_PATH}images/feed.png" alt=""></a>
-{/if}
 		<form action="{uri args="news/list"}" method="post" style="text-align:right">
 			<div>
 				<label for="cat" style="font-weight:bold">

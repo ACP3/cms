@@ -3,7 +3,7 @@
 	cursor: pointer;
 }
 #resources-table .sub-table-header:hover {
-	background: #eee;
+	background: #f6f6f6;
 }
 .privileges {
 	width: 100%;

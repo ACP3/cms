@@ -1,6 +1,6 @@
 .news {
 	margin: 2px 0;
-	border: 1px solid #333;
+	border: 1px solid #bbb;
 }
 .news .header {
 	padding: 3px;
@@ -11,7 +11,7 @@
 }
 .news .date {
 	padding: 0 10px;
-	border-top: 1px solid #333;
+	border-top: 1px solid #bbb;
 	line-height: 20px;
 }
 .news .comments {
@@ -26,11 +26,11 @@
 }
 .news .content {
 	padding: 10px;
-	border-top: 1px solid #333;
+	border-top: 1px solid #bbb;
 }
 .news .content .hyperlink {
 	padding: 0 4px;
 	background: #eee;
-	border: 1px solid #333;
+	border: 1px solid #bbb;
 	line-height: 20px;
 }
