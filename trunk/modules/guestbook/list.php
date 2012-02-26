@@ -11,14 +11,13 @@ if (defined('IN_ACP3') === false)
 	exit;
 
 $settings = config::getModuleSettings('guestbook');
+$tpl->assign('overlay', $settings['overlay']);
 
 $guestbook = $db->query('SELECT u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.id, g.date, g.name, g.user_id, g.message, g.website, g.mail FROM {pre}guestbook AS g LEFT JOIN {pre}users AS u ON(u.id = g.user_id) ' . ($settings['notify'] == 2 ? 'WHERE active = 1' : '') . ' ORDER BY date DESC LIMIT ' . POS . ', ' . $auth->entries);
 $c_guestbook = count($guestbook);
 
 if ($c_guestbook > 0) {
 	$tpl->assign('pagination', pagination($db->countRows('*', 'guestbook')));
-	
-	$tpl->assign('overlay', $settings['overlay']);
 
 	// Emoticons einbinden
 	$emoticons_active = false;

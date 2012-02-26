@@ -3,7 +3,6 @@
 	padding: 0;
 }
 body {
-	padding: 1%;
 	background: #fff;
 	font: 62.5% 'Lucida Grande', 'Trebuchet MS', Arial, sans-serif;
 	color: #333;
@@ -101,6 +100,7 @@ tfoot,
 	color: #333;
 }
 #content {
+	padding: 10px;
 	font-size: 1.2em;
 }
 /* Formulare */
