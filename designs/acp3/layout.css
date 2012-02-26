@@ -352,7 +352,6 @@ a.form, a.form:link,
 }
 .form:hover,
 #tabs a.form:hover {
-	background: #eee;
 	color: #f00;
 }
 .error-box {
