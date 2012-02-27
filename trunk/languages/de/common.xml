@@ -108,6 +108,7 @@
 	<item key="pls_select">Bitte auswählen</item>
 	<item key="previous_page">Vorherige Seite</item>
 	<item key="publication_period">Veröffentlichungszeitraum</item>
+	<item key="records_per_page">Datensätze pro Seite</item>
 	<item key="reset">Zurücksetzen</item>
 	<item key="select_date">Bitte vervollständigen Sie die Angaben zum Veröffentlichungsdatum bzw. dem Enddatum dieses Eintrages</item>
 	<item key="select_date_format">Bitte wählen Sie aus, ob das lange oder das kurze Datumsformat verwendet werden soll</item>
@@ -120,6 +121,8 @@
 	<item key="sidebar_entries_to_display">Anzuzeigende Sidebareinträge</item>
 	<item key="since_date">Seit %s</item>
 	<item key="start_date">Veröffentlichungsdatum</item>
+	<item key="statements_in_byte">Angaben in Byte</item>
+	<item key="statements_in_pixel">Angaben in Pixel</item>
 	<item key="submit">Senden</item>
 	<item key="time_zone">Zeitzone</item>
 	<item key="title_for_toc">Seitentitel für das Inhaltsverzeichnis</item>

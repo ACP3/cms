@@ -7,7 +7,7 @@
 		{$news.text}
 {if $news.uri != '' && $news.link_title != ''}
 		<div class="hyperlink">
-			<strong>{lang t="news|additional_hyperlink"}:</strong> <a href="{$news.uri}"{$news.target}>{$news.link_title}</a>
+			<strong>{lang t="news|hyperlink"}:</strong> <a href="{$news.uri}"{$news.target}>{$news.link_title}</a>
 		</div>
 {/if}
 	</div>

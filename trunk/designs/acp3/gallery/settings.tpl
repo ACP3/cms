@@ -57,19 +57,40 @@
 		</div>
 		<div id="tab-2">
 			<dl>
-				<dt><label for="thumbwidth">{lang t="gallery|thumb_image_width"}</label></dt>
+				<dt>
+					<label for="thumbwidth">{lang t="gallery|thumb_image_width"}</label>
+					<span>({lang t="common|statements_in_pixel"})</span>
+				</dt>
 				<dd><input type="number" name="form[thumbwidth]" id="thumbwidth" value="{$form.thumbwidth}"></dd>
-				<dt><label for="thumbheight">{lang t="gallery|thumb_image_height"}</label></dt>
+				<dt>
+					<label for="thumbheight">{lang t="gallery|thumb_image_height"}</label>
+					<span>({lang t="common|statements_in_pixel"})</span>
+				</dt>
 				<dd><input type="number" name="form[thumbheight]" id="thumbheight" value="{$form.thumbheight}"></dd>
-				<dt><label for="width">{lang t="gallery|image_width"}</label></dt>
+				<dt>
+					<label for="width">{lang t="gallery|image_width"}</label>
+					<span>({lang t="common|statements_in_pixel"})</span>
+				</dt>
 				<dd><input type="number" name="form[width]" id="width" value="{$form.width}"></dd>
-				<dt><label for="height">{lang t="gallery|image_height"}</label></dt>
+				<dt>
+					<label for="height">{lang t="gallery|image_height"}</label>
+					<span>({lang t="common|statements_in_pixel"})</span>
+				</dt>
 				<dd><input type="number" name="form[height]" id="height" value="{$form.height}"></dd>
-				<dt><label for="maxwidth">{lang t="gallery|max_image_width"}</label></dt>
+				<dt>
+					<label for="maxwidth">{lang t="gallery|max_image_width"}</label>
+					<span>({lang t="common|statements_in_pixel"})</span>
+				</dt>
 				<dd><input type="number" name="form[maxwidth]" id="maxwidth" value="{$form.maxwidth}"></dd>
-				<dt><label for="maxheight">{lang t="gallery|max_image_height"}</label></dt>
+				<dt>
+					<label for="maxheight">{lang t="gallery|max_image_height"}</label>
+					<span>({lang t="common|statements_in_pixel"})</span>
+				</dt>
 				<dd><input type="number" name="form[maxheight]" id="maxheight" value="{$form.maxheight}"></dd>
-				<dt><label for="filesize">{lang t="gallery|image_filesize"}</label></dt>
+				<dt>
+					<label for="filesize">{lang t="gallery|image_filesize"}</label>
+					<span>({lang t="common|statements_in_byte"})</span>
+				</dt>
 				<dd><input type="number" name="form[filesize]" id="filesize" value="{$form.filesize}"></dd>
 			</dl>
 		</div>

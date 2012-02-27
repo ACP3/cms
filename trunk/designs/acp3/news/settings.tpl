@@ -1,6 +1,7 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
+<script type="text/javascript" src="{$DESIGN_PATH}news/settings.js"></script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset>
 		<legend>{lang t="news|settings"}</legend>
@@ -32,8 +33,12 @@
 				</label>
 {/foreach}
 			</dd>
+		</dl>
+		<dl id="readmore-container">
 			<dt><label for="readmore-chars">{lang t="news|readmore_chars"}</label></dt>
 			<dd><input type="number" name="form[readmore_chars]" id="readmore-chars" value="{$readmore_chars}"></dd>
+		</dl>
+		<dl>
 			<dt><label for="category-in-breadcrumb-1">{lang t="news|display_category_in_breadcrumb"}</label></dt>
 			<dd>
 {foreach $category_in_breadcrumb as $row}

@@ -27,9 +27,10 @@ if (isset($_POST['form']) === true) {
 		$errors['cat'] = $lang->t('news', 'select_category');
 	if (strlen($form['cat_create']) >= 3 && categoriesCheckDuplicate($form['cat_create'], 'news') === true)
 		$errors['cat-create'] = $lang->t('categories', 'category_already_exists');
-	if (!empty($form['uri']) && (validate::isNumber($form['target']) === false || strlen($form['link_title']) < 3))
-		$errors[] = $lang->t('news', 'complete_additional_hyperlink_statements');
-	if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias']) === true))
+	if (!empty($form['link_title']) && (empty($form['uri']) || validate::isNumber($form['target']) === false))
+		$errors[] = $lang->t('news', 'complete_hyperlink_statements');
+	if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) &&
+		(validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias']) === true))
 		$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 	if (isset($errors) === true) {

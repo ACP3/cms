@@ -91,13 +91,7 @@ if (isset($_POST['form']) === true) {
 	}
 }
 if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-	// Einträge pro Seite
-	$entries = array();
-	for ($i = 0, $j = 10; $j <= 50; $i++, $j = $j + 10) {
-		$entries[$i]['value'] = $j;
-		$entries[$i]['selected'] = selectEntry('entries', $j, CONFIG_ENTRIES);
-	}
-	$tpl->assign('entries', $entries);
+	$tpl->assign('entries', recordsPerPage(CONFIG_ENTRIES));
 
 	// WYSIWYG-Editoren
 	$editors = scandir(INCLUDES_DIR . 'wysiwyg');
