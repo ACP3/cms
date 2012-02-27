@@ -6,7 +6,7 @@
 		<ul>
 			<li><a href="#tab-1">{lang t="common|publication_period"}</a></li>
 			<li><a href="#tab-2">{lang t="news|news"}</a></li>
-			<li><a href="#tab-3">{lang t="news|additional_hyperlink"}</a></li>
+			<li><a href="#tab-3">{lang t="news|hyperlink"}</a></li>
 			<li><a href="#tab-4">{lang t="common|seo"}</a></li>
 		</ul>
 		<div id="tab-1">
@@ -47,19 +47,18 @@
 		</div>
 		<div id="tab-3" class="ui-tabs-hide">
 			<dl>
+				<dt><label for="link-title">{lang t="news|link_title"}</label></dt>
+				<dd><input type="text" name="form[link_title]" id="link-title" value="{$form.link_title}" maxlength="120"></dd>
 				<dt><label for="uri">{lang t="news|uri"}</label></dt>
 				<dd><input type="url" name="form[uri]" id="uri" value="{$form.uri}" maxlength="120"></dd>
 				<dt><label for="target">{lang t="news|target_page"}</label></dt>
 				<dd>
 					<select name="form[target]" id="target">
-						<option value="">{lang t="common|pls_select"}</option>
 {foreach $target as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 					</select>
 				</dd>
-				<dt><label for="link-title">{lang t="news|link_title"}</label></dt>
-				<dd><input type="text" name="form[link_title]" id="link-title" value="{$form.link_title}" maxlength="120"></dd>
 			</dl>
 		</div>
 		<div id="tab-4" class="ui-tabs-hide">

@@ -61,6 +61,7 @@ if ($auth->isUser() === true) {
 				'time_zone' => CONFIG_DATE_TIME_ZONE,
 				'dst' => CONFIG_DATE_DST,
 				'language' => CONFIG_LANG,
+				'entries' => CONFIG_ENTRIES,
 				'draft' => '',
 			);
 

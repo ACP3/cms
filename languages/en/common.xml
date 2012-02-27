@@ -108,6 +108,7 @@
 	<item key="pls_select">Please select</item>
 	<item key="previous_page">Previous page</item>
 	<item key="publication_period">Publication period</item>
+	<item key="records_per_page">Records per page</item>
 	<item key="reset">Reset</item>
 	<item key="select_date">Please complete the statements belonging the release date and end date</item>
 	<item key="select_date_format">Please select, whether you want to display the date in short or long format</item>
@@ -120,6 +121,8 @@
 	<item key="sidebar_entries_to_display">Sidebar entries to display</item>
 	<item key="since_date">Since %s</item>
 	<item key="start_date">Release date</item>
+	<item key="statements_in_byte">Statements in Byte</item>
+	<item key="statements_in_pixel">Statements in Pixel</item>
 	<item key="submit">Submit</item>
 	<item key="time_zone">Time zone</item>
 	<item key="title_for_toc">Title for table of contents</item>

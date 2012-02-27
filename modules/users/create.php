@@ -122,12 +122,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$tpl->assign('languages', $languages);
 
 	// Einträge pro Seite
-	$entries = array();
-	for ($i = 0, $j = 10; $j <= 50; $i++, $j = $j + 10) {
-		$entries[$i]['value'] = $j;
-		$entries[$i]['selected'] = selectEntry('entries', $j, CONFIG_ENTRIES);
-	}
-	$tpl->assign('entries', $entries);
+	$tpl->assign('entries', recordsPerPage(CONFIG_ENTRIES));
 
 	// Zeitzonen
 	$tpl->assign('time_zone', timeZones(CONFIG_DATE_TIME_ZONE));

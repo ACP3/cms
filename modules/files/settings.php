@@ -50,12 +50,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	$tpl->assign('dateformat', $date->dateformatDropdown($settings['dateformat']));
 
-	$sidebar_entries = array();
-	for ($i = 0, $j = 1; $i < 10; ++$i, ++$j) {
-		$sidebar_entries[$i]['value'] = $j;
-		$sidebar_entries[$i]['selected'] = selectEntry('sidebar', $j, $settings['sidebar']);
-	}
-	$tpl->assign('sidebar_entries', $sidebar_entries);
+	$tpl->assign('sidebar_entries', recordsPerPage((int) $settings['sidebar'], 1, 10));
 
 	$session->generateFormToken();
 

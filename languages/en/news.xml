@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="activate_readmore">Activate &quot;readmore...&quot;</item>
-	<item key="additional_hyperlink">Additional hpyerlink</item>
-	<item key="complete_additional_hyperlink_statements">Please complete the statements for the additional hyperlink</item>
+	<item key="activate_readmore">Activate &quot;read more...&quot;</item>
+	<item key="hyperlink">Link</item>
+	<item key="complete_hyperlink_statements">Please complete the statements for the hyperlink</item>
 	<item key="create">Create a new news</item>
 	<item key="delete">Delete news</item>
 	<item key="details">News</item>

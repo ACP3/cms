@@ -22,7 +22,6 @@
 	<item key="email">E-Mail</item>
 	<item key="enable_module">Modul aktivieren</item>
 	<item key="enable_seo_aliases">URI-Aliase aktivieren</item>
-	<item key="entries_per_page">Datensätze pro Seite</item>
 	<item key="error_messages">Ausgabe von Fehlermeldungen</item>
 	<item key="error_update_check">Es konnte keine Verbindung zum Update-Server hergestellt werden.</item>
 	<item key="export_data">Nur Daten</item>

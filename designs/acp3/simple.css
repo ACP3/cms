@@ -77,7 +77,7 @@ pre {
 .acp-table .selected {
 	background: #f5f5f5;
 }
-.acp-table tr:hover {
+.acp-table tbody tr:hover {
 	background: #f6f6f6;
 }
 .acp-table th {

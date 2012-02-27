@@ -107,7 +107,7 @@ class auth
 			if (empty($user_info[$user_id])) {
 				global $db;
 
-				$info = $db->select('super_user, nickname, realname, gender, birthday, birthday_format, mail, website, icq, msn, skype, date_format_long, date_format_short, time_zone, dst, language, draft', 'users', 'id = \'' . $user_id . '\'');
+				$info = $db->select('super_user, nickname, realname, gender, birthday, birthday_format, mail, website, icq, msn, skype, date_format_long, date_format_short, time_zone, dst, language, entries, draft', 'users', 'id = \'' . $user_id . '\'');
 				if (!empty($info)) {
 					$pos = strrpos($info[0]['realname'], ':');
 					$info[0]['realname_display'] = substr($info[0]['realname'], $pos + 1);

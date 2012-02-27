@@ -184,7 +184,7 @@ function generateSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
 /**
  * Generiert das Inhaltsverzeichnis
  *
- * @param string $pages 
+ * @param string $pages
  */
 function generateTOC(array $pages, $path)
 {
@@ -211,7 +211,7 @@ function generateTOC(array $pages, $path)
  * liefert diese als assoziatives Array zurück
  *
  * @param string $string
- * @return array 
+ * @return array
  */
 function getHtmlAttributes($string)
 {
@@ -234,7 +234,7 @@ function getHtmlAttributes($string)
  *	Der zu parsende Text
  * @param string $path
  *	Der ACP3-interne URI-Pfad, um die Links zu generieren
- * @return string|array 
+ * @return string|array
  */
 function splitTextIntoPages($text, $path)
 {
@@ -508,6 +508,16 @@ function pagination($rows, $fragment = '')
 
 		return view::fetchTemplate('common/pagination.tpl');
 	}
+}
+function recordsPerPage($current_value, $steps = 5, $max_value = 50)
+{
+	// Einträge pro Seite
+	$records = array();
+	for ($i = 0, $j = $steps; $j <= $max_value; $i++, $j+= $steps) {
+		$records[$i]['value'] = $j;
+		$records[$i]['selected'] = selectEntry('entries', $j, $current_value);
+	}
+	return $records;
 }
 /**
  * Löscht eine Datei im uploads Ordner

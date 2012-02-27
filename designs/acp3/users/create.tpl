@@ -49,7 +49,7 @@
 {/foreach}
 					</select>
 				</dd>
-				<dt><label for="entries">{lang t="system|entries_per_page"}</label></dt>
+				<dt><label for="entries">{lang t="common|records_per_page"}</label></dt>
 				<dd>
 					<select name="form[entries]" id="entries">
 {foreach $entries as $row}

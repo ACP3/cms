@@ -15,9 +15,9 @@ if ($auth->isUser() === false || validate::isNumber($auth->getUserId()) === fals
 } else {
 	$settings = config::getModuleSettings('users');
 
-	$breadcrumb->append($lang->t('users', 'users'), $uri->route('users'));
-	$breadcrumb->append($lang->t('users', 'home'), $uri->route('users/home'));
-	$breadcrumb->append($lang->t('users', 'edit_settings'));
+	$breadcrumb->append($lang->t('users', 'users'), $uri->route('users'))
+			   ->append($lang->t('users', 'home'), $uri->route('users/home'))
+			   ->append($lang->t('users', 'edit_settings'));
 
 	if (isset($_POST['form']) === true) {
 		$form = $_POST['form'];
@@ -79,12 +79,7 @@ if ($auth->isUser() === false || validate::isNumber($auth->getUserId()) === fals
 		$tpl->assign('languages', $languages);
 
 		// Einträge pro Seite
-		$entries = array();
-		for ($i = 0, $j = 10; $j <= 50; $i++, $j = $j + 10) {
-			$entries[$i]['value'] = $j;
-			$entries[$i]['selected'] = selectEntry('entries', $j, $auth->entries);
-		}
-		$tpl->assign('entries', $entries);
+		$tpl->assign('entries', recordsPerPage((int) $user[0]['entries']));
 
 		// Zeitzonen
 		$tpl->assign('time_zone', timeZones($user[0]['time_zone']));

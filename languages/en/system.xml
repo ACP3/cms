@@ -22,7 +22,6 @@
 	<item key="email">E-mail</item>
 	<item key="enable_module">Enable module</item>
 	<item key="enable_seo_aliases">Enable URI-Aliases</item>
-	<item key="entries_per_page">Resultsets per page</item>
 	<item key="error_messages">Output of error messages</item>
 	<item key="error_update_check">It wasn't possible to establish a connection to the update server.</item>
 	<item key="export_data">Data only</item>
