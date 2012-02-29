@@ -197,12 +197,15 @@ class uri
 	 *	falls dieser existiert
 	 * @return string
 	 */
-	public function route($path, $alias = 0)
+	public function route($path, $alias = 1)
 	{
 		$path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
 
 		// Überprüfen, ob Alias vorhanden ist und diesen als URI verwenden
 		if (CONFIG_SEO_ALIASES === true && $alias === 1 && !preg_match('/^acp\//', $path)) {
+			if (count(preg_split('=/=', $path, PREG_SPLIT_NO_EMPTY)) === 1)
+				$path.= 'list/';
+
 			$alias = seo::getUriAlias($path);
 			$path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
 		}
