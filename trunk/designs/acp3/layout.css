@@ -411,15 +411,21 @@ a.form, a.form:link,
 	position: relative;
 	text-align: center;
 }
-#pagination a.next {
+#pagination a.next, #pagination a.previous {
+	padding: 0;
+	border: 0;
 	position: absolute;
 	top: 0;
+}
+#pagination a.next {
 	right: 0;
 }
 #pagination a.previous {
-	position: absolute;
-	top: 0;
 	left: 0;
+}
+#pagination a.no-border {
+	padding: 0;
+	border: 0;
 }
 /* Inhaltsverzeichnis */
 #toc {

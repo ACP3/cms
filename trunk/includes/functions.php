@@ -441,7 +441,7 @@ function pagination($rows, $fragment = '')
 		global $lang, $tpl, $uri;
 
 		// Alle angegebenen URL Parameter mit in die URL einbeziehen
-		$link = $uri->route((defined('IN_ADM') ? 'acp/' : '') . $uri->getCleanQuery(), 1);
+		$link = $uri->route((defined('IN_ADM') === true ? 'acp/' : '') . $uri->getCleanQuery(), 1);
 
 		// Seitenauswahl
 		$current_page = validate::isNumber($uri->page) ? (int) $uri->page : 1;
@@ -509,6 +509,15 @@ function pagination($rows, $fragment = '')
 		return view::fetchTemplate('common/pagination.tpl');
 	}
 }
+/**
+ * Liefert ein Array zur Ausgabe als Dropdown-Menü
+ * für die Anzahl der anzuzeigenden Datensätze je Seite
+ *
+ * @param integer $current_value
+ * @param integer $steps
+ * @param integer $max_value
+ * @return array
+ */
 function recordsPerPage($current_value, $steps = 5, $max_value = 50)
 {
 	// Einträge pro Seite

@@ -14,7 +14,7 @@ $time = $date->timestamp();
 $period = ' AND (g.start = g.end AND g.start <= ' . $time . ' OR g.start != g.end AND g.start <= ' . $time . ' AND g.end >= ' . $time . ')';
 
 if (validate::isNumber($uri->id) === true && $db->select('COUNT(g.id)', 'gallery AS g, {pre}gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id' . $period) > 0) {
-	$picture = $db->select('g.id AS gallery_id, g.name, p.id, p.pic, p.description, p.comments', 'gallery AS g, {pre}gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
+	$picture = $db->select('g.id AS gallery_id, g.name, p.id, p.pic, p.file, p.description, p.comments', 'gallery AS g, {pre}gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
 	$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
 
 	$settings = config::getModuleSettings('gallery');
@@ -23,6 +23,21 @@ if (validate::isNumber($uri->id) === true && $db->select('COUNT(g.id)', 'gallery
 	$breadcrumb->append($lang->t('gallery', 'gallery'), $uri->route('gallery'))
 			   ->append($picture[0]['name'], $uri->route('gallery/pics/id_' . $picture[0]['gallery_id']))
 			   ->append($lang->t('gallery', 'details'));
+
+	// Bildabmessungen berechnen
+	$picInfos = getimagesize(ACP3_ROOT . 'uploads/gallery/' . $picture[0]['file']);
+	if ($picInfos[0] > $settings['width'] || $picInfos[1] > $settings['height']) {
+		if ($picInfos[0] > $picInfos[1]) {
+			$newWidth = $settings['width'];
+			$newHeight = intval($picInfos[1] * $newWidth / $picInfos[0]);
+		} else {
+			$newHeight = $settings['height'];
+			$newWidth = intval($picInfos[0] * $newHeight / $picInfos[1]);
+		}
+	}
+
+	$picture[0]['width'] = isset($newWidth) ? $newWidth : $picInfos[0];
+	$picture[0]['height'] = isset($newHeight) ? $newHeight : $picInfos[1];
 
 	$tpl->assign('picture', $picture[0]);
 

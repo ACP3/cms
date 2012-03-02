@@ -24,14 +24,9 @@ function setGalleryCache($id)
 
 	for ($i = 0; $i < $c_pictures; ++$i) {
 		$picInfos = getimagesize(ACP3_ROOT . 'uploads/gallery/' . $pictures[$i]['file']);
-		if ($picInfos[0] > $settings['thumbwidth'] && $picInfos[1] > $settings['thumbheight']) {
-			if ($picInfos[0] > $picInfos[1]) {
-				$newWidth = $settings['thumbwidth'];
-				$newHeight = intval($picInfos[1] * $newWidth / $picInfos[0]);
-			} else {
-				$newHeight = $settings['thumbheight'];
-				$newWidth = intval($picInfos[0] * $newHeight / $picInfos[1]);
-			}
+		if ($picInfos[0] > $settings['thumbwidth'] || $picInfos[1] > $settings['thumbheight']) {
+			$newHeight = $settings['thumbheight'];
+			$newWidth = intval($picInfos[0] * $newHeight / $picInfos[1]);
 		}
 
 		$pictures[$i]['width'] = isset($newWidth) ? $newWidth : $picInfos[0];
