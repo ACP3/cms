@@ -129,7 +129,7 @@ class seo
 	{
 		global $uri;
 
-		$description = self::getDescription($uri->query);
+		$description = self::getDescription($uri->getCleanQuery());
 		if (empty($description))
 			$description = self::getDescription($uri->mod);
 
@@ -145,7 +145,7 @@ class seo
 	{
 		global $uri;
 
-		$keywords = self::getKeywords($uri->query);
+		$keywords = self::getKeywords($uri->getCleanQuery());
 		if (empty($keywords))
 			$keywords = self::getKeywords($uri->mod);
 
