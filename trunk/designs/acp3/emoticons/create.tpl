@@ -3,6 +3,7 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 	<fieldset>
+		<legend>{lang t="emoticons|create"}</legend>
 		<dl>
 			<dt><label for="code">{lang t="emoticons|code"}</label></dt>
 			<dd><input type="text" name="form[code]" id="code" value="{$form.code}" maxlength="10"></dd>
