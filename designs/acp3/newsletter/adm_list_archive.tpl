@@ -18,7 +18,6 @@
 {/if}
 				<th>{lang t="common|date"}</th>
 				<th>{lang t="newsletter|subject"}</th>
-				<th>{lang t="newsletter|text"}</th>
 				<th>{lang t="newsletter|status"}</th>
 {if $can_send}
 				<th>{lang t="common|options"}</th>
@@ -34,7 +33,6 @@
 {/if}
 				<td>{$row.date}</td>
 				<td>{check_access mode="link" action="newsletter|edit_archive" uri="acp/newsletter/edit_archive/id_`$row.id`" title=$row.subject}</td>
-				<td>{$row.text}</td>
 				<td>{$row.status}</td>
 {if $can_send}
 				<td><a href="{uri args="acp/newsletter/send/id_`$row.id`"}" title="{lang t="newsletter|send"}">{icon path="16/mail_send" width="16" height="16" alt="{lang t="newsletter|send"}"}</a></td>

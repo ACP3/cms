@@ -201,13 +201,14 @@ class uri
 	{
 		$path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
 
-		// Überprüfen, ob Alias vorhanden ist und diesen als URI verwenden
-		if (CONFIG_SEO_ALIASES === true && $alias === 1 && !preg_match('/^acp\//', $path)) {
-			if (count(preg_split('=/=', $path, PREG_SPLIT_NO_EMPTY)) === 1)
+		if (!preg_match('/^acp\//', $path)) {
+			if (count(preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY)) === 1)
 				$path.= 'list/';
-
-			$alias = seo::getUriAlias($path);
-			$path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
+			// Überprüfen, ob Alias vorhanden ist und diesen als URI verwenden
+			if (CONFIG_SEO_ALIASES === true && $alias === 1) {
+				$alias = seo::getUriAlias($path);
+				$path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
+			}
 		}
 		$prefix = CONFIG_SEO_MOD_REWRITE === false || preg_match('/^acp\//', $path) ? PHP_SELF . '/' : ROOT_DIR;
 		return $prefix . $path;

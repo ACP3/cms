@@ -12,7 +12,7 @@ if (defined('IN_ACP3') === false)
 $settings = config::getModuleSettings('files');
 
 $time = $date->timestamp();
-$where = 'start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\'';
+$where = 'start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time;
 $files = $db->select('id, start, link_title', 'files', $where, 'start DESC', $settings['sidebar']);
 $c_files = count($files);
 
