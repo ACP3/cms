@@ -12,7 +12,7 @@
 	<item key="adm_list_archive">Newsletter archive</item>
 	<item key="already_sent">Already sent</item>
 	<item key="compose">Create a new newsletter</item>
-	<item key="compose_save_error">While sending respectively saving At least one error has occured.</item>
+	<item key="compose_save_error">While sending respectively saving at least one error has occured.</item>
 	<item key="compose_success">The newsletter was successfully sent.</item>
 	<item key="create">Subscribe/Unscribe the newsletter</item>
 	<item key="delete">Delete newsletter accounts</item>
