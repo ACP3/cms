@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
 	<item key="code">Code</item>
-	<item key="create">Create a new emoticons</item>
+	<item key="create">Create a new emoticon</item>
 	<item key="delete">Delete emoticons</item>
 	<item key="edit">Edit emoticon</item>
 	<item key="emoticons">Emoticons</item>

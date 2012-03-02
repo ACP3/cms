@@ -62,11 +62,10 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'emoticons', 'i
 		}
 	}
 	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-		$emoticon = $db->select('code, description, img', 'emoticons', 'id = \'' . $uri->id . '\'');
+		$emoticon = $db->select('code, description', 'emoticons', 'id = \'' . $uri->id . '\'');
 		$emoticon[0]['code'] = $db->escape($emoticon[0]['code'], 3);
 		$emoticon[0]['description'] = $db->escape($emoticon[0]['description'], 3);
 
-		$tpl->assign('picture', $emoticon[0]['img']);
 		$tpl->assign('form', isset($form) ? $form : $emoticon[0]);
 
 		$session->generateFormToken();
