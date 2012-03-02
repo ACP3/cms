@@ -22,6 +22,7 @@ if (validate::isNumber($uri->id) === true) {
 		'max_width' => $settings[$action . 'width'],
 		'max_height' => $settings[$action . 'height'],
 		'file' => ACP3_ROOT . 'uploads/gallery/' . $picture[0]['file'],
+		'prefer_height' => $action === 'thumb' ? true : false
 	);
 
 	$image = new image($options);
