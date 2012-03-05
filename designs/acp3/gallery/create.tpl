@@ -20,7 +20,7 @@
 				<dd><input type="text" name="name" id="name" value="{$form.name}" maxlength="120"></dd>
 			</dl>
 		</div>
-		<div id="tab-2" class="ui-tabs-hide">
+		<div id="tab-2">
 			{$SEO_FORM_FIELDS}
 		</div>
 	</div>

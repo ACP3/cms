@@ -19,6 +19,8 @@
 {/foreach}
 					</select>
 				</dd>
+			</dl>
+			<dl>
 				<dt><label for="sidebar-entries">{lang t="common|sidebar_entries_to_display"}</label></dt>
 				<dd>
 					<select name="sidebar" id="sidebar-entries">
@@ -28,6 +30,8 @@
 {/foreach}
 					</select>
 				</dd>
+			</dl>
+			<dl>
 				<dt>
 					<label for="overlay-1">{lang t="gallery|use_overlay"}</label>
 					<span>({lang t="gallery|use_overlay_description"})</span>
@@ -41,8 +45,8 @@
 {/foreach}
 				</dd>
 			</dl>
-			<dl id="comments-container">
 {if isset($comments)}
+			<dl id="comments-container">
 				<dt><label for="comments-1">{lang t="common|allow_comments"}</label></dt>
 				<dd>
 {foreach $comments as $row}
@@ -52,8 +56,8 @@
 					</label>
 {/foreach}
 				</dd>
-{/if}
 			</dl>
+{/if}
 		</div>
 		<div id="tab-2">
 			<dl>
@@ -62,31 +66,43 @@
 					<span>({lang t="common|statements_in_pixel"})</span>
 				</dt>
 				<dd><input type="number" name="thumbwidth" id="thumbwidth" value="{$form.thumbwidth}"></dd>
+			</dl>
+			<dl>
 				<dt>
 					<label for="thumbheight">{lang t="gallery|thumb_image_height"}</label>
 					<span>({lang t="common|statements_in_pixel"})</span>
 				</dt>
 				<dd><input type="number" name="thumbheight" id="thumbheight" value="{$form.thumbheight}"></dd>
+			</dl>
+			<dl>
 				<dt>
 					<label for="width">{lang t="gallery|image_width"}</label>
 					<span>({lang t="common|statements_in_pixel"})</span>
 				</dt>
 				<dd><input type="number" name="width" id="width" value="{$form.width}"></dd>
+			</dl>
+			<dl>
 				<dt>
 					<label for="height">{lang t="gallery|image_height"}</label>
 					<span>({lang t="common|statements_in_pixel"})</span>
 				</dt>
 				<dd><input type="number" name="height" id="height" value="{$form.height}"></dd>
+			</dl>
+			<dl>
 				<dt>
 					<label for="maxwidth">{lang t="gallery|max_image_width"}</label>
 					<span>({lang t="common|statements_in_pixel"})</span>
 				</dt>
 				<dd><input type="number" name="maxwidth" id="maxwidth" value="{$form.maxwidth}"></dd>
+			</dl>
+			<dl>
 				<dt>
 					<label for="maxheight">{lang t="gallery|max_image_height"}</label>
 					<span>({lang t="common|statements_in_pixel"})</span>
 				</dt>
 				<dd><input type="number" name="maxheight" id="maxheight" value="{$form.maxheight}"></dd>
+			</dl>
+			<dl>
 				<dt>
 					<label for="filesize">{lang t="gallery|image_filesize"}</label>
 					<span>({lang t="common|statements_in_byte"})</span>

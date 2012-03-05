@@ -8,8 +8,12 @@
 		<dl>
 			<dt><label for="subject">{lang t="newsletter|subject"}</label></dt>
 			<dd><input type="text" name="subject" id="subject" value="{$form.subject}" required></dd>
+		</dl>
+		<dl>
 			<dt><label for="text">{lang t="newsletter|text"}</label></dt>
 			<dd><textarea name="text" id="text" cols="50" rows="5" required>{$form.text}</textarea></dd>
+		</dl>
+		<dl>
 			<dt>
 				<label for="action-1">{lang t="newsletter|action"}</label>
 				<span>({lang t="newsletter|action_description"})</span>

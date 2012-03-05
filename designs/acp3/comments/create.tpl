@@ -6,6 +6,8 @@
 		<dl>
 			<dt><label for="name">{lang t="common|name"}</label></dt>
 			<dd><input type="text" name="name" id="name" maxlength="20" value="{$form.name}" required{$form.name_disabled}></dd>
+		</dl>
+		<dl>
 			<dt><label for="message">{lang t="common|message"}</label></dt>
 			<dd>
 				{if isset($emoticons)}{$emoticons}{/if}

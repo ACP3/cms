@@ -15,6 +15,8 @@
 {/foreach}
 				</select>
 			</dd>
+		</dl>
+		<dl>
 			<dt><label for="sidebar-entries">{lang t="common|sidebar_entries_to_display"}</label></dt>
 			<dd>
 				<select name="sidebar" id="sidebar-entries">
@@ -24,6 +26,8 @@
 {/foreach}
 				</select>
 			</dd>
+		</dl>
+		<dl>
 			<dt><label for="readmore-1">{lang t="news|activate_readmore"}</label></dt>
 			<dd>
 {foreach $readmore as $row}
@@ -48,7 +52,9 @@
 				</label>
 {/foreach}
 			</dd>
+		</dl>
 {if isset($allow_comments)}
+		<dl>
 			<dt><label for="comments-1">{lang t="common|allow_comments"}</label></dt>
 			<dd>
 {foreach $allow_comments as $row}
@@ -58,8 +64,8 @@
 				</label>
 {/foreach}
 			</dd>
-{/if}
 		</dl>
+{/if}
 	</fieldset>
 	<div class="form-bottom">
 		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">

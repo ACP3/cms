@@ -7,6 +7,8 @@
 		<dl>
 			<dt><label for="mail">{lang t="common|email"}</label></dt>
 			<dd><input type="email" name="mail" id="mail" value="{$form.mail}" maxlength="120"></dd>
+		</dl>
+		<dl>
 			<dt><label for="mailsig">{lang t="newsletter|mailsig"}</label></dt>
 			<dd><textarea name="mailsig" id="mailsig" cols="50" rows="3" style="height:100px">{$form.mailsig}</textarea></dd>
 		</dl>

@@ -25,7 +25,7 @@
 				</dd>
 			</dl>
 		</div>
-		<div id="tab-2" class="ui-tabs-hide">
+		<div id="tab-2">
 			<dl>
 				<dt><label for="file">{lang t="system|output"}</label></dt>
 				<dd>
@@ -36,6 +36,8 @@
 					</label>
 {/foreach}
 				</dd>
+			</dl>
+			<dl>
 				<dt><label for="complete">{lang t="system|export_type"}</label></dt>
 				<dd>
 {foreach $export_type as $row}

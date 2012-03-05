@@ -21,7 +21,7 @@
 				<dd>{wysiwyg name="disclaimer" value="`$form.disclaimer`" height="150px" toolbar="simple"}</dd>
 			</dl>
 		</div>
-		<div id="tab-2" class="ui-tabs-hide">
+		<div id="tab-2">
 			<dl>
 				<dt><label for="layout">{lang t="contact|layout"}</label></dt>
 				<dd>

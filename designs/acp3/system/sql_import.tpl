@@ -14,6 +14,8 @@
 		<dl>
 			<dt><label for="text">{lang t="system|text"}</label></dt>
 			<dd><textarea name="text" id="text" cols="50" rows="6">{$form.text}</textarea></dd>
+		</dl>
+		<dl>
 			<dt><label for="file">{lang t="system|file"}</label></dt>
 			<dd><input type="file" name="file" id="file"></dd>
 		</dl>

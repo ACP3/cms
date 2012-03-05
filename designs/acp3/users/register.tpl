@@ -11,6 +11,8 @@
 			<dl>
 				<dt><label for="nickname">{lang t="users|nickname"}</label></dt>
 				<dd><input type="text" name="nickname" id="nickname" value="{$form.nickname}" maxlength="30"></dd>
+			</dl>
+			<dl>
 				<dt><label for="mail">{lang t="common|email"}</label></dt>
 				<dd><input type="email" name="mail" id="mail" value="{$form.mail}" maxlength="120"></dd>
 			</dl>
@@ -19,6 +21,8 @@
 			<dl>
 				<dt><label for="pwd">{lang t="users|pwd"}</label></dt>
 				<dd><input type="password" name="pwd" id="pwd" value=""></dd>
+			</dl>
+			<dl>
 				<dt><label for="pwd-repeat">{lang t="users|pwd_repeat"}</label></dt>
 				<dd><input type="password" name="pwd_repeat" id="pwd-repeat" value=""></dd>
 			</dl>

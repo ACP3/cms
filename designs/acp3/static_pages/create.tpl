@@ -18,10 +18,12 @@
 				{lang t="common|date_description"}
 			</p>
 		</div>
-		<div id="tab-2" class="ui-tabs-hide">
+		<div id="tab-2">
 			<dl>
 				<dt><label for="title">{lang t="static_pages|title"}</label></dt>
 				<dd><input type="text" name="title" id="title" value="{$form.title}" maxlength="120"></dd>
+			</dl>
+			<dl>
 				<dt><label for="text">{lang t="static_pages|text"}</label></dt>
 				<dd>{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</dd>
 {if isset($create)}
@@ -36,41 +38,47 @@
 				</dd>
 {/if}
 			</dl>
-			<dl id="create-item-container">
-				<dt><label for="block-id">{lang t="menu_items|blocks"}</label></dt>
-				<dd>
-					<select name="block_id" id="block-id">
-						<option value="">{lang t="common|pls_select"}</option>
+			<div id="create-item-container">
+				<dl>
+					<dt><label for="block-id">{lang t="menu_items|blocks"}</label></dt>
+					<dd>
+						<select name="block_id" id="block-id">
+							<option value="">{lang t="common|pls_select"}</option>
 {foreach $blocks as $row}
-						<option value="{$row.id}"{$row.selected}>{$row.title}</option>
+							<option value="{$row.id}"{$row.selected}>{$row.title}</option>
 {/foreach}
-					</select>
-				</dd>
-				<dt><label for="parent">{lang t="menu_items|superior_page"}</label></dt>
-				<dd>
-					<select name="parent" id="parent">
-						<option value="">{lang t="menu_items|no_superior_page"}</option>
+						</select>
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="parent">{lang t="menu_items|superior_page"}</label></dt>
+					<dd>
+						<select name="parent" id="parent">
+							<option value="">{lang t="menu_items|no_superior_page"}</option>
 {foreach $pages_list as $block => $pages}
-						<optgroup label="{$block}">
+							<optgroup label="{$block}">
 {foreach $pages as $row}
-							<option value="{$row.id}"{$row.selected}>{$row.spaces}{$row.title}</option>
+								<option value="{$row.id}"{$row.selected}>{$row.spaces}{$row.title}</option>
 {/foreach}
-						</optgroup>
+							</optgroup>
 {/foreach}
-					</select>
-				</dd>
-				<dt><label for="display-1">{lang t="menu_items|display_item"}</label></dt>
-				<dd>
+						</select>
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="display-1">{lang t="menu_items|display_item"}</label></dt>
+					<dd>
 {foreach $display as $row}
-					<label for="display-{$row.value}">
-						<input type="radio" name="display" id="display-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected}>
-						{$row.lang}
-					</label>
+						<label for="display-{$row.value}">
+							<input type="radio" name="display" id="display-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected}>
+							{$row.lang}
+						</label>
 {/foreach}
-				</dd>
-			</dl>
+					</dd>
+				</dl>
+			</div>
 		</div>
-		<div id="tab-3" class="ui-tabs-hide">
+		<div id="tab-3">
 			{$SEO_FORM_FIELDS}
 		</div>
 	</div>

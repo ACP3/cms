@@ -9,6 +9,8 @@
 				<span>({lang t="menu_items|index_name_description"})</span>
 			</dt>
 			<dd><input type="text" name="index_name" id="index-name" value="{$form.index_name}" maxlength="20"></dd>
+		</dl>
+		<dl>
 			<dt><label for="title">{lang t="menu_items|block_title"}</label></dt>
 			<dd><input type="text" name="title" id="title" value="{$form.title}" maxlength="120"></dd>
 		</dl>

@@ -13,8 +13,12 @@
 		<span>({lang t="common|seo_keywords_separate_with_commas"})</span>
 	</dt>
 	<dd><input type="text" name="seo_keywords" id="seo-keywords" value="{$seo.keywords}"></dd>
+</dl>
+<dl>
 	<dt><label for="seo-description">{lang t="common|seo_description"}</label></dt>
 	<dd><input type="text" name="seo_description" id="seo-description" value="{$seo.description}"></dd>
+</dl>
+<dl>
 	<dt><label for="seo-robots">{lang t="common|seo_robots"}</label></dt>
 	<dd>
 		<select name="seo_robots" id="seo-robots">

@@ -19,6 +19,8 @@
 					</label>
 {/foreach}
 				</dd>
+			</dl>
+			<dl>
 				<dt><label for="{$search_areas.0.id}">{lang t="search|search_after_areas"}</label></dt>
 				<dd>
 {foreach $search_areas as $row}
@@ -28,6 +30,8 @@
 					</label>
 {/foreach}
 				</dd>
+			</dl>
+			<dl>
 				<dt><label for="{$sort_hits.0.id}">{lang t="search|sort_hits"}</label></dt>
 				<dd>
 {foreach $sort_hits as $row}

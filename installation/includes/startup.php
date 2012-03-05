@@ -15,9 +15,19 @@ define('CONFIG_SEO_MOD_REWRITE', false);
 
 include INCLUDES_DIR . 'globals.php';
 
-set_include_path(get_include_path() . PATH_SEPARATOR . ACP3_ROOT . 'includes/classes/');
-spl_autoload_extensions('.class.php');
-spl_autoload_register();
+/**
+ * Autoloading für die ACP3 eigenen Klassen
+ *
+ * @param string $class
+ *  Der Name der zu ladenden Klasse
+ */
+function acp3_load_class($class)
+{
+	$file = INCLUDES_DIR . 'classes/' . str_replace('ACP3_', '', $class) . '.class.php';
+	if(is_file($file) === true)
+		require_once $file;
+}
+spl_autoload_register("acp3_load_class");
 
 include ACP3_ROOT . 'installation/includes/functions.php';
 

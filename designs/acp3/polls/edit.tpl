@@ -16,7 +16,7 @@
 				{lang t="common|date_description"}
 			</p>
 		</div>
-		<div id="tab-2" class="ui-tabs-hide">
+		<div id="tab-2">
 			<dl>
 				<dt><label for="question">{lang t="polls|question"}</label></dt>
 				<dd><input type="text" name="question" id="question" value="{$question}" maxlength="120"></dd>
@@ -41,7 +41,7 @@
 {/foreach}
 			</table>
 			<dl>
-				<dt><label for="reset">{lang t="common|options"}</label></dt>
+				<dt><label for="{$options.0.name}">{lang t="common|options"}</label></dt>
 				<dd>
 					<ul style="margin:0 20px;list-style:none">
 {foreach $options as $row}

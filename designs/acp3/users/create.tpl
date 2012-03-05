@@ -13,12 +13,20 @@
 			<dl>
 				<dt><label for="nickname">{lang t="users|nickname"}</label></dt>
 				<dd><input type="text" name="nickname" id="nickname" value="{$form.nickname}" maxlength="30"></dd>
+			</dl>
+			<dl>
 				<dt><label for="realname">{lang t="users|realname"}</label></dt>
 				<dd><input type="text" name="realname" id="realname" value="{$form.realname}" maxlength="80"></dd>
+			</dl>
+			<dl>
 				<dt><label for="mail">{lang t="common|email"}</label></dt>
 				<dd><input type="email" name="mail" id="mail" value="{$form.mail}" maxlength="120"></dd>
+			</dl>
+			<dl>
 				<dt><label for="website">{lang t="common|website"}</label></dt>
 				<dd><input type="url" name="website" id="website" value="{$form.website}" maxlength="120"></dd>
+			</dl>
+			<dl>
 				<dt><label for="roles">{lang t="access|roles"}</label></dt>
 				<dd>
 					<select name="roles[]" id="roles" multiple="multiple" style="height:100px">
@@ -27,6 +35,8 @@
 {/foreach}
 					</select>
 				</dd>
+			</dl>
+			<dl>
 				<dt><label for="super-user-1">{lang t="users|super_user"}</label></dt>
 				<dd>
 {foreach $super_user as $row}
@@ -38,7 +48,7 @@
 				</dd>
 			</dl>
 		</div>
-		<div id="tab-2" class="ui-tabs-hide">
+		<div id="tab-2">
 			<dl>
 				<dt><label for="language">{lang t="users|language"}</label></dt>
 				<dd>
@@ -49,6 +59,8 @@
 {/foreach}
 					</select>
 				</dd>
+			</dl>
+			<dl>
 				<dt><label for="entries">{lang t="common|records_per_page"}</label></dt>
 				<dd>
 					<select name="entries" id="entries">
@@ -59,15 +71,19 @@
 				</dd>
 			</dl>
 		</div>
-		<div id="tab-3" class="ui-tabs-hide">
+		<div id="tab-3">
 			<dl>
 				<dt>
 					<label for="date-format-long">{lang t="common|date_format_long"}</label>
 					<span>({lang t="system|php_date_function"})</span>
 				</dt>
 				<dd><input type="text" name="date_format_long" id="date-format-long" value="{$form.date_format_long}" maxlength="20"></dd>
+			</dl>
+			<dl>
 				<dt><label for="date-format-short">{lang t="common|date_format_short"}</label></dt>
 				<dd><input type="text" name="date_format_short" id="date-format-short" value="{$form.date_format_short}" maxlength="20"></dd>
+			</dl>
+			<dl>
 				<dt><label for="time-zone">{lang t="common|time_zone"}</label></dt>
 				<dd>
 					<select name="time_zone" id="time-zone">
@@ -76,6 +92,8 @@
 {/foreach}
 					</select>
 				</dd>
+			</dl>
+			<dl>
 				<dt><label for="dst-1">{lang t="common|daylight_saving_time"}</label></dt>
 				<dd>
 {foreach $dst as $row}
@@ -87,10 +105,12 @@
 				</dd>
 			</dl>
 		</div>
-		<div id="tab-4" class="ui-tabs-hide">
+		<div id="tab-4">
 			<dl>
 				<dt><label for="pwd">{lang t="users|pwd"}</label></dt>
 				<dd><input type="password" name="pwd" id="pwd"></dd>
+			</dl>
+			<dl>
 				<dt><label for="pwd-repeat">{lang t="users|pwd_repeat"}</label></dt>
 				<dd><input type="password" name="pwd_repeat" id="pwd-repeat"></dd>
 			</dl>
