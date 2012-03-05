@@ -22,16 +22,22 @@
 {/foreach}
 					</select>
 				</dd>
+			</dl>
+			<dl>
 				<dt>
 					<label for="flood">{lang t="system|flood_barrier"}</label>
 					<span>({lang t="system|flood_barrier_description"})</span>
 				</dt>
 				<dd><input type="number" name="flood" id="flood" value="{$form.flood}"></dd>
+			</dl>
+			<dl>
 				<dt>
 					<label for="homepage">{lang t="system|homepage"}</label>
 					<span>({lang t="system|homepage_description"})</span>
 				</dt>
 				<dd><input type="text" name="homepage" id="homepage" value="{$form.homepage}"></dd>
+			</dl>
+			<dl>
 				<dt><label for="wysiwyg">{lang t="system|editor"}</label></dt>
 				<dd>
 					<select name="wysiwyg" id="wysiwyg">
@@ -42,15 +48,19 @@
 				</dd>
 			</dl>
 		</div>
-		<div id="tab-2" class="ui-tabs-hide">
+		<div id="tab-2">
 			<dl>
 				<dt>
 					<label for="date-format-long">{lang t="common|date_format_long"}</label>
 					<span>({lang t="system|php_date_function"})</span>
 				</dt>
 				<dd><input type="text" name="date_format_long" id="date-format-long" value="{$form.date_format_long}" maxlength="20"></dd>
+			</dl>
+			<dl>
 				<dt><label for="date-format-short">{lang t="common|date_format_short"}</label></dt>
 				<dd><input type="text" name="date_format_short" id="date-format-short" value="{$form.date_format_short}" maxlength="20"></dd>
+			</dl>
+			<dl>
 				<dt><label for="date-time-zone">{lang t="common|time_zone"}</label></dt>
 				<dd>
 					<select name="date_time_zone" id="date-time-zone">
@@ -59,6 +69,8 @@
 {/foreach}
 					</select>
 				</dd>
+			</dl>
+			<dl>
 				<dt><label for="date-dst-1">{lang t="common|daylight_saving_time"}</label></dt>
 				<dd>
 {foreach $dst as $row}
@@ -70,7 +82,7 @@
 				</dd>
 			</dl>
 		</div>
-		<div id="tab-3" class="ui-tabs-hide">
+		<div id="tab-3">
 			<dl>
 				<dt><label for="maintenance-mode-1">{lang t="system|maintenance_mode"}</label></dt>
 				<dd>
@@ -81,21 +93,29 @@
 					</label>
 {/foreach}
 				</dd>
+			</dl>
+			<dl>
 				<dt><label for="maintenance-message">{lang t="system|maintenance_msg"}</label></dt>
 				<dd><textarea name="maintenance_message" id="maintenance-message" cols="50" rows="6">{$form.maintenance_message}</textarea></dd>
 			</dl>
 		</div>
-		<div id="tab-4" class="ui-tabs-hide">
+		<div id="tab-4">
 			<dl>
 				<dt><label for="seo-title">{lang t="system|title"}</label></dt>
 				<dd><input type="text" name="seo_title" id="seo-title" value="{$form.seo_title}" maxlength="120"></dd>
+			</dl>
+			<dl>
 				<dt><label for="seo-meta-description">{lang t="common|seo_description"}</label></dt>
 				<dd><input type="text" name="seo_meta_description" id="seo-meta-description" value="{$form.seo_meta_description}" maxlength="120"></dd>
+			</dl>
+			<dl>
 				<dt>
 					<label for="seo-meta-keywords">{lang t="common|seo_keywords"}</label>
 					<span>({lang t="common|seo_keywords_separate_with_commas"})</span>
 				</dt>
 				<dd><textarea name="seo_meta_keywords" id="seo-meta-keywords" cols="50" rows="6">{$form.seo_meta_keywords}</textarea></dd>
+			</dl>
+			<dl>
 				<dt><label for="seo-robots">{lang t="common|seo_robots"}</label></dt>
 				<dd>
 					<select name="seo_robots" id="seo-robots">
@@ -104,6 +124,8 @@
 {/foreach}
 					</select>
 				</dd>
+			</dl>
+			<dl>
 				<dt><label for="seo-aliases-1">{lang t="system|enable_seo_aliases"}</label></dt>
 				<dd>
 {foreach $aliases as $row}
@@ -113,6 +135,8 @@
 					</label>
 {/foreach}
 				</dd>
+			</dl>
+			<dl>
 				<dt>
 					<label for="seo-mod-rewrite-1">{lang t="system|mod_rewrite"}</label>
 					<span>({lang t="system|mod_rewrite_description"})</span>
@@ -127,7 +151,7 @@
 				</dd>
 			</dl>
 		</div>
-		<div id="tab-5" class="ui-tabs-hide">
+		<div id="tab-5">
 			<dl>
 				<dt><label for="cache-images-1">{lang t="system|cache_images"}</label></dt>
 				<dd>
@@ -138,6 +162,8 @@
 					</label>
 {/foreach}
 				</dd>
+			</dl>
+			<dl>
 				<dt>
 					<label for="cache-minify">{lang t="system|minify_cache_lifetime"}</label>
 					<span>({lang t="system|minify_cache_lifetime_description"})</span>
@@ -145,7 +171,7 @@
 				<dd><input type="text" name="cache_minify" id="cache-minify" value="{$form.cache_minify}" maxlength="20"></dd>
 			</dl>
 		</div>
-		<div id="tab-6" class="ui-tabs-hide">
+		<div id="tab-6">
 			<dl>
 				<dt><label for="mailer-type">{lang t="system|mailer_type"}</label></dt>
 				<dd>
@@ -156,35 +182,47 @@
 					</select>
 				</dd>
 			</dl>
-			<dl id="mailer-smtp-1">
-				<dt><label for="mailer-smtp-host">{lang t="system|mailer_smtp_hostname"}</label></dt>
-				<dd><input type="text" name="mailer_smtp_host" id="mailer-smtp-host" value="{$form.mailer_smtp_host}"></dd>
-				<dt><label for="mailer-smtp-port">{lang t="system|mailer_smtp_port"}</label></dt>
-				<dd><input type="number" name="mailer_smtp_port" id="mailer-smtp-port" value="{$form.mailer_smtp_port}"></dd>
-				<dt><label for="mailer-smtp-security">{lang t="system|mailer_smtp_security"}</label></dt>
-				<dd>
-					<select name="mailer_smtp_security" id="mailer-smtp-security">
+			<div id="mailer-smtp-1">
+				<dl>
+					<dt><label for="mailer-smtp-host">{lang t="system|mailer_smtp_hostname"}</label></dt>
+					<dd><input type="text" name="mailer_smtp_host" id="mailer-smtp-host" value="{$form.mailer_smtp_host}"></dd>
+				</dl>
+				<dl>
+					<dt><label for="mailer-smtp-port">{lang t="system|mailer_smtp_port"}</label></dt>
+					<dd><input type="number" name="mailer_smtp_port" id="mailer-smtp-port" value="{$form.mailer_smtp_port}"></dd>
+				</dl>
+				<dl>
+					<dt><label for="mailer-smtp-security">{lang t="system|mailer_smtp_security"}</label></dt>
+					<dd>
+						<select name="mailer_smtp_security" id="mailer-smtp-security">
 {foreach $mailer_smtp_security as $row}
-						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+							<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
-					</select>
-				</dd>
-				<dt><label for="mailer-smtp-auth-1">{lang t="system|mailer_smtp_auth"}</label></dt>
-				<dd>
+						</select>
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="mailer-smtp-auth-1">{lang t="system|mailer_smtp_auth"}</label></dt>
+					<dd>
 {foreach $mailer_smtp_auth as $row}
-					<label for="mailer-smtp-auth-{$row.value}">
-						<input type="radio" name="mailer_smtp_auth" id="mailer-smtp-auth-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
-						{$row.lang}
-					</label>
+						<label for="mailer-smtp-auth-{$row.value}">
+							<input type="radio" name="mailer_smtp_auth" id="mailer-smtp-auth-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+							{$row.lang}
+						</label>
 {/foreach}
-				</dd>
-			</dl>
-			<dl id="mailer-smtp-2">
-				<dt><label for="mailer-smtp-user">{lang t="system|mailer_smtp_username"}</label></dt>
-				<dd><input type="text" name="mailer_smtp_user" id="mailer-smtp-user" value="{$form.mailer_smtp_user}" maxlength="40"></dd>
-				<dt><label for="mailer-smtp-password">{lang t="system|mailer_smtp_password"}</label></dt>
-				<dd><input type="password" name="mailer_smtp_password" id="mailer-smtp-password" value="{$form.mailer_smtp_password}"></dd>
-			</dl>
+					</dd>
+				</dl>
+				<div id="mailer-smtp-2">
+					<dl>
+						<dt><label for="mailer-smtp-user">{lang t="system|mailer_smtp_username"}</label></dt>
+						<dd><input type="text" name="mailer_smtp_user" id="mailer-smtp-user" value="{$form.mailer_smtp_user}" maxlength="40"></dd>
+					</dl>
+					<dl>
+						<dt><label for="mailer-smtp-password">{lang t="system|mailer_smtp_password"}</label></dt>
+						<dd><input type="password" name="mailer_smtp_password" id="mailer-smtp-password" value="{$form.mailer_smtp_password}"></dd>
+					</dl>
+				</div>
+			</div> 
 		</div>
 	</div>
 	<div class="form-bottom">

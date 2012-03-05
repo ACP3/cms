@@ -73,7 +73,7 @@
 				</tr>
 			</table>
 		</div>
-		<div id="tab-2" class="ui-tabs-hide">
+		<div id="tab-2">
 			<p>
 				{lang t="users|display_profile_field"}
 			</p>
@@ -93,10 +93,12 @@
 {/foreach}
 			</table>
 		</div>
-		<div id="tab-3" class="ui-tabs-hide">
+		<div id="tab-3">
 			<dl>
 				<dt><label for="new-pwd">{lang t="users|new_pwd"}</label></dt>
 				<dd><input type="password" name="new_pwd" id="new-pwd"></dd>
+			</dl>
+			<dl>
 				<dt><label for="new_pwd_repeat">{lang t="users|new_pwd_repeat"}</label></dt>
 				<dd><input type="password" name="new_pwd_repeat" id="new_pwd_repeat"></dd>
 			</dl>

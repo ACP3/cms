@@ -18,17 +18,23 @@
 				{lang t="common|date_description"}
 			</p>
 		</div>
-		<div id="tab-2" class="ui-tabs-hide">
+		<div id="tab-2">
 			<dl>
 				<dt><label for="headline">{lang t="news|headline"}</label></dt>
 				<dd><input type="text" name="headline" id="headline" value="{$form.headline}" maxlength="120"></dd>
+			</dl>
+			<dl>
 				<dt><label for="text">{lang t="news|text"}</label></dt>
 				<dd>{wysiwyg name="text" value="`$form.text`" height="250"}</dd>
+			</dl>
+			<dl>
 				<dt><label for="cat">{lang t="common|category"}</label></dt>
 				<dd>
 					{$categories}
 				</dd>
+			</dl>
 {if isset($options)}
+			<dl>
 				<dt><label for="{$options.0.name}">{lang t="common|options"}</label></dt>
 				<dd>
 					<ul style="margin:0 20px;list-style:none">
@@ -42,15 +48,19 @@
 {/foreach}
 					</ul>
 				</dd>
-{/if}
 			</dl>
+{/if}
 		</div>
-		<div id="tab-3" class="ui-tabs-hide">
+		<div id="tab-3">
 			<dl>
 				<dt><label for="link-title">{lang t="news|link_title"}</label></dt>
 				<dd><input type="text" name="link_title" id="link-title" value="{$form.link_title}" maxlength="120"></dd>
+			</dl>
+			<dl>
 				<dt><label for="uri">{lang t="news|uri"}</label></dt>
 				<dd><input type="url" name="uri" id="uri" value="{$form.uri}" maxlength="120"></dd>
+			</dl>
+			<dl>
 				<dt><label for="target">{lang t="news|target_page"}</label></dt>
 				<dd>
 					<select name="target" id="target">
@@ -61,7 +71,7 @@
 				</dd>
 			</dl>
 		</div>
-		<div id="tab-4" class="ui-tabs-hide">
+		<div id="tab-4">
 			{$SEO_FORM_FIELDS}
 		</div>
 	</div>

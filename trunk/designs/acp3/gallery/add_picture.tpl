@@ -7,10 +7,14 @@
 		<dl>
 			<dt><label for="file">{lang t="gallery|select_picture"}</label></dt>
 			<dd><input type="file" name="file" id="file" required></dd>
+		</dl>
+		<dl>
 			<dt><label for="description">{lang t="common|description"}</label></dt>
 			<dd>{wysiwyg name="description" value="`$form.description`" height="150" toolbar="simple"}</dd>
+		</dl>
 {if isset($options)}
-			<dt><label for="comments">{lang t="common|options"}</label></dt>
+		<dl>
+			<dt><label for="{$options.0.name}">{lang t="common|options"}</label></dt>
 			<dd>
 				<ul style="margin:0 20px;list-style:none">
 {foreach $options as $row}
@@ -23,8 +27,8 @@
 {/foreach}
 				</ul>
 			</dd>
-{/if}
 		</dl>
+{/if}
 	</fieldset>
 	<div class="form-bottom">
 		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">

@@ -4,11 +4,13 @@
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset>
 		<legend>{lang t="comments|edit"}</legend>
-		<dl>
 {if isset($form.user_id) && $form.user_id == '0'}
+		<dl>
 			<dt><label for="name">{lang t="common|name"}</label></dt>
 			<dd><input type="text" name="name" id="name" value="{$form.name}" required></dd>
+		</dl>
 {/if}
+		<dl>
 			<dt><label for="message">{lang t="common|message"}</label></dt>
 			<dd>
 				{if isset($emoticons)}{$emoticons}{/if}

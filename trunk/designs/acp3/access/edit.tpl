@@ -11,7 +11,9 @@
 			<dl>
 				<dt><label for="name">{lang t="common|name"}</label></dt>
 				<dd><input type="text" name="name" id="name" value="{$form.name}" maxlength="120"></dd>
+			</dl>
 {if isset($parent)}
+			<dl>
 				<dt><label for="parent">{lang t="access|superior_role"}</label></dt>
 				<dd>
 					<select name="parent" id="parent">

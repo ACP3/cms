@@ -18,6 +18,8 @@
 {/foreach}
 					</select>
 				</dd>
+			</dl>
+			<dl>
 				<dt><label for="entries">{lang t="common|records_per_page"}</label></dt>
 				<dd>
 					<select name="entries" id="entries"{if $entries_override == 0} disabled{/if}>
@@ -35,8 +37,12 @@
 					<span>({lang t="system|php_date_function"})</span>
 				</dt>
 				<dd><input type="text" name="date_format_long" id="date-format-long" value="{$form.date_format_long}" maxlength="20"></dd>
+			</dl>
+			<dl>
 				<dt><label for="date-format-short">{lang t="common|date_format_short"}</label></dt>
 				<dd><input type="text" name="date_format_short" id="date-format-short" value="{$form.date_format_short}" maxlength="20"></dd>
+			</dl>
+			<dl>
 				<dt><label for="time-zone">{lang t="common|time_zone"}</label></dt>
 				<dd>
 					<select name="time_zone" id="time-zone">
@@ -45,6 +51,8 @@
 {/foreach}
 					</select>
 				</dd>
+			</dl>
+			<dl>
 				<dt><label for="dst-1">{lang t="common|daylight_saving_time"}</label></dt>
 				<dd>
 {foreach $dst as $row}

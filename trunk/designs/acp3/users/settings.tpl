@@ -14,6 +14,8 @@
 				</label>
 {/foreach}
 			</dd>
+		</dl>
+		<dl>
 			<dt><label for="entries-override-1">{lang t="users|allow_entries_override"}</label></dt>
 			<dd>
 {foreach $entries as $row}
@@ -23,6 +25,8 @@
 				</label>
 {/foreach}
 			</dd>
+		</dl>
+		<dl>
 			<dt><label for="enable-registration-1">{lang t="users|enable_registration"}</label></dt>
 			<dd>
 {foreach $registration as $row}

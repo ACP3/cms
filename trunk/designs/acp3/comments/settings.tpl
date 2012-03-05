@@ -14,7 +14,9 @@
 {/foreach}
 				</select>
 			</dd>
+		</dl>
 {if isset($allow_emoticons)}
+		<dl>
 			<dt><label for="emoticons-1">{lang t="comments|allow_emoticons"}</label></dt>
 			<dd>
 {foreach $allow_emoticons as $row}
@@ -24,8 +26,8 @@
 				</label>
 {/foreach}
 			</dd>
-{/if}
 		</dl>
+{/if}
 	</fieldset>
 	<div class="form-bottom">
 		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">

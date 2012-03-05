@@ -17,15 +17,17 @@
 				{lang t="common|date_description"}
 			</p>
 		</div>
-		<div id="tab-2" class="ui-tabs-hide">
+		<div id="tab-2">
 			<dl>
 				<dt><label for="title">{lang t="static_pages|title"}</label></dt>
 				<dd><input type="text" name="title" id="title" value="{$form.title}" maxlength="120"></dd>
+			</dl>
+			<dl>
 				<dt><label for="text">{lang t="static_pages|text"}</label></dt>
 				<dd>{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</dd>
 			</dl>
 		</div>
-		<div id="tab-3" class="ui-tabs-hide">
+		<div id="tab-3">
 			{$SEO_FORM_FIELDS}
 		</div>
 	</div>

@@ -19,6 +19,8 @@
 {/foreach}
 					</select>
 				</dd>
+			</dl>
+			<dl>
 				<dt><label for="title">{lang t="menu_items|title"}</label></dt>
 				<dd><input type="text" name="title" id="title" value="{$form.title}" maxlength="120"></dd>
 			</dl>
@@ -32,6 +34,8 @@
 {/foreach}
 					</select>
 				</dd>
+			</dl>
+			<dl>
 				<dt><label for="parent">{lang t="menu_items|superior_page"}</label></dt>
 				<dd>
 					<select name="parent" id="parent">
@@ -45,6 +49,8 @@
 {/foreach}
 					</select>
 				</dd>
+			</dl>
+			<dl>
 				<dt><label for="display-1">{lang t="menu_items|display_item"}</label></dt>
 				<dd>
 {foreach $display as $row}

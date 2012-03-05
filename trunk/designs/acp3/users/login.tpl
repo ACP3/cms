@@ -7,6 +7,8 @@
 		<dl>
 			<dt><label for="nickname">{lang t="users|nickname"}</label></dt>
 			<dd><input type="text" name="nickname" id="nickname" maxlength="30"></dd>
+		</dl>
+		<dl>
 			<dt><label for="pwd">{lang t="users|pwd"}</label></dt>
 			<dd><input type="password" name="pwd" id="pwd"></dd>
 		</dl>

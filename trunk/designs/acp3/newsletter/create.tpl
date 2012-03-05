@@ -10,10 +10,10 @@
 {$captcha}
 	</fieldset>
 {foreach $actions as $row}
-		<label for="{$row.value}">
-			<input type="radio" name="action" id="{$row.value}" value="{$row.value}"{$row.checked} class="checkbox">
-			{$row.lang}
-		</label>
+	<label for="{$row.value}">
+		<input type="radio" name="action" id="{$row.value}" value="{$row.value}"{$row.checked} class="checkbox">
+		{$row.lang}
+	</label>
 {/foreach}
 	<div class="form-bottom">
 		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">

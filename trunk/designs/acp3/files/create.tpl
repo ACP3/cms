@@ -18,10 +18,12 @@
 				{lang t="common|date_description"}
 			</p>
 		</div>
-		<div id="tab-2" class="ui-tabs-hide">
+		<div id="tab-2">
 			<dl>
 				<dt><label for="link-title">{lang t="files|link_title"}</label></dt>
 				<dd><input type="text" name="link_title" id="link-title" value="{$form.link_title}" maxlength="120"></dd>
+			</dl>
+			<dl>
 				<dt><label for="file-internal">{lang t="files|filename"}</label></dt>
 				<dd>
 					<label for="external">
@@ -37,7 +39,6 @@
 				<dd>
 					<input type="text" name="filesize" id="filesize" value="{$form.filesize}" maxlength="15" style="width:49%;display:inline">
 					<select name="unit" id="unit" style="width:49%;display:inline">
-						<option value="">{lang t="common|pls_select"}</option>
 {foreach $units as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.value}</option>
 {/foreach}
@@ -47,12 +48,16 @@
 			<dl>
 				<dt><label for="text">{lang t="common|description"}</label></dt>
 				<dd>{wysiwyg name="text" value="`$form.text`" height="200" toolbar="simple"}</dd>
+			</dl>
+			<dl>
 				<dt><label for="cat">{lang t="common|category"}</label></dt>
 				<dd>
 					{$categories}
 				</dd>
+			</dl>
 {if isset($options)}
-				<dt><label for="comments">{lang t="common|options"}</label></dt>
+			<dl>
+				<dt><label for="{$options.0.name}">{lang t="common|options"}</label></dt>
 				<dd>
 					<ul style="margin:0 20px;list-style:none">
 {foreach $options as $row}
@@ -65,10 +70,10 @@
 {/foreach}
 					</ul>
 				</dd>
-{/if}
 			</dl>
+{/if}
 		</div>
-		<div id="tab-3" class="ui-tabs-hide">
+		<div id="tab-3">
 			{$SEO_FORM_FIELDS}
 		</div>
 	</div>

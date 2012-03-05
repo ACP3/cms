@@ -14,6 +14,8 @@
 {/foreach}
 				</select>
 			</dd>
+		</dl>
+		<dl>
 			<dt><label for="notify">{lang t="guestbook|notification"}</label></dt>
 			<dd>
 				<select name="notify" id="notify">
@@ -23,8 +25,12 @@
 {/foreach}
 				</select>
 			</dd>
+		</dl>
+		<dl>
 			<dt><label for="notify-email">{lang t="guestbook|notification_email"}</label></dt>
 			<dd><input type="text" name="notify_email" id="notify-email" value="{$form.notify_email}"></dd>
+		</dl>
+		<dl>
 			<dt><label for="overlay-1">{lang t="guestbook|use_overlay"}</label>	</dt>
 			<dd>
 {foreach $overlay as $row}
@@ -34,7 +40,9 @@
 				</label>
 {/foreach}
 			</dd>
+		</dl>
 {if isset($allow_emoticons)}
+		<dl>
 			<dt><label for="emoticons-1">{lang t="guestbook|allow_emoticons"}</label></dt>
 			<dd>
 {foreach $allow_emoticons as $row}
@@ -44,8 +52,10 @@
 				</label>
 {/foreach}
 			</dd>
+		</dl>
 {/if}
 {if isset($newsletter_integration)}
+		<dl>
 			<dt><label for="newsletter-integration-1">{lang t="guestbook|newsletter_integration"}</label></dt>
 			<dd>
 {foreach $newsletter_integration as $row}
@@ -55,8 +65,8 @@
 				</label>
 {/foreach}
 			</dd>
-{/if}
 		</dl>
+{/if}
 	</fieldset>
 	<div class="form-bottom">
 		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">

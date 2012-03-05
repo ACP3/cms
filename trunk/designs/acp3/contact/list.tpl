@@ -6,8 +6,12 @@
 		<dl>
 			<dt><label for="name">{lang t="common|name"}</label></dt>
 			<dd><input type="text" name="name" id="name" maxlength="20" value="{$form.name}" required{$form.name_disabled}></dd>
+		</dl>
+		<dl>
 			<dt><label for="mail">{lang t="common|email"}</label></dt>
 			<dd><input type="email" name="mail" id="mail" maxlength="120" value="{$form.mail}" required{$form.mail_disabled}></dd>
+		</dl>
+		<dl>
 			<dt><label for="message">{lang t="common|message"}</label></dt>
 			<dd><textarea name="message" id="message" cols="50" rows="5" required>{$form.message}</textarea></dd>
 		</dl>

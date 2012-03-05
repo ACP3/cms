@@ -39,9 +39,6 @@ a:hover,
 #tabs dl a:hover {
 	color: #f90;
 }
-a:hover {
-	color: #f90;
-}
 ul, ol {
 	margin: 10px 20px;
 }
@@ -143,14 +140,15 @@ label {
 	cursor: pointer;
 	white-space: nowrap;
 }
-label:hover {
-	color: #f00;
-}
 fieldset dt label, #tabs dt label {
 	font-weight: bold;
 }
 fieldset dt span, #tabs dt span {
 	font-size: 0.9em;
+}
+label:hover,
+fieldset dl:hover dt label, #tabs dl:hover dt label {
+	color: #f00;
 }
 fieldset input, fieldset textarea,
 #tabs input, #tabs textarea {
@@ -165,14 +163,16 @@ fieldset input, fieldset select, fieldset textarea,
 	padding: 2px;
 	background: #fff;
 	border: 1px solid #ccc;
-	border-color: #c0c0c0 #eee #eee #c0c0c0;
+	border-color: #ccc #eee #eee;
 	font: 100% Arial, sans-serif;
 }
 fieldset input:hover, fieldset select:hover, fieldset textarea:hover,
+#tabs input:hover, #tabs select:hover, #tabs textarea:hover {
+	border-color: #d0d0d0;
+}
 fieldset input:focus, fieldset select:focus, fieldset textarea:focus,
-#tabs input:hover, #tabs select:hover, #tabs textarea:hover,
 #tabs input:focus, #tabs select:focus, #tabs textarea:focus {
-	background: #ffc;
+	border-color: #aaa;
 }
 fieldset input.error, fieldset select.error, fieldset textarea.error,
 #tabs input.error, #tabs select.error, #tabs textarea.error {
@@ -190,6 +190,7 @@ fieldset input[type="file"], #tabs input[type="file"] {
 }
 .readonly, .readonly:hover, .readonly:focus {
 	background: #f2f2f2;
+	border-color: #ccc #eee #eee;
 	color: #888;
 }
 option {
@@ -216,7 +217,7 @@ a.form, a.form:link,
 	padding: 2px 10px;
 	color: #000;
 }
-.form:hover,
+.form:hover, a.form:hover,
 #tabs a.form:hover {
 	color: #f00;
 }
@@ -240,18 +241,12 @@ a.form, a.form:link,
 	text-align: center;
 }
 .confirm-box {
-	width: 80%;
-	height: 54px;
-	margin: -28px auto;
+	width: 85%;
+	margin: 0 auto;
 	border: 1px solid #bbb;
 	text-align: center;
-	position: absolute;
-	top: 50%;
-	left: 10%;
-
 }
 .confirm-box .header {
-	height: 25px;
 	background: #069 url('images/common_header.png') repeat-x;
 	border-bottom: 1px solid #bbb;
 	font-weight: bold;
@@ -259,7 +254,6 @@ a.form, a.form:link,
 	color: #f90;
 }
 .confirm-box .content {
-	height: 28px;
 	background: #eee;
 	line-height: 28px;
 }
@@ -281,14 +275,24 @@ a.form, a.form:link,
 	border: 1px dotted #ccc;
 	border-width: 1px 0;
 	font: bold 0.9em/25px Verdana, Arial, sans-serif;
+	position: relative;
 	text-align: center;
-	clear: both;
+}
+#pagination a.next, #pagination a.previous {
+	padding: 0;
+	border: 0;
+	position: absolute;
+	top: 0;
 }
 #pagination a.next {
-	float: right;
+	right: 0;
 }
 #pagination a.previous {
-	float: left;
+	left: 0;
+}
+#pagination a.no-border {
+	padding: 0;
+	border: 0;
 }
 /* Inhaltsverzeichnis */
 #toc {
