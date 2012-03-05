@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$('input[name="form[overlay]"]').bind('click', function() {
+	$('input[name="overlay"]').bind('click', function() {
 		if ($(this).val() == 1) {
 			$('#comments-container').hide();
 		} else {
@@ -7,5 +7,5 @@ $(document).ready(function() {
 		}
 	});
 
-	$('input[name="form[overlay]"]:checked').trigger('click');
+	$('input[name="overlay"]:checked').trigger('click');
 });

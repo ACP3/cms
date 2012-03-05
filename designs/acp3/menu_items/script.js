@@ -7,7 +7,7 @@ $(document).ready(function() {
 	var target = $('#target-container');
 
 	// Wenn Menüpunkt nicht angezeigt werden soll, Linkziel verstecken
-	$('input[name="form[display]"]').change(function() {
+	$('input[name="display"]').change(function() {
 		if ($(this).val() == 0) {
 			target.hide();
 		} else {
