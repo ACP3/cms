@@ -17,7 +17,7 @@ if (defined('IN_ACP3') === false)
  * @package ACP3
  * @subpackage Core
  */
-class uri
+class ACP3_URI
 {
 	/**
 	 * Array, welches die URI Parameter enthält
@@ -54,8 +54,8 @@ class uri
 			// Nur ausführen, falls URI-Aliase aktiviert sind
 			if (CONFIG_SEO_ALIASES === true) {
 				// Falls für Query ein Alias existiert, zu diesem weiterleiten
-				if (seo::uriAliasExists($this->query) === true)
-					$this->redirect(seo::getUriAlias($this->query), 0, 1);
+				if (ACP3_SEO::uriAliasExists($this->query) === true)
+					$this->redirect(ACP3_SEO::getUriAlias($this->query), 0, 1);
 
 				// Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
 				if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)+(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
@@ -117,7 +117,7 @@ class uri
 			$this->query.= $defaultFile . '/';
 		}
 
-		if (!empty($_POST['cat']) && validate::isNumber($_POST['cat']) === true)
+		if (!empty($_POST['cat']) && ACP3_Validate::isNumber($_POST['cat']) === true)
 			$this->cat = $_POST['cat'];
 		if (!empty($_POST['action']))
 			$this->action = $_POST['action'];
@@ -206,7 +206,7 @@ class uri
 				$path.= 'list/';
 			// Überprüfen, ob Alias vorhanden ist und diesen als URI verwenden
 			if (CONFIG_SEO_ALIASES === true && $alias === 1) {
-				$alias = seo::getUriAlias($path);
+				$alias = ACP3_SEO::getUriAlias($path);
 				$path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
 			}
 		}

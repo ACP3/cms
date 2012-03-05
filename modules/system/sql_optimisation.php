@@ -14,7 +14,7 @@ $breadcrumb->append($lang->t('system', 'maintenance'), $uri->route('acp/system/m
 		   ->append($lang->t('system', 'sql_optimisation'));
 
 if ($uri->action === 'do') {
-	$mod_list = modules::modulesList();
+	$mod_list = ACP3_Modules::modulesList();
 	$tables = array();
 	$total_overhead = 0;
 	$i = 0;
@@ -47,4 +47,4 @@ if ($uri->action === 'do') {
 	$tpl->assign('total_overhead', calcFilesize($total_overhead));
 }
 
-view::setContent(view::fetchTemplate('system/sql_optimisation.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('system/sql_optimisation.tpl'));

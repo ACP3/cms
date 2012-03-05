@@ -7,7 +7,7 @@
 {$redirect_message}
 {/if}
 {if isset($resources)}
-{assign var="can_delete_resource" value=modules::check("access", "delete_resources")}
+{assign var="can_delete_resource" value=ACP3_Modules::check("access", "delete_resources")}
 	<script type="text/javascript" src="{$DESIGN_PATH}access/script.js"></script>
 	<table id="resources-table" class="acp-table">
 		<thead>

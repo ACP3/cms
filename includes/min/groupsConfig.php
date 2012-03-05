@@ -21,21 +21,32 @@ if ($_GET['g'] === 'css') {
 	$php_self = dirname(PHP_SELF);
 	define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
 	define('MODULES_DIR', ACP3_ROOT . 'modules/');
+        define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 
-	set_include_path(get_include_path() . PATH_SEPARATOR . ACP3_ROOT . 'includes/classes/');
-	spl_autoload_extensions('.class.php');
-	spl_autoload_register();
+        /**
+        * Autoloading für die ACP3 eigenen Klassen
+        *
+        * @param string $class
+        *  Der Name der zu ladenden Klasse
+        */
+        function acp3_load_class($class)
+        {
+                $file = INCLUDES_DIR . 'classes/' . str_replace('ACP3_', '', $class) . '.class.php';
+                if(is_file($file) === true)
+                        require_once $file;
+        }
+        spl_autoload_register("acp3_load_class");
 
 	// Klassen initialisieren
-	$db = new db();
+	$db = new ACP3_DB();
 	$handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
 	if ($handle !== true) {
 		exit($handle);
 	}
 
-	$session = new session();
-	$auth = new auth();
-	$lang = new lang();
+	$session = new ACP3_Session();
+	$auth = new ACP3_Auth();
+	$lang = new ACP3_Lang();
 
 	$layout = isset($_GET['layout']) && !preg_match('=/=', $_GET['layout']) && is_file(DESIGN_PATH . $_GET['layout'] . '.css') === true ? $_GET['layout']: 'layout';
 
@@ -45,7 +56,7 @@ if ($_GET['g'] === 'css') {
 	$modules = scandir(DESIGN_PATH);
 	foreach ($modules as $module) {
 		$path = DESIGN_PATH . $module . '/style.css';
-		if ($module !== '.' && $module !== '..' && is_file($path) === true && modules::isActive($module) === true)
+		if ($module !== '.' && $module !== '..' && is_file($path) === true && ACP3_Modules::isActive($module) === true)
 			$styles['css'][] = $path;
 	}
 

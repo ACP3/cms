@@ -17,7 +17,7 @@ if (defined('IN_ACP3') === false)
  * @package ACP3
  * @subpackage Core
  */
-class validate
+class ACP3_Validate
 {
 	/**
 	 * Überprüft, ob die bergebenen Privilegien überhaupt existieren
@@ -29,7 +29,7 @@ class validate
 	 */
 	public static function aclPrivilegesExist(array $privileges)
 	{
-		$all_privs = acl::getAllPrivileges();
+		$all_privs = ACP3_ACL::getAllPrivileges();
 		$c_all_privs = count($all_privs);
 		for ($i = 0; $i < $c_all_privs; ++$i) {
 			$valid = false;
@@ -51,7 +51,7 @@ class validate
 	 */
 	public static function aclRolesExist(array $roles)
 	{
-		$all_roles = acl::getAllRoles();
+		$all_roles = ACP3_ACL::getAllRoles();
 		$good = array();
 		foreach ($all_roles as $row) {
 			$good[] = $row['id'];
@@ -149,7 +149,7 @@ class validate
 	{
 		global $uri;
 
-		return isset($_POST[session::XSRF_TOKEN_NAME]) && isset($_SESSION[session::XSRF_TOKEN_NAME][$uri->query]) && $_POST[session::XSRF_TOKEN_NAME] === $_SESSION[session::XSRF_TOKEN_NAME][$uri->query] ? true : false;
+		return isset($_POST[ACP3_Session::XSRF_TOKEN_NAME]) && isset($_SESSION[ACP3_Session::XSRF_TOKEN_NAME][$uri->query]) && $_POST[ACP3_Session::XSRF_TOKEN_NAME] === $_SESSION[ACP3_Session::XSRF_TOKEN_NAME][$uri->query] ? true : false;
 	}
 	/**
 	 * Bestimmung des Geschlechts
@@ -220,11 +220,11 @@ class validate
 		if ($isPicture === true) {
 			$bool = true;
 			// Optionale Parameter
-			if (validate::isNumber($width) && $info[0] > $width)
+			if (ACP3_Validate::isNumber($width) && $info[0] > $width)
 				$bool = false;
-			if (validate::isNumber($height) && $info[1] > $height)
+			if (ACP3_Validate::isNumber($height) && $info[1] > $height)
 				$bool = false;
-			if (filesize($file) === 0 || validate::isNumber($filesize) && filesize($file) > $filesize)
+			if (filesize($file) === 0 || ACP3_Validate::isNumber($filesize) && filesize($file) > $filesize)
 				$bool = false;
 
 			return $bool;
@@ -285,7 +285,7 @@ class validate
 				global $db;
 
 				$path.= !preg_match('/\/$/', $path) ? '/' : '';
-				if ($path !== '/' && validate::isInternalURI($path) === true) {
+				if ($path !== '/' && ACP3_Validate::isInternalURI($path) === true) {
 					return $db->countRows('*', 'seo', 'alias = \'' . $alias . '\' AND uri != \'' . $path . '\'') > 0 ? true : false;
 				} elseif ($db->countRows('*', 'seo', 'alias = \'' . $alias . '\'') > 0) {
 					return true;

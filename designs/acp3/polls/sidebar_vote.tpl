@@ -18,7 +18,7 @@
 			</li>
 		</ul>
 		<div>
-			<input type="submit" value="{lang t="common|submit"}" class="form">
+			<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		</div>
 	</form>
 </div>

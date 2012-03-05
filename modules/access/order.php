@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles', 'id = \'' . $uri->id . '\'') == 1) {
+if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles', 'id = \'' . $uri->id . '\'') == 1) {
 	$roles = $db->query('SELECT c.id, c.left_id, c.right_id FROM {pre}acl_roles AS p, {pre}acl_roles AS c WHERE p.id = \'' . $uri->id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
 
 	if ($uri->action === 'up' && $db->countRows('*', 'acl_roles', 'right_id = ' . ($roles[0]['left_id'] - 1)) > 0) {
@@ -48,7 +48,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles', 'i
 
 	$db->link->commit();
 
-	cache::purge(0, 'acl');
+	ACP3_Cache::purge(0, 'acl');
 
 	$uri->redirect('acp/access');
 } else {

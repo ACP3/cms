@@ -16,7 +16,7 @@
 {foreach $options as $row}
 					<li>
 						<label for="{$row.name}">
-							<input type="checkbox" name="form[{$row.name}]" id="{$row.name}" value="1" class="checkbox"{$row.checked}>
+							<input type="checkbox" name="{$row.name}" id="{$row.name}" value="1" class="checkbox"{$row.checked}>
 							{$row.lang}
 						</label>
 					</li>
@@ -27,7 +27,7 @@
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		{$form_token}
 	</div>
 </form>

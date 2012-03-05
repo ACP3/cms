@@ -10,12 +10,12 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (validate::isNumber($uri->id) === true) {
+if (ACP3_Validate::isNumber($uri->id) === true) {
 	@set_time_limit(20);
 	$picture = $db->select('file', 'gallery_pictures', 'id = \'' . $uri->id . '\'');
 	$action = $uri->action === 'thumb' ? 'thumb' : '';
 
-	$settings = config::getModuleSettings('gallery');
+	$settings = ACP3_Config::getModuleSettings('gallery');
 	$options = array(
 		'enable_cache' => CONFIG_CACHE_IMAGES,
 		'cache_prefix' => 'gallery_' . $action,
@@ -25,7 +25,7 @@ if (validate::isNumber($uri->id) === true) {
 		'prefer_height' => $action === 'thumb' ? true : false
 	);
 
-	$image = new image($options);
+	$image = new ACP3_Image($options);
 	$image->output();
 
 	exit;

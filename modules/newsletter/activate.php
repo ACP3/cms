@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (validate::email($uri->mail) && validate::isMD5($uri->hash)) {
+if (ACP3_Validate::email($uri->mail) && ACP3_Validate::isMD5($uri->hash)) {
 	$mail = $uri->mail;
 	$hash = $uri->hash;
 } else {
@@ -21,9 +21,9 @@ if ($db->countRows('*', 'newsletter_accounts', 'mail = \'' . $mail . '\' AND has
 	$errors[] = $lang->t('newsletter', 'account_not_exists');
 
 if (isset($errors) === true) {
-	view::setContent(errorBox($errors));
+	ACP3_View::setContent(errorBox($errors));
 } else {
 	$bool = $db->update('newsletter_accounts', array('hash' => ''), 'mail = \'' . $mail . '\' AND hash = \'' . $db->escape($hash, 2) . '\'');
 
-	view::setContent(confirmBox($bool !== false ? $lang->t('newsletter', 'activate_success') : $lang->t('newsletter', 'activate_error'), ROOT_DIR));
+	ACP3_View::setContent(confirmBox($bool !== false ? $lang->t('newsletter', 'activate_success') : $lang->t('newsletter', 'activate_error'), ROOT_DIR));
 }

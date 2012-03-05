@@ -9,7 +9,7 @@
 			<dd>
 {foreach $languages as $row}
 				<label for="language-override-{$row.value}">
-					<input type="radio" name="form[language_override]" id="language-override-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+					<input type="radio" name="language_override" id="language-override-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 					{$row.lang}
 				</label>
 {/foreach}
@@ -18,7 +18,7 @@
 			<dd>
 {foreach $entries as $row}
 				<label for="entries-override-{$row.value}">
-					<input type="radio" name="form[entries_override]" id="entries-override-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+					<input type="radio" name="entries_override" id="entries-override-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 					{$row.lang}
 				</label>
 {/foreach}
@@ -27,7 +27,7 @@
 			<dd>
 {foreach $registration as $row}
 				<label for="enable-registration-{$row.value}">
-					<input type="radio" name="form[enable_registration]" id="enable-registration-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+					<input type="radio" name="enable_registration" id="enable-registration-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 					{$row.lang}
 				</label>
 {/foreach}
@@ -35,7 +35,7 @@
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		{$form_token}
 	</div>
 </form>

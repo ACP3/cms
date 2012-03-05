@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (modules::check('categories', 'functions') === true) {
+if (ACP3_Modules::check('categories', 'functions') === true) {
 	require_once MODULES_DIR . 'categories/functions.php';
 	$categories = getCategoriesCache('files');
 	if (count($categories) > 0) {
@@ -18,4 +18,4 @@ if (modules::check('categories', 'functions') === true) {
 	}
 }
 
-view::setContent(view::fetchTemplate('files/list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('files/list.tpl'));

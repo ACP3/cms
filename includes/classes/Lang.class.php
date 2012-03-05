@@ -17,7 +17,7 @@ if (defined('IN_ACP3') === false)
  * @package ACP3
  * @subpackage Core
  */
-class lang
+class ACP3_Lang
 {
 	/**
 	 * Die zur Zeit eingestellte Sprache
@@ -57,7 +57,7 @@ class lang
 				}
 			}
 		}
-		cache::create('language_' . $this->lang, $data);
+		ACP3_Cache::create('language_' . $this->lang, $data);
 	}
 	/**
 	 * Gibt die gecacheten Sprachstrings aus
@@ -67,10 +67,10 @@ class lang
 	private function getLangCache()
 	{
 		$filename = 'language_' . $this->lang;
-		if (cache::check($filename) === false)
+		if (ACP3_Cache::check($filename) === false)
 			$this->setLangCache();
 
-		return cache::output($filename);
+		return ACP3_Cache::output($filename);
 	}
 	/**
 	 * Gibt den angeforderten Sprachstring aus

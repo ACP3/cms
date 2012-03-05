@@ -10,36 +10,34 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (isset($_POST['form']) === true) {
-	$form = $_POST['form'];
-
-	if (empty($form['name']))
+if (isset($_POST['submit']) === true) {
+	if (empty($_POST['name']))
 		$errors['name'] = $lang->t('common', 'name_to_short');
-	if (validate::email($form['mail']) === false)
+	if (ACP3_Validate::email($_POST['mail']) === false)
 		$errors['mail'] = $lang->t('common', 'wrong_email_format');
-	if (strlen($form['message']) < 3)
+	if (strlen($_POST['message']) < 3)
 		$errors['message'] = $lang->t('common', 'message_to_short');
-	if ($auth->isUser() === false && validate::captcha($form['captcha']) === false)
+	if ($auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
 		$errors['captcha'] = $lang->t('captcha', 'invalid_captcha_entered');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (validate::formToken() === false) {
-		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+	} elseif (ACP3_Validate::formToken() === false) {
+		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
-		$settings = config::getModuleSettings('contact');
+		$settings = ACP3_Config::getModuleSettings('contact');
 
 		$subject = sprintf($lang->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
-		$body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($form['name'], $form['mail'], $form['message'], "\n"), $lang->t('contact', 'contact_body'));
+		$body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($_POST['name'], $_POST['mail'], $_POST['message'], "\n"), $lang->t('contact', 'contact_body'));
 
-		$bool = generateEmail('', $settings['mail'], $form['mail'], $subject, $body);
+		$bool = generateEmail('', $settings['mail'], $_POST['mail'], $subject, $body);
 
 		$session->unsetFormToken();
 
-		view::setContent(confirmBox($bool === true ? $lang->t('contact', 'send_mail_success') : $lang->t('contact', 'send_mail_error'), $uri->route('contact')));
+		ACP3_View::setContent(confirmBox($bool === true ? $lang->t('contact', 'send_mail_success') : $lang->t('contact', 'send_mail_error'), $uri->route('contact')));
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 	// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
 	if ($auth->isUser() === true) {
 		$defaults = $auth->getUserInfo();
@@ -47,9 +45,9 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 		$defaults['name'] = !empty($defaults['realname']) ? $db->escape($defaults['realname'], 3) : $db->escape($defaults['nickname'], 3);
 		$defaults['message'] = '';
 
-		if (isset($form)) {
-			$form['name_disabled'] = $disabled;
-			$form['mail_disabled'] = $disabled;
+		if (isset($_POST['submit'])) {
+			$_POST['name_disabled'] = $disabled;
+			$_POST['mail_disabled'] = $disabled;
 		} else {
 			$defaults['name_disabled'] = $disabled;
 			$defaults['mail_disabled'] = $disabled;
@@ -63,11 +61,11 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 			'message' => '',
 		);
 	}
-	$tpl->assign('form', isset($form) ? array_merge($defaults, $form) : $defaults);
+	$tpl->assign('form', isset($_POST['submit']) ? array_merge($defaults, $_POST) : $defaults);
 
 	$tpl->assign('captcha', captcha());
 
 	$session->generateFormToken();
 
-	view::setContent(view::fetchTemplate('contact/list.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('contact/list.tpl'));
 }

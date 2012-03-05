@@ -10,72 +10,71 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (modules::check('menu_items', 'create') === true)
+if (ACP3_Modules::check('menu_items', 'create') === true)
 	require_once MODULES_DIR . 'menu_items/functions.php';
 
-if (isset($_POST['form']) === true) {
-	$form = $_POST['form'];
-
-	if (validate::date($form['start'], $form['end']) === false)
+if (isset($_POST['submit']) === true) {
+	if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
 		$errors[] = $lang->t('common', 'select_date');
-	if (strlen($form['title']) < 3)
+	if (strlen($_POST['title']) < 3)
 		$errors['title'] = $lang->t('static_pages', 'title_to_short');
-	if (strlen($form['text']) < 3)
+	if (strlen($_POST['text']) < 3)
 		$errors['text'] = $lang->t('static_pages', 'text_to_short');
-	if (modules::check('menu_items', 'create') === true) {
-		if ($form['create'] != 1 && $form['create'] != 0)
+	if (ACP3_Modules::check('menu_items', 'create') === true) {
+		if ($_POST['create'] != 1 && $_POST['create'] != 0)
 			$errors[] = $lang->t('static_page', 'select_create_menu_item');
-		if ($form['create'] == 1) {
-			if (validate::isNumber($form['block_id']) === false)
+		if ($_POST['create'] == 1) {
+			if (ACP3_Validate::isNumber($_POST['block_id']) === false)
 				$errors['block-id'] = $lang->t('menu_items', 'select_block');
-			if (!empty($form['parent']) && validate::isNumber($form['parent']) === false)
+			if (!empty($_POST['parent']) && ACP3_Validate::isNumber($_POST['parent']) === false)
 				$errors['parent'] = $lang->t('menu_items', 'select_superior_page');
-			if (!empty($form['parent']) && validate::isNumber($form['parent']) === true) {
+			if (!empty($_POST['parent']) && ACP3_Validate::isNumber($_POST['parent']) === true) {
 				// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
-				$parent_block = $db->select('block_id', 'menu_items', 'id = \'' . $form['parent'] . '\'');
-				if (!empty($parent_block) && $parent_block[0]['block_id'] != $form['block_id'])
+				$parent_block = $db->select('block_id', 'menu_items', 'id = \'' . $_POST['parent'] . '\'');
+				if (!empty($parent_block) && $parent_block[0]['block_id'] != $_POST['block_id'])
 					$errors['parent'] = $lang->t('menu_items', 'superior_page_not_allowed');
 			}
-			if ($form['display'] != 0 && $form['display'] != 1)
+			if ($_POST['display'] != 0 && $_POST['display'] != 1)
 				$errors[] = $lang->t('menu_items', 'select_item_visibility');
 		}
 	}
-	if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias']) === true))
+	if (CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
+		(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias']) === true))
 		$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (validate::formToken() === false) {
-		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+	} elseif (ACP3_Validate::formToken() === false) {
+		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$insert_values = array(
 			'id' => '',
-			'start' => $date->timestamp($form['start']),
-			'end' => $date->timestamp($form['end']),
-			'title' => $db->escape($form['title']),
-			'text' => $db->escape($form['text'], 2),
+			'start' => $date->timestamp($_POST['start']),
+			'end' => $date->timestamp($_POST['end']),
+			'title' => $db->escape($_POST['title']),
+			'text' => $db->escape($_POST['text'], 2),
 			'user_id' => $auth->getUserId(),
 		);
 
 		$db->link->beginTransaction();
 		$bool = $db->insert('static_pages', $insert_values);
 		$last_id = $db->link->lastInsertId();
-		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']))
-			seo::insertUriAlias($form['alias'], 'static_pages/list/id_' . $last_id, $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
+		if (CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
+			ACP3_SEO::insertUriAlias('static_pages/list/id_' . $last_id, $_POST['alias'], $db->escape($_POST['seo_keywords']), $db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
 		$db->link->commit();
 
-		if ($form['create'] == 1 && modules::check('menu_items', 'create') === true) {
+		if ($_POST['create'] == 1 && ACP3_Modules::check('menu_items', 'create') === true) {
 			$insert_values = array(
 				'id' => '',
 				'mode' => 4,
-				'block_id' => $form['block_id'],
-				'display' => $form['display'],
-				'title' => $db->escape($form['title']),
+				'block_id' => $_POST['block_id'],
+				'display' => $_POST['display'],
+				'title' => $db->escape($_POST['title']),
 				'uri' => 'static_pages/list/id_' . $last_id . '/',
 				'target' => 1,
 			);
 
-			menuItemsInsertNode($form['parent'], $insert_values);
+			menuItemsInsertNode($_POST['parent'], $insert_values);
 			setMenuItemsCache();
 		}
 
@@ -84,8 +83,8 @@ if (isset($_POST['form']) === true) {
 		setRedirectMessage($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/static_pages');
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-	if (modules::check('menu_items', 'create') === true) {
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
+	if (ACP3_Modules::check('menu_items', 'create') === true) {
 		$create = array();
 		$create[0]['value'] = 1;
 		$create[0]['selected'] = selectEntry('create', '1', '0', 'checked');
@@ -125,9 +124,11 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 		'seo_description' => ''
 	);
 
-	$tpl->assign('form', isset($form) ? $form : $defaults);
+	$tpl->assign('SEO_FORM_FIELDS', ACP3_SEO::formFields());
+
+	$tpl->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
 	$session->generateFormToken();
 
-	view::setContent(view::fetchTemplate('static_pages/create.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('static_pages/create.tpl'));
 }

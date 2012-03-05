@@ -36,4 +36,4 @@ if ($c_polls > 0) {
 	$tpl->assign('polls', $polls);
 }
 
-view::setContent(view::fetchTemplate('polls/list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('polls/list.tpl'));

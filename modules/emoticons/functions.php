@@ -26,7 +26,7 @@ function setEmoticonsCache()
 		$data[$code] = '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $emoticons[$i]['img'] . '" width="' . $picInfos[0] . '" height="' . $picInfos[1] . '" alt="' . $description . '" title="' . $description . '" />';
 	}
 
-	return cache::create('emoticons', $data);
+	return ACP3_Cache::create('emoticons', $data);
 }
 /**
  * Bindet die gecacheten Emoticons ein
@@ -35,10 +35,10 @@ function setEmoticonsCache()
  */
 function getEmoticonsCache()
 {
-	if (cache::check('emoticons') === false)
+	if (ACP3_Cache::check('emoticons') === false)
 		setEmoticonsCache();
 
-	return cache::output('emoticons');
+	return ACP3_Cache::output('emoticons');
 }
 /**
  * Erzeugt eine Auflistung der Emoticons
@@ -57,7 +57,7 @@ function emoticonsList($field_id = 0)
 
 	$tpl->assign('emoticons_field_id', empty($field_id) ? 'message' : $field_id);
 	$tpl->assign('emoticons', $emoticons);
-	return view::fetchTemplate('emoticons/list.tpl');
+	return ACP3_View::fetchTemplate('emoticons/list.tpl');
 }
 /**
  * Ersetzt bestimmte Zeichen durch Emoticons

@@ -10,4 +10,4 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-view::setContent(view::fetchTemplate('system/adm_list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('system/adm_list.tpl'));

@@ -17,7 +17,7 @@ if (defined('IN_ACP3') === false)
  * @package ACP3
  * @subpackage Core
  */
-class config
+class ACP3_Config
 {
 	/**
 	 * Erstellt/Verändert die Hauptkonfigurationsdatei des ACP3
@@ -62,6 +62,7 @@ class config
 				'seo_meta_description' => CONFIG_SEO_META_DESCRIPTION,
 				'seo_meta_keywords' => CONFIG_SEO_META_KEYWORDS,
 				'seo_mod_rewrite' => CONFIG_SEO_MOD_REWRITE,
+				'seo_robots' => CONFIG_SEO_ROBOTS,
 				'seo_title' => CONFIG_SEO_TITLE,
 				'version' => CONFIG_VERSION,
 				'wysiwyg' => CONFIG_WYSIWYG
@@ -118,10 +119,10 @@ class config
 	 */
 	public static function getModuleSettings($module)
 	{
-		if (cache::check($module . '_settings') === false)
+		if (ACP3_Cache::check($module . '_settings') === false)
 			self::setModuleCache($module);
 
-		return cache::output($module . '_settings');
+		return ACP3_Cache::output($module . '_settings');
 	}
 	/**
 	 * Setzt den Cache für die Einstellungen eines Moduls
@@ -141,6 +142,6 @@ class config
 			$cache_ary[$settings[$i]['name']] = $settings[$i]['value'];
 		}
 
-		return cache::create($module . '_settings', $cache_ary);
+		return ACP3_Cache::create($module . '_settings', $cache_ary);
 	}
 }

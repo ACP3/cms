@@ -13,10 +13,10 @@ if (defined('IN_ACP3') === false)
 $time = $date->timestamp();
 $period = ' AND (start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time . ')';
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'id = \'' . $uri->id . '\'' . $period) == 1) {
+if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'id = \'' . $uri->id . '\'' . $period) == 1) {
 	require_once MODULES_DIR . 'news/functions.php';
 
-	$settings = config::getModuleSettings('news');
+	$settings = ACP3_Config::getModuleSettings('news');
 	$news = getNewsCache($uri->id);
 	$news[0]['headline'] = $db->escape($news[0]['headline'], 3);
 
@@ -40,12 +40,12 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'id = \
 
 	$tpl->assign('news', $news[0]);
 
-	if ($settings['comments'] == 1 && $news[0]['comments'] == 1 && modules::check('comments', 'functions') === true) {
+	if ($settings['comments'] == 1 && $news[0]['comments'] == 1 && ACP3_Modules::check('comments', 'functions') === true) {
 		require_once MODULES_DIR . 'comments/functions.php';
 
 		$tpl->assign('comments', commentsList('news', $uri->id));
 	}
-	view::setContent(view::fetchTemplate('news/details.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('news/details.tpl'));
 } else {
 	$uri->redirect('errors/404');
 }

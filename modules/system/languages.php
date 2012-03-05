@@ -18,17 +18,17 @@ if ($uri->dir) {
 	$bool = false;
 
 	if (!empty($dir)) {
-		$bool = config::system(array('lang' => $dir));
+		$bool = ACP3_Config::system(array('lang' => $dir));
 	}
 	$text = $bool === true ? $lang->t('system', 'languages_edit_success') : $lang->t('system', 'languages_edit_error');
 
-	view::setContent(confirmBox($text, $uri->route('acp/system/languages')));
+	ACP3_View::setContent(confirmBox($text, $uri->route('acp/system/languages')));
 } else {
 	$languages = array();
 	$directories = scandir(ACP3_ROOT . 'languages');
 	$count_dir = count($directories);
 	for ($i = 0; $i < $count_dir; ++$i) {
-		$lang_info = xml::parseXmlFile(ACP3_ROOT . 'languages/' . $directories[$i] . '/info.xml', '/language');
+		$lang_info = ACP3_XML::parseXmlFile(ACP3_ROOT . 'languages/' . $directories[$i] . '/info.xml', '/language');
 		if (!empty($lang_info)) {
 			$languages[$i] = $lang_info;
 			$languages[$i]['selected'] = CONFIG_LANG == $directories[$i] ? 1 : 0;
@@ -37,5 +37,5 @@ if ($uri->dir) {
 	}
 	$tpl->assign('languages', $languages);
 
-	view::setContent(view::fetchTemplate('system/languages.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('system/languages.tpl'));
 }

@@ -8,33 +8,31 @@ if ($auth->isUser() === true) {
 	$breadcrumb->append($lang->t('users', 'users'), $uri->route('users'))
 			   ->append($lang->t('users', 'forgot_pwd'));
 
-	if (isset($_POST['form']) === true) {
+	if (isset($_POST['submit']) === true) {
 		require_once MODULES_DIR . 'users/functions.php';
 
-		$form = $_POST['form'];
-
-		if (empty($form['nick_mail']))
+		if (empty($_POST['nick_mail']))
 			$errors['nick-mail'] = $lang->t('users', 'type_in_nickname_or_email');
-		if (!empty($form['nick_mail']) && validate::email($form['nick_mail']) === false && userNameExists($form['nick_mail']) === false)
+		if (!empty($_POST['nick_mail']) && ACP3_Validate::email($_POST['nick_mail']) === false && userNameExists($_POST['nick_mail']) === false)
 			$errors['nick-mail'] = $lang->t('users', 'user_not_exists');
-		if (!empty($form['nick_mail']) && validate::email($form['nick_mail']) === false)
+		if (!empty($_POST['nick_mail']) && ACP3_Validate::email($_POST['nick_mail']) === false)
 			$errors['nick-mail'] = $lang->t('common', 'wrong_email_format');
-		if (validate::email($form['nick_mail']) && userEmailExists($form['nick_mail']) === false)
+		if (ACP3_Validate::email($_POST['nick_mail']) && userEmailExists($_POST['nick_mail']) === false)
 			$errors['nick-mail'] = $lang->t('users', 'user_not_exists');
-		if ($auth->isUser() === false && validate::captcha($form['captcha']) === false)
+		if ($auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
 			$errors['captcha'] = $lang->t('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (validate::formToken() === false) {
-			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+		} elseif (ACP3_Validate::formToken() === false) {
+			ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			// Neues Passwort und neuen Zufallsschlüssel erstellen
 			$new_password = salt(8);
 			$host = htmlentities($_SERVER['HTTP_HOST']);
 
 			// Je nachdem welches Feld ausgefüllt wurde, dieses auswählen
-			$where = validate::email($form['nick_mail']) && userEmailExists($form['nick_mail']) === true ? 'mail = \'' . $form['nick_mail'] . '\'' : 'nickname = \'' . $db->escape($form['nick_mail']) . '\'';
+			$where = ACP3_Validate::email($_POST['nick_mail']) && userEmailExists($_POST['nick_mail']) === true ? 'mail = \'' . $_POST['nick_mail'] . '\'' : 'nickname = \'' . $db->escape($_POST['nick_mail']) . '\'';
 			$user = $db->select('id, nickname, mail', 'users', $where);
 
 			// E-Mail mit dem neuen Passwort versenden
@@ -50,18 +48,18 @@ if ($auth->isUser() === true) {
 
 			$session->unsetFormToken();
 
-			view::setContent(confirmBox($mail_sent === true && isset($bool) && $bool !== false ? $lang->t('users', 'forgot_pwd_success') : $lang->t('users', 'forgot_pwd_error'), ROOT_DIR));
+			ACP3_View::setContent(confirmBox($mail_sent === true && isset($bool) && $bool !== false ? $lang->t('users', 'forgot_pwd_success') : $lang->t('users', 'forgot_pwd_error'), ROOT_DIR));
 		}
 	}
-	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
+	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 		$defaults = array('nick_mail' => '');
 
-		$tpl->assign('form', isset($form) ? $form : $defaults);
+		$tpl->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
 		$tpl->assign('captcha', captcha());
 
 		$session->generateFormToken();
 
-		view::setContent(view::fetchTemplate('users/forgot_pwd.tpl'));
+		ACP3_View::setContent(ACP3_View::fetchTemplate('users/forgot_pwd.tpl'));
 	}
 }

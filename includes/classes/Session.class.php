@@ -17,7 +17,7 @@ if (defined('IN_ACP3') === false)
  * @package ACP3
  * @subpackage Core
  */
-class session {
+class ACP3_Session {
 	/**
 	 * Name der Session
 	 */

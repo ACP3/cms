@@ -57,7 +57,7 @@ function captcha($captcha_length = 5)
 		$captcha['width'] = $captcha_length * 25;
 		$captcha['height'] = 30;
 		$tpl->assign('captcha', $captcha);
-		return view::fetchTemplate('common/captcha.tpl');
+		return ACP3_View::fetchTemplate('common/captcha.tpl');
 	}
 	return '';
 }
@@ -88,7 +88,7 @@ function confirmBox($text, $forward = 0, $backward = 0, $overlay = 0)
 			$confirm['backward'] = $backward;
 		$tpl->assign('confirm', $confirm);
 
-		return view::fetchTemplate('common/confirm_box.tpl');
+		return ACP3_View::fetchTemplate('common/confirm_box.tpl');
 	}
 	return '';
 }
@@ -105,7 +105,7 @@ function errorBox($errors)
 	$non_integer_keys = false;
 	if (is_array($errors) === true) {
 		foreach(array_keys($errors) as $key) {
-			if (validate::isNumber($key) === false) {
+			if (ACP3_Validate::isNumber($key) === false) {
 				$non_integer_keys = true;
 				break;
 			}
@@ -114,7 +114,7 @@ function errorBox($errors)
 		$errors = array($errors);
 	}
 	$tpl->assign('error_box', array('non_integer_keys' => $non_integer_keys, 'errors' => $errors));
-	return view::fetchTemplate('common/error_box.tpl');
+	return ACP3_View::fetchTemplate('common/error_box.tpl');
 }
 /**
  * Generiert eine E-Mail und versendet diese
@@ -198,11 +198,11 @@ function generateTOC(array $pages, $path)
 			$page_num = $i + 1;
 			$toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf($lang->t('static_pages', 'page'), $page_num);
 			$toc[$i]['uri'] = $uri->route($path, 1) . 'page_' . $page_num . '/';
-			$toc[$i]['selected'] = (validate::isNumber($uri->page) === false && $i === 0) || $uri->page === $page_num ? true : false;
+			$toc[$i]['selected'] = (ACP3_Validate::isNumber($uri->page) === false && $i === 0) || $uri->page === $page_num ? true : false;
 			++$i;
 		}
 		$tpl->assign('toc', $toc);
-		return view::fetchTemplate('common/toc.tpl');
+		return ACP3_View::fetchTemplate('common/toc.tpl');
 	}
 	return '';
 }
@@ -257,14 +257,14 @@ function splitTextIntoPages($text, $path)
 			$matches = array();
 			preg_match_all($regex, $text, $matches);
 
-			$currentPage = validate::isNumber($uri->page) === true && $uri->page <= $c_pages ? $uri->page - 1 : 0;
+			$currentPage = ACP3_Validate::isNumber($uri->page) === true && $uri->page <= $c_pages ? $uri->page - 1 : 0;
 			$next_page = $currentPage + 2 <= $c_pages ? $uri->route($path, 1) . 'page_' . ($currentPage + 2) . '/' : '';
 			$previous_page = $currentPage > 0 ? $uri->route($path, 1) . 'page_' . $currentPage . '/' : '';
 
 			if (!empty($next_page))
-				seo::setNextPage($next_page);
+				ACP3_SEO::setNextPage($next_page);
 			if (!empty($previous_page))
-				seo::setPreviousPage($previous_page);
+				ACP3_SEO::setPreviousPage($previous_page);
 
 			$page = array(
 				'toc' => generateTOC($matches[0], $path),
@@ -286,7 +286,7 @@ function getRedirectMessage()
 
 	if (isset($_SESSION['redirect_message'])) {
 		$tpl->assign('redirect', array('text' => $_SESSION['redirect_message']));
-		$tpl->assign('redirect_message', view::fetchTemplate('common/redirect_message.tpl'));
+		$tpl->assign('redirect_message', ACP3_View::fetchTemplate('common/redirect_message.tpl'));
 		unset($_SESSION['redirect_message']);
 	}
 }
@@ -444,7 +444,7 @@ function pagination($rows, $fragment = '')
 		$link = $uri->route((defined('IN_ADM') === true ? 'acp/' : '') . $uri->getCleanQuery(), 1);
 
 		// Seitenauswahl
-		$current_page = validate::isNumber($uri->page) ? (int) $uri->page : 1;
+		$current_page = ACP3_Validate::isNumber($uri->page) ? (int) $uri->page : 1;
 		$pagination = array();
 		$c_pagination = (int) ceil($rows / $auth->entries);
 		$show_first_last = 5;
@@ -454,9 +454,9 @@ function pagination($rows, $fragment = '')
 		// Vorherige und nächste Seite für Suchmaschinen und Prefetching propagieren
 		if (defined('IN_ADM') === false) {
 			if ($current_page - 1 > 0)
-				seo::setPreviousPage($link . 'page_' . ($current_page - 1) . '/');
+				ACP3_SEO::setPreviousPage($link . 'page_' . ($current_page - 1) . '/');
 			if ($current_page + 1 <= $c_pagination)
-				seo::setNextPage($link . 'page_' . ($current_page + 1) . '/');
+				ACP3_SEO::setNextPage($link . 'page_' . ($current_page + 1) . '/');
 		}
 
 		// Erste Seite
@@ -506,7 +506,7 @@ function pagination($rows, $fragment = '')
 
 		$tpl->assign('pagination', $pagination);
 
-		return view::fetchTemplate('common/pagination.tpl');
+		return ACP3_View::fetchTemplate('common/pagination.tpl');
 	}
 }
 /**
@@ -606,16 +606,10 @@ function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
 	$attr = ' ' . $attr . '="' . $attr . '"';
 
 	if (isset($_POST[$name])) {
-		$field = $_POST[$name];
-	} elseif (isset($_POST['form'][$name])) {
-		$field = $_POST['form'][$name];
-	}
-
-	if (isset($field)) {
-		if (is_array($field) === false && $field == $defValue) {
+		if (is_array($_POST[$name]) === false && $_POST[$name] == $defValue) {
 			return $attr;
-		} elseif (is_array($field) === true) {
-			foreach ($field as $row) {
+		} elseif (is_array($_POST[$name]) === true) {
+			foreach ($_POST[$name] as $row) {
 				if ($row == $defValue)
 					return $attr;
 			}

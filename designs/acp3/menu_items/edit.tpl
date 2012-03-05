@@ -13,19 +13,19 @@
 			<dl>
 				<dt><label for="mode">{lang t="menu_items|page_type"}</label></dt>
 				<dd>
-					<select name="form[mode]" id="mode">
+					<select name="mode" id="mode">
 {foreach $mode as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 					</select>
 				</dd>
 				<dt><label for="title">{lang t="menu_items|title"}</label></dt>
-				<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120"></dd>
+				<dd><input type="text" name="title" id="title" value="{$form.title}" maxlength="120"></dd>
 			</dl>
 			<dl>
 				<dt><label for="block-id">{lang t="menu_items|blocks"}</label></dt>
 				<dd>
-					<select name="form[block_id]" id="block-id">
+					<select name="block_id" id="block-id">
 						<option value="">{lang t="common|pls_select"}</option>
 {foreach $blocks as $row}
 						<option value="{$row.id}"{$row.selected}>{$row.title}</option>
@@ -34,7 +34,7 @@
 				</dd>
 				<dt><label for="parent">{lang t="menu_items|superior_page"}</label></dt>
 				<dd>
-					<select name="form[parent]" id="parent">
+					<select name="parent" id="parent">
 						<option value="">{lang t="menu_items|no_superior_page"}</option>
 {foreach $pages_list as $block => $pages}
 						<optgroup label="{$block}">
@@ -49,7 +49,7 @@
 				<dd>
 {foreach $display as $row}
 					<label for="display-{$row.value}">
-						<input type="radio" name="form[display]" id="display-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected}>
+						<input type="radio" name="display" id="display-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected}>
 						{$row.lang}
 					</label>
 {/foreach}
@@ -60,7 +60,7 @@
 			<dl id="module-container">
 				<dt><label for="module">{lang t="menu_items|module"}</label></dt>
 				<dd>
-					<select name="form[module]" id="module">
+					<select name="module" id="module">
 						<option value="">{lang t="common|pls_select"}</option>
 {foreach $modules as $row}
 						<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
@@ -73,13 +73,13 @@
 					<label for="uri">{lang t="menu_items|uri"}</label>
 					<span id="link-hints">({lang t="menu_items|dynamic_page_hints"})</span>
 				</dt>
-				<dd><input type="text" name="form[uri]" id="uri" value="{$form.uri}" maxlength="120"></dd>
+				<dd><input type="text" name="uri" id="uri" value="{$form.uri}" maxlength="120"></dd>
 			</dl>
 {if isset($static_pages)}
 			<dl id="static-pages-container">
 				<dt><label for="static-pages">{lang t="static_pages|static_pages"}</label></dt>
 				<dd>
-					<select name="form[static_pages]" id="static-pages">
+					<select name="static_pages" id="static-pages">
 						<option value="">{lang t="common|pls_select"}</option>
 {foreach $static_pages as $row}
 						<option value="{$row.id}"{$row.selected}>{$row.title}</option>
@@ -91,7 +91,7 @@
 			<dl id="target-container">
 				<dt><label for="target">{lang t="menu_items|target_page"}</label></dt>
 				<dd>
-					<select name="form[target]" id="target">
+					<select name="target" id="target">
 {foreach $target as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
@@ -100,11 +100,11 @@
 			</dl>
 		</div>
 		<div id="tab-3">
-			{seo_fields alias="`$form.alias`" keywords="`$form.seo_keywords`" description="`$form.seo_description`"}
+			{$SEO_FORM_FIELDS}
 		</div>
 	</div>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		{$form_token}
 	</div>
 </form>

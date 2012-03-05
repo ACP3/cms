@@ -54,36 +54,36 @@
 					<label for="db-host">{lang t="installation|db_hostname"}</label>
 					<span>{lang t="installation|db_hostname_description"}</span>
 				</dt>
-				<dd><input type="text" name="form[db_host]" id="db-host" value="{$form.db_host}"></dd>
+				<dd><input type="text" name="db_host" id="db-host" value="{$form.db_host}"></dd>
 				<dt><label for="db-user">{lang t="installation|db_username"}</label></dt>
-				<dd><input type="text" name="form[db_user]" id="db-user" value="{$form.db_user}"></dd>
+				<dd><input type="text" name="db_user" id="db-user" value="{$form.db_user}"></dd>
 				<dt><label for="db-password">{lang t="installation|db_password"}</label></dt>
-				<dd><input type="password" name="form[db_password]" id="db-password" value=""></dd>
+				<dd><input type="password" name="db_password" id="db-password" value=""></dd>
 				<dt><label for="db-name">{lang t="installation|db_name"}</label></dt>
-				<dd><input type="text" name="form[db_name]" id="db-name" value="{$form.db_name}"></dd>
+				<dd><input type="text" name="db_name" id="db-name" value="{$form.db_name}"></dd>
 				<dt><label for="db-pre">{lang t="installation|db_table_prefix"}</label></dt>
-				<dd><input type="text" name="form[db_pre]" id="db-pre" value="{$form.db_pre}"></dd>
+				<dd><input type="text" name="db_pre" id="db-pre" value="{$form.db_pre}"></dd>
 			</dl>
 		</div>
 		<div id="tabs-2" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="user-name">{lang t="users|nickname"}</label></dt>
-				<dd><input type="text" name="form[user_name]" id="user-name" value="{$form.user_name}"></dd>
+				<dd><input type="text" name="user_name" id="user-name" value="{$form.user_name}"></dd>
 				<dt><label for="user-pwd">{lang t="users|pwd"}</label></dt>
-				<dd><input type="password" name="form[user_pwd]" id="user-pwd"></dd>
+				<dd><input type="password" name="user_pwd" id="user-pwd"></dd>
 				<dt><label for="user-pwd-wdh">{lang t="users|pwd_repeat"}</label></dt>
-				<dd><input type="password" name="form[user_pwd_wdh]" id="user-pwd-wdh"></dd>
+				<dd><input type="password" name="user_pwd_wdh" id="user-pwd-wdh"></dd>
 				<dt><label for="mail">{lang t="common|email"}</label></dt>
-				<dd><input type="text" name="form[mail]" id="mail" value="{$form.mail}"></dd>
+				<dd><input type="text" name="mail" id="mail" value="{$form.mail}"></dd>
 			</dl>
 		</div>
 		<div id="tabs-3" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="seo-title">{lang t="system|title"}</label></dt>
-				<dd><input type="text" name="form[seo_title]" id="seo-title" value="{$form.seo_title}"></dd>
+				<dd><input type="text" name="seo_title" id="seo-title" value="{$form.seo_title}"></dd>
 				<dt><label for="entries">{lang t="system|entries_per_page"}</label></dt>
 				<dd>
-					<select name="form[entries]" id="entries">
+					<select name="entries" id="entries">
 {foreach $entries as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.value}</option>
 {/foreach}
@@ -93,7 +93,7 @@
 					<label for="flood">{lang t="system|flood_barrier"}</label>
 					<span>({lang t="system|flood_barrier_description"})</span>
 				</dt>
-				<dd><input type="text" name="form[flood]" id="flood" value="{$form.flood}" maxlength="3"></dd>
+				<dd><input type="text" name="flood" id="flood" value="{$form.flood}" maxlength="3"></dd>
 			</dl>
 		</div>
 		<div id="tabs-4" class="ui-tabs-hide">
@@ -102,12 +102,12 @@
 					<label for="date-format-long">{lang t="common|date_format_long"}</label>
 					<span>({lang t="system|php_date_function"})</span>
 				</dt>
-				<dd><input type="text" name="form[date_format_long]" id="date-format-long" value="{$form.date_format_long}" maxlength="20"></dd>
+				<dd><input type="text" name="date_format_long" id="date-format-long" value="{$form.date_format_long}" maxlength="20"></dd>
 				<dt><label for="date-format-short">{lang t="common|date_format_short"}</label></dt>
-				<dd><input type="text" name="form[date_format_short]" id="date-format-short" value="{$form.date_format_short}" maxlength="20"></dd>
+				<dd><input type="text" name="date_format_short" id="date-format-short" value="{$form.date_format_short}" maxlength="20"></dd>
 				<dt><label for="date-time-zone">{lang t="common|time_zone"}</label></dt>
 				<dd>
-					<select name="form[date_time_zone]" id="date-time-zone">
+					<select name="date_time_zone" id="date-time-zone">
 {foreach $time_zones as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
@@ -117,7 +117,7 @@
 				<dd>
 {foreach $dst as $row}
 					<label for="date-dst-{$row.value}">
-						<input type="radio" name="form[date_dst]" id="date-dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+						<input type="radio" name="date_dst" id="date-dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 						{$row.lang}
 					</label>
 {/foreach}

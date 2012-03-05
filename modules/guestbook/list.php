@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$settings = config::getModuleSettings('guestbook');
+$settings = ACP3_Config::getModuleSettings('guestbook');
 $tpl->assign('overlay', $settings['overlay']);
 
 $guestbook = $db->query('SELECT u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.id, g.date, g.name, g.user_id, g.message, g.website, g.mail FROM {pre}guestbook AS g LEFT JOIN {pre}users AS u ON(u.id = g.user_id) ' . ($settings['notify'] == 2 ? 'WHERE active = 1' : '') . ' ORDER BY date DESC LIMIT ' . POS . ', ' . $auth->entries);
@@ -22,7 +22,7 @@ if ($c_guestbook > 0) {
 	// Emoticons einbinden
 	$emoticons_active = false;
 	if ($settings['emoticons'] == 1) {
-		$emoticons_active = modules::check('emoticons', 'functions') === true && $settings['emoticons'] == 1 ? true : false;
+		$emoticons_active = ACP3_Modules::check('emoticons', 'functions') === true && $settings['emoticons'] == 1 ? true : false;
 		if ($emoticons_active === true) {
 			require_once MODULES_DIR . 'emoticons/functions.php';
 		}
@@ -47,4 +47,4 @@ if ($c_guestbook > 0) {
 	}
 	$tpl->assign('guestbook', $guestbook);
 }
-view::setContent(view::fetchTemplate('guestbook/list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('guestbook/list.tpl'));

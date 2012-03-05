@@ -7,7 +7,7 @@
 		<dl>
 			<dt><label for="privileges">{lang t="access|assigned_privilege"}</label></dt>
 			<dd>
-				<select name="form[privileges]" id="privileges">
+				<select name="privileges" id="privileges">
 {foreach $privileges as $row}
 					<option value="{$row.id}"{$row.selected}>{$row.key}{if !empty($row.description)} ({$row.description}){/if}</option>
 {/foreach}
@@ -16,7 +16,7 @@
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		{$form_token}
 	</div>
 </form>

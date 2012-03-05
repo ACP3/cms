@@ -17,7 +17,7 @@ if (defined('IN_ACP3') === false)
  * @package ACP3
  * @subpackage Core
  */
-class cache
+class ACP3_Cache
 {
 	/**
 	 *

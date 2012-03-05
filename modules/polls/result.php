@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = \'' . $uri->id . '\' AND start <= \'' . $date->timestamp() . '\'') == 1) {
+if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = \'' . $uri->id . '\' AND start <= \'' . $date->timestamp() . '\'') == 1) {
 	$breadcrumb->append($lang->t('polls', 'polls'), $uri->route('polls'))
 			   ->append($lang->t('polls', 'result'));
 
@@ -28,7 +28,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = 
 	$tpl->assign('answers', $answers);
 	$tpl->assign('total_votes', $total_votes);
 
-	view::setContent(view::fetchTemplate('polls/result.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('polls/result.tpl'));
 } else {
 	$uri->redirect('errors/404');
 }

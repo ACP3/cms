@@ -9,7 +9,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$settings = config::getModuleSettings('news');
+$settings = ACP3_Config::getModuleSettings('news');
 
 $time = $date->timestamp();
 $where = 'start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time;
@@ -17,7 +17,7 @@ $news = $db->select('id, start, headline', 'news', $where, 'start DESC, end DESC
 $c_news = count($news);
 
 if ($c_news > 0) {
-	$settings = config::getModuleSettings('news');
+	$settings = ACP3_Config::getModuleSettings('news');
 
 	for ($i = 0; $i < $c_news; ++$i) {
 		$news[$i]['start'] = $date->format($news[$i]['start'], $settings['dateformat']);
@@ -27,4 +27,4 @@ if ($c_news > 0) {
 	$tpl->assign('sidebar_news', $news);
 }
 
-view::displayTemplate('news/sidebar.tpl');
+ACP3_View::displayTemplate('news/sidebar.tpl');

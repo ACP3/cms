@@ -26,5 +26,5 @@
 	<h5>{lang t="common|no_entries"}</h5>
 </div>
 {/if}
-{if modules::check('comments', 'create')}
+{if ACP3_Modules::check('comments', 'create')}
 {/if}

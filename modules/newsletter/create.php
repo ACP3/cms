@@ -10,59 +10,59 @@
 if (defined('IN_ACP3') === false)
 	exit();
 
-if (isset($_POST['form']) === true) {
+if (isset($_POST['submit']) === true) {
 	switch ($uri->action) {
 		case 'subscribe' :
-			$form = $_POST['form'];
+			
 
-			if (validate::email($form['mail']) === false)
+			if (ACP3_Validate::email($_POST['mail']) === false)
 				$errors['mail'] = $lang->t('common', 'wrong_email_format');
-			if (validate::email($form['mail']) && $db->countRows('*', 'newsletter_accounts', 'mail = \'' . $form['mail'] . '\'') == 1)
+			if (ACP3_Validate::email($_POST['mail']) && $db->countRows('*', 'newsletter_accounts', 'mail = \'' . $_POST['mail'] . '\'') == 1)
 				$errors['mail'] = $lang->t('newsletter', 'account_exists');
-			if ($auth->isUser() === false && validate::captcha($form['captcha']) === false)
+			if ($auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
 				$errors['captcha'] = $lang->t('captcha', 'invalid_captcha_entered');
 
 			if (isset($errors) === true) {
 				$tpl->assign('error_msg', errorBox($errors));
-			} elseif (validate::formToken() === false) {
-				view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+			} elseif (ACP3_Validate::formToken() === false) {
+				ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 			} else {
 				require MODULES_DIR . 'newsletter/functions.php';
-				$bool = subscribeToNewsletter($form['mail']);
+				$bool = subscribeToNewsletter($_POST['mail']);
 
 				$session->unsetFormToken();
 
-				view::setContent(confirmBox($bool !== false ? $lang->t('newsletter', 'subscribe_success') : $lang->t('newsletter', 'subscribe_error'), ROOT_DIR));
+				ACP3_View::setContent(confirmBox($bool !== false ? $lang->t('newsletter', 'subscribe_success') : $lang->t('newsletter', 'subscribe_error'), ROOT_DIR));
 			}
 			break;
 		case 'unsubscribe' :
-			$form = $_POST['form'];
+			
 
-			if (validate::email($form['mail']) === false)
+			if (ACP3_Validate::email($_POST['mail']) === false)
 				$errors[] = $lang->t('common', 'wrong_email_format');
-			if (validate::email($form['mail']) && $db->countRows('*', 'newsletter_accounts', 'mail = \'' . $form['mail'] . '\'') != 1)
+			if (ACP3_Validate::email($_POST['mail']) && $db->countRows('*', 'newsletter_accounts', 'mail = \'' . $_POST['mail'] . '\'') != 1)
 				$errors[] = $lang->t('newsletter', 'account_not_exists');
-			if ($auth->isUser() === false && validate::captcha($form['captcha']) === false)
+			if ($auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
 				$errors[] = $lang->t('captcha', 'invalid_captcha_entered');
 
 			if (isset($errors) === true) {
 				$tpl->assign('error_msg', errorBox($errors));
-			} elseif (validate::formToken() === false) {
-				view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+			} elseif (ACP3_Validate::formToken() === false) {
+				ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 			} else {
-				$bool = $db->delete('newsletter_accounts', 'mail = \'' . $form['mail'] . '\'');
+				$bool = $db->delete('newsletter_accounts', 'mail = \'' . $_POST['mail'] . '\'');
 
 				$session->unsetFormToken();
 
-				view::setContent(confirmBox($bool !== false ? $lang->t('newsletter', 'unsubscribe_success') : $lang->t('newsletter', 'unsubscribe_error'), ROOT_DIR));
+				ACP3_View::setContent(confirmBox($bool !== false ? $lang->t('newsletter', 'unsubscribe_success') : $lang->t('newsletter', 'unsubscribe_error'), ROOT_DIR));
 			}
 			break;
 		default:
 			$uri->redirect('errors/404');
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-	$tpl->assign('form', isset($form) ? $form : array('mail' => ''));
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
+	$tpl->assign('form', isset($_POST['submit']) ? $_POST : array('mail' => ''));
 
 	$field_value = $uri->action ? $uri->action : 'subscribe';
 
@@ -79,5 +79,5 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	$session->generateFormToken();
 
-	view::setContent(view::fetchTemplate('newsletter/create.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('newsletter/create.tpl'));
 }

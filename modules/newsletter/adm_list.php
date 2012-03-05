@@ -20,4 +20,4 @@ if ($c_accounts > 0) {
 
 	$tpl->assign('accounts', $accounts);
 }
-view::setContent(view::fetchTemplate('newsletter/adm_list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('newsletter/adm_list.tpl'));

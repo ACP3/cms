@@ -30,19 +30,30 @@ include ACP3_ROOT . 'includes/config.php';
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
 $php_self = dirname(PHP_SELF);
 define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
+define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 
-set_include_path(get_include_path() . PATH_SEPARATOR . ACP3_ROOT . 'includes/classes/');
-spl_autoload_extensions('.class.php');
-spl_autoload_register();
+/**
+ * Autoloading für die ACP3 eigenen Klassen
+ *
+ * @param string $class
+ *  Der Name der zu ladenden Klasse
+ */
+function acp3_load_class($class)
+{
+	$file = INCLUDES_DIR . 'classes/' . str_replace('ACP3_', '', $class) . '.class.php';
+	if(is_file($file) === true)
+		require_once $file;
+}
+spl_autoload_register("acp3_load_class");
 
-$db = new db();
+$db = new ACP3_DB();
 $handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
 if ($handle !== true) {
 	exit($handle);
 }
 
-$session = new session();
-$auth = new auth();
+$session = new ACP3_Session();
+$auth = new ACP3_Auth();
 
 global $Config;
 // SECURITY: You must explicitly enable this "connector". (Set it to "true").

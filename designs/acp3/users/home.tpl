@@ -11,7 +11,7 @@
 		{wysiwyg name="draft" value="$draft" height="250" toolbar="simple"}
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		<input type="reset" value="{lang t="common|reset"}" class="form">
 	</div>
 </form>

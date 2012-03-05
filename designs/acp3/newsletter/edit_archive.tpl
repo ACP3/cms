@@ -7,9 +7,9 @@
 		<legend>{lang t="newsletter|newsletter"}</legend>
 		<dl>
 			<dt><label for="subject">{lang t="newsletter|subject"}</label></dt>
-			<dd><input type="text" name="form[subject]" id="subject" value="{$form.subject}" required></dd>
+			<dd><input type="text" name="subject" id="subject" value="{$form.subject}" required></dd>
 			<dt><label for="text">{lang t="newsletter|text"}</label></dt>
-			<dd><textarea name="form[text]" id="text" cols="50" rows="5" required>{$form.text}</textarea></dd>
+			<dd><textarea name="text" id="text" cols="50" rows="5" required>{$form.text}</textarea></dd>
 			<dt>
 				<label for="action-1">{lang t="newsletter|action"}</label>
 				<span>({lang t="newsletter|action_description"})</span>
@@ -17,7 +17,7 @@
 			<dd>
 {foreach $action as $row}
 				<label for="action-{$row.value}">
-					<input type="radio" name="form[action]" id="action-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+					<input type="radio" name="action" id="action-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 					{$row.lang}
 				</label>
 {/foreach}
@@ -31,7 +31,7 @@
 			<dd>
 {foreach $test as $row}
 				<label for="test-{$row.value}">
-					<input type="radio" name="form[test]" id="test-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+					<input type="radio" name="test" id="test-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 					{$row.lang}
 				</label>
 {/foreach}
@@ -39,7 +39,7 @@
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		<input type="reset" value="{lang t="common|reset"}" class="form">
 		{$form_token}
 	</div>

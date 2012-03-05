@@ -17,15 +17,15 @@
 			</p>
 			<dl>
 				<dt><label for="name">{lang t="gallery|title"}</label></dt>
-				<dd><input type="text" name="form[name]" id="name" value="{$form.name}" maxlength="120"></dd>
+				<dd><input type="text" name="name" id="name" value="{$form.name}" maxlength="120"></dd>
 			</dl>
 		</div>
 		<div id="tab-2" class="ui-tabs-hide">
-			{seo_fields alias="`$form.alias`" keywords="`$form.seo_keywords`" description="`$form.seo_description`"}
+			{$SEO_FORM_FIELDS}
 		</div>
 	</div>
 	<div class="form-bottom" style="margin:20px 0">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		{$form_token}
 	</div>
 </form>
@@ -40,9 +40,9 @@
 {/if}
 {if isset($pictures)}
 {$pagination}
-{assign var="can_delete" value=modules::check("gallery", "delete_picture")}
-{assign var="can_order" value=modules::check("gallery", "order")}
-{assign var="can_edit_picture" value=modules::check("gallery", "edit_picture")}
+{assign var="can_delete" value=ACP3_Modules::check("gallery", "delete_picture")}
+{assign var="can_order" value=ACP3_Modules::check("gallery", "order")}
+{assign var="can_edit_picture" value=ACP3_Modules::check("gallery", "edit_picture")}
 	<table class="acp-table">
 		<thead>
 			<tr>

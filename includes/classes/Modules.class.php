@@ -17,7 +17,7 @@ if (defined('IN_ACP3') === false)
  * @package ACP3
  * @subpackage Core
  */
-class modules
+class ACP3_Modules
 {
 	/**
 	 * Überpüft, ob ein Modul überhaupt existiert,
@@ -38,7 +38,7 @@ class modules
 
 		if (is_file(MODULES_DIR . $module . '/' . $file . '.php') === true) {
 			if (self::isActive($module) === true) {
-				return acl::canAccessResource($module . '/' . $file . '/');
+				return ACP3_ACL::canAccessResource($module . '/' . $file . '/');
 			}
 			return 0;
 		}
@@ -91,9 +91,9 @@ class modules
 			global $auth;
 
 			$filename = 'modules_infos_' . $auth->getUserLanguage();
-			if (cache::check($filename) === false)
+			if (ACP3_Cache::check($filename) === false)
 				self::setModulesCache();
-			$parsed_modules = cache::output($filename);
+			$parsed_modules = ACP3_Cache::output($filename);
 		}
 		return !empty($parsed_modules[$module]) ? $parsed_modules[$module] : array();
 	}
@@ -106,7 +106,7 @@ class modules
 		$dirs = scandir(MODULES_DIR);
 		foreach ($dirs as $dir) {
 			if ($dir !== '.' && $dir !== '..' && is_file(MODULES_DIR . '/' . $dir . '/module.xml') === true) {
-				$mod_info = xml::parseXmlFile(MODULES_DIR . $dir . '/module.xml', 'info');
+				$mod_info = ACP3_XML::parseXmlFile(MODULES_DIR . $dir . '/module.xml', 'info');
 
 				if (is_array($mod_info) === true) {
 					global $auth, $db, $lang;
@@ -127,6 +127,6 @@ class modules
 				}
 			}
 		}
-		cache::create('modules_infos_' . $auth->getUserLanguage(), $infos);
+		ACP3_Cache::create('modules_infos_' . $auth->getUserLanguage(), $infos);
 	}
 }

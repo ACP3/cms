@@ -1,4 +1,4 @@
-{if modules::check('newsletter', 'create')}
+{if ACP3_Modules::check('newsletter', 'create')}
 <div style="text-align:center">
 	<a href="{uri args="newsletter/create"}">{lang t="newsletter|create"}</a>
 </div>
@@ -12,7 +12,7 @@
 					{lang t="common|category"}:
 					{$categories}
 				</label>
-				<input type="submit" value="{lang t="common|submit"}" class="form">
+				<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 			</div>
 		</form>
 	</div>

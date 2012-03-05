@@ -10,20 +10,20 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (isset($_POST['form']['cat']) && validate::isNumber($_POST['form']['cat']) === true) {
+if (isset($_POST['form']['cat']) && ACP3_Validate::isNumber($_POST['form']['cat']) === true) {
 	$cat = (int) $_POST['form']['cat'];
-} elseif (validate::isNumber($uri->cat) === true) {
+} elseif (ACP3_Validate::isNumber($uri->cat) === true) {
 	$cat = (int) $uri->cat;
 } else {
 	$cat = 0;
 }
 
-if (modules::check('categories', 'functions') === true) {
+if (ACP3_Modules::check('categories', 'functions') === true) {
 	require_once MODULES_DIR . 'categories/functions.php';
 	$tpl->assign('categories', categoriesList('news', $cat));
 }
 
-$settings = config::getModuleSettings('news');
+$settings = ACP3_Config::getModuleSettings('news');
 // Kategorie in Brotkrümelspur anzeigen
 if ($cat !== 0 && $settings['category_in_breadcrumb'] == 1) {
 	$breadcrumb->append($lang->t('news', 'news'), $uri->route('news'));
@@ -43,7 +43,7 @@ $c_news = count($news);
 
 if ($c_news > 0) {
 	// Überprüfen, ob das Kommentare Modul aktiv ist
-	if (modules::check('comments', 'functions') === true) {
+	if (ACP3_Modules::check('comments', 'functions') === true) {
 		require_once MODULES_DIR . 'comments/functions.php';
 		$comment_check = true;
 	}
@@ -67,4 +67,4 @@ if ($c_news > 0) {
 	$tpl->assign('news', $news);
 }
 
-view::setContent(view::fetchTemplate('news/list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('news/list.tpl'));

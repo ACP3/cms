@@ -12,7 +12,7 @@
 			<dl>
 				<dt><label for="date-format">{lang t="common|date_format"}</label></dt>
 				<dd>
-					<select name="form[dateformat]" id="date-format">
+					<select name="dateformat" id="date-format">
 						<option value="">{lang t="common|pls_select"}</option>
 {foreach $dateformat as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
@@ -21,7 +21,7 @@
 				</dd>
 				<dt><label for="sidebar-entries">{lang t="common|sidebar_entries_to_display"}</label></dt>
 				<dd>
-					<select name="form[sidebar]" id="sidebar-entries">
+					<select name="sidebar" id="sidebar-entries">
 						<option>{lang t="common|pls_select"}</option>
 {foreach $sidebar_entries as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.value}</option>
@@ -35,7 +35,7 @@
 				<dd>
 {foreach $overlay as $row}
 					<label for="overlay-{$row.value}">
-						<input type="radio" name="form[overlay]" id="overlay-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+						<input type="radio" name="overlay" id="overlay-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 						{$row.lang}
 					</label>
 {/foreach}
@@ -47,7 +47,7 @@
 				<dd>
 {foreach $comments as $row}
 					<label for="comments-{$row.value}">
-						<input type="radio" name="form[comments]" id="comments-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+						<input type="radio" name="comments" id="comments-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 						{$row.lang}
 					</label>
 {/foreach}
@@ -61,42 +61,42 @@
 					<label for="thumbwidth">{lang t="gallery|thumb_image_width"}</label>
 					<span>({lang t="common|statements_in_pixel"})</span>
 				</dt>
-				<dd><input type="number" name="form[thumbwidth]" id="thumbwidth" value="{$form.thumbwidth}"></dd>
+				<dd><input type="number" name="thumbwidth" id="thumbwidth" value="{$form.thumbwidth}"></dd>
 				<dt>
 					<label for="thumbheight">{lang t="gallery|thumb_image_height"}</label>
 					<span>({lang t="common|statements_in_pixel"})</span>
 				</dt>
-				<dd><input type="number" name="form[thumbheight]" id="thumbheight" value="{$form.thumbheight}"></dd>
+				<dd><input type="number" name="thumbheight" id="thumbheight" value="{$form.thumbheight}"></dd>
 				<dt>
 					<label for="width">{lang t="gallery|image_width"}</label>
 					<span>({lang t="common|statements_in_pixel"})</span>
 				</dt>
-				<dd><input type="number" name="form[width]" id="width" value="{$form.width}"></dd>
+				<dd><input type="number" name="width" id="width" value="{$form.width}"></dd>
 				<dt>
 					<label for="height">{lang t="gallery|image_height"}</label>
 					<span>({lang t="common|statements_in_pixel"})</span>
 				</dt>
-				<dd><input type="number" name="form[height]" id="height" value="{$form.height}"></dd>
+				<dd><input type="number" name="height" id="height" value="{$form.height}"></dd>
 				<dt>
 					<label for="maxwidth">{lang t="gallery|max_image_width"}</label>
 					<span>({lang t="common|statements_in_pixel"})</span>
 				</dt>
-				<dd><input type="number" name="form[maxwidth]" id="maxwidth" value="{$form.maxwidth}"></dd>
+				<dd><input type="number" name="maxwidth" id="maxwidth" value="{$form.maxwidth}"></dd>
 				<dt>
 					<label for="maxheight">{lang t="gallery|max_image_height"}</label>
 					<span>({lang t="common|statements_in_pixel"})</span>
 				</dt>
-				<dd><input type="number" name="form[maxheight]" id="maxheight" value="{$form.maxheight}"></dd>
+				<dd><input type="number" name="maxheight" id="maxheight" value="{$form.maxheight}"></dd>
 				<dt>
 					<label for="filesize">{lang t="gallery|image_filesize"}</label>
 					<span>({lang t="common|statements_in_byte"})</span>
 				</dt>
-				<dd><input type="number" name="form[filesize]" id="filesize" value="{$form.filesize}"></dd>
+				<dd><input type="number" name="filesize" id="filesize" value="{$form.filesize}"></dd>
 			</dl>
 		</div>
 	</div>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		{$form_token}
 	</div>
 </form>

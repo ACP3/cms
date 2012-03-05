@@ -8,7 +8,7 @@
 		<dl>
 			<dt><label for="date-format">{lang t="common|date_format"}</label></dt>
 			<dd>
-				<select name="form[dateformat]" id="date-format">
+				<select name="dateformat" id="date-format">
 					<option value="">{lang t="common|pls_select"}</option>
 {foreach $dateformat as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
@@ -17,7 +17,7 @@
 			</dd>
 			<dt><label for="sidebar-entries">{lang t="common|sidebar_entries_to_display"}</label></dt>
 			<dd>
-				<select name="form[sidebar]" id="sidebar-entries">
+				<select name="sidebar" id="sidebar-entries">
 					<option>{lang t="common|pls_select"}</option>
 {foreach $sidebar_entries as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.value}</option>
@@ -28,7 +28,7 @@
 			<dd>
 {foreach $readmore as $row}
 				<label for="readmore-{$row.value}">
-					<input type="radio" name="form[readmore]" id="readmore-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+					<input type="radio" name="readmore" id="readmore-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 					{$row.lang}
 				</label>
 {/foreach}
@@ -36,14 +36,14 @@
 		</dl>
 		<dl id="readmore-container">
 			<dt><label for="readmore-chars">{lang t="news|readmore_chars"}</label></dt>
-			<dd><input type="number" name="form[readmore_chars]" id="readmore-chars" value="{$readmore_chars}"></dd>
+			<dd><input type="number" name="readmore_chars" id="readmore-chars" value="{$readmore_chars}"></dd>
 		</dl>
 		<dl>
 			<dt><label for="category-in-breadcrumb-1">{lang t="news|display_category_in_breadcrumb"}</label></dt>
 			<dd>
 {foreach $category_in_breadcrumb as $row}
 				<label for="category-in-breadcrumb-{$row.value}">
-					<input type="radio" name="form[category_in_breadcrumb]" id="category-in-breadcrumb-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+					<input type="radio" name="category_in_breadcrumb" id="category-in-breadcrumb-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 					{$row.lang}
 				</label>
 {/foreach}
@@ -53,7 +53,7 @@
 			<dd>
 {foreach $allow_comments as $row}
 				<label for="comments-{$row.value}">
-					<input type="radio" name="form[comments]" id="comments-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+					<input type="radio" name="comments" id="comments-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 					{$row.lang}
 				</label>
 {/foreach}
@@ -62,7 +62,7 @@
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		{$form_token}
 	</div>
 </form>

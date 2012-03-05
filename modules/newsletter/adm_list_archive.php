@@ -25,4 +25,4 @@ if ($c_newsletter > 0) {
 	}
 	$tpl->assign('newsletter', $newsletter);
 }
-view::setContent(view::fetchTemplate('newsletter/adm_list_archive.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('newsletter/adm_list_archive.tpl'));

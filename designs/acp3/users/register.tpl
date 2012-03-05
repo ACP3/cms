@@ -10,23 +10,23 @@
 		<div id="tab-1">
 			<dl>
 				<dt><label for="nickname">{lang t="users|nickname"}</label></dt>
-				<dd><input type="text" name="form[nickname]" id="nickname" value="{$form.nickname}" maxlength="30"></dd>
+				<dd><input type="text" name="nickname" id="nickname" value="{$form.nickname}" maxlength="30"></dd>
 				<dt><label for="mail">{lang t="common|email"}</label></dt>
-				<dd><input type="email" name="form[mail]" id="mail" value="{$form.mail}" maxlength="120"></dd>
+				<dd><input type="email" name="mail" id="mail" value="{$form.mail}" maxlength="120"></dd>
 			</dl>
 		</div>
 		<div id="tab-2" clas="ui-tabs-hide">
 			<dl>
 				<dt><label for="pwd">{lang t="users|pwd"}</label></dt>
-				<dd><input type="password" name="form[pwd]" id="pwd" value=""></dd>
+				<dd><input type="password" name="pwd" id="pwd" value=""></dd>
 				<dt><label for="pwd-repeat">{lang t="users|pwd_repeat"}</label></dt>
-				<dd><input type="password" name="form[pwd_repeat]" id="pwd-repeat" value=""></dd>
+				<dd><input type="password" name="pwd_repeat" id="pwd-repeat" value=""></dd>
 			</dl>
 		</div>
 	</div>
 {$captcha}
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		<input type="reset" value="{lang t="common|reset"}" class="form">
 		{$form_token}
 	</div>

@@ -9,7 +9,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$settings = config::getModuleSettings('gallery');
+$settings = ACP3_Config::getModuleSettings('gallery');
 
 $time = $date->timestamp();
 $where = 'start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time;
@@ -25,4 +25,4 @@ if ($c_galleries > 0) {
 	$tpl->assign('sidebar_galleries', $galleries);
 }
 
-view::displayTemplate('gallery/sidebar.tpl');
+ACP3_View::displayTemplate('gallery/sidebar.tpl');

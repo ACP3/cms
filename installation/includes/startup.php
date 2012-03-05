@@ -21,7 +21,7 @@ spl_autoload_register();
 
 include ACP3_ROOT . 'installation/includes/functions.php';
 
-$uri = new uri('install', 'welcome');
+$uri = new ACP3_URI('install', 'welcome');
 
 if (!empty($_POST['lang'])) {
 	setcookie('ACP3_INSTALLER_LANG', $_POST['lang'], time() + 3600, '/');
@@ -34,7 +34,7 @@ if (!empty($_COOKIE['ACP3_INSTALLER_LANG']) &&
 else
 	define('LANG', 'en');
 
-$lang = new lang(LANG);
+$lang = new ACP3_Lang(LANG);
 
 // Smarty einbinden
 include INCLUDES_DIR . 'smarty/Smarty.class.php';

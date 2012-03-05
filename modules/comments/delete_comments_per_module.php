@@ -16,10 +16,10 @@ elseif (preg_match('/^([\w|]+)$/', $uri->entries))
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
-	view::setContent(errorBox($lang->t('common', 'no_entries_selected')));
+	ACP3_View::setContent(errorBox($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
-	view::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/comments/delete_comments_per_module/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/comments')));
+	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/comments/delete_comments_per_module/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/comments')));
 } elseif ($uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = false;

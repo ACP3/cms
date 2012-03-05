@@ -21,7 +21,7 @@
 		<div id="tab-2" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="title">{lang t="static_pages|title"}</label></dt>
-				<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120"></dd>
+				<dd><input type="text" name="title" id="title" value="{$form.title}" maxlength="120"></dd>
 				<dt><label for="text">{lang t="static_pages|text"}</label></dt>
 				<dd>{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</dd>
 {if isset($create)}
@@ -29,7 +29,7 @@
 				<dd>
 {foreach $create as $row}
 					<label for="create-item-{$row.value}">
-						<input type="radio" name="form[create]" id="create-item-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected}>
+						<input type="radio" name="create" id="create-item-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected}>
 						{$row.lang}
 					</label>
 {/foreach}
@@ -39,7 +39,7 @@
 			<dl id="create-item-container">
 				<dt><label for="block-id">{lang t="menu_items|blocks"}</label></dt>
 				<dd>
-					<select name="form[block_id]" id="block-id">
+					<select name="block_id" id="block-id">
 						<option value="">{lang t="common|pls_select"}</option>
 {foreach $blocks as $row}
 						<option value="{$row.id}"{$row.selected}>{$row.title}</option>
@@ -48,7 +48,7 @@
 				</dd>
 				<dt><label for="parent">{lang t="menu_items|superior_page"}</label></dt>
 				<dd>
-					<select name="form[parent]" id="parent">
+					<select name="parent" id="parent">
 						<option value="">{lang t="menu_items|no_superior_page"}</option>
 {foreach $pages_list as $block => $pages}
 						<optgroup label="{$block}">
@@ -63,7 +63,7 @@
 				<dd>
 {foreach $display as $row}
 					<label for="display-{$row.value}">
-						<input type="radio" name="form[display]" id="display-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected}>
+						<input type="radio" name="display" id="display-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected}>
 						{$row.lang}
 					</label>
 {/foreach}
@@ -71,11 +71,11 @@
 			</dl>
 		</div>
 		<div id="tab-3" class="ui-tabs-hide">
-			{seo_fields alias="`$form.alias`" keywords="`$form.seo_keywords`" description="`$form.seo_description`"}
+			{$SEO_FORM_FIELDS}
 		</div>
 	</div>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		<input type="reset" value="{lang t="common|reset"}" class="form">
 		{$form_token}
 	</div>

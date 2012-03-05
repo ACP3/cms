@@ -11,16 +11,16 @@ if (defined('IN_ADM') === false)
 	exit();
 
 // Module einholen
-$mod_list = modules::modulesList();
+$mod_list = ACP3_Modules::modulesList();
 $mods = array();
 
 foreach ($mod_list as $name => $info) {
 	$dir = $info['dir'];
-	if (modules::check($dir, 'adm_list') === true && $dir !== 'acp' && $dir !== 'system') {
+	if (ACP3_Modules::check($dir, 'adm_list') === true && $dir !== 'acp' && $dir !== 'system') {
 		$mods[$name]['name'] = $name;
 		$mods[$name]['dir'] = $dir;
 	}
 }
 $tpl->assign('modules', $mods);
 
-view::setContent(view::fetchTemplate('acp/adm_list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('acp/adm_list.tpl'));

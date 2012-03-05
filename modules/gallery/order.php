@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) === true) {
+if (ACP3_Validate::isNumber($uri->id) === true) {
 	require_once MODULES_DIR . 'gallery/functions.php';
 
 	if (($uri->action === 'up' || $uri->action === 'down') && $db->countRows('*', 'gallery_pictures', 'id = \'' . $uri->id . '\'') == 1) {

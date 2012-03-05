@@ -12,68 +12,67 @@ if (defined('IN_ADM') === false)
 
 require_once MODULES_DIR . 'categories/functions.php';
 
-$settings = config::getModuleSettings('files');
+$settings = ACP3_Config::getModuleSettings('files');
 
-if (isset($_POST['form']) === true) {
-	$form = $_POST['form'];
-	if (isset($form['external'])) {
-		$file = $form['file_external'];
+if (isset($_POST['submit']) === true) {
+	if (isset($_POST['external'])) {
+		$file = $_POST['file_external'];
 	} else {
 		$file['tmp_name'] = $_FILES['file_internal']['tmp_name'];
 		$file['name'] = $_FILES['file_internal']['name'];
 		$file['size'] = $_FILES['file_internal']['size'];
 	}
 
-	if (validate::date($form['start'], $form['end']) === false)
+	if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
 		$errors[] = $lang->t('common', 'select_date');
-	if (strlen($form['link_title']) < 3)
+	if (strlen($_POST['link_title']) < 3)
 		$errors['link-title'] = $lang->t('files', 'type_in_link_title');
-	if (isset($form['external']) && (empty($file) || empty($form['filesize']) || empty($form['unit'])))
+	if (isset($_POST['external']) && (empty($file) || empty($_POST['filesize']) || empty($_POST['unit'])))
 		$errors['external'] = $lang->t('files', 'type_in_external_resource');
-	if (!isset($form['external']) &&
+	if (!isset($_POST['external']) &&
 		(empty($file['tmp_name']) || empty($file['size']) || $_FILES['file_internal']['error'] !== UPLOAD_ERR_OK))
 		$errors['file-internal'] = $lang->t('files', 'select_internal_resource');
-	if (strlen($form['text']) < 3)
+	if (strlen($_POST['text']) < 3)
 		$errors['text'] = $lang->t('files', 'description_to_short');
-	if (strlen($form['cat_create']) < 3 && categoriesCheck($form['cat']) === false)
+	if (strlen($_POST['cat_create']) < 3 && categoriesCheck($_POST['cat']) === false)
 		$errors['cat'] = $lang->t('files', 'select_category');
-	if (strlen($form['cat_create']) >= 3 && categoriesCheckDuplicate($form['cat_create'], 'files') === true)
+	if (strlen($_POST['cat_create']) >= 3 && categoriesCheckDuplicate($_POST['cat_create'], 'files') === true)
 		$errors['cat-create'] = $lang->t('categories', 'category_already_exists');
-	if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias']) === true))
+	if (CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) && (ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias']) === true))
 		$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (validate::formToken() === false) {
-		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+	} elseif (ACP3_Validate::formToken() === false) {
+		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		if (is_array($file) === true) {
 			$result = moveFile($file['tmp_name'], $file['name'], 'files');
 			$new_file = $result['name'];
 			$filesize = $result['size'];
 		} else {
-			$form['filesize'] = (float) $form['filesize'];
+			$_POST['filesize'] = (float) $_POST['filesize'];
 			$new_file = $file;
-			$filesize = $form['filesize'] . ' ' . $db->escape($form['unit']);
+			$filesize = $_POST['filesize'] . ' ' . $db->escape($_POST['unit']);
 		}
 
 		$insert_values = array(
 			'id' => '',
-			'start' => $date->timestamp($form['start']),
-			'end' => $date->timestamp($form['end']),
-			'category_id' => strlen($form['cat_create']) >= 3 ? categoriesCreate($form['cat_create'], 'files') : $form['cat'],
+			'start' => $date->timestamp($_POST['start']),
+			'end' => $date->timestamp($_POST['end']),
+			'category_id' => strlen($_POST['cat_create']) >= 3 ? categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
 			'file' => $new_file,
 			'size' => $filesize,
-			'link_title' => $db->escape($form['link_title']),
-			'text' => $db->escape($form['text'], 2),
-			'comments' => $settings['comments'] == 1 && isset($form['comments']) ? 1 : 0,
+			'link_title' => $db->escape($_POST['link_title']),
+			'text' => $db->escape($_POST['text'], 2),
+			'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
 			'user_id' => $auth->getUserId(),
 		);
 
 
 		$bool = $db->insert('files', $insert_values);
-		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']))
-			seo::insertUriAlias($form['alias'], 'files/details/id_' . $db->link->lastInsertID(), $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
+		if (CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
+			ACP3_SEO::insertUriAlias('files/details/id_' . $db->link->lastInsertID(), $_POST['alias'], $db->escape($_POST['seo_keywords']), $db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
 
 		require_once MODULES_DIR . 'files/functions.php';
 		setFilesCache($db->link->lastInsertId());
@@ -83,7 +82,7 @@ if (isset($_POST['form']) === true) {
 		setRedirectMessage($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/files');
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 	// Datumsauswahl
 	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));
 
@@ -103,7 +102,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	// Formularelemente
 	$tpl->assign('categories', categoriesList('files', '', true));
 
-	if (modules::check('comments', 'functions') === true && $settings['comments'] == 1) {
+	if (ACP3_Modules::check('comments', 'functions') === true && $settings['comments'] == 1) {
 		$options = array();
 		$options[0]['name'] = 'comments';
 		$options[0]['checked'] = selectEntry('comments', '1', '0', 'checked');
@@ -111,7 +110,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 		$tpl->assign('options', $options);
 	}
 
-	$tpl->assign('checked_external', isset($form['external']) ? ' checked="checked"' : '');
+	$tpl->assign('checked_external', isset($_POST['external']) ? ' checked="checked"' : '');
 
 	$defaults = array(
 		'link_title' => '',
@@ -124,9 +123,11 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 		'seo_description' => '',
 	);
 
-	$tpl->assign('form', isset($form) ? $form : $defaults);
+	$tpl->assign('SEO_FORM_FIELDS', ACP3_SEO::formFields());
+
+	$tpl->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
 	$session->generateFormToken();
 
-	view::setContent(view::fetchTemplate('files/create.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('files/create.tpl'));
 }

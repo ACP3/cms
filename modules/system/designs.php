@@ -18,22 +18,22 @@ if ($uri->dir) {
 	$bool = false;
 
 	if (!empty($dir)) {
-		$bool = config::system(array('design' => $dir));
+		$bool = ACP3_Config::system(array('design' => $dir));
 
 		// Cache leeren und diverse Parameter für die Template Engine abändern
-		cache::purge();
+		ACP3_Cache::purge();
 		$tpl->setTemplateDir(ACP3_ROOT . 'designs/' . $dir . '/');
 		$tpl->assign('DESIGN_PATH', ROOT_DIR . 'designs/' . $dir . '/');
 	}
 	$text = $bool === true ? $lang->t('system', 'designs_edit_success') : $lang->t('system', 'designs_edit_error');
 
-	view::setContent(confirmBox($text, $uri->route('acp/system/designs')));
+	ACP3_View::setContent(confirmBox($text, $uri->route('acp/system/designs')));
 } else {
 	$designs = array();
 	$directories = scandir(ACP3_ROOT . 'designs');
 	$count_dir = count($directories);
 	for ($i = 0; $i < $count_dir; ++$i) {
-		$design_info = xml::parseXmlFile(ACP3_ROOT . 'designs/' . $directories[$i] . '/info.xml', '/design');
+		$design_info = ACP3_XML::parseXmlFile(ACP3_ROOT . 'designs/' . $directories[$i] . '/info.xml', '/design');
 		if (!empty($design_info)) {
 			$designs[$i] = $design_info;
 			$designs[$i]['selected'] = CONFIG_DESIGN == $directories[$i] ? 1 : 0;
@@ -42,5 +42,5 @@ if ($uri->dir) {
 	}
 	$tpl->assign('designs', $designs);
 
-	view::setContent(view::fetchTemplate('system/designs.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('system/designs.tpl'));
 }

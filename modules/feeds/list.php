@@ -2,7 +2,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (modules::check($uri->feed, 'extensions/feeds') === true) {
+if (ACP3_Modules::check($uri->feed, 'extensions/feeds') === true) {
 	$module = $uri->feed;
 
 	$link = 'http://' . htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES);
@@ -21,8 +21,8 @@ if (modules::check($uri->feed, 'extensions/feeds') === true) {
 	include MODULES_DIR . $module . '/extensions/feeds.php';
 
 	// Content-Type setzen und Layout für den RSS-Feed laden
-	view::setContentType('Content-Type: application/xml; charset="UTF-8"');
-	view::assignLayout('feeds/rss.tpl');
+	ACP3_View::setContentType('Content-Type: application/xml; charset="UTF-8"');
+	ACP3_View::assignLayout('feeds/rss.tpl');
 } else {
 	$uri->redirect(0, ROOT_DIR);
 }

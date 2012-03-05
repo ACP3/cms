@@ -59,5 +59,5 @@ function editor($params) {
 		$wysiwyg['advanced_replace_content'] = 'tinyMCE.execInstanceCommand(\'' . $params['id'] . '\',"mceInsertContent",false,text);';
 
 	$tpl->assign('wysiwyg', $wysiwyg);
-	return view::fetchTemplate('common/wysiwyg.tpl');
+	return ACP3_View::fetchTemplate('common/wysiwyg.tpl');
 }

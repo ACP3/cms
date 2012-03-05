@@ -25,4 +25,4 @@ if ($c_files > 0) {
 	$tpl->assign('files', $files);
 }
 
-view::setContent(view::fetchTemplate('files/adm_list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('files/adm_list.tpl'));

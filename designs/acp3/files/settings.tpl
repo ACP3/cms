@@ -7,7 +7,7 @@
 		<dl>
 			<dt><label for="date-format">{lang t="common|date_format"}</label></dt>
 			<dd>
-				<select name="form[dateformat]" id="date-format">
+				<select name="dateformat" id="date-format">
 					<option value="">{lang t="common|pls_select"}</option>
 {foreach $dateformat as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
@@ -16,7 +16,7 @@
 			</dd>
 			<dt><label for="sidebar-entries">{lang t="common|sidebar_entries_to_display"}</label></dt>
 			<dd>
-				<select name="form[sidebar]" id="sidebar-entries">
+				<select name="sidebar" id="sidebar-entries">
 					<option>{lang t="common|pls_select"}</option>
 {foreach $sidebar_entries as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.value}</option>
@@ -28,7 +28,7 @@
 			<dd>
 {foreach $comments as $row}
 				<label for="comments-{$row.value}">
-					<input type="radio" name="form[comments]" id="comments-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+					<input type="radio" name="comments" id="comments-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 					{$row.lang}
 				</label>
 {/foreach}
@@ -37,7 +37,7 @@
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		{$form_token}
 	</div>
 </form>

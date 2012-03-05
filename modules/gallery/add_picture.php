@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit();
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id = \'' . $uri->id . '\'') == 1) {
+if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id = \'' . $uri->id . '\'') == 1) {
 	require_once MODULES_DIR . 'gallery/functions.php';
 
 	$gallery = $db->select('name', 'gallery', 'id = \'' . $uri->id . '\'');
@@ -18,25 +18,24 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id 
 	$breadcrumb->append($gallery[0]['name'], $uri->route('acp/gallery/edit_gallery/id_' . $uri->id))
 			   ->append($lang->t('gallery', 'add_picture'));
 
-	$settings = config::getModuleSettings('gallery');
+	$settings = ACP3_Config::getModuleSettings('gallery');
 
-	if (isset($_POST['form']) === true) {
+	if (isset($_POST['submit']) === true) {
 		$file['tmp_name'] = $_FILES['file']['tmp_name'];
 		$file['name'] = $_FILES['file']['name'];
 		$file['size'] = $_FILES['file']['size'];
-		$form = $_POST['form'];
 
 		if (empty($file['tmp_name']))
 			$errors['file'] = $lang->t('gallery', 'no_picture_selected');
 		if (!empty($file['tmp_name']) &&
-			(validate::isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) === false ||
+			(ACP3_Validate::isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) === false ||
 			$_FILES['file']['error'] !== UPLOAD_ERR_OK))
 			$errors['file'] = $lang->t('gallery', 'invalid_image_selected');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (validate::formToken() === false) {
-			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+		} elseif (ACP3_Validate::formToken() === false) {
+			ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$result = moveFile($file['tmp_name'], $file['name'], 'gallery');
 			$picNum = $db->select('MAX(pic) AS pic', 'gallery_pictures', 'gallery_id = \'' . $uri->id . '\'');
@@ -46,8 +45,8 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id 
 				'pic' => !empty($picNum) && !is_null($picNum[0]['pic']) ? $picNum[0]['pic'] + 1 : 1,
 				'gallery_id' => $uri->id,
 				'file' => $result['name'],
-				'description' => $db->escape($form['description'], 2),
-				'comments' => $settings['comments'] == 1 && isset($form['comments']) && $form['comments'] == 1 ? 1 : 0,
+				'description' => $db->escape($_POST['description'], 2),
+				'comments' => $settings['comments'] == 1 && isset($_POST['comments']) && $_POST['comments'] == 1 ? 1 : 0,
 			);
 
 			$bool = $db->insert('gallery_pictures', $insert_values);
@@ -59,11 +58,11 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id 
 			setRedirectMessage($bool !== false && $bool2 !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/gallery/edit_gallery/id_' . $uri->id);
 		}
 	}
-	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
+	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 		$galleries = $db->select('id, start, name', 'gallery', 0, 'start DESC');
 		$c_galleries = count($galleries);
 
-		if ($settings['overlay'] == 0 && $settings['comments'] == 1 && modules::check('comments', 'functions') === true) {
+		if ($settings['overlay'] == 0 && $settings['comments'] == 1 && ACP3_Modules::check('comments', 'functions') === true) {
 			$options = array();
 			$options[0]['name'] = 'comments';
 			$options[0]['checked'] = selectEntry('comments', '1', '0', 'checked');
@@ -78,11 +77,11 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id 
 		}
 
 		$tpl->assign('galleries', $galleries);
-		$tpl->assign('form', isset($form) ? $form : array('description' => ''));
+		$tpl->assign('form', isset($_POST['submit']) ? $_POST : array('description' => ''));
 
 		$session->generateFormToken();
 
-		view::setContent(view::fetchTemplate('gallery/add_picture.tpl'));
+		ACP3_View::setContent(ACP3_View::fetchTemplate('gallery/add_picture.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

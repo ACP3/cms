@@ -12,14 +12,14 @@ if (defined('IN_ADM') === false)
 
 if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
 	$entries = $_POST['entries'];
-elseif (validate::deleteEntries($uri->entries) === true)
+elseif (ACP3_Validate::deleteEntries($uri->entries) === true)
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
-	view::setContent(errorBox($lang->t('common', 'no_entries_selected')));
+	ACP3_View::setContent(errorBox($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
-	view::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/gallery/delete_gallery/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/gallery')));
+	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/gallery/delete_gallery/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/gallery')));
 } elseif ($uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = $bool2 = false;
@@ -34,8 +34,8 @@ if (!isset($entries)) {
 				removePicture($row['file']);
 			}
 			// Galerie Cache löschen
-			cache::delete('gallery_pics_id_' . $entry);
-			seo::deleteUriAlias('gallery/pics/id_' . $entry);
+			ACP3_Cache::delete('gallery_pics_id_' . $entry);
+			ACP3_SEO::deleteUriAlias('gallery/pics/id_' . $entry);
 			deletePictureAliases($entry);
 
 			// Fotogalerie mitsamt Bildern löschen

@@ -9,8 +9,8 @@
 {$redirect_message}
 {/if}
 {if isset($roles)}
-{assign var="can_delete" value=modules::check("access", "delete")}
-{assign var="can_order" value=modules::check("access", "order")}
+{assign var="can_delete" value=ACP3_Modules::check("access", "delete")}
+{assign var="can_order" value=ACP3_Modules::check("access", "order")}
 	<table class="acp-table">
 		<thead>
 			<tr>

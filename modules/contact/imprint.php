@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$settings = config::getModuleSettings('contact');
+$settings = ACP3_Config::getModuleSettings('contact');
 $settings['address'] = $db->escape($settings['address'], 3);
 $settings['telephone'] = $db->escape($settings['telephone'], 3);
 $settings['fax'] = $db->escape($settings['fax'], 3);
@@ -25,4 +25,4 @@ $replace = array($lang->t('contact', 'address'), $settings['address'], $lang->t(
 $tpl->assign('imprint', rewriteInternalUri(str_replace($search, $replace, $settings['layout'])));
 $tpl->assign('powered_by', sprintf($lang->t('contact', 'powered_by'), '<a href="http://www.acp3-cms.net" onclick="window.open(this.href); return false">ACP3</a>'));
 
-view::setContent(view::fetchTemplate('contact/imprint.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('contact/imprint.tpl'));

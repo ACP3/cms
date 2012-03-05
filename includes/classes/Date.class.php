@@ -17,7 +17,7 @@ if (defined('IN_ACP3') === false)
  * @package ACP3
  * @subpackage Core
  */
-class date
+class ACP3_Date
 {
 	/**
 	 * Zeitverschiebung von Greenwich mit eventueller Sommerzeit
@@ -135,7 +135,7 @@ class date
 			if (!empty($_POST['form'][$name[0]]) && !empty($_POST['form'][$name[1]])) {
 				$value_start = $_POST['form'][$name[0]];
 				$value_end = $_POST['form'][$name[1]];
-			} elseif (is_array($value) === true && validate::isNumber($value[0]) === true && validate::isNumber($value[1]) === true) {
+			} elseif (is_array($value) === true && ACP3_Validate::isNumber($value[0]) === true && ACP3_Validate::isNumber($value[1]) === true) {
 				$value_start = $this->format($value[0], $format, $mode);
 				$value_end = $this->format($value[1], $format, $mode);
 			} else {
@@ -151,7 +151,7 @@ class date
 		} else {
 			if (!empty($_POST['form'][$name])) {
 				$value = $_POST['form'][$name];
-			} elseif (validate::isNumber($value) === true) {
+			} elseif (ACP3_Validate::isNumber($value) === true) {
 				$value = $this->format($value, $format, $mode);
 			} else {
 				$value = $this->format(time(), $format, $mode);
@@ -163,7 +163,7 @@ class date
 
 		$tpl->assign('datepicker', $datepicker);
 
-		return view::fetchTemplate('common/date.tpl');
+		return ACP3_View::fetchTemplate('common/date.tpl');
 	}
 	/**
 	 * Gibt ein formatiertes Datum zurück
@@ -255,7 +255,7 @@ class date
 	 */
 	public function period($start, $end, $format = 'long')
 	{
-		if (validate::isNumber($start) === true && validate::isNumber($end) === true) {
+		if (ACP3_Validate::isNumber($start) === true && ACP3_Validate::isNumber($end) === true) {
 			global $lang;
 			if ($start >= $end) {
 				return sprintf($lang->t('common', 'since_date'), $this->format($start, $format));
@@ -274,7 +274,7 @@ class date
 	public function timestamp($value = 0)
 	{
 		// Zeitstempel aus Veröffentlichungszeitraum heraus generieren
-		if (!empty($value) && validate::date($value) === true) {
+		if (!empty($value) && ACP3_Validate::date($value) === true) {
 			$value = strtotime($value);
 
 			$offset = (date('I', $value) == 1) ? -3600 : 0;

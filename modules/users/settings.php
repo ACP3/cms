@@ -10,30 +10,28 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (isset($_POST['form']) === true) {
-	$form = $_POST['form'];
-
-	if (!isset($form['language_override']) || $form['language_override'] != 1 && $form['language_override'] != 0)
+if (isset($_POST['submit']) === true) {
+	if (!isset($_POST['language_override']) || $_POST['language_override'] != 1 && $_POST['language_override'] != 0)
 		$errors[] = $lang->t('users', 'select_languages_override');
-	if (!isset($form['entries_override']) || $form['entries_override'] != 1 && $form['entries_override'] != 0)
+	if (!isset($_POST['entries_override']) || $_POST['entries_override'] != 1 && $_POST['entries_override'] != 0)
 		$errors[] = $lang->t('users', 'select_entries_override');
-	if (!isset($form['enable_registration']) || $form['enable_registration'] != 1 && $form['enable_registration'] != 0)
+	if (!isset($_POST['enable_registration']) || $_POST['enable_registration'] != 1 && $_POST['enable_registration'] != 0)
 		$errors[] = $lang->t('users', 'select_enable_registration');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (validate::formToken() === false) {
-		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+	} elseif (ACP3_Validate::formToken() === false) {
+		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
-		$bool = config::module('users', $form);
+		$bool = ACP3_Config::module('users', $_POST);
 
 		$session->unsetFormToken();
 
 		setRedirectMessage($bool === true ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), 'acp/users');
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-	$settings = config::getModuleSettings('users');
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
+	$settings = ACP3_Config::getModuleSettings('users');
 
 	$languages = array();
 	$languages[0]['value'] = '1';
@@ -64,5 +62,5 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	$session->generateFormToken();
 
-	view::setContent(view::fetchTemplate('users/settings.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('users/settings.tpl'));
 }

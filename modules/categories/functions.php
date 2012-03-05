@@ -20,7 +20,7 @@ if (defined('IN_ACP3') === false)
 function setCategoriesCache($module)
 {
 	global $db;
-	return cache::create('categories_' . $module, $db->select('id, name, picture, description', 'categories', 'module = \'' . $module . '\'', 'name ASC'));
+	return ACP3_Cache::create('categories_' . $module, $db->select('id, name, picture, description', 'categories', 'module = \'' . $module . '\'', 'name ASC'));
 }
 /**
  * Bindet die gecacheten Kategorien des jeweiligen Moduls ein
@@ -31,10 +31,10 @@ function setCategoriesCache($module)
  */
 function getCategoriesCache($module)
 {
-	if (cache::check('categories_' . $module) === false)
+	if (ACP3_Cache::check('categories_' . $module) === false)
 		setCategoriesCache($module);
 
-	return cache::output('categories_' . $module);
+	return ACP3_Cache::output('categories_' . $module);
 }
 /**
  * Überprüft, ob eine Kategorie überhaupt existiert
@@ -60,7 +60,7 @@ function categoriesCheckDuplicate($name, $module, $category_id = '')
 {
 	global $db;
 
-	$id = validate::isNumber($category_id) ? ' AND id != \'' . $category_id . '\'' : '';
+	$id = ACP3_Validate::isNumber($category_id) ? ' AND id != \'' . $category_id . '\'' : '';
 	return $db->countRows('id', 'categories', 'name = \'' . $db->escape($name) . '\' AND module = \'' . $db->escape($module) . '\'' . $id) != 0 ? true : false;
 }
 /**
@@ -118,10 +118,10 @@ function categoriesList($module, $category_id = '', $category_create = false, $c
 	} else {
 		$categories['categories'] = array();
 	}
-	if ($category_create === true && modules::check('categories', 'create') === true) {
+	if ($category_create === true && ACP3_Modules::check('categories', 'create') === true) {
 		$categories['create']['name'] = $category_name . '_create';
 		$categories['create']['value'] = isset($_POST['form'][$categories['create']['name']]) ? $_POST['form'][$categories['create']['name']] : '';
 	}
 	$tpl->assign('categories', $categories);
-	return view::fetchTemplate('categories/create_list.tpl');
+	return ACP3_View::fetchTemplate('categories/create_list.tpl');
 }

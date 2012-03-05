@@ -13,7 +13,7 @@ if (defined('IN_ACP3') === false)
 $time = $date->timestamp();
 $period = ' AND (start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time . ')';
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'files', 'id = \'' . $uri->id . '\'' . $period) == 1) {
+if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'files', 'id = \'' . $uri->id . '\'' . $period) == 1) {
 	require_once MODULES_DIR . 'files/functions.php';
 
 	$file = getFilesCache($uri->id);
@@ -45,18 +45,18 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'files', 'id = 
 				   ->append($file[0]['category_name'], $uri->route('files/files/cat_' . $file[0]['category_id']))
 				   ->append($file[0]['link_title']);
 
-		$settings = config::getModuleSettings('files');
+		$settings = ACP3_Config::getModuleSettings('files');
 
 		$file[0]['size'] = !empty($file[0]['size']) ? $file[0]['size'] : $lang->t('files', 'unknown_filesize');
 		$file[0]['date'] = $date->format($file[0]['start'], $settings['dateformat']);
 		$tpl->assign('file', $file[0]);
 
-		if ($settings['comments'] == 1 && $file[0]['comments'] == 1 && modules::check('comments', 'functions') === true) {
+		if ($settings['comments'] == 1 && $file[0]['comments'] == 1 && ACP3_Modules::check('comments', 'functions') === true) {
 			require_once MODULES_DIR . 'comments/functions.php';
 
 			$tpl->assign('comments', commentsList('files', $uri->id));
 		}
-		view::setContent(view::fetchTemplate('files/details.tpl'));
+		ACP3_View::setContent(ACP3_View::fetchTemplate('files/details.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

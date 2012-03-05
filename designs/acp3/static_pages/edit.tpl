@@ -20,17 +20,17 @@
 		<div id="tab-2" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="title">{lang t="static_pages|title"}</label></dt>
-				<dd><input type="text" name="form[title]" id="title" value="{$form.title}" maxlength="120"></dd>
+				<dd><input type="text" name="title" id="title" value="{$form.title}" maxlength="120"></dd>
 				<dt><label for="text">{lang t="static_pages|text"}</label></dt>
 				<dd>{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</dd>
 			</dl>
 		</div>
 		<div id="tab-3" class="ui-tabs-hide">
-			{seo_fields alias="`$form.alias`" keywords="`$form.seo_keywords`" description="`$form.seo_description`"}
+			{$SEO_FORM_FIELDS}
 		</div>
 	</div>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		<input type="reset" value="{lang t="common|reset"}" class="form">
 		{$form_token}
 	</div>

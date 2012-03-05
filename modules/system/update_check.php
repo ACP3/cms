@@ -27,4 +27,4 @@ if ($file !== false) {
 		$tpl->assign('update', $data);
 	}
 }
-view::setContent(view::fetchTemplate('system/update_check.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('system/update_check.tpl'));

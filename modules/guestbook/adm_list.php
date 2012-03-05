@@ -18,12 +18,12 @@ $c_guestbook = count($guestbook);
 if ($c_guestbook > 0) {
 	$tpl->assign('pagination', pagination($db->countRows('*', 'guestbook')));
 
-	$settings = config::getModuleSettings('guestbook');
+	$settings = ACP3_Config::getModuleSettings('guestbook');
 
 	// Emoticons einbinden
 	$emoticons_active = false;
 	if ($settings['emoticons'] == 1) {
-		if (modules::check('emoticons', 'functions') === true) {
+		if (ACP3_Modules::check('emoticons', 'functions') === true) {
 			require_once MODULES_DIR . 'emoticons/functions.php';
 			$emoticons_active = true;
 		}
@@ -39,4 +39,4 @@ if ($c_guestbook > 0) {
 	}
 	$tpl->assign('guestbook', $guestbook);
 }
-view::setContent(view::fetchTemplate('guestbook/adm_list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('guestbook/adm_list.tpl'));

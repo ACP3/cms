@@ -28,7 +28,7 @@ if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module
 		$tpl->assign('comments', $comments);
 	}
 
-	view::setContent(view::fetchTemplate('comments/adm_list_module.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('comments/adm_list_module.tpl'));
 } else {
 	//Brotkrümelspur
 	$breadcrumb->append($lang->t($module, $module));
@@ -36,13 +36,13 @@ if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module
 	$comments = $db->query('SELECT IF(c.name != "" AND c.user_id = 0,c.name,u.nickname) AS name, c.id, c.ip, c.user_id, c.date, c.message FROM {pre}comments AS c LEFT JOIN ({pre}users AS u) ON u.id = c.user_id WHERE c.module = \'' . $module . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . $auth->entries);
 	$c_comments = count($comments);
 
-	$settings = config::getModuleSettings('comments');
+	$settings = ACP3_Config::getModuleSettings('comments');
 
 	if ($c_comments > 0) {
 		// Emoticons einbinden
 		$emoticons_active = false;
 		if ($settings['emoticons'] == 1) {
-			if (modules::check('emoticons', 'functions') === true) {
+			if (ACP3_Modules::check('emoticons', 'functions') === true) {
 				require_once MODULES_DIR . 'emoticons/functions.php';
 				$emoticons_active = true;
 			}
@@ -62,5 +62,5 @@ if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module
 		$tpl->assign('comments', $comments);
 	}
 
-	view::setContent(view::fetchTemplate('comments/adm_list_comments.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('comments/adm_list_comments.tpl'));
 }

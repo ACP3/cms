@@ -17,7 +17,7 @@ if (defined('IN_ACP3') === false)
  * @package ACP3
  * @subpackage Core
  */
-class acl
+class ACP3_ACL
 {
 	/**
 	 * Array mit den jeweiligen Rollen zugewiesenen Berechtigungen
@@ -51,8 +51,6 @@ class acl
 	 */
 	public static function initialize($user_id)
 	{
-		global $auth;
-
 		self::$userId = $user_id;
 		self::$userRoles = self::getUserRoles();
 		self::$resources = self::getResources();
@@ -79,7 +77,7 @@ class acl
 				'key' => $resources[$i]['key'],
 			);
 		}
-		return cache::create('acl_resources', $data, 'acl');
+		return ACP3_Cache::create('acl_resources', $data, 'acl');
 	}
 	/**
 	 * Gibt alle in der Datenbank vorhandenen Ressourcen zurück
@@ -88,10 +86,10 @@ class acl
 	 */
 	public static function getResources()
 	{
-		if (cache::check('acl_resources', 'acl') === false)
+		if (ACP3_Cache::check('acl_resources', 'acl') === false)
 			self::setResourcesCache();
 
-		return cache::output('acl_resources', 'acl');
+		return ACP3_Cache::output('acl_resources', 'acl');
 	}
 	/**
 	 * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück
@@ -156,7 +154,7 @@ class acl
 			$roles[$i]['last'] = $last;
 		}
 
-		return cache::create('acl_all_roles', $roles, 'acl');
+		return ACP3_Cache::create('acl_all_roles', $roles, 'acl');
 	}
 	/**
 	 * Setzt den Cache für die einzelnen Berechtigungen einer Rolle
@@ -183,7 +181,7 @@ class acl
 			);
 		}
 
-		return cache::create('acl_rules_' . implode(',', $roles), $privileges, 'acl');
+		return ACP3_Cache::create('acl_rules_' . implode(',', $roles), $privileges, 'acl');
 	}
 	/**
 	 * Gibt alle existieren Rollen aus
@@ -192,10 +190,10 @@ class acl
 	 */
 	public static function getAllRoles()
 	{
-		if (cache::check('acl_all_roles', 'acl') === false)
+		if (ACP3_Cache::check('acl_all_roles', 'acl') === false)
 			self::setRolesCache();
 
-		return cache::output('acl_all_roles', 'acl');
+		return ACP3_Cache::output('acl_all_roles', 'acl');
 	}
 	/**
 	 * Gibt alle existierenden Privilegien/Berechtigungen aus
@@ -240,10 +238,10 @@ class acl
 	public static function getRules(array $roles)
 	{
 		$filename = 'acl_rules_' . implode(',', $roles);
-		if (cache::check($filename, 'acl') === false)
+		if (ACP3_Cache::check($filename, 'acl') === false)
 			self::setRulesCache($roles);
 
-		return cache::output($filename, 'acl');
+		return ACP3_Cache::output($filename, 'acl');
 	}
 	/**
 	 * Gibt aus ob dem Benutzer die jeweilige Rolle zugeordnet ist

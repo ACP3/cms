@@ -9,8 +9,8 @@
 {$redirect_message}
 {/if}
 {if isset($pages_list)}
-{assign var="can_delete" value=modules::check("menu_items", "delete")}
-{assign var="can_order" value=modules::check("menu_items", "order")}
+{assign var="can_delete" value=ACP3_Modules::check("menu_items", "delete")}
+{assign var="can_order" value=ACP3_Modules::check("menu_items", "order")}
 	<table class="acp-table">
 		<thead>
 			<tr>

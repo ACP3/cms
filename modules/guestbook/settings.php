@@ -10,39 +10,37 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$emoticons_active = modules::isActive('emoticons');
-$newsletter_active = modules::isActive('newsletter');
+$emoticons_active = ACP3_Modules::isActive('emoticons');
+$newsletter_active = ACP3_Modules::isActive('newsletter');
 
-if (isset($_POST['form']) === true) {
-	$form = $_POST['form'];
-
-	if (empty($form['dateformat']) || ($form['dateformat'] !== 'long' && $form['dateformat'] !== 'short'))
+if (isset($_POST['submit']) === true) {
+	if (empty($_POST['dateformat']) || ($_POST['dateformat'] !== 'long' && $_POST['dateformat'] !== 'short'))
 		$errors['dateformat'] = $lang->t('common', 'select_date_format');
-	if (!isset($form['notify']) || ($form['notify'] != 0 && $form['notify'] != 1 && $form['notify'] != 2))
+	if (!isset($_POST['notify']) || ($_POST['notify'] != 0 && $_POST['notify'] != 1 && $_POST['notify'] != 2))
 		$errors['notify'] = $lang->t('guestbook', 'select_notification_type');
-	if ($form['notify'] != 0 && validate::email($form['notify_email']) === false)
+	if ($_POST['notify'] != 0 && ACP3_Validate::email($_POST['notify_email']) === false)
 		$errors['notify-email'] = $lang->t('common', 'wrong_email_format');
-	if (!isset($form['overlay']) || $form['overlay'] != 1 && $form['overlay'] != 0)
+	if (!isset($_POST['overlay']) || $_POST['overlay'] != 1 && $_POST['overlay'] != 0)
 		$errors[] = $lang->t('guestbook', 'select_use_overlay');
-	if ($emoticons_active === true && (!isset($form['emoticons']) || ($form['emoticons'] != 0 && $form['emoticons'] != 1)))
+	if ($emoticons_active === true && (!isset($_POST['emoticons']) || ($_POST['emoticons'] != 0 && $_POST['emoticons'] != 1)))
 		$errors[] = $lang->t('guestbook', 'select_emoticons');
-	if ($newsletter_active === true && (!isset($form['newsletter_integration']) || ($form['newsletter_integration'] != 0 && $form['newsletter_integration'] != 1)))
+	if ($newsletter_active === true && (!isset($_POST['newsletter_integration']) || ($_POST['newsletter_integration'] != 0 && $_POST['newsletter_integration'] != 1)))
 		$errors[] = $lang->t('guestbook', 'select_newsletter_integration');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (validate::formToken() === false) {
-		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+	} elseif (ACP3_Validate::formToken() === false) {
+		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
-		$bool = config::module('guestbook', $form);
+		$bool = ACP3_Config::module('guestbook', $_POST);
 
 		$session->unsetFormToken();
 
 		setRedirectMessage($bool === true ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), 'acp/guestbook');
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-	$settings = config::getModuleSettings('guestbook');
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
+	$settings = ACP3_Config::getModuleSettings('guestbook');
 
 	$tpl->assign('dateformat', $date->dateformatDropdown($settings['dateformat']));
 
@@ -91,9 +89,9 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 		$tpl->assign('newsletter_integration', $newsletter_integration);
 	}
 
-	$tpl->assign('form', isset($form) ? $form : array('notify_email' => $settings['notify_email']));
+	$tpl->assign('form', isset($_POST['submit']) ? $_POST : array('notify_email' => $settings['notify_email']));
 
 	$session->generateFormToken();
 
-	view::setContent(view::fetchTemplate('guestbook/settings.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('guestbook/settings.tpl'));
 }

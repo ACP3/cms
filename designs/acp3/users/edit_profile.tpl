@@ -18,30 +18,30 @@
 					<td>
 						<dl>
 							<dt><label for="nickname">{lang t="users|nickname"}</label></dt>
-							<dd><input type="text" name="form[nickname]" id="nickname" value="{$form.nickname}" maxlength="30"></dd>
+							<dd><input type="text" name="nickname" id="nickname" value="{$form.nickname}" maxlength="30"></dd>
 						</dl>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<input type="checkbox" name="form[realname_display]" id="realname-display" value="1" class="checkbox"{$checked.realname}>
+						<input type="checkbox" name="realname_display" id="realname-display" value="1" class="checkbox"{$checked.realname}>
 					</td>
 					<td>
 						<dl>
 							<dt><label for="realname">{lang t="users|realname"}</label></dt>
-							<dd><input type="text" name="form[realname]" id="realname" value="{$form.realname}" maxlength="80"></dd>
+							<dd><input type="text" name="realname" id="realname" value="{$form.realname}" maxlength="80"></dd>
 						</dl>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<input type="checkbox" name="form[gender_display]" id="gender-display" value="1" class="checkbox"{$checked.gender}>
+						<input type="checkbox" name="gender_display" id="gender-display" value="1" class="checkbox"{$checked.gender}>
 					</td>
 					<td>
 						<dl>
 							<dt><label for="gender">{lang t="users|gender"}</label></dt>
 							<dd>
-								<select name="form[gender]" id="gender">
+								<select name="gender" id="gender">
 {foreach $gender as $row}
 									<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
@@ -52,7 +52,7 @@
 				</tr>
 				<tr>
 					<td>
-						<input type="checkbox" name="form[birthday_display]" id="birthday-display" value="1" class="checkbox"{$checked.birthday}>
+						<input type="checkbox" name="birthday_display" id="birthday-display" value="1" class="checkbox"{$checked.birthday}>
 					</td>
 					<td>
 						<dl>
@@ -62,7 +62,7 @@
 								<div>
 {foreach $birthday_format as $row}
 									<label for="{$row.name}">
-										<input type="radio" name="form[birthday_format]" id="{$row.name}" value="{$row.value}" class="checkbox"{$row.checked}>
+										<input type="radio" name="birthday_format" id="{$row.name}" value="{$row.value}" class="checkbox"{$row.checked}>
 										{$row.lang}
 									</label>
 {/foreach}
@@ -81,12 +81,12 @@
 {foreach $contact as $row}
 				<tr>
 					<td style="width:5%">
-						<input type="checkbox" name="form[{$row.name}_display]" id="{$row.name}_display" value="1" class="checkbox"{$row.checked}>
+						<input type="checkbox" name="{$row.name}_display" id="{$row.name}_display" value="1" class="checkbox"{$row.checked}>
 					</td>
 					<td>
 						<dl>
 							<dt><label for="{$row.name}">{$row.lang}</label></dt>
-							<dd><input type="text" name="form[{$row.name}]" id="{$row.name}" value="{$row.value}" maxlength="{$row.maxlength}"></dd>
+							<dd><input type="text" name="{$row.name}" id="{$row.name}" value="{$row.value}" maxlength="{$row.maxlength}"></dd>
 						</dl>
 					</td>
 				</tr>
@@ -96,14 +96,14 @@
 		<div id="tab-3" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="new-pwd">{lang t="users|new_pwd"}</label></dt>
-				<dd><input type="password" name="form[new_pwd]" id="new-pwd"></dd>
+				<dd><input type="password" name="new_pwd" id="new-pwd"></dd>
 				<dt><label for="new_pwd_repeat">{lang t="users|new_pwd_repeat"}</label></dt>
-				<dd><input type="password" name="form[new_pwd_repeat]" id="new_pwd_repeat"></dd>
+				<dd><input type="password" name="new_pwd_repeat" id="new_pwd_repeat"></dd>
 			</dl>
 		</div>
 	</div>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		{$form_token}
 	</div>
 </form>
