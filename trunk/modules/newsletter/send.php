@@ -10,8 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'newsletter_archive', 'id = \'' . $uri->id . '\'') == 1) {
-	$settings = config::getModuleSettings('newsletter');
+if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'newsletter_archive', 'id = \'' . $uri->id . '\'') == 1) {
+	$settings = ACP3_Config::getModuleSettings('newsletter');
 	$newsletter = $db->select('subject, text', 'newsletter_archive', 'id = \'' . $uri->id . '\'');
 	$accounts = $db->select('mail', 'newsletter_accounts', 'hash = \'\'');
 	$c_accounts = count($accounts);

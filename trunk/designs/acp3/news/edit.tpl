@@ -21,7 +21,7 @@
 		<div id="tab-2" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="headline">{lang t="news|headline"}</label></dt>
-				<dd><input type="text" name="form[headline]" id="headline" value="{$form.headline}" maxlength="120"></dd>
+				<dd><input type="text" name="headline" id="headline" value="{$form.headline}" maxlength="120"></dd>
 				<dt><label for="text">{lang t="news|text"}</label></dt>
 				<dd>{wysiwyg name="text" value="`$form.text`" height="250"}</dd>
 				<dt><label for="cat">{lang t="common|category"}</label></dt>
@@ -29,13 +29,13 @@
 					{$categories}
 				</dd>
 {if isset($options)}
-				<dt><label for="readmore">{lang t="common|options"}</label></dt>
+				<dt><label for="{$options.0.name}">{lang t="common|options"}</label></dt>
 				<dd>
 					<ul style="margin:0 20px;list-style:none">
 {foreach $options as $row}
 						<li>
 							<label for="{$row.name}">
-								<input type="checkbox" name="form[{$row.name}]" id="{$row.name}" value="1" class="checkbox"{$row.checked}>
+								<input type="checkbox" name="{$row.name}" id="{$row.name}" value="1" class="checkbox"{$row.checked}>
 								{$row.lang}
 							</label>
 						</li>
@@ -48,12 +48,12 @@
 		<div id="tab-3" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="link-title">{lang t="news|link_title"}</label></dt>
-				<dd><input type="text" name="form[link_title]" id="link-title" value="{$form.link_title}" maxlength="120"></dd>
+				<dd><input type="text" name="link_title" id="link-title" value="{$form.link_title}" maxlength="120"></dd>
 				<dt><label for="uri">{lang t="news|uri"}</label></dt>
-				<dd><input type="url" name="form[uri]" id="uri" value="{$form.uri}" maxlength="120"></dd>
+				<dd><input type="url" name="uri" id="uri" value="{$form.uri}" maxlength="120"></dd>
 				<dt><label for="target">{lang t="news|target_page"}</label></dt>
 				<dd>
-					<select name="form[target]" id="target">
+					<select name="target" id="target">
 {foreach $target as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
@@ -62,11 +62,11 @@
 			</dl>
 		</div>
 		<div id="tab-4" class="ui-tabs-hide">
-			{seo_fields alias="`$form.alias`" keywords="`$form.seo_keywords`" description="`$form.seo_description`"}
+			{$SEO_FORM_FIELDS}
 		</div>
 	</div>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		{$form_token}
 	</div>
 </form>

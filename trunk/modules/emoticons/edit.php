@@ -10,31 +10,30 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'emoticons', 'id = \'' . $uri->id . '\'') == 1) {
+if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'emoticons', 'id = \'' . $uri->id . '\'') == 1) {
 	require_once MODULES_DIR . 'emoticons/functions.php';
 
-	if (isset($_POST['form']) === true) {
-		$form = $_POST['form'];
+	if (isset($_POST['submit']) === true) {
 		if (!empty($_FILES['picture']['tmp_name'])) {
 			$file['tmp_name'] = $_FILES['picture']['tmp_name'];
 			$file['name'] = $_FILES['picture']['name'];
 			$file['size'] = $_FILES['picture']['size'];
 		}
-		$settings = config::getModuleSettings('emoticons');
+		$settings = ACP3_Config::getModuleSettings('emoticons');
 
-		if (empty($form['code']))
+		if (empty($_POST['code']))
 			$errors['code'] = $lang->t('emoticons', 'type_in_code');
-		if (empty($form['description']))
+		if (empty($_POST['description']))
 			$errors['description'] = $lang->t('emoticons', 'type_in_description');
 		if (!empty($file['tmp_name']) &&
-			(validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
+			(ACP3_Validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
 			$_FILES['picture']['error'] !== UPLOAD_ERR_OK))
 			$errors['picture'] = $lang->t('emoticons', 'invalid_image_selected');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (validate::formToken() === false) {
-			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+		} elseif (ACP3_Validate::formToken() === false) {
+			ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$new_file_sql = null;
 			if (isset($file)) {
@@ -43,8 +42,8 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'emoticons', 'i
 			}
 
 			$update_values = array(
-				'code' => $db->escape($form['code']),
-				'description' => $db->escape($form['description']),
+				'code' => $db->escape($_POST['code']),
+				'description' => $db->escape($_POST['description']),
 			);
 			if (is_array($new_file_sql) === true) {
 				$old_file = $db->select('img', 'emoticons', 'id = \'' . $uri->id . '\'');
@@ -61,16 +60,16 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'emoticons', 'i
 			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/emoticons');
 		}
 	}
-	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
+	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 		$emoticon = $db->select('code, description', 'emoticons', 'id = \'' . $uri->id . '\'');
 		$emoticon[0]['code'] = $db->escape($emoticon[0]['code'], 3);
 		$emoticon[0]['description'] = $db->escape($emoticon[0]['description'], 3);
 
-		$tpl->assign('form', isset($form) ? $form : $emoticon[0]);
+		$tpl->assign('form', isset($_POST['submit']) ? $_POST : $emoticon[0]);
 
 		$session->generateFormToken();
 
-		view::setContent(view::fetchTemplate('emoticons/edit.tpl'));
+		ACP3_View::setContent(ACP3_View::fetchTemplate('emoticons/edit.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

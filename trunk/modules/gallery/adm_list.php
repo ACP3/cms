@@ -24,4 +24,4 @@ if ($c_galleries > 0) {
 	}
 	$tpl->assign('galleries', $galleries);
 }
-view::setContent(view::fetchTemplate('gallery/adm_list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('gallery/adm_list.tpl'));

@@ -10,32 +10,30 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$comments_active = modules::isActive('comments');
+$comments_active = ACP3_Modules::isActive('comments');
 
-if (isset($_POST['form']) === true) {
-	$form = $_POST['form'];
-
-	if (empty($form['dateformat']) || ($form['dateformat'] !== 'long' && $form['dateformat'] !== 'short'))
+if (isset($_POST['submit']) === true) {
+	if (empty($_POST['dateformat']) || ($_POST['dateformat'] !== 'long' && $_POST['dateformat'] !== 'short'))
 		$errors['dateformat'] = $lang->t('common', 'select_date_format');
-	if (validate::isNumber($form['sidebar']) === false)
+	if (ACP3_Validate::isNumber($_POST['sidebar']) === false)
 		$errors['sidebar'] = $lang->t('common', 'select_sidebar_entries');
-	if ($comments_active === true && (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0))
+	if ($comments_active === true && (!isset($_POST['comments']) || $_POST['comments'] != 1 && $_POST['comments'] != 0))
 		$errors[] = $lang->t('files', 'select_allow_comments');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (validate::formToken() === false) {
-		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+	} elseif (ACP3_Validate::formToken() === false) {
+		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
-		$bool = config::module('files', $form);
+		$bool = ACP3_Config::module('files', $_POST);
 
 		$session->unsetFormToken();
 
 		setRedirectMessage($bool === true ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), 'acp/files');
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-	$settings = config::getModuleSettings('files');
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
+	$settings = ACP3_Config::getModuleSettings('files');
 
 	if ($comments_active === true) {
 		$comments = array();
@@ -54,5 +52,5 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	$session->generateFormToken();
 
-	view::setContent(view::fetchTemplate('files/settings.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('files/settings.tpl'));
 }

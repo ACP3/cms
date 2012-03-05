@@ -20,7 +20,7 @@ function setGalleryCache($id)
 	$pictures = $db->select('id, file, description', 'gallery_pictures', 'gallery_id = \'' . $id . '\'', 'pic ASC, id ASC');
 	$c_pictures = count($pictures);
 
-	$settings = config::getModuleSettings('gallery');
+	$settings = ACP3_Config::getModuleSettings('gallery');
 
 	for ($i = 0; $i < $c_pictures; ++$i) {
 		$picInfos = getimagesize(ACP3_ROOT . 'uploads/gallery/' . $pictures[$i]['file']);
@@ -33,7 +33,7 @@ function setGalleryCache($id)
 		$pictures[$i]['height'] = isset($newHeight) ? $newHeight : $picInfos[1];
 	}
 
-	return cache::create('gallery_pics_id_' . $id, $pictures);
+	return ACP3_Cache::create('gallery_pics_id_' . $id, $pictures);
 }
 /**
  * Bindet die gecachete Galerie anhand ihrer ID ein
@@ -44,10 +44,10 @@ function setGalleryCache($id)
  */
 function getGalleryCache($id)
 {
-	if (cache::check('gallery_pics_id_' . $id) === false)
+	if (ACP3_Cache::check('gallery_pics_id_' . $id) === false)
 		setGalleryCache($id);
 
-	return cache::output('gallery_pics_id_' . $id);
+	return ACP3_Cache::output('gallery_pics_id_' . $id);
 }
 /**
  * Setzt einen einzelnen Alias für ein Bild einer Fotogalerie
@@ -60,13 +60,13 @@ function generatePictureAlias($picture_id)
 	global $db, $lang;
 
 	$picture = $db->select('gallery_id', 'gallery_pictures', 'id = \'' . $picture_id . '\'');
-	$alias = seo::getUriAlias('gallery/pics/id_' . $picture[0]['gallery_id'], true);
+	$alias = ACP3_SEO::getUriAlias('gallery/pics/id_' . $picture[0]['gallery_id'], true);
 	if (!empty($alias))
 		$alias.= '/' . makeStringUrlSafe($lang->t('gallery', 'picture')) . '-' . $picture_id;
-	$seo_keywords = seo::getKeywords('gallery/pics/id_' . $picture[0]['gallery_id']);
-	$seo_description = seo::getDescription('gallery/pics/id_' . $picture[0]['gallery_id']);
+	$seo_keywords = ACP3_SEO::getKeywords('gallery/pics/id_' . $picture[0]['gallery_id']);
+	$seo_description = ACP3_SEO::getDescription('gallery/pics/id_' . $picture[0]['gallery_id']);
 
-	return seo::insertUriAlias($alias, 'gallery/details/id_' . $picture_id, $seo_keywords, $seo_description);
+	return ACP3_SEO::insertUriAlias('gallery/details/id_' . $picture_id, $alias, $seo_keywords, $seo_description);
 }
 /**
  * Setzt alle Bild-Aliase einer Fotogalerie neu
@@ -82,14 +82,14 @@ function generatePictureAliases($gallery_id)
 	$c_pictures = count($pictures);
 	$bool = false;
 
-	$alias = seo::getUriAlias('gallery/pics/id_' . $gallery_id, true);
+	$alias = ACP3_SEO::getUriAlias('gallery/pics/id_' . $gallery_id, true);
 	if (!empty($alias))
 		$alias.= '/' . makeStringUrlSafe($lang->t('gallery', 'picture'));
-	$seo_keywords = seo::getKeywords('gallery/pics/id_' . $picture[0]['gallery_id']);
-	$seo_description = seo::getDescription('gallery/pics/id_' . $picture[0]['gallery_id']);
+	$seo_keywords = ACP3_SEO::getKeywords('gallery/pics/id_' . $picture[0]['gallery_id']);
+	$seo_description = ACP3_SEO::getDescription('gallery/pics/id_' . $picture[0]['gallery_id']);
 
 	for ($i = 0; $i < $c_pictures; ++$i) {
-		$bool = seo::insertUriAlias(!empty($alias) ? $alias . '-' . $pictures[$i]['id'] : '', 'gallery/details/id_' . $pictures[$i]['id'], $seo_keywords, $seo_description);
+		$bool = ACP3_SEO::insertUriAlias(!empty($alias) ? $alias . '-' . $pictures[$i]['id'] : '', 'gallery/details/id_' . $pictures[$i]['id'], $seo_keywords, $seo_description);
 	}
 
 	return $bool;
@@ -110,7 +110,7 @@ function deletePictureAliases($gallery_id)
 	$bool = false;
 
 	for ($i = 0; $i < $c_pictures; ++$i) {
-		$bool = seo::deleteUriAlias('gallery/details/id_' . $pictures[$i]['id']);
+		$bool = ACP3_SEO::deleteUriAlias('gallery/details/id_' . $pictures[$i]['id']);
 		if ($bool === false)
 			break;
 	}

@@ -10,30 +10,28 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$emoticons_active = modules::isActive('emoticons');
+$emoticons_active = ACP3_Modules::isActive('emoticons');
 
-if (isset($_POST['form']) === true) {
-	$form = $_POST['form'];
-
-	if (empty($form['dateformat']) || ($form['dateformat'] !== 'long' && $form['dateformat'] !== 'short'))
+if (isset($_POST['submit']) === true) {
+	if (empty($_POST['dateformat']) || ($_POST['dateformat'] !== 'long' && $_POST['dateformat'] !== 'short'))
 		$errors['dateformat'] = $lang->t('common', 'select_date_format');
-	if ($emoticons_active === true && (!isset($form['emoticons']) || ($form['emoticons'] != 0 && $form['emoticons'] != 1)))
+	if ($emoticons_active === true && (!isset($_POST['emoticons']) || ($_POST['emoticons'] != 0 && $_POST['emoticons'] != 1)))
 		$errors[] = $lang->t('comments', 'select_emoticons');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (validate::formToken() === false) {
-		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+	} elseif (ACP3_Validate::formToken() === false) {
+		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
-		$bool = config::module('comments', $form);
+		$bool = ACP3_Config::module('comments', $_POST);
 
 		$session->unsetFormToken();
 
 		setRedirectMessage($bool === true ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), 'acp/comments');
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-	$settings = config::getModuleSettings('comments');
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
+	$settings = ACP3_Config::getModuleSettings('comments');
 
 	$tpl->assign('dateformat', $date->dateformatDropdown($settings['dateformat']));
 
@@ -51,5 +49,5 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	$session->generateFormToken();
 
-	view::setContent(view::fetchTemplate('comments/settings.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('comments/settings.tpl'));
 }

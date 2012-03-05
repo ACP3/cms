@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (validate::isNumber($uri->cat) && $db->countRows('*', 'categories', 'id = \'' . $uri->cat . '\'') == 1) {
+if (ACP3_Validate::isNumber($uri->cat) && $db->countRows('*', 'categories', 'id = \'' . $uri->cat . '\'') == 1) {
 	$category = $db->select('name', 'categories', 'id = \'' . $uri->cat . '\'');
 	$breadcrumb->append($lang->t('files', 'files'), $uri->route('files'))
 			   ->append($category[0]['name']);
@@ -22,7 +22,7 @@ if (validate::isNumber($uri->cat) && $db->countRows('*', 'categories', 'id = \''
 	$c_files = count($files);
 
 	if ($c_files > 0) {
-		$settings = config::getModuleSettings('files');
+		$settings = ACP3_Config::getModuleSettings('files');
 
 		for ($i = 0; $i < $c_files; ++$i) {
 			$files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : $lang->t('files', 'unknown_filesize');
@@ -31,7 +31,7 @@ if (validate::isNumber($uri->cat) && $db->countRows('*', 'categories', 'id = \''
 		}
 		$tpl->assign('files', $files);
 	}
-	view::setContent(view::fetchTemplate('files/files.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('files/files.tpl'));
 } else {
 	$uri->redirect('errors/404');
 }

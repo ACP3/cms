@@ -27,4 +27,4 @@ if ($c_blocks > 0) {
 	$tpl->assign('blocks', $blocks);
 }
 
-view::setContent(view::fetchTemplate('menu_items/adm_list_blocks.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('menu_items/adm_list_blocks.tpl'));

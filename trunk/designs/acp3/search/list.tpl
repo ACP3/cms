@@ -5,7 +5,7 @@
 	<fieldset class="no-border">
 		<dl>
 			<dt><label for="search-term">{lang t="search|search_term"}</label></dt>
-			<dd><input type="text" name="form[search_term]" id="search-term" value="{$form.search_term}" required></dd>
+			<dd><input type="text" name="search_term" id="search-term" value="{$form.search_term}" required></dd>
 		</dl>
 		<fieldset>
 			<legend>{lang t="search|search_options"}</legend>
@@ -14,7 +14,7 @@
 				<dd>
 {foreach $search_mods as $row}
 					<label for="{$row.dir}">
-						<input type="checkbox" name="form[mods][]" id="{$row.dir}" value="{$row.dir}"{$row.checked} class="checkbox">
+						<input type="checkbox" name="mods[]" id="{$row.dir}" value="{$row.dir}"{$row.checked} class="checkbox">
 						{$row.name}
 					</label>
 {/foreach}
@@ -23,7 +23,7 @@
 				<dd>
 {foreach $search_areas as $row}
 					<label for="{$row.id}">
-						<input type="radio" name="form[area]" id="{$row.id}" value="{$row.value}" class="checkbox"{$row.checked}>
+						<input type="radio" name="area" id="{$row.id}" value="{$row.value}" class="checkbox"{$row.checked}>
 						{$row.lang}
 					</label>
 {/foreach}
@@ -32,7 +32,7 @@
 				<dd>
 {foreach $sort_hits as $row}
 					<label for="{$row.id}">
-						<input type="radio" name="form[sort]" id="{$row.id}" value="{$row.value}" class="checkbox"{$row.checked}>
+						<input type="radio" name="sort" id="{$row.id}" value="{$row.value}" class="checkbox"{$row.checked}>
 						{$row.lang}
 					</label>
 {/foreach}
@@ -41,6 +41,6 @@
 		</fieldset>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="search|submit_search"}" class="form">
+		<input type="submit" name="submit" value="{lang t="search|submit_search"}" class="form">
 	</div>
 </form>

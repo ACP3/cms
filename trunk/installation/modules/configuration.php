@@ -3,35 +3,35 @@ if (defined('IN_INSTALL') === false)
 	exit;
 
 if (isset($_POST['submit'])) {
-	$form = $_POST['form'];
+	$_POST = $_POST['form'];
 	$config_path = ACP3_ROOT . 'includes/config.php';
-	$db = new db();
+	$db = new ACP3_DB();
 
-	if (empty($form['db_host']))
+	if (empty($_POST['db_host']))
 		$errors[] = $lang->t('installation', 'type_in_db_host');
-	if (empty($form['db_user']))
+	if (empty($_POST['db_user']))
 		$errors[] = $lang->t('installation', 'type_in_db_username');
-	if (empty($form['db_name']))
+	if (empty($_POST['db_name']))
 		$errors[] = $lang->t('installation', 'type_in_db_name');
-	if (!empty($form['db_host']) && !empty($form['db_user']) && !empty($form['db_name']) &&
-		$db->connect($form['db_host'], $form['db_name'], $form['db_user'], $form['db_password']) !== true)
+	if (!empty($_POST['db_host']) && !empty($_POST['db_user']) && !empty($_POST['db_name']) &&
+		$db->connect($_POST['db_host'], $_POST['db_name'], $_POST['db_user'], $_POST['db_password']) !== true)
 		$errors[] = $lang->t('installation', 'db_connection_failed');
-	if (empty($form['user_name']))
+	if (empty($_POST['user_name']))
 		$errors[] = $lang->t('installation', 'type_in_user_name');
-	if ((empty($form['user_pwd']) || empty($form['user_pwd_wdh'])) ||
-		(!empty($form['user_pwd']) && !empty($form['user_pwd_wdh']) && $form['user_pwd'] != $form['user_pwd_wdh']))
+	if ((empty($_POST['user_pwd']) || empty($_POST['user_pwd_wdh'])) ||
+		(!empty($_POST['user_pwd']) && !empty($_POST['user_pwd_wdh']) && $_POST['user_pwd'] != $_POST['user_pwd_wdh']))
 		$errors[] = $lang->t('installation', 'type_in_pwd');
-	if (validate::email($form['mail']) === false)
+	if (ACP3_Validate::email($_POST['mail']) === false)
 		$errors[] = $lang->t('common', 'wrong_email_format');
-	if (validate::isNumber($form['entries']) === false)
+	if (ACP3_Validate::isNumber($_POST['entries']) === false)
 		$errors[] = $lang->t('system', 'select_entries_per_page');
-	if (validate::isNumber($form['flood']) === false)
+	if (ACP3_Validate::isNumber($_POST['flood']) === false)
 		$errors[] = $lang->t('system', 'type_in_flood_barrier');
-	if (empty($form['date_format_long']) || empty($form['date_format_short']))
+	if (empty($_POST['date_format_long']) || empty($_POST['date_format_short']))
 		$errors[] = $lang->t('system', 'type_in_date_format');
-	if (validate::isNumber($form['date_dst']) === false)
+	if (ACP3_Validate::isNumber($_POST['date_dst']) === false)
 		$errors[] = $lang->t('common', 'select_daylight_saving_time');
-	if (validate::isNumber($form['date_time_zone']) === false)
+	if (ACP3_Validate::isNumber($_POST['date_time_zone']) === false)
 		$errors[] = $lang->t('common', 'select_time_zone');
 	if (is_file($config_path) === false || is_writable($config_path) === false)
 		$errors[] = $lang->t('installation', 'wrong_chmod_for_config_file');
@@ -44,19 +44,19 @@ if (isset($_POST['submit'])) {
 		$config = array(
 			'cache_images' => true,
 			'cache_minify' => 3600,
-			'date_dst' => $form['date_dst'],
-			'date_format_long' => $form['date_format_long'],
-			'date_format_short' => $form['date_format_short'],
-			'date_time_zone' => $form['date_time_zone'],
-			'db_host' => $form['db_host'],
-			'db_name' => $form['db_name'],
-			'db_pre' => $form['db_pre'],
-			'db_password' => $form['db_password'],
-			'db_user' => $form['db_user'],
-			'db_version' => 19,
+			'date_dst' => $_POST['date_dst'],
+			'date_format_long' => $_POST['date_format_long'],
+			'date_format_short' => $_POST['date_format_short'],
+			'date_time_zone' => $_POST['date_time_zone'],
+			'db_host' => $_POST['db_host'],
+			'db_name' => $_POST['db_name'],
+			'db_pre' => $_POST['db_pre'],
+			'db_password' => $_POST['db_password'],
+			'db_user' => $_POST['db_user'],
+			'db_version' => 20,
 			'design' => 'acp3',
-			'entries' => $form['entries'],
-			'flood' => $form['flood'],
+			'entries' => $_POST['entries'],
+			'flood' => $_POST['flood'],
 			'homepage' => 'news/list/',
 			'lang' => LANG,
 			'mailer_smtp_auth' => false,
@@ -72,7 +72,8 @@ if (isset($_POST['submit'])) {
 			'seo_meta_description' => '',
 			'seo_meta_keywords' => '',
 			'seo_mod_rewrite' => false,
-			'seo_title' => !empty($form['seo_title']) ? $form['seo_title'] : 'ACP3',
+			'seo_robots' => 1,
+			'seo_title' => !empty($_POST['seo_title']) ? $_POST['seo_title'] : 'ACP3',
 			'version' => CONFIG_VERSION,
 			'wysiwyg' => 'ckeditor'
 		);
@@ -80,8 +81,8 @@ if (isset($_POST['submit'])) {
 		// Daten in die config.php schreiben und diese laden
 		writeConfigFile($config);
 
-		$db = new db();
-		$db->connect($form['db_host'], $form['db_name'], $form['db_user'], $form['db_password'], $form['db_pre']);
+		$db = new ACP3_DB();
+		$db->connect($_POST['db_host'], $_POST['db_name'], $_POST['db_user'], $_POST['db_password'], $_POST['db_pre']);
 
 		$sql_file = file_get_contents(ACP3_ROOT . 'installation/modules/install.sql');
 		$sql_file = str_replace(array("\r\n", "\r"), "\n", $sql_file);
@@ -92,12 +93,12 @@ if (isset($_POST['submit'])) {
 		$current_date = gmdate('U');
 
 		$other_arr = array(
-			1 => 'INSERT INTO `{pre}users` VALUES (\'\', 1, \'' . $db->escape($form['user_name']) . '\', \'' . generateSaltedPassword($salt, $form['user_pwd']) . ':' . $salt . '\', \'0\', \':1\', \'1:1\', \':1\', \'1\', \'' . $form['mail'] . ':1\', \':1\', \':1\', \':1\', \':1\', \'' . $db->escape($form['date_format_long']) . '\', \'' . $db->escape($form['date_format_short']) . '\', \'' . $form['date_time_zone'] . '\', \'' . $form['date_dst'] .'\', \'' . LANG . '\', \'' . $form['entries'] . '\', \'\')',
+			1 => 'INSERT INTO `{pre}users` VALUES (\'\', 1, \'' . $db->escape($_POST['user_name']) . '\', \'' . generateSaltedPassword($salt, $_POST['user_pwd']) . ':' . $salt . '\', \'0\', \':1\', \'1:1\', \':1\', \'1\', \'' . $_POST['mail'] . ':1\', \':1\', \':1\', \':1\', \':1\', \'' . $db->escape($_POST['date_format_long']) . '\', \'' . $db->escape($_POST['date_format_short']) . '\', \'' . $_POST['date_time_zone'] . '\', \'' . $_POST['date_dst'] .'\', \'' . LANG . '\', \'' . $_POST['entries'] . '\', \'\')',
 			2 => 'INSERT INTO `{pre}news` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', \'' . $lang->t('installation', 'news_headline') . '\', \'' . $lang->t('installation', 'news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\', \'\')',
 			3 => 'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 1, 0, 1, 2, 1, \'' . $lang->t('installation', 'pages_news') . '\', \'news\', 1), (\'\', 1, 1, 2, 0, 3, 4, 1, \'' . $lang->t('installation', 'pages_files') . '\', \'files\', 1), (\'\', 1, 1, 3, 0, 5, 6, 1, \'' . $lang->t('installation', 'pages_gallery') . '\', \'gallery\', 1), (\'\', 1, 1, 4, 0, 7, 8, 1, \'' . $lang->t('installation', 'pages_guestbook') . '\', \'guestbook\', 1), (\'\', 1, 1, 5, 0, 9, 10, 1, \'' . $lang->t('installation', 'pages_polls') . '\', \'polls\', 1), (\'\', 1, 1, 6, 0, 11, 12, 1, \'' . $lang->t('installation', 'pages_search') . '\', \'search\', 1), (\'\', 1, 2, 7, 0, 13, 14, 1, \'' . $lang->t('installation', 'pages_contact') . '\', \'contact\', 1), (\'\', 2, 2, 8, 0, 15, 16, 1, \'' . $lang->t('installation', 'pages_imprint') . '\', \'contact/imprint/\', 1)',
 			4 => 'INSERT INTO `{pre}menu_items_blocks` (`id`, `index_name`, `title`) VALUES (1, \'main\', \'' . $lang->t('installation', 'pages_main') . '\'), (2, \'sidebar\', \'' . $lang->t('installation', 'pages_sidebar') . '\')',
-			5 => 'INSERT INTO `{pre}seo` VALUES (\'news/details/id_1/\', \'' . $lang->t('installation', 'news_headline_alias') . '\', \'\', \'\')',
-			6 => 'INSERT INTO `{pre}seo` VALUES (\'contact/imprint/\', \'' . $lang->t('installation', 'pages_imprint_alias') . '\', \'\', \'\')',
+			5 => 'INSERT INTO `{pre}seo` VALUES (\'news/details/id_1/\', \'' . $lang->t('installation', 'news_headline_alias') . '\', \'\', \'\', \'1\')',
+			6 => 'INSERT INTO `{pre}seo` VALUES (\'contact/imprint/\', \'' . $lang->t('installation', 'pages_imprint_alias') . '\', \'\', \'\', \'1\')',
 		);
 		$queries = array_merge($sql_file_arr, $other_arr);
 
@@ -211,8 +212,8 @@ if (isset($_POST['submit'])) {
 		}
 
 		// Modulkonfigurationsdateien schreiben
-		config::module('contact', array('mail' => $form['mail'], 'disclaimer' => $db->escape($lang->t('installation', 'disclaimer'), 2)));
-		config::module('newsletter', array('mail' => $form['mail'], 'mailsig' => $db->escape($lang->t('installation', 'sincerely') . "\n\n" . $lang->t('installation', 'newsletter_mailsig'))));
+		ACP3_Config::module('contact', array('mail' => $_POST['mail'], 'disclaimer' => $db->escape($lang->t('installation', 'disclaimer'), 2)));
+		ACP3_Config::module('newsletter', array('mail' => $_POST['mail'], 'mailsig' => $db->escape($lang->t('installation', 'sincerely') . "\n\n" . $lang->t('installation', 'newsletter_mailsig'))));
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -261,6 +262,6 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		'seo_title' => 'ACP3',
 	);
 
-	$tpl->assign('form', isset($form) ? $form : $defaults);
+	$tpl->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 }
 $content = $tpl->fetch('configuration.tpl');

@@ -10,38 +10,36 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (isset($_POST['form']) === true) {
-	$form = $_POST['form'];
-
-	if (strlen($form['subject']) < 3)
+if (isset($_POST['submit']) === true) {
+	if (strlen($_POST['subject']) < 3)
 		$errors['subject'] = $lang->t('newsletter', 'subject_to_short');
-	if (strlen($form['text']) < 3)
+	if (strlen($_POST['text']) < 3)
 		$errors['text'] = $lang->t('newsletter', 'text_to_short');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (validate::formToken() === false) {
-		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+	} elseif (ACP3_Validate::formToken() === false) {
+		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
-		$settings = config::getModuleSettings('newsletter');
+		$settings = ACP3_Config::getModuleSettings('newsletter');
 
 		// Newsletter archivieren
 		$insert_values = array(
 			'id' => '',
 			'date' => $date->timestamp(),
-			'subject' => $db->escape($form['subject']),
-			'text' => $db->escape($form['text']),
-			'status' => $form['test'] == 1 ? '0' : (int) $form['action'],
+			'subject' => $db->escape($_POST['subject']),
+			'text' => $db->escape($_POST['text']),
+			'status' => $_POST['test'] == 1 ? '0' : (int) $_POST['action'],
 			'user_id' => $auth->getUserId(),
 		);
 		$bool = $db->insert('newsletter_archive', $insert_values);
 
-		if ($form['action'] == 1 && $bool !== false) {
-			$subject = $form['subject'];
-			$body = $form['text'] . "\n-- \n" . html_entity_decode($db->escape($settings['mailsig'], 3), ENT_QUOTES, 'UTF-8');
+		if ($_POST['action'] == 1 && $bool !== false) {
+			$subject = $_POST['subject'];
+			$body = $_POST['text'] . "\n-- \n" . html_entity_decode($db->escape($settings['mailsig'], 3), ENT_QUOTES, 'UTF-8');
 
 			// Testnewsletter
-			if ($form['test'] == 1) {
+			if ($_POST['test'] == 1) {
 				$bool2 = generateEmail('', $settings['mail'], $settings['mail'], $subject, $body);
 			// An alle versenden
 			} else {
@@ -58,17 +56,17 @@ if (isset($_POST['form']) === true) {
 
 		$session->unsetFormToken();
 
-		if ($form['action'] == 0 && $bool !== false) {
+		if ($_POST['action'] == 0 && $bool !== false) {
 			setRedirectMessage($lang->t('newsletter', 'save_success'), 'acp/newsletter');
-		} elseif ($form['action'] == 1 && $bool !== false && $bool2 === true) {
+		} elseif ($_POST['action'] == 1 && $bool !== false && $bool2 === true) {
 			setRedirectMessage($lang->t('newsletter', 'compose_success'), 'acp/newsletter');
 		} else {
 			setRedirectMessage($lang->t('newsletter', 'compose_save_error'), 'acp/newsletter');
 		}
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-	$tpl->assign('form', isset($form) ? $form : array('subject' => '', 'text' => ''));
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
+	$tpl->assign('form', isset($_POST['submit']) ? $_POST : array('subject' => '', 'text' => ''));
 
 	$test = array();
 	$test[0]['value'] = '1';
@@ -90,5 +88,5 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	$session->generateFormToken();
 
-	view::setContent(view::fetchTemplate('newsletter/compose.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('newsletter/compose.tpl'));
 }

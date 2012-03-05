@@ -24,4 +24,4 @@ if ($c_polls > 0) {
 	}
 	$tpl->assign('polls', $polls);
 }
-view::setContent(view::fetchTemplate('polls/adm_list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('polls/adm_list.tpl'));

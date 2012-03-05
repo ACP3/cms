@@ -24,4 +24,4 @@ if ($c_pages > 0) {
 	}
 	$tpl->assign('pages', $pages);
 }
-view::setContent(view::fetchTemplate('static_pages/adm_list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('static_pages/adm_list.tpl'));

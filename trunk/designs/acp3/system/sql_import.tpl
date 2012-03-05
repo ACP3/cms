@@ -13,13 +13,13 @@
 		<legend>{lang t="system|sql_import"}</legend>
 		<dl>
 			<dt><label for="text">{lang t="system|text"}</label></dt>
-			<dd><textarea name="form[text]" id="text" cols="50" rows="6">{$form.text}</textarea></dd>
+			<dd><textarea name="text" id="text" cols="50" rows="6">{$form.text}</textarea></dd>
 			<dt><label for="file">{lang t="system|file"}</label></dt>
 			<dd><input type="file" name="file" id="file"></dd>
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		{$form_token}
 	</div>
 </form>

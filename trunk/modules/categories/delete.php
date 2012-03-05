@@ -12,14 +12,14 @@ if (defined('IN_ADM') === false)
 
 if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
 	$entries = $_POST['entries'];
-elseif (validate::deleteEntries($uri->entries) === true)
+elseif (ACP3_Validate::deleteEntries($uri->entries) === true)
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
-	view::setContent(errorBox($lang->t('common', 'no_entries_selected')));
+	ACP3_View::setContent(errorBox($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
-	view::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/categories/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/categories')));
+	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/categories/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/categories')));
 } elseif ($uri->action === 'confirmed') {
 	require_once MODULES_DIR . 'categories/functions.php';
 
@@ -36,7 +36,7 @@ if (!isset($entries)) {
 				// Kategoriebild ebenfalls löschen
 				removeUploadedFile('categories', $category[0]['picture']);
 				$bool = $db->delete('categories', 'id = \'' . $entry . '\'');
-				cache::delete('categories_' . $db->escape($category[0]['module'], 3));
+				ACP3_Cache::delete('categories_' . $db->escape($category[0]['module'], 3));
 			}
 		}
 	}

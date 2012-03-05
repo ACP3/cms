@@ -10,16 +10,14 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (isset($_POST['form']) === true) {
-	$form = $_POST['form'];
-
-	if (strlen($form['search_term']) < 3)
+if (isset($_POST['submit']) === true) {
+	if (strlen($_POST['search_term']) < 3)
 		$errors['search-term'] = $lang->t('search', 'search_term_to_short');
-	if (empty($form['mods']))
+	if (empty($_POST['mods']))
 		$errors[] = $lang->t('search', 'no_module_selected');
-	if (empty($form['area']))
+	if (empty($_POST['area']))
 		$errors[] = $lang->t('search', 'no_area_selected');
-	if (empty($form['sort']) || $form['sort'] != 'asc' && $form['sort'] != 'desc')
+	if (empty($_POST['sort']) || $_POST['sort'] != 'asc' && $_POST['sort'] != 'desc')
 		$errors[] = $lang->t('search', 'no_sorting_selected');
 
 	if (isset($errors) === true) {
@@ -28,31 +26,31 @@ if (isset($_POST['form']) === true) {
 		$breadcrumb->append($lang->t('search', 'search'), $uri->route('search'))
 				   ->append($lang->t('search', 'search_results'));
 
-		$form['sort'] = strtoupper($form['sort']);
+		$_POST['sort'] = strtoupper($_POST['sort']);
 		$results_mods = array();
-		foreach ($form['mods'] as $module) {
-			if (modules::check($module, 'extensions/search') === true) {
+		foreach ($_POST['mods'] as $module) {
+			if (ACP3_Modules::check($module, 'extensions/search') === true) {
 				include MODULES_DIR . $module . '/extensions/search.php';
 			}
 		}
 		if (!empty($results_mods))
 			$tpl->assign('results_mods', $results_mods);
 		else
-			$tpl->assign('no_search_results', sprintf($lang->t('search', 'no_search_results'), $form['search_term']));
+			$tpl->assign('no_search_results', sprintf($lang->t('search', 'no_search_results'), $_POST['search_term']));
 
-		view::setContent(view::fetchTemplate('search/results.tpl'));
+		ACP3_View::setContent(ACP3_View::fetchTemplate('search/results.tpl'));
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-	$tpl->assign('form', isset($form) ? $form : array('search_term' => ''));
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
+	$tpl->assign('form', isset($_POST['submit']) ? $_POST : array('search_term' => ''));
 
 	$mods = scandir(MODULES_DIR);
 	$c_mods = count($mods);
 	$search_mods = array();
 
 	for ($i = 0; $i < $c_mods; ++$i) {
-		if (modules::check($mods[$i], 'extensions/search') === true) {
-			$info = modules::parseInfo($mods[$i]);
+		if (ACP3_Modules::check($mods[$i], 'extensions/search') === true) {
+			$info = ACP3_Modules::parseInfo($mods[$i]);
 			$name = $info['name'];
 			$search_mods[$name]['dir'] = $mods[$i];
 			$search_mods[$name]['checked'] = selectEntry('mods', $mods[$i], $mods[$i], 'checked');
@@ -90,5 +88,5 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$sort_hits[1]['lang'] = $lang->t('search', 'desc');
 	$tpl->assign('sort_hits', $sort_hits);
 
-	view::setContent(view::fetchTemplate('search/list.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('search/list.tpl'));
 }

@@ -9,7 +9,7 @@
 {/if}
 {if isset($pages)}
 {$pagination}
-{assign var="can_delete" value=modules::check("static_pages", "delete")}
+{assign var="can_delete" value=ACP3_Modules::check("static_pages", "delete")}
 	<table class="acp-table">
 		<thead>
 			<tr>

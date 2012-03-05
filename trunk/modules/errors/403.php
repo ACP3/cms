@@ -11,4 +11,4 @@ if (defined('IN_ACP3') === false)
 	exit;
 
 header('HTTP/1.0 403 Forbidden');
-view::setContent(view::fetchTemplate('errors/403.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('errors/403.tpl'));

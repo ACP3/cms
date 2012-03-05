@@ -19,7 +19,7 @@
 		<div id="tab-2" class="ui-tabs-hide">
 			<dl>
 				<dt><label for="question">{lang t="polls|question"}</label></dt>
-				<dd><input type="text" name="form[question]" id="question" value="{$question}" maxlength="120"></dd>
+				<dd><input type="text" name="question" id="question" value="{$question}" maxlength="120"></dd>
 			</dl>
 			<p>
 				{lang t="polls|delete_answer_description"}
@@ -27,13 +27,13 @@
 			<table class="acp-table no-border">
 {foreach $answers as $row}
 				<tr>
-					<td style="width:5%;padding:3px 0"><input type="checkbox" name="form[answers][{$row.number}][delete]" value="1" class="checkbox"></td>
+					<td style="width:5%;padding:3px 0"><input type="checkbox" name="answers[{$row.number}][delete]" value="1" class="checkbox"></td>
 					<td style="padding:3px 0">
 						<dl>
 							<dt><label for="answer_{$row.number}">{lang t="polls|answer"} {$row.number+1}</label></dt>
 							<dd>
-								<input type="text" name="form[answers][{$row.number}][value]" id="answer_{$row.number}" value="{$row.value}" maxlength="120">
-								<input type="hidden" name="form[answers][{$row.number}][id]" value="{$row.id}" style="display:none">
+								<input type="text" name="answers[{$row.number}][value]" id="answer_{$row.number}" value="{$row.value}" maxlength="120">
+								<input type="hidden" name="answers[{$row.number}][id]" value="{$row.id}" style="display:none">
 							</dd>
 						</dl>
 					</td>
@@ -47,7 +47,7 @@
 {foreach $options as $row}
 						<li>
 							<label for="{$row.name}">
-								<input type="checkbox" name="form[{$row.name}]" id="{$row.name}" value="1" class="checkbox"{$row.checked}>
+								<input type="checkbox" name="{$row.name}" id="{$row.name}" value="1" class="checkbox"{$row.checked}>
 								{$row.lang}
 							</label>
 						</li>
@@ -58,7 +58,7 @@
 		</div>
 	</div>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 {if !$disable}
 		<input type="submit" name="add_answer" value="{lang t="polls|add_answer"}" class="form">
 {/if}

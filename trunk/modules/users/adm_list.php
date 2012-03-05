@@ -20,10 +20,10 @@ if ($c_users > 0) {
 
 	for ($i = 0; $i < $c_users; ++$i) {
 		$users[$i]['nickname'] = $db->escape($users[$i]['nickname'], 3);
-		$users[$i]['roles'] = implode(', ', acl::getUserRoles($users[$i]['id'], 2));
+		$users[$i]['roles'] = implode(', ', ACP3_ACL::getUserRoles($users[$i]['id'], 2));
 		$users[$i]['mail'] = substr($users[$i]['mail'], 0, -2);
 	}
 	$tpl->assign('users', $users);
 }
 
-view::setContent(view::fetchTemplate('users/adm_list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('users/adm_list.tpl'));

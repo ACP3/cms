@@ -16,7 +16,7 @@
 function setStaticPagesCache($id)
 {
 	global $db;
-	return cache::create('static_pages_list_id_' . $id, $db->select('start, end, title, text', 'static_pages', 'id = \'' . $id . '\''));
+	return ACP3_Cache::create('static_pages_list_id_' . $id, $db->select('start, end, title, text', 'static_pages', 'id = \'' . $id . '\''));
 }
 /**
  * Bindet die gecachete statische Seite ein
@@ -27,10 +27,10 @@ function setStaticPagesCache($id)
  */
 function getStaticPagesCache($id)
 {
-	if (cache::check('static_pages_list_id_' . $id) === false)
+	if (ACP3_Cache::check('static_pages_list_id_' . $id) === false)
 		setStaticPagesCache($id);
 
-	return cache::output('static_pages_list_id_' . $id);
+	return ACP3_Cache::output('static_pages_list_id_' . $id);
 }
 /**
  * Liest alle statischen Seiten ein

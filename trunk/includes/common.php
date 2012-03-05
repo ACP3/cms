@@ -31,9 +31,19 @@ define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
 define('MODULES_DIR', ACP3_ROOT . 'modules/');
 define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 
-set_include_path(get_include_path() . PATH_SEPARATOR . INCLUDES_DIR . 'classes/');
-spl_autoload_extensions('.class.php');
-spl_autoload_register();
+/**
+ * Autoloading für die ACP3 eigenen Klassen
+ *
+ * @param string $class
+ *  Der Name der zu ladenden Klasse
+ */
+function acp3_load_class($class)
+{
+	$file = INCLUDES_DIR . 'classes/' . str_replace('ACP3_', '', $class) . '.class.php';
+	if(is_file($file) === true)
+		require_once $file;
+}
+spl_autoload_register("acp3_load_class");
 
 // Smarty einbinden
 require INCLUDES_DIR . 'smarty/Smarty.class.php';
@@ -57,12 +67,12 @@ $tpl->assign('DESIGN_PATH', DESIGN_PATH);
 $tpl->assign('LANG', CONFIG_LANG);
 
 // Klassen initialisieren
-$db = new db();
+$db = new ACP3_DB();
 $handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
 if ($handle !== true) {
 	exit($handle);
 }
-$uri = new uri();
+$uri = new ACP3_URI();
 
 // Falls der Wartungsmodus aktiv ist, Wartungsnachricht ausgeben
 if (defined('IN_ADM') === false && CONFIG_MAINTENANCE_MODE === true) {
@@ -73,15 +83,15 @@ if (defined('IN_ADM') === false && CONFIG_MAINTENANCE_MODE === true) {
 }
 
 // Klassen initialisieren
-$session = new session();
-$auth = new auth();
-$lang = new lang();
-$date = new date();
-$breadcrumb = new breadcrumb();
+$session = new ACP3_Session();
+$auth = new ACP3_Auth();
+$lang = new ACP3_Lang();
+$date = new ACP3_Date();
+$breadcrumb = new ACP3_Breadcrumb();
 
-acl::initialize($auth->getUserId());
+ACP3_ACL::initialize($auth->getUserId());
 
 // Aktuelle Datensatzposition bestimmen
-define('POS', (int) (validate::isNumber($uri->page) && $uri->page >= 1 ? ($uri->page - 1) * $auth->entries : 0));
+define('POS', (int) (ACP3_Validate::isNumber($uri->page) && $uri->page >= 1 ? ($uri->page - 1) * $auth->entries : 0));
 
 require_once INCLUDES_DIR . 'functions.php';

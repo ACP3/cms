@@ -5,37 +5,35 @@ if (defined('IN_ADM') === false)
 $breadcrumb->append($lang->t('system', 'maintenance'), $uri->route('acp/system/maintenance'))
 		   ->append($lang->t('system', 'sql_export'));
 
-if (isset($_POST['form']) === true) {
-	$form = $_POST['form'];
-
-	if (empty($form['tables']) || is_array($form['tables']) === false)
+if (isset($_POST['submit']) === true) {
+	if (empty($_POST['tables']) || is_array($_POST['tables']) === false)
 		$errors['tables'] = $lang->t('system', 'select_sql_tables');
-	if ($form['output'] !== 'file' && $form['output'] !== 'text')
+	if ($_POST['output'] !== 'file' && $_POST['output'] !== 'text')
 		$errors[] = $lang->t('system', 'select_output');
-	if (in_array($form['export_type'], array('complete', 'structure', 'data')) === false)
+	if (in_array($_POST['export_type'], array('complete', 'structure', 'data')) === false)
 		$errors[] = $lang->t('system', 'select_export_type');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (validate::formToken() === false) {
-		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+	} elseif (ACP3_Validate::formToken() === false) {
+		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$session->unsetFormToken();
 
 		$structure = '';
 		$data = '';
-		foreach ($form['tables'] as $table) {
+		foreach ($_POST['tables'] as $table) {
 			// Struktur ausgeben
-			if ($form['export_type'] === 'complete' || $form['export_type'] === 'structure') {
+			if ($_POST['export_type'] === 'complete' || $_POST['export_type'] === 'structure') {
 				$result = $db->query('SHOW CREATE TABLE ' . $table);
 				if (is_array($result) === true) {
 					//$structure.= '-- ' . sprintf($lang->t('system', 'structure_of_table'), $table) . "\n\n";
-					$structure.= isset($form['drop']) && $form['drop'] == 1 ? 'DROP TABLE IF EXISTS `' . $table . '`;' . "\n\n" : '';
+					$structure.= isset($_POST['drop']) && $_POST['drop'] == 1 ? 'DROP TABLE IF EXISTS `' . $table . '`;' . "\n\n" : '';
 					$structure.= $result[0]['Create Table'] . ';' . "\n\n";
 				}
 			}
 			// Datensätze ausgeben
-			if ($form['export_type'] === 'complete' || $form['export_type'] === 'data') {
+			if ($_POST['export_type'] === 'complete' || $_POST['export_type'] === 'data') {
 				$resultsets = $db->select('*', substr($table, strlen($db->prefix)));
 				if (count($resultsets) > 0) {
 					//$data.= "\n" . '-- '. sprintf($lang->t('system', 'data_of_table'), $table) . "\n\n";
@@ -59,7 +57,7 @@ if (isset($_POST['form']) === true) {
 		$export = $structure . $data;
 
 		// Als Datei ausgeben
-		if ($form['output'] === 'file') {
+		if ($_POST['output'] === 'file') {
 			header('Content-Type: text/sql');
 			header('Content-Disposition: attachment; filename=' . CONFIG_DB_NAME . '_export.sql');
 			exit($export);
@@ -69,8 +67,8 @@ if (isset($_POST['form']) === true) {
 		}
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-	$mod_list = modules::modulesList();
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
+	$mod_list = ACP3_Modules::modulesList();
 	$tables = array();
 
 	foreach ($mod_list as $info) {
@@ -114,4 +112,4 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	$session->generateFormToken();
 }
-view::setContent(view::fetchTemplate('system/sql_export.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('system/sql_export.tpl'));

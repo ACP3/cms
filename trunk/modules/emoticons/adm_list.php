@@ -23,4 +23,4 @@ if ($c_emoticons > 0) {
 	}
 	$tpl->assign('emoticons', $emoticons);
 }
-view::setContent(view::fetchTemplate('emoticons/adm_list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('emoticons/adm_list.tpl'));

@@ -10,7 +10,7 @@
 {/if}
 {if isset($emoticons)}
 {$pagination}
-{assign var="can_delete" value=modules::check("emoticons", "delete")}
+{assign var="can_delete" value=ACP3_Modules::check("emoticons", "delete")}
 	<table class="acp-table">
 		<thead>
 			<tr>

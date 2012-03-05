@@ -22,4 +22,4 @@ for ($i = 0; $i < $c_resources; ++$i) {
 ksort($output);
 $tpl->assign('resources', $output);
 
-view::setContent(view::fetchTemplate('access/adm_list_resources.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('access/adm_list_resources.tpl'));

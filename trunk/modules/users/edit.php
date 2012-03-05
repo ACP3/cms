@@ -10,70 +10,68 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'users', 'id = \'' . $uri->id . '\'') == 1) {
+if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'users', 'id = \'' . $uri->id . '\'') == 1) {
 	$user = $auth->getUserInfo($uri->id);
 
-	if (isset($_POST['form']) === true) {
+	if (isset($_POST['submit']) === true) {
 		require_once MODULES_DIR . 'users/functions.php';
 
-		$form = $_POST['form'];
-
-		if (empty($form['nickname']))
+		if (empty($_POST['nickname']))
 			$errors['nickname'] = $lang->t('common', 'name_to_short');
-		if (userNameExists($form['nickname'], $uri->id))
+		if (userNameExists($_POST['nickname'], $uri->id))
 			$errors['nickname'] = $lang->t('users', 'user_name_already_exists');
-		if (validate::email($form['mail']) === false)
+		if (ACP3_Validate::email($_POST['mail']) === false)
 			$errors['mail'] = $lang->t('common', 'wrong_email_format');
-		if (userEmailExists($form['mail'], $uri->id))
+		if (userEmailExists($_POST['mail'], $uri->id))
 			$errors['mail'] = $lang->t('users', 'user_email_already_exists');
-		if (empty($form['roles']) || is_array($form['roles']) === false || validate::aclRolesExist($form['roles']) === false)
+		if (empty($_POST['roles']) || is_array($_POST['roles']) === false || ACP3_Validate::aclRolesExist($_POST['roles']) === false)
 			$errors['roles'] = $lang->t('users', 'select_access_level');
-		if (!isset($form['super_user']) || ($form['super_user'] != 1 && $form['super_user'] != 0))
+		if (!isset($_POST['super_user']) || ($_POST['super_user'] != 1 && $_POST['super_user'] != 0))
 			$errors['super-user'] = $lang->t('users', 'select_super_user');
-		if ($lang->languagePackExists($form['language']) === false)
+		if ($lang->languagePackExists($_POST['language']) === false)
 			$errors['language'] = $lang->t('users', 'select_language');
-		if (validate::isNumber($form['entries']) === false)
+		if (ACP3_Validate::isNumber($_POST['entries']) === false)
 			$errors['entries'] = $lang->t('system', 'select_entries_per_page');
-		if (empty($form['date_format_long']) || empty($form['date_format_short']))
+		if (empty($_POST['date_format_long']) || empty($_POST['date_format_short']))
 			$errors[] = $lang->t('system', 'type_in_date_format');
-		if (is_numeric($form['time_zone']) === false)
+		if (is_numeric($_POST['time_zone']) === false)
 			$errors['time-zone'] = $lang->t('common', 'select_time_zone');
-		if (validate::isNumber($form['dst']) === false)
+		if (ACP3_Validate::isNumber($_POST['dst']) === false)
 			$errors[] = $lang->t('common', 'select_daylight_saving_time');
-		if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat']) && $form['new_pwd'] != $form['new_pwd_repeat'])
+		if (!empty($_POST['new_pwd']) && !empty($_POST['new_pwd_repeat']) && $_POST['new_pwd'] != $_POST['new_pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (validate::formToken() === false) {
-			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+		} elseif (ACP3_Validate::formToken() === false) {
+			ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
-				'super_user' => (int) $form['super_user'],
-				'nickname' => $db->escape($form['nickname']),
-				'realname' => $db->escape($form['realname']) . ':' . $user['realname_display'],
-				'mail' => $form['mail'] . ':' . $user['mail_display'],
-				'website' => $db->escape($form['website'], 2) . ':' . $user['website_display'],
-				'date_format_long' => $db->escape($form['date_format_long']),
-				'date_format_short' => $db->escape($form['date_format_short']),
-				'time_zone' => $form['time_zone'],
-				'dst' => $form['dst'],
-				'language' => $db->escape($form['language'], 2),
-				'entries' => (int) $form['entries'],
+				'super_user' => (int) $_POST['super_user'],
+				'nickname' => $db->escape($_POST['nickname']),
+				'realname' => $db->escape($_POST['realname']) . ':' . $user['realname_display'],
+				'mail' => $_POST['mail'] . ':' . $user['mail_display'],
+				'website' => $db->escape($_POST['website'], 2) . ':' . $user['website_display'],
+				'date_format_long' => $db->escape($_POST['date_format_long']),
+				'date_format_short' => $db->escape($_POST['date_format_short']),
+				'time_zone' => $_POST['time_zone'],
+				'dst' => $_POST['dst'],
+				'language' => $db->escape($_POST['language'], 2),
+				'entries' => (int) $_POST['entries'],
 			);
 
 			// Rollen aktualisieren
 			$db->link->beginTransaction();
 			$db->delete('acl_user_roles', 'user_id = \'' . $uri->id . '\'');
-			foreach ($form['roles'] as $row) {
+			foreach ($_POST['roles'] as $row) {
 				$db->insert('acl_user_roles', array('user_id' => $uri->id, 'role_id' => $row));
 			}
 			$db->link->commit();
 
 			// Neues Passwort
-			if (!empty($form['new_pwd']) && !empty($form['new_pwd_repeat'])) {
+			if (!empty($_POST['new_pwd']) && !empty($_POST['new_pwd_repeat'])) {
 				$salt = salt(12);
-				$new_pwd = generateSaltedPassword($salt, $form['new_pwd']);
+				$new_pwd = generateSaltedPassword($salt, $_POST['new_pwd']);
 				$update_values['pwd'] = $new_pwd . ':' . $salt;
 			}
 
@@ -82,7 +80,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'users', 'id = 
 			// Falls sich der User selbst bearbeitet hat, Cookie aktualisieren
 			if ($uri->id == $auth->getUserId()) {
 				$cookie_arr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
-				$auth->setCookie($form['nickname'], isset($new_pwd) ? $new_pwd : $cookie_arr[1], 3600);
+				$auth->setCookie($_POST['nickname'], isset($new_pwd) ? $new_pwd : $cookie_arr[1], 3600);
 			}
 
 			$session->unsetFormToken();
@@ -90,15 +88,15 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'users', 'id = 
 			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/users');
 		}
 	}
-	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
+	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 		$user['nickname'] = $db->escape($user['nickname'], 3);
 		$user['date_format_long'] = $db->escape($user['date_format_long'], 3);
 		$user['date_format_short'] = $db->escape($user['date_format_short'], 3);
 
 		// Zugriffslevel holen
-		$roles = acl::getAllRoles();
+		$roles = ACP3_ACL::getAllRoles();
 		$c_roles = count($roles);
-		$user_roles = acl::getUserRoles($uri->id);
+		$user_roles = ACP3_ACL::getUserRoles($uri->id);
 		for ($i = 0; $i < $c_roles; ++$i) {
 			$roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
 			$roles[$i]['selected'] = selectEntry('roles', $roles[$i]['id'], in_array($roles[$i]['id'], $user_roles) ? $roles[$i]['id'] : '');
@@ -121,7 +119,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'users', 'id = 
 		$lang_dir = scandir(ACP3_ROOT . 'languages');
 		$c_lang_dir = count($lang_dir);
 		for ($i = 0; $i < $c_lang_dir; ++$i) {
-			$lang_info = xml::parseXmlFile(ACP3_ROOT . 'languages/' . $lang_dir[$i] . '/info.xml', '/language');
+			$lang_info = ACP3_XML::parseXmlFile(ACP3_ROOT . 'languages/' . $lang_dir[$i] . '/info.xml', '/language');
 			if (!empty($lang_info)) {
 				$name = $lang_info['name'];
 				$languages[$name]['dir'] = $lang_dir[$i];
@@ -148,11 +146,11 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'users', 'id = 
 		$dst[1]['lang'] = $lang->t('common', 'no');
 		$tpl->assign('dst', $dst);
 
-		$tpl->assign('form', isset($form) ? $form : $user);
+		$tpl->assign('form', isset($_POST['submit']) ? $_POST : $user);
 
 		$session->generateFormToken();
 
-		view::setContent(view::fetchTemplate('users/edit.tpl'));
+		ACP3_View::setContent(ACP3_View::fetchTemplate('users/edit.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

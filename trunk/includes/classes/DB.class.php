@@ -17,7 +17,7 @@ if (defined('IN_ACP3') === false)
  * @package ACP3
  * @subpackage Core
  */
-class db
+class ACP3_DB
 {
 	/**
 	 * Verbindungskennung zur Datenbank
@@ -131,7 +131,7 @@ class db
 	 */
 	public function delete($table, $where, $limit = 0)
 	{
-		$limit = !empty($limit) && validate::isNumber($limit) ? ' LIMIT ' . $limit : '';
+		$limit = !empty($limit) && ACP3_Validate::isNumber($limit) ? ' LIMIT ' . $limit : '';
 
 		$query = 'DELETE FROM `' . $this->prefix . $table . '` WHERE ' . $where . $limit;
 
@@ -190,9 +190,9 @@ class db
 		$where = empty($where) ? '' : ' WHERE ' . $where;
 		$order = empty($order) ? '' : ' ORDER BY ' . $order;
 
-		if (validate::isNumber($min) && $max == '') {
+		if (ACP3_Validate::isNumber($min) && $max == '') {
 			$limit = ' LIMIT ' . $min;
-		} elseif (validate::isNumber($min) && validate::isNumber($max)) {
+		} elseif (ACP3_Validate::isNumber($min) && ACP3_Validate::isNumber($max)) {
 			$limit = ' LIMIT ' . $min . ',' . $max;
 		} else {
 			$limit = '';

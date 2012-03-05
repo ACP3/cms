@@ -17,7 +17,7 @@ if (defined('IN_ACP3') === false)
  * @package ACP3
  * @subpackage Core
  */
-class breadcrumb
+class ACP3_Breadcrumb
 {
 	/**
 	 * Enthält alle Schritte der Brotkrümelspur
@@ -54,8 +54,7 @@ class breadcrumb
 	 * 	Bezeichnung der jeweiligen Stufe der Brotkrume
 	 * @param string $path
 	 * 	Die zum $title zugehörige ACP3-interne URI
-	 * @return \breadcrumb
-	 */
+	 * @return \bACP3_Breadcrumb	 */
 	public function append($title, $path = 0)
 	{
 		static $i = 0;
@@ -80,7 +79,7 @@ class breadcrumb
 	 * 	Bezeichnung der jeweiligen Stufe der Brotkrume
 	 * @param string $path
 	 * 	Die zum $title zugehörige ACP3-interne URI
-	 * @return \breadcrumb 
+	 * @return \bACP3_Breadcrumb
 	 */
 	private function prepend($title, $path)
 	{
@@ -100,7 +99,7 @@ class breadcrumb
 	 * 	Bezeichnung der jeweiligen Stufe der Brotkrume
 	 * @param string $path
 	 * 	Die zum $title zugehörige ACP3-interne URI
-	 * @return \breadcrumb 
+	 * @return \bACP3_Breadcrumb
 	 */
 	public function replaceAnchestor($title, $path = 0)
 	{

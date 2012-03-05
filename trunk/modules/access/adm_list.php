@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$roles = acl::getAllRoles();
+$roles = ACP3_ACL::getAllRoles();
 $c_roles = count($roles);
 
 if ($c_roles > 0) {
@@ -21,4 +21,4 @@ if ($c_roles > 0) {
 	}
 	$tpl->assign('roles', $roles);
 }
-view::setContent(view::fetchTemplate('access/adm_list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('access/adm_list.tpl'));

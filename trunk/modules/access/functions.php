@@ -19,7 +19,7 @@ if (defined('IN_ADM') === false)
  */
 function aclDeleteNode($id)
 {
-	if (!empty($id) && validate::isNumber($id) === true) {
+	if (!empty($id) && ACP3_Validate::isNumber($id) === true) {
 		global $db;
 
 		$lr = $db->select('left_id, right_id', 'acl_roles', 'id = \'' . $id . '\'');
@@ -52,7 +52,7 @@ function aclEditNode($id, $parent, array $update_values)
 {
 	global $db;
 
-	if (validate::isNumber($id) === true && (validate::isNumber($parent) || $parent == '')) {
+	if (ACP3_Validate::isNumber($id) === true && (ACP3_Validate::isNumber($parent) || $parent == '')) {
 		// Die aktuelle Seite mit allen untergeordneten Seiten selektieren
 		$roles = $db->query('SELECT c.id, c.left_id, c.right_id FROM {pre}acl_roles AS p, {pre}acl_roles AS c WHERE p.id = \'' . $id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
 
@@ -124,7 +124,7 @@ function aclEditNode($id, $parent, array $update_values)
  */
 function aclInsertNode($parent_id, array $insert_values)
 {
-	if (validate::isNumber($parent_id) === true) {
+	if (ACP3_Validate::isNumber($parent_id) === true) {
 		global $db;
 
 		$parent = $db->select('left_id, right_id', 'acl_roles', 'id = \'' . $parent_id . '\'');

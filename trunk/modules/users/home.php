@@ -2,26 +2,24 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if ($auth->isUser() === false || !validate::isNumber($auth->getUserId())) {
+if ($auth->isUser() === false || !ACP3_Validate::isNumber($auth->getUserId())) {
 	$uri->redirect('errors/403');
 } else {
 	$breadcrumb->append($lang->t('users', 'users'), $uri->route('users'));
 	$breadcrumb->append($lang->t('users', 'home'));
 
-	if (isset($_POST['form']) === true) {
-		$form = $_POST['form'];
+	if (isset($_POST['submit']) === true) {
+		$bool = $db->update('users', array('draft' => $db->escape($_POST['draft'], 2)), 'id = \'' . $auth->getUserId() . '\'');
 
-		$bool = $db->update('users', array('draft' => $db->escape($form['draft'], 2)), 'id = \'' . $auth->getUserId() . '\'');
-
-		view::setContent(confirmBox($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home')));
+		ACP3_View::setContent(confirmBox($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home')));
 	}
-	if (isset($_POST['form']) === false) {
+	if (isset($_POST['submit']) === false) {
 		getRedirectMessage();
 
 		$user = $db->select('draft', 'users', 'id = \'' . $auth->getUserId() . '\'');
 
 		$tpl->assign('draft', $db->escape($user[0]['draft'], 3));
 
-		view::setContent(view::fetchTemplate('users/home.tpl'));
+		ACP3_View::setContent(ACP3_View::fetchTemplate('users/home.tpl'));
 	}
 }

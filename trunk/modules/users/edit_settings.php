@@ -10,44 +10,42 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if ($auth->isUser() === false || validate::isNumber($auth->getUserId()) === false) {
+if ($auth->isUser() === false || ACP3_Validate::isNumber($auth->getUserId()) === false) {
 	$uri->redirect('errors/403');
 } else {
-	$settings = config::getModuleSettings('users');
+	$settings = ACP3_Config::getModuleSettings('users');
 
 	$breadcrumb->append($lang->t('users', 'users'), $uri->route('users'))
 			   ->append($lang->t('users', 'home'), $uri->route('users/home'))
 			   ->append($lang->t('users', 'edit_settings'));
 
-	if (isset($_POST['form']) === true) {
-		$form = $_POST['form'];
-
-		if ($settings['language_override'] == 1 && $lang->languagePackExists($form['language']) === false)
+	if (isset($_POST['submit']) === true) {
+		if ($settings['language_override'] == 1 && $lang->languagePackExists($_POST['language']) === false)
 			$errors['language'] = $lang->t('users', 'select_language');
-		if ($settings['entries_override'] == 1 && validate::isNumber($form['entries']) === false)
+		if ($settings['entries_override'] == 1 && ACP3_Validate::isNumber($_POST['entries']) === false)
 			$errors['entries'] = $lang->t('system', 'select_entries_per_page');
-		if (empty($form['date_format_long']) || empty($form['date_format_short']))
+		if (empty($_POST['date_format_long']) || empty($_POST['date_format_short']))
 			$errors[] = $lang->t('system', 'type_in_date_format');
-		if (is_numeric($form['time_zone']) === false)
+		if (is_numeric($_POST['time_zone']) === false)
 			$errors['time-zone'] = $lang->t('common', 'select_time_zone');
-		if (validate::isNumber($form['dst']) === false)
+		if (ACP3_Validate::isNumber($_POST['dst']) === false)
 			$errors[] = $lang->t('common', 'select_daylight_saving_time');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (validate::formToken() === false) {
-			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+		} elseif (ACP3_Validate::formToken() === false) {
+			ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
-				'date_format_long' => $db->escape($form['date_format_long']),
-				'date_format_short' => $db->escape($form['date_format_short']),
-				'time_zone' => $form['time_zone'],
-				'dst' => $form['dst'],
+				'date_format_long' => $db->escape($_POST['date_format_long']),
+				'date_format_short' => $db->escape($_POST['date_format_short']),
+				'time_zone' => $_POST['time_zone'],
+				'dst' => $_POST['dst'],
 			);
 			if ($settings['language_override'] == 1)
-				$update_values['language'] = $form['language'];
+				$update_values['language'] = $_POST['language'];
 			if ($settings['entries_override'] == 1)
-				$update_values['entries'] = (int) $form['entries'];
+				$update_values['entries'] = (int) $_POST['entries'];
 
 			$bool = $db->update('users', $update_values, 'id = \'' . $auth->getUserId() . '\'');
 
@@ -56,7 +54,7 @@ if ($auth->isUser() === false || validate::isNumber($auth->getUserId()) === fals
 			setRedirectMessage($bool !== false ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), 'users/home');
 		}
 	}
-	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
+	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 		$user = $db->select('date_format_long, date_format_short, time_zone, dst, language, entries', 'users', 'id = \'' . $auth->getUserId() . '\'');
 
 		$tpl->assign('language_override', $settings['language_override']);
@@ -67,7 +65,7 @@ if ($auth->isUser() === false || validate::isNumber($auth->getUserId()) === fals
 		$lang_dir = scandir(ACP3_ROOT . 'languages');
 		$c_lang_dir = count($lang_dir);
 		for ($i = 0; $i < $c_lang_dir; ++$i) {
-			$lang_info = xml::parseXmlFile(ACP3_ROOT . 'languages/' . $lang_dir[$i] . '/info.xml', '/language');
+			$lang_info = ACP3_XML::parseXmlFile(ACP3_ROOT . 'languages/' . $lang_dir[$i] . '/info.xml', '/language');
 			if (!empty($lang_info)) {
 				$name = $lang_info['name'];
 				$languages[$name]['dir'] = $lang_dir[$i];
@@ -97,10 +95,10 @@ if ($auth->isUser() === false || validate::isNumber($auth->getUserId()) === fals
 		$user[0]['date_format_long'] = $db->escape($user[0]['date_format_long'], 3);
 		$user[0]['date_format_short'] = $db->escape($user[0]['date_format_short'], 3);
 
-		$tpl->assign('form', isset($form) ? $form : $user[0]);
+		$tpl->assign('form', isset($_POST['submit']) ? $_POST : $user[0]);
 
 		$session->generateFormToken();
 
-		view::setContent(view::fetchTemplate('users/edit_settings.tpl'));
+		ACP3_View::setContent(ACP3_View::fetchTemplate('users/edit_settings.tpl'));
 	}
 }

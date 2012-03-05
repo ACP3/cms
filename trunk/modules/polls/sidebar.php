@@ -40,15 +40,15 @@ if (count($question) > 0) {
 		}
 
 		$tpl->assign('sidebar_poll_answers', $answers);
-		view::displayTemplate('polls/sidebar_result.tpl');
+		ACP3_View::displayTemplate('polls/sidebar_result.tpl');
 	} else {
 		for ($i = 0; $i < $c_answers; ++$i) {
 			$answers[$i]['text'] = $db->escape($answers[$i]['text'], 3);
 		}
 
 		$tpl->assign('sidebar_poll_answers', $answers);
-		view::displayTemplate('polls/sidebar_vote.tpl');
+		ACP3_View::displayTemplate('polls/sidebar_vote.tpl');
 	}
 } else {
-	view::displayTemplate('polls/sidebar_vote.tpl');
+	ACP3_View::displayTemplate('polls/sidebar_vote.tpl');
 }

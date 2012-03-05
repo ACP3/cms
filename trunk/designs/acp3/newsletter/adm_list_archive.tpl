@@ -8,8 +8,8 @@
 {/if}
 {if isset($newsletter)}
 {$pagination}
-{assign var="can_delete" value=modules::check("newsletter", "delete_archive")}
-{assign var="can_send" value=modules::check("newsletter", "send")}
+{assign var="can_delete" value=ACP3_Modules::check("newsletter", "delete_archive")}
+{assign var="can_send" value=ACP3_Modules::check("newsletter", "send")}
 	<table class="acp-table">
 		<thead>
 			<tr>

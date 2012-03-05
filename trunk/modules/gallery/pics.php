@@ -13,7 +13,7 @@ if (defined('IN_ACP3') === false)
 $time = $date->timestamp();
 $period = ' AND (start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time . ')';
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id = \'' . $uri->id . '\'' . $period) == 1) {
+if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id = \'' . $uri->id . '\'' . $period) == 1) {
 	require_once MODULES_DIR . 'gallery/functions.php';
 
 	// Cache der galerie holen
@@ -28,7 +28,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id 
 		$breadcrumb->append($lang->t('gallery', 'gallery'), $uri->route('gallery'))
 				   ->append($gallery_name[0]['name']);
 
-		$settings = config::getModuleSettings('gallery');
+		$settings = ACP3_Config::getModuleSettings('gallery');
 
 		for ($i = 0; $i < $c_pictures; ++$i) {
 			$pictures[$i]['uri'] = $settings['overlay'] == 1 ? $uri->route('gallery/image/id_' . $pictures[$i]['id'] . '/action_normal') : $uri->route('gallery/details/id_' . $pictures[$i]['id'], 1);
@@ -38,7 +38,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery', 'id 
 		$tpl->assign('pictures', $pictures);
 		$tpl->assign('overlay', (int) $settings['overlay']);
 	}
-	view::setContent(view::fetchTemplate('gallery/pics.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('gallery/pics.tpl'));
 } else {
 	$uri->redirect('errors/404');
 }

@@ -10,52 +10,50 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'id = \'' . $uri->id . '\'') == 1) {
+if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'id = \'' . $uri->id . '\'') == 1) {
 	require_once MODULES_DIR . 'categories/functions.php';
 
-	$settings = config::getModuleSettings('news');
+	$settings = ACP3_Config::getModuleSettings('news');
 
-	if (isset($_POST['form']) === true) {
-		$form = $_POST['form'];
-
-		if (validate::date($form['start'], $form['end']) === false)
+	if (isset($_POST['submit']) === true) {
+		if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
 			$errors[] = $lang->t('common', 'select_date');
-		if (strlen($form['headline']) < 3)
+		if (strlen($_POST['headline']) < 3)
 			$errors['headline'] = $lang->t('news', 'headline_to_short');
-		if (strlen($form['text']) < 3)
+		if (strlen($_POST['text']) < 3)
 			$errors['text'] = $lang->t('news', 'text_to_short');
-		if (strlen($form['cat_create']) < 3 && categoriesCheck($form['cat']) === false)
+		if (strlen($_POST['cat_create']) < 3 && categoriesCheck($_POST['cat']) === false)
 			$errors['cat'] = $lang->t('news', 'select_category');
-		if (strlen($form['cat_create']) >= 3 && categoriesCheckDuplicate($form['cat_create'], 'news') === true)
+		if (strlen($_POST['cat_create']) >= 3 && categoriesCheckDuplicate($_POST['cat_create'], 'news') === true)
 			$errors['cat-create'] = $lang->t('categories', 'category_already_exists');
-		if (!empty($form['link_title']) && (empty($form['uri']) || validate::isNumber($form['target']) === false))
+		if (!empty($_POST['link_title']) && (empty($_POST['uri']) || ACP3_Validate::isNumber($_POST['target']) === false))
 			$errors[] = $lang->t('news', 'complete_additional_hyperlink_statements');
-		if (CONFIG_SEO_ALIASES === true && !empty($form['alias']) &&
-			(validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias'], 'news/details/id_' . $uri->id) === true))
+		if (CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
+			(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias'], 'news/details/id_' . $uri->id) === true))
 			$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (validate::formToken() === false) {
-			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+		} elseif (ACP3_Validate::formToken() === false) {
+			ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
-				'start' => $date->timestamp($form['start']),
-				'end' => $date->timestamp($form['end']),
-				'headline' => $db->escape($form['headline']),
-				'text' => $db->escape($form['text'], 2),
-				'readmore' => $settings['readmore'] == 1 && isset($form['readmore']) ? 1 : 0,
-				'comments' => $settings['comments'] == 1 && isset($form['comments']) ? 1 : 0,
-				'category_id' => strlen($form['cat_create']) >= 3 ? categoriesCreate($form['cat_create'], 'news') : $form['cat'],
-				'uri' => $db->escape($form['uri'], 2),
-				'target' => $form['target'],
-				'link_title' => $db->escape($form['link_title']),
+				'start' => $date->timestamp($_POST['start']),
+				'end' => $date->timestamp($_POST['end']),
+				'headline' => $db->escape($_POST['headline']),
+				'text' => $db->escape($_POST['text'], 2),
+				'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,
+				'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
+				'category_id' => strlen($_POST['cat_create']) >= 3 ? categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
+				'uri' => $db->escape($_POST['uri'], 2),
+				'target' => $_POST['target'],
+				'link_title' => $db->escape($_POST['link_title']),
 				'user_id' => $auth->getUserId(),
 			);
 
 			$bool = $db->update('news', $update_values, 'id = \'' . $uri->id . '\'');
-			if (CONFIG_SEO_ALIASES === true && !empty($form['alias']))
-				seo::insertUriAlias($form['alias'], 'news/details/id_' . $uri->id, $db->escape($form['seo_keywords']), $db->escape($form['seo_description']));
+			if (CONFIG_SEO_ALIASES === true)
+				ACP3_SEO::insertUriAlias('news/details/id_' . $uri->id, $_POST['alias'], $db->escape($_POST['seo_keywords']), $db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
 
 			require_once MODULES_DIR . 'news/functions.php';
 			setNewsCache($uri->id);
@@ -65,13 +63,10 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'id = \
 			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/news');
 		}
 	}
-	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
+	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 		$news = $db->select('start, end, headline, text, readmore, comments, category_id, uri, target, link_title', 'news', 'id = \'' . $uri->id . '\'');
 		$news[0]['headline'] = $db->escape($news[0]['headline'], 3);
 		$news[0]['text'] = $db->escape($news[0]['text'], 3);
-		$news[0]['alias'] = seo::getUriAlias('news/details/id_' . $uri->id, true);
-		$news[0]['seo_keywords'] = seo::getKeywords('news/details/id_' . $uri->id);
-		$news[0]['seo_description'] = seo::getDescription('news/details/id_' . $uri->id);
 
 		// Datumsauswahl
 		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($news[0]['start'], $news[0]['end'])));
@@ -89,7 +84,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'id = \
 				$options[$i]['lang'] = $lang->t('news', 'activate_readmore');
 				$i++;
 			}
-			if ($settings['comments'] == 1 && modules::check('comments', 'functions') === true) {
+			if ($settings['comments'] == 1 && ACP3_Modules::check('comments', 'functions') === true) {
 				$options[$i]['name'] = 'comments';
 				$options[$i]['checked'] = selectEntry('comments', '1', $news[0]['comments'], 'checked');
 				$options[$i]['lang'] = $lang->t('common', 'allow_comments');
@@ -107,11 +102,13 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'id = \
 		$target[1]['lang'] = $lang->t('common', 'window_blank');
 		$tpl->assign('target', $target);
 
-		$tpl->assign('form', isset($form) ? $form : $news[0]);
+		$tpl->assign('SEO_FORM_FIELDS', ACP3_SEO::formFields('news/details/id_' . $uri->id));
+
+		$tpl->assign('form', isset($_POST['submit']) ? $_POST : $news[0]);
 
 		$session->generateFormToken();
 
-		view::setContent(view::fetchTemplate('news/edit.tpl'));
+		ACP3_View::setContent(ACP3_View::fetchTemplate('news/edit.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

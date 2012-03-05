@@ -12,22 +12,20 @@ if (defined('IN_ADM') === false)
 
 require_once MODULES_DIR . 'access/functions.php';
 
-if (isset($_POST['form']) === true) {
-	$form = $_POST['form'];
-
-	if (empty($form['name']))
+if (isset($_POST['submit']) === true) {
+	if (empty($_POST['name']))
 		$errors['name'] = $lang->t('common', 'name_to_short');
-	if (!empty($form['name']) && $db->countRows('*', 'acl_roles', 'name = \'' . $db->escape($form['name']) . '\'') == 1)
+	if (!empty($_POST['name']) && $db->countRows('*', 'acl_roles', 'name = \'' . $db->escape($_POST['name']) . '\'') == 1)
 		$errors['name'] = $lang->t('access', 'role_already_exists');
-	if (empty($form['privileges']) || is_array($form['privileges']) === false)
+	if (empty($_POST['privileges']) || is_array($_POST['privileges']) === false)
 		$errors[] = $lang->t('access', 'no_privilege_selected');
-	if (!empty($form['privileges']) && validate::aclPrivilegesExist($form['privileges']) === false)
+	if (!empty($_POST['privileges']) && ACP3_Validate::aclPrivilegesExist($_POST['privileges']) === false)
 		$errors[] = $lang->t('access', 'invalid_privileges');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (validate::formToken() === false) {
-		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+	} elseif (ACP3_Validate::formToken() === false) {
+		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		require_once MODULES_DIR . 'access/functions.php';
 
@@ -35,14 +33,14 @@ if (isset($_POST['form']) === true) {
 
 		$insert_values = array(
 			'id' => '',
-			'name' => $db->escape($form['name']),
-			'parent_id' => $form['parent'],
+			'name' => $db->escape($_POST['name']),
+			'parent_id' => $_POST['parent'],
 		);
 
-		$bool = aclInsertNode($form['parent'], $insert_values);
+		$bool = aclInsertNode($_POST['parent'], $insert_values);
 		$role_id = $db->link->lastInsertId();
 
-		foreach ($form['privileges'] as $module_id => $privileges) {
+		foreach ($_POST['privileges'] as $module_id => $privileges) {
 			foreach ($privileges as $id => $permission) {
 				$db->insert('acl_rules', array('id' => '', 'role_id' => $role_id, 'module_id' => $module_id, 'privilege_id' => $id, 'permission' => $permission));
 			}
@@ -50,17 +48,17 @@ if (isset($_POST['form']) === true) {
 
 		$db->link->commit();
 
-		acl::setRolesCache();
+		ACP3_ACL::setRolesCache();
 
 		$session->unsetFormToken();
 
 		setRedirectMessage($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/access');
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-	$tpl->assign('form', isset($form) ? $form : array('name' => ''));
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
+	$tpl->assign('form', isset($_POST['submit']) ? $_POST : array('name' => ''));
 
-	$roles = acl::getAllRoles();
+	$roles = ACP3_ACL::getAllRoles();
 	$c_roles = count($roles);
 	for ($i = 0; $i < $c_roles; ++$i) {
 		$roles[$i]['selected'] = selectEntry('roles', $roles[$i]['id'], !empty($parent[0]['id']) ? $parent[0]['id'] : 0);
@@ -70,7 +68,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	$modules = $db->select('id, name', 'modules', 'active = 1');
 	$c_modules = count($modules);
-	$privileges = acl::getAllPrivileges();
+	$privileges = ACP3_ACL::getAllPrivileges();
 	$c_privileges = count($privileges);
 	$tpl->assign('privileges', $privileges);
 
@@ -79,13 +77,13 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 			// Für jede Privilegie ein Input-Felder zuweisen
 			$select = array();
 			$select[0]['value'] = 0;
-			$select[0]['selected'] = isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 0 ? ' checked="checked"' : '';
+			$select[0]['selected'] = isset($_POST['submit']) && $_POST['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 0 ? ' checked="checked"' : '';
 			$select[0]['lang'] = $lang->t('access', 'deny_access');
 			$select[1]['value'] = 1;
-			$select[1]['selected'] = isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 1 ? ' checked="checked"' : '';
+			$select[1]['selected'] = isset($_POST['submit']) && $_POST['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 1 ? ' checked="checked"' : '';
 			$select[1]['lang'] = $lang->t('access', 'allow_access');
 			$select[2]['value'] = 2;
-			$select[2]['selected'] = !isset($form) || isset($form) && $form['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 2 ? ' checked="checked"' : '';
+			$select[2]['selected'] = !isset($_POST['submit']) || isset($_POST['submit']) && $_POST['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 2 ? ' checked="checked"' : '';
 			$select[2]['lang'] = $lang->t('access', 'inherit_access');
 			$privileges[$j]['select'] = $select;
 		}
@@ -102,5 +100,5 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	$session->generateFormToken();
 
-	view::setContent(view::fetchTemplate('access/create.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('access/create.tpl'));
 }

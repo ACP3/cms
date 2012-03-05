@@ -32,7 +32,7 @@
 {/foreach}
 					</select>
 				</label>
-				<input type="submit" value="{lang t="common|submit"}" class="form">
+				<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 			</form>
 		</div>
 		<div id="content">

@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-switch($form['area']) {
+switch($_POST['area']) {
 	case 'title':
 		$fields = 'title';
 		break;
@@ -23,7 +23,7 @@ switch($form['area']) {
 $time = $date->timestamp();
 $period = '(start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time . ')';
 
-$result_pages = $db->select('id, title, text', 'static_pages', 'MATCH (' . $fields . ') AGAINST (\'' .  $db->escape($form['search_term']) . '\' IN BOOLEAN MODE) AND ' . $period, 'start ' . $form['sort'] . ', end ' . $form['sort'] . ', title ' . $form['sort']);
+$result_pages = $db->select('id, title, text', 'static_pages', 'MATCH (' . $fields . ') AGAINST (\'' .  $db->escape($_POST['search_term']) . '\' IN BOOLEAN MODE) AND ' . $period, 'start ' . $_POST['sort'] . ', end ' . $_POST['sort'] . ', title ' . $_POST['sort']);
 $c_result_pages = count($result_pages);
 
 if ($c_result_pages > 0) {

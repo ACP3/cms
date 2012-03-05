@@ -14,13 +14,13 @@ $time = $date->timestamp();
 $period = ' AND (start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time . ')';
 $multiple = !empty($_POST['answer']) && is_array($_POST['answer']) ? ' AND multiple = \'1\'' : '';
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = \'' . $uri->id . '\'' . $multiple . $period) == 1) {
+if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = \'' . $uri->id . '\'' . $multiple . $period) == 1) {
 	// Brotkrümelspur
 	$breadcrumb->append($lang->t('polls', 'polls'), $uri->route('polls'))
 			   ->append($lang->t('polls', 'vote'));
 
 	// Wenn abgestimmt wurde
-	if (!empty($_POST['answer']) && (is_array($_POST['answer']) === true || validate::isNumber($_POST['answer']) === true)) {
+	if (!empty($_POST['answer']) && (is_array($_POST['answer']) === true || ACP3_Validate::isNumber($_POST['answer']) === true)) {
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$answers = $_POST['answer'];
 
@@ -37,7 +37,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = 
 
 			if (is_array($answers) === true) {
 				foreach ($answers as $answer) {
-					if (validate::isNumber($answer) === true) {
+					if (ACP3_Validate::isNumber($answer) === true) {
 						$insert_values = array(
 							'poll_id' => $uri->id,
 							'answer_id' => $answer,
@@ -63,7 +63,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = 
 		} else {
 			$text = $lang->t('polls', 'already_voted');
 		}
-		view::setContent(confirmBox($text, $uri->route('polls/result/id_' . $uri->id)));
+		ACP3_View::setContent(confirmBox($text, $uri->route('polls/result/id_' . $uri->id)));
 	} else {
 		$question = $db->select('question, multiple', 'polls', 'id = \'' . $uri->id . '\'');
 		$answers = $db->select('id, text', 'poll_answers', 'poll_id = \'' . $uri->id . '\'', 'id ASC');
@@ -80,7 +80,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = 
 		$tpl->assign('multiple', $question[0]['multiple']);
 		$tpl->assign('answers', $answers);
 
-		view::setContent(view::fetchTemplate('polls/vote.tpl'));
+		ACP3_View::setContent(ACP3_View::fetchTemplate('polls/vote.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

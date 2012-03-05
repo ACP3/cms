@@ -18,7 +18,7 @@ $c_galleries = count($galleries);
 if ($c_galleries > 0) {
 	$tpl->assign('pagination', pagination($db->countRows('*', 'gallery', $where)));
 
-	$settings = config::getModuleSettings('gallery');
+	$settings = ACP3_Config::getModuleSettings('gallery');
 
 	for ($i = 0; $i < $c_galleries; ++$i) {
 		$galleries[$i]['date'] = $date->format($galleries[$i]['start'], $settings['dateformat']);
@@ -28,4 +28,4 @@ if ($c_galleries > 0) {
 	}
 	$tpl->assign('galleries', $galleries);
 }
-view::setContent(view::fetchTemplate('gallery/list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('gallery/list.tpl'));

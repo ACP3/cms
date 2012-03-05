@@ -63,7 +63,7 @@ function setMenuItemsCache() {
 			$items[$i]['last'] = $last;
 		}
 	}
-	return cache::create('menu_items', $items);
+	return ACP3_Cache::create('menu_items', $items);
 }
 /**
  * Bindet die gecacheten Menüpunkte ein
@@ -72,10 +72,10 @@ function setMenuItemsCache() {
  */
 function getMenuItemsCache()
 {
-	if (cache::check('menu_items') === false)
+	if (ACP3_Cache::check('menu_items') === false)
 		setMenuItemsCache();
 
-	return cache::output('menu_items');
+	return ACP3_Cache::output('menu_items');
 }
 /**
  * Löscht einen Knoten und verschiebt seine Kinder eine Ebene nach oben
@@ -87,7 +87,7 @@ function getMenuItemsCache()
  */
 function menuItemsDeleteNode($id)
 {
-	if (!empty($id) && validate::isNumber($id) === true) {
+	if (!empty($id) && ACP3_Validate::isNumber($id) === true) {
 		global $db;
 
 		$lr = $db->select('left_id, right_id', 'menu_items', 'id = \'' . $id . '\'');
@@ -120,7 +120,7 @@ function menuItemsInsertNode($parent_id, array $insert_values)
 	global $db;
 
 	// Keine übergeordnete Seite zugewiesen
-	if (validate::isNumber($parent_id) === false || $db->countRows('*', 'menu_items', 'id = \'' . $parent_id . '\'') == 0) {
+	if (ACP3_Validate::isNumber($parent_id) === false || $db->countRows('*', 'menu_items', 'id = \'' . $parent_id . '\'') == 0) {
 		$db->link->beginTransaction();
 
 		// Letzten Eintrag des zugewiesenen Blocks holen
@@ -179,7 +179,7 @@ function menuItemsEditNode($id, $parent, $block_id, array $update_values)
 {
 	global $db;
 
-	if (validate::isNumber($id) === true && (validate::isNumber($parent) === true || $parent == '') && validate::isNumber($block_id) === true) {
+	if (ACP3_Validate::isNumber($id) === true && (ACP3_Validate::isNumber($parent) === true || $parent == '') && ACP3_Validate::isNumber($block_id) === true) {
 		// Die aktuelle Seite mit allen untergeordneten Seiten selektieren
 		$items = $db->query('SELECT c.id, c.root_id, c.left_id, c.right_id, c.block_id FROM {pre}menu_items AS p, {pre}menu_items AS c WHERE p.id = \'' . $id . '\' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
 

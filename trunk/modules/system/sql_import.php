@@ -5,29 +5,28 @@ if (defined('IN_ADM') === false)
 $breadcrumb->append($lang->t('system', 'maintenance'), $uri->route('acp/system/maintenance'))
 		   ->append($lang->t('system', 'sql_import'));
 
-if (isset($_POST['form']) === true) {
-	$form = $_POST['form'];
+if (isset($_POST['submit']) === true) {
 	if (isset($_FILES['file'])) {
 		$file['tmp_name'] = $_FILES['file']['tmp_name'];
 		$file['name'] = $_FILES['file']['name'];
 		$file['size'] = $_FILES['file']['size'];
 	}
 
-	if (empty($form['text']) && empty($file['size']))
+	if (empty($_POST['text']) && empty($file['size']))
 		$errors['text'] = $lang->t('system', 'type_in_text_or_select_sql_file');
 	if (!empty($file['size']) &&
-		(!validate::mimeType($file['tmp_name'], 'text/plain') ||
+		(!ACP3_Validate::mimeType($file['tmp_name'], 'text/plain') ||
 		$_FILES['file']['error'] !== UPLOAD_ERR_OK))
 		$errors['file'] = $lang->t('system', 'select_sql_file');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (validate::formToken() === false) {
-		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+	} elseif (ACP3_Validate::formToken() === false) {
+		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$session->unsetFormToken();
 
-		$data = isset($file) ? file_get_contents($file['tmp_name']) : $form['text'];
+		$data = isset($file) ? file_get_contents($file['tmp_name']) : $_POST['text'];
 		$data = str_replace(array("\r\n", "\r", "\n"), "\n", $data);
 		$data_ary = explode(";\n", $data);
 		$sql_queries = array();
@@ -48,12 +47,12 @@ if (isset($_POST['form']) === true) {
 
 		$tpl->assign('sql_queries', $sql_queries);
 
-		cache::purge();
+		ACP3_Cache::purge();
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-	$tpl->assign('form', isset($form) ? $form : array('text' => ''));
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
+	$tpl->assign('form', isset($_POST['submit']) ? $_POST : array('text' => ''));
 
 	$session->generateFormToken();
 }
-view::setContent(view::fetchTemplate('system/sql_import.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('system/sql_import.tpl'));

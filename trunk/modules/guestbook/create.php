@@ -13,19 +13,18 @@ if (defined('IN_ACP3') === false)
 $breadcrumb->append($lang->t('guestbook', 'guestbook'), $uri->route('guestbook'))
 		   ->append($lang->t('guestbook', 'create'));
 
-$settings = config::getModuleSettings('guestbook');
-$newsletterAccess = modules::check('newsletter', 'create') === true && $settings['newsletter_integration'] == 1;
+$settings = ACP3_Config::getModuleSettings('guestbook');
+$newsletterAccess = ACP3_Modules::check('newsletter', 'create') === true && $settings['newsletter_integration'] == 1;
 
 if ($uri->layout === 'simple') {
 	$overlay_active = 1;
-	view::assignLayout('simple.tpl');
+	ACP3_View::assignLayout('simple.tpl');
 } else {
 	$overlay_active = 0;
 }
 
-if (isset($_POST['form']) === true) {
+if (isset($_POST['submit']) === true) {
 	$ip = $_SERVER['REMOTE_ADDR'];
-	$form = $_POST['form'];
 
 	// Flood Sperre
 	$flood = $db->select('date', 'guestbook', 'ip = \'' . $ip . '\'', 'id DESC', '1');
@@ -36,36 +35,36 @@ if (isset($_POST['form']) === true) {
 
 	if (isset($flood_time) && $flood_time > $time)
 		$errors[] = sprintf($lang->t('common', 'flood_no_entry_possible'), $flood_time - $time);
-	if (empty($form['name']))
+	if (empty($_POST['name']))
 		$errors['name'] = $lang->t('common', 'name_to_short');
-	if (!empty($form['mail']) && validate::email($form['mail']) === false)
+	if (!empty($_POST['mail']) && ACP3_Validate::email($_POST['mail']) === false)
 		$errors['mail'] = $lang->t('common', 'wrong_email_format');
-	if (strlen($form['message']) < 3)
+	if (strlen($_POST['message']) < 3)
 		$errors['message'] = $lang->t('common', 'message_to_short');
-	if ($auth->isUser() === false && validate::captcha($form['captcha']) === false)
+	if ($auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
 		$errors['captcha'] = $lang->t('captcha', 'invalid_captcha_entered');
-	if ($newsletterAccess) {
-		if ($form['subscribe_newsletter'] == 1 && validate::email($form['mail']) === false)
+	if ($newsletterAccess === true) {
+		if ($_POST['subscribe_newsletter'] == 1 && ACP3_Validate::email($_POST['mail']) === false)
 			$errors['mail'] = $lang->t('guestbook', 'type_in_email_address_to_subscribe_to_newsletter');
-		if ($form['subscribe_newsletter'] == 1 && validate::email($form['mail']) === true &&
-			$db->countRows('*', 'newsletter_accounts', 'mail = \'' . $form['mail'] . '\'') == 1)
+		if ($_POST['subscribe_newsletter'] == 1 && ACP3_Validate::email($_POST['mail']) === true &&
+			$db->countRows('*', 'newsletter_accounts', 'mail = \'' . $_POST['mail'] . '\'') == 1)
 			$errors[] = $lang->t('newsletter', 'account_exists');
 	}
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (validate::formToken() === false) {
-		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+	} elseif (ACP3_Validate::formToken() === false) {
+		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$insert_values = array(
 			'id' => '',
 			'ip' => $ip,
 			'date' => $time,
-			'name' => $db->escape($form['name']),
+			'name' => $db->escape($_POST['name']),
 			'user_id' => $auth->isUser() ? $auth->getUserId() : '',
-			'message' => $db->escape($form['message']),
-			'website' => $db->escape($form['website'], 2),
-			'mail' => $form['mail'],
+			'message' => $db->escape($_POST['message']),
+			'website' => $db->escape($_POST['website'], 2),
+			'mail' => $_POST['mail'],
 			'active' => $settings['notify'] == 2 ? 0 : 1,
 		);
 
@@ -81,19 +80,19 @@ if (isset($_POST['form']) === true) {
 		}
 
 		// Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen
-		if ($newsletterAccess == 1 && $form['subscribe_newsletter'] == 1) {
+		if ($newsletterAccess === true && $_POST['subscribe_newsletter'] == 1) {
 			require MODULES_DIR . 'newsletter/functions.php';
-			subscribeToNewsletter($form['mail']);
+			subscribeToNewsletter($_POST['mail']);
 		}
 
 		$session->unsetFormToken();
 
-		view::setContent(confirmBox($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('guestbook'), 0, $overlay_active));
+		ACP3_View::setContent(confirmBox($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('guestbook'), 0, $overlay_active));
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 	// Emoticons einbinden
-	if (modules::check('emoticons', 'functions') === true && $settings['emoticons'] == 1) {
+	if (ACP3_Modules::check('emoticons', 'functions') === true && $settings['emoticons'] == 1) {
 		require_once MODULES_DIR . 'emoticons/functions.php';
 		$tpl->assign('emoticons', emoticonsList());
 	}
@@ -109,12 +108,12 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 		$user = $auth->getUserInfo();
 		$disabled = ' readonly="readonly" class="readonly"';
 
-		if (isset($form)) {
-			$form['name'] = $user['nickname'];
-			$form['name_disabled'] = $disabled;
-			$form['mail'] = $user['mail'];
-			$form['mail_disabled'] = $disabled;
-			$form['website_disabled'] = !empty($user['website']) ? $disabled : '';
+		if (isset($_POST['submit'])) {
+			$_POST['name'] = $user['nickname'];
+			$_POST['name_disabled'] = $disabled;
+			$_POST['mail'] = $user['mail'];
+			$_POST['mail_disabled'] = $disabled;
+			$_POST['website_disabled'] = !empty($user['website']) ? $disabled : '';
 		} else {
 			$user['name'] = $user['nickname'];
 			$user['name_disabled'] = $disabled;
@@ -122,7 +121,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 			$user['website_disabled'] = !empty($user['website']) ? $disabled : '';
 			$user['message'] = '';
 		}
-		$tpl->assign('form', isset($form) ? $form : $user);
+		$tpl->assign('form', isset($_POST['submit']) ? $_POST : $user);
 	} else {
 		$defaults = array(
 			'name' => '',
@@ -134,12 +133,12 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 			'message' => '',
 		);
 
-		$tpl->assign('form', isset($form) ? array_merge($defaults, $form) : $defaults);
+		$tpl->assign('form', isset($_POST['submit']) ? array_merge($defaults, $_POST) : $defaults);
 	}
 
 	$tpl->assign('captcha', captcha());
 
 	$session->generateFormToken();
 
-	view::setContent(view::fetchTemplate('guestbook/create.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('guestbook/create.tpl'));
 }

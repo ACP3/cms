@@ -10,16 +10,14 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = \'' . $uri->id . '\'') == 1) {
-	if (isset($_POST['form']) === true) {
-		$form = $_POST['form'];
-
-		if (validate::date($form['start'], $form['end']) === false)
+if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = \'' . $uri->id . '\'') == 1) {
+	if (isset($_POST['submit']) === true) {
+		if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
 			$errors[] = $lang->t('common', 'select_date');
-		if (empty($form['question']))
+		if (empty($_POST['question']))
 			$errors['question'] = $lang->t('polls', 'type_in_question');
 		$j = 0;
-		foreach ($form['answers'] as $row) {
+		foreach ($_POST['answers'] as $row) {
 			if (!empty($row['value']))
 				$check_answers = true;
 			if (isset($row['delete']))
@@ -27,43 +25,43 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = 
 		}
 		if (!isset($check_answers))
 			$errors[] = $lang->t('polls', 'type_in_answer');
-		if (count($form['answers']) - $j < 2)
+		if (count($_POST['answers']) - $j < 2)
 			$errors[] = $lang->t('polls', 'can_not_delete_all_answers');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (validate::formToken() === false) {
-			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+		} elseif (ACP3_Validate::formToken() === false) {
+			ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			// Frage aktualisieren
 			$update_values = array(
-				'start' => $date->timestamp($form['start']),
-				'end' => $date->timestamp($form['end']),
-				'question' => $db->escape($form['question']),
-				'multiple' => isset($form['multiple']) ? '1' : '0',
+				'start' => $date->timestamp($_POST['start']),
+				'end' => $date->timestamp($_POST['end']),
+				'question' => $db->escape($_POST['question']),
+				'multiple' => isset($_POST['multiple']) ? '1' : '0',
 				'user_id' => $auth->getUserId(),
 			);
 
 			$bool = $db->update('polls', $update_values, 'id = \'' . $uri->id . '\'');
 
 			// Stimmen zurücksetzen
-			if (!empty($form['reset']))
+			if (!empty($_POST['reset']))
 				$db->delete('poll_votes', 'poll_id = \'' . $uri->id . '\'');
 
 			// Antworten
-			foreach ($form['answers'] as $row) {
+			foreach ($_POST['answers'] as $row) {
 				// Neue Antwort hinzufügen
 				if (empty($row['id'])) {
 					// Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
 					if (!empty($row['value']) && !isset($row['delete']))
 						$db->insert('poll_answers', array('text' => $db->escape($row['value']), 'poll_id' => $uri->id));
 				// Antwort mitsamt Stimmen löschen
-				} elseif (isset($row['delete']) && validate::isNumber($row['id'])) {
+				} elseif (isset($row['delete']) && ACP3_Validate::isNumber($row['id'])) {
 					$db->delete('poll_answers', 'id = \'' . $row['id'] . '\'');
-					if (!empty($form['reset']))
+					if (!empty($_POST['reset']))
 						$db->delete('poll_votes', 'answer_id = \'' . $row['id'] . '\'');
 				// Antwort aktualisieren
-				} elseif (!empty($row['value']) && validate::isNumber($row['id'])) {
+				} elseif (!empty($row['value']) && ACP3_Validate::isNumber($row['id'])) {
 					$bool = $db->update('poll_answers', array('text' => $db->escape($row['value'])), 'id = \'' . $row['id'] . '\'');
 				}
 			}
@@ -73,7 +71,7 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = 
 			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/polls');
 		}
 	}
-	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
+	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 		$answers = array();
 		// Neue Antworten hinzufügen
 		if (isset($_POST['form']['answers'])) {
@@ -116,12 +114,12 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', 'id = 
 
 		// Übergabe der Daten an Smarty
 		$tpl->assign('publication_period', $date->datepicker(array('start', 'end'), array($poll[0]['start'], $poll[0]['end'])));
-		$tpl->assign('question', isset($form['question']) ? $form['question'] : $db->escape($poll[0]['question'], 3));
+		$tpl->assign('question', isset($_POST['question']) ? $_POST['question'] : $db->escape($poll[0]['question'], 3));
 		$tpl->assign('disable', count($answers) < 10 ? false : true);
 
 		$session->generateFormToken();
 
-		view::setContent(view::fetchTemplate('polls/edit.tpl'));
+		ACP3_View::setContent(ACP3_View::fetchTemplate('polls/edit.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

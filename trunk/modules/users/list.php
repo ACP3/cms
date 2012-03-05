@@ -24,4 +24,4 @@ if ($c_users > 0) {
 }
 $tpl->assign('LANG_users_found', sprintf($lang->t('users', 'users_found'), $all_users));
 
-view::setContent(view::fetchTemplate('users/list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('users/list.tpl'));

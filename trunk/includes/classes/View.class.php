@@ -17,7 +17,7 @@ if (defined('IN_ACP3') === false)
  * @package ACP3
  * @subpackage Core
  */
-class view
+class ACP3_View
 {
 	/**
 	 * Der auszugebende Inhalt der Seite
@@ -75,7 +75,7 @@ class view
 			$uri->redirect('acp/users/login/redirect_' . $redirect_uri);
 		}
 
-		switch (modules::check()) {
+		switch (ACP3_Modules::check()) {
 			// Seite ausgeben
 			case 1:
 				global $breadcrumb, $date, $db, $lang, $session, $tpl;
@@ -89,7 +89,7 @@ class view
 					$tpl->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
 					$tpl->assign('TITLE', $breadcrumb->output(2));
 					$tpl->assign('BREADCRUMB', $breadcrumb->output());
-					$tpl->assign('META', seo::getMetaTags());
+					$tpl->assign('META', ACP3_SEO::getMetaTags());
 					$tpl->assign('CONTENT', self::$content);
 
 					$minify = ROOT_DIR . 'includes/min/' . (CONFIG_SEO_MOD_REWRITE === true && defined('IN_ADM') === false ? '' : '?') . 'g=%s&amp;' . CONFIG_DESIGN;

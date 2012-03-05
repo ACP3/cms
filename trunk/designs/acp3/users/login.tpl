@@ -6,9 +6,9 @@
 		<legend>{lang t="users|login"}</legend>
 		<dl>
 			<dt><label for="nickname">{lang t="users|nickname"}</label></dt>
-			<dd><input type="text" name="form[nickname]" id="nickname" maxlength="30"></dd>
+			<dd><input type="text" name="nickname" id="nickname" maxlength="30"></dd>
 			<dt><label for="pwd">{lang t="users|pwd"}</label></dt>
-			<dd><input type="password" name="form[pwd]" id="pwd"></dd>
+			<dd><input type="password" name="pwd" id="pwd"></dd>
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
@@ -18,6 +18,6 @@
 		</label>
 		<br>
 		<br>
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 	</div>
 </form>

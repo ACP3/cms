@@ -10,15 +10,13 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (isset($_POST['form']) === true) {
-	$form = $_POST['form'];
-
-	if (validate::date($form['start'], $form['end']) === false)
+if (isset($_POST['submit']) === true) {
+	if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
 		$errors[] = $lang->t('common', 'select_date');
-	if (empty($form['question']))
+	if (empty($_POST['question']))
 		$errors['question'] = $lang->t('polls', 'type_in_question');
 	$i = 0;
-	foreach ($form['answers'] as $row) {
+	foreach ($_POST['answers'] as $row) {
 		if (!empty($row))
 			$i++;
 	}
@@ -27,19 +25,19 @@ if (isset($_POST['form']) === true) {
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (validate::formToken() === false) {
-		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+	} elseif (ACP3_Validate::formToken() === false) {
+		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
-		$start = $date->timestamp($form['start']);
-		$end = $date->timestamp($form['end']);
-		$question = $db->escape($form['question']);
+		$start = $date->timestamp($_POST['start']);
+		$end = $date->timestamp($_POST['end']);
+		$question = $db->escape($_POST['question']);
 
 		$insert_values = array(
 			'id' => '',
 			'start' => $start,
 			'end' => $end,
 			'question' => $question,
-			'multiple' => isset($form['multiple']) ? '1' : '0',
+			'multiple' => isset($_POST['multiple']) ? '1' : '0',
 			'user_id' => $auth->getUserId(),
 		);
 
@@ -48,7 +46,7 @@ if (isset($_POST['form']) === true) {
 
 		if ($bool !== false) {
 			$poll_id = $db->select('id', 'polls', 'start = \'' . $start . '\' AND end = \'' . $end . '\' AND question = \'' . $question . '\'', 'id DESC', 1);
-			foreach ($form['answers'] as $row) {
+			foreach ($_POST['answers'] as $row) {
 				if (!empty($row)) {
 					$insert_answer = array(
 						'id' => '',
@@ -65,7 +63,7 @@ if (isset($_POST['form']) === true) {
 		setRedirectMessage($bool !== false && $bool2 !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/polls');
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 	$answers = array();
 	if (isset($_POST['form']['answers'])) {
 		// Bisherige Antworten
@@ -96,5 +94,5 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	$session->generateFormToken();
 
-	view::setContent(view::fetchTemplate('polls/create.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('polls/create.tpl'));
 }

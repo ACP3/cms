@@ -3,8 +3,8 @@ function smarty_function_check_access($params, $template)
 {
 	$action = explode('|', $params['action']);
 	if ($params['mode'] == 'bool') {
-		return modules::check($action[0], $action[1]) === true ? true : false;
-	} elseif (modules::check($action[0], $action[1]) === true) {
+		return ACP3_Modules::check($action[0], $action[1]) === true ? true : false;
+	} elseif (ACP3_Modules::check($action[0], $action[1]) === true) {
 		global $lang, $uri;
 
 		$access_check = array();
@@ -29,7 +29,7 @@ function smarty_function_check_access($params, $template)
 			$access_check['width'] = $access_check['height'] = '';
 
 			if (!empty($params['width']) && !empty($params['height']) &&
-				validate::isNumber($params['width']) === true && validate::isNumber($params['height']) === true) {
+				ACP3_Validate::isNumber($params['width']) === true && ACP3_Validate::isNumber($params['height']) === true) {
 				$access_check['width'] = ' width="' . $params['width'] . '"';
 				$access_check['height'] = ' height="' . $params['height'] . '"';
 			} elseif (is_file(ACP3_ROOT . $path) === true) {

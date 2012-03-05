@@ -17,7 +17,7 @@
 function setFilesCache($id)
 {
 	global $db;
-	return cache::create('files_details_id_' . $id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, f.comments, c.name AS category_name', 'files AS f, {pre}categories AS c', 'f.id = \'' . $id . '\' AND f.category_id = c.id'));
+	return ACP3_Cache::create('files_details_id_' . $id, $db->select('f.id, f.start, f.category_id, f.file, f.size, f.link_title, f.text, f.comments, c.name AS category_name', 'files AS f, {pre}categories AS c', 'f.id = \'' . $id . '\' AND f.category_id = c.id'));
 }
 /**
  * Gibt den Cache eines Downloads aus
@@ -28,9 +28,9 @@ function setFilesCache($id)
  */
 function getFilesCache($id)
 {
-	if (cache::check('files_details_id_' . $id) === false)
+	if (ACP3_Cache::check('files_details_id_' . $id) === false)
 		setFilesCache($id);
 
-	return cache::output('files_details_id_' . $id);
+	return ACP3_Cache::output('files_details_id_' . $id);
 }
 

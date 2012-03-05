@@ -7,7 +7,7 @@
 		<dl>
 			<dt><label for="date-format">{lang t="common|date_format"}</label></dt>
 			<dd>
-				<select name="form[dateformat]" id="date-format">
+				<select name="dateformat" id="date-format">
 					<option value="">{lang t="common|pls_select"}</option>
 {foreach $dateformat as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
@@ -19,7 +19,7 @@
 			<dd>
 {foreach $allow_emoticons as $row}
 				<label for="emoticons-{$row.value}">
-					<input type="radio" name="form[emoticons]" id="emoticons-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+					<input type="radio" name="emoticons" id="emoticons-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 					{$row.lang}
 				</label>
 {/foreach}
@@ -28,7 +28,7 @@
 		</dl>
 	</fieldset>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		{$form_token}
 	</div>
 </form>

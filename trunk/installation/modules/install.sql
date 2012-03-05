@@ -208,6 +208,7 @@ CREATE TABLE `{pre}seo` (
 	`alias` varchar(100) NOT NULL,
 	`keywords` varchar(255) NOT NULL,
 	`description` varchar(255) NOT NULL,
+	`robots` TINYINT(1) UNSIGNED NOT NULL,
 	PRIMARY KEY (`uri`),
 	INDEX (`alias`)
 ) {engine};
@@ -234,7 +235,7 @@ CREATE TABLE `{pre}static_pages` (
 	`end` INT(10) UNSIGNED NOT NULL,
 	`title` VARCHAR(120) NOT NULL,
 	`text` TEXT NOT NULL,
-	`user_id` INT UNSIGNED NOT NULL,
+	`user_id` INT(10) UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`), FULLTEXT KEY `index` (`title`, `text`)
 ) {engine};
 

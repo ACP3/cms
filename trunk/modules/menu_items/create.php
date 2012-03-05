@@ -12,64 +12,63 @@ if (defined('IN_ADM') === false)
 
 require_once MODULES_DIR . 'menu_items/functions.php';
 
-if (isset($_POST['form']) === true) {
-	$form = $_POST['form'];
-
-	if (validate::isNumber($form['mode']) === false)
+if (isset($_POST['submit']) === true) {
+	if (ACP3_Validate::isNumber($_POST['mode']) === false)
 		$errors['mode'] = $lang->t('menu_items', 'select_page_type');
-	if (strlen($form['title']) < 3)
+	if (strlen($_POST['title']) < 3)
 		$errors['title'] = $lang->t('menu_items', 'title_to_short');
-	if (validate::isNumber($form['block_id']) === false)
+	if (ACP3_Validate::isNumber($_POST['block_id']) === false)
 		$errors['block-id'] = $lang->t('menu_items', 'select_block');
-	if (!empty($form['parent']) && validate::isNumber($form['parent']) === false)
+	if (!empty($_POST['parent']) && ACP3_Validate::isNumber($_POST['parent']) === false)
 		$errors['parent'] = $lang->t('menu_items', 'select_superior_page');
-	if (!empty($form['parent']) && validate::isNumber($form['parent']) === true) {
+	if (!empty($_POST['parent']) && ACP3_Validate::isNumber($_POST['parent']) === true) {
 		// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
-		$parent_block = $db->select('block_id', 'menu_items', 'id = \'' . $form['parent'] . '\'');
-		if (!empty($parent_block) && $parent_block[0]['block_id'] != $form['block_id'])
+		$parent_block = $db->select('block_id', 'menu_items', 'id = \'' . $_POST['parent'] . '\'');
+		if (!empty($parent_block) && $parent_block[0]['block_id'] != $_POST['block_id'])
 			$errors['parent'] = $lang->t('menu_items', 'superior_page_not_allowed');
 	}
-	if ($form['display'] != 0 && $form['display'] != 1)
+	if ($_POST['display'] != 0 && $_POST['display'] != 1)
 		$errors[] = $lang->t('menu_items', 'select_item_visibility');
-	if (validate::isNumber($form['target']) === false ||
-		$form['mode'] == 1 && (is_dir(MODULES_DIR . $form['module']) === false || preg_match('=/=', $form['module'])) ||
-		$form['mode'] == 2 && validate::isInternalURI($form['uri']) === false ||
-		$form['mode'] == 3 && empty($form['uri']) ||
-		$form['mode'] == 4 && (validate::isNumber($form['static_pages']) === false || $db->countRows('*', 'static_pages', 'id = \'' . $form['static_pages'] . '\'') == 0))
+	if (ACP3_Validate::isNumber($_POST['target']) === false ||
+		$_POST['mode'] == 1 && (is_dir(MODULES_DIR . $_POST['module']) === false || preg_match('=/=', $_POST['module'])) ||
+		$_POST['mode'] == 2 && ACP3_Validate::isInternalURI($_POST['uri']) === false ||
+		$_POST['mode'] == 3 && empty($_POST['uri']) ||
+		$_POST['mode'] == 4 && (ACP3_Validate::isNumber($_POST['static_pages']) === false || $db->countRows('*', 'static_pages', 'id = \'' . $_POST['static_pages'] . '\'') == 0))
 		$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
-	if ($form['mode'] == 2 && CONFIG_SEO_ALIASES === true && !empty($form['alias']) && (validate::isUriSafe($form['alias']) === false || validate::uriAliasExists($form['alias']) === true))
+	if ($_POST['mode'] == 2 && CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
+		(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias']) === true))
 		$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (validate::formToken() === false) {
-		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+	} elseif (ACP3_Validate::formToken() === false) {
+		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
 		$insert_values = array(
 			'id' => '',
-			'mode' => ($form['mode'] == 2 || $form['mode'] == 3) && preg_match('/^(static_pages\/list\/id_([0-9]+)\/)$/', $form['uri']) ? '4' : $form['mode'],
-			'block_id' => $form['block_id'],
-			'parent_id' => $form['parent'],
-			'display' => $form['display'],
-			'title' => $db->escape($form['title']),
-			'uri' => $form['mode'] == 1 ? $form['module'] : ($form['mode'] == 4 ? 'static_pages/list/id_' . $form['static_pages'] . '/' : $db->escape($form['uri'], 2)),
-			'target' => $form['display'] == 0 ? 1 : $form['target'],
+			'mode' => ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match('/^(static_pages\/list\/id_([0-9]+)\/)$/', $_POST['uri']) ? '4' : $_POST['mode'],
+			'block_id' => $_POST['block_id'],
+			'parent_id' => $_POST['parent'],
+			'display' => $_POST['display'],
+			'title' => $db->escape($_POST['title']),
+			'uri' => $_POST['mode'] == 1 ? $_POST['module'] : ($_POST['mode'] == 4 ? 'static_pages/list/id_' . $_POST['static_pages'] . '/' : $db->escape($_POST['uri'], 2)),
+			'target' => $_POST['display'] == 0 ? 1 : $_POST['target'],
 		);
 
-		$bool = menuItemsInsertNode($form['parent'], $insert_values);
+		$bool = menuItemsInsertNode($_POST['parent'], $insert_values);
 
 		// Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
-		if ($form['mode'] != 3) {
-			if (seo::uriAliasExists($form['uri'])) {
-				$alias = !empty($form['alias']) ? $form['alias'] : seo::getUriAlias($form['uri']);
-				$keywords = seo::getKeywords($form['uri']);
-				$description = seo::getDescription($form['uri']);
+		if ($_POST['mode'] != 3) {
+			if (ACP3_SEO::uriAliasExists($_POST['uri'])) {
+				$alias = !empty($_POST['alias']) ? $_POST['alias'] : ACP3_SEO::getUriAlias($_POST['uri']);
+				$keywords = ACP3_SEO::getKeywords($_POST['uri']);
+				$description = ACP3_SEO::getDescription($_POST['uri']);
 			} else {
-				$alias = $form['alias'];
-				$keywords = $form['seo_keywords'];
-				$description = $form['seo_description'];
+				$alias = $_POST['alias'];
+				$keywords = $_POST['seo_keywords'];
+				$description = $_POST['seo_description'];
 			}
-			seo::insertUriAlias($form['mode'] == 1 ? '' : $alias, $form['mode'] == 1 ? $form['module'] : $form['uri'], $keywords, $description);
+			ACP3_SEO::insertUriAlias($_POST['mode'] == 1 ? '' : $alias, $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'], $keywords, $description, (int) $_POST['seo_robots']);
 		}
 
 		setMenuItemsCache();
@@ -79,7 +78,7 @@ if (isset($_POST['form']) === true) {
 		setRedirectMessage($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/menu_items');
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 	// Seitentyp
 	$mode = array();
 	$mode[0]['value'] = 1;
@@ -91,7 +90,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$mode[2]['value'] = 3;
 	$mode[2]['selected'] = selectEntry('mode', '3');
 	$mode[2]['lang'] = $lang->t('menu_items', 'hyperlink');
-	if (modules::isActive('static_pages')) {
+	if (ACP3_Modules::isActive('static_pages')) {
 		$mode[3]['value'] = 4;
 		$mode[3]['selected'] = selectEntry('mode', '4');
 		$mode[3]['lang'] = $lang->t('menu_items', 'static_page');
@@ -107,7 +106,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$tpl->assign('blocks', $blocks);
 
 	// Module
-	$modules = modules::modulesList();
+	$modules = ACP3_Modules::modulesList();
 	foreach ($modules as $row) {
 		$modules[$row['name']]['selected'] = selectEntry('module', $row['dir']);
 	}
@@ -132,7 +131,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$display[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('display', $display);
 
-	if (modules::check('static_pages', 'functions')) {
+	if (ACP3_Modules::check('static_pages', 'functions')) {
 		require_once MODULES_DIR . 'static_pages/functions.php';
 
 		$tpl->assign('static_pages', staticPagesList());
@@ -148,10 +147,11 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	// Daten an Smarty übergeben
 	$tpl->assign('enable_uri_aliases', CONFIG_SEO_ALIASES);
-	$tpl->assign('form', isset($form) ? $form : $defaults);
 	$tpl->assign('pages_list', menuItemsList());
+	$tpl->assign('SEO_FORM_FIELDS', ACP3_SEO::formFields());
+	$tpl->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
 	$session->generateFormToken();
 
-	view::setContent(view::fetchTemplate('menu_items/create.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('menu_items/create.tpl'));
 }

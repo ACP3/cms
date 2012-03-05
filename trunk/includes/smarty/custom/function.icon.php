@@ -5,7 +5,7 @@ function smarty_function_icon($params)
 	$width = $height = '';
 
 	if (!empty($params['width']) && !empty($params['height']) &&
-		validate::isNumber($params['width']) === true && validate::isNumber($params['height']) === true) {
+		ACP3_Validate::isNumber($params['width']) === true && ACP3_Validate::isNumber($params['height']) === true) {
 		$width = ' width="' . $params['width'] . '"';
 		$height = ' height="' . $params['height'] . '"';
 	} elseif (is_file(ACP3_ROOT . $path) === true) {

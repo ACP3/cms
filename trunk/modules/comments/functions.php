@@ -35,7 +35,7 @@ function commentsList($module, $entry_id)
 {
 	global $auth, $date, $db, $lang, $tpl;
 
-	$settings = config::getModuleSettings('comments');
+	$settings = ACP3_Config::getModuleSettings('comments');
 
 	// Auflistung der Kommentare
 	$comments = $db->query('SELECT u.nickname AS user_name, c.name, c.user_id, c.date, c.message FROM {pre}comments AS c LEFT JOIN ({pre}users AS u) ON u.id = c.user_id WHERE c.module = \'' . $module . '\' AND c.entry_id = \'' . $entry_id . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . $auth->entries);
@@ -45,7 +45,7 @@ function commentsList($module, $entry_id)
 		// Falls in den Moduleinstellungen aktiviert und Emoticons überhaupt aktiv sind, diese einbinden
 		$emoticons_active = false;
 		if ($settings['emoticons'] == 1) {
-			$emoticons_active = modules::check('emoticons', 'functions') === true ? true : false;
+			$emoticons_active = ACP3_Modules::check('emoticons', 'functions') === true ? true : false;
 			if ($emoticons_active === true) {
 				require_once MODULES_DIR . 'emoticons/functions.php';
 			}
@@ -68,9 +68,9 @@ function commentsList($module, $entry_id)
 		$tpl->assign('comments', $comments);
 	}
 
-	$content = view::fetchTemplate('comments/list.tpl');
+	$content = ACP3_View::fetchTemplate('comments/list.tpl');
 
-	if (modules::check('comments', 'create') === true) {
+	if (ACP3_Modules::check('comments', 'create') === true) {
 		require_once MODULES_DIR . 'comments/create.php';
 		$content.= commentsCreate($module, $entry_id);
 	}

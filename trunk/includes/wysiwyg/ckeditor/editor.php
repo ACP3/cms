@@ -43,7 +43,7 @@ function editor($params) {
 		$config['toolbar'] = $params['toolbar'] === 'simple' ? 'Basic' : 'Full';
 
 	// Smilies
-	if ((!isset($config['toolbar']) || $config['toolbar'] !== 'simple') && modules::check('emoticons', 'functions') === true) {
+	if ((!isset($config['toolbar']) || $config['toolbar'] !== 'simple') && ACP3_Modules::check('emoticons', 'functions') === true) {
 		global $db;
 
 		$config['smiley_path'] = ROOT_DIR . 'uploads/emoticons/';
@@ -74,5 +74,5 @@ function editor($params) {
 		$wysiwyg['advanced_replace_content'] = 'CKEDITOR.instances.' . $wysiwyg['id'] . '.insertHtml(text);';
 
 	$tpl->assign('wysiwyg', $wysiwyg);
-	return view::fetchTemplate('common/wysiwyg.tpl');
+	return ACP3_View::fetchTemplate('common/wysiwyg.tpl');
 }

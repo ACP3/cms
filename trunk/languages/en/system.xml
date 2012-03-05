@@ -104,6 +104,7 @@
 	<item key="select_online_maintenance">Please selecr, whether the maintenance mode should be turned on or off</item>
 	<item key="select_output">Please select, whether the backup should be output as a file or a text</item>
 	<item key="select_seo_aliases">Please select, whether to enable URI-Aliases or not.</item>
+	<item key="select_seo_robots">Please select, how your website should be indexed by the seach engine crawlers.</item>
 	<item key="select_sql_file">The uploaded file is not a valid textfile</item>
 	<item key="select_sql_tables">Please select at least one SQL-table, that should be exported</item>
 	<item key="server_config">Serverconfiguration</item>

@@ -60,16 +60,10 @@ function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
 	$attr = ' ' . $attr . '="' . $attr . '"';
 
 	if (isset($_POST[$name])) {
-		$field = $_POST[$name];
-	} elseif (isset($_POST['form'][$name])) {
-		$field = $_POST['form'][$name];
-	}
-
-	if (isset($field)) {
-		if (is_array($field) === false && $field == $defValue) {
+		if (is_array($_POST[$name]) === false && $_POST[$name] == $defValue) {
 			return $attr;
-		} elseif (is_array($field) === true) {
-			foreach ($field as $row) {
+		} elseif (is_array($_POST[$name]) === true) {
+			foreach ($_POST[$name] as $row) {
 				if ($row == $defValue)
 					return $attr;
 			}

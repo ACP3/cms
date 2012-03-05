@@ -10,33 +10,31 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (isset($_POST['form']) === true) {
-	$form = $_POST['form'];
-
-	if (validate::email($form['mail']) === false)
+if (isset($_POST['submit']) === true) {
+	if (ACP3_Validate::email($_POST['mail']) === false)
 		$errors['mail'] = $lang->t('common', 'wrong_email_format');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (validate::formToken() === false) {
-		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+	} elseif (ACP3_Validate::formToken() === false) {
+		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
-		$form['mailsig'] = $db->escape($form['mailsig']);
+		$_POST['mailsig'] = $db->escape($_POST['mailsig']);
 
-		$bool = config::module('newsletter', $form);
+		$bool = ACP3_Config::module('newsletter', $_POST);
 
 		$session->unsetFormToken();
 
 		setRedirectMessage($bool === true ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), 'acp/newsletter');
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-	$settings = config::getModuleSettings('newsletter');
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
+	$settings = ACP3_Config::getModuleSettings('newsletter');
 	$settings['mailsig'] = $db->escape($settings['mailsig'], 3);
 
-	$tpl->assign('form', isset($form) ? $form : $settings);
+	$tpl->assign('form', isset($_POST['submit']) ? $_POST : $settings);
 
 	$session->generateFormToken();
 
-	view::setContent(view::fetchTemplate('newsletter/settings.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('newsletter/settings.tpl'));
 }

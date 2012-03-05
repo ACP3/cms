@@ -9,7 +9,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$settings = config::getModuleSettings('files');
+$settings = ACP3_Config::getModuleSettings('files');
 
 $time = $date->timestamp();
 $where = 'start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time;
@@ -25,4 +25,4 @@ if ($c_files > 0) {
 	$tpl->assign('sidebar_files', $files);
 }
 
-view::displayTemplate('files/sidebar.tpl');
+ACP3_View::displayTemplate('files/sidebar.tpl');

@@ -14,9 +14,19 @@ define('ACP3_ROOT', realpath(dirname(__FILE__) . '/../') . '/');
 define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 define('MODULES_DIR', ACP3_ROOT . 'modules/');
 
-set_include_path(get_include_path() . PATH_SEPARATOR . ACP3_ROOT . 'includes/classes/');
-spl_autoload_extensions('.class.php');
-spl_autoload_register();
+/**
+ * Autoloading für die ACP3 eigenen Klassen
+ *
+ * @param string $class
+ *  Der Name der zu ladenden Klasse
+ */
+function acp3_load_class($class)
+{
+	$file = INCLUDES_DIR . 'classes/' . str_replace('ACP3_', '', $class) . '.class.php';
+	if(is_file($file) === true)
+		require_once $file;
+}
+spl_autoload_register("acp3_load_class");
 
 require ACP3_ROOT . 'includes/config.php';
 
@@ -27,7 +37,7 @@ if (defined('CONFIG_DB_VERSION') === false) {
 	define('CONFIG_DB_VERSION', (int) 0);
 }
 
-$db = new db();
+$db = new ACP3_DB();
 $handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
 if ($handle !== true) {
 	exit($handle);
@@ -107,7 +117,7 @@ if (CONFIG_DB_VERSION < 3) {
 	$dir = scandir(MODULES_DIR);
 	foreach ($dir as $row) {
 		if ($row !== '.' && $row !== '..' && is_file(MODULES_DIR . $row . '/module.xml') === true) {
-			$settings = xml::parseXmlFile(MODULES_DIR . $row . '/module.xml', 'settings');
+			$settings = ACP3_XML::parseXmlFile(MODULES_DIR . $row . '/module.xml', 'settings');
 			if (!empty($settings)) {
 				foreach ($settings as $key => $value) {
 					$db->insert('settings', array('id' => '','module' => $row, 'name' => $key, 'value' => $value));
@@ -350,10 +360,16 @@ if (CONFIG_DB_VERSION < 19) {
 	);
 	echo executeSqlQueries($queries, 19);
 }
+if (CONFIG_DB_VERSION < 20) {
+	$queries = array(
+		"ALTER TABLE `{pre}seo` ADD COLUMN `robots` TINYINT(1) UNSIGNED NOT NULL AFTER `description`;",
+	);
+	echo executeSqlQueries($queries, 20);
+}
 
 // Konfigurationsdatei aktualisieren
 $config = array(
-	'db_version' => 19,
+	'db_version' => 20,
 	'maintenance_mode' => (bool) CONFIG_MAINTENANCE_MODE,
 	'seo_mod_rewrite' => (bool) CONFIG_SEO_MOD_REWRITE,
 );
@@ -380,8 +396,11 @@ if (defined('CONFIG_MAILER_TYPE') === false) {
 	define('CONFIG_MAILER_SMTP_USER', '');
 	define('CONFIG_MAILER_TYPE', 'mail');
 }
-print config::system($config) === true ? 'Konfigurationsdatei erfolgreich aktualisiert!' : 'Die Konfigurationsdatei konnte nicht aktualisiert werden!';
+if (defined('CONFIG_SEO_ROBOTS') === false) {
+	define('CONFIG_SEO_ROBOTS', 1);
+}
+print ACP3_Config::system($config) === true ? 'Konfigurationsdatei erfolgreich aktualisiert!' : 'Die Konfigurationsdatei konnte nicht aktualisiert werden!';
 
 // Cache leeren
-cache::purge();
-cache::purge('tpl_compiled');
+ACP3_Cache::purge();
+ACP3_Cache::purge('tpl_compiled');

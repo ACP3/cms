@@ -19,4 +19,4 @@ $pages_list = menuItemsList();
 if (count($pages_list) > 0) {
 	$tpl->assign('pages_list', $pages_list);
 }
-view::setContent(view::fetchTemplate('menu_items/adm_list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('menu_items/adm_list.tpl'));

@@ -3,11 +3,11 @@
 	<fieldset>
 		<dl>
 			<dt><label for="nav-nickname">{lang t="users|nickname"}</label></dt>
-			<dd><input type="text" name="form[nickname]" id="nav-nickname" maxlength="30" required></dd>
+			<dd><input type="text" name="nickname" id="nav-nickname" maxlength="30" required></dd>
 		</dl>
 		<dl>
 			<dt><label for="nav-pwd">{lang t="users|pwd"}</label></dt>
-			<dd><input type="password" name="form[pwd]" id="nav-pwd" required></dd>
+			<dd><input type="password" name="pwd" id="nav-pwd" required></dd>
 		</dl>
 	</fieldset>
 	<div>
@@ -16,8 +16,8 @@
 			{lang t="users|remember_me"}
 		</label>
 		<p style="text-align:center">
-			<input type="hidden" name="form[redirect_uri]" value="{$redirect_uri}">
-			<input type="submit" value="{lang t="common|submit"}" class="form">
+			<input type="hidden" name="redirect_uri" value="{$redirect_uri}">
+			<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		</p>
 		<a href="{uri args="users/forgot_pwd"}">{lang t="users|forgot_pwd"}</a>
 {if $enable_registration == 1}

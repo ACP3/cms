@@ -25,4 +25,4 @@ if ($c_news > 0) {
 	}
 	$tpl->assign('news', $news);
 }
-view::setContent(view::fetchTemplate('news/adm_list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('news/adm_list.tpl'));

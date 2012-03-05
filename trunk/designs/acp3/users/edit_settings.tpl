@@ -11,7 +11,7 @@
 			<dl>
 				<dt><label for="language">{lang t="users|language"}</label></dt>
 				<dd>
-					<select name="form[language]" id="language"{if $language_override == 0} disabled{/if}>
+					<select name="language" id="language"{if $language_override == 0} disabled{/if}>
 						<option value="">{lang t="common|pls_select"}</option>
 {foreach $languages as $row}
 						<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
@@ -20,7 +20,7 @@
 				</dd>
 				<dt><label for="entries">{lang t="common|records_per_page"}</label></dt>
 				<dd>
-					<select name="form[entries]" id="entries"{if $entries_override == 0} disabled{/if}>
+					<select name="entries" id="entries"{if $entries_override == 0} disabled{/if}>
 {foreach $entries as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.value}</option>
 {/foreach}
@@ -34,12 +34,12 @@
 					<label for="date-format-long">{lang t="common|date_format_long"}</label>
 					<span>({lang t="system|php_date_function"})</span>
 				</dt>
-				<dd><input type="text" name="form[date_format_long]" id="date-format-long" value="{$form.date_format_long}" maxlength="20"></dd>
+				<dd><input type="text" name="date_format_long" id="date-format-long" value="{$form.date_format_long}" maxlength="20"></dd>
 				<dt><label for="date-format-short">{lang t="common|date_format_short"}</label></dt>
-				<dd><input type="text" name="form[date_format_short]" id="date-format-short" value="{$form.date_format_short}" maxlength="20"></dd>
+				<dd><input type="text" name="date_format_short" id="date-format-short" value="{$form.date_format_short}" maxlength="20"></dd>
 				<dt><label for="time-zone">{lang t="common|time_zone"}</label></dt>
 				<dd>
-					<select name="form[time_zone]" id="time-zone">
+					<select name="time_zone" id="time-zone">
 {foreach $time_zone as $row}
 						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
@@ -49,7 +49,7 @@
 				<dd>
 {foreach $dst as $row}
 					<label for="dst-{$row.value}">
-						<input type="radio" name="form[dst]" id="dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+						<input type="radio" name="dst" id="dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 						{$row.lang}
 					</label>
 {/foreach}
@@ -58,7 +58,7 @@
 		</div>
 	</div>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		{$form_token}
 	</div>
 </form>

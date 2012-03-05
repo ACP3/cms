@@ -10,38 +10,36 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$comments_active = modules::isActive('comments');
+$comments_active = ACP3_Modules::isActive('comments');
 
-if (isset($_POST['form']) === true) {
-	$form = $_POST['form'];
-
-	if (empty($form['dateformat']) || ($form['dateformat'] !== 'long' && $form['dateformat'] !== 'short'))
+if (isset($_POST['submit']) === true) {
+	if (empty($_POST['dateformat']) || ($_POST['dateformat'] !== 'long' && $_POST['dateformat'] !== 'short'))
 		$errors['dateformat'] = $lang->t('common', 'select_date_format');
-	if (validate::isNumber($form['sidebar']) === false)
+	if (ACP3_Validate::isNumber($_POST['sidebar']) === false)
 		$errors['sideabr'] = $lang->t('common', 'select_sidebar_entries');
-	if (!isset($form['readmore']) || $form['readmore'] != 1 && $form['readmore'] != 0)
+	if (!isset($_POST['readmore']) || $_POST['readmore'] != 1 && $_POST['readmore'] != 0)
 		$errors[] = $lang->t('news', 'select_activate_readmore');
-	if (validate::isNumber($form['readmore_chars']) === false || $form['readmore_chars'] == 0)
+	if (ACP3_Validate::isNumber($_POST['readmore_chars']) === false || $_POST['readmore_chars'] == 0)
 		$errors['readmore-chars'] = $lang->t('news', 'type_in_readmore_chars');
-	if (!isset($form['category_in_breadcrumb']) || $form['category_in_breadcrumb'] != 1 && $form['category_in_breadcrumb'] != 0)
+	if (!isset($_POST['category_in_breadcrumb']) || $_POST['category_in_breadcrumb'] != 1 && $_POST['category_in_breadcrumb'] != 0)
 		$errors[] = $lang->t('news', 'select_display_category_in_breadcrumb');
-	if ($comments_active === true && (!isset($form['comments']) || $form['comments'] != 1 && $form['comments'] != 0))
+	if ($comments_active === true && (!isset($_POST['comments']) || $_POST['comments'] != 1 && $_POST['comments'] != 0))
 		$errors[] = $lang->t('news', 'select_allow_comments');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
-	} elseif (validate::formToken() === false) {
-		view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+	} elseif (ACP3_Validate::formToken() === false) {
+		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
-		$bool = config::module('news', $form);
+		$bool = ACP3_Config::module('news', $_POST);
 
 		$session->unsetFormToken();
 
 		setRedirectMessage($bool === true ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), 'acp/news');
 	}
 }
-if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
-	$settings = config::getModuleSettings('news');
+if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
+	$settings = ACP3_Config::getModuleSettings('news');
 
 	$tpl->assign('dateformat', $date->dateformatDropdown($settings['dateformat']));
 
@@ -54,7 +52,7 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 	$readmore[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('readmore', $readmore);
 
-	$tpl->assign('readmore_chars', isset($form) ? $form['readmore_chars'] : $settings['readmore_chars']);
+	$tpl->assign('readmore_chars', isset($_POST['submit']) ? $_POST['readmore_chars'] : $settings['readmore_chars']);
 
 	if ($comments_active === true) {
 		$allow_comments = array();
@@ -80,5 +78,5 @@ if (isset($_POST['form']) === false || isset($errors) === true && is_array($erro
 
 	$session->generateFormToken();
 
-	view::setContent(view::fetchTemplate('news/settings.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('news/settings.tpl'));
 }

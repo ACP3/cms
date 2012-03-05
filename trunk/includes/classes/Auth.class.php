@@ -17,7 +17,7 @@ if (defined('IN_ACP3') === false)
  * @package ACP3
  * @subpackage Core
  */
-class auth
+class ACP3_Auth
 {
 	/**
 	 * Name des Authentifizierungscookies
@@ -72,7 +72,7 @@ class auth
 					$this->isUser = true;
 					$this->userId = (int) $user[0]['id'];
 					$this->superUser = (bool) $user[0]['super_user'];
-					$settings = config::getModuleSettings('users');
+					$settings = ACP3_Config::getModuleSettings('users');
 					$this->entries = $settings['entries_override'] == 1 && $user[0]['entries'] > 0 ? (int) $user[0]['entries'] : (int) CONFIG_ENTRIES;
 					$this->language = $settings['language_override'] == 1 ? $user[0]['language'] : CONFIG_LANG;
 				}
@@ -101,7 +101,7 @@ class auth
 		if (empty($user_id) && $this->isUser() === true)
 			$user_id = $this->getUserId();
 
-		if (validate::isNumber($user_id) === true) {
+		if (ACP3_Validate::isNumber($user_id) === true) {
 			static $user_info = array();
 
 			if (empty($user_info[$user_id])) {
@@ -157,7 +157,7 @@ class auth
 	 */
 	public function isUser()
 	{
-		return $this->isUser === true && validate::isNumber($this->getUserId()) === true ? true : false;
+		return $this->isUser === true && ACP3_Validate::isNumber($this->getUserId()) === true ? true : false;
 	}
 	/**
 	 * Gibt aus, ob der aktuell eingeloggte Benutzer der Super User ist, oder nicht
@@ -206,7 +206,7 @@ class auth
 				$this->setCookie($username, $db_hash, $expiry);
 
 				// Neue Session-ID generieren
-				session::secureSession(true);
+				ACP3_Session::secureSession(true);
 
 				$this->isUser = true;
 				$this->userId = (int) $user[0]['id'];

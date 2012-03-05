@@ -17,7 +17,7 @@ if (defined('IN_ACP3') === false)
  * @package ACP3
  * @subpackage Core
  */
-class image
+class ACP3_Image
 {
 	/**
 	 *
@@ -89,15 +89,15 @@ class image
 			$this->cache_prefix = $options['cache_prefix'];
 		if ($this->cache_prefix !== '' && !preg_match('/_$/', $this->cache_prefix))
 			$this->cache_prefix.= '_';
-		if (isset($options['max_width']) && validate::isNumber($options['max_width']) === true)
+		if (isset($options['max_width']) && ACP3_Validate::isNumber($options['max_width']) === true)
 			$this->max_width = $options['max_width'];
-		if (isset($options['max_height']) && validate::isNumber($options['max_height']) === true)
+		if (isset($options['max_height']) && ACP3_Validate::isNumber($options['max_height']) === true)
 			$this->max_height = $options['max_height'];
 		if (isset($options['prefer_width']) && is_bool($options['prefer_width']) === true)
 			$this->prefer_width = $options['prefer_width'];
 		if (isset($options['prefer_height']) && is_bool($options['prefer_height']) === true)
 			$this->prefer_height = $options['prefer_height'];
-		if (isset($options['jpg_quality']) && validate::isNumber($options['jpg_quality']) === true)
+		if (isset($options['jpg_quality']) && ACP3_Validate::isNumber($options['jpg_quality']) === true)
 			$this->jpg_quality = $options['jpg_quality'];
 		if (isset($options['force_resample']) && is_bool($options['force_resample']) === true)
 			$this->force_resample = $options['force_resample'];

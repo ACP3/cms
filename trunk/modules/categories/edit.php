@@ -10,36 +10,35 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (validate::isNumber($uri->id) === true && $db->countRows('*', 'categories', 'id = \'' . $uri->id . '\'') == 1) {
+if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'categories', 'id = \'' . $uri->id . '\'') == 1) {
 	require_once MODULES_DIR . 'categories/functions.php';
 
-	if (isset($_POST['form']) === true) {
-		$form = $_POST['form'];
+	if (isset($_POST['submit']) === true) {
 		if (!empty($_FILES['picture']['name'])) {
 			$file['tmp_name'] = $_FILES['picture']['tmp_name'];
 			$file['name'] = $_FILES['picture']['name'];
 			$file['size'] = $_FILES['picture']['size'];
 		}
-		$settings = config::getModuleSettings('categories');
+		$settings = ACP3_Config::getModuleSettings('categories');
 		$module = $db->select('module', 'categories', 'id = \'' . $uri->id . '\'');
 
-		if (strlen($form['name']) < 3)
+		if (strlen($_POST['name']) < 3)
 			$errors['name'] = $lang->t('categories', 'name_to_short');
-		if (strlen($form['description']) < 3)
+		if (strlen($_POST['description']) < 3)
 			$errors['description'] = $lang->t('categories', 'description_to_short');
 		if (!empty($file) &&
 			(empty($file['tmp_name']) ||
 			empty($file['size']) ||
-			validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
+			ACP3_Validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
 			$_FILES['file']['error'] !== UPLOAD_ERR_OK))
 			$errors['picture'] = $lang->t('categories', 'invalid_image_selected');
-		if (strlen($form['name']) >= 3 && categoriesCheckDuplicate($db->escape($form['name']), $module[0]['module'], $uri->id))
+		if (strlen($_POST['name']) >= 3 && categoriesCheckDuplicate($db->escape($_POST['name']), $module[0]['module'], $uri->id))
 			$errors['name'] = $lang->t('categories', 'category_already_exists');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
-		} elseif (validate::formToken() === false) {
-			view::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+		} elseif (ACP3_Validate::formToken() === false) {
+			ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$new_file_sql = null;
 			if (isset($file) && is_array($file)) {
@@ -48,8 +47,8 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'categories', '
 			}
 
 			$update_values = array(
-				'name' => $db->escape($form['name']),
-				'description' => $db->escape($form['description']),
+				'name' => $db->escape($_POST['name']),
+				'description' => $db->escape($_POST['description']),
 			);
 			if (is_array($new_file_sql) === true) {
 				$old_file = $db->select('picture', 'categories', 'id = \'' . $uri->id . '\'');
@@ -67,16 +66,16 @@ if (validate::isNumber($uri->id) === true && $db->countRows('*', 'categories', '
 			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/categories');
 		}
 	}
-	if (isset($_POST['form']) === false || isset($errors) === true && is_array($errors) === true) {
+	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 		$category = $db->select('name, description', 'categories', 'id = \'' . $uri->id . '\'');
 		$category[0]['name'] = $db->escape($category[0]['name'], 3);
 		$category[0]['description'] = $db->escape($category[0]['description'], 3);
 
-		$tpl->assign('form', isset($form) ? $form : $category[0]);
+		$tpl->assign('form', isset($_POST['submit']) ? $_POST : $category[0]);
 
 		$session->generateFormToken();
 
-		view::setContent(view::fetchTemplate('categories/edit.tpl'));
+		ACP3_View::setContent(ACP3_View::fetchTemplate('categories/edit.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

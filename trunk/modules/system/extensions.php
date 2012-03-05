@@ -2,4 +2,4 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-view::setContent(view::fetchTemplate('system/extensions.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('system/extensions.tpl'));

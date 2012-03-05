@@ -10,10 +10,10 @@
 		<div id="tab-1">
 			<dl>
 				<dt><label for="name">{lang t="common|name"}</label></dt>
-				<dd><input type="text" name="form[name]" id="name" value="{$form.name}" maxlength="120"></dd>
+				<dd><input type="text" name="name" id="name" value="{$form.name}" maxlength="120"></dd>
 				<dt><label for="parent">{lang t="access|superior_role"}</label></dt>
 				<dd>
-					<select name="form[parent]" id="parent">
+					<select name="parent" id="parent">
 {foreach $parent as $row}
 						<option value="{$row.id}"{$row.selected}>{$row.name}</option>
 {/foreach}
@@ -36,7 +36,7 @@
 {foreach $privilege.select as $row}
 						<td>
 							<label for="privileges-{$values.id}-{$privilege.id}-{$row.value}">
-								<input type="radio" name="form[privileges][{$values.id}][{$privilege.id}]" id="privileges-{$values.id}-{$privilege.id}-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected}>
+								<input type="radio" name="privileges[{$values.id}][{$privilege.id}]" id="privileges-{$values.id}-{$privilege.id}-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected}>
 								{$row.lang}
 							</label>
 						</td>
@@ -49,7 +49,7 @@
 		</div>
 	</div>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		<input type="reset" value="{lang t="common|reset"}" class="form">
 		{$form_token}
 	</div>

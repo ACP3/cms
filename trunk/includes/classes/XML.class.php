@@ -17,7 +17,7 @@ if (defined('IN_ACP3') === false)
  * @package ACP3
  * @subpackage Core
  */
-class xml
+class ACP3_XML
 {
 	/**
 	 * Parst die angeforderte XML Datei
@@ -80,8 +80,8 @@ class xml
 				if (array_key_exists($item->nodeName, $data) === true) {
 					$newitem = $xml->createElement($item->nodeName);
 					if (empty($data[$item->nodeName]) ||
-						validate::isNumber($data[$item->nodeName]) ||
-						validate::email($data[$item->nodeName]) ||
+						ACP3_Validate::isNumber($data[$item->nodeName]) ||
+						ACP3_Validate::email($data[$item->nodeName]) ||
 						preg_match('/^(\w+)$/', $data[$item->nodeName])) {
 						$newitem_content = $xml->createTextNode($data[$item->nodeName]);
 					} else {

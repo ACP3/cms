@@ -9,7 +9,7 @@
 {/if}
 {if isset($blocks)}
 {$pagination}
-{assign var="can_delete" value=modules::check("menu_items", "delete_blocks")}
+{assign var="can_delete" value=ACP3_Modules::check("menu_items", "delete_blocks")}
 	<table class="acp-table">
 		<thead>
 			<tr>

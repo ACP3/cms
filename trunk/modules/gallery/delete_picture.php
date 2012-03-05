@@ -12,14 +12,14 @@ if (defined('IN_ADM') === false)
 
 if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
 	$entries = $_POST['entries'];
-elseif (validate::deleteEntries($uri->entries) === true)
+elseif (ACP3_Validate::deleteEntries($uri->entries) === true)
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
-	view::setContent(errorBox($lang->t('common', 'no_entries_selected')));
+	ACP3_View::setContent(errorBox($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
-	view::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/gallery/delete_picture/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/gallery/edit_gallery/id_' . $uri->id)));
+	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/gallery/delete_picture/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/gallery/edit_gallery/id_' . $uri->id)));
 } elseif ($uri->action === 'confirmed') {
 	require_once MODULES_DIR . 'gallery/functions.php';
 
@@ -33,7 +33,7 @@ if (!isset($entries)) {
 			removePicture($picture[0]['file']);
 
 			$bool = $db->delete('gallery_pictures', 'id = \'' . $entry . '\'');
-			seo::deleteUriAlias('gallery/details/id_' . $entry);
+			ACP3_SEO::deleteUriAlias('gallery/details/id_' . $entry);
 			setGalleryCache($picture[0]['gallery_id']);
 		}
 	}

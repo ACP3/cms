@@ -16,7 +16,7 @@
 		<div id="tab-1">
 			<dl>
 				<dd>
-					<select name="form[tables][]" id="tables" multiple="multiple" style="height:200px">
+					<select name="tables[]" id="tables" multiple="multiple" style="height:200px">
 {foreach $tables as $row}
 						<option value="{$row.name}"{$row.selected}>{$row.name}</option>
 {/foreach}
@@ -31,7 +31,7 @@
 				<dd>
 {foreach $output as $row}
 					<label for="{$row.value}">
-						<input type="radio" name="form[output]" id="{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+						<input type="radio" name="output" id="{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 						{$row.lang}
 					</label>
 {/foreach}
@@ -40,7 +40,7 @@
 				<dd>
 {foreach $export_type as $row}
 					<label for="{$row.value}">
-						<input type="radio" name="form[export_type]" id="{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+						<input type="radio" name="export_type" id="{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
 						{$row.lang}
 					</label>
 {/foreach}
@@ -50,7 +50,7 @@
 				<dt><label for="drop">{lang t="common|options"}</label></dt>
 				<dd>
 					<label for="drop">
-						<input type="checkbox" name="form[drop]" id="drop" value="1" class="checkbox"{$drop.checked}>
+						<input type="checkbox" name="drop" id="drop" value="1" class="checkbox"{$drop.checked}>
 						{$drop.lang}
 					</label>
 				</dd>
@@ -58,7 +58,7 @@
 		</div>
 	</div>
 	<div class="form-bottom">
-		<input type="submit" value="{lang t="common|submit"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
 		{$form_token}
 	</div>
 </form>
