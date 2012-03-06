@@ -14,8 +14,7 @@ $auth->logout();
 
 if ($uri->last) {
 	$lastPage = base64_decode($uri->last);
-	if (!preg_match('/^(acp\/)/', $lastPage) && !preg_match('/^(users\/)/', $lastPage)) {
+	if (!preg_match('/^((acp|users)\/)/', $lastPage))
 		$uri->redirect($lastPage);
-	}
 }
 $uri->redirect(0, ROOT_DIR);
