@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$currentPage = base64_encode(substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1));
+$currentPage = base64_encode($uri->query);
 
 if ($auth->isUser() === true) {
 	$user_sidebar = array();
