@@ -26,7 +26,9 @@
 			<dl>
 				<dt><label for="text">{lang t="static_pages|text"}</label></dt>
 				<dd>{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</dd>
+			</dl>
 {if isset($create)}
+			<dl>
 				<dt><label for="create-item-1">{lang t="static_pages|create_menu_item"}</label></dt>
 				<dd>
 {foreach $create as $row}
@@ -36,8 +38,8 @@
 					</label>
 {/foreach}
 				</dd>
-{/if}
 			</dl>
+{/if}
 			<div id="create-item-container">
 				<dl>
 					<dt><label for="block-id">{lang t="menu_items|blocks"}</label></dt>
