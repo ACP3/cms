@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$currentPage = base64_encode($uri->query);
+$currentPage = base64_encode((defined('IN_ADM') === true ? 'acp/' : '') . $uri->query);
 
 if ($auth->isUser() === true) {
 	$user_sidebar = array();
