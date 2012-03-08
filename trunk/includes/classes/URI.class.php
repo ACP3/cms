@@ -55,7 +55,8 @@ class ACP3_URI
 			if (CONFIG_SEO_ALIASES === true) {
 				// Falls für Query ein Alias existiert, zu diesem weiterleiten
 				if (ACP3_SEO::uriAliasExists($this->query) === true)
-					$this->redirect(ACP3_SEO::getUriAlias($this->query), 0, 1);
+					// URI-Alias wird von uri::route() erzeugt
+					$this->redirect($this->query, 0, 1);
 
 				// Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
 				if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)+(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
