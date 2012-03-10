@@ -406,6 +406,9 @@ if (defined('CONFIG_MAILER_TYPE') === false) {
 if (defined('CONFIG_SEO_ROBOTS') === false) {
 	define('CONFIG_SEO_ROBOTS', 1);
 }
+if (is_int(CONFIG_DATE_TIME_ZONE) === true) {
+	define('CONFIG_DATE_TIME_ZONE', 'Europe/Berlin');
+}
 print ACP3_Config::system($config) === true ? 'Konfigurationsdatei erfolgreich aktualisiert!' : 'Die Konfigurationsdatei konnte nicht aktualisiert werden!';
 
 // Cache leeren
