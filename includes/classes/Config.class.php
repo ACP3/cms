@@ -34,7 +34,6 @@ class ACP3_Config
 			$config = array(
 				'cache_images' => CONFIG_CACHE_IMAGES,
 				'cache_minify' => CONFIG_CACHE_MINIFY,
-				'date_dst' => CONFIG_DATE_DST,
 				'date_format_long' => CONFIG_DATE_FORMAT_LONG,
 				'date_format_short' => CONFIG_DATE_FORMAT_SHORT,
 				'date_time_zone' => CONFIG_DATE_TIME_ZONE,

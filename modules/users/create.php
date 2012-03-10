@@ -28,13 +28,11 @@ if (isset($_POST['submit']) === true) {
 	if ($lang->languagePackExists($_POST['language']) === false)
 		$errors['language'] = $lang->t('users', 'select_language');
 	if (ACP3_Validate::isNumber($_POST['entries']) === false)
-		$errors['entries'] = $lang->t('system', 'select_entries_per_page');
+		$errors['entries'] = $lang->t('common', 'select_records_per_page');
 	if (empty($_POST['date_format_long']) || empty($_POST['date_format_short']))
 		$errors[] = $lang->t('system', 'type_in_date_format');
-	if (is_numeric($_POST['time_zone']) === false)
+	if (ACP3_Validate::timeZone($_POST['date_time_zone']) === false)
 		$errors['time-zone'] = $lang->t('common', 'select_time_zone');
-	if (ACP3_Validate::isNumber($_POST['dst']) === false)
-		$errors[] = $lang->t('common', 'select_daylight_saving_time');
 	if (empty($_POST['pwd']) || empty($_POST['pwd_repeat']) || $_POST['pwd'] != $_POST['pwd_repeat'])
 		$errors[] = $lang->t('users', 'type_in_pwd');
 
@@ -61,8 +59,7 @@ if (isset($_POST['submit']) === true) {
 			'skype' => ':1',
 			'date_format_long' => $db->escape($_POST['date_format_long']),
 			'date_format_short' => $db->escape($_POST['date_format_short']),
-			'time_zone' => $_POST['time_zone'],
-			'dst' => $_POST['dst'],
+			'time_zone' => $_POST['date_time_zone'],
 			'language' => $db->escape($_POST['language'], 2),
 			'entries' => (int) $_POST['entries'],
 			'draft' => '',
@@ -123,17 +120,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$tpl->assign('entries', recordsPerPage(CONFIG_ENTRIES));
 
 	// Zeitzonen
-	$tpl->assign('time_zone', timeZones(CONFIG_DATE_TIME_ZONE));
-
-	// Sommerzeit an/aus
-	$dst = array();
-	$dst[0]['value'] = '1';
-	$dst[0]['checked'] = selectEntry('dst', '1', CONFIG_DATE_DST, 'checked');
-	$dst[0]['lang'] = $lang->t('common', 'yes');
-	$dst[1]['value'] = '0';
-	$dst[1]['checked'] = selectEntry('dst', '0', CONFIG_DATE_DST, 'checked');
-	$dst[1]['lang'] = $lang->t('common', 'no');
-	$tpl->assign('dst', $dst);
+	$tpl->assign('time_zones', $date->getTimeZones(CONFIG_DATE_TIME_ZONE));
 
 	$defaults = array(
 		'nickname' => '',

@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 if (isset($_POST['submit']) === true) {
 	if (ACP3_Validate::isNumber($_POST['entries']) === false)
-		$errors['entries'] = $lang->t('system', 'select_entries_per_page');
+		$errors['entries'] = $lang->t('common', 'select_records_per_page');
 	if (ACP3_Validate::isNumber($_POST['flood']) === false)
 		$errors['flood'] = $lang->t('system', 'type_in_flood_barrier');
 	if (ACP3_Validate::isInternalURI($_POST['homepage']) === false)
@@ -21,10 +21,8 @@ if (isset($_POST['submit']) === true) {
 		$errors['wysiwyg'] = $lang->t('system', 'select_editor');
 	if (empty($_POST['date_format_long']) || empty($_POST['date_format_short']))
 		$errors[] = $lang->t('system', 'type_in_date_format');
-	if (is_numeric($_POST['date_time_zone']) === false)
+	if (ACP3_Validate::timeZone($_POST['date_time_zone']) === false)
 		$errors['date-time-zone'] = $lang->t('common', 'select_time_zone');
-	if (ACP3_Validate::isNumber($_POST['date_dst']) === false)
-		$errors[] = $lang->t('common', 'select_daylight_saving_time');
 	if (ACP3_Validate::isNumber($_POST['maintenance_mode']) === false)
 		$errors[] = $lang->t('system', 'select_online_maintenance');
 	if (strlen($_POST['maintenance_message']) < 3)
@@ -59,7 +57,6 @@ if (isset($_POST['submit']) === true) {
 		$config = array(
 			'cache_images' => (bool) $_POST['cache_images'],
 			'cache_minify' => $_POST['cache_minify'],
-			'date_dst' => $_POST['date_dst'],
 			'date_format_long' => $db->escape($_POST['date_format_long']),
 			'date_format_short' => $db->escape($_POST['date_format_short']),
 			'date_time_zone' => $_POST['date_time_zone'],
@@ -114,17 +111,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$tpl->assign('wysiwyg', $wysiwyg);
 
 	// Zeitzonen
-	$tpl->assign('time_zone', timeZones(CONFIG_DATE_TIME_ZONE, 'date_time_zone'));
-
-	// Sommerzeit an/aus
-	$dst = array();
-	$dst[0]['value'] = '1';
-	$dst[0]['checked'] = selectEntry('date_dst', '1', CONFIG_DATE_DST, 'checked');
-	$dst[0]['lang'] = $lang->t('common', 'yes');
-	$dst[1]['value'] = '0';
-	$dst[1]['checked'] = selectEntry('date_dst', '0', CONFIG_DATE_DST, 'checked');
-	$dst[1]['lang'] = $lang->t('common', 'no');
-	$tpl->assign('dst', $dst);
+	$tpl->assign('time_zones', $date->getTimeZones(CONFIG_DATE_TIME_ZONE));
 
 	// Wartungsmodus an/aus
 	$maintenance = array();

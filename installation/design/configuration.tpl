@@ -97,7 +97,7 @@
 				<dd><input type="text" name="seo_title" id="seo-title" value="{$form.seo_title}"></dd>
 			</dl>
 			<dl>
-				<dt><label for="entries">{lang t="system|entries_per_page"}</label></dt>
+				<dt><label for="entries">{lang t="common|records_per_page"}</label></dt>
 				<dd>
 					<select name="entries" id="entries">
 {foreach $entries as $row}
@@ -130,21 +130,14 @@
 				<dt><label for="date-time-zone">{lang t="common|time_zone"}</label></dt>
 				<dd>
 					<select name="date_time_zone" id="date-time-zone">
-{foreach $time_zones as $row}
-						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{foreach $time_zones as $key => $values}
+						<optgroup label="{$key}">
+{foreach $values as $country => $value}
+							<option value="{$country}" style="margin:0 0 0 10px"{$value.selected}>{$country}</option>
+{/foreach}
+						</optgroup>
 {/foreach}
 					</select>
-				</dd>
-			</dl>
-			<dl>
-				<dt><label for="date-dst-1">{lang t="common|daylight_saving_time"}</label></dt>
-				<dd>
-{foreach $dst as $row}
-					<label for="date-dst-{$row.value}">
-						<input type="radio" name="date_dst" id="date-dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
-						{$row.lang}
-					</label>
-{/foreach}
 				</dd>
 			</dl>
 		</div>

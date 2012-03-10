@@ -20,34 +20,23 @@ if (defined('IN_ACP3') === false)
 class ACP3_Date
 {
 	/**
-	 * Zeitverschiebung von Greenwich mit eventueller Sommerzeit
-	 *
-	 * @var integer
-	 * @access private
-	 */
-	private $offset_dst = 0;
-	/**
-	 * Zeitverschiebung von Greenwich ohne Sommerzeit
-	 *
-	 * @var integer
-	 * @access private
-	 */
-	private $offset_real = 0;
-	/**
-	 * Sommerzeit an/aus
-	 *
-	 * @var integer
-	 * @access private
-	 */
-	private $dst = 0;
-	/**
-	 * Lanes Datumsformat
+	 * Langes Datumsformat
+	 * 
+	 * @var string
 	 */
 	private $date_format_long = CONFIG_DATE_FORMAT_LONG;
 	/**
 	 * Kurzes Datumsformat
+	 * 
+	 * @var string
 	 */
 	private $date_format_short = CONFIG_DATE_FORMAT_SHORT;
+	/**
+	 * PHP DateTimeZone-Object
+	 *
+	 * @var object 
+	 */
+	private $date_time_zone = null;
 
 	/**
 	 * Falls man sich als User authentifiziert hat, eingestellte Zeitzone + Sommerzeiteinstellung holen
@@ -59,17 +48,13 @@ class ACP3_Date
 		$info = $auth->getUserInfo();
 
 		if (!empty($info)) {
-			$this->dst = (int) $info['dst'];
 			$this->date_format_long = $info['date_format_long'];
 			$this->date_format_short = $info['date_format_short'];
-			$time_zone = (int) $info['time_zone'];
+			$time_zone = $info['time_zone'];
 		} else {
-			$this->dst = CONFIG_DATE_DST;
 			$time_zone = CONFIG_DATE_TIME_ZONE;
 		}
-
-		$this->offset_real = $time_zone;
-		$this->offset_dst = $time_zone + ($this->dst == 1 ? 3600 : 0);
+		$this->date_time_zone = new DateTimeZone($time_zone);
 	}
 	/**
 	 * Gibts ein Array mit den möglichen Datumsformaten aus,
@@ -175,7 +160,7 @@ class ACP3_Date
 	 *	2 = Sommerzeit nicht beachten
 	 * @return string
 	 */
-	public function format($time_stamp, $format = 'long', $mode = 1)
+	public function format($time_stamp, $format = 'long')
 	{
 		global $lang;
 
@@ -243,7 +228,42 @@ class ACP3_Date
 				'December' => $lang->t('common', 'date_december')
 			));
 		}
-		return strtr(gmdate($format, $time_stamp + ($mode === 1 ? $this->offset_dst : $this->offset_real)), $replace);
+
+		$date_time = new DateTime('', $this->date_time_zone);
+		$date_time->setTimestamp($time_stamp);
+		return strtr($date_time->format($format), $replace);
+	}
+	/**
+	 * Liefert ein Array mit allen Zeitzonen dieser Welt aus
+	 *
+	 * @param string $current_value
+	 * @return array
+	 */
+	public function getTimeZones($current_value = '')
+	{
+		$timeZones = array(
+			'Africa' => DateTimeZone::listIdentifiers(DateTimeZone::AFRICA),
+			'America' => DateTimeZone::listIdentifiers(DateTimeZone::AMERICA),
+			'Antarctica' => DateTimeZone::listIdentifiers(DateTimeZone::ANTARCTICA),
+			'Arctic' => DateTimeZone::listIdentifiers(DateTimeZone::ARCTIC),
+			'Asia' => DateTimeZone::listIdentifiers(DateTimeZone::ASIA),
+			'Atlantic' => DateTimeZone::listIdentifiers(DateTimeZone::ATLANTIC),
+			'Australia' => DateTimeZone::listIdentifiers(DateTimeZone::AUSTRALIA),
+			'Europe' => DateTimeZone::listIdentifiers(DateTimeZone::EUROPE),
+			'Indian' => DateTimeZone::listIdentifiers(DateTimeZone::INDIAN),
+			'Pacitic' => DateTimeZone::listIdentifiers(DateTimeZone::PACIFIC),
+			'UTC' => DateTimeZone::listIdentifiers(DateTimeZone::UTC),
+		);
+
+		foreach ($timeZones as $key => $values) {
+			$i = 0;
+			foreach ($values as $row) {
+				unset($timeZones[$key][$i]);
+				$timeZones[$key][$row]['selected'] = selectEntry('date_time_zone', $row, $current_value);
+				++$i;
+			}
+		}
+		return $timeZones;
 	}
 	/**
 	 * Gibt die Formularfelder für den Veröffentlichungszeitraum aus
@@ -275,12 +295,10 @@ class ACP3_Date
 	{
 		// Zeitstempel aus Veröffentlichungszeitraum heraus generieren
 		if (!empty($value) && ACP3_Validate::date($value) === true) {
-			$value = strtotime($value);
-
-			$offset = (date('I', $value) == 1) ? -3600 : 0;
-
-			return gmdate('U', $value + $offset - $this->offset_dst);
+			$date_time = new DateTime($value, $this->date_time_zone);
+			return $date_time->format('U');
 		}
-		return gmdate('U');
+		$date_time = new DateTime('now', $this->date_time_zone);
+		return $date_time->format('U');
 	}
 }

@@ -118,7 +118,7 @@ tfoot,
 	margin: 0;
 	padding-left: 10px;
 	background: url('images/header.png') repeat-x;
-	font: bold 1.3em Verdana, Arial, sans-serif;
+	font: bold 1.2em/30px Verdana, Arial, sans-serif;
 	list-style: none;
 }
 #header li {
@@ -128,7 +128,6 @@ tfoot,
 #header li a {
 	margin-right: 3px;
 	padding: 0 5px;
-	line-height: 30px;
 	text-align: center;
 	color: #fff;
 	white-space: nowrap;

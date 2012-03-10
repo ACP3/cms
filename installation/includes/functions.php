@@ -22,6 +22,57 @@ function generateSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
 	return hash($algorithm, $salt . hash($algorithm, $plaintext));
 }
 /**
+ * Liefert ein Array mit allen Zeitzonen dieser Welt aus
+ *
+ * @param string $current_value
+ * @return array
+ */
+function getTimeZones($current_value = '')
+{
+	$timeZones = array(
+		'Africa' => DateTimeZone::listIdentifiers(DateTimeZone::AFRICA),
+		'America' => DateTimeZone::listIdentifiers(DateTimeZone::AMERICA),
+		'Antarctica' => DateTimeZone::listIdentifiers(DateTimeZone::ANTARCTICA),
+		'Arctic' => DateTimeZone::listIdentifiers(DateTimeZone::ARCTIC),
+		'Asia' => DateTimeZone::listIdentifiers(DateTimeZone::ASIA),
+		'Atlantic' => DateTimeZone::listIdentifiers(DateTimeZone::ATLANTIC),
+		'Australia' => DateTimeZone::listIdentifiers(DateTimeZone::AUSTRALIA),
+		'Europe' => DateTimeZone::listIdentifiers(DateTimeZone::EUROPE),
+		'Indian' => DateTimeZone::listIdentifiers(DateTimeZone::INDIAN),
+		'Pacitic' => DateTimeZone::listIdentifiers(DateTimeZone::PACIFIC),
+		'UTC' => DateTimeZone::listIdentifiers(DateTimeZone::UTC),
+	);
+
+	foreach ($timeZones as $key => $values) {
+		$i = 0;
+		foreach ($values as $row) {
+			unset($timeZones[$key][$i]);
+			$timeZones[$key][$row]['selected'] = selectEntry('date_time_zone', $row, $current_value);
+			++$i;
+		}
+	}
+	return $timeZones;
+}
+/**
+ * Liefert ein Array zur Ausgabe als Dropdown-Menü
+ * für die Anzahl der anzuzeigenden Datensätze je Seite
+ *
+ * @param integer $current_value
+ * @param integer $steps
+ * @param integer $max_value
+ * @return array
+ */
+function recordsPerPage($current_value, $steps = 5, $max_value = 50)
+{
+	// Einträge pro Seite
+	$records = array();
+	for ($i = 0, $j = $steps; $j <= $max_value; $i++, $j+= $steps) {
+		$records[$i]['value'] = $j;
+		$records[$i]['selected'] = selectEntry('entries', $j, $current_value);
+	}
+	return $records;
+}
+/**
  * Generiert einen Zufallsstring beliebiger Länge
  *
  * @param integer $str_length
