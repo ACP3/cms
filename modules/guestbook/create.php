@@ -43,10 +43,10 @@ if (isset($_POST['submit']) === true) {
 		$errors['message'] = $lang->t('common', 'message_to_short');
 	if ($auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
 		$errors['captcha'] = $lang->t('captcha', 'invalid_captcha_entered');
-	if ($newsletterAccess === true) {
-		if ($_POST['subscribe_newsletter'] == 1 && ACP3_Validate::email($_POST['mail']) === false)
+	if ($newsletterAccess === true && isset($_POST['subscribe_newsletter']) && $_POST['subscribe_newsletter'] == 1) {
+		if (ACP3_Validate::email($_POST['mail']) === false)
 			$errors['mail'] = $lang->t('guestbook', 'type_in_email_address_to_subscribe_to_newsletter');
-		if ($_POST['subscribe_newsletter'] == 1 && ACP3_Validate::email($_POST['mail']) === true &&
+		if (ACP3_Validate::email($_POST['mail']) === true &&
 			$db->countRows('*', 'newsletter_accounts', 'mail = \'' . $_POST['mail'] . '\'') == 1)
 			$errors[] = $lang->t('newsletter', 'account_exists');
 	}
@@ -80,7 +80,7 @@ if (isset($_POST['submit']) === true) {
 		}
 
 		// Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen
-		if ($newsletterAccess === true && $_POST['subscribe_newsletter'] == 1) {
+		if ($newsletterAccess === true && isset($_POST['subscribe_newsletter']) && $_POST['subscribe_newsletter'] == 1) {
 			require MODULES_DIR . 'newsletter/functions.php';
 			subscribeToNewsletter($_POST['mail']);
 		}
