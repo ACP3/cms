@@ -652,25 +652,3 @@ function shortenEntry($data, $chars = 300, $diff = 50, $append = '')
 	}
 	return $data;
 }
-/**
- * Gibt eine Liste aller Zeitzonen aus
- *
- * @param integer $value
- * 	Der Wert der aktuell eingestellten Zeitzone
- * @return array
- */
-function timeZones($value, $name = 'time_zone')
-{
-	global $lang;
-
-	$areas = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.75, 13, 14);
-	$time_zones = array();
-	$i = 0;
-	foreach ($areas as $row) {
-		$time_zones[$i]['value'] = $row * 3600;
-		$time_zones[$i]['selected'] = selectEntry($name, $time_zones[$i]['value'], $value);
-		$time_zones[$i]['lang'] = $lang->t('common', 'utc' . $row);
-		$i++;
-	}
-	return $time_zones;
-}
