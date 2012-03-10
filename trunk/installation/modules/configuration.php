@@ -24,14 +24,12 @@ if (isset($_POST['submit'])) {
 	if (ACP3_Validate::email($_POST['mail']) === false)
 		$errors[] = $lang->t('common', 'wrong_email_format');
 	if (ACP3_Validate::isNumber($_POST['entries']) === false)
-		$errors[] = $lang->t('system', 'select_entries_per_page');
+		$errors[] = $lang->t('common', 'select_records_per_page');
 	if (ACP3_Validate::isNumber($_POST['flood']) === false)
 		$errors[] = $lang->t('system', 'type_in_flood_barrier');
 	if (empty($_POST['date_format_long']) || empty($_POST['date_format_short']))
 		$errors[] = $lang->t('system', 'type_in_date_format');
-	if (ACP3_Validate::isNumber($_POST['date_dst']) === false)
-		$errors[] = $lang->t('common', 'select_daylight_saving_time');
-	if (ACP3_Validate::isNumber($_POST['date_time_zone']) === false)
+	if (ACP3_Validate::timeZone($_POST['date_time_zone']) === false)
 		$errors[] = $lang->t('common', 'select_time_zone');
 	if (is_file($config_path) === false || is_writable($config_path) === false)
 		$errors[] = $lang->t('installation', 'wrong_chmod_for_config_file');
@@ -44,7 +42,6 @@ if (isset($_POST['submit'])) {
 		$config = array(
 			'cache_images' => true,
 			'cache_minify' => 3600,
-			'date_dst' => $_POST['date_dst'],
 			'date_format_long' => $_POST['date_format_long'],
 			'date_format_short' => $_POST['date_format_short'],
 			'date_time_zone' => $_POST['date_time_zone'],
@@ -53,7 +50,7 @@ if (isset($_POST['submit'])) {
 			'db_pre' => $_POST['db_pre'],
 			'db_password' => $_POST['db_password'],
 			'db_user' => $_POST['db_user'],
-			'db_version' => 20,
+			'db_version' => 21,
 			'design' => 'acp3',
 			'entries' => $_POST['entries'],
 			'flood' => $_POST['flood'],
@@ -218,36 +215,10 @@ if (isset($_POST['submit'])) {
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 	// Einträge pro Seite
-	$entries = array();
-	for ($i = 0, $j = 10; $j <= 50; $j = $j + 10, ++$i) {
-		$entries[$i]['value'] = $j;
-		$entries[$i]['selected'] = selectEntry('entries', $j, '20');
-	}
-	$tpl->assign('entries', $entries);
+	$tpl->assign('entries', recordsPerPage(20));
 
 	// Zeitzonen
-	$areas = array(-12, -11, -10, -9.5, -9, -8, -7, -6, -5, -4, -3.5, -3, -2, -1, 0, 1, 2, 3, 3.5, 4, 4.5, 5, 5.5, 5.75, 6, 6.5, 7, 8, 8.75, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.75, 13, 14);
-	$check_dst = date('I');
-	$offset = date('Z') - ($check_dst == '1' ? 3600 : 0);
-	$time_zones = array();
-	$i = 0;
-	foreach ($areas as $row) {
-		$time_zones[$i]['value'] = $row * 3600;
-		$time_zones[$i]['selected'] = selectEntry('date_time_zone', $row * 3600, $offset);
-		$time_zones[$i]['lang'] = $lang->t('common', 'utc' . $row);
-		$i++;
-	}
-	$tpl->assign('time_zones', $time_zones);
-
-	// Sommerzeit an/aus
-	$dst = array();
-	$dst[0]['value'] = '1';
-	$dst[0]['checked'] = selectEntry('date_dst', '1', $check_dst, 'checked');
-	$dst[0]['lang'] = $lang->t('common', 'yes');
-	$dst[1]['value'] = '0';
-	$dst[1]['checked'] = selectEntry('date_dst', '0', $check_dst, 'checked');
-	$dst[1]['lang'] = $lang->t('common', 'no');
-	$tpl->assign('dst', $dst);
+	$tpl->assign('time_zones', getTimeZones());
 
 	$defaults = array(
 		'db_host' => 'localhost',

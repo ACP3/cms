@@ -31,13 +31,11 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'users', '
 		if ($lang->languagePackExists($_POST['language']) === false)
 			$errors['language'] = $lang->t('users', 'select_language');
 		if (ACP3_Validate::isNumber($_POST['entries']) === false)
-			$errors['entries'] = $lang->t('system', 'select_entries_per_page');
+			$errors['entries'] = $lang->t('common', 'select_records_per_page');
 		if (empty($_POST['date_format_long']) || empty($_POST['date_format_short']))
 			$errors[] = $lang->t('system', 'type_in_date_format');
-		if (is_numeric($_POST['time_zone']) === false)
+		if (ACP3_Validate::timeZone($_POST['date_time_zone']) === false)
 			$errors['time-zone'] = $lang->t('common', 'select_time_zone');
-		if (ACP3_Validate::isNumber($_POST['dst']) === false)
-			$errors[] = $lang->t('common', 'select_daylight_saving_time');
 		if (!empty($_POST['new_pwd']) && !empty($_POST['new_pwd_repeat']) && $_POST['new_pwd'] != $_POST['new_pwd_repeat'])
 			$errors[] = $lang->t('users', 'type_in_pwd');
 
@@ -54,8 +52,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'users', '
 				'website' => $db->escape($_POST['website'], 2) . ':' . $user['website_display'],
 				'date_format_long' => $db->escape($_POST['date_format_long']),
 				'date_format_short' => $db->escape($_POST['date_format_short']),
-				'time_zone' => $_POST['time_zone'],
-				'dst' => $_POST['dst'],
+				'time_zone' => $_POST['date_time_zone'],
 				'language' => $db->escape($_POST['language'], 2),
 				'entries' => (int) $_POST['entries'],
 			);
@@ -134,17 +131,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'users', '
 		$tpl->assign('entries', recordsPerPage((int) $user['entries']));
 
 		// Zeitzonen
-		$tpl->assign('time_zone', timeZones($user['time_zone']));
-
-		// Sommerzeit an/aus
-		$dst = array();
-		$dst[0]['value'] = '1';
-		$dst[0]['checked'] = selectEntry('dst', '1', $user['dst'], 'checked');
-		$dst[0]['lang'] = $lang->t('common', 'yes');
-		$dst[1]['value'] = '0';
-		$dst[1]['checked'] = selectEntry('dst', '0', $user['dst'], 'checked');
-		$dst[1]['lang'] = $lang->t('common', 'no');
-		$tpl->assign('dst', $dst);
+		$tpl->assign('time_zones', $date->getTimeZones($user['time_zone']));
 
 		$tpl->assign('form', isset($_POST['submit']) ? $_POST : $user);
 

@@ -8,9 +8,6 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-// Standardzeitzone festlegen
-date_default_timezone_set('UTC');
-
 // register_globals OFF Emulation
 require_once ACP3_ROOT . 'includes/globals.php';
 
@@ -18,6 +15,9 @@ require_once ACP3_ROOT . 'includes/globals.php';
 require_once ACP3_ROOT . 'includes/config.php';
 if (defined('INSTALLED') === false)
 	exit('Das ACP3 ist nicht richtig installiert. Bitte führen Sie den <a href="' . ACP3_ROOT . 'installation/">Installationsassistenten</a> aus und folgen Sie den Anweisungen.');
+
+// Standardzeitzone festlegen
+date_default_timezone_set(CONFIG_DATE_TIME_ZONE);
 
 // Wenn der DEBUG Modus aktiv ist, Fehler ausgeben
 $reporting_level = defined('DEBUG') === true && DEBUG === true ? E_ALL : 0;

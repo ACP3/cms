@@ -54,7 +54,6 @@
 	<item key="date_wed">Mi</item>
 	<item key="date_wednesday">Mittwoch</item>
 	<item key="day">Tag</item>
-	<item key="daylight_saving_time">Sommerzeit</item>
 	<item key="delete">Löschen</item>
 	<item key="delete_error">Beim Löschen der ausgewählten Einträge ist ein Fehler aufgetreten.</item>
 	<item key="delete_marked">Markierte Einträge löschen</item>
@@ -110,7 +109,7 @@
 	<item key="reset">Zurücksetzen</item>
 	<item key="select_date">Bitte vervollständigen Sie die Angaben zum Veröffentlichungsdatum bzw. dem Enddatum dieses Eintrages</item>
 	<item key="select_date_format">Bitte wählen Sie aus, ob das lange oder das kurze Datumsformat verwendet werden soll</item>
-	<item key="select_daylight_saving_time">Bitte wählen Sie aus, ob gerade Sommerzeit ist oder nicht</item>
+	<item key="select_records_per_page">Bitte wählen Sie aus, wie viele Datensätze pro Seite angezeigt werden sollen.</item>
 	<item key="select_sidebar_entries">Bitte wählen Sie aus, wie viele Einträge in der Modul-Sidebar angezeigt werden sollen</item>
 	<item key="select_time_zone">Bitte wählen Sie die Zeitzone aus</item>
 	<item key="seo">SEO</item>

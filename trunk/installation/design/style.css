@@ -92,7 +92,7 @@ table.acp-table {
 	margin: 0;
 	padding-left: 10px;
 	background: url('../../designs/acp3/images/header.png') repeat-x;
-	font: bold 1.3em Verdana, Arial, sans-serif;
+	font: bold 1.2em/30px Verdana, Arial, sans-serif;
 	list-style: none;
 }
 #header ul li {
@@ -101,7 +101,6 @@ table.acp-table {
 #header ul li span {
 	margin-right: 3px;
 	padding: 0 5px;
-	line-height: 30px;
 	color: #fff;
 	display: block;
 }

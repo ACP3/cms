@@ -54,7 +54,6 @@
 	<item key="date_wed">Wed</item>
 	<item key="date_wednesday">Wednesday</item>
 	<item key="day">Day</item>
-	<item key="daylight_saving_time">Daylight saving time is in effect</item>
 	<item key="delete">Delete</item>
 	<item key="delete_error">While deleting the marked entries an error has occured.</item>
 	<item key="delete_marked">Delete marked entries</item>
@@ -110,7 +109,7 @@
 	<item key="reset">Reset</item>
 	<item key="select_date">Please complete the statements belonging the release date and end date</item>
 	<item key="select_date_format">Please select, whether you want to display the date in short or long format</item>
-	<item key="select_daylight_saving_time">Please select, whether daylight saving time is in effect or not</item>
+	<item key="select_records_per_page">Please select, how many resultsets per page should be displayed</item>
 	<item key="select_sidebar_entries">Please select, how many entries you want to display inside the Module-Sidebar</item>
 	<item key="select_time_zone">Please select the time zone</item>
 	<item key="seo">SEO</item>

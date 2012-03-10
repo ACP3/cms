@@ -366,10 +366,17 @@ if (CONFIG_DB_VERSION < 20) {
 	);
 	echo executeSqlQueries($queries, 20);
 }
+if (CONFIG_DB_VERSION < 21) {
+	$queries = array(
+		"ALTER TABLE `{pre}users` CHANGE `time_zone` `time_zone` VARCHAR(100) NOT NULL;",
+		"UPDATE `{pre}users` SET time_zone = 'Europe/Berlin';",
+	);
+	echo executeSqlQueries($queries, 21);
+}
 
 // Konfigurationsdatei aktualisieren
 $config = array(
-	'db_version' => 20,
+	'db_version' => 21,
 	'maintenance_mode' => (bool) CONFIG_MAINTENANCE_MODE,
 	'seo_mod_rewrite' => (bool) CONFIG_SEO_MOD_REWRITE,
 );

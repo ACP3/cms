@@ -97,7 +97,6 @@
 	<item key="safe_mode">Sicherer Modus</item>
 	<item key="select_cache_images">Bitte wählen Sie aus, ob Bilder gecached werden sollen.</item>
 	<item key="select_editor">Bitte wählen Sie aus, mit welchen Editor Sie Ihre Einträge erstellen wollen.</item>
-	<item key="select_entries_per_page">Bitte wählen Sie aus, wie viele Datensätze pro Seite angezeigt werden sollen.</item>
 	<item key="select_export_type">Bitte wählen Sie die Exportart aus.</item>
 	<item key="select_menu_item">Bitte wählen Sie einen der obenstehenden Menüpunkte aus, um zur gewünschten Aktion zu gelangen.</item>
 	<item key="select_mod_rewrite">Bitte geben Sie an, ob die suchmaschinenfreundlichen URIs verwendet werden sollen, oder nicht</item>

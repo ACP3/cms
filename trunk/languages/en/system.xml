@@ -97,7 +97,6 @@
 	<item key="safe_mode">Safe mode</item>
 	<item key="select_cache_images">Please select, whether you want to cache pictures.</item>
 	<item key="select_editor">Please select, whether you want to use a WYSIWYG editor or a simple textarea</item>
-	<item key="select_entries_per_page">Please select, how many resultsets per page should be displayed</item>
 	<item key="select_export_type">Please select the export type</item>
 	<item key="select_menu_item">Please select one of the above-noted menu items, to reach the desired action.</item>
 	<item key="select_mod_rewrite">Please select, whether search engine friendly URIs should be used, or not</item>

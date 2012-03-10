@@ -45,22 +45,15 @@
 			<dl>
 				<dt><label for="time-zone">{lang t="common|time_zone"}</label></dt>
 				<dd>
-					<select name="time_zone" id="time-zone">
-{foreach $time_zone as $row}
-						<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+					<select name="date_time_zone" id="date-time-zone">
+{foreach $time_zones as $key => $values}
+						<optgroup label="{$key}">
+{foreach $values as $country => $value}
+							<option value="{$country}" style="margin:0 0 0 10px"{$value.selected}>{$country}</option>
+{/foreach}
+						</optgroup>
 {/foreach}
 					</select>
-				</dd>
-			</dl>
-			<dl>
-				<dt><label for="dst-1">{lang t="common|daylight_saving_time"}</label></dt>
-				<dd>
-{foreach $dst as $row}
-					<label for="dst-{$row.value}">
-						<input type="radio" name="dst" id="dst-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
-						{$row.lang}
-					</label>
-{/foreach}
 				</dd>
 			</dl>
 		</div>

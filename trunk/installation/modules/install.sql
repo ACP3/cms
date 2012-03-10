@@ -256,7 +256,7 @@ CREATE TABLE `{pre}users` (
 	`skype` VARCHAR(30) NOT NULL,
 	`date_format_long` VARCHAR(30) NOT NULL,
 	`date_format_short` VARCHAR(30) NOT NULL,
-	`time_zone` int(5) UNSIGNED NOT NULL,
+	`time_zone` VARCHAR(100) NOT NULL,
 	`dst` TINYINT(1) UNSIGNED NOT NULL,
 	`language` VARCHAR(10) NOT NULL,
 	`entries` TINYINT(2) UNSIGNED NOT NULL,

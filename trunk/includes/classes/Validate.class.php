@@ -270,6 +270,23 @@ class ACP3_Validate
 		}
 	}
 	/**
+	 * Überprüft, ob eine gültige Zeitzone gewählt wurde
+	 *
+	 * @param string $var
+	 *	Die zu überprüfende Variable
+	 * @return boolean 
+	 */
+	public static function timeZone($var)
+	{
+		$bool = true;
+		try {
+			new DateTimeZone($var);
+		} catch (Exception $e) {
+			$bool = false;
+		}
+		return $bool;
+	}
+	/**
 	 * Überprüft, ob ein URI-Alias bereits existiert
 	 *
 	 * @param string $alias
