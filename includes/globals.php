@@ -25,31 +25,25 @@ if ((bool)@ini_get('register_globals')) {
 	);
 	foreach ($superglobals as $superglobal) {
 		foreach ($superglobal as $global => $void) {
-			if (!in_array($global, $knownglobals))
+			if (in_array($global, $knownglobals) === false)
 				unset($GLOBALS[$global]);
 		}
 	}
 }
 
 // Magic Quotes deaktivieren
-if (version_compare(PHP_VERSION, '5.3', '<')) {
-	@set_magic_quotes_runtime(0);
-
-	if (get_magic_quotes_gpc()) {
-		/**
-		 * Falls magic_quotes an sind, Slashes entfernen
-		 * wir haben selbst eine Funktion dafür...
-		 *
-		 * @param mixed $global
-		 * @return mixed
-		 */
-		function acp3_strip($global) {
-			$result = is_array($global) ? array_map('acp3_strip', $global) : stripslashes($global);
-			return $result;
+if (get_magic_quotes_gpc()) {
+	$process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
+	while (list($key, $val) = each($process)) {
+		foreach ($val as $k => $v) {
+			unset($process[$key][$k]);
+			if (is_array($v) === true) {
+				$process[$key][stripslashes($k)] = $v;
+				$process[] = &$process[$key][stripslashes($k)];
+			} else {
+				$process[$key][stripslashes($k)] = stripslashes($v);
+			}
 		}
-		$_GET = acp3_strip($_GET);
-		$_POST = acp3_strip($_POST);
-		$_COOKIE = acp3_strip($_COOKIE);
-		$_REQUEST = acp3_strip($_REQUEST);
 	}
+	unset($process);
 }
