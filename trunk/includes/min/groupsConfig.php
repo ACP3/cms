@@ -4,9 +4,11 @@
  * @package Minify
  */
 
-/**
+/** 
  * You may wish to use the Minify URI Builder app to suggest
  * changes. http://yourdomain/min/builder/
+ *
+ * See http://code.google.com/p/minify/wiki/CustomSource for other ideas
  **/
 
 define('ACP3_ROOT', realpath(dirname(__FILE__) . '/../../') . '/');
