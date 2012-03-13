@@ -3,7 +3,6 @@
 	<item key="access_to_following_modules">Sie haben Zugriff auf folgende %d Module.</item>
 	<item key="acp3_not_up_to_date">Es ist eine neue Version des ACP3 verfügbar. Sie kann %1$shier%2$s heruntergeladen werden.</item>
 	<item key="acp3_up_to_date">Sie verwenden bereits die aktuelle Version des ACP3.</item>
-	<item key="architecture">Architektur</item>
 	<item key="attention">Achtung</item>
 	<item key="cache_images">Bilder cachen</item>
 	<item key="complete_export">Komplett</item>
@@ -22,7 +21,6 @@
 	<item key="email">E-Mail</item>
 	<item key="enable_module">Modul aktivieren</item>
 	<item key="enable_seo_aliases">URI-Aliase aktivieren</item>
-	<item key="error_messages">Ausgabe von Fehlermeldungen</item>
 	<item key="error_update_check">Es konnte keine Verbindung zum Update-Server hergestellt werden.</item>
 	<item key="export_data">Nur Daten</item>
 	<item key="export_options">Exportoptionen</item>
@@ -72,12 +70,7 @@
 	<item key="module_name">Modul Name</item>
 	<item key="modules">Module</item>
 	<item key="modules_found">Es wurden insgesamt %d Module gefunden.</item>
-	<item key="not_optimal_server_configuration">Der Server ist nicht optimal konfiguriert</item>
 	<item key="not_optimised">Optimierung nicht notwendig</item>
-	<item key="off">aus</item>
-	<item key="on">an</item>
-	<item key="operating_system">Betriebssystem</item>
-	<item key="optimal_server_configuration">Der Server ist optimal konfiguriert</item>
 	<item key="optimisation_access_forbidden">Während der Optimierung sind alle Zugriffe auf die Datenbank gesperrt!</item>
 	<item key="optimised">Tabelle erfolgreich optimiert</item>
 	<item key="output">Ausgabe</item>
@@ -87,14 +80,9 @@
 	<item key="overhead">Überhang</item>
 	<item key="performance">Leistung</item>
 	<item key="php_date_function"><![CDATA[siehe <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a>-Funktion von PHP]]></item>
-	<item key="php_extensions">Vorhandene PHP Erweiterungen</item>
-	<item key="php_settings">PHP Einstellungen</item>
-	<item key="php_version">PHP Version</item>
 	<item key="query_failed">Abfrage fehlgeschalgen!</item>
 	<item key="query_successfully_executed">Abfrage erfolgreich durchgeführt!</item>
-	<item key="register_globals">Globale Registrierung</item>
 	<item key="result">Ergebnis</item>
-	<item key="safe_mode">Sicherer Modus</item>
 	<item key="select_cache_images">Bitte wählen Sie aus, ob Bilder gecached werden sollen.</item>
 	<item key="select_editor">Bitte wählen Sie aus, mit welchen Editor Sie Ihre Einträge erstellen wollen.</item>
 	<item key="select_export_type">Bitte wählen Sie die Exportart aus.</item>
@@ -106,9 +94,6 @@
 	<item key="select_seo_robots">Bitte wählen Sie aus, wie die Website von Suchmaschinen-Crawlern indexiert werden soll.</item>
 	<item key="select_sql_file">Die angegebene Datei ist keine Textdatei.</item>
 	<item key="select_sql_tables">Bitte wählen Sie mindestens eine SQL-Tabelle aus, welche exportiert werden soll.</item>
-	<item key="server_config">Serverkonfiguration</item>
-	<item key="server_infos">Server Informationen</item>
-	<item key="server_software">Server Software</item>
 	<item key="sql_export">SQL-Tabellen-Export</item>
 	<item key="sql_import">SQL-Tabellen-Import</item>
 	<item key="sql_optimisation">SQL-Tabellen-Optimierung</item>
@@ -132,5 +117,4 @@
 	<item key="type_in_text_or_select_sql_file">Bitte geben Sie die SQL-Abfragen entweder in dem Textfeld ein oder laden Sie eine Datei hoch.</item>
 	<item key="update_check">Versionsüberprüfung</item>
 	<item key="version">Version</item>
-	<item key="zend_engine">Zend Engine</item>
 </language>

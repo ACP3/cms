@@ -28,6 +28,7 @@
 	<item key="installation_successful_2"><strong>Achtung:</strong> Bitte löschen Sie nun den "installation"-Ordner, da dies ein potentielles Sicherheitsrisiko darstellen könnte, falls dieser Ordner in einer Produktiv-Umgebung noch existieren sollte.</item>
 	<item key="language">Sprache:</item>
 	<item key="licence">Lizenz</item>
+	<item key="magic_quotes">Magic Quotes:</item>
 	<item key="maximum_uploadsize">Maximale Uploadgröße:</item>
 	<item key="navigation">Navigation</item>
 	<item key="news_headline">Installation erfolgreich beendet!</item>
@@ -35,7 +36,9 @@
 	<item key="news_text"><![CDATA[So wie es aussieht, hat bei der Installation des ACP3 4.0 alles geklappt.<br />Dies ist nur eine Testnews, die Sie nun im Administrationsbereich bearbeiten oder l&ouml;schen k&ouml;nnen.<br />Ansonsten w&uuml;nscht Ihnen das Team von Goratsch Webdesign viel Spa&szlig; bei der Arbeit mit dem ACP3 4.0!]]></item>
 	<item key="newsletter_mailsig">das Newsletterteam</item>
 	<item key="not_writeable">Keine Schreibrechte gefunden</item>
+	<item key="off">aus</item>
 	<item key="offline_message">Wegen kurzfristigen Wartungsarbeiten ist diese Website zur Zeit nicht erreichbar. Bitte versuchen Sie es in einigen Minuten erneut.</item>
+	<item key="on">an</item>
 	<item key="overview">Übersicht</item>
 	<item key="pages_contact">Kontakt</item>
 	<item key="pages_files">Downloads</item>
@@ -49,9 +52,12 @@
 	<item key="pages_search">Suche</item>
 	<item key="pages_sidebar">Sidebar</item>
 	<item key="pdo_extension">PDO Erweiterung</item>
+	<item key="php_settings">PHP Einstellungen</item>
+	<item key="php_version">PHP Version</item>
 	<item key="register_globals">Globale Registrierung von Variablen:</item>
 	<item key="required">Benötigt</item>
 	<item key="requirements">Voraussetzungen</item>
+	<item key="safe_mode">Abgesicherter Modus</item>
 	<item key="show_hide_executed_db_queries">Durchgeführte Datenbankabfragen anzeigen/verstecken</item>
 	<item key="sincerely">Mit freundlichen Grüßen,</item>
 	<item key="step_1_legend">Im Detail wird Sie die Installationsroutine durch folgende Schritte führen:</item>
