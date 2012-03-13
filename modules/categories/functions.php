@@ -120,7 +120,7 @@ function categoriesList($module, $category_id = '', $category_create = false, $c
 	}
 	if ($category_create === true && ACP3_Modules::check('categories', 'create') === true) {
 		$categories['create']['name'] = $category_name . '_create';
-		$categories['create']['value'] = isset($_POST['form'][$categories['create']['name']]) ? $_POST['form'][$categories['create']['name']] : '';
+		$categories['create']['value'] = isset($_POST[$categories['create']['name']]) ? $_POST[$categories['create']['name']] : '';
 	}
 	$tpl->assign('categories', $categories);
 	return ACP3_View::fetchTemplate('categories/create_list.tpl');

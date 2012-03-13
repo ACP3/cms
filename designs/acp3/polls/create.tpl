@@ -20,13 +20,13 @@
 			<dl>
 				<dt><label for="question">{lang t="polls|question"}</label></dt>
 				<dd><input type="text" name="question" id="question" value="{$question}" maxlength="120"></dd>
-	{		</dl>
+			</dl>
+{foreach $answers as $row}
 			<dl>
-foreach $answers as $row}
 				<dt><label for="answer_{$row.number}">{lang t="polls|answer"} {$row.number+1}</label></dt>
 				<dd><input type="text" name="answers[]" id="answer_{$row.number}" value="{$row.value}" maxlength="120"></dd>
-{/foreach}
 			</dl>
+{/foreach}
 			<dl>
 				<dt><label for="multiple">{lang t="common|options"}</label></dt>
 				<dd style="margin:0 20px">

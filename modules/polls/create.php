@@ -65,16 +65,16 @@ if (isset($_POST['submit']) === true) {
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 	$answers = array();
-	if (isset($_POST['form']['answers'])) {
+	if (isset($_POST['answers'])) {
 		// Bisherige Antworten
 		$i = 0;
-		foreach ($_POST['form']['answers'] as $row) {
+		foreach ($_POST['answers'] as $row) {
 			$answers[$i]['number'] = $i;
 			$answers[$i]['value'] = $row;
 			$i++;
 		}
 		// Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
-		if (count($_POST['form']['answers']) <= 9 && !empty($_POST['form']['answers'][$i - 1]) && isset($_POST['form']) === false) {
+		if (count($_POST['answers']) <= 9 && !empty($_POST['answers'][$i - 1]) && isset($_POST['submit']) === false) {
 			$answers[$i]['number'] = $i;
 			$answers[$i]['value'] = '';
 		}
@@ -87,7 +87,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 
 	// Übergabe der Daten an Smarty
 	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));
-	$tpl->assign('question', isset($_POST['form']['question']) ? $_POST['form']['question'] : '');
+	$tpl->assign('question', isset($_POST['question']) ? $_POST['question'] : '');
 	$tpl->assign('answers', $answers);
 	$tpl->assign('multiple', selectEntry('multiple', '1', '0', 'checked'));
 	$tpl->assign('disable', count($answers) < 10 ? false : true);
