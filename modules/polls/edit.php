@@ -21,7 +21,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', '
 			if (!empty($row['value']))
 				$check_answers = true;
 			if (isset($row['delete']))
-				$j++;
+				++$j;
 		}
 		if (!isset($check_answers))
 			$errors[] = $lang->t('polls', 'type_in_answer');
@@ -81,7 +81,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', '
 				$answers[$i]['number'] = $i;
 				$answers[$i]['id'] = $row['id'];
 				$answers[$i]['value'] = $row['value'];
-				$i++;
+				++$i;
 			}
 			// Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
 			if (count($_POST['answers']) <= 9 && !empty($_POST['answers'][$i - 1]['value']) && isset($_POST['submit']) === false) {
