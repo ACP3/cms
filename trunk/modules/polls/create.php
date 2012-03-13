@@ -18,7 +18,7 @@ if (isset($_POST['submit']) === true) {
 	$i = 0;
 	foreach ($_POST['answers'] as $row) {
 		if (!empty($row))
-			$i++;
+			++$i;
 	}
 	if ($i <= 1)
 		$errors[] = $lang->t('polls', 'type_in_answer');
@@ -71,7 +71,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		foreach ($_POST['answers'] as $row) {
 			$answers[$i]['number'] = $i;
 			$answers[$i]['value'] = $row;
-			$i++;
+			++$i;
 		}
 		// Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
 		if (count($_POST['answers']) <= 9 && !empty($_POST['answers'][$i - 1]) && isset($_POST['submit']) === false) {
