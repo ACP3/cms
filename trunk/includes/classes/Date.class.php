@@ -117,9 +117,9 @@ class ACP3_Date
 
 		// Veröffentlichungszeitraum
 		if (is_array($name) === true && $range === 1) {
-			if (!empty($_POST['form'][$name[0]]) && !empty($_POST['form'][$name[1]])) {
-				$value_start = $_POST['form'][$name[0]];
-				$value_end = $_POST['form'][$name[1]];
+			if (!empty($_POST[$name[0]]) && !empty($_POST[$name[1]])) {
+				$value_start = $_POST[$name[0]];
+				$value_end = $_POST[$name[1]];
 			} elseif (is_array($value) === true && ACP3_Validate::isNumber($value[0]) === true && ACP3_Validate::isNumber($value[1]) === true) {
 				$value_start = $this->format($value[0], $format, $mode);
 				$value_end = $this->format($value[1], $format, $mode);
@@ -134,8 +134,8 @@ class ACP3_Date
 			$datepicker['value_end'] = $value_end;
 		// Einfaches Inputfeld mit Datepicker
 		} else {
-			if (!empty($_POST['form'][$name])) {
-				$value = $_POST['form'][$name];
+			if (!empty($_POST[$name])) {
+				$value = $_POST[$name];
 			} elseif (ACP3_Validate::isNumber($value) === true) {
 				$value = $this->format($value, $format, $mode);
 			} else {

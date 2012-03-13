@@ -20,8 +20,8 @@ if (defined('IN_ACP3') === false)
 class ACP3_Validate
 {
 	/**
-	 * Überprüft, ob die bergebenen Privilegien überhaupt existieren
-	 * und plausible Werte enthalten
+	 * Überprüft, ob die übergebenen Privilegien existieren und
+	 * plausible Werte enthalten
 	 *
 	 * @param array $privileges
 	 *	Array mit den IDs der zu überprüfenden Privilegien mit ihren Berechtigungen
@@ -43,7 +43,7 @@ class ACP3_Validate
 		return $valid;
 	}
 	/**
-	 * Überprüft, ob die selektierten Rollen überhaupt existieren
+	 * Überprüft, ob die selektierten Rollen existieren
 	 *
 	 * @param array $roles
 	 *	Die zu überprüfenden Rollen
@@ -83,7 +83,7 @@ class ACP3_Validate
 		return false;
 	}
 	/**
-	 * Überpürft, ob der eingegebene Captcha mit dem generierten übereinstimmt
+	 * Überpürft, ob das eingegebene Captcha mit dem generierten übereinstimmt
 	 *
 	 * @param string $input
 	 * @return boolean
@@ -136,9 +136,12 @@ class ACP3_Validate
 	 */
 	public static function email($var)
 	{
-		$pattern = '/^((\"[^\"\f\n\r\t\v\b]+\")|([\w\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+(\.[\w\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+)*))@((\[(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))\])|(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))|((([A-Za-z0-9\-])+\.)+[A-Za-z\-]+))$/';
-
-		return (bool) preg_match($pattern, $var);
+		if (function_exists('filter_var')) {
+			return (bool) filter_var($var, FILTER_VALIDATE_EMAIL);
+		} else {
+			$pattern = '/^((\"[^\"\f\n\r\t\v\b]+\")|([\w\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+(\.[\w\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+)*))@((\[(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))\])|(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))|((([A-Za-z0-9\-])+\.)+[A-Za-z\-]+))$/';
+			return (bool) preg_match($pattern, $var);
+		}
 	}
 	/**
 	 * Validiert das Formtoken auf seine Gültigkeit

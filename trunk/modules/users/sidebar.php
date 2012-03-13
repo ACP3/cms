@@ -65,7 +65,7 @@ if ($auth->isUser() === true) {
 
 	$tpl->assign('enable_registration', $settings['enable_registration']);
 	$tpl->assign('uri', $uri->route(defined('IN_ADM') === true ? 'acp/users/login' : 'users/login'));
-	$tpl->assign('redirect_uri', isset($_POST['form']['redirect_uri']) ? $_POST['form']['redirect_uri'] : $currentPage);
+	$tpl->assign('redirect_uri', isset($_POST['redirect_uri']) ? $_POST['redirect_uri'] : $currentPage);
 
 	ACP3_View::displayTemplate('users/sidebar_login.tpl');
 }

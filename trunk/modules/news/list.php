@@ -10,8 +10,8 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (isset($_POST['form']['cat']) && ACP3_Validate::isNumber($_POST['form']['cat']) === true) {
-	$cat = (int) $_POST['form']['cat'];
+if (isset($_POST['cat']) && ACP3_Validate::isNumber($_POST['cat']) === true) {
+	$cat = (int) $_POST['cat'];
 } elseif (ACP3_Validate::isNumber($uri->cat) === true) {
 	$cat = (int) $uri->cat;
 } else {
