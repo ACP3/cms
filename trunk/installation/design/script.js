@@ -1,6 +1,6 @@
 jQuery(function($) {
 	// Sprachdropdown
-	$('#languages input[type=submit]').hide();
+	$('#languages :submit').hide();
 	$('#lang').change(function() {
 		$('#languages').submit();
 	});
@@ -13,5 +13,5 @@ jQuery(function($) {
 	});
 
 	// jQuery UI Tabs
-	$('#tabs').tabs({ cookie: { expires: 30 }});
+	$('#tabs').tabs();
 })
