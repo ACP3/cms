@@ -32,19 +32,7 @@ $php_self = dirname(PHP_SELF);
 define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
 define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 
-/**
- * Autoloading für die ACP3 eigenen Klassen
- *
- * @param string $class
- *  Der Name der zu ladenden Klasse
- */
-function acp3_load_class($class)
-{
-	$file = INCLUDES_DIR . 'classes/' . str_replace('ACP3_', '', $class) . '.class.php';
-	if(is_file($file) === true)
-		require_once $file;
-}
-spl_autoload_register("acp3_load_class");
+require INCLUDES_DIR . 'autoload.php';
 
 $db = new ACP3_DB();
 $handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);

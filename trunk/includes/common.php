@@ -31,19 +31,7 @@ define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
 define('MODULES_DIR', ACP3_ROOT . 'modules/');
 define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 
-/**
- * Autoloading für die ACP3 eigenen Klassen
- *
- * @param string $class
- *  Der Name der zu ladenden Klasse
- */
-function acp3_load_class($class)
-{
-	$file = INCLUDES_DIR . 'classes/' . str_replace('ACP3_', '', $class) . '.class.php';
-	if(is_file($file) === true)
-		require_once $file;
-}
-spl_autoload_register("acp3_load_class");
+require INCLUDES_DIR . 'autoload.php';
 
 // Smarty einbinden
 require INCLUDES_DIR . 'smarty/Smarty.class.php';
