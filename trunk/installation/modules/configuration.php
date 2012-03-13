@@ -3,7 +3,6 @@ if (defined('IN_INSTALL') === false)
 	exit;
 
 if (isset($_POST['submit'])) {
-	$_POST = $_POST['form'];
 	$config_path = ACP3_ROOT . 'includes/config.php';
 	$db = new ACP3_DB();
 
@@ -218,7 +217,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$tpl->assign('entries', recordsPerPage(20));
 
 	// Zeitzonen
-	$tpl->assign('time_zones', getTimeZones());
+	$tpl->assign('time_zones', getTimeZones(date_default_timezone_get()));
 
 	$defaults = array(
 		'db_host' => 'localhost',

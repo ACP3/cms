@@ -28,6 +28,7 @@
 	<item key="installation_successful_2"><strong>Attention:</strong> Please delete the "installation"-folder, because it's a possible security risk, if this folders exists in a production environment.</item>
 	<item key="language">Language:</item>
 	<item key="licence">Licence</item>
+	<item key="magic_quotes">Magic Quotes:</item>
 	<item key="maximum_uploadsize">Maximum uploadsize:</item>
 	<item key="navigation">Navigation</item>
 	<item key="news_headline">Installation finished successfully!</item>
@@ -35,7 +36,9 @@
 	<item key="news_text"><![CDATA[It looks like that the installation of the ACP3 4.0 was successful.<br />This is only a Testnews, which you can now edit or delete inside the administration area.<br />Apart from that, the Goratsch Webdesign Team wishes you much fun with the ACP3 4.0!]]></item>
 	<item key="newsletter_mailsig">the Newsletterteam</item>
 	<item key="not_writeable">Not writeable</item>
+	<item key="off">off</item>
 	<item key="offline_message">This website is currently offline. Please try it in a few minutes again.</item>
+	<item key="on">on</item>
 	<item key="overview">Overview</item>
 	<item key="pages_contact">Contact</item>
 	<item key="pages_files">Downloads</item>
@@ -49,9 +52,12 @@
 	<item key="pages_search">Search</item>
 	<item key="pages_sidebar">Sidebar</item>
 	<item key="pdo_extension">PDO Extension</item>
+	<item key="php_settings">PHP settings</item>
+	<item key="php_version">PHP version</item>
 	<item key="register_globals">Global registration of variables:</item>
 	<item key="required">Required</item>
 	<item key="requirements">Requirements</item>
+	<item key="safe_mode">Safe mode</item>
 	<item key="show_hide_executed_db_queries">Show/hide executed database queries</item>
 	<item key="sincerely">Sincerely,</item>
 	<item key="step_1_legend">In detail, the installer will guide you through the following steps:</item>

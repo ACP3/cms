@@ -1,6 +1,4 @@
 <?php
-ob_start();
-
 define('IN_ACP3', true);
 define('IN_INSTALL', true);
 
@@ -14,7 +12,7 @@ require ACP3_ROOT . 'installation/includes/startup.php';
 $i = 0;
 $is_file = false;
 foreach ($pages as $row) {
-	if ($row['file'] == $uri->file) {
+	if ($row['file'] === $uri->file) {
 		$pages[$i]['selected'] = ' class="selected"';
 		$tpl->assign('title', $lang->t('installation', $row['file']));
 		$is_file = true;
@@ -48,5 +46,3 @@ if ($is_file === true) {
 }
 
 $tpl->display('layout.tpl');
-
-ob_end_flush();
