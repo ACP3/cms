@@ -14,20 +14,6 @@ define('ACP3_ROOT', realpath(dirname(__FILE__) . '/../') . '/');
 define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 define('MODULES_DIR', ACP3_ROOT . 'modules/');
 
-/**
- * Autoloading für die ACP3 eigenen Klassen
- *
- * @param string $class
- *  Der Name der zu ladenden Klasse
- */
-function acp3_load_class($class)
-{
-	$file = INCLUDES_DIR . 'classes/' . str_replace('ACP3_', '', $class) . '.class.php';
-	if(is_file($file) === true)
-		require_once $file;
-}
-spl_autoload_register("acp3_load_class");
-
 require ACP3_ROOT . 'includes/config.php';
 
 define('NEW_VERSION', '4.0 SVN');
@@ -36,6 +22,8 @@ define('PHP_SELF', '');
 if (defined('CONFIG_DB_VERSION') === false) {
 	define('CONFIG_DB_VERSION', (int) 0);
 }
+
+require INCLUDES_DIR . 'autoload.php';
 
 $db = new ACP3_DB();
 $handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
