@@ -249,9 +249,9 @@ fieldset {
 	margin: 0 auto;
 	font-size: 1em;
 }
-#tabs table {
+#tabs table, fieldset dl, #tabs dl {
 	font-family: 'Lucida Grande', 'Trebuchet MS', Arial, sans-serif;
-	font-size: 1em
+	font-size: 1em;
 }
 fieldset dl, #tabs dl {
 	text-align: left;

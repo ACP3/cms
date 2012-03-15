@@ -8,13 +8,7 @@
 			<li><a href="#tab-2">{lang t="common|seo"}</a></li>
 		</ul>
 		<div id="tab-1">
-			<dl>
-				<dt><label for="start">{lang t="common|publication_period"}</label></dt>
-				<dd>{$publication_period}</dd>
-			</dl>
-			<p>
-				{lang t="common|date_description"}
-			</p>
+			{$publication_period}
 			<dl>
 				<dt><label for="name">{lang t="gallery|title"}</label></dt>
 				<dd><input type="text" name="name" id="name" value="{$form.name}" maxlength="120"></dd>

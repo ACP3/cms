@@ -108,13 +108,17 @@ fieldset {
 	width: 90%;
 	margin: 0 auto 1px;
 	padding: 10px;
-	border: 1px solid #c2c2c2;
-	font-size: 100%;
+	border: 1px solid #ccc;
+	font-size: 1em;
 }
 #tabs {
 	width: 90%;
 	margin: 0 auto;
-	font-size: 100%;
+	font-size: 1em;
+}
+#tabs table, fieldset dl, #tabs dl {
+	font-family: 'Lucida Grande', 'Trebuchet MS', Arial, sans-serif;
+	font-size: 1em;
 }
 fieldset dl, #tabs dl {
 	text-align: left;
