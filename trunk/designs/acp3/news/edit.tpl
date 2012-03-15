@@ -10,13 +10,7 @@
 			<li><a href="#tab-4">{lang t="common|seo"}</a></li>
 		</ul>
 		<div id="tab-1">
-			<dl>
-				<dt><label for="start">{lang t="common|publication_period"}</label></dt>
-				<dd>{$publication_period}</dd>
-			</dl>
-			<p>
-				{lang t="common|date_description"}
-			</p>
+			{$publication_period}
 		</div>
 		<div id="tab-2">
 			<dl>

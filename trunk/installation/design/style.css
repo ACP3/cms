@@ -142,24 +142,28 @@ fieldset {
 	width: 70%;
 	margin: 0 auto 1px;
 	padding: 10px;
-	border: 1px solid #c2c2c2;
-	font-size: 100%;
+	border: 1px solid #ccc;
+	font-size: 1em;
 }
 #tabs {
 	width: 70%;
 	margin: 0 auto;
-	font-size: 100%;
+	font-size: 1em;
+}
+#tabs table, fieldset dl, #tabs dl {
+	font-family: 'Lucida Grande', 'Trebuchet MS', Arial, sans-serif;
+	font-size: 1em;
+}
+fieldset dl, #tabs dl {
+	text-align: left;
+}
+fieldset ol {
+	margin: 0 20px;
 }
 legend {
 	padding: 1px 6px;
 	font: bold 1.1em/20px Arial, sans-serif;
 	color: #069;
-}
-fieldset dl, #tabs div dl {
-	text-align: left;
-}
-fieldset ol {
-	margin: 0 20px;
 }
 label {
 	font: 1.0em Arial, sans-serif;
