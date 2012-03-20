@@ -1,11 +1,15 @@
 $(document).ready(function() {
-	$('#create-link').attr('href', $('#create-link').attr('href') + 'layout_simple/');
-	$('#create-link').fancybox({
-		type: 'iframe',
-		autoSize: true,
-		padding: 0,
-		afterClose: function() {
-			window.location.reload();
+	$('#create-link').click(function(e) {
+		if (e.which == 1) {
+			$.fancybox.open({ href: $(this).attr('href') + 'layout_simple/', title: $(this).attr('title') }, {
+				type: 'iframe',
+				autoSize: true,
+				padding: 0,
+				afterClose: function() {
+					window.location.reload();
+				}
+			});
+			e.preventDefault();
 		}
 	});
 });
