@@ -103,7 +103,7 @@ class ACP3_Breadcrumb
 	 */
 	public function replaceAnchestor($title, $path = 0)
 	{
-		$index = count($this->steps) - 1;
+		$index = count($this->steps) - (!empty($this->steps) ? 1 : 0);
 		$this->steps[$index]['title'] = $title;
 		$this->steps[$index]['uri'] = $path;
 		$this->steps[$index]['last'] = true;
