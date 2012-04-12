@@ -218,7 +218,7 @@ CREATE TABLE `{pre}sessions` (
 	`session_starttime` int(10) unsigned NOT NULL,
 	`session_data` text NOT NULL,
 	PRIMARY KEY (`session_id`)
-) {engine}
+) {engine};
 
 CREATE TABLE `{pre}settings` (
  `id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -257,7 +257,6 @@ CREATE TABLE `{pre}users` (
 	`date_format_long` VARCHAR(30) NOT NULL,
 	`date_format_short` VARCHAR(30) NOT NULL,
 	`time_zone` VARCHAR(100) NOT NULL,
-	`dst` TINYINT(1) UNSIGNED NOT NULL,
 	`language` VARCHAR(10) NOT NULL,
 	`entries` TINYINT(2) UNSIGNED NOT NULL,
 	`draft` TEXT NOT NULL,
