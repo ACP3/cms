@@ -52,7 +52,7 @@ if ($auth->isUser() === false || ACP3_Validate::isNumber($auth->getUserId()) ===
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-		$user = $db->select('date_format_long, date_format_short, time_zone, dst, language, entries', 'users', 'id = \'' . $auth->getUserId() . '\'');
+		$user = $db->select('date_format_long, date_format_short, time_zone, language, entries', 'users', 'id = \'' . $auth->getUserId() . '\'');
 
 		$tpl->assign('language_override', $settings['language_override']);
 		$tpl->assign('entries_override', $settings['entries_override']);

@@ -57,7 +57,6 @@ if ($auth->isUser() === true) {
 				'date_format_long' => CONFIG_DATE_FORMAT_LONG,
 				'date_format_short' => CONFIG_DATE_FORMAT_SHORT,
 				'time_zone' => CONFIG_DATE_TIME_ZONE,
-				'dst' => CONFIG_DATE_DST,
 				'language' => CONFIG_LANG,
 				'entries' => CONFIG_ENTRIES,
 				'draft' => '',
