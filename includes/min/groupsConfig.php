@@ -51,6 +51,7 @@ if ($_GET['g'] === 'css') {
 	}
 
 	$styles['css'][] = DESIGN_PATH . 'jquery/jquery-ui.css';
+	$styles['css'][] = DESIGN_PATH . 'jquery/jquery-timepicker.css';
 	$styles['css'][] = DESIGN_PATH . 'jquery/jquery-fancybox.css';
 
 	return $styles;
@@ -59,6 +60,7 @@ if ($_GET['g'] === 'css') {
 	$scripts['js'][] = DESIGN_PATH . 'jquery/jquery.min.js';
 	$scripts['js'][] = DESIGN_PATH . 'jquery/jquery.cookie.js';
 	$scripts['js'][] = DESIGN_PATH . 'jquery/jquery.ui.min.js';
+	$scripts['js'][] = DESIGN_PATH . 'jquery/jquery.timepicker.js';
 	$scripts['js'][] = DESIGN_PATH . 'jquery/jquery.fancybox.js';
 	$scripts['js'][] = DESIGN_PATH . 'script.js';
 

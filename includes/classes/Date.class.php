@@ -106,7 +106,7 @@ class ACP3_Date
 				'showOn' => '\'button\'',
 				'buttonImage' => '\'' . DESIGN_PATH . 'images/16/cal.png\'',
 				'buttonImageOnly' => 'true',
-				'constrainInput' => 'false',
+				'constrainInput' => 'true',
 				'changeMonth' => 'true',
 				'changeYear' => 'true',
 			)

@@ -7,7 +7,7 @@
 	<dd>
 		<script type="text/javascript">
 		$(document).ready(function() {
-			$('#{$datepicker.name_start}, #{$datepicker.name_end}').datepicker({
+			$('#{$datepicker.name_start}, #{$datepicker.name_end}').datetimepicker({
 {foreach $datepicker.params as $paramKey => $paramValue}
 				{$paramKey}: {$paramValue},
 {/foreach}
@@ -25,7 +25,7 @@
 	<dd>
 		<script type="text/javascript">
 		$(document).ready(function() {
-			$('#{$datepicker.name}').datepicker({
+			$('#{$datepicker.name}').datetimepicker({
 {foreach $datepicker.params as $paramKey => $paramValue}
 				{$paramKey}: {$paramValue},
 {/foreach}
