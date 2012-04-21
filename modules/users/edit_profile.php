@@ -13,8 +13,9 @@ if (defined('IN_ACP3') === false)
 if ($auth->isUser() === false || ACP3_Validate::isNumber($auth->getUserId()) === false) {
 	$uri->redirect('errors/403');
 } else {
-	$breadcrumb->append($lang->t('users', 'home'), $uri->route('users/home'));
-	$breadcrumb->append($lang->t('users', 'edit_profile'));
+	$breadcrumb->append($lang->t('users', 'users'), $uri->route('users'))
+			   ->append($lang->t('users', 'home'), $uri->route('users/home'))
+			   ->append($lang->t('users', 'edit_profile'));
 
 	if (isset($_POST['submit']) === true) {
 		require_once MODULES_DIR . 'users/functions.php';
