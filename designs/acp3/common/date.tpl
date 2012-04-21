@@ -7,7 +7,11 @@
 	<dd>
 		<script type="text/javascript">
 		$(document).ready(function() {
+{if $datepicker.with_time == 1}
 			$('#{$datepicker.name_start}, #{$datepicker.name_end}').datetimepicker({
+{else}
+			$('#{$datepicker.name_start}, #{$datepicker.name_end}').datepicker({
+{/if}
 {foreach $datepicker.params as $paramKey => $paramValue}
 				{$paramKey}: {$paramValue},
 {/foreach}
@@ -15,9 +19,9 @@
 		});
 		</script>
 		<span style="white-space:nowrap">
-			<input type="text" name="{$datepicker.name_start}" id="{$datepicker.name_start}" value="{$datepicker.value_start}" maxlength="16" title="{lang t="common|start_date"}" required style="width:45%;margin-right:4px;display:inline">
+			<input type="text" name="{$datepicker.name_start}" id="{$datepicker.name_start}" value="{$datepicker.value_start}" maxlength="{$datepicker.length}" title="{lang t="common|start_date"}" required style="width:45%;margin-right:4px;display:inline">
 			-
-			<input type="text" name="{$datepicker.name_end}" id="{$datepicker.name_end}" value="{$datepicker.value_end}" maxlength="16" title="{lang t="common|end_date"}" required style="width:45%;margin-right:4px;display:inline">
+			<input type="text" name="{$datepicker.name_end}" id="{$datepicker.name_end}" value="{$datepicker.value_end}" maxlength="{$datepicker.length}" title="{lang t="common|end_date"}" required style="width:45%;margin-right:4px;display:inline">
 		</span>
 	</dd>
 {else}
@@ -25,7 +29,11 @@
 	<dd>
 		<script type="text/javascript">
 		$(document).ready(function() {
+{if $datepicker.with_time == 1}
 			$('#{$datepicker.name}').datetimepicker({
+{else}
+			$('#{$datepicker.name}').datepicker({
+{/if}
 {foreach $datepicker.params as $paramKey => $paramValue}
 				{$paramKey}: {$paramValue},
 {/foreach}
@@ -33,7 +41,7 @@
 		});
 		</script>
 		<span style="white-space:nowrap">
-			<input type="text" name="{$datepicker.name}" id="{$datepicker.name}" value="{$datepicker.value}" maxlength="16" style="width:96%;margin-right:4px;display:inline">
+			<input type="text" name="{$datepicker.name}" id="{$datepicker.name}" value="{$datepicker.value}" maxlength="{$datepicker.length}" style="width:96%;margin-right:4px;display:inline">
 		</span>
 	</dd>
 {/if}
