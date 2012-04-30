@@ -11,12 +11,20 @@
 			<dl>
 				<dt><label for="address">{lang t="contact|address"}</label></dt>
 				<dd>{wysiwyg name="address" value="`$form.address`" height="150" toolbar="simple"}</dd>
+			</dl>
+			<dl>
 				<dt><label for="mail">{lang t="common|email"}</label></dt>
 				<dd><input type="email" name="mail" id="mail" value="{$form.mail}" maxlength="120"></dd>
+			</dl>
+			<dl>
 				<dt><label for="telephone">{lang t="contact|telephone"}</label></dt>
 				<dd><input type="tel" name="telephone" id="telephone" value="{$form.telephone}" maxlength="120"></dd>
+			</dl>
+			<dl>
 				<dt><label for="fax">{lang t="contact|fax"}</label></dt>
 				<dd><input type="tel" name="fax" id="fax" value="{$form.fax}" maxlength="120"></dd>
+			</dl>
+			<dl>
 				<dt><label for="disclaimer">{lang t="contact|disclaimer"}</label></dt>
 				<dd>{wysiwyg name="disclaimer" value="`$form.disclaimer`" height="150px" toolbar="simple"}</dd>
 			</dl>
