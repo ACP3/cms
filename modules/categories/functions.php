@@ -98,17 +98,18 @@ function categoriesCreate($name, $module)
  * @param string $module
  * @param string $category_id
  * @param boolean $category_create
- * @param string $category_name
+ * @param string $form_field_name
  * @return string
  */
-function categoriesList($module, $category_id = '', $category_create = false, $category_name = 'cat') {
-	global $db, $tpl;
+function categoriesList($module, $category_id = '', $category_create = false, $form_field_name = 'cat', $custom_text = '') {
+	global $db, $lang, $tpl;
 
 	$categories = array();
 	$data = getCategoriesCache($module);
 	$c_data = count($data);
 
-	$categories['name'] = $category_name;
+	$categories['custom_text'] = !empty($custom_text) ? $custom_text : $lang->t('common', 'pls_select');
+	$categories['name'] = $form_field_name;
 	if ($c_data > 0) {
 		for ($i = 0; $i < $c_data; ++$i) {
 			$data[$i]['selected'] = selectEntry('cat', $data[$i]['id'], $category_id);
@@ -119,7 +120,7 @@ function categoriesList($module, $category_id = '', $category_create = false, $c
 		$categories['categories'] = array();
 	}
 	if ($category_create === true && ACP3_Modules::check('categories', 'create') === true) {
-		$categories['create']['name'] = $category_name . '_create';
+		$categories['create']['name'] = $form_field_name . '_create';
 		$categories['create']['value'] = isset($_POST[$categories['create']['name']]) ? $_POST[$categories['create']['name']] : '';
 	}
 	$tpl->assign('categories', $categories);
