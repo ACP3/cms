@@ -1,6 +1,6 @@
 <span style="white-space:nowrap">
 	<select name="{$categories.name}" id="{$categories.name}"{if isset($categories.create)} style="width:68%;display:inline"{/if}>
-		<option value="">{lang t="common|pls_select"}</option>
+		<option value="">{$categories.custom_text}</option>
 {foreach $categories.categories as $row}
 		<option value="{$row.id}"{$row.selected}>{$row.name}</option>
 {/foreach}
