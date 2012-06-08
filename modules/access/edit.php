@@ -79,7 +79,8 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles
 
 		for ($i = 0; $i < $c_modules; ++$i) {
 			for ($j = 0; $j < $c_privileges; ++$j) {
-				$priv_val = $rules[$modules[$i]['name']][$privileges[$j]['key']]['permission'];
+				$priv_val = isset($rules[$modules[$i]['name']][$privileges[$j]['key']]['permission']) ? $rules[$modules[$i]['name']][$privileges[$j]['key']]['permission'] : 0;
+				$select = array();
 				$select[0]['value'] = 0;
 				$select[0]['selected'] = !isset($_POST['submit']) && $priv_val == 0 || isset($_POST['submit']) && $_POST['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 0 ? ' checked="checked"' : '';
 				$select[0]['lang'] = $lang->t('access', 'deny_access');

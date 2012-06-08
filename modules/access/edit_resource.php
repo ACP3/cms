@@ -13,8 +13,6 @@ if (defined('IN_ADM') === false)
 $breadcrumb->append($lang->t('access', 'adm_list_resources'), $uri->route('acp/access/adm_list_resources'))
 		   ->append($lang->t('access', 'edit_resource'));
 
-require_once MODULES_DIR . 'access/functions.php';
-
 if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_resources', 'id = \'' . $uri->id . '\'') == 1) {
 	if (isset($_POST['submit']) === true) {
 		if (empty($_POST['privileges']) || ACP3_Validate::isNumber($_POST['privileges']) === false)

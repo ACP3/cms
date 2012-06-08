@@ -361,10 +361,17 @@ if (CONFIG_DB_VERSION < 21) {
 	);
 	echo executeSqlQueries($queries, 21);
 }
+if (CONFIG_DB_VERSION < 22) {
+	$module_id = $db->select('id', 'modules', 'name = \'access\'');
+	$queries = array(
+		"INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES ('', '" . $module_id[0]['id'] . "', 'create_resources', '', 4);",
+	);
+	echo executeSqlQueries($queries, 22);
+}
 
 // Konfigurationsdatei aktualisieren
 $config = array(
-	'db_version' => 21,
+	'db_version' => 22,
 	'maintenance_mode' => (bool) CONFIG_MAINTENANCE_MODE,
 	'seo_mod_rewrite' => (bool) CONFIG_SEO_MOD_REWRITE,
 	'date_time_zone' => is_int(CONFIG_DATE_TIME_ZONE) === true ? 'Europe/Berlin' : CONFIG_DATE_TIME_ZONE,

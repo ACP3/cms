@@ -84,6 +84,7 @@
 	<item key="message">Message</item>
 	<item key="message_to_short">The message should be a least 3 characters long</item>
 	<item key="min">Minute</item>
+	<item key="module">Module</item>
 	<item key="modules">Modules</item>
 	<item key="month">Month</item>
 	<item key="move_down">Move entry one step down</item>
