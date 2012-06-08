@@ -6,6 +6,7 @@
 	<item key="assigned_privilege">Zugeordnete Privilegie</item>
 	<item key="filename">Dateiname</item>
 	<item key="create">Neue Rolle erstellen</item>
+	<item key="create_resource">Neue Ressource erstellen</item>
 	<item key="delete">Rolle löschen</item>
 	<item key="deny_access">Zugriff verbieten</item>
 	<item key="edit">Rolle bearbeiten</item>
@@ -17,9 +18,12 @@
 	<item key="no_privilege_selected">Bitte setzen Sie die Berechtigungen für die einzelnen Aktionen, die ein Benutzer ausführen darf.</item>
 	<item key="permissions">Berechtigungen</item>
 	<item key="privilege_does_not_exist">Die ausgewählte Privilegie existiert nicht.</item>
+	<item key="resource_name">Ressourcen-Name</item>
 	<item key="role_already_exists">Es existiert bereits ein Rolle mit diesem Namen.</item>
 	<item key="role_undeletable">Die Rollen für Gäste, Benutzer und Administratoren können nicht gelöscht werden!</item>
 	<item key="roles">Zugeordnete Rollen</item>
 	<item key="superior_role">Übergeordnete Rolle</item>
+	<item key="select_module">Bitte wählen Sie das Modul aus, für welches die Ressource erstellt werden soll.</item>
 	<item key="select_privilege">Bitte wählen Sie für die gewählte Ressource eine Privilegie aus.</item>
+	<item key="type_in_resource">Bitte geben Sie den Namen der Ressource an.</item>
 </language>

@@ -1,5 +1,6 @@
 <form action="{uri args="acp/access/delete_resources"}" method="post">
 	<div id="adm-list">
+		{check_access mode="link" uri="acp/access/create_resource"  action="access|create_resource" icon="32/resource" lang="access|create_resource"}
 		{check_access mode="input" action="access|delete_resources" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>

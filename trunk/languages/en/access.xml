@@ -6,6 +6,7 @@
 	<item key="assigned_privilege">Assigned privilege</item>
 	<item key="filename">Filename</item>
 	<item key="create">Create a new role</item>
+	<item key="create_resource">Create a new resource</item>
 	<item key="delete">Delete roles</item>
 	<item key="deny_access">Deny</item>
 	<item key="edit">Edit role</item>
@@ -17,9 +18,12 @@
 	<item key="no_privilege_selected">Please select the privileges, to which the user should have access</item>
 	<item key="permissions">Permissions</item>
 	<item key="privilege_does_not_exist">The selected privilege does not exist.</item>
+	<item key="resource_name">Resource name</item>
 	<item key="role_already_exists">There is already an role with the same name</item>
 	<item key="role_undeletable">It's impossible to delete the guest, user and administrator roles!</item>
 	<item key="roles">Assigned roles</item>
 	<item key="superior_role">Superior role</item>
+	<item key="select_module">Please select a module, for which you want to create the resource.</item>
 	<item key="select_privilege">Please select a privilege for this resource.</item>
+	<item key="type_in_resource">Please type in the name of resource.</item>
 </language>
