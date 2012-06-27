@@ -68,7 +68,7 @@ if (isset($_POST['submit']) === true) {
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-	$mod_list = ACP3_Modules::modulesList();
+	$mod_list = ACP3_Modules::getAllModules();
 	$tables = array();
 
 	foreach ($mod_list as $info) {

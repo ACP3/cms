@@ -414,6 +414,7 @@ a.form, a.form:link,
 	font: bold 0.9em/25px Verdana, Arial, sans-serif;
 	position: relative;
 	text-align: center;
+	clear: both;
 }
 #pagination a.next, #pagination a.previous {
 	padding: 0;

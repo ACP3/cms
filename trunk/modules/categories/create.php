@@ -67,7 +67,7 @@ if (isset($_POST['submit']) === true) {
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 	$tpl->assign('form', isset($_POST['submit']) ? $_POST : array('name' => '', 'description' => ''));
 
-	$mod_list = ACP3_Modules::modulesList();
+	$mod_list = ACP3_Modules::getAllModules();
 
 	foreach ($mod_list as $name => $info) {
 		if ($info['active'] && $info['categories']) {

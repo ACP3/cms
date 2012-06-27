@@ -26,14 +26,23 @@ function aclDeleteNode($id)
 		if (count($lr) === 1) {
 			$db->link->beginTransaction();
 
+			// Die aktuelle Seite mit allen untergeordneten Seiten selektieren
+			$roles = $db->query('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM {pre}acl_roles AS p, {pre}acl_roles AS n WHERE p.id = \'' . $id . '\' AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id ASC');
+			$c_roles = count($roles);
+
 			$bool = $db->delete('acl_roles', 'left_id = \'' . $lr[0]['left_id'] . '\'');
-			$bool2 = $db->query('UPDATE {pre}acl_roles SET left_id = left_id - 1, right_id = right_id - 1 WHERE left_id BETWEEN ' . $lr[0]['left_id'] . ' AND ' . $lr[0]['right_id'], 0);
-			$bool3 = $db->query('UPDATE {pre}acl_roles SET left_id = left_id - 2 WHERE left_id > ' . $lr[0]['right_id'], 0);
-			$bool4 = $db->query('UPDATE {pre}acl_roles SET right_id = right_id - 2 WHERE right_id > ' . $lr[0]['right_id'], 0);
+			// root_id und parent_id der Kinder aktualisieren
+			for ($i = 1; $i < $c_roles; ++$i) {
+				$parent = $db->query('SELECT id FROM {pre}acl_roles WHERE left_id < ' . $roles[$i]['left_id'] . ' AND right_id >= ' . $roles[$i]['right_id'] . ' ORDER BY left_id DESC LIMIT 1');
+				$db->query('UPDATE {pre}acl_roles SET parent_id = ' . (!empty($parent[0]['id']) ? $parent[0]['id'] : 0) . ', left_id = left_id - 1, right_id = right_id - 1 WHERE id = ' . $roles[$i]['id'], 0);
+			}
+
+			$bool2 = $db->query('UPDATE {pre}acl_roles SET left_id = left_id - 2 WHERE left_id > ' . $lr[0]['right_id'], 0);
+			$bool3 = $db->query('UPDATE {pre}acl_roles SET right_id = right_id - 2 WHERE right_id > ' . $lr[0]['right_id'], 0);
 
 			$db->link->commit();
 
-			return $bool !== false && $bool2 !== false && $bool3 !== false && $bool4 !== false ? true : false;
+			return $bool !== false && $bool2 !== false && $bool3 !== false ? true : false;
 		}
 	}
 	return false;
@@ -61,7 +70,7 @@ function aclEditNode($id, $parent, array $update_values)
 			$bool = $db->update('acl_roles', $update_values, 'id = \'' . $id . '\'');
 		} else {
 			// Überprüfung, falls Seite kein Root-Element ist, aber keine Veränderung vorgenommen werden soll...
-			$chk_parent = $db->query('SELECT id FROM {pre}acl_roles WHERE left_id < ' . $pages[0]['left_id'] . ' AND right_id > ' . $pages[0]['right_id'] . ' ORDER BY left_id DESC LIMIT 1');
+			$chk_parent = $db->query('SELECT id FROM {pre}acl_roles WHERE left_id < ' . $roles[0]['left_id'] . ' AND right_id > ' . $roles[0]['right_id'] . ' ORDER BY left_id DESC LIMIT 1');
 			if (isset($chk_parent[0]) && $chk_parent[0]['id'] == $parent) {
 				$bool = $db->update('acl_roles', $update_values, 'id = \'' . $id . '\'');
 			// ...ansonsten den Baum bearbeiten...
@@ -102,7 +111,8 @@ function aclEditNode($id, $parent, array $update_values)
 				// Einträge aktualisieren
 				$c_roles = count($roles);
 				for ($i = 0; $i < $c_roles; ++$i) {
-					$bool = $db->query('UPDATE {pre}acl_roles SET left_id = ' . ($roles[$i]['left_id'] + $diff) . ', right_id = ' . ($roles[$i]['right_id'] + $diff) . ' WHERE id = \'' . $roles[$i]['id'] . '\'', 0);
+					$parent = $db->query('SELECT id FROM {pre}acl_roles WHERE left_id < ' . ($roles[$i]['left_id'] + $diff) . ' AND right_id > ' . ($roles[$i]['right_id'] + $diff) . ' ORDER BY left_id DESC LIMIT 1');
+					$bool = $db->query('UPDATE {pre}acl_roles SET parent_id = \'' . (!empty($parent[0]['id']) ? $parent[0]['id'] : 0) . '\', left_id = ' . ($roles[$i]['left_id'] + $diff) . ', right_id = ' . ($roles[$i]['right_id'] + $diff) . ' WHERE id = \'' . $roles[$i]['id'] . '\'', 0);
 					if ($bool === false)
 						break;
 				}

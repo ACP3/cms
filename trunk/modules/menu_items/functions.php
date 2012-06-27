@@ -94,14 +94,24 @@ function menuItemsDeleteNode($id)
 		if (count($lr) === 1) {
 			$db->link->beginTransaction();
 
+			// Die aktuelle Seite mit allen untergeordneten Seiten selektieren
+			$items = $db->query('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM {pre}menu_items AS p, {pre}menu_items AS n WHERE p.id = \'' . $id . '\' AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id ASC');
+			$c_items = count($items);
+
 			$bool = $db->delete('menu_items', 'left_id = \'' . $lr[0]['left_id'] . '\'');
-			$bool2 = $db->query('UPDATE {pre}menu_items SET left_id = left_id - 1, right_id = right_id - 1 WHERE left_id BETWEEN ' . $lr[0]['left_id'] . ' AND ' . $lr[0]['right_id'], 0);
-			$bool3 = $db->query('UPDATE {pre}menu_items SET left_id = left_id - 2 WHERE left_id > ' . $lr[0]['right_id'], 0);
-			$bool4 = $db->query('UPDATE {pre}menu_items SET right_id = right_id - 2 WHERE right_id > ' . $lr[0]['right_id'], 0);
+			// root_id und parent_id der Kinder aktualisieren
+			for ($i = 1; $i < $c_items; ++$i) {
+				$root_id = $db->query('SELECT id FROM {pre}menu_items WHERE left_id < ' . $items[$i]['left_id'] . ' AND right_id >= ' . $items[$i]['right_id'] . ' ORDER BY left_id ASC LIMIT 1');
+				$parent = $db->query('SELECT id FROM {pre}menu_items WHERE left_id < ' . $items[$i]['left_id'] . ' AND right_id >= ' . $items[$i]['right_id'] . ' ORDER BY left_id DESC LIMIT 1');
+				$db->query('UPDATE {pre}menu_items SET root_id = ' . (!empty($root_id[0]['id']) ? $root_id[0]['id'] : $items[$i]['id']) . ', parent_id = ' . (!empty($parent[0]['id']) ? $parent[0]['id'] : 0) . ', left_id = left_id - 1, right_id = right_id - 1 WHERE id = ' . $items[$i]['id'], 0);
+			}
+
+			$bool2 = $db->query('UPDATE {pre}menu_items SET left_id = left_id - 2 WHERE left_id > ' . $lr[0]['right_id'], 0);
+			$bool3 = $db->query('UPDATE {pre}menu_items SET right_id = right_id - 2 WHERE right_id > ' . $lr[0]['right_id'], 0);
 
 			$db->link->commit();
 
-			return $bool !== false && $bool2 !== false && $bool3 !== false && $bool4 !== false ? true : false;
+			return $bool !== false && $bool2 !== false && $bool3 !== false ? true : false;
 		}
 	}
 	return false;
@@ -125,8 +135,8 @@ function menuItemsInsertNode($parent_id, array $insert_values)
 
 		// Letzten Eintrag des zugewiesenen Blocks holen
 		$node = $db->select('MAX(right_id) AS right_id', 'menu_items', 'block_id = \'' . $db->escape($insert_values['block_id']) . '\'');
-		if (empty($node)) {
-			$node = $db->select('MAX(right_id) AS right_id', 'menu_items', 'block_id < \'' . $db->escape($insert_values['block_id']) . '\'', 'block_id DESC');
+		if (empty($node[0]['right_id'])) {
+			$node = $db->select('MAX(right_id) AS right_id', 'menu_items', 0, 'block_id DESC');
 		}
 
 		// left_id und right_id Werte für das Anhängen entsprechend erhöhen
@@ -234,7 +244,7 @@ function menuItemsEditNode($id, $parent, $block_id, array $update_values)
 						$db->query('UPDATE {pre}menu_items SET right_id = right_id - ' . $page_diff . ' WHERE left_id < ' . $items[0]['left_id'] . ' AND right_id > ' . $items[0]['right_id'], 0);
 						$db->query('UPDATE {pre}menu_items SET left_id = left_id - ' . $page_diff . ', right_id = right_id - ' . $page_diff . ' WHERE left_id > ' . $items[0]['right_id'] . ' AND block_id = \'' . $items[0]['block_id'] . '\'', 0);
 					}
-				// Knoten werden wieder Kinder von einem anderen Knoten
+				// Knoten werden Kinder von einem anderen Knoten
 				} else {
 					// Teilbaum nach unten...
 					if ($new_parent[0]['left_id'] > $items[0]['left_id']) {
@@ -255,7 +265,8 @@ function menuItemsEditNode($id, $parent, $block_id, array $update_values)
 				// Einträge aktualisieren
 				$c_items = count($items);
 				for ($i = 0; $i < $c_items; ++$i) {
-					$bool = $db->query('UPDATE {pre}menu_items SET block_id = \'' . $block_id . '\', root_id = \'' . $root_id . '\', left_id = ' . ($items[$i]['left_id'] + $diff) . ', right_id = ' . ($items[$i]['right_id'] + $diff) . ' WHERE id = \'' . $items[$i]['id'] . '\'', 0);
+					$parent = $db->query('SELECT id FROM {pre}menu_items WHERE left_id < ' . ($items[$i]['left_id'] + $diff) . ' AND right_id > ' . ($items[$i]['right_id'] + $diff) . ' ORDER BY left_id DESC LIMIT 1');
+					$bool = $db->query('UPDATE {pre}menu_items SET block_id = \'' . $block_id . '\', root_id = \'' . $root_id . '\', parent_id = \'' . (!empty($parent[0]['id']) ? $parent[0]['id'] : 0) . '\', left_id = ' . ($items[$i]['left_id'] + $diff) . ', right_id = ' . ($items[$i]['right_id'] + $diff) . ' WHERE id = \'' . $items[$i]['id'] . '\'', 0);
 					if ($bool === false)
 						break;
 				}
@@ -315,7 +326,7 @@ function processNavbar($block) {
 	// Navigationsleiste sofort ausgeben, falls diese schon einmal verarbeitet wurde...
 	if (isset($navbar[$block])) {
 		return $navbar[$block];
-		// ...ansonsten Verarbeitung starten
+	// ...ansonsten Verarbeitung starten
 	} else {
 		$items = getMenuItemsCache();
 		$c_items = count($items);
@@ -328,7 +339,7 @@ function processNavbar($block) {
 				if ($items[$i]['display'] == 0 && $items[$i]['right_id'] > $hide_until)
 					$hide_until = $items[$i]['right_id'];
 				// Checken, ob der Menüpunkt im angeforderten Block liegt und ob dieser veröffentlicht ist
-				if ($items[$i]['display'] == 1 && $items[$i]['right_id'] > $hide_until)
+				elseif ($items[$i]['display'] == 1 && $items[$i]['right_id'] > $hide_until)
 					$visible_items[] = $items[$i];
 			}
 		}

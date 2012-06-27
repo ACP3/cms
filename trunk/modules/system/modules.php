@@ -41,7 +41,7 @@ if ($uri->action === 'activate') {
 	// Languagecache neu erstellen
 	$lang->setLangCache();
 
-	$mod_list = ACP3_Modules::modulesList();
+	$mod_list = ACP3_Modules::getAllModules();
 
 	$tpl->assign('LANG_modules_found', sprintf($lang->t('system', 'modules_found'), count($mod_list)));
 	$tpl->assign('modules', $mod_list);

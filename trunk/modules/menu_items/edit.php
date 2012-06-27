@@ -112,7 +112,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_item
 		$tpl->assign('blocks', $blocks);
 
 		// Module
-		$modules = ACP3_Modules::modulesList();
+		$modules = ACP3_Modules::getAllModules();
 		foreach ($modules as $row) {
 			$modules[$row['name']]['selected'] = selectEntry('module', $row['dir'], $page[0]['mode'] == 1 ? $page[0]['uri'] : '');
 		}
