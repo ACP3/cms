@@ -21,17 +21,16 @@ if (!isset($entries)) {
 	$marked_entries = implode('|', $entries);
 	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/access/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/access')));
 } elseif ($uri->action === 'confirmed') {
-	require_once MODULES_DIR . 'access/functions.php';
-
 	$marked_entries = explode('|', $entries);
 	$bool = $bool2 = $bool3 = null;
 	$level_undeletable = false;
 
+	$nestedSet = new ACP3_NestedSet('acl_roles');
 	foreach ($marked_entries as $entry) {
 		if (in_array($entry, array(1, 2, 4)) === true) {
 			$level_undeletable = true;
 		} else {
-			$bool = aclDeleteNode($entry);
+			$bool = $nestedSet->deleteNode($entry);
 			$bool2 = $db->delete('acl_rules', 'role_id = \'' . $entry . '\'');
 			$bool3 = $db->delete('acl_user_roles', 'role_id = \'' . $entry . '\'');
 		}

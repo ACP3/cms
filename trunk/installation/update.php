@@ -368,10 +368,17 @@ if (CONFIG_DB_VERSION < 22) {
 	);
 	echo executeSqlQueries($queries, 22);
 }
+if (CONFIG_DB_VERSION < 23) {
+	$queries = array(
+		"ALTER TABLE `{pre}acl_roles` ADD COLUMN `root_id` INT UNSIGNED NOT NULL AFTER `name`;",
+		"UPDATE `{pre}`acl_roles SET root_id = 1",
+	);
+	echo executeSqlQueries($queries, 23);
+}
 
 // Konfigurationsdatei aktualisieren
 $config = array(
-	'db_version' => 22,
+	'db_version' => 23,
 	'maintenance_mode' => (bool) CONFIG_MAINTENANCE_MODE,
 	'seo_mod_rewrite' => (bool) CONFIG_SEO_MOD_REWRITE,
 	'date_time_zone' => is_int(CONFIG_DATE_TIME_ZONE) === true ? 'Europe/Berlin' : CONFIG_DATE_TIME_ZONE,

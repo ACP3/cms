@@ -1,6 +1,6 @@
 <?php
 /**
- * Pages
+ * Menu Items
  *
  * @author Goratsch Webdesign
  * @package ACP3
@@ -55,7 +55,8 @@ if (isset($_POST['submit']) === true) {
 			'target' => $_POST['display'] == 0 ? 1 : $_POST['target'],
 		);
 
-		$bool = menuItemsInsertNode($_POST['parent'], $insert_values);
+		$nestedSet = new ACP3_NestedSet('menu_items', true);
+		$bool = $nestedSet->insertNode((int) $_POST['parent_id'], $insert_values);
 
 		// Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
 		if ($_POST['mode'] != 3) {

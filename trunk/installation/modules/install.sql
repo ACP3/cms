@@ -18,6 +18,7 @@ CREATE TABLE`{pre}acl_resources` (
 CREATE TABLE`{pre}acl_roles` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
+  `root_id` int(10) unsigned NOT NULL,
   `parent_id` int(10) unsigned NOT NULL,
   `left_id` int(10) unsigned NOT NULL,
   `right_id` int(10) unsigned NOT NULL,
@@ -278,5 +279,5 @@ INSERT INTO `{pre}settings` VALUES ('', 'newsletter', 'mail', ''), ('', 'newslet
 INSERT INTO `{pre}settings` VALUES ('', 'users', 'language_override', '1'), ('', 'users', 'entries_override', '1'), ('', 'users', 'enable_registration', '1');
 INSERT INTO `{pre}modules` (`id`, `name`, `active`) VALUES (1, 'access', 1), (2, 'acp', 1), (3, 'captcha', 1), (4, 'categories', 1), (5, 'comments', 1), (6, 'contact', 1), (7, 'emoticons', 1), (8,'errors', 1), (9, 'feeds', 1), (10, 'files', 1), (11, 'gallery', 1), (12, 'guestbook', 1), (13, 'menu_items', 1), (14, 'news', 1), (15, 'newsletter', 1), (16, 'polls', 1), (17, 'search', 1), (18, 'static_pages', 1), (19, 'system', 1), (20, 'users', 1);
 INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (1, 'view', ''), (2, 'create', ''), (3, 'admin_view', ''), (4, 'admin_create', ''), (5, 'admin_edit', ''), (6, 'admin_delete', ''), (7, 'admin_settings', '');
-INSERT INTO `{pre}acl_roles` (`id`, `name`, `parent_id`, `left_id`, `right_id`) VALUES (1, 'Gast', 0, 1, 8), (2, 'Mitglied', 1, 2, 7), (3, 'Autor', 2, 3, 6), (4, 'Administrator', 3, 4, 5);
+INSERT INTO `{pre}acl_roles` (`id`, `name`, `root_id`, `parent_id`, `left_id`, `right_id`) VALUES (1, 'Gast', 1, 0, 1, 8), (2, 'Mitglied', 1, 1, 2, 7), (3, 'Autor', 1, 2, 3, 6), (4, 'Administrator', 1, 3, 4, 5);
 INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (0, 1), (1, 4);

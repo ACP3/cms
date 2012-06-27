@@ -10,8 +10,6 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-require_once MODULES_DIR . 'access/functions.php';
-
 if (isset($_POST['submit']) === true) {
 	if (empty($_POST['name']))
 		$errors['name'] = $lang->t('common', 'name_to_short');
@@ -37,7 +35,8 @@ if (isset($_POST['submit']) === true) {
 			'parent_id' => $_POST['parent'],
 		);
 
-		$bool = aclInsertNode($_POST['parent'], $insert_values);
+		$nestedSet = new ACP3_NestedSet('acl_roles');
+		$bool = $nestedSet->insertNode((int) $_POST['parent'], $insert_values);
 		$role_id = $db->link->lastInsertId();
 
 		foreach ($_POST['privileges'] as $module_id => $privileges) {
