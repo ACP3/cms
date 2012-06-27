@@ -25,13 +25,15 @@ if (!isset($entries)) {
 
 	$marked_entries = explode('|', $entries);
 	$bool = false;
+	$nestedSet = new ACP3_NestedSet('menu_items', true);
 	foreach ($marked_entries as $entry) {
 		// URI-Alias löschen
 		$menu_item = $db->select('uri', 'menu_items', 'id = \'' . $entry . '\'');
 		ACP3_SEO::deleteUriAlias($menu_item[0]['uri']);
 
-		$bool = menuItemsDeleteNode($entry);
+		$bool = $nestedSet->deleteNode($entry);
 	}
+
 	setMenuItemsCache();
 
 	setRedirectMessage($bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/menu_items');

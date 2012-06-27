@@ -10,8 +10,6 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-require_once MODULES_DIR . 'access/functions.php';
-
 if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles', 'id = \'' . $uri->id . '\'') == 1) {
 	if (isset($_POST['submit']) === true) {
 		if (empty($_POST['name']))
@@ -32,7 +30,8 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles
 				'name' => $db->escape($_POST['name']),
 				'parent_id' => $uri->id == 1 ? 0 : $_POST['parent'],
 			);
-			$bool = aclEditNode($uri->id, $uri->id == 1 ? '' : $_POST['parent'], $update_values);
+			$nestedSet = new ACP3_NestedSet('acl_roles');
+			$bool = $nestedSet->EditNode($uri->id, $uri->id == 1 ? '' : (int) $_POST['parent'], $update_values);
 
 			$db->link->beginTransaction();
 			// Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugkommen sein könnten

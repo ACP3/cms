@@ -66,7 +66,8 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_item
 				'target' => $_POST['display'] == 0 ? 1 : $_POST['target'],
 			);
 
-			$bool = menuItemsEditNode($uri->id, $_POST['parent'], $_POST['block_id'], $update_values);
+			$nestedSet = new ACP3_NestedSet('menu_items', true);
+			$bool = $nestedSet->editNode($uri->id, (int) $_POST['parent'], (int) $_POST['block_id'], $update_values);
 
 			// Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
 			if ($_POST['mode'] != 3) {
