@@ -61,7 +61,7 @@ class ACP3_Modules
 	 *
 	 * @return array
 	 */
-	public static function modulesList()
+	public static function getAllModules($only_active = false)
 	{
 		static $mod_list = array();
 
@@ -69,12 +69,22 @@ class ACP3_Modules
 			$uri_dir = scandir(MODULES_DIR);
 			foreach ($uri_dir as $module) {
 				$info = self::parseInfo($module);
-				if (!empty($info))
+				if (!empty($info) &&
+					($only_active === false || ($only_active === true && self::isActive($module) === true)))
 					$mod_list[$info['name']] = $info;
 			}
 			ksort($mod_list);
 		}
 		return $mod_list;
+	}
+	/**
+	 * Gibt alle derzeit aktiven Module in einem Array zurück
+	 *
+	 * @return array
+	 */
+	public static function getActiveModules()
+	{
+		return self::getAllModules(true);
 	}
 	/**
 	 * Durchläuft für das angeforderte Modul den <info> Abschnitt in der

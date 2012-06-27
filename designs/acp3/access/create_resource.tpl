@@ -9,7 +9,7 @@
 			<dd>
 				<select name="modules" id="modules">
 {foreach $modules as $row}
-					<option value="{$row.name}"{$row.selected}>{$row.name}</option>
+					<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
 {/foreach}
 				</select>
 			</dd>

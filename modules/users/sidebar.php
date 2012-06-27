@@ -17,7 +17,7 @@ if ($auth->isUser() === true) {
 	$user_sidebar['page'] = $currentPage;
 
 	// Module holen
-	$mod_list = ACP3_Modules::modulesList();
+	$mod_list = ACP3_Modules::getActiveModules();
 	$nav_mods = array();
 	$access_system = false;
 

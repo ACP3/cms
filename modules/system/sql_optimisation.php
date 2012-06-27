@@ -14,7 +14,7 @@ $breadcrumb->append($lang->t('system', 'maintenance'), $uri->route('acp/system/m
 		   ->append($lang->t('system', 'sql_optimisation'));
 
 if ($uri->action === 'do') {
-	$mod_list = ACP3_Modules::modulesList();
+	$mod_list = ACP3_Modules::getAllModules();
 	$tables = array();
 	$total_overhead = 0;
 	$i = 0;

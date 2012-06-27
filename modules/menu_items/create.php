@@ -106,7 +106,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$tpl->assign('blocks', $blocks);
 
 	// Module
-	$modules = ACP3_Modules::modulesList();
+	$modules = ACP3_Modules::getActiveModules();
 	foreach ($modules as $row) {
 		$modules[$row['name']]['selected'] = selectEntry('module', $row['dir']);
 	}
@@ -131,7 +131,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$display[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('display', $display);
 
-	if (ACP3_Modules::check('static_pages', 'functions')) {
+	if (ACP3_Modules::check('static_pages', 'functions') === true) {
 		require_once MODULES_DIR . 'static_pages/functions.php';
 
 		$tpl->assign('static_pages', staticPagesList());

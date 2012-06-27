@@ -16,8 +16,10 @@ $resources = $db->query('SELECT m.id AS module_id, m.name AS module_name, r.id A
 $c_resources = count($resources);
 $output = array();
 for ($i = 0; $i < $c_resources; ++$i) {
-	$module = $lang->t($resources[$i]['module_name'], $resources[$i]['module_name']);
-	$output[$module][] = $resources[$i];
+	if (ACP3_Modules::isActive($resources[$i]['module_name']) === true) {
+		$module = $lang->t($resources[$i]['module_name'], $resources[$i]['module_name']);
+		$output[$module][] = $resources[$i];
+	}
 }
 ksort($output);
 $tpl->assign('resources', $output);

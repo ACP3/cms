@@ -46,12 +46,9 @@ if (isset($_POST['submit']) === true) {
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-	$modules = $db->select('name', 'modules', 'active = 1');
-	$c_modules = count($modules);
-
-	for ($i = 0; $i < $c_modules; ++$i) {
-		$modules[$i]['name'] = $db->escape($modules[$i]['name'], 3);
-		$modules[$i]['selected'] = selectEntry('modules', $modules[$i]['name']);
+	$modules = ACP3_Modules::getActiveModules();
+	foreach ($modules as $row) {
+		$modules[$row['name']]['selected'] = selectEntry('modules', $row['name']);
 	}
 	$tpl->assign('modules', $modules);
 

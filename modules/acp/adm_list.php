@@ -11,7 +11,7 @@ if (defined('IN_ADM') === false)
 	exit();
 
 // Module einholen
-$mod_list = ACP3_Modules::modulesList();
+$mod_list = ACP3_Modules::getAllModules();
 $mods = array();
 
 foreach ($mod_list as $name => $info) {
