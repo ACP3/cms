@@ -1,15 +1,22 @@
 <?php
 /**
- * Description of NestedSet
+ * Klasse zum Erstellen, Bearbeiten, Löschen und
+ * Umsortieren von Knoten in einem Nested Set Baum
  *
  * @author Goratsch Webdesign
  */
 class ACP3_NestedSet {
+
 	/**
-	 *
+	 * Der Tabellenname
 	 * @var string
 	 */
 	private $table_name;
+
+	/**
+	 * Legt fest, ob das Block-Management aktiv ist oder nicht
+	 * @var boolean
+	 */
 	private $enable_blocks;
 
 	/**
@@ -20,16 +27,15 @@ class ACP3_NestedSet {
 		$this->table_name = $table_name;
 		$this->enable_blocks = $enable_blocks;
 	}
+
 	/**
-	* Löscht einen Knoten und verschiebt seine Kinder eine Ebene nach oben
-	*
-	* @param integer $id
-	*  Die ID des zu löschenden Datensatzes
-	*
-	* @return boolean
-	*/
-	function deleteNode($id)
-	{
+	 * Löscht einen Knoten und verschiebt seine Kinder eine Ebene nach oben
+	 *
+	 * @param integer $id
+	 *  Die ID des zu löschenden Datensatzes
+	 * @return boolean
+	 */
+	function deleteNode($id) {
 		if (!empty($id) && ACP3_Validate::isNumber($id) === true) {
 			global $db;
 
@@ -59,17 +65,16 @@ class ACP3_NestedSet {
 		}
 		return false;
 	}
+
 	/**
-	* Erstellt einen neuen Knoten
-	*
-	* @param integer $parent_id
-	*	ID der übergeordneten Seite
-	* @param array $insert_values
-	*
-	* @return boolean
-	*/
-	function insertNode($parent_id, array $insert_values)
-	{
+	 * Erstellt einen neuen Knoten
+	 *
+	 * @param integer $parent_id
+	 * 	ID der übergeordneten Seite
+	 * @param array $insert_values
+	 * @return boolean
+	 */
+	function insertNode($parent_id, array $insert_values) {
 		global $db;
 
 		// Keine übergeordnete Seite zugewiesen
@@ -116,21 +121,20 @@ class ACP3_NestedSet {
 			return $db->insert($this->table_name, $insert_values);
 		}
 	}
+
 	/**
-	* Sorgt dafür, das ein Knoten in einen anderen Block verschoben werden kann
-	*
-	* @param integer $id
-	*	ID des zu verschiebenden Knotens
-	* @param integer $parent
-	*	ID des neuen Elternelements
-	* @param integer $block_id
-	*	ID des neuen Blocks
-	* @param array $update_values
-	*
-	* @return
-	*/
-	function editNode($id, $parent, $block_id, array $update_values)
-	{
+	 * Methode zum Bearbeiten eines Knotens
+	 *
+	 * @param integer $id
+	 * 	ID des zu bearbeitenden Knotens
+	 * @param integer $parent
+	 * 	ID des neuen Elternelements
+	 * @param integer $block_id
+	 * 	ID des neuen Blocks
+	 * @param array $update_values
+	 * @return boolean
+	 */
+	function editNode($id, $parent, $block_id, array $update_values) {
 		global $db;
 
 		if (ACP3_Validate::isNumber($id) === true && (ACP3_Validate::isNumber($parent) === true || $parent == '') && ACP3_Validate::isNumber($block_id) === true) {
@@ -139,8 +143,8 @@ class ACP3_NestedSet {
 
 			// Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
 			if (empty($parent) &&
-				($this->enable_blocks === false || ($this->enable_blocks === true && $block_id == $items[0]['block_id'])) &&
-				$db->countRows('*', $this->table_name, 'left_id < ' . $items[0]['left_id'] . ' AND right_id > ' . $items[0]['right_id']) == 0) {
+					($this->enable_blocks === false || ($this->enable_blocks === true && $block_id == $items[0]['block_id'])) &&
+					$db->countRows('*', $this->table_name, 'left_id < ' . $items[0]['left_id'] . ' AND right_id > ' . $items[0]['right_id']) == 0) {
 				$bool = $db->update($this->table_name, $update_values, 'id = ' . $id);
 			} else {
 				// Überprüfung, falls Seite kein Root-Element ist, aber keine Veränderung vorgenommen werden soll...
@@ -227,6 +231,61 @@ class ACP3_NestedSet {
 				}
 			}
 			return $bool;
+		}
+		return false;
+	}
+
+	/**
+	 * Methode zum Umsortieren von Knoten
+	 *
+	 * @param integer $id
+	 * @param string $mode
+	 * @return boolean
+	 */
+	public function order($id, $mode) {
+		global $db;
+
+		if (ACP3_Validate::isNumber($id) === true && $db->countRows('*', $this->table_name, 'id = ' . $id) == 1) {
+			$items = $db->query('SELECT c.id, ' . ($this->enable_block === true ? 'c.block_id, ' : '') . 'c.left_id, c.right_id FROM {pre}' . $this->table_name . ' AS p, {pre}' . $this->table_name . ' AS c WHERE p.id = ' . $id . ' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
+
+			if ($mode === 'up' && $db->countRows('*', $this->table_name, 'right_id = ' . ($items[0]['left_id'] - 1) . ($this->enable_block === true ? ' AND block_id = ' . $items[0]['block_id'] : '')) > 0) {
+				// Vorherigen Knoten mit allen Kindern selektieren
+				$elem = $db->query('SELECT c.id, c.left_id, c.right_id FROM {pre}' . $this->table_name . ' AS p, {pre}' . $this->table_name . ' AS c WHERE p.right_id = ' . ($items[0]['left_id'] - 1) . ' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
+				$diff_left = $items[0]['left_id'] - $elem[0]['left_id'];
+				$diff_right = $items[0]['right_id'] - $elem[0]['right_id'];
+			} elseif ($mode === 'down' && $db->countRows('*', $this->table_name, 'left_id = ' . ($items[0]['right_id'] + 1) . ($this->enable_block === true ? ' AND block_id = ' . $items[0]['block_id'] : '')) > 0) {
+				// Nachfolgenden Knoten mit allen Kindern selektieren
+				$elem = $db->query('SELECT c.id, c.left_id, c.right_id FROM {pre}' . $this->table_name . ' AS p, {pre}' . $this->table_name . ' AS c WHERE p.left_id = ' . ($items[0]['right_id'] + 1) . ' AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC');
+				$diff_left = $elem[0]['left_id'] - $items[0]['left_id'];
+				$diff_right = $elem[0]['right_id'] - $items[0]['right_id'];
+			} else {
+				return false;
+			}
+
+			$c_elem = count($elem);
+			$c_pages = count($items);
+			$elem_ids = $pages_ids = '';
+
+			for ($i = 0; $i < $c_elem; ++$i) {
+				$elem_ids.= 'id = ' . $elem[$i]['id'] . ' OR ';
+			}
+			for ($i = 0; $i < $c_pages; ++$i) {
+				$pages_ids.= 'id = ' . $items[$i]['id'] . ' OR ';
+			}
+
+			$db->link->beginTransaction();
+
+			if ($mode === 'up') {
+				$bool = $db->query('UPDATE {pre}' . $this->table_name . ' SET left_id = left_id + ' . $diff_right . ', right_id = right_id + ' . $diff_right . ' WHERE ' . substr($elem_ids, 0, -4), 0);
+				$bool2 = $db->query('UPDATE {pre}' . $this->table_name . ' SET left_id = left_id - ' . $diff_left . ', right_id = right_id - ' . $diff_left . ' WHERE ' . substr($pages_ids, 0, -4), 0);
+			} else {
+				$bool = $db->query('UPDATE {pre}' . $this->table_name . ' SET left_id = left_id - ' . $diff_left . ', right_id = right_id - ' . $diff_left . ' WHERE ' . substr($elem_ids, 0, -4), 0);
+				$bool2 = $db->query('UPDATE {pre}' . $this->table_name . ' SET left_id = left_id + ' . $diff_right . ', right_id = right_id + ' . $diff_right . ' WHERE ' . substr($pages_ids, 0, -4), 0);
+			}
+
+			$db->link->commit();
+
+			return $bool && $bool2;
 		}
 		return false;
 	}
