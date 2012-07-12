@@ -86,7 +86,7 @@ class ACP3_Cache
 	{
 		$cache_id.= $cache_id !== '' ? '_' : '';
 		$data = @file_get_contents(ACP3_ROOT . self::$sql_cache_dir . $cache_id . md5($filename) . '.php');
-		return $data === false ? array() : $data;
+		return $data === false ? array() : unserialize($data);
 	}
 	/**
 	 * Löscht den gesamten Cache
