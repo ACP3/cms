@@ -72,11 +72,8 @@ class ACP3_Cache
 	 */
 	public static function delete($filename, $cache_id = '')
 	{
-		if (self::check($filename) === true) {
-			$cache_id.= $cache_id !== '' ? '_' : '';
-			return unlink(ACP3_ROOT . self::$sql_cache_dir . $cache_id . md5($filename) . '.php');
-		}
-		return false;
+		$cache_id.= $cache_id !== '' ? '_' : '';
+		return @unlink(ACP3_ROOT . self::$sql_cache_dir . $cache_id . md5($filename) . '.php');
 	}
 	/**
 	 * Ausgabe der gecacheten Aktion
@@ -87,16 +84,9 @@ class ACP3_Cache
 	 */
 	public static function output($filename, $cache_id = '')
 	{
-		if (self::check($filename, $cache_id) === true) {
-			$cache_id.= $cache_id !== '' ? '_' : '';
-			$handle = fopen(ACP3_ROOT . self::$sql_cache_dir . $cache_id . md5($filename) . '.php', 'r');
-			flock($handle, LOCK_SH);
-			$data = unserialize(stream_get_contents($handle));
-			flock($handle, LOCK_UN);
-			fclose($handle);
-			return $data;
-		}
-		return array();
+		$cache_id.= $cache_id !== '' ? '_' : '';
+		$data = @file_get_contents(ACP3_ROOT . self::$sql_cache_dir . $cache_id . md5($filename) . '.php');
+		return $data === false ? array() : $data;
 	}
 	/**
 	 * Löscht den gesamten Cache
