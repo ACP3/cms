@@ -21,6 +21,10 @@ function setMenuItemsCache() {
 		$blocks = $db->select('id, title, index_name', 'menu_items_blocks');
 		$c_blocks = count($blocks);
 
+		for ($i = 0; $i < $c_blocks; ++$i) {
+			setVisibleMenuItemsCache($blocks[$i]['index_name']);
+		}
+
 		for ($i = 0; $i < $c_items; ++$i) {
 			for ($j = 0; $j < $c_blocks; ++$j) {
 				if ($items[$i]['block_id'] == $blocks[$j]['id']) {
@@ -39,7 +43,7 @@ function setMenuItemsCache() {
 		);
 
 		for ($i = 0; $i < $c_items; ++$i) {
-			$items[$i]['mode_formated'] = str_replace($mode_search, $mode_replace, $items[$i]['mode']);
+			$items[$i]['mode_formatted'] = str_replace($mode_search, $mode_replace, $items[$i]['mode']);
 
 			// Bestimmen, ob die Seite die Erste und/oder Letzte eines Knotens ist
 			$first = $last = true;
@@ -76,6 +80,30 @@ function getMenuItemsCache()
 		setMenuItemsCache();
 
 	return ACP3_Cache::output('menu_items');
+}
+/**
+ * Erstellt den Cache für die Menüpunkte
+ *
+ * @return boolean
+ */
+function setVisibleMenuItemsCache($block) {
+	global $db;
+
+	$items = $db->query('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, b.title AS block_title, b.index_name AS block_name FROM {pre}menu_items AS p, {pre}menu_items AS n JOIN {pre}menu_items_blocks AS b ON(n.block_id = b.id) WHERE b.index_name = \'' . $db->escape($block) . '\' AND n.display = 1 AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
+
+	return ACP3_Cache::create('visible_menu_items_' . $block, $items);
+}
+/**
+ * Bindet die gecacheten Menüpunkte ein
+ *
+ * @return array
+ */
+function getVisibleMenuItems($block)
+{
+	if (ACP3_Cache::check('visible_menu_items_' . $block) === false)
+		setVisibleMenuItemsCache($block);
+
+	return ACP3_Cache::output('visible_menu_items_' . $block);
 }
 /**
  * Auflistung der Seiten
@@ -127,23 +155,8 @@ function processNavbar($block) {
 		return $navbar[$block];
 	// ...ansonsten Verarbeitung starten
 	} else {
-		$items = getMenuItemsCache();
+		$items = getVisibleMenuItems($block);
 		$c_items = count($items);
-		$hide_until = 0;
-		$visible_items = array();
-
-		for ($i = 0; $i < $c_items; ++$i) {
-			if ($items[$i]['block_name'] == $block) {
-				// Nicht anzuzeigende Menüpunkte
-				if ($items[$i]['display'] == 0 && $items[$i]['right_id'] > $hide_until)
-					$hide_until = $items[$i]['right_id'];
-				// Checken, ob der Menüpunkt im angeforderten Block liegt und ob dieser veröffentlicht ist
-				elseif ($items[$i]['display'] == 1 && $items[$i]['right_id'] > $hide_until)
-					$visible_items[] = $items[$i];
-			}
-		}
-
-		$c_items = count($visible_items);
 
 		if ($c_items > 0) {
 			global $db, $uri;
@@ -157,29 +170,29 @@ function processNavbar($block) {
 			$navbar[$block] = '';
 
 			for ($i = 0; $i < $c_items; ++$i) {
-				$css = 'navi-' . $visible_items[$i]['id'];
+				$css = 'navi-' . $items[$i]['id'];
 				// Menüpunkt selektieren
 				if (isset($select[0]) &&
-						$visible_items[$i]['left_id'] <= $select[0]['left_id'] &&
-						$visible_items[$i]['right_id'] > $select[0]['left_id']) {
+						$items[$i]['left_id'] <= $select[0]['left_id'] &&
+						$items[$i]['right_id'] > $select[0]['left_id']) {
 					$css.= ' selected';
 				}
 
 				// Link zusammenbauen
-				$href = $visible_items[$i]['mode'] == 1 || $visible_items[$i]['mode'] == 2 || $visible_items[$i]['mode'] == 4 ? $uri->route($visible_items[$i]['uri'], 1) : $visible_items[$i]['uri'];
-				$target = $visible_items[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
-				$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $db->escape($visible_items[$i]['title'], 3) . '</a>';
+				$href = $items[$i]['mode'] == 1 || $items[$i]['mode'] == 2 || $items[$i]['mode'] == 4 ? $uri->route($items[$i]['uri'], 1) : $items[$i]['uri'];
+				$target = $items[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
+				$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $db->escape($items[$i]['title'], 3) . '</a>';
 
 				// Falls für Knoten Kindelemente vorhanden sind, neue Unterliste erstellen
-				if (isset($visible_items[$i + 1]) && $visible_items[$i + 1]['level'] > $visible_items[$i]['level']) {
-					$navbar[$block].= '<li>' . $link . '<ul class="navigation-' . $block . '-subnav-' . $visible_items[$i]['id'] . '">';
+				if (isset($items[$i + 1]) && $items[$i + 1]['level'] > $items[$i]['level']) {
+					$navbar[$block].= '<li>' . $link . '<ul class="navigation-' . $block . '-subnav-' . $items[$i]['id'] . '">';
 					// Elemente ohne Kindelemente
 				} else {
 					$navbar[$block].= '<li>' . $link . '</li>';
 					// Liste für untergeordnete Elemente schließen
-					if (isset($visible_items[$i + 1]) && $visible_items[$i + 1]['level'] < $visible_items[$i]['level'] || !isset($visible_items[$i + 1]) && $visible_items[$i]['level'] != '0') {
+					if (isset($items[$i + 1]) && $items[$i + 1]['level'] < $items[$i]['level'] || !isset($items[$i + 1]) && $items[$i]['level'] != '0') {
 						// Differenz ermitteln, wieviele Level zwischen dem aktuellen und dem nachfolgendem Element liegen
-						$diff = (isset($visible_items[$i + 1]['level']) ? $visible_items[$i]['level'] - $visible_items[$i + 1]['level'] : $visible_items[$i]['level']) * 2;
+						$diff = (isset($items[$i + 1]['level']) ? $items[$i]['level'] - $items[$i + 1]['level'] : $items[$i]['level']) * 2;
 						for ($diff; $diff > 0; --$diff) {
 							$navbar[$block].= ($diff % 2 == 0 ? '</ul>' : '</li>');
 						}

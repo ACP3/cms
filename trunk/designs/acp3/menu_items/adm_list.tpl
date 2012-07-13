@@ -35,7 +35,7 @@
 {if $can_delete === true}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
-				<td>{$row.mode_formated}</td>
+				<td>{$row.mode_formatted}</td>
 				<td style="padding-left:10px;text-align:left">{$row.spaces}{check_access mode="link" action="menu_items|edit" uri="acp/menu_items/edit/id_`$row.id`" title=$row.title}</td>
 {if $can_order === true}
 				<td>

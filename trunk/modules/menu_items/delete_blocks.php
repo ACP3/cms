@@ -30,6 +30,9 @@ if (!isset($entries)) {
 	$bool = false;
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && $db->countRows('*', 'menu_items_blocks', 'id = \'' . $entry . '\'') == 1) {
+			$block = $db->select('index_name', 'menu_items_blocks', 'id = \'' . $entry . '\'');
+			ACP3_Cache::delete('visible_menu_items_' . $block[0]['index_name']);
+
 			$bool = $db->delete('menu_items_blocks', 'id = \'' . $entry . '\'');
 		}
 	}
