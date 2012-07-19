@@ -22,5 +22,6 @@ if ($c_emoticons > 0) {
 		$emoticons[$i]['description'] = $db->escape($emoticons[$i]['description'], 3);
 	}
 	$tpl->assign('emoticons', $emoticons);
+	$tpl->assign('can_delete', ACP3_Modules::check('emoticons', 'delete'));
 }
 ACP3_View::setContent(ACP3_View::fetchTemplate('emoticons/adm_list.tpl'));

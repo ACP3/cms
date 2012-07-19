@@ -24,5 +24,6 @@ if ($c_categories > 0) {
 		$categories[$i]['module'] = $info['name'];
 	}
 	$tpl->assign('categories', $categories);
+	$tpl->assign('can_delete', ACP3_Modules::check('categories', 'delete'));
 }
 ACP3_View::setContent(ACP3_View::fetchTemplate('categories/adm_list.tpl'));

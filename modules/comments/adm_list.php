@@ -26,6 +26,7 @@ if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module
 			$comments[$i]['count'] = $db->countRows('*', 'comments', 'module = \'' . $comments[$i]['module'] . '\'');
 		}
 		$tpl->assign('comments', $comments);
+		$tpl->assign('can_delete', ACP3_Modules::check('comments', 'delete_comments_per_module'));
 	}
 
 	ACP3_View::setContent(ACP3_View::fetchTemplate('comments/adm_list_module.tpl'));
@@ -60,6 +61,7 @@ if (empty($module) || !empty($module) && $db->countRows('*', 'comments', 'module
 			}
 		}
 		$tpl->assign('comments', $comments);
+		$tpl->assign('can_delete', ACP3_Modules::check('comments', 'delete_comments'));
 	}
 
 	ACP3_View::setContent(ACP3_View::fetchTemplate('comments/adm_list_comments.tpl'));

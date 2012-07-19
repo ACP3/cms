@@ -23,5 +23,6 @@ for ($i = 0; $i < $c_resources; ++$i) {
 }
 ksort($output);
 $tpl->assign('resources', $output);
+$tpl->assign('can_delete_resource', ACP3_Modules::check('access', 'delete_resources'));
 
 ACP3_View::setContent(ACP3_View::fetchTemplate('access/adm_list_resources.tpl'));

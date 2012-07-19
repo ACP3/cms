@@ -9,7 +9,6 @@
 {/if}
 {if isset($comments)}
 {$pagination}
-{assign var="can_delete" value=ACP3_Modules::check("comments", "delete_comments_per_module")}
 	<table class="acp-table">
 		<thead>
 			<tr>

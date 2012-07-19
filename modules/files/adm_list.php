@@ -23,6 +23,7 @@ if ($c_files > 0) {
 		$files[$i]['link_title'] = $db->escape($files[$i]['link_title'], 3);
 	}
 	$tpl->assign('files', $files);
+	$tpl->assign('can_delete', ACP3_Modules::check('files', 'delete'));
 }
 
 ACP3_View::setContent(ACP3_View::fetchTemplate('files/adm_list.tpl'));

@@ -10,7 +10,6 @@
 {/if}
 {if isset($galleries)}
 {$pagination}
-{assign var="can_delete" value=ACP3_Modules::check("gallery", "delete_gallery")}
 	<table class="acp-table">
 		<thead>
 			<tr>

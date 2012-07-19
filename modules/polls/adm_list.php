@@ -23,5 +23,6 @@ if ($c_polls > 0) {
 		$polls[$i]['question'] = $db->escape($polls[$i]['question'], 3);
 	}
 	$tpl->assign('polls', $polls);
+	$tpl->assign('can_delete', ACP3_Modules::check('polls', 'delete'));
 }
 ACP3_View::setContent(ACP3_View::fetchTemplate('polls/adm_list.tpl'));

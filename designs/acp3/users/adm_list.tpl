@@ -10,7 +10,6 @@
 {/if}
 {if isset($users)}
 {$pagination}
-{assign var="can_delete" value=ACP3_Modules::check("users", "delete")}
 	<table class="acp-table">
 		<thead>
 			<tr>
