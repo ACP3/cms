@@ -24,5 +24,7 @@ if ($c_newsletter > 0) {
 		$newsletter[$i]['status'] = str_replace(array('0', '1'), array($lang->t('newsletter', 'not_yet_sent'), $lang->t('newsletter', 'already_sent')), $newsletter[$i]['status']);
 	}
 	$tpl->assign('newsletter', $newsletter);
+	$tpl->assign('can_delete', ACP3_Modules::check('newsletter', 'delete_archive'));
+	$tpl->assign('can_send', ACP3_Modules::check('newsletter', 'send'));
 }
 ACP3_View::setContent(ACP3_View::fetchTemplate('newsletter/adm_list_archive.tpl'));

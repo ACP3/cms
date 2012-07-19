@@ -8,7 +8,6 @@
 {$redirect_message}
 {/if}
 {$pagination}
-{assign var="can_delete" value=ACP3_Modules::check("comments", "delete_comments")}
 	<table class="acp-table">
 		<thead>
 			<tr>

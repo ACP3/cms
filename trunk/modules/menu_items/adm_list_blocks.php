@@ -25,6 +25,7 @@ if ($c_blocks > 0) {
 
 	$tpl->assign('pagination', pagination($db->countRows('*', 'menu_items_blocks')));
 	$tpl->assign('blocks', $blocks);
+	$tpl->assign('can_delete', ACP3_Modules::check('menu_items', 'delete_blocks'));
 }
 
 ACP3_View::setContent(ACP3_View::fetchTemplate('menu_items/adm_list_blocks.tpl'));

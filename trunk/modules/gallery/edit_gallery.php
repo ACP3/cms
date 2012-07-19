@@ -72,6 +72,9 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery',
 				$pictures[$i]['description'] = $db->escape($pictures[$i]['description'], 3);
 			}
 			$tpl->assign('pictures', $pictures);
+			$tpl->assign('can_delete', ACP3_Modules::check('gallery', 'delete_picture'));
+			$tpl->assign('can_order', ACP3_Modules::check('gallery', 'order'));
+			$tpl->assign('can_edit_picture', ACP3_Modules::check('gallery', 'edit_picture'));
 		}
 
 		$session->generateFormToken();

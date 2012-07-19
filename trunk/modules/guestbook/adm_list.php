@@ -38,5 +38,6 @@ if ($c_guestbook > 0) {
 		}
 	}
 	$tpl->assign('guestbook', $guestbook);
+	$tpl->assign('can_delete', ACP3_Modules::check('guestbook', 'delete'));
 }
 ACP3_View::setContent(ACP3_View::fetchTemplate('guestbook/adm_list.tpl'));

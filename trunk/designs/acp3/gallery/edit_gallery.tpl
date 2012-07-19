@@ -34,9 +34,6 @@
 {/if}
 {if isset($pictures)}
 {$pagination}
-{assign var="can_delete" value=ACP3_Modules::check("gallery", "delete_picture")}
-{assign var="can_order" value=ACP3_Modules::check("gallery", "order")}
-{assign var="can_edit_picture" value=ACP3_Modules::check("gallery", "edit_picture")}
 	<table class="acp-table">
 		<thead>
 			<tr>

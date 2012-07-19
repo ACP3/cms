@@ -24,5 +24,6 @@ if ($c_news > 0) {
 		$news[$i]['cat'] = $db->escape($news[$i]['cat'], 3);
 	}
 	$tpl->assign('news', $news);
+	$tpl->assign('can_delete', ACP3_Modules::check('news', 'delete'));
 }
 ACP3_View::setContent(ACP3_View::fetchTemplate('news/adm_list.tpl'));

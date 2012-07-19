@@ -11,7 +11,6 @@
 {/if}
 {if isset($accounts)}
 {$pagination}
-{assign var="can_delete" value=ACP3_Modules::check("newsletter", "delete")}
 	<table class="acp-table">
 		<thead>
 			<tr>

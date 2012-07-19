@@ -23,5 +23,6 @@ if ($c_pages > 0) {
 		$pages[$i]['title'] = $db->escape($pages[$i]['title'], 3);
 	}
 	$tpl->assign('pages', $pages);
+	$tpl->assign('can_delete', ACP3_Modules::check('static_pages', 'delete'));
 }
 ACP3_View::setContent(ACP3_View::fetchTemplate('static_pages/adm_list.tpl'));

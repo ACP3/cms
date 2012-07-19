@@ -24,6 +24,7 @@ if ($c_users > 0) {
 		$users[$i]['mail'] = substr($users[$i]['mail'], 0, -2);
 	}
 	$tpl->assign('users', $users);
+	$tpl->assign('can_delete', ACP3_Modules::check('users', 'delete'));
 }
 
 ACP3_View::setContent(ACP3_View::fetchTemplate('users/adm_list.tpl'));
