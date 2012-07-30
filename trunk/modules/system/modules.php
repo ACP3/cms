@@ -33,7 +33,19 @@ switch ($uri->action) {
 	case 'install':
 		// Nur noch nicht installierte Module berücksichtigen
 		if ($db->countRows('*', 'modules', 'name = \'' . $db->escape($uri->dir) . '\'') == 0) {
-			
+			// Modul in die Modules-SQL-Tabelle eintragen
+			$insert_values = array(
+				'id' => '',
+				'name' => $db->escape($uri->dir),
+				'active' => 1
+			);
+			$bool = $db->insert('modules', $insert_values);
+
+			/**
+			 * @todo Vom Modul mitgebrachte SQL-Tabellen installieren
+			 */
+
+			$text = $lang->t('system', $bool !== false ? 'mod_installation_success' : 'mod_installation_error');
 		} else {
 			$text = $lang->t('system', 'module_already_installed');
 		}
@@ -50,7 +62,7 @@ switch ($uri->action) {
 			if ($db->countRows('*', 'modules', 'name = \'' . $values['dir'] . '\'') == 1) {
 				$installed_modules[$key] = $values;
 			} else {
-				$new_mods[$key] = $values;
+				$new_modules[$key] = $values;
 			}
 		}
 
