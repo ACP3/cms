@@ -26,17 +26,15 @@ if (!isset($entries)) {
 	$admin_user = false;
 	$self_delete = false;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $db->countRows('*', 'users', 'id = \'' . $entry . '\'') == 1) {
-			if ($entry == 1) {
-				$admin_user = true;
-			} else {
-				// Falls sich der User selbst gelöscht hat, diesen auch gleich abmelden
-				if ($entry == $auth->getUserId()) {
-					$auth->logout();
-					$self_delete = true;
-				}
-				$bool = $db->delete('users', 'id = \'' . $entry . '\'');
+		if ($entry == 1) {
+			$admin_user = true;
+		} else {
+			// Falls sich der User selbst gelöscht hat, diesen auch gleich abmelden
+			if ($entry == $auth->getUserId()) {
+				$auth->logout();
+				$self_delete = true;
 			}
+			$bool = $db->delete('users', 'id = \'' . $entry . '\'');
 		}
 	}
 	if ($admin_user === true) {

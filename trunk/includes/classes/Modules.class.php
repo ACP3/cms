@@ -128,7 +128,6 @@ class ACP3_Modules
 						'author' => $mod_info['author'],
 						'version' => isset($mod_info['version']['core']) && $mod_info['version']['core'] == 'true' ? CONFIG_VERSION : $mod_info['version'],
 						'name' => isset($mod_info['name']['lang']) && $mod_info['name']['lang'] == 'true' ? $lang->t($dir, $dir) : $mod_info['name'],
-						'tables' => !empty($mod_info['tables']) ? explode(',', $mod_info['tables']) : false,
 						'categories' => isset($mod_info['categories']) ? true : false,
 						'js' => isset($mod_info['js']) ? true : false,
 						'css' => isset($mod_info['css']) ? true : false,

@@ -4,7 +4,6 @@
 		<name lang="true"/>
 		<description lang="true"/>
 		<author>Goratsch Webdesign</author>
-		<tables>static_pages</tables>
 		<version core="true"/>
 	</info>
 </module>

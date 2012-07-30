@@ -24,9 +24,7 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $db->countRows('*', 'guestbook', 'id = \'' . $entry . '\'') == 1) {
-			$bool = $db->delete('guestbook', 'id = \'' . $entry . '\'');
-		}
+		$bool = $db->delete('guestbook', 'id = \'' . $entry . '\'');
 	}
 	setRedirectMessage($bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/guestbook');
 } else {

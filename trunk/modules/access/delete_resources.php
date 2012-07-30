@@ -31,7 +31,6 @@ if (!isset($entries)) {
 		$bool = $db->delete('acl_resources', 'id = \'' . $entry . '\'');
 	}
 
-	require_once MODULES_DIR . 'access/functions.php';
 	ACP3_ACL::setResourcesCache();
 
 	$text = $bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');

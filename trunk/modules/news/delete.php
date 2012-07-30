@@ -24,13 +24,11 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = $bool2 = false;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $db->countRows('*', 'news', 'id = \'' . $entry . '\'') == 1) {
-			$bool = $db->delete('news', 'id = \'' . $entry . '\'');
-			$bool2 = $db->delete('comments', 'module = \'news\' AND entry_id = \'' . $entry . '\'');
-			// News Cache löschen
-			ACP3_Cache::delete('news_details_id_' . $entry);
-			ACP3_SEO::deleteUriAlias('news/details/id_' . $entry);
-		}
+		$bool = $db->delete('news', 'id = \'' . $entry . '\'');
+		$bool2 = $db->delete('comments', 'module = \'news\' AND entry_id = \'' . $entry . '\'');
+		// News Cache löschen
+		ACP3_Cache::delete('news_details_id_' . $entry);
+		ACP3_SEO::deleteUriAlias('news/details/id_' . $entry);
 	}
 	setRedirectMessage($bool !== false && $bool2 !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/news');
 } else {
