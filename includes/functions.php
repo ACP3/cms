@@ -2,7 +2,7 @@
 /**
  * Diese Datei ist für die häufig verwendeten Funktionen im ACP3 zuständig
  *
- * @author Goratsch Webdesign
+ * @author Tino Goratsch
  * @package ACP3
  * @subpackage Core
  */

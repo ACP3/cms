@@ -2,7 +2,7 @@
 /**
  * Index
  *
- * @author Goratsch Webdesign
+ * @author Tino Goratsch
  * @package ACP3
  * @subpackage Core
  */

@@ -2,7 +2,7 @@
 /**
  * XML Parser
  *
- * @author Goratsch Webdesign
+ * @author Tino Goratsch
  * @package ACP3
  * @subpackage Core
  */
@@ -13,7 +13,7 @@ if (defined('IN_ACP3') === false)
 /**
  * Parst XML Dateien, z.B. die diversen info.xml bzw. module.xml Dateien
  *
- * @author Goratsch Webdesign
+ * @author Tino Goratsch
  * @package ACP3
  * @subpackage Core
  */

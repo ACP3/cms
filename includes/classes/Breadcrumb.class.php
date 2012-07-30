@@ -2,7 +2,7 @@
 /**
  * Breadcrumbs
  *
- * @author Goratsch Webdesign
+ * @author Tino Goratsch
  * @package ACP3
  * @subpackage Core
  */
@@ -13,7 +13,7 @@ if (defined('IN_ACP3') === false)
 /**
  * Erzeugt die Brotkrümelspur und gibt den Titel der jeweiligen Seite aus
  *
- * @author Goratsch Webdesign
+ * @author Tino Goratsch
  * @package ACP3
  * @subpackage Core
  */

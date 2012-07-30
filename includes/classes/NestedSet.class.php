@@ -3,7 +3,7 @@
  * Klasse zum Erstellen, Bearbeiten, Löschen und
  * Umsortieren von Knoten in einem Nested Set Baum
  *
- * @author Goratsch Webdesign
+ * @author Tino Goratsch
  */
 class ACP3_NestedSet {
 

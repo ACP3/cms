@@ -33,7 +33,7 @@
 	<item key="navigation">Navigation</item>
 	<item key="news_headline">Installation finished successfully!</item>
 	<item key="news_headline_alias">installation-finished-successfully</item>
-	<item key="news_text"><![CDATA[It looks like that the installation of the ACP3 4.0 was successful.<br />This is only a Testnews, which you can now edit or delete inside the administration area.<br />Apart from that, the Goratsch Webdesign Team wishes you much fun with the ACP3 4.0!]]></item>
+	<item key="news_text"><![CDATA[It looks like that the installation of the ACP3 4.0 was successful.<br />This is only a Testnews, which you can now edit or delete inside the administration area.]]></item>
 	<item key="newsletter_mailsig">the Newsletterteam</item>
 	<item key="not_writeable">Not writeable</item>
 	<item key="off">off</item>
