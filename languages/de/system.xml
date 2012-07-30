@@ -3,7 +3,6 @@
 	<item key="access_to_following_modules">Sie haben Zugriff auf folgende %d Module.</item>
 	<item key="acp3_not_up_to_date">Es ist eine neue Version des ACP3 verfügbar. Sie kann %1$shier%2$s heruntergeladen werden.</item>
 	<item key="acp3_up_to_date">Sie verwenden bereits die aktuelle Version des ACP3.</item>
-	<item key="attention">Achtung</item>
 	<item key="cache_images">Bilder cachen</item>
 	<item key="complete_export">Komplett</item>
 	<item key="config_edit_error">Beim Bearbeiten der Konfiguration ist ein Fehler aufgetreten.</item>
@@ -35,6 +34,9 @@
 	<item key="homepage">Startseite</item>
 	<item key="homepage_description"><![CDATA[Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein]]></item>
 	<item key="incorrect_homepage"><![CDATA[Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein]]></item>
+	<item key="install_module">Modul installieren</item>
+	<item key="installable_modules">Installierbare Module</item>
+	<item key="installed_modules">Installierte Module</item>
 	<item key="installed_version">Installierte Version</item>
 	<item key="language">Sprache</item>
 	<item key="languages">Sprachen</item>
@@ -69,15 +71,10 @@
 	<item key="mod_rewrite_description">Bitte nur aktivieren, wenn Sie den Apache Webserver verwenden.</item>
 	<item key="module_name">Modul Name</item>
 	<item key="modules">Module</item>
-	<item key="modules_found">Es wurden insgesamt %d Module gefunden.</item>
-	<item key="not_optimised">Optimierung nicht notwendig</item>
-	<item key="optimisation_access_forbidden">Während der Optimierung sind alle Zugriffe auf die Datenbank gesperrt!</item>
-	<item key="optimised">Tabelle erfolgreich optimiert</item>
+	<item key="no_modules_available_for_installation">Es sind bereits alle lokal verfügbaren Module installiert!</item>
 	<item key="output">Ausgabe</item>
 	<item key="output_as_text">Als Text</item>
 	<item key="output_as_file">Als Datei</item>
-	<item key="overall_overhead">Überhang gesamt</item>
-	<item key="overhead">Überhang</item>
 	<item key="performance">Leistung</item>
 	<item key="php_date_function"><![CDATA[siehe <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a>-Funktion von PHP]]></item>
 	<item key="query_failed">Abfrage fehlgeschalgen!</item>
@@ -96,14 +93,10 @@
 	<item key="select_sql_tables">Bitte wählen Sie mindestens eine SQL-Tabelle aus, welche exportiert werden soll.</item>
 	<item key="sql_export">SQL-Tabellen-Export</item>
 	<item key="sql_import">SQL-Tabellen-Import</item>
-	<item key="sql_optimisation">SQL-Tabellen-Optimierung</item>
 	<item key="sql_query">SQL Abfrage</item>
-	<item key="sql_table_optimisation_description">Die Tabellen-Optimierung beseitigt den durch viele Lösch- und Bearbeitungsvorgänge entstandenen ungenutzten Speicherplatz in den Tabellen der Datenbank.</item>
 	<item key="sql_tables">SQL-Tabellen</item>
-	<item key="status">Status</item>
 	<item key="structure_of_table">Struktur der Tabelle %s</item>
 	<item key="system">System</item>
-	<item key="table_name">Tabellenname</item>
 	<item key="text">Text</item>
 	<item key="textarea">Textfeld</item>
 	<item key="title">Seitentitel</item>
