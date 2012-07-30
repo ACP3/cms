@@ -24,9 +24,7 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $db->countRows('*', 'comments', 'id = \'' . $entry . '\'') == 1) {
-			$bool = $db->delete('comments', 'id = \'' . $entry . '\'');
-		}
+		$bool = $db->delete('comments', 'id = \'' . $entry . '\'');
 	}
 	setRedirectMessage($bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/comments');
 } else {

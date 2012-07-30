@@ -24,9 +24,7 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && preg_match('/^(\w+)$/', $entry) && $db->countRows('*', 'comments', 'module = \'' . $entry . '\'') > '0') {
-			$bool = $db->delete('comments', 'module = \'' . $entry . '\'');
-		}
+		$bool = $db->delete('comments', 'module = \'' . $db->escape($entry) . '\'');
 	}
 	setRedirectMessage($bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/comments');
 } else {

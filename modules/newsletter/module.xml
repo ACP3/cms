@@ -4,7 +4,6 @@
 		<name lang="true"/>
 		<description lang="true"/>
 		<author>Goratsch Webdesign</author>
-		<tables>newsletter_accounts,newsletter_archive</tables>
 		<version core="true"/>
 	</info>
 </module>

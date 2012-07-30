@@ -26,14 +26,12 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	foreach ($marked_entries as $entry) {
-		if (!empty($entry) && $db->countRows('*', 'static_pages', 'id = \'' . $entry . '\'') == 1) {
-			$bool = $db->delete('static_pages', 'id = \'' . $entry . '\'');
-			$page = $db->select('id', 'menu_items', 'uri = \'static_pages/list/id_' . $entry . '/\'');
-			if (!empty($page))
-				menuItemsDeleteNode($page[0]['id']);
-			ACP3_Cache::delete('static_pages_list_id_' . $entry);
-			ACP3_SEO::deleteUriAlias('static_pages/list/id_' . $entry);
-		}
+		$bool = $db->delete('static_pages', 'id = \'' . $entry . '\'');
+		$page = $db->select('id', 'menu_items', 'uri = \'static_pages/list/id_' . $entry . '/\'');
+		if (!empty($page))
+			menuItemsDeleteNode($page[0]['id']);
+		ACP3_Cache::delete('static_pages_list_id_' . $entry);
+		ACP3_SEO::deleteUriAlias('static_pages/list/id_' . $entry);
 	}
 	setMenuItemsCache();
 
