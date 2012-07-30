@@ -2,7 +2,7 @@
 /**
  * URI
  *
- * @author Goratsch Webdesign
+ * @author Tino Goratsch
  * @package ACP3
  * @subpackage Core
  */
@@ -13,7 +13,7 @@ if (defined('IN_ACP3') === false)
 /**
  * Verarbeitet die URI Query
  *
- * @author Goratsch Webdesign
+ * @author Tino Goratsch
  * @package ACP3
  * @subpackage Core
  */

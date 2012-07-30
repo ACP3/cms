@@ -2,7 +2,7 @@
 /**
  * Sessions
  *
- * @author Goratsch Webdesign
+ * @author Tino Goratsch
  * @package ACP3
  * @subpackage Core
  */
@@ -13,7 +13,7 @@ if (defined('IN_ACP3') === false)
  * Sessionklasse
  * Diese ist zuständig für das Sessionhandling in der Datenbank
  *
- * @author Goratsch Webdesign
+ * @author Tino Goratsch
  * @package ACP3
  * @subpackage Core
  */
