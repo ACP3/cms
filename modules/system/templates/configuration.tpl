@@ -1,7 +1,27 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<script type="text/javascript" src="{$DESIGN_PATH}system/configuration.js"></script>
+<script type="text/javascript">
+$(function() {
+	$('input[name="mailer_smtp_auth"]').bind('click', function() {
+		if ($(this).val() == 1) {
+			$('#mailer-smtp-2').show();
+		} else {
+			$('#mailer-smtp-2').hide();
+		}
+	});
+	$('#mailer-type').bind('change', function() {
+		if ($(this).val() == 'smtp') {
+			$('#mailer-smtp-1').show();
+			$('input[name="mailer_smtp_auth"]:checked').trigger('click');
+		} else {
+			$('#mailer-smtp-1, #mailer-smtp-2').hide();
+		}
+	});
+
+	$('#mailer-type').trigger('change');
+});
+</script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<div id="tabs">
 		<ul>
