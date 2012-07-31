@@ -79,7 +79,7 @@ pre {
 }
 .acp-table th {
 	padding: 0 3px;
-	background: #069 url('images/common_header.png') repeat-x;
+	background: #069 url('../images/common_header.png') repeat-x;
 	font-weight: bold;
 	font-size: 1.1em;
 	line-height: 24px;
@@ -251,7 +251,7 @@ a.form, a.form:link,
 	text-align: center;
 }
 .confirm-box .header {
-	background: #069 url('images/common_header.png') repeat-x;
+	background: #069 url('../images/common_header.png') repeat-x;
 	border-bottom: 1px solid #bbb;
 	font-weight: bold;
 	line-height: 25px;

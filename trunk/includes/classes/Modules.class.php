@@ -53,7 +53,7 @@ class ACP3_Modules
 	public static function isActive($module)
 	{
 		$info = self::parseInfo($module);
-		return $info['active'] == 1 ? true : false;
+		return !empty($info) && $info['active'] == 1 ? true : false;
 	}
 	/**
 	 * Gibt ein alphabetisch sortiertes Array mit allen gefundenen
