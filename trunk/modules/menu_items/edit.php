@@ -72,8 +72,8 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_item
 			// Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
 			if ($_POST['mode'] != 3) {
 				$alias = $_POST['alias'] === $page[0]['alias'] ? $page[0]['alias'] : $_POST['alias'];
-				$keywords = $_POST['seo_keywords'] === $page[0]['seo_keywords'] ? $page[0]['seo_keywords'] : $_POST['seo_keywords'];
-				$description = $_POST['seo_description'] === $page[0]['seo_description'] ? $page[0]['seo_description'] : $_POST['seo_description'];
+				$keywords = $_POST['seo_keywords'] === $page[0]['seo_keywords'] ? $page[0]['seo_keywords'] : $db->escape($_POST['seo_keywords']);
+				$description = $_POST['seo_description'] === $page[0]['seo_description'] ? $page[0]['seo_description'] : $db->escape($_POST['seo_description']);
 				ACP3_SEO::insertUriAlias($_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'], $_POST['mode'] == 1 ? '' : $alias, $keywords, $description, (int) $_POST['seo_robots']);
 			}
 
