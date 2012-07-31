@@ -45,23 +45,23 @@ if ($_GET['g'] === 'css') {
 
 	$modules = scandir(DESIGN_PATH);
 	foreach ($modules as $module) {
-		$path = DESIGN_PATH . $module . '/style.css';
+		$path = DESIGN_PATH . 'css/' . $module . '.css';
 		if ($module !== '.' && $module !== '..' && is_file($path) === true && ACP3_Modules::isActive($module) === true)
 			$styles['css'][] = $path;
 	}
 
-	$styles['css'][] = DESIGN_PATH . 'jquery/jquery-ui.css';
-	$styles['css'][] = DESIGN_PATH . 'jquery/jquery-timepicker.css';
-	$styles['css'][] = DESIGN_PATH . 'jquery/jquery-fancybox.css';
+	$styles['css'][] = DESIGN_PATH . 'js/jquery-ui.css';
+	$styles['css'][] = DESIGN_PATH . 'js/jquery-timepicker.css';
+	$styles['css'][] = DESIGN_PATH . 'js/jquery-fancybox.css';
 
 	return $styles;
 } elseif ($_GET['g'] === 'js') {
 	$scripts = array();
-	$scripts['js'][] = DESIGN_PATH . 'jquery/jquery.min.js';
-	$scripts['js'][] = DESIGN_PATH . 'jquery/jquery.cookie.js';
-	$scripts['js'][] = DESIGN_PATH . 'jquery/jquery.ui.min.js';
-	$scripts['js'][] = DESIGN_PATH . 'jquery/jquery.timepicker.js';
-	$scripts['js'][] = DESIGN_PATH . 'jquery/jquery.fancybox.js';
+	$scripts['js'][] = DESIGN_PATH . 'js/jquery.min.js';
+	$scripts['js'][] = DESIGN_PATH . 'js/jquery.cookie.js';
+	$scripts['js'][] = DESIGN_PATH . 'js/jquery.ui.min.js';
+	$scripts['js'][] = DESIGN_PATH . 'js/jquery.timepicker.js';
+	$scripts['js'][] = DESIGN_PATH . 'js/jquery.fancybox.js';
 	$scripts['js'][] = DESIGN_PATH . 'script.js';
 
 	return $scripts;
