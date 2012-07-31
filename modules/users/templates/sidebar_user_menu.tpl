@@ -1,5 +1,12 @@
 <h4>{lang t="users|user_menu"}</h4>
-<script type="text/javascript" src="{$DESIGN_PATH}users/script.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('ul.admin > li:has(ul) > a').click(function() {
+		$(this).next('ul').stop(true, true).slideToggle('slow');
+		return false;
+	});
+});
+</script>
 <ul class="admin">
 	<li><a href="{uri args="users/home"}">{lang t="users|home"}</a></li>
 {if isset($user_sidebar.modules)}
