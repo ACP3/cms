@@ -5,10 +5,6 @@
 {$META}
 <link rel="stylesheet" type="text/css" href="{$MIN_STYLESHEET}">
 <script type="text/javascript" src="{$MIN_JAVASCRIPT}"></script>
-<!--[if lte IE 6]>
-<link rel="stylesheet" type="text/css" href="{$DESIGN_PATH}ie.css">
-<script type="text/javascript" defer="defer" src="{$DESIGN_PATH}pngfix.js"></script>
-<![endif]-->
 </head>
 
 <body>
