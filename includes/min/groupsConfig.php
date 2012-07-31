@@ -50,9 +50,9 @@ if ($_GET['g'] === 'css') {
 			$styles['css'][] = $path;
 	}
 
-	$styles['css'][] = DESIGN_PATH . 'js/jquery-ui.css';
-	$styles['css'][] = DESIGN_PATH . 'js/jquery-timepicker.css';
-	$styles['css'][] = DESIGN_PATH . 'js/jquery-fancybox.css';
+	$styles['css'][] = DESIGN_PATH . 'css/jquery-ui.css';
+	$styles['css'][] = DESIGN_PATH . 'css/jquery-timepicker.css';
+	$styles['css'][] = DESIGN_PATH . 'css/jquery-fancybox.css';
 
 	return $styles;
 } elseif ($_GET['g'] === 'js') {
