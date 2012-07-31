@@ -9,9 +9,6 @@
 <script type="text/javascript" src="{$ROOT_DIR}design/script.js"></script>
 <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}design/style.css">
 <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}../designs/acp3/jquery/jquery-ui.css">
-<!--[if lte IE 6]>
-<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}design/ie.css">
-<![endif]-->
 </head>
 
 <body>
