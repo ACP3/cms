@@ -56,7 +56,7 @@ if (isset($_POST['submit']) === true) {
 		);
 
 		$nestedSet = new ACP3_NestedSet('menu_items', true);
-		$bool = $nestedSet->insertNode((int) $_POST['parent_id'], $insert_values);
+		$bool = $nestedSet->insertNode((int) $_POST['parent'], $insert_values);
 
 		// Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
 		if ($_POST['mode'] != 3) {
@@ -66,8 +66,8 @@ if (isset($_POST['submit']) === true) {
 				$description = ACP3_SEO::getDescription($_POST['uri']);
 			} else {
 				$alias = $_POST['alias'];
-				$keywords = $_POST['seo_keywords'];
-				$description = $_POST['seo_description'];
+				$keywords = $db->escape($_POST['seo_keywords']);
+				$description = $db->escape($_POST['seo_description']);
 			}
 			ACP3_SEO::insertUriAlias($_POST['mode'] == 1 ? '' : $alias, $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'], $keywords, $description, (int) $_POST['seo_robots']);
 		}
