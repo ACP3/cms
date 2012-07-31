@@ -39,7 +39,7 @@ $tpl = new Smarty();
 $tpl->error_reporting = $reporting_level;
 $tpl->compile_id = CONFIG_DESIGN;
 $tpl->setCompileCheck(defined('DEBUG') === true && DEBUG === true);
-$tpl->setTemplateDir(ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/')
+$tpl->setTemplateDir(array(ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/', MODULES_DIR))
 	->addPluginsDir(INCLUDES_DIR . 'smarty/custom/')
 	->setCompileDir(ACP3_ROOT . 'uploads/cache/tpl_compiled/')
 	->setCacheDir(ACP3_ROOT . 'uploads/cache/tpl_cached/');

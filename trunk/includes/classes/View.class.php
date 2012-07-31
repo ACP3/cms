@@ -142,9 +142,8 @@ class ACP3_View
 			} else {
 				// Pfad zerlegen
 				$path = explode('/', $template);
-				if (count($path) > 1 && is_file(MODULES_DIR . $path[0] . '/templates/' . $path[1])) {
-					$tpl->addTemplateDir(MODULES_DIR . $path[0] . '/templates/');
-					return $tpl->fetch($path[1], $cache_id, $compile_id, $parent, $display);
+				if (count($path) > 1 && $tpl->templateExists($path[0] . '/templates/' . $path[1])) {
+					return $tpl->fetch($path[0] . '/templates/' . $path[1], $cache_id, $compile_id, $parent, $display);
 				}
 			}
 		} catch (SmartyException $e) {
