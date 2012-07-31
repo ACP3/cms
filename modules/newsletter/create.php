@@ -75,6 +75,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$actions[1]['lang'] = $lang->t('newsletter', 'unsubscribe');
 	$tpl->assign('actions', $actions);
 
+	require_once MODULES_DIR . 'captcha/functions.php';
 	$tpl->assign('captcha', captcha());
 
 	$session->generateFormToken();

@@ -100,6 +100,8 @@ function commentsCreate($module, $entry_id)
 			$defaults['message'] = '';
 		}
 		$tpl->assign('form', isset($_POST['submit']) ? array_merge($defaults, $_POST) : $defaults);
+
+		require_once MODULES_DIR . 'captcha/functions.php';
 		$tpl->assign('captcha', captcha());
 
 		$session->generateFormToken();
