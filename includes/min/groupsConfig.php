@@ -42,8 +42,9 @@ if ($_GET['g'] === 'css') {
 	$styles = array();
 	$styles['css'][] = DESIGN_PATH . 'css/' . LAYOUT . '.css';
 
-	$modules = scandir(DESIGN_PATH);
+	$modules = scandir(DESIGN_PATH . 'css/');
 	foreach ($modules as $module) {
+		$module = substr($module, 0, -4);
 		$path = DESIGN_PATH . 'css/' . $module . '.css';
 		if ($module !== '.' && $module !== '..' && is_file($path) === true && ACP3_Modules::isActive($module) === true)
 			$styles['css'][] = $path;
