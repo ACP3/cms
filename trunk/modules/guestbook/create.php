@@ -136,6 +136,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		$tpl->assign('form', isset($_POST['submit']) ? array_merge($defaults, $_POST) : $defaults);
 	}
 
+	require_once MODULES_DIR . 'captcha/functions.php';
 	$tpl->assign('captcha', captcha());
 
 	$session->generateFormToken();

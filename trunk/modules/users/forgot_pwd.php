@@ -56,6 +56,7 @@ if ($auth->isUser() === true) {
 
 		$tpl->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
+		require_once MODULES_DIR . 'captcha/functions.php';
 		$tpl->assign('captcha', captcha());
 
 		$session->generateFormToken();

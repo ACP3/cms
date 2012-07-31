@@ -39,29 +39,6 @@ function calcFilesize($value)
 	return round($value, 2) . ' ' . $units[$i];
 }
 /**
- * Erzeugt das Captchafeld für das Template
- *
- * @param integer $captcha_length
- *  Anzahl der Zeichen, welche das Captcha haben soll
- * @return string
- */
-function captcha($captcha_length = 5)
-{
-	global $auth, $tpl;
-
-	// Wenn man als User angemeldet ist, Captcha nicht anzeigen
-	if ($auth->isUser() === false) {
-		$_SESSION['captcha'] = salt($captcha_length);
-
-		$captcha = array();
-		$captcha['width'] = $captcha_length * 25;
-		$captcha['height'] = 30;
-		$tpl->assign('captcha', $captcha);
-		return ACP3_View::fetchTemplate('common/captcha.tpl');
-	}
-	return '';
-}
-/**
  * Gibt je nach angegebenen Parametern eine Fehlerbox oder eine Bestätigungsbox aus
  *
  * @param string $text

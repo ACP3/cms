@@ -16,7 +16,6 @@ define('ACP3_ROOT', realpath(dirname(__FILE__) . '/../../') . '/');
 require_once ACP3_ROOT . 'includes/config.php';
 
 define('DESIGN_PATH', ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/');
-define('LAYOUT', isset($_GET['layout']) && !preg_match('=/=', $_GET['layout']) && is_file(DESIGN_PATH . 'css/' . $_GET['layout'] . '.css') === true ? $_GET['layout'] : 'layout');
 
 if ($_GET['g'] === 'css') {
 	define('IN_ACP3', true);
@@ -39,8 +38,10 @@ if ($_GET['g'] === 'css') {
 	$auth = new ACP3_Auth();
 	$lang = new ACP3_Lang();
 
+	$layout = isset($_GET['layout']) && !preg_match('=/=', $_GET['layout']) && is_file(DESIGN_PATH . 'css/' . $_GET['layout'] . '.css') === true ? $_GET['layout'] : 'layout';
+
 	$styles = array();
-	$styles['css'][] = DESIGN_PATH . 'css/' . LAYOUT . '.css';
+	$styles['css'][] = DESIGN_PATH . 'css/' . $layout . '.css';
 
 	$modules = scandir(DESIGN_PATH . 'css/');
 	foreach ($modules as $module) {
@@ -62,7 +63,10 @@ if ($_GET['g'] === 'css') {
 	$scripts['js'][] = DESIGN_PATH . 'js/jquery.ui.min.js';
 	$scripts['js'][] = DESIGN_PATH . 'js/jquery.timepicker.js';
 	$scripts['js'][] = DESIGN_PATH . 'js/jquery.fancybox.js';
-	$scripts['js'][] = DESIGN_PATH . LAYOUT . '.js';
+
+	$layout = isset($_GET['layout']) && !preg_match('=/=', $_GET['layout']) ? $_GET['layout'] : 'layout';
+	if (is_file(DESIGN_PATH . 'js/' . $layout . '.js') === true)
+		$scripts['js'][] = DESIGN_PATH . 'js/' . $layout . '.js';
 
 	return $scripts;
 }
