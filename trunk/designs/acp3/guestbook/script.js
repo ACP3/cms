@@ -6,7 +6,8 @@ $(document).ready(function() {
 				autoSize: true,
 				padding: 0,
 				afterClose: function() {
-					window.location.reload();
+					location.reload();
+					return;
 				}
 			});
 			e.preventDefault();
