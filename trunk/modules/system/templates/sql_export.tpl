@@ -6,7 +6,26 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<script type="text/javascript" src="{$DESIGN_PATH}system/export.js"></script>
+<script type="text/javascript">
+function mark_options(action)
+{
+	if (action == 'add') {
+		$('form #tables option').attr('selected', 'selected');
+	} else {
+		$('form #tables option').removeAttr('selected');
+	}
+}
+
+$(function() {
+	$('input[name="export_type"]').click(function() {
+		if (($(this).attr('id') == 'complete' || $(this).attr('id') == 'structure')) {
+			$('#options-container').show();
+		} else {
+			$('#options-container').hide();
+		}
+	}).click();
+});
+</script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<div id="tabs">
 		<ul>

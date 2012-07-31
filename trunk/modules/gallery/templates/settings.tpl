@@ -1,7 +1,19 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<script type="text/javascript" src="{$DESIGN_PATH}gallery/settings.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('input[name="overlay"]').bind('click', function() {
+		if ($(this).val() == 1) {
+			$('#comments-container').hide();
+		} else {
+			$('#comments-container').show();
+		}
+	});
+
+	$('input[name="overlay"]:checked').trigger('click');
+});
+</script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<div id="tabs">
 		<ul>

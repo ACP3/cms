@@ -1,7 +1,7 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<script type="text/javascript" src="{$DESIGN_PATH}newsletter/script.js"></script>
+<script type="text/javascript" src="{$DESIGN_PATH}js/newsletter_admin.js"></script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset>
 		<legend>{lang t="newsletter|newsletter"}</legend>

@@ -1,5 +1,22 @@
 {if $overlay == 1}
-<script type="text/javascript" src="{$DESIGN_PATH}guestbook/script.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#create-link').click(function(e) {
+		if (e.which == 1) {
+			$.fancybox.open({ href: $(this).attr('href') + 'layout_simple/', title: $(this).attr('title') }, {
+				type: 'iframe',
+				autoSize: true,
+				padding: 0,
+				afterClose: function() {
+					location.reload();
+					return;
+				}
+			});
+			e.preventDefault();
+		}
+	});
+});
+</script>
 {/if}
 <div style="text-align:center">
 	<a href="{uri args="guestbook/create"}" id="create-link" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>

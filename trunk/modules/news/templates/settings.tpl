@@ -1,7 +1,19 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<script type="text/javascript" src="{$DESIGN_PATH}news/settings.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('input[name="readmore"]').bind('click', function() {
+		if ($(this).val() == 1) {
+			$('#readmore-container').show();
+		} else {
+			$('#readmore-container').hide();
+		}
+	});
+
+	$('input[name="readmore"]:checked').trigger('click');
+});
+</script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
 	<fieldset>
 		<legend>{lang t="news|settings"}</legend>
