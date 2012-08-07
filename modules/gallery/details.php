@@ -13,7 +13,7 @@ if (defined('IN_ACP3') === false)
 $time = $date->timestamp();
 $period = ' AND (g.start = g.end AND g.start <= ' . $time . ' OR g.start != g.end AND g.start <= ' . $time . ' AND g.end >= ' . $time . ')';
 
-if (ACP3_Validate::isNumber($uri->id) === true && $db->select('COUNT(g.id)', 'gallery AS g, {pre}gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id' . $period) > 0) {
+if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('g.id', 'gallery AS g, {pre}gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id' . $period) > 0) {
 	$picture = $db->select('g.id AS gallery_id, g.name, p.id, p.pic, p.file, p.description, p.comments', 'gallery AS g, {pre}gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
 	$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
 
