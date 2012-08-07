@@ -26,7 +26,7 @@ switch ($uri->action) {
 			ACP3_Modules::setModulesCache();
 			ACP3_ACL::setResourcesCache();
 
-			$text = $bool !== false ? $lang->t('system', $uri->action === 'activate' ? 'mod_activate_success' : 'mod_deactivate_success') : $lang->t('system', $uri->action === 'activate' ? 'mod_activate_error' : 'mod_deactivate_error');
+			$text = $lang->t('system', 'mod_' . $uri->action . '_' . ($bool !== false ? 'success' : 'error'));
 		}
 		ACP3_View::setContent(confirmBox($text, $uri->route('acp/system/modules')));
 		break;
