@@ -19,7 +19,7 @@
 	<item key="already_sent">Already sent</item>
 	<item key="compose_save_error">While sending respectively saving at least one error has occured.</item>
 	<item key="compose_success">The newsletter was successfully sent.</item>
-	<item key="create">Subscribe/Unscribe the newsletter</item>
+	<item key="create">Subscribe/Unsubscribe the newsletter</item>
 	<item key="entry">Subscribe/Unsubscribe the newsletter</item>
 	<item key="mailsig">E-mail signature</item>
 	<item key="mod_description">This module is responsible for the newsletter.</item>
