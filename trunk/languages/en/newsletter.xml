@@ -44,7 +44,7 @@ If you haven't subscribed this newsletter, please ignore or delete this E-mail.<
 	<item key="test_nl_description">Will only be send to the E-mail adress which is stated in the newsletter settings</item>
 	<item key="text">Text</item>
 	<item key="text_to_short">The text should be at least 3 characters long</item>
-	<item key="unsubscribe">Unsubsribe</item>
+	<item key="unsubscribe">Unsubscribe</item>
 	<item key="unsubscribe_error">While deleting the newsletter account an error has occured.</item>
 	<item key="unsubscribe_success">The newsletter account was successfully deleted.</item>
 </language>
