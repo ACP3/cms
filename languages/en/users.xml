@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
 	<item key="account_locked">Your user account has been locked. To reactivate it, please use the &quot;forgot password&quot; function, to get a new password.</item>
+	<item key="acp_create">Create a new user</item>
+	<item key="acp_delete">Delete users</item>
+	<item key="acp_edit">Edit user</item>
+	<item key="acp_settings">Settings</item>
 	<item key="administration">Administration</item>
 	<item key="admin_user_undeletable">The administrator can't be deleted.</item>
 	<item key="allow_language_override">Allow users to override the default language</item>
@@ -9,12 +13,9 @@
 	<item key="birthday_display_completely">Display birthday completely</item>
 	<item key="birthday_hide_year">Hide year of birth</item>
 	<item key="contact">Contact</item>
-	<item key="create">Create a new user</item>
-	<item key="delete">Delete users</item>
 	<item key="deleted_user">Deleted user</item>
 	<item key="display_profile_field"><![CDATA[When you don't want to display a certain profile field, just remove the tick from the respective field.]]></item>
 	<item key="drafts">Drafts</item>
-	<item key="edit">Edit user</item>
 	<item key="edit_profile">Edit profile</item>
 	<item key="edit_settings">Edit settings</item>
 	<item key="enable_registration">Enable registration of new users</item>
@@ -73,7 +74,6 @@ Password: {password}</item>
 	<item key="select_language_override">Please select whether to users should be allowed to override the default language.</item>
 	<item key="select_super_user">Please select, whether the user should be a super user or not.</item>
 	<item key="send_email">Send E-mail</item>
-	<item key="settings">Settings</item>
 	<item key="skype">Skype</item>
 	<item key="super_user">Super user</item>
 	<item key="type_in_nickname_or_email">Please either enter the E-mail address or the user name you used with the registration.</item>

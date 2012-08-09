@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
+	<item key="acp_delete">Gästebucheinträge löschen</item>
+	<item key="acp_edit">Gästebucheintrag bearbeiten</item>
+	<item key="acp_settings">Einstellungen</item>
 	<item key="activate_entry">Eintrag freischalten</item>
 	<item key="allow_emoticons">Emoticons erlauben</item>
 	<item key="create">Neuer Eintrag</item>
-	<item key="delete">Gästebucheinträge löschen</item>
-	<item key="edit">Gästebucheintrag bearbeiten</item>
 	<item key="guestbook">Gästebuch</item>
 	<item key="guestbook_entries">Gästebucheinträge</item>
 	<item key="ip">IP Adresse</item>
@@ -27,7 +28,6 @@ Bitte klicken Sie auf den unten stehenden Link, um sich den Eintrag anzusehen un
 	<item key="select_notification_type">Bitte wählen Sie aus, ob auf neue Gästebucheinträge per E-Mail hingewiesen werden soll oder nicht.</item>
 	<item key="select_use_overlay">Bitte wählen Sie aus, ob neue Gästebucheinträge in einem Overlay verfasst werden sollen oder nicht.</item>
 	<item key="send_email">E-Mail senden</item>
-	<item key="settings">Einstellungen</item>
 	<item key="subscribe_to_newsletter">Ja, ich möchte in Zukunft den Newsletter von %s erhalten.</item>
 	<item key="type_in_email_address_to_subscribe_to_newsletter">Um den Newsletter erhalten zu können, müssen Sie ihre E-Mail-Adresse angeben.</item>
 	<item key="use_overlay">Neue Gästebucheinträge in Overlay verfassen</item>

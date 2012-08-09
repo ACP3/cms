@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
 	<item key="access_to_following_modules">You have access to the following %d modules.</item>
+	<item key="acp_configuration">Configuration</item>
+	<item key="acp_designs">Designs</item>
+	<item key="acp_extensions">Extensions</item>
+	<item key="language">Language</item>
+	<item key="acp_languages">Languages</item>
+	<item key="acp_maintenance">Maintenance</item>
+	<item key="acp_modules">Modules</item>
+	<item key="acp_sql_export">SQL table export</item>
+	<item key="acp_sql_import">SQL table import</item>
+	<item key="acp_update_check">Version check</item>
 	<item key="acp3_not_up_to_date">A newer version of ACP3 is available. Click %1$shere%2$s to download the latest version.</item>
 	<item key="acp3_up_to_date">You're already using the most recent version of ACP3.</item>
 	<item key="cache_images">Cache pictures</item>
 	<item key="complete_export">Complete</item>
 	<item key="config_edit_error">While editing the ACP3 configuration an error has occured.</item>
 	<item key="config_edit_success">The ACP3 configuration has been edited successfully.</item>
-	<item key="configuration">Configuration</item>
 	<item key="current_version">Current version</item>
 	<item key="data_of_table">Data of table %s</item>
 	<item key="database">Database</item>
-	<item key="designs">Designs</item>
 	<item key="designs_edit_error">While switching the design an error has occured.</item>
 	<item key="designs_edit_success">The design was successfully selected and can now be used.</item>
 	<item key="disable_module">Disable module</item>
@@ -25,7 +33,6 @@
 	<item key="export_options">Exportoptions</item>
 	<item key="export_structure">Struture only</item>
 	<item key="export_type">Export type</item>
-	<item key="extensions">Extensions</item>
 	<item key="file">File</item>
 	<item key="flood_barrier">Flood barrier</item>
 	<item key="flood_barrier_description">Time in seconds, how long an user has to wait, before he can write a new entry</item>
@@ -38,8 +45,6 @@
 	<item key="installable_modules">Installable modules</item>
 	<item key="installed_modules">Installed modules</item>
 	<item key="installed_version">Installed version</item>
-	<item key="language">Language</item>
-	<item key="languages">Languages</item>
 	<item key="languages_edit_error">While switching the language an error has occured.</item>
 	<item key="languages_edit_success">The language was successfully selected and can now be used.</item>
 	<item key="mailer_smtp_auth">SMTP Authentication</item>
@@ -54,7 +59,6 @@
 	<item key="mailer_type">Mailer type</item>
 	<item key="mailer_type_php_mail">PHP Mail</item>
 	<item key="mailer_type_smtp">SMTP</item>
-	<item key="maintenance">Maintenance</item>
 	<item key="maintenance_message_to_short">The maintenance message should be at least 3 characters long</item>
 	<item key="maintenance_mode">Turn maintenance mode on</item>
 	<item key="maintenance_msg">Maintenance message</item>
@@ -72,7 +76,6 @@
 	<item key="mod_rewrite">Use mod_rewrite</item>
 	<item key="mod_rewrite_description">Only enable this, if you are using the Apache web server.</item>
 	<item key="module_name">Module name</item>
-	<item key="modules">Modules</item>
 	<item key="no_modules_available_for_installation">There are no new modules available for installation!</item>
 	<item key="output">Output</item>
 	<item key="output_as_text">As text</item>
@@ -93,8 +96,6 @@
 	<item key="select_seo_robots">Please select, how your website should be indexed by the seach engine crawlers.</item>
 	<item key="select_sql_file">The uploaded file is not a valid textfile</item>
 	<item key="select_sql_tables">Please select at least one SQL table, that should be exported</item>
-	<item key="sql_export">SQL table export</item>
-	<item key="sql_import">SQL table import</item>
 	<item key="sql_query">SQL Query</item>
 	<item key="sql_tables">SQL-tables</item>
 	<item key="structure_of_table">Structure of table %s</item>
@@ -110,6 +111,5 @@
 	<item key="type_in_mailer_smtp_username">Please type in the username of the SMTP server.</item>
 	<item key="type_in_minify_cache_lifetime">Please type in the cache lifetime of CSS and JavaScript files.</item>
 	<item key="type_in_text_or_select_sql_file">Please either type in the sql queries into the textarea oder just upload a file.</item>
-	<item key="update_check">Version check</item>
 	<item key="version">Version</item>
 </language>

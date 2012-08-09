@@ -38,90 +38,15 @@ class ACP3_URI
 	 */
 	function __construct($defaultModule = '', $defaultFile = '')
 	{
-		$this->query = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
-		$this->query.= !preg_match('/\/$/', $this->query) ? '/' : '';
-
-		if (preg_match('/^(acp\/)/', $this->query)) {
-			// Definieren, dass man sich im Administrationsbereich befindet
-			define('IN_ADM', true);
-			// "acp/" entfernen
-			$this->query = substr($this->query, 4);
-		} elseif (defined('IN_INSTALL') === false) {
+		$this->preprocessUriQuery();
+		if (defined('IN_INSTALL') === false) {
 			// Query auf eine benutzerdefinierte Startseite setzen
 			if ($this->query === '/' && CONFIG_HOMEPAGE !== '')
 				$this->query = CONFIG_HOMEPAGE;
-
-			// Nur ausführen, falls URI-Aliase aktiviert sind
-			if (CONFIG_SEO_ALIASES === true) {
-				// Falls für Query ein Alias existiert, zu diesem weiterleiten
-				if (ACP3_SEO::uriAliasExists($this->query) === true)
-					// URI-Alias wird von uri::route() erzeugt
-					$this->redirect($this->query, 0, 1);
-
-				// Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
-				if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)+(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
-					$query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
-					// Annahme bestätigt
-					if (is_file(MODULES_DIR . $query[0] . '/' . $query[1] . '.php') === false) {
-						$length = 0;
-						foreach ($query as $row) {
-							if (strpos($row, '_') === false) {
-								$length+= strlen($row) + 1;
-							} else {
-								break;
-							}
-						}
-						$params = substr($this->query, $length);
-						$this->query = substr($this->query, 0, $length);
-					}
-				}
-
-				global $db;
-
-				// Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-				$alias = $db->select('uri', 'seo', 'alias = \'' . $db->escape(substr($this->query, 0, -1)) . '\'');
-				if (!empty($alias)) {
-					$this->query = $alias[0]['uri'] . (!empty($params) ? $params : '');
-				}
-			}
+			$this->checkForUriAlias();
 		}
 
-		$query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
-
-		if (empty($defaultModule) || empty($defaultFile)) {
-			$defaultModule = defined('IN_ADM') ? 'acp' : 'news';
-			$defaultFile = defined('IN_ADM') ? 'adm_list' : 'list';
-		}
-
-		$this->mod = !empty($query[0]) ? $query[0] : $defaultModule;
-		$this->file = !empty($query[1]) ? $query[1] : $defaultFile;
-
-		if (!empty($query[2])) {
-			$c_query = count($query);
-
-			for ($i = 2; $i < $c_query; ++$i) {
-				// Position
-				if (preg_match('/^(page_(\d+))$/', $query[$i])) {
-					$this->page = (int) substr($query[$i], 5);
-				// ID eines Datensatzes
-				} elseif (preg_match('/^(id_(\d+))$/', $query[$i])) {
-					$this->id = (int) substr($query[$i], 3);
-				// Additional URI parameters
-				} elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) {
-					$param = explode('_', $query[$i], 2);
-					$this->$param[0] = $param[1];
-				}
-			}
-		// Workaround für Securitytoken-Generierung,
-		// falls die URL nur aus dem Modulnamen besteht
-		} elseif (empty($query[1])) {
-			$this->query.= $defaultFile . '/';
-		}
-
-		if (!empty($_POST['cat']) && ACP3_Validate::isNumber($_POST['cat']) === true)
-			$this->cat = $_POST['cat'];
-		if (!empty($_POST['action']))
-			$this->action = $_POST['action'];
+		$this->setUriParameters($defaultModule, $defaultFile);
 	}
 	/**
 	 * Gibt einen URI Parameter aus
@@ -144,6 +69,115 @@ class ACP3_URI
 		// Parameter sollten nicht überschrieben werden können
 		if (isset($this->params[$name]) === false)
 			$this->params[$name] = $value;
+	}
+	/**
+	 * Grundlegende Verarbeitung der URI-Query 
+	 */
+	private function preprocessUriQuery()
+	{
+		$this->query = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
+		$this->query.= !preg_match('/\/$/', $this->query) ? '/' : '';
+
+		if (preg_match('/^(acp\/)/', $this->query)) {
+			// Definieren, dass man sich im Administrationsbereich befindet
+			define('IN_ADM', true);
+			// "acp/" entfernen
+			$this->query = substr($this->query, 4);
+		}
+
+		return;
+	}
+	/**
+	 * Überprüft die URI auf einen möglichen URI-Alias und
+	 * macht im Erfolgsfall einen Redirect darauf
+	 *
+	 * @return
+	 */
+	private function checkForUriAlias()
+	{
+		// Nur ausführen, falls URI-Aliase aktiviert sind
+		if (CONFIG_SEO_ALIASES === true && !defined('IN_ADM')) {
+			// Falls für Query ein Alias existiert, zu diesem weiterleiten
+			if (ACP3_SEO::uriAliasExists($this->query) === true)
+				// URI-Alias wird von uri::route() erzeugt
+				$this->redirect($this->query, 0, 1);
+
+			// Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
+			if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)+(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
+				$query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
+				// Annahme bestätigt
+				if (is_file(MODULES_DIR . $query[0] . '/' . $query[1] . '.php') === false) {
+					$length = 0;
+					foreach ($query as $row) {
+						if (strpos($row, '_') === false) {
+							$length+= strlen($row) + 1;
+						} else {
+							break;
+						}
+					}
+					$params = substr($this->query, $length);
+					$this->query = substr($this->query, 0, $length);
+				}
+			}
+
+			global $db;
+
+			// Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
+			$alias = $db->select('uri', 'seo', 'alias = \'' . $db->escape(substr($this->query, 0, -1)) . '\'');
+			if (!empty($alias)) {
+				$this->query = $alias[0]['uri'] . (!empty($params) ? $params : '');
+			}
+		}
+
+		return;
+	}
+	/**
+	 * Setzt alle in URI::query enthaltenen Parameter
+	 *
+	 * @param string $defaultModule
+	 * @param string $defaultFile
+	 * @return
+	 */
+	private function setUriParameters($defaultModule, $defaultFile)
+	{
+		$query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
+
+		if (empty($defaultModule) && empty($defaultFile)) {
+			$defaultModule = defined('IN_ADM') ? 'acp' : 'news';
+			$defaultFile = 'list';
+		}
+
+		$this->mod = isset($query[0]) ? $query[0] : $defaultModule;
+		$this->file = (defined('IN_ADM') ? 'acp_' : '') . (isset($query[1]) ? $query[1] : $defaultFile);
+
+		if (isset($query[2])) {
+			$c_query = count($query);
+
+			for ($i = 2; $i < $c_query; ++$i) {
+				// Position
+				if (preg_match('/^(page_(\d+))$/', $query[$i])) {
+					$this->page = (int) substr($query[$i], 5);
+				// ID eines Datensatzes
+				} elseif (preg_match('/^(id_(\d+))$/', $query[$i])) {
+					$this->id = (int) substr($query[$i], 3);
+				// Additional URI parameters
+				} elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) {
+					$param = explode('_', $query[$i], 2);
+					$this->$param[0] = $param[1];
+				}
+			}
+		// Workaround für Securitytoken-Generierung,
+		// falls die URL nur aus dem Modulnamen besteht
+		} elseif (!isset($query[1])) {
+			$this->query.= $defaultFile . '/';
+		}
+
+		if (!empty($_POST['cat']) && ACP3_Validate::isNumber($_POST['cat']) === true)
+			$this->cat = (int) $_POST['cat'];
+		if (!empty($_POST['action']))
+			$this->action = $_POST['action'];
+
+		return;
 	}
 	/**
 	 * Gibt die URI-Parameter aus
@@ -174,9 +208,6 @@ class ACP3_URI
 	public function redirect($args, $new_page = 0, $moved_permanently = 0)
 	{
 		if (!empty($args)) {
-			if ($args === 'errors/404' || $args === 'errors/403')
-				$args = (defined('IN_ADM') === false ? '' : 'acp/') . $args;
-
 			$protocol = empty($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) === 'off' ? 'http://' : 'https://';
 			$host = $_SERVER['HTTP_HOST'];
 			if ($moved_permanently === 1) {

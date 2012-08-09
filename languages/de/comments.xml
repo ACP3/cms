@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
+	<item key="acp_delete_comments">Kommentare löschen</item>
+	<item key="acp_delete_comments_per_module">Kommentare löschen</item>
+	<item key="acp_edit">Kommentar bearbeiten</item>
+	<item key="acp_settings">Einstellungen</item>
 	<item key="allow_emoticons">Emoticons erlauben</item>
 	<item key="comments">Kommentare</item>
 	<item key="comments_count">Kommentar Anzahl</item>
-	<item key="delete_comments">Kommentare löschen</item>
-	<item key="delete_comments_per_module">Kommentare löschen</item>
-	<item key="edit">Kommentar bearbeiten</item>
 	<item key="ip">IP Adresse</item>
 	<item key="mod_description">Mit diesem Modul können Kommentare für andere Module erstellt werden.</item>
 	<item key="module_doesnt_exist">Entweder existiert das ausgewählte Modul nicht oder es ist zur Zeit deaktiviert</item>
 	<item key="module">Modul</item>
 	<item key="select_emoticons">Bitte wählen Sie aus, ob Emoticons verwendet werden dürfen oder nicht.</item>
 	<item key="show_comments">Kommentare anzeigen</item>
-	<item key="settings">Einstellungen</item>
 </language>

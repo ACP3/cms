@@ -116,74 +116,7 @@ if (isset($_POST['submit'])) {
 		}
 		$tpl->assign('sql_queries', $data);
 
-		$special_resources = array(
-			'comments' => array(
-				'create' => 2,
-			),
-			'gallery' => array(
-				'add_picture' => 4,
-			),
-			'guestbook' => array(
-				'create' => 2,
-			),
-			'newsletter' => array(
-				'compose' => 4,
-				'create' => 2,
-				'adm_activate' => 3,
-				'sent' => 4,
-			),
-			'system' => array(
-				'configuration' => 7,
-				'designs' => 7,
-				'extensions' => 7,
-				'languages' => 7,
-				'maintenance' => 7,
-				'modules' => 7,
-				'sql_export' => 7,
-				'sql_import' => 7,
-				'sql_optimisation' => 7,
-				'update_check' => 3,
-			),
-			'users' => array(
-				'edit_profile' => 1,
-				'edit_settings' => 1,
-			),
-		);
-
-		// Moduldaten in die ACL schreiben
-		$modules = scandir(MODULES_DIR);
-		foreach ($modules as $row) {
-			if ($row !== '.' && $row !== '..' && is_dir(MODULES_DIR . $row . '/') === true) {
-				$module = scandir(MODULES_DIR . $row . '/');
-				$mod_id = $db->select('id', 'modules', 'name = \'' . $row . '\'');
-				if (is_file(MODULES_DIR . $row . '/extensions/search.php') === true)
-					$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id[0]['id'], 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
-				if (is_file(MODULES_DIR . $row . '/extensions/feeds.php') === true)
-					$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id[0]['id'], 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
-
-				foreach ($module as $file) {
-					if ($file !== '.' && $file !== '..' && is_file(MODULES_DIR . $row . '/' . $file) === true && strpos($file, '.php') !== false) {
-						$file = substr($file, 0, -4);
-						if (isset($special_resources[$row][$file])) {
-							$privilege_id = $special_resources[$row][$file];
-						} else {
-							$privilege_id = 1;
-							if (strpos($file, 'adm_list') === 0)
-								$privilege_id = 3;
-							if (strpos($file, 'create') === 0 || strpos($file, 'order') === 0)
-								$privilege_id = 4;
-							if (strpos($file, 'edit') === 0)
-								$privilege_id = 5;
-							if (strpos($file, 'delete') === 0)
-								$privilege_id = 6;
-							if (strpos($file, 'settings') === 0)
-								$privilege_id = 7;
-						}
-						$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id[0]['id'], 'page' => $file, 'params' => '', 'privilege_id' => $privilege_id));
-					}
-				}
-			}
-		}
+		ACP3_ACL::resetResources();
 
 		$roles = $db->select('id', 'acl_roles');
 		$modules = $db->select('id', 'modules');

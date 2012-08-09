@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="add_picture">Add picture</item>
-	<item key="create">Create a new gallery</item>
-	<item key="delete_gallery">Delete galleries</item>
-	<item key="delete_picture">Delete pictures</item>
+	<item key="acp_add_picture">Add picture</item>
+	<item key="acp_create">Create a new gallery</item>
+	<item key="acp_delete_gallery">Delete galleries</item>
+	<item key="acp_delete_picture">Delete pictures</item>
+	<item key="acp_edit_gallery">Edit gallery</item>
+	<item key="acp_edit_picture">Edit picture</item>
+	<item key="acp_settings">Settings</item>
 	<item key="details">Picture details</item>
-	<item key="edit_gallery">Edit gallery</item>
-	<item key="edit_picture">Edit picture</item>
 	<item key="filename">Filename</item>
 	<item key="gallery">Gallery</item>
 	<item key="image_dimensions">Image dimensions</item>
@@ -34,7 +35,6 @@
 	<item key="select_new_picture">Select a new picture</item>
 	<item key="select_picture">Select picture</item>
 	<item key="select_use_overlay">Please select, whether use want to use the image overlay or not</item>
-	<item key="settings">Settings</item>
 	<item key="thumb_image_height">Maximum thumb image height to be displayed</item>
 	<item key="thumb_image_width">Maximum thumb image width to be displayed</item>
 	<item key="title">Title</item>

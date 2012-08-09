@@ -3,12 +3,12 @@
 <head>
 <title>ACP3 {lang t="installation|installation"} :: {$title}</title>
 <meta charset="UTF-8">
-<script type="text/javascript" src="{$ROOT_DIR}../designs/acp3/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="{$ROOT_DIR}../designs/acp3/jquery/jquery.cookie.js"></script>
-<script type="text/javascript" src="{$ROOT_DIR}../designs/acp3/jquery/jquery.ui.min.js"></script>
+<script type="text/javascript" src="{$ROOT_DIR}../designs/acp3/js/jquery.min.js"></script>
+<script type="text/javascript" src="{$ROOT_DIR}../designs/acp3/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="{$ROOT_DIR}../designs/acp3/js/jquery.ui.min.js"></script>
 <script type="text/javascript" src="{$ROOT_DIR}design/script.js"></script>
 <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}design/style.css">
-<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}../designs/acp3/jquery/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}../designs/acp3/css/jquery-ui.css">
 </head>
 
 <body>

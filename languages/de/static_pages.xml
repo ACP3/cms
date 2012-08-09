@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="create">Neue statische Seite erstellen</item>
+	<item key="acp_create">Neue statische Seite erstellen</item>
+	<item key="acp_delete">Statische Seite löschen</item>
+	<item key="acp_edit">Statische Seite bearbeiten</item>
 	<item key="create_menu_item">Für Seite einen Menüpunkt erstellen</item>
-	<item key="delete">Statische Seite löschen</item>
-	<item key="edit">Statische Seite bearbeiten</item>
 	<item key="mod_description">Dieses Modul verwaltet die statischen Seiten.</item>
 	<item key="page">Seite %d</item>
 	<item key="page_statements">Seitenangaben</item>

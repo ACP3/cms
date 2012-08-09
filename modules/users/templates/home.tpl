@@ -1,6 +1,6 @@
 <div id="adm-list">
-	{check_access mode="link" action="users|edit_profile" uri="users/edit_profile" icon="32/edit_user" width="32" height="32"}
-	{check_access mode="link" action="users|edit_settings" uri="users/edit_settings" icon="32/advancedsettings" width="32" height="32"}
+	{check_access mode="link" uri="users/edit_profile" icon="32/edit_user" width="32" height="32"}
+	{check_access mode="link" uri="users/edit_settings" icon="32/advancedsettings" width="32" height="32"}
 </div>
 {if isset($redirect_message)}
 {$redirect_message}
