@@ -152,7 +152,7 @@ class ACP3_Breadcrumb
 				if ($module !== 'errors') {
 					if ($module !== 'acp') {
 						$this->append($lang->t($module, $module), $uri->route('acp/' . $module));
-						if ($file !== 'adm_list')
+						if ($file !== 'acp_list')
 							$this->append($lang->t($module, $file));
 					}
 				} else {

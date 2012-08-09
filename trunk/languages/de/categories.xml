@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
+	<item key="acp_create">Neue Kategorie erstellen</item>
+	<item key="acp_delete">Kategorien löschen</item>
+	<item key="acp_edit">Kategorie bearbeiten</item>
+	<item key="acp_settings">Einstellungen</item>
 	<item key="categories">Kategorien</item>
 	<item key="category_already_exists">Für das gewählte Modul existiert bereits eine Kategorie mit diesem Namen</item>
 	<item key="category_is_in_use">Es konnten nicht alle Kategorien gelöscht werden, da sie noch von mindestens einem Datensatz verwendet werden.</item>
-	<item key="create">Neue Kategorie erstellen</item>
-	<item key="delete">Kategorien löschen</item>
 	<item key="description_to_short">Der Beschreibungstext der Kategorie sollte mindestens 3 Zeichen lang sein</item>
-	<item key="edit">Kategorie bearbeiten</item>
 	<item key="image_filesize">Maximale Dateigröße des Bildes</item>
 	<item key="image_height">Maximale Bildhöhe</item>
 	<item key="image_width">Maximale Bildbreite</item>
@@ -19,5 +20,4 @@
 	<item key="name_to_short">Der Name der Kategorie sollte mindestens 3 Zeichen lang sein</item>
 	<item key="picture">Bild</item>
 	<item key="select_module">Bitte wählen Sie ein Modul aus</item>
-	<item key="settings">Einstellungen</item>
 </language>

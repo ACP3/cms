@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
 	<item key="access">Permissions</item>
-	<item key="adm_list_resources">Manage resources</item>
+	<item key="acp_create">Create a new role</item>
+	<item key="acp_create_resource">Create a new resource</item>
+	<item key="acp_delete">Delete roles</item>
+	<item key="acp_edit">Edit role</item>
+	<item key="acp_edit_resource">Edit resource</item>
+	<item key="acp_list_resources">Manage resources</item>
 	<item key="allow_access">Allow</item>
 	<item key="assigned_privilege">Assigned privilege</item>
 	<item key="filename">Filename</item>
-	<item key="create">Create a new role</item>
-	<item key="create_resource">Create a new resource</item>
-	<item key="delete">Delete roles</item>
 	<item key="deny_access">Deny</item>
-	<item key="edit">Edit role</item>
-	<item key="edit_resource">Edit resource</item>
 	<item key="inherit_access">Inherit</item>
 	<item key="invalid_privileges">The submitted permissions contain unallowed values.</item>
 	<item key="mod_description">With this module you can set permissions for the users.</item>

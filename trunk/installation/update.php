@@ -35,7 +35,7 @@ if ($handle !== true) {
  * Führt die Datenbankschema-Änderungen durch
  *
  * @param array $queries
- *	Array mit durchführenden Datenbankschema-Änderungen
+ *	Array mit den durchzuführenden Datenbankschema-Änderungen
  * @param integer $version
  *	Version der Datenbank, auf welche aktualisiert werden soll
  */
@@ -375,10 +375,13 @@ if (CONFIG_DB_VERSION < 23) {
 	);
 	echo executeSqlQueries($queries, 23);
 }
+if (CONFIG_DB_VERSION < 24) {
+	ACP3_ACL::resetResources();
+}
 
 // Konfigurationsdatei aktualisieren
 $config = array(
-	'db_version' => 23,
+	'db_version' => 24,
 	'maintenance_mode' => (bool) CONFIG_MAINTENANCE_MODE,
 	'seo_mod_rewrite' => (bool) CONFIG_SEO_MOD_REWRITE,
 	'date_time_zone' => is_int(CONFIG_DATE_TIME_ZONE) === true ? 'Europe/Berlin' : CONFIG_DATE_TIME_ZONE,

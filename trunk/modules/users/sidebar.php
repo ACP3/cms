@@ -18,12 +18,12 @@ if ($auth->isUser() === true) {
 
 	// Module holen
 	$mod_list = ACP3_Modules::getActiveModules();
-	$nav_mods = array();
+	$nav_mods = $nav_system = array();
 	$access_system = false;
 
 	foreach ($mod_list as $name => $info) {
 		$dir = $info['dir'];
-		if (ACP3_Modules::check($dir, 'adm_list') === true && $dir !== 'acp') {
+		if (ACP3_Modules::check($dir, 'acp_list') === true && $dir !== 'acp') {
 			if ($dir === 'system') {
 				$access_system = true;
 			} elseif ($dir === 'home') {
@@ -40,19 +40,19 @@ if ($auth->isUser() === true) {
 
 	if ($access_system) {
 		$i = 0;
-		if (ACP3_Modules::check('system', 'configuration') === true) {
+		if (ACP3_Modules::check('system', 'acp_configuration') === true) {
 			$nav_system[$i]['page'] = 'configuration';
-			$nav_system[$i]['name'] = $lang->t('system', 'configuration');
+			$nav_system[$i]['name'] = $lang->t('system', 'acp_configuration');
 		}
-		if (ACP3_Modules::check('system', 'extensions') === true) {
+		if (ACP3_Modules::check('system', 'acp_extensions') === true) {
 			$i++;
 			$nav_system[$i]['page'] = 'extensions';
-			$nav_system[$i]['name'] = $lang->t('system', 'extensions');
+			$nav_system[$i]['name'] = $lang->t('system', 'acp_extensions');
 		}
-		if (ACP3_Modules::check('system', 'maintenance') === true) {
+		if (ACP3_Modules::check('system', 'acp_maintenance') === true) {
 			$i++;
 			$nav_system[$i]['page'] = 'maintenance';
-			$nav_system[$i]['name'] = $lang->t('system', 'maintenance');
+			$nav_system[$i]['name'] = $lang->t('system', 'acp_maintenance');
 		}
 		$user_sidebar['system'] = $nav_system;
 	}

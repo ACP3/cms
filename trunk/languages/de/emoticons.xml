@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
+	<item key="acp_create">Emoticon hinzufügen</item>
+	<item key="acp_delete">Emoticon löschen</item>
+	<item key="acp_edit">Emoticon bearbeiten</item>
+	<item key="acp_settings">Einstellungen</item>
 	<item key="code">Code</item>
-	<item key="create">Emoticon hinzufügen</item>
-	<item key="edit">Emoticon bearbeiten</item>
-	<item key="delete">Emoticon löschen</item>
 	<item key="emoticons">Emoticons</item>
 	<item key="image_filesize">Maximale Dateigröße des Bildes</item>
 	<item key="image_height">Maximale Bildhöhe</item>
@@ -15,7 +16,6 @@
 	<item key="mod_description">Mit diesem Modul können Emoticons z.B. in Kommentare eingefügt werden.</item>
 	<item key="picture">Bild</item>
 	<item key="replace_picture">Bild ersetzen</item>
-	<item key="settings">Einstellungen</item>
 	<item key="type_in_code">Bitte geben Sie einen Code an, der dann durch ein Bild ersetzt werden soll</item>
 	<item key="type_in_description">Bitte geben Sie zum Code eine kurze Beschreibung an</item>
 </language>

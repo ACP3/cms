@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="create">Create new static page</item>
+	<item key="acp_create">Create new static page</item>
+	<item key="acp_delete">Delete static page</item>
+	<item key="acp_edit">Edit static page</item>
 	<item key="create_menu_item">Create menu item for this page</item>
-	<item key="delete">Delete static page</item>
-	<item key="edit">Edit static page</item>
 	<item key="mod_description">This module manages the static pages.</item>
 	<item key="page">Page %d</item>
 	<item key="page_statements">Page statements</item>

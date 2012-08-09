@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="add_picture">Bild hinzufügen</item>
-	<item key="create">Neue Fotogalerie erstellen</item>
-	<item key="delete_gallery">Fotogalerien löschen</item>
-	<item key="delete_picture">Bilder löschen</item>
+	<item key="acp_add_picture">Bild hinzufügen</item>
+	<item key="acp_create">Neue Fotogalerie erstellen</item>
+	<item key="acp_delete_gallery">Fotogalerien löschen</item>
+	<item key="acp_delete_picture">Bilder löschen</item>
+	<item key="acp_edit_gallery">Fotogalerie bearbeiten</item>
+	<item key="acp_edit_picture">Bild bearbeiten</item>
+	<item key="acp_settings">Einstellungen</item>
 	<item key="details">Bilddetails</item>
-	<item key="edit_gallery">Fotogalerie bearbeiten</item>
-	<item key="edit_picture">Bild bearbeiten</item>
 	<item key="filename">Dateiname</item>
 	<item key="gallery">Fotogalerien</item>
 	<item key="image_dimensions">Bildabmessungen</item>
@@ -34,7 +35,6 @@
 	<item key="select_new_picture">Neues Bild auswählen</item>
 	<item key="select_picture">Bild auswählen</item>
 	<item key="select_use_overlay">Bitte wählen Sie aus, ob für die Bildpräsentation das Bildoverlay eingesetzt werden soll oder nicht</item>
-	<item key="settings">Einstellungen</item>
 	<item key="thumb_image_height">Maximal anzuzeigende Höhe der Vorschaubilder</item>
 	<item key="thumb_image_width">Maximal anzuzeigende Breite der Vorschaubilder</item>
 	<item key="title">Titel</item>

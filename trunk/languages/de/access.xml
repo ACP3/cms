@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
 	<item key="access">Berechtigungen</item>
-	<item key="adm_list_resources">Ressourcen verwalten</item>
+	<item key="acp_create">Neue Rolle erstellen</item>
+	<item key="acp_create_resource">Neue Ressource erstellen</item>
+	<item key="acp_delete">Rolle löschen</item>
+	<item key="acp_edit">Rolle bearbeiten</item>
+	<item key="acp_edit_resource">Ressource bearbeiten</item>
+	<item key="acp_list_resources">Ressourcen verwalten</item>
 	<item key="allow_access">Zugriff erlauben</item>
 	<item key="assigned_privilege">Zugeordnete Privilegie</item>
 	<item key="filename">Dateiname</item>
-	<item key="create">Neue Rolle erstellen</item>
-	<item key="create_resource">Neue Ressource erstellen</item>
-	<item key="delete">Rolle löschen</item>
 	<item key="deny_access">Zugriff verbieten</item>
-	<item key="edit">Rolle bearbeiten</item>
-	<item key="edit_resource">Ressource bearbeiten</item>
 	<item key="inherit_access">Zugriff erben</item>
 	<item key="invalid_privileges">Die übergebenen Berechtigungen enthalten nicht erlaubte Werte.</item>
 	<item key="mod_description">Mit diesem Modul können Berechtigungen für die Benutzer festgelegt werden.</item>

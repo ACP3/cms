@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
 	<item key="account_locked">Ihr Benutzerkonto wurde gesperrt. Um es wieder zu aktivieren, verwenden Sie bitte die &quot;Passwort vergessen&quot; Funktion, welche Ihnen dann ein neues Passwort zusenden wird.</item>
+	<item key="acp_create">Neuen Benutzer erstellen</item>
+	<item key="acp_delete">Benutzer löschen</item>
+	<item key="acp_edit">Benutzer bearbeiten</item>
+	<item key="acp_settings">Einstellungen</item>
+	<item key="drafts">Entwürfe</item>
 	<item key="administration">Verwaltung</item>
 	<item key="admin_user_undeletable">Der Administrator kann nicht gelöscht werden.</item>
 	<item key="allow_language_override">Benutzern erlauben, Sprache selber festzulegen</item>
@@ -9,12 +14,8 @@
 	<item key="birthday_display_completely">Geburtstag vollständig anzeigen</item>
 	<item key="birthday_hide_year">Geburtsjahr verstecken</item>
 	<item key="contact">Kontakt</item>
-	<item key="create">Neuen Benutzer erstellen</item>
-	<item key="delete">Benutzer löschen</item>
 	<item key="deleted_user">Gelöschter Benutzer</item>
 	<item key="display_profile_field">Ein Profilfeld kann versteckt werden, indem der Haken links neben dem jeweiligen Feld entfernt wird.</item>
-	<item key="drafts">Entwürfe</item>
-	<item key="edit">Benutzer bearbeiten</item>
 	<item key="edit_profile">Profil bearbeiten</item>
 	<item key="edit_settings">Einstellungen bearbeiten</item>
 	<item key="enable_registration">Registrierung neuer Benutzer erlauben</item>
@@ -73,7 +74,6 @@ Passwort: {password}</item>
 	<item key="select_language_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die Anzeigesprache selber festzulegen.</item>
 	<item key="select_super_user">Bitte geben Sie an, ob der gewählte Benutzer Super User sein soll, oder nicht.</item>
 	<item key="send_email">E-Mail senden</item>
-	<item key="settings">Einstellungen</item>
 	<item key="skype">Skype</item>
 	<item key="super_user">Super User</item>
 	<item key="type_in_nickname_or_email">Bitte geben Sie entweder den bei der Registrierung verwendeten Benutzernamen oder die E-Mail-Adresse ein.</item>

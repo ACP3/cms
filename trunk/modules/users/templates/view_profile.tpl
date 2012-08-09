@@ -1,4 +1,3 @@
-{if isset($user)}
 <div class="user-info">
 	<dl>
 		<dt><strong>{lang t="users|nickname"}</strong></dt>
@@ -63,8 +62,3 @@
 	</dl>
 {/if}
 </div>
-{else}
-<div class="error-box">
-	<h5>{lang t="users|user_profile_not_exists"}</h5>
-</div>
-{/if}

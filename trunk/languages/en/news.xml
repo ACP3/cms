@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
+	<item key="acp_create">Create a new news</item>
+	<item key="acp_delete">Delete news</item>
+	<item key="acp_edit">Edit news</item>
+	<item key="acp_settings">Settings</item>
 	<item key="activate_readmore">Activate &quot;read more...&quot;</item>
 	<item key="hyperlink">Link</item>
 	<item key="complete_hyperlink_statements">Please complete the statements for the hyperlink</item>
-	<item key="create">Create a new news</item>
-	<item key="delete">Delete news</item>
 	<item key="details">News</item>
 	<item key="display_category_in_breadcrumb">Display category in breadcrumb</item>
-	<item key="edit">Edit news</item>
 	<item key="headline">Headline</item>
 	<item key="headline_to_short">The headline should be at least 3 characters long</item>
 	<item key="latest_news">Latest news</item>
@@ -21,7 +22,6 @@
 	<item key="select_allow_comments">Please select, whether you want to allow comments under news</item>
 	<item key="select_category">Please select the category, where do you want to find the news</item>
 	<item key="select_display_category_in_breadcrumb">Please select, whether you want to display the category name of a news in the breadcrumb</item>
-	<item key="settings">Settings</item>
 	<item key="target_page">Target page</item>
 	<item key="text">Text</item>
 	<item key="text_to_short">The newstext should be at least 3 characters long</item>

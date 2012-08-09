@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
+	<item key="acp_create">Neue News erstellen</item>
+	<item key="acp_delete">News löschen</item>
+	<item key="acp_edit">News bearbeiten</item>
+	<item key="acp_settings">Einstellungen</item>
 	<item key="activate_readmore">&quot;Weiterlesen...&quot; aktivieren</item>
 	<item key="hyperlink">Link</item>
 	<item key="complete_hyperlink_statements">Bitte vervollständigen Sie die Angaben zum Hyperlink</item>
-	<item key="create">Neue News erstellen</item>
-	<item key="delete">News löschen</item>
 	<item key="details">News</item>
 	<item key="display_category_in_breadcrumb">Kategorie in Brotkrümelspur anzeigen</item>
-	<item key="edit">News bearbeiten</item>
 	<item key="headline">Überschrift</item>
 	<item key="headline_to_short">Die Überschrift sollte mindestens 3 Zeichen lang sein</item>
 	<item key="latest_news">Aktuelle News</item>
@@ -21,7 +22,6 @@
 	<item key="select_allow_comments">Bitte wählen Sie aus, ob Kommentare unter News zugelassen werden sollen oder nicht</item>
 	<item key="select_category">Bitte wählen Sie die Kategorie aus, in der sich die News befinden soll</item>
 	<item key="select_display_category_in_breadcrumb">Bitte wählen Sie aus, ob der Kategoriename einer News in der Brotkrümelspur angezeigt werden soll.</item>
-	<item key="settings">Einstellungen</item>
 	<item key="target_page">Zielseite</item>
 	<item key="text">Text</item>
 	<item key="text_to_short">Der Text sollte mindestens 3 Zeichen lang sein</item>

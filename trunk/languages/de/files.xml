@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
+	<item key="acp_create">Neuen Download erstellen</item>
+	<item key="acp_delete">Downloads löschen</item>
+	<item key="acp_edit">Download bearbeiten</item>
+	<item key="acp_settings">Einstellungen</item>
 	<item key="category_select">Bitte wählen Sie eine der untenstehenden Kategorien aus.</item>
-	<item key="create">Neuen Download erstellen</item>
-	<item key="delete">Downloads löschen</item>
 	<item key="description_to_short">Der Beschreibungstext sollte mindestens 3 Zeichen lang sein</item>
 	<item key="details">Downloads</item>
 	<item key="download_file">Datei herunterladen</item>
-	<item key="edit">Download bearbeiten</item>
 	<item key="external_resource">Externe Quelle</item>
 	<item key="file_statements">Datei Angaben</item>
 	<item key="filename">Dateiname</item>
@@ -19,7 +20,6 @@
 	<item key="select_allow_comments">Bitte wählen Sie aus, ob Kommentare unter Downloads zugelassen werden sollen oder nicht</item>
 	<item key="select_category">Bitte wählen Sie die Kategorie aus, in der sich der Download befinden soll</item>
 	<item key="select_internal_resource">Bitte geben Sie den Pfad zur hochzuladenden Datei an</item>
-	<item key="settings">Einstellungen</item>
 	<item key="type_in_external_resource">Bitte geben Sie den Pfad zur Datei und die Dateigröße ein</item>
 	<item key="type_in_link_title">Der Linktitel sollte mindestens 3 Zeichen lang sein</item>
 	<item key="unknown_filesize">Dateigröße unbekannt</item>

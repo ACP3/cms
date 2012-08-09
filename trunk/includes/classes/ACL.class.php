@@ -284,4 +284,85 @@ class ACP3_ACL
 		}
 		return false;
 	}
+	/**
+	 * Setzt die Ressourcen-Tabelle auf die Standardwerte zurück
+	 */
+	public static function resetResources()
+	{
+		global $db;
+
+		$db->query('TRUNCATE TABLE {pre}acl_resources', 0);
+
+		$special_resources = array(
+			'comments' => array(
+				'create' => 2,
+			),
+			'gallery' => array(
+				'acp_add_picture' => 4,
+			),
+			'guestbook' => array(
+				'create' => 2,
+			),
+			'newsletter' => array(
+				'acp_activate' => 3,
+				'acp_compose' => 4,
+				'acp_sent' => 4,
+				'create' => 2,
+			),
+			'system' => array(
+				'configuration' => 7,
+				'designs' => 7,
+				'extensions' => 7,
+				'languages' => 7,
+				'maintenance' => 7,
+				'modules' => 7,
+				'sql_export' => 7,
+				'sql_import' => 7,
+				'update_check' => 3,
+			),
+		);
+
+		// Moduldaten in die ACL schreiben
+		$modules = scandir(MODULES_DIR);
+		foreach ($modules as $row) {
+			if ($row !== '.' && $row !== '..' && is_file(MODULES_DIR . $row . '/module.xml') === true) {
+				$module = scandir(MODULES_DIR . $row . '/');
+
+				$mod_id = $db->select('id', 'modules', 'name = \'' . $db->escape($row) . '\'');
+				if (isset($mod_id[0]['id'])) {
+					$mod_id = $mod_id[0]['id'];
+				} else {
+					$db->insert('modules', array('id' => '', 'name' => $row, 'active' => 1));
+					$mod_id = $db->link->lastInsertId();
+				}
+
+				if (is_file(MODULES_DIR . $row . '/extensions/search.php') === true)
+					$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
+				if (is_file(MODULES_DIR . $row . '/extensions/feeds.php') === true)
+					$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
+
+				foreach ($module as $file) {
+					if ($file !== '.' && $file !== '..' && is_file(MODULES_DIR . $row . '/' . $file) === true && strpos($file, '.php') !== false) {
+						$file = substr($file, 0, -4);
+						if (isset($special_resources[$row][$file])) {
+							$privilege_id = $special_resources[$row][$file];
+						} else {
+							$privilege_id = 1;
+							if (strpos($file, 'acp_') === 0)
+								$privilege_id = 3;
+							if (strpos($file, 'acp_create') === 0 || strpos($file, 'acp_order') === 0)
+								$privilege_id = 4;
+							elseif (strpos($file, 'acp_edit') === 0)
+								$privilege_id = 5;
+							elseif (strpos($file, 'acp_delete') === 0)
+								$privilege_id = 6;
+							elseif (strpos($file, 'acp_settings') === 0)
+								$privilege_id = 7;
+						}
+						$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => $file, 'params' => '', 'privilege_id' => $privilege_id));
+					}
+				}
+			}
+		}
+	}
 }

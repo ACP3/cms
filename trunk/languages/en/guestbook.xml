@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
+	<item key="acp_delete">Delete guestbook entries</item>
+	<item key="acp_edit">Edit guestbook entry</item>
+	<item key="acp_settings">Settings</item>
 	<item key="activate_entry">Enable entry</item>
 	<item key="allow_emoticons">Allow Emoticons</item>
 	<item key="create">New entry</item>
-	<item key="delete">Delete guestbook entries</item>
-	<item key="edit">Edit guestbook entry</item>
 	<item key="guestbook">Guestbook</item>
 	<item key="guestbook_entries">Guestbook entries</item>
 	<item key="ip">IP Address</item>
@@ -27,7 +28,6 @@ Please click on the link below to review and activate the entry (maybe it is nec
 	<item key="select_notification_type">Please select, whether you want to be notified about new guestbook entries or not.</item>
 	<item key="select_use_overlay">Please select, whether user shoud be allowed the create guestbook entries in an overlay.</item>
 	<item key="send_email">Send E-mail</item>
-	<item key="settings">Settings</item>
 	<item key="subscribe_to_newsletter">Yes, I want to subscibe to the newsletter of %s.</item>
 	<item key="type_in_email_address_to_subscribe_to_newsletter">The subscribe to this newsletter, you must type in a valid E-mail address.</item>
 	<item key="use_overlay">Create guestbook entries in an overlay</item>

@@ -44,7 +44,7 @@ $tpl->setTemplateDir(array(ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/', MODULES
 	->setCompileDir(ACP3_ROOT . 'uploads/cache/tpl_compiled/')
 	->setCacheDir(ACP3_ROOT . 'uploads/cache/tpl_cached/');
 if (is_writable($tpl->getCompileDir()) === false || is_writable($tpl->getCacheDir()) === false) {
-	exit('Bitte geben Sie dem "cache"-Ordner den CHMOD 777!');
+	exit('The cache folder is not writable!');
 }
 
 // Einige Template Variablen setzen
