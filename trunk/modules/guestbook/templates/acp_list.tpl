@@ -1,7 +1,7 @@
 <form action="{uri args="acp/guestbook/delete"}" method="post">
 	<div id="adm-list">
-		{check_access mode="link" uri="acp/guestbook/settings" icon="32/advancedsettings" width="32" height="32"}
-		{check_access mode="input" action="guestbook|acp_delete" icon="32/cancel" lang="common|delete_marked"}
+		{check_access mode="link" path="acp/guestbook/settings" icon="32/advancedsettings" width="32" height="32"}
+		{check_access mode="input" path="acp/guestbook/delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
 {if isset($redirect_message)}
@@ -29,7 +29,7 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td>{$row.date}</td>
-				<td>{check_access mode="link" uri="acp/guestbook/edit/id_`$row.id`" title=$row.name}</td>
+				<td>{check_access mode="link" path="acp/guestbook/edit/id_`$row.id`" title=$row.name}</td>
 				<td>{$row.message}</td>
 				<td>{$row.ip}</td>
 				<td>{$row.id}</td>

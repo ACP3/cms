@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <design>
-	<name>ACP3 - HTML5</name>
-	<description>Offizielles Design des ACP3 4.0 als HTML5 Fassung.</description>
+	<name>ACP3</name>
+	<description>Default design of the ACP3 4.0.</description>
 	<author>Tino Goratsch</author>
 	<version core="true"/>
 </design>

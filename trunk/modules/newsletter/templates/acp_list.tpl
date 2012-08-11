@@ -1,9 +1,9 @@
 <form action="{uri args="acp/newsletter/delete"}" method="post">
 	<div id="adm-list">
-		{check_access mode="link" uri="acp/newsletter/compose" icon="32/mail_new" width="32" height="32"}
-		{check_access mode="link" uri="acp/newsletter/list_archive" icon="32/mail" width="32" height="32"}
-		{check_access mode="link" uri="acp/newsletter/settings" icon="32/advancedsettings" width="32" height="32"}
-		{check_access mode="input" action="newsletter|acp_delete" icon="32/cancel" lang="common|delete_marked"}
+		{check_access mode="link" path="acp/newsletter/compose" icon="32/mail_new" width="32" height="32"}
+		{check_access mode="link" path="acp/newsletter/list_archive" icon="32/mail" width="32" height="32"}
+		{check_access mode="link" path="acp/newsletter/settings" icon="32/advancedsettings" width="32" height="32"}
+		{check_access mode="input" path="acp/newsletter/delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="newsletter|newsletter_accounts"}</h2>
 	</div>
 {if isset($redirect_message)}

@@ -1,7 +1,7 @@
 <form action="{uri args="acp/comments/delete_comments_per_module"}" method="post">
 	<div id="adm-list">
-		{check_access mode="link" uri="acp/comments/settings" icon="32/advancedsettings" width="32" height="32"}
-		{check_access mode="input" action="comments|acp_delete_comments_per_module" icon="32/cancel" lang="common|delete_marked"}
+		{check_access mode="link" path="acp/comments/settings" icon="32/advancedsettings" width="32" height="32"}
+		{check_access mode="input" path="acp/comments/delete_comments_per_module" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
 {if isset($redirect_message)}
@@ -25,7 +25,7 @@
 {if $can_delete === true}
 				<td><input type="checkbox" name="entries[]" value="{$row.module}" class="checkbox"></td>
 {/if}
-				<td>{check_access mode="link" uri="acp/comments/list/module_`$row.module`" lang="comments|show_comments" title=$row.name}</td>
+				<td>{check_access mode="link" path="acp/comments/list/module_`$row.module`" lang="comments|show_comments" title=$row.name}</td>
 				<td>{$row.count}</td>
 			</tr>
 {/foreach}

@@ -1,8 +1,8 @@
 <form action="{uri args="acp/users/delete"}" method="post">
 	<div id="adm-list">
-		{check_access mode="link" uri="acp/users/create" icon="32/add_user" width="32" height="32"}
-		{check_access mode="link" uri="acp/users/settings" icon="32/advancedsettings" width="32" height="32"}
-		{check_access mode="input" action="users|acp_delete" icon="32/cancel" lang="common|delete_marked"}
+		{check_access mode="link" path="acp/users/create" icon="32/add_user" width="32" height="32"}
+		{check_access mode="link" path="acp/users/settings" icon="32/advancedsettings" width="32" height="32"}
+		{check_access mode="input" path="acp/users/delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
 {if isset($redirect_message)}
@@ -28,7 +28,7 @@
 {if $can_delete === true}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
-				<td>{check_access mode="link" uri="acp/users/edit/id_`$row.id`" title=$row.nickname}</td>
+				<td>{check_access mode="link" path="acp/users/edit/id_`$row.id`" title=$row.nickname}</td>
 				<td>{$row.mail}</td>
 				<td>{$row.roles}</td>
 				<td>{$row.id}</td>

@@ -1,7 +1,7 @@
 <form action="{uri args="acp/static_pages/delete"}" method="post">
 	<div id="adm-list">
-		{check_access mode="link" uri="acp/static_pages/create" icon="32/contents" width="32" height="32"}
-		{check_access mode="input" action="static_pages|acp_delete" icon="32/cancel" lang="common|delete_marked"}
+		{check_access mode="link" path="acp/static_pages/create" icon="32/contents" width="32" height="32"}
+		{check_access mode="input" path="acp/static_pages/delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
 {if isset($redirect_message)}
@@ -27,7 +27,7 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td>{$row.period}</td>
-				<td>{check_access mode="link" uri="acp/static_pages/edit/id_`$row.id`" title=$row.title}</td>
+				<td>{check_access mode="link" path="acp/static_pages/edit/id_`$row.id`" title=$row.title}</td>
 				<td>{$row.id}</td>
 			</tr>
 {/foreach}
