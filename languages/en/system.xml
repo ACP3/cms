@@ -76,7 +76,7 @@
 	<item key="mod_rewrite">Use mod_rewrite</item>
 	<item key="mod_rewrite_description">Only enable this, if you are using the Apache web server.</item>
 	<item key="module_name">Module name</item>
-	<item key="no_modules_available_for_installation">There are no new modules available for installation!</item>
+	<item key="no_modules_available_for_installation">Currently there are no new modules available for installation!</item>
 	<item key="output">Output</item>
 	<item key="output_as_text">As text</item>
 	<item key="output_as_file">As file</item>

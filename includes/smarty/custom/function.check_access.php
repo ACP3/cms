@@ -1,28 +1,22 @@
 <?php
 function smarty_function_check_access($params, $template)
 {
-	if ($params['mode'] === 'bool') {
-		$action = explode('|', $params['action']);
-		return ACP3_Modules::check($action[0], $action[1]) === true ? true : false;
-	} else {
+	if (isset($params['mode']) && isset($params['path'])) {
 		$action = array();
-		if (isset($params['uri'])) {
-			$query = explode('/', strtolower($params['uri']));
-			if (isset($query[0]) && $query[0] === 'acp') {
-				$action[0] = (isset($query[1]) ? $query[1] : 'acp');
-				$action[1] = 'acp_' . (isset($query[2]) ? $query[2] : 'list');
-			} else {
-				$action[0] = $query[0];
-				$action[1] = isset($query[1]) ? $query[1] : 'list';
-			}
+		$query = explode('/', strtolower($params['path']));
+		if (isset($query[0]) && $query[0] === 'acp') {
+			$action[0] = (isset($query[1]) ? $query[1] : 'acp');
+			$action[1] = 'acp_' . (isset($query[2]) ? $query[2] : 'list');
 		} else {
-			$action = explode('|', $params['action']);
+			$action[0] = $query[0];
+			$action[1] = isset($query[1]) ? $query[1] : 'list';
 		}
 
 		if (ACP3_Modules::check($action[0], $action[1]) === true) {
 			global $lang, $uri;
 
 			$access_check = array();
+			$access_check['uri'] = $uri->route($params['path']);
 
 			if (isset($params['icon'])) {
 				$path = DESIGN_PATH . 'images/' . $params['icon'] . '.png';
@@ -30,8 +24,6 @@ function smarty_function_check_access($params, $template)
 			}
 			if (isset($params['title']))
 				$access_check['title'] = $params['title'];
-			if (isset($params['uri']))
-				$access_check['uri'] = $uri->route($params['uri']);
 			if (isset($params['lang'])) {
 				$lang_ary = explode('|', $params['lang']);
 				$access_check['lang'] = $lang->t($lang_ary[0], $lang_ary[1]);
@@ -57,7 +49,7 @@ function smarty_function_check_access($params, $template)
 			$access_check['mode'] = $params['mode'];
 			$template->smarty->assign('access_check', $access_check);
 			return $template->smarty->fetch('common/access_check.tpl');
-		} elseif ($params['mode'] == 'link' && isset($params['title'])) {
+		} elseif ($params['mode'] === 'link' && isset($params['title'])) {
 			return $params['title'];
 		}
 	}

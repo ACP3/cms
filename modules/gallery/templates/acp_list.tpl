@@ -1,8 +1,8 @@
 <form action="{uri args="acp/gallery/delete_gallery"}" method="post">
 	<div id="adm-list">
-		{check_access mode="link" uri="acp/gallery/create" icon="32/folder_image" width="32" height="32"}
-		{check_access mode="link" uri="acp/gallery/settings" icon="32/advancedsettings" width="32" height="32"}
-		{check_access mode="input" action="gallery|acp_delete_gallery" icon="32/cancel" lang="common|delete_marked"}
+		{check_access mode="link" path="acp/gallery/create" icon="32/folder_image" width="32" height="32"}
+		{check_access mode="link" path="acp/gallery/settings" icon="32/advancedsettings" width="32" height="32"}
+		{check_access mode="input" path="acp/gallery/delete_gallery" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
 {if isset($redirect_message)}
@@ -29,7 +29,7 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td>{$row.period}</td>
-				<td>{check_access mode="link" uri="acp/gallery/edit_gallery/id_`$row.id`" title=$row.name}</td>
+				<td>{check_access mode="link" path="acp/gallery/edit_gallery/id_`$row.id`" title=$row.name}</td>
 				<td>{$row.pictures}</td>
 				<td>{$row.id}</td>
 			</tr>

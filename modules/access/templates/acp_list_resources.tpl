@@ -1,7 +1,7 @@
 <form action="{uri args="acp/access/delete_resources"}" method="post">
 	<div id="adm-list">
-		{check_access mode="link" uri="acp/access/create_resource"  icon="32/resource" lang="access|create_resource"}
-		{check_access mode="input" action="access|acp_delete_resources" icon="32/cancel" lang="common|delete_marked"}
+		{check_access mode="link" path="acp/access/create_resource"  icon="32/resource" lang="access|create_resource"}
+		{check_access mode="input" path="acp/access/delete_resources" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
 {if isset($redirect_message)}
@@ -30,7 +30,7 @@
 {if $can_delete_resource === true}
 					<td><input type="checkbox" name="entries[]" value="{$row.resource_id}" class="checkbox"></td>
 {/if}
-				<td>{check_access mode="link" uri="acp/access/edit_resource/id_`$row.resource_id`" title=$row.page}</td>
+				<td>{check_access mode="link" path="acp/access/edit_resource/id_`$row.resource_id`" title=$row.page}</td>
 				<td>{$row.privilege_name}</td>
 				<td>{$row.resource_id}</td>
 			</tr>

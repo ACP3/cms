@@ -1,8 +1,8 @@
 <form action="{uri args="acp/menu_items/delete"}" method="post">
 	<div id="adm-list">
-		{check_access mode="link" uri="acp/menu_items/create" icon="32/kmenuedit" width="32" height="32"}
-		{check_access mode="link" uri="acp/menu_items/list_blocks" icon="32/blockdevice" width="32" height="32"}
-		{check_access mode="input" action="menu_items|acp_delete" icon="32/cancel" lang="common|delete_marked"}
+		{check_access mode="link" path="acp/menu_items/create" icon="32/kmenuedit" width="32" height="32"}
+		{check_access mode="link" path="acp/menu_items/list_blocks" icon="32/blockdevice" width="32" height="32"}
+		{check_access mode="input" path="acp/menu_items/delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
 {if isset($redirect_message)}
@@ -34,7 +34,7 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td>{$row.mode_formatted}</td>
-				<td style="padding-left:10px;text-align:left">{$row.spaces}{check_access mode="link" uri="acp/menu_items/edit/id_`$row.id`" title=$row.title}</td>
+				<td style="padding-left:10px;text-align:left">{$row.spaces}{check_access mode="link" path="acp/menu_items/edit/id_`$row.id`" title=$row.title}</td>
 {if $can_order === true}
 				<td>
 {if !$row.last}

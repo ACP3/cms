@@ -25,8 +25,8 @@
 </form>
 <form action="{uri args="acp/gallery/delete_picture/id_$gallery_id"}" method="post">
 	<div id="adm-list">
-		{check_access mode="link" uri="acp/gallery/add_picture/id_`$gallery_id`" icon="32/image" width="32" height="32"}
-		{check_access mode="input" action="gallery|delete_picture" icon="32/cancel" lang="common|delete_marked"}
+		{check_access mode="link" path="acp/gallery/add_picture/id_`$gallery_id`" icon="32/image" width="32" height="32"}
+		{check_access mode="input" path="acp/gallery/delete_picture" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="gallery|pictures"}</h2>
 	</div>
 {if isset($redirect_message)}

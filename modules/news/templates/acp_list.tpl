@@ -1,8 +1,8 @@
 <form action="{uri args="acp/news/delete"}" method="post">
 	<div id="adm-list">
-		{check_access mode="link" uri="acp/news/create" icon="32/news" width="32" height="32"}
-		{check_access mode="link" uri="acp/news/settings" icon="32/advancedsettings" width="32" height="32"}
-		{check_access mode="input" action="news|acp_delete" icon="32/cancel" lang="common|delete_marked"}
+		{check_access mode="link" path="acp/news/create" icon="32/news" width="32" height="32"}
+		{check_access mode="link" path="acp/news/settings" icon="32/advancedsettings" width="32" height="32"}
+		{check_access mode="input" path="acp/news/delete" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
 {if isset($redirect_message)}
@@ -29,7 +29,7 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td>{$row.period}</td>
-				<td>{check_access mode="link" uri="acp/news/edit/id_`$row.id`" title=$row.headline}</td>
+				<td>{check_access mode="link" path="acp/news/edit/id_`$row.id`" title=$row.headline}</td>
 				<td>{$row.cat}</td>
 				<td>{$row.id}</td>
 			</tr>

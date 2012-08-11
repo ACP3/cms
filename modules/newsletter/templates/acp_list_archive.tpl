@@ -1,6 +1,6 @@
 <form action="{uri args="acp/newsletter/delete_archive"}" method="post">
 	<div id="adm-list">
-		{check_access mode="input" action="newsletter|acp_delete_archive" icon="32/cancel" lang="common|delete_marked"}
+		{check_access mode="input" path="acp/newsletter/delete_archive" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="newsletter|newsletter_archive"}</h2>
 	</div>
 {if isset($redirect_message)}
@@ -30,7 +30,7 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
 {/if}
 				<td>{$row.date}</td>
-				<td>{check_access mode="link" uri="acp/newsletter/edit_archive/id_`$row.id`" title=$row.subject}</td>
+				<td>{check_access mode="link" path="acp/newsletter/edit_archive/id_`$row.id`" title=$row.subject}</td>
 				<td>{$row.status}</td>
 {if $can_send}
 				<td><a href="{uri args="acp/newsletter/send/id_`$row.id`"}" title="{lang t="newsletter|acp_send"}">{icon path="16/mail_send" width="16" height="16" alt="{lang t="newsletter|send"}"}</a></td>

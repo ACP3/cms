@@ -60,7 +60,9 @@
 			</tbody>
 		</table>
 {else}
-		<p>{lang t="system|no_modules_available_for_installation"}</p>
+		<div class="error-box">
+			<h5>{lang t="system|no_modules_available_for_installation"}</h5>
+		</div>
 {/if}
 	</div>
 </div>
