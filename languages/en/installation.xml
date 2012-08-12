@@ -8,7 +8,7 @@
 	<item key="db_connection_failed">The connection to the database failed</item>
 	<item key="db_connection_settings">Database connection settings</item>
 	<item key="db_hostname">Hostname</item>
-	<item key="db_hostname_description">(usually "localhost")</item>
+	<item key="db_hostname_description">usually "localhost"</item>
 	<item key="db_name">Database name</item>
 	<item key="db_password">Password</item>
 	<item key="db_table_prefix">Table prefix</item>

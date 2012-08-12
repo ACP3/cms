@@ -5,14 +5,12 @@ $(document).ready(function() {
 	var pagebreak = '<form id="page-break-form">';
 	pagebreak+= '<fieldset>';
 	pagebreak+= '<legend>{lang t="common|insert_page_break"}</legend>';
-	pagebreak+= '<dl>';
-	pagebreak+= '<dt><label for="toc-title">{lang t="common|title_for_toc"}</label></dt>';
-	pagebreak+= '<dd><input type="text" id="toc-title"></dd>';
-	pagebreak+= '</dl>';
+	pagebreak+= '<label for="toc-title" class="control-label">{lang t="common|title_for_toc"}</label>';
+	pagebreak+= '<input type="text" id="toc-title">';
 	pagebreak+= '</fieldset>';
-	pagebreak+= '<div class="form-bottom"><button class="form">{lang t="common|submit"}</button></div>';
+	pagebreak+= '<div class="form-actions"><button class="btn">{lang t="common|submit"}</button></div>';
 	pagebreak+= '</form>';
-	pagebreak+= '<div id="page-break-link"><a href="#" class="form">{lang t="common|insert_page_break"}</a></div>';
+	pagebreak+= '<div id="page-break-link"><a href="#" class="btn">{lang t="common|insert_page_break"}</a></div>';
 
 	$('#{$wysiwyg.id}').after(pagebreak);
 	$('#page-break-form').hide();

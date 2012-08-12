@@ -48,7 +48,7 @@ Please change the password again, after you logged in to your account.</item>
 	<item key="msn">MSN</item>
 	<item key="new_pwd">New password</item>
 	<item key="new_pwd_repeat">Repeat new password</item>
-	<item key="nickname_or_email">Benutzername oder E-Mail-Adresse</item>
+	<item key="nickname_or_email">User name or E-mail address</item>
 	<item key="nickname">User name</item>
 	<item key="nickname_or_password_wrong">Either the user name or the password is wrong.</item>
 	<item key="pwd">Password</item>

@@ -1,4 +1,4 @@
-<table class="acp-table">
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>{lang t="common|name"}</th>

@@ -1,4 +1,4 @@
-<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="poll">
 		<h4>{$question}</h4>
 {foreach $answers as $row}
@@ -12,7 +12,7 @@
 		</label>
 {/foreach}
 	</div>
-	<div class="form-bottom">
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
+	<div class="form-actions">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
 	</div>
 </form>

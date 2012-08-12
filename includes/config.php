@@ -13,7 +13,7 @@ define('CONFIG_DB_PRE', 'acp3_');
 define('CONFIG_DB_USER', 'root');
 define('CONFIG_DB_VERSION', 23);
 define('CONFIG_DESIGN', 'acp3');
-define('CONFIG_ENTRIES', 20);
+define('CONFIG_ENTRIES', 5);
 define('CONFIG_FLOOD', 30);
 define('CONFIG_HOMEPAGE', 'news/list/');
 define('CONFIG_LANG', 'en');

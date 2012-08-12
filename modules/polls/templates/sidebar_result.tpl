@@ -1,10 +1,13 @@
-<h4>{lang t="polls|latest_poll"}</h4>
-<div id="sidebar-polls">
-	<h5>{$sidebar_polls.question}</h5>
-	<ul>
+<ul class="nav nav-list">
+	<li class="nav-header">{lang t="polls|latest_poll"}</li>
+	<li>
+		<strong>{$sidebar_polls.question}</strong>
+		<ul class="unstyled">
 {foreach $sidebar_poll_answers as $row}
-		<li><strong>{$row.text}:</strong> {$row.percent}% ({$row.votes})</li>
+			<li><strong>{$row.text}:</strong> {$row.percent}% ({$row.votes})</li>
 {/foreach}
-	</ul>
-	<a href="{uri args="polls"}">{lang t="polls|polls_archive"}</a>
-</div>
+		</ul>
+	</li>
+	<li class="divider"></li>
+	<li><a href="{uri args="polls"}">{lang t="polls|polls_archive"}</a></li>
+</ul>

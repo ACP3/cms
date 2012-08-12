@@ -1,7 +1,7 @@
 <script type="text/javascript">
 function mark_entries(name, action)
 {
-	var fields = $('form .acp-table tbody input[name="' + name + '[]"]:visible');
+	var fields = $('form .table tbody input[name="' + name + '[]"]:visible');
 
 	jQuery.each(fields, function() {
 		if (action == 'add') {
@@ -22,20 +22,20 @@ $(document).ready(function() {
 	});
 
 	// Checkbox durch Klick auf Tabellenzeile markieren
-	$('form > table.acp-table > tbody > tr').filter(':has(:checkbox:checked)').addClass('selected').end().click(function(event) {
+	$('form > .table > tbody > tr').filter(':has(:checkbox:checked)').addClass('selected').end().click(function(event) {
 		if (event.target.type !== 'checkbox') {
 			$(':checkbox', this).trigger('click');
 		}
 	}).find(':checkbox').click(function() {
 		$(this).parents('tr:first').toggleClass('selected');
-		if ($('.acp-table tbody tr:has(:checkbox):visible').length == $('.acp-table tbody tr.selected:visible').length) {
+		if ($('.table tbody tr:has(:checkbox):visible').length == $('.table tbody tr.selected:visible').length) {
 			$('#mark-all').prop('checked', true);
 		} else {
 			$('#mark-all').prop('checked', false);
 		}
 	});
 
-	$('.acp-table').after('<' + 'div id="dialog"><' + 'h5 style="text-align:center"><' + '/h5><' + '/div>');
+	$('.table').after('<' + 'div id="dialog"><' + 'h5 style="text-align:center"><' + '/h5><' + '/div>');
 	$('#dialog').dialog({
 		autoOpen: false,
 		draggable: false,
@@ -48,7 +48,7 @@ $(document).ready(function() {
 	});
 
 	$('form #adm-list input[type=image]').click(function() {
-		var entries = $('form .acp-table :checkbox:checked') || [];
+		var entries = $('form .table :checkbox:checked') || [];
 		var ary = '';
 
 		jQuery.each(entries, function() {
@@ -63,7 +63,7 @@ $(document).ready(function() {
 						$(this).dialog('close');
 					},
 					{lang t="common|yes"}: function() {
-						location.href = $('.acp-table').parent('form').attr('action') + 'entries_' + ary.substr(0, ary.length - 1) + '/action_confirmed/';
+						location.href = $('.table').parent('form').attr('action') + 'entries_' + ary.substr(0, ary.length - 1) + '/action_confirmed/';
 					}
 				}
 			}).dialog('open');

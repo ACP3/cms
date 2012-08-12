@@ -1,50 +1,48 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<form action="{uri args="search/list"}" method="post" accept-charset="UTF-8">
-	<fieldset class="no-border">
-		<dl>
-			<dt><label for="search-term">{lang t="search|search_term"}</label></dt>
-			<dd><input type="text" name="search_term" id="search-term" value="{$form.search_term}" required></dd>
-		</dl>
-		<fieldset>
-			<legend>{lang t="search|search_options"}</legend>
-			<dl>
-				<dt><label>{lang t="search|search_after_modules"}</label></dt>
-				<dd>
+<form action="{uri args="search/list"}" method="post" accept-charset="UTF-8" class="form-horizontal">
+	<fieldset>
+		<legend>{lang t="search|search_options"}</legend>
+		<div class="control-group">
+			<label for="search-term" class="control-label">{lang t="search|search_term"}</label>
+			<div class="controls"><input type="text" name="search_term" id="search-term" value="{$form.search_term}" required></div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">{lang t="search|search_after_modules"}</label>
+			<div class="controls">
 {foreach $search_mods as $row}
-					<label for="{$row.dir}">
-						<input type="checkbox" name="mods[]" id="{$row.dir}" value="{$row.dir}"{$row.checked} class="checkbox">
-						{$row.name}
-					</label>
+				<label for="{$row.dir}" class="checkbox">
+					<input type="checkbox" name="mods[]" id="{$row.dir}" value="{$row.dir}"{$row.checked}>
+					{$row.name}
+				</label>
 {/foreach}
-				</dd>
-			</dl>
-			<dl>
-				<dt><label for="{$search_areas.0.id}">{lang t="search|search_after_areas"}</label></dt>
-				<dd>
+			</div>
+		</div>
+		<div class="control-group">
+			<label for="{$search_areas.0.id}" class="control-label">{lang t="search|search_after_areas"}</label>
+			<div class="controls">
 {foreach $search_areas as $row}
-					<label for="{$row.id}">
-						<input type="radio" name="area" id="{$row.id}" value="{$row.value}" class="checkbox"{$row.checked}>
-						{$row.lang}
-					</label>
+				<label for="{$row.id}" class="checkbox">
+					<input type="radio" name="area" id="{$row.id}" value="{$row.value}"{$row.checked}>
+					{$row.lang}
+				</label>
 {/foreach}
-				</dd>
-			</dl>
-			<dl>
-				<dt><label for="{$sort_hits.0.id}">{lang t="search|sort_hits"}</label></dt>
-				<dd>
+			</div>
+		</div>
+		<div class="control-group">
+			<label for="{$sort_hits.0.id}" class="control-label">{lang t="search|sort_hits"}</label>
+			<div class="controls">
 {foreach $sort_hits as $row}
-					<label for="{$row.id}">
-						<input type="radio" name="sort" id="{$row.id}" value="{$row.value}" class="checkbox"{$row.checked}>
-						{$row.lang}
-					</label>
+				<label for="{$row.id}" class="checkbox">
+					<input type="radio" name="sort" id="{$row.id}" value="{$row.value}"{$row.checked}>
+					{$row.lang}
+				</label>
 {/foreach}
-				</dd>
-			</dl>
-		</fieldset>
+			</div>
+		</div>
 	</fieldset>
-	<div class="form-bottom">
-		<input type="submit" name="submit" value="{lang t="search|submit_search"}" class="form">
+	<div class="form-actions">
+		<input type="submit" name="submit" value="{lang t="search|submit_search"}" class="btn">
 	</div>
 </form>

@@ -1,25 +1,25 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<fieldset class="no-border">
-		<dl>
-			<dt><label for="name">{lang t="common|name"}</label></dt>
-			<dd><input type="text" name="name" id="name" maxlength="20" value="{$form.name}" required{$form.name_disabled}></dd>
-		</dl>
-		<dl>
-			<dt><label for="mail">{lang t="common|email"}</label></dt>
-			<dd><input type="email" name="mail" id="mail" maxlength="120" value="{$form.mail}" required{$form.mail_disabled}></dd>
-		</dl>
-		<dl>
-			<dt><label for="message">{lang t="common|message"}</label></dt>
-			<dd><textarea name="message" id="message" cols="50" rows="5" required>{$form.message}</textarea></dd>
-		</dl>
+		<div class="control-group">
+			<label for="name" class="control-label">{lang t="common|name"}</label>
+			<div class="controls"><input type="text" name="name" id="name" maxlength="20" value="{$form.name}" required{$form.name_disabled}></div>
+		</div>
+		<div class="control-group">
+			<label for="mail" class="control-label">{lang t="common|email"}</label>
+			<div class="controls"><input type="email" name="mail" id="mail" maxlength="120" value="{$form.mail}" required{$form.mail_disabled}></div>
+		</div>
+		<div class="control-group">
+			<label for="message" class="control-label">{lang t="common|message"}</label>
+			<div class="controls"><textarea name="message" id="message" cols="50" rows="5" required>{$form.message}</textarea></div>
+		</div>
 	</fieldset>
 {$captcha}
-	<div class="form-bottom">
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
-		<input type="reset" value="{lang t="common|reset"}" class="form">
+	<div class="form-actions">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
+		<input type="reset" value="{lang t="common|reset"}" class="btn">
 		{$form_token}
 	</div>
 </form>

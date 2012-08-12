@@ -147,7 +147,7 @@ function menuItemsList($parent_id = 0, $left_id = 0, $right_id = 0) {
  *
  * @return string
  */
-function processNavbar($block) {
+function processNavbar($block, $class = '') {
 	static $navbar = array();
 
 	// Navigationsleiste sofort ausgeben, falls diese schon einmal verarbeitet wurde...
@@ -175,20 +175,21 @@ function processNavbar($block) {
 				if (isset($select[0]) &&
 						$items[$i]['left_id'] <= $select[0]['left_id'] &&
 						$items[$i]['right_id'] > $select[0]['left_id']) {
-					$css.= ' selected';
+					$css.= ' active';
 				}
 
 				// Link zusammenbauen
 				$href = $items[$i]['mode'] == 1 || $items[$i]['mode'] == 2 || $items[$i]['mode'] == 4 ? $uri->route($items[$i]['uri'], 1) : $items[$i]['uri'];
 				$target = $items[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
-				$link = '<a href="' . $href . '" class="' . $css . '"' . $target . '>' . $db->escape($items[$i]['title'], 3) . '</a>';
 
 				// Falls für Knoten Kindelemente vorhanden sind, neue Unterliste erstellen
 				if (isset($items[$i + 1]) && $items[$i + 1]['level'] > $items[$i]['level']) {
-					$navbar[$block].= '<li>' . $link . '<ul class="navigation-' . $block . '-subnav-' . $items[$i]['id'] . '">';
+					$link = '<a href="' . $href . '"' . $target . ' class="dropdown-toggle" data-toggle="dropdown" data-target="#">' . $db->escape($items[$i]['title'], 3) . ' <b class="caret"></b></a>';
+					$navbar[$block].= '<li class="' . $css . ' dropdown">' . $link . '<ul class="dropdown-menu">';
 					// Elemente ohne Kindelemente
 				} else {
-					$navbar[$block].= '<li>' . $link . '</li>';
+					$link = '<a href="' . $href . '"' . $target . '>' . $db->escape($items[$i]['title'], 3) . '</a>';
+					$navbar[$block].= '<li class="' . $css . '">' . $link . '</li>';
 					// Liste für untergeordnete Elemente schließen
 					if (isset($items[$i + 1]) && $items[$i + 1]['level'] < $items[$i]['level'] || !isset($items[$i + 1]) && $items[$i]['level'] != '0') {
 						// Differenz ermitteln, wieviele Level zwischen dem aktuellen und dem nachfolgendem Element liegen
@@ -199,7 +200,7 @@ function processNavbar($block) {
 					}
 				}
 			}
-			$navbar[$block] = !empty($navbar[$block]) ? '<ul class="navigation-' . $block . '">' . $navbar[$block] . '</ul>' : '';
+			$navbar[$block] = !empty($navbar[$block]) ? '<ul class="nav' . (!empty($class) ? ' ' . $class : '') . '">' . $navbar[$block] . '</ul>' : '';
 			return $navbar[$block];
 		}
 		return '';

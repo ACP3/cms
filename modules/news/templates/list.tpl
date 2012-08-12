@@ -1,25 +1,22 @@
-{if ACP3_Modules::check('newsletter', 'create')}
-<div style="text-align:center">
-	<a href="{uri args="newsletter/create"}">{lang t="newsletter|create"}</a>
-</div>
-{/if}
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span4">{if !empty($pagination)}{$pagination}{/if}</div>
 {if isset($categories)}
-<div class="news">
-	<div class="header">
-		<form action="{uri args="news/list"}" method="post" style="text-align:right">
-			<div>
-				<label for="cat" style="font-weight:bold">
-					{lang t="common|category"}:
-					{$categories}
-				</label>
-				<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
-			</div>
-		</form>
+		<div class="span4" style="text-align: center">
+{if ACP3_Modules::check('newsletter', 'create')}
+			<a href="{uri args="newsletter/create"}">{lang t="newsletter|create"}</a>
+{/if}
+		</div>
+		<div class="span4" style="text-align: right">
+			<form action="{uri args="news/list"}" method="post" class="form-inline">
+				{$categories}
+				<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
+			</form>
+		</div>
+{/if}
 	</div>
 </div>
-{/if}
 {if isset($news)}
-{$pagination}
 {foreach $news as $row}
 <div class="news">
 	<h3 class="header">
@@ -40,7 +37,7 @@
 </div>
 {/foreach}
 {else}
-<div class="error-box">
+<div class="alert alert-block">
 	<h5>{lang t="common|no_entries"}</h5>
 </div>
 {/if}

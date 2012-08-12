@@ -1,5 +1,5 @@
 <h4 style="margin-bottom:10px">{$question}</h4>
-<table class="acp-table">
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>{lang t="polls|answers"}</th>

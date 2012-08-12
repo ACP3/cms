@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (ACP3_Modules::check('menu_items', 'create') === true)
+if (ACP3_Modules::check('menu_items', 'acp_create') === true)
 	require_once MODULES_DIR . 'menu_items/functions.php';
 
 if (isset($_POST['submit']) === true) {
@@ -84,7 +84,7 @@ if (isset($_POST['submit']) === true) {
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-	if (ACP3_Modules::check('menu_items', 'create') === true) {
+	if (ACP3_Modules::check('menu_items', 'acp_create') === true) {
 		$create = array();
 		$create[0]['value'] = 1;
 		$create[0]['selected'] = selectEntry('create', '1', '0', 'checked');
@@ -92,6 +92,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		$create[1]['value'] = 0;
 		$create[1]['selected'] = selectEntry('create', '0', '0', 'checked');
 		$create[1]['lang'] = $lang->t('common', 'no');
+		$tpl->assign('create', $create);
 
 		// Block
 		$blocks = $db->select('id, title', 'menu_items_blocks');
@@ -99,6 +100,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		for ($i = 0; $i < $c_blocks; ++$i) {
 			$blocks[$i]['selected'] = selectEntry('block_id', $blocks[$i]['id']);
 		}
+		$tpl->assign('blocks', $blocks);
 
 		$display = array();
 		$display[0]['value'] = 1;
@@ -107,10 +109,8 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		$display[1]['value'] = 0;
 		$display[1]['selected'] = selectEntry('display', '0', '', 'checked');
 		$display[1]['lang'] = $lang->t('common', 'no');
-
-		$tpl->assign('create', $create);
-		$tpl->assign('blocks', $blocks);
 		$tpl->assign('display', $display);
+
 		$tpl->assign('pages_list', menuItemsList());
 	}
 

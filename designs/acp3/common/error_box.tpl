@@ -10,8 +10,8 @@ $(document).ready(function() {
 });
 </script>
 {/if}
-<div class="error-box" style="margin:2px auto 10px">
-	<h4>{lang t="common|failure"}</h4>
+<div class="alert alert-block">
+	<h4 class="alert-heading">{lang t="common|failure"}</h4>
 	<ul>
 {foreach $error_box.errors as $key => $value}
 		<li{if ACP3_validate::isNumber($key) === false} class="error-{$key}"{/if}>{$value}</li>

@@ -6,6 +6,5 @@ $(document).ready(function() {
 		$(this).children('ul').hide();
 	});
 
-	// jQuery UI Tabs
-	$('#tabs').tabs({ cookie: { expires: 1 }});
+	$('.dropdown-toggle').dropdown();
 })

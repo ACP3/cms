@@ -1,5 +1,5 @@
 <form action="{uri args="acp/access/delete"}" method="post">
-	<div id="adm-list">
+	<div id="adm-list" class="well">
 		{check_access mode="link" path="acp/access/create" icon="32/add_group" width="32" height="32"}
 		{check_access mode="link" path="acp/access/list_resources" icon="32/resource" width="32" height="32"}
 		{check_access mode="input" path="acp/access/delete" icon="32/cancel" lang="common|delete_marked"}
@@ -9,11 +9,11 @@
 {$redirect_message}
 {/if}
 {if isset($roles)}
-	<table class="acp-table">
+	<table class="table table-striped">
 		<thead>
 			<tr>
 {if $can_delete === true}
-				<th><input type="checkbox" id="mark-all" value="1" class="checkbox"></th>
+				<th><input type="checkbox" id="mark-all" value="1" class="checkbox inline"></th>
 {/if}
 				<th>{lang t="common|name"}</th>
 {if $can_order === true}
@@ -26,9 +26,9 @@
 {foreach $roles as $row}
 			<tr>
 {if $can_delete === true}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox inline"></td>
 {/if}
-				<td style="text-align:left">{check_access mode="link" path="acp/access/edit/id_`$row.id`" title=$row.name}</td>
+				<td style="text-align:left">{$row.spaces}{check_access mode="link" path="acp/access/edit/id_`$row.id`" title=$row.name}</td>
 {if $can_order === true}
 				<td>
 {if !$row.last}
@@ -51,7 +51,7 @@
 {mark name="entries"}
 {/if}
 {else}
-	<div class="error-box">
+	<div class="alert alert-block">
 		<h5>{lang t="common|no_entries"}</h5>
 	</div>
 {/if}

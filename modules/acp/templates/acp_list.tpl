@@ -1,4 +1,4 @@
-<div class="error-box">
+<div class="alert alert-block">
 	<p>
 		{lang t="acp|description"}
 	</p>

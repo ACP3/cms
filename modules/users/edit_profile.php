@@ -99,7 +99,7 @@ if ($auth->isUser() === false || ACP3_Validate::isNumber($auth->getUserId()) ===
 		$tpl->assign('gender', $gender);
 
 		// Geburtstag
-		$tpl->assign('birthday_datepicker', $date->datepicker('birthday', $user['birthday'], 'Y-m-d', array('constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\''), 0));
+		$tpl->assign('birthday_datepicker', $date->datepicker('birthday', $user['birthday'], 'Y-m-d', array('constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\''), 0, 1, false, true));
 		$birthday_format = array();
 		$birthday_format[0]['name'] = 'full';
 		$birthday_format[0]['value'] = '1';

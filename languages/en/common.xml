@@ -124,7 +124,7 @@
 	<item key="seo_robots_noindex_follow">noindex, follow</item>
 	<item key="seo_robots_noindex_nofollow">noindex, nofollow</item>
 	<item key="seo_uri_alias">URI-Alias</item>
-	<item key="seo_uri_alias_description">(Please use only lower case letters, numbers and the hyphen)</item>
+	<item key="seo_uri_alias_description">Please use only lower case letters, numbers and the hyphen</item>
 	<item key="settings_error">While editing the settings an error has occured.</item>
 	<item key="settings_success">The settings have been edited successfully.</item>
 	<item key="sidebar_entries_to_display">Sidebar entries to display</item>

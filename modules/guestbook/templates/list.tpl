@@ -18,9 +18,9 @@ $(document).ready(function() {
 });
 </script>
 {/if}
-<div style="text-align:center">
+<p style="text-align:center">
 	<a href="{uri args="guestbook/create"}" id="create-link" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>
-</div>
+</p>
 {if isset($guestbook)}
 {$pagination}
 {foreach $guestbook as $row}
@@ -50,7 +50,7 @@ $(document).ready(function() {
 </div>
 {/foreach}
 {else}
-<div class="error-box">
+<div class="alert alert-block">
 	<h5>{lang t="common|no_entries"}</h5>
 </div>
 {/if}

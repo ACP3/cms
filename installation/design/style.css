@@ -62,7 +62,7 @@ table.acp-table {
 	border-collapse: collapse;
 }
 #queries th {
-	background: #069 url('../../designs/acp3/images/common_header.png') repeat-x;
+	background: #069 url('../../designs/acp3/img/common_header.png') repeat-x;
 	font-weight: bold;
 	font-size: 1.1em;
 	line-height: 24px;
@@ -81,7 +81,7 @@ table.acp-table {
 	width: 104px;
 	height: 45px;
 	padding: 0 0 0 15px;
-	background: url('../../designs/acp3/images/logo.png') no-repeat;
+	background: url('../../designs/acp3/img/logo.png') no-repeat;
 	text-indent: -9999px;
 }
 #header {
@@ -91,7 +91,7 @@ table.acp-table {
 	height: 30px;
 	margin: 0;
 	padding-left: 10px;
-	background: url('../../designs/acp3/images/header.png') repeat-x;
+	background: url('../../designs/acp3/img/header.png') repeat-x;
 	font: bold 1.2em/30px Verdana, Arial, sans-serif;
 	list-style: none;
 }

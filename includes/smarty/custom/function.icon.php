@@ -1,7 +1,7 @@
 <?php
 function smarty_function_icon($params)
 {
-	$path = DESIGN_PATH . 'images/' . $params['path'] . '.png';
+	$path = DESIGN_PATH . 'img/' . $params['path'] . '.png';
 	$width = $height = '';
 
 	if (!empty($params['width']) && !empty($params['height']) &&
