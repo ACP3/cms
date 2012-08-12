@@ -96,19 +96,20 @@ class ACP3_Date
 	 * @param integer $with_time
 	 * @return string
 	 */
-	public function datepicker($name, $value = '', $format = 'Y-m-d H:i', array $params = array(), $range = 1, $mode = 1, $with_time = 1)
+	public function datepicker($name, $value = '', $format = 'Y-m-d H:i', array $params = array(), $range = 1, $mode = 1, $with_time = true, $input_only = false)
 	{
 		global $tpl;
 
 		$datepicker = array(
 			'range' => is_array($name) === true && $range === 1 ? 1 : 0,
-			'with_time' => $with_time === 1 ? true : false,
-			'length' =>  $with_time === 1 ? 16 : 10,
+			'with_time' => (bool) $with_time,
+			'length' =>  $with_time === true ? 16 : 10,
+			'input_only' => (bool) $input_only,
 			'params' => array(
 				'firstDay' => '\'1\'',
 				'dateFormat' => '\'yy-mm-dd\'',
 				'showOn' => '\'button\'',
-				'buttonImage' => '\'' . DESIGN_PATH . 'images/16/cal.png\'',
+				'buttonImage' => '\'' . DESIGN_PATH . 'img/16/cal.png\'',
 				'buttonImageOnly' => 'true',
 				'constrainInput' => 'true',
 				'changeMonth' => 'true',

@@ -1,36 +1,36 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<fieldset>
-		<legend>{lang t="guestbook|settings"}</legend>
-		<dl>
-			<dt><label for="date-format">{lang t="common|date_format"}</label></dt>
-			<dd>
+		<legend>{lang t="comments|acp_settings"}</legend>
+		<div class="control-group">
+			<label for="date-format" class="control-label">{lang t="common|date_format"}</label>
+			<div class="controls">
 				<select name="dateformat" id="date-format">
 					<option value="">{lang t="common|pls_select"}</option>
 {foreach $dateformat as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 				</select>
-			</dd>
-		</dl>
+			</div>
+		</div>
 {if isset($allow_emoticons)}
-		<dl>
-			<dt><label for="emoticons-1">{lang t="comments|allow_emoticons"}</label></dt>
-			<dd>
+		<div class="control-group">
+			<label for="emoticons-1" class="control-label">{lang t="comments|allow_emoticons"}</label>
+			<div class="controls">
 {foreach $allow_emoticons as $row}
-				<label for="emoticons-{$row.value}">
-					<input type="radio" name="emoticons" id="emoticons-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+				<label for="emoticons-{$row.value}" class="checkbox">
+					<input type="radio" name="emoticons" id="emoticons-{$row.value}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>
 {/foreach}
-			</dd>
-		</dl>
+			</div>
+		</div>
 {/if}
 	</fieldset>
-	<div class="form-bottom">
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
+	<div class="form-actions">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
 		{$form_token}
 	</div>
 </form>

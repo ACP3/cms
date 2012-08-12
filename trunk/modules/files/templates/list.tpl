@@ -1,5 +1,5 @@
 {if isset($categories)}
-<table class="acp-table">
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th colspan="2">{lang t="files|category_select"}</th>
@@ -15,7 +15,7 @@
 	</tbody>
 </table>
 {else}
-<div class="error-box">
+<div class="alert alert-block">
 	<h5>{lang t="common|no_entries"}</h5>
 </div>
 {/if}

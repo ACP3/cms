@@ -1,10 +1,7 @@
-<div id="pagination">
-	{lang t="common|pagination"}:
+<div class="pagination pagination-centered">
+	<ul>
 {foreach $pagination as $row}
-{if $row.selected}
-	<span>{$row.page}</span>
-{else}
-	<a href="{$row.uri}"{if isset($row.title)} title="{$row.title}"{/if}>{$row.page}</a>
-{/if}
+		<li{if $row.selected} class="active"{/if}><a href="{$row.uri}"{if isset($row.title)} title="{$row.title}"{/if}>{$row.page}</a></li>
 {/foreach}
+	</ul>
 </div>

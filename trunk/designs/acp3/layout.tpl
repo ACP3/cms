@@ -10,30 +10,34 @@
 </head>
 
 <body>
-	<div id="box">
-		<div id="header">
-			<h1 id="page-title">{$PAGE_TITLE}</h1>
-			{navbar block="main"}
+	<div class="container-fluid">
+		<div class="navbar">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="brand" href="{$ROOT_DIR}">{$PAGE_TITLE}</a>
+					{navbar block="main"}
+				</div>
+			</div>
 		</div>
-		<div id="breadcrumb">
-			{$BREADCRUMB}
+		<div class="row-fluid">
+			<div class="span2 well" style="padding:8px">
+				{navbar block="sidebar" class="nav-list"}
+				{load_module module="users|sidebar"}
+			</div>
+			<div class="span8">
+				<div id="breadcrumb">
+					{$BREADCRUMB}
+				</div>
+				<h2>{$TITLE}</h2>
+				{$CONTENT}
+			</div>
+			<div class="span2 well" style="padding:8px">
+				{load_module module="news|sidebar"}
+				{load_module module="files|sidebar"}
+				{load_module module="gallery|sidebar"}
+				{load_module module="polls|sidebar"}
+			</div>
 		</div>
-		<div id="sidebar-left">
-			<h4>Navigation</h4>
-			{navbar block="sidebar"}
-			{load_module module="users|sidebar"}
-		</div>
-		<div id="sidebar-right">
-			{load_module module="news|sidebar"}
-			{load_module module="files|sidebar"}
-			{load_module module="gallery|sidebar"}
-			{load_module module="polls|sidebar"}
-		</div>
-		<div id="content">
-			<h1>{$TITLE}</h1>
-			{$CONTENT}
-		</div>
-		<div id="footer"></div>
 	</div>
 </body>
 </html>

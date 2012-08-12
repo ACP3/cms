@@ -3,7 +3,7 @@
 </p>
 {if isset($users)}
 {$pagination}
-<table class="acp-table">
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>{lang t="users|nickname"}</th>
@@ -24,7 +24,7 @@
 	</tbody>
 </table>
 {else}
-<div class="error-box">
+<div class="alert alert-block">
 	<h5>{lang t="common|no_entries"}</h5>
 </div>
 {/if}

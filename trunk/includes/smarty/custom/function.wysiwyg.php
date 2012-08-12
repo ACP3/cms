@@ -22,7 +22,7 @@ function smarty_function_wysiwyg($params) {
 			include_once MODULES_DIR . 'emoticons/functions.php';
 			$out.= emoticonsList($params['id']);
 		}
-		$out.= '<textarea name="' . $params['name'] . '" id="' . $params['id'] . '" cols="50" rows="6">' . (!empty($params['value']) ? $params['value'] : '') . '</textarea>';
+		$out.= '<textarea name="' . $params['name'] . '" id="' . $params['id'] . '" cols="50" rows="6" class="span6">' . (!empty($params['value']) ? $params['value'] : '') . '</textarea>';
 		return $out;
 	}
 }

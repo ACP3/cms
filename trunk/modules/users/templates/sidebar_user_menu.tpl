@@ -1,4 +1,3 @@
-<h4>{lang t="users|user_menu"}</h4>
 <script type="text/javascript">
 $(document).ready(function() {
 	$('ul.admin > li:has(ul) > a').click(function() {
@@ -7,12 +6,13 @@ $(document).ready(function() {
 	});
 });
 </script>
-<ul class="admin">
+<ul class="nav nav-list">
+	<li class="nav-header">{lang t="users|user_menu"}</li>
 	<li><a href="{uri args="users/home"}">{lang t="users|home"}</a></li>
 {if isset($user_sidebar.modules)}
-	<li>
-		<a href="{uri args="acp"}">{lang t="users|administration"}</a>
-		<ul>
+	<li class="dropdown">
+		<a href="{uri args="acp"}" class="dropdown-toggle" data-toggle="dropdown" data-target="#">{lang t="users|administration"}</a>
+		<ul class="dropdown-menu">
 {foreach $user_sidebar.modules as $row}
 			<li><a href="{uri args="acp/`$row.dir`"}">{$row.name}</a></li>
 {/foreach}
@@ -20,9 +20,9 @@ $(document).ready(function() {
 	</li>
 {/if}
 {if isset($user_sidebar.system)}
-	<li>
-		<a href="{uri args="acp/system"}">{lang t="system|system"}</a>
-		<ul>
+	<li class="dropdown">
+		<a href="{uri args="acp/system"}" class="dropdown-toggle" data-toggle="dropdown" data-target="#">{lang t="system|system"}</a>
+		<ul class="dropdown-menu">
 {foreach $user_sidebar.system as $row}
 			<li><a href="{uri args="acp/system/`$row.page`"}">{$row.name}</a></li>
 {/foreach}

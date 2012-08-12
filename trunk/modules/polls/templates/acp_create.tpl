@@ -1,43 +1,45 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
-	<div id="tabs">
-		<ul>
-			<li><a href="#tab-1">{lang t="common|publication_period"}</a></li>
-			<li><a href="#tab-2">{lang t="polls|poll"}</a></li>
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
+	<div class="tabbable">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#tab-1" data-toggle="tab">{lang t="common|publication_period"}</a></li>
+			<li><a href="#tab-2" data-toggle="tab">{lang t="polls|poll"}</a></li>
 		</ul>
-		<div id="tab-1">
-			{$publication_period}
-		</div>
-		<div id="tab-2">
-			<dl>
-				<dt><label for="question">{lang t="polls|question"}</label></dt>
-				<dd><input type="text" name="question" id="question" value="{$question}" maxlength="120"></dd>
-			</dl>
+		<div class="tab-content">
+			<div id="tab-1" class="tab-pane active">
+				{$publication_period}
+			</div>
+			<div id="tab-2" class="tab-pane">
+				<div class="control-group">
+					<label for="question" class="control-label">{lang t="polls|question"}</label>
+					<div class="controls"><input type="text" name="question" id="question" value="{$question}" maxlength="120"></div>
+				</div>
 {foreach $answers as $row}
-			<dl>
-				<dt><label for="answer_{$row.number}">{lang t="polls|answer"} {$row.number+1}</label></dt>
-				<dd><input type="text" name="answers[]" id="answer_{$row.number}" value="{$row.value}" maxlength="120"></dd>
-			</dl>
+				<div class="control-group">
+					<label for="answer_{$row.number}" class="control-label">{lang t="polls|answer"} {$row.number+1}</label>
+					<div class="controls"><input type="text" name="answers[]" id="answer_{$row.number}" value="{$row.value}" maxlength="120"></div>
+				</div>
 {/foreach}
-			<dl>
-				<dt><label for="multiple">{lang t="common|options"}</label></dt>
-				<dd style="margin:0 20px">
-					<label for="multiple">
-						<input type="checkbox" name="multiple" id="multiple" value="1" class="checkbox"{$multiple}>
-						{lang t="polls|multiple_choice"}
-					</label>
-				</dd>
-			</dl>
+				<div class="control-group">
+					<label for="multiple" class="control-label">{lang t="common|options"}</label>
+					<div class="controls">
+						<label for="multiple" class="checkbox inline">
+							<input type="checkbox" name="multiple" id="multiple" value="1"{$multiple}>
+							{lang t="polls|multiple_choice"}
+						</label>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-	<div class="form-bottom">
+	<div class="form-actions">
 {if !$disable}
-		<input type="submit" name="add_answer" value="{lang t="polls|add_answer"}" class="form">
+		<input type="submit" name="add_answer" value="{lang t="polls|add_answer"}" class="btn">
 {/if}
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
-		<input type="reset" value="{lang t="common|reset"}" class="form">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
+		<input type="reset" value="{lang t="common|reset"}" class="btn">
 		{$form_token}
 	</div>
 </form>

@@ -1,59 +1,61 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
-	<div id="tabs">
-		<ul>
-			<li><a href="#tab-1">{lang t="common|general_statements"}</a></li>
-			<li><a href="#tab-2">{lang t="access|permissions"}</a></li>
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
+	<div class="tabbable">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#tab-1" data-toggle="tab">{lang t="common|general_statements"}</a></li>
+			<li><a href="#tab-2" data-toggle="tab">{lang t="access|permissions"}</a></li>
 		</ul>
-		<div id="tab-1">
-			<dl>
-				<dt><label for="name">{lang t="common|name"}</label></dt>
-				<dd><input type="text" name="name" id="name" value="{$form.name}" maxlength="120"></dd>
-			</dl>
+		<div class="tab-content">
+			<div id="tab-1" class="tab-pane active">
+				<div class="control-group">
+					<label for="name" class="control-label">{lang t="common|name"}</label>
+					<div class="controls"><input type="text" name="name" id="name" value="{$form.name}" maxlength="120"></div>
+				</div>
 {if isset($parent)}
-			<dl>
-				<dt><label for="parent">{lang t="access|superior_role"}</label></dt>
-				<dd>
-					<select name="parent" id="parent">
+				<div class="control-group">
+					<label for="parent" class="control-label">{lang t="access|superior_role"}</label>
+					<div class="controls">
+						<select name="parent" id="parent">
 {foreach $parent as $row}
-						<option value="{$row.id}"{$row.selected}>{$row.name}</option>
+							<option value="{$row.id}"{$row.selected}>{$row.name}</option>
 {/foreach}
-					</select>
-				</dd>
+						</select>
+					</div>
 {/if}
-			</dl>
-		</div>
-		<div id="tab-2">
+				</div>
+			</div>
+			<div id="tab-2" class="tab-pane">
 {foreach $modules as $module => $values}
-			<table class="privileges">
-				<thead>
-					<tr>
-						<th colspan="4">{$module}</th>
-					</tr>
-				</thead>
-				<tbody>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th colspan="4">{$module}</th>
+						</tr>
+					</thead>
+					<tbody>
 {foreach $values.privileges as $privilege}
-					<tr>
-						<td class="privilege-name"{if !empty($privilege.description)} title="{$privilege.description}"{/if}>{$privilege.key}</td>
+						<tr>
+							<td class="privilege-name"{if !empty($privilege.description)} title="{$privilege.description}"{/if}>{$privilege.key}</td>
 {foreach $privilege.select as $row}
-						<td>
-							<label for="privileges-{$values.id}-{$privilege.id}-{$row.value}">
-								<input type="radio" name="privileges[{$values.id}][{$privilege.id}]" id="privileges-{$values.id}-{$privilege.id}-{$row.value}" value="{$row.value}" class="checkbox"{$row.selected}>
-								{$row.lang}
-							</label>
-						</td>
+							<td>
+								<label for="privileges-{$values.id}-{$privilege.id}-{$row.value}" class="checkbox">
+									<input type="radio" name="privileges[{$values.id}][{$privilege.id}]" id="privileges-{$values.id}-{$privilege.id}-{$row.value}" value="{$row.value}"{$row.selected}>
+									{$row.lang}
+								</label>
+							</td>
 {/foreach}
-					</tr>
+						</tr>
 {/foreach}
-				</tbody>
-			</table>
+					</tbody>
+				</table>
 {/foreach}
+			</div>
 		</div>
 	</div>
-	<div class="form-bottom">
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
+	<div class="form-actions">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
 		{$form_token}
 	</div>
 </form>

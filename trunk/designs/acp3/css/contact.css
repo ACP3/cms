@@ -1,34 +1,8 @@
-.imprint {
-	width: 70%;
-	margin: 0 auto 10px;
-}
-.imprint dl {
-	clear: left;
-}
-.imprint dt {
-	width: 20%;
-	margin: 0 0 2px 0;
-	padding-left: 4px;
-	background: #e5e5e5;
-	border: 1px solid #eee;
-	border-color: #eee #ccc #ccc #eee;
-	font-weight: bold;
-	font-size: 1.1em;
-	line-height: 20px;
-	float: left;
-}
-.imprint dl dd {
-	margin-left: 22%;
-	padding-top: 1px;
-	line-height: 20px;
-}
-.imprint dl dd p {
-	padding: 0;
-}
 .powered-by {
 	width: 70%;
 	margin: 5px auto;
 	padding: 5px 0 0;
 	border-top: 1px dotted #333;
 	text-align: center;
+	clear: both;
 }

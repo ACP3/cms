@@ -1,6 +1,6 @@
 .files {
 	margin: 2px 0;
-	background: #069 url('../images/common_header.png') repeat-x;
+	background: #069 url('../img/common_header.png') repeat-x;
 	border: 1px solid #bbb;
 }
 .files .header, .files .date {
@@ -35,7 +35,7 @@
 }
 a.download-file {
 	padding-left: 34px;
-	background: url('../images/32/download.png') no-repeat;
+	background: url('../img/32/download.png') no-repeat;
 	font-weight: bold;
 	font-size: 1.1em;
 	line-height: 34px;

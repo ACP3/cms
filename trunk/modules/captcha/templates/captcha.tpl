@@ -1,9 +1,7 @@
-<fieldset class="captcha">
-	<legend>{lang t="captcha|captcha"}</legend>
-	<dl style="text-align:center">
-		<dt><img src="{uri args="captcha/image"}" width="{$captcha.width}" height="{$captcha.height}" alt=""></dt>
-		<dd>
-			<input type="text" name="captcha" id="captcha" value="" style="width:auto;display:inline" required>
-		</dd>
-	</dl>
-</fieldset>
+<div class="control-group">
+	<label for="captcha" class="control-label">{lang t="captcha|captcha"}</label>
+	<div class="controls">
+		<img src="{uri args="captcha/image"}" width="{$captcha.width}" height="{$captcha.height}" alt=""><br>
+		<input type="text" name="captcha" id="captcha" value="" required>
+	</div>
+</div>

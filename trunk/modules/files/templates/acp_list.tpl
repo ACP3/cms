@@ -1,5 +1,5 @@
 <form action="{uri args="acp/files/delete"}" method="post">
-	<div id="adm-list">
+	<div id="adm-list" class="well">
 		{check_access mode="link" path="acp/files/create" icon="32/download" width="32" height="32"}
 		{check_access mode="link" path="acp/files/settings" icon="32/advancedsettings" width="32" height="32"}
 		{check_access mode="input" path="acp/files/delete" icon="32/cancel" lang="common|delete_marked"}
@@ -10,11 +10,11 @@
 {/if}
 {if isset($files)}
 {$pagination}
-	<table class="acp-table">
+	<table class="table table-striped">
 		<thead>
 			<tr>
 {if $can_delete === true}
-				<th><input type="checkbox" id="mark-all" value="1" class="checkbox"></th>
+				<th><input type="checkbox" id="mark-all" value="1" class="checkbox inline"></th>
 {/if}
 				<th>{lang t="common|publication_period"}</th>
 				<th>{lang t="files|link_title"}</th>
@@ -27,7 +27,7 @@
 {foreach $files as $row}
 			<tr>
 {if $can_delete === true}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox inline"></td>
 {/if}
 				<td>{$row.period}</td>
 				<td>{check_access mode="link" path="acp/files/edit/id_`$row.id`" title=$row.link_title}</td>
@@ -42,7 +42,7 @@
 {mark name="entries"}
 {/if}
 {else}
-	<div class="error-box">
+	<div class="alert alert-block">
 		<h5>{lang t="common|no_entries"}</h5>
 	</div>
 {/if}

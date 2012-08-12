@@ -1,29 +1,30 @@
-<h4>{lang t="polls|latest_poll"}</h4>
+<ul class="nav nav-list">
+	<li class="nav-header">{lang t="polls|latest_poll"}</li>
 {if isset($sidebar_poll_question)}
-<div id="sidebar-polls">
-	<h5>{$sidebar_poll_question.question}</h5>
-	<form action="{uri args="polls/vote/id_`$sidebar_poll_question.id`"}" method="post" accept-charset="UTF-8">
-		<ul>
-			<li>
+	<li>
+		<h5>{$sidebar_poll_question.question}</h5>
+		<form action="{uri args="polls/vote/id_`$sidebar_poll_question.id`"}" method="post" accept-charset="UTF-8">
+			<ul>
+				<li>
 {foreach $sidebar_poll_answers as $row}
-				<label for="answer-{$row.id}">
+					<label for="answer-{$row.id}" class="checkbox">
 {if $sidebar_poll_question.multiple == '1'}
-					<input type="checkbox" name="answer[]" id="answer-{$row.id}" value="{$row.id}" class="checkbox">
+						<input type="checkbox" name="answer[]" id="answer-{$row.id}" value="{$row.id}">
 {else}
-					<input type="radio" name="answer" id="answer-{$row.id}" value="{$row.id}" class="checkbox">
+						<input type="radio" name="answer" id="answer-{$row.id}" value="{$row.id}">
 {/if}
-					{$row.text}
-				</label><br>
+						{$row.text}
+					</label><br>
 {/foreach}
-			</li>
-		</ul>
-		<div>
-			<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
-		</div>
-	</form>
+				</li>
+			</ul>
+			<div>
+				<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
+			</div>
+		</form>
+	</li>
 </div>
 {else}
-<ul>
 	<li>{lang t="common|no_entries_short"}</li>
-</ul>
 {/if}
+</ul>

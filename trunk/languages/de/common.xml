@@ -124,7 +124,7 @@
 	<item key="seo_robots_noindex_follow">noindex, follow</item>
 	<item key="seo_robots_noindex_nofollow">noindex, nofollow</item>
 	<item key="seo_uri_alias">URI-Alias</item>
-	<item key="seo_uri_alias_description">(Bitte nur Kleinbuchstaben von a-z, Zahlen und den Bindestrich verwenden)</item>
+	<item key="seo_uri_alias_description">Bitte nur Kleinbuchstaben von a-z, Zahlen und den Bindestrich verwenden</item>
 	<item key="settings_error">Beim Bearbeiten der Einstellungen ist ein Fehler aufgetreten.</item>
 	<item key="settings_success">Die Einstellungen wurden erfolgreich aktualisiert.</item>
 	<item key="sidebar_entries_to_display">Anzuzeigende Sidebareinträge</item>

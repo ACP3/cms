@@ -1,22 +1,22 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<fieldset>
 		<legend>{lang t="access|acp_edit_resource"}</legend>
-		<dl>
-			<dt><label for="privileges">{lang t="access|assigned_privilege"}</label></dt>
-			<dd>
+		<div class="control-group">
+			<label for="privileges" class="control-label">{lang t="access|assigned_privilege"}</label>
+			<div class="controls">
 				<select name="privileges" id="privileges">
 {foreach $privileges as $row}
 					<option value="{$row.id}"{$row.selected}>{$row.key}{if !empty($row.description)} ({$row.description}){/if}</option>
 {/foreach}
 				</select>
-			</dd>
-		</dl>
+			</div>
+		</div>
 	</fieldset>
-	<div class="form-bottom">
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
+	<div class="form-actions">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
 		{$form_token}
 	</div>
 </form>

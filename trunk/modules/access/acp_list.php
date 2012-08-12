@@ -17,7 +17,7 @@ $c_roles = count($roles);
 
 if ($c_roles > 0) {
 	for ($i = 0; $i < $c_roles; ++$i) {
-		$roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
+		$roles[$i]['spaces'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']);
 	}
 	$tpl->assign('roles', $roles);
 	$tpl->assign('can_delete', ACP3_Modules::check('access', 'acp_delete'));

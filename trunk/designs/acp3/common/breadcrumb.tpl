@@ -1,10 +1,12 @@
-<a href="{$ROOT_DIR}">{lang t="common|home"}</a> &raquo;
+<ul class="breadcrumb">
+	<li><a href="{$ROOT_DIR}">{lang t="common|home"}</a> <span class="divider">/</span></li>
 {if isset($breadcrumb)}
 {foreach $breadcrumb as $row}
 {if $row.last === false && !empty($row.uri)}
-<a href="{$row.uri}">{$row.title}</a> &raquo;
+	<li><a href="{$row.uri}">{$row.title}</a> <span class="divider">/</span></li>
 {elseif $row.last === true}
-<span>{$row.title}</span>
+	<li class="active">{$row.title}</li>
 {/if}
 {/foreach}
 {/if}
+</ul>

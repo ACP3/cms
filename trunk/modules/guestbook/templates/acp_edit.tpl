@@ -1,35 +1,35 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<fieldset>
 		<legend>{lang t="guestbook|acp_edit"}</legend>
-		<dl>
-			<dt><label for="name">{lang t="common|name"}</label></dt>
-			<dd><input type="text" name="name" id="name" value="{$form.name}" required></dd>
-		</dl>
-		<dl>
-			<dt><label for="message">{lang t="common|message"}</label></dt>
-			<dd>
+		<div class="control-group">
+			<label for="name" class="control-label">{lang t="common|name"}</label>
+			<div class="controls"><input type="text" name="name" id="name" value="{$form.name}" required></div>
+		</div>
+		<div class="control-group">
+			<label for="message" class="control-label">{lang t="common|message"}</label>
+			<div class="controls">
 				{if isset($emoticons)}{$emoticons}{/if}
-				<textarea name="message" id="message" cols="50" rows="5" required>{$form.message}</textarea>
-			</dd>
+				<textarea name="message" id="message" cols="50" rows="5" class="span6" required>{$form.message}</textarea>
+			</div>
 {if isset($activate)}
-		<dl>
-			<dt><label for="active-1">{lang t="guestbook|activate_entry"}</label></dt>
-			<dd>
+		<div class="control-group">
+			<label for="active-1" class="control-label">{lang t="guestbook|activate_entry"}</label>
+			<div class="controls">
 {foreach $activate as $row}
-				<label for="active-{$row.value}">
-					<input type="radio" name="active" id="active-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+				<label for="active-{$row.value}" class="checkbox">
+					<input type="radio" name="active" id="active-{$row.value}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>
 {/foreach}
-			</dd>
-		</dl>
+			</div>
+		</div>
 {/if}
 	</fieldset>
-	<div class="form-bottom">
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
+	<div class="form-actions">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
 		{$form_token}
 	</div>
 </form>

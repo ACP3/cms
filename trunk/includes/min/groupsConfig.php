@@ -41,6 +41,7 @@ if ($_GET['g'] === 'css') {
 	$layout = isset($_GET['layout']) && !preg_match('=/=', $_GET['layout']) && is_file(DESIGN_PATH . 'css/' . $_GET['layout'] . '.css') === true ? $_GET['layout'] : 'layout';
 
 	$styles = array();
+	$styles['css'][] = DESIGN_PATH . 'css/bootstrap.css';
 	$styles['css'][] = DESIGN_PATH . 'css/' . $layout . '.css';
 
 	$modules = scandir(DESIGN_PATH . 'css/');
@@ -62,6 +63,7 @@ if ($_GET['g'] === 'css') {
 	$scripts['js'][] = DESIGN_PATH . 'js/jquery.cookie.js';
 	$scripts['js'][] = DESIGN_PATH . 'js/jquery.ui.min.js';
 	$scripts['js'][] = DESIGN_PATH . 'js/jquery.timepicker.js';
+	$scripts['js'][] = DESIGN_PATH . 'js/bootstrap.min.js';
 	$scripts['js'][] = DESIGN_PATH . 'js/jquery.fancybox.js';
 
 	$layout = isset($_GET['layout']) && !preg_match('=/=', $_GET['layout']) ? $_GET['layout'] : 'layout';

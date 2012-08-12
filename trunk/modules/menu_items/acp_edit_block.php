@@ -14,7 +14,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_item
 	require_once MODULES_DIR . 'menu_items/functions.php';
 
 	$breadcrumb->append($lang->t('menu_items', 'acp_list_blocks'), $uri->route('acp/menu_items/list_blocks'))
-			   ->append($lang->t('menu_items', 'edit_block'));
+			   ->append($lang->t('menu_items', 'acp_edit_block'));
 
 	if (isset($_POST['submit']) === true) {
 		if (!preg_match('/^[a-zA-Z]+\w/', $_POST['index_name']))

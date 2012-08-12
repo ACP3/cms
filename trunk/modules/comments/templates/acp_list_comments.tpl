@@ -1,6 +1,6 @@
 {if isset($comments)}
 <form action="{uri args="acp/comments/delete_comments"}" method="post">
-	<div id="adm-list">
+	<div id="adm-list" class="well">
 		{check_access mode="input" path="acp/comments/delete_comments" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="common|overview"}</h2>
 	</div>
@@ -8,11 +8,11 @@
 {$redirect_message}
 {/if}
 {$pagination}
-	<table class="acp-table">
+	<table class="table table-striped">
 		<thead>
 			<tr>
 {if $can_delete === true}
-				<th><input type="checkbox" id="mark-all" value="1" class="checkbox"></th>
+				<th><input type="checkbox" id="mark-all" value="1" class="checkbox inline"></th>
 {/if}
 				<th>{lang t="common|date"}</th>
 				<th>{lang t="common|name"}</th>
@@ -25,7 +25,7 @@
 {foreach $comments as $row}
 			<tr>
 {if $can_delete === true}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox inline"></td>
 {/if}
 				<td>{$row.date}</td>
 				<td>{check_access mode="link" path="acp/comments/edit/id_`$row.id`" title=$row.name}</td>
@@ -41,7 +41,7 @@
 {/if}
 </form>
 {else}
-	<div class="error-box">
+	<div class="alert alert-block">
 		<h5>{lang t="common|no_entries"}</h5>
 	</div>
 {/if}

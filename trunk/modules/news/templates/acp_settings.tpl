@@ -14,73 +14,73 @@ $(document).ready(function() {
 	$('input[name="readmore"]:checked').trigger('click');
 });
 </script>
-<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8">
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<fieldset>
 		<legend>{lang t="news|acp_settings"}</legend>
-		<dl>
-			<dt><label for="date-format">{lang t="common|date_format"}</label></dt>
-			<dd>
+		<div class="control-group">
+			<label for="date-format" class="control-label">{lang t="common|date_format"}</label>
+			<div class="controls">
 				<select name="dateformat" id="date-format">
 					<option value="">{lang t="common|pls_select"}</option>
 {foreach $dateformat as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 				</select>
-			</dd>
-		</dl>
-		<dl>
-			<dt><label for="sidebar-entries">{lang t="common|sidebar_entries_to_display"}</label></dt>
-			<dd>
+			</div>
+		</div>
+		<div class="control-group">
+			<label for="sidebar-entries" class="control-label">{lang t="common|sidebar_entries_to_display"}</label>
+			<div class="controls">
 				<select name="sidebar" id="sidebar-entries">
 					<option>{lang t="common|pls_select"}</option>
 {foreach $sidebar_entries as $row}
 					<option value="{$row.value}"{$row.selected}>{$row.value}</option>
 {/foreach}
 				</select>
-			</dd>
-		</dl>
-		<dl>
-			<dt><label for="readmore-1">{lang t="news|activate_readmore"}</label></dt>
-			<dd>
+			</div>
+		</div>
+		<div class="control-group">
+			<label for="readmore-1" class="control-label">{lang t="news|activate_readmore"}</label>
+			<div class="controls">
 {foreach $readmore as $row}
-				<label for="readmore-{$row.value}">
-					<input type="radio" name="readmore" id="readmore-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+				<label for="readmore-{$row.value}" class="checkbox inline">
+					<input type="radio" name="readmore" id="readmore-{$row.value}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>
 {/foreach}
-			</dd>
-		</dl>
-		<dl id="readmore-container">
-			<dt><label for="readmore-chars">{lang t="news|readmore_chars"}</label></dt>
-			<dd><input type="number" name="readmore_chars" id="readmore-chars" value="{$readmore_chars}"></dd>
-		</dl>
-		<dl>
-			<dt><label for="category-in-breadcrumb-1">{lang t="news|display_category_in_breadcrumb"}</label></dt>
-			<dd>
+			</div>
+		</div>
+		<div id="readmore-container" class="control-group">
+			<label for="readmore-chars" class="control-label">{lang t="news|readmore_chars"}</label>
+			<div class="controls"><input type="number" name="readmore_chars" id="readmore-chars" value="{$readmore_chars}"></div>
+		</div>
+		<div class="control-group">
+			<label for="category-in-breadcrumb-1" class="control-label">{lang t="news|display_category_in_breadcrumb"}</label>
+			<div class="controls">
 {foreach $category_in_breadcrumb as $row}
-				<label for="category-in-breadcrumb-{$row.value}">
-					<input type="radio" name="category_in_breadcrumb" id="category-in-breadcrumb-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+				<label for="category-in-breadcrumb-{$row.value}" class="checkbox inline">
+					<input type="radio" name="category_in_breadcrumb" id="category-in-breadcrumb-{$row.value}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>
 {/foreach}
-			</dd>
-		</dl>
+			</div>
+		</div>
 {if isset($allow_comments)}
-		<dl>
-			<dt><label for="comments-1">{lang t="common|allow_comments"}</label></dt>
-			<dd>
+		<div class="control-group">
+			<label for="comments-1" class="control-label">{lang t="common|allow_comments"}</label>
+			<div class="controls">
 {foreach $allow_comments as $row}
-				<label for="comments-{$row.value}">
-					<input type="radio" name="comments" id="comments-{$row.value}" value="{$row.value}" class="checkbox"{$row.checked}>
+				<label for="comments-{$row.value}" class="checkbox inline">
+					<input type="radio" name="comments" id="comments-{$row.value}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>
 {/foreach}
-			</dd>
-		</dl>
+			</div>
+		</div>
 {/if}
 	</fieldset>
-	<div class="form-bottom">
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="form">
+	<div class="form-actions">
+		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
 		{$form_token}
 	</div>
 </form>

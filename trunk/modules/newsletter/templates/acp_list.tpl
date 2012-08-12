@@ -1,5 +1,5 @@
 <form action="{uri args="acp/newsletter/delete"}" method="post">
-	<div id="adm-list">
+	<div id="adm-list" class="well">
 		{check_access mode="link" path="acp/newsletter/compose" icon="32/mail_new" width="32" height="32"}
 		{check_access mode="link" path="acp/newsletter/list_archive" icon="32/mail" width="32" height="32"}
 		{check_access mode="link" path="acp/newsletter/settings" icon="32/advancedsettings" width="32" height="32"}
@@ -11,11 +11,11 @@
 {/if}
 {if isset($accounts)}
 {$pagination}
-	<table class="acp-table">
+	<table class="table table-striped">
 		<thead>
 			<tr>
 {if $can_delete === true}
-				<th><input type="checkbox" id="mark-all" value="1" class="checkbox"></th>
+				<th><input type="checkbox" id="mark-all" value="1" class="checkbox inline"></th>
 {/if}
 				<th>{lang t="common|email"}</th>
 				<th>{lang t="newsletter|status"}</th>
@@ -26,7 +26,7 @@
 {foreach $accounts as $row}
 			<tr>
 {if $can_delete === true}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox"></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox inline"></td>
 {/if}
 				<td>{$row.mail}</td>
 				<td>
@@ -45,7 +45,7 @@
 {mark name="entries"}
 {/if}
 {else}
-	<div class="error-box">
+	<div class="alert alert-block">
 		<h5>{lang t="common|no_entries"}</h5>
 	</div>
 {/if}
