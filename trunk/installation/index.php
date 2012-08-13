@@ -13,14 +13,14 @@ $i = 0;
 $is_file = false;
 foreach ($pages as $row) {
 	if ($row['file'] === $uri->file) {
-		$pages[$i]['selected'] = ' class="selected"';
-		$tpl->assign('title', $lang->t('installation', $row['file']));
+		$pages[$i]['selected'] = ' class="active"';
+		$tpl->assign('TITLE', $lang->t('installation', $row['file']));
 		$is_file = true;
 		break;
 	}
 	++$i;
 }
-$tpl->assign('pages', $pages);
+$tpl->assign('PAGES', $pages);
 
 // Dropdown-Menü für die Sprachen
 $languages = array();
@@ -34,15 +34,15 @@ for ($i = 0; $i < $count_dir; ++$i) {
 		$languages[$i]['name'] = $lang_info['name'];
 	}
 }
-$tpl->assign('languages', $languages);
+$tpl->assign('LANGUAGES', $languages);
 
 if ($is_file === true) {
 	$content = '';
 	include ACP3_ROOT . 'installation/modules/' . $uri->file . '.php';
-	$tpl->assign('content', $content);
+	$tpl->assign('CONTENT', $content);
 } else {
-	$tpl->assign('title', $lang->t('errors', '404'));
-	$tpl->assign('content', $tpl->fetch('404.tpl'));
+	$tpl->assign('TITLE', $lang->t('errors', '404'));
+	$tpl->assign('CONTENT', $tpl->fetch('404.tpl'));
 }
 
 $tpl->display('layout.tpl');

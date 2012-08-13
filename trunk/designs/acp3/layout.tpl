@@ -11,10 +11,10 @@
 
 <body>
 	<div class="container-fluid">
+		<h1 id="logo">{$PAGE_TITLE}</h1>
 		<div class="navbar">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="{$ROOT_DIR}">{$PAGE_TITLE}</a>
 					{navbar block="main"}
 				</div>
 			</div>

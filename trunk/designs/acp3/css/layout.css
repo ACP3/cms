@@ -1,3 +1,10 @@
+#logo {
+	margin: 5px 0 5px 10px;
+	width: 104px;
+	height: 45px;
+	background: url('../img/logo.png') no-repeat;
+	text-indent: -9999px;
+}
 .confirm-box {
 	width: 85%;
 	margin: 0 auto;

@@ -1,13 +1,12 @@
 <div class="container-fluid">
 	<div class="row-fluid">
-		<div class="span4">{if !empty($pagination)}{$pagination}{/if}</div>
 {if isset($categories)}
-		<div class="span4" style="text-align: center">
+		<div class="span6">
 {if ACP3_Modules::check('newsletter', 'create')}
 			<a href="{uri args="newsletter/create"}">{lang t="newsletter|create"}</a>
 {/if}
 		</div>
-		<div class="span4" style="text-align: right">
+		<div class="span6" style="text-align: right">
 			<form action="{uri args="news/list"}" method="post" class="form-inline">
 				{$categories}
 				<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
@@ -17,6 +16,7 @@
 	</div>
 </div>
 {if isset($news)}
+{$pagination}
 {foreach $news as $row}
 <div class="news">
 	<h3 class="header">
