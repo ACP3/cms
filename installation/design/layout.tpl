@@ -24,7 +24,7 @@
 					<li class="divider"></li>
 				</ul>
 				<form action="{$REQUEST_URI}" method="post" id="languages" class="form-inline">
-					<select name="lang" id="lang">
+					<select name="lang" id="lang" class="span12">
 {foreach from=$LANGUAGES item=row}
 						<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
 {/foreach}
