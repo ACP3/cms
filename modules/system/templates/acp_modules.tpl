@@ -62,7 +62,7 @@
 			</table>
 {else}
 			<div class="alert alert-block">
-				<h4 class="alert-heading">{lang t="system|no_modules_available_for_installation"}</h4>
+				<h5>{lang t="system|no_modules_available_for_installation"}</h5>
 			</div>
 {/if}
 		</div>
