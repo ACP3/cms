@@ -7,6 +7,9 @@
 <script type="text/javascript" src="{$MIN_JAVASCRIPT}"></script>
 <link rel="alternate" type="application/rss+xml" href="{uri args="feeds/list/feed_news"}" title="{$PAGE_TITLE} - {lang t="news|news"}">
 <link rel="alternate" type="application/rss+xml" href="{uri args="feeds/list/feed_files"}" title="{$PAGE_TITLE} - {lang t="files|files"}">
+<!--[if lt IE 9]>
+<script src="{$DESIGN_PATH}js/html5shiv.js"></script>
+<![endif]-->
 </head>
 
 <body>
@@ -20,9 +23,11 @@
 			</div>
 		</div>
 		<div class="row-fluid">
-			<div class="span2 well" style="padding:8px">
-				{navbar block="sidebar" class="nav-list"}
-				{load_module module="users|sidebar"}
+			<div class="span2">
+				<div class="well">
+					{navbar block="sidebar" class="nav-list"}
+					{load_module module="users|sidebar"}
+				</div>
 			</div>
 			<div class="span8">
 				<div id="breadcrumb">
@@ -31,11 +36,13 @@
 				<h2>{$TITLE}</h2>
 				{$CONTENT}
 			</div>
-			<div class="span2 well" style="padding:8px">
-				{load_module module="news|sidebar"}
-				{load_module module="files|sidebar"}
-				{load_module module="gallery|sidebar"}
-				{load_module module="polls|sidebar"}
+			<div class="span2">
+				<div class="well">
+					{load_module module="news|sidebar"}
+					{load_module module="files|sidebar"}
+					{load_module module="gallery|sidebar"}
+					{load_module module="polls|sidebar"}
+				</div>
 			</div>
 		</div>
 	</div>
