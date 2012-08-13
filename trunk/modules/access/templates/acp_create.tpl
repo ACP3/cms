@@ -26,7 +26,7 @@
 			</div>
 			<div id="tab-2" class="tab-pane">
 {foreach $modules as $module => $values}
-				<table class="table table-striped">
+				<table class="table table-striped table-condensed">
 					<thead>
 						<tr>
 							<th colspan="4">{$module}</th>

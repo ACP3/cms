@@ -1,6 +1,4 @@
 #resources-table .sub-table-header {
 	cursor: pointer;
-}
-#resources-table .sub-table-header:hover {
 	background: #f6f6f6;
 }

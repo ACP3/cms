@@ -42,6 +42,7 @@ if ($_GET['g'] === 'css') {
 
 	$styles = array();
 	$styles['css'][] = DESIGN_PATH . 'css/bootstrap.css';
+	$styles['css'][] = DESIGN_PATH . 'css/bootstrap-responsive.css';
 	$styles['css'][] = DESIGN_PATH . 'css/' . $layout . '.css';
 
 	$modules = scandir(DESIGN_PATH . 'css/');

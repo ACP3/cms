@@ -1,13 +1,13 @@
 <ul class="nav nav-list">
 	<li class="nav-header">{lang t="polls|latest_poll"}</li>
-{if isset($sidebar_poll_question)}
+{if isset($sidebar_polls)}
 	<li>
-		<h5>{$sidebar_poll_question.question}</h5>
-		<form action="{uri args="polls/vote/id_`$sidebar_poll_question.id`"}" method="post" accept-charset="UTF-8">
+		<h5>{$sidebar_polls.question}</h5>
+		<form action="{uri args="polls/vote/id_`$sidebar_polls.id`"}" method="post" accept-charset="UTF-8">
 			<ul class="unstyled">
 				<li>
 {foreach $sidebar_poll_answers as $row}
-{if $sidebar_poll_question.multiple == '1'}
+{if $sidebar_polls.multiple == '1'}
 					<label for="answer-{$row.id}" class="checkbox">
 						<input type="checkbox" name="answer[]" id="answer-{$row.id}" value="{$row.id}">
 {else}
