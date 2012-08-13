@@ -38,7 +38,7 @@
 							<td class="privilege-name"{if !empty($privilege.description)} title="{$privilege.description}"{/if}>{$privilege.key}</td>
 {foreach $privilege.select as $row}
 							<td>
-								<label for="privileges-{$values.id}-{$privilege.id}-{$row.value}" class="checkbox">
+								<label for="privileges-{$values.id}-{$privilege.id}-{$row.value}" class="radio">
 									<input type="radio" name="privileges[{$values.id}][{$privilege.id}]" id="privileges-{$values.id}-{$privilege.id}-{$row.value}" value="{$row.value}"{$row.selected}>
 									{$row.lang}
 								</label>

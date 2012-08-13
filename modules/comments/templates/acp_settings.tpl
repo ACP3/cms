@@ -20,7 +20,7 @@
 			<label for="emoticons-1" class="control-label">{lang t="comments|allow_emoticons"}</label>
 			<div class="controls">
 {foreach $allow_emoticons as $row}
-				<label for="emoticons-{$row.value}" class="checkbox">
+				<label for="emoticons-{$row.value}" class="radio">
 					<input type="radio" name="emoticons" id="emoticons-{$row.value}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>

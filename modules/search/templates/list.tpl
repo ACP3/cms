@@ -23,7 +23,7 @@
 			<label for="{$search_areas.0.id}" class="control-label">{lang t="search|search_after_areas"}</label>
 			<div class="controls">
 {foreach $search_areas as $row}
-				<label for="{$row.id}" class="checkbox">
+				<label for="{$row.id}" class="radio">
 					<input type="radio" name="area" id="{$row.id}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>
@@ -34,7 +34,7 @@
 			<label for="{$sort_hits.0.id}" class="control-label">{lang t="search|sort_hits"}</label>
 			<div class="controls">
 {foreach $sort_hits as $row}
-				<label for="{$row.id}" class="checkbox">
+				<label for="{$row.id}" class="radio">
 					<input type="radio" name="sort" id="{$row.id}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>
