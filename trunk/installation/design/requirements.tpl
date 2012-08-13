@@ -7,7 +7,7 @@
 			</p>
 			<div class="row-fluid">
 				<div class="span6">
-					<table class="table table-condensed" style="width:auto">
+					<table class="table table-condensed">
 						<thead>
 							<tr>
 								<th></th>

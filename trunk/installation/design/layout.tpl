@@ -3,21 +3,21 @@
 <head>
 <title>ACP3 {lang t="installation|installation"} :: {$TITLE}</title>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}../designs/acp3/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}../designs/acp3/css/bootstrap-responsive.css">
-<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}design/style.css">
-<script type="text/javascript" src="{$ROOT_DIR}../designs/acp3/js/jquery.min.js"></script>
-<script type="text/javascript" src="{$ROOT_DIR}../designs/acp3/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="{$ROOT_DIR}design/script.js"></script>
+<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}designs/acp3/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}designs/acp3/css/bootstrap-responsive.css">
+<link rel="stylesheet" type="text/css" href="{$INSTALLER_DIR}design/style.css">
+<script type="text/javascript" src="{$ROOT_DIR}designs/acp3/js/jquery.min.js"></script>
+<script type="text/javascript" src="{$ROOT_DIR}designs/acp3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{$INSTALLER_DIR}design/script.js"></script>
 <!--[if lt IE 9]>
-<script src="{$ROOT_DIR}../designs/acp3/js/html5shiv.js"></script>
+<script src="{$ROOT_DIR}designs/acp3/js/html5shiv.js"></script>
 <![endif]-->
 </head>
 
 <body>
 	<div class="container-fluid">
 		<h1 id="logo">ACP3</h1>
-		<div class="row">
+		<div class="row-fluid">
 			<div class="span2">
 				<div class="well">
 					<ul class="nav nav-list">

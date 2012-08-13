@@ -33,7 +33,7 @@
 	{lang t="installation|installation_successful_2"}
 </p>
 <div class="form-actions" style="text-align:center">
-	<a href="{$ROOT_DIR}../" class="btn">{lang t="common|forward"}</a>
+	<a href="{$INSTALLER_DIR}../" class="btn">{lang t="common|forward"}</a>
 </div>
 {/if}
 {else}
