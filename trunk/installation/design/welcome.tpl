@@ -1,4 +1,4 @@
-<p style="text-align:center">
+<p>
 	{lang t="installation|step_1_paragraph_1"}
 </p>
 <fieldset>
@@ -10,7 +10,6 @@
 	   <li>{lang t="installation|step_1_list_item_4"}</li>
 	</ol>
 </fieldset>
-<br>
 <div class="form-actions" style="text-align:center">
 	<a href="{uri args="install/licence"}" class="btn">{lang t="common|forward"}</a>
 </div>
