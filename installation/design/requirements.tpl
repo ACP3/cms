@@ -1,9 +1,9 @@
 <fieldset>
 	<legend>{lang t="installation|step_3_legend_1"}</legend>
-	<p style="margin:0">
+	<p>
 		{lang t="installation|step_3_paragraph_1"}
 	</p>
-	<table class="acp-table">
+	<table class="table table-condensed" style="width:auto">
 		<thead>
 			<tr>
 				<th></th>
@@ -21,31 +21,35 @@
 {/foreach}
 		</tbody>
 	</table>
-	<p>
+	<ul>
 {foreach $files_dirs as $row}
-		<strong>{$row.path}</strong> <span style="color:#{$row.color_1}">{$row.exists}</span>, <span style="color:#{$row.color_2}">{$row.writeable}</span><br>
+		<li>
+			<strong>{$row.path}</strong>
+			<span style="color:#{$row.color_1}">{$row.exists}</span>, <span style="color:#{$row.color_2}">{$row.writeable}</span>
+		</li>
 {/foreach}
-	</p>
+	</ul>
 </fieldset>
 <fieldset>
 	<legend>{lang t="installation|step_3_legend_2"}</legend>
-	<p style="margin:0">
+	<p>
 		{lang t="installation|step_3_paragraph_2"}
 	</p>
-	<p>
+	<ul>
 {foreach $php_settings as $row}
-		<strong>{$row.setting}</strong>
-		<span style="color:#{$row.color}">{$row.value}</span><br>
+		<li>
+			<strong>{$row.setting}</strong>
+			<span style="color:#{$row.color}">{$row.value}</span>
+		</li>
 {/foreach}
-	</p>
+	</ul>
 </fieldset>
-<br>
-<div class="success forward">
+<div class="form-actions" style="text-align:center">
 {if isset($stop_install)}
 {lang t="installation|stop_installation"}
 {elseif isset($check_again)}
-	<a href="{$REQUEST_URI}" class="form">{lang t="installation|check_again"}</a>
+	<a href="{$REQUEST_URI}" class="btn">{lang t="installation|check_again"}</a>
 {else}
-	<a href="{uri args="install/configuration"}" class="form">{lang t="installation|configuration"}</a>
+	<a href="{uri args="install/configuration"}" class="btn">{lang t="installation|configuration"}</a>
 {/if}
 </div>

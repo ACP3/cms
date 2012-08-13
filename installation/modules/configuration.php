@@ -105,7 +105,7 @@ if (isset($_POST['submit'])) {
 				$query.= ';';
 				$data[$i]['query'] = htmlentities($query, ENT_QUOTES, 'UTF-8');
 				$bool = $db->query($query, 3);
-				$data[$i]['color'] = $bool !== false ? '090' : 'f00';
+				$data[$i]['class'] = $bool !== false ? 'alert-success' : 'alert-error';
 				$data[$i]['result'] = $bool !== false ? $lang->t('system', 'query_successfully_executed') : $lang->t('system', 'query_failed');
 				++$i;
 				if ($bool === false) {

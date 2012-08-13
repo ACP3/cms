@@ -85,7 +85,6 @@ class ACP3_Config
 						$value = '\'' . $value . '\'';
 					$content.= sprintf($pattern, strtoupper($key), $value);
 			}
-			$content.= '?>';
 			$bool = @file_put_contents($path, $content, LOCK_EX);
 			return $bool !== false ? true : false;
 		}

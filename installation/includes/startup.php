@@ -21,7 +21,7 @@ $uri = new ACP3_URI('install', 'welcome');
 
 if (!empty($_POST['lang'])) {
 	setcookie('ACP3_INSTALLER_LANG', $_POST['lang'], time() + 3600, '/');
-	$uri->redirect($uri->query);
+	$uri->redirect($uri->mod . '/' . $uri->file);
 }
 if (!empty($_COOKIE['ACP3_INSTALLER_LANG']) &&
 	!preg_match('=/=', $_COOKIE['ACP3_INSTALLER_LANG']) &&

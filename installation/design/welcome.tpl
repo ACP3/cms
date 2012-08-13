@@ -11,6 +11,6 @@
 	</ol>
 </fieldset>
 <br>
-<div class="success forward">
-	<a href="{uri args="install/licence"}" class="form">{lang t="common|forward"}</a>
+<div class="form-actions" style="text-align:center">
+	<a href="{uri args="install/licence"}" class="btn">{lang t="common|forward"}</a>
 </div>
