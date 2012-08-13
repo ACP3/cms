@@ -43,7 +43,7 @@ $(document).ready(function() {
 			<label for="readmore-1" class="control-label">{lang t="news|activate_readmore"}</label>
 			<div class="controls">
 {foreach $readmore as $row}
-				<label for="readmore-{$row.value}" class="checkbox inline">
+				<label for="readmore-{$row.value}" class="radio inline">
 					<input type="radio" name="readmore" id="readmore-{$row.value}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>
@@ -58,7 +58,7 @@ $(document).ready(function() {
 			<label for="category-in-breadcrumb-1" class="control-label">{lang t="news|display_category_in_breadcrumb"}</label>
 			<div class="controls">
 {foreach $category_in_breadcrumb as $row}
-				<label for="category-in-breadcrumb-{$row.value}" class="checkbox inline">
+				<label for="category-in-breadcrumb-{$row.value}" class="radio inline">
 					<input type="radio" name="category_in_breadcrumb" id="category-in-breadcrumb-{$row.value}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>
@@ -70,7 +70,7 @@ $(document).ready(function() {
 			<label for="comments-1" class="control-label">{lang t="common|allow_comments"}</label>
 			<div class="controls">
 {foreach $allow_comments as $row}
-				<label for="comments-{$row.value}" class="checkbox inline">
+				<label for="comments-{$row.value}" class="radio inline">
 					<input type="radio" name="comments" id="comments-{$row.value}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>

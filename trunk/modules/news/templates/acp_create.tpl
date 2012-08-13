@@ -30,16 +30,12 @@
 				<div class="control-group">
 					<label for="{$options.0.name}" class="control-label">{lang t="common|options"}</label>
 					<div class="controls">
-						<ul class="unstyled">
 {foreach $options as $row}
-							<li>
-								<label for="{$row.name}" class="checkbox inline">
-									<input type="checkbox" name="{$row.name}" id="{$row.name}" value="1"{$row.checked}>
-									{$row.lang}
-								</label>
-							</li>
+						<label for="{$row.name}" class="checkbox inline">
+							<input type="checkbox" name="{$row.name}" id="{$row.name}" value="1"{$row.checked}>
+							{$row.lang}
+						</label>
 {/foreach}
-						</ul>
 					</div>
 				</div>
 {/if}

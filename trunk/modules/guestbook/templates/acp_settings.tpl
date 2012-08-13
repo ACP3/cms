@@ -34,7 +34,7 @@
 			<label for="overlay-1" class="control-label">{lang t="guestbook|use_overlay"}</label>	</dt>
 			<div class="controls">
 {foreach $overlay as $row}
-				<label for="overlay-{$row.value}" class="checkbox inline">
+				<label for="overlay-{$row.value}" class="radio inline">
 					<input type="radio" name="overlay" id="overlay-{$row.value}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>
@@ -46,7 +46,7 @@
 			<label for="emoticons-1" class="control-label">{lang t="guestbook|allow_emoticons"}</label>
 			<div class="controls">
 {foreach $allow_emoticons as $row}
-				<label for="emoticons-{$row.value}" class="checkbox inline">
+				<label for="emoticons-{$row.value}" class="radio inline">
 					<input type="radio" name="emoticons" id="emoticons-{$row.value}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>
@@ -59,7 +59,7 @@
 			<label for="newsletter-integration-1" class="control-label">{lang t="guestbook|newsletter_integration"}</label>
 			<div class="controls">
 {foreach $newsletter_integration as $row}
-				<label for="newsletter-integration-{$row.value}" class="checkbox inline">
+				<label for="newsletter-integration-{$row.value}" class="radio inline">
 					<input type="radio" name="newsletter_integration" id="newsletter-integration-{$row.value}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>

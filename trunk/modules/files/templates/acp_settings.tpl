@@ -31,7 +31,7 @@
 			<label for="comments-1" class="control-label">{lang t="common|allow_comments"}</label>
 			<div class="controls">
 {foreach $comments as $row}
-				<label for="comments-{$row.value}" class="checkbox inline">
+				<label for="comments-{$row.value}" class="radio inline">
 					<input type="radio" name="comments" id="comments-{$row.value}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>

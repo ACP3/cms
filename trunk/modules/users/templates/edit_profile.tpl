@@ -41,7 +41,7 @@
 						{$birthday_datepicker}
 						<input type="checkbox" name="birthday_display" id="birthday-display" value="1"{$checked.birthday}>
 {foreach $birthday_format as $row}
-						<label for="{$row.name}" class="checkbox">
+						<label for="{$row.name}" class="radio">
 							<input type="radio" name="birthday_format" id="{$row.name}" value="{$row.value}"{$row.checked}>
 							{$row.lang}
 						</label>

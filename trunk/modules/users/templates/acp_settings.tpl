@@ -8,7 +8,7 @@
 			<label for="language-override-1" class="control-label">{lang t="users|allow_language_override"}</label>
 			<div class="controls">
 {foreach $languages as $row}
-				<label for="language-override-{$row.value}" class="checkbox inline">
+				<label for="language-override-{$row.value}" class="radio inline">
 					<input type="radio" name="language_override" id="language-override-{$row.value}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>
@@ -19,7 +19,7 @@
 			<label for="entries-override-1" class="control-label">{lang t="users|allow_entries_override"}</label>
 			<div class="controls">
 {foreach $entries as $row}
-				<label for="entries-override-{$row.value}" class="checkbox inline">
+				<label for="entries-override-{$row.value}" class="radio inline">
 					<input type="radio" name="entries_override" id="entries-override-{$row.value}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>
@@ -30,7 +30,7 @@
 			<label for="enable-registration-1" class="control-label">{lang t="users|enable_registration"}</label>
 			<div class="controls">
 {foreach $registration as $row}
-				<label for="enable-registration-{$row.value}" class="checkbox inline">
+				<label for="enable-registration-{$row.value}" class="radio inline">
 					<input type="radio" name="enable_registration" id="enable-registration-{$row.value}" value="{$row.value}"{$row.checked}>
 					{$row.lang}
 				</label>
