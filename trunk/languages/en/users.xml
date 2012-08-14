@@ -14,7 +14,7 @@
 	<item key="birthday_hide_year">Hide year of birth</item>
 	<item key="contact">Contact</item>
 	<item key="deleted_user">Deleted user</item>
-	<item key="display_profile_field"><![CDATA[When you don't want to display a certain profile field, just remove the tick from the respective field.]]></item>
+	<item key="display_profile_field"><![CDATA[If you don't want to display a certain profile field, just untick the respective field.]]></item>
 	<item key="drafts">Drafts</item>
 	<item key="edit_profile">Edit profile</item>
 	<item key="edit_settings">Edit settings</item>
