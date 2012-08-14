@@ -39,7 +39,7 @@ if (!isset($entries)) {
 
 	setMenuItemsCache();
 
-	setRedirectMessage($bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/menu_items/list_blocks');
+	setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menu_items/list_blocks');
 } else {
 	$uri->redirect('errors/404');
 }

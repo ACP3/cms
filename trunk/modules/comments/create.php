@@ -61,7 +61,7 @@ function commentsCreate($module, $entry_id)
 
 			$session->unsetFormToken();
 
-			return confirmBox($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route($uri->query));
+			return confirmBox($lang->t('common', $bool !== false ? 'create_success' : 'create_error'), $uri->route($uri->query));
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {

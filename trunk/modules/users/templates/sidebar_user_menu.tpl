@@ -1,11 +1,3 @@
-<script type="text/javascript">
-$(document).ready(function() {
-	$('ul.admin > li:has(ul) > a').click(function() {
-		$(this).next('ul').stop(true, true).slideToggle('slow');
-		return false;
-	});
-});
-</script>
 <ul class="nav nav-list">
 	<li class="nav-header">{lang t="users|user_menu"}</li>
 	<li><a href="{uri args="users/home"}">{lang t="users|home"}</a></li>

@@ -43,7 +43,7 @@ if (!isset($entries)) {
 			$bool2 = $db->delete('gallery_pictures', 'gallery_id = \'' . $entry . '\'', 0);
 		}
 	}
-	setRedirectMessage($bool !== false && $bool2 !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/gallery');
+	setRedirectMessage($bool && $bool2, $lang->t('common', $bool !== false && $bool2 !== false ? 'delete_success' : 'delete_error'), 'acp/gallery');
 } else {
 	$uri->redirect('errors/404');
 }

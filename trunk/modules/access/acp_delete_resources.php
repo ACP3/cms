@@ -25,7 +25,7 @@ if (!isset($entries)) {
 	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/access/delete_resources/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/access/list_resources')));
 } elseif ($uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
-	$bool = null;
+	$bool = false;
 
 	foreach ($marked_entries as $entry) {
 		$bool = $db->delete('acl_resources', 'id = \'' . $entry . '\'');
@@ -33,8 +33,7 @@ if (!isset($entries)) {
 
 	ACP3_ACL::setResourcesCache();
 
-	$text = $bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
-	setRedirectMessage($text, 'acp/access/list_resources');
+	setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/access/list_resources');
 } else {
 	$uri->redirect('errors/404');
 }

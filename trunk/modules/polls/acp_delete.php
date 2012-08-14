@@ -28,7 +28,7 @@ if (!isset($entries)) {
 		$bool2 = $db->delete('poll_answers', 'poll_id = \'' . $entry . '\'');
 		$bool3 = $db->delete('poll_votes', 'poll_id = \'' . $entry . '\'');
 	}
-	setRedirectMessage($bool !== false && $bool2 !== false && $bool3 !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/polls');
+	setRedirectMessage($bool && $bool2 && $bool3, $bool !== false && $bool2 !== false && $bool3 !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/polls');
 } else {
 	$uri->redirect('errors/404');
 }

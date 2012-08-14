@@ -30,7 +30,7 @@ if (!isset($entries)) {
 		ACP3_Cache::delete('news_details_id_' . $entry);
 		ACP3_SEO::deleteUriAlias('news/details/id_' . $entry);
 	}
-	setRedirectMessage($bool !== false && $bool2 !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/news');
+	setRedirectMessage($bool && $bool2, $lang->t('common', $bool !== false && $bool2 !== false ? 'delete_success' : 'delete_error'), 'acp/news');
 } else {
 	$uri->redirect('errors/404');
 }

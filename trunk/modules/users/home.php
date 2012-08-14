@@ -11,7 +11,7 @@ if ($auth->isUser() === false || !ACP3_Validate::isNumber($auth->getUserId())) {
 	if (isset($_POST['submit']) === true) {
 		$bool = $db->update('users', array('draft' => $db->escape($_POST['draft'], 2)), 'id = \'' . $auth->getUserId() . '\'');
 
-		ACP3_View::setContent(confirmBox($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), $uri->route('users/home')));
+		ACP3_View::setContent(confirmBox($lang->t('common', $bool !== false ? 'edit_success' : 'edit_error'), $uri->route('users/home')));
 	}
 	if (isset($_POST['submit']) === false) {
 		getRedirectMessage();

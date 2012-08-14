@@ -38,7 +38,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'comments'
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/comments/acp_list/module_' . $comment[0]['module']);
+			setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/comments/acp_list/module_' . $comment[0]['module']);
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {

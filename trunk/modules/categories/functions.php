@@ -119,7 +119,7 @@ function categoriesList($module, $category_id = '', $category_create = false, $f
 	} else {
 		$categories['categories'] = array();
 	}
-	if ($category_create === true && ACP3_Modules::check('categories', 'create') === true) {
+	if ($category_create === true && ACP3_Modules::check('categories', 'acp_create') === true) {
 		$categories['create']['name'] = $form_field_name . '_create';
 		$categories['create']['value'] = isset($_POST[$categories['create']['name']]) ? $_POST[$categories['create']['name']] : '';
 	}

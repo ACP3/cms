@@ -49,7 +49,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'static_pa
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/static_pages');
+			setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/static_pages');
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {

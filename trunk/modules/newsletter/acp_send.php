@@ -29,7 +29,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'newslette
 		$bool2 = $db->update('newsletter_archive', array('status' => '1'), 'id = \'' . $uri->id . '\'');
 	}
 
-	setRedirectMessage($bool === true && $bool2 !== false ? $lang->t('newsletter', 'compose_success') : $lang->t('newsletter', 'compose_save_error'), 'acp/newsletter/list_archive');
+	setRedirectMessage($bool && $bool2, $lang->t('newsletter', $bool === true && $bool2 !== false ? 'compose_success' : 'compose_save_error'), 'acp/newsletter/list_archive');
 } else {
 	$uri->redirect('errors/404');
 }

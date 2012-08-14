@@ -36,7 +36,7 @@ if (!isset($entries)) {
 			ACP3_SEO::deleteUriAlias('files/details/id_' . $entry);
 		}
 	}
-	setRedirectMessage($bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/files');
+	setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/files');
 } else {
 	$uri->redirect('errors/404');
 }

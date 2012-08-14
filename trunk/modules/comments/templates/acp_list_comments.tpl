@@ -41,7 +41,7 @@
 {/if}
 </form>
 {else}
-	<div class="alert alert-block">
+	<div class="alert alert-block align-center">
 		<h5>{lang t="common|no_entries"}</h5>
 	</div>
 {/if}

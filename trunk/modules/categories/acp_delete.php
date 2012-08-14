@@ -49,9 +49,9 @@ if (!isset($entries)) {
 	if ($in_use) {
 		$text = $lang->t('categories', 'category_is_in_use');
 	} else {
-		$text = $bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
+		$text = $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error');
 	}
-	setRedirectMessage($text, 'acp/categories');
+	setRedirectMessage($bool, $text, 'acp/categories');
 } else {
 	$uri->redirect('errors/404');
 }

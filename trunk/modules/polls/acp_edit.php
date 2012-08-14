@@ -68,7 +68,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', '
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/polls');
+			setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/polls');
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {

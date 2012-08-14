@@ -14,11 +14,11 @@ $requirements[0]['found'] = phpversion();
 $requirements[0]['required'] = REQUIRED_PHP_VERSION;
 $requirements[1]['name'] = $lang->t('installation', 'pdo_extension');
 $requirements[1]['color'] = extension_loaded('pdo') && extension_loaded('pdo_mysql') ? COLOR_SUCCESS : COLOR_ERROR;
-$requirements[1]['found'] = $lang->t('installation', $requirements[1]['color'] == COLOR_ERROR ? 'on' : 'off');
+$requirements[1]['found'] = $lang->t('installation', $requirements[1]['color'] == COLOR_SUCCESS ? 'on' : 'off');
 $requirements[1]['required'] = $lang->t('installation', 'on');
 $requirements[2]['name'] = $lang->t('installation', 'gd_library');
 $requirements[2]['color'] = extension_loaded('gd') ? COLOR_SUCCESS : COLOR_ERROR;
-$requirements[2]['found'] = $lang->t('installation', $requirements[2]['color'] == COLOR_ERROR ? 'on' : 'off');
+$requirements[2]['found'] = $lang->t('installation', $requirements[2]['color'] == COLOR_SUCCESS ? 'on' : 'off');
 $requirements[2]['required'] = $lang->t('installation', 'on');
 
 $tpl->assign('requirements', $requirements);
@@ -29,7 +29,7 @@ $defaults = array('includes/config.php');
 $uploads = scandir(ACP3_ROOT . 'uploads/');
 foreach ($uploads as $row) {
 	$path = 'uploads/' . $row . '/';
-	if ($row !== '.' && $row !== '..' && $row !== '.svn' &&  is_dir(ACP3_ROOT . $path) === true) {
+	if ($row !== '.' && $row !== '..' &&  is_dir(ACP3_ROOT . $path) === true) {
 		$defaults[] = $path;
 	}
 }

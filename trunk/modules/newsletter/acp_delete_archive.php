@@ -26,7 +26,7 @@ if (!isset($entries)) {
 	foreach ($marked_entries as $entry) {
 		$bool = $db->delete('newsletter_archive', 'id = \'' . $entry . '\'');
 	}
-	setRedirectMessage($bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error'), 'acp/newsletter/list_archive');
+	setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/newsletter/list_archive');
 } else {
 	$uri->redirect('errors/404');
 }
