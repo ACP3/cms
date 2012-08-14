@@ -38,11 +38,12 @@ if (!isset($entries)) {
 		}
 	}
 	if ($admin_user === true) {
+		$bool = false;
 		$text = $lang->t('users', 'admin_user_undeletable');
 	} else {
-		$text = $bool !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
+		$text = $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error');
 	}
-	setRedirectMessage($text, $self_delete === true ? ROOT_DIR : 'acp/users');
+	setRedirectMessage($bool, $text, $self_delete === true ? ROOT_DIR : 'acp/users');
 } else {
 	$uri->redirect('errors/404');
 }

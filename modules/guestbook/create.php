@@ -87,7 +87,7 @@ if (isset($_POST['submit']) === true) {
 
 		$session->unsetFormToken();
 
-		ACP3_View::setContent(confirmBox($bool !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), $uri->route('guestbook'), 0, $overlay_active));
+		ACP3_View::setContent(confirmBox($lang->t('common', $bool !== false ? 'create_success' : 'create_error'), $uri->route('guestbook'), 0, $overlay_active));
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -98,7 +98,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	}
 
 	// In Newsletter integrieren
-	if ($newsletterAccess == 1) {
+	if ($newsletterAccess === true) {
 		$tpl->assign('subscribe_newsletter', selectEntry('subscribe_newsletter', '1', '1', 'checked'));
 		$tpl->assign('LANG_subscribe_to_newsletter', sprintf($lang->t('guestbook', 'subscribe_to_newsletter'), CONFIG_SEO_TITLE));
 	}

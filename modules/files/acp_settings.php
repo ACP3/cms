@@ -29,7 +29,7 @@ if (isset($_POST['submit']) === true) {
 
 		$session->unsetFormToken();
 
-		setRedirectMessage($bool === true ? $lang->t('common', 'settings_success') : $lang->t('common', 'settings_error'), 'acp/files');
+		setRedirectMessage($bool, $lang->t('common', $bool === true ? 'settings_success' : 'settings_error'), 'acp/files');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {

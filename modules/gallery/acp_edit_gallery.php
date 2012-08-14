@@ -48,7 +48,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery',
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool !== false ? $lang->t('common', 'edit_success') : $lang->t('common', 'edit_error'), 'acp/gallery');
+			setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/gallery');
 		}
 	}
 	if (isset($_POST['entries']) === false && isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {

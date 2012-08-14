@@ -261,8 +261,8 @@ function getRedirectMessage()
 {
 	global $tpl;
 
-	if (isset($_SESSION['redirect_message'])) {
-		$tpl->assign('redirect', array('text' => $_SESSION['redirect_message']));
+	if (isset($_SESSION['redirect_message']) && is_array($_SESSION['redirect_message'])) {
+		$tpl->assign('redirect', $_SESSION['redirect_message']);
 		$tpl->assign('redirect_message', ACP3_View::fetchTemplate('common/redirect_message.tpl'));
 		unset($_SESSION['redirect_message']);
 	}
@@ -273,12 +273,15 @@ function getRedirectMessage()
  * @param string $text
  * @param string $path
  */
-function setRedirectMessage($text, $path)
+function setRedirectMessage($success, $text, $path)
 {
 	global $uri;
 
 	if (empty($text) === false && empty($path) === false) {
-		$_SESSION['redirect_message'] = $text;
+		$_SESSION['redirect_message'] = array(
+			'success' => (bool) $success,
+			'text' => $text
+		);
 		$uri->redirect($path);
 	}
 }

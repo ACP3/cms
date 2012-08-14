@@ -22,7 +22,7 @@ if (!isset($entries)) {
 	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/access/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/access')));
 } elseif ($uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
-	$bool = $bool2 = $bool3 = null;
+	$bool = $bool2 = $bool3 = false;
 	$level_undeletable = false;
 
 	$nestedSet = new ACP3_NestedSet('acl_roles');
@@ -41,9 +41,9 @@ if (!isset($entries)) {
 	if ($level_undeletable === true) {
 		$text = $lang->t('access', 'role_undeletable');
 	} else {
-		$text = $bool !== false && $bool2 !== false && $bool3 !== false ? $lang->t('common', 'delete_success') : $lang->t('common', 'delete_error');
+		$text = $lang->t('common', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error');
 	}
-	setRedirectMessage($text, 'acp/access');
+	setRedirectMessage($bool && $bool2 && $bool3, $text, 'acp/access');
 } else {
 	$uri->redirect('errors/404');
 }

@@ -57,11 +57,11 @@ if (isset($_POST['submit']) === true) {
 		$session->unsetFormToken();
 
 		if ($_POST['action'] == 0 && $bool !== false) {
-			setRedirectMessage($lang->t('newsletter', 'save_success'), 'acp/newsletter');
+			setRedirectMessage(true, $lang->t('newsletter', 'save_success'), 'acp/newsletter');
 		} elseif ($_POST['action'] == 1 && $bool !== false && $bool2 === true) {
-			setRedirectMessage($lang->t('newsletter', 'compose_success'), 'acp/newsletter');
+			setRedirectMessage($bool && $bool2, $lang->t('newsletter', 'compose_success'), 'acp/newsletter');
 		} else {
-			setRedirectMessage($lang->t('newsletter', 'compose_save_error'), 'acp/newsletter');
+			setRedirectMessage(false, $lang->t('newsletter', 'compose_save_error'), 'acp/newsletter');
 		}
 	}
 }

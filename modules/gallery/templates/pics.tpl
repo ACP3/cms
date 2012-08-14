@@ -22,7 +22,7 @@ $(document).ready(function() {
 {/if}
 </div>
 {else}
-<div class="alert alert-block">
+<div class="alert alert-block align-center">
 	<h5>{lang t="gallery|no_pictures"}</h5>
 </div>
 {/if}

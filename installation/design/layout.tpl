@@ -18,24 +18,22 @@
 	<div class="container-fluid">
 		<h1 id="logo">ACP3</h1>
 		<div class="row-fluid">
-			<div class="span2">
-				<div class="well">
-					<ul class="nav nav-list">
-						<li class="nav-header">Navigation</li>
+			<div class="span2 well" style="padding:8px">
+				<ul class="nav nav-list">
+					<li class="nav-header">Navigation</li>
 {foreach from=$PAGES item=row}
-						<li{$row.selected}><a>{$row.title}</a></li>
+					<li{$row.selected}><a>{$row.title}</a></li>
 {/foreach}
-						<li class="divider"></li>
-					</ul>
-					<form action="{$REQUEST_URI}" method="post" id="languages" class="form-inline">
-						<select name="lang" id="lang" class="span12">
+					<li class="divider"></li>
+				</ul>
+				<form action="{$REQUEST_URI}" method="post" id="languages" class="form-inline">
+					<select name="lang" id="lang" class="span12">
 {foreach from=$LANGUAGES item=row}
-							<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
+						<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
 {/foreach}
-						</select>
-						<input type="submit" name="languages" value="{lang t="common|submit"}" class="btn">
-					</form>
-				</div>
+					</select>
+					<input type="submit" name="languages" value="{lang t="common|submit"}" class="btn">
+				</form>
 			</div>
 			<div class="span10">
 				<h2>{$TITLE}</h2>

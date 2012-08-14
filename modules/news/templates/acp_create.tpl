@@ -31,7 +31,7 @@
 					<label for="{$options.0.name}" class="control-label">{lang t="common|options"}</label>
 					<div class="controls">
 {foreach $options as $row}
-						<label for="{$row.name}" class="checkbox inline">
+						<label for="{$row.name}" class="checkbox">
 							<input type="checkbox" name="{$row.name}" id="{$row.name}" value="1"{$row.checked}>
 							{$row.lang}
 						</label>
