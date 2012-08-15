@@ -1,16 +1,16 @@
 {if $error_box.non_integer_keys === true}
 <script type="text/javascript">
 $(document).ready(function() {
-	$('.error-box ul li').each(function() {
+	$('#error-box ul li').each(function() {
 		var errorClass = $(this).attr('class');
 		if (errorClass.length > 0) {
-			$('#' + errorClass.substr(6)).addClass('error');
+			$('#' + errorClass.substr(6)).parents('div.control-group').addClass('error');
 		}
 	});
 });
 </script>
 {/if}
-<div class="alert alert-block">
+<div id="error-box" class="alert alert-block">
 	<h4 class="alert-heading">{lang t="common|failure"}</h4>
 	<ul>
 {foreach $error_box.errors as $key => $value}
