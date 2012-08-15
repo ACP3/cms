@@ -71,8 +71,8 @@ class ACP3_View
 		global $auth, $uri;
 
 		if ($auth->isUser() === false && defined('IN_ADM') === true && $uri->mod !== 'users' && $uri->file !== 'login') {
-			$redirect_uri = base64_encode(substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1));
-			$uri->redirect('acp/users/login/redirect_' . $redirect_uri);
+			$redirect_uri = base64_encode('acp/' . $uri->query);
+			$uri->redirect('users/login/redirect_' . $redirect_uri);
 		}
 
 		switch (ACP3_Modules::check()) {

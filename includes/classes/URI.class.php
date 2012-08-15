@@ -168,8 +168,10 @@ class ACP3_URI
 			}
 		// Workaround für Securitytoken-Generierung,
 		// falls die URL nur aus dem Modulnamen besteht
-		} elseif (!isset($query[1])) {
+		} elseif (isset($query[0]) && !isset($query[1])) {
 			$this->query.= $defaultFile . '/';
+		} elseif (!isset($query[0]) && !isset($query[1])) {
+			$this->query = $defaultModule . '/' . $defaultFile . '/';
 		}
 
 		if (!empty($_POST['cat']) && ACP3_Validate::isNumber($_POST['cat']) === true)
