@@ -31,7 +31,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles
 				'parent_id' => $uri->id == 1 ? 0 : $_POST['parent'],
 			);
 			$nestedSet = new ACP3_NestedSet('acl_roles');
-			$bool = $nestedSet->EditNode($uri->id, $uri->id == 1 ? '' : (int) $_POST['parent'], $update_values);
+			$bool = $nestedSet->EditNode($uri->id, $uri->id == 1 ? '' : (int) $_POST['parent'], 0, $update_values);
 
 			$db->link->beginTransaction();
 			// Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugkommen sein könnten
