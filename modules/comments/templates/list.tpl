@@ -1,24 +1,15 @@
-<h2 id="comments" style="margin:5px 0;text-align:center">{lang t="comments|comments"}</h2>
+<h2 id="comments" class="align-center" style="margin:5px 0">{lang t="comments|comments"}</h2>
 {if isset($comments)}
 {$pagination}
 {foreach $comments as $row}
-<div class="comments">
+<div class="dataset-box" style="width:65%">
 	<div class="header">
-		<div class="author">
-			{lang t="common|author"}
-		</div>
-		<div class="message">
-			{lang t="common|message"}
-		</div>
-	</div>
-	<div class="left">
-		<strong>{lang t="common|name"}:</strong> {if !empty($row.user_id)}<a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>{else}{$row.name}{/if}<br>
-		<strong>{lang t="common|date"}:</strong> {$row.date}
+		<div class="f-right small">{$row.date}</div>
+		{if !empty($row.user_id)}<a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>{else}{$row.name}{/if}
 	</div>
 	<div class="content">
 		{$row.message}
 	</div>
-	<div class="footer"></div>
 </div>
 {/foreach}
 {else}

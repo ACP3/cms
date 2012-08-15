@@ -34,7 +34,7 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox inline"></td>
 {/if}
 				<td>{$row.mode_formatted}</td>
-				<td style="padding-left:10px;text-align:left">{$row.spaces}{check_access mode="link" path="acp/menu_items/edit/id_`$row.id`" title=$row.title}</td>
+				<td>{$row.spaces}{check_access mode="link" path="acp/menu_items/edit/id_`$row.id`" title=$row.title}</td>
 {if $can_order === true}
 				<td>
 {if !$row.last}

@@ -1,11 +1,11 @@
 {if isset($galleries)}
 {$pagination}
 {foreach $galleries as $row}
-<div class="galleries">
-	<div class="date">
-		{$row.date}
+<div class="dataset-box">
+	<div class="header">
+		<div class="small f-right">{$row.date}</div>
+		<a href="{uri args="gallery/pics/id_`$row.id`"}">{$row.name} ({$row.pics})</a>
 	</div>
-	<h3 class="header"><a href="{uri args="gallery/pics/id_`$row.id`"}">{$row.name} ({$row.pics})</a></h3>
 </div>
 {/foreach}
 {else}
