@@ -1,12 +1,12 @@
-<div class="container-fluid">
-	<div class="row-fluid">
+<div class="dataset-box">
+	<div class="header bigger">
 {if isset($categories)}
-		<div class="span6">
 {if ACP3_Modules::check('newsletter', 'create')}
+		<div class="f-left">
 			<a href="{uri args="newsletter/create"}">{lang t="newsletter|create"}</a>
-{/if}
 		</div>
-		<div class="span6" style="text-align: right">
+{/if}
+		<div class="align-right">
 			<form action="{uri args="news/list"}" method="post" class="form-inline">
 				{$categories}
 				<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
