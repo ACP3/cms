@@ -3,8 +3,10 @@
 <h4>{$result_mod.title}</h4>
 <ol>
 {foreach $result_mod.results as $row}
-	<li class="search">
-		<a href="{$row.hyperlink}" class="header">{$row.headline}</a>
+	<li class="dataset-box">
+		<div class="header">
+			<a href="{$row.hyperlink}">{$row.headline}</a>
+		</div>
 {if !empty($row.text)}
 		<div class="content">
 			{$row.text}

@@ -1,7 +1,7 @@
-<div class="news">
-	<h3 class="header">{$news.headline}</h3>
-	<div class="date">
-		{$news.date}
+<div class="dataset-box">
+	<div class="header">
+		<div class="f-right small">{$news.date}</div>
+		{$news.headline}
 	</div>
 	<div class="content">
 		{$news.text}
