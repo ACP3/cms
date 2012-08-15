@@ -1,4 +1,4 @@
-<div class="alert alert-block align-center">
+<div class="alert alert-block">
 {if isset($update)}
 	<h4 class="alert-heading">{$update_text}</h4>
 	<ul style="margin:10px 20px auto">
