@@ -58,8 +58,8 @@ if (isset($_POST['submit']) === true) {
 	} else {
 		$insert_values = array(
 			'id' => '',
-			'ip' => $ip,
 			'date' => $date->timestampToDateTime($time),
+			'ip' => $ip,
 			'name' => $db->escape($_POST['name']),
 			'user_id' => $auth->isUser() ? $auth->getUserId() : '',
 			'message' => $db->escape($_POST['message']),

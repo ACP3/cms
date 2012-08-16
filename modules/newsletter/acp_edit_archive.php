@@ -30,7 +30,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'newslette
 
 			// Newsletter archivieren
 			$update_values = array(
-				'date' => $date->timestamp(),
+				'date' => $date->getCurrentDateTime(),
 				'subject' => $db->escape($_POST['subject']),
 				'text' => $db->escape($_POST['text']),
 				'status' => $_POST['test'] == 1 ? '0' : (int) $_POST['action'],

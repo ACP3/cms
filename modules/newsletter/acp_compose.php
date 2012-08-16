@@ -26,7 +26,7 @@ if (isset($_POST['submit']) === true) {
 		// Newsletter archivieren
 		$insert_values = array(
 			'id' => '',
-			'date' => $date->timestamp(),
+			'date' => $date->getCurrentDateTime(),
 			'subject' => $db->escape($_POST['subject']),
 			'text' => $db->escape($_POST['text']),
 			'status' => $_POST['test'] == 1 ? '0' : (int) $_POST['action'],
