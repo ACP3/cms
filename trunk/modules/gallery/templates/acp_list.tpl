@@ -14,7 +14,7 @@
 		<thead>
 			<tr>
 {if $can_delete === true}
-				<th><input type="checkbox" id="mark-all" value="1" class="checkbox inline"></th>
+				<th><input type="checkbox" id="mark-all" value="1"></th>
 {/if}
 				<th>{lang t="common|publication_period"}</th>
 				<th>{lang t="gallery|title"}</th>
@@ -26,7 +26,7 @@
 {foreach $galleries as $row}
 			<tr>
 {if $can_delete === true}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox inline"></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
 {/if}
 				<td>{$row.period}</td>
 				<td>{check_access mode="link" path="acp/gallery/edit_gallery/id_`$row.id`" title=$row.name}</td>

@@ -15,7 +15,7 @@
 		<thead>
 			<tr>
 {if $can_delete === true}
-				<th><input type="checkbox" id="mark-all" value="1" class="checkbox inline"></th>
+				<th><input type="checkbox" id="mark-all" value="1"></th>
 {/if}
 				<th>{lang t="common|email"}</th>
 				<th>{lang t="newsletter|status"}</th>
@@ -26,7 +26,7 @@
 {foreach $accounts as $row}
 			<tr>
 {if $can_delete === true}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox inline"></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
 {/if}
 				<td>{$row.mail}</td>
 				<td>

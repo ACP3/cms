@@ -13,7 +13,7 @@
 		<thead>
 			<tr>
 {if $can_delete === true}
-				<th><input type="checkbox" id="mark-all" value="1" class="checkbox inline"></th>
+				<th><input type="checkbox" id="mark-all" value="1"></th>
 {/if}
 				<th>{lang t="common|name"}</th>
 {if $can_order === true}
@@ -26,7 +26,7 @@
 {foreach $roles as $row}
 			<tr>
 {if $can_delete === true}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox inline"></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
 {/if}
 				<td style="text-align:left">{$row.spaces}{check_access mode="link" path="acp/access/edit/id_`$row.id`" title=$row.name}</td>
 {if $can_order === true}

@@ -40,7 +40,7 @@
 		<thead>
 			<tr>
 {if $can_delete === true}
-				<th><input type="checkbox" id="mark-all" value="1" class="checkbox inline"></th>
+				<th><input type="checkbox" id="mark-all" value="1"></th>
 {/if}
 				<th>{lang t="gallery|picture"}</th>
 				<th>{lang t="common|description"}</th>
@@ -54,7 +54,7 @@
 {foreach $pictures as $row}
 			<tr>
 {if $can_delete === true}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox inline"></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
 {/if}
 				<td>{if $can_edit_picture}<a href="{uri args="acp/gallery/edit_picture/id_`$row.id`"}" title="{lang t="gallery|acp_edit_picture"}"><img src="{uri args="gallery/image/id_`$row.id`/action_thumb"}" alt=""></a>{else}<img src="{uri args="gallery/image/id_`$row.id`/action_thumb"}" alt="">{/if}</td>
 				<td>{$row.description}</td>

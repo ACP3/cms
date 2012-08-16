@@ -136,18 +136,16 @@ class ACP3_View
 	{
 		global $lang, $tpl;
 
-		try {
-			if ($tpl->templateExists($template)) {
-				return $tpl->fetch($template, $cache_id, $compile_id, $parent, $display);
+		if ($tpl->templateExists($template)) {
+			return $tpl->fetch($template, $cache_id, $compile_id, $parent, $display);
+		} else {
+			// Pfad zerlegen
+			$path = explode('/', $template);
+			if (count($path) > 1 && $tpl->templateExists($path[0] . '/templates/' . $path[1])) {
+				return $tpl->fetch($path[0] . '/templates/' . $path[1], $cache_id, $compile_id, $parent, $display);
 			} else {
-				// Pfad zerlegen
-				$path = explode('/', $template);
-				if (count($path) > 1 && $tpl->templateExists($path[0] . '/templates/' . $path[1])) {
-					return $tpl->fetch($path[0] . '/templates/' . $path[1], $cache_id, $compile_id, $parent, $display);
-				}
+				return sprintf($lang->t('errors', 'tpl_not_found'), $template);
 			}
-		} catch (SmartyException $e) {
-			return $e->getMessage();
 		}
 	}
 }

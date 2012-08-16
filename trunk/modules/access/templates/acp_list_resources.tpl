@@ -13,7 +13,7 @@
 		<thead>
 			<tr>
 {if $can_delete_resource === true}
-				<th><input type="checkbox" id="mark-all" value="1" class="checkbox inline"></th>
+				<th><input type="checkbox" id="mark-all" value="1"></th>
 {/if}
 				<th>{lang t="access|filename"}</th>
 				<th>{lang t="access|assigned_privilege"}</th>
@@ -28,7 +28,7 @@
 {foreach $values as $row}
 			<tr class="hide {$values.0.module_id}-resources">
 {if $can_delete_resource === true}
-					<td><input type="checkbox" name="entries[]" value="{$row.resource_id}" class="checkbox inline"></td>
+					<td><input type="checkbox" name="entries[]" value="{$row.resource_id}"></td>
 {/if}
 				<td>{check_access mode="link" path="acp/access/edit_resource/id_`$row.resource_id`" title=$row.page}</td>
 				<td>{$row.privilege_name}</td>
