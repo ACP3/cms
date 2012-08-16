@@ -48,7 +48,7 @@ if ($auth->isUser() === false || ACP3_Validate::isNumber($auth->getUserId()) ===
 				'nickname' => $db->escape($_POST['nickname']),
 				'realname' => $db->escape($_POST['realname']) . ':' . (isset($_POST['realname_display']) ? '1' : '0'),
 				'gender' => $_POST['gender'] . ':' . (isset($_POST['gender_display']) ? '1' : '0'),
-				'birthday' => $date->timestamp($_POST['birthday']) . ':' . (isset($_POST['birthday_display']) ? '1' : '0'),
+				'birthday' => $_POST['birthday'] . ':' . (isset($_POST['birthday_display']) ? '1' : '0'),
 				'birthday_format' => $_POST['birthday_format'],
 				'mail' => $_POST['mail'] . ':' . (isset($_POST['mail_display']) ? '1' : '0'),
 				'website' => $db->escape($_POST['website'], 2) . ':' . (isset($_POST['website_display']) ? '1' : '0'),

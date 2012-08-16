@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$polls = $db->select('id, start, end, question', 'polls', 'start <= \'' . $date->timestamp() . '\'', 'start DESC, end DESC, id DESC');
+$polls = $db->select('id, start, end, question', 'polls', 'start <= \'' . $date->getCurrentDateTime() . '\'', 'start DESC, end DESC, id DESC');
 $c_polls = count($polls);
 
 if ($c_polls > 0) {
@@ -25,7 +25,7 @@ if ($c_polls > 0) {
 			$query = $db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . $polls[$i]['id'] . '\' AND ip = \'' . $_SERVER['REMOTE_ADDR'] . '\'');
 		}
 
-		if ($query != 0 || $polls[$i]['start'] != $polls[$i]['end'] && $polls[$i]['end'] <= $date->timestamp()) {
+		if ($query != 0 || $polls[$i]['start'] != $polls[$i]['end'] && $date->timestamp($polls[$i]['end']) <= $date->timestamp()) {
 			$polls[$i]['link'] = 'result';
 		} else {
 			$polls[$i]['link'] = 'vote';

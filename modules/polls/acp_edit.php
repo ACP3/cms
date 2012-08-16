@@ -35,8 +35,8 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'polls', '
 		} else {
 			// Frage aktualisieren
 			$update_values = array(
-				'start' => $date->timestamp($_POST['start']),
-				'end' => $date->timestamp($_POST['end']),
+				'start' => $_POST['start'],
+				'end' => $_POST['end'],
 				'question' => $db->escape($_POST['question']),
 				'multiple' => isset($_POST['multiple']) ? '1' : '0',
 				'user_id' => $auth->getUserId(),

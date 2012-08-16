@@ -49,8 +49,8 @@ if (isset($_POST['submit']) === true) {
 	} else {
 		$insert_values = array(
 			'id' => '',
-			'start' => $date->timestamp($_POST['start']),
-			'end' => $date->timestamp($_POST['end']),
+			'start' => $_POST['start'],
+			'end' => $_POST['end'],
 			'title' => $db->escape($_POST['title']),
 			'text' => $db->escape($_POST['text'], 2),
 			'user_id' => $auth->getUserId(),

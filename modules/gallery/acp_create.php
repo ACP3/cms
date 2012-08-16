@@ -26,8 +26,8 @@ if (isset($_POST['submit']) === true) {
 	} else {
 		$insert_values = array(
 			'id' => '',
-			'start' => $date->timestamp($_POST['start']),
-			'end' => $date->timestamp($_POST['end']),
+			'start' => $_POST['start'],
+			'end' => $_POST['end'],
 			'name' => $db->escape($_POST['name']),
 			'user_id' => $auth->getUserId(),
 		);

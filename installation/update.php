@@ -378,6 +378,47 @@ if (CONFIG_DB_VERSION < 23) {
 if (CONFIG_DB_VERSION < 24) {
 	ACP3_ACL::resetResources();
 }
+if (CONFIG_DB_VERSION < 25) {
+	$queries = array(
+		"ALTER TABLE `{pre}comments` ADD COLUMN `date2` DATETIME NOT NULL AFTER `id`;",
+		"UPDATE `{pre}comments` SET date2 = FROM_UNIXTIME(date);",
+		"ALTER TABLE `{pre}comments` DROP `date`;",
+		"ALTER TABLE `{pre}comments` CHANGE `date2` `date` DATETIME NOT NULL;",
+		"ALTER TABLE `{pre}guestbook` ADD COLUMN `date2` DATETIME NOT NULL AFTER `id`;",
+		"UPDATE `{pre}guestbook` SET date2 = FROM_UNIXTIME(date);",
+		"ALTER TABLE `{pre}guestbook` DROP `date`;",
+		"ALTER TABLE `{pre}guestbook` CHANGE `date2` `date` DATETIME NOT NULL;",
+		"ALTER TABLE `{pre}files` ADD COLUMN `start2` DATETIME NOT NULL AFTER `id`, ADD COLUMN `end2` DATETIME NOT NULL AFTER `start2`;",
+		"UPDATE `{pre}files` SET start2 = FROM_UNIXTIME(start), end2 = FROM_UNIXTIME(end);",
+		"ALTER TABLE `{pre}files` DROP `start`, DROP `end`;",
+		"ALTER TABLE `{pre}files` CHANGE `start2` `start` DATETIME NOT NULL, CHANGE `end2` `end` DATETIME NOT NULL;",
+		"ALTER TABLE `{pre}gallery` ADD COLUMN `start2` DATETIME NOT NULL AFTER `id`, ADD COLUMN `end2` DATETIME NOT NULL AFTER `start2`;",
+		"UPDATE `{pre}gallery` SET start2 = FROM_UNIXTIME(start), end2 = FROM_UNIXTIME(end);",
+		"ALTER TABLE `{pre}gallery` DROP `start`, DROP `end`;",
+		"ALTER TABLE `{pre}gallery` CHANGE `start2` `start` DATETIME NOT NULL, CHANGE `end2` `end` DATETIME NOT NULL;",
+		"ALTER TABLE `{pre}news` ADD COLUMN `start2` DATETIME NOT NULL AFTER `id`, ADD COLUMN `end2` DATETIME NOT NULL AFTER `start2`;",
+		"UPDATE `{pre}news` SET start2 = FROM_UNIXTIME(start), end2 = FROM_UNIXTIME(end);",
+		"ALTER TABLE `{pre}news` DROP `start`, DROP `end`;",
+		"ALTER TABLE `{pre}news` CHANGE `start2` `start` DATETIME NOT NULL, CHANGE `end2` `end` DATETIME NOT NULL;",
+		"ALTER TABLE `{pre}newsletter_archive` ADD COLUMN `date2` DATETIME NOT NULL AFTER `id`;",
+		"UPDATE `{pre}newsletter_archive` SET date2 = FROM_UNIXTIME(date);",
+		"ALTER TABLE `{pre}newsletter_archive` DROP `date`;",
+		"ALTER TABLE `{pre}newsletter_archive` CHANGE `date2` `date` DATETIME NOT NULL;",
+		"ALTER TABLE `{pre}polls` ADD COLUMN `start2` DATETIME NOT NULL AFTER `id`, ADD COLUMN `end2` DATETIME NOT NULL AFTER `start2`;",
+		"UPDATE `{pre}polls` SET start2 = FROM_UNIXTIME(start), end2 = FROM_UNIXTIME(end);",
+		"ALTER TABLE `{pre}polls` DROP `start`, DROP `end`;",
+		"ALTER TABLE `{pre}polls` CHANGE `start2` `start` DATETIME NOT NULL, CHANGE `end2` `end` DATETIME NOT NULL;",
+		"ALTER TABLE `{pre}poll_votes` ADD COLUMN `date2` DATETIME NOT NULL AFTER `id`;",
+		"UPDATE `{pre}poll_votes` SET date2 = FROM_UNIXTIME(date);",
+		"ALTER TABLE `{pre}poll_votes` DROP `date`;",
+		"ALTER TABLE `{pre}poll_votes` CHANGE `date2` `date` DATETIME NOT NULL;",
+		"ALTER TABLE `{pre}static_pages` ADD COLUMN `start2` DATETIME NOT NULL AFTER `id`, ADD COLUMN `end2` DATETIME NOT NULL AFTER `start2`;",
+		"UPDATE `{pre}static_pages` SET start2 = FROM_UNIXTIME(start), end2 = FROM_UNIXTIME(end);",
+		"ALTER TABLE `{pre}static_pages` DROP `start`, DROP `end`;",
+		"ALTER TABLE `{pre}static_pages` CHANGE `start2` `start` DATETIME NOT NULL, CHANGE `end2` `end` DATETIME NOT NULL;",
+	);
+	echo executeSqlQueries($queries, 25);
+}
 
 // Konfigurationsdatei aktualisieren
 $config = array(

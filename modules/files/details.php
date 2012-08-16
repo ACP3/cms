@@ -10,8 +10,8 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$time = $date->timestamp();
-$period = ' AND (start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time . ')';
+$time = $date->getCurrentDateTime();
+$period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
 if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'files', 'id = \'' . $uri->id . '\'' . $period) == 1) {
 	require_once MODULES_DIR . 'files/functions.php';

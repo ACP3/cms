@@ -28,8 +28,8 @@ if (isset($_POST['submit']) === true) {
 	} elseif (ACP3_Validate::formToken() === false) {
 		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
-		$start = $date->timestamp($_POST['start']);
-		$end = $date->timestamp($_POST['end']);
+		$start = $_POST['start'];
+		$end = $_POST['end'];
 		$question = $db->escape($_POST['question']);
 
 		$insert_values = array(

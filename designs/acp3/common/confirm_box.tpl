@@ -1,4 +1,4 @@
-<div class="modal">
+<div class="modal static">
 	<div class="modal-header align-center"><h4>{$confirm.text}</h4></div>
 	<div class="modal-footer align-center">
 {if isset($confirm.backward)}

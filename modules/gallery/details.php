@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$time = $date->timestamp();
+$time = $date->getCurrentDateTime();
 $period = ' AND (g.start = g.end AND g.start <= ' . $time . ' OR g.start != g.end AND g.start <= ' . $time . ' AND g.end >= ' . $time . ')';
 
 if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('g.id', 'gallery AS g, {pre}gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id' . $period) > 0) {

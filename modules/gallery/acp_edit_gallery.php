@@ -33,8 +33,8 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery',
 			ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
-				'start' => $date->timestamp($_POST['start']),
-				'end' => $date->timestamp($_POST['end']),
+				'start' => $_POST['start'],
+				'end' => $_POST['end'],
 				'name' => $db->escape($_POST['name']),
 				'user_id' => $auth->getUserId(),
 			);

@@ -26,7 +26,7 @@ function commentsCreate($module, $entry_id)
 		// Flood Sperre
 		$flood = $db->select('date', 'comments', 'ip = \'' . $ip . '\'', 'id DESC', '1');
 		if (count($flood) === 1) {
-			$flood_time = $flood[0]['date'] + CONFIG_FLOOD;
+			$flood_time = $date->timestamp($flood[0]['date']) + CONFIG_FLOOD;
 		}
 		$time = $date->timestamp();
 
@@ -49,7 +49,7 @@ function commentsCreate($module, $entry_id)
 			$insert_values = array(
 				'id' => '',
 				'ip' => $ip,
-				'date' => $time,
+				'date' => $date->timestampToDateTime($time),
 				'name' => $auth->isUser() === true && ACP3_Validate::isNumber($auth->getUserId() === true) ? '' : $db->escape($_POST['name']),
 				'user_id' => $auth->isUser() === true && ACP3_Validate::isNumber($auth->getUserId() === true) ? $auth->getUserId() : '',
 				'message' => $db->escape($_POST['message']),

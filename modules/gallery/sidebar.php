@@ -11,8 +11,8 @@ if (defined('IN_ACP3') === false)
 
 $settings = ACP3_Config::getModuleSettings('gallery');
 
-$time = $date->timestamp();
-$where = 'start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time;
+$time = $date->getCurrentDateTime();
+$where = 'start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\'';
 $galleries = $db->select('id, start, name', 'gallery', $where, 'start DESC', $settings['sidebar']);
 $c_galleries = count($galleries);
 

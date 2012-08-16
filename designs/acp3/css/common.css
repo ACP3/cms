@@ -109,3 +109,10 @@ table .sub-table-header {
 	line-height: normal;
 	float: right;
 }
+/* Bootstrap Modal Dialog statisch positionieren */
+.modal.static {
+	margin: 0 auto;
+	position: static;
+	top: auto;
+	left: auto;
+}

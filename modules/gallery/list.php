@@ -10,8 +10,8 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$time = $date->timestamp();
-$where = '(start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time . ')';
+$time = $date->getCurrentDateTime();
+$where = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 $galleries = $db->select('id, start, name', 'gallery', $where, 'start DESC, end DESC, id DESC', POS, $auth->entries);
 $c_galleries = count($galleries);
 

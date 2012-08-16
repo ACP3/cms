@@ -69,7 +69,7 @@
 	<item key="entry_not_found">Sorry, but the requested entry can be found.</item>
 	<item key="failure">The following errors have occured:</item>
 	<item key="first_page">First page</item>
-	<item key="flood_no_entry_possible">You need to wait %d seconds, to submit a new comment</item>
+	<item key="flood_no_entry_possible">You have to wait for %d seconds to submit a new entry.</item>
 	<item key="form_already_submitted">The form has been already submitted.</item>
 	<item key="forward">Forward</item>
 	<item key="from_start_to_end">From %1$s until %2$s</item>

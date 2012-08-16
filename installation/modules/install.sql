@@ -53,7 +53,7 @@ CREATE TABLE `{pre}categories` (
 CREATE TABLE `{pre}comments` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`ip` VARCHAR(40) NOT NULL,
-	`date` VARCHAR(14) NOT NULL,
+	`date` DATETIME NOT NULL,
 	`name` VARCHAR(20) NOT NULL,
 	`user_id` INT(10) UNSIGNED NOT NULL,
 	`message` TEXT NOT NULL,
@@ -72,8 +72,8 @@ CREATE TABLE `{pre}emoticons` (
 
 CREATE TABLE `{pre}files` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`start` INT(10) UNSIGNED NOT NULL,
-	`end` INT(10) UNSIGNED NOT NULL,
+	`start` DATETIME NOT NULL,
+	`end` DATETIME NOT NULL,
 	`category_id` INT(10) UNSIGNED NOT NULL,
 	`file` VARCHAR(120) NOT NULL,
 	`size` VARCHAR(20) NOT NULL,
@@ -86,8 +86,8 @@ CREATE TABLE `{pre}files` (
 
 CREATE TABLE `{pre}gallery` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`start` INT(10) UNSIGNED NOT NULL,
-	`end` INT(10) UNSIGNED NOT NULL,
+	`start` DATETIME NOT NULL,
+	`end` DATETIME NOT NULL,
 	`name` VARCHAR(120) NOT NULL,
 	`user_id` INT UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`)
@@ -105,8 +105,8 @@ CREATE TABLE `{pre}gallery_pictures` (
 
 CREATE TABLE `{pre}guestbook` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`date` DATETIME NOT NULL,
 	`ip` VARCHAR(40) NOT NULL,
-	`date` VARCHAR(14) NOT NULL,
 	`name` VARCHAR(20) NOT NULL,
 	`user_id` INT(10) UNSIGNED NOT NULL,
 	`message` TEXT NOT NULL,
@@ -147,8 +147,8 @@ CREATE TABLE `{pre}modules` (
 
 CREATE TABLE `{pre}news` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`start` INT(10) UNSIGNED NOT NULL,
-	`end` INT(10) UNSIGNED NOT NULL,
+	`start` DATETIME NOT NULL,
+	`end` DATETIME NOT NULL,
 	`headline` VARCHAR(120) NOT NULL,
 	`text` TEXT NOT NULL,
 	`readmore` TINYINT(1) UNSIGNED NOT NULL,
@@ -170,7 +170,7 @@ CREATE TABLE `{pre}newsletter_accounts` (
 
 CREATE TABLE `{pre}newsletter_archive` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`date` VARCHAR(14) NOT NULL,
+	`date` DATETIME NOT NULL,
 	`subject` VARCHAR(120) NOT NULL,
 	`text` TEXT NOT NULL,
 	`status` TINYINT(1) UNSIGNED NOT NULL,
@@ -180,8 +180,8 @@ CREATE TABLE `{pre}newsletter_archive` (
 
 CREATE TABLE `{pre}polls` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`start` INT(10) UNSIGNED NOT NULL,
-	`end` INT(10) UNSIGNED NOT NULL,
+	`start` DATETIME NOT NULL,
+	`end` DATETIME NOT NULL,
 	`question` VARCHAR(120) NOT NULL,
 	`multiple` TINYINT(1) UNSIGNED NOT NULL,
 	`user_id` INT UNSIGNED NOT NULL,
@@ -200,7 +200,7 @@ CREATE TABLE `{pre}poll_votes` (
 	`answer_id` INT(10) UNSIGNED NOT NULL,
 	`user_id` INT(10) UNSIGNED NOT NULL,
 	`ip` VARCHAR(40) NOT NULL,
-	`time` VARCHAR(14) NOT NULL,
+	`time` DATETIME NOT NULL,
 	INDEX (`poll_id`, `answer_id`, `user_id`)
 ) {engine};
 
@@ -232,8 +232,8 @@ CREATE TABLE `{pre}settings` (
 
 CREATE TABLE `{pre}static_pages` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`start` INT(10) UNSIGNED NOT NULL,
-	`end` INT(10) UNSIGNED NOT NULL,
+	`start` DATETIME NOT NULL,
+	`end` DATETIME NOT NULL,
 	`title` VARCHAR(120) NOT NULL,
 	`text` TEXT NOT NULL,
 	`user_id` INT(10) UNSIGNED NOT NULL,

@@ -30,8 +30,8 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'static_pa
 			ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
-				'start' => $date->timestamp($_POST['start']),
-				'end' => $date->timestamp($_POST['end']),
+				'start' => $_POST['start'],
+				'end' => $_POST['end'],
 				'title' => $db->escape($_POST['title']),
 				'text' => $db->escape($_POST['text'], 2),
 				'user_id' => $auth->getUserId(),
