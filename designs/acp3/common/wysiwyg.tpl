@@ -1,25 +1,29 @@
 {$wysiwyg.editor}
 {if $wysiwyg.advanced === true}
+<div id="page-break-form" class="modal hide">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3>{lang t="common|insert_page_break"}</h3>
+	</div>
+	<div class="modal-body">
+		<form id="page-break-form" class="form-horizontal">
+			<div class="control-group">
+				<label for="toc-title" class="control-label">{lang t="common|title_for_toc"}</label>
+				<div class="controls"><input type="text" id="toc-title"></div>
+			</div>
+			<div class="form-actions"><button class="btn">{lang t="common|submit"}</button></div>
+		</form>
+	</div>
+</div>
+<div id="page-break-link" class="align-left"><a href="#" class="btn">{lang t="common|insert_page_break"}</a></div>
 <script type="text/javascript">
 $(document).ready(function() {
-	var pagebreak = '<form id="page-break-form">';
-	pagebreak+= '<fieldset>';
-	pagebreak+= '<legend>{lang t="common|insert_page_break"}</legend>';
-	pagebreak+= '<label for="toc-title" class="control-label">{lang t="common|title_for_toc"}</label>';
-	pagebreak+= '<input type="text" id="toc-title">';
-	pagebreak+= '</fieldset>';
-	pagebreak+= '<div class="form-actions"><button class="btn">{lang t="common|submit"}</button></div>';
-	pagebreak+= '</form>';
-	pagebreak+= '<div id="page-break-link"><a href="#" class="btn">{lang t="common|insert_page_break"}</a></div>';
-
-	$('#{$wysiwyg.id}').after(pagebreak);
-	$('#page-break-form').hide();
 	$('#page-break-link a').click(function(e) {
-		$.fancybox.open($('#page-break-form'), { type: 'inline', autoSize: false, width: '20%', height: 'auto' });
+		$('#page-break-form').modal('show');
 		e.preventDefault();
 	});
 
-	$('#page-break-form button').click(function(e) {
+	$('#page-break-form .form-actions button').click(function(e) {
 		if ($('#toc-title').val().length > 0) {
 			var text = '<hr class="page-break" title="' + $('#toc-title').val() + '" />';
 		} else {
@@ -27,7 +31,7 @@ $(document).ready(function() {
 		}
 
 		{$wysiwyg.advanced_replace_content}
-		$.fancybox.close();
+		$('#page-break-form').modal('hide');
 
 		e.preventDefault();
 	});

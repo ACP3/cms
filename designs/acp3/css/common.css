@@ -93,6 +93,9 @@ table .sub-table-header {
 #toc h4 {
 	text-align: center;
 }
+#page-break-link {
+	margin: 5px;
+}
 /* ACP */
 #adm-list {
 	min-height: 40px;
