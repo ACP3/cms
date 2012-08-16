@@ -103,7 +103,7 @@ table .sub-table-header {
 }
 /* ACP */
 #adm-list {
-	height: 40px;
+	min-height: 40px;
 	margin: 0 0 5px;
 	padding: 0 10px;
 	line-height: 40px;
@@ -116,11 +116,4 @@ table .sub-table-header {
 	margin: 4px 0 0 8px;
 	line-height: normal;
 	float: right;
-}
-.mark-entries {
-	line-height: 25px;
-	text-align: left;
-}
-.mark-entries span {
-	font-weight: bold;
 }
