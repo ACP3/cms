@@ -5,14 +5,12 @@
 		<button type="button" class="close" data-dismiss="modal">×</button>
 		<h3>{lang t="common|insert_page_break"}</h3>
 	</div>
-	<div class="modal-body">
-		<form id="page-break-form" class="form-horizontal">
-			<div class="control-group">
-				<label for="toc-title" class="control-label">{lang t="common|title_for_toc"}</label>
-				<div class="controls"><input type="text" id="toc-title"></div>
-			</div>
-			<div class="form-actions"><button class="btn">{lang t="common|submit"}</button></div>
-		</form>
+	<div class="modal-body form-horizontal">
+		<div class="control-group">
+			<label for="toc-title" class="control-label">{lang t="common|title_for_toc"}</label>
+			<div class="controls"><input type="text" id="toc-title"></div>
+		</div>
+		<div class="form-actions"><button class="btn">{lang t="common|submit"}</button></div>
 	</div>
 </div>
 <div id="page-break-link" class="align-left"><a href="#" class="btn">{lang t="common|insert_page_break"}</a></div>
