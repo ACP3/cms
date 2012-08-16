@@ -1,27 +1,3 @@
 body {
 	padding: 10px;
 }
-/* Inhaltsverzeichnis */
-#toc {
-	width: 20%;
-	margin: 5px 10px 10px 0;
-	padding: 5px;
-	background: #eee;
-	border: 1px dotted #ccc;
-	float: left;
-}
-#toc h4 {
-	text-align: center;
-}
-/* ACP */
-#adm-list {
-	min-height: 40px;
-	padding: 0 10px;
-	line-height: 40px;
-	text-align: left;
-}
-#adm-list a, #adm-list input {
-	margin: 4px 0 0 8px;
-	line-height: normal;
-	float: right;
-}
