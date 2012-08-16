@@ -127,12 +127,12 @@ class ACP3_Date
 			if (!empty($_POST[$name[0]]) && !empty($_POST[$name[1]])) {
 				$value_start = $_POST[$name[0]];
 				$value_end = $_POST[$name[1]];
-			} elseif (is_array($value) === true && ACP3_Validate::isNumber($value[0]) === true && ACP3_Validate::isNumber($value[1]) === true) {
+			} elseif (is_array($value) === true && ACP3_Validate::date($value[0], $value[1]) === true) {
 				$value_start = $this->format($value[0], $format, $mode);
 				$value_end = $this->format($value[1], $format, $mode);
 			} else {
-				$value_start = $this->format(time(), $format, $mode);
-				$value_end = $this->format(time(), $format, $mode);
+				$value_start = $this->format('now', $format, $mode);
+				$value_end = $this->format('now', $format, $mode);
 			}
 
 			$datepicker['name_start'] = $name[0];
@@ -143,10 +143,10 @@ class ACP3_Date
 		} else {
 			if (!empty($_POST[$name])) {
 				$value = $_POST[$name];
-			} elseif (ACP3_Validate::isNumber($value) === true) {
+			} elseif (ACP3_Validate::date($value) === true) {
 				$value = $this->format($value, $format, $mode);
 			} else {
-				$value = $this->format(time(), $format, $mode);
+				$value = $this->format('now', $format, $mode);
 			}
 
 			$datepicker['name'] = $name;
@@ -160,14 +160,14 @@ class ACP3_Date
 	/**
 	 * Gibt ein formatiertes Datum zurück
 	 *
-	 * @param integer $time_stamp
+	 * @param string $time
 	 * @param string $format
 	 * @param integer $mode
 	 *	1 = Sommerzeit beachten
 	 *	2 = Sommerzeit nicht beachten
 	 * @return string
 	 */
-	public function format($time_stamp, $format = 'long')
+	public function format($time, $format = 'long')
 	{
 		global $lang;
 
@@ -236,8 +236,7 @@ class ACP3_Date
 			));
 		}
 
-		$date_time = new DateTime('', $this->date_time_zone);
-		$date_time->setTimestamp($time_stamp);
+		$date_time = new DateTime($time, $this->date_time_zone);
 		return strtr($date_time->format($format), $replace);
 	}
 	/**
@@ -275,22 +274,20 @@ class ACP3_Date
 	/**
 	 * Gibt die Formularfelder für den Veröffentlichungszeitraum aus
 	 *
-	 * @param integer $start
-	 * @param integer $end
+	 * @param string $start
+	 * @param string $end
 	 * @param string $format
 	 * @return string
 	 */
 	public function period($start, $end, $format = 'long')
 	{
-		if (ACP3_Validate::isNumber($start) === true && ACP3_Validate::isNumber($end) === true) {
-			global $lang;
-			if ($start >= $end) {
-				return sprintf($lang->t('common', 'since_date'), $this->format($start, $format));
-			} else {
-				return sprintf($lang->t('common', 'from_start_to_end'), $this->format($start, $format), $this->format($end, $format));
-			}
+		global $lang;
+
+		if ($start >= $end) {
+			return sprintf($lang->t('common', 'since_date'), $this->format($start, $format));
+		} else {
+			return sprintf($lang->t('common', 'from_start_to_end'), $this->format($start, $format), $this->format($end, $format));
 		}
-		return '';
 	}
 	/**
 	 * Gibt einen einfachen Zeitstempel zurück, welcher sich an UTC ausrichtet
@@ -300,12 +297,29 @@ class ACP3_Date
 	 */
 	public function timestamp($value = 0)
 	{
-		// Zeitstempel aus Veröffentlichungszeitraum heraus generieren
-		if (!empty($value) && ACP3_Validate::date($value) === true) {
-			$date_time = new DateTime($value, $this->date_time_zone);
-			return $date_time->format('U');
-		}
+		$date_time = new DateTime(!empty($value) && ACP3_Validate::date($value) === true ? $value : 'now', $this->date_time_zone);
+		return $date_time->getTimestamp();
+	}
+	/**
+	 * Gibt die aktuelle Uhrzeit im MySQL-Datetime Format zurück
+	 * 
+	 * @return string
+	 */
+	public function getCurrentDateTime()
+	{
 		$date_time = new DateTime('now', $this->date_time_zone);
-		return $date_time->format('U');
+		return $date_time->format('Y-m-d H:i:s');
+	}
+	/**
+	 * Konvertiert einen Unixstamp in das MySQL-Datetime Format
+	 * 
+	 * @param integer $value
+	 * @return string
+	 */
+	public function timestampToDateTime($value)
+	{
+		$date_time = new DateTime('', $this->date_time_zone);
+		$date_time->setTimestamp($value);
+		return $date_time->format('Y-m-d H:i:s');
 	}
 }

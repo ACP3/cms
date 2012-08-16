@@ -11,8 +11,8 @@ if (defined('IN_ACP3') === false)
 
 $settings = ACP3_Config::getModuleSettings('news');
 
-$time = $date->timestamp();
-$where = 'start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time;
+$time = $date->getCurrentDateTime();
+$where = 'start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\'';
 $news = $db->select('id, start, headline', 'news', $where, 'start DESC, end DESC, id DESC', $settings['sidebar']);
 $c_news = count($news);
 

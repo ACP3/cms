@@ -68,8 +68,8 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'files', '
 			}
 
 			$update_values = array(
-				'start' => $date->timestamp($_POST['start']),
-				'end' => $date->timestamp($_POST['end']),
+				'start' => $_POST['start'],
+				'end' => $_POST['end'],
 				'category_id' => strlen($_POST['cat_create']) >= 3 ? categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
 				'link_title' => $db->escape($_POST['link_title']),
 				'text' => $db->escape($_POST['text'], 2),

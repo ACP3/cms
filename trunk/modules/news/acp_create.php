@@ -38,8 +38,8 @@ if (isset($_POST['submit']) === true) {
 	} else {
 		$insert_values = array(
 			'id' => '',
-			'start' => $date->timestamp($_POST['start']),
-			'end' => $date->timestamp($_POST['end']),
+			'start' => $_POST['start'],
+			'end' => $_POST['end'],
 			'headline' => $db->escape($_POST['headline']),
 			'text' => $db->escape($_POST['text'], 2),
 			'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,

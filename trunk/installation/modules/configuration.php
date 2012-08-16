@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 			'db_pre' => $_POST['db_pre'],
 			'db_password' => $_POST['db_password'],
 			'db_user' => $_POST['db_user'],
-			'db_version' => 24,
+			'db_version' => 25,
 			'design' => 'acp3',
 			'entries' => $_POST['entries'],
 			'flood' => $_POST['flood'],
@@ -86,7 +86,7 @@ if (isset($_POST['submit'])) {
 
 		$sql_file_arr = explode(";\n", $sql_file);
 		$salt = salt(12);
-		$current_date = gmdate('U');
+		$current_date = gmdate('Y-m-d H:i:s');
 
 		$other_arr = array(
 			1 => 'INSERT INTO `{pre}users` VALUES (\'\', 1, \'' . $db->escape($_POST['user_name']) . '\', \'' . generateSaltedPassword($salt, $_POST['user_pwd']) . ':' . $salt . '\', \'0\', \':1\', \'1:1\', \':1\', \'1\', \'' . $_POST['mail'] . ':1\', \':1\', \':1\', \':1\', \':1\', \'' . $db->escape($_POST['date_format_long']) . '\', \'' . $db->escape($_POST['date_format_short']) . '\', \'' . $_POST['date_time_zone'] . '\', \'' . LANG . '\', \'' . $_POST['entries'] . '\', \'\')',

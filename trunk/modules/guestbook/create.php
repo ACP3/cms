@@ -29,7 +29,7 @@ if (isset($_POST['submit']) === true) {
 	// Flood Sperre
 	$flood = $db->select('date', 'guestbook', 'ip = \'' . $ip . '\'', 'id DESC', '1');
 	if (count($flood) === 1) {
-		$flood_time = $flood[0]['date'] + CONFIG_FLOOD;
+		$flood_time = $date->timestamp($flood[0]['date']) + CONFIG_FLOOD;
 	}
 	$time = $date->timestamp();
 
@@ -59,7 +59,7 @@ if (isset($_POST['submit']) === true) {
 		$insert_values = array(
 			'id' => '',
 			'ip' => $ip,
-			'date' => $time,
+			'date' => $date->timestampToDateTime($time),
 			'name' => $db->escape($_POST['name']),
 			'user_id' => $auth->isUser() ? $auth->getUserId() : '',
 			'message' => $db->escape($_POST['message']),

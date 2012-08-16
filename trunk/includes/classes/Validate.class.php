@@ -103,7 +103,8 @@ class ACP3_Validate
 	 */
 	public static function date($start, $end = null)
 	{
-		$regex = '/^(\d{4})-(\d{2})-(\d{2})( ([01][0-9]|2[0-3]):([0-5][0-9])){0,1}$/';
+		$matches_start = $matches_end = array();
+		$regex = '/^(\d{4})-(\d{2})-(\d{2})( ([01][0-9]|2[0-3])(:([0-5][0-9])){1,2}){0,1}$/';
 		if (preg_match($regex, $start, $matches_start)) {
 			// Wenn ein Enddatum festgelegt wurde, dieses ebenfalls mit überprüfen
 			if ($end != null && preg_match($regex, $end, $matches_end)) {

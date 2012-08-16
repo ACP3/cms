@@ -20,8 +20,8 @@ switch($_POST['area']) {
 	default:
 		$fields = 'title, text';
 }
-$time = $date->timestamp();
-$period = '(start = end AND start <= ' . $time . ' OR start != end AND start <= ' . $time . ' AND end >= ' . $time . ')';
+$time = $date->getCurrentDateTime();
+$period = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
 $result_pages = $db->select('id, title, text', 'static_pages', 'MATCH (' . $fields . ') AGAINST (\'' .  $db->escape($_POST['search_term']) . '\' IN BOOLEAN MODE) AND ' . $period, 'start ' . $_POST['sort'] . ', end ' . $_POST['sort'] . ', title ' . $_POST['sort']);
 $c_result_pages = count($result_pages);

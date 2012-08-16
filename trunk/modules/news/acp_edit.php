@@ -38,8 +38,8 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'i
 			ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			$update_values = array(
-				'start' => $date->timestamp($_POST['start']),
-				'end' => $date->timestamp($_POST['end']),
+				'start' => $_POST['start'],
+				'end' => $_POST['end'],
 				'headline' => $db->escape($_POST['headline']),
 				'text' => $db->escape($_POST['text'], 2),
 				'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,

@@ -58,8 +58,8 @@ if (isset($_POST['submit']) === true) {
 
 		$insert_values = array(
 			'id' => '',
-			'start' => $date->timestamp($_POST['start']),
-			'end' => $date->timestamp($_POST['end']),
+			'start' => $_POST['start'],
+			'end' => $_POST['end'],
 			'category_id' => strlen($_POST['cat_create']) >= 3 ? categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
 			'file' => $new_file,
 			'size' => $filesize,
