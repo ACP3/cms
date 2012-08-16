@@ -1,3 +1,4 @@
+<script type="text/javascript" src="{$DESIGN_PATH}js/bootbox.min.js"></script>
 <script type="text/javascript">
 function mark_entries(name, action)
 {
@@ -35,18 +36,6 @@ $(document).ready(function() {
 		}
 	});
 
-	$('.table').after('<' + 'div id="dialog"><' + 'h5 style="text-align:center"><' + '/h5><' + '/div>');
-	$('#dialog').dialog({
-		autoOpen: false,
-		draggable: false,
-		resizable: false,
-		modal: true,
-		overlay: {
-			backgroundColor: '#000',
-			opacity: 0.5
-		}
-	});
-
 	$('form #adm-list input[type=image]').click(function() {
 		var entries = $('form .table :checkbox:checked') || [];
 		var ary = '';
@@ -56,20 +45,13 @@ $(document).ready(function() {
 		});
 
 		if (ary != '') {
-			$('#dialog h5').text('{lang t="common|confirm_delete"}');
-			$('#dialog').dialog('option', {
-				buttons: {
-					{lang t="common|no"}: function() {
-						$(this).dialog('close');
-					},
-					{lang t="common|yes"}: function() {
-						location.href = $('.table').parent('form').attr('action') + 'entries_' + ary.substr(0, ary.length - 1) + '/action_confirmed/';
-					}
+			bootbox.confirm('{lang t="common|confirm_delete"}', '{lang t="common|no"}', '{lang t="common|yes"}', function(result) {
+				if (result) {
+					location.href = $('.table').parent('form').attr('action') + 'entries_' + ary.substr(0, ary.length - 1) + '/action_confirmed/';
 				}
-			}).dialog('open');
+			});
 		} else {
-			$('#dialog h5').text('{lang t="common|no_entries_selected"}');
-			$('#dialog').dialog('option', { buttons: {} }).dialog('open');
+			bootbox.alert('{lang t="common|no_entries_selected"}');
 		}
 		return false;
 	});
