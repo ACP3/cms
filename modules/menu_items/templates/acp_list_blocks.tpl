@@ -13,7 +13,7 @@
 		<thead>
 			<tr>
 {if $can_delete === true}
-				<th><input type="checkbox" id="mark-all" value="1" class="checkbox inline"></th>
+				<th><input type="checkbox" id="mark-all" value="1"></th>
 {/if}
 				<th>{lang t="menu_items|title"}</th>
 				<th>{lang t="menu_items|index_name"}</th>
@@ -24,7 +24,7 @@
 {foreach $blocks as $row}
 			<tr>
 {if $can_delete === true}
-				<td><input type="checkbox" name="entries[]" value="{$row.id}" class="checkbox inline"></td>
+				<td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
 {/if}
 				<td>{check_access mode="link" path="acp/menu_items/edit_block/id_`$row.id`" title=$row.title}</td>
 				<td>{$row.index_name}</td>
