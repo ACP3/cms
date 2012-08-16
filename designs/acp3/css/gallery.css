@@ -11,5 +11,6 @@
 	text-align: center;
 }
 .picture .description {
-	margin: 10px 25%;
+	width: 60%;
+	margin: 10px auto;
 }

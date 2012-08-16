@@ -24,7 +24,6 @@
 			</div>
 		</form>
 	</li>
-</div>
 {else}
 	<li>{lang t="common|no_entries_short"}</li>
 {/if}

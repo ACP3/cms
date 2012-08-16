@@ -1,33 +1,6 @@
 body {
 	padding: 10px;
 }
-.confirm-box {
-	width: 85%;
-	margin: 0 auto;
-	border: 1px solid #bbb;
-	text-align: center;
-}
-.confirm-box .header {
-	background: #069 url('../img/common_header.png') repeat-x;
-	border-bottom: 1px solid #bbb;
-	font-weight: bold;
-	line-height: 25px;
-	color: #f90;
-}
-.confirm-box .content {
-	background: #eee;
-	line-height: 28px;
-}
-.redirect-message {
-	margin: 10px 0;
-	background: #eee;
-	border: 1px solid #ccc;
-	border-width: 1px 0;
-}
-.redirect-message h4 {
-	margin: 5px 0;
-	text-align: center;
-}
 /* Inhaltsverzeichnis */
 #toc {
 	width: 20%;
@@ -42,7 +15,7 @@ body {
 }
 /* ACP */
 #adm-list {
-	height: 40px;
+	min-height: 40px;
 	padding: 0 10px;
 	line-height: 40px;
 	text-align: left;
@@ -51,11 +24,4 @@ body {
 	margin: 4px 0 0 8px;
 	line-height: normal;
 	float: right;
-}
-.mark-entries {
-	line-height: 25px;
-	text-align: left;
-}
-.mark-entries span {
-	font-weight: bold;
 }
