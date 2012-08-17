@@ -14,24 +14,24 @@
 	<div class="control-group">
 		<label for="action-1" class="control-label">{lang t="newsletter|action"}</label>
 		<div class="controls">
+			<div class="btn-group" data-toggle="radio">
 {foreach $action as $row}
-			<label for="action-{$row.value}" class="radio inline">
 				<input type="radio" name="action" id="action-{$row.value}" value="{$row.value}"{$row.checked}>
-				{$row.lang}
-			</label>
+				<label for="action-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+			</div>
 			<p class="help-block">{lang t="newsletter|action_description"}</p>
 		</div>
 	</div>
 	<div id="test-newsletter" class="control-group">
 		<label for="test-1" class="control-label">{lang t="newsletter|test_newsletter"}</label>
 		<div class="controls">
+			<div class="btn-group" data-toggle="radio">
 {foreach $test as $row}
-			<label for="test-{$row.value}" class="radio inline">
 				<input type="radio" name="test" id="test-{$row.value}" value="{$row.value}"{$row.checked}>
-				{$row.lang}
-			</label>
+				<label for="test-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+			</div>
 			<p class="help-block">{lang t="newsletter|test_nl_description"}</p>
 		</div>
 	</div>

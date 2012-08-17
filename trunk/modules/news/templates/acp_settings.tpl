@@ -40,12 +40,12 @@ $(document).ready(function() {
 	<div class="control-group">
 		<label for="readmore-1" class="control-label">{lang t="news|activate_readmore"}</label>
 		<div class="controls">
+			<div class="btn-group" data-toggle="radio">
 {foreach $readmore as $row}
-			<label for="readmore-{$row.value}" class="radio inline">
 				<input type="radio" name="readmore" id="readmore-{$row.value}" value="{$row.value}"{$row.checked}>
-				{$row.lang}
-			</label>
+				<label for="readmore-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+			</div>
 		</div>
 	</div>
 	<div id="readmore-container" class="control-group">
@@ -55,24 +55,24 @@ $(document).ready(function() {
 	<div class="control-group">
 		<label for="category-in-breadcrumb-1" class="control-label">{lang t="news|display_category_in_breadcrumb"}</label>
 		<div class="controls">
+			<div class="btn-group" data-toggle="radio">
 {foreach $category_in_breadcrumb as $row}
-			<label for="category-in-breadcrumb-{$row.value}" class="radio inline">
 				<input type="radio" name="category_in_breadcrumb" id="category-in-breadcrumb-{$row.value}" value="{$row.value}"{$row.checked}>
-				{$row.lang}
-			</label>
+				<label for="category-in-breadcrumb-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+			</div>
 		</div>
 	</div>
 {if isset($allow_comments)}
 	<div class="control-group">
 		<label for="comments-1" class="control-label">{lang t="common|allow_comments"}</label>
 		<div class="controls">
+			<div class="btn-group" data-toggle="radio">
 {foreach $allow_comments as $row}
-			<label for="comments-{$row.value}" class="radio inline">
 				<input type="radio" name="comments" id="comments-{$row.value}" value="{$row.value}"{$row.checked}>
-				{$row.lang}
-			</label>
+				<label for="comments-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+			</div>
 		</div>
 	</div>
 {/if}
