@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	var alias = $('#alias').parents('dl');
+	var alias = $('#alias').parents('div.control-group');
 	var module = $('#module-container');
 	var hints = $('#link-hints');
 	var link = $('#link-container');
@@ -22,9 +22,9 @@ $(document).ready(function() {
 
 		// SEO Tab bei einem externen Hyperlink deaktivieren
 		if (mode == 3) {
-			$('#tabs').tabs({disabled: [ 2 ]});
+			$('.tabbable .nav-tabs a[href="#tab-3"]').addClass('hide');
 		} else {
-			$('#tabs').tabs({disabled: []});
+			$('.tabbable .nav-tabs a[href="#tab-3"]').removeClass('hide');
 		}
 
 		if (mode == 1) {
