@@ -68,12 +68,10 @@ function commentsList($module, $entry_id)
 		$tpl->assign('comments', $comments);
 	}
 
-	$content = ACP3_View::fetchTemplate('comments/list.tpl');
-
 	if (ACP3_Modules::check('comments', 'create') === true) {
 		require_once MODULES_DIR . 'comments/create.php';
-		$content.= commentsCreate($module, $entry_id);
+		$tpl->assign('comments_create_form', commentsCreate($module, $entry_id));
 	}
 
-	return $content;
+	return ACP3_View::fetchTemplate('comments/list.tpl');
 }
