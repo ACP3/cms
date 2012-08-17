@@ -28,12 +28,12 @@
 	<div class="control-group">
 		<label for="comments-1" class="control-label">{lang t="common|allow_comments"}</label>
 		<div class="controls">
+			<div class="btn-group" data-toggle="radio">
 {foreach $comments as $row}
-			<label for="comments-{$row.value}" class="radio inline">
 				<input type="radio" name="comments" id="comments-{$row.value}" value="{$row.value}"{$row.checked}>
-				{$row.lang}
-			</label>
+				<label for="comments-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+			</div>
 		</div>
 	</div>
 {/if}

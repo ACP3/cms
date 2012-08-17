@@ -39,13 +39,13 @@
 				</div>
 				<div class="control-group">
 					<label for="super-user-1" class="control-label">{lang t="users|super_user"}</label>
-					<div class="controls">
+						<div class="controls">
+							<div class="btn-group" data-toggle="radio">
 {foreach $super_user as $row}
-						<label for="super-user-{$row.value}" class="radio inline">
-							<input type="radio" name="super_user" id="super-user-{$row.value}" value="{$row.value}"{$row.checked}>
-							{$row.lang}
-						</label>
+								<input type="radio" name="super_user" id="super-user-{$row.value}" value="{$row.value}"{$row.checked}>
+								<label for="super-user-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+						</div>
 					</div>
 				</div>
 			</div>

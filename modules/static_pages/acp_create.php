@@ -85,14 +85,11 @@ if (isset($_POST['submit']) === true) {
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 	if (ACP3_Modules::check('menu_items', 'acp_create') === true) {
-		$create = array();
-		$create[0]['value'] = 1;
-		$create[0]['selected'] = selectEntry('create', '1', '0', 'checked');
-		$create[0]['lang'] = $lang->t('common', 'yes');
-		$create[1]['value'] = 0;
-		$create[1]['selected'] = selectEntry('create', '0', '0', 'checked');
-		$create[1]['lang'] = $lang->t('common', 'no');
-		$tpl->assign('create', $create);
+		$options = array();
+		$options[0]['name'] = 'create';
+		$options[0]['checked'] = selectEntry('create', '1', '0', 'checked');
+		$options[0]['lang'] = $lang->t('static_pages', 'create_menu_item');
+		$tpl->assign('options', $options);
 
 		// Block
 		$blocks = $db->select('id, title', 'menu_items_blocks');

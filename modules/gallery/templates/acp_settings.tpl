@@ -47,12 +47,12 @@ $(document).ready(function() {
 				<div class="control-group">
 					<label for="overlay-1" class="control-label">{lang t="gallery|use_overlay"}</label>
 					<div class="controls">
+						<div class="btn-group" data-toggle="radio">
 {foreach $overlay as $row}
-						<label for="overlay-{$row.value}" class="radio inline">
 							<input type="radio" name="overlay" id="overlay-{$row.value}" value="{$row.value}"{$row.checked}>
-							{$row.lang}
-						</label>
+							<label for="overlay-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+						</div>
 						<p class="help-block">{lang t="gallery|use_overlay_description"}</p>
 					</div>
 				</div>
@@ -60,12 +60,12 @@ $(document).ready(function() {
 				<div id="comments-container" class="control-group">
 					<label for="comments-1" class="control-label">{lang t="common|allow_comments"}</label>
 					<div class="controls">
+						<div class="btn-group" data-toggle="radio">
 {foreach $comments as $row}
-						<label for="comments-{$row.value}" class="radio inline">
 							<input type="radio" name="comments" id="comments-{$row.value}" value="{$row.value}"{$row.checked}>
-							{$row.lang}
-						</label>
+							<label for="comments-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+						</div>
 					</div>
 				</div>
 {/if}

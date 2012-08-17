@@ -100,12 +100,12 @@ $(function() {
 				<div class="control-group">
 					<label for="maintenance-mode-1" class="control-label">{lang t="system|maintenance_mode"}</label>
 					<div class="controls">
+						<div class="btn-group" data-toggle="radio">
 {foreach $maintenance as $row}
-						<label for="maintenance-mode-{$row.value}" class="radio inline">
 							<input type="radio" name="maintenance_mode" id="maintenance-mode-{$row.value}" value="{$row.value}"{$row.checked}>
-							{$row.lang}
-						</label>
+							<label for="maintenance-mode-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+						</div>
 					</div>
 				</div>
 				<div class="control-group">
@@ -142,23 +142,23 @@ $(function() {
 				<div class="control-group">
 					<label for="seo-aliases-1" class="control-label">{lang t="system|enable_seo_aliases"}</label>
 					<div class="controls">
+						<div class="btn-group" data-toggle="radio">
 {foreach $aliases as $row}
-						<label for="seo-aliases-{$row.value}" class="radio inline">
 							<input type="radio" name="seo_aliases" id="seo-aliases-{$row.value}" value="{$row.value}"{$row.checked}>
-							{$row.lang}
-						</label>
+							<label for="seo-aliases-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+						</div>
 					</div>
 				</div>
 				<div class="control-group">
 					<label for="seo-mod-rewrite-1" class="control-label">{lang t="system|mod_rewrite"}</label>
 					<div class="controls">
+						<div class="btn-group" data-toggle="radio">
 {foreach $mod_rewrite as $row}
-						<label for="seo-mod-rewrite-{$row.value}" class="radio inline">
 							<input type="radio" name="seo_mod_rewrite" id="seo-mod-rewrite-{$row.value}" value="{$row.value}"{$row.checked}>
-							{$row.lang}
-						</label>
+							<label for="seo-mod-rewrite-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+						</div>
 						<p class="help-block">{lang t="system|mod_rewrite_description"}</p>
 					</div>
 				</div>
@@ -167,12 +167,12 @@ $(function() {
 				<div class="control-group">
 					<label for="cache-images-1" class="control-label">{lang t="system|cache_images"}</label>
 					<div class="controls">
+						<div class="btn-group" data-toggle="radio">
 {foreach $cache_images as $row}
-						<label for="cache-images-{$row.value}" class="radio inline">
 							<input type="radio" name="cache_images" id="cache-images-{$row.value}" value="{$row.value}"{$row.checked}>
-							{$row.lang}
-						</label>
+							<label for="cache-images-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+						</div>
 					</div>
 				</div>
 				<div class="control-group">
@@ -216,12 +216,13 @@ $(function() {
 					<div class="control-group">
 						<label for="mailer-smtp-auth-1" class="control-label">{lang t="system|mailer_smtp_auth"}</label>
 						<div class="controls">
+							<div class="btn-group" data-toggle="radio">
 {foreach $mailer_smtp_auth as $row}
-							<label for="mailer-smtp-auth-{$row.value}" class="radio inline">
 								<input type="radio" name="mailer_smtp_auth" id="mailer-smtp-auth-{$row.value}" value="{$row.value}"{$row.checked}>
-								{$row.lang}
-							</label>
+								<label for="mailer-smtp-auth-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+
+							</div>
 						</div>
 					</div>
 					<div id="mailer-smtp-2">

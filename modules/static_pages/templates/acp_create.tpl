@@ -22,13 +22,13 @@
 					<label for="text" class="control-label">{lang t="static_pages|text"}</label>
 					<div class="controls">{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</div>
 				</div>
-{if isset($create)}
+{if isset($options)}
 				<div class="control-group">
-					<label for="create-item-1" class="control-label">{lang t="static_pages|create_menu_item"}</label>
+					<label for="{$options.0.name}" class="control-label">{lang t="common|options"}</label>
 					<div class="controls">
-{foreach $create as $row}
-						<label for="create-item-{$row.value}" class="radio inline">
-							<input type="radio" name="create" id="create-item-{$row.value}" value="{$row.value}"{$row.selected}>
+{foreach $options as $row}
+						<label for="{$row.name}" class="checkbox">
+							<input type="checkbox" name="{$row.name}" id="{$row.name}" value="1"{$row.checked}>
 							{$row.lang}
 						</label>
 {/foreach}
@@ -65,12 +65,12 @@
 					<div class="control-group">
 						<label for="display-1" class="control-label">{lang t="menu_items|display_item"}</label>
 						<div class="controls">
+							<div class="btn-group" data-toggle="radio">
 {foreach $display as $row}
-							<label for="display-{$row.value}" class="radio inline">
 								<input type="radio" name="display" id="display-{$row.value}" value="{$row.value}"{$row.selected}>
-								{$row.lang}
-							</label>
+								<label for="display-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+							</div>
 						</div>
 					</div>
 				</div>
