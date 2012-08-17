@@ -26,28 +26,22 @@
 			</div>
 			<div id="tab-2" class="tab-pane">
 {foreach $modules as $module => $values}
-				<table class="table table-striped table-condensed">
-					<thead>
-						<tr>
-							<th colspan="4">{$module}</th>
-						</tr>
-					</thead>
-					<tbody>
+				<fieldset class="f-left" style="width:50%">
+					<legend>{$module}</legend>
 {foreach $values.privileges as $privilege}
-						<tr>
-							<td class="privilege-name"{if !empty($privilege.description)} title="{$privilege.description}"{/if}>{$privilege.key}</td>
+					<div class="control-group">
+						<label class="control-label"{if !empty($privilege.description)} title="{$privilege.description}"{/if}>{$privilege.key}</label>
+						<div class="controls">
+							<div class="btn-group" data-toggle="radio">
 {foreach $privilege.select as $row}
-							<td>
-								<label for="privileges-{$values.id}-{$privilege.id}-{$row.value}" class="radio">
-									<input type="radio" name="privileges[{$values.id}][{$privilege.id}]" id="privileges-{$values.id}-{$privilege.id}-{$row.value}" value="{$row.value}"{$row.selected}>
-									{$row.lang}
-								</label>
-							</td>
+								<input type="radio" name="privileges[{$values.id}][{$privilege.id}]" id="privileges-{$values.id}-{$privilege.id}-{$row.value}" value="{$row.value}"{$row.selected}>
+								<label for="privileges-{$values.id}-{$privilege.id}-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
-						</tr>
+							</div>
+						</div>
+					</div>
 {/foreach}
-					</tbody>
-				</table>
+				</fieldset>
 {/foreach}
 			</div>
 		</div>
