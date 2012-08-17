@@ -1,5 +1,6 @@
 {$wysiwyg.editor}
 {if $wysiwyg.advanced === true}
+{js_libraries enable="bootstrap"}
 <div id="page-break-form" class="modal hide">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">×</button>

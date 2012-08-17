@@ -1,3 +1,4 @@
+{js_libraries enable="jquery-ui{if $datepicker.with_time == 1},timepicker{/if}"}
 <script type="text/javascript">
 $(document).ready(function() {
 {if $datepicker.range == 1}
@@ -26,7 +27,7 @@ $(document).ready(function() {
 <input type="text" name="{$datepicker.name_end}" id="{$datepicker.name_end}" value="{$datepicker.value_end}" maxlength="{$datepicker.length}" title="{lang t="common|end_date"}" required style="margin-right:4px">
 <p class="help-block">{lang t="common|date_description"}</p>
 {else}
-<div class="content-group">
+<div class="control-group">
 	<label for="{$datepicker.name_start}" class="control-label">{lang t="common|publication_period"}</label>
 	<div class="controls">
 		<input type="text" name="{$datepicker.name_start}" id="{$datepicker.name_start}" value="{$datepicker.value_start}" maxlength="{$datepicker.length}" title="{lang t="common|start_date"}" required style="margin-right:4px">
@@ -40,7 +41,7 @@ $(document).ready(function() {
 {if $datepicker.input_only}
 <input type="text" name="{$datepicker.name}" id="{$datepicker.name}" value="{$datepicker.value}" maxlength="{$datepicker.length}" style="margin-right:4px">
 {else}
-<div class="content-group">
+<div class="control-group">
 	<label for="{$datepicker.name}" class="control-label">{lang t="common|date"}</label>
 	<div class="controls">
 		<input type="text" name="{$datepicker.name}" id="{$datepicker.name}" value="{$datepicker.value}" maxlength="{$datepicker.length}" style="margin-right:4px">

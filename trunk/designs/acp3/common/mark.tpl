@@ -1,4 +1,4 @@
-<script type="text/javascript" src="{$DESIGN_PATH}js/bootbox.min.js"></script>
+{js_libraries enable="bootbox"}
 <script type="text/javascript">
 function mark_entries(name, action)
 {

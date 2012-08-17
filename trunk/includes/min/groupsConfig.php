@@ -17,6 +17,8 @@ require_once ACP3_ROOT . 'includes/config.php';
 
 define('DESIGN_PATH', ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/');
 
+$libraries = !empty($_GET['libraries']) ? explode(',', $_GET['libraries']) : array();
+
 if ($_GET['g'] === 'css') {
 	define('IN_ACP3', true);
 	define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
@@ -54,19 +56,26 @@ if ($_GET['g'] === 'css') {
 			$styles['css'][] = $path;
 	}
 
-	$styles['css'][] = DESIGN_PATH . 'css/jquery-ui.css';
-	$styles['css'][] = DESIGN_PATH . 'css/jquery-timepicker.css';
-	$styles['css'][] = DESIGN_PATH . 'css/jquery-fancybox.css';
+	if (in_array('jquery-ui', $libraries))
+		$styles['css'][] = DESIGN_PATH . 'css/jquery-ui.css';
+	if (in_array('timepicker', $libraries))
+		$styles['css'][] = DESIGN_PATH . 'css/jquery-timepicker.css';
+	if (in_array('fancybox', $libraries))
+		$styles['css'][] = DESIGN_PATH . 'css/jquery-fancybox.css';
 
 	return $styles;
 } elseif ($_GET['g'] === 'js') {
 	$scripts = array();
 	$scripts['js'][] = DESIGN_PATH . 'js/jquery.min.js';
-	$scripts['js'][] = DESIGN_PATH . 'js/jquery.cookie.js';
-	$scripts['js'][] = DESIGN_PATH . 'js/jquery.ui.min.js';
-	$scripts['js'][] = DESIGN_PATH . 'js/jquery.timepicker.js';
 	$scripts['js'][] = DESIGN_PATH . 'js/bootstrap.min.js';
-	$scripts['js'][] = DESIGN_PATH . 'js/jquery.fancybox.js';
+	if (in_array('bootbox', $libraries))
+		$scripts['js'][] = DESIGN_PATH . 'js/bootbox.min.js';
+	if (in_array('jquery-ui', $libraries))
+		$scripts['js'][] = DESIGN_PATH . 'js/jquery.ui.min.js';
+	if (in_array('timepicker', $libraries))
+		$scripts['js'][] = DESIGN_PATH . 'js/jquery.timepicker.js';
+	if (in_array('fancybox', $libraries))
+		$scripts['js'][] = DESIGN_PATH . 'js/jquery.fancybox.js';
 
 	$layout = isset($_GET['layout']) && !preg_match('=/=', $_GET['layout']) ? $_GET['layout'] : 'layout';
 	if (is_file(DESIGN_PATH . 'js/' . $layout . '.js') === true)

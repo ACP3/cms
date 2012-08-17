@@ -7,6 +7,10 @@ $(document).ready(function() {
 			$('#' + errorClass.substr(6)).parents('div.control-group').addClass('error');
 		}
 	});
+	if ($('.tabbable').length > 0) {
+		var tab_id = $('.tabbable .control-group.error:first').parents('.tab-pane').prop('id');
+		$('.tabbable .nav-tabs a[href="#' + tab_id + '"]').tab('show');
+	}
 });
 </script>
 {/if}
