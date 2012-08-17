@@ -1,6 +1,7 @@
 {if isset($pictures)}
 <div class="pictures">
 {if $overlay == 1}
+{js_libraries enable="fancybox"}
 <script type="text/javascript">
 $(document).ready(function() {
 	$(".pictures a").fancybox({

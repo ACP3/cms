@@ -52,7 +52,7 @@ $min_enableBuilder = false;
  */
 //require dirname(__FILE__) . '/lib/Minify/Cache/APC.php';
 //$min_cachePath = new Minify_Cache_APC();
-$min_cachePath = realpath(dirname(__FILE__) . '/../../uploads/cache');
+$min_cachePath = realpath(__DIR__ . '/../../uploads/cache/minify');
 
 
 /**

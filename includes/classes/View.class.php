@@ -25,17 +25,27 @@ class ACP3_View
 	 * @var string
 	 */
 	private static $content = '';
+
 	/**
 	 * Der auszugebende Content-Type der Seite
+	 *
 	 * @var string
 	 */
 	private static $content_type = 'Content-Type: text/html; charset=UTF-8';
+
 	/**
 	 * Das zuverwendende Seitenlayout
 	 *
 	 * @var string
 	 */
 	private static $layout = 'layout.tpl';
+
+	/**
+	 * Legt fest, welche JavaScript Bibliotheken beim Seitenaufruf geladen werden sollen
+	 * 
+	 * @var array
+	 */
+	private static $js_libraries = array('bootbox' => false, 'fancybox' => false, 'jquery-ui' => false, 'timepicker' => false);
 
 	/**
 	 * Weist dem Template den auszugebenden Inhalt zu
@@ -65,6 +75,44 @@ class ACP3_View
 		self::$layout = $file;
 	}
 	/**
+	 * Aktiviert einzelne JavaScript Bibliotheken
+	 *
+	 * @param array $libraries
+	 * @return
+	 */
+	public static function enableJsLibraries(array $libraries)
+	{
+		foreach ($libraries as $library) {
+			if (array_key_exists($library, self::$js_libraries) === true) {
+				self::$js_libraries[$library] = true;
+				if ($library === 'timepicker')
+					self::$js_libraries['jquery-ui'] = true;
+			}
+		}
+		return;
+	}
+	/**
+	 * Erstellt den Link zum Minifier mitsamt allen zu ladenden JavaScript Bibliotheken
+	 *
+	 * @return string
+	 */
+	private static function buildMinifyLink()
+	{
+		$minify = ROOT_DIR . 'includes/min/' . (CONFIG_SEO_MOD_REWRITE === true && defined('IN_ADM') === false ? '' : '?') . 'g=%s';
+
+		ksort(self::$js_libraries);
+		$libraries = '';
+		foreach (self::$js_libraries as $library => $enable) {
+			if ($enable === true)
+				$libraries.= $library . ',';
+		}
+
+		if ($libraries !== '')
+			$minify.= '&amp;libraries=' . substr($libraries, 0, -1) . '&amp;' . CONFIG_DESIGN;
+		
+		return $minify;
+	}
+	/**
 	 * Gibt die Seite aus
 	 */
 	public static function outputPage() {
@@ -92,7 +140,7 @@ class ACP3_View
 					$tpl->assign('META', ACP3_SEO::getMetaTags());
 					$tpl->assign('CONTENT', self::$content);
 
-					$minify = ROOT_DIR . 'includes/min/' . (CONFIG_SEO_MOD_REWRITE === true && defined('IN_ADM') === false ? '' : '?') . 'g=%s&amp;' . CONFIG_DESIGN;
+					$minify = self::buildMinifyLink();
 					$layout = substr(self::$layout, 0, strpos(self::$layout, '.'));
 					$tpl->assign('MIN_STYLESHEET', sprintf($minify, 'css') . ($layout !== 'layout' ? '&amp;layout=' . $layout : ''));
 					$tpl->assign('MIN_JAVASCRIPT', sprintf($minify, 'js'));
