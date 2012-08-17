@@ -52,23 +52,23 @@ $(function() {
 				<div class="control-group">
 					<label for="file" class="control-label">{lang t="system|output"}</label>
 					<div class="controls">
+						<div class="btn-group" data-toggle="radio">
 {foreach $output as $row}
-						<label for="{$row.value}" class="radio">
 							<input type="radio" name="output" id="{$row.value}" value="{$row.value}"{$row.checked}>
-							{$row.lang}
-						</label>
+							<label for="{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+						</div>
 					</div>
 				</div>
 				<div class="control-group">
 					<label for="complete" class="control-label">{lang t="system|export_type"}</label>
 					<div class="controls">
-	{foreach $export_type as $row}
-						<label for="{$row.value}" class="radio">
+						<div class="btn-group" data-toggle="radio">
+{foreach $export_type as $row}
 							<input type="radio" name="export_type" id="{$row.value}" value="{$row.value}"{$row.checked}>
-							{$row.lang}
-						</label>
-	{/foreach}
+							<label for="{$row.value}" class="btn">{$row.lang}</label>
+{/foreach}
+						</div>
 					</div>
 				</div>
 				<div id="options-container" class="control-group">
