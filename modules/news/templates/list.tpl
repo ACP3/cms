@@ -1,9 +1,9 @@
 <div class="dataset-box">
 	<div class="header bigger">
 {if isset($categories)}
-{if ACP3_Modules::check('newsletter', 'create')}
+{if ACP3_Modules::check('newsletter', 'list')}
 		<div class="f-left">
-			<a href="{uri args="newsletter/create"}">{lang t="newsletter|create"}</a>
+			<a href="{uri args="newsletter/list"}">{lang t="newsletter|list"}</a>
 		</div>
 {/if}
 		<div class="align-right">

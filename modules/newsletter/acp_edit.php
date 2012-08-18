@@ -61,11 +61,11 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'newslette
 			$session->unsetFormToken();
 
 			if ($_POST['action'] == 0 && $bool !== false) {
-				setRedirectMessage(true, $lang->t('newsletter', 'save_success'), 'acp/newsletter/list_archive');
+				setRedirectMessage(true, $lang->t('newsletter', 'save_success'), 'acp/newsletter');
 			} elseif ($_POST['action'] == 1 && $bool !== false && $bool2 === true) {
-				setRedirectMessage($bool && $bool2, $lang->t('newsletter', 'compose_success'), 'acp/newsletter/list_archive');
+				setRedirectMessage($bool && $bool2, $lang->t('newsletter', 'compose_success'), 'acp/newsletter');
 			} else {
-				setRedirectMessage(false, $lang->t('newsletter', 'compose_save_error'), 'acp/newsletter/list_archive');
+				setRedirectMessage(false, $lang->t('newsletter', 'compose_save_error'), 'acp/newsletter');
 			}
 		}
 	}
@@ -96,7 +96,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'newslette
 
 		$session->generateFormToken();
 
-		ACP3_View::setContent(ACP3_View::fetchTemplate('newsletter/acp_edit_archive.tpl'));
+		ACP3_View::setContent(ACP3_View::fetchTemplate('newsletter/acp_edit.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

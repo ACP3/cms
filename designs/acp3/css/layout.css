@@ -6,3 +6,46 @@
 	background: url('../img/logo.png') no-repeat;
 	text-indent: -9999px;
 }
+.navbar-inner .nav li {
+	position: relative;
+}
+.navbar-inner .nav ul {
+	min-width: 160px;
+	padding: 4px 0;
+	margin: 0;
+	background: #fff;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	list-style: none;
+	display: none;
+	z-index: 1000;
+	position: absolute;
+	top: 35px;
+	left: 0;
+}
+.navbar-inner .nav ul a {
+	padding: 4px 8px;
+	display: block;
+	color: #999;
+}
+.navbar-inner .nav ul a:hover,
+.navbar-inner .nav ul li.active > a,
+.navbar-inner .nav ul li.active > a:hover {
+	background: rgb(0, 136, 204);
+	text-decoration: none;
+	color: #fff;
+}
+.navbar-inner .nav ul ul {
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	position: static;
+	top: auto;
+	left: auto;
+}
+.navbar-inner .nav ul ul a {
+	padding: 4px 8px;
+	display: block;
+	color: #999;
+}

@@ -144,10 +144,12 @@ function menuItemsList($parent_id = 0, $left_id = 0, $right_id = 0) {
  *
  * @param string $block
  *	Name des Blocks, für welchen die Navigationspunkte ausgegeben werden sollen
+ * @param boolean $use_bootstrap
+ * @param string $class
  *
  * @return string
  */
-function processNavbar($block, $class = '') {
+function processNavbar($block, $use_bootstrap = true, $class = '') {
 	static $navbar = array();
 
 	// Navigationsleiste sofort ausgeben, falls diese schon einmal verarbeitet wurde...
@@ -181,14 +183,13 @@ function processNavbar($block, $class = '') {
 				// Link zusammenbauen
 				$href = $items[$i]['mode'] == 1 || $items[$i]['mode'] == 2 || $items[$i]['mode'] == 4 ? $uri->route($items[$i]['uri'], 1) : $items[$i]['uri'];
 				$target = $items[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
+				$link = '<a href="' . $href . '"' . $target . '>' . $db->escape($items[$i]['title'], 3) . '</a>';
 
 				// Falls für Knoten Kindelemente vorhanden sind, neue Unterliste erstellen
 				if (isset($items[$i + 1]) && $items[$i + 1]['level'] > $items[$i]['level']) {
-					$link = '<a href="' . $href . '"' . $target . ' class="dropdown-toggle" data-toggle="dropdown" data-target="#">' . $db->escape($items[$i]['title'], 3) . ' <b class="caret"></b></a>';
-					$navbar[$block].= '<li class="' . $css . ' dropdown">' . $link . '<ul class="dropdown-menu">';
+					$navbar[$block].= '<li class="' . $css . '">' . $link . '<ul class="unstyled navigation-' . $block . '-subnav-' . $items[$i]['id'] . '">';
 					// Elemente ohne Kindelemente
 				} else {
-					$link = '<a href="' . $href . '"' . $target . '>' . $db->escape($items[$i]['title'], 3) . '</a>';
 					$navbar[$block].= '<li class="' . $css . '">' . $link . '</li>';
 					// Liste für untergeordnete Elemente schließen
 					if (isset($items[$i + 1]) && $items[$i + 1]['level'] < $items[$i]['level'] || !isset($items[$i + 1]) && $items[$i]['level'] != '0') {
@@ -200,7 +201,7 @@ function processNavbar($block, $class = '') {
 					}
 				}
 			}
-			$navbar[$block] = !empty($navbar[$block]) ? '<ul class="nav' . (!empty($class) ? ' ' . $class : '') . '">' . $navbar[$block] . '</ul>' : '';
+			$navbar[$block] = !empty($navbar[$block]) ? '<ul class="navigation-' . $block . (!empty($class) ? ' ' . $class : '') . ($use_bootstrap === true ? ' nav' : '') . '">' . $navbar[$block] . '</ul>' : '';
 			return $navbar[$block];
 		}
 		return '';

@@ -88,5 +88,5 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 
 	$session->generateFormToken();
 
-	ACP3_View::setContent(ACP3_View::fetchTemplate('newsletter/acp_compose.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('newsletter/acp_create.tpl'));
 }

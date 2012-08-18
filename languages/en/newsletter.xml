@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="account_exists">There is already an newsletter account with the same E-Mail address registered</item>
-	<item key="account_not_exists">For the stated E-mail address is no newsletter account registered</item>
+	<item key="account_exists">There is already an newsletter account with the same E-Mail address registered.</item>
+	<item key="account_not_exists">For the stated E-mail address is no newsletter account registered.</item>
 	<item key="acp_activate">Activate newsletter account</item>
-	<item key="acp_compose">Create a new newsletter</item>
-	<item key="acp_delete">Delete newsletter accounts</item>
-	<item key="acp_delete_archive">Delete newsletters</item>
-	<item key="acp_edit_archive">Edit newsletter</item>
-	<item key="acp_list_archive">Newsletter archive</item>
+	<item key="acp_create">Create a new newsletter</item>
+	<item key="acp_delete">Delete newsletters</item>
+	<item key="acp_delete_account">Delete newsletter accounts</item>
+	<item key="acp_edit">Edit newsletter</item>
+	<item key="acp_list_accounts">Newsletter accounts</item>
 	<item key="acp_send">Send newsletter</item>
 	<item key="acp_settings">Settings</item>
 	<item key="action">Action</item>
@@ -19,8 +19,7 @@
 	<item key="already_sent">Already sent</item>
 	<item key="compose_save_error">While sending respectively saving at least one error has occured.</item>
 	<item key="compose_success">The newsletter was successfully sent.</item>
-	<item key="create">Subscribe/Unsubscribe the newsletter</item>
-	<item key="entry">Subscribe/Unsubscribe the newsletter</item>
+	<item key="list">Subscribe/Unsubscribe the newsletter</item>
 	<item key="mailsig">E-mail signature</item>
 	<item key="mod_description">This module is responsible for the newsletter.</item>
 	<item key="newsletter">Newsletter</item>
