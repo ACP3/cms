@@ -19,14 +19,14 @@ if (!isset($entries)) {
 	ACP3_View::setContent(errorBox($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
-	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/newsletter/delete_archive/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/newsletter/list_archive')));
+	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/newsletter/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/newsletter/list_accounts')));
 } elseif ($uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	foreach ($marked_entries as $entry) {
-		$bool = $db->delete('newsletter_archive', 'id = \'' . $entry . '\'');
+		$bool = $db->delete('newsletter_accounts', 'id = \'' . $entry . '\'');
 	}
-	setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/newsletter/list_archive');
+	setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/newsletter/list_accounts');
 } else {
 	$uri->redirect('errors/404');
 }
