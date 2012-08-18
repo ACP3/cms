@@ -48,7 +48,7 @@ if ($auth->isUser() === false || ACP3_Validate::isNumber($auth->getUserId()) ===
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool, $lang->t('common', $bool === true ? 'settings_success' : 'settings_error'), 'users/home');
+			setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'settings_success' : 'settings_error'), 'users/home');
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
