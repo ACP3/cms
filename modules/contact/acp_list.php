@@ -23,7 +23,6 @@ if (isset($_POST['submit']) === true) {
 		$_POST['telephone'] = $db->escape($_POST['telephone']);
 		$_POST['fax'] = $db->escape($_POST['fax']);
 		$_POST['disclaimer'] = $db->escape($_POST['disclaimer'], 2);
-		$_POST['layout'] = $db->escape($_POST['layout'], 2);
 
 		$bool = ACP3_Config::module('contact', $_POST);
 
@@ -38,7 +37,6 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$settings['telephone'] = $db->escape($settings['telephone'], 3);
 	$settings['fax'] = $db->escape($settings['fax'], 3);
 	$settings['disclaimer'] = $db->escape($settings['disclaimer'], 3);
-	$settings['layout'] = $db->escape($settings['layout'], 3);
 
 	$tpl->assign('form', isset($_POST['submit']) ? $_POST : $settings);
 

@@ -422,10 +422,16 @@ if (CONFIG_DB_VERSION < 25) {
 if (CONFIG_DB_VERSION < 26) {
 	ACP3_ACL::resetResources();
 }
+if (CONFIG_DB_VERSION < 27) {
+	$queries = array(
+		"DELETE FROM `{pre}settings` WHERE module = 'contact' AND name = 'layout';",
+	);
+	echo executeSqlQueries($queries, 27);
+}
 
 // Konfigurationsdatei aktualisieren
 $config = array(
-	'db_version' => 26,
+	'db_version' => 27,
 	'maintenance_mode' => (bool) CONFIG_MAINTENANCE_MODE,
 	'seo_mod_rewrite' => (bool) CONFIG_SEO_MOD_REWRITE,
 	'date_time_zone' => is_int(CONFIG_DATE_TIME_ZONE) === true ? 'Europe/Berlin' : CONFIG_DATE_TIME_ZONE,
