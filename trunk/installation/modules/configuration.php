@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 			'db_pre' => $_POST['db_pre'],
 			'db_password' => $_POST['db_password'],
 			'db_user' => $_POST['db_user'],
-			'db_version' => 26,
+			'db_version' => 27,
 			'design' => 'acp3',
 			'entries' => $_POST['entries'],
 			'flood' => $_POST['flood'],
