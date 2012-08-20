@@ -29,8 +29,14 @@ if (isset($_POST['submit']) === true) {
 
 		$subject = sprintf($lang->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
 		$body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($_POST['name'], $_POST['mail'], $_POST['message'], "\n"), $lang->t('contact', 'contact_body'));
-
 		$bool = generateEmail('', $settings['mail'], $_POST['mail'], $subject, $body);
+
+		// Nachrichtenkopie an Absender senden
+		if (isset($_POST['copy'])) {
+			$subject2 = sprintf($lang->t('contact', 'sender_subject'), CONFIG_SEO_TITLE);
+			$body2 = sprintf($lang->t('contact', 'sender_body'), CONFIG_SEO_TITLE, $_POST['message']);
+			generateEmail($_POST['name'], $_POST['mail'], $settings['mail'], $subject2, $body2);
+		}
 
 		$session->unsetFormToken();
 
@@ -62,6 +68,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		);
 	}
 	$tpl->assign('form', isset($_POST['submit']) ? array_merge($defaults, $_POST) : $defaults);
+	$tpl->assign('copy_checked', selectEntry('copy', 1, 0, 'checked'));
 
 	require_once MODULES_DIR . 'captcha/functions.php';
 	$tpl->assign('captcha', captcha());

@@ -5,6 +5,7 @@
 	<item key="allow_comments">Allow comments</item>
 	<item key="author">Author</item>
 	<item key="back">Back</item>
+	<item key="cancel">Cancel</item>
 	<item key="category">Category</item>
 	<item key="confirm_delete">Do you really want to delete the marked entries?</item>
 	<item key="close_window">Close window</item>

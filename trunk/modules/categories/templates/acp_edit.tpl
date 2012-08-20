@@ -15,7 +15,8 @@
 		<div class="controls"><input type="file" id="picture" name="picture" value=""></div>
 	</div>
 	<div class="form-actions">
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
+		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
+		<a href="{uri args="acp/categories"}" class="btn">{lang t="common|cancel"}</a>
 		{$form_token}
 	</div>
 </form>
