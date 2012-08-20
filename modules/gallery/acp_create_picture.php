@@ -15,8 +15,8 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery',
 
 	$gallery = $db->select('name', 'gallery', 'id = \'' . $uri->id . '\'');
 
-	$breadcrumb->append($gallery[0]['name'], $uri->route('acp/gallery/edit_gallery/id_' . $uri->id))
-			   ->append($lang->t('gallery', 'acp_add_picture'));
+	$breadcrumb->append($gallery[0]['name'], $uri->route('acp/gallery/edit/id_' . $uri->id))
+			   ->append($lang->t('gallery', 'acp_create_picture'));
 
 	$settings = ACP3_Config::getModuleSettings('gallery');
 
@@ -55,7 +55,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery',
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool && $bool2, $bool !== false && $bool2 !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/gallery/edit_gallery/id_' . $uri->id);
+			setRedirectMessage($bool && $bool2, $bool !== false && $bool2 !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/gallery/edit/id_' . $uri->id);
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -78,10 +78,11 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery',
 
 		$tpl->assign('galleries', $galleries);
 		$tpl->assign('form', isset($_POST['submit']) ? $_POST : array('description' => ''));
+		$tpl->assign('gallery_id', $uri->id);
 
 		$session->generateFormToken();
 
-		ACP3_View::setContent(ACP3_View::fetchTemplate('gallery/acp_add_picture.tpl'));
+		ACP3_View::setContent(ACP3_View::fetchTemplate('gallery/acp_create_picture.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

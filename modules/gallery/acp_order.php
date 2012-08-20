@@ -19,7 +19,7 @@ if (ACP3_Validate::isNumber($uri->id) === true) {
 		$gallery = $db->select('g.id', 'gallery AS g, {pre}gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
 		setGalleryCache($gallery[0]['id']);
 
-		$uri->redirect('acp/gallery/edit_gallery/id_' . $gallery[0]['id']);
+		$uri->redirect('acp/gallery/edit/id_' . $gallery[0]['id']);
 	}
 }
 $uri->redirect('errors/404');

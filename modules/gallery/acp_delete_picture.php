@@ -19,7 +19,7 @@ if (!isset($entries)) {
 	ACP3_View::setContent(errorBox($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
-	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/gallery/delete_picture/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/gallery/edit_gallery/id_' . $uri->id)));
+	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/gallery/delete_picture/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/gallery/edit/id_' . $uri->id)));
 } elseif ($uri->action === 'confirmed') {
 	require_once MODULES_DIR . 'gallery/functions.php';
 
@@ -37,7 +37,7 @@ if (!isset($entries)) {
 			setGalleryCache($picture[0]['gallery_id']);
 		}
 	}
-	setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/gallery' . (!empty($picture[0]['gallery_id']) ? '/edit_gallery/id_' . $picture[0]['gallery_id'] : ''));
+	setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/gallery' . (!empty($picture[0]['gallery_id']) ? '/edit/id_' . $picture[0]['gallery_id'] : ''));
 } else {
 	$uri->redirect('errors/404');
 }

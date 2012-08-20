@@ -428,10 +428,13 @@ if (CONFIG_DB_VERSION < 27) {
 	);
 	echo executeSqlQueries($queries, 27);
 }
+if (CONFIG_DB_VERSION < 28) {
+	ACP3_ACL::resetResources();
+}
 
 // Konfigurationsdatei aktualisieren
 $config = array(
-	'db_version' => 27,
+	'db_version' => 28,
 	'maintenance_mode' => (bool) CONFIG_MAINTENANCE_MODE,
 	'seo_mod_rewrite' => (bool) CONFIG_SEO_MOD_REWRITE,
 	'date_time_zone' => is_int(CONFIG_DATE_TIME_ZONE) === true ? 'Europe/Berlin' : CONFIG_DATE_TIME_ZONE,

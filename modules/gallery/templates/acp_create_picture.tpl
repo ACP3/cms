@@ -14,22 +14,18 @@
 	<div class="control-group">
 		<label for="{$options.0.name}" class="control-label">{lang t="common|options"}</label>
 		<div class="controls">
-			<ul class="unstyled">
 {foreach $options as $row}
-				<li>
-					<label for="{$row.name}" class="checkbox">
-						<input type="checkbox" name="{$row.name}" id="{$row.name}" value="1"{$row.checked}>
-						{$row.lang}
-					</label>
-				</li>
+			<label for="{$row.name}" class="checkbox">
+				<input type="checkbox" name="{$row.name}" id="{$row.name}" value="1"{$row.checked}>
+				{$row.lang}
+			</label>
 {/foreach}
-			</ul>
 		</div>
 	</div>
 {/if}
 	<div class="form-actions">
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
-		<input type="reset" value="{lang t="common|reset"}" class="btn">
+		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
+		<a href="{uri args="acp/gallery/edit/id_`$gallery_id`"}" class="btn">{lang t="common|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

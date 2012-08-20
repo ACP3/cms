@@ -294,15 +294,6 @@ class ACP3_ACL
 		$db->query('TRUNCATE TABLE {pre}acl_resources', 0);
 
 		$special_resources = array(
-			'comments' => array(
-				'create' => 2,
-			),
-			'gallery' => array(
-				'acp_add_picture' => 4,
-			),
-			'guestbook' => array(
-				'create' => 2,
-			),
 			'newsletter' => array(
 				'acp_activate' => 3,
 				'acp_sent' => 4,
@@ -346,6 +337,8 @@ class ACP3_ACL
 							$privilege_id = $special_resources[$row][$file];
 						} else {
 							$privilege_id = 1;
+							if (strpos($file, 'create') === 0)
+								$privilege_id = 2;
 							if (strpos($file, 'acp_') === 0)
 								$privilege_id = 3;
 							if (strpos($file, 'acp_create') === 0 || strpos($file, 'acp_order') === 0)
