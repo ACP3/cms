@@ -79,7 +79,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery',
 
 		$session->generateFormToken();
 
-		ACP3_View::setContent(ACP3_View::fetchTemplate('gallery/acp_edit_gallery.tpl'));
+		ACP3_View::setContent(ACP3_View::fetchTemplate('gallery/acp_edit.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

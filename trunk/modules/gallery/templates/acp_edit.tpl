@@ -22,12 +22,13 @@
 	</div>
 	<div class="form-actions" style="margin:20px 0">
 		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
+		<a href="{uri args="acp/gallery"}" class="btn">{lang t="common|cancel"}</a>
 		{$form_token}
 	</div>
 </form>
 <form action="{uri args="acp/gallery/delete_picture/id_$gallery_id"}" method="post">
 	<div id="adm-list" class="well">
-		{check_access mode="link" path="acp/gallery/add_picture/id_`$gallery_id`" icon="32/image" width="32" height="32"}
+		{check_access mode="link" path="acp/gallery/create_picture/id_`$gallery_id`" icon="32/image" width="32" height="32"}
 		{check_access mode="input" path="acp/gallery/delete_picture" icon="32/cancel" lang="common|delete_marked"}
 		<h2>{lang t="gallery|pictures"}</h2>
 	</div>

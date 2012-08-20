@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="acp_add_picture">Add picture</item>
 	<item key="acp_create">Create a new gallery</item>
+	<item key="acp_create_picture">Add picture</item>
 	<item key="acp_delete_gallery">Delete galleries</item>
 	<item key="acp_delete_picture">Delete pictures</item>
 	<item key="acp_edit_gallery">Edit gallery</item>

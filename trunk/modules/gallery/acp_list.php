@@ -23,6 +23,6 @@ if ($c_galleries > 0) {
 		$galleries[$i]['pictures'] = $db->countRows('*', 'gallery_pictures', 'gallery_id = \'' . $galleries[$i]['id'] . '\'');
 	}
 	$tpl->assign('galleries', $galleries);
-	$tpl->assign('can_delete', ACP3_Modules::check('gallery', 'acp_delete_gallery'));
+	$tpl->assign('can_delete', ACP3_Modules::check('gallery', 'acp_delete'));
 }
 ACP3_View::setContent(ACP3_View::fetchTemplate('gallery/acp_list.tpl'));
