@@ -14,10 +14,17 @@
 		<label for="message" class="control-label">{lang t="common|message"}</label>
 		<div class="controls"><textarea name="message" id="message" cols="50" rows="5" class="span6" required>{$form.message}</textarea></div>
 	</div>
+	<div class="control-group">
+		<div class="controls">
+			<label for="copy" class="checkbox">
+				<input type="checkbox" name="copy" id="copy" value="1"{$copy_checked}>
+				{lang t="contact|send_copy_to_sender"}
+			</label>
+		</div>
+	</div>
 {$captcha}
 	<div class="form-actions">
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
-		<input type="reset" value="{lang t="common|reset"}" class="btn">
+		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
 		{$form_token}
 	</div>
 </form>

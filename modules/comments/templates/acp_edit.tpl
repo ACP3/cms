@@ -19,7 +19,8 @@
 {if isset($form.user_id) && $form.user_id != '0'}
 		<input type="hidden" name="user_id" value="{$form.user_id}">
 {/if}
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
+		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
+		<a href="{uri args="acp/comments"}" class="btn">{lang t="common|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

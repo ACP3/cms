@@ -11,7 +11,8 @@
 		<div class="controls"><textarea name="mailsig" id="mailsig" cols="50" rows="3" class="span6">{$form.mailsig}</textarea></div>
 	</div>
 	<div class="form-actions">
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
+		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
+		<a href="{uri args="acp/newsletter"}" class="btn">{lang t="common|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

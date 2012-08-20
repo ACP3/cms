@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="additional_information">Weitere Informationen</item>
 	<item key="address">Anschrift</item>
-	<item key="address_to_short">Die Anschrift sollte mindestens 3 Zeichen lang sein</item>
+	<item key="address_to_short">Die Anschrift sollte mindestens 3 Zeichen lang sein.</item>
 	<item key="contact">Kontakt</item>
 	<item key="contact_body">{name} ({mail}) hat folgende Nachricht hinterlassen:
 
 {message}</item>
 	<item key="contact_information">Kontakt Daten</item>
-	<item key="contact_subject">Kontaktformular %s</item>
+	<item key="contact_subject">Kontaktformular "%s"</item>
 	<item key="disclaimer">Haftungshinweise</item>
-	<item key="disclaimer_to_short">Die Haftungshinweise sollten mindestens 3 Zeichen lang sein</item>
+	<item key="disclaimer_to_short">Die Haftungshinweise sollten mindestens 3 Zeichen lang sein.</item>
 	<item key="fax">FAX Nummer</item>
 	<item key="imprint">Impressum</item>
-	<item key="layout">Aussehen</item>
-	<item key="layout_placeholders">Es stehen folgende Platzhalter zur Verfügung:</item>
 	<item key="mod_description">Dieses Modul ist für das Kontaktformular und das Impressum zuständig.</item>
 	<item key="powered_by">Diese Website wird angetrieben vom %s</item>
+	<item key="send_copy_to_sender">Kopie der Nachricht an mich senden.</item>
 	<item key="send_mail_error">Beim Versenden der E-Mail ist ein Fehler aufgetreten.</item>
 	<item key="send_mail_success">Die E-Mail wurde erfolgreich versendet.</item>
+	<item key="sender_body">Sie haben folgende Nachricht auf der Website "%1$s" hinterlassen:
+
+%2$s</item>
+	<item key="sender_subject">Ihre Nachricht an "%s"</item>
 	<item key="telephone">Telefonnummer</item>
 </language>

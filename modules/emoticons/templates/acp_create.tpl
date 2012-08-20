@@ -15,8 +15,8 @@
 		<div class="controls"><input type="file" name="picture" id="picture"></div>
 	</div>
 	<div class="form-actions">
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
-		<input type="reset" value="{lang t="common|reset"}" class="btn">
+		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
+		<a href="{uri args="acp/emoticons"}" class="btn">{lang t="common|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

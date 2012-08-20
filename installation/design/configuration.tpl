@@ -145,8 +145,7 @@
 		</div>
 	</div>
 	<div class="form-actions">
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
-		<input type="reset" value="{lang t="common|reset"}" class="btn">
+		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
 	</div>
 </form>
 {/if}

@@ -18,8 +18,7 @@
 	<div class="form-actions">
 		<input type="hidden" name="module" value="{$form.module}">
 		<input type="hidden" name="entry_id" value="{$form.entry_id}">
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
-		<input type="reset" value="{lang t="common|reset"}" class="btn">
+		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
 		{$form_token}
 	</div>
 </form>

@@ -41,10 +41,11 @@
 		</div>
 	</div>
 	<div class="form-actions">
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
+		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
 {if !$disable}
 		<input type="submit" name="add_answer" value="{lang t="polls|add_answer"}" class="btn">
 {/if}
+		<a href="{uri args="acp/polls"}" class="btn">{lang t="common|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

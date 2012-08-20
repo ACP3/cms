@@ -19,9 +19,7 @@
 {/foreach}
 				</li>
 			</ul>
-			<div>
-				<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
-			</div>
+			<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
 		</form>
 	</li>
 {else}

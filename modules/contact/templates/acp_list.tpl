@@ -23,7 +23,8 @@
 		<div class="controls">{wysiwyg name="disclaimer" value="`$form.disclaimer`" height="150px" toolbar="simple"}</div>
 	</div>
 	<div class="form-actions">
-		<input type="submit" name="submit" value="{lang t="common|submit"}" class="btn">
+		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
+		<a href="{uri args="acp/contact"}" class="btn">{lang t="common|cancel"}</a>
 		{$form_token}
 	</div>
 </form>
