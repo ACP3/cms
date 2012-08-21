@@ -26,7 +26,10 @@
 {if $row.protected === true}
 							{icon path="16/editdelete" width="16" height="16"}
 {elseif $row.active === true}
-							<a href="{uri args="acp/system/modules/dir_`$row.dir`/action_deactivate"}" title="{lang t="system|disable_module"}">{icon path="16/apply" width="16" height="16"}</a>
+							<div class="btn-group">
+								<a href="{uri args="acp/system/modules/dir_`$row.dir`/action_deactivate"}" class="btn" title="{lang t="system|disable_module"}">{icon path="16/apply" width="16" height="16"}</a>
+								<a href="{uri args="acp/system/modules/dir_`$row.dir`/action_uninstall"}" class="btn" title="{lang t="system|uninstall_module"}">{icon path="16/cancel" width="16" height="16"}</a>
+							</div>
 {else}
 							<a href="{uri args="acp/system/modules/dir_`$row.dir`/action_activate"}" title="{lang t="system|enable_module"}">{icon path="16/cancel" width="16" height="16"}</a>
 {/if}

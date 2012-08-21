@@ -101,11 +101,14 @@ class ACP3_Config
 	{
 		global $db;
 
-		$bool = false;
-		foreach ($data as $key => $value) {
-			$bool = $db->update('settings', array('value' => $value), 'module = \'' . $db->escape($module) . '\' AND name = \'' . $key . '\'');
+		$bool = $bool2 = false;
+		$mod_id = $db->select('id', 'modules', 'name = \'' . $db->escape($module) . '\'');
+		if (!empty($mod_id)) {
+			foreach ($data as $key => $value) {
+				$bool = $db->update('settings', array('value' => $value), 'module_id = ' . $mod_id[0]['id'] . ' AND name = \'' . $key . '\'');
+			}
+			$bool2 = self::setModuleCache($module);
 		}
-		$bool2 = self::setModuleCache($module);
 
 		return $bool !== false && $bool2 !== false ? true : false;
 	}
@@ -132,7 +135,7 @@ class ACP3_Config
 	{
 		global $db;
 
-		$settings = $db->select('name, value', 'settings', 'module = \'' . $db->escape($module) . '\'');
+		$settings = $db->query('SELECT s.name, s.value FROM {pre}settings AS s JOIN {pre}modules AS m ON(m.id = s.module_id) WHERE m.name = \'' . $db->escape($module) . '\'');
 		$c_settings = count($settings);
 
 		$cache_ary = array();

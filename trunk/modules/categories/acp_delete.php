@@ -25,13 +25,13 @@ if (!isset($entries)) {
 
 	$marked_entries = explode('|', $entries);
 	$bool = false;
-	$in_use = 0;
+	$in_use = false;
 
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && $db->countRows('*', 'categories', 'id = \'' . $entry . '\'') == 1) {
-			$category = $db->select('picture, module', 'categories', 'id = \'' . $entry . '\'');
+			$category = $db->query('SELECT c.picture, n.name AS module FROM {pre}categories AS c JOIN {pre}modules AS m ON(m.id = c.module_id) WHERE c.id = \'' . $entry . '\'');
 			if ($db->countRows('*', $db->escape($category[0]['module'], 3), 'category_id = \'' . $entry . '\'') > 0) {
-				$in_use = 1;
+				$in_use = true;
 			} else {
 				// Kategoriebild ebenfalls löschen
 				removeUploadedFile('categories', $category[0]['picture']);
@@ -41,13 +41,14 @@ if (!isset($entries)) {
 		}
 	}
 	// Cache für die Kategorien neu erstellen
-	$mods = $db->query('SELECT module FROM {pre}categories GROUP BY module');
+	$mods = $db->query('SELECT m.name AS module FROM {pre}categories AS c JOIN {pre}modules AS m ON(m.id = c.module_id) GROUP BY c.module_id');
 	foreach ($mods as $row) {
 		setCategoriesCache($db->escape($row['module'], 3));
 	}
 
-	if ($in_use) {
+	if ($in_use === true) {
 		$text = $lang->t('categories', 'category_is_in_use');
+		$bool = false;
 	} else {
 		$text = $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error');
 	}

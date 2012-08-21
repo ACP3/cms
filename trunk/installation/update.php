@@ -431,10 +431,27 @@ if (CONFIG_DB_VERSION < 27) {
 if (CONFIG_DB_VERSION < 28) {
 	ACP3_ACL::resetResources();
 }
+if (CONFIG_DB_VERSION < 29) {
+	$queries = array(
+		"ALTER TABLE `{pre}categories` ADD `module_id` INT UNSIGNED NOT NULL AFTER `description`;",
+		"UPDATE `{pre}categories` AS c SET c.module_id = (SELECT m.id FROM `{pre}modules` AS m WHERE m.name = c.module);",
+		"ALTER TABLE `{pre}categories` ADD INDEX (`module_id`);",
+		"ALTER TABLE `{pre}categories` DROP `module`;",
+		"ALTER TABLE `{pre}comments` ADD `module_id` INT UNSIGNED NOT NULL AFTER `message`;",
+		"UPDATE `{pre}comments` AS c SET c.module_id = (SELECT m.id FROM `{pre}modules` AS m WHERE m.name = c.module);",
+		"ALTER TABLE `{pre}comments` ADD INDEX (`module_id`, `entry_id`);",
+		"ALTER TABLE `{pre}comments` DROP `module`;",
+		"ALTER TABLE `{pre}settings` ADD `module_id` INT UNSIGNED NOT NULL AFTER `id`;",
+		"UPDATE `{pre}settings` AS s SET s.module_id = (SELECT m.id FROM `{pre}modules` AS m WHERE m.name = s.module);",
+		"ALTER TABLE `{pre}settings` DROP INDEX `module`, ADD UNIQUE (`module_id`, `name`);",
+		"ALTER TABLE `{pre}settings` DROP `module`;",
+	);
+	echo executeSqlQueries($queries, 29);
+}
 
 // Konfigurationsdatei aktualisieren
 $config = array(
-	'db_version' => 28,
+	'db_version' => 29,
 	'maintenance_mode' => (bool) CONFIG_MAINTENANCE_MODE,
 	'seo_mod_rewrite' => (bool) CONFIG_SEO_MOD_REWRITE,
 	'date_time_zone' => is_int(CONFIG_DATE_TIME_ZONE) === true ? 'Europe/Berlin' : CONFIG_DATE_TIME_ZONE,

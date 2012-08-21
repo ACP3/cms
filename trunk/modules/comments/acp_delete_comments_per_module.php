@@ -24,7 +24,7 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	foreach ($marked_entries as $entry) {
-		$bool = $db->delete('comments', 'module = \'' . $db->escape($entry) . '\'');
+		$bool = $db->delete('comments AS c', 'c.module_id = (SELECT m.id FROM {pre}modules AS m WHERE m.name = \'' . $db->escape($entry) . '\')');
 	}
 	setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
 } else {

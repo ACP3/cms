@@ -11,7 +11,7 @@ if (defined('IN_ADM') === false)
 	exit;
 
 if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'comments', 'id = \'' . $uri->id . '\'') == 1) {
-	$comment = $db->select('name, user_id, message, module', 'comments', 'id = \'' . $uri->id . '\'');
+	$comment = $db->query('SELECT c.name, c.user_id, c.message, m.name AS module FROM {pre}comments AS c JOIN {pre}modules AS m ON(m.id = c.module_id) WHERE c.id = \'' . $uri->id . '\'');
 
 	$comment[0]['module'] = $db->escape($comment[0]['module'], 3);
 	$breadcrumb->append($lang->t($comment[0]['module'], $comment[0]['module']), $uri->route('acp/comments/list/module_' . $comment[0]['module']))

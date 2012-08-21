@@ -46,11 +46,12 @@ if (isset($_POST['submit']) === true) {
 			$file_sql = array('picture' => $result['name']);
 		}
 
+		$mod_id = $db->select('id', 'modules', 'name = \'' . $db->escape($_POST['module']) . '\'');
 		$insert_values = array(
 			'id' => '',
 			'name' => $db->escape($_POST['name']),
 			'description' => $db->escape($_POST['description']),
-			'module' => $db->escape($_POST['module'], 2),
+			'module_id' => $mod_id[0]['id'],
 		);
 		if (is_array($file_sql) === true) {
 			$insert_values = array_merge($insert_values, $file_sql);

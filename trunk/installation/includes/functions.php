@@ -54,6 +54,28 @@ function getTimeZones($current_value = '')
 	return $timeZones;
 }
 /**
+ * Führt die Installationsanweisungen des jeweiligen Moduls durch
+ *
+ * @param string $module
+ * @return boolean
+ */
+function installModule($module)
+{
+	$bool = false;
+
+	$path = MODULES_DIR . $module . '/install.class.php';
+	if (is_file($path) === true) {
+		require $path;
+		$className = 'ACP3_' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $module)))) . 'ModuleInstaller';
+		$install = new $className();
+		if ($install instanceof ACP3_ModuleInstaller) {
+			$bool = $install->install();
+		}
+	}
+
+	return $bool;
+}
+/**
  * Liefert ein Array zur Ausgabe als Dropdown-Menü
  * für die Anzahl der anzuzeigenden Datensätze je Seite
  *

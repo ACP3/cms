@@ -2,5 +2,5 @@
 <language>
 	<item key="captcha">Captcha</item>
 	<item key="invalid_captcha_entered">Either you had a typo in the captcha or it is outdated</item>
-	<item key="mod_description">Captchas can block Spambots</item>
+	<item key="mod_description">Captchas can block Spambots.</item>
 </language>

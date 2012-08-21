@@ -19,7 +19,7 @@ function commentsCount($module, $entry_id)
 {
 	global $db;
 
-	return $db->countRows('*', 'comments', 'module = \'' . $module . '\' AND entry_id =\'' . $entry_id . '\'');
+	return $db->query('SELECT COUNT(*) FROM {pre}comments AS c JOIN {pre}modules AS m ON(m.id = c.module_id) WHERE m.name = \'' . $module . '\' AND c.entry_id =\'' . $entry_id . '\'', 1);
 }
 /**
  * Zeigt alle Kommentare für das jeweilige Modul und Datensatz
@@ -38,7 +38,7 @@ function commentsList($module, $entry_id)
 	$settings = ACP3_Config::getModuleSettings('comments');
 
 	// Auflistung der Kommentare
-	$comments = $db->query('SELECT u.nickname AS user_name, c.name, c.user_id, c.date, c.message FROM {pre}comments AS c LEFT JOIN ({pre}users AS u) ON u.id = c.user_id WHERE c.module = \'' . $module . '\' AND c.entry_id = \'' . $entry_id . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . $auth->entries);
+	$comments = $db->query('SELECT u.nickname AS user_name, c.name, c.user_id, c.date, c.message FROM {pre}comments AS c JOIN {pre}modules AS m ON(m.id = c.module_id) LEFT JOIN ({pre}users AS u) ON u.id = c.user_id WHERE m.name = \'' . $module . '\' AND c.entry_id = \'' . $entry_id . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . $auth->entries);
 	$c_comments = count($comments);
 
 	if ($c_comments > 0) {
@@ -51,7 +51,7 @@ function commentsList($module, $entry_id)
 			}
 		}
 
-		$tpl->assign('pagination', pagination($db->countRows('*', 'comments', 'module = \'' . $module . '\' AND entry_id = \'' . $entry_id . '\'')));
+		$tpl->assign('pagination', pagination(commentsCount($module, $entry_id)));
 
 		for ($i = 0; $i < $c_comments; ++$i) {
 			if (empty($comments[$i]['user_name']) && empty($comments[$i]['name'])) {

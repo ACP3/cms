@@ -20,7 +20,9 @@ if (defined('IN_ACP3') === false)
 function setCategoriesCache($module)
 {
 	global $db;
-	return ACP3_Cache::create('categories_' . $module, $db->select('id, name, picture, description', 'categories', 'module = \'' . $module . '\'', 'name ASC'));
+
+	$data = $db->query('SELECT c.id, c.name, c.picture, c.description FROM {pre}categories AS c JOIN {pre}modules AS m ON(m.id = c.module_id) WHERE m.name = \'' . $module . '\' ORDER BY c.name ASC');
+	return ACP3_Cache::create('categories_' . $module, $data);
 }
 /**
  * Bindet die gecacheten Kategorien des jeweiligen Moduls ein
@@ -61,7 +63,7 @@ function categoriesCheckDuplicate($name, $module, $category_id = '')
 	global $db;
 
 	$id = ACP3_Validate::isNumber($category_id) ? ' AND id != \'' . $category_id . '\'' : '';
-	return $db->countRows('id', 'categories', 'name = \'' . $db->escape($name) . '\' AND module = \'' . $db->escape($module) . '\'' . $id) != 0 ? true : false;
+	return $db->query('SELECT COUNT(c.*) FROM {pre}categories AS c JOIN {pre}modules AS m ON(m.id = c.module_id) WHERE c.name = \'' . $db->escape($name) . '\' AND m.name = \'' . $db->escape($module) . '\'' . $id) != 0 ? true : false;
 }
 /**
  * Erzeugt eine neue Kategorie und gibt ihre ID zurück
@@ -75,12 +77,13 @@ function categoriesCreate($name, $module)
 	global $db;
 
 	if (categoriesCheckDuplicate($name, $module) === false) {
+		$mod_id = $db->select('id', 'modules', 'name = \'' . $db->escape($module) . '\'');
 		$insert_values = array(
 			'id' => '',
 			'name' => $db->escape($name),
 			'picture' => '',
 			'description' => '',
-			'module' => $db->escape($module),
+			'module_id' => $mod_id[0]['id'],
 		);
 		$db->link->beginTransaction();
 		$db->insert('categories', $insert_values);
