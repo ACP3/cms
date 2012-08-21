@@ -10,9 +10,9 @@
 		</ul>
 		<div class="tab-content">
 			<div id="tab-1" class="tab-pane active">
-				<p>
+				<div class="alert alert-info">
 					{lang t="users|display_profile_field"}
-				</p>
+				</div>
 				<div class="control-group">
 					<label for="nickname" class="control-label">{lang t="users|nickname"}</label>
 					<div class="controls"><input type="text" name="nickname" id="nickname" value="{$form.nickname}" maxlength="30"></div>
@@ -50,9 +50,9 @@
 				</div>
 			</div>
 			<div id="tab-2" class="tab-pane">
-				<p>
+				<div class="alert alert-info">
 					{lang t="users|display_profile_field"}
-				</p>
+				</div>
 {foreach $contact as $row}
 				<div class="control-group">
 					<label for="{$row.name}" class="control-label">{$row.lang}</label>
