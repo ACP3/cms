@@ -9,7 +9,7 @@ function editor($params) {
 		'url' => ROOT_DIR . 'includes/wysiwyg/tinymce/tiny_mce_gzip.php',
 		'themes' => 'advanced',
 		'languages' => 'en',
-		'cache_dir' => ACP3_ROOT . 'uploads/cache/',
+		'cache_dir' => ACP3_ROOT . 'uploads/cache/minify/',
 	);
 
 	if (isset($params['toolbar']) && $params['toolbar'] === 'simple') {
