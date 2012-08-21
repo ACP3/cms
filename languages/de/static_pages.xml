@@ -7,11 +7,11 @@
 	<item key="mod_description">Dieses Modul verwaltet die statischen Seiten.</item>
 	<item key="page">Seite %d</item>
 	<item key="page_statements">Seitenangaben</item>
-	<item key="select_create_menu_item">Bitte wählen Sie aus, ob für die statische Seite ein Menüpunkt erstellt werden soll oder nicht</item>
+	<item key="select_create_menu_item">Bitte wählen Sie aus, ob für diese statische Seite ein Menüpunkt erstellt werden soll oder nicht.</item>
 	<item key="static_pages">Statische Seiten</item>
 	<item key="table_of_contents">Inhaltsverzeichnis</item>
 	<item key="text">Text</item>
-	<item key="text_to_short">Der Text sollte mindestens 3 Zeichen lang sein</item>
+	<item key="text_to_short">Der Text sollte mindestens 3 Zeichen lang sein.</item>
 	<item key="title">Titel</item>
-	<item key="title_to_short">Der Titel sollte mindestens 3 Zeichen lang sein</item>
+	<item key="title_to_short">Der Titel sollte mindestens 3 Zeichen lang sein.</item>
 </language>

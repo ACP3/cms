@@ -34,12 +34,12 @@
 	<item key="export_type">Exportart</item>
 	<item key="file">Datei</item>
 	<item key="flood_barrier">Flood Sperre</item>
-	<item key="flood_barrier_description">Zeit in Sekunden, die ein Benutzer warten muss, bis er einen neuen Beitrag verfassen kann</item>
+	<item key="flood_barrier_description">Zeit in Sekunden, die ein Benutzer warten muss, bevor er einen neuen Beitrag verfassen kann.</item>
 	<item key="general">Allgemeines</item>
 	<item key="general_settings">Allgemeine Einstellungen</item>
 	<item key="homepage">Startseite</item>
-	<item key="homepage_description"><![CDATA[Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein]]></item>
-	<item key="incorrect_homepage"><![CDATA[Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein]]></item>
+	<item key="homepage_description"><![CDATA[Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein.]]></item>
+	<item key="incorrect_homepage"><![CDATA[Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein.]]></item>
 	<item key="install_module">Modul installieren</item>
 	<item key="installable_modules">Installierbare Module</item>
 	<item key="installed_modules">Installierte Module</item>
@@ -83,15 +83,13 @@
 	<item key="output_as_text">Als Text</item>
 	<item key="output_as_file">Als Datei</item>
 	<item key="performance">Leistung</item>
-	<item key="php_date_function"><![CDATA[siehe <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a>-Funktion von PHP]]></item>
-	<item key="query_failed">Abfrage fehlgeschalgen!</item>
-	<item key="query_successfully_executed">Abfrage erfolgreich durchgeführt!</item>
+	<item key="php_date_function"><![CDATA[siehe <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a>-Funktion von PHP.]]></item>
 	<item key="result">Ergebnis</item>
 	<item key="select_cache_images">Bitte wählen Sie aus, ob Bilder gecached werden sollen.</item>
 	<item key="select_editor">Bitte wählen Sie aus, mit welchen Editor Sie Ihre Einträge erstellen wollen.</item>
 	<item key="select_export_type">Bitte wählen Sie die Exportart aus.</item>
-	<item key="select_menu_item">Bitte wählen Sie einen der obenstehenden Menüpunkte aus, um zur gewünschten Aktion zu gelangen.</item>
-	<item key="select_mod_rewrite">Bitte geben Sie an, ob die suchmaschinenfreundlichen URIs verwendet werden sollen, oder nicht</item>
+	<item key="select_menu_item">Bitte wählen Sie einen der oben stehenden Menüpunkte aus, um zur gewünschten Aktion zu gelangen.</item>
+	<item key="select_mod_rewrite">Bitte geben Sie an, ob die suchmaschinenfreundlichen URIs verwendet werden sollen, oder nicht.</item>
 	<item key="select_online_maintenance">Bitte wählen Sie aus, ob sich die Seite im Wartungsmodus befinden soll oder nicht.</item>
 	<item key="select_output">Bittw wählen Sie aus, ob die Sicherung der SQL-Tabellen als Datei oder als Text ausgegeben werden soll.</item>
 	<item key="select_seo_aliases">Bitte wählen Sie aus, ob die URI-Aliase aktiviert werden sollen oder nicht.</item>
@@ -107,7 +105,7 @@
 	<item key="title">Seitentitel</item>
 	<item key="title_to_short">Bitte geben Sie einen Seitentitel ein.</item>
 	<item key="type_in_date_format">Bitte geben Sie eine Datumsformatierung ein.</item>
-	<item key="type_in_flood_barrier">Bitte geben Sie ein, für wieviele Sekunden ein Benutzer keine Beiträge abschicken kann.</item>
+	<item key="type_in_flood_barrier">Bitte geben Sie ein, für wie viele Sekunden ein Benutzer keine Beiträge abschicken kann.</item>
 	<item key="type_in_mailer_smtp_host">Bitte geben Sie den Hostnamen des SMTP-Servers an.</item>
 	<item key="type_in_mailer_smtp_port">Bitte geben Sie die Portnummer des SMTP-Servers an.</item>
 	<item key="type_in_mailer_smtp_username">Bitte geben Sie den Benutzernamen des SMTP-Servers an.</item>

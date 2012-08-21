@@ -1,11 +1,3 @@
-.pictures {
-	text-align: center;
-}
-.picture img, .pictures img {
-	padding: 5px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-}
 .picture {
 	margin: 10px 0;
 	text-align: center;

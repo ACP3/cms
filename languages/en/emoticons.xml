@@ -9,9 +9,9 @@
 	<item key="image_filesize">Maximum image filesize</item>
 	<item key="image_height">Maximum image height</item>
 	<item key="image_width">Maximum image width</item>
-	<item key="invalid_image_filesize_entered">Please type in the maximum image filesize in bytes</item>
-	<item key="invalid_image_height_entered">Please type in the maximum image height in pixels</item>
-	<item key="invalid_image_selected">Either you selected an image with a invalid filesize, or the image is to wide, to tall or the filsize is to big</item>
+	<item key="invalid_image_filesize_entered">Please type in the maximum image filesize in bytes.</item>
+	<item key="invalid_image_height_entered">Please type in the maximum image height in pixels.</item>
+	<item key="invalid_image_selected">Either you used an illegal file format or the image is too wide, too high or too large.</item>
 	<item key="invalid_image_width_entered">Please type in the maximum image width in pixels</item>
 	<item key="mod_description">With this module it is possible to add emoticons for example to comments.</item>
 	<item key="picture">Picture</item>

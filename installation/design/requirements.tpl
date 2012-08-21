@@ -1,5 +1,5 @@
 <div class="row-fluid">
-	<div class="span6">
+	<div class="span7">
 		<fieldset>
 			<legend>{lang t="installation|step_3_legend_1"}</legend>
 			<p>
@@ -39,7 +39,7 @@
 			</div>
 		</fieldset>
 	</div>
-	<div class="span6">
+	<div class="span5">
 		<fieldset>
 			<legend>{lang t="installation|step_3_legend_2"}</legend>
 			<p>

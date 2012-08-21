@@ -7,11 +7,11 @@
 	<item key="mod_description">This module manages the static pages.</item>
 	<item key="page">Page %d</item>
 	<item key="page_statements">Page statements</item>
-	<item key="select_create_menu_item">Please select, whether you want to create an menu item for this static page</item>
+	<item key="select_create_menu_item">Please select whether you want to create a menu item for this static page or not.</item>
 	<item key="static_pages">Static pages</item>
 	<item key="table_of_contents">Table of contents</item>
 	<item key="text">Text</item>
-	<item key="text_to_short">The text should be at least 3 characters long</item>
+	<item key="text_to_short">The text should be at least 3 characters long.</item>
 	<item key="title">Title</item>
-	<item key="title_to_short">The title should be at least 3 characters long</item>
+	<item key="title_to_short">The title should be at least 3 characters long.</item>
 </language>

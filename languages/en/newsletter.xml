@@ -11,14 +11,14 @@
 	<item key="acp_send">Send newsletter</item>
 	<item key="acp_settings">Settings</item>
 	<item key="action">Action</item>
-	<item key="action_description">Please select, what you want to do with this newsletter.</item>
+	<item key="action_description">Please choose what to do with the newsletter.</item>
 	<item key="activate">Activate newsletter account</item>
 	<item key="activate_account">Active newsletter account</item>
 	<item key="activate_error">While activating the newsletter account an error has occured.</item>
-	<item key="activate_success">The newsletter account was successfully activated and can now be used.</item>
+	<item key="activate_success">The newsletter account has been successfully activated and may now be used.</item>
 	<item key="already_sent">Already sent</item>
-	<item key="compose_save_error">While sending respectively saving at least one error has occured.</item>
-	<item key="compose_success">The newsletter was successfully sent.</item>
+	<item key="create_save_error">While sending respectively saving the newsletter an error has occured.</item>
+	<item key="create_success">The newsletter has been successfully sent.</item>
 	<item key="list">Subscribe/Unsubscribe the newsletter</item>
 	<item key="mailsig">E-mail signature</item>
 	<item key="mod_description">This module is responsible for the newsletter.</item>
@@ -27,23 +27,23 @@
 	<item key="newsletter_archive">Newsletter archive</item>
 	<item key="not_yet_sent">Not yet sent</item>
 	<item key="only_save">Only save</item>
-	<item key="save_success">The newsletter has been saved successfully.</item>
+	<item key="save_success">The newsletter has been successfully saved.</item>
 	<item key="send_and_save">Send and save</item>
 	<item key="status">Status</item>
 	<item key="subject">Subject</item>
-	<item key="subject_to_short">The subject should be at least 3 characters long</item>
+	<item key="subject_to_short">The subject should be at least 3 characters long.</item>
 	<item key="subscribe">Subscribe</item>
 	<item key="subscribe_error">While creating your newsletter account an error has occured.</item>
-	<item key="subscribe_mail_body">You have successfully subscribed to the newsletter of {host}.
-To complete the registration process, please click on the hyperlink below.
-If you haven't subscribed this newsletter, please ignore or delete this E-mail.</item>
-	<item key="subscribe_mail_subject">Welcome to the newsletter of %s</item>
+	<item key="subscribe_mail_body">You have successfully subscribed to the newsletter on the website {host}.
+To complete the registration process, please click on the link below.
+If you've received this e-mail mistakenly, please ignore or delete this e-mail.</item>
+	<item key="subscribe_mail_subject">Welcome to the newsletter of %s!</item>
 	<item key="subscribe_success">The newsletter account has been successfully created.</item>
 	<item key="test_newsletter">Test newsletter</item>
-	<item key="test_nl_description">Will only be send to the E-mail adress which is stated in the newsletter settings</item>
+	<item key="test_nl_description">Will only be send to the E-mail adress which is stated in the newsletter settings.</item>
 	<item key="text">Text</item>
-	<item key="text_to_short">The text should be at least 3 characters long</item>
+	<item key="text_to_short">The text should be at least 3 characters long.</item>
 	<item key="unsubscribe">Unsubscribe</item>
 	<item key="unsubscribe_error">While deleting the newsletter account an error has occured.</item>
-	<item key="unsubscribe_success">The newsletter account was successfully deleted.</item>
+	<item key="unsubscribe_success">The newsletter account has been successfully deleted.</item>
 </language>

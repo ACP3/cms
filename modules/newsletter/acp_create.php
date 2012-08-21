@@ -59,9 +59,9 @@ if (isset($_POST['submit']) === true) {
 		if ($_POST['action'] == 0 && $bool !== false) {
 			setRedirectMessage(true, $lang->t('newsletter', 'save_success'), 'acp/newsletter');
 		} elseif ($_POST['action'] == 1 && $bool !== false && $bool2 === true) {
-			setRedirectMessage($bool && $bool2, $lang->t('newsletter', 'compose_success'), 'acp/newsletter');
+			setRedirectMessage($bool && $bool2, $lang->t('newsletter', 'create_success'), 'acp/newsletter');
 		} else {
-			setRedirectMessage(false, $lang->t('newsletter', 'compose_save_error'), 'acp/newsletter');
+			setRedirectMessage(false, $lang->t('newsletter', 'create_save_error'), 'acp/newsletter');
 		}
 	}
 }
