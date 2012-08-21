@@ -7,11 +7,11 @@ class ACP3_AccessModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	public function createTables() {
-		return true;
+		return array();
 	}
 
 	public function removeTables() {
-		return true;
+		return array();
 	}
 
 	public function addSettings() {

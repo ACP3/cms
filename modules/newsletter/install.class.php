@@ -9,9 +9,7 @@ class ACP3_NewsletterModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	public function createTables() {
-		global $db;
-
-		$queries = array(
+		return array(
 			"CREATE TABLE `{pre}newsletter_accounts` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`mail` VARCHAR(120) NOT NULL,
@@ -28,29 +26,13 @@ class ACP3_NewsletterModuleInstaller extends ACP3_ModuleInstaller {
 				PRIMARY KEY (`id`)
 			) {engine};"
 		);
-
-		$engine = 'ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
-		$bool = false;
-		foreach ($queries as $query) {
-			$bool = $db->query(str_replace('{engine}', $engine, $query), 0);
-		}
-
-		return (bool) $bool;
 	}
 
 	public function removeTables() {
-		global $db;
-
-		$queries = array(
+		return array(
 			"DROP TABLE `{pre}newsletter_accounts`;",
-			"DROP TABLE `{pre}newsletter_archive`;",
+			"DROP TABLE `{pre}newsletter_archive`;"
 		);
-
-		$bool = false;
-		foreach ($queries as $query) {
-			$bool = $db->query($query, 0);
-		}
-		return (bool) $bool;
 	}
 
 	public function addSettings() {

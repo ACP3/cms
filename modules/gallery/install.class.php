@@ -3,9 +3,7 @@
 class ACP3_GalleryModuleInstaller extends ACP3_ModuleInstaller {
 
 	public function createTables() {
-		global $db;
-
-		$queries = array(
+		return array(
 			"CREATE TABLE `{pre}gallery` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`start` DATETIME NOT NULL,
@@ -24,29 +22,13 @@ class ACP3_GalleryModuleInstaller extends ACP3_ModuleInstaller {
 				PRIMARY KEY (`id`), INDEX `foreign_gallery_id` (`gallery_id`)
 			) {engine};"
 		);
-
-		$engine = 'ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
-		$bool = false;
-		foreach ($queries as $query) {
-			$bool = $db->query(str_replace('{engine}', $engine, $query), 0);
-		}
-
-		return (bool) $bool;
 	}
 
 	public function removeTables() {
-		global $db;
-
-		$queries = array(
+		return array(
 			"DROP TABLE `{pre}gallery_pictures`;",
-			"DROP TABLE `{pre}gallery`;",
+			"DROP TABLE `{pre}gallery`;"
 		);
-
-		$bool = false;
-		foreach ($queries as $query) {
-			$bool = $db->query($query, 0);
-		}
-		return (bool) $bool;
 	}
 
 	public function addSettings() {

@@ -7,9 +7,7 @@ class ACP3_CategoriesModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	public function createTables() {
-		global $db;
-
-		$queries = array(
+		return array(
 			"CREATE TABLE `{pre}categories` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`name` VARCHAR(120) NOT NULL,
@@ -19,28 +17,10 @@ class ACP3_CategoriesModuleInstaller extends ACP3_ModuleInstaller {
 				PRIMARY KEY (`id`)
 			) {engine};"
 		);
-
-		$engine = 'ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
-		$bool = false;
-		foreach ($queries as $query) {
-			$bool = $db->query(str_replace('{engine}', $engine, $query), 0);
-		}
-
-		return (bool) $bool;
 	}
 
 	public function removeTables() {
-		global $db;
-
-		$queries = array(
-			"DROP TABLE `{pre}categories`;",
-		);
-
-		$bool = false;
-		foreach ($queries as $query) {
-			$bool = $db->query($query, 0);
-		}
-		return (bool) $bool;
+		return array();
 	}
 
 	public function addSettings() {
@@ -60,9 +40,7 @@ class ACP3_CategoriesModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	public function removeSettings() {
-		global $db;
-
-		return (bool) $db->delete('settings', 'module_id = ' . $this->module_id);
+		return true;
 	}
 
 	public function addToModulesTable() {

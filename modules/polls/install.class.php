@@ -3,9 +3,7 @@
 class ACP3_PollsModuleInstaller extends ACP3_ModuleInstaller {
 
 	public function createTables() {
-		global $db;
-
-		$queries = array(
+		return array(
 			"CREATE TABLE `{pre}polls` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`start` DATETIME NOT NULL,
@@ -30,30 +28,14 @@ class ACP3_PollsModuleInstaller extends ACP3_ModuleInstaller {
 				INDEX (`poll_id`, `answer_id`, `user_id`)
 			) {engine};"
 		);
-
-		$engine = 'ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
-		$bool = false;
-		foreach ($queries as $query) {
-			$bool = $db->query(str_replace('{engine}', $engine, $query), 0);
-		}
-
-		return (bool) $bool;
 	}
 
 	public function removeTables() {
-		global $db;
-
-		$queries = array(
+		return array(
 			"DROP TABLE `{pre}poll_votes`;",
 			"DROP TABLE `{pre}poll_answers`;",
-			"DROP TABLE `{pre}polls`;",
+			"DROP TABLE `{pre}polls`;"
 		);
-
-		$bool = false;
-		foreach ($queries as $query) {
-			$bool = $db->query($query, 0);
-		}
-		return (bool) $bool;
 	}
 
 	public function addSettings() {

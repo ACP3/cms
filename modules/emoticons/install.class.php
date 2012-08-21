@@ -3,9 +3,7 @@
 class ACP3_EmoticonsModuleInstaller extends ACP3_ModuleInstaller {
 
 	public function createTables() {
-		global $db;
-
-		$queries = array(
+		return array(
 			"CREATE TABLE `{pre}emoticons` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`code` VARCHAR(10) NOT NULL,
@@ -35,30 +33,12 @@ class ACP3_EmoticonsModuleInstaller extends ACP3_ModuleInstaller {
 			"INSERT INTO `{pre}emoticons` VALUES ('', ':idea:', 'Idea', '19.gif');",
 			"INSERT INTO `{pre}emoticons` VALUES ('', ':arrow:', 'Arrow', '20.gif');",
 			"INSERT INTO `{pre}emoticons` VALUES ('', ':|', 'Neutral', '21.gif');",
-			"INSERT INTO `{pre}emoticons` VALUES ('', ':mrgreen:', 'Mr. Green', '22.gif');",
+			"INSERT INTO `{pre}emoticons` VALUES ('', ':mrgreen:', 'Mr. Green', '22.gif');"
 		);
-
-		$engine = 'ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
-		$bool = false;
-		foreach ($queries as $query) {
-			$bool = $db->query(str_replace('{engine}', $engine, $query), 0);
-		}
-
-		return (bool) $bool;
 	}
 
 	public function removeTables() {
-		global $db;
-
-		$queries = array(
-			"DROP TABLE `{pre}emoticons`;",
-		);
-
-		$bool = false;
-		foreach ($queries as $query) {
-			$bool = $db->query($query, 0);
-		}
-		return (bool) $bool;
+		return array("DROP TABLE `{pre}emoticons`;");
 	}
 
 	public function addSettings() {

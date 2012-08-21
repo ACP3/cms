@@ -3,9 +3,7 @@
 class ACP3_NewsModuleInstaller extends ACP3_ModuleInstaller {
 
 	public function createTables() {
-		global $db;
-
-		$queries = array(
+		return array(
 			"CREATE TABLE `{pre}news` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`start` DATETIME NOT NULL,
@@ -22,28 +20,10 @@ class ACP3_NewsModuleInstaller extends ACP3_ModuleInstaller {
 				PRIMARY KEY (`id`), FULLTEXT KEY `index` (`headline`,`text`), INDEX `foreign_category_id` (`category_id`)
 			) {engine};"
 		);
-
-		$engine = 'ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
-		$bool = false;
-		foreach ($queries as $query) {
-			$bool = $db->query(str_replace('{engine}', $engine, $query), 0);
-		}
-
-		return (bool) $bool;
 	}
 
 	public function removeTables() {
-		global $db;
-
-		$queries = array(
-			"DROP TABLE `{pre}news`;",
-		);
-
-		$bool = false;
-		foreach ($queries as $query) {
-			$bool = $db->query($query, 0);
-		}
-		return (bool) $bool;
+		return array("DROP TABLE `{pre}news`;");
 	}
 
 	public function addSettings() {
