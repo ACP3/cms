@@ -33,21 +33,41 @@ switch ($uri->action) {
 	case 'install':
 		// Nur noch nicht installierte Module berücksichtigen
 		if ($db->countRows('*', 'modules', 'name = \'' . $db->escape($uri->dir) . '\'') == 0) {
-			// Modul in die Modules-SQL-Tabelle eintragen
-			$insert_values = array(
-				'id' => '',
-				'name' => $db->escape($uri->dir),
-				'active' => 1
-			);
-			$bool = $db->insert('modules', $insert_values);
+			$bool = false;
+			$path = MODULES_DIR . $uri->dir . '/install.class.php';
+			if (is_file($path) === true) {
+				require $path;
 
-			/**
-			 * @todo Vom Modul mitgebrachte SQL-Tabellen installieren
-			 */
+				$className = 'ACP3_' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $uri->dir)))) . 'ModuleInstaller';
+				$install = new $className();
+				$bool = $install->install();
+			}
 
 			$text = $lang->t('system', $bool !== false ? 'mod_installation_success' : 'mod_installation_error');
 		} else {
 			$text = $lang->t('system', 'module_already_installed');
+		}
+		ACP3_View::setContent(confirmBox($text, $uri->route('acp/system/modules')));
+		break;
+	case 'uninstall':
+		$mod_info = ACP3_Modules::parseInfo($uri->dir);
+		// Nur installierte und Nicht-Core-Module berücksichtigen
+		if ($db->countRows('*', 'modules', 'name = \'' . $db->escape($uri->dir) . '\'') == 1 && $mod_info['protected'] === false) {
+			$bool = false;
+			$path = MODULES_DIR . $uri->dir . '/install.class.php';
+			if (is_file($path) === true) {
+				require $path;
+
+				$mod_id = $db->select('id', 'modules', 'name = \'' . $db->escape($uri->dir) . '\'');
+				$className = 'ACP3_' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $uri->dir)))) . 'ModuleInstaller';
+				$install = new $className();
+				$install->setModuleId($mod_id[0]['id']);
+				$bool = $install->uninstall();
+			}
+
+			$text = $lang->t('system', $bool !== false ? 'mod_uninstallation_success' : 'mod_uninstallation_error');
+		} else {
+			$text = $lang->t('system', 'module_not_uninstallable');
 		}
 		ACP3_View::setContent(confirmBox($text, $uri->route('acp/system/modules')));
 		break;

@@ -36,7 +36,7 @@ function commentsCreate($module, $entry_id)
 			$errors['name'] = $lang->t('common', 'name_to_short');
 		if (strlen($_POST['message']) < 3)
 			$errors['message'] = $lang->t('common', 'message_to_short');
-		if (ACP3_Modules::check($db->escape($_POST['module'], 2), 'list') === false || ACP3_Validate::isNumber($_POST['entry_id']) === false)
+		if (ACP3_Modules::check($db->escape($_POST['module']), 'list') === false || ACP3_Validate::isNumber($_POST['entry_id']) === false)
 			$errors[] = $lang->t('comments', 'module_doesnt_exist');
 		if ($auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
 			$errors['captcha'] = $lang->t('captcha', 'invalid_captcha_entered');
@@ -46,6 +46,7 @@ function commentsCreate($module, $entry_id)
 		} elseif (ACP3_Validate::formToken() === false) {
 			return errorBox($lang->t('common', 'form_already_submitted'));
 		} else {
+			$mod_id = $db->select('id', 'modules', 'name = \'' . $db->escape($_POST['module']) . '\'');
 			$insert_values = array(
 				'id' => '',
 				'date' => $date->timestampToDateTime($time),
@@ -53,7 +54,7 @@ function commentsCreate($module, $entry_id)
 				'name' => $auth->isUser() === true && ACP3_Validate::isNumber($auth->getUserId() === true) ? '' : $db->escape($_POST['name']),
 				'user_id' => $auth->isUser() === true && ACP3_Validate::isNumber($auth->getUserId() === true) ? $auth->getUserId() : '',
 				'message' => $db->escape($_POST['message']),
-				'module' => $db->escape($_POST['module'], 2),
+				'module_id' => $mod_id[0]['id'],
 				'entry_id' => $_POST['entry_id'],
 			);
 

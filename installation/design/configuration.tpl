@@ -1,42 +1,3 @@
-{if isset($sql_queries)}
-<p style="text-align:center">
-	<a href="#" id="queries-link">{lang t="installation|show_hide_executed_db_queries"}</a>
-</p>
-<table id="queries" class="table table-condensed">
-	<thead>
-		<tr>
-			<th>{lang t="system|sql_query"}</th>
-			<th style="width:10%">{lang t="system|result"}</th>
-		</tr>
-	</thead>
-	<tbody>
-{foreach $sql_queries as $row}
-		<tr>
-			<td>{$row.query}</td>
-			<td class="alert {$row.class}">{$row.result}</td>
-		</tr>
-{/foreach}
-	</tbody>
-</table>
-{if isset($install_error)}
-<p>
-	{lang t="installation|installation_error"}
-</p>
-<div class="form-actions" style="text-align:center">
-	<a href="{uri args="overview/welcome"}" class="btn">{lang t="common|back"}</a>
-</div>
-{else}
-<p>
-	{lang t="installation|installation_successful_1"}
-</p>
-<p>
-	{lang t="installation|installation_successful_2"}
-</p>
-<div class="form-actions" style="text-align:center">
-	<a href="{$INSTALLER_DIR}../" class="btn">{lang t="common|forward"}</a>
-</div>
-{/if}
-{else}
 {if isset($error_msg)}
 {$error_msg}
 {/if}
@@ -148,4 +109,3 @@
 		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
 	</div>
 </form>
-{/if}

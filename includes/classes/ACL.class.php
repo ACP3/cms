@@ -168,7 +168,8 @@ class ACP3_ACL
 		global $db;
 
 		// Berechtigungen einlesen, auf die der Benutzer laut seinen Rollen Zugriff hat
-		$rules = $db->query('SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM {pre}acl_rules AS ru JOIN {pre}modules AS m ON (ru.module_id = m.id) JOIN {pre}acl_privileges AS p ON(ru.privilege_id = p.id) WHERE ru.role_id IN(' . implode(',', $roles) . ')');
+		$impl_roles = implode(',', $roles);
+		$rules = $db->query('SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM {pre}acl_rules AS ru JOIN {pre}modules AS m ON (ru.module_id = m.id) JOIN {pre}acl_privileges AS p ON(ru.privilege_id = p.id) WHERE ru.role_id IN(' . $impl_roles . ')');
 		$c_rules = count($rules);
 		$privileges = array();
 		for ($i = 0; $i < $c_rules; ++$i) {
@@ -181,7 +182,7 @@ class ACP3_ACL
 			);
 		}
 
-		return ACP3_Cache::create('acl_rules_' . implode(',', $roles), $privileges, 'acl');
+		return ACP3_Cache::create('acl_rules_' . $impl_roles, $privileges, 'acl');
 	}
 	/**
 	 * Gibt alle existieren Rollen aus
@@ -331,8 +332,10 @@ class ACP3_ACL
 					$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
 
 				foreach ($module as $file) {
-					if ($file !== '.' && $file !== '..' && is_file(MODULES_DIR . $row . '/' . $file) === true && strpos($file, '.php') !== false) {
+					if ($file !== '.' && $file !== '..' && $file !== 'install.class.php' && is_file(MODULES_DIR . $row . '/' . $file) === true && strpos($file, '.php') !== false) {
+						// .php entfernen
 						$file = substr($file, 0, -4);
+
 						if (isset($special_resources[$row][$file])) {
 							$privilege_id = $special_resources[$row][$file];
 						} else {

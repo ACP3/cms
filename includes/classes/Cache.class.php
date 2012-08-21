@@ -94,20 +94,19 @@ class ACP3_Cache
 	 * @param string $dir
 	 *	Einen Unterordner des Cache-Ordners löschen
 	 */
-	public static function purge($dir = 'sql', $cache_id = '')
+	public static function purge($dir = '', $cache_id = '')
 	{
-		$path = ACP3_ROOT . self::$cache_dir . (!empty($dir) && !preg_match('=/=', $dir) ? $dir . '/' : '');
+		$path = ACP3_ROOT . self::$cache_dir . (!empty($dir) && !preg_match('=/=', $dir) ? $dir . '/' : 'sql/');
 		if (is_dir($path)) {
 			$cache_id.= $cache_id !== '' ? '_' : '';
-			$cache_dir = scandir($path);
-			$c_cache_dir = count($cache_dir);
 
-			for ($i = 0; $i < $c_cache_dir; ++$i) {
-				if (is_file($path . $cache_dir[$i]) && $cache_dir[$i] !== '.htaccess') {
+			$cache_dir = scandir($path);
+			foreach ($cache_dir as $row) {
+				if (is_file($path . $row) && $row !== '.htaccess') {
 					// Wenn eine $cache_id gesetzt wurde, nur diese Dateien löschen
-					if ($cache_id !== '' && preg_match('/^(' . $cache_id . ')/', $cache_dir[$i]) === true)
+					if ($cache_id !== '' && strpos($row, $cache_id) !== 0)
 						continue;
-					unlink($path . $cache_dir[$i]);
+					@unlink($path . $row);
 				}
 			}
 		}

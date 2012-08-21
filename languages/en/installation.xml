@@ -2,6 +2,8 @@
 <language>
 	<item key="accept">Accept</item>
 	<item key="admin_account">Administrator account</item>
+	<item key="category_name">First category</item>
+	<item key="category_description">This is the first category.</item>
 	<item key="check_again">Check again</item>
 	<item key="configuration">Configuration</item>
 	<item key="database">Database</item>

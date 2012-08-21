@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$categories = $db->select('id, name, description, module', 'categories', 0, 'module ASC, name DESC, id DESC', POS, $auth->entries);
+$categories = $db->query('SELECT c.id, c.name, c.description, m.name AS module FROM {pre}categories AS c JOIN {pre}modules AS m ON(m.id = c.module_id) ORDER BY m.name ASC, c.name DESC, c.id DESC LIMIT ' . POS . ',' . $auth->entries);
 $c_categories = count($categories);
 
 if ($c_categories > 0) {

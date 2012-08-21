@@ -75,6 +75,8 @@
 	<item key="mod_installation_success">The module was successfuly installed.</item>
 	<item key="mod_rewrite">Use mod_rewrite</item>
 	<item key="mod_rewrite_description">Only enable this, if you are using the Apache web server.</item>
+	<item key="mod_uninstallation_error">While uninstalling the module an error has occured.</item>
+	<item key="mod_uninstallation_success">The module was successfuly uninstalled.</item>
 	<item key="module_name">Module name</item>
 	<item key="no_modules_available_for_installation">Currently there are no new modules available for installation!</item>
 	<item key="output">Output</item>
@@ -111,5 +113,6 @@
 	<item key="type_in_mailer_smtp_username">Please type in the username of the SMTP server.</item>
 	<item key="type_in_minify_cache_lifetime">Please type in the cache lifetime of CSS and JavaScript files.</item>
 	<item key="type_in_text_or_select_sql_file">Please either type in the sql queries into the textarea oder just upload a file.</item>
+	<item key="uninstall_module">Uninstall module</item>
 	<item key="version">Version</item>
 </language>
