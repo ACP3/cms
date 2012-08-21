@@ -4,5 +4,5 @@ $(document).ready(function() {
 });
 </script>
 <div id="redirect-message" class="alert alert-{if $redirect.success === true}success{else}error{/if} align-center">
-	<h4 class="alert-heading">{$redirect.text}</h4>
+	<strong>{$redirect.text}</strong>
 </div>

@@ -27,11 +27,11 @@ $(document).ready(function() {
 {foreach $guestbook as $row}
 <div id="gb-entry-{$row.id}" class="dataset-box" style="width: 65%">
 	<div class="header">
-		<div class="f-right small">{$row.date}</div>
+		<div class="pull-right small">{$row.date}</div>
 		{if !empty($row.user_id)}<a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>{else}{$row.name}{/if}<br>
 	</div>
 	<div class="content">
-		<div class="f-right">
+		<div class="pull-right">
 {if $row.website != ''}
 			<a href="{$row.website}" onclick="window.open(this.href); return false" title="{lang t="guestbook|visit_website"}">{icon path="16/gohome" width="16" height="16" alt="`$row.website`"}</a><br>
 {/if}
@@ -44,7 +44,7 @@ $(document).ready(function() {
 </div>
 {/foreach}
 {else}
-<div class="alert alert-block align-center">
-	<h5>{lang t="common|no_entries"}</h5>
+<div class="alert align-center">
+	<strong>{lang t="common|no_entries"}</strong>
 </div>
 {/if}

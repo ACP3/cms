@@ -17,12 +17,12 @@
 	<div class="control-group">
 		<label for="emoticons-1" class="control-label">{lang t="comments|allow_emoticons"}</label>
 		<div class="controls">
+			<div class="btn-group" data-toggle="radio">
 {foreach $allow_emoticons as $row}
-			<label for="emoticons-{$row.value}" class="radio">
 				<input type="radio" name="emoticons" id="emoticons-{$row.value}" value="{$row.value}"{$row.checked}>
-				{$row.lang}
-			</label>
+				<label for="emoticons-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+			</div>
 		</div>
 	</div>
 {/if}

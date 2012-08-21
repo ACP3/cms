@@ -1,6 +1,6 @@
 <div class="dataset-box">
 	<div class="header">
-		<div class="f-right small">{$news.date}</div>
+		<div class="pull-right small">{$news.date}</div>
 		{$news.headline}
 	</div>
 	<div class="content">
