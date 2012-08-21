@@ -1,3 +1,3 @@
-<div class="alert alert-block align-center">
+<div class="alert align-center">
 	{lang t="errors|no_access"}
 </div>

@@ -183,13 +183,21 @@ function processNavbar($block, $use_bootstrap = true, $class = '') {
 				// Link zusammenbauen
 				$href = $items[$i]['mode'] == 1 || $items[$i]['mode'] == 2 || $items[$i]['mode'] == 4 ? $uri->route($items[$i]['uri'], 1) : $items[$i]['uri'];
 				$target = $items[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
-				$link = '<a href="' . $href . '"' . $target . '>' . $db->escape($items[$i]['title'], 3) . '</a>';
 
 				// Falls für Knoten Kindelemente vorhanden sind, neue Unterliste erstellen
 				if (isset($items[$i + 1]) && $items[$i + 1]['level'] > $items[$i]['level']) {
-					$navbar[$block].= '<li class="' . $css . '">' . $link . '<ul class="unstyled navigation-' . $block . '-subnav-' . $items[$i]['id'] . '">';
-					// Elemente ohne Kindelemente
+					if ($use_bootstrap === true) {
+						$css.= $items[$i]['level'] == 0 ? ' dropdown' : ' dropdown-submenu';
+						$caret = $items[$i]['level'] == 0 ? ' <b class="caret"></b>' : '';
+						$link = '<a href="' . $href . '" class="dropdown-toggle" data-toggle="dropdown" data-target="#"' . $target . '>' . $db->escape($items[$i]['title'], 3) . $caret . '</a>';
+						$navbar[$block].= '<li class="' . $css . '">' . $link . '<ul class="dropdown-menu navigation-' . $block . '-subnav-' . $items[$i]['id'] . '">';
+					} else {
+						$link = '<a href="' . $href . '"' . $target . '>' . $db->escape($items[$i]['title'], 3) . '</a>';
+						$navbar[$block].= '<li class="' . $css . '">' . $link . '<ul class="navigation-' . $block . '-subnav-' . $items[$i]['id'] . '">';
+					}
+				// Elemente ohne Kindelemente
 				} else {
+					$link = '<a href="' . $href . '"' . $target . '>' . $db->escape($items[$i]['title'], 3) . '</a>';
 					$navbar[$block].= '<li class="' . $css . '">' . $link . '</li>';
 					// Liste für untergeordnete Elemente schließen
 					if (isset($items[$i + 1]) && $items[$i + 1]['level'] < $items[$i]['level'] || !isset($items[$i + 1]) && $items[$i]['level'] != '0') {

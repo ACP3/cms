@@ -40,7 +40,7 @@
 {mark name="entries"}
 {/if}
 {else}
-	<div class="alert alert-block align-center">
+	<div class="alert align-center">
 		<h5>{lang t="common|entries"}</h5>
 	</div>
 {/if}

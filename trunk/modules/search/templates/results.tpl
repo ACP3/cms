@@ -16,7 +16,7 @@
 {/foreach}
 </ol>
 {else}
-<div class="alert alert-block align-center">
+<div class="alert align-center">
 	<h5>{$no_search_results}</h5>
 </div>
 {/if}

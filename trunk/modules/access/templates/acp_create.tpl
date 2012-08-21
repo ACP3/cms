@@ -26,7 +26,7 @@
 			</div>
 			<div id="tab-2" class="tab-pane">
 {foreach $modules as $module => $values}
-				<fieldset class="f-left" style="width:50%">
+				<fieldset class="pull-left" style="width:50%">
 					<legend>{$module}</legend>
 {foreach $values.privileges as $privilege}
 					<div class="control-group">

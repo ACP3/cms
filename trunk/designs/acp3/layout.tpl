@@ -15,11 +15,9 @@
 <body>
 	<div class="container-fluid">
 		<h1 id="logo">{$PAGE_TITLE}</h1>
-		<div class="navbar">
+		<div class="navbar navbar-inverse">
 			<div class="navbar-inner">
-				<div class="container">
-					{navbar block="main"}
-				</div>
+				{navbar block="main"}
 			</div>
 		</div>
 		<div class="row-fluid">

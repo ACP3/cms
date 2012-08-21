@@ -64,8 +64,8 @@
 				</tbody>
 			</table>
 {else}
-			<div class="alert alert-block align-center">
-				<h5>{lang t="system|no_modules_available_for_installation"}</h5>
+			<div class="alert align-center">
+				<strong>{lang t="system|no_modules_available_for_installation"}</strong>
 			</div>
 {/if}
 		</div>

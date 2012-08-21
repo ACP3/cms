@@ -1,5 +1,5 @@
 <div class="alert alert-block">
-	<h4 class="alert-heading">{lang t="acp|access_to_modules"}</h4>
+	<strong>{lang t="acp|access_to_modules"}</strong>
 	<ul>
 {foreach $modules as $module}
 		<li><a href="{uri args="acp/`$module.dir`"}">{$module.name}</a></li>

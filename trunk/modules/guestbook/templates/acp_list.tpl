@@ -41,8 +41,8 @@
 {mark name="entries"}
 {/if}
 {else}
-	<div class="alert alert-block align-center">
-		<h5>{lang t="common|no_entries"}</h5>
+	<div class="alert align-center">
+		<strong>{lang t="common|no_entries"}</strong>
 	</div>
 {/if}
 </form>

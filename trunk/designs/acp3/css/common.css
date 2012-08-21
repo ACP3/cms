@@ -11,12 +11,6 @@
 .align-justify {
 	text-align: justify;
 }
-.f-left {
-	float: left;
-}
-.f-right {
-	float: right;
-}
 /* Datensätze */
 table .sub-table-header {
 	background: #f6f6f6;
@@ -105,7 +99,10 @@ table .sub-table-header {
 	text-align: left;
 }
 #adm-list h2 {
-	font-size: 1.2em;
+	margin: 0;
+	padding: 0;
+	font-size: 17px;
+	line-height: 40px;
 }
 #adm-list a, #adm-list input {
 	margin: 4px 0 0 8px;
@@ -123,13 +120,11 @@ table .sub-table-header {
 .btn-group > input {
 	display: none;
 }
-
 .btn-group input:first-child + .btn {
 	border-bottom-left-radius: 4px;
 	border-top-left-radius: 4px;
 	margin-left: 0;
 }
-
 input:checked + label.btn {
 	background-color: #E6E6E6;
 	background-image: none;

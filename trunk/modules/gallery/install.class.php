@@ -56,11 +56,12 @@ class ACP3_GalleryModuleInstaller extends ACP3_ModuleInstaller {
 			'width' => 640,
 			'height' => 480,
 			'thumbwidth' => 160,
-			'thumbheight' => 480,
+			'thumbheight' => 120,
 			'maxwidth' => 2048,
 			'maxheight' => 1536,
 			'filesize' => 20971520,
 			'overlay' => 1,
+			'comments' => 1,
 			'dateformat' => 'long',
 			'sidebar' => 5,
 		);

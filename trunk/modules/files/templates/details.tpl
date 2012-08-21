@@ -1,6 +1,6 @@
 <div class="dataset-box">
 	<div class="header">
-		<div class="f-right small">{$file.date}</div>
+		<div class="pull-right small">{$file.date}</div>
 		{$file.link_title}
 	</div>
 	<div class="content">

@@ -2,7 +2,7 @@
 	<div class="header bigger">
 {if isset($categories)}
 {if ACP3_Modules::check('newsletter', 'list')}
-		<div class="f-left">
+		<div class="pull-left">
 			<a href="{uri args="newsletter/list"}">{lang t="newsletter|list"}</a>
 		</div>
 {/if}
@@ -20,7 +20,7 @@
 {foreach $news as $row}
 <div class="dataset-box">
 	<div class="header">
-		<div class="f-right small">
+		<div class="pull-right small">
 			{$row.date}
 		</div>
 		{$row.headline}
@@ -37,7 +37,7 @@
 </div>
 {/foreach}
 {else}
-<div class="alert alert-block align-center">
-	<h5>{lang t="common|no_entries"}</h5>
+<div class="alert align-center">
+	<strong>{lang t="common|no_entries"}</strong>
 </div>
 {/if}
