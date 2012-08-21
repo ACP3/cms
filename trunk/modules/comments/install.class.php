@@ -3,9 +3,7 @@
 class ACP3_CommentsModuleInstaller extends ACP3_ModuleInstaller {
 
 	public function createTables() {
-		global $db;
-
-		$queries = array(
+		return array(
 			"CREATE TABLE `{pre}comments` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`ip` VARCHAR(40) NOT NULL,
@@ -18,28 +16,10 @@ class ACP3_CommentsModuleInstaller extends ACP3_ModuleInstaller {
 				PRIMARY KEY (`id`), INDEX (`module_id`, `entry_id`)
 			) {engine};"
 		);
-
-		$engine = 'ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
-		$bool = false;
-		foreach ($queries as $query) {
-			$bool = $db->query(str_replace('{engine}', $engine, $query), 0);
-		}
-
-		return (bool) $bool;
 	}
 
 	public function removeTables() {
-		global $db;
-
-		$queries = array(
-			"DROP TABLE `{pre}comments`;",
-		);
-
-		$bool = false;
-		foreach ($queries as $query) {
-			$bool = $db->query($query, 0);
-		}
-		return (bool) $bool;
+		return array("DROP TABLE `{pre}comments`;");
 	}
 
 	public function addSettings() {

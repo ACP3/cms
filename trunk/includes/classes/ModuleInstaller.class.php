@@ -27,7 +27,7 @@ abstract class ACP3_ModuleInstaller {
 	 * @return boolean
 	 */
 	public function install() {
-		$bool1 = $this->createTables();
+		$bool1 = $this->executeSqlQueries($this->createTables());
 		$bool2 = $this->addToModulesTable();
 		$bool3 = $this->addSettings();
 		$bool4 = $this->addResources();
@@ -41,12 +41,26 @@ abstract class ACP3_ModuleInstaller {
 	 * @return boolean
 	 */
 	public function uninstall() {
-		$bool1 = $this->removeTables();
+		$bool1 = $this->executeSqlQueries($this->removeTables());
 		$bool2 = $this->removeFromModulesTable();
 		$bool3 = $this->removeSettings();
 		$bool4 = $this->removeResources();
 
 		return $bool1 && $bool2 && $bool3 && $bool4;
+	}
+
+	protected function executeSqlQueries(array $queries) {
+		global $db;
+
+		if (count($queries) > 0) {
+			$engine = 'ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
+			foreach ($queries as $query) {
+				$bool = $db->query(str_replace('{engine}', $engine, $query), 0);
+				if ($bool === false)
+					return false;
+			}
+		}
+		return true;
 	}
 
 	/**

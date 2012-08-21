@@ -7,9 +7,7 @@ class ACP3_UsersModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	public function createTables() {
-		global $db;
-
-		$queries = array(
+		return array(
 			"CREATE TABLE `{pre}users` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`super_user` TINYINT(1) UNSIGNED NOT NULL,
@@ -34,18 +32,10 @@ class ACP3_UsersModuleInstaller extends ACP3_ModuleInstaller {
 				PRIMARY KEY (`id`)
 			) {engine};"
 		);
-
-		$engine = 'ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
-		$bool = false;
-		foreach ($queries as $query) {
-			$bool = $db->query(str_replace('{engine}', $engine, $query), 0);
-		}
-
-		return (bool) $bool;
 	}
 
 	public function removeTables() {
-		return true;
+		return array();
 	}
 
 	public function addSettings() {
