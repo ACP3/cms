@@ -22,11 +22,12 @@
 	<item key="female">Weiblich</item>
 	<item key="forgot_pwd">Passwort vergessen?</item>
 	<item key="forgot_pwd_error">Beim Versenden der E-Mail-Adresse mit Ihrem neuen Passwort ist ein Fehler aufgetreten.</item>
-	<item key="forgot_pwd_description">Bitte geben Sie im folgenden Feld entweder Ihren bei der Registrierung verwendeten Benutzernamen oder die E-Mail-Adresse ein.</item>
+	<item key="forgot_pwd_description">Bitte geben Sie ihren bei der Registrierung verwendeten Benutzernamen oder die E-Mail-Adresse ein.</item>
 	<item key="forgot_pwd_mail_subject">Passwortänderung bei {title} ({host})</item>
 	<item key="forgot_pwd_mail_message">Hallo {name},
 
-Sie haben auf der Website von {title} ({host}) ein neues Passwort für Ihr Benutzerkonto angefordert.
+Sie haben auf der Website {title} ({host}) ein neues Passwort für Ihr Benutzerkonto angefordert.
+Anbei alle Details:
 
 Benutzername: {name}
 E-Mail-Adresse: {mail}
@@ -37,9 +38,9 @@ Bitte ändern Sie, nachdem Sie sich mit obrigem Passwort angemeldet haben, das P
 	<item key="gender">Geschlecht</item>
 	<item key="home">Kontrollzentrum</item>
 	<item key="icq">ICQ-Nummer</item>
-	<item key="invalid_birthday">Bitte geben Sie ein gültiges Geburtsdatum an und wie dieses dargestellt werden soll</item>
-	<item key="invalid_icq_number">Sie haben eine ungültige ICQ-Nummer eingegeben</item>
-	<item key="invalid_msn_account">Der eingegebene Name ihres MSN-Kontos entspricht nicht dem Format einer E-Mail-Adresse</item>
+	<item key="invalid_birthday">Bitte geben Sie ein gültiges Geburtsdatum an und wie dieses dargestellt werden soll.</item>
+	<item key="invalid_icq_number">Sie haben eine ungültige ICQ-Nummer eingegeben.</item>
+	<item key="invalid_msn_account">Der eingegebene Name ihres MSN-Kontos entspricht nicht dem Format einer E-Mail-Adresse.</item>
 	<item key="language">Sprache</item>
 	<item key="login">Login</item>
 	<item key="logout">Abmelden</item>
@@ -57,10 +58,10 @@ Bitte ändern Sie, nachdem Sie sich mit obrigem Passwort angemeldet haben, das P
 	<item key="remember_me">Eingeloggt bleiben</item>
 	<item key="register">Registrieren</item>
 	<item key="register_error">Beim Erstellen des Benutzerkontos ist ein Fehler aufgetreten.</item>
-	<item key="register_mail_subject">Ihr Registrierung bei {title} ({host})</item>
+	<item key="register_mail_subject">Ihre Registrierung bei {title} ({host})</item>
 	<item key="register_mail_message">Hallo {name},
 
-Sie haben soben auf der Website von {title} ({host}) ein Benutzerkonto erstellt.
+Sie haben soeben auf der Website von {title} ({host}) ein Benutzerkonto erstellt.
 Im Folgenden sehen Sie die Daten, mit welchen Sie sich auf der Seite registriert haben.
 
 Benutzername: {name}
@@ -72,7 +73,7 @@ Passwort: {password}</item>
 	<item key="select_entries_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die angezeigten Datensätze pro Seite selber festzulegen.</item>
 	<item key="select_language">Bitte wählen Sie aus, in welcher Sprache Sie die Website angezeigt bekommen möchten.</item>
 	<item key="select_language_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die Anzeigesprache selber festzulegen.</item>
-	<item key="select_super_user">Bitte geben Sie an, ob der gewählte Benutzer Super User sein soll, oder nicht.</item>
+	<item key="select_super_user">Bitte geben Sie an, ob der gewählte Benutzer Super User sein soll oder nicht.</item>
 	<item key="send_email">E-Mail senden</item>
 	<item key="skype">Skype</item>
 	<item key="super_user">Super User</item>

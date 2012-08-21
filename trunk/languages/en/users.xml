@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="account_locked">Your user account has been locked. To reactivate it, please use the &quot;forgot password&quot; function, to get a new password.</item>
+	<item key="account_locked">Your user account has been locked. To reactivate it, please use the &quot;forgot password&quot; function, to receive a new password.</item>
 	<item key="acp_create">Create a new user</item>
 	<item key="acp_delete">Delete users</item>
 	<item key="acp_edit">Edit user</item>
@@ -14,7 +14,7 @@
 	<item key="birthday_hide_year">Hide year of birth</item>
 	<item key="contact">Contact</item>
 	<item key="deleted_user">Deleted user</item>
-	<item key="display_profile_field"><![CDATA[If you don't want to display a certain profile field, just untick the respective field.]]></item>
+	<item key="display_profile_field">If you don't want to display a certain profile field, just untick the respective field.</item>
 	<item key="drafts">Drafts</item>
 	<item key="edit_profile">Edit profile</item>
 	<item key="edit_settings">Edit settings</item>
@@ -22,24 +22,25 @@
 	<item key="female">Female</item>
 	<item key="forgot_pwd">Forgot password?</item>
 	<item key="forgot_pwd_error">While sending the E-mail with your new password an error has occured.</item>
-	<item key="forgot_pwd_description">Please either enter the E-mail address or the user name you used with the registration in the following input field.</item>
-	<item key="forgot_pwd_mail_subject">Change of the password on {title} ({host})</item>
+	<item key="forgot_pwd_description">Please enter your user name used when registering or the E-mail address.</item>
+	<item key="forgot_pwd_mail_subject">Password change on {title} ({host})</item>
 	<item key="forgot_pwd_mail_message">Hello {name},
 
-You have requested a new password for your user account on the website of {title} ({host}).
+You have requested on the website {title} ({host}) a new password for your account.
+Enclosed all details:
 
 User name: {name}
 E-mail address: {mail}
 Password: {password}
 
 Please change the password again, after you logged in to your account.</item>
-	<item key="forgot_pwd_success">An E-mail with your new password has been sent successfully.</item>
+	<item key="forgot_pwd_success">An E-mail with your new password has been successfully sent.</item>
 	<item key="gender">Gender</item>
 	<item key="home">Control center</item>
 	<item key="icq">ICQ-Number</item>
-	<item key="invalid_birthday">Please type in a valid birthday and how it should look like</item>
-	<item key="invalid_icq_number">Please type in a valid ICQ number</item>
-	<item key="invalid_msn_account">The MSN-Account you have typed in, does not match a valid e-mail address</item>
+	<item key="invalid_birthday">Please type in a valid birthday and how it should look like.</item>
+	<item key="invalid_icq_number">Please type in a valid ICQ number.</item>
+	<item key="invalid_msn_account">The MSN-Account you have entered does not match the format of an e-mail address.</item>
 	<item key="language">Language</item>
 	<item key="login">Login</item>
 	<item key="logout">Logout</item>
@@ -61,7 +62,7 @@ Please change the password again, after you logged in to your account.</item>
 	<item key="register_mail_message">Hello {name},
 
 You have just registered a user account on the website of {title} ({host}).
-Below you can see the data, with which you has been registered.
+Enclosed all details:
 
 User name: {name}
 E-mail address: {mail}
@@ -72,7 +73,7 @@ Password: {password}</item>
 	<item key="select_entries_override">Please select whether users should be allowed to override the number of displayed resultsets per page.</item>
 	<item key="select_language">Please select the language in which you want to see the website.</item>
 	<item key="select_language_override">Please select whether to users should be allowed to override the default language.</item>
-	<item key="select_super_user">Please select, whether the user should be a super user or not.</item>
+	<item key="select_super_user">Please select whether the user should be a super user or not.</item>
 	<item key="send_email">Send E-mail</item>
 	<item key="skype">Skype</item>
 	<item key="super_user">Super user</item>

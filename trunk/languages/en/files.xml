@@ -5,7 +5,7 @@
 	<item key="acp_edit">Edit download</item>
 	<item key="acp_settings">Settings</item>
 	<item key="category_select">Please select one of the categories below.</item>
-	<item key="description_to_short">The description should be at least 3 characters long</item>
+	<item key="description_to_short">The description should be at least 3 characters long.</item>
 	<item key="details">Downloads</item>
 	<item key="download_file">Download file</item>
 	<item key="external_resource">External resource</item>
@@ -17,10 +17,10 @@
 	<item key="link_title">Link title</item>
 	<item key="mod_description">With this module you are able to administer the downloads.</item>
 	<item key="new_file">Replace current file</item>
-	<item key="select_allow_comments">Please select, whether you want to allow comments under downloads</item>
-	<item key="select_category">Please select a category, where do you want to find the download</item>
-	<item key="select_internal_resource">Please select the path to the file, which you want to upload</item>
-	<item key="type_in_external_resource">Please type in the external resource for the file</item>
-	<item key="type_in_link_title">The link title should be at least 3 characters long</item>
+	<item key="select_allow_comments">Please select whether you want to allow comments under downloads or not.</item>
+	<item key="select_category">Please select a category where do you want to find the download.</item>
+	<item key="select_internal_resource">Please select the path to the file you want to upload.</item>
+	<item key="type_in_external_resource">Please type in the external resource for the file.</item>
+	<item key="type_in_link_title">The link title should be at least 3 characters long.</item>
 	<item key="unknown_filesize">Unknown filesize</item>
 </language>

@@ -7,7 +7,7 @@
 
 {message}</item>
 	<item key="contact_information">Kontakt Daten</item>
-	<item key="contact_subject">Kontaktformular "%s"</item>
+	<item key="contact_subject">Kontaktformular "%s".</item>
 	<item key="disclaimer">Haftungshinweise</item>
 	<item key="disclaimer_to_short">Die Haftungshinweise sollten mindestens 3 Zeichen lang sein.</item>
 	<item key="fax">FAX Nummer</item>
@@ -20,6 +20,6 @@
 	<item key="sender_body">Sie haben folgende Nachricht auf der Website "%1$s" hinterlassen:
 
 %2$s</item>
-	<item key="sender_subject">Ihre Nachricht an "%s"</item>
+	<item key="sender_subject">Ihre Nachricht an "%s".</item>
 	<item key="telephone">Telefonnummer</item>
 </language>

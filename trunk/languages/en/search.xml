@@ -4,9 +4,9 @@
 	<item key="content_only">Content only</item>
 	<item key="desc">Descending</item>
 	<item key="mod_description">With this module it is possible to search thorugh other modules.</item>
-	<item key="no_area_selected">Please select which areas of the entries should be searched through</item>
-	<item key="no_sorting_selected">Please select in which order the hits should be displayed</item>
-	<item key="no_module_selected">Please select at least one module, which should be search through</item>
+	<item key="no_area_selected">Please specify which areas of the entries are to be searched.</item>
+	<item key="no_sorting_selected">Please sepcify the order of search results.</item>
+	<item key="no_module_selected">Please select at least one module, which is to be searched.</item>
 	<item key="no_search_results"><![CDATA[No entries matched search term &quot;%s&quot;.]]></item>
 	<item key="search">Search</item>
 	<item key="search_after_areas">Search through following areas</item>
@@ -14,7 +14,7 @@
 	<item key="search_options">Search options</item>
 	<item key="search_results">Search results</item>
 	<item key="search_term">Search term</item>
-	<item key="search_term_to_short">The search term should be at least 3 characters long</item>
+	<item key="search_term_to_short">The search term should be at least 3 characters long.</item>
 	<item key="sort_hits">Order of hits</item>
 	<item key="submit_search">Start search</item>
 	<item key="title_and_content">Title and content</item>

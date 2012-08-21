@@ -9,13 +9,13 @@
 	<item key="image_filesize">Maximale Dateigröße des Bildes</item>
 	<item key="image_height">Maximale Bildhöhe</item>
 	<item key="image_width">Maximale Bildbreite</item>
-	<item key="invalid_image_filesize_entered">Bitte geben Sie die maximale Dateigröße des Bildes in Byte an</item>
-	<item key="invalid_image_height_entered">Bitte geben Sie die maximale Bildhöhe in Pixel an</item>
-	<item key="invalid_image_selected">Entweder Sie haben ein unerlaubtes Dateiformat verwendet oder das Bild ist zu breit, zu hoch oder zu groß</item>
-	<item key="invalid_image_width_entered">Bitte geben Sie die maximale Bildbreite in Pixel an</item>
+	<item key="invalid_image_filesize_entered">Bitte geben Sie die maximale Dateigröße des Bildes in Byte an.</item>
+	<item key="invalid_image_height_entered">Bitte geben Sie die maximale Bildhöhe in Pixel an.</item>
+	<item key="invalid_image_selected">Entweder haben Sie ein unerlaubtes Dateiformat verwendet oder das Bild ist zu breit, zu hoch oder zu groß.</item>
+	<item key="invalid_image_width_entered">Bitte geben Sie die maximale Bildbreite in Pixel an.</item>
 	<item key="mod_description">Mit diesem Modul können Emoticons z.B. in Kommentare eingefügt werden.</item>
 	<item key="picture">Bild</item>
 	<item key="replace_picture">Bild ersetzen</item>
-	<item key="type_in_code">Bitte geben Sie einen Code an, der dann durch ein Bild ersetzt werden soll</item>
-	<item key="type_in_description">Bitte geben Sie zum Code eine kurze Beschreibung an</item>
+	<item key="type_in_code">Bitte geben Sie einen Code an, der dann durch ein Bild ersetzt werden soll.</item>
+	<item key="type_in_description">Bitte geben Sie zum Code eine kurze Beschreibung an.</item>
 </language>

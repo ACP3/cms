@@ -8,7 +8,7 @@
 	<item key="acp_edit_resource">Ressource bearbeiten</item>
 	<item key="acp_list_resources">Ressourcen verwalten</item>
 	<item key="allow_access">Erlaubt</item>
-	<item key="assigned_privilege">Zugeordnete Privilegie</item>
+	<item key="assigned_privilege">Zugeordnetes Privileg</item>
 	<item key="filename">Dateiname</item>
 	<item key="deny_access">Verweigert</item>
 	<item key="inherit_access">Vererbt</item>
@@ -17,13 +17,13 @@
 	<item key="module_name">Modul Name</item>
 	<item key="no_privilege_selected">Bitte setzen Sie die Berechtigungen für die einzelnen Aktionen, die ein Benutzer ausführen darf.</item>
 	<item key="permissions">Berechtigungen</item>
-	<item key="privilege_does_not_exist">Die ausgewählte Privilegie existiert nicht.</item>
+	<item key="privilege_does_not_exist">Das ausgewählte Privileg existiert nicht.</item>
 	<item key="resource_name">Ressourcen-Name</item>
-	<item key="role_already_exists">Es existiert bereits ein Rolle mit diesem Namen.</item>
+	<item key="role_already_exists">Es existiert bereits eine Rolle mit diesem Namen.</item>
 	<item key="role_undeletable">Die Rollen für Gäste, Benutzer und Administratoren können nicht gelöscht werden!</item>
 	<item key="roles">Zugeordnete Rollen</item>
 	<item key="superior_role">Übergeordnete Rolle</item>
 	<item key="select_module">Bitte wählen Sie das Modul aus, für welches die Ressource erstellt werden soll.</item>
-	<item key="select_privilege">Bitte wählen Sie für die gewählte Ressource eine Privilegie aus.</item>
+	<item key="select_privilege">Bitte wählen Sie für die gewählte Ressource ein Privileg aus.</item>
 	<item key="type_in_resource">Bitte geben Sie den Namen der Ressource an.</item>
 </language>

@@ -4,11 +4,11 @@
 	<item key="acp_delete">Delete polls</item>
 	<item key="acp_edit">Edit poll</item>
 	<item key="add_answer">Add answer</item>
-	<item key="already_voted">You have already at this poll.</item>
+	<item key="already_voted">You have already voted in this poll.</item>
 	<item key="answer">Answer</item>
 	<item key="answers">Answers</item>
-	<item key="can_not_delete_all_answers">It's impossible to delete all answers</item>
-	<item key="delete_answer_description">To delete answer, please click on the checkbox on the left hand side of the form.</item>
+	<item key="can_not_delete_all_answers">It's impossible to delete all answers.</item>
+	<item key="delete_answer_description">You can delete answers by simply left-clicking on the selection box next to the answers.</item>
 	<item key="latest_poll">Latest poll</item>
 	<item key="mod_description">With this module you can administer the polls.</item>
 	<item key="multiple_choice">Multiple choice</item>
@@ -25,8 +25,8 @@
 	<item key="reset_votes">Reset votes</item>
 	<item key="result">Result</item>
 	<item key="total_votes">Total votes</item>
-	<item key="type_in_answer">Please type in at least one anwers</item>
-	<item key="type_in_question">Please type in a question</item>
+	<item key="type_in_answer">Please type in at least one anwers.</item>
+	<item key="type_in_question">Please type in a question.</item>
 	<item key="vote">Vote</item>
 	<item key="votes">Votes</item>
 </language>

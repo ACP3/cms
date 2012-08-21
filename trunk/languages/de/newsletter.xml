@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="account_exists">Für die angegebene E-Mail-Adresse existiert bereits ein Newsletter-Konto</item>
-	<item key="account_not_exists">Für die angegebene E-Mail-Adresse konnte kein Newsletter-Konto gefunden werden</item>
+	<item key="account_exists">Für die angegebene E-Mail-Adresse existiert bereits ein Newsletter-Konto.</item>
+	<item key="account_not_exists">Für die angegebene E-Mail-Adresse konnte kein Newsletter-Konto gefunden werden.</item>
 	<item key="acp_activate">Newsletterkonto löschen</item>
 	<item key="acp_create">Neuen Newsletter erstellen</item>
 	<item key="acp_delete">Newsletter löschen</item>
@@ -17,8 +17,8 @@
 	<item key="activate_error">Beim Aktivieren des Newsletter-Kontos ist ein Fehler aufgetreten.</item>
 	<item key="activate_success">Das Newsletter-Konto wurde erfolgreich aktiviert und kann nun verwendet werden.</item>
 	<item key="already_sent">Bereits versendet</item>
-	<item key="compose_save_error">Beim Versenden bzw. Speichern das Newsletters ist mindestens ein Fehler aufgetreten.</item>
-	<item key="compose_success">Der Newsletter wurde erfolgreich versendet.</item>
+	<item key="create_save_error">Beim Versenden bzw. Speichern des Newsletters ist ein Fehler aufgetreten.</item>
+	<item key="create_success">Der Newsletter wurde erfolgreich versendet.</item>
 	<item key="list">In Newsletter eintragen/austragen</item>
 	<item key="mailsig">E-Mail Signatur</item>
 	<item key="mod_description">Dieses Modul ist für den Newsletter zuständig.</item>
@@ -34,15 +34,15 @@
 	<item key="subject_to_short">Der Betreff sollte mindestens 3 Zeichen lang sein</item>
 	<item key="subscribe">Eintragen</item>
 	<item key="subscribe_error">Es ist ein Fehler beim Erstellen des Newsletterkontos aufgetreten.</item>
-	<item key="subscribe_mail_body">Sie haben sich erfolgreich auf der Website {host} beim Newsletter angemeldet.
-Um die Registrierung abzuschließen, klicken Sie bitte auf den untenstehenden Link.
+	<item key="subscribe_mail_body">Sie haben sich erfolgreich im Newsletter auf der Website {host} eingetragen.
+Um die Registrierung abzuschließen, klicken Sie bitte auf den unten stehenden Link.
 Falls Sie diese E-Mail fälschlicherweise zugestellt bekommen haben sollten, so ignorieren/löschen Sie sie bitte einfach.</item>
-	<item key="subscribe_mail_subject">Willkommen beim Newsletter von %s</item>
+	<item key="subscribe_mail_subject">Willkommen beim Newsletter von %s!</item>
 	<item key="subscribe_success">Das Newsletterkonto wurde erfolgreich erstellt.</item>
-	<item key="test_newsletter">Testnewsletter</item>
-	<item key="test_nl_description">Wird nur an die E-Mail-Adresse der Newsletter Einstellungen gesendet</item>
+	<item key="test_newsletter">Test-Newsletter</item>
+	<item key="test_nl_description">Wird nur an die E-Mail-Adresse der Newsletter Einstellungen gesendet.</item>
 	<item key="text">Text</item>
-	<item key="text_to_short">Der Text sollte mindestens 3 Zeichen lang sein</item>
+	<item key="text_to_short">Der Text sollte mindestens 3 Zeichen lang sein.</item>
 	<item key="unsubscribe">Austragen</item>
 	<item key="unsubscribe_error">Beim Löschen des Newsletterkontos ist ein Fehler aufgetreten.</item>
 	<item key="unsubscribe_success">Das Newsletterkonto wurde erfolgreich gelöscht.</item>
