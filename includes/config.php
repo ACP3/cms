@@ -34,4 +34,3 @@ define('CONFIG_SEO_ROBOTS', 1);
 define('CONFIG_SEO_TITLE', 'ACP3');
 define('CONFIG_VERSION', '4.0 SVN');
 define('CONFIG_WYSIWYG', 'ckeditor');
-?>
