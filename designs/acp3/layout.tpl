@@ -17,7 +17,16 @@
 		<h1 id="logo">{$PAGE_TITLE}</h1>
 		<div class="navbar navbar-inverse">
 			<div class="navbar-inner">
-				{navbar block="main"}
+				<div class="container">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</a>
+					<div class="nav-collapse">
+						{navbar block="main"}
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="row-fluid">

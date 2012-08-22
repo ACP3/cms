@@ -189,7 +189,8 @@ function processNavbar($block, $use_bootstrap = true, $class = '') {
 					if ($use_bootstrap === true) {
 						$css.= $items[$i]['level'] == 0 ? ' dropdown' : ' dropdown-submenu';
 						$caret = $items[$i]['level'] == 0 ? ' <b class="caret"></b>' : '';
-						$link = '<a href="' . $href . '" class="dropdown-toggle" data-toggle="dropdown" data-target="#"' . $target . '>' . $db->escape($items[$i]['title'], 3) . $caret . '</a>';
+						$data_target = $items[$i]['level'] == 0 ? '  data-target="#"' : '';
+						$link = '<a href="' . $href . '" class="dropdown-toggle" data-toggle="dropdown"' . $data_target . $target . '>' . $db->escape($items[$i]['title'], 3) . $caret . '</a>';
 						$navbar[$block].= '<li class="' . $css . '">' . $link . '<ul class="dropdown-menu navigation-' . $block . '-subnav-' . $items[$i]['id'] . '">';
 					} else {
 						$link = '<a href="' . $href . '"' . $target . '>' . $db->escape($items[$i]['title'], 3) . '</a>';
