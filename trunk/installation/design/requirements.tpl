@@ -31,7 +31,8 @@
 {foreach $files_dirs as $row}
 						<li>
 							<strong>{$row.path}</strong>
-							<span style="color:#{$row.color_1}">{$row.exists}</span>, <span style="color:#{$row.color_2}">{$row.writeable}</span>
+							<span class="label label-{$row.class_1}">{$row.exists}</span>
+							<span class="label label-{$row.class_2}">{$row.writable}</span>
 						</li>
 {/foreach}
 					</ul>
@@ -49,7 +50,7 @@
 {foreach $php_settings as $row}
 				<li>
 					<strong>{$row.setting}</strong>
-					<span style="color:#{$row.color}">{$row.value}</span>
+					<span class="label label-{$row.class}">{$row.value}</span>
 				</li>
 {/foreach}
 			</ul>
