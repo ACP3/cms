@@ -45,7 +45,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'files', '
 				   ->append($file[0]['category_name'], $uri->route('files/files/cat_' . $file[0]['category_id']))
 				   ->append($file[0]['link_title']);
 
-		$settings = ACP3_Config::getModuleSettings('files');
+		$settings = ACP3_Config::getSettings('files');
 
 		$file[0]['size'] = !empty($file[0]['size']) ? $file[0]['size'] : $lang->t('files', 'unknown_filesize');
 		$file[0]['date'] = $date->format($file[0]['start'], $settings['dateformat']);

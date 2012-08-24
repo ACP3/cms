@@ -66,7 +66,7 @@ function commentsCreate($module, $entry_id)
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-		$settings = ACP3_Config::getModuleSettings('comments');
+		$settings = ACP3_Config::getSettings('comments');
 
 		// Emoticons einbinden, falls diese aktiv sind
 		if (ACP3_Modules::check('emoticons', 'functions') === true && $settings['emoticons'] == 1) {

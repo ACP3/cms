@@ -2,7 +2,7 @@
 
 class ACP3_GalleryModuleInstaller extends ACP3_ModuleInstaller {
 
-	public function createTables() {
+	protected function createTables() {
 		return array(
 			"CREATE TABLE `{pre}gallery` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -11,7 +11,7 @@ class ACP3_GalleryModuleInstaller extends ACP3_ModuleInstaller {
 				`name` VARCHAR(120) NOT NULL,
 				`user_id` INT UNSIGNED NOT NULL,
 				PRIMARY KEY (`id`)
-			) {engine};",
+			) {engine} {charset};",
 			"CREATE TABLE `{pre}gallery_pictures` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`pic` INT(10) UNSIGNED NOT NULL,
@@ -20,18 +20,18 @@ class ACP3_GalleryModuleInstaller extends ACP3_ModuleInstaller {
 				`description` TEXT NOT NULL,
 				`comments` TINYINT(1) UNSIGNED NOT NULL,
 				PRIMARY KEY (`id`), INDEX `foreign_gallery_id` (`gallery_id`)
-			) {engine};"
+			) {engine} {charset};"
 		);
 	}
 
-	public function removeTables() {
+	protected function removeTables() {
 		return array(
 			"DROP TABLE `{pre}gallery_pictures`;",
 			"DROP TABLE `{pre}gallery`;"
 		);
 	}
 
-	public function addSettings() {
+	protected function addSettings() {
 		global $db;
 
 		$queries = array(
@@ -55,23 +55,23 @@ class ACP3_GalleryModuleInstaller extends ACP3_ModuleInstaller {
 		return (bool) $bool;
 	}
 
-	public function removeSettings() {
+	protected function removeSettings() {
 		global $db;
 
 		return (bool) $db->delete('settings', 'module_id = ' . $this->module_id);
 	}
 
-	public function addToModulesTable() {
+	protected function addToModulesTable() {
 		global $db;
 
 		// Modul in die Modules-SQL-Tabelle eintragen
-		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('gallery'), 'active' => 1));
+		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('gallery'), 'version' => 30, 'active' => 1));
 		$this->module_id = $db->link->lastInsertId();
 
 		return (bool) $bool;
 	}
 
-	public function removeFromModulesTable() {
+	protected function removeFromModulesTable() {
 		global $db;
 
 		return (bool) $db->delete('modules', 'id = ' . $this->module_id);

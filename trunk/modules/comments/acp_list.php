@@ -37,7 +37,7 @@ if (empty($module) || !empty($module) && $db->query('SELECT COUNT(*) FROM {pre}c
 	$comments = $db->query('SELECT IF(c.name != "" AND c.user_id = 0,c.name,u.nickname) AS name, c.id, c.ip, c.user_id, c.date, c.message FROM {pre}comments AS c JOIN {pre}modules AS m ON(m.id = c.module_id) LEFT JOIN {pre}users AS u ON u.id = c.user_id WHERE m.name = \'' . $module . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . $auth->entries);
 	$c_comments = count($comments);
 
-	$settings = ACP3_Config::getModuleSettings('comments');
+	$settings = ACP3_Config::getSettings('comments');
 
 	if ($c_comments > 0) {
 		// Emoticons einbinden

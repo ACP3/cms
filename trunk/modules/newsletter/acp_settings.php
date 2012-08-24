@@ -21,7 +21,7 @@ if (isset($_POST['submit']) === true) {
 	} else {
 		$_POST['mailsig'] = $db->escape($_POST['mailsig']);
 
-		$bool = ACP3_Config::module('newsletter', $_POST);
+		$bool = ACP3_Config::setSettings('newsletter', $_POST);
 
 		$session->unsetFormToken();
 
@@ -29,7 +29,7 @@ if (isset($_POST['submit']) === true) {
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-	$settings = ACP3_Config::getModuleSettings('newsletter');
+	$settings = ACP3_Config::getSettings('newsletter');
 	$settings['mailsig'] = $db->escape($settings['mailsig'], 3);
 
 	$tpl->assign('form', isset($_POST['submit']) ? $_POST : $settings);

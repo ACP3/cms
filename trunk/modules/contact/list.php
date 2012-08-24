@@ -25,7 +25,7 @@ if (isset($_POST['submit']) === true) {
 	} elseif (ACP3_Validate::formToken() === false) {
 		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
-		$settings = ACP3_Config::getModuleSettings('contact');
+		$settings = ACP3_Config::getSettings('contact');
 
 		$subject = sprintf($lang->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
 		$body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($_POST['name'], $_POST['mail'], $_POST['message'], "\n"), $lang->t('contact', 'contact_body'));

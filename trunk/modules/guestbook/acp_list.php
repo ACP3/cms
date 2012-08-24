@@ -18,7 +18,7 @@ $c_guestbook = count($guestbook);
 if ($c_guestbook > 0) {
 	$tpl->assign('pagination', pagination($db->countRows('*', 'guestbook')));
 
-	$settings = ACP3_Config::getModuleSettings('guestbook');
+	$settings = ACP3_Config::getSettings('guestbook');
 
 	// Emoticons einbinden
 	$emoticons_active = false;

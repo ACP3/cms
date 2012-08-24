@@ -18,7 +18,7 @@ if ($uri->dir) {
 	$bool = false;
 
 	if (!empty($dir)) {
-		$bool = ACP3_Config::system(array('lang' => $dir));
+		$bool = ACP3_Config::setSettings('system', array('lang' => $dir));
 	}
 	$text = $bool === true ? $lang->t('system', 'languages_edit_success') : $lang->t('system', 'languages_edit_error');
 

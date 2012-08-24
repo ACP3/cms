@@ -13,7 +13,7 @@ if (defined('IN_ACP3') === false)
 if ($auth->isUser() === false || ACP3_Validate::isNumber($auth->getUserId()) === false) {
 	$uri->redirect('errors/403');
 } else {
-	$settings = ACP3_Config::getModuleSettings('users');
+	$settings = ACP3_Config::getSettings('users');
 
 	$breadcrumb->append($lang->t('users', 'users'), $uri->route('users'))
 			   ->append($lang->t('users', 'home'), $uri->route('users/home'))

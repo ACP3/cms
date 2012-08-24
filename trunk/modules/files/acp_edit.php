@@ -13,7 +13,7 @@ if (defined('IN_ADM') === false)
 if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'files', 'id = \'' . $uri->id . '\'') == 1) {
 	require_once MODULES_DIR . 'categories/functions.php';
 
-	$settings = ACP3_Config::getModuleSettings('files');
+	$settings = ACP3_Config::getSettings('files');
 
 	if (isset($_POST['submit']) === true) {
 		if (isset($_POST['external'])) {

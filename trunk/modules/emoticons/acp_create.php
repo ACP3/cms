@@ -18,7 +18,7 @@ if (isset($_POST['submit']) === true) {
 		$file['name'] = $_FILES['picture']['name'];
 		$file['size'] = $_FILES['picture']['size'];
 	}
-	$settings = ACP3_Config::getModuleSettings('emoticons');
+	$settings = ACP3_Config::getSettings('emoticons');
 
 	if (empty($_POST['code']))
 		$errors['code'] = $lang->t('emoticons', 'type_in_code');

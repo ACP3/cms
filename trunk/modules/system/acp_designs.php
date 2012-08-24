@@ -18,7 +18,7 @@ if ($uri->dir) {
 	$bool = false;
 
 	if (!empty($dir)) {
-		$bool = ACP3_Config::system(array('design' => $dir));
+		$bool = ACP3_Config::setSettings('system', array('design' => $dir));
 
 		// Cache leeren und diverse Parameter für die Template Engine abändern
 		ACP3_Cache::purge();

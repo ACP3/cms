@@ -49,16 +49,28 @@ abstract class ACP3_ModuleInstaller {
 		return $bool1 && $bool2 && $bool3 && $bool4;
 	}
 
+	/**
+	 * Führt die in $queries als Array übergebenen SQL-Statements aus
+	 *
+	 * @param array $queries
+	 * @return boolean
+	 */
 	protected function executeSqlQueries(array $queries) {
 		global $db;
 
 		if (count($queries) > 0) {
-			$engine = 'ENGINE=MyISAM CHARACTER SET `utf8` COLLATE `utf8_general_ci`';
+			$search = array('{engine}', '{charset}');
+			$replace = array('ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`');
+
+			$db->link->beginTransaction();
 			foreach ($queries as $query) {
-				$bool = $db->query(str_replace('{engine}', $engine, $query), 0);
-				if ($bool === false)
+				$bool = $db->query(str_replace($search, $replace, $query), 0);
+				if ($bool === false) {
+					$db->link->rollBack();
 					return false;
+				}
 			}
+			$db->link->commit();
 		}
 		return true;
 	}
@@ -68,7 +80,7 @@ abstract class ACP3_ModuleInstaller {
 	 *
 	 * @return boolean
 	 */
-	public function addResources() {
+	protected function addResources() {
 		global $db;
 
 		$mod_name = $db->select('name', 'modules', 'id = ' . $this->module_id);
@@ -143,7 +155,7 @@ abstract class ACP3_ModuleInstaller {
 	 *
 	 * @return boolean
 	 */
-	public function removeResources() {
+	protected function removeResources() {
 		global $db;
 
 		$bool = $db->delete('acl_resources', 'module_id = ' . $this->module_id);
@@ -154,15 +166,15 @@ abstract class ACP3_ModuleInstaller {
 		return $bool && $bool2;
 	}
 
-	abstract public function createTables();
+	abstract protected function createTables();
 
-	abstract public function removeTables();
+	abstract protected function removeTables();
 
-	abstract public function addSettings();
+	abstract protected function addSettings();
 
-	abstract public function removeSettings();
+	abstract protected function removeSettings();
 
-	abstract public function addToModulesTable();
+	abstract protected function addToModulesTable();
 
-	abstract public function removeFromModulesTable();
+	abstract protected function removeFromModulesTable();
 }

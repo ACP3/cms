@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 require_once MODULES_DIR . 'categories/functions.php';
 
-$settings = ACP3_Config::getModuleSettings('files');
+$settings = ACP3_Config::getSettings('files');
 
 if (isset($_POST['submit']) === true) {
 	if (isset($_POST['external'])) {

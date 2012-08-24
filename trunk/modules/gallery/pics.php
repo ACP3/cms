@@ -28,7 +28,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery',
 		$breadcrumb->append($lang->t('gallery', 'gallery'), $uri->route('gallery'))
 				   ->append($gallery_name[0]['name']);
 
-		$settings = ACP3_Config::getModuleSettings('gallery');
+		$settings = ACP3_Config::getSettings('gallery');
 
 		for ($i = 0; $i < $c_pictures; ++$i) {
 			$pictures[$i]['uri'] = $settings['overlay'] == 1 ? $uri->route('gallery/image/id_' . $pictures[$i]['id'] . '/action_normal') : $uri->route('gallery/details/id_' . $pictures[$i]['id'], 1);

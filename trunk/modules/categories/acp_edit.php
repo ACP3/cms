@@ -19,7 +19,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'categorie
 			$file['name'] = $_FILES['picture']['name'];
 			$file['size'] = $_FILES['picture']['size'];
 		}
-		$settings = ACP3_Config::getModuleSettings('categories');
+		$settings = ACP3_Config::getSettings('categories');
 		$module = $db->select('module', 'categories', 'id = \'' . $uri->id . '\'');
 
 		if (strlen($_POST['name']) < 3)

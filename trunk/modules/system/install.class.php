@@ -15,18 +15,19 @@ class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 		);
 	}
 
-	public function removeResources() {
+	protected function removeResources() {
 		return true;
 	}
 
-	public function createTables() {
+	protected function createTables() {
 		return array(
 			"CREATE TABLE `{pre}modules` (
 				`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 				`name` varchar(100) NOT NULL,
+				`version` tinyint(3) UNSIGNED NOT NULL,
 				`active` tinyint(1) unsigned NOT NULL,
 				PRIMARY KEY (`id`)
-			) {engine};",
+			) {engine} {charset};",
 			"CREATE TABLE `{pre}seo` (
 				`uri` varchar(255) NOT NULL,
 				`alias` varchar(100) NOT NULL,
@@ -34,20 +35,20 @@ class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 				`description` varchar(255) NOT NULL,
 				`robots` TINYINT(1) UNSIGNED NOT NULL,
 				PRIMARY KEY (`uri`), INDEX (`alias`)
-			) {engine};",
+			) {engine} {charset};",
 			"CREATE TABLE `{pre}sessions` (
 				`session_id` varchar(32) NOT NULL,
 				`session_starttime` int(10) unsigned NOT NULL,
 				`session_data` text NOT NULL,
 				PRIMARY KEY (`session_id`)
-			) {engine};",
+			) {engine} {charset};",
 			"CREATE TABLE `{pre}settings` (
 				`id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
 				`module_id` INT(10) NOT NULL,
 				`name` VARCHAR(40) NOT NULL,
 				`value` TEXT NOT NULL,
 				PRIMARY KEY (`id`), UNIQUE KEY (`module_id`,`name`)
-			) {engine};",
+			) {engine} {charset};",
 			// ACL
 			"CREATE TABLE `{pre}acl_privileges` (
 				`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -55,7 +56,7 @@ class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 				`description` varchar(100) NOT NULL,
 				PRIMARY KEY (`id`),
 				UNIQUE KEY `key` (`key`)
-			) {engine};",
+			) {engine} {charset};",
 			"CREATE TABLE`{pre}acl_resources` (
 				`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 				`module_id` int(10) unsigned NOT NULL,
@@ -63,7 +64,7 @@ class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 				`params` varchar(255) NOT NULL,
 				`privilege_id` int(10) unsigned NOT NULL,
 				PRIMARY KEY (`id`)
-			) {engine};",
+			) {engine} {charset};",
 			"CREATE TABLE`{pre}acl_roles` (
 				`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 				`name` varchar(100) NOT NULL,
@@ -72,7 +73,7 @@ class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 				`left_id` int(10) unsigned NOT NULL,
 				`right_id` int(10) unsigned NOT NULL,
 				PRIMARY KEY (`id`)
-			) {engine};",
+			) {engine} {charset};",
 			"CREATE TABLE`{pre}acl_rules` (
 				`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 				`role_id` int(10) unsigned NOT NULL,
@@ -81,12 +82,12 @@ class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 				`permission` tinyint(1) unsigned NOT NULL,
 				PRIMARY KEY (`id`),
 				UNIQUE KEY `role_id` (`role_id`,`module_id`,`privilege_id`)
-			) {engine};",
+			) {engine} {charset};",
 			"CREATE TABLE`{pre}acl_user_roles` (
 				`user_id` int(10) unsigned NOT NULL,
 				`role_id` int(10) unsigned NOT NULL,
 				PRIMARY KEY (`user_id`,`role_id`)
-			) {engine};",
+			) {engine} {charset};",
 			// Default Privilegien & Benutzer-Rollen
 			"INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (1, 'view', '')",
 			"INSERT INTO `{pre}acl_privileges` (`id`, `key`, `description`) VALUES (2, 'create', '')",
@@ -104,29 +105,65 @@ class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 		);
 	}
 
-	public function removeTables() {
+	protected function removeTables() {
 		return array();
 	}
 
-	public function addSettings() {
+	protected function addSettings() {
+		global $db;
+
+		$queries = array(
+			'cache_images' => true,
+			'cache_minify' => 3600,
+			'date_format_long' => '',
+			'date_format_short' => '',
+			'date_time_zone' => '',
+			'design' => 'acp3',
+			'entries' => '',
+			'flood' => '',
+			'homepage' => 'news/list/',
+			'lang' => '',
+			'mailer_smtp_auth' => false,
+			'mailer_smtp_host' => '',
+			'mailer_smtp_password' => '',
+			'mailer_smtp_port' => 25,
+			'mailer_smtp_security' => '',
+			'mailer_smtp_user' => '',
+			'mailer_type' => 'mail',
+			'maintenance_mode' => false,
+			'maintenance_message' => '',
+			'seo_aliases' => true,
+			'seo_meta_description' => '',
+			'seo_meta_keywords' => '',
+			'seo_mod_rewrite' => false,
+			'seo_robots' => 1,
+			'seo_title' => '',
+			'version' => '',
+			'wysiwyg' => 'ckeditor'
+		);
+
+		$bool = false;
+		foreach ($queries as $key => $value) {
+			$bool = $db->insert('settings', array('id' => '', 'module_id' => $this->module_id, 'name' => $key, 'value' => $value));
+		}
+		return (bool) $bool;
+	}
+
+	protected function removeSettings() {
 		return true;
 	}
 
-	public function removeSettings() {
-		return true;
-	}
-
-	public function addToModulesTable() {
+	protected function addToModulesTable() {
 		global $db;
 
 		// Modul in die Modules-SQL-Tabelle eintragen
-		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('system'), 'active' => 1));
+		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('system'), 'version' => 30, 'active' => 1));
 		$this->module_id = $db->link->lastInsertId();
 
 		return (bool) $bool;
 	}
 
-	public function removeFromModulesTable() {
+	protected function removeFromModulesTable() {
 		return true;
 	}
 

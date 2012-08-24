@@ -11,31 +11,33 @@
  * See http://code.google.com/p/minify/wiki/CustomSource for other ideas
  **/
 
-define('ACP3_ROOT', realpath(dirname(__FILE__) . '/../../') . '/');
+define('ACP3_ROOT', realpath(__DIR__ . '/../../') . '/');
 
-require_once ACP3_ROOT . 'includes/config.php';
+define('IN_ACP3', true);
+define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
+$php_self = dirname(PHP_SELF);
+define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
+define('MODULES_DIR', ACP3_ROOT . 'modules/');
+define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 
+require_once INCLUDES_DIR . 'config.php';
+require_once INCLUDES_DIR . 'autoload.php';
+
+$db = new ACP3_DB();
+$handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
+if ($handle !== true)
+	exit($handle);
+
+ACP3_Config::getSystemSettings();
 define('DESIGN_PATH', ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/');
+
+// Cache-Lebenszeit setzen
+$min_serveOptions['maxAge'] = CONFIG_CACHE_MINIFY;
 
 $libraries = !empty($_GET['libraries']) ? explode(',', $_GET['libraries']) : array();
 
 if ($_GET['g'] === 'css') {
-	define('IN_ACP3', true);
-	define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
-	$php_self = dirname(PHP_SELF);
-	define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
-	define('MODULES_DIR', ACP3_ROOT . 'modules/');
-	define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
-
-	require INCLUDES_DIR . 'autoload.php';
-
 	// Klassen initialisieren
-	$db = new ACP3_DB();
-	$handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
-	if ($handle !== true) {
-		exit($handle);
-	}
-
 	$session = new ACP3_Session();
 	$auth = new ACP3_Auth();
 	$lang = new ACP3_Lang();

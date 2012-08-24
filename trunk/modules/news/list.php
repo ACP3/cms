@@ -23,7 +23,7 @@ if (ACP3_Modules::check('categories', 'functions') === true) {
 	$tpl->assign('categories', categoriesList('news', $cat));
 }
 
-$settings = ACP3_Config::getModuleSettings('news');
+$settings = ACP3_Config::getSettings('news');
 // Kategorie in Brotkrümelspur anzeigen
 if ($cat !== 0 && $settings['category_in_breadcrumb'] == 1) {
 	$breadcrumb->append($lang->t('news', 'news'), $uri->route('news'));

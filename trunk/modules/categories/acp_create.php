@@ -18,7 +18,7 @@ if (isset($_POST['submit']) === true) {
 		$file['name'] = $_FILES['picture']['name'];
 		$file['size'] = $_FILES['picture']['size'];
 	}
-	$settings = ACP3_Config::getModuleSettings('categories');
+	$settings = ACP3_Config::getSettings('categories');
 
 	if (strlen($_POST['name']) < 3)
 		$errors['name'] = $lang->t('categories', 'name_to_short');

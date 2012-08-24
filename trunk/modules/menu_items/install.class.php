@@ -2,7 +2,7 @@
 
 class ACP3_MenuItemsModuleInstaller extends ACP3_ModuleInstaller {
 
-	public function createTables() {
+	protected function createTables() {
 		return array(
 			"CREATE TABLE `{pre}menu_items` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -17,42 +17,42 @@ class ACP3_MenuItemsModuleInstaller extends ACP3_ModuleInstaller {
 				`uri` VARCHAR(120) NOT NULL,
 				`target` TINYINT(1) UNSIGNED NOT NULL,
 				PRIMARY KEY (`id`), INDEX `foreign_block_id` (`block_id`)
-			) {engine};",
+			) {engine} {charset};",
 			"CREATE TABLE `{pre}menu_items_blocks` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`index_name` VARCHAR(10) NOT NULL,
 				`title` VARCHAR(120) NOT NULL,
 				PRIMARY KEY (`id`)
-			) {engine};"
+			) {engine} {charset};"
 		);
 	}
 
-	public function removeTables() {
+	protected function removeTables() {
 		return array(
 			"DROP TABLE `{pre}menu_items_blocks`;",
 			"DROP TABLE `{pre}menu_items`;"
 		);
 	}
 
-	public function addSettings() {
+	protected function addSettings() {
 		return true;
 	}
 
-	public function removeSettings() {
+	protected function removeSettings() {
 		return true;
 	}
 
-	public function addToModulesTable() {
+	protected function addToModulesTable() {
 		global $db;
 
 		// Modul in die Modules-SQL-Tabelle eintragen
-		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('menu_items'), 'active' => 1));
+		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('menu_items'), 'version' => 30, 'active' => 1));
 		$this->module_id = $db->link->lastInsertId();
 
 		return (bool) $bool;
 	}
 
-	public function removeFromModulesTable() {
+	protected function removeFromModulesTable() {
 		global $db;
 
 		return (bool) $db->delete('modules', 'id = ' . $this->module_id);

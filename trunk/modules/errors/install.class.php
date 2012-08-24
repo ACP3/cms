@@ -2,37 +2,37 @@
 
 class ACP3_ErrorsModuleInstaller extends ACP3_ModuleInstaller {
 
-	public function removeResources() {
+	protected function removeResources() {
 		return true;
 	}
 
-	public function createTables() {
+	protected function createTables() {
 		return array();
 	}
 
-	public function removeTables() {
+	protected function removeTables() {
 		return array();
 	}
 
-	public function addSettings() {
+	protected function addSettings() {
 		return true;
 	}
 
-	public function removeSettings() {
+	protected function removeSettings() {
 		return true;
 	}
 
-	public function addToModulesTable() {
+	protected function addToModulesTable() {
 		global $db;
 
 		// Modul in die Modules-SQL-Tabelle eintragen
-		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('errors'), 'active' => 1));
+		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('errors'), 'version' => 30, 'active' => 1));
 		$this->module_id = $db->link->lastInsertId();
 
 		return (bool) $bool;
 	}
 
-	public function removeFromModulesTable() {
+	protected function removeFromModulesTable() {
 		return true;
 	}
 

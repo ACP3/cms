@@ -25,7 +25,7 @@ if (isset($_POST['submit']) === true) {
 	} elseif (ACP3_Validate::formToken() === false) {
 		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
-		$bool = ACP3_Config::module('files', $_POST);
+		$bool = ACP3_Config::setSettings('files', $_POST);
 
 		$session->unsetFormToken();
 
@@ -33,7 +33,7 @@ if (isset($_POST['submit']) === true) {
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-	$settings = ACP3_Config::getModuleSettings('files');
+	$settings = ACP3_Config::getSettings('files');
 
 	if ($comments_active === true) {
 		$comments = array();

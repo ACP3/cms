@@ -9,9 +9,9 @@
 <p>
 	{lang t="installation|installation_successful_1"}
 </p>
-<p>
+<div class="alert">
 	{lang t="installation|installation_successful_2"}
-</p>
+</div>
 <div class="form-actions" style="text-align:center">
 	<a href="{$ROOT_DIR}" class="btn">{lang t="common|forward"}</a>
 </div>

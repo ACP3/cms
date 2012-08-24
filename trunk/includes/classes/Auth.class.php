@@ -72,7 +72,7 @@ class ACP3_Auth
 					$this->isUser = true;
 					$this->userId = (int) $user[0]['id'];
 					$this->superUser = (bool) $user[0]['super_user'];
-					$settings = ACP3_Config::getModuleSettings('users');
+					$settings = ACP3_Config::getSettings('users');
 					$this->entries = $settings['entries_override'] == 1 && $user[0]['entries'] > 0 ? (int) $user[0]['entries'] : (int) CONFIG_ENTRIES;
 					$this->language = $settings['language_override'] == 1 ? $user[0]['language'] : CONFIG_LANG;
 				}

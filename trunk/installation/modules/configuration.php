@@ -39,42 +39,12 @@ if (isset($_POST['submit'])) {
 	} else {
 		// Systemkonfiguration erstellen
 		$config = array(
-			'cache_images' => true,
-			'cache_minify' => 3600,
-			'date_format_long' => $_POST['date_format_long'],
-			'date_format_short' => $_POST['date_format_short'],
-			'date_time_zone' => $_POST['date_time_zone'],
 			'db_host' => $_POST['db_host'],
 			'db_name' => $_POST['db_name'],
 			'db_pre' => $_POST['db_pre'],
 			'db_password' => $_POST['db_password'],
 			'db_user' => $_POST['db_user'],
-			'db_version' => 29,
-			'design' => 'acp3',
-			'entries' => $_POST['entries'],
-			'flood' => $_POST['flood'],
-			'homepage' => 'news/list/',
-			'lang' => LANG,
-			'mailer_smtp_auth' => false,
-			'mailer_smtp_host' => '',
-			'mailer_smtp_password' => '',
-			'mailer_smtp_port' => 25,
-			'mailer_smtp_security' => '',
-			'mailer_smtp_user' => '',
-			'mailer_type' => 'mail',
-			'maintenance_mode' => false,
-			'maintenance_message' => $lang->t('installation', 'offline_message'),
-			'seo_aliases' => true,
-			'seo_meta_description' => '',
-			'seo_meta_keywords' => '',
-			'seo_mod_rewrite' => false,
-			'seo_robots' => 1,
-			'seo_title' => !empty($_POST['seo_title']) ? $_POST['seo_title'] : 'ACP3',
-			'version' => CONFIG_VERSION,
-			'wysiwyg' => 'ckeditor'
 		);
-
-		// Daten in die config.php schreiben und diese laden
 		writeConfigFile($config);
 
 		$db = new ACP3_DB();
@@ -134,8 +104,38 @@ if (isset($_POST['submit'])) {
 		}
 
 		// Modulkonfigurationsdateien schreiben
-		ACP3_Config::module('contact', array('mail' => $_POST['mail'], 'disclaimer' => $db->escape($lang->t('installation', 'disclaimer'), 2)));
-		ACP3_Config::module('newsletter', array('mail' => $_POST['mail'], 'mailsig' => $db->escape($lang->t('installation', 'sincerely') . "\n\n" . $lang->t('installation', 'newsletter_mailsig'))));
+		$system_settings = array(
+			'cache_images' => true,
+			'cache_minify' => 3600,
+			'date_format_long' => $_POST['date_format_long'],
+			'date_format_short' => $_POST['date_format_short'],
+			'date_time_zone' => $_POST['date_time_zone'],
+			'design' => 'acp3',
+			'entries' => (int) $_POST['entries'],
+			'flood' => (int) $_POST['flood'],
+			'homepage' => 'news/list/',
+			'lang' => LANG,
+			'mailer_smtp_auth' => 0,
+			'mailer_smtp_host' => '',
+			'mailer_smtp_password' => '',
+			'mailer_smtp_port' => 25,
+			'mailer_smtp_security' => 'none',
+			'mailer_smtp_user' => '',
+			'mailer_type' => 'mail',
+			'maintenance_mode' => 0,
+			'maintenance_message' => $lang->t('installation', 'offline_message'),
+			'seo_aliases' => 1,
+			'seo_meta_description' => '',
+			'seo_meta_keywords' => '',
+			'seo_mod_rewrite' => 1,
+			'seo_robots' => 1,
+			'seo_title' => !empty($_POST['seo_title']) ? $_POST['seo_title'] : 'ACP3',
+			'version' => CONFIG_VERSION,
+			'wysiwyg' => 'ckeditor'
+		);
+		ACP3_Config::setSettings('system', $system_settings);
+		ACP3_Config::setSettings('contact', array('mail' => $_POST['mail'], 'disclaimer' => $db->escape($lang->t('installation', 'disclaimer'), 2)));
+		ACP3_Config::setSettings('newsletter', array('mail' => $_POST['mail'], 'mailsig' => $db->escape($lang->t('installation', 'sincerely') . "\n\n" . $lang->t('installation', 'newsletter_mailsig'))));
 
 		$content = $tpl->fetch('result.tpl');
 	}

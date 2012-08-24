@@ -23,7 +23,7 @@ if (isset($_POST['submit']) === true) {
 	} elseif (ACP3_Validate::formToken() === false) {
 		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
-		$bool = ACP3_Config::module('comments', $_POST);
+		$bool = ACP3_Config::setSettings('comments', $_POST);
 
 		$session->unsetFormToken();
 
@@ -31,7 +31,7 @@ if (isset($_POST['submit']) === true) {
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-	$settings = ACP3_Config::getModuleSettings('comments');
+	$settings = ACP3_Config::getSettings('comments');
 
 	$tpl->assign('dateformat', $date->dateformatDropdown($settings['dateformat']));
 

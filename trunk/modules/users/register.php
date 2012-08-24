@@ -2,7 +2,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$settings = ACP3_Config::getModuleSettings('users');
+$settings = ACP3_Config::getSettings('users');
 
 if ($auth->isUser() === true) {
 	$uri->redirect(0, ROOT_DIR);

@@ -9,7 +9,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$settings = ACP3_Config::getModuleSettings('gallery');
+$settings = ACP3_Config::getSettings('gallery');
 
 $time = $date->getCurrentDateTime();
 $where = 'start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\'';
