@@ -10,7 +10,7 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$settings = ACP3_Config::getModuleSettings('gallery');
+$settings = ACP3_Config::getSettings('gallery');
 $comments_active = ACP3_Modules::isActive('comments');
 
 if (isset($_POST['submit']) === true) {
@@ -34,7 +34,7 @@ if (isset($_POST['submit']) === true) {
 	} elseif (ACP3_Validate::formToken() === false) {
 		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
-		$bool = ACP3_Config::module('gallery', $_POST);
+		$bool = ACP3_Config::setSettings('gallery', $_POST);
 
 		// Falls sich die anzuzeigenden Bildgrößen geändert haben, die gecacheten Bilder löschen
 		if ($_POST['thumbwidth'] !== $settings['thumbwidth'] || $_POST['thumbheight'] !== $settings['thumbheight'] ||

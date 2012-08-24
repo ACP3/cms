@@ -53,17 +53,17 @@ if (isset($_POST['submit']) === true) {
 	} elseif (ACP3_Validate::formToken() === false) {
 		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 	} else {
-		// Konfig aktualisieren
+		// Config aktualisieren
 		$config = array(
-			'cache_images' => (bool) $_POST['cache_images'],
-			'cache_minify' => $_POST['cache_minify'],
+			'cache_images' => (int) $_POST['cache_images'],
+			'cache_minify' => (int) $_POST['cache_minify'],
 			'date_format_long' => $db->escape($_POST['date_format_long']),
 			'date_format_short' => $db->escape($_POST['date_format_short']),
 			'date_time_zone' => $_POST['date_time_zone'],
-			'entries' => $_POST['entries'],
-			'flood' => $_POST['flood'],
+			'entries' => (int) $_POST['entries'],
+			'flood' => (int) $_POST['flood'],
 			'homepage' => $_POST['homepage'],
-			'mailer_smtp_auth' => (bool) $_POST['mailer_smtp_auth'],
+			'mailer_smtp_auth' => (int) $_POST['mailer_smtp_auth'],
 			'mailer_smtp_host' => $_POST['mailer_smtp_host'],
 			'mailer_smtp_password' => $_POST['mailer_smtp_password'],
 			'mailer_smtp_port' => (int) $_POST['mailer_smtp_port'],
@@ -71,17 +71,17 @@ if (isset($_POST['submit']) === true) {
 			'mailer_smtp_user' => $_POST['mailer_smtp_user'],
 			'mailer_type' => $_POST['mailer_type'],
 			'maintenance_message' => $db->escape($_POST['maintenance_message']),
-			'maintenance_mode' => (bool) $_POST['maintenance_mode'],
-			'seo_aliases' => (bool) $_POST['seo_aliases'],
+			'maintenance_mode' => (int) $_POST['maintenance_mode'],
+			'seo_aliases' => (int) $_POST['seo_aliases'],
 			'seo_meta_description' => $db->escape($_POST['seo_meta_description']),
 			'seo_meta_keywords' => $db->escape($_POST['seo_meta_keywords']),
-			'seo_mod_rewrite' => (bool) $_POST['seo_mod_rewrite'],
+			'seo_mod_rewrite' => (int) $_POST['seo_mod_rewrite'],
 			'seo_robots' => (int) $_POST['seo_robots'],
 			'seo_title' => $db->escape($_POST['seo_title']),
 			'wysiwyg' => $_POST['wysiwyg']
 		);
 
-		$bool = ACP3_Config::system($config);
+		$bool = ACP3_Config::setSettings('system', $config);
 
 		$session->unsetFormToken();
 
@@ -202,23 +202,9 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$mailer_smtp_security[2]['lang'] = $lang->t('system', 'mailer_smtp_security_tls');
 	$tpl->assign('mailer_smtp_security', $mailer_smtp_security);
 
-	$current = array(
-		'cache_minify' => CONFIG_CACHE_MINIFY,
-		'date_format_long' => CONFIG_DATE_FORMAT_LONG,
-		'date_format_short' => CONFIG_DATE_FORMAT_SHORT,
-		'flood' => CONFIG_FLOOD,
-		'homepage' => CONFIG_HOMEPAGE,
-		'mailer_smtp_host' => CONFIG_MAILER_SMTP_HOST,
-		'mailer_smtp_password' => CONFIG_MAILER_SMTP_PASSWORD,
-		'mailer_smtp_port' => CONFIG_MAILER_SMTP_PORT,
-		'mailer_smtp_user' => CONFIG_MAILER_SMTP_USER,
-		'maintenance_message' => CONFIG_MAINTENANCE_MESSAGE,
-		'seo_meta_description' => CONFIG_SEO_META_DESCRIPTION,
-		'seo_meta_keywords' => CONFIG_SEO_META_KEYWORDS,
-		'seo_title' => CONFIG_SEO_TITLE
-	);
+	$settings = ACP3_Config::getSettings('system');
 
-	$tpl->assign('form', isset($_POST['submit']) ? $_POST : $current);
+	$tpl->assign('form', isset($_POST['submit']) ? $_POST : $settings);
 
 	$session->generateFormToken();
 

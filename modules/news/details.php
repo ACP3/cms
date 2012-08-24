@@ -16,7 +16,7 @@ $period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND 
 if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'id = \'' . $uri->id . '\'' . $period) == 1) {
 	require_once MODULES_DIR . 'news/functions.php';
 
-	$settings = ACP3_Config::getModuleSettings('news');
+	$settings = ACP3_Config::getSettings('news');
 	$news = getNewsCache($uri->id);
 	$news[0]['headline'] = $db->escape($news[0]['headline'], 3);
 

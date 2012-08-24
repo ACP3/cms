@@ -11,7 +11,7 @@ if (defined('IN_ADM') === false)
 	exit;
 
 if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'guestbook', 'id = \'' . $uri->id . '\'') == 1) {
-	$settings = ACP3_Config::getModuleSettings('guestbook');
+	$settings = ACP3_Config::getSettings('guestbook');
 
 	if (isset($_POST['submit']) === true) {
 		if (empty($_POST['name']))

@@ -11,7 +11,7 @@ if (defined('IN_ACP3') === false)
 	exit;
 
 /**
- * Ermittelt die Dateigröße, gemäß IEC 60027-2
+ * Ermittelt die Dateigröße gemäß IEC 60027-2
  *
  * @param integer $value
  * 	Die Dateigröße in Byte
@@ -88,7 +88,7 @@ function errorBox($errors)
 			}
 		}
 	} else {
-		$errors = array($errors);
+		$errors = (array) $errors;
 	}
 	$tpl->assign('error_box', array('non_integer_keys' => $non_integer_keys, 'errors' => $errors));
 	return ACP3_View::fetchTemplate('common/error_box.tpl');
@@ -119,7 +119,7 @@ function generateEmail($recipient_name, $recipient_email, $from, $subject, $body
 			$mail->Host = CONFIG_MAILER_SMTP_HOST;
 			$mail->Port = CONFIG_MAILER_SMTP_PORT;
 			$mail->SMTPSecure = CONFIG_MAILER_SMTP_SECURITY === 'ssl' || CONFIG_MAILER_SMTP_SECURITY === 'tls' ? CONFIG_MAILER_SMTP_SECURITY : '';
-			if (CONFIG_MAILER_SMTP_AUTH === true) {
+			if ((bool) CONFIG_MAILER_SMTP_AUTH === true) {
 				$mail->SMTPAuth = true;
 				$mail->Username = CONFIG_MAILER_SMTP_USER;
 				$mail->Password = CONFIG_MAILER_SMTP_PASSWORD;

@@ -35,7 +35,7 @@ function commentsList($module, $entry_id)
 {
 	global $auth, $date, $db, $lang, $tpl;
 
-	$settings = ACP3_Config::getModuleSettings('comments');
+	$settings = ACP3_Config::getSettings('comments');
 
 	// Auflistung der Kommentare
 	$comments = $db->query('SELECT u.nickname AS user_name, c.name, c.user_id, c.date, c.message FROM {pre}comments AS c JOIN {pre}modules AS m ON(m.id = c.module_id) LEFT JOIN ({pre}users AS u) ON u.id = c.user_id WHERE m.name = \'' . $module . '\' AND c.entry_id = \'' . $entry_id . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . $auth->entries);

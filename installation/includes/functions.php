@@ -6,9 +6,6 @@
  * @package ACP3 Installer
  */
 
-if (defined('IN_INSTALL') === false)
-	exit;
-
 /**
  * Generiert ein gesalzenes Passwort
  *
@@ -161,7 +158,7 @@ function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
  */
 function writeConfigFile(array $data)
 {
-	$path = ACP3_ROOT . 'includes/config.php';
+	$path = INCLUDES_DIR . 'config.php';
 	if (is_writable($path) === true){
 		// Konfigurationsdatei in ein Array schreiben
 		ksort($data);

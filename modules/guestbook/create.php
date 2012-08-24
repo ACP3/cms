@@ -13,7 +13,7 @@ if (defined('IN_ACP3') === false)
 $breadcrumb->append($lang->t('guestbook', 'guestbook'), $uri->route('guestbook'))
 		   ->append($lang->t('guestbook', 'create'));
 
-$settings = ACP3_Config::getModuleSettings('guestbook');
+$settings = ACP3_Config::getSettings('guestbook');
 $newsletterAccess = ACP3_Modules::check('newsletter', 'list') === true && $settings['newsletter_integration'] == 1;
 
 if ($uri->layout === 'simple') {

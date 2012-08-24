@@ -8,28 +8,29 @@
  */
 header('Content-type: text/plain; charset=UTF-8');
 
+error_reporting(E_ALL);
+
 define('IN_ACP3', true);
 
-define('ACP3_ROOT', realpath(dirname(__FILE__) . '/../') . '/');
+define('ACP3_ROOT', realpath(__DIR__ . '/../') . '/');
+define('PHP_SELF', '');
 define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 define('MODULES_DIR', ACP3_ROOT . 'modules/');
 
-require ACP3_ROOT . 'includes/config.php';
-
-define('NEW_VERSION', '4.0 SVN');
-define('PHP_SELF', '');
-
-if (defined('CONFIG_DB_VERSION') === false) {
-	define('CONFIG_DB_VERSION', (int) 0);
-}
-
+require INCLUDES_DIR . 'config.php';
 require INCLUDES_DIR . 'autoload.php';
 
 $db = new ACP3_DB();
 $handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
-if ($handle !== true) {
+if ($handle !== true)
 	exit($handle);
-}
+
+if (!defined('CONFIG_LANG'))
+	ACP3_Config::getSystemSettings();
+
+define('NEW_VERSION', '4.0 SVN');
+if (defined('CONFIG_DB_VERSION') === false)
+	define('CONFIG_DB_VERSION', (int) 0);
 
 /**
  * Führt die Datenbankschema-Änderungen durch
@@ -448,41 +449,91 @@ if (CONFIG_DB_VERSION < 29) {
 	);
 	echo executeSqlQueries($queries, 29);
 }
+if (CONFIG_DB_VERSION < 30) {
+	$system_settings = array(
+		'cache_images' => CONFIG_CACHE_IMAGES,
+		'cache_minify' => CONFIG_CACHE_MINIFY,
+		'date_format_long' => CONFIG_DATE_FORMAT_LONG,
+		'date_format_short' => CONFIG_DATE_FORMAT_SHORT,
+		'date_time_zone' => CONFIG_DATE_TIME_ZONE,
+		'design' => CONFIG_DESIGN,
+		'entries' => CONFIG_ENTRIES,
+		'flood' => CONFIG_FLOOD,
+		'homepage' => CONFIG_HOMEPAGE,
+		'lang' => CONFIG_LANG,
+		'mailer_smtp_auth' => (int) CONFIG_MAILER_SMTP_AUTH,
+		'mailer_smtp_host' => CONFIG_MAILER_SMTP_HOST,
+		'mailer_smtp_password' => CONFIG_MAILER_SMTP_HOST,
+		'mailer_smtp_port' => CONFIG_MAILER_SMTP_PORT,
+		'mailer_smtp_security' => CONFIG_MAILER_SMTP_SECURITY,
+		'mailer_smtp_user' => CONFIG_MAILER_SMTP_HOST,
+		'mailer_type' => CONFIG_MAILER_TYPE,
+		'maintenance_message' => CONFIG_MAINTENANCE_MESSAGE,
+		'maintenance_mode' => (int) CONFIG_MAINTENANCE_MODE,
+		'seo_aliases' => (int) CONFIG_SEO_ALIASES,
+		'seo_meta_description' => CONFIG_SEO_META_DESCRIPTION,
+		'seo_meta_keywords' => CONFIG_SEO_META_KEYWORDS,
+		'seo_mod_rewrite' => (int) CONFIG_SEO_MOD_REWRITE,
+		'seo_robots' => CONFIG_SEO_ROBOTS,
+		'seo_title' => CONFIG_SEO_TITLE,
+		'version' => CONFIG_VERSION,
+		'wysiwyg' => CONFIG_WYSIWYG
+	);
+	
+	$mod_id = $db->select('id', 'modules', 'name = \'system\'');
+	foreach ($system_settings as $key => $value) {
+		$db->insert('settings', array('id' => '', 'module_id' => $mod_id[0]['id'], 'name' => $key, 'value' => $db->escape($value, 2)));
+	}
+
+	// DB-Config anpassen
+	require ACP3_ROOT . 'installation/includes/functions.php';
+	$system_config = array(
+		'db_host' => CONFIG_DB_HOST,
+		'db_name' => CONFIG_DB_NAME,
+		'db_password' => CONFIG_DB_PASSWORD,
+		'db_pre' => CONFIG_DB_PRE,
+		'db_user' => CONFIG_DB_USER,
+	);
+	writeConfigFile($system_config);
+
+	$queries = array(
+		"ALTER TABLE `{pre}modules` ADD `version` TINYINT(3) UNSIGNED NOT NULL AFTER `name`;",
+		// Interne DB-Schema-Version der Module
+		"UPDATE `{pre}modules` SET version = 30;"
+	);
+	echo executeSqlQueries($queries, 30);
+}
 
 // Konfigurationsdatei aktualisieren
-$config = array(
-	'db_version' => 29,
-	'maintenance_mode' => (bool) CONFIG_MAINTENANCE_MODE,
-	'seo_mod_rewrite' => (bool) CONFIG_SEO_MOD_REWRITE,
+$settings = array(
+	'maintenance_mode' => (int) CONFIG_MAINTENANCE_MODE,
+	'seo_mod_rewrite' => (int) CONFIG_SEO_MOD_REWRITE,
 	'date_time_zone' => is_int(CONFIG_DATE_TIME_ZONE) === true ? 'Europe/Berlin' : CONFIG_DATE_TIME_ZONE,
 );
 
 if (defined('CONFIG_DATE_FORMAT') === true && CONFIG_DB_VERSION == 0) {
-	$config['wysiwyg'] = CONFIG_WYSIWYG == 'fckeditor' ? 'ckeditor' : CONFIG_WYSIWYG;
-	$config['date_format_long'] = CONFIG_DATE_FORMAT;
-	$config['date_format_short'] = 'd.m.Y';
-
-	define('CONFIG_DATE_FORMAT_LONG', CONFIG_DATE_FORMAT);
-	define('CONFIG_DATE_FORMAT_SHORT', $config['date_format_short']);
+	$settings['wysiwyg'] = CONFIG_WYSIWYG == 'fckeditor' ? 'ckeditor' : CONFIG_WYSIWYG;
+	$settings['date_format_long'] = CONFIG_DATE_FORMAT;
+	$settings['date_format_short'] = 'd.m.Y';
 }
 if (defined('CONFIG_CACHE_IMAGES') == false) {
-	define('CONFIG_CACHE_IMAGES', true);
-	define('CONFIG_CACHE_MINIFY', 3600);
-	define('CONFIG_SEO_ALIASES', true);
+	$settings['cache_images'] = 1;
+	$settings['cache_minify'] = 3600;
+	$settings['seo_aliases'] = 1;
 }
 if (defined('CONFIG_MAILER_TYPE') === false) {
-	define('CONFIG_MAILER_SMTP_AUTH', false);
-	define('CONFIG_MAILER_SMTP_HOST', '');
-	define('CONFIG_MAILER_SMTP_PASSWORD', '');
-	define('CONFIG_MAILER_SMTP_PORT', 25);
-	define('CONFIG_MAILER_SMTP_SECURITY', 'none');
-	define('CONFIG_MAILER_SMTP_USER', '');
-	define('CONFIG_MAILER_TYPE', 'mail');
+	$settings['mailer_smtp_auth'] = 0;
+	$settings['mailer_smtp_host'] = '';
+	$settings['mailer_smtp_password'] = '';
+	$settings['mailer_smtp_port'] = 25;
+	$settings['mailer_smtp_security'] = 'none';
+	$settings['mailer_smtp_user'] = '';
+	$settings['mailer_type'] = 'mail';
 }
 if (defined('CONFIG_SEO_ROBOTS') === false) {
-	define('CONFIG_SEO_ROBOTS', 1);
+	$settings['seo_robots'] = 1;
 }
-print ACP3_Config::system($config) === true ? 'Konfigurationsdatei erfolgreich aktualisiert!' : 'Die Konfigurationsdatei konnte nicht aktualisiert werden!';
+print ACP3_Config::setSettings('system', $settings) === true ? 'Konfigurationsdatei erfolgreich aktualisiert!' : 'Die Konfigurationsdatei konnte nicht aktualisiert werden!';
 
 // Cache leeren
 ACP3_Cache::purge();

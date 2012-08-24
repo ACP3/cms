@@ -24,21 +24,22 @@
  */
 define('IN_ACP3', true);
 
-define('ACP3_ROOT', '../../../../../../');
-include ACP3_ROOT . 'includes/config.php';
+define('ACP3_ROOT', realpath(__DIR__ . '/../../../../../../') . '/');
 
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
 $php_self = dirname(PHP_SELF);
 define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
 define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 
+include INCLUDES_DIR . 'config.php';
 require INCLUDES_DIR . 'autoload.php';
 
 $db = new ACP3_DB();
 $handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
-if ($handle !== true) {
+if ($handle !== true)
 	exit($handle);
-}
+
+ACP3_Config::getSystemSettings();
 
 $session = new ACP3_Session();
 $auth = new ACP3_Auth();

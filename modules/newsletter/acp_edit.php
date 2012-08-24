@@ -26,7 +26,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'newslette
 		} elseif (ACP3_Validate::formToken() === false) {
 			ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
-			$settings = ACP3_Config::getModuleSettings('newsletter');
+			$settings = ACP3_Config::getSettings('newsletter');
 
 			// Newsletter archivieren
 			$update_values = array(

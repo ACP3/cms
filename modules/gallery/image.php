@@ -15,7 +15,7 @@ if (ACP3_Validate::isNumber($uri->id) === true) {
 	$picture = $db->select('file', 'gallery_pictures', 'id = \'' . $uri->id . '\'');
 	$action = $uri->action === 'thumb' ? 'thumb' : '';
 
-	$settings = ACP3_Config::getModuleSettings('gallery');
+	$settings = ACP3_Config::getSettings('gallery');
 	$options = array(
 		'enable_cache' => CONFIG_CACHE_IMAGES,
 		'cache_prefix' => 'gallery_' . $action,

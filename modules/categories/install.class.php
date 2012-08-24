@@ -2,11 +2,11 @@
 
 class ACP3_CategoriesModuleInstaller extends ACP3_ModuleInstaller {
 
-	public function removeResources() {
+	protected function removeResources() {
 		return true;
 	}
 
-	public function createTables() {
+	protected function createTables() {
 		return array(
 			"CREATE TABLE `{pre}categories` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -15,15 +15,15 @@ class ACP3_CategoriesModuleInstaller extends ACP3_ModuleInstaller {
 				`description` VARCHAR(120) NOT NULL,
 				`module_id` INT(10) UNSIGNED NOT NULL,
 				PRIMARY KEY (`id`)
-			) {engine};"
+			) {engine} {charset};"
 		);
 	}
 
-	public function removeTables() {
+	protected function removeTables() {
 		return array();
 	}
 
-	public function addSettings() {
+	protected function addSettings() {
 		global $db;
 
 		$queries = array(
@@ -39,21 +39,21 @@ class ACP3_CategoriesModuleInstaller extends ACP3_ModuleInstaller {
 		return (bool) $bool;
 	}
 
-	public function removeSettings() {
+	protected function removeSettings() {
 		return true;
 	}
 
-	public function addToModulesTable() {
+	protected function addToModulesTable() {
 		global $db;
 
 		// Modul in die Modules-SQL-Tabelle eintragen
-		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('categories'), 'active' => 1));
+		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('categories'), 'version' => 30, 'active' => 1));
 		$this->module_id = $db->link->lastInsertId();
 
 		return (bool) $bool;
 	}
 
-	public function removeFromModulesTable() {
+	protected function removeFromModulesTable() {
 		return true;
 	}
 

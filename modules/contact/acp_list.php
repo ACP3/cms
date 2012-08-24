@@ -24,7 +24,7 @@ if (isset($_POST['submit']) === true) {
 		$_POST['fax'] = $db->escape($_POST['fax']);
 		$_POST['disclaimer'] = $db->escape($_POST['disclaimer'], 2);
 
-		$bool = ACP3_Config::module('contact', $_POST);
+		$bool = ACP3_Config::setSettings('contact', $_POST);
 
 		$session->unsetFormToken();
 
@@ -32,7 +32,7 @@ if (isset($_POST['submit']) === true) {
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-	$settings = ACP3_Config::getModuleSettings('contact');
+	$settings = ACP3_Config::getSettings('contact');
 	$settings['address'] = $db->escape($settings['address'], 3);
 	$settings['telephone'] = $db->escape($settings['telephone'], 3);
 	$settings['fax'] = $db->escape($settings['fax'], 3);

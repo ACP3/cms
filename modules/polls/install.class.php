@@ -2,7 +2,7 @@
 
 class ACP3_PollsModuleInstaller extends ACP3_ModuleInstaller {
 
-	public function createTables() {
+	protected function createTables() {
 		return array(
 			"CREATE TABLE `{pre}polls` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -12,13 +12,13 @@ class ACP3_PollsModuleInstaller extends ACP3_ModuleInstaller {
 				`multiple` TINYINT(1) UNSIGNED NOT NULL,
 				`user_id` INT UNSIGNED NOT NULL,
 				PRIMARY KEY (`id`)
-			) {engine};",
+			) {engine} {charset};",
 			"CREATE TABLE `{pre}poll_answers` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`text` VARCHAR(120) NOT NULL,
 				`poll_id` INT(10) UNSIGNED NOT NULL,
 				PRIMARY KEY (`id`), INDEX `foreign_poll_id` (`poll_id`)
-			) {engine};",
+			) {engine} {charset};",
 			"CREATE TABLE `{pre}poll_votes` (
 				`poll_id` INT(10) UNSIGNED NOT NULL,
 				`answer_id` INT(10) UNSIGNED NOT NULL,
@@ -26,11 +26,11 @@ class ACP3_PollsModuleInstaller extends ACP3_ModuleInstaller {
 				`ip` VARCHAR(40) NOT NULL,
 				`time` DATETIME NOT NULL,
 				INDEX (`poll_id`, `answer_id`, `user_id`)
-			) {engine};"
+			) {engine} {charset};"
 		);
 	}
 
-	public function removeTables() {
+	protected function removeTables() {
 		return array(
 			"DROP TABLE `{pre}poll_votes`;",
 			"DROP TABLE `{pre}poll_answers`;",
@@ -38,25 +38,25 @@ class ACP3_PollsModuleInstaller extends ACP3_ModuleInstaller {
 		);
 	}
 
-	public function addSettings() {
+	protected function addSettings() {
 		return true;
 	}
 
-	public function removeSettings() {
+	protected function removeSettings() {
 		return true;
 	}
 
-	public function addToModulesTable() {
+	protected function addToModulesTable() {
 		global $db;
 
 		// Modul in die Modules-SQL-Tabelle eintragen
-		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('polls'), 'active' => 1));
+		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('polls'), 'version' => 30, 'active' => 1));
 		$this->module_id = $db->link->lastInsertId();
 
 		return (bool) $bool;
 	}
 
-	public function removeFromModulesTable() {
+	protected function removeFromModulesTable() {
 		global $db;
 
 		return (bool) $db->delete('modules', 'id = ' . $this->module_id);

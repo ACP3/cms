@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 require_once MODULES_DIR . 'categories/functions.php';
 
-$settings = ACP3_Config::getModuleSettings('news');
+$settings = ACP3_Config::getSettings('news');
 
 if (isset($_POST['submit']) === true) {
 	if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)

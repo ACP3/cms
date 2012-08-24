@@ -22,7 +22,7 @@ if (ACP3_Validate::isNumber($uri->cat) && $db->countRows('*', 'categories', 'id 
 	$c_files = count($files);
 
 	if ($c_files > 0) {
-		$settings = ACP3_Config::getModuleSettings('files');
+		$settings = ACP3_Config::getSettings('files');
 
 		for ($i = 0; $i < $c_files; ++$i) {
 			$files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : $lang->t('files', 'unknown_filesize');

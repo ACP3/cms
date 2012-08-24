@@ -17,7 +17,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('g.id', 'galler
 	$picture = $db->select('g.id AS gallery_id, g.name, p.id, p.pic, p.file, p.description, p.comments', 'gallery AS g, {pre}gallery_pictures AS p', 'p.id = \'' . $uri->id . '\' AND p.gallery_id = g.id');
 	$picture[0]['description'] = $db->escape($picture[0]['description'], 3);
 
-	$settings = ACP3_Config::getModuleSettings('gallery');
+	$settings = ACP3_Config::getSettings('gallery');
 
 	// Brotkrümelspur
 	$breadcrumb->append($lang->t('gallery', 'gallery'), $uri->route('gallery'))

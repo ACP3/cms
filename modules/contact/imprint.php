@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$settings = ACP3_Config::getModuleSettings('contact');
+$settings = ACP3_Config::getSettings('contact');
 $settings['address'] = $db->escape($settings['address'], 3);
 $settings['telephone'] = $db->escape($settings['telephone'], 3);
 $settings['fax'] = $db->escape($settings['fax'], 3);

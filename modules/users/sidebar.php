@@ -61,7 +61,7 @@ if ($auth->isUser() === true) {
 
 	ACP3_View::displayTemplate('users/sidebar_user_menu.tpl');
 } else {
-	$settings = ACP3_Config::getModuleSettings('users');
+	$settings = ACP3_Config::getSettings('users');
 
 	$tpl->assign('enable_registration', $settings['enable_registration']);
 	$tpl->assign('redirect_uri', isset($_POST['redirect_uri']) ? $_POST['redirect_uri'] : $currentPage);

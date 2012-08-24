@@ -18,7 +18,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery',
 	$breadcrumb->append($gallery[0]['name'], $uri->route('acp/gallery/edit/id_' . $uri->id))
 			   ->append($lang->t('gallery', 'acp_create_picture'));
 
-	$settings = ACP3_Config::getModuleSettings('gallery');
+	$settings = ACP3_Config::getSettings('gallery');
 
 	if (isset($_POST['submit']) === true) {
 		$file['tmp_name'] = $_FILES['file']['tmp_name'];

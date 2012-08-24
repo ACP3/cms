@@ -2,11 +2,11 @@
 
 class ACP3_UsersModuleInstaller extends ACP3_ModuleInstaller {
 
-	public function removeResources() {
+	protected function removeResources() {
 		return true;
 	}
 
-	public function createTables() {
+	protected function createTables() {
 		return array(
 			"CREATE TABLE `{pre}users` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -30,15 +30,15 @@ class ACP3_UsersModuleInstaller extends ACP3_ModuleInstaller {
 				`entries` TINYINT(2) UNSIGNED NOT NULL,
 				`draft` TEXT NOT NULL,
 				PRIMARY KEY (`id`)
-			) {engine};"
+			) {engine} {charset};"
 		);
 	}
 
-	public function removeTables() {
+	protected function removeTables() {
 		return array();
 	}
 
-	public function addSettings() {
+	protected function addSettings() {
 		global $db;
 
 		$queries = array(
@@ -54,21 +54,21 @@ class ACP3_UsersModuleInstaller extends ACP3_ModuleInstaller {
 		return (bool) $bool;
 	}
 
-	public function removeSettings() {
+	protected function removeSettings() {
 		return true;
 	}
 
-	public function addToModulesTable() {
+	protected function addToModulesTable() {
 		global $db;
 
 		// Modul in die Modules-SQL-Tabelle eintragen
-		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('users'), 'active' => 1));
+		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('users'), 'version' => 30, 'active' => 1));
 		$this->module_id = $db->link->lastInsertId();
 
 		return (bool) $bool;
 	}
 
-	public function removeFromModulesTable() {
+	protected function removeFromModulesTable() {
 		return true;
 	}
 
