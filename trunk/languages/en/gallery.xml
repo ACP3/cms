@@ -2,9 +2,9 @@
 <language>
 	<item key="acp_create">Create a new gallery</item>
 	<item key="acp_create_picture">Add picture</item>
-	<item key="acp_delete_gallery">Delete galleries</item>
+	<item key="acp_delete">Delete galleries</item>
 	<item key="acp_delete_picture">Delete pictures</item>
-	<item key="acp_edit_gallery">Edit gallery</item>
+	<item key="acp_edit">Edit gallery</item>
 	<item key="acp_edit_picture">Edit picture</item>
 	<item key="acp_settings">Settings</item>
 	<item key="details">Picture details</item>
