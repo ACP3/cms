@@ -7,17 +7,15 @@
 	<div class="description">
 		{$picture.description}
 	</div>
-	<div class="pagination pagination-centered">
-		<ul>
+	<ul class="pager">
 {if isset($picture_back)}
-			<li><a href="{uri args="gallery/details/id_`$picture_back.id`"}" rel="prev">&laquo; {lang t="gallery|previous_image"}</a></li>
+		<li class="previous"><a href="{uri args="gallery/details/id_`$picture_back.id`"}" rel="prev">&laquo; {lang t="gallery|previous_image"}</a></li>
 {/if}
-			<li><a href="{uri args="gallery/pics/id_`$picture.gallery_id`"}">{lang t="gallery|picture_index"}</a></li>
+		<li><a href="{uri args="gallery/pics/id_`$picture.gallery_id`"}">{lang t="gallery|picture_index"}</a></li>
 {if isset($picture_next)}
-			<li><a href="{uri args="gallery/details/id_`$picture_next.id`"}" rel="next">{lang t="gallery|next_image"} &raquo;</a></li>
+		<li class="next"><a href="{uri args="gallery/details/id_`$picture_next.id`"}" rel="next">{lang t="gallery|next_image"} &raquo;</a></li>
 {/if}
-		</ul>
-	</div>
+	</ul>
 </div>
 {if isset($comments)}
 {$comments}
