@@ -98,7 +98,7 @@ class ACP3_View
 	 */
 	private static function buildMinifyLink()
 	{
-		$minify = ROOT_DIR . 'includes/min/' . (CONFIG_SEO_MOD_REWRITE === true && defined('IN_ADM') === false ? '' : '?') . 'g=%s';
+		$minify = ROOT_DIR . 'includes/min/' . ((bool) CONFIG_SEO_MOD_REWRITE === true && defined('IN_ADM') === false ? '' : '?') . 'g=%s';
 
 		ksort(self::$js_libraries);
 		$libraries = '';

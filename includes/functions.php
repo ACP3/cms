@@ -429,6 +429,7 @@ function pagination($rows, $fragment = '')
 		$c_pagination = (int) ceil($rows / $auth->entries);
 		$show_first_last = 5;
 		$show_previous_next = 2;
+		$items_to_display = 7;
 		$j = 0;
 
 		// Vorherige und nächste Seite für Suchmaschinen und Prefetching propagieren
@@ -439,9 +440,18 @@ function pagination($rows, $fragment = '')
 				ACP3_SEO::setNextPage($link . 'page_' . ($current_page + 1) . '/');
 		}
 
+		// Wenn mehr als 9 Seiten vorhanden sind, nur noch einen bestimmten Teil der Seitenauswahl anzeigen
+		$start = $c_pagination > 9 && $current_page - $show_previous_next > 0 ? $current_page - $show_previous_next : 1;
+		$end = $c_pagination > 9 && $start + $items_to_display - 1 <= $c_pagination ? $start + $items_to_display - 1 : $c_pagination;
+
+		if ($c_pagination > $items_to_display &&
+			$end - $start < $items_to_display && $end - $items_to_display > 0) {
+			$start = $end - $items_to_display + 1;
+		}
+
 		// Erste Seite
-		if ($c_pagination > $show_first_last) {
-			$pagination[$j]['selected'] = $current_page === 1 ? true : false;
+		if ($c_pagination > $show_first_last && $start > 1) {
+			$pagination[$j]['selected'] = false;
 			$pagination[$j]['page'] = '&laquo;';
 			$pagination[$j]['title'] = $lang->t('common', 'first_page');
 			$pagination[$j]['uri'] = $link . $fragment;
@@ -449,17 +459,13 @@ function pagination($rows, $fragment = '')
 		}
 
 		// Vorherige Seite
-		if ($c_pagination > $show_previous_next) {
-			$pagination[$j]['selected'] = $current_page === 1 ? true : false;
+		if ($c_pagination > $show_previous_next && $current_page !== 1) {
+			$pagination[$j]['selected'] = false;
 			$pagination[$j]['page'] = '&lsaquo;';
 			$pagination[$j]['title'] = $lang->t('common', 'previous_page');
 			$pagination[$j]['uri'] = $link . ($current_page - 1 > 1 ? 'page_' . ($current_page - 1) . '/' : '') . $fragment;
 			++$j;
 		}
-
-		// Wenn mehr als 9 Seiten vorhanden sind, nur noch einen bestimmten Teil der Seitenauswahl anzeigen
-		$start = $c_pagination > 9 && $current_page - $show_previous_next > 0 ? $current_page - $show_previous_next : 1;
-		$end = $c_pagination > 9 && $start + 5 <= $c_pagination ? $start + 5 : $c_pagination;
 
 		for ($i = (int) $start; $i <= $end; ++$i, ++$j) {
 			$pagination[$j]['selected'] = $current_page === $i ? true : false;
@@ -468,8 +474,8 @@ function pagination($rows, $fragment = '')
 		}
 
 		// Nächste Seite
-		if ($c_pagination > $show_previous_next) {
-			$pagination[$j]['selected'] = $current_page === $c_pagination ? true : false;
+		if ($c_pagination > $show_previous_next && $current_page !== $c_pagination) {
+			$pagination[$j]['selected'] = false;
 			$pagination[$j]['page'] = '&rsaquo;';
 			$pagination[$j]['title'] = $lang->t('common', 'next_page');
 			$pagination[$j]['uri'] = $link . 'page_' . ($current_page + 1) . '/' . $fragment;
@@ -477,8 +483,8 @@ function pagination($rows, $fragment = '')
 		}
 
 		// Letzte Seite
-		if ($c_pagination > $show_first_last) {
-			$pagination[$j]['selected'] = $current_page === $c_pagination ? true : false;
+		if ($c_pagination > $show_first_last && $c_pagination !== $end) {
+			$pagination[$j]['selected'] = false;
 			$pagination[$j]['page'] = '&raquo;';
 			$pagination[$j]['title'] = $lang->t('common', 'last_page');
 			$pagination[$j]['uri'] = $link . 'page_' . $c_pagination . '/' . $fragment;
