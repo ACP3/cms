@@ -301,7 +301,7 @@ class ACP3_SEO
 		}
 
 		$seo = array(
-			'enable_uri_aliases' => CONFIG_SEO_ALIASES,
+			'enable_uri_aliases' => (bool) CONFIG_SEO_ALIASES,
 			'alias' => isset($alias) ? $alias : '',
 			'keywords' => $keywords,
 			'description' => $description,

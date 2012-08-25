@@ -43,7 +43,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_item
 			$_POST['mode'] == 3 && empty($_POST['uri']) ||
 			$_POST['mode'] == 4 && (ACP3_Validate::isNumber($_POST['static_pages']) === false || $db->countRows('*', 'static_pages', 'id = \'' . $_POST['static_pages'] . '\'') == 0))
 			$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
-		if (($_POST['mode'] == 2 || $_POST['mode'] == 4) && CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
+		if (($_POST['mode'] == 2 || $_POST['mode'] == 4) && (bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 			(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias'], $db->escape($_POST['uri']))))
 			$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
@@ -153,7 +153,6 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_item
 		}
 
 		// Daten an Smarty übergeben
-		$tpl->assign('enable_uri_aliases', CONFIG_SEO_ALIASES);
 		$tpl->assign('pages_list', menuItemsList($page[0]['parent_id'], $page[0]['left_id'], $page[0]['right_id']));
 		$tpl->assign('SEO_FORM_FIELDS', ACP3_SEO::formFields($page[0]['uri']));
 		$tpl->assign('form', isset($_POST['submit']) ? $_POST : $page[0]);

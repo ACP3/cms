@@ -15,7 +15,7 @@ if (isset($_POST['submit']) === true) {
 		$errors[] = $lang->t('common', 'select_date');
 	if (strlen($_POST['name']) < 3)
 		$errors['name'] = $lang->t('gallery', 'type_in_gallery_name');
-	if (CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
+	if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 		(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias']) === true))
 		$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
@@ -33,7 +33,7 @@ if (isset($_POST['submit']) === true) {
 		);
 
 		$bool = $db->insert('gallery', $insert_values);
-		if (CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
+		if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
 			ACP3_SEO::insertUriAlias('gallery/pics/id_' . $db->link->lastInsertID(), $_POST['alias'], $db->escape($_POST['seo_keywords']), $db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
 
 		$session->unsetFormToken();

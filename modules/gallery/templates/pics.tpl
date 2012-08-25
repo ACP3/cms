@@ -20,7 +20,9 @@ $(document).ready(function() {
 		</a>
 	</li>
 {/foreach}
+</ul>
 {else}
+<ul class="thumbnails">
 {foreach $pictures as $row}
 	<li>
 		<a href="{$row.uri}" class="thumbnail">
@@ -28,8 +30,8 @@ $(document).ready(function() {
 		</a>
 	</li>
 {/foreach}
-{/if}
 </ul>
+{/if}
 {else}
 <div class="alert align-center">
 	<strong>{lang t="gallery|no_pictures"}</strong>

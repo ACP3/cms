@@ -96,7 +96,7 @@ class ACP3_URI
 	private function checkForUriAlias()
 	{
 		// Nur ausführen, falls URI-Aliase aktiviert sind
-		if ((bool) CONFIG_SEO_ALIASES === true && !defined('IN_ADM')) {
+		if ((bool) (bool) CONFIG_SEO_ALIASES === true && !defined('IN_ADM')) {
 			// Falls für Query ein Alias existiert, zu diesem weiterleiten
 			if (ACP3_SEO::uriAliasExists($this->query) === true)
 				// URI-Alias wird von uri::route() erzeugt
@@ -239,7 +239,7 @@ class ACP3_URI
 			if (count(preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY)) === 1)
 				$path.= 'list/';
 			// Überprüfen, ob Alias vorhanden ist und diesen als URI verwenden
-			if ((bool) CONFIG_SEO_ALIASES === true && $alias === 1) {
+			if ((bool) (bool) CONFIG_SEO_ALIASES === true && $alias === 1) {
 				$alias = ACP3_SEO::getUriAlias($path);
 				$path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
 			}

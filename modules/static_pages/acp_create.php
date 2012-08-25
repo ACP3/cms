@@ -38,7 +38,7 @@ if (isset($_POST['submit']) === true) {
 				$errors[] = $lang->t('menu_items', 'select_item_visibility');
 		}
 	}
-	if (CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
+	if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 		(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias']) === true))
 		$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
@@ -59,7 +59,7 @@ if (isset($_POST['submit']) === true) {
 		$db->link->beginTransaction();
 		$bool = $db->insert('static_pages', $insert_values);
 		$last_id = $db->link->lastInsertId();
-		if (CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
+		if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
 			ACP3_SEO::insertUriAlias('static_pages/list/id_' . $last_id, $_POST['alias'], $db->escape($_POST['seo_keywords']), $db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
 		$db->link->commit();
 
