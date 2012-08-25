@@ -23,7 +23,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery',
 			$errors[] = $lang->t('common', 'select_date');
 		if (strlen($_POST['name']) < 3)
 			$errors['name'] = $lang->t('gallery', 'type_in_gallery_name');
-		if (CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
+		if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 			(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias'], 'gallery/pics/id_' . $uri->id)))
 			$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
@@ -40,7 +40,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'gallery',
 			);
 
 			$bool = $db->update('gallery', $update_values, 'id = \'' . $uri->id . '\'');
-			if (CONFIG_SEO_ALIASES === true && !empty($_POST['alias'])) {
+			if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias'])) {
 				ACP3_SEO::insertUriAlias('gallery/pics/id_' . $uri->id, $_POST['alias'], $db->escape($_POST['seo_keywords']), $db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
 				require_once MODULES_DIR . 'gallery/functions.php';
 				generatePictureAliases($uri->id);

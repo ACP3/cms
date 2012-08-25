@@ -20,7 +20,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'static_pa
 			$errors['title'] = $lang->t('static_pages', 'title_to_short');
 		if (strlen($_POST['text']) < 3)
 			$errors['text'] = $lang->t('static_pages', 'text_to_short');
-		if (CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
+		if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 			(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias'], 'static_pages/list/id_' . $uri->id) === true))
 			$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
@@ -38,7 +38,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'static_pa
 			);
 
 			$bool = $db->update('static_pages', $update_values, 'id = \'' . $uri->id . '\'');
-			if (CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
+			if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
 				ACP3_SEO::insertUriAlias('static_pages/list/id_' . $uri->id, $_POST['alias'], $db->escape($_POST['seo_keywords']), $db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
 
 			setStaticPagesCache($uri->id);

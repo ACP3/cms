@@ -28,7 +28,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'i
 			$errors['cat-create'] = $lang->t('categories', 'category_already_exists');
 		if (!empty($_POST['link_title']) && (empty($_POST['uri']) || ACP3_Validate::isNumber($_POST['target']) === false))
 			$errors[] = $lang->t('news', 'complete_additional_hyperlink_statements');
-		if (CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
+		if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 			(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias'], 'news/details/id_' . $uri->id) === true))
 			$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
@@ -52,7 +52,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'i
 			);
 
 			$bool = $db->update('news', $update_values, 'id = \'' . $uri->id . '\'');
-			if (CONFIG_SEO_ALIASES === true)
+			if ((bool) CONFIG_SEO_ALIASES === true)
 				ACP3_SEO::insertUriAlias('news/details/id_' . $uri->id, $_POST['alias'], $db->escape($_POST['seo_keywords']), $db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
 
 			require_once MODULES_DIR . 'news/functions.php';
@@ -75,7 +75,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'news', 'i
 		$tpl->assign('categories', categoriesList('news', $news[0]['category_id'], true));
 
 		// Weiterlesen & Kommentare
-		if ($settings['readmore'] == 1 || $settings['comments'] == 1) {
+		if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && ACP3_Modules::check('comments', 'functions') === true)) {
 			$i = 0;
 			$options = array();
 			if ($settings['readmore'] == 1) {
