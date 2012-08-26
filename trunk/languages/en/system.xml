@@ -22,10 +22,12 @@
 	<item key="database">Database</item>
 	<item key="designs_edit_error">While switching the design an error has occured.</item>
 	<item key="designs_edit_success">The design has been successfully selected and may now be used.</item>
+	<item key="disable">Disable</item>
 	<item key="disable_module">Disable module</item>
 	<item key="drop_tables"><![CDATA[Export with &quot;DROP TABLE&quot; statement]]></item>
 	<item key="editor">Editor</item>
 	<item key="email">E-mail</item>
+	<item key="enable">Enable</item>
 	<item key="enable_module">Enable module</item>
 	<item key="enable_seo_aliases">Enable URI-Aliases</item>
 	<item key="error_update_check">It wasn't possible to establish a connection to the update server.</item>
@@ -41,6 +43,7 @@
 	<item key="homepage">Homepage</item>
 	<item key="homepage_description"><![CDATA[To specify a custom homepage, please use the format &quot;module/file/optional_parameters/&quot;.]]></item>
 	<item key="incorrect_homepage"><![CDATA[To specify a custom homepage, please use the format &quot;module/file/optional_parameters/&quot;.]]></item>
+	<item key="install">Install</item>
 	<item key="install_module">Install module</item>
 	<item key="installable_modules">Installable modules</item>
 	<item key="installed_modules">Installed modules</item>
@@ -72,11 +75,11 @@
 	<item key="mod_deactivate_success">The module has been successfully disabled.</item>
 	<item key="mod_description">This module is responsible for the basic functions of the ACP3.</item>
 	<item key="mod_installation_error">While installing the module an error has occured.</item>
-	<item key="mod_installation_success">The module has been successfuly installed.</item>
+	<item key="mod_installation_success">The module has been successfully installed.</item>
 	<item key="mod_rewrite">Use mod_rewrite</item>
 	<item key="mod_rewrite_description">Only enable this if you are using the Apache web server.</item>
 	<item key="mod_uninstallation_error">While uninstalling the module an error has occured.</item>
-	<item key="mod_uninstallation_success">The module has been successfuly uninstalled.</item>
+	<item key="mod_uninstallation_success">The module has been successfully uninstalled.</item>
 	<item key="module_name">Module name</item>
 	<item key="no_modules_available_for_installation">Currently there are no new modules available for installation!</item>
 	<item key="output">Output</item>
@@ -84,6 +87,8 @@
 	<item key="output_as_file">As file</item>
 	<item key="performance">Performance</item>
 	<item key="php_date_function"><![CDATA[see <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a> function of PHP.]]></item>
+	<item key="protected_module">Protected module</item>
+	<item key="protected_module_description">Protected module can't be disabled or uninstalled.</item>
 	<item key="result">Result</item>
 	<item key="select_cache_images">Please select whether you want to cache pictures.</item>
 	<item key="select_editor">Please select whether you want to use a WYSIWYG editor or a simple textarea.</item>
@@ -111,6 +116,7 @@
 	<item key="type_in_mailer_smtp_username">Please type in the username of the SMTP server.</item>
 	<item key="type_in_minify_cache_lifetime">Please type in the cache lifetime of CSS and JavaScript files.</item>
 	<item key="type_in_text_or_select_sql_file">Please enter the sql queries either in the textarea oder upload a file.</item>
+	<item key="uninstall">Uninstall</item>
 	<item key="uninstall_module">Uninstall module</item>
 	<item key="version">Version</item>
 </language>

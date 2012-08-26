@@ -19,7 +19,7 @@ switch ($uri->action) {
 		$info = ACP3_Modules::parseInfo($uri->dir);
 		if (empty($info)) {
 			$text = $lang->t('system', 'module_not_found');
-		} elseif ($info['protected']) {
+		} elseif ($info['protected'] === true) {
 			$text = $lang->t('system', 'mod_deactivate_forbidden');
 		} else {
 			$bool = $db->update('modules', array('active' => $uri->action === 'activate' ? 1 : 0), 'name = \'' . $db->escape($uri->dir) . '\'');
@@ -41,9 +41,12 @@ switch ($uri->action) {
 				$className = 'ACP3_' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $uri->dir)))) . 'ModuleInstaller';
 				$install = new $className();
 				$bool = $install->install();
+
+				// Cache aktualisieren
+				ACP3_Modules::setModulesCache();
 			}
 
-			$text = $lang->t('system', $bool !== false ? 'mod_installation_success' : 'mod_installation_error');
+			$text = $lang->t('system', 'mod_installation_' . ($bool !== false ? 'success' : 'error'));
 		} else {
 			$text = $lang->t('system', 'module_already_installed');
 		}
@@ -63,11 +66,14 @@ switch ($uri->action) {
 				$install = new $className();
 				$install->setModuleId($mod_id[0]['id']);
 				$bool = $install->uninstall();
+
+				// Cache aktualisieren
+				ACP3_Modules::setModulesCache();
 			}
 
-			$text = $lang->t('system', $bool !== false ? 'mod_uninstallation_success' : 'mod_uninstallation_error');
+			$text = $lang->t('system', 'mod_uninstallation_' . ($bool !== false ? 'success' : 'error'));
 		} else {
-			$text = $lang->t('system', 'module_not_uninstallable');
+			$text = $lang->t('system', 'protected_module_description');
 		}
 		ACP3_View::setContent(confirmBox($text, $uri->route('acp/system/modules')));
 		break;
