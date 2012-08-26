@@ -55,7 +55,7 @@ if (empty($module) || !empty($module) && $db->query('SELECT COUNT(*) FROM {pre}c
 				$comments[$i]['name'] = $lang->t('users', 'deleted_user');
 			}
 			$comments[$i]['date'] = $date->format($comments[$i]['date']);
-			$comments[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $comments[$i]['message']);
+			$comments[$i]['message'] = nl2p($db->escape($comments[$i]['message'], 3));
 			if ($emoticons_active === true) {
 				$comments[$i]['message'] = emoticonsReplace($comments[$i]['message']);
 			}

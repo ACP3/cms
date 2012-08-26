@@ -60,7 +60,7 @@ function commentsList($module, $entry_id)
 			}
 			$comments[$i]['name'] = $db->escape(!empty($comments[$i]['user_name']) ? $comments[$i]['user_name'] : $comments[$i]['name'], 3);
 			$comments[$i]['date'] = $date->format($comments[$i]['date'], $settings['dateformat']);
-			$comments[$i]['message'] = str_replace(array("\r\n", "\r", "\n"), '<br />', $db->escape($comments[$i]['message'], 3));
+			$comments[$i]['message'] = nl2p($db->escape($comments[$i]['message'], 3));
 			if ($emoticons_active === true) {
 				$comments[$i]['message'] = emoticonsReplace($comments[$i]['message']);
 			}
