@@ -406,6 +406,24 @@ function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = '')
 	return false;
 }
 /**
+ * Konvertiert Zeilenumbrüche zu neuen Abschnitten
+ *
+ * @param string $data
+ * @param boolean $is_xhtml
+ * @param boolean $line_breaks
+ * @return string
+ */
+function nl2p($data, $is_xhtml = true, $line_breaks = false)
+{
+	$data = trim($data);
+	if ($line_breaks === true) {
+		return '<p>' . preg_replace(array("/([\n]{2,})/i", "/([^>])\n([^<])/i"), array("</p>\n<p>", '<br' . ($is_xhtml == true ? ' /' : '') . '>'), $data) . '</p>';
+	} else {
+		return '<p>' . preg_replace("/([\n]{1,})/i", "</p>\n<p>", $data) . '</p>';
+	}
+}
+
+/**
  * Gibt eine Seitenauswahl aus
  *
  * @param integer $rows
@@ -429,7 +447,7 @@ function pagination($rows, $fragment = '')
 		$c_pagination = (int) ceil($rows / $auth->entries);
 		$show_first_last = 5;
 		$show_previous_next = 2;
-		$items_to_display = 7;
+		$pages_to_display = 7;
 		$j = 0;
 
 		// Vorherige und nächste Seite für Suchmaschinen und Prefetching propagieren
@@ -440,13 +458,13 @@ function pagination($rows, $fragment = '')
 				ACP3_SEO::setNextPage($link . 'page_' . ($current_page + 1) . '/');
 		}
 
-		// Wenn mehr als 9 Seiten vorhanden sind, nur noch einen bestimmten Teil der Seitenauswahl anzeigen
-		$start = $c_pagination > 9 && $current_page - $show_previous_next > 0 ? $current_page - $show_previous_next : 1;
-		$end = $c_pagination > 9 && $start + $items_to_display - 1 <= $c_pagination ? $start + $items_to_display - 1 : $c_pagination;
+		// Wenn mehr als die in $pages_to_display festgelegten Seiten vorhanden sind, nur noch einen bestimmten Teil der Seitenauswahl anzeigen
+		$start = $c_pagination > $pages_to_display && $current_page - $show_previous_next > 0 ? $current_page - $show_previous_next : 1;
+		$end = $c_pagination > $pages_to_display && $start + $pages_to_display - 1 <= $c_pagination ? $start + $pages_to_display - 1 : $c_pagination;
 
-		if ($c_pagination > $items_to_display &&
-			$end - $start < $items_to_display && $end - $items_to_display > 0) {
-			$start = $end - $items_to_display + 1;
+		if ($c_pagination > $pages_to_display &&
+			$end - $start < $pages_to_display && $end - $pages_to_display > 0) {
+			$start = $end - $pages_to_display + 1;
 		}
 
 		// Erste Seite
@@ -631,8 +649,7 @@ function shortenEntry($data, $chars = 300, $diff = 50, $append = '')
 	if ($chars <= $diff)
 		$diff = 0;
 
-	$shortened = strip_tags($data);
-	$shortened = utf8_decode(html_entity_decode($shortened, ENT_QUOTES, 'UTF-8'));
+	$shortened = utf8_decode(html_entity_decode(strip_tags($data), ENT_QUOTES, 'UTF-8'));
 	if (strlen($shortened) > $chars && strlen($shortened) - $chars >= $diff) {
 		return utf8_encode(substr($shortened, 0, $chars - $diff)) . $append;
 	}
