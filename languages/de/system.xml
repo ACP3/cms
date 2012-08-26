@@ -21,10 +21,12 @@
 	<item key="database">Datenbank</item>
 	<item key="designs_edit_error">Beim Verändern des Designs ist ein Fehler aufgetreten.</item>
 	<item key="designs_edit_success">Das Design wurde erfolgreich ausgewählt und kann nun verwendet werden.</item>
+	<item key="disable">Deaktivieren</item>
 	<item key="disable_module">Modul deaktivieren</item>
 	<item key="drop_tables"><![CDATA[Mit &quot;DROP TABLE&quot; exportieren]]></item>
 	<item key="editor">Editor</item>
 	<item key="email">E-Mail</item>
+	<item key="enable">Aktivieren</item>
 	<item key="enable_module">Modul aktivieren</item>
 	<item key="enable_seo_aliases">URI-Aliase aktivieren</item>
 	<item key="error_update_check">Es konnte keine Verbindung zum Update-Server hergestellt werden.</item>
@@ -40,6 +42,7 @@
 	<item key="homepage">Startseite</item>
 	<item key="homepage_description"><![CDATA[Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein.]]></item>
 	<item key="incorrect_homepage"><![CDATA[Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein.]]></item>
+	<item key="install">Installieren</item>
 	<item key="install_module">Modul installieren</item>
 	<item key="installable_modules">Installierbare Module</item>
 	<item key="installed_modules">Installierte Module</item>
@@ -84,6 +87,8 @@
 	<item key="output_as_file">Als Datei</item>
 	<item key="performance">Leistung</item>
 	<item key="php_date_function"><![CDATA[siehe <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a>-Funktion von PHP.]]></item>
+	<item key="protected_module">Geschütztes Modul</item>
+	<item key="protected_module_description">Geschützte Module können nicht deaktiviert oder deinstalliert werden.</item>
 	<item key="result">Ergebnis</item>
 	<item key="select_cache_images">Bitte wählen Sie aus, ob Bilder gecached werden sollen.</item>
 	<item key="select_editor">Bitte wählen Sie aus, mit welchen Editor Sie Ihre Einträge erstellen wollen.</item>
@@ -111,6 +116,7 @@
 	<item key="type_in_mailer_smtp_username">Bitte geben Sie den Benutzernamen des SMTP-Servers an.</item>
 	<item key="type_in_minify_cache_lifetime">Bitte geben Sie die Cache-Lebenszeit der CSS- und JavaScript-Dateien ein.</item>
 	<item key="type_in_text_or_select_sql_file">Bitte geben Sie die SQL-Abfragen entweder in dem Textfeld ein oder laden Sie eine Datei hoch.</item>
+	<item key="uninstall">Deinstallieren</item>
 	<item key="uninstall_module">Modul deinstallieren</item>
 	<item key="version">Version</item>
 </language>

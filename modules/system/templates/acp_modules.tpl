@@ -24,14 +24,16 @@
 						<td>{$row.author}</td>
 						<td>
 {if $row.protected === true}
-							{icon path="16/editdelete" width="16" height="16"}
-{elseif $row.active === true}
-							<div class="btn-group">
-								<a href="{uri args="acp/system/modules/dir_`$row.dir`/action_deactivate"}" class="btn" title="{lang t="system|disable_module"}">{icon path="16/apply" width="16" height="16"}</a>
-								<a href="{uri args="acp/system/modules/dir_`$row.dir`/action_uninstall"}" class="btn" title="{lang t="system|uninstall_module"}">{icon path="16/cancel" width="16" height="16"}</a>
-							</div>
+							{icon path="16/editdelete" width="16" height="16" alt={lang t="system|protected_module"} title={lang t="system|protected_module_description"}}
 {else}
-							<a href="{uri args="acp/system/modules/dir_`$row.dir`/action_activate"}" title="{lang t="system|enable_module"}">{icon path="16/cancel" width="16" height="16"}</a>
+							<div class="btn-group">
+{if $row.active === true}
+								<a href="{uri args="acp/system/modules/dir_`$row.dir`/action_deactivate"}" class="btn" title="{lang t="system|disable_module"}"><i class="icon-remove"></i> {lang t="system|disable"}</a>
+{else}
+								<a href="{uri args="acp/system/modules/dir_`$row.dir`/action_activate"}" class="btn" title="{lang t="system|enable_module"}"><i class="icon-ok"></i> {lang t="system|enable"}</a>
+{/if}
+								<a href="{uri args="acp/system/modules/dir_`$row.dir`/action_uninstall"}" class="btn" title="{lang t="system|uninstall_module"}"><i class="icon-off"></i> {lang t="system|uninstall"}</a>
+							</div>
 {/if}
 						</td>
 					</tr>
@@ -58,7 +60,7 @@
 						<td>{$row.description}</td>
 						<td>{$row.version}</td>
 						<td>{$row.author}</td>
-						<td><a href="{uri args="acp/system/modules/dir_`$row.dir`/action_install"}" title="{lang t="system|install_module"}">{icon path="16/edit_add" width="16" height="16"}</a></td>
+						<td><a href="{uri args="acp/system/modules/dir_`$row.dir`/action_install"}" class="btn" title="{lang t="system|install_module"}"><i class="icon-off"></i> {lang t="system|install"}</a></td>
 					</tr>
 {/foreach}
 				</tbody>
