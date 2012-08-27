@@ -47,6 +47,13 @@ class ACP3_XML
 									$info[$path][$xpath][(string) $key][(string) $attr_key] = (string) $attr_val;
 								}
 							}
+						} elseif (isset($info[$path][$xpath][(string) $key]) && is_array($info[$path][$xpath][(string) $key])) {
+							$info[$path][$xpath][(string) $key][] = (string) $value;
+						} elseif (isset($info[$path][$xpath][(string) $key])) {
+							$tmp = $info[$path][$xpath][(string) $key];
+							$info[$path][$xpath][(string) $key] = array();
+							$info[$path][$xpath][(string) $key][] = $tmp;
+							$info[$path][$xpath][(string) $key][] = (string) $value;
 						} else {
 							$info[$path][$xpath][(string) $key] = (string) $value;
 						}

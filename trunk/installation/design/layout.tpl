@@ -3,6 +3,7 @@
 <head>
 <title>ACP3 {lang t="installation|installation"} :: {$TITLE}</title>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}designs/acp3/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}designs/acp3/css/bootstrap-responsive.css">
 <link rel="stylesheet" type="text/css" href="{$INSTALLER_DIR}design/style.css">
