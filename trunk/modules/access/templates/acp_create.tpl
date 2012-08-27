@@ -25,23 +25,31 @@
 				</div>
 			</div>
 			<div id="tab-2" class="tab-pane">
+{$i=1}
 {foreach $modules as $module => $values}
-				<fieldset class="pull-left" style="width:50%">
-					<legend>{$module}</legend>
+{if $i % 2 !== 0}
+				<div class="row-fluid">
+{/if}
+					<fieldset class="span6">
+						<legend>{$module}</legend>
 {foreach $values.privileges as $privilege}
-					<div class="control-group">
-						<label class="control-label"{if !empty($privilege.description)} title="{$privilege.description}"{/if}>{$privilege.key}</label>
-						<div class="controls">
-							<div class="btn-group" data-toggle="radio">
+						<div class="control-group">
+							<label class="control-label"{if !empty($privilege.description)} title="{$privilege.description}"{/if}>{$privilege.key}</label>
+							<div class="controls">
+								<div class="btn-group" data-toggle="radio">
 {foreach $privilege.select as $row}
-								<input type="radio" name="privileges[{$values.id}][{$privilege.id}]" id="privileges-{$values.id}-{$privilege.id}-{$row.value}" value="{$row.value}"{$row.selected}>
-								<label for="privileges-{$values.id}-{$privilege.id}-{$row.value}" class="btn">{$row.lang}</label>
+									<input type="radio" name="privileges[{$values.id}][{$privilege.id}]" id="privileges-{$values.id}-{$privilege.id}-{$row.value}" value="{$row.value}"{$row.selected}>
+									<label for="privileges-{$values.id}-{$privilege.id}-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
+								</div>
 							</div>
 						</div>
-					</div>
 {/foreach}
-				</fieldset>
+					</fieldset>
+{if $i % 2 === 0 || count($modules) === $i}
+				</div>
+{/if}
+{$i=$i+1}
 {/foreach}
 			</div>
 		</div>

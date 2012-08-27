@@ -28,17 +28,17 @@
 {if $can_delete === true}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
 {/if}
-				<td style="text-align:left">{$row.spaces}{check_access mode="link" path="acp/access/edit/id_`$row.id`" title=$row.name}</td>
+				<td>{$row.spaces}{check_access mode="link" path="acp/access/edit/id_`$row.id`" title=$row.name}</td>
 {if $can_order === true}
 				<td>
 {if !$row.last}
-					<a href="{uri args="acp/access/order/id_`$row.id`/action_down"}" title="{lang t="common|move_down"}">{icon path="16/down" width="16" height="16" alt="{lang t="common|move_down"}"}</a>
+					<a href="{uri args="acp/access/order/id_`$row.id`/action_down"}" title="{lang t="common|move_down"}">{icon path="16/down" width="16" height="16" alt={lang t="common|move_down"}}</a>
 {/if}
 {if !$row.first}
-					<a href="{uri args="acp/access/order/id_`$row.id`/action_up"}" title="{lang t="common|move_up"}">{icon path="16/up" width="16" height="16" alt="{lang t="common|move_up"}"}</a>
+					<a href="{uri args="acp/access/order/id_`$row.id`/action_up"}" title="{lang t="common|move_up"}">{icon path="16/up" width="16" height="16" alt={lang t="common|move_up"}}</a>
 {/if}
 {if $row.first && $row.last}
-					{icon path="16/editdelete" width="16" height="16" alt="{lang t="common|move_impossible"}" title="{lang t="common|move_impossible"}"}
+					{icon path="16/editdelete" width="16" height="16" alt={lang t="common|move_impossible"} title={lang t="common|move_impossible"}}
 {/if}
 				</td>
 {/if}
