@@ -62,13 +62,13 @@
 {if $can_order === true}
 				<td>
 {if !$row.last}
-					<a href="{uri args="acp/gallery/order/id_`$row.id`/action_down"}" title="{lang t="common|move_down"}">{icon path="16/down" width="16" height="16" alt="{lang t="common|move_down"}"}</a>
+					<a href="{uri args="acp/gallery/order/id_`$row.id`/action_down"}" title="{lang t="common|move_down"}">{icon path="16/down" width="16" height="16" alt={lang t="common|move_down"}}</a>
 {/if}
 {if !$row.first}
-					<a href="{uri args="acp/gallery/order/id_`$row.id`/action_up"}" title="{lang t="common|move_up"}">{icon path="16/up" width="16" height="16" alt="{lang t="common|move_up"}"}</a>
+					<a href="{uri args="acp/gallery/order/id_`$row.id`/action_up"}" title="{lang t="common|move_up"}">{icon path="16/up" width="16" height="16" alt={lang t="common|move_up"}}</a>
 {/if}
 {if $row.first && $row.last}
-					{icon path="16/editdelete" width="16" height="16" alt="{lang t="common|move_impossible"}" title="{lang t="common|move_impossible"}"}
+					{icon path="16/editdelete" width="16" height="16" alt={lang t="common|move_impossible"} title={lang t="common|move_impossible"}}
 {/if}
 				</td>
 {/if}
