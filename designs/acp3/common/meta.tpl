@@ -1,5 +1,4 @@
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 {if !empty($meta.description)}
 <meta name="description" content="{$meta.description}">
 {/if}
