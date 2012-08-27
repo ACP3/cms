@@ -53,8 +53,7 @@ if ($_GET['g'] === 'css') {
 		($design_info['layout'] === $layout || (is_array($design_info['layout']) === true && in_array($layout, $design_info['layout']) === true)))
 		$styles['css'][] = DESIGN_PATH . 'css/bootstrap-responsive.css';
 	// Stylesheet für das Layout-Tenplate
-	if (is_file(DESIGN_PATH . 'css/' . $layout . '.css') === true)
-		$styles['css'][] = DESIGN_PATH . 'css/' . $layout . '.css';
+	$styles['css'][] = DESIGN_PATH . 'css/' . (is_file(DESIGN_PATH . 'css/' . $layout . '.css') === true ? $layout : 'layout') . '.css';
 	$styles['css'][] = DESIGN_PATH . 'css/common.css';
 
 	$modules = scandir(DESIGN_PATH . 'css/');
