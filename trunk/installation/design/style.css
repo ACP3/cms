@@ -1,6 +1,12 @@
 ul, ol {
 	margin: 8px 0 8px 25px;
 }
+ul.unstyled, ol.unstyled {
+	margin: 0;
+}
+p {
+	text-align: justify;
+}
 /* Layout */
 #logo {
 	width: 104px;
@@ -13,11 +19,11 @@ ul, ol {
 	margin: 10px 0;
 }
 .licence {
-	width: 70%;
+	width: 80%;
 	height: 400px;
 	margin: 0 auto;
 	padding: 10px;
-	border: 1px solid #c2c2c2;
+	border: 1px dotted #ddd;
 	overflow: auto;
 }
 .nav-list {

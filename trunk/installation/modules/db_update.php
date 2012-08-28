@@ -10,6 +10,10 @@
 if (defined('IN_INSTALL') === false)
 	exit;
 
+// Vorsorglich den Cache für die Sprachdateien erneuern,
+// damit die jeweils aktuellen Versionen verwendet werden
+$lang->setLangCache();
+
 if ($uri->action === 'do') {
 	$results = array();
 	// Zuerst die wichtigen System-Module aktualisieren...
