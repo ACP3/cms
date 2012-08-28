@@ -1,6 +1,16 @@
 <?php
 
 class ACP3_GuestbookModuleInstaller extends ACP3_ModuleInstaller {
+	private $module_name = 'guestbook';
+	private $schema_version = 30;
+
+	protected function getName() {
+		return $this->module_name;
+	}
+
+	protected function getSchemaVersion() {
+		return $this->schema_version;
+	}
 
 	protected function createTables() {
 		return array(
@@ -23,10 +33,8 @@ class ACP3_GuestbookModuleInstaller extends ACP3_ModuleInstaller {
 		return array("DROP TABLE `{pre}guestbook`;");
 	}
 
-	protected function addSettings() {
-		global $db;
-
-		$queries = array(
+	protected function settings() {
+		return array(
 			'dateformat' => 'long',
 			'notify' => 0,
 			'notify_email' => '',
@@ -34,34 +42,9 @@ class ACP3_GuestbookModuleInstaller extends ACP3_ModuleInstaller {
 			'newsletter_integration' => 0,
 			'overlay' => 1
 		);
-
-		$bool = false;
-		foreach ($queries as $key => $value) {
-			$bool = $db->insert('settings', array('id' => '', 'module_id' => $this->module_id, 'name' => $key, 'value' => $value));
-		}
-		return (bool) $bool;
 	}
 
-	protected function removeSettings() {
-		global $db;
-
-		return (bool) $db->delete('settings', 'module_id = ' . $this->module_id);
+	protected function schemaUpdates() {
+		return array();
 	}
-
-	protected function addToModulesTable() {
-		global $db;
-
-		// Modul in die Modules-SQL-Tabelle eintragen
-		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('guestbook'), 'version' => 30, 'active' => 1));
-		$this->module_id = $db->link->lastInsertId();
-
-		return (bool) $bool;
-	}
-
-	protected function removeFromModulesTable() {
-		global $db;
-
-		return (bool) $db->delete('modules', 'id = ' . $this->module_id);
-	}
-
 }

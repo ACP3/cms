@@ -1,5 +1,22 @@
 <?php
+/**
+ * Module Installer
+ *
+ * @author Tino Goratsch
+ * @package ACP3
+ * @subpackage Core
+ */
 
+if (defined('IN_ACP3') === false)
+	exit;
+
+/**
+ * Module Installer Klasse
+ *
+ * @author Tino Goratsch
+ * @package ACP3
+ * @subpackage Core
+ */
 abstract class ACP3_ModuleInstaller {
 
 	/**
@@ -29,7 +46,7 @@ abstract class ACP3_ModuleInstaller {
 	public function install() {
 		$bool1 = $this->executeSqlQueries($this->createTables());
 		$bool2 = $this->addToModulesTable();
-		$bool3 = $this->addSettings();
+		$bool3 = $this->installSettings($this->settings());
 		$bool4 = $this->addResources();
 
 		return $bool1 && $bool2 && $bool3 && $bool4;
@@ -166,15 +183,137 @@ abstract class ACP3_ModuleInstaller {
 		return $bool && $bool2;
 	}
 
+	/**
+	 * Installiert die zu einem Module zugehörigen Einstellungen
+	 * 
+	 * @param array $settings
+	 * @return boolean
+	 */
+	protected function installSettings(array $settings) {
+		global $db;
+
+		if (count($settings) > 0) {
+			$db->link->beginTransaction();
+			$bool = false;
+			foreach ($settings as $key => $value) {
+				$bool = $db->insert('settings', array('id' => '', 'module_id' => $this->module_id, 'name' => $key, 'value' => $value));
+				if ($bool === false) {
+					$db->link->rollBack();
+					return false;
+				}
+			}
+			$db->link->commit();
+		}
+		return true;
+	}
+
+	/**
+	 * Löscht die zu einem Module zugehörigen Einstellungen
+	 * 
+	 * @return boolean
+	 */
+	protected function removeSettings() {
+		global $db;
+
+		return (bool) $db->delete('settings', 'module_id = ' . ((int) $this->module_id));
+	}
+
+	/**
+	 * Fügt ein Modul zur modules DB-Tabelle hinzu
+	 *
+	 * @return boolean
+	 */
+	protected function addToModulesTable() {
+		global $db;
+
+		// Modul in die Modules-SQL-Tabelle eintragen
+		$bool = $db->insert('modules', array('id' => '', 'name' => $this->getName(), 'version' => $this->getSchemaVersion(), 'active' => 1));
+		$this->module_id = $db->link->lastInsertId();
+
+		return (bool) $bool;
+	}
+
+	/**
+	 * Löscht ein Modul aus der modules DB-Tabelle
+	 * @return boolean
+	 */
+	protected function removeFromModulesTable() {
+		global $db;
+
+		return (bool) $db->delete('modules', 'id = ' . ((int) $this->module_id));
+	}
+
+	/**
+	 * Führt die in der Methode schemaUpdates() enthaltenen Tabellenänderungen aus
+	 *
+	 * @param array $queries
+	 * @return integer
+	 */
+	public function updateSchema() {
+		global $db;
+
+		$result = -1;
+		$queries = $this->schemaUpdates();
+		if (count($queries) > 0) {
+			// Nur für den Fall der Fälle... ;)
+			ksort($queries);
+
+			$module = $db->select('version', 'modules', 'name = \'' . $db->escape($this->getName()) . '\'');
+			$current_schema_version = isset($module[0]['version']) ? (int) $module[0]['version'] : 0;
+			foreach ($queries as $new_schema_version => $updates) {
+				// Schema-Änderungen nur für neuere Versionen durchführen
+				if ($current_schema_version < $new_schema_version) {
+					// Die DB-Schema-Änderungen der jeweiligen Schema-Version ausführen
+					if (!empty($updates) && is_array($updates))
+						$result = $this->executeSqlQueries($updates) === true ? 1 : 0;
+
+					// Schema Version des Moduls erhöhen
+					$this->setNewSchemaVersion($new_schema_version);
+				}
+			}
+		}
+		return $result;
+	}
+
+	/**
+	 * Setzt die DB-Schema-Version auf die neue Versionsnummer
+	 *
+	 * @param integer $new_version
+	 * @return boolean
+	 */
+	public function setNewSchemaVersion($new_version) {
+		global $db;
+
+		return (bool) $db->update('modules', array('version' => (int) $new_version), 'name = \'' . $db->escape($this->getName()) . '\'');
+	}
+
+	/**
+	 * Liefert den Modulnamen zurück
+	 */
+	abstract protected function getName();
+
+	/**
+	 * Liefert die DB-Schema-Version des Moduls zurück
+	 */
+	abstract protected function getSchemaVersion();
+
+	/**
+	 * Liefert ein Array mit den zu erstellenden Datenbanktabellen des Moduls zurück
+	 */
 	abstract protected function createTables();
 
+	/**
+	 * Liefert ein Array mit den zu löschenden Datenbanktabellen des Moduls zurück
+	 */
 	abstract protected function removeTables();
 
-	abstract protected function addSettings();
+	/**
+	 * Liefert ein Array mit den zu erstellenden Moduleinstellungen zurück
+	 */
+	abstract protected function settings();
 
-	abstract protected function removeSettings();
-
-	abstract protected function addToModulesTable();
-
-	abstract protected function removeFromModulesTable();
+	/**
+	 * Aktualisiert die Tabellen und Einstellungen eines Moduls auf eine neue Version
+	 */
+	abstract protected function schemaUpdates();
 }

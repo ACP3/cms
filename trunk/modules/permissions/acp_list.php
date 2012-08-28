@@ -20,7 +20,7 @@ if ($c_roles > 0) {
 		$roles[$i]['spaces'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']);
 	}
 	$tpl->assign('roles', $roles);
-	$tpl->assign('can_delete', ACP3_Modules::check('access', 'acp_delete'));
-	$tpl->assign('can_order', ACP3_Modules::check('access', 'acp_order'));	
+	$tpl->assign('can_delete', ACP3_Modules::check('permissions', 'acp_delete'));
+	$tpl->assign('can_order', ACP3_Modules::check('permissions', 'acp_order'));	
 }
-ACP3_View::setContent(ACP3_View::fetchTemplate('access/acp_list.tpl'));
+ACP3_View::setContent(ACP3_View::fetchTemplate('permissions/acp_list.tpl'));

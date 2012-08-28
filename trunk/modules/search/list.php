@@ -50,7 +50,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 
 	for ($i = 0; $i < $c_mods; ++$i) {
 		if (ACP3_Modules::check($mods[$i], 'extensions/search') === true) {
-			$info = ACP3_Modules::parseInfo($mods[$i]);
+			$info = ACP3_Modules::getModuleInfo($mods[$i]);
 			$name = $info['name'];
 			$search_mods[$name]['dir'] = $mods[$i];
 			$search_mods[$name]['checked'] = selectEntry('mods', $mods[$i], $mods[$i], 'checked');

@@ -10,18 +10,18 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$breadcrumb->append($lang->t('access', 'acp_list_resources'), $uri->route('acp/access/list_resources'))
-		   ->append($lang->t('access', 'acp_create_resource'));
+$breadcrumb->append($lang->t('permissions', 'acp_list_resources'), $uri->route('acp/permissions/list_resources'))
+		   ->append($lang->t('permissions', 'acp_create_resource'));
 
 if (isset($_POST['submit']) === true) {
 	if (empty($_POST['modules']) || ACP3_Modules::isActive($_POST['modules']) === false)
-		$errors['modules'] = $lang->t('access', 'select_module');
+		$errors['modules'] = $lang->t('permissions', 'select_module');
 	if (empty($_POST['resource']) || preg_match('=/=', $_POST['resource']) || ACP3_Validate::isInternalURI($_POST['modules'] . '/' . $_POST['resource'] . '/') === false)
-		$errors['resource'] = $lang->t('access', 'type_in_resource');
+		$errors['resource'] = $lang->t('permissions', 'type_in_resource');
 	if (empty($_POST['privileges']) || ACP3_Validate::isNumber($_POST['privileges']) === false)
-		$errors['privileges'] = $lang->t('access', 'select_privilege');
+		$errors['privileges'] = $lang->t('permissions', 'select_privilege');
 	if (ACP3_Validate::isNumber($_POST['privileges']) && $db->countRows('*', 'acl_resources', 'id = \'' . $_POST['privileges'] . '\'') == 0)
-		$errors['privileges'] = $lang->t('access', 'privilege_does_not_exist');
+		$errors['privileges'] = $lang->t('permissions', 'privilege_does_not_exist');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
@@ -42,7 +42,7 @@ if (isset($_POST['submit']) === true) {
 
 		$session->unsetFormToken();
 
-		setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/access/list_resources');
+		setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/permissions/list_resources');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -63,5 +63,5 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 
 	$session->generateFormToken();
 
-	ACP3_View::setContent(ACP3_View::fetchTemplate('access/acp_create_resource.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('permissions/acp_create_resource.tpl'));
 }

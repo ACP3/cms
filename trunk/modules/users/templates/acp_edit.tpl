@@ -28,7 +28,7 @@
 					<div class="controls"><input type="url" name="website" id="website" value="{$form.website}" maxlength="120"></div>
 				</div>
 				<div class="control-group">
-					<label for="roles" class="control-label">{lang t="access|roles"}</label>
+					<label for="roles" class="control-label">{lang t="permissions|roles"}</label>
 					<div class="controls">
 						<select name="roles[]" id="roles" multiple="multiple" style="height:100px">
 {foreach $roles as $row}

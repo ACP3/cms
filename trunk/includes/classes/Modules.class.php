@@ -52,8 +52,21 @@ class ACP3_Modules
 	 */
 	public static function isActive($module)
 	{
-		$info = self::parseInfo($module);
+		$info = self::getModuleInfo($module);
 		return !empty($info) && $info['active'] == 1 ? true : false;
+	}
+	/**
+	 * Überprüft, ob ein Modul in der modules DB-Tabelle
+	 * eingetragen und somit installiert ist
+	 *
+	 * @param string $module
+	 * @return boolean
+	 */
+	public static function isInstalled($module)
+	{
+		global $db;
+
+		return (bool) $db->countRows('*', 'modules', 'name = \'' . $db->escape($module) . '\'');
 	}
 	/**
 	 * Gibt ein alphabetisch sortiertes Array mit allen gefundenen
@@ -68,7 +81,7 @@ class ACP3_Modules
 		if (empty($mod_list)) {
 			$uri_dir = scandir(MODULES_DIR);
 			foreach ($uri_dir as $module) {
-				$info = self::parseInfo($module);
+				$info = self::getModuleInfo($module);
 				if (!empty($info) &&
 					($only_active === false || ($only_active === true && self::isActive($module) === true)))
 					$mod_list[$info['name']] = $info;
@@ -93,14 +106,14 @@ class ACP3_Modules
 	 * @param string $module
 	 * @return array
 	 */
-	public static function parseInfo($module)
+	public static function getModuleInfo($module)
 	{
 		static $parsed_modules = array();
 
 		if (empty($parsed_modules)) {
-			global $auth;
+			global $lang;
 
-			$filename = 'modules_infos_' . $auth->getUserLanguage();
+			$filename = 'modules_infos_' . $lang->getLang();
 			if (ACP3_Cache::check($filename) === false)
 				self::setModulesCache();
 			$parsed_modules = ACP3_Cache::output($filename);
@@ -119,11 +132,13 @@ class ACP3_Modules
 				$mod_info = ACP3_XML::parseXmlFile(MODULES_DIR . $dir . '/module.xml', 'info');
 
 				if (is_array($mod_info) === true) {
-					global $auth, $db, $lang;
+					global $db, $lang;
 
+					$mod_db = $db->select('version, active', 'modules', 'name = \'' . $db->escape($dir, 2) . '\'');
 					$infos[$dir] = array(
 						'dir' => $dir,
-						'active' => $db->countRows('*', 'modules', 'name = \'' . $db->escape($dir, 2) . '\' AND active = 1') == 1 ? true : false,
+						'active' =>  isset($mod_db[0]) && $mod_db[0]['active'] == 1 ? true : false,
+						'schema_version' => isset($mod_db[0]) ? (int) $mod_db[0]['version'] : 0,
 						'description' => isset($mod_info['description']['lang']) && $mod_info['description']['lang'] == 'true' ? $lang->t($dir, 'mod_description') : $mod_info['description']['lang'],
 						'author' => $mod_info['author'],
 						'version' => isset($mod_info['version']['core']) && $mod_info['version']['core'] == 'true' ? CONFIG_VERSION : $mod_info['version'],
@@ -136,6 +151,6 @@ class ACP3_Modules
 				}
 			}
 		}
-		ACP3_Cache::create('modules_infos_' . $auth->getUserLanguage(), $infos);
+		ACP3_Cache::create('modules_infos_' . $lang->getLang(), $infos);
 	}
 }

@@ -1,6 +1,16 @@
 <?php
 
 class ACP3_CategoriesModuleInstaller extends ACP3_ModuleInstaller {
+	private $module_name = 'categories';
+	private $schema_version = 30;
+
+	protected function getName() {
+		return $this->module_name;
+	}
+
+	protected function getSchemaVersion() {
+		return $this->schema_version;
+	}
 
 	protected function removeResources() {
 		return true;
@@ -23,38 +33,23 @@ class ACP3_CategoriesModuleInstaller extends ACP3_ModuleInstaller {
 		return array();
 	}
 
-	protected function addSettings() {
-		global $db;
-
-		$queries = array(
+	protected function settings() {
+		return array(
 			'width' => 100,
 			'height' => 50,
 			'filesize' => 40960
 		);
-
-		$bool = false;
-		foreach ($queries as $key => $value) {
-			$bool = $db->insert('settings', array('id' => '', 'module_id' => $this->module_id, 'name' => $key, 'value' => $value));
-		}
-		return (bool) $bool;
 	}
 
 	protected function removeSettings() {
 		return true;
 	}
 
-	protected function addToModulesTable() {
-		global $db;
-
-		// Modul in die Modules-SQL-Tabelle eintragen
-		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('categories'), 'version' => 30, 'active' => 1));
-		$this->module_id = $db->link->lastInsertId();
-
-		return (bool) $bool;
-	}
-
 	protected function removeFromModulesTable() {
 		return true;
 	}
 
+	protected function schemaUpdates() {
+		return array();
+	}
 }

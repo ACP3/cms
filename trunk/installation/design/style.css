@@ -1,3 +1,7 @@
+ul, ol {
+	margin: 8px 0 8px 25px;
+}
+/* Layout */
 #logo {
 	width: 104px;
 	height: 45px;
@@ -15,4 +19,7 @@
 	padding: 10px;
 	border: 1px solid #c2c2c2;
 	overflow: auto;
+}
+.nav-list {
+	margin: 0;
 }

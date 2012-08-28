@@ -19,7 +19,7 @@ if (!isset($entries)) {
 	ACP3_View::setContent(errorBox($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
-	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/access/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/access')));
+	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/permissions/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/permissions')));
 } elseif ($uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = $bool2 = $bool3 = false;
@@ -39,11 +39,11 @@ if (!isset($entries)) {
 	ACP3_Cache::purge(0, 'acl');
 
 	if ($level_undeletable === true) {
-		$text = $lang->t('access', 'role_undeletable');
+		$text = $lang->t('permissions', 'role_undeletable');
 	} else {
 		$text = $lang->t('common', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error');
 	}
-	setRedirectMessage($bool && $bool2 && $bool3, $text, 'acp/access');
+	setRedirectMessage($bool && $bool2 && $bool3, $text, 'acp/permissions');
 } else {
 	$uri->redirect('errors/404');
 }

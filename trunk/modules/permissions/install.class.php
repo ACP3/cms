@@ -1,8 +1,8 @@
 <?php
 
-class ACP3_CaptchaModuleInstaller extends ACP3_ModuleInstaller {
-	private $module_name = 'captcha';
-	private $schema_version = 30;
+class ACP3_PermissionsModuleInstaller extends ACP3_ModuleInstaller {
+	private $module_name = 'permissions';
+	private $schema_version = 31;
 
 	protected function getName() {
 		return $this->module_name;
@@ -37,6 +37,10 @@ class ACP3_CaptchaModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	protected function schemaUpdates() {
-		return array();
+		return array(
+			31 => array(
+				"UPDATE `{pre}modules` SET name='" . $this->getName() . "' WHERE name='access';"
+			)
+		);
 	}
 }

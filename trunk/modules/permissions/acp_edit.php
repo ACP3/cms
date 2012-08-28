@@ -15,11 +15,11 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles
 		if (empty($_POST['name']))
 			$errors['name'] = $lang->t('common', 'name_to_short');
 		if (!empty($_POST['name']) && $db->countRows('*', 'acl_roles', 'id != \'' . $uri->id . '\' AND name = \'' . $db->escape($_POST['name']) . '\'') == 1)
-			$errors['name'] = $lang->t('access', 'role_already_exists');
+			$errors['name'] = $lang->t('permissions', 'role_already_exists');
 		if (empty($_POST['privileges']) || is_array($_POST['privileges']) === false)
-			$errors[] = $lang->t('access', 'no_privilege_selected');
+			$errors[] = $lang->t('permissions', 'no_privilege_selected');
 		if (!empty($_POST['privileges']) && ACP3_Validate::aclPrivilegesExist($_POST['privileges']) === false)
-			$errors[] = $lang->t('access', 'invalid_privileges');
+			$errors[] = $lang->t('permissions', 'invalid_privileges');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
@@ -48,7 +48,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/access');
+			setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/permissions');
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -82,15 +82,15 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles
 				$select = array();
 				$select[0]['value'] = 0;
 				$select[0]['selected'] = !isset($_POST['submit']) && $priv_val == 0 || isset($_POST['submit']) && $_POST['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 0 ? ' checked="checked"' : '';
-				$select[0]['lang'] = $lang->t('access', 'deny_access');
+				$select[0]['lang'] = $lang->t('permissions', 'deny_access');
 				$select[1]['value'] = 1;
 				$select[1]['selected'] = !isset($_POST['submit']) && $priv_val == 1 || isset($_POST['submit']) && $_POST['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 1 ? ' checked="checked"' : '';
-				$select[1]['lang'] = $lang->t('access', 'allow_access');
+				$select[1]['lang'] = $lang->t('permissions', 'allow_access');
 				if ($uri->id != 1) {
 					$select[2]['value'] = 2;
 					$select[2]['selected'] = !isset($_POST['submit']) && $priv_val == 2 || isset($_POST['submit']) && $_POST['privileges'][$modules[$i]['id']][$privileges[$j]['id']] == 2 ? ' checked="checked"' : '';
-					$select[2]['lang'] = $lang->t('access', 'inherit_access');
-					//$privileges[$j]['calculated'] = sprintf($lang->t('access', 'calculated_permission'), $rules[$privileges[$j]['key']]['access'] === true ? $lang->t('access', 'allow_access') :  $lang->t('access', 'deny_access'));
+					$select[2]['lang'] = $lang->t('permissions', 'inherit_access');
+					//$privileges[$j]['calculated'] = sprintf($lang->t('permissions', 'calculated_permission'), $rules[$privileges[$j]['key']]['access'] === true ? $lang->t('permissions', 'allow_access') :  $lang->t('permissions', 'deny_access'));
 				}
 				$privileges[$j]['select'] = $select;
 			}
@@ -109,7 +109,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles
 
 		$session->generateFormToken();
 
-		ACP3_View::setContent(ACP3_View::fetchTemplate('access/acp_edit.tpl'));
+		ACP3_View::setContent(ACP3_View::fetchTemplate('permissions/acp_edit.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

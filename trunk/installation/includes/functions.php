@@ -151,6 +151,28 @@ function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
 	}
 }
 /**
+ * Führt die Updateanweisungen eines Moduls aus
+ *
+ * @param string $module
+ * @return integer
+ */
+function updateModule($module)
+{
+	$result = false;
+
+	$path = MODULES_DIR . $module . '/install.class.php';
+	if (is_file($path) === true) {
+		require $path;
+		$className = 'ACP3_' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $module)))) . 'ModuleInstaller';
+		$install = new $className();
+		if ($install instanceof ACP3_ModuleInstaller) {
+			$result = $install->updateSchema();
+		}
+	}
+
+	return $result;
+}
+/**
  * Schreibt die Systemkonfigurationsdatei
  *
  * @param array $data

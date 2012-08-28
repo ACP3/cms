@@ -1,4 +1,12 @@
 <?php
+/**
+ * Installer
+ *
+ * @author Tino Goratsch
+ * @package ACP3
+ * @subpackage Installer
+ */
+
 if (defined('IN_INSTALL') === false)
 	exit;
 
@@ -54,7 +62,7 @@ foreach ($defaults as $row) {
 		$files_dirs[$i]['exists'] = $lang->t('installation', 'file_folder_not_found');
 	}
 	$files_dirs[$i]['class_2'] = is_writable(ACP3_ROOT . $row) === true ? CLASS_SUCCESS : CLASS_ERROR;
-	$files_dirs[$i]['writable'] = $files_dirs[$i]['class_2'] === CLASS_SUCCESS ? $lang->t('installation', 'writeable') : $lang->t('installation', 'not_writeable');
+	$files_dirs[$i]['writable'] = $files_dirs[$i]['class_2'] === CLASS_SUCCESS ? $lang->t('installation', 'writable') : $lang->t('installation', 'not_writable');
 	if ($files_dirs[$i]['class_1'] == CLASS_ERROR || $files_dirs[$i]['class_2'] == CLASS_ERROR) {
 		$check_again = true;
 	}

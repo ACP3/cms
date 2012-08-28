@@ -1,6 +1,16 @@
 <?php
 
 class ACP3_AcpModuleInstaller extends ACP3_ModuleInstaller {
+	private $module_name = 'acp';
+	private $schema_version = 30;
+
+	protected function getName() {
+		return $this->module_name;
+	}
+
+	protected function getSchemaVersion() {
+		return $this->schema_version;
+	}
 
 	protected function removeResources() {
 		return true;
@@ -14,26 +24,19 @@ class ACP3_AcpModuleInstaller extends ACP3_ModuleInstaller {
 		return array();
 	}
 
-	protected function addSettings() {
-		return true;
+	protected function settings() {
+		return array();
 	}
 
 	protected function removeSettings() {
 		return true;
 	}
 
-	protected function addToModulesTable() {
-		global $db;
-
-		// Modul in die Modules-SQL-Tabelle eintragen
-		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('acp'), 'version' => 30, 'active' => 1));
-		$this->module_id = $db->link->lastInsertId();
-
-		return (bool) $bool;
-	}
-
 	protected function removeFromModulesTable() {
 		return true;
 	}
 
+	protected function schemaUpdates() {
+		return array();
+	}
 }

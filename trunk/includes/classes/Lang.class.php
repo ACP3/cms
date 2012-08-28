@@ -40,6 +40,15 @@ class ACP3_Lang
 		}
 	}
 	/**
+	 * Gibt die aktuell eingestellte Sprache zurück
+	 *
+	 * @return string
+	 */
+	public function getLang()
+	{
+		return $this->lang;
+	}
+	/**
 	 * Cached die Sprachfiles, um diese schneller verarbeiten zu können
 	 */
 	public function setLangCache()

@@ -16,7 +16,7 @@ $breadcrumb->append($lang->t('system', 'acp_extensions'), $uri->route('acp/syste
 switch ($uri->action) {
 	case 'activate':
 	case 'deactivate':
-		$info = ACP3_Modules::parseInfo($uri->dir);
+		$info = ACP3_Modules::getModuleInfo($uri->dir);
 		if (empty($info)) {
 			$text = $lang->t('system', 'module_not_found');
 		} elseif ($info['protected'] === true) {
@@ -28,12 +28,12 @@ switch ($uri->action) {
 
 			$text = $lang->t('system', 'mod_' . $uri->action . '_' . ($bool !== false ? 'success' : 'error'));
 		}
-		ACP3_View::setContent(confirmBox($text, $uri->route('acp/system/modules')));
+		setRedirectMessage($bool, $text, 'acp/system/modules');
 		break;
 	case 'install':
+		$bool = false;
 		// Nur noch nicht installierte Module berücksichtigen
 		if ($db->countRows('*', 'modules', 'name = \'' . $db->escape($uri->dir) . '\'') == 0) {
-			$bool = false;
 			$path = MODULES_DIR . $uri->dir . '/install.class.php';
 			if (is_file($path) === true) {
 				require $path;
@@ -50,13 +50,13 @@ switch ($uri->action) {
 		} else {
 			$text = $lang->t('system', 'module_already_installed');
 		}
-		ACP3_View::setContent(confirmBox($text, $uri->route('acp/system/modules')));
+		setRedirectMessage($bool, $text, 'acp/system/modules');
 		break;
 	case 'uninstall':
-		$mod_info = ACP3_Modules::parseInfo($uri->dir);
+		$bool = false;
+		$mod_info = ACP3_Modules::getModuleInfo($uri->dir);
 		// Nur installierte und Nicht-Core-Module berücksichtigen
 		if ($db->countRows('*', 'modules', 'name = \'' . $db->escape($uri->dir) . '\'') == 1 && $mod_info['protected'] === false) {
-			$bool = false;
 			$path = MODULES_DIR . $uri->dir . '/install.class.php';
 			if (is_file($path) === true) {
 				require $path;
@@ -75,9 +75,11 @@ switch ($uri->action) {
 		} else {
 			$text = $lang->t('system', 'protected_module_description');
 		}
-		ACP3_View::setContent(confirmBox($text, $uri->route('acp/system/modules')));
+		setRedirectMessage($bool, $text, 'acp/system/modules');
 		break;
 	default:
+		getRedirectMessage();
+
 		// Languagecache neu erstellen, für den Fall, dass neue Module hinzugefügt wurden
 		$lang->setLangCache();
 

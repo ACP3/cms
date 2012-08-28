@@ -20,7 +20,7 @@ if ($c_categories > 0) {
 	for ($i = 0; $i < $c_categories; ++$i) {
 		$categories[$i]['name'] = $db->escape($categories[$i]['name'], 3);
 		$categories[$i]['description'] = $db->escape($categories[$i]['description'], 3);
-		$info = ACP3_Modules::parseInfo($db->escape($categories[$i]['module'], 3));
+		$info = ACP3_Modules::getModuleInfo($db->escape($categories[$i]['module'], 3));
 		$categories[$i]['module'] = $info['name'];
 	}
 	$tpl->assign('categories', $categories);
