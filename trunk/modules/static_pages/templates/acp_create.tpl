@@ -34,7 +34,6 @@
 {/foreach}
 					</div>
 				</div>
-{/if}
 				<div id="create-item-container">
 					<div class="control-group">
 						<label for="block-id" class="control-label">{lang t="menu_items|blocks"}</label>
@@ -74,6 +73,7 @@
 						</div>
 					</div>
 				</div>
+{/if}
 			</div>
 			<div id="tab-3" class="tab-pane">
 				{$SEO_FORM_FIELDS}
