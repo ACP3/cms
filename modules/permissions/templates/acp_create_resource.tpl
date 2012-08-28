@@ -13,11 +13,11 @@
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="resource" class="control-label">{lang t="access|resource_name"}</label>
+		<label for="resource" class="control-label">{lang t="permissions|resource_name"}</label>
 		<div class="controls"><input type="text" name="resource" id="resource" value="{$form.resource}" required></div>
 	</div>
 	<div class="control-group">
-		<label for="privileges" class="control-label">{lang t="access|assigned_privilege"}</label>
+		<label for="privileges" class="control-label">{lang t="permissions|assigned_privilege"}</label>
 		<div class="controls">
 			<select name="privileges" id="privileges">
 {foreach $privileges as $row}
@@ -28,7 +28,7 @@
 	</div>
 	<div class="form-actions">
 		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
-		<a href="{uri args="acp/access/list_resouces"}" class="btn">{lang t="common|cancel"}</a>
+		<a href="{uri args="acp/permissions/list_resouces"}" class="btn">{lang t="common|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

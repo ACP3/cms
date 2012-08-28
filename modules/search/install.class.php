@@ -1,6 +1,16 @@
 <?php
 
 class ACP3_SearchModuleInstaller extends ACP3_ModuleInstaller {
+	private $module_name = 'search';
+	private $schema_version = 30;
+
+	protected function getName() {
+		return $this->module_name;
+	}
+
+	protected function getSchemaVersion() {
+		return $this->schema_version;
+	}
 
 	protected function createTables() {
 		return array();
@@ -10,28 +20,15 @@ class ACP3_SearchModuleInstaller extends ACP3_ModuleInstaller {
 		return array();
 	}
 
-	protected function addSettings() {
-		return true;
+	protected function settings() {
+		return array();
 	}
 
 	protected function removeSettings() {
 		return true;
 	}
 
-	protected function addToModulesTable() {
-		global $db;
-
-		// Modul in die Modules-SQL-Tabelle eintragen
-		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('search'), 'version' => 30, 'active' => 1));
-		$this->module_id = $db->link->lastInsertId();
-
-		return (bool) $bool;
+	protected function schemaUpdates() {
+		return array();
 	}
-
-	protected function removeFromModulesTable() {
-		global $db;
-
-		return (bool) $db->delete('modules', 'id = ' . $this->module_id);
-	}
-
 }

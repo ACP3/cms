@@ -25,7 +25,7 @@ require INCLUDES_DIR . 'globals.php';
 // DB-Config des ACP3 laden
 require INCLUDES_DIR . 'config.php';
 if (defined('INSTALLED') === false)
-	exit('The ACP3 is not installed correctly. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow the instructions.');
+	exit('The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow the instructions.');
 
 // Class Autoloader
 require INCLUDES_DIR . 'autoload.php';

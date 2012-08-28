@@ -1,4 +1,12 @@
 <?php
+/**
+ * Installer
+ *
+ * @author Tino Goratsch
+ * @package ACP3
+ * @subpackage Installer
+ */
+
 if (defined('IN_INSTALL') === false)
 	exit;
 
@@ -52,7 +60,7 @@ if (isset($_POST['submit'])) {
 
 		$bool = false;
 		// Core-Module installieren
-		$install_first = array('system', 'access', 'users');
+		$install_first = array('system', 'permissions', 'users');
 		foreach ($install_first as $module) {
 			$bool = installModule($module);
 			if ($bool === false) {

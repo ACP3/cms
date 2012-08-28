@@ -1,3 +1,6 @@
+{if isset($redirect_message)}
+{$redirect_message}
+{/if}
 <div class="tabbable">
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|installed_modules"}</a></li>

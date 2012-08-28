@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="access">Permissions</item>
 	<item key="acp_create">Create a new role</item>
 	<item key="acp_create_resource">Create a new resource</item>
 	<item key="acp_delete">Delete roles</item>

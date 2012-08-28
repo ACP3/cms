@@ -10,15 +10,15 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$breadcrumb->append($lang->t('access', 'acp_list_resources'), $uri->route('acp/access/list_resources'))
-		   ->append($lang->t('access', 'acp_edit_resource'));
+$breadcrumb->append($lang->t('permissions', 'acp_list_resources'), $uri->route('acp/permissions/list_resources'))
+		   ->append($lang->t('permissions', 'acp_edit_resource'));
 
 if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_resources', 'id = \'' . $uri->id . '\'') == 1) {
 	if (isset($_POST['submit']) === true) {
 		if (empty($_POST['privileges']) || ACP3_Validate::isNumber($_POST['privileges']) === false)
-			$errors['privileges'] = $lang->t('access', 'select_privilege');
+			$errors['privileges'] = $lang->t('permissions', 'select_privilege');
 		if (ACP3_Validate::isNumber($_POST['privileges']) && $db->countRows('*', 'acl_resources', 'id = \'' . $_POST['privileges'] . '\'') == 0)
-			$errors['privileges'] = $lang->t('access', 'privilege_does_not_exist');
+			$errors['privileges'] = $lang->t('permissions', 'privilege_does_not_exist');
 
 		if (isset($errors) === true) {
 			$tpl->assign('error_msg', errorBox($errors));
@@ -34,7 +34,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_resou
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/access/list_resources');
+			setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/permissions/list_resources');
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -49,7 +49,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_resou
 
 		$session->generateFormToken();
 
-		ACP3_View::setContent(ACP3_View::fetchTemplate('access/acp_edit_resource.tpl'));
+		ACP3_View::setContent(ACP3_View::fetchTemplate('permissions/acp_edit_resource.tpl'));
 	}
 } else {
 	$uri->redirect('errors/404');

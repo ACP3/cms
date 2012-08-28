@@ -1,3 +1,9 @@
+ul, ol {
+	margin: 8px 0 0 25px;
+}
+ul ul, ol ol {
+	margin: 0 0 0 25px;
+}
 /* Allgemeine Textausrichtungen */
 .align-left {
 	text-align: left;
@@ -138,4 +144,9 @@ input[disabled] + label.btn {
 	box-shadow: none;
 	cursor: default;
 	opacity: 0.65;
+}
+/* Seitenauswahl */
+.pagination {
+	margin-left: 0;
+	margin-right: 0;
 }

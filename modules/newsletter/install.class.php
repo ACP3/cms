@@ -1,11 +1,22 @@
 <?php
 
 class ACP3_NewsletterModuleInstaller extends ACP3_ModuleInstaller {
+	private $module_name = 'newsletter';
+	private $schema_version = 30;
+
 	public function __construct() {
 		$this->special_resources = array(
 			'acp_activate' => 3,
 			'acp_sent' => 4,
 		);
+	}
+
+	protected function getName() {
+		return $this->module_name;
+	}
+
+	protected function getSchemaVersion() {
+		return $this->schema_version;
 	}
 
 	protected function createTables() {
@@ -35,41 +46,14 @@ class ACP3_NewsletterModuleInstaller extends ACP3_ModuleInstaller {
 		);
 	}
 
-	protected function addSettings() {
-		global $db;
-
-		$queries = array(
+	protected function settings() {
+		return array(
 			'mail' => '',
 			'mailsig' => '',
 		);
-
-		$bool = false;
-		foreach ($queries as $key => $value) {
-			$bool = $db->insert('settings', array('id' => '', 'module_id' => $this->module_id, 'name' => $key, 'value' => $value));
-		}
-		return (bool) $bool;
 	}
 
-	protected function removeSettings() {
-		global $db;
-
-		return (bool) $db->delete('settings', 'module_id = ' . $this->module_id);
+	protected function schemaUpdates() {
+		return array();
 	}
-
-	protected function addToModulesTable() {
-		global $db;
-
-		// Modul in die Modules-SQL-Tabelle eintragen
-		$bool = $db->insert('modules', array('id' => '', 'name' => $db->escape('newsletter'), 'version' => 30, 'active' => 1));
-		$this->module_id = $db->link->lastInsertId();
-
-		return (bool) $bool;
-	}
-
-	protected function removeFromModulesTable() {
-		global $db;
-
-		return (bool) $db->delete('modules', 'id = ' . $this->module_id);
-	}
-
 }

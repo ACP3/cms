@@ -16,7 +16,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'acl_roles
 
 	ACP3_Cache::purge(0, 'acl');
 
-	$uri->redirect('acp/access');
+	$uri->redirect('acp/permissions');
 } else {
 	$uri->redirect('errors/404');
 }

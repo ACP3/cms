@@ -80,6 +80,7 @@
 	<item key="mod_rewrite_description">Bitte nur aktivieren, wenn Sie den Apache Webserver verwenden.</item>
 	<item key="mod_uninstallation_error">Beim Deinstallieren des Moduls ist ein Fehler aufgetreten.</item>
 	<item key="mod_uninstallation_success">Das Modul wurde erfolgreich deinstalliert.</item>
+	<item key="module_already_installed">Das Modul ist bereits installiert!</item>
 	<item key="module_name">Modul Name</item>
 	<item key="no_modules_available_for_installation">Es sind bereits alle lokal verfügbaren Module installiert!</item>
 	<item key="output">Ausgabe</item>

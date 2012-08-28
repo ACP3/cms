@@ -3,7 +3,7 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="control-group">
-		<label for="privileges" class="control-label">{lang t="access|assigned_privilege"}</label>
+		<label for="privileges" class="control-label">{lang t="permissions|assigned_privilege"}</label>
 		<div class="controls">
 			<select name="privileges" id="privileges">
 {foreach $privileges as $row}
@@ -14,7 +14,7 @@
 	</div>
 	<div class="form-actions">
 		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
-		<a href="{uri args="acp/access/list_resources"}" class="btn">{lang t="common|cancel"}</a>
+		<a href="{uri args="acp/permissions/list_resources"}" class="btn">{lang t="common|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

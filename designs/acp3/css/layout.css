@@ -6,3 +6,6 @@
 	background: url('../img/logo.png') no-repeat;
 	text-indent: -9999px;
 }
+.nav-list {
+	margin: 0;
+}

@@ -18,7 +18,7 @@
 {/if}
 				<th>{lang t="users|nickname"}</th>
 				<th>{lang t="common|email"}</th>
-				<th>{lang t="access|roles"}</th>
+				<th>{lang t="permissions|roles"}</th>
 				<th style="width:3%">{lang t="common|id"}</th>
 			</tr>
 		</thead>
