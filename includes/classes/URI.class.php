@@ -244,7 +244,7 @@ class ACP3_URI
 				$path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
 			}
 		}
-		$prefix = (bool) CONFIG_SEO_MOD_REWRITE === false || preg_match('/^acp\//', $path) ? PHP_SELF . '/' : ROOT_DIR;
+		$prefix = (bool) CONFIG_SEO_MOD_REWRITE === false || preg_match('/^acp\//', $path) || defined('IN_UPDATER') === true ? PHP_SELF . '/' : ROOT_DIR;
 		return $prefix . $path;
 	}
 }

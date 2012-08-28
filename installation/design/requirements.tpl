@@ -1,12 +1,12 @@
 <div class="row-fluid">
-	<div class="span7">
+	<div class="span8">
 		<fieldset>
 			<legend>{lang t="installation|step_3_legend_1"}</legend>
 			<p>
 				{lang t="installation|step_3_paragraph_1"}
 			</p>
 			<div class="row-fluid">
-				<div class="span6">
+				<div class="span5">
 					<table class="table table-condensed">
 						<thead>
 							<tr>
@@ -26,7 +26,7 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="span6">
+				<div class="span7">
 					<ul class="unstyled">
 {foreach $files_dirs as $row}
 						<li>
@@ -40,7 +40,7 @@
 			</div>
 		</fieldset>
 	</div>
-	<div class="span5">
+	<div class="span4">
 		<fieldset>
 			<legend>{lang t="installation|step_3_legend_2"}</legend>
 			<p>

@@ -67,7 +67,7 @@
 	<item key="maintenance_msg">Wartungsnachricht</item>
 	<item key="max_upload_size">Maximale Uploadgröße</item>
 	<item key="minify_cache_lifetime">Cache-Lebenszeit der CSS- und JavaScript-Dateien</item>
-	<item key="minify_cache_lifetime_description">Angaben in Sekunden</item>
+	<item key="minify_cache_lifetime_description">Angaben in Sekunden.</item>
 	<item key="mod_activate_error">Beim Aktivieren des Moduls ist ein Fehler aufgetreten.</item>
 	<item key="mod_activate_success">Das Modul wurde erfolgreich aktiviert und kann nun verwendet werden.</item>
 	<item key="mod_deactivate_error">Beim Deaktivieren des Moduls ist ein Fehler aufgetreten.</item>

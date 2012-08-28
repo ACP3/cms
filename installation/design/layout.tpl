@@ -24,10 +24,10 @@ $(document).ready(function($) {
 </head>
 
 <body>
-	<div class="container-fluid">
+	<div class="container">
 		<h1 id="logo">ACP3</h1>
 		<div class="row-fluid">
-			<div class="span2 well" style="padding:8px">
+			<div class="span3 well" style="padding:8px">
 {if isset($PAGES)}
 				<ul class="nav nav-list">
 					<li class="nav-header">Navigation</li>
@@ -46,7 +46,7 @@ $(document).ready(function($) {
 					<input type="submit" name="languages" value="{lang t="common|submit"}" class="btn">
 				</form>
 			</div>
-			<div class="span10">
+			<div class="span9">
 				<h2>{$TITLE}</h2>
 				{$CONTENT}
 			</div>

@@ -82,6 +82,8 @@ if (defined('IN_UPDATER') === false) {
 		),
 	);
 	$uri = new ACP3_URI('install', 'db_update');
+
+	ACP3_Cache::purge();
 }
 
 if (!empty($_POST['lang'])) {
