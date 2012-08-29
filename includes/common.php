@@ -15,7 +15,7 @@ error_reporting($reporting_level);
 // Einige Konstanten definieren
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
 $php_self = dirname(PHP_SELF);
-define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
+define('ROOT_DIR', $php_self !== '/' ? $php_self . '/' : '/');
 define('MODULES_DIR', ACP3_ROOT . 'modules/');
 define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 
@@ -57,6 +57,7 @@ if (is_writable($tpl->getCompileDir()) === false || is_writable($tpl->getCacheDi
 }
 
 define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
+define('DESIGN_PATH_INTERNAL', ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/');
 
 // Einige Template Variablen setzen
 $tpl->assign('PHP_SELF', PHP_SELF);

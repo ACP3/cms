@@ -145,6 +145,46 @@ class ACP3_Validate
 		}
 	}
 	/**
+	 * Überprüft, ob die zusätzlich zu ladenden Stylesheets überhaupt existieren
+	 *
+	 * @param string $var
+	 * @return boolean
+	 */
+	public static function extraCSS($var)
+	{
+		if ((bool) preg_match('=/=', $var) === false) {
+			$var_ary = explode(',', $var);
+			foreach ($var_ary as $stylesheet) {
+				$stylesheet = trim($stylesheet);
+				if (is_file(DESIGN_PATH_INTERNAL . 'css/' . $stylesheet) === false) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * Überprüft, ob die zusätzlich zu ladenden JavaScript Dateien überhaupt existieren
+	 *
+	 * @param string $var
+	 * @return boolean
+	 */
+	public static function extraJS($var)
+	{
+		if ((bool) preg_match('=/=', $var) === false) {
+			$var_ary = explode(',', $var);
+			foreach ($var_ary as $js) {
+				$js = trim($js);
+				if (is_file(DESIGN_PATH_INTERNAL . 'js/' . $js) === false) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+	/**
 	 * Validiert das Formtoken auf seine Gültigkeit
 	 *
 	 * @return boolean
@@ -153,7 +193,11 @@ class ACP3_Validate
 	{
 		global $uri;
 
-		return isset($_POST[ACP3_Session::XSRF_TOKEN_NAME]) && isset($_SESSION[ACP3_Session::XSRF_TOKEN_NAME][$uri->query]) && $_POST[ACP3_Session::XSRF_TOKEN_NAME] === $_SESSION[ACP3_Session::XSRF_TOKEN_NAME][$uri->query] ? true : false;
+		if (isset($_POST[ACP3_Session::XSRF_TOKEN_NAME]) && isset($_SESSION[ACP3_Session::XSRF_TOKEN_NAME][$uri->query]) &&
+			$_POST[ACP3_Session::XSRF_TOKEN_NAME] === $_SESSION[ACP3_Session::XSRF_TOKEN_NAME][$uri->query]) {
+			return true;
+		}
+		return false;
 	}
 	/**
 	 * Bestimmung des Geschlechts

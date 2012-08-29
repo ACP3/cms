@@ -6,8 +6,6 @@
  * @package ACP3
  * @subpackage Core
  */
-header('Content-type: text/plain; charset=UTF-8');
-
 error_reporting(E_ALL);
 
 define('IN_ACP3', true);
@@ -25,8 +23,18 @@ $handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB
 if ($handle !== true)
 	exit($handle);
 
-if (!defined('CONFIG_LANG'))
-	ACP3_Config::getSystemSettings();
+// Zum neuen Datenbank Updater weiterleiten,
+// falls eine aktuelle Version gefunden wurden
+if (defined('CONFIG_LANG') === false) {
+	$php_self = dirname(htmlentities($_SERVER['SCRIPT_NAME']));
+	define('INSTALLER_DIR', $php_self !== '/' ? $php_self . '/' : '/');
+
+	$uri = new ACP3_URI();
+	$uri->redirect('', INSTALLER_DIR . 'update.php');
+	exit();
+}
+
+header('Content-type: text/plain; charset=UTF-8');
 
 define('NEW_VERSION', '4.0 SVN');
 if (defined('CONFIG_DB_VERSION') === false)

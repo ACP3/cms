@@ -12,6 +12,10 @@
 	<item key="acp_update_check">Versionsüberprüfung</item>
 	<item key="acp3_not_up_to_date">Es ist eine neue Version des ACP3 verfügbar. Sie kann %1$shier%2$s heruntergeladen werden.</item>
 	<item key="acp3_up_to_date">Sie verwenden bereits die aktuelle Version des ACP3.</item>
+	<item key="additional_javascript_files">Zusätzlich zu ladende JavaScript Dateien</item>
+	<item key="additional_javascript_files_description">Die Dateien müssen sich im &quot;js&quot;-Ordner des Designs befinden. Die einzelnen Dateien bitte jeweils mit einem Komma separieren.</item>
+	<item key="additional_stylesheets">Zusätzlich zu ladende Stylesheet Dateien</item>
+	<item key="additional_stylesheets_description">Die Stylesheets müssen sich im &quot;css&quot;-Ordner des Designs befinden. Die einzelnen Stylesheets bitte jeweils mit einem Komma separieren.</item>
 	<item key="cache_images">Bilder cachen</item>
 	<item key="complete_export">Komplett</item>
 	<item key="config_edit_error">Beim Bearbeiten der Konfiguration ist ein Fehler aufgetreten.</item>
@@ -110,6 +114,8 @@
 	<item key="textarea">Textfeld</item>
 	<item key="title">Seitentitel</item>
 	<item key="title_to_short">Bitte geben Sie einen Seitentitel ein.</item>
+	<item key="type_in_additional_javascript_files">Einige der angegebenen JavaScript Dateien konnten nicht gefunden werden.</item>
+	<item key="type_in_additional_stylesheets">Einige der angegebenen Stylesheets konnten nicht gefunden werden.</item>
 	<item key="type_in_date_format">Bitte geben Sie eine Datumsformatierung ein.</item>
 	<item key="type_in_flood_barrier">Bitte geben Sie ein, für wie viele Sekunden ein Benutzer keine Beiträge abschicken kann.</item>
 	<item key="type_in_mailer_smtp_host">Bitte geben Sie den Hostnamen des SMTP-Servers an.</item>
