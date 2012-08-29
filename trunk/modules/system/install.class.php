@@ -2,7 +2,7 @@
 
 class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 	private $module_name = 'system';
-	private $schema_version = 30;
+	private $schema_version = 31;
 
 	public function __construct() {
 		$this->special_resources = array(
@@ -129,6 +129,8 @@ class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 			'date_time_zone' => '',
 			'design' => 'acp3',
 			'entries' => '',
+			'extra_css' => '',
+			'extra_js' => '',
 			'flood' => '',
 			'homepage' => 'news/list/',
 			'lang' => '',
@@ -161,6 +163,14 @@ class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	protected function schemaUpdates() {
-		return array();
+		global $db;
+
+		$module = $db->select('id', 'modules', 'name = \'' . $db->escape($this->getName()) . '\'');
+		return array(
+			31 => array(
+				"INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '" . $module[0]['id'] . "', 'extra_css', '');",
+				"INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '" . $module[0]['id'] . "', 'extra_js', '');",
+			)
+		);
 	}
 }

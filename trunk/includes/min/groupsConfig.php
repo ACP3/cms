@@ -71,6 +71,17 @@ if ($_GET['g'] === 'css') {
 	if (in_array('fancybox', $libraries))
 		$styles['css'][] = DESIGN_PATH . 'css/jquery-fancybox.css';
 
+	// Zusätzliche Stylesheets einbinden
+	$extra_css = explode(',', CONFIG_EXTRA_CSS);
+	if (count($extra_css) > 0) {
+		foreach ($extra_css as $file) {
+			$path = DESIGN_PATH . 'css/' . trim($file);
+			if (is_file($path) && in_array($path, $styles['css'])) {
+				$styles['css'][] = $path;
+			}
+		}
+	}
+
 	return $styles;
 } elseif ($_GET['g'] === 'js') {
 	$scripts = array();
@@ -87,6 +98,17 @@ if ($_GET['g'] === 'css') {
 
 	if (is_file(DESIGN_PATH . 'js/' . $layout . '.js') === true)
 		$scripts['js'][] = DESIGN_PATH . 'js/' . $layout . '.js';
+
+	// Zusätzliche JavaScript Dateien einbinden
+	$extra_js = explode(',', CONFIG_EXTRA_JS);
+	if (count($extra_js) > 0) {
+		foreach ($extra_js as $file) {
+			$path = DESIGN_PATH . 'js/' . trim($file);
+			if (is_file($path) && in_array($path, $styles['js'])) {
+				$styles['js'][] = $path;
+			}
+		}
+	}
 
 	return $scripts;
 }

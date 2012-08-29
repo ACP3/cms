@@ -4,7 +4,6 @@
 	<item key="acp_configuration">Configuration</item>
 	<item key="acp_designs">Designs</item>
 	<item key="acp_extensions">Extensions</item>
-	<item key="language">Language</item>
 	<item key="acp_languages">Languages</item>
 	<item key="acp_maintenance">Maintenance</item>
 	<item key="acp_modules">Modules</item>
@@ -13,6 +12,10 @@
 	<item key="acp_update_check">Version check</item>
 	<item key="acp3_not_up_to_date">A newer version of ACP3 is available. Click %1$shere%2$s to download the latest version.</item>
 	<item key="acp3_up_to_date">You're already using the latest version of ACP3.</item>
+	<item key="additional_javascript_files">Additional JavaScript files</item>
+	<item key="additional_javascript_files_description">The javascript files have to be located in the &quot;js&quot; directory. Please separate each file with a comma.</item>
+	<item key="additional_stylesheets">Additional stylesheets</item>
+	<item key="additional_stylesheets_description">The stylesheets have to be located in the &quot;css&quot; directory. Please separate each file with a comma.</item>
 	<item key="cache_images">Cache pictures</item>
 	<item key="complete_export">Complete</item>
 	<item key="config_edit_error">While editing the ACP3 configuration an error has occured.</item>
@@ -48,6 +51,7 @@
 	<item key="installable_modules">Installable modules</item>
 	<item key="installed_modules">Installed modules</item>
 	<item key="installed_version">Installed version</item>
+	<item key="language">Language</item>
 	<item key="languages_edit_error">While switching the language an error has occured.</item>
 	<item key="languages_edit_success">The language has been successfully selected and may now be used.</item>
 	<item key="mailer_smtp_auth">SMTP Authentication</item>
@@ -110,6 +114,8 @@
 	<item key="textarea">Textarea</item>
 	<item key="title">Title</item>
 	<item key="title_to_short">Please type in a title.</item>
+	<item key="type_in_additional_javascript_files">Some of the specified javascript files could not be found.</item>
+	<item key="type_in_additional_stylesheets">Some of the specified stylesheets could not be found.</item>
 	<item key="type_in_date_format">Please type in a date format.</item>
 	<item key="type_in_flood_barrier">Please enter the number of seconds a user can not submit posts.</item>
 	<item key="type_in_mailer_smtp_host">Please type in the hostname of the SMTP server.</item>

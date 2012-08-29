@@ -182,6 +182,20 @@ $(function() {
 						<p class="help-block">{lang t="system|minify_cache_lifetime_description"}</p>
 					</div>
 				</div>
+				<div class="control-group">
+					<label for="extra-css" class="control-label">{lang t="system|additional_stylesheets"}</label>
+					<div class="controls">
+						<input type="text" name="extra_css" id="extra-css" value="{$form.extra_css}" class="span6">
+						<p class="help-block">{lang t="system|additional_stylesheets_description"}</p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label for="extra-js" class="control-label">{lang t="system|additional_javascript_files"}</label>
+					<div class="controls">
+						<input type="text" name="extra_js" id="extra-js" value="{$form.extra_js}" class="span6">
+						<p class="help-block">{lang t="system|additional_javascript_files_description"}</p>
+					</div>
+				</div>
 			</div>
 			<div id="tab-6" class="tab-pane">
 				<div class="control-group">

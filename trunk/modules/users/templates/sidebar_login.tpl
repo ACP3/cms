@@ -10,7 +10,7 @@
 					{lang t="users|remember_me"}
 				</label>
 			</div>
-			<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
+			<button type="submit" name="submit" class="btn"><i class="icon-lock"></i> {lang t="users|log_in"}</button>
 		</form>
 	</li>
 	<li class="divider"></li>

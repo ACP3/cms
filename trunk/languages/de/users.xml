@@ -42,6 +42,7 @@ Bitte ändern Sie, nachdem Sie sich mit obrigem Passwort angemeldet haben, das P
 	<item key="invalid_icq_number">Sie haben eine ungültige ICQ-Nummer eingegeben.</item>
 	<item key="invalid_msn_account">Der eingegebene Name ihres MSN-Kontos entspricht nicht dem Format einer E-Mail-Adresse.</item>
 	<item key="language">Sprache</item>
+	<item key="log_in">Einloggen</item>
 	<item key="login">Login</item>
 	<item key="logout">Abmelden</item>
 	<item key="male">Männlich</item>

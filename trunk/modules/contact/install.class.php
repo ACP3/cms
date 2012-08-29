@@ -2,7 +2,13 @@
 
 class ACP3_ContactModuleInstaller extends ACP3_ModuleInstaller {
 	private $module_name = 'contact';
-	private $schema_version = 30;
+	private $schema_version = 31;
+
+	public function __construct() {
+		$this->special_resources = array(
+			'acp_list' => 7,
+		);
+	}
 
 	protected function getName() {
 		return $this->module_name;
@@ -31,6 +37,13 @@ class ACP3_ContactModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	protected function schemaUpdates() {
-		return array();
+		global $db;
+
+		$module = $db->select('id', 'modules', 'name = \'' . $db->escape($this->getName()) . '\'');
+		return array(
+			31 => array(
+				"UPDATE `{pre}acl_resources` SET privilege_id = 7 WHERE page = 'acp_list' AND module_id = " . ((int) $module[0]['id']) . ";"
+			)
+		);
 	}
 }

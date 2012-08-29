@@ -18,7 +18,7 @@ error_reporting(E_ALL);
 
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
 $php_self = dirname(PHP_SELF);
-define('INSTALLER_DIR', $php_self != '/' ? $php_self . '/' : '/');
+define('INSTALLER_DIR', $php_self !== '/' ? $php_self . '/' : '/');
 define('ROOT_DIR', substr(INSTALLER_DIR, 0, -13));
 define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 define('MODULES_DIR', ACP3_ROOT . 'modules/');

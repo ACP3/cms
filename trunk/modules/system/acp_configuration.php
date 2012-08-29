@@ -39,6 +39,10 @@ if (isset($_POST['submit']) === true) {
 		$errors[] = $lang->t('system', 'select_cache_images');
 	if (ACP3_Validate::isNumber($_POST['cache_minify']) === false)
 		$errors['cache-minify'] = $lang->t('system', 'type_in_minify_cache_lifetime');
+	if (!empty($_POST['extra_css']) && ACP3_Validate::extraCSS($_POST['extra_css']) === false)
+		$errors['extra-css'] = $lang->t('system', 'type_in_additional_stylesheets');
+	if (!empty($_POST['extra_js']) && ACP3_Validate::extraJS($_POST['extra_js']) === false)
+		$errors['extra-js'] = $lang->t('system', 'type_in_additional_javascript_files');
 	if ($_POST['mailer_type'] === 'smtp') {
 		if (empty($_POST['mailer_smtp_host']))
 			$errors['mailer-smtp-host'] = $lang->t('system', 'type_in_mailer_smtp_host');
@@ -61,6 +65,8 @@ if (isset($_POST['submit']) === true) {
 			'date_format_short' => $db->escape($_POST['date_format_short']),
 			'date_time_zone' => $_POST['date_time_zone'],
 			'entries' => (int) $_POST['entries'],
+			'extra_css' => $db->escape($_POST['extra_css'], 2),
+			'extra_js' => $db->escape($_POST['extra_js'], 2),
 			'flood' => (int) $_POST['flood'],
 			'homepage' => $_POST['homepage'],
 			'mailer_smtp_auth' => (int) $_POST['mailer_smtp_auth'],
@@ -82,6 +88,12 @@ if (isset($_POST['submit']) === true) {
 		);
 
 		$bool = ACP3_Config::setSettings('system', $config);
+
+		// Gecachete Stylesheets und JavaScript Dateien löschen
+		if (CONFIG_EXTRA_CSS !== $_POST['extra_css'] ||
+			CONFIG_EXTRA_JS !== $_POST['extra_js']) {
+			ACP3_Cache::purge('minify');
+		}
 
 		$session->unsetFormToken();
 

@@ -42,6 +42,7 @@ Please change the password again, after you logged in to your account.</item>
 	<item key="invalid_icq_number">Please type in a valid ICQ number.</item>
 	<item key="invalid_msn_account">The MSN-Account you have entered does not match the format of an e-mail address.</item>
 	<item key="language">Language</item>
+	<item key="log_in">Log in</item>
 	<item key="login">Login</item>
 	<item key="logout">Logout</item>
 	<item key="male">Male</item>
