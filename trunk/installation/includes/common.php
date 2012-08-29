@@ -67,6 +67,22 @@ if (defined('IN_UPDATER') === false) {
 	require INCLUDES_DIR . 'config.php';
 	if (defined('INSTALLED') === false)
 		exit('The ACP3 needs to be installed first before you can use the database updater.');
+	// Alte Versionen auf den Legacy Updater umleiten
+	if (defined('CONFIG_LANG') === true) {
+		$html = '<!DOCTYPE html>' . "\n";
+		$html.= '<html>' . "\n";
+		$html.= '<head>' . "\n";
+		$html.= '<title>Attention</title>' . "\n";
+		$html.= '</head>' . "\n";
+		$html.= '<body>' . "\n";
+		$html.= '<h1>Attention</h1>' . "\n";
+		$html.= '<p>A very old version of the ACP3 has been detected.</p>' . "\n";
+		$html.= '<p>Please run the <a href="' . INSTALLER_DIR . 'update_old.php" onclick="window.open(this.href); return false">legacy database updater</a> first.<br />' . "\n";
+		$html.= 'After that please reload this page to use the new database upgrade wizard.</p>' . "\n";
+		$html.= '</body>' . "\n";
+		$html.= '</html>';
+		exit($html);
+	}
 
 	$db = new ACP3_DB();
 	$handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
@@ -74,7 +90,7 @@ if (defined('IN_UPDATER') === false) {
 		exit($handle);
 
 	ACP3_Config::getSystemSettings();
-	
+
 	$pages = array(
 		array(
 			'file' => 'db_update',
