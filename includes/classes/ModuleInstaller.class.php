@@ -252,7 +252,6 @@ abstract class ACP3_ModuleInstaller {
 	public function updateSchema() {
 		global $db;
 
-		$result = -1;
 		$queries = $this->schemaUpdates();
 		if (count($queries) > 0) {
 			// Nur für den Fall der Fälle... ;)
@@ -261,18 +260,20 @@ abstract class ACP3_ModuleInstaller {
 			$module = $db->select('version', 'modules', 'name = \'' . $db->escape($this->getName()) . '\'');
 			$current_schema_version = isset($module[0]['version']) ? (int) $module[0]['version'] : 0;
 			foreach ($queries as $new_schema_version => $updates) {
+				$result = -1;
 				// Schema-Änderungen nur für neuere Versionen durchführen
 				if ($current_schema_version < $new_schema_version) {
 					// Die DB-Schema-Änderungen der jeweiligen Schema-Version ausführen
 					if (!empty($updates) && is_array($updates))
 						$result = $this->executeSqlQueries($updates) === true ? 1 : 0;
-
-					// Schema Version des Moduls erhöhen
-					$this->setNewSchemaVersion($new_schema_version);
+					// Falls kein Fehler aufgetreten ist, die Schema Version des Moduls erhöhen
+					if ($result !== 0)
+						$this->setNewSchemaVersion($new_schema_version);
 				}
 			}
+			return $result;
 		}
-		return $result;
+		return -1;
 	}
 
 	/**

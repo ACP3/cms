@@ -2,7 +2,7 @@
 
 class ACP3_SearchModuleInstaller extends ACP3_ModuleInstaller {
 	private $module_name = 'search';
-	private $schema_version = 30;
+	private $schema_version = 31;
 
 	protected function getName() {
 		return $this->module_name;
@@ -29,6 +29,13 @@ class ACP3_SearchModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	protected function schemaUpdates() {
-		return array();
+		global $db;
+
+		$module = $db->select('id', 'modules', 'name = \'' . $db->escape($this->getName()) . '\'');
+		return array(
+			31 => array(
+				"INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES ('', '" . $module[0]['id'] . "', 'sidebar', '', 1);",
+			)
+		);
 	}
 }
