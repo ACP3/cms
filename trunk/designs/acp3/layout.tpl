@@ -15,9 +15,10 @@
 
 <body>
 	<div class="container-fluid">
-		<h1 id="logo">{$PAGE_TITLE}</h1>
+		<h1 id="logo" class="visible-desktop">{$PAGE_TITLE}</h1>
 		<div class="navbar navbar-inverse">
 			<div class="navbar-inner">
+				<a href="{$ROOT_DIR}" class="brand hidden-desktop">{$PAGE_TITLE}</a>
 				<div class="container">
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 						<span class="icon-bar"></span>
@@ -26,6 +27,7 @@
 					</a>
 					<div class="nav-collapse">
 						{navbar block="main"}
+						{load_module module="search|sidebar"}
 					</div>
 				</div>
 			</div>
