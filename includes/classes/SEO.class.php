@@ -85,8 +85,8 @@ class ACP3_SEO
 		global $tpl;
 
 		$meta = array(
-			'description' => self::getCurrentDescription(),
-			'keywords' => self::getCurrentKeywords(),
+			'description' => defined('IN_ADM') === true ? '' : self::getCurrentDescription(),
+			'keywords' => defined('IN_ADM') === true ? '' : self::getCurrentKeywords(),
 			'robots' => defined('IN_ADM') === true ? 'noindex,nofollow' : self::getCurrentRobotsSetting(),
 			'previous_page' => self::$previous_page,
 			'next_page' => self::$next_page,
