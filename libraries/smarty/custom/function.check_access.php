@@ -19,7 +19,7 @@ function smarty_function_check_access($params, $template)
 			$access_check['uri'] = $uri->route($params['path']);
 
 			if (isset($params['icon'])) {
-				$path = DESIGN_PATH . 'img/' . $params['icon'] . '.png';
+				$path = ROOT_DIR . CONFIG_ICONS_PATH . $params['icon'] . '.png';
 				$access_check['icon'] = $path;
 			}
 			if (isset($params['title']))

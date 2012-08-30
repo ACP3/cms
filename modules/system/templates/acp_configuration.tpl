@@ -35,6 +35,13 @@ $(function() {
 		<div class="tab-content">
 			<div id="tab-1" class="tab-pane active">
 				<div class="control-group">
+					<label for="homepage" class="control-label">{lang t="system|homepage"}</label>
+					<div class="controls">
+						<input type="text" name="homepage" id="homepage" value="{$form.homepage}">
+						<p class="help-block">{lang t="system|homepage_description"}</p>
+					</div>
+				</div>
+				<div class="control-group">
 					<label for="entries" class="control-label">{lang t="common|records_per_page"}</label>
 					<div class="controls">
 						<select name="entries" id="entries">
@@ -52,11 +59,8 @@ $(function() {
 					</div>
 				</div>
 				<div class="control-group">
-					<label for="homepage" class="control-label">{lang t="system|homepage"}</label>
-					<div class="controls">
-						<input type="text" name="homepage" id="homepage" value="{$form.homepage}">
-						<p class="help-block">{lang t="system|homepage_description"}</p>
-					</div>
+					<label for="icons-path" class="control-label">{lang t="system|path_to_icons"}</label>
+					<div class="controls"><input type="text" name="icons_path" id="icons-path" value="{$form.icons_path}"></div>
 				</div>
 				<div class="control-group">
 					<label for="wysiwyg" class="control-label">{lang t="system|editor"}</label>
