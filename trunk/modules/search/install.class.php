@@ -29,12 +29,9 @@ class ACP3_SearchModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	protected function schemaUpdates() {
-		global $db;
-
-		$module = $db->select('id', 'modules', 'name = \'' . $db->escape($this->getName()) . '\'');
 		return array(
 			31 => array(
-				"INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES ('', '" . $module[0]['id'] . "', 'sidebar', '', 1);",
+				"INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES ('', " . $this->getModuleId() . ", 'sidebar', '', 1);",
 			)
 		);
 	}

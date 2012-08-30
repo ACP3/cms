@@ -34,10 +34,33 @@ abstract class ACP3_ModuleInstaller {
 	 */
 	protected $special_resources = array();
 
+	function __construct() {
+		global $db;
+
+		$module = $db->select('id', 'modules', 'name = \'' . $db->escape($this->getName()) . '\'');
+		$this->setModuleId(!empty($module[0]['id']) ? $module[0]['id'] : 0);
+	}
+
+	/**
+	 * Setzt die ID eines Moduls
+	 *
+	 * @param mixed $module_id
+	 */
 	public function setModuleId($module_id)
 	{
 		$this->module_id = (int) $module_id;
 	}
+
+	/**
+	 * Gibt die ID eines Moduls zurück
+	 *
+	 * @return integer
+	 */
+	public function getModuleId()
+	{
+		return (int) $this->module_id;
+	}
+
 	/**
 	 * Methode zum Installieren des Moduls
 	 *
