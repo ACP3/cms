@@ -118,7 +118,7 @@ class ACP3_View
 	public static function outputPage() {
 		global $auth, $uri;
 
-		if ($auth->isUser() === false && defined('IN_ADM') === true && $uri->mod !== 'users' && $uri->file !== 'login') {
+		if ($auth->isUser() === false && defined('IN_ADM') === true && $uri->query !== 'users/login') {
 			$redirect_uri = base64_encode('acp/' . $uri->query);
 			$uri->redirect('users/login/redirect_' . $redirect_uri);
 		}
