@@ -2,7 +2,7 @@
 
 class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 	private $module_name = 'system';
-	private $schema_version = 31;
+	private $schema_version = 32;
 
 	public function __construct() {
 		$this->special_resources = array(
@@ -133,6 +133,7 @@ class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 			'extra_js' => '',
 			'flood' => '',
 			'homepage' => 'news/list/',
+			'icons_path' => 'libraries/crystal_project/',
 			'lang' => '',
 			'mailer_smtp_auth' => false,
 			'mailer_smtp_host' => '',
@@ -170,6 +171,9 @@ class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 			31 => array(
 				"INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '" . $module[0]['id'] . "', 'extra_css', '');",
 				"INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '" . $module[0]['id'] . "', 'extra_js', '');",
+			),
+			32 => array(
+				"INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '" . $module[0]['id'] . "', 'icons_path', 'libraries/crystal_project/');",
 			)
 		);
 	}

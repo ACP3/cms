@@ -11,12 +11,14 @@ if (defined('IN_ADM') === false)
 	exit;
 
 if (isset($_POST['submit']) === true) {
+	if (ACP3_Validate::isInternalURI($_POST['homepage']) === false)
+		$errors['homepage'] = $lang->t('system', 'incorrect_homepage');
 	if (ACP3_Validate::isNumber($_POST['entries']) === false)
 		$errors['entries'] = $lang->t('common', 'select_records_per_page');
 	if (ACP3_Validate::isNumber($_POST['flood']) === false)
 		$errors['flood'] = $lang->t('system', 'type_in_flood_barrier');
-	if (ACP3_Validate::isInternalURI($_POST['homepage']) === false)
-		$errors['homepage'] = $lang->t('system', 'incorrect_homepage');
+	if ((bool) preg_match('/\/$/', $_POST['icons_path']) === false)
+		$errors['icons-path'] = $lang->t('system', 'incorrect_path_to_icons');
 	if ($_POST['wysiwyg'] != 'textarea' && (preg_match('=/=', $_POST['wysiwyg']) || is_file(INCLUDES_DIR . 'wysiwyg/' . $_POST['wysiwyg'] . '/info.xml') === false))
 		$errors['wysiwyg'] = $lang->t('system', 'select_editor');
 	if (empty($_POST['date_format_long']) || empty($_POST['date_format_short']))
@@ -69,6 +71,7 @@ if (isset($_POST['submit']) === true) {
 			'extra_js' => $db->escape($_POST['extra_js'], 2),
 			'flood' => (int) $_POST['flood'],
 			'homepage' => $_POST['homepage'],
+			'icons_path' => $_POST['icons_path'],
 			'mailer_smtp_auth' => (int) $_POST['mailer_smtp_auth'],
 			'mailer_smtp_host' => $_POST['mailer_smtp_host'],
 			'mailer_smtp_password' => $_POST['mailer_smtp_password'],

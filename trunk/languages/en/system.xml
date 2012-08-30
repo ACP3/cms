@@ -44,8 +44,9 @@
 	<item key="general">General</item>
 	<item key="general_settings">General settings</item>
 	<item key="homepage">Homepage</item>
-	<item key="homepage_description"><![CDATA[To specify a custom homepage, please use the format &quot;module/file/optional_parameters/&quot;.]]></item>
-	<item key="incorrect_homepage"><![CDATA[To specify a custom homepage, please use the format &quot;module/file/optional_parameters/&quot;.]]></item>
+	<item key="homepage_description">To specify a custom homepage, please use the format &quot;module/file/optional_parameters/&quot;.</item>
+	<item key="incorrect_homepage">To specify a custom homepage, please use the format &quot;module/file/optional_parameters/&quot;.</item>
+	<item key="incorrect_path_to_icons">The path to the icons folder has to end with a slash.</item>
 	<item key="install">Install</item>
 	<item key="install_module">Install module</item>
 	<item key="installable_modules">Installable modules</item>
@@ -90,6 +91,7 @@
 	<item key="output">Output</item>
 	<item key="output_as_text">As text</item>
 	<item key="output_as_file">As file</item>
+	<item key="path_to_icons">Path to the icons folder</item>
 	<item key="performance">Performance</item>
 	<item key="php_date_function"><![CDATA[see <a href="http://www.php.net/manual/function.date.php" onclick="window.open(this.href); return false">date</a> function of PHP.]]></item>
 	<item key="protected_module">Protected module</item>
