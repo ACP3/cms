@@ -37,12 +37,9 @@ class ACP3_ContactModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	protected function schemaUpdates() {
-		global $db;
-
-		$module = $db->select('id', 'modules', 'name = \'' . $db->escape($this->getName()) . '\'');
 		return array(
 			31 => array(
-				"UPDATE `{pre}acl_resources` SET privilege_id = 7 WHERE page = 'acp_list' AND module_id = " . ((int) $module[0]['id']) . ";"
+				"UPDATE `{pre}acl_resources` SET privilege_id = 7 WHERE page = 'acp_list' AND module_id = " . $this->getModuleId() . ";"
 			)
 		);
 	}

@@ -2,15 +2,18 @@
 
 class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 	private $module_name = 'system';
-	private $schema_version = 32;
+	private $schema_version = 33;
 
 	public function __construct() {
+		// Modul ID setzen
+		parent::__construct();
+
 		$this->special_resources = array(
 			'acp_configuration' => 7,
 			'acp_designs' => 7,
 			'acp_extensions' => 7,
 			'acp_languages' => 7,
-			'acp_maintenance' => 7,
+			'acp_maintenance' => 3,
 			'acp_modules' => 7,
 			'acp_sql_export' => 7,
 			'acp_sql_import' => 7,
@@ -164,16 +167,16 @@ class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	protected function schemaUpdates() {
-		global $db;
-
-		$module = $db->select('id', 'modules', 'name = \'' . $db->escape($this->getName()) . '\'');
 		return array(
 			31 => array(
-				"INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '" . $module[0]['id'] . "', 'extra_css', '');",
-				"INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '" . $module[0]['id'] . "', 'extra_js', '');",
+				"INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', " . $this->getModuleId() . ", 'extra_css', '');",
+				"INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', " . $this->getModuleId() . ", 'extra_js', '');",
 			),
 			32 => array(
-				"INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '" . $module[0]['id'] . "', 'icons_path', 'libraries/crystal_project/');",
+				"INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', " . $this->getModuleId() . ", 'icons_path', 'libraries/crystal_project/');",
+			),
+			33 => array(
+				"UPDATE `{pre}acl_resources` SET privilege_id = 3 WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_maintenance';",
 			)
 		);
 	}

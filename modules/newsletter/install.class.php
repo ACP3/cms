@@ -5,6 +5,9 @@ class ACP3_NewsletterModuleInstaller extends ACP3_ModuleInstaller {
 	private $schema_version = 30;
 
 	public function __construct() {
+		// Modul ID setzen
+		parent::__construct();
+
 		$this->special_resources = array(
 			'acp_activate' => 3,
 			'acp_sent' => 4,
