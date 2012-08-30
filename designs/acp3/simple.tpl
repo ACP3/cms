@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="{$MIN_STYLESHEET}">
 <script type="text/javascript" src="{$MIN_JAVASCRIPT}"></script>
 <!--[if lt IE 9]>
-<script src="{$DESIGN_PATH}js/html5shiv.js"></script>
+<script src="{$ROOT_DIR}libraries/js/html5shiv.js"></script>
 <![endif]-->
 </head>
 
