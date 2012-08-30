@@ -110,7 +110,7 @@ function errorBox($errors)
  */
 function generateEmail($recipient_name, $recipient_email, $from, $subject, $body)
 {
-	require_once INCLUDES_DIR . 'phpmailer/class.phpmailer.php';
+	require_once LIBRARIES_DIR . 'phpmailer/class.phpmailer.php';
 
 	$mail = new PHPMailer(true);
 	try {
