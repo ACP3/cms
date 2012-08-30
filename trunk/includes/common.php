@@ -18,6 +18,7 @@ $php_self = dirname(PHP_SELF);
 define('ROOT_DIR', $php_self !== '/' ? $php_self . '/' : '/');
 define('MODULES_DIR', ACP3_ROOT . 'modules/');
 define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
+define('LIBRARIES_DIR', ACP3_ROOT . 'libraries/');
 
 // register_globals OFF Emulation
 require INCLUDES_DIR . 'globals.php';
@@ -43,13 +44,13 @@ ACP3_Config::getSystemSettings();
 date_default_timezone_set(CONFIG_DATE_TIME_ZONE);
 
 // Smarty einbinden
-require INCLUDES_DIR . 'smarty/Smarty.class.php';
+require LIBRARIES_DIR . 'smarty/Smarty.class.php';
 $tpl = new Smarty();
 $tpl->error_reporting = $reporting_level;
 $tpl->compile_id = CONFIG_DESIGN;
 $tpl->setCompileCheck(defined('DEBUG') === true && DEBUG === true);
 $tpl->setTemplateDir(array(ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/', MODULES_DIR))
-	->addPluginsDir(INCLUDES_DIR . 'smarty/custom/')
+	->addPluginsDir(LIBRARIES_DIR . 'smarty/custom/')
 	->setCompileDir(ACP3_ROOT . 'uploads/cache/tpl_compiled/')
 	->setCacheDir(ACP3_ROOT . 'uploads/cache/tpl_cached/');
 if (is_writable($tpl->getCompileDir()) === false || is_writable($tpl->getCacheDir()) === false) {

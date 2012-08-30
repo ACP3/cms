@@ -21,6 +21,7 @@ $php_self = dirname(PHP_SELF);
 define('INSTALLER_DIR', $php_self !== '/' ? $php_self . '/' : '/');
 define('ROOT_DIR', substr(INSTALLER_DIR, 0, -13));
 define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
+define('LIBRARIES_DIR', ACP3_ROOT . 'libraries/');
 define('MODULES_DIR', ACP3_ROOT . 'modules/');
 
 include INCLUDES_DIR . 'globals.php';
@@ -28,11 +29,11 @@ require INCLUDES_DIR . 'autoload.php';
 require ACP3_ROOT . 'installation/includes/functions.php';
 
 // Smarty einbinden
-include INCLUDES_DIR . 'smarty/Smarty.class.php';
+include LIBRARIES_DIR . 'smarty/Smarty.class.php';
 $tpl = new Smarty();
 $tpl->compile_id = 'installation';
 $tpl->setTemplateDir(ACP3_ROOT . 'installation/design/')
-	->addPluginsDir(INCLUDES_DIR . 'smarty/custom/')
+	->addPluginsDir(LIBRARIES_DIR . 'smarty/custom/')
 	->setCompileDir(ACP3_ROOT . 'uploads/cache/tpl_compiled/')
 	->setCacheDir(ACP3_ROOT . 'uploads/cache/tpl_cached/');
 if (is_writable($tpl->getCompileDir()) === false || is_writable($tpl->getCacheDir()) === false) {

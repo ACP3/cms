@@ -4,11 +4,11 @@
 <title>ACP3 {lang t="installation|installation"} :: {$TITLE}</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}designs/acp3/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}designs/acp3/css/bootstrap-responsive.css">
+<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}libraries/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}libraries/bootstrap/css/bootstrap-responsive.css">
 <link rel="stylesheet" type="text/css" href="{$INSTALLER_DIR}design/style.css">
-<script type="text/javascript" src="{$ROOT_DIR}designs/acp3/js/jquery.min.js"></script>
-<script type="text/javascript" src="{$ROOT_DIR}designs/acp3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{$ROOT_DIR}libraries/js/jquery.min.js"></script>
+<script type="text/javascript" src="{$ROOT_DIR}libraries/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function($) {
 	// Sprachdropdown
@@ -19,7 +19,7 @@ $(document).ready(function($) {
 });
 </script>
 <!--[if lt IE 9]>
-<script src="{$ROOT_DIR}designs/acp3/js/html5shiv.js"></script>
+<script src="{$ROOT_DIR}libraries/js/html5shiv.js"></script>
 <![endif]-->
 </head>
 

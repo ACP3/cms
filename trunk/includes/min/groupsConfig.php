@@ -19,6 +19,7 @@ $php_self = dirname(PHP_SELF);
 define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
 define('MODULES_DIR', ACP3_ROOT . 'modules/');
 define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
+define('LIBRARIES_DIR', ACP3_ROOT . 'libraries/');
 
 require_once INCLUDES_DIR . 'config.php';
 require_once INCLUDES_DIR . 'autoload.php';
@@ -46,12 +47,12 @@ if ($_GET['g'] === 'css') {
 	$design_info = ACP3_XML::parseXmlFile(DESIGN_PATH . 'info.xml', '/design/responsive_layouts');
 
 	$styles = array();
-	$styles['css'][] = DESIGN_PATH . 'css/bootstrap.css';
+	$styles['css'][] = LIBRARIES_DIR . 'bootstrap/css/bootstrap.css';
 	// Styles für das Responsive Design nur einbinden,
 	// falls dies vom Design benötigt wird
 	if (isset($design_info['layout']) &&
 		($design_info['layout'] === $layout || (is_array($design_info['layout']) === true && in_array($layout, $design_info['layout']) === true)))
-		$styles['css'][] = DESIGN_PATH . 'css/bootstrap-responsive.css';
+		$styles['css'][] = LIBRARIES_DIR . 'bootstrap/css/bootstrap-responsive.css';
 	// Stylesheet für das Layout-Tenplate
 	$styles['css'][] = DESIGN_PATH . 'css/' . (is_file(DESIGN_PATH . 'css/' . $layout . '.css') === true ? $layout : 'layout') . '.css';
 	$styles['css'][] = DESIGN_PATH . 'css/common.css';
@@ -65,11 +66,11 @@ if ($_GET['g'] === 'css') {
 	}
 
 	if (in_array('jquery-ui', $libraries))
-		$styles['css'][] = DESIGN_PATH . 'css/jquery-ui.css';
+		$styles['css'][] = LIBRARIES_DIR . 'js/jquery-ui.css';
 	if (in_array('timepicker', $libraries))
-		$styles['css'][] = DESIGN_PATH . 'css/jquery-timepicker.css';
+		$styles['css'][] = LIBRARIES_DIR . 'js/jquery-timepicker.css';
 	if (in_array('fancybox', $libraries))
-		$styles['css'][] = DESIGN_PATH . 'css/jquery-fancybox.css';
+		$styles['css'][] = LIBRARIES_DIR . 'js/jquery-fancybox.css';
 
 	// Zusätzliche Stylesheets einbinden
 	$extra_css = explode(',', CONFIG_EXTRA_CSS);
@@ -85,16 +86,16 @@ if ($_GET['g'] === 'css') {
 	return $styles;
 } elseif ($_GET['g'] === 'js') {
 	$scripts = array();
-	$scripts['js'][] = DESIGN_PATH . 'js/jquery.min.js';
-	$scripts['js'][] = DESIGN_PATH . 'js/bootstrap.min.js';
+	$scripts['js'][] = LIBRARIES_DIR . 'js/jquery.min.js';
+	$scripts['js'][] = LIBRARIES_DIR . 'js/bootstrap.min.js';
 	if (in_array('bootbox', $libraries))
-		$scripts['js'][] = DESIGN_PATH . 'js/bootbox.min.js';
+		$scripts['js'][] = LIBRARIES_DIR . 'js/bootbox.min.js';
 	if (in_array('jquery-ui', $libraries))
-		$scripts['js'][] = DESIGN_PATH . 'js/jquery.ui.min.js';
+		$scripts['js'][] = LIBRARIES_DIR . 'js/jquery.ui.min.js';
 	if (in_array('timepicker', $libraries))
-		$scripts['js'][] = DESIGN_PATH . 'js/jquery.timepicker.js';
+		$scripts['js'][] = LIBRARIES_DIR . 'js/jquery.timepicker.js';
 	if (in_array('fancybox', $libraries))
-		$scripts['js'][] = DESIGN_PATH . 'js/jquery.fancybox.js';
+		$scripts['js'][] = LIBRARIES_DIR . 'js/jquery.fancybox.js';
 
 	if (is_file(DESIGN_PATH . 'js/' . $layout . '.js') === true)
 		$scripts['js'][] = DESIGN_PATH . 'js/' . $layout . '.js';
