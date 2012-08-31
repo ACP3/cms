@@ -109,7 +109,7 @@ class ACP3_Date
 				'firstDay' => '\'1\'',
 				'dateFormat' => '\'yy-mm-dd\'',
 				'showOn' => '\'button\'',
-				'buttonImage' => '\'' . DESIGN_PATH . 'img/16/cal.png\'',
+				'buttonImage' => '\'' . ROOT_DIR . CONFIG_ICONS_PATH . '16/cal.png\'',
 				'buttonImageOnly' => 'true',
 				'constrainInput' => 'true',
 				'changeMonth' => 'true',
