@@ -20,6 +20,11 @@ ul ul, ol ol {
 /* Datensätze */
 table .sub-table-header {
 	background: #f6f6f6;
+	line-height: 26px;
+	font-weight: bold;
+}
+table .sub-table-header span, table .sub-table-header div {
+	font-weight: normal;
 }
 .dataset-box {
 	margin: 0 auto 10px;

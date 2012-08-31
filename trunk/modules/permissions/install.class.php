@@ -4,6 +4,12 @@ class ACP3_PermissionsModuleInstaller extends ACP3_ModuleInstaller {
 	private $module_name = 'permissions';
 	private $schema_version = 31;
 
+	public function renameModule() {
+		return array(
+			31 => "UPDATE `{pre}modules` SET name = 'permissions' WHERE name = 'access';"
+		);
+	}
+
 	protected function getName() {
 		return $this->module_name;
 	}
@@ -37,10 +43,6 @@ class ACP3_PermissionsModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	protected function schemaUpdates() {
-		return array(
-			31 => array(
-				"UPDATE `{pre}modules` SET name='" . $this->getName() . "' WHERE name='access';"
-			)
-		);
+		return array();
 	}
 }

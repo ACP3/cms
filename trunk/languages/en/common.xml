@@ -60,6 +60,7 @@
 	<item key="delete_marked">Delete marked entries</item>
 	<item key="delete_success">The marked entries have been successfully deleted.</item>
 	<item key="description">Description</item>
+	<item key="edit">Edit</item>
 	<item key="edit_error">While editing the entry an error has occured.</item>
 	<item key="edit_order">Edit order</item>
 	<item key="edit_success">The entry has been successfully edited.</item>

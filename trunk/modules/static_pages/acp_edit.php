@@ -44,7 +44,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'static_pa
 			setStaticPagesCache($uri->id);
 
 			// Aliase in der Navigation aktualisieren
-			require_once MODULES_DIR . 'menu_items/functions.php';
+			require_once MODULES_DIR . 'menus/functions.php';
 			setMenuItemsCache();
 
 			$session->unsetFormToken();

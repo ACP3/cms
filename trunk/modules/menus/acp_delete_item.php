@@ -1,6 +1,6 @@
 <?php
 /**
- * Pages
+ * Menu bars
  *
  * @author Tino Goratsch
  * @package ACP3
@@ -19,9 +19,9 @@ if (!isset($entries)) {
 	ACP3_View::setContent(errorBox($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
-	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/menu_items/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/menu_items')));
+	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/menus/delete_items/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/menus')));
 } elseif ($uri->action === 'confirmed') {
-	require_once MODULES_DIR . 'menu_items/functions.php';
+	require_once MODULES_DIR . 'menus/functions.php';
 
 	$marked_entries = explode('|', $entries);
 	$bool = false;
@@ -36,7 +36,7 @@ if (!isset($entries)) {
 
 	setMenuItemsCache();
 
-	setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menu_items');
+	setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
 } else {
 	$uri->redirect('errors/404');
 }

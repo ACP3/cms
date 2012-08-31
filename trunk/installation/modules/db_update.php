@@ -20,8 +20,10 @@ if ($uri->action === 'do') {
 	$update_first = array('system', 'permissions', 'users');
 	foreach ($update_first as $row) {
 		$result = updateModule($row);
-		$results[] = array(
-			'text' => sprintf($lang->t('installation', 'db_update_text'), $lang->t($row, $row)),
+		$module = $lang->t($row, $row);
+		$text = $lang->t('installation', $result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'));
+		$results[$module] = array(
+			'text' => sprintf($lang->t('installation', 'db_update_text'), $module),
 			'class' => $result === 1 ? 'success' : ($result === 0 ? 'important' : 'info'),
 			'result_text' => $lang->t('installation', $result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
 		);
@@ -30,17 +32,20 @@ if ($uri->action === 'do') {
 	// ...danach die Restlichen
 	$modules = scandir(MODULES_DIR);
 	foreach ($modules as $row) {
-		if ($row !== '.' && $row !== '..' &&
-			ACP3_Modules::isInstalled($row) && in_array($row, $update_first) === false) {
+		if ($row !== '.' && $row !== '..' && in_array($row, $update_first) === false) {
 			$result = updateModule($row);
+			$module = $lang->t($row, $row);
 			$text = $lang->t('installation', $result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'));
-			$results[] = array(
-				'text' => sprintf($lang->t('installation', 'db_update_text'), $lang->t($row, $row)),
+			$results[$module] = array(
+				'text' => sprintf($lang->t('installation', 'db_update_text'), $module),
 				'class' => $result === 1 ? 'success' : ($result === 0 ? 'important' : 'info'),
 				'result_text' => $lang->t('installation', $result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
 			);
 		}
 	}
+
+	ksort($results);
+
 	$tpl->assign('results', $results);
 
 	// Cache leeren

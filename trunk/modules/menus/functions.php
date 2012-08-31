@@ -1,6 +1,6 @@
 <?php
 /**
- * Pages
+ * Menu bars
  *
  * @author Tino Goratsch
  * @package ACP3
@@ -18,7 +18,7 @@ function setMenuItemsCache() {
 	$c_items = count($items);
 
 	if ($c_items > 0) {
-		$blocks = $db->select('id, title, index_name', 'menu_items_blocks');
+		$blocks = $db->select('id, title, index_name', 'menus');
 		$c_blocks = count($blocks);
 
 		for ($i = 0; $i < $c_blocks; ++$i) {
@@ -36,10 +36,10 @@ function setMenuItemsCache() {
 
 		$mode_search = array('1', '2', '3', '4');
 		$mode_replace = array(
-			$lang->t('menu_items', 'module'),
-			$lang->t('menu_items', 'dynamic_page'),
-			$lang->t('menu_items', 'hyperlink'),
-			$lang->t('menu_items', 'static_page')
+			$lang->t('menus', 'module'),
+			$lang->t('menus', 'dynamic_page'),
+			$lang->t('menus', 'hyperlink'),
+			$lang->t('menus', 'static_page')
 		);
 
 		for ($i = 0; $i < $c_items; ++$i) {
@@ -89,7 +89,7 @@ function getMenuItemsCache()
 function setVisibleMenuItemsCache($block) {
 	global $db;
 
-	$items = $db->query('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, b.title AS block_title, b.index_name AS block_name FROM {pre}menu_items AS p, {pre}menu_items AS n JOIN {pre}menu_items_blocks AS b ON(n.block_id = b.id) WHERE b.index_name = \'' . $db->escape($block) . '\' AND n.display = 1 AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
+	$items = $db->query('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, b.title AS block_title, b.index_name AS block_name FROM {pre}menu_items AS p, {pre}menu_items AS n JOIN {pre}menus AS b ON(n.block_id = b.id) WHERE b.index_name = \'' . $db->escape($block) . '\' AND n.display = 1 AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
 
 	return ACP3_Cache::create('visible_menu_items_' . $block, $items);
 }
@@ -124,15 +124,15 @@ function menuItemsList($parent_id = 0, $left_id = 0, $right_id = 0) {
 	$output = array();
 
 	if (count($pages) > 0) {
-		$i = 0;
 		foreach($pages as $row) {
 			if (!($row['left_id'] >= $left_id && $row['right_id'] <= $right_id)) {
 				$row['selected'] = selectEntry('parent', $row['id'], $parent_id);
 				$row['spaces'] = str_repeat('&nbsp;&nbsp;', $row['level']);
 
 				// Titel für den aktuellen Block setzen
-				$output[$row['block_title']][$i] = $row;
-				++$i;
+				$output[$row['block_name']]['title'] = $row['block_title'];
+				$output[$row['block_name']]['menu_id'] = $row['block_id'];
+				$output[$row['block_name']]['items'][] = $row;
 			}
 		}
 	}
@@ -166,7 +166,7 @@ function processNavbar($block, $use_bootstrap = true, $class = '') {
 			// Selektion nur vornehmen, wenn man sich im Frontend befindet
 			if (defined('IN_ADM') === false) {
 				$in = "'" . $uri->query . "', '" . $uri->getCleanQuery() . "', '" . $uri->mod . '/' . $uri->file . "/', '" . $uri->mod . "'";
-				$select = $db->query('SELECT m.left_id FROM {pre}menu_items AS m JOIN {pre}menu_items_blocks AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri IN(' . $in . ') ORDER BY LENGTH(m.uri) DESC');
+				$select = $db->query('SELECT m.left_id FROM {pre}menu_items AS m JOIN {pre}menus AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri IN(' . $in . ') ORDER BY LENGTH(m.uri) DESC');
 			}
 
 			$navbar[$block] = '';

@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="acp_create">Neuen Menüpunkt erstellen</item>
-	<item key="acp_create_block">Neuen Block erstellen</item>
-	<item key="acp_delete">Menüpunkte löschen</item>
-	<item key="acp_delete_blocks">Blöcke löschen</item>
-	<item key="acp_edit">Menüpunkt bearbeiten</item>
-	<item key="acp_edit_block">Block bearbeiten</item>
-	<item key="acp_list_blocks">Blöcke</item>
-	<item key="block_title">Name des Blocks</item>
-	<item key="block_title_to_short">Der Name des Blocks sollte mindestens 3 Zeichen lang sein.</item>
+	<item key="acp_create">Neue Navigationsleiste erstellen</item>
+	<item key="acp_create_item">Neuen Menüpunkt erstellen</item>
+	<item key="acp_delete">Navigationsleiste löschen</item>
+	<item key="acp_delete_item">Menüpunkte löschen</item>
+	<item key="acp_edit">Navigationsleiste bearbeiten</item>
+	<item key="acp_edit_item">Menüpunkt bearbeiten</item>
+	<item key="acp_list">Navigationsleisten</item>
+	<item key="acp_list_items">Menüpunkte</item>
+	<item key="block_title">Name der Navigationsleiste</item>
+	<item key="block_title_to_short">Der Name der Navigationsleiste sollte mindestens 3 Zeichen lang sein.</item>
 	<item key="blocks">Block</item>
 	<item key="chronology">Reihenfolge</item>
 	<item key="display_item">Menüpunkt anzeigen</item>
 	<item key="dynamic_page">Dynamische Seite</item>
-	<item key="dynamic_page_hints"><![CDATA[Bitte in der Form &quot;modul/datei/weitere_parameter/&quot; eintragen, also bspw. news/details/id_1/.]]></item>
+	<item key="dynamic_page_hints">Bitte in der Form &quot;modul/datei/weitere_parameter/&quot; eintragen, also bspw. news/details/id_1/.</item>
 	<item key="hyperlink">Hyperlink</item>
 	<item key="index_name">Index Name</item>
+	<item key="index_name2">Index Name:</item>
 	<item key="index_name_description">Dies beschreibt den Namen des Platzhalters in den Templates.</item>
 	<item key="index_name_unique">Der Name des Template Platzhalters muss einzigartig sein.</item>
+	<item key="menus">Navigationsleisten</item>
 	<item key="menu_items">Menüpunkte</item>
 	<item key="mod_description">Dieses Modul verwaltet die Navigationsleisten.</item>
 	<item key="module">Modul</item>

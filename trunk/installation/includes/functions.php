@@ -165,7 +165,8 @@ function updateModule($module)
 		require $path;
 		$className = 'ACP3_' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $module)))) . 'ModuleInstaller';
 		$install = new $className();
-		if ($install instanceof ACP3_ModuleInstaller) {
+		if ($install instanceof ACP3_ModuleInstaller &&
+			(ACP3_Modules::isInstalled($module) || count($install->renameModule()) > 0)) {
 			$result = $install->updateSchema();
 		}
 	}

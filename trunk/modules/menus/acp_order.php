@@ -1,6 +1,6 @@
 <?php
 /**
- * Pages
+ * Menu bars
  *
  * @author Tino Goratsch
  * @package ACP3
@@ -14,10 +14,11 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_item
 	$nestedSet = new ACP3_NestedSet('menu_items', true);
 	$nestedSet->order($uri->id, $uri->action);
 
-	require_once MODULES_DIR . 'menu_items/functions.php';
+	require_once MODULES_DIR . 'menus/functions.php';
 	setMenuItemsCache();
 
-	$uri->redirect('acp/menu_items');
+	$menu = $db->select('id', 'menus', 'id = ' . ((int) $uri->id));
+	$uri->redirect('acp/menus/list_items/id_' . $menu[0]['id']);
 } else {
 	$uri->redirect('errors/404');
 }

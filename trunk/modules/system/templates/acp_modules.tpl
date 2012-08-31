@@ -31,11 +31,11 @@
 {else}
 							<div class="btn-group">
 {if $row.active === true}
-								<a href="{uri args="acp/system/modules/dir_`$row.dir`/action_deactivate"}" class="btn" title="{lang t="system|disable_module"}"><i class="icon-remove"></i> {lang t="system|disable"}</a>
+								<a href="{uri args="acp/system/modules/dir_`$row.dir`/action_deactivate"}" class="btn btn-small" title="{lang t="system|disable_module"}"><i class="icon-remove"></i> {lang t="system|disable"}</a>
 {else}
-								<a href="{uri args="acp/system/modules/dir_`$row.dir`/action_activate"}" class="btn" title="{lang t="system|enable_module"}"><i class="icon-ok"></i> {lang t="system|enable"}</a>
+								<a href="{uri args="acp/system/modules/dir_`$row.dir`/action_activate"}" class="btn btn-small" title="{lang t="system|enable_module"}"><i class="icon-ok"></i> {lang t="system|enable"}</a>
 {/if}
-								<a href="{uri args="acp/system/modules/dir_`$row.dir`/action_uninstall"}" class="btn" title="{lang t="system|uninstall_module"}"><i class="icon-off"></i> {lang t="system|uninstall"}</a>
+								<a href="{uri args="acp/system/modules/dir_`$row.dir`/action_uninstall"}" class="btn btn-small" title="{lang t="system|uninstall_module"}"><i class="icon-off"></i> {lang t="system|uninstall"}</a>
 							</div>
 {/if}
 						</td>
@@ -63,7 +63,7 @@
 						<td>{$row.description}</td>
 						<td>{$row.version}</td>
 						<td>{$row.author}</td>
-						<td><a href="{uri args="acp/system/modules/dir_`$row.dir`/action_install"}" class="btn" title="{lang t="system|install_module"}"><i class="icon-off"></i> {lang t="system|install"}</a></td>
+						<td><a href="{uri args="acp/system/modules/dir_`$row.dir`/action_install"}" class="btn btn-small" title="{lang t="system|install_module"}"><i class="icon-off"></i> {lang t="system|install"}</a></td>
 					</tr>
 {/foreach}
 				</tbody>
