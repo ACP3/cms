@@ -10,8 +10,9 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (ACP3_Modules::check('menu_items', 'acp_create') === true)
-	require_once MODULES_DIR . 'menu_items/functions.php';
+$access_to_menus = ACP3_Modules::check('menus', 'acp_create_item');
+if ($access_to_menus === true)
+	require_once MODULES_DIR . 'menus/functions.php';
 
 if (isset($_POST['submit']) === true) {
 	if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
@@ -20,22 +21,22 @@ if (isset($_POST['submit']) === true) {
 		$errors['title'] = $lang->t('static_pages', 'title_to_short');
 	if (strlen($_POST['text']) < 3)
 		$errors['text'] = $lang->t('static_pages', 'text_to_short');
-	if (ACP3_Modules::check('menu_items', 'create') === true) {
+	if ($access_to_menus === true) {
 		if ($_POST['create'] != 1 && $_POST['create'] != 0)
 			$errors[] = $lang->t('static_page', 'select_create_menu_item');
 		if ($_POST['create'] == 1) {
 			if (ACP3_Validate::isNumber($_POST['block_id']) === false)
-				$errors['block-id'] = $lang->t('menu_items', 'select_block');
+				$errors['block-id'] = $lang->t('menus', 'select_block');
 			if (!empty($_POST['parent']) && ACP3_Validate::isNumber($_POST['parent']) === false)
-				$errors['parent'] = $lang->t('menu_items', 'select_superior_page');
+				$errors['parent'] = $lang->t('menus', 'select_superior_page');
 			if (!empty($_POST['parent']) && ACP3_Validate::isNumber($_POST['parent']) === true) {
 				// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
 				$parent_block = $db->select('block_id', 'menu_items', 'id = \'' . $_POST['parent'] . '\'');
 				if (!empty($parent_block) && $parent_block[0]['block_id'] != $_POST['block_id'])
-					$errors['parent'] = $lang->t('menu_items', 'superior_page_not_allowed');
+					$errors['parent'] = $lang->t('menus', 'superior_page_not_allowed');
 			}
 			if ($_POST['display'] != 0 && $_POST['display'] != 1)
-				$errors[] = $lang->t('menu_items', 'select_item_visibility');
+				$errors[] = $lang->t('menus', 'select_item_visibility');
 		}
 	}
 	if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
@@ -63,7 +64,7 @@ if (isset($_POST['submit']) === true) {
 			ACP3_SEO::insertUriAlias('static_pages/list/id_' . $last_id, $_POST['alias'], $db->escape($_POST['seo_keywords']), $db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
 		$db->link->commit();
 
-		if ($_POST['create'] == 1 && ACP3_Modules::check('menu_items', 'create') === true) {
+		if ($_POST['create'] == 1 && $access_to_menus === true) {
 			$insert_values = array(
 				'id' => '',
 				'mode' => 4,
@@ -84,7 +85,7 @@ if (isset($_POST['submit']) === true) {
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-	if (ACP3_Modules::check('menu_items', 'acp_create') === true) {
+	if ($access_to_menus === true) {
 		$options = array();
 		$options[0]['name'] = 'create';
 		$options[0]['checked'] = selectEntry('create', '1', '0', 'checked');
@@ -92,7 +93,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		$tpl->assign('options', $options);
 
 		// Block
-		$blocks = $db->select('id, title', 'menu_items_blocks');
+		$blocks = $db->select('id, title', 'menus');
 		$c_blocks = count($blocks);
 		for ($i = 0; $i < $c_blocks; ++$i) {
 			$blocks[$i]['selected'] = selectEntry('block_id', $blocks[$i]['id']);

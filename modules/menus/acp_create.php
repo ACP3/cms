@@ -1,6 +1,6 @@
 <?php
 /**
- * Pages
+ * Menu bars
  *
  * @author Tino Goratsch
  * @package ACP3
@@ -10,16 +10,13 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$breadcrumb->append($lang->t('menu_items', 'acp_list_blocks'), $uri->route('acp/menu_items/list_blocks'))
-		   ->append($lang->t('menu_items', 'acp_create_block'));
-
 if (isset($_POST['submit']) === true) {
 	if (!preg_match('/^[a-zA-Z]+\w/', $_POST['index_name']))
-		$errors['index-name'] = $lang->t('menu_items', 'type_in_index_name');
-	if (!isset($errors) && $db->countRows('*', 'menu_items_blocks', 'index_name = \'' . $db->escape($_POST['index_name']) . '\'') > 0)
-		$errors['index-name'] = $lang->t('menu_items', 'index_name_unique');
+		$errors['index-name'] = $lang->t('menus', 'type_in_index_name');
+	if (!isset($errors) && $db->countRows('*', 'menus', 'index_name = \'' . $db->escape($_POST['index_name']) . '\'') > 0)
+		$errors['index-name'] = $lang->t('menus', 'index_name_unique');
 	if (strlen($_POST['title']) < 3)
-		$errors['title'] = $lang->t('menu_items', 'block_title_to_short');
+		$errors['title'] = $lang->t('menus', 'block_title_to_short');
 
 	if (isset($errors) === true) {
 		$tpl->assign('error_msg', errorBox($errors));
@@ -32,11 +29,11 @@ if (isset($_POST['submit']) === true) {
 			'title' => $db->escape($_POST['title']),
 		);
 
-		$bool = $db->insert('menu_items_blocks', $insert_values);
+		$bool = $db->insert('menus', $insert_values);
 
 		$session->unsetFormToken();
 
-		setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/menu_items/list_blocks');
+		setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -44,5 +41,5 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 
 	$session->generateFormToken();
 
-	ACP3_View::setContent(ACP3_View::fetchTemplate('menu_items/acp_create_block.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('menus/acp_create.tpl'));
 }

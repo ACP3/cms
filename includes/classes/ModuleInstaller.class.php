@@ -275,28 +275,54 @@ abstract class ACP3_ModuleInstaller {
 	public function updateSchema() {
 		global $db;
 
+		$module = $db->select('version', 'modules', 'name = \'' . $db->escape($this->getName()) . '\'');
+		$installed_schema_version = isset($module[0]['version']) ? (int) $module[0]['version'] : 0;
+		$result = -1;
+
+		// Falls eine Methode zum Umbenennen des Moduls existiert,
+		// diese mit der aktuell installierten Schemaverion aufrufen
+		$module_names = $this->renameModule();
+		if (count($module_names) > 0) {
+			$result = $this->interateOverSchemaUpdates($module_names, $installed_schema_version);
+		}
+
 		$queries = $this->schemaUpdates();
 		if (count($queries) > 0) {
 			// Nur für den Fall der Fälle... ;)
 			ksort($queries);
 
-			$module = $db->select('version', 'modules', 'name = \'' . $db->escape($this->getName()) . '\'');
-			$current_schema_version = isset($module[0]['version']) ? (int) $module[0]['version'] : 0;
-			foreach ($queries as $new_schema_version => $updates) {
-				$result = -1;
-				// Schema-Änderungen nur für neuere Versionen durchführen
-				if ($current_schema_version < $new_schema_version) {
-					// Die DB-Schema-Änderungen der jeweiligen Schema-Version ausführen
-					if (!empty($updates) && is_array($updates))
-						$result = $this->executeSqlQueries($updates) === true ? 1 : 0;
-					// Falls kein Fehler aufgetreten ist, die Schema Version des Moduls erhöhen
+			$result = $this->interateOverSchemaUpdates($queries, $installed_schema_version);
+		}
+		return $result;
+	}
+
+	/**
+	 * 
+	 * @param array $schema_updates
+	 * @param integer $installed_schema_version
+	 * @return integer
+	 */
+	private function interateOverSchemaUpdates(array $schema_updates, $installed_schema_version) {
+		$result = -1;
+		foreach ($schema_updates as $new_schema_version => $queries) {
+			// Schema-Änderungen nur für neuere Versionen durchführen
+			if ($installed_schema_version < $new_schema_version) {
+				// Einzelne Schema-Änderung bei einer Version
+				if (!empty($queries) && is_array($queries) === false) {
+					$result = $this->executeSqlQueries((array) $queries) === true ? 1 : 0;
+					if ($result !== 0)
+						$this->setNewSchemaVersion($new_schema_version);
+				// Mehrere Schema-Änderungen bei einer Version
+				} else {
+					if (!empty($queries) && is_array($queries) === true) 
+						$result = $this->executeSqlQueries($queries) === true ? 1 : 0;
+						// Falls kein Fehler aufgetreten ist, die Schema Version des Moduls erhöhen
 					if ($result !== 0)
 						$this->setNewSchemaVersion($new_schema_version);
 				}
 			}
-			return $result;
 		}
-		return -1;
+		return $result;
 	}
 
 	/**
@@ -309,6 +335,15 @@ abstract class ACP3_ModuleInstaller {
 		global $db;
 
 		return (bool) $db->update('modules', array('version' => (int) $new_version), 'name = \'' . $db->escape($this->getName()) . '\'');
+	}
+
+	/**
+	 * Methodenstub zum Umbenennen eines Moduls
+	 *
+	 * @return array
+	 */
+	public function renameModule() {
+		return array();
 	}
 
 	/**

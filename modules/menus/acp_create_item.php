@@ -10,31 +10,31 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-require_once MODULES_DIR . 'menu_items/functions.php';
+require_once MODULES_DIR . 'menus/functions.php';
 
 if (isset($_POST['submit']) === true) {
 	if (ACP3_Validate::isNumber($_POST['mode']) === false)
-		$errors['mode'] = $lang->t('menu_items', 'select_page_type');
+		$errors['mode'] = $lang->t('menus', 'select_page_type');
 	if (strlen($_POST['title']) < 3)
-		$errors['title'] = $lang->t('menu_items', 'title_to_short');
+		$errors['title'] = $lang->t('menus', 'title_to_short');
 	if (ACP3_Validate::isNumber($_POST['block_id']) === false)
-		$errors['block-id'] = $lang->t('menu_items', 'select_block');
+		$errors['block-id'] = $lang->t('menus', 'select_block');
 	if (!empty($_POST['parent']) && ACP3_Validate::isNumber($_POST['parent']) === false)
-		$errors['parent'] = $lang->t('menu_items', 'select_superior_page');
+		$errors['parent'] = $lang->t('menus', 'select_superior_page');
 	if (!empty($_POST['parent']) && ACP3_Validate::isNumber($_POST['parent']) === true) {
 		// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
 		$parent_block = $db->select('block_id', 'menu_items', 'id = \'' . $_POST['parent'] . '\'');
 		if (!empty($parent_block) && $parent_block[0]['block_id'] != $_POST['block_id'])
-			$errors['parent'] = $lang->t('menu_items', 'superior_page_not_allowed');
+			$errors['parent'] = $lang->t('menus', 'superior_page_not_allowed');
 	}
 	if ($_POST['display'] != 0 && $_POST['display'] != 1)
-		$errors[] = $lang->t('menu_items', 'select_item_visibility');
+		$errors[] = $lang->t('menus', 'select_item_visibility');
 	if (ACP3_Validate::isNumber($_POST['target']) === false ||
 		$_POST['mode'] == 1 && (is_dir(MODULES_DIR . $_POST['module']) === false || preg_match('=/=', $_POST['module'])) ||
 		$_POST['mode'] == 2 && ACP3_Validate::isInternalURI($_POST['uri']) === false ||
 		$_POST['mode'] == 3 && empty($_POST['uri']) ||
 		$_POST['mode'] == 4 && (ACP3_Validate::isNumber($_POST['static_pages']) === false || $db->countRows('*', 'static_pages', 'id = \'' . $_POST['static_pages'] . '\'') == 0))
-		$errors[] = $lang->t('menu_items', 'type_in_uri_and_target');
+		$errors[] = $lang->t('menus', 'type_in_uri_and_target');
 	if ($_POST['mode'] == 2 && (bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 		(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias']) === true))
 		$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
@@ -76,7 +76,7 @@ if (isset($_POST['submit']) === true) {
 
 		$session->unsetFormToken();
 
-		setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/menu_items');
+		setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -84,22 +84,22 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$mode = array();
 	$mode[0]['value'] = 1;
 	$mode[0]['selected'] = selectEntry('mode', '1');
-	$mode[0]['lang'] = $lang->t('menu_items', 'module');
+	$mode[0]['lang'] = $lang->t('menus', 'module');
 	$mode[1]['value'] = 2;
 	$mode[1]['selected'] = selectEntry('mode', '2');
-	$mode[1]['lang'] = $lang->t('menu_items', 'dynamic_page');
+	$mode[1]['lang'] = $lang->t('menus', 'dynamic_page');
 	$mode[2]['value'] = 3;
 	$mode[2]['selected'] = selectEntry('mode', '3');
-	$mode[2]['lang'] = $lang->t('menu_items', 'hyperlink');
+	$mode[2]['lang'] = $lang->t('menus', 'hyperlink');
 	if (ACP3_Modules::isActive('static_pages')) {
 		$mode[3]['value'] = 4;
 		$mode[3]['selected'] = selectEntry('mode', '4');
-		$mode[3]['lang'] = $lang->t('menu_items', 'static_page');
+		$mode[3]['lang'] = $lang->t('menus', 'static_page');
 	}
 	$tpl->assign('mode', $mode);
 
 	// Block
-	$blocks = $db->select('id, title', 'menu_items_blocks');
+	$blocks = $db->select('id, title', 'menus');
 	$c_blocks = count($blocks);
 	for ($i = 0; $i < $c_blocks; ++$i) {
 		$blocks[$i]['selected'] = selectEntry('block_id', $blocks[$i]['id']);
@@ -153,5 +153,5 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 
 	$session->generateFormToken();
 
-	ACP3_View::setContent(ACP3_View::fetchTemplate('menu_items/acp_create.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('menus/acp_create_item.tpl'));
 }

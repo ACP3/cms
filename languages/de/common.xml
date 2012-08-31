@@ -60,6 +60,7 @@
 	<item key="delete_marked">Markierte Einträge löschen</item>
 	<item key="delete_success">Die ausgewählten Einträge wurden erfolgreich gelöscht.</item>
 	<item key="description">Beschreibung</item>
+	<item key="edit">Bearbeiten</item>
 	<item key="edit_error">Beim Bearbeiten des Eintrages ist ein Fehler aufgetreten.</item>
 	<item key="edit_order">Reihenfolge bearbeiten</item>
 	<item key="edit_success">Der Eintrag wurde erfolgreich bearbeitet.</item>

@@ -83,12 +83,14 @@ class ACP3_Breadcrumb
 	 */
 	private function prepend($title, $path)
 	{
-		$step = array(
-			'title' => $title,
-			'uri' => $path,
-			'last' => false,
-		);
-		array_unshift($this->steps, $step);
+		if ($this->searchForDuplicates($title, $path) === false) {
+			$step = array(
+				'title' => $title,
+				'uri' => $path,
+				'last' => false,
+			);
+			array_unshift($this->steps, $step);
+		}
 
 		return $this;
 	}
@@ -160,7 +162,7 @@ class ACP3_Breadcrumb
 				}
 			// Falls bereits Stufen gesetzt wurden, Links für das Admin-Panel und
 			// die Modulverwaltung in ungedrehter Reihenfolge voranstellen
-			} elseif ($this->searchForDuplicates($lang->t('common', 'acp'), $uri->route('acp')) === false) {
+			} else {
 				if ($module !== 'acp')
 					$this->prepend($lang->t($module, $module), $uri->route('acp/' . $module));
 				$this->prepend($lang->t('common', 'acp'), $uri->route('acp'));

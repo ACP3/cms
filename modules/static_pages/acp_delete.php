@@ -21,7 +21,7 @@ if (!isset($entries)) {
 	$marked_entries = implode('|', $entries);
 	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/static_pages/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/static_pages')));
 } elseif ($uri->action === 'confirmed') {
-	require_once MODULES_DIR . 'menu_items/functions.php';
+	require_once MODULES_DIR . 'menus/functions.php';
 
 	$marked_entries = explode('|', $entries);
 	$bool = false;

@@ -36,7 +36,7 @@
 				</div>
 				<div id="create-item-container">
 					<div class="control-group">
-						<label for="block-id" class="control-label">{lang t="menu_items|blocks"}</label>
+						<label for="block-id" class="control-label">{lang t="menus|blocks"}</label>
 						<div class="controls">
 							<select name="block_id" id="block-id">
 								<option value="">{lang t="common|pls_select"}</option>
@@ -47,13 +47,13 @@
 						</div>
 					</div>
 					<div class="control-group">
-						<label for="parent" class="control-label">{lang t="menu_items|superior_page"}</label>
+						<label for="parent" class="control-label">{lang t="menus|superior_page"}</label>
 						<div class="controls">
 							<select name="parent" id="parent">
-								<option value="">{lang t="menu_items|no_superior_page"}</option>
-{foreach $pages_list as $block => $pages}
-								<optgroup label="{$block}">
-{foreach $pages as $row}
+								<option value="">{lang t="menus|no_superior_page"}</option>
+{foreach $pages_list as $blocks}
+							<optgroup label="{$blocks.title}">
+{foreach $blocks.items as $row}
 									<option value="{$row.id}"{$row.selected}>{$row.spaces}{$row.title}</option>
 {/foreach}
 								</optgroup>
@@ -62,7 +62,7 @@
 						</div>
 					</div>
 					<div class="control-group">
-						<label for="display-1" class="control-label">{lang t="menu_items|display_item"}</label>
+						<label for="display-1" class="control-label">{lang t="menus|display_item"}</label>
 						<div class="controls">
 							<div class="btn-group" data-toggle="radio">
 {foreach $display as $row}
