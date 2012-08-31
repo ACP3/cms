@@ -1,7 +1,7 @@
 <?php
 
 class ACP3_ErrorsModuleInstaller extends ACP3_ModuleInstaller {
-	private $module_name = 'error';
+	private $module_name = 'errors';
 	private $schema_version = 30;
 
 	protected function getName() {

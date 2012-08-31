@@ -23,7 +23,7 @@ class ACP3_MenusModuleInstaller extends ACP3_ModuleInstaller {
 			"CREATE TABLE `{pre}menu_items` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`mode` TINYINT(1) UNSIGNED NOT NULL,
-				`menu_id` INT(10) UNSIGNED NOT NULL,
+				`block_id` INT(10) UNSIGNED NOT NULL,
 				`root_id` INT(10) UNSIGNED NOT NULL,
 				`parent_id` INT(10) UNSIGNED NOT NULL,
 				`left_id` INT(10) UNSIGNED NOT NULL,

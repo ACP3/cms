@@ -12,7 +12,7 @@ if (defined('IN_INSTALL') === false)
 
 if (isset($_POST['submit'])) {
 	$config_path = ACP3_ROOT . 'includes/config.php';
-	$db = new ACP3_DB();
+	$test_db = new ACP3_DB();
 
 	if (empty($_POST['db_host']))
 		$errors[] = $lang->t('installation', 'type_in_db_host');
@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
 	if (empty($_POST['db_name']))
 		$errors[] = $lang->t('installation', 'type_in_db_name');
 	if (!empty($_POST['db_host']) && !empty($_POST['db_user']) && !empty($_POST['db_name']) &&
-		$db->connect($_POST['db_host'], $_POST['db_name'], $_POST['db_user'], $_POST['db_password']) !== true)
+		$test_db->connect($_POST['db_host'], $_POST['db_name'], $_POST['db_user'], $_POST['db_password']) !== true)
 		$errors[] = $lang->t('installation', 'db_connection_failed');
 	if (empty($_POST['user_name']))
 		$errors[] = $lang->t('installation', 'type_in_user_name');

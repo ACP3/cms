@@ -8,10 +8,6 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-// Wenn der DEBUG Modus aktiv ist, Fehler ausgeben
-$reporting_level = defined('DEBUG') === true && DEBUG === true ? E_ALL : 0;
-error_reporting($reporting_level);
-
 // Einige Konstanten definieren
 define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
 $php_self = dirname(PHP_SELF);
@@ -26,7 +22,11 @@ require INCLUDES_DIR . 'globals.php';
 // DB-Config des ACP3 laden
 require INCLUDES_DIR . 'config.php';
 if (defined('INSTALLED') === false)
-	exit('The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow the instructions.');
+	exit('The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow its instructions.');
+
+// Wenn der DEBUG Modus aktiv ist, Fehler ausgeben
+$reporting_level = defined('DEBUG') === true && DEBUG === true ? E_ALL : 0;
+error_reporting($reporting_level);
 
 // Class Autoloader
 require INCLUDES_DIR . 'autoload.php';

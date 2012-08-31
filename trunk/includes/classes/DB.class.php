@@ -103,7 +103,8 @@ class ACP3_DB
 					break;
 				// Query ausführen, die ein Resultset zurückgibt
 				case 2:
-					$stmt = $this->link->query($query);
+					$stmt = $this->link->prepare($query);
+					$stmt->execute();
 					$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 					break;
 				// Queries ohne Resultset
