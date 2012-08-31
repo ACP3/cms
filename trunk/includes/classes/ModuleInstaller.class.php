@@ -35,10 +35,7 @@ abstract class ACP3_ModuleInstaller {
 	protected $special_resources = array();
 
 	function __construct() {
-		global $db;
-
-		$module = $db->select('id', 'modules', 'name = \'' . $db->escape($this->getName()) . '\'');
-		$this->setModuleId(!empty($module[0]['id']) ? $module[0]['id'] : 0);
+		$this->setModuleId();
 	}
 
 	/**
@@ -46,9 +43,12 @@ abstract class ACP3_ModuleInstaller {
 	 *
 	 * @param mixed $module_id
 	 */
-	public function setModuleId($module_id)
+	public function setModuleId()
 	{
-		$this->module_id = (int) $module_id;
+		global $db;
+
+		$module = $db->select('id', 'modules', 'name = \'' . $db->escape($this->getName()) . '\'');
+		$this->module_id = !empty($module[0]['id']) ? (int) $module[0]['id'] : 0;
 	}
 
 	/**
@@ -284,6 +284,8 @@ abstract class ACP3_ModuleInstaller {
 		$module_names = $this->renameModule();
 		if (count($module_names) > 0) {
 			$result = $this->interateOverSchemaUpdates($module_names, $installed_schema_version);
+			// Modul-ID explizit nochmal neu setzen
+			$this->setModuleId();
 		}
 
 		$queries = $this->schemaUpdates();

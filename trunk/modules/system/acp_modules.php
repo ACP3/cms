@@ -61,10 +61,8 @@ switch ($uri->action) {
 			if (is_file($path) === true) {
 				require $path;
 
-				$mod_id = $db->select('id', 'modules', 'name = \'' . $db->escape($uri->dir) . '\'');
 				$className = 'ACP3_' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $uri->dir)))) . 'ModuleInstaller';
 				$install = new $className();
-				$install->setModuleId($mod_id[0]['id']);
 				$bool = $install->uninstall();
 
 				// Cache aktualisieren

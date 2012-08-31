@@ -14,7 +14,7 @@ $breadcrumb->append($lang->t('permissions', 'acp_list_resources'), $uri->route('
 		   ->append($lang->t('permissions', 'acp_create_resource'));
 
 if (isset($_POST['submit']) === true) {
-	if (empty($_POST['modules']) || ACP3_Modules::isActive($_POST['modules']) === false)
+	if (empty($_POST['modules']) || ACP3_Modules::isInstalled($_POST['modules']) === false)
 		$errors['modules'] = $lang->t('permissions', 'select_module');
 	if (empty($_POST['resource']) || preg_match('=/=', $_POST['resource']) || ACP3_Validate::isInternalURI($_POST['modules'] . '/' . $_POST['resource'] . '/') === false)
 		$errors['resource'] = $lang->t('permissions', 'type_in_resource');
