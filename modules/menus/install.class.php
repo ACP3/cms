@@ -61,13 +61,10 @@ class ACP3_MenusModuleInstaller extends ACP3_ModuleInstaller {
 	protected function schemaUpdates() {
 		return array(
 			31 => array(
-				"UPDATE `{pre}acl_resources` SET page = 'acp_create_item' WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_create';",
-				"UPDATE `{pre}acl_resources` SET page = 'acp_create' WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_create_block';",
-				"UPDATE `{pre}acl_resources` SET page = 'acp_delete_item' WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_delete';",
-				"UPDATE `{pre}acl_resources` SET page = 'acp_delete' WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_delete_blocks';",
-				"UPDATE `{pre}acl_resources` SET page = 'acp_edit_item' WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_edit';",
-				"UPDATE `{pre}acl_resources` SET page = 'acp_edit' WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_edit_block';",
-				"DLETE  FROM `{pre}acl_resources` WHERE page = 'acp_list_blocks' AND module_id = " . $this->getModuleId() . ";",
+				"UPDATE `{pre}acl_resources` SET page = 'acp_create_item' WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_create_block';",
+				"UPDATE `{pre}acl_resources` SET page = 'acp_delete_item' WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_delete_blocks';",
+				"UPDATE `{pre}acl_resources` SET page = 'acp_edit_item' WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_edit_block';",
+				"DELETE  FROM `{pre}acl_resources` WHERE page = 'acp_list_blocks' AND module_id = " . $this->getModuleId() . ";",
 				"RENAME TABLE `{pre}menu_items_blocks` TO `{pre}menus`"
 			)
 		);
