@@ -49,7 +49,7 @@ class ACP3_ArticlesModuleInstaller extends ACP3_ModuleInstaller {
 			31 => array(
 				"RENAME TABLE `{pre}static_pages` TO `{pre}articles`;",
 				"UPDATE `{pre}seo` SET uri = REPLACE(uri, 'static_pages', 'articles') WHERE uri REGEXP '^(static_pages/list/id_[0-9]+/)$';",
-				ACP3_Modules::isInstalled('menus') ? "UPDATE `{pre}menu_items` SET uri = REPLACE(uri, 'static_pages', 'articles') WHERE uri REGEXP '^(static_pages/list/id_[0-9]+/)$';" : ''
+				ACP3_Modules::isInstalled('menus') || ACP3_Modules::isInstalled('menu_items') ? "UPDATE `{pre}menu_items` SET uri = REPLACE(uri, 'static_pages', 'articles') WHERE uri REGEXP '^(static_pages/list/id_[0-9]+/)$';" : ''
 			)
 		);
 	}

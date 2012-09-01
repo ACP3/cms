@@ -104,10 +104,12 @@ abstract class ACP3_ModuleInstaller {
 
 			$db->link->beginTransaction();
 			foreach ($queries as $query) {
-				$bool = $db->query(str_replace($search, $replace, $query), 0);
-				if ($bool === false) {
-					$db->link->rollBack();
-					return false;
+				if (!empty($query)) {
+					$bool = $db->query(str_replace($search, $replace, $query), 0);
+					if ($bool === false) {
+						$db->link->rollBack();
+						return false;
+					}
 				}
 			}
 			$db->link->commit();
