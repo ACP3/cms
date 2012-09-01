@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
 	<item key="account_locked">Your user account has been locked. To reactivate it, please use the &quot;forgot password&quot; function, to receive a new password.</item>
-	<item key="acp_create">Create a new user</item>
+	<item key="acp_create">Create new user</item>
 	<item key="acp_delete">Delete users</item>
 	<item key="acp_edit">Edit user</item>
 	<item key="acp_settings">Settings</item>

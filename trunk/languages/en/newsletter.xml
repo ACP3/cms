@@ -3,7 +3,7 @@
 	<item key="account_exists">There is already an newsletter account with the same E-Mail address registered.</item>
 	<item key="account_not_exists">For the stated E-mail address is no newsletter account registered.</item>
 	<item key="acp_activate">Activate newsletter account</item>
-	<item key="acp_create">Create a new newsletter</item>
+	<item key="acp_create">Create new newsletter</item>
 	<item key="acp_delete">Delete newsletters</item>
 	<item key="acp_delete_account">Delete newsletter accounts</item>
 	<item key="acp_edit">Edit newsletter</item>

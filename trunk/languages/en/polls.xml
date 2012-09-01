@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="acp_create">Create a new poll</item>
+	<item key="acp_create">Create new poll</item>
 	<item key="acp_delete">Delete polls</item>
 	<item key="acp_edit">Edit poll</item>
 	<item key="add_answer">Add answer</item>

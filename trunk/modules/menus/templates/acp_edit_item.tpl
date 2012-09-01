@@ -82,13 +82,13 @@
 						<p id="link-hints" class="help-block">{lang t="menus|dynamic_page_hints"}</p>
 					</div>
 				</div>
-{if isset($static_pages)}
-				<div id="static-pages-container" class="control-group">
-					<label for="static-pages" class="control-label">{lang t="static_pages|static_pages"}</label>
+{if isset($articles)}
+				<div id="articles-container" class="control-group">
+					<label for="articles" class="control-label">{lang t="articles|articles"}</label>
 					<div class="controls">
-						<select name="static_pages" id="static-pages">
+						<select name="articles" id="articles">
 							<option value="">{lang t="common|pls_select"}</option>
-{foreach $static_pages as $row}
+{foreach $articles as $row}
 							<option value="{$row.id}"{$row.selected}>{$row.title}</option>
 {/foreach}
 						</select>

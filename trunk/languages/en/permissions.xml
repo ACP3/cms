@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="acp_create">Create a new role</item>
-	<item key="acp_create_resource">Create a new resource</item>
+	<item key="acp_create">Create new role</item>
+	<item key="acp_create_resource">Create new resource</item>
 	<item key="acp_delete">Delete roles</item>
 	<item key="acp_edit">Edit role</item>
 	<item key="acp_edit_resource">Edit resource</item>

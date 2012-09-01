@@ -8,6 +8,7 @@
 	<item key="acp_edit_item">Menüpunkt bearbeiten</item>
 	<item key="acp_list">Navigationsleisten</item>
 	<item key="acp_list_items">Menüpunkte</item>
+	<item key="article">Artikel</item>
 	<item key="block_title">Name der Navigationsleiste</item>
 	<item key="block_title_to_short">Der Name der Navigationsleiste sollte mindestens 3 Zeichen lang sein.</item>
 	<item key="blocks">Block</item>
@@ -30,7 +31,6 @@
 	<item key="select_item_visibility">Bitte wählen Sie aus, ob der Menüpunkt angezeigt werden soll oder nicht.</item>
 	<item key="select_page_type">Bitte wählen Sie den Seitentyp aus.</item>
 	<item key="select_superior_page">Bitte wählen Sie eine übergeordnete Seite aus.</item>
-	<item key="static_page">Statische Seite</item>
 	<item key="superior_page">Übergeordnete Seite</item>
 	<item key="superior_page_not_allowed">Die gerade ausgewählte Seite kann nicht als übergeordnete Seite verwendet werden.</item>
 	<item key="target_page">Zielseite</item>

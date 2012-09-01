@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="acp_create">Create a new emoticon</item>
+	<item key="acp_create">Create new emoticon</item>
 	<item key="acp_delete">Delete emoticons</item>
 	<item key="acp_edit">Edit emoticon</item>
 	<item key="acp_settings">Settings</item>
