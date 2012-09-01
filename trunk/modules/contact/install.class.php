@@ -5,8 +5,10 @@ class ACP3_ContactModuleInstaller extends ACP3_ModuleInstaller {
 	private $schema_version = 31;
 
 	public function __construct() {
+		parent::__construct();
+
 		$this->special_resources = array(
-			'acp_list' => 7,
+			'acp_list' => 7
 		);
 	}
 
