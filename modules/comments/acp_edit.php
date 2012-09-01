@@ -11,10 +11,10 @@ if (defined('IN_ADM') === false)
 	exit;
 
 if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'comments', 'id = \'' . $uri->id . '\'') == 1) {
-	$comment = $db->query('SELECT c.name, c.user_id, c.message, m.name AS module FROM {pre}comments AS c JOIN {pre}modules AS m ON(m.id = c.module_id) WHERE c.id = \'' . $uri->id . '\'');
+	$comment = $db->query('SELECT c.name, c.user_id, c.message, c.module_id, m.name AS module FROM {pre}comments AS c JOIN {pre}modules AS m ON(m.id = c.module_id) WHERE c.id = \'' . $uri->id . '\'');
 
 	$comment[0]['module'] = $db->escape($comment[0]['module'], 3);
-	$breadcrumb->append($lang->t($comment[0]['module'], $comment[0]['module']), $uri->route('acp/comments/list/module_' . $comment[0]['module']))
+	$breadcrumb->append($lang->t($comment[0]['module'], $comment[0]['module']), $uri->route('acp/comments/list_comments/id_' . $comment[0]['module_id']))
 			   ->append($lang->t('comments', 'acp_edit'));
 
 	if (isset($_POST['submit']) === true) {
@@ -38,7 +38,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'comments'
 
 			$session->unsetFormToken();
 
-			setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/comments/acp_list/module_' . $comment[0]['module']);
+			setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/comments/list_comments/id_' . $comment[0]['module_id']);
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -50,6 +50,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'comments'
 		}
 
 		$tpl->assign('form', isset($_POST['submit']) ? $_POST : $comment[0]);
+		$tpl->assign('module_id', (int) $comment[0]['module_id']);
 
 		$session->generateFormToken();
 

@@ -3,6 +3,7 @@
 	<item key="acp_delete_comments">Delete comments</item>
 	<item key="acp_delete_comments_per_module">Delete comments</item>
 	<item key="acp_edit">Edit comment</item>
+	<item key="acp_list_comments">Comments</item>
 	<item key="acp_settings">Settings</item>
 	<item key="allow_emoticons">Allow Emoticons</item>
 	<item key="comments">Comments</item>

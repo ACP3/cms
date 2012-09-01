@@ -3,6 +3,7 @@
 	<item key="acp_delete_comments">Kommentare löschen</item>
 	<item key="acp_delete_comments_per_module">Kommentare löschen</item>
 	<item key="acp_edit">Kommentar bearbeiten</item>
+	<item key="acp_list_comments">Kommentare</item>
 	<item key="acp_settings">Einstellungen</item>
 	<item key="allow_emoticons">Emoticons erlauben</item>
 	<item key="comments">Kommentare</item>
