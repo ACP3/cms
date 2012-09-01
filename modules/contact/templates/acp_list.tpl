@@ -1,7 +1,7 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<form action="{uri args="acp/contact/list"}" method="post" accept-charset="UTF-8" class="form-horizontal">
+<form action="{uri args="acp/contact"}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="control-group">
 		<label for="address" class="control-label">{lang t="contact|address"}</label>
 		<div class="controls">{wysiwyg name="address" value="`$form.address`" height="150" toolbar="simple"}</div>

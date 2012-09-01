@@ -22,4 +22,4 @@ function acp3_load_class($class)
 			require $file;
 	}
 }
-spl_autoload_register("acp3_load_class");
+spl_autoload_register('acp3_load_class');

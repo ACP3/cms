@@ -27,6 +27,11 @@ class ACP3_View
 	private static $content = '';
 
 	/**
+	 * Nicht ausgeben
+	 */
+	private static $no_output = false;
+
+	/**
 	 * Der auszugebende Content-Type der Seite
 	 *
 	 * @var string
@@ -55,6 +60,15 @@ class ACP3_View
 	public static function setContent($data)
 	{
 		self::$content = $data;
+	}
+	/**
+	 * Setter Methode für die self::$no_output Variable
+	 *
+	 * @param boolean $value
+	 */
+	public static function setNoOutput($value)
+	{
+		self::$no_output = (bool) $value;
 	}
 	/**
 	 * Weist der aktuell auszugebenden Seite den Content-Type zu
@@ -130,24 +144,26 @@ class ACP3_View
 
 				require MODULES_DIR . $uri->mod . '/' . $uri->file . '.php';
 
-				// Evtl. gesetzten Content-Type des Servers überschreiben
-				header(self::$content_type);
+				if (self::$no_output === false) {
+					// Evtl. gesetzten Content-Type des Servers überschreiben
+					header(self::$content_type);
 
-				if (self::$layout !== '') {
-					$tpl->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
-					$tpl->assign('TITLE', $breadcrumb->output(2));
-					$tpl->assign('BREADCRUMB', $breadcrumb->output());
-					$tpl->assign('META', ACP3_SEO::getMetaTags());
-					$tpl->assign('CONTENT', self::$content);
+					if (self::$layout !== '') {
+						$tpl->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
+						$tpl->assign('TITLE', $breadcrumb->output(2));
+						$tpl->assign('BREADCRUMB', $breadcrumb->output());
+						$tpl->assign('META', ACP3_SEO::getMetaTags());
+						$tpl->assign('CONTENT', self::$content);
 
-					$minify = self::buildMinifyLink();
-					$layout = substr(self::$layout, 0, strpos(self::$layout, '.'));
-					$tpl->assign('MIN_STYLESHEET', sprintf($minify, 'css') . ($layout !== 'layout' ? '&amp;layout=' . $layout : ''));
-					$tpl->assign('MIN_JAVASCRIPT', sprintf($minify, 'js'));
+						$minify = self::buildMinifyLink();
+						$layout = substr(self::$layout, 0, strpos(self::$layout, '.'));
+						$tpl->assign('MIN_STYLESHEET', sprintf($minify, 'css') . ($layout !== 'layout' ? '&amp;layout=' . $layout : ''));
+						$tpl->assign('MIN_JAVASCRIPT', sprintf($minify, 'js'));
 
-					self::displayTemplate(self::$layout);
-				} else {
-					echo self::$content;
+						self::displayTemplate(self::$layout);
+					} else {
+						echo self::$content;
+					}
 				}
 				break;
 			// Kein Zugriff auf die Seite
