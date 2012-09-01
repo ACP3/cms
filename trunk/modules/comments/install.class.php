@@ -2,7 +2,7 @@
 
 class ACP3_CommentsModuleInstaller extends ACP3_ModuleInstaller {
 	private $module_name = 'comments';
-	private $schema_version = 30;
+	private $schema_version = 31;
 
 	protected function getName() {
 		return $this->module_name;
@@ -40,6 +40,11 @@ class ACP3_CommentsModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	protected function schemaUpdates() {
-		return array();
+		return array(
+			31 => array(
+				"INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES ('', " . $this->getModuleId() . ", 'acp_list_comments', '', 3);",
+				"UPDATE `{pre}acl_resources` SET page = 'acp_delete' WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_delete_comments_per_module';",
+			)
+		);
 	}
 }

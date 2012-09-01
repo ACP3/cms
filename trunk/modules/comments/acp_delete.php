@@ -12,19 +12,19 @@ if (defined('IN_ADM') === false)
 
 if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
 	$entries = $_POST['entries'];
-elseif (preg_match('/^([\w|]+)$/', $uri->entries))
+elseif (ACP3_Validate::deleteEntries($uri->entries) === true)
 	$entries = $uri->entries;
 
 if (!isset($entries)) {
 	ACP3_View::setContent(errorBox($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
-	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/comments/delete_comments_per_module/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/comments')));
+	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/comments/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/comments')));
 } elseif ($uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	foreach ($marked_entries as $entry) {
-		$bool = $db->delete('comments AS c', 'c.module_id = (SELECT m.id FROM {pre}modules AS m WHERE m.name = \'' . $db->escape($entry) . '\')');
+		$bool = $db->delete('comments', 'module_id = ' . ((int) $entry));
 	}
 	setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
 } else {
