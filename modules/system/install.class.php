@@ -5,7 +5,6 @@ class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 	private $schema_version = 33;
 
 	public function __construct() {
-		// Modul ID setzen
 		parent::__construct();
 
 		$this->special_resources = array(
