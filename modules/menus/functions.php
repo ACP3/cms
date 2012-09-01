@@ -139,6 +139,24 @@ function menuItemsList($parent_id = 0, $left_id = 0, $right_id = 0) {
 	return $output;
 }
 /**
+ * Gibt alle Menüleisten zur Benutzung in einem Dropdown-Menü aus
+ *
+ * @param integer $selected
+ * @return array
+ */
+function menusDropdown($selected = 0)
+{
+	global $db;
+
+	$blocks = $db->select('id, title', 'menus', 0, 'title ASC, id ASC');
+	$c_blocks = count($blocks);
+	for ($i = 0; $i < $c_blocks; ++$i) {
+		$blocks[$i]['selected'] = selectEntry('block_id', (int) $blocks[$i]['id'], (int) $selected);
+	}
+
+	return $blocks;
+}
+/**
  * Verarbeitet die Navigationsleiste und selektiert die aktuelle Seite,
  * falls diese sich ebenfalls in der Navigationsleiste befindet
  *

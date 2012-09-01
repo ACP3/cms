@@ -1,6 +1,6 @@
 <?php
 /**
- * Static Pages
+ * Articles
  *
  * @author Tino Goratsch
  * @package ACP3
@@ -19,23 +19,23 @@ if (!isset($entries)) {
 	ACP3_View::setContent(errorBox($lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
-	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/static_pages/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/static_pages')));
+	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/articles/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/articles')));
 } elseif ($uri->action === 'confirmed') {
 	require_once MODULES_DIR . 'menus/functions.php';
 
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	foreach ($marked_entries as $entry) {
-		$bool = $db->delete('static_pages', 'id = \'' . $entry . '\'');
-		$page = $db->select('id', 'menu_items', 'uri = \'static_pages/list/id_' . $entry . '/\'');
+		$bool = $db->delete('articles', 'id = \'' . $entry . '\'');
+		$page = $db->select('id', 'menu_items', 'uri = \'articles/list/id_' . $entry . '/\'');
 		if (!empty($page))
 			menuItemsDeleteNode($page[0]['id']);
-		ACP3_Cache::delete('static_pages_list_id_' . $entry);
-		ACP3_SEO::deleteUriAlias('static_pages/list/id_' . $entry);
+		ACP3_Cache::delete('articles_list_id_' . $entry);
+		ACP3_SEO::deleteUriAlias('articles/list/id_' . $entry);
 	}
 	setMenuItemsCache();
 
-	setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/static_pages');
+	setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/articles');
 } else {
 	$uri->redirect('errors/404');
 }

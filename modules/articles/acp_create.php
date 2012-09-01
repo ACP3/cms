@@ -1,6 +1,6 @@
 <?php
 /**
- * Static Pages
+ * Articles
  *
  * @author Tino Goratsch
  * @package ACP3
@@ -18,9 +18,9 @@ if (isset($_POST['submit']) === true) {
 	if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
 		$errors[] = $lang->t('common', 'select_date');
 	if (strlen($_POST['title']) < 3)
-		$errors['title'] = $lang->t('static_pages', 'title_to_short');
+		$errors['title'] = $lang->t('articles', 'title_to_short');
 	if (strlen($_POST['text']) < 3)
-		$errors['text'] = $lang->t('static_pages', 'text_to_short');
+		$errors['text'] = $lang->t('articles', 'text_to_short');
 	if ($access_to_menus === true) {
 		if ($_POST['create'] != 1 && $_POST['create'] != 0)
 			$errors[] = $lang->t('static_page', 'select_create_menu_item');
@@ -58,10 +58,10 @@ if (isset($_POST['submit']) === true) {
 		);
 
 		$db->link->beginTransaction();
-		$bool = $db->insert('static_pages', $insert_values);
+		$bool = $db->insert('articles', $insert_values);
 		$last_id = $db->link->lastInsertId();
 		if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
-			ACP3_SEO::insertUriAlias('static_pages/list/id_' . $last_id, $_POST['alias'], $db->escape($_POST['seo_keywords']), $db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
+			ACP3_SEO::insertUriAlias('articles/list/id_' . $last_id, $_POST['alias'], $db->escape($_POST['seo_keywords']), $db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
 		$db->link->commit();
 
 		if ($_POST['create'] == 1 && $access_to_menus === true) {
@@ -71,7 +71,7 @@ if (isset($_POST['submit']) === true) {
 				'block_id' => $_POST['block_id'],
 				'display' => $_POST['display'],
 				'title' => $db->escape($_POST['title']),
-				'uri' => 'static_pages/list/id_' . $last_id . '/',
+				'uri' => 'articles/list/id_' . $last_id . '/',
 				'target' => 1,
 			);
 
@@ -81,7 +81,7 @@ if (isset($_POST['submit']) === true) {
 
 		$session->unsetFormToken();
 
-		setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/static_pages');
+		setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/articles');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -89,16 +89,11 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		$options = array();
 		$options[0]['name'] = 'create';
 		$options[0]['checked'] = selectEntry('create', '1', '0', 'checked');
-		$options[0]['lang'] = $lang->t('static_pages', 'create_menu_item');
+		$options[0]['lang'] = $lang->t('articles', 'create_menu_item');
 		$tpl->assign('options', $options);
 
 		// Block
-		$blocks = $db->select('id, title', 'menus');
-		$c_blocks = count($blocks);
-		for ($i = 0; $i < $c_blocks; ++$i) {
-			$blocks[$i]['selected'] = selectEntry('block_id', $blocks[$i]['id']);
-		}
-		$tpl->assign('blocks', $blocks);
+		$tpl->assign('blocks', menusDropdown());
 
 		$display = array();
 		$display[0]['value'] = 1;
@@ -128,5 +123,5 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 
 	$session->generateFormToken();
 
-	ACP3_View::setContent(ACP3_View::fetchTemplate('static_pages/acp_create.tpl'));
+	ACP3_View::setContent(ACP3_View::fetchTemplate('articles/acp_create.tpl'));
 }

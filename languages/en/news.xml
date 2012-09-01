@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="acp_create">Create a new news</item>
+	<item key="acp_create">Create new news</item>
 	<item key="acp_delete">Delete news</item>
 	<item key="acp_edit">Edit news</item>
 	<item key="acp_settings">Settings</item>

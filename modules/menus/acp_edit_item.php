@@ -41,7 +41,7 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_item
 			$_POST['mode'] == 1 && (is_dir(MODULES_DIR . $_POST['module']) === false || preg_match('=/=', $_POST['module'])) ||
 			$_POST['mode'] == 2 && ACP3_Validate::isInternalURI($_POST['uri']) === false ||
 			$_POST['mode'] == 3 && empty($_POST['uri']) ||
-			$_POST['mode'] == 4 && (ACP3_Validate::isNumber($_POST['static_pages']) === false || $db->countRows('*', 'static_pages', 'id = \'' . $_POST['static_pages'] . '\'') == 0))
+			$_POST['mode'] == 4 && (ACP3_Validate::isNumber($_POST['articles']) === false || $db->countRows('*', 'articles', 'id = \'' . $_POST['articles'] . '\'') == 0))
 			$errors[] = $lang->t('menus', 'type_in_uri_and_target');
 		if (($_POST['mode'] == 2 || $_POST['mode'] == 4) && (bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 			(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias'], $db->escape($_POST['uri']))))
@@ -53,8 +53,8 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_item
 			ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
 		} else {
 			// Vorgenommene Änderungen am Datensatz anwenden
-			$mode = ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match('/^(static_pages\/list\/id_([0-9]+)\/)$/', $_POST['uri']) ? '4' : $_POST['mode'];
-			$uri_type = $_POST['mode'] == 4 ? 'static_pages/list/id_' . $_POST['static_pages'] . '/' : $db->escape($_POST['uri'], 2);
+			$mode = ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match('/^(articles\/list\/id_([0-9]+)\/)$/', $_POST['uri']) ? '4' : $_POST['mode'];
+			$uri_type = $_POST['mode'] == 4 ? 'articles/list/id_' . $_POST['articles'] . '/' : $db->escape($_POST['uri'], 2);
 
 			$update_values = array(
 				'mode' => $mode,
@@ -96,21 +96,15 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_item
 		$mode[2]['value'] = 3;
 		$mode[2]['selected'] = selectEntry('mode', '3', $page[0]['mode']);
 		$mode[2]['lang'] = $lang->t('menus', 'hyperlink');
-		if (ACP3_Modules::isActive('static_pages')) {
+		if (ACP3_Modules::isActive('articles')) {
 			$mode[3]['value'] = 4;
 			$mode[3]['selected'] = selectEntry('mode', '4', $page[0]['mode']);
-			$mode[3]['lang'] = $lang->t('menus', 'static_page');
+			$mode[3]['lang'] = $lang->t('menus', 'article');
 		}
 		$tpl->assign('mode', $mode);
 
 		// Block
-		$blocks = $db->select('id, title', 'menus', 0, 'title ASC, id ASC');
-		$c_blocks = count($blocks);
-		for ($i = 0; $i < $c_blocks; ++$i) {
-			$blocks[$i]['title'] = $db->escape($blocks[$i]['title'], 3);
-			$blocks[$i]['selected'] = selectEntry('block_id', $blocks[$i]['id'], $page[0]['block_id']);
-		}
-		$tpl->assign('blocks', $blocks);
+		$tpl->assign('blocks', menusDropdown($page[0]['block_id']));
 
 		// Module
 		$modules = ACP3_Modules::getAllModules();
@@ -141,15 +135,15 @@ if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'menu_item
 		$display[1]['lang'] = $lang->t('common', 'no');
 		$tpl->assign('display', $display);
 
-		if (ACP3_Modules::check('static_pages', 'functions') === true) {
-			require_once MODULES_DIR . 'static_pages/functions.php';
+		if (ACP3_Modules::check('articles', 'functions') === true) {
+			require_once MODULES_DIR . 'articles/functions.php';
 
 			$matches = array();
 			if (!isset($_POST['submit']) && $page[0]['mode'] == 4) {
-				preg_match_all('/^(static_pages\/list\/id_([0-9]+)\/)$/', $page[0]['uri'], $matches);
+				preg_match_all('/^(articles\/list\/id_([0-9]+)\/)$/', $page[0]['uri'], $matches);
 			}
 
-			$tpl->assign('static_pages', staticPagesList(!empty($matches[2]) ? $matches[2][0] : ''));
+			$tpl->assign('articles', articlesList(!empty($matches[2]) ? $matches[2][0] : ''));
 		}
 
 		// Daten an Smarty übergeben

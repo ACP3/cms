@@ -3,7 +3,7 @@ $(document).ready(function() {
 	var module = $('#module-container');
 	var hints = $('#link-hints');
 	var link = $('#link-container');
-	var static_page = $('#static-pages-container');
+	var articles = $('#articles-container');
 	var target = $('#target-container');
 
 	// Wenn Menüpunkt nicht angezeigt werden soll, Linkziel verstecken
@@ -32,12 +32,12 @@ $(document).ready(function() {
 			module.show();
 			hints.hide();
 			link.hide();
-			static_page.hide();
+			articles.hide();
 
-			// Modul im Dropdown-Men selektieren, falls zuvor als Modus eine dynamische Seite aktiv war
+			// Modul im Dropdown-Menü selektieren, falls zuvor als Modus eine dynamische Seite aktiv war
 			if (currentMode == 2) {
 				var match = $('#uri').val().match(/^([a-z\d_\-]+)\/([a-z\d_\-]+\/)+$/);
-				if (!$('#uri').val().match(/^static_pages\/list\/id_(\d+)\/$/) && match[1] != null && $('#module option[value="' + match[1] + '"]').length > 0) {
+				if (!$('#uri').val().match(/^articles\/list\/id_(\d+)\/$/) && match[1] != null && $('#module option[value="' + match[1] + '"]').length > 0) {
 					$('#module').val(match[1]);
 				}
 			}
@@ -46,34 +46,34 @@ $(document).ready(function() {
 			module.hide();
 			hints.show();
 			link.show();
-			static_page.hide();
+			articles.hide();
 		} else if (mode == 3) {
 			module.hide();
 			hints.hide();
 			link.show();
-			static_page.hide();
+			articles.hide();
 		} else if (mode == 4) {
 			alias.show();
 			module.hide();
 			hints.hide();
 			link.hide();
-			static_page.show();
+			articles.show();
 		} else {
 			alias.hide();
 			module.hide();
 			hints.hide();
 			link.hide();
-			static_page.hide();
+			articles.hide();
 		}
 
 		currentMode = mode;
 	}).change();
 
 	$('#uri').blur(function() {
-		var match = $(this).val().match(/^static_pages\/list\/id_(\d+)\/$/);
-		if (match[1] != null && $('#static-pages option[value="' + match[1] + '"]').length > 0) {
+		var match = $(this).val().match(/^articles\/list\/id_(\d+)\/$/);
+		if (match[1] != null && $('#articles option[value="' + match[1] + '"]').length > 0) {
 			$('#mode').val(4).change();
-			$('#static-pages').val(match[1]);
+			$('#articles').val(match[1]);
 		}
 	});
 

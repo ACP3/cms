@@ -33,7 +33,7 @@ if (isset($_POST['submit']) === true) {
 		$_POST['mode'] == 1 && (is_dir(MODULES_DIR . $_POST['module']) === false || preg_match('=/=', $_POST['module'])) ||
 		$_POST['mode'] == 2 && ACP3_Validate::isInternalURI($_POST['uri']) === false ||
 		$_POST['mode'] == 3 && empty($_POST['uri']) ||
-		$_POST['mode'] == 4 && (ACP3_Validate::isNumber($_POST['static_pages']) === false || $db->countRows('*', 'static_pages', 'id = \'' . $_POST['static_pages'] . '\'') == 0))
+		$_POST['mode'] == 4 && (ACP3_Validate::isNumber($_POST['articles']) === false || $db->countRows('*', 'articles', 'id = \'' . $_POST['articles'] . '\'') == 0))
 		$errors[] = $lang->t('menus', 'type_in_uri_and_target');
 	if ($_POST['mode'] == 2 && (bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 		(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias']) === true))
@@ -46,12 +46,12 @@ if (isset($_POST['submit']) === true) {
 	} else {
 		$insert_values = array(
 			'id' => '',
-			'mode' => ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match('/^(static_pages\/list\/id_([0-9]+)\/)$/', $_POST['uri']) ? '4' : $_POST['mode'],
+			'mode' => ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match('/^(articles\/list\/id_([0-9]+)\/)$/', $_POST['uri']) ? '4' : $_POST['mode'],
 			'block_id' => $_POST['block_id'],
 			'parent_id' => $_POST['parent'],
 			'display' => $_POST['display'],
 			'title' => $db->escape($_POST['title']),
-			'uri' => $_POST['mode'] == 1 ? $_POST['module'] : ($_POST['mode'] == 4 ? 'static_pages/list/id_' . $_POST['static_pages'] . '/' : $db->escape($_POST['uri'], 2)),
+			'uri' => $_POST['mode'] == 1 ? $_POST['module'] : ($_POST['mode'] == 4 ? 'articles/list/id_' . $_POST['articles'] . '/' : $db->escape($_POST['uri'], 2)),
 			'target' => $_POST['display'] == 0 ? 1 : $_POST['target'],
 		);
 
@@ -91,20 +91,15 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$mode[2]['value'] = 3;
 	$mode[2]['selected'] = selectEntry('mode', '3');
 	$mode[2]['lang'] = $lang->t('menus', 'hyperlink');
-	if (ACP3_Modules::isActive('static_pages')) {
+	if (ACP3_Modules::isActive('articles')) {
 		$mode[3]['value'] = 4;
 		$mode[3]['selected'] = selectEntry('mode', '4');
-		$mode[3]['lang'] = $lang->t('menus', 'static_page');
+		$mode[3]['lang'] = $lang->t('menus', 'article');
 	}
 	$tpl->assign('mode', $mode);
 
-	// Block
-	$blocks = $db->select('id, title', 'menus');
-	$c_blocks = count($blocks);
-	for ($i = 0; $i < $c_blocks; ++$i) {
-		$blocks[$i]['selected'] = selectEntry('block_id', $blocks[$i]['id']);
-	}
-	$tpl->assign('blocks', $blocks);
+	// Menus
+	$tpl->assign('blocks', menusDropdown());
 
 	// Module
 	$modules = ACP3_Modules::getActiveModules();
@@ -132,10 +127,10 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$display[1]['lang'] = $lang->t('common', 'no');
 	$tpl->assign('display', $display);
 
-	if (ACP3_Modules::check('static_pages', 'functions') === true) {
-		require_once MODULES_DIR . 'static_pages/functions.php';
+	if (ACP3_Modules::check('articles', 'functions') === true) {
+		require_once MODULES_DIR . 'articles/functions.php';
 
-		$tpl->assign('static_pages', staticPagesList());
+		$tpl->assign('articles', articlesList());
 	}
 
 	$defaults = array(
