@@ -8,6 +8,8 @@ if (ACP3_CMS::$auth->isUser() === true) {
 	ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('users', 'users'), ACP3_CMS::$uri->route('users'))
 			   ->append(ACP3_CMS::$lang->t('users', 'forgot_pwd'));
 
+	$captchaAccess = ACP3_Modules::check('captcha', 'functions');
+
 	if (isset($_POST['submit']) === true) {
 		require_once MODULES_DIR . 'users/functions.php';
 
@@ -17,7 +19,7 @@ if (ACP3_CMS::$auth->isUser() === true) {
 			$errors['nick-mail'] = ACP3_CMS::$lang->t('users', 'user_not_exists');
 		elseif (ACP3_Validate::email($_POST['nick_mail']) === true && userEmailExists($_POST['nick_mail']) === false)
 			$errors['nick-mail'] = ACP3_CMS::$lang->t('users', 'user_not_exists');
-		if (ACP3_Validate::captcha($_POST['captcha']) === false)
+		if ($captchaAccess === true && ACP3_Validate::captcha($_POST['captcha']) === false)
 			$errors['captcha'] = ACP3_CMS::$lang->t('captcha', 'invalid_captcha_entered');
 
 		if (isset($errors) === true) {
@@ -56,8 +58,10 @@ if (ACP3_CMS::$auth->isUser() === true) {
 
 		ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
-		require_once MODULES_DIR . 'captcha/functions.php';
-		ACP3_CMS::$view->assign('captcha', captcha());
+		if ($captchaAccess === true) {
+			require_once MODULES_DIR . 'captcha/functions.php';
+			ACP3_CMS::$view->assign('captcha', captcha());
+		}
 
 		ACP3_CMS::$session->generateFormToken();
 

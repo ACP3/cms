@@ -15,6 +15,7 @@ ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('guestbook', 'guestbook'), ACP3
 
 $settings = ACP3_Config::getSettings('guestbook');
 $newsletterAccess = ACP3_Modules::check('newsletter', 'list') === true && $settings['newsletter_integration'] == 1;
+$captchaAccess = ACP3_Modules::check('captcha', 'functions');
 
 if (ACP3_CMS::$uri->layout === 'simple') {
 	$overlay_active = 1;
@@ -41,7 +42,7 @@ if (isset($_POST['submit']) === true) {
 		$errors['mail'] = ACP3_CMS::$lang->t('common', 'wrong_email_format');
 	if (strlen($_POST['message']) < 3)
 		$errors['message'] = ACP3_CMS::$lang->t('common', 'message_to_short');
-	if (ACP3_CMS::$auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
+	if ($captchaAccess === true && ACP3_CMS::$auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
 		$errors['captcha'] = ACP3_CMS::$lang->t('captcha', 'invalid_captcha_entered');
 	if ($newsletterAccess === true && isset($_POST['subscribe_newsletter']) && $_POST['subscribe_newsletter'] == 1) {
 		if (ACP3_Validate::email($_POST['mail']) === false)
@@ -136,8 +137,10 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? array_merge($defaults, $_POST) : $defaults);
 	}
 
-	require_once MODULES_DIR . 'captcha/functions.php';
-	ACP3_CMS::$view->assign('captcha', captcha());
+	if ($captchaAccess) {
+		require_once MODULES_DIR . 'captcha/functions.php';
+		ACP3_CMS::$view->assign('captcha', captcha());
+	}
 
 	ACP3_CMS::$session->generateFormToken();
 

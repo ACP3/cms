@@ -3,7 +3,7 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="control-group">
-		<label for="title" class="control-label">{lang t="menus|block_title"}</label>
+		<label for="title" class="control-label">{lang t="menus|menu_bar_title"}</label>
 		<div class="controls"><input type="text" name="title" id="title" value="{$form.title}" maxlength="120"></div>
 	</div>
 	<div class="control-group">

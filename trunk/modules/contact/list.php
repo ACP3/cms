@@ -10,6 +10,8 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
+$captchaAccess = ACP3_Modules::check('captcha', 'functions');
+
 if (isset($_POST['submit']) === true) {
 	if (empty($_POST['name']))
 		$errors['name'] = ACP3_CMS::$lang->t('common', 'name_to_short');
@@ -17,7 +19,7 @@ if (isset($_POST['submit']) === true) {
 		$errors['mail'] = ACP3_CMS::$lang->t('common', 'wrong_email_format');
 	if (strlen($_POST['message']) < 3)
 		$errors['message'] = ACP3_CMS::$lang->t('common', 'message_to_short');
-	if (ACP3_CMS::$auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
+	if ($captchaAccess === true && ACP3_CMS::$auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
 		$errors['captcha'] = ACP3_CMS::$lang->t('captcha', 'invalid_captcha_entered');
 
 	if (isset($errors) === true) {
@@ -70,8 +72,10 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? array_merge($defaults, $_POST) : $defaults);
 	ACP3_CMS::$view->assign('copy_checked', selectEntry('copy', 1, 0, 'checked'));
 
-	require_once MODULES_DIR . 'captcha/functions.php';
-	ACP3_CMS::$view->assign('captcha', captcha());
+	if ($captchaAccess === true) {
+		require_once MODULES_DIR . 'captcha/functions.php';
+		ACP3_CMS::$view->assign('captcha', captcha());
+	}
 
 	ACP3_CMS::$session->generateFormToken();
 

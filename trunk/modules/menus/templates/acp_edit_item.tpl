@@ -26,7 +26,7 @@
 					<div class="controls"><input type="text" name="title" id="title" value="{$form.title}" maxlength="120"></div>
 				</div>
 				<div class="control-group">
-					<label for="block-id" class="control-label">{lang t="menus|blocks"}</label>
+					<label for="block-id" class="control-label">{lang t="menus|menu_bar"}</label>
 					<div class="controls">
 						<select name="block_id" id="block-id">
 							<option value="">{lang t="common|pls_select"}</option>

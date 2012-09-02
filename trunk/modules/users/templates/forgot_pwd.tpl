@@ -9,7 +9,9 @@
 			<p class="help-block">{lang t="users|forgot_pwd_description"}</p>
 		</div>
 	</div>
+{if isset($captcha)}
 {$captcha}
+{/if}
 	<div class="form-actions">
 		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
 		{$form_token}

@@ -18,7 +18,7 @@ if (isset($_POST['submit']) === true) {
 	if (strlen($_POST['title']) < 3)
 		$errors['title'] = ACP3_CMS::$lang->t('menus', 'title_to_short');
 	if (ACP3_Validate::isNumber($_POST['block_id']) === false)
-		$errors['block-id'] = ACP3_CMS::$lang->t('menus', 'select_block');
+		$errors['block-id'] = ACP3_CMS::$lang->t('menus', 'select_menu_bar');
 	if (!empty($_POST['parent']) && ACP3_Validate::isNumber($_POST['parent']) === false)
 		$errors['parent'] = ACP3_CMS::$lang->t('menus', 'select_superior_page');
 	if (!empty($_POST['parent']) && ACP3_Validate::isNumber($_POST['parent']) === true) {
