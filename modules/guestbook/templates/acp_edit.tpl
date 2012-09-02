@@ -12,6 +12,7 @@
 			{if isset($emoticons)}{$emoticons}{/if}
 			<textarea name="message" id="message" cols="50" rows="5" class="span6" required>{$form.message}</textarea>
 		</div>
+	</div>
 {if isset($activate)}
 	<div class="control-group">
 		<label for="active-1" class="control-label">{lang t="guestbook|activate_entry"}</label>
