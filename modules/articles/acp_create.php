@@ -26,7 +26,7 @@ if (isset($_POST['submit']) === true) {
 			$errors[] = ACP3_CMS::$lang->t('static_page', 'select_create_menu_item');
 		if ($_POST['create'] == 1) {
 			if (ACP3_Validate::isNumber($_POST['block_id']) === false)
-				$errors['block-id'] = ACP3_CMS::$lang->t('menus', 'select_block');
+				$errors['block-id'] = ACP3_CMS::$lang->t('menus', 'select_menu_bar');
 			if (!empty($_POST['parent']) && ACP3_Validate::isNumber($_POST['parent']) === false)
 				$errors['parent'] = ACP3_CMS::$lang->t('menus', 'select_superior_page');
 			if (!empty($_POST['parent']) && ACP3_Validate::isNumber($_POST['parent']) === true) {

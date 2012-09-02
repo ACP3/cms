@@ -136,7 +136,9 @@
 	<item key="statements_in_pixel">Statements in Pixel.</item>
 	<item key="submit">Submit</item>
 	<item key="time_zone">Time zone</item>
+	<item key="table_of_contents">Table of contents</item>
 	<item key="title_for_toc">Title for table of contents</item>
+	<item key="toc_page">Page %d</item>
 	<item key="unmark_all">Unmark all</item>
 	<item key="upload_error">While moving the file %s an error has occured.</item>
 	<item key="uri_alias_unallowed_characters_or_exists">Either you have typed in unallowed characters or there is already an URI-Alias with the given name.</item>

@@ -16,7 +16,7 @@
 			<div id="tab-2" class="tab-pane">
 				<div class="control-group">
 					<label for="title" class="control-label">{lang t="articles|title"}</label>
-					<div class="controls"><input type="text" name="title" id="title" value="{$form.title}" maxlength="120"></div>
+					<div class="controls"><input type="text" name="title" id="title" value="{$form.title}" maxlength="120" required></div>
 				</div>
 				<div class="control-group">
 					<label for="text" class="control-label">{lang t="articles|text"}</label>
@@ -36,7 +36,7 @@
 				</div>
 				<div id="create-item-container">
 					<div class="control-group">
-						<label for="block-id" class="control-label">{lang t="menus|blocks"}</label>
+						<label for="block-id" class="control-label">{lang t="menus|menu_bar"}</label>
 						<div class="controls">
 							<select name="block_id" id="block-id">
 								<option value="">{lang t="common|pls_select"}</option>

@@ -169,7 +169,7 @@ function generateTOC(array $pages, $path)
 		foreach ($pages as $page) {
 			$attributes = getHtmlAttributes($page);
 			$page_num = $i + 1;
-			$toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf(ACP3_CMS::$lang->t('articles', 'page'), $page_num);
+			$toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf(ACP3_CMS::$lang->t('common', 'toc_page'), $page_num);
 			$toc[$i]['uri'] = ACP3_CMS::$uri->route($path, 1) . 'page_' . $page_num . '/';
 			$toc[$i]['selected'] = (ACP3_Validate::isNumber(ACP3_CMS::$uri->page) === false && $i === 0) || ACP3_CMS::$uri->page === $page_num ? true : false;
 			++$i;

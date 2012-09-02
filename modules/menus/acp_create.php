@@ -16,7 +16,7 @@ if (isset($_POST['submit']) === true) {
 	if (!isset($errors) && ACP3_CMS::$db->countRows('*', 'menus', 'index_name = \'' . ACP3_CMS::$db->escape($_POST['index_name']) . '\'') > 0)
 		$errors['index-name'] = ACP3_CMS::$lang->t('menus', 'index_name_unique');
 	if (strlen($_POST['title']) < 3)
-		$errors['title'] = ACP3_CMS::$lang->t('menus', 'block_title_to_short');
+		$errors['title'] = ACP3_CMS::$lang->t('menus', 'menu_bar_title_to_short');
 
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));

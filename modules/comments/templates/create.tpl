@@ -14,7 +14,9 @@
 			<textarea name="message" id="message" cols="50" rows="5" class="span10" required>{$form.message}</textarea>
 		</div>
 	</div>
+{if isset($captcha)}
 {$captcha}
+{/if}
 	<div class="form-actions">
 		<input type="hidden" name="module" value="{$form.module}">
 		<input type="hidden" name="entry_id" value="{$form.entry_id}">

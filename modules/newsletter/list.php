@@ -10,16 +10,16 @@
 if (defined('IN_ACP3') === false)
 	exit();
 
+$captchaAccess = ACP3_Modules::check('captcha', 'functions');
+
 if (isset($_POST['submit']) === true) {
 	switch (ACP3_CMS::$uri->action) {
-		case 'subscribe' :
-			
-
+		case 'subscribe':
 			if (ACP3_Validate::email($_POST['mail']) === false)
 				$errors['mail'] = ACP3_CMS::$lang->t('common', 'wrong_email_format');
 			if (ACP3_Validate::email($_POST['mail']) && ACP3_CMS::$db->countRows('*', 'newsletter_accounts', 'mail = \'' . $_POST['mail'] . '\'') == 1)
 				$errors['mail'] = ACP3_CMS::$lang->t('newsletter', 'account_exists');
-			if (ACP3_CMS::$auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
+			if ($captchaAccess === true && ACP3_CMS::$auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
 				$errors['captcha'] = ACP3_CMS::$lang->t('captcha', 'invalid_captcha_entered');
 
 			if (isset($errors) === true) {
@@ -35,14 +35,12 @@ if (isset($_POST['submit']) === true) {
 				ACP3_CMS::setContent(confirmBox($bool !== false ? ACP3_CMS::$lang->t('newsletter', 'subscribe_success') : ACP3_CMS::$lang->t('newsletter', 'subscribe_error'), ROOT_DIR));
 			}
 			break;
-		case 'unsubscribe' :
-			
-
+		case 'unsubscribe':
 			if (ACP3_Validate::email($_POST['mail']) === false)
 				$errors[] = ACP3_CMS::$lang->t('common', 'wrong_email_format');
 			if (ACP3_Validate::email($_POST['mail']) && ACP3_CMS::$db->countRows('*', 'newsletter_accounts', 'mail = \'' . $_POST['mail'] . '\'') != 1)
 				$errors[] = ACP3_CMS::$lang->t('newsletter', 'account_not_exists');
-			if (ACP3_CMS::$auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
+			if ($captchaAccess === true && ACP3_CMS::$auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
 				$errors[] = ACP3_CMS::$lang->t('captcha', 'invalid_captcha_entered');
 
 			if (isset($errors) === true) {
@@ -75,8 +73,10 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$actions[1]['lang'] = ACP3_CMS::$lang->t('newsletter', 'unsubscribe');
 	ACP3_CMS::$view->assign('actions', $actions);
 
-	require_once MODULES_DIR . 'captcha/functions.php';
-	ACP3_CMS::$view->assign('captcha', captcha());
+	if ($captchaAccess === true) {
+		require_once MODULES_DIR . 'captcha/functions.php';
+		ACP3_CMS::$view->assign('captcha', captcha());
+	}
 
 	ACP3_CMS::$session->generateFormToken();
 
