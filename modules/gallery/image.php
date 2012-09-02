@@ -10,10 +10,10 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (ACP3_Validate::isNumber($uri->id) === true) {
+if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true) {
 	@set_time_limit(20);
-	$picture = $db->select('file', 'gallery_pictures', 'id = \'' . $uri->id . '\'');
-	$action = $uri->action === 'thumb' ? 'thumb' : '';
+	$picture = ACP3_CMS::$db->select('file', 'gallery_pictures', 'id = \'' . ACP3_CMS::$uri->id . '\'');
+	$action = ACP3_CMS::$uri->action === 'thumb' ? 'thumb' : '';
 
 	$settings = ACP3_Config::getSettings('gallery');
 	$options = array(
@@ -28,5 +28,5 @@ if (ACP3_Validate::isNumber($uri->id) === true) {
 	$image = new ACP3_Image($options);
 	$image->output();
 
-	exit;
+	ACP3_CMS::$view->setNoOutput(true);
 }

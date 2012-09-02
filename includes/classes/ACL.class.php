@@ -63,9 +63,7 @@ class ACP3_ACL
 	 */
 	public static function setResourcesCache()
 	{
-		global $db;
-
-		$resources = $db->query('SELECT r.id AS resource_id, r.module_id, m.name AS module, r.page, r.params, r.privilege_id, p.key FROM {pre}acl_resources AS r JOIN {pre}acl_privileges AS p ON(r.privilege_id = p.id) JOIN {pre}modules AS m ON(r.module_id = m.id) WHERE m.active = 1 ORDER BY r.module_id ASC, r.page ASC');
+		$resources = ACP3_CMS::$db->query('SELECT r.id AS resource_id, r.module_id, m.name AS module, r.page, r.params, r.privilege_id, p.key FROM {pre}acl_resources AS r JOIN {pre}acl_privileges AS p ON(r.privilege_id = p.id) JOIN {pre}modules AS m ON(r.module_id = m.id) WHERE m.active = 1 ORDER BY r.module_id ASC, r.page ASC');
 		$c_resources = count($resources);
 		$data = array();
 
@@ -103,12 +101,10 @@ class ACP3_ACL
 	 */
 	public static function getUserRoles($user_id = 0, $mode = 1)
 	{
-		global $db;
-
 		$user_id = $user_id === 0 ? self::$userId : $user_id;
 		$field = $mode === 2 ? 'r.name' : 'r.id';
 		$key = substr($field, 2);
-		$user_roles = $db->query('SELECT ' . $field . ' FROM {pre}acl_user_roles AS ur JOIN {pre}acl_roles AS r ON(ur.role_id = r.id) WHERE ur.user_id = \'' . $user_id . '\' ORDER BY r.left_id DESC');
+		$user_roles = ACP3_CMS::$db->query('SELECT ' . $field . ' FROM {pre}acl_user_roles AS ur JOIN {pre}acl_roles AS r ON(ur.role_id = r.id) WHERE ur.user_id = \'' . $user_id . '\' ORDER BY r.left_id DESC');
 		$c_user_roles = count($user_roles);
 		$roles = array();
 
@@ -124,13 +120,11 @@ class ACP3_ACL
 	 */
 	public static function setRolesCache()
 	{
-		global $db;
-
-		$roles = $db->query('SELECT n.id, n.name, n.parent_id, n.left_id, n.right_id, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM {pre}acl_roles AS p, {pre}acl_roles AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
+		$roles = ACP3_CMS::$db->query('SELECT n.id, n.name, n.parent_id, n.left_id, n.right_id, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM {pre}acl_roles AS p, {pre}acl_roles AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
 		$c_roles = count($roles);
 
 		for ($i = 0; $i < $c_roles; ++$i) {
-			$roles[$i]['name'] = $db->escape($roles[$i]['name'], 3);
+			$roles[$i]['name'] = ACP3_CMS::$db->escape($roles[$i]['name'], 3);
 
 			// Bestimmen, ob die Seite die Erste und/oder Letzte eines Knotens ist
 			$first = $last = true;
@@ -165,18 +159,16 @@ class ACP3_ACL
 	 */
 	public static function setRulesCache(array $roles)
 	{
-		global $db;
-
 		// Berechtigungen einlesen, auf die der Benutzer laut seinen Rollen Zugriff hat
 		$impl_roles = implode(',', $roles);
-		$rules = $db->query('SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM {pre}acl_rules AS ru JOIN {pre}modules AS m ON (ru.module_id = m.id) JOIN {pre}acl_privileges AS p ON(ru.privilege_id = p.id) WHERE ru.role_id IN(' . $impl_roles . ')');
+		$rules = ACP3_CMS::$db->query('SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM {pre}acl_rules AS ru JOIN {pre}modules AS m ON (ru.module_id = m.id) JOIN {pre}acl_privileges AS p ON(ru.privilege_id = p.id) WHERE ru.role_id IN(' . $impl_roles . ')');
 		$c_rules = count($rules);
 		$privileges = array();
 		for ($i = 0; $i < $c_rules; ++$i) {
 			$key = strtolower($rules[$i]['key']);
 			$privileges[$rules[$i]['module_name']][$key] = array(
 				'id' => $rules[$i]['privilege_id'],
-				'description' => $db->escape($rules[$i]['description'], 3),
+				'description' => ACP3_CMS::$db->escape($rules[$i]['description'], 3),
 				'permission' => $rules[$i]['permission'],
 				'access' => $rules[$i]['permission'] == 1 || ($rules[$i]['permission'] == 2 && self::getPermissionValue($key, $rules[$i]['role_id']) == 1) ? true : false,
 			);
@@ -203,13 +195,11 @@ class ACP3_ACL
 	 */
 	public static function getAllPrivileges()
 	{
-		global $db;
-
-		$privileges = $db->select('id, `key`, description', 'acl_privileges', 0, '`key` ASC');
+		$privileges = ACP3_CMS::$db->select('id, `key`, description', 'acl_privileges', 0, '`key` ASC');
 		$c_privileges = count($privileges);
 
 		for ($i = 0; $i < $c_privileges; ++$i) {
-			$privileges[$i]['description'] = $db->escape($privileges[$i]['description'], 3);
+			$privileges[$i]['description'] = ACP3_CMS::$db->escape($privileges[$i]['description'], 3);
 		}
 		return $privileges;
 	}
@@ -224,9 +214,7 @@ class ACP3_ACL
 	 */
 	private static function getPermissionValue($key, $role_id)
 	{
-		global $db;
-
-		$value = $db->query('SELECT ru.permission FROM {pre}acl_roles AS r, {pre}acl_roles AS parent JOIN {pre}acl_rules AS ru ON(parent.id = ru.role_id) JOIN {pre}acl_privileges AS p ON(ru.privilege_id = p.id) WHERE r.id = \'' . $db->escape($role_id) . '\' AND p.key = \'' . $db->escape($key) . '\' AND ru.permission != 2 AND parent.left_id < r.left_id AND parent.right_id > r.right_id ORDER BY parent.left_id DESC LIMIT 1');
+		$value = ACP3_CMS::$db->query('SELECT ru.permission FROM {pre}acl_roles AS r, {pre}acl_roles AS parent JOIN {pre}acl_rules AS ru ON(parent.id = ru.role_id) JOIN {pre}acl_privileges AS p ON(ru.privilege_id = p.id) WHERE r.id = \'' . ACP3_CMS::$db->escape($role_id) . '\' AND p.key = \'' . ACP3_CMS::$db->escape($key) . '\' AND ru.permission != 2 AND parent.left_id < r.left_id AND parent.right_id > r.right_id ORDER BY parent.left_id DESC LIMIT 1');
 		return isset($value[0]['permission']) ? $value[0]['permission'] : 0;
 	}
 	/**
@@ -279,9 +267,7 @@ class ACP3_ACL
 	public static function canAccessResource($resource)
 	{
 		if (isset(self::$resources[$resource])) {
-			global $auth;
-
-			return self::userHasPrivilege(substr($resource, 0, strpos($resource, '/')), self::$resources[$resource]['key']) === true || $auth->isSuperUser() === true ? true : false;
+			return self::userHasPrivilege(substr($resource, 0, strpos($resource, '/')), self::$resources[$resource]['key']) === true || ACP3_CMS::$auth->isSuperUser() === true ? true : false;
 		}
 		return false;
 	}
@@ -290,9 +276,7 @@ class ACP3_ACL
 	 */
 	public static function resetResources()
 	{
-		global $db;
-
-		$db->query('TRUNCATE TABLE {pre}acl_resources', 0);
+		ACP3_CMS::$db->query('TRUNCATE TABLE {pre}acl_resources', 0);
 
 		$special_resources = array(
 			'newsletter' => array(
@@ -318,18 +302,18 @@ class ACP3_ACL
 			if ($row !== '.' && $row !== '..' && is_file(MODULES_DIR . $row . '/module.xml') === true) {
 				$module = scandir(MODULES_DIR . $row . '/');
 
-				$mod_id = $db->select('id', 'modules', 'name = \'' . $db->escape($row) . '\'');
+				$mod_id = ACP3_CMS::$db->select('id', 'modules', 'name = \'' . ACP3_CMS::$db->escape($row) . '\'');
 				if (isset($mod_id[0]['id'])) {
 					$mod_id = $mod_id[0]['id'];
 				} else {
-					$db->insert('modules', array('id' => '', 'name' => $row, 'active' => 1));
-					$mod_id = $db->link->lastInsertId();
+					ACP3_CMS::$db->insert('modules', array('id' => '', 'name' => $row, 'active' => 1));
+					$mod_id = ACP3_CMS::$db->link->lastInsertId();
 				}
 
 				if (is_file(MODULES_DIR . $row . '/extensions/search.php') === true)
-					$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
+					ACP3_CMS::$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
 				if (is_file(MODULES_DIR . $row . '/extensions/feeds.php') === true)
-					$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
+					ACP3_CMS::$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
 
 				foreach ($module as $file) {
 					if ($file !== '.' && $file !== '..' && $file !== 'install.class.php' && is_file(MODULES_DIR . $row . '/' . $file) === true && strpos($file, '.php') !== false) {
@@ -353,7 +337,7 @@ class ACP3_ACL
 							elseif (strpos($file, 'acp_settings') === 0)
 								$privilege_id = 7;
 						}
-						$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => $file, 'params' => '', 'privilege_id' => $privilege_id));
+						ACP3_CMS::$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => $file, 'params' => '', 'privilege_id' => $privilege_id));
 					}
 				}
 			}

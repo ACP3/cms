@@ -53,8 +53,6 @@ function calcFilesize($value)
  */
 function confirmBox($text, $forward = 0, $backward = 0, $overlay = 0)
 {
-	global $tpl;
-
 	if (!empty($text)) {
 		$confirm = array(
 			'text' => $text,
@@ -63,9 +61,9 @@ function confirmBox($text, $forward = 0, $backward = 0, $overlay = 0)
 		);
 		if (!empty($backward))
 			$confirm['backward'] = $backward;
-		$tpl->assign('confirm', $confirm);
+		ACP3_CMS::$view->assign('confirm', $confirm);
 
-		return ACP3_View::fetchTemplate('common/confirm_box.tpl');
+		return ACP3_CMS::$view->fetchTemplate('common/confirm_box.tpl');
 	}
 	return '';
 }
@@ -77,8 +75,6 @@ function confirmBox($text, $forward = 0, $backward = 0, $overlay = 0)
  */
 function errorBox($errors)
 {
-	global $tpl;
-
 	$non_integer_keys = false;
 	if (is_array($errors) === true) {
 		foreach(array_keys($errors) as $key) {
@@ -90,8 +86,8 @@ function errorBox($errors)
 	} else {
 		$errors = (array) $errors;
 	}
-	$tpl->assign('error_box', array('non_integer_keys' => $non_integer_keys, 'errors' => $errors));
-	return ACP3_View::fetchTemplate('common/error_box.tpl');
+	ACP3_CMS::$view->assign('error_box', array('non_integer_keys' => $non_integer_keys, 'errors' => $errors));
+	return ACP3_CMS::$view->fetchTemplate('common/error_box.tpl');
 }
 /**
  * Generiert eine E-Mail und versendet diese
@@ -166,20 +162,20 @@ function generateSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
 function generateTOC(array $pages, $path)
 {
 	if (!empty($pages)) {
-		global $lang, $tpl, $uri;
+		global $lang;
 
 		$toc = array();
 		$i = 0;
 		foreach ($pages as $page) {
 			$attributes = getHtmlAttributes($page);
 			$page_num = $i + 1;
-			$toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf($lang->t('articles', 'page'), $page_num);
-			$toc[$i]['uri'] = $uri->route($path, 1) . 'page_' . $page_num . '/';
-			$toc[$i]['selected'] = (ACP3_Validate::isNumber($uri->page) === false && $i === 0) || $uri->page === $page_num ? true : false;
+			$toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf(ACP3_CMS::$lang->t('articles', 'page'), $page_num);
+			$toc[$i]['uri'] = ACP3_CMS::$uri->route($path, 1) . 'page_' . $page_num . '/';
+			$toc[$i]['selected'] = (ACP3_Validate::isNumber(ACP3_CMS::$uri->page) === false && $i === 0) || ACP3_CMS::$uri->page === $page_num ? true : false;
 			++$i;
 		}
-		$tpl->assign('toc', $toc);
-		return ACP3_View::fetchTemplate('common/toc.tpl');
+		ACP3_CMS::$view->assign('toc', $toc);
+		return ACP3_CMS::$view->fetchTemplate('common/toc.tpl');
 	}
 	return '';
 }
@@ -229,14 +225,12 @@ function splitTextIntoPages($text, $path)
 		if ($c_pages == 1) {
 			return $text;
 		} else {
-			global $uri;
-
 			$matches = array();
 			preg_match_all($regex, $text, $matches);
 
-			$currentPage = ACP3_Validate::isNumber($uri->page) === true && $uri->page <= $c_pages ? $uri->page - 1 : 0;
-			$next_page = $currentPage + 2 <= $c_pages ? $uri->route($path, 1) . 'page_' . ($currentPage + 2) . '/' : '';
-			$previous_page = $currentPage > 0 ? $uri->route($path, 1) . 'page_' . $currentPage . '/' : '';
+			$currentPage = ACP3_Validate::isNumber(ACP3_CMS::$uri->page) === true && ACP3_CMS::$uri->page <= $c_pages ? ACP3_CMS::$uri->page - 1 : 0;
+			$next_page = $currentPage + 2 <= $c_pages ? ACP3_CMS::$uri->route($path, 1) . 'page_' . ($currentPage + 2) . '/' : '';
+			$previous_page = $currentPage > 0 ? ACP3_CMS::$uri->route($path, 1) . 'page_' . $currentPage . '/' : '';
 
 			if (!empty($next_page))
 				ACP3_SEO::setNextPage($next_page);
@@ -259,11 +253,9 @@ function splitTextIntoPages($text, $path)
  */
 function getRedirectMessage()
 {
-	global $tpl;
-
 	if (isset($_SESSION['redirect_message']) && is_array($_SESSION['redirect_message'])) {
-		$tpl->assign('redirect', $_SESSION['redirect_message']);
-		$tpl->assign('redirect_message', ACP3_View::fetchTemplate('common/redirect_message.tpl'));
+		ACP3_CMS::$view->assign('redirect', $_SESSION['redirect_message']);
+		ACP3_CMS::$view->assign('redirect_message', ACP3_CMS::$view->fetchTemplate('common/redirect_message.tpl'));
 		unset($_SESSION['redirect_message']);
 	}
 }
@@ -275,14 +267,12 @@ function getRedirectMessage()
  */
 function setRedirectMessage($success, $text, $path)
 {
-	global $uri;
-
 	if (empty($text) === false && empty($path) === false) {
 		$_SESSION['redirect_message'] = array(
 			'success' => (bool) $success,
 			'text' => $text
 		);
-		$uri->redirect($path);
+		ACP3_CMS::$uri->redirect($path);
 	}
 }
 /**
@@ -341,9 +331,7 @@ function moveFile($tmp_filename, $filename, $dir)
 
 	if (is_writable($path) === true) {
 		if (!@move_uploaded_file($tmp_filename, $path . $new_name . $ext)) {
-			global $lang;
-
-			echo sprintf($lang->t('common', 'upload_error'), $filename);
+			echo sprintf(ACP3_CMS::$lang->t('common', 'upload_error'), $filename);
 		} else {
 			$new_file = array();
 			$new_file['name'] = $new_name . $ext;
@@ -375,8 +363,6 @@ function moveFile($tmp_filename, $filename, $dir)
 function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = '')
 {
 	if ($action === 'up' || $action === 'down') {
-		global $db;
-
 		$bool = $bool2 = $bool3 = false;
 		$id = (int) $id;
 
@@ -386,20 +372,20 @@ function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = '')
 		// Ein Schritt nach oben
 		if ($action === 'up') {
 			// Aktuelles Element und das vorherige Element selektieren
-			$query = $db->query('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM {pre}' . $table . ' AS a, {pre}' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' < b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' DESC LIMIT 1');
+			$query = ACP3_CMS::$db->query('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM {pre}' . $table . ' AS a, {pre}' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' < b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' DESC LIMIT 1');
 		// Ein Schritt nach unten
 		} else {
 			// Aktuelles Element und das nachfolgende Element selektieren
-			$query = $db->query('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM {pre}' . $table . ' AS a, {pre}' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' > b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' ASC LIMIT 1');
+			$query = ACP3_CMS::$db->query('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM {pre}' . $table . ' AS a, {pre}' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' > b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' ASC LIMIT 1');
 		}
 
 		if (!empty($query)) {
 			// Sortierreihenfolge des aktuellen Elementes zunächst auf 0 setzen
 			// um Probleme mit möglichen Duplicate-Keys zu umgehen
-			$bool = $db->update($table, array($sort_field => 0), $id_field . ' = ' . $id);
-			$bool2 = $db->update($table, array($sort_field => $query[0]['elem_sort']), $id_field . ' = ' . $query[0]['other_id']);
+			$bool = ACP3_CMS::$db->update($table, array($sort_field => 0), $id_field . ' = ' . $id);
+			$bool2 = ACP3_CMS::$db->update($table, array($sort_field => $query[0]['elem_sort']), $id_field . ' = ' . $query[0]['other_id']);
 			// Element nun den richtigen Wert zuweisen
-			$bool3 = $db->update($table, array($sort_field => $query[0]['other_sort']), $id_field . ' = ' . $id);
+			$bool3 = ACP3_CMS::$db->update($table, array($sort_field => $query[0]['other_sort']), $id_field . ' = ' . $id);
 		}
 		return $bool !== false && $bool2 !== false ? true : false;
 	}
@@ -433,18 +419,14 @@ function nl2p($data, $is_xhtml = true, $line_breaks = false)
  */
 function pagination($rows, $fragment = '')
 {
-	global $auth;
-
-	if ($rows > $auth->entries) {
-		global $lang, $tpl, $uri;
-
+	if ($rows > ACP3_CMS::$auth->entries) {
 		// Alle angegebenen URL Parameter mit in die URL einbeziehen
-		$link = $uri->route((defined('IN_ADM') === true ? 'acp/' : '') . $uri->getCleanQuery(), 1);
+		$link = ACP3_CMS::$uri->route((defined('IN_ADM') === true ? 'acp/' : '') . ACP3_CMS::$uri->getCleanQuery(), 1);
 
 		// Seitenauswahl
-		$current_page = ACP3_Validate::isNumber($uri->page) ? (int) $uri->page : 1;
+		$current_page = ACP3_Validate::isNumber(ACP3_CMS::$uri->page) ? (int) ACP3_CMS::$uri->page : 1;
 		$pagination = array();
-		$c_pagination = (int) ceil($rows / $auth->entries);
+		$c_pagination = (int) ceil($rows / ACP3_CMS::$auth->entries);
 		$show_first_last = 5;
 		$show_previous_next = 2;
 		$pages_to_display = 7;
@@ -471,7 +453,7 @@ function pagination($rows, $fragment = '')
 		if ($c_pagination > $show_first_last && $start > 1) {
 			$pagination[$j]['selected'] = false;
 			$pagination[$j]['page'] = '&laquo;';
-			$pagination[$j]['title'] = $lang->t('common', 'first_page');
+			$pagination[$j]['title'] = ACP3_CMS::$lang->t('common', 'first_page');
 			$pagination[$j]['uri'] = $link . $fragment;
 			++$j;
 		}
@@ -480,7 +462,7 @@ function pagination($rows, $fragment = '')
 		if ($c_pagination > $show_previous_next && $current_page !== 1) {
 			$pagination[$j]['selected'] = false;
 			$pagination[$j]['page'] = '&lsaquo;';
-			$pagination[$j]['title'] = $lang->t('common', 'previous_page');
+			$pagination[$j]['title'] = ACP3_CMS::$lang->t('common', 'previous_page');
 			$pagination[$j]['uri'] = $link . ($current_page - 1 > 1 ? 'page_' . ($current_page - 1) . '/' : '') . $fragment;
 			++$j;
 		}
@@ -495,7 +477,7 @@ function pagination($rows, $fragment = '')
 		if ($c_pagination > $show_previous_next && $current_page !== $c_pagination) {
 			$pagination[$j]['selected'] = false;
 			$pagination[$j]['page'] = '&rsaquo;';
-			$pagination[$j]['title'] = $lang->t('common', 'next_page');
+			$pagination[$j]['title'] = ACP3_CMS::$lang->t('common', 'next_page');
 			$pagination[$j]['uri'] = $link . 'page_' . ($current_page + 1) . '/' . $fragment;
 			++$j;
 		}
@@ -504,13 +486,13 @@ function pagination($rows, $fragment = '')
 		if ($c_pagination > $show_first_last && $c_pagination !== $end) {
 			$pagination[$j]['selected'] = false;
 			$pagination[$j]['page'] = '&raquo;';
-			$pagination[$j]['title'] = $lang->t('common', 'last_page');
+			$pagination[$j]['title'] = ACP3_CMS::$lang->t('common', 'last_page');
 			$pagination[$j]['uri'] = $link . 'page_' . $c_pagination . '/' . $fragment;
 		}
 
-		$tpl->assign('pagination', $pagination);
+		ACP3_CMS::$view->assign('pagination', $pagination);
 
-		return ACP3_View::fetchTemplate('common/pagination.tpl');
+		return ACP3_CMS::$view->fetchTemplate('common/pagination.tpl');
 	}
 }
 /**
@@ -567,9 +549,7 @@ function rewriteInternalUri($text)
  */
 function rewriteInternalUriCallback($matches)
 {
-	global $uri;
-
-	return '<a href="' . $uri->route($matches[6], 1) . '"';
+	return '<a href="' . ACP3_CMS::$uri->route($matches[6], 1) . '"';
 }
 /**
  * Generiert einen Zufallsstring beliebiger Länge

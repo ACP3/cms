@@ -21,19 +21,20 @@ $php_self = dirname(PHP_SELF);
 define('INSTALLER_DIR', $php_self !== '/' ? $php_self . '/' : '/');
 define('ROOT_DIR', substr(INSTALLER_DIR, 0, -13));
 define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
+define('INSTALLER_INCLUDES_DIR', ACP3_ROOT . 'installation/includes/');
 define('LIBRARIES_DIR', ACP3_ROOT . 'libraries/');
 define('MODULES_DIR', ACP3_ROOT . 'modules/');
 
 include INCLUDES_DIR . 'globals.php';
 require INCLUDES_DIR . 'autoload.php';
-require ACP3_ROOT . 'installation/includes/functions.php';
+require INSTALLER_INCLUDES_DIR . 'functions.php';
 
 // Smarty einbinden
 include LIBRARIES_DIR . 'smarty/Smarty.class.php';
 $tpl = new Smarty();
 $tpl->compile_id = 'installation';
 $tpl->setTemplateDir(ACP3_ROOT . 'installation/design/')
-	->addPluginsDir(LIBRARIES_DIR . 'smarty/custom/')
+	->addPluginsDir(INSTALLER_INCLUDES_DIR . 'smarty_functions/')
 	->setCompileDir(ACP3_ROOT . 'uploads/cache/tpl_compiled/')
 	->setCacheDir(ACP3_ROOT . 'uploads/cache/tpl_cached/');
 if (is_writable($tpl->getCompileDir()) === false || is_writable($tpl->getCacheDir()) === false) {
@@ -65,18 +66,20 @@ if (defined('IN_UPDATER') === false) {
 	);
 	$uri = new ACP3_URI('install', 'welcome');
 } else {
-	require INCLUDES_DIR . 'config.php';
-	if (defined('INSTALLED') === false)
-		exit('The ACP3 needs to be installed first before you can use the database updater.');
+	require INCLUDES_DIR . 'bootstrap.php';
+
+	ACP3_CMS::startupChecks();
+	ACP3_CMS::initializeDatabase();
+
 	// Alte Versionen auf den Legacy Updater umleiten
 	if (defined('CONFIG_LANG') === true) {
 		$html = '<!DOCTYPE html>' . "\n";
 		$html.= '<html>' . "\n";
 		$html.= '<head>' . "\n";
-		$html.= '<title>Attention</title>' . "\n";
+		$html.= '<title>Attention!</title>' . "\n";
 		$html.= '</head>' . "\n";
 		$html.= '<body>' . "\n";
-		$html.= '<h1>Attention</h1>' . "\n";
+		$html.= '<h1>Attention!</h1>' . "\n";
 		$html.= '<p>A very old version of the ACP3 has been detected.</p>' . "\n";
 		$html.= '<p>Please run the <a href="' . INSTALLER_DIR . 'update_old.php" onclick="window.open(this.href); return false">legacy database updater</a> first.<br />' . "\n";
 		$html.= 'After that please reload this page to use the new database upgrade wizard.</p>' . "\n";
@@ -84,11 +87,6 @@ if (defined('IN_UPDATER') === false) {
 		$html.= '</html>';
 		exit($html);
 	}
-
-	$db = new ACP3_DB();
-	$handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
-	if ($handle !== true)
-		exit($handle);
 
 	ACP3_Config::getSystemSettings();
 
@@ -107,28 +105,15 @@ if (!empty($_POST['lang'])) {
 	setcookie('ACP3_INSTALLER_LANG', $_POST['lang'], time() + 3600, '/');
 	$uri->redirect($uri->mod . '/' . $uri->file);
 }
-if (!empty($_COOKIE['ACP3_INSTALLER_LANG']) &&
-	!preg_match('=/=', $_COOKIE['ACP3_INSTALLER_LANG']) &&
-	is_file(ACP3_ROOT . 'languages/' . $_COOKIE['ACP3_INSTALLER_LANG'] . '/info.xml') === true)
+
+if (!empty($_COOKIE['ACP3_INSTALLER_LANG']) && !preg_match('=/=', $_COOKIE['ACP3_INSTALLER_LANG']) &&
+	is_file(ACP3_ROOT . 'installation/languages/' . $_COOKIE['ACP3_INSTALLER_LANG'] . '.xml') === true) {
 	define('LANG', $_COOKIE['ACP3_INSTALLER_LANG']);
-else
-	define('LANG', 'en');
-
-$lang = new ACP3_Lang(LANG);
-
-// Dropdown-Menü für die Sprachen
-$languages = array();
-$directories = scandir(ACP3_ROOT . 'languages');
-$count_dir = count($directories);
-for ($i = 0; $i < $count_dir; ++$i) {
-	$lang_info = ACP3_XML::parseXmlFile(ACP3_ROOT . 'languages/' . $directories[$i] . '/info.xml', '/language');
-	if (!empty($lang_info)) {
-		$languages[$i]['dir'] = $directories[$i];
-		$languages[$i]['selected'] = LANG === $directories[$i] ? ' selected="selected"' : '';
-		$languages[$i]['name'] = $lang_info['name'];
-	}
+} else {
+	define('LANG', ACP3_Lang::parseAcceptLanguage());
 }
-$tpl->assign('LANGUAGES', $languages);
+
+$tpl->assign('LANGUAGES', languagesDropdown(LANG));
 
 $tpl->assign('PHP_SELF', PHP_SELF);
 $tpl->assign('INSTALLER_DIR', INSTALLER_DIR);
@@ -136,13 +121,16 @@ $tpl->assign('ROOT_DIR', ROOT_DIR);
 $tpl->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI'], ENT_QUOTES));
 $tpl->assign('LANG', LANG);
 
+require INSTALLER_INCLUDES_DIR . 'classes/InstallerLang.class.php';
+$lang = new ACP3_InstallerLang(LANG);
+
 // Überprüfen, ob die angeforderte Seite überhaupt existiert
 $i = 0;
 $is_file = false;
 foreach ($pages as $row) {
 	if ($row['file'] === $uri->file) {
 		$pages[$i]['selected'] = ' class="active"';
-		$tpl->assign('TITLE', $lang->t('installation', $row['file']));
+		$tpl->assign('TITLE', $lang->t($row['file']));
 		$is_file = true;
 		break;
 	}
@@ -152,7 +140,7 @@ $tpl->assign('PAGES', $pages);
 
 if ($is_file === true) {
 	$content = '';
-	include ACP3_ROOT . 'installation/modules/' . $uri->file . '.php';
+	include ACP3_ROOT . 'installation/pages/' . $uri->file . '.php';
 	$tpl->assign('CONTENT', $content);
 } else {
 	$tpl->assign('TITLE', $lang->t('errors', '404'));

@@ -12,25 +12,25 @@ if (defined('IN_ADM') === false)
 
 if (isset($_POST['submit']) === true) {
 	if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
-		$errors[] = $lang->t('common', 'select_date');
+		$errors[] = ACP3_CMS::$lang->t('common', 'select_date');
 	if (empty($_POST['question']))
-		$errors['question'] = $lang->t('polls', 'type_in_question');
+		$errors['question'] = ACP3_CMS::$lang->t('polls', 'type_in_question');
 	$i = 0;
 	foreach ($_POST['answers'] as $row) {
 		if (!empty($row))
 			++$i;
 	}
 	if ($i <= 1)
-		$errors[] = $lang->t('polls', 'type_in_answer');
+		$errors[] = ACP3_CMS::$lang->t('polls', 'type_in_answer');
 
 	if (isset($errors) === true) {
-		$tpl->assign('error_msg', errorBox($errors));
+		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
 	} else {
 		$start = $_POST['start'];
 		$end = $_POST['end'];
-		$question = $db->escape($_POST['question']);
+		$question = ACP3_CMS::$db->escape($_POST['question']);
 
 		$insert_values = array(
 			'id' => '',
@@ -38,29 +38,29 @@ if (isset($_POST['submit']) === true) {
 			'end' => $end,
 			'question' => $question,
 			'multiple' => isset($_POST['multiple']) ? '1' : '0',
-			'user_id' => $auth->getUserId(),
+			'user_id' => ACP3_CMS::$auth->getUserId(),
 		);
 
-		$bool = $db->insert('polls', $insert_values);
+		$bool = ACP3_CMS::$db->insert('polls', $insert_values);
 		$bool2 = false;
 
 		if ($bool !== false) {
-			$poll_id = $db->select('id', 'polls', 'start = \'' . $start . '\' AND end = \'' . $end . '\' AND question = \'' . $question . '\'', 'id DESC', 1);
+			$poll_id = ACP3_CMS::$db->select('id', 'polls', 'start = \'' . $start . '\' AND end = \'' . $end . '\' AND question = \'' . $question . '\'', 'id DESC', 1);
 			foreach ($_POST['answers'] as $row) {
 				if (!empty($row)) {
 					$insert_answer = array(
 						'id' => '',
-						'text' => $db->escape($row),
+						'text' => ACP3_CMS::$db->escape($row),
 						'poll_id' => $poll_id[0]['id'],
 					);
-					$bool2 = $db->insert('poll_answers', $insert_answer);
+					$bool2 = ACP3_CMS::$db->insert('poll_answers', $insert_answer);
 				}
 			}
 		}
 
-		$session->unsetFormToken();
+		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool && $bool2, $bool !== false && $bool2 !== false ? $lang->t('common', 'create_success') : $lang->t('common', 'create_error'), 'acp/polls');
+		setRedirectMessage($bool && $bool2, $bool !== false && $bool2 !== false ? ACP3_CMS::$lang->t('common', 'create_success') : ACP3_CMS::$lang->t('common', 'create_error'), 'acp/polls');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -86,13 +86,13 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	}
 
 	// Übergabe der Daten an Smarty
-	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));
-	$tpl->assign('question', isset($_POST['question']) ? $_POST['question'] : '');
-	$tpl->assign('answers', $answers);
-	$tpl->assign('multiple', selectEntry('multiple', '1', '0', 'checked'));
-	$tpl->assign('disable', count($answers) < 10 ? false : true);
+	ACP3_CMS::$view->assign('publication_period', ACP3_CMS::$date->datepicker(array('start', 'end')));
+	ACP3_CMS::$view->assign('question', isset($_POST['question']) ? $_POST['question'] : '');
+	ACP3_CMS::$view->assign('answers', $answers);
+	ACP3_CMS::$view->assign('multiple', selectEntry('multiple', '1', '0', 'checked'));
+	ACP3_CMS::$view->assign('disable', count($answers) < 10 ? false : true);
 
-	$session->generateFormToken();
+	ACP3_CMS::$session->generateFormToken();
 
-	ACP3_View::setContent(ACP3_View::fetchTemplate('polls/acp_create.tpl'));
+	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('polls/acp_create.tpl'));
 }

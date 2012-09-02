@@ -12,12 +12,12 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$accounts = $db->select('id, mail, hash', 'newsletter_accounts', 0, 'id DESC', POS, $auth->entries);
+$accounts = ACP3_CMS::$db->select('id, mail, hash', 'newsletter_accounts', 0, 'id DESC', POS, ACP3_CMS::$auth->entries);
 $c_accounts = count($accounts);
 
 if ($c_accounts > 0) {
-	$tpl->assign('pagination', pagination($db->countRows('*', 'newsletter_accounts')));
-	$tpl->assign('accounts', $accounts);
-	$tpl->assign('can_delete', ACP3_Modules::check('newsletter', 'acp_delete_account'));
+	ACP3_CMS::$view->assign('pagination', pagination(ACP3_CMS::$db->countRows('*', 'newsletter_accounts')));
+	ACP3_CMS::$view->assign('accounts', $accounts);
+	ACP3_CMS::$view->assign('can_delete', ACP3_Modules::check('newsletter', 'acp_delete_account'));
 }
-ACP3_View::setContent(ACP3_View::fetchTemplate('newsletter/acp_list_accounts.tpl'));
+ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('newsletter/acp_list_accounts.tpl'));

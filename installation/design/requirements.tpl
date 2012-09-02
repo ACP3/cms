@@ -1,18 +1,18 @@
 <div class="row-fluid">
-	<div class="span8">
+	<div class="span7">
 		<fieldset>
-			<legend>{lang t="installation|step_3_legend_1"}</legend>
+			<legend>{lang t="step_3_legend_1"}</legend>
 			<p>
-				{lang t="installation|step_3_paragraph_1"}
+				{lang t="step_3_paragraph_1"}
 			</p>
 			<div class="row-fluid">
-				<div class="span5">
+				<div class="span6">
 					<table class="table table-condensed">
 						<thead>
 							<tr>
 								<th></th>
-								<th style="width:33%">{lang t="installation|required"}</th>
-								<th style="width:33%">{lang t="installation|found"}</th>
+								<th style="width:33%">{lang t="required"}</th>
+								<th style="width:33%">{lang t="found"}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -20,13 +20,13 @@
 							<tr>
 								<td>{$row.name}</td>
 								<td>{$row.required}</td>
-								<td><span style="color:#{$row.color}">{$row.found}{if $row.color == 'f00'} - {lang t="installation|installation_impossible"}{/if}</span></td>
+								<td><span style="color:#{$row.color}">{$row.found}{if $row.color == 'f00'} - {lang t="installation_impossible"}{/if}</span></td>
 							</tr>
 {/foreach}
 						</tbody>
 					</table>
 				</div>
-				<div class="span7">
+				<div class="span6">
 					<ul class="unstyled">
 {foreach $files_dirs as $row}
 						<li>
@@ -40,11 +40,11 @@
 			</div>
 		</fieldset>
 	</div>
-	<div class="span4">
+	<div class="span5">
 		<fieldset>
-			<legend>{lang t="installation|step_3_legend_2"}</legend>
+			<legend>{lang t="step_3_legend_2"}</legend>
 			<p>
-				{lang t="installation|step_3_paragraph_2"}
+				{lang t="step_3_paragraph_2"}
 			</p>
 			<ul class="unstyled">
 {foreach $php_settings as $row}
@@ -59,10 +59,10 @@
 </div>
 <div class="form-actions" style="text-align:center">
 {if isset($stop_install)}
-{lang t="installation|stop_installation"}
+{lang t="stop_installation"}
 {elseif isset($check_again)}
-	<a href="{$REQUEST_URI}" class="btn">{lang t="installation|check_again"}</a>
+	<a href="{$REQUEST_URI}" class="btn">{lang t="check_again"}</a>
 {else}
-	<a href="{uri args="install/configuration"}" class="btn">{lang t="installation|configuration"}</a>
+	<a href="{uri args="install/configuration"}" class="btn">{lang t="configuration"}</a>
 {/if}
 </div>

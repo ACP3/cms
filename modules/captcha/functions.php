@@ -22,14 +22,14 @@ function captcha($captcha_length = 5)
 	global $auth, $tpl;
 
 	// Wenn man als User angemeldet ist, Captcha nicht anzeigen
-	if ($auth->isUser() === false) {
+	if (ACP3_CMS::$auth->isUser() === false) {
 		$_SESSION['captcha'] = salt($captcha_length);
 
 		$captcha = array();
 		$captcha['width'] = $captcha_length * 25;
 		$captcha['height'] = 30;
-		$tpl->assign('captcha', $captcha);
-		return ACP3_View::fetchTemplate('captcha/captcha.tpl');
+		ACP3_CMS::$view->assign('captcha', $captcha);
+		return ACP3_CMS::$view->fetchTemplate('captcha/captcha.tpl');
 	}
 	return '';
 }

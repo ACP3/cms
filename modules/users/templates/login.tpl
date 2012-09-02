@@ -20,5 +20,6 @@
 	</div>
 	<div class="form-actions">
 		<button type="submit" name="submit" class="btn"><i class="icon-lock"></i> {lang t="users|log_in"}</button>
+		<a href="{uri args="users/forgot_pwd"}" class="btn btn-link">{lang t="users|forgot_pwd"}</a>
 	</div>
 </form>

@@ -16,7 +16,7 @@
 function setArticlesCache($id)
 {
 	global $db;
-	return ACP3_Cache::create('articles_list_id_' . $id, $db->select('start, end, title, text', 'articles', 'id = \'' . $id . '\''));
+	return ACP3_Cache::create('articles_list_id_' . $id, ACP3_CMS::$db->select('start, end, title, text', 'articles', 'id = \'' . $id . '\''));
 }
 /**
  * Bindet die gecachete statische Seite ein
@@ -42,12 +42,12 @@ function articlesList($id = '')
 {
 	global $db;
 
-	$articles = $db->select('id, start, end, title, text', 'articles', 0, 'title ASC');
+	$articles = ACP3_CMS::$db->select('id, start, end, title, text', 'articles', 0, 'title ASC');
 	$c_articles = count($articles);
 
 	if ($c_articles > 0) {
 		for ($i = 0; $i < $c_articles; ++$i) {
-			$articles[$i]['text'] = $db->escape($articles[$i]['text'], 3);
+			$articles[$i]['text'] = ACP3_CMS::$db->escape($articles[$i]['text'], 3);
 			$articles[$i]['selected'] = selectEntry('articles', $articles[$i]['id'], $id);
 		}
 	}

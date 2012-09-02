@@ -110,9 +110,7 @@ class ACP3_Session {
 	 * @return string
 	 */
 	public function session_read($session_id) {
-		global $db;
-
-		$session = $db->select('session_data', 'sessions', 'session_id = \'' . $db->escape($session_id) . '\'');
+		$session = ACP3_CMS::$db->select('session_data', 'sessions', 'session_id = \'' . ACP3_CMS::$db->escape($session_id) . '\'');
 
 		// Wenn keine Session gefunden wurde, dann einen leeren String zurückgeben
 		return !empty($session) ? (string) $session[0]['session_data'] : '';
@@ -127,9 +125,7 @@ class ACP3_Session {
 	 * @return bool
 	 */
 	public function session_write($session_id, $data) {
-		global $db;
-
-		$db->query('INSERT INTO {pre}sessions (session_id, session_starttime, session_data) VALUES (\'' . $db->escape($session_id) . '\', \'' . time() . '\', \'' . $data . '\') ON DUPLICATE KEY UPDATE session_data = \'' . $data . '\'', 0);
+		ACP3_CMS::$db->query('INSERT INTO {pre}sessions (session_id, session_starttime, session_data) VALUES (\'' . ACP3_CMS::$db->escape($session_id) . '\', \'' . time() . '\', \'' . $data . '\') ON DUPLICATE KEY UPDATE session_data = \'' . $data . '\'', 0);
 
 		return true;
 	}
@@ -148,8 +144,7 @@ class ACP3_Session {
 			setcookie(self::SESSION_NAME, '', time() - 3600, '/');
 
 		// Session aus Datenbank löschen
-		global $db;
-		$db->delete('sessions', 'session_id = \'' . $db->escape($session_id) . '\'');
+		ACP3_CMS::$db->delete('sessions', 'session_id = \'' . ACP3_CMS::$db->escape($session_id) . '\'');
 	}
 
 	/**
@@ -163,8 +158,7 @@ class ACP3_Session {
 		if ($session_lifetime == 0)
 			return;
 
-		global $db;
-		$db->delete('sessions', 'session_starttime + ' . $session_lifetime . ' < ' . time());
+		ACP3_CMS::$db->delete('sessions', 'session_starttime + ' . $session_lifetime . ' < ' . time());
 
 		return true;
 	}
@@ -173,29 +167,25 @@ class ACP3_Session {
 	 */
 	public function generateFormToken()
 	{
-		global $tpl, $uri;
-
 		if (!isset($_SESSION[self::XSRF_TOKEN_NAME]) || is_array($_SESSION[self::XSRF_TOKEN_NAME]) === false) {
 			$_SESSION[self::XSRF_TOKEN_NAME] = array();
 		}
 
 		$token = md5(uniqid(mt_rand(), true));
-		$_SESSION[self::XSRF_TOKEN_NAME][$uri->query] = $token;
+		$_SESSION[self::XSRF_TOKEN_NAME][ACP3_CMS::$uri->query] = $token;
 
-		$tpl->assign('form_token', '<input type="hidden" name="' . self::XSRF_TOKEN_NAME . '" value="' . $token . '" />');
+		ACP3_CMS::$view->assign('form_token', '<input type="hidden" name="' . self::XSRF_TOKEN_NAME . '" value="' . $token . '" />');
 	}
 	/**
 	 * Entfernt das Securitytoken aus der Session
 	 */
 	public function unsetFormToken($token = '')
 	{
-		global $uri;
-
 		if (empty($token) && isset($_POST[self::XSRF_TOKEN_NAME]))
 			$token = $_POST[self::XSRF_TOKEN_NAME];
 		if (!empty($token) && is_array($_SESSION[self::XSRF_TOKEN_NAME]) === true) {
-			if (isset($_SESSION[self::XSRF_TOKEN_NAME][$uri->query])) {
-				unset($_SESSION[self::XSRF_TOKEN_NAME][$uri->query]);
+			if (isset($_SESSION[self::XSRF_TOKEN_NAME][ACP3_CMS::$uri->query])) {
+				unset($_SESSION[self::XSRF_TOKEN_NAME][ACP3_CMS::$uri->query]);
 			}
 		}
 	}

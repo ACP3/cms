@@ -21,6 +21,6 @@ foreach ($mod_list as $name => $info) {
 		$mods[$name]['dir'] = $dir;
 	}
 }
-$tpl->assign('modules', $mods);
+ACP3_CMS::$view->assign('modules', $mods);
 
-ACP3_View::setContent(ACP3_View::fetchTemplate('acp/acp_list.tpl'));
+ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('acp/acp_list.tpl'));

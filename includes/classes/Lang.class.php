@@ -27,18 +27,12 @@ class ACP3_Lang
 	 */
 	private $lang = '';
 
-	function __construct($lang = '')
+	function __construct()
 	{
-		// Installer abfangen
-		if (empty($lang)) {
-			global $auth;
-
-			$lang = $auth->getUserLanguage();
-			$this->lang = $this->languagePackExists($lang) === true ? $lang : CONFIG_LANG;
-		} else {
-			$this->lang = $lang;
-		}
+		$lang = ACP3_CMS::$auth->getUserLanguage();
+		$this->lang = $this->languagePackExists($lang) === true ? $lang : CONFIG_LANG;
 	}
+
 	/**
 	 * Gibt die aktuell eingestellte Sprache zurück
 	 *
@@ -48,6 +42,7 @@ class ACP3_Lang
 	{
 		return $this->lang;
 	}
+
 	/**
 	 * Cached die Sprachfiles, um diese schneller verarbeiten zu können
 	 */
@@ -68,6 +63,7 @@ class ACP3_Lang
 		}
 		ACP3_Cache::create('language_' . $this->lang, $data);
 	}
+
 	/**
 	 * Gibt die gecacheten Sprachstrings aus
 	 *
@@ -81,6 +77,7 @@ class ACP3_Lang
 
 		return ACP3_Cache::output($filename);
 	}
+
 	/**
 	 * Gibt den angeforderten Sprachstring aus
 	 *
@@ -98,14 +95,51 @@ class ACP3_Lang
 
 		return isset($lang_data[$module][$key]) ? $lang_data[$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
 	}
+
 	/**
 	 * Überprüft, ob das angegebene Sprachpaket existiert
 	 *
 	 * @param string $lang
 	 * @return boolean
 	 */
-	public function languagePackExists($lang)
+	public static function languagePackExists($lang)
 	{
 		return !preg_match('=/=', $lang) && is_file(ACP3_ROOT . 'languages/' . $lang . '/info.xml') === true;
+	}
+
+	/**
+	 * Parst den ACCEPT-LANGUAGE Header des Browsers
+	 * und selektiert die präferierte Sprache
+	 * 
+	 * @return string
+	 */
+	final public static function parseAcceptLanguage()
+	{
+		$langs = array();
+
+		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+			preg_match_all('/([a-z]{1,8}(-[a-z]{1,8})?)\s*(;\s*q\s*=\s*(1|0\.[0-9]+))?/i', $_SERVER['HTTP_ACCEPT_LANGUAGE'], $matches);
+
+			if (count($matches[1])) {
+				$langs = array_combine($matches[1], $matches[4]);
+
+				// Für Einträge ohne q-Faktor, Wert auf 1 setzen
+				foreach ($langs as $lang => $val) {
+					if ($val === '')
+						$langs[$lang] = 1;
+				}
+
+				// Liste nach Sprachpräferenz sortieren
+				arsort($langs, SORT_NUMERIC);
+			}
+		}
+
+		// Über die Sprachen iterieren und das passende Sprachpaket auswählen
+		foreach ($langs as $lang => $val) {
+			if (ACP3_Lang::languagePackExists($lang) === true) {
+				return $lang;
+			}
+		}
+		return 'en';
 	}
 }

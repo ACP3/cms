@@ -11,19 +11,19 @@ if (defined('IN_ACP3') === false)
 	exit;
 
 // Falls der Benutzer schon eingeloggt ist, diesen zur Startseite weiterleiten
-if ($auth->isUser() === true) {
-	$uri->redirect(0, ROOT_DIR);
+if (ACP3_CMS::$auth->isUser() === true) {
+	ACP3_CMS::$uri->redirect(0, ROOT_DIR);
 } elseif (isset($_POST['submit']) === true) {
-	$result = $auth->login($_POST['nickname'], $_POST['pwd'], isset($_POST['remember']) ? 31104000 : 3600);
+	$result = ACP3_CMS::$auth->login($_POST['nickname'], $_POST['pwd'], isset($_POST['remember']) ? 31104000 : 3600);
 	if ($result == 1) {
-		if ($uri->redirect) {
-			$uri->redirect(base64_decode($uri->redirect));
+		if (ACP3_CMS::$uri->redirect) {
+			ACP3_CMS::$uri->redirect(base64_decode(ACP3_CMS::$uri->redirect));
 		} else {
-			$uri->redirect(0, ROOT_DIR);
+			ACP3_CMS::$uri->redirect(0, ROOT_DIR);
 		}
 	} else {
-		$tpl->assign('error_msg', errorBox($lang->t('users', $result == -1 ? 'account_locked' : 'nickname_or_password_wrong')));
+		ACP3_CMS::$view->assign('error_msg', errorBox(ACP3_CMS::$lang->t('users', $result == -1 ? 'account_locked' : 'nickname_or_password_wrong')));
 	}
 }
 
-ACP3_View::setContent(ACP3_view::fetchTemplate('users/login.tpl'));
+ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('users/login.tpl'));

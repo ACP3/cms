@@ -21,17 +21,17 @@ switch($_POST['area']) {
 		$fields = 'link_title, file, text';
 }
 
-$time = $date->getCurrentDateTime();
+$time = ACP3_CMS::$date->getCurrentDateTime();
 $period = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
-$result_files = $db->select('id, link_title, text', 'files', 'MATCH (' . $fields . ') AGAINST (\'' . $db->escape($_POST['search_term']) . '\' IN BOOLEAN MODE) AND ' . $period, 'start ' . $_POST['sort'] . ', end ' . $_POST['sort'] . ', id ' . $_POST['sort']);
+$result_files = ACP3_CMS::$db->select('id, link_title, text', 'files', 'MATCH (' . $fields . ') AGAINST (\'' . ACP3_CMS::$db->escape($_POST['search_term']) . '\' IN BOOLEAN MODE) AND ' . $period, 'start ' . $_POST['sort'] . ', end ' . $_POST['sort'] . ', id ' . $_POST['sort']);
 $c_result_files = count($result_files);
 
 if ($c_result_files > 0) {
-	$results_mods['files']['title'] = $lang->t('files', 'files');
+	$results_mods['files']['title'] = ACP3_CMS::$lang->t('files', 'files');
 	for ($i = 0; $i < $c_result_files; ++$i) {
-		$results_mods['files']['results'][$i]['hyperlink'] = $uri->route('files/details/id_' . $result_files[$i]['id'], 1);
-		$results_mods['files']['results'][$i]['headline'] = $db->escape($result_files[$i]['link_title'], 3);
-		$results_mods['files']['results'][$i]['text'] = shortenEntry($db->escape($result_files[$i]['text'], 3), 200, 0, '...');
+		$results_mods['files']['results'][$i]['hyperlink'] = ACP3_CMS::$uri->route('files/details/id_' . $result_files[$i]['id'], 1);
+		$results_mods['files']['results'][$i]['headline'] = ACP3_CMS::$db->escape($result_files[$i]['link_title'], 3);
+		$results_mods['files']['results'][$i]['text'] = shortenEntry(ACP3_CMS::$db->escape($result_files[$i]['text'], 3), 200, 0, '...');
 	}
 }

@@ -1,3 +1,3 @@
 <div class="error">
-	{lang t="errors|file_not_found"}
+	{lang t="file_not_found"}
 </div>

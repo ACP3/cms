@@ -12,44 +12,44 @@ if (defined('IN_ADM') === false)
 
 if (isset($_POST['submit']) === true) {
 	if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
-		$errors[] = $lang->t('common', 'select_date');
+		$errors[] = ACP3_CMS::$lang->t('common', 'select_date');
 	if (strlen($_POST['name']) < 3)
-		$errors['name'] = $lang->t('gallery', 'type_in_gallery_name');
+		$errors['name'] = ACP3_CMS::$lang->t('gallery', 'type_in_gallery_name');
 	if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 		(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias']) === true))
-		$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
+		$errors['alias'] = ACP3_CMS::$lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 	if (isset($errors) === true) {
-		$tpl->assign('error_msg', errorBox($errors));
+		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
 	} else {
 		$insert_values = array(
 			'id' => '',
 			'start' => $_POST['start'],
 			'end' => $_POST['end'],
-			'name' => $db->escape($_POST['name']),
-			'user_id' => $auth->getUserId(),
+			'name' => ACP3_CMS::$db->escape($_POST['name']),
+			'user_id' => ACP3_CMS::$auth->getUserId(),
 		);
 
-		$bool = $db->insert('gallery', $insert_values);
+		$bool = ACP3_CMS::$db->insert('gallery', $insert_values);
 		if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
-			ACP3_SEO::insertUriAlias('gallery/pics/id_' . $db->link->lastInsertID(), $_POST['alias'], $db->escape($_POST['seo_keywords']), $db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
+			ACP3_SEO::insertUriAlias('gallery/pics/id_' . ACP3_CMS::$db->link->lastInsertID(), $_POST['alias'], ACP3_CMS::$db->escape($_POST['seo_keywords']), ACP3_CMS::$db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
 
-		$session->unsetFormToken();
+		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/gallery');
+		setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/gallery');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 	// Datumsauswahl
-	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));
+	ACP3_CMS::$view->assign('publication_period', ACP3_CMS::$date->datepicker(array('start', 'end')));
 
-	$tpl->assign('SEO_FORM_FIELDS', ACP3_SEO::formFields());
+	ACP3_CMS::$view->assign('SEO_FORM_FIELDS', ACP3_SEO::formFields());
 
-	$tpl->assign('form', isset($_POST['submit']) ? $_POST : array('name' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => ''));
+	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : array('name' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => ''));
 
-	$session->generateFormToken();
+	ACP3_CMS::$session->generateFormToken();
 
-	ACP3_View::setContent(ACP3_View::fetchTemplate('gallery/acp_create.tpl'));
+	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('gallery/acp_create.tpl'));
 }

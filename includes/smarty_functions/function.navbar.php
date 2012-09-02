@@ -8,4 +8,3 @@ function smarty_function_navbar($params)
 	return '';
 }
 /* vim: set expandtab: */
-?>

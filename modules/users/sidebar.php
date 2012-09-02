@@ -10,9 +10,9 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$currentPage = base64_encode((defined('IN_ADM') === true ? 'acp/' : '') . $uri->query);
+$currentPage = base64_encode((defined('IN_ADM') === true ? 'acp/' : '') . ACP3_CMS::$uri->query);
 
-if ($auth->isUser() === true) {
+if (ACP3_CMS::$auth->isUser() === true) {
 	$user_sidebar = array();
 	$user_sidebar['page'] = $currentPage;
 
@@ -27,7 +27,7 @@ if ($auth->isUser() === true) {
 			if ($dir === 'system') {
 				$access_system = true;
 			} elseif ($dir === 'home') {
-				$tpl->assign('access_home', true);
+				ACP3_CMS::$view->assign('access_home', true);
 			} else {
 				$nav_mods[$name]['name'] = $name;
 				$nav_mods[$name]['dir'] = $dir;
@@ -42,29 +42,29 @@ if ($auth->isUser() === true) {
 		$i = 0;
 		if (ACP3_Modules::check('system', 'acp_configuration') === true) {
 			$nav_system[$i]['page'] = 'configuration';
-			$nav_system[$i]['name'] = $lang->t('system', 'acp_configuration');
+			$nav_system[$i]['name'] = ACP3_CMS::$lang->t('system', 'acp_configuration');
 		}
 		if (ACP3_Modules::check('system', 'acp_extensions') === true) {
 			$i++;
 			$nav_system[$i]['page'] = 'extensions';
-			$nav_system[$i]['name'] = $lang->t('system', 'acp_extensions');
+			$nav_system[$i]['name'] = ACP3_CMS::$lang->t('system', 'acp_extensions');
 		}
 		if (ACP3_Modules::check('system', 'acp_maintenance') === true) {
 			$i++;
 			$nav_system[$i]['page'] = 'maintenance';
-			$nav_system[$i]['name'] = $lang->t('system', 'acp_maintenance');
+			$nav_system[$i]['name'] = ACP3_CMS::$lang->t('system', 'acp_maintenance');
 		}
 		$user_sidebar['system'] = $nav_system;
 	}
 
-	$tpl->assign('user_sidebar', $user_sidebar);
+	ACP3_CMS::$view->assign('user_sidebar', $user_sidebar);
 
-	ACP3_View::displayTemplate('users/sidebar_user_menu.tpl');
+	ACP3_CMS::$view->displayTemplate('users/sidebar_user_menu.tpl');
 } else {
 	$settings = ACP3_Config::getSettings('users');
 
-	$tpl->assign('enable_registration', $settings['enable_registration']);
-	$tpl->assign('redirect_uri', isset($_POST['redirect_uri']) ? $_POST['redirect_uri'] : $currentPage);
+	ACP3_CMS::$view->assign('enable_registration', $settings['enable_registration']);
+	ACP3_CMS::$view->assign('redirect_uri', isset($_POST['redirect_uri']) ? $_POST['redirect_uri'] : $currentPage);
 
-	ACP3_View::displayTemplate('users/sidebar_login.tpl');
+	ACP3_CMS::$view->displayTemplate('users/sidebar_login.tpl');
 }

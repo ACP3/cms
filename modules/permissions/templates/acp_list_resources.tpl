@@ -8,7 +8,7 @@
 {$redirect_message}
 {/if}
 {if isset($resources)}
-	<script type="text/javascript" src="{$DESIGN_PATH}js/permissions_admin.js"></script>
+{include_js module="permissions" file="acp"}
 	<table id="resources-table" class="table">
 		<thead>
 			<tr>

@@ -6,8 +6,9 @@
  * @package ACP3
  * @subpackage Core
  */
+
 define('IN_ACP3', true);
 define('ACP3_ROOT', realpath(__DIR__) . '/');
-require ACP3_ROOT . 'includes/common.php';
+require ACP3_ROOT . 'includes/bootstrap.php';
 
-ACP3_View::outputPage();
+ACP3_CMS::run();

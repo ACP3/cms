@@ -17,7 +17,7 @@ function setGalleryCache($id)
 {
 	global $db;
 
-	$pictures = $db->select('id, file, description', 'gallery_pictures', 'gallery_id = \'' . $id . '\'', 'pic ASC, id ASC');
+	$pictures = ACP3_CMS::$db->select('id, file, description', 'gallery_pictures', 'gallery_id = \'' . $id . '\'', 'pic ASC, id ASC');
 	$c_pictures = count($pictures);
 
 	$settings = ACP3_Config::getSettings('gallery');
@@ -59,10 +59,10 @@ function generatePictureAlias($picture_id)
 {
 	global $db, $lang;
 
-	$picture = $db->select('gallery_id', 'gallery_pictures', 'id = \'' . $picture_id . '\'');
+	$picture = ACP3_CMS::$db->select('gallery_id', 'gallery_pictures', 'id = \'' . $picture_id . '\'');
 	$alias = ACP3_SEO::getUriAlias('gallery/pics/id_' . $picture[0]['gallery_id'], true);
 	if (!empty($alias))
-		$alias.= '/' . makeStringUrlSafe($lang->t('gallery', 'picture')) . '-' . $picture_id;
+		$alias.= '/' . makeStringUrlSafe(ACP3_CMS::$lang->t('gallery', 'picture')) . '-' . $picture_id;
 	$seo_keywords = ACP3_SEO::getKeywords('gallery/pics/id_' . $picture[0]['gallery_id']);
 	$seo_description = ACP3_SEO::getDescription('gallery/pics/id_' . $picture[0]['gallery_id']);
 
@@ -78,13 +78,13 @@ function generatePictureAliases($gallery_id)
 {
 	global $db, $lang;
 
-	$pictures = $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $gallery_id . '\'');
+	$pictures = ACP3_CMS::$db->select('id', 'gallery_pictures', 'gallery_id = \'' . $gallery_id . '\'');
 	$c_pictures = count($pictures);
 	$bool = false;
 
 	$alias = ACP3_SEO::getUriAlias('gallery/pics/id_' . $gallery_id, true);
 	if (!empty($alias))
-		$alias.= '/' . makeStringUrlSafe($lang->t('gallery', 'picture'));
+		$alias.= '/' . makeStringUrlSafe(ACP3_CMS::$lang->t('gallery', 'picture'));
 	$seo_keywords = ACP3_SEO::getKeywords('gallery/pics/id_' . $picture[0]['gallery_id']);
 	$seo_description = ACP3_SEO::getDescription('gallery/pics/id_' . $picture[0]['gallery_id']);
 
@@ -105,7 +105,7 @@ function deletePictureAliases($gallery_id)
 {
 	global $db;
 
-	$pictures = $db->select('id', 'gallery_pictures', 'gallery_id = \'' . $gallery_id . '\'');
+	$pictures = ACP3_CMS::$db->select('id', 'gallery_pictures', 'gallery_id = \'' . $gallery_id . '\'');
 	$c_pictures = count($pictures);
 	$bool = false;
 

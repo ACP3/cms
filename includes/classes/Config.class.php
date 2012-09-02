@@ -24,11 +24,9 @@ class ACP3_Config
 	 */
 	public static function getSystemSettings()
 	{
-		global $db;
-
 		$settings = self::getSettings('system');
 		foreach ($settings as $key => $value) {
-			define('CONFIG_' . strtoupper($key), $db->escape($value, 3));
+			define('CONFIG_' . strtoupper($key), ACP3_CMS::$db->escape($value, 3));
 		}
 		return;
 	}
@@ -41,13 +39,11 @@ class ACP3_Config
 	 */
 	public static function setSettings($module, $data)
 	{
-		global $db;
-
 		$bool = $bool2 = false;
-		$mod_id = $db->select('id', 'modules', 'name = \'' . $db->escape($module) . '\'');
+		$mod_id = ACP3_CMS::$db->select('id', 'modules', 'name = \'' . ACP3_CMS::$db->escape($module) . '\'');
 		if (!empty($mod_id)) {
 			foreach ($data as $key => $value) {
-				$bool = $db->update('settings', array('value' => $value), 'module_id = ' . $mod_id[0]['id'] . ' AND name = \'' . $key . '\'');
+				$bool = ACP3_CMS::$db->update('settings', array('value' => $value), 'module_id = ' . $mod_id[0]['id'] . ' AND name = \'' . $key . '\'');
 			}
 			$bool2 = self::setModuleCache($module);
 		}
@@ -75,9 +71,7 @@ class ACP3_Config
 	 */
 	private static function setModuleCache($module)
 	{
-		global $db;
-
-		$settings = $db->query('SELECT s.name, s.value FROM {pre}settings AS s JOIN {pre}modules AS m ON(m.id = s.module_id) WHERE m.name = \'' . $db->escape($module) . '\'');
+		$settings = ACP3_CMS::$db->query('SELECT s.name, s.value FROM {pre}settings AS s JOIN {pre}modules AS m ON(m.id = s.module_id) WHERE m.name = \'' . ACP3_CMS::$db->escape($module) . '\'');
 		$c_settings = count($settings);
 
 		$cache_ary = array();

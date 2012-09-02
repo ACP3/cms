@@ -23,6 +23,6 @@ for ($i = 0; $i < $c_mods; ++$i) {
 	}
 }
 ksort($search_mods);
-$tpl->assign('search_mods', $search_mods);
+ACP3_CMS::$view->assign('search_mods', $search_mods);
 
-ACP3_View::displayTemplate('search/sidebar.tpl');
+ACP3_CMS::$view->displayTemplate('search/sidebar.tpl');

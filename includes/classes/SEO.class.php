@@ -46,9 +46,7 @@ class ACP3_SEO
 	 */
 	private static function setSEOCache()
 	{
-		global $db;
-
-		$aliases = $db->select('uri, alias, keywords, description, robots', 'seo');
+		$aliases = ACP3_CMS::$db->select('uri, alias, keywords, description, robots', 'seo');
 		$c_aliases = count($aliases);
 		$data = array();
 
@@ -82,8 +80,6 @@ class ACP3_SEO
 	 */
 	public static function getMetaTags()
 	{
-		global $tpl;
-
 		$meta = array(
 			'description' => defined('IN_ADM') === true ? '' : self::getCurrentDescription(),
 			'keywords' => defined('IN_ADM') === true ? '' : self::getCurrentKeywords(),
@@ -91,9 +87,9 @@ class ACP3_SEO
 			'previous_page' => self::$previous_page,
 			'next_page' => self::$next_page,
 		);
-		$tpl->assign('meta', $meta);
+		ACP3_CMS::$view->assign('meta', $meta);
 
-		return ACP3_View::fetchTemplate('common/meta.tpl');
+		return ACP3_CMS::$view->fetchTemplate('common/meta.tpl');
 	}
 	/**
 	 * Gibt die Beschreibung der aktuell angezeigten Seite oder der
@@ -103,11 +99,9 @@ class ACP3_SEO
 	 */
 	public static function getCurrentDescription()
 	{
-		global $uri;
-
-		$description = self::getDescription($uri->getCleanQuery());
+		$description = self::getDescription(ACP3_CMS::$uri->getCleanQuery());
 		if (empty($description))
-			$description = self::getDescription($uri->mod);
+			$description = self::getDescription(ACP3_CMS::$uri->mod);
 
 		return !empty($description) ? $description : CONFIG_SEO_META_DESCRIPTION;
 	}
@@ -119,11 +113,9 @@ class ACP3_SEO
 	 */
 	public static function getCurrentKeywords()
 	{
-		global $uri;
-
-		$keywords = self::getKeywords($uri->getCleanQuery());
+		$keywords = self::getKeywords(ACP3_CMS::$uri->getCleanQuery());
 		if (empty($keywords))
-			$keywords = self::getKeywords($uri->mod);
+			$keywords = self::getKeywords(ACP3_CMS::$uri->mod);
 
 		return strtolower(!empty($keywords) ? $keywords : CONFIG_SEO_META_KEYWORDS);
 	}
@@ -135,11 +127,9 @@ class ACP3_SEO
 	 */
 	public static function getCurrentRobotsSetting()
 	{
-		global $uri;
-
-		$robots = self::getRobotsSetting($uri->getCleanQuery());
+		$robots = self::getRobotsSetting(ACP3_CMS::$uri->getCleanQuery());
 		if (empty($robots))
-			$robots = self::getRobotsSetting($uri->mod);
+			$robots = self::getRobotsSetting(ACP3_CMS::$uri->mod);
 
 		return strtolower(!empty($robots) ? $robots : self::getRobotsSetting());
 	}
@@ -241,11 +231,9 @@ class ACP3_SEO
 	 */
 	public static function deleteUriAlias($path)
 	{
-		global $db;
-
 		$path.= !preg_match('/\/$/', $path) ? '/' : '';
 
-		$bool = $db->delete('seo', 'uri = \'' . $db->escape($path) . '\'');
+		$bool = ACP3_CMS::$db->delete('seo', 'uri = \'' . ACP3_CMS::$db->escape($path) . '\'');
 		$bool2 = self::setSEOCache();
 		return $bool !== false && $bool2 !== false ? true : false;
 	}
@@ -260,16 +248,14 @@ class ACP3_SEO
 	 */
 	public static function insertUriAlias($path, $alias, $keywords = '', $description = '', $robots = '')
 	{
-		global $db;
-
 		$path.= !preg_match('/\/$/', $path) ? '/' : '';
 
 		// Vorhandenen Alias aktualisieren
-		if ($db->countRows('*', 'seo', 'uri = \'' . $db->escape($path) . '\'') == 1) {
-			$bool = $db->update('seo', array('alias' => $alias, 'keywords' => $keywords, 'description' => $description, 'robots' => $robots), 'uri = \'' . $db->escape($path) . '\'');
+		if (ACP3_CMS::$db->countRows('*', 'seo', 'uri = \'' . ACP3_CMS::$db->escape($path) . '\'') == 1) {
+			$bool = ACP3_CMS::$db->update('seo', array('alias' => $alias, 'keywords' => $keywords, 'description' => $description, 'robots' => $robots), 'uri = \'' . ACP3_CMS::$db->escape($path) . '\'');
 		// Neuer Eintrag in DB
 		} else {
-			$bool = $db->insert('seo', array('alias' => $alias, 'uri' => $db->escape($path), 'keywords' => $keywords, 'description' => $description, 'robots' => $robots));
+			$bool = ACP3_CMS::$db->insert('seo', array('alias' => $alias, 'uri' => ACP3_CMS::$db->escape($path), 'keywords' => $keywords, 'description' => $description, 'robots' => $robots));
 		}
 
 		$bool2 = self::setSEOCache();
@@ -309,33 +295,34 @@ class ACP3_SEO
 				array(
 					'value' => 0,
 					'selected' => selectEntry('seo_robots', 0, $robots),
-					'lang' => sprintf($lang->t('common', 'seo_robots_use_system_default'), ACP3_SEO::getRobotsSetting())
+					'lang' => sprintf(ACP3_CMS::$lang->t('common', 'seo_robots_use_system_default'), ACP3_SEO::getRobotsSetting())
 				),
 				array(
 					'value' => 1,
 					'selected' => selectEntry('seo_robots', 1, $robots),
-					'lang' => $lang->t('common', 'seo_robots_index_follow')
+					'lang' => ACP3_CMS::$lang->t('common', 'seo_robots_index_follow')
 				),
 				array(
 					'value' => 2,
 					'selected' => selectEntry('seo_robots', 2, $robots),
-					'lang' => $lang->t('common', 'seo_robots_index_nofollow')
+					'lang' => ACP3_CMS::$lang->t('common', 'seo_robots_index_nofollow')
 				),
 				array(
 					'value' => 3,
 					'selected' => selectEntry('seo_robots', 3, $robots),
-					'lang' => $lang->t('common', 'seo_robots_noindex_follow')
+					'lang' => ACP3_CMS::$lang->t('common', 'seo_robots_noindex_follow')
 				),
 				array(
 					'value' => 4,
 					'selected' => selectEntry('seo_robots', 4, $robots),
-					'lang' => $lang->t('common', 'seo_robots_noindex_nofollow')
+					'lang' => ACP3_CMS::$lang->t('common', 'seo_robots_noindex_nofollow')
 				)
 			)
 		);
 
-		$tpl->assign('seo', $seo);
-		return ACP3_View::fetchTemplate('common/seo_fields.tpl');	}
+		ACP3_CMS::$view->assign('seo', $seo);
+		return ACP3_CMS::$view->fetchTemplate('common/seo_fields.tpl');
+	}
 	/**
 	 * Überprüft, ob ein URI-Alias existiert
 	 *

@@ -16,7 +16,7 @@
 function setNewsCache($id)
 {
 	global $db;
-	return ACP3_Cache::create('news_details_id_' . $id, $db->select('id, start, headline, text, readmore, comments, category_id, uri, target, link_title', 'news', 'id = \'' . $id . '\''));
+	return ACP3_Cache::create('news_details_id_' . $id, ACP3_CMS::$db->select('id, start, headline, text, readmore, comments, category_id, uri, target, link_title', 'news', 'id = \'' . $id . '\''));
 }
 /**
  * Bindet die gecachete News ein

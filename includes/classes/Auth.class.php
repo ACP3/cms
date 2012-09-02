@@ -60,12 +60,10 @@ class ACP3_Auth
 	function __construct()
 	{
 		if (isset($_COOKIE[self::COOKIE_NAME])) {
-			global $db;
-
 			$cookie = base64_decode($_COOKIE[self::COOKIE_NAME]);
 			$cookie_arr = explode('|', $cookie);
 
-			$user = $db->select('id, super_user, pwd, entries, language', 'users', 'nickname = \'' . $db->escape($cookie_arr[0]) . '\' AND login_errors < 3');
+			$user = ACP3_CMS::$db->select('id, super_user, pwd, entries, language', 'users', 'nickname = \'' . ACP3_CMS::$db->escape($cookie_arr[0]) . '\' AND login_errors < 3');
 			if (count($user) === 1) {
 				$db_password = substr($user[0]['pwd'], 0, 40);
 				if ($db_password === $cookie_arr[1]) {
@@ -105,9 +103,7 @@ class ACP3_Auth
 			static $user_info = array();
 
 			if (empty($user_info[$user_id])) {
-				global $db;
-
-				$info = $db->select('super_user, nickname, realname, gender, birthday, birthday_format, mail, website, icq, msn, skype, date_format_long, date_format_short, time_zone, language, entries, draft', 'users', 'id = \'' . $user_id . '\'');
+				$info = ACP3_CMS::$db->select('super_user, nickname, realname, gender, birthday, birthday_format, mail, website, icq, msn, skype, date_format_long, date_format_short, time_zone, language, entries, draft', 'users', 'id = \'' . $user_id . '\'');
 				if (!empty($info)) {
 					$pos = strrpos($info[0]['realname'], ':');
 					$info[0]['realname_display'] = substr($info[0]['realname'], $pos + 1);
@@ -181,9 +177,7 @@ class ACP3_Auth
 	 */
 	public function login($username, $password, $expiry)
 	{
-		global $db;
-
-		$user = $db->select('id, pwd, login_errors', 'users', 'nickname = \'' . $db->escape($username) . '\'');
+		$user = ACP3_CMS::$db->select('id, pwd, login_errors', 'users', 'nickname = \'' . ACP3_CMS::$db->escape($username) . '\'');
 
 		if (count($user) === 1) {
 			// Useraccount ist gesperrt
@@ -201,7 +195,7 @@ class ACP3_Auth
 			if ($db_hash === $form_pwd_hash) {
 				// Login-Fehler zurücksetzen
 				if ($user[0]['login_errors'] > 0)
-					$db->update('users', array('login_errors' => 0), 'id = \'' . $user[0]['id'] . '\'');
+					ACP3_CMS::$db->update('users', array('login_errors' => 0), 'id = \'' . $user[0]['id'] . '\'');
 
 				$this->setCookie($username, $db_hash, $expiry);
 
@@ -215,7 +209,7 @@ class ACP3_Auth
 			// Beim dritten falschen Login den Account sperren
 			} else {
 				$login_errors = $user[0]['login_errors'] + 1;
-				$db->update('users', array('login_errors' => $login_errors), 'id = \'' . $user[0]['id'] . '\'');
+				ACP3_CMS::$db->update('users', array('login_errors' => $login_errors), 'id = \'' . $user[0]['id'] . '\'');
 				if ($login_errors === 3) {
 					return -1;
 				}
@@ -230,8 +224,7 @@ class ACP3_Auth
 	 */
 	public function logout()
 	{
-		global $session;
-		$session->session_destroy(session_id());
+		ACP3_CMS::$session->session_destroy(session_id());
 		return $this->setCookie('', '', -50400);
 	}
 	/**

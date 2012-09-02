@@ -22,7 +22,7 @@
 	<item key="female">Weiblich</item>
 	<item key="forgot_pwd">Passwort vergessen?</item>
 	<item key="forgot_pwd_error">Beim Versenden der E-Mail-Adresse mit Ihrem neuen Passwort ist ein Fehler aufgetreten.</item>
-	<item key="forgot_pwd_description">Bitte geben Sie ihren bei der Registrierung verwendeten Benutzernamen oder die E-Mail-Adresse ein.</item>
+	<item key="forgot_pwd_description">Bitte geben Sie ihren Benutzernamen bzw. die E-Mail-Adresse Ihres Benutzerkontos ein.</item>
 	<item key="forgot_pwd_mail_subject">Passwortänderung bei {title} ({host})</item>
 	<item key="forgot_pwd_mail_message">Hallo {name},
 

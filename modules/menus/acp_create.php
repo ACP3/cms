@@ -12,34 +12,34 @@ if (defined('IN_ADM') === false)
 
 if (isset($_POST['submit']) === true) {
 	if (!preg_match('/^[a-zA-Z]+\w/', $_POST['index_name']))
-		$errors['index-name'] = $lang->t('menus', 'type_in_index_name');
-	if (!isset($errors) && $db->countRows('*', 'menus', 'index_name = \'' . $db->escape($_POST['index_name']) . '\'') > 0)
-		$errors['index-name'] = $lang->t('menus', 'index_name_unique');
+		$errors['index-name'] = ACP3_CMS::$lang->t('menus', 'type_in_index_name');
+	if (!isset($errors) && ACP3_CMS::$db->countRows('*', 'menus', 'index_name = \'' . ACP3_CMS::$db->escape($_POST['index_name']) . '\'') > 0)
+		$errors['index-name'] = ACP3_CMS::$lang->t('menus', 'index_name_unique');
 	if (strlen($_POST['title']) < 3)
-		$errors['title'] = $lang->t('menus', 'block_title_to_short');
+		$errors['title'] = ACP3_CMS::$lang->t('menus', 'block_title_to_short');
 
 	if (isset($errors) === true) {
-		$tpl->assign('error_msg', errorBox($errors));
+		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
 	} else {
 		$insert_values = array(
 			'id' => '',
-			'index_name' => $db->escape($_POST['index_name']),
-			'title' => $db->escape($_POST['title']),
+			'index_name' => ACP3_CMS::$db->escape($_POST['index_name']),
+			'title' => ACP3_CMS::$db->escape($_POST['title']),
 		);
 
-		$bool = $db->insert('menus', $insert_values);
+		$bool = ACP3_CMS::$db->insert('menus', $insert_values);
 
-		$session->unsetFormToken();
+		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
+		setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-	$tpl->assign('form', isset($_POST['submit']) ? $_POST : array('index_name' => '', 'title' => ''));
+	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : array('index_name' => '', 'title' => ''));
 
-	$session->generateFormToken();
+	ACP3_CMS::$session->generateFormToken();
 
-	ACP3_View::setContent(ACP3_View::fetchTemplate('menus/acp_create.tpl'));
+	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('menus/acp_create.tpl'));
 }

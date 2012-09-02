@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{$LANG}">
 <head>
-<title>ACP3 {lang t="installation|installation"} :: {$TITLE}</title>
+<title>ACP3 {lang t="installation"} :: {$TITLE}</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}libraries/bootstrap/css/bootstrap.css">
@@ -24,7 +24,7 @@ $(document).ready(function($) {
 </head>
 
 <body>
-	<div class="container">
+	<div class="container-fluid">
 		<h1 id="logo">ACP3</h1>
 		<div class="row-fluid">
 			<div class="span3 well" style="padding:8px">
@@ -32,7 +32,7 @@ $(document).ready(function($) {
 				<ul class="nav nav-list">
 					<li class="nav-header">Navigation</li>
 {foreach from=$PAGES item=row}
-					<li{$row.selected}><a>{lang t="installation|`$row.file`"}</a></li>
+					<li{$row.selected}><a>{lang t="`$row.file`"}</a></li>
 {/foreach}
 					<li class="divider"></li>
 				</ul>
@@ -40,10 +40,10 @@ $(document).ready(function($) {
 				<form action="{$REQUEST_URI}" method="post" id="languages" class="form-inline">
 					<select name="lang" id="lang" class="span12">
 {foreach from=$LANGUAGES item=row}
-						<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
+						<option value="{$row.language}"{$row.selected}>{$row.name}</option>
 {/foreach}
 					</select>
-					<input type="submit" name="languages" value="{lang t="common|submit"}" class="btn">
+					<input type="submit" name="languages" value="{lang t="submit"}" class="btn">
 				</form>
 			</div>
 			<div class="span9">

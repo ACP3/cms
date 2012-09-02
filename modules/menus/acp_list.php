@@ -14,17 +14,17 @@ getRedirectMessage();
 
 require_once MODULES_DIR . 'menus/functions.php';
 
-$menus = $db->select('id, title, index_name', 'menus');
+$menus = ACP3_CMS::$db->select('id, title, index_name', 'menus');
 $c_menus = count($menus);
 
 if ($c_menus > 0) {
 	$can_delete_item = ACP3_Modules::check('menus', 'acp_delete_item');
 	$can_order_item = ACP3_Modules::check('menus', 'acp_order_item');
-	$tpl->assign('can_delete_item', $can_delete_item);
-	$tpl->assign('can_order_item', $can_order_item);
-	$tpl->assign('can_delete', ACP3_Modules::check('menus', 'acp_delete'));
-	$tpl->assign('can_edit', ACP3_Modules::check('menus', 'acp_edit'));
-	$tpl->assign('colspan', $can_delete_item && $can_order_item ? 5 : ($can_delete_item || $can_order_item ? 4 : 3));
+	ACP3_CMS::$view->assign('can_delete_item', $can_delete_item);
+	ACP3_CMS::$view->assign('can_order_item', $can_order_item);
+	ACP3_CMS::$view->assign('can_delete', ACP3_Modules::check('menus', 'acp_delete'));
+	ACP3_CMS::$view->assign('can_edit', ACP3_Modules::check('menus', 'acp_edit'));
+	ACP3_CMS::$view->assign('colspan', $can_delete_item && $can_order_item ? 5 : ($can_delete_item || $can_order_item ? 4 : 3));
 
 	$pages_list = menuItemsList();
 	for ($i = 0; $i < $c_menus; ++$i) {
@@ -34,7 +34,7 @@ if ($c_menus > 0) {
 			$pages_list[$menus[$i]['index_name']]['items'] = array();
 		}
 	}
-	$tpl->assign('pages_list', $pages_list);
+	ACP3_CMS::$view->assign('pages_list', $pages_list);
 }
 
-ACP3_View::setContent(ACP3_View::fetchTemplate('menus/acp_list.tpl'));
+ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('menus/acp_list.tpl'));

@@ -19,8 +19,8 @@ if ($c_roles > 0) {
 	for ($i = 0; $i < $c_roles; ++$i) {
 		$roles[$i]['spaces'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']);
 	}
-	$tpl->assign('roles', $roles);
-	$tpl->assign('can_delete', ACP3_Modules::check('permissions', 'acp_delete'));
-	$tpl->assign('can_order', ACP3_Modules::check('permissions', 'acp_order'));	
+	ACP3_CMS::$view->assign('roles', $roles);
+	ACP3_CMS::$view->assign('can_delete', ACP3_Modules::check('permissions', 'acp_delete'));
+	ACP3_CMS::$view->assign('can_order', ACP3_Modules::check('permissions', 'acp_order'));	
 }
-ACP3_View::setContent(ACP3_View::fetchTemplate('permissions/acp_list.tpl'));
+ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('permissions/acp_list.tpl'));
