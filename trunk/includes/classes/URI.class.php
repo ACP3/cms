@@ -61,14 +61,24 @@ class ACP3_URI
 	/**
 	 * Setzt einen neuen URI Parameter
 	 *
-	 * @param string $name
+	 * @param string $key
 	 * @param string|integer $value
 	 */
-	public function __set($name, $value)
+	public function __set($key, $value)
 	{
 		// Parameter sollten nicht überschrieben werden können
-		if (isset($this->params[$name]) === false)
-			$this->params[$name] = $value;
+		if (isset($this->params[$key]) === false)
+			$this->params[$key] = $value;
+	}
+	/**
+	 * Überprüft, ob ein URI-Parameter existiert
+	 *
+	 * @param string $key
+	 * @return boolean
+	 */
+	public function __isset($key)
+	{
+		return isset($this->params[$key]);
 	}
 	/**
 	 * Grundlegende Verarbeitung der URI-Query 
@@ -120,10 +130,8 @@ class ACP3_URI
 				}
 			}
 
-			global $db;
-
 			// Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-			$alias = $db->select('uri', 'seo', 'alias = \'' . $db->escape(substr($this->query, 0, -1)) . '\'');
+			$alias = ACP3_CMS::$db->select('uri', 'seo', 'alias = \'' . ACP3_CMS::$db->escape(substr($this->query, 0, -1)) . '\'');
 			if (!empty($alias)) {
 				$this->query = $alias[0]['uri'] . (!empty($params) ? $params : '');
 			}
@@ -149,6 +157,17 @@ class ACP3_URI
 
 		$this->mod = isset($query[0]) ? $query[0] : $defaultModule;
 		$this->file = (defined('IN_ADM') ? 'acp_' : '') . (isset($query[1]) ? $query[1] : $defaultFile);
+
+		// Redirect, falls jemand versuchen sollte eine ACP-Seite ohne
+		// vorangestelltes "acp/" aufzurufen, anstatt eine leere Seite anzuzeigen
+		if (defined('IN_ADM') === false && strpos($this->file, 'acp_') === 0) {
+			$params = '';
+			for ($i = 2; isset($query[$i]); ++$i) {
+				$params.= '/' . $query[$i];
+			}
+
+			$this->redirect('acp/' . $this->mod . '/' . substr($this->file, 4) . $params);
+		}
 
 		if (isset($query[2])) {
 			$c_query = count($query);

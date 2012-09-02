@@ -10,4 +10,4 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-ACP3_View::setContent(ACP3_View::fetchTemplate('system/acp_list.tpl'));
+ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('system/acp_list.tpl'));

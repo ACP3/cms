@@ -16,53 +16,53 @@ if ($access_to_menus === true)
 
 if (isset($_POST['submit']) === true) {
 	if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
-		$errors[] = $lang->t('common', 'select_date');
+		$errors[] = ACP3_CMS::$lang->t('common', 'select_date');
 	if (strlen($_POST['title']) < 3)
-		$errors['title'] = $lang->t('articles', 'title_to_short');
+		$errors['title'] = ACP3_CMS::$lang->t('articles', 'title_to_short');
 	if (strlen($_POST['text']) < 3)
-		$errors['text'] = $lang->t('articles', 'text_to_short');
+		$errors['text'] = ACP3_CMS::$lang->t('articles', 'text_to_short');
 	if ($access_to_menus === true) {
 		if ($_POST['create'] != 1 && $_POST['create'] != 0)
-			$errors[] = $lang->t('static_page', 'select_create_menu_item');
+			$errors[] = ACP3_CMS::$lang->t('static_page', 'select_create_menu_item');
 		if ($_POST['create'] == 1) {
 			if (ACP3_Validate::isNumber($_POST['block_id']) === false)
-				$errors['block-id'] = $lang->t('menus', 'select_block');
+				$errors['block-id'] = ACP3_CMS::$lang->t('menus', 'select_block');
 			if (!empty($_POST['parent']) && ACP3_Validate::isNumber($_POST['parent']) === false)
-				$errors['parent'] = $lang->t('menus', 'select_superior_page');
+				$errors['parent'] = ACP3_CMS::$lang->t('menus', 'select_superior_page');
 			if (!empty($_POST['parent']) && ACP3_Validate::isNumber($_POST['parent']) === true) {
 				// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
-				$parent_block = $db->select('block_id', 'menu_items', 'id = \'' . $_POST['parent'] . '\'');
+				$parent_block = ACP3_CMS::$db->select('block_id', 'menu_items', 'id = \'' . $_POST['parent'] . '\'');
 				if (!empty($parent_block) && $parent_block[0]['block_id'] != $_POST['block_id'])
-					$errors['parent'] = $lang->t('menus', 'superior_page_not_allowed');
+					$errors['parent'] = ACP3_CMS::$lang->t('menus', 'superior_page_not_allowed');
 			}
 			if ($_POST['display'] != 0 && $_POST['display'] != 1)
-				$errors[] = $lang->t('menus', 'select_item_visibility');
+				$errors[] = ACP3_CMS::$lang->t('menus', 'select_item_visibility');
 		}
 	}
 	if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 		(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias']) === true))
-		$errors['alias'] = $lang->t('common', 'uri_alias_unallowed_characters_or_exists');
+		$errors['alias'] = ACP3_CMS::$lang->t('common', 'uri_alias_unallowed_characters_or_exists');
 
 	if (isset($errors) === true) {
-		$tpl->assign('error_msg', errorBox($errors));
+		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
 	} else {
 		$insert_values = array(
 			'id' => '',
 			'start' => $_POST['start'],
 			'end' => $_POST['end'],
-			'title' => $db->escape($_POST['title']),
-			'text' => $db->escape($_POST['text'], 2),
-			'user_id' => $auth->getUserId(),
+			'title' => ACP3_CMS::$db->escape($_POST['title']),
+			'text' => ACP3_CMS::$db->escape($_POST['text'], 2),
+			'user_id' => ACP3_CMS::$auth->getUserId(),
 		);
 
-		$db->link->beginTransaction();
-		$bool = $db->insert('articles', $insert_values);
-		$last_id = $db->link->lastInsertId();
+		ACP3_CMS::$db->link->beginTransaction();
+		$bool = ACP3_CMS::$db->insert('articles', $insert_values);
+		$last_id = ACP3_CMS::$db->link->lastInsertId();
 		if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
-			ACP3_SEO::insertUriAlias('articles/list/id_' . $last_id, $_POST['alias'], $db->escape($_POST['seo_keywords']), $db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
-		$db->link->commit();
+			ACP3_SEO::insertUriAlias('articles/list/id_' . $last_id, $_POST['alias'], ACP3_CMS::$db->escape($_POST['seo_keywords']), ACP3_CMS::$db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
+		ACP3_CMS::$db->link->commit();
 
 		if ($_POST['create'] == 1 && $access_to_menus === true) {
 			$insert_values = array(
@@ -70,7 +70,7 @@ if (isset($_POST['submit']) === true) {
 				'mode' => 4,
 				'block_id' => $_POST['block_id'],
 				'display' => $_POST['display'],
-				'title' => $db->escape($_POST['title']),
+				'title' => ACP3_CMS::$db->escape($_POST['title']),
 				'uri' => 'articles/list/id_' . $last_id . '/',
 				'target' => 1,
 			);
@@ -79,9 +79,9 @@ if (isset($_POST['submit']) === true) {
 			setMenuItemsCache();
 		}
 
-		$session->unsetFormToken();
+		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/articles');
+		setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/articles');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -89,25 +89,25 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		$options = array();
 		$options[0]['name'] = 'create';
 		$options[0]['checked'] = selectEntry('create', '1', '0', 'checked');
-		$options[0]['lang'] = $lang->t('articles', 'create_menu_item');
-		$tpl->assign('options', $options);
+		$options[0]['lang'] = ACP3_CMS::$lang->t('articles', 'create_menu_item');
+		ACP3_CMS::$view->assign('options', $options);
 
 		// Block
-		$tpl->assign('blocks', menusDropdown());
+		ACP3_CMS::$view->assign('blocks', menusDropdown());
 
 		$display = array();
 		$display[0]['value'] = 1;
 		$display[0]['selected'] = selectEntry('display', 1, 1, 'checked');
-		$display[0]['lang'] = $lang->t('common', 'yes');
+		$display[0]['lang'] = ACP3_CMS::$lang->t('common', 'yes');
 		$display[1]['value'] = 0;
 		$display[1]['selected'] = selectEntry('display', '0', '', 'checked');
-		$display[1]['lang'] = $lang->t('common', 'no');
-		$tpl->assign('display', $display);
+		$display[1]['lang'] = ACP3_CMS::$lang->t('common', 'no');
+		ACP3_CMS::$view->assign('display', $display);
 
-		$tpl->assign('pages_list', menuItemsList());
+		ACP3_CMS::$view->assign('pages_list', menuItemsList());
 	}
 
-	$tpl->assign('publication_period', $date->datepicker(array('start', 'end')));
+	ACP3_CMS::$view->assign('publication_period', ACP3_CMS::$date->datepicker(array('start', 'end')));
 
 	$defaults = array(
 		'title' => '',
@@ -117,11 +117,11 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		'seo_description' => ''
 	);
 
-	$tpl->assign('SEO_FORM_FIELDS', ACP3_SEO::formFields());
+	ACP3_CMS::$view->assign('SEO_FORM_FIELDS', ACP3_SEO::formFields());
 
-	$tpl->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
+	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
-	$session->generateFormToken();
+	ACP3_CMS::$session->generateFormToken();
 
-	ACP3_View::setContent(ACP3_View::fetchTemplate('articles/acp_create.tpl'));
+	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('articles/acp_create.tpl'));
 }

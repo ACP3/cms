@@ -25,9 +25,9 @@ function subscribeToNewsletter($emailAddress)
 	$host = htmlentities($_SERVER['HTTP_HOST']);
 	$settings = ACP3_Config::getSettings('newsletter');
 
-	$subject = sprintf($lang->t('newsletter', 'subscribe_mail_subject'), CONFIG_SEO_TITLE);
-	$body = str_replace('{host}', $host, $lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
-	$body.= 'http://' . $host . $uri->route('newsletter/activate/hash_' . $hash . '/mail_' . $emailAddress);
+	$subject = sprintf(ACP3_CMS::$lang->t('newsletter', 'subscribe_mail_subject'), CONFIG_SEO_TITLE);
+	$body = str_replace('{host}', $host, ACP3_CMS::$lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
+	$body.= 'http://' . $host . ACP3_CMS::$uri->route('newsletter/activate/hash_' . $hash . '/mail_' . $emailAddress);
 	$mail_sent = generateEmail('', $emailAddress, $settings['mail'], $subject, $body);
 
 	// Newsletter-Konto nur erstellen, wenn die E-Mail erfolgreich versendet werden konnte
@@ -35,7 +35,7 @@ function subscribeToNewsletter($emailAddress)
 		global $db;
 
 		$insert_values = array('id' => '', 'mail' => $emailAddress, 'hash' => $hash);
-		$bool = $db->insert('newsletter_accounts', $insert_values);
+		$bool = ACP3_CMS::$db->insert('newsletter_accounts', $insert_values);
 	}
 
 	return $mail_sent === true && isset($bool) && $bool !== false;

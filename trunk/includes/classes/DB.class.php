@@ -33,7 +33,7 @@ class ACP3_DB
 	 * @var string
 	 * @access public
 	 */
-	public $prefix = '';
+	private $prefix = '';
 
 	/**
 	 * Stellt die Verbindung mit der Datenbank her
@@ -114,8 +114,13 @@ class ACP3_DB
 			return $result;
 		} catch(PDOException $e) {
 			// SQL-Fehler nur ausgeben, wenn Debugmodus aktiv ist
-			if (defined('DEBUG') === true && DEBUG === true)
-				echo $e->getMessage();
+			if (defined('DEBUG') === true && DEBUG === true) {
+				$err = "<strong>There was an error with the query below:</strong><br>\n";
+				$err.= $query . "<br><br>\n";
+				$err.= '<strong>Error message:</strong><br />' . $e->getMessage() . "<br><br>\n";
+				$err.= "<strong>Exiting now...</strong>";
+				exit($err);
+			}
 			return false;
 		}
 	}

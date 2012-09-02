@@ -12,18 +12,18 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$files = $db->select('id, start, end, file, size, link_title', 'files', 0, 'start DESC, end DESC, id DESC', POS, $auth->entries);
+$files = ACP3_CMS::$db->select('id, start, end, file, size, link_title', 'files', 0, 'start DESC, end DESC, id DESC', POS, ACP3_CMS::$auth->entries);
 $c_files = count($files);
 
 if ($c_files > 0) {
-	$tpl->assign('pagination', pagination($db->countRows('*', 'files')));
+	ACP3_CMS::$view->assign('pagination', pagination(ACP3_CMS::$db->countRows('*', 'files')));
 	for ($i = 0; $i < $c_files; ++$i) {
-		$files[$i]['period'] = $date->period($files[$i]['start'], $files[$i]['end']);
-		$files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : $lang->t('files', 'unknown_filesize');
-		$files[$i]['link_title'] = $db->escape($files[$i]['link_title'], 3);
+		$files[$i]['period'] = ACP3_CMS::$date->period($files[$i]['start'], $files[$i]['end']);
+		$files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : ACP3_CMS::$lang->t('files', 'unknown_filesize');
+		$files[$i]['link_title'] = ACP3_CMS::$db->escape($files[$i]['link_title'], 3);
 	}
-	$tpl->assign('files', $files);
-	$tpl->assign('can_delete', ACP3_Modules::check('files', 'acp_delete'));
+	ACP3_CMS::$view->assign('files', $files);
+	ACP3_CMS::$view->assign('can_delete', ACP3_Modules::check('files', 'acp_delete'));
 }
 
-ACP3_View::setContent(ACP3_View::fetchTemplate('files/acp_list.tpl'));
+ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('files/acp_list.tpl'));

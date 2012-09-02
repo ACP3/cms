@@ -12,19 +12,19 @@ if (defined('IN_ACP3') === false)
 
 if (isset($_POST['submit']) === true) {
 	if (strlen($_POST['search_term']) < 3)
-		$errors['search-term'] = $lang->t('search', 'search_term_to_short');
+		$errors['search-term'] = ACP3_CMS::$lang->t('search', 'search_term_to_short');
 	if (empty($_POST['mods']))
-		$errors[] = $lang->t('search', 'no_module_selected');
+		$errors[] = ACP3_CMS::$lang->t('search', 'no_module_selected');
 	if (empty($_POST['area']))
-		$errors[] = $lang->t('search', 'no_area_selected');
+		$errors[] = ACP3_CMS::$lang->t('search', 'no_area_selected');
 	if (empty($_POST['sort']) || $_POST['sort'] != 'asc' && $_POST['sort'] != 'desc')
-		$errors[] = $lang->t('search', 'no_sorting_selected');
+		$errors[] = ACP3_CMS::$lang->t('search', 'no_sorting_selected');
 
 	if (isset($errors) === true) {
-		$tpl->assign('error_msg', errorBox($errors));
+		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} else {
-		$breadcrumb->append($lang->t('search', 'search'), $uri->route('search'))
-				   ->append($lang->t('search', 'search_results'));
+		ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('search', 'search'), ACP3_CMS::$uri->route('search'))
+				   ->append(ACP3_CMS::$lang->t('search', 'search_results'));
 
 		$_POST['sort'] = strtoupper($_POST['sort']);
 		$results_mods = array();
@@ -34,15 +34,15 @@ if (isset($_POST['submit']) === true) {
 			}
 		}
 		if (!empty($results_mods))
-			$tpl->assign('results_mods', $results_mods);
+			ACP3_CMS::$view->assign('results_mods', $results_mods);
 		else
-			$tpl->assign('no_search_results', sprintf($lang->t('search', 'no_search_results'), $_POST['search_term']));
+			ACP3_CMS::$view->assign('no_search_results', sprintf(ACP3_CMS::$lang->t('search', 'no_search_results'), $_POST['search_term']));
 
-		ACP3_View::setContent(ACP3_View::fetchTemplate('search/results.tpl'));
+		ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('search/results.tpl'));
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-	$tpl->assign('form', isset($_POST['submit']) ? $_POST : array('search_term' => ''));
+	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : array('search_term' => ''));
 
 	$mods = scandir(MODULES_DIR);
 	$c_mods = count($mods);
@@ -58,35 +58,35 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		}
 	}
 	ksort($search_mods);
-	$tpl->assign('search_mods', $search_mods);
+	ACP3_CMS::$view->assign('search_mods', $search_mods);
 
 	// Zu durchsuchende Bereiche
 	$search_areas = array();
 	$search_areas[0]['id'] = 'title_only';
 	$search_areas[0]['value'] = 'title';
 	$search_areas[0]['checked'] = selectEntry('area', 'title', 'title', 'checked');
-	$search_areas[0]['lang'] = $lang->t('search', 'title_only');
+	$search_areas[0]['lang'] = ACP3_CMS::$lang->t('search', 'title_only');
 	$search_areas[1]['id'] = 'content_only';
 	$search_areas[1]['value'] = 'content';
 	$search_areas[1]['checked'] = selectEntry('area', 'content', 'title', 'checked');
-	$search_areas[1]['lang'] = $lang->t('search', 'content_only');
+	$search_areas[1]['lang'] = ACP3_CMS::$lang->t('search', 'content_only');
 	$search_areas[2]['id'] = 'title_content';
 	$search_areas[2]['value'] = 'title_content';
 	$search_areas[2]['checked'] = selectEntry('area', 'title_content', 'title', 'checked');
-	$search_areas[2]['lang'] = $lang->t('search', 'title_and_content');
-	$tpl->assign('search_areas', $search_areas);
+	$search_areas[2]['lang'] = ACP3_CMS::$lang->t('search', 'title_and_content');
+	ACP3_CMS::$view->assign('search_areas', $search_areas);
 
 	// Treffer sortieren
 	$sort_hits = array();
 	$sort_hits[0]['id'] = 'asc';
 	$sort_hits[0]['value'] = 'asc';
 	$sort_hits[0]['checked'] = selectEntry('sort', 'asc', 'asc', 'checked');
-	$sort_hits[0]['lang'] = $lang->t('search', 'asc');
+	$sort_hits[0]['lang'] = ACP3_CMS::$lang->t('search', 'asc');
 	$sort_hits[1]['id'] = 'desc';
 	$sort_hits[1]['value'] = 'desc';
 	$sort_hits[1]['checked'] = selectEntry('sort', 'desc', 'asc', 'checked');
-	$sort_hits[1]['lang'] = $lang->t('search', 'desc');
-	$tpl->assign('sort_hits', $sort_hits);
+	$sort_hits[1]['lang'] = ACP3_CMS::$lang->t('search', 'desc');
+	ACP3_CMS::$view->assign('sort_hits', $sort_hits);
 
-	ACP3_View::setContent(ACP3_View::fetchTemplate('search/list.tpl'));
+	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('search/list.tpl'));
 }

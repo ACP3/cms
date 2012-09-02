@@ -191,10 +191,8 @@ class ACP3_Validate
 	 */
 	public static function formToken()
 	{
-		global $uri;
-
-		if (isset($_POST[ACP3_Session::XSRF_TOKEN_NAME]) && isset($_SESSION[ACP3_Session::XSRF_TOKEN_NAME][$uri->query]) &&
-			$_POST[ACP3_Session::XSRF_TOKEN_NAME] === $_SESSION[ACP3_Session::XSRF_TOKEN_NAME][$uri->query]) {
+		if (isset($_POST[ACP3_Session::XSRF_TOKEN_NAME]) && isset($_SESSION[ACP3_Session::XSRF_TOKEN_NAME][ACP3_CMS::$uri->query]) &&
+			$_POST[ACP3_Session::XSRF_TOKEN_NAME] === $_SESSION[ACP3_Session::XSRF_TOKEN_NAME][ACP3_CMS::$uri->query]) {
 			return true;
 		}
 		return false;
@@ -347,12 +345,10 @@ class ACP3_Validate
 			if (is_dir(MODULES_DIR . $alias) === true) {
 				return true;
 			} else {
-				global $db;
-
 				$path.= !preg_match('/\/$/', $path) ? '/' : '';
 				if ($path !== '/' && ACP3_Validate::isInternalURI($path) === true) {
-					return $db->countRows('*', 'seo', 'alias = \'' . $alias . '\' AND uri != \'' . $path . '\'') > 0 ? true : false;
-				} elseif ($db->countRows('*', 'seo', 'alias = \'' . $alias . '\'') > 0) {
+					return ACP3_CMS::$db->countRows('*', 'seo', 'alias = \'' . $alias . '\' AND uri != \'' . $path . '\'') > 0 ? true : false;
+				} elseif (ACP3_CMS::$db->countRows('*', 'seo', 'alias = \'' . $alias . '\'') > 0) {
 					return true;
 				}
 			}

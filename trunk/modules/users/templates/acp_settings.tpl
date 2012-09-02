@@ -3,6 +3,10 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="control-group">
+		<label for="mail" class="control-label">{lang t="common|email"}</label>
+		<div class="controls"><input type="email" name="mail" id="mail" value="{$form.mail}" maxlength="120"></div>
+	</div>
+	<div class="control-group">
 		<label for="language-override-1" class="control-label">{lang t="users|allow_language_override"}</label>
 		<div class="controls">
 			<div class="btn-group" data-toggle="radio">

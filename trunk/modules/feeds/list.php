@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (ACP3_Modules::check($uri->feed, 'extensions/feeds') === true) {
+if (ACP3_Modules::check(ACP3_CMS::$uri->feed, 'extensions/feeds') === true) {
 	$settings = ACP3_Config::getSettings('feeds');
 
 	define('FEED_LINK', 'http://' . htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES));
@@ -18,14 +18,14 @@ if (ACP3_Modules::check($uri->feed, 'extensions/feeds') === true) {
 	require LIBRARIES_DIR . 'feedcreator/FeedWriter.php';
 	require LIBRARIES_DIR . 'feedcreator/FeedItem.php';
 
-	$module = $uri->feed;
+	$module = ACP3_CMS::$uri->feed;
 	
 	$feed = new FeedWriter($settings['feed_type']);
 
 	$feed->setTitle(CONFIG_SEO_TITLE);
 	$feed->setLink(FEED_LINK . ROOT_DIR);
 	if ($settings['feed_type'] !== 'ATOM') {
-		$feed->setDescription($lang->t($module, $module));
+		$feed->setDescription(ACP3_CMS::$lang->t($module, $module));
 	} else {
 		$feed->setChannelElement('updated', date(DATE_ATOM , time()));
 		$feed->setChannelElement('author', array('name' => CONFIG_SEO_TITLE));
@@ -37,5 +37,5 @@ if (ACP3_Modules::check($uri->feed, 'extensions/feeds') === true) {
 
 	$feed->genarateFeed();
 
-	ACP3_View::setNoOutput(true);
+	ACP3_CMS::$view->setNoOutput(true);
 }

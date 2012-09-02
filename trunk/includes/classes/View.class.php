@@ -20,73 +20,92 @@ if (defined('IN_ACP3') === false)
 class ACP3_View
 {
 	/**
-	 * Der auszugebende Inhalt der Seite
-	 *
-	 * @var string
-	 */
-	private static $content = '';
-
-	/**
 	 * Nicht ausgeben
 	 */
-	private static $no_output = false;
+	private $no_output = false;
 
 	/**
 	 * Der auszugebende Content-Type der Seite
 	 *
 	 * @var string
 	 */
-	private static $content_type = 'Content-Type: text/html; charset=UTF-8';
+	private $content_type = 'Content-Type: text/html; charset=UTF-8';
 
 	/**
 	 * Das zuverwendende Seitenlayout
 	 *
 	 * @var string
 	 */
-	private static $layout = 'layout.tpl';
+	private $layout = 'layout.tpl';
 
 	/**
 	 * Legt fest, welche JavaScript Bibliotheken beim Seitenaufruf geladen werden sollen
 	 * 
 	 * @var array
 	 */
-	private static $js_libraries = array('bootbox' => false, 'fancybox' => false, 'jquery-ui' => false, 'timepicker' => false);
+	private $js_libraries = array('bootbox' => false, 'fancybox' => false, 'jquery-ui' => false, 'timepicker' => false);
+	
+	private $view_obj = null;
 
 	/**
-	 * Weist dem Template den auszugebenden Inhalt zu
-	 *
-	 * @param string $data
-	 */
-	public static function setContent($data)
-	{
-		self::$content = $data;
-	}
-	/**
-	 * Setter Methode für die self::$no_output Variable
+	 * Setter Methode für die $this->no_output Variable
 	 *
 	 * @param boolean $value
 	 */
-	public static function setNoOutput($value)
+	public function setNoOutput($value)
 	{
-		self::$no_output = (bool) $value;
+		$this->no_output = (bool) $value;
 	}
+
+	/**
+	 * Gibt zurück, ob die Seitenausgabe mit Hilfe der ACP3_Bootstrap-Klasse
+	 * erfolgen soll oder die Datei dies selber handelt
+	 *
+	 * @return string
+	 */
+	public function getNoOutput()
+	{
+		return $this->no_output;
+	}
+
 	/**
 	 * Weist der aktuell auszugebenden Seite den Content-Type zu
 	 *
 	 * @param string $data
 	 */
-	public static function setContentType($data)
+	public function setContentType($data)
 	{
-		self::$content_type = $data;
+		$this->content_type = $data;
 	}
+
+	/**
+	 * Gibt den Content-Type der anzuzeigenden Seiten zurück
+	 *
+	 * @return string
+	 */
+	public function getContentType()
+	{
+		return $this->content_type;
+	}
+
 	/**
 	 * Weist der aktuell auszugebenden Seite ein Layout zu
 	 *
 	 * @param string $file
 	 */
-	public static function assignLayout($file)
+	public function setLayout($file)
 	{
-		self::$layout = $file;
+		$this->layout = $file;
+	}
+
+	/**
+	 * Gibt das aktuell zugewiesene Layout zurück
+	 *
+	 * @return string
+	 */
+	public function getLayout()
+	{
+		return $this->layout;
 	}
 	/**
 	 * Aktiviert einzelne JavaScript Bibliotheken
@@ -94,29 +113,47 @@ class ACP3_View
 	 * @param array $libraries
 	 * @return
 	 */
-	public static function enableJsLibraries(array $libraries)
+	public function enableJsLibraries(array $libraries)
 	{
 		foreach ($libraries as $library) {
-			if (array_key_exists($library, self::$js_libraries) === true) {
-				self::$js_libraries[$library] = true;
+			if (array_key_exists($library, $this->js_libraries) === true) {
+				$this->js_libraries[$library] = true;
 				if ($library === 'timepicker')
-					self::$js_libraries['jquery-ui'] = true;
+					$this->js_libraries['jquery-ui'] = true;
 			}
 		}
 		return;
 	}
+
+	public function __construct()
+	{
+		// Smarty einbinden
+		require LIBRARIES_DIR . 'smarty/Smarty.class.php';
+		$this->view_obj = new Smarty();
+		$this->view_obj->error_reporting = defined('DEBUG') === true && DEBUG === true ? E_ALL : 0;
+		$this->view_obj->compile_id = CONFIG_DESIGN;
+		$this->view_obj->setCompileCheck(defined('DEBUG') === true && DEBUG === true);
+		$this->view_obj->setTemplateDir(array(DESIGN_PATH_INTERNAL, MODULES_DIR))
+			->addPluginsDir(INCLUDES_DIR . 'smarty_functions/')
+			->setCompileDir(ACP3_ROOT . 'uploads/cache/tpl_compiled/')
+			->setCacheDir(ACP3_ROOT . 'uploads/cache/tpl_cached/');
+		if (is_writable($this->view_obj->getCompileDir()) === false || is_writable($this->view_obj->getCacheDir()) === false) {
+			exit('The cache folder is not writable!');
+		}
+	}
+
 	/**
 	 * Erstellt den Link zum Minifier mitsamt allen zu ladenden JavaScript Bibliotheken
 	 *
 	 * @return string
 	 */
-	private static function buildMinifyLink()
+	public function buildMinifyLink()
 	{
 		$minify = ROOT_DIR . 'includes/min/' . ((bool) CONFIG_SEO_MOD_REWRITE === true && defined('IN_ADM') === false ? '' : '?') . 'g=%s';
 
-		ksort(self::$js_libraries);
+		ksort($this->js_libraries);
 		$libraries = '';
-		foreach (self::$js_libraries as $library => $enable) {
+		foreach ($this->js_libraries as $library => $enable) {
 			if ($enable === true)
 				$libraries.= $library . ',';
 		}
@@ -127,64 +164,15 @@ class ACP3_View
 		return $minify;
 	}
 	/**
-	 * Gibt die Seite aus
-	 */
-	public static function outputPage() {
-		global $auth, $uri;
-
-		if ($auth->isUser() === false && defined('IN_ADM') === true && $uri->query !== 'users/login') {
-			$redirect_uri = base64_encode('acp/' . $uri->query);
-			$uri->redirect('users/login/redirect_' . $redirect_uri);
-		}
-
-		switch (ACP3_Modules::check()) {
-			// Seite ausgeben
-			case 1:
-				global $breadcrumb, $date, $db, $lang, $session, $tpl;
-
-				require MODULES_DIR . $uri->mod . '/' . $uri->file . '.php';
-
-				if (self::$no_output === false) {
-					// Evtl. gesetzten Content-Type des Servers überschreiben
-					header(self::$content_type);
-
-					if (self::$layout !== '') {
-						$tpl->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
-						$tpl->assign('TITLE', $breadcrumb->output(2));
-						$tpl->assign('BREADCRUMB', $breadcrumb->output());
-						$tpl->assign('META', ACP3_SEO::getMetaTags());
-						$tpl->assign('CONTENT', self::$content);
-
-						$minify = self::buildMinifyLink();
-						$layout = substr(self::$layout, 0, strpos(self::$layout, '.'));
-						$tpl->assign('MIN_STYLESHEET', sprintf($minify, 'css') . ($layout !== 'layout' ? '&amp;layout=' . $layout : ''));
-						$tpl->assign('MIN_JAVASCRIPT', sprintf($minify, 'js'));
-
-						self::displayTemplate(self::$layout);
-					} else {
-						echo self::$content;
-					}
-				}
-				break;
-			// Kein Zugriff auf die Seite
-			case 0:
-				$uri->redirect('errors/403');
-				break;
-			// Seite nicht gefunden
-			default:
-				$uri->redirect('errors/404');
-		}
-	}
-	/**
 	 * Gibt ein Template direkt aus
 	 *
 	 * @param string $template
 	 * @param mixed $cache_id
 	 * @param integer $cache_lifetime
 	 */
-	public static function displayTemplate($template, $cache_id = null, $compile_id = null, $parent = null)
+	public function displayTemplate($template, $cache_id = null, $compile_id = null, $parent = null)
 	{
-		self::fetchTemplate($template, $cache_id, $compile_id, $parent, true);
+		echo $this->fetchTemplate($template, $cache_id, $compile_id, $parent, true);
 	}
 	/**
 	 * Gibt ein Template aus
@@ -196,20 +184,30 @@ class ACP3_View
 	 * @param boolean $display
 	 * @return string
 	 */
-	public static function fetchTemplate($template, $cache_id = null, $compile_id = null, $parent = null, $display = false)
+	public function fetchTemplate($template, $cache_id = null, $compile_id = null, $parent = null, $display = false)
 	{
-		global $lang, $tpl;
-
-		if ($tpl->templateExists($template)) {
-			return $tpl->fetch($template, $cache_id, $compile_id, $parent, $display);
+		if ($this->view_obj->templateExists($template)) {
+			return $this->view_obj->fetch($template, $cache_id, $compile_id, $parent, $display);
 		} else {
 			// Pfad zerlegen
 			$path = explode('/', $template);
-			if (count($path) > 1 && $tpl->templateExists($path[0] . '/templates/' . $path[1])) {
-				return $tpl->fetch($path[0] . '/templates/' . $path[1], $cache_id, $compile_id, $parent, $display);
+			if (count($path) > 1 && $this->view_obj->templateExists($path[0] . '/templates/' . $path[1])) {
+				return $this->view_obj->fetch($path[0] . '/templates/' . $path[1], $cache_id, $compile_id, $parent, $display);
 			} else {
-				return sprintf($lang->t('errors', 'tpl_not_found'), $template);
+				return sprintf(ACP3_CMS::$lang->t('errors', 'tpl_not_found'), $template);
 			}
 		}
+	}
+
+	/**
+	 * Weist dem View-Object eine Template-Variable zu
+	 *
+	 * @param string $name
+	 * @param mixed $value
+	 * @return boolean
+	 */
+	public function assign($name, $value)
+	{
+		return $this->view_obj->assign($name, $value);
 	}
 }

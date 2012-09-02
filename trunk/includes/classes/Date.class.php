@@ -44,8 +44,7 @@ class ACP3_Date
 	 */
 	function __construct()
 	{
-		global $auth;
-		$info = $auth->getUserInfo();
+		$info = ACP3_CMS::$auth->getUserInfo();
 
 		if (!empty($info)) {
 			$this->date_format_long = $info['date_format_long'];
@@ -66,15 +65,13 @@ class ACP3_Date
 	 */
 	public function dateformatDropdown($format = '')
 	{
-		global $lang;
-
 		$dateformat = array();
 		$dateformat[0]['value'] = 'short';
 		$dateformat[0]['selected'] = selectEntry('dateformat', 'short', $format);
-		$dateformat[0]['lang'] = $lang->t('common', 'date_format_short');
+		$dateformat[0]['lang'] = ACP3_CMS::$lang->t('common', 'date_format_short');
 		$dateformat[1]['value'] = 'long';
 		$dateformat[1]['selected'] = selectEntry('dateformat', 'long', $format);
-		$dateformat[1]['lang'] = $lang->t('common', 'date_format_long');
+		$dateformat[1]['lang'] = ACP3_CMS::$lang->t('common', 'date_format_long');
 
 		return $dateformat;
 	}
@@ -98,8 +95,6 @@ class ACP3_Date
 	 */
 	public function datepicker($name, $value = '', $format = 'Y-m-d H:i', array $params = array(), $range = 1, $mode = 1, $with_time = true, $input_only = false)
 	{
-		global $tpl;
-
 		$datepicker = array(
 			'range' => is_array($name) === true && $range === 1 ? 1 : 0,
 			'with_time' => (bool) $with_time,
@@ -153,9 +148,9 @@ class ACP3_Date
 			$datepicker['value'] = $value;
 		}
 
-		$tpl->assign('datepicker', $datepicker);
+		ACP3_CMS::$view->assign('datepicker', $datepicker);
 
-		return ACP3_View::fetchTemplate('common/date.tpl');
+		return ACP3_CMS::$view->fetchTemplate('common/date.tpl');
 	}
 	/**
 	 * Gibt ein formatiertes Datum zurück
@@ -169,8 +164,6 @@ class ACP3_Date
 	 */
 	public function format($time, $format = 'long')
 	{
-		global $lang;
-
 		// Datum in gewünschter Formatierung ausgeben
 		switch ($format) {
 			case 'long':
@@ -185,54 +178,54 @@ class ACP3_Date
 		$replace = array();
 		if (strpos($format, 'D') !== false) {
 			$replace = array(
-				'Mon' => $lang->t('common', 'date_mon'),
-				'Tue' => $lang->t('common', 'date_tue'),
-				'Wed' => $lang->t('common', 'date_wed'),
-				'Thu' => $lang->t('common', 'date_thu'),
-				'Fri' => $lang->t('common', 'date_fri'),
-				'Sat' => $lang->t('common', 'date_sat'),
-				'Sun' => $lang->t('common', 'date_sun')
+				'Mon' => ACP3_CMS::$lang->t('common', 'date_mon'),
+				'Tue' => ACP3_CMS::$lang->t('common', 'date_tue'),
+				'Wed' => ACP3_CMS::$lang->t('common', 'date_wed'),
+				'Thu' => ACP3_CMS::$lang->t('common', 'date_thu'),
+				'Fri' => ACP3_CMS::$lang->t('common', 'date_fri'),
+				'Sat' => ACP3_CMS::$lang->t('common', 'date_sat'),
+				'Sun' => ACP3_CMS::$lang->t('common', 'date_sun')
 			);
 		} elseif (strpos($format, 'l') !== false) {
 			$replace = array(
-				'Monday' => $lang->t('common', 'date_monday'),
-				'Tuesday' => $lang->t('common', 'date_tuesday'),
-				'Wednesday' => $lang->t('common', 'date_wednesday'),
-				'Thursday' => $lang->t('common', 'date_thursday'),
-				'Friday' => $lang->t('common', 'date_friday'),
-				'Saturday' => $lang->t('common', 'date_saturday'),
-				'Sunday' => $lang->t('common', 'date_sunday')
+				'Monday' => ACP3_CMS::$lang->t('common', 'date_monday'),
+				'Tuesday' => ACP3_CMS::$lang->t('common', 'date_tuesday'),
+				'Wednesday' => ACP3_CMS::$lang->t('common', 'date_wednesday'),
+				'Thursday' => ACP3_CMS::$lang->t('common', 'date_thursday'),
+				'Friday' => ACP3_CMS::$lang->t('common', 'date_friday'),
+				'Saturday' => ACP3_CMS::$lang->t('common', 'date_saturday'),
+				'Sunday' => ACP3_CMS::$lang->t('common', 'date_sunday')
 			);
 		}
 		if (strpos($format, 'M') !== false) {
 			$replace = array_merge($replace, array(
-				'Jan' => $lang->t('common', 'date_jan'),
-				'Feb' => $lang->t('common', 'date_feb'),
-				'Mar' => $lang->t('common', 'date_mar'),
-				'Apr' => $lang->t('common', 'date_apr'),
-				'May' => $lang->t('common', 'date_may_abbr'),
-				'Jun' => $lang->t('common', 'date_jun'),
-				'Jul' => $lang->t('common', 'date_jul'),
-				'Aug' => $lang->t('common', 'date_aug'),
-				'Sep' => $lang->t('common', 'date_sep'),
-				'Oct' => $lang->t('common', 'date_oct'),
-				'Nov' => $lang->t('common', 'date_nov'),
-				'Dec' => $lang->t('common', 'date_dec')
+				'Jan' => ACP3_CMS::$lang->t('common', 'date_jan'),
+				'Feb' => ACP3_CMS::$lang->t('common', 'date_feb'),
+				'Mar' => ACP3_CMS::$lang->t('common', 'date_mar'),
+				'Apr' => ACP3_CMS::$lang->t('common', 'date_apr'),
+				'May' => ACP3_CMS::$lang->t('common', 'date_may_abbr'),
+				'Jun' => ACP3_CMS::$lang->t('common', 'date_jun'),
+				'Jul' => ACP3_CMS::$lang->t('common', 'date_jul'),
+				'Aug' => ACP3_CMS::$lang->t('common', 'date_aug'),
+				'Sep' => ACP3_CMS::$lang->t('common', 'date_sep'),
+				'Oct' => ACP3_CMS::$lang->t('common', 'date_oct'),
+				'Nov' => ACP3_CMS::$lang->t('common', 'date_nov'),
+				'Dec' => ACP3_CMS::$lang->t('common', 'date_dec')
 			));
 		} elseif (strpos($format, 'F') !== false) {
 			$replace = array_merge($replace, array(
-				'January' => $lang->t('common', 'date_january'),
-				'February' => $lang->t('common', 'date_february'),
-				'March' => $lang->t('common', 'date_march'),
-				'April' => $lang->t('common', 'date_april'),
-				'May' => $lang->t('common', 'date_may_full'),
-				'June' => $lang->t('common', 'date_june'),
-				'July' => $lang->t('common', 'date_july'),
-				'August' => $lang->t('common', 'date_august'),
-				'September' => $lang->t('common', 'date_september'),
-				'October' => $lang->t('common', 'date_october'),
-				'November' => $lang->t('common', 'date_november'),
-				'December' => $lang->t('common', 'date_december')
+				'January' => ACP3_CMS::$lang->t('common', 'date_january'),
+				'February' => ACP3_CMS::$lang->t('common', 'date_february'),
+				'March' => ACP3_CMS::$lang->t('common', 'date_march'),
+				'April' => ACP3_CMS::$lang->t('common', 'date_april'),
+				'May' => ACP3_CMS::$lang->t('common', 'date_may_full'),
+				'June' => ACP3_CMS::$lang->t('common', 'date_june'),
+				'July' => ACP3_CMS::$lang->t('common', 'date_july'),
+				'August' => ACP3_CMS::$lang->t('common', 'date_august'),
+				'September' => ACP3_CMS::$lang->t('common', 'date_september'),
+				'October' => ACP3_CMS::$lang->t('common', 'date_october'),
+				'November' => ACP3_CMS::$lang->t('common', 'date_november'),
+				'December' => ACP3_CMS::$lang->t('common', 'date_december')
 			));
 		}
 
@@ -281,12 +274,10 @@ class ACP3_Date
 	 */
 	public function period($start, $end, $format = 'long')
 	{
-		global $lang;
-
 		if ($start >= $end) {
-			return sprintf($lang->t('common', 'since_date'), $this->format($start, $format));
+			return sprintf(ACP3_CMS::$lang->t('common', 'since_date'), $this->format($start, $format));
 		} else {
-			return sprintf($lang->t('common', 'from_start_to_end'), $this->format($start, $format), $this->format($end, $format));
+			return sprintf(ACP3_CMS::$lang->t('common', 'from_start_to_end'), $this->format($start, $format), $this->format($end, $format));
 		}
 	}
 	/**

@@ -14,8 +14,8 @@ if (ACP3_Modules::check('categories', 'functions') === true) {
 	require_once MODULES_DIR . 'categories/functions.php';
 	$categories = getCategoriesCache('files');
 	if (count($categories) > 0) {
-		$tpl->assign('categories', $categories);
+		ACP3_CMS::$view->assign('categories', $categories);
 	}
 }
 
-ACP3_View::setContent(ACP3_View::fetchTemplate('files/list.tpl'));
+ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('files/list.tpl'));

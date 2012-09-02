@@ -12,17 +12,17 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$pages = $db->select('id, start, end, title', 'articles', 0, 'title ASC', POS, $auth->entries);
+$pages = ACP3_CMS::$db->select('id, start, end, title', 'articles', 0, 'title ASC', POS, ACP3_CMS::$auth->entries);
 $c_pages = count($pages);
 
 if ($c_pages > 0) {
-	$tpl->assign('pagination', pagination($db->countRows('*', 'articles')));
+	ACP3_CMS::$view->assign('pagination', pagination(ACP3_CMS::$db->countRows('*', 'articles')));
 
 	for ($i = 0; $i < $c_pages; ++$i) {
-		$pages[$i]['period'] = $date->period($pages[$i]['start'], $pages[$i]['end']);
-		$pages[$i]['title'] = $db->escape($pages[$i]['title'], 3);
+		$pages[$i]['period'] = ACP3_CMS::$date->period($pages[$i]['start'], $pages[$i]['end']);
+		$pages[$i]['title'] = ACP3_CMS::$db->escape($pages[$i]['title'], 3);
 	}
-	$tpl->assign('pages', $pages);
-	$tpl->assign('can_delete', ACP3_Modules::check('articles', 'acp_delete'));
+	ACP3_CMS::$view->assign('pages', $pages);
+	ACP3_CMS::$view->assign('can_delete', ACP3_Modules::check('articles', 'acp_delete'));
 }
-ACP3_View::setContent(ACP3_View::fetchTemplate('articles/acp_list.tpl'));
+ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('articles/acp_list.tpl'));

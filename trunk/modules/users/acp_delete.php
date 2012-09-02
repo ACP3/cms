@@ -12,15 +12,15 @@ if (defined('IN_ADM') === false)
 
 if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
 	$entries = $_POST['entries'];
-elseif (ACP3_Validate::deleteEntries($uri->entries) === true)
-	$entries = $uri->entries;
+elseif (ACP3_Validate::deleteEntries(ACP3_CMS::$uri->entries) === true)
+	$entries = ACP3_CMS::$uri->entries;
 
 if (!isset($entries)) {
-	ACP3_View::setContent(errorBox($lang->t('common', 'no_entries_selected')));
+	ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'no_entries_selected')));
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
-	ACP3_View::setContent(confirmBox($lang->t('common', 'confirm_delete'), $uri->route('acp/users/delete/entries_' . $marked_entries . '/action_confirmed/'), $uri->route('acp/users')));
-} elseif ($uri->action === 'confirmed') {
+	ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('common', 'confirm_delete'), ACP3_CMS::$uri->route('acp/users/delete/entries_' . $marked_entries . '/action_confirmed/'), ACP3_CMS::$uri->route('acp/users')));
+} elseif (ACP3_CMS::$uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	$admin_user = false;
@@ -30,20 +30,20 @@ if (!isset($entries)) {
 			$admin_user = true;
 		} else {
 			// Falls sich der User selbst gelöscht hat, diesen auch gleich abmelden
-			if ($entry == $auth->getUserId()) {
-				$auth->logout();
+			if ($entry == ACP3_CMS::$auth->getUserId()) {
+				ACP3_CMS::$auth->logout();
 				$self_delete = true;
 			}
-			$bool = $db->delete('users', 'id = \'' . $entry . '\'');
+			$bool = ACP3_CMS::$db->delete('users', 'id = \'' . $entry . '\'');
 		}
 	}
 	if ($admin_user === true) {
 		$bool = false;
-		$text = $lang->t('users', 'admin_user_undeletable');
+		$text = ACP3_CMS::$lang->t('users', 'admin_user_undeletable');
 	} else {
-		$text = $lang->t('common', $bool !== false ? 'delete_success' : 'delete_error');
+		$text = ACP3_CMS::$lang->t('common', $bool !== false ? 'delete_success' : 'delete_error');
 	}
 	setRedirectMessage($bool, $text, $self_delete === true ? ROOT_DIR : 'acp/users');
 } else {
-	$uri->redirect('errors/404');
+	ACP3_CMS::$uri->redirect('errors/404');
 }

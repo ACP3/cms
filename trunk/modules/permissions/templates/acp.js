@@ -1,5 +1,4 @@
 $(document).ready(function() {
-	$('.hide:not(:first)').hide();
 	$('.sub-table-header').click(function() {
 		$('.' + $(this).prop('id')).toggle();
 		var visible_length = $('#resources-table tbody tr:has(:checkbox):visible').length;

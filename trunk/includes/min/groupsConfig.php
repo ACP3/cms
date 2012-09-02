@@ -11,26 +11,15 @@
  * See http://code.google.com/p/minify/wiki/CustomSource for other ideas
  **/
 
+define('IN_ACP3', true);
 define('ACP3_ROOT', realpath(__DIR__ . '/../../') . '/');
 
-define('IN_ACP3', true);
-define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
-$php_self = dirname(PHP_SELF);
-define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
-define('MODULES_DIR', ACP3_ROOT . 'modules/');
-define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
-define('LIBRARIES_DIR', ACP3_ROOT . 'libraries/');
+require_once ACP3_ROOT . 'includes/bootstrap.php';
 
-require_once INCLUDES_DIR . 'config.php';
-require_once INCLUDES_DIR . 'autoload.php';
-
-$db = new ACP3_DB();
-$handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
-if ($handle !== true)
-	exit($handle);
-
-ACP3_Config::getSystemSettings();
-define('DESIGN_PATH', ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/');
+ACP3_CMS::defineDirConstants();
+ACP3_CMS::includeAutoLoader();
+ACP3_CMS::initializeDatabase();
+ACP3_CMS::initializeClasses();
 
 // Cache-Lebenszeit setzen
 $min_serveOptions['maxAge'] = CONFIG_CACHE_MINIFY;
@@ -39,12 +28,7 @@ $libraries = !empty($_GET['libraries']) ? explode(',', $_GET['libraries']) : arr
 $layout = isset($_GET['layout']) && !preg_match('=/=', $_GET['layout']) ? $_GET['layout'] : 'layout';
 
 if ($_GET['g'] === 'css') {
-	// Klassen initialisieren
-	$session = new ACP3_Session();
-	$auth = new ACP3_Auth();
-	$lang = new ACP3_Lang();
-	
-	$design_info = ACP3_XML::parseXmlFile(DESIGN_PATH . 'info.xml', '/design/responsive_layouts');
+	$design_info = ACP3_XML::parseXmlFile(DESIGN_PATH_INTERNAL . 'info.xml', '/design/responsive_layouts');
 
 	$styles = array();
 	$styles['css'][] = LIBRARIES_DIR . 'bootstrap/css/bootstrap.css';
@@ -54,15 +38,29 @@ if ($_GET['g'] === 'css') {
 		($design_info['layout'] === $layout || (is_array($design_info['layout']) === true && in_array($layout, $design_info['layout']) === true)))
 		$styles['css'][] = LIBRARIES_DIR . 'bootstrap/css/bootstrap-responsive.css';
 	// Stylesheet für das Layout-Tenplate
-	$styles['css'][] = DESIGN_PATH . 'css/' . (is_file(DESIGN_PATH . 'css/' . $layout . '.css') === true ? $layout : 'layout') . '.css';
-	$styles['css'][] = DESIGN_PATH . 'css/common.css';
+	$styles['css'][] = DESIGN_PATH_INTERNAL . (is_file(DESIGN_PATH_INTERNAL . $layout . '.css') === true ? $layout : 'layout') . '.css';
+	$styles['css'][] = DESIGN_PATH_INTERNAL . 'common/common.css';
 
-	$modules = scandir(DESIGN_PATH . 'css/');
+	// Zusätzliche Stylesheets einbinden
+	$extra_css = explode(',', CONFIG_EXTRA_CSS);
+	if (count($extra_css) > 0) {
+		foreach ($extra_css as $file) {
+			$path = DESIGN_PATH_INTERNAL . 'css/' . trim($file);
+			if (is_file($path) && in_array($path, $styles['css'])) {
+				$styles['css'][] = $path;
+			}
+		}
+	}
+
+	$modules = ACP3_Modules::getActiveModules();
 	foreach ($modules as $module) {
-		$module = substr($module, 0, -4);
-		$path = DESIGN_PATH . 'css/' . $module . '.css';
-		if ($module !== '.' && $module !== '..' && is_file($path) === true && ACP3_Modules::isActive($module) === true)
-			$styles['css'][] = $path;
+		$path_design = DESIGN_PATH_INTERNAL . $module['dir'] . '/style.css';
+		$path_module = MODULES_DIR . $module['dir'] . '/templates/style.css';
+		if (is_file($path_design) === true) {
+			$styles['css'][] = $path_design;
+		} elseif (is_file($path_module) === true) {
+			$styles['css'][] = $path_module;
+		}
 	}
 
 	if (in_array('jquery-ui', $libraries))
@@ -71,17 +69,6 @@ if ($_GET['g'] === 'css') {
 		$styles['css'][] = LIBRARIES_DIR . 'js/jquery-timepicker.css';
 	if (in_array('fancybox', $libraries))
 		$styles['css'][] = LIBRARIES_DIR . 'js/jquery-fancybox.css';
-
-	// Zusätzliche Stylesheets einbinden
-	$extra_css = explode(',', CONFIG_EXTRA_CSS);
-	if (count($extra_css) > 0) {
-		foreach ($extra_css as $file) {
-			$path = DESIGN_PATH . 'css/' . trim($file);
-			if (is_file($path) && in_array($path, $styles['css'])) {
-				$styles['css'][] = $path;
-			}
-		}
-	}
 
 	return $styles;
 } elseif ($_GET['g'] === 'js') {
@@ -97,14 +84,14 @@ if ($_GET['g'] === 'css') {
 	if (in_array('fancybox', $libraries))
 		$scripts['js'][] = LIBRARIES_DIR . 'js/jquery.fancybox.js';
 
-	if (is_file(DESIGN_PATH . 'js/' . $layout . '.js') === true)
-		$scripts['js'][] = DESIGN_PATH . 'js/' . $layout . '.js';
+	if (is_file(DESIGN_PATH_INTERNAL . $layout . '.js') === true)
+		$scripts['js'][] = DESIGN_PATH_INTERNAL . $layout . '.js';
 
 	// Zusätzliche JavaScript Dateien einbinden
 	$extra_js = explode(',', CONFIG_EXTRA_JS);
 	if (count($extra_js) > 0) {
 		foreach ($extra_js as $file) {
-			$path = DESIGN_PATH . 'js/' . trim($file);
+			$path = DESIGN_PATH_INTERNAL . 'js/' . trim($file);
 			if (is_file($path) && in_array($path, $styles['js'])) {
 				$styles['js'][] = $path;
 			}

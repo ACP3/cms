@@ -1,7 +1,5 @@
 <?php
 function editor($params) {
-	global $tpl;
-
 	// Load the TinyMCE compressor class
 	require_once INCLUDES_DIR . 'wysiwyg/tinymce/tiny_mce_gzip.php';
 
@@ -58,6 +56,6 @@ function editor($params) {
 	if ($wysiwyg['advanced'] === true)
 		$wysiwyg['advanced_replace_content'] = 'tinyMCE.execInstanceCommand(\'' . $params['id'] . '\',"mceInsertContent",false,text);';
 
-	$tpl->assign('wysiwyg', $wysiwyg);
-	return ACP3_View::fetchTemplate('common/wysiwyg.tpl');
+	ACP3_CMS::$view->assign('wysiwyg', $wysiwyg);
+	return ACP3_CMS::$view->fetchTemplate('common/wysiwyg.tpl');
 }

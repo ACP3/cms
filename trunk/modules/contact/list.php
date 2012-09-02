@@ -12,43 +12,43 @@ if (defined('IN_ACP3') === false)
 
 if (isset($_POST['submit']) === true) {
 	if (empty($_POST['name']))
-		$errors['name'] = $lang->t('common', 'name_to_short');
+		$errors['name'] = ACP3_CMS::$lang->t('common', 'name_to_short');
 	if (ACP3_Validate::email($_POST['mail']) === false)
-		$errors['mail'] = $lang->t('common', 'wrong_email_format');
+		$errors['mail'] = ACP3_CMS::$lang->t('common', 'wrong_email_format');
 	if (strlen($_POST['message']) < 3)
-		$errors['message'] = $lang->t('common', 'message_to_short');
-	if ($auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
-		$errors['captcha'] = $lang->t('captcha', 'invalid_captcha_entered');
+		$errors['message'] = ACP3_CMS::$lang->t('common', 'message_to_short');
+	if (ACP3_CMS::$auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
+		$errors['captcha'] = ACP3_CMS::$lang->t('captcha', 'invalid_captcha_entered');
 
 	if (isset($errors) === true) {
-		$tpl->assign('error_msg', errorBox($errors));
+		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
 	} else {
 		$settings = ACP3_Config::getSettings('contact');
 
-		$subject = sprintf($lang->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
-		$body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($_POST['name'], $_POST['mail'], $_POST['message'], "\n"), $lang->t('contact', 'contact_body'));
+		$subject = sprintf(ACP3_CMS::$lang->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
+		$body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($_POST['name'], $_POST['mail'], $_POST['message'], "\n"), ACP3_CMS::$lang->t('contact', 'contact_body'));
 		$bool = generateEmail('', $settings['mail'], $_POST['mail'], $subject, $body);
 
 		// Nachrichtenkopie an Absender senden
 		if (isset($_POST['copy'])) {
-			$subject2 = sprintf($lang->t('contact', 'sender_subject'), CONFIG_SEO_TITLE);
-			$body2 = sprintf($lang->t('contact', 'sender_body'), CONFIG_SEO_TITLE, $_POST['message']);
+			$subject2 = sprintf(ACP3_CMS::$lang->t('contact', 'sender_subject'), CONFIG_SEO_TITLE);
+			$body2 = sprintf(ACP3_CMS::$lang->t('contact', 'sender_body'), CONFIG_SEO_TITLE, $_POST['message']);
 			generateEmail($_POST['name'], $_POST['mail'], $settings['mail'], $subject2, $body2);
 		}
 
-		$session->unsetFormToken();
+		ACP3_CMS::$session->unsetFormToken();
 
-		ACP3_View::setContent(confirmBox($bool === true ? $lang->t('contact', 'send_mail_success') : $lang->t('contact', 'send_mail_error'), $uri->route('contact')));
+		ACP3_CMS::setContent(confirmBox($bool === true ? ACP3_CMS::$lang->t('contact', 'send_mail_success') : ACP3_CMS::$lang->t('contact', 'send_mail_error'), ACP3_CMS::$uri->route('contact')));
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 	// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
-	if ($auth->isUser() === true) {
-		$defaults = $auth->getUserInfo();
+	if (ACP3_CMS::$auth->isUser() === true) {
+		$defaults = ACP3_CMS::$auth->getUserInfo();
 		$disabled = ' readonly="readonly" class="readonly"';
-		$defaults['name'] = !empty($defaults['realname']) ? $db->escape($defaults['realname'], 3) : $db->escape($defaults['nickname'], 3);
+		$defaults['name'] = !empty($defaults['realname']) ? ACP3_CMS::$db->escape($defaults['realname'], 3) : ACP3_CMS::$db->escape($defaults['nickname'], 3);
 		$defaults['message'] = '';
 
 		if (isset($_POST['submit'])) {
@@ -67,13 +67,13 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 			'message' => '',
 		);
 	}
-	$tpl->assign('form', isset($_POST['submit']) ? array_merge($defaults, $_POST) : $defaults);
-	$tpl->assign('copy_checked', selectEntry('copy', 1, 0, 'checked'));
+	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? array_merge($defaults, $_POST) : $defaults);
+	ACP3_CMS::$view->assign('copy_checked', selectEntry('copy', 1, 0, 'checked'));
 
 	require_once MODULES_DIR . 'captcha/functions.php';
-	$tpl->assign('captcha', captcha());
+	ACP3_CMS::$view->assign('captcha', captcha());
 
-	$session->generateFormToken();
+	ACP3_CMS::$session->generateFormToken();
 
-	ACP3_View::setContent(ACP3_View::fetchTemplate('contact/list.tpl'));
+	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('contact/list.tpl'));
 }

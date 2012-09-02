@@ -16,9 +16,9 @@
 function userNameExists($nickname, $id = 0)
 {
 	global $db;
-	$nickname = $db->escape($nickname);
+	$nickname = ACP3_CMS::$db->escape($nickname);
 	$id = ACP3_Validate::isNumber($id) === true ? ' AND id != \'' . $id . '\'' : '';
-	return !empty($nickname) && $db->countRows('*', 'users', 'nickname = \'' . $nickname . '\'' . $id) == 1 ? true : false;
+	return !empty($nickname) && ACP3_CMS::$db->countRows('*', 'users', 'nickname = \'' . $nickname . '\'' . $id) == 1 ? true : false;
 }
 /**
  * Überprüft, ob die übergebene E-Mail-Adresse schon existiert
@@ -31,5 +31,5 @@ function userEmailExists($mail, $id = 0)
 {
 	global $db;
 	$id = ACP3_Validate::isNumber($id) === true ? ' AND id != \'' . $id . '\'' : '';
-	return ACP3_Validate::email($mail) === true && $db->countRows('*', 'users', 'mail IN(\'' . $mail . ':1\', \'' . $mail . ':0\')' . $id) > 0 ? true : false;
+	return ACP3_Validate::email($mail) === true && ACP3_CMS::$db->countRows('*', 'users', 'mail IN(\'' . $mail . ':1\', \'' . $mail . ':0\')' . $id) > 0 ? true : false;
 }

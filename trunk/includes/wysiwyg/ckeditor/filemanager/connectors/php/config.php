@@ -26,29 +26,18 @@ define('IN_ACP3', true);
 
 define('ACP3_ROOT', realpath(__DIR__ . '/../../../../../../') . '/');
 
-define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
-$php_self = dirname(PHP_SELF);
-define('ROOT_DIR', $php_self != '/' ? $php_self . '/' : '/');
-define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
+require_once ACP3_ROOT . 'includes/bootstrap.php';
 
-include INCLUDES_DIR . 'config.php';
-require INCLUDES_DIR . 'autoload.php';
-
-$db = new ACP3_DB();
-$handle = $db->connect(CONFIG_DB_HOST, CONFIG_DB_NAME, CONFIG_DB_USER, CONFIG_DB_PASSWORD, CONFIG_DB_PRE);
-if ($handle !== true)
-	exit($handle);
-
-ACP3_Config::getSystemSettings();
-
-$session = new ACP3_Session();
-$auth = new ACP3_Auth();
+ACP3_CMS::defineDirConstants();
+ACP3_CMS::includeAutoLoader();
+ACP3_CMS::initializeDatabase();
+ACP3_CMS::initializeClasses();
 
 global $Config;
 // SECURITY: You must explicitly enable this "connector". (Set it to "true").
 // WARNING: don't just set "$Config['Enabled'] = true ;", you must be sure that only
 //		authenticated users can access this file or use some kind of session checking.
-$Config['Enabled'] = CONFIG_WYSIWYG == 'ckeditor' && $auth->isUser() ? true : false;
+$Config['Enabled'] = CONFIG_WYSIWYG == 'ckeditor' && ACP3_CMS::$auth->isUser() ? true : false;
 
 $dirname = dirname($_SERVER['PHP_SELF']);
 $dirname = $dirname != '/' ? $dirname . '/' : '/';

@@ -2,16 +2,16 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$breadcrumb->append($lang->t('users', 'users'), $uri->route('users'))
-		   ->append($lang->t('users', 'view_profile'));
+ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('users', 'users'), ACP3_CMS::$uri->route('users'))
+		   ->append(ACP3_CMS::$lang->t('users', 'view_profile'));
 
-if (ACP3_Validate::isNumber($uri->id) === true && $db->countRows('*', 'users', 'id = \'' . $uri->id . '\'') == 1) {
-	$user = $auth->getUserInfo($uri->id);
-	$user['gender'] = str_replace(array(1, 2, 3), array('-', $lang->t('users', 'female'), $lang->t('users', 'male')), $user['gender']);
-	$user['birthday'] = $date->format($user['birthday'], $user['birthday_format'] == 1 ? 'd.m.Y' : 'd.m');
-	$tpl->assign('user', $user);
+if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true && ACP3_CMS::$db->countRows('*', 'users', 'id = \'' . ACP3_CMS::$uri->id . '\'') == 1) {
+	$user = ACP3_CMS::$auth->getUserInfo(ACP3_CMS::$uri->id);
+	$user['gender'] = str_replace(array(1, 2, 3), array('-', ACP3_CMS::$lang->t('users', 'female'), ACP3_CMS::$lang->t('users', 'male')), $user['gender']);
+	$user['birthday'] = ACP3_CMS::$date->format($user['birthday'], $user['birthday_format'] == 1 ? 'd.m.Y' : 'd.m');
+	ACP3_CMS::$view->assign('user', $user);
 
-	ACP3_View::setContent(ACP3_View::fetchTemplate('users/view_profile.tpl'));	
+	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('users/view_profile.tpl'));	
 } else {
-	$uri->redirect('errors/404');
+	ACP3_CMS::$uri->redirect('errors/404');
 }

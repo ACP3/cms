@@ -22,9 +22,7 @@
 * See http://wiki.fckeditor.net/Developer%27s_Guide/Configuration/Configurations_File for more configuration info.
 */
 function editor($params) {
-	global $tpl;
 	require_once INCLUDES_DIR . 'wysiwyg/ckeditor/ckeditor_php5.php';
-
 
 	$ckeditor = new CKEditor(ROOT_DIR . 'includes/wysiwyg/ckeditor/');
 	$ckeditor->returnOutput = true;
@@ -44,16 +42,14 @@ function editor($params) {
 
 	// Smilies
 	if ((!isset($config['toolbar']) || $config['toolbar'] !== 'simple') && ACP3_Modules::check('emoticons', 'functions') === true) {
-		global $db;
-
 		$config['smiley_path'] = ROOT_DIR . 'uploads/emoticons/';
 		$config['smiley_images'] = $config['smiley_descriptions'] = '';
-		$emoticons = $db->select('description, img', 'emoticons');
+		$emoticons = ACP3_CMS::$db->select('description, img', 'emoticons');
 		$c_emoticons = count($emoticons);
 
 		for ($i = 0; $i < $c_emoticons; ++$i) {
 			$config['smiley_images'].= '\'' . $emoticons[$i]['img'] . '\',';
-			$config['smiley_descriptions'].= '\'' . $db->escape($emoticons[$i]['description'], 3) . '\',';
+			$config['smiley_descriptions'].= '\'' . ACP3_CMS::$db->escape($emoticons[$i]['description'], 3) . '\',';
 		}
 
 		$config['smiley_images'] = '@@[' . substr($config['smiley_images'], 0, -1) . ']';
@@ -73,6 +69,6 @@ function editor($params) {
 	if ($wysiwyg['advanced'] === true)
 		$wysiwyg['advanced_replace_content'] = 'CKEDITOR.instances.' . $wysiwyg['id'] . '.insertHtml(text);';
 
-	$tpl->assign('wysiwyg', $wysiwyg);
-	return ACP3_View::fetchTemplate('common/wysiwyg.tpl');
+	ACP3_CMS::$view->assign('wysiwyg', $wysiwyg);
+	return ACP3_CMS::$view->fetchTemplate('common/wysiwyg.tpl');
 }

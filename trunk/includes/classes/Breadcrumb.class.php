@@ -29,19 +29,17 @@ class ACP3_Breadcrumb
 
 	public function __construct()
 	{
-		global $db, $uri;
-
 		// Frontendbereich
 		if (defined('IN_ADM') === false) {
-			$in = "'" . $uri->query . "', '" . $uri->getCleanQuery() . "', '" . $uri->mod . '/' . $uri->file . "/', '" . $uri->mod . "'";
-			$pages = $db->query('SELECT p.title, p.uri, p.left_id, p.right_id FROM {pre}menu_items AS c, {pre}menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(' . $in . ') ORDER BY p.left_id DESC');
+			$in = "'" . ACP3_CMS::$uri->query . "', '" . ACP3_CMS::$uri->getCleanQuery() . "', '" . ACP3_CMS::$uri->mod . '/' . ACP3_CMS::$uri->file . "/', '" . ACP3_CMS::$uri->mod . "'";
+			$pages = ACP3_CMS::$db->query('SELECT p.title, p.uri, p.left_id, p.right_id FROM {pre}menu_items AS c, {pre}menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(' . $in . ') ORDER BY p.left_id DESC');
 			$c_pages = count($pages);
 
 			// Dynamische Seite (ACP3 intern)
 			if ($c_pages > 0) {
 				for ($i = $c_pages - 1; $i >= 0; --$i) {
 					if ($pages[0]['left_id'] >= $pages[$i]['left_id'] && $pages[0]['right_id'] <= $pages[$i]['right_id']) {
-						$this->append($pages[$i]['title'], $uri->route($pages[$i]['uri'], 1));
+						$this->append($pages[$i]['title'], ACP3_CMS::$uri->route($pages[$i]['uri'], 1));
 					}
 				}
 			}
@@ -141,41 +139,39 @@ class ACP3_Breadcrumb
 	 */
 	public function output($mode = 1)
 	{
-		global $lang, $tpl, $uri;
-
-		$module = $uri->mod;
-		$file = $uri->file;
+		$module = ACP3_CMS::$uri->mod;
+		$file = ACP3_CMS::$uri->file;
 
 		// Brotkrümelspur für das Admin-Panel
 		if (defined('IN_ADM') === true) {
 			// Wenn noch keine Brotkrümelspur gesetzt ist, dies nun tun
 			if (empty($this->steps)) {
-				$this->append($lang->t('common', 'acp'), $uri->route('acp'));
+				$this->append(ACP3_CMS::$lang->t('common', 'acp'), ACP3_CMS::$uri->route('acp'));
 				if ($module !== 'errors') {
 					if ($module !== 'acp') {
-						$this->append($lang->t($module, $module), $uri->route('acp/' . $module));
+						$this->append(ACP3_CMS::$lang->t($module, $module), ACP3_CMS::$uri->route('acp/' . $module));
 						if ($file !== 'acp_list')
-							$this->append($lang->t($module, $file));
+							$this->append(ACP3_CMS::$lang->t($module, $file));
 					}
 				} else {
-					$this->append($lang->t($module, $file));
+					$this->append(ACP3_CMS::$lang->t($module, $file));
 				}
 			// Falls bereits Stufen gesetzt wurden, Links für das Admin-Panel und
 			// die Modulverwaltung in ungedrehter Reihenfolge voranstellen
 			} else {
 				if ($module !== 'acp')
-					$this->prepend($lang->t($module, $module), $uri->route('acp/' . $module));
-				$this->prepend($lang->t('common', 'acp'), $uri->route('acp'));
+					$this->prepend(ACP3_CMS::$lang->t($module, $module), ACP3_CMS::$uri->route('acp/' . $module));
+				$this->prepend(ACP3_CMS::$lang->t('common', 'acp'), ACP3_CMS::$uri->route('acp'));
 			}
 		// Falls noch keine Brotkrümelspur gesetzt sein sollte, dies nun tun
 		} elseif (empty($this->steps)) {
-			$this->append($file === 'list' ? $lang->t($module, $module) : $lang->t($module, $file), $uri->route($module . '/' . $file, 1));
+			$this->append($file === 'list' ? ACP3_CMS::$lang->t($module, $module) : ACP3_CMS::$lang->t($module, $file), ACP3_CMS::$uri->route($module . '/' . $file, 1));
 		}
 
 		// Brotkrümelspur ausgeben
 		if ($mode === 1) {
-			$tpl->assign('breadcrumb', $this->steps);
-			return $tpl->fetch('common/breadcrumb.tpl');
+			ACP3_CMS::$view->assign('breadcrumb', $this->steps);
+			return ACP3_CMS::$view->fetchTemplate('common/breadcrumb.tpl');
 		// Nur Titel ausgeben
 		} else {
 			// Letzter Eintrag der Brotkrümelspur ist der Seitentitel

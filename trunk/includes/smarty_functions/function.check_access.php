@@ -13,10 +13,8 @@ function smarty_function_check_access($params, $template)
 		}
 
 		if (ACP3_Modules::check($action[0], $action[1]) === true) {
-			global $lang, $uri;
-
 			$access_check = array();
-			$access_check['uri'] = $uri->route($params['path']);
+			$access_check['uri'] = ACP3_CMS::$uri->route($params['path']);
 
 			if (isset($params['icon'])) {
 				$path = ROOT_DIR . CONFIG_ICONS_PATH . $params['icon'] . '.png';
@@ -26,9 +24,9 @@ function smarty_function_check_access($params, $template)
 				$access_check['title'] = $params['title'];
 			if (isset($params['lang'])) {
 				$lang_ary = explode('|', $params['lang']);
-				$access_check['lang'] = $lang->t($lang_ary[0], $lang_ary[1]);
+				$access_check['lang'] = ACP3_CMS::$lang->t($lang_ary[0], $lang_ary[1]);
 			} else {
-				$access_check['lang'] = $lang->t($action[0], $action[1]);
+				$access_check['lang'] = ACP3_CMS::$lang->t($action[0], $action[1]);
 			}
 
 			// Dimensionen der Grafik bestimmen

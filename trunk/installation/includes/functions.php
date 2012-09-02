@@ -73,6 +73,32 @@ function installModule($module)
 	return $bool;
 }
 /**
+ * Generiert das Dropdown-Menü mit der zur Verfügung stehenden Installersprachen
+ *
+ * @param string $selected_language
+ * @return array
+ */
+function languagesDropdown($selected_language)
+{
+	// Dropdown-Menü für die Sprachen
+	$languages = array();
+	$path = ACP3_ROOT . 'installation/languages/';
+	$files = scandir($path);
+	foreach ($files as $row) {
+		if ($row !== '.' && $row !== '..') {
+			$lang_info = ACP3_XML::parseXmlFile($path . $row, '/language/info');
+			if (!empty($lang_info)) {
+				$languages[] = array(
+					'language' => substr($row, 0, -4),
+					'selected' => $selected_language === substr($row, 0, -4) ? ' selected="selected"' : '',
+					'name' => $lang_info['name']
+				);
+			}		
+		}
+	}
+	return $languages;
+}
+/**
  * Liefert ein Array zur Ausgabe als Dropdown-Menü
  * für die Anzahl der anzuzeigenden Datensätze je Seite
  *

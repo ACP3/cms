@@ -10,8 +10,8 @@
 	</ul>
 </div>
 {else}
-<p>{lang t="installation|db_update_description"}</p>
+<p>{lang t="db_update_description"}</p>
 <div class="form-actions" style="text-align:center">
-	<a href="{uri args="install/db_update/action_do"}" class="btn">{lang t="installation|do_db_update"}</a>
+	<a href="{uri args="install/db_update/action_do"}" class="btn">{lang t="do_db_update"}</a>
 </div>
 {/if}

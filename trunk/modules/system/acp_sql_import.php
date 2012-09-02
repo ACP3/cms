@@ -2,8 +2,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$breadcrumb->append($lang->t('system', 'acp_maintenance'), $uri->route('acp/system/maintenance'))
-		   ->append($lang->t('system', 'acp_sql_import'));
+ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('system', 'acp_maintenance'), ACP3_CMS::$uri->route('acp/system/maintenance'))
+		   ->append(ACP3_CMS::$lang->t('system', 'acp_sql_import'));
 
 if (isset($_POST['submit']) === true) {
 	if (isset($_FILES['file'])) {
@@ -13,18 +13,18 @@ if (isset($_POST['submit']) === true) {
 	}
 
 	if (empty($_POST['text']) && empty($file['size']))
-		$errors['text'] = $lang->t('system', 'type_in_text_or_select_sql_file');
+		$errors['text'] = ACP3_CMS::$lang->t('system', 'type_in_text_or_select_sql_file');
 	if (!empty($file['size']) &&
 		(!ACP3_Validate::mimeType($file['tmp_name'], 'text/plain') ||
 		$_FILES['file']['error'] !== UPLOAD_ERR_OK))
-		$errors['file'] = $lang->t('system', 'select_sql_file');
+		$errors['file'] = ACP3_CMS::$lang->t('system', 'select_sql_file');
 
 	if (isset($errors) === true) {
-		$tpl->assign('error_msg', errorBox($errors));
+		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
 	} else {
-		$session->unsetFormToken();
+		ACP3_CMS::$session->unsetFormToken();
 
 		$data = isset($file) ? file_get_contents($file['tmp_name']) : $_POST['text'];
 		$data = str_replace(array("\r\n", "\r", "\n"), "\n", $data);
@@ -34,7 +34,7 @@ if (isset($_POST['submit']) === true) {
 		$i = 0;
 		foreach ($data_ary as $row) {
 			if (!empty($row)) {
-				$bool = $db->query($row, 3);
+				$bool = ACP3_CMS::$db->query($row, 3);
 				$sql_queries[$i]['query'] = str_replace("\n", '<br />', $row);
 				$sql_queries[$i]['color'] = $bool !== null ? '090' : 'f00';
 				++$i;
@@ -45,14 +45,14 @@ if (isset($_POST['submit']) === true) {
 			}
 		}
 
-		$tpl->assign('sql_queries', $sql_queries);
+		ACP3_CMS::$view->assign('sql_queries', $sql_queries);
 
 		ACP3_Cache::purge();
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-	$tpl->assign('form', isset($_POST['submit']) ? $_POST : array('text' => ''));
+	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : array('text' => ''));
 
-	$session->generateFormToken();
+	ACP3_CMS::$session->generateFormToken();
 }
-ACP3_View::setContent(ACP3_View::fetchTemplate('system/acp_sql_import.tpl'));
+ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('system/acp_sql_import.tpl'));

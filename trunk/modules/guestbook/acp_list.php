@@ -12,11 +12,11 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$guestbook = $db->select('id, ip, date, name, message', 'guestbook', 0, 'date DESC', POS, $auth->entries);
+$guestbook = ACP3_CMS::$db->select('id, ip, date, name, message', 'guestbook', 0, 'date DESC', POS, ACP3_CMS::$auth->entries);
 $c_guestbook = count($guestbook);
 
 if ($c_guestbook > 0) {
-	$tpl->assign('pagination', pagination($db->countRows('*', 'guestbook')));
+	ACP3_CMS::$view->assign('pagination', pagination(ACP3_CMS::$db->countRows('*', 'guestbook')));
 
 	$settings = ACP3_Config::getSettings('guestbook');
 
@@ -30,14 +30,14 @@ if ($c_guestbook > 0) {
 	}
 
 	for ($i = 0; $i < $c_guestbook; ++$i) {
-		$guestbook[$i]['date'] = $date->format($guestbook[$i]['date']);
-		$guestbook[$i]['name'] = $db->escape($guestbook[$i]['name'], 3);
-		$guestbook[$i]['message'] = nl2p($db->escape($guestbook[$i]['message'], 3));
+		$guestbook[$i]['date'] = ACP3_CMS::$date->format($guestbook[$i]['date']);
+		$guestbook[$i]['name'] = ACP3_CMS::$db->escape($guestbook[$i]['name'], 3);
+		$guestbook[$i]['message'] = nl2p(ACP3_CMS::$db->escape($guestbook[$i]['message'], 3));
 		if ($emoticons_active === true) {
 			$guestbook[$i]['message'] = emoticonsReplace($guestbook[$i]['message']);
 		}
 	}
-	$tpl->assign('guestbook', $guestbook);
-	$tpl->assign('can_delete', ACP3_Modules::check('guestbook', 'acp_delete'));
+	ACP3_CMS::$view->assign('guestbook', $guestbook);
+	ACP3_CMS::$view->assign('can_delete', ACP3_Modules::check('guestbook', 'acp_delete'));
 }
-ACP3_View::setContent(ACP3_View::fetchTemplate('guestbook/acp_list.tpl'));
+ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('guestbook/acp_list.tpl'));

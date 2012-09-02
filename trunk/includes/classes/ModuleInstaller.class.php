@@ -45,9 +45,7 @@ abstract class ACP3_ModuleInstaller {
 	 */
 	public function setModuleId()
 	{
-		global $db;
-
-		$module = $db->select('id', 'modules', 'name = \'' . $db->escape($this->getName()) . '\'');
+		$module = ACP3_CMS::$db->select('id', 'modules', 'name = \'' . ACP3_CMS::$db->escape($this->getName()) . '\'');
 		$this->module_id = !empty($module[0]['id']) ? (int) $module[0]['id'] : 0;
 	}
 
@@ -96,23 +94,21 @@ abstract class ACP3_ModuleInstaller {
 	 * @return boolean
 	 */
 	protected function executeSqlQueries(array $queries) {
-		global $db;
-
 		if (count($queries) > 0) {
 			$search = array('{engine}', '{charset}');
 			$replace = array('ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`');
 
-			$db->link->beginTransaction();
+			ACP3_CMS::$db->link->beginTransaction();
 			foreach ($queries as $query) {
 				if (!empty($query)) {
-					$bool = $db->query(str_replace($search, $replace, $query), 0);
+					$bool = ACP3_CMS::$db->query(str_replace($search, $replace, $query), 0);
 					if ($bool === false) {
-						$db->link->rollBack();
+						ACP3_CMS::$db->link->rollBack();
 						return false;
 					}
 				}
 			}
-			$db->link->commit();
+			ACP3_CMS::$db->link->commit();
 		}
 		return true;
 	}
@@ -123,9 +119,7 @@ abstract class ACP3_ModuleInstaller {
 	 * @return boolean
 	 */
 	protected function addResources() {
-		global $db;
-
-		$mod_name = $db->select('name', 'modules', 'id = ' . $this->module_id);
+		$mod_name = ACP3_CMS::$db->select('name', 'modules', 'id = ' . $this->module_id);
 
 		if (!empty($mod_name)) {
 			$modules = scandir(MODULES_DIR . $mod_name[0]['name']);
@@ -135,9 +129,9 @@ abstract class ACP3_ModuleInstaller {
 					$path = MODULES_DIR . $mod_name[0]['name'] . '/';
 					if (is_dir($path . $row) === true && $row === 'extensions') {
 						if (is_file($path . 'extensions/search.php') === true)
-							$db->insert('acl_resources', array('id' => '', 'module_id' => $this->module_id, 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
+							ACP3_CMS::$db->insert('acl_resources', array('id' => '', 'module_id' => $this->module_id, 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
 						if (is_file($path . 'extensions/feeds.php') === true)
-							$db->insert('acl_resources', array('id' => '', 'module_id' => $this->module_id, 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
+							ACP3_CMS::$db->insert('acl_resources', array('id' => '', 'module_id' => $this->module_id, 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
 					// Normale Moduldateien
 					} elseif (strpos($row, '.php') !== false) {
 						// .php entfernen
@@ -160,14 +154,14 @@ abstract class ACP3_ModuleInstaller {
 							elseif (strpos($row, 'acp_settings') === 0)
 								$privilege_id = 7;
 						}
-						$db->insert('acl_resources', array('id' => '', 'module_id' => $this->module_id, 'page' => $row, 'params' => '', 'privilege_id' => $privilege_id));
+						ACP3_CMS::$db->insert('acl_resources', array('id' => '', 'module_id' => $this->module_id, 'page' => $row, 'params' => '', 'privilege_id' => $privilege_id));
 					}
 				}
 			}
 
 			// Regeln für die Rollen setzen
-			$roles = $db->select('id', 'acl_roles');
-			$privileges = $db->select('id', 'acl_privileges');
+			$roles = ACP3_CMS::$db->select('id', 'acl_roles');
+			$privileges = ACP3_CMS::$db->select('id', 'acl_privileges');
 			foreach ($roles as $role) {
 				foreach ($privileges as $privilege) {
 					$permission = 0;
@@ -180,7 +174,7 @@ abstract class ACP3_ModuleInstaller {
 					if ($role['id'] == 4)
 						$permission = 1;
 
-					$db->insert('acl_rules', array('id' => '', 'role_id' => $role['id'], 'module_id' => $this->module_id, 'privilege_id' => $privilege['id'], 'permission' => $permission));
+					ACP3_CMS::$db->insert('acl_rules', array('id' => '', 'role_id' => $role['id'], 'module_id' => $this->module_id, 'privilege_id' => $privilege['id'], 'permission' => $permission));
 				}
 			}
 
@@ -198,10 +192,8 @@ abstract class ACP3_ModuleInstaller {
 	 * @return boolean
 	 */
 	protected function removeResources() {
-		global $db;
-
-		$bool = $db->delete('acl_resources', 'module_id = ' . $this->module_id);
-		$bool2 = $db->delete('acl_rules', 'module_id = ' . $this->module_id);
+		$bool = ACP3_CMS::$db->delete('acl_resources', 'module_id = ' . $this->module_id);
+		$bool2 = ACP3_CMS::$db->delete('acl_rules', 'module_id = ' . $this->module_id);
 
 		ACP3_Cache::purge(0, 'acl');
 
@@ -215,19 +207,17 @@ abstract class ACP3_ModuleInstaller {
 	 * @return boolean
 	 */
 	protected function installSettings(array $settings) {
-		global $db;
-
 		if (count($settings) > 0) {
-			$db->link->beginTransaction();
+			ACP3_CMS::$db->link->beginTransaction();
 			$bool = false;
 			foreach ($settings as $key => $value) {
-				$bool = $db->insert('settings', array('id' => '', 'module_id' => $this->module_id, 'name' => $key, 'value' => $value));
+				$bool = ACP3_CMS::$db->insert('settings', array('id' => '', 'module_id' => $this->module_id, 'name' => $key, 'value' => $value));
 				if ($bool === false) {
-					$db->link->rollBack();
+					ACP3_CMS::$db->link->rollBack();
 					return false;
 				}
 			}
-			$db->link->commit();
+			ACP3_CMS::$db->link->commit();
 		}
 		return true;
 	}
@@ -238,9 +228,7 @@ abstract class ACP3_ModuleInstaller {
 	 * @return boolean
 	 */
 	protected function removeSettings() {
-		global $db;
-
-		return (bool) $db->delete('settings', 'module_id = ' . ((int) $this->module_id));
+		return (bool) ACP3_CMS::$db->delete('settings', 'module_id = ' . ((int) $this->module_id));
 	}
 
 	/**
@@ -249,11 +237,9 @@ abstract class ACP3_ModuleInstaller {
 	 * @return boolean
 	 */
 	protected function addToModulesTable() {
-		global $db;
-
 		// Modul in die Modules-SQL-Tabelle eintragen
-		$bool = $db->insert('modules', array('id' => '', 'name' => $this->getName(), 'version' => $this->getSchemaVersion(), 'active' => 1));
-		$this->module_id = $db->link->lastInsertId();
+		$bool = ACP3_CMS::$db->insert('modules', array('id' => '', 'name' => $this->getName(), 'version' => $this->getSchemaVersion(), 'active' => 1));
+		$this->module_id = ACP3_CMS::$db->link->lastInsertId();
 
 		return (bool) $bool;
 	}
@@ -263,9 +249,7 @@ abstract class ACP3_ModuleInstaller {
 	 * @return boolean
 	 */
 	protected function removeFromModulesTable() {
-		global $db;
-
-		return (bool) $db->delete('modules', 'id = ' . ((int) $this->module_id));
+		return (bool) ACP3_CMS::$db->delete('modules', 'id = ' . ((int) $this->module_id));
 	}
 
 	/**
@@ -275,9 +259,7 @@ abstract class ACP3_ModuleInstaller {
 	 * @return integer
 	 */
 	public function updateSchema() {
-		global $db;
-
-		$module = $db->select('version', 'modules', 'name = \'' . $db->escape($this->getName()) . '\'');
+		$module = ACP3_CMS::$db->select('version', 'modules', 'name = \'' . ACP3_CMS::$db->escape($this->getName()) . '\'');
 		$installed_schema_version = isset($module[0]['version']) ? (int) $module[0]['version'] : 0;
 		$result = -1;
 
@@ -338,7 +320,7 @@ abstract class ACP3_ModuleInstaller {
 	public function setNewSchemaVersion($new_version) {
 		global $db;
 
-		return (bool) $db->update('modules', array('version' => (int) $new_version), 'name = \'' . $db->escape($this->getName()) . '\'');
+		return (bool) ACP3_CMS::$db->update('modules', array('version' => (int) $new_version), 'name = \'' . ACP3_CMS::$db->escape($this->getName()) . '\'');
 	}
 
 	/**

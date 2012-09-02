@@ -10,8 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$breadcrumb->append($lang->t('system', 'acp_maintenance'), $uri->route('acp/system/maintenance'))
-		   ->append($lang->t('system', 'acp_update_check'));
+ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('system', 'acp_maintenance'), ACP3_CMS::$uri->route('acp/system/maintenance'))
+		   ->append(ACP3_CMS::$lang->t('system', 'acp_update_check'));
 
 $file = @file_get_contents('http://www.acp3-cms.net/update.txt');
 if ($file !== false) {
@@ -23,14 +23,14 @@ if ($file !== false) {
 		);
 
 		if (version_compare($update['installed_version'], $update['current_version'], '>=')) {
-			$update['text'] = $lang->t('system', 'acp3_up_to_date');
+			$update['text'] = ACP3_CMS::$lang->t('system', 'acp3_up_to_date');
 			$update['class'] = 'success';
 		} else {
-			$update['text'] = sprintf($lang->t('system', 'acp3_not_up_to_date'), '<a href="' . $data[1] . '" onclick="window.open(this.href); return false">', '</a>');
+			$update['text'] = sprintf(ACP3_CMS::$lang->t('system', 'acp3_not_up_to_date'), '<a href="' . $data[1] . '" onclick="window.open(this.href); return false">', '</a>');
 			$update['class'] = 'error';
 		}
 		
-		$tpl->assign('update', $update);
+		ACP3_CMS::$view->assign('update', $update);
 	}
 }
-ACP3_View::setContent(ACP3_View::fetchTemplate('system/acp_update_check.tpl'));
+ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('system/acp_update_check.tpl'));

@@ -10,11 +10,11 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$auth->logout();
+ACP3_CMS::$auth->logout();
 
-if ($uri->last) {
-	$lastPage = base64_decode($uri->last);
+if (ACP3_CMS::$uri->last) {
+	$lastPage = base64_decode(ACP3_CMS::$uri->last);
 	if (!preg_match('/^((acp|users)\/)/', $lastPage))
-		$uri->redirect($lastPage);
+		ACP3_CMS::$uri->redirect($lastPage);
 }
-$uri->redirect(0, ROOT_DIR);
+ACP3_CMS::$uri->redirect(0, ROOT_DIR);

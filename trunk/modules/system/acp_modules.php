@@ -10,35 +10,35 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-$breadcrumb->append($lang->t('system', 'acp_extensions'), $uri->route('acp/system/extensions'))
-		   ->append($lang->t('system', 'acp_modules'));
+ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('system', 'acp_extensions'), ACP3_CMS::$uri->route('acp/system/extensions'))
+		   ->append(ACP3_CMS::$lang->t('system', 'acp_modules'));
 
-switch ($uri->action) {
+switch (ACP3_CMS::$uri->action) {
 	case 'activate':
 	case 'deactivate':
-		$info = ACP3_Modules::getModuleInfo($uri->dir);
+		$info = ACP3_Modules::getModuleInfo(ACP3_CMS::$uri->dir);
 		if (empty($info)) {
-			$text = $lang->t('system', 'module_not_found');
+			$text = ACP3_CMS::$lang->t('system', 'module_not_found');
 		} elseif ($info['protected'] === true) {
-			$text = $lang->t('system', 'mod_deactivate_forbidden');
+			$text = ACP3_CMS::$lang->t('system', 'mod_deactivate_forbidden');
 		} else {
-			$bool = $db->update('modules', array('active' => $uri->action === 'activate' ? 1 : 0), 'name = \'' . $db->escape($uri->dir) . '\'');
+			$bool = ACP3_CMS::$db->update('modules', array('active' => ACP3_CMS::$uri->action === 'activate' ? 1 : 0), 'name = \'' . ACP3_CMS::$db->escape(ACP3_CMS::$uri->dir) . '\'');
 			ACP3_Modules::setModulesCache();
 			ACP3_ACL::setResourcesCache();
 
-			$text = $lang->t('system', 'mod_' . $uri->action . '_' . ($bool !== false ? 'success' : 'error'));
+			$text = ACP3_CMS::$lang->t('system', 'mod_' . ACP3_CMS::$uri->action . '_' . ($bool !== false ? 'success' : 'error'));
 		}
 		setRedirectMessage($bool, $text, 'acp/system/modules');
 		break;
 	case 'install':
 		$bool = false;
 		// Nur noch nicht installierte Module berücksichtigen
-		if ($db->countRows('*', 'modules', 'name = \'' . $db->escape($uri->dir) . '\'') == 0) {
-			$path = MODULES_DIR . $uri->dir . '/install.class.php';
+		if (ACP3_CMS::$db->countRows('*', 'modules', 'name = \'' . ACP3_CMS::$db->escape(ACP3_CMS::$uri->dir) . '\'') == 0) {
+			$path = MODULES_DIR . ACP3_CMS::$uri->dir . '/install.class.php';
 			if (is_file($path) === true) {
 				require $path;
 
-				$className = 'ACP3_' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $uri->dir)))) . 'ModuleInstaller';
+				$className = 'ACP3_' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', ACP3_CMS::$uri->dir)))) . 'ModuleInstaller';
 				$install = new $className();
 				$bool = $install->install();
 
@@ -46,22 +46,22 @@ switch ($uri->action) {
 				ACP3_Modules::setModulesCache();
 			}
 
-			$text = $lang->t('system', 'mod_installation_' . ($bool !== false ? 'success' : 'error'));
+			$text = ACP3_CMS::$lang->t('system', 'mod_installation_' . ($bool !== false ? 'success' : 'error'));
 		} else {
-			$text = $lang->t('system', 'module_already_installed');
+			$text = ACP3_CMS::$lang->t('system', 'module_already_installed');
 		}
 		setRedirectMessage($bool, $text, 'acp/system/modules');
 		break;
 	case 'uninstall':
 		$bool = false;
-		$mod_info = ACP3_Modules::getModuleInfo($uri->dir);
+		$mod_info = ACP3_Modules::getModuleInfo(ACP3_CMS::$uri->dir);
 		// Nur installierte und Nicht-Core-Module berücksichtigen
-		if ($db->countRows('*', 'modules', 'name = \'' . $db->escape($uri->dir) . '\'') == 1 && $mod_info['protected'] === false) {
-			$path = MODULES_DIR . $uri->dir . '/install.class.php';
+		if (ACP3_CMS::$db->countRows('*', 'modules', 'name = \'' . ACP3_CMS::$db->escape(ACP3_CMS::$uri->dir) . '\'') == 1 && $mod_info['protected'] === false) {
+			$path = MODULES_DIR . ACP3_CMS::$uri->dir . '/install.class.php';
 			if (is_file($path) === true) {
 				require $path;
 
-				$className = 'ACP3_' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $uri->dir)))) . 'ModuleInstaller';
+				$className = 'ACP3_' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', ACP3_CMS::$uri->dir)))) . 'ModuleInstaller';
 				$install = new $className();
 				$bool = $install->uninstall();
 
@@ -69,9 +69,9 @@ switch ($uri->action) {
 				ACP3_Modules::setModulesCache();
 			}
 
-			$text = $lang->t('system', 'mod_uninstallation_' . ($bool !== false ? 'success' : 'error'));
+			$text = ACP3_CMS::$lang->t('system', 'mod_uninstallation_' . ($bool !== false ? 'success' : 'error'));
 		} else {
-			$text = $lang->t('system', 'protected_module_description');
+			$text = ACP3_CMS::$lang->t('system', 'protected_module_description');
 		}
 		setRedirectMessage($bool, $text, 'acp/system/modules');
 		break;
@@ -79,21 +79,21 @@ switch ($uri->action) {
 		getRedirectMessage();
 
 		// Languagecache neu erstellen, für den Fall, dass neue Module hinzugefügt wurden
-		$lang->setLangCache();
+		ACP3_CMS::$lang->setLangCache();
 
 		$modules = ACP3_Modules::getAllModules();
 		$installed_modules = $new_modules = array();
 
 		foreach ($modules as $key => $values) {
-			if ($db->countRows('*', 'modules', 'name = \'' . $values['dir'] . '\'') == 1) {
+			if (ACP3_CMS::$db->countRows('*', 'modules', 'name = \'' . $values['dir'] . '\'') == 1) {
 				$installed_modules[$key] = $values;
 			} else {
 				$new_modules[$key] = $values;
 			}
 		}
 
-		$tpl->assign('installed_modules', $installed_modules);
-		$tpl->assign('new_modules', $new_modules);
+		ACP3_CMS::$view->assign('installed_modules', $installed_modules);
+		ACP3_CMS::$view->assign('new_modules', $new_modules);
 
-		ACP3_View::setContent(ACP3_View::fetchTemplate('system/acp_modules.tpl'));
+		ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('system/acp_modules.tpl'));
 }

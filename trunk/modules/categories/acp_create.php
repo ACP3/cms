@@ -21,24 +21,24 @@ if (isset($_POST['submit']) === true) {
 	$settings = ACP3_Config::getSettings('categories');
 
 	if (strlen($_POST['name']) < 3)
-		$errors['name'] = $lang->t('categories', 'name_to_short');
+		$errors['name'] = ACP3_CMS::$lang->t('categories', 'name_to_short');
 	if (strlen($_POST['description']) < 3)
-		$errors['description'] = $lang->t('categories', 'description_to_short');
+		$errors['description'] = ACP3_CMS::$lang->t('categories', 'description_to_short');
 	if (!empty($file) &&
 		(empty($file['tmp_name']) ||
 		empty($file['size']) ||
 		ACP3_Validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
 		$_FILES['picture']['error'] !== UPLOAD_ERR_OK))
-		$errors['picture'] = $lang->t('categories', 'invalid_image_selected');
+		$errors['picture'] = ACP3_CMS::$lang->t('categories', 'invalid_image_selected');
 	if (empty($_POST['module']))
-		$errors['module'] = $lang->t('categories', 'select_module');
-	if (strlen($_POST['name']) >= 3 && categoriesCheckDuplicate($db->escape($_POST['name']), $_POST['module']))
-		$errors['name'] = $lang->t('categories', 'category_already_exists');
+		$errors['module'] = ACP3_CMS::$lang->t('categories', 'select_module');
+	if (strlen($_POST['name']) >= 3 && categoriesCheckDuplicate(ACP3_CMS::$db->escape($_POST['name']), $_POST['module']))
+		$errors['name'] = ACP3_CMS::$lang->t('categories', 'category_already_exists');
 
 	if (isset($errors) === true) {
-		$tpl->assign('error_msg', errorBox($errors));
+		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_View::setContent(errorBox($lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
 	} else {
 		$file_sql = null;
 		if (!empty($file)) {
@@ -46,27 +46,27 @@ if (isset($_POST['submit']) === true) {
 			$file_sql = array('picture' => $result['name']);
 		}
 
-		$mod_id = $db->select('id', 'modules', 'name = \'' . $db->escape($_POST['module']) . '\'');
+		$mod_id = ACP3_CMS::$db->select('id', 'modules', 'name = \'' . ACP3_CMS::$db->escape($_POST['module']) . '\'');
 		$insert_values = array(
 			'id' => '',
-			'name' => $db->escape($_POST['name']),
-			'description' => $db->escape($_POST['description']),
+			'name' => ACP3_CMS::$db->escape($_POST['name']),
+			'description' => ACP3_CMS::$db->escape($_POST['description']),
 			'module_id' => $mod_id[0]['id'],
 		);
 		if (is_array($file_sql) === true) {
 			$insert_values = array_merge($insert_values, $file_sql);
 		}
 
-		$bool = $db->insert('categories', $insert_values);
+		$bool = ACP3_CMS::$db->insert('categories', $insert_values);
 		setCategoriesCache($_POST['module']);
 
-		$session->unsetFormToken();
+		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool, $lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/categories');
+		setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/categories');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-	$tpl->assign('form', isset($_POST['submit']) ? $_POST : array('name' => '', 'description' => ''));
+	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : array('name' => '', 'description' => ''));
 
 	$mod_list = ACP3_Modules::getAllModules();
 
@@ -77,9 +77,9 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 			unset($mod_list[$name]);
 		}
 	}
-	$tpl->assign('mod_list', $mod_list);
+	ACP3_CMS::$view->assign('mod_list', $mod_list);
 
-	$session->generateFormToken();
+	ACP3_CMS::$session->generateFormToken();
 
-	ACP3_View::setContent(ACP3_View::fetchTemplate('categories/acp_create.tpl'));
+	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('categories/acp_create.tpl'));
 }
