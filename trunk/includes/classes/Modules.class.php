@@ -131,13 +131,11 @@ class ACP3_Modules
 						'dir' => $dir,
 						'active' =>  isset($mod_db[0]) && $mod_db[0]['active'] == 1 ? true : false,
 						'schema_version' => isset($mod_db[0]) ? (int) $mod_db[0]['version'] : 0,
-						'description' => isset($mod_info['description']['lang']) && $mod_info['description']['lang'] == 'true' ? ACP3_CMS::$lang->t($dir, 'mod_description') : $mod_info['description']['lang'],
+						'description' => isset($mod_info['description']['lang']) && $mod_info['description']['lang'] === 'true' ? ACP3_CMS::$lang->t($dir, 'mod_description') : $mod_info['description']['lang'],
 						'author' => $mod_info['author'],
-						'version' => isset($mod_info['version']['core']) && $mod_info['version']['core'] == 'true' ? CONFIG_VERSION : $mod_info['version'],
+						'version' => isset($mod_info['version']['core']) && $mod_info['version']['core'] === 'true' ? CONFIG_VERSION : $mod_info['version'],
 						'name' => isset($mod_info['name']['lang']) && $mod_info['name']['lang'] == 'true' ? ACP3_CMS::$lang->t($dir, $dir) : $mod_info['name'],
 						'categories' => isset($mod_info['categories']) ? true : false,
-						'js' => isset($mod_info['js']) ? true : false,
-						'css' => isset($mod_info['css']) ? true : false,
 						'protected' => isset($mod_info['protected']) ? true : false,
 					);
 				}
