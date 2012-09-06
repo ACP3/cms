@@ -348,7 +348,7 @@ abstract class ACP3_ModuleInstaller {
 	 */
 	public function setNewSchemaVersion($new_version)
 	{
-		return ACP3_CMS::$db2->update('modules', array('version' => (int) $new_version), array('name' => $this->getName())) >= 0 ? true : false;
+		return ACP3_CMS::$db2->update(DB_PRE . 'modules', array('version' => (int) $new_version), array('name' => $this->getName())) >= 0 ? true : false;
 	}
 
 	/**

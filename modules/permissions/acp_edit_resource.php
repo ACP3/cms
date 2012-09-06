@@ -35,7 +35,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 				'page' => $_POST['resource'],
 				'privilege_id' => $_POST['privileges'],
 			);
-			$bool = ACP3_CMS::$db2->update('acl_resources', $update_values, array('id' => ACP3_CMS::$uri->id));
+			$bool = ACP3_CMS::$db2->update(DB_PRE . 'acl_resources', $update_values, array('id' => ACP3_CMS::$uri->id));
 
 			ACP3_ACL::setResourcesCache();
 

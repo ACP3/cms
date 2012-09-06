@@ -23,7 +23,7 @@ if (ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'newsletter_a
 if (isset($errors) === true) {
 	ACP3_CMS::setContent(errorBox($errors));
 } else {
-	$bool = ACP3_CMS::$db2->update('newsletter_accounts', array('hash' => ''), array('mail' => $mail, 'hash' => $hash));
+	$bool = ACP3_CMS::$db2->update(DB_PRE . 'newsletter_accounts', array('hash' => ''), array('mail' => $mail, 'hash' => $hash));
 
 	ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
 }

@@ -25,12 +25,15 @@ if (!isset($entries)) {
 
 	$marked_entries = explode('|', $entries);
 	$bool = false;
+	$commentsInstalled = ACP3_Modules::isInstalled('comments');
 	foreach ($marked_entries as $entry) {
 		if (!empty($entry) && ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'files WHERE id = ?', array($entry)) == 1) {
 			// Datei ebenfalls löschen
 			$file = ACP3_CMS::$db2->fetchColumn('SELECT file FROM ' . DB_PRE . 'files WHERE id = ?', array($entry));
 			removeUploadedFile('files', $file);
 			$bool = ACP3_CMS::$db2->delete(DB_PRE . 'files', array('id' => $entry));
+			if ($commentsInstalled === true)
+				ACP3_CMS::$db2->delete(DB_PRE . 'comments', array('module' => 'files', 'entry_id' => $entry));
 
 			ACP3_Cache::delete('details_id_' . $entry, 'files');
 			ACP3_SEO::deleteUriAlias('files/details/id_' . $entry);
