@@ -16,7 +16,7 @@
 {if $can_delete === true}
 				<th style="width:3%"><input type="checkbox" id="mark-all" value="1"></th>
 {/if}
-				<th>{lang t="system|date"}</th>
+				<th style="width:22%">{lang t="system|date"}</th>
 				<th>{lang t="newsletter|subject"}</th>
 				<th>{lang t="newsletter|status"}</th>
 {if $can_send}
