@@ -138,7 +138,7 @@ class ACP3_CMS {
 			'password' => CONFIG_DB_PASSWORD,
 			'host' => CONFIG_DB_HOST,
 			'driver' => 'pdo_mysql',
-			'charset' => 'UTF-8'
+			'charset' => 'utf8'
 		);
 		self::$db2 = Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
 
