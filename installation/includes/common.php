@@ -16,17 +16,16 @@ header('Content-type: text/html; charset=UTF-8');
 // Alle Fehler ausgeben
 error_reporting(E_ALL);
 
-define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
+include ACP3_ROOT . 'includes/globals.php';
+
+require ACP3_ROOT . 'includes/bootstrap.php';
+ACP3_CMS::defineDirConstants();
+ACP3_CMS::includeAutoLoader();
+
 $php_self = dirname(PHP_SELF);
 define('INSTALLER_DIR', $php_self !== '/' ? $php_self . '/' : '/');
-define('ROOT_DIR', substr(INSTALLER_DIR, 0, -13));
-define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
 define('INSTALLER_INCLUDES_DIR', ACP3_ROOT . 'installation/includes/');
-define('LIBRARIES_DIR', ACP3_ROOT . 'libraries/');
-define('MODULES_DIR', ACP3_ROOT . 'modules/');
 
-include INCLUDES_DIR . 'globals.php';
-require INCLUDES_DIR . 'autoload.php';
 require INSTALLER_INCLUDES_DIR . 'functions.php';
 
 // Smarty einbinden
@@ -66,10 +65,8 @@ if (defined('IN_UPDATER') === false) {
 	);
 	$uri = new ACP3_URI('install', 'welcome');
 } else {
-	require INCLUDES_DIR . 'bootstrap.php';
-
 	ACP3_CMS::startupChecks();
-	ACP3_CMS::initializeDatabase();
+	ACP3_CMS::initializeDoctrineDBAL();
 
 	// Alte Versionen auf den Legacy Updater umleiten
 	if (defined('CONFIG_LANG') === true) {
@@ -117,7 +114,7 @@ $tpl->assign('LANGUAGES', languagesDropdown(LANG));
 
 $tpl->assign('PHP_SELF', PHP_SELF);
 $tpl->assign('INSTALLER_DIR', INSTALLER_DIR);
-$tpl->assign('ROOT_DIR', ROOT_DIR);
+$tpl->assign('ROOT_DIR', substr(INSTALLER_DIR, 0, -13));
 $tpl->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI'], ENT_QUOTES));
 $tpl->assign('LANG', LANG);
 

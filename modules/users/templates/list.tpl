@@ -8,8 +8,8 @@
 		<tr>
 			<th>{lang t="users|nickname"}</th>
 			<th>{lang t="users|realname"}</th>
-			<th>{lang t="common|email"}</th>
-			<th>{lang t="common|website"}</th>
+			<th>{lang t="system|email_address"}</th>
+			<th>{lang t="system|website"}</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -25,6 +25,6 @@
 </table>
 {else}
 <div class="alert align-center">
-	<strong>{lang t="common|no_entries"}</strong>
+	<strong>{lang t="system|no_entries"}</strong>
 </div>
 {/if}

@@ -16,17 +16,17 @@ elseif (ACP3_Validate::deleteEntries(ACP3_CMS::$uri->entries) === true)
 	$entries = ACP3_CMS::$uri->entries;
 
 if (!isset($entries)) {
-	ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'no_entries_selected')));
+	ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'no_entries_selected')));
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
-	ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('common', 'confirm_delete'), ACP3_CMS::$uri->route('acp/comments/delete/entries_' . $marked_entries . '/action_confirmed/'), ACP3_CMS::$uri->route('acp/comments')));
+	ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('system', 'confirm_delete'), ACP3_CMS::$uri->route('acp/comments/delete/entries_' . $marked_entries . '/action_confirmed/'), ACP3_CMS::$uri->route('acp/comments')));
 } elseif (ACP3_CMS::$uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	foreach ($marked_entries as $entry) {
-		$bool = ACP3_CMS::$db->delete('comments', 'module_id = ' . ((int) $entry));
+		$bool = ACP3_CMS::$db2->delete(DB_PRE . 'comments', array('module_id' => $entry));
 	}
-	setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
+	setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
 } else {
 	ACP3_CMS::$uri->redirect('errors/404');
 }

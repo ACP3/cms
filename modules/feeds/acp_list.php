@@ -17,24 +17,24 @@ if (isset($_POST['submit']) === true) {
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
-		$settings = array(
-			'feed_image' => ACP3_CMS::$db->escape($_POST['feed_image']),
-			'feed_type' => ACP3_CMS::$db->escape($_POST['feed_type'])
+		$data = array(
+			'feed_image' => $_POST['feed_image'],
+			'feed_type' => $_POST['feed_type']
 		);
 
-		$bool = ACP3_Config::setSettings('feeds', $settings);
+		$bool = ACP3_Config::setSettings('feeds', $data);
 
 		ACP3_CMS::$session->unsetFormToken();
 
-		ACP3_CMS::setContent(confirmBox($bool === true ? ACP3_CMS::$lang->t('common', 'settings_success') : ACP3_CMS::$lang->t('common', 'settings_error'), ACP3_CMS::$uri->route('acp/feeds')));
+		setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/feeds');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
+	getRedirectMessage();
+
 	$settings = ACP3_Config::getSettings('feeds');
-	$settings['feed_image'] = ACP3_CMS::$db->escape($settings['feed_image'], 3);
-	$settings['feed_type'] = ACP3_CMS::$db->escape($settings['feed_type'], 3);
 
 	$feed_types = array();
 	$feed_types[0]['value'] = 'RSS 1.0';

@@ -4,7 +4,7 @@
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="tabbable">
 		<ul class="nav nav-tabs">
-			<li class="active"><a href="#tab-1" data-toggle="tab">{lang t="common|general_statements"}</a></li>
+			<li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general_statements"}</a></li>
 			<li><a href="#tab-2" data-toggle="tab">{lang t="users|contact"}</a></li>
 			<li><a href="#tab-3" data-toggle="tab">{lang t="users|pwd"}</a></li>
 		</ul>
@@ -76,8 +76,8 @@
 		</div>
 	</div>
 	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
-		<a href="{uri args="users/home"}" class="btn">{lang t="common|cancel"}</a>
+		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
+		<a href="{uri args="users/home"}" class="btn">{lang t="system|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

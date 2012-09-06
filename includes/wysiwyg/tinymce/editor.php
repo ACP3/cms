@@ -7,7 +7,7 @@ function editor($params) {
 		'url' => ROOT_DIR . 'includes/wysiwyg/tinymce/tiny_mce_gzip.php',
 		'themes' => 'advanced',
 		'languages' => 'en',
-		'cache_dir' => ACP3_ROOT . 'uploads/cache/minify/',
+		'cache_dir' => UPLOADS_DIR . 'cache/minify/',
 	);
 
 	if (isset($params['toolbar']) && $params['toolbar'] === 'simple') {
@@ -57,5 +57,5 @@ function editor($params) {
 		$wysiwyg['advanced_replace_content'] = 'tinyMCE.execInstanceCommand(\'' . $params['id'] . '\',"mceInsertContent",false,text);';
 
 	ACP3_CMS::$view->assign('wysiwyg', $wysiwyg);
-	return ACP3_CMS::$view->fetchTemplate('common/wysiwyg.tpl');
+	return ACP3_CMS::$view->fetchTemplate('system/wysiwyg.tpl');
 }

@@ -10,14 +10,15 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true && ACP3_CMS::$db->countRows('*', 'news', 'id = \'' . ACP3_CMS::$uri->id . '\'') == 1) {
+if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
+	ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'news WHERE id = ?', array(ACP3_CMS::$uri->id)) == 1) {
 	require_once MODULES_DIR . 'categories/functions.php';
 
 	$settings = ACP3_Config::getSettings('news');
 
 	if (isset($_POST['submit']) === true) {
 		if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
-			$errors[] = ACP3_CMS::$lang->t('common', 'select_date');
+			$errors[] = ACP3_CMS::$lang->t('system', 'select_date');
 		if (strlen($_POST['headline']) < 3)
 			$errors['headline'] = ACP3_CMS::$lang->t('news', 'headline_to_short');
 		if (strlen($_POST['text']) < 3)
@@ -30,49 +31,47 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true && ACP3_CMS::$db->count
 			$errors[] = ACP3_CMS::$lang->t('news', 'complete_additional_hyperlink_statements');
 		if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 			(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias'], 'news/details/id_' . ACP3_CMS::$uri->id) === true))
-			$errors['alias'] = ACP3_CMS::$lang->t('common', 'uri_alias_unallowed_characters_or_exists');
+			$errors['alias'] = ACP3_CMS::$lang->t('system', 'uri_alias_unallowed_characters_or_exists');
 
 		if (isset($errors) === true) {
 			ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 		} elseif (ACP3_Validate::formToken() === false) {
-			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 		} else {
 			$update_values = array(
 				'start' => $_POST['start'],
 				'end' => $_POST['end'],
-				'headline' => ACP3_CMS::$db->escape($_POST['headline']),
-				'text' => ACP3_CMS::$db->escape($_POST['text'], 2),
+				'headline' => $_POST['headline'],
+				'text' => $_POST['text'],
 				'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,
 				'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
 				'category_id' => strlen($_POST['cat_create']) >= 3 ? categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
-				'uri' => ACP3_CMS::$db->escape($_POST['uri'], 2),
+				'uri' => $_POST['uri'],
 				'target' => $_POST['target'],
-				'link_title' => ACP3_CMS::$db->escape($_POST['link_title']),
+				'link_title' => $_POST['link_title'],
 				'user_id' => ACP3_CMS::$auth->getUserId(),
 			);
 
-			$bool = ACP3_CMS::$db->update('news', $update_values, 'id = \'' . ACP3_CMS::$uri->id . '\'');
+			$bool = ACP3_CMS::$db2->update(DB_PRE . 'news', $update_values, array('id' => ACP3_CMS::$uri->id));
 			if ((bool) CONFIG_SEO_ALIASES === true)
-				ACP3_SEO::insertUriAlias('news/details/id_' . ACP3_CMS::$uri->id, $_POST['alias'], ACP3_CMS::$db->escape($_POST['seo_keywords']), ACP3_CMS::$db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
+				ACP3_SEO::insertUriAlias('news/details/id_' . ACP3_CMS::$uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int) $_POST['seo_robots']);
 
 			require_once MODULES_DIR . 'news/functions.php';
 			setNewsCache(ACP3_CMS::$uri->id);
 
 			ACP3_CMS::$session->unsetFormToken();
 
-			setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/news');
+			setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/news');
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-		$news = ACP3_CMS::$db->select('start, end, headline, text, readmore, comments, category_id, uri, target, link_title', 'news', 'id = \'' . ACP3_CMS::$uri->id . '\'');
-		$news[0]['headline'] = ACP3_CMS::$db->escape($news[0]['headline'], 3);
-		$news[0]['text'] = ACP3_CMS::$db->escape($news[0]['text'], 3);
+		$news = ACP3_CMS::$db2->fetchAssoc('SELECT start, end, headline, text, readmore, comments, category_id, uri, target, link_title FROM ' . DB_PRE . 'news WHERE id = ?', array(ACP3_CMS::$uri->id));
 
 		// Datumsauswahl
-		ACP3_CMS::$view->assign('publication_period', ACP3_CMS::$date->datepicker(array('start', 'end'), array($news[0]['start'], $news[0]['end'])));
+		ACP3_CMS::$view->assign('publication_period', ACP3_CMS::$date->datepicker(array('start', 'end'), array($news['start'], $news['end'])));
 
 		// Kategorien
-		ACP3_CMS::$view->assign('categories', categoriesList('news', $news[0]['category_id'], true));
+		ACP3_CMS::$view->assign('categories', categoriesList('news', $news['category_id'], true));
 
 		// Weiterlesen & Kommentare
 		if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && ACP3_Modules::check('comments', 'functions') === true)) {
@@ -80,14 +79,14 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true && ACP3_CMS::$db->count
 			$options = array();
 			if ($settings['readmore'] == 1) {
 				$options[$i]['name'] = 'readmore';
-				$options[$i]['checked'] = selectEntry('readmore', '1', $news[0]['readmore'], 'checked');
+				$options[$i]['checked'] = selectEntry('readmore', '1', $news['readmore'], 'checked');
 				$options[$i]['lang'] = ACP3_CMS::$lang->t('news', 'activate_readmore');
 				$i++;
 			}
 			if ($settings['comments'] == 1 && ACP3_Modules::check('comments', 'functions') === true) {
 				$options[$i]['name'] = 'comments';
-				$options[$i]['checked'] = selectEntry('comments', '1', $news[0]['comments'], 'checked');
-				$options[$i]['lang'] = ACP3_CMS::$lang->t('common', 'allow_comments');
+				$options[$i]['checked'] = selectEntry('comments', '1', $news['comments'], 'checked');
+				$options[$i]['lang'] = ACP3_CMS::$lang->t('system', 'allow_comments');
 			}
 			ACP3_CMS::$view->assign('options', $options);
 		}
@@ -95,16 +94,16 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true && ACP3_CMS::$db->count
 		// Linkziel
 		$target = array();
 		$target[0]['value'] = '1';
-		$target[0]['selected'] = selectEntry('target', '1', $news[0]['target']);
-		$target[0]['lang'] = ACP3_CMS::$lang->t('common', 'window_self');
+		$target[0]['selected'] = selectEntry('target', '1', $news['target']);
+		$target[0]['lang'] = ACP3_CMS::$lang->t('system', 'window_self');
 		$target[1]['value'] = '2';
-		$target[1]['selected'] = selectEntry('target', '2', $news[0]['target']);
-		$target[1]['lang'] = ACP3_CMS::$lang->t('common', 'window_blank');
+		$target[1]['selected'] = selectEntry('target', '2', $news['target']);
+		$target[1]['lang'] = ACP3_CMS::$lang->t('system', 'window_blank');
 		ACP3_CMS::$view->assign('target', $target);
 
 		ACP3_CMS::$view->assign('SEO_FORM_FIELDS', ACP3_SEO::formFields('news/details/id_' . ACP3_CMS::$uri->id));
 
-		ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : $news[0]);
+		ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : $news);
 
 		ACP3_CMS::$session->generateFormToken();
 

@@ -10,15 +10,14 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-if (ACP3_Validate::isNumber(ACP3_CMS::$uri->cat) && ACP3_CMS::$db->countRows('*', 'categories', 'id = \'' . ACP3_CMS::$uri->cat . '\'') == 1) {
-	$category = ACP3_CMS::$db->select('name', 'categories', 'id = \'' . ACP3_CMS::$uri->cat . '\'');
+if (ACP3_Validate::isNumber(ACP3_CMS::$uri->cat) &&
+	ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'categories WHERE id = ?', array(ACP3_CMS::$uri->cat)) == 1) {
+	$category = ACP3_CMS::$db2->fetchColumn('SELECT name FROM ' . DB_PRE . 'categories WHERE id = ?', array(ACP3_CMS::$uri->cat));
 	ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('files', 'files'), ACP3_CMS::$uri->route('files'))
-			   ->append($category[0]['name']);
+			   ->append($category);
 
-	$time = ACP3_CMS::$date->getCurrentDateTime();
-	$period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
-
-	$files = ACP3_CMS::$db->select('id, start, file, size, link_title', 'files', 'category_id = \'' . ACP3_CMS::$uri->cat . '\'' . $period, 'start DESC, end DESC, id DESC');
+	$period = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
+	$files = ACP3_CMS::$db2->fetchAll('SELECT id, start, file, size, link_title FROM ' . DB_PRE . 'files WHERE category_id = :cat_id' . $period . ' ORDER BY start DESC, end DESC, id DESC', array('cat_id' => ACP3_CMS::$uri->cat, 'time' => ACP3_CMS::$date->getCurrentDateTime()));
 	$c_files = count($files);
 
 	if ($c_files > 0) {
@@ -27,7 +26,6 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->cat) && ACP3_CMS::$db->countRows('*'
 		for ($i = 0; $i < $c_files; ++$i) {
 			$files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : ACP3_CMS::$lang->t('files', 'unknown_filesize');
 			$files[$i]['date'] = ACP3_CMS::$date->format($files[$i]['start'], $settings['dateformat']);
-			$files[$i]['link_title'] = ACP3_CMS::$db->escape($files[$i]['link_title'], 3);
 		}
 		ACP3_CMS::$view->assign('files', $files);
 	}

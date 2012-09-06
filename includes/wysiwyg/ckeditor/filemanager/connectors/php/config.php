@@ -30,7 +30,7 @@ require_once ACP3_ROOT . 'includes/bootstrap.php';
 
 ACP3_CMS::defineDirConstants();
 ACP3_CMS::includeAutoLoader();
-ACP3_CMS::initializeDatabase();
+ACP3_CMS::initializeDoctrineDBAL();
 ACP3_CMS::initializeClasses();
 
 global $Config;
@@ -51,7 +51,7 @@ $Config['UserFilesPath'] = $userdir;
 // user files directory. Useful if you are using a virtual directory, symbolic
 // link or alias. Examples: 'C:\\MySite\\userfiles\\' or '/root/mysite/userfiles/'.
 // Attention: The above 'UserFilesPath' must point to the same directory.
-$Config['UserFilesAbsolutePath'] = ACP3_ROOT . 'uploads/';
+$Config['UserFilesAbsolutePath'] = UPLOADS_DIR;
 
 // Due to security issues with Apache modules, it is recommended to leave the
 // following setting enabled.

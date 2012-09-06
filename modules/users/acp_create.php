@@ -14,11 +14,11 @@ if (isset($_POST['submit']) === true) {
 	require_once MODULES_DIR . 'users/functions.php';
 
 	if (empty($_POST['nickname']))
-		$errors['nickname'] = ACP3_CMS::$lang->t('common', 'name_to_short');
+		$errors['nickname'] = ACP3_CMS::$lang->t('system', 'name_to_short');
 	if (userNameExists($_POST['nickname']) === true)
 		$errors['nickname'] = ACP3_CMS::$lang->t('users', 'user_name_already_exists');
 	if (ACP3_Validate::email($_POST['mail']) === false)
-		$errors['mail'] = ACP3_CMS::$lang->t('common', 'wrong_email_format');
+		$errors['mail'] = ACP3_CMS::$lang->t('system', 'wrong_email_format');
 	if (userEmailExists($_POST['mail']) === true)
 		$errors['mail'] = ACP3_CMS::$lang->t('users', 'user_email_already_exists');
 	if (empty($_POST['roles']) || is_array($_POST['roles']) === false || ACP3_Validate::aclRolesExist($_POST['roles']) === false)
@@ -28,56 +28,59 @@ if (isset($_POST['submit']) === true) {
 	if (ACP3_CMS::$lang->languagePackExists($_POST['language']) === false)
 		$errors['language'] = ACP3_CMS::$lang->t('users', 'select_language');
 	if (ACP3_Validate::isNumber($_POST['entries']) === false)
-		$errors['entries'] = ACP3_CMS::$lang->t('common', 'select_records_per_page');
+		$errors['entries'] = ACP3_CMS::$lang->t('system', 'select_records_per_page');
 	if (empty($_POST['date_format_long']) || empty($_POST['date_format_short']))
 		$errors[] = ACP3_CMS::$lang->t('system', 'type_in_date_format');
 	if (ACP3_Validate::timeZone($_POST['date_time_zone']) === false)
-		$errors['time-zone'] = ACP3_CMS::$lang->t('common', 'select_time_zone');
+		$errors['time-zone'] = ACP3_CMS::$lang->t('system', 'select_time_zone');
 	if (empty($_POST['pwd']) || empty($_POST['pwd_repeat']) || $_POST['pwd'] != $_POST['pwd_repeat'])
 		$errors[] = ACP3_CMS::$lang->t('users', 'type_in_pwd');
 
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
 		$salt = salt(12);
 
 		$insert_values = array(
 			'id' => '',
 			'super_user' => (int) $_POST['super_user'],
-			'nickname' => ACP3_CMS::$db->escape($_POST['nickname']),
+			'nickname' => $_POST['nickname'],
 			'pwd' => generateSaltedPassword($salt, $_POST['pwd']) . ':' . $salt,
-			'realname' => ACP3_CMS::$db->escape($_POST['realname']) . ':1',
+			'realname' => $_POST['realname'] . ':1',
 			'gender' => ':1',
 			'birthday' => ':1',
 			'birthday_format' => '1',
 			'mail' => $_POST['mail'] . ':1',
-			'website' => ACP3_CMS::$db->escape($_POST['website'], 2) . ':1',
+			'website' => $_POST['website'] . ':1',
 			'icq' => ':1',
 			'msn' => ':1',
 			'skype' => ':1',
-			'date_format_long' => ACP3_CMS::$db->escape($_POST['date_format_long']),
-			'date_format_short' => ACP3_CMS::$db->escape($_POST['date_format_short']),
+			'date_format_long' => $_POST['date_format_long'],
+			'date_format_short' => $_POST['date_format_short'],
 			'time_zone' => $_POST['date_time_zone'],
-			'language' => ACP3_CMS::$db->escape($_POST['language'], 2),
+			'language' => $_POST['language'],
 			'entries' => (int) $_POST['entries'],
 			'draft' => '',
 		);
 
-		ACP3_CMS::$db->link->beginTransaction();
-		$bool = ACP3_CMS::$db->insert('users', $insert_values);
-
-		$user_id = ACP3_CMS::$db->link->lastInsertId();
-		foreach ($_POST['roles'] as $row) {
-			ACP3_CMS::$db->insert('acl_user_roles', array('user_id' => $user_id, 'role_id' => $row));
+		ACP3_CMS::$db2->beginTransaction();
+		try {
+			$bool = ACP3_CMS::$db2->insert(DB_PRE . 'users', $insert_values);
+			$user_id = ACP3_CMS::$db2->lastInsertId();
+			foreach ($_POST['roles'] as $row) {
+				ACP3_CMS::$db2->insert(DB_PRE . 'acl_user_roles', array('user_id' => $user_id, 'role_id' => $row));
+			}
+			ACP3_CMS::$db2->commit();
+		} catch (Exception $e) {
+			ACP3_CMS::$db2->rollback();
+			$bool = false;
 		}
-
-		ACP3_CMS::$db->link->commit();
 
 		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/users');
+		setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/users');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -94,10 +97,10 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$super_user = array();
 	$super_user[0]['value'] = '1';
 	$super_user[0]['checked'] = selectEntry('super_user', '1', '0', 'checked');
-	$super_user[0]['lang'] = ACP3_CMS::$lang->t('common', 'yes');
+	$super_user[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
 	$super_user[1]['value'] = '0';
 	$super_user[1]['checked'] = selectEntry('super_user', '0', '0', 'checked');
-	$super_user[1]['lang'] = ACP3_CMS::$lang->t('common', 'no');
+	$super_user[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
 	ACP3_CMS::$view->assign('super_user', $super_user);
 
 	// Sprache

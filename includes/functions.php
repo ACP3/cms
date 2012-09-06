@@ -63,9 +63,30 @@ function confirmBox($text, $forward = 0, $backward = 0, $overlay = 0)
 			$confirm['backward'] = $backward;
 		ACP3_CMS::$view->assign('confirm', $confirm);
 
-		return ACP3_CMS::$view->fetchTemplate('common/confirm_box.tpl');
+		return ACP3_CMS::$view->fetchTemplate('system/confirm_box.tpl');
 	}
 	return '';
+}
+/**
+ * 
+ * @param array $config
+ * @return string
+ */
+function datatable(array $config)
+{
+	ACP3_CMS::$view->enableJsLibraries(array('datatables'));
+
+	static $init = false;
+
+	if (isset($config['records_per_page']) === false)
+		$config['records_per_page'] = ACP3_CMS::$auth->entries;
+	
+	$config['initialized'] = $init;
+
+	ACP3_CMS::$view->assign('dt', $config);
+	$init = true;
+
+	return ACP3_CMS::$view->fetchTemplate('system/data_table.tpl');
 }
 /**
  * Gibt eine Box mit den aufgetretenen Fehlern aus
@@ -87,7 +108,7 @@ function errorBox($errors)
 		$errors = (array) $errors;
 	}
 	ACP3_CMS::$view->assign('error_box', array('non_integer_keys' => $non_integer_keys, 'errors' => $errors));
-	return ACP3_CMS::$view->fetchTemplate('common/error_box.tpl');
+	return ACP3_CMS::$view->fetchTemplate('system/error_box.tpl');
 }
 /**
  * Generiert eine E-Mail und versendet diese
@@ -162,20 +183,18 @@ function generateSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
 function generateTOC(array $pages, $path)
 {
 	if (!empty($pages)) {
-		global $lang;
-
 		$toc = array();
 		$i = 0;
 		foreach ($pages as $page) {
 			$attributes = getHtmlAttributes($page);
 			$page_num = $i + 1;
-			$toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf(ACP3_CMS::$lang->t('common', 'toc_page'), $page_num);
+			$toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf(ACP3_CMS::$lang->t('system', 'toc_page'), $page_num);
 			$toc[$i]['uri'] = ACP3_CMS::$uri->route($path, 1) . 'page_' . $page_num . '/';
 			$toc[$i]['selected'] = (ACP3_Validate::isNumber(ACP3_CMS::$uri->page) === false && $i === 0) || ACP3_CMS::$uri->page === $page_num ? true : false;
 			++$i;
 		}
 		ACP3_CMS::$view->assign('toc', $toc);
-		return ACP3_CMS::$view->fetchTemplate('common/toc.tpl');
+		return ACP3_CMS::$view->fetchTemplate('system/toc.tpl');
 	}
 	return '';
 }
@@ -255,7 +274,7 @@ function getRedirectMessage()
 {
 	if (isset($_SESSION['redirect_message']) && is_array($_SESSION['redirect_message'])) {
 		ACP3_CMS::$view->assign('redirect', $_SESSION['redirect_message']);
-		ACP3_CMS::$view->assign('redirect_message', ACP3_CMS::$view->fetchTemplate('common/redirect_message.tpl'));
+		ACP3_CMS::$view->assign('redirect_message', ACP3_CMS::$view->fetchTemplate('system/redirect_message.tpl'));
 		unset($_SESSION['redirect_message']);
 	}
 }
@@ -269,7 +288,7 @@ function setRedirectMessage($success, $text, $path)
 {
 	if (empty($text) === false && empty($path) === false) {
 		$_SESSION['redirect_message'] = array(
-			'success' => (bool) $success,
+			'success' => is_int($success) ? true : (bool) $success,
 			'text' => $text
 		);
 		ACP3_CMS::$uri->redirect($path);
@@ -287,7 +306,6 @@ function makeStringUrlSafe($var)
 	$var = strip_tags($var);
 	if (!preg_match('/&([a-z]+);/', $var))
 		$var = htmlentities($var, ENT_QUOTES, 'UTF-8');
-	$var = strtolower($var);
 	$search = array(
 		'/&([a-z]{1})uml;/',
 		'/&szlig;/',
@@ -304,7 +322,7 @@ function makeStringUrlSafe($var)
 		'-',
 		'',
 	);
-	return preg_replace($search, $replace, $var);
+	return preg_replace($search, $replace, strtolower($var));
 }
 /**
  * Hochgeladene Dateien verschieben und umbenennen
@@ -320,7 +338,7 @@ function makeStringUrlSafe($var)
  */
 function moveFile($tmp_filename, $filename, $dir)
 {
-	$path = ACP3_ROOT . 'uploads/' . $dir . '/';
+	$path = UPLOADS_DIR . $dir . '/';
 	$ext = strrchr($filename, '.');
 	$new_name = 1;
 
@@ -331,7 +349,7 @@ function moveFile($tmp_filename, $filename, $dir)
 
 	if (is_writable($path) === true) {
 		if (!@move_uploaded_file($tmp_filename, $path . $new_name . $ext)) {
-			echo sprintf(ACP3_CMS::$lang->t('common', 'upload_error'), $filename);
+			echo sprintf(ACP3_CMS::$lang->t('system', 'upload_error'), $filename);
 		} else {
 			$new_file = array();
 			$new_file['name'] = $new_name . $ext;
@@ -363,31 +381,39 @@ function moveFile($tmp_filename, $filename, $dir)
 function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = '')
 {
 	if ($action === 'up' || $action === 'down') {
-		$bool = $bool2 = $bool3 = false;
-		$id = (int) $id;
+		ACP3_CMS::$db2->beginTransaction();
+		try {
+			$id = (int) $id;
+			$table = DB_PRE . $table;
 
-		// Zusätzliche WHERE-Bedingung
-		$where = !empty($where) ? 'a.' . $where . ' = b.' . $where . ' AND ' : '';
+			// Zusätzliche WHERE-Bedingung
+			$where = !empty($where) ? 'a.' . $where . ' = b.' . $where . ' AND ' : '';
 
-		// Ein Schritt nach oben
-		if ($action === 'up') {
-			// Aktuelles Element und das vorherige Element selektieren
-			$query = ACP3_CMS::$db->query('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM {pre}' . $table . ' AS a, {pre}' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' < b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' DESC LIMIT 1');
-		// Ein Schritt nach unten
-		} else {
-			// Aktuelles Element und das nachfolgende Element selektieren
-			$query = ACP3_CMS::$db->query('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM {pre}' . $table . ' AS a, {pre}' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' > b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' ASC LIMIT 1');
+			// Ein Schritt nach oben
+			if ($action === 'up') {
+				// Aktuelles Element und das vorherige Element selektieren
+				$query = ACP3_CMS::$db2->fetchAssoc('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' < b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' DESC LIMIT 1');
+			// Ein Schritt nach unten
+			} else {
+				// Aktuelles Element und das nachfolgende Element selektieren
+				$query = ACP3_CMS::$db2->fetchAssoc('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' > b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' ASC LIMIT 1');
+			}
+
+			if (!empty($query)) {
+				// Sortierreihenfolge des aktuellen Elementes zunächst auf 0 setzen
+				// um Probleme mit möglichen Duplicate-Keys zu umgehen
+				ACP3_CMS::$db2->update($table, array($sort_field => 0), array($id_field => $id));
+				ACP3_CMS::$db2->update($table, array($sort_field => $query['elem_sort']), array($id_field => $query['other_id']));
+				// Element nun den richtigen Wert zuweisen
+				ACP3_CMS::$db2->update($table, array($sort_field => $query['other_sort']), array($id_field => $id));
+
+				ACP3_CMS::$db2->commit();
+				return true;
+			}
+
+		} catch (Exception $e) {
+			ACP3_CMS::$db2->rollback();
 		}
-
-		if (!empty($query)) {
-			// Sortierreihenfolge des aktuellen Elementes zunächst auf 0 setzen
-			// um Probleme mit möglichen Duplicate-Keys zu umgehen
-			$bool = ACP3_CMS::$db->update($table, array($sort_field => 0), $id_field . ' = ' . $id);
-			$bool2 = ACP3_CMS::$db->update($table, array($sort_field => $query[0]['elem_sort']), $id_field . ' = ' . $query[0]['other_id']);
-			// Element nun den richtigen Wert zuweisen
-			$bool3 = ACP3_CMS::$db->update($table, array($sort_field => $query[0]['other_sort']), $id_field . ' = ' . $id);
-		}
-		return $bool !== false && $bool2 !== false ? true : false;
 	}
 	return false;
 }
@@ -453,7 +479,7 @@ function pagination($rows, $fragment = '')
 		if ($c_pagination > $show_first_last && $start > 1) {
 			$pagination[$j]['selected'] = false;
 			$pagination[$j]['page'] = '&laquo;';
-			$pagination[$j]['title'] = ACP3_CMS::$lang->t('common', 'first_page');
+			$pagination[$j]['title'] = ACP3_CMS::$lang->t('system', 'first_page');
 			$pagination[$j]['uri'] = $link . $fragment;
 			++$j;
 		}
@@ -462,7 +488,7 @@ function pagination($rows, $fragment = '')
 		if ($c_pagination > $show_previous_next && $current_page !== 1) {
 			$pagination[$j]['selected'] = false;
 			$pagination[$j]['page'] = '&lsaquo;';
-			$pagination[$j]['title'] = ACP3_CMS::$lang->t('common', 'previous_page');
+			$pagination[$j]['title'] = ACP3_CMS::$lang->t('system', 'previous_page');
 			$pagination[$j]['uri'] = $link . ($current_page - 1 > 1 ? 'page_' . ($current_page - 1) . '/' : '') . $fragment;
 			++$j;
 		}
@@ -477,7 +503,7 @@ function pagination($rows, $fragment = '')
 		if ($c_pagination > $show_previous_next && $current_page !== $c_pagination) {
 			$pagination[$j]['selected'] = false;
 			$pagination[$j]['page'] = '&rsaquo;';
-			$pagination[$j]['title'] = ACP3_CMS::$lang->t('common', 'next_page');
+			$pagination[$j]['title'] = ACP3_CMS::$lang->t('system', 'next_page');
 			$pagination[$j]['uri'] = $link . 'page_' . ($current_page + 1) . '/' . $fragment;
 			++$j;
 		}
@@ -486,13 +512,13 @@ function pagination($rows, $fragment = '')
 		if ($c_pagination > $show_first_last && $c_pagination !== $end) {
 			$pagination[$j]['selected'] = false;
 			$pagination[$j]['page'] = '&raquo;';
-			$pagination[$j]['title'] = ACP3_CMS::$lang->t('common', 'last_page');
+			$pagination[$j]['title'] = ACP3_CMS::$lang->t('system', 'last_page');
 			$pagination[$j]['uri'] = $link . 'page_' . $c_pagination . '/' . $fragment;
 		}
 
 		ACP3_CMS::$view->assign('pagination', $pagination);
 
-		return ACP3_CMS::$view->fetchTemplate('common/pagination.tpl');
+		return ACP3_CMS::$view->fetchTemplate('system/pagination.tpl');
 	}
 }
 /**
@@ -525,7 +551,7 @@ function recordsPerPage($current_value, $steps = 5, $max_value = 50)
  */
 function removeUploadedFile($dir, $file)
 {
-	$path = ACP3_ROOT . 'uploads/' . $dir . '/' . $file;
+	$path = UPLOADS_DIR . $dir . '/' . $file;
 	if (!empty($dir) && !empty($file) && !preg_match('=/=', $file) && is_file($path) === true)
 		return @unlink($path);
 	return false;

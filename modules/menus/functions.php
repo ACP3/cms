@@ -6,19 +6,18 @@
  * @package ACP3
  * @subpackage Modules
  */
+
 /**
  * Erstellt den Cache für die Menüpunkte
  *
  * @return boolean
  */
 function setMenuItemsCache() {
-	global $db, $lang;
-
-	$items = ACP3_CMS::$db->query('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM {pre}menu_items AS p, {pre}menu_items AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
+	$items = ACP3_CMS::$db2->fetchAll('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . DB_PRE . 'menu_items AS p, ' . DB_PRE . 'menu_items AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
 	$c_items = count($items);
 
 	if ($c_items > 0) {
-		$blocks = ACP3_CMS::$db->select('id, title, index_name', 'menus');
+		$blocks = ACP3_CMS::$db2->fetchAll('SELECT id, title, index_name FROM ' . DB_PRE . 'menus');
 		$c_blocks = count($blocks);
 
 		for ($i = 0; $i < $c_blocks; ++$i) {
@@ -39,7 +38,7 @@ function setMenuItemsCache() {
 			ACP3_CMS::$lang->t('menus', 'module'),
 			ACP3_CMS::$lang->t('menus', 'dynamic_page'),
 			ACP3_CMS::$lang->t('menus', 'hyperlink'),
-			ACP3_CMS::$lang->t('menus', 'static_page')
+			ACP3_CMS::$lang->t('menus', 'article')
 		);
 
 		for ($i = 0; $i < $c_items; ++$i) {
@@ -67,7 +66,7 @@ function setMenuItemsCache() {
 			$items[$i]['last'] = $last;
 		}
 	}
-	return ACP3_Cache::create('menu_items', $items);
+	return ACP3_Cache::create('items', $items, 'menus');
 }
 /**
  * Bindet die gecacheten Menüpunkte ein
@@ -76,10 +75,10 @@ function setMenuItemsCache() {
  */
 function getMenuItemsCache()
 {
-	if (ACP3_Cache::check('menu_items') === false)
+	if (ACP3_Cache::check('items', 'menus') === false)
 		setMenuItemsCache();
 
-	return ACP3_Cache::output('menu_items');
+	return ACP3_Cache::output('items', 'menus');
 }
 /**
  * Erstellt den Cache für die Menüpunkte
@@ -87,11 +86,8 @@ function getMenuItemsCache()
  * @return boolean
  */
 function setVisibleMenuItemsCache($block) {
-	global $db;
-
-	$items = ACP3_CMS::$db->query('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, b.title AS block_title, b.index_name AS block_name FROM {pre}menu_items AS p, {pre}menu_items AS n JOIN {pre}menus AS b ON(n.block_id = b.id) WHERE b.index_name = \'' . ACP3_CMS::$db->escape($block) . '\' AND n.display = 1 AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
-
-	return ACP3_Cache::create('visible_menu_items_' . $block, $items);
+	$items = ACP3_CMS::$db2->fetchAll('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, b.title AS block_title, b.index_name AS block_name FROM ' . DB_PRE . 'menu_items AS p, ' . DB_PRE . 'menu_items AS n JOIN ' . DB_PRE . 'menus AS b ON(n.block_id = b.id) WHERE b.index_name = ? AND n.display = 1 AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id', array($block));
+	return ACP3_Cache::create('visible_items_' . $block, $items, 'menus');
 }
 /**
  * Bindet die gecacheten Menüpunkte ein
@@ -100,10 +96,10 @@ function setVisibleMenuItemsCache($block) {
  */
 function getVisibleMenuItems($block)
 {
-	if (ACP3_Cache::check('visible_menu_items_' . $block) === false)
+	if (ACP3_Cache::check('visible_items_' . $block, 'menus') === false)
 		setVisibleMenuItemsCache($block);
 
-	return ACP3_Cache::output('visible_menu_items_' . $block);
+	return ACP3_Cache::output('visible_items_' . $block, 'menus');
 }
 /**
  * Auflistung der Seiten
@@ -146,9 +142,7 @@ function menuItemsList($parent_id = 0, $left_id = 0, $right_id = 0) {
  */
 function menusDropdown($selected = 0)
 {
-	global $db;
-
-	$blocks = ACP3_CMS::$db->select('id, title', 'menus', 0, 'title ASC, id ASC');
+	$blocks = ACP3_CMS::$db2->fetchAll('SELECT id, title FROM ' . DB_PRE . 'menus ORDER BY title ASC, id ASC');
 	$c_blocks = count($blocks);
 	for ($i = 0; $i < $c_blocks; ++$i) {
 		$blocks[$i]['selected'] = selectEntry('block_id', (int) $blocks[$i]['id'], (int) $selected);
@@ -179,12 +173,11 @@ function processNavbar($block, $use_bootstrap = true, $class = '') {
 		$c_items = count($items);
 
 		if ($c_items > 0) {
-			global $db, $uri;
-
 			// Selektion nur vornehmen, wenn man sich im Frontend befindet
 			if (defined('IN_ADM') === false) {
-				$in = "'" . ACP3_CMS::$uri->query . "', '" . ACP3_CMS::$uri->getCleanQuery() . "', '" . ACP3_CMS::$uri->mod . '/' . ACP3_CMS::$uri->file . "/', '" . ACP3_CMS::$uri->mod . "'";
-				$select = ACP3_CMS::$db->query('SELECT m.left_id FROM {pre}menu_items AS m JOIN {pre}menus AS b ON(m.block_id = b.id) WHERE b.index_name = \'' . $block . '\' AND m.uri IN(' . $in . ') ORDER BY LENGTH(m.uri) DESC');
+				$in = array(ACP3_CMS::$uri->query, ACP3_CMS::$uri->getCleanQuery(), ACP3_CMS::$uri->mod . '/' . ACP3_CMS::$uri->file . '/', ACP3_CMS::$uri->mod);
+				$selected = ACP3_CMS::$db2->executeQuery('SELECT m.left_id FROM ' . DB_PRE . 'menu_items AS m JOIN ' . DB_PRE . 'menus AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC',
+						array($block, $in), array(\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetch(\PDO::FETCH_COLUMN);
 			}
 
 			$navbar[$block] = '';
@@ -192,9 +185,9 @@ function processNavbar($block, $use_bootstrap = true, $class = '') {
 			for ($i = 0; $i < $c_items; ++$i) {
 				$css = 'navi-' . $items[$i]['id'];
 				// Menüpunkt selektieren
-				if (isset($select[0]) &&
-						$items[$i]['left_id'] <= $select[0]['left_id'] &&
-						$items[$i]['right_id'] > $select[0]['left_id']) {
+				if (!empty($selected) &&
+						$items[$i]['left_id'] <= $selected &&
+						$items[$i]['right_id'] > $selected) {
 					$css.= ' active';
 				}
 
@@ -208,15 +201,15 @@ function processNavbar($block, $use_bootstrap = true, $class = '') {
 						$css.= $items[$i]['level'] == 0 ? ' dropdown' : ' dropdown-submenu';
 						$caret = $items[$i]['level'] == 0 ? ' <b class="caret"></b>' : '';
 						$data_target = $items[$i]['level'] == 0 ? '  data-target="#"' : '';
-						$link = '<a href="' . $href . '" class="dropdown-toggle" data-toggle="dropdown"' . $data_target . $target . '>' . ACP3_CMS::$db->escape($items[$i]['title'], 3) . $caret . '</a>';
+						$link = '<a href="' . $href . '" class="dropdown-toggle" data-toggle="dropdown"' . $data_target . $target . '>' . $items[$i]['title'] . $caret . '</a>';
 						$navbar[$block].= '<li class="' . $css . '">' . $link . '<ul class="dropdown-menu navigation-' . $block . '-subnav-' . $items[$i]['id'] . '">';
 					} else {
-						$link = '<a href="' . $href . '"' . $target . '>' . ACP3_CMS::$db->escape($items[$i]['title'], 3) . '</a>';
+						$link = '<a href="' . $href . '"' . $target . '>' . $items[$i]['title'] . '</a>';
 						$navbar[$block].= '<li class="' . $css . '">' . $link . '<ul class="navigation-' . $block . '-subnav-' . $items[$i]['id'] . '">';
 					}
 				// Elemente ohne Kindelemente
 				} else {
-					$link = '<a href="' . $href . '"' . $target . '>' . ACP3_CMS::$db->escape($items[$i]['title'], 3) . '</a>';
+					$link = '<a href="' . $href . '"' . $target . '>' . $items[$i]['title'] . '</a>';
 					$navbar[$block].= '<li class="' . $css . '">' . $link . '</li>';
 					// Liste für untergeordnete Elemente schließen
 					if (isset($items[$i + 1]) && $items[$i + 1]['level'] < $items[$i]['level'] || !isset($items[$i + 1]) && $items[$i]['level'] != '0') {

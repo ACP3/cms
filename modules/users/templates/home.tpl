@@ -11,6 +11,6 @@
 		{wysiwyg name="draft" value="$draft" height="250" toolbar="simple"}
 	</fieldset>
 	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
+		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
 	</div>
 </form>

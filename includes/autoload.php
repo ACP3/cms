@@ -17,7 +17,7 @@ if (defined('IN_ACP3') === false)
 function acp3_load_class($class)
 {
 	if (strpos($class, 'ACP3_') === 0) {
-		$file = dirname(__FILE__) . '/classes/' . str_replace('ACP3_', '', $class) . '.class.php';
+		$file = dirname(__FILE__) . '/classes/' . str_replace(array('ACP3_', '_'), array('', '/'), $class) . '.php';
 		if (is_file($file) === true)
 			require $file;
 	}

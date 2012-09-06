@@ -5,6 +5,6 @@
 	<li><a href="{uri args="files/details/id_`$row.id`"}" title="{$row.start} - {$row.link_title}">{$row.link_title_short}</a></li>
 {/foreach}
 {else}
-	<li>{lang t="common|no_entries_short"}</li>
+	<li>{lang t="system|no_entries_short"}</li>
 {/if}
 </ul>

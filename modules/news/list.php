@@ -27,18 +27,18 @@ $settings = ACP3_Config::getSettings('news');
 // Kategorie in Brotkrümelspur anzeigen
 if ($cat !== 0 && $settings['category_in_breadcrumb'] == 1) {
 	ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('news', 'news'), ACP3_CMS::$uri->route('news'));
-	$category = ACP3_CMS::$db->select('name', 'categories', 'id = \'' . $cat . '\'');
-	if (count($category) > 0) {
-		ACP3_CMS::$breadcrumb->append($category[0]['name']);
+	$category = ACP3_CMS::$db2->fetchColumn('SELECT name FROM ' . DB_PRE . 'categories WHERE id = ?', array($cat));
+	if (!empty($category)) {
+		ACP3_CMS::$breadcrumb->append($category);
 	}
 }
 
 // Falls Kategorie angegeben, News nur aus eben jener selektieren
 $cat = !empty($cat) ? ' AND category_id = ' . $cat : '';
 $time = ACP3_CMS::$date->getCurrentDateTime();
-$where = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')' . $cat;
+$where = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' . $cat;
 
-$news = ACP3_CMS::$db->select('id, start, headline, text, readmore, comments, uri', 'news', $where, 'start DESC, end DESC, id DESC', POS, ACP3_CMS::$auth->entries);
+$news = ACP3_CMS::$db2->fetchAll('SELECT id, start, headline, text, readmore, comments, uri FROM ' . DB_PRE . 'news WHERE ' . $where . ' ORDER BY start DESC, end DESC, id DESC LIMIT ' . POS . ',' . ACP3_CMS::$auth->entries, array('time' => $time));
 $c_news = count($news);
 
 if ($c_news > 0) {
@@ -48,13 +48,11 @@ if ($c_news > 0) {
 		$comment_check = true;
 	}
 
-	ACP3_CMS::$view->assign('pagination', pagination(ACP3_CMS::$db->countRows('*', 'news', $where)));
+	ACP3_CMS::$view->assign('pagination', pagination(ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'news WHERE ' . $where, array('time' => $time))));
 
 	for ($i = 0; $i < $c_news; ++$i) {
 		$news[$i]['date'] = ACP3_CMS::$date->format($news[$i]['start'], $settings['dateformat']);
-		$news[$i]['headline'] = ACP3_CMS::$db->escape($news[$i]['headline'], 3);
-		$news[$i]['text'] = rewriteInternalUri(ACP3_CMS::$db->escape($news[$i]['text'], 3));
-		$news[$i]['uri'] = ACP3_CMS::$db->escape($news[$i]['uri'], 3);
+		$news[$i]['text'] = rewriteInternalUri($news[$i]['text']);
 		$news[$i]['allow_comments'] = false;
 		if ($settings['comments'] == 1 && $news[$i]['comments'] == 1 && isset($comment_check)) {
 			$news[$i]['comments'] = commentsCount('news', $news[$i]['id']);

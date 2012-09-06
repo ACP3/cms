@@ -1,12 +1,24 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#notify').bind('change', function() {
+		if ($(this).val() == 0) {
+			$('#notify-email').parents('.control-group').hide();
+		} else {
+			$('#notify-email').parents('.control-group').show();
+		}
+	});
+
+	$('#notify option:selected').trigger('change');
+});
+</script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="control-group">
-		<label for="date-format" class="control-label">{lang t="common|date_format"}</label>
+		<label for="date-format" class="control-label">{lang t="system|date_format"}</label>
 		<div class="controls">
 			<select name="dateformat" id="date-format">
-				<option value="">{lang t="common|pls_select"}</option>
 {foreach $dateformat as $row}
 				<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
@@ -17,7 +29,6 @@
 		<label for="notify" class="control-label">{lang t="guestbook|notification"}</label>
 		<div class="controls">
 			<select name="notify" id="notify">
-				<option value="">{lang t="common|pls_select"}</option>
 {foreach $notify as $row}
 				<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
@@ -29,7 +40,7 @@
 		<div class="controls"><input type="text" name="notify_email" id="notify-email" value="{$form.notify_email}"></div>
 	</div>
 	<div class="control-group">
-		<label for="overlay-1" class="control-label">{lang t="guestbook|use_overlay"}</label>	</dt>
+		<label for="overlay-1" class="control-label">{lang t="guestbook|use_overlay"}</label>
 		<div class="controls">
 			<div class="btn-group" data-toggle="radio">
 {foreach $overlay as $row}
@@ -66,8 +77,8 @@
 	</div>
 {/if}
 	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
-		<a href="{uri args="acp/guestbook"}" class="btn">{lang t="common|cancel"}</a>
+		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
+		<a href="{uri args="acp/guestbook"}" class="btn">{lang t="system|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

@@ -3,7 +3,7 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="control-group">
-		<label for="mail" class="control-label">{lang t="common|email"}</label>
+		<label for="mail" class="control-label">{lang t="system|email_address"}</label>
 		<div class="controls">
 			<input type="email" name="mail" id="mail" maxlength="120" value="{$form.mail}" required><br>
 {foreach $actions as $row}
@@ -18,7 +18,7 @@
 {$captcha}
 {/if}
 	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
+		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
 		{$form_token}
 	</div>
 </form>

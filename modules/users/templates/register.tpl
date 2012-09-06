@@ -4,7 +4,7 @@
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="tabbable">
 		<ul class="nav nav-tabs">
-			<li class="active"><a href="#tab-1" data-toggle="tab">{lang t="users|nickname"} &amp; {lang t="common|email"}</a></li>
+			<li class="active"><a href="#tab-1" data-toggle="tab">{lang t="users|nickname"} &amp; {lang t="system|email_address"}</a></li>
 			<li><a href="#tab-2" data-toggle="tab">{lang t="users|pwd"}</a></li>
 		</ul>
 		<div class="tab-content">
@@ -14,7 +14,7 @@
 					<div class="controls"><input type="text" name="nickname" id="nickname" value="{$form.nickname}" maxlength="30"></div>
 				</div>
 				<div class="control-group">
-					<label for="mail" class="control-label">{lang t="common|email"}</label>
+					<label for="mail" class="control-label">{lang t="system|email_address"}</label>
 					<div class="controls"><input type="email" name="mail" id="mail" value="{$form.mail}" maxlength="120"></div>
 				</div>
 			</div>
@@ -34,7 +34,7 @@
 {$captcha}
 {/if}
 	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
+		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
 		{$form_token}
 	</div>
 </form>

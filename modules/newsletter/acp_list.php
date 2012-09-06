@@ -12,19 +12,27 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$newsletter = ACP3_CMS::$db->select('id, date, subject, status', 'newsletter_archive', 0, 'id DESC', POS, ACP3_CMS::$auth->entries);
+$newsletter = ACP3_CMS::$db2->fetchAll('SELECT id, date, subject, status FROM ' . DB_PRE . 'newsletter_archive ORDER BY id DESC');
 $c_newsletter = count($newsletter);
 
 if ($c_newsletter > 0) {
-	ACP3_CMS::$view->assign('pagination', pagination(ACP3_CMS::$db->countRows('*', 'newsletter_archive')));
+	$can_delete = ACP3_Modules::check('newsletter', 'acp_delete');
+	$config = array(
+		'element' => '#acp-table',
+		'sort_col' => $can_delete === true ? 1 : 0,
+		'sort_dir' => 'desc',
+		'hide_col_sort' => $can_delete === true ? 0 : ''
+	);
+	ACP3_CMS::setContent(datatable($config));
 
+	$search = array('0', '1');
+	$replace = array(ACP3_CMS::$lang->t('newsletter', 'not_yet_sent'), ACP3_CMS::$lang->t('newsletter', 'already_sent'));
 	for ($i = 0; $i < $c_newsletter; ++$i) {
 		$newsletter[$i]['date'] = ACP3_CMS::$date->format($newsletter[$i]['date']);
-		$newsletter[$i]['subject'] = ACP3_CMS::$db->escape($newsletter[$i]['subject'], 3);
-		$newsletter[$i]['status'] = str_replace(array('0', '1'), array(ACP3_CMS::$lang->t('newsletter', 'not_yet_sent'), ACP3_CMS::$lang->t('newsletter', 'already_sent')), $newsletter[$i]['status']);
+		$newsletter[$i]['status'] = str_replace($search, $replace, $newsletter[$i]['status']);
 	}
 	ACP3_CMS::$view->assign('newsletter', $newsletter);
-	ACP3_CMS::$view->assign('can_delete', ACP3_Modules::check('newsletter', 'acp_delete'));
+	ACP3_CMS::$view->assign('can_delete', $can_delete);
 	ACP3_CMS::$view->assign('can_send', ACP3_Modules::check('newsletter', 'acp_send'));
 }
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('newsletter/acp_list.tpl'));
+ACP3_CMS::appendContent(ACP3_CMS::$view->fetchTemplate('newsletter/acp_list.tpl'));

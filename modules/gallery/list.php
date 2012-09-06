@@ -11,20 +11,18 @@ if (defined('IN_ACP3') === false)
 	exit;
 
 $time = ACP3_CMS::$date->getCurrentDateTime();
-$where = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
-$galleries = ACP3_CMS::$db->select('id, start, name', 'gallery', $where, 'start DESC, end DESC, id DESC', POS, ACP3_CMS::$auth->entries);
+$where = '(g.start = g.end AND g.start <= :time OR g.start != g.end AND :time BETWEEN g.start AND g.end)';
+$galleries = ACP3_CMS::$db2->fetchAll('SELECT g.id, g.start, g.name, COUNT(p.gallery_id) AS pics FROM ' . DB_PRE . 'gallery AS g LEFT JOIN ' . DB_PRE . 'gallery_pictures AS p ON(g.id = p.gallery_id) WHERE ' . $where . ' GROUP BY g.id ORDER BY g.start DESC, g.end DESC, g.id DESC LIMIT ' . POS . ',' . ACP3_CMS::$auth->entries, array('time' => $time));
 $c_galleries = count($galleries);
 
 if ($c_galleries > 0) {
-	ACP3_CMS::$view->assign('pagination', pagination(ACP3_CMS::$db->countRows('*', 'gallery', $where)));
+	ACP3_CMS::$view->assign('pagination', pagination(ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'gallery AS g WHERE ' . $where, array('time' => $time))));
 
 	$settings = ACP3_Config::getSettings('gallery');
 
 	for ($i = 0; $i < $c_galleries; ++$i) {
 		$galleries[$i]['date'] = ACP3_CMS::$date->format($galleries[$i]['start'], $settings['dateformat']);
-		$galleries[$i]['name'] = ACP3_CMS::$db->escape($galleries[$i]['name'], 3);
-		$pictures = ACP3_CMS::$db->countRows('*', 'gallery_pictures', 'gallery_id = \'' . $galleries[$i]['id'] . '\'');
-		$galleries[$i]['pics'] = $pictures == 1 ? '1 ' . ACP3_CMS::$lang->t('gallery', 'picture') : $pictures . ' ' . ACP3_CMS::$lang->t('gallery', 'pictures');
+		$galleries[$i]['pics_lang'] = $galleries[$i]['pics'] . ' ' . ACP3_CMS::$lang->t('gallery', $galleries[$i]['pics'] == 1 ? 'picture' : 'pictures');
 	}
 	ACP3_CMS::$view->assign('galleries', $galleries);
 }

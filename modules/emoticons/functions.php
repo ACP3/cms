@@ -13,20 +13,18 @@
  */
 function setEmoticonsCache()
 {
-	global $db;
-
-	$emoticons = ACP3_CMS::$db->select('code, description, img', 'emoticons', 0, 'code DESC');
+	$emoticons = ACP3_CMS::$db2->fetchAll('SELECT code, description, img FROM ' . DB_PRE . 'emoticons ORDER BY code DESC');
 	$c_emoticons = count($emoticons);
 
 	$data = array();
 	for ($i = 0; $i < $c_emoticons; ++$i) {
-		$picInfos = getimagesize(ACP3_ROOT . 'uploads/emoticons/' . $emoticons[$i]['img']);
-		$code = ACP3_CMS::$db->escape($emoticons[$i]['code'], 3);
-		$description = ACP3_CMS::$db->escape($emoticons[$i]['description'], 3);
+		$picInfos = getimagesize(UPLOADS_DIR . 'emoticons/' . $emoticons[$i]['img']);
+		$code = $emoticons[$i]['code'];
+		$description = $emoticons[$i]['description'];
 		$data[$code] = '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $emoticons[$i]['img'] . '" width="' . $picInfos[0] . '" height="' . $picInfos[1] . '" alt="' . $description . '" title="' . $description . '" />';
 	}
 
-	return ACP3_Cache::create('emoticons', $data);
+	return ACP3_Cache::create('list', $data, 'emoticons');
 }
 /**
  * Bindet die gecacheten Emoticons ein
@@ -35,10 +33,10 @@ function setEmoticonsCache()
  */
 function getEmoticonsCache()
 {
-	if (ACP3_Cache::check('emoticons') === false)
+	if (ACP3_Cache::check('list', 'emoticons') === false)
 		setEmoticonsCache();
 
-	return ACP3_Cache::output('emoticons');
+	return ACP3_Cache::output('list', 'emoticons');
 }
 /**
  * Erzeugt eine Auflistung der Emoticons
@@ -49,7 +47,6 @@ function getEmoticonsCache()
  */
 function emoticonsList($field_id = 0)
 {
-	global $db, $tpl;
 	static $emoticons = array();
 
 	if (empty($emoticons))

@@ -7,6 +7,30 @@
  */
 
 /**
+ * Gibt eine Box mit den aufgetretenen Fehlern aus
+ *
+ * @param string|array $errors
+ * @return string
+ */
+function errorBox($errors)
+{
+	global $tpl;
+
+	$non_integer_keys = false;
+	if (is_array($errors) === true) {
+		foreach(array_keys($errors) as $key) {
+			if (ACP3_Validate::isNumber($key) === false) {
+				$non_integer_keys = true;
+				break;
+			}
+		}
+	} else {
+		$errors = (array) $errors;
+	}
+	$tpl->assign('error_box', array('non_integer_keys' => $non_integer_keys, 'errors' => $errors));
+	return $tpl->fetch('error_box.tpl');
+}
+/**
  * Generiert ein gesalzenes Passwort
  *
  * @param string $salt
@@ -63,7 +87,7 @@ function installModule($module)
 	$path = MODULES_DIR . $module . '/install.class.php';
 	if (is_file($path) === true) {
 		require $path;
-		$className = 'ACP3_' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $module)))) . 'ModuleInstaller';
+		$className = ACP3_ModuleInstaller::buildClassName($module);
 		$install = new $className();
 		if ($install instanceof ACP3_ModuleInstaller) {
 			$bool = $install->install();
@@ -189,7 +213,7 @@ function updateModule($module)
 	$path = MODULES_DIR . $module . '/install.class.php';
 	if (is_file($path) === true) {
 		require $path;
-		$className = 'ACP3_' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $module)))) . 'ModuleInstaller';
+		$className = ACP3_ModuleInstaller::buildClassName($module);
 		$install = new $className();
 		if ($install instanceof ACP3_ModuleInstaller &&
 			(ACP3_Modules::isInstalled($module) || count($install->renameModule()) > 0)) {

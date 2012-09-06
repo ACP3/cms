@@ -12,10 +12,10 @@
 				<thead>
 					<tr>
 						<th>{lang t="system|module_name"}</th>
-						<th>{lang t="common|description"}</th>
+						<th>{lang t="system|description"}</th>
 						<th>{lang t="system|version"}</th>
-						<th>{lang t="common|author"}</th>
-						<th>{lang t="common|options"}</th>
+						<th>{lang t="system|author"}</th>
+						<th>{lang t="system|options"}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -50,10 +50,10 @@
 				<thead>
 					<tr>
 						<th>{lang t="system|module_name"}</th>
-						<th>{lang t="common|description"}</th>
+						<th>{lang t="system|description"}</th>
 						<th>{lang t="system|version"}</th>
-						<th>{lang t="common|author"}</th>
-						<th>{lang t="common|options"}</th>
+						<th>{lang t="system|author"}</th>
+						<th>{lang t="system|options"}</th>
 					</tr>
 				</thead>
 				<tbody>

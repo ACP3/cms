@@ -13,11 +13,11 @@ if (defined('IN_ACP3') === false)
 $settings = ACP3_Config::getSettings('guestbook');
 ACP3_CMS::$view->assign('overlay', $settings['overlay']);
 
-$guestbook = ACP3_CMS::$db->query('SELECT u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.id, g.date, g.name, g.user_id, g.message, g.website, g.mail FROM {pre}guestbook AS g LEFT JOIN {pre}users AS u ON(u.id = g.user_id) ' . ($settings['notify'] == 2 ? 'WHERE active = 1' : '') . ' ORDER BY date DESC LIMIT ' . POS . ', ' . ACP3_CMS::$auth->entries);
+$guestbook = ACP3_CMS::$db2->fetchAll('SELECT u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.id, g.date, g.name, g.user_id, g.message, g.website, g.mail FROM ' . DB_PRE . 'guestbook AS g LEFT JOIN ' . DB_PRE . 'users AS u ON(u.id = g.user_id) ' . ($settings['notify'] == 2 ? 'WHERE active = 1' : '') . ' ORDER BY date DESC LIMIT ' . POS . ',' . ACP3_CMS::$auth->entries);
 $c_guestbook = count($guestbook);
 
 if ($c_guestbook > 0) {
-	ACP3_CMS::$view->assign('pagination', pagination(ACP3_CMS::$db->countRows('*', 'guestbook')));
+	ACP3_CMS::$view->assign('pagination', pagination(ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'guestbook')));
 
 	// Emoticons einbinden
 	$emoticons_active = false;
@@ -33,13 +33,13 @@ if ($c_guestbook > 0) {
 			$guestbook[$i]['name'] = ACP3_CMS::$lang->t('users', 'deleted_user');
 			$guestbook[$i]['user_id'] = 0;
 		}
-		$guestbook[$i]['name'] = ACP3_CMS::$db->escape(!empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'], 3);
+		$guestbook[$i]['name'] = !empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'];
 		$guestbook[$i]['date'] = ACP3_CMS::$date->format($guestbook[$i]['date'], $settings['dateformat']);
-		$guestbook[$i]['message'] = nl2p(ACP3_CMS::$db->escape($guestbook[$i]['message'], 3));
+		$guestbook[$i]['message'] = nl2p($guestbook[$i]['message']);
 		if ($emoticons_active === true) {
 			$guestbook[$i]['message'] = emoticonsReplace($guestbook[$i]['message']);
 		}
-		$guestbook[$i]['website'] = ACP3_CMS::$db->escape(strlen($guestbook[$i]['user_website']) > 2 ? substr($guestbook[$i]['user_website'], 0, -2) : $guestbook[$i]['website'], 3);
+		$guestbook[$i]['website'] = strlen($guestbook[$i]['user_website']) > 2 ? substr($guestbook[$i]['user_website'], 0, -2) : $guestbook[$i]['website'];
 		if (!empty($guestbook[$i]['website']) && (bool) preg_match('=^http(s)?://=', $guestbook[$i]['website']) === false)
 			$guestbook[$i]['website'] = 'http://' . $guestbook[$i]['website'];
 

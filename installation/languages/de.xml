@@ -14,10 +14,10 @@
 		<item key="database">Datenbank</item>
 		<item key="date_format_long">Langes Datumsformat</item>
 		<item key="date_format_short">Kurzes Datumsformat</item>
-		<item key="db_connection_failed">Es konnte keine Verbindung zur Datenbank hergestellt werden.</item>
+		<item key="db_connection_failed"><![CDATA[Aus folgenden Gründen konnte keine Verbindung zur Datenbank hergestellt werden:<br /><pre>%s</pre>]]></item>
 		<item key="db_connection_settings">Verbindungsdaten zur Datenbank</item>
 		<item key="db_hostname">Hostname</item>
-		<item key="db_hostname_description">meistens "localhost"</item>
+		<item key="db_hostname_description">Mmeistens &quot;localhost&quot;.</item>
 		<item key="db_name">Datenbankname</item>
 		<item key="db_password">Passwort</item>
 		<item key="db_table_prefix">Tabellenpräfix</item>
@@ -30,7 +30,7 @@
 		<item key="db_username">Benutzername</item>
 		<item key="do_db_update">Aktualisierung beginnen</item>
 		<item key="decline">Ablehnen</item>
-		<item key="disclaim">Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</item>
+		<item key="disclaimer">Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</item>
 		<item key="email">E-Mail-Adresse</item>
 		<item key="error_messages">Ausgabe von Fehlermeldungen:</item>
 		<item key="failure">Es sind folgende Fehler aufgetreten:</item>
@@ -82,6 +82,7 @@
 		<item key="requirements">Voraussetzungen</item>
 		<item key="safe_mode">Abgesicherter Modus</item>
 		<item key="sincerely">Mit freundlichen Grüßen,</item>
+		<item key="site-title">Titel der Website</item>
 		<item key="select_time_zone">Bitte wählen Sie die Zeitzone aus.</item>
 		<item key="step_1_legend">Im Detail wird Sie die Installationsroutine durch folgende Schritte führen:</item>
 		<item key="step_1_list_item_1">Einsicht in die Lizenz.</item>
@@ -96,7 +97,6 @@
 		<item key="stop_installation">Die Installation kann nicht fortgesetzt werden, da dieser Webspace/Server die benötigten Voraussetzungen nicht erfüllt.</item>
 		<item key="submit">Senden</item>
 		<item key="time_zone">Zeitzone</item>
-		<item key="title">Titel</item>
 		<item key="type_in_date_format">Bitte geben Sie eine Datumsformatierung ein.</item>
 		<item key="type_in_db_host">Bitte geben Sie den Hostnamen zur Datenbank ein.</item>
 		<item key="type_in_db_name">Bitte geben Sie den Datenbankname ein.</item>

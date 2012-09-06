@@ -40,10 +40,6 @@ class ACP3_ArticlesModuleInstaller extends ACP3_ModuleInstaller {
 		return array();
 	}
 
-	protected function removeSettings() {
-		return true;
-	}
-
 	protected function schemaUpdates() {
 		return array(
 			31 => array(

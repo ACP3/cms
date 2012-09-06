@@ -23,20 +23,23 @@ if (isset($_POST['submit']) === true) {
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} else {
-		ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('search', 'search'), ACP3_CMS::$uri->route('search'))
-				   ->append(ACP3_CMS::$lang->t('search', 'search_results'));
+		ACP3_CMS::$breadcrumb
+		->append(ACP3_CMS::$lang->t('search', 'search'), ACP3_CMS::$uri->route('search'))
+		->append(ACP3_CMS::$lang->t('search', 'search_results'));
 
 		$_POST['sort'] = strtoupper($_POST['sort']);
-		$results_mods = array();
+		$results = array();
 		foreach ($_POST['mods'] as $module) {
 			if (ACP3_Modules::check($module, 'extensions/search') === true) {
 				include MODULES_DIR . $module . '/extensions/search.php';
 			}
 		}
-		if (!empty($results_mods))
-			ACP3_CMS::$view->assign('results_mods', $results_mods);
-		else
+		if (!empty($results)) {
+			ksort($results);
+			ACP3_CMS::$view->assign('results_mods', $results);
+		} else {
 			ACP3_CMS::$view->assign('no_search_results', sprintf(ACP3_CMS::$lang->t('search', 'no_search_results'), $_POST['search_term']));
+		}
 
 		ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('search/results.tpl'));
 	}

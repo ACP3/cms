@@ -4,7 +4,7 @@
 		<tr>
 			<th>{lang t="polls|question"}</th>
 			<th>{lang t="polls|votes"}</th>
-			<th>{lang t="common|end_date"}</th>
+			<th>{lang t="system|end_date"}</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -19,6 +19,6 @@
 </table>
 {else}
 <div class="alert align-center">
-	<strong>{lang t="common|no_entries"}</strong>
+	<strong>{lang t="system|no_entries"}</strong>
 </div>
 {/if}

@@ -14,18 +14,18 @@ $captchaAccess = ACP3_Modules::check('captcha', 'functions');
 
 if (isset($_POST['submit']) === true) {
 	if (empty($_POST['name']))
-		$errors['name'] = ACP3_CMS::$lang->t('common', 'name_to_short');
+		$errors['name'] = ACP3_CMS::$lang->t('system', 'name_to_short');
 	if (ACP3_Validate::email($_POST['mail']) === false)
-		$errors['mail'] = ACP3_CMS::$lang->t('common', 'wrong_email_format');
+		$errors['mail'] = ACP3_CMS::$lang->t('system', 'wrong_email_format');
 	if (strlen($_POST['message']) < 3)
-		$errors['message'] = ACP3_CMS::$lang->t('common', 'message_to_short');
+		$errors['message'] = ACP3_CMS::$lang->t('system', 'message_to_short');
 	if ($captchaAccess === true && ACP3_CMS::$auth->isUser() === false && ACP3_Validate::captcha($_POST['captcha']) === false)
 		$errors['captcha'] = ACP3_CMS::$lang->t('captcha', 'invalid_captcha_entered');
 
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
 		$settings = ACP3_Config::getSettings('contact');
 
@@ -50,7 +50,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	if (ACP3_CMS::$auth->isUser() === true) {
 		$defaults = ACP3_CMS::$auth->getUserInfo();
 		$disabled = ' readonly="readonly" class="readonly"';
-		$defaults['name'] = !empty($defaults['realname']) ? ACP3_CMS::$db->escape($defaults['realname'], 3) : ACP3_CMS::$db->escape($defaults['nickname'], 3);
+		$defaults['name'] = !empty($defaults['realname']) ? $defaults['realname'] : $defaults['nickname'];
 		$defaults['message'] = '';
 
 		if (isset($_POST['submit'])) {

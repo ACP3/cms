@@ -4,7 +4,7 @@
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="tabbable">
 		<ul class="nav nav-tabs">
-			<li class="active"><a href="#tab-1" data-toggle="tab">{lang t="common|publication_period"}</a></li>
+			<li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|publication_period"}</a></li>
 			<li><a href="#tab-2" data-toggle="tab">{lang t="polls|poll"}</a></li>
 		</ul>
 		<div class="tab-content">
@@ -27,10 +27,10 @@
 				</div>
 {/foreach}
 				<div class="control-group">
-					<label for="{$options.0.name}" class="control-label">{lang t="common|options"}</label>
+					<label for="{$options.0.name}" class="control-label">{lang t="system|options"}</label>
 					<div class="controls">
 {foreach $options as $row}
-						<label for="{$row.name}" class="checkbox inline">
+						<label for="{$row.name}" class="checkbox">
 							<input type="checkbox" name="{$row.name}" id="{$row.name}" value="1"{$row.checked}>
 							{$row.lang}
 						</label>
@@ -41,11 +41,11 @@
 		</div>
 	</div>
 	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
 {if !$disable}
-		<input type="submit" name="add_answer" value="{lang t="polls|add_answer"}" class="btn">
+		<button type="submit" name="add_answer" class="btn">{lang t="polls|add_answer"}</button>
 {/if}
-		<a href="{uri args="acp/polls"}" class="btn">{lang t="common|cancel"}</a>
+		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
+		<a href="{uri args="acp/polls"}" class="btn">{lang t="system|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

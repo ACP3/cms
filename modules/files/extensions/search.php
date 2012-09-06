@@ -1,6 +1,6 @@
 <?php
 /**
- * Search
+ * Files
  *
  * @author Tino Goratsch
  * @package ACP3
@@ -21,17 +21,17 @@ switch($_POST['area']) {
 		$fields = 'link_title, file, text';
 }
 
-$time = ACP3_CMS::$date->getCurrentDateTime();
-$period = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
-
-$result_files = ACP3_CMS::$db->select('id, link_title, text', 'files', 'MATCH (' . $fields . ') AGAINST (\'' . ACP3_CMS::$db->escape($_POST['search_term']) . '\' IN BOOLEAN MODE) AND ' . $period, 'start ' . $_POST['sort'] . ', end ' . $_POST['sort'] . ', id ' . $_POST['sort']);
+$period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
+$result_files = ACP3_CMS::$db2->fetchAll('SELECT id, link_title, text FROM ' . DB_PRE . 'files WHERE MATCH (' . $fields . ') AGAINST (' . ACP3_CMS::$db2->quote($_POST['search_term']) . ' IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $_POST['sort'] . ', end ' . $_POST['sort'] . ', id ' . $_POST['sort'], array('time' => ACP3_CMS::$date->getCurrentDateTime()));
 $c_result_files = count($result_files);
 
 if ($c_result_files > 0) {
-	$results_mods['files']['title'] = ACP3_CMS::$lang->t('files', 'files');
+	$module_name = str_replace(MODULES_DIR, '', __DIR__);
+	$name =  ACP3_CMS::$lang->t($module_name, $module_name);
+	$results_mods[$name]['dir'] = $module_name;
 	for ($i = 0; $i < $c_result_files; ++$i) {
-		$results_mods['files']['results'][$i]['hyperlink'] = ACP3_CMS::$uri->route('files/details/id_' . $result_files[$i]['id'], 1);
-		$results_mods['files']['results'][$i]['headline'] = ACP3_CMS::$db->escape($result_files[$i]['link_title'], 3);
-		$results_mods['files']['results'][$i]['text'] = shortenEntry(ACP3_CMS::$db->escape($result_files[$i]['text'], 3), 200, 0, '...');
+		$results_mods[$name]['results'][$i]['hyperlink'] = ACP3_CMS::$uri->route('files/details/id_' . $result_files[$i]['id'], 1);
+		$results_mods[$name]['results'][$i]['headline'] = $result_files[$i]['link_title'];
+		$results_mods[$name]['results'][$i]['text'] = shortenEntry($result_files[$i]['text'], 200, 0, '...');
 	}
 }

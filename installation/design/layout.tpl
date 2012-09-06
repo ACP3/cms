@@ -27,7 +27,7 @@ $(document).ready(function($) {
 	<div class="container-fluid">
 		<h1 id="logo">ACP3</h1>
 		<div class="row-fluid">
-			<div class="span3 well" style="padding:8px">
+			<div class="span3 well well-small">
 {if isset($PAGES)}
 				<ul class="nav nav-list">
 					<li class="nav-header">Navigation</li>

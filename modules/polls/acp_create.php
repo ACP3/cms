@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 if (isset($_POST['submit']) === true) {
 	if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
-		$errors[] = ACP3_CMS::$lang->t('common', 'select_date');
+		$errors[] = ACP3_CMS::$lang->t('system', 'select_date');
 	if (empty($_POST['question']))
 		$errors['question'] = ACP3_CMS::$lang->t('polls', 'type_in_question');
 	$i = 0;
@@ -26,41 +26,37 @@ if (isset($_POST['submit']) === true) {
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
-		$start = $_POST['start'];
-		$end = $_POST['end'];
-		$question = ACP3_CMS::$db->escape($_POST['question']);
-
 		$insert_values = array(
 			'id' => '',
-			'start' => $start,
-			'end' => $end,
-			'question' => $question,
+			'start' => $_POST['start'],
+			'end' => $_POST['end'],
+			'question' => $_POST['question'],
 			'multiple' => isset($_POST['multiple']) ? '1' : '0',
 			'user_id' => ACP3_CMS::$auth->getUserId(),
 		);
 
-		$bool = ACP3_CMS::$db->insert('polls', $insert_values);
+		$bool = ACP3_CMS::$db2->insert(DB_PRE . 'polls', $insert_values);
+		$poll_id = ACP3_CMS::$db2->lastInsertId();
 		$bool2 = false;
 
 		if ($bool !== false) {
-			$poll_id = ACP3_CMS::$db->select('id', 'polls', 'start = \'' . $start . '\' AND end = \'' . $end . '\' AND question = \'' . $question . '\'', 'id DESC', 1);
 			foreach ($_POST['answers'] as $row) {
 				if (!empty($row)) {
 					$insert_answer = array(
 						'id' => '',
-						'text' => ACP3_CMS::$db->escape($row),
-						'poll_id' => $poll_id[0]['id'],
+						'text' => $row,
+						'poll_id' => $poll_id,
 					);
-					$bool2 = ACP3_CMS::$db->insert('poll_answers', $insert_answer);
+					$bool2 = ACP3_CMS::$db2->insert(DB_PRE . 'poll_answers', $insert_answer);
 				}
 			}
 		}
 
 		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool && $bool2, $bool !== false && $bool2 !== false ? ACP3_CMS::$lang->t('common', 'create_success') : ACP3_CMS::$lang->t('common', 'create_error'), 'acp/polls');
+		setRedirectMessage($bool && $bool2, ACP3_CMS::$lang->t('system', $bool !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/polls');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {

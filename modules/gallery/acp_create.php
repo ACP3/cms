@@ -12,33 +12,33 @@ if (defined('IN_ADM') === false)
 
 if (isset($_POST['submit']) === true) {
 	if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
-		$errors[] = ACP3_CMS::$lang->t('common', 'select_date');
+		$errors[] = ACP3_CMS::$lang->t('system', 'select_date');
 	if (strlen($_POST['name']) < 3)
 		$errors['name'] = ACP3_CMS::$lang->t('gallery', 'type_in_gallery_name');
 	if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 		(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias']) === true))
-		$errors['alias'] = ACP3_CMS::$lang->t('common', 'uri_alias_unallowed_characters_or_exists');
+		$errors['alias'] = ACP3_CMS::$lang->t('system', 'uri_alias_unallowed_characters_or_exists');
 
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
 		$insert_values = array(
 			'id' => '',
 			'start' => $_POST['start'],
 			'end' => $_POST['end'],
-			'name' => ACP3_CMS::$db->escape($_POST['name']),
+			'name' => $_POST['name'],
 			'user_id' => ACP3_CMS::$auth->getUserId(),
 		);
 
-		$bool = ACP3_CMS::$db->insert('gallery', $insert_values);
+		$bool = ACP3_CMS::$db2->insert(DB_PRE . 'gallery', $insert_values);
 		if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
-			ACP3_SEO::insertUriAlias('gallery/pics/id_' . ACP3_CMS::$db->link->lastInsertID(), $_POST['alias'], ACP3_CMS::$db->escape($_POST['seo_keywords']), ACP3_CMS::$db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
+			ACP3_SEO::insertUriAlias('gallery/pics/id_' . ACP3_CMS::$db2->lastInsertId(), $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int) $_POST['seo_robots']);
 
 		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/gallery');
+		setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/gallery');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {

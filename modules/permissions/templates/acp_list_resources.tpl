@@ -1,8 +1,8 @@
 <form action="{uri args="acp/permissions/delete_resources"}" method="post">
 	<div id="adm-list" class="well">
 		{check_access mode="link" path="acp/permissions/create_resource"  icon="32/resource" lang="permissions|create_resource"}
-		{check_access mode="input" path="acp/permissions/delete_resources" icon="32/cancel" lang="common|delete_marked"}
-		<h2>{lang t="common|overview"}</h2>
+		{check_access mode="input" path="acp/permissions/delete_resources" icon="32/cancel" lang="system|delete_marked"}
+		<h2>{lang t="system|overview"}</h2>
 	</div>
 {if isset($redirect_message)}
 {$redirect_message}
@@ -13,11 +13,11 @@
 		<thead>
 			<tr>
 {if $can_delete_resource === true}
-				<th><input type="checkbox" id="mark-all" value="1"></th>
+				<th style="width:3%"><input type="checkbox" id="mark-all" value="1"></th>
 {/if}
 				<th>{lang t="permissions|filename"}</th>
 				<th>{lang t="permissions|assigned_privilege"}</th>
-				<th style="width:3%">{lang t="common|id"}</th>
+				<th style="width:5%">{lang t="system|id"}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -43,7 +43,7 @@
 {/if}
 {else}
 	<div class="alert align-center">
-		<strong>{lang t="common|no_entries"}</strong>
+		<strong>{lang t="system|no_entries"}</strong>
 	</div>
 {/if}
 </form>

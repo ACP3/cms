@@ -25,7 +25,7 @@ $(document).ready(function() {
 {if isset($guestbook)}
 {$pagination}
 {foreach $guestbook as $row}
-<div id="gb-entry-{$row.id}" class="dataset-box" style="width: 65%">
+<div id="gb-entry-{$row.id}" class="dataset-box clearfix" style="width: 65%">
 	<div class="header">
 		<div class="pull-right small">{$row.date}</div>
 		{if !empty($row.user_id)}<a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>{else}{$row.name}{/if}<br>
@@ -45,6 +45,6 @@ $(document).ready(function() {
 {/foreach}
 {else}
 <div class="alert align-center">
-	<strong>{lang t="common|no_entries"}</strong>
+	<strong>{lang t="system|no_entries"}</strong>
 </div>
 {/if}

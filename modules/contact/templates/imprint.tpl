@@ -4,7 +4,7 @@
 	<dd>{$imprint.address}</dd>
 {/if}
 {if !empty($imprint.mail)}
-	<dt>{lang t="common|email"}</dt>
+	<dt>{lang t="system|email_address"}</dt>
 	<dd><a href="{uri args="contact"}">{$imprint.mail}</a></dd>
 {/if}
 {if !empty($imprint.telephone)}

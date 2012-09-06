@@ -67,7 +67,7 @@ function executeSqlQueries(array $queries, $version)
 	foreach($queries as $row) {
 		if (!empty($row)) {
 			$row = str_replace(array('{engine}', '{charset}'), array($engine, $charset), $row);
-			$bool = $db->query($row, 3);
+			$bool = $db->query($row, 0);
 			if ($bool === false && defined('DEBUG') === true && DEBUG === true) {
 				$success = false;
 				print "\n";
@@ -135,7 +135,7 @@ if (CONFIG_DB_VERSION < 4) {
 	);
 	echo executeSqlQueries($queries, 4);
 
-	$user = $db->select('MIN(id) AS id', 'users');
+	$user = $db->getResults('MIN(id) AS id', 'users');
 
 	$db->update('files', array('user_id' => $user[0]['id']));
 	$db->update('gallery', array('user_id' => $user[0]['id']));
@@ -177,15 +177,15 @@ if (CONFIG_DB_VERSION < 10) {
 	);
 	echo executeSqlQueries($queries, 10);
 
-	$roles = $db->select('id, left_id, right_id', 'acl_roles');
+	$roles = $db->getResults('id, left_id, right_id', 'acl_roles');
 	foreach ($roles as $row) {
-		$parent = $db->select('id', 'acl_roles', 'left_id < ' . $row['left_id'] . ' AND right_id > ' . $row['right_id'], 'left_id DESC', 1);
+		$parent = $db->getResults('id', 'acl_roles', 'left_id < ' . $row['left_id'] . ' AND right_id > ' . $row['right_id'], 'left_id DESC', 1);
 		$db->update('acl_roles', array('parent_id' => !empty($parent) ? $parent[0]['id'] : 0), 'id = \'' . $row['id'] . '\'');
 	}
 
-	$pages = $db->select('id, left_id, right_id', 'menu_items');
+	$pages = $db->getResults('id, left_id, right_id', 'menu_items');
 	foreach ($pages as $row) {
-		$parent = $db->select('id', 'menu_items', 'left_id < ' . $row['left_id'] . ' AND right_id > ' . $row['right_id'], 'left_id DESC', 1);
+		$parent = $db->getResults('id', 'menu_items', 'left_id < ' . $row['left_id'] . ' AND right_id > ' . $row['right_id'], 'left_id DESC', 1);
 		$db->update('menu_items', array('parent_id' => !empty($parent) ? $parent[0]['id'] : 0), 'id = \'' . $row['id'] . '\'');
 	}
 
@@ -267,9 +267,9 @@ if (CONFIG_DB_VERSION < 10) {
 		}
 	}
 
-	$roles = $db->select('id', 'acl_roles');
-	$modules = $db->select('id', 'modules');
-	$privileges = $db->select('id', 'acl_privileges');
+	$roles = $db->getResults('id', 'acl_roles');
+	$modules = $db->getResults('id', 'modules');
+	$privileges = $db->getResults('id', 'acl_privileges');
 
 	foreach ($roles as $role) {
 		foreach ($modules as $module) {
@@ -297,7 +297,7 @@ if (CONFIG_DB_VERSION < 11) {
 	);
 	echo executeSqlQueries($queries, 11);
 
-	$mod_id = $db->select('id', 'modules', 'name = \'access\'');
+	$mod_id = $db->getResults('id', 'modules', 'name = \'access\'');
 
 	$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id[0]['id'], 'page' => 'adm_list_resources', 'privilege_id' => 3));
 	$db->insert('acl_resources', array('id' => '', 'module_id' => $mod_id[0]['id'], 'page' => 'edit_resource', 'privilege_id' => 5));
@@ -371,7 +371,7 @@ if (CONFIG_DB_VERSION < 21) {
 	echo executeSqlQueries($queries, 21);
 }
 if (CONFIG_DB_VERSION < 22) {
-	$module_id = $db->select('id', 'modules', 'name = \'access\'');
+	$module_id = $db->getResults('id', 'modules', 'name = \'access\'');
 	$queries = array(
 		"INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES ('', '" . $module_id[0]['id'] . "', 'create_resources', '', 4);",
 	);
@@ -488,7 +488,7 @@ if (CONFIG_DB_VERSION < 30) {
 		'wysiwyg' => CONFIG_WYSIWYG
 	);
 	
-	$mod_id = $db->select('id', 'modules', 'name = \'system\'');
+	$mod_id = $db->getResults('id', 'modules', 'name = \'system\'');
 	foreach ($system_settings as $key => $value) {
 		$db->insert('settings', array('id' => '', 'module_id' => $mod_id[0]['id'], 'name' => $key, 'value' => $db->escape($value, 2)));
 	}

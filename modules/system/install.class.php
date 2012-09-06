@@ -2,7 +2,7 @@
 
 class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 	private $module_name = 'system';
-	private $schema_version = 33;
+	private $schema_version = 34;
 
 	public function __construct() {
 		parent::__construct();
@@ -176,6 +176,9 @@ class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 			),
 			33 => array(
 				"UPDATE `{pre}acl_resources` SET privilege_id = 3 WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_maintenance';",
+			),
+			34 => array(
+				"INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'functions', '', 1);",
 			)
 		);
 	}

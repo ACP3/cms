@@ -14,7 +14,7 @@
 	<dd>{$user.birthday}</dd>
 {/if}
 {if $user.mail_display == 1}
-	<dt>{lang t="common|email"}</dt>
+	<dt>{lang t="system|email_address"}</dt>
 	<dd><a href="mailto:{$user.mail}" title="{lang t="users|send_email"}">{$user.mail}</a></dd>
 {/if}
 {if !empty($user.icq) && $user.icq_display == 1}
@@ -40,7 +40,7 @@
 	</dd>
 {/if}
 {if $user.website != '' && $user.website_display == 1}
-	<dt>{lang t="common|website"}</dt>
+	<dt>{lang t="system|website"}</dt>
 	<dd><a href="{$user.website}" onclick="window.open(this.href); return false" title="{lang t="users|visit_website"}">{$user.website}</a></dd>
 {/if}
 </dl>

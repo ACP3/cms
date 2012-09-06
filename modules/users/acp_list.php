@@ -12,19 +12,25 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$users = ACP3_CMS::$db->select('u.id, u.nickname, u.mail', 'users AS u', 0, 'u.nickname ASC', POS, ACP3_CMS::$auth->entries);
+$users = ACP3_CMS::$db2->fetchAll('SELECT u.id, u.nickname, u.mail FROM ' . DB_PRE . 'users AS u ORDER BY u.nickname ASC');
 $c_users = count($users);
 
 if ($c_users > 0) {
-	ACP3_CMS::$view->assign('pagination', pagination(ACP3_CMS::$db->countRows('*', 'users')));
+	$can_delete = ACP3_Modules::check('users', 'acp_delete');
+	$config = array(
+		'element' => '#acp-table',
+		'sort_col' => $can_delete === true ? 1 : 0,
+		'sort_dir' => 'asc',
+		'hide_col_sort' => $can_delete === true ? 0 : ''
+	);
+	ACP3_CMS::setContent(datatable($config));
 
 	for ($i = 0; $i < $c_users; ++$i) {
-		$users[$i]['nickname'] = ACP3_CMS::$db->escape($users[$i]['nickname'], 3);
 		$users[$i]['roles'] = implode(', ', ACP3_ACL::getUserRoles($users[$i]['id'], 2));
 		$users[$i]['mail'] = substr($users[$i]['mail'], 0, -2);
 	}
 	ACP3_CMS::$view->assign('users', $users);
-	ACP3_CMS::$view->assign('can_delete', ACP3_Modules::check('users', 'acp_delete'));
+	ACP3_CMS::$view->assign('can_delete', $can_delete);
 }
 
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('users/acp_list.tpl'));
+ACP3_CMS::appendContent(ACP3_CMS::$view->fetchTemplate('users/acp_list.tpl'));
