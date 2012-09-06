@@ -1,6 +1,6 @@
 <?php
 /**
- * Search
+ * News
  *
  * @author Tino Goratsch
  * @package ACP3
@@ -20,17 +20,18 @@ switch($_POST['area']) {
 	default:
 		$fields = 'headline, text';
 }
-$time = ACP3_CMS::$date->getCurrentDateTime();
-$period = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
 
-$result_news = ACP3_CMS::$db->select('id, headline, text', 'news', 'MATCH (' . $fields . ') AGAINST (\'' . ACP3_CMS::$db->escape($_POST['search_term']) . '\' IN BOOLEAN MODE) AND ' . $period, 'start ' . $_POST['sort'] . ', end ' . $_POST['sort'] . ', id ' . $_POST['sort']);
+$period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
+$result_news = ACP3_CMS::$db2->fetchAll('SELECT id, headline, text FROM ' . DB_PRE . 'news WHERE MATCH (' . $fields . ') AGAINST (' . ACP3_CMS::$db2->quote($_POST['search_term']) . ' IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $_POST['sort'] . ', end ' . $_POST['sort'] . ', id ' . $_POST['sort'], array('time' => ACP3_CMS::$date->getCurrentDateTime()));
 $c_result_news = count($result_news);
 
 if ($c_result_news > 0) {
-	$results_mods['news']['title'] = ACP3_CMS::$lang->t('news', 'news');
+	$module_name = str_replace(MODULES_DIR, '', __DIR__);
+	$name =  ACP3_CMS::$lang->t($module_name, $module_name);
+	$results_mods[$name]['dir'] = $module_name;
 	for ($i = 0; $i < $c_result_news; ++$i) {
-		$results_mods['news']['results'][$i]['hyperlink'] = ACP3_CMS::$uri->route('news/details/id_' . $result_news[$i]['id'], 1);
-		$results_mods['news']['results'][$i]['headline'] = ACP3_CMS::$db->escape($result_news[$i]['headline'], 3);
-		$results_mods['news']['results'][$i]['text'] = shortenEntry(ACP3_CMS::$db->escape($result_news[$i]['text'], 3), 200, 0, '...');
+		$results_mods[$name]['results'][$i]['hyperlink'] = ACP3_CMS::$uri->route('news/details/id_' . $result_news[$i]['id'], 1);
+		$results_mods[$name]['results'][$i]['headline'] = $result_news[$i]['headline'];
+		$results_mods[$name]['results'][$i]['text'] = shortenEntry($result_news[$i]['text'], 200, 0, '...');
 	}
 }

@@ -26,9 +26,9 @@ $(function() {
 	<div class="tabbable">
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general"}</a></li>
-			<li><a href="#tab-2" data-toggle="tab">{lang t="common|date"}</a></li>
+			<li><a href="#tab-2" data-toggle="tab">{lang t="system|date"}</a></li>
 			<li><a href="#tab-3" data-toggle="tab">{lang t="system|acp_maintenance"}</a></li>
-			<li><a href="#tab-4" data-toggle="tab">{lang t="common|seo"}</a></li>
+			<li><a href="#tab-4" data-toggle="tab">{lang t="system|seo"}</a></li>
 			<li><a href="#tab-5" data-toggle="tab">{lang t="system|performance"}</a></li>
 			<li><a href="#tab-6" data-toggle="tab">{lang t="system|email"}</a></li>
 		</ul>
@@ -42,7 +42,7 @@ $(function() {
 					</div>
 				</div>
 				<div class="control-group">
-					<label for="entries" class="control-label">{lang t="common|records_per_page"}</label>
+					<label for="entries" class="control-label">{lang t="system|records_per_page"}</label>
 					<div class="controls">
 						<select name="entries" id="entries">
 {foreach $entries as $row}
@@ -75,18 +75,18 @@ $(function() {
 			</div>
 			<div id="tab-2" class="tab-pane">
 				<div class="control-group">
-					<label for="date-format-long" class="control-label">{lang t="common|date_format_long"}</label>
+					<label for="date-format-long" class="control-label">{lang t="system|date_format_long"}</label>
 					<div class="controls">
 						<input type="text" name="date_format_long" id="date-format-long" value="{$form.date_format_long}" maxlength="20">
 						<p class="help-block">{lang t="system|php_date_function"}</p>
 					</div>
 				</div>
 				<div class="control-group">
-					<label for="date-format-short" class="control-label">{lang t="common|date_format_short"}</label>
+					<label for="date-format-short" class="control-label">{lang t="system|date_format_short"}</label>
 					<div class="controls"><input type="text" name="date_format_short" id="date-format-short" value="{$form.date_format_short}" maxlength="20"></div>
 				</div>
 				<div class="control-group">
-					<label for="date-time-zone" class="control-label">{lang t="common|time_zone"}</label>
+					<label for="date-time-zone" class="control-label">{lang t="system|time_zone"}</label>
 					<div class="controls">
 						<select name="date_time_zone" id="date-time-zone">
 {foreach $time_zones as $key => $values}
@@ -123,18 +123,18 @@ $(function() {
 					<div class="controls"><input type="text" name="seo_title" id="seo-title" value="{$form.seo_title}" maxlength="120"></div>
 				</div>
 				<div class="control-group">
-					<label for="seo-meta-description" class="control-label">{lang t="common|seo_description"}</label>
+					<label for="seo-meta-description" class="control-label">{lang t="system|seo_description"}</label>
 					<div class="controls"><input type="text" name="seo_meta_description" id="seo-meta-description" value="{$form.seo_meta_description}" maxlength="120"></div>
 				</div>
 				<div class="control-group">
-					<label for="seo-meta-keywords" class="control-label">{lang t="common|seo_keywords"}</label>
+					<label for="seo-meta-keywords" class="control-label">{lang t="system|seo_keywords"}</label>
 					<div class="controls">
 						<textarea name="seo_meta_keywords" id="seo-meta-keywords" cols="50" rows="6" class="span6">{$form.seo_meta_keywords}</textarea>
-						<p class="help-block">{lang t="common|seo_keywords_separate_with_commas"}</p>
+						<p class="help-block">{lang t="system|seo_keywords_separate_with_commas"}</p>
 					</div>
 				</div>
 				<div class="control-group">
-					<label for="seo-robots" class="control-label">{lang t="common|seo_robots"}</label>
+					<label for="seo-robots" class="control-label">{lang t="system|seo_robots"}</label>
 					<div class="controls">
 						<select name="seo_robots" id="seo-robots">
 {foreach $robots as $row}
@@ -258,7 +258,7 @@ $(function() {
 		</div>
 	</div>
 	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
+		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
 		{$form_token}
 	</div>
 </form>

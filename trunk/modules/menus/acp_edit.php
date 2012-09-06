@@ -12,11 +12,12 @@ if (defined('IN_ADM') === false)
 
 require_once MODULES_DIR . 'menus/functions.php';
 
-if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true && ACP3_CMS::$db->countRows('*', 'menus', 'id = \'' . ACP3_CMS::$uri->id . '\'') == 1) {
+if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
+	ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menus WHERE id = ?', array(ACP3_CMS::$uri->id)) == 1) {
 	if (isset($_POST['submit']) === true) {
 		if (!preg_match('/^[a-zA-Z]+\w/', $_POST['index_name']))
 			$errors['index-name'] = ACP3_CMS::$lang->t('menus', 'type_in_index_name');
-		if (!isset($errors) && ACP3_CMS::$db->countRows('*', 'menus', 'index_name = \'' . ACP3_CMS::$db->escape($_POST['index_name']) . '\' AND id != \'' . ACP3_CMS::$uri->id . '\'') > 0)
+		if (!isset($errors) && ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menus WHERE index_name = ? AND id != ?', array($_POST['index_name'], ACP3_CMS::$uri->id)) > 0)
 			$errors['index-name'] = ACP3_CMS::$lang->t('menus', 'index_name_unique');
 		if (strlen($_POST['title']) < 3)
 			$errors['title'] = ACP3_CMS::$lang->t('menus', 'menu_bar_title_to_short');
@@ -24,28 +25,26 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true && ACP3_CMS::$db->count
 		if (isset($errors) === true) {
 			ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 		} elseif (ACP3_Validate::formToken() === false) {
-			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 		} else {
 			$update_values = array(
-				'index_name' => ACP3_CMS::$db->escape($_POST['index_name']),
-				'title' => ACP3_CMS::$db->escape($_POST['title']),
+				'index_name' => $_POST['index_name'],
+				'title' => $_POST['title'],
 			);
 
-			$bool = ACP3_CMS::$db->update('menus', $update_values, 'id = \'' . ACP3_CMS::$uri->id . '\'');
+			$bool = ACP3_CMS::$db2->update(DB_PRE . 'menus', $update_values, array('id' => ACP3_CMS::$uri->id));
 
 			setMenuItemsCache();
 
 			ACP3_CMS::$session->unsetFormToken();
 
-			setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
+			setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-		$block = ACP3_CMS::$db->select('index_name, title', 'menus', 'id = \'' . ACP3_CMS::$uri->id . '\'');
-		$block[0]['index_name'] = ACP3_CMS::$db->escape($block[0]['index_name'], 3);
-		$block[0]['title'] = ACP3_CMS::$db->escape($block[0]['title'], 3);
+		$block = ACP3_CMS::$db2->fetchAssoc('SELECT index_name, title FROM ' . DB_PRE . 'menus WHERE id = ?', array(ACP3_CMS::$uri->id));
 
-		ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : $block[0]);
+		ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : $block);
 
 		ACP3_CMS::$session->generateFormToken();
 

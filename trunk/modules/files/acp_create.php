@@ -24,7 +24,7 @@ if (isset($_POST['submit']) === true) {
 	}
 
 	if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
-		$errors[] = ACP3_CMS::$lang->t('common', 'select_date');
+		$errors[] = ACP3_CMS::$lang->t('system', 'select_date');
 	if (strlen($_POST['link_title']) < 3)
 		$errors['link-title'] = ACP3_CMS::$lang->t('files', 'type_in_link_title');
 	if (isset($_POST['external']) && (empty($file) || empty($_POST['filesize']) || empty($_POST['unit'])))
@@ -39,12 +39,12 @@ if (isset($_POST['submit']) === true) {
 	if (strlen($_POST['cat_create']) >= 3 && categoriesCheckDuplicate($_POST['cat_create'], 'files') === true)
 		$errors['cat-create'] = ACP3_CMS::$lang->t('categories', 'category_already_exists');
 	if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) && (ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias']) === true))
-		$errors['alias'] = ACP3_CMS::$lang->t('common', 'uri_alias_unallowed_characters_or_exists');
+		$errors['alias'] = ACP3_CMS::$lang->t('system', 'uri_alias_unallowed_characters_or_exists');
 
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
 		if (is_array($file) === true) {
 			$result = moveFile($file['tmp_name'], $file['name'], 'files');
@@ -53,7 +53,7 @@ if (isset($_POST['submit']) === true) {
 		} else {
 			$_POST['filesize'] = (float) $_POST['filesize'];
 			$new_file = $file;
-			$filesize = $_POST['filesize'] . ' ' . ACP3_CMS::$db->escape($_POST['unit']);
+			$filesize = $_POST['filesize'] . ' ' . $_POST['unit'];
 		}
 
 		$insert_values = array(
@@ -63,23 +63,20 @@ if (isset($_POST['submit']) === true) {
 			'category_id' => strlen($_POST['cat_create']) >= 3 ? categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
 			'file' => $new_file,
 			'size' => $filesize,
-			'link_title' => ACP3_CMS::$db->escape($_POST['link_title']),
-			'text' => ACP3_CMS::$db->escape($_POST['text'], 2),
+			'link_title' => $_POST['link_title'],
+			'text' => $_POST['text'],
 			'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
 			'user_id' => ACP3_CMS::$auth->getUserId(),
 		);
 
 
-		$bool = ACP3_CMS::$db->insert('files', $insert_values);
+		$bool = ACP3_CMS::$db2->insert(DB_PRE . 'files', $insert_values);
 		if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
-			ACP3_SEO::insertUriAlias('files/details/id_' . ACP3_CMS::$db->link->lastInsertID(), $_POST['alias'], ACP3_CMS::$db->escape($_POST['seo_keywords']), ACP3_CMS::$db->escape($_POST['seo_description']), (int) $_POST['seo_robots']);
-
-		require_once MODULES_DIR . 'files/functions.php';
-		setFilesCache(ACP3_CMS::$db->link->lastInsertId());
+			ACP3_SEO::insertUriAlias('files/details/id_' . ACP3_CMS::$db2->lastInsertId(), $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int) $_POST['seo_robots']);
 
 		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/files');
+		setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/files');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -106,7 +103,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		$options = array();
 		$options[0]['name'] = 'comments';
 		$options[0]['checked'] = selectEntry('comments', '1', '0', 'checked');
-		$options[0]['lang'] = ACP3_CMS::$lang->t('common', 'allow_comments');
+		$options[0]['lang'] = ACP3_CMS::$lang->t('system', 'allow_comments');
 		ACP3_CMS::$view->assign('options', $options);
 	}
 

@@ -9,7 +9,7 @@
 		<div class="align-right">
 			<form action="{uri args="news/list"}" method="post" class="form-inline">
 				{$categories}
-				<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
+				<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
 			</form>
 		</div>
 {/if}
@@ -38,6 +38,6 @@
 {/foreach}
 {else}
 <div class="alert align-center">
-	<strong>{lang t="common|no_entries"}</strong>
+	<strong>{lang t="system|no_entries"}</strong>
 </div>
 {/if}

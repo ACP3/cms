@@ -21,13 +21,18 @@ if (isset($_POST['submit']) === true) {
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
-		$bool = ACP3_Config::setSettings('categories', $_POST);
+		$data = array(
+			'width' => $_POST['width'],
+			'height' => $_POST['height'],
+			'filsize' => $_POST['filesize'],
+		);
+		$bool = ACP3_Config::setSettings('categories', $data);
 
 		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool === true ? 'settings_success' : 'settings_error'), 'acp/categories');
+		setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/categories');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {

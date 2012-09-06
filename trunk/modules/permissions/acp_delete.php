@@ -16,10 +16,10 @@ elseif (ACP3_Validate::deleteEntries(ACP3_CMS::$uri->entries) === true)
 	$entries = ACP3_CMS::$uri->entries;
 
 if (!isset($entries)) {
-	ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'no_entries_selected')));
+	ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'no_entries_selected')));
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
-	ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('common', 'confirm_delete'), ACP3_CMS::$uri->route('acp/permissions/delete/entries_' . $marked_entries . '/action_confirmed/'), ACP3_CMS::$uri->route('acp/permissions')));
+	ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('system', 'confirm_delete'), ACP3_CMS::$uri->route('acp/permissions/delete/entries_' . $marked_entries . '/action_confirmed/'), ACP3_CMS::$uri->route('acp/permissions')));
 } elseif (ACP3_CMS::$uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = $bool2 = $bool3 = false;
@@ -31,8 +31,8 @@ if (!isset($entries)) {
 			$level_undeletable = true;
 		} else {
 			$bool = $nestedSet->deleteNode($entry);
-			$bool2 = ACP3_CMS::$db->delete('acl_rules', 'role_id = \'' . $entry . '\'');
-			$bool3 = ACP3_CMS::$db->delete('acl_user_roles', 'role_id = \'' . $entry . '\'');
+			$bool2 = ACP3_CMS::$db2->delete(DB_PRE . 'acl_rules', array('role_id' => $entry));
+			$bool3 = ACP3_CMS::$db2->delete(DB_PRE . 'acl_user_roles', array('role_id' => $entry));
 		}
 	}
 
@@ -41,7 +41,7 @@ if (!isset($entries)) {
 	if ($level_undeletable === true) {
 		$text = ACP3_CMS::$lang->t('permissions', 'role_undeletable');
 	} else {
-		$text = ACP3_CMS::$lang->t('common', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error');
+		$text = ACP3_CMS::$lang->t('system', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error');
 	}
 	setRedirectMessage($bool && $bool2 && $bool3, $text, 'acp/permissions');
 } else {

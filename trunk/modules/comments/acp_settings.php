@@ -14,20 +14,24 @@ $emoticons_active = ACP3_Modules::isActive('emoticons');
 
 if (isset($_POST['submit']) === true) {
 	if (empty($_POST['dateformat']) || ($_POST['dateformat'] !== 'long' && $_POST['dateformat'] !== 'short'))
-		$errors['dateformat'] = ACP3_CMS::$lang->t('common', 'select_date_format');
+		$errors['dateformat'] = ACP3_CMS::$lang->t('system', 'select_date_format');
 	if ($emoticons_active === true && (!isset($_POST['emoticons']) || ($_POST['emoticons'] != 0 && $_POST['emoticons'] != 1)))
 		$errors[] = ACP3_CMS::$lang->t('comments', 'select_emoticons');
 
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
-		$bool = ACP3_Config::setSettings('comments', $_POST);
+		$data = array(
+			'dateformat' => $_POST['dateformat'],
+			'emoticons' => $_POST['emoticons'],
+		);
+		$bool = ACP3_Config::setSettings('comments', $data);
 
 		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool === true ? 'settings_success' : 'settings_error'), 'acp/comments');
+		setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/comments');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -40,10 +44,10 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		$allow_emoticons = array();
 		$allow_emoticons[0]['value'] = '1';
 		$allow_emoticons[0]['checked'] = selectEntry('emoticons', '1', $settings['emoticons'], 'checked');
-		$allow_emoticons[0]['lang'] = ACP3_CMS::$lang->t('common', 'yes');
+		$allow_emoticons[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
 		$allow_emoticons[1]['value'] = '0';
 		$allow_emoticons[1]['checked'] = selectEntry('emoticons', '0', $settings['emoticons'], 'checked');
-		$allow_emoticons[1]['lang'] = ACP3_CMS::$lang->t('common', 'no');
+		$allow_emoticons[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
 		ACP3_CMS::$view->assign('allow_emoticons', $allow_emoticons);
 	}
 

@@ -10,20 +10,23 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('system', 'acp_extensions'), ACP3_CMS::$uri->route('acp/system/extensions'))
-		   ->append(ACP3_CMS::$lang->t('system', 'acp_languages'));
+ACP3_CMS::$breadcrumb
+->append(ACP3_CMS::$lang->t('system', 'acp_extensions'), ACP3_CMS::$uri->route('acp/system/extensions'))
+->append(ACP3_CMS::$lang->t('system', 'acp_languages'));
 
-if (ACP3_CMS::$uri->dir) {
-	$dir = ACP3_CMS::$lang->languagePackExists(ACP3_CMS::$uri->dir) ? ACP3_CMS::$uri->dir : 0;
+if (isset(ACP3_CMS::$uri->dir)) {
 	$bool = false;
 
-	if (!empty($dir)) {
-		$bool = ACP3_Config::setSettings('system', array('lang' => $dir));
+	if (ACP3_CMS::$lang->languagePackExists(ACP3_CMS::$uri->dir) === true) {
+		$bool = ACP3_Config::setSettings('system', array('lang' => ACP3_CMS::$uri->dir));
+		ACP3_CMS::$lang->setLanguage(ACP3_CMS::$uri->dir);
 	}
-	$text = $bool === true ? ACP3_CMS::$lang->t('system', 'languages_edit_success') : ACP3_CMS::$lang->t('system', 'languages_edit_error');
+	$text = ACP3_CMS::$lang->t('system', $bool === true ? 'languages_edit_success' : 'languages_edit_error');
 
-	ACP3_CMS::setContent(confirmBox($text, ACP3_CMS::$uri->route('acp/system/languages')));
+	setRedirectMessage($bool, $text, 'acp/system/languages');
 } else {
+	getRedirectMessage();
+
 	$languages = array();
 	$directories = scandir(ACP3_ROOT . 'languages');
 	$count_dir = count($directories);

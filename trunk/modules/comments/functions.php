@@ -17,9 +17,7 @@
  */
 function commentsCount($module, $entry_id)
 {
-	global $db;
-
-	return ACP3_CMS::$db->query('SELECT COUNT(*) FROM {pre}comments AS c JOIN {pre}modules AS m ON(m.id = c.module_id) WHERE m.name = \'' . $module . '\' AND c.entry_id =\'' . $entry_id . '\'', 1);
+	return ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'comments AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE m.name = ? AND c.entry_id = ?', array($module, $entry_id));
 }
 /**
  * Zeigt alle Kommentare für das jeweilige Modul und Datensatz
@@ -33,12 +31,10 @@ function commentsCount($module, $entry_id)
  */
 function commentsList($module, $entry_id)
 {
-	global $auth, $date, $db, $lang, $tpl;
-
 	$settings = ACP3_Config::getSettings('comments');
 
 	// Auflistung der Kommentare
-	$comments = ACP3_CMS::$db->query('SELECT u.nickname AS user_name, c.name, c.user_id, c.date, c.message FROM {pre}comments AS c JOIN {pre}modules AS m ON(m.id = c.module_id) LEFT JOIN ({pre}users AS u) ON u.id = c.user_id WHERE m.name = \'' . $module . '\' AND c.entry_id = \'' . $entry_id . '\' ORDER BY c.date ASC LIMIT ' . POS . ', ' . ACP3_CMS::$auth->entries);
+	$comments = ACP3_CMS::$db2->fetchAll('SELECT u.nickname AS user_name, c.name, c.user_id, c.date, c.message FROM ' . DB_PRE . 'comments AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) LEFT JOIN (' . DB_PRE . 'users AS u) ON u.id = c.user_id WHERE m.name = ? AND c.entry_id = ? ORDER BY c.date ASC LIMIT ' . POS . ', ' . ACP3_CMS::$auth->entries, array($module, $entry_id));
 	$c_comments = count($comments);
 
 	if ($c_comments > 0) {
@@ -58,9 +54,9 @@ function commentsList($module, $entry_id)
 				$comments[$i]['name'] = ACP3_CMS::$lang->t('users', 'deleted_user');
 				$comments[$i]['user_id'] = 0;
 			}
-			$comments[$i]['name'] = ACP3_CMS::$db->escape(!empty($comments[$i]['user_name']) ? $comments[$i]['user_name'] : $comments[$i]['name'], 3);
+			$comments[$i]['name'] = !empty($comments[$i]['user_name']) ? $comments[$i]['user_name'] : $comments[$i]['name'];
 			$comments[$i]['date'] = ACP3_CMS::$date->format($comments[$i]['date'], $settings['dateformat']);
-			$comments[$i]['message'] = nl2p(ACP3_CMS::$db->escape($comments[$i]['message'], 3));
+			$comments[$i]['message'] = nl2p($comments[$i]['message']);
 			if ($emoticons_active === true) {
 				$comments[$i]['message'] = emoticonsReplace($comments[$i]['message']);
 			}

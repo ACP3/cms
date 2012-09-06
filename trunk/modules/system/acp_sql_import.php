@@ -2,8 +2,9 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('system', 'acp_maintenance'), ACP3_CMS::$uri->route('acp/system/maintenance'))
-		   ->append(ACP3_CMS::$lang->t('system', 'acp_sql_import'));
+ACP3_CMS::$breadcrumb
+->append(ACP3_CMS::$lang->t('system', 'acp_maintenance'), ACP3_CMS::$uri->route('acp/system/maintenance'))
+->append(ACP3_CMS::$lang->t('system', 'acp_sql_import'));
 
 if (isset($_POST['submit']) === true) {
 	if (isset($_FILES['file'])) {
@@ -22,19 +23,18 @@ if (isset($_POST['submit']) === true) {
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
 		ACP3_CMS::$session->unsetFormToken();
 
 		$data = isset($file) ? file_get_contents($file['tmp_name']) : $_POST['text'];
-		$data = str_replace(array("\r\n", "\r", "\n"), "\n", $data);
-		$data_ary = explode(";\n", $data);
+		$data_ary = explode(";\n", str_replace(array("\r\n", "\r", "\n"), "\n", $data));
 		$sql_queries = array();
 
 		$i = 0;
 		foreach ($data_ary as $row) {
 			if (!empty($row)) {
-				$bool = ACP3_CMS::$db->query($row, 3);
+				$bool = ACP3_CMS::$db2->query($row);
 				$sql_queries[$i]['query'] = str_replace("\n", '<br />', $row);
 				$sql_queries[$i]['color'] = $bool !== null ? '090' : 'f00';
 				++$i;

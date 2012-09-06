@@ -44,12 +44,12 @@ function editor($params) {
 	if ((!isset($config['toolbar']) || $config['toolbar'] !== 'simple') && ACP3_Modules::check('emoticons', 'functions') === true) {
 		$config['smiley_path'] = ROOT_DIR . 'uploads/emoticons/';
 		$config['smiley_images'] = $config['smiley_descriptions'] = '';
-		$emoticons = ACP3_CMS::$db->select('description, img', 'emoticons');
+		$emoticons = ACP3_CMS::$db2->fetchAll('SELECT description, img FROM ' . DB_PRE . 'emoticons');
 		$c_emoticons = count($emoticons);
 
 		for ($i = 0; $i < $c_emoticons; ++$i) {
 			$config['smiley_images'].= '\'' . $emoticons[$i]['img'] . '\',';
-			$config['smiley_descriptions'].= '\'' . ACP3_CMS::$db->escape($emoticons[$i]['description'], 3) . '\',';
+			$config['smiley_descriptions'].= '\'' . $emoticons[$i]['description'] . '\',';
 		}
 
 		$config['smiley_images'] = '@@[' . substr($config['smiley_images'], 0, -1) . ']';
@@ -70,5 +70,5 @@ function editor($params) {
 		$wysiwyg['advanced_replace_content'] = 'CKEDITOR.instances.' . $wysiwyg['id'] . '.insertHtml(text);';
 
 	ACP3_CMS::$view->assign('wysiwyg', $wysiwyg);
-	return ACP3_CMS::$view->fetchTemplate('common/wysiwyg.tpl');
+	return ACP3_CMS::$view->fetchTemplate('system/wysiwyg.tpl');
 }

@@ -5,8 +5,8 @@
 {$page.text}
 {if !empty($page.next) || !empty($page.previous)}
 <ul class="pager">
-	{if !empty($page.previous)}<li class="previous"><a href="{$page.previous}" rel="prev" class="previous">&laquo; {lang t="common|previous_page"}</a></li>{/if}
-	{if !empty($page.next)}<li class="next"><a href="{$page.next}" rel="next" class="next">{lang t="common|next_page"} &raquo;</a></li>{/if}
+	{if !empty($page.previous)}<li class="previous"><a href="{$page.previous}" rel="prev" class="previous">&laquo; {lang t="system|previous_page"}</a></li>{/if}
+	{if !empty($page.next)}<li class="next"><a href="{$page.next}" rel="next" class="next">{lang t="system|next_page"} &raquo;</a></li>{/if}
 </ul>
 {/if}
 {/if}

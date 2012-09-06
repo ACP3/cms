@@ -12,18 +12,22 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$categories = ACP3_CMS::$db->query('SELECT c.id, c.name, c.description, m.name AS module FROM {pre}categories AS c JOIN {pre}modules AS m ON(m.id = c.module_id) ORDER BY m.name ASC, c.name DESC, c.id DESC LIMIT ' . POS . ',' . ACP3_CMS::$auth->entries);
+$categories = ACP3_CMS::$db2->fetchAll('SELECT c.id, c.name, c.description, m.name AS module FROM ' . DB_PRE . 'categories AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) ORDER BY m.name ASC, c.name DESC, c.id DESC');
 $c_categories = count($categories);
 
 if ($c_categories > 0) {
-	ACP3_CMS::$view->assign('pagination', pagination(ACP3_CMS::$db->countRows('*', 'categories')));
+	$can_delete = ACP3_Modules::check('categories', 'acp_delete');
+	$config = array(
+		'element' => '#acp-table',
+		'sort_col' => $can_delete === true ? 1 : 0,
+		'sort_dir' => 'desc',
+		'hide_col_sort' => $can_delete === true ? 0 : ''
+	);
+	ACP3_CMS::setContent(datatable($config));
 	for ($i = 0; $i < $c_categories; ++$i) {
-		$categories[$i]['name'] = ACP3_CMS::$db->escape($categories[$i]['name'], 3);
-		$categories[$i]['description'] = ACP3_CMS::$db->escape($categories[$i]['description'], 3);
-		$info = ACP3_Modules::getModuleInfo(ACP3_CMS::$db->escape($categories[$i]['module'], 3));
-		$categories[$i]['module'] = $info['name'];
+		$categories[$i]['module'] = ACP3_CMS::$lang->t($categories[$i]['module'], $categories[$i]['module']);
 	}
 	ACP3_CMS::$view->assign('categories', $categories);
-	ACP3_CMS::$view->assign('can_delete', ACP3_Modules::check('categories', 'acp_delete'));
+	ACP3_CMS::$view->assign('can_delete', $can_delete);
 }
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('categories/acp_list.tpl'));
+ACP3_CMS::appendContent(ACP3_CMS::$view->fetchTemplate('categories/acp_list.tpl'));

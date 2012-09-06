@@ -7,12 +7,12 @@
 		<div class="controls"><input type="file" name="file" id="file" required></div>
 	</div>
 	<div class="control-group">
-		<label for="description" class="control-label">{lang t="common|description"}</label>
+		<label for="description" class="control-label">{lang t="system|description"}</label>
 		<div class="controls">{wysiwyg name="description" value="`$form.description`" height="150" toolbar="simple"}</div>
 	</div>
 {if isset($options)}
 	<div class="control-group">
-		<label for="{$options.0.name}" class="control-label">{lang t="common|options"}</label>
+		<label for="{$options.0.name}" class="control-label">{lang t="system|options"}</label>
 		<div class="controls">
 {foreach $options as $row}
 			<label for="{$row.name}" class="checkbox">
@@ -24,8 +24,8 @@
 	</div>
 {/if}
 	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
-		<a href="{uri args="acp/gallery/edit/id_`$gallery_id`"}" class="btn">{lang t="common|cancel"}</a>
+		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
+		<a href="{uri args="acp/gallery/edit/id_`$gallery_id`"}" class="btn">{lang t="system|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

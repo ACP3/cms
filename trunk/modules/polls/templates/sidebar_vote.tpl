@@ -19,10 +19,10 @@
 {/foreach}
 				</li>
 			</ul>
-			<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
+			<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
 		</form>
 	</li>
 {else}
-	<li>{lang t="common|no_entries_short"}</li>
+	<li>{lang t="system|no_entries_short"}</li>
 {/if}
 </ul>

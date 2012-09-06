@@ -23,8 +23,8 @@ if (isset($_POST['submit']) === true) {
 		$errors['parent'] = ACP3_CMS::$lang->t('menus', 'select_superior_page');
 	if (!empty($_POST['parent']) && ACP3_Validate::isNumber($_POST['parent']) === true) {
 		// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
-		$parent_block = ACP3_CMS::$db->select('block_id', 'menu_items', 'id = \'' . $_POST['parent'] . '\'');
-		if (!empty($parent_block) && $parent_block[0]['block_id'] != $_POST['block_id'])
+		$parent_block = ACP3_CMS::$db2->fetchColumn('SELECT block_id FROM ' . DB_PRE . 'menu_items WHERE id = ?', array($_POST['parent']));
+		if (!empty($parent_block) && $parent_block != $_POST['block_id'])
 			$errors['parent'] = ACP3_CMS::$lang->t('menus', 'superior_page_not_allowed');
 	}
 	if ($_POST['display'] != 0 && $_POST['display'] != 1)
@@ -33,25 +33,25 @@ if (isset($_POST['submit']) === true) {
 		$_POST['mode'] == 1 && (is_dir(MODULES_DIR . $_POST['module']) === false || preg_match('=/=', $_POST['module'])) ||
 		$_POST['mode'] == 2 && ACP3_Validate::isInternalURI($_POST['uri']) === false ||
 		$_POST['mode'] == 3 && empty($_POST['uri']) ||
-		$_POST['mode'] == 4 && (ACP3_Validate::isNumber($_POST['articles']) === false || ACP3_CMS::$db->countRows('*', 'articles', 'id = \'' . $_POST['articles'] . '\'') == 0))
+		$_POST['mode'] == 4 && (ACP3_Validate::isNumber($_POST['articles']) === false || ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'articles WHERE id = ?', array($_POST['articles'])) == 0))
 		$errors[] = ACP3_CMS::$lang->t('menus', 'type_in_uri_and_target');
 	if ($_POST['mode'] == 2 && (bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 		(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias']) === true))
-		$errors['alias'] = ACP3_CMS::$lang->t('common', 'uri_alias_unallowed_characters_or_exists');
+		$errors['alias'] = ACP3_CMS::$lang->t('system', 'uri_alias_unallowed_characters_or_exists');
 
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
 		$insert_values = array(
 			'id' => '',
 			'mode' => ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match('/^(articles\/list\/id_([0-9]+)\/)$/', $_POST['uri']) ? '4' : $_POST['mode'],
-			'block_id' => $_POST['block_id'],
-			'parent_id' => $_POST['parent'],
+			'block_id' => (int) $_POST['block_id'],
+			'parent_id' => (int) $_POST['parent'],
 			'display' => $_POST['display'],
-			'title' => ACP3_CMS::$db->escape($_POST['title']),
-			'uri' => $_POST['mode'] == 1 ? $_POST['module'] : ($_POST['mode'] == 4 ? 'articles/list/id_' . $_POST['articles'] . '/' : ACP3_CMS::$db->escape($_POST['uri'], 2)),
+			'title' => $_POST['title'],
+			'uri' => $_POST['mode'] == 1 ? $_POST['module'] : ($_POST['mode'] == 4 ? 'articles/list/id_' . $_POST['articles'] . '/' : $_POST['uri']),
 			'target' => $_POST['display'] == 0 ? 1 : $_POST['target'],
 		);
 
@@ -66,17 +66,17 @@ if (isset($_POST['submit']) === true) {
 				$description = ACP3_SEO::getDescription($_POST['uri']);
 			} else {
 				$alias = $_POST['alias'];
-				$keywords = ACP3_CMS::$db->escape($_POST['seo_keywords']);
-				$description = ACP3_CMS::$db->escape($_POST['seo_description']);
+				$keywords = $_POST['seo_keywords'];
+				$description = $_POST['seo_description'];
 			}
-			ACP3_SEO::insertUriAlias($_POST['mode'] == 1 ? '' : $alias, $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'], $keywords, $description, (int) $_POST['seo_robots']);
+			ACP3_SEO::insertUriAlias($_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'], $_POST['mode'] == 1 ? '' : $alias, $keywords, $description, (int) $_POST['seo_robots']);
 		}
 
 		setMenuItemsCache();
 
 		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
+		setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -112,19 +112,19 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$target = array();
 	$target[0]['value'] = 1;
 	$target[0]['selected'] = selectEntry('target', '1');
-	$target[0]['lang'] = ACP3_CMS::$lang->t('common', 'window_self');
+	$target[0]['lang'] = ACP3_CMS::$lang->t('system', 'window_self');
 	$target[1]['value'] = 2;
 	$target[1]['selected'] = selectEntry('target', '2');
-	$target[1]['lang'] = ACP3_CMS::$lang->t('common', 'window_blank');
+	$target[1]['lang'] = ACP3_CMS::$lang->t('system', 'window_blank');
 	ACP3_CMS::$view->assign('target', $target);
 
 	$display = array();
 	$display[0]['value'] = 1;
 	$display[0]['selected'] = selectEntry('display', '1', '1', 'checked');
-	$display[0]['lang'] = ACP3_CMS::$lang->t('common', 'yes');
+	$display[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
 	$display[1]['value'] = 0;
 	$display[1]['selected'] = selectEntry('display', '0', '', 'checked');
-	$display[1]['lang'] = ACP3_CMS::$lang->t('common', 'no');
+	$display[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
 	ACP3_CMS::$view->assign('display', $display);
 
 	if (ACP3_Modules::check('articles', 'functions') === true) {

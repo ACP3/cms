@@ -36,8 +36,8 @@
 		</div>
 	</div>
 	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
-		<a href="{uri args="acp/newsletter"}" class="btn">{lang t="common|cancel"}</a>
+		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
+		<a href="{uri args="acp/newsletter"}" class="btn">{lang t="system|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

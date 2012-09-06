@@ -32,23 +32,23 @@ if (isset($_POST['submit']) === true) {
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
 		$result = moveFile($file['tmp_name'], $file['name'], 'emoticons');
 
 		$insert_values = array(
 			'id' => '',
-			'code' => ACP3_CMS::$db->escape($_POST['code']),
-			'description' => ACP3_CMS::$db->escape($_POST['description']),
+			'code' => $_POST['code'],
+			'description' => $_POST['description'],
 			'img' => $result['name'],
 		);
 
-		$bool = ACP3_CMS::$db->insert('emoticons', $insert_values);
+		$bool = ACP3_CMS::$db2->insert(DB_PRE . 'emoticons', $insert_values);
 		setEmoticonsCache();
 
 		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/emoticons');
+		setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/emoticons');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {

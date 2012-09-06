@@ -6,26 +6,26 @@
 		<label for="width" class="control-label">{lang t="categories|image_width"}</label>
 		<div class="controls">
 			<input type="number" name="width" id="width" value="{$form.width}">
-			<p class="help-block">{lang t="common|statements_in_pixel"}</p>
+			<p class="help-block">{lang t="system|statements_in_pixel"}</p>
 		</div>
 	</div>
 	<div class="control-group">
 		<label for="height" class="control-label">{lang t="categories|image_height"}</label>
 		<div class="controls">
 			<input type="number" name="height" id="height" value="{$form.height}">
-			<p class="help-block">{lang t="common|statements_in_pixel"}</p>
+			<p class="help-block">{lang t="system|statements_in_pixel"}</p>
 		</div>
 	</div>
 	<div class="control-group">
 		<label for="filesize" class="control-label">{lang t="categories|image_filesize"}</label>
 		<div class="controls">
 			<input type="number" name="filesize" id="filesize" value="{$form.filesize}">
-			<p class="help-block">{lang t="common|statements_in_byte"}</p>
+			<p class="help-block">{lang t="system|statements_in_byte"}</p>
 		</div>
 	</div>
 	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
-		<a href="{uri args="acp/categories"}" class="btn">{lang t="common|cancel"}</a>
+		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
+		<a href="{uri args="acp/categories"}" class="btn">{lang t="system|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

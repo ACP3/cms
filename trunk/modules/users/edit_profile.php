@@ -13,15 +13,16 @@ if (defined('IN_ACP3') === false)
 if (ACP3_CMS::$auth->isUser() === false || ACP3_Validate::isNumber(ACP3_CMS::$auth->getUserId()) === false) {
 	ACP3_CMS::$uri->redirect('errors/403');
 } else {
-	ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('users', 'users'), ACP3_CMS::$uri->route('users'))
-			   ->append(ACP3_CMS::$lang->t('users', 'home'), ACP3_CMS::$uri->route('users/home'))
-			   ->append(ACP3_CMS::$lang->t('users', 'edit_profile'));
+	ACP3_CMS::$breadcrumb
+	->append(ACP3_CMS::$lang->t('users', 'users'), ACP3_CMS::$uri->route('users'))
+	->append(ACP3_CMS::$lang->t('users', 'home'), ACP3_CMS::$uri->route('users/home'))
+	->append(ACP3_CMS::$lang->t('users', 'edit_profile'));
 
 	if (isset($_POST['submit']) === true) {
 		require_once MODULES_DIR . 'users/functions.php';
 
 		if (empty($_POST['nickname']))
-			$errors['nnickname'] = ACP3_CMS::$lang->t('common', 'name_to_short');
+			$errors['nnickname'] = ACP3_CMS::$lang->t('system', 'name_to_short');
 		if (userNameExists($_POST['nickname'], ACP3_CMS::$auth->getUserId()) === true)
 			$errors['nickname'] = ACP3_CMS::$lang->t('users', 'user_name_already_exists');
 		if (ACP3_Validate::gender($_POST['gender']) === false)
@@ -29,7 +30,7 @@ if (ACP3_CMS::$auth->isUser() === false || ACP3_Validate::isNumber(ACP3_CMS::$au
 		if (!isset($_POST['birthday_format']) || !empty($_POST['birthday']) && ACP3_Validate::birthday($_POST['birthday'], $_POST['birthday_format']) === false)
 			$errors[] = ACP3_CMS::$lang->t('users', 'invalid_birthday');
 		if (ACP3_Validate::email($_POST['mail']) === false)
-			$errors['mail'] = ACP3_CMS::$lang->t('common', 'wrong_email_format');
+			$errors['mail'] = ACP3_CMS::$lang->t('system', 'wrong_email_format');
 		if (userEmailExists($_POST['mail'], ACP3_CMS::$auth->getUserId()) === true)
 			$errors['mail'] = ACP3_CMS::$lang->t('users', 'user_email_already_exists');
 		if (!empty($_POST['icq']) && ACP3_Validate::icq($_POST['icq']) === false)
@@ -42,19 +43,19 @@ if (ACP3_CMS::$auth->isUser() === false || ACP3_Validate::isNumber(ACP3_CMS::$au
 		if (isset($errors) === true) {
 			ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 		} elseif (ACP3_Validate::formToken() === false) {
-			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 		} else {
 			$update_values = array(
-				'nickname' => ACP3_CMS::$db->escape($_POST['nickname']),
-				'realname' => ACP3_CMS::$db->escape($_POST['realname']) . ':' . (isset($_POST['realname_display']) ? '1' : '0'),
+				'nickname' => $_POST['nickname'],
+				'realname' => $_POST['realname'] . ':' . (isset($_POST['realname_display']) ? '1' : '0'),
 				'gender' => $_POST['gender'] . ':' . (isset($_POST['gender_display']) ? '1' : '0'),
 				'birthday' => $_POST['birthday'] . ':' . (isset($_POST['birthday_display']) ? '1' : '0'),
 				'birthday_format' => $_POST['birthday_format'],
 				'mail' => $_POST['mail'] . ':' . (isset($_POST['mail_display']) ? '1' : '0'),
-				'website' => ACP3_CMS::$db->escape($_POST['website'], 2) . ':' . (isset($_POST['website_display']) ? '1' : '0'),
+				'website' => $_POST['website'] . ':' . (isset($_POST['website_display']) ? '1' : '0'),
 				'icq' => $_POST['icq'] . ':' . (isset($_POST['icq_display']) ? '1' : '0'),
-				'msn' => ACP3_CMS::$db->escape($_POST['msn'], 2) . ':' . (isset($_POST['msn_display']) ? '1' : '0'),
-				'skype' => ACP3_CMS::$db->escape($_POST['skype']) . ':' . (isset($_POST['skype_display']) ? '1' : '0'),
+				'msn' => $_POST['msn'] . ':' . (isset($_POST['msn_display']) ? '1' : '0'),
+				'skype' => $_POST['skype'] . ':' . (isset($_POST['skype_display']) ? '1' : '0'),
 			);
 
 			// Neues Passwort
@@ -64,20 +65,18 @@ if (ACP3_CMS::$auth->isUser() === false || ACP3_Validate::isNumber(ACP3_CMS::$au
 				$update_values['pwd'] = $new_pwd . ':' . $salt;
 			}
 
-			$bool = ACP3_CMS::$db->update('users', $update_values, 'id = \'' . ACP3_CMS::$auth->getUserId() . '\'');
+			$bool = ACP3_CMS::$db2->update(DB_PRE . 'users', $update_values, array('id' => ACP3_CMS::$auth->getUserId()));
 
 			$cookie_arr = explode('|', base64_decode($_COOKIE['ACP3_AUTH']));
 			ACP3_CMS::$auth->setCookie($_POST['nickname'], isset($new_pwd) ? $new_pwd : $cookie_arr[1], 3600);
 
 			ACP3_CMS::$session->unsetFormToken();
 
-			setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool !== false ? 'edit_success' : 'edit_error'), 'users/home');
+			setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/home');
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 		$user = ACP3_CMS::$auth->getUserInfo();
-		$user['nickname'] = ACP3_CMS::$db->escape($user['nickname'], 3);
-		$user['realname'] = ACP3_CMS::$db->escape($user['realname'], 3);
 
 		$checked = array();
 		$checked['realname'] = selectEntry('realname_display', 1, $user['realname_display'], 'checked');
@@ -114,14 +113,14 @@ if (ACP3_CMS::$auth->isUser() === false || ACP3_Validate::isNumber(ACP3_CMS::$au
 		// Kontaktangaben
 		$contact = array();
 		$contact[0]['name'] = 'mail';
-		$contact[0]['lang'] = ACP3_CMS::$lang->t('common', 'email');
+		$contact[0]['lang'] = ACP3_CMS::$lang->t('system', 'email_address');
 		$contact[0]['checked'] = selectEntry('mail_display', 1, $user['mail_display'], 'checked');
 		$contact[0]['value'] = isset($_POST['submit']) ? $_POST['mail'] : $user['mail'];
 		$contact[0]['maxlength'] = '118';
 		$contact[1]['name'] = 'website';
-		$contact[1]['lang'] = ACP3_CMS::$lang->t('common', 'website');
+		$contact[1]['lang'] = ACP3_CMS::$lang->t('system', 'website');
 		$contact[1]['checked'] = selectEntry('website_display', 1, $user['website_display'], 'checked');
-		$contact[1]['value'] = isset($_POST['submit']) ? $_POST['website'] : ACP3_CMS::$db->escape($user['website'], 3);
+		$contact[1]['value'] = isset($_POST['submit']) ? $_POST['website'] : $user['website'];
 		$contact[1]['maxlength'] = '118';
 		$contact[2]['name'] = 'icq';
 		$contact[2]['lang'] = ACP3_CMS::$lang->t('users', 'icq');
@@ -131,12 +130,12 @@ if (ACP3_CMS::$auth->isUser() === false || ACP3_Validate::isNumber(ACP3_CMS::$au
 		$contact[3]['name'] = 'msn';
 		$contact[3]['lang'] = ACP3_CMS::$lang->t('users', 'msn');
 		$contact[3]['checked'] = selectEntry('msn_display', 1, $user['msn_display'], 'checked');
-		$contact[3]['value'] = isset($_POST['submit']) ? $_POST['msn'] : ACP3_CMS::$db->escape($user['msn'], 3);
+		$contact[3]['value'] = isset($_POST['submit']) ? $_POST['msn'] : $user['msn'];
 		$contact[3]['maxlength'] = '118';
 		$contact[4]['name'] = 'skype';
 		$contact[4]['lang'] = ACP3_CMS::$lang->t('users', 'skype');
 		$contact[4]['checked'] = selectEntry('skype_display', 1, $user['skype_display'], 'checked');
-		$contact[4]['value'] = isset($_POST['submit']) ? $_POST['skype'] : ACP3_CMS::$db->escape($user['skype'], 3);
+		$contact[4]['value'] = isset($_POST['submit']) ? $_POST['skype'] : $user['skype'];
 		$contact[4]['maxlength'] = '28';
 		ACP3_CMS::$view->assign('contact', $contact);
 

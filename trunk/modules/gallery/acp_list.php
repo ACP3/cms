@@ -12,17 +12,22 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$galleries = ACP3_CMS::$db->select('id, start, end, name', 'gallery', 0, 'start DESC, end DESC, id DESC', POS, ACP3_CMS::$auth->entries);
+$galleries = ACP3_CMS::$db2->fetchAll('SELECT g.id, g.start, g.end, g.name, COUNT(p.gallery_id) AS pictures FROM ' . DB_PRE . 'gallery AS g LEFT JOIN ' . DB_PRE . 'gallery_pictures AS p ON(g.id = p.gallery_id) GROUP BY g.id ORDER BY g.start DESC, g.end DESC, g.id DESC');
 $c_galleries = count($galleries);
 
 if ($c_galleries > 0) {
-	ACP3_CMS::$view->assign('pagination', pagination(ACP3_CMS::$db->countRows('*', 'gallery')));
+	$can_delete = ACP3_Modules::check('gallery', 'acp_delete');
+	$config = array(
+		'element' => '#acp-table',
+		'sort_col' => $can_delete === true ? 1 : 0,
+		'sort_dir' => 'desc',
+		'hide_col_sort' => $can_delete === true ? 0 : ''
+	);
+	ACP3_CMS::setContent(datatable($config));
 	for ($i = 0; $i < $c_galleries; ++$i) {
 		$galleries[$i]['period'] = ACP3_CMS::$date->period($galleries[$i]['start'], $galleries[$i]['end']);
-		$galleries[$i]['name'] = ACP3_CMS::$db->escape($galleries[$i]['name'], 3);
-		$galleries[$i]['pictures'] = ACP3_CMS::$db->countRows('*', 'gallery_pictures', 'gallery_id = \'' . $galleries[$i]['id'] . '\'');
 	}
 	ACP3_CMS::$view->assign('galleries', $galleries);
-	ACP3_CMS::$view->assign('can_delete', ACP3_Modules::check('gallery', 'acp_delete'));
+	ACP3_CMS::$view->assign('can_delete', $can_delete);
 }
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('gallery/acp_list.tpl'));
+ACP3_CMS::appendContent(ACP3_CMS::$view->fetchTemplate('gallery/acp_list.tpl'));

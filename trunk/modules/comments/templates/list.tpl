@@ -15,7 +15,7 @@
 {/foreach}
 {else}
 	<div class="alert align-center">
-		<strong>{lang t="common|no_entries"}</strong>
+		<strong>{lang t="system|no_entries"}</strong>
 	</div>
 {/if}
 {if isset($comments_create_form)}

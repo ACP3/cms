@@ -3,7 +3,7 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="control-group">
-		<label for="privileges" class="control-label">{lang t="common|module"}</label>
+		<label for="privileges" class="control-label">{lang t="system|module"}</label>
 		<div class="controls">
 			<select name="modules" id="modules">
 {foreach $modules as $row}
@@ -27,8 +27,8 @@
 		</div>
 	</div>
 	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
-		<a href="{uri args="acp/permissions/list_resouces"}" class="btn">{lang t="common|cancel"}</a>
+		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
+		<a href="{uri args="acp/permissions/list_resouces"}" class="btn">{lang t="system|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

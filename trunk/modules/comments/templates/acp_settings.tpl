@@ -3,10 +3,9 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="control-group">
-		<label for="date-format" class="control-label">{lang t="common|date_format"}</label>
+		<label for="date-format" class="control-label">{lang t="system|date_format"}</label>
 		<div class="controls">
 			<select name="dateformat" id="date-format">
-				<option value="">{lang t="common|pls_select"}</option>
 {foreach $dateformat as $row}
 				<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
@@ -27,8 +26,8 @@
 	</div>
 {/if}
 	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
-		<a href="{uri args="acp/comments"}" class="btn">{lang t="common|cancel"}</a>
+		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
+		<a href="{uri args="acp/comments"}" class="btn">{lang t="system|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

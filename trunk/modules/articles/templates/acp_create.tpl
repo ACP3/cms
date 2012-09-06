@@ -5,9 +5,9 @@
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="tabbable">
 		<ul class="nav nav-tabs">
-			<li class="active"><a href="#tab-1" data-toggle="tab">{lang t="common|publication_period"}</a></li>
+			<li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|publication_period"}</a></li>
 			<li><a href="#tab-2" data-toggle="tab">{lang t="articles|page_statements"}</a></li>
-			<li><a href="#tab-3" data-toggle="tab">{lang t="common|seo"}</a></li>
+			<li><a href="#tab-3" data-toggle="tab">{lang t="system|seo"}</a></li>
 		</ul>
 		<div class="tab-content">
 			<div id="tab-1" class="tab-pane active">
@@ -24,7 +24,7 @@
 				</div>
 {if isset($options)}
 				<div class="control-group">
-					<label for="{$options.0.name}" class="control-label">{lang t="common|options"}</label>
+					<label for="{$options.0.name}" class="control-label">{lang t="system|options"}</label>
 					<div class="controls">
 {foreach $options as $row}
 						<label for="{$row.name}" class="checkbox">
@@ -39,7 +39,6 @@
 						<label for="block-id" class="control-label">{lang t="menus|menu_bar"}</label>
 						<div class="controls">
 							<select name="block_id" id="block-id">
-								<option value="">{lang t="common|pls_select"}</option>
 {foreach $blocks as $row}
 								<option value="{$row.id}"{$row.selected}>{$row.title}</option>
 {/foreach}
@@ -81,8 +80,8 @@
 		</div>
 	</div>
 	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
-		<a href="{uri args="acp/articles"}" class="btn">{lang t="common|cancel"}</a>
+		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
+		<a href="{uri args="acp/articles"}" class="btn">{lang t="system|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

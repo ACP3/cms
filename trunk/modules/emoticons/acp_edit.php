@@ -10,7 +10,8 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true && ACP3_CMS::$db->countRows('*', 'emoticons', 'id = \'' . ACP3_CMS::$uri->id . '\'') == 1) {
+if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
+	ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'emoticons WHERE id = ?', array(ACP3_CMS::$uri->id)) == 1) {
 	require_once MODULES_DIR . 'emoticons/functions.php';
 
 	if (isset($_POST['submit']) === true) {
@@ -33,7 +34,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true && ACP3_CMS::$db->count
 		if (isset($errors) === true) {
 			ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 		} elseif (ACP3_Validate::formToken() === false) {
-			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 		} else {
 			$new_file_sql = null;
 			if (isset($file)) {
@@ -42,30 +43,28 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true && ACP3_CMS::$db->count
 			}
 
 			$update_values = array(
-				'code' => ACP3_CMS::$db->escape($_POST['code']),
-				'description' => ACP3_CMS::$db->escape($_POST['description']),
+				'code' => $_POST['code'],
+				'description' => $_POST['description'],
 			);
 			if (is_array($new_file_sql) === true) {
-				$old_file = ACP3_CMS::$db->select('img', 'emoticons', 'id = \'' . ACP3_CMS::$uri->id . '\'');
-				removeUploadedFile('emoticons', $old_file[0]['img']);
+				$old_file = ACP3_CMS::$db2->fetchColumn('SELECT img FROM emoticons WHERE id = ?', array(ACP3_CMS::$uri->id));
+				removeUploadedFile('emoticons', $old_file);
 
 				$update_values = array_merge($update_values, $new_file_sql);
 			}
 
-			$bool = ACP3_CMS::$db->update('emoticons', $update_values, 'id = \'' . ACP3_CMS::$uri->id . '\'');
+			$bool = ACP3_CMS::$db2->update(DB_PRE . 'emoticons', $update_values, array('id' => ACP3_CMS::$uri->id));
 			setEmoticonsCache();
 
 			ACP3_CMS::$session->unsetFormToken();
 
-			setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/emoticons');
+			setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/emoticons');
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-		$emoticon = ACP3_CMS::$db->select('code, description', 'emoticons', 'id = \'' . ACP3_CMS::$uri->id . '\'');
-		$emoticon[0]['code'] = ACP3_CMS::$db->escape($emoticon[0]['code'], 3);
-		$emoticon[0]['description'] = ACP3_CMS::$db->escape($emoticon[0]['description'], 3);
+		$emoticon = ACP3_CMS::$db2->fetchAssoc('SELECT code, description FROM ' . DB_PRE . 'emoticons WHERE id = ?', array(ACP3_CMS::$uri->id));
 
-		ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : $emoticon[0]);
+		ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : $emoticon);
 
 		ACP3_CMS::$session->generateFormToken();
 

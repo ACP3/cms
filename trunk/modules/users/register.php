@@ -9,8 +9,9 @@ if (ACP3_CMS::$auth->isUser() === true) {
 } elseif ($settings['enable_registration'] == 0) {
 	ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('users', 'user_registration_disabled')));
 } else {
-	ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('users', 'users'), ACP3_CMS::$uri->route('users'))
-			   ->append(ACP3_CMS::$lang->t('users', 'register'));
+	ACP3_CMS::$breadcrumb
+	->append(ACP3_CMS::$lang->t('users', 'users'), ACP3_CMS::$uri->route('users'))
+	->append(ACP3_CMS::$lang->t('users', 'register'));
 
 	$captchaAccess = ACP3_Modules::check('captcha', 'functions');
 
@@ -18,11 +19,11 @@ if (ACP3_CMS::$auth->isUser() === true) {
 		require_once MODULES_DIR . 'users/functions.php';
 
 		if (empty($_POST['nickname']))
-			$errors['nickname'] = ACP3_CMS::$lang->t('common', 'name_to_short');
+			$errors['nickname'] = ACP3_CMS::$lang->t('system', 'name_to_short');
 		if (userNameExists($_POST['nickname']) === true)
 			$errors['nickname'] = ACP3_CMS::$lang->t('users', 'user_name_already_exists');
 		if (ACP3_Validate::email($_POST['mail']) === false)
-			$errors['mail'] = ACP3_CMS::$lang->t('common', 'wrong_email_format');
+			$errors['mail'] = ACP3_CMS::$lang->t('system', 'wrong_email_format');
 		if (userEmailExists($_POST['mail']) === true)
 			$errors['mail'] = ACP3_CMS::$lang->t('users', 'user_email_already_exists');
 		if (empty($_POST['pwd']) || empty($_POST['pwd_repeat']) || $_POST['pwd'] != $_POST['pwd_repeat'])
@@ -33,10 +34,9 @@ if (ACP3_CMS::$auth->isUser() === true) {
 		if (isset($errors) === true) {
 			ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 		} elseif (ACP3_Validate::formToken() === false) {
-			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 		} else {
 			// E-Mail mit den Accountdaten zusenden
-			$_POST['nickname'] = ACP3_CMS::$db->escape($_POST['nickname']);
 			$host = htmlentities($_SERVER['HTTP_HOST']);
 			$subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), ACP3_CMS::$lang->t('users', 'register_mail_subject'));
 			$body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($_POST['nickname'], $_POST['mail'], $_POST['pwd'], CONFIG_SEO_TITLE, $host), ACP3_CMS::$lang->t('users', 'register_mail_message'));
@@ -64,15 +64,20 @@ if (ACP3_CMS::$auth->isUser() === true) {
 				'draft' => '',
 			);
 
-			ACP3_CMS::$db->link->beginTransaction();
-			$bool = ACP3_CMS::$db->insert('users', $insert_values);
-			$user_id = ACP3_CMS::$db->link->lastInsertId();
-			$bool2 = ACP3_CMS::$db->insert('acl_user_roles', array('user_id' => $user_id, 'role_id' => 2));
-			ACP3_CMS::$db->link->commit();
+			ACP3_CMS::$db2->beginTransaction();
+			try {
+				$bool = ACP3_CMS::$db2->insert(DB_PRE . 'users', $insert_values);
+				$user_id = ACP3_CMS::$db2->lastInsertId();
+				$bool2 = ACP3_CMS::$db2->insert(DB_PRE . 'acl_user_roles', array('user_id' => $user_id, 'role_id' => 2));
+				ACP3_CMS::$db2->commit();
+			} catch(Exception $e) {
+				ACP3_CMS::$db2->rollback();
+				$bool = $bool2 = false;
+			}
 
 			ACP3_CMS::$session->unsetFormToken();
 
-			ACP3_CMS::setContent(confirmBox($mail_sent === true && $bool !== false && $bool2 !== false ? ACP3_CMS::$lang->t('users', 'register_success') : ACP3_CMS::$lang->t('users', 'register_error'), ROOT_DIR));
+			ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('users', $mail_sent === true && $bool !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {

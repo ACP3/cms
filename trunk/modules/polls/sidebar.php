@@ -10,42 +10,35 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$time = ACP3_CMS::$date->getCurrentDateTime();
-$period = '(start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
+$period = 'p.start = p.end AND p.start <= :time OR p.start != p.end AND :time BETWEEN p.start AND p.end';
+$question = ACP3_CMS::$db2->fetchAssoc('SELECT p.id, p.question, p.multiple, COUNT(pv.poll_id) AS total_votes FROM ' . DB_PRE . 'polls AS p LEFT JOIN ' . DB_PRE . 'poll_votes AS pv ON(p.id = pv.poll_id) WHERE ' . $period . ' GROUP BY p.id ORDER BY p.start DESC', array('time' => ACP3_CMS::$date->getCurrentDateTime()));
 
-$question = ACP3_CMS::$db->select('id, question, multiple', 'polls', $period, 'start DESC');
-
-if (count($question) > 0) {
-	$answers = ACP3_CMS::$db->select('id, text', 'poll_answers', 'poll_id = \'' . $question[0]['id'] . '\'', 'id ASC');
+if (!empty($question)) {
+	$answers = ACP3_CMS::$db2->fetchAll('SELECT pa.id, pa.text, COUNT(pv.answer_id) AS votes FROM ' . DB_PRE . 'poll_answers AS pa LEFT JOIN ' . DB_PRE . 'poll_votes AS pv ON(pa.id = pv.answer_id) WHERE pa.poll_id = ? GROUP BY pa.id ORDER BY pa.id ASC', array($question['id']));
 	$c_answers = count($answers);
 
-	$question[0]['question'] = ACP3_CMS::$db->escape($question[0]['question'], 3);
-	ACP3_CMS::$view->assign('sidebar_polls', $question[0]);
+	ACP3_CMS::$view->assign('sidebar_polls', $question);
 
 	// Überprüfen, ob der eingeloggte User schon abgestimmt hat
-	if (ACP3_CMS::$auth->isUser() === true)
-		$alreadyVoted = ACP3_CMS::$db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . $question[0]['id'] . '\' AND user_id = \'' . ACP3_CMS::$auth->getUserId() . '\'');
+	if (ACP3_CMS::$auth->isUser() === true) {
+		$alreadyVoted = ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'poll_votes WHERE poll_id = ? AND user_id = ?', array($question['id'], ACP3_CMS::$auth->getUserId()));
 	// Überprüfung für Gäste
-	else
-		$alreadyVoted = ACP3_CMS::$db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . $question[0]['id'] . '\' AND ip = \'' . $_SERVER['REMOTE_ADDR'] . '\'');
+	} else {
+		$alreadyVoted = ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'poll_votes WHERE poll_id = ? AND ip = ?', array($question['id'], $_SERVER['REMOTE_ADDR']));
+	}
 
 	if ($alreadyVoted > 0) {
-		$total_votes = ACP3_CMS::$db->countRows('answer_id', 'poll_votes', 'poll_id = \'' . $question[0]['id'] . '\'');
+		$total_votes = $question['total_votes'];
 
 		for ($i = 0; $i < $c_answers; ++$i) {
-			$answers[$i]['text'] = ACP3_CMS::$db->escape($answers[$i]['text'], 3);
-			$votes = ACP3_CMS::$db->countRows('answer_id', 'poll_votes', 'answer_id = \'' . $answers[$i]['id'] . '\'');
-			$answers[$i]['votes'] = ($votes > 1) ? sprintf(ACP3_CMS::$lang->t('polls', 'number_of_votes'), $votes) : (($votes == 1) ? ACP3_CMS::$lang->t('polls', 'one_vote') : ACP3_CMS::$lang->t('polls', 'no_votes'));
+			$votes = $answers[$i]['votes'];
+			$answers[$i]['votes'] = ($votes > 1) ? sprintf(ACP3_CMS::$lang->t('polls', 'number_of_votes'), $votes) : ACP3_CMS::$lang->t('polls', ($votes == 1 ? 'one_vote' : 'no_votes'));
 			$answers[$i]['percent'] = $total_votes > 0 ? round(100 * $votes / $total_votes, 2) : '0';
 		}
 
 		ACP3_CMS::$view->assign('sidebar_poll_answers', $answers);
 		ACP3_CMS::$view->displayTemplate('polls/sidebar_result.tpl');
 	} else {
-		for ($i = 0; $i < $c_answers; ++$i) {
-			$answers[$i]['text'] = ACP3_CMS::$db->escape($answers[$i]['text'], 3);
-		}
-
 		ACP3_CMS::$view->assign('sidebar_poll_answers', $answers);
 		ACP3_CMS::$view->displayTemplate('polls/sidebar_vote.tpl');
 	}

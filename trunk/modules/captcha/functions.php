@@ -7,9 +7,6 @@
  * @subpackage Modules
  */
 
-if (defined('IN_ACP3') === false)
-	exit();
-
 /**
  * Erzeugt das Captchafeld für das Template
  *
@@ -19,8 +16,6 @@ if (defined('IN_ACP3') === false)
  */
 function captcha($captcha_length = 5)
 {
-	global $auth, $tpl;
-
 	// Wenn man als User angemeldet ist, Captcha nicht anzeigen
 	if (ACP3_CMS::$auth->isUser() === false) {
 		$_SESSION['captcha'] = salt($captcha_length);

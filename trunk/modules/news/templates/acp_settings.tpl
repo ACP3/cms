@@ -16,10 +16,10 @@ $(document).ready(function() {
 </script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="control-group">
-		<label for="date-format" class="control-label">{lang t="common|date_format"}</label>
+		<label for="date-format" class="control-label">{lang t="system|date_format"}</label>
 		<div class="controls">
 			<select name="dateformat" id="date-format">
-				<option value="">{lang t="common|pls_select"}</option>
+				<option value="">{lang t="system|pls_select"}</option>
 {foreach $dateformat as $row}
 				<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
@@ -27,10 +27,10 @@ $(document).ready(function() {
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="sidebar-entries" class="control-label">{lang t="common|sidebar_entries_to_display"}</label>
+		<label for="sidebar-entries" class="control-label">{lang t="system|sidebar_entries_to_display"}</label>
 		<div class="controls">
 			<select name="sidebar" id="sidebar-entries">
-				<option>{lang t="common|pls_select"}</option>
+				<option>{lang t="system|pls_select"}</option>
 {foreach $sidebar_entries as $row}
 				<option value="{$row.value}"{$row.selected}>{$row.value}</option>
 {/foreach}
@@ -65,7 +65,7 @@ $(document).ready(function() {
 	</div>
 {if isset($allow_comments)}
 	<div class="control-group">
-		<label for="comments-1" class="control-label">{lang t="common|allow_comments"}</label>
+		<label for="comments-1" class="control-label">{lang t="system|allow_comments"}</label>
 		<div class="controls">
 			<div class="btn-group" data-toggle="radio">
 {foreach $allow_comments as $row}
@@ -77,8 +77,8 @@ $(document).ready(function() {
 	</div>
 {/if}
 	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
-		<a href="{uri args="acp/news"}" class="btn">{lang t="common|cancel"}</a>
+		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
+		<a href="{uri args="acp/news"}" class="btn">{lang t="system|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

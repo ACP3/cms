@@ -18,8 +18,8 @@
 	</div>
 	<div class="form-actions">
 		<input type="hidden" name="modules" value="{$form.modules}">
-		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
-		<a href="{uri args="acp/permissions/list_resources"}" class="btn">{lang t="common|cancel"}</a>
+		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
+		<a href="{uri args="acp/permissions/list_resources"}" class="btn">{lang t="system|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

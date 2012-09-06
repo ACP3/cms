@@ -10,25 +10,26 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('system', 'acp_extensions'), ACP3_CMS::$uri->route('acp/system/extensions'))
-		   ->append(ACP3_CMS::$lang->t('system', 'acp_designs'));
+ACP3_CMS::$breadcrumb
+->append(ACP3_CMS::$lang->t('system', 'acp_extensions'), ACP3_CMS::$uri->route('acp/system/extensions'))
+->append(ACP3_CMS::$lang->t('system', 'acp_designs'));
 
-if (ACP3_CMS::$uri->dir) {
-	$dir = is_file(ACP3_ROOT . 'designs/' . ACP3_CMS::$uri->dir . '/info.xml') ? ACP3_CMS::$uri->dir : 0;
+if (isset(ACP3_CMS::$uri->dir)) {
 	$bool = false;
 
-	if (!empty($dir)) {
-		$bool = ACP3_Config::setSettings('system', array('design' => $dir));
+	if (is_file(ACP3_ROOT . 'designs/' . ACP3_CMS::$uri->dir . '/info.xml') === true) {
+		$bool = ACP3_Config::setSettings('system', array('design' => ACP3_CMS::$uri->dir));
 
 		// Cache leeren und diverse Parameter für die Template Engine abändern
-		ACP3_Cache::purge();
-		ACP3_CMS::$view->setTemplateDir(ACP3_ROOT . 'designs/' . $dir . '/');
-		ACP3_CMS::$view->assign('DESIGN_PATH', ROOT_DIR . 'designs/' . $dir . '/');
+		ACP3_Cache::purge('tpl_compiled');
+		ACP3_Cache::purge('tpl_cached');
 	}
-	$text = $bool === true ? ACP3_CMS::$lang->t('system', 'designs_edit_success') : ACP3_CMS::$lang->t('system', 'designs_edit_error');
+	$text = ACP3_CMS::$lang->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
 
-	ACP3_CMS::setContent(confirmBox($text, ACP3_CMS::$uri->route('acp/system/designs')));
+	setRedirectMessage($bool, $text, 'acp/system/designs');
 } else {
+	getRedirectMessage();
+
 	$designs = array();
 	$directories = scandir(ACP3_ROOT . 'designs');
 	$count_dir = count($directories);

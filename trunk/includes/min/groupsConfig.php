@@ -18,7 +18,7 @@ require_once ACP3_ROOT . 'includes/bootstrap.php';
 
 ACP3_CMS::defineDirConstants();
 ACP3_CMS::includeAutoLoader();
-ACP3_CMS::initializeDatabase();
+ACP3_CMS::initializeDoctrineDBAL();
 ACP3_CMS::initializeClasses();
 
 // Cache-Lebenszeit setzen
@@ -37,9 +37,21 @@ if ($_GET['g'] === 'css') {
 	if (isset($design_info['layout']) &&
 		($design_info['layout'] === $layout || (is_array($design_info['layout']) === true && in_array($layout, $design_info['layout']) === true)))
 		$styles['css'][] = LIBRARIES_DIR . 'bootstrap/css/bootstrap-responsive.css';
+
+	// Stylesheets der Bibliotheken zuerst laden,
+	// damit deren Styles überschrieben werden können
+	if (in_array('jquery-ui', $libraries))
+		$styles['css'][] = LIBRARIES_DIR . 'js/jquery-ui.css';
+	if (in_array('timepicker', $libraries))
+		$styles['css'][] = LIBRARIES_DIR . 'js/jquery-timepicker.css';
+	if (in_array('fancybox', $libraries))
+		$styles['css'][] = LIBRARIES_DIR . 'js/jquery-fancybox.css';
+	if (in_array('datatables', $libraries))
+		$styles['css'][] = LIBRARIES_DIR . 'js/jquery-datatables.css';
+
 	// Stylesheet für das Layout-Tenplate
 	$styles['css'][] = DESIGN_PATH_INTERNAL . (is_file(DESIGN_PATH_INTERNAL . $layout . '.css') === true ? $layout : 'layout') . '.css';
-	$styles['css'][] = DESIGN_PATH_INTERNAL . 'common/common.css';
+	$styles['css'][] = DESIGN_PATH_INTERNAL . 'common.css';
 
 	// Zusätzliche Stylesheets einbinden
 	$extra_css = explode(',', CONFIG_EXTRA_CSS);
@@ -52,6 +64,7 @@ if ($_GET['g'] === 'css') {
 		}
 	}
 
+	// Stylesheets der Module
 	$modules = ACP3_Modules::getActiveModules();
 	foreach ($modules as $module) {
 		$path_design = DESIGN_PATH_INTERNAL . $module['dir'] . '/style.css';
@@ -63,18 +76,11 @@ if ($_GET['g'] === 'css') {
 		}
 	}
 
-	if (in_array('jquery-ui', $libraries))
-		$styles['css'][] = LIBRARIES_DIR . 'js/jquery-ui.css';
-	if (in_array('timepicker', $libraries))
-		$styles['css'][] = LIBRARIES_DIR . 'js/jquery-timepicker.css';
-	if (in_array('fancybox', $libraries))
-		$styles['css'][] = LIBRARIES_DIR . 'js/jquery-fancybox.css';
-
 	return $styles;
 } elseif ($_GET['g'] === 'js') {
 	$scripts = array();
 	$scripts['js'][] = LIBRARIES_DIR . 'js/jquery.min.js';
-	$scripts['js'][] = LIBRARIES_DIR . 'js/bootstrap.min.js';
+	$scripts['js'][] = LIBRARIES_DIR . 'bootstrap/js/bootstrap.min.js';
 	if (in_array('bootbox', $libraries))
 		$scripts['js'][] = LIBRARIES_DIR . 'js/bootbox.min.js';
 	if (in_array('jquery-ui', $libraries))
@@ -83,6 +89,8 @@ if ($_GET['g'] === 'css') {
 		$scripts['js'][] = LIBRARIES_DIR . 'js/jquery.timepicker.js';
 	if (in_array('fancybox', $libraries))
 		$scripts['js'][] = LIBRARIES_DIR . 'js/jquery.fancybox.js';
+	if (in_array('datatables', $libraries))
+		$scripts['js'][] = LIBRARIES_DIR . 'js/jquery.datatables.min.js';
 
 	if (is_file(DESIGN_PATH_INTERNAL . $layout . '.js') === true)
 		$scripts['js'][] = DESIGN_PATH_INTERNAL . $layout . '.js';

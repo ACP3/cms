@@ -5,8 +5,9 @@ if (defined('IN_ACP3') === false)
 if (ACP3_CMS::$auth->isUser() === true) {
 	ACP3_CMS::$uri->redirect(0, ROOT_DIR);
 } else {
-	ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('users', 'users'), ACP3_CMS::$uri->route('users'))
-			   ->append(ACP3_CMS::$lang->t('users', 'forgot_pwd'));
+	ACP3_CMS::$breadcrumb
+	->append(ACP3_CMS::$lang->t('users', 'users'), ACP3_CMS::$uri->route('users'))
+	->append(ACP3_CMS::$lang->t('users', 'forgot_pwd'));
 
 	$captchaAccess = ACP3_Modules::check('captcha', 'functions');
 
@@ -25,32 +26,38 @@ if (ACP3_CMS::$auth->isUser() === true) {
 		if (isset($errors) === true) {
 			ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 		} elseif (ACP3_Validate::formToken() === false) {
-			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 		} else {
 			// Neues Passwort und neuen Zufallsschlüssel erstellen
 			$new_password = salt(8);
 			$host = htmlentities($_SERVER['HTTP_HOST']);
 
 			// Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
-			$where = ACP3_Validate::email($_POST['nick_mail']) === true && userEmailExists($_POST['nick_mail']) === true ? 'mail = \'' . $_POST['nick_mail'] . '\'' : 'nickname = \'' . ACP3_CMS::$db->escape($_POST['nick_mail']) . '\'';
-			$user = ACP3_CMS::$db->select('id, nickname, realname, mail', 'users', $where);
+			if (ACP3_Validate::email($_POST['nick_mail']) === true && userEmailExists($_POST['nick_mail']) === true) {
+				$query = 'SELECT id, nickname, realname, mail FROM ' . DB_PRE . 'users WHERE mail = ?';
+			} else {
+				$query = 'SELECT id, nickname, realname, mail FROM ' . DB_PRE . 'users WHERE nickname = ?';
+			}
+			$user = ACP3_CMS::$db2->fetchAssoc($query, array($_POST['nick_mail']));
 
 			// E-Mail mit dem neuen Passwort versenden
 			$subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), ACP3_CMS::$lang->t('users', 'forgot_pwd_mail_subject'));
-			$body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array(ACP3_CMS::$db->escape($user[0]['nickname'], 3), $user[0]['mail'], $new_password, CONFIG_SEO_TITLE, $host), ACP3_CMS::$lang->t('users', 'forgot_pwd_mail_message'));
+			$search = array('{name}', '{mail}', '{password}', '{title}', '{host}');
+			$replace = array($user['nickname'], $user['mail'], $new_password, CONFIG_SEO_TITLE, $host);
+			$body = str_replace($search, $replace, ACP3_CMS::$lang->t('users', 'forgot_pwd_mail_message'));
 
 			$settings = ACP3_Config::getSettings('users');
-			$mail_sent = generateEmail(substr($user[0]['realname'], 0, -2), $user[0]['mail'], $settings['mail'], $subject, $body);
+			$mail_sent = generateEmail(substr($user['realname'], 0, -2), $user['mail'], $settings['mail'], $subject, $body);
 
 			// Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
 			if ($mail_sent === true) {
 				$salt = salt(12);
-				$bool = ACP3_CMS::$db->update('users', array('pwd' => generateSaltedPassword($salt, $new_password) . ':' . $salt, 'login_errors' => 0), 'id = \'' . $user[0]['id'] . '\'');
+				$bool = ACP3_CMS::$db2->update(DB_PRE . 'users', array('pwd' => generateSaltedPassword($salt, $new_password) . ':' . $salt, 'login_errors' => 0), array('id' => $user['id']));
 			}
 
 			ACP3_CMS::$session->unsetFormToken();
 
-			ACP3_CMS::setContent(confirmBox($mail_sent === true && isset($bool) && $bool !== false ? ACP3_CMS::$lang->t('users', 'forgot_pwd_success') : ACP3_CMS::$lang->t('users', 'forgot_pwd_error'), ROOT_DIR));
+			ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('users', $mail_sent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success'  : 'forgot_pwd_error'), ROOT_DIR));
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {

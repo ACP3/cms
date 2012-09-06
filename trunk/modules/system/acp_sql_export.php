@@ -2,8 +2,9 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('system', 'acp_maintenance'), ACP3_CMS::$uri->route('acp/system/maintenance'))
-		   ->append(ACP3_CMS::$lang->t('system', 'acp_sql_export'));
+ACP3_CMS::$breadcrumb
+->append(ACP3_CMS::$lang->t('system', 'acp_maintenance'), ACP3_CMS::$uri->route('acp/system/maintenance'))
+->append(ACP3_CMS::$lang->t('system', 'acp_sql_export'));
 
 if (isset($_POST['submit']) === true) {
 	if (empty($_POST['tables']) || is_array($_POST['tables']) === false)
@@ -16,7 +17,7 @@ if (isset($_POST['submit']) === true) {
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
 		ACP3_CMS::$session->unsetFormToken();
 
@@ -25,21 +26,22 @@ if (isset($_POST['submit']) === true) {
 		foreach ($_POST['tables'] as $table) {
 			// Struktur ausgeben
 			if ($_POST['export_type'] === 'complete' || $_POST['export_type'] === 'structure') {
-				$result = ACP3_CMS::$db->query('SHOW CREATE TABLE ' . $table);
-				if (is_array($result) === true) {
+				$result = ACP3_CMS::$db2->fetchAssoc('SHOW CREATE TABLE ' . $table);
+				if (!empty($result)) {
 					//$structure.= '-- ' . sprintf(ACP3_CMS::$lang->t('system', 'structure_of_table'), $table) . "\n\n";
 					$structure.= isset($_POST['drop']) && $_POST['drop'] == 1 ? 'DROP TABLE IF EXISTS `' . $table . '`;' . "\n\n" : '';
-					$structure.= $result[0]['Create Table'] . ';' . "\n\n";
+					$structure.= $result['Create Table'] . ';' . "\n\n";
 				}
 			}
+
 			// Datensätze ausgeben
 			if ($_POST['export_type'] === 'complete' || $_POST['export_type'] === 'data') {
-				$resultsets = ACP3_CMS::$db->select('*', substr($table, strlen(CONFIG_DB_PRE)));
+				$resultsets = ACP3_CMS::$db2->fetchAll('SELECT * FROM ' . DB_PRE . substr($table, strlen(CONFIG_DB_PRE)));
 				if (count($resultsets) > 0) {
 					//$data.= "\n" . '-- '. sprintf(ACP3_CMS::$lang->t('system', 'data_of_table'), $table) . "\n\n";
 					$fields = '';
 					// Felder der jeweiligen Tabelle auslesen
-					foreach ($resultsets[0] as $field => $content) {
+					foreach (array_keys($resultsets[0]) as $field) {
 						$fields.= '`' . $field . '`, ';
 					}
 
@@ -64,11 +66,12 @@ if (isset($_POST['submit']) === true) {
 		// Im Browser ausgeben
 		} else {
 			ACP3_CMS::$view->assign('export', htmlentities($export, ENT_QUOTES, 'UTF-8'));
+			ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('system/acp_sql_export.tpl'));
 		}
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-	$db_tables = ACP3_CMS::$db->query('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_TYPE=\'BASE TABLE\' AND TABLE_SCHEMA=\'' . CONFIG_DB_NAME . '\'');
+	$db_tables = ACP3_CMS::$db2->fetchAll('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_TYPE = ? AND TABLE_SCHEMA = ?', array('BASE TABLE', CONFIG_DB_NAME));
 	$tables = array();
 	foreach ($db_tables as $row) {
 		$table = $row['TABLE_NAME'];
@@ -109,5 +112,6 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	ACP3_CMS::$view->assign('drop', $drop);
 
 	ACP3_CMS::$session->generateFormToken();
+
+	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('system/acp_sql_export.tpl'));
 }
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('system/acp_sql_export.tpl'));

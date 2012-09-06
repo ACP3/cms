@@ -15,11 +15,11 @@ $newsletter_active = ACP3_Modules::isActive('newsletter');
 
 if (isset($_POST['submit']) === true) {
 	if (empty($_POST['dateformat']) || ($_POST['dateformat'] !== 'long' && $_POST['dateformat'] !== 'short'))
-		$errors['dateformat'] = ACP3_CMS::$lang->t('common', 'select_date_format');
+		$errors['dateformat'] = ACP3_CMS::$lang->t('system', 'select_date_format');
 	if (!isset($_POST['notify']) || ($_POST['notify'] != 0 && $_POST['notify'] != 1 && $_POST['notify'] != 2))
 		$errors['notify'] = ACP3_CMS::$lang->t('guestbook', 'select_notification_type');
 	if ($_POST['notify'] != 0 && ACP3_Validate::email($_POST['notify_email']) === false)
-		$errors['notify-email'] = ACP3_CMS::$lang->t('common', 'wrong_email_format');
+		$errors['notify-email'] = ACP3_CMS::$lang->t('system', 'wrong_email_format');
 	if (!isset($_POST['overlay']) || $_POST['overlay'] != 1 && $_POST['overlay'] != 0)
 		$errors[] = ACP3_CMS::$lang->t('guestbook', 'select_use_overlay');
 	if ($emoticons_active === true && (!isset($_POST['emoticons']) || ($_POST['emoticons'] != 0 && $_POST['emoticons'] != 1)))
@@ -30,13 +30,21 @@ if (isset($_POST['submit']) === true) {
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
-		$bool = ACP3_Config::setSettings('guestbook', $_POST);
+		$data = array(
+			'dateformat' => $_POST['dateformat'],
+			'notify' => $_POST['notify'],
+			'notify_email' => $_POST['notify_email'],
+			'overlay' => $_POST['overlay'],
+			'emoticons' => $_POST['emoticons'],
+			'newsletter_integration' => $_POST['newsletter_integration'],
+		);
+		$bool = ACP3_Config::setSettings('guestbook', $data);
 
 		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool === true ? 'settings_success' : 'settings_error'), 'acp/guestbook');
+		setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/guestbook');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -59,10 +67,10 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$overlay = array();
 	$overlay[0]['value'] = '1';
 	$overlay[0]['checked'] = selectEntry('overlay', '1', $settings['overlay'], 'checked');
-	$overlay[0]['lang'] = ACP3_CMS::$lang->t('common', 'yes');
+	$overlay[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
 	$overlay[1]['value'] = '0';
 	$overlay[1]['checked'] = selectEntry('overlay', '0', $settings['overlay'], 'checked');
-	$overlay[1]['lang'] = ACP3_CMS::$lang->t('common', 'no');
+	$overlay[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
 	ACP3_CMS::$view->assign('overlay', $overlay);
 
 	// Emoticons erlauben
@@ -70,10 +78,10 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		$allow_emoticons = array();
 		$allow_emoticons[0]['value'] = '1';
 		$allow_emoticons[0]['checked'] = selectEntry('emoticons', '1', $settings['emoticons'], 'checked');
-		$allow_emoticons[0]['lang'] = ACP3_CMS::$lang->t('common', 'yes');
+		$allow_emoticons[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
 		$allow_emoticons[1]['value'] = '0';
 		$allow_emoticons[1]['checked'] = selectEntry('emoticons', '0', $settings['emoticons'], 'checked');
-		$allow_emoticons[1]['lang'] = ACP3_CMS::$lang->t('common', 'no');
+		$allow_emoticons[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
 		ACP3_CMS::$view->assign('allow_emoticons', $allow_emoticons);
 	}
 
@@ -82,10 +90,10 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		$newsletter_integration = array();
 		$newsletter_integration[0]['value'] = '1';
 		$newsletter_integration[0]['checked'] = selectEntry('newsletter_integration', '1', $settings['newsletter_integration'], 'checked');
-		$newsletter_integration[0]['lang'] = ACP3_CMS::$lang->t('common', 'yes');
+		$newsletter_integration[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
 		$newsletter_integration[1]['value'] = '0';
 		$newsletter_integration[1]['checked'] = selectEntry('newsletter_integration', '0', $settings['newsletter_integration'], 'checked');
-		$newsletter_integration[1]['lang'] = ACP3_CMS::$lang->t('common', 'no');
+		$newsletter_integration[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
 		ACP3_CMS::$view->assign('newsletter_integration', $newsletter_integration);
 	}
 

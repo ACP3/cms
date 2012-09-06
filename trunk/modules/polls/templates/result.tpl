@@ -1,3 +1,6 @@
+{if isset($redirect_message)}
+{$redirect_message}
+{/if}
 <h4 style="margin-bottom:10px">{$question}</h4>
 <table class="table table-striped">
 	<thead>

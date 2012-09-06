@@ -11,13 +11,15 @@ if (defined('IN_ACP3') === false)
 	exit;
 
 $time = ACP3_CMS::$date->getCurrentDateTime();
-$period = ' AND (start = end AND start <= \'' . $time . '\' OR start != end AND start <= \'' . $time . '\' AND end >= \'' . $time . '\')';
+$period = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
 $multiple = !empty($_POST['answer']) && is_array($_POST['answer']) ? ' AND multiple = \'1\'' : '';
 
-if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true && ACP3_CMS::$db->countRows('*', 'polls', 'id = \'' . ACP3_CMS::$uri->id . '\'' . $multiple . $period) == 1) {
+if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
+	ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'polls WHERE id = :id' . $period . $multiple, array('id' => ACP3_CMS::$uri->id, 'time' => $time)) == 1) {
 	// Brotkrümelspur
-	ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('polls', 'polls'), ACP3_CMS::$uri->route('polls'))
-			   ->append(ACP3_CMS::$lang->t('polls', 'vote'));
+	ACP3_CMS::$breadcrumb
+	->append(ACP3_CMS::$lang->t('polls', 'polls'), ACP3_CMS::$uri->route('polls'))
+	->append(ACP3_CMS::$lang->t('polls', 'vote'));
 
 	// Wenn abgestimmt wurde
 	if (!empty($_POST['answer']) && (is_array($_POST['answer']) === true || ACP3_Validate::isNumber($_POST['answer']) === true)) {
@@ -26,10 +28,10 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true && ACP3_CMS::$db->count
 
 		// Überprüfen, ob der eingeloggte User schon abgestimmt hat
 		if (ACP3_CMS::$auth->isUser() === true) {
-			$query = ACP3_CMS::$db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . ACP3_CMS::$uri->id . '\' AND user_id = \'' . ACP3_CMS::$auth->getUserId() . '\'');
+			$query = ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'poll_votes WHERE poll_id = ? AND user_id = ?', array(ACP3_CMS::$uri->id ,ACP3_CMS::$auth->getUserId()));
 		// Überprüfung für Gäste
 		} else {
-			$query = ACP3_CMS::$db->countRows('poll_id', 'poll_votes', 'poll_id = \'' . ACP3_CMS::$uri->id . '\' AND ip = \'' . $ip . '\'');
+			$query = ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'poll_votes WHERE poll_id = ? AND ip = ?', array(ACP3_CMS::$uri->id, $ip));
 		}
 
 		if ($query == 0) {
@@ -45,7 +47,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true && ACP3_CMS::$db->count
 							'ip' => $ip,
 							'time' => $time,
 						);
-						ACP3_CMS::$db->insert('poll_votes', $insert_values);
+						ACP3_CMS::$db2->insert(DB_PRE . 'poll_votes', $insert_values);
 					}
 				}
 				$bool = true;
@@ -57,27 +59,19 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true && ACP3_CMS::$db->count
 					'ip' => $ip,
 					'time' => $time,
 				);
-				$bool = ACP3_CMS::$db->insert('poll_votes', $insert_values);
+				$bool = ACP3_CMS::$db2->insert(DB_PRE . 'poll_votes', $insert_values);
 			}
 			$text = $bool !== false ? ACP3_CMS::$lang->t('polls', 'poll_success') : ACP3_CMS::$lang->t('polls', 'poll_error');
 		} else {
 			$text = ACP3_CMS::$lang->t('polls', 'already_voted');
 		}
-		ACP3_CMS::setContent(confirmBox($text, ACP3_CMS::$uri->route('polls/result/id_' . ACP3_CMS::$uri->id)));
+		setRedirectMessage($bool, $text, 'polls/result/id_' . ACP3_CMS::$uri->id);
 	} else {
-		$question = ACP3_CMS::$db->select('question, multiple', 'polls', 'id = \'' . ACP3_CMS::$uri->id . '\'');
-		$answers = ACP3_CMS::$db->select('id, text', 'poll_answers', 'poll_id = \'' . ACP3_CMS::$uri->id . '\'', 'id ASC');
-		$c_answers = count($answers);
+		$question = ACP3_CMS::$db2->fetchAssoc('SELECT question, multiple FROM ' . DB_PRE . 'polls WHERE id = ?', array(ACP3_CMS::$uri->id));
+		$answers = ACP3_CMS::$db2->fetchAll('SELECT id, text FROM ' . DB_PRE . 'poll_answers WHERE poll_id = ? ORDER BY id ASC', array(ACP3_CMS::$uri->id));
 
-		$css_class = 'dark';
-		for ($i = 0; $i < $c_answers; ++$i) {
-			$css_class = $css_class == 'dark' ? 'light' : 'dark';
-			$answers[$i]['css_class'] = $css_class;
-			$answers[$i]['text'] = ACP3_CMS::$db->escape($answers[$i]['text'], 3);
-		}
-
-		ACP3_CMS::$view->assign('question', ACP3_CMS::$db->escape($question[0]['question'], 3));
-		ACP3_CMS::$view->assign('multiple', $question[0]['multiple']);
+		ACP3_CMS::$view->assign('question', $question['question']);
+		ACP3_CMS::$view->assign('multiple', $question['multiple']);
 		ACP3_CMS::$view->assign('answers', $answers);
 
 		ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('polls/vote.tpl'));

@@ -1,11 +1,14 @@
+{if isset($redirect_message)}
+{$redirect_message}
+{/if}
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th>{lang t="common|name"}</th>
-			<th>{lang t="common|description"}</th>
-			<th>{lang t="common|author"}</th>
+			<th>{lang t="system|name"}</th>
+			<th>{lang t="system|description"}</th>
+			<th>{lang t="system|author"}</th>
 			<th>{lang t="system|version"}</th>
-			<th>{lang t="common|options"}</th>
+			<th>{lang t="system|options"}</th>
 		</tr>
 	</thead>
 	<tbody>

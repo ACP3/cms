@@ -1,6 +1,9 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
+{if isset($redirect_message)}
+{$redirect_message}
+{/if}
 <form action="{uri args="acp/feeds"}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="control-group">
 		<label for="feed-image" class="control-label">{lang t="feeds|feed_image"}</label>
@@ -17,8 +20,8 @@
 		</div>
 	</div>
 	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
-		<a href="{uri args="acp/contact"}" class="btn">{lang t="common|cancel"}</a>
+		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
+		<a href="{uri args="acp/contact"}" class="btn">{lang t="system|cancel"}</a>
 		{$form_token}
 	</div>
 </form>

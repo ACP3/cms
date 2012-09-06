@@ -43,7 +43,7 @@ $(function() {
 {/foreach}
 						</select>
 						<p class="help-block">
-							<a href="javascript:mark_options('add')">{lang t="common|mark_all"}</a> <span>::</span> <a href="javascript:mark_options('remove')">{lang t="common|unmark_all"}</a>
+							<a href="javascript:mark_options('add')">{lang t="system|mark_all"}</a> <span>::</span> <a href="javascript:mark_options('remove')">{lang t="system|unmark_all"}</a>
 						</p>
 					</div>
 				</div>
@@ -72,7 +72,7 @@ $(function() {
 					</div>
 				</div>
 				<div id="options-container" class="control-group">
-					<label for="drop" class="control-label">{lang t="common|options"}</label>
+					<label for="drop" class="control-label">{lang t="system|options"}</label>
 					<div class="controls">
 						<label for="drop" class="checkbox">
 							<input type="checkbox" name="drop" id="drop" value="1"{$drop.checked}>
@@ -84,7 +84,7 @@ $(function() {
 		</div>
 	</div>
 	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="common|submit"}</button>
+		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
 		{$form_token}
 	</div>
 </form>

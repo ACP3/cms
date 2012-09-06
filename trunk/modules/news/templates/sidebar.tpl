@@ -5,6 +5,6 @@
 	<li><a href="{uri args="news/details/id_`$row.id`"}" title="{$row.start} - {$row.headline}">{$row.headline_short}</a></li>
 {/foreach}
 {else}
-	<li>{lang t="common|no_entries_short"}</li>
+	<li>{lang t="system|no_entries_short"}</li>
 {/if}
 </ul>

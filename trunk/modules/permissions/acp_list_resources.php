@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$resources = ACP3_CMS::$db->query('SELECT m.id AS module_id, m.name AS module_name, r.id AS resource_id, r.page, r.privilege_id, p.key AS privilege_name FROM {pre}acl_resources AS r JOIN {pre}modules AS m ON(r.module_id = m.id) JOIN {pre}acl_privileges AS p ON(r.privilege_id = p.id) ORDER BY r.module_id ASC, r.page ASC');
+$resources = ACP3_CMS::$db2->fetchAll('SELECT m.id AS module_id, m.name AS module_name, r.id AS resource_id, r.page, r.privilege_id, p.key AS privilege_name FROM ' . DB_PRE . 'acl_resources AS r JOIN ' . DB_PRE . 'modules AS m ON(r.module_id = m.id) JOIN ' . DB_PRE . 'acl_privileges AS p ON(r.privilege_id = p.id) ORDER BY r.module_id ASC, r.page ASC');
 $c_resources = count($resources);
 $output = array();
 for ($i = 0; $i < $c_resources; ++$i) {

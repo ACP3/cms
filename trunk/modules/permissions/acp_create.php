@@ -12,8 +12,8 @@ if (defined('IN_ADM') === false)
 
 if (isset($_POST['submit']) === true) {
 	if (empty($_POST['name']))
-		$errors['name'] = ACP3_CMS::$lang->t('common', 'name_to_short');
-	if (!empty($_POST['name']) && ACP3_CMS::$db->countRows('*', 'acl_roles', 'name = \'' . ACP3_CMS::$db->escape($_POST['name']) . '\'') == 1)
+		$errors['name'] = ACP3_CMS::$lang->t('system', 'name_to_short');
+	if (!empty($_POST['name']) && ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'acl_roles WHERE name = ?', array($_POST['name'])) == 1)
 		$errors['name'] = ACP3_CMS::$lang->t('permissions', 'role_already_exists');
 	if (empty($_POST['privileges']) || is_array($_POST['privileges']) === false)
 		$errors[] = ACP3_CMS::$lang->t('permissions', 'no_privilege_selected');
@@ -23,33 +23,33 @@ if (isset($_POST['submit']) === true) {
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
-		ACP3_CMS::$db->link->beginTransaction();
+		ACP3_CMS::$db2->beginTransaction();
 
 		$insert_values = array(
 			'id' => '',
-			'name' => ACP3_CMS::$db->escape($_POST['name']),
+			'name' => $_POST['name'],
 			'parent_id' => $_POST['parent'],
 		);
 
 		$nestedSet = new ACP3_NestedSet('acl_roles');
 		$bool = $nestedSet->insertNode((int) $_POST['parent'], $insert_values);
-		$role_id = ACP3_CMS::$db->link->lastInsertId();
+		$role_id = ACP3_CMS::$db2->lastInsertId();
 
 		foreach ($_POST['privileges'] as $module_id => $privileges) {
 			foreach ($privileges as $id => $permission) {
-				ACP3_CMS::$db->insert('acl_rules', array('id' => '', 'role_id' => $role_id, 'module_id' => $module_id, 'privilege_id' => $id, 'permission' => $permission));
+				ACP3_CMS::$db2->insert(DB_PRE . 'acl_rules', array('id' => '', 'role_id' => $role_id, 'module_id' => $module_id, 'privilege_id' => $id, 'permission' => $permission));
 			}
 		}
 
-		ACP3_CMS::$db->link->commit();
+		ACP3_CMS::$db2->commit();
 
 		ACP3_ACL::setRolesCache();
 
 		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/permissions');
+		setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/permissions');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -63,7 +63,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	}
 	ACP3_CMS::$view->assign('parent', $roles);
 
-	$modules = ACP3_CMS::$db->select('id, name', 'modules', 'active = 1');
+	$modules = ACP3_CMS::$db2->fetchAll('SELECT id, name FROM ' . DB_PRE . 'modules WHERE active = 1');
 	$c_modules = count($modules);
 	$privileges = ACP3_ACL::getAllPrivileges();
 	$c_privileges = count($privileges);

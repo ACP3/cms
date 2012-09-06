@@ -2,8 +2,8 @@
 	<div id="adm-list" class="well">
 		{check_access mode="link" path="acp/permissions/create" icon="32/add_group" width="32" height="32"}
 		{check_access mode="link" path="acp/permissions/list_resources" icon="32/resource" width="32" height="32"}
-		{check_access mode="input" path="acp/permissions/delete" icon="32/cancel" lang="common|delete_marked"}
-		<h2>{lang t="common|overview"}</h2>
+		{check_access mode="input" path="acp/permissions/delete" icon="32/cancel" lang="system|delete_marked"}
+		<h2>{lang t="system|overview"}</h2>
 	</div>
 {if isset($redirect_message)}
 {$redirect_message}
@@ -13,13 +13,13 @@
 		<thead>
 			<tr>
 {if $can_delete === true}
-				<th><input type="checkbox" id="mark-all" value="1"></th>
+				<th style="width:3%"><input type="checkbox" id="mark-all" value="1"></th>
 {/if}
-				<th>{lang t="common|name"}</th>
+				<th>{lang t="system|name"}</th>
 {if $can_order === true}
-				<th>{lang t="common|order"}</th>
+				<th>{lang t="system|order"}</th>
 {/if}
-				<th style="width:3%">{lang t="common|id"}</th>
+				<th style="width:5%">{lang t="system|id"}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -32,13 +32,13 @@
 {if $can_order === true}
 				<td>
 {if !$row.last}
-					<a href="{uri args="acp/permissions/order/id_`$row.id`/action_down"}" title="{lang t="common|move_down"}">{icon path="16/down" width="16" height="16" alt={lang t="common|move_down"}}</a>
+					<a href="{uri args="acp/permissions/order/id_`$row.id`/action_down"}" title="{lang t="system|move_down"}">{icon path="16/down" width="16" height="16" alt={lang t="system|move_down"}}</a>
 {/if}
 {if !$row.first}
-					<a href="{uri args="acp/permissions/order/id_`$row.id`/action_up"}" title="{lang t="common|move_up"}">{icon path="16/up" width="16" height="16" alt={lang t="common|move_up"}}</a>
+					<a href="{uri args="acp/permissions/order/id_`$row.id`/action_up"}" title="{lang t="system|move_up"}">{icon path="16/up" width="16" height="16" alt={lang t="system|move_up"}}</a>
 {/if}
 {if $row.first && $row.last}
-					{icon path="16/editdelete" width="16" height="16" alt={lang t="common|move_impossible"} title={lang t="common|move_impossible"}}
+					{icon path="16/editdelete" width="16" height="16" alt={lang t="system|move_impossible"} title={lang t="system|move_impossible"}}
 {/if}
 				</td>
 {/if}
@@ -52,7 +52,7 @@
 {/if}
 {else}
 	<div class="alert align-center">
-		<strong>{lang t="common|no_entries"}</strong>
+		<strong>{lang t="system|no_entries"}</strong>
 	</div>
 {/if}
 </form>

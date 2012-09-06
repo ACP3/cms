@@ -10,8 +10,9 @@
 if (defined('IN_ADM') === false)
 	exit;
 
-ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('permissions', 'acp_list_resources'), ACP3_CMS::$uri->route('acp/permissions/list_resources'))
-		   ->append(ACP3_CMS::$lang->t('permissions', 'acp_create_resource'));
+ACP3_CMS::$breadcrumb
+->append(ACP3_CMS::$lang->t('permissions', 'acp_list_resources'), ACP3_CMS::$uri->route('acp/permissions/list_resources'))
+->append(ACP3_CMS::$lang->t('permissions', 'acp_create_resource'));
 
 if (isset($_POST['submit']) === true) {
 	if (empty($_POST['modules']) || ACP3_Modules::isInstalled($_POST['modules']) === false)
@@ -20,29 +21,29 @@ if (isset($_POST['submit']) === true) {
 		$errors['resource'] = ACP3_CMS::$lang->t('permissions', 'type_in_resource');
 	if (empty($_POST['privileges']) || ACP3_Validate::isNumber($_POST['privileges']) === false)
 		$errors['privileges'] = ACP3_CMS::$lang->t('permissions', 'select_privilege');
-	if (ACP3_Validate::isNumber($_POST['privileges']) && ACP3_CMS::$db->countRows('*', 'acl_resources', 'id = \'' . $_POST['privileges'] . '\'') == 0)
+	if (ACP3_Validate::isNumber($_POST['privileges']) && ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'acl_resources WHERE id = ?', array($_POST['privileges'])) == 0)
 		$errors['privileges'] = ACP3_CMS::$lang->t('permissions', 'privilege_does_not_exist');
 
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
-		$module_id = ACP3_CMS::$db->select('id', 'modules', 'name = \'' . ACP3_CMS::$db->escape($_POST['modules']) . '\'');
+		$mod_id = ACP3_CMS::$db2->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($_POST['modules']));
 		$insert_values = array(
 			'id' => '',
-			'module_id' => $module_id[0]['id'],
-			'page' => ACP3_CMS::$db->escape($_POST['resource']),
+			'module_id' => $mod_id,
+			'page' => $_POST['resource'],
 			'params' => '',
 			'privilege_id' => $_POST['privileges'],
 		);
-		$bool = ACP3_CMS::$db->insert('acl_resources', $insert_values);
+		$bool = ACP3_CMS::$db2->insert(DB_PRE . 'acl_resources', $insert_values);
 
 		ACP3_ACL::setResourcesCache();
 
 		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool !== false ? 'create_success' : 'create_error'), 'acp/permissions/list_resources');
+		setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/permissions/list_resources');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {

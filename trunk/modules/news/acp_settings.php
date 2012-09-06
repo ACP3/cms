@@ -14,9 +14,9 @@ $comments_active = ACP3_Modules::isActive('comments');
 
 if (isset($_POST['submit']) === true) {
 	if (empty($_POST['dateformat']) || ($_POST['dateformat'] !== 'long' && $_POST['dateformat'] !== 'short'))
-		$errors['dateformat'] = ACP3_CMS::$lang->t('common', 'select_date_format');
+		$errors['dateformat'] = ACP3_CMS::$lang->t('system', 'select_date_format');
 	if (ACP3_Validate::isNumber($_POST['sidebar']) === false)
-		$errors['sideabr'] = ACP3_CMS::$lang->t('common', 'select_sidebar_entries');
+		$errors['sidebar'] = ACP3_CMS::$lang->t('system', 'select_sidebar_entries');
 	if (!isset($_POST['readmore']) || $_POST['readmore'] != 1 && $_POST['readmore'] != 0)
 		$errors[] = ACP3_CMS::$lang->t('news', 'select_activate_readmore');
 	if (ACP3_Validate::isNumber($_POST['readmore_chars']) === false || $_POST['readmore_chars'] == 0)
@@ -29,13 +29,21 @@ if (isset($_POST['submit']) === true) {
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('common', 'form_already_submitted')));
+		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
-		$bool = ACP3_Config::setSettings('news', $_POST);
+		$data = array(
+			'dateformat' => $_POST['dateformat'],
+			'sidebar' => $_POST['sidebar'],
+			'readmore' => $_POST['readmore'],
+			'readmore_chars' => $_POST['readmore_chars'],
+			'category_in_breadcrumb' => $_POST['category_in_breadcrumb'],
+			'comments' => $_POST['comments'],
+		);
+		$bool = ACP3_Config::setSettings('news', $data);
 
 		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool, ACP3_CMS::$lang->t('common', $bool === true ? 'settings_success' : 'settings_error'), 'acp/news');
+		setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/news');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -46,10 +54,10 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$readmore = array();
 	$readmore[0]['value'] = '1';
 	$readmore[0]['checked'] = selectEntry('readmore', '1', $settings['readmore'], 'checked');
-	$readmore[0]['lang'] = ACP3_CMS::$lang->t('common', 'yes');
+	$readmore[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
 	$readmore[1]['value'] = '0';
 	$readmore[1]['checked'] = selectEntry('readmore', '0', $settings['readmore'], 'checked');
-	$readmore[1]['lang'] = ACP3_CMS::$lang->t('common', 'no');
+	$readmore[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
 	ACP3_CMS::$view->assign('readmore', $readmore);
 
 	ACP3_CMS::$view->assign('readmore_chars', isset($_POST['submit']) ? $_POST['readmore_chars'] : $settings['readmore_chars']);
@@ -58,10 +66,10 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		$allow_comments = array();
 		$allow_comments[0]['value'] = '1';
 		$allow_comments[0]['checked'] = selectEntry('comments', '1', $settings['comments'], 'checked');
-		$allow_comments[0]['lang'] = ACP3_CMS::$lang->t('common', 'yes');
+		$allow_comments[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
 		$allow_comments[1]['value'] = '0';
 		$allow_comments[1]['checked'] = selectEntry('comments', '0', $settings['comments'], 'checked');
-		$allow_comments[1]['lang'] = ACP3_CMS::$lang->t('common', 'no');
+		$allow_comments[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
 		ACP3_CMS::$view->assign('allow_comments', $allow_comments);
 	}
 
@@ -70,10 +78,10 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$category_in_breadcrumb = array();
 	$category_in_breadcrumb[0]['value'] = '1';
 	$category_in_breadcrumb[0]['checked'] = selectEntry('category_in_breadcrumb', '1', $settings['category_in_breadcrumb'], 'checked');
-	$category_in_breadcrumb[0]['lang'] = ACP3_CMS::$lang->t('common', 'yes');
+	$category_in_breadcrumb[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
 	$category_in_breadcrumb[1]['value'] = '0';
 	$category_in_breadcrumb[1]['checked'] = selectEntry('category_in_breadcrumb', '0', $settings['category_in_breadcrumb'], 'checked');
-	$category_in_breadcrumb[1]['lang'] = ACP3_CMS::$lang->t('common', 'no');
+	$category_in_breadcrumb[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
 	ACP3_CMS::$view->assign('category_in_breadcrumb', $category_in_breadcrumb);
 
 	ACP3_CMS::$session->generateFormToken();

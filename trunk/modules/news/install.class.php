@@ -33,7 +33,10 @@ class ACP3_NewsModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	protected function removeTables() {
-		return array("DROP TABLE `{pre}news`;");
+		return array(
+			"DROP TABLE `{pre}news`;",
+			"DELETE FROM `{pre}categories` WHERE module_id = " . $this->getModuleId() . ";"
+		);
 	}
 
 	protected function settings() {

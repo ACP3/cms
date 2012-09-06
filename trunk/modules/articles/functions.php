@@ -15,8 +15,8 @@
  */
 function setArticlesCache($id)
 {
-	global $db;
-	return ACP3_Cache::create('articles_list_id_' . $id, ACP3_CMS::$db->select('start, end, title, text', 'articles', 'id = \'' . $id . '\''));
+	$data = ACP3_CMS::$db2->fetchAssoc('SELECT start, end, title, text FROM ' . DB_PRE . 'articles WHERE id = ?', array($id));
+	return ACP3_Cache::create('list_id_' . $id, $data, 'articles');
 }
 /**
  * Bindet die gecachete statische Seite ein
@@ -27,10 +27,10 @@ function setArticlesCache($id)
  */
 function getArticlesCache($id)
 {
-	if (ACP3_Cache::check('articles_list_id_' . $id) === false)
+	if (ACP3_Cache::check('list_id_' . $id, 'articles') === false)
 		setArticlesCache($id);
 
-	return ACP3_Cache::output('articles_list_id_' . $id);
+	return ACP3_Cache::output('list_id_' . $id, 'articles');
 }
 /**
  * Liest alle statischen Seiten ein
@@ -40,14 +40,11 @@ function getArticlesCache($id)
  */
 function articlesList($id = '')
 {
-	global $db;
-
-	$articles = ACP3_CMS::$db->select('id, start, end, title, text', 'articles', 0, 'title ASC');
+	$articles = ACP3_CMS::$db2->fetchAll('SELECT id, start, end, title, text FROM ' . DB_PRE . 'articles ORDER BY title ASC');
 	$c_articles = count($articles);
 
 	if ($c_articles > 0) {
 		for ($i = 0; $i < $c_articles; ++$i) {
-			$articles[$i]['text'] = ACP3_CMS::$db->escape($articles[$i]['text'], 3);
 			$articles[$i]['selected'] = selectEntry('articles', $articles[$i]['id'], $id);
 		}
 	}

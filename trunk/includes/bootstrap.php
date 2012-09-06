@@ -5,14 +5,14 @@
  * @subpackage Core
  */
 
-if (defined('IN_ACP3') === false)
-	exit;
+use Doctrine\Common\ClassLoader;
 
 class ACP3_CMS {
 	public static $auth = null;
 	public static $breadcrumb = null;
 	public static $date = null;
 	public static $db = null;
+	public static $db2 = null;
 	public static $lang = null;
 	public static $session = null;
 	public static $tpl = null;
@@ -28,6 +28,16 @@ class ACP3_CMS {
 	public static function setContent($data)
 	{
 		self::$content = $data;
+	}
+
+	/**
+	 * Fügt weitere Daten an den Seiteninhalt an
+	 *
+	 * @param string $data
+	 */
+	public static function appendContent($data)
+	{
+		self::$content.= $data;
 	}
 
 	/**
@@ -48,7 +58,7 @@ class ACP3_CMS {
 		self::startupChecks();
 		self::defineDirConstants();
 		self::includeAutoLoader();
-		self::initializeDatabase();
+		self::initializeDoctrineDBAL();
 		self::initializeClasses();
 		self::outputPage();
 	}
@@ -78,7 +88,10 @@ class ACP3_CMS {
 		define('ROOT_DIR', $php_self !== '/' ? $php_self . '/' : '/');
 		define('MODULES_DIR', ACP3_ROOT . 'modules/');
 		define('INCLUDES_DIR', ACP3_ROOT . 'includes/');
+		define('CLASSES_DIR', INCLUDES_DIR . 'classes/');
 		define('LIBRARIES_DIR', ACP3_ROOT . 'libraries/');
+		define('UPLOADS_DIR', ACP3_ROOT . 'uploads/');
+		define('CACHE_DIR', UPLOADS_DIR . 'cache/');
 	}
 
 	/**
@@ -87,6 +100,11 @@ class ACP3_CMS {
 	public static function includeAutoLoader()
 	{
 		require INCLUDES_DIR . 'autoload.php';
+
+		require LIBRARIES_DIR . 'Doctrine/Common/ClassLoader.php';
+
+		$classLoader = new ClassLoader('Doctrine', LIBRARIES_DIR);
+		$classLoader->register();
 	}
 
 	/**
@@ -103,14 +121,36 @@ class ACP3_CMS {
 	}
 
 	/**
-	 * Initialisieren der Datenbankverbindung
+	 * Initialisieren von Doctrine
 	 */
-	public static function initializeDatabase()
+	public static function initializeDoctrineDBAL()
 	{
-		require INCLUDES_DIR . 'config.php';
+		require_once INCLUDES_DIR . 'config.php';
 
 		// Wenn der DEBUG Modus aktiv ist, Fehler ausgeben
 		error_reporting(defined('DEBUG') === true && DEBUG === true ? E_ALL : 0);
+
+		$config = new \Doctrine\DBAL\Configuration();
+
+		$connectionParams = array(
+			'dbname' => CONFIG_DB_NAME,
+			'user' => CONFIG_DB_USER,
+			'password' => CONFIG_DB_PASSWORD,
+			'host' => CONFIG_DB_HOST,
+			'driver' => 'pdo_mysql',
+			'charset' => 'UTF-8'
+		);
+		self::$db2 = Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
+
+		define('DB_PRE', CONFIG_DB_PRE);
+	}
+
+	/**
+	 * Initialisierung der alten DB-Klasse
+	 */
+	public static function initializeLegacyDatabase()
+	{
+		require_once INCLUDES_DIR . 'config.php';
 
 		// Klassen initialisieren
 		self::$db = new ACP3_DB();
@@ -134,6 +174,7 @@ class ACP3_CMS {
 		define('DESIGN_PATH_INTERNAL', ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/');
 
 		self::$view = new ACP3_View();
+		ACP3_View::factory('Smarty');
 
 		// Einige Template Variablen setzen
 		self::$view->assign('PHP_SELF', PHP_SELF);

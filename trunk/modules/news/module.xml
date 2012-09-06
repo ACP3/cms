@@ -5,6 +5,8 @@
 		<description lang="true"/>
 		<author>Tino Goratsch</author>
 		<version core="true"/>
-		<categories/>
+		<dependencies>
+			<module>categories</module>
+		</dependencies>
 	</info>
 </module>

@@ -31,7 +31,10 @@ class ACP3_FilesModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	protected function removeTables() {
-		return array("DROP TABLE `{pre}files`;");
+		return array(
+			"DROP TABLE `{pre}files`;",
+			"DELETE FROM `{pre}categories` WHERE module_id = " . $this->getModuleId() . ";"
+		);
 	}
 
 	protected function settings() {

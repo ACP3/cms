@@ -12,10 +12,6 @@ class ACP3_CategoriesModuleInstaller extends ACP3_ModuleInstaller {
 		return $this->schema_version;
 	}
 
-	protected function removeResources() {
-		return true;
-	}
-
 	protected function createTables() {
 		return array(
 			"CREATE TABLE `{pre}categories` (
@@ -30,7 +26,7 @@ class ACP3_CategoriesModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	protected function removeTables() {
-		return array();
+		return array("DROP TABLE `{pre}categories`;");
 	}
 
 	protected function settings() {
@@ -39,14 +35,6 @@ class ACP3_CategoriesModuleInstaller extends ACP3_ModuleInstaller {
 			'height' => 50,
 			'filesize' => 40960
 		);
-	}
-
-	protected function removeSettings() {
-		return true;
-	}
-
-	protected function removeFromModulesTable() {
-		return true;
 	}
 
 	protected function schemaUpdates() {
