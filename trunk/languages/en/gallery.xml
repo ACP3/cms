@@ -24,7 +24,7 @@
 	<item key="mod_description">With this module you can administer the galleries.</item>
 	<item key="next_image">Next image</item>
 	<item key="no_picture_selected">Please select a picture</item>
-	<item key="no_pictures">There are no pictures registered for this gallery.</item>
+	<item key="no_pictures">In this gallery no pictures have been added.</item>
 	<item key="pics">Gallery</item>
 	<item key="picture">Picture</item>
 	<item key="picture_index">Picture overview</item>
