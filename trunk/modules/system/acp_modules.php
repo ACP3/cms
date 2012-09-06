@@ -18,6 +18,7 @@ require_once MODULES_DIR . 'system/functions.php';
 
 switch (ACP3_CMS::$uri->action) {
 	case 'activate':
+		$bool = false;
 		$info = ACP3_Modules::getModuleInfo(ACP3_CMS::$uri->dir);
 		if (empty($info)) {
 			$text = ACP3_CMS::$lang->t('system', 'module_not_found');
@@ -32,6 +33,7 @@ switch (ACP3_CMS::$uri->action) {
 		}
 		setRedirectMessage($bool, $text, 'acp/system/modules');
 	case 'deactivate':
+		$bool = false;
 		$info = ACP3_Modules::getModuleInfo(ACP3_CMS::$uri->dir);
 		if (empty($info)) {
 			$text = ACP3_CMS::$lang->t('system', 'module_not_found');
