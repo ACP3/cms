@@ -6,7 +6,7 @@ $(document).ready(function() {
 	$('{$dt.element}').dataTable({
 		"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
 		"sPaginationType": "bootstrap",
-		"aLengthMenu": [[2, 10, 15, 20, 25, 50, -1], [2, 10, 15, 20, 25, 50, "{lang t="system|data_table_all"}"]],
+		"aLengthMenu": [[10, 15, 20, 25, 50, -1], [10, 15, 20, 25, 50, "{lang t="system|data_table_all"}"]],
 		"iDisplayLength": {$dt.records_per_page},
 		'bStateSave': true,
 {if isset($dt.sort_col, $dt.sort_dir)}
