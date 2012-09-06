@@ -1,3 +1,6 @@
+{if isset($redirect_message)}
+{$redirect_message}
+{/if}
 {if isset($error_msg)}
 {$error_msg}
 {/if}

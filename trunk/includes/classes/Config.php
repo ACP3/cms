@@ -40,7 +40,7 @@ class ACP3_Config
 		$mod_id = ACP3_CMS::$db2->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($module));
 		if (!empty($mod_id)) {
 			foreach ($data as $key => $value) {
-				$bool = ACP3_CMS::$db2->executeUpdate('UPDATE ' . DB_PRE . 'settings SET value = ? WHERE module_id = ? AND name = ?', array($value, (int) $mod_id[0]['id'], $key));
+				$bool = ACP3_CMS::$db2->executeUpdate('UPDATE ' . DB_PRE . 'settings SET value = ? WHERE module_id = ? AND name = ?', array($value, (int) $mod_id, $key));
 			}
 			$bool2 = self::setModuleCache($module);
 		}

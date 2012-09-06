@@ -100,10 +100,12 @@ if (isset($_POST['submit']) === true) {
 
 		ACP3_CMS::$session->unsetFormToken();
 
-		setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), 'acp/system');
+		setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), 'acp/system/configuration');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
+	getRedirectMessage();
+
 	ACP3_CMS::$view->assign('entries', recordsPerPage(CONFIG_ENTRIES));
 
 	// WYSIWYG-Editoren
