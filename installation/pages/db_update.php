@@ -10,7 +10,7 @@
 if (defined('IN_INSTALL') === false)
 	exit;
 
-if ($uri->action === 'do') {
+if (isset($_POST['update'])) {
 	$results = array();
 	// Zuerst die wichtigen System-Module aktualisieren...
 	$update_first = array('system', 'permissions', 'users');

@@ -122,6 +122,12 @@ abstract class ACP3_ModuleInstaller {
 		return true;
 	}
 
+	/**
+	 * Gibt ein Array mit den Abhängigkeiten zu anderen Modulen eines Moduls zurück
+	 *
+	 * @param string $module
+	 * @return array
+	 */
 	public static function getDependencies($module)
 	{
 		if ((bool) preg_match('=/=', $module) === false) {
@@ -137,50 +143,52 @@ abstract class ACP3_ModuleInstaller {
 	/**
 	 * Fügt die zu einen Modul zugehörigen Ressourcen ein
 	 *
+	 * @param integer $mode
+	 *	1 = Ressourcen und Regeln einlesen
+	 *	2 = Nur die Ressourcen einlesen
 	 * @return boolean
 	 */
-	protected function addResources()
+	public function addResources($mode = 1)
 	{
-		$mod_name = ACP3_CMS::$db2->fetchColumn('SELECT name FROM ' . DB_PRE . 'modules WHERE id = ?', array($this->module_id));
+		$mod_name = $this->getName();
+		$modules = scandir(MODULES_DIR . $mod_name);
+		foreach ($modules as $row) {
+			if ($row !== '.' && $row !== '..' && $row !== 'install.class.php') {
+				// Erweiterungen
+				$path = MODULES_DIR . $mod_name . '/';
+				if (is_dir($path . $row) === true && $row === 'extensions') {
+					if (is_file($path . 'extensions/search.php') === true)
+						ACP3_CMS::$db2->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->module_id, 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
+					if (is_file($path . 'extensions/feeds.php') === true)
+						ACP3_CMS::$db2->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->module_id, 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
+					// Normale Moduldateien
+				} elseif (strpos($row, '.php') !== false) {
+					// .php entfernen
+					$row = substr($row, 0, -4);
+					if (isset($this->special_resources[$row])) {
+						$privilege_id = $this->special_resources[$row];
+					} else {
+						$privilege_id = 1;
 
-		if (!empty($mod_name)) {
-			$modules = scandir(MODULES_DIR . $mod_name);
-			foreach ($modules as $row) {
-				if ($row !== '.' && $row !== '..' && $row !== 'install.class.php') {
-					// Erweiterungen
-					$path = MODULES_DIR . $mod_name . '/';
-					if (is_dir($path . $row) === true && $row === 'extensions') {
-						if (is_file($path . 'extensions/search.php') === true)
-							ACP3_CMS::$db2->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->module_id, 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
-						if (is_file($path . 'extensions/feeds.php') === true)
-							ACP3_CMS::$db2->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->module_id, 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
-						// Normale Moduldateien
-					} elseif (strpos($row, '.php') !== false) {
-						// .php entfernen
-						$row = substr($row, 0, -4);
-						if (isset($this->special_resources[$row])) {
-							$privilege_id = $this->special_resources[$row];
-						} else {
-							$privilege_id = 1;
-
-							if (strpos($row, 'create') === 0)
-								$privilege_id = 2;
-							if (strpos($row, 'acp_') === 0)
-								$privilege_id = 3;
-							if (strpos($row, 'acp_create') === 0 || strpos($row, 'acp_order') === 0)
-								$privilege_id = 4;
-							elseif (strpos($row, 'acp_edit') === 0)
-								$privilege_id = 5;
-							elseif (strpos($row, 'acp_delete') === 0)
-								$privilege_id = 6;
-							elseif (strpos($row, 'acp_settings') === 0)
-								$privilege_id = 7;
-						}
-						ACP3_CMS::$db2->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->module_id, 'page' => $row, 'params' => '', 'privilege_id' => (int) $privilege_id));
+						if (strpos($row, 'create') === 0)
+							$privilege_id = 2;
+						if (strpos($row, 'acp_') === 0)
+							$privilege_id = 3;
+						if (strpos($row, 'acp_create') === 0 || strpos($row, 'acp_order') === 0)
+							$privilege_id = 4;
+						elseif (strpos($row, 'acp_edit') === 0)
+							$privilege_id = 5;
+						elseif (strpos($row, 'acp_delete') === 0)
+							$privilege_id = 6;
+						elseif (strpos($row, 'acp_settings') === 0)
+							$privilege_id = 7;
 					}
+					ACP3_CMS::$db2->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->module_id, 'page' => $row, 'params' => '', 'privilege_id' => (int) $privilege_id));
 				}
 			}
+		}
 
+		if ($mode === 1) {
 			// Regeln für die Rollen setzen
 			$roles = ACP3_CMS::$db2->fetchAll('SELECT id FROM ' . DB_PRE . 'acl_roles');
 			$privileges = ACP3_CMS::$db2->fetchAll('SELECT id FROM ' . DB_PRE . 'acl_privileges');
@@ -199,13 +207,11 @@ abstract class ACP3_ModuleInstaller {
 					ACP3_CMS::$db2->insert(DB_PRE . 'acl_rules', array('id' => '', 'role_id' => $role['id'], 'module_id' => $this->module_id, 'privilege_id' => $privilege['id'], 'permission' => $permission));
 				}
 			}
-
-			ACP3_Cache::purge(0, 'acl');
-
-			return true;
 		}
 
-		return false;
+		ACP3_Cache::purge(0, 'acl');
+
+		return true;
 	}
 
 	/**

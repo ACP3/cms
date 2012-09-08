@@ -260,80 +260,10 @@ class ACP3_ACL
 	public static function canAccessResource($resource)
 	{
 		if (isset(self::$resources[$resource])) {
-			return self::userHasPrivilege(substr($resource, 0, strpos($resource, '/')), self::$resources[$resource]['key']) === true || ACP3_CMS::$auth->isSuperUser() === true ? true : false;
+			$module = substr($resource, 0, strpos($resource, '/'));
+			$key = self::$resources[$resource]['key'];
+			return self::userHasPrivilege($module, $key) === true || ACP3_CMS::$auth->isSuperUser() === true ? true : false;
 		}
 		return false;
-	}
-	/**
-	 * Setzt die Ressourcen-Tabelle auf die Standardwerte zurück
-	 */
-	public static function resetResources()
-	{
-		ACP3_CMS::$db2->executeUpdate('TRUNCATE TABLE ' . DB_PRE . 'acl_resources');
-
-		$special_resources = array(
-			'newsletter' => array(
-				'acp_activate' => 3,
-				'acp_sent' => 4,
-			),
-			'system' => array(
-				'acp_configuration' => 7,
-				'acp_designs' => 7,
-				'acp_extensions' => 7,
-				'acp_languages' => 7,
-				'acp_maintenance' => 7,
-				'acp_modules' => 7,
-				'acp_sql_export' => 7,
-				'acp_sql_import' => 7,
-				'acp_update_check' => 3,
-			),
-		);
-
-		// Moduldaten in die ACL schreiben
-		$modules = scandir(MODULES_DIR);
-		foreach ($modules as $row) {
-			if ($row !== '.' && $row !== '..' && is_file(MODULES_DIR . $row . '/module.xml') === true) {
-				$module = scandir(MODULES_DIR . $row . '/');
-
-				$mod_id = ACP3_CMS::$db2->fetchAssoc('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($row));
-				if (isset($mod_id['id'])) {
-					$mod_id = (int)$mod_id['id'];
-				} else {
-					ACP3_CMS::$db2->insert(DB_PRE . 'modules', array('id' => '', 'name' => ACP3_CMS::$db2->quote($row), 'active' => 1));
-					$mod_id = (int) ACP3_CMS::$db2->lastInsertId();
-				}
-
-				if (is_file(MODULES_DIR . $row . '/extensions/search.php') === true)
-					ACP3_CMS::$db2->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
-				if (is_file(MODULES_DIR . $row . '/extensions/feeds.php') === true)
-					ACP3_CMS::$db2->insert(DB . PRE . 'acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
-
-				foreach ($module as $file) {
-					if ($file !== '.' && $file !== '..' && $file !== 'install.class.php' && is_file(MODULES_DIR . $row . '/' . $file) === true && strpos($file, '.php') !== false) {
-						// .php entfernen
-						$file = substr($file, 0, -4);
-
-						if (isset($special_resources[$row][$file])) {
-							$privilege_id = $special_resources[$row][$file];
-						} else {
-							$privilege_id = 1;
-							if (strpos($file, 'create') === 0)
-								$privilege_id = 2;
-							if (strpos($file, 'acp_') === 0)
-								$privilege_id = 3;
-							if (strpos($file, 'acp_create') === 0 || strpos($file, 'acp_order') === 0)
-								$privilege_id = 4;
-							elseif (strpos($file, 'acp_edit') === 0)
-								$privilege_id = 5;
-							elseif (strpos($file, 'acp_delete') === 0)
-								$privilege_id = 6;
-							elseif (strpos($file, 'acp_settings') === 0)
-								$privilege_id = 7;
-						}
-						ACP3_CMS::$db2->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $mod_id, 'page' => ACP3_CMS::$db2->quote($file), 'params' => '', 'privilege_id' => (int) $privilege_id));
-					}
-				}
-			}
-		}
 	}
 }

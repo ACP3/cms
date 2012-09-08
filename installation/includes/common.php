@@ -70,30 +70,26 @@ if (defined('IN_UPDATER') === false) {
 
 	// Alte Versionen auf den Legacy Updater umleiten
 	if (defined('CONFIG_LANG') === true) {
-		$html = '<!DOCTYPE html>' . "\n";
-		$html.= '<html>' . "\n";
-		$html.= '<head>' . "\n";
-		$html.= '<title>Attention!</title>' . "\n";
-		$html.= '</head>' . "\n";
-		$html.= '<body>' . "\n";
-		$html.= '<h1>Attention!</h1>' . "\n";
-		$html.= '<p>A very old version of the ACP3 has been detected.</p>' . "\n";
-		$html.= '<p>Please run the <a href="' . INSTALLER_DIR . 'update_old.php" onclick="window.open(this.href); return false">legacy database updater</a> first.<br />' . "\n";
-		$html.= 'After that please reload this page to use the new database upgrade wizard.</p>' . "\n";
-		$html.= '</body>' . "\n";
-		$html.= '</html>';
-		exit($html);
+		$pages = array(
+			array(
+				'file' => 'db_update_legacy',
+				'selected' => '',
+			),
+		);
+
+		$uri = new ACP3_URI('install', 'db_update_legacy');
+	} else {
+		ACP3_Config::getSystemSettings();
+
+		$pages = array(
+			array(
+				'file' => 'db_update',
+				'selected' => '',
+			),
+		);
+
+		$uri = new ACP3_URI('install', 'db_update');
 	}
-
-	ACP3_Config::getSystemSettings();
-
-	$pages = array(
-		array(
-			'file' => 'db_update',
-			'selected' => '',
-		),
-	);
-	$uri = new ACP3_URI('install', 'db_update');
 
 	ACP3_Cache::purge();
 }
@@ -140,6 +136,6 @@ if ($is_file === true) {
 	include ACP3_ROOT . 'installation/pages/' . $uri->file . '.php';
 	$tpl->assign('CONTENT', $content);
 } else {
-	$tpl->assign('TITLE', $lang->t('errors', '404'));
+	$tpl->assign('TITLE', $lang->t('error_404'));
 	$tpl->assign('CONTENT', $tpl->fetch('404.tpl'));
 }
