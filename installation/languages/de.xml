@@ -50,7 +50,7 @@
 		<item key="installation_impossible">Installation nicht möglich!</item>
 		<item key="installation_successful_1"><![CDATA[Alle Abfragen wurden erfolgreich durchgeführt, womit die Installation nun abgeschlossen ist.<br />Über die unten stehende Schaltfläche können Sie zum Frontend Ihrer Website gelangen. Anschließend können Sie sich einloggen und weitere Änderungen an der Seite vornehmen, wie z.B. die Sprache wechseln, ein anderes Design wählen oder Inhalte veröffentlichen.]]></item>
 		<item key="installation_successful_2"><![CDATA[<strong>Achtung:</strong> Bitte löschen Sie nun den &quot;installation&quot;-Ordner, da dies ein potentielles Sicherheitsrisiko darstellen könnte, falls dieser Ordner in einer Produktiv-Umgebung noch existieren sollte.]]></item>
-		<item key="legacy_db_update_description"><![CDATA[Sie verwenden derzeit eine sehr alte Version des ACP3, weshalb die Aktualiserung der Datenbank aus 2 Schritten besteht.<br />Bitte klicken Sie zunächst auf &quot;Datenbank aktualisieren&quot;, um die Datenbank in die neue Modulstruktur anzupassen und anschließend auf &quot;Weiter&quot;, damit die Module letztendlich aktualisiert werden.]]></item>
+		<item key="legacy_db_update_description"><![CDATA[Sie verwenden derzeit eine sehr alte Version des ACP3, weshalb die Aktualisierung der Datenbank aus 2 Schritten besteht.<br />Bitte klicken Sie zunächst auf &quot;Datenbank aktualisieren&quot;, um die Datenbank an die neue Modulstruktur anzupassen und anschließend auf &quot;Weiter&quot;, damit die Module letztendlich aktualisiert werden.]]></item>
 		<item key="licence">Lizenz</item>
 		<item key="log_into_admin_panel">Zum Administrationsbereich</item>
 		<item key="magic_quotes">Magic Quotes:</item>
