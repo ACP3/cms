@@ -5,8 +5,6 @@ class ACP3_SystemModuleInstaller extends ACP3_ModuleInstaller {
 	private $schema_version = 34;
 
 	public function __construct() {
-		parent::__construct();
-
 		$this->special_resources = array(
 			'acp_configuration' => 7,
 			'acp_designs' => 7,

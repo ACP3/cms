@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}libraries/bootstrap/css/bootstrap-responsive.css">
 <link rel="stylesheet" type="text/css" href="{$INSTALLER_DIR}design/style.css">
 <script type="text/javascript" src="{$ROOT_DIR}libraries/js/jquery.min.js"></script>
-<script type="text/javascript" src="{$ROOT_DIR}libraries/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{$ROOT_DIR}libraries/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function($) {
 	// Sprachdropdown

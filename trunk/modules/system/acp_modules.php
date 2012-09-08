@@ -66,7 +66,7 @@ switch (ACP3_CMS::$uri->action) {
 
 				// Modul installieren
 				if (empty($deps)) {
-					require $path;
+					require_once $path;
 
 					$className = ACP3_ModuleInstaller::buildClassName(ACP3_CMS::$uri->dir);
 					$install = new $className();
@@ -97,7 +97,7 @@ switch (ACP3_CMS::$uri->action) {
 
 				// Modul deinstallieren
 				if (empty($deps)) {
-					require $path;
+					require_once $path;
 
 					$className = ACP3_ModuleInstaller::buildClassName(ACP3_CMS::$uri->dir);
 					$install = new $className();
