@@ -9,7 +9,6 @@ class ACP3_NewsletterModuleInstaller extends ACP3_ModuleInstaller {
 		parent::__construct();
 
 		$this->special_resources = array(
-			'acp_activate' => 3,
 			'acp_sent' => 4,
 		);
 	}

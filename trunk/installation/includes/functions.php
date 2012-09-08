@@ -31,6 +31,28 @@ function errorBox($errors)
 	return $tpl->fetch('error_box.tpl');
 }
 /**
+ * Führt die Datenbankschema-Änderungen durch
+ *
+ * @param array $queries
+ *	Array mit den durchzuführenden Datenbankschema-Änderungen
+ * @param integer $version
+ *	Version der Datenbank, auf welche aktualisiert werden soll
+ */
+function executeSqlQueries(array $queries, $version)
+{
+	global $lang;
+
+	$bool = ACP3_ModuleInstaller::executeSqlQueries($queries);
+
+	$result = array(
+		'text' => sprintf($lang->t('update_db_version_to'), $version),
+		'class' => $bool === true ?'success' : 'important',
+		'result_text' => $lang->t($bool === true ? 'db_update_success' : 'db_update_error')
+	);
+
+	return $result;
+}
+/**
  * Generiert ein gesalzenes Passwort
  *
  * @param string $salt
@@ -140,6 +162,26 @@ function recordsPerPage($current_value, $steps = 5, $max_value = 50)
 		$records[$i]['selected'] = selectEntry('entries', $j, $current_value);
 	}
 	return $records;
+}
+/**
+ * Setzt die Ressourcen-Tabelle auf die Standardwerte zurück
+ */
+function resetResources($mode = 1)
+{
+	ACP3_CMS::$db2->executeUpdate('TRUNCATE TABLE ' . DB_PRE . 'acl_resources');
+
+	// Moduldaten in die ACL schreiben
+	$modules = scandir(MODULES_DIR);
+	foreach ($modules as $row) {
+		$path = MODULES_DIR . $row . '/install.class.php';
+		if ($row !== '.' && $row !== '..' && is_file($path) === true) {
+			require_once $path;
+
+			$class_name = ACP3_ModuleInstaller::buildClassName($row);
+			$install = new $class_name();
+			$install->addResources($mode);
+		}
+	}
 }
 /**
  * Generiert einen Zufallsstring beliebiger Länge
