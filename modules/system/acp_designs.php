@@ -17,10 +17,11 @@ ACP3_CMS::$breadcrumb
 if (isset(ACP3_CMS::$uri->dir)) {
 	$bool = false;
 
-	if (is_file(ACP3_ROOT . 'designs/' . ACP3_CMS::$uri->dir . '/info.xml') === true) {
+	if ((bool) preg_match('=/=', ACP3_CMS::$uri->dir) === false &&
+		is_file(ACP3_ROOT . 'designs/' . ACP3_CMS::$uri->dir . '/info.xml') === true) {
 		$bool = ACP3_Config::setSettings('system', array('design' => ACP3_CMS::$uri->dir));
 
-		// Cache leeren und diverse Parameter für die Template Engine abändern
+		// Template Cache leeren
 		ACP3_Cache::purge('tpl_compiled');
 		ACP3_Cache::purge('tpl_cached');
 	}
@@ -31,7 +32,7 @@ if (isset(ACP3_CMS::$uri->dir)) {
 	getRedirectMessage();
 
 	$designs = array();
-	$directories = scandir(ACP3_ROOT . 'designs');
+	$directories = scandir(DESIGN_PATH_INTERNAL);
 	$count_dir = count($directories);
 	for ($i = 0; $i < $count_dir; ++$i) {
 		$design_info = ACP3_XML::parseXmlFile(ACP3_ROOT . 'designs/' . $directories[$i] . '/info.xml', '/design');

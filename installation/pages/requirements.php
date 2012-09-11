@@ -37,7 +37,7 @@ $tpl->assign('requirements', $requirements);
 $defaults = array('includes/config.php');
 
 // Uploadordner
-$uploads = scandir(ACP3_ROOT . 'uploads/');
+$uploads = scandir(UPLOADS_DIR);
 foreach ($uploads as $row) {
 	$path = 'uploads/' . $row . '/';
 	if ($row !== '.' && $row !== '..' &&  is_dir(ACP3_ROOT . $path) === true) {

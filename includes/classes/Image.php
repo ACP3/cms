@@ -25,7 +25,7 @@ class ACP3_Image
 	 *
 	 * @var string 
 	 */
-	private $cache_dir = 'uploads/cache/images/';
+	private $cache_dir = 'images/';
 	/**
 	 *
 	 * @var string 
@@ -197,15 +197,18 @@ class ACP3_Image
 			header('Content-type: ' . $picInfo['mime']);
 
 			// Falls Cache aktiviert ist und das Bild bereits gecachet wurde, dieses direkt ausgeben
-			if ($this->enable_cache === true && is_file(ACP3_ROOT . $this->cache_dir . $this->setCacheName()) === true) {
-				$this->file = ACP3_ROOT . $this->cache_dir . $this->setCacheName();
+			if ($this->enable_cache === true &&
+				is_file(CACHE_DIR . $this->cache_dir . $this->setCacheName()) === true) {
+				$this->file = CACHE_DIR . $this->cache_dir . $this->setCacheName();
 				$this->readFromFile();
 			// Bild resampeln
-			} elseif (($this->force_resample === true || ($width > $this->max_width || $height > $this->max_height)) && ($type === 1 || $type === 2 || $type === 3)) {
+			} elseif (($this->force_resample === true || ($width > $this->max_width || $height > $this->max_height)) &&
+				($type === 1 || $type === 2 || $type === 3)) {
 				$dimensions = $this->calcNewDimensions($width, $height);
 				$cache_file = null;
-				if ($this->enable_cache === true && is_dir(ACP3_ROOT . $this->cache_dir) === true && is_file(ACP3_ROOT . $this->cache_dir . $this->setCacheName()) === false)
-					$cache_file = ACP3_ROOT . $this->cache_dir . $this->setCacheName();
+				if ($this->enable_cache === true &&
+					is_file(CACHE_DIR . $this->cache_dir . $this->setCacheName()) === false)
+					$cache_file = CACHE_DIR . $this->cache_dir . $this->setCacheName();
 
 				$this->resample($dimensions['width'], $dimensions['height'], $width, $height, $type, $cache_file);
 
