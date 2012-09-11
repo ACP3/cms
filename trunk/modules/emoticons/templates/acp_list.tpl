@@ -1,9 +1,11 @@
 <form action="{uri args="acp/emoticons/delete"}" method="post">
-	<div id="adm-list" class="well">
-		{check_access mode="link" path="acp/emoticons/create" icon="32/ksmiletris" width="32" height="32"}
-		{check_access mode="link" path="acp/emoticons/settings" icon="32/advancedsettings" width="32" height="32"}
-		{check_access mode="input" path="acp/emoticons/delete" icon="32/cancel" lang="system|delete_marked"}
-		<h2>{lang t="system|overview"}</h2>
+	<div id="adm-list" class="navbar">
+		<div class="navbar-inner navbar-text">
+			<h2>{lang t="system|overview"}</h2>
+			{check_access mode="link" path="acp/emoticons/create" icon="32/ksmiletris" width="32" height="32"}
+			{check_access mode="link" path="acp/emoticons/settings" icon="32/advancedsettings" width="32" height="32"}
+			{check_access mode="input" path="acp/emoticons/delete" icon="32/cancel" lang="system|delete_marked"}
+		</div>
 	</div>
 {if isset($redirect_message)}
 {$redirect_message}

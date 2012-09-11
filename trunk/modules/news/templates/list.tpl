@@ -1,17 +1,15 @@
-<div class="dataset-box">
-	<div class="header bigger">
+<div class="navbar navbar-inverse">
+	<div class="navbar-inner">
 {if isset($categories)}
 {if ACP3_Modules::check('newsletter', 'list')}
-		<div class="pull-left">
-			<a href="{uri args="newsletter/list"}">{lang t="newsletter|list"}</a>
+		<div class="navbar-text pull-left">
+			<h5><a href="{uri args="newsletter/list"}">{lang t="newsletter|list"}</a></h5>
 		</div>
 {/if}
-		<div class="align-right">
-			<form action="{uri args="news/list"}" method="post" class="form-inline">
-				{$categories}
-				<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
-			</form>
-		</div>
+		<form action="{uri args="news/list"}" method="post" class="navbar-form pull-right">
+			{$categories}
+			<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
+		</form>
 {/if}
 	</div>
 </div>

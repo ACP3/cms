@@ -1,8 +1,10 @@
 <form action="{uri args="acp/permissions/delete_resources"}" method="post">
-	<div id="adm-list" class="well">
-		{check_access mode="link" path="acp/permissions/create_resource"  icon="32/resource" lang="permissions|create_resource"}
-		{check_access mode="input" path="acp/permissions/delete_resources" icon="32/cancel" lang="system|delete_marked"}
-		<h2>{lang t="system|overview"}</h2>
+	<div id="adm-list" class="navbar">
+		<div class="navbar-inner navbar-text">
+			<h2>{lang t="system|overview"}</h2>
+			{check_access mode="link" path="acp/permissions/create_resource"  icon="32/resource" lang="permissions|create_resource"}
+			{check_access mode="input" path="acp/permissions/delete_resources" icon="32/cancel" lang="system|delete_marked"}
+		</div>
 	</div>
 {if isset($redirect_message)}
 {$redirect_message}

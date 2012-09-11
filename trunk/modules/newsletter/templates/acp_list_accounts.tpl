@@ -1,7 +1,9 @@
 <form action="{uri args="acp/newsletter/delete_account"}" method="post">
-	<div id="adm-list" class="well">
-		{check_access mode="input" path="acp/newsletter/delete_account" icon="32/cancel" lang="system|delete_marked"}
-		<h2>{lang t="newsletter|newsletter_accounts"}</h2>
+	<div id="adm-list" class="navbar">
+		<div class="navbar-inner navbar-text">
+			<h2>{lang t="system|overview"}</h2>
+			{check_access mode="input" path="acp/newsletter/delete_account" icon="32/cancel" lang="system|delete_marked"}
+		</div>
 	</div>
 {if isset($redirect_message)}
 {$redirect_message}
