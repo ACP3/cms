@@ -1,8 +1,10 @@
 {if isset($comments)}
 <form action="{uri args="acp/comments/delete_comments"}" method="post">
-	<div id="adm-list" class="well">
-		{check_access mode="input" path="acp/comments/delete_comments" icon="32/cancel" lang="system|delete_marked"}
-		<h2>{lang t="system|overview"}</h2>
+	<div id="adm-list" class="navbar">
+		<div class="navbar-inner navbar-text">
+			<h2>{lang t="system|overview"}</h2>
+			{check_access mode="input" path="acp/comments/delete_comments" icon="32/cancel" lang="system|delete_marked"}
+		</div>
 	</div>
 {if isset($redirect_message)}
 {$redirect_message}

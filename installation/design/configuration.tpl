@@ -75,7 +75,7 @@
 {foreach $time_zones as $key => $values}
 							<optgroup label="{$key}">
 {foreach $values as $country => $value}
-								<option value="{$country}" style="margin:0 0 0 10px"{$value.selected}>{$country}</option>
+								<option value="{$country}"{$value.selected}>{$country}</option>
 {/foreach}
 							</optgroup>
 {/foreach}

@@ -16,7 +16,7 @@ $mods = array();
 
 foreach ($mod_list as $name => $info) {
 	$dir = $info['dir'];
-	if (ACP3_Modules::check($dir, 'acp_list') === true && $dir !== 'acp' && $dir !== 'system') {
+	if (ACP3_Modules::check($dir, 'acp_list') === true && $dir !== 'acp') {
 		$mods[$name]['name'] = $name;
 		$mods[$name]['dir'] = $dir;
 	}

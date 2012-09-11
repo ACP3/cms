@@ -1,6 +1,8 @@
-<div id="adm-list" class="well">
-	{check_access mode="link" path="users/edit_profile" icon="32/edit_user" width="32" height="32"}
-	{check_access mode="link" path="users/edit_settings" icon="32/advancedsettings" width="32" height="32"}
+<div id="adm-list" class="navbar">
+	<div class="navbar-inner navbar-text">
+		{check_access mode="link" path="users/edit_profile" icon="32/edit_user" width="32" height="32"}
+		{check_access mode="link" path="users/edit_settings" icon="32/advancedsettings" width="32" height="32"}
+	</div>
 </div>
 {if isset($redirect_message)}
 {$redirect_message}

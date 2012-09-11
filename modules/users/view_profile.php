@@ -19,7 +19,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 	$user = ACP3_CMS::$auth->getUserInfo(ACP3_CMS::$uri->id);
 	$user['gender'] = str_replace(array(1, 2, 3), array('-', ACP3_CMS::$lang->t('users', 'female'), ACP3_CMS::$lang->t('users', 'male')), $user['gender']);
 	$user['birthday'] = ACP3_CMS::$date->format($user['birthday'], $user['birthday_format'] == 1 ? 'd.m.Y' : 'd.m');
-	if ((bool) preg_match('=^http(s)?://=', $user['website']) === false)
+	if (!empty($user['website']) && (bool) preg_match('=^http(s)?://=', $user['website']) === false)
 		$user['website'] =  'http://' . $user['website'];
 
 	ACP3_CMS::$view->assign('user', $user);

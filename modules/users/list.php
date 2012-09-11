@@ -19,7 +19,7 @@ if ($c_users > 0) {
 		$pos = strrpos($users[$i]['website'], ':');
 		$users[$i]['website_display'] = substr($users[$i]['website'], $pos + 1);
 		$users[$i]['website'] = substr($users[$i]['website'], 0, $pos);
-		if ((bool) preg_match('=^http(s)?://=', $users[$i]['website']) === false)
+		if (!empty($users[$i]['website']) && (bool) preg_match('=^http(s)?://=', $users[$i]['website']) === false)
 			$users[$i]['website'] =  'http://' . $users[$i]['website'];
 	}
 	ACP3_CMS::$view->assign('users', $users);
