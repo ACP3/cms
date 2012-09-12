@@ -8,11 +8,11 @@
 				<li>
 {foreach $sidebar_poll_answers as $row}
 {if $sidebar_polls.multiple == '1'}
-					<label for="answer-{$row.id}" class="checkbox">
-						<input type="checkbox" name="answer[]" id="answer-{$row.id}" value="{$row.id}">
+					<label for="answer-{$row.id}-sidebar" class="checkbox">
+						<input type="checkbox" name="answer[]" id="answer-{$row.id}-sidebar" value="{$row.id}">
 {else}
-					<label for="answer-{$row.id}" class="radio">
-						<input type="radio" name="answer" id="answer-{$row.id}" value="{$row.id}">
+					<label for="answer-{$row.id}-sidebar" class="radio">
+						<input type="radio" name="answer" id="answer-{$row.id}-sidebar" value="{$row.id}">
 {/if}
 						{$row.text}
 					</label>
