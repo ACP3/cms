@@ -479,13 +479,21 @@ function pagination($rows, $fragment = '')
 				ACP3_SEO::setNextPage($link . 'page_' . ($current_page + 1) . '/');
 		}
 
-		// Wenn mehr als die in $pages_to_display festgelegten Seiten vorhanden sind, nur noch einen bestimmten Teil der Seitenauswahl anzeigen
-		$start = $c_pagination > $pages_to_display && $current_page - $show_previous_next > 0 ? $current_page - $show_previous_next : 1;
-		$end = $c_pagination > $pages_to_display && $start + $pages_to_display - 1 <= $c_pagination ? $start + $pages_to_display - 1 : $c_pagination;
+		$start = 1;
+		$end = $c_pagination;
+		if ($c_pagination > $pages_to_display) {
+			$center = floor($pages_to_display / 2);
+			// Beginn der anzuzeigenden Seitenzahlen
+			if ($current_page - $center > 0)
+				$start = $current_page - $center;
+			// Ende der anzuzeigenden Seitenzahlen
+			if ($start + $pages_to_display - 1 <= $c_pagination)
+				$end = $start + $pages_to_display - 1;
 
-		if ($c_pagination > $pages_to_display &&
-			$end - $start < $pages_to_display && $end - $pages_to_display > 0) {
-			$start = $end - $pages_to_display + 1;
+			// Anzuzeigende Seiten immer auf dem Wert von $pages_to_display halten
+			if ($end - $start < $pages_to_display && $end - $pages_to_display > 0) {
+				$start = $end - $pages_to_display + 1;
+			}
 		}
 
 		// Erste Seite
