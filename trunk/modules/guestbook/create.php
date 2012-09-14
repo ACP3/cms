@@ -76,7 +76,7 @@ if (isset($_POST['submit']) === true) {
 		// E-Mail-Adresse zusenden
 		if ($settings['notify'] == 1 || $settings['notify'] == 2) {
 			$host = 'http://' . htmlentities($_SERVER['HTTP_HOST']);
-			$fullPath = $host . ACP3_CMS::$uri->route('guestbook/list', 1) . '#gb-entry-' . ACP3_CMS::$db2->lastInsertId();
+			$fullPath = $host . ACP3_CMS::$uri->route('guestbook/list') . '#gb-entry-' . ACP3_CMS::$db2->lastInsertId();
 			$body = sprintf($settings['notify'] == 1 ? ACP3_CMS::$lang->t('guestbook', 'notification_email_body_1') : ACP3_CMS::$lang->t('guestbook', 'notification_email_body_2'), $host, $fullPath);
 			generateEmail('', $settings['notify_email'], $settings['notify_email'], ACP3_CMS::$lang->t('guestbook', 'notification_email_subject'), $body);
 		}

@@ -59,7 +59,7 @@ if ($c_news > 0) {
 			$news[$i]['allow_comments'] = true;
 		}
 		if ($settings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
-			$news[$i]['text'] = shortenEntry($news[$i]['text'], $settings['readmore_chars'], 50, '...<a href="' . ACP3_CMS::$uri->route('news/details/id_' . $news[$i]['id'], 1) . '">[' . ACP3_CMS::$lang->t('news', 'readmore') . "]</a>\n");
+			$news[$i]['text'] = shortenEntry($news[$i]['text'], $settings['readmore_chars'], 50, '...<a href="' . ACP3_CMS::$uri->route('news/details/id_' . $news[$i]['id']) . '">[' . ACP3_CMS::$lang->t('news', 'readmore') . "]</a>\n");
 		}
 	}
 	ACP3_CMS::$view->assign('news', $news);
