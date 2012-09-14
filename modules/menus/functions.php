@@ -192,7 +192,7 @@ function processNavbar($block, $use_bootstrap = true, $class = '') {
 				}
 
 				// Link zusammenbauen
-				$href = $items[$i]['mode'] == 1 || $items[$i]['mode'] == 2 || $items[$i]['mode'] == 4 ? ACP3_CMS::$uri->route($items[$i]['uri'], 1) : $items[$i]['uri'];
+				$href = $items[$i]['mode'] == 1 || $items[$i]['mode'] == 2 || $items[$i]['mode'] == 4 ? ACP3_CMS::$uri->route($items[$i]['uri']) : $items[$i]['uri'];
 				$target = $items[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 
 				// Falls für Knoten Kindelemente vorhanden sind, neue Unterliste erstellen

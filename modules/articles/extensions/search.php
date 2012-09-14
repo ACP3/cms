@@ -30,7 +30,7 @@ if ($c_result_pages > 0) {
 	$name =  ACP3_CMS::$lang->t($module_name, $module_name);
 	$results_mods[$name]['dir'] = $module_name;
 	for ($i = 0; $i < $c_result_pages; ++$i) {
-		$results_mods[$name]['results'][$i]['hyperlink'] = ACP3_CMS::$uri->route('articles/list/id_' . $result_pages[$i]['id'], 1);
+		$results_mods[$name]['results'][$i]['hyperlink'] = ACP3_CMS::$uri->route('articles/list/id_' . $result_pages[$i]['id']);
 		$results_mods[$name]['results'][$i]['headline'] = $result_pages[$i]['title'];
 		$results_mods[$name]['results'][$i]['text'] = shortenEntry($result_pages[$i]['text'], 200, 0, '...');
 	}
