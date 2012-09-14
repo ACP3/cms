@@ -176,13 +176,6 @@ class ACP3_CMS {
 		self::$view = new ACP3_View();
 		ACP3_View::factory('Smarty');
 
-		// Einige Template Variablen setzen
-		self::$view->assign('PHP_SELF', PHP_SELF);
-		self::$view->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
-		self::$view->assign('ROOT_DIR', ROOT_DIR);
-		self::$view->assign('DESIGN_PATH', DESIGN_PATH);
-		self::$view->assign('LANG', CONFIG_LANG);
-
 		self::$uri = new ACP3_URI();
 
 		// Klassen initialisieren
@@ -195,6 +188,14 @@ class ACP3_CMS {
 		ACP3_ACL::initialize(self::$auth->getUserId());
 
 		require INCLUDES_DIR . 'functions.php';
+
+		// Einige Template Variablen setzen
+		self::$view->assign('PHP_SELF', PHP_SELF);
+		self::$view->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
+		self::$view->assign('ROOT_DIR', ROOT_DIR);
+		self::$view->assign('DESIGN_PATH', DESIGN_PATH);
+		self::$view->assign('LANG', CONFIG_LANG);
+		self::$view->assign('UA_IS_MOBILE', isMobileBrowser());
 	}
 
 	/**
