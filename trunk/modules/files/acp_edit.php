@@ -69,8 +69,8 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			}
 
 			$update_values = array(
-				'start' => $_POST['start'],
-				'end' => $_POST['end'],
+				'start' => ACP3_CMS::$date->toSQL($_POST['start']),
+				'end' => ACP3_CMS::$date->toSQL($_POST['end']),
 				'category_id' => strlen($_POST['cat_create']) >= 3 ? categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
 				'link_title' => $_POST['link_title'],
 				'text' => $_POST['text'],

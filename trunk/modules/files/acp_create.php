@@ -58,8 +58,8 @@ if (isset($_POST['submit']) === true) {
 
 		$insert_values = array(
 			'id' => '',
-			'start' => $_POST['start'],
-			'end' => $_POST['end'],
+			'start' => ACP3_CMS::$date->toSQL($_POST['start']),
+			'end' => ACP3_CMS::$date->toSQL($_POST['end']),
 			'category_id' => strlen($_POST['cat_create']) >= 3 ? categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
 			'file' => $new_file,
 			'size' => $filesize,

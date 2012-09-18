@@ -33,8 +33,8 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 		} else {
 			$update_values = array(
-				'start' => $_POST['start'],
-				'end' => $_POST['end'],
+				'start' => ACP3_CMS::$date->toSQL($_POST['start']),
+				'end' => ACP3_CMS::$date->toSQL($_POST['end']),
 				'name' => $_POST['name'],
 				'user_id' => ACP3_CMS::$auth->getUserId(),
 			);

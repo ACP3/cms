@@ -36,8 +36,8 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		} else {
 			// Frage aktualisieren
 			$update_values = array(
-				'start' => $_POST['start'],
-				'end' => $_POST['end'],
+				'start' => ACP3_CMS::$date->toSQL($_POST['start']),
+				'end' => ACP3_CMS::$date->toSQL($_POST['end']),
 				'question' => $_POST['question'],
 				'multiple' => isset($_POST['multiple']) ? '1' : '0',
 				'user_id' => ACP3_CMS::$auth->getUserId(),

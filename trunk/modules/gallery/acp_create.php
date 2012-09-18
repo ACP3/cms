@@ -26,8 +26,8 @@ if (isset($_POST['submit']) === true) {
 	} else {
 		$insert_values = array(
 			'id' => '',
-			'start' => $_POST['start'],
-			'end' => $_POST['end'],
+			'start' => ACP3_CMS::$date->toSQL($_POST['start']),
+			'end' => ACP3_CMS::$date->toSQL($_POST['end']),
 			'name' => $_POST['name'],
 			'user_id' => ACP3_CMS::$auth->getUserId(),
 		);

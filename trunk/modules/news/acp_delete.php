@@ -27,7 +27,7 @@ if (!isset($entries)) {
 	foreach ($marked_entries as $entry) {
 		$bool = ACP3_CMS::$db2->delete(DB_PRE . 'news', array('id' => $entry));
 		if ($commentsInstalled === true)
-			ACP3_CMS::$db2->delete(DB_PRE . 'comments', array('module' => 'news', 'entry_id' => $entry));
+			ACP3_CMS::$db2->delete(DB_PRE . 'comments', array('module_id' => 'news', 'entry_id' => $entry));
 		// News Cache löschen
 		ACP3_Cache::delete('details_id_' . $entry, 'news');
 		ACP3_SEO::deleteUriAlias('news/details/id_' . $entry);
