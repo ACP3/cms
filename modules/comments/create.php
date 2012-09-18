@@ -49,7 +49,7 @@ function commentsCreate($module, $entry_id)
 			$mod_id = ACP3_CMS::$db2->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($_POST['module']));
 			$insert_values = array(
 				'id' => '',
-				'date' => ACP3_CMS::$date->timestampToDateTime($time),
+				'date' => ACP3_CMS::$date->getCurrentDateTime(),
 				'ip' => $ip,
 				'name' => ACP3_CMS::$auth->isUser() === true && ACP3_Validate::isNumber(ACP3_CMS::$auth->getUserId() === true) ? '' : $_POST['name'],
 				'user_id' => ACP3_CMS::$auth->isUser() === true && ACP3_Validate::isNumber(ACP3_CMS::$auth->getUserId() === true) ? ACP3_CMS::$auth->getUserId() : '',

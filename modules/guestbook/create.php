@@ -29,7 +29,7 @@ if (isset($_POST['submit']) === true) {
 	$ip = $_SERVER['REMOTE_ADDR'];
 
 	// Flood Sperre
-	$flood = ACP3_CMS::$db2->fetchColumn('SELECT date FROM ' . DB_PRE . 'guestbook WHERE ip = ? ORDER BY id DESC LIMIT 1', array($ip));
+	$flood = ACP3_CMS::$db2->fetchColumn('SELECT MAX(date) FROM ' . DB_PRE . 'guestbook WHERE ip = ?', array($ip));
 	if (!empty($flood)) {
 		$flood_time = ACP3_CMS::$date->timestamp($flood) + CONFIG_FLOOD;
 	}
@@ -60,7 +60,7 @@ if (isset($_POST['submit']) === true) {
 	} else {
 		$insert_values = array(
 			'id' => '',
-			'date' => ACP3_CMS::$date->timestampToDateTime($time),
+			'date' => ACP3_CMS::$date->getCurrentDateTime(),
 			'ip' => $ip,
 			'name' => $_POST['name'],
 			'user_id' => ACP3_CMS::$auth->isUser() ? ACP3_CMS::$auth->getUserId() : '',

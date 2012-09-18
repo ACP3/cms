@@ -168,7 +168,7 @@ class ACP3_CMS {
 		ACP3_Config::getSystemSettings();
 
 		// Standardzeitzone festlegen
-		date_default_timezone_set(CONFIG_DATE_TIME_ZONE);
+		date_default_timezone_set('UTC');
 
 		define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
 		define('DESIGN_PATH_INTERNAL', ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/');

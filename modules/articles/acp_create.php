@@ -50,8 +50,8 @@ if (isset($_POST['submit']) === true) {
 	} else {
 		$insert_values = array(
 			'id' => '',
-			'start' => $_POST['start'],
-			'end' => $_POST['end'],
+			'start' => ACP3_CMS::$date->toSQL($_POST['start']),
+			'end' => ACP3_CMS::$date->toSQL($_POST['end']),
 			'title' => $_POST['title'],
 			'text' => $_POST['text'],
 			'user_id' => ACP3_CMS::$auth->getUserId(),
@@ -71,7 +71,7 @@ if (isset($_POST['submit']) === true) {
 				'block_id' => $_POST['block_id'],
 				'parent_id' => (int) $_POST['parent'],
 				'display' => $_POST['display'],
-				'title' => ACP3_CMS::$db2->quote($_POST['title']),
+				'title' => $_POST['title'],
 				'uri' => 'articles/list/id_' . $last_id . '/',
 				'target' => 1,
 			);
