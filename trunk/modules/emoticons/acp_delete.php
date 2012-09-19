@@ -33,6 +33,7 @@ if (!isset($entries)) {
 			$bool = ACP3_CMS::$db2->delete(DB_PRE . 'emoticons', array('id' => $entry));
 		}
 	}
+
 	setEmoticonsCache();
 
 	setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/emoticons');

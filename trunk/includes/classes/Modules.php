@@ -104,10 +104,10 @@ class ACP3_Modules
 		static $parsed_modules = array();
 
 		if (empty($parsed_modules)) {
-			$filename = 'modules_infos_' . ACP3_CMS::$lang->getLanguage();
-			if (ACP3_Cache::check($filename) === false)
+			$filename = 'infos_' . ACP3_CMS::$lang->getLanguage();
+			if (ACP3_Cache::check($filename, 'modules') === false)
 				self::setModulesCache();
-			$parsed_modules = ACP3_Cache::output($filename);
+			$parsed_modules = ACP3_Cache::output($filename, 'modules');
 		}
 		return !empty($parsed_modules[$module]) ? $parsed_modules[$module] : array();
 	}
@@ -140,6 +140,6 @@ class ACP3_Modules
 				}
 			}
 		}
-		ACP3_Cache::create('modules_infos_' . ACP3_CMS::$lang->getLanguage(), $infos);
+		ACP3_Cache::create('infos_' . ACP3_CMS::$lang->getLanguage(), $infos, 'modules');
 	}
 }

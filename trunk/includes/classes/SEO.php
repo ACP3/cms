@@ -56,7 +56,7 @@ class ACP3_SEO
 			);
 		}
 
-		return ACP3_Cache::create('aliases', $data);
+		return ACP3_Cache::create('aliases', $data, 'seo');
 	}
 	/**
 	 * Gibt den Cache der URI-Aliase aus
@@ -65,10 +65,10 @@ class ACP3_SEO
 	 */
 	private static function getSEOCache()
 	{
-		if (ACP3_Cache::check('aliases') === false)
+		if (ACP3_Cache::check('aliases', 'seo') === false)
 			self::setSEOCache();
 
-		return ACP3_Cache::output('aliases');
+		return ACP3_Cache::output('aliases', 'seo');
 	}
 	/**
 	 * Gibt die für die jeweilige Seite gesetzten Metatags aus
