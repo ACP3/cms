@@ -55,10 +55,10 @@ class ACP3_Config
 	 */
 	public static function getSettings($module)
 	{
-		if (ACP3_Cache::check($module . '_settings') === false)
+		if (ACP3_Cache::check($module, 'settings') === false)
 			self::setModuleCache($module);
 
-		return ACP3_Cache::output($module . '_settings');
+		return ACP3_Cache::output($module, 'settings');
 	}
 	/**
 	 * Setzt den Cache für die Einstellungen eines Moduls
@@ -81,6 +81,6 @@ class ACP3_Config
 				$cache_ary[$settings[$i]['name']] = $settings[$i]['value'];
 		}
 
-		return ACP3_Cache::create($module . '_settings', $cache_ary);
+		return ACP3_Cache::create($module, $cache_ary, 'settings');
 	}
 }

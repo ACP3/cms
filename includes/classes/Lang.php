@@ -80,7 +80,7 @@ class ACP3_Lang
 		
 		$this->cache = array();
 
-		return ACP3_Cache::create('language_' . $this->lang, $data);
+		return ACP3_Cache::create($this->lang, $data, 'lang');
 	}
 
 	/**
@@ -90,11 +90,10 @@ class ACP3_Lang
 	 */
 	private function getLanguageCache()
 	{
-		$filename = 'language_' . $this->lang;
-		if (ACP3_Cache::check($filename) === false)
+		if (ACP3_Cache::check($this->lang, 'lang') === false)
 			$this->setLanguageCache();
 
-		return ACP3_Cache::output($filename);
+		return ACP3_Cache::output($this->lang, 'lang');
 	}
 
 	/**

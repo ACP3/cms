@@ -34,7 +34,7 @@ if (!isset($entries)) {
 				removePicture($row['file']);
 			}
 			// Galerie Cache löschen
-			ACP3_Cache::delete('gallery_pics_id_' . $entry);
+			ACP3_Cache::delete('pics_id_' . $entry, 'gallery');
 			ACP3_SEO::deleteUriAlias('gallery/pics/id_' . $entry);
 			deletePictureAliases($entry);
 
