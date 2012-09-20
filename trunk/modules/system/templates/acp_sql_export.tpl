@@ -9,21 +9,23 @@
 <script type="text/javascript">
 function mark_options(action)
 {
+	var $elem = $('form #tables option');
 	if (action == 'add') {
-		$('form #tables option').attr('selected', 'selected');
+		$elem.attr('selected', true);
 	} else {
-		$('form #tables option').removeAttr('selected');
+		$elem.removeAttr('selected');
 	}
 }
 
 $(function() {
-	$('input[name="export_type"]').click(function() {
-		if (($(this).attr('id') == 'complete' || $(this).attr('id') == 'structure')) {
-			$('#options-container').show();
+	$('input[name="export_type"]').bind('click', function() {
+		var $elem = $('#options-container');
+		if ($(this).attr('id') == 'complete' || $(this).attr('id') == 'structure') {
+			$elem.show();
 		} else {
-			$('#options-container').hide();
+			$elem.hide();
 		}
-	}).click();
+	}).filter(':checked').trigger('click');
 });
 </script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
@@ -37,7 +39,7 @@ $(function() {
 				<div class="control-group">
 					<label for="tables" class="control-label">{lang t="system|sql_tables"}</label>
 					<div class="controls">
-						<select name="tables[]" id="tables" multiple="multiple" style="height:200px">
+						<select name="tables[]" id="tables" multiple="multiple" class="span6" style="height:200px">
 {foreach $tables as $row}
 							<option value="{$row.name}"{$row.selected}>{$row.name}</option>
 {/foreach}

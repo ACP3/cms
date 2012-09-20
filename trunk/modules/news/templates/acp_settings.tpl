@@ -4,14 +4,13 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('input[name="readmore"]').bind('click', function() {
+		var $elem = $('#readmore-container');
 		if ($(this).val() == 1) {
-			$('#readmore-container').show();
+			$elem.show();
 		} else {
-			$('#readmore-container').hide();
+			$elem.hide();
 		}
-	});
-
-	$('input[name="readmore"]:checked').trigger('click');
+	}).filter(':checked').trigger('click');
 });
 </script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">

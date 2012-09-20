@@ -5,6 +5,5 @@ $(document).ready(function() {
 		} else {
 			$('#test-newsletter').hide();
 		}
-	});
-	$('input[name="action"]:checked').trigger('click');
+	}).filter(':checked').trigger('click');
 });
