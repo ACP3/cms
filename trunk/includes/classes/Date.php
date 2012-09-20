@@ -105,14 +105,13 @@ class ACP3_Date {
 			'params' => array(
 				'firstDay' => '\'1\'',
 				'dateFormat' => '\'yy-mm-dd\'',
-				'showOn' => '\'button\'',
-				'buttonImage' => '\'' . ROOT_DIR . CONFIG_ICONS_PATH . '16/cal.png\'',
-				'buttonImageOnly' => 'true',
 				'constrainInput' => 'true',
 				'changeMonth' => 'true',
 				'changeYear' => 'true',
 			)
 		);
+		if ($with_time === true)
+			$datepicker['params']['timeFormat'] = '\'hh:mm\'';
 
 		// Zusätzliche Datepicker-Parameter hinzufügen
 		if (!empty($params) && is_array($params) === true) {
@@ -124,18 +123,26 @@ class ACP3_Date {
 			if (!empty($_POST[$name[0]]) && !empty($_POST[$name[1]])) {
 				$value_start = $_POST[$name[0]];
 				$value_end = $_POST[$name[1]];
+				$value_start_r = $this->format($_POST[$name[0]], 'r', false);
+				$value_end_r = $this->format($_POST[$name[1]], 'r', false);
 			} elseif (is_array($value) === true && ACP3_Validate::date($value[0], $value[1]) === true) {
 				$value_start = $this->format($value[0], $format);
 				$value_end = $this->format($value[1], $format);
+				$value_start_r = $this->format($value[0], 'r');
+				$value_end_r = $this->format($value[1], 'r');
 			} else {
 				$value_start = $this->format('now', $format, false);
 				$value_end = $this->format('now', $format, false);
+				$value_start_r = $this->format('now', 'r', false);
+				$value_end_r = $this->format('now', 'r', false);
 			}
 
 			$datepicker['name_start'] = $name[0];
 			$datepicker['name_end'] = $name[1];
 			$datepicker['value_start'] = $value_start;
+			$datepicker['value_start_r'] = $value_start_r;
 			$datepicker['value_end'] = $value_end;
+			$datepicker['value_end_r'] = $value_end_r;
 		// Einfaches Inputfeld mit Datepicker
 		} else {
 			if (!empty($_POST[$name])) {
