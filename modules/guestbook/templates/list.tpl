@@ -36,7 +36,7 @@ $(document).ready(function() {
 			<a href="{$row.website}" onclick="window.open(this.href); return false" title="{lang t="guestbook|visit_website"}">{icon path="16/gohome" width="16" height="16" alt="`$row.website`"}</a><br>
 {/if}
 {if $row.mail != ''}
-			<a href="mailto:{$row.mail}" title="{lang t="guestbook|send_email"}">{icon path="16/mail" width="16" height="16" alt="`$row.mail`"}</a>
+			{mailto address=$row.mail encode="javascript" text="{icon path="16/mail" width="16" height="16" alt="`$row.mail`"}"}
 {/if}
 		</div>
 		{$row.message}

@@ -15,7 +15,7 @@
 {/if}
 {if $user.mail_display == 1}
 	<dt>{lang t="system|email_address"}</dt>
-	<dd><a href="mailto:{$user.mail}" title="{lang t="users|send_email"}">{$user.mail}</a></dd>
+	<dd>{mailto address=$user.mail encode="javascript"}</a></dd>
 {/if}
 {if !empty($user.icq) && $user.icq_display == 1}
 	<dt>{lang t="users|icq"}</dt>
