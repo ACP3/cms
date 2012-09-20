@@ -4,14 +4,13 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#notify').bind('change', function() {
+		var $elem = $('#notify-email').parents('.control-group');
 		if ($(this).val() == 0) {
-			$('#notify-email').parents('.control-group').hide();
+			$elem.hide();
 		} else {
-			$('#notify-email').parents('.control-group').show();
+			$elem.show();
 		}
-	});
-
-	$('#notify option:selected').trigger('change');
+	}).children('option:selected').trigger('change');
 });
 </script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">

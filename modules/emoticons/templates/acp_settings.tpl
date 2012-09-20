@@ -1,5 +1,5 @@
 {if isset($error_msg)}
-	{$error_msg}
+{$error_msg}
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="control-group">

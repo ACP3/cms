@@ -4,14 +4,13 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('input[name="overlay"]').bind('click', function() {
+		var $elem = $('#comments-container');
 		if ($(this).val() == 1) {
-			$('#comments-container').hide();
+			$elem.hide();
 		} else {
-			$('#comments-container').show();
+			$elem.show();
 		}
-	});
-
-	$('input[name="overlay"]:checked').trigger('click');
+	}).filter(':checked').trigger('click');
 });
 </script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">

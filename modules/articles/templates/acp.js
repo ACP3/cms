@@ -1,13 +1,14 @@
 $(document).ready(function() {
-	$(':checkbox[name="create"]').bind('onload click', function() {
+	$(':checkbox[name="create"]').bind('click', function() {
+		var $elem = $('#create-item-container');
 		if ($(this).is(':checked')) {
-			$('#create-item-container').show();
+			$elem.show();
 		} else {
-			$('#create-item-container').hide();
+			$elem.hide();
 		}
-	}).trigger('onload');
+	}).filter(':checked').trigger('click');
 
-	// Nur die zum Block gehörigen übergeordneten Seiten anzeigen
+	// Nur die zum Block zugehörigen übergeordneten Seiten anzeigen
 	$('#parent optgroup').hide();
 	$('#block-id').change(function() {
 		var block = $('#block-id option:selected').eq(0).text();
