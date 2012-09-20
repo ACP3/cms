@@ -10,6 +10,8 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
+getRedirectMessage();
+
 $settings = ACP3_Config::getSettings('guestbook');
 ACP3_CMS::$view->assign('overlay', $settings['overlay']);
 
