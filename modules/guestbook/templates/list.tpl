@@ -22,6 +22,9 @@ $(document).ready(function() {
 <p class="align-center">
 	<a href="{uri args="guestbook/create"}" id="create-link" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>
 </p>
+{if isset($redirect_message)}
+{$redirect_message}
+{/if}
 {if isset($guestbook)}
 {$pagination}
 {foreach $guestbook as $row}

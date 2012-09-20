@@ -53,6 +53,7 @@ if (isset($_POST['submit']) === true) {
 		if ($_POST['thumbwidth'] !== $settings['thumbwidth'] || $_POST['thumbheight'] !== $settings['thumbheight'] ||
 			$_POST['width'] !== $settings['width'] || $_POST['height'] !== $settings['height']) {
 			ACP3_Cache::purge('images', 'gallery');
+			ACP3_Cache::purge('sql', 'gallery');
 		}
 
 		ACP3_CMS::$session->unsetFormToken();

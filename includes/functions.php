@@ -284,14 +284,18 @@ function getRedirectMessage()
  * @param string $text
  * @param string $path
  */
-function setRedirectMessage($success, $text, $path)
+function setRedirectMessage($success, $text, $path, $overlay = false)
 {
 	if (empty($text) === false && empty($path) === false) {
 		$_SESSION['redirect_message'] = array(
 			'success' => is_int($success) ? true : (bool) $success,
 			'text' => $text
 		);
-		ACP3_CMS::$uri->redirect($path);
+		if ($overlay === true) {
+			ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('system/close_overlay.tpl'));
+		} else {
+			ACP3_CMS::$uri->redirect($path);
+		}
 	}
 }
 /**
