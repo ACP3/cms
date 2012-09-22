@@ -112,10 +112,11 @@ class ACP3_CMS {
 	 */
 	public static function checkForMaintenanceMode()
 	{
-		if (defined('IN_ADM') === false && (bool) CONFIG_MAINTENANCE_MODE === true) {
+		if ((bool) CONFIG_MAINTENANCE_MODE === true &&
+			(defined('IN_ADM') === false && strpos(self::$uri->query,'users/login/') !== 0)) {
 			self::$view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
 			self::$view->assign('CONTENT', CONFIG_MAINTENANCE_MESSAGE);
-			self::$view->displayTemplate('maintenance.tpl');
+			self::$view->displayTemplate('system/maintenance.tpl');
 			exit;
 		}
 	}
@@ -207,7 +208,7 @@ class ACP3_CMS {
 		// Aktuelle Datensatzposition bestimmen
 		define('POS', (int) (ACP3_Validate::isNumber(self::$uri->page) && self::$uri->page >= 1 ? (self::$uri->page - 1) * self::$auth->entries : 0));
 
-		if (self::$auth->isUser() === false && defined('IN_ADM') === true && self::$uri->query !== 'users/login') {
+		if (self::$auth->isUser() === false && defined('IN_ADM') === true && self::$uri->query !== 'users/login/') {
 			$redirect_uri = base64_encode('acp/' . self::$uri->query);
 			self::$uri->redirect('users/login/redirect_' . $redirect_uri);
 		}

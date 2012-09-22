@@ -40,6 +40,7 @@
 		<item key="error_messages">Ausgabe von Fehlermeldungen:</item>
 		<item key="failure">Es sind folgende Fehler aufgetreten:</item>
 		<item key="file_not_found"><![CDATA[Das angeforderte Modul bzw. die angeforderte Datei ist entweder nicht vorhanden oder wurde noch nicht aktiviert.<br />Bitte wenden Sie sich an den Administrator dieser Seite, falls der Fehler wiederholt auftreten sollte.]]></item>
+		<item key="form_change_warning">ACHTUNG: Durch das Wechseln der Sprache gehen alle Formulareingaben verloren!</item>
 		<item key="forward">Weiter</item>
 		<item key="found">Gefunden</item>
 		<item key="gd_library">GD-Grafikbibliothek</item>
