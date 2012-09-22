@@ -58,7 +58,6 @@
 		<item key="maximum_uploadsize">Maximale Uploadgröße:</item>
 		<item key="navigation">Navigation</item>
 		<item key="news_headline">Installation erfolgreich beendet!</item>
-		<item key="news_headline_alias">installation-erfolgreich-beendet</item>
 		<item key="news_text"><![CDATA[So wie es aussieht, hat bei der Installation des ACP3 4.0 alles geklappt.<br />Dies ist nur eine Testnews, die Sie nun im Administrationsbereich bearbeiten oder löschen können.]]></item>
 		<item key="newsletter_mailsig">das Newsletterteam</item>
 		<item key="nickname">Benutzername</item>
@@ -73,9 +72,9 @@
 		<item key="pages_gallery">Fotogalerien</item>
 		<item key="pages_guestbook">Gästebuch</item>
 		<item key="pages_imprint">Impressum</item>
-		<item key="pages_imprint_alias">impressum</item>
 		<item key="pages_main">Hauptnavigation</item>
 		<item key="pages_news">News</item>
+		<item key="pages_newsletter">Newsletter</item>
 		<item key="pages_polls">Umfragen</item>
 		<item key="pages_search">Suche</item>
 		<item key="pages_sidebar">Sidebar</item>

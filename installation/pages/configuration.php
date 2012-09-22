@@ -101,13 +101,20 @@ if (isset($_POST['submit'])) {
 
 			$news_mod_id = ACP3_CMS::$db2->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('news'));
 			$queries = array(
-				'INSERT INTO `{pre}users` VALUES (\'\', 1, ' . ACP3_CMS::$db2->quote($_POST['user_name']) . ', \'' . generateSaltedPassword($salt, $_POST['user_pwd']) . ':' . $salt . '\', \'0\', \':1\', \'1:1\', \':1\', \'1\', \'' . $_POST['mail'] . ':1\', \':1\', \':1\', \':1\', \':1\', ' . ACP3_CMS::$db2->quote($_POST['date_format_long']) . ', ' . ACP3_CMS::$db2->quote($_POST['date_format_short']) . ', \'' . $_POST['date_time_zone'] . '\', \'' . LANG . '\', \'20\', \'\')',
-				'INSERT INTO `{pre}categories` VALUES (\'\', \'' . $lang->t('category_name') . '\', \'\', \'' . $lang->t('category_description') . '\', \'' . $news_mod_id . '\')',
-				'INSERT INTO `{pre}news` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', \'' . $lang->t('news_headline') . '\', \'' . $lang->t('news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\', \'\')',
-				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 1, 0, 1, 2, 1, \'' . $lang->t('pages_news') . '\', \'news\', 1), (\'\', 1, 1, 2, 0, 3, 4, 1, \'' . $lang->t('pages_files') . '\', \'files\', 1), (\'\', 1, 1, 3, 0, 5, 6, 1, \'' . $lang->t('pages_gallery') . '\', \'gallery\', 1), (\'\', 1, 1, 4, 0, 7, 8, 1, \'' . $lang->t('pages_guestbook') . '\', \'guestbook\', 1), (\'\', 1, 1, 5, 0, 9, 10, 1, \'' . $lang->t('pages_polls') . '\', \'polls\', 1), (\'\', 1, 1, 6, 0, 11, 12, 1, \'' . $lang->t('pages_search') . '\', \'search\', 1), (\'\', 1, 2, 7, 0, 13, 14, 1, \'' . $lang->t('pages_contact') . '\', \'contact\', 1), (\'\', 2, 2, 8, 0, 15, 16, 1, \'' . $lang->t('pages_imprint') . '\', \'contact/imprint/\', 1)',
-				'INSERT INTO `{pre}menus` (`id`, `index_name`, `title`) VALUES (1, \'main\', \'' . $lang->t('pages_main') . '\'), (2, \'sidebar\', \'' . $lang->t('pages_sidebar') . '\')',
-				'INSERT INTO `{pre}seo` VALUES (\'news/details/id_1/\', \'' . $lang->t('news_headline_alias') . '\', \'\', \'\', \'1\')',
-				'INSERT INTO `{pre}seo` VALUES (\'contact/imprint/\', \'' . $lang->t('pages_imprint_alias') . '\', \'\', \'\', \'1\')',
+				'INSERT INTO `{pre}users` VALUES (\'\', 1, ' . ACP3_CMS::$db2->quote($_POST['user_name']) . ', \'' . generateSaltedPassword($salt, $_POST['user_pwd']) . ':' . $salt . '\', \'0\', \':1\', \'1:1\', \':1\', \'1\', \'' . $_POST['mail'] . ':1\', \':1\', \':1\', \':1\', \':1\', ' . ACP3_CMS::$db2->quote($_POST['date_format_long']) . ', ' . ACP3_CMS::$db2->quote($_POST['date_format_short']) . ', \'' . $_POST['date_time_zone'] . '\', \'' . LANG . '\', \'20\', \'\');',
+				'INSERT INTO `{pre}categories` VALUES (\'\', \'' . $lang->t('category_name') . '\', \'\', \'' . $lang->t('category_description') . '\', \'' . $news_mod_id . '\');',
+				'INSERT INTO `{pre}news` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', \'' . $lang->t('news_headline') . '\', \'' . $lang->t('news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\', \'\');',
+				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 1, 0, 1, 4, 1, \'' . $lang->t('pages_news') . '\', \'news\', 1);',
+				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 1, 1, 2, 3, 1, \'' . $lang->t('pages_newsletter') . '\', \'newsletter\', 1);',
+				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 3, 0, 5, 6, 1, \'' . $lang->t('pages_files') . '\', \'files\', 1);',
+				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 4, 0, 7, 8, 1, \'' . $lang->t('pages_gallery') . '\', \'gallery\', 1);',
+				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 5, 0, 9, 10, 9, \'' . $lang->t('pages_guestbook') . '\', \'guestbook\', 1);',
+				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 6, 0, 11, 12, 1, \'' . $lang->t('pages_polls') . '\', \'polls\', 1);',
+				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 7, 0, 13, 14, 1, \'' . $lang->t('pages_search') . '\', \'search\', 1);',
+				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 2, 8, 0, 15, 16, 1, \'' . $lang->t('pages_contact') . '\', \'contact\', 1);',
+				'INSERT INTO `{pre}menu_items` VALUES (\'\', 2, 2, 9, 0, 17, 18, 1, \'' . $lang->t('pages_imprint') . '\', \'contact/imprint/\', 1);',
+				'INSERT INTO `{pre}menus` VALUES (1, \'main\', \'' . $lang->t('pages_main') . '\');',
+				'INSERT INTO `{pre}menus` VALUES (2, \'sidebar\', \'' . $lang->t('pages_sidebar') . '\');',
 			);
 
 			if (ACP3_ModuleInstaller::executeSqlQueries($queries) === false) {

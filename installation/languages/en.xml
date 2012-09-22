@@ -58,7 +58,6 @@
 		<item key="maximum_uploadsize">Maximum uploadsize:</item>
 		<item key="navigation">Navigation</item>
 		<item key="news_headline">Installation successfully finished!</item>
-		<item key="news_headline_alias">installation-successfully-finished</item>
 		<item key="news_text"><![CDATA[It looks like that the installation of the ACP3 4.0 was successful.<br />This is just a test news, you can now edit or delete in the administration area.]]></item>
 		<item key="newsletter_mailsig">the Newsletterteam</item>
 		<item key="nickname">User name</item>
@@ -73,9 +72,9 @@
 		<item key="pages_gallery">Galleries</item>
 		<item key="pages_guestbook">Guestbook</item>
 		<item key="pages_imprint">Imprint</item>
-		<item key="pages_imprint_alias">imprint</item>
 		<item key="pages_main">Mainnavigation</item>
 		<item key="pages_news">News</item>
+		<item key="pages_newsletter">Newsletter</item>
 		<item key="pages_polls">Polls</item>
 		<item key="pages_search">Search</item>
 		<item key="pages_sidebar">Sidebar</item>
