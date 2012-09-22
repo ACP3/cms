@@ -11,10 +11,24 @@
 <script type="text/javascript" src="{$ROOT_DIR}libraries/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function($) {
+	if ($('#config-form').length > 0) {
+		$('#config-form').data('changed', false);
+		$('#config-form input, #config-form select').change(function() {
+			$('#config-form').data('changed', true);
+		});
+	}
+
 	// Sprachdropdown
 	$('#languages :submit').hide();
 	$('#lang').change(function() {
-		$('#languages').submit();
+		var reload = true;
+		if ($('#config-form').length > 0 &&
+			$('#config-form').data('changed') == true) {
+			reload = confirm({lang t="language_change_warning"});
+		}
+		
+		if (reload == true)
+			$('#languages').submit();
 	});
 });
 </script>

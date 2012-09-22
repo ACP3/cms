@@ -1,7 +1,7 @@
 {if isset($error_msg)}
 {$error_msg}
 {/if}
-<form action="{uri args="install/configuration"}" method="post" accept-charset="UTF-8" class="form-horizontal">
+<form action="{uri args="install/configuration"}" method="post" accept-charset="UTF-8" class="form-horizontal" id="config-form">
 	<div class="tabbable">
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#tabs-1" data-toggle="tab">{lang t="db_connection_settings"}</a></li>

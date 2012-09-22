@@ -41,6 +41,7 @@
 		<item key="failure">The following errors have occured:</item>
 		<item key="file_not_found"><![CDATA[The requested module or the requested file is either missing or has not been activated.<br />Please contact the administrator of this site, if the error should occur repeatedly.]]></item>
 		<item key="forward">Forward</item>
+		<item key="form_change_warning">ATTENTION: By changing the language you will lose all form changes!</item>
 		<item key="found">Found</item>
 		<item key="gd_library">GD library</item>
 		<item key="go_to_website">Go to the website</item>
