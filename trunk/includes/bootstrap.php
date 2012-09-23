@@ -224,6 +224,7 @@ class ACP3_CMS {
 
 					if (self::$view->getLayout() !== '') {
 						self::$view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
+						self::$view->assign('HEAD_TITLE', self::$breadcrumb->output(3));
 						self::$view->assign('TITLE', self::$breadcrumb->output(2));
 						self::$view->assign('BREADCRUMB', self::$breadcrumb->output());
 						self::$view->assign('META', ACP3_SEO::getMetaTags());

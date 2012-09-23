@@ -206,6 +206,7 @@
 	<item key="output_as_text">Als Text</item>
 	<item key="output_as_file">Als Datei</item>
 	<item key="overview">Übersicht</item>
+	<item key="page_x">Seite %d</item>
 	<item key="pagination">Seitenauswahl</item>
 	<item key="path_to_icons">Pfad zum Icons Ordner</item>
 	<item key="performance">Leistung</item>

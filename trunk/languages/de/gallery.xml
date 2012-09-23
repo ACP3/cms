@@ -29,6 +29,7 @@
 	<item key="picture">Bild</item>
 	<item key="picture_index">Bildübersicht</item>
 	<item key="picture_information">Bild Informationen</item>
+	<item key="picture_x">Bild %d</item>
 	<item key="pictures">Bilder</item>
 	<item key="previous_image">Vorheriges Bild</item>
 	<item key="select_allow_comments">Bitte wählen Sie aus, ob Kommentare unter Bildern zugelassen werden sollen oder nicht.</item>

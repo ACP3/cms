@@ -250,10 +250,10 @@ class ACP3_SEO
 
 		// Vorhandenen Alias aktualisieren
 		if (ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE uri = ?', array($path)) == 1) {
-			$bool = ACP3_CMS::$db2->update(DB_PRE . 'seo', array('alias' => $alias, 'keywords' => $keywords, 'description' => $description, 'robots' => $robots), array('uri' => ACP3_CMS::$db2->quote($path)));
+			$bool = ACP3_CMS::$db2->update(DB_PRE . 'seo', array('alias' => $alias, 'keywords' => $keywords, 'description' => $description, 'robots' => $robots), array('uri' => $path));
 		// Neuer Eintrag in DB
 		} else {
-			$bool = ACP3_CMS::$db2->insert(DB_PRE . 'seo', array('alias' => $alias, 'uri' => ACP3_CMS::$db2->quote($path), 'keywords' => $keywords, 'description' => $description, 'robots' => $robots));
+			$bool = ACP3_CMS::$db2->insert(DB_PRE . 'seo', array('alias' => $alias, 'uri' => $path, 'keywords' => $keywords, 'description' => $description, 'robots' => $robots));
 		}
 
 		$bool2 = self::setSEOCache();

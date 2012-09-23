@@ -21,7 +21,9 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 	ACP3_CMS::$breadcrumb
 	->append(ACP3_CMS::$lang->t('gallery', 'gallery'), ACP3_CMS::$uri->route('gallery'))
 	->append($picture['name'], ACP3_CMS::$uri->route('gallery/pics/id_' . $picture['gallery_id']))
-	->append(ACP3_CMS::$lang->t('gallery', 'details'));
+	->append(ACP3_CMS::$lang->t('gallery', 'details'))
+	->setTitlePrefix($picture['name'])
+	->setTitlePostfix(sprintf(ACP3_CMS::$lang->t('gallery', 'picture_x'), $picture['pic']));
 
 	// Bildabmessungen berechnen
 	$picInfos = getimagesize(UPLOADS_DIR . 'gallery/' . $picture['file']);
