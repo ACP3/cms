@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{$LANG}">
 <head>
-<title>{$PAGE_TITLE} :: {$TITLE}</title>
+<title>{$HEAD_TITLE}</title>
 {$META}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="{$MIN_STYLESHEET}">

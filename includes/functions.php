@@ -468,6 +468,11 @@ function pagination($rows, $fragment = '')
 
 		// Seitenauswahl
 		$current_page = ACP3_Validate::isNumber(ACP3_CMS::$uri->page) ? (int) ACP3_CMS::$uri->page : 1;
+
+		if ($current_page > 1) {
+			$postfix = sprintf(ACP3_CMS::$lang->t('system', 'page_x'), $current_page);
+			ACP3_CMS::$breadcrumb->setTitlePostfix($postfix);
+		}
 		$pagination = array();
 		$c_pagination = (int) ceil($rows / ACP3_CMS::$auth->entries);
 		$show_first_last = 5;

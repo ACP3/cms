@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Breadcrumbs
  *
@@ -14,8 +15,8 @@
  * @package ACP3
  * @subpackage Core
  */
-class ACP3_Breadcrumb
-{
+class ACP3_Breadcrumb {
+
 	/**
 	 * Enthält alle Schritte der Brotkrümelspur
 	 *
@@ -24,13 +25,18 @@ class ACP3_Breadcrumb
 	 */
 	private $steps = array();
 
+	/**
+	 *
+	 * @var array
+	 */
+	private $title = array('separator' => '-', 'prefix' => '', 'postfix' => '');
+
 	public function __construct()
 	{
 		// Frontendbereich
 		if (defined('IN_ADM') === false) {
 			$in = array(ACP3_CMS::$uri->query, ACP3_CMS::$uri->getCleanQuery(), ACP3_CMS::$uri->mod . '/' . ACP3_CMS::$uri->file . '/', ACP3_CMS::$uri->mod);
-			$pages = ACP3_CMS::$db2->executeQuery('SELECT p.title, p.uri, p.left_id, p.right_id FROM ' . DB_PRE . 'menu_items AS c, ' . DB_PRE . 'menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) ORDER BY p.left_id DESC',
-					array($in), array(\Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetchAll();
+			$pages = ACP3_CMS::$db2->executeQuery('SELECT p.title, p.uri, p.left_id, p.right_id FROM ' . DB_PRE . 'menu_items AS c, ' . DB_PRE . 'menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) ORDER BY p.left_id DESC', array($in), array(\Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetchAll();
 			$c_pages = count($pages);
 
 			// Dynamische Seite (ACP3 intern)
@@ -43,6 +49,40 @@ class ACP3_Breadcrumb
 			}
 		}
 	}
+
+	/**
+	 * 
+	 * @param string $value
+	 */
+	public function setTitleSeparator($value)
+	{
+		$this->title['separator'] = $value;
+
+		return $this;
+	}
+
+	/**
+	 * 
+	 * @param string $value
+	 */
+	public function setTitlePrefix($value)
+	{
+		$this->title['prefix'] = $value;
+
+		return $this;
+	}
+
+	/**
+	 * 
+	 * @param string $value
+	 */
+	public function setTitlePostfix($value)
+	{
+		$this->title['postfix'] = $value;
+
+		return $this;
+	}
+
 	/**
 	 * Zuweisung der jeweiligen Stufen zur Brotkrümelspur
 	 *
@@ -69,6 +109,7 @@ class ACP3_Breadcrumb
 
 		return $this;
 	}
+
 	/**
 	 * Fügt Brotkrumen an den Anfang an
 	 *
@@ -91,6 +132,7 @@ class ACP3_Breadcrumb
 
 		return $this;
 	}
+
 	/**
 	 * Ersetzt die aktuell letzte Brotkrume mit neuen Werten
 	 * 
@@ -109,13 +151,14 @@ class ACP3_Breadcrumb
 
 		return $this;
 	}
+
 	/**
 	 * Sucht nach bereits vorhandenen Brotkrumen, damit keine Dopplungen auftreten
 	 *
 	 * @param string $title
-	 *	Der zu überprüfende Seitentitel
+	 * 	Der zu überprüfende Seitentitel
 	 * @param string $path
-	 *	Die zu überprüfende ACP3-interne URI
+	 * 	Die zu überprüfende ACP3-interne URI
 	 * @return boolean 
 	 */
 	private function searchForDuplicates($title, $path)
@@ -128,6 +171,7 @@ class ACP3_Breadcrumb
 		}
 		return false;
 	}
+
 	/**
 	 * Gibt je nach Modus entweder die Brotkrümelspur oder den Seitentitel aus
 	 *
@@ -174,7 +218,17 @@ class ACP3_Breadcrumb
 		// Nur Titel ausgeben
 		} else {
 			// Letzter Eintrag der Brotkrümelspur ist der Seitentitel
-			return $this->steps[count($this->steps) - 1]['title'];
+			$title = $this->steps[count($this->steps) - 1]['title'];
+			if ($mode === 3) {
+				$separator = ' ' . $this->title['separator'] . ' ';
+				if (!empty($this->title['prefix']))
+					$title = $this->title['prefix'] . $separator . $title;
+				if (!empty($this->title['postfix']))
+					$title.= $separator . $this->title['postfix'];
+				$title.= $separator . CONFIG_SEO_TITLE;
+			}
+			return $title;
 		}
 	}
+
 }
