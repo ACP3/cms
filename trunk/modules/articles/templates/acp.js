@@ -1,12 +1,12 @@
 $(document).ready(function() {
-	$(':checkbox[name="create"]').bind('click', function() {
+	$(':checkbox[name="create"]').bind('onload click', function() {
 		var $elem = $('#create-item-container');
 		if ($(this).is(':checked')) {
 			$elem.show();
 		} else {
 			$elem.hide();
 		}
-	}).filter(':checked').trigger('click');
+	}).trigger('onload');
 
 	// Nur die zum Block zugehörigen übergeordneten Seiten anzeigen
 	$('#parent optgroup').hide();

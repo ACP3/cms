@@ -1,4 +1,4 @@
-<div id="toc">
+<div id="toc" class="well well-small">
 	<h4>{lang t="system|table_of_contents"}</h4>
 	<ul>
 {foreach $toc as $row}

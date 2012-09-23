@@ -189,8 +189,13 @@ function generateTOC(array $pages, $path)
 			$attributes = getHtmlAttributes($page);
 			$page_num = $i + 1;
 			$toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf(ACP3_CMS::$lang->t('system', 'toc_page'), $page_num);
-			$toc[$i]['uri'] = ACP3_CMS::$uri->route($path, 1) . 'page_' . $page_num . '/';
-			$toc[$i]['selected'] = (ACP3_Validate::isNumber(ACP3_CMS::$uri->page) === false && $i === 0) || ACP3_CMS::$uri->page === $page_num ? true : false;
+			$toc[$i]['uri'] = ACP3_CMS::$uri->route($path, 1) . ($page_num > 1 ? 'page_' . $page_num . '/' : '');
+			$toc[$i]['selected'] = false;
+			if ((ACP3_Validate::isNumber(ACP3_CMS::$uri->page) === false && $i === 0) || ACP3_CMS::$uri->page === $page_num) {
+				$toc[$i]['selected'] = true;
+				if ($page_num !== 1)
+					ACP3_CMS::$breadcrumb->setTitlePostfix($toc[$i]['title']);
+			}
 			++$i;
 		}
 		ACP3_CMS::$view->assign('toc', $toc);

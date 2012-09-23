@@ -90,13 +90,10 @@ table .sub-table-header span, table .sub-table-header div {
 #toc {
 	width: 20%;
 	margin: 5px 10px 10px 0;
-	padding: 5px;
-	background: #eee;
-	border: 1px dotted #ccc;
 	float: left;
 }
 #toc h4 {
-	text-align: center;
+	margin: 0;
 }
 #page-break-link {
 	margin: 5px;
