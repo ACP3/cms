@@ -108,7 +108,7 @@ if (isset($_POST['submit'])) {
 				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 1, 1, 2, 3, 1, \'' . $lang->t('pages_newsletter') . '\', \'newsletter\', 1);',
 				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 3, 0, 5, 6, 1, \'' . $lang->t('pages_files') . '\', \'files\', 1);',
 				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 4, 0, 7, 8, 1, \'' . $lang->t('pages_gallery') . '\', \'gallery\', 1);',
-				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 5, 0, 9, 10, 9, \'' . $lang->t('pages_guestbook') . '\', \'guestbook\', 1);',
+				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 5, 0, 9, 10, 1, \'' . $lang->t('pages_guestbook') . '\', \'guestbook\', 1);',
 				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 6, 0, 11, 12, 1, \'' . $lang->t('pages_polls') . '\', \'polls\', 1);',
 				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 7, 0, 13, 14, 1, \'' . $lang->t('pages_search') . '\', \'search\', 1);',
 				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 2, 8, 0, 15, 16, 1, \'' . $lang->t('pages_contact') . '\', \'contact\', 1);',
