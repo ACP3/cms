@@ -27,6 +27,7 @@ if (isset($_POST['submit']) === true) {
 		->append(ACP3_CMS::$lang->t('search', 'search'), ACP3_CMS::$uri->route('search'))
 		->append(ACP3_CMS::$lang->t('search', 'search_results'));
 
+		$_POST['search_term'] = str_encode($_POST['search_term']);
 		$_POST['sort'] = strtoupper($_POST['sort']);
 		$results = array();
 		foreach ($_POST['mods'] as $module) {
