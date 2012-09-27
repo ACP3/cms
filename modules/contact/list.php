@@ -28,6 +28,7 @@ if (isset($_POST['submit']) === true) {
 		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
 		$settings = ACP3_Config::getSettings('contact');
+		$_POST['message'] = str_encode($_POST['message'], true);
 
 		$subject = sprintf(ACP3_CMS::$lang->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
 		$body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($_POST['name'], $_POST['mail'], $_POST['message'], "\n"), ACP3_CMS::$lang->t('contact', 'contact_body'));
