@@ -20,11 +20,11 @@ if (isset($_POST['submit']) === true) {
 		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
 		$data = array(
-			'address' => $_POST['address'],
+			'address' => str_encode($_POST['address'], true),
 			'mail' => $_POST['mail'],
-			'telephone' => $_POST['telephone'],
-			'fax' => $_POST['fax'],
-			'disclaimer' => $_POST['disclaimer'],
+			'telephone' => str_encode($_POST['telephone']),
+			'fax' => str_encode($_POST['fax']),
+			'disclaimer' => str_encode($_POST['disclaimer'], true),
 		);
 
 		$bool = ACP3_Config::setSettings('contact', $data);

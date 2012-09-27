@@ -15,7 +15,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 	$settings = ACP3_Config::getSettings('newsletter');
 	$newsletter = ACP3_CMS::$db2->fetchAssoc('SELECT subject, text FROM ' . DB_PRE . 'newsletter_archive WHERE id = ?', array(ACP3_CMS::$uri->id));
 
-	$subject = $newsletter['subject'];
+	$subject = html_entity_decode($newsletter['subject'], ENT_QUOTES, 'UTF-8');
 	$body = html_entity_decode($newsletter['text'] . "\n-- \n" . $settings['mailsig'], ENT_QUOTES, 'UTF-8');
 
 	require_once MODULES_DIR . 'newsletter/functions.php';

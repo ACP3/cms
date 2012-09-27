@@ -33,8 +33,8 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			$update_values = array(
 				'start' => ACP3_CMS::$date->toSQL($_POST['start']),
 				'end' => ACP3_CMS::$date->toSQL($_POST['end']),
-				'title' => $_POST['title'],
-				'text' => $_POST['text'],
+				'title' => str_encode($_POST['title']),
+				'text' => str_encode($_POST['text'], true),
 				'user_id' => ACP3_CMS::$auth->getUserId(),
 			);
 

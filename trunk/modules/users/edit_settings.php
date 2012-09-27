@@ -36,8 +36,8 @@ if (ACP3_CMS::$auth->isUser() === false || ACP3_Validate::isNumber(ACP3_CMS::$au
 			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 		} else {
 			$update_values = array(
-				'date_format_long' => $_POST['date_format_long'],
-				'date_format_short' => $_POST['date_format_short'],
+				'date_format_long' => str_encode($_POST['date_format_long']),
+				'date_format_short' => str_encode($_POST['date_format_short']),
 				'time_zone' => $_POST['date_time_zone'],
 			);
 			if ($settings['language_override'] == 1)

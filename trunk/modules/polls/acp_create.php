@@ -32,7 +32,7 @@ if (isset($_POST['submit']) === true) {
 			'id' => '',
 			'start' => ACP3_CMS::$date->toSQL($_POST['start']),
 			'end' => ACP3_CMS::$date->toSQL($_POST['end']),
-			'question' => $_POST['question'],
+			'question' => str_encode($_POST['question']),
 			'multiple' => isset($_POST['multiple']) ? '1' : '0',
 			'user_id' => ACP3_CMS::$auth->getUserId(),
 		);
@@ -46,7 +46,7 @@ if (isset($_POST['submit']) === true) {
 				if (!empty($row)) {
 					$insert_answer = array(
 						'id' => '',
-						'text' => $row,
+						'text' => str_encode($row),
 						'poll_id' => $poll_id,
 					);
 					$bool2 = ACP3_CMS::$db2->insert(DB_PRE . 'poll_answers', $insert_answer);

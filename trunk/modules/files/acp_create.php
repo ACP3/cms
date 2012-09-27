@@ -63,8 +63,8 @@ if (isset($_POST['submit']) === true) {
 			'category_id' => strlen($_POST['cat_create']) >= 3 ? categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
 			'file' => $new_file,
 			'size' => $filesize,
-			'link_title' => $_POST['link_title'],
-			'text' => $_POST['text'],
+			'link_title' => str_encode($_POST['link_title']),
+			'text' => str_encode($_POST['text'], true),
 			'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
 			'user_id' => ACP3_CMS::$auth->getUserId(),
 		);

@@ -48,8 +48,8 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			}
 
 			$update_values = array(
-				'name' => $_POST['name'],
-				'description' => $_POST['description'],
+				'name' => str_encode($_POST['name']),
+				'description' => str_encode($_POST['description']),
 			);
 			if (is_array($new_file_sql) === true) {
 				$old_file = ACP3_CMS::$db2->fetchColumn('SELECT picture FROM ' . DB_PRE . 'categories WEHRE id = ?', array(ACP3_CMS::$uri->id));

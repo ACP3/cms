@@ -38,7 +38,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			$update_values = array(
 				'start' => ACP3_CMS::$date->toSQL($_POST['start']),
 				'end' => ACP3_CMS::$date->toSQL($_POST['end']),
-				'question' => $_POST['question'],
+				'question' => str_encode($_POST['question']),
 				'multiple' => isset($_POST['multiple']) ? '1' : '0',
 				'user_id' => ACP3_CMS::$auth->getUserId(),
 			);
@@ -55,7 +55,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 				if (empty($row['id'])) {
 					// Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
 					if (!empty($row['value']) && !isset($row['delete']))
-						ACP3_CMS::$db2->insert(DB_PRE . 'poll_answers', array('text' => $row['value'], 'poll_id' => ACP3_CMS::$uri->id));
+						ACP3_CMS::$db2->insert(DB_PRE . 'poll_answers', array('text' => str_encode($row['value']), 'poll_id' => ACP3_CMS::$uri->id));
 				// Antwort mitsamt Stimmen löschen
 				} elseif (isset($row['delete']) && ACP3_Validate::isNumber($row['id'])) {
 					ACP3_CMS::$db2->delete(DB_PRE . 'poll_answers', array('id' => $row['id']));
@@ -63,7 +63,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 						ACP3_CMS::$db2->delete(DB_PRE . 'poll_votes', array('answer_id' => $row['id']));
 				// Antwort aktualisieren
 				} elseif (!empty($row['value']) && ACP3_Validate::isNumber($row['id'])) {
-					$bool = ACP3_CMS::$db2->update(DB_PRE . 'poll_answers', array('text' => $row['value']), array('id' => $row['id']));
+					$bool = ACP3_CMS::$db2->update(DB_PRE . 'poll_answers', array('text' => str_encode($row['value'])), array('id' => $row['id']));
 				}
 			}
 

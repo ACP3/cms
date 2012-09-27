@@ -49,8 +49,8 @@ if (isset($_POST['submit']) === true) {
 		$mod_id = ACP3_CMS::$db2->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($_POST['module']));
 		$insert_values = array(
 			'id' => '',
-			'name' => $_POST['name'],
-			'description' => $_POST['description'],
+			'name' => str_encode($_POST['name']),
+			'description' => str_encode($_POST['description']),
 			'module_id' => $mod_id,
 		);
 		if (is_array($file_sql) === true) {

@@ -28,7 +28,7 @@ if (isset($_POST['submit']) === true) {
 			'id' => '',
 			'start' => ACP3_CMS::$date->toSQL($_POST['start']),
 			'end' => ACP3_CMS::$date->toSQL($_POST['end']),
-			'name' => $_POST['name'],
+			'name' => str_encode($_POST['name']),
 			'user_id' => ACP3_CMS::$auth->getUserId(),
 		);
 

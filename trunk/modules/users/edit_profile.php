@@ -46,13 +46,13 @@ if (ACP3_CMS::$auth->isUser() === false || ACP3_Validate::isNumber(ACP3_CMS::$au
 			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 		} else {
 			$update_values = array(
-				'nickname' => $_POST['nickname'],
-				'realname' => $_POST['realname'] . ':' . (isset($_POST['realname_display']) ? '1' : '0'),
+				'nickname' => str_encode($_POST['nickname']),
+				'realname' => str_encode($_POST['realname']) . ':' . (isset($_POST['realname_display']) ? '1' : '0'),
 				'gender' => $_POST['gender'] . ':' . (isset($_POST['gender_display']) ? '1' : '0'),
 				'birthday' => $_POST['birthday'] . ':' . (isset($_POST['birthday_display']) ? '1' : '0'),
 				'birthday_format' => $_POST['birthday_format'],
 				'mail' => $_POST['mail'] . ':' . (isset($_POST['mail_display']) ? '1' : '0'),
-				'website' => $_POST['website'] . ':' . (isset($_POST['website_display']) ? '1' : '0'),
+				'website' => str_encode($_POST['website']) . ':' . (isset($_POST['website_display']) ? '1' : '0'),
 				'icq' => $_POST['icq'] . ':' . (isset($_POST['icq_display']) ? '1' : '0'),
 				'msn' => $_POST['msn'] . ':' . (isset($_POST['msn_display']) ? '1' : '0'),
 				'skype' => $_POST['skype'] . ':' . (isset($_POST['skype_display']) ? '1' : '0'),

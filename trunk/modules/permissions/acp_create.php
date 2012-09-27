@@ -29,7 +29,7 @@ if (isset($_POST['submit']) === true) {
 
 		$insert_values = array(
 			'id' => '',
-			'name' => $_POST['name'],
+			'name' => str_encode($_POST['name']),
 			'parent_id' => $_POST['parent'],
 		);
 

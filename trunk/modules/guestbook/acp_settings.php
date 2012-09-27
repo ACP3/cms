@@ -33,7 +33,7 @@ if (isset($_POST['submit']) === true) {
 		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
 		$data = array(
-			'dateformat' => $_POST['dateformat'],
+			'dateformat' => str_encode($_POST['dateformat']),
 			'notify' => $_POST['notify'],
 			'notify_email' => $_POST['notify_email'],
 			'overlay' => $_POST['overlay'],

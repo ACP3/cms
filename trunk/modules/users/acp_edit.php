@@ -47,12 +47,12 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		} else {
 			$update_values = array(
 				'super_user' => (int) $_POST['super_user'],
-				'nickname' => $_POST['nickname'],
-				'realname' => $_POST['realname'] . ':' . $user['realname_display'],
+				'nickname' => str_encode($_POST['nickname']),
+				'realname' => str_encode($_POST['realname']) . ':' . $user['realname_display'],
 				'mail' => $_POST['mail'] . ':' . $user['mail_display'],
-				'website' => $_POST['website'] . ':' . $user['website_display'],
-				'date_format_long' => $_POST['date_format_long'],
-				'date_format_short' => $_POST['date_format_short'],
+				'website' => str_encode($_POST['website']) . ':' . $user['website_display'],
+				'date_format_long' => str_encode($_POST['date_format_long']),
+				'date_format_short' => str_encode($_POST['date_format_short']),
 				'time_zone' => $_POST['date_time_zone'],
 				'language' => $_POST['language'],
 				'entries' => (int) $_POST['entries'],

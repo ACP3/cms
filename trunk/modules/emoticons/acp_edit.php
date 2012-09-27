@@ -43,8 +43,8 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			}
 
 			$update_values = array(
-				'code' => $_POST['code'],
-				'description' => $_POST['description'],
+				'code' => str_encode($_POST['code']),
+				'description' => str_encode($_POST['description']),
 			);
 			if (is_array($new_file_sql) === true) {
 				$old_file = ACP3_CMS::$db2->fetchColumn('SELECT img FROM emoticons WHERE id = ?', array(ACP3_CMS::$uri->id));

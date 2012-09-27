@@ -63,8 +63,8 @@ if (isset($_POST['submit']) === true) {
 		$config = array(
 			'cache_images' => (int) $_POST['cache_images'],
 			'cache_minify' => (int) $_POST['cache_minify'],
-			'date_format_long' => $_POST['date_format_long'],
-			'date_format_short' => $_POST['date_format_short'],
+			'date_format_long' => str_encode($_POST['date_format_long']),
+			'date_format_short' => str_encode($_POST['date_format_short']),
 			'date_time_zone' => $_POST['date_time_zone'],
 			'entries' => (int) $_POST['entries'],
 			'extra_css' => $_POST['extra_css'],
@@ -82,11 +82,11 @@ if (isset($_POST['submit']) === true) {
 			'maintenance_message' => $_POST['maintenance_message'],
 			'maintenance_mode' => (int) $_POST['maintenance_mode'],
 			'seo_aliases' => (int) $_POST['seo_aliases'],
-			'seo_meta_description' => $_POST['seo_meta_description'],
-			'seo_meta_keywords' => $_POST['seo_meta_keywords'],
+			'seo_meta_description' => str_encode($_POST['seo_meta_description']),
+			'seo_meta_keywords' => str_encode($_POST['seo_meta_keywords']),
 			'seo_mod_rewrite' => (int) $_POST['seo_mod_rewrite'],
 			'seo_robots' => (int) $_POST['seo_robots'],
-			'seo_title' => $_POST['seo_title'],
+			'seo_title' => str_encode($_POST['seo_title']),
 			'wysiwyg' => $_POST['wysiwyg']
 		);
 
