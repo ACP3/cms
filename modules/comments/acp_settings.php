@@ -24,7 +24,7 @@ if (isset($_POST['submit']) === true) {
 		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
 		$data = array(
-			'dateformat' => $_POST['dateformat'],
+			'dateformat' => str_encode($_POST['dateformat']),
 			'emoticons' => $_POST['emoticons'],
 		);
 		$bool = ACP3_Config::setSettings('comments', $data);

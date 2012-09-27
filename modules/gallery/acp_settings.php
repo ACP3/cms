@@ -35,17 +35,17 @@ if (isset($_POST['submit']) === true) {
 		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
 		$data = array(
-			'width' => $_POST['width'],
-			'height' => $_POST['height'],
-			'thumbwidth' => $_POST['thumbwidth'],
-			'thumbheight' => $_POST['thumbheight'],
-			'maxwidth' => $_POST['maxwidth'],
-			'maxheight' => $_POST['maxheight'],
-			'filesize' => $_POST['filesize'],
+			'width' => (int) $_POST['width'],
+			'height' => (int) $_POST['height'],
+			'thumbwidth' => (int) $_POST['thumbwidth'],
+			'thumbheight' => (int) $_POST['thumbheight'],
+			'maxwidth' => (int) $_POST['maxwidth'],
+			'maxheight' => (int) $_POST['maxheight'],
+			'filesize' => (int) $_POST['filesize'],
 			'overlay' => $_POST['overlay'],
 			'comments' => $_POST['comments'],
-			'dateformat' => 'long',
-			'sidebar' => $_POST['sidebar'],
+			'dateformat' => str_encode($_POST['dateformat']),
+			'sidebar' => (int) $_POST['sidebar'],
 		);
 		$bool = ACP3_Config::setSettings('gallery', $data);
 

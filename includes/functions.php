@@ -696,3 +696,15 @@ function shortenEntry($data, $chars = 300, $diff = 50, $append = '')
 	}
 	return $data;
 }
+/**
+ * Enkodiert alle HTML-Entitäten eines Strings
+ * zur Vermeidung von XSS
+ *
+ * @param string $var
+ * @return string
+ */
+function str_encode($var, $script_tag_only = false)
+{
+	$var = preg_replace('/<script.*>.*<\/script>/isU', '', $var);
+	return $script_tag_only === true ? $var : htmlentities($var, ENT_QUOTES, 'UTF-8');
+}

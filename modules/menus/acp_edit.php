@@ -29,7 +29,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		} else {
 			$update_values = array(
 				'index_name' => $_POST['index_name'],
-				'title' => $_POST['title'],
+				'title' => str_encode($_POST['title']),
 			);
 
 			$bool = ACP3_CMS::$db2->update(DB_PRE . 'menus', $update_values, array('id' => ACP3_CMS::$uri->id));

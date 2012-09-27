@@ -32,10 +32,10 @@ if (isset($_POST['submit']) === true) {
 		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
 		$data = array(
-			'dateformat' => $_POST['dateformat'],
-			'sidebar' => $_POST['sidebar'],
+			'dateformat' => str_encode($_POST['dateformat']),
+			'sidebar' => (int) $_POST['sidebar'],
 			'readmore' => $_POST['readmore'],
-			'readmore_chars' => $_POST['readmore_chars'],
+			'readmore_chars' => (int) $_POST['readmore_chars'],
 			'category_in_breadcrumb' => $_POST['category_in_breadcrumb'],
 			'comments' => $_POST['comments'],
 		);

@@ -46,7 +46,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			}
 
 			$update_values = array(
-				'description' => $_POST['description'],
+				'description' => str_encode($_POST['description'], true),
 				'comments' => $settings['comments'] == 1 && isset($_POST['comments']) && $_POST['comments'] == 1 ? 1 : 0,
 			);
 			if (is_array($new_file_sql) === true) {

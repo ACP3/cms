@@ -28,7 +28,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 		} else {
 			$update_values = array(
-				'name' => $_POST['name'],
+				'name' => str_encode($_POST['name']),
 				'parent_id' => ACP3_CMS::$uri->id == 1 ? 0 : $_POST['parent'],
 			);
 			$nestedSet = new ACP3_NestedSet('acl_roles');

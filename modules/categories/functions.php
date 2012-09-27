@@ -68,7 +68,7 @@ function categoriesCreate($name, $module)
 		$mod_id = ACP3_CMS::$db2->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($module));
 		$insert_values = array(
 			'id' => '',
-			'name' => $name,
+			'name' => str_encode($name),
 			'picture' => '',
 			'description' => '',
 			'module_id' => $mod_id,

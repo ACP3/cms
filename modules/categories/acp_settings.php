@@ -24,9 +24,9 @@ if (isset($_POST['submit']) === true) {
 		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
 		$data = array(
-			'width' => $_POST['width'],
-			'height' => $_POST['height'],
-			'filsize' => $_POST['filesize'],
+			'width' => (int) $_POST['width'],
+			'height' => (int) $_POST['height'],
+			'filsize' => (int) $_POST['filesize'],
 		);
 		$bool = ACP3_Config::setSettings('categories', $data);
 

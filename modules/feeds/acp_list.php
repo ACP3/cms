@@ -20,7 +20,7 @@ if (isset($_POST['submit']) === true) {
 		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
 		$data = array(
-			'feed_image' => $_POST['feed_image'],
+			'feed_image' => str_encode($_POST['feed_image']),
 			'feed_type' => $_POST['feed_type']
 		);
 

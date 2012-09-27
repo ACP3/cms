@@ -30,9 +30,9 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 		} else {
 			$update_values = array();
-			$update_values['message'] = $_POST['message'];
+			$update_values['message'] = str_encode($_POST['message']);
 			if ((empty($comment['user_id']) || ACP3_Validate::isNumber($comment['user_id']) === false) && !empty($_POST['name'])) {
-				$update_values['name'] = $_POST['name'];
+				$update_values['name'] = str_encode($_POST['name']);
 			}
 
 			$bool = ACP3_CMS::$db2->update(DB_PRE . 'comments', $update_values, array('id' => ACP3_CMS::$uri->id));

@@ -38,8 +38,8 @@ if (isset($_POST['submit']) === true) {
 
 		$insert_values = array(
 			'id' => '',
-			'code' => $_POST['code'],
-			'description' => $_POST['description'],
+			'code' => str_encode($_POST['code']),
+			'description' => str_encode($_POST['description']),
 			'img' => $result['name'],
 		);
 

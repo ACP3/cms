@@ -126,8 +126,8 @@ if (isset($_POST['submit'])) {
 		$system_settings = array(
 			'cache_images' => true,
 			'cache_minify' => 3600,
-			'date_format_long' => $_POST['date_format_long'],
-			'date_format_short' => $_POST['date_format_short'],
+			'date_format_long' => str_encode($_POST['date_format_long']),
+			'date_format_short' => str_encode($_POST['date_format_short']),
 			'date_time_zone' => $_POST['date_time_zone'],
 			'design' => 'acp3',
 			'entries' => 20,

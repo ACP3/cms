@@ -60,7 +60,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 				'block_id' => $_POST['block_id'],
 				'parent_id' => $_POST['parent'],
 				'display' => $_POST['display'],
-				'title' => $_POST['title'],
+				'title' => str_encode($_POST['title']),
 				'uri' => $_POST['mode'] == 1 ? $_POST['module'] : $uri_type,
 				'target' => $_POST['display'] == 0 ? 1 : $_POST['target'],
 			);

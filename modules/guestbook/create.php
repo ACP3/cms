@@ -62,10 +62,10 @@ if (isset($_POST['submit']) === true) {
 			'id' => '',
 			'date' => ACP3_CMS::$date->getCurrentDateTime(),
 			'ip' => $ip,
-			'name' => $_POST['name'],
+			'name' => str_encode($_POST['name']),
 			'user_id' => ACP3_CMS::$auth->isUser() ? ACP3_CMS::$auth->getUserId() : '',
-			'message' => $_POST['message'],
-			'website' => $_POST['website'],
+			'message' => str_encode($_POST['message']),
+			'website' => str_encode($_POST['website']),
 			'mail' => $_POST['mail'],
 			'active' => $settings['notify'] == 2 ? 0 : 1,
 		);

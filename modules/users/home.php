@@ -10,7 +10,7 @@ if (ACP3_CMS::$auth->isUser() === false || !ACP3_Validate::isNumber(ACP3_CMS::$a
 	->append(ACP3_CMS::$lang->t('users', 'home'));
 
 	if (isset($_POST['submit']) === true) {
-		$bool = ACP3_CMS::$db2->update(DB_PRE . 'users', array('draft' => $_POST['draft']), array('id' => ACP3_CMS::$auth->getUserId()));
+		$bool = ACP3_CMS::$db2->update(DB_PRE . 'users', array('draft' => str_encode($_POST['draft'], true)), array('id' => ACP3_CMS::$auth->getUserId()));
 
 		setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/home');
 	}

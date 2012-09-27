@@ -28,8 +28,8 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 		} else {
 			$update_values = array(
-				'name' => $_POST['name'],
-				'message' => $_POST['message'],
+				'name' => str_encode($_POST['name']),
+				'message' => str_encode($_POST['message']),
 				'active' => $settings['notify'] == 2 ? $_POST['active'] : 1,
 			);
 

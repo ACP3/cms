@@ -33,16 +33,16 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			// Newsletter archivieren
 			$update_values = array(
 				'date' => ACP3_CMS::$date->getCurrentDateTime(),
-				'subject' => $_POST['subject'],
-				'text' => $_POST['text'],
+				'subject' => str_encode($_POST['subject']),
+				'text' => str_encode($_POST['text'], true),
 				'status' => $_POST['test'] == 1 ? '0' : (int) $_POST['action'],
 				'user_id' => ACP3_CMS::$auth->getUserId(),
 			);
 			$bool = ACP3_CMS::$db2->update(DB_PRE . 'newsletter_archive', $update_values, array('id' => ACP3_CMS::$uri->id));
 
 			if ($_POST['action'] == 1 && $bool !== false) {
-				$subject = $_POST['subject'];
-				$body = $_POST['text'] . "\n" . html_entity_decode($settings['mailsig'], ENT_QUOTES, 'UTF-8');
+				$subject = str_encode($_POST['subject'], true);
+				$body = str_encode($_POST['text'], true) . "\n" . html_entity_decode($settings['mailsig'], ENT_QUOTES, 'UTF-8');
 
 				// Testnewsletter
 				if ($_POST['test'] == 1) {

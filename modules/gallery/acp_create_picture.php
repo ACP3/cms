@@ -47,7 +47,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 				'pic' => !is_null($picNum) ? $picNum + 1 : 1,
 				'gallery_id' => ACP3_CMS::$uri->id,
 				'file' => $result['name'],
-				'description' => $_POST['description'],
+				'description' => str_encode($_POST['description'], true),
 				'comments' => $settings['comments'] == 1 && isset($_POST['comments']) && $_POST['comments'] == 1 ? 1 : 0,
 			);
 

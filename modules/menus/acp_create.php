@@ -26,7 +26,7 @@ if (isset($_POST['submit']) === true) {
 		$insert_values = array(
 			'id' => '',
 			'index_name' => $_POST['index_name'],
-			'title' => $_POST['title'],
+			'title' => str_encode($_POST['title']),
 		);
 
 		$bool = ACP3_CMS::$db2->insert(DB_PRE . 'menus', $insert_values);

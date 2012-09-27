@@ -21,7 +21,7 @@ if (isset($_POST['submit']) === true) {
 	} else {
 		$data = array(
 			'mail' => $_POST['mail'],
-			'mailsig' => $_POST['mailsig']
+			'mailsig' => str_encode($_POST['mailsig'])
 		);
 
 		$bool = ACP3_Config::setSettings('newsletter', $data);

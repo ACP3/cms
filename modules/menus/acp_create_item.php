@@ -50,7 +50,7 @@ if (isset($_POST['submit']) === true) {
 			'block_id' => (int) $_POST['block_id'],
 			'parent_id' => (int) $_POST['parent'],
 			'display' => $_POST['display'],
-			'title' => $_POST['title'],
+			'title' => str_encode($_POST['title']),
 			'uri' => $_POST['mode'] == 1 ? $_POST['module'] : ($_POST['mode'] == 4 ? 'articles/list/id_' . $_POST['articles'] . '/' : $_POST['uri']),
 			'target' => $_POST['display'] == 0 ? 1 : $_POST['target'],
 		);

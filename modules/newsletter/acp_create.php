@@ -27,16 +27,16 @@ if (isset($_POST['submit']) === true) {
 		$insert_values = array(
 			'id' => '',
 			'date' => ACP3_CMS::$date->getCurrentDateTime(),
-			'subject' => $_POST['subject'],
-			'text' => $_POST['text'],
+			'subject' => str_encode($_POST['subject']),
+			'text' => str_encode($_POST['text'], true),
 			'status' => $_POST['test'] == 1 ? '0' : (int) $_POST['action'],
 			'user_id' => ACP3_CMS::$auth->getUserId(),
 		);
 		$bool = ACP3_CMS::$db2->insert(DB_PRE . 'newsletter_archive', $insert_values);
 
 		if ($_POST['action'] == 1 && $bool !== false) {
-			$subject = $_POST['subject'];
-			$body = $_POST['text'] . "\n-- \n" . html_entity_decode($settings['mailsig'], ENT_QUOTES, 'UTF-8');
+			$subject = str_encode($_POST['subject'], true);
+			$body = str_encode($_POST['text'], true) . "\n-- \n" . html_entity_decode($settings['mailsig'], ENT_QUOTES, 'UTF-8');
 
 			// Testnewsletter
 			if ($_POST['test'] == 1) {

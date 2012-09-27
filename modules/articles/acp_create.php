@@ -52,8 +52,8 @@ if (isset($_POST['submit']) === true) {
 			'id' => '',
 			'start' => ACP3_CMS::$date->toSQL($_POST['start']),
 			'end' => ACP3_CMS::$date->toSQL($_POST['end']),
-			'title' => $_POST['title'],
-			'text' => $_POST['text'],
+			'title' => str_encode($_POST['title']),
+			'text' => str_encode($_POST['text'], true),
 			'user_id' => ACP3_CMS::$auth->getUserId(),
 		);
 
@@ -71,7 +71,7 @@ if (isset($_POST['submit']) === true) {
 				'block_id' => $_POST['block_id'],
 				'parent_id' => (int) $_POST['parent'],
 				'display' => $_POST['display'],
-				'title' => $_POST['title'],
+				'title' => str_encode($_POST['title']),
 				'uri' => 'articles/list/id_' . $last_id . '/',
 				'target' => 1,
 			);

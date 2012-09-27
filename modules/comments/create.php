@@ -51,9 +51,9 @@ function commentsCreate($module, $entry_id)
 				'id' => '',
 				'date' => ACP3_CMS::$date->getCurrentDateTime(),
 				'ip' => $ip,
-				'name' => ACP3_CMS::$auth->isUser() === true && ACP3_Validate::isNumber(ACP3_CMS::$auth->getUserId() === true) ? '' : $_POST['name'],
+				'name' => str_encode($_POST['name']),
 				'user_id' => ACP3_CMS::$auth->isUser() === true && ACP3_Validate::isNumber(ACP3_CMS::$auth->getUserId() === true) ? ACP3_CMS::$auth->getUserId() : '',
-				'message' => $_POST['message'],
+				'message' => str_encode($_POST['message']),
 				'module_id' => $mod_id,
 				'entry_id' => $_POST['entry_id'],
 			);
