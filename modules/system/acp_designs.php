@@ -38,7 +38,6 @@ if (isset(ACP3_CMS::$uri->dir)) {
 	for ($i = 0; $i < $count_dir; ++$i) {
 		$design_info = ACP3_XML::parseXmlFile($path . $directories[$i] . '/info.xml', '/design');
 		if (!empty($design_info)) {
-			echo 'blab';
 			$designs[$i] = $design_info;
 			$designs[$i]['selected'] = CONFIG_DESIGN === $directories[$i] ? 1 : 0;
 			$designs[$i]['dir'] = $directories[$i];
