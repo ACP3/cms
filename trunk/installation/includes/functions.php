@@ -251,7 +251,7 @@ function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
  */
 function str_encode($var)
 {
-	return htmlentities(preg_replace('/<script.*>.*<\/script>/isU', '', $var), ENT_QUOTES, 'UTF-8');
+	return htmlentities(preg_replace('=<script[^>]*>.*</script>=isU', '', $var), ENT_QUOTES, 'UTF-8');
 }
 /**
  * Führt die Updateanweisungen eines Moduls aus
