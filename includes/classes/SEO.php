@@ -231,7 +231,7 @@ class ACP3_SEO
 	{
 		$path.= !preg_match('/\/$/', $path) ? '/' : '';
 
-		$bool = ACP3_CMS::$db2->delete(DB_PRE . 'seo', array('uri' => ACP3_CMS::$db2->quote($path)));
+		$bool = ACP3_CMS::$db2->delete(DB_PRE . 'seo', array('uri' => $path));
 		$bool2 = self::setSEOCache();
 		return $bool !== false && $bool2 !== false ? true : false;
 	}

@@ -149,7 +149,7 @@ class ACP3_Session {
 			setcookie(self::SESSION_NAME, '', time() - 3600, '/');
 
 		// Session aus Datenbank löschen
-		ACP3_CMS::$db2->delete(DB_PRE . 'sessions', array('session_id' => ACP3_CMS::$db2->quote($session_id)));
+		ACP3_CMS::$db2->delete(DB_PRE . 'sessions', array('session_id' => $session_id));
 	}
 
 	/**
