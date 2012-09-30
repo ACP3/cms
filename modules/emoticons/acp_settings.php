@@ -26,7 +26,7 @@ if (isset($_POST['submit']) === true) {
 		$data = array(
 			'width' => (int) $_POST['width'],
 			'height' => (int) $_POST['height'],
-			'filsize' => (int) $_POST['filesize'],
+			'filesize' => (int) $_POST['filesize'],
 		);
 		$bool = ACP3_Config::setSettings('emoticons', $data);
 

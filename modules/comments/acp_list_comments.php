@@ -19,15 +19,15 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) &&
 	//Brotkrümelspur
 	ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t($module, $module));
 
-	$comments = ACP3_CMS::$db2->fetchAll('SELECT IF(c.name != "" AND c.user_id = 0,c.name,u.nickname) AS name, c.id, c.ip, c.user_id, c.date, c.message FROM ' . DB_PRE . 'comments AS c LEFT JOIN ' . DB_PRE . 'users AS u ON u.id = c.user_id WHERE c.module_id = ? ORDER BY c.entry_id ASC, c.date ASC', array(ACP3_CMS::$uri->id));
+	$comments = ACP3_CMS::$db2->fetchAll('SELECT IF(c.name != "" AND c.user_id = 0,c.name,u.nickname) AS name, c.id, c.ip, c.user_id, c.date, c.message FROM ' . DB_PRE . 'comments AS c LEFT JOIN ' . DB_PRE . 'users AS u ON u.id = c.user_id WHERE c.module_id = ? ORDER BY c.entry_id ASC, c.id ASC', array(ACP3_CMS::$uri->id));
 	$c_comments = count($comments);
 
 	if ($c_comments > 0) {
 		$can_delete = ACP3_Modules::check('comments', 'acp_delete_comments');
 		$config = array(
 			'element' => '#acp-table',
-			'sort_col' => $can_delete === true ? 1 : 0,
-			'sort_dir' => 'desc',
+			'sort_col' => $can_delete === true ? 5 : 4,
+			'sort_dir' => 'asc',
 			'hide_col_sort' => $can_delete === true ? 0 : ''
 		);
 		ACP3_CMS::setContent(datatable($config));
