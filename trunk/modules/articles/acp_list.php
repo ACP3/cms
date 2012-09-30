@@ -19,8 +19,8 @@ if ($c_articles > 0) {
 	$can_delete = ACP3_Modules::check('articles', 'acp_delete');
 	$config = array(
 		'element' => '#acp-table',
-		'sort_col' => $can_delete === true ? 1 : 0,
-		'sort_dir' => 'desc',
+		'sort_col' => $can_delete === true ? 2 : 1,
+		'sort_dir' => 'asc',
 		'hide_col_sort' => $can_delete === true ? 0 : ''
 	);
 	ACP3_CMS::setContent(datatable($config));
