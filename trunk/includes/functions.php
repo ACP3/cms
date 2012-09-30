@@ -469,7 +469,7 @@ function pagination($rows, $fragment = '')
 {
 	if ($rows > ACP3_CMS::$auth->entries) {
 		// Alle angegebenen URL Parameter mit in die URL einbeziehen
-		$link = ACP3_CMS::$uri->route((defined('IN_ADM') === true ? 'acp/' : '') . ACP3_CMS::$uri->getCleanQuery(), 1);
+		$link = ACP3_CMS::$uri->route((defined('IN_ADM') === true ? 'acp/' : '') . ACP3_CMS::$uri->getCleanQuery());
 
 		// Seitenauswahl
 		$current_page = ACP3_Validate::isNumber(ACP3_CMS::$uri->page) ? (int) ACP3_CMS::$uri->page : 1;
@@ -491,6 +491,8 @@ function pagination($rows, $fragment = '')
 				ACP3_SEO::setPreviousPage($link . 'page_' . ($current_page - 1) . '/');
 			if ($current_page + 1 <= $c_pagination)
 				ACP3_SEO::setNextPage($link . 'page_' . ($current_page + 1) . '/');
+			if (isset(ACP3_CMS::$uri->page) && ACP3_CMS::$uri->page === 1)
+				ACP3_SEO::setCanonicalUri($link);
 		}
 
 		$start = 1;
@@ -531,7 +533,7 @@ function pagination($rows, $fragment = '')
 		for ($i = (int) $start; $i <= $end; ++$i, ++$j) {
 			$pagination[$j]['selected'] = $current_page === $i ? true : false;
 			$pagination[$j]['page'] = $i;
-			$pagination[$j]['uri'] = $link . 'page_' . $i . '/' . $fragment;
+			$pagination[$j]['uri'] = $link . ($i > 1 ? 'page_' . $i . '/' : '') . $fragment;
 		}
 
 		// Nächste Seite

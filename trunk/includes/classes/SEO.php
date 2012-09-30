@@ -35,6 +35,12 @@ class ACP3_SEO
 	 * @var string 
 	 */
 	private static $previous_page = '';
+	/**
+	 * Kanonische URL
+	 *
+	 * @var string
+	 */
+	private static $canonical = '';
 
 	/**
 	 * Setzt den Cache für die URI-Aliase
@@ -83,6 +89,7 @@ class ACP3_SEO
 			'robots' => defined('IN_ADM') === true ? 'noindex,nofollow' : self::getCurrentRobotsSetting(),
 			'previous_page' => self::$previous_page,
 			'next_page' => self::$next_page,
+			'canonical' => self::$canonical,
 		);
 		ACP3_CMS::$view->assign('meta', $meta);
 
@@ -201,6 +208,15 @@ class ACP3_SEO
 		$path.= !preg_match('/\/$/', $path) ? '/' : '';
 
 		return !empty(self::$aliases[$path]['alias']) ? self::$aliases[$path]['alias'] : ($for_form === true ? '' : $path);
+	}
+	/**
+	 * Setzt die kanonische URI
+	 *
+	 * @param string $path
+	 */
+	public static function setCanonicalUri($path)
+	{
+		self::$canonical = $path;
 	}
 	/**
 	 * Setzt die nächste Seite
