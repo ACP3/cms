@@ -14,8 +14,8 @@
 		</form>
 	</li>
 	<li class="divider"></li>
-	<li><a href="{uri args="users/forgot_pwd"}">{lang t="users|forgot_pwd"}</a></li>
+	<li><a href="{uri args="users/forgot_pwd"}"><i class="icon-question-sign"></i> {lang t="users|forgot_pwd"}</a></li>
 {if $enable_registration == 1}
-	<li><a href="{uri args="users/register"}">{lang t="users|register"}</a></li>
+	<li><a href="{uri args="users/register"}"><i class="icon-star"></i> {lang t="users|register"}</a></li>
 {/if}
 </ul>
