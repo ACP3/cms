@@ -43,7 +43,7 @@ class ACP3_Breadcrumb {
 			if ($c_pages > 0) {
 				for ($i = $c_pages - 1; $i >= 0; --$i) {
 					if ($pages[0]['left_id'] >= $pages[$i]['left_id'] && $pages[0]['right_id'] <= $pages[$i]['right_id']) {
-						$this->append($pages[$i]['title'], ACP3_CMS::$uri->route($pages[$i]['uri'], 1));
+						$this->append($pages[$i]['title'], ACP3_CMS::$uri->route($pages[$i]['uri']));
 					}
 				}
 			}
@@ -208,7 +208,7 @@ class ACP3_Breadcrumb {
 			}
 		// Falls noch keine Brotkrümelspur gesetzt sein sollte, dies nun tun
 		} elseif (empty($this->steps)) {
-			$this->append($file === 'list' ? ACP3_CMS::$lang->t($module, $module) : ACP3_CMS::$lang->t($module, $file), ACP3_CMS::$uri->route($module . '/' . $file, 1));
+			$this->append($file === 'list' ? ACP3_CMS::$lang->t($module, $module) : ACP3_CMS::$lang->t($module, $file), ACP3_CMS::$uri->route($module . '/' . $file));
 		}
 
 		// Brotkrümelspur ausgeben

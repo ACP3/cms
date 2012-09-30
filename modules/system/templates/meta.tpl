@@ -14,3 +14,6 @@
 {if !empty($meta.next_page)}
 <link rel="next" href="{$meta.next_page}">
 {/if}
+{if !empty($meta.canonical)}
+<link rel="canonical" href="{$meta.canonical}">
+{/if}
