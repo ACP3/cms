@@ -17,7 +17,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true) {
 
 	$settings = ACP3_Config::getSettings('gallery');
 	$options = array(
-		'enable_cache' => CONFIG_CACHE_IMAGES,
+		'enable_cache' => CONFIG_CACHE_IMAGES == 1 ? true : false,
 		'cache_prefix' => 'gallery_' . $action,
 		'max_width' => $settings[$action . 'width'],
 		'max_height' => $settings[$action . 'height'],
