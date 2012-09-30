@@ -8,16 +8,45 @@
 use Doctrine\Common\ClassLoader;
 
 class ACP3_CMS {
-	public static $auth = null;
-	public static $breadcrumb = null;
-	public static $date = null;
-	public static $db = null;
-	public static $db2 = null;
-	public static $lang = null;
-	public static $session = null;
-	public static $tpl = null;
-	public static $uri = null;
-	public static $view = null;
+	/**
+	 * @var \ACP3_Auth
+	 */
+	public static $auth;
+	/**
+	 * @var \ACP3_Breadcrumb
+	 */
+	public static $breadcrumb;
+	/**
+	 * @var \ACP3_Date
+	 */
+	public static $date;
+	/**
+	 * @var \ACP3_DB
+	 */
+	public static $db;
+	/**
+	 * @var \Doctrine\DBAL\Connection
+	 */
+	public static $db2;
+	/**
+	 * @var \ACP3_Lang
+	 */
+	public static $lang;
+	/**
+	 * @var \ACP3_Session
+	 */
+	public static $session;
+	/**
+	 * @var \ACP3_URI
+	 */
+	public static $uri;
+	/**
+	 * @var \ACP3_View
+	 */
+	public static $view;
+	/**
+	 * @var string
+	 */
 	private static $content = '';
 
 	/**
