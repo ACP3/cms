@@ -1,5 +1,8 @@
 <section id="comments">
 	<header><h2 class="align-center">{lang t="comments|comments"}</h2></header>
+{if isset($redirect_message)}
+{$redirect_message}
+{/if}
 {if isset($comments)}
 {$pagination}
 {foreach $comments as $row}

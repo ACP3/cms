@@ -47,7 +47,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 
 			$update_values = array(
 				'description' => str_encode($_POST['description'], true),
-				'comments' => $settings['comments'] == 1 && isset($_POST['comments']) && $_POST['comments'] == 1 ? 1 : 0,
+				'comments' => $settings['comments'] == 1 ? (isset($_POST['comments']) && $_POST['comments'] == 1 ? 1 : 0) : $settings['comments'],
 			);
 			if (is_array($new_file_sql) === true) {
 				$old_file = ACP3_CMS::$db2->fetchColumn('SELECT file FROM ' . DB_PRE . 'gallery_pictures WHERE id = ?', array(ACP3_CMS::$uri->id));

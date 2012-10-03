@@ -62,7 +62,7 @@ function commentsCreate($module, $entry_id)
 
 			ACP3_CMS::$session->unsetFormToken();
 
-			return confirmBox(ACP3_CMS::$lang->t('system', $bool !== false ? 'create_success' : 'create_error'), ACP3_CMS::$uri->route(ACP3_CMS::$uri->query));
+			setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool !== false ? 'create_success' : 'create_error'), ACP3_CMS::$uri->query);
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
