@@ -31,6 +31,8 @@ function commentsCount($module, $entry_id)
  */
 function commentsList($module, $entry_id)
 {
+	getRedirectMessage();
+
 	$settings = ACP3_Config::getSettings('comments');
 
 	// Auflistung der Kommentare

@@ -48,7 +48,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 				'gallery_id' => ACP3_CMS::$uri->id,
 				'file' => $result['name'],
 				'description' => str_encode($_POST['description'], true),
-				'comments' => $settings['comments'] == 1 && isset($_POST['comments']) && $_POST['comments'] == 1 ? 1 : 0,
+				'comments' => $settings['comments'] == 1 ? (isset($_POST['comments']) && $_POST['comments'] == 1 ? 1 : 0) : $settings['comments'],
 			);
 
 			$bool = ACP3_CMS::$db2->insert(DB_PRE . 'gallery_pictures', $insert_values);
