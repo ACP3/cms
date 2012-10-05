@@ -14,10 +14,10 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 	ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'gallery_pictures WHERE id = ?', array(ACP3_CMS::$uri->id)) == 1) {
 	require_once MODULES_DIR . 'gallery/functions.php';
 
-	$picture = ACP3_CMS::$db2->fetchAssoc('SELECT p.gallery_id, p.file, p.description, p.comments, g.name AS gallery_name FROM ' . DB_PRE . 'gallery_pictures AS p, ' . DB_PRE . 'gallery AS g WHERE p.id = ? AND p.gallery_id = g.id', array(ACP3_CMS::$uri->id));
+	$picture = ACP3_CMS::$db2->fetchAssoc('SELECT p.gallery_id, p.file, p.description, p.comments, g.title AS gallery_title FROM ' . DB_PRE . 'gallery_pictures AS p, ' . DB_PRE . 'gallery AS g WHERE p.id = ? AND p.gallery_id = g.id', array(ACP3_CMS::$uri->id));
 
 	ACP3_CMS::$breadcrumb
-	->append($picture['gallery_name'], ACP3_CMS::$uri->route('acp/gallery/edit/id_' . $picture['gallery_id']))
+	->append($picture['gallery_title'], ACP3_CMS::$uri->route('acp/gallery/edit/id_' . $picture['gallery_id']))
 	->append(ACP3_CMS::$lang->t('gallery', 'acp_edit_picture'));
 
 	$settings = ACP3_Config::getSettings('gallery');

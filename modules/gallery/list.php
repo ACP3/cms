@@ -12,7 +12,7 @@ if (defined('IN_ACP3') === false)
 
 $time = ACP3_CMS::$date->getCurrentDateTime();
 $where = '(g.start = g.end AND g.start <= :time OR g.start != g.end AND :time BETWEEN g.start AND g.end)';
-$galleries = ACP3_CMS::$db2->fetchAll('SELECT g.id, g.start, g.name, COUNT(p.gallery_id) AS pics FROM ' . DB_PRE . 'gallery AS g LEFT JOIN ' . DB_PRE . 'gallery_pictures AS p ON(g.id = p.gallery_id) WHERE ' . $where . ' GROUP BY g.id ORDER BY g.start DESC, g.end DESC, g.id DESC LIMIT ' . POS . ',' . ACP3_CMS::$auth->entries, array('time' => $time));
+$galleries = ACP3_CMS::$db2->fetchAll('SELECT g.id, g.start, g.title, COUNT(p.gallery_id) AS pics FROM ' . DB_PRE . 'gallery AS g LEFT JOIN ' . DB_PRE . 'gallery_pictures AS p ON(g.id = p.gallery_id) WHERE ' . $where . ' GROUP BY g.id ORDER BY g.start DESC, g.end DESC, g.id DESC LIMIT ' . POS . ',' . ACP3_CMS::$auth->entries, array('time' => $time));
 $c_galleries = count($galleries);
 
 if ($c_galleries > 0) {

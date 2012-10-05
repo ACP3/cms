@@ -18,7 +18,7 @@
 				<th style="width:3%"><input type="checkbox" id="mark-all" value="1"></th>
 {/if}
 				<th style="width:22%">{lang t="system|publication_period"}</th>
-				<th>{lang t="files|link_title"}</th>
+				<th>{lang t="files|title"}</th>
 				<th>{lang t="files|filename"}</th>
 				<th>{lang t="files|filesize"}</th>
 				<th style="width:5%">{lang t="system|id"}</th>
@@ -31,7 +31,7 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
 {/if}
 				<td>{$row.period}</td>
-				<td>{check_access mode="link" path="acp/files/edit/id_`$row.id`" title=$row.link_title}</td>
+				<td>{check_access mode="link" path="acp/files/edit/id_`$row.id`" title=$row.title}</td>
 				<td>{check_access mode="link" path="files/details/id_`$row.id`/action_download" lang="files|download_file" title=$row.file}</td>
 				<td>{$row.size}</td>
 				<td>{$row.id}</td>

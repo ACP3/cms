@@ -11,8 +11,8 @@
 			<div id="tab-1" class="tab-pane active">
 				{$publication_period}
 				<div class="control-group">
-					<label for="name" class="control-label">{lang t="gallery|title"}</label>
-					<div class="controls"><input type="text" name="name" id="name" value="{$form.name}" maxlength="120"></div>
+					<label for="title" class="control-label">{lang t="gallery|title"}</label>
+					<div class="controls"><input type="text" name="title" id="title" value="{$form.title}" maxlength="120" required></div>
 				</div>
 			</div>
 			<div id="tab-2" class="tab-pane">

@@ -15,7 +15,7 @@
  */
 function setNewsCache($id)
 {
-	$data = ACP3_CMS::$db2->fetchAssoc('SELECT id, start, headline, text, readmore, comments, category_id, uri, target, link_title FROM ' . DB_PRE . 'news WHERE id = ?', array($id));
+	$data = ACP3_CMS::$db2->fetchAssoc('SELECT id, start, title, text, readmore, comments, category_id, uri, target, link_title FROM ' . DB_PRE . 'news WHERE id = ?', array($id));
 	return ACP3_Cache::create('details_id_' . $id, $data, 'news');
 }
 /**

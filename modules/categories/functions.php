@@ -16,7 +16,7 @@
  */
 function setCategoriesCache($module)
 {
-	$data = ACP3_CMS::$db2->fetchAll('SELECT c.id, c.name, c.picture, c.description FROM ' . DB_PRE . 'categories AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE m.name = ? ORDER BY c.name ASC', array($module));
+	$data = ACP3_CMS::$db2->fetchAll('SELECT c.id, c.title, c.picture, c.description FROM ' . DB_PRE . 'categories AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE m.name = ? ORDER BY c.title ASC', array($module));
 	return ACP3_Cache::create($module, $data, 'categories');
 }
 /**
@@ -46,29 +46,29 @@ function categoriesCheck($category_id)
 /**
  * Überprüft, ob bereits eine Kategorie mit dem selben Namen existiert
  *
- * @param string $name
+ * @param string $title
  * @param string $module
  * @param integer $category_id
  * @return boolean
  */
-function categoriesCheckDuplicate($name, $module, $category_id = '')
+function categoriesCheckDuplicate($title, $module, $category_id = '')
 {
-	return ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'categories AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE c.name = ? AND m.name = ? AND c.id != ?', array($name, $module, $category_id)) != 0 ? true : false;
+	return ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'categories AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE c.title = ? AND m.name = ? AND c.id != ?', array($title, $module, $category_id)) != 0 ? true : false;
 }
 /**
  * Erzeugt eine neue Kategorie und gibt ihre ID zurück
  *
- * @param string $name
+ * @param string $title
  * @param string $module
  * @return integer
  */
-function categoriesCreate($name, $module)
+function categoriesCreate($title, $module)
 {
-	if (categoriesCheckDuplicate($name, $module) === false) {
+	if (categoriesCheckDuplicate($title, $module) === false) {
 		$mod_id = ACP3_CMS::$db2->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($module));
 		$insert_values = array(
 			'id' => '',
-			'name' => str_encode($name),
+			'title' => str_encode($title),
 			'picture' => '',
 			'description' => '',
 			'module_id' => $mod_id,

@@ -27,8 +27,8 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 
 		if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
 			$errors[] = ACP3_CMS::$lang->t('system', 'select_date');
-		if (strlen($_POST['link_title']) < 3)
-			$errors['link-title'] = ACP3_CMS::$lang->t('files', 'type_in_link_title');
+		if (strlen($_POST['title']) < 3)
+			$errors['link-title'] = ACP3_CMS::$lang->t('files', 'type_in_title');
 		if (isset($_POST['external']) && (empty($file) || empty($_POST['filesize']) || empty($_POST['unit'])))
 			$errors['external'] = ACP3_CMS::$lang->t('files', 'type_in_external_resource');
 		if (!isset($_POST['external']) && isset($file) && is_array($file) &&
@@ -72,7 +72,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 				'start' => ACP3_CMS::$date->toSQL($_POST['start']),
 				'end' => ACP3_CMS::$date->toSQL($_POST['end']),
 				'category_id' => strlen($_POST['cat_create']) >= 3 ? categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
-				'link_title' => str_encode($_POST['link_title']),
+				'title' => str_encode($_POST['title']),
 				'text' => str_encode($_POST['text'], true),
 				'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
 				'user_id' => ACP3_CMS::$auth->getUserId(),
@@ -97,7 +97,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-		$dl = ACP3_CMS::$db2->fetchAssoc('SELECT start, end, category_id, file, size, link_title, text, comments FROM ' . DB_PRE . 'files WHERE id = ?', array(ACP3_CMS::$uri->id));
+		$dl = ACP3_CMS::$db2->fetchAssoc('SELECT start, end, category_id, file, size, title, text, comments FROM ' . DB_PRE . 'files WHERE id = ?', array(ACP3_CMS::$uri->id));
 
 		// Datumsauswahl
 		ACP3_CMS::$view->assign('publication_period', ACP3_CMS::$date->datepicker(array('start', 'end'), array($dl['start'], $dl['end'])));

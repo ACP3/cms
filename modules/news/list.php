@@ -38,7 +38,7 @@ $cat = !empty($cat) ? ' AND category_id = ' . $cat : '';
 $time = ACP3_CMS::$date->getCurrentDateTime();
 $where = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' . $cat;
 
-$news = ACP3_CMS::$db2->fetchAll('SELECT id, start, headline, text, readmore, comments, uri FROM ' . DB_PRE . 'news WHERE ' . $where . ' ORDER BY start DESC, end DESC, id DESC LIMIT ' . POS . ',' . ACP3_CMS::$auth->entries, array('time' => $time));
+$news = ACP3_CMS::$db2->fetchAll('SELECT id, start, title, text, readmore, comments, uri FROM ' . DB_PRE . 'news WHERE ' . $where . ' ORDER BY start DESC, end DESC, id DESC LIMIT ' . POS . ',' . ACP3_CMS::$auth->entries, array('time' => $time));
 $c_news = count($news);
 
 if ($c_news > 0) {

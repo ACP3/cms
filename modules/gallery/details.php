@@ -13,16 +13,16 @@ if (defined('IN_ACP3') === false)
 $period = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
 if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 	ACP3_CMS::$db2->fetchColumn('SELECT g.id FROM ' . DB_PRE . 'gallery AS g, ' . DB_PRE . 'gallery_pictures AS p WHERE p.id = :id AND p.gallery_id = g.id' . $period, array('id' => ACP3_CMS::$uri->id, 'time' => ACP3_CMS::$date->getCurrentDateTime())) > 0) {
-	$picture = ACP3_CMS::$db2->fetchAssoc('SELECT g.id AS gallery_id, g.name, p.id, p.pic, p.file, p.description, p.comments FROM ' . DB_PRE . 'gallery AS g, ' . DB_PRE . 'gallery_pictures AS p WHERE p.id = ? AND p.gallery_id = g.id', array(ACP3_CMS::$uri->id));
+	$picture = ACP3_CMS::$db2->fetchAssoc('SELECT g.id AS gallery_id, g.title, p.id, p.pic, p.file, p.description, p.comments FROM ' . DB_PRE . 'gallery AS g, ' . DB_PRE . 'gallery_pictures AS p WHERE p.id = ? AND p.gallery_id = g.id', array(ACP3_CMS::$uri->id));
 
 	$settings = ACP3_Config::getSettings('gallery');
 
 	// Brotkrümelspur
 	ACP3_CMS::$breadcrumb
 	->append(ACP3_CMS::$lang->t('gallery', 'gallery'), ACP3_CMS::$uri->route('gallery'))
-	->append($picture['name'], ACP3_CMS::$uri->route('gallery/pics/id_' . $picture['gallery_id']))
+	->append($picture['title'], ACP3_CMS::$uri->route('gallery/pics/id_' . $picture['gallery_id']))
 	->append(ACP3_CMS::$lang->t('gallery', 'details'))
-	->setTitlePrefix($picture['name'])
+	->setTitlePrefix($picture['title'])
 	->setTitlePostfix(sprintf(ACP3_CMS::$lang->t('gallery', 'picture_x'), $picture['pic']));
 
 	// Bildabmessungen berechnen
