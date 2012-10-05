@@ -30,7 +30,7 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
 {/if}
 				<td>{$row.period}</td>
-				<td>{check_access mode="link" path="acp/gallery/edit/id_`$row.id`" title=$row.name}</td>
+				<td>{check_access mode="link" path="acp/gallery/edit/id_`$row.id`" title=$row.title}</td>
 				<td>{$row.pictures}</td>
 				<td>{$row.id}</td>
 			</tr>

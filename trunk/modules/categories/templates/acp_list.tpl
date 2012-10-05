@@ -17,7 +17,7 @@
 {if $can_delete === true}
 				<th style="width:3%"><input type="checkbox" id="mark-all" value="1"></th>
 {/if}
-				<th>{lang t="system|name"}</th>
+				<th>{lang t="categories|title"}</th>
 				<th>{lang t="system|description"}</th>
 				<th>{lang t="categories|module"}</th>
 				<th style="width:5%">{lang t="system|id"}</th>
@@ -29,7 +29,7 @@
 {if $can_delete === true}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
 {/if}
-				<td>{check_access mode="link" path="acp/categories/edit/id_`$row.id`" title=$row.name}</td>
+				<td>{check_access mode="link" path="acp/categories/edit/id_`$row.id`" title=$row.title}</td>
 				<td>{$row.description}</td>
 				<td>{$row.module}</td>
 				<td>{$row.id}</td>

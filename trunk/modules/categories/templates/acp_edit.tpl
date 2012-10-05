@@ -3,8 +3,8 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal">
 	<div class="control-group">
-		<label for="name" class="control-label">{lang t="system|name"}</label>
-		<div class="controls"><input type="text" name="name" id="name" value="{$form.name}" maxlength="120" required></div>
+		<label for="title" class="control-label">{lang t="categories|title"}</label>
+		<div class="controls"><input type="text" name="title" id="title" value="{$form.title}" maxlength="120" required></div>
 	</div>
 	<div class="control-group">
 		<label for="description" class="control-label">{lang t="system|description"}</label>

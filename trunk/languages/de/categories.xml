@@ -18,7 +18,8 @@
 	<item key="invalid_image_width_entered">Bitte geben Sie die maximale Bildbreite in Pixel an.</item>
 	<item key="mod_description">Mit diesem Modul können Kategorien für andere Module erstellt werden.</item>
 	<item key="module">Modul</item>
-	<item key="name_to_short">Der Name der Kategorie sollte mindestens 3 Zeichen lang sein.</item>
 	<item key="picture">Bild</item>
 	<item key="select_module">Bitte wählen Sie ein Modul aus.</item>
+	<item key="title">Titel</item>
+	<item key="title_to_short">Der Titel der Kategorie sollte mindestens 3 Zeichen lang sein.</item>
 </language>

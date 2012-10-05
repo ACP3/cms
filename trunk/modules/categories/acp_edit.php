@@ -23,8 +23,8 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		$settings = ACP3_Config::getSettings('categories');
 		$module = ACP3_CMS::$db2->fetchAssoc('SELECT m.name FROM ' . DB_PRE . 'modules AS m JOIN ' . DB_PRE . 'categories AS c ON(m.id = c.module_id) WHERE c.id = ?', array(ACP3_CMS::$uri->id));
 
-		if (strlen($_POST['name']) < 3)
-			$errors['name'] = ACP3_CMS::$lang->t('categories', 'name_to_short');
+		if (strlen($_POST['title']) < 3)
+			$errors['title'] = ACP3_CMS::$lang->t('categories', 'title_to_short');
 		if (strlen($_POST['description']) < 3)
 			$errors['description'] = ACP3_CMS::$lang->t('categories', 'description_to_short');
 		if (!empty($file) &&
@@ -33,8 +33,8 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			ACP3_Validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
 			$_FILES['file']['error'] !== UPLOAD_ERR_OK))
 			$errors['picture'] = ACP3_CMS::$lang->t('categories', 'invalid_image_selected');
-		if (strlen($_POST['name']) >= 3 && categoriesCheckDuplicate($_POST['name'], $module['name'], ACP3_CMS::$uri->id))
-			$errors['name'] = ACP3_CMS::$lang->t('categories', 'category_already_exists');
+		if (strlen($_POST['title']) >= 3 && categoriesCheckDuplicate($_POST['title'], $module['name'], ACP3_CMS::$uri->id))
+			$errors['title'] = ACP3_CMS::$lang->t('categories', 'category_already_exists');
 
 		if (isset($errors) === true) {
 			ACP3_CMS::$view->assign('error_msg', errorBox($errors));
@@ -48,7 +48,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			}
 
 			$update_values = array(
-				'name' => str_encode($_POST['name']),
+				'title' => str_encode($_POST['title']),
 				'description' => str_encode($_POST['description']),
 			);
 			if (is_array($new_file_sql) === true) {
@@ -60,7 +60,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 
 			$bool = ACP3_CMS::$db2->update(DB_PRE . 'categories', $update_values, array('id' => ACP3_CMS::$uri->id));
 
-			setCategoriesCache($module['name']);
+			setCategoriesCache($module['title']);
 
 			ACP3_CMS::$session->unsetFormToken();
 
@@ -68,7 +68,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-		$category = ACP3_CMS::$db2->fetchAssoc('SELECT name, description FROM ' . DB_PRE . 'categories WHERE id = ?', array(ACP3_CMS::$uri->id));
+		$category = ACP3_CMS::$db2->fetchAssoc('SELECT title, description FROM ' . DB_PRE . 'categories WHERE id = ?', array(ACP3_CMS::$uri->id));
 
 		ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : $category);
 

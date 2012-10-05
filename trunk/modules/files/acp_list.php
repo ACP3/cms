@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$files = ACP3_CMS::$db2->fetchAll('SELECT id, start, end, file, size, link_title FROM ' . DB_PRE . 'files ORDER BY start DESC, end DESC, id DESC');
+$files = ACP3_CMS::$db2->fetchAll('SELECT id, start, end, file, size, title FROM ' . DB_PRE . 'files ORDER BY start DESC, end DESC, id DESC');
 $c_files = count($files);
 
 if ($c_files > 0) {

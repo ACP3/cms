@@ -9,8 +9,6 @@
 	<item key="complete_hyperlink_statements">Please complete the statements for the hyperlink.</item>
 	<item key="details">News</item>
 	<item key="display_category_in_breadcrumb">Display category in breadcrumb</item>
-	<item key="headline">Headline</item>
-	<item key="headline_to_short">The headline should be at least 3 characters long.</item>
 	<item key="latest_news">Latest news</item>
 	<item key="link_title">Link title</item>
 	<item key="mod_description">With this module you can administer the news.</item>
@@ -25,6 +23,8 @@
 	<item key="target_page">Target page</item>
 	<item key="text">Text</item>
 	<item key="text_to_short">The news text should be at least 3 characters long.</item>
+	<item key="title">Title</item>
+	<item key="title_to_short">The title should be at least 3 characters long.</item>
 	<item key="type_in_readmore_chars"><![CDATA[Please specify how many characters a news needs to have to enable the &quot;read more...&quot;-function.]]></item>
 	<item key="uri">URI</item>
 </language>

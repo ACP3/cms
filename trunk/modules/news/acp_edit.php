@@ -19,8 +19,8 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 	if (isset($_POST['submit']) === true) {
 		if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
 			$errors[] = ACP3_CMS::$lang->t('system', 'select_date');
-		if (strlen($_POST['headline']) < 3)
-			$errors['headline'] = ACP3_CMS::$lang->t('news', 'headline_to_short');
+		if (strlen($_POST['title']) < 3)
+			$errors['title'] = ACP3_CMS::$lang->t('news', 'title_to_short');
 		if (strlen($_POST['text']) < 3)
 			$errors['text'] = ACP3_CMS::$lang->t('news', 'text_to_short');
 		if (strlen($_POST['cat_create']) < 3 && categoriesCheck($_POST['cat']) === false)
@@ -41,7 +41,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			$update_values = array(
 				'start' => ACP3_CMS::$date->toSQL($_POST['start']),
 				'end' => ACP3_CMS::$date->toSQL($_POST['end']),
-				'headline' => str_encode($_POST['headline']),
+				'title' => str_encode($_POST['title']),
 				'text' => str_encode($_POST['text'], true),
 				'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,
 				'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
@@ -65,7 +65,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-		$news = ACP3_CMS::$db2->fetchAssoc('SELECT start, end, headline, text, readmore, comments, category_id, uri, target, link_title FROM ' . DB_PRE . 'news WHERE id = ?', array(ACP3_CMS::$uri->id));
+		$news = ACP3_CMS::$db2->fetchAssoc('SELECT start, end, title, text, readmore, comments, category_id, uri, target, link_title FROM ' . DB_PRE . 'news WHERE id = ?', array(ACP3_CMS::$uri->id));
 
 		// Datumsauswahl
 		ACP3_CMS::$view->assign('publication_period', ACP3_CMS::$date->datepicker(array('start', 'end'), array($news['start'], $news['end'])));

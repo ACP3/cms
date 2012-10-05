@@ -2,7 +2,7 @@
 
 class ACP3_CategoriesModuleInstaller extends ACP3_ModuleInstaller {
 	private $module_name = 'categories';
-	private $schema_version = 30;
+	private $schema_version = 31;
 
 	protected function getName() {
 		return $this->module_name;
@@ -16,7 +16,7 @@ class ACP3_CategoriesModuleInstaller extends ACP3_ModuleInstaller {
 		return array(
 			"CREATE TABLE `{pre}categories` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-				`name` VARCHAR(120) NOT NULL,
+				`title` VARCHAR(120) NOT NULL,
 				`picture` VARCHAR(120) NOT NULL,
 				`description` VARCHAR(120) NOT NULL,
 				`module_id` INT(10) UNSIGNED NOT NULL,
@@ -38,6 +38,10 @@ class ACP3_CategoriesModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	protected function schemaUpdates() {
-		return array();
+		return array(
+			31 => array(
+				"ALTER TABLE `{pre}categories` CHANGE `name` `title` VARCHAR(120) {charset} NOT NULL;",
+			)
+		);
 	}
 }

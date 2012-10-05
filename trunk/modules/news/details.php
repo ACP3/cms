@@ -26,7 +26,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			ACP3_CMS::$breadcrumb->append($category, ACP3_CMS::$uri->route('news/list/cat_' . $news['category_id']));
 		}
 	}
-	ACP3_CMS::$breadcrumb->append($news['headline']);
+	ACP3_CMS::$breadcrumb->append($news['title']);
 
 	$news['date'] = ACP3_CMS::$date->format($news['start'], $settings['dateformat']);
 	$news['text'] = rewriteInternalUri($news['text']);

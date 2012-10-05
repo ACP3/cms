@@ -15,8 +15,8 @@
 			</div>
 			<div id="tab-2" class="tab-pane">
 				<div class="control-group">
-					<label for="headline" class="control-label">{lang t="news|headline"}</label>
-					<div class="controls"><input type="text" name="headline" id="headline" value="{$form.headline}" maxlength="120"></div>
+					<label for="title" class="control-label">{lang t="news|title"}</label>
+					<div class="controls"><input type="text" name="title" id="title" value="{$form.title}" maxlength="120"></div>
 				</div>
 				<div class="control-group">
 					<label for="text" class="control-label">{lang t="news|text"}</label>

@@ -21,7 +21,7 @@
 		<div class="pull-right small">
 			{$row.date}
 		</div>
-		{$row.headline}
+		{$row.title}
 	</div>
 	<div class="content">
 		{$row.text}

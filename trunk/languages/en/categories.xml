@@ -18,7 +18,8 @@
 	<item key="invalid_image_width_entered">Please type in the maximum image width in pixels.</item>
 	<item key="mod_description">With this module you can create categories for other modules.</item>
 	<item key="module">Module</item>
-	<item key="name_to_short">The name of the category should be at least 3 characters long.</item>
 	<item key="picture">Picture</item>
 	<item key="select_module">Please select a module</item>
+	<item key="title">Title</item>
+	<item key="title_to_short">The name of the category should be at least 3 characters long.</item>
 </language>

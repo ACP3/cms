@@ -12,17 +12,17 @@ if (defined('IN_ADM') === false)
 
 if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 	ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'gallery WHERE id = ?', array(ACP3_CMS::$uri->id)) == 1) {
-	$gallery = ACP3_CMS::$db2->fetchAssoc('SELECT start, end, name FROM ' . DB_PRE . 'gallery WHERE id = ?', array(ACP3_CMS::$uri->id));
+	$gallery = ACP3_CMS::$db2->fetchAssoc('SELECT start, end, title FROM ' . DB_PRE . 'gallery WHERE id = ?', array(ACP3_CMS::$uri->id));
 
 	ACP3_CMS::$view->assign('SEO_FORM_FIELDS', ACP3_SEO::formFields('gallery/pics/id_' . ACP3_CMS::$uri->id));
 
-	ACP3_CMS::$breadcrumb->append($gallery['name']);
+	ACP3_CMS::$breadcrumb->append($gallery['title']);
 
 	if (isset($_POST['submit']) === true) {
 		if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
 			$errors[] = ACP3_CMS::$lang->t('system', 'select_date');
-		if (strlen($_POST['name']) < 3)
-			$errors['name'] = ACP3_CMS::$lang->t('gallery', 'type_in_gallery_name');
+		if (strlen($_POST['title']) < 3)
+			$errors['title'] = ACP3_CMS::$lang->t('gallery', 'type_in_gallery_title');
 		if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 			(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias'], 'gallery/pics/id_' . ACP3_CMS::$uri->id)))
 			$errors['alias'] = ACP3_CMS::$lang->t('system', 'uri_alias_unallowed_characters_or_exists');
@@ -35,7 +35,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			$update_values = array(
 				'start' => ACP3_CMS::$date->toSQL($_POST['start']),
 				'end' => ACP3_CMS::$date->toSQL($_POST['end']),
-				'name' => str_encode($_POST['name']),
+				'title' => str_encode($_POST['title']),
 				'user_id' => ACP3_CMS::$auth->getUserId(),
 			);
 

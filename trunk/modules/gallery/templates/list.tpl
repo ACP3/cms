@@ -4,7 +4,7 @@
 <div class="dataset-box">
 	<div class="header">
 		<div class="small pull-right">{$row.date}</div>
-		<a href="{uri args="gallery/pics/id_`$row.id`"}">{$row.name} ({$row.pics_lang})</a>
+		<a href="{uri args="gallery/pics/id_`$row.id`"}">{$row.title} ({$row.pics_lang})</a>
 	</div>
 </div>
 {/foreach}

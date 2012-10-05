@@ -17,7 +17,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->cat) &&
 			   ->append($category);
 
 	$period = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-	$files = ACP3_CMS::$db2->fetchAll('SELECT id, start, file, size, link_title FROM ' . DB_PRE . 'files WHERE category_id = :cat_id' . $period . ' ORDER BY start DESC, end DESC, id DESC', array('cat_id' => ACP3_CMS::$uri->cat, 'time' => ACP3_CMS::$date->getCurrentDateTime()));
+	$files = ACP3_CMS::$db2->fetchAll('SELECT id, start, file, size, title FROM ' . DB_PRE . 'files WHERE category_id = :cat_id' . $period . ' ORDER BY start DESC, end DESC, id DESC', array('cat_id' => ACP3_CMS::$uri->cat, 'time' => ACP3_CMS::$date->getCurrentDateTime()));
 	$c_files = count($files);
 
 	if ($c_files > 0) {

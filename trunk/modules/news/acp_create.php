@@ -17,8 +17,8 @@ $settings = ACP3_Config::getSettings('news');
 if (isset($_POST['submit']) === true) {
 	if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
 		$errors[] = ACP3_CMS::$lang->t('system', 'select_date');
-	if (strlen($_POST['headline']) < 3)
-		$errors['headline'] = ACP3_CMS::$lang->t('news', 'headline_to_short');
+	if (strlen($_POST['title']) < 3)
+		$errors['title'] = ACP3_CMS::$lang->t('news', 'title_to_short');
 	if (strlen($_POST['text']) < 3)
 		$errors['text'] = ACP3_CMS::$lang->t('news', 'text_to_short');
 	if (strlen($_POST['cat_create']) < 3 && categoriesCheck($_POST['cat']) === false)
@@ -40,7 +40,7 @@ if (isset($_POST['submit']) === true) {
 			'id' => '',
 			'start' => ACP3_CMS::$date->toSQL($_POST['start']),
 			'end' => ACP3_CMS::$date->toSQL($_POST['end']),
-			'headline' => str_encode($_POST['headline']),
+			'title' => str_encode($_POST['title']),
 			'text' => str_encode($_POST['text'], true),
 			'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,
 			'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
@@ -97,7 +97,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 
 	ACP3_CMS::$view->assign('SEO_FORM_FIELDS', ACP3_SEO::formFields());
 
-	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : array('headline' => '', 'text' => '', 'uri' => '', 'link_title' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => ''));
+	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : array('title' => '', 'text' => '', 'uri' => '', 'link_title' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => ''));
 
 	ACP3_CMS::$session->generateFormToken();
 

@@ -15,8 +15,8 @@
 			</div>
 			<div id="tab-2" class="tab-pane">
 				<div class="control-group">
-					<label for="link-title" class="control-label">{lang t="files|link_title"}</label>
-					<div class="controls"><input type="text" name="link_title" id="link-title" value="{$form.link_title}" maxlength="120"></div>
+					<label for="title" class="control-label">{lang t="files|title"}</label>
+					<div class="controls"><input type="text" name="title" id="title" value="{$form.title}" maxlength="120"></div>
 				</div>
 				<div class="control-group">
 					<label class="control-label">{lang t="files|filename"}</label>

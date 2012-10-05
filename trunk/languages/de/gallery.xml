@@ -39,7 +39,7 @@
 	<item key="thumb_image_height">Maximal anzuzeigende Höhe der Vorschaubilder</item>
 	<item key="thumb_image_width">Maximal anzuzeigende Breite der Vorschaubilder</item>
 	<item key="title">Titel</item>
-	<item key="type_in_gallery_name">Der Name der Fotogalerie sollte mindestens 3 Zeichen lang sein.</item>
+	<item key="type_in_gallery_title">Der Name der Fotogalerie sollte mindestens 3 Zeichen lang sein.</item>
 	<item key="use_overlay">Bildoverlay verwenden</item>
 	<item key="use_overlay_description">Wenn das Bildoverlay aktiv ist, können keine Kommentare zu Bildern abgegeben werden.</item>
 </language>

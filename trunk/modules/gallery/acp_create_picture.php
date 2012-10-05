@@ -14,7 +14,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 	ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'gallery WHERE id = ?', array(ACP3_CMS::$uri->id)) == 1) {
 	require_once MODULES_DIR . 'gallery/functions.php';
 
-	$gallery = ACP3_CMS::$db2->fetchColumn('SELECT name FROM ' . DB_PRE . 'gallery WHERE id = ?', array(ACP3_CMS::$uri->id));
+	$gallery = ACP3_CMS::$db2->fetchColumn('SELECT title FROM ' . DB_PRE . 'gallery WHERE id = ?', array(ACP3_CMS::$uri->id));
 
 	ACP3_CMS::$breadcrumb
 	->append($gallery, ACP3_CMS::$uri->route('acp/gallery/edit/id_' . ACP3_CMS::$uri->id))
@@ -69,7 +69,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			ACP3_CMS::$view->assign('options', $options);
 		}
 
-		$galleries = ACP3_CMS::$db2->fetchAll('SELECT id, start, name FROM ' . DB_PRE . 'gallery ORDER BY start DESC');
+		$galleries = ACP3_CMS::$db2->fetchAll('SELECT id, start, title FROM ' . DB_PRE . 'gallery ORDER BY start DESC');
 		$c_galleries = count($galleries);
 		for ($i = 0; $i < $c_galleries; ++$i) {
 			$galleries[$i]['selected'] = selectEntry('gallery', $galleries[$i]['id'], ACP3_CMS::$uri->id);

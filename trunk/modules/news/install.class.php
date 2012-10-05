@@ -2,7 +2,7 @@
 
 class ACP3_NewsModuleInstaller extends ACP3_ModuleInstaller {
 	private $module_name = 'news';
-	private $schema_version = 30;
+	private $schema_version = 31;
 
 	protected function getName() {
 		return $this->module_name;
@@ -18,7 +18,7 @@ class ACP3_NewsModuleInstaller extends ACP3_ModuleInstaller {
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`start` DATETIME NOT NULL,
 				`end` DATETIME NOT NULL,
-				`headline` VARCHAR(120) NOT NULL,
+				`title` VARCHAR(120) NOT NULL,
 				`text` TEXT NOT NULL,
 				`readmore` TINYINT(1) UNSIGNED NOT NULL,
 				`comments` TINYINT(1) UNSIGNED NOT NULL,
@@ -27,7 +27,7 @@ class ACP3_NewsModuleInstaller extends ACP3_ModuleInstaller {
 				`target` TINYINT(1) UNSIGNED NOT NULL,
 				`link_title` VARCHAR(120) NOT NULL,
 				`user_id` INT UNSIGNED NOT NULL,
-				PRIMARY KEY (`id`), FULLTEXT KEY `index` (`headline`,`text`), INDEX `foreign_category_id` (`category_id`)
+				PRIMARY KEY (`id`), FULLTEXT KEY `index` (`title`,`text`), INDEX `foreign_category_id` (`category_id`)
 			) {engine} {charset};"
 		);
 	}
@@ -51,6 +51,10 @@ class ACP3_NewsModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	protected function schemaUpdates() {
-		return array();
+		return array(
+			31 => array(
+				"ALTER TABLE `{pre}news` CHANGE `headline` `title` VARCHAR(120) {charset} NOT NULL",
+			)
+		);
 	}
 }

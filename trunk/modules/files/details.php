@@ -23,7 +23,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		if (is_file($path . $file['file'])) {
 			// Schönen Dateinamen generieren
 			$ext = strrchr($file['file'], '.');
-			$filename = makeStringUrlSafe($file['link_title']) . $ext;
+			$filename = makeStringUrlSafe($file['title']) . $ext;
 
 			header('Content-Type: application/force-download');
 			header('Content-Transfer-Encoding: binary');
@@ -41,7 +41,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		// Brotkrümelspur
 		ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('files', 'files'), ACP3_CMS::$uri->route('files'))
 				   ->append($file['category_name'], ACP3_CMS::$uri->route('files/files/cat_' . $file['category_id']))
-				   ->append($file['link_title']);
+				   ->append($file['title']);
 
 		$settings = ACP3_Config::getSettings('files');
 

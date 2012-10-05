@@ -20,12 +20,12 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 	$c_pictures = count($pictures);
 
 	if ($c_pictures > 0) {
-		$gallery_name = ACP3_CMS::$db2->fetchColumn('SELECT name FROM ' . DB_PRE . 'gallery WHERE id = ?', array(ACP3_CMS::$uri->id));
+		$gallery_title = ACP3_CMS::$db2->fetchColumn('SELECT title FROM ' . DB_PRE . 'gallery WHERE id = ?', array(ACP3_CMS::$uri->id));
 
 		// Brotkrümelspur
 		ACP3_CMS::$breadcrumb
 		->append(ACP3_CMS::$lang->t('gallery', 'gallery'), ACP3_CMS::$uri->route('gallery'))
-		->append($gallery_name);
+		->append($gallery_title);
 
 		$settings = ACP3_Config::getSettings('gallery');
 
