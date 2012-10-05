@@ -12,7 +12,7 @@ if (defined('IN_ACP3') === false)
 
 if (ACP3_Validate::isNumber(ACP3_CMS::$uri->cat) &&
 	ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'categories WHERE id = ?', array(ACP3_CMS::$uri->cat)) == 1) {
-	$category = ACP3_CMS::$db2->fetchColumn('SELECT name FROM ' . DB_PRE . 'categories WHERE id = ?', array(ACP3_CMS::$uri->cat));
+	$category = ACP3_CMS::$db2->fetchColumn('SELECT title FROM ' . DB_PRE . 'categories WHERE id = ?', array(ACP3_CMS::$uri->cat));
 	ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('files', 'files'), ACP3_CMS::$uri->route('files'))
 			   ->append($category);
 
