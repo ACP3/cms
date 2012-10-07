@@ -84,7 +84,7 @@
 		<item key="php_version">PHP version</item>
 		<item key="pwd">Password</item>
 		<item key="pwd_repeat">Repeat password</item>
-		<item key="register_globals">Global registration of variables:</item>
+		<item key="register_globals">register_globals</item>
 		<item key="required">Required</item>
 		<item key="requirements">Requirements</item>
 		<item key="safe_mode">Safe mode</item>

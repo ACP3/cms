@@ -57,12 +57,16 @@
 		</fieldset>
 	</div>
 </div>
-<div class="form-actions" style="text-align:center">
 {if isset($stop_install)}
-{lang t="stop_installation"}
-{elseif isset($check_again)}
+<div class="alert alert-warning" style="text-align:center">
+	<strong>{lang t="stop_installation"}</strong>
+</div>
+{else}
+<div class="form-actions" style="text-align:center">
+{if isset($check_again)}
 	<a href="{$REQUEST_URI}" class="btn">{lang t="check_again"}</a>
 {else}
 	<a href="{uri args="install/configuration"}" class="btn">{lang t="configuration"}</a>
 {/if}
 </div>
+{/if}
