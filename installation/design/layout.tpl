@@ -24,7 +24,7 @@ $(document).ready(function($) {
 		var reload = true;
 		if ($('#config-form').length > 0 &&
 			$('#config-form').data('changed') == true) {
-			reload = confirm({lang t="language_change_warning"});
+			reload = confirm('{lang t="form_change_warning"}');
 		}
 		
 		if (reload == true)

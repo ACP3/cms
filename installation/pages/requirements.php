@@ -10,7 +10,7 @@
 if (defined('IN_INSTALL') === false)
 	exit;
 
-define('REQUIRED_PHP_VERSION', '5.3.0');
+define('REQUIRED_PHP_VERSION', '5.3.2');
 define('COLOR_ERROR', 'f00');
 define('COLOR_SUCCESS', '090');
 define('CLASS_ERROR', 'important');
@@ -31,6 +31,14 @@ $requirements[2]['name'] = $lang->t('gd_library');
 $requirements[2]['color'] = extension_loaded('gd') ? COLOR_SUCCESS : COLOR_ERROR;
 $requirements[2]['found'] = $lang->t($requirements[2]['color'] == COLOR_SUCCESS ? 'on' : 'off');
 $requirements[2]['required'] = $lang->t('on');
+$requirements[3]['name'] = $lang->t('register_globals');
+$requirements[3]['color'] = ((bool) ini_get('register_globals')) ? COLOR_ERROR : COLOR_SUCCESS;
+$requirements[3]['found'] = $lang->t(((bool) ini_get('register_globals')) ? 'on' : 'off');
+$requirements[3]['required'] = $lang->t('off');
+$requirements[4]['name'] = $lang->t('safe_mode');
+$requirements[4]['color'] = ((bool)ini_get('safe_mode')) ? COLOR_ERROR : COLOR_SUCCESS;
+$requirements[4]['found'] = $lang->t(((bool) ini_get('safe_mode')) ? 'on' : 'off');
+$requirements[4]['required'] = $lang->t('off');
 
 $tpl->assign('requirements', $requirements);
 
@@ -72,28 +80,21 @@ $tpl->assign('files_dirs', $files_dirs);
 
 // PHP Einstellungen
 $php_settings = array();
-$php_settings[0]['setting'] = $lang->t('error_messages');
-$php_settings[0]['class'] = (bool)ini_get('display_errors') ? CLASS_WARNING : CLASS_SUCCESS;
-$php_settings[0]['value'] = $lang->t((bool)ini_get('display_errors') ? 'on' : 'off');
-$php_settings[1]['setting'] = $lang->t('register_globals');
-$php_settings[1]['class'] = (bool)ini_get('register_globals') ? CLASS_WARNING : CLASS_SUCCESS;
-$php_settings[1]['value'] = $lang->t((bool)ini_get('register_globals') ? 'on' : 'off');
-$php_settings[2]['setting'] = $lang->t('maximum_uploadsize');
-$php_settings[2]['class'] = ini_get('post_max_size') > 0 ? CLASS_SUCCESS : CLASS_WARNING;
-$php_settings[2]['value'] = ini_get('post_max_size');
-$php_settings[3]['setting'] = $lang->t('safe_mode');
-$php_settings[3]['class'] =  (bool)ini_get('safe_mode') ? CLASS_WARNING : CLASS_SUCCESS;
-$php_settings[3]['value'] = $lang->t((bool)ini_get('safe_mode') ? 'on' : 'off');
-$php_settings[4]['setting'] = $lang->t('magic_quotes');
-$php_settings[4]['class'] =  (bool)ini_get('magic_quotes_gpc') ? CLASS_WARNING : CLASS_SUCCESS;
-$php_settings[4]['value'] = $lang->t((bool)ini_get('magic_quotes_gpc') ? 'on' : 'off');
+$php_settings[0]['setting'] = $lang->t('maximum_uploadsize');
+$php_settings[0]['class'] = ini_get('post_max_size') > 0 ? CLASS_SUCCESS : CLASS_WARNING;
+$php_settings[0]['value'] = ini_get('post_max_size');
+$php_settings[1]['setting'] = $lang->t('magic_quotes');
+$php_settings[1]['class'] =  (bool)ini_get('magic_quotes_gpc') ? CLASS_WARNING : CLASS_SUCCESS;
+$php_settings[1]['value'] = $lang->t((bool)ini_get('magic_quotes_gpc') ? 'on' : 'off');
 $tpl->assign('php_settings', $php_settings);
 
-if (version_compare(phpversion(), REQUIRED_PHP_VERSION, '<') ||
-	$requirements[1]['color'] == COLOR_ERROR ||
-	$requirements[2]['color'] == COLOR_ERROR) {
-	$tpl->assign('stop_install', true);
-} elseif ($check_again) {
+foreach ($requirements as $row) {
+	if ($row['color'] !== COLOR_SUCCESS) {
+		$tpl->assign('stop_install', true);
+	}
+}
+
+if ($check_again === true) {
 	$tpl->assign('check_again', true);
 }
 
