@@ -15,7 +15,7 @@
 {foreach $values.results as $row}
 				<li class="dataset-box">
 					<div class="header">
-						<a href="{$row.hyperlink}">{$row.headline}</a>
+						<a href="{$row.hyperlink}">{$row.title}</a>
 					</div>
 {if !empty($row.text)}
 					<div class="content">

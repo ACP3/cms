@@ -13,8 +13,10 @@ if (defined('IN_ACP3') === false)
 if (ACP3_Validate::isNumber(ACP3_CMS::$uri->cat) &&
 	ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'categories WHERE id = ?', array(ACP3_CMS::$uri->cat)) == 1) {
 	$category = ACP3_CMS::$db2->fetchColumn('SELECT title FROM ' . DB_PRE . 'categories WHERE id = ?', array(ACP3_CMS::$uri->cat));
-	ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('files', 'files'), ACP3_CMS::$uri->route('files'))
-			   ->append($category);
+
+	ACP3_CMS::$breadcrumb
+	->append(ACP3_CMS::$lang->t('files', 'files'), ACP3_CMS::$uri->route('files'))
+	->append($category);
 
 	$period = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
 	$files = ACP3_CMS::$db2->fetchAll('SELECT id, start, file, size, title FROM ' . DB_PRE . 'files WHERE category_id = :cat_id' . $period . ' ORDER BY start DESC, end DESC, id DESC', array('cat_id' => ACP3_CMS::$uri->cat, 'time' => ACP3_CMS::$date->getCurrentDateTime()));

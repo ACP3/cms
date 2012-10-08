@@ -2,7 +2,7 @@
 
 class ACP3_PollsModuleInstaller extends ACP3_ModuleInstaller {
 	private $module_name = 'polls';
-	private $schema_version = 30;
+	private $schema_version = 31;
 
 	protected function getName() {
 		return $this->module_name;
@@ -18,7 +18,7 @@ class ACP3_PollsModuleInstaller extends ACP3_ModuleInstaller {
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`start` DATETIME NOT NULL,
 				`end` DATETIME NOT NULL,
-				`question` VARCHAR(120) NOT NULL,
+				`title` VARCHAR(120) NOT NULL,
 				`multiple` TINYINT(1) UNSIGNED NOT NULL,
 				`user_id` INT UNSIGNED NOT NULL,
 				PRIMARY KEY (`id`)
@@ -57,6 +57,10 @@ class ACP3_PollsModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	protected function schemaUpdates() {
-		return array();
+		return array(
+			31 => array(
+				"ALTER TABLE `{pre}polls` CHANGE `question` `title` VARCHAR(120) {charset} NOT NULL",
+			)
+		);
 	}
 }

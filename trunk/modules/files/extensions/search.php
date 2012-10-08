@@ -26,12 +26,11 @@ $result_files = ACP3_CMS::$db2->fetchAll('SELECT id, title, text FROM ' . DB_PRE
 $c_result_files = count($result_files);
 
 if ($c_result_files > 0) {
-	$module_name = str_replace(MODULES_DIR, '', __DIR__);
-	$name =  ACP3_CMS::$lang->t($module_name, $module_name);
-	$results_mods[$name]['dir'] = $module_name;
+	$name =  ACP3_CMS::$lang->t('files', 'files');
+	$results_mods[$name]['dir'] = 'files';
 	for ($i = 0; $i < $c_result_files; ++$i) {
 		$results_mods[$name]['results'][$i]['hyperlink'] = ACP3_CMS::$uri->route('files/details/id_' . $result_files[$i]['id']);
-		$results_mods[$name]['results'][$i]['headline'] = $result_files[$i]['title'];
+		$results_mods[$name]['results'][$i]['title'] = $result_files[$i]['title'];
 		$results_mods[$name]['results'][$i]['text'] = shortenEntry($result_files[$i]['text'], 200, 0, '...');
 	}
 }

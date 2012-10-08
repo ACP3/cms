@@ -29,15 +29,15 @@ if (isset($_POST['submit']) === true) {
 
 		$_POST['search_term'] = str_encode($_POST['search_term']);
 		$_POST['sort'] = strtoupper($_POST['sort']);
-		$results = array();
+		$results_mods = array();
 		foreach ($_POST['mods'] as $module) {
 			if (ACP3_Modules::check($module, 'extensions/search') === true) {
-				include MODULES_DIR . $module . '/extensions/search.php';
+				include_once MODULES_DIR . $module . '/extensions/search.php';
 			}
 		}
-		if (!empty($results)) {
-			ksort($results);
-			ACP3_CMS::$view->assign('results_mods', $results);
+		if (!empty($results_mods)) {
+			ksort($results_mods);
+			ACP3_CMS::$view->assign('results_mods', $results_mods);
 		} else {
 			ACP3_CMS::$view->assign('no_search_results', sprintf(ACP3_CMS::$lang->t('search', 'no_search_results'), $_POST['search_term']));
 		}

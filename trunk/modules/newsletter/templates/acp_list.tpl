@@ -34,7 +34,7 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
 {/if}
 				<td>{$row.date}</td>
-				<td>{check_access mode="link" path="acp/newsletter/edit/id_`$row.id`" title=$row.subject}</td>
+				<td>{check_access mode="link" path="acp/newsletter/edit/id_`$row.id`" title=$row.title}</td>
 				<td>{$row.status}</td>
 {if $can_send}
 				<td><a href="{uri args="acp/newsletter/send/id_`$row.id`"}" title="{lang t="newsletter|acp_send"}">{icon path="16/mail_send" width="16" height="16" alt="{lang t="newsletter|send"}"}</a></td>

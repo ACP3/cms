@@ -26,9 +26,8 @@ $result_news = ACP3_CMS::$db2->fetchAll('SELECT id, title, text FROM ' . DB_PRE 
 $c_result_news = count($result_news);
 
 if ($c_result_news > 0) {
-	$module_name = str_replace(MODULES_DIR, '', __DIR__);
-	$name =  ACP3_CMS::$lang->t($module_name, $module_name);
-	$results_mods[$name]['dir'] = $module_name;
+	$name =  ACP3_CMS::$lang->t('news', 'news');
+	$results_mods[$name]['dir'] = 'news';
 	for ($i = 0; $i < $c_result_news; ++$i) {
 		$results_mods[$name]['results'][$i]['hyperlink'] = ACP3_CMS::$uri->route('news/details/id_' . $result_news[$i]['id']);
 		$results_mods[$name]['results'][$i]['title'] = $result_news[$i]['title'];

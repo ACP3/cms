@@ -58,7 +58,7 @@
 	</div>
 </div>
 {if isset($stop_install)}
-<div class="alert alert-warning" style="text-align:center">
+<div class="alert alert-error" style="text-align:center">
 	<strong>{lang t="stop_installation"}</strong>
 </div>
 {else}

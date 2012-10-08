@@ -13,8 +13,8 @@
 			</div>
 			<div id="tab-2" class="tab-pane">
 				<div class="control-group">
-					<label for="question" class="control-label">{lang t="polls|question"}</label>
-					<div class="controls"><input type="text" name="question" id="question" value="{$question}" maxlength="120"></div>
+					<label for="title" class="control-label">{lang t="polls|question"}</label>
+					<div class="controls"><input type="text" name="title" id="title" value="{$title}" maxlength="120"></div>
 				</div>
 {foreach $answers as $row}
 				<div class="control-group">

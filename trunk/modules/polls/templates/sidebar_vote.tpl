@@ -2,7 +2,7 @@
 	<li class="nav-header">{lang t="polls|latest_poll"}</li>
 {if isset($sidebar_polls)}
 	<li>
-		<h5>{$sidebar_polls.question}</h5>
+		<h5>{$sidebar_polls.title}</h5>
 		<form action="{uri args="polls/vote/id_`$sidebar_polls.id`"}" method="post" accept-charset="UTF-8">
 			<ul class="unstyled">
 				<li>
