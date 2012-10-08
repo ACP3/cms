@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$polls = ACP3_CMS::$db2->fetchAll('SELECT id, start, end, question FROM ' . DB_PRE . 'polls ORDER BY start DESC, end DESC, id DESC');
+$polls = ACP3_CMS::$db2->fetchAll('SELECT id, start, end, title FROM ' . DB_PRE . 'polls ORDER BY start DESC, end DESC, id DESC');
 $c_polls = count($polls);
 
 if ($c_polls > 0) {

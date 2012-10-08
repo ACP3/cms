@@ -11,8 +11,8 @@ if (defined('IN_ADM') === false)
 	exit;
 
 if (isset($_POST['submit']) === true) {
-	if (strlen($_POST['subject']) < 3)
-		$errors['subject'] = ACP3_CMS::$lang->t('newsletter', 'subject_to_short');
+	if (strlen($_POST['title']) < 3)
+		$errors['title'] = ACP3_CMS::$lang->t('newsletter', 'subject_to_short');
 	if (strlen($_POST['text']) < 3)
 		$errors['text'] = ACP3_CMS::$lang->t('newsletter', 'text_to_short');
 
@@ -27,15 +27,15 @@ if (isset($_POST['submit']) === true) {
 		$insert_values = array(
 			'id' => '',
 			'date' => ACP3_CMS::$date->getCurrentDateTime(),
-			'subject' => str_encode($_POST['subject']),
+			'title' => str_encode($_POST['title']),
 			'text' => str_encode($_POST['text'], true),
 			'status' => $_POST['test'] == 1 ? '0' : (int) $_POST['action'],
 			'user_id' => ACP3_CMS::$auth->getUserId(),
 		);
-		$bool = ACP3_CMS::$db2->insert(DB_PRE . 'newsletter_archive', $insert_values);
+		$bool = ACP3_CMS::$db2->insert(DB_PRE . 'newsletters', $insert_values);
 
 		if ($_POST['action'] == 1 && $bool !== false) {
-			$subject = str_encode($_POST['subject'], true);
+			$subject = str_encode($_POST['title'], true);
 			$body = str_encode($_POST['text'], true) . "\n-- \n" . html_entity_decode($settings['mailsig'], ENT_QUOTES, 'UTF-8');
 
 			// Testnewsletter
@@ -60,7 +60,7 @@ if (isset($_POST['submit']) === true) {
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : array('subject' => '', 'text' => ''));
+	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : array('title' => '', 'text' => ''));
 
 	$test = array();
 	$test[0]['value'] = '1';

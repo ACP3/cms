@@ -4,8 +4,8 @@
 {include_js module="newsletter" file="acp"}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="control-group">
-		<label for="subject" class="control-label">{lang t="newsletter|subject"}</label>
-		<div class="controls"><input type="text" name="subject" id="subject" value="{$form.subject}" required></div>
+		<label for="title" class="control-label">{lang t="newsletter|subject"}</label>
+		<div class="controls"><input type="text" name="title" id="title" value="{$form.title}" required></div>
 	</div>
 	<div class="control-group">
 		<label for="text" class="control-label">{lang t="newsletter|text"}</label>
@@ -20,7 +20,6 @@
 				<label for="action-{$row.value}" class="btn">{$row.lang}</label>
 {/foreach}
 			</div>
-			<p class="help-block">{lang t="newsletter|action_description"}</p>
 		</div>
 	</div>
 	<div id="test-newsletter" class="control-group">

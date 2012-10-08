@@ -11,7 +11,6 @@
 	<item key="acp_send">Send newsletter</item>
 	<item key="acp_settings">Settings</item>
 	<item key="action">Action</item>
-	<item key="action_description">Please choose what to do with the newsletter.</item>
 	<item key="activate">Activate newsletter account</item>
 	<item key="activate_account">Active newsletter account</item>
 	<item key="activate_error">While activating the newsletter account an error has occured.</item>

@@ -24,7 +24,7 @@ if (!isset($entries)) {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
 	foreach ($marked_entries as $entry) {
-		$bool = ACP3_CMS::$db2->delete(DB_PRE . 'newsletter_archive', array('id' => $entry));
+		$bool = ACP3_CMS::$db2->delete(DB_PRE . 'newsletters', array('id' => $entry));
 	}
 	setRedirectMessage($bool, ACP3_CMS::$lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/newsletter');
 } else {

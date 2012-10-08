@@ -2,7 +2,7 @@
 
 class ACP3_NewsletterModuleInstaller extends ACP3_ModuleInstaller {
 	private $module_name = 'newsletter';
-	private $schema_version = 30;
+	private $schema_version = 31;
 
 	public function __construct() {
 		$this->special_resources = array(
@@ -26,10 +26,10 @@ class ACP3_NewsletterModuleInstaller extends ACP3_ModuleInstaller {
 				`hash` VARCHAR(32) NOT NULL,
 				PRIMARY KEY (`id`)
 			) {engine} {charset};",
-			"CREATE TABLE `{pre}newsletter_archive` (
+			"CREATE TABLE `{pre}newsletters` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`date` DATETIME NOT NULL,
-				`subject` VARCHAR(120) NOT NULL,
+				`title` VARCHAR(120) NOT NULL,
 				`text` TEXT NOT NULL,
 				`status` TINYINT(1) UNSIGNED NOT NULL,
 				`user_id` INT UNSIGNED NOT NULL,
@@ -41,7 +41,7 @@ class ACP3_NewsletterModuleInstaller extends ACP3_ModuleInstaller {
 	protected function removeTables() {
 		return array(
 			"DROP TABLE `{pre}newsletter_accounts`;",
-			"DROP TABLE `{pre}newsletter_archive`;"
+			"DROP TABLE `{pre}newsletters`;"
 		);
 	}
 
@@ -53,6 +53,11 @@ class ACP3_NewsletterModuleInstaller extends ACP3_ModuleInstaller {
 	}
 
 	protected function schemaUpdates() {
-		return array();
+		return array(
+			31 => array(
+				"RENAME TABLE `{pre}newsletter_archive` TO `{pre}newsletters`",
+				"ALTER TABLE `{pre}newsletters` CHANGE `subject` `title` VARCHAR(120) {charset} NOT NULL",
+			)
+		);
 	}
 }

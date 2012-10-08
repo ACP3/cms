@@ -28,7 +28,7 @@
 				<td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
 {/if}
 				<td>{$row.period}</td>
-				<td>{check_access mode="link" path="acp/polls/edit/id_`$row.id`" title=$row.question}</td>
+				<td>{check_access mode="link" path="acp/polls/edit/id_`$row.id`" title=$row.title}</td>
 				<td>{$row.id}</td>
 			</tr>
 {/foreach}

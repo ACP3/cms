@@ -67,11 +67,11 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		}
 		setRedirectMessage($bool, $text, 'polls/result/id_' . ACP3_CMS::$uri->id);
 	} else {
-		$question = ACP3_CMS::$db2->fetchAssoc('SELECT question, multiple FROM ' . DB_PRE . 'polls WHERE id = ?', array(ACP3_CMS::$uri->id));
+		$poll = ACP3_CMS::$db2->fetchAssoc('SELECT title, multiple FROM ' . DB_PRE . 'polls WHERE id = ?', array(ACP3_CMS::$uri->id));
 		$answers = ACP3_CMS::$db2->fetchAll('SELECT id, text FROM ' . DB_PRE . 'poll_answers WHERE poll_id = ? ORDER BY id ASC', array(ACP3_CMS::$uri->id));
 
-		ACP3_CMS::$view->assign('question', $question['question']);
-		ACP3_CMS::$view->assign('multiple', $question['multiple']);
+		ACP3_CMS::$view->assign('question', $poll['title']);
+		ACP3_CMS::$view->assign('multiple', $poll['multiple']);
 		ACP3_CMS::$view->assign('answers', $answers);
 
 		ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('polls/vote.tpl'));

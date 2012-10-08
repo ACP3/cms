@@ -21,7 +21,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 	ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('news', 'news'), ACP3_CMS::$uri->route('news'));
 	if ($settings['category_in_breadcrumb'] == 1) {
 		// Brotkrümelspur
-		$category = ACP3_CMS::$db2->fetchColumn('SELECT name FROM ' . DB_PRE . 'categories WHERE id = ?', array($news['category_id']));
+		$category = ACP3_CMS::$db2->fetchColumn('SELECT title FROM ' . DB_PRE . 'categories WHERE id = ?', array($news['category_id']));
 		if (!empty($category)) {
 			ACP3_CMS::$breadcrumb->append($category, ACP3_CMS::$uri->route('news/list/cat_' . $news['category_id']));
 		}

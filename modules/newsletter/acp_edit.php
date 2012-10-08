@@ -11,7 +11,7 @@ if (defined('IN_ADM') === false)
 	exit;
 
 if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
-	ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'newsletter_archive WHERE id = ?', array(ACP3_CMS::$uri->id)) == 1) {
+	ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'newsletters WHERE id = ?', array(ACP3_CMS::$uri->id)) == 1) {
 	// Brotkrümelspur
 	ACP3_CMS::$breadcrumb
 	->append(ACP3_CMS::$lang->t('newsletter', 'newsletter'), ACP3_CMS::$uri->route('acp/newsletter'))
@@ -19,7 +19,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 
 	if (isset($_POST['submit']) === true) {
 		if (strlen($_POST['subject']) < 3)
-			$errors['subject'] = ACP3_CMS::$lang->t('newsletter', 'subject_to_short');
+			$errors['title'] = ACP3_CMS::$lang->t('newsletter', 'subject_to_short');
 		if (strlen($_POST['text']) < 3)
 			$errors['text'] = ACP3_CMS::$lang->t('newsletter', 'text_to_short');
 
@@ -33,15 +33,15 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			// Newsletter archivieren
 			$update_values = array(
 				'date' => ACP3_CMS::$date->getCurrentDateTime(),
-				'subject' => str_encode($_POST['subject']),
+				'title' => str_encode($_POST['title']),
 				'text' => str_encode($_POST['text'], true),
 				'status' => $_POST['test'] == 1 ? '0' : (int) $_POST['action'],
 				'user_id' => ACP3_CMS::$auth->getUserId(),
 			);
-			$bool = ACP3_CMS::$db2->update(DB_PRE . 'newsletter_archive', $update_values, array('id' => ACP3_CMS::$uri->id));
+			$bool = ACP3_CMS::$db2->update(DB_PRE . 'newsletters', $update_values, array('id' => ACP3_CMS::$uri->id));
 
 			if ($_POST['action'] == 1 && $bool !== false) {
-				$subject = str_encode($_POST['subject'], true);
+				$subject = str_encode($_POST['title'], true);
 				$body = str_encode($_POST['text'], true) . "\n" . html_entity_decode($settings['mailsig'], ENT_QUOTES, 'UTF-8');
 
 				// Testnewsletter
@@ -66,7 +66,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-		$newsletter = ACP3_CMS::$db2->fetchAssoc('SELECT subject, text FROM ' . DB_PRE . 'newsletter_archive WHERE id = ?', array(ACP3_CMS::$uri->id));
+		$newsletter = ACP3_CMS::$db2->fetchAssoc('SELECT title, text FROM ' . DB_PRE . 'newsletters WHERE id = ?', array(ACP3_CMS::$uri->id));
 
 		ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : $newsletter);
 

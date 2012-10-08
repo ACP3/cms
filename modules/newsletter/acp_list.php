@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$newsletter = ACP3_CMS::$db2->fetchAll('SELECT id, date, subject, status FROM ' . DB_PRE . 'newsletter_archive ORDER BY id DESC');
+$newsletter = ACP3_CMS::$db2->fetchAll('SELECT id, date, title, status FROM ' . DB_PRE . 'newsletters ORDER BY id DESC');
 $c_newsletter = count($newsletter);
 
 if ($c_newsletter > 0) {

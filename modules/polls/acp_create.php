@@ -13,8 +13,8 @@ if (defined('IN_ADM') === false)
 if (isset($_POST['submit']) === true) {
 	if (ACP3_Validate::date($_POST['start'], $_POST['end']) === false)
 		$errors[] = ACP3_CMS::$lang->t('system', 'select_date');
-	if (empty($_POST['question']))
-		$errors['question'] = ACP3_CMS::$lang->t('polls', 'type_in_question');
+	if (empty($_POST['title']))
+		$errors['title'] = ACP3_CMS::$lang->t('polls', 'type_in_question');
 	$i = 0;
 	foreach ($_POST['answers'] as $row) {
 		if (!empty($row))
@@ -32,7 +32,7 @@ if (isset($_POST['submit']) === true) {
 			'id' => '',
 			'start' => ACP3_CMS::$date->toSQL($_POST['start']),
 			'end' => ACP3_CMS::$date->toSQL($_POST['end']),
-			'question' => str_encode($_POST['question']),
+			'title' => str_encode($_POST['title']),
 			'multiple' => isset($_POST['multiple']) ? '1' : '0',
 			'user_id' => ACP3_CMS::$auth->getUserId(),
 		);
@@ -83,7 +83,7 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 
 	// Übergabe der Daten an Smarty
 	ACP3_CMS::$view->assign('publication_period', ACP3_CMS::$date->datepicker(array('start', 'end')));
-	ACP3_CMS::$view->assign('question', isset($_POST['question']) ? $_POST['question'] : '');
+	ACP3_CMS::$view->assign('title', isset($_POST['title']) ? $_POST['title'] : '');
 	ACP3_CMS::$view->assign('answers', $answers);
 	ACP3_CMS::$view->assign('multiple', selectEntry('multiple', '1', '0', 'checked'));
 	ACP3_CMS::$view->assign('disable', count($answers) < 10 ? false : true);

@@ -10,7 +10,7 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$polls = ACP3_CMS::$db2->fetchAll('SELECT p.id, p.start, p.end, p.question, COUNT(pv.poll_id) AS votes FROM ' . DB_PRE . 'polls AS p LEFT JOIN ' . DB_PRE . 'poll_votes AS pv ON(p.id = pv.poll_id) WHERE p.start <= ? GROUP BY p.id ORDER BY p.start DESC, p.end DESC, p.id DESC', array(ACP3_CMS::$date->getCurrentDateTime()));
+$polls = ACP3_CMS::$db2->fetchAll('SELECT p.id, p.start, p.end, p.title, COUNT(pv.poll_id) AS votes FROM ' . DB_PRE . 'polls AS p LEFT JOIN ' . DB_PRE . 'poll_votes AS pv ON(p.id = pv.poll_id) WHERE p.start <= ? GROUP BY p.id ORDER BY p.start DESC, p.end DESC, p.id DESC', array(ACP3_CMS::$date->getCurrentDateTime()));
 $c_polls = count($polls);
 
 if ($c_polls > 0) {
