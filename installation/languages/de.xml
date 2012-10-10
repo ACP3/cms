@@ -3,6 +3,7 @@
 	<info>
 		<name>Deutsch</name>
 		<author>Tino Goratsch</author>
+		<direction>ltr</direction>
 	</info>
 	<strings>
 		<item key="accept">Akzeptieren</item>

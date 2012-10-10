@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{$LANG}">
+<html lang="{$LANG}" dir="{$LANG_DIRECTION}">
 <head>
 <title>{$HEAD_TITLE}</title>
 {$META}

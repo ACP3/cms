@@ -52,4 +52,4 @@ if (isset($_POST['update'])) {
 	ACP3_Cache::purge('tpl_compiled');
 }
 
-$content = $tpl->fetch('db_update.tpl');
+$content = $tpl->fetch('pages/db_update.tpl');

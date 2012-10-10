@@ -105,13 +105,15 @@ if (!empty($_COOKIE['ACP3_INSTALLER_LANG']) && !preg_match('=/=', $_COOKIE['ACP3
 } else {
 	define('LANG', ACP3_Lang::parseAcceptLanguage());
 }
-
 $tpl->assign('LANGUAGES', languagesDropdown(LANG));
 
 $tpl->assign('PHP_SELF', PHP_SELF);
 $tpl->assign('INSTALLER_DIR', INSTALLER_DIR);
 $tpl->assign('ROOT_DIR', substr(INSTALLER_DIR, 0, -13));
 $tpl->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI'], ENT_QUOTES));
+
+$lang_info = ACP3_XML::parseXmlFile(ACP3_ROOT . 'installation/languages/' . LANG . '.xml', '/language/info');
+$tpl->assign('LANG_DIRECTION', isset($lang_info['direction']) ? $lang_info['direction'] : 'ltr');
 $tpl->assign('LANG', LANG);
 
 require INSTALLER_INCLUDES_DIR . 'classes/InstallerLang.class.php';
@@ -137,5 +139,5 @@ if ($is_file === true) {
 	$tpl->assign('CONTENT', $content);
 } else {
 	$tpl->assign('TITLE', $lang->t('error_404'));
-	$tpl->assign('CONTENT', $tpl->fetch('404.tpl'));
+	$tpl->assign('CONTENT', $tpl->fetch('pages/404.tpl'));
 }

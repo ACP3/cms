@@ -4,4 +4,5 @@
 	<description>Official english ACP3 language pack.</description>
 	<author>Tino Goratsch</author>
 	<version core="true"/>
+	<direction>ltr</direction>
 </language>
