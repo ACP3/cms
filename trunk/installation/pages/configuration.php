@@ -157,7 +157,7 @@ if (isset($_POST['submit'])) {
 		ACP3_Config::setSettings('contact', array('mail' => $_POST['mail'], 'disclaimer' => $lang->t('disclaimer')));
 		ACP3_Config::setSettings('newsletter', array('mail' => $_POST['mail'], 'mailsig' => $lang->t('sincerely') . "\n\n" . $lang->t('newsletter_mailsig')));
 
-		$content = $tpl->fetch('result.tpl');
+		$content = $tpl->fetch('pages/result.tpl');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -178,5 +178,5 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 
 	$tpl->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
-	$content = $tpl->fetch('configuration.tpl');
+	$content = $tpl->fetch('pages/configuration.tpl');
 }

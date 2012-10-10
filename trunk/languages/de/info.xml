@@ -4,4 +4,5 @@
 	<description>Offizielles deutsches Sprachpaket für das ACP3.</description>
 	<author>Tino Goratsch</author>
 	<version core="true"/>
+	<direction>ltr</direction>
 </language>

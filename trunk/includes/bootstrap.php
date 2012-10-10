@@ -224,8 +224,11 @@ class ACP3_CMS {
 		self::$view->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
 		self::$view->assign('ROOT_DIR', ROOT_DIR);
 		self::$view->assign('DESIGN_PATH', DESIGN_PATH);
-		self::$view->assign('LANG', CONFIG_LANG);
 		self::$view->assign('UA_IS_MOBILE', isMobileBrowser());
+
+		$lang_info = ACP3_XML::parseXmlFile(ACP3_ROOT . 'languages/' . self::$lang->getLanguage() . '/info.xml', '/language');
+		self::$view->assign('LANG_DIRECTION', isset($lang_info['direction']) ? $lang_info['direction'] : 'ltr');
+		self::$view->assign('LANG', CONFIG_LANG);
 	}
 
 	/**

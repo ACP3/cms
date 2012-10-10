@@ -398,4 +398,4 @@ if (isset($_POST['update'])) {
 }
 
 $tpl->assign('legacy', true);
-$content = $tpl->fetch('db_update.tpl');
+$content = $tpl->fetch('pages/db_update.tpl');

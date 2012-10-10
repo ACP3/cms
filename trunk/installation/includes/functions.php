@@ -28,7 +28,7 @@ function errorBox($errors)
 		$errors = (array) $errors;
 	}
 	$tpl->assign('error_box', array('non_integer_keys' => $non_integer_keys, 'errors' => $errors));
-	return $tpl->fetch('error_box.tpl');
+	return $tpl->fetch('pages/error_box.tpl');
 }
 /**
  * Führt die Datenbankschema-Änderungen durch

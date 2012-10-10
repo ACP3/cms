@@ -61,7 +61,7 @@ class ACP3_Lang
 	}
 
 	/**
-	 * Cached die Sprachfiles, um diese schneller verarbeiten zu können
+	 * Cacht die Sprachfiles, um diese schneller verarbeiten zu können
 	 */
 	public function setLanguageCache()
 	{

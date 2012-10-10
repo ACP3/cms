@@ -10,4 +10,4 @@
 if (defined('IN_INSTALL') === false)
 	exit;
 
-$content = $tpl->fetch('licence.tpl');
+$content = $tpl->fetch('pages/licence.tpl');

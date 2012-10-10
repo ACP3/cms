@@ -98,4 +98,4 @@ if ($check_again === true) {
 	$tpl->assign('check_again', true);
 }
 
-$content = $tpl->fetch('requirements.tpl');
+$content = $tpl->fetch('pages/requirements.tpl');
