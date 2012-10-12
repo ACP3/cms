@@ -6,7 +6,7 @@ class ACP3_NewsletterModuleInstaller extends ACP3_ModuleInstaller {
 
 	public function __construct() {
 		$this->special_resources = array(
-			'acp_sent' => 4,
+			'acp_send' => 4,
 		);
 	}
 
