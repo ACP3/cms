@@ -2,7 +2,7 @@
 
 class ACP3_NewsletterModuleInstaller extends ACP3_ModuleInstaller {
 	private $module_name = 'newsletter';
-	private $schema_version = 31;
+	private $schema_version = 32;
 
 	public function __construct() {
 		$this->special_resources = array(
@@ -57,6 +57,9 @@ class ACP3_NewsletterModuleInstaller extends ACP3_ModuleInstaller {
 			31 => array(
 				"RENAME TABLE `{pre}newsletter_archive` TO `{pre}newsletters`",
 				"ALTER TABLE `{pre}newsletters` CHANGE `subject` `title` VARCHAR(120) {charset} NOT NULL",
+			),
+			32 => array(
+				"INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'archive', '', 1);",
 			)
 		);
 	}

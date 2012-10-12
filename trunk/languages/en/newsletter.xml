@@ -16,10 +16,13 @@
 	<item key="activate_error">While activating the newsletter account an error has occured.</item>
 	<item key="activate_success">The newsletter account has been successfully activated and may now be used.</item>
 	<item key="already_sent">Already sent</item>
+	<item key="archive">Archive</item>
+	<item key="select_newsletter">To display a newsletter please select one from the above dropdown list.</item>
 	<item key="create_save_error">While sending respectively saving the newsletter an error has occured.</item>
 	<item key="create_success">The newsletter has been successfully sent.</item>
 	<item key="list">Subscribe/Unsubscribe the newsletter</item>
 	<item key="mailsig">E-mail signature</item>
+	<item key="missed_out_newsletter">Missed out a newsletter edition?</item>
 	<item key="mod_description">This module is responsible for the newsletter.</item>
 	<item key="newsletter">Newsletter</item>
 	<item key="newsletter_accounts">Newsletter accounts</item>

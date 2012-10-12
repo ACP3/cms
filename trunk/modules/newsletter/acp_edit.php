@@ -18,7 +18,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 	->append(ACP3_CMS::$lang->t('newsletter', 'acp_edit'));
 
 	if (isset($_POST['submit']) === true) {
-		if (strlen($_POST['subject']) < 3)
+		if (strlen($_POST['title']) < 3)
 			$errors['title'] = ACP3_CMS::$lang->t('newsletter', 'subject_to_short');
 		if (strlen($_POST['text']) < 3)
 			$errors['text'] = ACP3_CMS::$lang->t('newsletter', 'text_to_short');

@@ -36,16 +36,12 @@ class ACP3_Breadcrumb {
 		// Frontendbereich
 		if (defined('IN_ADM') === false) {
 			$in = array(ACP3_CMS::$uri->query, ACP3_CMS::$uri->getCleanQuery(), ACP3_CMS::$uri->mod . '/' . ACP3_CMS::$uri->file . '/', ACP3_CMS::$uri->mod);
-			$pages = ACP3_CMS::$db2->executeQuery('SELECT p.title, p.uri, p.left_id, p.right_id FROM ' . DB_PRE . 'menu_items AS c, ' . DB_PRE . 'menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) ORDER BY p.left_id DESC', array($in), array(\Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetchAll();
-			$c_pages = count($pages);
+			$items = ACP3_CMS::$db2->executeQuery('SELECT p.title, p.uri, p.left_id, p.right_id FROM ' . DB_PRE . 'menu_items AS c, ' . DB_PRE . 'menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) ORDER BY p.left_id ASC', array($in), array(\Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetchAll();
+			$c_items = count($items);
 
 			// Dynamische Seite (ACP3 intern)
-			if ($c_pages > 0) {
-				for ($i = $c_pages - 1; $i >= 0; --$i) {
-					if ($pages[0]['left_id'] >= $pages[$i]['left_id'] && $pages[0]['right_id'] <= $pages[$i]['right_id']) {
-						$this->append($pages[$i]['title'], ACP3_CMS::$uri->route($pages[$i]['uri']));
-					}
-				}
+			for ($i = 0; $i < $c_items; ++$i) {
+				$this->append($items[$i]['title'], ACP3_CMS::$uri->route($items[$i]['uri']));
 			}
 		}
 	}
@@ -209,6 +205,9 @@ class ACP3_Breadcrumb {
 		// Falls noch keine Brotkrümelspur gesetzt sein sollte, dies nun tun
 		} elseif (empty($this->steps)) {
 			$this->append($file === 'list' ? ACP3_CMS::$lang->t($module, $module) : ACP3_CMS::$lang->t($module, $file), ACP3_CMS::$uri->route($module . '/' . $file));
+		// Der Modulunterseite den richtigen Seitentitel zuweisen
+		} elseif ($this->steps[count($this->steps) - 1]['uri'] !== ACP3_CMS::$uri->route(ACP3_CMS::$uri->query)) {
+			$this->replaceAnchestor(ACP3_CMS::$lang->t($module, $file), ACP3_CMS::$uri->route(ACP3_CMS::$uri->query));
 		}
 
 		// Brotkrümelspur ausgeben

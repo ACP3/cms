@@ -19,6 +19,7 @@
 {/if}
 	<div class="form-actions">
 		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
+		<a href="{uri args="newsletter/archive"}" class="btn btn-link">{lang t="newsletter|missed_out_newsletter"}</a>
 		{$form_token}
 	</div>
 </form>
