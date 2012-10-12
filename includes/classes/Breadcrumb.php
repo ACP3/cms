@@ -206,7 +206,8 @@ class ACP3_Breadcrumb {
 		} elseif (empty($this->steps)) {
 			$this->append($file === 'list' ? ACP3_CMS::$lang->t($module, $module) : ACP3_CMS::$lang->t($module, $file), ACP3_CMS::$uri->route($module . '/' . $file));
 		// Der Modulunterseite den richtigen Seitentitel zuweisen
-		} elseif ($this->steps[count($this->steps) - 1]['uri'] !== ACP3_CMS::$uri->route(ACP3_CMS::$uri->query)) {
+		} elseif ($module !== 'articles' && $file !== 'list' &&
+			$this->steps[count($this->steps) - 1]['uri'] !== ACP3_CMS::$uri->route(ACP3_CMS::$uri->query)) {
 			$this->replaceAnchestor(ACP3_CMS::$lang->t($module, $file), ACP3_CMS::$uri->route(ACP3_CMS::$uri->query));
 		}
 
