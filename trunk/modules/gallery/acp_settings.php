@@ -43,10 +43,12 @@ if (isset($_POST['submit']) === true) {
 			'maxheight' => (int) $_POST['maxheight'],
 			'filesize' => (int) $_POST['filesize'],
 			'overlay' => $_POST['overlay'],
-			'comments' => $_POST['comments'],
 			'dateformat' => str_encode($_POST['dateformat']),
 			'sidebar' => (int) $_POST['sidebar'],
 		);
+		if ($comments_active === true)
+			$data['comments'] = $_POST['comments'];
+
 		$bool = ACP3_Config::setSettings('gallery', $data);
 
 		// Falls sich die anzuzeigenden Bildgrößen geändert haben, die gecacheten Bilder löschen

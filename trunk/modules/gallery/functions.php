@@ -83,7 +83,7 @@ function generatePictureAliases($gallery_id)
 	$seo_description = ACP3_SEO::getDescription('gallery/pics/id_' . $gallery_id);
 
 	for ($i = 0; $i < $c_pictures; ++$i) {
-		$bool = ACP3_SEO::insertUriAlias(!empty($alias) ? $alias . '-' . $pictures[$i]['id'] : '', 'gallery/details/id_' . $pictures[$i]['id'], $seo_keywords, $seo_description);
+		$bool = ACP3_SEO::insertUriAlias('gallery/details/id_' . $pictures[$i]['id'], !empty($alias) ? $alias . '-' . $pictures[$i]['id'] : '', $seo_keywords, $seo_description);
 	}
 
 	return $bool;
