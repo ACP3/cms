@@ -105,6 +105,8 @@ class ACP3_SEO
 	{
 		$description = self::getDescription(ACP3_CMS::$uri->getCleanQuery());
 		if (empty($description))
+			$description = self::getDescription(ACP3_CMS::$uri->mod . '/' . ACP3_CMS::$uri->file);
+		if (empty($description))
 			$description = self::getDescription(ACP3_CMS::$uri->mod);
 
 		return !empty($description) ? $description : CONFIG_SEO_META_DESCRIPTION;
@@ -119,6 +121,8 @@ class ACP3_SEO
 	{
 		$keywords = self::getKeywords(ACP3_CMS::$uri->getCleanQuery());
 		if (empty($keywords))
+			$keywords = self::getKeywords(ACP3_CMS::$uri->mod . '/' . ACP3_CMS::$uri->file);
+		if (empty($keywords))
 			$keywords = self::getKeywords(ACP3_CMS::$uri->mod);
 
 		return strtolower(!empty($keywords) ? $keywords : CONFIG_SEO_META_KEYWORDS);
@@ -132,6 +136,8 @@ class ACP3_SEO
 	public static function getCurrentRobotsSetting()
 	{
 		$robots = self::getRobotsSetting(ACP3_CMS::$uri->getCleanQuery());
+		if (empty($robots))
+			$robots = self::getRobotsSetting(ACP3_CMS::$uri->mod . '/' . ACP3_CMS::$uri->file);
 		if (empty($robots))
 			$robots = self::getRobotsSetting(ACP3_CMS::$uri->mod);
 
