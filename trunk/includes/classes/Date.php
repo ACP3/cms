@@ -111,7 +111,7 @@ class ACP3_Date {
 			)
 		);
 		if ($with_time === true)
-			$datepicker['params']['timeFormat'] = '\'hh:mm\'';
+			$datepicker['params']['timeFormat'] = '\'HH:mm\'';
 
 		// Zusätzliche Datepicker-Parameter hinzufügen
 		if (!empty($params) && is_array($params) === true) {
