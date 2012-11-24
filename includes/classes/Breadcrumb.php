@@ -196,7 +196,7 @@ class ACP3_Breadcrumb {
 					$this->append(ACP3_CMS::$lang->t($module, $file));
 				}
 			// Falls bereits Stufen gesetzt wurden, Links für das Admin-Panel und
-			// die Modulverwaltung in ungedrehter Reihenfolge voranstellen
+			// die Modulverwaltung in umgedrehter Reihenfolge voranstellen
 			} else {
 				if ($module !== 'acp')
 					$this->prepend(ACP3_CMS::$lang->t($module, $module), ACP3_CMS::$uri->route('acp/' . $module));
