@@ -252,9 +252,9 @@ function splitTextIntoPages($text, $path)
 			$matches = array();
 			preg_match_all($regex, $text, $matches);
 
-			$currentPage = ACP3_Validate::isNumber(ACP3_CMS::$uri->page) === true && ACP3_CMS::$uri->page <= $c_pages ? ACP3_CMS::$uri->page - 1 : 0;
-			$next_page = $currentPage + 2 <= $c_pages ? ACP3_CMS::$uri->route($path, 1) . 'page_' . ($currentPage + 2) . '/' : '';
-			$previous_page = $currentPage > 0 ? ACP3_CMS::$uri->route($path, 1) . 'page_' . $currentPage . '/' : '';
+			$currentPage = ACP3_Validate::isNumber(ACP3_CMS::$uri->page) === true && ACP3_CMS::$uri->page <= $c_pages ? ACP3_CMS::$uri->page : 1;
+			$next_page = !empty($pages[$currentPage + 1]) ? ACP3_CMS::$uri->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
+			$previous_page = $currentPage > 1 ? ACP3_CMS::$uri->route($path) . 'page_' . ($currentPage - 1) . '/' : '';
 
 			if (!empty($next_page))
 				ACP3_SEO::setNextPage($next_page);
@@ -263,7 +263,7 @@ function splitTextIntoPages($text, $path)
 
 			$page = array(
 				'toc' => generateTOC($matches[0], $path),
-				'text' => $pages[$currentPage],
+				'text' => $pages[$currentPage - 1],
 				'next' => $next_page,
 				'previous' => $previous_page,
 			);
