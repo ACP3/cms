@@ -602,7 +602,8 @@ function removeUploadedFile($dir, $file)
 function rewriteInternalUri($text)
 {
 	$root_dir = str_replace('/', '\/', ROOT_DIR);
-	return preg_replace_callback('/<a href="((' . $root_dir . ')?)((index\.php)?)(\/?)((?i:[a-z\d_\-]+\/){2,})"/', 'rewriteInternalUriCallback', $text);
+	$host = $_SERVER['HTTP_HOST'];
+	return preg_replace_callback('/<a href="(http(s?):\/\/' . $host . ')?(' . $root_dir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})"/', 'rewriteInternalUriCallback', $text);
 }
 /**
  * Callback-Funktion zum Ersetzen der ACP3 internen URIs gegen ihre Aliase
