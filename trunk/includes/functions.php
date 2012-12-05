@@ -132,7 +132,7 @@ function generateEmail($recipient_name, $recipient_email, $from, $subject, $body
 	$mail = new PHPMailer(true);
 	try {
 		if (strtolower(CONFIG_MAILER_TYPE) === 'smtp') {
-			$mail->IsSMTP();
+			$mail->set('Mailer', 'smtp');
 			$mail->Host = CONFIG_MAILER_SMTP_HOST;
 			$mail->Port = CONFIG_MAILER_SMTP_PORT;
 			$mail->SMTPSecure = CONFIG_MAILER_SMTP_SECURITY === 'ssl' || CONFIG_MAILER_SMTP_SECURITY === 'tls' ? CONFIG_MAILER_SMTP_SECURITY : '';
@@ -142,7 +142,7 @@ function generateEmail($recipient_name, $recipient_email, $from, $subject, $body
 				$mail->Password = CONFIG_MAILER_SMTP_PASSWORD;
 			}
 		} else {
-			$mail->IsMail();
+			$mail->set('Mailer', 'mail');
 		}
 		$mail->CharSet = 'UTF-8';
 		$mail->Encoding = '8bit';
