@@ -169,15 +169,19 @@ class ACP3_Session {
 	}
 	/**
 	 * Generiert für ein Formular ein Securitytoken
+	 * 
+	 * @param string $path
+	 *	Optionaler ACP3 interner URI Pfad, für welchen das Token gelten soll
 	 */
-	public function generateFormToken()
+	public function generateFormToken($path = '')
 	{
 		if (!isset($_SESSION[self::XSRF_TOKEN_NAME]) || is_array($_SESSION[self::XSRF_TOKEN_NAME]) === false) {
 			$_SESSION[self::XSRF_TOKEN_NAME] = array();
 		}
 
-		$token = md5(uniqid(mt_rand(), true));
-		$_SESSION[self::XSRF_TOKEN_NAME][ACP3_CMS::$uri->query] = $token;
+		$token = sha1(uniqid(mt_rand(), true));
+		$path = !empty($path) ? $path . (!preg_match('/\/$/', $path) ? '/' : '') : ACP3_CMS::$uri->query;
+		$_SESSION[self::XSRF_TOKEN_NAME][$path] = $token;
 
 		ACP3_CMS::$view->assign('form_token', '<input type="hidden" name="' . self::XSRF_TOKEN_NAME . '" value="' . $token . '" />');
 	}

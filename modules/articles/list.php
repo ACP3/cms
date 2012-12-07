@@ -10,18 +10,20 @@
 if (defined('IN_ACP3') === false)
 	exit;
 
-$period = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
+$period = 'start = end AND start <= :time OR start != end AND :time BETWEEN start AND end';
+$time = ACP3_CMS::$date->getCurrentDateTime();
 
-if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
-	ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'articles WHERE id = :id' . $period, array('id' => ACP3_CMS::$uri->id, 'time' => ACP3_CMS::$date->getCurrentDateTime())) == 1) {
-	require_once MODULES_DIR . 'articles/functions.php';
+$articles = ACP3_CMS::$db2->fetchAll('SELECT id, start, end, title FROM ' . DB_PRE . 'articles WHERE ' . $period . ' ORDER BY title ASC LIMIT ' . POS . ',' . ACP3_CMS::$auth->entries, array('time' => $time));
+$c_articles = count($articles);
 
-	$page = getArticlesCache(ACP3_CMS::$uri->id);
+if ($c_articles > 0) {
+	ACP3_CMS::$view->assign('pagination', pagination(ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'articles WHERE ' . $period, array('time' => $time))));
 
-	ACP3_CMS::$breadcrumb->replaceAnchestor($page['title']);
+	for ($i = 0; $i < $c_articles; ++$i) {
+		$articles[$i]['date'] = ACP3_CMS::$date->format($articles[$i]['start']);
+	}
 
-	ACP3_CMS::$view->assign('page', splitTextIntoPages(rewriteInternalUri($page['text']), ACP3_CMS::$uri->getCleanQuery()));
-	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('articles/list.tpl'));
-} else {
-	ACP3_CMS::$uri->redirect('errors/404');
+	ACP3_CMS::$view->assign('articles', $articles);
 }
+
+ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('articles/list.tpl'));

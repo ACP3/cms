@@ -1,12 +1,15 @@
-{if !is_array($page)}
-{$page}
+{if isset($articles)}
+{$pagination}
+{foreach $articles as $row}
+<div class="dataset-box">
+	<div class="header">
+		<div class="small pull-right">{$row.date}</div>
+		<a href="{uri args="articles/details/id_`$row.id`"}">{$row.title}</a>
+	</div>
+</div>
+{/foreach}
 {else}
-{$page.toc}
-{$page.text}
-{if !empty($page.next) || !empty($page.previous)}
-<ul class="pager" style="clear:both">
-	{if !empty($page.previous)}<li class="previous"><a href="{$page.previous}" rel="prev" class="previous">&laquo; {lang t="system|previous_page"}</a></li>{/if}
-	{if !empty($page.next)}<li class="next"><a href="{$page.next}" rel="next" class="next">{lang t="system|next_page"} &raquo;</a></li>{/if}
-</ul>
-{/if}
+<div class="alert align-center">
+	<strong>{lang t="system|no_entries"}</strong>
+</div>
 {/if}

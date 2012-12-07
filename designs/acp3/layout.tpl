@@ -49,6 +49,7 @@
 			<div class="span2">
 				<div class="well well-small">
 					{load_module module="news|sidebar"}
+					{load_module module="newsletter|sidebar"}
 					{load_module module="files|sidebar"}
 					{load_module module="gallery|sidebar"}
 					{load_module module="polls|sidebar"}

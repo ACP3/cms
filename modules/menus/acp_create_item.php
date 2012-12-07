@@ -51,7 +51,7 @@ if (isset($_POST['submit']) === true) {
 			'parent_id' => (int) $_POST['parent'],
 			'display' => $_POST['display'],
 			'title' => str_encode($_POST['title']),
-			'uri' => $_POST['mode'] == 1 ? $_POST['module'] : ($_POST['mode'] == 4 ? 'articles/list/id_' . $_POST['articles'] . '/' : $_POST['uri']),
+			'uri' => $_POST['mode'] == 1 ? $_POST['module'] : ($_POST['mode'] == 4 ? 'articles/details/id_' . $_POST['articles'] . '/' : $_POST['uri']),
 			'target' => $_POST['display'] == 0 ? 1 : $_POST['target'],
 		);
 
