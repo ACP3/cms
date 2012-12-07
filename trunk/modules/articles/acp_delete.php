@@ -26,10 +26,10 @@ if (!isset($entries)) {
 	$nestedSet = new ACP3_NestedSet('menu_items', true);
 	foreach ($marked_entries as $entry) {
 		$bool = ACP3_CMS::$db2->delete(DB_PRE . 'articles', array('id' => $entry));
-		$nestedSet->deleteNode(ACP3_CMS::$db2->fetchColumn('SELECT id FROM ' . DB_PRE . 'menu_items WHERE uri = ?', array('articles/list/id_' . $entry . '/')));
+		$nestedSet->deleteNode(ACP3_CMS::$db2->fetchColumn('SELECT id FROM ' . DB_PRE . 'menu_items WHERE uri = ?', array('articles/details/id_' . $entry . '/')));
 
 		ACP3_Cache::delete('list_id_' . $entry, 'articles');
-		ACP3_SEO::deleteUriAlias('articles/list/id_' . $entry);
+		ACP3_SEO::deleteUriAlias('articles/details/id_' . $entry);
 	}
 	if (ACP3_Modules::isInstalled('menus') === true) {
 		require_once MODULES_DIR . 'menus/functions.php';

@@ -61,7 +61,7 @@ if (isset($_POST['submit']) === true) {
 		$bool = ACP3_CMS::$db2->insert(DB_PRE . 'articles', $insert_values);
 		$last_id = ACP3_CMS::$db2->lastInsertId();
 		if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
-			ACP3_SEO::insertUriAlias('articles/list/id_' . $last_id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int) $_POST['seo_robots']);
+			ACP3_SEO::insertUriAlias('articles/details/id_' . $last_id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int) $_POST['seo_robots']);
 		ACP3_CMS::$db2->commit();
 
 		if ($_POST['create'] == 1 && $access_to_menus === true) {
@@ -72,7 +72,7 @@ if (isset($_POST['submit']) === true) {
 				'parent_id' => (int) $_POST['parent'],
 				'display' => $_POST['display'],
 				'title' => str_encode($_POST['title']),
-				'uri' => 'articles/list/id_' . $last_id . '/',
+				'uri' => 'articles/details/id_' . $last_id . '/',
 				'target' => 1,
 			);
 

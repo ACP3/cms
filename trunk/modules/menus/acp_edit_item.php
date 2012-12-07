@@ -53,7 +53,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		} else {
 			// Vorgenommene Änderungen am Datensatz anwenden
 			$mode = ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match('/^(articles\/list\/id_([0-9]+)\/)$/', $_POST['uri']) ? '4' : $_POST['mode'];
-			$uri_type = $_POST['mode'] == 4 ? 'articles/list/id_' . $_POST['articles'] . '/' : $_POST['uri'];
+			$uri_type = $_POST['mode'] == 4 ? 'articles/details/id_' . $_POST['articles'] . '/' : $_POST['uri'];
 
 			$update_values = array(
 				'mode' => $mode,

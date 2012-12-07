@@ -22,7 +22,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		if (strlen($_POST['text']) < 3)
 			$errors['text'] = ACP3_CMS::$lang->t('articles', 'text_to_short');
 		if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
-			(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias'], 'articles/list/id_' . ACP3_CMS::$uri->id) === true))
+			(ACP3_Validate::isUriSafe($_POST['alias']) === false || ACP3_Validate::uriAliasExists($_POST['alias'], 'articles/details/id_' . ACP3_CMS::$uri->id) === true))
 			$errors['alias'] = ACP3_CMS::$lang->t('system', 'uri_alias_unallowed_characters_or_exists');
 
 		if (isset($errors) === true) {
@@ -40,7 +40,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 
 			$bool = ACP3_CMS::$db2->update(DB_PRE . 'articles', $update_values, array('id' => ACP3_CMS::$uri->id));
 			if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
-				ACP3_SEO::insertUriAlias('articles/list/id_' . ACP3_CMS::$uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int) $_POST['seo_robots']);
+				ACP3_SEO::insertUriAlias('articles/details/id_' . ACP3_CMS::$uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int) $_POST['seo_robots']);
 
 			setArticlesCache(ACP3_CMS::$uri->id);
 
@@ -59,7 +59,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		// Datumsauswahl
 		ACP3_CMS::$view->assign('publication_period', ACP3_CMS::$date->datepicker(array('start', 'end'), array($page['start'], $page['end'])));
 
-		ACP3_CMS::$view->assign('SEO_FORM_FIELDS', ACP3_SEO::formFields('articles/list/id_' . ACP3_CMS::$uri->id));
+		ACP3_CMS::$view->assign('SEO_FORM_FIELDS', ACP3_SEO::formFields('articles/details/id_' . ACP3_CMS::$uri->id));
 
 		ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : $page);
 

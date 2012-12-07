@@ -40,6 +40,7 @@
 To complete the registration process, please click on the link below.
 If you've received this e-mail mistakenly, please ignore or delete this e-mail.</item>
 	<item key="subscribe_mail_subject">Welcome to the newsletter of %s!</item>
+	<item key="subscribe_newsletter">Subscribe the newsletter</item>
 	<item key="subscribe_success">The newsletter account has been successfully created.</item>
 	<item key="test_newsletter">Test newsletter</item>
 	<item key="test_nl_description">Will only be send to the E-mail adress which is stated in the newsletter settings.</item>

@@ -2,7 +2,7 @@
 
 class ACP3_ArticlesModuleInstaller extends ACP3_ModuleInstaller {
 	private $module_name = 'articles';
-	private $schema_version = 31;
+	private $schema_version = 32;
 
 	public function renameModule() {
 		return array(
@@ -46,6 +46,11 @@ class ACP3_ArticlesModuleInstaller extends ACP3_ModuleInstaller {
 				"RENAME TABLE `{pre}static_pages` TO `{pre}articles`;",
 				"UPDATE `{pre}seo` SET uri = REPLACE(uri, 'static_pages', 'articles') WHERE uri REGEXP '^(static_pages/list/id_[0-9]+/)$';",
 				ACP3_Modules::isInstalled('menus') || ACP3_Modules::isInstalled('menu_items') ? "UPDATE `{pre}menu_items` SET uri = REPLACE(uri, 'static_pages', 'articles') WHERE uri REGEXP '^(static_pages/list/id_[0-9]+/)$';" : ''
+			),
+			32 => array(
+				"INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'details', '', 1);",
+				"UPDATE `{pre}seo` SET uri = REPLACE(uri, '/list/', '/details/') WHERE uri REGEXP '^(articles/list/id_[0-9]+/)$';",
+				ACP3_Modules::isInstalled('menus') || ACP3_Modules::isInstalled('menu_items') ? "UPDATE `{pre}menu_items` SET uri = REPLACE(uri, '/list/', '/details/') WHERE uri REGEXP '^(articles/list/id_[0-9]+/)$';" : ''
 			)
 		);
 	}
