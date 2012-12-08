@@ -80,7 +80,7 @@ class ACP3_Breadcrumb {
 	}
 
 	/**
-	 * Zuweisung der jeweiligen Stufen zur Brotkrümelspur
+	 * Zuweisung einer neuen Stufe zur Brotkrümelspur
 	 *
 	 * @param string $title
 	 * 	Bezeichnung der jeweiligen Stufe der Brotkrume
@@ -206,7 +206,8 @@ class ACP3_Breadcrumb {
 		} elseif (empty($this->steps)) {
 			$this->append($file === 'list' ? ACP3_CMS::$lang->t($module, $module) : ACP3_CMS::$lang->t($module, $file), ACP3_CMS::$uri->route($module . '/' . $file));
 		// Der Modulunterseite den richtigen Seitentitel zuweisen
-		} elseif ($module !== 'articles' && $file !== 'list' &&
+		} elseif ($module !== 'articles' && $file !== 'details' &&
+			!empty($this->steps[count($this->steps) - 1]['uri']) &&
 			$this->steps[count($this->steps) - 1]['uri'] !== ACP3_CMS::$uri->route(ACP3_CMS::$uri->query)) {
 			$this->replaceAnchestor(ACP3_CMS::$lang->t($module, $file), ACP3_CMS::$uri->route(ACP3_CMS::$uri->query));
 		}
