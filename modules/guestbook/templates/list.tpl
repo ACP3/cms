@@ -7,11 +7,7 @@ $(document).ready(function() {
 			$.fancybox.open({ href: $(this).attr('href') + 'layout_simple/', title: $(this).attr('title') }, {
 				type: 'iframe',
 				autoSize: true,
-				padding: 0,
-				afterClose: function() {
-					location.reload();
-					return;
-				}
+				padding: 0
 			});
 			e.preventDefault();
 		}
