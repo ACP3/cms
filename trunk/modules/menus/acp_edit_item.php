@@ -68,12 +68,13 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			$nestedSet = new ACP3_NestedSet('menu_items', true);
 			$bool = $nestedSet->editNode(ACP3_CMS::$uri->id, (int) $_POST['parent'], (int) $_POST['block_id'], $update_values);
 
-			// Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
+			// Verhindern, dass externen URIs Aliase, Keywords, etc. zugewiesen bekommen
 			if ($_POST['mode'] != 3) {
 				$alias = $_POST['alias'] === $page['alias'] ? $page['alias'] : $_POST['alias'];
 				$keywords = $_POST['seo_keywords'] === $page['seo_keywords'] ? $page['seo_keywords'] : $_POST['seo_keywords'];
 				$description = $_POST['seo_description'] === $page['seo_description'] ? $page['seo_description'] : $_POST['seo_description'];
-				ACP3_SEO::insertUriAlias($_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'], $_POST['mode'] == 1 ? '' : $alias, $keywords, $description, (int) $_POST['seo_robots']);
+				$path = $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'];
+				ACP3_SEO::insertUriAlias($path, $_POST['mode'] == 1 ? '' : $alias, $keywords, $description, (int) $_POST['seo_robots']);
 			}
 
 			setMenuItemsCache();
@@ -111,9 +112,6 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			$modules[$row['name']]['selected'] = selectEntry('module', $row['dir'], $page['mode'] == 1 ? $page['uri'] : '');
 		}
 		ACP3_CMS::$view->assign('modules', $modules);
-
-		if ($page['mode'] == 1)
-			$page['uri'] = '';
 
 		// Ziel des Hyperlinks
 		$target = array();

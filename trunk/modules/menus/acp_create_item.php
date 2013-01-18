@@ -58,8 +58,9 @@ if (isset($_POST['submit']) === true) {
 		$nestedSet = new ACP3_NestedSet('menu_items', true);
 		$bool = $nestedSet->insertNode((int) $_POST['parent'], $insert_values);
 
-		// Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
+		// Verhindern, dass externen URIs Aliase, Keywords, etc. zugewiesen bekommen
 		if ($_POST['mode'] != 3) {
+			$path = $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'];
 			if (ACP3_SEO::uriAliasExists($_POST['uri'])) {
 				$alias = !empty($_POST['alias']) ? $_POST['alias'] : ACP3_SEO::getUriAlias($_POST['uri']);
 				$keywords = ACP3_SEO::getKeywords($_POST['uri']);
@@ -69,7 +70,7 @@ if (isset($_POST['submit']) === true) {
 				$keywords = $_POST['seo_keywords'];
 				$description = $_POST['seo_description'];
 			}
-			ACP3_SEO::insertUriAlias($_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'], $_POST['mode'] == 1 ? '' : $alias, $keywords, $description, (int) $_POST['seo_robots']);
+			ACP3_SEO::insertUriAlias($path, $_POST['mode'] == 1 ? '' : $alias, $keywords, $description, (int) $_POST['seo_robots']);
 		}
 
 		setMenuItemsCache();
