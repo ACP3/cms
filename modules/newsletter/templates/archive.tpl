@@ -1,14 +1,22 @@
 {if isset($newsletters)}
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#newsletter-submit').hide();
+	$('#newsletters').on('change', function() {
+		$(this).closest('form').submit();
+	});
+});
+</script>
 <div class="navbar navbar-inverse">
 	<div class="navbar-inner">
 		<form action="{$REQUEST_URI}" method="post" class="navbar-form pull-right">
-			<select name="newsletter">
+			<select id="newsletters" name="newsletter">
 				<option value="">{lang t="system|pls_select"}</option>
 {foreach $newsletters as $row}
 				<option value="{$row.id}"{$row.selected}>{$row.title} - {$row.date_formatted}</option>
 {/foreach}
 			</select>
-			<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
+			<input type="submit" name="categories" value="{lang t="system|submit"}" id="newsletter-submit" class="btn">
 		</form>
 	</div>
 </div>

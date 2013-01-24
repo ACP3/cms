@@ -25,7 +25,7 @@ if (isset($_POST['newsletter']) === true &&
 	}
 }
 
-$newsletters = ACP3_CMS::$db2->fetchAll('SELECT id, date, title FROM ' . DB_PRE . 'newsletters WHERE status = ?', array(1));
+$newsletters = ACP3_CMS::$db2->fetchAll('SELECT id, date, title FROM ' . DB_PRE . 'newsletters WHERE status = ? ORDER BY date DESC', array(1));
 $c_newsletters = count($newsletters);
 
 if ($c_newsletters > 0) {
