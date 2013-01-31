@@ -176,25 +176,43 @@ function generateSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
 	return hash($algorithm, $salt . hash($algorithm, $plaintext));
 }
 /**
- * Generiert das Inhaltsverzeichnis
- *
- * @param string $pages
+ * Generiert ein Inhaltsverzeichnis
+ * 
+ * @param array $pages
+ * @param string $path
+ * @param boolean $titles_from_db
+ * @param boolean $custom_uris
+ * @return string
  */
-function generateTOC(array $pages, $path)
+function generateTOC(array $pages, $path = '', $titles_from_db = false, $custom_uris = false)
 {
 	if (!empty($pages)) {
+		$path = empty($path) ? ACP3_CMS::$uri->getCleanQuery() : $path;
 		$toc = array();
 		$i = 0;
 		foreach ($pages as $page) {
-			$attributes = getHtmlAttributes($page);
 			$page_num = $i + 1;
-			$toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf(ACP3_CMS::$lang->t('system', 'toc_page'), $page_num);
-			$toc[$i]['uri'] = ACP3_CMS::$uri->route($path, 1) . ($page_num > 1 ? 'page_' . $page_num . '/' : '');
+			if ($titles_from_db === false) {
+				$attributes = getHtmlAttributes($page);
+				$toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf(ACP3_CMS::$lang->t('system', 'toc_page'), $page_num);
+			} else {
+				$toc[$i]['title'] = !empty($page['title']) ? $page['title'] : sprintf(ACP3_CMS::$lang->t('system', 'toc_page'), $page_num);
+			}
+
+			$toc[$i]['uri'] = $custom_uris === true ? $page['uri'] : ACP3_CMS::$uri->route($path) . ($page_num > 1 ? 'page_' . $page_num . '/' : '');
+
 			$toc[$i]['selected'] = false;
-			if ((ACP3_Validate::isNumber(ACP3_CMS::$uri->page) === false && $i === 0) || ACP3_CMS::$uri->page === $page_num) {
-				$toc[$i]['selected'] = true;
-				if ($page_num !== 1)
+			if ($custom_uris === true) {
+				if ($page['uri'] === ACP3_CMS::$uri->route(ACP3_CMS::$uri->query) ||
+					ACP3_CMS::$uri->route(ACP3_CMS::$uri->query) === ACP3_CMS::$uri->route(ACP3_CMS::$uri->mod . '/' . ACP3_CMS::$uri->file) && $i == 0) {
+					$toc[$i]['selected'] = true;
 					ACP3_CMS::$breadcrumb->setTitlePostfix($toc[$i]['title']);
+				}
+			} else {
+				if ((ACP3_Validate::isNumber(ACP3_CMS::$uri->page) === false && $i === 0) || ACP3_CMS::$uri->page === $page_num) {
+					$toc[$i]['selected'] = true;
+					ACP3_CMS::$breadcrumb->setTitlePostfix($toc[$i]['title']);
+				}
 			}
 			++$i;
 		}
