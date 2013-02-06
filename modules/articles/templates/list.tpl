@@ -3,7 +3,9 @@
 {foreach $articles as $row}
 <div class="dataset-box">
 	<div class="header">
-		<div class="small pull-right">{$row.date}</div>
+		<small class="pull-right">
+			<time datetime="{$row.date_iso}">{$row.date_formatted}</time>
+		</small>
 		<a href="{uri args="articles/details/id_`$row.id`"}">{$row.title}</a>
 	</div>
 </div>

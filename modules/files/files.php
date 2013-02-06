@@ -27,7 +27,8 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->cat) &&
 
 		for ($i = 0; $i < $c_files; ++$i) {
 			$files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : ACP3_CMS::$lang->t('files', 'unknown_filesize');
-			$files[$i]['date'] = ACP3_CMS::$date->format($files[$i]['start'], $settings['dateformat']);
+			$files[$i]['date_formatted'] = ACP3_CMS::$date->format($files[$i]['start'], $settings['dateformat']);
+			$files[$i]['date_iso'] = ACP3_CMS::$date->format($files[$i]['start'], 'c');
 		}
 		ACP3_CMS::$view->assign('files', $files);
 	}

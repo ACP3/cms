@@ -46,7 +46,8 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		$settings = ACP3_Config::getSettings('files');
 
 		$file['size'] = !empty($file['size']) ? $file['size'] : ACP3_CMS::$lang->t('files', 'unknown_filesize');
-		$file['date'] = ACP3_CMS::$date->format($file['start'], $settings['dateformat']);
+		$file['date_formatted'] = ACP3_CMS::$date->format($file['start'], $settings['dateformat']);
+		$file['date_iso'] = ACP3_CMS::$date->format($file['start'], 'c');
 		ACP3_CMS::$view->assign('file', $file);
 
 		if ($settings['comments'] == 1 && $file['comments'] == 1 && ACP3_Modules::check('comments', 'functions') === true) {

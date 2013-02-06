@@ -57,7 +57,8 @@ function commentsList($module, $entry_id)
 				$comments[$i]['user_id'] = 0;
 			}
 			$comments[$i]['name'] = !empty($comments[$i]['user_name']) ? $comments[$i]['user_name'] : $comments[$i]['name'];
-			$comments[$i]['date'] = ACP3_CMS::$date->format($comments[$i]['date'], $settings['dateformat']);
+			$comments[$i]['date_formatted'] = ACP3_CMS::$date->format($comments[$i]['date'], $settings['dateformat']);
+			$comments[$i]['date_iso'] = ACP3_CMS::$date->format($comments[$i]['date'], 'c');
 			$comments[$i]['message'] = nl2p($comments[$i]['message']);
 			if ($emoticons_active === true) {
 				$comments[$i]['message'] = emoticonsReplace($comments[$i]['message']);

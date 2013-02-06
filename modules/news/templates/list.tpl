@@ -16,23 +16,23 @@
 {if isset($news)}
 {$pagination}
 {foreach $news as $row}
-<div class="dataset-box">
-	<div class="header">
-		<div class="pull-right small">
-			{$row.date}
-		</div>
-		{$row.title}
-	</div>
+<article class="dataset-box">
+	<header class="header">
+		<small class="pull-right">
+			<time datetime="{$row.date_iso}">{$row.date_formatted}</time>
+		</small>
+		<h1>{$row.title}</h1>
+	</header>
 	<div class="content">
 		{$row.text}
-{if $row.allow_comments}
-		<p class="align-center">
-			<a href="{uri args="news/details/id_`$row.id`"}#comments">{lang t="comments|comments"}</a>
-			<span>({$row.comments})</span>
-		</p>
-{/if}
 	</div>
-</div>
+{if $row.allow_comments}
+	<footer class="align-center">
+		<a href="{uri args="news/details/id_`$row.id`"}#comments">{lang t="comments|comments"}</a>
+		<span>({$row.comments})</span>
+	</footer>
+{/if}
+</article>
 {/foreach}
 {else}
 <div class="alert align-center">

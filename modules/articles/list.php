@@ -20,7 +20,8 @@ if ($c_articles > 0) {
 	ACP3_CMS::$view->assign('pagination', pagination(ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'articles WHERE ' . $period, array('time' => $time))));
 
 	for ($i = 0; $i < $c_articles; ++$i) {
-		$articles[$i]['date'] = ACP3_CMS::$date->format($articles[$i]['start']);
+		$articles[$i]['date_formatted'] = ACP3_CMS::$date->format($articles[$i]['start']);
+		$articles[$i]['date_iso'] = ACP3_CMS::$date->format($articles[$i]['start'], 'c');
 	}
 
 	ACP3_CMS::$view->assign('articles', $articles);

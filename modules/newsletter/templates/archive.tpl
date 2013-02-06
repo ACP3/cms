@@ -21,15 +21,15 @@ $(document).ready(function() {
 	</div>
 </div>
 {if isset($newsletter)}
-<div class="dataset-box">
-	<div class="header">
-		<div class="pull-right small">{$newsletter.date_formatted}</div>
-		{$newsletter.title}
-	</div>
+<article class="dataset-box">
+	<header class="header">
+		<small class="pull-right"><time datetime="{$newsletter.date_iso}">{$newsletter.date_formatted}</time></small>
+		<h1>{$newsletter.title}</h1>
+	</header>
 	<div class="content">
 		{$newsletter.text}
 	</div>
-</div>
+</article>
 {else}
 <div class="alert align-center">
 	<strong>{lang t="newsletter|select_newsletter"}</strong>

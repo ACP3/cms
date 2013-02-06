@@ -36,7 +36,8 @@ if ($c_guestbook > 0) {
 			$guestbook[$i]['user_id'] = 0;
 		}
 		$guestbook[$i]['name'] = !empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'];
-		$guestbook[$i]['date'] = ACP3_CMS::$date->format($guestbook[$i]['date'], $settings['dateformat']);
+		$guestbook[$i]['date_formatted'] = ACP3_CMS::$date->format($guestbook[$i]['date'], $settings['dateformat']);
+		$guestbook[$i]['date_iso'] = ACP3_CMS::$date->format($guestbook[$i]['date'], 'c');
 		$guestbook[$i]['message'] = nl2p($guestbook[$i]['message']);
 		if ($emoticons_active === true) {
 			$guestbook[$i]['message'] = emoticonsReplace($guestbook[$i]['message']);

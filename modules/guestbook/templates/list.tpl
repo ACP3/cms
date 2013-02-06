@@ -24,15 +24,17 @@ $(document).ready(function() {
 {if isset($guestbook)}
 {$pagination}
 {foreach $guestbook as $row}
-<div id="gb-entry-{$row.id}" class="dataset-box clearfix" style="width: 65%">
-	<div class="header">
-		<div class="pull-right small">{$row.date}</div>
+<article id="gb-entry-{$row.id}" class="dataset-box clearfix" style="width: 65%">
+	<header class="header">
+		<small class="pull-right">
+			<time datetime="{$row.datetime}">{$row.date_formatted}</time>
+		</small>
 		{if !empty($row.user_id)}<a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>{else}{$row.name}{/if}<br>
-	</div>
+	</header>
 	<div class="content">
 		<div class="pull-right">
 {if $row.website != ''}
-			<a href="{$row.website}" onclick="window.open(this.href); return false" title="{lang t="guestbook|visit_website"}">{icon path="16/gohome" width="16" height="16" alt="`$row.website`"}</a><br>
+			<a href="{$row.website}" rel="nofollow" onclick="window.open(this.href); return false" title="{lang t="guestbook|visit_website"}">{icon path="16/gohome" width="16" height="16" alt="`$row.website`"}</a><br>
 {/if}
 {if $row.mail != ''}
 			{mailto address=$row.mail encode="javascript" text="{icon path="16/mail" width="16" height="16" alt="`$row.mail`"}"}
@@ -40,7 +42,7 @@ $(document).ready(function() {
 		</div>
 		{$row.message}
 	</div>
-</div>
+</article>
 {/foreach}
 {else}
 <div class="alert align-center">

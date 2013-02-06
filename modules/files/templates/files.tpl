@@ -1,9 +1,11 @@
 {if isset($files)}
-{foreach $files as $file}
+{foreach $files as $row}
 <div class="dataset-box">
 	<div class="header">
-		<div class="pull-right small">{$file.date}</div>
-		<a href="{uri args="files/details/id_`$file.id`"}">{$file.title} ({$file.size})</a>
+		<small class="pull-right">
+			<time datetime="{$row.date_iso}">{$row.date_formatted}</time>
+		</small>
+		<a href="{uri args="files/details/id_`$row.id`"}">{$row.title} ({$row.size})</a>
 	</div>
 </div>
 {/foreach}
