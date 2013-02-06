@@ -1,17 +1,23 @@
-<div class="dataset-box">
-	<div class="header">
-		<div class="pull-right small">{$news.date}</div>
-		{$news.title}
-	</div>
-	<div class="content">
-		{$news.text}
-{if $news.uri != '' && $news.link_title != ''}
-		<div class="hyperlink">
-			<strong>{lang t="news|hyperlink"}:</strong> <a href="{$news.uri}"{$news.target}>{$news.link_title}</a>
+<article>
+	<section class="dataset-box">
+		<header class="header">
+			<small class="pull-right">
+				<time datetime="{$news.date_iso}">{$news.date_formatted}</time>
+			</small>
+			<h1>{$news.title}</h1>
+		</header>
+		<div class="content">
+			{$news.text}
 		</div>
+{if $news.uri != '' && $news.link_title != ''}
+		<footer>
+			<div class="hyperlink">
+				<strong>{lang t="news|hyperlink"}:</strong> <a href="{$news.uri}"{$news.target}>{$news.link_title}</a>
+			</div>
+		</footer>
 {/if}
-	</div>
-</div>
+	</section>
 {if isset($comments)}
 {$comments}
 {/if}
+</article>

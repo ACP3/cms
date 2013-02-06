@@ -28,7 +28,8 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 	}
 	ACP3_CMS::$breadcrumb->append($news['title']);
 
-	$news['date'] = ACP3_CMS::$date->format($news['start'], $settings['dateformat']);
+	$news['date_formatted'] = ACP3_CMS::$date->format($news['start'], $settings['dateformat']);
+	$news['date_iso'] = ACP3_CMS::$date->format($news['start'], 'c');
 	$news['text'] = rewriteInternalUri($news['text']);
 	if (!empty($news['uri']) && (bool) preg_match('=^http(s)?://=', $news['uri']) === false) {
 		$news['uri'] = 'http://' . $news['uri'];

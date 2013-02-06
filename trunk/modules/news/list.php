@@ -51,7 +51,8 @@ if ($c_news > 0) {
 	ACP3_CMS::$view->assign('pagination', pagination(ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'news WHERE ' . $where, array('time' => $time))));
 
 	for ($i = 0; $i < $c_news; ++$i) {
-		$news[$i]['date'] = ACP3_CMS::$date->format($news[$i]['start'], $settings['dateformat']);
+		$news[$i]['date_formatted'] = ACP3_CMS::$date->format($news[$i]['start'], $settings['dateformat']);
+		$news[$i]['date_iso'] = ACP3_CMS::$date->format($news[$i]['start'], 'c');
 		$news[$i]['text'] = rewriteInternalUri($news[$i]['text']);
 		$news[$i]['allow_comments'] = false;
 		if ($settings['comments'] == 1 && $news[$i]['comments'] == 1 && isset($comment_check)) {

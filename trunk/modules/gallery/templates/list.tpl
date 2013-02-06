@@ -3,7 +3,9 @@
 {foreach $galleries as $row}
 <div class="dataset-box">
 	<div class="header">
-		<div class="small pull-right">{$row.date}</div>
+		<small class="pull-right">
+			<time datetime="{$row.date_iso}">{$row.date_formatted}</time>
+		</small>
 		<a href="{uri args="gallery/pics/id_`$row.id`"}">{$row.title} ({$row.pics_lang})</a>
 	</div>
 </div>

@@ -41,6 +41,6 @@
 {/if}
 {if $user.website != '' && $user.website_display == 1}
 	<dt>{lang t="system|website"}</dt>
-	<dd><a href="{$user.website}" onclick="window.open(this.href); return false" title="{lang t="users|visit_website"}">{$user.website}</a></dd>
+	<dd><a href="{$user.website}" rel="nofollow" onclick="window.open(this.href); return false" title="{lang t="users|visit_website"}">{$user.website}</a></dd>
 {/if}
 </dl>

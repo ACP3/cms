@@ -19,6 +19,7 @@ if (isset($_POST['newsletter']) === true &&
 	$newsletter = ACP3_CMS::$db2->fetchAssoc('SELECT date, title, text FROM ' . DB_PRE . 'newsletters WHERE id = ? AND status = ?', array($id, 1));
 	if (!empty($newsletter)) {
 		$newsletter['date_formatted'] = ACP3_CMS::$date->format($newsletter['date'], 'short');
+		$newsletter['date_iso'] = ACP3_CMS::$date->format($newsletter['date'], 'c');
 		$newsletter['text'] = nl2p($newsletter['text']);
 
 		ACP3_CMS::$view->assign('newsletter', $newsletter);

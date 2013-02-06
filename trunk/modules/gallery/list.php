@@ -21,7 +21,8 @@ if ($c_galleries > 0) {
 	$settings = ACP3_Config::getSettings('gallery');
 
 	for ($i = 0; $i < $c_galleries; ++$i) {
-		$galleries[$i]['date'] = ACP3_CMS::$date->format($galleries[$i]['start'], $settings['dateformat']);
+		$galleries[$i]['date_formatted'] = ACP3_CMS::$date->format($galleries[$i]['start'], $settings['dateformat']);
+		$galleries[$i]['date_iso'] = ACP3_CMS::$date->format($galleries[$i]['start'], 'c');
 		$galleries[$i]['pics_lang'] = $galleries[$i]['pics'] . ' ' . ACP3_CMS::$lang->t('gallery', $galleries[$i]['pics'] == 1 ? 'picture' : 'pictures');
 	}
 	ACP3_CMS::$view->assign('galleries', $galleries);
