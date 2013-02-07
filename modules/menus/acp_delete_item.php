@@ -19,7 +19,7 @@ if (!isset($entries)) {
 	ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'no_entries_selected')));
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
-	ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('system', 'confirm_delete'), ACP3_CMS::$uri->route('acp/menus/delete_items/entries_' . $marked_entries . '/action_confirmed/'), ACP3_CMS::$uri->route('acp/menus')));
+	ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('system', 'confirm_delete'), ACP3_CMS::$uri->route('acp/menus/delete_item/entries_' . $marked_entries . '/action_confirmed/'), ACP3_CMS::$uri->route('acp/menus')));
 } elseif (ACP3_CMS::$uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = false;
