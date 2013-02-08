@@ -27,7 +27,7 @@ $(document).ready(function() {
 <article id="gb-entry-{$row.id}" class="dataset-box clearfix" style="width: 65%">
 	<header class="header">
 		<small class="pull-right">
-			<time datetime="{$row.datetime}">{$row.date_formatted}</time>
+			<time datetime="{$row.date_iso}">{$row.date_formatted}</time>
 		</small>
 		{if !empty($row.user_id)}<a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>{else}{$row.name}{/if}<br>
 	</header>

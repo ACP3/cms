@@ -88,7 +88,7 @@ if ($_GET['g'] === 'css') {
 	if (in_array('timepicker', $libraries))
 		$scripts['js'][] = LIBRARIES_DIR . 'js/jquery.timepicker.js';
 	if (in_array('fancybox', $libraries))
-		$scripts['js'][] = LIBRARIES_DIR . 'js/jquery.fancybox.js';
+		$scripts['js'][] = LIBRARIES_DIR . 'js/jquery.fancybox.min.js';
 	if (in_array('datatables', $libraries))
 		$scripts['js'][] = LIBRARIES_DIR . 'js/jquery.datatables.min.js';
 
