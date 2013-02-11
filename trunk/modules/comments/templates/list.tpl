@@ -11,7 +11,7 @@
 	<article class="dataset-box" style="width:65%">
 		<div class="header">
 			<small class="pull-right">
-				<time date="{$row.date_iso}">{$row.date_formatted}</time>
+				<time datetime="{$row.date_iso}">{$row.date_formatted}</time>
 			</small>
 			{if !empty($row.user_id)}<a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>{else}{$row.name}{/if}
 		</div>
