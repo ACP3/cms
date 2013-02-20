@@ -84,7 +84,7 @@ if ($_GET['g'] === 'css') {
 	if (in_array('bootbox', $libraries))
 		$scripts['js'][] = LIBRARIES_DIR . 'js/bootbox.min.js';
 	if (in_array('jquery-ui', $libraries))
-		$scripts['js'][] = LIBRARIES_DIR . 'js/jquery.ui.min.js';
+		$scripts['js'][] = LIBRARIES_DIR . 'js/jquery-ui.min.js';
 	if (in_array('timepicker', $libraries))
 		$scripts['js'][] = LIBRARIES_DIR . 'js/jquery.timepicker.js';
 	if (in_array('fancybox', $libraries))
