@@ -46,9 +46,10 @@ function editor($params) {
 
 	// Filebrowser
 	$editor.= 'file_browser_callback: "openKCFinder",' . "\n";
+	$editor.= "});\n";
 	$editor.= "function openKCFinder(field_name, url, type, win) {
 	tinyMCE.activeEditor.windowManager.open({
-		file: '" . ROOT_DIR . "'libraries/kcfinder/browse.php?opener=tinymce&type=' + type,
+		file: '" . ROOT_DIR . "libraries/kcfinder/browse.php?opener=tinymce&type=' + (type == 'image' ? 'gallery' : 'files'),
 		title: 'KCFinder',
 		width: 700,
 		height: 500,
@@ -61,7 +62,6 @@ function editor($params) {
 		input: field_name
 	});
     return false;}\n";
-	$editor.= "});\n";
 	$editor.= "</script>\n";
 	$editor.= '<textarea name="' . $params['name'] . '" id="' . $params['id'] . '" cols="50" rows="5" style="width:100%">' . (!empty($params['value']) ? $params['value'] : '') . "</textarea>\n";
 
