@@ -43,6 +43,24 @@ function editor($params) {
 		$editor.= 'theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,|,help",' . "\n";
 	}
 	$editor.= 'height : "' . $params['height'] . '",' . "\n";
+
+	// Filebrowser
+	$editor.= 'file_browser_callback: "openKCFinder",' . "\n";
+	$editor.= "function openKCFinder(field_name, url, type, win) {
+	tinyMCE.activeEditor.windowManager.open({
+		file: '" . ROOT_DIR . "'libraries/kcfinder/browse.php?opener=tinymce&type=' + type,
+		title: 'KCFinder',
+		width: 700,
+		height: 500,
+		resizable: 'yes',
+		inline: true,
+		close_previous: 'no',
+		popup_css: false
+	}, {
+		window: win,
+		input: field_name
+	});
+    return false;}\n";
 	$editor.= "});\n";
 	$editor.= "</script>\n";
 	$editor.= '<textarea name="' . $params['name'] . '" id="' . $params['id'] . '" cols="50" rows="5" style="width:100%">' . (!empty($params['value']) ? $params['value'] : '') . "</textarea>\n";

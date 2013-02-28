@@ -98,7 +98,7 @@ class ACP3_CMS {
 	public static function startupChecks()
 	{
 		// register_globals OFF Emulation
-		require ACP3_ROOT . 'includes/globals.php';
+		require_once ACP3_ROOT . 'includes/globals.php';
 
 		// DB-Config des ACP3 laden
 		$path = ACP3_ROOT . 'includes/config.php';
@@ -128,9 +128,9 @@ class ACP3_CMS {
 	 */
 	public static function includeAutoLoader()
 	{
-		require INCLUDES_DIR . 'autoload.php';
+		require_once INCLUDES_DIR . 'autoload.php';
 
-		require LIBRARIES_DIR . 'Doctrine/Common/ClassLoader.php';
+		require_once LIBRARIES_DIR . 'Doctrine/Common/ClassLoader.php';
 
 		$classLoader = new ClassLoader('Doctrine', LIBRARIES_DIR);
 		$classLoader->register();

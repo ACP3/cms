@@ -28,12 +28,16 @@ function editor($params) {
 	$ckeditor->returnOutput = true;
 
 	$basepath = ROOT_DIR . 'includes/wysiwyg/ckeditor/';
-	$filebrowser_uri = $basepath . 'filemanager/browser/default/browser.html%sConnector=http://' . $_SERVER['HTTP_HOST'] . $basepath. 'filemanager/connectors/php/connector.php';
+	$filebrowser_uri = ROOT_DIR . 'libraries/kcfinder/browse.php%s';
+	$upload_uri = ROOT_DIR . 'libraries/kcfinder/upload.php%s';
 
 	$config = array();
-	$config['filebrowserBrowseUrl'] = sprintf($filebrowser_uri, '?');
-	$config['filebrowserImageBrowseUrl'] = sprintf($filebrowser_uri, '?Type=Image&');
-	$config['filebrowserFlashBrowseUrl'] = sprintf($filebrowser_uri, '?Type=Flash&');
+	$config['filebrowserBrowseUrl'] = sprintf($filebrowser_uri, '?type=files');
+	$config['filebrowserImageBrowseUrl'] = sprintf($filebrowser_uri, '?type=gallery');
+	$config['filebrowserFlashBrowseUrl'] = sprintf($filebrowser_uri, '?type=files');
+	$config['filebrowserUploadUrl'] = sprintf($upload_uri, '?type=files');
+	$config['filebrowserImageUploadUrl'] = sprintf($upload_uri, '?type=gallery');
+	$config['filebrowserFlashUploadUrl'] = sprintf($upload_uri, '?type=files');
 
 	if (isset($params['height']))
 		$config['height'] = $params['height'] . 'px';
