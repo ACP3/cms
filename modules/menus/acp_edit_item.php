@@ -52,7 +52,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 		} else {
 			// Vorgenommene Änderungen am Datensatz anwenden
-			$mode = ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match('/^(articles\/list\/id_([0-9]+)\/)$/', $_POST['uri']) ? '4' : $_POST['mode'];
+			$mode = ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match('/^(articles\/details\/id_([0-9]+)\/)$/', $_POST['uri']) ? '4' : $_POST['mode'];
 			$uri_type = $_POST['mode'] == 4 ? 'articles/details/id_' . $_POST['articles'] . '/' : $_POST['uri'];
 
 			$update_values = array(
@@ -137,7 +137,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 
 			$matches = array();
 			if (!isset($_POST['submit']) && $page['mode'] == 4) {
-				preg_match_all('/^(articles\/list\/id_([0-9]+)\/)$/', $page['uri'], $matches);
+				preg_match_all('/^(articles\/details\/id_([0-9]+)\/)$/', $page['uri'], $matches);
 			}
 
 			ACP3_CMS::$view->assign('articles', articlesList(!empty($matches[2]) ? $matches[2][0] : ''));
