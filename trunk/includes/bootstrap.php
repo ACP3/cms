@@ -225,6 +225,7 @@ class ACP3_CMS {
 		self::$view->assign('ROOT_DIR', ROOT_DIR);
 		self::$view->assign('DESIGN_PATH', DESIGN_PATH);
 		self::$view->assign('UA_IS_MOBILE', isMobileBrowser());
+		self::$view->assign('IN_ADM', defined('IN_ADM') ? true : false);
 
 		$lang_info = ACP3_XML::parseXmlFile(ACP3_ROOT . 'languages/' . self::$lang->getLanguage() . '/info.xml', '/language');
 		self::$view->assign('LANG_DIRECTION', isset($lang_info['direction']) ? $lang_info['direction'] : 'ltr');

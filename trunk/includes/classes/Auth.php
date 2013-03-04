@@ -236,6 +236,6 @@ class ACP3_Auth
 	 */
 	public function setCookie($nickname, $password, $expiry)
 	{
-		return setcookie(self::COOKIE_NAME, base64_encode($nickname . '|' . $password), time() + $expiry, '/', strpos($_SERVER['HTTP_HOST'],'.') !== false ? $_SERVER['HTTP_HOST'] : '');
+		return setcookie(self::COOKIE_NAME, base64_encode($nickname . '|' . $password), time() + $expiry, ROOT_DIR, strpos($_SERVER['HTTP_HOST'],'.') !== false ? $_SERVER['HTTP_HOST'] : '');
 	}
 }

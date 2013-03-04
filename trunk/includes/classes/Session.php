@@ -72,7 +72,7 @@ class ACP3_Session {
 	 */
 	private static function startSession() {
 		// Session Cookie Parameter setzen
-		session_set_cookie_params(0, '/');
+		session_set_cookie_params(0, ROOT_DIR);
 
 		// Session starten
 		session_start();
@@ -146,7 +146,7 @@ class ACP3_Session {
 
 		// Session-Cookie löschen
 		if (isset($_COOKIE[self::SESSION_NAME]))
-			setcookie(self::SESSION_NAME, '', time() - 3600, '/');
+			setcookie(self::SESSION_NAME, '', time() - 3600, ROOT_DIR);
 
 		// Session aus Datenbank löschen
 		ACP3_CMS::$db2->delete(DB_PRE . 'sessions', array('session_id' => $session_id));
