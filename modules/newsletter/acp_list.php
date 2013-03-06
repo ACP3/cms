@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$newsletter = ACP3_CMS::$db2->fetchAll('SELECT id, date, title, status FROM ' . DB_PRE . 'newsletters ORDER BY id DESC');
+$newsletter = ACP3_CMS::$db2->fetchAll('SELECT id, date, title, status FROM ' . DB_PRE . 'newsletters ORDER BY date DESC');
 $c_newsletter = count($newsletter);
 
 if ($c_newsletter > 0) {
@@ -28,7 +28,7 @@ if ($c_newsletter > 0) {
 	$search = array('0', '1');
 	$replace = array(ACP3_CMS::$lang->t('newsletter', 'not_yet_sent'), ACP3_CMS::$lang->t('newsletter', 'already_sent'));
 	for ($i = 0; $i < $c_newsletter; ++$i) {
-		$newsletter[$i]['date'] = ACP3_CMS::$date->format($newsletter[$i]['date']);
+		$newsletter[$i]['date_formatted'] = ACP3_CMS::$date->formatTimeRange($newsletter[$i]['date']);
 		$newsletter[$i]['status'] = str_replace($search, $replace, $newsletter[$i]['status']);
 	}
 	ACP3_CMS::$view->assign('newsletter', $newsletter);

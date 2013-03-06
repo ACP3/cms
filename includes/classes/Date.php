@@ -316,12 +316,15 @@ class ACP3_Date {
 	 * @param string $format
 	 * @return string
 	 */
-	public function period($start, $end, $format = 'long')
+	public function formatTimeRange($start, $end = '', $format = 'long')
 	{
-		if ($start >= $end) {
-			return sprintf(ACP3_CMS::$lang->t('system', 'since_date'), $this->format($start, $format));
+		$datetime_format = 'Y-m-d H:i';
+		if ($end === '' || $start >= $end) {
+			$title = $end === '' ? $this->format($start, $format) : sprintf(ACP3_CMS::$lang->t('system', 'date_published_since'), $this->format($start, $format));
+			return '<time datetime="' . $start . '" title="' . $title . '">' . $this->format($start, $datetime_format) . '</time>';
 		} else {
-			return sprintf(ACP3_CMS::$lang->t('system', 'from_start_to_end'), $this->format($start, $format), $this->format($end, $format));
+			$title = sprintf(ACP3_CMS::$lang->t('system', 'date_time_range'), $this->format($start, $format), $this->format($end, $format));
+			return '<time datetime="' . $start . '/' . $end . '" title="' . $title . '">' . $this->format($start, $datetime_format) . '&ndash;' . $this->format($end, $datetime_format) . '</time>';
 		}
 	}
 

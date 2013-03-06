@@ -12,14 +12,14 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$guestbook = ACP3_CMS::$db2->fetchAll('SELECT id, ip, date, name, message FROM ' . DB_PRE . 'guestbook ORDER BY id DESC');
+$guestbook = ACP3_CMS::$db2->fetchAll('SELECT id, ip, date, name, message FROM ' . DB_PRE . 'guestbook ORDER BY date DESC');
 $c_guestbook = count($guestbook);
 
 if ($c_guestbook > 0) {
 	$can_delete = ACP3_Modules::check('guestbook', 'acp_delete');
 	$config = array(
 		'element' => '#acp-table',
-		'sort_col' => $can_delete === true ? 5 : 4,
+		'sort_col' => $can_delete === true ? 1 : 0,
 		'sort_dir' => 'desc',
 		'hide_col_sort' => $can_delete === true ? 0 : ''
 	);
@@ -36,7 +36,7 @@ if ($c_guestbook > 0) {
 	}
 
 	for ($i = 0; $i < $c_guestbook; ++$i) {
-		$guestbook[$i]['date'] = ACP3_CMS::$date->format($guestbook[$i]['date']);
+		$guestbook[$i]['date_formatted'] = ACP3_CMS::$date->formatTimeRange($guestbook[$i]['date']);
 		$guestbook[$i]['message'] = nl2p($guestbook[$i]['message']);
 		if ($emoticons_active === true) {
 			$guestbook[$i]['message'] = emoticonsReplace($guestbook[$i]['message']);

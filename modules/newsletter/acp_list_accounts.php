@@ -16,7 +16,7 @@ $accounts = ACP3_CMS::$db2->fetchAll('SELECT id, mail, hash FROM ' . DB_PRE . 'n
 $c_accounts = count($accounts);
 
 if ($c_accounts > 0) {
-	$can_delete = ACP3_Modules::check('comments', 'acp_delete_account');
+	$can_delete = ACP3_Modules::check('newsletter', 'acp_delete_account');
 	$config = array(
 		'element' => '#acp-table',
 		'sort_col' => $can_delete === true ? 3 : 2,

@@ -19,12 +19,14 @@ if ($c_news > 0) {
 	$can_delete = ACP3_Modules::check('news', 'acp_delete');
 	$config = array(
 		'element' => '#acp-table',
+		'sort_col' => $can_delete === true ? 1 : 0,
+		'sort_dir' => 'desc',
 		'hide_col_sort' => $can_delete === true ? 0 : ''
 	);
 	ACP3_CMS::setContent(datatable($config));
 
 	for ($i = 0; $i < $c_news; ++$i) {
-		$news[$i]['period'] = ACP3_CMS::$date->period($news[$i]['start'], $news[$i]['end']);
+		$news[$i]['period'] = ACP3_CMS::$date->formatTimeRange($news[$i]['start'], $news[$i]['end']);
 	}
 	ACP3_CMS::$view->assign('news', $news);
 	ACP3_CMS::$view->assign('can_delete', $can_delete);

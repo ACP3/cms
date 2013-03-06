@@ -33,7 +33,7 @@
 {if $can_delete === true}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
 {/if}
-				<td>{$row.date}</td>
+				<td>{$row.date_formatted}</td>
 				<td>{check_access mode="link" path="acp/newsletter/edit/id_`$row.id`" title=$row.title}</td>
 				<td>{$row.status}</td>
 {if $can_send}

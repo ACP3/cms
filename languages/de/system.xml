@@ -72,6 +72,7 @@
 	<item key="date_november">November</item>
 	<item key="date_oct">Okt</item>
 	<item key="date_october">Oktober</item>
+	<item key="date_published_since">Seit %s</item>
 	<item key="date_sat">Sa</item>
 	<item key="date_saturday">Samstag</item>
 	<item key="date_sep">Sep</item>
@@ -80,6 +81,7 @@
 	<item key="date_sunday">Sonntag</item>
 	<item key="date_thu">Do</item>
 	<item key="date_thursday">Donnerstag</item>
+	<item key="date_time_range"><![CDATA[%1$s&ndash;%2$s]]></item>
 	<item key="date_tue">Di</item>
 	<item key="date_tuesday">Dienstag</item>
 	<item key="date_wed">Mi</item>
@@ -123,7 +125,6 @@
 	<item key="flood_no_entry_possible">Sie können erst in %d Sekunden einen neuen Beitrag verfassen.</item>
 	<item key="form_already_submitted">Das Formular wurde bereits abgesendet.</item>
 	<item key="forward">Weiter</item>
-	<item key="from_start_to_end">%1$s bis %2$s</item>
 	<item key="general">Allgemeines</item>
 	<item key="general_settings">Allgemeine Einstellungen</item>
 	<item key="general_statements">Allgemeine Angaben</item>
@@ -251,7 +252,6 @@
 	<item key="settings_error">Beim Bearbeiten der Einstellungen ist ein Fehler aufgetreten.</item>
 	<item key="settings_success">Die Einstellungen wurden erfolgreich aktualisiert.</item>
 	<item key="sidebar_entries_to_display">Anzuzeigende Sidebareinträge</item>
-	<item key="since_date">Seit %s</item>
 	<item key="sql_query">SQL Abfrage</item>
 	<item key="sql_tables">SQL-Tabellen</item>
 	<item key="start_date">Veröffentlichungsdatum</item>

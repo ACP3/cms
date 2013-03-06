@@ -72,6 +72,7 @@
 	<item key="date_november">November</item>
 	<item key="date_oct">Oct</item>
 	<item key="date_october">October</item>
+	<item key="date_published_since">Since %s</item>
 	<item key="date_sat">Sat</item>
 	<item key="date_saturday">Saturday</item>
 	<item key="date_sep">Sep</item>
@@ -80,6 +81,7 @@
 	<item key="date_sunday">Sunday</item>
 	<item key="date_thu">Thu</item>
 	<item key="date_thursday">Thursday</item>
+	<item key="date_time_range"><![CDATA[%1$s&ndash;%2$s]]></item>
 	<item key="date_tue">Tue</item>
 	<item key="date_tuesday">Tuesday</item>
 	<item key="date_wed">Wed</item>
@@ -123,7 +125,6 @@
 	<item key="flood_no_entry_possible">You have to wait for %d seconds to submit a new entry.</item>
 	<item key="form_already_submitted">The form has been already submitted.</item>
 	<item key="forward">Forward</item>
-	<item key="from_start_to_end">From %1$s until %2$s</item>
 	<item key="general">General</item>
 	<item key="general_settings">General settings</item>
 	<item key="general_statements">General statements</item>
@@ -251,7 +252,6 @@
 	<item key="settings_error">While editing the settings an error has occured.</item>
 	<item key="settings_success">The settings have been successfully edited.</item>
 	<item key="sidebar_entries_to_display">Sidebar entries to display</item>
-	<item key="since_date">Since %s</item>
 	<item key="start_date">Release date</item>
 	<item key="statements_in_byte">Statements in Byte.</item>
 	<item key="statements_in_pixel">Statements in Pixel.</item>
