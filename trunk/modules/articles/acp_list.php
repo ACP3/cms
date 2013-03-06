@@ -25,7 +25,7 @@ if ($c_articles > 0) {
 	);
 	ACP3_CMS::setContent(datatable($config));
 	for ($i = 0; $i < $c_articles; ++$i) {
-		$articles[$i]['period'] = ACP3_CMS::$date->period($articles[$i]['start'], $articles[$i]['end']);
+		$articles[$i]['period'] = ACP3_CMS::$date->formatTimeRange($articles[$i]['start'], $articles[$i]['end']);
 	}
 	ACP3_CMS::$view->assign('articles', $articles);
 	ACP3_CMS::$view->assign('can_delete', $can_delete);

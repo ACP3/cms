@@ -46,7 +46,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) &&
 			if (!empty($comments[$i]['user_id']) && empty($comments[$i]['name'])) {
 				$comments[$i]['name'] = ACP3_CMS::$lang->t('users', 'deleted_user');
 			}
-			$comments[$i]['date'] = ACP3_CMS::$date->format($comments[$i]['date']);
+			$comments[$i]['date_formatted'] = ACP3_CMS::$date->formatTimeRange($comments[$i]['date']);
 			$comments[$i]['message'] = nl2p($comments[$i]['message']);
 			if ($emoticons_active === true) {
 				$comments[$i]['message'] = emoticonsReplace($comments[$i]['message']);

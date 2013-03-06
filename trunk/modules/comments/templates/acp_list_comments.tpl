@@ -28,7 +28,7 @@
 {if $can_delete === true}
 				<td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
 {/if}
-				<td>{$row.date}</td>
+				<td>{$row.date_formatted}</td>
 				<td>{check_access mode="link" path="acp/comments/edit/id_`$row.id`" title=$row.name}</td>
 				<td>{$row.message}</td>
 				<td>{$row.ip}</td>

@@ -19,12 +19,14 @@ if ($c_polls > 0) {
 	$can_delete = ACP3_Modules::check('polls', 'acp_delete');
 	$config = array(
 		'element' => '#acp-table',
+		'sort_col' => $can_delete === true ? 1 : 0,
+		'sort_dir' => 'desc',
 		'hide_col_sort' => $can_delete === true ? 0 : ''
 	);
 	ACP3_CMS::setContent(datatable($config));
 
 	for ($i = 0; $i < $c_polls; ++$i) {
-		$polls[$i]['period'] = ACP3_CMS::$date->period($polls[$i]['start'], $polls[$i]['end']);
+		$polls[$i]['period'] = ACP3_CMS::$date->formatTimeRange($polls[$i]['start'], $polls[$i]['end']);
 	}
 	ACP3_CMS::$view->assign('polls', $polls);
 	ACP3_CMS::$view->assign('can_delete', $can_delete);
