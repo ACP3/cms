@@ -35,10 +35,16 @@ class ACP3_Breadcrumb {
 	private $steps_mods = array();
 
 	/**
-	 *
 	 * @var array
 	 */
 	private $title = array('separator' => '-', 'prefix' => '', 'postfix' => '');
+
+	/**
+	 * Enthält die gecachete Brotkrümelspur
+	 *
+	 * @var array
+	 */
+	private $breadcrumb_cache = array();
 
 	public function __construct()
 	{
@@ -140,7 +146,6 @@ class ACP3_Breadcrumb {
 		$step = array(
 			'title' => $title,
 			'uri' => $path,
-			'last' => false,
 		);
 		array_unshift($this->steps_mods, $step);
 		return $this;
@@ -160,7 +165,6 @@ class ACP3_Breadcrumb {
 		$index = count($this->steps_mods) - (!empty($this->steps_mods) ? 1 : 0);
 		$this->steps_mods[$index]['title'] = $title;
 		$this->steps_mods[$index]['uri'] = $path;
-		$this->steps_mods[$index]['last'] = true;
 
 		return $this;
 	}
@@ -179,60 +183,62 @@ class ACP3_Breadcrumb {
 		$module = ACP3_CMS::$uri->mod;
 		$file = ACP3_CMS::$uri->file;
 
-		// Brotkrümelspur für das Admin-Panel
-		if (defined('IN_ADM') === true) {
-			// Wenn noch keine Brotkrümelspur gesetzt ist, dies nun tun
-			if (empty($this->steps_mods)) {
-				$this->append(ACP3_CMS::$lang->t('system', 'acp'), ACP3_CMS::$uri->route('acp'));
-				if ($module !== 'errors') {
-					if ($module !== 'acp') {
-						$this->append(ACP3_CMS::$lang->t($module, $module), ACP3_CMS::$uri->route('acp/' . $module));
-						if ($file !== 'acp_list')
-							$this->append(ACP3_CMS::$lang->t($module, $file));
+		if (empty($this->breadcrumb_cache)) {
+			// Brotkrümelspur für das Admin-Panel
+			if (defined('IN_ADM') === true) {
+				// Wenn noch keine Brotkrümelspur gesetzt ist, dies nun tun
+				if (empty($this->steps_mods)) {
+					$this->append(ACP3_CMS::$lang->t('system', 'acp'), ACP3_CMS::$uri->route('acp'));
+					if ($module !== 'errors') {
+						if ($module !== 'acp') {
+							$this->append(ACP3_CMS::$lang->t($module, $module), ACP3_CMS::$uri->route('acp/' . $module));
+							if ($file !== 'acp_list')
+								$this->append(ACP3_CMS::$lang->t($module, $file), ACP3_CMS::$uri->route('acp/' . $module . '/' . $file));
+						}
+					} else {
+						$this->append(ACP3_CMS::$lang->t($module, $file), ACP3_CMS::$uri->route('acp/' . $module . '/' . $file));
 					}
+				// Falls bereits Stufen gesetzt wurden, Links für das Admin-Panel und
+				// die Modulverwaltung in umgedrehter Reihenfolge voranstellen
 				} else {
-					$this->append(ACP3_CMS::$lang->t($module, $file));
+					if ($module !== 'acp')
+						$this->prepend(ACP3_CMS::$lang->t($module, $module), ACP3_CMS::$uri->route('acp/' . $module));
+					$this->prepend(ACP3_CMS::$lang->t('system', 'acp'), ACP3_CMS::$uri->route('acp'));
 				}
-			// Falls bereits Stufen gesetzt wurden, Links für das Admin-Panel und
-			// die Modulverwaltung in umgedrehter Reihenfolge voranstellen
+				$this->breadcrumb_cache = $this->steps_mods;
+			// Brotkrümelspur für das Frontend
 			} else {
-				if ($module !== 'acp')
-					$this->prepend(ACP3_CMS::$lang->t($module, $module), ACP3_CMS::$uri->route('acp/' . $module));
-				$this->prepend(ACP3_CMS::$lang->t('system', 'acp'), ACP3_CMS::$uri->route('acp'));
-			}
-			$breadcrumb = $this->steps_mods;
-		// Brotkrümelspur für das Frontend
-		} else {
-			if (empty($this->steps_db) && empty($this->steps_mods)) {
-				$this->append($file === 'list' ? ACP3_CMS::$lang->t($module, $module) : ACP3_CMS::$lang->t($module, $file), ACP3_CMS::$uri->route($module . '/' . $file));
-				$breadcrumb = $this->steps_mods;
-			} elseif (!empty($this->steps_db) && empty($this->steps_mods)) {
-				$breadcrumb = $this->steps_db;
-			} elseif (!empty($this->steps_mods) && empty($this->steps_db)) {
-				$breadcrumb = $this->steps_mods;
-			} else {
-				$breadcrumb = $this->steps_db;
+				if (empty($this->steps_db) && empty($this->steps_mods)) {
+					$this->append($file === 'list' ? ACP3_CMS::$lang->t($module, $module) : ACP3_CMS::$lang->t($module, $file), ACP3_CMS::$uri->route($module . '/' . $file));
+					$this->breadcrumb_cache = $this->steps_mods;
+				} elseif (!empty($this->steps_db) && empty($this->steps_mods)) {
+					$this->breadcrumb_cache = $this->steps_db;
+				} elseif (!empty($this->steps_mods) && empty($this->steps_db)) {
+					$this->breadcrumb_cache = $this->steps_mods;
+				} else {
+					$this->breadcrumb_cache = $this->steps_db;
 
-				if ($breadcrumb[count($breadcrumb) - 1]['uri'] === $this->steps_mods[0]['uri']) {
-					$c_steps_mods = count($this->steps_mods);
-					for ($i = 1; $i < $c_steps_mods; ++$i) {
-						$breadcrumb[] = $this->steps_mods[$i];
+					if ($this->breadcrumb_cache[count($this->breadcrumb_cache) - 1]['uri'] === $this->steps_mods[0]['uri']) {
+						$c_steps_mods = count($this->steps_mods);
+						for ($i = 1; $i < $c_steps_mods; ++$i) {
+							$this->breadcrumb_cache[] = $this->steps_mods[$i];
+						}
 					}
 				}
 			}
+
+			// Letzte Brotkrume markieren
+			$this->breadcrumb_cache[count($this->breadcrumb_cache) - 1]['last'] = true;
 		}
 
-		$last_index = count($breadcrumb) - 1;
 		// Brotkrümelspur ausgeben
 		if ($mode === 1) {
-			// Letzte Brotkrume markieren
-			$breadcrumb[$last_index]['last'] = true;
-			ACP3_CMS::$view->assign('breadcrumb', $breadcrumb);
+			ACP3_CMS::$view->assign('breadcrumb', $this->breadcrumb_cache);
 			return ACP3_CMS::$view->fetchTemplate('system/breadcrumb.tpl');
 		// Nur Titel ausgeben
 		} else {
 			// Letzter Eintrag der Brotkrümelspur ist der Seitentitel
-			$title = $breadcrumb[$last_index]['title'];
+			$title = $this->breadcrumb_cache[count($this->breadcrumb_cache) - 1]['title'];
 			if ($mode === 3) {
 				$separator = ' ' . $this->title['separator'] . ' ';
 				if (!empty($this->title['prefix']))
