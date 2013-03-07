@@ -22,12 +22,11 @@
 * See http://wiki.fckeditor.net/Developer%27s_Guide/Configuration/Configurations_File for more configuration info.
 */
 function editor($params) {
-	require_once INCLUDES_DIR . 'wysiwyg/ckeditor/ckeditor_php5.php';
+	require_once INCLUDES_DIR . 'wysiwyg/ckeditor/ckeditor.php';
 
 	$ckeditor = new CKEditor(ROOT_DIR . 'includes/wysiwyg/ckeditor/');
 	$ckeditor->returnOutput = true;
 
-	$basepath = ROOT_DIR . 'includes/wysiwyg/ckeditor/';
 	$filebrowser_uri = ROOT_DIR . 'libraries/kcfinder/browse.php%s';
 	$upload_uri = ROOT_DIR . 'libraries/kcfinder/upload.php%s';
 
@@ -43,6 +42,8 @@ function editor($params) {
 		$config['height'] = $params['height'] . 'px';
 	if (isset($params['toolbar']))
 		$config['toolbar'] = $params['toolbar'] === 'simple' ? 'Basic' : 'Full';
+
+	$config['extraPlugins'] = 'divarea';
 
 	// Smilies
 	if ((!isset($config['toolbar']) || $config['toolbar'] !== 'simple') && ACP3_Modules::check('emoticons', 'functions') === true) {
