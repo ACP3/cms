@@ -18,12 +18,21 @@
 class ACP3_Breadcrumb {
 
 	/**
-	 * Enthält alle Schritte der Brotkrümelspur
+	 * Enthält alle Schritte der Brotkrümelspur,
+	 * welche sich aus der Navigationsstruktur der Website ergeben
 	 *
 	 * @var array
 	 * @access private
 	 */
-	private $steps = array();
+	private $steps_db = array();
+	/**
+	 * Enthält alle Schritte der Brotkrümelspur,
+	 * welche von den Modulen festgelegt werden
+	 *
+	 * @var array
+	 * @access private
+	 */
+	private $steps_mods = array();
 
 	/**
 	 *
@@ -41,7 +50,7 @@ class ACP3_Breadcrumb {
 
 			// Dynamische Seite (ACP3 intern)
 			for ($i = 0; $i < $c_items; ++$i) {
-				$this->append($items[$i]['title'], ACP3_CMS::$uri->route($items[$i]['uri']));
+				$this->appendFromDB($items[$i]['title'], ACP3_CMS::$uri->route($items[$i]['uri']));
 			}
 		}
 	}
@@ -88,20 +97,31 @@ class ACP3_Breadcrumb {
 	 * 	Die zum $title zugehörige ACP3-interne URI
 	 * @return \bACP3_Breadcrumb
 	 */
+	private function appendFromDB($title, $path = 0)
+	{
+		$this->steps_db[] = array(
+			'title' => $title,
+			'uri' => $path
+		);
+
+		return $this;
+	}
+
+	/**
+	 * Zuweisung einer neuen Stufe zur Brotkrümelspur
+	 *
+	 * @param string $title
+	 * 	Bezeichnung der jeweiligen Stufe der Brotkrume
+	 * @param string $path
+	 * 	Die zum $title zugehörige ACP3-interne URI
+	 * @return \bACP3_Breadcrumb
+	 */
 	public function append($title, $path = 0)
 	{
-		static $i = 0;
-
-		// Neue Brotkrume nur hinzufügen, falls noch keine mit dem gleichen Namen angelegt wurde
-		if ($i === 0 || $this->searchForDuplicates($title, $path) === false) {
-			$this->steps[$i]['title'] = $title;
-			$this->steps[$i]['uri'] = $path;
-			$this->steps[$i]['last'] = true;
-			// Die vorherige Brotkrume ist nun nicht mehr das letzte Element
-			if (isset($this->steps[$i - 1]))
-				$this->steps[$i - 1]['last'] = false;
-			++$i;
-		}
+		$this->steps_mods[] = array(
+			'title' => $title,
+			'uri' => $path
+		);
 
 		return $this;
 	}
@@ -117,15 +137,12 @@ class ACP3_Breadcrumb {
 	 */
 	private function prepend($title, $path)
 	{
-		if ($this->searchForDuplicates($title, $path) === false) {
-			$step = array(
-				'title' => $title,
-				'uri' => $path,
-				'last' => false,
-			);
-			array_unshift($this->steps, $step);
-		}
-
+		$step = array(
+			'title' => $title,
+			'uri' => $path,
+			'last' => false,
+		);
+		array_unshift($this->steps_mods, $step);
 		return $this;
 	}
 
@@ -140,32 +157,12 @@ class ACP3_Breadcrumb {
 	 */
 	public function replaceAnchestor($title, $path = 0)
 	{
-		$index = count($this->steps) - (!empty($this->steps) ? 1 : 0);
-		$this->steps[$index]['title'] = $title;
-		$this->steps[$index]['uri'] = $path;
-		$this->steps[$index]['last'] = true;
+		$index = count($this->steps_mods) - (!empty($this->steps_mods) ? 1 : 0);
+		$this->steps_mods[$index]['title'] = $title;
+		$this->steps_mods[$index]['uri'] = $path;
+		$this->steps_mods[$index]['last'] = true;
 
 		return $this;
-	}
-
-	/**
-	 * Sucht nach bereits vorhandenen Brotkrumen, damit keine Dopplungen auftreten
-	 *
-	 * @param string $title
-	 * 	Der zu überprüfende Seitentitel
-	 * @param string $path
-	 * 	Die zu überprüfende ACP3-interne URI
-	 * @return boolean 
-	 */
-	private function searchForDuplicates($title, $path)
-	{
-		if (!empty($this->steps)) {
-			foreach ($this->steps as $row) {
-				if ($row['title'] === $title || $row['uri'] === $path)
-					return true;
-			}
-		}
-		return false;
 	}
 
 	/**
@@ -174,6 +171,7 @@ class ACP3_Breadcrumb {
 	 * @param integer $mode
 	 * 	1 = Brotkrümelspur ausgeben
 	 * 	2 = Nur Seitentitel ausgeben
+	 *  3 = Seitentitel mit eventuellen Prefixes und Postfixes ausgeben
 	 * @return string
 	 */
 	public function output($mode = 1)
@@ -184,7 +182,7 @@ class ACP3_Breadcrumb {
 		// Brotkrümelspur für das Admin-Panel
 		if (defined('IN_ADM') === true) {
 			// Wenn noch keine Brotkrümelspur gesetzt ist, dies nun tun
-			if (empty($this->steps)) {
+			if (empty($this->steps_mods)) {
 				$this->append(ACP3_CMS::$lang->t('system', 'acp'), ACP3_CMS::$uri->route('acp'));
 				if ($module !== 'errors') {
 					if ($module !== 'acp') {
@@ -202,24 +200,39 @@ class ACP3_Breadcrumb {
 					$this->prepend(ACP3_CMS::$lang->t($module, $module), ACP3_CMS::$uri->route('acp/' . $module));
 				$this->prepend(ACP3_CMS::$lang->t('system', 'acp'), ACP3_CMS::$uri->route('acp'));
 			}
-		// Falls noch keine Brotkrümelspur gesetzt sein sollte, dies nun tun
-		} elseif (empty($this->steps)) {
-			$this->append($file === 'list' ? ACP3_CMS::$lang->t($module, $module) : ACP3_CMS::$lang->t($module, $file), ACP3_CMS::$uri->route($module . '/' . $file));
-		// Der Modulunterseite den richtigen Seitentitel zuweisen
-		} elseif ($module !== 'articles' && $file !== 'details' &&
-			!empty($this->steps[count($this->steps) - 1]['uri']) &&
-			$this->steps[count($this->steps) - 1]['uri'] !== ACP3_CMS::$uri->route(ACP3_CMS::$uri->query)) {
-			$this->replaceAnchestor(ACP3_CMS::$lang->t($module, $file), ACP3_CMS::$uri->route(ACP3_CMS::$uri->query));
+			$breadcrumb = $this->steps_mods;
+		// Brotkrümelspur für das Frontend
+		} else {
+			if (empty($this->steps_db) && empty($this->steps_mods)) {
+				$this->append($file === 'list' ? ACP3_CMS::$lang->t($module, $module) : ACP3_CMS::$lang->t($module, $file), ACP3_CMS::$uri->route($module . '/' . $file));
+				$breadcrumb = $this->steps_mods;
+			} elseif (!empty($this->steps_db) && empty($this->steps_mods)) {
+				$breadcrumb = $this->steps_db;
+			} elseif (!empty($this->steps_mods) && empty($this->steps_db)) {
+				$breadcrumb = $this->steps_mods;
+			} else {
+				$breadcrumb = $this->steps_db;
+
+				if ($breadcrumb[count($breadcrumb) - 1]['uri'] === $this->steps_mods[0]['uri']) {
+					$c_steps_mods = count($this->steps_mods);
+					for ($i = 1; $i < $c_steps_mods; ++$i) {
+						$breadcrumb[] = $this->steps_mods[$i];
+					}
+				}
+			}
 		}
 
+		$last_index = count($breadcrumb) - 1;
 		// Brotkrümelspur ausgeben
 		if ($mode === 1) {
-			ACP3_CMS::$view->assign('breadcrumb', $this->steps);
+			// Letzte Brotkrume markieren
+			$breadcrumb[$last_index]['last'] = true;
+			ACP3_CMS::$view->assign('breadcrumb', $breadcrumb);
 			return ACP3_CMS::$view->fetchTemplate('system/breadcrumb.tpl');
 		// Nur Titel ausgeben
 		} else {
 			// Letzter Eintrag der Brotkrümelspur ist der Seitentitel
-			$title = $this->steps[count($this->steps) - 1]['title'];
+			$title = $breadcrumb[$last_index]['title'];
 			if ($mode === 3) {
 				$separator = ' ' . $this->title['separator'] . ' ';
 				if (!empty($this->title['prefix']))
@@ -231,5 +244,4 @@ class ACP3_Breadcrumb {
 			return $title;
 		}
 	}
-
 }
