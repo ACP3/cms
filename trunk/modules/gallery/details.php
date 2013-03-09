@@ -26,19 +26,23 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 	->setTitlePostfix(sprintf(ACP3_CMS::$lang->t('gallery', 'picture_x'), $picture['pic']));
 
 	// Bildabmessungen berechnen
-	$picInfos = getimagesize(UPLOADS_DIR . 'gallery/' . $picture['file']);
-	if ($picInfos[0] > $settings['width'] || $picInfos[1] > $settings['height']) {
-		if ($picInfos[0] > $picInfos[1]) {
-			$newWidth = $settings['width'];
-			$newHeight = intval($picInfos[1] * $newWidth / $picInfos[0]);
-		} else {
-			$newHeight = $settings['height'];
-			$newWidth = intval($picInfos[0] * $newHeight / $picInfos[1]);
+	$picture['width'] = $settings['width'];
+	$picture['height'] = $settings['height'];
+	$picInfos = @getimagesize(UPLOADS_DIR . 'gallery/' . $picture['file']);
+	if ($picInfos !== false) {
+		if ($picInfos[0] > $settings['width'] || $picInfos[1] > $settings['height']) {
+			if ($picInfos[0] > $picInfos[1]) {
+				$newWidth = $settings['width'];
+				$newHeight = intval($picInfos[1] * $newWidth / $picInfos[0]);
+			} else {
+				$newHeight = $settings['height'];
+				$newWidth = intval($picInfos[0] * $newHeight / $picInfos[1]);
+			}
 		}
-	}
 
-	$picture['width'] = isset($newWidth) ? $newWidth : $picInfos[0];
-	$picture['height'] = isset($newHeight) ? $newHeight : $picInfos[1];
+		$picture['width'] = isset($newWidth) ? $newWidth : $picInfos[0];
+		$picture['height'] = isset($newHeight) ? $newHeight : $picInfos[1];
+	}
 
 	ACP3_CMS::$view->assign('picture', $picture);
 

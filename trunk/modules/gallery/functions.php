@@ -21,14 +21,18 @@ function setGalleryCache($id)
 	$settings = ACP3_Config::getSettings('gallery');
 
 	for ($i = 0; $i < $c_pictures; ++$i) {
-		$picInfos = getimagesize(UPLOADS_DIR . 'gallery/' . $pictures[$i]['file']);
-		if ($picInfos[0] > $settings['thumbwidth'] || $picInfos[1] > $settings['thumbheight']) {
-			$newHeight = $settings['thumbheight'];
-			$newWidth = intval($picInfos[0] * $newHeight / $picInfos[1]);
-		}
+		$pictures[$i]['width'] = $settings['thumbwidth'];
+		$pictures[$i]['height'] = $settings['thumbheight'];
+		$picInfos = @getimagesize(UPLOADS_DIR . 'gallery/' . $pictures[$i]['file']);
+		if ($picInfos !== false) {
+			if ($picInfos[0] > $settings['thumbwidth'] || $picInfos[1] > $settings['thumbheight']) {
+				$newHeight = $settings['thumbheight'];
+				$newWidth = intval($picInfos[0] * $newHeight / $picInfos[1]);
+			}
 
-		$pictures[$i]['width'] = isset($newWidth) ? $newWidth : $picInfos[0];
-		$pictures[$i]['height'] = isset($newHeight) ? $newHeight : $picInfos[1];
+			$pictures[$i]['width'] = isset($newWidth) ? $newWidth : $picInfos[0];
+			$pictures[$i]['height'] = isset($newHeight) ? $newHeight : $picInfos[1];
+		}
 	}
 
 	return ACP3_Cache::create('pics_id_' . $id, $pictures, 'gallery');
