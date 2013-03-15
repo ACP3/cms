@@ -8,7 +8,7 @@
 	</ul>
 	<div class="tab-content">
 		<div id="tab-1" class="tab-pane active">
-			<table class="table table-striped">
+			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
 						<th>{lang t="system|module_name"}</th>
@@ -46,7 +46,7 @@
 		</div>
 		<div id="tab-2" class="tab-pane">
 {if !empty($new_modules)}
-			<table class="table table-striped">
+			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
 						<th>{lang t="system|module_name"}</th>

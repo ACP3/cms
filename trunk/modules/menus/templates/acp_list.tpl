@@ -11,7 +11,7 @@
 {$redirect_message}
 {/if}
 {if isset($pages_list)}
-	<table class="table table-striped">
+	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
 {if $can_delete_item === true}

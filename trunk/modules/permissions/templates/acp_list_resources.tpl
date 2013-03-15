@@ -11,7 +11,7 @@
 {/if}
 {if isset($resources)}
 {include_js module="permissions" file="acp"}
-	<table id="resources-table" class="table">
+	<table id="resources-table" class="table table-hover">
 		<thead>
 			<tr>
 {if $can_delete_resource === true}

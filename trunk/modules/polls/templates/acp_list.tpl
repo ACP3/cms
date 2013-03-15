@@ -10,7 +10,7 @@
 {$redirect_message}
 {/if}
 {if isset($polls)}
-	<table id="acp-table" class="table table-striped">
+	<table id="acp-table" class="table table-striped table-hover">
 		<thead>
 			<tr>
 {if $can_delete === true}

@@ -1,7 +1,7 @@
 {if isset($redirect_message)}
 {$redirect_message}
 {/if}
-<table class="table table-striped">
+<table class="table table-striped table-hover">
 	<thead>
 		<tr>
 			<th>{lang t="system|name"}</th>

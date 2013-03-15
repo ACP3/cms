@@ -11,7 +11,7 @@
 {$redirect_message}
 {/if}
 {if isset($roles)}
-	<table class="table table-striped">
+	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
 {if $can_delete === true}
