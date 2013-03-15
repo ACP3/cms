@@ -1,50 +1,53 @@
 {js_libraries enable="bootbox"}
 <script type="text/javascript">
-function mark_entries(name, action)
+function mark_entries(id, name, action)
 {
-	var fields = $('form .table tbody input[name="' + name + '[]"]:visible');
+	var fields = $(id).parents('thead:first').next('tbody').find('input[name="' + name + '[]"]:visible');
 
 	jQuery.each(fields, function() {
-		if (action == 'add') {
-			$(this).prop('checked', true).parents('tr:first').addClass('selected');
+		if (action === 'add') {
+			$(this).prop('checked', true).parents('tr:first').addClass('info');
 		} else {
-			$(this).prop('checked', false).parents('tr:first').removeClass('selected');
+			$(this).prop('checked', false).parents('tr:first').removeClass('info');
 		}
 	});
 }
 
 $(document).ready(function() {
-	$('#mark-all').click(function() {
-		if ($(this).is(':checked')) {
-			mark_entries('{$checkbox_name}', 'add');
-		} else {
-			mark_entries('{$checkbox_name}', 'remove');
-		}
-	});
-
+	$('#{$mark_all_id}').click(function() {
+		mark_entries('#{$mark_all_id}', '{$checkbox_name}', $(this).is(':checked') ? 'add' : 'remove');
 	// Checkbox durch Klick auf Tabellenzeile markieren
-	$('form > .table > tbody > tr').filter(':has(:checkbox:checked)').addClass('selected').end().click(function(event) {
-		if (event.target.type !== 'checkbox') {
-			$(':checkbox', this).trigger('click');
+	}).parents('thead').next('tbody').find('tr:has(:checkbox)').click(function(e) {
+		if (e.target.type !== 'checkbox') {
+			if (e.target.nodeName === 'A')
+				return;
+
+			var $elem = $('input[name="{$checkbox_name}[]"]', this);
+			$elem.prop('checked', $elem.is(':checked') ? false : true);
 		}
-	}).find(':checkbox').click(function() {
-		$(this).parents('tr:first').toggleClass('selected');
-		if ($('.table tbody tr:has(:checkbox):visible').length == $('.table tbody tr.selected:visible').length) {
-			$('#mark-all').prop('checked', true);
+
+		if ($(this).hasClass('info')) {
+			$(this).removeClass('info');
 		} else {
-			$('#mark-all').prop('checked', false);
+			$(this).addClass('info');
+		}
+
+		if ($(this).parents('tbody').find('input[name="{$checkbox_name}[]"]:visible').length === $(this).parents('tbody').find('tr.info:visible').length) {
+			$('#{$mark_all_id}').prop('checked', true);
+		} else {
+			$('#{$mark_all_id}').prop('checked', false);
 		}
 	});
 
 	$('form #adm-list input[type=image]').click(function() {
-		var entries = $('form .table :checkbox:checked') || [];
+		var entries = $('form .table input[name="{$checkbox_name}[]"]:checked') || [];
 		var ary = '';
 
 		jQuery.each(entries, function() {
 			ary = ary + $(this).val() + '|';
 		});
 
-		if (ary != '') {
+		if (ary !== '') {
 			bootbox.confirm('{lang t="system|confirm_delete"}', '{lang t="system|no"}', '{lang t="system|yes"}', function(result) {
 				if (result) {
 					location.href = $('.table').parents('form').prop('action') + 'entries_' + ary.substr(0, ary.length - 1) + '/action_confirmed/';

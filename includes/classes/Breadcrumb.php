@@ -160,11 +160,17 @@ class ACP3_Breadcrumb {
 	 * 	Die zum $title zugehörige ACP3-interne URI
 	 * @return \bACP3_Breadcrumb
 	 */
-	public function replaceAnchestor($title, $path = 0)
+	public function replaceAnchestor($title, $path = 0, $db_steps = false)
 	{
-		$index = count($this->steps_mods) - (!empty($this->steps_mods) ? 1 : 0);
-		$this->steps_mods[$index]['title'] = $title;
-		$this->steps_mods[$index]['uri'] = $path;
+		if ($db_steps === true) {
+			$index = count($this->steps_db) - (!empty($this->steps_db) ? 1 : 0);
+			$this->steps_db[$index]['title'] = $title;
+			$this->steps_db[$index]['uri'] = $path;
+		} else {
+			$index = count($this->steps_mods) - (!empty($this->steps_mods) ? 1 : 0);
+			$this->steps_mods[$index]['title'] = $title;
+			$this->steps_mods[$index]['uri'] = $path;
+		}
 
 		return $this;
 	}
