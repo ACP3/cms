@@ -4,7 +4,7 @@
   *
   *      @desc Upload files using drag and drop
   *   @package KCFinder
-  *   @version 2.51
+  *   @version 2.52-dev
   *    @author Forum user (updated by Pavel Tzonkov)
   * @copyright 2010, 2011 KCFinder Project
   *   @license http://www.opensource.org/licenses/gpl-2.0.php GPLv2
@@ -216,10 +216,11 @@ browser.initDropUpload = function() {
             filesCount = 0;
             var loop = setInterval(function() {
                 if (uploadInProgress) return;
+                boundary = '------multipartdropuploadboundary' + (new Date).getTime();
+                uploadQueue = [];
                 clearInterval(loop);
                 if (currentFile.thisTargetDir == browser.dir)
                     browser.refresh();
-                boundary = '------multipartdropuploadboundary' + (new Date).getTime();
                 if (errors.length) {
                     browser.alert(errors.join('\n'));
                     errors = [];

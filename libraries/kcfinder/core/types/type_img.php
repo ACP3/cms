@@ -2,9 +2,9 @@
 
 /** This file is part of KCFinder project
   *
-  *      @desc GD image detection class
+  *      @desc Image detection class
   *   @package KCFinder
-  *   @version 2.51
+  *   @version 2.52-dev
   *    @author Pavel Tzonkov <pavelc@users.sourceforge.net>
   * @copyright 2010, 2011 KCFinder Project
   *   @license http://www.opensource.org/licenses/gpl-2.0.php GPLv2
@@ -15,9 +15,15 @@
 class type_img {
 
     public function checkFile($file, array $config) {
-        $gd = new gd($file);
-        if ($gd->init_error)
+
+        $driver = isset($config['imageDriversPriority'])
+            ? image::getDriver(explode(" ", $config['imageDriversPriority'])) : "gd";
+
+        $img = image::factory($driver, $file);
+
+        if ($img->initError)
             return "Unknown image format/encoding.";
+
         return true;
     }
 }
