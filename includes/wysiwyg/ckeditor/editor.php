@@ -43,7 +43,7 @@ function editor($params) {
 	if (isset($params['toolbar']))
 		$config['toolbar'] = $params['toolbar'] === 'simple' ? 'Basic' : 'Full';
 
-	$config['extraPlugins'] = 'divarea';
+	$config['extraPlugins'] = 'divarea,oembed';
 
 	// Smilies
 	if ((!isset($config['toolbar']) || $config['toolbar'] !== 'simple') && ACP3_Modules::check('emoticons', 'functions') === true) {
