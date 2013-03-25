@@ -24,9 +24,6 @@
 function editor($params) {
 	require_once INCLUDES_DIR . 'wysiwyg/ckeditor/ckeditor.php';
 
-	$ckeditor = new CKEditor(ROOT_DIR . 'includes/wysiwyg/ckeditor/');
-	$ckeditor->returnOutput = true;
-
 	$filebrowser_uri = ROOT_DIR . 'libraries/kcfinder/browse.php%s';
 	$upload_uri = ROOT_DIR . 'libraries/kcfinder/upload.php%s';
 
@@ -44,6 +41,7 @@ function editor($params) {
 		$config['toolbar'] = $params['toolbar'] === 'simple' ? 'Basic' : 'Full';
 
 	$config['extraPlugins'] = 'divarea,oembed';
+	$config['allowedContent'] = true;
 
 	// Smilies
 	if ((!isset($config['toolbar']) || $config['toolbar'] !== 'simple') && ACP3_Modules::check('emoticons', 'functions') === true) {
@@ -64,6 +62,9 @@ function editor($params) {
 	if (isset($config['toolbar']) && $config['toolbar'] == 'Basic') {
 		$config['toolbar_Basic'] = "@@[ ['Source','-','Undo','Redo','-','Bold','Italic','-','NumberedList','BulletedList','-','Link','Unlink','-','About'] ]";
 	}
+
+	$ckeditor = new CKEditor(ROOT_DIR . 'includes/wysiwyg/ckeditor/');
+	$ckeditor->returnOutput = true;
 
 	$wysiwyg = array(
 		'id' => $params['id'],
