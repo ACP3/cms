@@ -232,7 +232,7 @@ class ACP3_URI
 			$protocol = empty($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) === 'off' ? 'http://' : 'https://';
 			$host = $_SERVER['HTTP_HOST'];
 			if ($moved_permanently === 1) {
-				header('HTTP/1.0 301 Moved Permanently');
+				header('HTTP/1.1 301 Moved Permanently');
 			}
 			header('Location: ' . $protocol . $host . $this->route($args));
 			exit;
