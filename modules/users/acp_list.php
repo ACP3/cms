@@ -12,7 +12,7 @@ if (defined('IN_ADM') === false)
 
 getRedirectMessage();
 
-$users = ACP3_CMS::$db2->fetchAll('SELECT u.id, u.nickname, u.mail FROM ' . DB_PRE . 'users AS u ORDER BY u.nickname ASC');
+$users = ACP3_CMS::$db2->fetchAll('SELECT id, nickname, mail FROM ' . DB_PRE . 'users ORDER BY nickname ASC');
 $c_users = count($users);
 
 if ($c_users > 0) {
@@ -27,7 +27,6 @@ if ($c_users > 0) {
 
 	for ($i = 0; $i < $c_users; ++$i) {
 		$users[$i]['roles'] = implode(', ', ACP3_ACL::getUserRoles($users[$i]['id'], 2));
-		$users[$i]['mail'] = substr($users[$i]['mail'], 0, -2);
 	}
 	ACP3_CMS::$view->assign('users', $users);
 	ACP3_CMS::$view->assign('can_delete', $can_delete);

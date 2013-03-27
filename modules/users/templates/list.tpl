@@ -16,9 +16,9 @@
 {foreach $users as $row}
 		<tr>
 			<td><a href="{uri args="users/view_profile/id_`$row.id`"}" title="{lang t="users|view_profile"}">{$row.nickname}</a></td>
-			<td>{if $row.realname != '' && $row.realname_display == 1}{$row.realname}{else}-{/if}</td>
+			<td>{if !empty($row.realname)}{$row.realname}{else}-{/if}</td>
 			<td>{if $row.mail_display == 1}{mailto address=$row.mail encode="javascript"}{else}-{/if}</td>
-			<td>{if $row.website != '' && $row.website_display == 1}<a href="{$row.website}" rel="nofollow" onclick="window.open(this.href); return false" title="{lang t="users|visit_website"}">{$row.website}</a>{else}-{/if}</td>
+			<td>{if !empty($row.website)}<a href="{$row.website}" rel="nofollow" onclick="window.open(this.href); return false" title="{lang t="users|visit_website"}">{$row.website}</a>{else}-{/if}</td>
 		</tr>
 {/foreach}
 	</tbody>

@@ -20,7 +20,7 @@
 		<item key="db_connection_failed"><![CDATA[Aus folgenden Gründen konnte keine Verbindung zur Datenbank hergestellt werden:<br /><pre>%s</pre>]]></item>
 		<item key="db_connection_settings">Verbindungsdaten zur Datenbank</item>
 		<item key="db_hostname">Hostname</item>
-		<item key="db_hostname_description">Mmeistens &quot;localhost&quot;.</item>
+		<item key="db_hostname_description">Meistens &quot;localhost&quot;.</item>
 		<item key="db_name">Datenbankname</item>
 		<item key="db_password">Passwort</item>
 		<item key="db_table_prefix">Tabellenpräfix</item>
