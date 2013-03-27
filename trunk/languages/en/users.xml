@@ -5,21 +5,29 @@
 	<item key="acp_delete">Delete users</item>
 	<item key="acp_edit">Edit user</item>
 	<item key="acp_settings">Settings</item>
+	<item key="address">Address</item>
+	<item key="address_street">Street</item>
+	<item key="address_house_number">House number</item>
+	<item key="address_zip">Zip code</item>
+	<item key="address_city">City</item>
 	<item key="administration">Administration</item>
 	<item key="admin_user_undeletable">The administrator can't be deleted.</item>
 	<item key="allow_language_override">Allow users to override the default language</item>
 	<item key="allow_entries_override">Allow users to override the number of displayed resultsets per page</item>
 	<item key="birthday">Birthday</item>
+	<item key="birthday_hide">Hide birthday</item>
 	<item key="birthday_display_completely">Display birthday completely</item>
 	<item key="birthday_hide_year">Hide year of birth</item>
 	<item key="contact">Contact</item>
+	<item key="country">Country</item>
 	<item key="deleted_user">Deleted user</item>
-	<item key="display_profile_field">If you don't want to display a certain profile field, just untick the respective field.</item>
+	<item key="display_address">Display address in public profile</item>
+	<item key="display_country">Display country in public profile</item>
+	<item key="display_profile_field_info">If you don't want to display a certain profile field, just untick the respective field.</item>
 	<item key="drafts">Drafts</item>
 	<item key="edit_profile">Edit profile</item>
 	<item key="edit_settings">Edit settings</item>
 	<item key="enable_registration">Enable registration of new users</item>
-	<item key="female">Female</item>
 	<item key="forgot_pwd">Forgot password?</item>
 	<item key="forgot_pwd_error">While sending the E-mail with your new password an error has occured.</item>
 	<item key="forgot_pwd_description">Please enter your user name or E-mail address of your user account.</item>
@@ -34,8 +42,11 @@ E-mail address: {mail}
 Password: {password}
 
 Please change the password again, after you logged in to your account.</item>
-	<item key="forgot_pwd_success">An E-mail with your new password has been successfully sent.</item>
+	<item key="forgot_pwd_success">An E-mail with your new password has been successfully sent to your E-mail address.</item>
 	<item key="gender">Gender</item>
+	<item key="gender_female">Female</item>
+	<item key="gender_male">Male</item>
+	<item key="gender_not_specified">Not specified</item>
 	<item key="home">Control center</item>
 	<item key="icq">ICQ-Number</item>
 	<item key="invalid_birthday">Please type in a valid birthday and how it should look like.</item>
@@ -45,9 +56,7 @@ Please change the password again, after you logged in to your account.</item>
 	<item key="log_in">Log in</item>
 	<item key="login">Login</item>
 	<item key="logout">Logout</item>
-	<item key="male">Male</item>
 	<item key="mod_description">With this module you can administer the users.</item>
-	<item key="msn">MSN</item>
 	<item key="new_pwd">New password</item>
 	<item key="new_pwd_repeat">Repeat new password</item>
 	<item key="nickname_or_email">User name or E-mail address</item>

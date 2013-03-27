@@ -100,32 +100,10 @@ class ACP3_Auth
 			static $user_info = array();
 
 			if (empty($user_info[$user_id])) {
+				$countries = ACP3_Lang::worldCountries();
 				$info = ACP3_CMS::$db2->fetchAssoc('SELECT * FROM ' . DB_PRE . 'users WHERE id = ?', array($user_id), array(\PDO::PARAM_INT));
 				if (!empty($info)) {
-					$pos = strrpos($info['realname'], ':');
-					$info['realname_display'] = substr($info['realname'], $pos + 1);
-					$info['realname'] = substr($info['realname'], 0, $pos);
-					$pos = strrpos($info['gender'], ':');
-					$info['gender_display'] = substr($info['gender'], $pos + 1);
-					$info['gender'] = substr($info['gender'], 0, $pos);
-					$pos = strrpos($info['birthday'], ':');
-					$info['birthday_display'] = substr($info['birthday'], $pos + 1);
-					$info['birthday'] = substr($info['birthday'], 0, $pos);
-					$pos = strrpos($info['mail'], ':');
-					$info['mail_display'] = substr($info['mail'], $pos + 1);
-					$info['mail'] = substr($info['mail'], 0, $pos);
-					$pos = strrpos($info['website'], ':');
-					$info['website_display'] = substr($info['website'], $pos + 1);
-					$info['website'] = substr($info['website'], 0, $pos);
-					$pos = strrpos($info['icq'], ':');
-					$info['icq_display'] = substr($info['icq'], $pos + 1);
-					$info['icq'] = substr($info['icq'], 0, $pos);
-					$pos = strrpos($info['msn'], ':');
-					$info['msn_display'] = substr($info['msn'], $pos + 1);
-					$info['msn'] = substr($info['msn'], 0, $pos);
-					$pos = strrpos($info['skype'], ':');
-					$info['skype_display'] = substr($info['skype'], $pos + 1);
-					$info['skype'] = substr($info['skype'], 0, $pos);
+					$info['country_formatted'] = !empty($info['country']) && isset($countries[$info['country']]) ? $countries[$info['country']] : '';
 					$user_info[$user_id] = $info;
 				}
 			}

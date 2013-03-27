@@ -101,7 +101,7 @@ if (isset($_POST['submit'])) {
 
 			$news_mod_id = ACP3_CMS::$db2->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('news'));
 			$queries = array(
-				'INSERT INTO `{pre}users` VALUES (\'\', 1, ' . ACP3_CMS::$db2->quote($_POST['user_name']) . ', \'' . generateSaltedPassword($salt, $_POST['user_pwd']) . ':' . $salt . '\', \'0\', \':1\', \'1:1\', \':1\', \'1\', \'' . $_POST['mail'] . ':1\', \':1\', \':1\', \':1\', \':1\', ' . ACP3_CMS::$db2->quote($_POST['date_format_long']) . ', ' . ACP3_CMS::$db2->quote($_POST['date_format_short']) . ', \'' . $_POST['date_time_zone'] . '\', \'' . LANG . '\', \'20\', \'\');',
+				"INSERT INTO `{pre}users` VALUES ('', 1, " . ACP3_CMS::$db2->quote($_POST["user_name"]) . ", '" . generateSaltedPassword($salt, $_POST["user_pwd"]) . ":" . $salt . "', 0, '', '1', '', 0, '" . $_POST["mail"] . "', 0, '', '', '', '', '', '', '', '', 0, 0, " . ACP3_CMS::$db2->quote($_POST["date_format_long"]) . ", " . ACP3_CMS::$db2->quote($_POST["date_format_short"]) . ", '" . $_POST["date_time_zone"] . "', '" . LANG . "', '20', '');",
 				'INSERT INTO `{pre}categories` VALUES (\'\', \'' . $lang->t('category_name') . '\', \'\', \'' . $lang->t('category_description') . '\', \'' . $news_mod_id . '\');',
 				'INSERT INTO `{pre}news` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', \'' . $lang->t('news_headline') . '\', \'' . $lang->t('news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\', \'\');',
 				'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 1, 0, 1, 4, 1, \'' . $lang->t('pages_news') . '\', \'news\', 1);',

@@ -6,8 +6,9 @@
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general"}</a></li>
 			<li><a href="#tab-2" data-toggle="tab">{lang t="users|acp_settings"}</a></li>
-			<li><a href="#tab-3" data-toggle="tab">{lang t="system|date"}</a></li>
-			<li><a href="#tab-4" data-toggle="tab">{lang t="users|pwd"}</a></li>
+			<li><a href="#tab-3" data-toggle="tab">{lang t="users|contact"}</a></li>
+			<li><a href="#tab-4" data-toggle="tab">{lang t="users|address"}</a></li>
+			<li><a href="#tab-5" data-toggle="tab">{lang t="users|pwd"}</a></li>
 		</ul>
 		<div class="tab-content">
 			<div id="tab-1" class="tab-pane active">
@@ -20,12 +21,26 @@
 					<div class="controls"><input type="text" name="realname" id="realname" value="{$form.realname}" maxlength="80"></div>
 				</div>
 				<div class="control-group">
-					<label for="mail" class="control-label">{lang t="system|email_address"}</label>
-					<div class="controls"><input type="email" name="mail" id="mail" value="{$form.mail}" maxlength="120"></div>
+					<label for="gender" class="control-label">{lang t="users|gender"}</label>
+					<div class="controls">
+						<select name="gender" id="gender">
+{foreach $gender as $row}
+							<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{/foreach}
+						</select>
+					</div>
 				</div>
 				<div class="control-group">
-					<label for="website" class="control-label">{lang t="system|website"}</label>
-					<div class="controls"><input type="url" name="website" id="website" value="{$form.website}" maxlength="120"></div>
+					<label for="birthday" class="control-label">{lang t="users|birthday"}</label>
+					<div class="controls">
+						{$birthday_datepicker}
+{foreach $birthday_display as $row}
+						<label for="{$row.name}" class="radio">
+							<input type="radio" name="birthday_display" id="{$row.name}" value="{$row.value}"{$row.checked}>
+							{$row.lang}
+						</label>
+{/foreach}
+					</div>
 				</div>
 				<div class="control-group">
 					<label for="roles" class="control-label">{lang t="permissions|roles"}</label>
@@ -71,8 +86,6 @@
 						</select>
 					</div>
 				</div>
-			</div>
-			<div id="tab-3" class="tab-pane">
 				<div class="control-group">
 					<label for="date-format-long" class="control-label">{lang t="system|date_format_long"}</label>
 					<div class="controls">
@@ -99,7 +112,53 @@
 					</div>
 				</div>
 			</div>
+			<div id="tab-3" class="tab-pane">
+{foreach $contact as $row}
+				<div class="control-group">
+					<label for="{$row.name}" class="control-label">{$row.lang}</label>
+					<div class="controls"><input type="text" name="{$row.name}" id="{$row.name}" value="{$row.value}" maxlength="{$row.maxlength}"></div>
+				</div>
+{/foreach}
+			</div>
 			<div id="tab-4" class="tab-pane">
+				<div class="control-group">
+					<label for="street" class="control-label">{lang t="users|address_street"}</label>
+					<div class="controls"><input type="text" name="street" id="street" value="{$form.street}" maxlength="80"></div>
+				</div>
+				<div class="control-group">
+					<label for="house-number" class="control-label">{lang t="users|address_house_number"}</label>
+					<div class="controls"><input type="text" name="house_number" id="house-number" value="{$form.house_number}" maxlength="5"></div>
+				</div>
+				<div class="control-group">
+					<label for="zip" class="control-label">{lang t="users|address_zip"}</label>
+					<div class="controls"><input type="text" name="zip" id="zip" value="{$form.zip}" maxlength="5"></div>
+				</div>
+				<div class="control-group">
+					<label for="city" class="control-label">{lang t="users|address_city"}</label>
+					<div class="controls"><input type="text" name="city" id="city" value="{$form.city}" maxlength="80"></div>
+				</div>
+				<div class="control-group">
+					<label for="country" class="control-label">{lang t="users|country"}</label>
+					<div class="controls">
+						<select name="country" id="country">
+{foreach $countries as $row}
+							<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+{/foreach}
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+{foreach $address_checkboxes as $row}
+						<label for="{$row.name}" class="checkbox">
+							<input type="checkbox" name="{$row.name}" id="{$row.name}" value="1"{$row.checked}>
+							{$row.lang}
+						</label>
+{/foreach}
+					</div>
+				</div>
+			</div>
+			<div id="tab-5" class="tab-pane">
 				<div class="control-group">
 					<label for="new-pwd" class="control-label">{lang t="users|new_pwd"}</label>
 					<div class="controls"><input type="password" name="new_pwd" id="new-pwd"></div>

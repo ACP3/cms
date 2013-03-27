@@ -272,7 +272,7 @@ function splitTextIntoPages($text, $path)
 
 			$currentPage = ACP3_Validate::isNumber(ACP3_CMS::$uri->page) === true && ACP3_CMS::$uri->page <= $c_pages ? ACP3_CMS::$uri->page : 1;
 			$next_page = !empty($pages[$currentPage]) ? ACP3_CMS::$uri->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
-			$previous_page = $currentPage > 1 ? ACP3_CMS::$uri->route($path) . 'page_' . ($currentPage - 1) . '/' : '';
+			$previous_page = $currentPage > 1 ? ACP3_CMS::$uri->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
 
 			if (!empty($next_page))
 				ACP3_SEO::setNextPage($next_page);
