@@ -44,24 +44,15 @@ if (ACP3_CMS::$auth->isUser() === true) {
 
 			$salt = salt(12);
 			$insert_values = array(
-				'id' => '',
 				'nickname' => str_encode($_POST['nickname']),
 				'pwd' => generateSaltedPassword($salt, $_POST['pwd']) . ':' . $salt,
-				'realname' => ':1',
-				'gender' => ':1',
-				'birthday' => ':1',
-				'birthday_format' => '1',
-				'mail' => $_POST['mail'] . ':1',
-				'website' => ':1',
-				'icq' => ':1',
-				'msn' => ':1',
-				'skype' => ':1',
+				'birthday_display' => '1',
+				'mail' => $_POST['mail'],
 				'date_format_long' => CONFIG_DATE_FORMAT_LONG,
 				'date_format_short' => CONFIG_DATE_FORMAT_SHORT,
 				'time_zone' => CONFIG_DATE_TIME_ZONE,
 				'language' => CONFIG_LANG,
 				'entries' => CONFIG_ENTRIES,
-				'draft' => '',
 			);
 
 			ACP3_CMS::$db2->beginTransaction();
