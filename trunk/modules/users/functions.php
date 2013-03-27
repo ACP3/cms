@@ -30,10 +30,9 @@ function userNameExists($nickname, $id = '')
  */
 function userEmailExists($mail, $id = '')
 {
-	$in = array($mail . ':1', $mail . ':0');
 	if (ACP3_Validate::isNumber($id) === true) {
-		return ACP3_Validate::email($mail) === true && ACP3_CMS::$db2->executeQuery('SELECT COUNT(*) FROM ' . DB_PRE . 'users WHERE id != ? AND mail IN(?)', array($id, $in), array(\PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetch(PDO::FETCH_COLUMN) > 0 ? true : false;
+		return ACP3_Validate::email($mail) === true && ACP3_CMS::$db2->executeQuery('SELECT COUNT(*) FROM ' . DB_PRE . 'users WHERE id != ? AND mail = ?', array($id, $mail), array(\PDO::PARAM_INT, \PDO::PARAM_STR))->fetch(PDO::FETCH_COLUMN) > 0 ? true : false;
 	} else {
-		return ACP3_Validate::email($mail) === true && ACP3_CMS::$db2->executeQuery('SELECT COUNT(*) FROM ' . DB_PRE . 'users WHERE mail IN(?)', array($in), array(\Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetch(PDO::FETCH_COLUMN) > 0 ? true : false;
+		return ACP3_Validate::email($mail) === true && ACP3_CMS::$db2->executeQuery('SELECT COUNT(*) FROM ' . DB_PRE . 'users WHERE mail = ?', array($mail), array(\PDO::PARAM_STR))->fetch(PDO::FETCH_COLUMN) > 0 ? true : false;
 	}
 }
