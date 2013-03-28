@@ -34,25 +34,35 @@ if (ini_get("safe_mode"))
 // CMS INTEGRATION
 if (isset($_GET['cms'])) {
     switch ($_GET['cms']) {
-        case "drupal": require "integration/drupal.php";
+        case "acp3":
+			require "integration/acp3.php";
+			break;
+        case "drupal":
+			require "integration/drupal.php";
     }
 }
 
-
-// MAGIC AUTOLOAD CLASSES FUNCTION
-function __autoload($class) {
+/**
+ * Autoloading für die ACP3 eigenen Klassen
+ *
+ * @param string $class
+ *  Der Name der zu ladenden Klasse
+ */
+function kcfinder_autoload($class)
+{
     if ($class == "uploader")
-        require "core/uploader.php";
-    elseif ($class == "browser")
-        require "core/browser.php";
-    elseif (file_exists("core/types/$class.php"))
-        require "core/types/$class.php";
-    elseif (file_exists("lib/class_$class.php"))
-        require "lib/class_$class.php";
-    elseif (file_exists("lib/helper_$class.php"))
-        require "lib/helper_$class.php";
+		require "core/uploader.php";
+	elseif ($class == "browser")
+		require "core/browser.php";
+	elseif (file_exists("core/types/$class.php"))
+		require "core/types/$class.php";
+	elseif (file_exists("lib/class_$class.php"))
+		require "lib/class_$class.php";
+	elseif (file_exists("lib/helper_$class.php"))
+		require "lib/helper_$class.php";
 }
 
+spl_autoload_register('kcfinder_autoload');
 
 // json_encode() IMPLEMENTATION IF JSON EXTENSION IS MISSING
 if (!function_exists("json_encode")) {
@@ -106,91 +116,157 @@ if (!function_exists("json_encode")) {
 }
 
 
-// CUSTOM SESSION SAVE HANDLER CLASS EXAMPLE
-//
-// Uncomment & edit it if the application you want to integrate with, have
-// its own session save handler. It's not even needed to save instances of
-// this class in variables. Just add a row:
-// new SessionSaveHandler();
-// and your handler will rule the sessions ;-)
+class ACP3_Session {
+	/**
+	 * Name der Session
+	 */
+	const SESSION_NAME = 'ACP3_SID';
+	/**
+	 * Name des XSRF-Token
+	 */
+	const XSRF_TOKEN_NAME = 'security_token';
+	/**
+	 * Zeit, bis Session ungültig wird
+	 *
+	 * @var integer
+	 */
+	public $expire_time = 1800;
+	/**
+	 * Wahrscheinlichkeit, dass Session Garbage Collector anspringt
+	 *
+	 * @var integer
+	 */
+	public $gc_probability = 10;
 
-/*
-class SessionSaveHandler {
-    protected $savePath;
-    protected $sessionName;
+	public function __construct() {
+		// php.ini Session Einstellungen konfigurieren
+		ini_set('session.name', self::SESSION_NAME);
+		ini_set('session.use_trans_sid', 0);
+		ini_set('session.use_cookies', 1);
+		ini_set('session.use_only_cookies', 1);
+		ini_set('session.cookie_httponly', 1);
 
-    public function __construct() {
-        session_set_save_handler(
-            array($this, "open"),
-            array($this, "close"),
-            array($this, "read"),
-            array($this, "write"),
-            array($this, "destroy"),
-            array($this, "gc")
-        );
-    }
+		// Session GC
+		ini_set('session.gc_maxlifetime', $this->expire_time);
+		ini_set('session.gc_probability', $this->gc_probability);
+		ini_set('session.gc_divisor', 100);
 
-    // Open function, this works like a constructor in classes and is
-    // executed when the session is being opened. The open function expects
-    // two parameters, where the first is the save path and the second is the
-    // session name.
-    public function open($savePath, $sessionName) {
-        $this->savePath = $savePath;
-        $this->sessionName = $sessionName;
-        return true;
-    }
+		// Eigene Session Handling Methoden setzen
+		ini_set('session.save_handler', 'user');
+		session_set_save_handler(
+				array($this, 'session_open'),
+				array($this, 'session_close'),
+				array($this, 'session_read'),
+				array($this, 'session_write'),
+				array($this, 'session_destroy'),
+				array($this, 'session_gc')
+		);
 
-    // Close function, this works like a destructor in classes and is
-    // executed when the session operation is done.
-    public function close() {
-        return true;
-    }
+		// Session starten und anschließend sichern
+		self::startSession();
+		self::secureSession();
 
-    // Read function must return string value always to make save handler
-    // work as expected. Return empty string if there is no data to read.
-    // Return values from other handlers are converted to boolean expression.
-    // TRUE for success, FALSE for failure.
-    public function read($id) {
-        $file = $this->savePath . "/sess_$id";
-        return (string) @file_get_contents($file);
-    }
+		register_shutdown_function('session_write_close');
+	}
+	/**
+	 * Session starten
+	 */
+	private static function startSession() {
+		// Session Cookie Parameter setzen
+		session_set_cookie_params(0, ROOT_DIR);
 
-    // Write function that is called when session data is to be saved. This
-    // function expects two parameters: an identifier and the data associated
-    // with it.
-    public function write($id, $data) {
-        $file = $this->savePath . "/sess_$id";
-        if (false !== ($fp = @fopen($file, "w"))) {
-            $return = fwrite($fp, $data);
-            fclose($fp);
-            return $return;
-        } else
-            return false;
-    }
+		// Session starten
+		session_start();
+	}
+	/**
+	 * Sichert die aktuelle Session
+	 *
+	 * @param boolean $force
+	 */
+	public static function secureSession($force = false) {
+		// Session Fixation verhindern
+		if (isset($_SESSION['acp3_init']) === false || $force === true) {
+			session_regenerate_id(true);
+			$_SESSION = array();
+			$_SESSION['acp3_init'] = true;
+		}
+	}
+	/**
+	 * Öffnet eine Session
+	 *
+	 * @return true
+	 */
+	public function session_open() {
+		return true;
+	}
 
-    // The destroy handler, this is executed when a session is destroyed with
-    // session_destroy() and takes the session id as its only parameter.
-    public function destroy($id) {
-        $file = $this->savePath . "/sess_$id";
-        return @unlink($file);
-    }
+	/**
+	 * Schließt eine Session
+	 *
+	 * @return true
+	 */
+	public function session_close() {
+		return true;
+	}
 
-    // The garbage collector, this is executed when the session garbage
-    // collector is executed and takes the max session lifetime as its only
-    // parameter.
-    public function gc($maxlifetime) {
-        foreach (glob($this->savePath . "/sess_*") as $file)
-            if (filemtime($file) + $maxlifetime < time())
-                @unlink($file);
-        return true;
-    }
+	/**
+	 * Liest eine Session aus der Datenbank
+	 *
+	 * @param integer $session_id
+	 * @return string
+	 */
+	public function session_read($session_id) {
+		$session = ACP3_CMS::$db2->fetchAssoc('SELECT session_data FROM ' . DB_PRE . 'sessions WHERE session_id = ?', array($session_id));
+
+		// Wenn keine Session gefunden wurde, dann einen leeren String zurückgeben
+		return !empty($session) ? $session['session_data'] : '';
+	}
+
+	/**
+	 * Session in Datenbank schreiben
+	 *
+	 * @param integer $session_id
+	 * @param array $data Enthält die Session-Daten
+	 *
+	 * @return bool
+	 */
+	public function session_write($session_id, $data) {
+		ACP3_CMS::$db2->executeUpdate('INSERT INTO ' . DB_PRE . 'sessions (session_id, session_starttime, session_data) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE session_data = ?', array($session_id, time(), $data, $data));
+
+		return true;
+	}
+
+	/**
+	 * Aktuelle Session löschen
+	 *
+	 * @param integer $session_id
+	 */
+	public function session_destroy($session_id) {
+		// Alle gesetzten Session Variablen zurücksetzen
+		$_SESSION = array();
+
+		// Session-Cookie löschen
+		if (isset($_COOKIE[self::SESSION_NAME]))
+			setcookie(self::SESSION_NAME, '', time() - 3600, ROOT_DIR);
+
+		// Session aus Datenbank löschen
+		ACP3_CMS::$db2->delete(DB_PRE . 'sessions', array('session_id' => $session_id));
+	}
+
+	/**
+	 * Session Garbage Collector
+	 *
+	 * @param integer $session_lifetime Angaben in Sekunden
+	 *
+	 * @return boolean
+	 */
+	public function session_gc($session_lifetime = 1800) {
+		if ($session_lifetime == 0)
+			return;
+
+		ACP3_CMS::$db2->executeUpdate('DELETE FROM ' . DB_PRE . 'sessions WHERE session_starttime + ? < ?', array($session_lifetime, time()));
+
+		return true;
+	}
 }
-
-new SessionSaveHandler();
-
-*/
-
-
-// PUT YOUR ADDITIONAL CODE HERE
-
 ?>

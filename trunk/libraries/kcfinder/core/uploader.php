@@ -121,7 +121,7 @@ class uploader {
 
         // SET CMS INTEGRATION ATTRIBUTE
         if (isset($this->get['cms']) &&
-            in_array($this->get['cms'], array("drupal"))
+            in_array($this->get['cms'], array('acp3', "drupal"))
         )
             $this->cms = $this->get['cms'];
 
@@ -140,6 +140,7 @@ class uploader {
         if (isset($_CONFIG['_sessionDomain']))
             ini_set('session.cookie_domain', $_CONFIG['_sessionDomain']);
         switch ($this->cms) {
+            case "acp3": break;
             case "drupal": break;
             default: session_start(); break;
         }
