@@ -49,7 +49,7 @@ function editor($params) {
 	$editor.= "});\n";
 	$editor.= "function openKCFinder(field_name, url, type, win) {
 	tinyMCE.activeEditor.windowManager.open({
-		file: '" . ROOT_DIR . "libraries/kcfinder/browse.php?opener=tinymce&type=' + (type == 'image' ? 'gallery' : 'files'),
+		file: '" . ROOT_DIR . "libraries/kcfinder/browse.php?opener=tinymce&cms=acp3&type=' + (type == 'image' ? 'gallery' : 'files'),
 		title: 'KCFinder',
 		width: 700,
 		height: 500,
