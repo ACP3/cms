@@ -23,6 +23,7 @@
 	<item key="deleted_user">Gelöschter Benutzer</item>
 	<item key="display_address">Adresse im öffentlichen Profil anzeigen</item>
 	<item key="display_country">Land im öffentlichen Profil anzeigen</item>
+	<item key="display_mail">E-Mail Adresse im öffentlichen Profil anzeigen</item>
 	<item key="display_profile_field_info">Ein Profilfeld kann versteckt werden, indem der Haken links neben dem jeweiligen Feld entfernt wird.</item>
 	<item key="drafts">Entwürfe</item>
 	<item key="edit_profile">Profil bearbeiten</item>
@@ -49,9 +50,8 @@ Bitte ändern Sie, nachdem Sie sich mit obrigem Passwort angemeldet haben, das P
 	<item key="gender_not_specified">Keine Angabe</item>
 	<item key="home">Kontrollzentrum</item>
 	<item key="icq">ICQ-Nummer</item>
-	<item key="invalid_birthday">Bitte geben Sie ein gültiges Geburtsdatum an und wie dieses dargestellt werden soll.</item>
+	<item key="invalid_birthday">Bitte geben Sie ein gültiges Geburtsdatum an.</item>
 	<item key="invalid_icq_number">Sie haben eine ungültige ICQ-Nummer eingegeben.</item>
-	<item key="invalid_msn_account">Der eingegebene Name ihres MSN-Kontos entspricht nicht dem Format einer E-Mail-Adresse.</item>
 	<item key="language">Sprache</item>
 	<item key="log_in">Einloggen</item>
 	<item key="login">Login</item>
@@ -62,6 +62,7 @@ Bitte ändern Sie, nachdem Sie sich mit obrigem Passwort angemeldet haben, das P
 	<item key="nickname_or_email">Benutzername oder E-Mail-Adresse</item>
 	<item key="nickname">Benutzername</item>
 	<item key="nickname_or_password_wrong">Entweder ist der Benutzername oder das Passwort falsch.</item>
+	<item key="privacy">Privatsphäre</item>
 	<item key="pwd">Passwort</item>
 	<item key="pwd_repeat">Passwort wiederholen</item>
 	<item key="realname">Vollständiger Name</item>
@@ -79,10 +80,14 @@ E-Mail-Adresse: {mail}
 Passwort: {password}</item>
 	<item key="register_success">Ihr Benutzerkonto wurde erfolgreich erstellt.</item>
 	<item key="select_access_level">Bitte wählen Sie einen Zugriffslevel für den Benutzer aus.</item>
+	<item key="select_address_display">Bitte geben Sie an, ob Ihre Adresse im öffentlichen Profil angezeigt werden soll oder nicht.</item>
+	<item key="select_birthday_display">Bitte geben Sie das Format Ihres Geburtstages in Ihrem öffentlichen Profil an.</item>
+	<item key="select_country_display">Bitte geben Sie an, ob Ihre Nation im öffentlichen Profil angezeigt werden soll oder nicht.</item>
 	<item key="select_enable_registration">Bitten wählen Sie aus, ob die Registrierung neuer Benutzer erlaubt werden soll oder nicht.</item>
 	<item key="select_entries_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die angezeigten Datensätze pro Seite selber festzulegen.</item>
 	<item key="select_language">Bitte wählen Sie aus, in welcher Sprache Sie die Website angezeigt bekommen möchten.</item>
 	<item key="select_language_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die Anzeigesprache selber festzulegen.</item>
+	<item key="select_mail_display">Bitte geben Sie an, ob Ihre E-Mail-Adresse im öffentlichen Profil angezeigt werden soll oder nicht.</item>
 	<item key="select_super_user">Bitte geben Sie an, ob der gewählte Benutzer Super User sein soll oder nicht.</item>
 	<item key="send_email">E-Mail senden</item>
 	<item key="skype">Skype</item>

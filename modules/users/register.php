@@ -44,9 +44,9 @@ if (ACP3_CMS::$auth->isUser() === true) {
 
 			$salt = salt(12);
 			$insert_values = array(
+				'id' => '',
 				'nickname' => str_encode($_POST['nickname']),
 				'pwd' => generateSaltedPassword($salt, $_POST['pwd']) . ':' . $salt,
-				'birthday_display' => '1',
 				'mail' => $_POST['mail'],
 				'date_format_long' => CONFIG_DATE_FORMAT_LONG,
 				'date_format_short' => CONFIG_DATE_FORMAT_SHORT,

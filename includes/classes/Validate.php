@@ -65,15 +65,14 @@ class ACP3_Validate
 	 *
 	 * @param string $var
 	 *  Das zu überprüfende Datum
-	 * @param integer $format
 	 * @return boolean
 	 */
-	public static function birthday($var, $format)
+	public static function birthday($var)
 	{
 		$regex = '/^(\d{4})-(\d{2})-(\d{2})$/';
 		$matches = array();
 		if (preg_match($regex, $var, $matches)) {
-			if (checkdate($matches[2], $matches[3], $matches[1]) && in_array($format, array(0, 1, 2))) {
+			if (checkdate($matches[2], $matches[3], $matches[1])) {
 				return true;
 			}
 		}

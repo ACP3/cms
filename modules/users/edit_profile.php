@@ -27,7 +27,7 @@ if (ACP3_CMS::$auth->isUser() === false || ACP3_Validate::isNumber(ACP3_CMS::$au
 			$errors['nickname'] = ACP3_CMS::$lang->t('users', 'user_name_already_exists');
 		if (ACP3_Validate::gender($_POST['gender']) === false)
 			$errors['gender'] = ACP3_CMS::$lang->t('users', 'select_gender');
-		if (!isset($_POST['birthday_display']) || !empty($_POST['birthday']) && ACP3_Validate::birthday($_POST['birthday'], $_POST['birthday_display']) === false)
+		if (!empty($_POST['birthday']) && ACP3_Validate::birthday($_POST['birthday']) === false)
 			$errors[] = ACP3_CMS::$lang->t('users', 'invalid_birthday');
 		if (ACP3_Validate::email($_POST['mail']) === false)
 			$errors['mail'] = ACP3_CMS::$lang->t('system', 'wrong_email_format');
@@ -48,9 +48,7 @@ if (ACP3_CMS::$auth->isUser() === false || ACP3_Validate::isNumber(ACP3_CMS::$au
 				'realname' => str_encode($_POST['realname']),
 				'gender' => (int) $_POST['gender'],
 				'birthday' => $_POST['birthday'],
-				'birthday_display' => (int) $_POST['birthday_display'],
 				'mail' => $_POST['mail'],
-				'mail_display' => isset($_POST['mail_display']) ? 1 : 0,
 				'website' => str_encode($_POST['website']),
 				'icq' => $_POST['icq'],
 				'skype' => str_encode($_POST['skype']),
@@ -58,9 +56,7 @@ if (ACP3_CMS::$auth->isUser() === false || ACP3_Validate::isNumber(ACP3_CMS::$au
 				'house_number' => str_encode($_POST['house_number']),
 				'zip' => str_encode($_POST['zip']),
 				'city' => str_encode($_POST['city']),
-				'address_display' => isset($_POST['address_display']) ? 1 : 0,
 				'country' => str_encode($_POST['country']),
-				'country_display' => isset($_POST['country_display']) ? 1 : 0,
 			);
 
 			// Neues Passwort
@@ -98,20 +94,6 @@ if (ACP3_CMS::$auth->isUser() === false || ACP3_Validate::isNumber(ACP3_CMS::$au
 
 		// Geburtstag
 		ACP3_CMS::$view->assign('birthday_datepicker', ACP3_CMS::$date->datepicker('birthday', $user['birthday'], 'Y-m-d', array('constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\''), 0, 1, false, true));
-		$birthday_display = array();
-		$birthday_display[0]['name'] = 'hide';
-		$birthday_display[0]['value'] = '0';
-		$birthday_display[0]['checked'] = selectEntry('birthday_display', '0', $user['birthday_display'], 'checked');
-		$birthday_display[0]['lang'] = ACP3_CMS::$lang->t('users', 'birthday_hide');
-		$birthday_display[1]['name'] = 'full';
-		$birthday_display[1]['value'] = '1';
-		$birthday_display[1]['checked'] = selectEntry('birthday_display', '1', $user['birthday_display'], 'checked');
-		$birthday_display[1]['lang'] = ACP3_CMS::$lang->t('users', 'birthday_display_completely');
-		$birthday_display[2]['name'] = 'hide_year';
-		$birthday_display[2]['value'] = '2';
-		$birthday_display[2]['checked'] = selectEntry('birthday_display', '2', $user['birthday_display'], 'checked');
-		$birthday_display[2]['lang'] = ACP3_CMS::$lang->t('users', 'birthday_hide_year');
-		ACP3_CMS::$view->assign('birthday_display', $birthday_display);
 
 		// Kontaktangaben
 		$contact = array();
@@ -132,15 +114,6 @@ if (ACP3_CMS::$auth->isUser() === false || ACP3_Validate::isNumber(ACP3_CMS::$au
 		$contact[3]['value'] = isset($_POST['submit']) ? $_POST['skype'] : $user['skype'];
 		$contact[3]['maxlength'] = '28';
 		ACP3_CMS::$view->assign('contact', $contact);
-
-		$address = array();
-		$address[0]['name'] = 'address_display';
-		$address[0]['checked'] = selectEntry('address_display', '1', $user['address_display'], 'checked');
-		$address[0]['lang'] = ACP3_CMS::$lang->t('users', 'display_address');
-		$address[1]['name'] = 'country_display';
-		$address[1]['checked'] = selectEntry('country_display', '1', $user['country_display'], 'checked');
-		$address[1]['lang'] = ACP3_CMS::$lang->t('users', 'display_country');
-		ACP3_CMS::$view->assign('address_checkboxes', $address);
 
 		$countries = ACP3_LANG::worldCountries();
 		$countries_select = array();

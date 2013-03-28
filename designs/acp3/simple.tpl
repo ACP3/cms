@@ -12,7 +12,8 @@
 </head>
 
 <body>
-<div id="container-fluid">
+<div id="content" class="container-fluid">
+	<h1 id="page-title">{$TITLE}</h1>
 	{$CONTENT}
 </div>
 </body>
