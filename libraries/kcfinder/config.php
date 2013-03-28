@@ -23,7 +23,7 @@ $upload_dir = $dirname . '/uploads/';
 
 $_CONFIG = array(
 
-    'disabled' => false,
+    'disabled' => true,
     'denyZipDownload' => false,
     'denyUpdateCheck' => false,
     'denyExtensionRename' => false,

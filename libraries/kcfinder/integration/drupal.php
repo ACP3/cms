@@ -48,11 +48,11 @@ function CheckAuthentication($drupal_path) {
         if (!isset($bootstrap_file_found) || $bootstrap_file_found) {
             $current_cwd = getcwd();
             if (!defined('DRUPAL_ROOT')){
-                define('DRUPAL_ROOT', $drupal_path);
+                define('ACP3_ROOT', $drupal_path);
             }
 
             // Simulate being in the drupal root folder so we can share the session
-            chdir(DRUPAL_ROOT);
+            chdir(ACP3_ROOT);
 
             global $base_url;
             $base_root = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https' : 'http';
@@ -68,13 +68,13 @@ function CheckAuthentication($drupal_path) {
             $base_url = substr($base_url, 0, $pos); // drupal root absolute url
 
             // If we aren't in a Drupal installation, or if Drupal path hasn't been properly found, die
-            if(!file_exists(DRUPAL_ROOT . '/includes/bootstrap.inc')) {
+            if(!file_exists(ACP3_ROOT . '/includes/bootstrap.inc')) {
                 die("The CMS integration service for -drupal- requires KCFinder to be properly placed inside your Drupal installation.");
             }
 
 
             // bootstrap
-            require_once(DRUPAL_ROOT . '/includes/bootstrap.inc');
+            require_once(ACP3_ROOT . '/includes/bootstrap.inc');
             drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 
             // if user has access permission...

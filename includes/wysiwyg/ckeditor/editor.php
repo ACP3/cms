@@ -24,11 +24,11 @@
 function editor($params) {
 	require_once INCLUDES_DIR . 'wysiwyg/ckeditor/ckeditor.php';
 
-	$filebrowser_uri = ROOT_DIR . 'libraries/kcfinder/browse.php%s';
-	$upload_uri = ROOT_DIR . 'libraries/kcfinder/upload.php%s';
+	$filebrowser_uri = ROOT_DIR . 'libraries/kcfinder/browse.php%s&cms=acp3';
+	$upload_uri = ROOT_DIR . 'libraries/kcfinder/upload.php%s&cms=acp3';
 
 	$config = array();
-	$config['filebrowserBrowseUrl'] = sprintf($filebrowser_uri, '?type=files');
+	$config['filebrowserBrowseUrl'] = sprintf($filebrowser_uri, '?type=files&amp;cms=');
 	$config['filebrowserImageBrowseUrl'] = sprintf($filebrowser_uri, '?type=gallery');
 	$config['filebrowserFlashBrowseUrl'] = sprintf($filebrowser_uri, '?type=files');
 	$config['filebrowserUploadUrl'] = sprintf($upload_uri, '?type=files');
