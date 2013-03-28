@@ -6,6 +6,7 @@
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general"}</a></li>
 			<li><a href="#tab-2" data-toggle="tab">{lang t="system|date"}</a></li>
+			<li><a href="#tab-3" data-toggle="tab">{lang t="users|privacy"}</a></li>
 		</ul>
 		<div class="tab-content">
 			<div id="tab-1" class="tab-pane active">
@@ -55,6 +56,52 @@
 							</optgroup>
 {/foreach}
 						</select>
+					</div>
+				</div>
+			</div>
+			<div id="tab-3" class="tab-pane">
+				<div class="control-group">
+					<label for="mail-display-{$mail_display.0.value}" class="control-label">{lang t="users|display_mail"}</label>
+					<div class="controls">
+						<div class="btn-group" data-toggle="radio">
+{foreach $mail_display as $row}
+							<input type="radio" name="mail_display" id="mail-display-{$row.value}" value="{$row.value}"{$row.checked}>
+							<label for="mail-display-{$row.value}" class="btn">{$row.lang}</label>
+{/foreach}
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label for="address-display-{$address_display.0.value}" class="control-label">{lang t="users|display_address"}</label>
+					<div class="controls">
+						<div class="btn-group" data-toggle="radio">
+{foreach $address_display as $row}
+							<input type="radio" name="address_display" id="address-display-{$row.value}" value="{$row.value}"{$row.checked}>
+							<label for="address-display-{$row.value}" class="btn">{$row.lang}</label>
+{/foreach}
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label for="country-display-{$country_display.0.value}" class="control-label">{lang t="users|display_country"}</label>
+					<div class="controls">
+						<div class="btn-group" data-toggle="radio">
+{foreach $country_display as $row}
+							<input type="radio" name="country_display" id="country-display-{$row.value}" value="{$row.value}"{$row.checked}>
+							<label for="country-display-{$row.value}" class="btn">{$row.lang}</label>
+{/foreach}
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label for="birthday-display-{$birthday_display.0.value}" class="control-label">{lang t="users|birthday"}</label>
+					<div class="controls">
+{foreach $birthday_display as $row}
+						<label for="birthday-display-{$row.value}" class="radio">
+							<input type="radio" name="birthday_display" id="birthday-display-{$row.value}" value="{$row.value}"{$row.checked}>
+							{$row.lang}
+						</label>
+{/foreach}
 					</div>
 				</div>
 			</div>

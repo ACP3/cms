@@ -17,7 +17,7 @@ if (isset($_POST['submit']) === true) {
 		$errors['nickname'] = ACP3_CMS::$lang->t('system', 'name_to_short');
 	if (ACP3_Validate::gender($_POST['gender']) === false)
 		$errors['gender'] = ACP3_CMS::$lang->t('users', 'select_gender');
-	if (!isset($_POST['birthday_display']) || !empty($_POST['birthday']) && ACP3_Validate::birthday($_POST['birthday'], $_POST['birthday_display']) === false)
+	if (!empty($_POST['birthday']) && ACP3_Validate::birthday($_POST['birthday']) === false)
 		$errors[] = ACP3_CMS::$lang->t('users', 'invalid_birthday');
 	if (userNameExists($_POST['nickname']) === true)
 		$errors['nickname'] = ACP3_CMS::$lang->t('users', 'user_name_already_exists');
@@ -39,6 +39,14 @@ if (isset($_POST['submit']) === true) {
 		$errors['time-zone'] = ACP3_CMS::$lang->t('system', 'select_time_zone');
 	if (!empty($_POST['icq']) && ACP3_Validate::icq($_POST['icq']) === false)
 		$errors['icq'] = ACP3_CMS::$lang->t('users', 'invalid_icq_number');
+	if (in_array($_POST['mail_display'], array(0, 1)))
+		$errors[] = ACP3_CMS::$lang->t('users', 'select_mail_display');
+	if (in_array($_POST['address_display'], array(0, 1)))
+		$errors[] = ACP3_CMS::$lang->t('users', 'select_address_display');
+	if (in_array($_POST['country_display'], array(0, 1)))
+		$errors[] = ACP3_CMS::$lang->t('users', 'select_country_display');
+	if (in_array($_POST['birthday_display'], array(0, 1, 2)))
+		$errors[] = ACP3_CMS::$lang->t('users', 'select_birthday_display');
 	if (empty($_POST['pwd']) || empty($_POST['pwd_repeat']) || $_POST['pwd'] != $_POST['pwd_repeat'])
 		$errors[] = ACP3_CMS::$lang->t('users', 'type_in_pwd');
 
@@ -153,20 +161,6 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 
 	// Geburtstag
 	ACP3_CMS::$view->assign('birthday_datepicker', ACP3_CMS::$date->datepicker('birthday', '', 'Y-m-d', array('constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\''), 0, 1, false, true));
-	$birthday_display = array();
-	$birthday_display[0]['name'] = 'hide';
-	$birthday_display[0]['value'] = '0';
-	$birthday_display[0]['checked'] = selectEntry('birthday_display', '0', '', 'checked');
-	$birthday_display[0]['lang'] = ACP3_CMS::$lang->t('users', 'birthday_hide');
-	$birthday_display[1]['name'] = 'full';
-	$birthday_display[1]['value'] = '1';
-	$birthday_display[1]['checked'] = selectEntry('birthday_display', '1', '', 'checked');
-	$birthday_display[1]['lang'] = ACP3_CMS::$lang->t('users', 'birthday_display_completely');
-	$birthday_display[2]['name'] = 'hide_year';
-	$birthday_display[2]['value'] = '2';
-	$birthday_display[2]['checked'] = selectEntry('birthday_display', '2', '', 'checked');
-	$birthday_display[2]['lang'] = ACP3_CMS::$lang->t('users', 'birthday_hide_year');
-	ACP3_CMS::$view->assign('birthday_display', $birthday_display);
 
 	// Kontaktangaben
 	$contact = array();
@@ -188,15 +182,6 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$contact[3]['maxlength'] = '28';
 	ACP3_CMS::$view->assign('contact', $contact);
 
-	$address = array();
-	$address[0]['name'] = 'address_display';
-	$address[0]['checked'] = selectEntry('address_display', '1', '', 'checked');
-	$address[0]['lang'] = ACP3_CMS::$lang->t('users', 'display_address');
-	$address[1]['name'] = 'country_display';
-	$address[1]['checked'] = selectEntry('country_display', '1', '', 'checked');
-	$address[1]['lang'] = ACP3_CMS::$lang->t('users', 'display_country');
-	ACP3_CMS::$view->assign('address_checkboxes', $address);
-
 	$countries = ACP3_LANG::worldCountries();
 	$countries_select = array();
 	foreach ($countries as $key => $value) {
@@ -207,6 +192,48 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 		);
 	}
 	ACP3_CMS::$view->assign('countries', $countries_select);
+
+	$mail_display = array();
+	$mail_display[0]['value'] = '1';
+	$mail_display[0]['checked'] = selectEntry('mail_display', '1', '0', 'checked');
+	$mail_display[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
+	$mail_display[1]['value'] = '0';
+	$mail_display[1]['checked'] = selectEntry('mail_display', '0', '0', 'checked');
+	$mail_display[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
+	ACP3_CMS::$view->assign('mail_display', $mail_display);
+
+	$address_display = array();
+	$address_display[0]['value'] = '1';
+	$address_display[0]['checked'] = selectEntry('address_display', '1', '0', 'checked');
+	$address_display[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
+	$address_display[1]['value'] = '0';
+	$address_display[1]['checked'] = selectEntry('address_display', '0', '0', 'checked');
+	$address_display[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
+	ACP3_CMS::$view->assign('address_display', $address_display);
+
+	$country_display = array();
+	$country_display[0]['value'] = '1';
+	$country_display[0]['checked'] = selectEntry('country_display', '1', '0', 'checked');
+	$country_display[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
+	$country_display[1]['value'] = '0';
+	$country_display[1]['checked'] = selectEntry('country_display', '0', '0', 'checked');
+	$country_display[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
+	ACP3_CMS::$view->assign('country_display', $country_display);
+
+	$birthday_display = array();
+	$birthday_display[0]['name'] = 'hide';
+	$birthday_display[0]['value'] = '0';
+	$birthday_display[0]['checked'] = selectEntry('birthday_display', '0', '0', 'checked');
+	$birthday_display[0]['lang'] = ACP3_CMS::$lang->t('users', 'birthday_hide');
+	$birthday_display[1]['name'] = 'full';
+	$birthday_display[1]['value'] = '1';
+	$birthday_display[1]['checked'] = selectEntry('birthday_display', '1', '0', 'checked');
+	$birthday_display[1]['lang'] = ACP3_CMS::$lang->t('users', 'birthday_display_completely');
+	$birthday_display[2]['name'] = 'hide_year';
+	$birthday_display[2]['value'] = '2';
+	$birthday_display[2]['checked'] = selectEntry('birthday_display', '2', '0', 'checked');
+	$birthday_display[2]['lang'] = ACP3_CMS::$lang->t('users', 'birthday_hide_year');
+	ACP3_CMS::$view->assign('birthday_display', $birthday_display);
 
 	$defaults = array(
 		'nickname' => '',

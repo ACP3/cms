@@ -23,6 +23,7 @@
 	<item key="deleted_user">Deleted user</item>
 	<item key="display_address">Display address in public profile</item>
 	<item key="display_country">Display country in public profile</item>
+	<item key="display_mail">Display E-mail address in public profile</item>
 	<item key="display_profile_field_info">If you don't want to display a certain profile field, just untick the respective field.</item>
 	<item key="drafts">Drafts</item>
 	<item key="edit_profile">Edit profile</item>
@@ -49,9 +50,8 @@ Please change the password again, after you logged in to your account.</item>
 	<item key="gender_not_specified">Not specified</item>
 	<item key="home">Control center</item>
 	<item key="icq">ICQ-Number</item>
-	<item key="invalid_birthday">Please type in a valid birthday and how it should look like.</item>
+	<item key="invalid_birthday">Please type in a valid birthday.</item>
 	<item key="invalid_icq_number">Please type in a valid ICQ number.</item>
-	<item key="invalid_msn_account">The MSN-Account you have entered does not match the format of an e-mail address.</item>
 	<item key="language">Language</item>
 	<item key="log_in">Log in</item>
 	<item key="login">Login</item>
@@ -62,6 +62,7 @@ Please change the password again, after you logged in to your account.</item>
 	<item key="nickname_or_email">User name or E-mail address</item>
 	<item key="nickname">User name</item>
 	<item key="nickname_or_password_wrong">Either the user name or the password is wrong.</item>
+	<item key="privacy">Privacy</item>
 	<item key="pwd">Password</item>
 	<item key="pwd_repeat">Repeat password</item>
 	<item key="realname">Real name</item>
@@ -79,10 +80,14 @@ E-mail address: {mail}
 Password: {password}</item>
 	<item key="register_success">The user account has been created successfully.</item>
 	<item key="select_access_level">Please select an access level for this user.</item>
+	<item key="select_address_display">Please select whether you want to display your address in the public profile or not.</item>
+	<item key="select_birthday_display">Please select the format of your birthday in which it should be displayed in your public profile.</item>
+	<item key="select_country_display">Please select whether you want to display your country in the public profile or not.</item>
 	<item key="select_enable_registration">Please select whether users should be allowed to register on this website.</item>
 	<item key="select_entries_override">Please select whether users should be allowed to override the number of displayed resultsets per page.</item>
 	<item key="select_language">Please select the language in which you want to see the website.</item>
-	<item key="select_language_override">Please select whether to users should be allowed to override the default language.</item>
+	<item key="select_language_override">Please select whether users should be allowed to override the default language.</item>
+	<item key="select_mail_display">Please select whether you want to display your E-mail address in the public profile or not.</item>
 	<item key="select_super_user">Please select whether the user should be a super user or not.</item>
 	<item key="send_email">Send E-mail</item>
 	<item key="skype">Skype</item>

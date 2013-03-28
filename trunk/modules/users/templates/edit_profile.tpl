@@ -33,12 +33,6 @@
 					<label for="birthday" class="control-label">{lang t="users|birthday"}</label>
 					<div class="controls">
 						{$birthday_datepicker}
-{foreach $birthday_display as $row}
-						<label for="{$row.name}" class="radio">
-							<input type="radio" name="birthday_display" id="{$row.name}" value="{$row.value}"{$row.checked}>
-							{$row.lang}
-						</label>
-{/foreach}
 					</div>
 				</div>
 			</div>
@@ -71,20 +65,11 @@
 					<label for="country" class="control-label">{lang t="users|country"}</label>
 					<div class="controls">
 						<select name="country" id="country">
+							<option value="">{lang t="system|pls_select"}</option>
 {foreach $countries as $row}
 							<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 						</select>
-					</div>
-				</div>
-				<div class="control-group">
-					<div class="controls">
-{foreach $address_checkboxes as $row}
-						<label for="{$row.name}" class="checkbox">
-							<input type="checkbox" name="{$row.name}" id="{$row.name}" value="1"{$row.checked}>
-							{$row.lang}
-						</label>
-{/foreach}
 					</div>
 				</div>
 			</div>
