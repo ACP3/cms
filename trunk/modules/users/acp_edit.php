@@ -43,13 +43,13 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 			$errors['time-zone'] = ACP3_CMS::$lang->t('system', 'select_time_zone');
 		if (!empty($_POST['icq']) && ACP3_Validate::icq($_POST['icq']) === false)
 			$errors['icq'] = ACP3_CMS::$lang->t('users', 'invalid_icq_number');
-		if (in_array($_POST['mail_display'], array(0, 1)))
+		if (in_array($_POST['mail_display'], array(0, 1)) === false)
 			$errors[] = ACP3_CMS::$lang->t('users', 'select_mail_display');
-		if (in_array($_POST['address_display'], array(0, 1)))
+		if (in_array($_POST['address_display'], array(0, 1)) === false)
 			$errors[] = ACP3_CMS::$lang->t('users', 'select_address_display');
-		if (in_array($_POST['country_display'], array(0, 1)))
+		if (in_array($_POST['country_display'], array(0, 1)) === false)
 			$errors[] = ACP3_CMS::$lang->t('users', 'select_country_display');
-		if (in_array($_POST['birthday_display'], array(0, 1, 2)))
+		if (in_array($_POST['birthday_display'], array(0, 1, 2)) === false)
 			$errors[] = ACP3_CMS::$lang->t('users', 'select_birthday_display');
 		if (!empty($_POST['new_pwd']) && !empty($_POST['new_pwd_repeat']) && $_POST['new_pwd'] != $_POST['new_pwd_repeat'])
 			$errors[] = ACP3_CMS::$lang->t('users', 'type_in_pwd');

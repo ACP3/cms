@@ -29,13 +29,13 @@ if (ACP3_CMS::$auth->isUser() === false || ACP3_Validate::isNumber(ACP3_CMS::$au
 			$errors[] = ACP3_CMS::$lang->t('system', 'type_in_date_format');
 		if (ACP3_Validate::timeZone($_POST['date_time_zone']) === false)
 			$errors['time-zone'] = ACP3_CMS::$lang->t('system', 'select_time_zone');
-		if (in_array($_POST['mail_display'], array(0, 1)))
+		if (in_array($_POST['mail_display'], array(0, 1)) === false)
 			$errors[] = ACP3_CMS::$lang->t('users', 'select_mail_display');
-		if (in_array($_POST['address_display'], array(0, 1)))
+		if (in_array($_POST['address_display'], array(0, 1)) === false)
 			$errors[] = ACP3_CMS::$lang->t('users', 'select_address_display');
-		if (in_array($_POST['country_display'], array(0, 1)))
+		if (in_array($_POST['country_display'], array(0, 1)) === false)
 			$errors[] = ACP3_CMS::$lang->t('users', 'select_country_display');
-		if (in_array($_POST['birthday_display'], array(0, 1, 2)))
+		if (in_array($_POST['birthday_display'], array(0, 1, 2)) === false)
 			$errors[] = ACP3_CMS::$lang->t('users', 'select_birthday_display');
 
 		if (isset($errors) === true) {
