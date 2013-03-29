@@ -192,6 +192,9 @@ class ACP3_Breadcrumb {
 		if (empty($this->breadcrumb_cache)) {
 			// Brotkrümelspur für das Admin-Panel
 			if (defined('IN_ADM') === true) {
+				if ($module !== 'acp')
+					$this->setTitlePostfix(ACP3_CMS::$lang->t('system', 'acp'));
+
 				// Wenn noch keine Brotkrümelspur gesetzt ist, dies nun tun
 				if (empty($this->steps_mods)) {
 					$this->append(ACP3_CMS::$lang->t('system', 'acp'), ACP3_CMS::$uri->route('acp'));

@@ -42,6 +42,8 @@ class ACP3_SEO
 	 */
 	private static $canonical = '';
 
+	private static $meta_description_postfix = '';
+
 	/**
 	 * Setzt den Cache für die URI-Aliase
 	 *
@@ -84,9 +86,9 @@ class ACP3_SEO
 	public static function getMetaTags()
 	{
 		$meta = array(
-			'description' => defined('IN_ADM') === true ? '' : self::getCurrentDescription(),
-			'keywords' => defined('IN_ADM') === true ? '' : self::getCurrentKeywords(),
-			'robots' => defined('IN_ADM') === true ? 'noindex,nofollow' : self::getCurrentRobotsSetting(),
+			'description' => defined('IN_ADM') === true ? '' : self::getPageDescription(),
+			'keywords' => defined('IN_ADM') === true ? '' : self::getPageKeywords(),
+			'robots' => defined('IN_ADM') === true ? 'noindex,nofollow' : self::getPageRobotsSetting(),
 			'previous_page' => self::$previous_page,
 			'next_page' => self::$next_page,
 			'canonical' => self::$canonical,
@@ -101,7 +103,7 @@ class ACP3_SEO
 	 *
 	 * @return string
 	 */
-	public static function getCurrentDescription()
+	public static function getPageDescription()
 	{
 		$description = self::getDescription(ACP3_CMS::$uri->getCleanQuery());
 		if (empty($description))
@@ -109,7 +111,7 @@ class ACP3_SEO
 		if (empty($description))
 			$description = self::getDescription(ACP3_CMS::$uri->mod);
 
-		return !empty($description) ? $description : CONFIG_SEO_META_DESCRIPTION;
+		return !empty($description) ? $description . (!empty(self::$meta_description_postfix) ? ' - ' . self::$meta_description_postfix : '') : CONFIG_SEO_META_DESCRIPTION;
 	}
 	/**
 	 * Gibt die Keywords der aktuell angezeigten Seite oder der
@@ -117,7 +119,7 @@ class ACP3_SEO
 	 *
 	 * @return string
 	 */
-	public static function getCurrentKeywords()
+	public static function getPageKeywords()
 	{
 		$keywords = self::getKeywords(ACP3_CMS::$uri->getCleanQuery());
 		if (empty($keywords))
@@ -133,7 +135,7 @@ class ACP3_SEO
 	 *
 	 * @return string 
 	 */
-	public static function getCurrentRobotsSetting()
+	public static function getPageRobotsSetting()
 	{
 		$robots = self::getRobotsSetting(ACP3_CMS::$uri->getCleanQuery());
 		if (empty($robots))
@@ -157,6 +159,14 @@ class ACP3_SEO
 		$path.= !preg_match('/\/$/', $path) ? '/' : '';
 
 		return !empty(self::$aliases[$path]['description']) ? self::$aliases[$path]['description'] : '';
+	}
+	/**
+	 * 
+	 * @param string $string
+	 */
+	public  static function setDescriptionPostfix($string)
+	{
+		self::$meta_description_postfix = $string;
 	}
 	/**
 	 * Gibt die Schlüsselwörter der Seite aus

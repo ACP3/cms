@@ -505,6 +505,7 @@ function pagination($rows, $fragment = '')
 
 		// Vorherige und nächste Seite für Suchmaschinen und Prefetching propagieren
 		if (defined('IN_ADM') === false) {
+			ACP3_SEO::setDescriptionPostfix(sprintf(ACP3_CMS::$lang->t('system', 'page_x'), $current_page));
 			if ($current_page - 1 > 0)
 				ACP3_SEO::setPreviousPage($link . 'page_' . ($current_page - 1) . '/');
 			if ($current_page + 1 <= $c_pagination)
