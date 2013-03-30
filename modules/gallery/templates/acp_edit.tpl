@@ -29,7 +29,7 @@
 <form action="{uri args="acp/gallery/delete_picture/id_$gallery_id"}" method="post">
 	<div id="adm-list" class="navbar">
 		<div class="navbar-inner navbar-text">
-			<h2>{lang t="gallery|pictures"}</h2>
+			<h2 class="brand">{lang t="gallery|pictures"}</h2>
 			{check_access mode="link" path="acp/gallery/create_picture/id_`$gallery_id`" icon="32/image" width="32" height="32"}
 			{check_access mode="input" path="acp/gallery/delete_picture" icon="32/cancel" lang="system|delete_marked"}
 		</div>
