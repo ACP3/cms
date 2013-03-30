@@ -1,7 +1,7 @@
 <form action="{uri args="acp/newsletter/delete"}" method="post">
 	<div id="adm-list" class="navbar">
 		<div class="navbar-inner navbar-text">
-			<h2>{lang t="system|overview"}</h2>
+			<h2 class="brand">{lang t="system|overview"}</h2>
 			{check_access mode="link" path="acp/newsletter/create" icon="32/mail_new" width="32" height="32"}
 			{check_access mode="link" path="acp/newsletter/list_accounts" icon="32/personal" width="32" height="32"}
 			{check_access mode="link" path="acp/newsletter/settings" icon="32/advancedsettings" width="32" height="32"}

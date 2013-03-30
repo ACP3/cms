@@ -99,12 +99,9 @@ table .sub-table-header span, table .sub-table-header div {
 #adm-list {
 	text-align: right;
 }
-#adm-list h2 {
+#adm-list h2.brand {
 	margin: 0;
 	padding: 0;
-	font-size: 17px;
-	color: #333;
-	float: left;
 }
 #adm-list a, #adm-list input {
 	margin: 4px 0 0 8px;

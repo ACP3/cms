@@ -1,7 +1,7 @@
 <form action="{uri args="acp/gallery/delete"}" method="post">
 	<div id="adm-list" class="navbar">
 		<div class="navbar-inner navbar-text">
-			<h2>{lang t="system|overview"}</h2>
+			<h2 class="brand">{lang t="system|overview"}</h2>
 			{check_access mode="link" path="acp/gallery/create" icon="32/folder_image" width="32" height="32"}
 			{check_access mode="link" path="acp/gallery/settings" icon="32/advancedsettings" width="32" height="32"}
 			{check_access mode="input" path="acp/gallery/delete" icon="32/cancel" lang="system|delete_marked"}
