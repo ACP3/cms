@@ -40,8 +40,25 @@ function editor($params) {
 	if (isset($params['toolbar']))
 		$config['toolbar'] = $params['toolbar'] === 'simple' ? 'Basic' : 'Full';
 
-	$config['extraPlugins'] = 'divarea,oembed';
+	$config['extraPlugins'] = 'divarea,oembed,codemirror';
 	$config['allowedContent'] = true;
+	$config['codemirror'] = '@@{ theme: \'default\',
+	lineNumbers: true,
+	lineWrapping: true,
+	matchBrackets: true,
+	autoCloseTags: true,
+	autoCloseBrackets: true,
+	enableSearchTools: true,
+	enableCodeFolding: true,
+	enableCodeFormatting: true,
+	autoFormatOnStart: true,
+	autoFormatOnUncomment: true,
+	highlightActiveLine: true,
+	highlightMatches: true,
+	showFormatButton: false,
+	showCommentButton: false,
+	showUncommentButton: false
+}';
 
 	// Smilies
 	if ((!isset($config['toolbar']) || $config['toolbar'] !== 'simple') && ACP3_Modules::check('emoticons', 'functions') === true) {
