@@ -506,9 +506,11 @@ function pagination($rows, $fragment = '')
 
 		// Vorherige und nächste Seite für Suchmaschinen und Prefetching propagieren
 		if (defined('IN_ADM') === false) {
-			ACP3_SEO::setDescriptionPostfix(sprintf(ACP3_CMS::$lang->t('system', 'page_x'), $current_page));
-			if ($current_page - 1 > 0)
+			if ($current_page - 1 > 0) {
+				// Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben
+				ACP3_SEO::setDescriptionPostfix(sprintf(ACP3_CMS::$lang->t('system', 'page_x'), $current_page));
 				ACP3_SEO::setPreviousPage($link . 'page_' . ($current_page - 1) . '/');
+			}
 			if ($current_page + 1 <= $c_pagination)
 				ACP3_SEO::setNextPage($link . 'page_' . ($current_page + 1) . '/');
 			if (isset(ACP3_CMS::$uri->page) && ACP3_CMS::$uri->page === 1)

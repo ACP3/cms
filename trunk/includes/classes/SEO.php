@@ -111,7 +111,12 @@ class ACP3_SEO
 		if (empty($description))
 			$description = self::getDescription(ACP3_CMS::$uri->mod);
 
-		return !empty($description) ? $description . (!empty(self::$meta_description_postfix) ? ' - ' . self::$meta_description_postfix : '') : CONFIG_SEO_META_DESCRIPTION;
+		if ((ACP3_CMS::$uri->query === CONFIG_HOMEPAGE && CONFIG_SEO_META_DESCRIPTION !== '') ||
+			empty($description)) {
+			return CONFIG_SEO_META_DESCRIPTION;
+		} else {
+			return $description . (!empty(self::$meta_description_postfix) ? ' - ' . self::$meta_description_postfix : '');
+		}
 	}
 	/**
 	 * Gibt die Keywords der aktuell angezeigten Seite oder der
