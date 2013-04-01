@@ -60,7 +60,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 
 			$bool = ACP3_CMS::$db2->update(DB_PRE . 'categories', $update_values, array('id' => ACP3_CMS::$uri->id));
 
-			setCategoriesCache($module['title']);
+			setCategoriesCache($module['name']);
 
 			ACP3_CMS::$session->unsetFormToken();
 
