@@ -1,8 +1,8 @@
 <div id="toc" class="well well-small">
 	<h4>{lang t="system|table_of_contents"}</h4>
-	<ul>
+	<ul class="nav nav-list">
 {foreach $toc as $row}
-		<li>{if $row.selected}<span>{$row.title}</span>{else}<a href="{$row.uri}">{$row.title}</a>{/if}</li>
+		<li{if $row.selected} class="active"{/if}><a href="{$row.uri}">{$row.title}</a></li>
 {/foreach}
 	</ul>
 </div>
