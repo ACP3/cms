@@ -71,7 +71,5 @@ if (ACP3_CMS::$auth->isUser() === true) {
 		}
 
 		ACP3_CMS::$session->generateFormToken();
-
-		ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('users/forgot_pwd.tpl'));
 	}
 }

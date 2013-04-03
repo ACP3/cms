@@ -129,7 +129,5 @@ if (ACP3_CMS::$auth->isUser() === false || ACP3_Validate::isNumber(ACP3_CMS::$au
 		ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : $user);
 
 		ACP3_CMS::$session->generateFormToken();
-
-		ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('users/edit_profile.tpl'));
 	}
 }

@@ -33,4 +33,3 @@ if ($file !== false) {
 		ACP3_CMS::$view->assign('update', $update);
 	}
 }
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('system/acp_update_check.tpl'));

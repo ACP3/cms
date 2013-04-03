@@ -79,6 +79,4 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	ACP3_CMS::$view->assign('mod_list', $mod_list);
 
 	ACP3_CMS::$session->generateFormToken();
-
-	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('categories/acp_create.tpl'));
 }

@@ -25,5 +25,3 @@ if (ACP3_CMS::$auth->isUser() === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox(ACP3_CMS::$lang->t('users', $result == -1 ? 'account_locked' : 'nickname_or_password_wrong')));
 	}
 }
-
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('users/login.tpl'));

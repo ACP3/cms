@@ -134,6 +134,4 @@ switch (ACP3_CMS::$uri->action) {
 
 		ACP3_CMS::$view->assign('installed_modules', $installed_modules);
 		ACP3_CMS::$view->assign('new_modules', $new_modules);
-
-		ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('system/acp_modules.tpl'));
 }

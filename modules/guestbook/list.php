@@ -50,4 +50,3 @@ if ($c_guestbook > 0) {
 	}
 	ACP3_CMS::$view->assign('guestbook', $guestbook);
 }
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('guestbook/list.tpl'));

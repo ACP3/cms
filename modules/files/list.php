@@ -17,5 +17,3 @@ if (ACP3_Modules::check('categories', 'functions') === true) {
 		ACP3_CMS::$view->assign('categories', $categories);
 	}
 }
-
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('files/list.tpl'));

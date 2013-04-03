@@ -39,6 +39,4 @@ if (isset(ACP3_CMS::$uri->dir)) {
 		}
 	}
 	ACP3_CMS::$view->assign('languages', $languages);
-
-	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('system/acp_languages.tpl'));
 }

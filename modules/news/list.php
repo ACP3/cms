@@ -65,5 +65,3 @@ if ($c_news > 0) {
 	}
 	ACP3_CMS::$view->assign('news', $news);
 }
-
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('news/list.tpl'));

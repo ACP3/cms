@@ -37,7 +37,6 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		ACP3_CMS::$view->assign('pictures', $pictures);
 		ACP3_CMS::$view->assign('overlay', (int) $settings['overlay']);
 	}
-	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('gallery/pics.tpl'));
 } else {
 	ACP3_CMS::$uri->redirect('errors/404');
 }

@@ -108,8 +108,6 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : $role);
 
 		ACP3_CMS::$session->generateFormToken();
-
-		ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('permissions/acp_edit.tpl'));
 	}
 } else {
 	ACP3_CMS::$uri->redirect('errors/404');

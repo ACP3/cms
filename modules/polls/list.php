@@ -33,5 +33,3 @@ if ($c_polls > 0) {
 	}
 	ACP3_CMS::$view->assign('polls', $polls);
 }
-
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('polls/list.tpl'));

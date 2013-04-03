@@ -73,8 +73,6 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		ACP3_CMS::$view->assign('question', $poll['title']);
 		ACP3_CMS::$view->assign('multiple', $poll['multiple']);
 		ACP3_CMS::$view->assign('answers', $answers);
-
-		ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('polls/vote.tpl'));
 	}
 } else {
 	ACP3_CMS::$uri->redirect('errors/404');

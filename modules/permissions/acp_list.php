@@ -23,4 +23,3 @@ if ($c_roles > 0) {
 	ACP3_CMS::$view->assign('can_delete', ACP3_Modules::check('permissions', 'acp_delete'));
 	ACP3_CMS::$view->assign('can_order', ACP3_Modules::check('permissions', 'acp_order'));	
 }
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('permissions/acp_list.tpl'));
