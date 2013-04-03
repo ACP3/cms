@@ -23,8 +23,6 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		$user['website'] =  'http://' . $user['website'];
 
 	ACP3_CMS::$view->assign('user', $user);
-
-	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('users/view_profile.tpl'));	
 } else {
 	ACP3_CMS::$uri->redirect('errors/404');
 }

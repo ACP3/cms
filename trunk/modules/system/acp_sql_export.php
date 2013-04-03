@@ -66,7 +66,6 @@ if (isset($_POST['submit']) === true) {
 		// Im Browser ausgeben
 		} else {
 			ACP3_CMS::$view->assign('export', htmlentities($export, ENT_QUOTES, 'UTF-8'));
-			ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('system/acp_sql_export.tpl'));
 		}
 	}
 }
@@ -112,6 +111,4 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	ACP3_CMS::$view->assign('drop', $drop);
 
 	ACP3_CMS::$session->generateFormToken();
-
-	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('system/acp_sql_export.tpl'));
 }

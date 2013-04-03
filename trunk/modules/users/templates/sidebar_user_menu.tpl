@@ -6,7 +6,7 @@
 		<a href="{uri args="acp"}" class="dropdown-toggle" data-toggle="dropdown" data-target="#"><i class="icon-file"></i> {lang t="users|administration"}</a>
 		<ul class="dropdown-menu">
 {foreach $user_sidebar.modules as $row}
-			<li><a href="{uri args="acp/`$row.dir`"}">{$row.name}</a></li>
+			<li{$row.active}><a href="{uri args="acp/`$row.dir`"}">{$row.name}</a></li>
 {/foreach}
 		</ul>
 	</li>
@@ -16,7 +16,7 @@
 		<a href="{uri args="acp/system"}" class="dropdown-toggle" data-toggle="dropdown" data-target="#"><i class="icon-wrench"></i> {lang t="system|system"}</a>
 		<ul class="dropdown-menu">
 {foreach $user_sidebar.system as $row}
-			<li><a href="{uri args="acp/system/`$row.page`"}">{$row.name}</a></li>
+			<li{$row.active}><a href="{uri args="acp/system/`$row.page`"}">{$row.name}</a></li>
 {/foreach}
 		</ul>
 	</li>

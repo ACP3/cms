@@ -26,5 +26,3 @@ if ($c_articles > 0) {
 
 	ACP3_CMS::$view->assign('articles', $articles);
 }
-
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('articles/list.tpl'));

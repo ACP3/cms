@@ -100,6 +100,4 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : array('title' => '', 'text' => '', 'uri' => '', 'link_title' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => ''));
 
 	ACP3_CMS::$session->generateFormToken();
-
-	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('news/acp_create.tpl'));
 }

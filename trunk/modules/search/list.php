@@ -42,7 +42,7 @@ if (isset($_POST['submit']) === true) {
 			ACP3_CMS::$view->assign('no_search_results', sprintf(ACP3_CMS::$lang->t('search', 'no_search_results'), $_POST['search_term']));
 		}
 
-		ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('search/results.tpl'));
+		ACP3_CMS::$view->setContentTemplate('search/results.tpl');
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -91,6 +91,4 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$sort_hits[1]['checked'] = selectEntry('sort', 'desc', 'asc', 'checked');
 	$sort_hits[1]['lang'] = ACP3_CMS::$lang->t('search', 'desc');
 	ACP3_CMS::$view->assign('sort_hits', $sort_hits);
-
-	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('search/list.tpl'));
 }

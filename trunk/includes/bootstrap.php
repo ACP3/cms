@@ -249,9 +249,14 @@ class ACP3_CMS {
 		switch (ACP3_Modules::check()) {
 			// Seite ausgeben
 			case 1:
+				self::$view->setContentTemplate(self::$uri->mod . '/' . self::$uri->file . '.tpl');
 				require MODULES_DIR . self::$uri->mod . '/' . self::$uri->file . '.php';
 
 				if (self::$view->getNoOutput() === false) {
+					if (self::$content === '') {
+						self::setContent(self::$view->fetchTemplate(self::$view->getContentTemplate()));
+					}
+
 					// Evtl. gesetzten Content-Type des Servers überschreiben
 					header(self::$view->getContentType());
 

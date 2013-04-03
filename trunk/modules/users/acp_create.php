@@ -251,6 +251,4 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
 	ACP3_CMS::$session->generateFormToken();
-
-	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('users/acp_create.tpl'));
 }

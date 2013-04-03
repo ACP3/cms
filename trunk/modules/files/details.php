@@ -55,7 +55,6 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 
 			ACP3_CMS::$view->assign('comments', commentsList('files', ACP3_CMS::$uri->id));
 		}
-		ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('files/details.tpl'));
 	}
 } else {
 	ACP3_CMS::$uri->redirect('errors/404');

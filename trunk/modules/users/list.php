@@ -16,5 +16,3 @@ if ($c_users > 0) {
 	ACP3_CMS::$view->assign('users', $users);
 }
 ACP3_CMS::$view->assign('LANG_users_found', sprintf(ACP3_CMS::$lang->t('users', 'users_found'), $all_users));
-
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('users/list.tpl'));

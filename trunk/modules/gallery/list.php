@@ -27,4 +27,3 @@ if ($c_galleries > 0) {
 	}
 	ACP3_CMS::$view->assign('galleries', $galleries);
 }
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('gallery/list.tpl'));

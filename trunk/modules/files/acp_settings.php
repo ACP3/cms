@@ -56,6 +56,4 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	ACP3_CMS::$view->assign('sidebar_entries', recordsPerPage((int) $settings['sidebar'], 1, 10));
 
 	ACP3_CMS::$session->generateFormToken();
-
-	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('files/acp_settings.tpl'));
 }

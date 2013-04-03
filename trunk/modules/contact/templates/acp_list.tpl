@@ -7,7 +7,7 @@
 <form action="{uri args="acp/contact"}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="control-group">
 		<label for="address" class="control-label">{lang t="contact|address"}</label>
-		<div class="controls">{wysiwyg name="address" value="`$form.address`" height="150" toolbar="simple"}</div>
+		<div class="controls">{wysiwyg name="address" value="`$form.address`" toolbar="simple"}</div>
 	</div>
 	<div class="control-group">
 		<label for="mail" class="control-label">{lang t="system|email_address"}</label>
@@ -23,7 +23,7 @@
 	</div>
 	<div class="control-group">
 		<label for="disclaimer" class="control-label">{lang t="contact|disclaimer"}</label>
-		<div class="controls">{wysiwyg name="disclaimer" value="`$form.disclaimer`" height="150px" toolbar="simple"}</div>
+		<div class="controls">{wysiwyg name="disclaimer" value="`$form.disclaimer`" toolbar="simple"}</div>
 	</div>
 	<div class="form-actions">
 		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>

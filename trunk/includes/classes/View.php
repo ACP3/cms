@@ -36,6 +36,13 @@ class ACP3_View
 	private $layout = 'layout.tpl';
 
 	/**
+	 * Das zuverwendende Template für den Contentbereich
+	 *
+	 * @var string
+	 */
+	private $content_template = '';
+
+	/**
 	 * Legt fest, welche JavaScript Bibliotheken beim Seitenaufruf geladen werden sollen
 	 * 
 	 * @var array
@@ -105,6 +112,28 @@ class ACP3_View
 		return $this->layout;
 	}
 
+	/**
+	 * 
+	 * @param string $file
+	 */
+	public function setContentTemplate($file)
+	{
+		$this->content_template = $file;
+	}
+
+	/**
+	 * 
+	 * @return string
+	 */
+	public function getContentTemplate()
+	{
+		return $this->content_template;
+	}
+
+	/**
+	 * 
+	 * @return object
+	 */
 	public static function getRenderer()
 	{
 		return self::$renderer_obj;

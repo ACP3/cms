@@ -44,6 +44,4 @@ if (isset(ACP3_CMS::$uri->dir)) {
 		}
 	}
 	ACP3_CMS::$view->assign('designs', $designs);
-
-	ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('system/acp_designs.tpl'));
 }

@@ -24,5 +24,3 @@ for ($i = 0; $i < $c_resources; ++$i) {
 ksort($output);
 ACP3_CMS::$view->assign('resources', $output);
 ACP3_CMS::$view->assign('can_delete_resource', ACP3_Modules::check('permissions', 'acp_delete_resources'));
-
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('permissions/acp_list_resources.tpl'));

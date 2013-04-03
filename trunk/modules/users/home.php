@@ -20,7 +20,5 @@ if (ACP3_CMS::$auth->isUser() === false || !ACP3_Validate::isNumber(ACP3_CMS::$a
 		$user_draft = ACP3_CMS::$db2->fetchColumn('SELECT draft FROM ' . DB_PRE . 'users WHERE id = ?', array(ACP3_CMS::$auth->getUserId()));
 
 		ACP3_CMS::$view->assign('draft', $user_draft);
-
-		ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('users/home.tpl'));
 	}
 }

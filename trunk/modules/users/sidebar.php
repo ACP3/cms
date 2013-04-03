@@ -12,6 +12,7 @@ if (defined('IN_ACP3') === false)
 
 $currentPage = base64_encode((defined('IN_ADM') === true ? 'acp/' : '') . ACP3_CMS::$uri->query);
 
+// Usermenü anzeigen, falls der Benutzer eingeloggt ist
 if (ACP3_CMS::$auth->isUser() === true) {
 	$user_sidebar = array();
 	$user_sidebar['page'] = $currentPage;
@@ -31,6 +32,7 @@ if (ACP3_CMS::$auth->isUser() === true) {
 			} else {
 				$nav_mods[$name]['name'] = $name;
 				$nav_mods[$name]['dir'] = $dir;
+				$nav_mods[$name]['active'] = defined('IN_ADM') === true && $dir === ACP3_CMS::$uri->mod ? ' class="active"' : '';
 			}
 		}
 	}
@@ -38,21 +40,24 @@ if (ACP3_CMS::$auth->isUser() === true) {
 		$user_sidebar['modules'] = $nav_mods;
 	}
 
-	if ($access_system) {
+	if ($access_system === true) {
 		$i = 0;
 		if (ACP3_Modules::check('system', 'acp_configuration') === true) {
 			$nav_system[$i]['page'] = 'configuration';
 			$nav_system[$i]['name'] = ACP3_CMS::$lang->t('system', 'acp_configuration');
+			$nav_system[$i]['active'] = ACP3_CMS::$uri->query === 'system/configuration/' ? ' class="active"' : '';
 		}
 		if (ACP3_Modules::check('system', 'acp_extensions') === true) {
 			$i++;
 			$nav_system[$i]['page'] = 'extensions';
 			$nav_system[$i]['name'] = ACP3_CMS::$lang->t('system', 'acp_extensions');
+			$nav_system[$i]['active'] = ACP3_CMS::$uri->query === 'system/extensions/' ? ' class="active"' : '';
 		}
 		if (ACP3_Modules::check('system', 'acp_maintenance') === true) {
 			$i++;
 			$nav_system[$i]['page'] = 'maintenance';
 			$nav_system[$i]['name'] = ACP3_CMS::$lang->t('system', 'acp_maintenance');
+			$nav_system[$i]['active'] = ACP3_CMS::$uri->query === 'system/maintenance/' ? ' class="active"' : '';
 		}
 		$user_sidebar['system'] = $nav_system;
 	}

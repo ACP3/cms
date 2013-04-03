@@ -36,5 +36,3 @@ if ($c_menus > 0) {
 	}
 	ACP3_CMS::$view->assign('pages_list', $pages_list);
 }
-
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('menus/acp_list.tpl'));

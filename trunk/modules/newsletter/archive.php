@@ -36,5 +36,3 @@ if ($c_newsletters > 0) {
 	}
 	ACP3_CMS::$view->assign('newsletters', $newsletters);
 }
-
-ACP3_CMS::setContent(ACP3_CMS::$view->fetchTemplate('newsletter/archive.tpl'));
