@@ -37,7 +37,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		if (isset($errors) === true) {
 			ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 		} elseif (ACP3_Validate::formToken() === false) {
-			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
+			ACP3_CMS::$view->setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 		} else {
 			$result = moveFile($file['tmp_name'], $file['name'], 'gallery');
 			$picNum = ACP3_CMS::$db2->fetchColumn('SELECT MAX(pic) FROM ' . DB_PRE . 'gallery_pictures WHERE gallery_id = ?', array(ACP3_CMS::$uri->id));

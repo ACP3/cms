@@ -30,7 +30,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		if (isset($errors) === true) {
 			ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 		} elseif (ACP3_Validate::formToken() === false) {
-			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
+			ACP3_CMS::$view->setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 		} else {
 			$update_values = array(
 				'start' => ACP3_CMS::$date->toSQL($_POST['start']),
@@ -70,7 +70,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 				'element' => '#acp-table',
 				'hide_col_sort' => $can_delete === true ? 0 : ''
 			);
-			ACP3_CMS::setContent(datatable($config));
+			ACP3_CMS::$view->setContent(datatable($config));
 
 			for ($i = 0; $i < $c_pictures; ++$i) {
 				$pictures[$i]['first'] = $i == 0 ? true : false;
@@ -84,7 +84,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 
 		ACP3_CMS::$session->generateFormToken();
 
-		ACP3_CMS::appendContent(ACP3_CMS::$view->fetchTemplate('gallery/acp_edit.tpl'));
+		ACP3_CMS::$view->appendContent(ACP3_CMS::$view->fetchTemplate('gallery/acp_edit.tpl'));
 	}
 } else {
 	ACP3_CMS::$uri->redirect('errors/404');

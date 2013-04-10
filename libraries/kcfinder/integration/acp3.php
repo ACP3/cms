@@ -11,42 +11,42 @@ function CheckAuthentication($acp3_path) {
 
 	if (!isset($authenticated)) {
 
-			$current_cwd = getcwd();
+		$current_cwd = getcwd();
 
-			define('IN_ACP3', true);
-			if (!defined('ACP3_ROOT'))
-				define('ACP3_ROOT', $acp3_path);
+		define('IN_ACP3', true);
+		if (!defined('ACP3_ROOT'))
+			define('ACP3_ROOT', $acp3_path);
 
-			require_once ACP3_ROOT . 'includes/bootstrap.php';
+		require_once ACP3_ROOT . 'includes/bootstrap.php';
 
-			ACP3_CMS::defineDirConstants();
-			ACP3_CMS::includeAutoLoader();
-			ACP3_CMS::initializeDoctrineDBAL();
-			ACP3_CMS::initializeClasses();
-			
-			// Simulate being in the drupal root folder so we can share the session
-			chdir(ACP3_ROOT);
+		ACP3_CMS::defineDirConstants();
+		ACP3_CMS::includeAutoLoader();
+		ACP3_CMS::initializeDoctrineDBAL();
+		ACP3_CMS::initializeClasses();
 
-			// if user has access permission...
-			if (ACP3_CMS::$auth->isUser()) {
-				if (!isset($_SESSION['KCFINDER'])) {
-					$_SESSION['KCFINDER'] = array();
-					$_SESSION['KCFINDER']['disabled'] = false;
-				}
+		// Simulate being in the drupal root folder so we can share the session
+		chdir(ACP3_ROOT);
 
-				// User has permission, so make sure KCFinder is not disabled!
-				if (!isset($_SESSION['KCFINDER']['disabled'])) {
-					$_SESSION['KCFINDER']['disabled'] = false;
-				}
+		// if user has access permission...
+		if (ACP3_CMS::$auth->isUser()) {
+			if (!isset($_SESSION['KCFINDER'])) {
+				$_SESSION['KCFINDER'] = array();
+				$_SESSION['KCFINDER']['disabled'] = false;
+			}
 
-				chdir($current_cwd);
-
-				return true;
+			// User has permission, so make sure KCFinder is not disabled!
+			if (!isset($_SESSION['KCFINDER']['disabled'])) {
+				$_SESSION['KCFINDER']['disabled'] = false;
 			}
 
 			chdir($current_cwd);
-			return false;
+
+			return true;
 		}
+
+		chdir($current_cwd);
+		return false;
+	}
 }
 
 CheckAuthentication(get_acp3_path());

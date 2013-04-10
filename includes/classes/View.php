@@ -43,6 +43,13 @@ class ACP3_View
 	private $content_template = '';
 
 	/**
+	 * Der auszugebende Seiteninhalt
+	 *
+	 * @var string
+	 */
+	private $content = '';
+
+	/**
 	 * Legt fest, welche JavaScript Bibliotheken beim Seitenaufruf geladen werden sollen
 	 * 
 	 * @var array
@@ -128,6 +135,36 @@ class ACP3_View
 	public function getContentTemplate()
 	{
 		return $this->content_template;
+	}
+
+	/**
+	 * Weist dem Template den auszugebenden Inhalt zu
+	 *
+	 * @param string $data
+	 */
+	public function setContent($data)
+	{
+		$this->content = $data;
+	}
+
+	/**
+	 * Fügt weitere Daten an den Seiteninhalt an
+	 *
+	 * @param string $data
+	 */
+	public function appendContent($data)
+	{
+		$this->content.= $data;
+	}
+
+	/**
+	 * Gibt den auszugebenden Seiteninhalt zurück
+	 *
+	 * @return string
+	 */
+	public function getContent()
+	{
+		return $this->content;
 	}
 
 	/**

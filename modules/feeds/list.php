@@ -32,5 +32,5 @@ if (ACP3_Modules::check(ACP3_CMS::$uri->feed, 'extensions/feeds') === true) {
 	
 	ACP3_CMS::$view->setLayout('');
 	ACP3_CMS::$view->setContentType('text/xml');
-	ACP3_CMS::setContent(ACP3_CMS::$view->getRenderer()->display($settings['feed_type']));
+	ACP3_CMS::$view->setContent(ACP3_CMS::$view->getRenderer()->display($settings['feed_type']));
 }

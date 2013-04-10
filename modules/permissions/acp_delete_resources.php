@@ -19,10 +19,10 @@ ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('permissions', 'acp_list_resour
 		   ->append(ACP3_CMS::$lang->t('permissions', 'delete_resources'));
 
 if (!isset($entries)) {
-	ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'no_entries_selected')));
+	ACP3_CMS::$view->setContent(errorBox(ACP3_CMS::$lang->t('system', 'no_entries_selected')));
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
-	ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('system', 'confirm_delete'), ACP3_CMS::$uri->route('acp/permissions/delete_resources/entries_' . $marked_entries . '/action_confirmed/'), ACP3_CMS::$uri->route('acp/permissions/list_resources')));
+	ACP3_CMS::$view->setContent(confirmBox(ACP3_CMS::$lang->t('system', 'confirm_delete'), ACP3_CMS::$uri->route('acp/permissions/delete_resources/entries_' . $marked_entries . '/action_confirmed/'), ACP3_CMS::$uri->route('acp/permissions/list_resources')));
 } elseif (ACP3_CMS::$uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = false;

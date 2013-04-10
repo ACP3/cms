@@ -7,7 +7,7 @@ $settings = ACP3_Config::getSettings('users');
 if (ACP3_CMS::$auth->isUser() === true) {
 	ACP3_CMS::$uri->redirect(0, ROOT_DIR);
 } elseif ($settings['enable_registration'] == 0) {
-	ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('users', 'user_registration_disabled')));
+	ACP3_CMS::$view->setContent(errorBox(ACP3_CMS::$lang->t('users', 'user_registration_disabled')));
 } else {
 	ACP3_CMS::$breadcrumb
 	->append(ACP3_CMS::$lang->t('users', 'users'), ACP3_CMS::$uri->route('users'))
@@ -34,7 +34,7 @@ if (ACP3_CMS::$auth->isUser() === true) {
 		if (isset($errors) === true) {
 			ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 		} elseif (ACP3_Validate::formToken() === false) {
-			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
+			ACP3_CMS::$view->setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 		} else {
 			// E-Mail mit den Accountdaten zusenden
 			$host = htmlentities($_SERVER['HTTP_HOST']);
@@ -68,7 +68,7 @@ if (ACP3_CMS::$auth->isUser() === true) {
 
 			ACP3_CMS::$session->unsetFormToken();
 
-			ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('users', $mail_sent === true && $bool !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
+			ACP3_CMS::$view->setContent(confirmBox(ACP3_CMS::$lang->t('users', $mail_sent === true && $bool !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
