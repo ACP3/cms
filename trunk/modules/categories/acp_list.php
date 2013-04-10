@@ -23,11 +23,11 @@ if ($c_categories > 0) {
 		'sort_dir' => 'desc',
 		'hide_col_sort' => $can_delete === true ? 0 : ''
 	);
-	ACP3_CMS::setContent(datatable($config));
+	ACP3_CMS::$view->setContent(datatable($config));
 	for ($i = 0; $i < $c_categories; ++$i) {
 		$categories[$i]['module'] = ACP3_CMS::$lang->t($categories[$i]['module'], $categories[$i]['module']);
 	}
 	ACP3_CMS::$view->assign('categories', $categories);
 	ACP3_CMS::$view->assign('can_delete', $can_delete);
 }
-ACP3_CMS::appendContent(ACP3_CMS::$view->fetchTemplate('categories/acp_list.tpl'));
+ACP3_CMS::$view->appendContent(ACP3_CMS::$view->fetchTemplate('categories/acp_list.tpl'));

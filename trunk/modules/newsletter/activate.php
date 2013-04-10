@@ -21,9 +21,9 @@ if (ACP3_CMS::$db2->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'newsletter_a
 	$errors[] = ACP3_CMS::$lang->t('newsletter', 'account_not_exists');
 
 if (isset($errors) === true) {
-	ACP3_CMS::setContent(errorBox($errors));
+	ACP3_CMS::$view->setContent(errorBox($errors));
 } else {
 	$bool = ACP3_CMS::$db2->update(DB_PRE . 'newsletter_accounts', array('hash' => ''), array('mail' => $mail, 'hash' => $hash));
 
-	ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
+	ACP3_CMS::$view->setContent(confirmBox(ACP3_CMS::$lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
 }

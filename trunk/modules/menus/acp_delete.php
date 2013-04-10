@@ -16,10 +16,10 @@ elseif (ACP3_Validate::deleteEntries(ACP3_CMS::$uri->entries) === true)
 	$entries = ACP3_CMS::$uri->entries;
 
 if (!isset($entries)) {
-	ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'no_entries_selected')));
+	ACP3_CMS::$view->setContent(errorBox(ACP3_CMS::$lang->t('system', 'no_entries_selected')));
 } elseif (ACP3_CMS::$uri->action !== 'confirmed') {
 	$marked_entries = implode('|', (array) $entries);
-	ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('system', 'confirm_delete'), ACP3_CMS::$uri->route('acp/menus/delete/entries_' . $marked_entries . '/action_confirmed/'), ACP3_CMS::$uri->route('acp/menus')));
+	ACP3_CMS::$view->setContent(confirmBox(ACP3_CMS::$lang->t('system', 'confirm_delete'), ACP3_CMS::$uri->route('acp/menus/delete/entries_' . $marked_entries . '/action_confirmed/'), ACP3_CMS::$uri->route('acp/menus')));
 } elseif (ACP3_CMS::$uri->action === 'confirmed') {
 	$marked_entries = explode('|', $entries);
 	$bool = false;

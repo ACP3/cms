@@ -16,10 +16,10 @@ elseif (ACP3_Validate::deleteEntries(ACP3_CMS::$uri->entries) === true)
 	$entries = ACP3_CMS::$uri->entries;
 
 if (!isset($entries)) {
-	ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'no_entries_selected')));
+	ACP3_CMS::$view->setContent(errorBox(ACP3_CMS::$lang->t('system', 'no_entries_selected')));
 } elseif (is_array($entries) === true) {
 	$marked_entries = implode('|', $entries);
-	ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('system', 'confirm_delete'), ACP3_CMS::$uri->route('acp/gallery/delete_picture/entries_' . $marked_entries . '/action_confirmed/'), ACP3_CMS::$uri->route('acp/gallery/edit/id_' . ACP3_CMS::$uri->id)));
+	ACP3_CMS::$view->setContent(confirmBox(ACP3_CMS::$lang->t('system', 'confirm_delete'), ACP3_CMS::$uri->route('acp/gallery/delete_picture/entries_' . $marked_entries . '/action_confirmed/'), ACP3_CMS::$uri->route('acp/gallery/edit/id_' . ACP3_CMS::$uri->id)));
 } elseif (ACP3_CMS::$uri->action === 'confirmed') {
 	require_once MODULES_DIR . 'gallery/functions.php';
 

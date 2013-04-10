@@ -23,7 +23,7 @@ if ($c_comments > 0) {
 		'sort_dir' => 'desc',
 		'hide_col_sort' => $can_delete === true ? 0 : ''
 	);
-	ACP3_CMS::setContent(datatable($config));
+	ACP3_CMS::$view->setContent(datatable($config));
 	for ($i = 0; $i < $c_comments; ++$i) {
 		$comments[$i]['name'] = ACP3_CMS::$lang->t($comments[$i]['module'], $comments[$i]['module']);
 	}
@@ -31,4 +31,4 @@ if ($c_comments > 0) {
 	ACP3_CMS::$view->assign('can_delete', $can_delete);
 }
 
-ACP3_CMS::appendContent(ACP3_CMS::$view->fetchTemplate('comments/acp_list.tpl'));
+ACP3_CMS::$view->appendContent(ACP3_CMS::$view->fetchTemplate('comments/acp_list.tpl'));

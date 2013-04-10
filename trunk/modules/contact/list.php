@@ -25,7 +25,7 @@ if (isset($_POST['submit']) === true) {
 	if (isset($errors) === true) {
 		ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 	} elseif (ACP3_Validate::formToken() === false) {
-		ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
+		ACP3_CMS::$view->setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 	} else {
 		$settings = ACP3_Config::getSettings('contact');
 		$_POST['message'] = str_encode($_POST['message'], true);
@@ -43,7 +43,7 @@ if (isset($_POST['submit']) === true) {
 
 		ACP3_CMS::$session->unsetFormToken();
 
-		ACP3_CMS::setContent(confirmBox($bool === true ? ACP3_CMS::$lang->t('contact', 'send_mail_success') : ACP3_CMS::$lang->t('contact', 'send_mail_error'), ACP3_CMS::$uri->route('contact')));
+		ACP3_CMS::$view->setContent(confirmBox($bool === true ? ACP3_CMS::$lang->t('contact', 'send_mail_success') : ACP3_CMS::$lang->t('contact', 'send_mail_error'), ACP3_CMS::$uri->route('contact')));
 	}
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {

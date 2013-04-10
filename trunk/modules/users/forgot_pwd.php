@@ -26,7 +26,7 @@ if (ACP3_CMS::$auth->isUser() === true) {
 		if (isset($errors) === true) {
 			ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 		} elseif (ACP3_Validate::formToken() === false) {
-			ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
+			ACP3_CMS::$view->setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 		} else {
 			// Neues Passwort und neuen Zufallsschlüssel erstellen
 			$new_password = salt(8);
@@ -57,7 +57,7 @@ if (ACP3_CMS::$auth->isUser() === true) {
 
 			ACP3_CMS::$session->unsetFormToken();
 
-			ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('users', $mail_sent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success'  : 'forgot_pwd_error'), ROOT_DIR));
+			ACP3_CMS::$view->setContent(confirmBox(ACP3_CMS::$lang->t('users', $mail_sent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success'  : 'forgot_pwd_error'), ROOT_DIR));
 		}
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {

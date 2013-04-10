@@ -44,40 +44,6 @@ class ACP3_CMS {
 	 * @var \ACP3_View
 	 */
 	public static $view;
-	/**
-	 * @var string
-	 */
-	private static $content = '';
-
-	/**
-	 * Weist dem Template den auszugebenden Inhalt zu
-	 *
-	 * @param string $data
-	 */
-	public static function setContent($data)
-	{
-		self::$content = $data;
-	}
-
-	/**
-	 * Fügt weitere Daten an den Seiteninhalt an
-	 *
-	 * @param string $data
-	 */
-	public static function appendContent($data)
-	{
-		self::$content.= $data;
-	}
-
-	/**
-	 * Gibt den auszugebenden Seiteninhalt zurück
-	 *
-	 * @return string
-	 */
-	public static function getContent()
-	{
-		return self::$content;
-	}
 
 	/**
 	 * Führt alle nötigen Schritte aus, um die Seite anzuzeigen
@@ -249,12 +215,14 @@ class ACP3_CMS {
 		switch (ACP3_Modules::check()) {
 			// Seite ausgeben
 			case 1:
+				// Content-Template automatisch setzen
 				self::$view->setContentTemplate(self::$uri->mod . '/' . self::$uri->file . '.tpl');
+
 				require MODULES_DIR . self::$uri->mod . '/' . self::$uri->file . '.php';
 
 				if (self::$view->getNoOutput() === false) {
-					if (self::$content === '') {
-						self::setContent(self::$view->fetchTemplate(self::$view->getContentTemplate()));
+					if (self::$view->getContent() === '') {
+						self::$view->setContent(self::$view->fetchTemplate(self::$view->getContentTemplate()));
 					}
 
 					// Evtl. gesetzten Content-Type des Servers überschreiben
@@ -266,7 +234,7 @@ class ACP3_CMS {
 						self::$view->assign('TITLE', self::$breadcrumb->output(2));
 						self::$view->assign('BREADCRUMB', self::$breadcrumb->output());
 						self::$view->assign('META', ACP3_SEO::getMetaTags());
-						self::$view->assign('CONTENT', self::$content);
+						self::$view->assign('CONTENT', self::$view->getContent());
 
 						$minify = self::$view->buildMinifyLink();
 						$file = self::$view->getLayout();
@@ -276,7 +244,7 @@ class ACP3_CMS {
 
 						self::$view->displayTemplate($file);
 					} else {
-						echo self::$content;
+						echo self::$view->getContent();
 					}
 				}
 				break;

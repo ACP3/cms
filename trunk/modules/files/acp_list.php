@@ -23,7 +23,7 @@ if ($c_files > 0) {
 		'sort_dir' => 'desc',
 		'hide_col_sort' => $can_delete === true ? 0 : ''
 	);
-	ACP3_CMS::setContent(datatable($config));
+	ACP3_CMS::$view->setContent(datatable($config));
 	for ($i = 0; $i < $c_files; ++$i) {
 		$files[$i]['period'] = ACP3_CMS::$date->formatTimeRange($files[$i]['start'], $files[$i]['end']);
 		$files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : ACP3_CMS::$lang->t('files', 'unknown_filesize');
@@ -32,4 +32,4 @@ if ($c_files > 0) {
 	ACP3_CMS::$view->assign('can_delete', $can_delete);
 }
 
-ACP3_CMS::appendContent(ACP3_CMS::$view->fetchTemplate('files/acp_list.tpl'));
+ACP3_CMS::$view->appendContent(ACP3_CMS::$view->fetchTemplate('files/acp_list.tpl'));

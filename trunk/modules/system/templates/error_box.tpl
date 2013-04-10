@@ -14,8 +14,8 @@ $(document).ready(function() {
 });
 </script>
 {/if}
-<div id="error-box" class="alert">
-	<strong>{lang t="system|failure"}</strong>
+<div id="error-box" class="alert alert-block">
+	<h4>{lang t="system|failure"}</h4>
 	<ul>
 {foreach $error_box.errors as $key => $value}
 		<li{if ACP3_validate::isNumber($key) === false} class="error-{$key}"{/if}>{$value}</li>

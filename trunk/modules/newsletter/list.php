@@ -25,14 +25,14 @@ if (isset($_POST['submit']) === true) {
 			if (isset($errors) === true) {
 				ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 			} elseif (ACP3_Validate::formToken() === false) {
-				ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
+				ACP3_CMS::$view->setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 			} else {
 				require MODULES_DIR . 'newsletter/functions.php';
 				$bool = subscribeToNewsletter($_POST['mail']);
 
 				ACP3_CMS::$session->unsetFormToken();
 
-				ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
+				ACP3_CMS::$view->setContent(confirmBox(ACP3_CMS::$lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
 			}
 			break;
 		case 'unsubscribe':
@@ -46,13 +46,13 @@ if (isset($_POST['submit']) === true) {
 			if (isset($errors) === true) {
 				ACP3_CMS::$view->assign('error_msg', errorBox($errors));
 			} elseif (ACP3_Validate::formToken() === false) {
-				ACP3_CMS::setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
+				ACP3_CMS::$view->setContent(errorBox(ACP3_CMS::$lang->t('system', 'form_already_submitted')));
 			} else {
 				$bool = ACP3_CMS::$db2->delete(DB_PRE . 'newsletter_accounts', array('mail' => $_POST['mail']));
 
 				ACP3_CMS::$session->unsetFormToken();
 
-				ACP3_CMS::setContent(confirmBox(ACP3_CMS::$lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
+				ACP3_CMS::$view->setContent(confirmBox(ACP3_CMS::$lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
 			}
 			break;
 		default:
