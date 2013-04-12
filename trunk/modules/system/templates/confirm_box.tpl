@@ -5,7 +5,7 @@
 		<a href="{$confirm.forward}" class="btn">{lang t="system|yes"}</a>
 		<a href="{$confirm.backward}" class="btn">{lang t="system|no"}</a>
 {elseif $confirm.overlay == 1}
-		<a href="javascript:window.parent.$.fancybox.close()" class="btn">{lang t="system|close_window"}</a>
+		<a href="javascript:window.parent.$.fancybox.close();window.parent.location.reload();" class="btn">{lang t="system|close_window"}</a>
 {else}
 		<a href="{$confirm.forward}" class="btn">{lang t="system|forward"}</a>
 {/if}

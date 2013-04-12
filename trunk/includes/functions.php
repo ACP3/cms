@@ -315,7 +315,8 @@ function setRedirectMessage($success, $text, $path, $overlay = false)
 			'text' => $text
 		);
 		if ($overlay === true) {
-			ACP3_CMS::$view->setContent(ACP3_CMS::$view->fetchTemplate('system/close_overlay.tpl'));
+			ACP3_CMS::$view->setContentTemplate('system/close_overlay.tpl');
+			return;
 		} else {
 			ACP3_CMS::$uri->redirect($path);
 		}
