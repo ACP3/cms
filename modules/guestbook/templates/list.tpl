@@ -3,7 +3,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#create-link').click(function(e) {
-		if (e.which == 1) {
+		if (e.which === 1) {
 			$.fancybox.open({ href: $(this).attr('href') + 'layout_simple/', title: $(this).attr('title') }, {
 				type: 'iframe',
 				autoSize: true,
@@ -29,7 +29,7 @@ $(document).ready(function() {
 		<small class="pull-right">
 			<time datetime="{$row.date_iso}">{$row.date_formatted}</time>
 		</small>
-		{if !empty($row.user_id)}<a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>{else}{$row.name}{/if}<br>
+		{if !empty($row.user_id) && !empty($row.user_id_real)}<a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>{else}{$row.name}{/if}
 	</header>
 	<div class="content">
 		<div class="pull-right">

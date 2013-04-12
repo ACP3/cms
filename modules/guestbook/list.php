@@ -15,7 +15,7 @@ getRedirectMessage();
 $settings = ACP3_Config::getSettings('guestbook');
 ACP3_CMS::$view->assign('overlay', $settings['overlay']);
 
-$guestbook = ACP3_CMS::$db2->fetchAll('SELECT u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.id, g.date, g.name, g.user_id, g.message, g.website, g.mail FROM ' . DB_PRE . 'guestbook AS g LEFT JOIN ' . DB_PRE . 'users AS u ON(u.id = g.user_id) ' . ($settings['notify'] == 2 ? 'WHERE active = 1' : '') . ' ORDER BY date DESC LIMIT ' . POS . ',' . ACP3_CMS::$auth->entries);
+$guestbook = ACP3_CMS::$db2->fetchAll('SELECT g.user_id, u.id AS user_id_real, u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.id, g.date, g.name, g.message, g.website, g.mail FROM ' . DB_PRE . 'guestbook AS g LEFT JOIN ' . DB_PRE . 'users AS u ON(u.id = g.user_id) ' . ($settings['notify'] == 2 ? 'WHERE active = 1' : '') . ' ORDER BY date DESC LIMIT ' . POS . ',' . ACP3_CMS::$auth->entries);
 $c_guestbook = count($guestbook);
 
 if ($c_guestbook > 0) {
@@ -31,10 +31,6 @@ if ($c_guestbook > 0) {
 	}
 
 	for ($i = 0; $i < $c_guestbook; ++$i) {
-		if (empty($guestbook[$i]['user_name']) && empty($guestbook[$i]['name'])) {
-			$guestbook[$i]['name'] = ACP3_CMS::$lang->t('users', 'deleted_user');
-			$guestbook[$i]['user_id'] = 0;
-		}
 		$guestbook[$i]['name'] = !empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'];
 		$guestbook[$i]['date_formatted'] = ACP3_CMS::$date->format($guestbook[$i]['date'], $settings['dateformat']);
 		$guestbook[$i]['date_iso'] = ACP3_CMS::$date->format($guestbook[$i]['date'], 'c');
