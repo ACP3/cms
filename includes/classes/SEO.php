@@ -104,15 +104,15 @@ class ACP3_SEO
 	 */
 	public static function getPageDescription()
 	{
-		$description = self::getDescription(ACP3_CMS::$uri->getCleanQuery());
-		if (empty($description))
-			$description = self::getDescription(ACP3_CMS::$uri->mod . '/' . ACP3_CMS::$uri->file);
-
 		// Meta Description für die Homepage einer Website
 		if (ACP3_CMS::$uri->query === CONFIG_HOMEPAGE) {
 			return CONFIG_SEO_META_DESCRIPTION !== '' ? CONFIG_SEO_META_DESCRIPTION : '';
 		} else {
-			return $description . (!empty(self::$meta_description_postfix) ? ' - ' . self::$meta_description_postfix : '');
+			$description = self::getDescription(ACP3_CMS::$uri->getCleanQuery());
+			if (empty($description))
+				$description = self::getDescription(ACP3_CMS::$uri->mod . '/' . ACP3_CMS::$uri->file);
+
+			return $description . (!empty($description) && !empty(self::$meta_description_postfix) ? ' - ' . self::$meta_description_postfix : '');
 		}
 	}
 	/**
