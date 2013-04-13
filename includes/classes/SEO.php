@@ -98,8 +98,7 @@ class ACP3_SEO
 		return ACP3_CMS::$view->fetchTemplate('system/meta.tpl');
 	}
 	/**
-	 * Gibt die Beschreibung der aktuell angezeigten Seite oder der
-	 * Elternseite aus
+	 * Gibt die Beschreibung der aktuell angezeigten Seite aus
 	 *
 	 * @return string
 	 */
@@ -108,12 +107,10 @@ class ACP3_SEO
 		$description = self::getDescription(ACP3_CMS::$uri->getCleanQuery());
 		if (empty($description))
 			$description = self::getDescription(ACP3_CMS::$uri->mod . '/' . ACP3_CMS::$uri->file);
-		if (empty($description))
-			$description = self::getDescription(ACP3_CMS::$uri->mod);
 
-		if ((ACP3_CMS::$uri->query === CONFIG_HOMEPAGE && CONFIG_SEO_META_DESCRIPTION !== '') ||
-			empty($description)) {
-			return CONFIG_SEO_META_DESCRIPTION;
+		// Meta Description für die Homepage einer Website
+		if (ACP3_CMS::$uri->query === CONFIG_HOMEPAGE) {
+			return CONFIG_SEO_META_DESCRIPTION !== '' ? CONFIG_SEO_META_DESCRIPTION : '';
 		} else {
 			return $description . (!empty(self::$meta_description_postfix) ? ' - ' . self::$meta_description_postfix : '');
 		}
