@@ -120,6 +120,7 @@ class ACP3_View
 	}
 
 	/**
+	 * Setzt das Template für den Contentbereich der Seite
 	 * 
 	 * @param string $file
 	 */
@@ -129,6 +130,7 @@ class ACP3_View
 	}
 
 	/**
+	 * Gibt das aktuell zugewiesene Template für den Contentbereich zurück
 	 * 
 	 * @return string
 	 */

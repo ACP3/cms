@@ -196,8 +196,8 @@
 					<div class="controls"><input type="password" name="new_pwd" id="new-pwd"></div>
 				</div>
 				<div class="control-group">
-					<label for="new_pwd_repeat" class="control-label">{lang t="users|new_pwd_repeat"}</label>
-					<div class="controls"><input type="password" name="new_pwd_repeat" id="new_pwd_repeat"></div>
+					<label for="new-pwd-repeat" class="control-label">{lang t="users|new_pwd_repeat"}</label>
+					<div class="controls"><input type="password" name="new_pwd_repeat" id="new-pwd-repeat"></div>
 				</div>
 			</div>
 		</div>
