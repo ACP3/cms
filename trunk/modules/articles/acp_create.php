@@ -21,9 +21,7 @@ if (isset($_POST['submit']) === true) {
 		$errors['title'] = ACP3_CMS::$lang->t('articles', 'title_to_short');
 	if (strlen($_POST['text']) < 3)
 		$errors['text'] = ACP3_CMS::$lang->t('articles', 'text_to_short');
-	if ($access_to_menus === true) {
-		if ($_POST['create'] != 1 && $_POST['create'] != 0)
-			$errors[] = ACP3_CMS::$lang->t('static_page', 'select_create_menu_item');
+	if ($access_to_menus === true && isset($_POST['create']) === true) {
 		if ($_POST['create'] == 1) {
 			if (ACP3_Validate::isNumber($_POST['block_id']) === false)
 				$errors['block-id'] = ACP3_CMS::$lang->t('menus', 'select_menu_bar');
@@ -64,7 +62,7 @@ if (isset($_POST['submit']) === true) {
 			ACP3_SEO::insertUriAlias('articles/details/id_' . $last_id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int) $_POST['seo_robots']);
 		ACP3_CMS::$db2->commit();
 
-		if ($_POST['create'] == 1 && $access_to_menus === true) {
+		if (isset($_POST['create']) === true && $access_to_menus === true) {
 			$insert_values = array(
 				'id' => '',
 				'mode' => 4,

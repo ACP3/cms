@@ -169,12 +169,10 @@ class ACP3_CMS {
 		define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
 		define('DESIGN_PATH_INTERNAL', ACP3_ROOT . 'designs/' . CONFIG_DESIGN . '/');
 
+		// Klassen initialisieren
 		self::$view = new ACP3_View();
 		ACP3_View::factory('Smarty');
-
 		self::$uri = new ACP3_URI();
-
-		// Klassen initialisieren
 		self::$session = new ACP3_Session();
 		self::$auth = new ACP3_Auth();
 		self::$lang = new ACP3_Lang();
@@ -184,7 +182,12 @@ class ACP3_CMS {
 		ACP3_ACL::initialize(self::$auth->getUserId());
 
 		require INCLUDES_DIR . 'functions.php';
+	}
 
+	/**
+	 * Gibt die Seite aus
+	 */
+	public static function outputPage() {
 		// Einige Template Variablen setzen
 		self::$view->assign('PHP_SELF', PHP_SELF);
 		self::$view->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
@@ -196,12 +199,7 @@ class ACP3_CMS {
 		$lang_info = ACP3_XML::parseXmlFile(ACP3_ROOT . 'languages/' . self::$lang->getLanguage() . '/info.xml', '/language');
 		self::$view->assign('LANG_DIRECTION', isset($lang_info['direction']) ? $lang_info['direction'] : 'ltr');
 		self::$view->assign('LANG', CONFIG_LANG);
-	}
 
-	/**
-	 * Gibt die Seite aus
-	 */
-	public static function outputPage() {
 		self::checkForMaintenanceMode();
 
 		// Aktuelle Datensatzposition bestimmen

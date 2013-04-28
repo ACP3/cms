@@ -36,7 +36,7 @@ class ACP3_URI
 	function __construct($defaultModule = '', $defaultFile = '')
 	{
 		// Minify von der URI-Verarbeitung ausschließen
-		if ((bool) preg_match('=includes/min/index\.php$=', $_SERVER['PHP_SELF']) === false) {
+		if ((bool) preg_match('=(includes/min/index\.php|libraries/kcfinder)=', $_SERVER['PHP_SELF']) === false) {
 			$this->preprocessUriQuery();
 			if (defined('IN_INSTALL') === false) {
 				// Query auf eine benutzerdefinierte Startseite setzen

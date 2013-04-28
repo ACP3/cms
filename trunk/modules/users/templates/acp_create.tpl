@@ -192,12 +192,12 @@
 			</div>
 			<div id="tab-6" class="tab-pane">
 				<div class="control-group">
-					<label for="new-pwd" class="control-label">{lang t="users|new_pwd"}</label>
-					<div class="controls"><input type="password" name="new_pwd" id="new-pwd"></div>
+					<label for="pwd" class="control-label">{lang t="users|pwd"}</label>
+					<div class="controls"><input type="password" name="pwd" id="pwd"></div>
 				</div>
 				<div class="control-group">
-					<label for="new_pwd_repeat" class="control-label">{lang t="users|new_pwd_repeat"}</label>
-					<div class="controls"><input type="password" name="new_pwd_repeat" id="new_pwd_repeat"></div>
+					<label for="pwd-repeat" class="control-label">{lang t="users|pwd_repeat"}</label>
+					<div class="controls"><input type="password" name="pwd_repeat" id="pwd-repeat"></div>
 				</div>
 			</div>
 		</div>
