@@ -51,7 +51,7 @@ class ACP3_Breadcrumb {
 		// Frontendbereich
 		if (defined('IN_ADM') === false) {
 			$in = array(ACP3_CMS::$uri->query, ACP3_CMS::$uri->getCleanQuery(), ACP3_CMS::$uri->mod . '/' . ACP3_CMS::$uri->file . '/', ACP3_CMS::$uri->mod);
-			$items = ACP3_CMS::$db2->executeQuery('SELECT p.title, p.uri, p.left_id, p.right_id FROM ' . DB_PRE . 'menu_items AS c, ' . DB_PRE . 'menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) ORDER BY p.left_id ASC', array($in), array(\Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetchAll();
+			$items = ACP3_CMS::$db2->executeQuery('SELECT p.title, p.uri, p.left_id, p.right_id FROM ' . DB_PRE . 'menu_items AS c, ' . DB_PRE . 'menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) GROUP BY p.uri ORDER BY p.left_id ASC', array($in), array(\Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetchAll();
 			$c_items = count($items);
 
 			// Dynamische Seite (ACP3 intern)
