@@ -92,14 +92,8 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		}
 
 		// Linkziel
-		$target = array();
-		$target[0]['value'] = '1';
-		$target[0]['selected'] = selectEntry('target', '1', $news['target']);
-		$target[0]['lang'] = ACP3_CMS::$lang->t('system', 'window_self');
-		$target[1]['value'] = '2';
-		$target[1]['selected'] = selectEntry('target', '2', $news['target']);
-		$target[1]['lang'] = ACP3_CMS::$lang->t('system', 'window_blank');
-		ACP3_CMS::$view->assign('target', $target);
+		$lang_target = array(ACP3_CMS::$lang->t('system', 'window_self'), ACP3_CMS::$lang->t('system', 'window_blank'));
+		ACP3_CMS::$view->assign('target', selectGenerator('target', array(1, 2), $lang_target, $news['target']));
 
 		ACP3_CMS::$view->assign('SEO_FORM_FIELDS', ACP3_SEO::formFields('news/details/id_' . ACP3_CMS::$uri->id));
 

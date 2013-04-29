@@ -86,23 +86,14 @@ if (isset($_POST['submit']) === true) {
 }
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 	if ($access_to_menus === true) {
-		$options = array();
-		$options[0]['name'] = 'create';
-		$options[0]['checked'] = selectEntry('create', '1', '0', 'checked');
-		$options[0]['lang'] = ACP3_CMS::$lang->t('articles', 'create_menu_item');
-		ACP3_CMS::$view->assign('options', $options);
+		$lang_options = array(ACP3_CMS::$lang->t('articles', 'create_menu_item'));
+		ACP3_CMS::$view->assign('options', selectGenerator('create', array(1), $lang_options, 0, 'checked'));
 
 		// Block
 		ACP3_CMS::$view->assign('blocks', menusDropdown());
 
-		$display = array();
-		$display[0]['value'] = 1;
-		$display[0]['selected'] = selectEntry('display', 1, 1, 'checked');
-		$display[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-		$display[1]['value'] = 0;
-		$display[1]['selected'] = selectEntry('display', '0', '', 'checked');
-		$display[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-		ACP3_CMS::$view->assign('display', $display);
+		$lang_display = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+		ACP3_CMS::$view->assign('display', selectGenerator('display', array(1, 0), $lang_display, 1, 'checked'));
 
 		ACP3_CMS::$view->assign('pages_list', menuItemsList());
 	}

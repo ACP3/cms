@@ -37,12 +37,12 @@ $(document).ready(function() {
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="readmore-1" class="control-label">{lang t="news|activate_readmore"}</label>
+		<label for="{$readmore.0.id}" class="control-label">{lang t="news|activate_readmore"}</label>
 		<div class="controls">
 			<div class="btn-group" data-toggle="radio">
 {foreach $readmore as $row}
-				<input type="radio" name="readmore" id="readmore-{$row.value}" value="{$row.value}"{$row.checked}>
-				<label for="readmore-{$row.value}" class="btn">{$row.lang}</label>
+				<input type="radio" name="readmore" id="{$row.id}" value="{$row.value}"{$row.checked}>
+				<label for="{$row.id}" class="btn">{$row.lang}</label>
 {/foreach}
 			</div>
 		</div>
@@ -52,24 +52,24 @@ $(document).ready(function() {
 		<div class="controls"><input type="number" name="readmore_chars" id="readmore-chars" value="{$readmore_chars}"></div>
 	</div>
 	<div class="control-group">
-		<label for="category-in-breadcrumb-1" class="control-label">{lang t="news|display_category_in_breadcrumb"}</label>
+		<label for="{$category_in_breadcrumb.0.id}" class="control-label">{lang t="news|display_category_in_breadcrumb"}</label>
 		<div class="controls">
 			<div class="btn-group" data-toggle="radio">
 {foreach $category_in_breadcrumb as $row}
-				<input type="radio" name="category_in_breadcrumb" id="category-in-breadcrumb-{$row.value}" value="{$row.value}"{$row.checked}>
-				<label for="category-in-breadcrumb-{$row.value}" class="btn">{$row.lang}</label>
+				<input type="radio" name="category_in_breadcrumb" id="{$row.id}" value="{$row.value}"{$row.checked}>
+				<label for="{$row.id}" class="btn">{$row.lang}</label>
 {/foreach}
 			</div>
 		</div>
 	</div>
 {if isset($allow_comments)}
 	<div class="control-group">
-		<label for="comments-1" class="control-label">{lang t="system|allow_comments"}</label>
+		<label for="{$allow_comments.0.id}" class="control-label">{lang t="system|allow_comments"}</label>
 		<div class="controls">
 			<div class="btn-group" data-toggle="radio">
 {foreach $allow_comments as $row}
-				<input type="radio" name="comments" id="comments-{$row.value}" value="{$row.value}"{$row.checked}>
-				<label for="comments-{$row.value}" class="btn">{$row.lang}</label>
+				<input type="radio" name="comments" id="{$row.id}" value="{$row.value}"{$row.checked}>
+				<label for="{$row.id}" class="btn">{$row.lang}</label>
 {/foreach}
 			</div>
 		</div>

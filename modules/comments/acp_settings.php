@@ -41,14 +41,8 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 
 	// Emoticons erlauben
 	if ($emoticons_active === true) {
-		$allow_emoticons = array();
-		$allow_emoticons[0]['value'] = '1';
-		$allow_emoticons[0]['checked'] = selectEntry('emoticons', '1', $settings['emoticons'], 'checked');
-		$allow_emoticons[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-		$allow_emoticons[1]['value'] = '0';
-		$allow_emoticons[1]['checked'] = selectEntry('emoticons', '0', $settings['emoticons'], 'checked');
-		$allow_emoticons[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-		ACP3_CMS::$view->assign('allow_emoticons', $allow_emoticons);
+		$lang_allow_emoticons = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+		ACP3_CMS::$view->assign('allow_emoticons', selectGenerator('emoticons', array(1, 0), $lang_allow_emoticons, $settings['emoticons'], 'checked'));
 	}
 
 	ACP3_CMS::$session->generateFormToken();

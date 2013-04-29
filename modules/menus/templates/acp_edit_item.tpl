@@ -51,12 +51,12 @@
 					</div>
 				</div>
 				<div class="control-group">
-					<label for="display-1" class="control-label">{lang t="menus|display_item"}</label>
+					<label for="{$display.0.id}" class="control-label">{lang t="menus|display_item"}</label>
 					<div class="controls">
 						<div class="btn-group" data-toggle="radio">
 {foreach $display as $row}
-							<input type="radio" name="display" id="display-{$row.value}" value="{$row.value}"{$row.selected}>
-							<label for="display-{$row.value}" class="btn">{$row.lang}</label>
+							<input type="radio" name="display" id="{$row.id}" value="{$row.value}"{$row.checked}>
+							<label for="{$row.id}" class="btn">{$row.lang}</label>
 {/foreach}
 						</div>
 					</div>

@@ -83,27 +83,16 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	ACP3_CMS::$view->assign('tables', $tables);
 
 	// Ausgabe
-	$output = array();
-	$output[0]['value'] = 'file';
-	$output[0]['checked'] = selectEntry('output', 'file', 'file', 'checked');
-	$output[0]['lang'] = ACP3_CMS::$lang->t('system', 'output_as_file');
-	$output[1]['value'] = 'text';
-	$output[1]['checked'] = selectEntry('output', 'text', '', 'checked');
-	$output[1]['lang'] = ACP3_CMS::$lang->t('system', 'output_as_text');
-	ACP3_CMS::$view->assign('output', $output);
+	$lang_output = array(ACP3_CMS::$lang->t('system', 'output_as_file'), ACP3_CMS::$lang->t('system', 'output_as_text'));
+	ACP3_CMS::$view->assign('output', selectGenerator('output', array('file', 'text'), $lang_output, 'file', 'checked'));
 
 	// Exportart
-	$export_type = array();
-	$export_type[0]['value'] = 'complete';
-	$export_type[0]['checked'] = selectEntry('export_type', 'complete', 'complete', 'checked');
-	$export_type[0]['lang'] = ACP3_CMS::$lang->t('system', 'complete_export');
-	$export_type[1]['value'] = 'structure';
-	$export_type[1]['checked'] = selectEntry('export_type', 'structure', '', 'checked');
-	$export_type[1]['lang'] = ACP3_CMS::$lang->t('system', 'export_structure');
-	$export_type[2]['value'] = 'data';
-	$export_type[2]['checked'] = selectEntry('export_type', 'data', '', 'checked');
-	$export_type[2]['lang'] = ACP3_CMS::$lang->t('system', 'export_data');
-	ACP3_CMS::$view->assign('export_type', $export_type);
+	$lang_export_type = array(
+		ACP3_CMS::$lang->t('system', 'complete_export'),
+		ACP3_CMS::$lang->t('system', 'export_structure'),
+		ACP3_CMS::$lang->t('system', 'export_data')
+	);
+	ACP3_CMS::$view->assign('export_type', selectGenerator('export_type', array('complete', 'structure', 'data'), $lang_export_type, 'complete', 'checked'));
 
 	$drop = array();
 	$drop['checked'] = selectEntry('drop', '1', '', 'checked');

@@ -62,23 +62,11 @@ if (isset($_POST['submit']) === true) {
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : array('title' => '', 'text' => ''));
 
-	$test = array();
-	$test[0]['value'] = '1';
-	$test[0]['checked'] = selectEntry('test', '1', '0', 'checked');
-	$test[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-	$test[1]['value'] = '0';
-	$test[1]['checked'] = selectEntry('test', '0', '0', 'checked');
-	$test[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-	ACP3_CMS::$view->assign('test', $test);
+	$lang_test = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+	ACP3_CMS::$view->assign('test', selectGenerator('test', array(1, 0), $lang_test, 0, 'checked'));
 
-	$action = array();
-	$action[0]['value'] = '1';
-	$action[0]['checked'] = selectEntry('action', '1', '1', 'checked');
-	$action[0]['lang'] = ACP3_CMS::$lang->t('newsletter', 'send_and_save');
-	$action[1]['value'] = '0';
-	$action[1]['checked'] = selectEntry('action', '0', '1', 'checked');
-	$action[1]['lang'] = ACP3_CMS::$lang->t('newsletter', 'only_save');
-	ACP3_CMS::$view->assign('action', $action);
+	$lang_action = array(ACP3_CMS::$lang->t('newsletter', 'send_and_save'), ACP3_CMS::$lang->t('newsletter', 'only_save'));
+	ACP3_CMS::$view->assign('action', selectGenerator('action', array(1, 0), $lang_action, 1, 'checked'));
 
 	ACP3_CMS::$session->generateFormToken();
 }

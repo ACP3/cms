@@ -8,7 +8,7 @@
 $(function() {
 	$('input[name="mailer_smtp_auth"]').bind('click', function() {
 		var $elem = $('#mailer-smtp-2');
-		if ($(this).val() == 1) {
+		if ($(this).val() === 1) {
 			$elem.show();
 		} else {
 			$elem.hide();
@@ -16,7 +16,7 @@ $(function() {
 	}).filter(':checked').trigger('click');
 
 	$('#mailer-type').bind('change', function() {
-		if ($(this).val() == 'smtp') {
+		if ($(this).val() === 'smtp') {
 			$('#mailer-smtp-1').show();
 			$('input[name="mailer_smtp_auth"]:checked').trigger('click');
 		} else {
@@ -107,12 +107,12 @@ $(function() {
 			</div>
 			<div id="tab-3" class="tab-pane">
 				<div class="control-group">
-					<label for="maintenance-mode-1" class="control-label">{lang t="system|maintenance_mode"}</label>
+					<label for="{$maintenance.0.id}" class="control-label">{lang t="system|maintenance_mode"}</label>
 					<div class="controls">
 						<div class="btn-group" data-toggle="radio">
 {foreach $maintenance as $row}
-							<input type="radio" name="maintenance_mode" id="maintenance-mode-{$row.value}" value="{$row.value}"{$row.checked}>
-							<label for="maintenance-mode-{$row.value}" class="btn">{$row.lang}</label>
+							<input type="radio" name="maintenance_mode" id="{$row.id}" value="{$row.value}"{$row.checked}>
+							<label for="{$row.id}" class="btn">{$row.lang}</label>
 {/foreach}
 						</div>
 					</div>
@@ -149,23 +149,23 @@ $(function() {
 					</div>
 				</div>
 				<div class="control-group">
-					<label for="seo-aliases-1" class="control-label">{lang t="system|enable_seo_aliases"}</label>
+					<label for="{$aliases.0.id}" class="control-label">{lang t="system|enable_seo_aliases"}</label>
 					<div class="controls">
 						<div class="btn-group" data-toggle="radio">
 {foreach $aliases as $row}
-							<input type="radio" name="seo_aliases" id="seo-aliases-{$row.value}" value="{$row.value}"{$row.checked}>
-							<label for="seo-aliases-{$row.value}" class="btn">{$row.lang}</label>
+							<input type="radio" name="seo_aliases" id="{$row.id}" value="{$row.value}"{$row.checked}>
+							<label for="{$row.id}" class="btn">{$row.lang}</label>
 {/foreach}
 						</div>
 					</div>
 				</div>
 				<div class="control-group">
-					<label for="seo-mod-rewrite-1" class="control-label">{lang t="system|mod_rewrite"}</label>
+					<label for="{$mod_rewrite.0.id}" class="control-label">{lang t="system|mod_rewrite"}</label>
 					<div class="controls">
 						<div class="btn-group" data-toggle="radio">
 {foreach $mod_rewrite as $row}
-							<input type="radio" name="seo_mod_rewrite" id="seo-mod-rewrite-{$row.value}" value="{$row.value}"{$row.checked}>
-							<label for="seo-mod-rewrite-{$row.value}" class="btn">{$row.lang}</label>
+							<input type="radio" name="seo_mod_rewrite" id="{$row.id}" value="{$row.value}"{$row.checked}>
+							<label for="{$row.id}" class="btn">{$row.lang}</label>
 {/foreach}
 						</div>
 						<p class="help-block">{lang t="system|mod_rewrite_description"}</p>
@@ -174,12 +174,12 @@ $(function() {
 			</div>
 			<div id="tab-5" class="tab-pane">
 				<div class="control-group">
-					<label for="cache-images-1" class="control-label">{lang t="system|cache_images"}</label>
+					<label for="{$cache_images.0.id}" class="control-label">{lang t="system|cache_images"}</label>
 					<div class="controls">
 						<div class="btn-group" data-toggle="radio">
 {foreach $cache_images as $row}
-							<input type="radio" name="cache_images" id="cache-images-{$row.value}" value="{$row.value}"{$row.checked}>
-							<label for="cache-images-{$row.value}" class="btn">{$row.lang}</label>
+							<input type="radio" name="cache_images" id="{$row.id}" value="{$row.value}"{$row.checked}>
+							<label for="{$row.id}" class="btn">{$row.lang}</label>
 {/foreach}
 						</div>
 					</div>
@@ -237,12 +237,12 @@ $(function() {
 						</div>
 					</div>
 					<div class="control-group">
-						<label for="mailer-smtp-auth-1" class="control-label">{lang t="system|mailer_smtp_auth"}</label>
+						<label for="{$mailer_smtp_auth.0.id}" class="control-label">{lang t="system|mailer_smtp_auth"}</label>
 						<div class="controls">
 							<div class="btn-group" data-toggle="radio">
 {foreach $mailer_smtp_auth as $row}
-								<input type="radio" name="mailer_smtp_auth" id="mailer-smtp-auth-{$row.value}" value="{$row.value}"{$row.checked}>
-								<label for="mailer-smtp-auth-{$row.value}" class="btn">{$row.lang}</label>
+								<input type="radio" name="mailer_smtp_auth" id="{$row.id}" value="{$row.value}"{$row.checked}>
+								<label for="{$row.id}" class="btn">{$row.lang}</label>
 {/foreach}
 
 							</div>

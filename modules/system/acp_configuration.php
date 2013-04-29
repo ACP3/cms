@@ -131,93 +131,45 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	ACP3_CMS::$view->assign('time_zones', ACP3_CMS::$date->getTimeZones(CONFIG_DATE_TIME_ZONE));
 
 	// Wartungsmodus an/aus
-	$maintenance = array();
-	$maintenance[0]['value'] = '1';
-	$maintenance[0]['checked'] = selectEntry('maintenance_mode', '1', CONFIG_MAINTENANCE_MODE, 'checked');
-	$maintenance[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-	$maintenance[1]['value'] = '0';
-	$maintenance[1]['checked'] = selectEntry('maintenance_mode', '0', CONFIG_MAINTENANCE_MODE, 'checked');
-	$maintenance[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-	ACP3_CMS::$view->assign('maintenance', $maintenance);
+	$lang_maintenance = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+	ACP3_CMS::$view->assign('maintenance', selectGenerator('maintenance_mode', array(1, 0), $lang_maintenance, CONFIG_MAINTENANCE_MODE, 'checked'));
 
 	// Robots
-	$robots = array();
-	$robots[0]['value'] = '1';
-	$robots[0]['selected'] = selectEntry('seo_robots', '1', CONFIG_SEO_ROBOTS);
-	$robots[0]['lang'] = ACP3_CMS::$lang->t('system', 'seo_robots_index_follow');
-	$robots[1]['value'] = '2';
-	$robots[1]['selected'] = selectEntry('seo_robots', '2', CONFIG_SEO_ROBOTS);
-	$robots[1]['lang'] = ACP3_CMS::$lang->t('system', 'seo_robots_index_nofollow');
-	$robots[2]['value'] = '3';
-	$robots[2]['selected'] = selectEntry('seo_robots', '3', CONFIG_SEO_ROBOTS);
-	$robots[2]['lang'] = ACP3_CMS::$lang->t('system', 'seo_robots_noindex_follow');
-	$robots[3]['value'] = '4';
-	$robots[3]['selected'] = selectEntry('seo_robots', '4', CONFIG_SEO_ROBOTS);
-	$robots[3]['lang'] = ACP3_CMS::$lang->t('system', 'seo_robots_noindex_nofollow');
-	ACP3_CMS::$view->assign('robots', $robots);
+	$lang_robots = array(
+		ACP3_CMS::$lang->t('system', 'seo_robots_index_follow'),
+		ACP3_CMS::$lang->t('system', 'seo_robots_index_nofollow'),
+		ACP3_CMS::$lang->t('system', 'seo_robots_noindex_follow'),
+		ACP3_CMS::$lang->t('system', 'seo_robots_noindex_nofollow')
+	);
+	ACP3_CMS::$view->assign('robots', selectGenerator('seo_robots', array(1, 2, 3, 4), $lang_robots, CONFIG_SEO_ROBOTS));
 
 	// URI-Aliases aktivieren/deaktivieren
-	$aliases = array();
-	$aliases[0]['value'] = '1';
-	$aliases[0]['checked'] = selectEntry('seo_aliases', '1', CONFIG_SEO_ALIASES, 'checked');
-	$aliases[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-	$aliases[1]['value'] = '0';
-	$aliases[1]['checked'] = selectEntry('seo_aliases', '0', CONFIG_SEO_ALIASES, 'checked');
-	$aliases[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-	ACP3_CMS::$view->assign('aliases', $aliases);
+	$lang_aliases = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+	ACP3_CMS::$view->assign('aliases', selectGenerator('seo_aliases', array(1, 0), $lang_aliases, CONFIG_SEO_ALIASES, 'checked'));
 
 	// Sef-URIs
-	$mod_rewrite = array();
-	$mod_rewrite[0]['value'] = '1';
-	$mod_rewrite[0]['checked'] = selectEntry('seo_mod_rewrite', '1', CONFIG_SEO_MOD_REWRITE, 'checked');
-	$mod_rewrite[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-	$mod_rewrite[1]['value'] = '0';
-	$mod_rewrite[1]['checked'] = selectEntry('seo_mod_rewrite', '0', CONFIG_SEO_MOD_REWRITE, 'checked');
-	$mod_rewrite[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-	ACP3_CMS::$view->assign('mod_rewrite', $mod_rewrite);
+	$lang_mod_rewrite = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+	ACP3_CMS::$view->assign('mod_rewrite', selectGenerator('seo_mod_rewrite', array(1, 0), $lang_mod_rewrite, CONFIG_SEO_MOD_REWRITE, 'checked'));
 
 	// Caching von Bildern
-	$cache_images = array();
-	$cache_images[0]['value'] = '1';
-	$cache_images[0]['checked'] = selectEntry('cache_images', '1', CONFIG_CACHE_IMAGES, 'checked');
-	$cache_images[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-	$cache_images[1]['value'] = '0';
-	$cache_images[1]['checked'] = selectEntry('cache_images', '0', CONFIG_CACHE_IMAGES, 'checked');
-	$cache_images[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-	ACP3_CMS::$view->assign('cache_images', $cache_images);
+	$lang_cache_images = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+	ACP3_CMS::$view->assign('cache_images', selectGenerator('cache_images', array(1, 0), $lang_cache_images, CONFIG_CACHE_IMAGES, 'checked'));
 
 	// Mailertyp
-	$mailer_type = array();
-	$mailer_type[0]['value'] = 'mail';
-	$mailer_type[0]['selected'] = selectEntry('mailer_type', 'mail', CONFIG_MAILER_TYPE);
-	$mailer_type[0]['lang'] = ACP3_CMS::$lang->t('system', 'mailer_type_php_mail');
-	$mailer_type[1]['value'] = 'smtp';
-	$mailer_type[1]['selected'] = selectEntry('mailer_type', 'smtp', CONFIG_MAILER_TYPE);
-	$mailer_type[1]['lang'] = ACP3_CMS::$lang->t('system', 'mailer_type_smtp');
-	ACP3_CMS::$view->assign('mailer_type', $mailer_type);
+	$lang_mailer_type = array(ACP3_CMS::$lang->t('system', 'mailer_type_php_mail'), ACP3_CMS::$lang->t('system', 'mailer_type_smtp'));
+	ACP3_CMS::$view->assign('mailer_type', selectGenerator('mailer_type', array('mail', 'smtp'), $lang_mailer_type, CONFIG_MAILER_TYPE));
 
 	// Mailer SMTP Authentifizierung
-	$mailer_smtp_auth = array();
-	$mailer_smtp_auth[0]['value'] = '1';
-	$mailer_smtp_auth[0]['checked'] = selectEntry('seo_aliases', '1', CONFIG_MAILER_SMTP_AUTH, 'checked');
-	$mailer_smtp_auth[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-	$mailer_smtp_auth[1]['value'] = '0';
-	$mailer_smtp_auth[1]['checked'] = selectEntry('seo_aliases', '0', CONFIG_MAILER_SMTP_AUTH, 'checked');
-	$mailer_smtp_auth[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-	ACP3_CMS::$view->assign('mailer_smtp_auth', $mailer_smtp_auth);
+	$lang_mailer_smtp_auth = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+	ACP3_CMS::$view->assign('mailer_smtp_auth', selectGenerator('mailer_smtp_auth', array(1, 0), $lang_mailer_smtp_auth, CONFIG_MAILER_SMTP_AUTH, 'checked'));
 
 	// Mailer SMTP Verschlüsselung
-	$mailer_smtp_security = array();
-	$mailer_smtp_security[0]['value'] = 'none';
-	$mailer_smtp_security[0]['selected'] = selectEntry('mailer_smtp_security', '', CONFIG_MAILER_SMTP_SECURITY);
-	$mailer_smtp_security[0]['lang'] = ACP3_CMS::$lang->t('system', 'mailer_smtp_security_none');
-	$mailer_smtp_security[1]['value'] = 'ssl';
-	$mailer_smtp_security[1]['selected'] = selectEntry('mailer_smtp_security', 'ssl', CONFIG_MAILER_SMTP_SECURITY);
-	$mailer_smtp_security[1]['lang'] = ACP3_CMS::$lang->t('system', 'mailer_smtp_security_ssl');
-	$mailer_smtp_security[2]['value'] = 'tls';
-	$mailer_smtp_security[2]['selected'] = selectEntry('mailer_smtp_security', 'tls', CONFIG_MAILER_SMTP_SECURITY);
-	$mailer_smtp_security[2]['lang'] = ACP3_CMS::$lang->t('system', 'mailer_smtp_security_tls');
-	ACP3_CMS::$view->assign('mailer_smtp_security', $mailer_smtp_security);
+	$lang_mailer_smtp_security = array(
+		ACP3_CMS::$lang->t('system', 'mailer_smtp_security_none'),
+		ACP3_CMS::$lang->t('system', 'mailer_smtp_security_ssl'),
+		ACP3_CMS::$lang->t('system', 'mailer_smtp_security_tls')
+	);
+	ACP3_CMS::$view->assign('mailer_smtp_security', selectGenerator('mailer_smtp_security', array('none', 'ssl', 'tls'), $lang_mailer_smtp_security, CONFIG_MAILER_SMTP_SECURITY));
 
 	$settings = ACP3_Config::getSettings('system');
 

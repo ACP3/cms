@@ -36,14 +36,12 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 
 	$settings = ACP3_Config::getSettings('feeds');
 
-	$feed_types = array();
-	$feed_types[0]['value'] = 'RSS 1.0';
-	$feed_types[0]['selected'] = selectEntry('feed_type', $feed_types[0]['value'], $settings['feed_type']);
-	$feed_types[1]['value'] = 'RSS 2.0';
-	$feed_types[1]['selected'] = selectEntry('feed_type', $feed_types[1]['value'], $settings['feed_type']);
-	$feed_types[2]['value'] = 'ATOM';
-	$feed_types[2]['selected'] = selectEntry('feed_type', $feed_types[2]['value'], $settings['feed_type']);
-	ACP3_CMS::$view->assign('feed_types', $feed_types);
+	$feed_type = array(
+		'RSS 1.0',
+		'RSS 2.0',
+		'ATOM'
+	);
+	ACP3_CMS::$view->assign('feed_types', selectGenerator('feed_type', $feed_type, $feed_type, $settings['feed_type']));
 
 	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : $settings);
 

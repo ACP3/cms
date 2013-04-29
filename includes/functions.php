@@ -698,6 +698,30 @@ function selectEntry($name, $defValue, $currentValue = '', $attr = 'selected')
 	}
 }
 /**
+ * 
+ * @param string $name
+ * @param array $values
+ * @param array $lang
+ * @param string|integer $current_value
+ * @param string $selected
+ * @return array
+ */
+function selectGenerator($name, array $values, array $lang, $current_value = '', $selected = 'selected') {
+	$array = array();
+	if (count($values) == count($lang)) {
+		$c_array = count($values);
+		for ($i = 0; $i < $c_array; ++$i) {
+			$array[] = array(
+				'value' => $values[$i],
+				'id' => ($selected == 'checked' ? $name . '-' . $values[$i] : ''),
+				$selected => selectEntry($name, $values[$i], $current_value, $selected),
+				'lang' => $lang[$i]
+			);
+		}
+	}
+	return $array;
+}
+/**
  * Kürzt einen String, welcher im UTF-8-Charset vorliegt
  * auf eine bestimmte Länge
  *

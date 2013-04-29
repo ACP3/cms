@@ -41,14 +41,8 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	$settings = ACP3_Config::getSettings('files');
 
 	if ($comments_active === true) {
-		$comments = array();
-		$comments[0]['value'] = '1';
-		$comments[0]['checked'] = selectEntry('comments', '1', $settings['comments'], 'checked');
-		$comments[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-		$comments[1]['value'] = '0';
-		$comments[1]['checked'] = selectEntry('comments', '0', $settings['comments'], 'checked');
-		$comments[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-		ACP3_CMS::$view->assign('comments', $comments);
+		$lang_comments = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+		ACP3_CMS::$view->assign('comments', selectGenerator('comments', array(1, 0), $lang_comments, $settings['comments'], 'checked'));
 	}
 
 	ACP3_CMS::$view->assign('dateformat', ACP3_CMS::$date->dateformatDropdown($settings['dateformat']));
