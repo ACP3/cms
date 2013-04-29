@@ -102,20 +102,8 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		// Datumsauswahl
 		ACP3_CMS::$view->assign('publication_period', ACP3_CMS::$date->datepicker(array('start', 'end'), array($dl['start'], $dl['end'])));
 
-		$unit = trim(strrchr($dl['size'], ' '));
-
-		$units = array();
-		$units[0]['value'] = 'Byte';
-		$units[0]['selected'] = selectEntry('unit', 'Byte', $unit);
-		$units[1]['value'] = 'KiB';
-		$units[1]['selected'] = selectEntry('unit', 'KiB', $unit);
-		$units[2]['value'] = 'MiB';
-		$units[2]['selected'] = selectEntry('unit', 'MiB', $unit);
-		$units[3]['value'] = 'GiB';
-		$units[3]['selected'] = selectEntry('unit', 'GiB', $unit);
-		$units[4]['value'] = 'TiB';
-		$units[4]['selected'] = selectEntry('unit', 'TiB', $unit);
-		ACP3_CMS::$view->assign('units', $units);
+		$units = array('Byte', 'KiB', 'MiB', 'GiB', 'TiB');
+		ACP3_CMS::$view->assign('units', selectGenerator('units', $units, $units, trim(strrchr($dl['size'], ' '))));
 
 		$dl['filesize'] = substr($dl['size'], 0, strpos($dl['size'], ' '));
 

@@ -14,7 +14,7 @@
 		<div class="controls">
 			<select name="feed_type" id="feed-type">
 {foreach $feed_types as $row}
-				<option value="{$row.value}"{$row.selected}>{$row.value}</option>
+				<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 			</select>
 		</div>

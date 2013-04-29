@@ -14,12 +14,12 @@
 	</div>
 {if isset($allow_emoticons)}
 	<div class="control-group">
-		<label for="emoticons-1" class="control-label">{lang t="comments|allow_emoticons"}</label>
+		<label for="{$allow_emoticons.0.id}" class="control-label">{lang t="comments|allow_emoticons"}</label>
 		<div class="controls">
 			<div class="btn-group" data-toggle="radio">
 {foreach $allow_emoticons as $row}
-				<input type="radio" name="emoticons" id="emoticons-{$row.value}" value="{$row.value}"{$row.checked}>
-				<label for="emoticons-{$row.value}" class="btn">{$row.lang}</label>
+				<input type="radio" name="emoticons" id="{$row.id}" value="{$row.value}"{$row.checked}>
+				<label for="{$row.id}" class="btn">{$row.lang}</label>
 {/foreach}
 			</div>
 		</div>

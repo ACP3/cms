@@ -26,6 +26,7 @@ if (ACP3_Modules::check('categories', 'functions') === true) {
 $settings = ACP3_Config::getSettings('news');
 // Kategorie in Brotkrümelspur anzeigen
 if ($cat !== 0 && $settings['category_in_breadcrumb'] == 1) {
+	ACP3_SEO::setCanonicalUri(ACP3_CMS::$uri->route('news'));
 	ACP3_CMS::$breadcrumb->append(ACP3_CMS::$lang->t('news', 'news'), ACP3_CMS::$uri->route('news'));
 	$category = ACP3_CMS::$db2->fetchColumn('SELECT title FROM ' . DB_PRE . 'categories WHERE id = ?', array($cat));
 	if (!empty($category)) {

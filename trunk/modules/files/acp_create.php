@@ -83,18 +83,8 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	// Datumsauswahl
 	ACP3_CMS::$view->assign('publication_period', ACP3_CMS::$date->datepicker(array('start', 'end')));
 
-	$units = array();
-	$units[0]['value'] = 'Byte';
-	$units[0]['selected'] = selectEntry('unit', 'Byte');
-	$units[1]['value'] = 'KiB';
-	$units[1]['selected'] = selectEntry('unit', 'KiB');
-	$units[2]['value'] = 'MiB';
-	$units[2]['selected'] = selectEntry('unit', 'MiB');
-	$units[3]['value'] = 'GiB';
-	$units[3]['selected'] = selectEntry('unit', 'GiB');
-	$units[4]['value'] = 'TiB';
-	$units[4]['selected'] = selectEntry('unit', 'TiB');
-	ACP3_CMS::$view->assign('units', $units);
+	$units = array('Byte', 'KiB', 'MiB', 'GiB', 'TiB');
+	ACP3_CMS::$view->assign('units', selectGenerator('units', $units, $units, ''));
 
 	// Formularelemente
 	ACP3_CMS::$view->assign('categories', categoriesList('files', '', true));

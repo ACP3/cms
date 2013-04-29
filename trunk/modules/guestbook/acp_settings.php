@@ -52,49 +52,26 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 
 	ACP3_CMS::$view->assign('dateformat', ACP3_CMS::$date->dateformatDropdown($settings['dateformat']));
 
-	$notify = array();
-	$notify[0]['value'] = '0';
-	$notify[0]['selected'] = selectEntry('notify', '0', $settings['notify']);
-	$notify[0]['lang'] = ACP3_CMS::$lang->t('guestbook', 'no_notification');
-	$notify[1]['value'] = '1';
-	$notify[1]['selected'] = selectEntry('notify', '1', $settings['notify']);
-	$notify[1]['lang'] = ACP3_CMS::$lang->t('guestbook', 'notify_on_new_entry');
-	$notify[2]['value'] = '2';
-	$notify[2]['selected'] = selectEntry('notify', '2', $settings['notify']);
-	$notify[2]['lang'] = ACP3_CMS::$lang->t('guestbook', 'notify_and_enable');
-	ACP3_CMS::$view->assign('notify', $notify);
+	$lang_notify = array(
+		ACP3_CMS::$lang->t('guestbook', 'no_notification'),
+		ACP3_CMS::$lang->t('guestbook', 'notify_on_new_entry'),
+		ACP3_CMS::$lang->t('guestbook', 'notify_and_enable')
+	);
+	ACP3_CMS::$view->assign('notify', selectGenerator('notify', array(0, 1, 2), $lang_notify, $settings['notify']));
 
-	$overlay = array();
-	$overlay[0]['value'] = '1';
-	$overlay[0]['checked'] = selectEntry('overlay', '1', $settings['overlay'], 'checked');
-	$overlay[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-	$overlay[1]['value'] = '0';
-	$overlay[1]['checked'] = selectEntry('overlay', '0', $settings['overlay'], 'checked');
-	$overlay[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-	ACP3_CMS::$view->assign('overlay', $overlay);
+	$lang_overlay = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+	ACP3_CMS::$view->assign('overlay', selectGenerator('overlay', array(1, 0), $lang_overlay, $settings['overlay'], 'checked'));
 
 	// Emoticons erlauben
 	if ($emoticons_active === true) {
-		$allow_emoticons = array();
-		$allow_emoticons[0]['value'] = '1';
-		$allow_emoticons[0]['checked'] = selectEntry('emoticons', '1', $settings['emoticons'], 'checked');
-		$allow_emoticons[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-		$allow_emoticons[1]['value'] = '0';
-		$allow_emoticons[1]['checked'] = selectEntry('emoticons', '0', $settings['emoticons'], 'checked');
-		$allow_emoticons[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-		ACP3_CMS::$view->assign('allow_emoticons', $allow_emoticons);
+		$lang_allow_emoticons = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+		ACP3_CMS::$view->assign('allow_emoticons', selectGenerator('emoticons', array(1, 0), $lang_allow_emoticons, $settings['emoticons'], 'checked'));
 	}
 
 	// In Newsletter integrieren
 	if ($newsletter_active === true) {
-		$newsletter_integration = array();
-		$newsletter_integration[0]['value'] = '1';
-		$newsletter_integration[0]['checked'] = selectEntry('newsletter_integration', '1', $settings['newsletter_integration'], 'checked');
-		$newsletter_integration[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-		$newsletter_integration[1]['value'] = '0';
-		$newsletter_integration[1]['checked'] = selectEntry('newsletter_integration', '0', $settings['newsletter_integration'], 'checked');
-		$newsletter_integration[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-		ACP3_CMS::$view->assign('newsletter_integration', $newsletter_integration);
+		$lang_newsletter_integration = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+		ACP3_CMS::$view->assign('newsletter_integration', selectGenerator('newsletter_integration', array(1, 0), $lang_newsletter_integration, $settings['newsletter_integration'], 'checked'));
 	}
 
 	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : array('notify_email' => $settings['notify_email']));

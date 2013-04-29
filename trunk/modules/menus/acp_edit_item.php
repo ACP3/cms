@@ -86,22 +86,17 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 	}
 	if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 		// Seitentyp
-		$mode = array();
-		$mode[0]['value'] = 1;
-		$mode[0]['selected'] = selectEntry('mode', '1', $page['mode']);
-		$mode[0]['lang'] = ACP3_CMS::$lang->t('menus', 'module');
-		$mode[1]['value'] = 2;
-		$mode[1]['selected'] = selectEntry('mode', '2', $page['mode']);
-		$mode[1]['lang'] = ACP3_CMS::$lang->t('menus', 'dynamic_page');
-		$mode[2]['value'] = 3;
-		$mode[2]['selected'] = selectEntry('mode', '3', $page['mode']);
-		$mode[2]['lang'] = ACP3_CMS::$lang->t('menus', 'hyperlink');
+		$values_mode = array(1, 2, 3);
+		$lang_mode = array(
+			ACP3_CMS::$lang->t('menus', 'module'),
+			ACP3_CMS::$lang->t('menus', 'dynamic_page'),
+			ACP3_CMS::$lang->t('menus', 'hyperlink')
+		);
 		if (ACP3_Modules::isActive('articles')) {
-			$mode[3]['value'] = 4;
-			$mode[3]['selected'] = selectEntry('mode', '4', $page['mode']);
-			$mode[3]['lang'] = ACP3_CMS::$lang->t('menus', 'article');
+			$values_mode[] = 4;
+			$lang_mode[] = ACP3_CMS::$lang->t('menus', 'article');
 		}
-		ACP3_CMS::$view->assign('mode', $mode);
+		ACP3_CMS::$view->assign('mode', selectGenerator('mode', $values_mode, $lang_mode, $page['mode']));
 
 		// Block
 		ACP3_CMS::$view->assign('blocks', menusDropdown($page['block_id']));
@@ -114,23 +109,11 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		ACP3_CMS::$view->assign('modules', $modules);
 
 		// Ziel des Hyperlinks
-		$target = array();
-		$target[0]['value'] = 1;
-		$target[0]['selected'] = selectEntry('target', '1', $page['target']);
-		$target[0]['lang'] = ACP3_CMS::$lang->t('system', 'window_self');
-		$target[1]['value'] = 2;
-		$target[1]['selected'] = selectEntry('target', '2', $page['target']);
-		$target[1]['lang'] = ACP3_CMS::$lang->t('system', 'window_blank');
-		ACP3_CMS::$view->assign('target', $target);
+		$lang_target = array(ACP3_CMS::$lang->t('system', 'window_self'), ACP3_CMS::$lang->t('system', 'window_blank'));
+		ACP3_CMS::$view->assign('target', selectGenerator('target', array(1, 2), $lang_target, $page['target']));
 
-		$display = array();
-		$display[0]['value'] = 1;
-		$display[0]['selected'] = selectEntry('display', '1', $page['display'], 'checked');
-		$display[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-		$display[1]['value'] = 0;
-		$display[1]['selected'] = selectEntry('display', '0', $page['display'], 'checked');
-		$display[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-		ACP3_CMS::$view->assign('display', $display);
+		$lang_display = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+		ACP3_CMS::$view->assign('display', selectGenerator('display', array(1, 0), $lang_display, $page['display'], 'checked'));
 
 		if (ACP3_Modules::check('articles', 'functions') === true) {
 			require_once MODULES_DIR . 'articles/functions.php';

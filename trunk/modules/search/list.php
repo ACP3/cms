@@ -65,30 +65,14 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	ACP3_CMS::$view->assign('search_mods', $search_mods);
 
 	// Zu durchsuchende Bereiche
-	$search_areas = array();
-	$search_areas[0]['id'] = 'title_only';
-	$search_areas[0]['value'] = 'title';
-	$search_areas[0]['checked'] = selectEntry('area', 'title', 'title', 'checked');
-	$search_areas[0]['lang'] = ACP3_CMS::$lang->t('search', 'title_only');
-	$search_areas[1]['id'] = 'content_only';
-	$search_areas[1]['value'] = 'content';
-	$search_areas[1]['checked'] = selectEntry('area', 'content', 'title', 'checked');
-	$search_areas[1]['lang'] = ACP3_CMS::$lang->t('search', 'content_only');
-	$search_areas[2]['id'] = 'title_content';
-	$search_areas[2]['value'] = 'title_content';
-	$search_areas[2]['checked'] = selectEntry('area', 'title_content', 'title', 'checked');
-	$search_areas[2]['lang'] = ACP3_CMS::$lang->t('search', 'title_and_content');
-	ACP3_CMS::$view->assign('search_areas', $search_areas);
+	$lang_search_areas = array(
+		ACP3_CMS::$lang->t('search', 'title_only'),
+		ACP3_CMS::$lang->t('search', 'content_only'),
+		ACP3_CMS::$lang->t('search', 'title_and_content')
+	);
+	ACP3_CMS::$view->assign('search_areas', selectGenerator('area', array('title', 'content', 'title_content'), $lang_search_areas, 'title', 'checked'));
 
 	// Treffer sortieren
-	$sort_hits = array();
-	$sort_hits[0]['id'] = 'asc';
-	$sort_hits[0]['value'] = 'asc';
-	$sort_hits[0]['checked'] = selectEntry('sort', 'asc', 'asc', 'checked');
-	$sort_hits[0]['lang'] = ACP3_CMS::$lang->t('search', 'asc');
-	$sort_hits[1]['id'] = 'desc';
-	$sort_hits[1]['value'] = 'desc';
-	$sort_hits[1]['checked'] = selectEntry('sort', 'desc', 'asc', 'checked');
-	$sort_hits[1]['lang'] = ACP3_CMS::$lang->t('search', 'desc');
-	ACP3_CMS::$view->assign('sort_hits', $sort_hits);
+	$lang_sort_hits = array(ACP3_CMS::$lang->t('search', 'asc'), ACP3_CMS::$lang->t('search', 'desc'));
+	ACP3_CMS::$view->assign('sort_hits', selectGenerator('sort', array('asc', 'desc'), $lang_sort_hits, 'asc', 'checked'));
 }
