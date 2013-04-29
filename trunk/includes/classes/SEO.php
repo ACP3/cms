@@ -318,38 +318,19 @@ class ACP3_SEO
 			$robots = 0;
 		}
 
+		$lang_robots = array(
+			sprintf(ACP3_CMS::$lang->t('system', 'seo_robots_use_system_default'), ACP3_SEO::getRobotsSetting()),
+			ACP3_CMS::$lang->t('system', 'seo_robots_index_follow'),
+			ACP3_CMS::$lang->t('system', 'seo_robots_index_nofollow'),
+			ACP3_CMS::$lang->t('system', 'seo_robots_noindex_follow'),
+			ACP3_CMS::$lang->t('system', 'seo_robots_noindex_nofollow')
+		);
 		$seo = array(
 			'enable_uri_aliases' => (bool) CONFIG_SEO_ALIASES,
 			'alias' => isset($alias) ? $alias : '',
 			'keywords' => $keywords,
 			'description' => $description,
-			'robots' => array(
-				array(
-					'value' => 0,
-					'selected' => selectEntry('seo_robots', 0, $robots),
-					'lang' => sprintf(ACP3_CMS::$lang->t('system', 'seo_robots_use_system_default'), ACP3_SEO::getRobotsSetting())
-				),
-				array(
-					'value' => 1,
-					'selected' => selectEntry('seo_robots', 1, $robots),
-					'lang' => ACP3_CMS::$lang->t('system', 'seo_robots_index_follow')
-				),
-				array(
-					'value' => 2,
-					'selected' => selectEntry('seo_robots', 2, $robots),
-					'lang' => ACP3_CMS::$lang->t('system', 'seo_robots_index_nofollow')
-				),
-				array(
-					'value' => 3,
-					'selected' => selectEntry('seo_robots', 3, $robots),
-					'lang' => ACP3_CMS::$lang->t('system', 'seo_robots_noindex_follow')
-				),
-				array(
-					'value' => 4,
-					'selected' => selectEntry('seo_robots', 4, $robots),
-					'lang' => ACP3_CMS::$lang->t('system', 'seo_robots_noindex_nofollow')
-				)
-			)
+			'robots' => selectGenerator('seo_robots', array(0, 1, 2, 3, 4), $lang_robots, $robots)
 		);
 
 		ACP3_CMS::$view->assign('seo', $seo);
