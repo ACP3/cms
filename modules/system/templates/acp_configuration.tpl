@@ -8,7 +8,7 @@
 $(function() {
 	$('input[name="mailer_smtp_auth"]').bind('click', function() {
 		var $elem = $('#mailer-smtp-2');
-		if ($(this).val() === 1) {
+		if ($(this).val() == 1) {
 			$elem.show();
 		} else {
 			$elem.hide();

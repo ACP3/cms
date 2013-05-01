@@ -710,10 +710,11 @@ function selectGenerator($name, array $values, array $lang, $current_value = '',
 	$array = array();
 	if (count($values) == count($lang)) {
 		$c_array = count($values);
+		$id = str_replace('_', '-', $name);
 		for ($i = 0; $i < $c_array; ++$i) {
 			$array[] = array(
 				'value' => $values[$i],
-				'id' => ($selected == 'checked' ? $name . '-' . $values[$i] : ''),
+				'id' => ($selected == 'checked' ? $id . '-' . $values[$i] : ''),
 				$selected => selectEntry($name, $values[$i], $current_value, $selected),
 				'lang' => $lang[$i]
 			);
