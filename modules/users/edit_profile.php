@@ -80,17 +80,12 @@ if (ACP3_CMS::$auth->isUser() === false || ACP3_Validate::isNumber(ACP3_CMS::$au
 		$user = ACP3_CMS::$auth->getUserInfo();
 
 		// Geschlecht
-		$gender = array();
-		$gender[0]['value'] = '1';
-		$gender[0]['selected'] = selectEntry('gender', 1, $user['gender']);
-		$gender[0]['lang'] = ACP3_CMS::$lang->t('users', 'gender_not_specified');
-		$gender[1]['value'] = '2';
-		$gender[1]['selected'] = selectEntry('gender', 2, $user['gender']);
-		$gender[1]['lang'] = ACP3_CMS::$lang->t('users', 'gender_female');
-		$gender[2]['value'] = '3';
-		$gender[2]['selected'] = selectEntry('gender', 3, $user['gender']);
-		$gender[2]['lang'] = ACP3_CMS::$lang->t('users', 'gender_male');
-		ACP3_CMS::$view->assign('gender', $gender);
+		$lang_gender = array(
+			ACP3_CMS::$lang->t('users', 'gender_not_specified'),
+			ACP3_CMS::$lang->t('users', 'gender_female'),
+			ACP3_CMS::$lang->t('users', 'gender_male')
+		);
+		ACP3_CMS::$view->assign('gender', selectGenerator('gender', array(1, 2, 3), $lang_gender, $user['gender']));
 
 		// Geburtstag
 		ACP3_CMS::$view->assign('birthday_datepicker', ACP3_CMS::$date->datepicker('birthday', $user['birthday'], 'Y-m-d', array('constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\''), 0, 1, false, true));
