@@ -115,14 +115,8 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	ACP3_CMS::$view->assign('roles', $roles);
 
 	// Super User
-	$super_user = array();
-	$super_user[0]['value'] = '1';
-	$super_user[0]['checked'] = selectEntry('super_user', '1', '0', 'checked');
-	$super_user[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-	$super_user[1]['value'] = '0';
-	$super_user[1]['checked'] = selectEntry('super_user', '0', '0', 'checked');
-	$super_user[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-	ACP3_CMS::$view->assign('super_user', $super_user);
+	$lang_super_user = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+	ACP3_CMS::$view->assign('super_user', selectGenerator('super_user', array(1, 0), $lang_super_user, 0, 'checked'));
 
 	// Sprache
 	$languages = array();
@@ -147,17 +141,12 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	ACP3_CMS::$view->assign('time_zones', ACP3_CMS::$date->getTimeZones(CONFIG_DATE_TIME_ZONE));
 
 	// Geschlecht
-	$gender = array();
-	$gender[0]['value'] = '1';
-	$gender[0]['selected'] = selectEntry('gender', 1);
-	$gender[0]['lang'] = ACP3_CMS::$lang->t('users', 'gender_not_specified');
-	$gender[1]['value'] = '2';
-	$gender[1]['selected'] = selectEntry('gender', 2);
-	$gender[1]['lang'] = ACP3_CMS::$lang->t('users', 'gender_female');
-	$gender[2]['value'] = '3';
-	$gender[2]['selected'] = selectEntry('gender', 3);
-	$gender[2]['lang'] = ACP3_CMS::$lang->t('users', 'gender_male');
-	ACP3_CMS::$view->assign('gender', $gender);
+	$lang_gender = array(
+		ACP3_CMS::$lang->t('users', 'gender_not_specified'),
+		ACP3_CMS::$lang->t('users', 'gender_female'),
+		ACP3_CMS::$lang->t('users', 'gender_male')
+	);
+	ACP3_CMS::$view->assign('gender', selectGenerator('gender', array(1, 2, 3), $lang_gender, ''));
 
 	// Geburtstag
 	ACP3_CMS::$view->assign('birthday_datepicker', ACP3_CMS::$date->datepicker('birthday', '', 'Y-m-d', array('constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\''), 0, 1, false, true));
@@ -193,47 +182,21 @@ if (isset($_POST['submit']) === false || isset($errors) === true && is_array($er
 	}
 	ACP3_CMS::$view->assign('countries', $countries_select);
 
-	$mail_display = array();
-	$mail_display[0]['value'] = '1';
-	$mail_display[0]['checked'] = selectEntry('mail_display', '1', '0', 'checked');
-	$mail_display[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-	$mail_display[1]['value'] = '0';
-	$mail_display[1]['checked'] = selectEntry('mail_display', '0', '0', 'checked');
-	$mail_display[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-	ACP3_CMS::$view->assign('mail_display', $mail_display);
+	$lang_mail_display = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+	ACP3_CMS::$view->assign('mail_display', selectGenerator('mail_display', array(1, 0), $lang_mail_display, 0, 'checked'));
 
-	$address_display = array();
-	$address_display[0]['value'] = '1';
-	$address_display[0]['checked'] = selectEntry('address_display', '1', '0', 'checked');
-	$address_display[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-	$address_display[1]['value'] = '0';
-	$address_display[1]['checked'] = selectEntry('address_display', '0', '0', 'checked');
-	$address_display[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-	ACP3_CMS::$view->assign('address_display', $address_display);
+	$lang_address_display = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+	ACP3_CMS::$view->assign('address_display', selectGenerator('address_display', array(1, 0), $lang_address_display, 0, 'checked'));
 
-	$country_display = array();
-	$country_display[0]['value'] = '1';
-	$country_display[0]['checked'] = selectEntry('country_display', '1', '0', 'checked');
-	$country_display[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-	$country_display[1]['value'] = '0';
-	$country_display[1]['checked'] = selectEntry('country_display', '0', '0', 'checked');
-	$country_display[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-	ACP3_CMS::$view->assign('country_display', $country_display);
+	$lang_country_display = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+	ACP3_CMS::$view->assign('country_display', selectGenerator('country_display', array(1, 0), $lang_country_display, 0, 'checked'));
 
-	$birthday_display = array();
-	$birthday_display[0]['name'] = 'hide';
-	$birthday_display[0]['value'] = '0';
-	$birthday_display[0]['checked'] = selectEntry('birthday_display', '0', '0', 'checked');
-	$birthday_display[0]['lang'] = ACP3_CMS::$lang->t('users', 'birthday_hide');
-	$birthday_display[1]['name'] = 'full';
-	$birthday_display[1]['value'] = '1';
-	$birthday_display[1]['checked'] = selectEntry('birthday_display', '1', '0', 'checked');
-	$birthday_display[1]['lang'] = ACP3_CMS::$lang->t('users', 'birthday_display_completely');
-	$birthday_display[2]['name'] = 'hide_year';
-	$birthday_display[2]['value'] = '2';
-	$birthday_display[2]['checked'] = selectEntry('birthday_display', '2', '0', 'checked');
-	$birthday_display[2]['lang'] = ACP3_CMS::$lang->t('users', 'birthday_hide_year');
-	ACP3_CMS::$view->assign('birthday_display', $birthday_display);
+	$lang_birthday_display = array(
+		ACP3_CMS::$lang->t('users', 'birthday_hide'),
+		ACP3_CMS::$lang->t('users', 'birthday_display_completely'),
+		ACP3_CMS::$lang->t('users', 'birthday_hide_year')
+	);
+	ACP3_CMS::$view->assign('birthday_display', selectGenerator('birthday_display', array(0, 1, 2), $lang_birthday_display, 0, 'checked'));
 
 	$defaults = array(
 		'nickname' => '',

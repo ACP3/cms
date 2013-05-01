@@ -50,8 +50,8 @@ if ($_GET['g'] === 'css') {
 		$styles['css'][] = LIBRARIES_DIR . 'js/jquery-datatables.css';
 
 	// Stylesheet für das Layout-Tenplate
-	$styles['css'][] = DESIGN_PATH_INTERNAL . (is_file(DESIGN_PATH_INTERNAL . $layout . '.css') === true ? $layout : 'layout') . '.css';
 	$styles['css'][] = DESIGN_PATH_INTERNAL . 'common.css';
+	$styles['css'][] = DESIGN_PATH_INTERNAL . (is_file(DESIGN_PATH_INTERNAL . $layout . '.css') === true ? $layout : 'layout') . '.css';
 
 	// Zusätzliche Stylesheets einbinden
 	$extra_css = explode(',', CONFIG_EXTRA_CSS);

@@ -41,32 +41,14 @@ if (isset($_POST['submit']) === true) {
 if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 	$settings = ACP3_Config::getSettings('users');
 
-	$languages = array();
-	$languages[0]['value'] = '1';
-	$languages[0]['checked'] = selectEntry('language_override', '1', $settings['language_override'], 'checked');
-	$languages[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-	$languages[1]['value'] = '0';
-	$languages[1]['checked'] = selectEntry('language_override', '0', $settings['language_override'], 'checked');
-	$languages[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-	ACP3_CMS::$view->assign('languages', $languages);
+	$lang_languages = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+	ACP3_CMS::$view->assign('languages', selectGenerator('language_override', array(1, 0), $lang_languages, $settings['language_override'], 'checked'));
 
-	$entries = array();
-	$entries[0]['value'] = '1';
-	$entries[0]['checked'] = selectEntry('entries_override', '1', $settings['entries_override'], 'checked');
-	$entries[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-	$entries[1]['value'] = '0';
-	$entries[1]['checked'] = selectEntry('entries_override', '0', $settings['entries_override'], 'checked');
-	$entries[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-	ACP3_CMS::$view->assign('entries', $entries);
+	$lang_entries = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+	ACP3_CMS::$view->assign('entries', selectGenerator('entries_override', array(1, 0), $lang_entries, $settings['entries_override'], 'checked'));
 
-	$registration = array();
-	$registration[0]['value'] = '1';
-	$registration[0]['checked'] = selectEntry('enable_registration', '1', $settings['enable_registration'], 'checked');
-	$registration[0]['lang'] = ACP3_CMS::$lang->t('system', 'yes');
-	$registration[1]['value'] = '0';
-	$registration[1]['checked'] = selectEntry('enable_registration', '0', $settings['enable_registration'], 'checked');
-	$registration[1]['lang'] = ACP3_CMS::$lang->t('system', 'no');
-	ACP3_CMS::$view->assign('registration', $registration);
+	$lang_registration = array(ACP3_CMS::$lang->t('system', 'yes'), ACP3_CMS::$lang->t('system', 'no'));
+	ACP3_CMS::$view->assign('registration', selectGenerator('enable_registration', array(1, 0), $lang_registration, $settings['enable_registration'], 'checked'));
 
 	ACP3_CMS::$view->assign('form', isset($_POST['submit']) ? $_POST : array('mail' => $settings['mail']));
 
