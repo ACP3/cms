@@ -254,7 +254,7 @@ class ACP3_Breadcrumb {
 					$title = $this->title['prefix'] . $separator . $title;
 				if (!empty($this->title['postfix']))
 					$title.= $separator . $this->title['postfix'];
-				$title.= $separator . CONFIG_SEO_TITLE;
+				$title.= ' | ' . CONFIG_SEO_TITLE;
 			}
 			return $title;
 		}
