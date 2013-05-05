@@ -10,7 +10,10 @@
 			{$file.text}
 		</div>
 		<footer class="hyperlink">
-			<a href="{uri args="files/details/id_`$file.id`/action_download"}" class="download-file">{lang t="files|download_file"} ({$file.size})</a>
+			<a href="{uri args="files/details/id_`$file.id`/action_download"}" class="download-file">
+				<i class="icon-download-alt"></i>
+				{lang t="files|download_file"} ({$file.size})
+			</a>
 		</footer>
 	</section>
 {if isset($comments)}

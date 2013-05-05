@@ -77,10 +77,9 @@ table .sub-table-header span, table .sub-table-header div {
 	line-height: 20px;
 }
 .dataset-box .hyperlink a.download-file {
-	padding-left: 34px;
-	background: url('../../libraries/crystal_project/32/download.png') no-repeat;
+	padding: 0 8px;
 	font-weight: bold;
-	line-height: 34px;
+	line-height: 26px;
 	display: block;
 }
 /* Inhaltsverzeichnis */
@@ -102,6 +101,7 @@ table .sub-table-header span, table .sub-table-header div {
 #adm-list h2.brand {
 	margin: 0;
 	padding: 0;
+	line-height: 40px;
 }
 #adm-list a, #adm-list input {
 	margin: 4px 0 0 8px;
