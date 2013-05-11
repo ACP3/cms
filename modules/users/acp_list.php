@@ -23,7 +23,7 @@ if ($c_users > 0) {
 		'sort_dir' => 'asc',
 		'hide_col_sort' => $can_delete === true ? 0 : ''
 	);
-	ACP3_CMS::$view->setContent(datatable($config));
+	ACP3_CMS::$view->appendContent(datatable($config));
 
 	for ($i = 0; $i < $c_users; ++$i) {
 		$users[$i]['roles'] = implode(', ', ACP3_ACL::getUserRoles($users[$i]['id'], 2));
@@ -31,5 +31,3 @@ if ($c_users > 0) {
 	ACP3_CMS::$view->assign('users', $users);
 	ACP3_CMS::$view->assign('can_delete', $can_delete);
 }
-
-ACP3_CMS::$view->appendContent(ACP3_CMS::$view->fetchTemplate('users/acp_list.tpl'));

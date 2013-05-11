@@ -232,7 +232,7 @@ class ACP3_CMS {
 						self::$view->assign('TITLE', self::$breadcrumb->output(2));
 						self::$view->assign('BREADCRUMB', self::$breadcrumb->output());
 						self::$view->assign('META', ACP3_SEO::getMetaTags());
-						self::$view->assign('CONTENT', self::$view->getContent());
+						self::$view->assign('CONTENT', self::$view->getContent() . self::$view->getContentAppend());
 
 						$minify = self::$view->buildMinifyLink();
 						$file = self::$view->getLayout();

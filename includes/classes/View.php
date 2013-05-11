@@ -50,6 +50,12 @@ class ACP3_View
 	private $content = '';
 
 	/**
+	 *
+	 * @var string
+	 */
+	private $content_append = '';
+
+	/**
 	 * Legt fest, welche JavaScript Bibliotheken beim Seitenaufruf geladen werden sollen
 	 * 
 	 * @var array
@@ -156,7 +162,7 @@ class ACP3_View
 	 */
 	public function appendContent($data)
 	{
-		$this->content.= $data;
+		$this->content_append.= $data;
 	}
 
 	/**
@@ -167,6 +173,16 @@ class ACP3_View
 	public function getContent()
 	{
 		return $this->content;
+	}
+
+	/**
+	 * Gibt die anzuhängenden Inhalte an den Seiteninhalt zurück
+	 * 
+	 * @return string
+	 */
+	public function getContentAppend()
+	{
+		return $this->content_append;
 	}
 
 	/**
