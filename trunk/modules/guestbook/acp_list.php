@@ -23,7 +23,7 @@ if ($c_guestbook > 0) {
 		'sort_dir' => 'desc',
 		'hide_col_sort' => $can_delete === true ? 0 : ''
 	);
-	ACP3_CMS::$view->setContent(datatable($config));
+	ACP3_CMS::$view->appendContent(datatable($config));
 
 	$settings = ACP3_Config::getSettings('guestbook');
 	// Emoticons einbinden
@@ -45,4 +45,3 @@ if ($c_guestbook > 0) {
 	ACP3_CMS::$view->assign('guestbook', $guestbook);
 	ACP3_CMS::$view->assign('can_delete', $can_delete);
 }
-ACP3_CMS::$view->appendContent(ACP3_CMS::$view->fetchTemplate('guestbook/acp_list.tpl'));

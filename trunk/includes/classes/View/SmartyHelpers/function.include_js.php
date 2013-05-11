@@ -1,4 +1,10 @@
 <?php
+/**
+ * Fügt die angegebene JavaScript-Datei in ein Template ein
+ *
+ * @param array $params
+ * @return string
+ */
 function smarty_function_include_js($params)
 {
 	if (isset($params['module'], $params['file']) === true &&

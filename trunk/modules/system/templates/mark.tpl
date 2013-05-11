@@ -26,12 +26,9 @@ $(document).ready(function() {
 			$elem.prop('checked', $elem.is(':checked') ? false : true);
 		}
 
-		if ($(this).hasClass('info')) {
-			$(this).removeClass('info');
-		} else {
-			$(this).addClass('info');
-		}
+		$(this).toggleClass('info');
 
+		// Alle Datensätze auf einer Seite wurden markiert
 		if ($(this).parents('tbody').find('input[name="{$checkbox_name}[]"]:visible').length === $(this).parents('tbody').find('tr.info:visible').length) {
 			$('#{$mark_all_id}').prop('checked', true);
 		} else {

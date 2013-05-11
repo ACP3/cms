@@ -70,7 +70,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 				'element' => '#acp-table',
 				'hide_col_sort' => $can_delete === true ? 0 : ''
 			);
-			ACP3_CMS::$view->setContent(datatable($config));
+			ACP3_CMS::$view->appendContent(datatable($config));
 
 			for ($i = 0; $i < $c_pictures; ++$i) {
 				$pictures[$i]['first'] = $i == 0 ? true : false;
@@ -83,8 +83,6 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) === true &&
 		}
 
 		ACP3_CMS::$session->generateFormToken();
-
-		ACP3_CMS::$view->appendContent(ACP3_CMS::$view->fetchTemplate('gallery/acp_edit.tpl'));
 	}
 } else {
 	ACP3_CMS::$uri->redirect('errors/404');

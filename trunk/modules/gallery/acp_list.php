@@ -23,11 +23,10 @@ if ($c_galleries > 0) {
 		'sort_dir' => 'desc',
 		'hide_col_sort' => $can_delete === true ? 0 : ''
 	);
-	ACP3_CMS::$view->setContent(datatable($config));
+	ACP3_CMS::$view->appendContent(datatable($config));
 	for ($i = 0; $i < $c_galleries; ++$i) {
 		$galleries[$i]['period'] = ACP3_CMS::$date->formatTimeRange($galleries[$i]['start'], $galleries[$i]['end']);
 	}
 	ACP3_CMS::$view->assign('galleries', $galleries);
 	ACP3_CMS::$view->assign('can_delete', $can_delete);
 }
-ACP3_CMS::$view->appendContent(ACP3_CMS::$view->fetchTemplate('gallery/acp_list.tpl'));

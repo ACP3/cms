@@ -30,7 +30,7 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) &&
 			'sort_dir' => 'asc',
 			'hide_col_sort' => $can_delete === true ? 0 : ''
 		);
-		ACP3_CMS::$view->setContent(datatable($config));
+		ACP3_CMS::$view->appendContent(datatable($config));
 
 		$settings = ACP3_Config::getSettings('comments');
 		// Emoticons einbinden
@@ -56,5 +56,3 @@ if (ACP3_Validate::isNumber(ACP3_CMS::$uri->id) &&
 		ACP3_CMS::$view->assign('can_delete', $can_delete);
 	}
 }
-
-ACP3_CMS::$view->appendContent(ACP3_CMS::$view->fetchTemplate('comments/acp_list_comments.tpl'));
