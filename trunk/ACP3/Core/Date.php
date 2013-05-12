@@ -70,10 +70,10 @@ class Date {
 	{
 		$dateformat = array();
 		$dateformat[0]['value'] = 'short';
-		$dateformat[0]['selected'] = selectEntry('dateformat', 'short', $format);
+		$dateformat[0]['selected'] = Functions::selectEntry('dateformat', 'short', $format);
 		$dateformat[0]['lang'] = \ACP3\CMS::$injector['Lang']->t('system', 'date_format_short');
 		$dateformat[1]['value'] = 'long';
-		$dateformat[1]['selected'] = selectEntry('dateformat', 'long', $format);
+		$dateformat[1]['selected'] = Functions::selectEntry('dateformat', 'long', $format);
 		$dateformat[1]['lang'] = \ACP3\CMS::$injector['Lang']->t('system', 'date_format_long');
 
 		return $dateformat;

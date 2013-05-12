@@ -9,7 +9,7 @@ class FeedGenerator extends AbstractRenderer {
 		require_once LIBRARIES_DIR . 'feedcreator/FeedWriter.php';
 		require_once LIBRARIES_DIR . 'feedcreator/FeedItem.php';
 
-		$this->renderer = new FeedWriter($this->config['feed_type']);
+		$this->renderer = new \FeedWriter($this->config['feed_type']);
 		$this->generateChannel();
 	}
 

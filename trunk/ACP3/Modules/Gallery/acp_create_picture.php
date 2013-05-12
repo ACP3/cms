@@ -39,7 +39,7 @@ if (ACP3\Core\Validate::isNumber(ACP3\CMS::$injector['URI']->id) === true &&
 		} elseif (ACP3\Core\Validate::formToken() === false) {
 			ACP3\CMS::$injector['View']->setContent(Core\Functions::errorBox(ACP3\CMS::$injector['Lang']->t('system', 'form_already_submitted')));
 		} else {
-			$result = moveFile($file['tmp_name'], $file['name'], 'gallery');
+			$result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'gallery');
 			$picNum = ACP3\CMS::$injector['Db']->fetchColumn('SELECT MAX(pic) FROM ' . DB_PRE . 'gallery_pictures WHERE gallery_id = ?', array(ACP3\CMS::$injector['URI']->id));
 
 			$insert_values = array(

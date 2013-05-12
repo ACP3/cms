@@ -26,9 +26,8 @@ class NewsFrontend extends Core\ModuleController {
 			$cat = 0;
 		}
 
-		if (Core\Modules::check('categories', 'functions') === true) {
-			require_once MODULES_DIR . 'categories/functions.php';
-			$this->injector['View']->assign('categories', categoriesList('news', $cat));
+		if (Core\Modules::isActive('categories') === true) {
+			$this->injector['View']->assign('categories', \ACP3\Modules\Categories\CategoriesFunctions::categoriesList('news', $cat));
 		}
 
 		$settings = Core\Config::getSettings('news');

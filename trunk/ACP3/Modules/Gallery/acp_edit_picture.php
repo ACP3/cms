@@ -41,7 +41,7 @@ if (ACP3\Core\Validate::isNumber(ACP3\CMS::$injector['URI']->id) === true &&
 		} else {
 			$new_file_sql = null;
 			if (isset($file) && is_array($file)) {
-				$result = moveFile($file['tmp_name'], $file['name'], 'gallery');
+				$result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'gallery');
 				$new_file_sql['file'] = $result['name'];
 			}
 

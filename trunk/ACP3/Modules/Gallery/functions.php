@@ -120,7 +120,7 @@ function deletePictureAliases($gallery_id)
  */
 function removePicture($file)
 {
-	removeUploadedFile('cache/images', 'gallery_thumb_' . $file);
-	removeUploadedFile('cache/images', 'gallery_' . $file);
-	removeUploadedFile('gallery', $file);
+	Core\Functions::removeUploadedFile('cache/images', 'gallery_thumb_' . $file);
+	Core\Functions::removeUploadedFile('cache/images', 'gallery_' . $file);
+	Core\Functions::removeUploadedFile('gallery', $file);
 }
