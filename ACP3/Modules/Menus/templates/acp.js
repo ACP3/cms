@@ -71,7 +71,7 @@ $(document).ready(function() {
 
 	$('#uri').blur(function() {
 		var match = $(this).val().match(/^articles\/details\/id_(\d+)\/$/);
-		if (match[1] != null && $('#articles option[value="' + match[1] + '"]').length > 0) {
+		if (match[1] !== null && $('#articles option[value="' + match[1] + '"]').length > 0) {
 			$('#mode').val(4).change();
 			$('#articles').val(match[1]);
 		}
@@ -88,7 +88,7 @@ $(document).ready(function() {
 		$('#parent optgroup[label=\'' + block + '\']').show();
 
 		$('#block-id option').each(function() {
-			if ($(this).is(':selected') && $('#block-id option').index(this) != def_block) {
+			if ($(this).is(':selected') && $('#block-id option').index(this) !== def_block) {
 				$('#parent optgroup option:selected').removeAttr('selected');
 			}
 		});
