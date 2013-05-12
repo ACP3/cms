@@ -392,7 +392,7 @@ class Functions {
 	 * @param string $dir
 	 *  Ordner, in den die Datei verschoben werden soll
 	 * @return array
-	 *  Gibt ein Array mit dem Namen und der Größe der neuen Datei aus
+	 *  Gibt ein Array mit dem Namen und der Größe der neuen Datei zurück
 	 */
 	public static function moveFile($tmp_filename, $filename, $dir)
 	{
@@ -411,7 +411,7 @@ class Functions {
 			} else {
 				$new_file = array();
 				$new_file['name'] = $new_name . $ext;
-				$new_file['size'] = calcFilesize(filesize($path . $new_file['name']));
+				$new_file['size'] = self::calcFilesize(filesize($path . $new_file['name']));
 
 				return $new_file;
 			}

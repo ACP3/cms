@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
+	<item key="acp_delete">Kommentare löschen</item>
 	<item key="acp_delete_comments">Kommentare löschen</item>
-	<item key="acp_delete_comments_per_module">Kommentare löschen</item>
 	<item key="acp_edit">Kommentar bearbeiten</item>
 	<item key="acp_list_comments">Kommentare</item>
 	<item key="acp_settings">Einstellungen</item>

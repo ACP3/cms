@@ -9,7 +9,7 @@
 
 namespace ACP3\Modules\News;
 
-use ACP3\Core;
+use ACP3\Core\Cache;
 
 /**
  * Stellt einige Helperfunktionen bereit
@@ -25,8 +25,8 @@ class NewsFunctions {
 	 */
 	public static function setNewsCache($id)
 	{
-		$data = ACP3\CMS::$injector['Db']->fetchAssoc('SELECT id, start, title, text, readmore, comments, category_id, uri, target, link_title FROM ' . DB_PRE . 'news WHERE id = ?', array($id));
-		return Core\Cache::create('details_id_' . $id, $data, 'news');
+		$data = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT id, start, title, text, readmore, comments, category_id, uri, target, link_title FROM ' . DB_PRE . 'news WHERE id = ?', array($id));
+		return Cache::create('details_id_' . $id, $data, 'news');
 	}
 
 	/**
@@ -38,10 +38,10 @@ class NewsFunctions {
 	 */
 	public static function getNewsCache($id)
 	{
-		if (Core\Cache::check('details_id_' . $id, 'news') === false)
+		if (Cache::check('details_id_' . $id, 'news') === false)
 			self::setNewsCache($id);
 
-		return Core\Cache::output('details_id_' . $id, 'news');
+		return Cache::output('details_id_' . $id, 'news');
 	}
 
 }
