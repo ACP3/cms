@@ -22,5 +22,5 @@
 	</li>
 {/if}
 	<li class="divider"></li>
-	<li><a href="{uri args="users/logout/last_`$user_sidebar.page`"}"><i class="icon-share"></i> {lang t="users|logout"}</a></li>
+	<li><a href="{uri args="users/logout/last_`$user_sidebar.page`"}"><i class="icon-off"></i> {lang t="users|logout"}</a></li>
 </ul>

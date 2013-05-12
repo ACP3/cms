@@ -509,7 +509,7 @@ class UsersFrontend extends Core\ModuleController {
 			$access_system = false;
 
 			foreach ($mod_list as $name => $info) {
-				$dir = $info['dir'];
+				$dir = strtolower($info['dir']);
 				if ($dir !== 'acp' && Core\Modules::check($dir, 'acp_list') === true) {
 					if ($dir === 'system') {
 						$access_system = true;
