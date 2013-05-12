@@ -3,6 +3,7 @@
 namespace ACP3\Modules\News;
 
 use ACP3\Core;
+use ACP3\Modules\Categories\CategoriesFunctions;
 
 /**
  * Description of NewsAdmin
@@ -18,8 +19,6 @@ class NewsAdmin extends Core\ModuleController {
 
 	public function actionCreate()
 	{
-		require_once MODULES_DIR . 'categories/functions.php';
-
 		$settings = Core\Config::getSettings('news');
 
 		if (isset($_POST['submit']) === true) {
@@ -29,9 +28,9 @@ class NewsAdmin extends Core\ModuleController {
 				$errors['title'] = $this->injector['Lang']->t('news', 'title_to_short');
 			if (strlen($_POST['text']) < 3)
 				$errors['text'] = $this->injector['Lang']->t('news', 'text_to_short');
-			if (strlen($_POST['cat_create']) < 3 && categoriesCheck($_POST['cat']) === false)
+			if (strlen($_POST['cat_create']) < 3 && CategoriesFunctions::categoriesCheck($_POST['cat']) === false)
 				$errors['cat'] = $this->injector['Lang']->t('news', 'select_category');
-			if (strlen($_POST['cat_create']) >= 3 && categoriesCheckDuplicate($_POST['cat_create'], 'news') === true)
+			if (strlen($_POST['cat_create']) >= 3 && CategoriesFunctions::categoriesCheckDuplicate($_POST['cat_create'], 'news') === true)
 				$errors['cat-create'] = $this->injector['Lang']->t('categories', 'category_already_exists');
 			if (!empty($_POST['link_title']) && (empty($_POST['uri']) || Core\Validate::isNumber($_POST['target']) === false))
 				$errors[] = $this->injector['Lang']->t('news', 'complete_hyperlink_statements');
@@ -52,7 +51,7 @@ class NewsAdmin extends Core\ModuleController {
 					'text' => Core\Functions::str_encode($_POST['text'], true),
 					'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,
 					'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
-					'category_id' => strlen($_POST['cat_create']) >= 3 ? categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
+					'category_id' => strlen($_POST['cat_create']) >= 3 ? CategoriesFunctions::categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
 					'uri' => Core\Functions::str_encode($_POST['uri'], true),
 					'target' => (int) $_POST['target'],
 					'link_title' => Core\Functions::str_encode($_POST['link_title']),
@@ -73,7 +72,7 @@ class NewsAdmin extends Core\ModuleController {
 			$this->injector['View']->assign('publication_period', $this->injector['Date']->datepicker(array('start', 'end')));
 
 			// Kategorien
-			$this->injector['View']->assign('categories', categoriesList('news', '', true));
+			$this->injector['View']->assign('categories', CategoriesFunctions::categoriesList('news', '', true));
 
 			// Weiterlesen & Kommentare
 			if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && Core\Modules::check('comments', 'functions') === true)) {
@@ -139,8 +138,6 @@ class NewsAdmin extends Core\ModuleController {
 	{
 		if (Core\Validate::isNumber($this->injector['URI']->id) === true &&
 				$this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'news WHERE id = ?', array($this->injector['URI']->id)) == 1) {
-			require_once MODULES_DIR . 'categories/functions.php';
-
 			$settings = Core\Config::getSettings('news');
 
 			if (isset($_POST['submit']) === true) {
@@ -150,9 +147,9 @@ class NewsAdmin extends Core\ModuleController {
 					$errors['title'] = $this->injector['Lang']->t('news', 'title_to_short');
 				if (strlen($_POST['text']) < 3)
 					$errors['text'] = $this->injector['Lang']->t('news', 'text_to_short');
-				if (strlen($_POST['cat_create']) < 3 && categoriesCheck($_POST['cat']) === false)
+				if (strlen($_POST['cat_create']) < 3 && CategoriesFunctions::categoriesCheck($_POST['cat']) === false)
 					$errors['cat'] = $this->injector['Lang']->t('news', 'select_category');
-				if (strlen($_POST['cat_create']) >= 3 && categoriesCheckDuplicate($_POST['cat_create'], 'news') === true)
+				if (strlen($_POST['cat_create']) >= 3 && CategoriesFunctions::categoriesCheckDuplicate($_POST['cat_create'], 'news') === true)
 					$errors['cat-create'] = $this->injector['Lang']->t('categories', 'category_already_exists');
 				if (!empty($_POST['link_title']) && (empty($_POST['uri']) || Core\Validate::isNumber($_POST['target']) === false))
 					$errors[] = $this->injector['Lang']->t('news', 'complete_additional_hyperlink_statements');
@@ -172,7 +169,7 @@ class NewsAdmin extends Core\ModuleController {
 						'text' => Core\Functions::str_encode($_POST['text'], true),
 						'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,
 						'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
-						'category_id' => strlen($_POST['cat_create']) >= 3 ? categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
+						'category_id' => strlen($_POST['cat_create']) >= 3 ? CategoriesFunctions::categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
 						'uri' => Core\Functions::str_encode($_POST['uri'], true),
 						'target' => (int) $_POST['target'],
 						'link_title' => Core\Functions::str_encode($_POST['link_title']),
@@ -183,8 +180,7 @@ class NewsAdmin extends Core\ModuleController {
 					if ((bool) CONFIG_SEO_ALIASES === true)
 						Core\SEO::insertUriAlias('news/details/id_' . $this->injector['URI']->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int) $_POST['seo_robots']);
 
-					require_once MODULES_DIR . 'news/functions.php';
-					setNewsCache($this->injector['URI']->id);
+					NewsFunctions::setNewsCache($this->injector['URI']->id);
 
 					$this->injector['Session']->unsetFormToken();
 
@@ -198,7 +194,7 @@ class NewsAdmin extends Core\ModuleController {
 				$this->injector['View']->assign('publication_period', $this->injector['Date']->datepicker(array('start', 'end'), array($news['start'], $news['end'])));
 
 				// Kategorien
-				$this->injector['View']->assign('categories', categoriesList('news', $news['category_id'], true));
+				$this->injector['View']->assign('categories', CategoriesFunctions::categoriesList('news', $news['category_id'], true));
 
 				// Weiterlesen & Kommentare
 				if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && Core\Modules::check('comments', 'functions') === true)) {
@@ -230,6 +226,31 @@ class NewsAdmin extends Core\ModuleController {
 			}
 		} else {
 			$this->injector['URI']->redirect('errors/404');
+		}
+	}
+
+	public function actionList()
+	{
+		Core\Functions::getRedirectMessage();
+
+		$news = $this->injector['Db']->fetchAll('SELECT n.id, n.start, n.end, n.title, c.title AS cat FROM ' . DB_PRE . 'news AS n, ' . DB_PRE . 'categories AS c WHERE n.category_id = c.id ORDER BY n.start DESC, n.end DESC, n.id DESC');
+		$c_news = count($news);
+
+		if ($c_news > 0) {
+			$can_delete = Core\Modules::check('news', 'acp_delete');
+			$config = array(
+				'element' => '#acp-table',
+				'sort_col' => $can_delete === true ? 1 : 0,
+				'sort_dir' => 'desc',
+				'hide_col_sort' => $can_delete === true ? 0 : ''
+			);
+			$this->injector['View']->appendContent(Core\Functions::datatable($config));
+
+			for ($i = 0; $i < $c_news; ++$i) {
+				$news[$i]['period'] = $this->injector['Date']->formatTimeRange($news[$i]['start'], $news[$i]['end']);
+			}
+			$this->injector['View']->assign('news', $news);
+			$this->injector['View']->assign('can_delete', $can_delete);
 		}
 	}
 
@@ -292,31 +313,6 @@ class NewsAdmin extends Core\ModuleController {
 			$this->injector['View']->assign('category_in_breadcrumb', Core\Functions::selectGenerator('category_in_breadcrumb', array(1, 0), $lang_category_in_breadcrumb, $settings['category_in_breadcrumb'], 'checked'));
 
 			$this->injector['Session']->generateFormToken();
-		}
-	}
-
-	public function actionList()
-	{
-		Core\Functions::getRedirectMessage();
-
-		$news = $this->injector['Db']->fetchAll('SELECT n.id, n.start, n.end, n.title, c.title AS cat FROM ' . DB_PRE . 'news AS n, ' . DB_PRE . 'categories AS c WHERE n.category_id = c.id ORDER BY n.start DESC, n.end DESC, n.id DESC');
-		$c_news = count($news);
-
-		if ($c_news > 0) {
-			$can_delete = Core\Modules::check('news', 'acp_delete');
-			$config = array(
-				'element' => '#acp-table',
-				'sort_col' => $can_delete === true ? 1 : 0,
-				'sort_dir' => 'desc',
-				'hide_col_sort' => $can_delete === true ? 0 : ''
-			);
-			$this->injector['View']->appendContent(Core\Functions::datatable($config));
-
-			for ($i = 0; $i < $c_news; ++$i) {
-				$news[$i]['period'] = $this->injector['Date']->formatTimeRange($news[$i]['start'], $news[$i]['end']);
-			}
-			$this->injector['View']->assign('news', $news);
-			$this->injector['View']->assign('can_delete', $can_delete);
 		}
 	}
 
