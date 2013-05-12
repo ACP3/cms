@@ -133,7 +133,7 @@ class FilesAdmin extends Core\ModuleController {
 			$this->injector['View']->setContent(Core\Functions::errorBox($this->injector['Lang']->t('system', 'no_entries_selected')));
 		} elseif (is_array($entries) === true) {
 			$marked_entries = implode('|', $entries);
-			$this->injector['View']->setContent(confirmBox($this->injector['Lang']->t('system', 'confirm_delete'), $this->injector['URI']->route('acp/files/delete/entries_' . $marked_entries . '/action_confirmed/'), $this->injector['URI']->route('acp/files')));
+			$this->injector['View']->setContent(Core\Functions::confirmBox($this->injector['Lang']->t('system', 'confirm_delete'), $this->injector['URI']->route('acp/files/delete/entries_' . $marked_entries . '/action_confirmed/'), $this->injector['URI']->route('acp/files')));
 		} elseif ($this->injector['URI']->action === 'confirmed') {
 			$marked_entries = explode('|', $entries);
 			$bool = false;

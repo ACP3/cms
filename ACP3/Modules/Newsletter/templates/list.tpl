@@ -7,8 +7,8 @@
 		<div class="controls">
 			<input type="email" name="mail" id="mail" maxlength="120" value="{$form.mail}" required><br>
 {foreach $actions as $row}
-			<label for="{$row.value}" class="radio inline">
-				<input type="radio" name="action" id="{$row.value}" value="{$row.value}"{$row.checked}>
+			<label for="{$row.id}" class="radio inline">
+				<input type="radio" name="action" id="{$row.id}" value="{$row.value}"{$row.checked}>
 				{$row.lang}
 			</label>
 {/foreach}
