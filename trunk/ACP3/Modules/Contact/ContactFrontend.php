@@ -40,18 +40,18 @@ class ContactFrontend extends Core\ModuleController {
 
 				$subject = sprintf($this->injector['Lang']->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
 				$body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($_POST['name'], $_POST['mail'], $_POST['message'], "\n"), $this->injector['Lang']->t('contact', 'contact_body'));
-				$bool = generateEmail('', $settings['mail'], $_POST['mail'], $subject, $body);
+				$bool = Core\Functions::generateEmail('', $settings['mail'], $_POST['mail'], $subject, $body);
 
 				// Nachrichtenkopie an Absender senden
 				if (isset($_POST['copy'])) {
 					$subject2 = sprintf($this->injector['Lang']->t('contact', 'sender_subject'), CONFIG_SEO_TITLE);
 					$body2 = sprintf($this->injector['Lang']->t('contact', 'sender_body'), CONFIG_SEO_TITLE, $_POST['message']);
-					generateEmail($_POST['name'], $_POST['mail'], $settings['mail'], $subject2, $body2);
+					Core\Functions::generateEmail($_POST['name'], $_POST['mail'], $settings['mail'], $subject2, $body2);
 				}
 
 				$this->injector['Session']->unsetFormToken();
 
-				$this->injector['View']->setContent(confirmBox($bool === true ? $this->injector['Lang']->t('contact', 'send_mail_success') : $this->injector['Lang']->t('contact', 'send_mail_error'), $this->injector['URI']->route('contact')));
+				$this->injector['View']->setContent(Core\Functions::confirmBox($bool === true ? $this->injector['Lang']->t('contact', 'send_mail_success') : $this->injector['Lang']->t('contact', 'send_mail_error'), $this->injector['URI']->route('contact')));
 			}
 		}
 		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {

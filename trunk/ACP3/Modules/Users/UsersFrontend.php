@@ -286,7 +286,7 @@ class UsersFrontend extends Core\ModuleController {
 					$body = str_replace($search, $replace, $this->injector['Lang']->t('users', 'forgot_pwd_mail_message'));
 
 					$settings = Core\Config::getSettings('users');
-					$mail_sent = generateEmail(substr($user['realname'], 0, -2), $user['mail'], $settings['mail'], $subject, $body);
+					$mail_sent = Core\Functions::generateEmail(substr($user['realname'], 0, -2), $user['mail'], $settings['mail'], $subject, $body);
 
 					// Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
 					if ($mail_sent === true) {
@@ -296,7 +296,7 @@ class UsersFrontend extends Core\ModuleController {
 
 					$this->injector['Session']->unsetFormToken();
 
-					$this->injector['View']->setContent(confirmBox($this->injector['Lang']->t('users', $mail_sent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'), ROOT_DIR));
+					$this->injector['View']->setContent(Core\Functions::confirmBox($this->injector['Lang']->t('users', $mail_sent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'), ROOT_DIR));
 				}
 			}
 			if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -425,7 +425,7 @@ class UsersFrontend extends Core\ModuleController {
 					$host = htmlentities($_SERVER['HTTP_HOST']);
 					$subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), $this->injector['Lang']->t('users', 'register_mail_subject'));
 					$body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($_POST['nickname'], $_POST['mail'], $_POST['pwd'], CONFIG_SEO_TITLE, $host), $this->injector['Lang']->t('users', 'register_mail_message'));
-					$mail_sent = generateEmail('', $_POST['mail'], $subject, $body);
+					$mail_sent = Core\Functions::generateEmail('', $_POST['mail'], $subject, $body);
 
 					$salt = salt(12);
 					$insert_values = array(
@@ -453,7 +453,7 @@ class UsersFrontend extends Core\ModuleController {
 
 					$this->injector['Session']->unsetFormToken();
 
-					$this->injector['View']->setContent(confirmBox($this->injector['Lang']->t('users', $mail_sent === true && $bool !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
+					$this->injector['View']->setContent(Core\Functions::confirmBox($this->injector['Lang']->t('users', $mail_sent === true && $bool !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
 				}
 			}
 			if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
