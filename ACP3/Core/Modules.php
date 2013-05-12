@@ -30,13 +30,15 @@ class Modules
 	 * @return integer
 	 */
 	public static function check($module, $file) {
+		$module = strtolower($module);
 		$moduleUc = ucfirst($module);
 		$section = strpos($file, 'acp_') === 0 ? 'Admin' : 'Frontend';
+
 		$path = MODULES_DIR . $moduleUc . '/' . $moduleUc . $section . '.php';
-		$className = "\\ACP3\\Modules\\" . $moduleUc . "\\" . $moduleUc . $section;
-		$method = 'action' . ucfirst($section === 'Admin' ? substr($file, 4) : $file);
 
 		if (is_file($path) === true) {
+			$className = "\\ACP3\\Modules\\" . $moduleUc . "\\" . $moduleUc . $section;
+			$method = 'action' . ucfirst($section === 'Admin' ? substr($file, 4) : $file);
 			if (method_exists($className, $method) === true) {
 				if (self::isActive($module) === true) {
 					return ACL::canAccessResource($module . '/' . $file . '/');
@@ -134,19 +136,20 @@ class Modules
 				$mod_info = XML::parseXmlFile($path, 'info');
 
 				if (!empty($mod_info)) {
-					$mod_db = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT version, active FROM ' . DB_PRE . 'modules WHERE name = ?', array($dir));
-					$infos[$dir] = array(
+					$mod_name = strtolower($dir);
+					$mod_db = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT version, active FROM ' . DB_PRE . 'modules WHERE name = ?', array($mod_name));
+					$infos[$mod_name] = array(
 						'dir' => $dir,
 						'active' =>  !empty($mod_db) && $mod_db['active'] == 1 ? true : false,
 						'schema_version' => !empty($mod_db) ? (int) $mod_db['version'] : 0,
 						'description' => isset($mod_info['description']['lang']) && $mod_info['description']['lang'] === 'true' ? \ACP3\CMS::$injector['Lang']->t($dir, 'mod_description') : $mod_info['description']['lang'],
 						'author' => $mod_info['author'],
 						'version' => isset($mod_info['version']['core']) && $mod_info['version']['core'] === 'true' ? CONFIG_VERSION : $mod_info['version'],
-						'name' => isset($mod_info['name']['lang']) && $mod_info['name']['lang'] == 'true' ? \ACP3\CMS::$injector['Lang']->t($dir, $dir) : $mod_info['name'],
+						'name' => isset($mod_info['name']['lang']) && $mod_info['name']['lang'] == 'true' ? \ACP3\CMS::$injector['Lang']->t($mod_name, $mod_name) : $mod_info['name'],
 						'categories' => isset($mod_info['categories']) ? true : false,
 						'protected' => isset($mod_info['protected']) ? true : false,
 					);
-					$infos[$dir]['dependencies'] = array_values(XML::parseXmlFile($path, 'info/dependencies'));
+					$infos[$mod_name]['dependencies'] = array_values(XML::parseXmlFile($path, 'info/dependencies'));
 				}
 			}
 		}
