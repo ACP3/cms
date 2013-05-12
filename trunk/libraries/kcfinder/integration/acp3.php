@@ -14,21 +14,21 @@ function CheckAuthentication($acp3_path) {
 		$current_cwd = getcwd();
 
 		define('IN_ACP3', true);
-		if (!defined('ACP3_ROOT'))
-			define('ACP3_ROOT', $acp3_path);
+		if (!defined('ACP3_ROOT_DIR'))
+			define('ACP3_ROOT_DIR', $acp3_path);
 
-		require_once ACP3_ROOT . 'includes/bootstrap.php';
+		require_once ACP3_ROOT_DIR . 'ACP3/CMS.php';
 
-		ACP3_CMS::defineDirConstants();
-		ACP3_CMS::includeAutoLoader();
-		ACP3_CMS::initializeDoctrineDBAL();
-		ACP3_CMS::initializeClasses();
+		\ACP3\CMS::defineDirConstants();
+		\ACP3\CMS::startupChecks();
+		\ACP3\CMS::includeAutoLoader();
+		\ACP3\CMS::initializeClasses();
 
 		// Simulate being in the drupal root folder so we can share the session
-		chdir(ACP3_ROOT);
+		chdir(ACP3_ROOT_DIR);
 
 		// if user has access permission...
-		if (ACP3_CMS::$auth->isUser()) {
+		if (\ACP3\CMS::$injector['Auth']->isUser()) {
 			if (!isset($_SESSION['KCFINDER'])) {
 				$_SESSION['KCFINDER'] = array();
 				$_SESSION['KCFINDER']['disabled'] = false;

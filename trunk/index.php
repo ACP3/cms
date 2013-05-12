@@ -8,7 +8,7 @@
  */
 
 define('IN_ACP3', true);
-define('ACP3_ROOT', realpath(__DIR__) . '/');
-require ACP3_ROOT . 'includes/bootstrap.php';
+define('ACP3_ROOT_DIR', realpath(__DIR__) . '/');
+require ACP3_ROOT_DIR . 'ACP3/CMS.php';
 
-ACP3_CMS::run();
+\ACP3\CMS::run();
