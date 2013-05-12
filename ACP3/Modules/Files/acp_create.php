@@ -47,7 +47,7 @@ if (isset($_POST['submit']) === true) {
 		ACP3\CMS::$injector['View']->setContent(Core\Functions::errorBox(ACP3\CMS::$injector['Lang']->t('system', 'form_already_submitted')));
 	} else {
 		if (is_array($file) === true) {
-			$result = moveFile($file['tmp_name'], $file['name'], 'files');
+			$result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'files');
 			$new_file = $result['name'];
 			$filesize = $result['size'];
 		} else {

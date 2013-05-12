@@ -22,7 +22,7 @@ class AcpAdmin extends Core\ModuleController {
 		$mods = array();
 
 		foreach ($mod_list as $name => $info) {
-			$dir = $info['dir'];
+			$dir = strtolower($info['dir']);
 			if (Core\Modules::check($dir, 'acp_list') === true && $dir !== 'acp') {
 				$mods[$name]['name'] = $name;
 				$mods[$name]['dir'] = $dir;

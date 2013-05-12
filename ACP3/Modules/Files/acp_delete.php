@@ -30,7 +30,7 @@ if (!isset($entries)) {
 		if (!empty($entry) && ACP3\CMS::$injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'files WHERE id = ?', array($entry)) == 1) {
 			// Datei ebenfalls löschen
 			$file = ACP3\CMS::$injector['Db']->fetchColumn('SELECT file FROM ' . DB_PRE . 'files WHERE id = ?', array($entry));
-			removeUploadedFile('files', $file);
+			Core\Functions::removeUploadedFile('files', $file);
 			$bool = ACP3\CMS::$injector['Db']->delete(DB_PRE . 'files', array('id' => $entry));
 			if ($commentsInstalled === true)
 				ACP3\CMS::$injector['Db']->delete(DB_PRE . 'comments', array('module' => 'files', 'entry_id' => $entry));

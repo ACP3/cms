@@ -53,7 +53,7 @@ if (ACP3\Core\Validate::isNumber(ACP3\CMS::$injector['URI']->id) === true &&
 			// Falls eine neue Datei angegeben wurde, Änderungen durchführen
 			if (isset($file)) {
 				if (is_array($file) === true) {
-					$result = moveFile($file['tmp_name'], $file['name'], 'files');
+					$result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'files');
 					$new_file = $result['name'];
 					$filesize = $result['size'];
 				} else {
@@ -79,7 +79,7 @@ if (ACP3\Core\Validate::isNumber(ACP3\CMS::$injector['URI']->id) === true &&
 			);
 			if (is_array($new_file_sql) === true) {
 				$old_file = ACP3\CMS::$injector['Db']->fetchColumn('SELECT file FROM ' . DB_PRE . 'files WHERE id = ?', array(ACP3\CMS::$injector['URI']->id));
-				removeUploadedFile('files', $old_file);
+				Core\Functions::removeUploadedFile('files', $old_file);
 
 				$update_values = array_merge($update_values, $new_file_sql);
 			}

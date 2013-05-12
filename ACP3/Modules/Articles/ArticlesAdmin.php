@@ -160,8 +160,6 @@ class ArticlesAdmin extends Core\ModuleController {
 	{
 		if (Core\Validate::isNumber($this->injector['URI']->id) === true &&
 				$this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'articles WHERE id = ?', array($this->injector['URI']->id)) == 1) {
-			require_once MODULES_DIR . 'articles/functions.php';
-
 			if (isset($_POST['submit']) === true) {
 				if (Core\Validate::date($_POST['start'], $_POST['end']) === false)
 					$errors[] = $this->injector['Lang']->t('system', 'select_date');
