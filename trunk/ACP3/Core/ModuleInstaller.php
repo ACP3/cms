@@ -34,8 +34,7 @@ abstract class ModuleInstaller {
 	 */
 	protected $special_resources = array();
 
-	public static function buildClassName($module)
-	{
+	public static function buildClassName($module) {
 		$mod_name = preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $module))));
 		return "\\ACP3\\Modules\\$mod_name\\{$mod_name}Installer";
 	}
@@ -45,8 +44,7 @@ abstract class ModuleInstaller {
 	 *
 	 * @param mixed $module_id
 	 */
-	public function setModuleId()
-	{
+	public function setModuleId() {
 		$mod_id = \ACP3\CMS::$injector['Db']->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($this->getName()));
 		$this->module_id = !empty($mod_id) ? (int) $mod_id : 0;
 	}
@@ -56,8 +54,7 @@ abstract class ModuleInstaller {
 	 *
 	 * @return integer
 	 */
-	public function getModuleId()
-	{
+	public function getModuleId() {
 		if (is_null($this->module_id))
 			$this->setModuleId();
 
@@ -69,8 +66,7 @@ abstract class ModuleInstaller {
 	 *
 	 * @return boolean
 	 */
-	public function install()
-	{
+	public function install() {
 		$bool1 = self::executeSqlQueries($this->createTables());
 		$bool2 = $this->addToModulesTable();
 		$bool3 = $this->installSettings($this->settings());
@@ -84,8 +80,7 @@ abstract class ModuleInstaller {
 	 *
 	 * @return boolean
 	 */
-	public function uninstall()
-	{
+	public function uninstall() {
 		$bool1 = self::executeSqlQueries($this->removeTables());
 		$bool2 = $this->removeFromModulesTable();
 		$bool3 = $this->removeSettings();
@@ -100,8 +95,7 @@ abstract class ModuleInstaller {
 	 * @param array $queries
 	 * @return boolean
 	 */
-	public static function executeSqlQueries(array $queries)
-	{
+	public static function executeSqlQueries(array $queries) {
 		if (count($queries) > 0) {
 			$search = array('{pre}', '{engine}', '{charset}');
 			$replace = array(DB_PRE, 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`');
@@ -127,8 +121,7 @@ abstract class ModuleInstaller {
 	 * @param string $module
 	 * @return array
 	 */
-	public static function getDependencies($module)
-	{
+	public static function getDependencies($module) {
 		if ((bool) preg_match('=/=', $module) === false) {
 			$path = MODULES_DIR . $module . '/module.xml';
 			if (is_file($path)) {
@@ -136,53 +129,66 @@ abstract class ModuleInstaller {
 				return array_values($deps);
 			}
 		}
-		
 	}
 
 	/**
 	 * Fügt die zu einen Modul zugehörigen Ressourcen ein
 	 *
 	 * @param integer $mode
-	 *	1 = Ressourcen und Regeln einlesen
-	 *	2 = Nur die Ressourcen einlesen
+	 * 	1 = Ressourcen und Regeln einlesen
+	 * 	2 = Nur die Ressourcen einlesen
 	 * @return boolean
 	 */
-	public function addResources($mode = 1)
-	{
+	public function addResources($mode = 1) {
 		$mod_name = $this->getName();
-		$modules = scandir(MODULES_DIR . $mod_name);
-		foreach ($modules as $row) {
-			if ($row !== '.' && $row !== '..' && $row !== 'install.class.php') {
-				// Erweiterungen
-				$path = MODULES_DIR . $mod_name . '/';
-				if (is_dir($path . $row) === true && $row === 'extensions') {
-					if (is_file($path . 'extensions/search.php') === true)
-						\ACP3\CMS::$injector['Db']->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->getModuleId(), 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
-					if (is_file($path . 'extensions/feeds.php') === true)
-						\ACP3\CMS::$injector['Db']->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->getModuleId(), 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
-				// Normale Moduldateien
-				} elseif (strpos($row, '.php') !== false) {
-					// .php entfernen
-					$row = substr($row, 0, -4);
-					if (isset($this->special_resources[$row])) {
-						$privilege_id = $this->special_resources[$row];
-					} else {
-						$privilege_id = 1;
+		$dir = ucfirst($mod_name);
 
-						if (strpos($row, 'create') === 0)
-							$privilege_id = 2;
-						if (strpos($row, 'acp_') === 0)
-							$privilege_id = 3;
-						if (strpos($row, 'acp_create') === 0 || strpos($row, 'acp_order') === 0)
-							$privilege_id = 4;
-						elseif (strpos($row, 'acp_edit') === 0)
-							$privilege_id = 5;
-						elseif (strpos($row, 'acp_delete') === 0)
-							$privilege_id = 6;
-						elseif (strpos($row, 'acp_settings') === 0)
-							$privilege_id = 7;
+		// Erweiterungen
+		$path = MODULES_DIR . $dir . '/';
+		if (is_dir($path . '/extensions/') === true) {
+			if (is_file($path . 'extensions/search.php') === true)
+				\ACP3\CMS::$injector['Db']->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->getModuleId(), 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
+			if (is_file($path . 'extensions/feeds.php') === true)
+				\ACP3\CMS::$injector['Db']->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->getModuleId(), 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
+			// Normale Moduldateien
+		}
+
+		$files = array($dir . 'Admin', $dir . 'Frontend');
+
+		foreach ($files as $file) {
+			if (is_file($path . $file . '.php') === true) {
+				$className = "\\ACP3\\Modules\\$dir\\$file";
+				$actions = get_class_methods($className);
+
+				foreach ($actions as $action) {
+					if ($action !== '__construct' && $action !== 'display') {
+						// Strip "action" from Methodname and lower case
+						$action = strtolower(substr($action, 6));
+						if (isset($this->special_resources[$action])) {
+							$privilege_id = $this->special_resources[$action];
+						} else {
+							// Frontend Seiten
+							if ($file === $dir . 'Frontend') {
+								$privilege_id = 1;
+								if (strpos($action, 'create') === 0)
+									$privilege_id = 2;
+								// Admin-Panel Seiten
+							} else {
+								$action = 'acp_' . $action;
+								$privilege_id = 3;
+								if (strpos($action, 'acp_create') === 0 || strpos($action, 'acp_order') === 0)
+									$privilege_id = 4;
+								elseif (strpos($action, 'acp_edit') === 0)
+									$privilege_id = 5;
+								elseif (strpos($action, 'acp_delete') === 0)
+									$privilege_id = 6;
+								elseif (strpos($action, 'acp_settings') === 0)
+									$privilege_id = 7;
+							}
+						}
+
+						\ACP3\CMS::$injector['Db']->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->getModuleId(), 'page' => $action, 'params' => '', 'privilege_id' => (int) $privilege_id));
 					}
-					\ACP3\CMS::$injector['Db']->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->getModuleId(), 'page' => $row, 'params' => '', 'privilege_id' => (int) $privilege_id));
 				}
 			}
 		}
@@ -218,8 +224,7 @@ abstract class ModuleInstaller {
 	 *
 	 * @return boolean
 	 */
-	protected function removeResources()
-	{
+	protected function removeResources() {
 		$bool = \ACP3\CMS::$injector['Db']->delete(DB_PRE . 'acl_resources', array('module_id' => $this->getModuleId()));
 		$bool2 = \ACP3\CMS::$injector['Db']->delete(DB_PRE . 'acl_rules', array('module_id' => $this->getModuleId()));
 
@@ -234,8 +239,7 @@ abstract class ModuleInstaller {
 	 * @param array $settings
 	 * @return boolean
 	 */
-	protected function installSettings(array $settings)
-	{
+	protected function installSettings(array $settings) {
 		if (count($settings) > 0) {
 			\ACP3\CMS::$injector['Db']->beginTransaction();
 			try {
@@ -256,8 +260,7 @@ abstract class ModuleInstaller {
 	 * 
 	 * @return boolean
 	 */
-	protected function removeSettings()
-	{
+	protected function removeSettings() {
 		return \ACP3\CMS::$injector['Db']->delete(DB_PRE . 'settings', array('module_id' => (int) $this->getModuleId())) >= 0 ? true : false;
 	}
 
@@ -266,8 +269,7 @@ abstract class ModuleInstaller {
 	 *
 	 * @return boolean
 	 */
-	protected function addToModulesTable()
-	{
+	protected function addToModulesTable() {
 		// Modul in die Modules-SQL-Tabelle eintragen
 		$bool = \ACP3\CMS::$injector['Db']->insert(DB_PRE . 'modules', array('id' => '', 'name' => $this->getName(), 'version' => $this->getSchemaVersion(), 'active' => 1));
 		$this->module_id = \ACP3\CMS::$injector['Db']->lastInsertId();
@@ -279,8 +281,7 @@ abstract class ModuleInstaller {
 	 * Löscht ein Modul aus der modules DB-Tabelle
 	 * @return boolean
 	 */
-	protected function removeFromModulesTable()
-	{
+	protected function removeFromModulesTable() {
 		return \ACP3\CMS::$injector['Db']->delete(DB_PRE . 'modules', array('id' => (int) $this->getModuleId())) >= 0 ? true : false;
 	}
 
@@ -290,8 +291,7 @@ abstract class ModuleInstaller {
 	 * @param array $queries
 	 * @return integer
 	 */
-	public function updateSchema()
-	{
+	public function updateSchema() {
 		$module = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT version FROM ' . DB_PRE . 'modules WHERE name = ?', array($this->getName()));
 		$installed_schema_version = isset($module['version']) ? (int) $module['version'] : 0;
 		$result = -1;
@@ -321,8 +321,7 @@ abstract class ModuleInstaller {
 	 * @param integer $installed_schema_version
 	 * @return integer
 	 */
-	private function interateOverSchemaUpdates(array $schema_updates, $installed_schema_version)
-	{
+	private function interateOverSchemaUpdates(array $schema_updates, $installed_schema_version) {
 		$result = -1;
 		foreach ($schema_updates as $new_schema_version => $queries) {
 			// Schema-Änderungen nur für neuere Versionen durchführen
@@ -332,7 +331,7 @@ abstract class ModuleInstaller {
 					$result = self::executeSqlQueries((array) $queries) === true ? 1 : 0;
 					if ($result !== 0)
 						$this->setNewSchemaVersion($new_schema_version);
-				// Mehrere Schema-Änderungen bei einer Version
+					// Mehrere Schema-Änderungen bei einer Version
 				} else {
 					if (!empty($queries) && is_array($queries) === true)
 						$result = self::executeSqlQueries($queries) === true ? 1 : 0;
@@ -351,8 +350,7 @@ abstract class ModuleInstaller {
 	 * @param integer $new_version
 	 * @return boolean
 	 */
-	public function setNewSchemaVersion($new_version)
-	{
+	public function setNewSchemaVersion($new_version) {
 		return \ACP3\CMS::$injector['Db']->update(DB_PRE . 'modules', array('version' => (int) $new_version), array('name' => $this->getName())) >= 0 ? true : false;
 	}
 
@@ -361,8 +359,7 @@ abstract class ModuleInstaller {
 	 *
 	 * @return array
 	 */
-	public function renameModule()
-	{
+	public function renameModule() {
 		return array();
 	}
 
