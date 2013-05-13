@@ -167,13 +167,11 @@ abstract class ModuleInstaller {
 						if (isset($this->special_resources[$action])) {
 							$privilege_id = $this->special_resources[$action];
 						} else {
-							// Frontend Seiten
-							if ($file === $dir . 'Frontend') {
+							if ($file === $dir . 'Frontend') { // Frontend Seiten
 								$privilege_id = 1;
 								if (strpos($action, 'create') === 0)
 									$privilege_id = 2;
-								// Admin-Panel Seiten
-							} else {
+							} else { // Admin-Panel Seiten
 								$action = 'acp_' . $action;
 								$privilege_id = 3;
 								if (strpos($action, 'acp_create') === 0 || strpos($action, 'acp_order') === 0)
