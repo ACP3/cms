@@ -25,7 +25,7 @@ class SystemAdmin extends Core\ModuleController {
 				$errors['flood'] = $this->injector['Lang']->t('system', 'type_in_flood_barrier');
 			if ((bool) preg_match('/\/$/', $_POST['icons_path']) === false)
 				$errors['icons-path'] = $this->injector['Lang']->t('system', 'incorrect_path_to_icons');
-			if ($_POST['wysiwyg'] != 'textarea' && (preg_match('=/=', $_POST['wysiwyg']) || is_file(ACP3_DIR . 'wysiwyg/' . $_POST['wysiwyg'] . '/info.xml') === false))
+			if ($_POST['wysiwyg'] != 'textarea' && (preg_match('=/=', $_POST['wysiwyg']) || is_file(CLASSES_DIR . 'WYSIWYG/' . $_POST['wysiwyg'] . '.php') === false))
 				$errors['wysiwyg'] = $this->injector['Lang']->t('system', 'select_editor');
 			if (empty($_POST['date_format_long']) || empty($_POST['date_format_short']))
 				$errors[] = $this->injector['Lang']->t('system', 'type_in_date_format');
@@ -115,22 +115,18 @@ class SystemAdmin extends Core\ModuleController {
 			$this->injector['View']->assign('entries', Core\Functions::recordsPerPage(CONFIG_ENTRIES));
 
 			// WYSIWYG-Editoren
-			$editors = scandir(ACP3_DIR . 'wysiwyg');
+			$editors = scandir(CLASSES_DIR . 'WYSIWYG');
 			$c_editors = count($editors);
 			$wysiwyg = array();
 
 			for ($i = 0; $i < $c_editors; ++$i) {
-				$info = Core\XML::parseXmlFile(ACP3_DIR . 'wysiwyg/' . $editors[$i] . '/info.xml', '/editor');
-				if (!empty($info)) {
+				$editors[$i] = substr($editors[$i], 0, strrpos($editors[$i], '.php'));
+				if (!empty($editors[$i]) && !in_array($editors[$i], array('.', '..', 'AbstractWYSIWYG'))) {
 					$wysiwyg[$i]['value'] = $editors[$i];
 					$wysiwyg[$i]['selected'] = Core\Functions::selectEntry('wysiwyg', $editors[$i], CONFIG_WYSIWYG);
-					$wysiwyg[$i]['lang'] = $info['name'] . ' ' . $info['version'];
+					$wysiwyg[$i]['lang'] = $editors[$i];
 				}
 			}
-			// Normale <textarea>
-			$wysiwyg[$i]['value'] = 'textarea';
-			$wysiwyg[$i]['selected'] = Core\Functions::selectEntry('wysiwyg', 'textarea', CONFIG_WYSIWYG);
-			$wysiwyg[$i]['lang'] = $this->injector['Lang']->t('system', 'textarea');
 			$this->injector['View']->assign('wysiwyg', $wysiwyg);
 
 			// Zeitzonen
