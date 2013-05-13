@@ -142,7 +142,7 @@ class Modules
 						'dir' => $dir,
 						'active' =>  !empty($mod_db) && $mod_db['active'] == 1 ? true : false,
 						'schema_version' => !empty($mod_db) ? (int) $mod_db['version'] : 0,
-						'description' => isset($mod_info['description']['lang']) && $mod_info['description']['lang'] === 'true' ? \ACP3\CMS::$injector['Lang']->t($dir, 'mod_description') : $mod_info['description']['lang'],
+						'description' => isset($mod_info['description']['lang']) && $mod_info['description']['lang'] === 'true' ? \ACP3\CMS::$injector['Lang']->t($mod_name, 'mod_description') : $mod_info['description']['lang'],
 						'author' => $mod_info['author'],
 						'version' => isset($mod_info['version']['core']) && $mod_info['version']['core'] === 'true' ? CONFIG_VERSION : $mod_info['version'],
 						'name' => isset($mod_info['name']['lang']) && $mod_info['name']['lang'] == 'true' ? \ACP3\CMS::$injector['Lang']->t($mod_name, $mod_name) : $mod_info['name'],

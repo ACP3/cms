@@ -11,13 +11,11 @@ use ACP3\Core;
  */
 class SystemAdmin extends Core\ModuleController {
 
-	public function __construct($injector)
-	{
+	public function __construct($injector) {
 		parent::__construct($injector);
 	}
 
-	public function actionConfiguration()
-	{
+	public function actionConfiguration() {
 		if (isset($_POST['submit']) === true) {
 			if (Core\Validate::isInternalURI($_POST['homepage']) === false)
 				$errors['homepage'] = $this->injector['Lang']->t('system', 'incorrect_homepage');
@@ -187,8 +185,7 @@ class SystemAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionDesigns()
-	{
+	public function actionDesigns() {
 		$this->injector['Breadcrumb']
 				->append($this->injector['Lang']->t('system', 'acp_extensions'), $this->injector['URI']->route('acp/system/extensions'))
 				->append($this->injector['Lang']->t('system', 'acp_designs'));
@@ -226,13 +223,11 @@ class SystemAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionExtensions()
-	{
+	public function actionExtensions() {
 		$this->injector['View']->setContentTemplate('system/acp_extensions.tpl');
 	}
 
-	public function actionLanguages()
-	{
+	public function actionLanguages() {
 		$this->injector['Breadcrumb']
 				->append($this->injector['Lang']->t('system', 'acp_extensions'), $this->injector['URI']->route('acp/system/extensions'))
 				->append($this->injector['Lang']->t('system', 'acp_languages'));
@@ -265,18 +260,15 @@ class SystemAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionList()
-	{
+	public function actionList() {
 		$this->injector['View']->setContentTemplate('system/acp_list.tpl');
 	}
 
-	public function actionMaintenance()
-	{
+	public function actionMaintenance() {
 		$this->injector['View']->setContentTemplate('system/acp_maintenance.tpl');
 	}
 
-	public function actionModules()
-	{
+	public function actionModules() {
 		$this->injector['Breadcrumb']
 				->append($this->injector['Lang']->t('system', 'acp_extensions'), $this->injector['URI']->route('acp/system/extensions'))
 				->append($this->injector['Lang']->t('system', 'acp_modules'));
@@ -324,7 +316,8 @@ class SystemAdmin extends Core\ModuleController {
 				$bool = false;
 				// Nur noch nicht installierte Module berücksichtigen
 				if ($this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'modules WHERE name = ?', array($this->injector['URI']->dir)) == 0) {
-					$path = MODULES_DIR . $this->injector['URI']->dir . '/install.class.php';
+					$mod_name = ucfirst($this->injector['URI']->dir);
+					$path = MODULES_DIR . $mod_name . '/' . $mod_name . 'Installer.php';
 					if (is_file($path) === true) {
 						// Modulabhängigkeiten prüfen
 						$deps = SystemFunctions::checkInstallDependencies($this->injector['URI']->dir);
@@ -342,7 +335,7 @@ class SystemAdmin extends Core\ModuleController {
 							$text = sprintf($this->injector['Lang']->t('system', 'enable_following_modules_first'), implode(', ', $deps));
 						}
 					} else {
-						$text = $this->injector['Lang']->t('system', 'module_installer_dot_found');
+						$text = $this->injector['Lang']->t('system', 'module_installer_not_found');
 					}
 				} else {
 					$text = $this->injector['Lang']->t('system', 'module_already_installed');
@@ -355,7 +348,8 @@ class SystemAdmin extends Core\ModuleController {
 				// Nur installierte und Nicht-Core-Module berücksichtigen
 				if ($mod_info['protected'] === false &&
 						$this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'modules WHERE name = ?', array($this->injector['URI']->dir)) == 1) {
-					$path = MODULES_DIR . $this->injector['URI']->dir . '/install.class.php';
+					$mod_name = ucfirst($this->injector['URI']->dir);
+					$path = MODULES_DIR . $mod_name . '/' . $mod_name . 'Installer.php';
 					if (is_file($path) === true) {
 						// Modulabhängigkeiten prüfen
 						$deps = SystemFunctions::checkUninstallDependencies($this->injector['URI']->dir);
@@ -373,7 +367,7 @@ class SystemAdmin extends Core\ModuleController {
 							$text = sprintf($this->injector['Lang']->t('system', 'uninstall_following_modules_first'), implode(', ', $deps));
 						}
 					} else {
-						$text = $this->injector['Lang']->t('system', 'module_installer_dot_found');
+						$text = $this->injector['Lang']->t('system', 'module_installer_not_found');
 					}
 				} else {
 					$text = $this->injector['Lang']->t('system', 'protected_module_description');
@@ -402,8 +396,7 @@ class SystemAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionSql_export()
-	{
+	public function actionSql_export() {
 		$this->injector['Breadcrumb']
 				->append($this->injector['Lang']->t('system', 'acp_maintenance'), $this->injector['URI']->route('acp/system/maintenance'))
 				->append($this->injector['Lang']->t('system', 'acp_sql_export'));
@@ -505,8 +498,7 @@ class SystemAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionSql_import()
-	{
+	public function actionSql_import() {
 		$this->injector['Breadcrumb']
 				->append($this->injector['Lang']->t('system', 'acp_maintenance'), $this->injector['URI']->route('acp/system/maintenance'))
 				->append($this->injector['Lang']->t('system', 'acp_sql_import'));
@@ -562,9 +554,9 @@ class SystemAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionUpdate_check()
-	{
-		$this->injector['Breadcrumb']->append($this->injector['Lang']->t('system', 'acp_maintenance'), $this->injector['URI']->route('acp/system/maintenance'))
+	public function actionUpdate_check() {
+		$this->injector['Breadcrumb']
+				->append($this->injector['Lang']->t('system', 'acp_maintenance'), $this->injector['URI']->route('acp/system/maintenance'))
 				->append($this->injector['Lang']->t('system', 'acp_update_check'));
 
 		$file = @file_get_contents('http://www.acp3-cms.net/update.txt');
