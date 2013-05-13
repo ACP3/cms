@@ -94,7 +94,7 @@ class FilesAdmin extends Core\ModuleController {
 			// Formularelemente
 			$this->injector['View']->assign('categories', CategoriesFunctions::categoriesList('files', '', true));
 
-			if (Core\Modules::check('comments', 'functions') === true && $settings['comments'] == 1) {
+			if ($settings['comments'] == 1 && Core\Modules::isActive('comments') === true) {
 				$options = array();
 				$options[0]['name'] = 'comments';
 				$options[0]['checked'] = Core\Functions::selectEntry('comments', '1', '0', 'checked');
@@ -255,7 +255,7 @@ class FilesAdmin extends Core\ModuleController {
 				// Formularelemente
 				$this->injector['View']->assign('categories', CategoriesFunctions::categoriesList('files', $dl['category_id'], true));
 
-				if (Core\Modules::check('comments', 'functions') === true && $settings['comments'] == 1) {
+				if ($settings['comments'] == 1 && Core\Modules::isActive('comments') === true) {
 					$options = array();
 					$options[0]['name'] = 'comments';
 					$options[0]['checked'] = Core\Functions::selectEntry('comments', '1', $dl['comments'], 'checked');

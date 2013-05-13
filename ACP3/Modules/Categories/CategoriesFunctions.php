@@ -84,7 +84,7 @@ class CategoriesFunctions {
 				\ACP3\CMS::$injector['Db']->insert(DB_PRE . 'categories', $insert_values);
 				$last_id = \ACP3\CMS::$injector['Db']->lastInsertId();
 				\ACP3\CMS::$injector['Db']->commit();
-				setCategoriesCache($module);
+				self::setCategoriesCache($module);
 				return $last_id;
 			} catch (\Exception $e) {
 				\ACP3\CMS::$injector['Db']->rollback();

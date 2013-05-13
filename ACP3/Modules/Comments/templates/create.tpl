@@ -18,8 +18,6 @@
 {$captcha}
 {/if}
 	<div class="form-actions">
-		<input type="hidden" name="module" value="{$form.module}">
-		<input type="hidden" name="entry_id" value="{$form.entry_id}">
 		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
 		{$form_token}
 	</div>

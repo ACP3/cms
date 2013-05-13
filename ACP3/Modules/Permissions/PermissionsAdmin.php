@@ -113,7 +113,7 @@ class PermissionsAdmin extends Core\ModuleController {
 		if (isset($_POST['submit']) === true) {
 			if (empty($_POST['modules']) || Core\Modules::isInstalled($_POST['modules']) === false)
 				$errors['modules'] = $this->injector['Lang']->t('permissions', 'select_module');
-			if (empty($_POST['resource']) || preg_match('=/=', $_POST['resource']) || Core\Validate::isInternalURI($_POST['modules'] . '/' . $_POST['resource'] . '/') === false)
+			if (empty($_POST['resource']) || preg_match('=/=', $_POST['resource']) || Core\Validate::isInternalURI(strtolower($_POST['modules']) . '/' . $_POST['resource'] . '/') === false)
 				$errors['resource'] = $this->injector['Lang']->t('permissions', 'type_in_resource');
 			if (empty($_POST['privileges']) || Core\Validate::isNumber($_POST['privileges']) === false)
 				$errors['privileges'] = $this->injector['Lang']->t('permissions', 'select_privilege');
