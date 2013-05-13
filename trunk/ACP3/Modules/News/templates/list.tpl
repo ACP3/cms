@@ -26,10 +26,10 @@
 	<div class="content">
 		{$row.text}
 	</div>
-{if $row.allow_comments}
+{if isset($row.comments_count)}
 	<footer class="align-center">
 		<a href="{uri args="news/details/id_`$row.id`"}#comments">{lang t="comments|comments"}</a>
-		<span>({$row.comments})</span>
+		<span>({$row.comments_count})</span>
 	</footer>
 {/if}
 </article>

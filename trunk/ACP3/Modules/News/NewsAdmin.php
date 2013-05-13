@@ -75,7 +75,7 @@ class NewsAdmin extends Core\ModuleController {
 			$this->injector['View']->assign('categories', CategoriesFunctions::categoriesList('news', '', true));
 
 			// Weiterlesen & Kommentare
-			if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && Core\Modules::check('comments', 'functions') === true)) {
+			if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && Core\Modules::isActive('comments') === true)) {
 				$i = 0;
 				$options = array();
 				if ($settings['readmore'] == 1) {
@@ -84,7 +84,7 @@ class NewsAdmin extends Core\ModuleController {
 					$options[$i]['lang'] = $this->injector['Lang']->t('news', 'activate_readmore');
 					$i++;
 				}
-				if ($settings['comments'] == 1 && Core\Modules::check('comments', 'functions') === true) {
+				if ($settings['comments'] == 1 && Core\Modules::isActive('comments') === true) {
 					$options[$i]['name'] = 'comments';
 					$options[$i]['checked'] = Core\Functions::selectEntry('comments', '1', '0', 'checked');
 					$options[$i]['lang'] = $this->injector['Lang']->t('system', 'allow_comments');
@@ -197,7 +197,7 @@ class NewsAdmin extends Core\ModuleController {
 				$this->injector['View']->assign('categories', CategoriesFunctions::categoriesList('news', $news['category_id'], true));
 
 				// Weiterlesen & Kommentare
-				if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && Core\Modules::check('comments', 'functions') === true)) {
+				if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && Core\Modules::isActive('comments') === true)) {
 					$i = 0;
 					$options = array();
 					if ($settings['readmore'] == 1) {
@@ -206,7 +206,7 @@ class NewsAdmin extends Core\ModuleController {
 						$options[$i]['lang'] = $this->injector['Lang']->t('news', 'activate_readmore');
 						$i++;
 					}
-					if ($settings['comments'] == 1 && Core\Modules::check('comments', 'functions') === true) {
+					if ($settings['comments'] == 1 && Core\Modules::isActive('comments') === true) {
 						$options[$i]['name'] = 'comments';
 						$options[$i]['checked'] = Core\Functions::selectEntry('comments', '1', $news['comments'], 'checked');
 						$options[$i]['lang'] = $this->injector['Lang']->t('system', 'allow_comments');

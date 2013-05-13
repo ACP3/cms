@@ -66,10 +66,9 @@ class GalleryFrontend extends Core\ModuleController {
 				$this->injector['View']->assign('picture_next', $picture_next);
 			}
 
-			if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $picture['comments'] == 1 && Core\Modules::check('comments', 'functions') === true) {
-				require_once MODULES_DIR . 'comments/functions.php';
-
-				$this->injector['View']->assign('comments', commentsList('gallery', $this->injector['URI']->id));
+			if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $picture['comments'] == 1 && Core\Modules::check('comments', 'list') === true) {
+				$comments = new \ACP3\Modules\Comments\CommentsFrontend($this->injector, 'gallery', $this->injector['URI']->id);
+				$this->injector['View']->assign('comments', $comments->actionList());
 			}
 		} else {
 			$this->injector['URI']->redirect('errors/404');

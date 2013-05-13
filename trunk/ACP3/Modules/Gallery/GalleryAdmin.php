@@ -109,7 +109,7 @@ class GalleryAdmin extends Core\ModuleController {
 				}
 			}
 			if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-				if ($settings['overlay'] == 0 && $settings['comments'] == 1 && Core\Modules::check('comments', 'functions') === true) {
+				if ($settings['overlay'] == 0 && $settings['comments'] == 1 && Core\Modules::isActive('comments') === true) {
 					$options = array();
 					$options[0]['name'] = 'comments';
 					$options[0]['checked'] = Core\Functions::selectEntry('comments', '1', '0', 'checked');
@@ -338,7 +338,7 @@ class GalleryAdmin extends Core\ModuleController {
 				}
 			}
 			if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-				if ($settings['overlay'] == 0 && $settings['comments'] == 1 && Core\Modules::check('comments', 'functions') === true) {
+				if ($settings['overlay'] == 0 && $settings['comments'] == 1 && Core\Modules::isActive('comments') === true) {
 					$options = array();
 					$options[0]['name'] = 'comments';
 					$options[0]['checked'] = Core\Functions::selectEntry('comments', '1', $picture['comments'], 'checked');

@@ -63,10 +63,9 @@ class FilesFrontend extends Core\ModuleController {
 				$file['date_iso'] = $this->injector['Date']->format($file['start'], 'c');
 				$this->injector['View']->assign('file', $file);
 
-				if ($settings['comments'] == 1 && $file['comments'] == 1 && Core\Modules::check('comments', 'functions') === true) {
-					require_once MODULES_DIR . 'comments/functions.php';
-
-					$this->injector['View']->assign('comments', commentsList('files', $this->injector['URI']->id));
+				if ($settings['comments'] == 1 && $file['comments'] == 1 && Core\Modules::check('comments', 'list') === true) {
+					$comments = new \ACP3\Modules\Comments\CommentsFrontend($this->injector, 'files', $this->injector['URI']->id);
+					$this->injector['View']->assign('comments', $comments->actionList());
 				}
 			}
 		} else {
