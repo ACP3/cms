@@ -8,6 +8,7 @@ namespace ACP3;
 
 class CMS {
 	/**
+	 * Pimple Dependency Injector
 	 *
 	 * @var \ACP3\Core\Pimple
 	 */

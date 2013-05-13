@@ -5,7 +5,7 @@ namespace ACP3\Modules\Articles;
 use ACP3\Core\ModuleInstaller;
 use ACP3\Core\Modules;
 
-class Articles_Installer extends ModuleInstaller {
+class ArticlesInstaller extends ModuleInstaller {
 
 	private $module_name = 'articles';
 	private $schema_version = 32;

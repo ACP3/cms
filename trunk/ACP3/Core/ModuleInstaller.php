@@ -36,8 +36,8 @@ abstract class ModuleInstaller {
 
 	public static function buildClassName($module)
 	{
-		$className = preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $module)))) . '_ModuleInstaller';
-		return "\\ACP3\\Modules\\$className";
+		$mod_name = preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $module))));
+		return "\\ACP3\\Modules\\$mod_name\\{$mod_name}Installer";
 	}
 
 	/**

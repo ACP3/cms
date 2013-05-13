@@ -49,7 +49,7 @@ class SystemFunctions {
 				$deps = Core\ModuleInstaller::getDependencies($row);
 				if (!empty($deps) &&
 						Core\Modules::isInstalled($row) === true &&
-						in_array(ACP3\CMS::$injector['URI']->dir, $deps) === true) {
+						in_array(\ACP3\CMS::$injector['URI']->dir, $deps) === true) {
 					$mods_to_uninstall[] = ucfirst($row);
 				}
 			}
