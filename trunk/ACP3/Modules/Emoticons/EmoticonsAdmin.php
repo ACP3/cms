@@ -48,7 +48,7 @@ class EmoticonsAdmin extends Core\ModuleController {
 				);
 
 				$bool = $this->injector['Db']->insert(DB_PRE . 'emoticons', $insert_values);
-				setEmoticonsCache();
+				EmoticonsFunctions::setEmoticonsCache();
 
 				$this->injector['Session']->unsetFormToken();
 
@@ -74,8 +74,6 @@ class EmoticonsAdmin extends Core\ModuleController {
 			$marked_entries = implode('|', $entries);
 			$this->injector['View']->setContent(Core\Functions::confirmBox($this->injector['Lang']->t('system', 'confirm_delete'), $this->injector['URI']->route('acp/emoticons/delete/entries_' . $marked_entries . '/action_confirmed/'), $this->injector['URI']->route('acp/emoticons')));
 		} elseif ($this->injector['URI']->action === 'confirmed') {
-			require_once MODULES_DIR . 'emoticons/functions.php';
-
 			$marked_entries = explode('|', $entries);
 			$bool = false;
 			foreach ($marked_entries as $entry) {
@@ -87,7 +85,7 @@ class EmoticonsAdmin extends Core\ModuleController {
 				}
 			}
 
-			setEmoticonsCache();
+			EmoticonsFunctions::setEmoticonsCache();
 
 			Core\Functions::setRedirectMessage($bool, $this->injector['Lang']->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/emoticons');
 		} else {
@@ -98,8 +96,6 @@ class EmoticonsAdmin extends Core\ModuleController {
 	public function actionEdit() {
 		if (Core\Validate::isNumber($this->injector['URI']->id) === true &&
 				$this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'emoticons WHERE id = ?', array($this->injector['URI']->id)) == 1) {
-			require_once MODULES_DIR . 'emoticons/functions.php';
-
 			if (isset($_POST['submit']) === true) {
 				if (!empty($_FILES['picture']['tmp_name'])) {
 					$file['tmp_name'] = $_FILES['picture']['tmp_name'];
@@ -140,7 +136,7 @@ class EmoticonsAdmin extends Core\ModuleController {
 					}
 
 					$bool = $this->injector['Db']->update(DB_PRE . 'emoticons', $update_values, array('id' => $this->injector['URI']->id));
-					setEmoticonsCache();
+					EmoticonsFunctions::setEmoticonsCache();
 
 					$this->injector['Session']->unsetFormToken();
 

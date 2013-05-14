@@ -152,9 +152,7 @@ class MenusAdmin extends Core\ModuleController {
 			$lang_display = array($this->injector['Lang']->t('system', 'yes'), $this->injector['Lang']->t('system', 'no'));
 			$this->injector['View']->assign('display', Core\Functions::selectGenerator('display', array(1, 0), $lang_display, 1, 'checked'));
 
-			if (Core\Modules::check('articles', 'functions') === true) {
-				require_once MODULES_DIR . 'articles/functions.php';
-
+			if (Core\Modules::isActive('articles') === true) {
 				$this->injector['View']->assign('articles', \ACP3\Modules\Articles\ArticlesFunctions::articlesList());
 			}
 
@@ -392,9 +390,7 @@ class MenusAdmin extends Core\ModuleController {
 				$lang_display = array($this->injector['Lang']->t('system', 'yes'), $this->injector['Lang']->t('system', 'no'));
 				$this->injector['View']->assign('display', Core\Functions::selectGenerator('display', array(1, 0), $lang_display, $page['display'], 'checked'));
 
-				if (Core\Modules::check('articles', 'functions') === true) {
-					require_once MODULES_DIR . 'articles/functions.php';
-
+				if (Core\Modules::isActive('articles') === true) {
 					$matches = array();
 					if (!isset($_POST['submit']) && $page['mode'] == 4) {
 						preg_match_all('/^(articles\/details\/id_([0-9]+)\/)$/', $page['uri'], $matches);

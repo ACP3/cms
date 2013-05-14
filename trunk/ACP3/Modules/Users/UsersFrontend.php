@@ -250,7 +250,7 @@ class UsersFrontend extends Core\ModuleController {
 					->append($this->injector['Lang']->t('users', 'users'), $this->injector['URI']->route('users'))
 					->append($this->injector['Lang']->t('users', 'forgot_pwd'));
 
-			$captchaAccess = Core\Modules::check('captcha', 'functions');
+			$captchaAccess = Core\Modules::isActive('captcha');
 
 			if (isset($_POST['submit']) === true) {
 				if (empty($_POST['nick_mail']))
@@ -305,8 +305,7 @@ class UsersFrontend extends Core\ModuleController {
 				$this->injector['View']->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
 				if ($captchaAccess === true) {
-					require_once MODULES_DIR . 'captcha/functions.php';
-					$this->injector['View']->assign('captcha', captcha());
+					$this->injector['View']->assign('captcha', \ACP3\Modules\Captcha\CaptchaFunctions::captcha());
 				}
 
 				$this->injector['Session']->generateFormToken();
@@ -400,7 +399,7 @@ class UsersFrontend extends Core\ModuleController {
 					->append($this->injector['Lang']->t('users', 'users'), $this->injector['URI']->route('users'))
 					->append($this->injector['Lang']->t('users', 'register'));
 
-			$captchaAccess = Core\Modules::check('captcha', 'functions');
+			$captchaAccess = Core\Modules::isActive('captcha');
 
 			if (isset($_POST['submit']) === true) {
 				if (empty($_POST['nickname']))
@@ -465,8 +464,7 @@ class UsersFrontend extends Core\ModuleController {
 				$this->injector['View']->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
 				if ($captchaAccess === true) {
-					require_once MODULES_DIR . 'captcha/functions.php';
-					$this->injector['View']->assign('captcha', captcha());
+					$this->injector['View']->assign('captcha', \ACP3\Modules\Captcha\CaptchaFunctions::captcha());
 				}
 
 				$this->injector['Session']->generateFormToken();

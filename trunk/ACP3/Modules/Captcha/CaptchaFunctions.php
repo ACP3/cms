@@ -21,7 +21,7 @@ class CaptchaFunctions {
 	 *  Anzahl der Zeichen, welche das Captcha haben soll
 	 * @return string
 	 */
-	public static function captcha($captcha_length = 5)
+	public static function captcha($captcha_length = 5, $id = 'captcha')
 	{
 		// Wenn man als User angemeldet ist, Captcha nicht anzeigen
 		if (\ACP3\CMS::$injector['Auth']->isUser() === false) {
@@ -29,6 +29,7 @@ class CaptchaFunctions {
 
 			$captcha = array();
 			$captcha['width'] = $captcha_length * 25;
+			$captcha['id'] = $id;
 			$captcha['height'] = 30;
 			\ACP3\CMS::$injector['View']->assign('captcha', $captcha);
 			return \ACP3\CMS::$injector['View']->fetchTemplate('captcha/captcha.tpl');
