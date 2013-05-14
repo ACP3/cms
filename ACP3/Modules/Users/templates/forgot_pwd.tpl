@@ -5,7 +5,7 @@
 	<div class="control-group">
 		<label for="nick-mail" class="control-label">{lang t="users|nickname_or_email"}</label>
 		<div class="controls">
-			<input type="text" name="nick_mail" id="nick-mail" value="{$form.nick_mail}" maxlength="120">
+			<input type="text" name="nick_mail" id="nick-mail" value="{$form.nick_mail}" maxlength="120" required>
 			<p class="help-block">{lang t="users|forgot_pwd_description"}</p>
 		</div>
 	</div>

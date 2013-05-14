@@ -1,12 +1,15 @@
 <?php
+
 /**
  * @author Tino Goratsch
  * @package ACP3
  * @subpackage Core
  */
+
 namespace ACP3;
 
 class CMS {
+
 	/**
 	 * Pimple Dependency Injector
 	 *
@@ -17,8 +20,7 @@ class CMS {
 	/**
 	 * Führt alle nötigen Schritte aus, um die Seite anzuzeigen
 	 */
-	public static function run()
-	{
+	public static function run() {
 		self::defineDirConstants();
 		self::startupChecks();
 		self::includeAutoLoader();
@@ -29,8 +31,7 @@ class CMS {
 	/**
 	 * Überprüft, ob die config.php existiert
 	 */
-	public static function startupChecks()
-	{
+	public static function startupChecks() {
 		// Standardzeitzone festlegen
 		date_default_timezone_set('UTC');
 
@@ -38,7 +39,7 @@ class CMS {
 		$path = ACP3_DIR . 'config.php';
 		if (is_file($path) === false || filesize($path) === 0) {
 			exit('The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow its instructions.');
-		// Wenn alles okay ist, config.php einbinden und error_reporting setzen
+			// Wenn alles okay ist, config.php einbinden und error_reporting setzen
 		} else {
 			require_once ACP3_DIR . 'config.php';
 
@@ -50,8 +51,7 @@ class CMS {
 	/**
 	 * Einige Pfadkonstanten definieren
 	 */
-	public static function defineDirConstants()
-	{
+	public static function defineDirConstants() {
 		define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
 		$php_self = dirname(PHP_SELF);
 		define('ROOT_DIR', $php_self !== '/' ? $php_self . '/' : '/');
@@ -66,8 +66,7 @@ class CMS {
 	/**
 	 * Klassen Autoloader inkludieren
 	 */
-	public static function includeAutoLoader()
-	{
+	public static function includeAutoLoader() {
 		require_once LIBRARIES_DIR . 'Doctrine/Common/ClassLoader.php';
 
 		$clACP3 = new \Doctrine\Common\ClassLoader('ACP3', ACP3_ROOT_DIR);
@@ -80,10 +79,9 @@ class CMS {
 	/**
 	 * Überprüfen, ob der Wartungsmodus aktiv ist
 	 */
-	public static function checkForMaintenanceMode()
-	{
+	public static function checkForMaintenanceMode() {
 		if ((bool) CONFIG_MAINTENANCE_MODE === true &&
-			(defined('IN_ADM') === false && strpos(self::$injector['URI']->query,'users/login/') !== 0)) {
+				(defined('IN_ADM') === false && strpos(self::$injector['URI']->query, 'users/login/') !== 0)) {
 			self::$injector['View']->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
 			self::$injector['View']->assign('CONTENT', CONFIG_MAINTENANCE_MESSAGE);
 			self::$injector['View']->displayTemplate('system/maintenance.tpl');
@@ -94,12 +92,10 @@ class CMS {
 	/**
 	 * Initialisieren der anderen Klassen
 	 */
-	public static function initializeClasses()
-	{
+	public static function initializeClasses() {
 		// DI
 		self::$injector = new Core\Pimple();
 
-		// DoctrineDBAL instanziieren
 		$config = new \Doctrine\DBAL\Configuration();
 		$connectionParams = array(
 			'dbname' => CONFIG_DB_NAME,
@@ -123,14 +119,8 @@ class CMS {
 		$classes = array('View', 'URI', 'Session', 'Auth', 'Lang', 'Date', 'Breadcrumb');
 
 		foreach ($classes as $class) {
-			if ($class === 'URI') {
-				self::$injector['URI'] = self::$injector->share(function($c) {
-					return new Core\URI();
-				});
-			} else {
-				$className = "\\ACP3\\Core\\" . $class;
-				self::$injector[$class] = new $className();
-			}
+			$className = "\\ACP3\\Core\\" . $class;
+			self::$injector[$class] = new $className();
 		}
 		Core\View::factory('Smarty');
 		Core\ACL::initialize(self::$injector['Auth']->getUserId());
@@ -179,4 +169,5 @@ class CMS {
 			self::$injector['URI']->redirect('errors/404');
 		}
 	}
+
 }

@@ -19,19 +19,17 @@ class UsersAdmin extends Core\ModuleController {
 	public function actionCreate()
 	{
 		if (isset($_POST['submit']) === true) {
-			require_once MODULES_DIR . 'users/functions.php';
-
 			if (empty($_POST['nickname']))
 				$errors['nickname'] = $this->injector['Lang']->t('system', 'name_to_short');
 			if (Core\Validate::gender($_POST['gender']) === false)
 				$errors['gender'] = $this->injector['Lang']->t('users', 'select_gender');
 			if (!empty($_POST['birthday']) && Core\Validate::birthday($_POST['birthday']) === false)
 				$errors[] = $this->injector['Lang']->t('users', 'invalid_birthday');
-			if (userNameExists($_POST['nickname']) === true)
+			if (UsersFunctions::userNameExists($_POST['nickname']) === true)
 				$errors['nickname'] = $this->injector['Lang']->t('users', 'user_name_already_exists');
 			if (Core\Validate::email($_POST['mail']) === false)
 				$errors['mail'] = $this->injector['Lang']->t('system', 'wrong_email_format');
-			if (userEmailExists($_POST['mail']) === true)
+			if (UsersFunctions::userEmailExists($_POST['mail']) === true)
 				$errors['mail'] = $this->injector['Lang']->t('users', 'user_email_already_exists');
 			if (empty($_POST['roles']) || is_array($_POST['roles']) === false || Core\Validate::aclRolesExist($_POST['roles']) === false)
 				$errors['roles'] = $this->injector['Lang']->t('users', 'select_access_level');
@@ -273,19 +271,17 @@ class UsersAdmin extends Core\ModuleController {
 			$user = $this->injector['Auth']->getUserInfo($this->injector['URI']->id);
 
 			if (isset($_POST['submit']) === true) {
-				require_once MODULES_DIR . 'users/functions.php';
-
 				if (empty($_POST['nickname']))
 					$errors['nickname'] = $this->injector['Lang']->t('system', 'name_to_short');
 				if (Core\Validate::gender($_POST['gender']) === false)
 					$errors['gender'] = $this->injector['Lang']->t('users', 'select_gender');
 				if (!empty($_POST['birthday']) && Core\Validate::birthday($_POST['birthday']) === false)
 					$errors[] = $this->injector['Lang']->t('users', 'invalid_birthday');
-				if (userNameExists($_POST['nickname'], $this->injector['URI']->id))
+				if (UsersFunctions::userNameExists($_POST['nickname'], $this->injector['URI']->id))
 					$errors['nickname'] = $this->injector['Lang']->t('users', 'user_name_already_exists');
 				if (Core\Validate::email($_POST['mail']) === false)
 					$errors['mail'] = $this->injector['Lang']->t('system', 'wrong_email_format');
-				if (userEmailExists($_POST['mail'], $this->injector['URI']->id))
+				if (UsersFunctions::userEmailExists($_POST['mail'], $this->injector['URI']->id))
 					$errors['mail'] = $this->injector['Lang']->t('users', 'user_email_already_exists');
 				if (empty($_POST['roles']) || is_array($_POST['roles']) === false || Core\Validate::aclRolesExist($_POST['roles']) === false)
 					$errors['roles'] = $this->injector['Lang']->t('users', 'select_access_level');
