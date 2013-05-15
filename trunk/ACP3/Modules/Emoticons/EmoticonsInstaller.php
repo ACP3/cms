@@ -6,6 +6,10 @@ class EmoticonsInstaller extends ModuleInstaller {
 	private $module_name = 'emoticons';
 	private $schema_version = 30;
 
+	public function __construct(\ACP3\Core\Pimple $injector) {
+		parent::__construct($injector);
+	}
+
 	protected function getName() {
 		return $this->module_name;
 	}

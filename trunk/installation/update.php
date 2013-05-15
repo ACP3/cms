@@ -1,6 +1,6 @@
 <?php
 /**
- * Database Updater
+ * Installer
  *
  * @author Tino Goratsch
  * @package ACP3
@@ -11,7 +11,7 @@ define('IN_ACP3', true);
 define('IN_INSTALL', true);
 define('IN_UPDATER', true);
 
-define('ACP3_ROOT', realpath(__DIR__ . '/../') . '/');
-require ACP3_ROOT . 'installation/includes/common.php';
+define('ACP3_ROOT_DIR', realpath(__DIR__ . '/../') . '/');
+require ACP3_ROOT_DIR . 'ACP3/Installer/Installer.php';
 
-$tpl->display('layout.tpl');
+\ACP3\Installer\Installer::runInstaller();

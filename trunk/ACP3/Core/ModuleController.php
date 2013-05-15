@@ -19,7 +19,9 @@ abstract class ModuleController {
 	public function display()
 	{
 		// Content-Template automatisch setzen
-		$this->injector['View']->setContentTemplate($this->injector['URI']->mod . '/' . $this->injector['URI']->file . '.tpl');
+		if ($this->injector['View']->getContentTemplate() === '') {
+			$this->injector['View']->setContentTemplate($this->injector['URI']->mod . '/' . $this->injector['URI']->file . '.tpl');
+		}
 
 		if ($this->injector['View']->getNoOutput() === false) {
 			if ($this->injector['View']->getContent() === '') {

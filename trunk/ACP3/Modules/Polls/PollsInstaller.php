@@ -6,6 +6,10 @@ class PollsInstaller extends ModuleInstaller {
 	private $module_name = 'polls';
 	private $schema_version = 31;
 
+	public function __construct(\ACP3\Core\Pimple $injector) {
+		parent::__construct($injector);
+	}
+
 	protected function getName() {
 		return $this->module_name;
 	}

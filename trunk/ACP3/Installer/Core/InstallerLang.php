@@ -6,9 +6,7 @@
  * @package ACP3
  * @subpackage Installer
  */
-
-if (defined('IN_ACP3') === false)
-	exit;
+namespace ACP3\Installer\Core;
 
 /**
  * Stellt Funktionen bereit, um das ACP3 in verschiendene Sprachen zu übersetzen
@@ -17,7 +15,7 @@ if (defined('IN_ACP3') === false)
  * @package ACP3
  * @subpackage Installer
  */
-class ACP3_InstallerLang extends ACP3_Lang
+class InstallerLang extends \ACP3\Core\Lang
 {
 	function __construct($lang)
 	{
@@ -30,7 +28,7 @@ class ACP3_InstallerLang extends ACP3_Lang
 	private function parseLanguageFile()
 	{
 		$data = array();
-		$path = ACP3_ROOT . 'installation/languages/' . $this->lang . '.xml';
+		$path = ACP3_ROOT_DIR . 'installation/languages/' . $this->lang . '.xml';
 		if (is_file($path) === true) {
 			$xml = simplexml_load_file($path);
 			// Über die einzelnen Sprachstrings iterieren
@@ -64,6 +62,6 @@ class ACP3_InstallerLang extends ACP3_Lang
 	 */
 	public static function languagePackExists($lang)
 	{
-		return !preg_match('=/=', $lang) && is_file(ACP3_ROOT . 'installation/languages/' . $lang . '.xml') === true;
+		return !preg_match('=/=', $lang) && is_file(ACP3_ROOT_DIR . 'installation/languages/' . $lang . '.xml') === true;
 	}
 }
