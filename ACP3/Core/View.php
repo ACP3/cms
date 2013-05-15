@@ -214,7 +214,7 @@ class View
 		return;
 	}
 
-	public static function factory($renderer = 'Smarty', $params = '')
+	public static function factory($renderer = 'Smarty', array $params = array())
 	{
 		$path = CLASSES_DIR . 'View/' . $renderer . '.php';
 		if (is_file($path) === true) {
@@ -274,10 +274,12 @@ class View
 		} else {
 			// Pfad zerlegen
 			$path = explode('/', $template);
+			$path[0] = ucfirst($path[0]);
 			if (count($path) > 1 && $this->templateExists($path[0] . '/templates/' . $path[1])) {
+				self::$renderer_obj->fetch($path[0] . '/templates/' . $path[1], $cache_id, $compile_id, $parent, $display);
 				return self::$renderer_obj->fetch($path[0] . '/templates/' . $path[1], $cache_id, $compile_id, $parent, $display);
 			} else {
-				return sprintf(\ACP3\CMS::$injector['Lang']->t('errors', 'tpl_not_found'), $template);
+				throw new \Exception("The requested template " + $template + " can't be found!");
 			}
 		}
 	}
@@ -285,7 +287,8 @@ class View
 	public function templateExists($template)
 	{
 		if (is_file(DESIGN_PATH_INTERNAL . $template) === true ||
-			is_file(MODULES_DIR . $template) === true)
+			is_file(MODULES_DIR . $template) === true ||
+			is_file(INSTALLER_MODULES_DIR . $template) === true)
 			return true;
 		return false;
 	}
