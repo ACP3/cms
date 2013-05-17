@@ -11,11 +11,6 @@ use ACP3\Core;
  */
 class ArticlesFrontend extends Core\ModuleController {
 
-	public function __construct($injector)
-	{
-		parent::__construct($injector);
-	}
-
 	public function actionList()
 	{
 		$period = 'start = end AND start <= :time OR start != end AND :time BETWEEN start AND end';
