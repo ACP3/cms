@@ -11,11 +11,6 @@ use ACP3\Core;
  */
 class ArticlesAdmin extends Core\ModuleController {
 
-	public function __construct($injector)
-	{
-		parent::__construct($injector);
-	}
-
 	public function actionCreate()
 	{
 		$access_to_menus = Core\Modules::check('menus', 'acp_create_item');

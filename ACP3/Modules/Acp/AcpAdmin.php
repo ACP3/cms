@@ -11,11 +11,6 @@ use ACP3\Core;
  */
 class AcpAdmin extends Core\ModuleController {
 
-	public function __construct($injector)
-	{
-		parent::__construct($injector);
-	}
-
 	public function actionList()
 	{
 		$mod_list = Core\Modules::getAllModules();
