@@ -92,8 +92,8 @@ class TinyMCE extends AbstractWYSIWYG {
 		if ($wysiwyg['advanced'] === true)
 			$wysiwyg['advanced_replace_content'] = 'tinyMCE.execInstanceCommand(\'' . $this->id . '\',"mceInsertContent",false,text);';
 
-		Registry::getClass('View')->assign('wysiwyg', $wysiwyg);
-		return Registry::getClass('View')->fetchTemplate('system/wysiwyg.tpl');
+		\ACP3\Core\Registry::get('View')->assign('wysiwyg', $wysiwyg);
+		return \ACP3\Core\Registry::get('View')->fetchTemplate('system/wysiwyg.tpl');
 	}
 
 }

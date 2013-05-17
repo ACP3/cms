@@ -28,7 +28,7 @@ function CheckAuthentication($acp3_path) {
 		chdir(ACP3_ROOT_DIR);
 
 		// if user has access permission...
-		if (\ACP3\CMS::$injector['Auth']->isUser()) {
+		if (\ACP3\Core\Registry::get('Auth')->isUser()) {
 			if (!isset($_SESSION['KCFINDER'])) {
 				$_SESSION['KCFINDER'] = array();
 				$_SESSION['KCFINDER']['disabled'] = false;
