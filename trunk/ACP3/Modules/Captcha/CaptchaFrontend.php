@@ -19,11 +19,6 @@ use ACP3\Core;
  */
 class CaptchaFrontend extends Core\ModuleController {
 
-	public function __construct($injector)
-	{
-		parent::__construct($injector);
-	}
-
 	public function actionImage()
 	{
 		if (!empty($_SESSION['captcha'])) {

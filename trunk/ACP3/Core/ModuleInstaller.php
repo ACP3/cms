@@ -19,8 +19,6 @@ namespace ACP3\Core;
  */
 abstract class ModuleInstaller {
 
-	protected static $injector;
-
 	/**
 	 * Die bei der Installation an das Modul zugewiesene ID
 	 *
@@ -36,10 +34,6 @@ abstract class ModuleInstaller {
 	 */
 	protected $special_resources = array();
 
-	public function __construct(Pimple $injector) {
-		self::$injector = $injector;
-	}
-
 	public static function buildClassName($module) {
 		$mod_name = preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $module))));
 		return "\\ACP3\\Modules\\$mod_name\\{$mod_name}Installer";
@@ -51,7 +45,7 @@ abstract class ModuleInstaller {
 	 * @param mixed $module_id
 	 */
 	public function setModuleId() {
-		$mod_id = self::$injector['Db']->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($this->getName()));
+		$mod_id = Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($this->getName()));
 		$this->module_id = !empty($mod_id) ? (int) $mod_id : 0;
 	}
 
@@ -106,15 +100,15 @@ abstract class ModuleInstaller {
 			$search = array('{pre}', '{engine}', '{charset}');
 			$replace = array(DB_PRE, 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`');
 
-			self::$injector['Db']->beginTransaction();
+			Registry::get('Db')->beginTransaction();
 			try {
 				foreach ($queries as $query) {
 					if (!empty($query))
-						self::$injector['Db']->query(str_replace($search, $replace, $query));
+						Registry::get('Db')->query(str_replace($search, $replace, $query));
 				}
-				self::$injector['Db']->commit();
+				Registry::get('Db')->commit();
 			} catch (\Exception $e) {
-				self::$injector['Db']->rollBack();
+				Registry::get('Db')->rollBack();
 				return false;
 			}
 		}
@@ -153,9 +147,9 @@ abstract class ModuleInstaller {
 		$path = MODULES_DIR . $dir . '/';
 		if (is_dir($path . '/extensions/') === true) {
 			if (is_file($path . 'extensions/search.php') === true)
-				self::$injector['Db']->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->getModuleId(), 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
+				Registry::get('Db')->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->getModuleId(), 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
 			if (is_file($path . 'extensions/feeds.php') === true)
-				self::$injector['Db']->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->getModuleId(), 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
+				Registry::get('Db')->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->getModuleId(), 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
 			// Normale Moduldateien
 		}
 
@@ -191,7 +185,7 @@ abstract class ModuleInstaller {
 							}
 						}
 
-						self::$injector['Db']->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->getModuleId(), 'page' => $action, 'params' => '', 'privilege_id' => (int) $privilege_id));
+						Registry::get('Db')->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->getModuleId(), 'page' => $action, 'params' => '', 'privilege_id' => (int) $privilege_id));
 					}
 				}
 			}
@@ -199,8 +193,8 @@ abstract class ModuleInstaller {
 
 		if ($mode === 1) {
 			// Regeln für die Rollen setzen
-			$roles = self::$injector['Db']->fetchAll('SELECT id FROM ' . DB_PRE . 'acl_roles');
-			$privileges = self::$injector['Db']->fetchAll('SELECT id FROM ' . DB_PRE . 'acl_privileges');
+			$roles = Registry::get('Db')->fetchAll('SELECT id FROM ' . DB_PRE . 'acl_roles');
+			$privileges = Registry::get('Db')->fetchAll('SELECT id FROM ' . DB_PRE . 'acl_privileges');
 			foreach ($roles as $role) {
 				foreach ($privileges as $privilege) {
 					$permission = 0;
@@ -213,7 +207,7 @@ abstract class ModuleInstaller {
 					if ($role['id'] == 4)
 						$permission = 1;
 
-					self::$injector['Db']->insert(DB_PRE . 'acl_rules', array('id' => '', 'role_id' => $role['id'], 'module_id' => $this->getModuleId(), 'privilege_id' => $privilege['id'], 'permission' => $permission));
+					Registry::get('Db')->insert(DB_PRE . 'acl_rules', array('id' => '', 'role_id' => $role['id'], 'module_id' => $this->getModuleId(), 'privilege_id' => $privilege['id'], 'permission' => $permission));
 				}
 			}
 		}
@@ -229,8 +223,8 @@ abstract class ModuleInstaller {
 	 * @return boolean
 	 */
 	protected function removeResources() {
-		$bool = self::$injector['Db']->delete(DB_PRE . 'acl_resources', array('module_id' => $this->getModuleId()));
-		$bool2 = self::$injector['Db']->delete(DB_PRE . 'acl_rules', array('module_id' => $this->getModuleId()));
+		$bool = Registry::get('Db')->delete(DB_PRE . 'acl_resources', array('module_id' => $this->getModuleId()));
+		$bool2 = Registry::get('Db')->delete(DB_PRE . 'acl_rules', array('module_id' => $this->getModuleId()));
 
 		Cache::purge(0, 'acl');
 
@@ -245,14 +239,14 @@ abstract class ModuleInstaller {
 	 */
 	protected function installSettings(array $settings) {
 		if (count($settings) > 0) {
-			self::$injector['Db']->beginTransaction();
+			Registry::get('Db')->beginTransaction();
 			try {
 				foreach ($settings as $key => $value) {
-					self::$injector['Db']->insert(DB_PRE . 'settings', array('id' => '', 'module_id' => $this->getModuleId(), 'name' => $key, 'value' => $value));
+					Registry::get('Db')->insert(DB_PRE . 'settings', array('id' => '', 'module_id' => $this->getModuleId(), 'name' => $key, 'value' => $value));
 				}
-				self::$injector['Db']->commit();
+				Registry::get('Db')->commit();
 			} catch (\Exception $e) {
-				self::$injector['Db']->rollback();
+				Registry::get('Db')->rollback();
 				return false;
 			}
 		}
@@ -265,7 +259,7 @@ abstract class ModuleInstaller {
 	 * @return boolean
 	 */
 	protected function removeSettings() {
-		return self::$injector['Db']->delete(DB_PRE . 'settings', array('module_id' => (int) $this->getModuleId())) >= 0 ? true : false;
+		return Registry::get('Db')->delete(DB_PRE . 'settings', array('module_id' => (int) $this->getModuleId())) >= 0 ? true : false;
 	}
 
 	/**
@@ -275,8 +269,8 @@ abstract class ModuleInstaller {
 	 */
 	protected function addToModulesTable() {
 		// Modul in die Modules-SQL-Tabelle eintragen
-		$bool = self::$injector['Db']->insert(DB_PRE . 'modules', array('id' => '', 'name' => $this->getName(), 'version' => $this->getSchemaVersion(), 'active' => 1));
-		$this->module_id = self::$injector['Db']->lastInsertId();
+		$bool = Registry::get('Db')->insert(DB_PRE . 'modules', array('id' => '', 'name' => $this->getName(), 'version' => $this->getSchemaVersion(), 'active' => 1));
+		$this->module_id = Registry::get('Db')->lastInsertId();
 
 		return (bool) $bool;
 	}
@@ -286,7 +280,7 @@ abstract class ModuleInstaller {
 	 * @return boolean
 	 */
 	protected function removeFromModulesTable() {
-		return self::$injector['Db']->delete(DB_PRE . 'modules', array('id' => (int) $this->getModuleId())) >= 0 ? true : false;
+		return Registry::get('Db')->delete(DB_PRE . 'modules', array('id' => (int) $this->getModuleId())) >= 0 ? true : false;
 	}
 
 	/**
@@ -296,7 +290,7 @@ abstract class ModuleInstaller {
 	 * @return integer
 	 */
 	public function updateSchema() {
-		$module = self::$injector['Db']->fetchAssoc('SELECT version FROM ' . DB_PRE . 'modules WHERE name = ?', array($this->getName()));
+		$module = Registry::get('Db')->fetchAssoc('SELECT version FROM ' . DB_PRE . 'modules WHERE name = ?', array($this->getName()));
 		$installed_schema_version = isset($module['version']) ? (int) $module['version'] : 0;
 		$result = -1;
 
@@ -355,7 +349,7 @@ abstract class ModuleInstaller {
 	 * @return boolean
 	 */
 	public function setNewSchemaVersion($new_version) {
-		return self::$injector['Db']->update(DB_PRE . 'modules', array('version' => (int) $new_version), array('name' => $this->getName())) >= 0 ? true : false;
+		return Registry::get('Db')->update(DB_PRE . 'modules', array('version' => (int) $new_version), array('name' => $this->getName())) >= 0 ? true : false;
 	}
 
 	/**

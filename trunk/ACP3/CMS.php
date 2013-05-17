@@ -11,13 +11,6 @@ namespace ACP3;
 class CMS {
 
 	/**
-	 * Pimple Dependency Injector
-	 *
-	 * @var \ACP3\Core\Pimple
-	 */
-	public static $injector;
-
-	/**
 	 * Führt alle nötigen Schritte aus, um die Seite anzuzeigen
 	 */
 	public static function run() {
@@ -81,10 +74,10 @@ class CMS {
 	 */
 	public static function checkForMaintenanceMode() {
 		if ((bool) CONFIG_MAINTENANCE_MODE === true &&
-				(defined('IN_ADM') === false && strpos(self::$injector['URI']->query, 'users/login/') !== 0)) {
-			self::$injector['View']->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
-			self::$injector['View']->assign('CONTENT', CONFIG_MAINTENANCE_MESSAGE);
-			self::$injector['View']->displayTemplate('system/maintenance.tpl');
+				(defined('IN_ADM') === false && strpos(Registry::getClass('URI')->query, 'users/login/') !== 0)) {
+			Registry::get('View')->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
+			Registry::getClass('View')->assign('CONTENT', CONFIG_MAINTENANCE_MESSAGE);
+			Registry::getClass('View')->displayTemplate('system/maintenance.tpl');
 			exit;
 		}
 	}
@@ -93,9 +86,6 @@ class CMS {
 	 * Initialisieren der anderen Klassen
 	 */
 	public static function initializeClasses() {
-		// DI
-		self::$injector = new Core\Pimple();
-
 		$config = new \Doctrine\DBAL\Configuration();
 		$connectionParams = array(
 			'dbname' => CONFIG_DB_NAME,
@@ -105,7 +95,7 @@ class CMS {
 			'driver' => 'pdo_mysql',
 			'charset' => 'utf8'
 		);
-		self::$injector['Db'] = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
+		Core\Registry::set('Db', \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config));
 		define('DB_PRE', CONFIG_DB_PRE);
 
 		// Sytemeinstellungen laden
@@ -120,53 +110,56 @@ class CMS {
 
 		foreach ($classes as $class) {
 			$className = "\\ACP3\\Core\\" . $class;
-			self::$injector[$class] = new $className();
+			Core\Registry::set($class, new $className());
 		}
 		Core\View::factory('Smarty');
-		Core\ACL::initialize(self::$injector['Auth']->getUserId());
+		Core\ACL::initialize(Core\Registry::get('Auth')->getUserId());
 	}
 
 	/**
 	 * Gibt die Seite aus
 	 */
 	public static function outputPage() {
-		// Einige Template Variablen setzen
-		self::$injector['View']->assign('PHP_SELF', PHP_SELF);
-		self::$injector['View']->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
-		self::$injector['View']->assign('ROOT_DIR', ROOT_DIR);
-		self::$injector['View']->assign('DESIGN_PATH', DESIGN_PATH);
-		self::$injector['View']->assign('UA_IS_MOBILE', Core\Functions::isMobileBrowser());
-		self::$injector['View']->assign('IN_ADM', defined('IN_ADM') ? true : false);
+		$view = Core\Registry::get('View');
+		$uri = Core\Registry::get('URI');
 
-		$lang_info = Core\XML::parseXmlFile(ACP3_ROOT_DIR . 'languages/' . self::$injector['Lang']->getLanguage() . '/info.xml', '/language');
-		self::$injector['View']->assign('LANG_DIRECTION', isset($lang_info['direction']) ? $lang_info['direction'] : 'ltr');
-		self::$injector['View']->assign('LANG', CONFIG_LANG);
+		// Einige Template Variablen setzen
+		$view->assign('PHP_SELF', PHP_SELF);
+		$view->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
+		$view->assign('ROOT_DIR', ROOT_DIR);
+		$view->assign('DESIGN_PATH', DESIGN_PATH);
+		$view->assign('UA_IS_MOBILE', Core\Functions::isMobileBrowser());
+		$view->assign('IN_ADM', defined('IN_ADM') ? true : false);
+
+		$lang_info = Core\XML::parseXmlFile(ACP3_ROOT_DIR . 'languages/' . Core\Registry::get('Lang')->getLanguage() . '/info.xml', '/language');
+		$view->assign('LANG_DIRECTION', isset($lang_info['direction']) ? $lang_info['direction'] : 'ltr');
+		$view->assign('LANG', CONFIG_LANG);
 
 		self::checkForMaintenanceMode();
 
 		// Aktuelle Datensatzposition bestimmen
-		if (Core\Validate::isNumber(self::$injector['URI']->page) && self::$injector['URI']->page >= 1)
-			define('POS', (int) (self::$injector['URI']->page - 1) * self::$injector['Auth']->entries);
+		if (Core\Validate::isNumber($uri->page) && $uri->page >= 1)
+			define('POS', (int) ($uri->page - 1) * Core\Registry::get('Auth')->entries);
 		else
 			define('POS', 0);
 
-		if (defined('IN_ADM') === true && self::$injector['Auth']->isUser() === false && self::$injector['URI']->query !== 'users/login/') {
-			$redirect_uri = base64_encode('acp/' . self::$injector['URI']->query);
-			self::$injector['URI']->redirect('users/login/redirect_' . $redirect_uri);
+		if (defined('IN_ADM') === true && Core\Registry::get('Auth')->isUser() === false && $uri->query !== 'users/login/') {
+			$redirect_uri = base64_encode('acp/' . $uri->query);
+			$uri->redirect('users/login/redirect_' . $redirect_uri);
 		}
 
-		if (Core\Modules::check(self::$injector['URI']->mod, self::$injector['URI']->file) === true) {
-			$module = ucfirst(self::$injector['URI']->mod);
+		if (Core\Modules::check($uri->mod, $uri->file) === true) {
+			$module = ucfirst($uri->mod);
 			$section = defined('IN_ADM') === true ? 'Admin' : 'Frontend';
 			$className = "\\ACP3\\Modules\\" . $module . "\\" . $module . $section;
-			$action = 'action' . ucfirst(defined('IN_ADM') === true ? substr(self::$injector['URI']->file, 4) : self::$injector['URI']->file);
+			$action = 'action' . ucfirst(defined('IN_ADM') === true ? substr($uri->file, 4) : $uri->file);
 
 			// Modul einbinden
-			$mod = new $className(self::$injector);
+			$mod = new $className();
 			$mod->$action();
 			$mod->display();
 		} else {
-			self::$injector['URI']->redirect('errors/404');
+			$uri->redirect('errors/404');
 		}
 	}
 

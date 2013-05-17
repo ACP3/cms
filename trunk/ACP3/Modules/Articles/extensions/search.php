@@ -22,14 +22,14 @@ switch($_POST['area']) {
 }
 
 $period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-$result_pages = ACP3\CMS::$injector['Db']->fetchAll('SELECT id, title, text FROM ' . DB_PRE . 'articles WHERE MATCH (' . $fields . ') AGAINST (' . ACP3\CMS::$injector['Db']->quote($_POST['search_term']) . ' IN BOOLEAN MODE) AND ' . $period . 'ORDER BY start ' . $_POST['sort'] . ', end ' . $_POST['sort'] . ', title ' . $_POST['sort'], array('search_term' => $_POST['search_term'], 'time' => ACP3\CMS::$injector['Date']->getCurrentDateTime()));
+$result_pages = Core\Registry::get('Db')->fetchAll('SELECT id, title, text FROM ' . DB_PRE . 'articles WHERE MATCH (' . $fields . ') AGAINST (' . Core\Registry::get('Db')->quote($_POST['search_term']) . ' IN BOOLEAN MODE) AND ' . $period . 'ORDER BY start ' . $_POST['sort'] . ', end ' . $_POST['sort'] . ', title ' . $_POST['sort'], array('search_term' => $_POST['search_term'], 'time' => Core\Registry::get('Date')->getCurrentDateTime()));
 $c_result_pages = count($result_pages);
 
 if ($c_result_pages > 0) {
-	$name =  ACP3\CMS::$injector['Lang']->t('articles', 'articles');
+	$name =  Core\Registry::get('Lang')->t('articles', 'articles');
 	$results_mods[$name]['dir'] = 'articles';
 	for ($i = 0; $i < $c_result_pages; ++$i) {
-		$results_mods[$name]['results'][$i]['hyperlink'] = ACP3\CMS::$injector['URI']->route('articles/details/id_' . $result_pages[$i]['id']);
+		$results_mods[$name]['results'][$i]['hyperlink'] = Core\Registry::get('URI')->route('articles/details/id_' . $result_pages[$i]['id']);
 		$results_mods[$name]['results'][$i]['title'] = $result_pages[$i]['title'];
 		$results_mods[$name]['results'][$i]['text'] = ACP3\Core\Functions::shortenEntry($result_pages[$i]['text'], 200, 0, '...');
 	}

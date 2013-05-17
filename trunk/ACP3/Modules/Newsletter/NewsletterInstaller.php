@@ -6,9 +6,7 @@ class NewsletterInstaller extends ModuleInstaller {
 	private $module_name = 'newsletter';
 	private $schema_version = 33;
 
-	public function __construct(\ACP3\Core\Pimple $injector) {
-		parent::__construct($injector);
-
+	public function __construct() {
 		$this->special_resources = array(
 			'acp_send' => 4,
 		);

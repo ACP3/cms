@@ -11,10 +11,6 @@ use ACP3\Installer\Core;
  */
 class Update extends \ACP3\Installer\Core\InstallerModuleController {
 
-	public function __construct($injector) {
-		parent::__construct($injector);
-	}
-
 	public function actionDb_update() {
 		if (isset($_POST['update'])) {
 			$results = array();
@@ -23,32 +19,32 @@ class Update extends \ACP3\Installer\Core\InstallerModuleController {
 			foreach ($update_first as $row) {
 				$result = Core\Functions::updateModule($row);
 				$module = ucfirst($row);
-				$text = $this->injector['Lang']->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'));
+				$text = \ACP3\Core\Registry::get('Lang')->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'));
 				$results[$module] = array(
-					'text' => sprintf($this->injector['Lang']->t('db_update_text'), $module),
+					'text' => sprintf(\ACP3\Core\Registry::get('Lang')->t('db_update_text'), $module),
 					'class' => $result === 1 ? 'success' : ($result === 0 ? 'important' : 'info'),
-					'result_text' => $this->injector['Lang']->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
+					'result_text' => \ACP3\Core\Registry::get('Lang')->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
 				);
 			}
 
 			// ...danach die Restlichen
 			$modules = scandir(MODULES_DIR);
 			foreach ($modules as $row) {
-				if ($row !== '.' && $row !== '..' && in_array($row, $update_first) === false) {
+				if ($row !== '.' && $row !== '..' && in_array(strtolower($row), $update_first) === false) {
 					$result = Core\Functions::updateModule($row);
 					$module = ucfirst($row);
-					$text = $this->injector['Lang']->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'));
+					$text = \ACP3\Core\Registry::get('Lang')->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'));
 					$results[$module] = array(
-						'text' => sprintf($this->injector['Lang']->t('db_update_text'), $module),
+						'text' => sprintf(\ACP3\Core\Registry::get('Lang')->t('db_update_text'), $module),
 						'class' => $result === 1 ? 'success' : ($result === 0 ? 'important' : 'info'),
-						'result_text' => $this->injector['Lang']->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
+						'result_text' => \ACP3\Core\Registry::get('Lang')->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
 					);
 				}
 			}
 
 			ksort($results);
 
-			$this->injector['View']->assign('results', $results);
+			\ACP3\Core\Registry::get('View')->assign('results', $results);
 
 			// Cache leeren
 			\ACP3\Core\Cache::purge('minify');
@@ -168,14 +164,14 @@ class Update extends \ACP3\Installer\Core\InstallerModuleController {
 				);
 				$results[] = Core\Functions::executeSqlQueries($queries, 4);
 
-				$user = $this->injector['Db']->fetchColumn('SELECT MIN(id) AS id FROM ' . DB_PRE . 'users');
+				$user = \ACP3\Core\Registry::get('Db')->fetchColumn('SELECT MIN(id) AS id FROM ' . DB_PRE . 'users');
 
-				$this->injector['Db']->executeUpdate('UPDATE ' . DB_PRE . 'files SET user_id = ?', array($user));
-				$this->injector['Db']->executeUpdate('UPDATE ' . DB_PRE . 'gallery SET user_id = ?', array($user));
-				$this->injector['Db']->executeUpdate('UPDATE ' . DB_PRE . 'news SET user_id = ?', array($user));
-				$this->injector['Db']->executeUpdate('UPDATE ' . DB_PRE . 'newsletter_archive SET user_id = ?', array($user));
-				$this->injector['Db']->executeUpdate('UPDATE ' . DB_PRE . 'polls SET user_id = ?', array($user));
-				$this->injector['Db']->executeUpdate('UPDATE ' . DB_PRE . 'static_pages SET user_id = ?', array($user));
+				\ACP3\Core\Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'files SET user_id = ?', array($user));
+				\ACP3\Core\Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'gallery SET user_id = ?', array($user));
+				\ACP3\Core\Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'news SET user_id = ?', array($user));
+				\ACP3\Core\Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'newsletter_archive SET user_id = ?', array($user));
+				\ACP3\Core\Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'polls SET user_id = ?', array($user));
+				\ACP3\Core\Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'static_pages SET user_id = ?', array($user));
 			}
 			if (CONFIG_DB_VERSION < 5) {
 				$queries = array(
@@ -186,7 +182,7 @@ class Update extends \ACP3\Installer\Core\InstallerModuleController {
 				$dir = scandir(MODULES_DIR);
 				foreach ($dir as $row) {
 					if ($row !== '.' && $row !== '..' && is_file(MODULES_DIR . $row . '/module.xml') === true) {
-						$this->injector['Db']->insert(DB_PRE . 'modules', array('name' => $row, 'active' => 1));
+						\ACP3\Core\Registry::get('Db')->insert(DB_PRE . 'modules', array('name' => $row, 'active' => 1));
 					}
 				}
 			}
@@ -211,16 +207,16 @@ class Update extends \ACP3\Installer\Core\InstallerModuleController {
 				);
 				$results[] = Core\Functions::executeSqlQueries($queries, 10);
 
-				$roles = $this->injector['Db']->fetchAll('SELECT id, left_id, right_id FROM ' . DB_PRE . 'acl_roles');
+				$roles = \ACP3\Core\Registry::get('Db')->fetchAll('SELECT id, left_id, right_id FROM ' . DB_PRE . 'acl_roles');
 				foreach ($roles as $row) {
-					$parent_id = $this->injector['Db']->fetchColumn('SELECT id FROM ' . DB_PRE . 'acl_roles WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', array($row['left_id'], $row['right_id']));
-					$this->injector['Db']->update(DB_PRE . 'acl_roles', array('parent_id' => !empty($parent_id) ? $parent_id : 0), array('id' => $row['id']));
+					$parent_id = \ACP3\Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'acl_roles WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', array($row['left_id'], $row['right_id']));
+					\ACP3\Core\Registry::get('Db')->update(DB_PRE . 'acl_roles', array('parent_id' => !empty($parent_id) ? $parent_id : 0), array('id' => $row['id']));
 				}
 
-				$pages = $this->injector['Db']->fetchAll('SELECT id, left_id, right_id FROM ' . DB_PRE . 'menu_items');
+				$pages = \ACP3\Core\Registry::get('Db')->fetchAll('SELECT id, left_id, right_id FROM ' . DB_PRE . 'menu_items');
 				foreach ($pages as $row) {
-					$parent_id = $this->injector['Db']->fetchColumn('SELECT id FROM ' . DB_PRE . 'menu_items WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', array($row['left_id'], $row['right_id']));
-					$this->injector['Db']->update(DB_PRE . 'menu_items', array('parent_id' => !empty($parent_id) ? $parent_id : 0), array('id' => $row['id']));
+					$parent_id = \ACP3\Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'menu_items WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', array($row['left_id'], $row['right_id']));
+					\ACP3\Core\Registry::get('Db')->update(DB_PRE . 'menu_items', array('parent_id' => !empty($parent_id) ? $parent_id : 0), array('id' => $row['id']));
 				}
 
 				Core\Functions::resetResources();
@@ -297,7 +293,7 @@ class Update extends \ACP3\Installer\Core\InstallerModuleController {
 				$results[] = Core\Functions::executeSqlQueries($queries, 21);
 			}
 			if (CONFIG_DB_VERSION < 22) {
-				$mod_id = $this->injector['Db']->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('access'));
+				$mod_id = \ACP3\Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('access'));
 				$queries = array(
 					"INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES ('', '" . $mod_id . "', 'create_resources', '', 4);",
 				);
@@ -417,9 +413,9 @@ class Update extends \ACP3\Installer\Core\InstallerModuleController {
 					'wysiwyg' => CONFIG_WYSIWYG == 'fckeditor' ? 'ckeditor' : CONFIG_WYSIWYG
 				);
 
-				$mod_id = $this->injector['Db']->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('system'));
+				$mod_id = \ACP3\Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('system'));
 				foreach ($system_settings as $key => $value) {
-					$this->injector['Db']->insert(DB_PRE . 'settings', array('id' => '', 'module_id' => $mod_id, 'name' => $key, 'value' => $value));
+					\ACP3\Core\Registry::get('Db')->insert(DB_PRE . 'settings', array('id' => '', 'module_id' => $mod_id, 'name' => $key, 'value' => $value));
 				}
 
 				// DB-Config anpassen
@@ -440,7 +436,7 @@ class Update extends \ACP3\Installer\Core\InstallerModuleController {
 				$results[] = Core\Functions::executeSqlQueries($queries, 30);
 			}
 
-			$this->injector['View']->assign('results', $results);
+			\ACP3\Core\Registry::get('View')->assign('results', $results);
 
 			// Cache leeren
 			\ACP3\Core\Cache::purge('sql');
@@ -448,7 +444,7 @@ class Update extends \ACP3\Installer\Core\InstallerModuleController {
 			\ACP3\Core\Cache::purge('minify');
 		}
 
-		$this->injector['View']->assign('legacy', true);
+		\ACP3\Core\Registry::get('View')->assign('legacy', true);
 	}
 
 }

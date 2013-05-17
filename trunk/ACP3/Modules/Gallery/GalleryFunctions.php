@@ -22,7 +22,7 @@ class GalleryFunctions {
 	 * @return boolean
 	 */
 	public static function setGalleryCache($id) {
-		$pictures = \ACP3\CMS::$injector['Db']->fetchAll('SELECT id, file, description FROM ' . DB_PRE . 'gallery_pictures WHERE gallery_id = ? ORDER BY pic ASC, id ASC', array($id));
+		$pictures = Core\Registry::get('Db')->fetchAll('SELECT id, file, description FROM ' . DB_PRE . 'gallery_pictures WHERE gallery_id = ? ORDER BY pic ASC, id ASC', array($id));
 		$c_pictures = count($pictures);
 
 		$settings = Core\Config::getSettings('gallery');
@@ -66,7 +66,7 @@ class GalleryFunctions {
 	 * @return boolean
 	 */
 	public static function generatePictureAlias($picture_id) {
-		$gallery_id = \ACP3\CMS::$injector['Db']->fetchColumn('SELECT gallery_id FROM ' . DB_PRE . 'gallery_pictures WHERE id = ?', array($picture_id));
+		$gallery_id = Core\Registry::get('Db')->fetchColumn('SELECT gallery_id FROM ' . DB_PRE . 'gallery_pictures WHERE id = ?', array($picture_id));
 		$alias = Core\SEO::getUriAlias('gallery/pics/id_' . $gallery_id, true);
 		if (!empty($alias))
 			$alias.= '/img-' . $picture_id;
@@ -83,7 +83,7 @@ class GalleryFunctions {
 	 * @return boolean
 	 */
 	public static function generatePictureAliases($gallery_id) {
-		$pictures = \ACP3\CMS::$injector['Db']->fetchAll('SELECT id FROM ' . DB_PRE . 'gallery_pictures WHERE gallery_id = ?', array($gallery_id));
+		$pictures = Core\Registry::get('Db')->fetchAll('SELECT id FROM ' . DB_PRE . 'gallery_pictures WHERE gallery_id = ?', array($gallery_id));
 		$c_pictures = count($pictures);
 		$bool = false;
 
@@ -108,7 +108,7 @@ class GalleryFunctions {
 	 * @return boolean
 	 */
 	public static function deletePictureAliases($gallery_id) {
-		$pictures = \ACP3\CMS::$injector['Db']->fetchAll('SELECT id FROM ' . DB_PRE . 'gallery_pictures WHERE gallery_id = ?', array($gallery_id));
+		$pictures = Core\Registry::get('Db')->fetchAll('SELECT id FROM ' . DB_PRE . 'gallery_pictures WHERE gallery_id = ?', array($gallery_id));
 		$c_pictures = count($pictures);
 		$bool = false;
 

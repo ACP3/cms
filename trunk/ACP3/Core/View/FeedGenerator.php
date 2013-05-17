@@ -36,7 +36,7 @@ class FeedGenerator extends AbstractRenderer {
 		$this->renderer->setTitle($this->config['feed_title']);
 		$this->renderer->setLink($link);
 		if ($this->config['feed_type'] !== 'ATOM') {
-			$this->renderer->setDescription(\ACP3\CMS::$injector['Lang']->t($this->config['module'], $this->config['module']));
+			$this->renderer->setDescription(Registry::getClass('Lang')->t($this->config['module'], $this->config['module']));
 		} else {
 			$this->renderer->setChannelElement('updated', date(DATE_ATOM , time()));
 			$this->renderer->setChannelElement('author', array('name' => $this->config['feed_title']));
@@ -55,5 +55,9 @@ class FeedGenerator extends AbstractRenderer {
 	public function display($type)
 	{
 		echo $this->fetch($type);
+	}
+
+	public function templateExists($template) {
+		return true;
 	}
 }

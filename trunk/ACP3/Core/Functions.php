@@ -64,9 +64,9 @@ class Functions {
 			);
 			if (!empty($backward))
 				$confirm['backward'] = $backward;
-			\ACP3\CMS::$injector['View']->assign('confirm', $confirm);
+			Registry::get('View')->assign('confirm', $confirm);
 
-			return \ACP3\CMS::$injector['View']->fetchTemplate('system/confirm_box.tpl');
+			return Registry::get('View')->fetchTemplate('system/confirm_box.tpl');
 		}
 		return '';
 	}
@@ -78,19 +78,19 @@ class Functions {
 	 */
 	public static function datatable(array $config)
 	{
-		\ACP3\CMS::$injector['View']->enableJsLibraries(array('datatables'));
+		Registry::get('View')->enableJsLibraries(array('datatables'));
 
 		static $init = false;
 
 		if (isset($config['records_per_page']) === false)
-			$config['records_per_page'] = \ACP3\CMS::$injector['Auth']->entries;
+			$config['records_per_page'] = Registry::get('Auth')->entries;
 
 		$config['initialized'] = $init;
 
-		\ACP3\CMS::$injector['View']->assign('dt', $config);
+		Registry::get('View')->assign('dt', $config);
 		$init = true;
 
-		return \ACP3\CMS::$injector['View']->fetchTemplate('system/data_table.tpl');
+		return Registry::get('View')->fetchTemplate('system/data_table.tpl');
 	}
 
 	/**
@@ -112,8 +112,8 @@ class Functions {
 		} else {
 			$errors = (array) $errors;
 		}
-		\ACP3\CMS::$injector['View']->assign('error_box', array('non_integer_keys' => $non_integer_keys, 'errors' => $errors));
-		return \ACP3\CMS::$injector['View']->fetchTemplate('system/error_box.tpl');
+		Registry::get('View')->assign('error_box', array('non_integer_keys' => $non_integer_keys, 'errors' => $errors));
+		return Registry::get('View')->fetchTemplate('system/error_box.tpl');
 	}
 
 	/**
@@ -195,7 +195,7 @@ class Functions {
 	public static function generateTOC(array $pages, $path = '', $titles_from_db = false, $custom_uris = false)
 	{
 		if (!empty($pages)) {
-			$uri = \ACP3\CMS::$injector['URI'];
+			$uri = Registry::get('URI');
 			$path = empty($path) ? $uri->getCleanQuery() : $path;
 			$toc = array();
 			$i = 0;
@@ -203,9 +203,9 @@ class Functions {
 				$page_num = $i + 1;
 				if ($titles_from_db === false) {
 					$attributes = self::getHtmlAttributes($page);
-					$toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf(\ACP3\CMS::$injector['Lang']->t('system', 'toc_page'), $page_num);
+					$toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf(Registry::get('Lang')->t('system', 'toc_page'), $page_num);
 				} else {
-					$toc[$i]['title'] = !empty($page['title']) ? $page['title'] : sprintf(\ACP3\CMS::$injector['Lang']->t('system', 'toc_page'), $page_num);
+					$toc[$i]['title'] = !empty($page['title']) ? $page['title'] : sprintf(Registry::get('Lang')->t('system', 'toc_page'), $page_num);
 				}
 
 				$toc[$i]['uri'] = $custom_uris === true ? $page['uri'] : $uri->route($path) . ($page_num > 1 ? 'page_' . $page_num . '/' : '');
@@ -215,18 +215,18 @@ class Functions {
 					if ($page['uri'] === $uri->route($uri->query) ||
 							$uri->route($uri->query) === $uri->route($uri->mod . '/' . $uri->file) && $i == 0) {
 						$toc[$i]['selected'] = true;
-						\ACP3\CMS::$injector['Breadcrumb']->setTitlePostfix($toc[$i]['title']);
+						Registry::get('Breadcrumb')->setTitlePostfix($toc[$i]['title']);
 					}
 				} else {
 					if ((Validate::isNumber($uri->page) === false && $i === 0) || $uri->page === $page_num) {
 						$toc[$i]['selected'] = true;
-						\ACP3\CMS::$injector['Breadcrumb']->setTitlePostfix($toc[$i]['title']);
+						Registry::get('Breadcrumb')->setTitlePostfix($toc[$i]['title']);
 					}
 				}
 				++$i;
 			}
-			\ACP3\CMS::$injector['View']->assign('toc', $toc);
-			return \ACP3\CMS::$injector['View']->fetchTemplate('system/toc.tpl');
+			Registry::get('View')->assign('toc', $toc);
+			return Registry::get('View')->fetchTemplate('system/toc.tpl');
 		}
 		return '';
 	}
@@ -281,9 +281,9 @@ class Functions {
 				$matches = array();
 				preg_match_all($regex, $text, $matches);
 
-				$currentPage = Validate::isNumber(\ACP3\CMS::$injector['URI']->page) === true && \ACP3\CMS::$injector['URI']->page <= $c_pages ? \ACP3\CMS::$injector['URI']->page : 1;
-				$next_page = !empty($pages[$currentPage]) ? \ACP3\CMS::$injector['URI']->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
-				$previous_page = $currentPage > 1 ? \ACP3\CMS::$injector['URI']->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
+				$currentPage = Validate::isNumber(Registry::get('URI')->page) === true && Registry::get('URI')->page <= $c_pages ? Registry::get('URI')->page : 1;
+				$next_page = !empty($pages[$currentPage]) ? Registry::get('URI')->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
+				$previous_page = $currentPage > 1 ? Registry::get('URI')->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
 
 				if (!empty($next_page))
 					SEO::setNextPage($next_page);
@@ -308,8 +308,8 @@ class Functions {
 	public static function getRedirectMessage()
 	{
 		if (isset($_SESSION['redirect_message']) && is_array($_SESSION['redirect_message'])) {
-			\ACP3\CMS::$injector['View']->assign('redirect', $_SESSION['redirect_message']);
-			\ACP3\CMS::$injector['View']->assign('redirect_message', \ACP3\CMS::$injector['View']->fetchTemplate('system/redirect_message.tpl'));
+			Registry::get('View')->assign('redirect', $_SESSION['redirect_message']);
+			Registry::get('View')->assign('redirect_message', Registry::get('View')->fetchTemplate('system/redirect_message.tpl'));
 			unset($_SESSION['redirect_message']);
 		}
 	}
@@ -328,10 +328,10 @@ class Functions {
 				'text' => $text
 			);
 			if ($overlay === true) {
-				\ACP3\CMS::$injector['View']->setContentTemplate('system/close_overlay.tpl');
+				Registry::get('View')->setContentTemplate('system/close_overlay.tpl');
 				return;
 			} else {
-				\ACP3\CMS::$injector['URI']->redirect($path);
+				Registry::get('URI')->redirect($path);
 			}
 		}
 	}
@@ -407,7 +407,7 @@ class Functions {
 
 		if (is_writable($path) === true) {
 			if (!@move_uploaded_file($tmp_filename, $path . $new_name . $ext)) {
-				echo sprintf(\ACP3\CMS::$injector['Lang']->t('system', 'upload_error'), $filename);
+				echo sprintf(Registry::get('Lang')->t('system', 'upload_error'), $filename);
 			} else {
 				$new_file = array();
 				$new_file['name'] = $new_name . $ext;
@@ -440,7 +440,7 @@ class Functions {
 	public static function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = '')
 	{
 		if ($action === 'up' || $action === 'down') {
-			\ACP3\CMS::$injector['Db']->beginTransaction();
+			Registry::get('Db')->beginTransaction();
 			try {
 				$id = (int) $id;
 				$table = DB_PRE . $table;
@@ -451,26 +451,26 @@ class Functions {
 				// Ein Schritt nach oben
 				if ($action === 'up') {
 					// Aktuelles Element und das vorherige Element selektieren
-					$query = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' < b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' DESC LIMIT 1');
+					$query = Registry::get('Db')->fetchAssoc('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' < b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' DESC LIMIT 1');
 					// Ein Schritt nach unten
 				} else {
 					// Aktuelles Element und das nachfolgende Element selektieren
-					$query = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' > b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' ASC LIMIT 1');
+					$query = Registry::get('Db')->fetchAssoc('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' > b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' ASC LIMIT 1');
 				}
 
 				if (!empty($query)) {
 					// Sortierreihenfolge des aktuellen Elementes zunächst auf 0 setzen
 					// um Probleme mit möglichen Duplicate-Keys zu umgehen
-					\ACP3\CMS::$injector['Db']->update($table, array($sort_field => 0), array($id_field => $id));
-					\ACP3\CMS::$injector['Db']->update($table, array($sort_field => $query['elem_sort']), array($id_field => $query['other_id']));
+					Registry::get('Db')->update($table, array($sort_field => 0), array($id_field => $id));
+					Registry::get('Db')->update($table, array($sort_field => $query['elem_sort']), array($id_field => $query['other_id']));
 					// Element nun den richtigen Wert zuweisen
-					\ACP3\CMS::$injector['Db']->update($table, array($sort_field => $query['other_sort']), array($id_field => $id));
+					Registry::get('Db')->update($table, array($sort_field => $query['other_sort']), array($id_field => $id));
 
-					\ACP3\CMS::$injector['Db']->commit();
+					Registry::get('Db')->commit();
 					return true;
 				}
 			} catch (Exception $e) {
-				\ACP3\CMS::$injector['Db']->rollback();
+				Registry::get('Db')->rollback();
 			}
 		}
 		return false;
@@ -504,19 +504,19 @@ class Functions {
 	 */
 	public static function pagination($rows, $fragment = '')
 	{
-		if ($rows > \ACP3\CMS::$injector['Auth']->entries) {
+		if ($rows > Registry::get('Auth')->entries) {
 			// Alle angegebenen URL Parameter mit in die URL einbeziehen
-			$link = \ACP3\CMS::$injector['URI']->route((defined('IN_ADM') === true ? 'acp/' : '') . \ACP3\CMS::$injector['URI']->getCleanQuery());
+			$link = Registry::get('URI')->route((defined('IN_ADM') === true ? 'acp/' : '') . Registry::get('URI')->getCleanQuery());
 
 			// Seitenauswahl
-			$current_page = Validate::isNumber(\ACP3\CMS::$injector['URI']->page) ? (int) \ACP3\CMS::$injector['URI']->page : 1;
+			$current_page = Validate::isNumber(Registry::get('URI')->page) ? (int) Registry::get('URI')->page : 1;
 
 			if ($current_page > 1) {
-				$postfix = sprintf(\ACP3\CMS::$injector['Lang']->t('system', 'page_x'), $current_page);
-				\ACP3\CMS::$injector['Breadcrumb']->setTitlePostfix($postfix);
+				$postfix = sprintf(Registry::get('Lang')->t('system', 'page_x'), $current_page);
+				Registry::get('Breadcrumb')->setTitlePostfix($postfix);
 			}
 			$pagination = array();
-			$c_pagination = (int) ceil($rows / \ACP3\CMS::$injector['Auth']->entries);
+			$c_pagination = (int) ceil($rows / Registry::get('Auth')->entries);
 			$show_first_last = 5;
 			$show_previous_next = 2;
 			$pages_to_display = 7;
@@ -526,12 +526,12 @@ class Functions {
 			if (defined('IN_ADM') === false) {
 				if ($current_page - 1 > 0) {
 					// Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben
-					SEO::setDescriptionPostfix(sprintf(\ACP3\CMS::$injector['Lang']->t('system', 'page_x'), $current_page));
+					SEO::setDescriptionPostfix(sprintf(Registry::get('Lang')->t('system', 'page_x'), $current_page));
 					SEO::setPreviousPage($link . 'page_' . ($current_page - 1) . '/');
 				}
 				if ($current_page + 1 <= $c_pagination)
 					SEO::setNextPage($link . 'page_' . ($current_page + 1) . '/');
-				if (isset(\ACP3\CMS::$injector['URI']->page) && \ACP3\CMS::$injector['URI']->page === 1)
+				if (isset(Registry::get('URI')->page) && Registry::get('URI')->page === 1)
 					SEO::setCanonicalUri($link);
 			}
 
@@ -556,7 +556,7 @@ class Functions {
 			if ($c_pagination > $show_first_last && $start > 1) {
 				$pagination[$j]['selected'] = false;
 				$pagination[$j]['page'] = '&laquo;';
-				$pagination[$j]['title'] = \ACP3\CMS::$injector['Lang']->t('system', 'first_page');
+				$pagination[$j]['title'] = Registry::get('Lang')->t('system', 'first_page');
 				$pagination[$j]['uri'] = $link . $fragment;
 				++$j;
 			}
@@ -565,7 +565,7 @@ class Functions {
 			if ($c_pagination > $show_previous_next && $current_page !== 1) {
 				$pagination[$j]['selected'] = false;
 				$pagination[$j]['page'] = '&lsaquo;';
-				$pagination[$j]['title'] = \ACP3\CMS::$injector['Lang']->t('system', 'previous_page');
+				$pagination[$j]['title'] = Registry::get('Lang')->t('system', 'previous_page');
 				$pagination[$j]['uri'] = $link . ($current_page - 1 > 1 ? 'page_' . ($current_page - 1) . '/' : '') . $fragment;
 				++$j;
 			}
@@ -580,7 +580,7 @@ class Functions {
 			if ($c_pagination > $show_previous_next && $current_page !== $c_pagination) {
 				$pagination[$j]['selected'] = false;
 				$pagination[$j]['page'] = '&rsaquo;';
-				$pagination[$j]['title'] = \ACP3\CMS::$injector['Lang']->t('system', 'next_page');
+				$pagination[$j]['title'] = Registry::get('Lang')->t('system', 'next_page');
 				$pagination[$j]['uri'] = $link . 'page_' . ($current_page + 1) . '/' . $fragment;
 				++$j;
 			}
@@ -589,13 +589,13 @@ class Functions {
 			if ($c_pagination > $show_first_last && $c_pagination !== $end) {
 				$pagination[$j]['selected'] = false;
 				$pagination[$j]['page'] = '&raquo;';
-				$pagination[$j]['title'] = \ACP3\CMS::$injector['Lang']->t('system', 'last_page');
+				$pagination[$j]['title'] = Registry::get('Lang')->t('system', 'last_page');
 				$pagination[$j]['uri'] = $link . 'page_' . $c_pagination . '/' . $fragment;
 			}
 
-			\ACP3\CMS::$injector['View']->assign('pagination', $pagination);
+			Registry::get('View')->assign('pagination', $pagination);
 
-			return \ACP3\CMS::$injector['View']->fetchTemplate('system/pagination.tpl');
+			return Registry::get('View')->fetchTemplate('system/pagination.tpl');
 		}
 	}
 
@@ -657,7 +657,7 @@ class Functions {
 	 */
 	public static function rewriteInternalUriCallback($matches)
 	{
-		return '<a href="' . \ACP3\CMS::$injector['URI']->route($matches[6], 1) . '"';
+		return '<a href="' . Registry::get('URI')->route($matches[6], 1) . '"';
 	}
 
 	/**

@@ -11,46 +11,41 @@ use ACP3\Core;
  */
 class NewsFrontend extends Core\ModuleController {
 
-	public function __construct($injector)
-	{
-		parent::__construct($injector);
-	}
-
 	public function actionDetails()
 	{
 		$period = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-		if (Core\Validate::isNumber($this->injector['URI']->id) === true &&
-				$this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'news WHERE id = :id' . $period, array('id' => $this->injector['URI']->id, 'time' => $this->injector['Date']->getCurrentDateTime())) == 1) {
+		if (Core\Validate::isNumber(Core\Registry::get('URI')->id) === true &&
+				Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'news WHERE id = :id' . $period, array('id' => Core\Registry::get('URI')->id, 'time' => Core\Registry::get('Date')->getCurrentDateTime())) == 1) {
 
 			$settings = Core\Config::getSettings('news');
-			$news = NewsFunctions::getNewsCache($this->injector['URI']->id);
+			$news = NewsFunctions::getNewsCache(Core\Registry::get('URI')->id);
 
-			$this->injector['Breadcrumb']->append($this->injector['Lang']->t('news', 'news'), $this->injector['URI']->route('news'));
+			Core\Registry::get('Breadcrumb')->append(Core\Registry::get('Lang')->t('news', 'news'), Core\Registry::get('URI')->route('news'));
 			if ($settings['category_in_breadcrumb'] == 1) {
 				// Brotkrümelspur
-				$category = $this->injector['Db']->fetchColumn('SELECT title FROM ' . DB_PRE . 'categories WHERE id = ?', array($news['category_id']));
+				$category = Core\Registry::get('Db')->fetchColumn('SELECT title FROM ' . DB_PRE . 'categories WHERE id = ?', array($news['category_id']));
 				if (!empty($category)) {
-					$this->injector['Breadcrumb']->append($category, $this->injector['URI']->route('news/list/cat_' . $news['category_id']));
+					Core\Registry::get('Breadcrumb')->append($category, Core\Registry::get('URI')->route('news/list/cat_' . $news['category_id']));
 				}
 			}
-			$this->injector['Breadcrumb']->append($news['title']);
+			Core\Registry::get('Breadcrumb')->append($news['title']);
 
-			$news['date_formatted'] = $this->injector['Date']->format($news['start'], $settings['dateformat']);
-			$news['date_iso'] = $this->injector['Date']->format($news['start'], 'c');
+			$news['date_formatted'] = Core\Registry::get('Date')->format($news['start'], $settings['dateformat']);
+			$news['date_iso'] = Core\Registry::get('Date')->format($news['start'], 'c');
 			$news['text'] = Core\Functions::rewriteInternalUri($news['text']);
 			if (!empty($news['uri']) && (bool) preg_match('=^http(s)?://=', $news['uri']) === false) {
 				$news['uri'] = 'http://' . $news['uri'];
 			}
 			$news['target'] = $news['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 
-			$this->injector['View']->assign('news', $news);
+			Core\Registry::get('View')->assign('news', $news);
 
 			if ($settings['comments'] == 1 && $news['comments'] == 1 && Core\Modules::check('comments', 'list') === true) {
-				$comments = new \ACP3\Modules\Comments\CommentsFrontend($this->injector, 'news', $this->injector['URI']->id);
-				$this->injector['View']->assign('comments', $comments->actionList());
+				$comments = new \ACP3\Modules\Comments\CommentsFrontend($this->injector, 'news', Core\Registry::get('URI')->id);
+				Core\Registry::get('View')->assign('comments', $comments->actionList());
 			}
 		} else {
-			$this->injector['URI']->redirect('errors/404');
+			Core\Registry::get('URI')->redirect('errors/404');
 		}
 	}
 
@@ -58,33 +53,33 @@ class NewsFrontend extends Core\ModuleController {
 	{
 		if (isset($_POST['cat']) && Core\Validate::isNumber($_POST['cat']) === true) {
 			$cat = (int) $_POST['cat'];
-		} elseif (Core\Validate::isNumber($this->injector['URI']->cat) === true) {
-			$cat = (int) $this->injector['URI']->cat;
+		} elseif (Core\Validate::isNumber(Core\Registry::get('URI')->cat) === true) {
+			$cat = (int) Core\Registry::get('URI')->cat;
 		} else {
 			$cat = 0;
 		}
 
 		if (Core\Modules::isActive('categories') === true) {
-			$this->injector['View']->assign('categories', \ACP3\Modules\Categories\CategoriesFunctions::categoriesList('news', $cat));
+			Core\Registry::get('View')->assign('categories', \ACP3\Modules\Categories\CategoriesFunctions::categoriesList('news', $cat));
 		}
 
 		$settings = Core\Config::getSettings('news');
 		// Kategorie in Brotkrümelspur anzeigen
 		if ($cat !== 0 && $settings['category_in_breadcrumb'] == 1) {
-			Core\SEO::setCanonicalUri($this->injector['URI']->route('news'));
-			$this->injector['Breadcrumb']->append($this->injector['Lang']->t('news', 'news'), $this->injector['URI']->route('news'));
-			$category = $this->injector['Db']->fetchColumn('SELECT title FROM ' . DB_PRE . 'categories WHERE id = ?', array($cat));
+			Core\SEO::setCanonicalUri(Core\Registry::get('URI')->route('news'));
+			Core\Registry::get('Breadcrumb')->append(Core\Registry::get('Lang')->t('news', 'news'), Core\Registry::get('URI')->route('news'));
+			$category = Core\Registry::get('Db')->fetchColumn('SELECT title FROM ' . DB_PRE . 'categories WHERE id = ?', array($cat));
 			if (!empty($category)) {
-				$this->injector['Breadcrumb']->append($category);
+				Core\Registry::get('Breadcrumb')->append($category);
 			}
 		}
 
 		// Falls Kategorie angegeben, News nur aus eben jener selektieren
 		$cat = !empty($cat) ? ' AND category_id = ' . $cat : '';
-		$time = $this->injector['Date']->getCurrentDateTime();
+		$time = Core\Registry::get('Date')->getCurrentDateTime();
 		$where = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' . $cat;
 
-		$news = $this->injector['Db']->fetchAll('SELECT id, start, title, text, readmore, comments, uri FROM ' . DB_PRE . 'news WHERE ' . $where . ' ORDER BY start DESC, end DESC, id DESC LIMIT ' . POS . ',' . $this->injector['Auth']->entries, array('time' => $time));
+		$news = Core\Registry::get('Db')->fetchAll('SELECT id, start, title, text, readmore, comments, uri FROM ' . DB_PRE . 'news WHERE ' . $where . ' ORDER BY start DESC, end DESC, id DESC LIMIT ' . POS . ',' . Core\Registry::get('Auth')->entries, array('time' => $time));
 		$c_news = count($news);
 
 		if ($c_news > 0) {
@@ -94,20 +89,20 @@ class NewsFrontend extends Core\ModuleController {
 				$comment_check = true;
 			}
 
-			$this->injector['View']->assign('pagination', Core\Functions::pagination($this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'news WHERE ' . $where, array('time' => $time))));
+			Core\Registry::get('View')->assign('pagination', Core\Functions::pagination(Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'news WHERE ' . $where, array('time' => $time))));
 
 			for ($i = 0; $i < $c_news; ++$i) {
-				$news[$i]['date_formatted'] = $this->injector['Date']->format($news[$i]['start'], $settings['dateformat']);
-				$news[$i]['date_iso'] = $this->injector['Date']->format($news[$i]['start'], 'c');
+				$news[$i]['date_formatted'] = Core\Registry::get('Date')->format($news[$i]['start'], $settings['dateformat']);
+				$news[$i]['date_iso'] = Core\Registry::get('Date')->format($news[$i]['start'], 'c');
 				$news[$i]['text'] = Core\Functions::rewriteInternalUri($news[$i]['text']);
 				if ($settings['comments'] == 1 && $news[$i]['comments'] == 1 && $comment_check === true) {
 					$news[$i]['comments_count'] = \ACP3\Modules\Comments\CommentsFunctions::commentsCount('news', $news[$i]['id']);
 				}
 				if ($settings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
-					$news[$i]['text'] = Core\Functions::shortenEntry($news[$i]['text'], $settings['readmore_chars'], 50, '...<a href="' . $this->injector['URI']->route('news/details/id_' . $news[$i]['id']) . '">[' . $this->injector['Lang']->t('news', 'readmore') . "]</a>\n");
+					$news[$i]['text'] = Core\Functions::shortenEntry($news[$i]['text'], $settings['readmore_chars'], 50, '...<a href="' . Core\Registry::get('URI')->route('news/details/id_' . $news[$i]['id']) . '">[' . Core\Registry::get('Lang')->t('news', 'readmore') . "]</a>\n");
 				}
 			}
-			$this->injector['View']->assign('news', $news);
+			Core\Registry::get('View')->assign('news', $news);
 		}
 	}
 
@@ -116,19 +111,19 @@ class NewsFrontend extends Core\ModuleController {
 		$settings = Core\Config::getSettings('news');
 
 		$where = 'start = end AND start <= :time OR start != end AND :time BETWEEN start AND end';
-		$news = $this->injector['Db']->fetchAll('SELECT id, start, title FROM ' . DB_PRE . 'news WHERE ' . $where . ' ORDER BY start DESC, end DESC, id DESC LIMIT ' . $settings['sidebar'], array('time' => $this->injector['Date']->getCurrentDateTime()));
+		$news = Core\Registry::get('Db')->fetchAll('SELECT id, start, title FROM ' . DB_PRE . 'news WHERE ' . $where . ' ORDER BY start DESC, end DESC, id DESC LIMIT ' . $settings['sidebar'], array('time' => Core\Registry::get('Date')->getCurrentDateTime()));
 		$c_news = count($news);
 
 		if ($c_news > 0) {
 			for ($i = 0; $i < $c_news; ++$i) {
-				$news[$i]['start'] = $this->injector['Date']->format($news[$i]['start'], $settings['dateformat']);
+				$news[$i]['start'] = Core\Registry::get('Date')->format($news[$i]['start'], $settings['dateformat']);
 				$news[$i]['title'] = $news[$i]['title'];
 				$news[$i]['title_short'] = Core\Functions::shortenEntry($news[$i]['title'], 30, 5, '...');
 			}
-			$this->injector['View']->assign('sidebar_news', $news);
+			Core\Registry::get('View')->assign('sidebar_news', $news);
 		}
 
-		$this->injector['View']->displayTemplate('news/sidebar.tpl');
+		Core\Registry::get('View')->displayTemplate('news/sidebar.tpl');
 	}
 
 }

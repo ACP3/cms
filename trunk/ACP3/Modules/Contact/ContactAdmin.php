@@ -11,21 +11,16 @@ use ACP3\Core;
  */
 class ContactAdmin extends Core\ModuleController {
 
-	public function __construct($injector)
-	{
-		parent::__construct($injector);
-	}
-
 	public function actionList()
 	{
 		if (isset($_POST['submit']) === true) {
 			if (!empty($_POST['mail']) && Core\Validate::email($_POST['mail']) === false)
-				$errors['mail'] = $this->injector['Lang']->t('system', 'wrong_email_format');
+				$errors['mail'] = Core\Registry::get('Lang')->t('system', 'wrong_email_format');
 
 			if (isset($errors) === true) {
-				$this->injector['View']->assign('error_msg', Core\Functions::errorBox($errors));
+				Core\Registry::get('View')->assign('error_msg', Core\Functions::errorBox($errors));
 			} elseif (Core\Validate::formToken() === false) {
-				$this->injector['View']->setContent(Core\Functions::errorBox($this->injector['Lang']->t('system', 'form_already_submitted')));
+				Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 			} else {
 				$data = array(
 					'address' => Core\Functions::str_encode($_POST['address'], true),
@@ -37,9 +32,9 @@ class ContactAdmin extends Core\ModuleController {
 
 				$bool = Core\Config::setSettings('contact', $data);
 
-				$this->injector['Session']->unsetFormToken();
+				Core\Registry::get('Session')->unsetFormToken();
 
-				Core\Functions::setRedirectMessage($bool, $this->injector['Lang']->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/contact');
+				Core\Functions::setRedirectMessage($bool, Core\Registry::get('Lang')->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/contact');
 			}
 		}
 		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -47,9 +42,9 @@ class ContactAdmin extends Core\ModuleController {
 
 			$settings = Core\Config::getSettings('contact');
 
-			$this->injector['View']->assign('form', isset($_POST['submit']) ? $_POST : $settings);
+			Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? $_POST : $settings);
 
-			$this->injector['Session']->generateFormToken();
+			Core\Registry::get('Session')->generateFormToken();
 		}
 	}
 

@@ -11,25 +11,21 @@ use ACP3\Core;
  */
 class GalleryFrontend extends Core\ModuleController {
 
-	public function __construct($injector) {
-		parent::__construct($injector);
-	}
-
 	public function actionDetails() {
 		$period = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-		if (Core\Validate::isNumber($this->injector['URI']->id) === true &&
-				$this->injector['Db']->fetchColumn('SELECT g.id FROM ' . DB_PRE . 'gallery AS g, ' . DB_PRE . 'gallery_pictures AS p WHERE p.id = :id AND p.gallery_id = g.id' . $period, array('id' => $this->injector['URI']->id, 'time' => $this->injector['Date']->getCurrentDateTime())) > 0) {
-			$picture = $this->injector['Db']->fetchAssoc('SELECT g.id AS gallery_id, g.title, p.id, p.pic, p.file, p.description, p.comments FROM ' . DB_PRE . 'gallery AS g, ' . DB_PRE . 'gallery_pictures AS p WHERE p.id = ? AND p.gallery_id = g.id', array($this->injector['URI']->id));
+		if (Core\Validate::isNumber(Core\Registry::get('URI')->id) === true &&
+				Core\Registry::get('Db')->fetchColumn('SELECT g.id FROM ' . DB_PRE . 'gallery AS g, ' . DB_PRE . 'gallery_pictures AS p WHERE p.id = :id AND p.gallery_id = g.id' . $period, array('id' => Core\Registry::get('URI')->id, 'time' => Core\Registry::get('Date')->getCurrentDateTime())) > 0) {
+			$picture = Core\Registry::get('Db')->fetchAssoc('SELECT g.id AS gallery_id, g.title, p.id, p.pic, p.file, p.description, p.comments FROM ' . DB_PRE . 'gallery AS g, ' . DB_PRE . 'gallery_pictures AS p WHERE p.id = ? AND p.gallery_id = g.id', array(Core\Registry::get('URI')->id));
 
 			$settings = Core\Config::getSettings('gallery');
 
 			// Brotkrümelspur
-			$this->injector['Breadcrumb']
-					->append($this->injector['Lang']->t('gallery', 'gallery'), $this->injector['URI']->route('gallery'))
-					->append($picture['title'], $this->injector['URI']->route('gallery/pics/id_' . $picture['gallery_id']))
-					->append($this->injector['Lang']->t('gallery', 'details'))
+			Core\Registry::get('Breadcrumb')
+					->append(Core\Registry::get('Lang')->t('gallery', 'gallery'), Core\Registry::get('URI')->route('gallery'))
+					->append($picture['title'], Core\Registry::get('URI')->route('gallery/pics/id_' . $picture['gallery_id']))
+					->append(Core\Registry::get('Lang')->t('gallery', 'details'))
 					->setTitlePrefix($picture['title'])
-					->setTitlePostfix(sprintf($this->injector['Lang']->t('gallery', 'picture_x'), $picture['pic']));
+					->setTitlePostfix(sprintf(Core\Registry::get('Lang')->t('gallery', 'picture_x'), $picture['pic']));
 
 			// Bildabmessungen berechnen
 			$picture['width'] = $settings['width'];
@@ -50,36 +46,36 @@ class GalleryFrontend extends Core\ModuleController {
 				$picture['height'] = isset($newHeight) ? $newHeight : $picInfos[1];
 			}
 
-			$this->injector['View']->assign('picture', $picture);
+			Core\Registry::get('View')->assign('picture', $picture);
 
 			// Vorheriges Bild
-			$picture_back = $this->injector['Db']->fetchColumn('SELECT id FROM ' . DB_PRE . 'gallery_pictures WHERE pic < ? AND gallery_id = ? ORDER BY pic DESC LIMIT 1', array($picture['pic'], $picture['gallery_id']));
+			$picture_back = Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'gallery_pictures WHERE pic < ? AND gallery_id = ? ORDER BY pic DESC LIMIT 1', array($picture['pic'], $picture['gallery_id']));
 			if (!empty($picture_back)) {
-				Core\SEO::setPreviousPage($this->injector['URI']->route('gallery/details/id_' . $picture_back));
-				$this->injector['View']->assign('picture_back', $picture_back);
+				Core\SEO::setPreviousPage(Core\Registry::get('URI')->route('gallery/details/id_' . $picture_back));
+				Core\Registry::get('View')->assign('picture_back', $picture_back);
 			}
 
 			// Nächstes Bild
-			$picture_next = $this->injector['Db']->fetchColumn('SELECT id FROM ' . DB_PRE . 'gallery_pictures WHERE pic > ? AND gallery_id = ? ORDER BY pic ASC LIMIT 1', array($picture['pic'], $picture['gallery_id']));
+			$picture_next = Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'gallery_pictures WHERE pic > ? AND gallery_id = ? ORDER BY pic ASC LIMIT 1', array($picture['pic'], $picture['gallery_id']));
 			if (!empty($picture_next)) {
-				Core\SEO::setNextPage($this->injector['URI']->route('gallery/details/id_' . $picture_next));
-				$this->injector['View']->assign('picture_next', $picture_next);
+				Core\SEO::setNextPage(Core\Registry::get('URI')->route('gallery/details/id_' . $picture_next));
+				Core\Registry::get('View')->assign('picture_next', $picture_next);
 			}
 
 			if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $picture['comments'] == 1 && Core\Modules::check('comments', 'list') === true) {
-				$comments = new \ACP3\Modules\Comments\CommentsFrontend($this->injector, 'gallery', $this->injector['URI']->id);
-				$this->injector['View']->assign('comments', $comments->actionList());
+				$comments = new \ACP3\Modules\Comments\CommentsFrontend($this->injector, 'gallery', Core\Registry::get('URI')->id);
+				Core\Registry::get('View')->assign('comments', $comments->actionList());
 			}
 		} else {
-			$this->injector['URI']->redirect('errors/404');
+			Core\Registry::get('URI')->redirect('errors/404');
 		}
 	}
 
 	public function actionImage() {
-		if (Core\Validate::isNumber($this->injector['URI']->id) === true) {
+		if (Core\Validate::isNumber(Core\Registry::get('URI')->id) === true) {
 			@set_time_limit(20);
-			$picture = $this->injector['Db']->fetchColumn('SELECT file FROM ' . DB_PRE . 'gallery_pictures WHERE id = ?', array($this->injector['URI']->id));
-			$action = $this->injector['URI']->action === 'thumb' ? 'thumb' : '';
+			$picture = Core\Registry::get('Db')->fetchColumn('SELECT file FROM ' . DB_PRE . 'gallery_pictures WHERE id = ?', array(Core\Registry::get('URI')->id));
+			$action = Core\Registry::get('URI')->action === 'thumb' ? 'thumb' : '';
 
 			$settings = Core\Config::getSettings('gallery');
 			$options = array(
@@ -94,58 +90,58 @@ class GalleryFrontend extends Core\ModuleController {
 			$image = new Core\Image($options);
 			$image->output();
 
-			$this->injector['View']->setNoOutput(true);
+			Core\Registry::get('View')->setNoOutput(true);
 		}
 	}
 
 	public function actionList() {
-		$time = $this->injector['Date']->getCurrentDateTime();
+		$time = Core\Registry::get('Date')->getCurrentDateTime();
 		$where = '(g.start = g.end AND g.start <= :time OR g.start != g.end AND :time BETWEEN g.start AND g.end)';
-		$galleries = $this->injector['Db']->fetchAll('SELECT g.id, g.start, g.title, COUNT(p.gallery_id) AS pics FROM ' . DB_PRE . 'gallery AS g LEFT JOIN ' . DB_PRE . 'gallery_pictures AS p ON(g.id = p.gallery_id) WHERE ' . $where . ' GROUP BY g.id ORDER BY g.start DESC, g.end DESC, g.id DESC LIMIT ' . POS . ',' . $this->injector['Auth']->entries, array('time' => $time));
+		$galleries = Core\Registry::get('Db')->fetchAll('SELECT g.id, g.start, g.title, COUNT(p.gallery_id) AS pics FROM ' . DB_PRE . 'gallery AS g LEFT JOIN ' . DB_PRE . 'gallery_pictures AS p ON(g.id = p.gallery_id) WHERE ' . $where . ' GROUP BY g.id ORDER BY g.start DESC, g.end DESC, g.id DESC LIMIT ' . POS . ',' . Core\Registry::get('Auth')->entries, array('time' => $time));
 		$c_galleries = count($galleries);
 
 		if ($c_galleries > 0) {
-			$this->injector['View']->assign('pagination', Core\Functions::pagination($this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'gallery AS g WHERE ' . $where, array('time' => $time))));
+			Core\Registry::get('View')->assign('pagination', Core\Functions::pagination(Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'gallery AS g WHERE ' . $where, array('time' => $time))));
 
 			$settings = Core\Config::getSettings('gallery');
 
 			for ($i = 0; $i < $c_galleries; ++$i) {
-				$galleries[$i]['date_formatted'] = $this->injector['Date']->format($galleries[$i]['start'], $settings['dateformat']);
-				$galleries[$i]['date_iso'] = $this->injector['Date']->format($galleries[$i]['start'], 'c');
-				$galleries[$i]['pics_lang'] = $galleries[$i]['pics'] . ' ' . $this->injector['Lang']->t('gallery', $galleries[$i]['pics'] == 1 ? 'picture' : 'pictures');
+				$galleries[$i]['date_formatted'] = Core\Registry::get('Date')->format($galleries[$i]['start'], $settings['dateformat']);
+				$galleries[$i]['date_iso'] = Core\Registry::get('Date')->format($galleries[$i]['start'], 'c');
+				$galleries[$i]['pics_lang'] = $galleries[$i]['pics'] . ' ' . Core\Registry::get('Lang')->t('gallery', $galleries[$i]['pics'] == 1 ? 'picture' : 'pictures');
 			}
-			$this->injector['View']->assign('galleries', $galleries);
+			Core\Registry::get('View')->assign('galleries', $galleries);
 		}
 	}
 
 	public function actionPics() {
 		$period = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-		if (Core\Validate::isNumber($this->injector['URI']->id) === true &&
-				$this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'gallery WHERE id = :id' . $period, array('id' => $this->injector['URI']->id, 'time' => $this->injector['Date']->getCurrentDateTime())) == 1) {
+		if (Core\Validate::isNumber(Core\Registry::get('URI')->id) === true &&
+				Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'gallery WHERE id = :id' . $period, array('id' => Core\Registry::get('URI')->id, 'time' => Core\Registry::get('Date')->getCurrentDateTime())) == 1) {
 			// Cache der Galerie holen
-			$pictures = GalleryFunctions::getGalleryCache($this->injector['URI']->id);
+			$pictures = GalleryFunctions::getGalleryCache(Core\Registry::get('URI')->id);
 			$c_pictures = count($pictures);
 
 			if ($c_pictures > 0) {
-				$gallery_title = $this->injector['Db']->fetchColumn('SELECT title FROM ' . DB_PRE . 'gallery WHERE id = ?', array($this->injector['URI']->id));
+				$gallery_title = Core\Registry::get('Db')->fetchColumn('SELECT title FROM ' . DB_PRE . 'gallery WHERE id = ?', array(Core\Registry::get('URI')->id));
 
 				// Brotkrümelspur
-				$this->injector['Breadcrumb']
-						->append($this->injector['Lang']->t('gallery', 'gallery'), $this->injector['URI']->route('gallery'))
+				Core\Registry::get('Breadcrumb')
+						->append(Core\Registry::get('Lang')->t('gallery', 'gallery'), Core\Registry::get('URI')->route('gallery'))
 						->append($gallery_title);
 
 				$settings = Core\Config::getSettings('gallery');
 
 				for ($i = 0; $i < $c_pictures; ++$i) {
-					$pictures[$i]['uri'] = $this->injector['URI']->route($settings['overlay'] == 1 ? 'gallery/image/id_' . $pictures[$i]['id'] . '/action_normal' : 'gallery/details/id_' . $pictures[$i]['id']);
+					$pictures[$i]['uri'] = Core\Registry::get('URI')->route($settings['overlay'] == 1 ? 'gallery/image/id_' . $pictures[$i]['id'] . '/action_normal' : 'gallery/details/id_' . $pictures[$i]['id']);
 					$pictures[$i]['description'] = strip_tags($pictures[$i]['description']);
 				}
 
-				$this->injector['View']->assign('pictures', $pictures);
-				$this->injector['View']->assign('overlay', (int) $settings['overlay']);
+				Core\Registry::get('View')->assign('pictures', $pictures);
+				Core\Registry::get('View')->assign('overlay', (int) $settings['overlay']);
 			}
 		} else {
-			$this->injector['URI']->redirect('errors/404');
+			Core\Registry::get('URI')->redirect('errors/404');
 		}
 	}
 
@@ -153,18 +149,18 @@ class GalleryFrontend extends Core\ModuleController {
 		$settings = Core\Config::getSettings('gallery');
 
 		$where = 'start = end AND start <= :time OR start != end AND :time BETWEEN start AND end';
-		$galleries = $this->injector['Db']->fetchAll('SELECT id, start, title FROM ' . DB_PRE . 'gallery WHERE ' . $where . ' ORDER BY start DESC LIMIT ' . $settings['sidebar'], array('time' => $this->injector['Date']->getCurrentDateTime()));
+		$galleries = Core\Registry::get('Db')->fetchAll('SELECT id, start, title FROM ' . DB_PRE . 'gallery WHERE ' . $where . ' ORDER BY start DESC LIMIT ' . $settings['sidebar'], array('time' => Core\Registry::get('Date')->getCurrentDateTime()));
 		$c_galleries = count($galleries);
 
 		if ($c_galleries > 0) {
 			for ($i = 0; $i < $c_galleries; ++$i) {
-				$galleries[$i]['start'] = $this->injector['Date']->format($galleries[$i]['start']);
+				$galleries[$i]['start'] = Core\Registry::get('Date')->format($galleries[$i]['start']);
 				$galleries[$i]['title_short'] = Core\Functions::shortenEntry($galleries[$i]['title'], 30, 5, '...');
 			}
-			$this->injector['View']->assign('sidebar_galleries', $galleries);
+			Core\Registry::get('View')->assign('sidebar_galleries', $galleries);
 		}
 
-		$this->injector['View']->displayTemplate('gallery/sidebar.tpl');
+		Core\Registry::get('View')->displayTemplate('gallery/sidebar.tpl');
 	}
 
 }

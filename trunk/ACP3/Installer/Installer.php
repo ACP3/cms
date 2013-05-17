@@ -11,13 +11,6 @@ namespace ACP3\Installer;
 class Installer {
 
 	/**
-	 * Pimple Dependency Injector
-	 *
-	 * @var \ACP3\Core\Pimple
-	 */
-	public static $injector;
-
-	/**
 	 * Führt alle nötigen Schritte aus, um die Seite anzuzeigen
 	 */
 	public static function runInstaller() {
@@ -76,6 +69,10 @@ class Installer {
 		define('INSTALLER_DIR', ACP3_ROOT_DIR . 'installation/');
 		define('INSTALLER_MODULES_DIR', ACP3_DIR . 'Installer/Modules/');
 		define('INSTALLER_CLASSES_DIR', ACP3_DIR . 'Installer/Core/');
+
+		// Pfade zum Theme setzen
+		define('DESIGN_PATH', INSTALLER_DIR . 'design/');
+		define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'installation/design/');
 	}
 
 	/**
@@ -95,15 +92,8 @@ class Installer {
 	 * Initialisieren der Klassen für den Installer
 	 */
 	public static function initializeInstallerClasses() {
-		// DI
-		self::$injector = new \ACP3\Core\Pimple();
-
-		// Pfade zum Theme setzen
-		define('DESIGN_PATH', INSTALLER_DIR . 'design/');
-		define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'installation/design/');
-
-		self::$injector['View'] = new \ACP3\Core\View();
-		self::$injector['URI'] = new \ACP3\Core\URI('install', 'welcome');
+		\ACP3\Core\Registry::set('View', new \ACP3\Core\View());
+		\ACP3\Core\Registry::set('URI', new \ACP3\Core\URI('install', 'welcome'));
 		$params = array(
 			'compile_id' => 'installer',
 			'plugins_dir' => INSTALLER_CLASSES_DIR . 'SmartyHelpers/',
@@ -116,9 +106,6 @@ class Installer {
 	 * Initialisieren der Klassen für den Updater
 	 */
 	public static function initializeUpdaterClasses() {
-		// DI
-		self::$injector = new \ACP3\Core\Pimple();
-
 		$config = new \Doctrine\DBAL\Configuration();
 		$connectionParams = array(
 			'dbname' => CONFIG_DB_NAME,
@@ -128,39 +115,32 @@ class Installer {
 			'driver' => 'pdo_mysql',
 			'charset' => 'utf8'
 		);
-		self::$injector['Db'] = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
+		\ACP3\Core\Registry::set('Db', \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config));
 		define('DB_PRE', CONFIG_DB_PRE);
 
 		// Sytemeinstellungen laden
-		Core\Config::getSystemSettings();
+		\ACP3\Core\Config::getSystemSettings();
 
-		// Pfade zum Theme setzen
-		define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
-		define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
-
-		// Restliche Klassen instanziieren
-		$classes = array('View', 'URI', 'Session', 'Auth', 'Lang', 'Date', 'Breadcrumb');
-
-		foreach ($classes as $class) {
-			$className = "\\ACP3\\Core\\" . $class;
-			self::$injector[$class] = new $className();
-		}
+		\ACP3\Core\Registry::set('View', new \ACP3\Core\View());
+		\ACP3\Core\Registry::set('URI', new \ACP3\Core\URI('update', 'db_update'));
 		$params = array(
 			'compile_id' => 'installer',
 			'plugins_dir' => INSTALLER_CLASSES_DIR . 'SmartyHelpers/',
 			'template_dir' => array(DESIGN_PATH_INTERNAL, INSTALLER_MODULES_DIR)
 		);
 		\ACP3\Core\View::factory('Smarty', $params);
-		Core\ACL::initialize(self::$injector['Auth']->getUserId());
 	}
 
 	/**
 	 * Gibt die Seite aus
 	 */
 	public static function outputPage() {
+		$view = \ACP3\Core\Registry::get('View');
+		$uri = \ACP3\Core\Registry::get('URI');
+
 		if (!empty($_POST['lang'])) {
 			setcookie('ACP3_INSTALLER_LANG', $_POST['lang'], time() + 3600, '/');
-			self::$injector['URI']->redirect(self::$injector['URI']->mod . '/' . self::$injector['URI']->file);
+			$uri->redirect($uri->mod . '/' . $uri->file);
 		}
 
 		if (!empty($_COOKIE['ACP3_INSTALLER_LANG']) && !preg_match('=/=', $_COOKIE['ACP3_INSTALLER_LANG']) &&
@@ -169,32 +149,32 @@ class Installer {
 		} else {
 			define('LANG', \ACP3\Core\Lang::parseAcceptLanguage());
 		}
-		self::$injector['Lang'] = new Core\InstallerLang(LANG);
+		\ACP3\Core\Registry::set('Lang', new Core\InstallerLang(LANG));
 
 		// Einige Template Variablen setzen
-		self::$injector['View']->assign('LANGUAGES', Core\Functions::languagesDropdown(LANG));
-		self::$injector['View']->assign('PHP_SELF', PHP_SELF);
-		self::$injector['View']->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
-		self::$injector['View']->assign('ROOT_DIR', ROOT_DIR);
-		self::$injector['View']->assign('INSTALLER_ROOT_DIR', INSTALLER_ROOT_DIR);
-		self::$injector['View']->assign('DESIGN_PATH', DESIGN_PATH);
-		self::$injector['View']->assign('UA_IS_MOBILE', \ACP3\Core\Functions::isMobileBrowser());
+		$view->assign('LANGUAGES', Core\Functions::languagesDropdown(LANG));
+		$view->assign('PHP_SELF', PHP_SELF);
+		$view->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
+		$view->assign('ROOT_DIR', ROOT_DIR);
+		$view->assign('INSTALLER_ROOT_DIR', INSTALLER_ROOT_DIR);
+		$view->assign('DESIGN_PATH', DESIGN_PATH);
+		$view->assign('UA_IS_MOBILE', \ACP3\Core\Functions::isMobileBrowser());
 
-		$lang_info = \ACP3\Core\XML::parseXmlFile(INSTALLER_DIR . 'languages/' . self::$injector['Lang']->getLanguage() . '.xml', '/language/info');
-		self::$injector['View']->assign('LANG_DIRECTION', isset($lang_info['direction']) ? $lang_info['direction'] : 'ltr');
-		self::$injector['View']->assign('LANG', LANG);
+		$lang_info = \ACP3\Core\XML::parseXmlFile(INSTALLER_DIR . 'languages/' . \ACP3\Core\Registry::get('Lang')->getLanguage() . '.xml', '/language/info');
+		$view->assign('LANG_DIRECTION', isset($lang_info['direction']) ? $lang_info['direction'] : 'ltr');
+		$view->assign('LANG', LANG);
 
-		$module = ucfirst(self::$injector['URI']->mod);
+		$module = ucfirst($uri->mod);
 		$className = "\\ACP3\\Installer\\Modules\\" . $module . "\\" . $module;
-		$action = 'action' . ucfirst(self::$injector['URI']->file);
+		$action = 'action' . ucfirst($uri->file);
 
 		if (method_exists($className, $action) === true) {
 			// Modul einbinden
-			$mod = new $className(self::$injector);
+			$mod = new $className();
 			$mod->$action();
 			$mod->display();
 		} else {
-			self::$injector['URI']->redirect('errors/404');
+			$uri->redirect('errors/404');
 		}
 	}
 

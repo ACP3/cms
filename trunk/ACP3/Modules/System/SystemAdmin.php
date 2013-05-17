@@ -11,59 +11,55 @@ use ACP3\Core;
  */
 class SystemAdmin extends Core\ModuleController {
 
-	public function __construct($injector) {
-		parent::__construct($injector);
-	}
-
 	public function actionConfiguration() {
 		if (isset($_POST['submit']) === true) {
 			if (Core\Validate::isInternalURI($_POST['homepage']) === false)
-				$errors['homepage'] = $this->injector['Lang']->t('system', 'incorrect_homepage');
+				$errors['homepage'] = Core\Registry::get('Lang')->t('system', 'incorrect_homepage');
 			if (Core\Validate::isNumber($_POST['entries']) === false)
-				$errors['entries'] = $this->injector['Lang']->t('system', 'select_records_per_page');
+				$errors['entries'] = Core\Registry::get('Lang')->t('system', 'select_records_per_page');
 			if (Core\Validate::isNumber($_POST['flood']) === false)
-				$errors['flood'] = $this->injector['Lang']->t('system', 'type_in_flood_barrier');
+				$errors['flood'] = Core\Registry::get('Lang')->t('system', 'type_in_flood_barrier');
 			if ((bool) preg_match('/\/$/', $_POST['icons_path']) === false)
-				$errors['icons-path'] = $this->injector['Lang']->t('system', 'incorrect_path_to_icons');
+				$errors['icons-path'] = Core\Registry::get('Lang')->t('system', 'incorrect_path_to_icons');
 			if ($_POST['wysiwyg'] != 'textarea' && (preg_match('=/=', $_POST['wysiwyg']) || is_file(CLASSES_DIR . 'WYSIWYG/' . $_POST['wysiwyg'] . '.php') === false))
-				$errors['wysiwyg'] = $this->injector['Lang']->t('system', 'select_editor');
+				$errors['wysiwyg'] = Core\Registry::get('Lang')->t('system', 'select_editor');
 			if (empty($_POST['date_format_long']) || empty($_POST['date_format_short']))
-				$errors[] = $this->injector['Lang']->t('system', 'type_in_date_format');
+				$errors[] = Core\Registry::get('Lang')->t('system', 'type_in_date_format');
 			if (Core\Validate::timeZone($_POST['date_time_zone']) === false)
-				$errors['date-time-zone'] = $this->injector['Lang']->t('system', 'select_time_zone');
+				$errors['date-time-zone'] = Core\Registry::get('Lang')->t('system', 'select_time_zone');
 			if (Core\Validate::isNumber($_POST['maintenance_mode']) === false)
-				$errors[] = $this->injector['Lang']->t('system', 'select_online_maintenance');
+				$errors[] = Core\Registry::get('Lang')->t('system', 'select_online_maintenance');
 			if (strlen($_POST['maintenance_message']) < 3)
-				$errors['maintenance-message'] = $this->injector['Lang']->t('system', 'maintenance_message_to_short');
+				$errors['maintenance-message'] = Core\Registry::get('Lang')->t('system', 'maintenance_message_to_short');
 			if (empty($_POST['seo_title']))
-				$errors['seo-title'] = $this->injector['Lang']->t('system', 'title_to_short');
+				$errors['seo-title'] = Core\Registry::get('Lang')->t('system', 'title_to_short');
 			if (Core\Validate::isNumber($_POST['seo_robots']) === false)
-				$errors[] = $this->injector['Lang']->t('system', 'select_seo_robots');
+				$errors[] = Core\Registry::get('Lang')->t('system', 'select_seo_robots');
 			if (Core\Validate::isNumber($_POST['seo_aliases']) === false)
-				$errors[] = $this->injector['Lang']->t('system', 'select_seo_aliases');
+				$errors[] = Core\Registry::get('Lang')->t('system', 'select_seo_aliases');
 			if (Core\Validate::isNumber($_POST['seo_mod_rewrite']) === false)
-				$errors[] = $this->injector['Lang']->t('system', 'select_mod_rewrite');
+				$errors[] = Core\Registry::get('Lang')->t('system', 'select_mod_rewrite');
 			if (Core\Validate::isNumber($_POST['cache_images']) === false)
-				$errors[] = $this->injector['Lang']->t('system', 'select_cache_images');
+				$errors[] = Core\Registry::get('Lang')->t('system', 'select_cache_images');
 			if (Core\Validate::isNumber($_POST['cache_minify']) === false)
-				$errors['cache-minify'] = $this->injector['Lang']->t('system', 'type_in_minify_cache_lifetime');
+				$errors['cache-minify'] = Core\Registry::get('Lang')->t('system', 'type_in_minify_cache_lifetime');
 			if (!empty($_POST['extra_css']) && Core\Validate::extraCSS($_POST['extra_css']) === false)
-				$errors['extra-css'] = $this->injector['Lang']->t('system', 'type_in_additional_stylesheets');
+				$errors['extra-css'] = Core\Registry::get('Lang')->t('system', 'type_in_additional_stylesheets');
 			if (!empty($_POST['extra_js']) && Core\Validate::extraJS($_POST['extra_js']) === false)
-				$errors['extra-js'] = $this->injector['Lang']->t('system', 'type_in_additional_javascript_files');
+				$errors['extra-js'] = Core\Registry::get('Lang')->t('system', 'type_in_additional_javascript_files');
 			if ($_POST['mailer_type'] === 'smtp') {
 				if (empty($_POST['mailer_smtp_host']))
-					$errors['mailer-smtp-host'] = $this->injector['Lang']->t('system', 'type_in_mailer_smtp_host');
+					$errors['mailer-smtp-host'] = Core\Registry::get('Lang')->t('system', 'type_in_mailer_smtp_host');
 				if (Core\Validate::isNumber($_POST['mailer_smtp_port']) === false)
-					$errors['mailer-smtp-port'] = $this->injector['Lang']->t('system', 'type_in_mailer_smtp_port');
+					$errors['mailer-smtp-port'] = Core\Registry::get('Lang')->t('system', 'type_in_mailer_smtp_port');
 				if ($_POST['mailer_smtp_auth'] == 1 && empty($_POST['mailer_smtp_user']))
-					$errors['mailer-smtp-username'] = $this->injector['Lang']->t('system', 'type_in_mailer_smtp_username');
+					$errors['mailer-smtp-username'] = Core\Registry::get('Lang')->t('system', 'type_in_mailer_smtp_username');
 			}
 
 			if (isset($errors) === true) {
-				$this->injector['View']->assign('error_msg', Core\Functions::errorBox($errors));
+				Core\Registry::get('View')->assign('error_msg', Core\Functions::errorBox($errors));
 			} elseif (Core\Validate::formToken() === false) {
-				$this->injector['View']->setContent(Core\Functions::errorBox($this->injector['Lang']->t('system', 'form_already_submitted')));
+				Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 			} else {
 				// Config aktualisieren
 				$config = array(
@@ -104,15 +100,15 @@ class SystemAdmin extends Core\ModuleController {
 					Core\Cache::purge('minify');
 				}
 
-				$this->injector['Session']->unsetFormToken();
+				Core\Registry::get('Session')->unsetFormToken();
 
-				Core\Functions::setRedirectMessage($bool, $this->injector['Lang']->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), 'acp/system/configuration');
+				Core\Functions::setRedirectMessage($bool, Core\Registry::get('Lang')->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), 'acp/system/configuration');
 			}
 		}
 		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 			Core\Functions::getRedirectMessage();
 
-			$this->injector['View']->assign('entries', Core\Functions::recordsPerPage(CONFIG_ENTRIES));
+			Core\Registry::get('View')->assign('entries', Core\Functions::recordsPerPage(CONFIG_ENTRIES));
 
 			// WYSIWYG-Editoren
 			$editors = scandir(CLASSES_DIR . 'WYSIWYG');
@@ -127,77 +123,77 @@ class SystemAdmin extends Core\ModuleController {
 					$wysiwyg[$i]['lang'] = $editors[$i];
 				}
 			}
-			$this->injector['View']->assign('wysiwyg', $wysiwyg);
+			Core\Registry::get('View')->assign('wysiwyg', $wysiwyg);
 
 			// Zeitzonen
-			$this->injector['View']->assign('time_zones', $this->injector['Date']->getTimeZones(CONFIG_DATE_TIME_ZONE));
+			Core\Registry::get('View')->assign('time_zones', Core\Registry::get('Date')->getTimeZones(CONFIG_DATE_TIME_ZONE));
 
 			// Wartungsmodus an/aus
-			$lang_maintenance = array($this->injector['Lang']->t('system', 'yes'), $this->injector['Lang']->t('system', 'no'));
-			$this->injector['View']->assign('maintenance', Core\Functions::selectGenerator('maintenance_mode', array(1, 0), $lang_maintenance, CONFIG_MAINTENANCE_MODE, 'checked'));
+			$lang_maintenance = array(Core\Registry::get('Lang')->t('system', 'yes'), Core\Registry::get('Lang')->t('system', 'no'));
+			Core\Registry::get('View')->assign('maintenance', Core\Functions::selectGenerator('maintenance_mode', array(1, 0), $lang_maintenance, CONFIG_MAINTENANCE_MODE, 'checked'));
 
 			// Robots
 			$lang_robots = array(
-				$this->injector['Lang']->t('system', 'seo_robots_index_follow'),
-				$this->injector['Lang']->t('system', 'seo_robots_index_nofollow'),
-				$this->injector['Lang']->t('system', 'seo_robots_noindex_follow'),
-				$this->injector['Lang']->t('system', 'seo_robots_noindex_nofollow')
+				Core\Registry::get('Lang')->t('system', 'seo_robots_index_follow'),
+				Core\Registry::get('Lang')->t('system', 'seo_robots_index_nofollow'),
+				Core\Registry::get('Lang')->t('system', 'seo_robots_noindex_follow'),
+				Core\Registry::get('Lang')->t('system', 'seo_robots_noindex_nofollow')
 			);
-			$this->injector['View']->assign('robots', Core\Functions::selectGenerator('seo_robots', array(1, 2, 3, 4), $lang_robots, CONFIG_SEO_ROBOTS));
+			Core\Registry::get('View')->assign('robots', Core\Functions::selectGenerator('seo_robots', array(1, 2, 3, 4), $lang_robots, CONFIG_SEO_ROBOTS));
 
 			// URI-Aliases aktivieren/deaktivieren
-			$lang_aliases = array($this->injector['Lang']->t('system', 'yes'), $this->injector['Lang']->t('system', 'no'));
-			$this->injector['View']->assign('aliases', Core\Functions::selectGenerator('seo_aliases', array(1, 0), $lang_aliases, CONFIG_SEO_ALIASES, 'checked'));
+			$lang_aliases = array(Core\Registry::get('Lang')->t('system', 'yes'), Core\Registry::get('Lang')->t('system', 'no'));
+			Core\Registry::get('View')->assign('aliases', Core\Functions::selectGenerator('seo_aliases', array(1, 0), $lang_aliases, CONFIG_SEO_ALIASES, 'checked'));
 
 			// Sef-URIs
-			$lang_mod_rewrite = array($this->injector['Lang']->t('system', 'yes'), $this->injector['Lang']->t('system', 'no'));
-			$this->injector['View']->assign('mod_rewrite', Core\Functions::selectGenerator('seo_mod_rewrite', array(1, 0), $lang_mod_rewrite, CONFIG_SEO_MOD_REWRITE, 'checked'));
+			$lang_mod_rewrite = array(Core\Registry::get('Lang')->t('system', 'yes'), Core\Registry::get('Lang')->t('system', 'no'));
+			Core\Registry::get('View')->assign('mod_rewrite', Core\Functions::selectGenerator('seo_mod_rewrite', array(1, 0), $lang_mod_rewrite, CONFIG_SEO_MOD_REWRITE, 'checked'));
 
 			// Caching von Bildern
-			$lang_cache_images = array($this->injector['Lang']->t('system', 'yes'), $this->injector['Lang']->t('system', 'no'));
-			$this->injector['View']->assign('cache_images', Core\Functions::selectGenerator('cache_images', array(1, 0), $lang_cache_images, CONFIG_CACHE_IMAGES, 'checked'));
+			$lang_cache_images = array(Core\Registry::get('Lang')->t('system', 'yes'), Core\Registry::get('Lang')->t('system', 'no'));
+			Core\Registry::get('View')->assign('cache_images', Core\Functions::selectGenerator('cache_images', array(1, 0), $lang_cache_images, CONFIG_CACHE_IMAGES, 'checked'));
 
 			// Mailertyp
-			$lang_mailer_type = array($this->injector['Lang']->t('system', 'mailer_type_php_mail'), $this->injector['Lang']->t('system', 'mailer_type_smtp'));
-			$this->injector['View']->assign('mailer_type', Core\Functions::selectGenerator('mailer_type', array('mail', 'smtp'), $lang_mailer_type, CONFIG_MAILER_TYPE));
+			$lang_mailer_type = array(Core\Registry::get('Lang')->t('system', 'mailer_type_php_mail'), Core\Registry::get('Lang')->t('system', 'mailer_type_smtp'));
+			Core\Registry::get('View')->assign('mailer_type', Core\Functions::selectGenerator('mailer_type', array('mail', 'smtp'), $lang_mailer_type, CONFIG_MAILER_TYPE));
 
 			// Mailer SMTP Authentifizierung
-			$lang_mailer_smtp_auth = array($this->injector['Lang']->t('system', 'yes'), $this->injector['Lang']->t('system', 'no'));
-			$this->injector['View']->assign('mailer_smtp_auth', Core\Functions::selectGenerator('mailer_smtp_auth', array(1, 0), $lang_mailer_smtp_auth, CONFIG_MAILER_SMTP_AUTH, 'checked'));
+			$lang_mailer_smtp_auth = array(Core\Registry::get('Lang')->t('system', 'yes'), Core\Registry::get('Lang')->t('system', 'no'));
+			Core\Registry::get('View')->assign('mailer_smtp_auth', Core\Functions::selectGenerator('mailer_smtp_auth', array(1, 0), $lang_mailer_smtp_auth, CONFIG_MAILER_SMTP_AUTH, 'checked'));
 
 			// Mailer SMTP Verschlüsselung
 			$lang_mailer_smtp_security = array(
-				$this->injector['Lang']->t('system', 'mailer_smtp_security_none'),
-				$this->injector['Lang']->t('system', 'mailer_smtp_security_ssl'),
-				$this->injector['Lang']->t('system', 'mailer_smtp_security_tls')
+				Core\Registry::get('Lang')->t('system', 'mailer_smtp_security_none'),
+				Core\Registry::get('Lang')->t('system', 'mailer_smtp_security_ssl'),
+				Core\Registry::get('Lang')->t('system', 'mailer_smtp_security_tls')
 			);
-			$this->injector['View']->assign('mailer_smtp_security', Core\Functions::selectGenerator('mailer_smtp_security', array('none', 'ssl', 'tls'), $lang_mailer_smtp_security, CONFIG_MAILER_SMTP_SECURITY));
+			Core\Registry::get('View')->assign('mailer_smtp_security', Core\Functions::selectGenerator('mailer_smtp_security', array('none', 'ssl', 'tls'), $lang_mailer_smtp_security, CONFIG_MAILER_SMTP_SECURITY));
 
 			$settings = Core\Config::getSettings('system');
 
-			$this->injector['View']->assign('form', isset($_POST['submit']) ? $_POST : $settings);
+			Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? $_POST : $settings);
 
-			$this->injector['Session']->generateFormToken();
+			Core\Registry::get('Session')->generateFormToken();
 		}
 	}
 
 	public function actionDesigns() {
-		$this->injector['Breadcrumb']
-				->append($this->injector['Lang']->t('system', 'acp_extensions'), $this->injector['URI']->route('acp/system/extensions'))
-				->append($this->injector['Lang']->t('system', 'acp_designs'));
+		Core\Registry::get('Breadcrumb')
+				->append(Core\Registry::get('Lang')->t('system', 'acp_extensions'), Core\Registry::get('URI')->route('acp/system/extensions'))
+				->append(Core\Registry::get('Lang')->t('system', 'acp_designs'));
 
-		if (isset($this->injector['URI']->dir)) {
+		if (isset(Core\Registry::get('URI')->dir)) {
 			$bool = false;
 
-			if ((bool) preg_match('=/=', $this->injector['URI']->dir) === false &&
-					is_file(ACP3_ROOT_DIR . 'designs/' . $this->injector['URI']->dir . '/info.xml') === true) {
-				$bool = Core\Config::setSettings('system', array('design' => $this->injector['URI']->dir));
+			if ((bool) preg_match('=/=', Core\Registry::get('URI')->dir) === false &&
+					is_file(ACP3_ROOT_DIR . 'designs/' . Core\Registry::get('URI')->dir . '/info.xml') === true) {
+				$bool = Core\Config::setSettings('system', array('design' => Core\Registry::get('URI')->dir));
 
 				// Template Cache leeren
 				Core\Cache::purge('tpl_compiled');
 				Core\Cache::purge('tpl_cached');
 			}
-			$text = $this->injector['Lang']->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
+			$text = Core\Registry::get('Lang')->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
 
 			Core\Functions::setRedirectMessage($bool, $text, 'acp/system/designs');
 		} else {
@@ -215,27 +211,27 @@ class SystemAdmin extends Core\ModuleController {
 					$designs[$i]['dir'] = $directories[$i];
 				}
 			}
-			$this->injector['View']->assign('designs', $designs);
+			Core\Registry::get('View')->assign('designs', $designs);
 		}
 	}
 
 	public function actionExtensions() {
-		$this->injector['View']->setContentTemplate('system/acp_extensions.tpl');
+		Core\Registry::get('View')->setContentTemplate('system/acp_extensions.tpl');
 	}
 
 	public function actionLanguages() {
-		$this->injector['Breadcrumb']
-				->append($this->injector['Lang']->t('system', 'acp_extensions'), $this->injector['URI']->route('acp/system/extensions'))
-				->append($this->injector['Lang']->t('system', 'acp_languages'));
+		Core\Registry::get('Breadcrumb')
+				->append(Core\Registry::get('Lang')->t('system', 'acp_extensions'), Core\Registry::get('URI')->route('acp/system/extensions'))
+				->append(Core\Registry::get('Lang')->t('system', 'acp_languages'));
 
-		if (isset($this->injector['URI']->dir)) {
+		if (isset(Core\Registry::get('URI')->dir)) {
 			$bool = false;
 
-			if ($this->injector['Lang']->languagePackExists($this->injector['URI']->dir) === true) {
-				$bool = Core\Config::setSettings('system', array('lang' => $this->injector['URI']->dir));
-				$this->injector['Lang']->setLanguage($this->injector['URI']->dir);
+			if (Core\Registry::get('Lang')->languagePackExists(Core\Registry::get('URI')->dir) === true) {
+				$bool = Core\Config::setSettings('system', array('lang' => Core\Registry::get('URI')->dir));
+				Core\Registry::get('Lang')->setLanguage(Core\Registry::get('URI')->dir);
 			}
-			$text = $this->injector['Lang']->t('system', $bool === true ? 'languages_edit_success' : 'languages_edit_error');
+			$text = Core\Registry::get('Lang')->t('system', $bool === true ? 'languages_edit_success' : 'languages_edit_error');
 
 			Core\Functions::setRedirectMessage($bool, $text, 'acp/system/languages');
 		} else {
@@ -252,58 +248,58 @@ class SystemAdmin extends Core\ModuleController {
 					$languages[$i]['dir'] = $directories[$i];
 				}
 			}
-			$this->injector['View']->assign('languages', $languages);
+			Core\Registry::get('View')->assign('languages', $languages);
 		}
 	}
 
 	public function actionList() {
-		$this->injector['View']->setContentTemplate('system/acp_list.tpl');
+		Core\Registry::get('View')->setContentTemplate('system/acp_list.tpl');
 	}
 
 	public function actionMaintenance() {
-		$this->injector['View']->setContentTemplate('system/acp_maintenance.tpl');
+		Core\Registry::get('View')->setContentTemplate('system/acp_maintenance.tpl');
 	}
 
 	public function actionModules() {
-		$this->injector['Breadcrumb']
-				->append($this->injector['Lang']->t('system', 'acp_extensions'), $this->injector['URI']->route('acp/system/extensions'))
-				->append($this->injector['Lang']->t('system', 'acp_modules'));
+		Core\Registry::get('Breadcrumb')
+				->append(Core\Registry::get('Lang')->t('system', 'acp_extensions'), Core\Registry::get('URI')->route('acp/system/extensions'))
+				->append(Core\Registry::get('Lang')->t('system', 'acp_modules'));
 
-		switch ($this->injector['URI']->action) {
+		switch (Core\Registry::get('URI')->action) {
 			case 'activate':
 				$bool = false;
-				$info = Core\Modules::getModuleInfo($this->injector['URI']->dir);
+				$info = Core\Modules::getModuleInfo(Core\Registry::get('URI')->dir);
 				if (empty($info)) {
-					$text = $this->injector['Lang']->t('system', 'module_not_found');
+					$text = Core\Registry::get('Lang')->t('system', 'module_not_found');
 				} elseif ($info['protected'] === true) {
-					$text = $this->injector['Lang']->t('system', 'mod_deactivate_forbidden');
+					$text = Core\Registry::get('Lang')->t('system', 'mod_deactivate_forbidden');
 				} else {
-					$bool = $this->injector['Db']->update(DB_PRE . 'modules', array('active' => 1), array('name' => $this->injector['URI']->dir));
+					$bool = Core\Registry::get('Db')->update(DB_PRE . 'modules', array('active' => 1), array('name' => Core\Registry::get('URI')->dir));
 					Core\Modules::setModulesCache();
 					Core\ACL::setResourcesCache();
 
-					$text = $this->injector['Lang']->t('system', 'mod_activate_' . ($bool !== false ? 'success' : 'error'));
+					$text = Core\Registry::get('Lang')->t('system', 'mod_activate_' . ($bool !== false ? 'success' : 'error'));
 				}
 				Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
 			case 'deactivate':
 				$bool = false;
-				$info = Core\Modules::getModuleInfo($this->injector['URI']->dir);
+				$info = Core\Modules::getModuleInfo(Core\Registry::get('URI')->dir);
 				if (empty($info)) {
-					$text = $this->injector['Lang']->t('system', 'module_not_found');
+					$text = Core\Registry::get('Lang')->t('system', 'module_not_found');
 				} elseif ($info['protected'] === true) {
-					$text = $this->injector['Lang']->t('system', 'mod_deactivate_forbidden');
+					$text = Core\Registry::get('Lang')->t('system', 'mod_deactivate_forbidden');
 				} else {
 					// Modulabhängigkeiten prüfen
-					$deps = SystemFunctions::checkUninstallDependencies($this->injector['URI']->dir);
+					$deps = SystemFunctions::checkUninstallDependencies(Core\Registry::get('URI')->dir);
 
 					if (empty($deps)) {
-						$bool = $this->injector['Db']->update(DB_PRE . 'modules', array('active' => 0), array('name' => $this->injector['URI']->dir));
+						$bool = Core\Registry::get('Db')->update(DB_PRE . 'modules', array('active' => 0), array('name' => Core\Registry::get('URI')->dir));
 						Core\Modules::setModulesCache();
 						Core\ACL::setResourcesCache();
 
-						$text = $this->injector['Lang']->t('system', 'mod_deactivate_' . ($bool !== false ? 'success' : 'error'));
+						$text = Core\Registry::get('Lang')->t('system', 'mod_deactivate_' . ($bool !== false ? 'success' : 'error'));
 					} else {
-						$text = sprintf($this->injector['Lang']->t('system', 'module_disable_not_possible'), implode(', ', $deps));
+						$text = sprintf(Core\Registry::get('Lang')->t('system', 'module_disable_not_possible'), implode(', ', $deps));
 					}
 				}
 				Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
@@ -311,62 +307,62 @@ class SystemAdmin extends Core\ModuleController {
 			case 'install':
 				$bool = false;
 				// Nur noch nicht installierte Module berücksichtigen
-				if ($this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'modules WHERE name = ?', array($this->injector['URI']->dir)) == 0) {
-					$mod_name = ucfirst($this->injector['URI']->dir);
+				if (Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'modules WHERE name = ?', array(Core\Registry::get('URI')->dir)) == 0) {
+					$mod_name = ucfirst(Core\Registry::get('URI')->dir);
 					$path = MODULES_DIR . $mod_name . '/' . $mod_name . 'Installer.php';
 					if (is_file($path) === true) {
 						// Modulabhängigkeiten prüfen
-						$deps = SystemFunctions::checkInstallDependencies($this->injector['URI']->dir);
+						$deps = SystemFunctions::checkInstallDependencies(Core\Registry::get('URI')->dir);
 
 						// Modul installieren
 						if (empty($deps)) {
 							require_once $path;
 
-							$className = Core\ModuleInstaller::buildClassName($this->injector['URI']->dir);
+							$className = Core\ModuleInstaller::buildClassName(Core\Registry::get('URI')->dir);
 							$install = new $className();
 							$bool = $install->install();
 							Core\Modules::setModulesCache();
-							$text = $this->injector['Lang']->t('system', 'mod_installation_' . ($bool !== false ? 'success' : 'error'));
+							$text = Core\Registry::get('Lang')->t('system', 'mod_installation_' . ($bool !== false ? 'success' : 'error'));
 						} else {
-							$text = sprintf($this->injector['Lang']->t('system', 'enable_following_modules_first'), implode(', ', $deps));
+							$text = sprintf(Core\Registry::get('Lang')->t('system', 'enable_following_modules_first'), implode(', ', $deps));
 						}
 					} else {
-						$text = $this->injector['Lang']->t('system', 'module_installer_not_found');
+						$text = Core\Registry::get('Lang')->t('system', 'module_installer_not_found');
 					}
 				} else {
-					$text = $this->injector['Lang']->t('system', 'module_already_installed');
+					$text = Core\Registry::get('Lang')->t('system', 'module_already_installed');
 				}
 				Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
 				break;
 			case 'uninstall':
 				$bool = false;
-				$mod_info = Core\Modules::getModuleInfo($this->injector['URI']->dir);
+				$mod_info = Core\Modules::getModuleInfo(Core\Registry::get('URI')->dir);
 				// Nur installierte und Nicht-Core-Module berücksichtigen
 				if ($mod_info['protected'] === false &&
-						$this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'modules WHERE name = ?', array($this->injector['URI']->dir)) == 1) {
-					$mod_name = ucfirst($this->injector['URI']->dir);
+						Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'modules WHERE name = ?', array(Core\Registry::get('URI')->dir)) == 1) {
+					$mod_name = ucfirst(Core\Registry::get('URI')->dir);
 					$path = MODULES_DIR . $mod_name . '/' . $mod_name . 'Installer.php';
 					if (is_file($path) === true) {
 						// Modulabhängigkeiten prüfen
-						$deps = SystemFunctions::checkUninstallDependencies($this->injector['URI']->dir);
+						$deps = SystemFunctions::checkUninstallDependencies(Core\Registry::get('URI')->dir);
 
 						// Modul deinstallieren
 						if (empty($deps)) {
 							require_once $path;
 
-							$className = Core\ModuleInstaller::buildClassName($this->injector['URI']->dir);
+							$className = Core\ModuleInstaller::buildClassName(Core\Registry::get('URI')->dir);
 							$install = new $className();
 							$bool = $install->uninstall();
 							Core\Modules::setModulesCache();
-							$text = $this->injector['Lang']->t('system', 'mod_uninstallation_' . ($bool !== false ? 'success' : 'error'));
+							$text = Core\Registry::get('Lang')->t('system', 'mod_uninstallation_' . ($bool !== false ? 'success' : 'error'));
 						} else {
-							$text = sprintf($this->injector['Lang']->t('system', 'uninstall_following_modules_first'), implode(', ', $deps));
+							$text = sprintf(Core\Registry::get('Lang')->t('system', 'uninstall_following_modules_first'), implode(', ', $deps));
 						}
 					} else {
-						$text = $this->injector['Lang']->t('system', 'module_installer_not_found');
+						$text = Core\Registry::get('Lang')->t('system', 'module_installer_not_found');
 					}
 				} else {
-					$text = $this->injector['Lang']->t('system', 'protected_module_description');
+					$text = Core\Registry::get('Lang')->t('system', 'protected_module_description');
 				}
 				Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
 				break;
@@ -374,52 +370,51 @@ class SystemAdmin extends Core\ModuleController {
 				Core\Functions::getRedirectMessage();
 
 				// Languagecache neu erstellen, für den Fall, dass neue Module hinzugefügt wurden
-				$this->injector['Lang']->setLanguageCache();
+				Core\Registry::get('Lang')->setLanguageCache();
 
 				$modules = Core\Modules::getAllModules();
 				$installed_modules = $new_modules = array();
 
 				foreach ($modules as $key => $values) {
-					if ($this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'modules WHERE name = ?', array($values['dir'])) == 1) {
+					if (Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'modules WHERE name = ?', array($values['dir'])) == 1) {
 						$installed_modules[$key] = $values;
 					} else {
 						$new_modules[$key] = $values;
 					}
 				}
 
-				$this->injector['View']->assign('installed_modules', $installed_modules);
-				$this->injector['View']->assign('new_modules', $new_modules);
+				Core\Registry::get('View')->assign('installed_modules', $installed_modules);
+				Core\Registry::get('View')->assign('new_modules', $new_modules);
 		}
 	}
 
 	public function actionSql_export() {
-		$this->injector['Breadcrumb']
-				->append($this->injector['Lang']->t('system', 'acp_maintenance'), $this->injector['URI']->route('acp/system/maintenance'))
-				->append($this->injector['Lang']->t('system', 'acp_sql_export'));
+		Core\Registry::get('Breadcrumb')
+				->append(Core\Registry::get('Lang')->t('system', 'acp_maintenance'), Core\Registry::get('URI')->route('acp/system/maintenance'))
+				->append(Core\Registry::get('Lang')->t('system', 'acp_sql_export'));
 
 		if (isset($_POST['submit']) === true) {
 			if (empty($_POST['tables']) || is_array($_POST['tables']) === false)
-				$errors['tables'] = $this->injector['Lang']->t('system', 'select_sql_tables');
+				$errors['tables'] = Core\Registry::get('Lang')->t('system', 'select_sql_tables');
 			if ($_POST['output'] !== 'file' && $_POST['output'] !== 'text')
-				$errors[] = $this->injector['Lang']->t('system', 'select_output');
+				$errors[] = Core\Registry::get('Lang')->t('system', 'select_output');
 			if (in_array($_POST['export_type'], array('complete', 'structure', 'data')) === false)
-				$errors[] = $this->injector['Lang']->t('system', 'select_export_type');
+				$errors[] = Core\Registry::get('Lang')->t('system', 'select_export_type');
 
 			if (isset($errors) === true) {
-				$this->injector['View']->assign('error_msg', Core\Functions::errorBox($errors));
+				Core\Registry::get('View')->assign('error_msg', Core\Functions::errorBox($errors));
 			} elseif (Core\Validate::formToken() === false) {
-				$this->injector['View']->setContent(Core\Functions::errorBox($this->injector['Lang']->t('system', 'form_already_submitted')));
+				Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 			} else {
-				$this->injector['Session']->unsetFormToken();
+				Core\Registry::get('Session')->unsetFormToken();
 
 				$structure = '';
 				$data = '';
 				foreach ($_POST['tables'] as $table) {
 					// Struktur ausgeben
 					if ($_POST['export_type'] === 'complete' || $_POST['export_type'] === 'structure') {
-						$result = $this->injector['Db']->fetchAssoc('SHOW CREATE TABLE ' . $table);
+						$result = Core\Registry::get('Db')->fetchAssoc('SHOW CREATE TABLE ' . $table);
 						if (!empty($result)) {
-							//$structure.= '-- ' . sprintf($this->injector['Lang']->t('system', 'structure_of_table'), $table) . "\n\n";
 							$structure.= isset($_POST['drop']) && $_POST['drop'] == 1 ? 'DROP TABLE IF EXISTS `' . $table . '`;' . "\n\n" : '';
 							$structure.= $result['Create Table'] . ';' . "\n\n";
 						}
@@ -427,9 +422,8 @@ class SystemAdmin extends Core\ModuleController {
 
 					// Datensätze ausgeben
 					if ($_POST['export_type'] === 'complete' || $_POST['export_type'] === 'data') {
-						$resultsets = $this->injector['Db']->fetchAll('SELECT * FROM ' . DB_PRE . substr($table, strlen(CONFIG_DB_PRE)));
+						$resultsets = Core\Registry::get('Db')->fetchAll('SELECT * FROM ' . DB_PRE . substr($table, strlen(CONFIG_DB_PRE)));
 						if (count($resultsets) > 0) {
-							//$data.= "\n" . '-- '. sprintf($this->injector['Lang']->t('system', 'data_of_table'), $table) . "\n\n";
 							$fields = '';
 							// Felder der jeweiligen Tabelle auslesen
 							foreach (array_keys($resultsets[0]) as $field) {
@@ -456,12 +450,12 @@ class SystemAdmin extends Core\ModuleController {
 					exit($export);
 					// Im Browser ausgeben
 				} else {
-					$this->injector['View']->assign('export', htmlentities($export, ENT_QUOTES, 'UTF-8'));
+					Core\Registry::get('View')->assign('export', htmlentities($export, ENT_QUOTES, 'UTF-8'));
 				}
 			}
 		}
 		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-			$db_tables = $this->injector['Db']->fetchAll('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_TYPE = ? AND TABLE_SCHEMA = ?', array('BASE TABLE', CONFIG_DB_NAME));
+			$db_tables = Core\Registry::get('Db')->fetchAll('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_TYPE = ? AND TABLE_SCHEMA = ?', array('BASE TABLE', CONFIG_DB_NAME));
 			$tables = array();
 			foreach ($db_tables as $row) {
 				$table = $row['TABLE_NAME'];
@@ -471,33 +465,33 @@ class SystemAdmin extends Core\ModuleController {
 				}
 			}
 			ksort($tables);
-			$this->injector['View']->assign('tables', $tables);
+			Core\Registry::get('View')->assign('tables', $tables);
 
 			// Ausgabe
-			$lang_output = array($this->injector['Lang']->t('system', 'output_as_file'), $this->injector['Lang']->t('system', 'output_as_text'));
-			$this->injector['View']->assign('output', Core\Functions::selectGenerator('output', array('file', 'text'), $lang_output, 'file', 'checked'));
+			$lang_output = array(Core\Registry::get('Lang')->t('system', 'output_as_file'), Core\Registry::get('Lang')->t('system', 'output_as_text'));
+			Core\Registry::get('View')->assign('output', Core\Functions::selectGenerator('output', array('file', 'text'), $lang_output, 'file', 'checked'));
 
 			// Exportart
 			$lang_export_type = array(
-				$this->injector['Lang']->t('system', 'complete_export'),
-				$this->injector['Lang']->t('system', 'export_structure'),
-				$this->injector['Lang']->t('system', 'export_data')
+				Core\Registry::get('Lang')->t('system', 'complete_export'),
+				Core\Registry::get('Lang')->t('system', 'export_structure'),
+				Core\Registry::get('Lang')->t('system', 'export_data')
 			);
-			$this->injector['View']->assign('export_type', Core\Functions::selectGenerator('export_type', array('complete', 'structure', 'data'), $lang_export_type, 'complete', 'checked'));
+			Core\Registry::get('View')->assign('export_type', Core\Functions::selectGenerator('export_type', array('complete', 'structure', 'data'), $lang_export_type, 'complete', 'checked'));
 
 			$drop = array();
 			$drop['checked'] = Core\Functions::selectEntry('drop', '1', '', 'checked');
-			$drop['lang'] = $this->injector['Lang']->t('system', 'drop_tables');
-			$this->injector['View']->assign('drop', $drop);
+			$drop['lang'] = Core\Registry::get('Lang')->t('system', 'drop_tables');
+			Core\Registry::get('View')->assign('drop', $drop);
 
-			$this->injector['Session']->generateFormToken();
+			Core\Registry::get('Session')->generateFormToken();
 		}
 	}
 
 	public function actionSql_import() {
-		$this->injector['Breadcrumb']
-				->append($this->injector['Lang']->t('system', 'acp_maintenance'), $this->injector['URI']->route('acp/system/maintenance'))
-				->append($this->injector['Lang']->t('system', 'acp_sql_import'));
+		Core\Registry::get('Breadcrumb')
+				->append(Core\Registry::get('Lang')->t('system', 'acp_maintenance'), Core\Registry::get('URI')->route('acp/system/maintenance'))
+				->append(Core\Registry::get('Lang')->t('system', 'acp_sql_import'));
 
 		if (isset($_POST['submit']) === true) {
 			if (isset($_FILES['file'])) {
@@ -507,18 +501,18 @@ class SystemAdmin extends Core\ModuleController {
 			}
 
 			if (empty($_POST['text']) && empty($file['size']))
-				$errors['text'] = $this->injector['Lang']->t('system', 'type_in_text_or_select_sql_file');
+				$errors['text'] = Core\Registry::get('Lang')->t('system', 'type_in_text_or_select_sql_file');
 			if (!empty($file['size']) &&
 					(!Core\Validate::mimeType($file['tmp_name'], 'text/plain') ||
 					$_FILES['file']['error'] !== UPLOAD_ERR_OK))
-				$errors['file'] = $this->injector['Lang']->t('system', 'select_sql_file');
+				$errors['file'] = Core\Registry::get('Lang')->t('system', 'select_sql_file');
 
 			if (isset($errors) === true) {
-				$this->injector['View']->assign('error_msg', Core\Functions::errorBox($errors));
+				Core\Registry::get('View')->assign('error_msg', Core\Functions::errorBox($errors));
 			} elseif (Core\Validate::formToken() === false) {
-				$this->injector['View']->setContent(Core\Functions::errorBox($this->injector['Lang']->t('system', 'form_already_submitted')));
+				Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 			} else {
-				$this->injector['Session']->unsetFormToken();
+				Core\Registry::get('Session')->unsetFormToken();
 
 				$data = isset($file) ? file_get_contents($file['tmp_name']) : $_POST['text'];
 				$data_ary = explode(";\n", str_replace(array("\r\n", "\r", "\n"), "\n", $data));
@@ -527,7 +521,7 @@ class SystemAdmin extends Core\ModuleController {
 				$i = 0;
 				foreach ($data_ary as $row) {
 					if (!empty($row)) {
-						$bool = $this->injector['Db']->query($row);
+						$bool = Core\Registry::get('Db')->query($row);
 						$sql_queries[$i]['query'] = str_replace("\n", '<br />', $row);
 						$sql_queries[$i]['color'] = $bool !== null ? '090' : 'f00';
 						++$i;
@@ -538,22 +532,22 @@ class SystemAdmin extends Core\ModuleController {
 					}
 				}
 
-				$this->injector['View']->assign('sql_queries', $sql_queries);
+				Core\Registry::get('View')->assign('sql_queries', $sql_queries);
 
 				Core\Cache::purge();
 			}
 		}
 		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-			$this->injector['View']->assign('form', isset($_POST['submit']) ? $_POST : array('text' => ''));
+			Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? $_POST : array('text' => ''));
 
-			$this->injector['Session']->generateFormToken();
+			Core\Registry::get('Session')->generateFormToken();
 		}
 	}
 
 	public function actionUpdate_check() {
-		$this->injector['Breadcrumb']
-				->append($this->injector['Lang']->t('system', 'acp_maintenance'), $this->injector['URI']->route('acp/system/maintenance'))
-				->append($this->injector['Lang']->t('system', 'acp_update_check'));
+		Core\Registry::get('Breadcrumb')
+				->append(Core\Registry::get('Lang')->t('system', 'acp_maintenance'), Core\Registry::get('URI')->route('acp/system/maintenance'))
+				->append(Core\Registry::get('Lang')->t('system', 'acp_update_check'));
 
 		$file = @file_get_contents('http://www.acp3-cms.net/update.txt');
 		if ($file !== false) {
@@ -565,14 +559,14 @@ class SystemAdmin extends Core\ModuleController {
 				);
 
 				if (version_compare($update['installed_version'], $update['current_version'], '>=')) {
-					$update['text'] = $this->injector['Lang']->t('system', 'acp3_up_to_date');
+					$update['text'] = Core\Registry::get('Lang')->t('system', 'acp3_up_to_date');
 					$update['class'] = 'success';
 				} else {
-					$update['text'] = sprintf($this->injector['Lang']->t('system', 'acp3_not_up_to_date'), '<a href="' . $data[1] . '" onclick="window.open(this.href); return false">', '</a>');
+					$update['text'] = sprintf(Core\Registry::get('Lang')->t('system', 'acp3_not_up_to_date'), '<a href="' . $data[1] . '" onclick="window.open(this.href); return false">', '</a>');
 					$update['class'] = 'error';
 				}
 
-				$this->injector['View']->assign('update', $update);
+				Core\Registry::get('View')->assign('update', $update);
 			}
 		}
 	}

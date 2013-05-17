@@ -11,29 +11,24 @@ use ACP3\Core;
  */
 class SearchFrontend extends Core\ModuleController {
 
-	public function __construct($injector)
-	{
-		parent::__construct($injector);
-	}
-
 	public function actionList()
 	{
 		if (isset($_POST['submit']) === true) {
 			if (strlen($_POST['search_term']) < 3)
-				$errors['search-term'] = $this->injector['Lang']->t('search', 'search_term_to_short');
+				$errors['search-term'] = Core\Registry::get('Lang')->t('search', 'search_term_to_short');
 			if (empty($_POST['mods']))
-				$errors[] = $this->injector['Lang']->t('search', 'no_module_selected');
+				$errors[] = Core\Registry::get('Lang')->t('search', 'no_module_selected');
 			if (empty($_POST['area']))
-				$errors[] = $this->injector['Lang']->t('search', 'no_area_selected');
+				$errors[] = Core\Registry::get('Lang')->t('search', 'no_area_selected');
 			if (empty($_POST['sort']) || $_POST['sort'] != 'asc' && $_POST['sort'] != 'desc')
-				$errors[] = $this->injector['Lang']->t('search', 'no_sorting_selected');
+				$errors[] = Core\Registry::get('Lang')->t('search', 'no_sorting_selected');
 
 			if (isset($errors) === true) {
-				$this->injector['View']->assign('error_msg', Core\Functions::errorBox($errors));
+				Core\Registry::get('View')->assign('error_msg', Core\Functions::errorBox($errors));
 			} else {
-				$this->injector['Breadcrumb']
-						->append($this->injector['Lang']->t('search', 'search'), $this->injector['URI']->route('search'))
-						->append($this->injector['Lang']->t('search', 'search_results'));
+				Core\Registry::get('Breadcrumb')
+						->append(Core\Registry::get('Lang')->t('search', 'search'), Core\Registry::get('URI')->route('search'))
+						->append(Core\Registry::get('Lang')->t('search', 'search_results'));
 
 				$_POST['search_term'] = Core\Functions::str_encode($_POST['search_term']);
 				$_POST['sort'] = strtoupper($_POST['sort']);
@@ -45,16 +40,16 @@ class SearchFrontend extends Core\ModuleController {
 				}
 				if (!empty($results_mods)) {
 					ksort($results_mods);
-					$this->injector['View']->assign('results_mods', $results_mods);
+					Core\Registry::get('View')->assign('results_mods', $results_mods);
 				} else {
-					$this->injector['View']->assign('no_search_results', sprintf($this->injector['Lang']->t('search', 'no_search_results'), $_POST['search_term']));
+					Core\Registry::get('View')->assign('no_search_results', sprintf(Core\Registry::get('Lang')->t('search', 'no_search_results'), $_POST['search_term']));
 				}
 
-				$this->injector['View']->setContentTemplate('search/results.tpl');
+				Core\Registry::get('View')->setContentTemplate('search/results.tpl');
 			}
 		}
 		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-			$this->injector['View']->assign('form', isset($_POST['submit']) ? $_POST : array('search_term' => ''));
+			Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? $_POST : array('search_term' => ''));
 
 			$mods = scandir(MODULES_DIR);
 			$c_mods = count($mods);
@@ -70,19 +65,19 @@ class SearchFrontend extends Core\ModuleController {
 				}
 			}
 			ksort($search_mods);
-			$this->injector['View']->assign('search_mods', $search_mods);
+			Core\Registry::get('View')->assign('search_mods', $search_mods);
 
 			// Zu durchsuchende Bereiche
 			$lang_search_areas = array(
-				$this->injector['Lang']->t('search', 'title_only'),
-				$this->injector['Lang']->t('search', 'content_only'),
-				$this->injector['Lang']->t('search', 'title_and_content')
+				Core\Registry::get('Lang')->t('search', 'title_only'),
+				Core\Registry::get('Lang')->t('search', 'content_only'),
+				Core\Registry::get('Lang')->t('search', 'title_and_content')
 			);
-			$this->injector['View']->assign('search_areas', Core\Functions::selectGenerator('area', array('title', 'content', 'title_content'), $lang_search_areas, 'title', 'checked'));
+			Core\Registry::get('View')->assign('search_areas', Core\Functions::selectGenerator('area', array('title', 'content', 'title_content'), $lang_search_areas, 'title', 'checked'));
 
 			// Treffer sortieren
-			$lang_sort_hits = array($this->injector['Lang']->t('search', 'asc'), $this->injector['Lang']->t('search', 'desc'));
-			$this->injector['View']->assign('sort_hits', Core\Functions::selectGenerator('sort', array('asc', 'desc'), $lang_sort_hits, 'asc', 'checked'));
+			$lang_sort_hits = array(Core\Registry::get('Lang')->t('search', 'asc'), Core\Registry::get('Lang')->t('search', 'desc'));
+			Core\Registry::get('View')->assign('sort_hits', Core\Functions::selectGenerator('sort', array('asc', 'desc'), $lang_sort_hits, 'asc', 'checked'));
 		}
 	}
 
@@ -102,9 +97,9 @@ class SearchFrontend extends Core\ModuleController {
 			}
 		}
 		ksort($search_mods);
-		$this->injector['View']->assign('search_mods', $search_mods);
+		Core\Registry::get('View')->assign('search_mods', $search_mods);
 
-		$this->injector['View']->displayTemplate('search/sidebar.tpl');
+		Core\Registry::get('View')->displayTemplate('search/sidebar.tpl');
 	}
 
 }

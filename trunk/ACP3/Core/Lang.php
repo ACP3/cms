@@ -35,7 +35,7 @@ class Lang
 
 	function __construct()
 	{
-		$lang = \ACP3\CMS::$injector['Auth']->getUserLanguage();
+		$lang = Registry::get('Auth')->getUserLanguage();
 		$this->lang = $this->languagePackExists($lang) === true ? $lang : CONFIG_LANG;
 	}
 

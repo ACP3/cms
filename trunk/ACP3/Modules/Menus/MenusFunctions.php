@@ -22,11 +22,11 @@ class MenusFunctions {
 	 */
 	public static function setMenuItemsCache()
 	{
-		$items = CMS::$injector['Db']->fetchAll('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . DB_PRE . 'menu_items AS p, ' . DB_PRE . 'menu_items AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
+		$items = Core\Registry::get('Db')->fetchAll('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . DB_PRE . 'menu_items AS p, ' . DB_PRE . 'menu_items AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
 		$c_items = count($items);
 
 		if ($c_items > 0) {
-			$blocks = CMS::$injector['Db']->fetchAll('SELECT id, title, index_name FROM ' . DB_PRE . 'menus');
+			$blocks = Core\Registry::get('Db')->fetchAll('SELECT id, title, index_name FROM ' . DB_PRE . 'menus');
 			$c_blocks = count($blocks);
 
 			for ($i = 0; $i < $c_blocks; ++$i) {
@@ -44,10 +44,10 @@ class MenusFunctions {
 
 			$mode_search = array('1', '2', '3', '4');
 			$mode_replace = array(
-				CMS::$injector['Lang']->t('menus', 'module'),
-				CMS::$injector['Lang']->t('menus', 'dynamic_page'),
-				CMS::$injector['Lang']->t('menus', 'hyperlink'),
-				CMS::$injector['Lang']->t('menus', 'article')
+				Core\Registry::get('Lang')->t('menus', 'module'),
+				Core\Registry::get('Lang')->t('menus', 'dynamic_page'),
+				Core\Registry::get('Lang')->t('menus', 'hyperlink'),
+				Core\Registry::get('Lang')->t('menus', 'article')
 			);
 
 			for ($i = 0; $i < $c_items; ++$i) {
@@ -98,7 +98,7 @@ class MenusFunctions {
 	 */
 	public static function setVisibleMenuItemsCache($block)
 	{
-		$items = CMS::$injector['Db']->fetchAll('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, b.title AS block_title, b.index_name AS block_name FROM ' . DB_PRE . 'menu_items AS p, ' . DB_PRE . 'menu_items AS n JOIN ' . DB_PRE . 'menus AS b ON(n.block_id = b.id) WHERE b.index_name = ? AND n.display = 1 AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id', array($block));
+		$items = Core\Registry::get('Db')->fetchAll('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, b.title AS block_title, b.index_name AS block_name FROM ' . DB_PRE . 'menu_items AS p, ' . DB_PRE . 'menu_items AS n JOIN ' . DB_PRE . 'menus AS b ON(n.block_id = b.id) WHERE b.index_name = ? AND n.display = 1 AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id', array($block));
 		return Core\Cache::create('visible_items_' . $block, $items, 'menus');
 	}
 
@@ -158,7 +158,7 @@ class MenusFunctions {
 	 */
 	public static function menusDropdown($selected = 0)
 	{
-		$blocks = CMS::$injector['Db']->fetchAll('SELECT id, title FROM ' . DB_PRE . 'menus ORDER BY title ASC, id ASC');
+		$blocks = Core\Registry::get('Db')->fetchAll('SELECT id, title FROM ' . DB_PRE . 'menus ORDER BY title ASC, id ASC');
 		$c_blocks = count($blocks);
 		for ($i = 0; $i < $c_blocks; ++$i) {
 			$blocks[$i]['selected'] = Core\Functions::selectEntry('block_id', (int) $blocks[$i]['id'], (int) $selected);
@@ -193,8 +193,8 @@ class MenusFunctions {
 			if ($c_items > 0) {
 				// Selektion nur vornehmen, wenn man sich im Frontend befindet
 				if (defined('IN_ADM') === false) {
-					$in = array(CMS::$injector['URI']->query, CMS::$injector['URI']->getCleanQuery(), CMS::$injector['URI']->mod . '/' . CMS::$injector['URI']->file . '/', CMS::$injector['URI']->mod);
-					$selected = CMS::$injector['Db']->executeQuery('SELECT m.left_id FROM ' . DB_PRE . 'menu_items AS m JOIN ' . DB_PRE . 'menus AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC', array($block, $in), array(\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetch(\PDO::FETCH_COLUMN);
+					$in = array(Core\Registry::get('URI')->query, Core\Registry::get('URI')->getCleanQuery(), Core\Registry::get('URI')->mod . '/' . Core\Registry::get('URI')->file . '/', Core\Registry::get('URI')->mod);
+					$selected = Core\Registry::get('Db')->executeQuery('SELECT m.left_id FROM ' . DB_PRE . 'menu_items AS m JOIN ' . DB_PRE . 'menus AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC', array($block, $in), array(\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetch(\PDO::FETCH_COLUMN);
 				}
 
 				$navbar[$block] = '';
@@ -209,7 +209,7 @@ class MenusFunctions {
 					}
 
 					// Link zusammenbauen
-					$href = $items[$i]['mode'] == 1 || $items[$i]['mode'] == 2 || $items[$i]['mode'] == 4 ? CMS::$injector['URI']->route($items[$i]['uri']) : $items[$i]['uri'];
+					$href = $items[$i]['mode'] == 1 || $items[$i]['mode'] == 2 || $items[$i]['mode'] == 4 ? Core\Registry::get('URI')->route($items[$i]['uri']) : $items[$i]['uri'];
 					$target = $items[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 
 					// Falls für Knoten Kindelemente vorhanden sind, neue Unterliste erstellen

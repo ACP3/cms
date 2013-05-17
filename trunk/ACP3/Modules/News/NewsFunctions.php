@@ -25,7 +25,7 @@ class NewsFunctions {
 	 */
 	public static function setNewsCache($id)
 	{
-		$data = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT id, start, title, text, readmore, comments, category_id, uri, target, link_title FROM ' . DB_PRE . 'news WHERE id = ?', array($id));
+		$data = \ACP3\Core\Registry::get('Db')->fetchAssoc('SELECT id, start, title, text, readmore, comments, category_id, uri, target, link_title FROM ' . DB_PRE . 'news WHERE id = ?', array($id));
 		return Cache::create('details_id_' . $id, $data, 'news');
 	}
 

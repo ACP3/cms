@@ -24,15 +24,15 @@ class CaptchaFunctions {
 	public static function captcha($captcha_length = 5, $id = 'captcha')
 	{
 		// Wenn man als User angemeldet ist, Captcha nicht anzeigen
-		if (\ACP3\CMS::$injector['Auth']->isUser() === false) {
+		if (Core\Registry::get('Auth')->isUser() === false) {
 			$_SESSION['captcha'] = Core\Functions::salt($captcha_length);
 
 			$captcha = array();
 			$captcha['width'] = $captcha_length * 25;
 			$captcha['id'] = $id;
 			$captcha['height'] = 30;
-			\ACP3\CMS::$injector['View']->assign('captcha', $captcha);
-			return \ACP3\CMS::$injector['View']->fetchTemplate('captcha/captcha.tpl');
+			Core\Registry::get('View')->assign('captcha', $captcha);
+			return Core\Registry::get('View')->fetchTemplate('captcha/captcha.tpl');
 		}
 		return '';
 	}

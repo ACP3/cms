@@ -11,40 +11,36 @@ use ACP3\Core;
  */
 class PollsAdmin extends Core\ModuleController {
 
-	public function __construct($injector) {
-		parent::__construct($injector);
-	}
-
 	public function actionCreate() {
 		if (isset($_POST['submit']) === true) {
 			if (Core\Validate::date($_POST['start'], $_POST['end']) === false)
-				$errors[] = $this->injector['Lang']->t('system', 'select_date');
+				$errors[] = Core\Registry::get('Lang')->t('system', 'select_date');
 			if (empty($_POST['title']))
-				$errors['title'] = $this->injector['Lang']->t('polls', 'type_in_question');
+				$errors['title'] = Core\Registry::get('Lang')->t('polls', 'type_in_question');
 			$i = 0;
 			foreach ($_POST['answers'] as $row) {
 				if (!empty($row))
 					++$i;
 			}
 			if ($i <= 1)
-				$errors[] = $this->injector['Lang']->t('polls', 'type_in_answer');
+				$errors[] = Core\Registry::get('Lang')->t('polls', 'type_in_answer');
 
 			if (isset($errors) === true) {
-				$this->injector['View']->assign('error_msg', Core\Functions::errorBox($errors));
+				Core\Registry::get('View')->assign('error_msg', Core\Functions::errorBox($errors));
 			} elseif (Core\Validate::formToken() === false) {
-				$this->injector['View']->setContent(Core\Functions::errorBox($this->injector['Lang']->t('system', 'form_already_submitted')));
+				Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 			} else {
 				$insert_values = array(
 					'id' => '',
-					'start' => $this->injector['Date']->toSQL($_POST['start']),
-					'end' => $this->injector['Date']->toSQL($_POST['end']),
+					'start' => Core\Registry::get('Date')->toSQL($_POST['start']),
+					'end' => Core\Registry::get('Date')->toSQL($_POST['end']),
 					'title' => Core\Functions::str_encode($_POST['title']),
 					'multiple' => isset($_POST['multiple']) ? '1' : '0',
-					'user_id' => $this->injector['Auth']->getUserId(),
+					'user_id' => Core\Registry::get('Auth')->getUserId(),
 				);
 
-				$bool = $this->injector['Db']->insert(DB_PRE . 'polls', $insert_values);
-				$poll_id = $this->injector['Db']->lastInsertId();
+				$bool = Core\Registry::get('Db')->insert(DB_PRE . 'polls', $insert_values);
+				$poll_id = Core\Registry::get('Db')->lastInsertId();
 				$bool2 = false;
 
 				if ($bool !== false) {
@@ -55,14 +51,14 @@ class PollsAdmin extends Core\ModuleController {
 								'text' => Core\Functions::str_encode($row),
 								'poll_id' => $poll_id,
 							);
-							$bool2 = $this->injector['Db']->insert(DB_PRE . 'poll_answers', $insert_answer);
+							$bool2 = Core\Registry::get('Db')->insert(DB_PRE . 'poll_answers', $insert_answer);
 						}
 					}
 				}
 
-				$this->injector['Session']->unsetFormToken();
+				Core\Registry::get('Session')->unsetFormToken();
 
-				Core\Functions::setRedirectMessage($bool && $bool2, $this->injector['Lang']->t('system', $bool !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/polls');
+				Core\Functions::setRedirectMessage($bool && $bool2, Core\Registry::get('Lang')->t('system', $bool !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/polls');
 			}
 		}
 		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -88,49 +84,49 @@ class PollsAdmin extends Core\ModuleController {
 			}
 
 			// Übergabe der Daten an Smarty
-			$this->injector['View']->assign('publication_period', $this->injector['Date']->datepicker(array('start', 'end')));
-			$this->injector['View']->assign('title', isset($_POST['title']) ? $_POST['title'] : '');
-			$this->injector['View']->assign('answers', $answers);
-			$this->injector['View']->assign('multiple', Core\Functions::selectEntry('multiple', '1', '0', 'checked'));
-			$this->injector['View']->assign('disable', count($answers) < 10 ? false : true);
+			Core\Registry::get('View')->assign('publication_period', Core\Registry::get('Date')->datepicker(array('start', 'end')));
+			Core\Registry::get('View')->assign('title', isset($_POST['title']) ? $_POST['title'] : '');
+			Core\Registry::get('View')->assign('answers', $answers);
+			Core\Registry::get('View')->assign('multiple', Core\Functions::selectEntry('multiple', '1', '0', 'checked'));
+			Core\Registry::get('View')->assign('disable', count($answers) < 10 ? false : true);
 
-			$this->injector['Session']->generateFormToken();
+			Core\Registry::get('Session')->generateFormToken();
 		}
 	}
 
 	public function actionDelete() {
 		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
 			$entries = $_POST['entries'];
-		elseif (Core\Validate::deleteEntries($this->injector['URI']->entries) === true)
-			$entries = $this->injector['URI']->entries;
+		elseif (Core\Validate::deleteEntries(Core\Registry::get('URI')->entries) === true)
+			$entries = Core\Registry::get('URI')->entries;
 
 		if (!isset($entries)) {
-			$this->injector['View']->setContent(Core\Functions::errorBox($this->injector['Lang']->t('system', 'no_entries_selected')));
+			Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'no_entries_selected')));
 		} elseif (is_array($entries) === true) {
 			$marked_entries = implode('|', $entries);
-			$this->injector['View']->setContent(Core\Functions::confirmBox($this->injector['Lang']->t('system', 'confirm_delete'), $this->injector['URI']->route('acp/polls/delete/entries_' . $marked_entries . '/action_confirmed/'), $this->injector['URI']->route('acp/polls')));
-		} elseif ($this->injector['URI']->action === 'confirmed') {
+			Core\Registry::get('View')->setContent(Core\Functions::confirmBox(Core\Registry::get('Lang')->t('system', 'confirm_delete'), Core\Registry::get('URI')->route('acp/polls/delete/entries_' . $marked_entries . '/action_confirmed/'), Core\Registry::get('URI')->route('acp/polls')));
+		} elseif (Core\Registry::get('URI')->action === 'confirmed') {
 			$marked_entries = explode('|', $entries);
 			$bool = $bool2 = $bool3 = false;
 			foreach ($marked_entries as $entry) {
-				$bool = $this->injector['Db']->delete(DB_PRE . 'polls', array('id' => $entry));
-				$bool2 = $this->injector['Db']->delete(DB_PRE . 'poll_answers', array('poll_id' => $entry));
-				$bool3 = $this->injector['Db']->delete(DB_PRE . 'poll_votes', array('poll_id' => $entry));
+				$bool = Core\Registry::get('Db')->delete(DB_PRE . 'polls', array('id' => $entry));
+				$bool2 = Core\Registry::get('Db')->delete(DB_PRE . 'poll_answers', array('poll_id' => $entry));
+				$bool3 = Core\Registry::get('Db')->delete(DB_PRE . 'poll_votes', array('poll_id' => $entry));
 			}
-			Core\Functions::setRedirectMessage($bool && $bool2 && $bool3, $this->injector['Lang']->t('system', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error'), 'acp/polls');
+			Core\Functions::setRedirectMessage($bool && $bool2 && $bool3, Core\Registry::get('Lang')->t('system', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error'), 'acp/polls');
 		} else {
-			$this->injector['URI']->redirect('errors/404');
+			Core\Registry::get('URI')->redirect('errors/404');
 		}
 	}
 
 	public function actionEdit() {
-		if (Core\Validate::isNumber($this->injector['URI']->id) === true &&
-				$this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'polls WHERE id = ?', array($this->injector['URI']->id)) == 1) {
+		if (Core\Validate::isNumber(Core\Registry::get('URI')->id) === true &&
+				Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'polls WHERE id = ?', array(Core\Registry::get('URI')->id)) == 1) {
 			if (isset($_POST['submit']) === true) {
 				if (Core\Validate::date($_POST['start'], $_POST['end']) === false)
-					$errors[] = $this->injector['Lang']->t('system', 'select_date');
+					$errors[] = Core\Registry::get('Lang')->t('system', 'select_date');
 				if (empty($_POST['title']))
-					$errors['title'] = $this->injector['Lang']->t('polls', 'type_in_question');
+					$errors['title'] = Core\Registry::get('Lang')->t('polls', 'type_in_question');
 				$j = 0;
 				foreach ($_POST['answers'] as $row) {
 					if (!empty($row['value']))
@@ -139,29 +135,29 @@ class PollsAdmin extends Core\ModuleController {
 						++$j;
 				}
 				if (!isset($check_answers))
-					$errors[] = $this->injector['Lang']->t('polls', 'type_in_answer');
+					$errors[] = Core\Registry::get('Lang')->t('polls', 'type_in_answer');
 				if (count($_POST['answers']) - $j < 2)
-					$errors[] = $this->injector['Lang']->t('polls', 'can_not_delete_all_answers');
+					$errors[] = Core\Registry::get('Lang')->t('polls', 'can_not_delete_all_answers');
 
 				if (isset($errors) === true) {
-					$this->injector['View']->assign('error_msg', Core\Functions::errorBox($errors));
+					Core\Registry::get('View')->assign('error_msg', Core\Functions::errorBox($errors));
 				} elseif (Core\Validate::formToken() === false) {
-					$this->injector['View']->setContent(Core\Functions::errorBox($this->injector['Lang']->t('system', 'form_already_submitted')));
+					Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 				} else {
 					// Frage aktualisieren
 					$update_values = array(
-						'start' => $this->injector['Date']->toSQL($_POST['start']),
-						'end' => $this->injector['Date']->toSQL($_POST['end']),
+						'start' => Core\Registry::get('Date')->toSQL($_POST['start']),
+						'end' => Core\Registry::get('Date')->toSQL($_POST['end']),
 						'title' => Core\Functions::str_encode($_POST['title']),
 						'multiple' => isset($_POST['multiple']) ? '1' : '0',
-						'user_id' => $this->injector['Auth']->getUserId(),
+						'user_id' => Core\Registry::get('Auth')->getUserId(),
 					);
 
-					$bool = $this->injector['Db']->update(DB_PRE . 'polls', $update_values, array('id' => $this->injector['URI']->id));
+					$bool = Core\Registry::get('Db')->update(DB_PRE . 'polls', $update_values, array('id' => Core\Registry::get('URI')->id));
 
 					// Stimmen zurücksetzen
 					if (!empty($_POST['reset']))
-						$this->injector['Db']->delete(DB_PRE . 'poll_votes', array('poll_id' => $this->injector['URI']->id));
+						Core\Registry::get('Db')->delete(DB_PRE . 'poll_votes', array('poll_id' => Core\Registry::get('URI')->id));
 
 					// Antworten
 					foreach ($_POST['answers'] as $row) {
@@ -169,21 +165,21 @@ class PollsAdmin extends Core\ModuleController {
 						if (empty($row['id'])) {
 							// Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
 							if (!empty($row['value']) && !isset($row['delete']))
-								$this->injector['Db']->insert(DB_PRE . 'poll_answers', array('text' => Core\Functions::str_encode($row['value']), 'poll_id' => $this->injector['URI']->id));
+								Core\Registry::get('Db')->insert(DB_PRE . 'poll_answers', array('text' => Core\Functions::str_encode($row['value']), 'poll_id' => Core\Registry::get('URI')->id));
 							// Antwort mitsamt Stimmen löschen
 						} elseif (isset($row['delete']) && Core\Validate::isNumber($row['id'])) {
-							$this->injector['Db']->delete(DB_PRE . 'poll_answers', array('id' => $row['id']));
+							Core\Registry::get('Db')->delete(DB_PRE . 'poll_answers', array('id' => $row['id']));
 							if (!empty($_POST['reset']))
-								$this->injector['Db']->delete(DB_PRE . 'poll_votes', array('answer_id' => $row['id']));
+								Core\Registry::get('Db')->delete(DB_PRE . 'poll_votes', array('answer_id' => $row['id']));
 							// Antwort aktualisieren
 						} elseif (!empty($row['value']) && Core\Validate::isNumber($row['id'])) {
-							$bool = $this->injector['Db']->update(DB_PRE . 'poll_answers', array('text' => Core\Functions::str_encode($row['value'])), array('id' => $row['id']));
+							$bool = Core\Registry::get('Db')->update(DB_PRE . 'poll_answers', array('text' => Core\Functions::str_encode($row['value'])), array('id' => $row['id']));
 						}
 					}
 
-					$this->injector['Session']->unsetFormToken();
+					Core\Registry::get('Session')->unsetFormToken();
 
-					Core\Functions::setRedirectMessage($bool, $this->injector['Lang']->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/polls');
+					Core\Functions::setRedirectMessage($bool, Core\Registry::get('Lang')->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/polls');
 				}
 			}
 			if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
@@ -205,7 +201,7 @@ class PollsAdmin extends Core\ModuleController {
 						$answers[$i]['value'] = '';
 					}
 				} else {
-					$answers = $this->injector['Db']->fetchAll('SELECT id, text FROM ' . DB_PRE . 'poll_answers WHERE poll_id = ?', array($this->injector['URI']->id));
+					$answers = Core\Registry::get('Db')->fetchAll('SELECT id, text FROM ' . DB_PRE . 'poll_answers WHERE poll_id = ?', array(Core\Registry::get('URI')->id));
 					$c_answers = count($answers);
 
 					for ($i = 0; $i < $c_answers; ++$i) {
@@ -214,35 +210,35 @@ class PollsAdmin extends Core\ModuleController {
 						$answers[$i]['value'] = $answers[$i]['text'];
 					}
 				}
-				$this->injector['View']->assign('answers', $answers);
+				Core\Registry::get('View')->assign('answers', $answers);
 
-				$poll = $this->injector['Db']->fetchAssoc('SELECT start, end, title, multiple FROM ' . DB_PRE . 'polls WHERE id = ?', array($this->injector['URI']->id));
+				$poll = Core\Registry::get('Db')->fetchAssoc('SELECT start, end, title, multiple FROM ' . DB_PRE . 'polls WHERE id = ?', array(Core\Registry::get('URI')->id));
 
 				$options = array();
 				$options[0]['name'] = 'reset';
 				$options[0]['checked'] = Core\Functions::selectEntry('reset', '1', '0', 'checked');
-				$options[0]['lang'] = $this->injector['Lang']->t('polls', 'reset_votes');
+				$options[0]['lang'] = Core\Registry::get('Lang')->t('polls', 'reset_votes');
 				$options[1]['name'] = 'multiple';
 				$options[1]['checked'] = Core\Functions::selectEntry('multiple', '1', $poll['multiple'], 'checked');
-				$options[1]['lang'] = $this->injector['Lang']->t('polls', 'multiple_choice');
-				$this->injector['View']->assign('options', $options);
+				$options[1]['lang'] = Core\Registry::get('Lang')->t('polls', 'multiple_choice');
+				Core\Registry::get('View')->assign('options', $options);
 
 				// Übergabe der Daten an Smarty
-				$this->injector['View']->assign('publication_period', $this->injector['Date']->datepicker(array('start', 'end'), array($poll['start'], $poll['end'])));
-				$this->injector['View']->assign('title', isset($_POST['title']) ? $_POST['title'] : $poll['title']);
-				$this->injector['View']->assign('disable', count($answers) < 10 ? false : true);
+				Core\Registry::get('View')->assign('publication_period', Core\Registry::get('Date')->datepicker(array('start', 'end'), array($poll['start'], $poll['end'])));
+				Core\Registry::get('View')->assign('title', isset($_POST['title']) ? $_POST['title'] : $poll['title']);
+				Core\Registry::get('View')->assign('disable', count($answers) < 10 ? false : true);
 
-				$this->injector['Session']->generateFormToken();
+				Core\Registry::get('Session')->generateFormToken();
 			}
 		} else {
-			$this->injector['URI']->redirect('errors/404');
+			Core\Registry::get('URI')->redirect('errors/404');
 		}
 	}
 
 	public function actionList() {
 		Core\Functions::getRedirectMessage();
 
-		$polls = $this->injector['Db']->fetchAll('SELECT id, start, end, title FROM ' . DB_PRE . 'polls ORDER BY start DESC, end DESC, id DESC');
+		$polls = Core\Registry::get('Db')->fetchAll('SELECT id, start, end, title FROM ' . DB_PRE . 'polls ORDER BY start DESC, end DESC, id DESC');
 		$c_polls = count($polls);
 
 		if ($c_polls > 0) {
@@ -253,13 +249,13 @@ class PollsAdmin extends Core\ModuleController {
 				'sort_dir' => 'desc',
 				'hide_col_sort' => $can_delete === true ? 0 : ''
 			);
-			$this->injector['View']->appendContent(Core\Functions::datatable($config));
+			Core\Registry::get('View')->appendContent(Core\Functions::datatable($config));
 
 			for ($i = 0; $i < $c_polls; ++$i) {
-				$polls[$i]['period'] = $this->injector['Date']->formatTimeRange($polls[$i]['start'], $polls[$i]['end']);
+				$polls[$i]['period'] = Core\Registry::get('Date')->formatTimeRange($polls[$i]['start'], $polls[$i]['end']);
 			}
-			$this->injector['View']->assign('polls', $polls);
-			$this->injector['View']->assign('can_delete', $can_delete);
+			Core\Registry::get('View')->assign('polls', $polls);
+			Core\Registry::get('View')->assign('can_delete', $can_delete);
 		}
 	}
 

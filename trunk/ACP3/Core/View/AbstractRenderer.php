@@ -14,4 +14,6 @@ abstract class AbstractRenderer {
 	abstract public function fetch($template);
 
 	abstract public function display($template);
+	
+	abstract public function templateExists($template);
 }

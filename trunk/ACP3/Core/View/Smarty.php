@@ -31,11 +31,15 @@ class Smarty extends AbstractRenderer {
 	}
 
 	public function fetch($template, $cache_id = null, $compile_id = null, $parent = null, $display = false) {
-		return $this->renderer->fetch($template, $cache_id = null, $compile_id = null, $parent = null, $display = false);
+		return $this->renderer->fetch($template, $cache_id, $compile_id, $parent, $display);
 	}
 
 	public function display($template, $cache_id = null, $compile_id = null, $parent = null) {
-		echo $this->renderer->display($template, $cache_id = null, $compile_id = null, $parent = null);
+		echo $this->renderer->display($template, $cache_id, $compile_id, $parent);
+	}
+
+	public function templateExists($template) {
+		return $this->renderer->templateExists($template);
 	}
 
 }

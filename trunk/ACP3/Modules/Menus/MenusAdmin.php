@@ -11,25 +11,20 @@ use ACP3\Core;
  */
 class MenusAdmin extends Core\ModuleController {
 
-	public function __construct($injector)
-	{
-		parent::__construct($injector);
-	}
-
 	public function actionCreate()
 	{
 		if (isset($_POST['submit']) === true) {
 			if (!preg_match('/^[a-zA-Z]+\w/', $_POST['index_name']))
-				$errors['index-name'] = $this->injector['Lang']->t('menus', 'type_in_index_name');
-			if (!isset($errors) && $this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menus WHERE index_name = ?', array($_POST['index_name'])) > 0)
-				$errors['index-name'] = $this->injector['Lang']->t('menus', 'index_name_unique');
+				$errors['index-name'] = Core\Registry::get('Lang')->t('menus', 'type_in_index_name');
+			if (!isset($errors) && Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menus WHERE index_name = ?', array($_POST['index_name'])) > 0)
+				$errors['index-name'] = Core\Registry::get('Lang')->t('menus', 'index_name_unique');
 			if (strlen($_POST['title']) < 3)
-				$errors['title'] = $this->injector['Lang']->t('menus', 'menu_bar_title_to_short');
+				$errors['title'] = Core\Registry::get('Lang')->t('menus', 'menu_bar_title_to_short');
 
 			if (isset($errors) === true) {
-				$this->injector['View']->assign('error_msg', Core\Functions::errorBox($errors));
+				Core\Registry::get('View')->assign('error_msg', Core\Functions::errorBox($errors));
 			} elseif (Core\Validate::formToken() === false) {
-				$this->injector['View']->setContent(Core\Functions::errorBox($this->injector['Lang']->t('system', 'form_already_submitted')));
+				Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 			} else {
 				$insert_values = array(
 					'id' => '',
@@ -37,17 +32,17 @@ class MenusAdmin extends Core\ModuleController {
 					'title' => Core\Functions::str_encode($_POST['title']),
 				);
 
-				$bool = $this->injector['Db']->insert(DB_PRE . 'menus', $insert_values);
+				$bool = Core\Registry::get('Db')->insert(DB_PRE . 'menus', $insert_values);
 
-				$this->injector['Session']->unsetFormToken();
+				Core\Registry::get('Session')->unsetFormToken();
 
-				Core\Functions::setRedirectMessage($bool, $this->injector['Lang']->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
+				Core\Functions::setRedirectMessage($bool, Core\Registry::get('Lang')->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
 			}
 		}
 		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-			$this->injector['View']->assign('form', isset($_POST['submit']) ? $_POST : array('index_name' => '', 'title' => ''));
+			Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? $_POST : array('index_name' => '', 'title' => ''));
 
-			$this->injector['Session']->generateFormToken();
+			Core\Registry::get('Session')->generateFormToken();
 		}
 	}
 
@@ -55,35 +50,35 @@ class MenusAdmin extends Core\ModuleController {
 	{
 		if (isset($_POST['submit']) === true) {
 			if (Core\Validate::isNumber($_POST['mode']) === false)
-				$errors['mode'] = $this->injector['Lang']->t('menus', 'select_page_type');
+				$errors['mode'] = Core\Registry::get('Lang')->t('menus', 'select_page_type');
 			if (strlen($_POST['title']) < 3)
-				$errors['title'] = $this->injector['Lang']->t('menus', 'title_to_short');
+				$errors['title'] = Core\Registry::get('Lang')->t('menus', 'title_to_short');
 			if (Core\Validate::isNumber($_POST['block_id']) === false)
-				$errors['block-id'] = $this->injector['Lang']->t('menus', 'select_menu_bar');
+				$errors['block-id'] = Core\Registry::get('Lang')->t('menus', 'select_menu_bar');
 			if (!empty($_POST['parent']) && Core\Validate::isNumber($_POST['parent']) === false)
-				$errors['parent'] = $this->injector['Lang']->t('menus', 'select_superior_page');
+				$errors['parent'] = Core\Registry::get('Lang')->t('menus', 'select_superior_page');
 			if (!empty($_POST['parent']) && Core\Validate::isNumber($_POST['parent']) === true) {
 				// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
-				$parent_block = $this->injector['Db']->fetchColumn('SELECT block_id FROM ' . DB_PRE . 'menu_items WHERE id = ?', array($_POST['parent']));
+				$parent_block = Core\Registry::get('Db')->fetchColumn('SELECT block_id FROM ' . DB_PRE . 'menu_items WHERE id = ?', array($_POST['parent']));
 				if (!empty($parent_block) && $parent_block != $_POST['block_id'])
-					$errors['parent'] = $this->injector['Lang']->t('menus', 'superior_page_not_allowed');
+					$errors['parent'] = Core\Registry::get('Lang')->t('menus', 'superior_page_not_allowed');
 			}
 			if ($_POST['display'] != 0 && $_POST['display'] != 1)
-				$errors[] = $this->injector['Lang']->t('menus', 'select_item_visibility');
+				$errors[] = Core\Registry::get('Lang')->t('menus', 'select_item_visibility');
 			if (Core\Validate::isNumber($_POST['target']) === false ||
 					$_POST['mode'] == 1 && (is_dir(MODULES_DIR . $_POST['module']) === false || preg_match('=/=', $_POST['module'])) ||
 					$_POST['mode'] == 2 && Core\Validate::isInternalURI($_POST['uri']) === false ||
 					$_POST['mode'] == 3 && empty($_POST['uri']) ||
-					$_POST['mode'] == 4 && (Core\Validate::isNumber($_POST['articles']) === false || $this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'articles WHERE id = ?', array($_POST['articles'])) == 0))
-				$errors[] = $this->injector['Lang']->t('menus', 'type_in_uri_and_target');
+					$_POST['mode'] == 4 && (Core\Validate::isNumber($_POST['articles']) === false || Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'articles WHERE id = ?', array($_POST['articles'])) == 0))
+				$errors[] = Core\Registry::get('Lang')->t('menus', 'type_in_uri_and_target');
 			if ($_POST['mode'] == 2 && (bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 					(Core\Validate::isUriSafe($_POST['alias']) === false || Core\Validate::uriAliasExists($_POST['alias']) === true))
-				$errors['alias'] = $this->injector['Lang']->t('system', 'uri_alias_unallowed_characters_or_exists');
+				$errors['alias'] = Core\Registry::get('Lang')->t('system', 'uri_alias_unallowed_characters_or_exists');
 
 			if (isset($errors) === true) {
-				$this->injector['View']->assign('error_msg', Core\Functions::errorBox($errors));
+				Core\Registry::get('View')->assign('error_msg', Core\Functions::errorBox($errors));
 			} elseif (Core\Validate::formToken() === false) {
-				$this->injector['View']->setContent(Core\Functions::errorBox($this->injector['Lang']->t('system', 'form_already_submitted')));
+				Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 			} else {
 				$insert_values = array(
 					'id' => '',
@@ -116,44 +111,44 @@ class MenusAdmin extends Core\ModuleController {
 
 				MenusFunctions::setMenuItemsCache();
 
-				$this->injector['Session']->unsetFormToken();
+				Core\Registry::get('Session')->unsetFormToken();
 
-				Core\Functions::setRedirectMessage($bool, $this->injector['Lang']->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
+				Core\Functions::setRedirectMessage($bool, Core\Registry::get('Lang')->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
 			}
 		}
 		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 			// Seitentyp
 			$values_mode = array(1, 2, 3);
 			$lang_mode = array(
-				$this->injector['Lang']->t('menus', 'module'),
-				$this->injector['Lang']->t('menus', 'dynamic_page'),
-				$this->injector['Lang']->t('menus', 'hyperlink')
+				Core\Registry::get('Lang')->t('menus', 'module'),
+				Core\Registry::get('Lang')->t('menus', 'dynamic_page'),
+				Core\Registry::get('Lang')->t('menus', 'hyperlink')
 			);
 			if (Core\Modules::isActive('articles')) {
 				$values_mode[] = 4;
-				$lang_mode[] = $this->injector['Lang']->t('menus', 'article');
+				$lang_mode[] = Core\Registry::get('Lang')->t('menus', 'article');
 			}
-			$this->injector['View']->assign('mode', Core\Functions::selectGenerator('mode', $values_mode, $lang_mode));
+			Core\Registry::get('View')->assign('mode', Core\Functions::selectGenerator('mode', $values_mode, $lang_mode));
 
 			// Menus
-			$this->injector['View']->assign('blocks', MenusFunctions::menusDropdown());
+			Core\Registry::get('View')->assign('blocks', MenusFunctions::menusDropdown());
 
 			// Module
 			$modules = Core\Modules::getActiveModules();
 			foreach ($modules as $row) {
 				$modules[$row['name']]['selected'] = Core\Functions::selectEntry('module', $row['dir']);
 			}
-			$this->injector['View']->assign('modules', $modules);
+			Core\Registry::get('View')->assign('modules', $modules);
 
 			// Ziel des Hyperlinks
-			$lang_target = array($this->injector['Lang']->t('system', 'window_self'), $this->injector['Lang']->t('system', 'window_blank'));
-			$this->injector['View']->assign('target', Core\Functions::selectGenerator('target', array(1, 2), $lang_target));
+			$lang_target = array(Core\Registry::get('Lang')->t('system', 'window_self'), Core\Registry::get('Lang')->t('system', 'window_blank'));
+			Core\Registry::get('View')->assign('target', Core\Functions::selectGenerator('target', array(1, 2), $lang_target));
 
-			$lang_display = array($this->injector['Lang']->t('system', 'yes'), $this->injector['Lang']->t('system', 'no'));
-			$this->injector['View']->assign('display', Core\Functions::selectGenerator('display', array(1, 0), $lang_display, 1, 'checked'));
+			$lang_display = array(Core\Registry::get('Lang')->t('system', 'yes'), Core\Registry::get('Lang')->t('system', 'no'));
+			Core\Registry::get('View')->assign('display', Core\Functions::selectGenerator('display', array(1, 0), $lang_display, 1, 'checked'));
 
 			if (Core\Modules::isActive('articles') === true) {
-				$this->injector['View']->assign('articles', \ACP3\Modules\Articles\ArticlesFunctions::articlesList());
+				Core\Registry::get('View')->assign('articles', \ACP3\Modules\Articles\ArticlesFunctions::articlesList());
 			}
 
 			$defaults = array(
@@ -165,11 +160,11 @@ class MenusAdmin extends Core\ModuleController {
 			);
 
 			// Daten an Smarty übergeben
-			$this->injector['View']->assign('pages_list', MenusFunctions::menuItemsList());
-			$this->injector['View']->assign('SEO_FORM_FIELDS', Core\SEO::formFields());
-			$this->injector['View']->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
+			Core\Registry::get('View')->assign('pages_list', MenusFunctions::menuItemsList());
+			Core\Registry::get('View')->assign('SEO_FORM_FIELDS', Core\SEO::formFields());
+			Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
-			$this->injector['Session']->generateFormToken();
+			Core\Registry::get('Session')->generateFormToken();
 		}
 	}
 
@@ -177,37 +172,37 @@ class MenusAdmin extends Core\ModuleController {
 	{
 		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
 			$entries = $_POST['entries'];
-		elseif (Core\Validate::deleteEntries($this->injector['URI']->entries) === true)
-			$entries = $this->injector['URI']->entries;
+		elseif (Core\Validate::deleteEntries(Core\Registry::get('URI')->entries) === true)
+			$entries = Core\Registry::get('URI')->entries;
 
 		if (!isset($entries)) {
-			$this->injector['View']->setContent(Core\Functions::errorBox($this->injector['Lang']->t('system', 'no_entries_selected')));
-		} elseif ($this->injector['URI']->action !== 'confirmed') {
+			Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'no_entries_selected')));
+		} elseif (Core\Registry::get('URI')->action !== 'confirmed') {
 			$marked_entries = implode('|', (array) $entries);
-			$this->injector['View']->setContent(Core\Functions::confirmBox($this->injector['Lang']->t('system', 'confirm_delete'), $this->injector['URI']->route('acp/menus/delete/entries_' . $marked_entries . '/action_confirmed/'), $this->injector['URI']->route('acp/menus')));
-		} elseif ($this->injector['URI']->action === 'confirmed') {
+			Core\Registry::get('View')->setContent(Core\Functions::confirmBox(Core\Registry::get('Lang')->t('system', 'confirm_delete'), Core\Registry::get('URI')->route('acp/menus/delete/entries_' . $marked_entries . '/action_confirmed/'), Core\Registry::get('URI')->route('acp/menus')));
+		} elseif (Core\Registry::get('URI')->action === 'confirmed') {
 			$marked_entries = explode('|', $entries);
 			$bool = false;
 			$nestedSet = new Core\NestedSet('menu_items', true);
 			foreach ($marked_entries as $entry) {
-				if (!empty($entry) && $this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menus WHERE id = ?', array($entry)) == 1) {
+				if (!empty($entry) && Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menus WHERE id = ?', array($entry)) == 1) {
 					// Der Navigationsleiste zugeordnete Menüpunkte ebenfalls löschen
-					$items = $this->injector['Db']->fetchAll('SELECT id FROM ' . DB_PRE . 'menu_items WHERE block_id = ?', array($entry));
+					$items = Core\Registry::get('Db')->fetchAll('SELECT id FROM ' . DB_PRE . 'menu_items WHERE block_id = ?', array($entry));
 					foreach ($items as $row) {
 						$nestedSet->deleteNode($row['id']);
 					}
 
-					$block = $this->injector['Db']->fetchColumn('SELECT index_name FROM ' . DB_PRE . 'menus WHERE id = ?', array($entry));
-					$bool = $this->injector['Db']->delete(DB_PRE . 'menus', array('id' => $entry));
+					$block = Core\Registry::get('Db')->fetchColumn('SELECT index_name FROM ' . DB_PRE . 'menus WHERE id = ?', array($entry));
+					$bool = Core\Registry::get('Db')->delete(DB_PRE . 'menus', array('id' => $entry));
 					Core\Cache::delete('visible_items_' . $block, 'menus');
 				}
 			}
 
 			MenusFunctions::setMenuItemsCache();
 
-			Core\Functions::setRedirectMessage($bool, $this->injector['Lang']->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
+			Core\Functions::setRedirectMessage($bool, Core\Registry::get('Lang')->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
 		} else {
-			$this->injector['URI']->redirect('errors/404');
+			Core\Registry::get('URI')->redirect('errors/404');
 		}
 	}
 
@@ -215,116 +210,116 @@ class MenusAdmin extends Core\ModuleController {
 	{
 		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
 			$entries = $_POST['entries'];
-		elseif (Core\Validate::deleteEntries($this->injector['URI']->entries) === true)
-			$entries = $this->injector['URI']->entries;
+		elseif (Core\Validate::deleteEntries(Core\Registry::get('URI')->entries) === true)
+			$entries = Core\Registry::get('URI')->entries;
 
 		if (!isset($entries)) {
-			$this->injector['View']->setContent(Core\Functions::errorBox($this->injector['Lang']->t('system', 'no_entries_selected')));
+			Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'no_entries_selected')));
 		} elseif (is_array($entries) === true) {
 			$marked_entries = implode('|', $entries);
-			$this->injector['View']->setContent(Core\Functions::confirmBox($this->injector['Lang']->t('system', 'confirm_delete'), $this->injector['URI']->route('acp/menus/delete_item/entries_' . $marked_entries . '/action_confirmed/'), $this->injector['URI']->route('acp/menus')));
-		} elseif ($this->injector['URI']->action === 'confirmed') {
+			Core\Registry::get('View')->setContent(Core\Functions::confirmBox(Core\Registry::get('Lang')->t('system', 'confirm_delete'), Core\Registry::get('URI')->route('acp/menus/delete_item/entries_' . $marked_entries . '/action_confirmed/'), Core\Registry::get('URI')->route('acp/menus')));
+		} elseif (Core\Registry::get('URI')->action === 'confirmed') {
 			$marked_entries = explode('|', $entries);
 			$bool = false;
 			$nestedSet = new Core\NestedSet('menu_items', true);
 			foreach ($marked_entries as $entry) {
 				// URI-Alias löschen
-				$item_uri = $this->injector['Db']->fetchColumn('SELECT uri FROM ' . DB_PRE . 'menu_items WHERE id = ?', array($entry));
+				$item_uri = Core\Registry::get('Db')->fetchColumn('SELECT uri FROM ' . DB_PRE . 'menu_items WHERE id = ?', array($entry));
 				$bool = $nestedSet->deleteNode($entry);
 				Core\SEO::deleteUriAlias($item_uri);
 			}
 
 			MenusFunctions::setMenuItemsCache();
 
-			Core\Functions::setRedirectMessage($bool, $this->injector['Lang']->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
+			Core\Functions::setRedirectMessage($bool, Core\Registry::get('Lang')->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
 		} else {
-			$this->injector['URI']->redirect('errors/404');
+			Core\Registry::get('URI')->redirect('errors/404');
 		}
 	}
 
 	public function actionEdit()
 	{
-		if (Core\Validate::isNumber($this->injector['URI']->id) === true &&
-				$this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menus WHERE id = ?', array($this->injector['URI']->id)) == 1) {
+		if (Core\Validate::isNumber(Core\Registry::get('URI')->id) === true &&
+				Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menus WHERE id = ?', array(Core\Registry::get('URI')->id)) == 1) {
 			if (isset($_POST['submit']) === true) {
 				if (!preg_match('/^[a-zA-Z]+\w/', $_POST['index_name']))
-					$errors['index-name'] = $this->injector['Lang']->t('menus', 'type_in_index_name');
-				if (!isset($errors) && $this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menus WHERE index_name = ? AND id != ?', array($_POST['index_name'], $this->injector['URI']->id)) > 0)
-					$errors['index-name'] = $this->injector['Lang']->t('menus', 'index_name_unique');
+					$errors['index-name'] = Core\Registry::get('Lang')->t('menus', 'type_in_index_name');
+				if (!isset($errors) && Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menus WHERE index_name = ? AND id != ?', array($_POST['index_name'], Core\Registry::get('URI')->id)) > 0)
+					$errors['index-name'] = Core\Registry::get('Lang')->t('menus', 'index_name_unique');
 				if (strlen($_POST['title']) < 3)
-					$errors['title'] = $this->injector['Lang']->t('menus', 'menu_bar_title_to_short');
+					$errors['title'] = Core\Registry::get('Lang')->t('menus', 'menu_bar_title_to_short');
 
 				if (isset($errors) === true) {
-					$this->injector['View']->assign('error_msg', Core\Functions::errorBox($errors));
+					Core\Registry::get('View')->assign('error_msg', Core\Functions::errorBox($errors));
 				} elseif (Core\Validate::formToken() === false) {
-					$this->injector['View']->setContent(Core\Functions::errorBox($this->injector['Lang']->t('system', 'form_already_submitted')));
+					Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 				} else {
 					$update_values = array(
 						'index_name' => $_POST['index_name'],
 						'title' => Core\Functions::str_encode($_POST['title']),
 					);
 
-					$bool = $this->injector['Db']->update(DB_PRE . 'menus', $update_values, array('id' => $this->injector['URI']->id));
+					$bool = Core\Registry::get('Db')->update(DB_PRE . 'menus', $update_values, array('id' => Core\Registry::get('URI')->id));
 
 					MenusFunctions::setMenuItemsCache();
 
-					$this->injector['Session']->unsetFormToken();
+					Core\Registry::get('Session')->unsetFormToken();
 
-					Core\Functions::setRedirectMessage($bool, $this->injector['Lang']->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
+					Core\Functions::setRedirectMessage($bool, Core\Registry::get('Lang')->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
 				}
 			}
 			if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-				$block = $this->injector['Db']->fetchAssoc('SELECT index_name, title FROM ' . DB_PRE . 'menus WHERE id = ?', array($this->injector['URI']->id));
+				$block = Core\Registry::get('Db')->fetchAssoc('SELECT index_name, title FROM ' . DB_PRE . 'menus WHERE id = ?', array(Core\Registry::get('URI')->id));
 
-				$this->injector['View']->assign('form', isset($_POST['submit']) ? $_POST : $block);
+				Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? $_POST : $block);
 
-				$this->injector['Session']->generateFormToken();
+				Core\Registry::get('Session')->generateFormToken();
 			}
 		} else {
-			$this->injector['URI']->redirect('errors/404');
+			Core\Registry::get('URI')->redirect('errors/404');
 		}
 	}
 
 	public function actionEdit_item()
 	{
-		if (Core\Validate::isNumber($this->injector['URI']->id) === true &&
-				$this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menu_items WHERE id = ?', array($this->injector['URI']->id)) == 1) {
-			$page = $this->injector['Db']->fetchAssoc('SELECT id, mode, block_id, parent_id, left_id, right_id, display, title, uri, target FROM ' . DB_PRE . 'menu_items WHERE id = ?', array($this->injector['URI']->id));
+		if (Core\Validate::isNumber(Core\Registry::get('URI')->id) === true &&
+				Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menu_items WHERE id = ?', array(Core\Registry::get('URI')->id)) == 1) {
+			$page = Core\Registry::get('Db')->fetchAssoc('SELECT id, mode, block_id, parent_id, left_id, right_id, display, title, uri, target FROM ' . DB_PRE . 'menu_items WHERE id = ?', array(Core\Registry::get('URI')->id));
 			$page['alias'] = $page['mode'] == 2 || $page['mode'] == 4 ? Core\SEO::getUriAlias($page['uri'], true) : '';
 			$page['seo_keywords'] = Core\SEO::getKeywords($page['uri']);
 			$page['seo_description'] = Core\SEO::getDescription($page['uri']);
 
 			if (isset($_POST['submit']) === true) {
 				if (Core\Validate::isNumber($_POST['mode']) === false)
-					$errors['mode'] = $this->injector['Lang']->t('menus', 'select_page_type');
+					$errors['mode'] = Core\Registry::get('Lang')->t('menus', 'select_page_type');
 				if (strlen($_POST['title']) < 3)
-					$errors['title'] = $this->injector['Lang']->t('menus', 'title_to_short');
+					$errors['title'] = Core\Registry::get('Lang')->t('menus', 'title_to_short');
 				if (Core\Validate::isNumber($_POST['block_id']) === false)
-					$errors['block-id'] = $this->injector['Lang']->t('menus', 'select_menu_bar');
+					$errors['block-id'] = Core\Registry::get('Lang')->t('menus', 'select_menu_bar');
 				if (!empty($_POST['parent']) && Core\Validate::isNumber($_POST['parent']) === false)
-					$errors['parent'] = $this->injector['Lang']->t('menus', 'select_superior_page');
+					$errors['parent'] = Core\Registry::get('Lang')->t('menus', 'select_superior_page');
 				if (!empty($_POST['parent']) && Core\Validate::isNumber($_POST['parent']) === true) {
 					// Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
-					$parent_block = $this->injector['Db']->fetchColumn('SELECT block_id FROM ' . DB_PRE . 'menu_items WHERE id = ?', array($_POST['parent']));
+					$parent_block = Core\Registry::get('Db')->fetchColumn('SELECT block_id FROM ' . DB_PRE . 'menu_items WHERE id = ?', array($_POST['parent']));
 					if (!empty($parent_block) && $parent_block != $_POST['block_id'])
-						$errors[] = $this->injector['Lang']->t('menus', 'superior_page_not_allowed');
+						$errors[] = Core\Registry::get('Lang')->t('menus', 'superior_page_not_allowed');
 				}
 				if ($_POST['display'] != 0 && $_POST['display'] != 1)
-					$errors['display'] = $this->injector['Lang']->t('menus', 'select_item_visibility');
+					$errors['display'] = Core\Registry::get('Lang')->t('menus', 'select_item_visibility');
 				if (Core\Validate::isNumber($_POST['target']) === false ||
 						$_POST['mode'] == 1 && (is_dir(MODULES_DIR . $_POST['module']) === false || preg_match('=/=', $_POST['module'])) ||
 						$_POST['mode'] == 2 && Core\Validate::isInternalURI($_POST['uri']) === false ||
 						$_POST['mode'] == 3 && empty($_POST['uri']) ||
-						$_POST['mode'] == 4 && (Core\Validate::isNumber($_POST['articles']) === false || $this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'articles WHERE id = ?', array($_POST['articles'])) == 0))
-					$errors[] = $this->injector['Lang']->t('menus', 'type_in_uri_and_target');
+						$_POST['mode'] == 4 && (Core\Validate::isNumber($_POST['articles']) === false || Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'articles WHERE id = ?', array($_POST['articles'])) == 0))
+					$errors[] = Core\Registry::get('Lang')->t('menus', 'type_in_uri_and_target');
 				if (($_POST['mode'] == 2 || $_POST['mode'] == 4) && (bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 						(Core\Validate::isUriSafe($_POST['alias']) === false || Core\Validate::uriAliasExists($_POST['alias'], $_POST['uri'])))
-					$errors['alias'] = $this->injector['Lang']->t('system', 'uri_alias_unallowed_characters_or_exists');
+					$errors['alias'] = Core\Registry::get('Lang')->t('system', 'uri_alias_unallowed_characters_or_exists');
 
 				if (isset($errors) === true) {
-					$this->injector['View']->assign('error_msg', Core\Functions::errorBox($errors));
+					Core\Registry::get('View')->assign('error_msg', Core\Functions::errorBox($errors));
 				} elseif (Core\Validate::formToken() === false) {
-					$this->injector['View']->setContent(Core\Functions::errorBox($this->injector['Lang']->t('system', 'form_already_submitted')));
+					Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 				} else {
 					// Vorgenommene Änderungen am Datensatz anwenden
 					$mode = ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match('/^(articles\/details\/id_([0-9]+)\/)$/', $_POST['uri']) ? '4' : $_POST['mode'];
@@ -341,7 +336,7 @@ class MenusAdmin extends Core\ModuleController {
 					);
 
 					$nestedSet = new Core\NestedSet('menu_items', true);
-					$bool = $nestedSet->editNode($this->injector['URI']->id, (int) $_POST['parent'], (int) $_POST['block_id'], $update_values);
+					$bool = $nestedSet->editNode(Core\Registry::get('URI')->id, (int) $_POST['parent'], (int) $_POST['block_id'], $update_values);
 
 					// Verhindern, dass externen URIs Aliase, Keywords, etc. zugewiesen bekommen
 					if ($_POST['mode'] != 3) {
@@ -354,41 +349,41 @@ class MenusAdmin extends Core\ModuleController {
 
 					MenusFunctions::setMenuItemsCache();
 
-					$this->injector['Session']->unsetFormToken();
+					Core\Registry::get('Session')->unsetFormToken();
 
-					Core\Functions::setRedirectMessage($bool, $this->injector['Lang']->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
+					Core\Functions::setRedirectMessage($bool, Core\Registry::get('Lang')->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
 				}
 			}
 			if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 				// Seitentyp
 				$values_mode = array(1, 2, 3);
 				$lang_mode = array(
-					$this->injector['Lang']->t('menus', 'module'),
-					$this->injector['Lang']->t('menus', 'dynamic_page'),
-					$this->injector['Lang']->t('menus', 'hyperlink')
+					Core\Registry::get('Lang')->t('menus', 'module'),
+					Core\Registry::get('Lang')->t('menus', 'dynamic_page'),
+					Core\Registry::get('Lang')->t('menus', 'hyperlink')
 				);
 				if (Core\Modules::isActive('articles')) {
 					$values_mode[] = 4;
-					$lang_mode[] = $this->injector['Lang']->t('menus', 'article');
+					$lang_mode[] = Core\Registry::get('Lang')->t('menus', 'article');
 				}
-				$this->injector['View']->assign('mode', Core\Functions::selectGenerator('mode', $values_mode, $lang_mode, $page['mode']));
+				Core\Registry::get('View')->assign('mode', Core\Functions::selectGenerator('mode', $values_mode, $lang_mode, $page['mode']));
 
 				// Block
-				$this->injector['View']->assign('blocks', MenusFunctions::menusDropdown($page['block_id']));
+				Core\Registry::get('View')->assign('blocks', MenusFunctions::menusDropdown($page['block_id']));
 
 				// Module
 				$modules = Core\Modules::getAllModules();
 				foreach ($modules as $row) {
 					$modules[$row['name']]['selected'] = Core\Functions::selectEntry('module', $row['dir'], $page['mode'] == 1 ? $page['uri'] : '');
 				}
-				$this->injector['View']->assign('modules', $modules);
+				Core\Registry::get('View')->assign('modules', $modules);
 
 				// Ziel des Hyperlinks
-				$lang_target = array($this->injector['Lang']->t('system', 'window_self'), $this->injector['Lang']->t('system', 'window_blank'));
-				$this->injector['View']->assign('target', Core\Functions::selectGenerator('target', array(1, 2), $lang_target, $page['target']));
+				$lang_target = array(Core\Registry::get('Lang')->t('system', 'window_self'), Core\Registry::get('Lang')->t('system', 'window_blank'));
+				Core\Registry::get('View')->assign('target', Core\Functions::selectGenerator('target', array(1, 2), $lang_target, $page['target']));
 
-				$lang_display = array($this->injector['Lang']->t('system', 'yes'), $this->injector['Lang']->t('system', 'no'));
-				$this->injector['View']->assign('display', Core\Functions::selectGenerator('display', array(1, 0), $lang_display, $page['display'], 'checked'));
+				$lang_display = array(Core\Registry::get('Lang')->t('system', 'yes'), Core\Registry::get('Lang')->t('system', 'no'));
+				Core\Registry::get('View')->assign('display', Core\Functions::selectGenerator('display', array(1, 0), $lang_display, $page['display'], 'checked'));
 
 				if (Core\Modules::isActive('articles') === true) {
 					$matches = array();
@@ -396,18 +391,18 @@ class MenusAdmin extends Core\ModuleController {
 						preg_match_all('/^(articles\/details\/id_([0-9]+)\/)$/', $page['uri'], $matches);
 					}
 
-					$this->injector['View']->assign('articles', \ACP3\Modules\Articles\ArticlesFunctions::articlesList(!empty($matches[2]) ? $matches[2][0] : ''));
+					Core\Registry::get('View')->assign('articles', \ACP3\Modules\Articles\ArticlesFunctions::articlesList(!empty($matches[2]) ? $matches[2][0] : ''));
 				}
 
 				// Daten an Smarty übergeben
-				$this->injector['View']->assign('pages_list', MenusFunctions::menuItemsList($page['parent_id'], $page['left_id'], $page['right_id']));
-				$this->injector['View']->assign('SEO_FORM_FIELDS', Core\SEO::formFields($page['uri']));
-				$this->injector['View']->assign('form', isset($_POST['submit']) ? $_POST : $page);
+				Core\Registry::get('View')->assign('pages_list', MenusFunctions::menuItemsList($page['parent_id'], $page['left_id'], $page['right_id']));
+				Core\Registry::get('View')->assign('SEO_FORM_FIELDS', Core\SEO::formFields($page['uri']));
+				Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? $_POST : $page);
 
-				$this->injector['Session']->generateFormToken();
+				Core\Registry::get('Session')->generateFormToken();
 			}
 		} else {
-			$this->injector['URI']->redirect('errors/404');
+			Core\Registry::get('URI')->redirect('errors/404');
 		}
 	}
 
@@ -415,17 +410,17 @@ class MenusAdmin extends Core\ModuleController {
 	{
 		Core\Functions::getRedirectMessage();
 
-		$menus = $this->injector['Db']->fetchAll('SELECT id, title, index_name FROM ' . DB_PRE . 'menus');
+		$menus = Core\Registry::get('Db')->fetchAll('SELECT id, title, index_name FROM ' . DB_PRE . 'menus');
 		$c_menus = count($menus);
 
 		if ($c_menus > 0) {
 			$can_delete_item = Core\Modules::check('menus', 'acp_delete_item');
 			$can_order_item = Core\Modules::check('menus', 'acp_order');
-			$this->injector['View']->assign('can_delete_item', $can_delete_item);
-			$this->injector['View']->assign('can_order_item', $can_order_item);
-			$this->injector['View']->assign('can_delete', Core\Modules::check('menus', 'acp_delete'));
-			$this->injector['View']->assign('can_edit', Core\Modules::check('menus', 'acp_edit'));
-			$this->injector['View']->assign('colspan', $can_delete_item && $can_order_item ? 5 : ($can_delete_item || $can_order_item ? 4 : 3));
+			Core\Registry::get('View')->assign('can_delete_item', $can_delete_item);
+			Core\Registry::get('View')->assign('can_order_item', $can_order_item);
+			Core\Registry::get('View')->assign('can_delete', Core\Modules::check('menus', 'acp_delete'));
+			Core\Registry::get('View')->assign('can_edit', Core\Modules::check('menus', 'acp_edit'));
+			Core\Registry::get('View')->assign('colspan', $can_delete_item && $can_order_item ? 5 : ($can_delete_item || $can_order_item ? 4 : 3));
 
 			$pages_list = MenusFunctions::menuItemsList();
 			for ($i = 0; $i < $c_menus; ++$i) {
@@ -435,22 +430,22 @@ class MenusAdmin extends Core\ModuleController {
 					$pages_list[$menus[$i]['index_name']]['items'] = array();
 				}
 			}
-			$this->injector['View']->assign('pages_list', $pages_list);
+			Core\Registry::get('View')->assign('pages_list', $pages_list);
 		}
 	}
 
 	public function actionOrder()
 	{
-		if (Core\Validate::isNumber($this->injector['URI']->id) === true &&
-				$this->injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menu_items WHERE id = ?', array($this->injector['URI']->id)) == 1) {
+		if (Core\Validate::isNumber(Core\Registry::get('URI')->id) === true &&
+				Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menu_items WHERE id = ?', array(Core\Registry::get('URI')->id)) == 1) {
 			$nestedSet = new Core\NestedSet('menu_items', true);
-			$nestedSet->order($this->injector['URI']->id, $this->injector['URI']->action);
+			$nestedSet->order(Core\Registry::get('URI')->id, Core\Registry::get('URI')->action);
 
 			MenusFunctions::setMenuItemsCache();
 
-			$this->injector['URI']->redirect('acp/menus');
+			Core\Registry::get('URI')->redirect('acp/menus');
 		} else {
-			$this->injector['URI']->redirect('errors/404');
+			Core\Registry::get('URI')->redirect('errors/404');
 		}
 	}
 
