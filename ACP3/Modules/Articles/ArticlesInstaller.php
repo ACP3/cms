@@ -10,10 +10,6 @@ class ArticlesInstaller extends ModuleInstaller {
 	private $module_name = 'articles';
 	private $schema_version = 32;
 
-	public function __construct(\ACP3\Core\Pimple $injector) {
-		parent::__construct($injector);
-	}
-
 	public function renameModule()
 	{
 		return array(

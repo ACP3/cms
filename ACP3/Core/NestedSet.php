@@ -49,33 +49,33 @@ class NestedSet {
 	 */
 	function deleteNode($id) {
 		if (!empty($id) && Validate::isNumber($id) === true) {
-			$lr = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT left_id, right_id FROM ' . $this->table_name . ' WHERE id = ?', array($id));
+			$lr = Registry::get('Db')->fetchAssoc('SELECT left_id, right_id FROM ' . $this->table_name . ' WHERE id = ?', array($id));
 			if (!empty($lr)) {
-				\ACP3\CMS::$injector['Db']->beginTransaction();
+				Registry::get('Db')->beginTransaction();
 				try {
 					// Die aktuelle Seite mit allen untergeordneten Seiten selektieren
-					$items = \ACP3\CMS::$injector['Db']->fetchAll('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . $this->table_name . ' AS p, ' . $this->table_name . ' AS n WHERE p.id = ? AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id ASC', array($id));
+					$items = Registry::get('Db')->fetchAll('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . $this->table_name . ' AS p, ' . $this->table_name . ' AS n WHERE p.id = ? AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id ASC', array($id));
 					$c_items = count($items);
 
-					\ACP3\CMS::$injector['Db']->delete($this->table_name, array('id' => $id));
+					Registry::get('Db')->delete($this->table_name, array('id' => $id));
 					// root_id und parent_id der Kinder aktualisieren
 					for ($i = 1; $i < $c_items; ++$i) {
-						$root_id = \ACP3\CMS::$injector['Db']->fetchColumn('SELECT id FROM ' . $this->table_name . ' WHERE left_id < ? AND right_id >= ? ORDER BY left_id ASC LIMIT 1', array($items[$i]['left_id'], $items[$i]['right_id']));
-						$parent_id = \ACP3\CMS::$injector['Db']->fetchColumn('SELECT id FROM ' . $this->table_name . ' WHERE left_id < ? AND right_id >= ? ORDER BY left_id DESC LIMIT 1', array($items[$i]['left_id'], $items[$i]['right_id']));
-						\ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET root_id = ?, parent_id = ?, left_id = left_id - 1, right_id = right_id - 1 WHERE id = ?', array(!empty($root_id) ? $root_id : $items[$i]['id'], !empty($parent_id) ? $parent_id : 0, $items[$i]['id']));
+						$root_id = Registry::get('Db')->fetchColumn('SELECT id FROM ' . $this->table_name . ' WHERE left_id < ? AND right_id >= ? ORDER BY left_id ASC LIMIT 1', array($items[$i]['left_id'], $items[$i]['right_id']));
+						$parent_id = Registry::get('Db')->fetchColumn('SELECT id FROM ' . $this->table_name . ' WHERE left_id < ? AND right_id >= ? ORDER BY left_id DESC LIMIT 1', array($items[$i]['left_id'], $items[$i]['right_id']));
+						Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET root_id = ?, parent_id = ?, left_id = left_id - 1, right_id = right_id - 1 WHERE id = ?', array(!empty($root_id) ? $root_id : $items[$i]['id'], !empty($parent_id) ? $parent_id : 0, $items[$i]['id']));
 					}
 
 					// Übergeordnete Knoten aktualiseren
-					\ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET right_id = right_id - 2 WHERE left_id < ? AND right_id > ?', array($lr['left_id'], $lr['right_id']));
+					Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET right_id = right_id - 2 WHERE left_id < ? AND right_id > ?', array($lr['left_id'], $lr['right_id']));
 
 					// Nachfolgende Knoten
-					\ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id - 2, right_id = right_id - 2 WHERE left_id > ?', array($lr['right_id']));
+					Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id - 2, right_id = right_id - 2 WHERE left_id > ?', array($lr['right_id']));
 
-					\ACP3\CMS::$injector['Db']->commit();
+					Registry::get('Db')->commit();
 
 					return true;
 				} catch (\Exception $e) {
-					\ACP3\CMS::$injector['Db']->rollback();
+					Registry::get('Db')->rollback();
 				}
 			}
 		}
@@ -93,53 +93,53 @@ class NestedSet {
 	function insertNode($parent_id, array $insert_values) {
 		// Keine übergeordnete Seite zugewiesen
 		if (Validate::isNumber($parent_id) === false ||
-			\ACP3\CMS::$injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . $this->table_name . ' WHERE id = ?', array($parent_id)) == 0) {
-			\ACP3\CMS::$injector['Db']->beginTransaction();
+			Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . $this->table_name . ' WHERE id = ?', array($parent_id)) == 0) {
+			Registry::get('Db')->beginTransaction();
 			try {
 				// Letzten Eintrag selektieren
 				if ($this->enable_blocks === true)
-					$node = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT MAX(right_id) AS right_id FROM ' . $this->table_name . ' WHERE block_id = ?', array($insert_values['block_id']));
+					$node = Registry::get('Db')->fetchAssoc('SELECT MAX(right_id) AS right_id FROM ' . $this->table_name . ' WHERE block_id = ?', array($insert_values['block_id']));
 				if ($this->enable_blocks === false || empty($node['right_id'])) {
-					$node = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT MAX(right_id) AS right_id FROM ' . $this->table_name);
+					$node = Registry::get('Db')->fetchAssoc('SELECT MAX(right_id) AS right_id FROM ' . $this->table_name);
 				}
 
 				// left_id und right_id Werte für das Anhängen entsprechend erhöhen
 				$insert_values['left_id'] = !empty($node['right_id']) ? $node['right_id'] + 1 : 1;
 				$insert_values['right_id'] = !empty($node['right_id']) ? $node['right_id'] + 2 : 2;
 
-				\ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id >= ?', array($insert_values['left_id']));
+				Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id >= ?', array($insert_values['left_id']));
 
-				\ACP3\CMS::$injector['Db']->insert($this->table_name, $insert_values);
-				$root_id = \ACP3\CMS::$injector['Db']->lastInsertId();
-				\ACP3\CMS::$injector['Db']->update($this->table_name, array('root_id' => $root_id), array('id' => $root_id));
+				Registry::get('Db')->insert($this->table_name, $insert_values);
+				$root_id = Registry::get('Db')->lastInsertId();
+				Registry::get('Db')->update($this->table_name, array('root_id' => $root_id), array('id' => $root_id));
 
-				\ACP3\CMS::$injector['Db']->commit();
+				Registry::get('Db')->commit();
 				return true;
 			} catch (\Exception $e) {
-				\ACP3\CMS::$injector['Db']->rollback();
+				Registry::get('Db')->rollback();
 				return false;
 			}
 		// Übergeordnete Seite zugewiesen
 		} else {
-			$parent = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT root_id, left_id, right_id FROM ' . $this->table_name . ' WHERE id = ?', array($parent_id));
+			$parent = Registry::get('Db')->fetchAssoc('SELECT root_id, left_id, right_id FROM ' . $this->table_name . ' WHERE id = ?', array($parent_id));
 
-			\ACP3\CMS::$injector['Db']->beginTransaction();
+			Registry::get('Db')->beginTransaction();
 			try {
 				// Alle nachfolgenden Menüeinträge anpassen
-				\ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id > ?', array($parent['right_id']));
+				Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id + 2, right_id = right_id + 2 WHERE left_id > ?', array($parent['right_id']));
 				// Übergeordnete Menüpunkte anpassen
-				\ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET right_id = right_id + 2 WHERE root_id = ? AND left_id <= ? AND right_id >= ?', array($parent['root_id'], $parent['left_id'], $parent['right_id']));
+				Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET right_id = right_id + 2 WHERE root_id = ? AND left_id <= ? AND right_id >= ?', array($parent['root_id'], $parent['left_id'], $parent['right_id']));
 
 				$insert_values['root_id'] = $parent['root_id'];
 				$insert_values['left_id'] = $parent['right_id'];
 				$insert_values['right_id'] = $parent['right_id'] + 1;
 
-				\ACP3\CMS::$injector['Db']->insert($this->table_name, $insert_values);
+				Registry::get('Db')->insert($this->table_name, $insert_values);
 
-				\ACP3\CMS::$injector['Db']->commit();
+				Registry::get('Db')->commit();
 				return true;
 			} catch (\Exception $e) {
-				\ACP3\CMS::$injector['Db']->rollback();
+				Registry::get('Db')->rollback();
 				return false;
 			}
 		}
@@ -161,21 +161,21 @@ class NestedSet {
 		if (Validate::isNumber($id) === true &&
 			(Validate::isNumber($parent) === true || $parent == '') &&
 			Validate::isNumber($block_id) === true) {
-			\ACP3\CMS::$injector['Db']->beginTransaction();
+			Registry::get('Db')->beginTransaction();
 			try {
 				// Die aktuelle Seite mit allen untergeordneten Seiten selektieren
-				$items = \ACP3\CMS::$injector['Db']->fetchAll('SELECT n.id, n.root_id, n.left_id, n.right_id' . ($this->enable_blocks === true ? ', n.block_id' : '') . ' FROM ' . $this->table_name . ' AS p, ' . $this->table_name . ' AS n WHERE p.id = ? AND n.left_id BETWEEN p.left_id AND p.right_id ORDER BY n.left_id ASC', array($id));
+				$items = Registry::get('Db')->fetchAll('SELECT n.id, n.root_id, n.left_id, n.right_id' . ($this->enable_blocks === true ? ', n.block_id' : '') . ' FROM ' . $this->table_name . ' AS p, ' . $this->table_name . ' AS n WHERE p.id = ? AND n.left_id BETWEEN p.left_id AND p.right_id ORDER BY n.left_id ASC', array($id));
 
 				// Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
 				if (empty($parent) &&
 					($this->enable_blocks === false || ($this->enable_blocks === true && $block_id == $items[0]['block_id'])) &&
-					\ACP3\CMS::$injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . $this->table_name . ' WHERE left_id < ? AND right_id > ?', array($items[0]['left_id'], $items[0]['right_id'])) == 0) {
-					$bool = \ACP3\CMS::$injector['Db']->update($this->table_name, $update_values, array('id' => $id));
+					Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . $this->table_name . ' WHERE left_id < ? AND right_id > ?', array($items[0]['left_id'], $items[0]['right_id'])) == 0) {
+					$bool = Registry::get('Db')->update($this->table_name, $update_values, array('id' => $id));
 				} else {
 					// Überprüfung, falls Seite kein Root-Element ist, aber keine Veränderung vorgenommen werden soll...
-					$chk_parent = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT id FROM ' . $this->table_name . ' WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', array($items[0]['left_id'], $items[0]['right_id']));
+					$chk_parent = Registry::get('Db')->fetchAssoc('SELECT id FROM ' . $this->table_name . ' WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', array($items[0]['left_id'], $items[0]['right_id']));
 					if (!empty($chk_parent) && $chk_parent['id'] == $parent) {
-						$bool = \ACP3\CMS::$injector['Db']->update($this->table_name, $update_values, array('id' => $id));
+						$bool = Registry::get('Db')->update($this->table_name, $update_values, array('id' => $id));
 					// ...ansonsten den Baum bearbeiten...
 					} else {
 						$bool = false;
@@ -183,7 +183,7 @@ class NestedSet {
 						$page_diff = $items[0]['right_id'] - $items[0]['left_id'] + 1;
 
 						// Neues Elternelement
-						$new_parent = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT root_id, left_id, right_id FROM ' . $this->table_name . ' WHERE id = ?', array($parent));
+						$new_parent = Registry::get('Db')->fetchAssoc('SELECT root_id, left_id, right_id FROM ' . $this->table_name . ' WHERE id = ?', array($parent));
 
 						// Knoten werden eigenes Root-Element
 						if (empty($new_parent)) {
@@ -191,11 +191,11 @@ class NestedSet {
 							if ($this->enable_blocks === true) {
 								// Knoten in anderen Block verschieben
 								if ($items[0]['block_id'] != $block_id) {
-									$new_block = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT MIN(left_id) AS left_id FROM ' . $this->table_name . ' WHERE block_id = ?', array($block_id));
+									$new_block = Registry::get('Db')->fetchAssoc('SELECT MIN(left_id) AS left_id FROM ' . $this->table_name . ' WHERE block_id = ?', array($block_id));
 									// Falls die Knoten in einen leeren Block verschoben werden sollen,
 									// die right_id des letzten Elementes verwenden
 									if (empty($new_block) || is_null($new_block['left_id']) === true) {
-										$new_block = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT MAX(right_id) AS left_id FROM ' . $this->table_name);
+										$new_block = Registry::get('Db')->fetchAssoc('SELECT MAX(right_id) AS left_id FROM ' . $this->table_name);
 										$new_block['left_id']+= 1;
 									}
 
@@ -204,23 +204,23 @@ class NestedSet {
 
 									$diff = $new_block['left_id'] - $items[0]['left_id'];
 
-									\ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?', array($page_diff, $items[0]['left_id'], $items[0]['right_id']));
-									\ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?', array($page_diff, $page_diff, $items[0]['right_id']));
-									\ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id + ?, right_id = right_id + ? WHERE left_id >= ?', array($page_diff, $page_diff, $new_block['left_id']));
+									Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?', array($page_diff, $items[0]['left_id'], $items[0]['right_id']));
+									Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?', array($page_diff, $page_diff, $items[0]['right_id']));
+									Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id + ?, right_id = right_id + ? WHERE left_id >= ?', array($page_diff, $page_diff, $new_block['left_id']));
 								// Element zum neuen Wurzelknoten machen
 								} else {
-									$max_id = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT MAX(right_id) AS right_id FROM ' . $this->table_name . ' WHERE block_id = ?', array($items[0]['block_id']));
+									$max_id = Registry::get('Db')->fetchAssoc('SELECT MAX(right_id) AS right_id FROM ' . $this->table_name . ' WHERE block_id = ?', array($items[0]['block_id']));
 									$diff = $max_id['right_id'] - $items[0]['right_id'];
 
-									\ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?', array($page_diff, $items[0]['left_id'], $items[0]['right_id']));
-									\ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ? AND block_id = ?', array($page_diff, $page_diff, $items[0]['right_id'], $items[0]['block_id']));
+									Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?', array($page_diff, $items[0]['left_id'], $items[0]['right_id']));
+									Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ? AND block_id = ?', array($page_diff, $page_diff, $items[0]['right_id'], $items[0]['block_id']));
 								}
 							} else {
-								$max_id = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT MAX(right_id) AS right_id FROM ' . $this->table_name);
+								$max_id = Registry::get('Db')->fetchAssoc('SELECT MAX(right_id) AS right_id FROM ' . $this->table_name);
 								$diff = $max_id['right_id'] - $items[0]['right_id'];
 
-								\ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?', array($page_diff, $items[0]['left_id'], $items[0]['right_id']));
-								\ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?', array($page_diff, $page_diff, $items[0]['right_id']));
+								Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?', array($page_diff, $items[0]['left_id'], $items[0]['right_id']));
+								Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?', array($page_diff, $page_diff, $items[0]['right_id']));
 							}
 						// Knoten werden Kinder von einem anderen Knoten
 						} else {
@@ -233,31 +233,31 @@ class NestedSet {
 							$diff = $new_parent['left_id'] - $items[0]['left_id'] + 1;
 							$root_id = $new_parent['root_id'];
 
-							\ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?', array($page_diff, $items[0]['left_id'], $items[0]['right_id']));
-							\ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?', array($page_diff, $page_diff, $items[0]['right_id']));
-							\ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET right_id = right_id + ? WHERE left_id <= ? AND right_id >= ?', array($page_diff, $new_parent['left_id'], $new_parent['right_id']));
-							\ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id + ?, right_id = right_id + ? WHERE left_id > ?', array($page_diff, $page_diff, $new_parent['left_id']));
+							Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?', array($page_diff, $items[0]['left_id'], $items[0]['right_id']));
+							Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?', array($page_diff, $page_diff, $items[0]['right_id']));
+							Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET right_id = right_id + ? WHERE left_id <= ? AND right_id >= ?', array($page_diff, $new_parent['left_id'], $new_parent['right_id']));
+							Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id + ?, right_id = right_id + ? WHERE left_id > ?', array($page_diff, $page_diff, $new_parent['left_id']));
 						}
 
 						// Einträge aktualisieren
 						$c_items = count($items);
 						for ($i = 0; $i < $c_items; ++$i) {
-							$parent = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT id FROM ' . $this->table_name . ' WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', array($items[$i]['left_id'] + $diff, $items[$i]['right_id'] + $diff));
+							$parent = Registry::get('Db')->fetchAssoc('SELECT id FROM ' . $this->table_name . ' WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', array($items[$i]['left_id'] + $diff, $items[$i]['right_id'] + $diff));
 							if ($this->enable_blocks === true) {
-								$bool = \ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET block_id = ?, root_id = ?, parent_id = ?, left_id = ?, right_id = ? WHERE id = ?', array($block_id, $root_id, !empty($parent['id']) ? $parent['id'] : 0, $items[$i]['left_id'] + $diff, $items[$i]['right_id'] + $diff, $items[$i]['id']));
+								$bool = Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET block_id = ?, root_id = ?, parent_id = ?, left_id = ?, right_id = ? WHERE id = ?', array($block_id, $root_id, !empty($parent['id']) ? $parent['id'] : 0, $items[$i]['left_id'] + $diff, $items[$i]['right_id'] + $diff, $items[$i]['id']));
 							} else {
-								$bool = \ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET root_id = ?, parent_id = ?, left_id = ?, right_id = ? WHERE id = ?', array($root_id, !empty($parent['id']) ? $parent['id'] : 0, $items[$i]['left_id'] + $diff, $items[$i]['right_id'] + $diff, $items[$i]['id']));
+								$bool = Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET root_id = ?, parent_id = ?, left_id = ?, right_id = ? WHERE id = ?', array($root_id, !empty($parent['id']) ? $parent['id'] : 0, $items[$i]['left_id'] + $diff, $items[$i]['right_id'] + $diff, $items[$i]['id']));
 							}
 							if ($bool === false)
 								break;
 						}
-						\ACP3\CMS::$injector['Db']->update($this->table_name, $update_values, array('id' => $id));
-						\ACP3\CMS::$injector['Db']->commit();
+						Registry::get('Db')->update($this->table_name, $update_values, array('id' => $id));
+						Registry::get('Db')->commit();
 					}
 				}
 				return $bool;
 			} catch(\Exception $e) {
-				\ACP3\CMS::$injector['Db']->rollback();
+				Registry::get('Db')->rollback();
 			}
 		}
 		return false;
@@ -271,17 +271,17 @@ class NestedSet {
 	 * @return boolean
 	 */
 	public function order($id, $mode) {
-		if (Validate::isNumber($id) === true && \ACP3\CMS::$injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . $this->table_name . ' WHERE id = ?', array($id)) == 1) {
-			$items = \ACP3\CMS::$injector['Db']->fetchAll('SELECT c.id, ' . ($this->enable_blocks === true ? 'c.block_id, ' : '') . 'c.left_id, c.right_id FROM ' . $this->table_name . ' AS p, ' . $this->table_name . ' AS c WHERE p.id = ? AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC', array($id), array(\PDO::PARAM_INT));
+		if (Validate::isNumber($id) === true && Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . $this->table_name . ' WHERE id = ?', array($id)) == 1) {
+			$items = Registry::get('Db')->fetchAll('SELECT c.id, ' . ($this->enable_blocks === true ? 'c.block_id, ' : '') . 'c.left_id, c.right_id FROM ' . $this->table_name . ' AS p, ' . $this->table_name . ' AS c WHERE p.id = ? AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC', array($id), array(\PDO::PARAM_INT));
 
-			if ($mode === 'up' && \ACP3\CMS::$injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . $this->table_name . ' WHERE right_id = ?' . ($this->enable_blocks === true ? ' AND block_id = ' . $items[0]['block_id'] : ''), array($items[0]['left_id'] - 1)) > 0) {
+			if ($mode === 'up' && Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . $this->table_name . ' WHERE right_id = ?' . ($this->enable_blocks === true ? ' AND block_id = ' . $items[0]['block_id'] : ''), array($items[0]['left_id'] - 1)) > 0) {
 				// Vorherigen Knoten mit allen Kindern selektieren
-				$elem = \ACP3\CMS::$injector['Db']->fetchAll('SELECT c.id, c.left_id, c.right_id FROM ' . $this->table_name . ' AS p, ' . $this->table_name . ' AS c WHERE p.right_id = ? AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC', array($items[0]['left_id'] - 1));
+				$elem = Registry::get('Db')->fetchAll('SELECT c.id, c.left_id, c.right_id FROM ' . $this->table_name . ' AS p, ' . $this->table_name . ' AS c WHERE p.right_id = ? AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC', array($items[0]['left_id'] - 1));
 				$diff_left = $items[0]['left_id'] - $elem[0]['left_id'];
 				$diff_right = $items[0]['right_id'] - $elem[0]['right_id'];
-			} elseif ($mode === 'down' && \ACP3\CMS::$injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . $this->table_name . ' WHERE left_id = ?' . ($this->enable_blocks === true ? ' AND block_id = ' . $items[0]['block_id'] : ''), array($items[0]['right_id'] + 1)) > 0) {
+			} elseif ($mode === 'down' && Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . $this->table_name . ' WHERE left_id = ?' . ($this->enable_blocks === true ? ' AND block_id = ' . $items[0]['block_id'] : ''), array($items[0]['right_id'] + 1)) > 0) {
 				// Nachfolgenden Knoten mit allen Kindern selektieren
-				$elem = \ACP3\CMS::$injector['Db']->fetchAll('SELECT c.id, c.left_id, c.right_id FROM ' . $this->table_name . ' AS p, ' . $this->table_name . ' AS c WHERE p.left_id = ? AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC', array($items[0]['right_id'] + 1));
+				$elem = Registry::get('Db')->fetchAll('SELECT c.id, c.left_id, c.right_id FROM ' . $this->table_name . ' AS p, ' . $this->table_name . ' AS c WHERE p.left_id = ? AND c.left_id BETWEEN p.left_id AND p.right_id ORDER BY c.left_id ASC', array($items[0]['right_id'] + 1));
 				$diff_left = $elem[0]['left_id'] - $items[0]['left_id'];
 				$diff_right = $elem[0]['right_id'] - $items[0]['right_id'];
 			} else {
@@ -299,19 +299,19 @@ class NestedSet {
 				$items_ids[] = $items[$i]['id'];
 			}
 
-			\ACP3\CMS::$injector['Db']->beginTransaction();
+			Registry::get('Db')->beginTransaction();
 			try {
 				if ($mode === 'up') {
-					$bool = \ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id + ?, right_id = right_id + ? WHERE id IN(?)', array($diff_right, $diff_right, $elem_ids), array(\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY));
-					$bool2 = \ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE id IN(?)', array($diff_left, $diff_left, $items_ids), array(\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY));
+					$bool = Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id + ?, right_id = right_id + ? WHERE id IN(?)', array($diff_right, $diff_right, $elem_ids), array(\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY));
+					$bool2 = Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE id IN(?)', array($diff_left, $diff_left, $items_ids), array(\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY));
 				} else {
-					$bool = \ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE id IN(?)', array($diff_left, $diff_left, $elem_ids), array(\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY));
-					$bool2 = \ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id + ?, right_id = right_id + ? WHERE id IN(?)', array($diff_right, $diff_right, $items_ids), array(\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY));
+					$bool = Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id - ?, right_id = right_id - ? WHERE id IN(?)', array($diff_left, $diff_left, $elem_ids), array(\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY));
+					$bool2 = Registry::get('Db')->executeUpdate('UPDATE ' . $this->table_name . ' SET left_id = left_id + ?, right_id = right_id + ? WHERE id IN(?)', array($diff_right, $diff_right, $items_ids), array(\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY));
 				}
-				\ACP3\CMS::$injector['Db']->commit();
+				Registry::get('Db')->commit();
 				return $bool && $bool2;
 			} catch (\Exception $e) {
-				\ACP3\CMS::$injector['Db']->rollback();
+				Registry::get('Db')->rollback();
 			}
 		}
 		return false;

@@ -46,7 +46,7 @@ class Date {
 	 */
 	function __construct()
 	{
-		$info = \ACP3\CMS::$injector['Auth']->getUserInfo();
+		$info = Registry::get('Auth')->getUserInfo();
 
 		if (!empty($info)) {
 			$this->date_format_long = $info['date_format_long'];
@@ -71,10 +71,10 @@ class Date {
 		$dateformat = array();
 		$dateformat[0]['value'] = 'short';
 		$dateformat[0]['selected'] = Functions::selectEntry('dateformat', 'short', $format);
-		$dateformat[0]['lang'] = \ACP3\CMS::$injector['Lang']->t('system', 'date_format_short');
+		$dateformat[0]['lang'] = Registry::get('Lang')->t('system', 'date_format_short');
 		$dateformat[1]['value'] = 'long';
 		$dateformat[1]['selected'] = Functions::selectEntry('dateformat', 'long', $format);
-		$dateformat[1]['lang'] = \ACP3\CMS::$injector['Lang']->t('system', 'date_format_long');
+		$dateformat[1]['lang'] = Registry::get('Lang')->t('system', 'date_format_long');
 
 		return $dateformat;
 	}
@@ -159,9 +159,9 @@ class Date {
 			$datepicker['value'] = $value;
 		}
 
-		\ACP3\CMS::$injector['View']->assign('datepicker', $datepicker);
+		Registry::get('View')->assign('datepicker', $datepicker);
 
-		return \ACP3\CMS::$injector['View']->fetchTemplate('system/date.tpl');
+		return Registry::get('View')->fetchTemplate('system/date.tpl');
 	}
 
 	/**
@@ -218,62 +218,62 @@ class Date {
 	private function localizeDaysAbbr()
 	{
 		return array(
-			'Mon' => \ACP3\CMS::$injector['Lang']->t('system', 'date_mon'),
-			'Tue' => \ACP3\CMS::$injector['Lang']->t('system', 'date_tue'),
-			'Wed' => \ACP3\CMS::$injector['Lang']->t('system', 'date_wed'),
-			'Thu' => \ACP3\CMS::$injector['Lang']->t('system', 'date_thu'),
-			'Fri' => \ACP3\CMS::$injector['Lang']->t('system', 'date_fri'),
-			'Sat' => \ACP3\CMS::$injector['Lang']->t('system', 'date_sat'),
-			'Sun' => \ACP3\CMS::$injector['Lang']->t('system', 'date_sun')
+			'Mon' => Registry::get('Lang')->t('system', 'date_mon'),
+			'Tue' => Registry::get('Lang')->t('system', 'date_tue'),
+			'Wed' => Registry::get('Lang')->t('system', 'date_wed'),
+			'Thu' => Registry::get('Lang')->t('system', 'date_thu'),
+			'Fri' => Registry::get('Lang')->t('system', 'date_fri'),
+			'Sat' => Registry::get('Lang')->t('system', 'date_sat'),
+			'Sun' => Registry::get('Lang')->t('system', 'date_sun')
 		);
 	}
 
 	private function localizeDays()
 	{
 		return array(
-			'Monday' => \ACP3\CMS::$injector['Lang']->t('system', 'date_monday'),
-			'Tuesday' => \ACP3\CMS::$injector['Lang']->t('system', 'date_tuesday'),
-			'Wednesday' => \ACP3\CMS::$injector['Lang']->t('system', 'date_wednesday'),
-			'Thursday' => \ACP3\CMS::$injector['Lang']->t('system', 'date_thursday'),
-			'Friday' => \ACP3\CMS::$injector['Lang']->t('system', 'date_friday'),
-			'Saturday' => \ACP3\CMS::$injector['Lang']->t('system', 'date_saturday'),
-			'Sunday' => \ACP3\CMS::$injector['Lang']->t('system', 'date_sunday')
+			'Monday' => Registry::get('Lang')->t('system', 'date_monday'),
+			'Tuesday' => Registry::get('Lang')->t('system', 'date_tuesday'),
+			'Wednesday' => Registry::get('Lang')->t('system', 'date_wednesday'),
+			'Thursday' => Registry::get('Lang')->t('system', 'date_thursday'),
+			'Friday' => Registry::get('Lang')->t('system', 'date_friday'),
+			'Saturday' => Registry::get('Lang')->t('system', 'date_saturday'),
+			'Sunday' => Registry::get('Lang')->t('system', 'date_sunday')
 		);
 	}
 
 	private function localizeMonths()
 	{
 		return array(
-			'January' => \ACP3\CMS::$injector['Lang']->t('system', 'date_january'),
-			'February' => \ACP3\CMS::$injector['Lang']->t('system', 'date_february'),
-			'March' => \ACP3\CMS::$injector['Lang']->t('system', 'date_march'),
-			'April' => \ACP3\CMS::$injector['Lang']->t('system', 'date_april'),
-			'May' => \ACP3\CMS::$injector['Lang']->t('system', 'date_may_full'),
-			'June' => \ACP3\CMS::$injector['Lang']->t('system', 'date_june'),
-			'July' => \ACP3\CMS::$injector['Lang']->t('system', 'date_july'),
-			'August' => \ACP3\CMS::$injector['Lang']->t('system', 'date_august'),
-			'September' => \ACP3\CMS::$injector['Lang']->t('system', 'date_september'),
-			'October' => \ACP3\CMS::$injector['Lang']->t('system', 'date_october'),
-			'November' => \ACP3\CMS::$injector['Lang']->t('system', 'date_november'),
-			'December' => \ACP3\CMS::$injector['Lang']->t('system', 'date_december')
+			'January' => Registry::get('Lang')->t('system', 'date_january'),
+			'February' => Registry::get('Lang')->t('system', 'date_february'),
+			'March' => Registry::get('Lang')->t('system', 'date_march'),
+			'April' => Registry::get('Lang')->t('system', 'date_april'),
+			'May' => Registry::get('Lang')->t('system', 'date_may_full'),
+			'June' => Registry::get('Lang')->t('system', 'date_june'),
+			'July' => Registry::get('Lang')->t('system', 'date_july'),
+			'August' => Registry::get('Lang')->t('system', 'date_august'),
+			'September' => Registry::get('Lang')->t('system', 'date_september'),
+			'October' => Registry::get('Lang')->t('system', 'date_october'),
+			'November' => Registry::get('Lang')->t('system', 'date_november'),
+			'December' => Registry::get('Lang')->t('system', 'date_december')
 		);
 	}
 
 	private function localizeMonthsAbbr()
 	{
 		return array(
-			'Jan' => \ACP3\CMS::$injector['Lang']->t('system', 'date_jan'),
-			'Feb' => \ACP3\CMS::$injector['Lang']->t('system', 'date_feb'),
-			'Mar' => \ACP3\CMS::$injector['Lang']->t('system', 'date_mar'),
-			'Apr' => \ACP3\CMS::$injector['Lang']->t('system', 'date_apr'),
-			'May' => \ACP3\CMS::$injector['Lang']->t('system', 'date_may_abbr'),
-			'Jun' => \ACP3\CMS::$injector['Lang']->t('system', 'date_jun'),
-			'Jul' => \ACP3\CMS::$injector['Lang']->t('system', 'date_jul'),
-			'Aug' => \ACP3\CMS::$injector['Lang']->t('system', 'date_aug'),
-			'Sep' => \ACP3\CMS::$injector['Lang']->t('system', 'date_sep'),
-			'Oct' => \ACP3\CMS::$injector['Lang']->t('system', 'date_oct'),
-			'Nov' => \ACP3\CMS::$injector['Lang']->t('system', 'date_nov'),
-			'Dec' => \ACP3\CMS::$injector['Lang']->t('system', 'date_dec')
+			'Jan' => Registry::get('Lang')->t('system', 'date_jan'),
+			'Feb' => Registry::get('Lang')->t('system', 'date_feb'),
+			'Mar' => Registry::get('Lang')->t('system', 'date_mar'),
+			'Apr' => Registry::get('Lang')->t('system', 'date_apr'),
+			'May' => Registry::get('Lang')->t('system', 'date_may_abbr'),
+			'Jun' => Registry::get('Lang')->t('system', 'date_jun'),
+			'Jul' => Registry::get('Lang')->t('system', 'date_jul'),
+			'Aug' => Registry::get('Lang')->t('system', 'date_aug'),
+			'Sep' => Registry::get('Lang')->t('system', 'date_sep'),
+			'Oct' => Registry::get('Lang')->t('system', 'date_oct'),
+			'Nov' => Registry::get('Lang')->t('system', 'date_nov'),
+			'Dec' => Registry::get('Lang')->t('system', 'date_dec')
 		);
 	}
 
@@ -322,10 +322,10 @@ class Date {
 	{
 		$datetime_format = 'Y-m-d H:i';
 		if ($end === '' || $start >= $end) {
-			$title = $end === '' ? $this->format($start, $format) : sprintf(\ACP3\CMS::$injector['Lang']->t('system', 'date_published_since'), $this->format($start, $format));
+			$title = $end === '' ? $this->format($start, $format) : sprintf(Registry::get('Lang')->t('system', 'date_published_since'), $this->format($start, $format));
 			return '<time datetime="' . $start . '" title="' . $title . '">' . $this->format($start, $datetime_format) . '</time>';
 		} else {
-			$title = sprintf(\ACP3\CMS::$injector['Lang']->t('system', 'date_time_range'), $this->format($start, $format), $this->format($end, $format));
+			$title = sprintf(Registry::get('Lang')->t('system', 'date_time_range'), $this->format($start, $format), $this->format($end, $format));
 			return '<time datetime="' . $start . '/' . $end . '" title="' . $title . '">' . $this->format($start, $datetime_format) . '&ndash;' . $this->format($end, $datetime_format) . '</time>';
 		}
 	}

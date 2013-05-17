@@ -134,7 +134,7 @@ class URI
 			}
 
 			// Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-			$alias = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT uri FROM ' . DB_PRE . 'seo WHERE alias = ?', array(substr($this->query, 0, -1)));
+			$alias = Registry::get('Db')->fetchAssoc('SELECT uri FROM ' . DB_PRE . 'seo WHERE alias = ?', array(substr($this->query, 0, -1)));
 			if (!empty($alias)) {
 				$this->query = $alias['uri'] . (!empty($params) ? $params : '');
 			}

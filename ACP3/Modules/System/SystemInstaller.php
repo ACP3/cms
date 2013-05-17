@@ -6,9 +6,7 @@ class SystemInstaller extends ModuleInstaller {
 	private $module_name = 'system';
 	private $schema_version = 34;
 
-	public function __construct(\ACP3\Core\Pimple $injector) {
-		parent::__construct($injector);
-
+	public function __construct() {
 		$this->special_resources = array(
 			'acp_configuration' => 7,
 			'acp_designs' => 7,

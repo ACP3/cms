@@ -24,9 +24,9 @@ class UsersFunctions {
 	public static function userNameExists($nickname, $id = '')
 	{
 		if (Core\Validate::isNumber($id) === true) {
-			return !empty($nickname) && ACP3\CMS::$injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'users WHERE id != ? AND nickname = ?', array($id, $nickname)) == 1 ? true : false;
+			return !empty($nickname) && Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'users WHERE id != ? AND nickname = ?', array($id, $nickname)) == 1 ? true : false;
 		} else {
-			return !empty($nickname) && ACP3\CMS::$injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'users WHERE nickname = ?', array($nickname)) == 1 ? true : false;
+			return !empty($nickname) && Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'users WHERE nickname = ?', array($nickname)) == 1 ? true : false;
 		}
 	}
 
@@ -40,9 +40,9 @@ class UsersFunctions {
 	public static function userEmailExists($mail, $id = '')
 	{
 		if (Core\Validate::isNumber($id) === true) {
-			return Core\Validate::email($mail) === true && ACP3\CMS::$injector['Db']->executeQuery('SELECT COUNT(*) FROM ' . DB_PRE . 'users WHERE id != ? AND mail = ?', array($id, $mail), array(\PDO::PARAM_INT, \PDO::PARAM_STR))->fetch(PDO::FETCH_COLUMN) > 0 ? true : false;
+			return Core\Validate::email($mail) === true && Core\Registry::get('Db')->executeQuery('SELECT COUNT(*) FROM ' . DB_PRE . 'users WHERE id != ? AND mail = ?', array($id, $mail), array(\PDO::PARAM_INT, \PDO::PARAM_STR))->fetch(PDO::FETCH_COLUMN) > 0 ? true : false;
 		} else {
-			return Core\Validate::email($mail) === true && ACP3\CMS::$injector['Db']->executeQuery('SELECT COUNT(*) FROM ' . DB_PRE . 'users WHERE mail = ?', array($mail), array(\PDO::PARAM_STR))->fetch(PDO::FETCH_COLUMN) > 0 ? true : false;
+			return Core\Validate::email($mail) === true && Core\Registry::get('Db')->executeQuery('SELECT COUNT(*) FROM ' . DB_PRE . 'users WHERE mail = ?', array($mail), array(\PDO::PARAM_STR))->fetch(PDO::FETCH_COLUMN) > 0 ? true : false;
 		}
 	}
 

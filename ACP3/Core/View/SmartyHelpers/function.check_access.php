@@ -14,7 +14,7 @@ function smarty_function_check_access($params)
 
 		if (\ACP3\Core\Modules::check($action[0], $action[1]) === true) {
 			$access_check = array();
-			$access_check['uri'] = \ACP3\CMS::$injector['URI']->route($params['path']);
+			$access_check['uri'] = \ACP3\Core\Registry::get('URI')->route($params['path']);
 
 			if (isset($params['icon'])) {
 				$path = ROOT_DIR . CONFIG_ICONS_PATH . $params['icon'] . '.png';
@@ -24,9 +24,9 @@ function smarty_function_check_access($params)
 				$access_check['title'] = $params['title'];
 			if (isset($params['lang'])) {
 				$lang_ary = explode('|', $params['lang']);
-				$access_check['lang'] = \ACP3\CMS::$injector['Lang']->t($lang_ary[0], $lang_ary[1]);
+				$access_check['lang'] = \ACP3\Core\Registry::get('Lang')->t($lang_ary[0], $lang_ary[1]);
 			} else {
-				$access_check['lang'] = \ACP3\CMS::$injector['Lang']->t($action[0], $action[1]);
+				$access_check['lang'] = \ACP3\Core\Registry::get('Lang')->t($action[0], $action[1]);
 			}
 
 			// Dimensionen der Grafik bestimmen
@@ -45,8 +45,8 @@ function smarty_function_check_access($params)
 			}
 
 			$access_check['mode'] = $params['mode'];
-			\ACP3\CMS::$injector['View']->assign('access_check', $access_check);
-			return \ACP3\CMS::$injector['View']->fetchTemplate('system/access_check.tpl');
+			\ACP3\Core\Registry::get('View')->assign('access_check', $access_check);
+			return \ACP3\Core\Registry::get('View')->fetchTemplate('system/access_check.tpl');
 		} elseif ($params['mode'] === 'link' && isset($params['title'])) {
 			return $params['title'];
 		}

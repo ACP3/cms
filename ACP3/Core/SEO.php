@@ -53,7 +53,7 @@ class SEO
 	 */
 	private static function setSEOCache()
 	{
-		$aliases = \ACP3\CMS::$injector['Db']->fetchAll('SELECT uri, alias, keywords, description, robots FROM ' . DB_PRE . 'seo');
+		$aliases = Registry::get('Db')->fetchAll('SELECT uri, alias, keywords, description, robots FROM ' . DB_PRE . 'seo');
 		$c_aliases = count($aliases);
 		$data = array();
 
@@ -95,9 +95,9 @@ class SEO
 			'next_page' => self::$next_page,
 			'canonical' => self::$canonical,
 		);
-		\ACP3\CMS::$injector['View']->assign('meta', $meta);
+		Registry::get('View')->assign('meta', $meta);
 
-		return \ACP3\CMS::$injector['View']->fetchTemplate('system/meta.tpl');
+		return Registry::get('View')->fetchTemplate('system/meta.tpl');
 	}
 	/**
 	 * Gibt die Beschreibung der aktuell angezeigten Seite aus
@@ -107,12 +107,12 @@ class SEO
 	public static function getPageDescription()
 	{
 		// Meta Description für die Homepage einer Website
-		if (\ACP3\CMS::$injector['URI']->query === CONFIG_HOMEPAGE) {
+		if (Registry::get('URI')->query === CONFIG_HOMEPAGE) {
 			return CONFIG_SEO_META_DESCRIPTION !== '' ? CONFIG_SEO_META_DESCRIPTION : '';
 		} else {
-			$description = self::getDescription(\ACP3\CMS::$injector['URI']->getCleanQuery());
+			$description = self::getDescription(Registry::get('URI')->getCleanQuery());
 			if (empty($description))
-				$description = self::getDescription(\ACP3\CMS::$injector['URI']->mod . '/' . \ACP3\CMS::$injector['URI']->file);
+				$description = self::getDescription(Registry::get('URI')->mod . '/' . Registry::get('URI')->file);
 
 			return $description . (!empty($description) && !empty(self::$meta_description_postfix) ? ' - ' . self::$meta_description_postfix : '');
 		}
@@ -125,11 +125,11 @@ class SEO
 	 */
 	public static function getPageKeywords()
 	{
-		$keywords = self::getKeywords(\ACP3\CMS::$injector['URI']->getCleanQuery());
+		$keywords = self::getKeywords(Registry::get('URI')->getCleanQuery());
 		if (empty($keywords))
-			$keywords = self::getKeywords(\ACP3\CMS::$injector['URI']->mod . '/' . \ACP3\CMS::$injector['URI']->file);
+			$keywords = self::getKeywords(Registry::get('URI')->mod . '/' . Registry::get('URI')->file);
 		if (empty($keywords))
-			$keywords = self::getKeywords(\ACP3\CMS::$injector['URI']->mod);
+			$keywords = self::getKeywords(Registry::get('URI')->mod);
 
 		return strtolower(!empty($keywords) ? $keywords : CONFIG_SEO_META_KEYWORDS);
 	}
@@ -141,11 +141,11 @@ class SEO
 	 */
 	public static function getPageRobotsSetting()
 	{
-		$robots = self::getRobotsSetting(\ACP3\CMS::$injector['URI']->getCleanQuery());
+		$robots = self::getRobotsSetting(Registry::get('URI')->getCleanQuery());
 		if (empty($robots))
-			$robots = self::getRobotsSetting(\ACP3\CMS::$injector['URI']->mod . '/' . \ACP3\CMS::$injector['URI']->file);
+			$robots = self::getRobotsSetting(Registry::get('URI')->mod . '/' . Registry::get('URI')->file);
 		if (empty($robots))
-			$robots = self::getRobotsSetting(\ACP3\CMS::$injector['URI']->mod);
+			$robots = self::getRobotsSetting(Registry::get('URI')->mod);
 
 		return strtolower(!empty($robots) ? $robots : self::getRobotsSetting());
 	}
@@ -267,7 +267,7 @@ class SEO
 	{
 		$path.= !preg_match('/\/$/', $path) ? '/' : '';
 
-		$bool = \ACP3\CMS::$injector['Db']->delete(DB_PRE . 'seo', array('uri' => $path));
+		$bool = Registry::get('Db')->delete(DB_PRE . 'seo', array('uri' => $path));
 		$bool2 = self::setSEOCache();
 		return $bool !== false && $bool2 !== false ? true : false;
 	}
@@ -287,11 +287,11 @@ class SEO
 		$description = Functions::str_encode($description);
 
 		// Vorhandenen Alias aktualisieren
-		if (\ACP3\CMS::$injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE uri = ?', array($path)) == 1) {
-			$bool = \ACP3\CMS::$injector['Db']->update(DB_PRE . 'seo', array('alias' => $alias, 'keywords' => $keywords, 'description' => $description, 'robots' => (int) $robots), array('uri' => $path));
+		if (Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE uri = ?', array($path)) == 1) {
+			$bool = Registry::get('Db')->update(DB_PRE . 'seo', array('alias' => $alias, 'keywords' => $keywords, 'description' => $description, 'robots' => (int) $robots), array('uri' => $path));
 		// Neuer Eintrag in DB
 		} else {
-			$bool = \ACP3\CMS::$injector['Db']->insert(DB_PRE . 'seo', array('alias' => $alias, 'uri' => $path, 'keywords' => $keywords, 'description' => $description, 'robots' => (int) $robots));
+			$bool = Registry::get('Db')->insert(DB_PRE . 'seo', array('alias' => $alias, 'uri' => $path, 'keywords' => $keywords, 'description' => $description, 'robots' => (int) $robots));
 		}
 
 		$bool2 = self::setSEOCache();
@@ -321,11 +321,11 @@ class SEO
 		}
 
 		$lang_robots = array(
-			sprintf(\ACP3\CMS::$injector['Lang']->t('system', 'seo_robots_use_system_default'), self::getRobotsSetting()),
-			\ACP3\CMS::$injector['Lang']->t('system', 'seo_robots_index_follow'),
-			\ACP3\CMS::$injector['Lang']->t('system', 'seo_robots_index_nofollow'),
-			\ACP3\CMS::$injector['Lang']->t('system', 'seo_robots_noindex_follow'),
-			\ACP3\CMS::$injector['Lang']->t('system', 'seo_robots_noindex_nofollow')
+			sprintf(Registry::get('Lang')->t('system', 'seo_robots_use_system_default'), self::getRobotsSetting()),
+			Registry::get('Lang')->t('system', 'seo_robots_index_follow'),
+			Registry::get('Lang')->t('system', 'seo_robots_index_nofollow'),
+			Registry::get('Lang')->t('system', 'seo_robots_noindex_follow'),
+			Registry::get('Lang')->t('system', 'seo_robots_noindex_nofollow')
 		);
 		$seo = array(
 			'enable_uri_aliases' => (bool) CONFIG_SEO_ALIASES,
@@ -335,8 +335,8 @@ class SEO
 			'robots' => Functions::selectGenerator('seo_robots', array(0, 1, 2, 3, 4), $lang_robots, $robots)
 		);
 
-		\ACP3\CMS::$injector['View']->assign('seo', $seo);
-		return \ACP3\CMS::$injector['View']->fetchTemplate('system/seo_fields.tpl');
+		Registry::get('View')->assign('seo', $seo);
+		return Registry::get('View')->fetchTemplate('system/seo_fields.tpl');
 	}
 	/**
 	 * Überprüft, ob ein URI-Alias existiert

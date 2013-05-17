@@ -23,7 +23,7 @@ class NewsletterFunctions {
 	 * @return boolean
 	 */
 	public static function sendNewsletter($subject, $body, $from_address) {
-		$accounts = \ACP3\CMS::$injector['Db']->fetchAll('SELECT mail FROM ' . DB_PRE . 'newsletter_accounts WHERE hash = \'\'');
+		$accounts = Core\Registry::get('Db')->fetchAll('SELECT mail FROM ' . DB_PRE . 'newsletter_accounts WHERE hash = \'\'');
 		$c_accounts = count($accounts);
 
 		for ($i = 0; $i < $c_accounts; ++$i) {
@@ -46,9 +46,9 @@ class NewsletterFunctions {
 		$host = htmlentities($_SERVER['HTTP_HOST']);
 		$settings = Core\Config::getSettings('newsletter');
 
-		$subject = sprintf(\ACP3\CMS::$injector['Lang']->t('newsletter', 'subscribe_mail_subject'), CONFIG_SEO_TITLE);
-		$body = str_replace('{host}', $host, \ACP3\CMS::$injector['Lang']->t('newsletter', 'subscribe_mail_body')) . "\n\n";
-		$body.= 'http://' . $host . \ACP3\CMS::$injector['URI']->route('newsletter/activate/hash_' . $hash . '/mail_' . $emailAddress);
+		$subject = sprintf(Core\Registry::get('Lang')->t('newsletter', 'subscribe_mail_subject'), CONFIG_SEO_TITLE);
+		$body = str_replace('{host}', $host, Core\Registry::get('Lang')->t('newsletter', 'subscribe_mail_body')) . "\n\n";
+		$body.= 'http://' . $host . Core\Registry::get('URI')->route('newsletter/activate/hash_' . $hash . '/mail_' . $emailAddress);
 		$mail_sent = Core\Functions::generateEmail('', $emailAddress, $settings['mail'], $subject, $body);
 		$bool = false;
 
@@ -59,7 +59,7 @@ class NewsletterFunctions {
 				'mail' => $emailAddress,
 				'hash' => $hash
 			);
-			$bool = \ACP3\CMS::$injector['Db']->insert(DB_PRE . 'newsletter_accounts', $insert_values);
+			$bool = Core\Registry::get('Db')->insert(DB_PRE . 'newsletter_accounts', $insert_values);
 		}
 
 		return $mail_sent === true && $bool !== false;

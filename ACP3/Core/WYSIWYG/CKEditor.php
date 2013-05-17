@@ -50,7 +50,7 @@ class CKEditor extends AbstractWYSIWYG {
 		if ((!isset($this->config['toolbar']) || $this->config['toolbar'] !== 'simple') && \ACP3\Core\Modules::isActive('emoticons') === true) {
 			$this->config['smiley_path'] = ROOT_DIR . 'uploads/emoticons/';
 			$this->config['smiley_images'] = $this->config['smiley_descriptions'] = '';
-			$emoticons = \ACP3\CMS::$injector['Db']->fetchAll('SELECT description, img FROM ' . DB_PRE . 'emoticons');
+			$emoticons = Registry::getClass('Db')->fetchAll('SELECT description, img FROM ' . DB_PRE . 'emoticons');
 			$c_emoticons = count($emoticons);
 
 			for ($i = 0; $i < $c_emoticons; ++$i) {
@@ -82,8 +82,8 @@ class CKEditor extends AbstractWYSIWYG {
 		if ($wysiwyg['advanced'] === true)
 			$wysiwyg['advanced_replace_content'] = 'CKEDITOR.instances.' . $wysiwyg['id'] . '.insertHtml(text);';
 
-		\ACP3\CMS::$injector['View']->assign('wysiwyg', $wysiwyg);
-		return \ACP3\CMS::$injector['View']->fetchTemplate('system/wysiwyg.tpl');
+		Registry::getClass('View')->assign('wysiwyg', $wysiwyg);
+		return Registry::getClass('View')->fetchTemplate('system/wysiwyg.tpl');
 	}
 
 }

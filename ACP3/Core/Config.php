@@ -40,10 +40,10 @@ class Config
 	public static function setSettings($module, $data)
 	{
 		$bool = $bool2 = false;
-		$mod_id = \ACP3\CMS::$injector['Db']->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($module));
+		$mod_id = Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($module));
 		if (!empty($mod_id)) {
 			foreach ($data as $key => $value) {
-				$bool = \ACP3\CMS::$injector['Db']->executeUpdate('UPDATE ' . DB_PRE . 'settings SET value = ? WHERE module_id = ? AND name = ?', array($value, (int) $mod_id, $key));
+				$bool = Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'settings SET value = ? WHERE module_id = ? AND name = ?', array($value, (int) $mod_id, $key));
 			}
 			$bool2 = self::setModuleCache($module);
 		}
@@ -71,7 +71,7 @@ class Config
 	 */
 	private static function setModuleCache($module)
 	{
-		$settings = \ACP3\CMS::$injector['Db']->executeQuery('SELECT s.name, s.value FROM ' . DB_PRE . 'settings AS s JOIN ' . DB_PRE . 'modules AS m ON(m.id = s.module_id) WHERE m.name = ?', array($module))->fetchAll();
+		$settings = Registry::get('Db')->executeQuery('SELECT s.name, s.value FROM ' . DB_PRE . 'settings AS s JOIN ' . DB_PRE . 'modules AS m ON(m.id = s.module_id) WHERE m.name = ?', array($module))->fetchAll();
 		$c_settings = count($settings);
 
 		$cache_ary = array();

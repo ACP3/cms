@@ -189,8 +189,8 @@ class Validate
 	 */
 	public static function formToken()
 	{
-		if (isset($_POST[\ACP3\Core\Session::XSRF_TOKEN_NAME]) && isset($_SESSION[\ACP3\Core\Session::XSRF_TOKEN_NAME][\ACP3\CMS::$injector['URI']->query]) &&
-			$_POST[\ACP3\Core\Session::XSRF_TOKEN_NAME] === $_SESSION[\ACP3\Core\Session::XSRF_TOKEN_NAME][\ACP3\CMS::$injector['URI']->query]) {
+		if (isset($_POST[\ACP3\Core\Session::XSRF_TOKEN_NAME]) && isset($_SESSION[\ACP3\Core\Session::XSRF_TOKEN_NAME][Registry::get('URI')->query]) &&
+			$_POST[\ACP3\Core\Session::XSRF_TOKEN_NAME] === $_SESSION[\ACP3\Core\Session::XSRF_TOKEN_NAME][Registry::get('URI')->query]) {
 			return true;
 		}
 		return false;
@@ -345,8 +345,8 @@ class Validate
 			} else {
 				$path.= !preg_match('=/$=', $path) ? '/' : '';
 				if ($path !== '/' && self::isInternalURI($path) === true) {
-					return \ACP3\CMS::$injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE alias = ? AND uri != ?', array($alias, $path)) > 0 ? true : false;
-				} elseif (\ACP3\CMS::$injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE alias = ?', array($alias)) > 0) {
+					return Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE alias = ? AND uri != ?', array($alias, $path)) > 0 ? true : false;
+				} elseif (Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE alias = ?', array($alias)) > 0) {
 					return true;
 				}
 			}

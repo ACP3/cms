@@ -7,17 +7,13 @@
 	</li>
 {/foreach}
 </ul>
-<p>
-	{lang t="db_update_next_steps"}
-</p>
-<div class="alert">
-	{lang t="installation_successful_2"}
-</div>
-<div class="form-actions" style="text-align:center">
-	<a href="{$ROOT_DIR}" class="btn btn-primary">{lang t="go_to_website"}</a>
-</div>
+<form action="{uri args="install/db_update"}" method="post">
+	<div class="form-actions" style="text-align:center">
+		<button type="submit" name="update" class="btn">{lang t="forward"}</button>
+	</div>
+</form>
 {else}
-<p>{lang t="db_update_description"}</p>
+<p>{lang t="legacy_db_update_description"}</p>
 <form action="{$REQUEST_URI}" method="post">
 	<div class="form-actions" style="text-align:center">
 		<button type="submit" name="update" class="btn">{lang t="do_db_update"}</button>

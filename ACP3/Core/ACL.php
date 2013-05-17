@@ -62,7 +62,7 @@ class ACL
 	 */
 	public static function setResourcesCache()
 	{
-		$resources = \ACP3\CMS::$injector['Db']->fetchAll('SELECT r.id AS resource_id, r.module_id, m.name AS module, r.page, r.params, r.privilege_id, p.key FROM ' . DB_PRE . 'acl_resources AS r JOIN ' . DB_PRE . 'acl_privileges AS p ON(r.privilege_id = p.id) JOIN ' . DB_PRE . 'modules AS m ON(r.module_id = m.id) WHERE m.active = 1 ORDER BY r.module_id ASC, r.page ASC');
+		$resources = Registry::get('Db')->fetchAll('SELECT r.id AS resource_id, r.module_id, m.name AS module, r.page, r.params, r.privilege_id, p.key FROM ' . DB_PRE . 'acl_resources AS r JOIN ' . DB_PRE . 'acl_privileges AS p ON(r.privilege_id = p.id) JOIN ' . DB_PRE . 'modules AS m ON(r.module_id = m.id) WHERE m.active = 1 ORDER BY r.module_id ASC, r.page ASC');
 		$c_resources = count($resources);
 		$data = array();
 
@@ -103,7 +103,7 @@ class ACL
 		$user_id = $user_id === 0 ? self::$userId : $user_id;
 		$field = $mode === 2 ? 'r.name' : 'r.id';
 		$key = substr($field, 2);
-		$user_roles = \ACP3\CMS::$injector['Db']->fetchAll('SELECT ' . $field . ' FROM ' . DB_PRE . 'acl_user_roles AS ur JOIN ' . DB_PRE . 'acl_roles AS r ON(ur.role_id = r.id) WHERE ur.user_id = ? ORDER BY r.left_id DESC', array($user_id), array(\PDO::PARAM_INT));
+		$user_roles = Registry::get('Db')->fetchAll('SELECT ' . $field . ' FROM ' . DB_PRE . 'acl_user_roles AS ur JOIN ' . DB_PRE . 'acl_roles AS r ON(ur.role_id = r.id) WHERE ur.user_id = ? ORDER BY r.left_id DESC', array($user_id), array(\PDO::PARAM_INT));
 		$c_user_roles = count($user_roles);
 		$roles = array();
 
@@ -119,7 +119,7 @@ class ACL
 	 */
 	public static function setRolesCache()
 	{
-		$roles = \ACP3\CMS::$injector['Db']->fetchAll('SELECT n.id, n.name, n.parent_id, n.left_id, n.right_id, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . DB_PRE . 'acl_roles AS p, ' . DB_PRE . 'acl_roles AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
+		$roles = Registry::get('Db')->fetchAll('SELECT n.id, n.name, n.parent_id, n.left_id, n.right_id, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . DB_PRE . 'acl_roles AS p, ' . DB_PRE . 'acl_roles AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
 		$c_roles = count($roles);
 
 		for ($i = 0; $i < $c_roles; ++$i) {
@@ -159,7 +159,7 @@ class ACL
 	public static function setRulesCache(array $roles)
 	{
 		// Berechtigungen einlesen, auf die der Benutzer laut seinen Rollen Zugriff hat
-		$rules = \ACP3\CMS::$injector['Db']->executeQuery('SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM ' . DB_PRE . 'acl_rules AS ru JOIN ' . DB_PRE . 'modules AS m ON (ru.module_id = m.id) JOIN ' . DB_PRE . 'acl_privileges AS p ON(ru.privilege_id = p.id) WHERE ru.role_id IN(?)',
+		$rules = Registry::get('Db')->executeQuery('SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM ' . DB_PRE . 'acl_rules AS ru JOIN ' . DB_PRE . 'modules AS m ON (ru.module_id = m.id) JOIN ' . DB_PRE . 'acl_privileges AS p ON(ru.privilege_id = p.id) WHERE ru.role_id IN(?)',
 				array($roles), array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY))->fetchAll();
 		$c_rules = count($rules);
 		$privileges = array();
@@ -195,7 +195,7 @@ class ACL
 	 */
 	public static function getAllPrivileges()
 	{
-		$privileges = \ACP3\CMS::$injector['Db']->fetchAll('SELECT id, `key`, description FROM ' . DB_PRE . 'acl_privileges ORDER BY `key` ASC');
+		$privileges = Registry::get('Db')->fetchAll('SELECT id, `key`, description FROM ' . DB_PRE . 'acl_privileges ORDER BY `key` ASC');
 		return $privileges;
 	}
 	/**
@@ -209,7 +209,7 @@ class ACL
 	 */
 	private static function getPermissionValue($key, $role_id)
 	{
-		$value = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT ru.permission FROM ' . DB_PRE . 'acl_roles AS r, ' . DB_PRE . 'acl_roles AS parent JOIN ' . DB_PRE . 'acl_rules AS ru ON(parent.id = ru.role_id) JOIN ' . DB_PRE . 'acl_privileges AS p ON(ru.privilege_id = p.id) WHERE r.id = ? AND p.key = ? AND ru.permission != 2 AND parent.left_id < r.left_id AND parent.right_id > r.right_id ORDER BY parent.left_id DESC LIMIT 1', array($role_id, $key));
+		$value = Registry::get('Db')->fetchAssoc('SELECT ru.permission FROM ' . DB_PRE . 'acl_roles AS r, ' . DB_PRE . 'acl_roles AS parent JOIN ' . DB_PRE . 'acl_rules AS ru ON(parent.id = ru.role_id) JOIN ' . DB_PRE . 'acl_privileges AS p ON(ru.privilege_id = p.id) WHERE r.id = ? AND p.key = ? AND ru.permission != 2 AND parent.left_id < r.left_id AND parent.right_id > r.right_id ORDER BY parent.left_id DESC LIMIT 1', array($role_id, $key));
 		return isset($value['permission']) ? $value['permission'] : 0;
 	}
 	/**

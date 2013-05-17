@@ -117,7 +117,7 @@ class Session {
 	 * @return string
 	 */
 	public function session_read($session_id) {
-		$session = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT session_data FROM ' . DB_PRE . 'sessions WHERE session_id = ?', array($session_id));
+		$session = Registry::get('Db')->fetchAssoc('SELECT session_data FROM ' . DB_PRE . 'sessions WHERE session_id = ?', array($session_id));
 
 		// Wenn keine Session gefunden wurde, dann einen leeren String zurückgeben
 		return !empty($session) ? $session['session_data'] : '';
@@ -132,7 +132,7 @@ class Session {
 	 * @return bool
 	 */
 	public function session_write($session_id, $data) {
-		\ACP3\CMS::$injector['Db']->executeUpdate('INSERT INTO ' . DB_PRE . 'sessions (session_id, session_starttime, session_data) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE session_data = ?', array($session_id, time(), $data, $data));
+		Registry::get('Db')->executeUpdate('INSERT INTO ' . DB_PRE . 'sessions (session_id, session_starttime, session_data) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE session_data = ?', array($session_id, time(), $data, $data));
 
 		return true;
 	}
@@ -151,7 +151,7 @@ class Session {
 			setcookie(self::SESSION_NAME, '', time() - 3600, ROOT_DIR);
 
 		// Session aus Datenbank löschen
-		\ACP3\CMS::$injector['Db']->delete(DB_PRE . 'sessions', array('session_id' => $session_id));
+		Registry::get('Db')->delete(DB_PRE . 'sessions', array('session_id' => $session_id));
 	}
 
 	/**
@@ -165,7 +165,7 @@ class Session {
 		if ($session_lifetime == 0)
 			return;
 
-		\ACP3\CMS::$injector['Db']->executeUpdate('DELETE FROM ' . DB_PRE . 'sessions WHERE session_starttime + ? < ?', array($session_lifetime, time()));
+		Registry::get('Db')->executeUpdate('DELETE FROM ' . DB_PRE . 'sessions WHERE session_starttime + ? < ?', array($session_lifetime, time()));
 
 		return true;
 	}
@@ -182,10 +182,10 @@ class Session {
 		}
 
 		$token = sha1(uniqid(mt_rand(), true));
-		$path = !empty($path) ? $path . (!preg_match('/\/$/', $path) ? '/' : '') : \ACP3\CMS::$injector['URI']->query;
+		$path = !empty($path) ? $path . (!preg_match('/\/$/', $path) ? '/' : '') : Registry::get('URI')->query;
 		$_SESSION[self::XSRF_TOKEN_NAME][$path] = $token;
 
-		\ACP3\CMS::$injector['View']->assign('form_token', '<input type="hidden" name="' . self::XSRF_TOKEN_NAME . '" value="' . $token . '" />');
+		Registry::get('View')->assign('form_token', '<input type="hidden" name="' . self::XSRF_TOKEN_NAME . '" value="' . $token . '" />');
 	}
 	/**
 	 * Entfernt das Securitytoken aus der Session
@@ -195,8 +195,8 @@ class Session {
 		if (empty($token) && isset($_POST[self::XSRF_TOKEN_NAME]))
 			$token = $_POST[self::XSRF_TOKEN_NAME];
 		if (!empty($token) && is_array($_SESSION[self::XSRF_TOKEN_NAME]) === true) {
-			if (isset($_SESSION[self::XSRF_TOKEN_NAME][\ACP3\CMS::$injector['URI']->query])) {
-				unset($_SESSION[self::XSRF_TOKEN_NAME][\ACP3\CMS::$injector['URI']->query]);
+			if (isset($_SESSION[self::XSRF_TOKEN_NAME][Registry::get('URI')->query])) {
+				unset($_SESSION[self::XSRF_TOKEN_NAME][Registry::get('URI')->query]);
 			}
 		}
 	}

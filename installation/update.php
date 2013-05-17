@@ -14,4 +14,4 @@ define('IN_UPDATER', true);
 define('ACP3_ROOT_DIR', realpath(__DIR__ . '/../') . '/');
 require ACP3_ROOT_DIR . 'ACP3/Installer/Installer.php';
 
-\ACP3\Installer\Installer::runInstaller();
+\ACP3\Installer\Installer::runUpdater();

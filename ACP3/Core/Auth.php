@@ -62,7 +62,7 @@ class Auth
 			$cookie = base64_decode($_COOKIE[self::COOKIE_NAME]);
 			$cookie_arr = explode('|', $cookie);
 
-			$user = \ACP3\CMS::$injector['Db']->executeQuery('SELECT id, super_user, pwd, entries, language FROM ' . DB_PRE . 'users WHERE nickname = ? AND login_errors < 3', array($cookie_arr[0]))->fetchAll();
+			$user = Registry::get('Db')->executeQuery('SELECT id, super_user, pwd, entries, language FROM ' . DB_PRE . 'users WHERE nickname = ? AND login_errors < 3', array($cookie_arr[0]))->fetchAll();
 			if (count($user) === 1) {
 				$db_password = substr($user[0]['pwd'], 0, 40);
 				if ($db_password === $cookie_arr[1]) {
@@ -103,7 +103,7 @@ class Auth
 
 			if (empty($user_info[$user_id])) {
 				$countries = Lang::worldCountries();
-				$info = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT * FROM ' . DB_PRE . 'users WHERE id = ?', array($user_id), array(\PDO::PARAM_INT));
+				$info = Registry::get('Db')->fetchAssoc('SELECT * FROM ' . DB_PRE . 'users WHERE id = ?', array($user_id), array(\PDO::PARAM_INT));
 				if (!empty($info)) {
 					$info['country_formatted'] = !empty($info['country']) && isset($countries[$info['country']]) ? $countries[$info['country']] : '';
 					$user_info[$user_id] = $info;
@@ -154,7 +154,7 @@ class Auth
 	 */
 	public function login($username, $password, $expiry)
 	{
-		$user = \ACP3\CMS::$injector['Db']->fetchAssoc('SELECT id, pwd, login_errors FROM ' . DB_PRE . 'users WHERE nickname = ?', array($username));
+		$user = Registry::get('Db')->fetchAssoc('SELECT id, pwd, login_errors FROM ' . DB_PRE . 'users WHERE nickname = ?', array($username));
 
 		if (!empty($user)) {
 			// Useraccount ist gesperrt
@@ -172,7 +172,7 @@ class Auth
 			if ($db_hash === $form_pwd_hash) {
 				// Login-Fehler zurücksetzen
 				if ($user['login_errors'] > 0)
-					\ACP3\CMS::$injector['Db']->update(DB_PRE . 'users', array('login_errors' => 0), array('id', (int) $user['id']));
+					Registry::get('Db')->update(DB_PRE . 'users', array('login_errors' => 0), array('id', (int) $user['id']));
 
 				$this->setCookie($username, $db_hash, $expiry);
 
@@ -186,7 +186,7 @@ class Auth
 			// Beim dritten falschen Login den Account sperren
 			} else {
 				$login_errors = $user['login_errors'] + 1;
-				\ACP3\CMS::$injector['Db']->update(DB_PRE . 'users', array('login_errors' => $login_errors), array('id' => (int) $user['id']));
+				Registry::get('Db')->update(DB_PRE . 'users', array('login_errors' => $login_errors), array('id' => (int) $user['id']));
 				if ($login_errors === 3) {
 					return -1;
 				}
@@ -201,7 +201,7 @@ class Auth
 	 */
 	public function logout()
 	{
-		\ACP3\CMS::$injector['Session']->session_destroy(session_id());
+		Registry::get('Session')->session_destroy(session_id());
 		return $this->setCookie('', '', -50400);
 	}
 	/**

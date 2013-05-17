@@ -11,12 +11,8 @@ use ACP3\Core;
  */
 class FeedsFrontend extends Core\ModuleController {
 
-	public function __construct($injector) {
-		parent::__construct($injector);
-	}
-
 	public function actionList() {
-		if (Core\Modules::check($this->injector['URI']->feed, 'extensions/feeds') === true) {
+		if (Core\Modules::check(Core\Registry::get('URI')->feed, 'extensions/feeds') === true) {
 			$settings = Core\Config::getSettings('feeds');
 
 			define('FEED_LINK', 'http://' . htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES));
@@ -29,16 +25,16 @@ class FeedsFrontend extends Core\ModuleController {
 				'feed_type' => $settings['feed_type'],
 				'feed_link' => FEED_LINK . ROOT_DIR,
 				'feed_title' => CONFIG_SEO_TITLE,
-				'module' => $this->injector['URI']->feed,
+				'module' => Core\Registry::get('URI')->feed,
 			);
 
 			Core\View::factory('FeedGenerator', $config);
 
-			require MODULES_DIR . $this->injector['URI']->feed . '/extensions/feeds.php';
+			require MODULES_DIR . Core\Registry::get('URI')->feed . '/extensions/feeds.php';
 
-			$this->injector['View']->setNoOutput(true);
-			$this->injector['View']->setContentType('text/xml');
-			$this->injector['View']->display($settings['feed_type']);
+			Core\Registry::get('View')->setNoOutput(true);
+			Core\Registry::get('View')->setContentType('text/xml');
+			Core\Registry::get('View')->display($settings['feed_type']);
 		}
 	}
 

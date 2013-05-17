@@ -22,7 +22,7 @@ class CategoriesFunctions {
 	 * @return boolean
 	 */
 	public static function setCategoriesCache($module) {
-		$data = \ACP3\CMS::$injector['Db']->fetchAll('SELECT c.id, c.title, c.picture, c.description FROM ' . DB_PRE . 'categories AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE m.name = ? ORDER BY c.title ASC', array($module));
+		$data = Core\Registry::get('Db')->fetchAll('SELECT c.id, c.title, c.picture, c.description FROM ' . DB_PRE . 'categories AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE m.name = ? ORDER BY c.title ASC', array($module));
 		return Core\Cache::create($module, $data, 'categories');
 	}
 
@@ -47,7 +47,7 @@ class CategoriesFunctions {
 	 * @return boolean
 	 */
 	public static function categoriesCheck($category_id) {
-		return \ACP3\CMS::$injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'categories WHERE id = ?', array($category_id)) == 1 ? true : false;
+		return Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'categories WHERE id = ?', array($category_id)) == 1 ? true : false;
 	}
 
 	/**
@@ -59,7 +59,7 @@ class CategoriesFunctions {
 	 * @return boolean
 	 */
 	public static function categoriesCheckDuplicate($title, $module, $category_id = '') {
-		return \ACP3\CMS::$injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'categories AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE c.title = ? AND m.name = ? AND c.id != ?', array($title, $module, $category_id)) != 0 ? true : false;
+		return Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'categories AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE c.title = ? AND m.name = ? AND c.id != ?', array($title, $module, $category_id)) != 0 ? true : false;
 	}
 
 	/**
@@ -71,7 +71,7 @@ class CategoriesFunctions {
 	 */
 	public static function categoriesCreate($title, $module) {
 		if (self::categoriesCheckDuplicate($title, $module) === false) {
-			$mod_id = \ACP3\CMS::$injector['Db']->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($module));
+			$mod_id = Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($module));
 			$insert_values = array(
 				'id' => '',
 				'title' => Core\Functions::str_encode($title),
@@ -79,15 +79,15 @@ class CategoriesFunctions {
 				'description' => '',
 				'module_id' => $mod_id,
 			);
-			\ACP3\CMS::$injector['Db']->beginTransaction();
+			Core\Registry::get('Db')->beginTransaction();
 			try {
-				\ACP3\CMS::$injector['Db']->insert(DB_PRE . 'categories', $insert_values);
-				$last_id = \ACP3\CMS::$injector['Db']->lastInsertId();
-				\ACP3\CMS::$injector['Db']->commit();
+				Core\Registry::get('Db')->insert(DB_PRE . 'categories', $insert_values);
+				$last_id = Core\Registry::get('Db')->lastInsertId();
+				Core\Registry::get('Db')->commit();
 				self::setCategoriesCache($module);
 				return $last_id;
 			} catch (\Exception $e) {
-				\ACP3\CMS::$injector['Db']->rollback();
+				Core\Registry::get('Db')->rollback();
 			}
 		}
 		return 0;
@@ -107,7 +107,7 @@ class CategoriesFunctions {
 		$data = self::getCategoriesCache($module);
 		$c_data = count($data);
 
-		$categories['custom_text'] = !empty($custom_text) ? $custom_text : \ACP3\CMS::$injector['Lang']->t('system', 'pls_select');
+		$categories['custom_text'] = !empty($custom_text) ? $custom_text : Core\Registry::get('Lang')->t('system', 'pls_select');
 		$categories['name'] = $form_field_name;
 		if ($c_data > 0) {
 			for ($i = 0; $i < $c_data; ++$i) {
@@ -121,8 +121,8 @@ class CategoriesFunctions {
 			$categories['create']['name'] = $form_field_name . '_create';
 			$categories['create']['value'] = isset($_POST[$categories['create']['name']]) ? $_POST[$categories['create']['name']] : '';
 		}
-		\ACP3\CMS::$injector['View']->assign('categories', $categories);
-		return \ACP3\CMS::$injector['View']->fetchTemplate('categories/create_list.tpl');
+		Core\Registry::get('View')->assign('categories', $categories);
+		return Core\Registry::get('View')->fetchTemplate('categories/create_list.tpl');
 	}
 
 }

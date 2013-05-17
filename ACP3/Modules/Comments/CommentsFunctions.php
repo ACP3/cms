@@ -22,6 +22,6 @@ class CommentsFunctions {
 	 * @return integer
 	 */
 	public static function commentsCount($module, $entry_id) {
-		return \ACP3\CMS::$injector['Db']->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'comments AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE m.name = ? AND c.entry_id = ?', array($module, $entry_id));
+		return \ACP3\Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'comments AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE m.name = ? AND c.entry_id = ?', array($module, $entry_id));
 	}
 }

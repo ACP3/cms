@@ -6,10 +6,6 @@ class PermissionsInstaller extends ModuleInstaller {
 	private $module_name = 'permissions';
 	private $schema_version = 31;
 
-	public function __construct(\ACP3\Core\Pimple $injector) {
-		parent::__construct($injector);
-	}
-
 	public function renameModule() {
 		return array(
 			31 => "UPDATE `{pre}modules` SET name = 'permissions' WHERE name = 'access';"

@@ -29,8 +29,8 @@ class Functions {
 		} else {
 			$errors = (array) $errors;
 		}
-		$this->injector['View']->assign('error_box', array('non_integer_keys' => $non_integer_keys, 'errors' => $errors));
-		return $this->injector['View']->fetch('error_box.tpl');
+		Core\Registry::get('View')->assign('error_box', array('non_integer_keys' => $non_integer_keys, 'errors' => $errors));
+		return Core\Registry::get('View')->fetch('error_box.tpl');
 	}
 
 	/**
@@ -45,9 +45,9 @@ class Functions {
 		$bool = Core\ModuleInstaller::executeSqlQueries($queries);
 
 		$result = array(
-			'text' => sprintf($this->injector['Lang']->t('update_db_version_to'), $version),
+			'text' => sprintf(Core\Registry::get('Lang')->t('update_db_version_to'), $version),
 			'class' => $bool === true ? 'success' : 'important',
-			'result_text' => $this->injector['Lang']->t($bool === true ? 'db_update_success' : 'db_update_error')
+			'result_text' => Core\Registry::get('Lang')->t($bool === true ? 'db_update_success' : 'db_update_error')
 		);
 
 		return $result;
@@ -216,9 +216,9 @@ class Functions {
 		$path = MODULES_DIR . $module . '/' . $module . 'Installer.php';
 		if (is_file($path) === true) {
 			$className = Core\ModuleInstaller::buildClassName($module);
-			$install = new $className(\ACP3\Installer\Installer::$injector);
+			$install = new $className();
 			if ($install instanceof \ACP3\Core\ModuleInstaller &&
-					(ACP3_Modules::isInstalled($module) || count($install->renameModule()) > 0)) {
+					(\ACP3\Core\Modules::isInstalled($module) || count($install->renameModule()) > 0)) {
 				$result = $install->updateSchema();
 			}
 		}
@@ -268,10 +268,10 @@ class Functions {
 	public static function writeSettingsToDb($module, $data)
 	{
 		$bool = false;
-		$mod_id = \ACP3\Installer\Installer::$injector['Db']->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($module));
+		$mod_id = Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($module));
 		if (!empty($mod_id)) {
 			foreach ($data as $key => $value) {
-				$bool = \ACP3\Installer\Installer::$injector['Db']->executeUpdate('UPDATE ' . DB_PRE . 'settings SET value = ? WHERE module_id = ? AND name = ?', array($value, (int) $mod_id, $key));
+				$bool = Core\Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'settings SET value = ? WHERE module_id = ? AND name = ?', array($value, (int) $mod_id, $key));
 			}
 		}
 

@@ -28,7 +28,7 @@ class AcpAdmin extends Core\ModuleController {
 				$mods[$name]['dir'] = $dir;
 			}
 		}
-		$this->injector['View']->assign('modules', $mods);
+		Core\Registry::get('View')->assign('modules', $mods);
 	}
 
 }

@@ -23,7 +23,7 @@ class ArticlesFunctions {
 	 */
 	public static function setArticlesCache($id)
 	{
-		$data = ACP3\CMS::$injector['Db']->fetchAssoc('SELECT start, end, title, text FROM ' . DB_PRE . 'articles WHERE id = ?', array($id));
+		$data = Core\Registry::get('Db')->fetchAssoc('SELECT start, end, title, text FROM ' . DB_PRE . 'articles WHERE id = ?', array($id));
 		return Core\Cache::create('list_id_' . $id, $data, 'articles');
 	}
 
@@ -50,7 +50,7 @@ class ArticlesFunctions {
 	 */
 	public static function articlesList($id = '')
 	{
-		$articles = ACP3\CMS::$injector['Db']->fetchAll('SELECT id, start, end, title, text FROM ' . DB_PRE . 'articles ORDER BY title ASC');
+		$articles = Core\Registry::get('Db')->fetchAll('SELECT id, start, end, title, text FROM ' . DB_PRE . 'articles ORDER BY title ASC');
 		$c_articles = count($articles);
 
 		if ($c_articles > 0) {

@@ -6,9 +6,7 @@ class ContactInstaller extends ModuleInstaller {
 	private $module_name = 'contact';
 	private $schema_version = 32;
 
-	public function __construct(\ACP3\Core\Pimple $injector) {
-		parent::__construct($injector);
-
+	public function __construct() {
 		$this->special_resources = array(
 			'acp_list' => 7
 		);

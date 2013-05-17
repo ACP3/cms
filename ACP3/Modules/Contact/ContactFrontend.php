@@ -11,53 +11,48 @@ use ACP3\Core;
  */
 class ContactFrontend extends Core\ModuleController {
 
-	public function __construct($injector)
-	{
-		parent::__construct($injector);
-	}
-
 	public function actionList()
 	{
 		$captchaAccess = Core\Modules::check('captcha', 'image');
 
 		if (isset($_POST['submit']) === true) {
 			if (empty($_POST['name']))
-				$errors['name'] = $this->injector['Lang']->t('system', 'name_to_short');
+				$errors['name'] = Core\Registry::get('Lang')->t('system', 'name_to_short');
 			if (Core\Validate::email($_POST['mail']) === false)
-				$errors['mail'] = $this->injector['Lang']->t('system', 'wrong_email_format');
+				$errors['mail'] = Core\Registry::get('Lang')->t('system', 'wrong_email_format');
 			if (strlen($_POST['message']) < 3)
-				$errors['message'] = $this->injector['Lang']->t('system', 'message_to_short');
-			if ($captchaAccess === true && $this->injector['Auth']->isUser() === false && Core\Validate::captcha($_POST['captcha']) === false)
-				$errors['captcha'] = $this->injector['Lang']->t('captcha', 'invalid_captcha_entered');
+				$errors['message'] = Core\Registry::get('Lang')->t('system', 'message_to_short');
+			if ($captchaAccess === true && Core\Registry::get('Auth')->isUser() === false && Core\Validate::captcha($_POST['captcha']) === false)
+				$errors['captcha'] = Core\Registry::get('Lang')->t('captcha', 'invalid_captcha_entered');
 
 			if (isset($errors) === true) {
-				$this->injector['View']->assign('error_msg', Core\Functions::errorBox($errors));
+				Core\Registry::get('View')->assign('error_msg', Core\Functions::errorBox($errors));
 			} elseif (Core\Validate::formToken() === false) {
-				$this->injector['View']->setContent(Core\Functions::errorBox($this->injector['Lang']->t('system', 'form_already_submitted')));
+				Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 			} else {
 				$settings = Core\Config::getSettings('contact');
 				$_POST['message'] = Core\Functions::str_encode($_POST['message'], true);
 
-				$subject = sprintf($this->injector['Lang']->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
-				$body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($_POST['name'], $_POST['mail'], $_POST['message'], "\n"), $this->injector['Lang']->t('contact', 'contact_body'));
+				$subject = sprintf(Core\Registry::get('Lang')->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
+				$body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($_POST['name'], $_POST['mail'], $_POST['message'], "\n"), Core\Registry::get('Lang')->t('contact', 'contact_body'));
 				$bool = Core\Functions::generateEmail('', $settings['mail'], $_POST['mail'], $subject, $body);
 
 				// Nachrichtenkopie an Absender senden
 				if (isset($_POST['copy'])) {
-					$subject2 = sprintf($this->injector['Lang']->t('contact', 'sender_subject'), CONFIG_SEO_TITLE);
-					$body2 = sprintf($this->injector['Lang']->t('contact', 'sender_body'), CONFIG_SEO_TITLE, $_POST['message']);
+					$subject2 = sprintf(Core\Registry::get('Lang')->t('contact', 'sender_subject'), CONFIG_SEO_TITLE);
+					$body2 = sprintf(Core\Registry::get('Lang')->t('contact', 'sender_body'), CONFIG_SEO_TITLE, $_POST['message']);
 					Core\Functions::generateEmail($_POST['name'], $_POST['mail'], $settings['mail'], $subject2, $body2);
 				}
 
-				$this->injector['Session']->unsetFormToken();
+				Core\Registry::get('Session')->unsetFormToken();
 
-				$this->injector['View']->setContent(Core\Functions::confirmBox($bool === true ? $this->injector['Lang']->t('contact', 'send_mail_success') : $this->injector['Lang']->t('contact', 'send_mail_error'), $this->injector['URI']->route('contact')));
+				Core\Registry::get('View')->setContent(Core\Functions::confirmBox($bool === true ? Core\Registry::get('Lang')->t('contact', 'send_mail_success') : Core\Registry::get('Lang')->t('contact', 'send_mail_error'), Core\Registry::get('URI')->route('contact')));
 			}
 		}
 		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 			// Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
-			if ($this->injector['Auth']->isUser() === true) {
-				$defaults = $this->injector['Auth']->getUserInfo();
+			if (Core\Registry::get('Auth')->isUser() === true) {
+				$defaults = Core\Registry::get('Auth')->getUserInfo();
 				$disabled = ' readonly="readonly" class="readonly"';
 				$defaults['name'] = !empty($defaults['realname']) ? $defaults['realname'] : $defaults['nickname'];
 				$defaults['message'] = '';
@@ -78,14 +73,14 @@ class ContactFrontend extends Core\ModuleController {
 					'message' => '',
 				);
 			}
-			$this->injector['View']->assign('form', isset($_POST['submit']) ? array_merge($defaults, $_POST) : $defaults);
-			$this->injector['View']->assign('copy_checked', Core\Functions::selectEntry('copy', 1, 0, 'checked'));
+			Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? array_merge($defaults, $_POST) : $defaults);
+			Core\Registry::get('View')->assign('copy_checked', Core\Functions::selectEntry('copy', 1, 0, 'checked'));
 
 			if ($captchaAccess === true) {
-				$this->injector['View']->assign('captcha', \ACP3\Modules\Captcha\CaptchaFunctions::captcha());
+				Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaFunctions::captcha());
 			}
 
-			$this->injector['Session']->generateFormToken();
+			Core\Registry::get('Session')->generateFormToken();
 		}
 	}
 
@@ -94,9 +89,9 @@ class ContactFrontend extends Core\ModuleController {
 		$settings = Core\Config::getSettings('contact');
 		$settings['address'] = Core\Functions::rewriteInternalUri($settings['address']);
 		$settings['disclaimer'] = Core\Functions::rewriteInternalUri($settings['disclaimer']);
-		$this->injector['View']->assign('imprint', $settings);
+		Core\Registry::get('View')->assign('imprint', $settings);
 
-		$this->injector['View']->assign('powered_by', sprintf($this->injector['Lang']->t('contact', 'powered_by'), '<a href="http://www.acp3-cms.net" onclick="window.open(this.href); return false">ACP3</a>'));
+		Core\Registry::get('View')->assign('powered_by', sprintf(Core\Registry::get('Lang')->t('contact', 'powered_by'), '<a href="http://www.acp3-cms.net" onclick="window.open(this.href); return false">ACP3</a>'));
 	}
 
 	public function actionSidebar()
@@ -104,9 +99,9 @@ class ContactFrontend extends Core\ModuleController {
 		$settings = Core\Config::getSettings('contact');
 		$settings['address'] = Core\Functions::rewriteInternalUri($settings['address']);
 		$settings['disclaimer'] = Core\Functions::rewriteInternalUri($settings['disclaimer']);
-		$this->injector['View']->assign('sidebar_contact', $settings);
+		Core\Registry::get('View')->assign('sidebar_contact', $settings);
 
-		$this->injector['View']->displayTemplate('contact/sidebar.tpl');
+		Core\Registry::get('View')->displayTemplate('contact/sidebar.tpl');
 	}
 
 }

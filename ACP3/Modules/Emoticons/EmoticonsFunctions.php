@@ -20,7 +20,7 @@ class EmoticonsFunctions {
 	 * @return boolean
 	 */
 	public static function setEmoticonsCache() {
-		$emoticons = \ACP3\CMS::$injector['Db']->fetchAll('SELECT code, description, img FROM ' . DB_PRE . 'emoticons ORDER BY code DESC');
+		$emoticons = Core\Registry::get('Db')->fetchAll('SELECT code, description, img FROM ' . DB_PRE . 'emoticons ORDER BY code DESC');
 		$c_emoticons = count($emoticons);
 
 		$data = array();
@@ -59,9 +59,9 @@ class EmoticonsFunctions {
 		if (empty($emoticons))
 			$emoticons = self::getEmoticonsCache();
 
-		\ACP3\CMS::$injector['View']->assign('emoticons_field_id', empty($field_id) ? 'message' : $field_id);
-		\ACP3\CMS::$injector['View']->assign('emoticons', $emoticons);
-		return \ACP3\CMS::$injector['View']->fetchTemplate('emoticons/list.tpl');
+		Core\Registry::get('View')->assign('emoticons_field_id', empty($field_id) ? 'message' : $field_id);
+		Core\Registry::get('View')->assign('emoticons', $emoticons);
+		return Core\Registry::get('View')->fetchTemplate('emoticons/list.tpl');
 	}
 
 	/**

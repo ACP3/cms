@@ -1,19 +1,21 @@
 <?php
 namespace ACP3\Installer\Core;
 
+use ACP3\Core;
+
 /**
  * Description of InstallerModuleController
  *
  * @author goratsch
  */
-class InstallerModuleController extends \ACP3\Core\ModuleController {
+class InstallerModuleController extends Core\ModuleController {
 
 	public function display()
 	{
-		$view = $this->injector['View'];
+		$view = Core\Registry::get('View');
 		// Content-Template automatisch setzen
 		if ($view->getContentTemplate() === '') {
-			$view->setContentTemplate($this->injector['URI']->mod . '/' . $this->injector['URI']->file . '.tpl');
+			$view->setContentTemplate(Core\Registry::get('URI')->mod . '/' . Core\Registry::get('URI')->file . '.tpl');
 		}
 
 		if ($view->getNoOutput() === false) {
@@ -26,7 +28,7 @@ class InstallerModuleController extends \ACP3\Core\ModuleController {
 
 			if ($view->getLayout() !== '') {
 				$view->assign('PAGE_TITLE', 'ACP3 Installation');
-				$view->assign('TITLE', $this->injector['Lang']->t($this->injector['URI']->file));
+				$view->assign('TITLE', Core\Registry::get('Lang')->t(Core\Registry::get('URI')->file));
 				$view->assign('CONTENT', $view->getContent() . $view->getContentAppend());
 
 				$view->displayTemplate($view->getLayout());
