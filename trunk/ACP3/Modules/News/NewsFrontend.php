@@ -41,7 +41,7 @@ class NewsFrontend extends Core\ModuleController {
 			Core\Registry::get('View')->assign('news', $news);
 
 			if ($settings['comments'] == 1 && $news['comments'] == 1 && Core\Modules::check('comments', 'list') === true) {
-				$comments = new \ACP3\Modules\Comments\CommentsFrontend($this->injector, 'news', Core\Registry::get('URI')->id);
+				$comments = new \ACP3\Modules\Comments\CommentsFrontend('news', Core\Registry::get('URI')->id);
 				Core\Registry::get('View')->assign('comments', $comments->actionList());
 			}
 		} else {

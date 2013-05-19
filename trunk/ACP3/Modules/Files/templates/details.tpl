@@ -1,10 +1,12 @@
 <article>
 	<section class="dataset-box">
-		<header class="header">
-			<small class="pull-right">
-				<time datetime="{$file.date_iso}">{$file.date_formatted}</time>
-			</small>
-			<h1>{$file.title}</h1>
+		<header class="navbar">
+			<div class="navbar-inner navbar-text">
+				<small class="pull-right">
+					<time datetime="{$file.date_iso}">{$file.date_formatted}</time>
+				</small>
+				<h2>{$file.title}</h2>
+			</div>
 		</header>
 		<div class="content">
 			{$file.text}

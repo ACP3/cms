@@ -7,7 +7,7 @@ $(document).ready(function() {
 	});
 });
 </script>
-<div class="navbar navbar-inverse">
+<div class="navbar">
 	<div class="navbar-inner">
 		<form action="{$REQUEST_URI}" method="post" class="navbar-form pull-right">
 			<select id="newsletters" name="newsletter">
@@ -22,9 +22,13 @@ $(document).ready(function() {
 </div>
 {if isset($newsletter)}
 <article class="dataset-box">
-	<header class="header">
-		<small class="pull-right"><time datetime="{$newsletter.date_iso}">{$newsletter.date_formatted}</time></small>
-		<h1>{$newsletter.title}</h1>
+	<header class="navbar">
+		<div class="navbar-inner navbar-text">
+			<small class="pull-right">
+				<time datetime="{$newsletter.date_iso}">{$newsletter.date_formatted}</time>
+			</small>
+			<h2>{$newsletter.title}</h2>
+		</div>
 	</header>
 	<div class="content">
 		{$newsletter.text}

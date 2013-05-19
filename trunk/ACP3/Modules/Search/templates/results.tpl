@@ -14,9 +14,11 @@
 			<ol>
 {foreach $values.results as $row}
 				<li class="dataset-box">
-					<div class="header">
-						<a href="{$row.hyperlink}">{$row.title}</a>
-					</div>
+					<header class="navbar">
+						<div class="navbar-inner navbar-text">
+							<h2><a href="{$row.hyperlink}">{$row.title}</a></h2>
+						</div>
+					</header>
 {if !empty($row.text)}
 					<div class="content">
 						{$row.text}

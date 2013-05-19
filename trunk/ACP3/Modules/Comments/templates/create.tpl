@@ -11,7 +11,7 @@
 		<label for="message" class="control-label">{lang t="system|message"}</label>
 		<div class="controls">
 			{if isset($emoticons)}{$emoticons}{/if}
-			<textarea name="message" id="message" cols="50" rows="5" class="input-xlarge" required>{$form.message}</textarea>
+			<textarea name="message" id="message" cols="50" rows="5" class="input-xxlarge" required>{$form.message}</textarea>
 		</div>
 	</div>
 {if isset($captcha)}
