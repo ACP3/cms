@@ -15,8 +15,8 @@
 
 <body>
 	<div class="container-fluid">
-		<h1 id="logo" class="visible-desktop">{$PAGE_TITLE}</h1>
-		<div class="navbar navbar-inverse">
+		<h1 id="logo" class="visible-desktop"><a href="{$ROOT_DIR}">{$PAGE_TITLE}</a></h1>
+		<div class="navbar">
 			<div class="navbar-inner">
 				<a href="{$ROOT_DIR}" class="brand hidden-desktop">{$PAGE_TITLE}</a>
 				<div class="container">

@@ -1,9 +1,9 @@
-<div class="navbar navbar-inverse">
+<div class="navbar">
 	<div class="navbar-inner">
 {if isset($categories)}
 {if {has_permission mod="newsletter" file="list"}}
 		<div class="navbar-text pull-left">
-			<h5><a href="{uri args="newsletter/list"}">{lang t="newsletter|list"}</a></h5>
+			<a href="{uri args="newsletter/list"}">{lang t="newsletter|list"}</a>
 		</div>
 {/if}
 		<form action="{uri args="news/list"}" method="post" class="navbar-form pull-right">
@@ -17,11 +17,13 @@
 {$pagination}
 {foreach $news as $row}
 <article class="dataset-box">
-	<header class="header">
-		<small class="pull-right">
-			<time datetime="{$row.date_iso}">{$row.date_formatted}</time>
-		</small>
-		<h1>{$row.title}</h1>
+	<header class="navbar">
+		<div class="navbar-inner navbar-text">
+			<small class="pull-right">
+				<time datetime="{$row.date_iso}">{$row.date_formatted}</time>
+			</small>
+			<h2><a href="{uri args="news/details/id_`$row.id`"}">{$row.title}</a></h2>
+		</div>
 	</header>
 	<div class="content">
 		{$row.text}

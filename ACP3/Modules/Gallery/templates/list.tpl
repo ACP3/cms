@@ -2,11 +2,13 @@
 {$pagination}
 {foreach $galleries as $row}
 <div class="dataset-box">
-	<div class="header">
-		<small class="pull-right">
-			<time datetime="{$row.date_iso}">{$row.date_formatted}</time>
-		</small>
-		<a href="{uri args="gallery/pics/id_`$row.id`"}">{$row.title} ({$row.pics_lang})</a>
+	<div class="navbar">
+		<div class="navbar-inner navbar-text">
+			<small class="pull-right">
+				<time datetime="{$row.date_iso}">{$row.date_formatted}</time>
+			</small>
+			<h2><a href="{uri args="gallery/pics/id_`$row.id`"}">{$row.title} ({$row.pics_lang})</a></h2>
+		</div>
 	</div>
 </div>
 {/foreach}

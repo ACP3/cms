@@ -9,12 +9,16 @@
 {$pagination}
 {foreach $comments as $row}
 	<article class="dataset-box" style="width:65%">
-		<div class="header">
-			<small class="pull-right">
-				<time datetime="{$row.date_iso}">{$row.date_formatted}</time>
-			</small>
-			{if !empty($row.user_id)}<a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>{else}{$row.name}{/if}
-		</div>
+		<header class="navbar">
+			<div class="navbar-inner navbar-text">
+				<small class="pull-right">
+					<time datetime="{$row.date_iso}">{$row.date_formatted}</time>
+				</small>
+				<strong>
+					{if !empty($row.user_id)}<a href="{uri args="users/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>{else}{$row.name}{/if}
+				</strong>
+			</div>
+		</header>
 		<div class="content">
 			{$row.message}
 		</div>

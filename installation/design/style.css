@@ -6,9 +6,9 @@ p {
 }
 /* Layout */
 #logo {
-	width: 104px;
-	height: 45px;
-	margin: 10px 0 10px 10px;
+	width: 222px;
+	height: 89px;
+	margin: 10px 20px;
 	background: url('img/logo.png') no-repeat;
 	text-indent: -9999px;
 }

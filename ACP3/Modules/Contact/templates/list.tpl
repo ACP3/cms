@@ -12,7 +12,7 @@
 	</div>
 	<div class="control-group">
 		<label for="message" class="control-label">{lang t="system|message"}</label>
-		<div class="controls"><textarea name="message" id="message" cols="50" rows="5" class="span6" required>{$form.message}</textarea></div>
+		<div class="controls"><textarea name="message" id="message" cols="50" rows="5" class="input-xxlarge" required>{$form.message}</textarea></div>
 	</div>
 	<div class="control-group">
 		<div class="controls">
