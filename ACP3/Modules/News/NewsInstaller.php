@@ -1,10 +1,13 @@
 <?php
+
 namespace ACP3\Modules\News;
+
 use ACP3\Core\ModuleInstaller;
 
 class NewsInstaller extends ModuleInstaller {
+
 	private $module_name = 'news';
-	private $schema_version = 31;
+	private $schema_version = 32;
 
 	protected function getName() {
 		return $this->module_name;
@@ -56,7 +59,13 @@ class NewsInstaller extends ModuleInstaller {
 		return array(
 			31 => array(
 				"ALTER TABLE `{pre}news` CHANGE `headline` `title` VARCHAR(120) {charset} NOT NULL",
+			),
+			32 => array(
+				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"extensions/search\";",
+				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"extensions/feeds\";",
+				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
 			)
 		);
 	}
+
 }

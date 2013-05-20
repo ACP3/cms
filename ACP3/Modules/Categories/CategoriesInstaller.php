@@ -1,10 +1,13 @@
 <?php
+
 namespace ACP3\Modules\Categories;
+
 use ACP3\Core\ModuleInstaller;
 
 class CategoriesInstaller extends ModuleInstaller {
+
 	private $module_name = 'categories';
-	private $schema_version = 31;
+	private $schema_version = 32;
 
 	protected function getName() {
 		return $this->module_name;
@@ -43,7 +46,11 @@ class CategoriesInstaller extends ModuleInstaller {
 		return array(
 			31 => array(
 				"ALTER TABLE `{pre}categories` CHANGE `name` `title` VARCHAR(120) {charset} NOT NULL;",
+			),
+			32 => array(
+				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
 			)
 		);
 	}
+
 }

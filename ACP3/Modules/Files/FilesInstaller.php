@@ -4,7 +4,7 @@ use ACP3\Core\ModuleInstaller;
 
 class FilesInstaller extends ModuleInstaller {
 	private $module_name = 'files';
-	private $schema_version = 31;
+	private $schema_version = 32;
 
 	protected function getName() {
 		return $this->module_name;
@@ -51,7 +51,12 @@ class FilesInstaller extends ModuleInstaller {
 		return array(
 			31 => array(
 				"ALTER TABLE `{pre}files` CHANGE `link_title` `title` VARCHAR(120) {charset} NOT NULL;",
-			)
+			),
+			32 => array(
+				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"extensions/search\";",
+				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"extensions/feeds\";",
+				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
+			) 
 		);
 	}
 }

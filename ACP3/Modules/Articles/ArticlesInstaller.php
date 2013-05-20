@@ -8,7 +8,7 @@ use ACP3\Core\Modules;
 class ArticlesInstaller extends ModuleInstaller {
 
 	private $module_name = 'articles';
-	private $schema_version = 32;
+	private $schema_version = 33;
 
 	public function renameModule()
 	{
@@ -66,7 +66,11 @@ class ArticlesInstaller extends ModuleInstaller {
 				"UPDATE `{pre}seo` SET uri = REPLACE(uri, '/list/', '/details/') WHERE uri REGEXP '^(articles/list/id_[0-9]+/)$';",
 				"UPDATE `{pre}articles` SET `text` = REPLACE(`text`, 'articles/list/id_', 'articles/details/id_') WHERE `text` REGEXP '(articles/list/id_[0-9]+/)';",
 				Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? "UPDATE `{pre}menu_items` SET uri = REPLACE(uri, '/list/', '/details/') WHERE uri REGEXP '^(articles/list/id_[0-9]+/)$';" : ''
-			)
+			),
+			33 => array(
+				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"extensions/search\";",
+				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
+			) 
 		);
 	}
 

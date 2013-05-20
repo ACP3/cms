@@ -4,7 +4,7 @@ use ACP3\Core\ModuleInstaller;
 
 class UsersInstaller extends ModuleInstaller {
 	private $module_name = 'users';
-	private $schema_version = 32;
+	private $schema_version = 33;
 
 	protected function getName() {
 		return $this->module_name;
@@ -99,7 +99,10 @@ class UsersInstaller extends ModuleInstaller {
 				"ALTER TABLE `{pre}users` ADD `address_display` TINYINT(1) UNSIGNED NOT NULL AFTER `city`;",
 				"ALTER TABLE `{pre}users` ADD `country_display` TINYINT(1) UNSIGNED NOT NULL AFTER `country`;",
 				"ALTER TABLE `{pre}users` ADD `mail_display` TINYINT(1) UNSIGNED NOT NULL AFTER `mail`;",
-			)
+			),
+			33 => array(
+				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
+			) 
 		);
 	}
 }
