@@ -142,17 +142,7 @@ abstract class ModuleInstaller {
 	public function addResources($mode = 1) {
 		$mod_name = $this->getName();
 		$dir = ucfirst($mod_name);
-
-		// Erweiterungen
 		$path = MODULES_DIR . $dir . '/';
-		if (is_dir($path . '/extensions/') === true) {
-			if (is_file($path . 'extensions/search.php') === true)
-				Registry::get('Db')->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->getModuleId(), 'page' => 'extensions/search', 'params' => '', 'privilege_id' => 1));
-			if (is_file($path . 'extensions/feeds.php') === true)
-				Registry::get('Db')->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->getModuleId(), 'page' => 'extensions/feeds', 'params' => '', 'privilege_id' => 1));
-			// Normale Moduldateien
-		}
-
 		$files = array($dir . 'Admin', $dir . 'Frontend');
 
 		foreach ($files as $file) {
