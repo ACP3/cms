@@ -4,7 +4,7 @@ use ACP3\Core\ModuleInstaller;
 
 class CaptchaInstaller extends ModuleInstaller {
 	private $module_name = 'captcha';
-	private $schema_version = 30;
+	private $schema_version = 31;
 
 	protected function getName() {
 		return $this->module_name;
@@ -27,6 +27,10 @@ class CaptchaInstaller extends ModuleInstaller {
 	}
 
 	protected function schemaUpdates() {
-		return array();
+		return array(
+			31 => array(
+				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
+			) 
+		);
 	}
 }

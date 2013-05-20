@@ -1,10 +1,13 @@
 <?php
+
 namespace ACP3\Modules\Menus;
+
 use ACP3\Core\ModuleInstaller;
 
 class MenusInstaller extends ModuleInstaller {
+
 	private $module_name = 'menus';
-	private $schema_version = 31;
+	private $schema_version = 32;
 
 	public function renameModule() {
 		return array(
@@ -68,7 +71,11 @@ class MenusInstaller extends ModuleInstaller {
 				"UPDATE `{pre}acl_resources` SET page = 'acp_edit_item' WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_edit_block';",
 				"DELETE  FROM `{pre}acl_resources` WHERE page = 'acp_list_blocks' AND module_id = " . $this->getModuleId() . ";",
 				"RENAME TABLE `{pre}menu_items_blocks` TO `{pre}menus`"
+			),
+			32 => array(
+				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
 			)
 		);
 	}
+
 }

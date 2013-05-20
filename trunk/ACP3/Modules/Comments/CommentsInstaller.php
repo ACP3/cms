@@ -1,10 +1,13 @@
 <?php
+
 namespace ACP3\Modules\Comments;
+
 use ACP3\Core\ModuleInstaller;
 
 class CommentsInstaller extends ModuleInstaller {
+
 	private $module_name = 'comments';
-	private $schema_version = 31;
+	private $schema_version = 32;
 
 	protected function getName() {
 		return $this->module_name;
@@ -46,7 +49,12 @@ class CommentsInstaller extends ModuleInstaller {
 			31 => array(
 				"INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES ('', " . $this->getModuleId() . ", 'acp_list_comments', '', 3);",
 				"UPDATE `{pre}acl_resources` SET page = 'acp_delete' WHERE module_id = " . $this->getModuleId() . " AND page = 'acp_delete_comments_per_module';",
+			),
+			32 => array(
+				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
+				"INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'list', '', 1);",
 			)
 		);
 	}
+
 }

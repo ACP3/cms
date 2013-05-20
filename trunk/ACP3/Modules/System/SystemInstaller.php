@@ -4,7 +4,7 @@ use ACP3\Core\ModuleInstaller;
 
 class SystemInstaller extends ModuleInstaller {
 	private $module_name = 'system';
-	private $schema_version = 34;
+	private $schema_version = 35;
 
 	public function __construct() {
 		$this->special_resources = array(
@@ -151,7 +151,7 @@ class SystemInstaller extends ModuleInstaller {
 			'seo_robots' => 1,
 			'seo_title' => '',
 			'version' => '',
-			'wysiwyg' => 'ckeditor'
+			'wysiwyg' => 'CKEditor'
 		);
 	}
 
@@ -177,7 +177,11 @@ class SystemInstaller extends ModuleInstaller {
 			),
 			34 => array(
 				"INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'functions', '', 1);",
-			)
+			),
+			35 => array(
+				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
+				"UPDATE `{pre}settings` SET value = \"4.0-dev\" WHERE module_id = " . $this->getModuleId() . " AND name = \"config_version\";",
+			),
 		);
 	}
 }

@@ -1,10 +1,13 @@
 <?php
+
 namespace ACP3\Modules\Newsletter;
+
 use ACP3\Core\ModuleInstaller;
 
 class NewsletterInstaller extends ModuleInstaller {
+
 	private $module_name = 'newsletter';
-	private $schema_version = 33;
+	private $schema_version = 34;
 
 	public function __construct() {
 		$this->special_resources = array(
@@ -65,7 +68,11 @@ class NewsletterInstaller extends ModuleInstaller {
 			),
 			33 => array(
 				"INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'sidebar', '', 1);",
+			),
+			34 => array(
+				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
 			)
 		);
 	}
+
 }
