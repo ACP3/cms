@@ -69,7 +69,7 @@
 						<select name="module" id="module">
 							<option value="">{lang t="system|pls_select"}</option>
 {foreach $modules as $row}
-							<option value="{$row.dir}"{$row.selected}>{$row.name}</option>
+							<option value="{$row.dir|lower}"{$row.selected}>{$row.name}</option>
 {/foreach}
 						</select>
 					</div>

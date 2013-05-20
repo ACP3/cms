@@ -66,7 +66,7 @@ class MenusAdmin extends Core\ModuleController {
 			if ($_POST['display'] != 0 && $_POST['display'] != 1)
 				$errors[] = Core\Registry::get('Lang')->t('menus', 'select_item_visibility');
 			if (Core\Validate::isNumber($_POST['target']) === false ||
-					$_POST['mode'] == 1 && (is_dir(MODULES_DIR . $_POST['module']) === false || preg_match('=/=', $_POST['module'])) ||
+					$_POST['mode'] == 1 && Core\Modules::isInstalled($_POST['module']) === false ||
 					$_POST['mode'] == 2 && Core\Validate::isInternalURI($_POST['uri']) === false ||
 					$_POST['mode'] == 3 && empty($_POST['uri']) ||
 					$_POST['mode'] == 4 && (Core\Validate::isNumber($_POST['articles']) === false || Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'articles WHERE id = ?', array($_POST['articles'])) == 0))
@@ -136,6 +136,7 @@ class MenusAdmin extends Core\ModuleController {
 			// Module
 			$modules = Core\Modules::getActiveModules();
 			foreach ($modules as $row) {
+				$row['dir'] = strtolower($row['dir']);
 				$modules[$row['name']]['selected'] = Core\Functions::selectEntry('module', $row['dir']);
 			}
 			Core\Registry::get('View')->assign('modules', $modules);
@@ -307,7 +308,7 @@ class MenusAdmin extends Core\ModuleController {
 				if ($_POST['display'] != 0 && $_POST['display'] != 1)
 					$errors['display'] = Core\Registry::get('Lang')->t('menus', 'select_item_visibility');
 				if (Core\Validate::isNumber($_POST['target']) === false ||
-						$_POST['mode'] == 1 && (is_dir(MODULES_DIR . $_POST['module']) === false || preg_match('=/=', $_POST['module'])) ||
+						$_POST['mode'] == 1 && Core\Modules::isInstalled($_POST['module']) === false ||
 						$_POST['mode'] == 2 && Core\Validate::isInternalURI($_POST['uri']) === false ||
 						$_POST['mode'] == 3 && empty($_POST['uri']) ||
 						$_POST['mode'] == 4 && (Core\Validate::isNumber($_POST['articles']) === false || Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'articles WHERE id = ?', array($_POST['articles'])) == 0))
@@ -374,6 +375,7 @@ class MenusAdmin extends Core\ModuleController {
 				// Module
 				$modules = Core\Modules::getAllModules();
 				foreach ($modules as $row) {
+					$row['dir'] = strtolower($row['dir']);
 					$modules[$row['name']]['selected'] = Core\Functions::selectEntry('module', $row['dir'], $page['mode'] == 1 ? $page['uri'] : '');
 				}
 				Core\Registry::get('View')->assign('modules', $modules);
