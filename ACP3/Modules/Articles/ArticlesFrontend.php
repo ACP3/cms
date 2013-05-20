@@ -41,7 +41,7 @@ class ArticlesFrontend extends Core\ModuleController {
 
 			Core\Registry::get('Breadcrumb')->replaceAnchestor($page['title'], 0, true);
 
-			Core\Registry::get('View')->assign('page', splitTextIntoPages(Core\Functions::rewriteInternalUri($page['text']), Core\Registry::get('URI')->getCleanQuery()));
+			Core\Registry::get('View')->assign('page', Core\Functions::splitTextIntoPages(Core\Functions::rewriteInternalUri($page['text']), Core\Registry::get('URI')->getCleanQuery()));
 		} else {
 			Core\Registry::get('URI')->redirect('errors/404');
 		}

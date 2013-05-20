@@ -259,7 +259,7 @@ class URI
 	{
 		$path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
 
-		if (CONFIG_SEO_ALIASES === true && !preg_match(self::PATTERN, $path)) {
+		if ((bool) CONFIG_SEO_ALIASES === true && !preg_match(self::PATTERN, $path)) {
 			if (count(preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY)) === 1)
 				$path.= 'list/';
 			// Überprüfen, ob Alias vorhanden ist und diesen als URI verwenden
