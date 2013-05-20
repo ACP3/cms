@@ -14,12 +14,12 @@
 define('IN_ACP3', true);
 define('ACP3_ROOT_DIR', realpath(__DIR__ . '/../../') . '/');
 
-require_once ACP3_ROOT_DIR . 'ACP3/CMS.php';
+require_once ACP3_ROOT_DIR . 'ACP3/Application.php';
 
-\ACP3\CMS::defineDirConstants();
-\ACP3\CMS::startupChecks();
-\ACP3\CMS::includeAutoLoader();
-\ACP3\CMS::initializeClasses();
+\ACP3\Application::defineDirConstants();
+\ACP3\Application::startupChecks();
+\ACP3\Application::includeAutoLoader();
+\ACP3\Application::initializeClasses();
 
 // Cache-Lebenszeit setzen
 $min_serveOptions['maxAge'] = CONFIG_CACHE_MINIFY;

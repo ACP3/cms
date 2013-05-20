@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Validate
  *
@@ -16,18 +17,17 @@ namespace ACP3\Core;
  * @package ACP3
  * @subpackage Core
  */
-class Validate
-{
+abstract class Validate {
+
 	/**
 	 * Überprüft, ob die übergebenen Privilegien existieren und
 	 * plausible Werte enthalten
 	 *
 	 * @param array $privileges
-	 *	Array mit den IDs der zu überprüfenden Privilegien mit ihren Berechtigungen
+	 * 	Array mit den IDs der zu überprüfenden Privilegien mit ihren Berechtigungen
 	 * @return boolean
 	 */
-	public static function aclPrivilegesExist(array $privileges)
-	{
+	public static function aclPrivilegesExist(array $privileges) {
 		$all_privs = ACP3_ACL::getAllPrivileges();
 		$c_all_privs = count($all_privs);
 		for ($i = 0; $i < $c_all_privs; ++$i) {
@@ -41,15 +41,15 @@ class Validate
 		}
 		return $valid;
 	}
+
 	/**
 	 * Überprüft, ob die selektierten Rollen existieren
 	 *
 	 * @param array $roles
-	 *	Die zu überprüfenden Rollen
+	 * 	Die zu überprüfenden Rollen
 	 * @return boolean
 	 */
-	public static function aclRolesExist(array $roles)
-	{
+	public static function aclRolesExist(array $roles) {
 		$all_roles = ACP3_ACL::getAllRoles();
 		$good = array();
 		foreach ($all_roles as $row) {
@@ -62,6 +62,7 @@ class Validate
 		}
 		return true;
 	}
+
 	/**
 	 * Überprüft einen Geburtstag auf seine Gültigkeit
 	 *
@@ -69,8 +70,7 @@ class Validate
 	 *  Das zu überprüfende Datum
 	 * @return boolean
 	 */
-	public static function birthday($var)
-	{
+	public static function birthday($var) {
 		$regex = '/^(\d{4})-(\d{2})-(\d{2})$/';
 		$matches = array();
 		if (preg_match($regex, $var, $matches)) {
@@ -80,16 +80,17 @@ class Validate
 		}
 		return false;
 	}
+
 	/**
 	 * Überpürft, ob das eingegebene Captcha mit dem generierten übereinstimmt
 	 *
 	 * @param string $input
 	 * @return boolean
 	 */
-	public static function captcha($input)
-	{
+	public static function captcha($input) {
 		return preg_match('/^[a-zA-Z0-9]+$/', $input) && isset($_SESSION['captcha']) && strtolower($input) === strtolower($_SESSION['captcha']) ? true : false;
 	}
+
 	/**
 	 * Überprüft, ob alle Daten ein sinnvolles Datum ergeben
 	 *
@@ -97,21 +98,20 @@ class Validate
 	 *  Startdatum
 	 * @param string $end
 	 *  Enddatum
- 	 * @return boolean
+	 * @return boolean
 	 */
-	public static function date($start, $end = null)
-	{
+	public static function date($start, $end = null) {
 		$matches_start = $matches_end = array();
 		$regex = '/^(\d{4})-(\d{2})-(\d{2})( ([01][0-9]|2[0-3])(:([0-5][0-9])){1,2}){0,1}$/';
 		if (preg_match($regex, $start, $matches_start)) {
 			// Wenn ein Enddatum festgelegt wurde, dieses ebenfalls mit überprüfen
 			if ($end != null && preg_match($regex, $end, $matches_end)) {
 				if (checkdate($matches_start[2], $matches_start[3], $matches_start[1]) &&
-					checkdate($matches_end[2], $matches_end[3], $matches_end[1]) &&
-					strtotime($start) <= strtotime($end)) {
+						checkdate($matches_end[2], $matches_end[3], $matches_end[1]) &&
+						strtotime($start) <= strtotime($end)) {
 					return true;
 				}
-			// Nur Startdatum überprüfen
+				// Nur Startdatum überprüfen
 			} else {
 				if (checkdate($matches_start[2], $matches_start[3], $matches_start[1])) {
 					return true;
@@ -120,10 +120,11 @@ class Validate
 		}
 		return false;
 	}
-	public static function deleteEntries($entries)
-	{
+
+	public static function deleteEntries($entries) {
 		return (bool) preg_match('/^((\d+)\|)*(\d+)$/', $entries);
 	}
+
 	/**
 	 * Überprüft, ob eine Standardkonforme E-Mail-Adresse übergeben wurde
 	 *
@@ -133,8 +134,7 @@ class Validate
 	 *  Zu überprüfende E-Mail-Adresse
 	 * @return boolean
 	 */
-	public static function email($var)
-	{
+	public static function email($var) {
 		if (function_exists('filter_var')) {
 			return (bool) filter_var($var, FILTER_VALIDATE_EMAIL);
 		} else {
@@ -142,14 +142,14 @@ class Validate
 			return (bool) preg_match($pattern, $var);
 		}
 	}
+
 	/**
 	 * Überprüft, ob die zusätzlich zu ladenden Stylesheets überhaupt existieren
 	 *
 	 * @param string $var
 	 * @return boolean
 	 */
-	public static function extraCSS($var)
-	{
+	public static function extraCSS($var) {
 		if ((bool) preg_match('=/=', $var) === false) {
 			$var_ary = explode(',', $var);
 			foreach ($var_ary as $stylesheet) {
@@ -162,14 +162,14 @@ class Validate
 		}
 		return false;
 	}
+
 	/**
 	 * Überprüft, ob die zusätzlich zu ladenden JavaScript Dateien überhaupt existieren
 	 *
 	 * @param string $var
 	 * @return boolean
 	 */
-	public static function extraJS($var)
-	{
+	public static function extraJS($var) {
 		if ((bool) preg_match('=/=', $var) === false) {
 			$var_ary = explode(',', $var);
 			foreach ($var_ary as $js) {
@@ -182,19 +182,20 @@ class Validate
 		}
 		return false;
 	}
+
 	/**
 	 * Validiert das Formtoken auf seine Gültigkeit
 	 *
 	 * @return boolean
 	 */
-	public static function formToken()
-	{
+	public static function formToken() {
 		if (isset($_POST[\ACP3\Core\Session::XSRF_TOKEN_NAME]) && isset($_SESSION[\ACP3\Core\Session::XSRF_TOKEN_NAME][Registry::get('URI')->query]) &&
-			$_POST[\ACP3\Core\Session::XSRF_TOKEN_NAME] === $_SESSION[\ACP3\Core\Session::XSRF_TOKEN_NAME][Registry::get('URI')->query]) {
+				$_POST[\ACP3\Core\Session::XSRF_TOKEN_NAME] === $_SESSION[\ACP3\Core\Session::XSRF_TOKEN_NAME][Registry::get('URI')->query]) {
 			return true;
 		}
 		return false;
 	}
+
 	/**
 	 * Bestimmung des Geschlechts
 	 *  1 = Keine Angabe
@@ -205,50 +206,50 @@ class Validate
 	 *  Die zu überprüfende Variable
 	 * @return boolean
 	 */
-	public static function gender($var)
-	{
+	public static function gender($var) {
 		return $var == 1 || $var == 2 || $var == 3 ? true : false;
 	}
+
 	/**
 	 * Überprüft, ob eine gültige ICQ-Nummer eingegeben wurde
 	 *
 	 * @param integer $var
 	 * @return boolean
 	 */
-	public static function icq($var)
-	{
+	public static function icq($var) {
 		return (bool) preg_match('/^(\d{6,9})$/', $var);
 	}
+
 	/**
 	 * Überprüft, ob die übergebene URI dem Format des ACP3 entspricht
 	 *
 	 * @param mixed $var
 	 * @return boolean
 	 */
-	public static function isInternalURI($var)
-	{
+	public static function isInternalURI($var) {
 		return (bool) preg_match('/^([a-z\d_\-]+\/){2,}$/', $var);
 	}
+
 	/**
 	 * Überprüft, ob ein gültiger MD5-Hash übergeben wurde
 	 *
 	 * @param string $string
 	 * @return boolean
 	 */
-	public static function isMD5($string)
-	{
+	public static function isMD5($string) {
 		return is_string($string) === true && preg_match('/^[a-f\d]+$/', $string) && strlen($string) === 32 ? true : false;
- 	}
+	}
+
 	/**
 	 * Überprüft eine Variable, ob diese nur aus Ziffern besteht
 	 *
 	 * @param mixed $var
 	 * @return boolean
 	 */
-	public static function isNumber($var)
-	{
+	public static function isNumber($var) {
 		return (bool) preg_match('/^(\d+)$/', $var);
 	}
+
 	/**
 	 * Überprüfen, ob es ein unterstütztes Bildformat ist
 	 *
@@ -256,8 +257,7 @@ class Validate
 	 *  Zu überprüfendes Bild
 	 * @return boolean
 	 */
-	public static function isPicture($file, $width = '', $height = '', $filesize = '')
-	{
+	public static function isPicture($file, $width = '', $height = '', $filesize = '') {
 		$info = getimagesize($file);
 		$isPicture = $info[2] >= 1 && $info[2] <= 3 ? true : false;
 
@@ -275,17 +275,18 @@ class Validate
 		}
 		return false;
 	}
+
 	/**
-	 *	Überprüft, ob der eingegebene URI-Alias sicher ist, d.h. es dürfen nur
-	 *	die Kleinbuchstaben von a-z, Zahlen, der Bindestrich und das Slash eingegeben werden
+	 * 	Überprüft, ob der eingegebene URI-Alias sicher ist, d.h. es dürfen nur
+	 * 	die Kleinbuchstaben von a-z, Zahlen, der Bindestrich und das Slash eingegeben werden
 	 *
 	 * @param string $var
 	 * @return boolean
 	 */
-	public static function isUriSafe($var)
-	{
+	public static function isUriSafe($var) {
 		return (bool) preg_match('/^([a-z]{1}[a-z\d\-]*(\/[a-z\d\-]+)*)$/', $var);
 	}
+
 	/**
 	 * Gibt in Abhängigkeit des Parameters $mimetype entweder
 	 * den gefundenen MIMETYPE aus oder ob der gefundene MIMETYPE
@@ -313,15 +314,15 @@ class Validate
 			}
 		}
 	}
+
 	/**
 	 * Überprüft, ob eine gültige Zeitzone gewählt wurde
 	 *
 	 * @param string $var
-	 *	Die zu überprüfende Variable
+	 * 	Die zu überprüfende Variable
 	 * @return boolean 
 	 */
-	public static function timeZone($var)
-	{
+	public static function timeZone($var) {
 		$bool = true;
 		try {
 			new \DateTimeZone($var);
@@ -330,6 +331,7 @@ class Validate
 		}
 		return $bool;
 	}
+
 	/**
 	 * Überprüft, ob ein URI-Alias bereits existiert
 	 *
@@ -337,13 +339,12 @@ class Validate
 	 * @param string $path
 	 * @return boolean
 	 */
-	public static function uriAliasExists($alias, $path = '')
-	{
+	public static function uriAliasExists($alias, $path = '') {
 		if (self::isUriSafe($alias)) {
 			if (is_dir(MODULES_DIR . $alias) === true) {
 				return true;
 			} else {
-				$path.= !preg_match('=/$=', $path) ? '/' : '';
+				$path.=!preg_match('=/$=', $path) ? '/' : '';
 				if ($path !== '/' && self::isInternalURI($path) === true) {
 					return Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE alias = ? AND uri != ?', array($alias, $path)) > 0 ? true : false;
 				} elseif (Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE alias = ?', array($alias)) > 0) {
@@ -353,4 +354,5 @@ class Validate
 		}
 		return false;
 	}
+
 }

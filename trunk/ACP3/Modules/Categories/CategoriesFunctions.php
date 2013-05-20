@@ -12,7 +12,7 @@ namespace ACP3\Modules\Categories;
 
 use ACP3\Core;
 
-class CategoriesFunctions {
+abstract class CategoriesFunctions {
 
 	/**
 	 * Erstellt den Cache für die Kategorien eines Moduls

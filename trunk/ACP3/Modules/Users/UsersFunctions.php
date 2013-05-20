@@ -12,7 +12,7 @@ namespace ACP3\Modules\Users;
 
 use ACP3\Core;
 
-class UsersFunctions {
+abstract class UsersFunctions {
 
 	/**
 	 * Überprüft, ob der übergebene Username schon existiert

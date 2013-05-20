@@ -12,7 +12,7 @@ namespace ACP3\Modules\Emoticons;
 
 use ACP3\Core;
 
-class EmoticonsFunctions {
+abstract class EmoticonsFunctions {
 
 	/**
 	 * Cache die Emoticons

@@ -16,7 +16,7 @@ namespace ACP3\Core;
  * @package ACP3
  * @subpackage Core
  */
-class SEO
+abstract class SEO
 {
 	/**
 	 * Caching Variable für die URI-Aliases

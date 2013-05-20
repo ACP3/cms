@@ -10,7 +10,7 @@
 
 namespace ACP3\Core;
 
-class Functions {
+abstract class Functions {
 
 	/**
 	 * Ermittelt die Dateigröße gemäß IEC 60027-2
