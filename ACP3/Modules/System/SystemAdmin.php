@@ -21,7 +21,7 @@ class SystemAdmin extends Core\ModuleController {
 				$errors['flood'] = Core\Registry::get('Lang')->t('system', 'type_in_flood_barrier');
 			if ((bool) preg_match('/\/$/', $_POST['icons_path']) === false)
 				$errors['icons-path'] = Core\Registry::get('Lang')->t('system', 'incorrect_path_to_icons');
-			if ($_POST['wysiwyg'] != 'textarea' && (preg_match('=/=', $_POST['wysiwyg']) || is_file(CLASSES_DIR . 'WYSIWYG/' . $_POST['wysiwyg'] . '.php') === false))
+			if (preg_match('=/=', $_POST['wysiwyg']) || is_file(CLASSES_DIR . 'WYSIWYG/' . $_POST['wysiwyg'] . '.php') === false)
 				$errors['wysiwyg'] = Core\Registry::get('Lang')->t('system', 'select_editor');
 			if (empty($_POST['date_format_long']) || empty($_POST['date_format_short']))
 				$errors[] = Core\Registry::get('Lang')->t('system', 'type_in_date_format');
@@ -126,7 +126,7 @@ class SystemAdmin extends Core\ModuleController {
 			Core\Registry::get('View')->assign('wysiwyg', $wysiwyg);
 
 			// Zeitzonen
-			Core\Registry::get('View')->assign('time_zones', Core\Registry::get('Date')->getTimeZones(CONFIG_DATE_TIME_ZONE));
+			Core\Registry::get('View')->assign('time_zones', Core\Date::getTimeZones(CONFIG_DATE_TIME_ZONE));
 
 			// Wartungsmodus an/aus
 			$lang_maintenance = array(Core\Registry::get('Lang')->t('system', 'yes'), Core\Registry::get('Lang')->t('system', 'no'));
@@ -267,104 +267,16 @@ class SystemAdmin extends Core\ModuleController {
 
 		switch (Core\Registry::get('URI')->action) {
 			case 'activate':
-				$bool = false;
-				$info = Core\Modules::getModuleInfo(Core\Registry::get('URI')->dir);
-				if (empty($info)) {
-					$text = Core\Registry::get('Lang')->t('system', 'module_not_found');
-				} elseif ($info['protected'] === true) {
-					$text = Core\Registry::get('Lang')->t('system', 'mod_deactivate_forbidden');
-				} else {
-					$bool = Core\Registry::get('Db')->update(DB_PRE . 'modules', array('active' => 1), array('name' => Core\Registry::get('URI')->dir));
-					Core\Modules::setModulesCache();
-					Core\ACL::setResourcesCache();
-
-					$text = Core\Registry::get('Lang')->t('system', 'mod_activate_' . ($bool !== false ? 'success' : 'error'));
-				}
-				Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
+				$this->enableModule();
+				break;
 			case 'deactivate':
-				$bool = false;
-				$info = Core\Modules::getModuleInfo(Core\Registry::get('URI')->dir);
-				if (empty($info)) {
-					$text = Core\Registry::get('Lang')->t('system', 'module_not_found');
-				} elseif ($info['protected'] === true) {
-					$text = Core\Registry::get('Lang')->t('system', 'mod_deactivate_forbidden');
-				} else {
-					// Modulabhängigkeiten prüfen
-					$deps = SystemFunctions::checkUninstallDependencies(Core\Registry::get('URI')->dir);
-
-					if (empty($deps)) {
-						$bool = Core\Registry::get('Db')->update(DB_PRE . 'modules', array('active' => 0), array('name' => Core\Registry::get('URI')->dir));
-						Core\Modules::setModulesCache();
-						Core\ACL::setResourcesCache();
-
-						$text = Core\Registry::get('Lang')->t('system', 'mod_deactivate_' . ($bool !== false ? 'success' : 'error'));
-					} else {
-						$text = sprintf(Core\Registry::get('Lang')->t('system', 'module_disable_not_possible'), implode(', ', $deps));
-					}
-				}
-				Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
+				$this->disableModule();
 				break;
 			case 'install':
-				$bool = false;
-				// Nur noch nicht installierte Module berücksichtigen
-				if (Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'modules WHERE name = ?', array(Core\Registry::get('URI')->dir)) == 0) {
-					$mod_name = ucfirst(Core\Registry::get('URI')->dir);
-					$path = MODULES_DIR . $mod_name . '/' . $mod_name . 'Installer.php';
-					if (is_file($path) === true) {
-						// Modulabhängigkeiten prüfen
-						$deps = SystemFunctions::checkInstallDependencies(Core\Registry::get('URI')->dir);
-
-						// Modul installieren
-						if (empty($deps)) {
-							require_once $path;
-
-							$className = Core\ModuleInstaller::buildClassName(Core\Registry::get('URI')->dir);
-							$install = new $className();
-							$bool = $install->install();
-							Core\Modules::setModulesCache();
-							$text = Core\Registry::get('Lang')->t('system', 'mod_installation_' . ($bool !== false ? 'success' : 'error'));
-						} else {
-							$text = sprintf(Core\Registry::get('Lang')->t('system', 'enable_following_modules_first'), implode(', ', $deps));
-						}
-					} else {
-						$text = Core\Registry::get('Lang')->t('system', 'module_installer_not_found');
-					}
-				} else {
-					$text = Core\Registry::get('Lang')->t('system', 'module_already_installed');
-				}
-				Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
+				$this->installModule();
 				break;
 			case 'uninstall':
-				$bool = false;
-				$mod_info = Core\Modules::getModuleInfo(Core\Registry::get('URI')->dir);
-				// Nur installierte und Nicht-Core-Module berücksichtigen
-				if ($mod_info['protected'] === false &&
-						Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'modules WHERE name = ?', array(Core\Registry::get('URI')->dir)) == 1) {
-					$mod_name = ucfirst(Core\Registry::get('URI')->dir);
-					$path = MODULES_DIR . $mod_name . '/' . $mod_name . 'Installer.php';
-					if (is_file($path) === true) {
-						// Modulabhängigkeiten prüfen
-						$deps = SystemFunctions::checkUninstallDependencies(Core\Registry::get('URI')->dir);
-
-						// Modul deinstallieren
-						if (empty($deps)) {
-							require_once $path;
-
-							$className = Core\ModuleInstaller::buildClassName(Core\Registry::get('URI')->dir);
-							$install = new $className();
-							$bool = $install->uninstall();
-							Core\Modules::setModulesCache();
-							$text = Core\Registry::get('Lang')->t('system', 'mod_uninstallation_' . ($bool !== false ? 'success' : 'error'));
-						} else {
-							$text = sprintf(Core\Registry::get('Lang')->t('system', 'uninstall_following_modules_first'), implode(', ', $deps));
-						}
-					} else {
-						$text = Core\Registry::get('Lang')->t('system', 'module_installer_not_found');
-					}
-				} else {
-					$text = Core\Registry::get('Lang')->t('system', 'protected_module_description');
-				}
-				Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
+				$this->uninstallModule();
 				break;
 			default:
 				Core\Functions::getRedirectMessage();
@@ -376,7 +288,8 @@ class SystemAdmin extends Core\ModuleController {
 				$installed_modules = $new_modules = array();
 
 				foreach ($modules as $key => $values) {
-					if (Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'modules WHERE name = ?', array($values['dir'])) == 1) {
+					$values['dir'] = strtolower($values['dir']);
+					if (Core\Modules::isInstalled($values['dir']) === true) {
 						$installed_modules[$key] = $values;
 					} else {
 						$new_modules[$key] = $values;
@@ -386,6 +299,106 @@ class SystemAdmin extends Core\ModuleController {
 				Core\Registry::get('View')->assign('installed_modules', $installed_modules);
 				Core\Registry::get('View')->assign('new_modules', $new_modules);
 		}
+	}
+
+	private function enableModule() {
+		$bool = false;
+		$info = Core\Modules::getModuleInfo(Core\Registry::get('URI')->dir);
+		if (empty($info)) {
+			$text = Core\Registry::get('Lang')->t('system', 'module_not_found');
+		} elseif ($info['protected'] === true) {
+			$text = Core\Registry::get('Lang')->t('system', 'mod_deactivate_forbidden');
+		} else {
+			$bool = Core\Registry::get('Db')->update(DB_PRE . 'modules', array('active' => 1), array('name' => Core\Registry::get('URI')->dir));
+			Core\Modules::setModulesCache();
+			Core\ACL::setResourcesCache();
+
+			$text = Core\Registry::get('Lang')->t('system', 'mod_activate_' . ($bool !== false ? 'success' : 'error'));
+		}
+		Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
+	}
+
+	private function disableModule() {
+		$bool = false;
+		$info = Core\Modules::getModuleInfo(Core\Registry::get('URI')->dir);
+		if (empty($info)) {
+			$text = Core\Registry::get('Lang')->t('system', 'module_not_found');
+		} elseif ($info['protected'] === true) {
+			$text = Core\Registry::get('Lang')->t('system', 'mod_deactivate_forbidden');
+		} else {
+			// Modulabhängigkeiten prüfen
+			$deps = SystemFunctions::checkUninstallDependencies(Core\Registry::get('URI')->dir);
+
+			if (empty($deps)) {
+				$bool = Core\Registry::get('Db')->update(DB_PRE . 'modules', array('active' => 0), array('name' => Core\Registry::get('URI')->dir));
+				Core\Modules::setModulesCache();
+				Core\ACL::setResourcesCache();
+
+				$text = Core\Registry::get('Lang')->t('system', 'mod_deactivate_' . ($bool !== false ? 'success' : 'error'));
+			} else {
+				$text = sprintf(Core\Registry::get('Lang')->t('system', 'module_disable_not_possible'), implode(', ', $deps));
+			}
+		}
+		Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
+	}
+
+	private function installModule() {
+		$bool = false;
+		// Nur noch nicht installierte Module berücksichtigen
+		if (Core\Modules::isInstalled(Core\Registry::get('URI')->dir) === false) {
+			$mod_name = ucfirst(Core\Registry::get('URI')->dir);
+			$path = MODULES_DIR . $mod_name . '/' . $mod_name . 'Installer.php';
+			if (is_file($path) === true) {
+				// Modulabhängigkeiten prüfen
+				$deps = SystemFunctions::checkInstallDependencies(Core\Registry::get('URI')->dir);
+
+				// Modul installieren
+				if (empty($deps)) {
+					$className = Core\ModuleInstaller::buildClassName(Core\Registry::get('URI')->dir);
+					$install = new $className();
+					$bool = $install->install();
+					Core\Modules::setModulesCache();
+					$text = Core\Registry::get('Lang')->t('system', 'mod_installation_' . ($bool !== false ? 'success' : 'error'));
+				} else {
+					$text = sprintf(Core\Registry::get('Lang')->t('system', 'enable_following_modules_first'), implode(', ', $deps));
+				}
+			} else {
+				$text = Core\Registry::get('Lang')->t('system', 'module_installer_not_found');
+			}
+		} else {
+			$text = Core\Registry::get('Lang')->t('system', 'module_already_installed');
+		}
+		Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
+	}
+
+	private function uninstallModule() {
+		$bool = false;
+		$mod_info = Core\Modules::getModuleInfo(Core\Registry::get('URI')->dir);
+		// Nur installierte und Nicht-Core-Module berücksichtigen
+		if ($mod_info['protected'] === false && Core\Modules::isInstalled(Core\Registry::get('URI')->dir) === true) {
+			$mod_name = ucfirst(Core\Registry::get('URI')->dir);
+			$path = MODULES_DIR . $mod_name . '/' . $mod_name . 'Installer.php';
+			if (is_file($path) === true) {
+				// Modulabhängigkeiten prüfen
+				$deps = SystemFunctions::checkUninstallDependencies(Core\Registry::get('URI')->dir);
+
+				// Modul deinstallieren
+				if (empty($deps)) {
+					$className = Core\ModuleInstaller::buildClassName(Core\Registry::get('URI')->dir);
+					$install = new $className();
+					$bool = $install->uninstall();
+					Core\Modules::setModulesCache();
+					$text = Core\Registry::get('Lang')->t('system', 'mod_uninstallation_' . ($bool !== false ? 'success' : 'error'));
+				} else {
+					$text = sprintf(Core\Registry::get('Lang')->t('system', 'uninstall_following_modules_first'), implode(', ', $deps));
+				}
+			} else {
+				$text = Core\Registry::get('Lang')->t('system', 'module_installer_not_found');
+			}
+		} else {
+			$text = Core\Registry::get('Lang')->t('system', 'protected_module_description');
+		}
+		Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
 	}
 
 	public function actionSql_export() {

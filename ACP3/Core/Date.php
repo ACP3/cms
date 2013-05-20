@@ -283,7 +283,7 @@ class Date {
 	 * @param string $current_value
 	 * @return array
 	 */
-	public function getTimeZones($current_value = '')
+	public static function getTimeZones($current_value = '')
 	{
 		$timeZones = array(
 			'Africa' => \DateTimeZone::listIdentifiers(\DateTimeZone::AFRICA),

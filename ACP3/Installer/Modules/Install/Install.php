@@ -107,7 +107,7 @@ class Install extends \ACP3\Installer\Core\InstallerModuleController {
 					'driver' => 'pdo_mysql',
 					'charset' => 'utf8'
 				);
-				\ACP3\Installer\Installer::$injector['Db'] = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
+				\ACP3\Core\Registry::set('Db', \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config));
 				define('DB_PRE', $_POST['db_pre']);
 
 				$bool = false;
@@ -137,12 +137,12 @@ class Install extends \ACP3\Installer\Core\InstallerModuleController {
 
 				// Admin-User, Menüpunkte, News, etc. in die DB schreiben
 				if ($bool === true) {
-					$salt = Core\Functions::salt(12);
+					$salt = \ACP3\Core\Functions::salt(12);
 					$current_date = gmdate('Y-m-d H:i:s');
 
 					$news_mod_id = \ACP3\Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('news'));
 					$queries = array(
-						"INSERT INTO `{pre}users` VALUES ('', 1, " . \ACP3\Core\Registry::get('Db')->quote($_POST["user_name"]) . ", '" . Core\Functions::generateSaltedPassword($salt, $_POST["user_pwd"]) . ":" . $salt . "', 0, '', '1', '', 0, '" . $_POST["mail"] . "', 0, '', '', '', '', '', '', '', '', 0, 0, " . \ACP3\Core\Registry::get('Db')->quote($_POST["date_format_long"]) . ", " . \ACP3\Core\Registry::get('Db')->quote($_POST["date_format_short"]) . ", '" . $_POST["date_time_zone"] . "', '" . LANG . "', '20', '');",
+						"INSERT INTO `{pre}users` VALUES ('', 1, " . \ACP3\Core\Registry::get('Db')->quote($_POST["user_name"]) . ", '" . \ACP3\Core\Functions::generateSaltedPassword($salt, $_POST["user_pwd"]) . ":" . $salt . "', 0, '', '1', '', 0, '" . $_POST["mail"] . "', 0, '', '', '', '', '', '', '', '', 0, 0, " . \ACP3\Core\Registry::get('Db')->quote($_POST["date_format_long"]) . ", " . \ACP3\Core\Registry::get('Db')->quote($_POST["date_format_short"]) . ", '" . $_POST["date_time_zone"] . "', '" . LANG . "', '20', '');",
 						'INSERT INTO `{pre}categories` VALUES (\'\', \'' . \ACP3\Core\Registry::get('Lang')->t('category_name') . '\', \'\', \'' . \ACP3\Core\Registry::get('Lang')->t('category_description') . '\', \'' . $news_mod_id . '\');',
 						'INSERT INTO `{pre}news` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', \'' . \ACP3\Core\Registry::get('Lang')->t('news_headline') . '\', \'' . \ACP3\Core\Registry::get('Lang')->t('news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\', \'\');',
 						'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 1, 0, 1, 4, 1, \'' . \ACP3\Core\Registry::get('Lang')->t('pages_news') . '\', \'news\', 1);',
@@ -192,10 +192,10 @@ class Install extends \ACP3\Installer\Core\InstallerModuleController {
 						'version' => CONFIG_VERSION,
 						'wysiwyg' => 'CKEditor'
 					);
-					Core\Functions::writeSettingsToDb('system', $system_settings);
-					Core\Functions::writeSettingsToDb('users', array('mail' => $_POST['mail']));
-					Core\Functions::writeSettingsToDb('contact', array('mail' => $_POST['mail'], 'disclaimer' => \ACP3\Core\Registry::get('Lang')->t('disclaimer')));
-					Core\Functions::writeSettingsToDb('newsletter', array('mail' => $_POST['mail'], 'mailsig' => \ACP3\Core\Registry::get('Lang')->t('sincerely') . "\n\n" . \ACP3\Core\Registry::get('Lang')->t('newsletter_mailsig')));
+					\ACP3\Core\Config::setSettings('system', $system_settings);
+					\ACP3\Core\Config::setSettings('users', array('mail' => $_POST['mail']));
+					\ACP3\Core\Config::setSettings('contact', array('mail' => $_POST['mail'], 'disclaimer' => \ACP3\Core\Registry::get('Lang')->t('disclaimer')));
+					\ACP3\Core\Config::setSettings('newsletter', array('mail' => $_POST['mail'], 'mailsig' => \ACP3\Core\Registry::get('Lang')->t('sincerely') . "\n\n" . \ACP3\Core\Registry::get('Lang')->t('newsletter_mailsig')));
 				}
 
 				\ACP3\Core\Registry::get('View')->setContentTemplate('install/result.tpl');
@@ -203,7 +203,7 @@ class Install extends \ACP3\Installer\Core\InstallerModuleController {
 		}
 		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 			// Zeitzonen
-			\ACP3\Core\Registry::get('View')->assign('time_zones', Core\Functions::getTimeZones(date_default_timezone_get()));
+			\ACP3\Core\Registry::get('View')->assign('time_zones', \ACP3\Core\Date::getTimeZones(date_default_timezone_get()));
 
 			$defaults = array(
 				'db_host' => 'localhost',

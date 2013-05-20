@@ -16,7 +16,7 @@ namespace ACP3\Core;
  * @package ACP3
  * @subpackage Core
  */
-class Cache
+abstract class Cache
 {
 	/**
 	 *

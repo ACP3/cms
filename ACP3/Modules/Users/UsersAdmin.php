@@ -401,7 +401,7 @@ class UsersAdmin extends Core\ModuleController {
 				Core\Registry::get('View')->assign('entries', Core\Functions::recordsPerPage((int) $user['entries']));
 
 				// Zeitzonen
-				Core\Registry::get('View')->assign('time_zones', Core\Registry::get('Date')->getTimeZones($user['time_zone']));
+				Core\Registry::get('View')->assign('time_zones', Core\Date::getTimeZones($user['time_zone']));
 
 				// Geschlecht
 				$lang_gender = array(

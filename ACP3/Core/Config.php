@@ -17,7 +17,7 @@ use \ACP3\Core\Cache;
  * @package ACP3
  * @subpackage Core
  */
-class Config
+abstract class Config
 {
 	/**
 	 * Gibt die Systemeinstellungen aus

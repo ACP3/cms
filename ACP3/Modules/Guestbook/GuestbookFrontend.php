@@ -18,7 +18,7 @@ class GuestbookFrontend extends Core\ModuleController {
 
 		$settings = Core\Config::getSettings('guestbook');
 		$newsletterAccess = Core\Modules::check('newsletter', 'list') === true && $settings['newsletter_integration'] == 1;
-		$captchaAccess = Core\Modules::isActive('captcha');
+		$captchaAccess = Core\Modules::check('captcha', 'image');
 
 		$overlay_active = false;
 		if (Core\Registry::get('URI')->layout === 'simple') {

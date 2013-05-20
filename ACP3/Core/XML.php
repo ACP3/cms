@@ -1,4 +1,5 @@
 <?php
+
 /**
  * XML Parser
  *
@@ -16,8 +17,15 @@ namespace ACP3\Core;
  * @package ACP3
  * @subpackage Core
  */
-class XML
-{
+abstract class XML {
+
+	/**
+	 * Cache für bereits ausgelesene XML-Dateien
+	 * 
+	 * @var array
+	 */
+	private static $info = array();
+
 	/**
 	 * Parst die angeforderte XML Datei
 	 *
@@ -25,12 +33,9 @@ class XML
 	 * @param string $xpath
 	 * @return mixed
 	 */
-	public static function parseXmlFile($path, $xpath)
-	{
-		static $info = array();
-
-		if (!empty($info[$path][$xpath])) {
-			return $info[$path][$xpath];
+	public static function parseXmlFile($path, $xpath) {
+		if (!empty(self::$info[$path][$xpath])) {
+			return self::$info[$path][$xpath];
 		} elseif (is_file($path) === true) {
 			$xml = simplexml_load_file($path);
 			$data = $xml->xpath($xpath);
@@ -41,28 +46,29 @@ class XML
 						if ($value->attributes()) {
 							foreach ($value->attributes() as $attr_key => $attr_val) {
 								if ($key === 'version' && $attr_key === 'core' && (string) $attr_val === 'true') {
-									$info[$path][$xpath]['version'] = CONFIG_VERSION;
+									self::$info[$path][$xpath]['version'] = CONFIG_VERSION;
 								} else {
-									$info[$path][$xpath][(string) $key][(string) $attr_key] = (string) $attr_val;
+									self::$info[$path][$xpath][(string) $key][(string) $attr_key] = (string) $attr_val;
 								}
 							}
-						} elseif (isset($info[$path][$xpath][(string) $key]) && is_array($info[$path][$xpath][(string) $key])) {
-							$info[$path][$xpath][(string) $key][] = (string) $value;
-						} elseif (isset($info[$path][$xpath][(string) $key])) {
-							$tmp = $info[$path][$xpath][(string) $key];
-							$info[$path][$xpath][(string) $key] = array();
-							$info[$path][$xpath][(string) $key][] = $tmp;
-							$info[$path][$xpath][(string) $key][] = (string) $value;
+						} elseif (isset(self::$info[$path][$xpath][(string) $key]) && is_array(self::$info[$path][$xpath][(string) $key])) {
+							self::$info[$path][$xpath][(string) $key][] = (string) $value;
+						} elseif (isset(self::$info[$path][$xpath][(string) $key])) {
+							$tmp = self::$info[$path][$xpath][(string) $key];
+							self::$info[$path][$xpath][(string) $key] = array();
+							self::$info[$path][$xpath][(string) $key][] = $tmp;
+							self::$info[$path][$xpath][(string) $key][] = (string) $value;
 						} else {
-							$info[$path][$xpath][(string) $key] = (string) $value;
+							self::$info[$path][$xpath][(string) $key] = (string) $value;
 						}
 					}
 				}
-				return $info[$path][$xpath];
+				return self::$info[$path][$xpath];
 			}
 		}
 		return array();
 	}
+
 	/**
 	 * Schreibt Änderungen in die angegebene XML Datei
 	 *
@@ -71,8 +77,7 @@ class XML
 	 * @param array $data
 	 * @return boolean
 	 */
-	public static function writeToXml($path, $xpath, $data)
-	{
+	public static function writeToXml($path, $xpath, $data) {
 		if (is_file($path) === true && is_writable($path) === true && is_array($data) === true) {
 			$xml = new DOMDocument();
 			$xml->load($path);
@@ -86,9 +91,9 @@ class XML
 				if (array_key_exists($item->nodeName, $data) === true) {
 					$newitem = $xml->createElement($item->nodeName);
 					if (empty($data[$item->nodeName]) ||
-						Validate::isNumber($data[$item->nodeName]) ||
-						Validate::email($data[$item->nodeName]) ||
-						preg_match('/^(\w+)$/', $data[$item->nodeName])) {
+							Validate::isNumber($data[$item->nodeName]) ||
+							Validate::email($data[$item->nodeName]) ||
+							preg_match('/^(\w+)$/', $data[$item->nodeName])) {
 						$newitem_content = $xml->createTextNode($data[$item->nodeName]);
 					} else {
 						$newitem_content = $xml->createCDATASection($data[$item->nodeName]);
@@ -104,4 +109,5 @@ class XML
 		}
 		return false;
 	}
+
 }

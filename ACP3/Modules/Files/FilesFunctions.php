@@ -12,7 +12,7 @@ namespace ACP3\Modules\Files;
 
 use ACP3\Core\Cache;
 
-class FilesFunctions {
+abstract class FilesFunctions {
 
 	/**
 	 * Setzt das Cache für einen Download

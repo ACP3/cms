@@ -17,7 +17,7 @@ namespace ACP3\Core;
  * @package ACP3
  * @subpackage Core
  */
-class Modules {
+abstract class Modules {
 
 	/**
 	 * Überpüft, ob ein Modul überhaupt existiert,

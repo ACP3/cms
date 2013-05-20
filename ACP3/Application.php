@@ -8,7 +8,7 @@
 
 namespace ACP3;
 
-class CMS {
+class Application {
 
 	/**
 	 * Führt alle nötigen Schritte aus, um die Seite anzuzeigen

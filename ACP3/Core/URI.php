@@ -32,6 +32,8 @@ class URI
 	 */
 	public $query = '';
 
+	const PATTERN = '=^acp/=';
+
 	/**
 	 * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
 	 */
@@ -90,7 +92,7 @@ class URI
 		$this->query = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
 		$this->query.= !preg_match('/\/$/', $this->query) ? '/' : '';
 
-		if (preg_match('/^(acp\/)/', $this->query)) {
+		if (preg_match(self::PATTERN, $this->query)) {
 			// Definieren, dass man sich im Administrationsbereich befindet
 			define('IN_ADM', true);
 			// "acp/" entfernen
@@ -257,16 +259,16 @@ class URI
 	{
 		$path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
 
-		if (!preg_match('/^acp\//', $path)) {
+		if (CONFIG_SEO_ALIASES === true && !preg_match(self::PATTERN, $path)) {
 			if (count(preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY)) === 1)
 				$path.= 'list/';
 			// Überprüfen, ob Alias vorhanden ist und diesen als URI verwenden
-			if ((bool) (bool) CONFIG_SEO_ALIASES === true && $alias === 1) {
+			if ($alias === 1) {
 				$alias = SEO::getUriAlias($path);
 				$path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
 			}
 		}
-		$prefix = (bool) CONFIG_SEO_MOD_REWRITE === false || preg_match('/^acp\//', $path) || defined('IN_UPDATER') === true ? PHP_SELF . '/' : ROOT_DIR;
+		$prefix = (bool) CONFIG_SEO_MOD_REWRITE === false || preg_match(self::PATTERN, $path) ? PHP_SELF . '/' : ROOT_DIR;
 		return $prefix . $path;
 	}
 }

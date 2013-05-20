@@ -211,7 +211,7 @@ class UsersFrontend extends Core\ModuleController {
 				Core\Registry::get('View')->assign('entries', Core\Functions::recordsPerPage((int) $user['entries']));
 
 				// Zeitzonen
-				Core\Registry::get('View')->assign('time_zones', Core\Registry::get('Date')->getTimeZones($user['time_zone']));
+				Core\Registry::get('View')->assign('time_zones', Core\Date::getTimeZones($user['time_zone']));
 
 				$lang_mail_display = array(Core\Registry::get('Lang')->t('system', 'yes'), Core\Registry::get('Lang')->t('system', 'no'));
 				Core\Registry::get('View')->assign('mail_display', Core\Functions::selectGenerator('mail_display', array(1, 0), $lang_mail_display, $user['mail_display'], 'checked'));
@@ -245,7 +245,7 @@ class UsersFrontend extends Core\ModuleController {
 					->append(Core\Registry::get('Lang')->t('users', 'users'), Core\Registry::get('URI')->route('users'))
 					->append(Core\Registry::get('Lang')->t('users', 'forgot_pwd'));
 
-			$captchaAccess = Core\Modules::isActive('captcha');
+			$captchaAccess = Core\Modules::check('captcha', 'image');
 
 			if (isset($_POST['submit']) === true) {
 				if (empty($_POST['nick_mail']))
@@ -394,7 +394,7 @@ class UsersFrontend extends Core\ModuleController {
 					->append(Core\Registry::get('Lang')->t('users', 'users'), Core\Registry::get('URI')->route('users'))
 					->append(Core\Registry::get('Lang')->t('users', 'register'));
 
-			$captchaAccess = Core\Modules::isActive('captcha');
+			$captchaAccess = Core\Modules::check('captcha', 'image');
 
 			if (isset($_POST['submit']) === true) {
 				if (empty($_POST['nickname']))
@@ -419,7 +419,7 @@ class UsersFrontend extends Core\ModuleController {
 					$host = htmlentities($_SERVER['HTTP_HOST']);
 					$subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), Core\Registry::get('Lang')->t('users', 'register_mail_subject'));
 					$body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($_POST['nickname'], $_POST['mail'], $_POST['pwd'], CONFIG_SEO_TITLE, $host), Core\Registry::get('Lang')->t('users', 'register_mail_message'));
-					$mail_sent = Core\Functions::generateEmail('', $_POST['mail'], $subject, $body);
+					$mail_sent = Core\Functions::generateEmail('', $_POST['mail'], $settings['mail'], $subject, $body);
 
 					$salt = salt(12);
 					$insert_values = array(

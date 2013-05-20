@@ -10,7 +10,7 @@
 
 namespace ACP3\Modules\Comments;
 
-class CommentsFunctions {
+abstract class CommentsFunctions {
 
 	/**
 	 * Zählt die Anzahl der Kommentare für einen bestimmten Eintrag eines Modules zusammen

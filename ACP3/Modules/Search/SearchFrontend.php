@@ -32,15 +32,18 @@ class SearchFrontend extends Core\ModuleController {
 
 				$_POST['search_term'] = Core\Functions::str_encode($_POST['search_term']);
 				$_POST['sort'] = strtoupper($_POST['sort']);
-				$results_mods = array();
+				$search_results = array();
 				foreach ($_POST['mods'] as $module) {
-					if (Core\Modules::check($module, 'extensions/search') === true) {
-						include_once MODULES_DIR . $module . '/extensions/search.php';
+					$action = $module . 'Search';
+					if (method_exists("\\ACP3\\Modules\Search\SearchExtensions", $action) &&
+						Core\Modules::check($module, 'list') === true) {
+						$results = new SearchExtensions($_POST['area'], $_POST['sort'], $_POST['search_term']);
+						$search_results = array_merge($search_results, $results->$action());
 					}
 				}
-				if (!empty($results_mods)) {
-					ksort($results_mods);
-					Core\Registry::get('View')->assign('results_mods', $results_mods);
+				if (!empty($search_results)) {
+					ksort($search_results);
+					Core\Registry::get('View')->assign('results_mods', $search_results);
 				} else {
 					Core\Registry::get('View')->assign('no_search_results', sprintf(Core\Registry::get('Lang')->t('search', 'no_search_results'), $_POST['search_term']));
 				}
@@ -51,16 +54,17 @@ class SearchFrontend extends Core\ModuleController {
 		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 			Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? $_POST : array('search_term' => ''));
 
-			$mods = scandir(MODULES_DIR);
-			$c_mods = count($mods);
+			$className = "\\ACP3\\Modules\\Search\\SearchExtensions";
+			$modules = get_class_methods($className);
 			$search_mods = array();
 
-			for ($i = 0; $i < $c_mods; ++$i) {
-				if (Core\Modules::check($mods[$i], 'extensions/search') === true) {
-					$info = Core\Modules::getModuleInfo($mods[$i]);
+			foreach ($modules as $module) {
+				$module = substr($module, 0, strpos($module, 'Search'));
+				if (Core\Modules::check($module, 'list') === true) {
+					$info = Core\Modules::getModuleInfo($module);
 					$name = $info['name'];
-					$search_mods[$name]['dir'] = $mods[$i];
-					$search_mods[$name]['checked'] = Core\Functions::selectEntry('mods', $mods[$i], $mods[$i], 'checked');
+					$search_mods[$name]['dir'] = $module;
+					$search_mods[$name]['checked'] = Core\Functions::selectEntry('mods', $module, $module, 'checked');
 					$search_mods[$name]['name'] = $name;
 				}
 			}

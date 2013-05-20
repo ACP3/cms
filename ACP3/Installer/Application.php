@@ -8,7 +8,7 @@
 
 namespace ACP3\Installer;
 
-class Installer {
+class Application {
 
 	/**
 	 * Führt alle nötigen Schritte aus, um die Seite anzuzeigen

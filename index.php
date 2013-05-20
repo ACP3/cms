@@ -9,6 +9,6 @@
 
 define('IN_ACP3', true);
 define('ACP3_ROOT_DIR', realpath(__DIR__) . '/');
-require ACP3_ROOT_DIR . 'ACP3/CMS.php';
+require ACP3_ROOT_DIR . 'ACP3/Application.php';
 
-\ACP3\CMS::run();
+\ACP3\Application::run();
