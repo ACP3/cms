@@ -74,10 +74,10 @@ class Application {
 	 */
 	public static function checkForMaintenanceMode() {
 		if ((bool) CONFIG_MAINTENANCE_MODE === true &&
-				(defined('IN_ADM') === false && strpos(Registry::getClass('URI')->query, 'users/login/') !== 0)) {
-			Registry::get('View')->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
-			Registry::getClass('View')->assign('CONTENT', CONFIG_MAINTENANCE_MESSAGE);
-			Registry::getClass('View')->displayTemplate('system/maintenance.tpl');
+				(defined('IN_ADM') === false && strpos(Core\Registry::get('URI')->query, 'users/login/') !== 0)) {
+			Core\Registry::get('View')->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
+			Core\Registry::get('View')->assign('CONTENT', CONFIG_MAINTENANCE_MESSAGE);
+			Core\Registry::get('View')->displayTemplate('system/maintenance.tpl');
 			exit;
 		}
 	}
