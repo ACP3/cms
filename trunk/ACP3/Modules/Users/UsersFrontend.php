@@ -62,7 +62,7 @@ class UsersFrontend extends Core\ModuleController {
 
 					// Neues Passwort
 					if (!empty($_POST['new_pwd']) && !empty($_POST['new_pwd_repeat'])) {
-						$salt = salt(12);
+						$salt = Core\Functions::salt(12);
 						$new_pwd = Core\Functions::generateSaltedPassword($salt, $_POST['new_pwd']);
 						$update_values['pwd'] = $new_pwd . ':' . $salt;
 					}
@@ -263,7 +263,7 @@ class UsersFrontend extends Core\ModuleController {
 					Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 				} else {
 					// Neues Passwort und neuen Zufallsschlüssel erstellen
-					$new_password = salt(8);
+					$new_password = Core\Functions::salt(8);
 					$host = htmlentities($_SERVER['HTTP_HOST']);
 
 					// Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
@@ -285,7 +285,7 @@ class UsersFrontend extends Core\ModuleController {
 
 					// Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
 					if ($mail_sent === true) {
-						$salt = salt(12);
+						$salt = Core\Functions::salt(12);
 						$bool = Core\Registry::get('Db')->update(DB_PRE . 'users', array('pwd' => Core\Functions::generateSaltedPassword($salt, $new_password) . ':' . $salt, 'login_errors' => 0), array('id' => $user['id']));
 					}
 
@@ -421,7 +421,7 @@ class UsersFrontend extends Core\ModuleController {
 					$body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($_POST['nickname'], $_POST['mail'], $_POST['pwd'], CONFIG_SEO_TITLE, $host), Core\Registry::get('Lang')->t('users', 'register_mail_message'));
 					$mail_sent = Core\Functions::generateEmail('', $_POST['mail'], $settings['mail'], $subject, $body);
 
-					$salt = salt(12);
+					$salt = Core\Functions::salt(12);
 					$insert_values = array(
 						'id' => '',
 						'nickname' => Core\Functions::strEncode($_POST['nickname']),
