@@ -3,16 +3,8 @@ namespace ACP3\Modules\Search;
 use ACP3\Core\ModuleInstaller;
 
 class SearchInstaller extends ModuleInstaller {
-	private $module_name = 'search';
-	private $schema_version = 31;
-
-	protected function getName() {
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion() {
-		return $this->schema_version;
-	}
+	const MODULE_NAME = 'search';
+	const SCHEMA_VERSION = 31;
 
 	protected function createTables() {
 		return array();

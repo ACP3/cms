@@ -3,16 +3,8 @@ namespace ACP3\Modules\Emoticons;
 use ACP3\Core\ModuleInstaller;
 
 class EmoticonsInstaller extends ModuleInstaller {
-	private $module_name = 'emoticons';
-	private $schema_version = 31;
-
-	protected function getName() {
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion() {
-		return $this->schema_version;
-	}
+	const MODULE_NAME = 'emoticons';
+	const SCHEMA_VERSION = 31;
 
 	protected function createTables() {
 		return array(

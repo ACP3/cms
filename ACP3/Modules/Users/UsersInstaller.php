@@ -1,18 +1,13 @@
 <?php
+
 namespace ACP3\Modules\Users;
+
 use ACP3\Core\ModuleInstaller;
 
 class UsersInstaller extends ModuleInstaller {
-	private $module_name = 'users';
-	private $schema_version = 33;
 
-	protected function getName() {
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion() {
-		return $this->schema_version;
-	}
+	const MODULE_NAME = 'users';
+	const SCHEMA_VERSION = 33;
 
 	protected function removeResources() {
 		return true;
@@ -102,7 +97,8 @@ class UsersInstaller extends ModuleInstaller {
 			),
 			33 => array(
 				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
-			) 
+			)
 		);
 	}
+
 }

@@ -3,8 +3,8 @@ namespace ACP3\Modules\System;
 use ACP3\Core\ModuleInstaller;
 
 class SystemInstaller extends ModuleInstaller {
-	private $module_name = 'system';
-	private $schema_version = 35;
+	const MODULE_NAME = 'system';
+	const SCHEMA_VERSION = 35;
 
 	public function __construct() {
 		$this->special_resources = array(
@@ -16,14 +16,6 @@ class SystemInstaller extends ModuleInstaller {
 			'acp_sql_export' => 7,
 			'acp_sql_import' => 7,
 		);
-	}
-
-	protected function getName() {
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion() {
-		return $this->schema_version;
 	}
 
 	protected function removeResources() {

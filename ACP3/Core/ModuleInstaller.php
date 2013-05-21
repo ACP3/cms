@@ -27,6 +27,19 @@ abstract class ModuleInstaller {
 	protected $module_id = null;
 
 	/**
+	 * Name des Moduls
+	 * 
+	 * @var string
+	 */
+	const MODULE_NAME = '';
+
+	/**
+	 * Version des Tabellen-Schema für das Modul
+	 * @var integer
+	 */
+	const SCHEMA_VERSION = 0;
+
+	/**
 	 * Ressourcen, welche vom standardmäßigen Namensschema abweichen
 	 * oder spezielle Berechtigungen benötigen
 	 *
@@ -45,7 +58,7 @@ abstract class ModuleInstaller {
 	 * @param mixed $module_id
 	 */
 	public function setModuleId() {
-		$mod_id = Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($this->getName()));
+		$mod_id = Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array(static::MODULE_NAME));
 		$this->module_id = !empty($mod_id) ? (int) $mod_id : 0;
 	}
 
@@ -140,7 +153,7 @@ abstract class ModuleInstaller {
 	 * @return boolean
 	 */
 	public function addResources($mode = 1) {
-		$mod_name = $this->getName();
+		$mod_name = static::MODULE_NAME;
 		$dir = ucfirst($mod_name);
 		$path = MODULES_DIR . $dir . '/';
 		$files = array($dir . 'Admin', $dir . 'Frontend');
@@ -260,7 +273,7 @@ abstract class ModuleInstaller {
 	 */
 	protected function addToModulesTable() {
 		// Modul in die Modules-SQL-Tabelle eintragen
-		$bool = Registry::get('Db')->insert(DB_PRE . 'modules', array('id' => '', 'name' => $this->getName(), 'version' => $this->getSchemaVersion(), 'active' => 1));
+		$bool = Registry::get('Db')->insert(DB_PRE . 'modules', array('id' => '', 'name' => static::MODULE_NAME, 'version' => static::SCHEMA_VERSION, 'active' => 1));
 		$this->module_id = Registry::get('Db')->lastInsertId();
 
 		return (bool) $bool;
@@ -281,7 +294,7 @@ abstract class ModuleInstaller {
 	 * @return integer
 	 */
 	public function updateSchema() {
-		$module = Registry::get('Db')->fetchAssoc('SELECT version FROM ' . DB_PRE . 'modules WHERE name = ?', array($this->getName()));
+		$module = Registry::get('Db')->fetchAssoc('SELECT version FROM ' . DB_PRE . 'modules WHERE name = ?', array(static::MODULE_NAME));
 		$installed_schema_version = isset($module['version']) ? (int) $module['version'] : 0;
 		$result = -1;
 
@@ -340,7 +353,7 @@ abstract class ModuleInstaller {
 	 * @return boolean
 	 */
 	public function setNewSchemaVersion($new_version) {
-		return Registry::get('Db')->update(DB_PRE . 'modules', array('version' => (int) $new_version), array('name' => $this->getName())) >= 0 ? true : false;
+		return Registry::get('Db')->update(DB_PRE . 'modules', array('version' => (int) $new_version), array('name' => static::MODULE_NAME)) >= 0 ? true : false;
 	}
 
 	/**
@@ -351,16 +364,6 @@ abstract class ModuleInstaller {
 	public function renameModule() {
 		return array();
 	}
-
-	/**
-	 * Liefert den Modulnamen zurück
-	 */
-	abstract protected function getName();
-
-	/**
-	 * Liefert die DB-Schema-Version des Moduls zurück
-	 */
-	abstract protected function getSchemaVersion();
 
 	/**
 	 * Liefert ein Array mit den zu erstellenden Datenbanktabellen des Moduls zurück

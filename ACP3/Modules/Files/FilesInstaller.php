@@ -3,16 +3,8 @@ namespace ACP3\Modules\Files;
 use ACP3\Core\ModuleInstaller;
 
 class FilesInstaller extends ModuleInstaller {
-	private $module_name = 'files';
-	private $schema_version = 32;
-
-	protected function getName() {
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion() {
-		return $this->schema_version;
-	}
+	const MODULE_NAME = 'files';
+	const SCHEMA_VERSION = 32;
 
 	protected function createTables() {
 		return array(

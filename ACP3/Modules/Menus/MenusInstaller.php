@@ -6,21 +6,13 @@ use ACP3\Core\ModuleInstaller;
 
 class MenusInstaller extends ModuleInstaller {
 
-	private $module_name = 'menus';
-	private $schema_version = 32;
+	const MODULE_NAME = 'menus';
+	const SCHEMA_VERSION = 32;
 
 	public function renameModule() {
 		return array(
 			31 => "UPDATE `{pre}modules` SET name = 'menus' WHERE name = 'menu_items';"
 		);
-	}
-
-	protected function getName() {
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion() {
-		return $this->schema_version;
 	}
 
 	protected function createTables() {

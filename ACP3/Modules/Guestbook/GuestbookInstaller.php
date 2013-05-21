@@ -3,16 +3,8 @@ namespace ACP3\Modules\Guestbook;
 use ACP3\Core\ModuleInstaller;
 
 class GuestbookInstaller extends ModuleInstaller {
-	private $module_name = 'guestbook';
-	private $schema_version = 30;
-
-	protected function getName() {
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion() {
-		return $this->schema_version;
-	}
+	const MODULE_NAME = 'guestbook';
+	const SCHEMA_VERSION = 30;
 
 	protected function createTables() {
 		return array(

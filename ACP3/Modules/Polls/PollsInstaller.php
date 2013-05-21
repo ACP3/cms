@@ -3,16 +3,8 @@ namespace ACP3\Modules\Polls;
 use ACP3\Core\ModuleInstaller;
 
 class PollsInstaller extends ModuleInstaller {
-	private $module_name = 'polls';
-	private $schema_version = 31;
-
-	protected function getName() {
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion() {
-		return $this->schema_version;
-	}
+	const MODULE_NAME = 'polls';
+	const SCHEMA_VERSION = 31;
 
 	protected function createTables() {
 		return array(

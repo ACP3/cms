@@ -3,16 +3,8 @@ namespace ACP3\Modules\Captcha;
 use ACP3\Core\ModuleInstaller;
 
 class CaptchaInstaller extends ModuleInstaller {
-	private $module_name = 'captcha';
-	private $schema_version = 31;
-
-	protected function getName() {
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion() {
-		return $this->schema_version;
-	}
+	const MODULE_NAME = 'captcha';
+	const SCHEMA_VERSION = 31;
 
 	protected function createTables() {
 		return array();

@@ -6,16 +6,8 @@ use ACP3\Core\ModuleInstaller;
 
 class CategoriesInstaller extends ModuleInstaller {
 
-	private $module_name = 'categories';
-	private $schema_version = 32;
-
-	protected function getName() {
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion() {
-		return $this->schema_version;
-	}
+	const MODULE_NAME = 'categories';
+	const SCHEMA_VERSION = 32;
 
 	protected function createTables() {
 		return array(

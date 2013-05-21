@@ -6,21 +6,13 @@ use ACP3\Core\ModuleInstaller;
 
 class NewsletterInstaller extends ModuleInstaller {
 
-	private $module_name = 'newsletter';
-	private $schema_version = 34;
+	const MODULE_NAME = 'newsletter';
+	const SCHEMA_VERSION = 34;
 
 	public function __construct() {
 		$this->special_resources = array(
 			'acp_send' => 4,
 		);
-	}
-
-	protected function getName() {
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion() {
-		return $this->schema_version;
 	}
 
 	protected function createTables() {
