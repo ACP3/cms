@@ -151,9 +151,10 @@ abstract class ModuleInstaller {
 				$actions = get_class_methods($className);
 
 				foreach ($actions as $action) {
-					if ($action !== '__construct' && $action !== 'display') {
+					// Nur die Module-Actions als Ressourcen hinzufügen
+					if (strpos($action, 'action') === 0) {
 						// Strip "action" from Methodname and lower case
-						$action = strtolower(substr($action, 6));
+						$action = strtolower(substr(preg_replace('/\B([A-Z])/', '_$1', $action), 7));
 						if (isset($this->special_resources[$action])) {
 							$privilege_id = $this->special_resources[$action];
 						} else {
