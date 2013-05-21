@@ -135,7 +135,7 @@ abstract class Functions {
 	{
 		require_once LIBRARIES_DIR . 'phpmailer/class.phpmailer.php';
 
-		$mail = new PHPMailer(true);
+		$mail = new \PHPMailer(true);
 		try {
 			if (strtolower(CONFIG_MAILER_TYPE) === 'smtp') {
 				$mail->set('Mailer', 'smtp');
