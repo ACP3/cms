@@ -158,7 +158,7 @@ class EmoticonsAdmin extends Core\ModuleController {
 		$c_emoticons = count($emoticons);
 
 		if ($c_emoticons > 0) {
-			$can_delete = Core\Modules::check('emoticons', 'acp_delete');
+			$can_delete = Core\Modules::hasPermission('emoticons', 'acp_delete');
 			$config = array(
 				'element' => '#acp-table',
 				'sort_col' => $can_delete === true ? 4 : 3,

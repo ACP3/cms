@@ -36,7 +36,7 @@ class SearchFrontend extends Core\ModuleController {
 				foreach ($_POST['mods'] as $module) {
 					$action = $module . 'Search';
 					if (method_exists("\\ACP3\\Modules\Search\SearchExtensions", $action) &&
-						Core\Modules::check($module, 'list') === true) {
+						Core\Modules::hasPermission($module, 'list') === true) {
 						$results = new SearchExtensions($_POST['area'], $_POST['sort'], $_POST['search_term']);
 						$search_results = array_merge($search_results, $results->$action());
 					}
@@ -60,7 +60,7 @@ class SearchFrontend extends Core\ModuleController {
 
 			foreach ($modules as $module) {
 				$module = substr($module, 0, strpos($module, 'Search'));
-				if (Core\Modules::check($module, 'list') === true) {
+				if (Core\Modules::hasPermission($module, 'list') === true) {
 					$info = Core\Modules::getModuleInfo($module);
 					$name = $info['name'];
 					$search_mods[$name]['dir'] = $module;
@@ -92,7 +92,7 @@ class SearchFrontend extends Core\ModuleController {
 		$search_mods = array();
 
 		for ($i = 0; $i < $c_mods; ++$i) {
-			if ($mods[$i] !== '.' && $mods[$i] !== '..' && Core\Modules::check($mods[$i], 'extensions/search') === true) {
+			if ($mods[$i] !== '.' && $mods[$i] !== '..' && Core\Modules::hasPermission($mods[$i], 'extensions/search') === true) {
 				$info = Core\Modules::getModuleInfo($mods[$i]);
 				$name = $info['name'];
 				$search_mods[$name]['dir'] = $mods[$i];

@@ -526,7 +526,7 @@ class UsersAdmin extends Core\ModuleController {
 		$c_users = count($users);
 
 		if ($c_users > 0) {
-			$can_delete = Core\Modules::check('users', 'acp_delete');
+			$can_delete = Core\Modules::hasPermission('users', 'acp_delete');
 			$config = array(
 				'element' => '#acp-table',
 				'sort_col' => $can_delete === true ? 1 : 0,

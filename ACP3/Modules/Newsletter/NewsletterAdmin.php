@@ -105,7 +105,7 @@ class NewsletterAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionDelete_account() {
+	public function actionDeleteAccount() {
 		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
 			$entries = $_POST['entries'];
 		elseif (Core\Validate::deleteEntries(Core\Registry::get('URI')->entries) === true)
@@ -208,7 +208,7 @@ class NewsletterAdmin extends Core\ModuleController {
 		$c_newsletter = count($newsletter);
 
 		if ($c_newsletter > 0) {
-			$can_delete = Core\Modules::check('newsletter', 'acp_delete');
+			$can_delete = Core\Modules::hasPermission('newsletter', 'acp_delete');
 			$config = array(
 				'element' => '#acp-table',
 				'sort_col' => $can_delete === true ? 1 : 0,
@@ -225,18 +225,18 @@ class NewsletterAdmin extends Core\ModuleController {
 			}
 			Core\Registry::get('View')->assign('newsletter', $newsletter);
 			Core\Registry::get('View')->assign('can_delete', $can_delete);
-			Core\Registry::get('View')->assign('can_send', Core\Modules::check('newsletter', 'acp_send'));
+			Core\Registry::get('View')->assign('can_send', Core\Modules::hasPermission('newsletter', 'acp_send'));
 		}
 	}
 
-	public function actionList_accounts() {
+	public function actionListAccounts() {
 		Core\Functions::getRedirectMessage();
 
 		$accounts = Core\Registry::get('Db')->fetchAll('SELECT id, mail, hash FROM ' . DB_PRE . 'newsletter_accounts ORDER BY id DESC');
 		$c_accounts = count($accounts);
 
 		if ($c_accounts > 0) {
-			$can_delete = Core\Modules::check('newsletter', 'acp_delete_account');
+			$can_delete = Core\Modules::hasPermission('newsletter', 'acp_delete_account');
 			$config = array(
 				'element' => '#acp-table',
 				'sort_col' => $can_delete === true ? 3 : 2,

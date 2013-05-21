@@ -19,6 +19,7 @@ class Application {
 		self::initializeInstallerClasses();
 		self::outputPage();
 	}
+
 	/**
 	 * 
 	 */
@@ -144,7 +145,7 @@ class Application {
 		}
 
 		if (!empty($_COOKIE['ACP3_INSTALLER_LANG']) && !preg_match('=/=', $_COOKIE['ACP3_INSTALLER_LANG']) &&
-			is_file(ACP3_ROOT_DIR . 'installation/languages/' . $_COOKIE['ACP3_INSTALLER_LANG'] . '.xml') === true) {
+				is_file(ACP3_ROOT_DIR . 'installation/languages/' . $_COOKIE['ACP3_INSTALLER_LANG'] . '.xml') === true) {
 			define('LANG', $_COOKIE['ACP3_INSTALLER_LANG']);
 		} else {
 			define('LANG', \ACP3\Core\Lang::parseAcceptLanguage());
@@ -166,7 +167,7 @@ class Application {
 
 		$module = ucfirst($uri->mod);
 		$className = "\\ACP3\\Installer\\Modules\\" . $module . "\\" . $module;
-		$action = 'action' . ucfirst($uri->file);
+		$action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $uri->file))));
 
 		if (method_exists($className, $action) === true) {
 			// Modul einbinden

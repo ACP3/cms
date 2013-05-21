@@ -59,7 +59,7 @@ class FilesFrontend extends Core\ModuleController {
 				$file['date_iso'] = Core\Registry::get('Date')->format($file['start'], 'c');
 				Core\Registry::get('View')->assign('file', $file);
 
-				if ($settings['comments'] == 1 && $file['comments'] == 1 && Core\Modules::check('comments', 'list') === true) {
+				if ($settings['comments'] == 1 && $file['comments'] == 1 && Core\Modules::hasPermission('comments', 'list') === true) {
 					$comments = new \ACP3\Modules\Comments\CommentsFrontend($this->injector, 'files', Core\Registry::get('URI')->id);
 					Core\Registry::get('View')->assign('comments', $comments->actionList());
 				}

@@ -12,7 +12,7 @@ function smarty_function_check_access($params)
 			$action[1] = isset($query[1]) ? $query[1] : 'list';
 		}
 
-		if (\ACP3\Core\Modules::check($action[0], $action[1]) === true) {
+		if (\ACP3\Core\Modules::hasPermission($action[0], $action[1]) === true) {
 			$access_check = array();
 			$access_check['uri'] = \ACP3\Core\Registry::get('URI')->route($params['path']);
 

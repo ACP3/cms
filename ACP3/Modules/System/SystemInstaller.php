@@ -180,7 +180,7 @@ class SystemInstaller extends ModuleInstaller {
 			),
 			35 => array(
 				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
-				"UPDATE `{pre}settings` SET value = \"4.0-dev\" WHERE module_id = " . $this->getModuleId() . " AND name = \"config_version\";",
+				"UPDATE `{pre}settings` SET value = \"4.0-dev\" WHERE module_id = " . $this->getModuleId() . " AND name = \"version\";",
 			),
 		);
 	}

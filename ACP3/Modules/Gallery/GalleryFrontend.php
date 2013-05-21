@@ -62,7 +62,7 @@ class GalleryFrontend extends Core\ModuleController {
 				Core\Registry::get('View')->assign('picture_next', $picture_next);
 			}
 
-			if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $picture['comments'] == 1 && Core\Modules::check('comments', 'list') === true) {
+			if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $picture['comments'] == 1 && Core\Modules::hasPermission('comments', 'list') === true) {
 				$comments = new \ACP3\Modules\Comments\CommentsFrontend($this->injector, 'gallery', Core\Registry::get('URI')->id);
 				Core\Registry::get('View')->assign('comments', $comments->actionList());
 			}

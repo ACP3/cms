@@ -34,7 +34,7 @@ class CommentsAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionDelete_comments() {
+	public function actionDeleteComments() {
 		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
 			$entries = $_POST['entries'];
 		elseif (Core\Validate::deleteEntries(Core\Registry::get('URI')->entries) === true)
@@ -113,7 +113,7 @@ class CommentsAdmin extends Core\ModuleController {
 		$c_comments = count($comments);
 
 		if ($c_comments > 0) {
-			$can_delete = Core\Modules::check('comments', 'acp_delete');
+			$can_delete = Core\Modules::hasPermission('comments', 'acp_delete');
 			$config = array(
 				'element' => '#acp-table',
 				'sort_col' => $can_delete === true ? 1 : 0,
@@ -129,7 +129,7 @@ class CommentsAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionList_comments() {
+	public function actionListComments() {
 		Core\Functions::getRedirectMessage();
 
 		if (Core\Validate::isNumber(Core\Registry::get('URI')->id) &&
@@ -143,7 +143,7 @@ class CommentsAdmin extends Core\ModuleController {
 			$c_comments = count($comments);
 
 			if ($c_comments > 0) {
-				$can_delete = Core\Modules::check('comments', 'acp_delete_comments');
+				$can_delete = Core\Modules::hasPermission('comments', 'acp_delete_comments');
 				$config = array(
 					'element' => '#acp-table',
 					'sort_col' => $can_delete === true ? 5 : 4,

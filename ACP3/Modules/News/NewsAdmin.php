@@ -232,7 +232,7 @@ class NewsAdmin extends Core\ModuleController {
 		$c_news = count($news);
 
 		if ($c_news > 0) {
-			$can_delete = Core\Modules::check('news', 'acp_delete');
+			$can_delete = Core\Modules::hasPermission('news', 'acp_delete');
 			$config = array(
 				'element' => '#acp-table',
 				'sort_col' => $can_delete === true ? 1 : 0,

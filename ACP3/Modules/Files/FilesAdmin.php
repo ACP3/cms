@@ -279,7 +279,7 @@ class FilesAdmin extends Core\ModuleController {
 		$c_files = count($files);
 
 		if ($c_files > 0) {
-			$can_delete = Core\Modules::check('files', 'acp_delete');
+			$can_delete = Core\Modules::hasPermission('files', 'acp_delete');
 			$config = array(
 				'element' => '#acp-table',
 				'sort_col' => $can_delete === true ? 1 : 0,

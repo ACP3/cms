@@ -200,7 +200,7 @@ class CategoriesAdmin extends Core\ModuleController {
 		$c_categories = count($categories);
 
 		if ($c_categories > 0) {
-			$can_delete = Core\Modules::check('categories', 'acp_delete');
+			$can_delete = Core\Modules::hasPermission('categories', 'acp_delete');
 			$config = array(
 				'element' => '#acp-table',
 				'sort_col' => $can_delete === true ? 1 : 0,

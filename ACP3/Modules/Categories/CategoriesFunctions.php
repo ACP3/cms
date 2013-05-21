@@ -117,7 +117,7 @@ abstract class CategoriesFunctions {
 		} else {
 			$categories['categories'] = array();
 		}
-		if ($category_create === true && Core\Modules::check('categories', 'acp_create') === true) {
+		if ($category_create === true && Core\Modules::hasPermission('categories', 'acp_create') === true) {
 			$categories['create']['name'] = $form_field_name . '_create';
 			$categories['create']['value'] = isset($_POST[$categories['create']['name']]) ? $_POST[$categories['create']['name']] : '';
 		}

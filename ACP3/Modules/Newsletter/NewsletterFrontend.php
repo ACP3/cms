@@ -61,7 +61,7 @@ class NewsletterFrontend extends Core\ModuleController {
 	}
 
 	public function actionList() {
-		$captchaAccess = Core\Modules::check('captcha', 'image');
+		$captchaAccess = Core\Modules::hasPermission('captcha', 'image');
 
 		if (isset($_POST['submit']) === true) {
 			switch (Core\Registry::get('URI')->action) {
@@ -129,7 +129,7 @@ class NewsletterFrontend extends Core\ModuleController {
 	}
 
 	public function actionSidebar() {
-		if (Core\Modules::check('captcha', 'image') === true) {
+		if (Core\Modules::hasPermission('captcha', 'image') === true) {
 			Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaFunctions::captcha());
 		}
 

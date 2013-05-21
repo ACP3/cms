@@ -148,11 +148,11 @@ class Application {
 			$uri->redirect('users/login/redirect_' . $redirect_uri);
 		}
 
-		if (Core\Modules::check($uri->mod, $uri->file) === true) {
+		if (Core\Modules::hasPermission($uri->mod, $uri->file) === true) {
 			$module = ucfirst($uri->mod);
 			$section = defined('IN_ADM') === true ? 'Admin' : 'Frontend';
 			$className = "\\ACP3\\Modules\\" . $module . "\\" . $module . $section;
-			$action = 'action' . ucfirst(defined('IN_ADM') === true ? substr($uri->file, 4) : $uri->file);
+			$action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', defined('IN_ADM') === true ? substr($uri->file, 4) : $uri->file))));
 
 			// Modul einbinden
 			$mod = new $className();
