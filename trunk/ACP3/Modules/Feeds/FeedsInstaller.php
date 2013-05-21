@@ -3,21 +3,13 @@ namespace ACP3\Modules\Feeds;
 use ACP3\Core\ModuleInstaller;
 
 class FeedsInstaller extends ModuleInstaller {
-	private $module_name = 'feeds';
-	private $schema_version = 31;
+	const MODULE_NAME = 'feeds';
+	const SCHEMA_VERSION = 31;
 
 	public function __construct() {
 		$this->special_resources = array(
 			'acp_list' => 7
 		);
-	}
-
-	protected function getName() {
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion() {
-		return $this->schema_version;
 	}
 
 	protected function createTables() {

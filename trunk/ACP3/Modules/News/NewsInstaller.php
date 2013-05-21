@@ -6,16 +6,8 @@ use ACP3\Core\ModuleInstaller;
 
 class NewsInstaller extends ModuleInstaller {
 
-	private $module_name = 'news';
-	private $schema_version = 32;
-
-	protected function getName() {
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion() {
-		return $this->schema_version;
-	}
+	const MODULE_NAME = 'news';
+	const SCHEMA_VERSION = 32;
 
 	protected function createTables() {
 		return array(

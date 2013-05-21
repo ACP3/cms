@@ -3,21 +3,13 @@ namespace ACP3\Modules\Permissions;
 use ACP3\Core\ModuleInstaller;
 
 class PermissionsInstaller extends ModuleInstaller {
-	private $module_name = 'permissions';
-	private $schema_version = 31;
+	const MODULE_NAME = 'permissions';
+	const SCHEMA_VERSION = 31;
 
 	public function renameModule() {
 		return array(
 			31 => "UPDATE `{pre}modules` SET name = 'permissions' WHERE name = 'access';"
 		);
-	}
-
-	protected function getName() {
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion() {
-		return $this->schema_version;
 	}
 
 	protected function removeResources() {

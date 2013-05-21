@@ -3,21 +3,13 @@ namespace ACP3\Modules\Contact;
 use ACP3\Core\ModuleInstaller;
 
 class ContactInstaller extends ModuleInstaller {
-	private $module_name = 'contact';
-	private $schema_version = 32;
+	const MODULE_NAME = 'contact';
+	const SCHEMA_VERSION = 32;
 
 	public function __construct() {
 		$this->special_resources = array(
 			'acp_list' => 7
 		);
-	}
-
-	protected function getName() {
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion() {
-		return $this->schema_version;
 	}
 
 	protected function createTables() {

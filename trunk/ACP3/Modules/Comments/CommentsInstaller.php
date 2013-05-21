@@ -6,16 +6,8 @@ use ACP3\Core\ModuleInstaller;
 
 class CommentsInstaller extends ModuleInstaller {
 
-	private $module_name = 'comments';
-	private $schema_version = 32;
-
-	protected function getName() {
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion() {
-		return $this->schema_version;
-	}
+	const MODULE_NAME = 'comments';
+	const SCHEMA_VERSION = 32;
 
 	protected function createTables() {
 		return array(

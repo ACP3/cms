@@ -3,16 +3,8 @@ namespace ACP3\Modules\Acp;
 use ACP3\Core\ModuleInstaller;
 
 class AcpInstaller extends ModuleInstaller {
-	private $module_name = 'acp';
-	private $schema_version = 30;
-
-	protected function getName() {
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion() {
-		return $this->schema_version;
-	}
+	const MODULE_NAME = 'acp';
+	const SCHEMA_VERSION = 30;
 
 	protected function removeResources() {
 		return true;

@@ -7,28 +7,16 @@ use ACP3\Core\Modules;
 
 class ArticlesInstaller extends ModuleInstaller {
 
-	private $module_name = 'articles';
-	private $schema_version = 33;
+	const MODULE_NAME = 'articles';
+	const SCHEMA_VERSION = 33;
 
-	public function renameModule()
-	{
+	public function renameModule() {
 		return array(
 			31 => "UPDATE `{pre}modules` SET name = 'articles' WHERE name = 'static_pages';"
 		);
 	}
 
-	protected function getName()
-	{
-		return $this->module_name;
-	}
-
-	protected function getSchemaVersion()
-	{
-		return $this->schema_version;
-	}
-
-	protected function createTables()
-	{
+	protected function createTables() {
 		return array(
 			"CREATE TABLE `{pre}articles` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -42,18 +30,15 @@ class ArticlesInstaller extends ModuleInstaller {
 		);
 	}
 
-	protected function removeTables()
-	{
+	protected function removeTables() {
 		return array("DROP TABLE `{pre}articles`;");
 	}
 
-	protected function settings()
-	{
+	protected function settings() {
 		return array();
 	}
 
-	protected function schemaUpdates()
-	{
+	protected function schemaUpdates() {
 		return array(
 			31 => array(
 				"RENAME TABLE `{pre}static_pages` TO `{pre}articles`;",
@@ -70,7 +55,7 @@ class ArticlesInstaller extends ModuleInstaller {
 			33 => array(
 				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"extensions/search\";",
 				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
-			) 
+			)
 		);
 	}
 
