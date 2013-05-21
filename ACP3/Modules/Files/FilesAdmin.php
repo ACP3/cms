@@ -64,8 +64,8 @@ class FilesAdmin extends Core\ModuleController {
 					'category_id' => strlen($_POST['cat_create']) >= 3 ? CategoriesFunctions::categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
 					'file' => $new_file,
 					'size' => $filesize,
-					'title' => Core\Functions::str_encode($_POST['title']),
-					'text' => Core\Functions::str_encode($_POST['text'], true),
+					'title' => Core\Functions::strEncode($_POST['title']),
+					'text' => Core\Functions::strEncode($_POST['text'], true),
 					'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
 					'user_id' => Core\Registry::get('Auth')->getUserId(),
 				);
@@ -214,8 +214,8 @@ class FilesAdmin extends Core\ModuleController {
 						'start' => Core\Registry::get('Date')->toSQL($_POST['start']),
 						'end' => Core\Registry::get('Date')->toSQL($_POST['end']),
 						'category_id' => strlen($_POST['cat_create']) >= 3 ? CategoriesFunctions::categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
-						'title' => Core\Functions::str_encode($_POST['title']),
-						'text' => Core\Functions::str_encode($_POST['text'], true),
+						'title' => Core\Functions::strEncode($_POST['title']),
+						'text' => Core\Functions::strEncode($_POST['text'], true),
 						'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
 						'user_id' => Core\Registry::get('Auth')->getUserId(),
 					);
@@ -313,7 +313,7 @@ class FilesAdmin extends Core\ModuleController {
 				Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 			} else {
 				$data = array(
-					'dateformat' => Core\Functions::str_encode($_POST['dateformat']),
+					'dateformat' => Core\Functions::strEncode($_POST['dateformat']),
 					'sidebar' => (int) $_POST['sidebar'],
 					'comments' => $_POST['comments']
 				);

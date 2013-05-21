@@ -52,9 +52,9 @@ class CommentsFrontend extends Core\ModuleController {
 					'id' => '',
 					'date' => Core\Registry::get('Date')->getCurrentDateTime(),
 					'ip' => $ip,
-					'name' => Core\Functions::str_encode($_POST['name']),
+					'name' => Core\Functions::strEncode($_POST['name']),
 					'user_id' => Core\Registry::get('Auth')->isUser() === true && Core\Validate::isNumber(Core\Registry::get('Auth')->getUserId() === true) ? Core\Registry::get('Auth')->getUserId() : '',
-					'message' => Core\Functions::str_encode($_POST['message']),
+					'message' => Core\Functions::strEncode($_POST['message']),
 					'module_id' => $mod_id,
 					'entry_id' => $this->entry_id,
 				);

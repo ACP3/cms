@@ -782,7 +782,7 @@ abstract class Functions {
 	 * @param boolean $script_tag_only
 	 * @return string
 	 */
-	public static function str_encode($var, $script_tag_only = false)
+	public static function strEncode($var, $script_tag_only = false)
 	{
 		$var = preg_replace('=<script[^>]*>.*</script>=isU', '', $var);
 		return $script_tag_only === true ? $var : htmlentities($var, ENT_QUOTES, 'UTF-8');

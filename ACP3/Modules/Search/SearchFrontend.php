@@ -30,7 +30,7 @@ class SearchFrontend extends Core\ModuleController {
 						->append(Core\Registry::get('Lang')->t('search', 'search'), Core\Registry::get('URI')->route('search'))
 						->append(Core\Registry::get('Lang')->t('search', 'search_results'));
 
-				$_POST['search_term'] = Core\Functions::str_encode($_POST['search_term']);
+				$_POST['search_term'] = Core\Functions::strEncode($_POST['search_term']);
 				$_POST['sort'] = strtoupper($_POST['sort']);
 				$search_results = array();
 				foreach ($_POST['mods'] as $module) {

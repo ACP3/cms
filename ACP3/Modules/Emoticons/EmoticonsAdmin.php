@@ -38,8 +38,8 @@ class EmoticonsAdmin extends Core\ModuleController {
 
 				$insert_values = array(
 					'id' => '',
-					'code' => Core\Functions::str_encode($_POST['code']),
-					'description' => Core\Functions::str_encode($_POST['description']),
+					'code' => Core\Functions::strEncode($_POST['code']),
+					'description' => Core\Functions::strEncode($_POST['description']),
 					'img' => $result['name'],
 				);
 
@@ -121,8 +121,8 @@ class EmoticonsAdmin extends Core\ModuleController {
 					}
 
 					$update_values = array(
-						'code' => Core\Functions::str_encode($_POST['code']),
-						'description' => Core\Functions::str_encode($_POST['description']),
+						'code' => Core\Functions::strEncode($_POST['code']),
+						'description' => Core\Functions::strEncode($_POST['description']),
 					);
 					if (is_array($new_file_sql) === true) {
 						$old_file = Core\Registry::get('Db')->fetchColumn('SELECT img FROM emoticons WHERE id = ?', array(Core\Registry::get('URI')->id));

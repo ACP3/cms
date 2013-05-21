@@ -166,8 +166,8 @@ class Install extends \ACP3\Installer\Core\InstallerModuleController {
 					$system_settings = array(
 						'cache_images' => true,
 						'cache_minify' => 3600,
-						'date_format_long' => \ACP3\Core\Functions::str_encode($_POST['date_format_long']),
-						'date_format_short' => \ACP3\Core\Functions::str_encode($_POST['date_format_short']),
+						'date_format_long' => \ACP3\Core\Functions::strEncode($_POST['date_format_long']),
+						'date_format_short' => \ACP3\Core\Functions::strEncode($_POST['date_format_short']),
 						'date_time_zone' => $_POST['date_time_zone'],
 						'design' => 'acp3',
 						'entries' => 20,

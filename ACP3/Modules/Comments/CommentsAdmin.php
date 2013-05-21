@@ -78,9 +78,9 @@ class CommentsAdmin extends Core\ModuleController {
 					Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 				} else {
 					$update_values = array();
-					$update_values['message'] = Core\Functions::str_encode($_POST['message']);
+					$update_values['message'] = Core\Functions::strEncode($_POST['message']);
 					if ((empty($comment['user_id']) || Core\Validate::isNumber($comment['user_id']) === false) && !empty($_POST['name'])) {
-						$update_values['name'] = Core\Functions::str_encode($_POST['name']);
+						$update_values['name'] = Core\Functions::strEncode($_POST['name']);
 					}
 
 					$bool = Core\Registry::get('Db')->update(DB_PRE . 'comments', $update_values, array('id' => Core\Registry::get('URI')->id));
@@ -192,7 +192,7 @@ class CommentsAdmin extends Core\ModuleController {
 				Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 			} else {
 				$data = array(
-					'dateformat' => Core\Functions::str_encode($_POST['dateformat']),
+					'dateformat' => Core\Functions::strEncode($_POST['dateformat']),
 					'emoticons' => $_POST['emoticons'],
 				);
 				$bool = Core\Config::setSettings('comments', $data);

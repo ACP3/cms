@@ -42,14 +42,14 @@ class NewsAdmin extends Core\ModuleController {
 					'id' => '',
 					'start' => Core\Registry::get('Date')->toSQL($_POST['start']),
 					'end' => Core\Registry::get('Date')->toSQL($_POST['end']),
-					'title' => Core\Functions::str_encode($_POST['title']),
-					'text' => Core\Functions::str_encode($_POST['text'], true),
+					'title' => Core\Functions::strEncode($_POST['title']),
+					'text' => Core\Functions::strEncode($_POST['text'], true),
 					'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,
 					'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
 					'category_id' => strlen($_POST['cat_create']) >= 3 ? CategoriesFunctions::categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
-					'uri' => Core\Functions::str_encode($_POST['uri'], true),
+					'uri' => Core\Functions::strEncode($_POST['uri'], true),
 					'target' => (int) $_POST['target'],
-					'link_title' => Core\Functions::str_encode($_POST['link_title']),
+					'link_title' => Core\Functions::strEncode($_POST['link_title']),
 					'user_id' => Core\Registry::get('Auth')->getUserId(),
 				);
 
@@ -160,14 +160,14 @@ class NewsAdmin extends Core\ModuleController {
 					$update_values = array(
 						'start' => Core\Registry::get('Date')->toSQL($_POST['start']),
 						'end' => Core\Registry::get('Date')->toSQL($_POST['end']),
-						'title' => Core\Functions::str_encode($_POST['title']),
-						'text' => Core\Functions::str_encode($_POST['text'], true),
+						'title' => Core\Functions::strEncode($_POST['title']),
+						'text' => Core\Functions::strEncode($_POST['text'], true),
 						'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,
 						'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
 						'category_id' => strlen($_POST['cat_create']) >= 3 ? CategoriesFunctions::categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
-						'uri' => Core\Functions::str_encode($_POST['uri'], true),
+						'uri' => Core\Functions::strEncode($_POST['uri'], true),
 						'target' => (int) $_POST['target'],
-						'link_title' => Core\Functions::str_encode($_POST['link_title']),
+						'link_title' => Core\Functions::strEncode($_POST['link_title']),
 						'user_id' => Core\Registry::get('Auth')->getUserId(),
 					);
 
@@ -273,7 +273,7 @@ class NewsAdmin extends Core\ModuleController {
 				Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 			} else {
 				$data = array(
-					'dateformat' => Core\Functions::str_encode($_POST['dateformat']),
+					'dateformat' => Core\Functions::strEncode($_POST['dateformat']),
 					'sidebar' => (int) $_POST['sidebar'],
 					'readmore' => $_POST['readmore'],
 					'readmore_chars' => (int) $_POST['readmore_chars'],

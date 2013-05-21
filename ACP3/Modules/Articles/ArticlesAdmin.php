@@ -51,8 +51,8 @@ class ArticlesAdmin extends Core\ModuleController {
 					'id' => '',
 					'start' => Core\Registry::get('Date')->toSQL($_POST['start']),
 					'end' => Core\Registry::get('Date')->toSQL($_POST['end']),
-					'title' => Core\Functions::str_encode($_POST['title']),
-					'text' => Core\Functions::str_encode($_POST['text'], true),
+					'title' => Core\Functions::strEncode($_POST['title']),
+					'text' => Core\Functions::strEncode($_POST['text'], true),
 					'user_id' => Core\Registry::get('Auth')->getUserId(),
 				);
 
@@ -70,7 +70,7 @@ class ArticlesAdmin extends Core\ModuleController {
 						'block_id' => $_POST['block_id'],
 						'parent_id' => (int) $_POST['parent'],
 						'display' => $_POST['display'],
-						'title' => Core\Functions::str_encode($_POST['title']),
+						'title' => Core\Functions::strEncode($_POST['title']),
 						'uri' => 'articles/details/id_' . $last_id . '/',
 						'target' => 1,
 					);
@@ -174,8 +174,8 @@ class ArticlesAdmin extends Core\ModuleController {
 					$update_values = array(
 						'start' => Core\Registry::get('Date')->toSQL($_POST['start']),
 						'end' => Core\Registry::get('Date')->toSQL($_POST['end']),
-						'title' => Core\Functions::str_encode($_POST['title']),
-						'text' => Core\Functions::str_encode($_POST['text'], true),
+						'title' => Core\Functions::strEncode($_POST['title']),
+						'text' => Core\Functions::strEncode($_POST['text'], true),
 						'user_id' => Core\Registry::get('Auth')->getUserId(),
 					);
 

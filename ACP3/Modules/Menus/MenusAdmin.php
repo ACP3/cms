@@ -29,7 +29,7 @@ class MenusAdmin extends Core\ModuleController {
 				$insert_values = array(
 					'id' => '',
 					'index_name' => $_POST['index_name'],
-					'title' => Core\Functions::str_encode($_POST['title']),
+					'title' => Core\Functions::strEncode($_POST['title']),
 				);
 
 				$bool = Core\Registry::get('Db')->insert(DB_PRE . 'menus', $insert_values);
@@ -86,7 +86,7 @@ class MenusAdmin extends Core\ModuleController {
 					'block_id' => (int) $_POST['block_id'],
 					'parent_id' => (int) $_POST['parent'],
 					'display' => $_POST['display'],
-					'title' => Core\Functions::str_encode($_POST['title']),
+					'title' => Core\Functions::strEncode($_POST['title']),
 					'uri' => $_POST['mode'] == 1 ? $_POST['module'] : ($_POST['mode'] == 4 ? 'articles/details/id_' . $_POST['articles'] . '/' : $_POST['uri']),
 					'target' => $_POST['display'] == 0 ? 1 : $_POST['target'],
 				);
@@ -257,7 +257,7 @@ class MenusAdmin extends Core\ModuleController {
 				} else {
 					$update_values = array(
 						'index_name' => $_POST['index_name'],
-						'title' => Core\Functions::str_encode($_POST['title']),
+						'title' => Core\Functions::strEncode($_POST['title']),
 					);
 
 					$bool = Core\Registry::get('Db')->update(DB_PRE . 'menus', $update_values, array('id' => Core\Registry::get('URI')->id));
@@ -331,7 +331,7 @@ class MenusAdmin extends Core\ModuleController {
 						'block_id' => $_POST['block_id'],
 						'parent_id' => $_POST['parent'],
 						'display' => $_POST['display'],
-						'title' => Core\Functions::str_encode($_POST['title']),
+						'title' => Core\Functions::strEncode($_POST['title']),
 						'uri' => $_POST['mode'] == 1 ? $_POST['module'] : $uri_type,
 						'target' => $_POST['display'] == 0 ? 1 : $_POST['target'],
 					);

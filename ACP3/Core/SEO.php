@@ -283,8 +283,8 @@ abstract class SEO
 	public static function insertUriAlias($path, $alias, $keywords = '', $description = '', $robots = 0)
 	{
 		$path.= !preg_match('/\/$/', $path) ? '/' : '';
-		$keywords = Functions::str_encode($keywords);
-		$description = Functions::str_encode($description);
+		$keywords = Functions::strEncode($keywords);
+		$description = Functions::strEncode($description);
 
 		// Vorhandenen Alias aktualisieren
 		if (Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE uri = ?', array($path)) == 1) {

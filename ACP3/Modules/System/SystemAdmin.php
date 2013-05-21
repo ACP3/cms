@@ -65,8 +65,8 @@ class SystemAdmin extends Core\ModuleController {
 				$config = array(
 					'cache_images' => (int) $_POST['cache_images'],
 					'cache_minify' => (int) $_POST['cache_minify'],
-					'date_format_long' => Core\Functions::str_encode($_POST['date_format_long']),
-					'date_format_short' => Core\Functions::str_encode($_POST['date_format_short']),
+					'date_format_long' => Core\Functions::strEncode($_POST['date_format_long']),
+					'date_format_short' => Core\Functions::strEncode($_POST['date_format_short']),
 					'date_time_zone' => $_POST['date_time_zone'],
 					'entries' => (int) $_POST['entries'],
 					'extra_css' => $_POST['extra_css'],
@@ -84,11 +84,11 @@ class SystemAdmin extends Core\ModuleController {
 					'maintenance_message' => $_POST['maintenance_message'],
 					'maintenance_mode' => (int) $_POST['maintenance_mode'],
 					'seo_aliases' => (int) $_POST['seo_aliases'],
-					'seo_meta_description' => Core\Functions::str_encode($_POST['seo_meta_description']),
-					'seo_meta_keywords' => Core\Functions::str_encode($_POST['seo_meta_keywords']),
+					'seo_meta_description' => Core\Functions::strEncode($_POST['seo_meta_description']),
+					'seo_meta_keywords' => Core\Functions::strEncode($_POST['seo_meta_keywords']),
 					'seo_mod_rewrite' => (int) $_POST['seo_mod_rewrite'],
 					'seo_robots' => (int) $_POST['seo_robots'],
-					'seo_title' => Core\Functions::str_encode($_POST['seo_title']),
+					'seo_title' => Core\Functions::strEncode($_POST['seo_title']),
 					'wysiwyg' => $_POST['wysiwyg']
 				);
 
