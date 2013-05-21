@@ -28,7 +28,7 @@ abstract class Validate {
 	 * @return boolean
 	 */
 	public static function aclPrivilegesExist(array $privileges) {
-		$all_privs = ACP3_ACL::getAllPrivileges();
+		$all_privs = ACL::getAllPrivileges();
 		$c_all_privs = count($all_privs);
 		for ($i = 0; $i < $c_all_privs; ++$i) {
 			$valid = false;
@@ -50,7 +50,7 @@ abstract class Validate {
 	 * @return boolean
 	 */
 	public static function aclRolesExist(array $roles) {
-		$all_roles = ACP3_ACL::getAllRoles();
+		$all_roles = ACL::getAllRoles();
 		$good = array();
 		foreach ($all_roles as $row) {
 			$good[] = $row['id'];
