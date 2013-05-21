@@ -401,7 +401,7 @@ class SystemAdmin extends Core\ModuleController {
 		Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
 	}
 
-	public function actionSql_export() {
+	public function actionSqlExport() {
 		Core\Registry::get('Breadcrumb')
 				->append(Core\Registry::get('Lang')->t('system', 'acp_maintenance'), Core\Registry::get('URI')->route('acp/system/maintenance'))
 				->append(Core\Registry::get('Lang')->t('system', 'acp_sql_export'));
@@ -501,7 +501,7 @@ class SystemAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionSql_import() {
+	public function actionSqlImport() {
 		Core\Registry::get('Breadcrumb')
 				->append(Core\Registry::get('Lang')->t('system', 'acp_maintenance'), Core\Registry::get('URI')->route('acp/system/maintenance'))
 				->append(Core\Registry::get('Lang')->t('system', 'acp_sql_import'));
@@ -557,7 +557,7 @@ class SystemAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionUpdate_check() {
+	public function actionUpdateCheck() {
 		Core\Registry::get('Breadcrumb')
 				->append(Core\Registry::get('Lang')->t('system', 'acp_maintenance'), Core\Registry::get('URI')->route('acp/system/maintenance'))
 				->append(Core\Registry::get('Lang')->t('system', 'acp_update_check'));

@@ -46,7 +46,7 @@ class MenusAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionCreate_item()
+	public function actionCreateItem()
 	{
 		if (isset($_POST['submit']) === true) {
 			if (Core\Validate::isNumber($_POST['mode']) === false)
@@ -207,7 +207,7 @@ class MenusAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionDelete_item()
+	public function actionDeleteItem()
 	{
 		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
 			$entries = $_POST['entries'];
@@ -281,7 +281,7 @@ class MenusAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionEdit_item()
+	public function actionEditItem()
 	{
 		if (Core\Validate::isNumber(Core\Registry::get('URI')->id) === true &&
 				Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menu_items WHERE id = ?', array(Core\Registry::get('URI')->id)) == 1) {
@@ -416,12 +416,12 @@ class MenusAdmin extends Core\ModuleController {
 		$c_menus = count($menus);
 
 		if ($c_menus > 0) {
-			$can_delete_item = Core\Modules::check('menus', 'acp_delete_item');
-			$can_order_item = Core\Modules::check('menus', 'acp_order');
+			$can_delete_item = Core\Modules::hasPermission('menus', 'acp_delete_item');
+			$can_order_item = Core\Modules::hasPermission('menus', 'acp_order');
 			Core\Registry::get('View')->assign('can_delete_item', $can_delete_item);
 			Core\Registry::get('View')->assign('can_order_item', $can_order_item);
-			Core\Registry::get('View')->assign('can_delete', Core\Modules::check('menus', 'acp_delete'));
-			Core\Registry::get('View')->assign('can_edit', Core\Modules::check('menus', 'acp_edit'));
+			Core\Registry::get('View')->assign('can_delete', Core\Modules::hasPermission('menus', 'acp_delete'));
+			Core\Registry::get('View')->assign('can_edit', Core\Modules::hasPermission('menus', 'acp_edit'));
 			Core\Registry::get('View')->assign('colspan', $can_delete_item && $can_order_item ? 5 : ($can_delete_item || $can_order_item ? 4 : 3));
 
 			$pages_list = MenusFunctions::menuItemsList();

@@ -242,7 +242,7 @@ class PollsAdmin extends Core\ModuleController {
 		$c_polls = count($polls);
 
 		if ($c_polls > 0) {
-			$can_delete = Core\Modules::check('polls', 'acp_delete');
+			$can_delete = Core\Modules::hasPermission('polls', 'acp_delete');
 			$config = array(
 				'element' => '#acp-table',
 				'sort_col' => $can_delete === true ? 1 : 0,

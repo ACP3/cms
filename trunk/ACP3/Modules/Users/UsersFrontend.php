@@ -11,7 +11,7 @@ use ACP3\Core;
  */
 class UsersFrontend extends Core\ModuleController {
 
-	public function actionEdit_profile()
+	public function actionEditProfile()
 	{
 		if (Core\Registry::get('Auth')->isUser() === false || Core\Validate::isNumber(Core\Registry::get('Auth')->getUserId()) === false) {
 			Core\Registry::get('URI')->redirect('errors/403');
@@ -129,7 +129,7 @@ class UsersFrontend extends Core\ModuleController {
 		}
 	}
 
-	public function actionEdit_settings()
+	public function actionEditSettings()
 	{
 		if (Core\Registry::get('Auth')->isUser() === false || Core\Validate::isNumber(Core\Registry::get('Auth')->getUserId()) === false) {
 			Core\Registry::get('URI')->redirect('errors/403');
@@ -236,7 +236,7 @@ class UsersFrontend extends Core\ModuleController {
 		}
 	}
 
-	public function actionForgot_pwd()
+	public function actionForgotPwd()
 	{
 		if (Core\Registry::get('Auth')->isUser() === true) {
 			Core\Registry::get('URI')->redirect(0, ROOT_DIR);
@@ -245,7 +245,7 @@ class UsersFrontend extends Core\ModuleController {
 					->append(Core\Registry::get('Lang')->t('users', 'users'), Core\Registry::get('URI')->route('users'))
 					->append(Core\Registry::get('Lang')->t('users', 'forgot_pwd'));
 
-			$captchaAccess = Core\Modules::check('captcha', 'image');
+			$captchaAccess = Core\Modules::hasPermission('captcha', 'image');
 
 			if (isset($_POST['submit']) === true) {
 				if (empty($_POST['nick_mail']))
@@ -394,7 +394,7 @@ class UsersFrontend extends Core\ModuleController {
 					->append(Core\Registry::get('Lang')->t('users', 'users'), Core\Registry::get('URI')->route('users'))
 					->append(Core\Registry::get('Lang')->t('users', 'register'));
 
-			$captchaAccess = Core\Modules::check('captcha', 'image');
+			$captchaAccess = Core\Modules::hasPermission('captcha', 'image');
 
 			if (isset($_POST['submit']) === true) {
 				if (empty($_POST['nickname']))
@@ -467,7 +467,7 @@ class UsersFrontend extends Core\ModuleController {
 		}
 	}
 
-	public function actionView_profile()
+	public function actionViewProfile()
 	{
 		Core\Registry::get('Breadcrumb')
 				->append(Core\Registry::get('Lang')->t('users', 'users'), Core\Registry::get('URI')->route('users'))
@@ -503,7 +503,7 @@ class UsersFrontend extends Core\ModuleController {
 
 			foreach ($mod_list as $name => $info) {
 				$dir = strtolower($info['dir']);
-				if ($dir !== 'acp' && Core\Modules::check($dir, 'acp_list') === true) {
+				if ($dir !== 'acp' && Core\Modules::hasPermission($dir, 'acp_list') === true) {
 					if ($dir === 'system') {
 						$access_system = true;
 					} else {
@@ -519,18 +519,18 @@ class UsersFrontend extends Core\ModuleController {
 
 			if ($access_system === true) {
 				$i = 0;
-				if (Core\Modules::check('system', 'acp_configuration') === true) {
+				if (Core\Modules::hasPermission('system', 'acp_configuration') === true) {
 					$nav_system[$i]['page'] = 'configuration';
 					$nav_system[$i]['name'] = Core\Registry::get('Lang')->t('system', 'acp_configuration');
 					$nav_system[$i]['active'] = Core\Registry::get('URI')->query === 'system/configuration/' ? ' class="active"' : '';
 				}
-				if (Core\Modules::check('system', 'acp_extensions') === true) {
+				if (Core\Modules::hasPermission('system', 'acp_extensions') === true) {
 					$i++;
 					$nav_system[$i]['page'] = 'extensions';
 					$nav_system[$i]['name'] = Core\Registry::get('Lang')->t('system', 'acp_extensions');
 					$nav_system[$i]['active'] = Core\Registry::get('URI')->query === 'system/extensions/' ? ' class="active"' : '';
 				}
-				if (Core\Modules::check('system', 'acp_maintenance') === true) {
+				if (Core\Modules::hasPermission('system', 'acp_maintenance') === true) {
 					$i++;
 					$nav_system[$i]['page'] = 'maintenance';
 					$nav_system[$i]['name'] = Core\Registry::get('Lang')->t('system', 'acp_maintenance');

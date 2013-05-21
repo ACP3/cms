@@ -15,7 +15,7 @@ class FeedsFrontend extends Core\ModuleController {
 		$module = Core\Registry::get('URI')->feed;
 		$className = "\\ACP3\\Modules\\Feeds\\FeedsExtensions";
 		$action = strtolower($module) . 'Feed';
-		if (Core\Modules::check($module, 'list') === true &&
+		if (Core\Modules::hasPermission($module, 'list') === true &&
 			method_exists($className, $action) === true) {
 			$settings = Core\Config::getSettings('feeds');
 

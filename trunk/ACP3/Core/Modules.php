@@ -20,36 +20,39 @@ namespace ACP3\Core;
 abstract class Modules {
 
 	/**
-	 * Überpüft, ob ein Modul überhaupt existiert,
-	 * bzw. der Benutzer auf ein Modul Zugriff hat
+	 * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat
 	 *
 	 * @param string $module
 	 * 	Zu überprüfendes Modul
-	 * @param string $file
-	 * 	Zu überprüfende Moduldatei
+	 * @param string $action
+	 * 	Zu überprüfende Aktion
 	 *
 	 * @return integer
 	 */
-	public static function check($module, $file) {
-		$module = strtolower($module);
-		$moduleUc = ucfirst($module);
-		$section = strpos($file, 'acp_') === 0 ? 'Admin' : 'Frontend';
-
-		$path = MODULES_DIR . $moduleUc . '/' . $moduleUc . $section . '.php';
-
-		if (is_file($path) === true) {
-			$className = "\\ACP3\\Modules\\" . $moduleUc . "\\" . $moduleUc . $section;
-			$method = 'action' . ucfirst($section === 'Admin' ? substr($file, 4) : $file);
-			if (method_exists($className, $method) === true) {
-				if (self::isActive($module) === true) {
-					return ACL::canAccessResource($module . '/' . $file . '/');
-				}
-			}
-			return 0;
+	public static function hasPermission($module, $action) {
+		if (self::actionExists($module, $action) === true && self::isActive($module) === true) {
+			$module = strtolower($module);
+			return ACL::canAccessResource($module . '/' . $action . '/');
 		}
-		return -1;
+		return 0;
 	}
 
+	/**
+	 * berprüft, ob eine Modulaktion überhaupt existier
+	 * 
+	 * @param string $module
+	 * @param string $action
+	 * @return boolean
+	 */
+	public static function actionExists($module, $action) {
+		$moduleUc = ucfirst($module);
+		$section = strpos($action, 'acp_') === 0 ? 'Admin' : 'Frontend';
+		$path = MODULES_DIR . $moduleUc . '/' . $moduleUc . $section . '.php';
+		$className = "\\ACP3\\Modules\\" . $moduleUc . "\\" . $moduleUc . $section;
+		$action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $section === 'Admin' ? substr($action, 4) : $action))));
+
+		return (is_file($path) === true && method_exists($className, $action) === true);
+	}
 	/**
 	 * Gibt zurück, ob ein Modul aktiv ist oder nicht
 	 *

@@ -13,7 +13,7 @@ class ContactFrontend extends Core\ModuleController {
 
 	public function actionList()
 	{
-		$captchaAccess = Core\Modules::check('captcha', 'image');
+		$captchaAccess = Core\Modules::hasPermission('captcha', 'image');
 
 		if (isset($_POST['submit']) === true) {
 			if (empty($_POST['name']))

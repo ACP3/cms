@@ -55,7 +55,7 @@ class GalleryAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionCreate_picture() {
+	public function actionCreatePicture() {
 		if (Core\Validate::isNumber(Core\Registry::get('URI')->id) === true &&
 				Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'gallery WHERE id = ?', array(Core\Registry::get('URI')->id)) == 1) {
 			$gallery = Core\Registry::get('Db')->fetchColumn('SELECT title FROM ' . DB_PRE . 'gallery WHERE id = ?', array(Core\Registry::get('URI')->id));
@@ -169,7 +169,7 @@ class GalleryAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionDelete_picture() {
+	public function actionDeletePicture() {
 		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
 			$entries = $_POST['entries'];
 		elseif (Core\Validate::deleteEntries(Core\Registry::get('URI')->entries) === true)
@@ -256,7 +256,7 @@ class GalleryAdmin extends Core\ModuleController {
 				$c_pictures = count($pictures);
 
 				if ($c_pictures > 0) {
-					$can_delete = Core\Modules::check('gallery', 'acp_delete_picture');
+					$can_delete = Core\Modules::hasPermission('gallery', 'acp_delete_picture');
 					$config = array(
 						'element' => '#acp-table',
 						'hide_col_sort' => $can_delete === true ? 0 : ''
@@ -269,8 +269,8 @@ class GalleryAdmin extends Core\ModuleController {
 					}
 					Core\Registry::get('View')->assign('pictures', $pictures);
 					Core\Registry::get('View')->assign('can_delete', $can_delete);
-					Core\Registry::get('View')->assign('can_order', Core\Modules::check('gallery', 'acp_order'));
-					Core\Registry::get('View')->assign('can_edit_picture', Core\Modules::check('gallery', 'acp_edit_picture'));
+					Core\Registry::get('View')->assign('can_order', Core\Modules::hasPermission('gallery', 'acp_order'));
+					Core\Registry::get('View')->assign('can_edit_picture', Core\Modules::hasPermission('gallery', 'acp_edit_picture'));
 				}
 
 				Core\Registry::get('Session')->generateFormToken();
@@ -280,7 +280,7 @@ class GalleryAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionEdit_picture() {
+	public function actionEditPicture() {
 		if (Core\Validate::isNumber(Core\Registry::get('URI')->id) === true &&
 				Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'gallery_pictures WHERE id = ?', array(Core\Registry::get('URI')->id)) == 1) {
 			$picture = Core\Registry::get('Db')->fetchAssoc('SELECT p.gallery_id, p.file, p.description, p.comments, g.title AS gallery_title FROM ' . DB_PRE . 'gallery_pictures AS p, ' . DB_PRE . 'gallery AS g WHERE p.id = ? AND p.gallery_id = g.id', array(Core\Registry::get('URI')->id));
@@ -359,7 +359,7 @@ class GalleryAdmin extends Core\ModuleController {
 		$c_galleries = count($galleries);
 
 		if ($c_galleries > 0) {
-			$can_delete = Core\Modules::check('gallery', 'acp_delete');
+			$can_delete = Core\Modules::hasPermission('gallery', 'acp_delete');
 			$config = array(
 				'element' => '#acp-table',
 				'sort_col' => $can_delete === true ? 1 : 0,

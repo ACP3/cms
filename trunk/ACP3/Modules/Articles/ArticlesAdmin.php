@@ -13,7 +13,7 @@ class ArticlesAdmin extends Core\ModuleController {
 
 	public function actionCreate()
 	{
-		$access_to_menus = Core\Modules::check('menus', 'acp_create_item');
+		$access_to_menus = Core\Modules::hasPermission('menus', 'acp_create_item');
 
 		if (isset($_POST['submit']) === true) {
 			if (Core\Validate::date($_POST['start'], $_POST['end']) === false)
@@ -218,7 +218,7 @@ class ArticlesAdmin extends Core\ModuleController {
 		$c_articles = count($articles);
 
 		if ($c_articles > 0) {
-			$can_delete = Core\Modules::check('articles', 'acp_delete');
+			$can_delete = Core\Modules::hasPermission('articles', 'acp_delete');
 			$config = array(
 				'element' => '#acp-table',
 				'sort_col' => $can_delete === true ? 2 : 1,

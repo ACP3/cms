@@ -100,7 +100,7 @@ class GuestbookAdmin extends Core\ModuleController {
 		$c_guestbook = count($guestbook);
 
 		if ($c_guestbook > 0) {
-			$can_delete = Core\Modules::check('guestbook', 'acp_delete');
+			$can_delete = Core\Modules::hasPermission('guestbook', 'acp_delete');
 			$config = array(
 				'element' => '#acp-table',
 				'sort_col' => $can_delete === true ? 1 : 0,

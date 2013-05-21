@@ -101,7 +101,7 @@ class PermissionsAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionCreate_resource() {
+	public function actionCreateResource() {
 		Core\Registry::get('Breadcrumb')
 				->append(Core\Registry::get('Lang')->t('permissions', 'acp_list_resources'), Core\Registry::get('URI')->route('acp/permissions/list_resources'))
 				->append(Core\Registry::get('Lang')->t('permissions', 'acp_create_resource'));
@@ -198,7 +198,7 @@ class PermissionsAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionDelete_resources() {
+	public function actionDeleteResources() {
 		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
 			$entries = $_POST['entries'];
 		elseif (Core\Validate::deleteEntries(Core\Registry::get('URI')->entries) === true)
@@ -333,7 +333,7 @@ class PermissionsAdmin extends Core\ModuleController {
 		}
 	}
 
-	public function actionEdit_resource() {
+	public function actionEditResource() {
 		Core\Registry::get('Breadcrumb')
 				->append(Core\Registry::get('Lang')->t('permissions', 'acp_list_resources'), Core\Registry::get('URI')->route('acp/permissions/list_resources'))
 				->append(Core\Registry::get('Lang')->t('permissions', 'acp_edit_resource'));
@@ -398,12 +398,12 @@ class PermissionsAdmin extends Core\ModuleController {
 				$roles[$i]['spaces'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']);
 			}
 			Core\Registry::get('View')->assign('roles', $roles);
-			Core\Registry::get('View')->assign('can_delete', Core\Modules::check('permissions', 'acp_delete'));
-			Core\Registry::get('View')->assign('can_order', Core\Modules::check('permissions', 'acp_order'));
+			Core\Registry::get('View')->assign('can_delete', Core\Modules::hasPermission('permissions', 'acp_delete'));
+			Core\Registry::get('View')->assign('can_order', Core\Modules::hasPermission('permissions', 'acp_order'));
 		}
 	}
 
-	public function actionList_resources() {
+	public function actionListResources() {
 		Core\Functions::getRedirectMessage();
 
 		$resources = Core\Registry::get('Db')->fetchAll('SELECT m.id AS module_id, m.name AS module_name, r.id AS resource_id, r.page, r.privilege_id, p.key AS privilege_name FROM ' . DB_PRE . 'acl_resources AS r JOIN ' . DB_PRE . 'modules AS m ON(r.module_id = m.id) JOIN ' . DB_PRE . 'acl_privileges AS p ON(r.privilege_id = p.id) ORDER BY r.module_id ASC, r.page ASC');
@@ -417,7 +417,7 @@ class PermissionsAdmin extends Core\ModuleController {
 		}
 		ksort($output);
 		Core\Registry::get('View')->assign('resources', $output);
-		Core\Registry::get('View')->assign('can_delete_resource', Core\Modules::check('permissions', 'acp_delete_resources'));
+		Core\Registry::get('View')->assign('can_delete_resource', Core\Modules::hasPermission('permissions', 'acp_delete_resources'));
 	}
 
 	public function actionOrder() {

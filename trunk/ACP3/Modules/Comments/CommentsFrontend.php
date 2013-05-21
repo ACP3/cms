@@ -20,7 +20,7 @@ class CommentsFrontend extends Core\ModuleController {
 	}
 
 	public function actionCreate() {
-		$captchaAccess = Core\Modules::check('captcha', 'image');
+		$captchaAccess = Core\Modules::hasPermission('captcha', 'image');
 
 		// Formular für das Eintragen von Kommentaren
 		if (isset($_POST['submit']) === true) {
@@ -141,7 +141,7 @@ class CommentsFrontend extends Core\ModuleController {
 			Core\Registry::get('View')->assign('comments', $comments);
 		}
 
-		if (Core\Modules::check('comments', 'create') === true) {
+		if (Core\Modules::hasPermission('comments', 'create') === true) {
 			Core\Registry::get('View')->assign('comments_create_form', $this->actionCreate());
 		}
 
