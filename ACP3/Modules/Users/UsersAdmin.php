@@ -434,7 +434,7 @@ class UsersAdmin extends Core\ModuleController {
 				$contact[3]['maxlength'] = '28';
 				Core\Registry::get('View')->assign('contact', $contact);
 
-				$countries = ACP3_LANG::worldCountries();
+				$countries = Core\Lang::worldCountries();
 				$countries_select = array();
 				foreach ($countries as $key => $value) {
 					$countries_select[] = array(

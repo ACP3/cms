@@ -77,7 +77,7 @@ class View
 	}
 
 	/**
-	 * Gibt zurück, ob die Seitenausgabe mit Hilfe der ACP3_Bootstrap-Klasse
+	 * Gibt zurück, ob die Seitenausgabe mit Hilfe der Bootstraping-Klasse
 	 * erfolgen soll oder die Datei dies selber handelt
 	 *
 	 * @return string

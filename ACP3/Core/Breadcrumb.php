@@ -104,7 +104,7 @@ class Breadcrumb {
 	 * 	Bezeichnung der jeweiligen Stufe der Brotkrume
 	 * @param string $path
 	 * 	Die zum $title zugehörige ACP3-interne URI
-	 * @return \bACP3_Breadcrumb
+	 * @return \bBreadcrumb
 	 */
 	private function appendFromDB($title, $path = 0)
 	{
@@ -123,7 +123,7 @@ class Breadcrumb {
 	 * 	Bezeichnung der jeweiligen Stufe der Brotkrume
 	 * @param string $path
 	 * 	Die zum $title zugehörige ACP3-interne URI
-	 * @return \bACP3_Breadcrumb
+	 * @return \bBreadcrumb
 	 */
 	public function append($title, $path = 0)
 	{
@@ -142,7 +142,7 @@ class Breadcrumb {
 	 * 	Bezeichnung der jeweiligen Stufe der Brotkrume
 	 * @param string $path
 	 * 	Die zum $title zugehörige ACP3-interne URI
-	 * @return \bACP3_Breadcrumb
+	 * @return \bBreadcrumb
 	 */
 	private function prepend($title, $path)
 	{
@@ -161,7 +161,7 @@ class Breadcrumb {
 	 * 	Bezeichnung der jeweiligen Stufe der Brotkrume
 	 * @param string $path
 	 * 	Die zum $title zugehörige ACP3-interne URI
-	 * @return \bACP3_Breadcrumb
+	 * @return \bBreadcrumb
 	 */
 	public function replaceAnchestor($title, $path = 0, $db_steps = false)
 	{

@@ -264,7 +264,7 @@ abstract class ACL
 		if (isset(self::$resources[$resource])) {
 			$module = substr($resource, 0, strpos($resource, '/'));
 			$key = self::$resources[$resource]['key'];
-			return self::userHasPrivilege($module, $key) === true || ACP3_CMS::$auth->isSuperUser() === true ? true : false;
+			return self::userHasPrivilege($module, $key) === true || Registry::get('Auth')->isSuperUser() === true ? true : false;
 		}
 		return false;
 	}
