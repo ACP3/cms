@@ -34,7 +34,7 @@ class PollsAdmin extends Core\ModuleController {
 					'id' => '',
 					'start' => Core\Registry::get('Date')->toSQL($_POST['start']),
 					'end' => Core\Registry::get('Date')->toSQL($_POST['end']),
-					'title' => Core\Functions::str_encode($_POST['title']),
+					'title' => Core\Functions::strEncode($_POST['title']),
 					'multiple' => isset($_POST['multiple']) ? '1' : '0',
 					'user_id' => Core\Registry::get('Auth')->getUserId(),
 				);
@@ -48,7 +48,7 @@ class PollsAdmin extends Core\ModuleController {
 						if (!empty($row)) {
 							$insert_answer = array(
 								'id' => '',
-								'text' => Core\Functions::str_encode($row),
+								'text' => Core\Functions::strEncode($row),
 								'poll_id' => $poll_id,
 							);
 							$bool2 = Core\Registry::get('Db')->insert(DB_PRE . 'poll_answers', $insert_answer);
@@ -148,7 +148,7 @@ class PollsAdmin extends Core\ModuleController {
 					$update_values = array(
 						'start' => Core\Registry::get('Date')->toSQL($_POST['start']),
 						'end' => Core\Registry::get('Date')->toSQL($_POST['end']),
-						'title' => Core\Functions::str_encode($_POST['title']),
+						'title' => Core\Functions::strEncode($_POST['title']),
 						'multiple' => isset($_POST['multiple']) ? '1' : '0',
 						'user_id' => Core\Registry::get('Auth')->getUserId(),
 					);
@@ -165,7 +165,7 @@ class PollsAdmin extends Core\ModuleController {
 						if (empty($row['id'])) {
 							// Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
 							if (!empty($row['value']) && !isset($row['delete']))
-								Core\Registry::get('Db')->insert(DB_PRE . 'poll_answers', array('text' => Core\Functions::str_encode($row['value']), 'poll_id' => Core\Registry::get('URI')->id));
+								Core\Registry::get('Db')->insert(DB_PRE . 'poll_answers', array('text' => Core\Functions::strEncode($row['value']), 'poll_id' => Core\Registry::get('URI')->id));
 							// Antwort mitsamt Stimmen löschen
 						} elseif (isset($row['delete']) && Core\Validate::isNumber($row['id'])) {
 							Core\Registry::get('Db')->delete(DB_PRE . 'poll_answers', array('id' => $row['id']));
@@ -173,7 +173,7 @@ class PollsAdmin extends Core\ModuleController {
 								Core\Registry::get('Db')->delete(DB_PRE . 'poll_votes', array('answer_id' => $row['id']));
 							// Antwort aktualisieren
 						} elseif (!empty($row['value']) && Core\Validate::isNumber($row['id'])) {
-							$bool = Core\Registry::get('Db')->update(DB_PRE . 'poll_answers', array('text' => Core\Functions::str_encode($row['value'])), array('id' => $row['id']));
+							$bool = Core\Registry::get('Db')->update(DB_PRE . 'poll_answers', array('text' => Core\Functions::strEncode($row['value'])), array('id' => $row['id']));
 						}
 					}
 

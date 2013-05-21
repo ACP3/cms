@@ -53,8 +53,8 @@ class GuestbookAdmin extends Core\ModuleController {
 					Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 				} else {
 					$update_values = array(
-						'name' => Core\Functions::str_encode($_POST['name']),
-						'message' => Core\Functions::str_encode($_POST['message']),
+						'name' => Core\Functions::strEncode($_POST['name']),
+						'message' => Core\Functions::strEncode($_POST['message']),
 						'active' => $settings['notify'] == 2 ? $_POST['active'] : 1,
 					);
 
@@ -154,7 +154,7 @@ class GuestbookAdmin extends Core\ModuleController {
 				Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 			} else {
 				$data = array(
-					'dateformat' => Core\Functions::str_encode($_POST['dateformat']),
+					'dateformat' => Core\Functions::strEncode($_POST['dateformat']),
 					'notify' => $_POST['notify'],
 					'notify_email' => $_POST['notify_email'],
 					'overlay' => $_POST['overlay'],

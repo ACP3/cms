@@ -49,8 +49,8 @@ class CategoriesAdmin extends Core\ModuleController {
 				$mod_id = Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($_POST['module']));
 				$insert_values = array(
 					'id' => '',
-					'title' => Core\Functions::str_encode($_POST['title']),
-					'description' => Core\Functions::str_encode($_POST['description']),
+					'title' => Core\Functions::strEncode($_POST['title']),
+					'description' => Core\Functions::strEncode($_POST['description']),
 					'module_id' => $mod_id,
 				);
 				if (is_array($file_sql) === true) {
@@ -162,8 +162,8 @@ class CategoriesAdmin extends Core\ModuleController {
 					}
 
 					$update_values = array(
-						'title' => Core\Functions::str_encode($_POST['title']),
-						'description' => Core\Functions::str_encode($_POST['description']),
+						'title' => Core\Functions::strEncode($_POST['title']),
+						'description' => Core\Functions::strEncode($_POST['description']),
 					);
 					if (is_array($new_file_sql) === true) {
 						$old_file = Core\Registry::get('Db')->fetchColumn('SELECT picture FROM ' . DB_PRE . 'categories WEHRE id = ?', array(Core\Registry::get('URI')->id));

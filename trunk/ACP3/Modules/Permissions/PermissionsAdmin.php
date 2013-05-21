@@ -31,7 +31,7 @@ class PermissionsAdmin extends Core\ModuleController {
 
 				$insert_values = array(
 					'id' => '',
-					'name' => Core\Functions::str_encode($_POST['name']),
+					'name' => Core\Functions::strEncode($_POST['name']),
 					'parent_id' => $_POST['parent'],
 				);
 
@@ -247,7 +247,7 @@ class PermissionsAdmin extends Core\ModuleController {
 					Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 				} else {
 					$update_values = array(
-						'name' => Core\Functions::str_encode($_POST['name']),
+						'name' => Core\Functions::strEncode($_POST['name']),
 						'parent_id' => Core\Registry::get('URI')->id == 1 ? 0 : $_POST['parent'],
 					);
 					$nestedSet = new Core\NestedSet('acl_roles');

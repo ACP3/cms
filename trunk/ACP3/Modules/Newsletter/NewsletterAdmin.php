@@ -38,16 +38,16 @@ class NewsletterAdmin extends Core\ModuleController {
 				$insert_values = array(
 					'id' => '',
 					'date' => Core\Registry::get('Date')->getCurrentDateTime(),
-					'title' => Core\Functions::str_encode($_POST['title']),
-					'text' => Core\Functions::str_encode($_POST['text'], true),
+					'title' => Core\Functions::strEncode($_POST['title']),
+					'text' => Core\Functions::strEncode($_POST['text'], true),
 					'status' => $_POST['test'] == 1 ? '0' : (int) $_POST['action'],
 					'user_id' => Core\Registry::get('Auth')->getUserId(),
 				);
 				$bool = Core\Registry::get('Db')->insert(DB_PRE . 'newsletters', $insert_values);
 
 				if ($_POST['action'] == 1 && $bool !== false) {
-					$subject = Core\Functions::str_encode($_POST['title'], true);
-					$body = Core\Functions::str_encode($_POST['text'], true) . "\n-- \n" . html_entity_decode($settings['mailsig'], ENT_QUOTES, 'UTF-8');
+					$subject = Core\Functions::strEncode($_POST['title'], true);
+					$body = Core\Functions::strEncode($_POST['text'], true) . "\n-- \n" . html_entity_decode($settings['mailsig'], ENT_QUOTES, 'UTF-8');
 
 					// Testnewsletter
 					if ($_POST['test'] == 1) {
@@ -152,16 +152,16 @@ class NewsletterAdmin extends Core\ModuleController {
 					// Newsletter archivieren
 					$update_values = array(
 						'date' => Core\Registry::get('Date')->getCurrentDateTime(),
-						'title' => Core\Functions::str_encode($_POST['title']),
-						'text' => Core\Functions::str_encode($_POST['text'], true),
+						'title' => Core\Functions::strEncode($_POST['title']),
+						'text' => Core\Functions::strEncode($_POST['text'], true),
 						'status' => $_POST['test'] == 1 ? '0' : (int) $_POST['action'],
 						'user_id' => Core\Registry::get('Auth')->getUserId(),
 					);
 					$bool = Core\Registry::get('Db')->update(DB_PRE . 'newsletters', $update_values, array('id' => Core\Registry::get('URI')->id));
 
 					if ($_POST['action'] == 1 && $bool !== false) {
-						$subject = Core\Functions::str_encode($_POST['title'], true);
-						$body = Core\Functions::str_encode($_POST['text'], true) . "\n" . html_entity_decode($settings['mailsig'], ENT_QUOTES, 'UTF-8');
+						$subject = Core\Functions::strEncode($_POST['title'], true);
+						$body = Core\Functions::strEncode($_POST['text'], true) . "\n" . html_entity_decode($settings['mailsig'], ENT_QUOTES, 'UTF-8');
 
 						// Testnewsletter
 						if ($_POST['test'] == 1) {
@@ -283,7 +283,7 @@ class NewsletterAdmin extends Core\ModuleController {
 			} else {
 				$data = array(
 					'mail' => $_POST['mail'],
-					'mailsig' => Core\Functions::str_encode($_POST['mailsig'])
+					'mailsig' => Core\Functions::strEncode($_POST['mailsig'])
 				);
 
 				$bool = Core\Config::setSettings('newsletter', $data);

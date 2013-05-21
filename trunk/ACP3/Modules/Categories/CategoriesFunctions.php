@@ -74,7 +74,7 @@ abstract class CategoriesFunctions {
 			$mod_id = Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($module));
 			$insert_values = array(
 				'id' => '',
-				'title' => Core\Functions::str_encode($title),
+				'title' => Core\Functions::strEncode($title),
 				'picture' => '',
 				'description' => '',
 				'module_id' => $mod_id,

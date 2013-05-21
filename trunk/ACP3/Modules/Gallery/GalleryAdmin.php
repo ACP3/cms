@@ -30,7 +30,7 @@ class GalleryAdmin extends Core\ModuleController {
 					'id' => '',
 					'start' => Core\Registry::get('Date')->toSQL($_POST['start']),
 					'end' => Core\Registry::get('Date')->toSQL($_POST['end']),
-					'title' => Core\Functions::str_encode($_POST['title']),
+					'title' => Core\Functions::strEncode($_POST['title']),
 					'user_id' => Core\Registry::get('Auth')->getUserId(),
 				);
 
@@ -91,7 +91,7 @@ class GalleryAdmin extends Core\ModuleController {
 						'pic' => !is_null($picNum) ? $picNum + 1 : 1,
 						'gallery_id' => Core\Registry::get('URI')->id,
 						'file' => $result['name'],
-						'description' => Core\Functions::str_encode($_POST['description'], true),
+						'description' => Core\Functions::strEncode($_POST['description'], true),
 						'comments' => $settings['comments'] == 1 ? (isset($_POST['comments']) && $_POST['comments'] == 1 ? 1 : 0) : $settings['comments'],
 					);
 
@@ -227,7 +227,7 @@ class GalleryAdmin extends Core\ModuleController {
 					$update_values = array(
 						'start' => Core\Registry::get('Date')->toSQL($_POST['start']),
 						'end' => Core\Registry::get('Date')->toSQL($_POST['end']),
-						'title' => Core\Functions::str_encode($_POST['title']),
+						'title' => Core\Functions::strEncode($_POST['title']),
 						'user_id' => Core\Registry::get('Auth')->getUserId(),
 					);
 
@@ -315,7 +315,7 @@ class GalleryAdmin extends Core\ModuleController {
 					}
 
 					$update_values = array(
-						'description' => Core\Functions::str_encode($_POST['description'], true),
+						'description' => Core\Functions::strEncode($_POST['description'], true),
 						'comments' => $settings['comments'] == 1 ? (isset($_POST['comments']) && $_POST['comments'] == 1 ? 1 : 0) : $settings['comments'],
 					);
 					if (is_array($new_file_sql) === true) {
@@ -425,7 +425,7 @@ class GalleryAdmin extends Core\ModuleController {
 					'maxheight' => (int) $_POST['maxheight'],
 					'filesize' => (int) $_POST['filesize'],
 					'overlay' => $_POST['overlay'],
-					'dateformat' => Core\Functions::str_encode($_POST['dateformat']),
+					'dateformat' => Core\Functions::strEncode($_POST['dateformat']),
 					'sidebar' => (int) $_POST['sidebar'],
 				);
 				if ($comments_active === true)

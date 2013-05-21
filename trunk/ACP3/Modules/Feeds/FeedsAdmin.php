@@ -22,7 +22,7 @@ class FeedsAdmin extends Core\ModuleController {
 				Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 			} else {
 				$data = array(
-					'feed_image' => Core\Functions::str_encode($_POST['feed_image']),
+					'feed_image' => Core\Functions::strEncode($_POST['feed_image']),
 					'feed_type' => $_POST['feed_type']
 				);
 

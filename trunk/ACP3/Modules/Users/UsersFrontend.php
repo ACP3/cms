@@ -45,19 +45,19 @@ class UsersFrontend extends Core\ModuleController {
 					Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 				} else {
 					$update_values = array(
-						'nickname' => Core\Functions::str_encode($_POST['nickname']),
-						'realname' => Core\Functions::str_encode($_POST['realname']),
+						'nickname' => Core\Functions::strEncode($_POST['nickname']),
+						'realname' => Core\Functions::strEncode($_POST['realname']),
 						'gender' => (int) $_POST['gender'],
 						'birthday' => $_POST['birthday'],
 						'mail' => $_POST['mail'],
-						'website' => Core\Functions::str_encode($_POST['website']),
+						'website' => Core\Functions::strEncode($_POST['website']),
 						'icq' => $_POST['icq'],
-						'skype' => Core\Functions::str_encode($_POST['skype']),
-						'street' => Core\Functions::str_encode($_POST['street']),
-						'house_number' => Core\Functions::str_encode($_POST['house_number']),
-						'zip' => Core\Functions::str_encode($_POST['zip']),
-						'city' => Core\Functions::str_encode($_POST['city']),
-						'country' => Core\Functions::str_encode($_POST['country']),
+						'skype' => Core\Functions::strEncode($_POST['skype']),
+						'street' => Core\Functions::strEncode($_POST['street']),
+						'house_number' => Core\Functions::strEncode($_POST['house_number']),
+						'zip' => Core\Functions::strEncode($_POST['zip']),
+						'city' => Core\Functions::strEncode($_POST['city']),
+						'country' => Core\Functions::strEncode($_POST['country']),
 					);
 
 					// Neues Passwort
@@ -169,8 +169,8 @@ class UsersFrontend extends Core\ModuleController {
 						'birthday_display' => (int) $_POST['birthday_display'],
 						'address_display' => (int) $_POST['address_display'],
 						'country_display' => (int) $_POST['country_display'],
-						'date_format_long' => Core\Functions::str_encode($_POST['date_format_long']),
-						'date_format_short' => Core\Functions::str_encode($_POST['date_format_short']),
+						'date_format_long' => Core\Functions::strEncode($_POST['date_format_long']),
+						'date_format_short' => Core\Functions::strEncode($_POST['date_format_short']),
 						'time_zone' => $_POST['date_time_zone'],
 					);
 					if ($settings['language_override'] == 1)
@@ -318,7 +318,7 @@ class UsersFrontend extends Core\ModuleController {
 					->append(Core\Registry::get('Lang')->t('users', 'home'));
 
 			if (isset($_POST['submit']) === true) {
-				$bool = Core\Registry::get('Db')->update(DB_PRE . 'users', array('draft' => Core\Functions::str_encode($_POST['draft'], true)), array('id' => Core\Registry::get('Auth')->getUserId()));
+				$bool = Core\Registry::get('Db')->update(DB_PRE . 'users', array('draft' => Core\Functions::strEncode($_POST['draft'], true)), array('id' => Core\Registry::get('Auth')->getUserId()));
 
 				Core\Functions::setRedirectMessage($bool, Core\Registry::get('Lang')->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/home');
 			}
@@ -356,7 +356,7 @@ class UsersFrontend extends Core\ModuleController {
 		if (Core\Registry::get('Auth')->isUser() === true) {
 			Core\Registry::get('URI')->redirect(0, ROOT_DIR);
 		} elseif (isset($_POST['submit']) === true) {
-			$result = Core\Registry::get('Auth')->login(Core\Functions::str_encode($_POST['nickname']), $_POST['pwd'], isset($_POST['remember']) ? 31104000 : 3600);
+			$result = Core\Registry::get('Auth')->login(Core\Functions::strEncode($_POST['nickname']), $_POST['pwd'], isset($_POST['remember']) ? 31104000 : 3600);
 			if ($result == 1) {
 				if (Core\Registry::get('URI')->redirect) {
 					Core\Registry::get('URI')->redirect(base64_decode(Core\Registry::get('URI')->redirect));
@@ -424,7 +424,7 @@ class UsersFrontend extends Core\ModuleController {
 					$salt = salt(12);
 					$insert_values = array(
 						'id' => '',
-						'nickname' => Core\Functions::str_encode($_POST['nickname']),
+						'nickname' => Core\Functions::strEncode($_POST['nickname']),
 						'pwd' => Core\Functions::generateSaltedPassword($salt, $_POST['pwd']) . ':' . $salt,
 						'mail' => $_POST['mail'],
 						'date_format_long' => CONFIG_DATE_FORMAT_LONG,

@@ -23,11 +23,11 @@ class ContactAdmin extends Core\ModuleController {
 				Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 			} else {
 				$data = array(
-					'address' => Core\Functions::str_encode($_POST['address'], true),
+					'address' => Core\Functions::strEncode($_POST['address'], true),
 					'mail' => $_POST['mail'],
-					'telephone' => Core\Functions::str_encode($_POST['telephone']),
-					'fax' => Core\Functions::str_encode($_POST['fax']),
-					'disclaimer' => Core\Functions::str_encode($_POST['disclaimer'], true),
+					'telephone' => Core\Functions::strEncode($_POST['telephone']),
+					'fax' => Core\Functions::strEncode($_POST['fax']),
+					'disclaimer' => Core\Functions::strEncode($_POST['disclaimer'], true),
 				);
 
 				$bool = Core\Config::setSettings('contact', $data);

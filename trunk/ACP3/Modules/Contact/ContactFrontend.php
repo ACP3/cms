@@ -31,7 +31,7 @@ class ContactFrontend extends Core\ModuleController {
 				Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 			} else {
 				$settings = Core\Config::getSettings('contact');
-				$_POST['message'] = Core\Functions::str_encode($_POST['message'], true);
+				$_POST['message'] = Core\Functions::strEncode($_POST['message'], true);
 
 				$subject = sprintf(Core\Registry::get('Lang')->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
 				$body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($_POST['name'], $_POST['mail'], $_POST['message'], "\n"), Core\Registry::get('Lang')->t('contact', 'contact_body'));

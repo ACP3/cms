@@ -63,10 +63,10 @@ class GuestbookFrontend extends Core\ModuleController {
 					'id' => '',
 					'date' => Core\Registry::get('Date')->getCurrentDateTime(),
 					'ip' => $ip,
-					'name' => Core\Functions::str_encode($_POST['name']),
+					'name' => Core\Functions::strEncode($_POST['name']),
 					'user_id' => Core\Registry::get('Auth')->isUser() ? Core\Registry::get('Auth')->getUserId() : '',
-					'message' => Core\Functions::str_encode($_POST['message']),
-					'website' => Core\Functions::str_encode($_POST['website']),
+					'message' => Core\Functions::strEncode($_POST['message']),
+					'website' => Core\Functions::strEncode($_POST['website']),
 					'mail' => $_POST['mail'],
 					'active' => $settings['notify'] == 2 ? 0 : 1,
 				);
