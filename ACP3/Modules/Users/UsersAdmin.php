@@ -56,13 +56,13 @@ class UsersAdmin extends Core\ModuleController {
 			} elseif (Core\Validate::formToken() === false) {
 				Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 			} else {
-				$salt = salt(12);
+				$salt = Core\Functions::salt(12);
 
 				$insert_values = array(
 					'id' => '',
 					'super_user' => (int) $_POST['super_user'],
 					'nickname' => Core\Functions::strEncode($_POST['nickname']),
-					'pwd' => generateSaltedPassword($salt, $_POST['pwd']) . ':' . $salt,
+					'pwd' => Core\Functions::generateSaltedPassword($salt, $_POST['pwd']) . ':' . $salt,
 					'realname' => Core\Functions::strEncode($_POST['realname']),
 					'gender' => (int) $_POST['gender'],
 					'birthday' => $_POST['birthday'],
@@ -348,8 +348,8 @@ class UsersAdmin extends Core\ModuleController {
 
 					// Neues Passwort
 					if (!empty($_POST['new_pwd']) && !empty($_POST['new_pwd_repeat'])) {
-						$salt = salt(12);
-						$new_pwd = generateSaltedPassword($salt, $_POST['new_pwd']);
+						$salt = Core\Functions::salt(12);
+						$new_pwd = Core\Functions::generateSaltedPassword($salt, $_POST['new_pwd']);
 						$update_values['pwd'] = $new_pwd . ':' . $salt;
 					}
 
