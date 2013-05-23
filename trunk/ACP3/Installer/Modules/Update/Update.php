@@ -11,7 +11,7 @@ use ACP3\Installer\Core;
  */
 class Update extends \ACP3\Installer\Core\InstallerModuleController {
 
-	public function actionDb_update() {
+	public function actionDbUpdate() {
 		if (isset($_POST['update'])) {
 			$results = array();
 			// Zuerst die wichtigen System-Module aktualisieren...
@@ -53,7 +53,7 @@ class Update extends \ACP3\Installer\Core\InstallerModuleController {
 		}
 	}
 
-	public function actionDb_update_legacy() {
+	public function actionDbUpdateLegacy() {
 		if (isset($_POST['update'])) {
 			define('NEW_VERSION', '4.0 SVN');
 			if (defined('CONFIG_DB_VERSION') === false)
