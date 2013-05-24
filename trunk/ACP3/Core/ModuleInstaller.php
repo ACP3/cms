@@ -166,8 +166,10 @@ abstract class ModuleInstaller {
 				foreach ($actions as $action) {
 					// Nur die Module-Actions als Ressourcen hinzufügen
 					if (strpos($action, 'action') === 0) {
-						// Strip "action" from Methodname and lower case
-						$action = strtolower(substr(preg_replace('/\B([A-Z])/', '_$1', $action), 7));
+						$action_underscored = strtolower(preg_replace('/\B([A-Z])/', '_$1', $action));
+						// Modulaktionen berücksichtigen, die mit Ziffern anfangen
+						$action = substr($action_underscored, strpos($action_underscored, '_') === 6 ? 7 : 6);
+
 						if (isset($this->special_resources[$action])) {
 							$privilege_id = $this->special_resources[$action];
 						} else {
@@ -189,7 +191,8 @@ abstract class ModuleInstaller {
 							}
 						}
 
-						Registry::get('Db')->insert(DB_PRE . 'acl_resources', array('id' => '', 'module_id' => $this->getModuleId(), 'page' => $action, 'params' => '', 'privilege_id' => (int) $privilege_id));
+						$insert_values = array('id' => '', 'module_id' => $this->getModuleId(), 'page' => $action, 'params' => '', 'privilege_id' => (int) $privilege_id);
+						Registry::get('Db')->insert(DB_PRE . 'acl_resources', $insert_values);
 					}
 				}
 			}
@@ -211,7 +214,8 @@ abstract class ModuleInstaller {
 					if ($role['id'] == 4)
 						$permission = 1;
 
-					Registry::get('Db')->insert(DB_PRE . 'acl_rules', array('id' => '', 'role_id' => $role['id'], 'module_id' => $this->getModuleId(), 'privilege_id' => $privilege['id'], 'permission' => $permission));
+					$insert_values = array('id' => '', 'role_id' => $role['id'], 'module_id' => $this->getModuleId(), 'privilege_id' => $privilege['id'], 'permission' => $permission);
+					Registry::get('Db')->insert(DB_PRE . 'acl_rules', $insert_values);
 				}
 			}
 		}
