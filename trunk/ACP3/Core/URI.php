@@ -269,7 +269,7 @@ class URI {
 				$path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
 			}
 		}
-		$prefix = (bool) CONFIG_SEO_MOD_REWRITE === false || preg_match(self::PATTERN, $path) ? PHP_SELF . '/' : ROOT_DIR;
+		$prefix = (bool) CONFIG_SEO_MOD_REWRITE === false || preg_match(self::PATTERN, $path) ? PHP_SELF . '/' : (defined('IN_INSTALL') === true ? INSTALLER_ROOT_DIR : ROOT_DIR);
 		return $prefix . $path;
 	}
 

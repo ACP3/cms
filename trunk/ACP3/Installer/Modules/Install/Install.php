@@ -34,10 +34,6 @@ class Install extends \ACP3\Installer\Core\InstallerModuleController {
 			$navbar[\ACP3\Core\Registry::get('URI')->file]['active'] = true;
 		}
 		\ACP3\Core\Registry::get('View')->assign('navbar', $navbar);
-
-		define('CONFIG_VERSION', '4.0-dev');
-		define('CONFIG_SEO_ALIASES', false);
-		define('CONFIG_SEO_MOD_REWRITE', false);
 	}
 
 	public function actionConfiguration() {
