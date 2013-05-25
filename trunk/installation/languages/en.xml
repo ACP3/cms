@@ -6,6 +6,7 @@
 		<direction>ltr</direction>
 	</info>
 	<strings>
+		<item key="404">Page not found</item>
 		<item key="accept">Accept</item>
 		<item key="admin_account">Administrator account</item>
 		<item key="category_name">First category</item>
