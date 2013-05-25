@@ -74,6 +74,12 @@ class Application {
 		// Pfade zum Theme setzen
 		define('DESIGN_PATH', INSTALLER_DIR . 'design/');
 		define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'installation/design/');
+
+		if (defined('IN_UPDATER') === false) {
+			define('CONFIG_VERSION', '4.0-dev');
+			define('CONFIG_SEO_ALIASES', false);
+			define('CONFIG_SEO_MOD_REWRITE', false);
+		}
 	}
 
 	/**
