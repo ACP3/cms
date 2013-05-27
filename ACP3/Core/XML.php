@@ -1,21 +1,10 @@
 <?php
-
-/**
- * XML Parser
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Core;
 
 /**
  * Parst XML Dateien, z.B. die diversen info.xml bzw. module.xml Dateien
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
  */
 abstract class XML {
 

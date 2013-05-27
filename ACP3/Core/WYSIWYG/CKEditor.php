@@ -2,6 +2,9 @@
 
 namespace ACP3\Core\WYSIWYG;
 
+/**
+ * Implementation of the AbstractWYSIWYG class for CKEditor
+ */
 class CKEditor extends AbstractWYSIWYG {
 	public function __construct($id, $name, $value = '', $toolbar = '', $advanced = false, $height = '') {
 		$this->id = $id;

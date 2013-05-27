@@ -1,21 +1,10 @@
 <?php
-
-/**
- * Validate
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Core;
 
 /**
  * Klasse zur Validierung von bestimmten Einträgen
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
  */
 abstract class Validate {
 

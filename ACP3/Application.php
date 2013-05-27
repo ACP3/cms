@@ -1,13 +1,12 @@
 <?php
 
-/**
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3;
 
+/**
+ * Front Controller of the CMS
+ * 
+ * @author Tino Goratsch
+ */
 class Application {
 
 	/**

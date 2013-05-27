@@ -1,20 +1,10 @@
 <?php
-/**
- * Authentification
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Core;
 
 /**
- * Authentifiziert den Benutzer
+ * Authenticates the user
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
  */
 class Auth
 {

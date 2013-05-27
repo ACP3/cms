@@ -1,17 +1,17 @@
 <?php
+
 namespace ACP3\Installer\Core;
 
 use ACP3\Core;
 
 /**
- * Description of InstallerModuleController
+ * Module Controller of the installer modules
  *
- * @author goratsch
+ * @author Tino Goratsch
  */
 class InstallerModuleController extends Core\ModuleController {
 
-	public function display()
-	{
+	public function display() {
 		$view = Core\Registry::get('View');
 		// Content-Template automatisch setzen
 		if ($view->getContentTemplate() === '') {
@@ -37,4 +37,5 @@ class InstallerModuleController extends Core\ModuleController {
 			}
 		}
 	}
+
 }

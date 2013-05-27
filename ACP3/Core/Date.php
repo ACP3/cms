@@ -1,21 +1,10 @@
 <?php
-
-/**
- * Date
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Core;
 
 /**
  * Stellt Funktionen zur Datumsformatierung und Ausrichtung an den Zeitzonen bereit
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
  */
 class Date {
 

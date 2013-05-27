@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of EmoticonsAdmin
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class EmoticonsAdmin extends Core\ModuleController {
 

@@ -1,12 +1,4 @@
 <?php
-/**
- * Sessions
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Core;
 
 /**
@@ -14,8 +6,6 @@ namespace ACP3\Core;
  * Diese ist zuständig für das Sessionhandling in der Datenbank
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
  */
 class Session {
 	/**

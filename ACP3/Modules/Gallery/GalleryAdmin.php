@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of GalleryAdmin
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class GalleryAdmin extends Core\ModuleController {
 

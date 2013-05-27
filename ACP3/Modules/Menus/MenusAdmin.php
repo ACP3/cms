@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of MenusAdmin
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class MenusAdmin extends Core\ModuleController {
 

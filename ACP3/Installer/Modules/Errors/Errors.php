@@ -3,9 +3,9 @@
 namespace ACP3\Installer\Modules\Errors;
 
 /**
- * Description of Errors
+ * Module controller of the Errors installer module
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class Errors extends \ACP3\Installer\Core\InstallerModuleController {
 

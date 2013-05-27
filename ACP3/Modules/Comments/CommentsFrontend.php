@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of CommentsFrontend
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class CommentsFrontend extends Core\ModuleController {
 

@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of GalleryFrontend
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class GalleryFrontend extends Core\ModuleController {
 

@@ -3,9 +3,9 @@
 namespace ACP3\Core;
 
 /**
- * Description of ModuleController
+ * Module controller
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 abstract class ModuleController {
 

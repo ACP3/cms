@@ -1,8 +1,11 @@
 <?php
+
 namespace ACP3\Modules\Acp;
+
 use ACP3\Core\ModuleInstaller;
 
 class AcpInstaller extends ModuleInstaller {
+
 	const MODULE_NAME = 'acp';
 	const SCHEMA_VERSION = 30;
 
@@ -33,4 +36,5 @@ class AcpInstaller extends ModuleInstaller {
 	protected function schemaUpdates() {
 		return array();
 	}
+
 }

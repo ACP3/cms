@@ -5,9 +5,9 @@ namespace ACP3\Installer\Modules\Install;
 use ACP3\Installer\Core;
 
 /**
- * Description of Install
+ * Module controller of the Install installer module
  *
- * @author goratsch
+ * @author Tino Goratsch
  */
 class Install extends \ACP3\Installer\Core\InstallerModuleController {
 

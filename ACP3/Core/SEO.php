@@ -1,20 +1,10 @@
 <?php
-/**
- * SEO
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Core;
 
 /**
  * Klasse zum Setzen von URI Aliases, Keywords und Beschreibungen für Seiten
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
  */
 abstract class SEO
 {

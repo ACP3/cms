@@ -1,15 +1,12 @@
 <?php
 
-/**
- * Diese Datei ist für die häufig verwendeten Funktionen im ACP3 zuständig
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Core;
 
+/**
+ * Manages the most used functions in the ACP3
+ *
+ * @author Tino Goratsch
+ */
 abstract class Functions {
 
 	/**

@@ -1,6 +1,9 @@
 <?php
 namespace ACP3\Core\View;
 
+/**
+ * Abstract Class for the various renderers
+ */
 abstract class AbstractRenderer {
 	protected $config = array();
 	public $renderer = null;

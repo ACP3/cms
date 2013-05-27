@@ -3,8 +3,6 @@
  * Index
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
  */
 
 define('IN_ACP3', true);

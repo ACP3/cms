@@ -5,9 +5,9 @@ namespace ACP3\Installer\Modules\Update;
 use ACP3\Installer\Core;
 
 /**
- * Description of Update
+ * Module controller of the Update installer module
  *
- * @author goratsch
+ * @author Tino Goratsch
  */
 class Update extends \ACP3\Installer\Core\InstallerModuleController {
 

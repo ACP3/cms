@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of UsersFrontend
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class UsersFrontend extends Core\ModuleController {
 

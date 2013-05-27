@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of SearchExtensions
  *
- * @author goratsch
+ * @author Tino Goratsch
  */
 class SearchExtensions {
 	private $area;

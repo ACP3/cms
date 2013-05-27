@@ -4,10 +4,9 @@ namespace ACP3\Installer\Core;
 use ACP3\Core;
 
 /**
- * Ist für die häufig verwendeten Funktionen im Installer zuständig
+ * Manages the most used function of the installer
  *
  * @author Tino Goratsch
- * @package ACP3 Installer
  */
 abstract class Functions {
 

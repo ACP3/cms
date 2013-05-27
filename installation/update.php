@@ -3,8 +3,6 @@
  * Installer
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Installer
  */
 
 define('IN_ACP3', true);

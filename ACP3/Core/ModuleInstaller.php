@@ -1,21 +1,10 @@
 <?php
-
-/**
- * Module Installer
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Core;
 
 /**
  * Module Installer Klasse
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
  */
 abstract class ModuleInstaller {
 

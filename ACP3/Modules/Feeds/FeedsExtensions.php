@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of FeedsExtensions
  *
- * @author goratsch
+ * @author Tino Goratsch
  */
 class FeedsExtensions {
 

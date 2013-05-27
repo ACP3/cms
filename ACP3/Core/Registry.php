@@ -2,9 +2,9 @@
 namespace ACP3\Core;
 
 /**
- * Description of Registry
+ * Class Registry
  *
- * @author goratsch
+ * @author Tino Goratsch
  */
 abstract class Registry {
 	private static $registry = array();

@@ -1,20 +1,10 @@
 <?php
-/**
- * View
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Core;
 
 /**
  * Klasse für die Ausgabe der Seite
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
  */
 class View
 {

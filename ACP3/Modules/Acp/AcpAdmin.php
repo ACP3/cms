@@ -5,9 +5,9 @@ namespace ACP3\Modules\Acp;
 use ACP3\Core;
 
 /**
- * Description of AcpAdmin
+ * Module Controler of the Admin Backend
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class AcpAdmin extends Core\ModuleController {
 
