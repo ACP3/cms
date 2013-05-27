@@ -1,12 +1,4 @@
 <?php
-/**
- * Nested Sets
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Core;
 
 /**
@@ -14,8 +6,6 @@ namespace ACP3\Core;
  * Umsortieren von Knoten in einem Nested Set Baum
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
  */
 class NestedSet {
 

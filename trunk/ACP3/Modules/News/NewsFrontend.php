@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of NewsFrontend
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class NewsFrontend extends Core\ModuleController {
 

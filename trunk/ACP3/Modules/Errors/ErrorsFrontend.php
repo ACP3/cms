@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of ErrorsFrontend
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class ErrorsFrontend extends Core\ModuleController {
 

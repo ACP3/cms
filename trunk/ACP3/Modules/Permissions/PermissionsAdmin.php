@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of PermissionsAdmin
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class PermissionsAdmin extends Core\ModuleController {
 

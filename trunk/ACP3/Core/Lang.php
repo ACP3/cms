@@ -1,20 +1,10 @@
 <?php
-/**
- * Language
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Core;
 
 /**
  * Stellt Funktionen bereit, um das ACP3 in verschiedene Sprachen zu übersetzen
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
  */
 class Lang
 {

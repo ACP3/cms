@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of ContactFrontend
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class ContactFrontend extends Core\ModuleController {
 

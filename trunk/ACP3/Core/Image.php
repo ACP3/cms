@@ -1,20 +1,10 @@
 <?php
-/**
- * Image
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Core;
 
 /**
  * Klasse zum beliebigen Skalieren und Ausgeben von Bildern
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
  */
 class Image
 {

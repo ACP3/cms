@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of PollsAdmin
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class PollsAdmin extends Core\ModuleController {
 

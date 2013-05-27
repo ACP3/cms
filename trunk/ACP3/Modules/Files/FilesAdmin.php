@@ -8,7 +8,7 @@ use ACP3\Modules\Categories\CategoriesFunctions;
 /**
  * Description of FilesAdmin
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class FilesAdmin extends Core\ModuleController {
 

@@ -1,20 +1,10 @@
 <?php
-/**
- * Cache
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Core;
 
 /**
- * lasse zur Ersetllung des Caches, um die Leistung von bestimmten Aktionen des ACP3 zu steigern
+ * Klasse zur Erstellung des Caches, um die Leistung von bestimmten Aktionen des ACP3 zu steigern
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
  */
 abstract class Cache
 {

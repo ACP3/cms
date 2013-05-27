@@ -3,9 +3,9 @@
 namespace ACP3\Core;
 
 /**
- * Description of WYSIWYG
+ * Wrapper class for the WYSIWYG editors
  *
- * @author goratsch
+ * @author Tino Goratsch
  */
 class WYSIWYG {
 

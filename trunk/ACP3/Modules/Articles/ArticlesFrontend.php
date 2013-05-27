@@ -5,9 +5,9 @@ namespace ACP3\Modules\Articles;
 use ACP3\Core;
 
 /**
- * Description of ArticlesFrontend
+ * Module controller of the articles frontend
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class ArticlesFrontend extends Core\ModuleController {
 

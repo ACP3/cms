@@ -1,20 +1,10 @@
 <?php
-/**
- * Access Control List
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Core;
 
 /**
- * ACL Klasse
+ * Access control lists
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
  */
 abstract class ACL
 {

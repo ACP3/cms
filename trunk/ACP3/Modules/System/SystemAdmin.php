@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of SystemAdmin
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class SystemAdmin extends Core\ModuleController {
 

@@ -1,17 +1,16 @@
 <?php
 
-/**
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Installer;
 
+/**
+ * Front Controller of the Installer
+ *
+ * @author Tino Goratsch
+ */
 class Application {
 
 	/**
-	 * Führt alle nötigen Schritte aus, um die Seite anzuzeigen
+	 * run Methode für den Installer
 	 */
 	public static function runInstaller() {
 		self::defineDirConstants();
@@ -21,7 +20,7 @@ class Application {
 	}
 
 	/**
-	 * 
+	 * rund() Methode für den Database Updater
 	 */
 	public static function runUpdater() {
 		self::defineDirConstants();

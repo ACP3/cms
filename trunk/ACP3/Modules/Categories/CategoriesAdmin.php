@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of CategoriesAdmin
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class CategoriesAdmin extends Core\ModuleController {
 

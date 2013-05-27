@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of GuestbookAdmin
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class GuestbookAdmin extends Core\ModuleController {
 

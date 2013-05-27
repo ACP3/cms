@@ -1,21 +1,10 @@
 <?php
-
-/**
- * Modules
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Core;
 
 /**
  * Klasse für die Module
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
  */
 abstract class Modules {
 

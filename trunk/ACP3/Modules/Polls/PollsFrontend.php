@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of PollsFrontend
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class PollsFrontend extends Core\ModuleController {
 

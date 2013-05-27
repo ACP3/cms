@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of NewsletterAdmin
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class NewsletterAdmin extends Core\ModuleController {
 

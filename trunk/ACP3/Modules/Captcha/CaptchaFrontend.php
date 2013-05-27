@@ -15,7 +15,7 @@ use ACP3\Core;
 /**
  * Description of CaptchaAdmin
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class CaptchaFrontend extends Core\ModuleController {
 

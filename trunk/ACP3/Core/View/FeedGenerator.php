@@ -1,6 +1,9 @@
 <?php
 namespace ACP3\Core\View;
 
+/**
+ * Renderer for the output of RSS and ATOM newsfeeds
+ */
 class FeedGenerator extends AbstractRenderer {
 	public function __construct($params)
 	{

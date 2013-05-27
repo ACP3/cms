@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of FilesFrontend
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class FilesFrontend extends Core\ModuleController {
 

@@ -2,9 +2,9 @@
 namespace ACP3\Core\WYSIWYG;
 
 /**
- * Description of AbstractWYSIWYG
+ * Abstract Class for the various WYSIWYG editors
  *
- * @author goratsch
+ * @author Tino Goratsch
  */
 abstract class AbstractWYSIWYG {
 	/**

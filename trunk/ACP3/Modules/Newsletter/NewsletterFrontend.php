@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of NewsletterFrontend
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class NewsletterFrontend extends Core\ModuleController {
 

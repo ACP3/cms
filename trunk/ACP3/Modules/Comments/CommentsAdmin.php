@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of CommentsAdmin
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class CommentsAdmin extends Core\ModuleController {
 

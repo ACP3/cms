@@ -2,6 +2,9 @@
 
 namespace ACP3\Core\View;
 
+/**
+ * Renderer for the Smarty template engine
+ */
 class Smarty extends AbstractRenderer {
 	/**
 	 *

@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of UsersAdmin
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class UsersAdmin extends Core\ModuleController {
 

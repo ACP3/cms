@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of FeedsAdmin
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class FeedsAdmin extends Core\ModuleController {
 

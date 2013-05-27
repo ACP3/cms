@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of GuestbookFrontend
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class GuestbookFrontend extends Core\ModuleController {
 

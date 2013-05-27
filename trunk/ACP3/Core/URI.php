@@ -1,21 +1,10 @@
 <?php
-
-/**
- * URI
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Core;
 
 /**
- * Verarbeitet die URI Query
+ * URI Router
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
  */
 class URI {
 

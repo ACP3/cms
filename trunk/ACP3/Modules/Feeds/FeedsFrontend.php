@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of FeedsFrontend
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class FeedsFrontend extends Core\ModuleController {
 

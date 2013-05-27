@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of ContactAdmin
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class ContactAdmin extends Core\ModuleController {
 

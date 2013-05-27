@@ -1,13 +1,12 @@
 <?php
+
 namespace ACP3\Core\WYSIWYG;
 
-
 /**
- * Description of Textarea
- *
- * @author goratsch
+ * Implementation of the AbstractWYSIWYG class for a simple Textarea
  */
 class Textarea extends AbstractWYSIWYG {
+
 	public function __construct($id, $name, $value = '', $toolbar = '', $advanced = false, $height = '') {
 		$this->id = $id;
 		$this->name = $name;
@@ -28,6 +27,6 @@ class Textarea extends AbstractWYSIWYG {
 		}
 		$out.= '<textarea name="' . $this->name . '" id="' . $this->id . '" cols="50" rows="6" class="span6">' . $this->value . '</textarea>';
 		return $out;
-
 	}
+
 }

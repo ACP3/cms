@@ -8,7 +8,7 @@ use ACP3\Modules\Categories\CategoriesFunctions;
 /**
  * Description of NewsAdmin
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class NewsAdmin extends Core\ModuleController {
 

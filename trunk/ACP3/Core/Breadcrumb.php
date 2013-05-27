@@ -1,21 +1,10 @@
 <?php
-
-/**
- * Breadcrumbs
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
- */
-
 namespace ACP3\Core;
 
 /**
- * Erzeugt die Brotkrümelspur und gibt den Titel der jeweiligen Seite aus
+ * Generates the breadcrumb and page title
  *
  * @author Tino Goratsch
- * @package ACP3
- * @subpackage Core
  */
 class Breadcrumb {
 

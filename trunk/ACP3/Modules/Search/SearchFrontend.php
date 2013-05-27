@@ -7,7 +7,7 @@ use ACP3\Core;
 /**
  * Description of SearchFrontend
  *
- * @author Tino
+ * @author Tino Goratsch
  */
 class SearchFrontend extends Core\ModuleController {
 
