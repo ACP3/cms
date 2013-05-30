@@ -51,6 +51,7 @@ class Application {
 		define('CLASSES_DIR', ACP3_DIR . 'Core/');
 		define('MODULES_DIR', ACP3_DIR . 'Modules/');
 		define('LIBRARIES_DIR', ACP3_ROOT_DIR . 'libraries/');
+		define('VENDOR_DIR', ACP3_ROOT_DIR . 'vendor/');
 		define('UPLOADS_DIR', ACP3_ROOT_DIR . 'uploads/');
 		define('CACHE_DIR', UPLOADS_DIR . 'cache/');
 	}
@@ -59,13 +60,7 @@ class Application {
 	 * Klassen Autoloader inkludieren
 	 */
 	public static function includeAutoLoader() {
-		require_once LIBRARIES_DIR . 'Doctrine/Common/ClassLoader.php';
-
-		$clACP3 = new \Doctrine\Common\ClassLoader('ACP3', ACP3_ROOT_DIR);
-		$clACP3->register();
-
-		$clDoctrine = new \Doctrine\Common\ClassLoader('Doctrine', LIBRARIES_DIR);
-		$clDoctrine->register();
+		require VENDOR_DIR . 'autoload.php';
 	}
 
 	/**

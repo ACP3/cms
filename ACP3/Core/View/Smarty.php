@@ -13,7 +13,6 @@ class Smarty extends AbstractRenderer {
 	public $renderer;
 
 	public function __construct(array $params = array()) {
-		require LIBRARIES_DIR . 'smarty/Smarty.class.php';
 		$this->renderer = new \Smarty();
 		$this->renderer->error_reporting = defined('IN_INSTALL') === true || (defined('DEBUG') === true && DEBUG === true) ? E_ALL : 0;
 		$this->renderer->compile_id = !empty($params['compile_id']) ? $params['compile_id'] : CONFIG_DESIGN;
