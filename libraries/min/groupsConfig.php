@@ -31,12 +31,12 @@ if ($_GET['g'] === 'css') {
 	$design_info = \ACP3\Core\XML::parseXmlFile(DESIGN_PATH_INTERNAL . 'info.xml', '/design/responsive_layouts');
 
 	$styles = array();
-	$styles['css'][] = LIBRARIES_DIR . 'bootstrap/css/bootstrap.css';
+	$styles['css'][] = VENDOR_DIR . 'twitter/bootstrap/css/bootstrap.css';
 	// Styles für das Responsive Design nur einbinden,
 	// falls dies vom Design benötigt wird
 	if (isset($design_info['layout']) &&
 		($design_info['layout'] === $layout || (is_array($design_info['layout']) === true && in_array($layout, $design_info['layout']) === true)))
-		$styles['css'][] = LIBRARIES_DIR . 'bootstrap/css/bootstrap-responsive.css';
+		$styles['css'][] = VENDOR_DIR . 'twitter/bootstrap/css/bootstrap-responsive.css';
 
 	// Stylesheets der Bibliotheken zuerst laden,
 	// damit deren Styles überschrieben werden können
@@ -80,7 +80,7 @@ if ($_GET['g'] === 'css') {
 } elseif ($_GET['g'] === 'js') {
 	$scripts = array();
 	$scripts['js'][] = LIBRARIES_DIR . 'js/jquery.min.js';
-	$scripts['js'][] = LIBRARIES_DIR . 'bootstrap/js/bootstrap.min.js';
+	$scripts['js'][] = VENDOR_DIR . 'twitter/bootstrap/js/bootstrap.min.js';
 	if (in_array('bootbox', $libraries))
 		$scripts['js'][] = LIBRARIES_DIR . 'js/bootbox.min.js';
 	if (in_array('jquery-ui', $libraries))
