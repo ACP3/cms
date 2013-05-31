@@ -4,11 +4,11 @@
 <title>{$TITLE} | {$PAGE_TITLE}</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}libraries/bootstrap/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}libraries/bootstrap/css/bootstrap-responsive.css">
+<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}vendor/twitter/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{$ROOT_DIR}vendor/twitter/bootstrap/css/bootstrap-responsive.min.css">
 <link rel="stylesheet" type="text/css" href="{$INSTALLER_ROOT_DIR}design/style.css">
 <script type="text/javascript" src="{$ROOT_DIR}libraries/js/jquery.min.js"></script>
-<script type="text/javascript" src="{$ROOT_DIR}libraries/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{$ROOT_DIR}vendor/twitter/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function($) {
 	if ($('#config-form').length > 0) {
