@@ -22,7 +22,7 @@ class TinyMCE extends AbstractWYSIWYG {
 
 	public function display() {
 		// Load the TinyMCE compressor class
-		require_once ACP3_ROOT_DIR . 'libraries/tinymce/tiny_mce_gzip.php';
+		require_once LIBRARIES_DIR . 'tinymce/tiny_mce_gzip.php';
 
 		$tinymce_options = array(
 			'url' => ROOT_DIR . 'libraries/tinymce/tiny_mce_gzip.php',

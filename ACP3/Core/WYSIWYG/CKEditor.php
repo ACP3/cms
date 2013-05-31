@@ -71,7 +71,7 @@ class CKEditor extends AbstractWYSIWYG {
 	}
 
 	public function display() {
-		require_once ACP3_ROOT_DIR . 'libraries/ckeditor/ckeditor.php';
+		require_once LIBRARIES_DIR . 'ckeditor/ckeditor.php';
 
 		$ckeditor = new \CKEditor(ROOT_DIR . 'libraries/ckeditor/');
 		$ckeditor->returnOutput = true;
