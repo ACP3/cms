@@ -130,8 +130,6 @@ abstract class Functions {
 	 */
 	public static function generateEmail($recipient_name, $recipient_email, $from, $subject, $body)
 	{
-		require_once LIBRARIES_DIR . 'phpmailer/class.phpmailer.php';
-
 		$mail = new \PHPMailer(true);
 		try {
 			if (strtolower(CONFIG_MAILER_TYPE) === 'smtp') {

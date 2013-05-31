@@ -21,9 +21,6 @@ class FeedsFrontend extends Core\ModuleController {
 
 			define('FEED_LINK', 'http://' . htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES));
 
-			require LIBRARIES_DIR . 'feedcreator/FeedWriter.php';
-			require LIBRARIES_DIR . 'feedcreator/FeedItem.php';
-
 			$config = array(
 				'feed_image' => $settings['feed_image'],
 				'feed_type' => $settings['feed_type'],
