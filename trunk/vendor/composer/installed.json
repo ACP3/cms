@@ -191,48 +191,39 @@
         "description": "PHPMailer is a full-featured email creation and transfer class for PHP"
     },
     {
+        "name": "twitter/bootstrap",
+        "version": "2.3.2",
+        "version_normalized": "2.3.2.0",
+        "dist": {
+            "type": "zip",
+            "url": "http://twitter.github.io/bootstrap/assets/bootstrap.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "type": "library",
+        "installation-source": "dist"
+    },
+    {
         "name": "smarty/smarty",
-        "version": "v3.1.13",
+        "version": "3.1.13",
         "version_normalized": "3.1.13.0",
         "source": {
             "type": "svn",
-            "url": "http://smarty-php.googlecode.com/svn",
-            "reference": "/tags/v3.1.13/@4699"
+            "url": "http://smarty-php.googlecode.com/svn/",
+            "reference": "tags/Smarty_3_1_13/distribution/"
         },
-        "require": {
-            "php": ">=5.2"
+        "dist": {
+            "type": "zip",
+            "url": "http://www.smarty.net/files/Smarty-stable.zip",
+            "reference": null,
+            "shasum": null
         },
-        "time": "2013-01-26 12:03:52",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "classmap": [
-                "distribution/libs/Smarty.class.php",
-                "distribution/libs/SmartyBC.class.php"
+                "libs/"
             ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "LGPL-3.0"
-        ],
-        "authors": [
-            {
-                "name": "Monte Ohrt",
-                "email": "monte@ohrt.com"
-            },
-            {
-                "name": "Uwe Tews",
-                "email": "uwe.tews@googlemail.com"
-            },
-            {
-                "name": "Rodney Rehm",
-                "email": "rodney.rehm@medialize.de"
-            }
-        ],
-        "description": "Smarty - the compiling PHP template engine",
-        "homepage": "http://www.smarty.net",
-        "keywords": [
-            "templating"
-        ]
+        }
     }
 ]

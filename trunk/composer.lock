@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ca3bdaee78b6c65631a82d2df653e027",
+    "hash": "f7a184b9fe23dfc6a094d916952f4277",
     "packages": [
         {
             "name": "doctrine/common",
@@ -192,46 +192,35 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.13",
+            "version": "3.1.13",
             "source": {
                 "type": "svn",
-                "url": "http://smarty-php.googlecode.com/svn",
-                "reference": "/tags/v3.1.13/@4699"
+                "url": "http://smarty-php.googlecode.com/svn/",
+                "reference": "tags/Smarty_3_1_13/distribution/"
             },
-            "require": {
-                "php": ">=5.2"
+            "dist": {
+                "type": "zip",
+                "url": "http://www.smarty.net/files/Smarty-stable.zip",
+                "reference": null,
+                "shasum": null
             },
             "type": "library",
             "autoload": {
                 "classmap": [
-                    "distribution/libs/Smarty.class.php",
-                    "distribution/libs/SmartyBC.class.php"
+                    "libs/"
                 ]
+            }
+        },
+        {
+            "name": "twitter/bootstrap",
+            "version": "2.3.2",
+            "dist": {
+                "type": "zip",
+                "url": "http://twitter.github.io/bootstrap/assets/bootstrap.zip",
+                "reference": null,
+                "shasum": null
             },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Monte Ohrt",
-                    "email": "monte@ohrt.com"
-                },
-                {
-                    "name": "Uwe Tews",
-                    "email": "uwe.tews@googlemail.com"
-                },
-                {
-                    "name": "Rodney Rehm",
-                    "email": "rodney.rehm@medialize.de"
-                }
-            ],
-            "description": "Smarty - the compiling PHP template engine",
-            "homepage": "http://www.smarty.net",
-            "keywords": [
-                "templating"
-            ],
-            "time": "2013-01-26 12:03:52"
+            "type": "library"
         }
     ],
     "packages-dev": [

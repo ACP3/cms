@@ -1,19 +1,54 @@
 {
-    "name": "acp3/ACP3",
-    "description": "ACP3 is a highly customizable and easy to use web content management system based on PHP5 and MySQL.",
-    "authors": [
-        {
-            "name": "Tino Goratsch",
-            "email": "mail@acp3-cms.net"
-        }
-    ],
+	"name": "acp3/ACP3",
+	"description": "ACP3 is a highly customizable and easy to use web content management system based on PHP5 and MySQL.",
+	"authors": [
+		{
+			"name": "Tino Goratsch",
+			"email": "mail@acp3-cms.net"
+		}
+	],
 	"autoload": {
-		"psr-0":  { "ACP3": "./"}
+		"psr-0": {"ACP3": "./"}
 	},
-    "require": {
-		"php":  ">=5.3.2",
-        "doctrine/dbal": "2.3.4",
+	"repositories": [
+		{
+			"type": "package",
+			"package": {
+				"name": "smarty/smarty",
+				"version": "3.1.13",
+				"dist": {
+					"url": "http://www.smarty.net/files/Smarty-stable.zip",
+					"type": "zip"
+				},
+				"source": {
+					"url": "http://smarty-php.googlecode.com/svn/",
+					"type": "svn",
+					"reference": "tags/Smarty_3_1_13/distribution/"
+				},
+				"autoload": {
+					"classmap": [
+						"libs/"
+					]
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "twitter/bootstrap",
+				"version": "2.3.2",
+				"dist": {
+					"url": "http://twitter.github.io/bootstrap/assets/bootstrap.zip",
+					"type": "zip"
+				}
+			}
+		}
+	],
+	"require": {
+		"php": ">=5.3.2",
+		"doctrine/dbal": "2.3.4",
 		"phpmailer/phpmailer": "5.2.6",
-		"smarty/smarty": "v3.1.13"
-    }
+		"smarty/smarty": "3.1.13",
+		"twitter/bootstrap": "2.3.2"
+	}
 }
