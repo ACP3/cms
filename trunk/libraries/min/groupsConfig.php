@@ -67,7 +67,7 @@ if ($_GET['g'] === 'css') {
 	// Stylesheets der Module
 	$modules = \ACP3\Core\Modules::getActiveModules();
 	foreach ($modules as $module) {
-		$path_design = DESIGN_PATH_INTERNAL . $module['dir'] . '/style.css';
+		$path_design = DESIGN_PATH_INTERNAL . strtolower($module['dir']) . '/style.css';
 		$path_module = MODULES_DIR . $module['dir'] . '/templates/style.css';
 		if (is_file($path_design) === true) {
 			$styles['css'][] = $path_design;
