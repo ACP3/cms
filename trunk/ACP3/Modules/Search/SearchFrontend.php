@@ -54,22 +54,7 @@ class SearchFrontend extends Core\ModuleController {
 		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 			Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? $_POST : array('search_term' => ''));
 
-			$className = "\\ACP3\\Modules\\Search\\SearchExtensions";
-			$modules = get_class_methods($className);
-			$search_mods = array();
-
-			foreach ($modules as $module) {
-				$module = substr($module, 0, strpos($module, 'Search'));
-				if (Core\Modules::hasPermission($module, 'list') === true) {
-					$info = Core\Modules::getModuleInfo($module);
-					$name = $info['name'];
-					$search_mods[$name]['dir'] = $module;
-					$search_mods[$name]['checked'] = Core\Functions::selectEntry('mods', $module, $module, 'checked');
-					$search_mods[$name]['name'] = $name;
-				}
-			}
-			ksort($search_mods);
-			Core\Registry::get('View')->assign('search_mods', $search_mods);
+			Core\Registry::get('View')->assign('search_mods', SearchFunctions::getModules());
 
 			// Zu durchsuchende Bereiche
 			$lang_search_areas = array(
@@ -87,21 +72,7 @@ class SearchFrontend extends Core\ModuleController {
 
 	public function actionSidebar()
 	{
-		$mods = scandir(MODULES_DIR);
-		$c_mods = count($mods);
-		$search_mods = array();
-
-		for ($i = 0; $i < $c_mods; ++$i) {
-			if ($mods[$i] !== '.' && $mods[$i] !== '..' && Core\Modules::hasPermission($mods[$i], 'extensions/search') === true) {
-				$info = Core\Modules::getModuleInfo($mods[$i]);
-				$name = $info['name'];
-				$search_mods[$name]['dir'] = $mods[$i];
-				$search_mods[$name]['checked'] = Core\Functions::selectEntry('mods', $mods[$i], $mods[$i], 'checked');
-				$search_mods[$name]['name'] = $name;
-			}
-		}
-		ksort($search_mods);
-		Core\Registry::get('View')->assign('search_mods', $search_mods);
+		Core\Registry::get('View')->assign('search_mods', SearchFunctions::getModules());
 
 		Core\Registry::get('View')->displayTemplate('search/sidebar.tpl');
 	}
