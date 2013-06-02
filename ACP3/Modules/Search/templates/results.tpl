@@ -11,22 +11,20 @@
 {$i=0}
 {foreach $results_mods as $module => $values}
 		<div id="tab-{$values.dir}" class="tab-pane{if $i === 0} active{/if}">
-			<ol>
 {foreach $values.results as $row}
-				<li class="dataset-box">
-					<header class="navbar">
-						<div class="navbar-inner navbar-text">
-							<h2><a href="{$row.hyperlink}">{$row.title}</a></h2>
-						</div>
-					</header>
-{if !empty($row.text)}
-					<div class="content">
-						{$row.text}
+			<div class="dataset-box">
+				<header class="navbar">
+					<div class="navbar-inner navbar-text">
+						<h2><a href="{$row.hyperlink}">{$row.title}</a></h2>
 					</div>
+				</header>
+{if !empty($row.text)}
+				<div class="content">
+					{$row.text}
+				</div>
 {/if}
-				</li>
+			</div>
 {/foreach}
-			</ol>
 		</div>
 {$i=$i+1}
 {/foreach}
