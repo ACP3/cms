@@ -60,6 +60,7 @@ $min_allowDebugFlag = false;
 //$min_cachePath = new Minify_Cache_APC();
 $min_cachePath = realpath(__DIR__ . '/../../uploads/cache/minify');
 
+
 /**
  * Leave an empty string to use PHP's $_SERVER['DOCUMENT_ROOT'].
  *
