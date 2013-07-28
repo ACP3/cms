@@ -72,7 +72,7 @@ class CommentsFrontend extends Core\ModuleController {
 			// Emoticons einbinden, falls diese aktiv sind
 			if ($settings['emoticons'] == 1 && Core\Modules::isActive('emoticons') === true) {
 				// Emoticons im Formular anzeigen
-				Core\Registry::get('View')->assign('emoticons', \ACP3\Modules\Emoticons\EmoticonsFunctions::emoticonsList());
+				Core\Registry::get('View')->assign('emoticons', \ACP3\Modules\Emoticons\EmoticonsHelpers::emoticonsList());
 			}
 
 			$defaults = array();
@@ -98,7 +98,7 @@ class CommentsFrontend extends Core\ModuleController {
 			Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? array_merge($defaults, $_POST) : $defaults);
 
 			if ($captchaAccess === true) {
-				Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaFunctions::captcha());
+				Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaHelpers::captcha());
 			}
 
 			Core\Registry::get('Session')->generateFormToken();
@@ -123,7 +123,7 @@ class CommentsFrontend extends Core\ModuleController {
 				$emoticons_active = Core\Modules::isActive('emoticons');
 			}
 
-			Core\Registry::get('View')->assign('pagination', Core\Functions::pagination(CommentsFunctions::commentsCount($this->module, $this->entry_id)));
+			Core\Registry::get('View')->assign('pagination', Core\Functions::pagination(CommentsHelpers::commentsCount($this->module, $this->entry_id)));
 
 			for ($i = 0; $i < $c_comments; ++$i) {
 				if (empty($comments[$i]['user_name']) && empty($comments[$i]['name'])) {
@@ -135,7 +135,7 @@ class CommentsFrontend extends Core\ModuleController {
 				$comments[$i]['date_iso'] = Core\Registry::get('Date')->format($comments[$i]['date'], 'c');
 				$comments[$i]['message'] = Core\Functions::nl2p($comments[$i]['message']);
 				if ($emoticons_active === true) {
-					$comments[$i]['message'] = \ACP3\Modules\Emoticons\EmoticonsFunctions::emoticonsReplace($comments[$i]['message']);
+					$comments[$i]['message'] = \ACP3\Modules\Emoticons\EmoticonsHelpers::emoticonsReplace($comments[$i]['message']);
 				}
 			}
 			Core\Registry::get('View')->assign('comments', $comments);

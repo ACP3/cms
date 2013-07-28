@@ -119,7 +119,7 @@ class GalleryFrontend extends Core\ModuleController {
 		if (Core\Validate::isNumber(Core\Registry::get('URI')->id) === true &&
 				Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'gallery WHERE id = :id' . $period, array('id' => Core\Registry::get('URI')->id, 'time' => Core\Registry::get('Date')->getCurrentDateTime())) == 1) {
 			// Cache der Galerie holen
-			$pictures = GalleryFunctions::getGalleryCache(Core\Registry::get('URI')->id);
+			$pictures = GalleryHelpers::getGalleryCache(Core\Registry::get('URI')->id);
 			$c_pictures = count($pictures);
 
 			if ($c_pictures > 0) {

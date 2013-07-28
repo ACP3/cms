@@ -84,7 +84,7 @@ class GuestbookFrontend extends Core\ModuleController {
 
 				// Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen
 				if ($newsletterAccess === true && isset($_POST['subscribe_newsletter']) && $_POST['subscribe_newsletter'] == 1) {
-					\ACP3\Modules\Newsletter\NewsletterFunctions::subscribeToNewsletter($_POST['mail']);
+					\ACP3\Modules\Newsletter\NewsletterHelpers::subscribeToNewsletter($_POST['mail']);
 				}
 
 				Core\Registry::get('Session')->unsetFormToken();
@@ -95,7 +95,7 @@ class GuestbookFrontend extends Core\ModuleController {
 		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 			// Emoticons einbinden
 			if ($settings['emoticons'] == 1 && Core\Modules::isActive('emoticons') === true) {
-				Core\Registry::get('View')->assign('emoticons', \ACP3\Modules\Emoticons\EmoticonsFunctions::emoticonsList());
+				Core\Registry::get('View')->assign('emoticons', \ACP3\Modules\Emoticons\EmoticonsHelpers::emoticonsList());
 			}
 
 			// In Newsletter integrieren
@@ -138,7 +138,7 @@ class GuestbookFrontend extends Core\ModuleController {
 			}
 
 			if ($captchaAccess === true) {
-				Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaFunctions::captcha());
+				Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaHelpers::captcha());
 			}
 
 			Core\Registry::get('Session')->generateFormToken();
@@ -169,7 +169,7 @@ class GuestbookFrontend extends Core\ModuleController {
 				$guestbook[$i]['date_iso'] = Core\Registry::get('Date')->format($guestbook[$i]['date'], 'c');
 				$guestbook[$i]['message'] = Core\Functions::nl2p($guestbook[$i]['message']);
 				if ($emoticons_active === true) {
-					$guestbook[$i]['message'] = \ACP3\Modules\Emoticons\EmoticonsFunctions::emoticonsReplace($guestbook[$i]['message']);
+					$guestbook[$i]['message'] = \ACP3\Modules\Emoticons\EmoticonsHelpers::emoticonsReplace($guestbook[$i]['message']);
 				}
 				$guestbook[$i]['website'] = strlen($guestbook[$i]['user_website']) > 2 ? substr($guestbook[$i]['user_website'], 0, -2) : $guestbook[$i]['website'];
 				if (!empty($guestbook[$i]['website']) && (bool) preg_match('=^http(s)?://=', $guestbook[$i]['website']) === false)

@@ -23,7 +23,7 @@ class Textarea extends AbstractWYSIWYG {
 	public function display() {
 		$out = '';
 		if (\ACP3\Core\Modules::isActive('emoticons') === true) {
-			$out.= \ACP3\Modules\Emoticons\EmoticonsFunctions::emoticonsList($this->id);
+			$out.= \ACP3\Modules\Emoticons\EmoticonsHelpers::emoticonsList($this->id);
 		}
 		$out.= '<textarea name="' . $this->name . '" id="' . $this->id . '" cols="50" rows="6" class="span6">' . $this->value . '</textarea>';
 		return $out;

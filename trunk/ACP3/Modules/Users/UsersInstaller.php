@@ -7,7 +7,7 @@ use ACP3\Core\ModuleInstaller;
 class UsersInstaller extends ModuleInstaller {
 
 	const MODULE_NAME = 'users';
-	const SCHEMA_VERSION = 33;
+	const SCHEMA_VERSION = 34;
 
 	protected function removeResources() {
 		return true;
@@ -43,6 +43,7 @@ class UsersInstaller extends ModuleInstaller {
 				`language` VARCHAR(10) NOT NULL,
 				`entries` TINYINT(2) UNSIGNED NOT NULL,
 				`draft` TEXT NOT NULL,
+				`registration_date` DATETIME NOT NULL,
 				PRIMARY KEY (`id`)
 			) {engine} {charset};"
 		);
@@ -97,6 +98,10 @@ class UsersInstaller extends ModuleInstaller {
 			),
 			33 => array(
 				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
+			),
+			34 => array(
+				"ALTER TABLE `{pre}users` ADD `registration_date` DATETIME NOT NULL AFTER `draft`;",
+				"UPDATE `{pre}users` SET registration_date = '" . gmdate('Y-m-d H:i:s') . "';"
 			)
 		);
 	}

@@ -78,7 +78,7 @@ class NewsletterFrontend extends Core\ModuleController {
 					} elseif (Core\Validate::formToken() === false) {
 						Core\Registry::get('View')->setContent(Core\Functions::errorBox(Core\Registry::get('Lang')->t('system', 'form_already_submitted')));
 					} else {
-						$bool = NewsletterFunctions::subscribeToNewsletter($_POST['mail']);
+						$bool = NewsletterHelpers::subscribeToNewsletter($_POST['mail']);
 
 						Core\Registry::get('Session')->unsetFormToken();
 
@@ -121,7 +121,7 @@ class NewsletterFrontend extends Core\ModuleController {
 			Core\Registry::get('View')->assign('actions', Core\Functions::selectGenerator('action', array('subscribe', 'unsubstribe'), $actions_Lang, $field_value, 'checked'));
 
 			if ($captchaAccess === true) {
-				Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaFunctions::captcha());
+				Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaHelpers::captcha());
 			}
 
 			Core\Registry::get('Session')->generateFormToken();
@@ -130,7 +130,7 @@ class NewsletterFrontend extends Core\ModuleController {
 
 	public function actionSidebar() {
 		if (Core\Modules::hasPermission('captcha', 'image') === true) {
-			Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaFunctions::captcha());
+			Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaHelpers::captcha());
 		}
 
 		Core\Registry::get('Session')->generateFormToken('newsletter/list');

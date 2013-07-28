@@ -9,7 +9,7 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class SearchFunctions {
+abstract class SearchHelpers {
 
 	/**
 	 * Gibt die für die Suche verfügbaren Module zurück

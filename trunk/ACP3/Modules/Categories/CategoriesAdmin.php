@@ -32,7 +32,7 @@ class CategoriesAdmin extends Core\ModuleController {
 				$errors['picture'] = Core\Registry::get('Lang')->t('categories', 'invalid_image_selected');
 			if (empty($_POST['module']))
 				$errors['module'] = Core\Registry::get('Lang')->t('categories', 'select_module');
-			if (strlen($_POST['title']) >= 3 && CategoriesFunctions::categoriesCheckDuplicate($_POST['title'], $_POST['module']))
+			if (strlen($_POST['title']) >= 3 && CategoriesHelpers::categoriesCheckDuplicate($_POST['title'], $_POST['module']))
 				$errors['title'] = Core\Registry::get('Lang')->t('categories', 'category_already_exists');
 
 			if (isset($errors) === true) {
@@ -58,7 +58,7 @@ class CategoriesAdmin extends Core\ModuleController {
 				}
 
 				$bool = Core\Registry::get('Db')->insert(DB_PRE . 'categories', $insert_values);
-				CategoriesFunctions::setCategoriesCache($_POST['module']);
+				CategoriesHelpers::setCategoriesCache($_POST['module']);
 
 				Core\Registry::get('Session')->unsetFormToken();
 
@@ -147,7 +147,7 @@ class CategoriesAdmin extends Core\ModuleController {
 						Core\Validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
 						$_FILES['file']['error'] !== UPLOAD_ERR_OK))
 					$errors['picture'] = Core\Registry::get('Lang')->t('categories', 'invalid_image_selected');
-				if (strlen($_POST['title']) >= 3 && CategoriesFunctions::categoriesCheckDuplicate($_POST['title'], $module['name'], Core\Registry::get('URI')->id))
+				if (strlen($_POST['title']) >= 3 && CategoriesHelpers::categoriesCheckDuplicate($_POST['title'], $module['name'], Core\Registry::get('URI')->id))
 					$errors['title'] = Core\Registry::get('Lang')->t('categories', 'category_already_exists');
 
 				if (isset($errors) === true) {
@@ -174,7 +174,7 @@ class CategoriesAdmin extends Core\ModuleController {
 
 					$bool = Core\Registry::get('Db')->update(DB_PRE . 'categories', $update_values, array('id' => Core\Registry::get('URI')->id));
 
-					CategoriesFunctions::setCategoriesCache($module['name']);
+					CategoriesHelpers::setCategoriesCache($module['name']);
 
 					Core\Registry::get('Session')->unsetFormToken();
 

@@ -12,7 +12,7 @@ namespace ACP3\Modules\Newsletter;
 
 use ACP3\Core;
 
-abstract class NewsletterFunctions {
+abstract class NewsletterHelpers {
 
 	/**
 	 * Versendet einen Newsletter

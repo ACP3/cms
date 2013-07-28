@@ -93,7 +93,7 @@ class CommentsAdmin extends Core\ModuleController {
 			if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 				if (Core\Modules::isActive('emoticons') === true) {
 					// Emoticons im Formular anzeigen
-					Core\Registry::get('View')->assign('emoticons', \ACP3\Modules\Emoticons\EmoticonsFunctions::emoticonsList());
+					Core\Registry::get('View')->assign('emoticons', \ACP3\Modules\Emoticons\EmoticonsHelpers::emoticonsList());
 				}
 
 				Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? $_POST : $comment);
@@ -168,7 +168,7 @@ class CommentsAdmin extends Core\ModuleController {
 					$comments[$i]['date_formatted'] = Core\Registry::get('Date')->formatTimeRange($comments[$i]['date']);
 					$comments[$i]['message'] = Core\Functions::nl2p($comments[$i]['message']);
 					if ($emoticons_active === true) {
-						$comments[$i]['message'] = \ACP3\Modules\Emoticons\EmoticonsFunctions::emoticonsReplace($comments[$i]['message']);
+						$comments[$i]['message'] = \ACP3\Modules\Emoticons\EmoticonsHelpers::emoticonsReplace($comments[$i]['message']);
 					}
 				}
 				Core\Registry::get('View')->assign('comments', $comments);

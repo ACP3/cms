@@ -3,7 +3,7 @@
 namespace ACP3\Modules\News;
 
 use ACP3\Core;
-use ACP3\Modules\Categories\CategoriesFunctions;
+use ACP3\Modules\Categories\CategoriesHelpers;
 
 /**
  * Description of NewsAdmin
@@ -23,9 +23,9 @@ class NewsAdmin extends Core\ModuleController {
 				$errors['title'] = Core\Registry::get('Lang')->t('news', 'title_to_short');
 			if (strlen($_POST['text']) < 3)
 				$errors['text'] = Core\Registry::get('Lang')->t('news', 'text_to_short');
-			if (strlen($_POST['cat_create']) < 3 && CategoriesFunctions::categoriesCheck($_POST['cat']) === false)
+			if (strlen($_POST['cat_create']) < 3 && CategoriesHelpers::categoriesCheck($_POST['cat']) === false)
 				$errors['cat'] = Core\Registry::get('Lang')->t('news', 'select_category');
-			if (strlen($_POST['cat_create']) >= 3 && CategoriesFunctions::categoriesCheckDuplicate($_POST['cat_create'], 'news') === true)
+			if (strlen($_POST['cat_create']) >= 3 && CategoriesHelpers::categoriesCheckDuplicate($_POST['cat_create'], 'news') === true)
 				$errors['cat-create'] = Core\Registry::get('Lang')->t('categories', 'category_already_exists');
 			if (!empty($_POST['link_title']) && (empty($_POST['uri']) || Core\Validate::isNumber($_POST['target']) === false))
 				$errors[] = Core\Registry::get('Lang')->t('news', 'complete_hyperlink_statements');
@@ -46,7 +46,7 @@ class NewsAdmin extends Core\ModuleController {
 					'text' => Core\Functions::strEncode($_POST['text'], true),
 					'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,
 					'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
-					'category_id' => strlen($_POST['cat_create']) >= 3 ? CategoriesFunctions::categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
+					'category_id' => strlen($_POST['cat_create']) >= 3 ? CategoriesHelpers::categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
 					'uri' => Core\Functions::strEncode($_POST['uri'], true),
 					'target' => (int) $_POST['target'],
 					'link_title' => Core\Functions::strEncode($_POST['link_title']),
@@ -67,7 +67,7 @@ class NewsAdmin extends Core\ModuleController {
 			Core\Registry::get('View')->assign('publication_period', Core\Registry::get('Date')->datepicker(array('start', 'end')));
 
 			// Kategorien
-			Core\Registry::get('View')->assign('categories', CategoriesFunctions::categoriesList('news', '', true));
+			Core\Registry::get('View')->assign('categories', CategoriesHelpers::categoriesList('news', '', true));
 
 			// Weiterlesen & Kommentare
 			if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && Core\Modules::isActive('comments') === true)) {
@@ -142,9 +142,9 @@ class NewsAdmin extends Core\ModuleController {
 					$errors['title'] = Core\Registry::get('Lang')->t('news', 'title_to_short');
 				if (strlen($_POST['text']) < 3)
 					$errors['text'] = Core\Registry::get('Lang')->t('news', 'text_to_short');
-				if (strlen($_POST['cat_create']) < 3 && CategoriesFunctions::categoriesCheck($_POST['cat']) === false)
+				if (strlen($_POST['cat_create']) < 3 && CategoriesHelpers::categoriesCheck($_POST['cat']) === false)
 					$errors['cat'] = Core\Registry::get('Lang')->t('news', 'select_category');
-				if (strlen($_POST['cat_create']) >= 3 && CategoriesFunctions::categoriesCheckDuplicate($_POST['cat_create'], 'news') === true)
+				if (strlen($_POST['cat_create']) >= 3 && CategoriesHelpers::categoriesCheckDuplicate($_POST['cat_create'], 'news') === true)
 					$errors['cat-create'] = Core\Registry::get('Lang')->t('categories', 'category_already_exists');
 				if (!empty($_POST['link_title']) && (empty($_POST['uri']) || Core\Validate::isNumber($_POST['target']) === false))
 					$errors[] = Core\Registry::get('Lang')->t('news', 'complete_additional_hyperlink_statements');
@@ -164,7 +164,7 @@ class NewsAdmin extends Core\ModuleController {
 						'text' => Core\Functions::strEncode($_POST['text'], true),
 						'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,
 						'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
-						'category_id' => strlen($_POST['cat_create']) >= 3 ? CategoriesFunctions::categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
+						'category_id' => strlen($_POST['cat_create']) >= 3 ? CategoriesHelpers::categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
 						'uri' => Core\Functions::strEncode($_POST['uri'], true),
 						'target' => (int) $_POST['target'],
 						'link_title' => Core\Functions::strEncode($_POST['link_title']),
@@ -175,7 +175,7 @@ class NewsAdmin extends Core\ModuleController {
 					if ((bool) CONFIG_SEO_ALIASES === true)
 						Core\SEO::insertUriAlias('news/details/id_' . Core\Registry::get('URI')->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int) $_POST['seo_robots']);
 
-					NewsFunctions::setNewsCache(Core\Registry::get('URI')->id);
+					NewsHelpers::setNewsCache(Core\Registry::get('URI')->id);
 
 					Core\Registry::get('Session')->unsetFormToken();
 
@@ -189,7 +189,7 @@ class NewsAdmin extends Core\ModuleController {
 				Core\Registry::get('View')->assign('publication_period', Core\Registry::get('Date')->datepicker(array('start', 'end'), array($news['start'], $news['end'])));
 
 				// Kategorien
-				Core\Registry::get('View')->assign('categories', CategoriesFunctions::categoriesList('news', $news['category_id'], true));
+				Core\Registry::get('View')->assign('categories', CategoriesHelpers::categoriesList('news', $news['category_id'], true));
 
 				// Weiterlesen & Kommentare
 				if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && Core\Modules::isActive('comments') === true)) {

@@ -18,7 +18,7 @@ class NewsFrontend extends Core\ModuleController {
 				Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'news WHERE id = :id' . $period, array('id' => Core\Registry::get('URI')->id, 'time' => Core\Registry::get('Date')->getCurrentDateTime())) == 1) {
 
 			$settings = Core\Config::getSettings('news');
-			$news = NewsFunctions::getNewsCache(Core\Registry::get('URI')->id);
+			$news = NewsHelpers::getNewsCache(Core\Registry::get('URI')->id);
 
 			Core\Registry::get('Breadcrumb')->append(Core\Registry::get('Lang')->t('news', 'news'), Core\Registry::get('URI')->route('news'));
 			if ($settings['category_in_breadcrumb'] == 1) {
@@ -60,7 +60,7 @@ class NewsFrontend extends Core\ModuleController {
 		}
 
 		if (Core\Modules::isActive('categories') === true) {
-			Core\Registry::get('View')->assign('categories', \ACP3\Modules\Categories\CategoriesFunctions::categoriesList('news', $cat));
+			Core\Registry::get('View')->assign('categories', \ACP3\Modules\Categories\CategoriesHelpers::categoriesList('news', $cat));
 		}
 
 		$settings = Core\Config::getSettings('news');
@@ -96,7 +96,7 @@ class NewsFrontend extends Core\ModuleController {
 				$news[$i]['date_iso'] = Core\Registry::get('Date')->format($news[$i]['start'], 'c');
 				$news[$i]['text'] = Core\Functions::rewriteInternalUri($news[$i]['text']);
 				if ($settings['comments'] == 1 && $news[$i]['comments'] == 1 && $comment_check === true) {
-					$news[$i]['comments_count'] = \ACP3\Modules\Comments\CommentsFunctions::commentsCount('news', $news[$i]['id']);
+					$news[$i]['comments_count'] = \ACP3\Modules\Comments\CommentsHelpers::commentsCount('news', $news[$i]['id']);
 				}
 				if ($settings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
 					$news[$i]['text'] = Core\Functions::shortenEntry($news[$i]['text'], $settings['readmore_chars'], 50, '...<a href="' . Core\Registry::get('URI')->route('news/details/id_' . $news[$i]['id']) . '">[' . Core\Registry::get('Lang')->t('news', 'readmore') . "]</a>\n");

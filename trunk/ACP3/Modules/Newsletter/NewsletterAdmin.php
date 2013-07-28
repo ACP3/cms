@@ -54,7 +54,7 @@ class NewsletterAdmin extends Core\ModuleController {
 						$bool2 = Core\Functions::generateEmail('', $settings['mail'], $settings['mail'], $subject, $body);
 						// An alle versenden
 					} else {
-						$bool2 = NewsletterFunctions::sendNewsletter($subject, $body, $settings['mail']);
+						$bool2 = NewsletterHelpers::sendNewsletter($subject, $body, $settings['mail']);
 					}
 				}
 
@@ -168,7 +168,7 @@ class NewsletterAdmin extends Core\ModuleController {
 							$bool2 = Core\Functions::generateEmail('', $settings['mail'], $settings['mail'], $subject, $body);
 						// An alle versenden
 						} else {
-							$bool2 = NewsletterFunctions::sendNewsletter($subject, $body, $settings['mail']);
+							$bool2 = NewsletterHelpers::sendNewsletter($subject, $body, $settings['mail']);
 						}
 					}
 
@@ -259,7 +259,7 @@ class NewsletterAdmin extends Core\ModuleController {
 			$subject = html_entity_decode($newsletter['title'], ENT_QUOTES, 'UTF-8');
 			$body = html_entity_decode($newsletter['text'] . "\n-- \n" . $settings['mailsig'], ENT_QUOTES, 'UTF-8');
 
-			$bool = NewsletterFunctions::sendNewsletter($subject, $body, $settings['mail']);
+			$bool = NewsletterHelpers::sendNewsletter($subject, $body, $settings['mail']);
 			$bool2 = false;
 			if ($bool === true) {
 				$bool2 = Core\Registry::get('Db')->update(DB_PRE . 'newsletters', array('status' => '1'), array('id' => Core\Registry::get('URI')->id));
