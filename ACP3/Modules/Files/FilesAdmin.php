@@ -3,7 +3,7 @@
 namespace ACP3\Modules\Files;
 
 use ACP3\Core;
-use ACP3\Modules\Categories\CategoriesFunctions;
+use ACP3\Modules\Categories\CategoriesHelpers;
 
 /**
  * Description of FilesAdmin
@@ -35,9 +35,9 @@ class FilesAdmin extends Core\ModuleController {
 				$errors['file-internal'] = Core\Registry::get('Lang')->t('files', 'select_internal_resource');
 			if (strlen($_POST['text']) < 3)
 				$errors['text'] = Core\Registry::get('Lang')->t('files', 'description_to_short');
-			if (strlen($_POST['cat_create']) < 3 && CategoriesFunctions::categoriesCheck($_POST['cat']) === false)
+			if (strlen($_POST['cat_create']) < 3 && CategoriesHelpers::categoriesCheck($_POST['cat']) === false)
 				$errors['cat'] = Core\Registry::get('Lang')->t('files', 'select_category');
-			if (strlen($_POST['cat_create']) >= 3 && CategoriesFunctions::categoriesCheckDuplicate($_POST['cat_create'], 'files') === true)
+			if (strlen($_POST['cat_create']) >= 3 && CategoriesHelpers::categoriesCheckDuplicate($_POST['cat_create'], 'files') === true)
 				$errors['cat-create'] = Core\Registry::get('Lang')->t('categories', 'category_already_exists');
 			if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) && (Core\Validate::isUriSafe($_POST['alias']) === false || Core\Validate::uriAliasExists($_POST['alias']) === true))
 				$errors['alias'] = Core\Registry::get('Lang')->t('system', 'uri_alias_unallowed_characters_or_exists');
@@ -61,7 +61,7 @@ class FilesAdmin extends Core\ModuleController {
 					'id' => '',
 					'start' => Core\Registry::get('Date')->toSQL($_POST['start']),
 					'end' => Core\Registry::get('Date')->toSQL($_POST['end']),
-					'category_id' => strlen($_POST['cat_create']) >= 3 ? CategoriesFunctions::categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
+					'category_id' => strlen($_POST['cat_create']) >= 3 ? CategoriesHelpers::categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
 					'file' => $new_file,
 					'size' => $filesize,
 					'title' => Core\Functions::strEncode($_POST['title']),
@@ -88,7 +88,7 @@ class FilesAdmin extends Core\ModuleController {
 			Core\Registry::get('View')->assign('units', Core\Functions::selectGenerator('units', $units, $units, ''));
 
 			// Formularelemente
-			Core\Registry::get('View')->assign('categories', CategoriesFunctions::categoriesList('files', '', true));
+			Core\Registry::get('View')->assign('categories', CategoriesHelpers::categoriesList('files', '', true));
 
 			if ($settings['comments'] == 1 && Core\Modules::isActive('comments') === true) {
 				$options = array();
@@ -178,9 +178,9 @@ class FilesAdmin extends Core\ModuleController {
 					$errors['file-internal'] = Core\Registry::get('Lang')->t('files', 'select_internal_resource');
 				if (strlen($_POST['text']) < 3)
 					$errors['text'] = Core\Registry::get('Lang')->t('files', 'description_to_short');
-				if (strlen($_POST['cat_create']) < 3 && CategoriesFunctions::categoriesCheck($_POST['cat']) === false)
+				if (strlen($_POST['cat_create']) < 3 && CategoriesHelpers::categoriesCheck($_POST['cat']) === false)
 					$errors['cat'] = Core\Registry::get('Lang')->t('files', 'select_category');
-				if (strlen($_POST['cat_create']) >= 3 && CategoriesFunctions::categoriesCheckDuplicate($_POST['cat_create'], 'files') === true)
+				if (strlen($_POST['cat_create']) >= 3 && CategoriesHelpers::categoriesCheckDuplicate($_POST['cat_create'], 'files') === true)
 					$errors['cat-create'] = Core\Registry::get('Lang')->t('categories', 'category_already_exists');
 				if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 						(Core\Validate::isUriSafe($_POST['alias']) === false || Core\Validate::uriAliasExists($_POST['alias'], 'files/details/id_' . Core\Registry::get('URI')->id) === true))
@@ -213,7 +213,7 @@ class FilesAdmin extends Core\ModuleController {
 					$update_values = array(
 						'start' => Core\Registry::get('Date')->toSQL($_POST['start']),
 						'end' => Core\Registry::get('Date')->toSQL($_POST['end']),
-						'category_id' => strlen($_POST['cat_create']) >= 3 ? CategoriesFunctions::categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
+						'category_id' => strlen($_POST['cat_create']) >= 3 ? CategoriesHelpers::categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
 						'title' => Core\Functions::strEncode($_POST['title']),
 						'text' => Core\Functions::strEncode($_POST['text'], true),
 						'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
@@ -230,7 +230,7 @@ class FilesAdmin extends Core\ModuleController {
 					if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
 						Core\SEO::insertUriAlias('files/details/id_' . Core\Registry::get('URI')->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int) $_POST['seo_robots']);
 
-					FilesFunctions::setFilesCache(Core\Registry::get('URI')->id);
+					FilesHelpers::setFilesCache(Core\Registry::get('URI')->id);
 
 					Core\Registry::get('Session')->unsetFormToken();
 
@@ -249,7 +249,7 @@ class FilesAdmin extends Core\ModuleController {
 				$dl['filesize'] = substr($dl['size'], 0, strpos($dl['size'], ' '));
 
 				// Formularelemente
-				Core\Registry::get('View')->assign('categories', CategoriesFunctions::categoriesList('files', $dl['category_id'], true));
+				Core\Registry::get('View')->assign('categories', CategoriesHelpers::categoriesList('files', $dl['category_id'], true));
 
 				if ($settings['comments'] == 1 && Core\Modules::isActive('comments') === true) {
 					$options = array();

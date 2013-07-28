@@ -12,7 +12,7 @@ namespace ACP3\Modules\System;
 
 use ACP3\Core;
 
-abstract class SystemFunctions {
+abstract class SystemHelpers {
 
 	/**
 	 * Überprüft die Modulabhängigkeiten beim Installieren eines Moduls

@@ -12,7 +12,7 @@ namespace ACP3\Modules\Captcha;
 
 use ACP3\Core;
 
-abstract class CaptchaFunctions {
+abstract class CaptchaHelpers {
 
 	/**
 	 * Erzeugt das Captchafeld für das Template

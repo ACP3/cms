@@ -20,11 +20,11 @@ class UsersAdmin extends Core\ModuleController {
 				$errors['gender'] = Core\Registry::get('Lang')->t('users', 'select_gender');
 			if (!empty($_POST['birthday']) && Core\Validate::birthday($_POST['birthday']) === false)
 				$errors[] = Core\Registry::get('Lang')->t('users', 'invalid_birthday');
-			if (UsersFunctions::userNameExists($_POST['nickname']) === true)
+			if (UsersHelpers::userNameExists($_POST['nickname']) === true)
 				$errors['nickname'] = Core\Registry::get('Lang')->t('users', 'user_name_already_exists');
 			if (Core\Validate::email($_POST['mail']) === false)
 				$errors['mail'] = Core\Registry::get('Lang')->t('system', 'wrong_email_format');
-			if (UsersFunctions::userEmailExists($_POST['mail']) === true)
+			if (UsersHelpers::userEmailExists($_POST['mail']) === true)
 				$errors['mail'] = Core\Registry::get('Lang')->t('users', 'user_email_already_exists');
 			if (empty($_POST['roles']) || is_array($_POST['roles']) === false || Core\Validate::aclRolesExist($_POST['roles']) === false)
 				$errors['roles'] = Core\Registry::get('Lang')->t('users', 'select_access_level');
@@ -85,6 +85,7 @@ class UsersAdmin extends Core\ModuleController {
 					'language' => $_POST['language'],
 					'entries' => (int) $_POST['entries'],
 					'draft' => '',
+					'registration_date' => Core\Registry::get('Date')->getCurrentDateTime(),
 				);
 
 				Core\Registry::get('Db')->beginTransaction();
@@ -272,11 +273,11 @@ class UsersAdmin extends Core\ModuleController {
 					$errors['gender'] = Core\Registry::get('Lang')->t('users', 'select_gender');
 				if (!empty($_POST['birthday']) && Core\Validate::birthday($_POST['birthday']) === false)
 					$errors[] = Core\Registry::get('Lang')->t('users', 'invalid_birthday');
-				if (UsersFunctions::userNameExists($_POST['nickname'], Core\Registry::get('URI')->id))
+				if (UsersHelpers::userNameExists($_POST['nickname'], Core\Registry::get('URI')->id))
 					$errors['nickname'] = Core\Registry::get('Lang')->t('users', 'user_name_already_exists');
 				if (Core\Validate::email($_POST['mail']) === false)
 					$errors['mail'] = Core\Registry::get('Lang')->t('system', 'wrong_email_format');
-				if (UsersFunctions::userEmailExists($_POST['mail'], Core\Registry::get('URI')->id))
+				if (UsersHelpers::userEmailExists($_POST['mail'], Core\Registry::get('URI')->id))
 					$errors['mail'] = Core\Registry::get('Lang')->t('users', 'user_email_already_exists');
 				if (empty($_POST['roles']) || is_array($_POST['roles']) === false || Core\Validate::aclRolesExist($_POST['roles']) === false)
 					$errors['roles'] = Core\Registry::get('Lang')->t('users', 'select_access_level');

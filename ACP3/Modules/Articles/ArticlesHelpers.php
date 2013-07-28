@@ -12,7 +12,7 @@ namespace ACP3\Modules\Articles;
 
 use ACP3\Core;
 
-abstract class ArticlesFunctions {
+abstract class ArticlesHelpers {
 
 	/**
 	 * Erstellt den Cache eines Artikels anhand der angegebenen ID

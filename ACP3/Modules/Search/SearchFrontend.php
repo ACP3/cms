@@ -54,7 +54,7 @@ class SearchFrontend extends Core\ModuleController {
 		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
 			Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? $_POST : array('search_term' => ''));
 
-			Core\Registry::get('View')->assign('search_mods', SearchFunctions::getModules());
+			Core\Registry::get('View')->assign('search_mods', SearchHelpers::getModules());
 
 			// Zu durchsuchende Bereiche
 			$lang_search_areas = array(
@@ -72,7 +72,7 @@ class SearchFrontend extends Core\ModuleController {
 
 	public function actionSidebar()
 	{
-		Core\Registry::get('View')->assign('search_mods', SearchFunctions::getModules());
+		Core\Registry::get('View')->assign('search_mods', SearchHelpers::getModules());
 
 		Core\Registry::get('View')->displayTemplate('search/sidebar.tpl');
 	}

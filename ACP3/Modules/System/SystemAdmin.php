@@ -327,7 +327,7 @@ class SystemAdmin extends Core\ModuleController {
 			$text = Core\Registry::get('Lang')->t('system', 'mod_deactivate_forbidden');
 		} else {
 			// Modulabhängigkeiten prüfen
-			$deps = SystemFunctions::checkUninstallDependencies(Core\Registry::get('URI')->dir);
+			$deps = SystemHelpers::checkUninstallDependencies(Core\Registry::get('URI')->dir);
 
 			if (empty($deps)) {
 				$bool = Core\Registry::get('Db')->update(DB_PRE . 'modules', array('active' => 0), array('name' => Core\Registry::get('URI')->dir));
@@ -350,7 +350,7 @@ class SystemAdmin extends Core\ModuleController {
 			$path = MODULES_DIR . $mod_name . '/' . $mod_name . 'Installer.php';
 			if (is_file($path) === true) {
 				// Modulabhängigkeiten prüfen
-				$deps = SystemFunctions::checkInstallDependencies(Core\Registry::get('URI')->dir);
+				$deps = SystemHelpers::checkInstallDependencies(Core\Registry::get('URI')->dir);
 
 				// Modul installieren
 				if (empty($deps)) {
@@ -380,7 +380,7 @@ class SystemAdmin extends Core\ModuleController {
 			$path = MODULES_DIR . $mod_name . '/' . $mod_name . 'Installer.php';
 			if (is_file($path) === true) {
 				// Modulabhängigkeiten prüfen
-				$deps = SystemFunctions::checkUninstallDependencies(Core\Registry::get('URI')->dir);
+				$deps = SystemHelpers::checkUninstallDependencies(Core\Registry::get('URI')->dir);
 
 				// Modul deinstallieren
 				if (empty($deps)) {

@@ -77,7 +77,7 @@ class ContactFrontend extends Core\ModuleController {
 			Core\Registry::get('View')->assign('copy_checked', Core\Functions::selectEntry('copy', 1, 0, 'checked'));
 
 			if ($captchaAccess === true) {
-				Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaFunctions::captcha());
+				Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaHelpers::captcha());
 			}
 
 			Core\Registry::get('Session')->generateFormToken();

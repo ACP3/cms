@@ -12,7 +12,7 @@ namespace ACP3\Modules\Gallery;
 
 use ACP3\Core;
 
-abstract class GalleryFunctions {
+abstract class GalleryHelpers {
 
 	/**
 	 * Erstellt den Galerie-Cache anhand der angegebenen ID

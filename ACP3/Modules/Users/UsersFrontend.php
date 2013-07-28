@@ -24,7 +24,7 @@ class UsersFrontend extends Core\ModuleController {
 			if (isset($_POST['submit']) === true) {
 				if (empty($_POST['nickname']))
 					$errors['nnickname'] = Core\Registry::get('Lang')->t('system', 'name_to_short');
-				if (UsersFunctions::userNameExists($_POST['nickname'], Core\Registry::get('Auth')->getUserId()) === true)
+				if (UsersHelpers::userNameExists($_POST['nickname'], Core\Registry::get('Auth')->getUserId()) === true)
 					$errors['nickname'] = Core\Registry::get('Lang')->t('users', 'user_name_already_exists');
 				if (Core\Validate::gender($_POST['gender']) === false)
 					$errors['gender'] = Core\Registry::get('Lang')->t('users', 'select_gender');
@@ -32,7 +32,7 @@ class UsersFrontend extends Core\ModuleController {
 					$errors[] = Core\Registry::get('Lang')->t('users', 'invalid_birthday');
 				if (Core\Validate::email($_POST['mail']) === false)
 					$errors['mail'] = Core\Registry::get('Lang')->t('system', 'wrong_email_format');
-				if (UsersFunctions::userEmailExists($_POST['mail'], Core\Registry::get('Auth')->getUserId()) === true)
+				if (UsersHelpers::userEmailExists($_POST['mail'], Core\Registry::get('Auth')->getUserId()) === true)
 					$errors['mail'] = Core\Registry::get('Lang')->t('users', 'user_email_already_exists');
 				if (!empty($_POST['icq']) && Core\Validate::icq($_POST['icq']) === false)
 					$errors['icq'] = Core\Registry::get('Lang')->t('users', 'invalid_icq_number');
@@ -250,9 +250,9 @@ class UsersFrontend extends Core\ModuleController {
 			if (isset($_POST['submit']) === true) {
 				if (empty($_POST['nick_mail']))
 					$errors['nick-mail'] = Core\Registry::get('Lang')->t('users', 'type_in_nickname_or_email');
-				elseif (Core\Validate::email($_POST['nick_mail']) === false && UsersFunctions::userNameExists($_POST['nick_mail']) === false)
+				elseif (Core\Validate::email($_POST['nick_mail']) === false && UsersHelpers::userNameExists($_POST['nick_mail']) === false)
 					$errors['nick-mail'] = Core\Registry::get('Lang')->t('users', 'user_not_exists');
-				elseif (Core\Validate::email($_POST['nick_mail']) === true && UsersFunctions::userEmailExists($_POST['nick_mail']) === false)
+				elseif (Core\Validate::email($_POST['nick_mail']) === true && UsersHelpers::userEmailExists($_POST['nick_mail']) === false)
 					$errors['nick-mail'] = Core\Registry::get('Lang')->t('users', 'user_not_exists');
 				if ($captchaAccess === true && Core\Validate::captcha($_POST['captcha']) === false)
 					$errors['captcha'] = Core\Registry::get('Lang')->t('captcha', 'invalid_captcha_entered');
@@ -267,7 +267,7 @@ class UsersFrontend extends Core\ModuleController {
 					$host = htmlentities($_SERVER['HTTP_HOST']);
 
 					// Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
-					if (Core\Validate::email($_POST['nick_mail']) === true && UsersFunctions::userEmailExists($_POST['nick_mail']) === true) {
+					if (Core\Validate::email($_POST['nick_mail']) === true && UsersHelpers::userEmailExists($_POST['nick_mail']) === true) {
 						$query = 'SELECT id, nickname, realname, mail FROM ' . DB_PRE . 'users WHERE mail = ?';
 					} else {
 						$query = 'SELECT id, nickname, realname, mail FROM ' . DB_PRE . 'users WHERE nickname = ?';
@@ -300,7 +300,7 @@ class UsersFrontend extends Core\ModuleController {
 				Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
 				if ($captchaAccess === true) {
-					Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaFunctions::captcha());
+					Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaHelpers::captcha());
 				}
 
 				Core\Registry::get('Session')->generateFormToken();
@@ -399,11 +399,11 @@ class UsersFrontend extends Core\ModuleController {
 			if (isset($_POST['submit']) === true) {
 				if (empty($_POST['nickname']))
 					$errors['nickname'] = Core\Registry::get('Lang')->t('system', 'name_to_short');
-				if (UsersFunctions::userNameExists($_POST['nickname']) === true)
+				if (UsersHelpers::userNameExists($_POST['nickname']) === true)
 					$errors['nickname'] = Core\Registry::get('Lang')->t('users', 'user_name_already_exists');
 				if (Core\Validate::email($_POST['mail']) === false)
 					$errors['mail'] = Core\Registry::get('Lang')->t('system', 'wrong_email_format');
-				if (UsersFunctions::userEmailExists($_POST['mail']) === true)
+				if (UsersHelpers::userEmailExists($_POST['mail']) === true)
 					$errors['mail'] = Core\Registry::get('Lang')->t('users', 'user_email_already_exists');
 				if (empty($_POST['pwd']) || empty($_POST['pwd_repeat']) || $_POST['pwd'] != $_POST['pwd_repeat'])
 					$errors[] = Core\Registry::get('Lang')->t('users', 'type_in_pwd');
@@ -432,6 +432,7 @@ class UsersFrontend extends Core\ModuleController {
 						'time_zone' => CONFIG_DATE_TIME_ZONE,
 						'language' => CONFIG_LANG,
 						'entries' => CONFIG_ENTRIES,
+						'registration_date' => Core\Registry::get('Date')->getCurrentDateTime(),
 					);
 
 					Core\Registry::get('Db')->beginTransaction();
@@ -459,7 +460,7 @@ class UsersFrontend extends Core\ModuleController {
 				Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
 				if ($captchaAccess === true) {
-					Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaFunctions::captcha());
+					Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaHelpers::captcha());
 				}
 
 				Core\Registry::get('Session')->generateFormToken();

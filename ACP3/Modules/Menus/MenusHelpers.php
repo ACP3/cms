@@ -12,7 +12,7 @@ namespace ACP3\Modules\Menus;
 
 use ACP3\Core;
 
-abstract class MenusFunctions {
+abstract class MenusHelpers {
 
 	/**
 	 * Erstellt den Cache für die Menüpunkte

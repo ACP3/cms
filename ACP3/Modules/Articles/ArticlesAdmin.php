@@ -77,7 +77,7 @@ class ArticlesAdmin extends Core\ModuleController {
 
 					$nestedSet = new Core\NestedSet('menu_items', true);
 					$bool = $nestedSet->insertNode((int) $_POST['parent'], $insert_values);
-					\ACP3\Modules\Menus\MenusFunctions::setMenuItemsCache();
+					\ACP3\Modules\Menus\MenusHelpers::setMenuItemsCache();
 				}
 
 				Core\Registry::get('Session')->unsetFormToken();
@@ -91,12 +91,12 @@ class ArticlesAdmin extends Core\ModuleController {
 				Core\Registry::get('View')->assign('options', Core\Functions::selectGenerator('create', array(1), $lang_options, 0, 'checked'));
 
 				// Block
-				Core\Registry::get('View')->assign('blocks', \ACP3\Modules\Menus\MenusFunctions::menusDropdown());
+				Core\Registry::get('View')->assign('blocks', \ACP3\Modules\Menus\MenusHelpers::menusDropdown());
 
 				$lang_display = array(Core\Registry::get('Lang')->t('system', 'yes'), Core\Registry::get('Lang')->t('system', 'no'));
 				Core\Registry::get('View')->assign('display', Core\Functions::selectGenerator('display', array(1, 0), $lang_display, 1, 'checked'));
 
-				Core\Registry::get('View')->assign('pages_list', \ACP3\Modules\Menus\MenusFunctions::menuItemsList());
+				Core\Registry::get('View')->assign('pages_list', \ACP3\Modules\Menus\MenusHelpers::menuItemsList());
 			}
 
 			Core\Registry::get('View')->assign('publication_period', Core\Registry::get('Date')->datepicker(array('start', 'end')));
@@ -142,7 +142,7 @@ class ArticlesAdmin extends Core\ModuleController {
 			}
 
 			if (Core\Modules::isInstalled('menus') === true) {
-				\ACP3\Modules\Menus\MenusFunctions::setMenuItemsCache();
+				\ACP3\Modules\Menus\MenusHelpers::setMenuItemsCache();
 			}
 
 			Core\Functions::setRedirectMessage($bool, Core\Registry::get('Lang')->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/articles');
@@ -183,10 +183,10 @@ class ArticlesAdmin extends Core\ModuleController {
 					if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
 						Core\SEO::insertUriAlias('articles/details/id_' . Core\Registry::get('URI')->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int) $_POST['seo_robots']);
 
-					ArticlesFunctions::setArticlesCache(Core\Registry::get('URI')->id);
+					ArticlesHelpers::setArticlesCache(Core\Registry::get('URI')->id);
 
 					// Aliase in der Navigation aktualisieren
-					\ACP3\Modules\Menus\MenusFunctions::setMenuItemsCache();
+					\ACP3\Modules\Menus\MenusHelpers::setMenuItemsCache();
 
 					Core\Registry::get('Session')->unsetFormToken();
 
@@ -194,7 +194,7 @@ class ArticlesAdmin extends Core\ModuleController {
 				}
 			}
 			if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-				$page = ArticlesFunctions::getArticlesCache(Core\Registry::get('URI')->id);
+				$page = ArticlesHelpers::getArticlesCache(Core\Registry::get('URI')->id);
 
 				// Datumsauswahl
 				Core\Registry::get('View')->assign('publication_period', Core\Registry::get('Date')->datepicker(array('start', 'end'), array($page['start'], $page['end'])));

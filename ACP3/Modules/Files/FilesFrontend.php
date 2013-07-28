@@ -13,7 +13,7 @@ class FilesFrontend extends Core\ModuleController {
 
 	public function actionList() {
 		if (Core\Modules::isActive('categories') === true) {
-			$categories = \ACP3\Modules\Categories\CategoriesFunctions::getCategoriesCache('files');
+			$categories = \ACP3\Modules\Categories\CategoriesHelpers::getCategoriesCache('files');
 			if (count($categories) > 0) {
 				Core\Registry::get('View')->assign('categories', $categories);
 			}
@@ -25,7 +25,7 @@ class FilesFrontend extends Core\ModuleController {
 
 		if (Core\Validate::isNumber(Core\Registry::get('URI')->id) === true &&
 				Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'files WHERE id = :id' . $period, array('id' => Core\Registry::get('URI')->id, 'time' => Core\Registry::get('Date')->getCurrentDateTime())) == 1) {
-			$file = FilesFunctions::getFilesCache(Core\Registry::get('URI')->id);
+			$file = FilesHelpers::getFilesCache(Core\Registry::get('URI')->id);
 
 			if (Core\Registry::get('URI')->action === 'download') {
 				$path = UPLOADS_DIR . 'files/';

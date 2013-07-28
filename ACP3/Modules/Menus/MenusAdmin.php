@@ -109,7 +109,7 @@ class MenusAdmin extends Core\ModuleController {
 					Core\SEO::insertUriAlias($path, $_POST['mode'] == 1 ? '' : $alias, $keywords, $description, (int) $_POST['seo_robots']);
 				}
 
-				MenusFunctions::setMenuItemsCache();
+				MenusHelpers::setMenuItemsCache();
 
 				Core\Registry::get('Session')->unsetFormToken();
 
@@ -131,7 +131,7 @@ class MenusAdmin extends Core\ModuleController {
 			Core\Registry::get('View')->assign('mode', Core\Functions::selectGenerator('mode', $values_mode, $lang_mode));
 
 			// Menus
-			Core\Registry::get('View')->assign('blocks', MenusFunctions::menusDropdown());
+			Core\Registry::get('View')->assign('blocks', MenusHelpers::menusDropdown());
 
 			// Module
 			$modules = Core\Modules::getActiveModules();
@@ -149,7 +149,7 @@ class MenusAdmin extends Core\ModuleController {
 			Core\Registry::get('View')->assign('display', Core\Functions::selectGenerator('display', array(1, 0), $lang_display, 1, 'checked'));
 
 			if (Core\Modules::isActive('articles') === true) {
-				Core\Registry::get('View')->assign('articles', \ACP3\Modules\Articles\ArticlesFunctions::articlesList());
+				Core\Registry::get('View')->assign('articles', \ACP3\Modules\Articles\ArticlesHelpers::articlesList());
 			}
 
 			$defaults = array(
@@ -161,7 +161,7 @@ class MenusAdmin extends Core\ModuleController {
 			);
 
 			// Daten an Smarty übergeben
-			Core\Registry::get('View')->assign('pages_list', MenusFunctions::menuItemsList());
+			Core\Registry::get('View')->assign('pages_list', MenusHelpers::menuItemsList());
 			Core\Registry::get('View')->assign('SEO_FORM_FIELDS', Core\SEO::formFields());
 			Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
@@ -199,7 +199,7 @@ class MenusAdmin extends Core\ModuleController {
 				}
 			}
 
-			MenusFunctions::setMenuItemsCache();
+			MenusHelpers::setMenuItemsCache();
 
 			Core\Functions::setRedirectMessage($bool, Core\Registry::get('Lang')->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
 		} else {
@@ -230,7 +230,7 @@ class MenusAdmin extends Core\ModuleController {
 				Core\SEO::deleteUriAlias($item_uri);
 			}
 
-			MenusFunctions::setMenuItemsCache();
+			MenusHelpers::setMenuItemsCache();
 
 			Core\Functions::setRedirectMessage($bool, Core\Registry::get('Lang')->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
 		} else {
@@ -262,7 +262,7 @@ class MenusAdmin extends Core\ModuleController {
 
 					$bool = Core\Registry::get('Db')->update(DB_PRE . 'menus', $update_values, array('id' => Core\Registry::get('URI')->id));
 
-					MenusFunctions::setMenuItemsCache();
+					MenusHelpers::setMenuItemsCache();
 
 					Core\Registry::get('Session')->unsetFormToken();
 
@@ -348,7 +348,7 @@ class MenusAdmin extends Core\ModuleController {
 						Core\SEO::insertUriAlias($path, $_POST['mode'] == 1 ? '' : $alias, $keywords, $description, (int) $_POST['seo_robots']);
 					}
 
-					MenusFunctions::setMenuItemsCache();
+					MenusHelpers::setMenuItemsCache();
 
 					Core\Registry::get('Session')->unsetFormToken();
 
@@ -370,7 +370,7 @@ class MenusAdmin extends Core\ModuleController {
 				Core\Registry::get('View')->assign('mode', Core\Functions::selectGenerator('mode', $values_mode, $lang_mode, $page['mode']));
 
 				// Block
-				Core\Registry::get('View')->assign('blocks', MenusFunctions::menusDropdown($page['block_id']));
+				Core\Registry::get('View')->assign('blocks', MenusHelpers::menusDropdown($page['block_id']));
 
 				// Module
 				$modules = Core\Modules::getAllModules();
@@ -393,11 +393,11 @@ class MenusAdmin extends Core\ModuleController {
 						preg_match_all('/^(articles\/details\/id_([0-9]+)\/)$/', $page['uri'], $matches);
 					}
 
-					Core\Registry::get('View')->assign('articles', \ACP3\Modules\Articles\ArticlesFunctions::articlesList(!empty($matches[2]) ? $matches[2][0] : ''));
+					Core\Registry::get('View')->assign('articles', \ACP3\Modules\Articles\ArticlesHelpers::articlesList(!empty($matches[2]) ? $matches[2][0] : ''));
 				}
 
 				// Daten an Smarty übergeben
-				Core\Registry::get('View')->assign('pages_list', MenusFunctions::menuItemsList($page['parent_id'], $page['left_id'], $page['right_id']));
+				Core\Registry::get('View')->assign('pages_list', MenusHelpers::menuItemsList($page['parent_id'], $page['left_id'], $page['right_id']));
 				Core\Registry::get('View')->assign('SEO_FORM_FIELDS', Core\SEO::formFields($page['uri']));
 				Core\Registry::get('View')->assign('form', isset($_POST['submit']) ? $_POST : $page);
 
@@ -424,7 +424,7 @@ class MenusAdmin extends Core\ModuleController {
 			Core\Registry::get('View')->assign('can_edit', Core\Modules::hasPermission('menus', 'acp_edit'));
 			Core\Registry::get('View')->assign('colspan', $can_delete_item && $can_order_item ? 5 : ($can_delete_item || $can_order_item ? 4 : 3));
 
-			$pages_list = MenusFunctions::menuItemsList();
+			$pages_list = MenusHelpers::menuItemsList();
 			for ($i = 0; $i < $c_menus; ++$i) {
 				if (isset($pages_list[$menus[$i]['index_name']]) === false) {
 					$pages_list[$menus[$i]['index_name']]['title'] = $menus[$i]['title'];
@@ -443,7 +443,7 @@ class MenusAdmin extends Core\ModuleController {
 			$nestedSet = new Core\NestedSet('menu_items', true);
 			$nestedSet->order(Core\Registry::get('URI')->id, Core\Registry::get('URI')->action);
 
-			MenusFunctions::setMenuItemsCache();
+			MenusHelpers::setMenuItemsCache();
 
 			Core\Registry::get('URI')->redirect('acp/menus');
 		} else {

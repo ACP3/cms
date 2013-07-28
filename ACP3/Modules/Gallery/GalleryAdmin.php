@@ -96,8 +96,8 @@ class GalleryAdmin extends Core\ModuleController {
 					);
 
 					$bool = Core\Registry::get('Db')->insert(DB_PRE . 'gallery_pictures', $insert_values);
-					$bool2 = GalleryFunctions::generatePictureAlias(Core\Registry::get('Db')->lastInsertId());
-					GalleryFunctions::setGalleryCache(Core\Registry::get('URI')->id);
+					$bool2 = GalleryHelpers::generatePictureAlias(Core\Registry::get('Db')->lastInsertId());
+					GalleryHelpers::setGalleryCache(Core\Registry::get('URI')->id);
 
 					Core\Registry::get('Session')->unsetFormToken();
 
@@ -156,7 +156,7 @@ class GalleryAdmin extends Core\ModuleController {
 					// Galerie Cache löschen
 					Core\Cache::delete('pics_id_' . $entry, 'gallery');
 					Core\SEO::deleteUriAlias('gallery/pics/id_' . $entry);
-					GalleryFunctions::deletePictureAliases($entry);
+					GalleryHelpers::deletePictureAliases($entry);
 
 					// Fotogalerie mitsamt Bildern löschen
 					$bool = Core\Registry::get('Db')->delete(DB_PRE . 'gallery', array('id' => $entry));
@@ -188,11 +188,11 @@ class GalleryAdmin extends Core\ModuleController {
 					// Datei ebenfalls löschen
 					$picture = Core\Registry::get('Db')->fetchAssoc('SELECT pic, gallery_id, file FROM ' . DB_PRE . 'gallery_pictures WHERE id = ?', array($entry));
 					Core\Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'gallery_pictures SET pic = pic - 1 WHERE pic > ? AND gallery_id = ?', array($picture['pic'], $picture['gallery_id']));
-					GalleryFunctions::removePicture($picture['file']);
+					GalleryHelpers::removePicture($picture['file']);
 
 					$bool = Core\Registry::get('Db')->delete(DB_PRE . 'gallery_pictures', array('id' => $entry));
 					Core\SEO::deleteUriAlias('gallery/details/id_' . $entry);
-					GalleryFunctions::setGalleryCache($picture['gallery_id']);
+					GalleryHelpers::setGalleryCache($picture['gallery_id']);
 				}
 			}
 			Core\Functions::setRedirectMessage($bool, Core\Registry::get('Lang')->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/gallery/edit/id_' . $picture['gallery_id']);
@@ -234,7 +234,7 @@ class GalleryAdmin extends Core\ModuleController {
 					$bool = Core\Registry::get('Db')->update(DB_PRE . 'gallery', $update_values, array('id' => Core\Registry::get('URI')->id));
 					if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias'])) {
 						Core\SEO::insertUriAlias('gallery/pics/id_' . Core\Registry::get('URI')->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int) $_POST['seo_robots']);
-						GalleryFunctions::generatePictureAliases(Core\Registry::get('URI')->id);
+						GalleryHelpers::generatePictureAliases(Core\Registry::get('URI')->id);
 					}
 
 					Core\Registry::get('Session')->unsetFormToken();
@@ -320,13 +320,13 @@ class GalleryAdmin extends Core\ModuleController {
 					);
 					if (is_array($new_file_sql) === true) {
 						$old_file = Core\Registry::get('Db')->fetchColumn('SELECT file FROM ' . DB_PRE . 'gallery_pictures WHERE id = ?', array(Core\Registry::get('URI')->id));
-						GalleryFunctions::removePicture($old_file);
+						GalleryHelpers::removePicture($old_file);
 
 						$update_values = array_merge($update_values, $new_file_sql);
 					}
 
 					$bool = Core\Registry::get('Db')->update(DB_PRE . 'gallery_pictures', $update_values, array('id' => Core\Registry::get('URI')->id));
-					GalleryFunctions::setGalleryCache($picture['gallery_id']);
+					GalleryHelpers::setGalleryCache($picture['gallery_id']);
 
 					Core\Registry::get('Session')->unsetFormToken();
 
@@ -383,7 +383,7 @@ class GalleryAdmin extends Core\ModuleController {
 
 				$gallery_id = Core\Registry::get('Db')->fetchColumn('SELECT g.id FROM ' . DB_PRE . 'gallery AS g, ' . DB_PRE . 'gallery_pictures AS p WHERE p.id = ? AND p.gallery_id = g.id', array(Core\Registry::get('URI')->id));
 
-				GalleryFunctions::setGalleryCache($gallery_id);
+				GalleryHelpers::setGalleryCache($gallery_id);
 
 				Core\Registry::get('URI')->redirect('acp/gallery/edit/id_' . $gallery_id);
 			}

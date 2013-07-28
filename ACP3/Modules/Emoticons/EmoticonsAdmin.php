@@ -44,7 +44,7 @@ class EmoticonsAdmin extends Core\ModuleController {
 				);
 
 				$bool = Core\Registry::get('Db')->insert(DB_PRE . 'emoticons', $insert_values);
-				EmoticonsFunctions::setEmoticonsCache();
+				EmoticonsHelpers::setEmoticonsCache();
 
 				Core\Registry::get('Session')->unsetFormToken();
 
@@ -81,7 +81,7 @@ class EmoticonsAdmin extends Core\ModuleController {
 				}
 			}
 
-			EmoticonsFunctions::setEmoticonsCache();
+			EmoticonsHelpers::setEmoticonsCache();
 
 			Core\Functions::setRedirectMessage($bool, Core\Registry::get('Lang')->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/emoticons');
 		} else {
@@ -132,7 +132,7 @@ class EmoticonsAdmin extends Core\ModuleController {
 					}
 
 					$bool = Core\Registry::get('Db')->update(DB_PRE . 'emoticons', $update_values, array('id' => Core\Registry::get('URI')->id));
-					EmoticonsFunctions::setEmoticonsCache();
+					EmoticonsHelpers::setEmoticonsCache();
 
 					Core\Registry::get('Session')->unsetFormToken();
 

@@ -37,7 +37,7 @@ class ArticlesFrontend extends Core\ModuleController {
 
 		if (Core\Validate::isNumber(Core\Registry::get('URI')->id) === true &&
 				Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'articles WHERE id = :id' . $period, array('id' => Core\Registry::get('URI')->id, 'time' => Core\Registry::get('Date')->getCurrentDateTime())) == 1) {
-			$page = ArticlesFunctions::getArticlesCache(Core\Registry::get('URI')->id);
+			$page = ArticlesHelpers::getArticlesCache(Core\Registry::get('URI')->id);
 
 			Core\Registry::get('Breadcrumb')->replaceAnchestor($page['title'], 0, true);
 

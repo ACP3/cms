@@ -70,7 +70,7 @@ class GuestbookAdmin extends Core\ModuleController {
 
 				if ($settings['emoticons'] == 1 && Core\Modules::isActive('emoticons') === true) {
 					//Emoticons im Formular anzeigen
-					Core\Registry::get('View')->assign('emoticons', \ACP3\Modules\Emoticons\EmoticonsFunctions::emoticonsList());
+					Core\Registry::get('View')->assign('emoticons', \ACP3\Modules\Emoticons\EmoticonsHelpers::emoticonsList());
 				}
 
 				if ($settings['notify'] == 2) {
@@ -122,7 +122,7 @@ class GuestbookAdmin extends Core\ModuleController {
 				$guestbook[$i]['date_formatted'] = Core\Registry::get('Date')->formatTimeRange($guestbook[$i]['date']);
 				$guestbook[$i]['message'] = Core\Functions::nl2p($guestbook[$i]['message']);
 				if ($emoticons_active === true) {
-					$guestbook[$i]['message'] = \ACP3\Modules\Emoticons\EmoticonsFunctions::emoticonsReplace($guestbook[$i]['message']);
+					$guestbook[$i]['message'] = \ACP3\Modules\Emoticons\EmoticonsHelpers::emoticonsReplace($guestbook[$i]['message']);
 				}
 			}
 			Core\Registry::get('View')->assign('guestbook', $guestbook);

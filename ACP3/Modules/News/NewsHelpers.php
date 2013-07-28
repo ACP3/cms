@@ -14,7 +14,7 @@ use ACP3\Core\Cache;
 /**
  * Stellt einige Helperfunktionen bereit
  */
-abstract class NewsFunctions {
+abstract class NewsHelpers {
 
 	/**
 	 * Erstellt den Cache einer News anhand der angegebenen ID
