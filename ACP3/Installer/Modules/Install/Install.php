@@ -56,7 +56,7 @@ class Install extends \ACP3\Installer\Core\InstallerModuleController {
 						'password' => $_POST['db_password'],
 						'host' => $_POST['db_host'],
 						'driver' => 'pdo_mysql',
-						'charset' => 'UTF-8'
+						'charset' => 'utf8'
 					);
 					$db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
 					$db->query('USE `' . $_POST['db_name'] . '`');
