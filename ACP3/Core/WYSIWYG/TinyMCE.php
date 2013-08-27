@@ -61,7 +61,7 @@ class TinyMCE extends AbstractWYSIWYG {
         "insertdatetime media nonbreaking save table contextmenu directionality",
         "emoticons template paste textcolor"],' . "\n";
 			$editor.= 'image_advtab: true,' . "\n";
-			$editor.= 'toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons",' . "\n";
+			$editor.= 'toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons"' . "\n";
 		}
 
 		// Filebrowser
