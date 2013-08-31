@@ -173,11 +173,11 @@ abstract class MenusHelpers {
 	 * @param string $block
 	 * 	Name des Blocks, für welchen die Navigationspunkte ausgegeben werden sollen
 	 * @param boolean $use_bootstrap
-	 * @param string $class
+	 * @param string $navbarCssClass
 	 *
 	 * @return string
 	 */
-	public static function processNavbar($block, $use_bootstrap = true, $class = '')
+	public static function processNavbar($block, $use_bootstrap = true, $navbarCssClass = '', $navbarDropdownLi = '')
 	{
 		static $navbar = array();
 
@@ -214,7 +214,7 @@ abstract class MenusHelpers {
 					// Falls für Knoten Kindelemente vorhanden sind, neue Unterliste erstellen
 					if (isset($items[$i + 1]) && $items[$i + 1]['level'] > $items[$i]['level']) {
 						if ($use_bootstrap === true) {
-							$css.= $items[$i]['level'] == 0 ? ' dropdown' : ' dropdown-submenu';
+							$css.= !empty($navbarDropdownLi) ? $navbarDropdownLi : ($items[$i]['level'] == 0 ? ' dropdown' : ' dropdown-submenu');
 							$caret = $items[$i]['level'] == 0 ? ' <b class="caret"></b>' : '';
 							$data_target = $items[$i]['level'] == 0 ? '  data-target="#"' : '';
 							$link = '<a href="' . $href . '" class="dropdown-toggle" data-toggle="dropdown"' . $data_target . $target . '>' . $items[$i]['title'] . $caret . '</a>';
@@ -237,7 +237,7 @@ abstract class MenusHelpers {
 						}
 					}
 				}
-				$navbar[$block] = !empty($navbar[$block]) ? '<ul class="navigation-' . $block . (!empty($class) ? ' ' . $class : '') . ($use_bootstrap === true ? ' nav' : '') . '">' . $navbar[$block] . '</ul>' : '';
+				$navbar[$block] = !empty($navbar[$block]) ? '<ul class="navigation-' . $block . (!empty($navbarCssClass) ? ' ' . $navbarCssClass : '') . ($use_bootstrap === true ? ' nav' : '') . '">' . $navbar[$block] . '</ul>' : '';
 				return $navbar[$block];
 			}
 			return '';
