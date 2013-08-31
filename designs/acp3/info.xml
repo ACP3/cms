@@ -4,6 +4,7 @@
 	<description>Default design of the ACP3 4.0.</description>
 	<author>Tino Goratsch</author>
 	<version core="true"/>
+	<use_bootstrap>true</use_bootstrap>
 	<responsive_layouts>
 		<layout>layout</layout>
 		<layout>simple</layout>

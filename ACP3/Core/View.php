@@ -1,4 +1,5 @@
 <?php
+
 namespace ACP3\Core;
 
 /**
@@ -6,8 +7,8 @@ namespace ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class View
-{
+class View {
+
 	/**
 	 * Nicht ausgeben
 	 */
@@ -53,7 +54,6 @@ class View
 	 * @var array
 	 */
 	private $js_libraries = array('bootbox' => false, 'fancybox' => false, 'jquery-ui' => false, 'timepicker' => false, 'datatables' => false);
-	
 	private static $renderer_obj = null;
 
 	/**
@@ -61,8 +61,7 @@ class View
 	 *
 	 * @param boolean $value
 	 */
-	public function setNoOutput($value)
-	{
+	public function setNoOutput($value) {
 		$this->no_output = (bool) $value;
 	}
 
@@ -72,8 +71,7 @@ class View
 	 *
 	 * @return string
 	 */
-	public function getNoOutput()
-	{
+	public function getNoOutput() {
 		return $this->no_output;
 	}
 
@@ -82,8 +80,7 @@ class View
 	 *
 	 * @param string $data
 	 */
-	public function setContentType($data)
-	{
+	public function setContentType($data) {
 		$this->content_type = $data;
 	}
 
@@ -92,8 +89,7 @@ class View
 	 *
 	 * @return string
 	 */
-	public function getContentType()
-	{
+	public function getContentType() {
 		return $this->content_type;
 	}
 
@@ -102,8 +98,7 @@ class View
 	 *
 	 * @param string $file
 	 */
-	public function setLayout($file)
-	{
+	public function setLayout($file) {
 		$this->layout = $file;
 	}
 
@@ -112,8 +107,7 @@ class View
 	 *
 	 * @return string
 	 */
-	public function getLayout()
-	{
+	public function getLayout() {
 		return $this->layout;
 	}
 
@@ -122,8 +116,7 @@ class View
 	 * 
 	 * @param string $file
 	 */
-	public function setContentTemplate($file)
-	{
+	public function setContentTemplate($file) {
 		$this->content_template = $file;
 	}
 
@@ -132,8 +125,7 @@ class View
 	 * 
 	 * @return string
 	 */
-	public function getContentTemplate()
-	{
+	public function getContentTemplate() {
 		return $this->content_template;
 	}
 
@@ -142,8 +134,7 @@ class View
 	 *
 	 * @param string $data
 	 */
-	public function setContent($data)
-	{
+	public function setContent($data) {
 		$this->content = $data;
 	}
 
@@ -152,8 +143,7 @@ class View
 	 *
 	 * @param string $data
 	 */
-	public function appendContent($data)
-	{
+	public function appendContent($data) {
 		$this->content_append.= $data;
 	}
 
@@ -162,8 +152,7 @@ class View
 	 *
 	 * @return string
 	 */
-	public function getContent()
-	{
+	public function getContent() {
 		return $this->content;
 	}
 
@@ -172,8 +161,7 @@ class View
 	 * 
 	 * @return string
 	 */
-	public function getContentAppend()
-	{
+	public function getContentAppend() {
 		return $this->content_append;
 	}
 
@@ -181,8 +169,7 @@ class View
 	 * 
 	 * @return object
 	 */
-	public static function getRenderer()
-	{
+	public static function getRenderer() {
 		return self::$renderer_obj;
 	}
 
@@ -192,8 +179,7 @@ class View
 	 * @param array $libraries
 	 * @return
 	 */
-	public function enableJsLibraries(array $libraries)
-	{
+	public function enableJsLibraries(array $libraries) {
 		foreach ($libraries as $library) {
 			if (array_key_exists($library, $this->js_libraries) === true) {
 				$this->js_libraries[$library] = true;
@@ -204,8 +190,7 @@ class View
 		return;
 	}
 
-	public static function factory($renderer = 'Smarty', array $params = array())
-	{
+	public static function factory($renderer = 'Smarty', array $params = array()) {
 		$path = CLASSES_DIR . 'View/' . $renderer . '.php';
 		if (is_file($path) === true) {
 			$className = "\\ACP3\\Core\\View\\$renderer";
@@ -220,22 +205,172 @@ class View
 	 *
 	 * @return string
 	 */
-	public function buildMinifyLink()
-	{
+	public function buildMinifyLink() {
 		$minify = ROOT_DIR . 'libraries/min/' . ((bool) CONFIG_SEO_MOD_REWRITE === true && defined('IN_ADM') === false ? '' : '?') . 'g=%s';
 
 		ksort($this->js_libraries);
 		$libraries = '';
 		foreach ($this->js_libraries as $library => $enable) {
-			if ($enable === true)
+			if ($enable === true) {
 				$libraries.= $library . ',';
+			}
 		}
 
-		if ($libraries !== '')
+		if ($libraries !== '') {
 			$minify.= '&amp;libraries=' . substr($libraries, 0, -1) . '&amp;' . CONFIG_DESIGN;
-		
+		}
+
 		return $minify;
 	}
+
+	/**
+	 * 
+	 * @param type $systemPath
+	 * @param type $designPath
+	 * @param type $dir
+	 * @param type $file
+	 * @return string
+	 */
+	protected static function getCssJsPath($systemPath, $designPath, $dir, $file) {
+		$dir = !empty($dir) ? $dir . '/' : '';
+		if (is_file($designPath . $dir . $file) === true) {
+			return $designPath . $dir . $file;
+		} elseif (is_file($systemPath . $dir . $file) === true) {
+			return $systemPath . $dir . $file;
+		}
+		return '';
+	}
+
+	public static function includeCssFiles($libraries, $layout) {
+		$xml = simplexml_load_file(DESIGN_PATH_INTERNAL . 'info.xml');
+
+		$css = array();
+
+		if (isset($xml->use_bootstrap) && (string) $xml->use_bootstrap === 'true') {
+			$css[] = VENDOR_DIR . 'twitter/bootstrap/css/bootstrap.css';
+			// Styles für das Responsive Design nur einbinden,
+			// falls dies vom Design benötigt wird
+			if (isset($xml->responsive_layouts)) {
+				foreach ($xml->responsive_layouts->layout as $item) {
+					if ($layout == $item) {
+						$css[] = VENDOR_DIR . 'twitter/bootstrap/css/bootstrap-responsive.css';
+						break;
+					}
+				}
+			}
+		} elseif (isset($xml->css)) {
+			foreach ($xml->css->item as $file) {
+				$path = DESIGN_PATH_INTERNAL . 'css/' . $file;
+				if (is_file($path) === true) {
+					$css[] = $path;
+				}
+			}
+		}
+
+		// Stylesheets der Bibliotheken zuerst laden,
+		// damit deren Styles überschrieben werden können
+		if (in_array('jquery-ui', $libraries)) {
+			$css[] = self::getCssJsPath(LIBRARIES_DIR, DESIGN_PATH_INTERNAL, 'js', 'jquery-ui.css');
+		}
+		if (in_array('timepicker', $libraries)) {
+			$css[] = self::getCssJsPath(LIBRARIES_DIR, DESIGN_PATH_INTERNAL, 'js', 'jquery-timepicker.css');
+		}
+		if (in_array('fancybox', $libraries)) {
+			$css[] = self::getCssJsPath(LIBRARIES_DIR, DESIGN_PATH_INTERNAL, 'js', 'jquery-fancybox.css');
+		}
+		if (in_array('datatables', $libraries)) {
+			$css[] = self::getCssJsPath(LIBRARIES_DIR, DESIGN_PATH_INTERNAL, 'js', 'jquery-datatables.css');
+		}
+
+		// Stylesheet für das Layout-Tenplate
+		$css[] = DESIGN_PATH_INTERNAL . 'common.css';
+		$css[] = DESIGN_PATH_INTERNAL . (is_file(DESIGN_PATH_INTERNAL . $layout . '.css') === true ? $layout : 'layout') . '.css';
+
+		// Zusätzliche Stylesheets einbinden
+		$extra_css = explode(',', CONFIG_EXTRA_CSS);
+		if (count($extra_css) > 0) {
+			foreach ($extra_css as $file) {
+				$path = DESIGN_PATH_INTERNAL . 'css/' . trim($file);
+				if (is_file($path) && in_array($path, $css) === false) {
+					$css[] = $path;
+				}
+			}
+		}
+
+		// Stylesheets der Module
+		$modules = \ACP3\Core\Modules::getActiveModules();
+		foreach ($modules as $module) {
+			$systemPath = MODULES_DIR . $module['dir'] . '/templates/';
+			$designPath = DESIGN_PATH_INTERNAL . strtolower($module['dir']) . '/';
+			if (true === ($stylesheet = self::getCssJsPath($systemPath, $designPath, '', 'style.css'))) {
+				$css[] = $stylesheet;
+			}
+			// Append some custom styles to the default module styling
+			$path_module_append = MODULES_DIR . $module['dir'] . '/templates/append.css';
+			if (is_file($path_module_append) === true) {
+				$css[] = $path_module_append;
+			}
+		}
+
+		return $css;
+	}
+
+	public static function includeJsFiles($libraries, $layout) {
+		$xml = simplexml_load_file(DESIGN_PATH_INTERNAL . 'info.xml');
+
+		$scripts = array();
+		$scripts[] = self::getCssJsPath(LIBRARIES_DIR, DESIGN_PATH_INTERNAL, 'js', 'jquery.min.js');
+
+		if (isset($xml->use_bootstrap) && (string) $xml->use_bootstrap === 'true') {
+			$scripts[] = VENDOR_DIR . 'twitter/bootstrap/js/bootstrap.min.js';
+		}
+
+		// Include js files from the design
+		if (isset($xml->js)) {
+			foreach ($xml->js->item as $js) {
+				$path = DESIGN_PATH_INTERNAL . 'js/' . $js;
+				if (is_file($path) === true) {
+					$scripts[] = $path;
+				}
+			}
+		}
+
+		// JS-Libraries to include
+		if (in_array('bootbox', $libraries)) {
+			$scripts[] = self::getCssJsPath(LIBRARIES_DIR, DESIGN_PATH_INTERNAL, 'js', 'bootbox.min.js');
+		}
+		if (in_array('jquery-ui', $libraries)) {
+			$scripts[] = self::getCssJsPath(LIBRARIES_DIR, DESIGN_PATH_INTERNAL, 'js', 'jquery-ui.min.js');
+		}
+		if (in_array('timepicker', $libraries)) {
+			$scripts[] = self::getCssJsPath(LIBRARIES_DIR, DESIGN_PATH_INTERNAL, 'js', 'jquery.timepicker.js');
+		}
+		if (in_array('fancybox', $libraries)) {
+			$scripts[] = self::getCssJsPath(LIBRARIES_DIR, DESIGN_PATH_INTERNAL, 'js', 'jquery.fancybox.min.js');
+		}
+		if (in_array('datatables', $libraries)) {
+			$scripts[] = self::getCssJsPath(LIBRARIES_DIR, DESIGN_PATH_INTERNAL, 'js', 'jquery.datatables.min.js');
+		}
+
+		// Include general js file of the layout
+		if (is_file(DESIGN_PATH_INTERNAL . $layout . '.js') === true) {
+			$scripts[] = DESIGN_PATH_INTERNAL . $layout . '.js';
+		}
+
+		// Include additional js files from the system config
+		$extra_js = explode(',', CONFIG_EXTRA_JS);
+		if (count($extra_js) > 0) {
+			foreach ($extra_js as $file) {
+				$path = DESIGN_PATH_INTERNAL . 'js/' . trim($file);
+				if (is_file($path) && in_array($path, $scripts) === false) {
+					$scripts[] = $path;
+				}
+			}
+		}
+
+		return $scripts;
+	}
+
 	/**
 	 * Gibt ein Template direkt aus
 	 *
@@ -243,10 +378,10 @@ class View
 	 * @param mixed $cache_id
 	 * @param integer $cache_lifetime
 	 */
-	public function displayTemplate($template, $cache_id = null, $compile_id = null, $parent = null)
-	{
+	public function displayTemplate($template, $cache_id = null, $compile_id = null, $parent = null) {
 		echo $this->fetchTemplate($template, $cache_id, $compile_id, $parent, true);
 	}
+
 	/**
 	 * Gibt ein Template aus
 	 *
@@ -257,8 +392,7 @@ class View
 	 * @param boolean $display
 	 * @return string
 	 */
-	public function fetchTemplate($template, $cache_id = null, $compile_id = null, $parent = null, $display = false)
-	{
+	public function fetchTemplate($template, $cache_id = null, $compile_id = null, $parent = null, $display = false) {
 		if ($this->templateExists($template)) {
 			return self::$renderer_obj->fetch($template, $cache_id, $compile_id, $parent, $display);
 		} else {
@@ -274,8 +408,7 @@ class View
 		}
 	}
 
-	public function templateExists($template)
-	{
+	public function templateExists($template) {
 		return self::$renderer_obj->templateExists($template);
 	}
 
@@ -286,8 +419,8 @@ class View
 	 * @param mixed $value
 	 * @return boolean
 	 */
-	public function assign($name, $value = null)
-	{
+	public function assign($name, $value = null) {
 		return self::$renderer_obj->assign($name, $value);
 	}
+
 }

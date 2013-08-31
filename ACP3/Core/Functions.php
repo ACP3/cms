@@ -79,8 +79,9 @@ abstract class Functions {
 
 		static $init = false;
 
-		if (isset($config['records_per_page']) === false)
+		if (isset($config['records_per_page']) === false) {
 			$config['records_per_page'] = Registry::get('Auth')->entries;
+		}
 
 		$config['initialized'] = $init;
 
