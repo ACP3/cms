@@ -1,0 +1,18 @@
+#box {
+	max-width: 100%;
+}
+/* Logo */
+#logo {
+	margin: 10px 20px;
+	width: 222px;
+	height: 89px;
+	background: url('img/logo.png') no-repeat;
+	text-indent: -9999px;
+}
+#logo a {
+	height: 89px;
+	display: block;
+}
+.tab-content > .tab-pane {
+	padding-top: 15px;
+}

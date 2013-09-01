@@ -20,8 +20,9 @@ function smarty_function_check_access($params)
 				$path = ROOT_DIR . CONFIG_ICONS_PATH . $params['icon'] . '.png';
 				$access_check['icon'] = $path;
 			}
-			if (isset($params['title']))
+			if (isset($params['title'])) {
 				$access_check['title'] = $params['title'];
+			}
 			if (isset($params['lang'])) {
 				$lang_ary = explode('|', $params['lang']);
 				$access_check['lang'] = \ACP3\Core\Registry::get('Lang')->t($lang_ary[0], $lang_ary[1]);

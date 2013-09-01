@@ -35,7 +35,7 @@
 		<div class="row-fluid">
 			<div class="span2">
 				<div class="well well-small">
-					{navbar block="sidebar" class="nav-list"}
+					{navbar block="sidebar" class="nav nav-list"}
 					{load_module module="users|sidebar"}
 				</div>
 			</div>

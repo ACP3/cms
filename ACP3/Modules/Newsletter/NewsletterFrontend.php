@@ -130,7 +130,7 @@ class NewsletterFrontend extends Core\ModuleController {
 
 	public function actionSidebar() {
 		if (Core\Modules::hasPermission('captcha', 'image') === true) {
-			Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaHelpers::captcha());
+			Core\Registry::get('View')->assign('captcha', \ACP3\Modules\Captcha\CaptchaHelpers::captcha(3, 'captcha', true));
 		}
 
 		Core\Registry::get('Session')->generateFormToken('newsletter/list');

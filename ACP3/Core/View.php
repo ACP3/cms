@@ -183,8 +183,9 @@ class View {
 		foreach ($libraries as $library) {
 			if (array_key_exists($library, $this->js_libraries) === true) {
 				$this->js_libraries[$library] = true;
-				if ($library === 'timepicker')
+				if ($library === 'timepicker') {
 					$this->js_libraries['jquery-ui'] = true;
+				}
 			}
 		}
 		return;
@@ -206,7 +207,7 @@ class View {
 	 * @return string
 	 */
 	public function buildMinifyLink() {
-		$minify = ROOT_DIR . 'libraries/min/' . ((bool) CONFIG_SEO_MOD_REWRITE === true && defined('IN_ADM') === false ? '' : '?') . 'g=%s';
+		$minify = ROOT_DIR . 'libraries/min/' . ((bool) CONFIG_SEO_MOD_REWRITE === true && defined('IN_ADM') === false ? '' : '?') . 'g=%s&amp;' . CONFIG_DESIGN;
 
 		ksort($this->js_libraries);
 		$libraries = '';
@@ -217,7 +218,7 @@ class View {
 		}
 
 		if ($libraries !== '') {
-			$minify.= '&amp;libraries=' . substr($libraries, 0, -1) . '&amp;' . CONFIG_DESIGN;
+			$minify.= '&amp;libraries=' . substr($libraries, 0, -1);
 		}
 
 		return $minify;
@@ -241,6 +242,12 @@ class View {
 		return '';
 	}
 
+	/**
+	 * 
+	 * @param string $libraries
+	 * @param string $layout
+	 * @return array
+	 */
 	public static function includeCssFiles($libraries, $layout) {
 		$xml = simplexml_load_file(DESIGN_PATH_INTERNAL . 'info.xml');
 
@@ -315,6 +322,12 @@ class View {
 		return $css;
 	}
 
+	/**
+	 * 
+	 * @param string $libraries
+	 * @param string $layout
+	 * @return array
+	 */
 	public static function includeJsFiles($libraries, $layout) {
 		$xml = simplexml_load_file(DESIGN_PATH_INTERNAL . 'info.xml');
 
@@ -408,6 +421,12 @@ class View {
 		}
 	}
 
+	/**
+	 * Checks, whether a templates exists or not
+	 * 
+	 * @param string $template
+	 * @return boolean
+	 */
 	public function templateExists($template) {
 		return self::$renderer_obj->templateExists($template);
 	}
