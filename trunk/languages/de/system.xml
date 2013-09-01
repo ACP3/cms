@@ -192,6 +192,7 @@
 	<item key="move_up">Einen Schritt nach oben verschieben</item>
 	<item key="name">Name</item>
 	<item key="name_to_short">Bitte geben Sie einen Namen an.</item>
+	<item key="navigation">Navigation</item>
 	<item key="next">Weiter</item>
 	<item key="next_page">Nächste Seite</item>
 	<item key="no">Nein</item>
@@ -268,6 +269,7 @@
 	<item key="title_for_toc">Seitentitel für das Inhaltsverzeichnis</item>
 	<item key="title_to_short">Bitte geben Sie einen Seitentitel ein.</item>
 	<item key="toc_page">Seite %d</item>
+	<item key="toggle_navigation">Navigation einblenden/ausblenden</item>
 	<item key="type_in_additional_javascript_files">Einige der angegebenen JavaScript Dateien konnten nicht gefunden werden.</item>
 	<item key="type_in_additional_stylesheets">Einige der angegebenen Stylesheets konnten nicht gefunden werden.</item>
 	<item key="type_in_date_format">Bitte geben Sie eine Datumsformatierung ein.</item>

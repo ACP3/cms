@@ -172,12 +172,12 @@ abstract class MenusHelpers {
 	 *
 	 * @param string $block
 	 * 	Name des Blocks, für welchen die Navigationspunkte ausgegeben werden sollen
-	 * @param boolean $use_bootstrap
-	 * @param string $navbarCssClass
+	 * @param boolean $useBootstrap
+	 * @param string $class
 	 *
 	 * @return string
 	 */
-	public static function processNavbar($block, $use_bootstrap = true, $navbarCssClass = '', $navbarDropdownLi = '')
+	public static function processNavbar($block, $useBootstrap = true, $class = '', $dropdownItemClass = '', $tag = 'ul', $itemTag = 'li', $dropdownWrapperTag = 'li', $linkCss = '', $inlineStyles = '')
 	{
 		static $navbar = array();
 
@@ -210,34 +210,41 @@ abstract class MenusHelpers {
 					// Link zusammenbauen
 					$href = $items[$i]['mode'] == 1 || $items[$i]['mode'] == 2 || $items[$i]['mode'] == 4 ? Core\Registry::get('URI')->route($items[$i]['uri']) : $items[$i]['uri'];
 					$target = $items[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
+					$attributes = '';
+					$attributes.= !empty($linkCss) ? ' class="' . $linkCss . '"' : '';
 
 					// Falls für Knoten Kindelemente vorhanden sind, neue Unterliste erstellen
 					if (isset($items[$i + 1]) && $items[$i + 1]['level'] > $items[$i]['level']) {
-						if ($use_bootstrap === true) {
-							$css.= !empty($navbarDropdownLi) ? $navbarDropdownLi : ($items[$i]['level'] == 0 ? ' dropdown' : ' dropdown-submenu');
+						$caret = $subNavbarCss = '';
+						// Special styling for bootstrap enabled navbars
+						if ($useBootstrap === true) {
+							$css.= !empty($dropdownItemClass) ? ' ' . $dropdownItemClass : ($items[$i]['level'] == 0 ? ' dropdown' : ' dropdown-submenu');
 							$caret = $items[$i]['level'] == 0 ? ' <b class="caret"></b>' : '';
-							$data_target = $items[$i]['level'] == 0 ? '  data-target="#"' : '';
-							$link = '<a href="' . $href . '" class="dropdown-toggle" data-toggle="dropdown"' . $data_target . $target . '>' . $items[$i]['title'] . $caret . '</a>';
-							$navbar[$block].= '<li class="' . $css . '">' . $link . '<ul class="dropdown-menu navigation-' . $block . '-subnav-' . $items[$i]['id'] . '">';
-						} else {
-							$link = '<a href="' . $href . '"' . $target . '>' . $items[$i]['title'] . '</a>';
-							$navbar[$block].= '<li class="' . $css . '">' . $link . '<ul class="navigation-' . $block . '-subnav-' . $items[$i]['id'] . '">';
+							$attributes.= $items[$i]['level'] == 0 ? '  data-target="#"' : '';
+							$attributes.= ' class="dropdown-toggle" data-toggle="dropdown"';
+							$subNavbarCss = 'dropdown-menu ';
 						}
+
+						$link = sprintf('<a href="%1$s"%2$s%3$s>%4$s%5$s</a>', $href, $target, $attributes, $items[$i]['title'], $caret);
+						$navbar[$block].= sprintf('<%1$s class="%2$s">%3$s<ul class="%4$snavigation-%5$s-subnav-%6$d">', $dropdownWrapperTag, $css, $link, $subNavbarCss, $block, $items[$i]['id']);
 						// Elemente ohne Kindelemente
 					} else {
-						$link = '<a href="' . $href . '"' . $target . '>' . $items[$i]['title'] . '</a>';
-						$navbar[$block].= '<li class="' . $css . '">' . $link . '</li>';
+						$link = sprintf('<a href="%1$s"%2$s%3$s>%4$s</a>', $href, $target, $attributes, $items[$i]['title']);
+						$navbar[$block].= $itemTag === '' ? $link : sprintf('<%1$s class="%2$s">%3$s</%1$s>', $itemTag, $css, $link);
+
 						// Liste für untergeordnete Elemente schließen
 						if (isset($items[$i + 1]) && $items[$i + 1]['level'] < $items[$i]['level'] || !isset($items[$i + 1]) && $items[$i]['level'] != '0') {
 							// Differenz ermitteln, wieviele Level zwischen dem aktuellen und dem nachfolgendem Element liegen
 							$diff = (isset($items[$i + 1]['level']) ? $items[$i]['level'] - $items[$i + 1]['level'] : $items[$i]['level']) * 2;
 							for ($diff; $diff > 0; --$diff) {
-								$navbar[$block].= ($diff % 2 == 0 ? '</ul>' : '</li>');
+								$navbar[$block].= ($diff % 2 == 0 ? '</ul>' : '</' . $dropdownWrapperTag . '>');
 							}
 						}
 					}
 				}
-				$navbar[$block] = !empty($navbar[$block]) ? '<ul class="navigation-' . $block . (!empty($navbarCssClass) ? ' ' . $navbarCssClass : '') . ($use_bootstrap === true ? ' nav' : '') . '">' . $navbar[$block] . '</ul>' : '';
+				$attributes = ' class="navigation-' . $block . (!empty($class) ? ' ' . $class : ($useBootstrap === true ? ' nav' : '')) . '"';
+				$attributes.= !empty($inlineStyles) ? ' style="' . $inlineStyles . '"' : '';
+				$navbar[$block] = !empty($navbar[$block]) ? sprintf('<%1$s%2$s>%3$s</%1$s>', $tag, $attributes, $navbar[$block]) : '';
 				return $navbar[$block];
 			}
 			return '';

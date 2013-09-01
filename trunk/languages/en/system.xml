@@ -192,6 +192,7 @@
 	<item key="move_up">Move entry one step up</item>
 	<item key="name">Name</item>
 	<item key="name_to_short">Please type in a name</item>
+	<item key="navigation">Navigation</item>
 	<item key="next">Next</item>
 	<item key="next_page">Next page</item>
 	<item key="no">No</item>
@@ -267,6 +268,7 @@
 	<item key="title">Title</item>
 	<item key="title_for_toc">Title for table of contents</item>
 	<item key="toc_page">Page %d</item>
+	<item key="toggle_navigation">Toggle Navigation</item>
 	<item key="title_to_short">Please type in a title.</item>
 	<item key="type_in_additional_javascript_files">Some of the specified javascript files could not be found.</item>
 	<item key="type_in_additional_stylesheets">Some of the specified stylesheets could not be found.</item>
