@@ -1,7 +1,9 @@
 <div class="modal static">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-header text-center"><strong>{$confirm.text}</strong></div>
+			<div class="modal-header text-center">
+				<h4 class="modal-title">{$confirm.text}</h4>
+			</div>
 			<div class="modal-footer text-center">
 				{if isset($confirm.backward)}
 					<a href="{$confirm.forward}" class="btn btn-default">{lang t="system|yes"}</a>

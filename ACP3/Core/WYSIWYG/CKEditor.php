@@ -82,8 +82,9 @@ class CKEditor extends AbstractWYSIWYG {
 			'advanced' => $this->advanced,
 		);
 
-		if ($wysiwyg['advanced'] === true)
+		if ($wysiwyg['advanced'] === true) {
 			$wysiwyg['advanced_replace_content'] = 'CKEDITOR.instances.' . $wysiwyg['id'] . '.insertHtml(text);';
+		}
 
 		\ACP3\Core\Registry::get('View')->assign('wysiwyg', $wysiwyg);
 		return \ACP3\Core\Registry::get('View')->fetchTemplate('system/wysiwyg.tpl');
