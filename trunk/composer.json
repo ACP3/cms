@@ -46,7 +46,7 @@
 	],
 	"require": {
 		"php": ">=5.3.2",
-		"doctrine/dbal": "2.3.4",
+		"doctrine/dbal": "2.4.*",
 		"phpmailer/phpmailer": "5.2.6",
 		"smarty/smarty": "3.1.14",
 		"twitter/bootstrap": "2.3.2"
