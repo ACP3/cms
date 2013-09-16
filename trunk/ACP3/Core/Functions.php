@@ -59,8 +59,10 @@ abstract class Functions {
 				'forward' => $forward,
 				'overlay' => $overlay,
 			);
-			if (!empty($backward))
+			if (!empty($backward)) {
 				$confirm['backward'] = $backward;
+			}
+
 			Registry::get('View')->assign('confirm', $confirm);
 
 			return Registry::get('View')->fetchTemplate('system/confirm_box.tpl');

@@ -41,7 +41,7 @@
 		<div class="col-lg-10">
 			<div class="btn-group" data-toggle="buttons">
 				{foreach $readmore as $row}
-					<label for="{$row.id}" class="btn btn-default">
+					<label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
 						<input type="radio" name="readmore" id="{$row.id}" value="{$row.value}"{$row.checked}>
 						{$row.lang}
 					</label>
@@ -58,7 +58,7 @@
 		<div class="col-lg-10">
 			<div class="btn-group" data-toggle="buttons">
 				{foreach $category_in_breadcrumb as $row}
-					<label for="{$row.id}" class="btn btn-default">
+					<label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
 						<input type="radio" name="category_in_breadcrumb" id="{$row.id}" value="{$row.value}"{$row.checked}>
 						{$row.lang}
 					</label>
@@ -72,7 +72,7 @@
 			<div class="col-lg-10">
 				<div class="btn-group" data-toggle="buttons">
 					{foreach $allow_comments as $row}
-						<label for="{$row.id}" class="btn btn-default">
+						<label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
 							<input type="radio" name="comments" id="{$row.id}" value="{$row.value}"{$row.checked}>
 							{$row.lang}
 						</label>

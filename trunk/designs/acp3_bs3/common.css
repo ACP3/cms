@@ -62,9 +62,14 @@ table .sub-table-header span, table .sub-table-header div {
 .modal.static {
 	margin: 0 auto;
 	position: static;
-	top: auto;
-	left: auto;
+	display: block;
+	overflow: auto;
 }
+.modal.static .modal-footer {
+	margin-top: 0;
+	border-top: none;
+}
+
 .list-group div .list-group-item:first-child {
 	border-radius: 0;
 }

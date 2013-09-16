@@ -111,7 +111,7 @@
 					<div class="col-lg-10">
 						<div class="btn-group" data-toggle="buttons">
 							{foreach $maintenance as $row}
-								<label for="{$row.id}" class="btn btn-default">
+								<label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
 									<input type="radio" name="maintenance_mode" id="{$row.id}" value="{$row.value}"{$row.checked}>
 									{$row.lang}
 								</label>
@@ -155,7 +155,7 @@
 					<div class="col-lg-10">
 						<div class="btn-group" data-toggle="buttons">
 							{foreach $aliases as $row}
-								<label for="{$row.id}" class="btn btn-default">
+								<label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
 									<input type="radio" name="seo_aliases" id="{$row.id}" value="{$row.value}"{$row.checked}>
 									{$row.lang}
 								</label>
@@ -168,7 +168,7 @@
 					<div class="col-lg-10">
 						<div class="btn-group" data-toggle="buttons">
 							{foreach $mod_rewrite as $row}
-								<label for="{$row.id}" class="btn btn-default">
+								<label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
 									<input type="radio" name="seo_mod_rewrite" id="{$row.id}" value="{$row.value}"{$row.checked}>
 									{$row.lang}
 								</label>
@@ -184,7 +184,7 @@
 					<div class="col-lg-10">
 						<div class="btn-group" data-toggle="buttons">
 							{foreach $cache_images as $row}
-								<label for="{$row.id}" class="btn btn-default">
+								<label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
 									<input type="radio" name="cache_images" id="{$row.id}" value="{$row.value}"{$row.checked}>
 									{$row.lang}
 								</label>
@@ -249,7 +249,7 @@
 						<div class="col-lg-10">
 							<div class="btn-group" data-toggle="buttons">
 								{foreach $mailer_smtp_auth as $row}
-									<label for="{$row.id}" class="btn btn-default">
+									<label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
 										<input type="radio" name="mailer_smtp_auth" id="{$row.id}" value="{$row.value}"{$row.checked}>
 										{$row.lang}
 									</label>

@@ -11,7 +11,7 @@
 		<div class="col-lg-10">
 			<div class="btn-group" data-toggle="buttons">
 				{foreach $languages as $row}
-					<label for="{$row.id}" class="btn btn-default">
+					<label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
 						<input type="radio" name="language_override" id="{$row.id}" value="{$row.value}"{$row.checked}>
 						{$row.lang}
 					</label>
@@ -24,7 +24,7 @@
 		<div class="col-lg-10">
 			<div class="btn-group" data-toggle="buttons">
 				{foreach $entries as $row}
-					<label for="{$row.id}" class="btn btn-default">
+					<label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
 						<input type="radio" name="entries_override" id="{$row.id}" value="{$row.value}"{$row.checked}>
 						{$row.lang}
 					</label>
@@ -37,7 +37,7 @@
 		<div class="col-lg-10">
 			<div class="btn-group" data-toggle="buttons">
 				{foreach $registration as $row}
-					<label for="{$row.id}" class="btn btn-default">
+					<label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
 						<input type="radio" name="enable_registration" id="{$row.id}" value="{$row.value}"{$row.checked}>
 						{$row.lang}
 					</label>

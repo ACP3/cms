@@ -43,7 +43,7 @@
 		<div class="col-lg-10">
 			<div class="btn-group" data-toggle="buttons">
 				{foreach $overlay as $row}
-					<label for="{$row.id}" class="btn btn-default">
+					<label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
 						<input type="radio" name="overlay" id="{$row.id}" value="{$row.value}"{$row.checked}>
 						{$row.lang}
 					</label>
@@ -57,7 +57,7 @@
 			<div class="col-lg-10">
 				<div class="btn-group" data-toggle="buttons">
 					{foreach $allow_emoticons as $row}
-						<label for="{$row.id}" class="btn btn-default">
+						<label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
 							<input type="radio" name="emoticons" id="{$row.id}" value="{$row.value}"{$row.checked}>
 							{$row.lang}
 						</label>
@@ -72,7 +72,7 @@
 			<div class="col-lg-10">
 				<div class="btn-group" data-toggle="buttons">
 					{foreach $newsletter_integration as $row}
-						<label for="{$row.id}" class="btn btn-default">
+						<label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
 							<input type="radio" name="newsletter_integration" id="{$row.id}" value="{$row.value}"{$row.checked}>
 							{$row.lang}
 						</label>

@@ -47,7 +47,7 @@
 			<div class="col-lg-10">
 				<div class="btn-group" data-toggle="buttons">
 					{foreach $output as $row}
-						<label for="{$row.id}" class="btn btn-default">
+						<label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
 							<input type="radio" name="output" id="{$row.id}" value="{$row.value}"{$row.checked}>
 							{$row.lang}
 						</label>
@@ -60,7 +60,7 @@
 			<div class="col-lg-10">
 				<div class="btn-group" data-toggle="buttons">
 					{foreach $export_type as $row}
-						<label for="{$row.id}" class="btn btn-default">
+						<label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
 							<input type="radio" name="export_type" id="{$row.id}" value="{$row.value}"{$row.checked}>
 							{$row.lang}
 						</label>
