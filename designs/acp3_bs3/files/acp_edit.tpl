@@ -38,12 +38,18 @@
 				<div id="external-filesize" class="form-group">
 					<label for="filesize" class="col-lg-2 control-label">{lang t="files|filesize"}</label>
 					<div class="col-lg-10">
-						<input class="form-control" type="text" name="filesize" id="filesize" value="{$form.filesize}" maxlength="15">
-						<select class="form-control" name="unit" id="unit">
-							{foreach $units as $row}
-								<option value="{$row.value}"{$row.selected}>{$row.value}</option>
-							{/foreach}
-						</select>
+						<div class="row">
+							<div class="col-lg-6">
+								<input class="form-control" type="text" name="filesize" id="filesize" value="{$form.filesize}" maxlength="15">
+							</div>
+							<div class="col-lg-6">
+								<select class="form-control" name="unit" id="unit">
+									{foreach $units as $row}
+										<option value="{$row.value}"{$row.selected}>{$row.value}</option>
+									{/foreach}
+								</select>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="form-group">

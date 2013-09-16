@@ -40,7 +40,7 @@
 									<div class="col-lg-10">
 										<div class="btn-group" data-toggle="buttons">
 											{foreach $privilege.select as $row}
-												<label for="privileges-{$values.id}-{$privilege.id}-{$row.value}" class="btn btn-default">
+												<label for="privileges-{$values.id}-{$privilege.id}-{$row.value}" class="btn btn-default{if !empty($row.checked)} active{/if}">
 													<input type="radio" name="privileges[{$values.id}][{$privilege.id}]" id="privileges-{$values.id}-{$privilege.id}-{$row.value}" value="{$row.value}"{$row.selected}>
 													{$row.lang}
 												</label>

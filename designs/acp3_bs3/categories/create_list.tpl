@@ -1,9 +1,15 @@
-<select class="form-control" name="{$categories.name}" id="{$categories.name}">
-	<option value="">{$categories.custom_text}</option>
-{foreach $categories.categories as $row}
-	<option value="{$row.id}"{$row.selected}>{$row.title}</option>
-{/foreach}
-</select>
-{if isset($categories.create)}
-- <input class="form-control" type="text" name="{$categories.create.name}" id="{$categories.create.name|replace:'_':'-'}" value="{$categories.create.value}">
-{/if}
+<div class="row">
+	<div class="col-lg-6">
+		<select class="form-control" name="{$categories.name}" id="{$categories.name}">
+			<option value="">{$categories.custom_text}</option>
+			{foreach $categories.categories as $row}
+				<option value="{$row.id}"{$row.selected}>{$row.title}</option>
+			{/foreach}
+		</select>
+	</div>
+	{if isset($categories.create)}
+		<div class="col-lg-6">
+			<input class="form-control" type="text" name="{$categories.create.name}" id="{$categories.create.name|replace:'_':'-'}" value="{$categories.create.value}" placeholder="{lang t="categories|acp_create"}">
+		</div>
+	{/if}		
+</div>
