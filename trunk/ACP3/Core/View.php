@@ -265,7 +265,9 @@ class View {
 					}
 				}
 			}
-		} elseif (isset($xml->css)) {
+		}
+
+		if (isset($xml->css)) {
 			foreach ($xml->css->item as $file) {
 				$path = DESIGN_PATH_INTERNAL . 'css/' . $file;
 				if (is_file($path) === true) {
