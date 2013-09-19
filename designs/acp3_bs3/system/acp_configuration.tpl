@@ -6,14 +6,14 @@
 {/if}
 <script type="text/javascript">
 	$(function() {
-		$('input[name="mailer_smtp_auth"]').bind('click', function() {
+		$(':radio[name="mailer_smtp_auth"]').bind('onload change', function() {
 			var $elem = $('#mailer-smtp-2');
 			if ($(this).val() == 1) {
 				$elem.show();
 			} else {
 				$elem.hide();
 			}
-		}).filter(':checked').trigger('click');
+		});
 
 		$('#mailer-type').bind('change', function() {
 			if ($(this).val() === 'smtp') {
@@ -22,9 +22,7 @@
 			} else {
 				$('#mailer-smtp-1, #mailer-smtp-2').hide();
 			}
-		});
-
-		$('#mailer-type').trigger('change');
+		}).trigger('change');
 	});
 </script>
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
