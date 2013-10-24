@@ -9,12 +9,70 @@ namespace ACP3\Core;
  */
 abstract class ModuleController {
 
-	public function display()
-	{
-		$view = Registry::get('View');
+	/**
+	 *
+	 * @var \ACP3\Core\Auth
+	 */
+	protected $auth;
+
+	/**
+	 *
+	 * @var \ACP3\Core\Breadcrumb
+	 */
+	protected $breadcrumb;
+
+	/**
+	 *
+	 * @var \ACP3\Core\Date
+	 */
+	protected $date;
+
+	/**
+	 *
+	 * @var \Doctrine\DBAL\Connection
+	 */
+	protected $db;
+
+	/**
+	 *
+	 * @var \ACP3\Core\Lang
+	 */
+	protected $lang;
+
+	/**
+	 *
+	 * @var \ACP3\Core\Session
+	 */
+	protected $session;
+
+	/**
+	 *
+	 * @var \ACP3\Core\URI
+	 */
+	protected $uri;
+
+	/**
+	 *
+	 * @var \ACP3\Core\View
+	 */
+	protected $view;
+
+	public function __construct() {
+		$this->auth = Registry::get('Auth');
+		$this->breadcrumb = Registry::get('Breadcrumb');
+		$this->date = Registry::get('Date');
+		$this->db = Registry::get('Db');
+		$this->lang = Registry::get('Lang');
+		$this->session = Registry::get('Session');
+		$this->uri = Registry::get('URI');
+		$this->view = Registry::get('View');
+	}
+
+	public function display() {
+		$view = $this->view;
 		// Content-Template automatisch setzen
 		if ($view->getContentTemplate() === '') {
-			$view->setContentTemplate(Registry::get('URI')->mod . '/' . Registry::get('URI')->file . '.tpl');
+			$view->setContentTemplate($this->uri->mod . '/' . $this->uri->file . '.tpl');
 		}
 
 		if ($view->getNoOutput() === false) {
@@ -27,9 +85,9 @@ abstract class ModuleController {
 
 			if ($view->getLayout() !== '') {
 				$view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
-				$view->assign('HEAD_TITLE', Registry::get('Breadcrumb')->output(3));
-				$view->assign('TITLE', Registry::get('Breadcrumb')->output(2));
-				$view->assign('BREADCRUMB', Registry::get('Breadcrumb')->output());
+				$view->assign('HEAD_TITLE', $this->breadcrumb->output(3));
+				$view->assign('TITLE', $this->breadcrumb->output(2));
+				$view->assign('BREADCRUMB', $this->breadcrumb->output());
 				$view->assign('META', SEO::getMetaTags());
 				$view->assign('CONTENT', $view->getContent() . $view->getContentAppend());
 

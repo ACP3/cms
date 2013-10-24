@@ -311,11 +311,11 @@ class View {
 		foreach ($modules as $module) {
 			$systemPath = MODULES_DIR . $module['dir'] . '/templates/';
 			$designPath = DESIGN_PATH_INTERNAL . strtolower($module['dir']) . '/';
-			if (true === ($stylesheet = self::getCssJsPath($systemPath, $designPath, '', 'style.css'))) {
+			if (true == ($stylesheet = self::getCssJsPath($systemPath, $designPath, '', 'style.css'))) {
 				$css[] = $stylesheet;
 			}
 			// Append some custom styles to the default module styling
-			$path_module_append = MODULES_DIR . $module['dir'] . '/templates/append.css';
+			$path_module_append = $designPath . 'append.css';
 			if (is_file($path_module_append) === true) {
 				$css[] = $path_module_append;
 			}

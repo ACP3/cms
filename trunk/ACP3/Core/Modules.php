@@ -36,8 +36,8 @@ abstract class Modules {
 	public static function actionExists($module, $action) {
 		$moduleUc = ucfirst($module);
 		$section = strpos($action, 'acp_') === 0 ? 'Admin' : 'Frontend';
-		$path = MODULES_DIR . $moduleUc . '/' . $moduleUc . $section . '.php';
-		$className = "\\ACP3\\Modules\\" . $moduleUc . "\\" . $moduleUc . $section;
+		$path = MODULES_DIR . $moduleUc . '/' . $section . '.php';
+		$className = "\\ACP3\\Modules\\" . $moduleUc . "\\" . $section;
 		$action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $section === 'Admin' ? substr($action, 4) : $action))));
 
 		return (is_file($path) === true && method_exists($className, $action) === true);
@@ -78,9 +78,9 @@ abstract class Modules {
 			foreach ($dir as $module) {
 				if ($module !== '.' && $module !== '..') {
 					$info = self::getModuleInfo($module);
-					if (!empty($info) &&
-							($only_active === false || ($only_active === true && self::isActive($module) === true)))
+					if (!empty($info) && ($only_active === false || ($only_active === true && self::isActive($module) === true))) {
 						$mod_list[$info['name']] = $info;
+					}
 				}
 			}
 			ksort($mod_list);
@@ -110,8 +110,9 @@ abstract class Modules {
 		$module = strtolower($module);
 		if (empty($parsed_modules)) {
 			$filename = 'infos_' . Registry::get('Lang')->getLanguage();
-			if (Cache::check($filename, 'modules') === false)
+			if (Cache::check($filename, 'modules') === false) {
 				self::setModulesCache();
+			}
 			$parsed_modules = Cache::output($filename, 'modules');
 		}
 		return !empty($parsed_modules[$module]) ? $parsed_modules[$module] : array();
