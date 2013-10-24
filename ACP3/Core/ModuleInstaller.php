@@ -1,4 +1,5 @@
 <?php
+
 namespace ACP3\Core;
 
 /**
@@ -145,7 +146,7 @@ abstract class ModuleInstaller {
 		$mod_name = static::MODULE_NAME;
 		$dir = ucfirst($mod_name);
 		$path = MODULES_DIR . $dir . '/';
-		$files = array($dir . 'Admin', $dir . 'Frontend');
+		$files = array('Admin', 'Frontend');
 
 		foreach ($files as $file) {
 			if (is_file($path . $file . '.php') === true) {
@@ -164,19 +165,21 @@ abstract class ModuleInstaller {
 						} else {
 							if ($file === $dir . 'Frontend') { // Frontend Seiten
 								$privilege_id = 1;
-								if (strpos($action, 'create') === 0)
+								if (strpos($action, 'create') === 0) {
 									$privilege_id = 2;
+								}
 							} else { // Admin-Panel Seiten
 								$action = 'acp_' . $action;
 								$privilege_id = 3;
-								if (strpos($action, 'acp_create') === 0 || strpos($action, 'acp_order') === 0)
+								if (strpos($action, 'acp_create') === 0 || strpos($action, 'acp_order') === 0) {
 									$privilege_id = 4;
-								elseif (strpos($action, 'acp_edit') === 0)
+								} elseif (strpos($action, 'acp_edit') === 0) {
 									$privilege_id = 5;
-								elseif (strpos($action, 'acp_delete') === 0)
+								} elseif (strpos($action, 'acp_delete') === 0) {
 									$privilege_id = 6;
-								elseif (strpos($action, 'acp_settings') === 0)
+								} elseif (strpos($action, 'acp_settings') === 0) {
 									$privilege_id = 7;
+								}
 							}
 						}
 
@@ -194,14 +197,18 @@ abstract class ModuleInstaller {
 			foreach ($roles as $role) {
 				foreach ($privileges as $privilege) {
 					$permission = 0;
-					if ($role['id'] == 1 && ($privilege['id'] == 1 || $privilege['id'] == 2))
+					if ($role['id'] == 1 && ($privilege['id'] == 1 || $privilege['id'] == 2)) {
 						$permission = 1;
-					if ($role['id'] > 1 && $role['id'] < 4)
+					}
+					if ($role['id'] > 1 && $role['id'] < 4) {
 						$permission = 2;
-					if ($role['id'] == 3 && $privilege['id'] == 3)
+					}
+					if ($role['id'] == 3 && $privilege['id'] == 3) {
 						$permission = 1;
-					if ($role['id'] == 4)
+					}
+					if ($role['id'] == 4) {
 						$permission = 1;
+					}
 
 					$insert_values = array('id' => '', 'role_id' => $role['id'], 'module_id' => $this->getModuleId(), 'privilege_id' => $privilege['id'], 'permission' => $permission);
 					Registry::get('Db')->insert(DB_PRE . 'acl_rules', $insert_values);
@@ -324,15 +331,18 @@ abstract class ModuleInstaller {
 				// Einzelne Schema-Änderung bei einer Version
 				if (!empty($queries) && is_array($queries) === false) {
 					$result = self::executeSqlQueries((array) $queries) === true ? 1 : 0;
-					if ($result !== 0)
+					if ($result !== 0) {
 						$this->setNewSchemaVersion($new_schema_version);
+					}
 					// Mehrere Schema-Änderungen bei einer Version
 				} else {
-					if (!empty($queries) && is_array($queries) === true)
+					if (!empty($queries) && is_array($queries) === true) {
 						$result = self::executeSqlQueries($queries) === true ? 1 : 0;
+					}
 					// Falls kein Fehler aufgetreten ist, die Schema Version des Moduls erhöhen
-					if ($result !== 0)
+					if ($result !== 0) {
 						$this->setNewSchemaVersion($new_schema_version);
+					}
 				}
 			}
 		}

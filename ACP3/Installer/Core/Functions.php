@@ -1,4 +1,5 @@
 <?php
+
 namespace ACP3\Installer\Core;
 
 use ACP3\Core;
@@ -62,7 +63,7 @@ abstract class Functions {
 		$bool = false;
 
 		$module = ucfirst($module);
-		$path = MODULES_DIR . $module . '/' . $module . 'Installer.php';
+		$path = MODULES_DIR . $module . '/Installer.php';
 		if (is_file($path) === true) {
 			$className = Core\ModuleInstaller::buildClassName($module);
 			$install = new $className();
@@ -109,7 +110,7 @@ abstract class Functions {
 		// Moduldaten in die ACL schreiben
 		$modules = scandir(MODULES_DIR);
 		foreach ($modules as $module) {
-			$path = MODULES_DIR . $module . '/' . $module . 'Installer.php';
+			$path = MODULES_DIR . $module . '/Installer.php';
 			if ($module !== '.' && $module !== '..' && is_file($path) === true) {
 				$className = \ACP3\Core\ModuleInstaller::buildClassName($module);
 				$install = new $className();
@@ -128,7 +129,7 @@ abstract class Functions {
 		$result = false;
 
 		$module = ucfirst($module);
-		$path = MODULES_DIR . $module . '/' . $module . 'Installer.php';
+		$path = MODULES_DIR . $module . '/Installer.php';
 		if (is_file($path) === true) {
 			$className = Core\ModuleInstaller::buildClassName($module);
 			$install = new $className();
@@ -155,16 +156,16 @@ abstract class Functions {
 
 			$content = "<?php\n";
 			$content.= "define('INSTALLED', true);\n";
-			if (defined('DEBUG') === true)
+			if (defined('DEBUG') === true) {
 				$content.= "define('DEBUG', " . ((bool) DEBUG === true ? 'true' : 'false') . ");\n";
+			}
 			$pattern = "define('CONFIG_%s', %s);\n";
 			foreach ($data as $key => $value) {
-				if (is_numeric($value) === true)
-					$value = $value;
-				elseif (is_bool($value) === true)
+				if (is_bool($value) === true) {
 					$value = $value === true ? 'true' : 'false';
-				else
+				} elseif (is_numeric($value) !== true) {
 					$value = '\'' . $value . '\'';
+				}
 				$content.= sprintf($pattern, strtoupper($key), $value);
 			}
 			$bool = @file_put_contents($path, $content, LOCK_EX);
@@ -172,4 +173,5 @@ abstract class Functions {
 		}
 		return false;
 	}
+
 }

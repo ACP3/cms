@@ -132,10 +132,7 @@ class Application {
 		self::checkForMaintenanceMode();
 
 		// Aktuelle Datensatzposition bestimmen
-		if (Core\Validate::isNumber($uri->page) && $uri->page >= 1)
-			define('POS', (int) ($uri->page - 1) * Core\Registry::get('Auth')->entries);
-		else
-			define('POS', 0);
+		define('POS', Core\Validate::isNumber($uri->page) && $uri->page >= 1 ? (int) ($uri->page - 1) * Core\Registry::get('Auth')->entries : 0);
 
 		if (defined('IN_ADM') === true && Core\Registry::get('Auth')->isUser() === false && $uri->query !== 'users/login/') {
 			$redirect_uri = base64_encode('acp/' . $uri->query);
@@ -145,7 +142,7 @@ class Application {
 		if (Core\Modules::hasPermission($uri->mod, $uri->file) === true) {
 			$module = ucfirst($uri->mod);
 			$section = defined('IN_ADM') === true ? 'Admin' : 'Frontend';
-			$className = "\\ACP3\\Modules\\" . $module . "\\" . $module . $section;
+			$className = "\\ACP3\\Modules\\" . $module . "\\" . $section;
 			$action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', defined('IN_ADM') === true ? substr($uri->file, 4) : $uri->file))));
 
 			// Modul einbinden
