@@ -10,6 +10,6 @@
 	   <li>{lang t="step_1_list_item_4"}</li>
 	</ol>
 </fieldset>
-<div class="form-actions" style="text-align:center">
-	<a href="{uri args="install/licence"}" class="btn">{lang t="forward"}</a>
+<div class="well well-sm text-center">
+	<a href="{uri args="install/licence"}" class="btn btn-default">{lang t="forward"}</a>
 </div>

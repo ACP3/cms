@@ -1,25 +1,29 @@
 {if isset($error_msg)}
-{$error_msg}
+	{$error_msg}
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
-	<div class="control-group">
-		<label for="nickname" class="control-label">{lang t="users|nickname"}</label>
-		<div class="controls"><input type="text" name="nickname" id="nickname" maxlength="30" required></div>
+	<div class="form-group">
+		<label for="nickname" class="col-lg-2 control-label">{lang t="users|nickname"}</label>
+		<div class="col-lg-10"><input class="form-control" type="text" name="nickname" id="nickname" maxlength="30" required></div>
 	</div>
-	<div class="control-group">
-		<label for="pwd" class="control-label">{lang t="users|pwd"}</label>
-		<div class="controls"><input type="password" name="pwd" id="pwd" required></div>
+	<div class="form-group">
+		<label for="pwd" class="col-lg-2 control-label">{lang t="users|pwd"}</label>
+		<div class="col-lg-10"><input class="form-control" type="password" name="pwd" id="pwd" required></div>
 	</div>
-	<div class="control-group">
-		<div class="controls">
-			<label for="remember" class="checkbox">
-				<input type="checkbox" name="remember" id="remember" value="1">
-				{lang t="users|remember_me"}
-			</label>
+	<div class="form-group">
+		<div class="col-lg-offset-2 col-lg-10">
+			<div class="checkbox">
+				<label for="remember">
+					<input type="checkbox" name="remember" id="remember" value="1">
+					{lang t="users|remember_me"}
+				</label>
+			</div>
 		</div>
 	</div>
-	<div class="form-actions">
-		<button type="submit" name="submit" class="btn"><i class="icon-lock"></i> {lang t="users|log_in"}</button>
-		<a href="{uri args="users/forgot_pwd"}" class="btn btn-link">{lang t="users|forgot_pwd"}</a>
+	<div class="form-group">
+		<div class="col-lg-offset-2 col-lg-10">
+			<button type="submit" name="submit" class="btn btn-primary"><i class="glyphicon glyphicon-lock"></i> {lang t="users|log_in"}</button>
+			<a href="{uri args="users/forgot_pwd"}" class="btn btn-link">{lang t="users|forgot_pwd"}</a>
+		</div>
 	</div>
 </form>

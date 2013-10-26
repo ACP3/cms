@@ -254,17 +254,7 @@ class View {
 		$css = array();
 
 		if (isset($xml->use_bootstrap) && (string) $xml->use_bootstrap === 'true') {
-			$css[] = VENDOR_DIR . 'twitter/bootstrap/css/bootstrap.css';
-			// Styles für das Responsive Design nur einbinden,
-			// falls dies vom Design benötigt wird
-			if (isset($xml->responsive_layouts)) {
-				foreach ($xml->responsive_layouts->layout as $item) {
-					if ($layout == $item) {
-						$css[] = VENDOR_DIR . 'twitter/bootstrap/css/bootstrap-responsive.css';
-						break;
-					}
-				}
-			}
+			$css[] = LIBRARIES_DIR . 'bootstrap/css/bootstrap.min.css';
 		}
 
 		if (isset($xml->css)) {
@@ -337,7 +327,7 @@ class View {
 		$scripts[] = self::getCssJsPath(LIBRARIES_DIR, DESIGN_PATH_INTERNAL, 'js', 'jquery.min.js');
 
 		if (isset($xml->use_bootstrap) && (string) $xml->use_bootstrap === 'true') {
-			$scripts[] = VENDOR_DIR . 'twitter/bootstrap/js/bootstrap.min.js';
+			$scripts[] = LIBRARIES_DIR . 'bootstrap/js/bootstrap.min.js';
 		}
 
 		// Include js files from the design

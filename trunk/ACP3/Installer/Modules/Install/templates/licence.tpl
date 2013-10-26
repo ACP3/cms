@@ -1,4 +1,4 @@
-<div class="licence">
+<div class="well well-sm licence">
 	<h3>Table of Contents</h3>
 	<ul>
 		<li>
@@ -147,7 +147,7 @@
 		This General Public License does not permit incorporating your program into proprietary programs. If your program is a subroutine library, you may consider it more useful to permit linking proprietary applications with the library. If this is what you want to do, use the <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a> instead of this License.
 	</p>
 </div>
-<div class="form-actions" style="text-align:center">
+<div class="well well-sm text-center">
 	<a href="{uri args="install/requirements"}" class="btn btn-success">{lang t="accept"}</a>
 	<a href="{uri args="install/welcome"}" class="btn btn-danger">{lang t="decline"}</a>
 </div>

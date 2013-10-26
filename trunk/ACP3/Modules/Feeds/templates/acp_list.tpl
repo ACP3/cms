@@ -5,23 +5,25 @@
 {$redirect_message}
 {/if}
 <form action="{uri args="acp/feeds"}" method="post" accept-charset="UTF-8" class="form-horizontal">
-	<div class="control-group">
-		<label for="feed-image" class="control-label">{lang t="feeds|feed_image"}</label>
-		<div class="controls"><input type="text" name="feed_image" id="feed-image" value="{$form.feed_image}" maxlength="120"></div>
+	<div class="form-group">
+		<label for="feed-image" class="col-lg-2 control-label">{lang t="feeds|feed_image"}</label>
+		<div class="col-lg-10"><input class="form-control" type="text" name="feed_image" id="feed-image" value="{$form.feed_image}" maxlength="120"></div>
 	</div>
-	<div class="control-group">
-		<label for="feed-type" class="control-label">{lang t="feeds|feed_type"}</label>
-		<div class="controls">
-			<select name="feed_type" id="feed-type">
+	<div class="form-group">
+		<label for="feed-type" class="col-lg-2 control-label">{lang t="feeds|feed_type"}</label>
+		<div class="col-lg-10">
+			<select class="form-control" name="feed_type" id="feed-type">
 {foreach $feed_types as $row}
 				<option value="{$row.value}"{$row.selected}>{$row.lang}</option>
 {/foreach}
 			</select>
 		</div>
 	</div>
-	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
-		<a href="{uri args="acp/contact"}" class="btn">{lang t="system|cancel"}</a>
-		{$form_token}
+	<div class="form-group">
+		<div class="col-lg-offset-2 col-lg-10">
+			<button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
+			<a href="{uri args="acp/contact"}" class="btn btn-default">{lang t="system|cancel"}</a>
+			{$form_token}
+		</div>
 	</div>
 </form>

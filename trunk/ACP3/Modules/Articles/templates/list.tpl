@@ -1,19 +1,19 @@
 {if isset($articles)}
-{$pagination}
-{foreach $articles as $row}
-<div class="dataset-box">
-	<div class="navbar">
-		<div class="navbar-inner navbar-text">
-			<small class="pull-right">
-				<time datetime="{$row.date_iso}">{$row.date_formatted}</time>
-			</small>
-			<a href="{uri args="articles/details/id_`$row.id`"}">{$row.title}</a>
+	{$pagination}
+	{foreach $articles as $row}
+		<div class="dataset-box">
+			<div class="navbar navbar-default">
+				<div class="navbar-header">
+					<h2 class="navbar-brand"><a href="{uri args="articles/details/id_`$row.id`"}">{$row.title}</a></h2>
+				</div>
+				<small class="navbar-text pull-right">
+					<time datetime="{$row.date_iso}">{$row.date_formatted}</time>
+				</small>
+			</div>
 		</div>
-	</div>
-</div>
-{/foreach}
+	{/foreach}
 {else}
-<div class="alert align-center">
-	<strong>{lang t="system|no_entries"}</strong>
-</div>
+	<div class="alert alert-warning text-center">
+		<strong>{lang t="system|no_entries"}</strong>
+	</div>
 {/if}

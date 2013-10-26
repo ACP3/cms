@@ -60,29 +60,39 @@ $(document).ready(function() {
 </script>
 {if $datepicker.range == 1}
 {if $datepicker.input_only}
-<input type="text" name="{$datepicker.name_start}" id="{$datepicker.name_start}" value="{$datepicker.value_start}" maxlength="{$datepicker.length}" title="{lang t="system|start_date"}" required>
--
-<input type="text" name="{$datepicker.name_end}" id="{$datepicker.name_end}" value="{$datepicker.value_end}" maxlength="{$datepicker.length}" title="{lang t="system|end_date"}" required>
-<p class="help-block">{lang t="system|date_description"}</p>
+<div class="row">
+	<div class="col-lg-6">
+		<input class="form-control" type="text" name="{$datepicker.name_start}" id="{$datepicker.name_start}" value="{$datepicker.value_start}" maxlength="{$datepicker.length}" title="{lang t="system|start_date"}" required>
+	</div>
+	<div class="col-lg-6">
+		<input class="form-control" type="text" name="{$datepicker.name_end}" id="{$datepicker.name_end}" value="{$datepicker.value_end}" maxlength="{$datepicker.length}" title="{lang t="system|end_date"}" required>
+	</div>
+</div>
+<span class="help-block">{lang t="system|date_description"}</span>
 {else}
-<div class="control-group">
-	<label for="{$datepicker.name_start}" class="control-label">{lang t="system|publication_period"}</label>
-	<div class="controls">
-		<input type="text" name="{$datepicker.name_start}" id="{$datepicker.name_start}" value="{$datepicker.value_start}" maxlength="{$datepicker.length}" title="{lang t="system|start_date"}" required>
-		-
-		<input type="text" name="{$datepicker.name_end}" id="{$datepicker.name_end}" value="{$datepicker.value_end}" maxlength="{$datepicker.length}" title="{lang t="system|end_date"}" required>
-		<p class="help-block">{lang t="system|date_description"}</p>
+<div class="form-group">
+	<label for="{$datepicker.name_start}" class="col-lg-2 control-label">{lang t="system|publication_period"}</label>
+	<div class="col-lg-10">
+		<div class="row">
+			<div class="col-lg-6">
+				<input class="form-control" type="text" name="{$datepicker.name_start}" id="{$datepicker.name_start}" value="{$datepicker.value_start}" maxlength="{$datepicker.length}" title="{lang t="system|start_date"}" required>
+			</div>
+			<div class="col-lg-6">
+				<input class="form-control" type="text" name="{$datepicker.name_end}" id="{$datepicker.name_end}" value="{$datepicker.value_end}" maxlength="{$datepicker.length}" title="{lang t="system|end_date"}" required>
+			</div>
+		</div>
+		<span class="help-block">{lang t="system|date_description"}</span>
 	</div>
 </div>
 {/if}
 {else}
 {if $datepicker.input_only}
-<input type="text" name="{$datepicker.name}" id="{$datepicker.name}" value="{$datepicker.value}" maxlength="{$datepicker.length}">
+<input class="form-control" type="text" name="{$datepicker.name}" id="{$datepicker.name}" value="{$datepicker.value}" maxlength="{$datepicker.length}">
 {else}
-<div class="control-group">
-	<label for="{$datepicker.name}" class="control-label">{lang t="system|date"}</label>
-	<div class="controls">
-		<input type="text" name="{$datepicker.name}" id="{$datepicker.name}" value="{$datepicker.value}" maxlength="{$datepicker.length}">
+<div class="form-group">
+	<label for="{$datepicker.name}" class="col-lg-2 control-label">{lang t="system|date"}</label>
+	<div class="col-lg-10">
+		<input class="form-control" type="text" name="{$datepicker.name}" id="{$datepicker.name}" value="{$datepicker.value}" maxlength="{$datepicker.length}">
 	</div>
 </div>
 {/if}

@@ -5,19 +5,57 @@ namespace ACP3\Modules\Search;
 use ACP3\Core;
 
 /**
- * Description of SearchExtensions
+ * Description of Extensions
  *
  * @author Tino Goratsch
  */
 class Extensions {
+
+	/**
+	 *
+	 * @var string
+	 */
 	private $area;
+
+	/**
+	 * Whther to sort the results ascending/descending
+	 * 
+	 * @var string
+	 */
 	private $sort;
+
+	/**
+	 * The search term
+	 * 
+	 * @var string
+	 */
 	private $search_term;
+
+	/**
+	 * DB Connection Handler
+	 * 
+	 * @var \Doctrine\DBAL\Connection 
+	 */
+	private $db;
+	
+	/**
+	 * SQL Prepared Parameters
+	 * 
+	 * @var array
+	 */
+	private $params = array();
 
 	public function __construct($area, $sort, $search_term) {
 		$this->area = $area;
 		$this->sort = $sort;
 		$this->search_term = $search_term;
+
+		$this->db = Core\Registry::get('Db');
+
+		$this->params = array(
+			'searchterm' => $this->search_term,
+			'time' => Core\Registry::get('Date')->getCurrentDateTime()
+		);
 	}
 
 	public function articlesSearch() {
@@ -33,7 +71,7 @@ class Extensions {
 		}
 
 		$period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-		$results = $this->db->fetchAll('SELECT id, title, text FROM ' . DB_PRE . 'articles WHERE MATCH (' . $fields . ') AGAINST (' . $this->db->quote($this->search_term) . ' IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', title ' . $this->sort, array('search_term' => $this->search_term, 'time' => Core\Registry::get('Date')->getCurrentDateTime()));
+		$results = $this->db->fetchAll('SELECT id, title, text FROM ' . DB_PRE . 'articles WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', title ' . $this->sort, $this->params);
 		$c_results = count($results);
 		$search_results = array();
 
@@ -62,7 +100,7 @@ class Extensions {
 		}
 
 		$period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-		$results = $this->db->fetchAll('SELECT id, title, text FROM ' . DB_PRE . 'files WHERE MATCH (' . $fields . ') AGAINST (' . $this->db->quote($this->search_term) . ' IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', id ' . $this->sort, array('time' => Core\Registry::get('Date')->getCurrentDateTime()));
+		$results = $this->db->fetchAll('SELECT id, title, text FROM ' . DB_PRE . 'files WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', id ' . $this->sort, $this->params);
 		$c_results = count($results);
 		$search_results = array();
 
@@ -91,7 +129,7 @@ class Extensions {
 		}
 
 		$period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-		$results = $this->db->fetchAll('SELECT id, title, text FROM ' . DB_PRE . 'news WHERE MATCH (' . $fields . ') AGAINST (' . $this->db->quote($this->search_term) . ' IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', id ' . $this->sort, array('time' => Core\Registry::get('Date')->getCurrentDateTime()));
+		$results = $this->db->fetchAll('SELECT id, title, text FROM ' . DB_PRE . 'news WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', id ' . $this->sort, $this->params);
 		$c_results = count($results);
 		$search_results = array();
 

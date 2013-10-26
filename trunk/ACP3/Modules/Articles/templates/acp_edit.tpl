@@ -1,5 +1,5 @@
 {if isset($error_msg)}
-{$error_msg}
+	{$error_msg}
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
 	<div class="tabbable">
@@ -13,13 +13,13 @@
 				{$publication_period}
 			</div>
 			<div id="tab-2" class="tab-pane">
-				<div class="control-group">
-					<label for="title" class="control-label">{lang t="articles|title"}</label>
-					<div class="controls"><input type="text" name="title" id="title" value="{$form.title}" maxlength="120" required></div>
+				<div class="form-group">
+					<label for="title" class="col-lg-2 control-label">{lang t="articles|title"}</label>
+					<div class="col-lg-10"><input class="form-control" type="text" name="title" id="title" value="{$form.title}" maxlength="120" required></div>
 				</div>
-				<div class="control-group">
-					<label for="text" class="control-label">{lang t="articles|text"}</label>
-					<div class="controls">{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</div>
+				<div class="form-group">
+					<label for="text" class="col-lg-2 control-label">{lang t="articles|text"}</label>
+					<div class="col-lg-10">{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</div>
 				</div>
 			</div>
 			<div id="tab-3" class="tab-pane">
@@ -27,9 +27,11 @@
 			</div>
 		</div>
 	</div>
-	<div class="form-actions">
-		<button type="submit" name="submit" class="btn">{lang t="system|submit"}</button>
-		<a href="{uri args="acp/articles"}" class="btn">{lang t="system|cancel"}</a>
-		{$form_token}
+	<div class="form-group">
+		<div class="col-lg-offset-2 col-lg-10">
+			<button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
+			<a href="{uri args="acp/articles"}" class="btn btn-default">{lang t="system|cancel"}</a>
+			{$form_token}
+		</div>
 	</div>
 </form>

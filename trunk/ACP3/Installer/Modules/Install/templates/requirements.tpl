@@ -1,12 +1,12 @@
-<div class="row-fluid">
-	<div class="span7">
+<div class="row">
+	<div class="col-lg-7">
 		<fieldset>
 			<legend>{lang t="step_3_legend_1"}</legend>
 			<p>
 				{lang t="step_3_paragraph_1"}
 			</p>
-			<div class="row-fluid">
-				<div class="span6">
+			<div class="row">
+				<div class="col-lg-6">
 					<table class="table table-condensed">
 						<thead>
 							<tr>
@@ -26,7 +26,7 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="span6">
+				<div class="col-lg-6">
 					<ul class="unstyled">
 {foreach $files_dirs as $row}
 						<li>
@@ -40,7 +40,7 @@
 			</div>
 		</fieldset>
 	</div>
-	<div class="span5">
+	<div class="col-lg-5">
 		<fieldset>
 			<legend>{lang t="step_3_legend_2"}</legend>
 			<p>
@@ -58,15 +58,15 @@
 	</div>
 </div>
 {if isset($stop_install)}
-<div class="alert alert-error" style="text-align:center">
+<div class="alert alert-error text-center">
 	<strong>{lang t="stop_installation"}</strong>
 </div>
 {else}
-<div class="form-actions" style="text-align:center">
+<div class="well well-sm text-center">
 {if isset($check_again)}
-	<a href="{$REQUEST_URI}" class="btn">{lang t="check_again"}</a>
+	<a href="{$REQUEST_URI}" class="btn btn-warning">{lang t="check_again"}</a>
 {else}
-	<a href="{uri args="install/configuration"}" class="btn">{lang t="configuration"}</a>
+	<a href="{uri args="install/configuration"}" class="btn btn-default">{lang t="configuration"}</a>
 {/if}
 </div>
 {/if}

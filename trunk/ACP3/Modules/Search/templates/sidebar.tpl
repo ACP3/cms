@@ -1,6 +1,8 @@
-<form action="{uri args="search/list"}" method="post" accept-charset="UTF-8" class="navbar-search pull-right">
-	<div class="controls"><input type="text" name="search_term" value="" placeholder="{lang t="search|search_term"}" class="search-query"></div>
-	<button type="submit" name="submit" class="btn hide">{lang t="search|submit_search"}</button>
+<form action="{uri args="search/list"}" method="post" accept-charset="UTF-8" class="navbar-form navbar-right" role="search">
+	<div class="form-group">
+		<input class="form-control" type="text" name="search_term" value="" placeholder="{lang t="search|search_term"}">
+	</div>
+	<button type="submit" name="submit" class="btn btn-primary">{lang t="search|submit_search"}</button>
 {foreach $search_mods as $row}
 	<input type="hidden" name="mods[]" value="{$row.dir}">
 {/foreach}

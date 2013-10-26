@@ -39,7 +39,7 @@ class Frontend extends Core\Modules\Controller {
 				$search_results = array();
 				foreach ($_POST['mods'] as $module) {
 					$action = $module . 'Search';
-					if (method_exists("\\ACP3\\Modules\Search\SearchExtensions", $action) &&
+					if (method_exists("\\ACP3\\Modules\\Search\\Extensions", $action) &&
 						Core\Modules::hasPermission($module, 'list') === true) {
 						$results = new Extensions($_POST['area'], $_POST['sort'], $_POST['search_term']);
 						$search_results = array_merge($search_results, $results->$action());
@@ -62,11 +62,11 @@ class Frontend extends Core\Modules\Controller {
 
 			// Zu durchsuchende Bereiche
 			$lang_search_areas = array(
+				$this->lang->t('search', 'title_and_content'),
 				$this->lang->t('search', 'title_only'),
-				$this->lang->t('search', 'content_only'),
-				$this->lang->t('search', 'title_and_content')
+				$this->lang->t('search', 'content_only')
 			);
-			$this->view->assign('search_areas', Core\Functions::selectGenerator('area', array('title', 'content', 'title_content'), $lang_search_areas, 'title', 'checked'));
+			$this->view->assign('search_areas', Core\Functions::selectGenerator('area', array('title_content', 'title', 'content'), $lang_search_areas, 'title_content', 'checked'));
 
 			// Treffer sortieren
 			$lang_sort_hits = array($this->lang->t('search', 'asc'), $this->lang->t('search', 'desc'));
