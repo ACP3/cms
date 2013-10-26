@@ -15,8 +15,8 @@ function smarty_function_include_js($params)
 		$file = $params['file'];
 		if (is_file(DESIGN_PATH_INTERNAL . $module . '/' . $file . '.js') === true) {
 			return sprintf($script, DESIGN_PATH . $module . '/' . $file . '.js');
-		} elseif (is_file(MODULES_DIR . $module . '/templates/' . $file . '.js') === true) {
-			return sprintf($script, ROOT_DIR . 'ACP3/Modules/' . $module . '/templates/' . $file . '.js');
+		} elseif (is_file(MODULES_DIR . $module . '/View/' . $file . '.js') === true) {
+			return sprintf($script, ROOT_DIR . 'ACP3/Modules/' . $module . '/View/' . $file . '.js');
 		}
 	} else {
 		return 'Not all necessary arguments for the function ' . __FUNCTION__ . ' were passed!';

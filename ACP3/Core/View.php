@@ -299,7 +299,7 @@ class View {
 		// Stylesheets der Module
 		$modules = \ACP3\Core\Modules::getActiveModules();
 		foreach ($modules as $module) {
-			$systemPath = MODULES_DIR . $module['dir'] . '/templates/';
+			$systemPath = MODULES_DIR . $module['dir'] . '/View/';
 			$designPath = DESIGN_PATH_INTERNAL . strtolower($module['dir']) . '/';
 			if (true == ($stylesheet = self::getCssJsPath($systemPath, $designPath, '', 'style.css'))) {
 				$css[] = $stylesheet;
@@ -404,7 +404,7 @@ class View {
 			// Pfad zerlegen
 			$fragments = explode('/', $template);
 			$fragments[0] = ucfirst($fragments[0]);
-			$path = $fragments[0] . '/templates/' . $fragments[1];
+			$path = $fragments[0] . '/View/' . $fragments[1];
 			if (count($fragments) > 1 && $this->templateExists($path)) {
 				return self::$renderer_obj->fetch($path, $cache_id, $compile_id, $parent, $display);
 			} else {
