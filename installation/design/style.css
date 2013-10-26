@@ -1,8 +1,11 @@
 ul.unstyled, ol.unstyled {
-	margin: 0;
+	padding-left: 20px;
 }
 p {
 	text-align: justify;
+}
+.tab-content > .tab-pane {
+	padding-top: 15px;
 }
 /* Layout */
 #logo {
@@ -19,8 +22,7 @@ p {
 .licence {
 	width: 80%;
 	height: 400px;
-	margin: 0 auto;
+	margin: 0 auto 20px;
 	padding: 10px;
-	border: 1px dotted #ddd;
 	overflow: auto;
 }

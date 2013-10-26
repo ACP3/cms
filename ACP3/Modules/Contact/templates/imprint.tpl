@@ -20,6 +20,6 @@
 	<dd>{$imprint.disclaimer}</dd>
 {/if}
 </dl>
-<p class="powered-by align-center">
+<p class="powered-by text-center">
 	{$powered_by}
 </p>

@@ -1,21 +1,28 @@
-<ul class="nav nav-list">
-	<li class="nav-header">{lang t="users|login"}</li>
-	<li>
-		<form action="{uri args="users/login/redirect_`$redirect_uri`"}" method="post" accept-charset="UTF-8" class="form-inline" style="text-align:center">
-			<input type="text" name="nickname" id="nav-nickname" maxlength="30" class="input-small" placeholder="{lang t="users|nickname"}" required style="width:40%">
-			<input type="password" name="pwd" id="nav-pwd" class="input-small" placeholder="{lang t="users|pwd"}" required style="width:40%">
-			<div style="margin:5px 0">
-				<label for="nav-remember" class="checkbox">
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">{lang t="users|login"}</h3>
+	</div>
+	<div class="panel-body">
+		<form action="{uri args="users/login/redirect_`$redirect_uri`"}" method="post" accept-charset="UTF-8">
+			<div class="form-group">
+				<input class="form-control" type="text" name="nickname" id="nav-nickname" maxlength="30" placeholder="{lang t="users|nickname"}" required>
+			</div>
+			<div class="form-group">
+				<input class="form-control" type="password" name="pwd" id="nav-pwd" placeholder="{lang t="users|pwd"}" required>
+			</div>
+			<div class="checkbox">
+				<label for="nav-remember">
 					<input type="checkbox" name="remember" id="nav-remember" value="1">
 					{lang t="users|remember_me"}
 				</label>
 			</div>
-			<button type="submit" name="submit" class="btn"><i class="icon-lock"></i> {lang t="users|log_in"}</button>
+			<button type="submit" name="submit" class="btn btn-primary"><i class="glyphicon glyphicon-lock"></i> {lang t="users|log_in"}</button>
 		</form>
-	</li>
-	<li class="divider"></li>
-	<li><a href="{uri args="users/forgot_pwd"}"><i class="icon-question-sign"></i> {lang t="users|forgot_pwd"}</a></li>
-{if $enable_registration == 1}
-	<li><a href="{uri args="users/register"}"><i class="icon-star"></i> {lang t="users|register"}</a></li>
-{/if}
-</ul>
+		<div class="list-group" style="margin:10px 0 0">
+			<a href="{uri args="users/forgot_pwd"}" class="list-group-item"><i class="glyphicon glyphicon-question-sign"></i> {lang t="users|forgot_pwd"}</a>
+			{if $enable_registration == 1}
+				<a href="{uri args="users/register"}" class="list-group-item"><i class="glyphicon glyphicon-star"></i> {lang t="users|register"}</a>
+			{/if}
+		</div>
+	</div>
+</div>

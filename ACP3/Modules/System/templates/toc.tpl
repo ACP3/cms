@@ -1,8 +1,8 @@
 <nav id="toc" class="well well-small">
 	<h4>{lang t="system|table_of_contents"}</h4>
-	<ul class="nav nav-list">
+	<div class="list-group">
 {foreach $toc as $row}
-		<li{if $row.selected} class="active"{/if}><a href="{$row.uri}">{$row.title}</a></li>
+		<a href="{$row.uri}" class="list-group-item{if $row.selected} active{/if}">{$row.title}</a>
 {/foreach}
-	</ul>
+	</div>
 </nav>

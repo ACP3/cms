@@ -43,9 +43,9 @@ $(document).ready(function() {
 		jQuery.each(entries, function() {
 			ary = ary + $(this).val() + '|';
 		});
-
+		
 		if (ary !== '') {
-			bootbox.confirm('{lang t="system|confirm_delete"}', '{lang t="system|no"}', '{lang t="system|yes"}', function(result) {
+			bootbox.confirm('{lang t="system|confirm_delete"}', function(result) {
 				if (result) {
 					location.href = $('.table').parents('form').prop('action') + 'entries_' + ary.substr(0, ary.length - 1) + '/action_confirmed/';
 				}

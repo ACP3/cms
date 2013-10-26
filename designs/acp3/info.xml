@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <design>
-	<name>ACP3</name>
-	<description>Default design of the ACP3 4.0.</description>
+	<name>ACP3 - Bootstrap 3</name>
+	<description>Design of the ACP3 4.0 with Bootstrap 3.</description>
 	<author>Tino Goratsch</author>
 	<version core="true"/>
 	<use_bootstrap>true</use_bootstrap>
-	<responsive_layouts>
-		<layout>layout</layout>
-		<layout>simple</layout>
-	</responsive_layouts>
 </design>

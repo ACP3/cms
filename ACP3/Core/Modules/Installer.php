@@ -166,7 +166,7 @@ abstract class Installer {
 						if (isset($this->special_resources[$action])) {
 							$privilege_id = $this->special_resources[$action];
 						} else {
-							if ($file === $dir . 'Frontend') { // Frontend Seiten
+							if ($file === 'Frontend') { // Frontend Seiten
 								$privilege_id = 1;
 								if (strpos($action, 'create') === 0) {
 									$privilege_id = 2;

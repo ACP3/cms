@@ -8,6 +8,6 @@
 </div>
 {else}
 <div class="alert">
-	<strong class="align-center">{lang t="system|error_update_check"}</strong>
+	<strong class="text-center">{lang t="system|error_update_check"}</strong>
 </div>
 {/if}

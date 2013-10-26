@@ -33,7 +33,7 @@ $(document).ready(function() {
 </ul>
 {/if}
 {else}
-<div class="alert align-center">
+<div class="alert alert-warning text-center">
 	<strong>{lang t="gallery|no_pictures"}</strong>
 </div>
 {/if}

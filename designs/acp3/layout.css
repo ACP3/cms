@@ -1,3 +1,6 @@
+#box {
+	max-width: 100%;
+}
 /* Logo */
 #logo {
 	margin: 10px 20px;
