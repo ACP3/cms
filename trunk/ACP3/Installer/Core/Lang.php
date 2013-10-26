@@ -7,7 +7,7 @@ namespace ACP3\Installer\Core;
  *
  * @author Tino Goratsch
  */
-class InstallerLang extends \ACP3\Core\Lang {
+class Lang extends \ACP3\Core\Lang {
 
 	function __construct($lang) {
 		$this->lang = $lang;

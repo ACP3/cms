@@ -7,7 +7,11 @@ namespace ACP3\Installer\Modules\Errors;
  *
  * @author Tino Goratsch
  */
-class Errors extends \ACP3\Installer\Core\InstallerModuleController {
+class Errors extends \ACP3\Installer\Core\Modules\Controller {
+
+	public function __construct() {
+		parent::__construct();
+	}
 
 	public function action404() {
 		header('HTTP/1.0 404 not found');

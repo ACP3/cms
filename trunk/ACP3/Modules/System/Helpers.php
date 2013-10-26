@@ -23,7 +23,7 @@ abstract class Helpers {
 	public static function checkInstallDependencies($module)
 	{
 		$module = strtolower($module);
-		$deps = Core\ModuleInstaller::getDependencies($module);
+		$deps = Core\Modules\Installer::getDependencies($module);
 		$mods_to_enable = array();
 		if (!empty($deps)) {
 			foreach ($deps as $dep) {
@@ -49,7 +49,7 @@ abstract class Helpers {
 		foreach ($modules as $row) {
 			$row = strtolower($row);
 			if ($row !== '.' && $row !== '..' && $row !== $module) {
-				$deps = Core\ModuleInstaller::getDependencies($row); // Modulabhängigkeiten
+				$deps = Core\Modules\Installer::getDependencies($row); // Modulabhängigkeiten
 				if (!empty($deps) && Core\Modules::isInstalled($row) === true && in_array($module, $deps) === true) {
 					$mods_to_uninstall[] = ucfirst($row);
 				}

@@ -2,9 +2,9 @@
 
 namespace ACP3\Modules\Newsletter;
 
-use ACP3\Core\ModuleInstaller;
+use ACP3\Core\Modules;
 
-class Installer extends ModuleInstaller {
+class Installer extends Modules\Installer {
 
 	const MODULE_NAME = 'newsletter';
 	const SCHEMA_VERSION = 34;

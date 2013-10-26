@@ -1,11 +1,12 @@
 <?php
 
-namespace ACP3\Core\View;
+namespace ACP3\Core\View\Renderer;
 
 /**
  * Renderer for the Smarty template engine
  */
-class Smarty extends AbstractRenderer {
+class Smarty extends \ACP3\Core\View\Renderer {
+
 	/**
 	 *
 	 * @var \Smarty
@@ -13,12 +14,14 @@ class Smarty extends AbstractRenderer {
 	public $renderer;
 
 	public function __construct(array $params = array()) {
+		parent::__construct($params);
+
 		$this->renderer = new \Smarty();
 		$this->renderer->error_reporting = defined('IN_INSTALL') === true || (defined('DEBUG') === true && DEBUG === true) ? E_ALL : 0;
 		$this->renderer->compile_id = !empty($params['compile_id']) ? $params['compile_id'] : CONFIG_DESIGN;
 		$this->renderer->setCompileCheck(defined('DEBUG') === true && DEBUG === true);
 		$this->renderer->setTemplateDir(!empty($params['template_dir']) ? $params['template_dir'] : array(DESIGN_PATH_INTERNAL, MODULES_DIR))
-				->addPluginsDir(!empty($params['plugins_dir']) ? $params['plugins_dir'] : CLASSES_DIR . 'View/SmartyHelpers/')
+				->addPluginsDir(!empty($params['plugins_dir']) ? $params['plugins_dir'] : CLASSES_DIR . 'View/Renderer/Smarty/')
 				->setCompileDir(CACHE_DIR . 'tpl_compiled/')
 				->setCacheDir(CACHE_DIR . 'tpl_cached/');
 		$this->renderer->registerClass('Validate', "\ACP3\Core\Validate");

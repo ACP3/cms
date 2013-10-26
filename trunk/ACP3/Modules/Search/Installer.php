@@ -1,8 +1,11 @@
 <?php
-namespace ACP3\Modules\Search;
-use ACP3\Core\ModuleInstaller;
 
-class Installer extends ModuleInstaller {
+namespace ACP3\Modules\Search;
+
+use ACP3\Core\Modules;
+
+class Installer extends Modules\Installer {
+
 	const MODULE_NAME = 'search';
 	const SCHEMA_VERSION = 31;
 
@@ -29,4 +32,5 @@ class Installer extends ModuleInstaller {
 			)
 		);
 	}
+
 }

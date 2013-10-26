@@ -42,7 +42,7 @@ abstract class Functions {
 	 * 	Version der Datenbank, auf welche aktualisiert werden soll
 	 */
 	public static function executeSqlQueries(array $queries, $version) {
-		$bool = Core\ModuleInstaller::executeSqlQueries($queries);
+		$bool = Core\Modules\Installer::executeSqlQueries($queries);
 
 		$result = array(
 			'text' => sprintf(Core\Registry::get('Lang')->t('update_db_version_to'), $version),
@@ -65,9 +65,9 @@ abstract class Functions {
 		$module = ucfirst($module);
 		$path = MODULES_DIR . $module . '/Installer.php';
 		if (is_file($path) === true) {
-			$className = Core\ModuleInstaller::buildClassName($module);
+			$className = Core\Modules\Installer::buildClassName($module);
 			$install = new $className();
-			if ($install instanceof \ACP3\Core\ModuleInstaller) {
+			if ($install instanceof Core\Modules\Installer) {
 				$bool = $install->install();
 			}
 		}
@@ -88,7 +88,7 @@ abstract class Functions {
 		$files = scandir($path);
 		foreach ($files as $row) {
 			if ($row !== '.' && $row !== '..') {
-				$lang_info = \ACP3\Core\XML::parseXmlFile($path . $row, '/language/info');
+				$lang_info = Core\XML::parseXmlFile($path . $row, '/language/info');
 				if (!empty($lang_info)) {
 					$languages[] = array(
 						'language' => substr($row, 0, -4),
@@ -105,14 +105,14 @@ abstract class Functions {
 	 * Setzt die Ressourcen-Tabelle auf die Standardwerte zurück
 	 */
 	public static function resetResources($mode = 1) {
-		\ACP3\Core\Registry::get('Db')->executeUpdate('TRUNCATE TABLE ' . DB_PRE . 'acl_resources');
+		Core\Registry::get('Db')->executeUpdate('TRUNCATE TABLE ' . DB_PRE . 'acl_resources');
 
 		// Moduldaten in die ACL schreiben
 		$modules = scandir(MODULES_DIR);
 		foreach ($modules as $module) {
 			$path = MODULES_DIR . $module . '/Installer.php';
 			if ($module !== '.' && $module !== '..' && is_file($path) === true) {
-				$className = \ACP3\Core\ModuleInstaller::buildClassName($module);
+				$className = Core\Modules\Installer::buildClassName($module);
 				$install = new $className();
 				$install->addResources($mode);
 			}
@@ -131,9 +131,9 @@ abstract class Functions {
 		$module = ucfirst($module);
 		$path = MODULES_DIR . $module . '/Installer.php';
 		if (is_file($path) === true) {
-			$className = Core\ModuleInstaller::buildClassName($module);
+			$className = Core\Modules\Installer::buildClassName($module);
 			$install = new $className();
-			if ($install instanceof \ACP3\Core\ModuleInstaller &&
+			if ($install instanceof Core\Modules\Installer &&
 					(\ACP3\Core\Modules::isInstalled($module) || count($install->renameModule()) > 0)) {
 				$result = $install->updateSchema();
 			}

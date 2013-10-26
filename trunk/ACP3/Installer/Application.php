@@ -10,7 +10,7 @@ namespace ACP3\Installer;
 class Application {
 
 	/**
-	 * run Methode für den Installer
+	 * run(9 Methode für den Installer
 	 */
 	public static function runInstaller() {
 		self::defineDirConstants();
@@ -20,7 +20,7 @@ class Application {
 	}
 
 	/**
-	 * rund() Methode für den Database Updater
+	 * run() Methode für den Database Updater
 	 */
 	public static function runUpdater() {
 		self::defineDirConstants();
@@ -97,7 +97,7 @@ class Application {
 		\ACP3\Core\Registry::set('URI', new \ACP3\Core\URI('install', 'welcome'));
 		$params = array(
 			'compile_id' => 'installer',
-			'plugins_dir' => INSTALLER_CLASSES_DIR . 'SmartyHelpers/',
+			'plugins_dir' => INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/',
 			'template_dir' => array(DESIGN_PATH_INTERNAL, INSTALLER_MODULES_DIR)
 		);
 		\ACP3\Core\View::factory('Smarty', $params);
@@ -126,7 +126,7 @@ class Application {
 		\ACP3\Core\Registry::set('URI', new \ACP3\Core\URI('update', 'db_update'));
 		$params = array(
 			'compile_id' => 'installer',
-			'plugins_dir' => INSTALLER_CLASSES_DIR . 'SmartyHelpers/',
+			'plugins_dir' => INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/',
 			'template_dir' => array(DESIGN_PATH_INTERNAL, INSTALLER_MODULES_DIR)
 		);
 		\ACP3\Core\View::factory('Smarty', $params);
@@ -150,7 +150,7 @@ class Application {
 		} else {
 			define('LANG', \ACP3\Core\Lang::parseAcceptLanguage());
 		}
-		\ACP3\Core\Registry::set('Lang', new Core\InstallerLang(LANG));
+		\ACP3\Core\Registry::set('Lang', new Core\Lang(LANG));
 
 		// Einige Template Variablen setzen
 		$view->assign('LANGUAGES', Core\Functions::languagesDropdown(LANG));

@@ -1,13 +1,13 @@
 <?php
 
-namespace ACP3\Core;
+namespace ACP3\Core\Modules;
 
 /**
  * Module Installer Klasse
  *
  * @author Tino Goratsch
  */
-abstract class ModuleInstaller {
+abstract class Installer {
 
 	/**
 	 * Die bei der Installation an das Modul zugewiesene ID
@@ -39,7 +39,7 @@ abstract class ModuleInstaller {
 
 	public static function buildClassName($module) {
 		$mod_name = preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $module))));
-		return "\\ACP3\\Modules\\$mod_name\\{$mod_name}Installer";
+		return "\\ACP3\\Modules\\$mod_name\\Installer";
 	}
 
 	/**
@@ -48,7 +48,7 @@ abstract class ModuleInstaller {
 	 * @param mixed $module_id
 	 */
 	public function setModuleId() {
-		$mod_id = Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array(static::MODULE_NAME));
+		$mod_id = \ACP3\Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array(static::MODULE_NAME));
 		$this->module_id = !empty($mod_id) ? (int) $mod_id : 0;
 	}
 
@@ -58,8 +58,9 @@ abstract class ModuleInstaller {
 	 * @return integer
 	 */
 	public function getModuleId() {
-		if (is_null($this->module_id))
+		if (is_null($this->module_id)) {
 			$this->setModuleId();
+		}
 
 		return (int) $this->module_id;
 	}
@@ -100,18 +101,20 @@ abstract class ModuleInstaller {
 	 */
 	public static function executeSqlQueries(array $queries) {
 		if (count($queries) > 0) {
+			$db = \ACP3\Core\Registry::get('Db');
 			$search = array('{pre}', '{engine}', '{charset}');
 			$replace = array(DB_PRE, 'ENGINE=MyISAM', 'CHARACTER SET `utf8` COLLATE `utf8_general_ci`');
 
-			Registry::get('Db')->beginTransaction();
+			$db->beginTransaction();
 			try {
 				foreach ($queries as $query) {
-					if (!empty($query))
-						Registry::get('Db')->query(str_replace($search, $replace, $query));
+					if (!empty($query)) {
+						$db->query(str_replace($search, $replace, $query));
+					}
 				}
-				Registry::get('Db')->commit();
+				$db->commit();
 			} catch (\Exception $e) {
-				Registry::get('Db')->rollBack();
+				$db->rollBack();
 				return false;
 			}
 		}
@@ -128,7 +131,7 @@ abstract class ModuleInstaller {
 		if ((bool) preg_match('=/=', $module) === false) {
 			$path = MODULES_DIR . $module . '/module.xml';
 			if (is_file($path)) {
-				$deps = XML::parseXmlFile($path, '/module/info/dependencies');
+				$deps = \ACP3\Core\XML::parseXmlFile($path, '/module/info/dependencies');
 				return array_values($deps);
 			}
 		}
@@ -184,7 +187,7 @@ abstract class ModuleInstaller {
 						}
 
 						$insert_values = array('id' => '', 'module_id' => $this->getModuleId(), 'page' => $action, 'params' => '', 'privilege_id' => (int) $privilege_id);
-						Registry::get('Db')->insert(DB_PRE . 'acl_resources', $insert_values);
+						\ACP3\Core\Registry::get('Db')->insert(DB_PRE . 'acl_resources', $insert_values);
 					}
 				}
 			}
@@ -192,8 +195,8 @@ abstract class ModuleInstaller {
 
 		if ($mode === 1) {
 			// Regeln für die Rollen setzen
-			$roles = Registry::get('Db')->fetchAll('SELECT id FROM ' . DB_PRE . 'acl_roles');
-			$privileges = Registry::get('Db')->fetchAll('SELECT id FROM ' . DB_PRE . 'acl_privileges');
+			$roles = \ACP3\Core\Registry::get('Db')->fetchAll('SELECT id FROM ' . DB_PRE . 'acl_roles');
+			$privileges = \ACP3\Core\Registry::get('Db')->fetchAll('SELECT id FROM ' . DB_PRE . 'acl_privileges');
 			foreach ($roles as $role) {
 				foreach ($privileges as $privilege) {
 					$permission = 0;
@@ -211,7 +214,7 @@ abstract class ModuleInstaller {
 					}
 
 					$insert_values = array('id' => '', 'role_id' => $role['id'], 'module_id' => $this->getModuleId(), 'privilege_id' => $privilege['id'], 'permission' => $permission);
-					Registry::get('Db')->insert(DB_PRE . 'acl_rules', $insert_values);
+					\ACP3\Core\Registry::get('Db')->insert(DB_PRE . 'acl_rules', $insert_values);
 				}
 			}
 		}
@@ -227,10 +230,10 @@ abstract class ModuleInstaller {
 	 * @return boolean
 	 */
 	protected function removeResources() {
-		$bool = Registry::get('Db')->delete(DB_PRE . 'acl_resources', array('module_id' => $this->getModuleId()));
-		$bool2 = Registry::get('Db')->delete(DB_PRE . 'acl_rules', array('module_id' => $this->getModuleId()));
+		$bool = \ACP3\Core\Registry::get('Db')->delete(DB_PRE . 'acl_resources', array('module_id' => $this->getModuleId()));
+		$bool2 = \ACP3\Core\Registry::get('Db')->delete(DB_PRE . 'acl_rules', array('module_id' => $this->getModuleId()));
 
-		Cache::purge(0, 'acl');
+		\ACP3\Core\Cache::purge(0, 'acl');
 
 		return $bool && $bool2;
 	}
@@ -243,14 +246,15 @@ abstract class ModuleInstaller {
 	 */
 	protected function installSettings(array $settings) {
 		if (count($settings) > 0) {
-			Registry::get('Db')->beginTransaction();
+			$db = \ACP3\Core\Registry::get('Db');
+			$db->beginTransaction();
 			try {
 				foreach ($settings as $key => $value) {
-					Registry::get('Db')->insert(DB_PRE . 'settings', array('id' => '', 'module_id' => $this->getModuleId(), 'name' => $key, 'value' => $value));
+					$db->insert(DB_PRE . 'settings', array('id' => '', 'module_id' => $this->getModuleId(), 'name' => $key, 'value' => $value));
 				}
-				Registry::get('Db')->commit();
+				$db->commit();
 			} catch (\Exception $e) {
-				Registry::get('Db')->rollback();
+				$db->rollback();
 				return false;
 			}
 		}
@@ -263,7 +267,7 @@ abstract class ModuleInstaller {
 	 * @return boolean
 	 */
 	protected function removeSettings() {
-		return Registry::get('Db')->delete(DB_PRE . 'settings', array('module_id' => (int) $this->getModuleId())) >= 0 ? true : false;
+		return \ACP3\Core\Registry::get('Db')->delete(DB_PRE . 'settings', array('module_id' => (int) $this->getModuleId())) >= 0 ? true : false;
 	}
 
 	/**
@@ -273,8 +277,8 @@ abstract class ModuleInstaller {
 	 */
 	protected function addToModulesTable() {
 		// Modul in die Modules-SQL-Tabelle eintragen
-		$bool = Registry::get('Db')->insert(DB_PRE . 'modules', array('id' => '', 'name' => static::MODULE_NAME, 'version' => static::SCHEMA_VERSION, 'active' => 1));
-		$this->module_id = Registry::get('Db')->lastInsertId();
+		$bool = \ACP3\Core\Registry::get('Db')->insert(DB_PRE . 'modules', array('id' => '', 'name' => static::MODULE_NAME, 'version' => static::SCHEMA_VERSION, 'active' => 1));
+		$this->module_id = \ACP3\Core\Registry::get('Db')->lastInsertId();
 
 		return (bool) $bool;
 	}
@@ -284,7 +288,7 @@ abstract class ModuleInstaller {
 	 * @return boolean
 	 */
 	protected function removeFromModulesTable() {
-		return Registry::get('Db')->delete(DB_PRE . 'modules', array('id' => (int) $this->getModuleId())) >= 0 ? true : false;
+		return \ACP3\Core\Registry::get('Db')->delete(DB_PRE . 'modules', array('id' => (int) $this->getModuleId())) >= 0 ? true : false;
 	}
 
 	/**
@@ -294,7 +298,7 @@ abstract class ModuleInstaller {
 	 * @return integer
 	 */
 	public function updateSchema() {
-		$module = Registry::get('Db')->fetchAssoc('SELECT version FROM ' . DB_PRE . 'modules WHERE name = ?', array(static::MODULE_NAME));
+		$module = \ACP3\Core\Registry::get('Db')->fetchAssoc('SELECT version FROM ' . DB_PRE . 'modules WHERE name = ?', array(static::MODULE_NAME));
 		$installed_schema_version = isset($module['version']) ? (int) $module['version'] : 0;
 		$result = -1;
 
@@ -356,7 +360,7 @@ abstract class ModuleInstaller {
 	 * @return boolean
 	 */
 	public function setNewSchemaVersion($new_version) {
-		return Registry::get('Db')->update(DB_PRE . 'modules', array('version' => (int) $new_version), array('name' => static::MODULE_NAME)) >= 0 ? true : false;
+		return \ACP3\Core\Registry::get('Db')->update(DB_PRE . 'modules', array('version' => (int) $new_version), array('name' => static::MODULE_NAME)) >= 0 ? true : false;
 	}
 
 	/**

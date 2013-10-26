@@ -2,9 +2,9 @@
 
 namespace ACP3\Modules\Menus;
 
-use ACP3\Core\ModuleInstaller;
+use ACP3\Core\Modules;
 
-class Installer extends ModuleInstaller {
+class Installer extends Modules\Installer {
 
 	const MODULE_NAME = 'menus';
 	const SCHEMA_VERSION = 32;

@@ -192,9 +192,9 @@ class View {
 	}
 
 	public static function factory($renderer = 'Smarty', array $params = array()) {
-		$path = CLASSES_DIR . 'View/' . $renderer . '.php';
+		$path = CLASSES_DIR . 'View/Renderer/' . $renderer . '.php';
 		if (is_file($path) === true) {
-			$className = "\\ACP3\\Core\\View\\$renderer";
+			$className = "\\ACP3\\Core\\View\\Renderer\\{$renderer}";
 			self::$renderer_obj = new $className($params);
 		} else {
 			throw new \Exception('File ' . $path . ' not found!');

@@ -9,7 +9,7 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Frontend extends Core\ModuleController {
+class Frontend extends Core\Modules\Controller {
 
 	public function __construct() {
 		parent::__construct();

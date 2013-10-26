@@ -9,7 +9,7 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\ModuleController {
+class Admin extends Core\Modules\Controller {
 
 	public function __construct() {
 		parent::__construct();
@@ -358,7 +358,7 @@ class Admin extends Core\ModuleController {
 
 				// Modul installieren
 				if (empty($deps)) {
-					$className = Core\ModuleInstaller::buildClassName($this->uri->dir);
+					$className = Core\Modules\Installer::buildClassName($this->uri->dir);
 					$install = new $className();
 					$bool = $install->install();
 					Core\Modules::setModulesCache();
@@ -388,7 +388,7 @@ class Admin extends Core\ModuleController {
 
 				// Modul deinstallieren
 				if (empty($deps)) {
-					$className = Core\ModuleInstaller::buildClassName($this->uri->dir);
+					$className = Core\Modules\Installer::buildClassName($this->uri->dir);
 					$install = new $className();
 					$bool = $install->uninstall();
 					Core\Modules::setModulesCache();

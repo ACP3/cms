@@ -12,7 +12,7 @@ use ACP3\Core;
 class Extensions {
 
 	public function newsFeed() {
-		$result = $this->db->fetchAll('SELECT id, start, title, text FROM ' . DB_PRE . 'news WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end) ORDER BY start DESC, end DESC, id DESC LIMIT 10', array('time' => Core\Registry::get('Date')->getCurrentDateTime()));
+		$result = Core\Registry::get('Db')->fetchAll('SELECT id, start, title, text FROM ' . DB_PRE . 'news WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end) ORDER BY start DESC, end DESC, id DESC LIMIT 10', array('time' => Core\Registry::get('Date')->getCurrentDateTime()));
 		$c_result = count($result);
 
 		for ($i = 0; $i < $c_result; ++$i) {
@@ -22,12 +22,12 @@ class Extensions {
 				'description' => Core\Functions::shortenEntry($result[$i]['text'], 300, 0),
 				'link' => FEED_LINK . Core\Registry::get('URI')->route('news/details/id_' . $result[$i]['id'], false)
 			);
-			$this->view->assign($params);
+			Core\Registry::get('View')->assign($params);
 		}
 	}
 
 	public function filesFeed() {
-		$result = $this->db->fetchAll('SELECT id, start, title, text FROM ' . DB_PRE . 'files WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end) ORDER BY start DESC, end DESC, id DESC LIMIT 10', array('time' => Core\Registry::get('Date')->getCurrentDateTime()));
+		$result = Core\Registry::get('Db')->fetchAll('SELECT id, start, title, text FROM ' . DB_PRE . 'files WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end) ORDER BY start DESC, end DESC, id DESC LIMIT 10', array('time' => Core\Registry::get('Date')->getCurrentDateTime()));
 		$c_result = count($result);
 
 		for ($i = 0; $i < $c_result; ++$i) {
@@ -37,7 +37,7 @@ class Extensions {
 				'description' => Core\Functions::shortenEntry($result[$i]['text'], 300, 0),
 				'link' => FEED_LINK . Core\Registry::get('URI')->route('files/details/id_' . $result[$i]['id'], false)
 			);
-			$this->view->assign($params);
+			Core\Registry::get('View')->assign($params);
 		}
 	}
 

@@ -9,7 +9,7 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\ModuleController {
+class Admin extends Core\Modules\Controller {
 
 	public function actionList() {
 		if (isset($_POST['submit']) === true) {
