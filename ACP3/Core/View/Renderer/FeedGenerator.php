@@ -1,12 +1,13 @@
 <?php
-namespace ACP3\Core\View;
+
+namespace ACP3\Core\View\Renderer;
 
 /**
  * Renderer for the output of RSS and ATOM newsfeeds
  */
-class FeedGenerator extends AbstractRenderer {
-	public function __construct($params)
-	{
+class FeedGenerator extends \ACP3\Core\View\Renderer {
+
+	public function __construct($params) {
 		parent::__construct($params);
 
 		require_once LIBRARIES_DIR . 'feedcreator/FeedWriter.php';
@@ -16,8 +17,7 @@ class FeedGenerator extends AbstractRenderer {
 		$this->generateChannel();
 	}
 
-	public function assign($name, $value = null)
-	{
+	public function assign($name, $value = null) {
 		$item = $this->renderer->createNewItem();
 		if (is_array($name) === true) {
 			$item->setTitle($name['title']);
@@ -33,15 +33,14 @@ class FeedGenerator extends AbstractRenderer {
 		$this->renderer->addItem($item);
 	}
 
-	private function generateChannel()
-	{
+	private function generateChannel() {
 		$link = $this->config['feed_link'];
 		$this->renderer->setTitle($this->config['feed_title']);
 		$this->renderer->setLink($link);
 		if ($this->config['feed_type'] !== 'ATOM') {
 			$this->renderer->setDescription(\ACP3\Core\Registry::get('Lang')->t($this->config['module'], $this->config['module']));
 		} else {
-			$this->renderer->setChannelElement('updated', date(DATE_ATOM , time()));
+			$this->renderer->setChannelElement('updated', date(DATE_ATOM, time()));
 			$this->renderer->setChannelElement('author', array('name' => $this->config['feed_title']));
 		}
 
@@ -49,18 +48,17 @@ class FeedGenerator extends AbstractRenderer {
 			$this->renderer->setImage($this->config['feed_title'], $link, $this->config['feed_image']);
 	}
 
-	public function fetch($type)
-	{
+	public function fetch($type) {
 		$this->renderer->setType($type);
 		return $this->renderer->generateFeed();
 	}
 
-	public function display($type)
-	{
+	public function display($type) {
 		echo $this->fetch($type);
 	}
 
 	public function templateExists($template) {
 		return true;
 	}
+
 }

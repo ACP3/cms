@@ -2,9 +2,9 @@
 
 namespace ACP3\Modules\Acp;
 
-use ACP3\Core\ModuleInstaller;
+use ACP3\Core\Modules;
 
-class Installer extends ModuleInstaller {
+class Installer extends Modules\Installer {
 
 	const MODULE_NAME = 'acp';
 	const SCHEMA_VERSION = 30;

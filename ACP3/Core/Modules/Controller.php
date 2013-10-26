@@ -1,13 +1,13 @@
 <?php
 
-namespace ACP3\Core;
+namespace ACP3\Core\Modules;
 
 /**
  * Module controller
  *
  * @author Tino Goratsch
  */
-abstract class ModuleController {
+abstract class Controller {
 
 	/**
 	 *
@@ -58,14 +58,14 @@ abstract class ModuleController {
 	protected $view;
 
 	public function __construct() {
-		$this->auth = Registry::get('Auth');
-		$this->breadcrumb = Registry::get('Breadcrumb');
-		$this->date = Registry::get('Date');
-		$this->db = Registry::get('Db');
-		$this->lang = Registry::get('Lang');
-		$this->session = Registry::get('Session');
-		$this->uri = Registry::get('URI');
-		$this->view = Registry::get('View');
+		$this->auth = \ACP3\Core\Registry::get('Auth');
+		$this->breadcrumb = \ACP3\Core\Registry::get('Breadcrumb');
+		$this->date = \ACP3\Core\Registry::get('Date');
+		$this->db = \ACP3\Core\Registry::get('Db');
+		$this->lang = \ACP3\Core\Registry::get('Lang');
+		$this->session = \ACP3\Core\Registry::get('Session');
+		$this->uri = \ACP3\Core\Registry::get('URI');
+		$this->view = \ACP3\Core\Registry::get('View');
 	}
 
 	public function display() {
@@ -88,7 +88,7 @@ abstract class ModuleController {
 				$view->assign('HEAD_TITLE', $this->breadcrumb->output(3));
 				$view->assign('TITLE', $this->breadcrumb->output(2));
 				$view->assign('BREADCRUMB', $this->breadcrumb->output());
-				$view->assign('META', SEO::getMetaTags());
+				$view->assign('META', \ACP3\Core\SEO::getMetaTags());
 				$view->assign('CONTENT', $view->getContent() . $view->getContentAppend());
 
 				$minify = $view->buildMinifyLink();

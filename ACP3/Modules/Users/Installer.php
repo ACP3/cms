@@ -2,9 +2,9 @@
 
 namespace ACP3\Modules\Users;
 
-use ACP3\Core\ModuleInstaller;
+use ACP3\Core\Modules;
 
-class Installer extends ModuleInstaller {
+class Installer extends Modules\Installer {
 
 	const MODULE_NAME = 'users';
 	const SCHEMA_VERSION = 34;

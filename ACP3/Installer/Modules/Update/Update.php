@@ -9,7 +9,11 @@ use ACP3\Installer\Core;
  *
  * @author Tino Goratsch
  */
-class Update extends \ACP3\Installer\Core\InstallerModuleController {
+class Update extends Core\Modules\Controller {
+
+	public function __construct() {
+		parent::__construct();
+	}
 
 	public function actionDbUpdate() {
 		if (isset($_POST['update'])) {
@@ -19,11 +23,11 @@ class Update extends \ACP3\Installer\Core\InstallerModuleController {
 			foreach ($update_first as $row) {
 				$result = Core\Functions::updateModule($row);
 				$module = ucfirst($row);
-				$text = \ACP3\Core\Registry::get('Lang')->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'));
+				$text = $this->lang->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'));
 				$results[$module] = array(
-					'text' => sprintf(\ACP3\Core\Registry::get('Lang')->t('db_update_text'), $module),
+					'text' => sprintf($this->lang->t('db_update_text'), $module),
 					'class' => $result === 1 ? 'success' : ($result === 0 ? 'important' : 'info'),
-					'result_text' => \ACP3\Core\Registry::get('Lang')->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
+					'result_text' => $this->lang->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
 				);
 			}
 
@@ -33,18 +37,18 @@ class Update extends \ACP3\Installer\Core\InstallerModuleController {
 				if ($row !== '.' && $row !== '..' && in_array(strtolower($row), $update_first) === false) {
 					$result = Core\Functions::updateModule($row);
 					$module = ucfirst($row);
-					$text = \ACP3\Core\Registry::get('Lang')->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'));
+					$text = $this->lang->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'));
 					$results[$module] = array(
-						'text' => sprintf(\ACP3\Core\Registry::get('Lang')->t('db_update_text'), $module),
+						'text' => sprintf($this->lang->t('db_update_text'), $module),
 						'class' => $result === 1 ? 'success' : ($result === 0 ? 'important' : 'info'),
-						'result_text' => \ACP3\Core\Registry::get('Lang')->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
+						'result_text' => $this->lang->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
 					);
 				}
 			}
 
 			ksort($results);
 
-			\ACP3\Core\Registry::get('View')->assign('results', $results);
+			$this->view->assign('results', $results);
 
 			// Cache leeren
 			\ACP3\Core\Cache::purge('minify');
@@ -56,8 +60,9 @@ class Update extends \ACP3\Installer\Core\InstallerModuleController {
 	public function actionDbUpdateLegacy() {
 		if (isset($_POST['update'])) {
 			define('NEW_VERSION', '4.0 SVN');
-			if (defined('CONFIG_DB_VERSION') === false)
+			if (defined('CONFIG_DB_VERSION') === false) {
 				define('CONFIG_DB_VERSION', (int) 0);
+			}
 
 			if (defined('CONFIG_DATE_FORMAT_LONG') === false) {
 				define('CONFIG_DATE_FORMAT_LONG', CONFIG_DATE_FORMAT);
@@ -436,7 +441,7 @@ class Update extends \ACP3\Installer\Core\InstallerModuleController {
 				$results[] = Core\Functions::executeSqlQueries($queries, 30);
 			}
 
-			\ACP3\Core\Registry::get('View')->assign('results', $results);
+			$this->view->assign('results', $results);
 
 			// Cache leeren
 			\ACP3\Core\Cache::purge('sql');
@@ -444,7 +449,7 @@ class Update extends \ACP3\Installer\Core\InstallerModuleController {
 			\ACP3\Core\Cache::purge('minify');
 		}
 
-		\ACP3\Core\Registry::get('View')->assign('legacy', true);
+		$this->view->assign('legacy', true);
 	}
 
 }

@@ -1,8 +1,11 @@
 <?php
-namespace ACP3\Modules\Files;
-use ACP3\Core\ModuleInstaller;
 
-class Installer extends ModuleInstaller {
+namespace ACP3\Modules\Files;
+
+use ACP3\Core\Modules;
+
+class Installer extends Modules\Installer {
+
 	const MODULE_NAME = 'files';
 	const SCHEMA_VERSION = 32;
 
@@ -48,7 +51,8 @@ class Installer extends ModuleInstaller {
 				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"extensions/search\";",
 				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"extensions/feeds\";",
 				"DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
-			) 
+			)
 		);
 	}
+
 }

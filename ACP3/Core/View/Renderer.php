@@ -1,10 +1,12 @@
 <?php
+
 namespace ACP3\Core\View;
 
 /**
  * Abstract Class for the various renderers
  */
-abstract class AbstractRenderer {
+abstract class Renderer {
+
 	protected $config = array();
 	public $renderer = null;
 
@@ -17,6 +19,6 @@ abstract class AbstractRenderer {
 	abstract public function fetch($template);
 
 	abstract public function display($template);
-	
+
 	abstract public function templateExists($template);
 }

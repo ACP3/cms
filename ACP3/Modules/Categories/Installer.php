@@ -2,9 +2,9 @@
 
 namespace ACP3\Modules\Categories;
 
-use ACP3\Core\ModuleInstaller;
+use ACP3\Core\Modules;
 
-class Installer extends ModuleInstaller {
+class Installer extends Modules\Installer {
 
 	const MODULE_NAME = 'categories';
 	const SCHEMA_VERSION = 32;

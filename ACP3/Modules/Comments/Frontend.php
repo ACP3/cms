@@ -9,7 +9,7 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Frontend extends Core\ModuleController {
+class Frontend extends Core\Modules\Controller {
 
 	private $module;
 	private $entry_id;
