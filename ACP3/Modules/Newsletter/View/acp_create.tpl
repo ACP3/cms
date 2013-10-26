@@ -9,7 +9,7 @@
 	</div>
 	<div class="form-group">
 		<label for="text" class="col-lg-2 control-label">{lang t="newsletter|text"}</label>
-		<div class="col-lg-10"><textarea class="form-control" name="text" id="text" cols="50" rows="5" class="span6" required>{$form.text}</textarea></div>
+		<div class="col-lg-10"><textarea class="form-control" name="text" id="text" cols="50" rows="5" required>{$form.text}</textarea></div>
 	</div>
 	<div class="form-group">
 		<label for="action-1" class="col-lg-2 control-label">{lang t="newsletter|action"}</label>
