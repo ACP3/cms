@@ -32,7 +32,7 @@
 		<div class="form-group">
 			<label for="tables" class="col-lg-2 control-label">{lang t="system|sql_tables"}</label>
 			<div class="col-lg-10">
-				<select class="form-control" name="tables[]" id="tables" multiple="multiple" class="span6" style="height:200px">
+				<select class="form-control" name="tables[]" id="tables" multiple="multiple" style="height:200px">
 					{foreach $tables as $row}
 						<option value="{$row.name}"{$row.selected}>{$row.name}</option>
 					{/foreach}

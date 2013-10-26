@@ -20,7 +20,7 @@
 				</div>
 				<div class="form-group">
 					<label class="col-lg-2 control-label">{lang t="files|filename"}</label>
-					<div class="col-lg-10"><input class="form-control" type="text" value="{$current_file}" class="readonly" disabled="disabled"></div>
+					<div class="col-lg-10"><input class="form-control" type="text" value="{$current_file}" disabled="disabled"></div>
 				</div>
 				<div class="form-group">
 					<label for="file-internal" class="col-lg-2 control-label">{lang t="files|new_file"}</label>

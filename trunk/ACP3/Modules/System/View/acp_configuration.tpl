@@ -119,7 +119,7 @@
 				</div>
 				<div class="form-group">
 					<label for="maintenance-message" class="col-lg-2 control-label">{lang t="system|maintenance_msg"}</label>
-					<div class="col-lg-10"><textarea class="form-control" name="maintenance_message" id="maintenance-message" cols="50" rows="6" class="span6">{$form.maintenance_message}</textarea></div>
+					<div class="col-lg-10"><textarea class="form-control" name="maintenance_message" id="maintenance-message" cols="50" rows="6">{$form.maintenance_message}</textarea></div>
 				</div>
 			</div>
 			<div id="tab-4" class="tab-pane">
@@ -134,7 +134,7 @@
 				<div class="form-group">
 					<label for="seo-meta-keywords" class="col-lg-2 control-label">{lang t="system|seo_keywords"}</label>
 					<div class="col-lg-10">
-						<textarea class="form-control" name="seo_meta_keywords" id="seo-meta-keywords" cols="50" rows="6" class="span6">{$form.seo_meta_keywords}</textarea>
+						<textarea class="form-control" name="seo_meta_keywords" id="seo-meta-keywords" cols="50" rows="6">{$form.seo_meta_keywords}</textarea>
 						<p class="help-block">{lang t="system|seo_keywords_separate_with_commas"}</p>
 					</div>
 				</div>
@@ -200,14 +200,14 @@
 				<div class="form-group">
 					<label for="extra-css" class="col-lg-2 control-label">{lang t="system|additional_stylesheets"}</label>
 					<div class="col-lg-10">
-						<input class="form-control" type="text" name="extra_css" id="extra-css" value="{$form.extra_css}" class="span6">
+						<input class="form-control" type="text" name="extra_css" id="extra-css" value="{$form.extra_css}">
 						<p class="help-block">{lang t="system|additional_stylesheets_description"}</p>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="extra-js" class="col-lg-2 control-label">{lang t="system|additional_javascript_files"}</label>
 					<div class="col-lg-10">
-						<input class="form-control" type="text" name="extra_js" id="extra-js" value="{$form.extra_js}" class="span6">
+						<input class="form-control" type="text" name="extra_js" id="extra-js" value="{$form.extra_js}">
 						<p class="help-block">{lang t="system|additional_javascript_files_description"}</p>
 					</div>
 				</div>

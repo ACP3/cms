@@ -18,7 +18,7 @@
 		<label for="message" class="col-lg-2 control-label">{lang t="system|message"}</label>
 		<div class="col-lg-10">
 		{if isset($emoticons)}{$emoticons}{/if}
-		<textarea class="form-control" name="message" id="message" cols="50" rows="6" class="span6" required>{$form.message}</textarea>
+		<textarea class="form-control" name="message" id="message" cols="50" rows="6" required>{$form.message}</textarea>
 	</div>
 </div>
 {if isset($subscribe_newsletter)}
