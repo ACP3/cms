@@ -27,7 +27,7 @@
 					<a href="{$ROOT_DIR}" class="navbar-brand hidden-lg">{$PAGE_TITLE}</a>
 				</div>
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
-					{navbar block="main" class="nav navbar-nav" dropdownItemClass="dropdown"}
+					{navbar block="main"}
 					{load_module module="search|sidebar"}
 				</div>
 			</nav>

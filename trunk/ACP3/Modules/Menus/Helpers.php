@@ -84,8 +84,9 @@ abstract class Helpers {
 	 */
 	public static function getMenuItemsCache()
 	{
-		if (Core\Cache::check('items', 'menus') === false)
+		if (Core\Cache::check('items', 'menus') === false) {
 			self::setMenuItemsCache();
+		}
 
 		return Core\Cache::output('items', 'menus');
 	}
@@ -108,8 +109,9 @@ abstract class Helpers {
 	 */
 	public static function getVisibleMenuItems($block)
 	{
-		if (Core\Cache::check('visible_items_' . $block, 'menus') === false)
+		if (Core\Cache::check('visible_items_' . $block, 'menus') === false)  {
 			self::setVisibleMenuItemsCache($block);
+		}
 
 		return Core\Cache::output('visible_items_' . $block, 'menus');
 	}
@@ -128,8 +130,9 @@ abstract class Helpers {
 		static $pages = array();
 
 		// Menüpunkte einbinden
-		if (empty($pages))
+		if (empty($pages)) {
 			$pages = self::getMenuItemsCache();
+		}
 
 		$output = array();
 
@@ -180,6 +183,8 @@ abstract class Helpers {
 	public static function processNavbar($block, $useBootstrap = true, $class = '', $dropdownItemClass = '', $tag = 'ul', $itemTag = 'li', $dropdownWrapperTag = 'li', $linkCss = '', $inlineStyles = '')
 	{
 		static $navbar = array();
+		
+		$uri = Core\Registry::get('URI');
 
 		// Navigationsleiste sofort ausgeben, falls diese schon einmal verarbeitet wurde...
 		if (isset($navbar[$block])) {
@@ -192,7 +197,7 @@ abstract class Helpers {
 			if ($c_items > 0) {
 				// Selektion nur vornehmen, wenn man sich im Frontend befindet
 				if (defined('IN_ADM') === false) {
-					$in = array(Core\Registry::get('URI')->query, Core\Registry::get('URI')->getCleanQuery(), Core\Registry::get('URI')->mod . '/' . Core\Registry::get('URI')->file . '/', Core\Registry::get('URI')->mod);
+					$in = array($uri->query, $uri->getCleanQuery(), $uri->mod . '/' . $uri->file . '/', $uri->mod);
 					$selected = Core\Registry::get('Db')->executeQuery('SELECT m.left_id FROM ' . DB_PRE . 'menu_items AS m JOIN ' . DB_PRE . 'menus AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC', array($block, $in), array(\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetch(\PDO::FETCH_COLUMN);
 				}
 
@@ -208,7 +213,7 @@ abstract class Helpers {
 					}
 
 					// Link zusammenbauen
-					$href = $items[$i]['mode'] == 1 || $items[$i]['mode'] == 2 || $items[$i]['mode'] == 4 ? Core\Registry::get('URI')->route($items[$i]['uri']) : $items[$i]['uri'];
+					$href = $items[$i]['mode'] == 1 || $items[$i]['mode'] == 2 || $items[$i]['mode'] == 4 ? $uri->route($items[$i]['uri']) : $items[$i]['uri'];
 					$target = $items[$i]['target'] == 2 ? ' onclick="window.open(this.href); return false"' : '';
 					$attributes = '';
 					$attributes.= !empty($linkCss) ? ' class="' . $linkCss . '"' : '';
@@ -218,7 +223,7 @@ abstract class Helpers {
 						$caret = $subNavbarCss = '';
 						// Special styling for bootstrap enabled navbars
 						if ($useBootstrap === true) {
-							$css.= !empty($dropdownItemClass) ? ' ' . $dropdownItemClass : ($items[$i]['level'] == 0 ? ' dropdown' : ' dropdown-submenu');
+							$css.= !empty($dropdownItemClass) ? ' ' . $dropdownItemClass : ' dropdown';
 							$caret = $items[$i]['level'] == 0 ? ' <b class="caret"></b>' : '';
 							$attributes.= $items[$i]['level'] == 0 ? '  data-target="#"' : '';
 							$attributes.= ' class="dropdown-toggle" data-toggle="dropdown"';
@@ -242,7 +247,7 @@ abstract class Helpers {
 						}
 					}
 				}
-				$attributes = ' class="navigation-' . $block . (!empty($class) ? ' ' . $class : ($useBootstrap === true ? ' nav' : '')) . '"';
+				$attributes = ' class="navigation-' . $block . (!empty($class) ? ' ' . $class : ($useBootstrap === true ? ' nav navbar-nav' : '')) . '"';
 				$attributes.= !empty($inlineStyles) ? ' style="' . $inlineStyles . '"' : '';
 				$navbar[$block] = !empty($navbar[$block]) ? sprintf('<%1$s%2$s>%3$s</%1$s>', $tag, $attributes, $navbar[$block]) : '';
 				return $navbar[$block];
