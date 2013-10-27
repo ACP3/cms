@@ -336,8 +336,9 @@ abstract class SEO
 	 */
 	public static function uriAliasExists($path)
 	{
-		if (empty(self::$aliases))
+		if (empty(self::$aliases)) {
 			self::$aliases = self::getSEOCache();
+		}
 
 		$path.= !preg_match('/\/$/', $path) ? '/' : '';
 
