@@ -25,11 +25,13 @@ class Frontend extends Core\Modules\Controller {
 
 	public function actionImage()
 	{
-		if (!empty($_SESSION['captcha'])) {
+		if (!empty($_SESSION['captcha']) &&
+			!empty($this->uri->path) &&
+			isset($_SESSION['captcha_' . $this->uri->path])) {
 			header('Cache-Control: no-cache, must-revalidate');
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 			header('Content-Type: image/gif');
-			$captcha = $_SESSION['captcha'];
+			$captcha = $_SESSION['captcha_' . $this->uri->path];
 			$captchaLength = strlen($captcha);
 			$width = $captchaLength * 25;
 			$height = 30;

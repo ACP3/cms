@@ -34,8 +34,9 @@ class URI {
 			$this->preprocessUriQuery();
 			if (defined('IN_INSTALL') === false) {
 				// Query auf eine benutzerdefinierte Startseite setzen
-				if ($this->query === '/' && CONFIG_HOMEPAGE !== '')
+				if ($this->query === '/' && CONFIG_HOMEPAGE !== '') {
 					$this->query = CONFIG_HOMEPAGE;
+				}
 				$this->checkForUriAlias();
 			}
 
@@ -61,8 +62,9 @@ class URI {
 	 */
 	public function __set($key, $value) {
 		// Parameter sollten nicht überschrieben werden können
-		if (isset($this->params[$key]) === false)
+		if (isset($this->params[$key]) === false) {
 			$this->params[$key] = $value;
+		}
 	}
 
 	/**
@@ -102,9 +104,9 @@ class URI {
 		// Nur ausführen, falls URI-Aliase aktiviert sind
 		if ((bool) CONFIG_SEO_ALIASES === true && !defined('IN_ADM')) {
 			// Falls für Query ein Alias existiert, zu diesem weiterleiten
-			if (SEO::uriAliasExists($this->query) === true)
-			// URI-Alias wird von uri::route() erzeugt
-				$this->redirect($this->query, 0, 1);
+			if (SEO::uriAliasExists($this->query) === true) {
+				$this->redirect($this->query, 0, 1); // URI-Alias wird von uri::route() erzeugt
+			}
 
 			$prob_query = $this->query;
 			// Annehmen, dass ein URI Alias mit zusätzlichen Parametern übergeben wurde
@@ -188,10 +190,12 @@ class URI {
 			$this->query = $defaultModule . '/' . $defaultFile . '/';
 		}
 
-		if (!empty($_POST['cat']) && Validate::isNumber($_POST['cat']) === true)
+		if (!empty($_POST['cat']) && Validate::isNumber($_POST['cat']) === true) {
 			$this->cat = (int) $_POST['cat'];
-		if (!empty($_POST['action']))
+		}
+		if (!empty($_POST['action'])) {
 			$this->action = $_POST['action'];
+		}
 
 		return;
 	}
@@ -250,8 +254,9 @@ class URI {
 		$path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
 
 		if ((bool) CONFIG_SEO_ALIASES === true && !preg_match(self::PATTERN, $path)) {
-			if (count(preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY)) === 1)
+			if (count(preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY)) === 1) {
 				$path.= 'list/';
+			}
 			// Überprüfen, ob Alias vorhanden ist und diesen als URI verwenden
 			if ($alias === 1) {
 				$alias = SEO::getUriAlias($path);

@@ -35,7 +35,7 @@
 			<tbody>
 				{foreach $resources as $module => $values}
 					<tr class="sub-table-header">
-						<th id="resources-{$values.0.module_id}" colspan="{if $can_delete_resource === true}4{else}3{/if}">{$module}</th>
+						<th colspan="{if $can_delete_resource === true}4{else}3{/if}">{$module}</th>
 					</tr>
 					{foreach $values as $row}
 						<tr>

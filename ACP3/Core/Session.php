@@ -1,4 +1,5 @@
 <?php
+
 namespace ACP3\Core;
 
 /**
@@ -8,20 +9,24 @@ namespace ACP3\Core;
  * @author Tino Goratsch
  */
 class Session {
+
 	/**
 	 * Name der Session
 	 */
 	const SESSION_NAME = 'ACP3_SID';
+
 	/**
 	 * Name des XSRF-Token
 	 */
 	const XSRF_TOKEN_NAME = 'security_token';
+
 	/**
 	 * Zeit, bis Session ungültig wird
 	 *
 	 * @var integer
 	 */
 	public $expire_time = 1800;
+
 	/**
 	 * Wahrscheinlichkeit, dass Session Garbage Collector anspringt
 	 *
@@ -45,12 +50,7 @@ class Session {
 		// Eigene Session Handling Methoden setzen
 		ini_set('session.save_handler', 'user');
 		session_set_save_handler(
-				array($this, 'session_open'),
-				array($this, 'session_close'),
-				array($this, 'session_read'),
-				array($this, 'session_write'),
-				array($this, 'session_destroy'),
-				array($this, 'session_gc')
+				array($this, 'session_open'), array($this, 'session_close'), array($this, 'session_read'), array($this, 'session_write'), array($this, 'session_destroy'), array($this, 'session_gc')
 		);
 
 		// Session starten und anschließend sichern
@@ -59,6 +59,7 @@ class Session {
 
 		register_shutdown_function('session_write_close');
 	}
+
 	/**
 	 * Session starten
 	 */
@@ -69,6 +70,7 @@ class Session {
 		// Session starten
 		session_start();
 	}
+
 	/**
 	 * Sichert die aktuelle Session
 	 *
@@ -82,6 +84,7 @@ class Session {
 			$_SESSION['acp3_init'] = true;
 		}
 	}
+
 	/**
 	 * Öffnet eine Session
 	 *
@@ -137,8 +140,9 @@ class Session {
 		$_SESSION = array();
 
 		// Session-Cookie löschen
-		if (isset($_COOKIE[self::SESSION_NAME]))
+		if (isset($_COOKIE[self::SESSION_NAME])) {
 			setcookie(self::SESSION_NAME, '', time() - 3600, ROOT_DIR);
+		}
 
 		// Session aus Datenbank löschen
 		Registry::get('Db')->delete(DB_PRE . 'sessions', array('session_id' => $session_id));
@@ -152,21 +156,22 @@ class Session {
 	 * @return boolean
 	 */
 	public function session_gc($session_lifetime = 1800) {
-		if ($session_lifetime == 0)
+		if ($session_lifetime == 0) {
 			return;
+		}
 
 		Registry::get('Db')->executeUpdate('DELETE FROM ' . DB_PRE . 'sessions WHERE session_starttime + ? < ?', array($session_lifetime, time()));
 
 		return true;
 	}
+
 	/**
 	 * Generiert für ein Formular ein Securitytoken
 	 * 
 	 * @param string $path
-	 *	Optionaler ACP3 interner URI Pfad, für welchen das Token gelten soll
+	 * 	Optionaler ACP3 interner URI Pfad, für welchen das Token gelten soll
 	 */
-	public function generateFormToken($path = '')
-	{
+	public function generateFormToken($path = '') {
 		if (!isset($_SESSION[self::XSRF_TOKEN_NAME]) || is_array($_SESSION[self::XSRF_TOKEN_NAME]) === false) {
 			$_SESSION[self::XSRF_TOKEN_NAME] = array();
 		}
@@ -177,17 +182,19 @@ class Session {
 
 		Registry::get('View')->assign('form_token', '<input type="hidden" name="' . self::XSRF_TOKEN_NAME . '" value="' . $token . '" />');
 	}
+
 	/**
 	 * Entfernt das Securitytoken aus der Session
 	 */
-	public function unsetFormToken($token = '')
-	{
-		if (empty($token) && isset($_POST[self::XSRF_TOKEN_NAME]))
+	public function unsetFormToken($token = '') {
+		if (empty($token) && isset($_POST[self::XSRF_TOKEN_NAME])) {
 			$token = $_POST[self::XSRF_TOKEN_NAME];
+		}
 		if (!empty($token) && is_array($_SESSION[self::XSRF_TOKEN_NAME]) === true) {
 			if (isset($_SESSION[self::XSRF_TOKEN_NAME][Registry::get('URI')->query])) {
 				unset($_SESSION[self::XSRF_TOKEN_NAME][Registry::get('URI')->query]);
 			}
 		}
 	}
+
 }
