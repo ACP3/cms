@@ -1,4 +1,5 @@
 <?php
+
 namespace ACP3\Core;
 
 /**
@@ -23,8 +24,9 @@ abstract class Validate {
 			$valid = false;
 			foreach ($privileges as $module) {
 				foreach ($module as $priv_id => $value) {
-					if ($priv_id == $all_privs[$i]['id'] && $value >= 0 && $value <= 2)
+					if ($priv_id == $all_privs[$i]['id'] && $value >= 0 && $value <= 2) {
 						$valid = true;
+					}
 				}
 			}
 		}
@@ -46,8 +48,9 @@ abstract class Validate {
 		}
 
 		foreach ($roles as $row) {
-			if (in_array($row, $good) === false)
+			if (in_array($row, $good) === false) {
 				return false;
+			}
 		}
 		return true;
 	}
@@ -76,8 +79,11 @@ abstract class Validate {
 	 * @param string $input
 	 * @return boolean
 	 */
-	public static function captcha($input) {
-		return preg_match('/^[a-zA-Z0-9]+$/', $input) && isset($_SESSION['captcha']) && strtolower($input) === strtolower($_SESSION['captcha']) ? true : false;
+	public static function captcha($input, $path = '') {
+		$uri = Registry::get('URI');
+		$index = 'captcha_' . sha1($uri->route(empty($path) === true ? $uri->query : $path));
+
+		return preg_match('/^[a-zA-Z0-9]+$/', $input) && isset($_SESSION[$index]) && strtolower($input) === strtolower($_SESSION[$index]) ? true : false;
 	}
 
 	/**
@@ -253,12 +259,11 @@ abstract class Validate {
 		if ($isPicture === true) {
 			$bool = true;
 			// Optionale Parameter
-			if (Validate::isNumber($width) && $info[0] > $width)
+			if (Validate::isNumber($width) && $info[0] > $width ||
+				Validate::isNumber($height) && $info[1] > $height ||
+				filesize($file) === 0 || self::isNumber($filesize) && filesize($file) > $filesize) {
 				$bool = false;
-			if (Validate::isNumber($height) && $info[1] > $height)
-				$bool = false;
-			if (filesize($file) === 0 || self::isNumber($filesize) && filesize($file) > $filesize)
-				$bool = false;
+			}
 
 			return $bool;
 		}

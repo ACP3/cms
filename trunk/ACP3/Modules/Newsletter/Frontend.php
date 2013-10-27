@@ -134,7 +134,7 @@ class Frontend extends Core\Modules\Controller {
 
 	public function actionSidebar() {
 		if (Core\Modules::hasPermission('captcha', 'image') === true) {
-			$this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha(3, 'captcha', true));
+			$this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha(3, 'captcha', true, 'newsletter'));
 		}
 
 		$this->session->generateFormToken('newsletter/list');
