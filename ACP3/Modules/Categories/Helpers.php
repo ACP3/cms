@@ -15,40 +15,26 @@ use ACP3\Core;
 abstract class Helpers {
 
 	/**
-	 * Erstellt den Cache für die Kategorien eines Moduls
 	 *
-	 * @param string $module
-	 *  Das Modul, für welches der Kategorien-Cache erstellt werden soll
-	 * @return boolean
+	 * @var Model
 	 */
-	public static function setCategoriesCache($module) {
-		$data = Core\Registry::get('Db')->fetchAll('SELECT c.id, c.title, c.picture, c.description FROM ' . DB_PRE . 'categories AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE m.name = ? ORDER BY c.title ASC', array($module));
-		return Core\Cache::create($module, $data, 'categories');
-	}
+	private static $model;
 
-	/**
-	 * Gibt die gecacheten Kategorien des jeweiligen Moduls zurück
-	 *
-	 * @param string $module
-	 *  Das jeweilige Modul, für welches die Kategorien geholt werden sollen
-	 * @return array
-	 */
-	public static function getCategoriesCache($module) {
-		if (Core\Cache::check($module, 'categories') === false) {
-			self::setCategoriesCache($module);
+	private static function _init() {
+		if (!self::$model) {
+			self::$model = new Model(Core\Registry::get('Db'));
 		}
-
-		return Core\Cache::output($module, 'categories');
 	}
 
 	/**
 	 * Überprüft, ob eine Kategorie existiert
 	 *
-	 * @param integer $category_id
+	 * @param integer $categoryId
 	 * @return boolean
 	 */
-	public static function categoriesCheck($category_id) {
-		return Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'categories WHERE id = ?', array($category_id)) == 1 ? true : false;
+	public static function categoryExists($categoryId) {
+		self::_init();
+		return self::$model->resultExists($categoryId);
 	}
 
 	/**
@@ -56,11 +42,12 @@ abstract class Helpers {
 	 *
 	 * @param string $title
 	 * @param string $module
-	 * @param integer $category_id
+	 * @param integer $categoryId
 	 * @return boolean
 	 */
-	public static function categoriesCheckDuplicate($title, $module, $category_id = '') {
-		return Core\Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'categories AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE c.title = ? AND m.name = ? AND c.id != ?', array($title, $module, $category_id)) != 0 ? true : false;
+	public static function categoryIsDuplicate($title, $module, $categoryId = '') {
+		self::_init();
+		return self::$model->resultIsDuplicate($title, $module, $categoryId);
 	}
 
 	/**
@@ -71,25 +58,17 @@ abstract class Helpers {
 	 * @return integer
 	 */
 	public static function categoriesCreate($title, $module) {
-		if (self::categoriesCheckDuplicate($title, $module) === false) {
-			$mod_id = Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($module));
-			$insert_values = array(
+		if (self::categoryIsDuplicate($title, $module) === false) {
+			$moduleId = Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($module));
+
+			$insertValues = array(
 				'id' => '',
 				'title' => Core\Functions::strEncode($title),
 				'picture' => '',
 				'description' => '',
-				'module_id' => $mod_id,
+				'module_id' => $moduleId,
 			);
-			Core\Registry::get('Db')->beginTransaction();
-			try {
-				Core\Registry::get('Db')->insert(DB_PRE . 'categories', $insert_values);
-				$last_id = Core\Registry::get('Db')->lastInsertId();
-				Core\Registry::get('Db')->commit();
-				self::setCategoriesCache($module);
-				return $last_id;
-			} catch (\Exception $e) {
-				Core\Registry::get('Db')->rollback();
-			}
+			return self::$model->insert($insertValues);
 		}
 		return 0;
 	}
@@ -98,28 +77,30 @@ abstract class Helpers {
 	 * Listet alle Kategorien eines Moduls auf
 	 *
 	 * @param string $module
-	 * @param string $category_id
-	 * @param boolean $category_create
-	 * @param string $form_field_name
+	 * @param string $categoryId
+	 * @param boolean $categoryCreate
+	 * @param string $formFieldName
 	 * @return string
 	 */
-	public static function categoriesList($module, $category_id = '', $category_create = false, $form_field_name = 'cat', $custom_text = '') {
+	public static function categoriesList($module, $categoryId = '', $categoryCreate = false, $formFieldName = 'cat', $customText = '') {
+		self::_init();
+
 		$categories = array();
-		$data = self::getCategoriesCache($module);
+		$data = self::$model->getCategoriesCache($module);
 		$c_data = count($data);
 
-		$categories['custom_text'] = !empty($custom_text) ? $custom_text : Core\Registry::get('Lang')->t('system', 'pls_select');
-		$categories['name'] = $form_field_name;
+		$categories['custom_text'] = !empty($customText) ? $customText : Core\Registry::get('Lang')->t('system', 'pls_select');
+		$categories['name'] = $formFieldName;
 		if ($c_data > 0) {
 			for ($i = 0; $i < $c_data; ++$i) {
-				$data[$i]['selected'] = Core\Functions::selectEntry('cat', $data[$i]['id'], $category_id);
+				$data[$i]['selected'] = Core\Functions::selectEntry('cat', $data[$i]['id'], $categoryId);
 			}
 			$categories['categories'] = $data;
 		} else {
 			$categories['categories'] = array();
 		}
-		if ($category_create === true && Core\Modules::hasPermission('categories', 'acp_create') === true) {
-			$categories['create']['name'] = $form_field_name . '_create';
+		if ($categoryCreate === true && Core\Modules::hasPermission('categories', 'acp_create') === true) {
+			$categories['create']['name'] = $formFieldName . '_create';
 			$categories['create']['value'] = isset($_POST[$categories['create']['name']]) ? $_POST[$categories['create']['name']] : '';
 		}
 		Core\Registry::get('View')->assign('categories', $categories);

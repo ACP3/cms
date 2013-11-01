@@ -76,6 +76,8 @@ class Frontend extends Core\Modules\Controller {
 	}
 
 	public function actionImage() {
+		$this->view->setNoOutput(true);
+
 		if (Core\Validate::isNumber($this->uri->id) === true) {
 			@set_time_limit(20);
 			$picture = $this->db->fetchColumn('SELECT file FROM ' . DB_PRE . 'gallery_pictures WHERE id = ?', array($this->uri->id));
@@ -93,8 +95,6 @@ class Frontend extends Core\Modules\Controller {
 
 			$image = new Core\Image($options);
 			$image->output();
-
-			$this->view->setNoOutput(true);
 		}
 	}
 
