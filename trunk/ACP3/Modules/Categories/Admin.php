@@ -11,39 +11,31 @@ use ACP3\Core;
  */
 class Admin extends Core\Modules\Controller {
 
+	/**
+	 *
+	 * @var Model
+	 */
+	protected $model;
+
 	public function __construct() {
 		parent::__construct();
+
+		$this->model = new Model($this->db);
 	}
 
 	public function actionCreate() {
 		if (isset($_POST['submit']) === true) {
-			if (!empty($_FILES['picture']['name'])) {
-				$file['tmp_name'] = $_FILES['picture']['tmp_name'];
-				$file['name'] = $_FILES['picture']['name'];
-				$file['size'] = $_FILES['picture']['size'];
-			}
-			$settings = Core\Config::getSettings('categories');
+			try {
+				$file = array();
+				if (!empty($_FILES['picture']['name'])) {
+					$file['tmp_name'] = $_FILES['picture']['tmp_name'];
+					$file['name'] = $_FILES['picture']['name'];
+					$file['size'] = $_FILES['picture']['size'];
+				}
+				$settings = Core\Config::getSettings('categories');
 
-			if (strlen($_POST['title']) < 3)
-				$errors['title'] = $this->lang->t('categories', 'title_to_short');
-			if (strlen($_POST['description']) < 3)
-				$errors['description'] = $this->lang->t('categories', 'description_to_short');
-			if (!empty($file) &&
-					(empty($file['tmp_name']) ||
-					empty($file['size']) ||
-					Core\Validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
-					$_FILES['picture']['error'] !== UPLOAD_ERR_OK))
-				$errors['picture'] = $this->lang->t('categories', 'invalid_image_selected');
-			if (empty($_POST['module']))
-				$errors['module'] = $this->lang->t('categories', 'select_module');
-			if (strlen($_POST['title']) >= 3 && Helpers::categoriesCheckDuplicate($_POST['title'], $_POST['module']))
-				$errors['title'] = $this->lang->t('categories', 'category_already_exists');
+				$this->model->validate($_POST, $file, $settings, $this->lang);
 
-			if (isset($errors) === true) {
-				$this->view->assign('error_msg', Core\Functions::errorBox($errors));
-			} elseif (Core\Validate::formToken() === false) {
-				$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-			} else {
 				$file_sql = null;
 				if (!empty($file)) {
 					$result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'categories');
@@ -61,36 +53,40 @@ class Admin extends Core\Modules\Controller {
 					$insert_values = array_merge($insert_values, $file_sql);
 				}
 
-				$bool = $this->db->insert(DB_PRE . 'categories', $insert_values);
-				Helpers::setCategoriesCache($_POST['module']);
+				$bool = $this->model->insert($insert_values);
+				$this->model->setCategoriesCache($_POST['module']);
 
 				$this->session->unsetFormToken();
 
 				Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/categories');
+			} catch (Core\Exceptions\InvalidFormToken $e) {
+				Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/categories');
+			} catch (Core\Exceptions\ValidationFailed $e) {
+				$this->view->assign('error_msg', $e->getMessage());
 			}
 		}
-		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-			$this->view->assign('form', isset($_POST['submit']) ? $_POST : array('title' => '', 'description' => ''));
 
-			$mod_list = Core\Modules::getActiveModules();
-			foreach ($mod_list as $name => $info) {
-				if ($info['active'] && in_array('categories', $info['dependencies']) === true) {
-					$mod_list[$name]['selected'] = Core\Functions::selectEntry('module', $info['dir']);
-				} else {
-					unset($mod_list[$name]);
-				}
+		$this->view->assign('form', isset($_POST['submit']) ? $_POST : array('title' => '', 'description' => ''));
+
+		$mod_list = Core\Modules::getActiveModules();
+		foreach ($mod_list as $name => $info) {
+			if ($info['active'] && in_array('categories', $info['dependencies']) === true) {
+				$mod_list[$name]['selected'] = Core\Functions::selectEntry('module', $info['dir']);
+			} else {
+				unset($mod_list[$name]);
 			}
-			$this->view->assign('mod_list', $mod_list);
-
-			$this->session->generateFormToken();
 		}
+		$this->view->assign('mod_list', $mod_list);
+
+		$this->session->generateFormToken();
 	}
 
 	public function actionDelete() {
-		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
+		if (isset($_POST['entries']) && is_array($_POST['entries']) === true) {
 			$entries = $_POST['entries'];
-		elseif (Core\Validate::deleteEntries($this->uri->entries) === true)
+		} elseif (Core\Validate::deleteEntries($this->uri->entries) === true) {
 			$entries = $this->uri->entries;
+		}
 
 		if (!isset($entries)) {
 			$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
@@ -110,7 +106,7 @@ class Admin extends Core\Modules\Controller {
 					} else {
 						// Kategoriebild ebenfalls löschen
 						Core\Functions::removeUploadedFile('categories', $category['picture']);
-						$bool = $this->db->delete(DB_PRE . 'categories', array('id' => $entry));
+						$bool = $this->model->delete($entry);
 					}
 				}
 			}
@@ -130,68 +126,49 @@ class Admin extends Core\Modules\Controller {
 	}
 
 	public function actionEdit() {
-		if (Core\Validate::isNumber($this->uri->id) === true &&
-				$this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'categories WHERE id = ?', array($this->uri->id)) == 1) {
+		$category = $this->model->getOneById($this->uri->id);
+
+		if (empty($category) === false) {
 			if (isset($_POST['submit']) === true) {
-				if (!empty($_FILES['picture']['name'])) {
-					$file['tmp_name'] = $_FILES['picture']['tmp_name'];
-					$file['name'] = $_FILES['picture']['name'];
-					$file['size'] = $_FILES['picture']['size'];
-				}
-				$settings = Core\Config::getSettings('categories');
-				$module = $this->db->fetchAssoc('SELECT m.name FROM ' . DB_PRE . 'modules AS m JOIN ' . DB_PRE . 'categories AS c ON(m.id = c.module_id) WHERE c.id = ?', array($this->uri->id));
-
-				if (strlen($_POST['title']) < 3)
-					$errors['title'] = $this->lang->t('categories', 'title_to_short');
-				if (strlen($_POST['description']) < 3)
-					$errors['description'] = $this->lang->t('categories', 'description_to_short');
-				if (!empty($file) &&
-						(empty($file['tmp_name']) ||
-						empty($file['size']) ||
-						Core\Validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
-						$_FILES['file']['error'] !== UPLOAD_ERR_OK))
-					$errors['picture'] = $this->lang->t('categories', 'invalid_image_selected');
-				if (strlen($_POST['title']) >= 3 && Helpers::categoriesCheckDuplicate($_POST['title'], $module['name'], $this->uri->id))
-					$errors['title'] = $this->lang->t('categories', 'category_already_exists');
-
-				if (isset($errors) === true) {
-					$this->view->assign('error_msg', Core\Functions::errorBox($errors));
-				} elseif (Core\Validate::formToken() === false) {
-					$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-				} else {
-					$new_file_sql = null;
-					if (isset($file) && is_array($file)) {
-						$result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'categories');
-						$new_file_sql['picture'] = $result['name'];
+				try {
+					$file = array();
+					if (!empty($_FILES['picture']['name'])) {
+						$file['tmp_name'] = $_FILES['picture']['tmp_name'];
+						$file['name'] = $_FILES['picture']['name'];
+						$file['size'] = $_FILES['picture']['size'];
 					}
+					$settings = Core\Config::getSettings('categories');
+
+					$this->model->validate($_POST, $file, $settings, $this->lang, $this->uri->id);
 
 					$update_values = array(
 						'title' => Core\Functions::strEncode($_POST['title']),
 						'description' => Core\Functions::strEncode($_POST['description']),
 					);
-					if (is_array($new_file_sql) === true) {
-						$old_file = $this->db->fetchColumn('SELECT picture FROM ' . DB_PRE . 'categories WEHRE id = ?', array($this->uri->id));
-						Core\Functions::removeUploadedFile('categories', $old_file);
 
-						$update_values = array_merge($update_values, $new_file_sql);
+					if (empty($file) === false) {
+						$result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'categories');
+						Core\Functions::removeUploadedFile('categories', $category['picture']);
+						$update_values['picture'] = $result['name'];
 					}
 
-					$bool = $this->db->update(DB_PRE . 'categories', $update_values, array('id' => $this->uri->id));
+					$bool = $this->model->update($update_values, $this->uri->id);
 
-					Helpers::setCategoriesCache($module['name']);
+					$this->model->setCategoriesCache($this->model->getModuleNameFromCategoryId($this->uri->id));
 
 					$this->session->unsetFormToken();
 
 					Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/categories');
+				} catch (Core\Exceptions\InvalidFormToken $e) {
+					Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/news');
+				} catch (Core\Exceptions\ValidationFailed $e) {
+					$this->view->assign('error_msg', $e->getMessage());
 				}
 			}
-			if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-				$category = $this->db->fetchAssoc('SELECT title, description FROM ' . DB_PRE . 'categories WHERE id = ?', array($this->uri->id));
 
-				$this->view->assign('form', isset($_POST['submit']) ? $_POST : $category);
+			$this->view->assign('form', isset($_POST['submit']) ? $_POST : $category);
 
-				$this->session->generateFormToken();
-			}
+			$this->session->generateFormToken();
 		} else {
 			$this->uri->redirect('errors/404');
 		}
@@ -200,7 +177,7 @@ class Admin extends Core\Modules\Controller {
 	public function actionList() {
 		Core\Functions::getRedirectMessage();
 
-		$categories = $this->db->fetchAll('SELECT c.id, c.title, c.description, m.name AS module FROM ' . DB_PRE . 'categories AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) ORDER BY m.name ASC, c.title DESC, c.id DESC');
+		$categories = $this->model->getAllWithModuleName();
 		$c_categories = count($categories);
 
 		if ($c_categories > 0) {
@@ -222,18 +199,9 @@ class Admin extends Core\Modules\Controller {
 
 	public function actionSettings() {
 		if (isset($_POST['submit']) === true) {
-			if (Core\Validate::isNumber($_POST['width']) === false)
-				$errors['width'] = $this->lang->t('categories', 'invalid_image_width_entered');
-			if (Core\Validate::isNumber($_POST['height']) === false)
-				$errors['height'] = $this->lang->t('categories', 'invalid_image_height_entered');
-			if (Core\Validate::isNumber($_POST['filesize']) === false)
-				$errors['filesize'] = $this->lang->t('categories', 'invalid_image_filesize_entered');
+			try {
+				$this->model->validateSettings($_POST, $this->lang);
 
-			if (isset($errors) === true) {
-				$this->view->assign('error_msg', Core\Functions::errorBox($errors));
-			} elseif (Core\Validate::formToken() === false) {
-				$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-			} else {
 				$data = array(
 					'width' => (int) $_POST['width'],
 					'height' => (int) $_POST['height'],
@@ -244,15 +212,18 @@ class Admin extends Core\Modules\Controller {
 				$this->session->unsetFormToken();
 
 				Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/categories');
+			} catch (Core\Exceptions\InvalidFormToken $e) {
+				Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/news');
+			} catch (Core\Exceptions\ValidationFailed $e) {
+				$this->view->assign('error_msg', $e->getMessage());
 			}
 		}
-		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-			$settings = Core\Config::getSettings('categories');
 
-			$this->view->assign('form', isset($_POST['submit']) ? $_POST : $settings);
+		$settings = Core\Config::getSettings('categories');
 
-			$this->session->generateFormToken();
-		}
+		$this->view->assign('form', isset($_POST['submit']) ? $_POST : $settings);
+
+		$this->session->generateFormToken();
 	}
 
 }

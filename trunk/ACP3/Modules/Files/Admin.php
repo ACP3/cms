@@ -39,9 +39,9 @@ class Admin extends Core\Modules\Controller {
 				$errors['file-internal'] = $this->lang->t('files', 'select_internal_resource');
 			if (strlen($_POST['text']) < 3)
 				$errors['text'] = $this->lang->t('files', 'description_to_short');
-			if (strlen($_POST['cat_create']) < 3 && Categories\Helpers::categoriesCheck($_POST['cat']) === false)
+			if (strlen($_POST['cat_create']) < 3 && Categories\Helpers::categoryExists($_POST['cat']) === false)
 				$errors['cat'] = $this->lang->t('files', 'select_category');
-			if (strlen($_POST['cat_create']) >= 3 && Categories\Helpers::categoriesCheckDuplicate($_POST['cat_create'], 'files') === true)
+			if (strlen($_POST['cat_create']) >= 3 && Categories\Helpers::categoryIsDuplicate($_POST['cat_create'], 'files') === true)
 				$errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
 			if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) && (Core\Validate::isUriSafe($_POST['alias']) === false || Core\Validate::uriAliasExists($_POST['alias']) === true))
 				$errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
@@ -182,9 +182,9 @@ class Admin extends Core\Modules\Controller {
 					$errors['file-internal'] = $this->lang->t('files', 'select_internal_resource');
 				if (strlen($_POST['text']) < 3)
 					$errors['text'] = $this->lang->t('files', 'description_to_short');
-				if (strlen($_POST['cat_create']) < 3 && Categories\Helpers::categoriesCheck($_POST['cat']) === false)
+				if (strlen($_POST['cat_create']) < 3 && Categories\Helpers::categoryExists($_POST['cat']) === false)
 					$errors['cat'] = $this->lang->t('files', 'select_category');
-				if (strlen($_POST['cat_create']) >= 3 && Categories\Helpers::categoriesCheckDuplicate($_POST['cat_create'], 'files') === true)
+				if (strlen($_POST['cat_create']) >= 3 && Categories\Helpers::categoryIsDuplicate($_POST['cat_create'], 'files') === true)
 					$errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
 				if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']) &&
 						(Core\Validate::isUriSafe($_POST['alias']) === false || Core\Validate::uriAliasExists($_POST['alias'], 'files/details/id_' . $this->uri->id) === true))

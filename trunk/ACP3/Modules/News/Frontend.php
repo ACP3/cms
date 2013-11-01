@@ -11,25 +11,28 @@ use ACP3\Core;
  */
 class Frontend extends Core\Modules\Controller {
 
+	/**
+	 *
+	 * @var Model
+	 */
+	protected $model;
+
 	public function __construct() {
 		parent::__construct();
+
+		$this->model = new Model($this->db);
 	}
 
 	public function actionDetails() {
-		$period = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-		if (Core\Validate::isNumber($this->uri->id) === true &&
-				$this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'news WHERE id = :id' . $period, array('id' => $this->uri->id, 'time' => $this->date->getCurrentDateTime())) == 1) {
+		if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id, $this->date->getCurrentDateTime()) == 1) {
 
 			$settings = Core\Config::getSettings('news');
-			$news = Helpers::getNewsCache($this->uri->id);
+			$news = $this->model->getNewsCache($this->uri->id);
 
 			$this->breadcrumb->append($this->lang->t('news', 'news'), $this->uri->route('news'));
+
 			if ($settings['category_in_breadcrumb'] == 1) {
-				// Brotkrümelspur
-				$category = $this->db->fetchColumn('SELECT title FROM ' . DB_PRE . 'categories WHERE id = ?', array($news['category_id']));
-				if (!empty($category)) {
-					$this->breadcrumb->append($category, $this->uri->route('news/list/cat_' . $news['category_id']));
-				}
+				$this->breadcrumb->append($news['category_title'], $this->uri->route('news/list/cat_' . $news['category_id']));
 			}
 			$this->breadcrumb->append($news['title']);
 
@@ -76,12 +79,13 @@ class Frontend extends Core\Modules\Controller {
 			}
 		}
 
-		// Falls Kategorie angegeben, News nur aus eben jener selektieren
-		$cat = !empty($cat) ? ' AND category_id = ' . $cat : '';
 		$time = $this->date->getCurrentDateTime();
-		$where = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' . $cat;
-
-		$news = $this->db->fetchAll('SELECT id, start, title, text, readmore, comments, uri FROM ' . DB_PRE . 'news WHERE ' . $where . ' ORDER BY start DESC, end DESC, id DESC LIMIT ' . POS . ',' . $this->auth->entries, array('time' => $time));
+		// Falls Kategorie angegeben, News nur aus eben jener selektieren
+		if (!empty($cat)) {
+			$news = $this->model->getAllByCategoryId($cat, $time, POS, $this->auth->entries);
+		} else {
+			$news = $this->model->getAll($time, POS, $this->auth->entries);
+		}
 		$c_news = count($news);
 
 		if ($c_news > 0) {
@@ -91,7 +95,7 @@ class Frontend extends Core\Modules\Controller {
 				$comment_check = true;
 			}
 
-			$this->view->assign('pagination', Core\Functions::pagination($this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'news WHERE ' . $where, array('time' => $time))));
+			$this->view->assign('pagination', Core\Functions::pagination($this->model->countAll($time, $cat)));
 
 			for ($i = 0; $i < $c_news; ++$i) {
 				$news[$i]['date_formatted'] = $this->date->format($news[$i]['start'], $settings['dateformat']);
@@ -111,8 +115,7 @@ class Frontend extends Core\Modules\Controller {
 	public function actionSidebar() {
 		$settings = Core\Config::getSettings('news');
 
-		$where = 'start = end AND start <= :time OR start != end AND :time BETWEEN start AND end';
-		$news = $this->db->fetchAll('SELECT id, start, title FROM ' . DB_PRE . 'news WHERE ' . $where . ' ORDER BY start DESC, end DESC, id DESC LIMIT ' . $settings['sidebar'], array('time' => $this->date->getCurrentDateTime()));
+		$news = $this->model->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
 		$c_news = count($news);
 
 		if ($c_news > 0) {
