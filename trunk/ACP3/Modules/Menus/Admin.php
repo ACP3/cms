@@ -9,7 +9,7 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\Modules\Controller {
+class Admin extends Core\Modules\AdminController {
 
 	public function __construct() {
 		parent::__construct();
@@ -175,30 +175,22 @@ class Admin extends Core\Modules\Controller {
 
 	public function actionDelete()
 	{
-		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
-			$entries = $_POST['entries'];
-		elseif (Core\Validate::deleteEntries($this->uri->entries) === true)
-			$entries = $this->uri->entries;
-
-		if (!isset($entries)) {
-			$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
-		} elseif ($this->uri->action !== 'confirmed') {
-			$marked_entries = implode('|', (array) $entries);
-			$this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route('acp/menus/delete/entries_' . $marked_entries . '/action_confirmed/'), $this->uri->route('acp/menus')));
-		} elseif ($this->uri->action === 'confirmed') {
-			$marked_entries = explode('|', $entries);
+		$items = $this->_deleteItem('acp/menus/delete', 'acp/menus');
+		
+		if ($this->uri->action === 'confirmed') {
+			$items = explode('|', $items);
 			$bool = false;
 			$nestedSet = new Core\NestedSet('menu_items', true);
-			foreach ($marked_entries as $entry) {
-				if (!empty($entry) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menus WHERE id = ?', array($entry)) == 1) {
+			foreach ($items as $items) {
+				if (!empty($items) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menus WHERE id = ?', array($items)) == 1) {
 					// Der Navigationsleiste zugeordnete Menüpunkte ebenfalls löschen
-					$items = $this->db->fetchAll('SELECT id FROM ' . DB_PRE . 'menu_items WHERE block_id = ?', array($entry));
+					$items = $this->db->fetchAll('SELECT id FROM ' . DB_PRE . 'menu_items WHERE block_id = ?', array($items));
 					foreach ($items as $row) {
 						$nestedSet->deleteNode($row['id']);
 					}
 
-					$block = $this->db->fetchColumn('SELECT index_name FROM ' . DB_PRE . 'menus WHERE id = ?', array($entry));
-					$bool = $this->db->delete(DB_PRE . 'menus', array('id' => $entry));
+					$block = $this->db->fetchColumn('SELECT index_name FROM ' . DB_PRE . 'menus WHERE id = ?', array($items));
+					$bool = $this->db->delete(DB_PRE . 'menus', array('id' => $items));
 					Core\Cache::delete('visible_items_' . $block, 'menus');
 				}
 			}
@@ -206,38 +198,30 @@ class Admin extends Core\Modules\Controller {
 			Helpers::setMenuItemsCache();
 
 			Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
-		} else {
+		} elseif (is_string($items)) {
 			$this->uri->redirect('errors/404');
 		}
 	}
 
 	public function actionDeleteItem()
 	{
-		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
-			$entries = $_POST['entries'];
-		elseif (Core\Validate::deleteEntries($this->uri->entries) === true)
-			$entries = $this->uri->entries;
-
-		if (!isset($entries)) {
-			$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
-		} elseif (is_array($entries) === true) {
-			$marked_entries = implode('|', $entries);
-			$this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route('acp/menus/delete_item/entries_' . $marked_entries . '/action_confirmed/'), $this->uri->route('acp/menus')));
-		} elseif ($this->uri->action === 'confirmed') {
-			$marked_entries = explode('|', $entries);
+		$items = $this->_deleteItem('acp/menus/delete_item', 'acp/menus');
+		
+		if ($this->uri->action === 'confirmed') {
+			$items = explode('|', $items);
 			$bool = false;
 			$nestedSet = new Core\NestedSet('menu_items', true);
-			foreach ($marked_entries as $entry) {
+			foreach ($items as $item) {
 				// URI-Alias löschen
-				$item_uri = $this->db->fetchColumn('SELECT uri FROM ' . DB_PRE . 'menu_items WHERE id = ?', array($entry));
-				$bool = $nestedSet->deleteNode($entry);
+				$item_uri = $this->db->fetchColumn('SELECT uri FROM ' . DB_PRE . 'menu_items WHERE id = ?', array($item));
+				$bool = $nestedSet->deleteNode($item);
 				Core\SEO::deleteUriAlias($item_uri);
 			}
 
 			Helpers::setMenuItemsCache();
 
 			Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
-		} else {
+		} elseif (is_string($item)) {
 			$this->uri->redirect('errors/404');
 		}
 	}

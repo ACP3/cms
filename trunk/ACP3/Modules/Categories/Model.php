@@ -41,7 +41,7 @@ class Model extends Core\Model {
 		return $this->db->fetchColumn('SELECT m.name FROM ' . DB_PRE . 'modules AS m JOIN ' . $this->prefix . static::TABLE_NAME . ' AS c ON(m.id = c.module_id) WHERE c.id = ?', array($categoryId));
 	}
 
-	public function validate($formData, $file, $settings, \ACP3\Core\Lang $lang, $categoryId = '') {
+	public function validate(array $formData, $file, $settings, \ACP3\Core\Lang $lang, $categoryId = '') {
 		if (Core\Validate::formToken() === false) {
 			throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
 		}
@@ -72,7 +72,7 @@ class Model extends Core\Model {
 		}
 	}
 
-	public function validateSettings($formData, \ACP3\Core\Lang $lang) {
+	public function validateSettings(array $formData, \ACP3\Core\Lang $lang) {
 		if (Core\Validate::formToken() === false) {
 			throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
 		}

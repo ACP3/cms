@@ -67,7 +67,7 @@ abstract class Controller {
 		$this->uri = \ACP3\Core\Registry::get('URI');
 		$this->view = \ACP3\Core\Registry::get('View');
 	}
-
+	
 	public function display() {
 		$view = $this->view;
 		// Content-Template automatisch setzen

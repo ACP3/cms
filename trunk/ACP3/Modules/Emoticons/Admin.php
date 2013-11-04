@@ -9,7 +9,7 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\Modules\Controller {
+class Admin extends Core\Modules\AdminController {
 
 	public function __construct() {
 		parent::__construct();
@@ -63,32 +63,24 @@ class Admin extends Core\Modules\Controller {
 	}
 
 	public function actionDelete() {
-		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
-			$entries = $_POST['entries'];
-		elseif (Core\Validate::deleteEntries($this->uri->entries) === true)
-			$entries = $this->uri->entries;
-
-		if (!isset($entries)) {
-			$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
-		} elseif (is_array($entries) === true) {
-			$marked_entries = implode('|', $entries);
-			$this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route('acp/emoticons/delete/entries_' . $marked_entries . '/action_confirmed/'), $this->uri->route('acp/emoticons')));
-		} elseif ($this->uri->action === 'confirmed') {
-			$marked_entries = explode('|', $entries);
+		$items = $this->_deleteItem('acp/emoticons/delete', 'acp/emoticons');
+		
+		if ($this->uri->action === 'confirmed') {
+			$items = explode('|', $items);
 			$bool = false;
-			foreach ($marked_entries as $entry) {
-				if (!empty($entry) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'emoticons WHERE id = ?', array($entry)) == 1) {
+			foreach ($items as $item) {
+				if (!empty($item) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'emoticons WHERE id = ?', array($item)) == 1) {
 					// Datei ebenfalls löschen
-					$file = $this->db->fetchColumn('SELECT img FROM ' . DB_PRE . 'emoticons WHERE id = ?', array($entry));
+					$file = $this->db->fetchColumn('SELECT img FROM ' . DB_PRE . 'emoticons WHERE id = ?', array($item));
 					Core\Functions::removeUploadedFile('emoticons', $file);
-					$bool = $this->db->delete(DB_PRE . 'emoticons', array('id' => $entry));
+					$bool = $this->db->delete(DB_PRE . 'emoticons', array('id' => $item));
 				}
 			}
 
 			Helpers::setEmoticonsCache();
 
 			Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/emoticons');
-		} else {
+		} elseif (is_string($items)) {
 			$this->uri->redirect('errors/404');
 		}
 	}

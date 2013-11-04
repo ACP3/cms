@@ -9,14 +9,13 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\Modules\Controller {
+class Admin extends Core\Modules\AdminController {
 
 	public function __construct() {
 		parent::__construct();
 	}
 
-	public function actionCreate()
-	{
+	public function actionCreate() {
 		$access_to_menus = Core\Modules::hasPermission('menus', 'acp_create_item');
 
 		if (isset($_POST['submit']) === true) {
@@ -63,8 +62,9 @@ class Admin extends Core\Modules\Controller {
 				$this->db->beginTransaction();
 				$bool = $this->db->insert(DB_PRE . 'articles', $insert_values);
 				$last_id = $this->db->lastInsertId();
-				if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
+				if ((bool) CONFIG_SEO_ALIASES === true && !empty($_POST['alias'])) {
 					Core\SEO::insertUriAlias('articles/details/id_' . $last_id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int) $_POST['seo_robots']);
+				}
 				$this->db->commit();
 
 				if (isset($_POST['create']) === true && $access_to_menus === true) {
@@ -121,28 +121,19 @@ class Admin extends Core\Modules\Controller {
 		}
 	}
 
-	public function actionDelete()
-	{
-		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
-			$entries = $_POST['entries'];
-		elseif (Core\Validate::deleteEntries($this->uri->entries) === true)
-			$entries = $this->uri->entries;
+	public function actionDelete() {
+		$items = $this->_deleteItem('acp/articles/delete', 'acp/articles');
 
-		if (!isset($entries)) {
-			$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
-		} elseif (is_array($entries) === true) {
-			$marked_entries = implode('|', $entries);
-			$this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route('acp/articles/delete/entries_' . $marked_entries . '/action_confirmed/'), $this->uri->route('acp/articles')));
-		} elseif ($this->uri->action === 'confirmed') {
-			$marked_entries = explode('|', $entries);
+		if ($this->uri->action === 'confirmed') {
+			$items = explode('|', $items);
 			$bool = false;
 			$nestedSet = new Core\NestedSet('menu_items', true);
-			foreach ($marked_entries as $entry) {
-				$bool = $this->db->delete(DB_PRE . 'articles', array('id' => $entry));
-				$nestedSet->deleteNode($this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'menu_items WHERE uri = ?', array('articles/details/id_' . $entry . '/')));
+			foreach ($items as $item) {
+				$bool = $this->db->delete(DB_PRE . 'articles', array('id' => $item));
+				$nestedSet->deleteNode($this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'menu_items WHERE uri = ?', array('articles/details/id_' . $item . '/')));
 
-				Core\Cache::delete('list_id_' . $entry, 'articles');
-				Core\SEO::deleteUriAlias('articles/details/id_' . $entry);
+				Core\Cache::delete('list_id_' . $item, 'articles');
+				Core\SEO::deleteUriAlias('articles/details/id_' . $item);
 			}
 
 			if (Core\Modules::isInstalled('menus') === true) {
@@ -150,13 +141,12 @@ class Admin extends Core\Modules\Controller {
 			}
 
 			Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/articles');
-		} else {
+		} elseif (is_string($items)) {
 			$this->uri->redirect('errors/404');
 		}
 	}
 
-	public function actionEdit()
-	{
+	public function actionEdit() {
 		if (Core\Validate::isNumber($this->uri->id) === true &&
 				$this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'articles WHERE id = ?', array($this->uri->id)) == 1) {
 			if (isset($_POST['submit']) === true) {
@@ -214,8 +204,7 @@ class Admin extends Core\Modules\Controller {
 		}
 	}
 
-	public function actionList()
-	{
+	public function actionList() {
 		Core\Functions::getRedirectMessage();
 
 		$articles = $this->db->fetchAll('SELECT id, start, end, title FROM ' . DB_PRE . 'articles ORDER BY title ASC');

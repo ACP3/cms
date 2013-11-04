@@ -9,7 +9,7 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\Modules\Controller {
+class Admin extends Core\Modules\AdminController {
 
 	public function __construct() {
 		parent::__construct();
@@ -99,26 +99,18 @@ class Admin extends Core\Modules\Controller {
 	}
 
 	public function actionDelete() {
-		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
-			$entries = $_POST['entries'];
-		elseif (Core\Validate::deleteEntries($this->uri->entries) === true)
-			$entries = $this->uri->entries;
-
-		if (!isset($entries)) {
-			$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
-		} elseif (is_array($entries) === true) {
-			$marked_entries = implode('|', $entries);
-			$this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route('acp/polls/delete/entries_' . $marked_entries . '/action_confirmed/'), $this->uri->route('acp/polls')));
-		} elseif ($this->uri->action === 'confirmed') {
-			$marked_entries = explode('|', $entries);
+		$items = $this->_deleteItem('acp/polls/delete', 'acp/polls');
+		
+		if ($this->uri->action === 'confirmed') {
+			$items = explode('|', $items);
 			$bool = $bool2 = $bool3 = false;
-			foreach ($marked_entries as $entry) {
-				$bool = $this->db->delete(DB_PRE . 'polls', array('id' => $entry));
-				$bool2 = $this->db->delete(DB_PRE . 'poll_answers', array('poll_id' => $entry));
-				$bool3 = $this->db->delete(DB_PRE . 'poll_votes', array('poll_id' => $entry));
+			foreach ($items as $item) {
+				$bool = $this->db->delete(DB_PRE . 'polls', array('id' => $item));
+				$bool2 = $this->db->delete(DB_PRE . 'poll_answers', array('poll_id' => $item));
+				$bool3 = $this->db->delete(DB_PRE . 'poll_votes', array('poll_id' => $item));
 			}
 			Core\Functions::setRedirectMessage($bool && $bool2 && $bool3, $this->lang->t('system', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error'), 'acp/polls');
-		} else {
+		} elseif (is_string($items)) {
 			$this->uri->redirect('errors/404');
 		}
 	}

@@ -10,7 +10,7 @@ use ACP3\Modules\Categories;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\Modules\Controller {
+class Admin extends Core\Modules\AdminController {
 
 	public function __construct() {
 		parent::__construct();
@@ -124,35 +124,28 @@ class Admin extends Core\Modules\Controller {
 	}
 
 	public function actionDelete() {
-		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
-			$entries = $_POST['entries'];
-		elseif (Core\Validate::deleteEntries($this->uri->entries) === true)
-			$entries = $this->uri->entries;
-
-		if (!isset($entries)) {
-			$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
-		} elseif (is_array($entries) === true) {
-			$marked_entries = implode('|', $entries);
-			$this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route('acp/files/delete/entries_' . $marked_entries . '/action_confirmed/'), $this->uri->route('acp/files')));
-		} elseif ($this->uri->action === 'confirmed') {
-			$marked_entries = explode('|', $entries);
+		$items = $this->_deleteItem('acp/files/delete', 'acp/files');
+		
+		if ($this->uri->action === 'confirmed') {
+			$items = explode('|', $items);
 			$bool = false;
 			$commentsInstalled = Core\Modules::isInstalled('comments');
-			foreach ($marked_entries as $entry) {
-				if (!empty($entry) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'files WHERE id = ?', array($entry)) == 1) {
+			foreach ($items as $item) {
+				if (!empty($item) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'files WHERE id = ?', array($item)) == 1) {
 					// Datei ebenfalls löschen
-					$file = $this->db->fetchColumn('SELECT file FROM ' . DB_PRE . 'files WHERE id = ?', array($entry));
+					$file = $this->db->fetchColumn('SELECT file FROM ' . DB_PRE . 'files WHERE id = ?', array($item));
 					Core\Functions::removeUploadedFile('files', $file);
-					$bool = $this->db->delete(DB_PRE . 'files', array('id' => $entry));
-					if ($commentsInstalled === true)
-						$this->db->delete(DB_PRE . 'comments', array('module' => 'files', 'entry_id' => $entry));
+					$bool = $this->db->delete(DB_PRE . 'files', array('id' => $item));
+					if ($commentsInstalled === true) {						
+						$this->db->delete(DB_PRE . 'comments', array('module' => 'files', 'entry_id' => $item));
+					}
 
-					Core\Cache::delete('details_id_' . $entry, 'files');
-					Core\SEO::deleteUriAlias('files/details/id_' . $entry);
+					Core\Cache::delete('details_id_' . $item, 'files');
+					Core\SEO::deleteUriAlias('files/details/id_' . $item);
 				}
 			}
 			Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/files');
-		} else {
+		} elseif (is_string($items)) {
 			$this->uri->redirect('errors/404');
 		}
 	}

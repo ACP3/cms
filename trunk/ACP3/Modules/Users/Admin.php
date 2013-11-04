@@ -9,14 +9,13 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\Modules\Controller {
+class Admin extends Core\Modules\AdminController {
 
 	public function __construct() {
 		parent::__construct();
 	}
 
-	public function actionCreate()
-	{
+	public function actionCreate() {
 		if (isset($_POST['submit']) === true) {
 			if (empty($_POST['nickname']))
 				$errors['nickname'] = $this->lang->t('system', 'name_to_short');
@@ -155,7 +154,8 @@ class Admin extends Core\Modules\Controller {
 			$this->view->assign('gender', Core\Functions::selectGenerator('gender', array(1, 2, 3), $lang_gender, ''));
 
 			// Geburtstag
-			$this->view->assign('birthday_datepicker', $this->date->datepicker('birthday', '', 'Y-m-d', array('constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\''), 0, 1, false, true));
+			$datepickerParams = array('constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\'');
+			$this->view->assign('birthday_datepicker', $this->date->datepicker('birthday', '', 'Y-m-d', $datepickerParams, 0, false, true));
 
 			// Kontaktangaben
 			$contact = array();
@@ -223,49 +223,37 @@ class Admin extends Core\Modules\Controller {
 		}
 	}
 
-	public function actionDelete()
-	{
-		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
-			$entries = $_POST['entries'];
-		elseif (Core\Validate::deleteEntries($this->uri->entries) === true)
-			$entries = $this->uri->entries;
+	public function actionDelete() {
+		$items = $this->_deleteItem('acp/users/delete', 'acp/users');
 
-		if (!isset($entries)) {
-			$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
-		} elseif (is_array($entries) === true) {
-			$marked_entries = implode('|', $entries);
-			$this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route('acp/users/delete/entries_' . $marked_entries . '/action_confirmed/'), $this->uri->route('acp/users')));
-		} elseif ($this->uri->action === 'confirmed') {
-			$marked_entries = explode('|', $entries);
-			$bool = false;
-			$admin_user = false;
-			$self_delete = false;
-			foreach ($marked_entries as $entry) {
-				if ($entry == 1) {
-					$admin_user = true;
+		if ($this->uri->action === 'confirmed') {
+			$items = explode('|', $items);
+			$bool = $isAdminUser = $selfDelete = false;
+			foreach ($items as $item) {
+				if ($item == 1) {
+					$isAdminUser = true;
 				} else {
 					// Falls sich der User selbst gelöscht hat, diesen auch gleich abmelden
-					if ($entry == $this->auth->getUserId()) {
+					if ($item == $this->auth->getUserId()) {
 						$this->auth->logout();
-						$self_delete = true;
+						$selfDelete = true;
 					}
-					$bool = $this->db->delete(DB_PRE . 'users', array('id' => $entry));
+					$bool = $this->db->delete(DB_PRE . 'users', array('id' => $item));
 				}
 			}
-			if ($admin_user === true) {
+			if ($isAdminUser === true) {
 				$bool = false;
 				$text = $this->lang->t('users', 'admin_user_undeletable');
 			} else {
 				$text = $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error');
 			}
-			Core\Functions::setRedirectMessage($bool, $text, $self_delete === true ? ROOT_DIR : 'acp/users');
-		} else {
+			Core\Functions::setRedirectMessage($bool, $text, $selfDelete === true ? ROOT_DIR : 'acp/users');
+		} elseif (is_string($items)) {
 			$this->uri->redirect('errors/404');
 		}
 	}
 
-	public function actionEdit()
-	{
+	public function actionEdit() {
 		if (Core\Validate::isNumber($this->uri->id) === true &&
 				$this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'users WHERE id = ?', array($this->uri->id)) == 1) {
 			$user = $this->auth->getUserInfo($this->uri->id);
@@ -417,7 +405,8 @@ class Admin extends Core\Modules\Controller {
 				$this->view->assign('gender', Core\Functions::selectGenerator('gender', array(1, 2, 3), $lang_gender, $user['gender']));
 
 				// Geburtstag
-				$this->view->assign('birthday_datepicker', $this->date->datepicker('birthday', $user['birthday'], 'Y-m-d', array('constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\''), 0, 1, false, true));
+				$datepickerParams = array('constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\'');
+				$this->view->assign('birthday_datepicker', $this->date->datepicker('birthday', $user['birthday'], 'Y-m-d', $datepickerParams, 0, false, true));
 
 				// Kontaktangaben
 				$contact = array();
@@ -475,8 +464,7 @@ class Admin extends Core\Modules\Controller {
 		}
 	}
 
-	public function actionSettings()
-	{
+	public function actionSettings() {
 		if (isset($_POST['submit']) === true) {
 			if (!empty($_POST['mail']) && Core\Validate::email($_POST['mail']) === false)
 				$errors['mail'] = $this->lang->t('system', 'wrong_email_format');
@@ -523,8 +511,7 @@ class Admin extends Core\Modules\Controller {
 		}
 	}
 
-	public function actionList()
-	{
+	public function actionList() {
 		Core\Functions::getRedirectMessage();
 
 		$users = $this->db->fetchAll('SELECT id, nickname, mail FROM ' . DB_PRE . 'users ORDER BY nickname ASC');

@@ -9,102 +9,89 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\Modules\Controller {
+class Admin extends Core\Modules\AdminController {
+
+	/**
+	 *
+	 * @var Model
+	 */
+	private $model;
 
 	public function __construct() {
 		parent::__construct();
+
+		$this->model = new Model($this->db);
 	}
 
 	public function actionDelete() {
-		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
-			$entries = $_POST['entries'];
-		elseif (Core\Validate::deleteEntries($this->uri->entries) === true)
-			$entries = $this->uri->entries;
+		$items = $this->_deleteItem('acp/comments/delete', 'acp/comments');
 
-		if (!isset($entries)) {
-			$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
-		} elseif (is_array($entries) === true) {
-			$marked_entries = implode('|', $entries);
-			$this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route('acp/comments/delete/entries_' . $marked_entries . '/action_confirmed/'), $this->uri->route('acp/comments')));
-		} elseif ($this->uri->action === 'confirmed') {
-			$marked_entries = explode('|', $entries);
+		if ($this->uri->action === 'confirmed') {
+			$items = explode('|', $items);
 			$bool = false;
-			foreach ($marked_entries as $entry) {
-				$bool = $this->db->delete(DB_PRE . 'comments', array('module_id' => $entry));
+			foreach ($items as $item) {
+				$bool = $this->model->delete($item, 'module_id');
 			}
 			Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
-		} else {
+		} elseif (is_string($items)) {
 			$this->uri->redirect('errors/404');
 		}
 	}
 
 	public function actionDeleteComments() {
-		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
-			$entries = $_POST['entries'];
-		elseif (Core\Validate::deleteEntries($this->uri->entries) === true)
-			$entries = $this->uri->entries;
+		$items = $this->_deleteItem('acp/comments/delete_comments', 'acp/comments');
 
-		if (!isset($entries)) {
-			$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
-		} elseif (is_array($entries) === true) {
-			$marked_entries = implode('|', $entries);
-			$this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route('acp/comments/delete_comments/entries_' . $marked_entries . '/action_confirmed/'), $this->uri->route('acp/comments')));
-		} elseif ($this->uri->action === 'confirmed') {
-			$marked_entries = explode('|', $entries);
+		if ($this->uri->action === 'confirmed') {
+			$items = explode('|', $items);
 			$bool = false;
-			foreach ($marked_entries as $entry) {
-				$bool = $this->db->delete(DB_PRE . 'comments', array('id' => $entry));
+			foreach ($items as $item) {
+				$bool = $this->model->delete($item);
 			}
 			Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
-		} else {
+		} elseif (is_string($items)) {
 			$this->uri->redirect('errors/404');
 		}
 	}
 
 	public function actionEdit() {
-		if (Core\Validate::isNumber($this->uri->id) === true &&
-				$this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'comments WHERE id = ?', array($this->uri->id)) == 1) {
-			$comment = $this->db->fetchAssoc('SELECT c.name, c.user_id, c.message, c.module_id, m.name AS module FROM ' . DB_PRE . 'comments AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE c.id = ?', array($this->uri->id));
+		$comment = $this->model->getOneById((int) $this->uri->id);
 
+		if (empty($comment) === false) {
 			$this->breadcrumb
 					->append($this->lang->t($comment['module'], $comment['module']), $this->uri->route('acp/comments/list_comments/id_' . $comment['module_id']))
 					->append($this->lang->t('comments', 'acp_edit'));
 
 			if (isset($_POST['submit']) === true) {
-				if ((empty($comment['user_id']) || Core\Validate::isNumber($comment['user_id']) === false) && empty($_POST['name']))
-					$errors['name'] = $this->lang->t('system', 'name_to_short');
-				if (strlen($_POST['message']) < 3)
-					$errors['message'] = $this->lang->t('system', 'message_to_short');
+				try {
+					$this->model->validateEdit($_POST, $this->lang);
 
-				if (isset($errors) === true) {
-					$this->view->assign('error_msg', Core\Functions::errorBox($errors));
-				} elseif (Core\Validate::formToken() === false) {
-					$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-				} else {
 					$update_values = array();
 					$update_values['message'] = Core\Functions::strEncode($_POST['message']);
 					if ((empty($comment['user_id']) || Core\Validate::isNumber($comment['user_id']) === false) && !empty($_POST['name'])) {
 						$update_values['name'] = Core\Functions::strEncode($_POST['name']);
 					}
 
-					$bool = $this->db->update(DB_PRE . 'comments', $update_values, array('id' => $this->uri->id));
+					$bool = $this->model->update($update_values, $this->uri->id);
 
 					$this->session->unsetFormToken();
 
 					Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/comments/list_comments/id_' . $comment['module_id']);
+				} catch (Core\Exceptions\InvalidFormToken $e) {
+					Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/comments');
+				} catch (Core\Exceptions\ValidationFailed $e) {
+					$this->view->assign('error_msg', $e->getMessage());
 				}
 			}
-			if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-				if (Core\Modules::isActive('emoticons') === true) {
-					// Emoticons im Formular anzeigen
-					$this->view->assign('emoticons', \ACP3\Modules\Emoticons\Helpers::emoticonsList());
-				}
 
-				$this->view->assign('form', isset($_POST['submit']) ? $_POST : $comment);
-				$this->view->assign('module_id', (int) $comment['module_id']);
-
-				$this->session->generateFormToken();
+			if (Core\Modules::isActive('emoticons') === true) {
+				// Emoticons im Formular anzeigen
+				$this->view->assign('emoticons', \ACP3\Modules\Emoticons\Helpers::emoticonsList());
 			}
+
+			$this->view->assign('form', isset($_POST['submit']) ? $_POST : $comment);
+			$this->view->assign('module_id', (int) $comment['module_id']);
+
+			$this->session->generateFormToken();
 		} else {
 			$this->uri->redirect('errors/404');
 		}
@@ -113,7 +100,7 @@ class Admin extends Core\Modules\Controller {
 	public function actionList() {
 		Core\Functions::getRedirectMessage();
 
-		$comments = $this->db->fetchAll('SELECT c.module_id, m.name AS module, COUNT(c.module_id) AS `comments_count` FROM ' . DB_PRE . 'comments AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) GROUP BY c.module_id ORDER BY m.name');
+		$comments = $this->model->getCommentsGroupedByModule();
 		$c_comments = count($comments);
 
 		if ($c_comments > 0) {
@@ -136,14 +123,14 @@ class Admin extends Core\Modules\Controller {
 	public function actionListComments() {
 		Core\Functions::getRedirectMessage();
 
-		if (Core\Validate::isNumber($this->uri->id) &&
-				$this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'comments WHERE module_id = ?', array($this->uri->id)) > 0) {
+		$comments = $this->model->getAllByModuleInAcp((int) $this->uri->id);
+
+		if (empty($comments) === false) {
 			$module = $this->db->fetchColumn('SELECT name FROM ' . DB_PRE . 'modules WHERE id = ?', array($this->uri->id));
 
 			//Brotkrümelspur
 			$this->breadcrumb->append($this->lang->t($module, $module));
 
-			$comments = $this->db->fetchAll('SELECT IF(c.name != "" AND c.user_id = 0,c.name,u.nickname) AS name, c.id, c.ip, c.user_id, c.date, c.message FROM ' . DB_PRE . 'comments AS c LEFT JOIN ' . DB_PRE . 'users AS u ON u.id = c.user_id WHERE c.module_id = ? ORDER BY c.entry_id ASC, c.id ASC', array($this->uri->id));
 			$c_comments = count($comments);
 
 			if ($c_comments > 0) {
@@ -182,19 +169,10 @@ class Admin extends Core\Modules\Controller {
 	}
 
 	public function actionSettings() {
-		$emoticons_active = Core\Modules::isActive('emoticons');
-
 		if (isset($_POST['submit']) === true) {
-			if (empty($_POST['dateformat']) || ($_POST['dateformat'] !== 'long' && $_POST['dateformat'] !== 'short'))
-				$errors['dateformat'] = $this->lang->t('system', 'select_date_format');
-			if ($emoticons_active === true && (!isset($_POST['emoticons']) || ($_POST['emoticons'] != 0 && $_POST['emoticons'] != 1)))
-				$errors[] = $this->lang->t('comments', 'select_emoticons');
+			try {
+				$this->model->validateSettings($_POST, $this->lang);
 
-			if (isset($errors) === true) {
-				$this->view->assign('error_msg', Core\Functions::errorBox($errors));
-			} elseif (Core\Validate::formToken() === false) {
-				$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-			} else {
 				$data = array(
 					'dateformat' => Core\Functions::strEncode($_POST['dateformat']),
 					'emoticons' => $_POST['emoticons'],
@@ -204,21 +182,24 @@ class Admin extends Core\Modules\Controller {
 				$this->session->unsetFormToken();
 
 				Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/comments');
+			} catch (Core\Exceptions\InvalidFormToken $e) {
+				Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/comments');
+			} catch (Core\Exceptions\ValidationFailed $e) {
+				$this->view->assign('error_msg', $e->getMessage());
 			}
 		}
-		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-			$settings = Core\Config::getSettings('comments');
 
-			$this->view->assign('dateformat', $this->date->dateformatDropdown($settings['dateformat']));
+		$settings = Core\Config::getSettings('comments');
 
-			// Emoticons erlauben
-			if ($emoticons_active === true) {
-				$lang_allow_emoticons = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-				$this->view->assign('allow_emoticons', Core\Functions::selectGenerator('emoticons', array(1, 0), $lang_allow_emoticons, $settings['emoticons'], 'checked'));
-			}
+		$this->view->assign('dateformat', $this->date->dateformatDropdown($settings['dateformat']));
 
-			$this->session->generateFormToken();
+		// Emoticons erlauben
+		if (Core\Modules::isActive('emoticons') === true) {
+			$lang_allow_emoticons = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
+			$this->view->assign('allow_emoticons', Core\Functions::selectGenerator('emoticons', array(1, 0), $lang_allow_emoticons, $settings['emoticons'], 'checked'));
 		}
+
+		$this->session->generateFormToken();
 	}
 
 }
