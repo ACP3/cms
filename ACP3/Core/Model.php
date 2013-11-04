@@ -18,7 +18,7 @@ class Model {
 		$this->db = $db;
 	}
 
-	protected function buildLimitStmt($limitStart = '', $resultsPerPage = '') {
+	protected function _buildLimitStmt($limitStart = '', $resultsPerPage = '') {
 		if (Validate::isNumber($limitStart) === true && Validate::isNumber($resultsPerPage) === true) {
 			return ' LIMIT ' . $limitStart . ',' . $resultsPerPage;
 		} elseif (Validate::isNumber($limitStart) === true) {
@@ -40,10 +40,10 @@ class Model {
 		}
 	}
 
-	public function delete($id) {
+	public function delete($id, $field = 'id') {
 		$this->db->beginTransaction();
 		try {
-			$bool = $this->db->delete($this->prefix . static::TABLE_NAME, array('id' => (int) $id));
+			$bool = $this->db->delete($this->prefix . static::TABLE_NAME, is_array($id) ? $id : array($field => (int) $id));
 			$this->db->commit();
 			return $bool;
 		} catch (\Exception $e) {

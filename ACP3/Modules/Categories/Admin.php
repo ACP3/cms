@@ -9,7 +9,7 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\Modules\Controller {
+class Admin extends Core\Modules\AdminController {
 
 	/**
 	 *
@@ -82,31 +82,22 @@ class Admin extends Core\Modules\Controller {
 	}
 
 	public function actionDelete() {
-		if (isset($_POST['entries']) && is_array($_POST['entries']) === true) {
-			$entries = $_POST['entries'];
-		} elseif (Core\Validate::deleteEntries($this->uri->entries) === true) {
-			$entries = $this->uri->entries;
-		}
+		$items = $this->_deleteItem('acp/categories/delete', 'acp/categories');
 
-		if (!isset($entries)) {
-			$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
-		} elseif (is_array($entries) === true) {
-			$marked_entries = implode('|', $entries);
-			$this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route('acp/categories/delete/entries_' . $marked_entries . '/action_confirmed/'), $this->uri->route('acp/categories')));
-		} elseif ($this->uri->action === 'confirmed') {
-			$marked_entries = explode('|', $entries);
+		if ($this->uri->action === 'confirmed') {
+			$items = explode('|', $items);
 			$bool = false;
 			$in_use = false;
 
-			foreach ($marked_entries as $entry) {
-				if (!empty($entry) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'categories WHERE id = ?', array($entry)) == 1) {
-					$category = $this->db->fetchAssoc('SELECT c.picture, m.name AS module FROM ' . DB_PRE . 'categories AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE c.id = ?', array($entry));
-					if ($this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . $category['module'] . ' WHERE category_id = ?', array($entry)) > 0) {
+			foreach ($items as $item) {
+				if (!empty($item) && $this->model->resultExists($item) === true) {
+					$category = $this->db->fetchAssoc('SELECT c.picture, m.name AS module FROM ' . DB_PRE . 'categories AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE c.id = ?', array($item));
+					if ($this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . $category['module'] . ' WHERE category_id = ?', array($item)) > 0) {
 						$in_use = true;
 					} else {
 						// Kategoriebild ebenfalls löschen
 						Core\Functions::removeUploadedFile('categories', $category['picture']);
-						$bool = $this->model->delete($entry);
+						$bool = $this->model->delete($item);
 					}
 				}
 			}
@@ -120,7 +111,7 @@ class Admin extends Core\Modules\Controller {
 				$text = $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error');
 			}
 			Core\Functions::setRedirectMessage($bool, $text, 'acp/categories');
-		} else {
+		} elseif (is_string($items)) {
 			$this->uri->redirect('errors/404');
 		}
 	}

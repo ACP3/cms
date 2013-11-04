@@ -10,7 +10,7 @@ use ACP3\Modules\Categories;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\Modules\Controller {
+class Admin extends Core\Modules\AdminController {
 
 	/**
 	 *
@@ -98,32 +98,23 @@ class Admin extends Core\Modules\Controller {
 	}
 
 	public function actionDelete() {
-		if (isset($_POST['entries']) && is_array($_POST['entries']) === true) {
-			$entries = $_POST['entries'];
-		} elseif (Core\Validate::deleteEntries($this->uri->entries) === true) {
-			$entries = $this->uri->entries;
-		}
-
-		if (!isset($entries)) {
-			$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
-		} elseif (is_array($entries) === true) {
-			$marked_entries = implode('|', $entries);
-			$this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route('acp/news/delete/entries_' . $marked_entries . '/action_confirmed/'), $this->uri->route('acp/news')));
-		} elseif ($this->uri->action === 'confirmed') {
-			$marked_entries = explode('|', $entries);
+		$items = $this->_deleteItem('acp/news/delete', 'acp/news');
+		
+		if ($this->uri->action === 'confirmed') {
+			$items = explode('|', $items);
 			$bool = false;
 			$commentsInstalled = Core\Modules::isInstalled('comments');
-			foreach ($marked_entries as $entry) {
-				$bool = $this->model->delete($entry);
+			foreach ($items as $item) {
+				$bool = $this->model->delete($item);
 				if ($commentsInstalled === true) {
-					$this->db->delete(DB_PRE . 'comments', array('module_id' => 'news', 'entry_id' => $entry));
+					\ACP3\Modules\Comments\Helpers::deleteCommentsByModuleAndResult('news', $item);
 				}
 				// News Cache löschen
-				Core\Cache::delete('details_id_' . $entry, 'news');
-				Core\SEO::deleteUriAlias('news/details/id_' . $entry);
+				Core\Cache::delete('details_id_' . $item, 'news');
+				Core\SEO::deleteUriAlias('news/details/id_' . $item);
 			}
 			Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/news');
-		} else {
+		} elseif (is_string($items)) {
 			$this->uri->redirect('errors/404');
 		}
 	}
@@ -211,7 +202,7 @@ class Admin extends Core\Modules\Controller {
 	public function actionList() {
 		Core\Functions::getRedirectMessage();
 
-		$news = $this->model->getAllInAcpList();
+		$news = $this->model->getAllInAcp();
 		$c_news = count($news);
 
 		if ($c_news > 0) {

@@ -9,7 +9,7 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\Modules\Controller {
+class Admin extends Core\Modules\AdminController {
 
 	public function __construct() {
 		parent::__construct();
@@ -163,29 +163,21 @@ class Admin extends Core\Modules\Controller {
 	}
 
 	public function actionDelete() {
-		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
-			$entries = $_POST['entries'];
-		elseif (Core\Validate::deleteEntries($this->uri->entries) === true)
-			$entries = $this->uri->entries;
-
-		if (!isset($entries)) {
-			$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
-		} elseif (is_array($entries) === true) {
-			$marked_entries = implode('|', $entries);
-			$this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route('acp/permissions/delete/entries_' . $marked_entries . '/action_confirmed/'), $this->uri->route('acp/permissions')));
-		} elseif ($this->uri->action === 'confirmed') {
-			$marked_entries = explode('|', $entries);
+		$items = $this->_deleteItem('acp/permissions/delete', 'acp/permissions');
+		
+		if ($this->uri->action === 'confirmed') {
+			$items = explode('|', $items);
 			$bool = $bool2 = $bool3 = false;
 			$level_undeletable = false;
 
 			$nestedSet = new Core\NestedSet('acl_roles');
-			foreach ($marked_entries as $entry) {
-				if (in_array($entry, array(1, 2, 4)) === true) {
+			foreach ($items as $item) {
+				if (in_array($item, array(1, 2, 4)) === true) {
 					$level_undeletable = true;
 				} else {
-					$bool = $nestedSet->deleteNode($entry);
-					$bool2 = $this->db->delete(DB_PRE . 'acl_rules', array('role_id' => $entry));
-					$bool3 = $this->db->delete(DB_PRE . 'acl_user_roles', array('role_id' => $entry));
+					$bool = $nestedSet->deleteNode($item);
+					$bool2 = $this->db->delete(DB_PRE . 'acl_rules', array('role_id' => $item));
+					$bool3 = $this->db->delete(DB_PRE . 'acl_user_roles', array('role_id' => $item));
 				}
 			}
 
@@ -197,37 +189,29 @@ class Admin extends Core\Modules\Controller {
 				$text = $this->lang->t('system', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error');
 			}
 			Core\Functions::setRedirectMessage($bool && $bool2 && $bool3, $text, 'acp/permissions');
-		} else {
+		} elseif (is_string($item)) {
 			$this->uri->redirect('errors/404');
 		}
 	}
 
 	public function actionDeleteResources() {
-		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
-			$entries = $_POST['entries'];
-		elseif (Core\Validate::deleteEntries($this->uri->entries) === true)
-			$entries = $this->uri->entries;
-
 		$this->breadcrumb->append($this->lang->t('permissions', 'acp_list_resources'), $this->uri->route('acp/permissions/acp_list_resources'))
 				->append($this->lang->t('permissions', 'delete_resources'));
 
-		if (!isset($entries)) {
-			$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
-		} elseif (is_array($entries) === true) {
-			$marked_entries = implode('|', $entries);
-			$this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route('acp/permissions/delete_resources/entries_' . $marked_entries . '/action_confirmed/'), $this->uri->route('acp/permissions/list_resources')));
-		} elseif ($this->uri->action === 'confirmed') {
-			$marked_entries = explode('|', $entries);
+		$items = $this->_deleteItem('acp/permissions/delete_resources', 'acp/permissions/list_resources');
+		
+		if ($this->uri->action === 'confirmed') {
+			$items = explode('|', $items);
 			$bool = false;
 
-			foreach ($marked_entries as $entry) {
-				$bool = $this->db->delete(DB_PRE . 'acl_resources', array('id' => $entry));
+			foreach ($items as $item) {
+				$bool = $this->db->delete(DB_PRE . 'acl_resources', array('id' => $item));
 			}
 
 			Core\ACL::setResourcesCache();
 
 			Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/permissions/list_resources');
-		} else {
+		} elseif (is_string($items)) {
 			$this->uri->redirect('errors/404');
 		}
 	}

@@ -38,21 +38,21 @@ class Model extends Core\Model {
 
 	public function getAll($time, $limitStart = '', $resultsPerPage = '') {
 		$where = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-		$limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
+		$limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
 		return $this->db->fetchAll('SELECT id, start, title, text, readmore, comments, uri FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE ' . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, array('time' => $time));
 	}
 
 	public function getAllByCategoryId($categoryId, $time, $limitStart = '', $resultsPerPage = '') {
 		$where = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end) AND category_id = :categoryId';
-		$limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
+		$limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
 		return $this->db->fetchAll('SELECT id, start, title, text, readmore, comments, uri FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE ' . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, array('time' => $time, 'categoryId' => $categoryId));
 	}
 
-	public function getAllInAcpList() {
+	public function getAllInAcp() {
 		return $this->db->fetchAll('SELECT n.id, n.start, n.end, n.title, c.title AS cat FROM ' . $this->prefix . static::TABLE_NAME . ' AS n, ' . $this->prefix . \ACP3\Modules\Categories\Model::TABLE_NAME . ' AS c WHERE n.category_id = c.id ORDER BY n.start DESC, n.end DESC, n.id DESC');
 	}
 
-	public function validate($formData, \ACP3\Core\Lang $lang) {
+	public function validate(array $formData, \ACP3\Core\Lang $lang) {
 		if (Core\Validate::formToken() === false) {
 			throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
 		}
@@ -86,7 +86,7 @@ class Model extends Core\Model {
 		}
 	}
 
-	public function validateSettings($formData, \ACP3\Core\Lang $lang) {
+	public function validateSettings(array $formData, \ACP3\Core\Lang $lang) {
 		if (Core\Validate::formToken() === false) {
 			throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
 		}

@@ -1,4 +1,5 @@
 <?php
+
 namespace ACP3\Core;
 
 /**
@@ -33,8 +34,7 @@ class Date {
 	 * Falls man sich als User authentifiziert hat, eingestellte Zeitzone + Sommerzeiteinstellung holen
 	 *
 	 */
-	function __construct()
-	{
+	function __construct() {
 		$info = Registry::get('Auth')->getUserInfo();
 
 		if (!empty($info)) {
@@ -55,17 +55,12 @@ class Date {
 	 * 	Optionaler Parameter für das aktuelle Datumsformat
 	 * @return array 
 	 */
-	public function dateformatDropdown($format = '')
-	{
-		$dateformat = array();
-		$dateformat[0]['value'] = 'short';
-		$dateformat[0]['selected'] = Functions::selectEntry('dateformat', 'short', $format);
-		$dateformat[0]['lang'] = Registry::get('Lang')->t('system', 'date_format_short');
-		$dateformat[1]['value'] = 'long';
-		$dateformat[1]['selected'] = Functions::selectEntry('dateformat', 'long', $format);
-		$dateformat[1]['lang'] = Registry::get('Lang')->t('system', 'date_format_long');
-
-		return $dateformat;
+	public function dateformatDropdown($format = '') {
+		$dateformatLang = array(
+			Registry::get('Lang')->t('system', 'date_format_short'),
+			Registry::get('Lang')->t('system', 'date_format_long')
+		);
+		return Functions::selectGenerator('dateformat', array('short', 'long'), $dateformatLang, $format);
 	}
 
 	/**
@@ -82,12 +77,10 @@ class Date {
 	 * @param integer $range
 	 * 	1 = Start- und Enddatum anzeigen
 	 * 	2 = Einfaches Inputfeld mitsamt Datepicker anzeigen
-	 * @param integer $mode
 	 * @param integer $with_time
 	 * @return string
 	 */
-	public function datepicker($name, $value = '', $format = 'Y-m-d H:i', array $params = array(), $range = 1, $mode = 1, $with_time = true, $input_only = false)
-	{
+	public function datepicker($name, $value = '', $format = 'Y-m-d H:i', array $params = array(), $range = 1, $with_time = true, $input_only = false) {
 		$datepicker = array(
 			'range' => is_array($name) === true && $range === 1 ? 1 : 0,
 			'with_time' => (bool) $with_time,
@@ -101,8 +94,9 @@ class Date {
 				'changeYear' => 'true',
 			)
 		);
-		if ($with_time === true)
+		if ($with_time === true) {
 			$datepicker['params']['timeFormat'] = '\'HH:mm\'';
+		}
 
 		// Zusätzliche Datepicker-Parameter hinzufügen
 		if (!empty($params) && is_array($params) === true) {
@@ -134,7 +128,7 @@ class Date {
 			$datepicker['value_start_r'] = $value_start_r;
 			$datepicker['value_end'] = $value_end;
 			$datepicker['value_end_r'] = $value_end_r;
-		// Einfaches Inputfeld mit Datepicker
+			// Einfaches Inputfeld mit Datepicker
 		} else {
 			if (!empty($_POST[$name])) {
 				$value = $_POST[$name];
@@ -158,13 +152,11 @@ class Date {
 	 *
 	 * @param string $time
 	 * @param string $format
-	 * @param integer $mode
-	 * 	1 = Sommerzeit beachten
-	 * 	2 = Sommerzeit nicht beachten
+	 * @param integer $toLocal
+	 * @param integer $isLocal
 	 * @return string
 	 */
-	public function format($time = 'now', $format = 'long', $to_local = true, $is_local = true)
-	{
+	public function format($time = 'now', $format = 'long', $toLocal = true, $isLocal = true) {
 		// Datum in gewünschter Formatierung ausgeben
 		switch ($format) {
 			case 'long':
@@ -190,22 +182,22 @@ class Date {
 			$replace = array_merge($replace, $this->localizeMonths());
 		}
 
-		if (is_numeric($time))
+		if (is_numeric($time)) {
 			$time = date('c', $time);
+		}
 
-		$date_time = new \DateTime($time, $this->date_time_zone);
-		if ($to_local === true) {
-			if ($is_local === true) {
-				$date_time->setTimestamp($date_time->getTimestamp() + $date_time->getOffset());
+		$dateTime = new \DateTime($time, $this->date_time_zone);
+		if ($toLocal === true) {
+			if ($isLocal === true) {
+				$dateTime->setTimestamp($dateTime->getTimestamp() + $dateTime->getOffset());
 			} else {
-				$date_time->setTimestamp($date_time->getTimestamp() - $date_time->getOffset());
+				$dateTime->setTimestamp($dateTime->getTimestamp() - $dateTime->getOffset());
 			}
 		}
-		return strtr($date_time->format($format), $replace);
+		return strtr($dateTime->format($format), $replace);
 	}
 
-	private function localizeDaysAbbr()
-	{
+	private function localizeDaysAbbr() {
 		return array(
 			'Mon' => Registry::get('Lang')->t('system', 'date_mon'),
 			'Tue' => Registry::get('Lang')->t('system', 'date_tue'),
@@ -217,8 +209,7 @@ class Date {
 		);
 	}
 
-	private function localizeDays()
-	{
+	private function localizeDays() {
 		return array(
 			'Monday' => Registry::get('Lang')->t('system', 'date_monday'),
 			'Tuesday' => Registry::get('Lang')->t('system', 'date_tuesday'),
@@ -230,8 +221,7 @@ class Date {
 		);
 	}
 
-	private function localizeMonths()
-	{
+	private function localizeMonths() {
 		return array(
 			'January' => Registry::get('Lang')->t('system', 'date_january'),
 			'February' => Registry::get('Lang')->t('system', 'date_february'),
@@ -248,8 +238,7 @@ class Date {
 		);
 	}
 
-	private function localizeMonthsAbbr()
-	{
+	private function localizeMonthsAbbr() {
 		return array(
 			'Jan' => Registry::get('Lang')->t('system', 'date_jan'),
 			'Feb' => Registry::get('Lang')->t('system', 'date_feb'),
@@ -272,8 +261,7 @@ class Date {
 	 * @param string $current_value
 	 * @return array
 	 */
-	public static function getTimeZones($current_value = '')
-	{
+	public static function getTimeZones($current_value = '') {
 		$timeZones = array(
 			'Africa' => \DateTimeZone::listIdentifiers(\DateTimeZone::AFRICA),
 			'America' => \DateTimeZone::listIdentifiers(\DateTimeZone::AMERICA),
@@ -307,8 +295,7 @@ class Date {
 	 * @param string $format
 	 * @return string
 	 */
-	public function formatTimeRange($start, $end = '', $format = 'long')
-	{
+	public function formatTimeRange($start, $end = '', $format = 'long') {
 		$datetime_format = 'Y-m-d H:i';
 		if ($end === '' || $start >= $end) {
 			$title = $end === '' ? $this->format($start, $format) : sprintf(Registry::get('Lang')->t('system', 'date_published_since'), $this->format($start, $format));
@@ -325,8 +312,7 @@ class Date {
 	 * @param string $value
 	 * @return integer
 	 */
-	public function timestamp($value = 'now', $is_local = false)
-	{
+	public function timestamp($value = 'now', $is_local = false) {
 		return $this->format($value, 'U', true, $is_local);
 	}
 
@@ -335,8 +321,7 @@ class Date {
 	 * 
 	 * @return string
 	 */
-	public function getCurrentDateTime($is_local = false)
-	{
+	public function getCurrentDateTime($is_local = false) {
 		return $this->format('now', 'Y-m-d H:i:s', true, $is_local);
 	}
 
@@ -346,9 +331,8 @@ class Date {
 	 * @param string $value
 	 * @return string
 	 */
-	public function toSQL($value)
-	{
-		return $this->format($value, 'Y-m-d H:i:s', true, false);
+	public function toSQL($value = '') {
+		return $this->format(empty($value) === true ? $this->getCurrentDateTime() : $value, 'Y-m-d H:i:s', true, false);
 	}
 
 	/**
@@ -357,8 +341,7 @@ class Date {
 	 * @param integer $value
 	 * @return string
 	 */
-	public function timestampToDateTime($value, $is_local = false)
-	{
+	public function timestampToDateTime($value, $is_local = false) {
 		return $this->format($value, 'Y-m-d H:i:s', true, $is_local);
 	}
 

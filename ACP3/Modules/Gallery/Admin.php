@@ -9,7 +9,7 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\Modules\Controller {
+class Admin extends Core\Modules\AdminController {
 
 	public function __construct() {
 		parent::__construct();
@@ -136,71 +136,55 @@ class Admin extends Core\Modules\Controller {
 	}
 
 	public function actionDelete() {
-		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
-			$entries = $_POST['entries'];
-		elseif (Core\Validate::deleteEntries($this->uri->entries) === true)
-			$entries = $this->uri->entries;
-
-		if (!isset($entries)) {
-			$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
-		} elseif (is_array($entries) === true) {
-			$marked_entries = implode('|', $entries);
-			$this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route('acp/gallery/delete/entries_' . $marked_entries . '/action_confirmed/'), $this->uri->route('acp/gallery')));
-		} elseif ($this->uri->action === 'confirmed') {
-			$marked_entries = explode('|', $entries);
+		$items = $this->_deleteItem('acp/gallery/delete', 'acp/gallery');
+		
+		if ($this->uri->action === 'confirmed') {
+			$items = explode('|', $items);
 			$bool = $bool2 = false;
 
-			foreach ($marked_entries as $entry) {
-				if (!empty($entry) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'gallery WHERE id = ?', array($entry)) == 1) {
+			foreach ($items as $item) {
+				if (!empty($item) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'gallery WHERE id = ?', array($item)) == 1) {
 					// Hochgeladene Bilder löschen
-					$pictures = $this->db->fetchAll('SELECT file FROM ' . DB_PRE . 'gallery_pictures WHERE gallery_id = ?', array($entry));
+					$pictures = $this->db->fetchAll('SELECT file FROM ' . DB_PRE . 'gallery_pictures WHERE gallery_id = ?', array($item));
 					foreach ($pictures as $row) {
 						removePicture($row['file']);
 					}
 					// Galerie Cache löschen
-					Core\Cache::delete('pics_id_' . $entry, 'gallery');
-					Core\SEO::deleteUriAlias('gallery/pics/id_' . $entry);
-					Helpers::deletePictureAliases($entry);
+					Core\Cache::delete('pics_id_' . $item, 'gallery');
+					Core\SEO::deleteUriAlias('gallery/pics/id_' . $item);
+					Helpers::deletePictureAliases($item);
 
 					// Fotogalerie mitsamt Bildern löschen
-					$bool = $this->db->delete(DB_PRE . 'gallery', array('id' => $entry));
-					$bool2 = $this->db->delete(DB_PRE . 'gallery_pictures', array('gallery_id' => $entry));
+					$bool = $this->db->delete(DB_PRE . 'gallery', array('id' => $item));
+					$bool2 = $this->db->delete(DB_PRE . 'gallery_pictures', array('gallery_id' => $item));
 				}
 			}
 			Core\Functions::setRedirectMessage($bool && $bool2, $this->lang->t('system', $bool !== false && $bool2 !== false ? 'delete_success' : 'delete_error'), 'acp/gallery');
-		} else {
+		} elseif (is_string($items)) {
 			$this->uri->redirect('errors/404');
 		}
 	}
 
 	public function actionDeletePicture() {
-		if (isset($_POST['entries']) && is_array($_POST['entries']) === true)
-			$entries = $_POST['entries'];
-		elseif (Core\Validate::deleteEntries($this->uri->entries) === true)
-			$entries = $this->uri->entries;
-
-		if (!isset($entries)) {
-			$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
-		} elseif (is_array($entries) === true) {
-			$marked_entries = implode('|', $entries);
-			$this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route('acp/gallery/delete_picture/entries_' . $marked_entries . '/action_confirmed/'), $this->uri->route('acp/gallery/edit/id_' . $this->uri->id)));
-		} elseif ($this->uri->action === 'confirmed') {
-			$marked_entries = explode('|', $entries);
+		$items = $this->_deleteItem('acp/gallery/delete_picture', 'acp/gallery/edit/id_' . $this->uri->id);
+		
+		if ($this->uri->action === 'confirmed') {
+			$items = explode('|', $items);
 			$bool = false;
-			foreach ($marked_entries as $entry) {
-				if (!empty($entry) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'gallery_pictures WHERE id = ?', array($entry)) == 1) {
+			foreach ($items as $item) {
+				if (!empty($item) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'gallery_pictures WHERE id = ?', array($item)) == 1) {
 					// Datei ebenfalls löschen
-					$picture = $this->db->fetchAssoc('SELECT pic, gallery_id, file FROM ' . DB_PRE . 'gallery_pictures WHERE id = ?', array($entry));
+					$picture = $this->db->fetchAssoc('SELECT pic, gallery_id, file FROM ' . DB_PRE . 'gallery_pictures WHERE id = ?', array($item));
 					$this->db->executeUpdate('UPDATE ' . DB_PRE . 'gallery_pictures SET pic = pic - 1 WHERE pic > ? AND gallery_id = ?', array($picture['pic'], $picture['gallery_id']));
 					Helpers::removePicture($picture['file']);
 
-					$bool = $this->db->delete(DB_PRE . 'gallery_pictures', array('id' => $entry));
-					Core\SEO::deleteUriAlias('gallery/details/id_' . $entry);
+					$bool = $this->db->delete(DB_PRE . 'gallery_pictures', array('id' => $item));
+					Core\SEO::deleteUriAlias('gallery/details/id_' . $item);
 					Helpers::setGalleryCache($picture['gallery_id']);
 				}
 			}
 			Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/gallery/edit/id_' . $picture['gallery_id']);
-		} else {
+		} elseif (is_string($items)) {
 			$this->uri->redirect('errors/404');
 		}
 	}

@@ -9,7 +9,7 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\Modules\Controller {
+class Admin extends Core\Modules\AdminController {
 
 	public function __construct() {
 		parent::__construct();
