@@ -7,59 +7,65 @@ namespace ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Model {
+class Model
+{
 
-	protected $db;
-	protected $prefix = DB_PRE;
+    protected $db;
+    protected $prefix = DB_PRE;
 
-	const TABLE_NAME = '';
+    const TABLE_NAME = '';
 
-	public function __construct(\Doctrine\DBAL\Connection $db) {
-		$this->db = $db;
-	}
+    public function __construct(\Doctrine\DBAL\Connection $db)
+    {
+        $this->db = $db;
+    }
 
-	protected function _buildLimitStmt($limitStart = '', $resultsPerPage = '') {
-		if (Validate::isNumber($limitStart) === true && Validate::isNumber($resultsPerPage) === true) {
-			return ' LIMIT ' . $limitStart . ',' . $resultsPerPage;
-		} elseif (Validate::isNumber($limitStart) === true) {
-			return ' LIMIT ' . $limitStart;
-		} else {
-			return '';
-		}
-	}
+    protected function _buildLimitStmt($limitStart = '', $resultsPerPage = '')
+    {
+        if (Validate::isNumber($limitStart) === true && Validate::isNumber($resultsPerPage) === true) {
+            return ' LIMIT ' . $limitStart . ',' . $resultsPerPage;
+        } elseif (Validate::isNumber($limitStart) === true) {
+            return ' LIMIT ' . $limitStart;
+        } else {
+            return '';
+        }
+    }
 
-	public function insert($params) {
-		$this->db->beginTransaction();
-		try {
-			$this->db->insert($this->prefix . static::TABLE_NAME, $params);
-			$lastId = $this->db->lastInsertId();
-			$this->db->commit();
-			return $lastId;
-		} catch (\Exception $e) {
-			$this->db->rollback();
-		}
-	}
+    public function insert($params)
+    {
+        $this->db->beginTransaction();
+        try {
+            $this->db->insert($this->prefix . static::TABLE_NAME, $params);
+            $lastId = $this->db->lastInsertId();
+            $this->db->commit();
+            return $lastId;
+        } catch (\Exception $e) {
+            $this->db->rollback();
+        }
+    }
 
-	public function delete($id, $field = 'id') {
-		$this->db->beginTransaction();
-		try {
-			$bool = $this->db->delete($this->prefix . static::TABLE_NAME, is_array($id) ? $id : array($field => (int) $id));
-			$this->db->commit();
-			return $bool;
-		} catch (\Exception $e) {
-			$this->db->rollback();
-		}
-	}
+    public function delete($id, $field = 'id')
+    {
+        $this->db->beginTransaction();
+        try {
+            $bool = $this->db->delete($this->prefix . static::TABLE_NAME, is_array($id) ? $id : array($field => (int)$id));
+            $this->db->commit();
+            return $bool;
+        } catch (\Exception $e) {
+            $this->db->rollback();
+        }
+    }
 
-	public function update($params, $id) {
-		$this->db->beginTransaction();
-		try {
-			$bool = $this->db->update($this->prefix . static::TABLE_NAME, $params, array('id' => $id));
-			$this->db->commit();
-			return $bool;
-		} catch (\Exception $e) {
-			$this->db->rollback();
-		}
-	}
+    public function update($params, $id)
+    {
+        $this->db->beginTransaction();
+        try {
+            $bool = $this->db->update($this->prefix . static::TABLE_NAME, $params, array('id' => $id));
+            $this->db->commit();
+            return $bool;
+        } catch (\Exception $e) {
+            $this->db->rollback();
+        }
+    }
 
 }

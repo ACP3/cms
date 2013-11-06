@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="access_to_modules">Sie haben Zugriff auf folgende Module:</item>
-	<item key="acp">Administration</item>
-	<item key="mod_description">Die Startseite der Administrationsoberfläche.</item>
+    <item key="access_to_modules">Sie haben Zugriff auf folgende Module:</item>
+    <item key="acp">Administration</item>
+    <item key="mod_description">Die Startseite der Administrationsoberfläche.</item>
 </language>

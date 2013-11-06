@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="acp_create">Neuen Artikel erstellen</item>
-	<item key="acp_delete">Artikel löschen</item>
-	<item key="acp_edit">Artikel bearbeiten</item>
-	<item key="articles">Artikel</item>
-	<item key="create_menu_item">Für Artikel einen Menüpunkt erstellen</item>
-	<item key="mod_description">Dieses Modul verwaltet die Artikel.</item>
-	<item key="page_statements">Seitenangaben</item>
-	<item key="select_create_menu_item">Bitte wählen Sie aus, ob für diesen Artikel ein Menüpunkt erstellt werden soll oder nicht.</item>
-	<item key="text">Text</item>
-	<item key="text_to_short">Der Text sollte mindestens 3 Zeichen lang sein.</item>
-	<item key="title">Titel</item>
-	<item key="title_to_short">Der Titel sollte mindestens 3 Zeichen lang sein.</item>
+    <item key="acp_create">Neuen Artikel erstellen</item>
+    <item key="acp_delete">Artikel löschen</item>
+    <item key="acp_edit">Artikel bearbeiten</item>
+    <item key="articles">Artikel</item>
+    <item key="create_menu_item">Für Artikel einen Menüpunkt erstellen</item>
+    <item key="mod_description">Dieses Modul verwaltet die Artikel.</item>
+    <item key="page_statements">Seitenangaben</item>
+    <item key="select_create_menu_item">Bitte wählen Sie aus, ob für diesen Artikel ein Menüpunkt erstellt werden soll
+        oder nicht.
+    </item>
+    <item key="text">Text</item>
+    <item key="text_to_short">Der Text sollte mindestens 3 Zeichen lang sein.</item>
+    <item key="title">Titel</item>
+    <item key="title_to_short">Der Titel sollte mindestens 3 Zeichen lang sein.</item>
 </language>

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="403">Zugriff verweigert</item>
-	<item key="404">Datei nicht gefunden</item>
-	<item key="errors">Fehlermeldungen</item>
-	<item key="file_not_found"><![CDATA[Das angeforderte Modul bzw. die angeforderte Datei ist entweder nicht vorhanden oder wurde noch nicht aktiviert.<br />Bitte wenden Sie sich an den Administrator dieser Seite, falls der Fehler wiederholt auftreten sollte.]]></item>
-	<item key="mod_description">Dieses Modul ist für die verschiedenen Fehlerseiten verantwortlich.</item>
-	<item key="no_access">Es ist ihnen nicht gestattet auf diese Seite zuzugreifen, da Sie die dafür benötigten Zugriffsrechte nicht besitzen.</item>
-	<item key="tpl_not_found">Das angeforderte Template %s konnte nicht gefunden werden.</item>
+    <item key="403">Zugriff verweigert</item>
+    <item key="404">Datei nicht gefunden</item>
+    <item key="errors">Fehlermeldungen</item>
+    <item key="file_not_found">
+        <![CDATA[Das angeforderte Modul bzw. die angeforderte Datei ist entweder nicht vorhanden oder wurde noch nicht aktiviert.<br />Bitte wenden Sie sich an den Administrator dieser Seite, falls der Fehler wiederholt auftreten sollte.]]></item>
+    <item key="mod_description">Dieses Modul ist für die verschiedenen Fehlerseiten verantwortlich.</item>
+    <item key="no_access">Es ist ihnen nicht gestattet auf diese Seite zuzugreifen, da Sie die dafür benötigten
+        Zugriffsrechte nicht besitzen.
+    </item>
+    <item key="tpl_not_found">Das angeforderte Template %s konnte nicht gefunden werden.</item>
 </language>

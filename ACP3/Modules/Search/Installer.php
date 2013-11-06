@@ -4,33 +4,39 @@ namespace ACP3\Modules\Search;
 
 use ACP3\Core\Modules;
 
-class Installer extends Modules\Installer {
+class Installer extends Modules\Installer
+{
 
-	const MODULE_NAME = 'search';
-	const SCHEMA_VERSION = 31;
+    const MODULE_NAME = 'search';
+    const SCHEMA_VERSION = 31;
 
-	protected function createTables() {
-		return array();
-	}
+    protected function createTables()
+    {
+        return array();
+    }
 
-	protected function removeTables() {
-		return array();
-	}
+    protected function removeTables()
+    {
+        return array();
+    }
 
-	protected function settings() {
-		return array();
-	}
+    protected function settings()
+    {
+        return array();
+    }
 
-	protected function removeSettings() {
-		return true;
-	}
+    protected function removeSettings()
+    {
+        return true;
+    }
 
-	protected function schemaUpdates() {
-		return array(
-			31 => array(
-				"INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES ('', " . $this->getModuleId() . ", 'sidebar', '', 1);",
-			)
-		);
-	}
+    protected function schemaUpdates()
+    {
+        return array(
+            31 => array(
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES ('', " . $this->getModuleId() . ", 'sidebar', '', 1);",
+            )
+        );
+    }
 
 }

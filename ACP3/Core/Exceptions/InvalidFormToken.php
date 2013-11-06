@@ -6,6 +6,7 @@ namespace ACP3\Core\Exceptions;
  *
  * @author goratsch
  */
-class InvalidFormToken extends \Exception {
+class InvalidFormToken extends \Exception
+{
 
 }
