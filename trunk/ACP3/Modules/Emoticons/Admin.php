@@ -9,197 +9,181 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\Modules\AdminController {
+class Admin extends Core\Modules\AdminController
+{
 
-	public function __construct() {
-		parent::__construct();
-	}
+    /**
+     *
+     * @var Model
+     */
+    private $model;
 
-	public function actionCreate() {
-		if (isset($_POST['submit']) === true) {
-			if (!empty($_FILES['picture']['tmp_name'])) {
-				$file['tmp_name'] = $_FILES['picture']['tmp_name'];
-				$file['name'] = $_FILES['picture']['name'];
-				$file['size'] = $_FILES['picture']['size'];
-			}
-			$settings = Core\Config::getSettings('emoticons');
+    public function __construct()
+    {
+        parent::__construct();
 
-			if (empty($_POST['code']))
-				$errors['code'] = $this->lang->t('emoticons', 'type_in_code');
-			if (empty($_POST['description']))
-				$errors['description'] = $this->lang->t('emoticons', 'type_in_description');
-			if (!isset($file) ||
-					Core\Validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
-					$_FILES['picture']['error'] !== UPLOAD_ERR_OK)
-				$errors['picture'] = $this->lang->t('emoticons', 'invalid_image_selected');
+        $this->model = new Model($this->db);
+    }
 
-			if (isset($errors) === true) {
-				$this->view->assign('error_msg', Core\Functions::errorBox($errors));
-			} elseif (Core\Validate::formToken() === false) {
-				$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-			} else {
-				$result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'emoticons');
+    public function actionCreate()
+    {
+        if (isset($_POST['submit']) === true) {
+            try {
+                $file = array();
+                if (!empty($_FILES['picture']['tmp_name'])) {
+                    $file['tmp_name'] = $_FILES['picture']['tmp_name'];
+                    $file['name'] = $_FILES['picture']['name'];
+                    $file['size'] = $_FILES['picture']['size'];
+                }
 
-				$insert_values = array(
-					'id' => '',
-					'code' => Core\Functions::strEncode($_POST['code']),
-					'description' => Core\Functions::strEncode($_POST['description']),
-					'img' => $result['name'],
-				);
+                $this->model->validateCreate($_POST, $file, $this->lang);
 
-				$bool = $this->db->insert(DB_PRE . 'emoticons', $insert_values);
-				Helpers::setEmoticonsCache();
+                $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'emoticons');
 
-				$this->session->unsetFormToken();
+                $insert_values = array(
+                    'id' => '',
+                    'code' => Core\Functions::strEncode($_POST['code']),
+                    'description' => Core\Functions::strEncode($_POST['description']),
+                    'img' => $result['name'],
+                );
 
-				Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/emoticons');
-			}
-		}
-		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-			$this->view->assign('form', isset($_POST['submit']) ? $_POST : array('code' => '', 'description' => ''));
+                $bool = $this->model->insert($insert_values);
+                Helpers::setEmoticonsCache();
 
-			$this->session->generateFormToken();
-		}
-	}
+                $this->session->unsetFormToken();
 
-	public function actionDelete() {
-		$items = $this->_deleteItem('acp/emoticons/delete', 'acp/emoticons');
-		
-		if ($this->uri->action === 'confirmed') {
-			$items = explode('|', $items);
-			$bool = false;
-			foreach ($items as $item) {
-				if (!empty($item) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'emoticons WHERE id = ?', array($item)) == 1) {
-					// Datei ebenfalls löschen
-					$file = $this->db->fetchColumn('SELECT img FROM ' . DB_PRE . 'emoticons WHERE id = ?', array($item));
-					Core\Functions::removeUploadedFile('emoticons', $file);
-					$bool = $this->db->delete(DB_PRE . 'emoticons', array('id' => $item));
-				}
-			}
+                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/emoticons');
+            } catch (Core\Exceptions\InvalidFormToken $e) {
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/categories');
+            } catch (Core\Exceptions\ValidationFailed $e) {
+                $this->view->assign('error_msg', $e->getMessage());
+            }
+        }
 
-			Helpers::setEmoticonsCache();
+        $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('code' => '', 'description' => ''));
 
-			Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/emoticons');
-		} elseif (is_string($items)) {
-			$this->uri->redirect('errors/404');
-		}
-	}
+        $this->session->generateFormToken();
+    }
 
-	public function actionEdit() {
-		if (Core\Validate::isNumber($this->uri->id) === true &&
-				$this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'emoticons WHERE id = ?', array($this->uri->id)) == 1) {
-			if (isset($_POST['submit']) === true) {
-				if (!empty($_FILES['picture']['tmp_name'])) {
-					$file['tmp_name'] = $_FILES['picture']['tmp_name'];
-					$file['name'] = $_FILES['picture']['name'];
-					$file['size'] = $_FILES['picture']['size'];
-				}
-				$settings = Core\Config::getSettings('emoticons');
+    public function actionDelete()
+    {
+        $items = $this->_deleteItem('acp/emoticons/delete', 'acp/emoticons');
 
-				if (empty($_POST['code']))
-					$errors['code'] = $this->lang->t('emoticons', 'type_in_code');
-				if (empty($_POST['description']))
-					$errors['description'] = $this->lang->t('emoticons', 'type_in_description');
-				if (!empty($file['tmp_name']) &&
-						(Core\Validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
-						$_FILES['picture']['error'] !== UPLOAD_ERR_OK))
-					$errors['picture'] = $this->lang->t('emoticons', 'invalid_image_selected');
+        if ($this->uri->action === 'confirmed') {
+            $items = explode('|', $items);
+            $bool = false;
+            foreach ($items as $item) {
+                if (!empty($item) && $this->model->resultExists($item) === true) {
+                    // Datei ebenfalls löschen
+                    $file = $this->model->getOneImageById($item);
+                    Core\Functions::removeUploadedFile('emoticons', $file);
+                    $bool = $this->model->delete($item);
+                }
+            }
 
-				if (isset($errors) === true) {
-					$this->view->assign('error_msg', Core\Functions::errorBox($errors));
-				} elseif (Core\Validate::formToken() === false) {
-					$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-				} else {
-					$new_file_sql = null;
-					if (isset($file)) {
-						$result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'emoticons');
-						$new_file_sql['img'] = $result['name'];
-					}
+            Helpers::setEmoticonsCache();
 
-					$update_values = array(
-						'code' => Core\Functions::strEncode($_POST['code']),
-						'description' => Core\Functions::strEncode($_POST['description']),
-					);
-					if (is_array($new_file_sql) === true) {
-						$old_file = $this->db->fetchColumn('SELECT img FROM emoticons WHERE id = ?', array($this->uri->id));
-						Core\Functions::removeUploadedFile('emoticons', $old_file);
+            Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/emoticons');
+        } elseif (is_string($items)) {
+            $this->uri->redirect('errors/404');
+        }
+    }
 
-						$update_values = array_merge($update_values, $new_file_sql);
-					}
+    public function actionEdit()
+    {
+        $emoticon = $this->model->getOneById((int)$this->uri->id);
 
-					$bool = $this->db->update(DB_PRE . 'emoticons', $update_values, array('id' => $this->uri->id));
-					Helpers::setEmoticonsCache();
+        if (empty($emoticon) === false) {
+            if (isset($_POST['submit']) === true) {
+                try {
+                    $file = array();
+                    if (!empty($_FILES['picture']['name'])) {
+                        $file['tmp_name'] = $_FILES['picture']['tmp_name'];
+                        $file['name'] = $_FILES['picture']['name'];
+                        $file['size'] = $_FILES['picture']['size'];
+                    }
 
-					$this->session->unsetFormToken();
+                    $this->model->validateEdit($_POST, $file, $this->lang);
 
-					Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/emoticons');
-				}
-			}
-			if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-				$emoticon = $this->db->fetchAssoc('SELECT code, description FROM ' . DB_PRE . 'emoticons WHERE id = ?', array($this->uri->id));
+                    $update_values = array(
+                        'code' => Core\Functions::strEncode($_POST['code']),
+                        'description' => Core\Functions::strEncode($_POST['description']),
+                    );
 
-				$this->view->assign('form', isset($_POST['submit']) ? $_POST : $emoticon);
+                    if (empty($file) === false) {
+                        Core\Functions::removeUploadedFile('emoticons', $emoticon['img']);
+                        $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'emoticons');
+                        $update_values['img'] = $result['name'];
+                    }
 
-				$this->session->generateFormToken();
-			}
-		} else {
-			$this->uri->redirect('errors/404');
-		}
-	}
+                    $bool = $this->model->update($update_values, $this->uri->id);
+                    Helpers::setEmoticonsCache();
 
-	public function actionList() {
-		Core\Functions::getRedirectMessage();
+                    $this->session->unsetFormToken();
 
-		$emoticons = $this->db->fetchAll('SELECT id, code, description, img FROM ' . DB_PRE . 'emoticons ORDER BY id DESC');
-		$c_emoticons = count($emoticons);
+                    Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/emoticons');
+                } catch (Core\Exceptions\InvalidFormToken $e) {
+                    Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/news');
+                } catch (Core\Exceptions\ValidationFailed $e) {
+                    $this->view->assign('error_msg', $e->getMessage());
+                }
+            }
 
-		if ($c_emoticons > 0) {
-			$can_delete = Core\Modules::hasPermission('emoticons', 'acp_delete');
-			$config = array(
-				'element' => '#acp-table',
-				'sort_col' => $can_delete === true ? 4 : 3,
-				'sort_dir' => 'desc',
-				'hide_col_sort' => $can_delete === true ? 0 : ''
-			);
-			$this->view->assign('emoticons', $emoticons);
-			$this->view->assign('can_delete', $can_delete);
-			$this->view->appendContent(Core\Functions::datatable($config));
-		}
-	}
+            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $emoticon);
 
-	public function actionSettings() {
-		if (isset($_POST['submit']) === true) {
-			if (Core\Validate::isNumber($_POST['width']) === false)
-				$errors['width'] = $this->lang->t('emoticons', 'invalid_image_width_entered');
-			if (Core\Validate::isNumber($_POST['height']) === false)
-				$errors['height'] = $this->lang->t('emoticons', 'invalid_image_height_entered');
-			if (Core\Validate::isNumber($_POST['filesize']) === false)
-				$errors['filesize'] = $this->lang->t('emoticons', 'invalid_image_filesize_entered');
+            $this->session->generateFormToken();
+        } else {
+            $this->uri->redirect('errors/404');
+        }
+    }
 
-			if (isset($errors) === true) {
-				$this->view->assign('error_msg', Core\Functions::errorBox($errors));
-			} elseif (Core\Validate::formToken() === false) {
-				$this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-			} else {
-				$data = array(
-					'width' => (int) $_POST['width'],
-					'height' => (int) $_POST['height'],
-					'filesize' => (int) $_POST['filesize'],
-				);
-				$bool = Core\Config::setSettings('emoticons', $data);
+    public function actionList()
+    {
+        Core\Functions::getRedirectMessage();
 
-				$this->session->unsetFormToken();
+        $emoticons = $this->model->getAll();
+        $c_emoticons = count($emoticons);
 
-				Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/emoticons');
-			}
-		}
-		if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-			$settings = Core\Config::getSettings('emoticons');
+        if ($c_emoticons > 0) {
+            $can_delete = Core\Modules::hasPermission('emoticons', 'acp_delete');
+            $config = array(
+                'element' => '#acp-table',
+                'sort_col' => $can_delete === true ? 4 : 3,
+                'sort_dir' => 'desc',
+                'hide_col_sort' => $can_delete === true ? 0 : ''
+            );
+            $this->view->assign('emoticons', $emoticons);
+            $this->view->assign('can_delete', $can_delete);
+            $this->view->appendContent(Core\Functions::datatable($config));
+        }
+    }
 
-			$this->view->assign('form', isset($_POST['submit']) ? $_POST : $settings);
+    public function actionSettings()
+    {
+        if (isset($_POST['submit']) === true) {
+            try {
+                $this->model->validateSettings($_POST, $this->lang);
 
-			$this->session->generateFormToken();
-		}
-	}
+                $data = array(
+                    'width' => (int)$_POST['width'],
+                    'height' => (int)$_POST['height'],
+                    'filesize' => (int)$_POST['filesize'],
+                );
+                $bool = Core\Config::setSettings('emoticons', $data);
+
+                $this->session->unsetFormToken();
+
+                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/emoticons');
+            } catch (Core\Exceptions\InvalidFormToken $e) {
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/news');
+            } catch (Core\Exceptions\ValidationFailed $e) {
+                $this->view->assign('error_msg', $e->getMessage());
+            }
+        }
+
+        $this->view->assign('form', isset($_POST['submit']) ? $_POST : Core\Config::getSettings('emoticons'));
+
+        $this->session->generateFormToken();
+    }
 
 }

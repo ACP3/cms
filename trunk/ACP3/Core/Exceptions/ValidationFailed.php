@@ -7,6 +7,7 @@ namespace ACP3\Core\Exceptions;
  *
  * @author goratsch
  */
-class ValidationFailed extends \Exception {
-	
+class ValidationFailed extends \Exception
+{
+
 }

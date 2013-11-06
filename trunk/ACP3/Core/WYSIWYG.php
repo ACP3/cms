@@ -7,32 +7,35 @@ namespace ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class WYSIWYG {
+class WYSIWYG
+{
 
-	/**
-	 *
-	 * @var \ACP3\Core\WYSIWYG\AbstractWYSIWYG
-	 */
-	private static $editor = null;
+    /**
+     *
+     * @var \ACP3\Core\WYSIWYG\AbstractWYSIWYG
+     */
+    private static $editor = null;
 
-	public static function factory($editor, array $params = array()) {
-		$path = CLASSES_DIR . 'WYSIWYG/' . $editor . '.php';
-		if (is_file($path) === true) {
-			if (isset($params['toolbar']) === false)
-				$params['toolbar'] = '';
-			if (isset($params['advanced']) === false)
-				$params['advanced'] = false;
-			if (isset($params['height']) === false)
-				$params['height'] = '';
+    public static function factory($editor, array $params = array())
+    {
+        $path = CLASSES_DIR . 'WYSIWYG/' . $editor . '.php';
+        if (is_file($path) === true) {
+            if (isset($params['toolbar']) === false)
+                $params['toolbar'] = '';
+            if (isset($params['advanced']) === false)
+                $params['advanced'] = false;
+            if (isset($params['height']) === false)
+                $params['height'] = '';
 
-			$className = "\\ACP3\\Core\\WYSIWYG\\$editor";
-			self::$editor = new $className($params['id'], $params['name'], $params['value'], $params['toolbar'], (bool) $params['advanced'], (int) $params['height']);
-		} else {
-			throw new \Exception('File ' . $path . ' not found!');
-		}
-	}
+            $className = "\\ACP3\\Core\\WYSIWYG\\$editor";
+            self::$editor = new $className($params['id'], $params['name'], $params['value'], $params['toolbar'], (bool)$params['advanced'], (int)$params['height']);
+        } else {
+            throw new \Exception('File ' . $path . ' not found!');
+        }
+    }
 
-	public function display() {
-		return self::$editor->display();
-	}
+    public function display()
+    {
+        return self::$editor->display();
+    }
 }

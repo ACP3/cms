@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="feed_image">Feed image</item>
-	<item key="feed_type">Feed type</item>
-	<item key="feeds">Feeds</item>
-	<item key="mod_description">With this module you can create feeds to display the most recent News or Downloads.</item>
-	<item key="select_feed_type">Please select the type of the news feed.</item>
+    <item key="feed_image">Feed image</item>
+    <item key="feed_type">Feed type</item>
+    <item key="feeds">Feeds</item>
+    <item key="mod_description">With this module you can create feeds to display the most recent News or Downloads.
+    </item>
+    <item key="select_feed_type">Please select the type of the news feed.</item>
 </language>

@@ -10,37 +10,41 @@
 
 namespace ACP3\Modules\Comments;
 
-abstract class Helpers {
+abstract class Helpers
+{
 
-	/**
-	 *
-	 * @var Model
-	 */
-	private static $model;
+    /**
+     *
+     * @var Model
+     */
+    private static $model;
 
-	private static function _init() {
-		if (!self::$model) {
-			self::$model = new Model(\ACP3\Core\Registry::get('Db'));
-		}
-	}
+    private static function _init()
+    {
+        if (!self::$model) {
+            self::$model = new Model(\ACP3\Core\Registry::get('Db'));
+        }
+    }
 
-	/**
-	 * Zählt die Anzahl der Kommentare für einen bestimmten Eintrag eines Modules zusammen
-	 *
-	 * @param string $moduleId
-	 * 	Das jeweilige Modul
-	 * @param integer $resultId
-	 * 	Die ID des jeweiligen Eintrages
-	 * @return integer
-	 */
-	public static function commentsCount($moduleId, $resultId) {
-		self::_init();
-		return self::$model->countAllByModule($moduleId, $resultId);
-	}
-	
-	public static function deleteCommentsByModuleAndResult($moduleName, $resultId) {
-		self::_init();
-		return self::$model->delete(array('module_id' => $moduleName, 'entry_id' => $resultId));
-	}
+    /**
+     * Zählt die Anzahl der Kommentare für einen bestimmten Eintrag eines Modules zusammen
+     *
+     * @param string $moduleId
+     *    Das jeweilige Modul
+     * @param integer $resultId
+     *    Die ID des jeweiligen Eintrages
+     * @return integer
+     */
+    public static function commentsCount($moduleId, $resultId)
+    {
+        self::_init();
+        return self::$model->countAllByModule($moduleId, $resultId);
+    }
+
+    public static function deleteCommentsByModuleAndResult($moduleName, $resultId)
+    {
+        self::_init();
+        return self::$model->delete(array('module_id' => $moduleName, 'entry_id' => $resultId));
+    }
 
 }

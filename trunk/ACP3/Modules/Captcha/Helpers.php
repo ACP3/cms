@@ -12,33 +12,34 @@ namespace ACP3\Modules\Captcha;
 
 use ACP3\Core;
 
-abstract class Helpers {
+abstract class Helpers
+{
 
-	/**
-	 * Erzeugt das Captchafeld für das Template
-	 *
-	 * @param integer $captcha_length
-	 *  Anzahl der Zeichen, welche das Captcha haben soll
-	 * @return string
-	 */
-	public static function captcha($captcha_length = 5, $id = 'captcha', $input_only = false, $path = '')
-	{
-		// Wenn man als User angemeldet ist, Captcha nicht anzeigen
-		if (Core\Registry::get('Auth')->isUser() === false) {
-			$uri = Core\Registry::get('URI');
-			$path = sha1($uri->route(empty($path) === true ? $uri->query : $path));
-			$_SESSION['captcha_' . $path] = Core\Functions::salt($captcha_length);
+    /**
+     * Erzeugt das Captchafeld für das Template
+     *
+     * @param integer $captcha_length
+     *  Anzahl der Zeichen, welche das Captcha haben soll
+     * @return string
+     */
+    public static function captcha($captcha_length = 5, $id = 'captcha', $input_only = false, $path = '')
+    {
+        // Wenn man als User angemeldet ist, Captcha nicht anzeigen
+        if (Core\Registry::get('Auth')->isUser() === false) {
+            $uri = Core\Registry::get('URI');
+            $path = sha1($uri->route(empty($path) === true ? $uri->query : $path));
+            $_SESSION['captcha_' . $path] = Core\Functions::salt($captcha_length);
 
-			$captcha = array();
-			$captcha['width'] = $captcha_length * 25;
-			$captcha['id'] = $id;
-			$captcha['height'] = 30;
-			$captcha['input_only'] = $input_only;
-			$captcha['path'] = $path;
-			Core\Registry::get('View')->assign('captcha', $captcha);
-			return Core\Registry::get('View')->fetchTemplate('captcha/captcha.tpl');
-		}
-		return '';
-	}
+            $captcha = array();
+            $captcha['width'] = $captcha_length * 25;
+            $captcha['id'] = $id;
+            $captcha['height'] = 30;
+            $captcha['input_only'] = $input_only;
+            $captcha['path'] = $path;
+            Core\Registry::get('View')->assign('captcha', $captcha);
+            return Core\Registry::get('View')->fetchTemplate('captcha/captcha.tpl');
+        }
+        return '';
+    }
 
 }

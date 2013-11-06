@@ -1,41 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<item key="acp_create">Neue Navigationsleiste erstellen</item>
-	<item key="acp_create_item">Neuen Menüpunkt erstellen</item>
-	<item key="acp_delete">Navigationsleiste löschen</item>
-	<item key="acp_delete_item">Menüpunkte löschen</item>
-	<item key="acp_edit">Navigationsleiste bearbeiten</item>
-	<item key="acp_edit_item">Menüpunkt bearbeiten</item>
-	<item key="acp_list_items">Menüpunkte</item>
-	<item key="article">Artikel</item>
-	<item key="chronology">Reihenfolge</item>
-	<item key="display_item">Menüpunkt anzeigen</item>
-	<item key="dynamic_page">Dynamische Seite</item>
-	<item key="dynamic_page_hints">Bitte in der Form &quot;modul/datei/weitere_parameter/&quot; eintragen, also bspw. news/details/id_1/.</item>
-	<item key="hyperlink">Hyperlink</item>
-	<item key="index_name">Index Name</item>
-	<item key="index_name2">Index Name:</item>
-	<item key="index_name_description">Dies beschreibt den Namen des Platzhalters in den Templates.</item>
-	<item key="index_name_unique">Der Name des Template Platzhalters muss einzigartig sein.</item>
-	<item key="menus">Navigationsleisten</item>
-	<item key="menu_bar">Navigationsleiste</item>
-	<item key="menu_bar_title">Name der Navigationsleiste</item>
-	<item key="menu_bar_title_to_short">Der Name der Navigationsleiste sollte mindestens 3 Zeichen lang sein.</item>
-	<item key="menu_items">Menüpunkte</item>
-	<item key="mod_description">Dieses Modul verwaltet die Navigationsleisten.</item>
-	<item key="module">Modul</item>
-	<item key="no_superior_page">Keine übergeordnete Seite</item>
-	<item key="page_type">Seitentyp</item>
-	<item key="select_item_visibility">Bitte wählen Sie aus, ob der Menüpunkt angezeigt werden soll oder nicht.</item>
-	<item key="select_menu_bar">Bitte wählen Sie aus, in welcher Navigationsleiste der Menüpunkt angezeigt werden soll.</item>
-	<item key="select_page_type">Bitte wählen Sie den Seitentyp aus.</item>
-	<item key="select_superior_page">Bitte wählen Sie eine übergeordnete Seite aus.</item>
-	<item key="superior_page">Übergeordnete Seite</item>
-	<item key="superior_page_not_allowed">Die gerade ausgewählte Seite kann nicht als übergeordnete Seite verwendet werden.</item>
-	<item key="target_page">Zielseite</item>
-	<item key="title">Seitentitel</item>
-	<item key="title_to_short">Der Seitentitel sollte mindestens 3 Zeichen lang sein.</item>
-	<item key="type_in_index_name">Der Index Name darf nur Buchstaben, Ziffern und den Unterstrich enthalten.</item>
-	<item key="type_in_uri_and_target">Bitte geben Sie die Zielseite und das zu verlinkende Modul bzw. die zu verlinkende URI an.</item>
-	<item key="uri">URI</item>
+    <item key="acp_create">Neue Navigationsleiste erstellen</item>
+    <item key="acp_create_item">Neuen Menüpunkt erstellen</item>
+    <item key="acp_delete">Navigationsleiste löschen</item>
+    <item key="acp_delete_item">Menüpunkte löschen</item>
+    <item key="acp_edit">Navigationsleiste bearbeiten</item>
+    <item key="acp_edit_item">Menüpunkt bearbeiten</item>
+    <item key="acp_list_items">Menüpunkte</item>
+    <item key="article">Artikel</item>
+    <item key="chronology">Reihenfolge</item>
+    <item key="display_item">Menüpunkt anzeigen</item>
+    <item key="dynamic_page">Dynamische Seite</item>
+    <item key="dynamic_page_hints">Bitte in der Form &quot;modul/datei/weitere_parameter/&quot; eintragen, also bspw.
+        news/details/id_1/.
+    </item>
+    <item key="hyperlink">Hyperlink</item>
+    <item key="index_name">Index Name</item>
+    <item key="index_name2">Index Name:</item>
+    <item key="index_name_description">Dies beschreibt den Namen des Platzhalters in den Templates.</item>
+    <item key="index_name_unique">Der Name des Template Platzhalters muss einzigartig sein.</item>
+    <item key="menus">Navigationsleisten</item>
+    <item key="menu_bar">Navigationsleiste</item>
+    <item key="menu_bar_title">Name der Navigationsleiste</item>
+    <item key="menu_bar_title_to_short">Der Name der Navigationsleiste sollte mindestens 3 Zeichen lang sein.</item>
+    <item key="menu_items">Menüpunkte</item>
+    <item key="mod_description">Dieses Modul verwaltet die Navigationsleisten.</item>
+    <item key="module">Modul</item>
+    <item key="no_superior_page">Keine übergeordnete Seite</item>
+    <item key="page_type">Seitentyp</item>
+    <item key="select_item_visibility">Bitte wählen Sie aus, ob der Menüpunkt angezeigt werden soll oder nicht.</item>
+    <item key="select_menu_bar">Bitte wählen Sie aus, in welcher Navigationsleiste der Menüpunkt angezeigt werden
+        soll.
+    </item>
+    <item key="select_page_type">Bitte wählen Sie den Seitentyp aus.</item>
+    <item key="select_superior_page">Bitte wählen Sie eine übergeordnete Seite aus.</item>
+    <item key="superior_page">Übergeordnete Seite</item>
+    <item key="superior_page_not_allowed">Die gerade ausgewählte Seite kann nicht als übergeordnete Seite verwendet
+        werden.
+    </item>
+    <item key="target_page">Zielseite</item>
+    <item key="title">Seitentitel</item>
+    <item key="title_to_short">Der Seitentitel sollte mindestens 3 Zeichen lang sein.</item>
+    <item key="type_in_index_name">Der Index Name darf nur Buchstaben, Ziffern und den Unterstrich enthalten.</item>
+    <item key="type_in_uri_and_target">Bitte geben Sie die Zielseite und das zu verlinkende Modul bzw. die zu
+        verlinkende URI an.
+    </item>
+    <item key="uri">URI</item>
 </language>

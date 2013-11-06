@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-	<name>Deutsch</name>
-	<description>Offizielles deutsches Sprachpaket für das ACP3.</description>
-	<author>Tino Goratsch</author>
-	<version core="true"/>
-	<direction>ltr</direction>
+    <name>Deutsch</name>
+    <description>Offizielles deutsches Sprachpaket für das ACP3.</description>
+    <author>Tino Goratsch</author>
+    <version core="true"/>
+    <direction>ltr</direction>
 </language>
