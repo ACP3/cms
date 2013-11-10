@@ -12,15 +12,27 @@ use ACP3\Core;
 class Frontend extends Core\Modules\Controller
 {
 
+    /**
+     *
+     * @var Model
+     */
+    protected $model;
+
+    protected $categoriesModel;
+
     public function __construct()
     {
         parent::__construct();
+
+        $this->model = new Model($this->db);
+
+        $this->categoriesModel = new \ACP3\Modules\Categories\Model($this->db);
     }
 
     public function actionList()
     {
         if (Core\Modules::isActive('categories') === true) {
-            $categories = \ACP3\Modules\Categories\Helpers::getCategoriesCache('files');
+            $categories = $this->categoriesModel->getCategoriesCache('files');
             if (count($categories) > 0) {
                 $this->view->assign('categories', $categories);
             }
@@ -29,11 +41,7 @@ class Frontend extends Core\Modules\Controller
 
     public function actionDetails()
     {
-        $period = ' AND (start = end AND start <= :time OR :time BETWEEN start AND end)';
-
-        if (Core\Validate::isNumber($this->uri->id) === true &&
-            $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'files WHERE id = :id' . $period, array('id' => $this->uri->id, 'time' => $this->date->getCurrentDateTime())) == 1
-        ) {
+        if ($this->model->resultExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
             $file = Helpers::getFilesCache($this->uri->id);
 
             if ($this->uri->action === 'download') {
@@ -49,9 +57,8 @@ class Frontend extends Core\Modules\Controller
                     header('Content-Disposition: attachment; filename="' . $filename . '"');
                     readfile($path . $file['file']);
                     exit;
-                    // Externe Datei
                 } elseif (preg_match('/^([a-z]+):\/\//', $file['file'])) {
-                    $this->uri->redirect(0, $file['file']);
+                    $this->uri->redirect(0, $file['file']); // Externe Datei
                 } else {
                     $this->uri->redirect('errors/404');
                 }
@@ -80,17 +87,14 @@ class Frontend extends Core\Modules\Controller
 
     public function actionFiles()
     {
-        if (Core\Validate::isNumber($this->uri->cat) &&
-            $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'categories WHERE id = ?', array($this->uri->cat)) == 1
-        ) {
-            $category = $this->db->fetchColumn('SELECT title FROM ' . DB_PRE . 'categories WHERE id = ?', array($this->uri->cat));
+        if (Core\Validate::isNumber($this->uri->cat) && $this->categoriesModel->resultExists($this->uri->cat) === true) {
+            $category = $this->categoriesModel->getOneById($this->uri->cat);
 
             $this->breadcrumb
                 ->append($this->lang->t('files', 'files'), $this->uri->route('files'))
-                ->append($category);
+                ->append($category['title']);
 
-            $period = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-            $files = $this->db->fetchAll('SELECT id, start, file, size, title FROM ' . DB_PRE . 'files WHERE category_id = :cat_id' . $period . ' ORDER BY start DESC, end DESC, id DESC', array('cat_id' => $this->uri->cat, 'time' => $this->date->getCurrentDateTime()));
+            $files = $this->model->getAllByCategoryId($this->uri->cat, $this->date->getCurrentDateTime());
             $c_files = count($files);
 
             if ($c_files > 0) {
@@ -112,8 +116,7 @@ class Frontend extends Core\Modules\Controller
     {
         $settings = Core\Config::getSettings('files');
 
-        $where = 'start = end AND start <= :time OR start != end AND :time BETWEEN start AND end';
-        $files = $this->db->fetchAll('SELECT id, start, title FROM ' . DB_PRE . 'files WHERE ' . $where . ' ORDER BY start DESC LIMIT ' . $settings['sidebar'], array('time' => $this->date->getCurrentDateTime()));
+        $files = $this->model->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         $c_files = count($files);
 
         if ($c_files > 0) {
