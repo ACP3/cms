@@ -73,7 +73,11 @@ abstract class Helpers
                 'description' => '',
                 'module_id' => $moduleId,
             );
-            return self::$model->insert($insertValues);
+            $result = self::$model->insert($insertValues);
+
+            self::$model->setCategoriesCache($module);
+
+            return $result;
         }
         return 0;
     }
