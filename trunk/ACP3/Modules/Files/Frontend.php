@@ -42,7 +42,7 @@ class Frontend extends Core\Modules\Controller
     public function actionDetails()
     {
         if ($this->model->resultExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
-            $file = Helpers::getFilesCache($this->uri->id);
+            $file = $this->model->getFilesCache($this->uri->id);
 
             if ($this->uri->action === 'download') {
                 $path = UPLOADS_DIR . 'files/';
@@ -76,7 +76,7 @@ class Frontend extends Core\Modules\Controller
                 $this->view->assign('file', $file);
 
                 if ($settings['comments'] == 1 && $file['comments'] == 1 && Core\Modules::hasPermission('comments', 'list') === true) {
-                    $comments = new \ACP3\Modules\Comments\Frontend($this->injector, 'files', $this->uri->id);
+                    $comments = new \ACP3\Modules\Comments\Frontend('files', $this->uri->id);
                     $this->view->assign('comments', $comments->actionList());
                 }
             }

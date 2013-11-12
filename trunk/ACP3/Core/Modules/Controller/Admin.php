@@ -1,6 +1,6 @@
 <?php
 
-namespace ACP3\Core\Modules;
+namespace ACP3\Core\Modules\Controller;
 
 use ACP3\Core;
 
@@ -9,7 +9,7 @@ use ACP3\Core;
  *
  * @author goratsch
  */
-class AdminController extends Controller
+class Admin extends Core\Modules\Controller
 {
 
     public function __construct()

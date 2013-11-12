@@ -9,7 +9,7 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\Modules\AdminController
+class Admin extends Core\Modules\Controller\Admin
 {
 
     public function __construct()
@@ -64,10 +64,9 @@ class Admin extends Core\Modules\AdminController
                 );
 
                 $this->db->beginTransaction();
-                $bool = $this->db->insert(DB_PRE . 'articles', $insert_values);
-                $last_id = $this->db->lastInsertId();
+                $lastId = $this->db->insert(DB_PRE . 'articles', $insert_values);
                 if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias'])) {
-                    Core\SEO::insertUriAlias('articles/details/id_' . $last_id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    Core\SEO::insertUriAlias('articles/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                 }
                 $this->db->commit();
 
@@ -84,13 +83,13 @@ class Admin extends Core\Modules\AdminController
                     );
 
                     $nestedSet = new Core\NestedSet('menu_items', true);
-                    $bool = $nestedSet->insertNode((int)$_POST['parent'], $insert_values);
+                    $lastId = $nestedSet->insertNode((int)$_POST['parent'], $insert_values);
                     \ACP3\Modules\Menus\Helpers::setMenuItemsCache();
                 }
 
                 $this->session->unsetFormToken();
 
-                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/articles');
+                Core\Functions::setRedirectMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/articles');
             }
         }
         if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {

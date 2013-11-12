@@ -22,7 +22,7 @@ class Model extends Core\Model
     public function resultExists($id, $time = '')
     {
         $period = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id' . $period, array('id' => $id, 'time' => $time));
+        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id' . $period, array('id' => $id, 'time' => $time)) > 0 ? true : false;
     }
 
     public function getOneById($id)

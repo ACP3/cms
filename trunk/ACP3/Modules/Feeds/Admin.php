@@ -9,7 +9,7 @@ use ACP3\Core;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\Modules\AdminController
+class Admin extends Core\Modules\Controller\Admin
 {
 
     public function actionList()

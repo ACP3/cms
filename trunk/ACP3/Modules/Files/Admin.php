@@ -10,7 +10,7 @@ use ACP3\Modules\Categories;
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\Modules\AdminController
+class Admin extends Core\Modules\Controller\Admin
 {
 
     /**
@@ -67,13 +67,13 @@ class Admin extends Core\Modules\AdminController
                 );
 
 
-                $bool = $this->model->insert($insert_values);
+                $lastId = $this->model->insert($insert_values);
                 if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
-                    Core\SEO::insertUriAlias('files/details/id_' . $this->db->lastInsertId(), $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    Core\SEO::insertUriAlias('files/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
 
                 $this->session->unsetFormToken();
 
-                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/files');
+                Core\Functions::setRedirectMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/files');
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/files');
             } catch (Core\Exceptions\ValidationFailed $e) {
@@ -200,7 +200,7 @@ class Admin extends Core\Modules\AdminController
                     if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
                         Core\SEO::insertUriAlias('files/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
 
-                    Helpers::setFilesCache($this->uri->id);
+                    $this->model->setFilesCache($this->uri->id);
 
                     $this->session->unsetFormToken();
 
