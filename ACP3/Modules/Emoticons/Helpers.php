@@ -40,6 +40,7 @@ abstract class Helpers
     public static function emoticonsList($formFieldId = '')
     {
         if (empty(self::$emoticons)) {
+            self::_init();
             self::$emoticons = self::$model->getEmoticonsCache();
         }
 
@@ -58,6 +59,7 @@ abstract class Helpers
     public static function emoticonsReplace($string)
     {
         if (empty(self::$emoticons)) {
+            self::_init();
             self::$emoticons = self::$model->getEmoticonsCache();
         }
 
