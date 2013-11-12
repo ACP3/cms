@@ -133,7 +133,7 @@ class Frontend extends Core\Modules\Controller
     {
         if ($this->model->galleryExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
             // Cache der Galerie holen
-            $pictures = Helpers::getGalleryCache($this->uri->id);
+            $pictures = $this->model->getGalleryCache($this->uri->id);
             $c_pictures = count($pictures);
 
             if ($c_pictures > 0) {
