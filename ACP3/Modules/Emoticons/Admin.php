@@ -48,7 +48,7 @@ class Admin extends Core\Modules\Controller\Admin
                 );
 
                 $bool = $this->model->insert($insert_values);
-                Helpers::setEmoticonsCache();
+                $this->model->setEmoticonsCache();
 
                 $this->session->unsetFormToken();
 
@@ -81,7 +81,7 @@ class Admin extends Core\Modules\Controller\Admin
                 }
             }
 
-            Helpers::setEmoticonsCache();
+            $this->model->setEmoticonsCache();
 
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/emoticons');
         } elseif (is_string($items)) {
@@ -117,7 +117,7 @@ class Admin extends Core\Modules\Controller\Admin
                     }
 
                     $bool = $this->model->update($update_values, $this->uri->id);
-                    Helpers::setEmoticonsCache();
+                    $this->model->setEmoticonsCache();
 
                     $this->session->unsetFormToken();
 

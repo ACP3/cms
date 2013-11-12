@@ -42,6 +42,11 @@ class Model extends Core\Model
         return $this->db->fetchAssoc('SELECT g.id AS gallery_id, g.title, p.* FROM ' . $this->prefix . static::TABLE_NAME . ' AS g, ' . $this->prefix . static::TABLE_NAME_PICTURES . ' AS p WHERE p.id = ? AND p.gallery_id = g.id', array($id));
     }
 
+    public function getGalleryIdFromPictureId($pictureId)
+    {
+        return $this->db->fetchColumn('SELECT gallery_id FROM ' . $this->prefix . static::TABLE_NAME_PICTURES . ' WHERE id = ?', array($pictureId));
+    }
+
     public function getPicturesByGalleryId($id)
     {
         return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME_PICTURES . ' WHERE gallery_id = ? ORDER BY pic ASC', array($id));
@@ -214,32 +219,52 @@ class Model extends Core\Model
     }
 
     /**
-     * Erstellt den Cache einer News anhand der angegebenen ID
+     * Erstellt den Galerie-Cache anhand der angegebenen ID
      *
      * @param integer $id
-     *  Die ID der News
+     *  Die ID der zu cachenden Galerie
      * @return boolean
      */
-    public function setFilesCache($id)
+    public function setGalleryCache($id)
     {
-        return Core\Cache::create('details_id_' . $id, $this->getOneById($id), 'files');
+        $pictures = $this->getPicturesByGalleryId($id);
+        $c_pictures = count($pictures);
+
+        $settings = Core\Config::getSettings('gallery');
+
+        for ($i = 0; $i < $c_pictures; ++$i) {
+            $pictures[$i]['width'] = $settings['thumbwidth'];
+            $pictures[$i]['height'] = $settings['thumbheight'];
+            $picInfos = @getimagesize(UPLOADS_DIR . 'gallery/' . $pictures[$i]['file']);
+            if ($picInfos !== false) {
+                if ($picInfos[0] > $settings['thumbwidth'] || $picInfos[1] > $settings['thumbheight']) {
+                    $newHeight = $settings['thumbheight'];
+                    $newWidth = intval($picInfos[0] * $newHeight / $picInfos[1]);
+                }
+
+                $pictures[$i]['width'] = isset($newWidth) ? $newWidth : $picInfos[0];
+                $pictures[$i]['height'] = isset($newHeight) ? $newHeight : $picInfos[1];
+            }
+        }
+
+        return Core\Cache::create('pics_id_' . $id, $pictures, 'gallery');
     }
 
     /**
-     * Bindet die gecachete News ein
+     * Bindet die gecachete Galerie anhand ihrer ID ein
      *
      * @param integer $id
-     *  Die ID der News
+     *  Die ID der Galerie
      * @return array
      */
-    public function getFilesCache($id)
+    public function getGalleryCache($id)
     {
-        $cacheId = 'details_id_' . $id;
-        if (Core\Cache::check($cacheId, 'files') === false) {
-            $this->setFilesCache($id);
+        if (Core\Cache::check('pics_id_' . $id, 'gallery') === false) {
+            $this->setGalleryCache($id);
         }
 
-        return Core\Cache::output($cacheId, 'files');
+        return Core\Cache::output('pics_id_' . $id, 'gallery');
     }
+
 
 }

@@ -97,7 +97,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                     $lastId = $this->model->insert($insert_values, Model::TABLE_NAME_PICTURES);
                     $bool2 = Helpers::generatePictureAlias($lastId);
-                    Helpers::setGalleryCache($this->uri->id);
+                    $this->model->setGalleryCache($this->uri->id);
 
                     $this->session->unsetFormToken();
 
@@ -182,7 +182,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                     $bool = $this->model->delete($item, '', Model::TABLE_NAME_PICTURES);
                     Core\SEO::deleteUriAlias('gallery/details/id_' . $item);
-                    Helpers::setGalleryCache($picture['gallery_id']);
+                    $this->model->setGalleryCache($picture['gallery_id']);
                 }
             }
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/gallery/edit/id_' . $picture['gallery_id']);
@@ -300,7 +300,7 @@ class Admin extends Core\Modules\Controller\Admin
                     }
 
                     $bool = $this->model->update($update_values, $this->uri->id, Model::TABLE_NAME_PICTURES);
-                    Helpers::setGalleryCache($picture['gallery_id']);
+                    $this->model->setGalleryCache($picture['gallery_id']);
 
                     $this->session->unsetFormToken();
 
@@ -356,12 +356,12 @@ class Admin extends Core\Modules\Controller\Admin
     public function actionOrder()
     {
         if (Core\Validate::isNumber($this->uri->id) === true) {
-            if (($this->uri->action === 'up' || $this->uri->action === 'down') && $this->model->pictureExists((int) $this->uri->id) === true) {
+            if (($this->uri->action === 'up' || $this->uri->action === 'down') && $this->model->pictureExists((int)$this->uri->id) === true) {
                 Core\Functions::moveOneStep($this->uri->action, Model::TABLE_NAME_PICTURES, 'id', 'pic', $this->uri->id, 'gallery_id');
 
-                $galleryId = $this->db->fetchColumn('SELECT g.id FROM ' . DB_PRE . 'gallery AS g, ' . DB_PRE . 'gallery_pictures AS p WHERE p.id = ? AND p.gallery_id = g.id', array($this->uri->id));
+                $galleryId = $this->model->getGalleryIdFromPictureId($this->uri->id);
 
-                Helpers::setGalleryCache($galleryId);
+                $this->model->setGalleryCache($galleryId);
 
                 $this->uri->redirect('acp/gallery/edit/id_' . $galleryId);
             }
