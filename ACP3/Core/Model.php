@@ -31,11 +31,12 @@ class Model
         }
     }
 
-    public function insert($params)
+    public function insert($params, $tableName = '')
     {
         $this->db->beginTransaction();
         try {
-            $this->db->insert($this->prefix . static::TABLE_NAME, $params);
+            $tableName = !empty($tableName) ? $tableName : static::TABLE_NAME;
+            $this->db->insert($this->prefix . $tableName, $params);
             $lastId = $this->db->lastInsertId();
             $this->db->commit();
             return $lastId;
@@ -44,11 +45,12 @@ class Model
         }
     }
 
-    public function delete($id, $field = 'id')
+    public function delete($id, $field = 'id', $tableName = '')
     {
         $this->db->beginTransaction();
         try {
-            $bool = $this->db->delete($this->prefix . static::TABLE_NAME, is_array($id) ? $id : array($field => (int)$id));
+            $tableName = !empty($tableName) ? $tableName : static::TABLE_NAME;
+            $bool = $this->db->delete($this->prefix . $tableName, is_array($id) ? $id : array($field => (int)$id));
             $this->db->commit();
             return $bool;
         } catch (\Exception $e) {
@@ -56,11 +58,12 @@ class Model
         }
     }
 
-    public function update($params, $id)
+    public function update($params, $id, $tableName = '')
     {
         $this->db->beginTransaction();
         try {
-            $bool = $this->db->update($this->prefix . static::TABLE_NAME, $params, array('id' => $id));
+            $tableName = !empty($tableName) ? $tableName : static::TABLE_NAME;
+            $bool = $this->db->update($this->prefix . $tableName, $params, array('id' => $id));
             $this->db->commit();
             return $bool;
         } catch (\Exception $e) {

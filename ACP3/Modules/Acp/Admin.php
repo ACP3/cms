@@ -5,11 +5,11 @@ namespace ACP3\Modules\Acp;
 use ACP3\Core;
 
 /**
- * Module Controler of the Admin Backend
+ * Module Controller of the Admin Backend
  *
  * @author Tino Goratsch
  */
-class Admin extends Core\Modules\AdminController
+class Admin extends Core\Modules\Controller\Admin
 {
 
     public function __construct()

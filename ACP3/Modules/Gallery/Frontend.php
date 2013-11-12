@@ -12,18 +12,23 @@ use ACP3\Core;
 class Frontend extends Core\Modules\Controller
 {
 
+    /**
+     *
+     * @var Model
+     */
+    protected $model;
+
     public function __construct()
     {
         parent::__construct();
+
+        $this->model = new Model($this->db);
     }
 
     public function actionDetails()
     {
-        $period = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-        if (Core\Validate::isNumber($this->uri->id) === true &&
-            $this->db->fetchColumn('SELECT g.id FROM ' . DB_PRE . 'gallery AS g, ' . DB_PRE . 'gallery_pictures AS p WHERE p.id = :id AND p.gallery_id = g.id' . $period, array('id' => $this->uri->id, 'time' => $this->date->getCurrentDateTime())) > 0
-        ) {
-            $picture = $this->db->fetchAssoc('SELECT g.id AS gallery_id, g.title, p.id, p.pic, p.file, p.description, p.comments FROM ' . DB_PRE . 'gallery AS g, ' . DB_PRE . 'gallery_pictures AS p WHERE p.id = ? AND p.gallery_id = g.id', array($this->uri->id));
+        if ($this->model->pictureExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
+            $picture = $this->model->getPictureById((int) $this->uri->id);
 
             $settings = Core\Config::getSettings('gallery');
 
@@ -57,14 +62,14 @@ class Frontend extends Core\Modules\Controller
             $this->view->assign('picture', $picture);
 
             // Vorheriges Bild
-            $picture_back = $this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'gallery_pictures WHERE pic < ? AND gallery_id = ? ORDER BY pic DESC LIMIT 1', array($picture['pic'], $picture['gallery_id']));
+            $picture_back = $this->model->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($picture_back)) {
                 Core\SEO::setPreviousPage($this->uri->route('gallery/details/id_' . $picture_back));
                 $this->view->assign('picture_back', $picture_back);
             }
 
             // Nächstes Bild
-            $picture_next = $this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'gallery_pictures WHERE pic > ? AND gallery_id = ? ORDER BY pic ASC LIMIT 1', array($picture['pic'], $picture['gallery_id']));
+            $picture_next = $this->model->getNextPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($picture_next)) {
                 Core\SEO::setNextPage($this->uri->route('gallery/details/id_' . $picture_next));
                 $this->view->assign('picture_next', $picture_next);
@@ -85,7 +90,7 @@ class Frontend extends Core\Modules\Controller
 
         if (Core\Validate::isNumber($this->uri->id) === true) {
             @set_time_limit(20);
-            $picture = $this->db->fetchColumn('SELECT file FROM ' . DB_PRE . 'gallery_pictures WHERE id = ?', array($this->uri->id));
+            $picture = $this->model->getFileById($this->uri->id);
             $action = $this->uri->action === 'thumb' ? 'thumb' : '';
 
             $settings = Core\Config::getSettings('gallery');
@@ -106,12 +111,12 @@ class Frontend extends Core\Modules\Controller
     public function actionList()
     {
         $time = $this->date->getCurrentDateTime();
-        $where = '(g.start = g.end AND g.start <= :time OR g.start != g.end AND :time BETWEEN g.start AND g.end)';
-        $galleries = $this->db->fetchAll('SELECT g.id, g.start, g.title, COUNT(p.gallery_id) AS pics FROM ' . DB_PRE . 'gallery AS g LEFT JOIN ' . DB_PRE . 'gallery_pictures AS p ON(g.id = p.gallery_id) WHERE ' . $where . ' GROUP BY g.id ORDER BY g.start DESC, g.end DESC, g.id DESC LIMIT ' . POS . ',' . $this->auth->entries, array('time' => $time));
+
+        $galleries = $this->model->getAll($time, POS, $this->auth->entries);
         $c_galleries = count($galleries);
 
         if ($c_galleries > 0) {
-            $this->view->assign('pagination', Core\Functions::pagination($this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'gallery AS g WHERE ' . $where, array('time' => $time))));
+            $this->view->assign('pagination', Core\Functions::pagination($this->model->countAll($time)));
 
             $settings = Core\Config::getSettings('gallery');
 
@@ -126,21 +131,18 @@ class Frontend extends Core\Modules\Controller
 
     public function actionPics()
     {
-        $period = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-        if (Core\Validate::isNumber($this->uri->id) === true &&
-            $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'gallery WHERE id = :id' . $period, array('id' => $this->uri->id, 'time' => $this->date->getCurrentDateTime())) == 1
-        ) {
+        if ($this->model->galleryExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
             // Cache der Galerie holen
             $pictures = Helpers::getGalleryCache($this->uri->id);
             $c_pictures = count($pictures);
 
             if ($c_pictures > 0) {
-                $gallery_title = $this->db->fetchColumn('SELECT title FROM ' . DB_PRE . 'gallery WHERE id = ?', array($this->uri->id));
+                $galleryTitle = $this->model->getGalleryTitle($this->uri->id);
 
                 // Brotkrümelspur
                 $this->breadcrumb
                     ->append($this->lang->t('gallery', 'gallery'), $this->uri->route('gallery'))
-                    ->append($gallery_title);
+                    ->append($galleryTitle);
 
                 $settings = Core\Config::getSettings('gallery');
 
@@ -161,8 +163,7 @@ class Frontend extends Core\Modules\Controller
     {
         $settings = Core\Config::getSettings('gallery');
 
-        $where = 'start = end AND start <= :time OR start != end AND :time BETWEEN start AND end';
-        $galleries = $this->db->fetchAll('SELECT id, start, title FROM ' . DB_PRE . 'gallery WHERE ' . $where . ' ORDER BY start DESC LIMIT ' . $settings['sidebar'], array('time' => $this->date->getCurrentDateTime()));
+        $galleries = $this->model->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         $c_galleries = count($galleries);
 
         if ($c_galleries > 0) {
