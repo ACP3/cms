@@ -267,41 +267,41 @@ class Install extends Core\Modules\Controller
                 $defaults[] = $path;
             }
         }
-        $files_dirs = array();
-        $check_again = false;
+        $requiredFilesAndDirs = array();
+        $checkAgain = false;
 
         $i = 0;
         foreach ($defaults as $row) {
-            $files_dirs[$i]['path'] = $row;
+            $requiredFilesAndDirs[$i]['path'] = $row;
             // Überprüfen, ob es eine Datei oder ein Ordner ist
             if (is_file(ACP3_ROOT_DIR . $row) === true) {
-                $files_dirs[$i]['class_1'] = CLASS_SUCCESS;
-                $files_dirs[$i]['exists'] = $this->lang->t('found');
+                $requiredFilesAndDirs[$i]['class_1'] = CLASS_SUCCESS;
+                $requiredFilesAndDirs[$i]['exists'] = $this->lang->t('found');
             } elseif (is_dir(ACP3_ROOT_DIR . $row) === true) {
-                $files_dirs[$i]['class_1'] = CLASS_SUCCESS;
-                $files_dirs[$i]['exists'] = $this->lang->t('found');
+                $requiredFilesAndDirs[$i]['class_1'] = CLASS_SUCCESS;
+                $requiredFilesAndDirs[$i]['exists'] = $this->lang->t('found');
             } else {
-                $files_dirs[$i]['class_1'] = CLASS_ERROR;
-                $files_dirs[$i]['exists'] = $this->lang->t('not_found');
+                $requiredFilesAndDirs[$i]['class_1'] = CLASS_ERROR;
+                $requiredFilesAndDirs[$i]['exists'] = $this->lang->t('not_found');
             }
-            $files_dirs[$i]['class_2'] = is_writable(ACP3_ROOT_DIR . $row) === true ? CLASS_SUCCESS : CLASS_ERROR;
-            $files_dirs[$i]['writable'] = $files_dirs[$i]['class_2'] === CLASS_SUCCESS ? $this->lang->t('writable') : $this->lang->t('not_writable');
-            if ($files_dirs[$i]['class_1'] == CLASS_ERROR || $files_dirs[$i]['class_2'] == CLASS_ERROR) {
-                $check_again = true;
+            $requiredFilesAndDirs[$i]['class_2'] = is_writable(ACP3_ROOT_DIR . $row) === true ? CLASS_SUCCESS : CLASS_ERROR;
+            $requiredFilesAndDirs[$i]['writable'] = $requiredFilesAndDirs[$i]['class_2'] === CLASS_SUCCESS ? $this->lang->t('writable') : $this->lang->t('not_writable');
+            if ($requiredFilesAndDirs[$i]['class_1'] == CLASS_ERROR || $requiredFilesAndDirs[$i]['class_2'] == CLASS_ERROR) {
+                $checkAgain = true;
             }
             ++$i;
         }
-        $this->view->assign('files_dirs', $files_dirs);
+        $this->view->assign('files_dirs', $requiredFilesAndDirs);
 
         // PHP Einstellungen
-        $php_settings = array();
-        $php_settings[0]['setting'] = $this->lang->t('maximum_uploadsize');
-        $php_settings[0]['class'] = ini_get('post_max_size') > 0 ? CLASS_SUCCESS : CLASS_WARNING;
-        $php_settings[0]['value'] = ini_get('post_max_size');
-        $php_settings[1]['setting'] = $this->lang->t('magic_quotes');
-        $php_settings[1]['class'] = (bool)ini_get('magic_quotes_gpc') ? CLASS_WARNING : CLASS_SUCCESS;
-        $php_settings[1]['value'] = $this->lang->t((bool)ini_get('magic_quotes_gpc') ? 'on' : 'off');
-        $this->view->assign('php_settings', $php_settings);
+        $phpSettings = array();
+        $phpSettings[0]['setting'] = $this->lang->t('maximum_uploadsize');
+        $phpSettings[0]['class'] = ini_get('post_max_size') > 0 ? CLASS_SUCCESS : CLASS_WARNING;
+        $phpSettings[0]['value'] = ini_get('post_max_size');
+        $phpSettings[1]['setting'] = $this->lang->t('magic_quotes');
+        $phpSettings[1]['class'] = (bool)ini_get('magic_quotes_gpc') ? CLASS_WARNING : CLASS_SUCCESS;
+        $phpSettings[1]['value'] = $this->lang->t((bool)ini_get('magic_quotes_gpc') ? 'on' : 'off');
+        $this->view->assign('php_settings', $phpSettings);
 
         foreach ($requirements as $row) {
             if ($row['color'] !== COLOR_SUCCESS) {
@@ -309,7 +309,7 @@ class Install extends Core\Modules\Controller
             }
         }
 
-        if ($check_again === true) {
+        if ($checkAgain === true) {
             $this->view->assign('check_again', true);
         }
     }

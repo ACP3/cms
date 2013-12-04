@@ -157,12 +157,12 @@ abstract class Installer
     {
         $mod_name = static::MODULE_NAME;
         $dir = ucfirst($mod_name);
-        $path = MODULES_DIR . $dir . '/';
+        $path = MODULES_DIR . $dir . '/Controller/';
         $files = array('Admin', 'Frontend');
 
         foreach ($files as $file) {
             if (is_file($path . $file . '.php') === true) {
-                $className = "\\ACP3\\Modules\\$dir\\$file";
+                $className = "\\ACP3\\Modules\\$dir\\Controller\\$file";
                 $actions = get_class_methods($className);
 
                 foreach ($actions as $action) {

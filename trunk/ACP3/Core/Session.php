@@ -35,8 +35,27 @@ class Session
      */
     public $gc_probability = 10;
 
-    public function __construct()
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    private $db;
+
+    /**
+     * @var \ACP3\Core\URI
+     */
+    private $uri;
+
+    /**
+     * @var \ACP3\Core\View
+     */
+    private $view;
+
+    public function __construct(\Doctrine\DBAL\Connection $db, \ACP3\Core\URI $uri, \ACP3\Core\View $view)
     {
+        $this->db = $db;
+        $this->uri = $uri;
+        $this->view = $view;
+
         // php.ini Session Einstellungen konfigurieren
         ini_set('session.name', self::SESSION_NAME);
         ini_set('session.use_trans_sid', 0);
@@ -117,7 +136,7 @@ class Session
      */
     public function session_read($session_id)
     {
-        $session = Registry::get('Db')->fetchAssoc('SELECT session_data FROM ' . DB_PRE . 'sessions WHERE session_id = ?', array($session_id));
+        $session = $this->db->fetchAssoc('SELECT session_data FROM ' . DB_PRE . 'sessions WHERE session_id = ?', array($session_id));
 
         // Wenn keine Session gefunden wurde, dann einen leeren String zurückgeben
         return !empty($session) ? $session['session_data'] : '';
@@ -133,7 +152,7 @@ class Session
      */
     public function session_write($session_id, $data)
     {
-        Registry::get('Db')->executeUpdate('INSERT INTO ' . DB_PRE . 'sessions (session_id, session_starttime, session_data) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE session_data = ?', array($session_id, time(), $data, $data));
+        $this->db->executeUpdate('INSERT INTO ' . DB_PRE . 'sessions (session_id, session_starttime, session_data) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE session_data = ?', array($session_id, time(), $data, $data));
 
         return true;
     }
@@ -170,7 +189,7 @@ class Session
             return;
         }
 
-        Registry::get('Db')->executeUpdate('DELETE FROM ' . DB_PRE . 'sessions WHERE session_starttime + ? < ?', array($session_lifetime, time()));
+        $this->db->executeUpdate('DELETE FROM ' . DB_PRE . 'sessions WHERE session_starttime + ? < ?', array($session_lifetime, time()));
 
         return true;
     }
@@ -188,10 +207,10 @@ class Session
         }
 
         $token = sha1(uniqid(mt_rand(), true));
-        $path = !empty($path) ? $path . (!preg_match('/\/$/', $path) ? '/' : '') : Registry::get('URI')->query;
+        $path = !empty($path) ? $path . (!preg_match('/\/$/', $path) ? '/' : '') : $this->uri->query;
         $_SESSION[self::XSRF_TOKEN_NAME][$path] = $token;
 
-        Registry::get('View')->assign('form_token', '<input type="hidden" name="' . self::XSRF_TOKEN_NAME . '" value="' . $token . '" />');
+        $this->view->assign('form_token', '<input type="hidden" name="' . self::XSRF_TOKEN_NAME . '" value="' . $token . '" />');
     }
 
     /**
@@ -203,8 +222,8 @@ class Session
             $token = $_POST[self::XSRF_TOKEN_NAME];
         }
         if (!empty($token) && is_array($_SESSION[self::XSRF_TOKEN_NAME]) === true) {
-            if (isset($_SESSION[self::XSRF_TOKEN_NAME][Registry::get('URI')->query])) {
-                unset($_SESSION[self::XSRF_TOKEN_NAME][Registry::get('URI')->query]);
+            if (isset($_SESSION[self::XSRF_TOKEN_NAME][$this->uri->query])) {
+                unset($_SESSION[self::XSRF_TOKEN_NAME][$this->uri->query]);
             }
         }
     }

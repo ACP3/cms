@@ -65,6 +65,8 @@ class View
     public function setNoOutput($value)
     {
         $this->no_output = (bool)$value;
+
+        return $this;
     }
 
     /**
@@ -86,6 +88,8 @@ class View
     public function setContentType($data)
     {
         $this->content_type = $data;
+
+        return $this;
     }
 
     /**
@@ -106,6 +110,8 @@ class View
     public function setLayout($file)
     {
         $this->layout = $file;
+
+        return $this;
     }
 
     /**
@@ -126,6 +132,8 @@ class View
     public function setContentTemplate($file)
     {
         $this->content_template = $file;
+
+        return $this;
     }
 
     /**
@@ -146,6 +154,8 @@ class View
     public function setContent($data)
     {
         $this->content = $data;
+
+        return $this;
     }
 
     /**
@@ -156,6 +166,8 @@ class View
     public function appendContent($data)
     {
         $this->content_append .= $data;
+
+        return $this;
     }
 
     /**
@@ -191,7 +203,7 @@ class View
      * Aktiviert einzelne JavaScript Bibliotheken
      *
      * @param array $libraries
-     * @return
+     * @return $this
      */
     public function enableJsLibraries(array $libraries)
     {
@@ -203,9 +215,15 @@ class View
                 }
             }
         }
-        return;
+
+        return $this;
     }
 
+    /**
+     * @param string $renderer
+     * @param array $params
+     * @throws \Exception
+     */
     public static function factory($renderer = 'Smarty', array $params = array())
     {
         $path = CLASSES_DIR . 'View/Renderer/' . $renderer . '.php';

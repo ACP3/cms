@@ -12,20 +12,18 @@ class Lang
      * Die zur Zeit eingestellte Sprache
      *
      * @var string
-     * @access private
      */
     private $lang = '';
 
     /**
      *
      * @var array
-     * @access private
      */
     private $cache = array();
 
-    function __construct()
+    function __construct(\ACP3\Core\Auth $auth)
     {
-        $lang = Registry::get('Auth')->getUserLanguage();
+        $lang = $auth->getUserLanguage();
         $this->lang = $this->languagePackExists($lang) === true ? $lang : CONFIG_LANG;
     }
 
@@ -50,6 +48,8 @@ class Lang
             $this->lang = $lang;
             $this->cache = array();
         }
+
+        return $this;
     }
 
     /**
@@ -82,8 +82,9 @@ class Lang
      */
     private function getLanguageCache()
     {
-        if (Cache::check($this->lang, 'lang') === false)
+        if (Cache::check($this->lang, 'lang') === false) {
             $this->setLanguageCache();
+        }
 
         return Cache::output($this->lang, 'lang');
     }

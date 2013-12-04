@@ -39,11 +39,11 @@ abstract class Modules
     {
         $moduleUc = ucfirst($module);
         $section = strpos($action, 'acp_') === 0 ? 'Admin' : 'Frontend';
-        $path = MODULES_DIR . $moduleUc . '/' . $section . '.php';
-        $className = "\\ACP3\\Modules\\" . $moduleUc . "\\" . $section;
+
+        $className = "\\ACP3\\Modules\\" . $moduleUc . "\\Controller\\" . $section;
         $action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $section === 'Admin' ? substr($action, 4) : $action))));
 
-        return (is_file($path) === true && method_exists($className, $action) === true);
+        return (method_exists($className, $action) === true);
     }
 
     /**

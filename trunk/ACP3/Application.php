@@ -108,13 +108,35 @@ class Application
         define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
 
         // Restliche Klassen instanziieren
-        $classes = array('View', 'URI', 'Session', 'Auth', 'Lang', 'Date', 'Breadcrumb');
+        Core\Registry::set('View', new Core\View());
 
-        foreach ($classes as $class) {
-            $className = "\\ACP3\\Core\\" . $class;
-            Core\Registry::set($class, new $className());
-        }
+        Core\Registry::set('URI', new Core\URI(Core\Registry::get('Db')));
+
+        Core\Registry::set('Session', new Core\Session(
+            Core\Registry::get('Db'),
+            Core\Registry::get('URI'),
+            Core\Registry::get('View')
+        ));
+
+        Core\Registry::set('Auth', new Core\Auth(Core\Registry::get('Db')));
+
+        Core\Registry::set('Lang', new Core\Lang(Core\Registry::get('Auth')));
+
+        Core\Registry::set('Date', new Core\Date(
+            Core\Registry::get('Auth'),
+            Core\Registry::get('Lang'),
+            Core\Registry::get('View')
+        ));
+
+        Core\Registry::set('Breadcrumb', new Core\Breadcrumb(
+            Core\Registry::get('Db'),
+            Core\Registry::get('Lang'),
+            Core\Registry::get('URI'),
+            Core\Registry::get('View')
+        ));
+
         Core\View::factory('Smarty');
+
         Core\ACL::initialize(Core\Registry::get('Auth')->getUserId());
     }
 
@@ -151,7 +173,7 @@ class Application
         if (Core\Modules::hasPermission($uri->mod, $uri->file) === true) {
             $module = ucfirst($uri->mod);
             $section = defined('IN_ADM') === true ? 'Admin' : 'Frontend';
-            $className = "\\ACP3\\Modules\\" . $module . "\\" . $section;
+            $className = "\\ACP3\\Modules\\" . $module . "\\Controller\\" . $section;
             $action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', defined('IN_ADM') === true ? substr($uri->file, 4) : $uri->file))));
 
             // Modul einbinden

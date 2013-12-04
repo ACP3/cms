@@ -44,16 +44,23 @@ class Auth
     public $language = CONFIG_LANG;
 
     /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    private $db;
+
+    /**
      * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der
      * Seitenbesucher auch wirklich ein registrierter Benutzer des ACP3 ist
      */
-    function __construct()
+    function __construct(\Doctrine\DBAL\Connection $db)
     {
+        $this->db = $db;
+
         if (isset($_COOKIE[self::COOKIE_NAME])) {
             $cookie = base64_decode($_COOKIE[self::COOKIE_NAME]);
             $cookie_arr = explode('|', $cookie);
 
-            $user = Registry::get('Db')->executeQuery('SELECT id, super_user, pwd, entries, language FROM ' . DB_PRE . 'users WHERE nickname = ? AND login_errors < 3', array($cookie_arr[0]))->fetchAll();
+            $user = $this->db->executeQuery('SELECT id, super_user, pwd, entries, language FROM ' . DB_PRE . 'users WHERE nickname = ? AND login_errors < 3', array($cookie_arr[0]))->fetchAll();
             if (count($user) === 1) {
                 $db_password = substr($user[0]['pwd'], 0, 40);
                 if ($db_password === $cookie_arr[1]) {
@@ -96,7 +103,7 @@ class Auth
 
             if (empty($user_info[$user_id])) {
                 $countries = Lang::worldCountries();
-                $info = Registry::get('Db')->fetchAssoc('SELECT * FROM ' . DB_PRE . 'users WHERE id = ?', array($user_id), array(\PDO::PARAM_INT));
+                $info = $this->db->fetchAssoc('SELECT * FROM ' . DB_PRE . 'users WHERE id = ?', array($user_id), array(\PDO::PARAM_INT));
                 if (!empty($info)) {
                     $info['country_formatted'] = !empty($info['country']) && isset($countries[$info['country']]) ? $countries[$info['country']] : '';
                     $user_info[$user_id] = $info;
@@ -151,7 +158,7 @@ class Auth
      */
     public function login($username, $password, $expiry)
     {
-        $user = Registry::get('Db')->fetchAssoc('SELECT id, pwd, login_errors FROM ' . DB_PRE . 'users WHERE nickname = ?', array($username));
+        $user = $this->db->fetchAssoc('SELECT id, pwd, login_errors FROM ' . DB_PRE . 'users WHERE nickname = ?', array($username));
 
         if (!empty($user)) {
             // Useraccount ist gesperrt
@@ -183,7 +190,7 @@ class Auth
                 // Beim dritten falschen Login den Account sperren
             } else {
                 $login_errors = $user['login_errors'] + 1;
-                Registry::get('Db')->update(DB_PRE . 'users', array('login_errors' => $login_errors), array('id' => (int)$user['id']));
+                $this->db->update(DB_PRE . 'users', array('login_errors' => $login_errors), array('id' => (int)$user['id']));
                 if ($login_errors === 3) {
                     return -1;
                 }
