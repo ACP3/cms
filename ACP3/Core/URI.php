@@ -26,11 +26,15 @@ class URI
 
     const PATTERN = '=^acp/=';
 
+    private $db;
+
     /**
      * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
      */
-    function __construct($defaultModule = '', $defaultFile = '')
+    function __construct(\Doctrine\DBAL\Connection $db, $defaultModule = '', $defaultFile = '')
     {
+        $this->db = $db;
+
         // Minify von der URI-Verarbeitung ausschließen
         if ((bool)preg_match('=libraries/.+=', $_SERVER['PHP_SELF']) === false) {
             $this->preprocessUriQuery();
@@ -135,7 +139,7 @@ class URI
             }
 
             // Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
-            $alias = Registry::get('Db')->fetchAssoc('SELECT uri FROM ' . DB_PRE . 'seo WHERE alias = ?', array(substr($prob_query, 0, -1)));
+            $alias = $this->db->fetchAssoc('SELECT uri FROM ' . DB_PRE . 'seo WHERE alias = ?', array(substr($prob_query, 0, -1)));
             if (!empty($alias)) {
                 $this->query = $alias['uri'] . (!empty($params) ? $params : '');
             }

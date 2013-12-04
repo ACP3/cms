@@ -101,7 +101,9 @@ class Application
     public static function initializeInstallerClasses()
     {
         \ACP3\Core\Registry::set('View', new \ACP3\Core\View());
+
         \ACP3\Core\Registry::set('URI', new \ACP3\Core\URI('install', 'welcome'));
+
         $params = array(
             'compile_id' => 'installer',
             'plugins_dir' => INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/',
@@ -131,7 +133,9 @@ class Application
         \ACP3\Core\Config::getSystemSettings();
 
         \ACP3\Core\Registry::set('View', new \ACP3\Core\View());
+
         \ACP3\Core\Registry::set('URI', new \ACP3\Core\URI('update', 'db_update'));
+
         $params = array(
             'compile_id' => 'installer',
             'plugins_dir' => INSTALLER_CLASSES_DIR . 'View/Renderer/Smarty/',

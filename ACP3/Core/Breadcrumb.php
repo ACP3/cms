@@ -38,13 +38,32 @@ class Breadcrumb
      */
     private $breadcrumb_cache = array();
 
-    public function __construct()
+    /**
+     * @var \ACP3\Core\Lang
+     */
+    private $lang;
+
+    /**
+     * @var \ACP3\Core\URI
+     */
+    private $uri;
+
+    /**
+     * @var \ACP3\Core\View
+     */
+    private $view;
+
+    public function __construct(\Doctrine\DBAL\Connection $db, \ACP3\Core\Lang $lang, \ACP3\Core\URI $uri, \ACP3\Core\View $view)
     {
+        $this->lang = $lang;
+        $this->uri = $uri;
+        $this->view = $view;
+
         // Frontendbereich
         if (defined('IN_ADM') === false) {
-            $uri = Registry::get('URI');
+            $uri = $this->uri;
             $in = array($uri->query, $uri->getCleanQuery(), $uri->mod . '/' . $uri->file . '/', $uri->mod);
-            $items = Registry::get('Db')->executeQuery('SELECT p.title, p.uri, p.left_id, p.right_id FROM ' . DB_PRE . 'menu_items AS c, ' . DB_PRE . 'menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) GROUP BY p.uri ORDER BY p.left_id ASC', array($in), array(\Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetchAll();
+            $items = $db->executeQuery('SELECT p.title, p.uri, p.left_id, p.right_id FROM ' . DB_PRE . 'menu_items AS c, ' . DB_PRE . 'menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) GROUP BY p.uri ORDER BY p.left_id ASC', array($in), array(\Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetchAll();
             $c_items = count($items);
 
             // Dynamische Seite (ACP3 intern)
@@ -179,39 +198,39 @@ class Breadcrumb
      */
     public function output($mode = 1)
     {
-        $module = Registry::get('URI')->mod;
-        $file = Registry::get('URI')->file;
+        $module = $this->uri->mod;
+        $file = $this->uri->file;
 
         if (empty($this->breadcrumb_cache)) {
             // Brotkrümelspur für das Admin-Panel
             if (defined('IN_ADM') === true) {
                 if ($module !== 'acp')
-                    $this->setTitlePostfix(Registry::get('Lang')->t('system', 'acp'));
+                    $this->setTitlePostfix($this->lang->t('system', 'acp'));
 
                 // Wenn noch keine Brotkrümelspur gesetzt ist, dies nun tun
                 if (empty($this->steps_mods)) {
-                    $this->append(Registry::get('Lang')->t('system', 'acp'), Registry::get('URI')->route('acp'));
+                    $this->append($this->lang->t('system', 'acp'), $this->uri->route('acp'));
                     if ($module !== 'errors') {
                         if ($module !== 'acp') {
-                            $this->append(Registry::get('Lang')->t($module, $module), Registry::get('URI')->route('acp/' . $module));
+                            $this->append($this->lang->t($module, $module), $this->uri->route('acp/' . $module));
                             if ($file !== 'acp_list')
-                                $this->append(Registry::get('Lang')->t($module, $file), Registry::get('URI')->route('acp/' . $module . '/' . $file));
+                                $this->append($this->lang->t($module, $file), $this->uri->route('acp/' . $module . '/' . $file));
                         }
                     } else {
-                        $this->append(Registry::get('Lang')->t($module, $file), Registry::get('URI')->route('acp/' . $module . '/' . $file));
+                        $this->append($this->lang->t($module, $file), $this->uri->route('acp/' . $module . '/' . $file));
                     }
                     // Falls bereits Stufen gesetzt wurden, Links für das Admin-Panel und
                     // die Modulverwaltung in umgedrehter Reihenfolge voranstellen
                 } else {
                     if ($module !== 'acp')
-                        $this->prepend(Registry::get('Lang')->t($module, $module), Registry::get('URI')->route('acp/' . $module));
-                    $this->prepend(Registry::get('Lang')->t('system', 'acp'), Registry::get('URI')->route('acp'));
+                        $this->prepend($this->lang->t($module, $module), $this->uri->route('acp/' . $module));
+                    $this->prepend($this->lang->t('system', 'acp'), $this->uri->route('acp'));
                 }
                 $this->breadcrumb_cache = $this->steps_mods;
                 // Brotkrümelspur für das Frontend
             } else {
                 if (empty($this->steps_db) && empty($this->steps_mods)) {
-                    $this->append($file === 'list' ? Registry::get('Lang')->t($module, $module) : Registry::get('Lang')->t($module, $file), Registry::get('URI')->route($module . '/' . $file));
+                    $this->append($file === 'list' ? $this->lang->t($module, $module) : $this->lang->t($module, $file), $this->uri->route($module . '/' . $file));
                     $this->breadcrumb_cache = $this->steps_mods;
                 } elseif (!empty($this->steps_db) && empty($this->steps_mods)) {
                     $this->breadcrumb_cache = $this->steps_db;
@@ -235,8 +254,8 @@ class Breadcrumb
 
         // Brotkrümelspur ausgeben
         if ($mode === 1) {
-            Registry::get('View')->assign('breadcrumb', $this->breadcrumb_cache);
-            return Registry::get('View')->fetchTemplate('system/breadcrumb.tpl');
+            $this->view->assign('breadcrumb', $this->breadcrumb_cache);
+            return $this->view->fetchTemplate('system/breadcrumb.tpl');
             // Nur Titel ausgeben
         } else {
             // Letzter Eintrag der Brotkrümelspur ist der Seitentitel

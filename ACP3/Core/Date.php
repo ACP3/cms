@@ -32,12 +32,25 @@ class Date
     private $date_time_zone = null;
 
     /**
+     * @var \ACP3\Core\Lang
+     */
+    private $lang;
+
+    /**
+     * @var \ACP3\Core\View
+     */
+    private $view;
+
+    /**
      * Falls man sich als User authentifiziert hat, eingestellte Zeitzone + Sommerzeiteinstellung holen
      *
      */
-    function __construct()
+    function __construct(\ACP3\Core\Auth $auth, \ACP3\Core\Lang $lang, \ACP3\Core\View $view)
     {
-        $info = Registry::get('Auth')->getUserInfo();
+        $info = $auth->getUserInfo();
+
+        $this->lang = $lang;
+        $this->view = $view;
 
         if (!empty($info)) {
             $this->date_format_long = $info['date_format_long'];
@@ -60,8 +73,8 @@ class Date
     public function dateformatDropdown($format = '')
     {
         $dateformatLang = array(
-            Registry::get('Lang')->t('system', 'date_format_short'),
-            Registry::get('Lang')->t('system', 'date_format_long')
+            $this->lang->t('system', 'date_format_short'),
+            $this->lang->t('system', 'date_format_long')
         );
         return Functions::selectGenerator('dateformat', array('short', 'long'), $dateformatLang, $format);
     }
@@ -146,9 +159,9 @@ class Date
             $datepicker['value'] = $value;
         }
 
-        Registry::get('View')->assign('datepicker', $datepicker);
+        $this->view->assign('datepicker', $datepicker);
 
-        return Registry::get('View')->fetchTemplate('system/date.tpl');
+        return $this->view->fetchTemplate('system/date.tpl');
     }
 
     /**
@@ -205,62 +218,62 @@ class Date
     private function localizeDaysAbbr()
     {
         return array(
-            'Mon' => Registry::get('Lang')->t('system', 'date_mon'),
-            'Tue' => Registry::get('Lang')->t('system', 'date_tue'),
-            'Wed' => Registry::get('Lang')->t('system', 'date_wed'),
-            'Thu' => Registry::get('Lang')->t('system', 'date_thu'),
-            'Fri' => Registry::get('Lang')->t('system', 'date_fri'),
-            'Sat' => Registry::get('Lang')->t('system', 'date_sat'),
-            'Sun' => Registry::get('Lang')->t('system', 'date_sun')
+            'Mon' => $this->lang->t('system', 'date_mon'),
+            'Tue' => $this->lang->t('system', 'date_tue'),
+            'Wed' => $this->lang->t('system', 'date_wed'),
+            'Thu' => $this->lang->t('system', 'date_thu'),
+            'Fri' => $this->lang->t('system', 'date_fri'),
+            'Sat' => $this->lang->t('system', 'date_sat'),
+            'Sun' => $this->lang->t('system', 'date_sun')
         );
     }
 
     private function localizeDays()
     {
         return array(
-            'Monday' => Registry::get('Lang')->t('system', 'date_monday'),
-            'Tuesday' => Registry::get('Lang')->t('system', 'date_tuesday'),
-            'Wednesday' => Registry::get('Lang')->t('system', 'date_wednesday'),
-            'Thursday' => Registry::get('Lang')->t('system', 'date_thursday'),
-            'Friday' => Registry::get('Lang')->t('system', 'date_friday'),
-            'Saturday' => Registry::get('Lang')->t('system', 'date_saturday'),
-            'Sunday' => Registry::get('Lang')->t('system', 'date_sunday')
+            'Monday' => $this->lang->t('system', 'date_monday'),
+            'Tuesday' => $this->lang->t('system', 'date_tuesday'),
+            'Wednesday' => $this->lang->t('system', 'date_wednesday'),
+            'Thursday' => $this->lang->t('system', 'date_thursday'),
+            'Friday' => $this->lang->t('system', 'date_friday'),
+            'Saturday' => $this->lang->t('system', 'date_saturday'),
+            'Sunday' => $this->lang->t('system', 'date_sunday')
         );
     }
 
     private function localizeMonths()
     {
         return array(
-            'January' => Registry::get('Lang')->t('system', 'date_january'),
-            'February' => Registry::get('Lang')->t('system', 'date_february'),
-            'March' => Registry::get('Lang')->t('system', 'date_march'),
-            'April' => Registry::get('Lang')->t('system', 'date_april'),
-            'May' => Registry::get('Lang')->t('system', 'date_may_full'),
-            'June' => Registry::get('Lang')->t('system', 'date_june'),
-            'July' => Registry::get('Lang')->t('system', 'date_july'),
-            'August' => Registry::get('Lang')->t('system', 'date_august'),
-            'September' => Registry::get('Lang')->t('system', 'date_september'),
-            'October' => Registry::get('Lang')->t('system', 'date_october'),
-            'November' => Registry::get('Lang')->t('system', 'date_november'),
-            'December' => Registry::get('Lang')->t('system', 'date_december')
+            'January' => $this->lang->t('system', 'date_january'),
+            'February' => $this->lang->t('system', 'date_february'),
+            'March' => $this->lang->t('system', 'date_march'),
+            'April' => $this->lang->t('system', 'date_april'),
+            'May' => $this->lang->t('system', 'date_may_full'),
+            'June' => $this->lang->t('system', 'date_june'),
+            'July' => $this->lang->t('system', 'date_july'),
+            'August' => $this->lang->t('system', 'date_august'),
+            'September' => $this->lang->t('system', 'date_september'),
+            'October' => $this->lang->t('system', 'date_october'),
+            'November' => $this->lang->t('system', 'date_november'),
+            'December' => $this->lang->t('system', 'date_december')
         );
     }
 
     private function localizeMonthsAbbr()
     {
         return array(
-            'Jan' => Registry::get('Lang')->t('system', 'date_jan'),
-            'Feb' => Registry::get('Lang')->t('system', 'date_feb'),
-            'Mar' => Registry::get('Lang')->t('system', 'date_mar'),
-            'Apr' => Registry::get('Lang')->t('system', 'date_apr'),
-            'May' => Registry::get('Lang')->t('system', 'date_may_abbr'),
-            'Jun' => Registry::get('Lang')->t('system', 'date_jun'),
-            'Jul' => Registry::get('Lang')->t('system', 'date_jul'),
-            'Aug' => Registry::get('Lang')->t('system', 'date_aug'),
-            'Sep' => Registry::get('Lang')->t('system', 'date_sep'),
-            'Oct' => Registry::get('Lang')->t('system', 'date_oct'),
-            'Nov' => Registry::get('Lang')->t('system', 'date_nov'),
-            'Dec' => Registry::get('Lang')->t('system', 'date_dec')
+            'Jan' => $this->lang->t('system', 'date_jan'),
+            'Feb' => $this->lang->t('system', 'date_feb'),
+            'Mar' => $this->lang->t('system', 'date_mar'),
+            'Apr' => $this->lang->t('system', 'date_apr'),
+            'May' => $this->lang->t('system', 'date_may_abbr'),
+            'Jun' => $this->lang->t('system', 'date_jun'),
+            'Jul' => $this->lang->t('system', 'date_jul'),
+            'Aug' => $this->lang->t('system', 'date_aug'),
+            'Sep' => $this->lang->t('system', 'date_sep'),
+            'Oct' => $this->lang->t('system', 'date_oct'),
+            'Nov' => $this->lang->t('system', 'date_nov'),
+            'Dec' => $this->lang->t('system', 'date_dec')
         );
     }
 
@@ -309,10 +322,10 @@ class Date
     {
         $datetime_format = 'Y-m-d H:i';
         if ($end === '' || $start >= $end) {
-            $title = $end === '' ? $this->format($start, $format) : sprintf(Registry::get('Lang')->t('system', 'date_published_since'), $this->format($start, $format));
+            $title = $end === '' ? $this->format($start, $format) : sprintf($this->lang->t('system', 'date_published_since'), $this->format($start, $format));
             return '<time datetime="' . $start . '" title="' . $title . '">' . $this->format($start, $datetime_format) . '</time>';
         } else {
-            $title = sprintf(Registry::get('Lang')->t('system', 'date_time_range'), $this->format($start, $format), $this->format($end, $format));
+            $title = sprintf($this->lang->t('system', 'date_time_range'), $this->format($start, $format), $this->format($end, $format));
             return '<time datetime="' . $start . '/' . $end . '" title="' . $title . '">' . $this->format($start, $datetime_format) . '&ndash;' . $this->format($end, $datetime_format) . '</time>';
         }
     }
