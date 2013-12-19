@@ -22,9 +22,19 @@ class Frontend extends Core\Modules\Controller
      */
     private $model;
 
-    public function __construct($module, $entry_id)
+    public function __construct(
+        \ACP3\Core\Auth $auth,
+        \ACP3\Core\Breadcrumb $breadcrumb,
+        \ACP3\Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        \ACP3\Core\Lang $lang,
+        \ACP3\Core\Session $session,
+        \ACP3\Core\URI $uri,
+        \ACP3\Core\View $view,
+        $module
+        $entry_id)
     {
-        parent::__construct();
+        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
         $this->module = $module;
         $this->entryId = $entry_id;

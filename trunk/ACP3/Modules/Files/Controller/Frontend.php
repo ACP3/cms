@@ -22,9 +22,17 @@ class Frontend extends Core\Modules\Controller
 
     protected $categoriesModel;
 
-    public function __construct()
+    public function __construct(
+        \ACP3\Core\Auth $auth,
+        \ACP3\Core\Breadcrumb $breadcrumb,
+        \ACP3\Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        \ACP3\Core\Lang $lang,
+        \ACP3\Core\Session $session,
+        \ACP3\Core\URI $uri,
+        \ACP3\Core\View $view)
     {
-        parent::__construct();
+        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
         $this->model = new Files\Model($this->db);
 
@@ -78,7 +86,18 @@ class Frontend extends Core\Modules\Controller
                 $this->view->assign('file', $file);
 
                 if ($settings['comments'] == 1 && $file['comments'] == 1 && Core\Modules::hasPermission('comments', 'list') === true) {
-                    $comments = new \ACP3\Modules\Comments\Controller\Frontend('files', $this->uri->id);
+                    $comments = new \ACP3\Modules\Comments\Controller\Frontend(
+                        $this->auth,
+                        $this->breadcrumb,
+                        $this->date,
+                        $this->db,
+                        $this->lang,
+                        $this->session,
+                        $this->uri,
+                        $this->view,
+                        'files',
+                        $this->uri->id
+                    );
                     $this->view->assign('comments', $comments->actionList());
                 }
             }
