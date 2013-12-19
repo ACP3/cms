@@ -58,16 +58,24 @@ abstract class Controller
      */
     protected $view;
 
-    public function __construct()
+    public function __construct(
+        \ACP3\Core\Auth $auth,
+        \ACP3\Core\Breadcrumb $breadcrumb,
+        \ACP3\Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        \ACP3\Core\Lang $lang,
+        \ACP3\Core\Session $session,
+        \ACP3\Core\URI $uri,
+        \ACP3\Core\View $view)
     {
-        $this->auth = \ACP3\Core\Registry::get('Auth');
-        $this->breadcrumb = \ACP3\Core\Registry::get('Breadcrumb');
-        $this->date = \ACP3\Core\Registry::get('Date');
-        $this->db = \ACP3\Core\Registry::get('Db');
-        $this->lang = \ACP3\Core\Registry::get('Lang');
-        $this->session = \ACP3\Core\Registry::get('Session');
-        $this->uri = \ACP3\Core\Registry::get('URI');
-        $this->view = \ACP3\Core\Registry::get('View');
+        $this->auth = $auth;
+        $this->breadcrumb = $breadcrumb;
+        $this->date = $date;
+        $this->db = $db;
+        $this->lang = $lang;
+        $this->session = $session;
+        $this->uri = $uri;
+        $this->view = $view;
     }
 
     public function display()

@@ -177,7 +177,16 @@ class Application
             $action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', defined('IN_ADM') === true ? substr($uri->file, 4) : $uri->file))));
 
             // Modul einbinden
-            $mod = new $className();
+            $mod = new $className(
+                Core\Registry::get('Auth'),
+                Core\Registry::get('Breadcrumb'),
+                Core\Registry::get('Date'),
+                Core\Registry::get('Db'),
+                Core\Registry::get('Lang'),
+                Core\Registry::get('Session'),
+                Core\Registry::get('URI'),
+                Core\Registry::get('View')
+            );
             $mod->$action();
             $mod->display();
         } else {
