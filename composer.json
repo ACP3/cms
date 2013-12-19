@@ -15,15 +15,15 @@
 			"type": "package",
 			"package": {
 				"name": "smarty/smarty",
-				"version": "3.1.15",
+				"version": "3.1.16",
 				"dist": {
-					"url": "http://www.smarty.net/files/Smarty-3.1.15.zip",
+					"url": "http://www.smarty.net/files/Smarty-3.1.16.zip",
 					"type": "zip"
 				},
 				"source": {
 					"url": "http://smarty-php.googlecode.com/svn/",
 					"type": "svn",
-					"reference": "tags/Smarty_3_1_15/distribution/"
+					"reference": "tags/Smarty_3_1_16/distribution/"
 				},
 				"autoload": {
 					"classmap": [
@@ -37,6 +37,6 @@
 		"php": ">=5.3.2",
 		"doctrine/dbal": "2.4.*",
 		"phpmailer/phpmailer": "5.2.*",
-		"smarty/smarty": "3.1.15"
+		"smarty/smarty": "3.1.16"
 	}
 }
