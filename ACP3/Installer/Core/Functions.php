@@ -45,7 +45,7 @@ abstract class Functions
      */
     public static function executeSqlQueries(array $queries, $version)
     {
-        $bool = Core\Modules\Installer::executeSqlQueries($queries);
+        $bool = Core\Modules\AbstractInstaller::executeSqlQueries($queries);
 
         $result = array(
             'text' => sprintf(Core\Registry::get('Lang')->t('update_db_version_to'), $version),
@@ -69,9 +69,9 @@ abstract class Functions
         $module = ucfirst($module);
         $path = MODULES_DIR . $module . '/Installer.php';
         if (is_file($path) === true) {
-            $className = Core\Modules\Installer::buildClassName($module);
+            $className = Core\Modules\AbstractInstaller::buildClassName($module);
             $install = new $className();
-            if ($install instanceof Core\Modules\Installer) {
+            if ($install instanceof Core\Modules\AbstractInstaller) {
                 $bool = $install->install();
             }
         }
@@ -118,7 +118,7 @@ abstract class Functions
         foreach ($modules as $module) {
             $path = MODULES_DIR . $module . '/Installer.php';
             if ($module !== '.' && $module !== '..' && is_file($path) === true) {
-                $className = Core\Modules\Installer::buildClassName($module);
+                $className = Core\Modules\AbstractInstaller::buildClassName($module);
                 $install = new $className();
                 $install->addResources($mode);
             }
@@ -138,9 +138,9 @@ abstract class Functions
         $module = ucfirst($module);
         $path = MODULES_DIR . $module . '/Installer.php';
         if (is_file($path) === true) {
-            $className = Core\Modules\Installer::buildClassName($module);
+            $className = Core\Modules\AbstractInstaller::buildClassName($module);
             $install = new $className();
-            if ($install instanceof Core\Modules\Installer &&
+            if ($install instanceof Core\Modules\AbstractInstaller &&
                 (\ACP3\Core\Modules::isInstalled($module) || count($install->renameModule()) > 0)
             ) {
                 $result = $install->updateSchema();

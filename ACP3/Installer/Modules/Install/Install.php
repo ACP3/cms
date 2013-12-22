@@ -160,7 +160,7 @@ class Install extends Core\Modules\Controller
                         'INSERT INTO `{pre}menus` VALUES (2, \'sidebar\', \'' . $this->lang->t('pages_sidebar') . '\');',
                     );
 
-                    if (\ACP3\Core\Modules\Installer::executeSqlQueries($queries) === false) {
+                    if (\ACP3\Core\Modules\AbstractInstaller::executeSqlQueries($queries) === false) {
                         $this->view->assign('install_error', true);
                     }
 

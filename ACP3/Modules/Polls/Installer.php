@@ -4,13 +4,13 @@ namespace ACP3\Modules\Polls;
 
 use ACP3\Core\Modules;
 
-class Installer extends Modules\Installer
+class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'polls';
     const SCHEMA_VERSION = 31;
 
-    protected function createTables()
+    public function createTables()
     {
         return array(
             "CREATE TABLE `{pre}polls` (
@@ -39,7 +39,7 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function removeTables()
+    public function removeTables()
     {
         return array(
             "DROP TABLE `{pre}poll_votes`;",
@@ -48,17 +48,17 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function settings()
+    public function settings()
     {
         return array();
     }
 
-    protected function removeSettings()
+    public function removeSettings()
     {
         return true;
     }
 
-    protected function schemaUpdates()
+    public function schemaUpdates()
     {
         return array(
             31 => array(

@@ -4,13 +4,13 @@ namespace ACP3\Modules\Guestbook;
 
 use ACP3\Core\Modules;
 
-class Installer extends Modules\Installer
+class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'guestbook';
     const SCHEMA_VERSION = 30;
 
-    protected function createTables()
+    public function createTables()
     {
         return array(
             "CREATE TABLE `{pre}guestbook` (
@@ -28,12 +28,12 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function removeTables()
+    public function removeTables()
     {
         return array("DROP TABLE `{pre}guestbook`;");
     }
 
-    protected function settings()
+    public function settings()
     {
         return array(
             'dateformat' => 'long',
@@ -45,7 +45,7 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function schemaUpdates()
+    public function schemaUpdates()
     {
         return array();
     }

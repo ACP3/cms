@@ -4,7 +4,7 @@ namespace ACP3\Modules\Contact;
 
 use ACP3\Core\Modules;
 
-class Installer extends Modules\Installer
+class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'contact';
@@ -17,17 +17,17 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function createTables()
+    public function createTables()
     {
         return array();
     }
 
-    protected function removeTables()
+    public function removeTables()
     {
         return array();
     }
 
-    protected function settings()
+    public function settings()
     {
         return array(
             'address' => '',
@@ -38,7 +38,7 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function schemaUpdates()
+    public function schemaUpdates()
     {
         return array(
             31 => array(

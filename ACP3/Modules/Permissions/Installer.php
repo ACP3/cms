@@ -4,7 +4,7 @@ namespace ACP3\Modules\Permissions;
 
 use ACP3\Core\Modules;
 
-class Installer extends Modules\Installer
+class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'permissions';
@@ -17,37 +17,37 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function removeResources()
+    public function removeResources()
     {
         return true;
     }
 
-    protected function createTables()
+    public function createTables()
     {
         return array();
     }
 
-    protected function removeTables()
+    public function removeTables()
     {
         return array();
     }
 
-    protected function settings()
+    public function settings()
     {
         return array();
     }
 
-    protected function removeSettings()
+    public function removeSettings()
     {
         return true;
     }
 
-    protected function removeFromModulesTable()
+    public function removeFromModulesTable()
     {
         return true;
     }
 
-    protected function schemaUpdates()
+    public function schemaUpdates()
     {
         return array();
     }

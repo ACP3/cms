@@ -4,7 +4,7 @@ namespace ACP3\Modules\Menus;
 
 use ACP3\Core\Modules;
 
-class Installer extends Modules\Installer
+class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'menus';
@@ -17,7 +17,7 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function createTables()
+    public function createTables()
     {
         return array(
             "CREATE TABLE `{pre}menu_items` (
@@ -43,7 +43,7 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function removeTables()
+    public function removeTables()
     {
         return array(
             "DROP TABLE `{pre}menus`;",
@@ -51,17 +51,17 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function settings()
+    public function settings()
     {
         return array();
     }
 
-    protected function removeSettings()
+    public function removeSettings()
     {
         return true;
     }
 
-    protected function schemaUpdates()
+    public function schemaUpdates()
     {
         return array(
             31 => array(

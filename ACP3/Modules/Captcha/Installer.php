@@ -4,28 +4,28 @@ namespace ACP3\Modules\Captcha;
 
 use ACP3\Core\Modules;
 
-class Installer extends Modules\Installer
+class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'captcha';
     const SCHEMA_VERSION = 31;
 
-    protected function createTables()
+    public function createTables()
     {
         return array();
     }
 
-    protected function removeTables()
+    public function removeTables()
     {
         return array();
     }
 
-    protected function settings()
+    public function settings()
     {
         return array();
     }
 
-    protected function schemaUpdates()
+    public function schemaUpdates()
     {
         return array(
             31 => array(

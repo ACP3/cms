@@ -4,7 +4,7 @@ namespace ACP3\Modules\Feeds;
 
 use ACP3\Core\Modules;
 
-class Installer extends Modules\Installer
+class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'feeds';
@@ -17,17 +17,17 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function createTables()
+    public function createTables()
     {
         return array();
     }
 
-    protected function removeTables()
+    public function removeTables()
     {
         return array();
     }
 
-    protected function settings()
+    public function settings()
     {
         return array(
             'feed_image' => '',
@@ -35,12 +35,12 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function removeSettings()
+    public function removeSettings()
     {
         return true;
     }
 
-    protected function schemaUpdates()
+    public function schemaUpdates()
     {
         return array(
             31 => array(

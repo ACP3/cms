@@ -4,13 +4,13 @@ namespace ACP3\Modules\Gallery;
 
 use ACP3\Core\Modules;
 
-class Installer extends Modules\Installer
+class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'gallery';
     const SCHEMA_VERSION = 32;
 
-    protected function createTables()
+    public function createTables()
     {
         return array(
             "CREATE TABLE `{pre}gallery` (
@@ -33,7 +33,7 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function removeTables()
+    public function removeTables()
     {
         return array(
             "DROP TABLE `{pre}gallery_pictures`;",
@@ -41,7 +41,7 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function settings()
+    public function settings()
     {
         return array(
             'width' => 640,
@@ -58,7 +58,7 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function schemaUpdates()
+    public function schemaUpdates()
     {
         return array(
             31 => array(
