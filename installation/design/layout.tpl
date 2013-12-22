@@ -18,8 +18,8 @@
     <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">{lang t="toggle_navigation"}</span> <span class="glyphicon glyphicon-bar"></span>
-                <span class="glyphicon glyphicon-bar"></span> <span class="glyphicon glyphicon-bar"></span>
+                <span class="sr-only">{lang t="toggle_navigation"}</span> <span class="icon-bar"></span>
+                <span class="icon-bar"></span> <span class="icon-bar"></span>
             </button>
             <a href="{$ROOT_DIR}" class="navbar-brand hidden-lg">{$PAGE_TITLE}</a>
         </div>

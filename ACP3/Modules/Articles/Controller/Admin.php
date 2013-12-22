@@ -18,6 +18,11 @@ class Admin extends Core\Modules\Controller\Admin
      */
     protected $model;
 
+    /**
+     * @var \ACP3\Modules\Menus\Model
+     */
+    protected $menuModel;
+
     public function __construct(
         \ACP3\Core\Auth $auth,
         \ACP3\Core\Breadcrumb $breadcrumb,
@@ -31,15 +36,15 @@ class Admin extends Core\Modules\Controller\Admin
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
         $this->model = new Articles\Model($this->db);
+
+        $this->menuModel = new \ACP3\Modules\Menus\Model($this->db);
     }
 
     public function actionCreate()
     {
-        $access_to_menus = Core\Modules::hasPermission('menus', 'acp_create_item');
-
         if (isset($_POST['submit']) === true) {
             try {
-                $this->model->validateCreate($_POST, $this->lang);
+                $this->model->validateCreate($_POST, $this->lang, $this->menuModel);
 
                 $insertValues = array(
                     'id' => '',
@@ -55,7 +60,7 @@ class Admin extends Core\Modules\Controller\Admin
                     Core\SEO::insertUriAlias('articles/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                 }
 
-                if (isset($_POST['create']) === true && $access_to_menus === true) {
+                if (isset($_POST['create']) === true && Core\Modules::hasPermission('menus', 'acp_create_item') === true) {
                     $insertValues = array(
                         'id' => '',
                         'mode' => 4,
@@ -69,7 +74,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                     $nestedSet = new Core\NestedSet($this->db, \ACP3\Modules\Menus\Model::TABLE_NAME_ITEMS, true);
                     $lastId = $nestedSet->insertNode((int)$_POST['parent'], $insertValues);
-                    \ACP3\Modules\Menus\Helpers::setMenuItemsCache();
+                    $this->menuModel->setMenuItemsCache();
                 }
 
                 $this->session->unsetFormToken();
@@ -82,7 +87,7 @@ class Admin extends Core\Modules\Controller\Admin
             }
         }
 
-        if ($access_to_menus === true) {
+        if (Core\Modules::hasPermission('menus', 'acp_create_item') === true) {
             $lang_options = array($this->lang->t('articles', 'create_menu_item'));
             $this->view->assign('options', Core\Functions::selectGenerator('create', array(1), $lang_options, 0, 'checked'));
 
@@ -120,19 +125,19 @@ class Admin extends Core\Modules\Controller\Admin
             $items = explode('|', $items);
             $bool = false;
 
-            $menuModel = new \ACP3\Modules\Menus\Model($this->db);
             $nestedSet = new Core\NestedSet($this->db, \ACP3\Modules\Menus\Model::TABLE_NAME_ITEMS, true);
             foreach ($items as $item) {
                 $uri = 'articles/details/id_' . $item . '/';
+
                 $bool = $this->model->delete($item);
-                $nestedSet->deleteNode($menuModel->getMenuItemIdByUri($uri));
+                $nestedSet->deleteNode($this->menuModel->getMenuItemIdByUri($uri));
 
                 Core\Cache::delete('list_id_' . $item, 'articles');
                 Core\SEO::deleteUriAlias($uri);
             }
 
             if (Core\Modules::isInstalled('menus') === true) {
-                $menuModel->setMenuItemsCache();
+                $this->menuModel->setMenuItemsCache();
             }
 
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/articles');
@@ -148,7 +153,7 @@ class Admin extends Core\Modules\Controller\Admin
         if (empty($article) === false) {
             if (isset($_POST['submit']) === true) {
                 try {
-                    $this->model->validateEdit($_POST, $this->lang);
+                    $this->model->validateEdit($_POST, $this->lang, $this->uri);
 
                     $updateValues = array(
                         'start' => $this->date->toSQL($_POST['start']),
@@ -167,7 +172,7 @@ class Admin extends Core\Modules\Controller\Admin
                     $this->model->setCache($this->uri->id);
 
                     // Aliase in der Navigation aktualisieren
-                    \ACP3\Modules\Menus\Helpers::setMenuItemsCache();
+                    $this->menuModel->setMenuItemsCache();
 
                     $this->session->unsetFormToken();
 

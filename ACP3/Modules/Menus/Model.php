@@ -132,7 +132,7 @@ class Model extends Core\Model
             $formData['mode'] == 1 && Core\Modules::isInstalled($formData['module']) === false ||
             $formData['mode'] == 2 && Core\Validate::isInternalURI($formData['uri']) === false ||
             $formData['mode'] == 3 && empty($formData['uri']) ||
-            $formData['mode'] == 4 && (Core\Validate::isNumber($formData['articles']) === false || \ACP3\Modules\Articles\Helpers::articleExists(array($formData['articles'])) === false)
+            $formData['mode'] == 4 && (Core\Validate::isNumber($formData['articles']) === false || \ACP3\Modules\Articles\Helpers::articleExists($formData['articles']) === false)
         )
             $errors[] = $lang->t('menus', 'type_in_uri_and_target');
         if ($formData['mode'] == 2 && (bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
