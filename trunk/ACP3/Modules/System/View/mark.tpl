@@ -1,13 +1,14 @@
 {js_libraries enable="bootbox"}
 <script type="text/javascript">
+    var cssClassName = 'active';
     function mark_entries(id, name, action) {
         var fields = $(id).parents('thead:first').next('tbody').find('input[name="' + name + '[]"]:visible');
 
         jQuery.each(fields, function () {
             if (action === 'add') {
-                $(this).prop('checked', true).parents('tr:first').addClass('info');
+                $(this).prop('checked', true).parents('tr:first').addClass(cssClassName);
             } else {
-                $(this).prop('checked', false).parents('tr:first').removeClass('info');
+                $(this).prop('checked', false).parents('tr:first').removeClass(cssClassName);
             }
         });
     }
@@ -16,7 +17,8 @@
         $('#{$mark_all_id}').click(function () {
             mark_entries('#{$mark_all_id}', '{$checkbox_name}', $(this).is(':checked') ? 'add' : 'remove');
             // Checkbox durch Klick auf Tabellenzeile markieren
-        }).parents('thead').next('tbody').find('tr:has(:checkbox)').click(function (e) {
+        }).parents('thead').next('tbody').find('tr:has(:checkbox)').click(
+                function (e) {
                     if (e.target.type !== 'checkbox') {
                         if (e.target.nodeName === 'A')
                             return;
@@ -25,15 +27,16 @@
                         $elem.prop('checked', $elem.is(':checked') ? false : true);
                     }
 
-                    $(this).toggleClass('info');
+                    $(this).toggleClass(cssClassName);
 
                     // Alle Datensätze auf einer Seite wurden markiert
-                    if ($(this).parents('tbody').find('input[name="{$checkbox_name}[]"]:visible').length === $(this).parents('tbody').find('tr.info:visible').length) {
+                    if ($(this).parents('tbody').find('input[name="{$checkbox_name}[]"]:visible').length === $(this).parents('tbody').find('tr.' + cssClassName + ':visible').length) {
                         $('#{$mark_all_id}').prop('checked', true);
                     } else {
                         $('#{$mark_all_id}').prop('checked', false);
                     }
-                });
+                }
+        );
 
         $('form #adm-list input[type=image]').click(function () {
             var entries = $('form .table input[name="{$checkbox_name}[]"]:checked') || [];

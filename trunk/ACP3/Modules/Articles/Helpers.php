@@ -14,33 +14,17 @@ use ACP3\Core;
 
 abstract class Helpers
 {
-
     /**
-     * Erstellt den Cache eines Artikels anhand der angegebenen ID
      *
-     * @param integer $id
-     *  Die ID der statischen Seite
-     * @return boolean
+     * @var Model
      */
-    public static function setArticlesCache($id)
-    {
-        $data = Core\Registry::get('Db')->fetchAssoc('SELECT start, end, title, text FROM ' . DB_PRE . 'articles WHERE id = ?', array($id));
-        return Core\Cache::create('list_id_' . $id, $data, 'articles');
-    }
+    protected static $model;
 
-    /**
-     * Bindet den gecacheten Artikel ein
-     *
-     * @param integer $id
-     *  Die ID der statischen Seite
-     * @return array
-     */
-    public static function getArticlesCache($id)
+    protected static function _init()
     {
-        if (Core\Cache::check('list_id_' . $id, 'articles') === false)
-            self::setArticlesCache($id);
-
-        return Core\Cache::output('list_id_' . $id, 'articles');
+        if (!self::$model) {
+            self::$model = new Model(Core\Registry::get('Db'));
+        }
     }
 
     /**
@@ -51,7 +35,9 @@ abstract class Helpers
      */
     public static function articlesList($id = '')
     {
-        $articles = Core\Registry::get('Db')->fetchAll('SELECT id, start, end, title, text FROM ' . DB_PRE . 'articles ORDER BY title ASC');
+        self::_init();
+
+        $articles = self::$model->getAll();
         $c_articles = count($articles);
 
         if ($c_articles > 0) {

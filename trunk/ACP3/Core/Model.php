@@ -71,4 +71,11 @@ class Model
         }
     }
 
+    public function validateFormKey(\ACP3\Core\Lang $lang)
+    {
+        if (Validate::formToken() === false) {
+            throw new Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
+        }
+    }
+
 }

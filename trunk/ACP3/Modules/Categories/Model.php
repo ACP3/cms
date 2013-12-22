@@ -51,9 +51,7 @@ class Model extends Core\Model
 
     public function validate(array $formData, $file, $settings, \ACP3\Core\Lang $lang, $categoryId = '')
     {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+        $this->validateFormKey($lang);
 
         $errors = array();
         if (strlen($formData['title']) < 3) {
@@ -84,9 +82,7 @@ class Model extends Core\Model
 
     public function validateSettings(array $formData, \ACP3\Core\Lang $lang)
     {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+        $this->validateFormKey($lang);
 
         $errors = array();
         if (Core\Validate::isNumber($formData['width']) === false) {
@@ -111,7 +107,7 @@ class Model extends Core\Model
      *  Das Modul, für welches der Kategorien-Cache erstellt werden soll
      * @return boolean
      */
-    public function setCategoriesCache($moduleName)
+    public function setCache($moduleName)
     {
         return Core\Cache::create($moduleName, $this->getAllByModuleName($moduleName), 'categories');
     }
@@ -123,10 +119,10 @@ class Model extends Core\Model
      *  Das jeweilige Modul, für welches die Kategorien geholt werden sollen
      * @return array
      */
-    public function getCategoriesCache($moduleName)
+    public function getCache($moduleName)
     {
         if (Core\Cache::check($moduleName, 'categories') === false) {
-            $this->setCategoriesCache($moduleName);
+            $this->setCache($moduleName);
         }
 
         return Core\Cache::output($moduleName, 'categories');

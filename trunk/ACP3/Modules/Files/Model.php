@@ -19,22 +19,40 @@ class Model extends Core\Model
         parent::__construct($db);
     }
 
+    /**
+     * @param int $id
+     * @param string $time
+     * @return bool
+     */
     public function resultExists($id, $time = '')
     {
-        $period = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
+        $period = empty($time) === false ? ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
         return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id' . $period, array('id' => $id, 'time' => $time)) > 0 ? true : false;
     }
 
+    /**
+     * @param int $id
+     * @return array
+     */
     public function getOneById($id)
     {
         return $this->db->fetchAssoc('SELECT n.*, c.title AS category_title FROM ' . $this->prefix . static::TABLE_NAME . ' AS n LEFT JOIN ' . $this->prefix . \ACP3\Modules\Categories\Model::TABLE_NAME . ' AS c ON(n.category_id = c.id) WHERE n.id = ?', array($id));
     }
 
+    /**
+     * @param int $id
+     * @return mixed
+     */
     public function getFileById($id)
     {
         return $this->db->fetchColumn('SELECT file FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = ?', array($id));
     }
 
+    /**
+     * @param $time
+     * @param string $categoryId
+     * @return int
+     */
     public function countAll($time, $categoryId = '')
     {
         if (!empty($categoryId)) {
@@ -46,16 +64,29 @@ class Model extends Core\Model
         return count($results);
     }
 
-    public function getAll($time, $limitStart = '', $resultsPerPage = '')
+    /**
+     * @param string $time
+     * @param string $limitStart
+     * @param string $resultsPerPage
+     * @return array
+     */
+    public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
+        $where = empty($time) === false ? ' WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE ' . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, array('time' => $time));
+        return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, array('time' => $time));
     }
 
-    public function getAllByCategoryId($categoryId, $time, $limitStart = '', $resultsPerPage = '')
+    /**
+     * @param $categoryId
+     * @param string $time
+     * @param string $limitStart
+     * @param string $resultsPerPage
+     * @return array
+     */
+    public function getAllByCategoryId($categoryId, $time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
+        $where = empty($time) === false ? ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE category_id = :categoryId' . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, array('time' => $time, 'categoryId' => $categoryId));
     }
@@ -64,11 +95,10 @@ class Model extends Core\Model
     {
         return $this->db->fetchAll('SELECT f.*, c.title AS cat FROM ' . $this->prefix . static::TABLE_NAME . ' AS f, ' . $this->prefix . \ACP3\Modules\Categories\Model::TABLE_NAME . ' AS c WHERE f.category_id = c.id ORDER BY f.start DESC, f.end DESC, f.id DESC');
     }
-    
-    public function validateCreate(array $formData, $file, \ACP3\Core\Lang $lang) {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+
+    public function validateCreate(array $formData, $file, \ACP3\Core\Lang $lang)
+    {
+        $this->validateFormKey($lang);
 
         $errors = array();
         if (Core\Validate::date($formData['start'], $formData['end']) === false) {
@@ -105,9 +135,7 @@ class Model extends Core\Model
 
     public function validateEdit(array $formData, $file, \ACP3\Core\Lang $lang)
     {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+        $this->validateFormKey($lang);
 
         $errors = array();
         if (Core\Validate::date($formData['start'], $formData['end']) === false) {
@@ -146,9 +174,7 @@ class Model extends Core\Model
 
     public function validateSettings(array $formData, \ACP3\Core\Lang $lang)
     {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+        $this->validateFormKey($lang);
 
         $errors = array();
         if (empty($formData['dateformat']) || ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short')) {
@@ -173,7 +199,7 @@ class Model extends Core\Model
      *  Die ID der News
      * @return boolean
      */
-    public function setFilesCache($id)
+    public function setCache($id)
     {
         return Core\Cache::create('details_id_' . $id, $this->getOneById($id), 'files');
     }
@@ -185,11 +211,11 @@ class Model extends Core\Model
      *  Die ID der News
      * @return array
      */
-    public function getFilesCache($id)
+    public function getCache($id)
     {
         $cacheId = 'details_id_' . $id;
         if (Core\Cache::check($cacheId, 'files') === false) {
-            $this->setFilesCache($id);
+            $this->setCache($id);
         }
 
         return Core\Cache::output($cacheId, 'files');
