@@ -100,24 +100,31 @@ class Admin extends Core\Modules\Controller\Admin
         if ($this->uri->action === 'confirmed') {
             $items = explode('|', $items);
             $bool = false;
-            $in_use = false;
+            $isInUse = false;
 
             foreach ($items as $item) {
                 if (!empty($item) && $this->model->resultExists($item) === true) {
-                    $category = $this->db->fetchAssoc('SELECT c.picture, m.name AS module FROM ' . DB_PRE . 'categories AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE c.id = ?', array($item));
-                    if ($this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . $category['module'] . ' WHERE category_id = ?', array($item)) > 0) {
-                        $in_use = true;
-                    } else {
-                        // Kategoriebild ebenfalls löschen
-                        Core\Functions::removeUploadedFile('categories', $category['picture']);
-                        $bool = $this->model->delete($item);
+                    $category = $this->model->getCategoryDeleteInfosById($item);
+
+                    $className = "\\ACP3\\Modules\\" . ucfirst($category['module']) . "\\Model";
+                    if (class_exists($className) === true) {
+                        /** @var \ACP3\Core\Model $model */
+                        $model = new $className($this->db);
+                        if ($model->countAll('', $item) > 0) {
+                            $isInUse = true;
+                            continue;
+                        }
                     }
+
+                    // Kategoriebild ebenfalls löschen
+                    Core\Functions::removeUploadedFile('categories', $category['picture']);
+                    $bool = $this->model->delete($item);
                 }
             }
 
             Core\Cache::purge('sql', 'categories');
 
-            if ($in_use === true) {
+            if ($isInUse === true) {
                 $text = $this->lang->t('categories', 'category_is_in_use');
                 $bool = false;
             } else {

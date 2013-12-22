@@ -55,7 +55,6 @@ class Admin extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $this->view->assign('error_msg', $e->getMessage());
             }
-
         }
 
         $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('index_name' => '', 'title' => ''));
@@ -104,7 +103,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                 Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/news');
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/menus');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $this->view->assign('error_msg', $e->getMessage());
             }
@@ -201,15 +200,15 @@ class Admin extends Core\Modules\Controller\Admin
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
             foreach ($items as $item) {
                 // URI-Alias löschen
-                $item_uri = $this->model->getMenuItemUriById($item);
+                $itemUri = $this->model->getMenuItemUriById($item);
                 $bool = $nestedSet->deleteNode($item);
-                Core\SEO::deleteUriAlias($item_uri);
+                Core\SEO::deleteUriAlias($itemUri);
             }
 
-            Menus\Helpers::setMenuItemsCache();
+            $this->model->setMenuItemsCache();
 
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
-        } elseif (is_string($item)) {
+        } elseif (is_string($items)) {
             $this->uri->redirect('errors/404');
         }
     }
@@ -295,7 +294,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                     Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/news');
+                    Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/menus');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $this->view->assign('error_msg', $e->getMessage());
                 }
