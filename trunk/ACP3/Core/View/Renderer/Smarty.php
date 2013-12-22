@@ -5,7 +5,7 @@ namespace ACP3\Core\View\Renderer;
 /**
  * Renderer for the Smarty template engine
  */
-class Smarty extends \ACP3\Core\View\Renderer
+class Smarty extends \ACP3\Core\View\AbstractRenderer
 {
 
     /**

@@ -4,18 +4,18 @@ namespace ACP3\Modules\Users;
 
 use ACP3\Core\Modules;
 
-class Installer extends Modules\Installer
+class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'users';
     const SCHEMA_VERSION = 34;
 
-    protected function removeResources()
+    public function removeResources()
     {
         return true;
     }
 
-    protected function createTables()
+    public function createTables()
     {
         return array(
             "CREATE TABLE `{pre}users` (
@@ -52,12 +52,12 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function removeTables()
+    public function removeTables()
     {
         return array();
     }
 
-    protected function settings()
+    public function settings()
     {
         return array(
             'enable_registration' => 1,
@@ -67,17 +67,17 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function removeSettings()
+    public function removeSettings()
     {
         return true;
     }
 
-    protected function removeFromModulesTable()
+    public function removeFromModulesTable()
     {
         return true;
     }
 
-    protected function schemaUpdates()
+    public function schemaUpdates()
     {
         return array(
             31 => array(

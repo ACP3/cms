@@ -5,7 +5,7 @@ namespace ACP3\Core\View;
 /**
  * Abstract Class for the various renderers
  */
-abstract class Renderer
+abstract class AbstractRenderer implements RendererInterface
 {
 
     protected $config = array();
@@ -15,12 +15,4 @@ abstract class Renderer
     {
         $this->config = $params;
     }
-
-    abstract public function assign($name, $value = null);
-
-    abstract public function fetch($template);
-
-    abstract public function display($template);
-
-    abstract public function templateExists($template);
 }

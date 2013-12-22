@@ -4,7 +4,7 @@ namespace ACP3\Modules\Articles;
 
 use ACP3\Core\Modules;
 
-class Installer extends Modules\Installer
+class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'articles';
@@ -17,7 +17,7 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function createTables()
+    public function createTables()
     {
         return array(
             "CREATE TABLE `{pre}articles` (
@@ -32,17 +32,17 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function removeTables()
+    public function removeTables()
     {
         return array("DROP TABLE `{pre}articles`;");
     }
 
-    protected function settings()
+    public function settings()
     {
         return array();
     }
 
-    protected function schemaUpdates()
+    public function schemaUpdates()
     {
         return array(
             31 => array(

@@ -5,7 +5,7 @@ namespace ACP3\Core\View\Renderer;
 /**
  * Renderer for the output of RSS and ATOM newsfeeds
  */
-class FeedGenerator extends \ACP3\Core\View\Renderer
+class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
 {
 
     public function __construct($params)

@@ -4,13 +4,13 @@ namespace ACP3\Modules\News;
 
 use ACP3\Core\Modules;
 
-class Installer extends Modules\Installer
+class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'news';
     const SCHEMA_VERSION = 32;
 
-    protected function createTables()
+    public function createTables()
     {
         return array(
             "CREATE TABLE `{pre}news` (
@@ -31,7 +31,7 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function removeTables()
+    public function removeTables()
     {
         return array(
             "DROP TABLE `{pre}news`;",
@@ -39,7 +39,7 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function settings()
+    public function settings()
     {
         return array(
             'comments' => 1,
@@ -51,7 +51,7 @@ class Installer extends Modules\Installer
         );
     }
 
-    protected function schemaUpdates()
+    public function schemaUpdates()
     {
         return array(
             31 => array(

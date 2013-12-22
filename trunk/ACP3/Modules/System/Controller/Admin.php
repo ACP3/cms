@@ -343,7 +343,7 @@ class Admin extends Core\Modules\Controller\Admin
         Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
     }
 
-   protected function disableModule()
+    protected function disableModule()
     {
         $bool = false;
         $info = Core\Modules::getModuleInfo($this->uri->dir);
@@ -353,7 +353,7 @@ class Admin extends Core\Modules\Controller\Admin
             $text = $this->lang->t('system', 'mod_deactivate_forbidden');
         } else {
             // Modulabhängigkeiten prüfen
-            $deps = Helpers::checkUninstallDependencies($this->uri->dir);
+            $deps = System\Helpers::checkUninstallDependencies($this->uri->dir);
 
             if (empty($deps)) {
                 $bool = $this->db->update(DB_PRE . 'modules', array('active' => 0), array('name' => $this->uri->dir));
@@ -368,7 +368,7 @@ class Admin extends Core\Modules\Controller\Admin
         Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
     }
 
-  protectede function installModule()
+    protected function installModule()
     {
         $bool = false;
         // Nur noch nicht installierte Module berücksichtigen
@@ -377,11 +377,11 @@ class Admin extends Core\Modules\Controller\Admin
             $path = MODULES_DIR . $mod_name . '/Installer.php';
             if (is_file($path) === true) {
                 // Modulabhängigkeiten prüfen
-                $deps = Helpers::checkInstallDependencies($this->uri->dir);
+                $deps = System\Helpers::checkInstallDependencies($this->uri->dir);
 
                 // Modul installieren
                 if (empty($deps)) {
-                    $className = Core\Modules\Installer::buildClassName($this->uri->dir);
+                    $className = Core\Modules\AbstractInstaller::buildClassName($this->uri->dir);
                     $install = new $className();
                     $bool = $install->install();
                     Core\Modules::setModulesCache();
@@ -398,7 +398,7 @@ class Admin extends Core\Modules\Controller\Admin
         Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
     }
 
- protectedte function uninstallModule()
+    protected function uninstallModule()
     {
         $bool = false;
         $mod_info = Core\Modules::getModuleInfo($this->uri->dir);
@@ -408,11 +408,11 @@ class Admin extends Core\Modules\Controller\Admin
             $path = MODULES_DIR . $mod_name . '/Installer.php';
             if (is_file($path) === true) {
                 // Modulabhängigkeiten prüfen
-                $deps = Helpers::checkUninstallDependencies($this->uri->dir);
+                $deps = System\Helpers::checkUninstallDependencies($this->uri->dir);
 
                 // Modul deinstallieren
                 if (empty($deps)) {
-                    $className = Core\Modules\Installer::buildClassName($this->uri->dir);
+                    $className = Core\Modules\AbstractInstaller::buildClassName($this->uri->dir);
                     $install = new $className();
                     $bool = $install->uninstall();
                     Core\Modules::setModulesCache();
