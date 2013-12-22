@@ -53,12 +53,12 @@ class Model extends Core\Model
      * @param string $categoryId
      * @return int
      */
-    public function countAll($time, $categoryId = '')
+    public function countAll($time = '', $categoryId = '')
     {
         if (!empty($categoryId)) {
             $results = $this->getAllByCategoryId($categoryId, $time);
         } else {
-            $results = $this->getAll($time, POS);
+            $results = $this->getAll($time);
         }
 
         return count($results);

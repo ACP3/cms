@@ -37,9 +37,9 @@ class Model extends Core\Model
         return $this->db->fetchAssoc('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = ?', array($id));
     }
 
-    public function countAll($time)
+    public function countAll($time = '')
     {
-        return count($this->getAll($time, POS));
+        return count($this->getAll($time));
     }
 
     public function getAll($time = '', $limitStart = '', $resultsPerPage = '')

@@ -30,12 +30,12 @@ class Model extends Core\Model
         return $this->db->fetchAssoc('SELECT n.*, c.title AS category_title FROM ' . $this->prefix . static::TABLE_NAME . ' AS n LEFT JOIN ' . $this->prefix . \ACP3\Modules\Categories\Model::TABLE_NAME . ' AS c ON(n.category_id = c.id) WHERE n.id = ?', array($id));
     }
 
-    public function countAll($time, $categoryId = '')
+    public function countAll($time = '', $categoryId = '')
     {
         if (!empty($categoryId)) {
             $results = $this->getAllByCategoryId($categoryId, $time);
         } else {
-            $results = $this->getAll($time, POS);
+            $results = $this->getAll($time);
         }
 
         return count($results);
