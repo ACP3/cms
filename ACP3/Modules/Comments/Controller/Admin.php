@@ -126,7 +126,7 @@ class Admin extends Core\Modules\Controller\Admin
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $can_delete === true ? 0 : ''
             );
-            $this->view->appendContent(Core\Functions::datatable($config));
+            $this->view->appendContent(Core\Functions::dataTable($config));
             for ($i = 0; $i < $c_comments; ++$i) {
                 $comments[$i]['name'] = $this->lang->t($comments[$i]['module'], $comments[$i]['module']);
             }
@@ -157,7 +157,7 @@ class Admin extends Core\Modules\Controller\Admin
                     'sort_dir' => 'asc',
                     'hide_col_sort' => $can_delete === true ? 0 : ''
                 );
-                $this->view->appendContent(Core\Functions::datatable($config));
+                $this->view->appendContent(Core\Functions::dataTable($config));
 
                 $settings = Core\Config::getSettings('comments');
                 // Emoticons einbinden
@@ -208,7 +208,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         $settings = Core\Config::getSettings('comments');
 
-        $this->view->assign('dateformat', $this->date->dateformatDropdown($settings['dateformat']));
+        $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 
         // Emoticons erlauben
         if (Core\Modules::isActive('emoticons') === true) {

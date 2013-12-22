@@ -76,7 +76,7 @@ abstract class Functions
      * @param array $config
      * @return string
      */
-    public static function datatable(array $config)
+    public static function dataTable(array $config)
     {
         Registry::get('View')->enableJsLibraries(array('datatables'));
 
@@ -102,18 +102,18 @@ abstract class Functions
      */
     public static function errorBox($errors)
     {
-        $non_integer_keys = false;
+        $hasNonIntegerKeys = false;
         if (is_array($errors) === true) {
             foreach (array_keys($errors) as $key) {
                 if (Validate::isNumber($key) === false) {
-                    $non_integer_keys = true;
+                    $hasNonIntegerKeys = true;
                     break;
                 }
             }
         } else {
             $errors = (array)$errors;
         }
-        Registry::get('View')->assign('error_box', array('non_integer_keys' => $non_integer_keys, 'errors' => $errors));
+        Registry::get('View')->assign('error_box', array('non_integer_keys' => $hasNonIntegerKeys, 'errors' => $errors));
         return Registry::get('View')->fetchTemplate('system/error_box.tpl');
     }
 
@@ -386,7 +386,7 @@ abstract class Functions
     /**
      * Hochgeladene Dateien verschieben und umbenennen
      *
-     * @param string $tmp_filename
+     * @param string $tmpFilename
      *  Temporäre Datei
      * @param string $filename
      *  Dateiname
@@ -395,7 +395,7 @@ abstract class Functions
      * @return array
      *  Gibt ein Array mit dem Namen und der Größe der neuen Datei zurück
      */
-    public static function moveFile($tmp_filename, $filename, $dir)
+    public static function moveFile($tmpFilename, $filename, $dir)
     {
         $path = UPLOADS_DIR . $dir . '/';
         $ext = strrchr($filename, '.');
@@ -407,7 +407,7 @@ abstract class Functions
         }
 
         if (is_writable($path) === true) {
-            if (!@move_uploaded_file($tmp_filename, $path . $new_name . $ext)) {
+            if (!@move_uploaded_file($tmpFilename, $path . $new_name . $ext)) {
                 echo sprintf(Registry::get('Lang')->t('system', 'upload_error'), $filename);
             } else {
                 $new_file = array();

@@ -26,4 +26,9 @@ class Model extends Core\Model
         parent::__construct($db);
     }
 
+    public function getSchemaTables()
+    {
+        return $this->db->fetchAll('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_TYPE = ? AND TABLE_SCHEMA = ?', array('BASE TABLE', CONFIG_DB_NAME));
+    }
+
 }

@@ -163,7 +163,7 @@ class Admin extends Core\Modules\Controller\Admin
             );
             $this->view->assign('emoticons', $emoticons);
             $this->view->assign('can_delete', $can_delete);
-            $this->view->appendContent(Core\Functions::datatable($config));
+            $this->view->appendContent(Core\Functions::dataTable($config));
         }
     }
 

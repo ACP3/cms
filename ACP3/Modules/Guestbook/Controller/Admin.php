@@ -110,7 +110,7 @@ class Admin extends Core\Modules\Controller\Admin
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $can_delete === true ? 0 : ''
             );
-            $this->view->appendContent(Core\Functions::datatable($config));
+            $this->view->appendContent(Core\Functions::dataTable($config));
 
             $settings = Core\Config::getSettings('guestbook');
             // Emoticons einbinden
@@ -161,7 +161,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         $settings = Core\Config::getSettings('guestbook');
 
-        $this->view->assign('dateformat', $this->date->dateformatDropdown($settings['dateformat']));
+        $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 
         $lang_notify = array(
             $this->lang->t('guestbook', 'no_notification'),

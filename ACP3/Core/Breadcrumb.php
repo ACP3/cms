@@ -16,7 +16,7 @@ class Breadcrumb
      * @var array
      * @access private
      */
-    protected $steps_db = array();
+    protected $stepsFromDb = array();
     /**
      * Enthält alle Schritte der Brotkrümelspur,
      * welche von den Modulen festgelegt werden
@@ -24,7 +24,7 @@ class Breadcrumb
      * @var array
      * @access private
      */
-    protected $steps_mods = array();
+    protected $stepsFromModules = array();
 
     /**
      * @var array
@@ -36,7 +36,7 @@ class Breadcrumb
      *
      * @var array
      */
-    protected $breadcrumb_cache = array();
+    protected $breadcrumbCache = array();
 
     /**
      * @var \ACP3\Core\Lang
@@ -53,7 +53,7 @@ class Breadcrumb
      */
     protected $view;
 
-    public function __construct(\Doctrine\DBAL\Connection $db, \ACP3\Core\Lang $lang, \ACP3\Core\URI $uri, \ACP3\Core\View $view)
+    public function __construct(\Doctrine\DBAL\Connection $db, Lang $lang, URI $uri, View $view)
     {
         $this->lang = $lang;
         $this->uri = $uri;
@@ -117,7 +117,7 @@ class Breadcrumb
      */
     protected function appendFromDB($title, $path = 0)
     {
-        $this->steps_db[] = array(
+        $this->stepsFromDb[] = array(
             'title' => $title,
             'uri' => $path
         );
@@ -136,7 +136,7 @@ class Breadcrumb
      */
     public function append($title, $path = 0)
     {
-        $this->steps_mods[] = array(
+        $this->stepsFromModules[] = array(
             'title' => $title,
             'uri' => $path
         );
@@ -159,7 +159,7 @@ class Breadcrumb
             'title' => $title,
             'uri' => $path,
         );
-        array_unshift($this->steps_mods, $step);
+        array_unshift($this->stepsFromModules, $step);
         return $this;
     }
 
@@ -175,13 +175,13 @@ class Breadcrumb
     public function replaceAnchestor($title, $path = 0, $db_steps = false)
     {
         if ($db_steps === true) {
-            $index = count($this->steps_db) - (!empty($this->steps_db) ? 1 : 0);
-            $this->steps_db[$index]['title'] = $title;
-            $this->steps_db[$index]['uri'] = $path;
+            $index = count($this->stepsFromDb) - (!empty($this->stepsFromDb) ? 1 : 0);
+            $this->stepsFromDb[$index]['title'] = $title;
+            $this->stepsFromDb[$index]['uri'] = $path;
         } else {
-            $index = count($this->steps_mods) - (!empty($this->steps_mods) ? 1 : 0);
-            $this->steps_mods[$index]['title'] = $title;
-            $this->steps_mods[$index]['uri'] = $path;
+            $index = count($this->stepsFromModules) - (!empty($this->stepsFromModules) ? 1 : 0);
+            $this->stepsFromModules[$index]['title'] = $title;
+            $this->stepsFromModules[$index]['uri'] = $path;
         }
 
         return $this;
@@ -201,14 +201,14 @@ class Breadcrumb
         $module = $this->uri->mod;
         $file = $this->uri->file;
 
-        if (empty($this->breadcrumb_cache)) {
+        if (empty($this->breadcrumbCache)) {
             // Brotkrümelspur für das Admin-Panel
             if (defined('IN_ADM') === true) {
                 if ($module !== 'acp')
                     $this->setTitlePostfix($this->lang->t('system', 'acp'));
 
                 // Wenn noch keine Brotkrümelspur gesetzt ist, dies nun tun
-                if (empty($this->steps_mods)) {
+                if (empty($this->stepsFromModules)) {
                     $this->append($this->lang->t('system', 'acp'), $this->uri->route('acp'));
                     if ($module !== 'errors') {
                         if ($module !== 'acp') {
@@ -226,40 +226,40 @@ class Breadcrumb
                         $this->prepend($this->lang->t($module, $module), $this->uri->route('acp/' . $module));
                     $this->prepend($this->lang->t('system', 'acp'), $this->uri->route('acp'));
                 }
-                $this->breadcrumb_cache = $this->steps_mods;
+                $this->breadcrumbCache = $this->stepsFromModules;
                 // Brotkrümelspur für das Frontend
             } else {
-                if (empty($this->steps_db) && empty($this->steps_mods)) {
+                if (empty($this->stepsFromDb) && empty($this->stepsFromModules)) {
                     $this->append($file === 'list' ? $this->lang->t($module, $module) : $this->lang->t($module, $file), $this->uri->route($module . '/' . $file));
-                    $this->breadcrumb_cache = $this->steps_mods;
-                } elseif (!empty($this->steps_db) && empty($this->steps_mods)) {
-                    $this->breadcrumb_cache = $this->steps_db;
-                } elseif (!empty($this->steps_mods) && empty($this->steps_db)) {
-                    $this->breadcrumb_cache = $this->steps_mods;
+                    $this->breadcrumbCache = $this->stepsFromModules;
+                } elseif (!empty($this->stepsFromDb) && empty($this->stepsFromModules)) {
+                    $this->breadcrumbCache = $this->stepsFromDb;
+                } elseif (!empty($this->stepsFromModules) && empty($this->stepsFromDb)) {
+                    $this->breadcrumbCache = $this->stepsFromModules;
                 } else {
-                    $this->breadcrumb_cache = $this->steps_db;
+                    $this->breadcrumbCache = $this->stepsFromDb;
 
-                    if ($this->breadcrumb_cache[count($this->breadcrumb_cache) - 1]['uri'] === $this->steps_mods[0]['uri']) {
-                        $c_steps_mods = count($this->steps_mods);
+                    if ($this->breadcrumbCache[count($this->breadcrumbCache) - 1]['uri'] === $this->stepsFromModules[0]['uri']) {
+                        $c_steps_mods = count($this->stepsFromModules);
                         for ($i = 1; $i < $c_steps_mods; ++$i) {
-                            $this->breadcrumb_cache[] = $this->steps_mods[$i];
+                            $this->breadcrumbCache[] = $this->stepsFromModules[$i];
                         }
                     }
                 }
             }
 
             // Letzte Brotkrume markieren
-            $this->breadcrumb_cache[count($this->breadcrumb_cache) - 1]['last'] = true;
+            $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['last'] = true;
         }
 
         // Brotkrümelspur ausgeben
         if ($mode === 1) {
-            $this->view->assign('breadcrumb', $this->breadcrumb_cache);
+            $this->view->assign('breadcrumb', $this->breadcrumbCache);
             return $this->view->fetchTemplate('system/breadcrumb.tpl');
             // Nur Titel ausgeben
         } else {
             // Letzter Eintrag der Brotkrümelspur ist der Seitentitel
-            $title = $this->breadcrumb_cache[count($this->breadcrumb_cache) - 1]['title'];
+            $title = $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['title'];
             if ($mode === 3) {
                 $separator = ' ' . $this->title['separator'] . ' ';
                 if (!empty($this->title['prefix']))

@@ -268,7 +268,7 @@ class Admin extends Core\Modules\Controller\Admin
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $can_delete === true ? 0 : ''
             );
-            $this->view->appendContent(Core\Functions::datatable($config));
+            $this->view->appendContent(Core\Functions::dataTable($config));
             for ($i = 0; $i < $c_files; ++$i) {
                 $files[$i]['period'] = $this->date->formatTimeRange($files[$i]['start'], $files[$i]['end']);
                 $files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : $this->lang->t('files', 'unknown_filesize');
@@ -308,7 +308,7 @@ class Admin extends Core\Modules\Controller\Admin
             $this->view->assign('comments', Core\Functions::selectGenerator('comments', array(1, 0), $lang_comments, $settings['comments'], 'checked'));
         }
 
-        $this->view->assign('dateformat', $this->date->dateformatDropdown($settings['dateformat']));
+        $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 
         $this->view->assign('sidebar_entries', Core\Functions::recordsPerPage((int)$settings['sidebar'], 1, 10));
 
