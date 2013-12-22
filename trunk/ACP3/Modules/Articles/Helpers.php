@@ -48,4 +48,8 @@ abstract class Helpers
         return $articles;
     }
 
+    public static function articleExists($id) {
+        return self::$model->resultExists($id);
+    }
+
 }

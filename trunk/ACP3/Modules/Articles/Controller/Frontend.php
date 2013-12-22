@@ -55,11 +55,11 @@ class Frontend extends Core\Modules\Controller
     public function actionDetails()
     {
         if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id, $this->date->getCurrentDateTime()) === true) {
-            $page = Articles\Helpers::getArticlesCache($this->uri->id);
+            $article = $this->model->getCache($this->uri->id);
 
-            $this->breadcrumb->replaceAnchestor($page['title'], 0, true);
+            $this->breadcrumb->replaceAnchestor($article['title'], 0, true);
 
-            $this->view->assign('page', Core\Functions::splitTextIntoPages(Core\Functions::rewriteInternalUri($page['text']), $this->uri->getCleanQuery()));
+            $this->view->assign('page', Core\Functions::splitTextIntoPages(Core\Functions::rewriteInternalUri($article['text']), $this->uri->getCleanQuery()));
         } else {
             $this->uri->redirect('errors/404');
         }

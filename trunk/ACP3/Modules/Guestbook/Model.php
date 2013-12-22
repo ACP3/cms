@@ -21,7 +21,7 @@ class Model extends Core\Model
 
     public function resultExists($id, $time = '')
     {
-        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id', array('id' => $id));
+        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id', array('id' => $id)) > 0 ? true : false;
     }
 
     public function getOneById($id)

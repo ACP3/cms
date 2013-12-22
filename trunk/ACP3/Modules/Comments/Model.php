@@ -26,7 +26,7 @@ class Model extends Core\Model
 
     public function resultsExist($moduleId)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE module_id = ?', array($moduleId));
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE module_id = ?', array($moduleId)) > 0 ? true : false;
     }
 
     public function getOneById($id)
