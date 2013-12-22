@@ -17,7 +17,7 @@ class Admin extends Core\Modules\Controller\Admin
      *
      * @var Model
      */
-    private $model;
+    protected $model;
 
     public function __construct(
         \ACP3\Core\Auth $auth,

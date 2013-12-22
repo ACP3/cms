@@ -13,25 +13,25 @@ abstract class ACL
      *
      * @var array
      */
-    private static $privileges = array();
+    protected static $privileges = array();
     /**
      * ID des eingeloggten Users
      *
      * @var array
      */
-    private static $userId = 0;
+    protected static $userId = 0;
     /**
      * Array mit den dem Benutzer zugewiesenen Rollen
      *
      * @var array
      */
-    private static $userRoles = array();
+    protected static $userRoles = array();
     /**
      * Array mit allen registrierten Ressourcen
      *
      * @var array
      */
-    private static $resources = array();
+    protected static $resources = array();
 
     /**
      * Konstruktor - erzeugt die ACL für den jeweiligen User
@@ -205,7 +205,7 @@ abstract class ACL
      *    ID der Rolle, dessen übergeordnete Rolle sucht werden soll
      * @return integer
      */
-    private static function getPermissionValue($key, $role_id)
+    protected static function getPermissionValue($key, $role_id)
     {
         $value = Registry::get('Db')->fetchAssoc('SELECT ru.permission FROM ' . DB_PRE . 'acl_roles AS r, ' . DB_PRE . 'acl_roles AS parent JOIN ' . DB_PRE . 'acl_rules AS ru ON(parent.id = ru.role_id) JOIN ' . DB_PRE . 'acl_privileges AS p ON(ru.privilege_id = p.id) WHERE r.id = ? AND p.key = ? AND ru.permission != 2 AND parent.left_id < r.left_id AND parent.right_id > r.right_id ORDER BY parent.left_id DESC LIMIT 1', array($role_id, $key));
         return isset($value['permission']) ? $value['permission'] : 0;

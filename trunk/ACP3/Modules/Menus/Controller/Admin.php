@@ -108,7 +108,7 @@ class Admin extends Core\Modules\Controller\Admin
                     'target' => $_POST['display'] == 0 ? 1 : $_POST['target'],
                 );
 
-                $nestedSet = new Core\NestedSet('menu_items', true);
+                $nestedSet = new Core\NestedSet($this->db, 'menu_items', true);
                 $bool = $nestedSet->insertNode((int)$_POST['parent'], $insert_values);
 
                 // Verhindern, dass externen URIs Aliase, Keywords, etc. zugewiesen bekommen
@@ -193,7 +193,7 @@ class Admin extends Core\Modules\Controller\Admin
         if ($this->uri->action === 'confirmed') {
             $items = explode('|', $items);
             $bool = false;
-            $nestedSet = new Core\NestedSet('menu_items', true);
+            $nestedSet = new Core\NestedSet($this->db, 'menu_items', true);
             foreach ($items as $items) {
                 if (!empty($items) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menus WHERE id = ?', array($items)) == 1) {
                     // Der Navigationsleiste zugeordnete Menüpunkte ebenfalls löschen
@@ -223,7 +223,7 @@ class Admin extends Core\Modules\Controller\Admin
         if ($this->uri->action === 'confirmed') {
             $items = explode('|', $items);
             $bool = false;
-            $nestedSet = new Core\NestedSet('menu_items', true);
+            $nestedSet = new Core\NestedSet($this->db, 'menu_items', true);
             foreach ($items as $item) {
                 // URI-Alias löschen
                 $item_uri = $this->db->fetchColumn('SELECT uri FROM ' . DB_PRE . 'menu_items WHERE id = ?', array($item));
@@ -341,7 +341,7 @@ class Admin extends Core\Modules\Controller\Admin
                         'target' => $_POST['display'] == 0 ? 1 : $_POST['target'],
                     );
 
-                    $nestedSet = new Core\NestedSet('menu_items', true);
+                    $nestedSet = new Core\NestedSet($this->db, 'menu_items', true);
                     $bool = $nestedSet->editNode($this->uri->id, (int)$_POST['parent'], (int)$_POST['block_id'], $update_values);
 
                     // Verhindern, dass externen URIs Aliase, Keywords, etc. zugewiesen bekommen
@@ -446,7 +446,7 @@ class Admin extends Core\Modules\Controller\Admin
         if (Core\Validate::isNumber($this->uri->id) === true &&
             $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'menu_items WHERE id = ?', array($this->uri->id)) == 1
         ) {
-            $nestedSet = new Core\NestedSet('menu_items', true);
+            $nestedSet = new Core\NestedSet($this->db, 'menu_items', true);
             $nestedSet->order($this->uri->id, $this->uri->action);
 
             Menus\Helpers::setMenuItemsCache();

@@ -13,14 +13,14 @@ use ACP3\Modules\Comments;
 class Frontend extends Core\Modules\Controller
 {
 
-    private $module;
-    private $entryId;
+    protected $module;
+    protected $entryId;
 
     /**
      *
      * @var Model
      */
-    private $model;
+    protected $model;
 
     public function __construct(
         \ACP3\Core\Auth $auth,
@@ -31,7 +31,7 @@ class Frontend extends Core\Modules\Controller
         \ACP3\Core\Session $session,
         \ACP3\Core\URI $uri,
         \ACP3\Core\View $view,
-        $module
+        $module,
         $entry_id)
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);

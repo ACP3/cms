@@ -64,7 +64,7 @@ abstract class Config
      * @param string $module
      * @return boolean
      */
-    private static function setModuleCache($module)
+    protected static function setModuleCache($module)
     {
         $settings = Registry::get('Db')->executeQuery('SELECT s.name, s.value FROM ' . DB_PRE . 'settings AS s JOIN ' . DB_PRE . 'modules AS m ON(m.id = s.module_id) WHERE m.name = ?', array($module))->fetchAll();
         $c_settings = count($settings);

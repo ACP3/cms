@@ -17,19 +17,19 @@ class Auth
      *
      * @var boolean
      */
-    private $isUser = false;
+    protected $isUser = false;
     /**
      * ID des Benutzers
      *
      * @var integer
      */
-    private $userId = 0;
+    protected $userId = 0;
     /**
      * Super User oder nicht
      *
      * @var boolean
      */
-    private $superUser = false;
+    protected $superUser = false;
     /**
      * Anzuzeigende Datensätze  pro Seite
      *
@@ -46,7 +46,7 @@ class Auth
     /**
      * @var \Doctrine\DBAL\Connection
      */
-    private $db;
+    protected $db;
 
     /**
      * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der

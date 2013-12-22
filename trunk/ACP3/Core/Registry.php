@@ -8,7 +8,7 @@ namespace ACP3\Core;
  */
 abstract class Registry
 {
-    private static $registry = array();
+    protected static $registry = array();
 
     public static function set($key, $value)
     {

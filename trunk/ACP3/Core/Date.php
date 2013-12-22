@@ -15,31 +15,31 @@ class Date
      *
      * @var string
      */
-    private $date_format_long = CONFIG_DATE_FORMAT_LONG;
+    protected $date_format_long = CONFIG_DATE_FORMAT_LONG;
 
     /**
      * Kurzes Datumsformat
      *
      * @var string
      */
-    private $date_format_short = CONFIG_DATE_FORMAT_SHORT;
+    protected $date_format_short = CONFIG_DATE_FORMAT_SHORT;
 
     /**
      * PHP DateTimeZone-Object
      *
      * @var object
      */
-    private $date_time_zone = null;
+    protected $date_time_zone = null;
 
     /**
      * @var \ACP3\Core\Lang
      */
-    private $lang;
+    protected $lang;
 
     /**
      * @var \ACP3\Core\View
      */
-    private $view;
+    protected $view;
 
     /**
      * Falls man sich als User authentifiziert hat, eingestellte Zeitzone + Sommerzeiteinstellung holen
@@ -215,7 +215,7 @@ class Date
         return strtr($dateTime->format($format), $replace);
     }
 
-    private function localizeDaysAbbr()
+    protected function localizeDaysAbbr()
     {
         return array(
             'Mon' => $this->lang->t('system', 'date_mon'),
@@ -228,7 +228,7 @@ class Date
         );
     }
 
-    private function localizeDays()
+    protected function localizeDays()
     {
         return array(
             'Monday' => $this->lang->t('system', 'date_monday'),
@@ -241,7 +241,7 @@ class Date
         );
     }
 
-    private function localizeMonths()
+    protected function localizeMonths()
     {
         return array(
             'January' => $this->lang->t('system', 'date_january'),
@@ -259,7 +259,7 @@ class Date
         );
     }
 
-    private function localizeMonthsAbbr()
+    protected function localizeMonthsAbbr()
     {
         return array(
             'Jan' => $this->lang->t('system', 'date_jan'),

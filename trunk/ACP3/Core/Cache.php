@@ -12,12 +12,12 @@ abstract class Cache
      *
      * @var string
      */
-    private static $cache_dir = 'uploads/cache/';
+    protected static $cache_dir = 'uploads/cache/';
     /**
      *
      * @var string
      */
-    private static $sql_cache_dir = 'uploads/cache/sql/';
+    protected static $sql_cache_dir = 'uploads/cache/sql/';
 
     /**
      * Überprüft, ob der Cache für eine bestimmte Abfrage schon erstellt wurde

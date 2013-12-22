@@ -325,7 +325,7 @@ class Admin extends Core\Modules\Controller\Admin
         }
     }
 
-    private function enableModule()
+    protected function enableModule()
     {
         $bool = false;
         $info = Core\Modules::getModuleInfo($this->uri->dir);
@@ -343,7 +343,7 @@ class Admin extends Core\Modules\Controller\Admin
         Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
     }
 
-    private function disableModule()
+   protected function disableModule()
     {
         $bool = false;
         $info = Core\Modules::getModuleInfo($this->uri->dir);
@@ -368,7 +368,7 @@ class Admin extends Core\Modules\Controller\Admin
         Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
     }
 
-    private function installModule()
+  protectede function installModule()
     {
         $bool = false;
         // Nur noch nicht installierte Module berücksichtigen
@@ -398,7 +398,7 @@ class Admin extends Core\Modules\Controller\Admin
         Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
     }
 
-    private function uninstallModule()
+ protectedte function uninstallModule()
     {
         $bool = false;
         $mod_info = Core\Modules::getModuleInfo($this->uri->dir);

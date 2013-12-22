@@ -16,7 +16,7 @@ class Breadcrumb
      * @var array
      * @access private
      */
-    private $steps_db = array();
+    protected $steps_db = array();
     /**
      * Enthält alle Schritte der Brotkrümelspur,
      * welche von den Modulen festgelegt werden
@@ -24,34 +24,34 @@ class Breadcrumb
      * @var array
      * @access private
      */
-    private $steps_mods = array();
+    protected $steps_mods = array();
 
     /**
      * @var array
      */
-    private $title = array('separator' => '-', 'prefix' => '', 'postfix' => '');
+    protected $title = array('separator' => '-', 'prefix' => '', 'postfix' => '');
 
     /**
      * Enthält die gecachete Brotkrümelspur
      *
      * @var array
      */
-    private $breadcrumb_cache = array();
+    protected $breadcrumb_cache = array();
 
     /**
      * @var \ACP3\Core\Lang
      */
-    private $lang;
+    protected $lang;
 
     /**
      * @var \ACP3\Core\URI
      */
-    private $uri;
+    protected $uri;
 
     /**
      * @var \ACP3\Core\View
      */
-    private $view;
+    protected $view;
 
     public function __construct(\Doctrine\DBAL\Connection $db, \ACP3\Core\Lang $lang, \ACP3\Core\URI $uri, \ACP3\Core\View $view)
     {
@@ -115,7 +115,7 @@ class Breadcrumb
      *    Die zum $title zugehörige ACP3-interne URI
      * @return \bBreadcrumb
      */
-    private function appendFromDB($title, $path = 0)
+    protected function appendFromDB($title, $path = 0)
     {
         $this->steps_db[] = array(
             'title' => $title,
@@ -153,7 +153,7 @@ class Breadcrumb
      *    Die zum $title zugehörige ACP3-interne URI
      * @return \bBreadcrumb
      */
-    private function prepend($title, $path)
+    protected function prepend($title, $path)
     {
         $step = array(
             'title' => $title,

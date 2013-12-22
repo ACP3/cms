@@ -14,34 +14,34 @@ abstract class SEO
      * @access private
      * @var array
      */
-    private static $aliases = array();
+    protected static $aliases = array();
     /**
      * Gibt die nächste Seite an
      *
      * @var string
      */
-    private static $next_page = '';
+    protected static $next_page = '';
     /**
      * Gibt die vorherige Seite an
      *
      * @var string
      */
-    private static $previous_page = '';
+    protected static $previous_page = '';
     /**
      * Kanonische URL
      *
      * @var string
      */
-    private static $canonical = '';
+    protected static $canonical = '';
 
-    private static $meta_description_postfix = '';
+    protected static $meta_description_postfix = '';
 
     /**
      * Setzt den Cache für die URI-Aliase
      *
      * @return boolean
      */
-    private static function setSEOCache()
+    protected static function setSEOCache()
     {
         $aliases = Registry::get('Db')->fetchAll('SELECT uri, alias, keywords, description, robots FROM ' . DB_PRE . 'seo');
         $c_aliases = count($aliases);
@@ -64,7 +64,7 @@ abstract class SEO
      *
      * @return array
      */
-    private static function getSEOCache()
+    protected static function getSEOCache()
     {
         if (Cache::check('aliases', 'seo') === false)
             self::setSEOCache();
