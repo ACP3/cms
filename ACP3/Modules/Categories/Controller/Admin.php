@@ -66,7 +66,7 @@ class Admin extends Core\Modules\Controller\Admin
                 }
 
                 $bool = $this->model->insert($insert_values);
-                $this->model->setCategoriesCache($_POST['module']);
+                $this->model->setCache($_POST['module']);
 
                 $this->session->unsetFormToken();
 
@@ -159,7 +159,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                     $bool = $this->model->update($update_values, $this->uri->id);
 
-                    $this->model->setCategoriesCache($this->model->getModuleNameFromCategoryId($this->uri->id));
+                    $this->model->setCache($this->model->getModuleNameFromCategoryId($this->uri->id));
 
                     $this->session->unsetFormToken();
 

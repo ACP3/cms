@@ -163,7 +163,7 @@ class Admin extends Core\Modules\Controller\Admin
                         Core\SEO::insertUriAlias('news/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                     }
 
-                    $this->model->setNewsCache($this->uri->id);
+                    $this->model->setCache($this->uri->id);
 
                     $this->session->unsetFormToken();
 

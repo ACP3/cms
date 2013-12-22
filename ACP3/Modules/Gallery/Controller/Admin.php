@@ -106,7 +106,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                     $lastId = $this->model->insert($insert_values, Model::TABLE_NAME_PICTURES);
                     $bool2 = Gallery\Helpers::generatePictureAlias($lastId);
-                    $this->model->setGalleryCache($this->uri->id);
+                    $this->model->setCache($this->uri->id);
 
                     $this->session->unsetFormToken();
 
@@ -191,7 +191,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                     $bool = $this->model->delete($item, '', Model::TABLE_NAME_PICTURES);
                     Core\SEO::deleteUriAlias('gallery/details/id_' . $item);
-                    $this->model->setGalleryCache($picture['gallery_id']);
+                    $this->model->setCache($picture['gallery_id']);
                 }
             }
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/gallery/edit/id_' . $picture['gallery_id']);
@@ -309,7 +309,7 @@ class Admin extends Core\Modules\Controller\Admin
                     }
 
                     $bool = $this->model->update($update_values, $this->uri->id, Model::TABLE_NAME_PICTURES);
-                    $this->model->setGalleryCache($picture['gallery_id']);
+                    $this->model->setCache($picture['gallery_id']);
 
                     $this->session->unsetFormToken();
 
@@ -370,7 +370,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                 $galleryId = $this->model->getGalleryIdFromPictureId($this->uri->id);
 
-                $this->model->setGalleryCache($galleryId);
+                $this->model->setCache($galleryId);
 
                 $this->uri->redirect('acp/gallery/edit/id_' . $galleryId);
             }

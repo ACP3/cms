@@ -75,7 +75,7 @@ abstract class Helpers
             );
             $result = self::$model->insert($insertValues);
 
-            self::$model->setCategoriesCache($module);
+            self::$model->setCache($module);
 
             return $result;
         }
@@ -96,7 +96,7 @@ abstract class Helpers
         self::_init();
 
         $categories = array();
-        $data = self::$model->getCategoriesCache($module);
+        $data = self::$model->getCache($module);
         $c_data = count($data);
 
         $categories['custom_text'] = !empty($customText) ? $customText : Core\Registry::get('Lang')->t('system', 'pls_select');

@@ -210,7 +210,7 @@ class Admin extends Core\Modules\Controller\Admin
                     if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
                         Core\SEO::insertUriAlias('files/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
 
-                    $this->model->setFilesCache($this->uri->id);
+                    $this->model->setCache($this->uri->id);
 
                     $this->session->unsetFormToken();
 

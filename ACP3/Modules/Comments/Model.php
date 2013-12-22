@@ -62,9 +62,7 @@ class Model extends Core\Model
 
     public function validateCreate(array $formData, $ip, \ACP3\Core\Lang $lang, \ACP3\Core\Auth $auth, \ACP3\Core\Date $date)
     {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+        $this->validateFormKey($lang);
 
         // Flood Sperre
         $flood = $this->getLastDateFromIp($ip);
@@ -92,9 +90,7 @@ class Model extends Core\Model
 
     public function validateEdit(array $formData, \ACP3\Core\Lang $lang)
     {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+        $this->validateFormKey($lang);
 
         $errors = array();
         if ((empty($comment['user_id']) || Core\Validate::isNumber($comment['user_id']) === false) && empty($formData['name'])) {
@@ -111,9 +107,7 @@ class Model extends Core\Model
 
     public function validateSettings(array $formData, \ACP3\Core\Lang $lang)
     {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+        $this->validateFormKey($lang);
 
         $errors = array();
         if (empty($formData['dateformat']) || ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short')) {

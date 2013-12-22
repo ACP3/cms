@@ -41,7 +41,7 @@ abstract class Helpers
     {
         if (empty(self::$emoticons)) {
             self::_init();
-            self::$emoticons = self::$model->getEmoticonsCache();
+            self::$emoticons = self::$model->getCache();
         }
 
         Core\Registry::get('View')->assign('emoticons_field_id', empty($formFieldId) ? 'message' : $formFieldId);
@@ -60,7 +60,7 @@ abstract class Helpers
     {
         if (empty(self::$emoticons)) {
             self::_init();
-            self::$emoticons = self::$model->getEmoticonsCache();
+            self::$emoticons = self::$model->getCache();
         }
 
         return strtr($string, self::$emoticons);

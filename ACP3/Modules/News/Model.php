@@ -19,9 +19,9 @@ class Model extends Core\Model
         parent::__construct($db);
     }
 
-    public function resultExists($id, $time)
+    public function resultExists($id, $time = '')
     {
-        $period = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
+        $period = empy($time) === false ? ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
         return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id' . $period, array('id' => $id, 'time' => $time));
     }
 
@@ -41,30 +41,28 @@ class Model extends Core\Model
         return count($results);
     }
 
-    public function getAll($time, $limitStart = '', $resultsPerPage = '')
+    public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
+        $where = empty($time) === false ? ' WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT id, start, title, text, readmore, comments, uri FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE ' . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, array('time' => $time));
+        return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, array('time' => $time));
     }
 
-    public function getAllByCategoryId($categoryId, $time, $limitStart = '', $resultsPerPage = '')
+    public function getAllByCategoryId($categoryId, $time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end) AND category_id = :categoryId';
+        $where = empty($time) === false ? ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT id, start, title, text, readmore, comments, uri FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE ' . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, array('time' => $time, 'categoryId' => $categoryId));
+        return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE category_id = :categoryId' . $where . ' ORDER BY start DESC, end DESC, id DESC' . $limitStmt, array('time' => $time, 'categoryId' => $categoryId));
     }
 
     public function getAllInAcp()
     {
-        return $this->db->fetchAll('SELECT n.id, n.start, n.end, n.title, c.title AS cat FROM ' . $this->prefix . static::TABLE_NAME . ' AS n, ' . $this->prefix . \ACP3\Modules\Categories\Model::TABLE_NAME . ' AS c WHERE n.category_id = c.id ORDER BY n.start DESC, n.end DESC, n.id DESC');
+        return $this->db->fetchAll('SELECT n.*, c.title AS cat FROM ' . $this->prefix . static::TABLE_NAME . ' AS n, ' . $this->prefix . \ACP3\Modules\Categories\Model::TABLE_NAME . ' AS c WHERE n.category_id = c.id ORDER BY n.start DESC, n.end DESC, n.id DESC');
     }
 
     public function validate(array $formData, \ACP3\Core\Lang $lang)
     {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+        $this->validateFormKey($lang);
 
         $errors = array();
         if (Core\Validate::date($formData['start'], $formData['end']) === false) {
@@ -98,9 +96,7 @@ class Model extends Core\Model
 
     public function validateSettings(array $formData, \ACP3\Core\Lang $lang)
     {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+        $this->validateFormKey($lang);
 
         $errors = array();
         if (empty($formData['dateformat']) ||
@@ -144,7 +140,7 @@ class Model extends Core\Model
      *  Die ID der News
      * @return boolean
      */
-    public function setNewsCache($id)
+    public function setCache($id)
     {
         return Core\Cache::create('details_id_' . $id, $this->getOneById($id), 'news');
     }
@@ -156,11 +152,11 @@ class Model extends Core\Model
      *  Die ID der News
      * @return array
      */
-    public function getNewsCache($id)
+    public function getCache($id)
     {
         $cacheId = 'details_id_' . $id;
         if (Core\Cache::check($cacheId, 'news') === false) {
-            $this->setNewsCache($id);
+            $this->setCache($id);
         }
 
         return Core\Cache::output($cacheId, 'news');

@@ -46,9 +46,7 @@ class Model extends Core\Model
 
     public function validateCreate(array $formData, $file, \ACP3\Core\Lang $lang)
     {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+        $this->validateFormKey($lang);
 
         $settings = Core\Config::getSettings('emoticons');
 
@@ -71,9 +69,7 @@ class Model extends Core\Model
 
     public function validateEdit(array $formData, $file, \ACP3\Core\Lang $lang)
     {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+        $this->validateFormKey($lang);
 
         $settings = Core\Config::getSettings('emoticons');
 
@@ -94,9 +90,7 @@ class Model extends Core\Model
 
     public function validateSettings(array $formData, \ACP3\Core\Lang $lang)
     {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+        $this->validateFormKey($lang);
 
         $errors = array();
         if (Core\Validate::isNumber($formData['width']) === false) {
@@ -119,7 +113,7 @@ class Model extends Core\Model
      *
      * @return boolean
      */
-    public function setEmoticonsCache()
+    public function setCache()
     {
         $emoticons = $this->getAll();
         $c_emoticons = count($emoticons);
@@ -140,10 +134,10 @@ class Model extends Core\Model
      *
      * @return array
      */
-    public function getEmoticonsCache()
+    public function getCache()
     {
         if (Core\Cache::check('list', 'emoticons') === false) {
-            $this->setEmoticonsCache();
+            $this->setCache();
         }
 
         return Core\Cache::output('list', 'emoticons');

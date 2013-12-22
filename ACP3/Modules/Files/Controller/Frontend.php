@@ -42,7 +42,7 @@ class Frontend extends Core\Modules\Controller
     public function actionList()
     {
         if (Core\Modules::isActive('categories') === true) {
-            $categories = $this->categoriesModel->getCategoriesCache('files');
+            $categories = $this->categoriesModel->getCache('files');
             if (count($categories) > 0) {
                 $this->view->assign('categories', $categories);
             }
@@ -52,7 +52,7 @@ class Frontend extends Core\Modules\Controller
     public function actionDetails()
     {
         if ($this->model->resultExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
-            $file = $this->model->getFilesCache($this->uri->id);
+            $file = $this->model->getCache($this->uri->id);
 
             if ($this->uri->action === 'download') {
                 $path = UPLOADS_DIR . 'files/';

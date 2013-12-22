@@ -22,13 +22,14 @@ class Model extends Core\Model
 
     public function galleryExists($id, $time = '')
     {
-        $period = $time !== '' ? ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
+
+        $period = empy($time) === false ? ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
         return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id' . $period, array('id' => $id, 'time' => $time)) > 0 ? true : false;
     }
 
     public function pictureExists($pictureId, $time = '')
     {
-        $period = $time !== '' ? ' AND (g.start = g.end AND g.start <= :time OR g.start != g.end AND :time BETWEEN g.start AND g.end)' : '';
+        $period = empy($time) === false ? ' AND (g.start = g.end AND g.start <= :time OR g.start != g.end AND :time BETWEEN g.start AND g.end)' : '';
         return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' AS g, ' . $this->prefix . static::TABLE_NAME_PICTURES . ' AS p WHERE p.id = :id AND p.gallery_id = g.id' . $period, array('id' => $pictureId, 'time' => $time)) > 0 ? true : false;
     }
 
@@ -79,9 +80,9 @@ class Model extends Core\Model
 
     public function getAll($time = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = $time !== '' ? '(g.start = g.end AND g.start <= :time OR g.start != g.end AND :time BETWEEN g.start AND g.end)' : '';
+        $where = $time !== '' ? ' WHERE (g.start = g.end AND g.start <= :time OR g.start != g.end AND :time BETWEEN g.start AND g.end)' : '';
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
-        return $this->db->fetchAll('SELECT g.*, COUNT(p.gallery_id) AS pics FROM ' . $this->prefix . static::TABLE_NAME . ' AS g LEFT JOIN ' . $this->prefix . static::TABLE_NAME_PICTURES . ' AS p ON(g.id = p.gallery_id) WHERE ' . $where . ' GROUP BY g.id ORDER BY g.start DESC, g.end DESC, g.id DESC' . $limitStmt, array('time' => $time));
+        return $this->db->fetchAll('SELECT g.*, COUNT(p.gallery_id) AS pics FROM ' . $this->prefix . static::TABLE_NAME . ' AS g LEFT JOIN ' . $this->prefix . static::TABLE_NAME_PICTURES . ' AS p ON(g.id = p.gallery_id) ' . $where . ' GROUP BY g.id ORDER BY g.start DESC, g.end DESC, g.id DESC' . $limitStmt, array('time' => $time));
     }
 
     public function getAllInAcp()
@@ -96,9 +97,7 @@ class Model extends Core\Model
 
     public function validateCreate(array $formData, \ACP3\Core\Lang $lang)
     {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+        $this->validateFormKey($lang);
 
         $errors = array();
         if (Core\Validate::date($formData['start'], $formData['end']) === false) {
@@ -120,9 +119,7 @@ class Model extends Core\Model
 
     public function validateCreatePicture(array $file, array $settings, \ACP3\Core\Lang $lang)
     {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+        $this->validateFormKey($lang);
 
         $errors = array();
         if (empty($file['tmp_name'])) {
@@ -142,9 +139,7 @@ class Model extends Core\Model
 
     public function validateEdit(array $formData, \ACP3\Core\Lang $lang)
     {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+        $this->validateFormKey($lang);
 
         $errors = array();
         if (Core\Validate::date($formData['start'], $formData['end']) === false) {
@@ -166,9 +161,7 @@ class Model extends Core\Model
 
     public function validateEditPicture(array $file, array $settings, \ACP3\Core\Lang $lang)
     {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+        $this->validateFormKey($lang);
 
         $errors = array();
         if (!empty($file['tmp_name']) &&
@@ -186,9 +179,7 @@ class Model extends Core\Model
 
     public function validateSettings(array $formData, \ACP3\Core\Lang $lang)
     {
-        if (Core\Validate::formToken() === false) {
-            throw new Core\Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
-        }
+        $this->validateFormKey($lang);
 
         $errors = array();
         if (empty($formData['dateformat']) || ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short')) {
@@ -225,7 +216,7 @@ class Model extends Core\Model
      *  Die ID der zu cachenden Galerie
      * @return boolean
      */
-    public function setGalleryCache($id)
+    public function setCache($id)
     {
         $pictures = $this->getPicturesByGalleryId($id);
         $c_pictures = count($pictures);
@@ -257,10 +248,10 @@ class Model extends Core\Model
      *  Die ID der Galerie
      * @return array
      */
-    public function getGalleryCache($id)
+    public function getCache($id)
     {
         if (Core\Cache::check('pics_id_' . $id, 'gallery') === false) {
-            $this->setGalleryCache($id);
+            $this->setCache($id);
         }
 
         return Core\Cache::output('pics_id_' . $id, 'gallery');

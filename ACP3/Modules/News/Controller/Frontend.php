@@ -39,7 +39,7 @@ class Frontend extends Core\Modules\Controller
         if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id, $this->date->getCurrentDateTime()) == 1) {
 
             $settings = Core\Config::getSettings('news');
-            $news = $this->model->getNewsCache($this->uri->id);
+            $news = $this->model->getCache($this->uri->id);
 
             $this->breadcrumb->append($this->lang->t('news', 'news'), $this->uri->route('news'));
 

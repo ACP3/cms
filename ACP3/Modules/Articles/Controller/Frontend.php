@@ -12,6 +12,11 @@ use ACP3\Modules\Articles;
  */
 class Frontend extends Core\Modules\Controller
 {
+    /**
+     *
+     * @var Model
+     */
+    protected $model;
 
     public function __construct(
         \ACP3\Core\Auth $auth,
@@ -24,18 +29,19 @@ class Frontend extends Core\Modules\Controller
         \ACP3\Core\View $view)
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+
+        $this->model = new Articles\Model($this->db);
     }
 
     public function actionList()
     {
-        $period = 'start = end AND start <= :time OR start != end AND :time BETWEEN start AND end';
         $time = $this->date->getCurrentDateTime();
 
-        $articles = $this->db->fetchAll('SELECT id, start, end, title FROM ' . DB_PRE . 'articles WHERE ' . $period . ' ORDER BY title ASC LIMIT ' . POS . ',' . $this->auth->entries, array('time' => $time));
+        $articles = $this->model->getAll($time, POS, $this->auth->entries);
         $c_articles = count($articles);
 
         if ($c_articles > 0) {
-            $this->view->assign('pagination', Core\Functions::pagination($this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'articles WHERE ' . $period, array('time' => $time))));
+            $this->view->assign('pagination', Core\Functions::pagination($this->model->countAll($time)));
 
             for ($i = 0; $i < $c_articles; ++$i) {
                 $articles[$i]['date_formatted'] = $this->date->format($articles[$i]['start']);
@@ -48,11 +54,7 @@ class Frontend extends Core\Modules\Controller
 
     public function actionDetails()
     {
-        $period = ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
-
-        if (Core\Validate::isNumber($this->uri->id) === true &&
-            $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'articles WHERE id = :id' . $period, array('id' => $this->uri->id, 'time' => $this->date->getCurrentDateTime())) == 1
-        ) {
+        if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id, $this->date->getCurrentDateTime()) === true) {
             $page = Articles\Helpers::getArticlesCache($this->uri->id);
 
             $this->breadcrumb->replaceAnchestor($page['title'], 0, true);
