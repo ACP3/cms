@@ -26,7 +26,7 @@ class Model extends Core\Model
 
     public function resultIsDuplicate($title, $module, $categoryId)
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE c.title = ? AND m.name = ? AND c.id != ?', array($title, $module, $categoryId)) > 0 ? true : false;
+        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' AS c JOIN ' . DB_PRE . 'modules AS m ON(m.id = c.module_id) WHERE c.title = ? AND m.name = ? AND c.id != ?', array($title, $module, $categoryId)) > 0 ? true : false;
     }
 
     public function getOneById($id)

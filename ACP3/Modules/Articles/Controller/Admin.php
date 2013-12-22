@@ -67,7 +67,7 @@ class Admin extends Core\Modules\Controller\Admin
                         'target' => 1,
                     );
 
-                    $nestedSet = new Core\NestedSet($this->db, 'menu_items', true);
+                    $nestedSet = new Core\NestedSet($this->db, \ACP3\Modules\Menus\Model::TABLE_NAME_ITEMS, true);
                     $lastId = $nestedSet->insertNode((int)$_POST['parent'], $insertValues);
                     \ACP3\Modules\Menus\Helpers::setMenuItemsCache();
                 }
@@ -119,17 +119,20 @@ class Admin extends Core\Modules\Controller\Admin
         if ($this->uri->action === 'confirmed') {
             $items = explode('|', $items);
             $bool = false;
-            $nestedSet = new Core\NestedSet($this->db, 'menu_items', true);
+
+            $menuModel = new \ACP3\Modules\Menus\Model($this->db);
+            $nestedSet = new Core\NestedSet($this->db, \ACP3\Modules\Menus\Model::TABLE_NAME_ITEMS, true);
             foreach ($items as $item) {
+                $uri = 'articles/details/id_' . $item . '/';
                 $bool = $this->model->delete($item);
-                $nestedSet->deleteNode($this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'menu_items WHERE uri = ?', array('articles/details/id_' . $item . '/')));
+                $nestedSet->deleteNode($menuModel->getMenuItemIdByUri($uri));
 
                 Core\Cache::delete('list_id_' . $item, 'articles');
-                Core\SEO::deleteUriAlias('articles/details/id_' . $item);
+                Core\SEO::deleteUriAlias($uri);
             }
 
             if (Core\Modules::isInstalled('menus') === true) {
-                \ACP3\Modules\Menus\Helpers::setMenuItemsCache();
+                $menuModel->setMenuItemsCache();
             }
 
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/articles');

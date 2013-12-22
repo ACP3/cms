@@ -29,7 +29,7 @@ class Model extends Core\Model
     public function resultExists($id, $time = '')
     {
         $period = empty($time) === false ? ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
-        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id' . $period, array('id' => $id, 'time' => $time));
+        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id' . $period, array('id' => $id, 'time' => $time)) > 0 ? true : false;
     }
 
     public function getOneById($id)
@@ -95,6 +95,7 @@ class Model extends Core\Model
     public function validateEdit(array $formData, \ACP3\Core\Lang $lang) {
         $this->validateFormKey($lang);
 
+        $errors = array();
         if (Core\Validate::date($_POST['start'], $_POST['end']) === false)
             $errors[] = $this->lang->t('system', 'select_date');
         if (strlen($_POST['title']) < 3)
@@ -106,6 +107,9 @@ class Model extends Core\Model
         )
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
 
+        if (!empty($errors)) {
+            throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
+        }
     }
 
     /**
