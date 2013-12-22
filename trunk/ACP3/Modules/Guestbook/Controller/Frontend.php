@@ -12,6 +12,11 @@ use ACP3\Modules\Guestbook;
  */
 class Frontend extends Core\Modules\Controller
 {
+    /**
+     *
+     * @var Model
+     */
+    protected $model;
 
     public function __construct(
         \ACP3\Core\Auth $auth,
@@ -24,6 +29,8 @@ class Frontend extends Core\Modules\Controller
         \ACP3\Core\View $view)
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+
+        $this->model = new Guestbook\Model($this->db);
     }
 
     public function actionCreate()
@@ -33,53 +40,22 @@ class Frontend extends Core\Modules\Controller
             ->append($this->lang->t('guestbook', 'create'));
 
         $settings = Core\Config::getSettings('guestbook');
-        $newsletterAccess = Core\Modules::hasPermission('newsletter', 'list') === true && $settings['newsletter_integration'] == 1;
-        $captchaAccess = Core\Modules::hasPermission('captcha', 'image');
+        $hasNewsletterAccess = Core\Modules::hasPermission('newsletter', 'list') === true && $settings['newsletter_integration'] == 1;
 
-        $overlay_active = false;
+        $overlayIsActive = false;
         if ($this->uri->layout === 'simple') {
-            $overlay_active = true;
+            $overlayIsActive = true;
             $this->view->setLayout('simple.tpl');
         }
 
         if (isset($_POST['submit']) === true) {
-            $ip = $_SERVER['REMOTE_ADDR'];
+            try {
+                $this->model->validateCreate($_POST, $hasNewsletterAccess, $this->lang, $this->date, $this->auth);
 
-            // Flood Sperre
-            $flood = $this->db->fetchColumn('SELECT MAX(date) FROM ' . DB_PRE . 'guestbook WHERE ip = ?', array($ip));
-            if (!empty($flood)) {
-                $flood_time = $this->date->timestamp($flood) + CONFIG_FLOOD;
-            }
-            $time = $this->date->timestamp();
-
-            if (isset($flood_time) && $flood_time > $time)
-                $errors[] = sprintf($this->lang->t('system', 'flood_no_entry_possible'), $flood_time - $time);
-            if (empty($_POST['name']))
-                $errors['name'] = $this->lang->t('system', 'name_to_short');
-            if (!empty($_POST['mail']) && Core\Validate::email($_POST['mail']) === false)
-                $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
-            if (strlen($_POST['message']) < 3)
-                $errors['message'] = $this->lang->t('system', 'message_to_short');
-            if ($captchaAccess === true && $this->auth->isUser() === false && Core\Validate::captcha($_POST['captcha']) === false)
-                $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
-            if ($newsletterAccess === true && isset($_POST['subscribe_newsletter']) && $_POST['subscribe_newsletter'] == 1) {
-                if (Core\Validate::email($_POST['mail']) === false)
-                    $errors['mail'] = $this->lang->t('guestbook', 'type_in_email_address_to_subscribe_to_newsletter');
-                if (Core\Validate::email($_POST['mail']) === true &&
-                    $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'newsletter_accounts WHERE mail = ?', array($_POST['mail'])) == 1
-                )
-                    $errors[] = $this->lang->t('newsletter', 'account_exists');
-            }
-
-            if (isset($errors) === true) {
-                $this->view->assign('error_msg', Core\Functions::errorBox($errors));
-            } elseif (Core\Validate::formToken() === false) {
-                $this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-            } else {
-                $insert_values = array(
+                $insertValues = array(
                     'id' => '',
                     'date' => $this->date->getCurrentDateTime(),
-                    'ip' => $ip,
+                    'ip' => $_SERVER['REMOTE_ADDR'],
                     'name' => Core\Functions::strEncode($_POST['name']),
                     'user_id' => $this->auth->isUser() ? $this->auth->getUserId() : '',
                     'message' => Core\Functions::strEncode($_POST['message']),
@@ -88,7 +64,7 @@ class Frontend extends Core\Modules\Controller
                     'active' => $settings['notify'] == 2 ? 0 : 1,
                 );
 
-                $bool = $this->db->insert(DB_PRE . 'guestbook', $insert_values);
+                $lastId = $this->model->insert($insertValues);
 
                 // E-Mail-Benachrichtigung bei neuem Eintrag der hinterlegten
                 // E-Mail-Adresse zusenden
@@ -100,66 +76,69 @@ class Frontend extends Core\Modules\Controller
                 }
 
                 // Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen
-                if ($newsletterAccess === true && isset($_POST['subscribe_newsletter']) && $_POST['subscribe_newsletter'] == 1) {
+                if ($hasNewsletterAccess === true && isset($_POST['subscribe_newsletter']) && $_POST['subscribe_newsletter'] == 1) {
                     \ACP3\Modules\Newsletter\Helpers::subscribeToNewsletter($_POST['mail']);
                 }
 
                 $this->session->unsetFormToken();
 
-                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'guestbook', (bool)$overlay_active);
+                Core\Functions::setRedirectMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'guestbook', (bool)$overlayIsActive);
+            } catch (Core\Exceptions\InvalidFormToken $e) {
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'guestbook');
+            } catch (Core\Exceptions\ValidationFailed $e) {
+                $this->view->assign('error_msg', $e->getMessage());
             }
         }
-        if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-            // Emoticons einbinden
-            if ($settings['emoticons'] == 1 && Core\Modules::isActive('emoticons') === true) {
-                $this->view->assign('emoticons', \ACP3\Modules\Emoticons\Helpers::emoticonsList());
-            }
 
-            // In Newsletter integrieren
-            if ($newsletterAccess === true) {
-                $this->view->assign('subscribe_newsletter', Core\Functions::selectEntry('subscribe_newsletter', '1', '1', 'checked'));
-                $this->view->assign('LANG_subscribe_to_newsletter', sprintf($this->lang->t('guestbook', 'subscribe_to_newsletter'), CONFIG_SEO_TITLE));
-            }
+        // Emoticons einbinden
+        if ($settings['emoticons'] == 1 && Core\Modules::isActive('emoticons') === true) {
+            $this->view->assign('emoticons', \ACP3\Modules\Emoticons\Helpers::emoticonsList());
+        }
 
-            // Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
-            if ($this->auth->isUser() === true) {
-                $user = $this->auth->getUserInfo();
-                $disabled = ' readonly="readonly" class="readonly"';
+        // In Newsletter integrieren
+        if ($hasNewsletterAccess === true) {
+            $this->view->assign('subscribe_newsletter', Core\Functions::selectEntry('subscribe_newsletter', '1', '1', 'checked'));
+            $this->view->assign('LANG_subscribe_to_newsletter', sprintf($this->lang->t('guestbook', 'subscribe_to_newsletter'), CONFIG_SEO_TITLE));
+        }
 
-                if (isset($_POST['submit'])) {
-                    $_POST['name'] = $user['nickname'];
-                    $_POST['name_disabled'] = $disabled;
-                    $_POST['mail'] = $user['mail'];
-                    $_POST['mail_disabled'] = $disabled;
-                    $_POST['website_disabled'] = !empty($user['website']) ? $disabled : '';
-                } else {
-                    $user['name'] = $user['nickname'];
-                    $user['name_disabled'] = $disabled;
-                    $user['mail_disabled'] = $disabled;
-                    $user['website_disabled'] = !empty($user['website']) ? $disabled : '';
-                    $user['message'] = '';
-                }
-                $this->view->assign('form', isset($_POST['submit']) ? $_POST : $user);
+        // Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
+        if ($this->auth->isUser() === true) {
+            $user = $this->auth->getUserInfo();
+            $disabled = ' readonly="readonly" class="readonly"';
+
+            if (isset($_POST['submit'])) {
+                $_POST['name'] = $user['nickname'];
+                $_POST['name_disabled'] = $disabled;
+                $_POST['mail'] = $user['mail'];
+                $_POST['mail_disabled'] = $disabled;
+                $_POST['website_disabled'] = !empty($user['website']) ? $disabled : '';
             } else {
-                $defaults = array(
-                    'name' => '',
-                    'name_disabled' => '',
-                    'mail' => '',
-                    'mail_disabled' => '',
-                    'website' => '',
-                    'website_disabled' => '',
-                    'message' => '',
-                );
-
-                $this->view->assign('form', isset($_POST['submit']) ? array_merge($defaults, $_POST) : $defaults);
+                $user['name'] = $user['nickname'];
+                $user['name_disabled'] = $disabled;
+                $user['mail_disabled'] = $disabled;
+                $user['website_disabled'] = !empty($user['website']) ? $disabled : '';
+                $user['message'] = '';
             }
+            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $user);
+        } else {
+            $defaults = array(
+                'name' => '',
+                'name_disabled' => '',
+                'mail' => '',
+                'mail_disabled' => '',
+                'website' => '',
+                'website_disabled' => '',
+                'message' => '',
+            );
 
-            if ($captchaAccess === true) {
-                $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());
-            }
-
-            $this->session->generateFormToken();
+            $this->view->assign('form', isset($_POST['submit']) ? array_merge($defaults, $_POST) : $defaults);
         }
+
+        if (Core\Modules::hasPermission('captcha', 'image') === true) {
+            $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());
+        }
+
+        $this->session->generateFormToken();
     }
 
     public function actionList()
@@ -169,11 +148,11 @@ class Frontend extends Core\Modules\Controller
         $settings = Core\Config::getSettings('guestbook');
         $this->view->assign('overlay', $settings['overlay']);
 
-        $guestbook = $this->db->fetchAll('SELECT g.user_id, u.id AS user_id_real, u.nickname AS user_name, u.website AS user_website, u.mail AS user_mail, g.id, g.date, g.name, g.message, g.website, g.mail FROM ' . DB_PRE . 'guestbook AS g LEFT JOIN ' . DB_PRE . 'users AS u ON(u.id = g.user_id) ' . ($settings['notify'] == 2 ? 'WHERE active = 1' : '') . ' ORDER BY date DESC LIMIT ' . POS . ',' . $this->auth->entries);
+        $guestbook = $this->model->getAll($settings['notify'], POS, $this->auth->entries);
         $c_guestbook = count($guestbook);
 
         if ($c_guestbook > 0) {
-            $this->view->assign('pagination', Core\Functions::pagination($this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'guestbook')));
+            $this->view->assign('pagination', Core\Functions::pagination($this->model->countAll($settings['notify'])));
 
             // Emoticons einbinden
             $emoticons_active = false;
