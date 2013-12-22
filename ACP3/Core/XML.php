@@ -14,7 +14,7 @@ abstract class XML
      *
      * @var array
      */
-    private static $info = array();
+    protected static $info = array();
 
     /**
      * Parst die angeforderte XML Datei

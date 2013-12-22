@@ -38,17 +38,17 @@ class Session
     /**
      * @var \Doctrine\DBAL\Connection
      */
-    private $db;
+    protected $db;
 
     /**
      * @var \ACP3\Core\URI
      */
-    private $uri;
+    protected $uri;
 
     /**
      * @var \ACP3\Core\View
      */
-    private $view;
+    protected $view;
 
     public function __construct(\Doctrine\DBAL\Connection $db, \ACP3\Core\URI $uri, \ACP3\Core\View $view)
     {
@@ -84,7 +84,7 @@ class Session
     /**
      * Session starten
      */
-    private static function startSession()
+    protected static function startSession()
     {
         // Session Cookie Parameter setzen
         session_set_cookie_params(0, ROOT_DIR);

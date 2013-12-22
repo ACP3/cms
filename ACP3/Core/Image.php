@@ -12,57 +12,57 @@ class Image
      *
      * @var boolean
      */
-    private $enable_cache = false;
+    protected $enable_cache = false;
     /**
      *
      * @var string
      */
-    private $cache_dir = 'images/';
+    protected $cache_dir = 'images/';
     /**
      *
      * @var string
      */
-    private $cache_prefix = '';
+    protected $cache_prefix = '';
     /**
      *
      * @var integer
      */
-    private $max_width = 0;
+    protected $max_width = 0;
     /**
      *
      * @var integer
      */
-    private $max_height = 0;
+    protected $max_height = 0;
     /**
      *
      * @var integer
      */
-    private $jpg_quality = 85;
+    protected $jpg_quality = 85;
     /**
      *
      * @var boolean
      */
-    private $prefer_width = false;
+    protected $prefer_width = false;
     /**
      *
      * @var boolean
      */
-    private $prefer_height = false;
+    protected $prefer_height = false;
     /**
      *
      * @var string
      */
-    private $file = '';
+    protected $file = '';
     /**
      *
      * @var boolean
      */
-    private $force_resample = false;
+    protected $force_resample = false;
     /**
      *
      * @var resource
      */
-    private $image = null;
+    protected $image = null;
 
     /**
      * Konstruktor der Klasse.
@@ -111,7 +111,7 @@ class Image
      *  Ausgangshöhe des Bildes
      * @return array
      */
-    private function calcNewDimensions($width, $height)
+    protected function calcNewDimensions($width, $height)
     {
         if (($width >= $height || $this->prefer_width === true) && $this->prefer_height === false) {
             $newWidth = $this->max_width;
@@ -129,7 +129,7 @@ class Image
      *
      * @return string
      */
-    private function setCacheName()
+    protected function setCacheName()
     {
         return $this->cache_prefix . substr($this->file, strrpos($this->file, '/') + 1);
     }
@@ -143,7 +143,7 @@ class Image
      * @param integer $height
      * @param integer $type
      */
-    private function resample($newWidth, $newHeight, $width, $height, $type, $cache_file = null)
+    protected function resample($newWidth, $newHeight, $width, $height, $type, $cache_file = null)
     {
         $this->image = imagecreatetruecolor($newWidth, $newHeight);
         switch ($type) {
@@ -172,7 +172,7 @@ class Image
      *
      * @return string
      */
-    private function readFromFile()
+    protected function readFromFile()
     {
         return readfile($this->file);
     }

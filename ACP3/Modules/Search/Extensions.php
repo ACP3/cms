@@ -16,35 +16,35 @@ class Extensions
      *
      * @var string
      */
-    private $area;
+    protected $area;
 
     /**
      * Whther to sort the results ascending/descending
      *
      * @var string
      */
-    private $sort;
+    protected $sort;
 
     /**
      * The search term
      *
      * @var string
      */
-    private $search_term;
+    protected $search_term;
 
     /**
      * DB Connection Handler
      *
      * @var \Doctrine\DBAL\Connection
      */
-    private $db;
+    protected $db;
 
     /**
      * SQL Prepared Parameters
      *
      * @var array
      */
-    private $params = array();
+    protected $params = array();
 
     public function __construct($area, $sort, $search_term)
     {

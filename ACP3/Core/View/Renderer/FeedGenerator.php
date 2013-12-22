@@ -36,7 +36,7 @@ class FeedGenerator extends \ACP3\Core\View\Renderer
         $this->renderer->addItem($item);
     }
 
-    private function generateChannel()
+    protected function generateChannel()
     {
         $link = $this->config['feed_link'];
         $this->renderer->setTitle($this->config['feed_title']);

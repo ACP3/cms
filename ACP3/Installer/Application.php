@@ -102,7 +102,7 @@ class Application
     {
         \ACP3\Core\Registry::set('View', new \ACP3\Core\View());
 
-        \ACP3\Core\Registry::set('URI', new \ACP3\Core\URI('install', 'welcome'));
+        \ACP3\Core\Registry::set('URI', new \ACP3\Installer\Core\URI('install', 'welcome'));
 
         $params = array(
             'compile_id' => 'installer',
@@ -134,7 +134,7 @@ class Application
 
         \ACP3\Core\Registry::set('View', new \ACP3\Core\View());
 
-        \ACP3\Core\Registry::set('URI', new \ACP3\Core\URI('update', 'db_update'));
+        \ACP3\Core\Registry::set('URI', new \ACP3\Core\URI(\ACP3\Core\Registry::get('Db'), 'update', 'db_update'));
 
         $params = array(
             'compile_id' => 'installer',

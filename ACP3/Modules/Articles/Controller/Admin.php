@@ -91,7 +91,7 @@ class Admin extends Core\Modules\Controller\Admin
                         'target' => 1,
                     );
 
-                    $nestedSet = new Core\NestedSet('menu_items', true);
+                    $nestedSet = new Core\NestedSet($this->db, 'menu_items', true);
                     $lastId = $nestedSet->insertNode((int)$_POST['parent'], $insert_values);
                     \ACP3\Modules\Menus\Helpers::setMenuItemsCache();
                 }
@@ -140,7 +140,7 @@ class Admin extends Core\Modules\Controller\Admin
         if ($this->uri->action === 'confirmed') {
             $items = explode('|', $items);
             $bool = false;
-            $nestedSet = new Core\NestedSet('menu_items', true);
+            $nestedSet = new Core\NestedSet($this->db, 'menu_items', true);
             foreach ($items as $item) {
                 $bool = $this->db->delete(DB_PRE . 'articles', array('id' => $item));
                 $nestedSet->deleteNode($this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'menu_items WHERE uri = ?', array('articles/details/id_' . $item . '/')));

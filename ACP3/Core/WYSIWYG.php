@@ -14,7 +14,7 @@ class WYSIWYG
      *
      * @var \ACP3\Core\WYSIWYG\AbstractWYSIWYG
      */
-    private static $editor = null;
+    protected static $editor = null;
 
     public static function factory($editor, array $params = array())
     {

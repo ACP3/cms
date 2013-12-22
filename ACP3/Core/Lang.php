@@ -13,13 +13,13 @@ class Lang
      *
      * @var string
      */
-    private $lang = '';
+    protected $lang = '';
 
     /**
      *
      * @var array
      */
-    private $cache = array();
+    protected $cache = array();
 
     function __construct(\ACP3\Core\Auth $auth)
     {
@@ -80,7 +80,7 @@ class Lang
      *
      * @return array
      */
-    private function getLanguageCache()
+    protected function getLanguageCache()
     {
         if (Cache::check($this->lang, 'lang') === false) {
             $this->setLanguageCache();

@@ -18,9 +18,9 @@ abstract class Helpers
      *
      * @var Model
      */
-    private static $model;
+    protected static $model;
 
-    private static function _init()
+    protected static function _init()
     {
         if (!self::$model) {
             self::$model = new Model(Core\Registry::get('Db'));

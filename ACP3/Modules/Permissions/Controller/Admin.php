@@ -51,7 +51,7 @@ class Admin extends Core\Modules\Controller\Admin
                     'parent_id' => $_POST['parent'],
                 );
 
-                $nestedSet = new Core\NestedSet('acl_roles');
+                $nestedSet = new Core\NestedSet($this->db, 'acl_roles');
                 $bool = $nestedSet->insertNode((int)$_POST['parent'], $insert_values);
                 $role_id = $this->db->lastInsertId();
 
@@ -184,7 +184,7 @@ class Admin extends Core\Modules\Controller\Admin
             $bool = $bool2 = $bool3 = false;
             $level_undeletable = false;
 
-            $nestedSet = new Core\NestedSet('acl_roles');
+            $nestedSet = new Core\NestedSet($this->db, 'acl_roles');
             foreach ($items as $item) {
                 if (in_array($item, array(1, 2, 4)) === true) {
                     $level_undeletable = true;
@@ -255,7 +255,7 @@ class Admin extends Core\Modules\Controller\Admin
                         'name' => Core\Functions::strEncode($_POST['name']),
                         'parent_id' => $this->uri->id == 1 ? 0 : $_POST['parent'],
                     );
-                    $nestedSet = new Core\NestedSet('acl_roles');
+                    $nestedSet = new Core\NestedSet($this->db, 'acl_roles');
                     $bool = $nestedSet->EditNode($this->uri->id, $this->uri->id == 1 ? '' : (int)$_POST['parent'], 0, $update_values);
 
                     $this->db->beginTransaction();
@@ -434,7 +434,7 @@ class Admin extends Core\Modules\Controller\Admin
         if (Core\Validate::isNumber($this->uri->id) === true &&
             $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'acl_roles WHERE id = ?', array($this->uri->id)) == 1
         ) {
-            $nestedSet = new Core\NestedSet('acl_roles');
+            $nestedSet = new Core\NestedSet($this->db, 'acl_roles');
             $nestedSet->order($this->uri->id, $this->uri->action);
 
             Core\Cache::purge(0, 'acl');

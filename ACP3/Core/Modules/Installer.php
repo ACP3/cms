@@ -342,7 +342,7 @@ abstract class Installer
      * @param integer $installed_schema_version
      * @return integer
      */
-    private function interateOverSchemaUpdates(array $schema_updates, $installed_schema_version)
+    protected function interateOverSchemaUpdates(array $schema_updates, $installed_schema_version)
     {
         $result = -1;
         foreach ($schema_updates as $new_schema_version => $queries) {

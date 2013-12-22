@@ -13,49 +13,49 @@ class View
     /**
      * Nicht ausgeben
      */
-    private $no_output = false;
+    protected $no_output = false;
 
     /**
      * Der auszugebende Content-Type der Seite
      *
      * @var string
      */
-    private $content_type = 'Content-Type: text/html; charset=UTF-8';
+    protected $content_type = 'Content-Type: text/html; charset=UTF-8';
 
     /**
      * Das zuverwendende Seitenlayout
      *
      * @var string
      */
-    private $layout = 'layout.tpl';
+    protected $layout = 'layout.tpl';
 
     /**
      * Das zuverwendende Template für den Contentbereich
      *
      * @var string
      */
-    private $content_template = '';
+    protected $content_template = '';
 
     /**
      * Der auszugebende Seiteninhalt
      *
      * @var string
      */
-    private $content = '';
+    protected $content = '';
 
     /**
      *
      * @var string
      */
-    private $content_append = '';
+    protected $content_append = '';
 
     /**
      * Legt fest, welche JavaScript Bibliotheken beim Seitenaufruf geladen werden sollen
      *
      * @var array
      */
-    private $js_libraries = array('bootbox' => false, 'fancybox' => false, 'jquery-ui' => false, 'timepicker' => false, 'datatables' => false);
-    private static $renderer_obj = null;
+    protected $js_libraries = array('bootbox' => false, 'fancybox' => false, 'jquery-ui' => false, 'timepicker' => false, 'datatables' => false);
+    protected static $renderer_obj = null;
 
     /**
      * Setter Methode für die $this->no_output Variable

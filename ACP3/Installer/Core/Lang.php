@@ -18,7 +18,7 @@ class Lang extends \ACP3\Core\Lang
     /**
      * Cached die Sprachfiles, um diese schneller verarbeiten zu können
      */
-    private function parseLanguageFile()
+    protected function parseLanguageFile()
     {
         $data = array();
         $path = ACP3_ROOT_DIR . 'installation/languages/' . $this->lang . '.xml';

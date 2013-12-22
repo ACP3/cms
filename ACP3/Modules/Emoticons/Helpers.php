@@ -15,15 +15,15 @@ use ACP3\Core;
 abstract class Helpers
 {
 
-    private static $emoticons = array();
+    protected static $emoticons = array();
 
     /**
      *
      * @var Model
      */
-    private static $model;
+    protected static $model;
 
-    private static function _init()
+    protected static function _init()
     {
         if (!self::$model) {
             self::$model = new Model(Core\Registry::get('Db'));
