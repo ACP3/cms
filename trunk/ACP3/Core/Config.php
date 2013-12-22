@@ -52,8 +52,9 @@ abstract class Config
      */
     public static function getSettings($module)
     {
-        if (Cache::check($module, 'settings') === false)
+        if (Cache::check($module, 'settings') === false) {
             self::setModuleCache($module);
+        }
 
         return Cache::output($module, 'settings');
     }
@@ -69,17 +70,18 @@ abstract class Config
         $settings = Registry::get('Db')->executeQuery('SELECT s.name, s.value FROM ' . DB_PRE . 'settings AS s JOIN ' . DB_PRE . 'modules AS m ON(m.id = s.module_id) WHERE m.name = ?', array($module))->fetchAll();
         $c_settings = count($settings);
 
-        $cache_ary = array();
+        $data = array();
         for ($i = 0; $i < $c_settings; ++$i) {
-            if (is_int($settings[$i]['value']))
-                $cache_ary[$settings[$i]['name']] = (int)$settings[$i]['value'];
-            elseif (is_float($settings[$i]['value']))
-                $cache_ary[$settings[$i]['name']] = (float)$settings[$i]['value'];
-            else
-                $cache_ary[$settings[$i]['name']] = $settings[$i]['value'];
+            if (is_int($settings[$i]['value'])) {
+                $data[$settings[$i]['name']] = (int)$settings[$i]['value'];
+            } elseif (is_float($settings[$i]['value'])) {
+                $data[$settings[$i]['name']] = (float)$settings[$i]['value'];
+            } else {
+                $data[$settings[$i]['name']] = $settings[$i]['value'];
+            }
         }
 
-        return Cache::create($module, $cache_ary, 'settings');
+        return Cache::create($module, $data, 'settings');
     }
 
 }

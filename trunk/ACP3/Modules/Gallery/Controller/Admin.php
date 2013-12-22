@@ -254,7 +254,7 @@ class Admin extends Core\Modules\Controller\Admin
                     'element' => '#acp-table',
                     'hide_col_sort' => $can_delete === true ? 0 : ''
                 );
-                $this->view->appendContent(Core\Functions::datatable($config));
+                $this->view->appendContent(Core\Functions::dataTable($config));
 
                 for ($i = 0; $i < $c_pictures; ++$i) {
                     $pictures[$i]['first'] = $i == 0 ? true : false;
@@ -353,7 +353,7 @@ class Admin extends Core\Modules\Controller\Admin
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->view->appendContent(Core\Functions::datatable($config));
+            $this->view->appendContent(Core\Functions::dataTable($config));
             for ($i = 0; $i < $c_galleries; ++$i) {
                 $galleries[$i]['period'] = $this->date->formatTimeRange($galleries[$i]['start'], $galleries[$i]['end']);
             }
@@ -430,7 +430,7 @@ class Admin extends Core\Modules\Controller\Admin
         $lang_overlay = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
         $this->view->assign('overlay', Core\Functions::selectGenerator('overlay', array(1, 0), $lang_overlay, $settings['overlay'], 'checked'));
 
-        $this->view->assign('dateformat', $this->date->dateformatDropdown($settings['dateformat']));
+        $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 
         $this->view->assign('sidebar_entries', Core\Functions::recordsPerPage((int)$settings['sidebar'], 1, 10));
 

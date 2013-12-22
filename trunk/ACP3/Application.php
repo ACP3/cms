@@ -118,7 +118,10 @@ class Application
             Core\Registry::get('View')
         ));
 
-        Core\Registry::set('Auth', new Core\Auth(Core\Registry::get('Db')));
+        Core\Registry::set('Auth', new Core\Auth(
+            Core\Registry::get('Db'),
+            Core\Registry::get('Session')
+        ));
 
         Core\Registry::set('Lang', new Core\Lang(Core\Registry::get('Auth')));
 

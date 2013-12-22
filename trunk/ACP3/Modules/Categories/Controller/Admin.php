@@ -201,7 +201,7 @@ class Admin extends Core\Modules\Controller\Admin
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $can_delete === true ? 0 : ''
             );
-            $this->view->appendContent(Core\Functions::datatable($config));
+            $this->view->appendContent(Core\Functions::dataTable($config));
             for ($i = 0; $i < $c_categories; ++$i) {
                 $categories[$i]['module'] = $this->lang->t($categories[$i]['module'], $categories[$i]['module']);
             }

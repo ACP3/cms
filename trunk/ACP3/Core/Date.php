@@ -15,21 +15,21 @@ class Date
      *
      * @var string
      */
-    protected $date_format_long = CONFIG_DATE_FORMAT_LONG;
+    protected $dateFormatLong = CONFIG_DATE_FORMAT_LONG;
 
     /**
      * Kurzes Datumsformat
      *
      * @var string
      */
-    protected $date_format_short = CONFIG_DATE_FORMAT_SHORT;
+    protected $dateFormatShort = CONFIG_DATE_FORMAT_SHORT;
 
     /**
      * PHP DateTimeZone-Object
      *
      * @var object
      */
-    protected $date_time_zone = null;
+    protected $dateTimeZone = null;
 
     /**
      * @var \ACP3\Core\Lang
@@ -45,7 +45,7 @@ class Date
      * Falls man sich als User authentifiziert hat, eingestellte Zeitzone + Sommerzeiteinstellung holen
      *
      */
-    function __construct(\ACP3\Core\Auth $auth, \ACP3\Core\Lang $lang, \ACP3\Core\View $view)
+    function __construct(Auth $auth, Lang $lang, View $view)
     {
         $info = $auth->getUserInfo();
 
@@ -53,13 +53,13 @@ class Date
         $this->view = $view;
 
         if (!empty($info)) {
-            $this->date_format_long = $info['date_format_long'];
-            $this->date_format_short = $info['date_format_short'];
+            $this->dateFormatLong = $info['date_format_long'];
+            $this->dateFormatShort = $info['date_format_short'];
             $time_zone = $info['time_zone'];
         } else {
             $time_zone = CONFIG_DATE_TIME_ZONE;
         }
-        $this->date_time_zone = new \DateTimeZone($time_zone);
+        $this->dateTimeZone = new \DateTimeZone($time_zone);
     }
 
     /**
@@ -70,7 +70,7 @@ class Date
      *    Optionaler Parameter für das aktuelle Datumsformat
      * @return array
      */
-    public function dateformatDropdown($format = '')
+    public function dateFormatDropdown($format = '')
     {
         $dateformatLang = array(
             $this->lang->t('system', 'date_format_short'),
@@ -178,10 +178,10 @@ class Date
         // Datum in gewünschter Formatierung ausgeben
         switch ($format) {
             case 'long':
-                $format = $this->date_format_long;
+                $format = $this->dateFormatLong;
                 break;
             case 'short':
-                $format = $this->date_format_short;
+                $format = $this->dateFormatShort;
                 break;
         }
 
@@ -204,7 +204,7 @@ class Date
             $time = date('c', $time);
         }
 
-        $dateTime = new \DateTime($time, $this->date_time_zone);
+        $dateTime = new \DateTime($time, $this->dateTimeZone);
         if ($toLocal === true) {
             if ($isLocal === true) {
                 $dateTime->setTimestamp($dateTime->getTimestamp() + $dateTime->getOffset());

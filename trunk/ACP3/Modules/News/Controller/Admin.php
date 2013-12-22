@@ -228,7 +228,7 @@ class Admin extends Core\Modules\Controller\Admin
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $can_delete === true ? 0 : ''
             );
-            $this->view->appendContent(Core\Functions::datatable($config));
+            $this->view->appendContent(Core\Functions::dataTable($config));
 
             for ($i = 0; $i < $c_news; ++$i) {
                 $news[$i]['period'] = $this->date->formatTimeRange($news[$i]['start'], $news[$i]['end']);
@@ -266,7 +266,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         $settings = Core\Config::getSettings('news');
 
-        $this->view->assign('dateformat', $this->date->dateformatDropdown($settings['dateformat']));
+        $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 
         $lang_readmore = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
         $this->view->assign('readmore', Core\Functions::selectGenerator('readmore', array(1, 0), $lang_readmore, $settings['readmore'], 'checked'));

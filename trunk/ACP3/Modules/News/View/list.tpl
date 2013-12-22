@@ -38,4 +38,5 @@
 {else}
     <div class="alert alert-warning text-center">
         <strong>{lang t="system|no_entries"}</strong>
-    </div>{/if}
+    </div>
+{/if}

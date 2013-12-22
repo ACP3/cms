@@ -44,17 +44,28 @@ class Auth
     public $language = CONFIG_LANG;
 
     /**
+     * @var array
+     */
+    protected $userInfo = array();
+
+    /**
      * @var \Doctrine\DBAL\Connection
      */
     protected $db;
 
     /**
+     * @var Session
+     */
+    protected $session;
+
+    /**
      * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der
      * Seitenbesucher auch wirklich ein registrierter Benutzer des ACP3 ist
      */
-    function __construct(\Doctrine\DBAL\Connection $db)
+    function __construct(\Doctrine\DBAL\Connection $db, Session $session)
     {
         $this->db = $db;
+        $this->session = $session;
 
         if (isset($_COOKIE[self::COOKIE_NAME])) {
             $cookie = base64_decode($_COOKIE[self::COOKIE_NAME]);
@@ -89,28 +100,27 @@ class Auth
     /**
      * Gibt ein Array mit den angeforderten Daten eines Benutzers zurück
      *
-     * @param integer $user_id
+     * @param integer $userId
      *    Der angeforderte Benutzer
      * @return mixed
      */
-    public function getUserInfo($user_id = '')
+    public function getUserInfo($userId = '')
     {
-        if (empty($user_id) && $this->isUser() === true)
-            $user_id = $this->getUserId();
+        if (empty($userId) && $this->isUser() === true) {
+            $userId = $this->getUserId();
+        }
 
-        if (Validate::isNumber($user_id) === true) {
-            static $user_info = array();
-
-            if (empty($user_info[$user_id])) {
+        if (Validate::isNumber($userId) === true) {
+            if (empty($this->userInfo[$userId])) {
                 $countries = Lang::worldCountries();
-                $info = $this->db->fetchAssoc('SELECT * FROM ' . DB_PRE . 'users WHERE id = ?', array($user_id), array(\PDO::PARAM_INT));
+                $info = $this->db->fetchAssoc('SELECT * FROM ' . DB_PRE . 'users WHERE id = ?', array($userId), array(\PDO::PARAM_INT));
                 if (!empty($info)) {
                     $info['country_formatted'] = !empty($info['country']) && isset($countries[$info['country']]) ? $countries[$info['country']] : '';
-                    $user_info[$user_id] = $info;
+                    $this->userInfo[$userId] = $info;
                 }
             }
 
-            return !empty($user_info[$user_id]) ? $user_info[$user_id] : false;
+            return !empty($this->userInfo[$userId]) ? $this->userInfo[$userId] : false;
         }
         return false;
     }
@@ -162,23 +172,25 @@ class Auth
 
         if (!empty($user)) {
             // Useraccount ist gesperrt
-            if ($user['login_errors'] >= 3)
+            if ($user['login_errors'] >= 3) {
                 return -1;
+            }
 
             // Passwort aus Datenbank
-            $db_hash = substr($user['pwd'], 0, 40);
+            $dbHash = substr($user['pwd'], 0, 40);
 
             // Hash für eingegebenes Passwort generieren
             $salt = substr($user['pwd'], 41, 53);
-            $form_pwd_hash = Functions::generateSaltedPassword($salt, $password);
+            $formPasswordHash = Functions::generateSaltedPassword($salt, $password);
 
             // Wenn beide Hashwerte gleich sind, Benutzer authentifizieren
-            if ($db_hash === $form_pwd_hash) {
+            if ($dbHash === $formPasswordHash) {
                 // Login-Fehler zurücksetzen
-                if ($user['login_errors'] > 0)
-                    Registry::get('Db')->update(DB_PRE . 'users', array('login_errors' => 0), array('id', (int)$user['id']));
+                if ($user['login_errors'] > 0) {
+                    $this->db->update(DB_PRE . 'users', array('login_errors' => 0), array('id', (int)$user['id']));
+                }
 
-                $this->setCookie($username, $db_hash, $expiry);
+                $this->setCookie($username, $dbHash, $expiry);
 
                 // Neue Session-ID generieren
                 Session::secureSession(true);
@@ -189,9 +201,9 @@ class Auth
                 return 1;
                 // Beim dritten falschen Login den Account sperren
             } else {
-                $login_errors = $user['login_errors'] + 1;
-                $this->db->update(DB_PRE . 'users', array('login_errors' => $login_errors), array('id' => (int)$user['id']));
-                if ($login_errors === 3) {
+                $loginErrors = $user['login_errors'] + 1;
+                $this->db->update(DB_PRE . 'users', array('login_errors' => $loginErrors), array('id' => (int)$user['id']));
+                if ($loginErrors === 3) {
                     return -1;
                 }
             }
@@ -206,7 +218,7 @@ class Auth
      */
     public function logout()
     {
-        Registry::get('Session')->session_destroy(session_id());
+        $this->session->session_destroy(session_id());
         return $this->setCookie('', '', -50400);
     }
 

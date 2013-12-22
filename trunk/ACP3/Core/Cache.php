@@ -12,12 +12,12 @@ abstract class Cache
      *
      * @var string
      */
-    protected static $cache_dir = 'uploads/cache/';
+    protected static $cacheDir = 'uploads/cache/';
     /**
      *
      * @var string
      */
-    protected static $sql_cache_dir = 'uploads/cache/sql/';
+    protected static $sqlCacheDir = 'uploads/cache/sql/';
 
     /**
      * Überprüft, ob der Cache für eine bestimmte Abfrage schon erstellt wurde
@@ -26,10 +26,10 @@ abstract class Cache
      *  Der Name der Datei, welcher auf Existenz und Gültigkeit geprüft werden soll
      * @return boolean
      */
-    public static function check($filename, $cache_id = '')
+    public static function check($filename, $cacheId = '')
     {
-        $cache_id .= $cache_id !== '' ? '_' : '';
-        return is_file(ACP3_ROOT_DIR . self::$sql_cache_dir . $cache_id . md5($filename) . '.php');
+        $cacheId .= $cacheId !== '' ? '_' : '';
+        return is_file(ACP3_ROOT_DIR . self::$sqlCacheDir . $cacheId . md5($filename) . '.php');
     }
 
     /**
@@ -41,15 +41,15 @@ abstract class Cache
      *    Daten, für welche der Cache erstellt werden sollen
      * @return boolean
      */
-    public static function create($filename, $data, $cache_id = '')
+    public static function create($filename, $data, $cacheId = '')
     {
         if (!empty($data)) {
-            $cache_id .= $cache_id !== '' ? '_' : '';
-            $bool = @file_put_contents(ACP3_ROOT_DIR . self::$sql_cache_dir . $cache_id . md5($filename) . '.php', serialize($data), LOCK_EX);
+            $cacheId .= $cacheId !== '' ? '_' : '';
+            $bool = @file_put_contents(ACP3_ROOT_DIR . self::$sqlCacheDir . $cacheId . md5($filename) . '.php', serialize($data), LOCK_EX);
 
             return $bool !== false ? true : false;
-        } elseif (self::check($filename, $cache_id) === true) {
-            return self::delete($filename, $cache_id);
+        } elseif (self::check($filename, $cacheId) === true) {
+            return self::delete($filename, $cacheId);
         }
         return false;
     }
@@ -61,10 +61,10 @@ abstract class Cache
      *    Zu löschende Datei
      * @return boolean
      */
-    public static function delete($filename, $cache_id = '')
+    public static function delete($filename, $cacheId = '')
     {
-        $cache_id .= $cache_id !== '' ? '_' : '';
-        return @unlink(ACP3_ROOT_DIR . self::$sql_cache_dir . $cache_id . md5($filename) . '.php');
+        $cacheId .= $cacheId !== '' ? '_' : '';
+        return @unlink(ACP3_ROOT_DIR . self::$sqlCacheDir . $cacheId . md5($filename) . '.php');
     }
 
     /**
@@ -74,10 +74,10 @@ abstract class Cache
      *    Auszugebende Datei
      * @return mixed
      */
-    public static function output($filename, $cache_id = '')
+    public static function output($filename, $cacheId = '')
     {
-        $cache_id .= $cache_id !== '' ? '_' : '';
-        $data = @file_get_contents(ACP3_ROOT_DIR . self::$sql_cache_dir . $cache_id . md5($filename) . '.php');
+        $cacheId .= $cacheId !== '' ? '_' : '';
+        $data = @file_get_contents(ACP3_ROOT_DIR . self::$sqlCacheDir . $cacheId . md5($filename) . '.php');
         return $data === false ? array() : unserialize($data);
     }
 
@@ -87,17 +87,17 @@ abstract class Cache
      * @param string $dir
      *    Einen Unterordner des Cache-Ordners löschen
      */
-    public static function purge($dir = '', $cache_id = '')
+    public static function purge($dir = '', $cacheId = '')
     {
-        $path = ACP3_ROOT_DIR . self::$cache_dir . (!empty($dir) && !preg_match('=/=', $dir) ? $dir . '/' : 'sql/');
+        $path = ACP3_ROOT_DIR . self::$cacheDir . (!empty($dir) && !preg_match('=/=', $dir) ? $dir . '/' : 'sql/');
         if (is_dir($path)) {
-            $cache_id .= $cache_id !== '' ? '_' : '';
+            $cacheId .= $cacheId !== '' ? '_' : '';
 
-            $cache_dir = scandir($path);
-            foreach ($cache_dir as $row) {
+            $cacheDir = scandir($path);
+            foreach ($cacheDir as $row) {
                 if (is_file($path . $row) && $row !== '.htaccess') {
                     // Wenn eine $cache_id gesetzt wurde, nur diese Dateien löschen
-                    if ($cache_id !== '' && strpos($row, $cache_id) !== 0)
+                    if ($cacheId !== '' && strpos($row, $cacheId) !== 0)
                         continue;
                     @unlink($path . $row);
                 }
