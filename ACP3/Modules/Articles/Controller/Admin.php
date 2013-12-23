@@ -24,14 +24,14 @@ class Admin extends Core\Modules\Controller\Admin
     protected $menuModel;
 
     public function __construct(
-        \ACP3\Core\Auth $auth,
-        \ACP3\Core\Breadcrumb $breadcrumb,
-        \ACP3\Core\Date $date,
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Date $date,
         \Doctrine\DBAL\Connection $db,
-        \ACP3\Core\Lang $lang,
-        \ACP3\Core\Session $session,
-        \ACP3\Core\URI $uri,
-        \ACP3\Core\View $view)
+        Core\Lang $lang,
+        Core\Session $session,
+        Core\URI $uri,
+        Core\View $view)
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
