@@ -16,6 +16,16 @@ abstract class Helpers
 {
 
     /**
+     * @var Model
+     */
+    protected static $model;
+
+    protected static function _init()
+    {
+        self::$model = new Model(Core\Registry::get('Db'));
+    }
+
+    /**
      * Versendet einen Newsletter
      *
      * @param string $subject
@@ -25,13 +35,20 @@ abstract class Helpers
      */
     public static function sendNewsletter($subject, $body, $from_address)
     {
-        $accounts = Core\Registry::get('Db')->fetchAll('SELECT mail FROM ' . DB_PRE . 'newsletter_accounts WHERE hash = \'\'');
+        self::_init();
+
+        $accounts = self::$model->getAllAccounts();
         $c_accounts = count($accounts);
 
         for ($i = 0; $i < $c_accounts; ++$i) {
+            if (!empty($accounts[$i]['hash'])) {
+                continue;
+            }
+
             $bool2 = Core\Functions::generateEmail('', $accounts[$i]['mail'], $from_address, $subject, $body);
-            if ($bool2 === false)
+            if ($bool2 === false) {
                 return false;
+            }
         }
         return true;
     }
@@ -45,6 +62,8 @@ abstract class Helpers
      */
     public static function subscribeToNewsletter($emailAddress)
     {
+        self::_init();
+
         $hash = md5(mt_rand(0, microtime(true)));
         $host = htmlentities($_SERVER['HTTP_HOST']);
         $settings = Core\Config::getSettings('newsletter');
@@ -57,12 +76,12 @@ abstract class Helpers
 
         // Newsletter-Konto nur erstellen, wenn die E-Mail erfolgreich versendet werden konnte
         if ($mail_sent === true) {
-            $insert_values = array(
+            $insertValues = array(
                 'id' => '',
                 'mail' => $emailAddress,
                 'hash' => $hash
             );
-            $bool = Core\Registry::get('Db')->insert(DB_PRE . 'newsletter_accounts', $insert_values);
+            $bool = self::$model->insert($insertValues, Model::TABLE_NAME_ACCOUNTS);
         }
 
         return $mail_sent === true && $bool !== false;

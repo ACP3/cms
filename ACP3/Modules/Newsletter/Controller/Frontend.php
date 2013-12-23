@@ -13,6 +13,12 @@ use ACP3\Modules\Newsletter;
 class Frontend extends Core\Modules\Controller
 {
 
+    /**
+     *
+     * @var Model
+     */
+    protected $model;
+
     public function __construct(
         Core\Auth $auth,
         Core\Breadcrumb $breadcrumb,
@@ -24,6 +30,8 @@ class Frontend extends Core\Modules\Controller
         Core\View $view)
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+
+        $this->model = new Newsletter\Model($this->db);
     }
 
     public function actionActivate()
@@ -33,15 +41,16 @@ class Frontend extends Core\Modules\Controller
             $hash = $this->uri->hash;
         } else {
             $this->uri->redirect('errors/404');
+            return;
         }
 
-        if ($this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'newsletter_accounts WHERE mail = ? AND has = ?', array($mail, $hash)) != 1)
+        if ($this->model->accountExists($mail, $hash) === false)
             $errors[] = $this->lang->t('newsletter', 'account_not_exists');
 
         if (isset($errors) === true) {
             $this->view->setContent(Core\Functions::errorBox($errors));
         } else {
-            $bool = $this->db->update(DB_PRE . 'newsletter_accounts', array('hash' => ''), array('mail' => $mail, 'hash' => $hash));
+            $bool = $this->model->update(array('hash' => ''), array('mail' => $mail, 'hash' => $hash), Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
             $this->view->setContent(Core\Functions::confirmBox($this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
         }
@@ -56,7 +65,7 @@ class Frontend extends Core\Modules\Controller
         ) {
             $id = (int)$_POST['newsletter'];
 
-            $newsletter = $this->db->fetchAssoc('SELECT date, title, text FROM ' . DB_PRE . 'newsletters WHERE id = ? AND status = ?', array($id, 1));
+            $newsletter = $this->model->getOneById($id, 1);
             if (!empty($newsletter)) {
                 $newsletter['date_formatted'] = $this->date->format($newsletter['date'], 'short');
                 $newsletter['date_iso'] = $this->date->format($newsletter['date'], 'c');
@@ -66,7 +75,7 @@ class Frontend extends Core\Modules\Controller
             }
         }
 
-        $newsletters = $this->db->fetchAll('SELECT id, date, title FROM ' . DB_PRE . 'newsletters WHERE status = ? ORDER BY date DESC', array(1));
+        $newsletters = $this->model->getAll(1);
         $c_newsletters = count($newsletters);
 
         if ($c_newsletters > 0) {
@@ -80,71 +89,54 @@ class Frontend extends Core\Modules\Controller
 
     public function actionList()
     {
-        $captchaAccess = Core\Modules::hasPermission('captcha', 'image');
-
         if (isset($_POST['submit']) === true) {
-            switch ($this->uri->action) {
-                case 'subscribe':
-                    if (Core\Validate::email($_POST['mail']) === false)
-                        $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
-                    if (Core\Validate::email($_POST['mail']) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'newsletter_accounts WHERE mail = ?', array($_POST['mail'])) == 1)
-                        $errors['mail'] = $this->lang->t('newsletter', 'account_exists');
-                    if ($captchaAccess === true && $this->auth->isUser() === false && Core\Validate::captcha($_POST['captcha']) === false)
-                        $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
+            try {
+                switch ($this->uri->action) {
+                    case 'subscribe':
+                        $this->model->validateSubscribe($_POST, $this->lang);
 
-                    if (isset($errors) === true) {
-                        $this->view->assign('error_msg', Core\Functions::errorBox($errors));
-                    } elseif (Core\Validate::formToken() === false) {
-                        $this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-                    } else {
                         $bool = Newsletter\Helpers::subscribeToNewsletter($_POST['mail']);
 
                         $this->session->unsetFormToken();
 
                         $this->view->setContent(Core\Functions::confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
-                    }
-                    break;
-                case 'unsubscribe':
-                    if (Core\Validate::email($_POST['mail']) === false)
-                        $errors[] = $this->lang->t('system', 'wrong_email_format');
-                    if (Core\Validate::email($_POST['mail']) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'newsletter_accounts WHERE mail = ?', array($_POST['mail'])) != 1)
-                        $errors[] = $this->lang->t('newsletter', 'account_not_exists');
-                    if ($captchaAccess === true && $this->auth->isUser() === false && Core\Validate::captcha($_POST['captcha']) === false)
-                        $errors[] = $this->lang->t('captcha', 'invalid_captcha_entered');
+                        return;
+                        break;
+                    case 'unsubscribe':
+                        $this->model->validateUnsubscribe($_POST, $this->lang);
 
-                    if (isset($errors) === true) {
-                        $this->view->assign('error_msg', Core\Functions::errorBox($errors));
-                    } elseif (Core\Validate::formToken() === false) {
-                        $this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-                    } else {
-                        $bool = $this->db->delete(DB_PRE . 'newsletter_accounts', array('mail' => $_POST['mail']));
+                        $bool = $this->model->delete($_POST['mail'], 'mail', Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
                         $this->session->unsetFormToken();
 
                         $this->view->setContent(Core\Functions::confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
-                    }
-                    break;
-                default:
-                    $this->uri->redirect('errors/404');
+                        return;
+                        break;
+                    default:
+                        $this->uri->redirect('errors/404');
+                }
+            } catch (Core\Exceptions\InvalidFormToken $e) {
+                $this->view->setContent(Core\Functions::errorBox($e->getMessage()));
+            } catch (Core\Exceptions\ValidationFailed $e) {
+                $this->view->assign('error_msg', $e->getMessage());
             }
         }
-        if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('mail' => ''));
 
-            $field_value = $this->uri->action ? $this->uri->action : 'subscribe';
+        $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('mail' => ''));
 
-            $actions_Lang = array(
-                $this->lang->t('newsletter', 'subscribe'),
-                $this->lang->t('newsletter', 'unsubscribe')
-            );
-            $this->view->assign('actions', Core\Functions::selectGenerator('action', array('subscribe', 'unsubstribe'), $actions_Lang, $field_value, 'checked'));
+        $field_value = $this->uri->action ? $this->uri->action : 'subscribe';
 
-            if ($captchaAccess === true) {
-                $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());
-            }
+        $actions_Lang = array(
+            $this->lang->t('newsletter', 'subscribe'),
+            $this->lang->t('newsletter', 'unsubscribe')
+        );
+        $this->view->assign('actions', Core\Functions::selectGenerator('action', array('subscribe', 'unsubstribe'), $actions_Lang, $field_value, 'checked'));
 
-            $this->session->generateFormToken();
+        if (Core\Modules::hasPermission('captcha', 'image') === true) {
+            $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());
         }
+
+        $this->session->generateFormToken();
     }
 
     public function actionSidebar()

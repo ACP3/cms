@@ -21,8 +21,8 @@ class Model extends Core\Model
 
     public function resultExists($id, $time = '')
     {
-        $period = empy($time) === false ? ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
-        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id' . $period, array('id' => $id, 'time' => $time));
+        $period = empty($time) === false ? ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
+        return (int)$this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = :id' . $period, array('id' => $id, 'time' => $time)) > 0 ? true : false;
     }
 
     public function getOneById($id)
@@ -60,7 +60,7 @@ class Model extends Core\Model
         return $this->db->fetchAll('SELECT n.*, c.title AS cat FROM ' . $this->prefix . static::TABLE_NAME . ' AS n, ' . $this->prefix . \ACP3\Modules\Categories\Model::TABLE_NAME . ' AS c WHERE n.category_id = c.id ORDER BY n.start DESC, n.end DESC, n.id DESC');
     }
 
-    public function validate(array $formData, \ACP3\Core\Lang $lang)
+    public function validate(array $formData, Core\Lang $lang)
     {
         $this->validateFormKey($lang);
 
@@ -94,7 +94,7 @@ class Model extends Core\Model
         }
     }
 
-    public function validateSettings(array $formData, \ACP3\Core\Lang $lang)
+    public function validateSettings(array $formData, Core\Lang $lang)
     {
         $this->validateFormKey($lang);
 

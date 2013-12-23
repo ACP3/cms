@@ -43,7 +43,7 @@ class Admin extends Core\Modules\Controller\Admin
             try {
                 $this->model->validate($_POST, $this->lang);
 
-                $insert_values = array(
+                $insertValues = array(
                     'id' => '',
                     'start' => $this->date->toSQL($_POST['start']),
                     'end' => $this->date->toSQL($_POST['end']),
@@ -58,7 +58,7 @@ class Admin extends Core\Modules\Controller\Admin
                     'user_id' => $this->auth->getUserId(),
                 );
 
-                $lastId = $this->model->insert($insert_values);
+                $lastId = $this->model->insert($insertValues);
                 if ((bool)CONFIG_SEO_ALIASES === true) {
                     Core\SEO::insertUriAlias('news/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                 }
@@ -143,7 +143,7 @@ class Admin extends Core\Modules\Controller\Admin
                 try {
                     $this->model->validate($_POST, $this->lang);
 
-                    $update_values = array(
+                    $updateValues = array(
                         'start' => $this->date->toSQL($_POST['start']),
                         'end' => $this->date->toSQL($_POST['end']),
                         'title' => Core\Functions::strEncode($_POST['title']),
@@ -157,7 +157,7 @@ class Admin extends Core\Modules\Controller\Admin
                         'user_id' => $this->auth->getUserId(),
                     );
 
-                    $bool = $this->model->update($update_values, $this->uri->id);
+                    $bool = $this->model->update($updateValues, $this->uri->id);
 
                     if ((bool)CONFIG_SEO_ALIASES === true) {
                         Core\SEO::insertUriAlias('news/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);

@@ -63,7 +63,8 @@ class Model
         $this->db->beginTransaction();
         try {
             $tableName = !empty($tableName) ? $tableName : static::TABLE_NAME;
-            $bool = $this->db->update($this->prefix . $tableName, $params, array('id' => $id));
+            $where = is_array($id) === true ? $id : array('id' => $id);
+            $bool = $this->db->update($this->prefix . $tableName, $params, $where);
             $this->db->commit();
             return $bool;
         } catch (\Exception $e) {
@@ -71,7 +72,7 @@ class Model
         }
     }
 
-    public function validateFormKey(\ACP3\Core\Lang $lang)
+    public function validateFormKey(Lang $lang)
     {
         if (Validate::formToken() === false) {
             throw new Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));

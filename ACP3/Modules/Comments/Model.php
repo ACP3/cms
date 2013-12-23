@@ -60,18 +60,18 @@ class Model extends Core\Model
         return $this->db->fetchAll('SELECT c.module_id, m.name AS module, COUNT(c.module_id) AS `comments_count` FROM ' . $this->prefix . static::TABLE_NAME . ' AS c JOIN ' . $this->prefix . 'modules AS m ON(m.id = c.module_id) GROUP BY c.module_id ORDER BY m.name');
     }
 
-    public function validateCreate(array $formData, $ip, \ACP3\Core\Lang $lang, \ACP3\Core\Auth $auth, \ACP3\Core\Date $date)
+    public function validateCreate(array $formData, $ip, Core\Lang $lang, Core\Auth $auth, Core\Date $date)
     {
         $this->validateFormKey($lang);
 
         // Flood Sperre
         $flood = $this->getLastDateFromIp($ip);
-        $flood_time = !empty($flood) ? $date->timestamp($flood) + CONFIG_FLOOD : 0;
-        $time = $date->timestamp();
+        $floodTime = !empty($flood) ? $date->timestamp($flood, true) + 30 : 0;
+        $time = $date->timestamp('now', true);
 
         $errors = array();
-        if ($flood_time > $time) {
-            $errors[] = sprintf($lang->t('system', 'flood_no_entry_possible'), $flood_time - $time);
+        if ($floodTime > $time) {
+            $errors[] = sprintf($lang->t('system', 'flood_no_entry_possible'), $floodTime - $time);
         }
         if (empty($formData['name'])) {
             $errors['name'] = $lang->t('system', 'name_to_short');
@@ -88,7 +88,7 @@ class Model extends Core\Model
         }
     }
 
-    public function validateEdit(array $formData, \ACP3\Core\Lang $lang)
+    public function validateEdit(array $formData, Core\Lang $lang)
     {
         $this->validateFormKey($lang);
 
@@ -105,7 +105,7 @@ class Model extends Core\Model
         }
     }
 
-    public function validateSettings(array $formData, \ACP3\Core\Lang $lang)
+    public function validateSettings(array $formData, Core\Lang $lang)
     {
         $this->validateFormKey($lang);
 
