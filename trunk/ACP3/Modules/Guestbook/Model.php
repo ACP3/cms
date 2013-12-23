@@ -51,7 +51,7 @@ class Model extends Core\Model
         return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' ORDER BY date DESC, id DESC');
     }
 
-    public function validateCreate(array $formData, $newsletterAccess, \ACP3\Core\Lang $lang, \ACP3\Core\Date $date, \ACP3\Core\Auth $auth)
+    public function validateCreate(array $formData, $newsletterAccess, Core\Lang $lang, Core\Date $date, Core\Auth $auth)
     {
         $this->validateFormKey($lang);
 
@@ -59,13 +59,11 @@ class Model extends Core\Model
 
         // Flood Sperre
         $flood = $this->getLastDateFromIp($_SERVER['REMOTE_ADDR']);
-        if (!empty($flood)) {
-            $flood_time = $date->timestamp($flood) + CONFIG_FLOOD;
-        }
-        $time = $date->timestamp();
+        $floodTime = !empty($flood) ? $date->timestamp($flood, true) + 30 : 0;
+        $time = $date->timestamp('now', true);
 
-        if (isset($flood_time) && $flood_time > $time)
-            $errors[] = sprintf($lang->t('system', 'flood_no_entry_possible'), $flood_time - $time);
+        if ($floodTime > $time)
+            $errors[] = sprintf($lang->t('system', 'flood_no_entry_possible'), $floodTime - $time);
         if (empty($formData['name']))
             $errors['name'] = $lang->t('system', 'name_to_short');
         if (!empty($formData['mail']) && Core\Validate::email($formData['mail']) === false)
@@ -75,11 +73,10 @@ class Model extends Core\Model
         if (Core\Modules::hasPermission('captcha', 'image') === true && $auth->isUser() === false && Core\Validate::captcha($formData['captcha']) === false)
             $errors['captcha'] = $lang->t('captcha', 'invalid_captcha_entered');
         if ($newsletterAccess === true && isset($formData['subscribe_newsletter']) && $formData['subscribe_newsletter'] == 1) {
+            $newsletterModel = new \ACP3\Modules\Newsletter\Model($this->db);
             if (Core\Validate::email($formData['mail']) === false)
                 $errors['mail'] = $lang->t('guestbook', 'type_in_email_address_to_subscribe_to_newsletter');
-            if (Core\Validate::email($formData['mail']) === true &&
-                $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'newsletter_accounts WHERE mail = ?', array($formData['mail'])) == 1
-            )
+            if (Core\Validate::email($formData['mail']) === true && $newsletterModel->accountExists($formData['mail']) === true)
                 $errors[] = $lang->t('newsletter', 'account_exists');
         }
 
@@ -88,7 +85,7 @@ class Model extends Core\Model
         }
     }
 
-    public function validateEdit(array $formData, array $settings, \ACP3\Core\Lang $lang)
+    public function validateEdit(array $formData, array $settings, Core\Lang $lang)
     {
         $this->validateFormKey($lang);
 
@@ -105,7 +102,7 @@ class Model extends Core\Model
         }
     }
 
-    public function validateSettings(array $formData, \ACP3\Core\Lang $lang)
+    public function validateSettings(array $formData, Core\Lang $lang)
     {
         $this->validateFormKey($lang);
 

@@ -1,7 +1,7 @@
 <div class="navbar navbar-default">
     {if isset($categories)}
         {if {has_permission mod="newsletter" file="list"}}
-            <div class="navbar-text pull-left">
+            <div class="navbar-text">
                 <a href="{uri args="newsletter/list"}">{lang t="newsletter|list"}</a>
             </div>
         {/if}

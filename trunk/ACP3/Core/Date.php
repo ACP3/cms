@@ -43,7 +43,6 @@ class Date
 
     /**
      * Falls man sich als User authentifiziert hat, eingestellte Zeitzone + Sommerzeiteinstellung holen
-     *
      */
     function __construct(Auth $auth, Lang $lang, View $view)
     {
@@ -93,16 +92,16 @@ class Date
      * @param integer $range
      *    1 = Start- und Enddatum anzeigen
      *    2 = Einfaches Inputfeld mitsamt Datepicker anzeigen
-     * @param integer $with_time
+     * @param integer $withTime
      * @return string
      */
-    public function datepicker($name, $value = '', $format = 'Y-m-d H:i', array $params = array(), $range = 1, $with_time = true, $input_only = false)
+    public function datepicker($name, $value = '', $format = 'Y-m-d H:i', array $params = array(), $range = 1, $withTime = true, $inputFieldOnly = false)
     {
         $datepicker = array(
             'range' => is_array($name) === true && $range === 1 ? 1 : 0,
-            'with_time' => (bool)$with_time,
-            'length' => $with_time === true ? 16 : 10,
-            'input_only' => (bool)$input_only,
+            'with_time' => (bool)$withTime,
+            'length' => $withTime === true ? 16 : 10,
+            'input_only' => (bool)$inputFieldOnly,
             'params' => array(
                 'firstDay' => '\'1\'',
                 'dateFormat' => '\'yy-mm-dd\'',
@@ -111,7 +110,7 @@ class Date
                 'changeYear' => 'true',
             )
         );
-        if ($with_time === true) {
+        if ($withTime === true) {
             $datepicker['params']['timeFormat'] = '\'HH:mm\'';
         }
 
@@ -169,11 +168,11 @@ class Date
      *
      * @param string $time
      * @param string $format
-     * @param integer $toLocal
-     * @param integer $isLocal
+     * @param bool $toLocalTimeZone
+     * @param bool $isLocalTimeZone
      * @return string
      */
-    public function format($time = 'now', $format = 'long', $toLocal = true, $isLocal = true)
+    public function format($time = 'now', $format = 'long', $toLocalTimeZone = true, $isLocalTimeZone = true)
     {
         // Datum in gewünschter Formatierung ausgeben
         switch ($format) {
@@ -205,8 +204,8 @@ class Date
         }
 
         $dateTime = new \DateTime($time, $this->dateTimeZone);
-        if ($toLocal === true) {
-            if ($isLocal === true) {
+        if ($toLocalTimeZone === true) {
+            if ($isLocalTimeZone === true) {
                 $dateTime->setTimestamp($dateTime->getTimestamp() + $dateTime->getOffset());
             } else {
                 $dateTime->setTimestamp($dateTime->getTimestamp() - $dateTime->getOffset());
@@ -280,10 +279,10 @@ class Date
     /**
      * Liefert ein Array mit allen Zeitzonen dieser Welt aus
      *
-     * @param string $current_value
+     * @param string $currentValue
      * @return array
      */
-    public static function getTimeZones($current_value = '')
+    public static function getTimeZones($currentValue = '')
     {
         $timeZones = array(
             'Africa' => \DateTimeZone::listIdentifiers(\DateTimeZone::AFRICA),
@@ -303,7 +302,7 @@ class Date
             $i = 0;
             foreach ($values as $row) {
                 unset($timeZones[$key][$i]);
-                $timeZones[$key][$row]['selected'] = Functions::selectEntry('date_time_zone', $row, $current_value);
+                $timeZones[$key][$row]['selected'] = Functions::selectEntry('date_time_zone', $row, $currentValue);
                 ++$i;
             }
         }
@@ -334,21 +333,23 @@ class Date
      * Gibt einen einfachen Zeitstempel zurück, welcher sich an UTC ausrichtet
      *
      * @param string $value
+     * @param bool $islocalTime
      * @return integer
      */
-    public function timestamp($value = 'now', $is_local = false)
+    public function timestamp($value = 'now', $islocalTime = false)
     {
-        return $this->format($value, 'U', true, $is_local);
+        return $this->format($value, 'U', true, $islocalTime);
     }
 
     /**
      * Gibt die aktuelle Uhrzeit im MySQL-Datetime Format zurück
      *
+     * @param bool $islocalTime
      * @return string
      */
-    public function getCurrentDateTime($is_local = false)
+    public function getCurrentDateTime($isLocalTime = false)
     {
-        return $this->format('now', 'Y-m-d H:i:s', true, $is_local);
+        return $this->format('now', 'Y-m-d H:i:s', true, $isLocalTime);
     }
 
     /**
@@ -359,18 +360,19 @@ class Date
      */
     public function toSQL($value = '')
     {
-        return $this->format(empty($value) === true ? $this->getCurrentDateTime() : $value, 'Y-m-d H:i:s', true, false);
+        return $this->format(empty($value) === true ? 'now' : $value, 'Y-m-d H:i:s', true, false);
     }
 
     /**
      * Konvertiert einen Unixstamp in das MySQL-Datetime Format
      *
-     * @param integer $value
+     * @param $value
+     * @param bool $isLocalTime
      * @return string
      */
-    public function timestampToDateTime($value, $is_local = false)
+    public function timestampToDateTime($value, $isLocalTime = false)
     {
-        return $this->format($value, 'Y-m-d H:i:s', true, $is_local);
+        return $this->format($value, 'Y-m-d H:i:s', true, $isLocalTime);
     }
 
 }

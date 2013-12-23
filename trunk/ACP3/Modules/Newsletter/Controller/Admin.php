@@ -13,6 +13,12 @@ use ACP3\Modules\Newsletter;
 class Admin extends Core\Modules\Controller\Admin
 {
 
+    /**
+     *
+     * @var Model
+     */
+    protected $model;
+
     public function __construct(
         Core\Auth $auth,
         Core\Breadcrumb $breadcrumb,
@@ -24,13 +30,15 @@ class Admin extends Core\Modules\Controller\Admin
         Core\View $view)
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+
+        $this->model = new Newsletter\Model($this->db);
     }
 
     public function actionActivate()
     {
         $bool = false;
         if (Core\Validate::isNumber($this->uri->id) === true) {
-            $bool = $this->db->update(DB_PRE . 'newsletter_accounts', array('hash' => ''), array('id' => $this->uri->id));
+            $bool = $this->model->update(array('hash' => ''), $this->uri->id, Newsletter\Model::TABLE_NAME_ACCOUNTS);
         }
 
         Core\Functions::setRedirectMessage($bool, $this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), 'acp/newsletter');
@@ -39,38 +47,30 @@ class Admin extends Core\Modules\Controller\Admin
     public function actionCreate()
     {
         if (isset($_POST['submit']) === true) {
-            if (strlen($_POST['title']) < 3)
-                $errors['title'] = $this->lang->t('newsletter', 'subject_to_short');
-            if (strlen($_POST['text']) < 3)
-                $errors['text'] = $this->lang->t('newsletter', 'text_to_short');
+            try {
+                $this->model->validate($_POST, $this->lang);
 
-            if (isset($errors) === true) {
-                $this->view->assign('error_msg', Core\Functions::errorBox($errors));
-            } elseif (Core\Validate::formToken() === false) {
-                $this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-            } else {
                 $settings = Core\Config::getSettings('newsletter');
 
                 // Newsletter archivieren
-                $insert_values = array(
+                $insertValues = array(
                     'id' => '',
-                    'date' => $this->date->getCurrentDateTime(),
+                    'date' => $this->date->toSQL(),
                     'title' => Core\Functions::strEncode($_POST['title']),
                     'text' => Core\Functions::strEncode($_POST['text'], true),
                     'status' => $_POST['test'] == 1 ? '0' : (int)$_POST['action'],
                     'user_id' => $this->auth->getUserId(),
                 );
-                $bool = $this->db->insert(DB_PRE . 'newsletters', $insert_values);
+                $bool = $this->model->insert($insertValues);
 
                 if ($_POST['action'] == 1 && $bool !== false) {
                     $subject = Core\Functions::strEncode($_POST['title'], true);
                     $body = Core\Functions::strEncode($_POST['text'], true) . "\n-- \n" . html_entity_decode($settings['mailsig'], ENT_QUOTES, 'UTF-8');
 
-                    // Testnewsletter
+                    // Test-Newsletter
                     if ($_POST['test'] == 1) {
                         $bool2 = Core\Functions::generateEmail('', $settings['mail'], $settings['mail'], $subject, $body);
-                        // An alle versenden
-                    } else {
+                    } else { // An alle versenden
                         $bool2 = Newsletter\Helpers::sendNewsletter($subject, $body, $settings['mail']);
                     }
                 }
@@ -84,19 +84,22 @@ class Admin extends Core\Modules\Controller\Admin
                 } else {
                     Core\Functions::setRedirectMessage(false, $this->lang->t('newsletter', 'create_save_error'), 'acp/newsletter');
                 }
+            } catch (Core\Exceptions\InvalidFormToken $e) {
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/newsletter');
+            } catch (Core\Exceptions\ValidationFailed $e) {
+                $this->view->assign('error_msg', $e->getMessage());
             }
         }
-        if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('title' => '', 'text' => ''));
 
-            $lang_test = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('test', Core\Functions::selectGenerator('test', array(1, 0), $lang_test, 0, 'checked'));
+        $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('title' => '', 'text' => ''));
 
-            $lang_action = array($this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save'));
-            $this->view->assign('action', Core\Functions::selectGenerator('action', array(1, 0), $lang_action, 1, 'checked'));
+        $lang_test = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
+        $this->view->assign('test', Core\Functions::selectGenerator('test', array(1, 0), $lang_test, 0, 'checked'));
 
-            $this->session->generateFormToken();
-        }
+        $lang_action = array($this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save'));
+        $this->view->assign('action', Core\Functions::selectGenerator('action', array(1, 0), $lang_action, 1, 'checked'));
+
+        $this->session->generateFormToken();
     }
 
     public function actionDelete()
@@ -107,7 +110,7 @@ class Admin extends Core\Modules\Controller\Admin
             $items = explode('|', $items);
             $bool = false;
             foreach ($items as $item) {
-                $bool = $this->db->delete(DB_PRE . 'newsletters', array('id' => $item));
+                $bool = $this->model->delete($item);
             }
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/newsletter');
         } elseif (is_string($items)) {
@@ -123,7 +126,7 @@ class Admin extends Core\Modules\Controller\Admin
             $items = explode('|', $items);
             $bool = false;
             foreach ($items as $item) {
-                $bool = $this->db->delete(DB_PRE . 'newsletter_accounts', array('id' => $item));
+                $bool = $this->model->delete($item, Newsletter\Model::TABLE_NAME_ACCOUNTS);
             }
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/newsletter/list_accounts');
         } elseif (is_string($items)) {
@@ -133,36 +136,29 @@ class Admin extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        if (Core\Validate::isNumber($this->uri->id) === true &&
-            $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'newsletters WHERE id = ?', array($this->uri->id)) == 1
-        ) {
+        $newsletter = $this->model->getOneById($this->uri->id);
+
+        if (empty($newsletter) === false) {
             // Brotkrümelspur
             $this->breadcrumb
                 ->append($this->lang->t('newsletter', 'newsletter'), $this->uri->route('acp/newsletter'))
                 ->append($this->lang->t('newsletter', 'acp_edit'));
 
             if (isset($_POST['submit']) === true) {
-                if (strlen($_POST['title']) < 3)
-                    $errors['title'] = $this->lang->t('newsletter', 'subject_to_short');
-                if (strlen($_POST['text']) < 3)
-                    $errors['text'] = $this->lang->t('newsletter', 'text_to_short');
+                try {
+                    $this->model->validate($_POST, $this->lang);
 
-                if (isset($errors) === true) {
-                    $this->view->assign('error_msg', Core\Functions::errorBox($errors));
-                } elseif (Core\Validate::formToken() === false) {
-                    $this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-                } else {
                     $settings = Core\Config::getSettings('newsletter');
 
                     // Newsletter archivieren
-                    $update_values = array(
-                        'date' => $this->date->getCurrentDateTime(),
+                    $updateValues = array(
+                        'date' => $this->date->toSQL(),
                         'title' => Core\Functions::strEncode($_POST['title']),
                         'text' => Core\Functions::strEncode($_POST['text'], true),
                         'status' => $_POST['test'] == 1 ? '0' : (int)$_POST['action'],
                         'user_id' => $this->auth->getUserId(),
                     );
-                    $bool = $this->db->update(DB_PRE . 'newsletters', $update_values, array('id' => $this->uri->id));
+                    $bool = $this->model->update($updateValues, $this->uri->id);
 
                     if ($_POST['action'] == 1 && $bool !== false) {
                         $subject = Core\Functions::strEncode($_POST['title'], true);
@@ -186,21 +182,22 @@ class Admin extends Core\Modules\Controller\Admin
                     } else {
                         Core\Functions::setRedirectMessage(false, $this->lang->t('newsletter', 'create_save_error'), 'acp/newsletter');
                     }
+                } catch (Core\Exceptions\InvalidFormToken $e) {
+                    Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/newsletter');
+                } catch (Core\Exceptions\ValidationFailed $e) {
+                    $this->view->assign('error_msg', $e->getMessage());
                 }
             }
-            if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-                $newsletter = $this->db->fetchAssoc('SELECT title, text FROM ' . DB_PRE . 'newsletters WHERE id = ?', array($this->uri->id));
 
-                $this->view->assign('form', isset($_POST['submit']) ? $_POST : $newsletter);
+            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $newsletter);
 
-                $lang_test = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-                $this->view->assign('test', Core\Functions::selectGenerator('test', array(1, 0), $lang_test, 0, 'checked'));
+            $lang_test = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
+            $this->view->assign('test', Core\Functions::selectGenerator('test', array(1, 0), $lang_test, 0, 'checked'));
 
-                $lang_action = array($this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save'));
-                $this->view->assign('action', Core\Functions::selectGenerator('action', array(1, 0), $lang_action, 1, 'checked'));
+            $lang_action = array($this->lang->t('newsletter', 'send_and_save'), $this->lang->t('newsletter', 'only_save'));
+            $this->view->assign('action', Core\Functions::selectGenerator('action', array(1, 0), $lang_action, 1, 'checked'));
 
-                $this->session->generateFormToken();
-            }
+            $this->session->generateFormToken();
         } else {
             $this->uri->redirect('errors/404');
         }
@@ -210,7 +207,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         Core\Functions::getRedirectMessage();
 
-        $newsletter = $this->db->fetchAll('SELECT id, date, title, status FROM ' . DB_PRE . 'newsletters ORDER BY date DESC');
+        $newsletter = $this->model->getAllInAcp();
         $c_newsletter = count($newsletter);
 
         if ($c_newsletter > 0) {
@@ -239,7 +236,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         Core\Functions::getRedirectMessage();
 
-        $accounts = $this->db->fetchAll('SELECT id, mail, hash FROM ' . DB_PRE . 'newsletter_accounts ORDER BY id DESC');
+        $accounts = $this->model->getAllAccounts();
         $c_accounts = count($accounts);
 
         if ($c_accounts > 0) {
@@ -259,11 +256,9 @@ class Admin extends Core\Modules\Controller\Admin
 
     public function actionSend()
     {
-        if (Core\Validate::isNumber($this->uri->id) === true &&
-            $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'newsletters WHERE id = ?', array($this->uri->id)) == 1
-        ) {
+        if (Core\Validate::isNumber($this->uri->id) === true && $this->model->newsletterExists($this->uri->id) === true) {
             $settings = Core\Config::getSettings('newsletter');
-            $newsletter = $this->db->fetchAssoc('SELECT title, text FROM ' . DB_PRE . 'newsletters WHERE id = ?', array($this->uri->id));
+            $newsletter = $this->model->getOneById($this->uri->id);
 
             $subject = html_entity_decode($newsletter['title'], ENT_QUOTES, 'UTF-8');
             $body = html_entity_decode($newsletter['text'] . "\n-- \n" . $settings['mailsig'], ENT_QUOTES, 'UTF-8');
@@ -271,7 +266,7 @@ class Admin extends Core\Modules\Controller\Admin
             $bool = Newsletter\Helpers::sendNewsletter($subject, $body, $settings['mail']);
             $bool2 = false;
             if ($bool === true) {
-                $bool2 = $this->db->update(DB_PRE . 'newsletters', array('status' => '1'), array('id' => $this->uri->id));
+                $bool2 = $this->model->update(array('status' => '1'), $this->uri->id);
             }
 
             Core\Functions::setRedirectMessage($bool && $bool2, $this->lang->t('newsletter', $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error'), 'acp/newsletter');
@@ -283,14 +278,9 @@ class Admin extends Core\Modules\Controller\Admin
     public function actionSettings()
     {
         if (isset($_POST['submit']) === true) {
-            if (Core\Validate::email($_POST['mail']) === false)
-                $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
+            try {
+                $this->model->validateSettings($_POST, $this->lang);
 
-            if (isset($errors) === true) {
-                $this->view->assign('error_msg', Core\Functions::errorBox($errors));
-            } elseif (Core\Validate::formToken() === false) {
-                $this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-            } else {
                 $data = array(
                     'mail' => $_POST['mail'],
                     'mailsig' => Core\Functions::strEncode($_POST['mailsig'])
@@ -301,15 +291,18 @@ class Admin extends Core\Modules\Controller\Admin
                 $this->session->unsetFormToken();
 
                 Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/newsletter');
+            } catch (Core\Exceptions\InvalidFormToken $e) {
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/newsletter');
+            } catch (Core\Exceptions\ValidationFailed $e) {
+                $this->view->assign('error_msg', $e->getMessage());
             }
         }
-        if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-            $settings = Core\Config::getSettings('newsletter');
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $settings);
+        $settings = Core\Config::getSettings('newsletter');
 
-            $this->session->generateFormToken();
-        }
+        $this->view->assign('form', isset($_POST['submit']) ? $_POST : $settings);
+
+        $this->session->generateFormToken();
     }
 
 }

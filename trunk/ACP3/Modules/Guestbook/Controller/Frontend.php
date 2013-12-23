@@ -54,7 +54,7 @@ class Frontend extends Core\Modules\Controller
 
                 $insertValues = array(
                     'id' => '',
-                    'date' => $this->date->getCurrentDateTime(),
+                    'date' => $this->date->toSQL(),
                     'ip' => $_SERVER['REMOTE_ADDR'],
                     'name' => Core\Functions::strEncode($_POST['name']),
                     'user_id' => $this->auth->isUser() ? $this->auth->getUserId() : '',
