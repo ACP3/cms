@@ -2,6 +2,8 @@
 
 namespace ACP3\Core\Modules;
 
+use ACP3\Core;
+
 /**
  * Module controller
  *
@@ -59,14 +61,14 @@ abstract class Controller
     protected $view;
 
     public function __construct(
-        \ACP3\Core\Auth $auth,
-        \ACP3\Core\Breadcrumb $breadcrumb,
-        \ACP3\Core\Date $date,
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Date $date,
         \Doctrine\DBAL\Connection $db,
-        \ACP3\Core\Lang $lang,
-        \ACP3\Core\Session $session,
-        \ACP3\Core\URI $uri,
-        \ACP3\Core\View $view)
+        Core\Lang $lang,
+        Core\Session $session,
+        Core\URI $uri,
+        Core\View $view)
     {
         $this->auth = $auth;
         $this->breadcrumb = $breadcrumb;
