@@ -24,8 +24,12 @@
                         <label for="answer-{$row.number}" class="col-lg-2 control-label">{lang t="polls|answer"} {$row.number+1}</label>
 
                         <div class="col-lg-10">
-                            <input class="form-control" type="text" name="answers[{$row.number}][value]" id="answer-{$row.number}" value="{$row.value}" maxlength="120">
-                            <input type="checkbox" name="answers[{$row.number}][delete]" value="1" class="checkbox inline">
+                            <div class="input-group">
+                                <input class="form-control" type="text" name="answers[{$row.number}][value]" id="answer-{$row.number}" value="{$row.value}" maxlength="120">
+                                <div class="input-group-addon">
+                                    <input type="checkbox" name="answers[{$row.number}][delete]" value="1">
+                                </div>
+                            </div>
                             <input type="hidden" name="answers[{$row.number}][id]" value="{$row.id}" style="display:none">
                         </div>
                     </div>
@@ -49,9 +53,7 @@
     </div>
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-10">
-            {if !$disable}
-                <button type="submit" name="add_answer" class="btn btn-primary">{lang t="polls|add_answer"}</button>
-            {/if}
+            <button type="submit" name="add_answer" class="btn btn-primary">{lang t="polls|add_answer"}</button>
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
             <a href="{uri args="acp/polls"}" class="btn btn-default">{lang t="system|cancel"}</a>
             {$form_token}

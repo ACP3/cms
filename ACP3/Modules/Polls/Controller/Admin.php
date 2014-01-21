@@ -13,6 +13,12 @@ use ACP3\Modules\Polls;
 class Admin extends Core\Modules\Controller\Admin
 {
 
+    /**
+     *
+     * @var Model
+     */
+    protected $model;
+
     public function __construct(
         Core\Auth $auth,
         Core\Breadcrumb $breadcrumb,
@@ -24,29 +30,17 @@ class Admin extends Core\Modules\Controller\Admin
         Core\View $view)
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+
+        $this->model = new Polls\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
     {
         if (isset($_POST['submit']) === true) {
-            if (Core\Validate::date($_POST['start'], $_POST['end']) === false)
-                $errors[] = $this->lang->t('system', 'select_date');
-            if (empty($_POST['title']))
-                $errors['title'] = $this->lang->t('polls', 'type_in_question');
-            $i = 0;
-            foreach ($_POST['answers'] as $row) {
-                if (!empty($row))
-                    ++$i;
-            }
-            if ($i <= 1)
-                $errors[] = $this->lang->t('polls', 'type_in_answer');
+            try {
+                $this->model->validateCreate($_POST);
 
-            if (isset($errors) === true) {
-                $this->view->assign('error_msg', Core\Functions::errorBox($errors));
-            } elseif (Core\Validate::formToken() === false) {
-                $this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-            } else {
-                $insert_values = array(
+                $insertValues = array(
                     'id' => '',
                     'start' => $this->date->toSQL($_POST['start']),
                     'end' => $this->date->toSQL($_POST['end']),
@@ -55,59 +49,60 @@ class Admin extends Core\Modules\Controller\Admin
                     'user_id' => $this->auth->getUserId(),
                 );
 
-                $bool = $this->db->insert(DB_PRE . 'polls', $insert_values);
-                $poll_id = $this->db->lastInsertId();
+                $pollId = $this->model->insert($insertValues);
                 $bool2 = false;
 
-                if ($bool !== false) {
+                if ($pollId !== false) {
                     foreach ($_POST['answers'] as $row) {
                         if (!empty($row)) {
-                            $insert_answer = array(
+                            $insertAnswer = array(
                                 'id' => '',
                                 'text' => Core\Functions::strEncode($row),
-                                'poll_id' => $poll_id,
+                                'poll_id' => $pollId,
                             );
-                            $bool2 = $this->db->insert(DB_PRE . 'poll_answers', $insert_answer);
+                            $bool2 = $this->model->insert($insertAnswer, Polls\Model::TABLE_NAME_ANSWERS);
                         }
                     }
                 }
 
                 $this->session->unsetFormToken();
 
-                Core\Functions::setRedirectMessage($bool && $bool2, $this->lang->t('system', $bool !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/polls');
+                Core\Functions::setRedirectMessage($pollId && $bool2, $this->lang->t('system', $pollId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/polls');
+            } catch (Core\Exceptions\InvalidFormToken $e) {
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/polls');
+            } catch (Core\Exceptions\ValidationFailed $e) {
+                $this->view->assign('error_msg', $e->getMessage());
             }
         }
-        if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-            $answers = array();
-            if (isset($_POST['answers'])) {
-                // Bisherige Antworten
-                $i = 0;
-                foreach ($_POST['answers'] as $row) {
-                    $answers[$i]['number'] = $i;
-                    $answers[$i]['value'] = $row;
-                    ++$i;
-                }
-                // Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
-                if (count($_POST['answers']) <= 9 && !empty($_POST['answers'][$i - 1]) && isset($_POST['submit']) === false) {
-                    $answers[$i]['number'] = $i;
-                    $answers[$i]['value'] = '';
-                }
-            } else {
-                $answers[0]['number'] = 0;
-                $answers[0]['value'] = '';
-                $answers[1]['number'] = 1;
-                $answers[1]['value'] = '';
+
+        $answers = array();
+        if (isset($_POST['answers'])) {
+            // Bisherige Antworten
+            $i = 0;
+            foreach ($_POST['answers'] as $row) {
+                $answers[$i]['number'] = $i;
+                $answers[$i]['value'] = $row;
+                ++$i;
             }
-
-            // Übergabe der Daten an Smarty
-            $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end')));
-            $this->view->assign('title', isset($_POST['title']) ? $_POST['title'] : '');
-            $this->view->assign('answers', $answers);
-            $this->view->assign('multiple', Core\Functions::selectEntry('multiple', '1', '0', 'checked'));
-            $this->view->assign('disable', count($answers) < 10 ? false : true);
-
-            $this->session->generateFormToken();
+            // Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
+            if (!empty($_POST['answers'][$i - 1]) && isset($_POST['submit']) === false) {
+                $answers[$i]['number'] = $i;
+                $answers[$i]['value'] = '';
+            }
+        } else {
+            $answers[0]['number'] = 0;
+            $answers[0]['value'] = '';
+            $answers[1]['number'] = 1;
+            $answers[1]['value'] = '';
         }
+
+        // Übergabe der Daten an Smarty
+        $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end')));
+        $this->view->assign('title', isset($_POST['title']) ? $_POST['title'] : '');
+        $this->view->assign('answers', $answers);
+        $this->view->assign('multiple', Core\Functions::selectEntry('multiple', '1', '0', 'checked'));
+
+        $this->session->generateFormToken();
     }
 
     public function actionDelete()
@@ -118,9 +113,9 @@ class Admin extends Core\Modules\Controller\Admin
             $items = explode('|', $items);
             $bool = $bool2 = $bool3 = false;
             foreach ($items as $item) {
-                $bool = $this->db->delete(DB_PRE . 'polls', array('id' => $item));
-                $bool2 = $this->db->delete(DB_PRE . 'poll_answers', array('poll_id' => $item));
-                $bool3 = $this->db->delete(DB_PRE . 'poll_votes', array('poll_id' => $item));
+                $bool = $this->model->delete($item);
+                $bool2 = $this->model->delete($item, 'poll_id', Polls\Model::TABLE_NAME_ANSWERS);
+                $bool3 = $this->model->delete($item, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
             }
             Core\Functions::setRedirectMessage($bool && $bool2 && $bool3, $this->lang->t('system', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error'), 'acp/polls');
         } elseif (is_string($items)) {
@@ -130,33 +125,15 @@ class Admin extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        if (Core\Validate::isNumber($this->uri->id) === true &&
-            $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'polls WHERE id = ?', array($this->uri->id)) == 1
-        ) {
-            if (isset($_POST['submit']) === true) {
-                if (Core\Validate::date($_POST['start'], $_POST['end']) === false)
-                    $errors[] = $this->lang->t('system', 'select_date');
-                if (empty($_POST['title']))
-                    $errors['title'] = $this->lang->t('polls', 'type_in_question');
-                $j = 0;
-                foreach ($_POST['answers'] as $row) {
-                    if (!empty($row['value']))
-                        $check_answers = true;
-                    if (isset($row['delete']))
-                        ++$j;
-                }
-                if (!isset($check_answers))
-                    $errors[] = $this->lang->t('polls', 'type_in_answer');
-                if (count($_POST['answers']) - $j < 2)
-                    $errors[] = $this->lang->t('polls', 'can_not_delete_all_answers');
+        $poll = $this->model->getOneById($this->uri->id);
 
-                if (isset($errors) === true) {
-                    $this->view->assign('error_msg', Core\Functions::errorBox($errors));
-                } elseif (Core\Validate::formToken() === false) {
-                    $this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-                } else {
+        if (empty($poll) === false) {
+            if (isset($_POST['submit']) === true) {
+                try {
+                    $this->model->validateEdit($_POST);
+
                     // Frage aktualisieren
-                    $update_values = array(
+                    $updateValues = array(
                         'start' => $this->date->toSQL($_POST['start']),
                         'end' => $this->date->toSQL($_POST['end']),
                         'title' => Core\Functions::strEncode($_POST['title']),
@@ -164,11 +141,12 @@ class Admin extends Core\Modules\Controller\Admin
                         'user_id' => $this->auth->getUserId(),
                     );
 
-                    $bool = $this->db->update(DB_PRE . 'polls', $update_values, array('id' => $this->uri->id));
+                    $bool = $this->model->update($updateValues, $this->uri->id);
 
                     // Stimmen zurücksetzen
-                    if (!empty($_POST['reset']))
-                        $this->db->delete(DB_PRE . 'poll_votes', array('poll_id' => $this->uri->id));
+                    if (!empty($_POST['reset'])) {
+                        $this->model->delete($this->uri->id, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
+                    }
 
                     // Antworten
                     foreach ($_POST['answers'] as $row) {
@@ -176,71 +154,70 @@ class Admin extends Core\Modules\Controller\Admin
                         if (empty($row['id'])) {
                             // Neue Antwort nur hinzufügen, wenn die Löschen-Checkbox nicht gesetzt wurde
                             if (!empty($row['value']) && !isset($row['delete']))
-                                $this->db->insert(DB_PRE . 'poll_answers', array('text' => Core\Functions::strEncode($row['value']), 'poll_id' => $this->uri->id));
+                                $this->model->insert(array('text' => Core\Functions::strEncode($row['value']), 'poll_id' => $this->uri->id), Polls\Model::TABLE_NAME_ANSWERS);
                             // Antwort mitsamt Stimmen löschen
                         } elseif (isset($row['delete']) && Core\Validate::isNumber($row['id'])) {
-                            $this->db->delete(DB_PRE . 'poll_answers', array('id' => $row['id']));
-                            if (!empty($_POST['reset']))
-                                $this->db->delete(DB_PRE . 'poll_votes', array('answer_id' => $row['id']));
+                            $this->model->delete($row['id'], '', Polls\Model::TABLE_NAME_ANSWERS);
+                            $this->model->delete($row['id'], 'answer_id', Polls\Model::TABLE_NAME_VOTES);
                             // Antwort aktualisieren
                         } elseif (!empty($row['value']) && Core\Validate::isNumber($row['id'])) {
-                            $bool = $this->db->update(DB_PRE . 'poll_answers', array('text' => Core\Functions::strEncode($row['value'])), array('id' => $row['id']));
+                            $bool = $this->model->update(array('text' => Core\Functions::strEncode($row['value'])), $row['id'], Polls\Model::TABLE_NAME_ANSWERS);
                         }
                     }
 
                     $this->session->unsetFormToken();
 
                     Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/polls');
+                } catch (Core\Exceptions\InvalidFormToken $e) {
+                    Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/polls');
+                } catch (Core\Exceptions\ValidationFailed $e) {
+                    $this->view->assign('error_msg', $e->getMessage());
                 }
             }
-            if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-                $answers = array();
-                // Neue Antworten hinzufügen
-                if (isset($_POST['answers'])) {
-                    // Bisherige Antworten
-                    $i = 0;
-                    foreach ($_POST['answers'] as $row) {
-                        $answers[$i]['number'] = $i;
-                        $answers[$i]['id'] = $row['id'];
-                        $answers[$i]['value'] = $row['value'];
-                        ++$i;
-                    }
-                    // Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
-                    if (count($_POST['answers']) <= 9 && !empty($_POST['answers'][$i - 1]['value']) && isset($_POST['submit']) === false) {
-                        $answers[$i]['number'] = $i;
-                        $answers[$i]['id'] = '0';
-                        $answers[$i]['value'] = '';
-                    }
-                } else {
-                    $answers = $this->db->fetchAll('SELECT id, text FROM ' . DB_PRE . 'poll_answers WHERE poll_id = ?', array($this->uri->id));
-                    $c_answers = count($answers);
 
-                    for ($i = 0; $i < $c_answers; ++$i) {
-                        $answers[$i]['number'] = $i;
-                        $answers[$i]['id'] = $answers[$i]['id'];
-                        $answers[$i]['value'] = $answers[$i]['text'];
-                    }
+            $answers = array();
+            // Neue Antworten hinzufügen
+            if (isset($_POST['answers'])) {
+                // Bisherige Antworten
+                $i = 0;
+                foreach ($_POST['answers'] as $row) {
+                    $answers[$i]['number'] = $i;
+                    $answers[$i]['id'] = $row['id'];
+                    $answers[$i]['value'] = $row['value'];
+                    ++$i;
                 }
-                $this->view->assign('answers', $answers);
+                // Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
+                if (!empty($_POST['answers'][$i - 1]['value']) && isset($_POST['submit']) === false) {
+                    $answers[$i]['number'] = $i;
+                    $answers[$i]['id'] = '0';
+                    $answers[$i]['value'] = '';
+                }
+            } else {
+                $answers = $this->model->getAnswersByPollId($this->uri->id);
+                $c_answers = count($answers);
 
-                $poll = $this->db->fetchAssoc('SELECT start, end, title, multiple FROM ' . DB_PRE . 'polls WHERE id = ?', array($this->uri->id));
-
-                $options = array();
-                $options[0]['name'] = 'reset';
-                $options[0]['checked'] = Core\Functions::selectEntry('reset', '1', '0', 'checked');
-                $options[0]['lang'] = $this->lang->t('polls', 'reset_votes');
-                $options[1]['name'] = 'multiple';
-                $options[1]['checked'] = Core\Functions::selectEntry('multiple', '1', $poll['multiple'], 'checked');
-                $options[1]['lang'] = $this->lang->t('polls', 'multiple_choice');
-                $this->view->assign('options', $options);
-
-                // Übergabe der Daten an Smarty
-                $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end'), array($poll['start'], $poll['end'])));
-                $this->view->assign('title', isset($_POST['title']) ? $_POST['title'] : $poll['title']);
-                $this->view->assign('disable', count($answers) < 10 ? false : true);
-
-                $this->session->generateFormToken();
+                for ($i = 0; $i < $c_answers; ++$i) {
+                    $answers[$i]['number'] = $i;
+                    $answers[$i]['id'] = $answers[$i]['id'];
+                    $answers[$i]['value'] = $answers[$i]['text'];
+                }
             }
+            $this->view->assign('answers', $answers);
+
+            $options = array();
+            $options[0]['name'] = 'reset';
+            $options[0]['checked'] = Core\Functions::selectEntry('reset', '1', '0', 'checked');
+            $options[0]['lang'] = $this->lang->t('polls', 'reset_votes');
+            $options[1]['name'] = 'multiple';
+            $options[1]['checked'] = Core\Functions::selectEntry('multiple', '1', $poll['multiple'], 'checked');
+            $options[1]['lang'] = $this->lang->t('polls', 'multiple_choice');
+            $this->view->assign('options', $options);
+
+            // Übergabe der Daten an Smarty
+            $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end'), array($poll['start'], $poll['end'])));
+            $this->view->assign('title', isset($_POST['title']) ? $_POST['title'] : $poll['title']);
+
+            $this->session->generateFormToken();
         } else {
             $this->uri->redirect('errors/404');
         }
@@ -250,7 +227,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         Core\Functions::getRedirectMessage();
 
-        $polls = $this->db->fetchAll('SELECT id, start, end, title FROM ' . DB_PRE . 'polls ORDER BY start DESC, end DESC, id DESC');
+        $polls = $this->model->getAllInAcp();
         $c_polls = count($polls);
 
         if ($c_polls > 0) {

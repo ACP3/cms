@@ -45,9 +45,7 @@
     </div>
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-10">
-            {if !$disable}
-                <button type="submit" name="add_answer" class="btn btn-primary">{lang t="polls|add_answer"}</button>
-            {/if}
+            <button type="submit" name="add_answer" class="btn btn-primary">{lang t="polls|add_answer"}</button>
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
             <a href="{uri args="acp/polls"}" class="btn btn-default">{lang t="system|cancel"}</a>
             {$form_token}
