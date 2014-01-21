@@ -45,11 +45,12 @@ class Model
         }
     }
 
-    public function delete($id, $field = 'id', $tableName = '')
+    public function delete($id, $field = '', $tableName = '')
     {
         $this->db->beginTransaction();
         try {
             $tableName = !empty($tableName) ? $tableName : static::TABLE_NAME;
+            $field = empty($field) ? 'id' : $field;
             $bool = $this->db->delete($this->prefix . $tableName, is_array($id) ? $id : array($field => (int)$id));
             $this->db->commit();
             return $bool;

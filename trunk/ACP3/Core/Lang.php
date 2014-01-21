@@ -41,6 +41,7 @@ class Lang
      * Verändert die aktuell eingestellte Sprache
      *
      * @param string $lang
+     * @return $this
      */
     public function setLanguage($lang)
     {
