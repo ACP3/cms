@@ -16,16 +16,9 @@ class Model extends Core\Model
     const TABLE_NAME_ANSWERS = 'poll_answers';
     const TABLE_NAME_VOTES = 'poll_votes';
 
-    /**
-     * @var \ACP3\Core\Lang
-     */
-    protected $lang;
-
     public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang)
     {
-        parent::__construct($db);
-
-        $this->lang = $lang;
+        parent::__construct($db, $lang);
     }
 
     public function pollExists($pollId, $time = '', $multiple = false)
@@ -90,7 +83,7 @@ class Model extends Core\Model
 
     public function validateCreate(array $formData)
     {
-        $this->validateFormKey($this->lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (Core\Validate::date($formData['start'], $formData['end']) === false) {
@@ -116,18 +109,18 @@ class Model extends Core\Model
 
     public function validateEdit(array $formData)
     {
-        $this->validateFormKey($this->lang);
+        $this->validateFormKey();
 
         $errors = array();
-        if (Core\Validate::date($_POST['start'], $_POST['end']) === false) {
+        if (Core\Validate::date($formData['start'], $formData['end']) === false) {
             $errors[] = $this->lang->t('system', 'select_date');
         }
-        if (empty($_POST['title'])) {
+        if (empty($formData['title'])) {
             $errors['title'] = $this->lang->t('polls', 'type_in_question');
         }
         $markedAnswers = 0;
         $allAnswersEmpty = true;
-        foreach ($_POST['answers'] as $row) {
+        foreach ($formData['answers'] as $row) {
             if (!empty($row['value'])) {
                 $allAnswersEmpty = false;
             }
@@ -138,7 +131,7 @@ class Model extends Core\Model
         if ($allAnswersEmpty === true) {
             $errors[] = $this->lang->t('polls', 'type_in_answer');
         }
-        if (count($_POST['answers']) - $markedAnswers < 2) {
+        if (count($formData['answers']) - $markedAnswers < 2) {
             $errors[] = $this->lang->t('polls', 'can_not_delete_all_answers');
         }
 

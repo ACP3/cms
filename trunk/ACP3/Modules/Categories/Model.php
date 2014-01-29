@@ -14,9 +14,9 @@ class Model extends Core\Model
 
     const TABLE_NAME = 'categories';
 
-    public function __construct(\Doctrine\DBAL\Connection $db)
+    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang)
     {
-        parent::__construct($db);
+        parent::__construct($db, $lang);
     }
 
     public function resultExists($id)
@@ -53,30 +53,30 @@ class Model extends Core\Model
         return $this->db->fetchAssoc('SELECT c.picture, m.name AS module FROM ' . $this->prefix . static::TABLE_NAME . ' AS c JOIN ' . $this->prefix . \ACP3\Modules\System\Model::TABLE_NAME . ' AS m ON(m.id = c.module_id) WHERE c.id = ?', array($id));
     }
 
-    public function validate(array $formData, $file, $settings, \ACP3\Core\Lang $lang, $categoryId = '')
+    public function validate(array $formData, $file, $settings, $categoryId = '')
     {
-        $this->validateFormKey($lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (strlen($formData['title']) < 3) {
-            $errors['title'] = $lang->t('categories', 'title_to_short');
+            $errors['title'] = $this->lang->t('categories', 'title_to_short');
         }
         if (strlen($formData['description']) < 3) {
-            $errors['description'] = $lang->t('categories', 'description_to_short');
+            $errors['description'] = $this->lang->t('categories', 'description_to_short');
         }
         if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) ||
                 Core\Validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
                 $_FILES['picture']['error'] !== UPLOAD_ERR_OK)
         ) {
-            $errors['picture'] = $lang->t('categories', 'invalid_image_selected');
+            $errors['picture'] = $this->lang->t('categories', 'invalid_image_selected');
         }
         if (empty($categoryId) && empty($formData['module'])) {
-            $errors['module'] = $lang->t('categories', 'select_module');
+            $errors['module'] = $this->lang->t('categories', 'select_module');
         }
 
         $categoryName = empty($categoryId) ? $formData['module'] : $this->getModuleNameFromCategoryId($categoryId);
         if (strlen($formData['title']) >= 3 && Helpers::categoryIsDuplicate($formData['title'], $categoryName, $categoryId)) {
-            $errors['title'] = $lang->t('categories', 'category_already_exists');
+            $errors['title'] = $this->lang->t('categories', 'category_already_exists');
         }
 
         if (!empty($errors)) {
@@ -84,19 +84,19 @@ class Model extends Core\Model
         }
     }
 
-    public function validateSettings(array $formData, \ACP3\Core\Lang $lang)
+    public function validateSettings(array $formData)
     {
-        $this->validateFormKey($lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (Core\Validate::isNumber($formData['width']) === false) {
-            $errors['width'] = $lang->t('categories', 'invalid_image_width_entered');
+            $errors['width'] = $this->lang->t('categories', 'invalid_image_width_entered');
         }
         if (Core\Validate::isNumber($formData['height']) === false) {
-            $errors['height'] = $lang->t('categories', 'invalid_image_height_entered');
+            $errors['height'] = $this->lang->t('categories', 'invalid_image_height_entered');
         }
         if (Core\Validate::isNumber($formData['filesize']) === false) {
-            $errors['filesize'] = $lang->t('categories', 'invalid_image_filesize_entered');
+            $errors['filesize'] = $this->lang->t('categories', 'invalid_image_filesize_entered');
         }
 
         if (!empty($errors)) {

@@ -10,6 +10,8 @@
 
 namespace ACP3\Modules\Comments;
 
+use ACP3\Core;
+
 abstract class Helpers
 {
 
@@ -22,7 +24,12 @@ abstract class Helpers
     protected static function _init()
     {
         if (!self::$model) {
-            self::$model = new Model(\ACP3\Core\Registry::get('Db'));
+            self::$model = new Model(
+                Core\Registry::get('Db'),
+                Core\Registry::get('Lang'),
+                Core\Registry::get('Auth'),
+                Core\Registry::get('Date')
+            );
         }
     }
 

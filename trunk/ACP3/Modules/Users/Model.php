@@ -14,9 +14,9 @@ class Model extends Core\Model
 
     const TABLE_NAME = 'users';
 
-    public function __construct(\Doctrine\DBAL\Connection $db)
+    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang)
     {
-        parent::__construct($db);
+        parent::__construct($db, $lang);
     }
 
     public function resultExists($id, $time = '')

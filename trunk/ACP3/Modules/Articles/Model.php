@@ -21,9 +21,15 @@ class Model extends Core\Model
 
     const TABLE_NAME = 'articles';
 
-    public function __construct(\Doctrine\DBAL\Connection $db)
+    protected $menuModel;
+    protected $uri;
+
+    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang, \ACP3\Modules\Menus\Model $menuModel, Core\URI $uri)
     {
-        parent::__construct($db);
+        parent::__construct($db, $lang);
+
+        $this->menuModel = $menuModel;
+        $this->uri = $uri;
     }
 
     public function resultExists($id, $time = '')
@@ -54,37 +60,37 @@ class Model extends Core\Model
         return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' ORDER BY title ASC');
     }
 
-    public function validateCreate(array $formData, \ACP3\Core\Lang $lang, \ACP3\Modules\Menus\Model $menuModel)
+    public function validateCreate(array $formData)
     {
-        $this->validateFormKey($lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (Core\Validate::date($formData['start'], $formData['end']) === false)
-            $errors[] = $lang->t('system', 'select_date');
+            $errors[] = $this->lang->t('system', 'select_date');
         if (strlen($formData['title']) < 3)
-            $errors['title'] = $lang->t('articles', 'title_to_short');
+            $errors['title'] = $this->lang->t('articles', 'title_to_short');
         if (strlen($formData['text']) < 3)
-            $errors['text'] = $lang->t('articles', 'text_to_short');
+            $errors['text'] = $this->lang->t('articles', 'text_to_short');
         if (Core\Modules::hasPermission('menus', 'acp_create_item') === true && isset($formData['create']) === true) {
             if ($formData['create'] == 1) {
                 if (Core\Validate::isNumber($formData['block_id']) === false)
-                    $errors['block-id'] = $lang->t('menus', 'select_menu_bar');
+                    $errors['block-id'] = $this->lang->t('menus', 'select_menu_bar');
                 if (!empty($formData['parent']) && Core\Validate::isNumber($formData['parent']) === false)
-                    $errors['parent'] = $lang->t('menus', 'select_superior_page');
+                    $errors['parent'] = $this->lang->t('menus', 'select_superior_page');
                 if (!empty($formData['parent']) && Core\Validate::isNumber($formData['parent']) === true) {
                     // Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
-                    $parent_block = $menuModel->getMenuItemBlockIdById($formData['parent']);
+                    $parent_block = $this->menuModel->getMenuItemBlockIdById($formData['parent']);
                     if (!empty($parent_block) && $parent_block != $formData['block_id'])
-                        $errors['parent'] = $lang->t('menus', 'superior_page_not_allowed');
+                        $errors['parent'] = $this->lang->t('menus', 'superior_page_not_allowed');
                 }
                 if ($formData['display'] != 0 && $formData['display'] != 1)
-                    $errors[] = $lang->t('menus', 'select_item_visibility');
+                    $errors[] = $this->lang->t('menus', 'select_item_visibility');
             }
         }
         if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
             (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias']) === true)
         )
-            $errors['alias'] = $lang->t('system', 'uri_alias_unallowed_characters_or_exists');
+            $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
 
 
         if (!empty($errors)) {
@@ -92,20 +98,20 @@ class Model extends Core\Model
         }
     }
 
-    public function validateEdit(array $formData, \ACP3\Core\Lang $lang, \ACP3\Core\URI $URI) {
-        $this->validateFormKey($lang);
+    public function validateEdit(array $formData) {
+        $this->validateFormKey();
 
         $errors = array();
         if (Core\Validate::date($formData['start'], $formData['end']) === false)
-            $errors[] = $lang->t('system', 'select_date');
+            $errors[] = $this->lang->t('system', 'select_date');
         if (strlen($formData['title']) < 3)
-            $errors['title'] = $lang->t('articles', 'title_to_short');
+            $errors['title'] = $this->lang->t('articles', 'title_to_short');
         if (strlen($formData['text']) < 3)
-            $errors['text'] = $lang->t('articles', 'text_to_short');
+            $errors['text'] = $this->lang->t('articles', 'text_to_short');
         if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
-            (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], 'articles/details/id_' . $uri->id) === true)
+            (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], 'articles/details/id_' . $this->uri->id) === true)
         )
-            $errors['alias'] = $lang->t('system', 'uri_alias_unallowed_characters_or_exists');
+            $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
 
         if (!empty($errors)) {
             throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));

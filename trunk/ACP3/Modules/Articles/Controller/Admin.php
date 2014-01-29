@@ -35,16 +35,15 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
-        $this->model = new Articles\Model($this->db);
-
-        $this->menuModel = new \ACP3\Modules\Menus\Model($this->db);
+        $this->menuModel = new \ACP3\Modules\Menus\Model($this->db, $this->lang, $this->uri);
+        $this->model = new Articles\Model($this->db, $this->lang, $this->menuModel, $this->uri);
     }
 
     public function actionCreate()
     {
         if (isset($_POST['submit']) === true) {
             try {
-                $this->model->validateCreate($_POST, $this->lang, $this->menuModel);
+                $this->model->validateCreate($_POST);
 
                 $insertValues = array(
                     'id' => '',
@@ -153,7 +152,7 @@ class Admin extends Core\Modules\Controller\Admin
         if (empty($article) === false) {
             if (isset($_POST['submit']) === true) {
                 try {
-                    $this->model->validateEdit($_POST, $this->lang, $this->uri);
+                    $this->model->validateEdit($_POST);
 
                     $updateValues = array(
                         'start' => $this->date->toSQL($_POST['start']),

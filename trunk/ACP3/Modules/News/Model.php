@@ -14,9 +14,9 @@ class Model extends Core\Model
 
     const TABLE_NAME = 'news';
 
-    public function __construct(\Doctrine\DBAL\Connection $db)
+    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang)
     {
-        parent::__construct($db);
+        parent::__construct($db, $lang);
     }
 
     public function resultExists($id, $time = '')
@@ -60,33 +60,33 @@ class Model extends Core\Model
         return $this->db->fetchAll('SELECT n.*, c.title AS cat FROM ' . $this->prefix . static::TABLE_NAME . ' AS n, ' . $this->prefix . \ACP3\Modules\Categories\Model::TABLE_NAME . ' AS c WHERE n.category_id = c.id ORDER BY n.start DESC, n.end DESC, n.id DESC');
     }
 
-    public function validate(array $formData, Core\Lang $lang)
+    public function validate(array $formData)
     {
-        $this->validateFormKey($lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (Core\Validate::date($formData['start'], $formData['end']) === false) {
-            $errors[] = $lang->t('system', 'select_date');
+            $errors[] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
-            $errors['title'] = $lang->t('news', 'title_to_short');
+            $errors['title'] = $this->lang->t('news', 'title_to_short');
         }
         if (strlen($formData['text']) < 3) {
-            $errors['text'] = $lang->t('news', 'text_to_short');
+            $errors['text'] = $this->lang->t('news', 'text_to_short');
         }
         if (strlen($formData['cat_create']) < 3 && \ACP3\Modules\Categories\Helpers::categoryExists($formData['cat']) === false) {
-            $errors['cat'] = $lang->t('news', 'select_category');
+            $errors['cat'] = $this->lang->t('news', 'select_category');
         }
         if (strlen($formData['cat_create']) >= 3 && \ACP3\Modules\Categories\Helpers::categoryIsDuplicate($formData['cat_create'], 'news') === true) {
-            $errors['cat-create'] = $lang->t('categories', 'category_already_exists');
+            $errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
         if (!empty($formData['link_title']) && (empty($formData['uri']) || Core\Validate::isNumber($formData['target']) === false)) {
-            $errors[] = $lang->t('news', 'complete_hyperlink_statements');
+            $errors[] = $this->lang->t('news', 'complete_hyperlink_statements');
         }
         if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
             (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias']) === true)
         ) {
-            $errors['alias'] = $lang->t('system', 'uri_alias_unallowed_characters_or_exists');
+            $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 
         if (!empty($errors)) {
@@ -94,38 +94,38 @@ class Model extends Core\Model
         }
     }
 
-    public function validateSettings(array $formData, Core\Lang $lang)
+    public function validateSettings(array $formData)
     {
-        $this->validateFormKey($lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (empty($formData['dateformat']) ||
             ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short')
         ) {
-            $errors['dateformat'] = $lang->t('system', 'select_date_format');
+            $errors['dateformat'] = $this->lang->t('system', 'select_date_format');
         }
         if (Core\Validate::isNumber($formData['sidebar']) === false) {
-            $errors['sidebar'] = $lang->t('system', 'select_sidebar_entries');
+            $errors['sidebar'] = $this->lang->t('system', 'select_sidebar_entries');
         }
         if (!isset($formData['readmore']) ||
             ($formData['readmore'] != 1 && $formData['readmore'] != 0)
         ) {
-            $errors[] = $lang->t('news', 'select_activate_readmore');
+            $errors[] = $this->lang->t('news', 'select_activate_readmore');
         }
         if (Core\Validate::isNumber($formData['readmore_chars']) === false ||
             $formData['readmore_chars'] == 0
         ) {
-            $errors['readmore-chars'] = $lang->t('news', 'type_in_readmore_chars');
+            $errors['readmore-chars'] = $this->lang->t('news', 'type_in_readmore_chars');
         }
         if (!isset($formData['category_in_breadcrumb']) ||
             ($formData['category_in_breadcrumb'] != 1 && $formData['category_in_breadcrumb'] != 0)
         ) {
-            $errors[] = $lang->t('news', 'select_display_category_in_breadcrumb');
+            $errors[] = $this->lang->t('news', 'select_display_category_in_breadcrumb');
         }
         if (Core\Modules::isActive('comments') === true &&
             (!isset($formData['comments']) || $formData['comments'] != 1 && $formData['comments'] != 0)
         ) {
-            $errors[] = $lang->t('news', 'select_allow_comments');
+            $errors[] = $this->lang->t('news', 'select_allow_comments');
         }
 
         if (!empty($errors)) {

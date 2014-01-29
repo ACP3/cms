@@ -15,9 +15,9 @@ class Model extends Core\Model
     const TABLE_NAME = 'gallery';
     const TABLE_NAME_PICTURES = 'gallery_pictures';
 
-    public function __construct(\Doctrine\DBAL\Connection $db)
+    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang)
     {
-        parent::__construct($db);
+        parent::__construct($db, $lang);
     }
 
     public function galleryExists($id, $time = '')
@@ -46,6 +46,11 @@ class Model extends Core\Model
     public function getGalleryIdFromPictureId($pictureId)
     {
         return $this->db->fetchColumn('SELECT gallery_id FROM ' . $this->prefix . static::TABLE_NAME_PICTURES . ' WHERE id = ?', array($pictureId));
+    }
+
+    public function getLastPictureByGalleryId($galleryId)
+    {
+        return $this->db->fetchColumn('SELECT MAX(pic) FROM ' . $this->prefix . static::TABLE_NAME_PICTURES . ' WHERE gallery_id = ?', array($galleryId));
     }
 
     public function getPicturesByGalleryId($id)
@@ -95,7 +100,7 @@ class Model extends Core\Model
         return $this->db->executeUpdate('UPDATE ' . $this->prefix . static::TABLE_NAME_PICTURES . ' SET pic = pic - 1 WHERE pic > ? AND gallery_id = ?', array($pictureNumber, $galleryId));
     }
 
-    public function validateCreate(array $formData, \ACP3\Core\Lang $lang)
+    public function validateCreate(array $formData)
     {
         $this->validateFormKey($lang);
 
@@ -117,7 +122,7 @@ class Model extends Core\Model
         }
     }
 
-    public function validateCreatePicture(array $file, array $settings, \ACP3\Core\Lang $lang)
+    public function validateCreatePicture(array $file, array $settings)
     {
         $this->validateFormKey($lang);
 
@@ -137,7 +142,7 @@ class Model extends Core\Model
         }
     }
 
-    public function validateEdit(array $formData, \ACP3\Core\Lang $lang)
+    public function validateEdit(array $formData)
     {
         $this->validateFormKey($lang);
 
@@ -159,7 +164,7 @@ class Model extends Core\Model
         }
     }
 
-    public function validateEditPicture(array $file, array $settings, \ACP3\Core\Lang $lang)
+    public function validateEditPicture(array $file, array $settings)
     {
         $this->validateFormKey($lang);
 
@@ -177,7 +182,7 @@ class Model extends Core\Model
     }
 
 
-    public function validateSettings(array $formData, \ACP3\Core\Lang $lang)
+    public function validateSettings(array $formData)
     {
         $this->validateFormKey($lang);
 

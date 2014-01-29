@@ -38,7 +38,7 @@ class Frontend extends Core\Modules\Controller
 
         $this->module = $module;
         $this->entryId = $entry_id;
-        $this->model = new Comments\Model($this->db);
+        $this->model = new Comments\Model($this->db, $this->lang, $this->auth, $this->date);
     }
 
     public function actionCreate()
@@ -48,7 +48,7 @@ class Frontend extends Core\Modules\Controller
             try {
                 $ip = $_SERVER['REMOTE_ADDR'];
 
-                $this->model->validateCreate($_POST, $ip, $this->lang, $this->auth, $this->date);
+                $this->model->validateCreate($_POST, $ip);
 
                 $mod_id = $this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($this->module));
                 $insert_values = array(

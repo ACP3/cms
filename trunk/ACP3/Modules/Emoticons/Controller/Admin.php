@@ -31,7 +31,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
-        $this->model = new Emoticons\Model($this->db);
+        $this->model = new Emoticons\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
@@ -45,7 +45,7 @@ class Admin extends Core\Modules\Controller\Admin
                     $file['size'] = $_FILES['picture']['size'];
                 }
 
-                $this->model->validateCreate($_POST, $file, $this->lang);
+                $this->model->validateCreate($_POST, $file);
 
                 $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'emoticons');
 
@@ -112,7 +112,7 @@ class Admin extends Core\Modules\Controller\Admin
                         $file['size'] = $_FILES['picture']['size'];
                     }
 
-                    $this->model->validateEdit($_POST, $file, $this->lang);
+                    $this->model->validateEdit($_POST, $file);
 
                     $update_values = array(
                         'code' => Core\Functions::strEncode($_POST['code']),
@@ -171,7 +171,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         if (isset($_POST['submit']) === true) {
             try {
-                $this->model->validateSettings($_POST, $this->lang);
+                $this->model->validateSettings($_POST);
 
                 $data = array(
                     'width' => (int)$_POST['width'],
