@@ -23,7 +23,8 @@ abstract class Helpers
     protected static function _init()
     {
         if (!self::$model) {
-            self::$model = new Model(Core\Registry::get('Db'));
+            $menuModel = new \ACP3\Modules\Menus\Model(Core\Registry::get('Db'), Core\Registry::get('Lang'), Core\Registry::get('URI'));
+            self::$model = new Model(Core\Registry::get('Db'), Core\Registry::get('Lang'), $menuModel, Core\Registry::get('URI'));
         }
     }
 
@@ -33,7 +34,7 @@ abstract class Helpers
      * @param integer $id
      * @return array
      */
-    public static function articlesList($id = '')
+    public static function articlesList($id = 0)
     {
         self::_init();
 

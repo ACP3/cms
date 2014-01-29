@@ -31,14 +31,14 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
-        $this->model = new Gallery\Model($this->db);
+        $this->model = new Gallery\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
     {
         if (isset($_POST['submit']) === true) {
             try {
-                $this->model->validateCreate($_POST, $this->lang);
+                $this->model->validateCreate($_POST);
 
                 $insert_values = array(
                     'id' => '',
@@ -90,10 +90,10 @@ class Admin extends Core\Modules\Controller\Admin
                     $file['name'] = $_FILES['file']['name'];
                     $file['size'] = $_FILES['file']['size'];
 
-                    $this->model->validateCreatePicture($file, $settings, $this->lang);
+                    $this->model->validateCreatePicture($file, $settings);
 
                     $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'gallery');
-                    $picNum = $this->db->fetchColumn('SELECT MAX(pic) FROM ' . DB_PRE . 'gallery_pictures WHERE gallery_id = ?', array($this->uri->id));
+                    $picNum = $this->model->getLastPictureByGalleryId($this->uri->id);
 
                     $insert_values = array(
                         'id' => '',
@@ -211,7 +211,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             if (isset($_POST['submit']) === true) {
                 try {
-                    $this->model->validateEdit($_POST, $this->lang);
+                    $this->model->validateEdit($_POST);
 
                     $update_values = array(
                         'start' => $this->date->toSQL($_POST['start']),
@@ -292,7 +292,7 @@ class Admin extends Core\Modules\Controller\Admin
                         $file['size'] = $_FILES['file']['size'];
                     }
 
-                    $this->model->validateEditPicture($file, $settings, $this->lang);
+                    $this->model->validateEditPicture($file, $settings);
 
                     $update_values = array(
                         'description' => Core\Functions::strEncode($_POST['description'], true),
@@ -384,7 +384,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         if (isset($_POST['submit']) === true) {
             try {
-                $this->model->validateSettings($_POST, $this->lang);
+                $this->model->validateSettings($_POST);
 
                 $data = array(
                     'width' => (int)$_POST['width'],

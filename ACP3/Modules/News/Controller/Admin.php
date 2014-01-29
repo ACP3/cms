@@ -32,7 +32,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
-        $this->model = new News\Model($this->db);
+        $this->model = new News\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
@@ -41,7 +41,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         if (isset($_POST['submit']) === true) {
             try {
-                $this->model->validate($_POST, $this->lang);
+                $this->model->validate($_POST);
 
                 $insertValues = array(
                     'id' => '',
@@ -141,7 +141,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             if (isset($_POST['submit']) === true) {
                 try {
-                    $this->model->validate($_POST, $this->lang);
+                    $this->model->validate($_POST);
 
                     $updateValues = array(
                         'start' => $this->date->toSQL($_POST['start']),

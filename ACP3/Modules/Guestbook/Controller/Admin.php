@@ -30,7 +30,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
-        $this->model = new Guestbook\Model($this->db);
+        $this->model = new Guestbook\Model($this->db, $this->lang, $this->date, $this->auth);
     }
 
     public function actionDelete()
@@ -57,7 +57,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             if (isset($_POST['submit']) === true) {
                 try {
-                    $this->model->validateEdit($_POST, $this->lang);
+                    $this->model->validateEdit($_POST);
 
                     $updateValues = array(
                         'name' => Core\Functions::strEncode($_POST['name']),
@@ -137,7 +137,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         if (isset($_POST['submit']) === true) {
             try {
-                $this->model->validateSettings($_POST, $this->lang);
+                $this->model->validateSettings($_POST);
 
                 $data = array(
                     'dateformat' => Core\Functions::strEncode($_POST['dateformat']),

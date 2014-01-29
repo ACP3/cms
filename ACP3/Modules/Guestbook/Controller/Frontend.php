@@ -30,7 +30,7 @@ class Frontend extends Core\Modules\Controller
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
-        $this->model = new Guestbook\Model($this->db);
+        $this->model = new Guestbook\Model($this->db, $this->lang, $this->date, $this->auth);
     }
 
     public function actionCreate()
@@ -50,7 +50,7 @@ class Frontend extends Core\Modules\Controller
 
         if (isset($_POST['submit']) === true) {
             try {
-                $this->model->validateCreate($_POST, $hasNewsletterAccess, $this->lang, $this->date, $this->auth);
+                $this->model->validateCreate($_POST, $hasNewsletterAccess);
 
                 $insertValues = array(
                     'id' => '',

@@ -14,9 +14,9 @@ class Model extends Core\Model
 
     const TABLE_NAME = 'files';
 
-    public function __construct(\Doctrine\DBAL\Connection $db)
+    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang)
     {
-        parent::__construct($db);
+        parent::__construct($db, $lang);
     }
 
     /**
@@ -96,36 +96,36 @@ class Model extends Core\Model
         return $this->db->fetchAll('SELECT f.*, c.title AS cat FROM ' . $this->prefix . static::TABLE_NAME . ' AS f, ' . $this->prefix . \ACP3\Modules\Categories\Model::TABLE_NAME . ' AS c WHERE f.category_id = c.id ORDER BY f.start DESC, f.end DESC, f.id DESC');
     }
 
-    public function validateCreate(array $formData, $file, \ACP3\Core\Lang $lang)
+    public function validateCreate(array $formData, $file)
     {
-        $this->validateFormKey($lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (Core\Validate::date($formData['start'], $formData['end']) === false) {
-            $errors[] = $lang->t('system', 'select_date');
+            $errors[] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
-            $errors['link-title'] = $lang->t('files', 'type_in_title');
+            $errors['link-title'] = $this->lang->t('files', 'type_in_title');
         }
         if (isset($formData['external']) && (empty($file) || empty($formData['filesize']) || empty($formData['unit']))) {
-            $errors['external'] = $lang->t('files', 'type_in_external_resource');
+            $errors['external'] = $this->lang->t('files', 'type_in_external_resource');
         }
         if (!isset($formData['external']) &&
             (empty($file['tmp_name']) || empty($file['size']) || $_FILES['file_internal']['error'] !== UPLOAD_ERR_OK)
         ) {
-            $errors['file-internal'] = $lang->t('files', 'select_internal_resource');
+            $errors['file-internal'] = $this->lang->t('files', 'select_internal_resource');
         }
         if (strlen($formData['text']) < 3) {
-            $errors['text'] = $lang->t('files', 'description_to_short');
+            $errors['text'] = $this->lang->t('files', 'description_to_short');
         }
         if (strlen($formData['cat_create']) < 3 && \ACP3\Modules\Categories\Helpers::categoryExists($formData['cat']) === false) {
-            $errors['cat'] = $lang->t('files', 'select_category');
+            $errors['cat'] = $this->lang->t('files', 'select_category');
         }
         if (strlen($formData['cat_create']) >= 3 && \ACP3\Modules\Categories\Helpers::categoryIsDuplicate($formData['cat_create'], 'files') === true) {
-            $errors['cat-create'] = $lang->t('categories', 'category_already_exists');
+            $errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
         if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) && (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias']) === true)) {
-            $errors['alias'] = $lang->t('system', 'uri_alias_unallowed_characters_or_exists');
+            $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 
         if (!empty($errors)) {
@@ -133,33 +133,33 @@ class Model extends Core\Model
         }
     }
 
-    public function validateEdit(array $formData, $file, \ACP3\Core\Lang $lang)
+    public function validateEdit(array $formData, $file)
     {
-        $this->validateFormKey($lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (Core\Validate::date($formData['start'], $formData['end']) === false) {
-            $errors[] = $lang->t('system', 'select_date');
+            $errors[] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
-            $errors['link-title'] = $lang->t('files', 'type_in_title');
+            $errors['link-title'] = $this->lang->t('files', 'type_in_title');
         }
         if (isset($formData['external']) && (empty($file) || empty($formData['filesize']) || empty($formData['unit']))) {
-            $errors['external'] = $lang->t('files', 'type_in_external_resource');
+            $errors['external'] = $this->lang->t('files', 'type_in_external_resource');
         }
         if (!isset($formData['external']) && isset($file) && is_array($file) &&
             (empty($file['tmp_name']) || empty($file['size']) || $_FILES['file_internal']['error'] !== UPLOAD_ERR_OK)
         ) {
-            $errors['file-internal'] = $lang->t('files', 'select_internal_resource');
+            $errors['file-internal'] = $this->lang->t('files', 'select_internal_resource');
         }
         if (strlen($formData['text']) < 3) {
-            $errors['text'] = $lang->t('files', 'description_to_short');
+            $errors['text'] = $this->lang->t('files', 'description_to_short');
         }
         if (strlen($formData['cat_create']) < 3 && \ACP3\Modules\Categories\Helpers::categoryExists($formData['cat']) === false) {
-            $errors['cat'] = $lang->t('files', 'select_category');
+            $errors['cat'] = $this->lang->t('files', 'select_category');
         }
         if (strlen($formData['cat_create']) >= 3 && \ACP3\Modules\Categories\Helpers::categoryIsDuplicate($formData['cat_create'], 'files') === true) {
-            $errors['cat-create'] = $lang->t('categories', 'category_already_exists');
+            $errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
         if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
             (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], 'files/details/id_' . $this->uri->id) === true)
@@ -172,19 +172,19 @@ class Model extends Core\Model
         }
     }
 
-    public function validateSettings(array $formData, \ACP3\Core\Lang $lang)
+    public function validateSettings(array $formData)
     {
-        $this->validateFormKey($lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (empty($formData['dateformat']) || ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short')) {
-            $errors['dateformat'] = $lang->t('system', 'select_date_format');
+            $errors['dateformat'] = $this->lang->t('system', 'select_date_format');
         }
         if (Core\Validate::isNumber($formData['sidebar']) === false) {
-            $errors['sidebar'] = $lang->t('system', 'select_sidebar_entries');
+            $errors['sidebar'] = $this->lang->t('system', 'select_sidebar_entries');
         }
         if (Core\Modules::isActive('comments') === true && (!isset($formData['comments']) || $formData['comments'] != 1 && $formData['comments'] != 0)) {
-            $errors[] = $lang->t('files', 'select_allow_comments');
+            $errors[] = $this->lang->t('files', 'select_allow_comments');
         }
 
         if (!empty($errors)) {

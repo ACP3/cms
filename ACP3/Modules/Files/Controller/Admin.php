@@ -33,7 +33,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
-        $this->model = new Files\Model($this->db);
+        $this->model = new Files\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
@@ -51,7 +51,7 @@ class Admin extends Core\Modules\Controller\Admin
                     $file['size'] = $_FILES['file_internal']['size'];
                 }
 
-                $this->model->validateCreate($_POST, $file, $this->lang);
+                $this->model->validateCreate($_POST, $file);
 
                 if (is_array($file) === true) {
                     $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'files');
@@ -172,7 +172,7 @@ class Admin extends Core\Modules\Controller\Admin
                         $file['size'] = $_FILES['file_internal']['size'];
                     }
 
-                    $this->model->validateEdit($_POST, $file, $this->lang);
+                    $this->model->validateEdit($_POST, $file);
 
                     $update_values = array(
                         'start' => $this->date->toSQL($_POST['start']),
@@ -282,7 +282,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         if (isset($_POST['submit']) === true) {
             try {
-                $this->model->validateSettings($_POST, $this->lang);
+                $this->model->validateSettings($_POST);
 
                 $data = array(
                     'dateformat' => Core\Functions::strEncode($_POST['dateformat']),

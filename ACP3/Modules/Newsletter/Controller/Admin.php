@@ -31,7 +31,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
-        $this->model = new Newsletter\Model($this->db);
+        $this->model = new Newsletter\Model($this->db, $this->lang);
     }
 
     public function actionActivate()
@@ -48,7 +48,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         if (isset($_POST['submit']) === true) {
             try {
-                $this->model->validate($_POST, $this->lang);
+                $this->model->validate($_POST);
 
                 $settings = Core\Config::getSettings('newsletter');
 
@@ -146,7 +146,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             if (isset($_POST['submit']) === true) {
                 try {
-                    $this->model->validate($_POST, $this->lang);
+                    $this->model->validate($_POST);
 
                     $settings = Core\Config::getSettings('newsletter');
 
@@ -279,7 +279,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         if (isset($_POST['submit']) === true) {
             try {
-                $this->model->validateSettings($_POST, $this->lang);
+                $this->model->validateSettings($_POST);
 
                 $data = array(
                     'mail' => $_POST['mail'],

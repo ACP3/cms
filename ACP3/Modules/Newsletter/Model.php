@@ -15,9 +15,9 @@ class Model extends Core\Model
     const TABLE_NAME = 'newsletters';
     const TABLE_NAME_ACCOUNTS = 'newsletter_accounts';
 
-    public function __construct(\Doctrine\DBAL\Connection $db)
+    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang)
     {
-        parent::__construct($db);
+        parent::__construct($db, $lang);
     }
 
     public function newsletterExists($id, $status = '')
@@ -60,62 +60,62 @@ class Model extends Core\Model
         return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME_ACCOUNTS . ' ORDER BY id DESC');
     }
 
-    public function validate(array $formData, Core\Lang $lang)
+    public function validate(array $formData)
     {
-        $this->validateFormKey($lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (strlen($formData['title']) < 3)
-            $errors['title'] = $lang->t('newsletter', 'subject_to_short');
+            $errors['title'] = $this->lang->t('newsletter', 'subject_to_short');
         if (strlen($formData['text']) < 3)
-            $errors['text'] = $lang->t('newsletter', 'text_to_short');
+            $errors['text'] = $this->lang->t('newsletter', 'text_to_short');
 
         if (!empty($errors)) {
             throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
         }
     }
 
-    public function validateSubscribe(array $formData, Core\Lang $lang)
+    public function validateSubscribe(array $formData)
     {
-        $this->validateFormKey($lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (Core\Validate::email($formData['mail']) === false)
-            $errors['mail'] = $lang->t('system', 'wrong_email_format');
+            $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         if (Core\Validate::email($formData['mail']) && $this->model->accountExists($formData['mail']) === true)
-            $errors['mail'] = $lang->t('newsletter', 'account_exists');
+            $errors['mail'] = $this->lang->t('newsletter', 'account_exists');
         if (Core\Modules::hasPermission('captcha', 'image') === true && $this->auth->isUser() === false && Core\Validate::captcha($formData['captcha']) === false)
-            $errors['captcha'] = $lang->t('captcha', 'invalid_captcha_entered');
+            $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
 
         if (!empty($errors)) {
             throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
         }
     }
 
-    public function validateUnsubscribe(array $formData, Core\Lang $lang)
+    public function validateUnsubscribe(array $formData)
     {
-        $this->validateFormKey($lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (Core\Validate::email($formData['mail']) === false)
-            $errors[] = $lang->t('system', 'wrong_email_format');
+            $errors[] = $this->lang->t('system', 'wrong_email_format');
         if (Core\Validate::email($formData['mail']) && $this->model->accountExists($formData['mail']) === false)
-            $errors[] = $lang->t('newsletter', 'account_not_exists');
+            $errors[] = $this->lang->t('newsletter', 'account_not_exists');
         if (Core\Modules::hasPermission('captcha', 'image') === true && $this->auth->isUser() === false && Core\Validate::captcha($formData['captcha']) === false)
-            $errors[] = $lang->t('captcha', 'invalid_captcha_entered');
+            $errors[] = $this->lang->t('captcha', 'invalid_captcha_entered');
 
         if (!empty($errors)) {
             throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
         }
     }
 
-    public function validateSettings(array $formData, Core\Lang $lang)
+    public function validateSettings(array $formData)
     {
-        $this->validateFormKey($lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (Core\Validate::email($formData['mail']) === false)
-            $errors['mail'] = $lang->t('system', 'wrong_email_format');
+            $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
 
         if (!empty($errors)) {
             throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));

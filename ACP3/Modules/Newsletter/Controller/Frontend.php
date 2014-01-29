@@ -31,7 +31,7 @@ class Frontend extends Core\Modules\Controller
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
-        $this->model = new Newsletter\Model($this->db);
+        $this->model = new Newsletter\Model($this->db, $this->lang);
     }
 
     public function actionActivate()
@@ -130,7 +130,7 @@ class Frontend extends Core\Modules\Controller
             $this->lang->t('newsletter', 'subscribe'),
             $this->lang->t('newsletter', 'unsubscribe')
         );
-        $this->view->assign('actions', Core\Functions::selectGenerator('action', array('subscribe', 'unsubstribe'), $actions_Lang, $field_value, 'checked'));
+        $this->view->assign('actions', Core\Functions::selectGenerator('action', array('subscribe', 'unsubscribe'), $actions_Lang, $field_value, 'checked'));
 
         if (Core\Modules::hasPermission('captcha', 'image') === true) {
             $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());

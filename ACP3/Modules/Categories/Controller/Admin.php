@@ -31,7 +31,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
-        $this->model = new Categories\Model($this->db);
+        $this->model = new Categories\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
@@ -46,7 +46,7 @@ class Admin extends Core\Modules\Controller\Admin
                 }
                 $settings = Core\Config::getSettings('categories');
 
-                $this->model->validate($_POST, $file, $settings, $this->lang);
+                $this->model->validate($_POST, $file, $settings);
 
                 $file_sql = null;
                 if (!empty($file)) {
@@ -151,7 +151,7 @@ class Admin extends Core\Modules\Controller\Admin
                     }
                     $settings = Core\Config::getSettings('categories');
 
-                    $this->model->validate($_POST, $file, $settings, $this->lang, $this->uri->id);
+                    $this->model->validate($_POST, $file, $settings, $this->uri->id);
 
                     $update_values = array(
                         'title' => Core\Functions::strEncode($_POST['title']),

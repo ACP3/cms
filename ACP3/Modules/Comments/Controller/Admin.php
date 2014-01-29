@@ -31,7 +31,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
-        $this->model = new Comments\Model($this->db);
+        $this->model = new Comments\Model($this->db, $this->lang, $this->auth, $this->date);
     }
 
     public function actionDelete()
@@ -77,7 +77,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             if (isset($_POST['submit']) === true) {
                 try {
-                    $this->model->validateEdit($_POST, $this->lang);
+                    $this->model->validateEdit($_POST);
 
                     $update_values = array();
                     $update_values['message'] = Core\Functions::strEncode($_POST['message']);
@@ -188,7 +188,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         if (isset($_POST['submit']) === true) {
             try {
-                $this->model->validateSettings($_POST, $this->lang);
+                $this->model->validateSettings($_POST);
 
                 $data = array(
                     'dateformat' => Core\Functions::strEncode($_POST['dateformat']),

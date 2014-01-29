@@ -30,14 +30,14 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
-        $this->model = new Menus\Model($this->db);
+        $this->model = new Menus\Model($this->db, $this->lang, $this->uri);
     }
 
     public function actionCreate()
     {
         if (isset($_POST['submit']) === true) {
             try {
-                $this->model->validateCreate($_POST, $this->lang);
+                $this->model->validateCreate($_POST);
 
                 $insertValues = array(
                     'id' => '',
@@ -66,7 +66,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         if (isset($_POST['submit']) === true) {
             try {
-                $this->model->validateItem($_POST, $this->lang);
+                $this->model->validateItem($_POST);
 
                 $insertValues = array(
                     'id' => '',
@@ -220,7 +220,7 @@ class Admin extends Core\Modules\Controller\Admin
         if (empty($menu) === false) {
             if (isset($_POST['submit']) === true) {
                 try {
-                    $this->model->validateEdit($_POST, $this->lang, $this->uri);
+                    $this->model->validateEdit($_POST);
 
                     $updateValues = array(
                         'index_name' => $_POST['index_name'],
@@ -260,7 +260,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             if (isset($_POST['submit']) === true) {
                 try {
-                    $this->model->validateItem($_POST, $this->lang);
+                    $this->model->validateItem($_POST);
 
                     // Vorgenommene Änderungen am Datensatz anwenden
                     $mode = ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match('/^(articles\/details\/id_([0-9]+)\/)$/', $_POST['uri']) ? '4' : $_POST['mode'];

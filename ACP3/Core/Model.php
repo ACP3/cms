@@ -11,13 +11,15 @@ class Model
 {
 
     protected $db;
+    protected $lang;
     protected $prefix = DB_PRE;
 
     const TABLE_NAME = '';
 
-    public function __construct(\Doctrine\DBAL\Connection $db)
+    public function __construct(\Doctrine\DBAL\Connection $db, Lang $lang)
     {
         $this->db = $db;
+        $this->lang;
     }
 
     protected function _buildLimitStmt($limitStart = '', $resultsPerPage = '')
@@ -73,10 +75,10 @@ class Model
         }
     }
 
-    public function validateFormKey(Lang $lang)
+    public function validateFormKey()
     {
         if (Validate::formToken() === false) {
-            throw new Exceptions\InvalidFormToken($lang->t('system', 'form_already_submitted'));
+            throw new Exceptions\InvalidFormToken($this->lang->t('system', 'form_already_submitted'));
         }
     }
 
