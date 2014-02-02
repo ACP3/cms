@@ -184,7 +184,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                 Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/emoticons');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/news');
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/emoticons');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $this->view->assign('error_msg', $e->getMessage());
             }
