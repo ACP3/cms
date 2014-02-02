@@ -12,6 +12,10 @@ use ACP3\Modules\Contact;
  */
 class Admin extends Core\Modules\Controller\Admin
 {
+    /**
+     * @var \ACP3\Modules\Contact\Model
+     */
+    protected $model;
 
     public function __construct(
         Core\Auth $auth,
@@ -24,19 +28,16 @@ class Admin extends Core\Modules\Controller\Admin
         Core\View $view)
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+
+        $this->model = new Contact\Model($db, $lang, $auth);
     }
 
     public function actionList()
     {
         if (isset($_POST['submit']) === true) {
-            if (!empty($_POST['mail']) && Core\Validate::email($_POST['mail']) === false)
-                $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
+            try {
+                $this->model->validateSettings($_POST);
 
-            if (isset($errors) === true) {
-                $this->view->assign('error_msg', Core\Functions::errorBox($errors));
-            } elseif (Core\Validate::formToken() === false) {
-                $this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-            } else {
                 $data = array(
                     'address' => Core\Functions::strEncode($_POST['address'], true),
                     'mail' => $_POST['mail'],
@@ -50,17 +51,20 @@ class Admin extends Core\Modules\Controller\Admin
                 $this->session->unsetFormToken();
 
                 Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/contact');
+            } catch (Core\Exceptions\InvalidFormToken $e) {
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/contact');
+            } catch (Core\Exceptions\ValidationFailed $e) {
+                $this->view->assign('error_msg', $e->getMessage());
             }
         }
-        if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-            Core\Functions::getRedirectMessage();
 
-            $settings = Core\Config::getSettings('contact');
+        Core\Functions::getRedirectMessage();
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $settings);
+        $settings = Core\Config::getSettings('contact');
 
-            $this->session->generateFormToken();
-        }
+        $this->view->assign('form', isset($_POST['submit']) ? $_POST : $settings);
+
+        $this->session->generateFormToken();
     }
 
 }

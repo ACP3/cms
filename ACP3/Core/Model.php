@@ -10,7 +10,13 @@ namespace ACP3\Core;
 class Model
 {
 
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
     protected $db;
+    /**
+     * @var Lang
+     */
     protected $lang;
     protected $prefix = DB_PRE;
 
@@ -19,7 +25,7 @@ class Model
     public function __construct(\Doctrine\DBAL\Connection $db, Lang $lang)
     {
         $this->db = $db;
-        $this->lang;
+        $this->lang = $lang;
     }
 
     protected function _buildLimitStmt($limitStart = '', $resultsPerPage = '')
