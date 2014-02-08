@@ -7,7 +7,7 @@
         <li><a href="#tab-2" data-toggle="tab">{lang t="system|installable_modules"}</a></li>
     </ul>
     <div class="tab-content">
-        <div id="tab-1" class="tab-pane active">
+        <div id="tab-1" class="tab-pane fade in active">
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
@@ -47,7 +47,7 @@
                 </tbody>
             </table>
         </div>
-        <div id="tab-2" class="tab-pane">
+        <div id="tab-2" class="tab-pane fade">
             {if !empty($new_modules)}
                 <table class="table table-striped table-hover">
                     <thead>

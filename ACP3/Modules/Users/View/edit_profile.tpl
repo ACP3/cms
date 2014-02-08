@@ -10,7 +10,7 @@
             <li><a href="#tab-4" data-toggle="tab">{lang t="users|pwd"}</a></li>
         </ul>
         <div class="tab-content">
-            <div id="tab-1" class="tab-pane active">
+            <div id="tab-1" class="tab-pane fade in active">
                 <div class="form-group">
                     <label for="nickname" class="col-lg-2 control-label">{lang t="users|nickname"}</label>
 
@@ -44,7 +44,7 @@
                     </div>
                 </div>
             </div>
-            <div id="tab-2" class="tab-pane">
+            <div id="tab-2" class="tab-pane fade">
                 {foreach $contact as $row}
                     <div class="form-group">
                         <label for="{$row.name}" class="col-lg-2 control-label">{$row.lang}</label>
@@ -55,7 +55,7 @@
                     </div>
                 {/foreach}
             </div>
-            <div id="tab-3" class="tab-pane">
+            <div id="tab-3" class="tab-pane fade">
                 <div class="form-group">
                     <label for="street" class="col-lg-2 control-label">{lang t="users|address_street"}</label>
 
@@ -97,7 +97,7 @@
                     </div>
                 </div>
             </div>
-            <div id="tab-4" class="tab-pane">
+            <div id="tab-4" class="tab-pane fade">
                 <div class="form-group">
                     <label for="new-pwd" class="col-lg-2 control-label">{lang t="users|new_pwd"}</label>
 

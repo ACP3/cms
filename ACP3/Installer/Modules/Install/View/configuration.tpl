@@ -9,7 +9,7 @@
             <li><a href="#tabs-3" data-toggle="tab">{lang t="general"}</a></li>
         </ul>
         <div class="tab-content">
-            <div id="tabs-1" class="tab-pane active">
+            <div id="tabs-1" class="tab-pane fade in active">
                 <div class="form-group">
                     <label for="db-host" class="col-lg-2 control-label">{lang t="db_hostname"}</label>
 
@@ -46,7 +46,7 @@
                         <input class="form-control" type="text" name="db_pre" id="db-pre" value="{$form.db_pre}"></div>
                 </div>
             </div>
-            <div id="tabs-2" class="tab-pane">
+            <div id="tabs-2" class="tab-pane fade">
                 <div class="form-group">
                     <label for="user-name" class="col-lg-2 control-label">{lang t="nickname"}</label>
 
@@ -75,7 +75,7 @@
                     </div>
                 </div>
             </div>
-            <div id="tabs-3" class="tab-pane">
+            <div id="tabs-3" class="tab-pane fade">
                 <div class="form-group">
                     <label for="seo-title" class="col-lg-2 control-label">{lang t="site-title"}</label>
 

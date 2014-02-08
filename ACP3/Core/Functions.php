@@ -9,6 +9,47 @@ namespace ACP3\Core;
  */
 abstract class Functions
 {
+    /**
+     * @var Auth
+     */
+    protected static $auth;
+    /**
+     * @var Breadcrumb
+     */
+    protected static $breadcrumb;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected static $db;
+    /**
+     * @var Lang
+     */
+    protected static $lang;
+    /**
+     * @var URI
+     */
+    protected static $uri;
+    /**
+     * @var View
+     */
+    protected static $view;
+
+    private static $dataTableInitialized = false;
+
+    /**
+     * Set the class attributes
+     */
+    protected static function _init()
+    {
+        if (!static::$auth) {
+            static::$auth = Registry::get('Auth');
+            static::$breadcrumb = Registry::get('Breadcrumb');
+            static::$db = Registry::get('Db');
+            static::$lang = Registry::get('Lang');
+            static::$uri = Registry::get('URI');
+            static::$view = Registry::get('View');
+        }
+    }
 
     /**
      * Ermittelt die Dateigröße gemäß IEC 60027-2
@@ -44,9 +85,9 @@ abstract class Functions
      *
      * @param string $text
      *  Zu übergebender Text
-     * @param string $forward
+     * @param int|string $forward
      *  Weiter Hyperlink
-     * @param string $backward
+     * @param int|string $backward
      *  Zurück Hyperlink
      * @param integer $overlay
      *    Wenn Wert "1", dann wird das Fenster geschlossen
@@ -55,6 +96,8 @@ abstract class Functions
     public static function confirmBox($text, $forward = 0, $backward = 0, $overlay = 0)
     {
         if (!empty($text)) {
+            static::_init();
+
             $confirm = array(
                 'text' => $text,
                 'forward' => $forward,
@@ -64,9 +107,9 @@ abstract class Functions
                 $confirm['backward'] = $backward;
             }
 
-            Registry::get('View')->assign('confirm', $confirm);
+            static::$view->assign('confirm', $confirm);
 
-            return Registry::get('View')->fetchTemplate('system/confirm_box.tpl');
+            return static::$view->fetchTemplate('system/confirm_box.tpl');
         }
         return '';
     }
@@ -78,20 +121,20 @@ abstract class Functions
      */
     public static function dataTable(array $config)
     {
-        Registry::get('View')->enableJsLibraries(array('datatables'));
+        static::_init();
 
-        static $init = false;
+        static::$view->enableJsLibraries(array('datatables'));
 
         if (isset($config['records_per_page']) === false) {
             $config['records_per_page'] = Registry::get('Auth')->entries;
         }
 
-        $config['initialized'] = $init;
+        $config['initialized'] = self::$dataTableInitialized;
 
-        Registry::get('View')->assign('dt', $config);
-        $init = true;
+        static::$view->assign('dt', $config);
+        self::$dataTableInitialized = true;
 
-        return Registry::get('View')->fetchTemplate('system/data_table.tpl');
+        return static::$view->fetchTemplate('system/data_table.tpl');
     }
 
     /**
@@ -102,6 +145,8 @@ abstract class Functions
      */
     public static function errorBox($errors)
     {
+        static::_init();
+
         $hasNonIntegerKeys = false;
         if (is_array($errors) === true) {
             foreach (array_keys($errors) as $key) {
@@ -113,8 +158,8 @@ abstract class Functions
         } else {
             $errors = (array)$errors;
         }
-        Registry::get('View')->assign('error_box', array('non_integer_keys' => $hasNonIntegerKeys, 'errors' => $errors));
-        return Registry::get('View')->fetchTemplate('system/error_box.tpl');
+        static::$view->assign('error_box', array('non_integer_keys' => $hasNonIntegerKeys, 'errors' => $errors));
+        return static::$view->fetchTemplate('system/error_box.tpl');
     }
 
     /**
@@ -194,7 +239,9 @@ abstract class Functions
     public static function generateTOC(array $pages, $path = '', $titles_from_db = false, $custom_uris = false)
     {
         if (!empty($pages)) {
-            $uri = Registry::get('URI');
+            static::_init();
+
+            $uri = static::$uri;
             $path = empty($path) ? $uri->getCleanQuery() : $path;
             $toc = array();
             $i = 0;
@@ -202,9 +249,9 @@ abstract class Functions
                 $page_num = $i + 1;
                 if ($titles_from_db === false) {
                     $attributes = self::getHtmlAttributes($page);
-                    $toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf(Registry::get('Lang')->t('system', 'toc_page'), $page_num);
+                    $toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf(static::$lang->t('system', 'toc_page'), $page_num);
                 } else {
-                    $toc[$i]['title'] = !empty($page['title']) ? $page['title'] : sprintf(Registry::get('Lang')->t('system', 'toc_page'), $page_num);
+                    $toc[$i]['title'] = !empty($page['title']) ? $page['title'] : sprintf(static::$lang->t('system', 'toc_page'), $page_num);
                 }
 
                 $toc[$i]['uri'] = $custom_uris === true ? $page['uri'] : $uri->route($path) . ($page_num > 1 ? 'page_' . $page_num . '/' : '');
@@ -215,18 +262,18 @@ abstract class Functions
                         $uri->route($uri->query) === $uri->route($uri->mod . '/' . $uri->file) && $i == 0
                     ) {
                         $toc[$i]['selected'] = true;
-                        Registry::get('Breadcrumb')->setTitlePostfix($toc[$i]['title']);
+                        static::$breadcrumb->setTitlePostfix($toc[$i]['title']);
                     }
                 } else {
                     if ((Validate::isNumber($uri->page) === false && $i === 0) || $uri->page === $page_num) {
                         $toc[$i]['selected'] = true;
-                        Registry::get('Breadcrumb')->setTitlePostfix($toc[$i]['title']);
+                        static::$breadcrumb->setTitlePostfix($toc[$i]['title']);
                     }
                 }
                 ++$i;
             }
-            Registry::get('View')->assign('toc', $toc);
-            return Registry::get('View')->fetchTemplate('system/toc.tpl');
+            static::$view->assign('toc', $toc);
+            return static::$view->fetchTemplate('system/toc.tpl');
         }
         return '';
     }
@@ -268,6 +315,8 @@ abstract class Functions
         if (strpos($text, 'class="page-break"') === false) {
             return $text;
         } else {
+            static::_init();
+
             $regex = '/<hr(.+)class="page-break"(.*)(\/>|>)/iU';
 
             $pages = preg_split($regex, $text, -1, PREG_SPLIT_NO_EMPTY);
@@ -281,9 +330,9 @@ abstract class Functions
                 $matches = array();
                 preg_match_all($regex, $text, $matches);
 
-                $currentPage = Validate::isNumber(Registry::get('URI')->page) === true && Registry::get('URI')->page <= $c_pages ? Registry::get('URI')->page : 1;
-                $next_page = !empty($pages[$currentPage]) ? Registry::get('URI')->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
-                $previous_page = $currentPage > 1 ? Registry::get('URI')->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
+                $currentPage = Validate::isNumber(static::$uri->page) === true && static::$uri->page <= $c_pages ? static::$uri->page : 1;
+                $next_page = !empty($pages[$currentPage]) ? static::$uri->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
+                $previous_page = $currentPage > 1 ? static::$uri->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
 
                 if (!empty($next_page))
                     SEO::setNextPage($next_page);
@@ -308,8 +357,10 @@ abstract class Functions
     public static function getRedirectMessage()
     {
         if (isset($_SESSION['redirect_message']) && is_array($_SESSION['redirect_message'])) {
-            Registry::get('View')->assign('redirect', $_SESSION['redirect_message']);
-            Registry::get('View')->assign('redirect_message', Registry::get('View')->fetchTemplate('system/redirect_message.tpl'));
+            static::_init();
+
+            static::$view->assign('redirect', $_SESSION['redirect_message']);
+            static::$view->assign('redirect_message', static::$view->fetchTemplate('system/redirect_message.tpl'));
             unset($_SESSION['redirect_message']);
         }
     }
@@ -325,16 +376,18 @@ abstract class Functions
     public static function setRedirectMessage($success, $text, $path, $overlay = false)
     {
         if (empty($text) === false && empty($path) === false) {
+            static::_init();
+
             $_SESSION['redirect_message'] = array(
                 'success' => is_int($success) ? true : (bool)$success,
                 'text' => $text
             );
             if ($overlay === true) {
-                Registry::get('View')->setContentTemplate('system/close_overlay.tpl');
+                static::$view->setContentTemplate('system/close_overlay.tpl');
                 return;
-            } else {
-                Registry::get('URI')->redirect($path);
             }
+
+            static::$uri->redirect($path);
         }
     }
 
@@ -413,7 +466,9 @@ abstract class Functions
 
         if (is_writable($path) === true) {
             if (!@move_uploaded_file($tmpFilename, $path . $new_name . $ext)) {
-                echo sprintf(Registry::get('Lang')->t('system', 'upload_error'), $filename);
+                static::_init();
+
+                echo sprintf(static::$lang->t('system', 'upload_error'), $filename);
             } else {
                 $new_file = array();
                 $new_file['name'] = $new_name . $ext;
@@ -446,7 +501,9 @@ abstract class Functions
     public static function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = '')
     {
         if ($action === 'up' || $action === 'down') {
-            Registry::get('Db')->beginTransaction();
+            static::_init();
+
+            static::$db->beginTransaction();
             try {
                 $id = (int)$id;
                 $table = DB_PRE . $table;
@@ -457,26 +514,26 @@ abstract class Functions
                 // Ein Schritt nach oben
                 if ($action === 'up') {
                     // Aktuelles Element und das vorherige Element selektieren
-                    $query = Registry::get('Db')->fetchAssoc('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' < b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' DESC LIMIT 1');
+                    $query = static::$db->fetchAssoc('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' < b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' DESC LIMIT 1');
                     // Ein Schritt nach unten
                 } else {
                     // Aktuelles Element und das nachfolgende Element selektieren
-                    $query = Registry::get('Db')->fetchAssoc('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' > b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' ASC LIMIT 1');
+                    $query = static::$db->fetchAssoc('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' > b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' ASC LIMIT 1');
                 }
 
                 if (!empty($query)) {
                     // Sortierreihenfolge des aktuellen Elementes zunächst auf 0 setzen
                     // um Probleme mit möglichen Duplicate-Keys zu umgehen
-                    Registry::get('Db')->update($table, array($sort_field => 0), array($id_field => $id));
-                    Registry::get('Db')->update($table, array($sort_field => $query['elem_sort']), array($id_field => $query['other_id']));
+                    static::$db->update($table, array($sort_field => 0), array($id_field => $id));
+                    static::$db->update($table, array($sort_field => $query['elem_sort']), array($id_field => $query['other_id']));
                     // Element nun den richtigen Wert zuweisen
-                    Registry::get('Db')->update($table, array($sort_field => $query['other_sort']), array($id_field => $id));
+                    static::$db->update($table, array($sort_field => $query['other_sort']), array($id_field => $id));
 
-                    Registry::get('Db')->commit();
+                    static::$db->commit();
                     return true;
                 }
             } catch (Exception $e) {
-                Registry::get('Db')->rollback();
+                static::$db->rollback();
             }
         }
         return false;
@@ -510,19 +567,21 @@ abstract class Functions
      */
     public static function pagination($rows, $fragment = '')
     {
-        if ($rows > Registry::get('Auth')->entries) {
+        static::_init();
+
+        if ($rows > static::$auth->entries) {
             // Alle angegebenen URL Parameter mit in die URL einbeziehen
-            $link = Registry::get('URI')->route((defined('IN_ADM') === true ? 'acp/' : '') . Registry::get('URI')->getCleanQuery());
+            $link = static::$uri->route((defined('IN_ADM') === true ? 'acp/' : '') . static::$uri->getCleanQuery());
 
             // Seitenauswahl
-            $current_page = Validate::isNumber(Registry::get('URI')->page) ? (int)Registry::get('URI')->page : 1;
+            $current_page = Validate::isNumber(static::$uri->page) ? (int)static::$uri->page : 1;
 
             if ($current_page > 1) {
-                $postfix = sprintf(Registry::get('Lang')->t('system', 'page_x'), $current_page);
-                Registry::get('Breadcrumb')->setTitlePostfix($postfix);
+                $postfix = sprintf(static::$lang->t('system', 'page_x'), $current_page);
+                static::$breadcrumb->setTitlePostfix($postfix);
             }
             $pagination = array();
-            $c_pagination = (int)ceil($rows / Registry::get('Auth')->entries);
+            $c_pagination = (int)ceil($rows / static::$auth->entries);
             $show_first_last = 5;
             $show_previous_next = 2;
             $pages_to_display = 7;
@@ -532,12 +591,12 @@ abstract class Functions
             if (defined('IN_ADM') === false) {
                 if ($current_page - 1 > 0) {
                     // Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben
-                    SEO::setDescriptionPostfix(sprintf(Registry::get('Lang')->t('system', 'page_x'), $current_page));
+                    SEO::setDescriptionPostfix(sprintf(static::$lang->t('system', 'page_x'), $current_page));
                     SEO::setPreviousPage($link . 'page_' . ($current_page - 1) . '/');
                 }
                 if ($current_page + 1 <= $c_pagination)
                     SEO::setNextPage($link . 'page_' . ($current_page + 1) . '/');
-                if (isset(Registry::get('URI')->page) && Registry::get('URI')->page === 1)
+                if (isset(static::$uri->page) && static::$uri->page === 1)
                     SEO::setCanonicalUri($link);
             }
 
@@ -562,7 +621,7 @@ abstract class Functions
             if ($c_pagination > $show_first_last && $start > 1) {
                 $pagination[$j]['selected'] = false;
                 $pagination[$j]['page'] = '&laquo;';
-                $pagination[$j]['title'] = Registry::get('Lang')->t('system', 'first_page');
+                $pagination[$j]['title'] = static::$lang->t('system', 'first_page');
                 $pagination[$j]['uri'] = $link . $fragment;
                 ++$j;
             }
@@ -571,7 +630,7 @@ abstract class Functions
             if ($c_pagination > $show_previous_next && $current_page !== 1) {
                 $pagination[$j]['selected'] = false;
                 $pagination[$j]['page'] = '&lsaquo;';
-                $pagination[$j]['title'] = Registry::get('Lang')->t('system', 'previous_page');
+                $pagination[$j]['title'] = static::$lang->t('system', 'previous_page');
                 $pagination[$j]['uri'] = $link . ($current_page - 1 > 1 ? 'page_' . ($current_page - 1) . '/' : '') . $fragment;
                 ++$j;
             }
@@ -586,7 +645,7 @@ abstract class Functions
             if ($c_pagination > $show_previous_next && $current_page !== $c_pagination) {
                 $pagination[$j]['selected'] = false;
                 $pagination[$j]['page'] = '&rsaquo;';
-                $pagination[$j]['title'] = Registry::get('Lang')->t('system', 'next_page');
+                $pagination[$j]['title'] = static::$lang->t('system', 'next_page');
                 $pagination[$j]['uri'] = $link . 'page_' . ($current_page + 1) . '/' . $fragment;
                 ++$j;
             }
@@ -595,13 +654,13 @@ abstract class Functions
             if ($c_pagination > $show_first_last && $c_pagination !== $end) {
                 $pagination[$j]['selected'] = false;
                 $pagination[$j]['page'] = '&raquo;';
-                $pagination[$j]['title'] = Registry::get('Lang')->t('system', 'last_page');
+                $pagination[$j]['title'] = static::$lang->t('system', 'last_page');
                 $pagination[$j]['uri'] = $link . 'page_' . $c_pagination . '/' . $fragment;
             }
 
-            Registry::get('View')->assign('pagination', $pagination);
+            static::$view->assign('pagination', $pagination);
 
-            return Registry::get('View')->fetchTemplate('system/pagination.tpl');
+            return static::$view->fetchTemplate('system/pagination.tpl');
         }
     }
 
@@ -637,8 +696,9 @@ abstract class Functions
     public static function removeUploadedFile($dir, $file)
     {
         $path = UPLOADS_DIR . $dir . '/' . $file;
-        if (!empty($dir) && !empty($file) && !preg_match('=/=', $file) && is_file($path) === true)
+        if (!empty($dir) && !empty($file) && !preg_match('=/=', $file) && is_file($path) === true) {
             return @unlink($path);
+        }
         return false;
     }
 
@@ -663,7 +723,9 @@ abstract class Functions
      */
     public static function rewriteInternalUriCallback($matches)
     {
-        return '<a href="' . Registry::get('URI')->route($matches[6], 1) . '"';
+        static::_init();
+
+        return '<a href="' . static::$uri->route($matches[6], 1) . '"';
     }
 
     /**

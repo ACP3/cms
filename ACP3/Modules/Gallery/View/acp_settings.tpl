@@ -20,7 +20,7 @@
             <li><a href="#tab-2" data-toggle="tab">{lang t="gallery|image_dimensions"}</a></li>
         </ul>
         <div class="tab-content">
-            <div id="tab-1" class="tab-pane active">
+            <div id="tab-1" class="tab-pane fade in active">
                 <div class="form-group">
                     <label for="date-format" class="col-lg-2 control-label">{lang t="system|date_format"}</label>
 
@@ -75,7 +75,7 @@
                     </div>
                 {/if}
             </div>
-            <div id="tab-2" class="tab-pane">
+            <div id="tab-2" class="tab-pane fade">
                 <div class="form-group">
                     <label for="thumbwidth" class="col-lg-2 control-label">{lang t="gallery|thumb_image_width"}</label>
 

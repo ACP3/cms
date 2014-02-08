@@ -10,7 +10,7 @@
             <li><a href="#tab-3" data-toggle="tab">{lang t="system|seo"}</a></li>
         </ul>
         <div class="tab-content">
-            <div id="tab-1" class="tab-pane active">
+            <div id="tab-1" class="tab-pane fade in active">
                 <div class="form-group">
                     <label for="mode" class="col-lg-2 control-label">{lang t="menus|page_type"}</label>
 
@@ -71,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            <div id="tab-2" class="tab-pane">
+            <div id="tab-2" class="tab-pane fade">
                 <div id="module-container" class="form-group">
                     <label for="module" class="col-lg-2 control-label">{lang t="menus|module"}</label>
 
@@ -119,7 +119,7 @@
                     </div>
                 </div>
             </div>
-            <div id="tab-3" class="tab-pane">
+            <div id="tab-3" class="tab-pane fade">
                 {$SEO_FORM_FIELDS}
             </div>
         </div>

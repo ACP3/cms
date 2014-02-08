@@ -45,7 +45,7 @@ class Model
         try {
             $tableName = !empty($tableName) ? $tableName : static::TABLE_NAME;
             $this->db->insert($this->prefix . $tableName, $params);
-            $lastId = $this->db->lastInsertId();
+            $lastId = (int) $this->db->lastInsertId();
             $this->db->commit();
             return $lastId;
         } catch (\Exception $e) {

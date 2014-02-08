@@ -10,10 +10,10 @@
             <li><a href="#tab-4" data-toggle="tab">{lang t="system|seo"}</a></li>
         </ul>
         <div class="tab-content">
-            <div id="tab-1" class="tab-pane active">
+            <div id="tab-1" class="tab-pane fade in active">
                 {$publication_period}
             </div>
-            <div id="tab-2" class="tab-pane">
+            <div id="tab-2" class="tab-pane fade">
                 <div class="form-group">
                     <label for="title" class="col-lg-2 control-label">{lang t="news|title"}</label>
 
@@ -50,7 +50,7 @@
                     </div>
                 {/if}
             </div>
-            <div id="tab-3" class="tab-pane">
+            <div id="tab-3" class="tab-pane fade">
                 <div class="form-group">
                     <label for="link-title" class="col-lg-2 control-label">{lang t="news|link_title"}</label>
 
@@ -77,7 +77,7 @@
                     </div>
                 </div>
             </div>
-            <div id="tab-4" class="tab-pane">
+            <div id="tab-4" class="tab-pane fade">
                 {$SEO_FORM_FIELDS}
             </div>
         </div>
