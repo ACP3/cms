@@ -6,6 +6,10 @@
     padding-top: 15px;
 }
 
+.pagination {
+    margin: 0 0 10px;
+}
+
 /* Datensätze */
 table .sub-table-header {
     background: #f6f6f6;

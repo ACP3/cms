@@ -9,7 +9,7 @@
             <li><a href="#tab-3" data-toggle="tab">{lang t="users|privacy"}</a></li>
         </ul>
         <div class="tab-content">
-            <div id="tab-1" class="tab-pane active">
+            <div id="tab-1" class="tab-pane fade in active">
                 <div class="form-group">
                     <label for="language" class="col-lg-2 control-label">{lang t="users|language"}</label>
 
@@ -34,7 +34,7 @@
                     </div>
                 </div>
             </div>
-            <div id="tab-2" class="tab-pane">
+            <div id="tab-2" class="tab-pane fade">
                 <div class="form-group">
                     <label for="date-format-long" class="col-lg-2 control-label">{lang t="system|date_format_long"}</label>
 
@@ -67,7 +67,7 @@
                     </div>
                 </div>
             </div>
-            <div id="tab-3" class="tab-pane">
+            <div id="tab-3" class="tab-pane fade">
                 <div class="form-group">
                     <label for="{$mail_display.0.id}" class="col-lg-2 control-label">{lang t="users|display_mail"}</label>
 

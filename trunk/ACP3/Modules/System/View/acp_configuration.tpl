@@ -36,7 +36,7 @@
     <li><a href="#tab-6" data-toggle="tab">{lang t="system|email"}</a></li>
 </ul>
 <div class="tab-content">
-<div id="tab-1" class="tab-pane active">
+<div id="tab-1" class="tab-pane fade in active">
     <div class="form-group">
         <label for="homepage" class="col-lg-2 control-label">{lang t="system|homepage"}</label>
 
@@ -84,7 +84,7 @@
         </div>
     </div>
 </div>
-<div id="tab-2" class="tab-pane">
+<div id="tab-2" class="tab-pane fade">
     <div class="form-group">
         <label for="date-format-long" class="col-lg-2 control-label">{lang t="system|date_format_long"}</label>
 
@@ -117,7 +117,7 @@
         </div>
     </div>
 </div>
-<div id="tab-3" class="tab-pane">
+<div id="tab-3" class="tab-pane fade">
     <div class="form-group">
         <label for="{$maintenance.0.id}" class="col-lg-2 control-label">{lang t="system|maintenance_mode"}</label>
 
@@ -140,7 +140,7 @@
         </div>
     </div>
 </div>
-<div id="tab-4" class="tab-pane">
+<div id="tab-4" class="tab-pane fade">
     <div class="form-group">
         <label for="seo-title" class="col-lg-2 control-label">{lang t="system|title"}</label>
 
@@ -205,7 +205,7 @@
         </div>
     </div>
 </div>
-<div id="tab-5" class="tab-pane">
+<div id="tab-5" class="tab-pane fade">
     <div class="form-group">
         <label for="{$cache_images.0.id}" class="col-lg-2 control-label">{lang t="system|cache_images"}</label>
 
@@ -248,7 +248,7 @@
         </div>
     </div>
 </div>
-<div id="tab-6" class="tab-pane">
+<div id="tab-6" class="tab-pane fade">
     <div class="form-group">
         <label for="mailer-type" class="col-lg-2 control-label">{lang t="system|mailer_type"}</label>
 

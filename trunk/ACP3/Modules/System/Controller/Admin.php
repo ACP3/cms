@@ -30,60 +30,15 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
-        $this->model = new System\Model($this->db);
+        $this->model = new System\Model($this->db, $this->lang);
     }
 
     public function actionConfiguration()
     {
         if (isset($_POST['submit']) === true) {
-            if (Core\Validate::isInternalURI($_POST['homepage']) === false)
-                $errors['homepage'] = $this->lang->t('system', 'incorrect_homepage');
-            if (Core\Validate::isNumber($_POST['entries']) === false)
-                $errors['entries'] = $this->lang->t('system', 'select_records_per_page');
-            if (Core\Validate::isNumber($_POST['flood']) === false)
-                $errors['flood'] = $this->lang->t('system', 'type_in_flood_barrier');
-            if ((bool)preg_match('/\/$/', $_POST['icons_path']) === false)
-                $errors['icons-path'] = $this->lang->t('system', 'incorrect_path_to_icons');
-            if (preg_match('=/=', $_POST['wysiwyg']) || is_file(CLASSES_DIR . 'WYSIWYG/' . $_POST['wysiwyg'] . '.php') === false)
-                $errors['wysiwyg'] = $this->lang->t('system', 'select_editor');
-            if (empty($_POST['date_format_long']) || empty($_POST['date_format_short']))
-                $errors[] = $this->lang->t('system', 'type_in_date_format');
-            if (Core\Validate::timeZone($_POST['date_time_zone']) === false)
-                $errors['date-time-zone'] = $this->lang->t('system', 'select_time_zone');
-            if (Core\Validate::isNumber($_POST['maintenance_mode']) === false)
-                $errors[] = $this->lang->t('system', 'select_online_maintenance');
-            if (strlen($_POST['maintenance_message']) < 3)
-                $errors['maintenance-message'] = $this->lang->t('system', 'maintenance_message_to_short');
-            if (empty($_POST['seo_title']))
-                $errors['seo-title'] = $this->lang->t('system', 'title_to_short');
-            if (Core\Validate::isNumber($_POST['seo_robots']) === false)
-                $errors[] = $this->lang->t('system', 'select_seo_robots');
-            if (Core\Validate::isNumber($_POST['seo_aliases']) === false)
-                $errors[] = $this->lang->t('system', 'select_seo_aliases');
-            if (Core\Validate::isNumber($_POST['seo_mod_rewrite']) === false)
-                $errors[] = $this->lang->t('system', 'select_mod_rewrite');
-            if (Core\Validate::isNumber($_POST['cache_images']) === false)
-                $errors[] = $this->lang->t('system', 'select_cache_images');
-            if (Core\Validate::isNumber($_POST['cache_minify']) === false)
-                $errors['cache-minify'] = $this->lang->t('system', 'type_in_minify_cache_lifetime');
-            if (!empty($_POST['extra_css']) && Core\Validate::extraCSS($_POST['extra_css']) === false)
-                $errors['extra-css'] = $this->lang->t('system', 'type_in_additional_stylesheets');
-            if (!empty($_POST['extra_js']) && Core\Validate::extraJS($_POST['extra_js']) === false)
-                $errors['extra-js'] = $this->lang->t('system', 'type_in_additional_javascript_files');
-            if ($_POST['mailer_type'] === 'smtp') {
-                if (empty($_POST['mailer_smtp_host']))
-                    $errors['mailer-smtp-host'] = $this->lang->t('system', 'type_in_mailer_smtp_host');
-                if (Core\Validate::isNumber($_POST['mailer_smtp_port']) === false)
-                    $errors['mailer-smtp-port'] = $this->lang->t('system', 'type_in_mailer_smtp_port');
-                if ($_POST['mailer_smtp_auth'] == 1 && empty($_POST['mailer_smtp_user']))
-                    $errors['mailer-smtp-username'] = $this->lang->t('system', 'type_in_mailer_smtp_username');
-            }
+            try {
+                $this->model->validateSettings($_POST);
 
-            if (isset($errors) === true) {
-                $this->view->assign('error_msg', Core\Functions::errorBox($errors));
-            } elseif (Core\Validate::formToken() === false) {
-                $this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-            } else {
                 // Config aktualisieren
                 $config = array(
                     'cache_images' => (int)$_POST['cache_images'],
@@ -127,78 +82,81 @@ class Admin extends Core\Modules\Controller\Admin
                 $this->session->unsetFormToken();
 
                 Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), 'acp/system/configuration');
+            } catch (Core\Exceptions\InvalidFormToken $e) {
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/system/configuration');
+            } catch (Core\Exceptions\ValidationFailed $e) {
+                $this->view->assign('error_msg', $e->getMessage());
             }
         }
-        if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-            Core\Functions::getRedirectMessage();
 
-            $this->view->assign('entries', Core\Functions::recordsPerPage(CONFIG_ENTRIES));
+        Core\Functions::getRedirectMessage();
 
-            // WYSIWYG-Editoren
-            $editors = scandir(CLASSES_DIR . 'WYSIWYG');
-            $c_editors = count($editors);
-            $wysiwyg = array();
+        $this->view->assign('entries', Core\Functions::recordsPerPage(CONFIG_ENTRIES));
 
-            for ($i = 0; $i < $c_editors; ++$i) {
-                $editors[$i] = substr($editors[$i], 0, strrpos($editors[$i], '.php'));
-                if (!empty($editors[$i]) && !in_array($editors[$i], array('.', '..', 'AbstractWYSIWYG'))) {
-                    $wysiwyg[$i]['value'] = $editors[$i];
-                    $wysiwyg[$i]['selected'] = Core\Functions::selectEntry('wysiwyg', $editors[$i], CONFIG_WYSIWYG);
-                    $wysiwyg[$i]['lang'] = $editors[$i];
-                }
+        // WYSIWYG-Editoren
+        $editors = scandir(CLASSES_DIR . 'WYSIWYG');
+        $c_editors = count($editors);
+        $wysiwyg = array();
+
+        for ($i = 0; $i < $c_editors; ++$i) {
+            $editors[$i] = substr($editors[$i], 0, strrpos($editors[$i], '.php'));
+            if (!empty($editors[$i]) && !in_array($editors[$i], array('.', '..', 'AbstractWYSIWYG'))) {
+                $wysiwyg[$i]['value'] = $editors[$i];
+                $wysiwyg[$i]['selected'] = Core\Functions::selectEntry('wysiwyg', $editors[$i], CONFIG_WYSIWYG);
+                $wysiwyg[$i]['lang'] = $editors[$i];
             }
-            $this->view->assign('wysiwyg', $wysiwyg);
-
-            // Zeitzonen
-            $this->view->assign('time_zones', Core\Date::getTimeZones(CONFIG_DATE_TIME_ZONE));
-
-            // Wartungsmodus an/aus
-            $lang_maintenance = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('maintenance', Core\Functions::selectGenerator('maintenance_mode', array(1, 0), $lang_maintenance, CONFIG_MAINTENANCE_MODE, 'checked'));
-
-            // Robots
-            $lang_robots = array(
-                $this->lang->t('system', 'seo_robots_index_follow'),
-                $this->lang->t('system', 'seo_robots_index_nofollow'),
-                $this->lang->t('system', 'seo_robots_noindex_follow'),
-                $this->lang->t('system', 'seo_robots_noindex_nofollow')
-            );
-            $this->view->assign('robots', Core\Functions::selectGenerator('seo_robots', array(1, 2, 3, 4), $lang_robots, CONFIG_SEO_ROBOTS));
-
-            // URI-Aliases aktivieren/deaktivieren
-            $lang_aliases = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('aliases', Core\Functions::selectGenerator('seo_aliases', array(1, 0), $lang_aliases, CONFIG_SEO_ALIASES, 'checked'));
-
-            // Sef-URIs
-            $lang_mod_rewrite = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('mod_rewrite', Core\Functions::selectGenerator('seo_mod_rewrite', array(1, 0), $lang_mod_rewrite, CONFIG_SEO_MOD_REWRITE, 'checked'));
-
-            // Caching von Bildern
-            $lang_cache_images = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('cache_images', Core\Functions::selectGenerator('cache_images', array(1, 0), $lang_cache_images, CONFIG_CACHE_IMAGES, 'checked'));
-
-            // Mailertyp
-            $lang_mailer_type = array($this->lang->t('system', 'mailer_type_php_mail'), $this->lang->t('system', 'mailer_type_smtp'));
-            $this->view->assign('mailer_type', Core\Functions::selectGenerator('mailer_type', array('mail', 'smtp'), $lang_mailer_type, CONFIG_MAILER_TYPE));
-
-            // Mailer SMTP Authentifizierung
-            $lang_mailer_smtp_auth = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('mailer_smtp_auth', Core\Functions::selectGenerator('mailer_smtp_auth', array(1, 0), $lang_mailer_smtp_auth, CONFIG_MAILER_SMTP_AUTH, 'checked'));
-
-            // Mailer SMTP Verschlüsselung
-            $lang_mailer_smtp_security = array(
-                $this->lang->t('system', 'mailer_smtp_security_none'),
-                $this->lang->t('system', 'mailer_smtp_security_ssl'),
-                $this->lang->t('system', 'mailer_smtp_security_tls')
-            );
-            $this->view->assign('mailer_smtp_security', Core\Functions::selectGenerator('mailer_smtp_security', array('none', 'ssl', 'tls'), $lang_mailer_smtp_security, CONFIG_MAILER_SMTP_SECURITY));
-
-            $settings = Core\Config::getSettings('system');
-
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $settings);
-
-            $this->session->generateFormToken();
         }
+        $this->view->assign('wysiwyg', $wysiwyg);
+
+        // Zeitzonen
+        $this->view->assign('time_zones', Core\Date::getTimeZones(CONFIG_DATE_TIME_ZONE));
+
+        // Wartungsmodus an/aus
+        $lang_maintenance = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
+        $this->view->assign('maintenance', Core\Functions::selectGenerator('maintenance_mode', array(1, 0), $lang_maintenance, CONFIG_MAINTENANCE_MODE, 'checked'));
+
+        // Robots
+        $lang_robots = array(
+            $this->lang->t('system', 'seo_robots_index_follow'),
+            $this->lang->t('system', 'seo_robots_index_nofollow'),
+            $this->lang->t('system', 'seo_robots_noindex_follow'),
+            $this->lang->t('system', 'seo_robots_noindex_nofollow')
+        );
+        $this->view->assign('robots', Core\Functions::selectGenerator('seo_robots', array(1, 2, 3, 4), $lang_robots, CONFIG_SEO_ROBOTS));
+
+        // URI-Aliases aktivieren/deaktivieren
+        $lang_aliases = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
+        $this->view->assign('aliases', Core\Functions::selectGenerator('seo_aliases', array(1, 0), $lang_aliases, CONFIG_SEO_ALIASES, 'checked'));
+
+        // Sef-URIs
+        $lang_mod_rewrite = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
+        $this->view->assign('mod_rewrite', Core\Functions::selectGenerator('seo_mod_rewrite', array(1, 0), $lang_mod_rewrite, CONFIG_SEO_MOD_REWRITE, 'checked'));
+
+        // Caching von Bildern
+        $lang_cache_images = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
+        $this->view->assign('cache_images', Core\Functions::selectGenerator('cache_images', array(1, 0), $lang_cache_images, CONFIG_CACHE_IMAGES, 'checked'));
+
+        // Mailertyp
+        $lang_mailer_type = array($this->lang->t('system', 'mailer_type_php_mail'), $this->lang->t('system', 'mailer_type_smtp'));
+        $this->view->assign('mailer_type', Core\Functions::selectGenerator('mailer_type', array('mail', 'smtp'), $lang_mailer_type, CONFIG_MAILER_TYPE));
+
+        // Mailer SMTP Authentifizierung
+        $lang_mailer_smtp_auth = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
+        $this->view->assign('mailer_smtp_auth', Core\Functions::selectGenerator('mailer_smtp_auth', array(1, 0), $lang_mailer_smtp_auth, CONFIG_MAILER_SMTP_AUTH, 'checked'));
+
+        // Mailer SMTP Verschlüsselung
+        $lang_mailer_smtp_security = array(
+            $this->lang->t('system', 'mailer_smtp_security_none'),
+            $this->lang->t('system', 'mailer_smtp_security_ssl'),
+            $this->lang->t('system', 'mailer_smtp_security_tls')
+        );
+        $this->view->assign('mailer_smtp_security', Core\Functions::selectGenerator('mailer_smtp_security', array('none', 'ssl', 'tls'), $lang_mailer_smtp_security, CONFIG_MAILER_SMTP_SECURITY));
+
+        $settings = Core\Config::getSettings('system');
+
+        $this->view->assign('form', isset($_POST['submit']) ? $_POST : $settings);
+
+        $this->session->generateFormToken();
     }
 
     public function actionDesigns()

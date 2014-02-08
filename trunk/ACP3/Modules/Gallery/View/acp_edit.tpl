@@ -8,7 +8,7 @@
             <li><a href="#tab-2" data-toggle="tab">{lang t="system|seo"}</a></li>
         </ul>
         <div class="tab-content">
-            <div id="tab-1" class="tab-pane active">
+            <div id="tab-1" class="tab-pane fade in active">
                 {$publication_period}
                 <div class="form-group">
                     <label for="title" class="col-lg-2 control-label">{lang t="gallery|title"}</label>
@@ -18,7 +18,7 @@
                     </div>
                 </div>
             </div>
-            <div id="tab-2" class="tab-pane">
+            <div id="tab-2" class="tab-pane fade">
                 {$SEO_FORM_FIELDS}
             </div>
         </div>

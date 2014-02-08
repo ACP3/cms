@@ -9,10 +9,10 @@
             <li><a href="#tab-3" data-toggle="tab">{lang t="system|seo"}</a></li>
         </ul>
         <div class="tab-content">
-            <div id="tab-1" class="tab-pane active">
+            <div id="tab-1" class="tab-pane fade in active">
                 {$publication_period}
             </div>
-            <div id="tab-2" class="tab-pane">
+            <div id="tab-2" class="tab-pane fade">
                 <div class="form-group">
                     <label for="title" class="col-lg-2 control-label">{lang t="articles|title"}</label>
 
@@ -26,7 +26,7 @@
                     <div class="col-lg-10">{wysiwyg name="text" value="`$form.text`" height="250" advanced="1"}</div>
                 </div>
             </div>
-            <div id="tab-3" class="tab-pane">
+            <div id="tab-3" class="tab-pane fade">
                 {$SEO_FORM_FIELDS}
             </div>
         </div>

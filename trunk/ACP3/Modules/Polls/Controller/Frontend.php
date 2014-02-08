@@ -143,6 +143,7 @@ class Frontend extends Core\Modules\Controller
                     $query = $this->model->getVotesByIpAddress($this->uri->id, $ip); // For guest users check against the ip address
                 }
 
+                $bool = false;
                 if ($query == 0) {
                     $userId = $this->auth->isUser() ? $this->auth->getUserId() : 0;
 
@@ -151,7 +152,6 @@ class Frontend extends Core\Modules\Controller
                         $answers = array($answers);
                     }
 
-                    $bool = false;
                     foreach ($answers as $answer) {
                         if (Core\Validate::isNumber($answer) === true) {
                             $insertValues = array(
@@ -168,6 +168,7 @@ class Frontend extends Core\Modules\Controller
                 } else {
                     $text = $this->lang->t('polls', 'already_voted');
                 }
+
                 Core\Functions::setRedirectMessage($bool, $text, 'polls/result/id_' . $this->uri->id);
             } else {
                 $poll = $this->model->getOneById($this->uri->id);
