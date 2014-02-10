@@ -43,27 +43,24 @@ class Admin extends Core\Modules\Controller\Admin
             try {
                 $this->model->validate($_POST);
 
-                for ($i = 0; $i < 10000; ++$i) {
-                    set_time_limit(20);
-                    $insertValues = array(
-                        'id' => '',
-                        'start' => $this->date->toSQL($_POST['start']),
-                        'end' => $this->date->toSQL($_POST['end']),
-                        'title' => Core\Functions::strEncode($_POST['title'] . ' - ' . $i),
-                        'text' => Core\Functions::strEncode($_POST['text'], true),
-                        'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,
-                        'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
-                        'category_id' => strlen($_POST['cat_create']) >= 3 ? Categories\Helpers::categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
-                        'uri' => Core\Functions::strEncode($_POST['uri'], true),
-                        'target' => (int)$_POST['target'],
-                        'link_title' => Core\Functions::strEncode($_POST['link_title']),
-                        'user_id' => $this->auth->getUserId(),
-                    );
+                $insertValues = array(
+                    'id' => '',
+                    'start' => $this->date->toSQL($_POST['start']),
+                    'end' => $this->date->toSQL($_POST['end']),
+                    'title' => Core\Functions::strEncode($_POST['title']),
+                    'text' => Core\Functions::strEncode($_POST['text'], true),
+                    'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,
+                    'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
+                    'category_id' => strlen($_POST['cat_create']) >= 3 ? Categories\Helpers::categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
+                    'uri' => Core\Functions::strEncode($_POST['uri'], true),
+                    'target' => (int)$_POST['target'],
+                    'link_title' => Core\Functions::strEncode($_POST['link_title']),
+                    'user_id' => $this->auth->getUserId(),
+                );
 
-                    $lastId = $this->model->insert($insertValues);
-                    if ((bool)CONFIG_SEO_ALIASES === true) {
-                        Core\SEO::insertUriAlias('news/details/id_' . $lastId, $_POST['alias'] . '-' . $i, $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
-                    }
+                $lastId = $this->model->insert($insertValues);
+                if ((bool)CONFIG_SEO_ALIASES === true) {
+                    Core\SEO::insertUriAlias('news/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                 }
 
                 $this->session->unsetFormToken();
