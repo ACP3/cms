@@ -127,7 +127,7 @@ abstract class Helpers
             if ($c_items > 0) {
                 // Selektion nur vornehmen, wenn man sich im Frontend befindet
                 if (defined('IN_ADM') === false) {
-                    $in = array($uri->query, $uri->getCleanQuery(), $uri->mod . '/' . $uri->file . '/', $uri->mod);
+                    $in = array($uri->query, $uri->getUriWithoutPages(), $uri->mod . '/' . $uri->file . '/', $uri->mod);
                     $selected = Core\Registry::get('Db')->executeQuery('SELECT m.left_id FROM ' . DB_PRE . Model::TABLE_NAME_ITEMS . ' AS m JOIN ' . DB_PRE . Model::TABLE_NAME . ' AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC', array($menu, $in), array(\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetch(\PDO::FETCH_COLUMN);
                 }
 

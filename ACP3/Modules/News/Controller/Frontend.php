@@ -119,7 +119,15 @@ class Frontend extends Core\Modules\Controller
                 $comment_check = true;
             }
 
-            $this->view->assign('pagination', Core\Functions::pagination($this->model->countAll($time, $cat)));
+            $pagination = new Core\Pagination(
+                $this->auth,
+                $this->breadcrumb,
+                $this->lang,
+                $this->uri,
+                $this->view,
+                $this->model->countAll($time, $cat)
+            );
+            $pagination->display();
 
             for ($i = 0; $i < $c_news; ++$i) {
                 $news[$i]['date_formatted'] = $this->date->format($news[$i]['start'], $settings['dateformat']);

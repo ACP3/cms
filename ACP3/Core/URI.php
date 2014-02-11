@@ -227,7 +227,7 @@ class URI
      *
      * @return string
      */
-    public function getCleanQuery()
+    public function getUriWithoutPages()
     {
         return preg_replace('/\/page_(\d+)\//', '/', $this->query);
     }

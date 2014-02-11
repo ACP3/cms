@@ -62,7 +62,7 @@ class Breadcrumb
         // Frontendbereich
         if (defined('IN_ADM') === false) {
             $uri = $this->uri;
-            $in = array($uri->query, $uri->getCleanQuery(), $uri->mod . '/' . $uri->file . '/', $uri->mod);
+            $in = array($uri->query, $uri->getUriWithoutPages(), $uri->mod . '/' . $uri->file . '/', $uri->mod);
             $items = $db->executeQuery('SELECT p.title, p.uri, p.left_id, p.right_id FROM ' . DB_PRE . 'menu_items AS c, ' . DB_PRE . 'menu_items AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) GROUP BY p.uri ORDER BY p.left_id ASC', array($in), array(\Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetchAll();
             $c_items = count($items);
 

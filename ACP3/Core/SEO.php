@@ -103,7 +103,7 @@ abstract class SEO
         if (Registry::get('URI')->query === CONFIG_HOMEPAGE) {
             return CONFIG_SEO_META_DESCRIPTION !== '' ? CONFIG_SEO_META_DESCRIPTION : '';
         } else {
-            $description = self::getDescription(Registry::get('URI')->getCleanQuery());
+            $description = self::getDescription(Registry::get('URI')->getUriWithoutPages());
             if (empty($description))
                 $description = self::getDescription(Registry::get('URI')->mod . '/' . Registry::get('URI')->file);
 
@@ -119,7 +119,7 @@ abstract class SEO
      */
     public static function getPageKeywords()
     {
-        $keywords = self::getKeywords(Registry::get('URI')->getCleanQuery());
+        $keywords = self::getKeywords(Registry::get('URI')->getUriWithoutPages());
         if (empty($keywords))
             $keywords = self::getKeywords(Registry::get('URI')->mod . '/' . Registry::get('URI')->file);
         if (empty($keywords))
@@ -136,7 +136,7 @@ abstract class SEO
      */
     public static function getPageRobotsSetting()
     {
-        $robots = self::getRobotsSetting(Registry::get('URI')->getCleanQuery());
+        $robots = self::getRobotsSetting(Registry::get('URI')->getUriWithoutPages());
         if (empty($robots))
             $robots = self::getRobotsSetting(Registry::get('URI')->mod . '/' . Registry::get('URI')->file);
         if (empty($robots))
