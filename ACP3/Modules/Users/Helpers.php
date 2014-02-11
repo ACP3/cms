@@ -20,6 +20,7 @@ abstract class Helpers
      *
      * @param string $nickname
      *  Der zu überprüfende Nickname
+     * @param string $id
      * @return boolean
      */
     public static function userNameExists($nickname, $id = '')
@@ -36,6 +37,7 @@ abstract class Helpers
      *
      * @param string $mail
      *  Die zu überprüfende E-Mail-Adresse
+     * @param string $id
      * @return boolean
      */
     public static function userEmailExists($mail, $id = '')

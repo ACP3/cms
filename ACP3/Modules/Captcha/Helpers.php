@@ -20,6 +20,9 @@ abstract class Helpers
      *
      * @param integer $captcha_length
      *  Anzahl der Zeichen, welche das Captcha haben soll
+     * @param string $id
+     * @param bool $input_only
+     * @param string $path
      * @return string
      */
     public static function captcha($captcha_length = 5, $id = 'captcha', $input_only = false, $path = '')
