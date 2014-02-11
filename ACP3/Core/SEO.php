@@ -20,13 +20,13 @@ abstract class SEO
      *
      * @var string
      */
-    protected static $next_page = '';
+    protected static $nextPage = '';
     /**
      * Gibt die vorherige Seite an
      *
      * @var string
      */
-    protected static $previous_page = '';
+    protected static $previousPage = '';
     /**
      * Kanonische URL
      *
@@ -34,7 +34,7 @@ abstract class SEO
      */
     protected static $canonical = '';
 
-    protected static $meta_description_postfix = '';
+    protected static $metaDescriptionPostfix = '';
 
     /**
      * Setzt den Cache für die URI-Aliase
@@ -60,20 +60,21 @@ abstract class SEO
     }
 
     /**
-     * Gibt den Cache der URI-Aliase aus
+     * Gibt den Cache der URI-Aliase zurück
      *
      * @return array
      */
     protected static function getSEOCache()
     {
-        if (Cache::check('aliases', 'seo') === false)
+        if (Cache::check('aliases', 'seo') === false) {
             self::setSEOCache();
+        }
 
         return Cache::output('aliases', 'seo');
     }
 
     /**
-     * Gibt die für die jeweilige Seite gesetzten Metatags aus
+     * Gibt die für die jeweilige Seite gesetzten Metatags zurück
      *
      * @return string
      */
@@ -83,8 +84,8 @@ abstract class SEO
             'description' => defined('IN_ADM') === true ? '' : self::getPageDescription(),
             'keywords' => defined('IN_ADM') === true ? '' : self::getPageKeywords(),
             'robots' => defined('IN_ADM') === true ? 'noindex,nofollow' : self::getPageRobotsSetting(),
-            'previous_page' => self::$previous_page,
-            'next_page' => self::$next_page,
+            'previous_page' => self::$previousPage,
+            'next_page' => self::$nextPage,
             'canonical' => self::$canonical,
         );
         Registry::get('View')->assign('meta', $meta);
@@ -93,7 +94,7 @@ abstract class SEO
     }
 
     /**
-     * Gibt die Beschreibung der aktuell angezeigten Seite aus
+     * Gibt die Beschreibung der aktuell angezeigten Seite zurück
      *
      * @return string
      */
@@ -104,57 +105,61 @@ abstract class SEO
             return CONFIG_SEO_META_DESCRIPTION !== '' ? CONFIG_SEO_META_DESCRIPTION : '';
         } else {
             $description = self::getDescription(Registry::get('URI')->getUriWithoutPages());
-            if (empty($description))
+            if (empty($description)) {
                 $description = self::getDescription(Registry::get('URI')->mod . '/' . Registry::get('URI')->file);
+            }
 
-            return $description . (!empty($description) && !empty(self::$meta_description_postfix) ? ' - ' . self::$meta_description_postfix : '');
+            return $description . (!empty($description) && !empty(self::$metaDescriptionPostfix) ? ' - ' . self::$metaDescriptionPostfix : '');
         }
     }
 
     /**
      * Gibt die Keywords der aktuell angezeigten Seite oder der
-     * Elternseite aus
+     * Elternseite zurück
      *
      * @return string
      */
     public static function getPageKeywords()
     {
         $keywords = self::getKeywords(Registry::get('URI')->getUriWithoutPages());
-        if (empty($keywords))
+        if (empty($keywords)) {
             $keywords = self::getKeywords(Registry::get('URI')->mod . '/' . Registry::get('URI')->file);
-        if (empty($keywords))
+        }
+        if (empty($keywords)) {
             $keywords = self::getKeywords(Registry::get('URI')->mod);
+        }
 
         return strtolower(!empty($keywords) ? $keywords : CONFIG_SEO_META_KEYWORDS);
     }
 
     /**
      * Gibt den Robots-Metatag der aktuell angezeigten Seite oder der
-     * Elternseite aus
+     * Elternseite zurück
      *
      * @return string
      */
     public static function getPageRobotsSetting()
     {
         $robots = self::getRobotsSetting(Registry::get('URI')->getUriWithoutPages());
-        if (empty($robots))
+        if (empty($robots)) {
             $robots = self::getRobotsSetting(Registry::get('URI')->mod . '/' . Registry::get('URI')->file);
-        if (empty($robots))
+        }
+        if (empty($robots)) {
             $robots = self::getRobotsSetting(Registry::get('URI')->mod);
+        }
 
         return strtolower(!empty($robots) ? $robots : self::getRobotsSetting());
     }
 
     /**
-     * Gibt die Beschreibung der Seite aus
+     * Gibt die Beschreibung der Seite zurück
      *
      * @param string $path
      * @return string
      */
     public static function getDescription($path)
     {
-        if (empty(self::$aliases))
-            self::$aliases = self::getSEOCache();
+        self::_initCache();
 
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
@@ -167,19 +172,18 @@ abstract class SEO
      */
     public static function setDescriptionPostfix($string)
     {
-        self::$meta_description_postfix = $string;
+        self::$metaDescriptionPostfix = $string;
     }
 
     /**
-     * Gibt die Schlüsselwörter der Seite aus
+     * Gibt die Schlüsselwörter der Seite zurück
      *
      * @param string $path
      * @return string
      */
     public static function getKeywords($path)
     {
-        if (empty(self::$aliases))
-            self::$aliases = self::getSEOCache();
+        self::_initCache();
 
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
@@ -187,7 +191,7 @@ abstract class SEO
     }
 
     /**
-     * Gibt die jeweilige Einstellung für den Robots-Metatag aus
+     * Gibt die jeweilige Einstellung für den Robots-Metatag zurück
      *
      * @param string $path
      * @return string
@@ -204,8 +208,7 @@ abstract class SEO
         if ($path === '') {
             return strtr(CONFIG_SEO_ROBOTS, $replace);
         } else {
-            if (empty(self::$aliases))
-                self::$aliases = self::getSEOCache();
+            self::_initCache();
 
             $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
@@ -215,15 +218,15 @@ abstract class SEO
     }
 
     /**
-     * Gibt einen URI-Alias aus
+     * Gibt einen URI-Alias zurück
      *
      * @param string $path
+     * @param bool $for_form
      * @return string
      */
     public static function getUriAlias($path, $for_form = false)
     {
-        if (empty(self::$aliases))
-            self::$aliases = self::getSEOCache();
+        self::_initCache();
 
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
@@ -247,7 +250,7 @@ abstract class SEO
      */
     public static function setNextPage($path)
     {
-        self::$next_page = $path;
+        self::$nextPage = $path;
     }
 
     /**
@@ -257,13 +260,12 @@ abstract class SEO
      */
     public static function setPreviousPage($path)
     {
-        self::$previous_page = $path;
+        self::$previousPage = $path;
     }
 
     /**
      * Löscht einen URI-Alias
      *
-     * @param string $alias
      * @param string $path
      * @return boolean
      */
@@ -283,6 +285,7 @@ abstract class SEO
      * @param string $alias
      * @param string $keywords
      * @param string $description
+     * @param int $robots
      * @return boolean
      */
     public static function insertUriAlias($path, $alias, $keywords = '', $description = '', $robots = 0)
@@ -306,10 +309,7 @@ abstract class SEO
     /**
      * Gibt die Formularfelder für die Suchmaschinenoptimierung aus
      *
-     * @param string $alias
-     * @param string $keywords
-     * @param string $description
-     * @param string $robots
+     * @param string $path
      * @return string
      */
     public static function formFields($path = '')
@@ -346,6 +346,16 @@ abstract class SEO
     }
 
     /**
+     * Initialize the SEO Cache
+     */
+    private static function _initCache()
+    {
+        if (empty(self::$aliases)) {
+            self::$aliases = self::getSEOCache();
+        }
+    }
+
+    /**
      * Überprüft, ob ein URI-Alias existiert
      *
      * @param string $path
@@ -353,9 +363,7 @@ abstract class SEO
      */
     public static function uriAliasExists($path)
     {
-        if (empty(self::$aliases)) {
-            self::$aliases = self::getSEOCache();
-        }
+        self::_initCache();
 
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
