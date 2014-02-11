@@ -136,7 +136,15 @@ class Frontend extends Core\Modules\Controller
         $c_galleries = count($galleries);
 
         if ($c_galleries > 0) {
-            $this->view->assign('pagination', Core\Functions::pagination($this->model->countAll($time)));
+            $pagination = new Core\Pagination(
+                $this->auth,
+                $this->breadcrumb,
+                $this->lang,
+                $this->uri,
+                $this->view,
+                $this->model->countAll($time)
+            );
+            $pagination->display();
 
             $settings = Core\Config::getSettings('gallery');
 

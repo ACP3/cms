@@ -152,7 +152,15 @@ class Frontend extends Core\Modules\Controller
         $c_guestbook = count($guestbook);
 
         if ($c_guestbook > 0) {
-            $this->view->assign('pagination', Core\Functions::pagination($this->model->countAll($settings['notify'])));
+            $pagination = new Core\Pagination(
+                $this->auth,
+                $this->breadcrumb,
+                $this->lang,
+                $this->uri,
+                $this->view,
+                $this->model->countAll($settings['notify'])
+            );
+            $pagination->display();
 
             // Emoticons einbinden
             $emoticons_active = false;

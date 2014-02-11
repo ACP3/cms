@@ -242,7 +242,7 @@ abstract class Functions
             static::_init();
 
             $uri = static::$uri;
-            $path = empty($path) ? $uri->getCleanQuery() : $path;
+            $path = empty($path) ? $uri->getUriWithoutPages() : $path;
             $toc = array();
             $i = 0;
             foreach ($pages as $page) {
@@ -450,6 +450,7 @@ abstract class Functions
      *  Dateiname
      * @param string $dir
      *  Ordner, in den die Datei verschoben werden soll
+     * @throws Exceptions\ValidationFailed
      * @return array
      *  Gibt ein Array mit dem Namen und der Größe der neuen Datei zurück
      */
@@ -459,7 +460,7 @@ abstract class Functions
         $ext = strrchr($filename, '.');
         $new_name = 1;
 
-        // Dateiname solange ändern, wie die Datei im aktuellen Ordner vorhanden ist
+        // Dateiname solange ändern, wie eine Datei mit dem selben Dateinamen im aktuellen Ordner existiert
         while (is_file($path . $new_name . $ext) === true) {
             ++$new_name;
         }
@@ -468,7 +469,10 @@ abstract class Functions
             if (!@move_uploaded_file($tmpFilename, $path . $new_name . $ext)) {
                 static::_init();
 
-                echo sprintf(static::$lang->t('system', 'upload_error'), $filename);
+                $error = array(
+                    sprintf(static::$lang->t('system', 'upload_error'), $filename)
+                );
+                throw new Exceptions\ValidationFailed(self::errorBox($error));
             } else {
                 $new_file = array();
                 $new_file['name'] = $new_name . $ext;
@@ -554,113 +558,6 @@ abstract class Functions
             return '<p>' . preg_replace(array("/([\n]{2,})/i", "/([^>])\n([^<])/i"), array("</p>\n<p>", '<br' . ($is_xhtml == true ? ' /' : '') . '>'), $data) . '</p>';
         } else {
             return '<p>' . preg_replace("/([\n]{1,})/i", "</p>\n<p>", $data) . '</p>';
-        }
-    }
-
-    /**
-     * Gibt eine Seitenauswahl aus
-     *
-     * @param integer $rows
-     *  Anzahl der Datensätze
-     * @return string
-     *  Gibt die Seitenauswahl aus
-     */
-    public static function pagination($rows, $fragment = '')
-    {
-        static::_init();
-
-        if ($rows > static::$auth->entries) {
-            // Alle angegebenen URL Parameter mit in die URL einbeziehen
-            $link = static::$uri->route((defined('IN_ADM') === true ? 'acp/' : '') . static::$uri->getCleanQuery());
-
-            // Seitenauswahl
-            $current_page = Validate::isNumber(static::$uri->page) ? (int)static::$uri->page : 1;
-
-            if ($current_page > 1) {
-                $postfix = sprintf(static::$lang->t('system', 'page_x'), $current_page);
-                static::$breadcrumb->setTitlePostfix($postfix);
-            }
-            $pagination = array();
-            $c_pagination = (int)ceil($rows / static::$auth->entries);
-            $show_first_last = 5;
-            $show_previous_next = 2;
-            $pages_to_display = 7;
-            $j = 0;
-
-            // Vorherige und nächste Seite für Suchmaschinen und Prefetching propagieren
-            if (defined('IN_ADM') === false) {
-                if ($current_page - 1 > 0) {
-                    // Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben
-                    SEO::setDescriptionPostfix(sprintf(static::$lang->t('system', 'page_x'), $current_page));
-                    SEO::setPreviousPage($link . 'page_' . ($current_page - 1) . '/');
-                }
-                if ($current_page + 1 <= $c_pagination)
-                    SEO::setNextPage($link . 'page_' . ($current_page + 1) . '/');
-                if (isset(static::$uri->page) && static::$uri->page === 1)
-                    SEO::setCanonicalUri($link);
-            }
-
-            $start = 1;
-            $end = $c_pagination;
-            if ($c_pagination > $pages_to_display) {
-                $center = floor($pages_to_display / 2);
-                // Beginn der anzuzeigenden Seitenzahlen
-                if ($current_page - $center > 0)
-                    $start = $current_page - $center;
-                // Ende der anzuzeigenden Seitenzahlen
-                if ($start + $pages_to_display - 1 <= $c_pagination)
-                    $end = $start + $pages_to_display - 1;
-
-                // Anzuzeigende Seiten immer auf dem Wert von $pages_to_display halten
-                if ($end - $start < $pages_to_display && $end - $pages_to_display > 0) {
-                    $start = $end - $pages_to_display + 1;
-                }
-            }
-
-            // Erste Seite
-            if ($c_pagination > $show_first_last && $start > 1) {
-                $pagination[$j]['selected'] = false;
-                $pagination[$j]['page'] = '&laquo;';
-                $pagination[$j]['title'] = static::$lang->t('system', 'first_page');
-                $pagination[$j]['uri'] = $link . $fragment;
-                ++$j;
-            }
-
-            // Vorherige Seite
-            if ($c_pagination > $show_previous_next && $current_page !== 1) {
-                $pagination[$j]['selected'] = false;
-                $pagination[$j]['page'] = '&lsaquo;';
-                $pagination[$j]['title'] = static::$lang->t('system', 'previous_page');
-                $pagination[$j]['uri'] = $link . ($current_page - 1 > 1 ? 'page_' . ($current_page - 1) . '/' : '') . $fragment;
-                ++$j;
-            }
-
-            for ($i = (int)$start; $i <= $end; ++$i, ++$j) {
-                $pagination[$j]['selected'] = $current_page === $i ? true : false;
-                $pagination[$j]['page'] = $i;
-                $pagination[$j]['uri'] = $link . ($i > 1 ? 'page_' . $i . '/' : '') . $fragment;
-            }
-
-            // Nächste Seite
-            if ($c_pagination > $show_previous_next && $current_page !== $c_pagination) {
-                $pagination[$j]['selected'] = false;
-                $pagination[$j]['page'] = '&rsaquo;';
-                $pagination[$j]['title'] = static::$lang->t('system', 'next_page');
-                $pagination[$j]['uri'] = $link . 'page_' . ($current_page + 1) . '/' . $fragment;
-                ++$j;
-            }
-
-            // Letzte Seite
-            if ($c_pagination > $show_first_last && $c_pagination !== $end) {
-                $pagination[$j]['selected'] = false;
-                $pagination[$j]['page'] = '&raquo;';
-                $pagination[$j]['title'] = static::$lang->t('system', 'last_page');
-                $pagination[$j]['uri'] = $link . 'page_' . $c_pagination . '/' . $fragment;
-            }
-
-            static::$view->assign('pagination', $pagination);
-
-            return static::$view->fetchTemplate('system/pagination.tpl');
         }
     }
 

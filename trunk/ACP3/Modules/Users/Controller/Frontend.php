@@ -355,7 +355,15 @@ class Frontend extends Core\Modules\Controller
         $all_users = $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'users');
 
         if ($c_users > 0) {
-            $this->view->assign('pagination', Core\Functions::pagination($all_users));
+            $pagination = new Core\Pagination(
+                $this->auth,
+                $this->breadcrumb,
+                $this->lang,
+                $this->uri,
+                $this->view,
+                $all_users
+            );
+            $pagination->display();
 
             for ($i = 0; $i < $c_users; ++$i) {
                 if (!empty($users[$i]['website']) && (bool)preg_match('=^http(s)?://=', $users[$i]['website']) === false)

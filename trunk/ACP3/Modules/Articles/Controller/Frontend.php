@@ -42,7 +42,15 @@ class Frontend extends Core\Modules\Controller
         $c_articles = count($articles);
 
         if ($c_articles > 0) {
-            $this->view->assign('pagination', Core\Functions::pagination($this->model->countAll($time)));
+            $pagination = new Core\Pagination(
+                $this->auth,
+                $this->breadcrumb,
+                $this->lang,
+                $this->uri,
+                $this->view,
+                $this->model->countAll($time)
+            );
+            $pagination->display();
 
             for ($i = 0; $i < $c_articles; ++$i) {
                 $articles[$i]['date_formatted'] = $this->date->format($articles[$i]['start']);
@@ -60,7 +68,7 @@ class Frontend extends Core\Modules\Controller
 
             $this->breadcrumb->replaceAnchestor($article['title'], 0, true);
 
-            $this->view->assign('page', Core\Functions::splitTextIntoPages(Core\Functions::rewriteInternalUri($article['text']), $this->uri->getCleanQuery()));
+            $this->view->assign('page', Core\Functions::splitTextIntoPages(Core\Functions::rewriteInternalUri($article['text']), $this->uri->getUriWithoutPages()));
         } else {
             $this->uri->redirect('errors/404');
         }
