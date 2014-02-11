@@ -45,7 +45,7 @@ abstract class Helpers
      *
      * @param string $title
      * @param string $module
-     * @param integer $categoryId
+     * @param int|string $categoryId
      * @return boolean
      */
     public static function categoryIsDuplicate($title, $module, $categoryId = '')
@@ -89,6 +89,7 @@ abstract class Helpers
      * @param string $categoryId
      * @param boolean $categoryCreate
      * @param string $formFieldName
+     * @param string $customText
      * @return string
      */
     public static function categoriesList($module, $categoryId = '', $categoryCreate = false, $formFieldName = 'cat', $customText = '')

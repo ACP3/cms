@@ -9,6 +9,22 @@ namespace ACP3\Core;
 abstract class SEO
 {
     /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected static $db;
+    /**
+     * @var Lang
+     */
+    protected static $lang;
+    /**
+     * @var URI
+     */
+    protected static $uri;
+    /**
+     * @var View
+     */
+    protected static $view;
+    /**
      * Caching Variable für die URI-Aliases
      *
      * @access private
@@ -36,6 +52,16 @@ abstract class SEO
 
     protected static $metaDescriptionPostfix = '';
 
+    protected static function _init()
+    {
+        if (!static::$db) {
+            static::$db = Registry::get('Db');
+            static::$lang = Registry::get('Lang');
+            static::$uri = Registry::get('URI');
+            static::$view = Registry::get('View');
+        }
+    }
+
     /**
      * Setzt den Cache für die URI-Aliase
      *
@@ -43,7 +69,9 @@ abstract class SEO
      */
     protected static function setSEOCache()
     {
-        $aliases = Registry::get('Db')->fetchAll('SELECT uri, alias, keywords, description, robots FROM ' . DB_PRE . 'seo');
+        static::_init();
+
+        $aliases = static::$db->fetchAll('SELECT uri, alias, keywords, description, robots FROM ' . DB_PRE . 'seo');
         $c_aliases = count($aliases);
         $data = array();
 
@@ -80,6 +108,8 @@ abstract class SEO
      */
     public static function getMetaTags()
     {
+        static::_init();
+
         $meta = array(
             'description' => defined('IN_ADM') === true ? '' : self::getPageDescription(),
             'keywords' => defined('IN_ADM') === true ? '' : self::getPageKeywords(),
@@ -88,9 +118,9 @@ abstract class SEO
             'next_page' => self::$nextPage,
             'canonical' => self::$canonical,
         );
-        Registry::get('View')->assign('meta', $meta);
+        static::$view->assign('meta', $meta);
 
-        return Registry::get('View')->fetchTemplate('system/meta.tpl');
+        return static::$view->fetchTemplate('system/meta.tpl');
     }
 
     /**
@@ -100,13 +130,15 @@ abstract class SEO
      */
     public static function getPageDescription()
     {
+        static::_init();
+
         // Meta Description für die Homepage einer Website
-        if (Registry::get('URI')->query === CONFIG_HOMEPAGE) {
+        if (static::$uri->query === CONFIG_HOMEPAGE) {
             return CONFIG_SEO_META_DESCRIPTION !== '' ? CONFIG_SEO_META_DESCRIPTION : '';
         } else {
-            $description = self::getDescription(Registry::get('URI')->getUriWithoutPages());
+            $description = self::getDescription(static::$uri->getUriWithoutPages());
             if (empty($description)) {
-                $description = self::getDescription(Registry::get('URI')->mod . '/' . Registry::get('URI')->file);
+                $description = self::getDescription(static::$uri->mod . '/' . static::$uri->file);
             }
 
             return $description . (!empty($description) && !empty(self::$metaDescriptionPostfix) ? ' - ' . self::$metaDescriptionPostfix : '');
@@ -121,12 +153,14 @@ abstract class SEO
      */
     public static function getPageKeywords()
     {
-        $keywords = self::getKeywords(Registry::get('URI')->getUriWithoutPages());
+        static::_init();
+
+        $keywords = self::getKeywords(static::$uri->getUriWithoutPages());
         if (empty($keywords)) {
-            $keywords = self::getKeywords(Registry::get('URI')->mod . '/' . Registry::get('URI')->file);
+            $keywords = self::getKeywords(static::$uri->mod . '/' . static::$uri->file);
         }
         if (empty($keywords)) {
-            $keywords = self::getKeywords(Registry::get('URI')->mod);
+            $keywords = self::getKeywords(static::$uri->mod);
         }
 
         return strtolower(!empty($keywords) ? $keywords : CONFIG_SEO_META_KEYWORDS);
@@ -140,12 +174,14 @@ abstract class SEO
      */
     public static function getPageRobotsSetting()
     {
-        $robots = self::getRobotsSetting(Registry::get('URI')->getUriWithoutPages());
+        static::_init();
+
+        $robots = self::getRobotsSetting(static::$uri->getUriWithoutPages());
         if (empty($robots)) {
-            $robots = self::getRobotsSetting(Registry::get('URI')->mod . '/' . Registry::get('URI')->file);
+            $robots = self::getRobotsSetting(static::$uri->mod . '/' . static::$uri->file);
         }
         if (empty($robots)) {
-            $robots = self::getRobotsSetting(Registry::get('URI')->mod);
+            $robots = self::getRobotsSetting(static::$uri->mod);
         }
 
         return strtolower(!empty($robots) ? $robots : self::getRobotsSetting());
@@ -271,9 +307,11 @@ abstract class SEO
      */
     public static function deleteUriAlias($path)
     {
+        static::_init();
+
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-        $bool = Registry::get('Db')->delete(DB_PRE . 'seo', array('uri' => $path));
+        $bool = static::$db->delete(DB_PRE . 'seo', array('uri' => $path));
         $bool2 = self::setSEOCache();
         return $bool !== false && $bool2 !== false ? true : false;
     }
@@ -290,16 +328,18 @@ abstract class SEO
      */
     public static function insertUriAlias($path, $alias, $keywords = '', $description = '', $robots = 0)
     {
+        static::_init();
+
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
         $keywords = Functions::strEncode($keywords);
         $description = Functions::strEncode($description);
 
         // Vorhandenen Alias aktualisieren
-        if (Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE uri = ?', array($path)) == 1) {
-            $bool = Registry::get('Db')->update(DB_PRE . 'seo', array('alias' => $alias, 'keywords' => $keywords, 'description' => $description, 'robots' => (int)$robots), array('uri' => $path));
+        if (static::$db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE uri = ?', array($path)) == 1) {
+            $bool = static::$db->update(DB_PRE . 'seo', array('alias' => $alias, 'keywords' => $keywords, 'description' => $description, 'robots' => (int)$robots), array('uri' => $path));
             // Neuer Eintrag in DB
         } else {
-            $bool = Registry::get('Db')->insert(DB_PRE . 'seo', array('alias' => $alias, 'uri' => $path, 'keywords' => $keywords, 'description' => $description, 'robots' => (int)$robots));
+            $bool = static::$db->insert(DB_PRE . 'seo', array('alias' => $alias, 'uri' => $path, 'keywords' => $keywords, 'description' => $description, 'robots' => (int)$robots));
         }
 
         $bool2 = self::setSEOCache();
@@ -314,6 +354,8 @@ abstract class SEO
      */
     public static function formFields($path = '')
     {
+        static::_init();
+
         if (!empty($path)) {
             $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
@@ -327,11 +369,11 @@ abstract class SEO
         }
 
         $lang_robots = array(
-            sprintf(Registry::get('Lang')->t('system', 'seo_robots_use_system_default'), self::getRobotsSetting()),
-            Registry::get('Lang')->t('system', 'seo_robots_index_follow'),
-            Registry::get('Lang')->t('system', 'seo_robots_index_nofollow'),
-            Registry::get('Lang')->t('system', 'seo_robots_noindex_follow'),
-            Registry::get('Lang')->t('system', 'seo_robots_noindex_nofollow')
+            sprintf(static::$lang->t('system', 'seo_robots_use_system_default'), self::getRobotsSetting()),
+            static::$lang->t('system', 'seo_robots_index_follow'),
+            static::$lang->t('system', 'seo_robots_index_nofollow'),
+            static::$lang->t('system', 'seo_robots_noindex_follow'),
+            static::$lang->t('system', 'seo_robots_noindex_nofollow')
         );
         $seo = array(
             'enable_uri_aliases' => (bool)CONFIG_SEO_ALIASES,
@@ -341,8 +383,8 @@ abstract class SEO
             'robots' => Functions::selectGenerator('seo_robots', array(0, 1, 2, 3, 4), $lang_robots, $robots)
         );
 
-        Registry::get('View')->assign('seo', $seo);
-        return Registry::get('View')->fetchTemplate('system/seo_fields.tpl');
+        static::$view->assign('seo', $seo);
+        return static::$view->fetchTemplate('system/seo_fields.tpl');
     }
 
     /**

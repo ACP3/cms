@@ -22,7 +22,9 @@ abstract class Helpers
 
     protected static function _init()
     {
-        self::$model = new Model(Core\Registry::get('Db'), Core\Registry::get('Lang'));
+        if (!self::$model) {
+            self::$model = new Model(Core\Registry::get('Db'), Core\Registry::get('Lang'));
+        }
     }
 
     /**
