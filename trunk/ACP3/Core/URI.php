@@ -108,7 +108,7 @@ class URI
      * Überprüft die URI auf einen möglichen URI-Alias und
      * macht im Erfolgsfall einen Redirect darauf
      *
-     * @return
+     * @return void
      */
     protected function checkForUriAlias()
     {
@@ -116,7 +116,7 @@ class URI
         if ((bool)CONFIG_SEO_ALIASES === true && !defined('IN_ADM')) {
             // Falls für Query ein Alias existiert, zu diesem weiterleiten
             if (SEO::uriAliasExists($this->query) === true) {
-                $this->redirect($this->query, 0, 1); // URI-Alias wird von uri::route() erzeugt
+                $this->redirect($this->query, 0, true); // URI-Alias wird von uri::route() erzeugt
             }
 
             $prob_query = $this->query;
@@ -153,7 +153,7 @@ class URI
      *
      * @param string $defaultModule
      * @param string $defaultFile
-     * @return
+     * @return void
      */
     protected function setUriParameters($defaultModule, $defaultFile)
     {
@@ -166,17 +166,6 @@ class URI
 
         $this->mod = isset($query[0]) ? $query[0] : $defaultModule;
         $this->file = (defined('IN_ADM') ? 'acp_' : '') . (isset($query[1]) ? $query[1] : $defaultFile);
-
-        // Redirect, falls jemand versuchen sollte eine ACP-Seite ohne
-        // vorangestelltes "acp/" aufzurufen, anstatt eine leere Seite anzuzeigen
-        if (defined('IN_ADM') === false && strpos($this->file, 'acp_') === 0) {
-            $params = '';
-            for ($i = 2; isset($query[$i]); ++$i) {
-                $params .= '/' . $query[$i];
-            }
-
-            $this->redirect('acp/' . $this->mod . '/' . substr($this->file, 4) . $params);
-        }
 
         if (isset($query[2])) {
             $c_query = count($query);
@@ -194,9 +183,9 @@ class URI
                     $this->$param[0] = $param[1];
                 }
             }
+        } elseif (isset($query[0]) && !isset($query[1])) {
             // Workaround für Securitytoken-Generierung,
             // falls die URL nur aus dem Modulnamen besteht
-        } elseif (isset($query[0]) && !isset($query[1])) {
             $this->query .= $defaultFile . '/';
         } elseif (!isset($query[0]) && !isset($query[1])) {
             $this->query = $defaultModule . '/' . $defaultFile . '/';
@@ -237,32 +226,33 @@ class URI
      *
      * @param string $args
      *  Leitet auf eine interne ACP3 Seite weiter
-     * @param string $new_page
+     * @param int|string $newPage
      *  Leitet auf eine externe Seite weiter
+     * @param bool|int $moved_permanently
      */
-    public function redirect($args, $new_page = 0, $moved_permanently = 0)
+    public function redirect($args, $newPage = '', $moved_permanently = false)
     {
         if (!empty($args)) {
             $protocol = empty($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) === 'off' ? 'http://' : 'https://';
             $host = $_SERVER['HTTP_HOST'];
-            if ($moved_permanently === 1) {
+            if ($moved_permanently === true) {
                 header('HTTP/1.1 301 Moved Permanently');
             }
             header('Location: ' . $protocol . $host . $this->route($args));
             exit;
         }
-        header('Location:' . str_replace('&amp;', '&', $new_page));
+        header('Location:' . str_replace('&amp;', '&', $newPage));
         exit;
     }
 
     /**
      * Generiert die ACP3 internen Hyperlinks
      *
-     * @param string $uri
-     *  Inhalt der zu generierenden URL
+     * @param $path
      * @param integer $alias
      *    Gibt an, ob für die auszugebende Seite der URI-Alias ausgegeben werden soll,
      *    falls dieser existiert
+     * @internal param string $uri Inhalt der zu generierenden URL
      * @return string
      */
     public function route($path, $alias = 1)

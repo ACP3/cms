@@ -242,6 +242,7 @@ abstract class ACL
     /**
      * Gibt aus, ob ein Benutzer die Berechtigung auf eine Privilegie besitzt
      *
+     * @param $module
      * @param string $key
      *    Der Schlssel der Privilegie
      * @return boolean

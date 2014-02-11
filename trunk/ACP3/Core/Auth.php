@@ -100,11 +100,11 @@ class Auth
     /**
      * Gibt ein Array mit den angeforderten Daten eines Benutzers zurück
      *
-     * @param integer $userId
+     * @param int $userId
      *    Der angeforderte Benutzer
      * @return mixed
      */
-    public function getUserInfo($userId = '')
+    public function getUserInfo($userId = 0)
     {
         if (empty($userId) && $this->isUser() === true) {
             $userId = $this->getUserId();
