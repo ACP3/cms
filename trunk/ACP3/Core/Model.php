@@ -28,24 +28,34 @@ class Model
         $this->lang = $lang;
     }
 
+    /**
+     * @param $limitStart
+     * @param $resultsPerPage
+     * @return string
+     */
     protected function _buildLimitStmt($limitStart = '', $resultsPerPage = '')
     {
-        if (Validate::isNumber($limitStart) === true && Validate::isNumber($resultsPerPage) === true) {
-            return ' LIMIT ' . $limitStart . ',' . $resultsPerPage;
-        } elseif (Validate::isNumber($limitStart) === true) {
-            return ' LIMIT ' . $limitStart;
-        } else {
-            return '';
+        if ($limitStart !== '' && $resultsPerPage !== '') {
+            return ' LIMIT ' . ((int)$limitStart) . ',' . ((int)$resultsPerPage);
+        } elseif ($limitStart !== '') {
+            return ' LIMIT ' . ((int)$limitStart);
         }
+
+        return '';
     }
 
-    public function insert($params, $tableName = '')
+    /**
+     * @param array $params
+     * @param string $tableName
+     * @return int
+     */
+    public function insert(array $params, $tableName = '')
     {
         $this->db->beginTransaction();
         try {
             $tableName = !empty($tableName) ? $tableName : static::TABLE_NAME;
             $this->db->insert($this->prefix . $tableName, $params);
-            $lastId = (int) $this->db->lastInsertId();
+            $lastId = (int)$this->db->lastInsertId();
             $this->db->commit();
             return $lastId;
         } catch (\Exception $e) {
@@ -53,6 +63,12 @@ class Model
         }
     }
 
+    /**
+     * @param int|array $id
+     * @param string $field
+     * @param string $tableName
+     * @return int
+     */
     public function delete($id, $field = '', $tableName = '')
     {
         $this->db->beginTransaction();
@@ -67,7 +83,13 @@ class Model
         }
     }
 
-    public function update($params, $id, $tableName = '')
+    /**
+     * @param array $params
+     * @param int|array $id
+     * @param string $tableName
+     * @return int
+     */
+    public function update(array $params, $id, $tableName = '')
     {
         $this->db->beginTransaction();
         try {
@@ -81,6 +103,9 @@ class Model
         }
     }
 
+    /**
+     * @throws Exceptions\InvalidFormToken
+     */
     public function validateFormKey()
     {
         if (Validate::formToken() === false) {
