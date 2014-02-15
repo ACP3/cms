@@ -231,6 +231,7 @@ class Auth
      *  Die Hashsumme des Passwortes
      * @param integer $expiry
      *  Zeit in Sekunden, bis der Cookie seine Gültigkeit verliert
+     * @return bool
      */
     public function setCookie($nickname, $password, $expiry)
     {
