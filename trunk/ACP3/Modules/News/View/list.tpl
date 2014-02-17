@@ -1,17 +1,19 @@
 <div class="navbar navbar-default">
-    {if isset($categories)}
-        {if {has_permission mod="newsletter" file="list"}}
-            <div class="navbar-text">
-                <a href="{uri args="newsletter/list"}">{lang t="newsletter|list"}</a>
-            </div>
+    <div class="container-fluid">
+        {if isset($categories)}
+            {if {has_permission mod="newsletter" file="list"}}
+                <div class="navbar-text">
+                    <a href="{uri args="newsletter/list"}">{lang t="newsletter|list"}</a>
+                </div>
+            {/if}
+            <form action="{uri args="news/list"}" method="post" class="navbar-form navbar-right">
+                <div class="form-group">
+                    {$categories}
+                </div>
+                <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
+            </form>
         {/if}
-        <form action="{uri args="news/list"}" method="post" class="navbar-form navbar-right">
-            <div class="form-group">
-                {$categories}
-            </div>
-            <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-        </form>
-    {/if}
+    </div>
 </div>{if isset($news)}
 {$pagination}
     {foreach $news as $row}
