@@ -13,20 +13,23 @@
 </head>
 
 <body>
-<div id="box" class="container">
+<div class="container-fluid">
     <h1 id="logo" class="visible-lg"><a href="{$ROOT_DIR}">{$PAGE_TITLE}</a></h1>
     <nav class="navbar navbar-default" role="navigation">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">{lang t="system|toggle_navigation"}</span>
-                <span class="icon-bar"></span> <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="{$ROOT_DIR}" class="navbar-brand hidden-lg">{$PAGE_TITLE}</a>
-        </div>
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            {navbar block="main"}
-            {load_module module="search|sidebar"}
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="sr-only">{lang t="system|toggle_navigation"}</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="{$ROOT_DIR}" class="navbar-brand hidden-lg">{$PAGE_TITLE}</a>
+            </div>
+            <div id="navbar-collapse" class="collapse navbar-collapse">
+                {navbar block="main"}
+                {load_module module="search|sidebar"}
+            </div>
         </div>
     </nav>
     <div class="row">
