@@ -29,7 +29,7 @@ class Frontend extends Core\Modules\Controller
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
 
-        $this->model = new Users\Model($db, $lang, $auth);
+        $this->model = new Users\Model($db, $lang, $auth, $uri);
     }
 
     public function actionEditProfile()
@@ -44,7 +44,7 @@ class Frontend extends Core\Modules\Controller
 
             if (isset($_POST['submit']) === true) {
                 try {
-                    $this->model->validateProfile($_POST);
+                    $this->model->validateEditProfile($_POST);
 
                     $updateValues = array(
                         'nickname' => Core\Functions::strEncode($_POST['nickname']),
