@@ -7,7 +7,7 @@ namespace ACP3\Core;
  *
  * @author Tino Goratsch
  */
-abstract class Validate
+class Validate
 {
 
     /**
@@ -81,6 +81,7 @@ abstract class Validate
      * Überpürft, ob das eingegebene Captcha mit dem generierten übereinstimmt
      *
      * @param string $input
+     * @param string $path
      * @return boolean
      */
     public static function captcha($input, $path = '')
@@ -268,6 +269,9 @@ abstract class Validate
      *
      * @param string $file
      *  Zu überprüfendes Bild
+     * @param string $width
+     * @param string $height
+     * @param string $filesize
      * @return boolean
      */
     public static function isPicture($file, $width = '', $height = '', $filesize = '')

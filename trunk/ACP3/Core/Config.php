@@ -1,14 +1,12 @@
 <?php
 namespace ACP3\Core;
 
-use \ACP3\Core\Cache;
-
 /**
  * Manages the various module settings
  *
  * @author Tino Goratsch
  */
-abstract class Config
+class Config
 {
 
     /**

@@ -6,7 +6,7 @@ namespace ACP3\Core;
  *
  * @author Tino Goratsch
  */
-abstract class Cache
+class Cache
 {
     /**
      *
@@ -24,6 +24,7 @@ abstract class Cache
      *
      * @param string $filename
      *  Der Name der Datei, welcher auf Existenz und Gültigkeit geprüft werden soll
+     * @param string $cacheId
      * @return boolean
      */
     public static function check($filename, $cacheId = '')
@@ -39,6 +40,7 @@ abstract class Cache
      *    Gewünschter Dateiname des Caches
      * @param array $data
      *    Daten, für welche der Cache erstellt werden sollen
+     * @param string $cacheId
      * @return boolean
      */
     public static function create($filename, $data, $cacheId = '')
@@ -59,6 +61,7 @@ abstract class Cache
      *
      * @param string $filename
      *    Zu löschende Datei
+     * @param string $cacheId
      * @return boolean
      */
     public static function delete($filename, $cacheId = '')
@@ -72,6 +75,7 @@ abstract class Cache
      *
      * @param string $filename
      *    Auszugebende Datei
+     * @param string $cacheId
      * @return mixed
      */
     public static function output($filename, $cacheId = '')
@@ -86,6 +90,7 @@ abstract class Cache
      *
      * @param string $dir
      *    Einen Unterordner des Cache-Ordners löschen
+     * @param string $cacheId
      */
     public static function purge($dir = '', $cacheId = '')
     {

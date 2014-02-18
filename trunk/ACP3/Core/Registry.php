@@ -6,10 +6,16 @@ namespace ACP3\Core;
  *
  * @author Tino Goratsch
  */
-abstract class Registry
+class Registry
 {
     protected static $registry = array();
 
+    /**
+     * Inject an object to the registry
+     *
+     * @param $key
+     * @param $value
+     */
     public static function set($key, $value)
     {
         if (isset(self::$registry[$key]) === false) {
@@ -17,11 +23,22 @@ abstract class Registry
         }
     }
 
+    /**
+     * Get an object from the registry
+     *
+     * @param $class
+     * @return mixed
+     */
     public static function get($class)
     {
         return self::$registry[$class];
     }
 
+    /**
+     * Remove an object from the registry
+     *
+     * @param $class
+     */
     public static function remove($class)
     {
         if (isset(self::$registry[$class])) {
@@ -29,6 +46,11 @@ abstract class Registry
         }
     }
 
+    /**
+     * Get all registered object inside the registry
+     *
+     * @return array
+     */
     public static function getAll()
     {
         return self::$registry;

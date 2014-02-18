@@ -6,7 +6,7 @@ namespace ACP3\Core;
  *
  * @author Tino Goratsch
  */
-abstract class ACL
+class ACL
 {
     /**
      * Array mit den jeweiligen Rollen zugewiesenen Berechtigungen

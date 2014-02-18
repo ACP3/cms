@@ -6,8 +6,17 @@ namespace ACP3\Core;
  *
  * @author Tino Goratsch
  */
-abstract class Modules
+class Modules
 {
+    /**
+     * @var array
+     */
+    private static $parseModules = array();
+
+    /**
+     * @var array
+     */
+    private static $allModules = array();
 
     /**
      * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat
@@ -79,21 +88,20 @@ abstract class Modules
      */
     public static function getAllModules($onlyActiveModules = false)
     {
-        static $mod_list = array();
-
-        if (empty($mod_list)) {
+        if (empty(static::$allModules)) {
             $dir = scandir(MODULES_DIR);
             foreach ($dir as $module) {
                 if ($module !== '.' && $module !== '..') {
                     $info = self::getModuleInfo($module);
                     if (!empty($info) && ($onlyActiveModules === false || ($onlyActiveModules === true && self::isActive($module) === true))) {
-                        $mod_list[$info['name']] = $info;
+                        static::$allModules[$info['name']] = $info;
                     }
                 }
             }
-            ksort($mod_list);
+            ksort(static::$allModules);
         }
-        return $mod_list;
+
+        return static::$allModules;
     }
 
     /**
@@ -115,17 +123,15 @@ abstract class Modules
      */
     public static function getModuleInfo($module)
     {
-        static $parsed_modules = array();
-
         $module = strtolower($module);
-        if (empty($parsed_modules)) {
+        if (empty(static::$parseModules)) {
             $filename = 'infos_' . Registry::get('Lang')->getLanguage();
             if (Cache::check($filename, 'modules') === false) {
                 self::setModulesCache();
             }
-            $parsed_modules = Cache::output($filename, 'modules');
+            static::$parseModules = Cache::output($filename, 'modules');
         }
-        return !empty($parsed_modules[$module]) ? $parsed_modules[$module] : array();
+        return !empty(static::$parseModules[$module]) ? static::$parseModules[$module] : array();
     }
 
     /**
@@ -138,23 +144,24 @@ abstract class Modules
         foreach ($dirs as $dir) {
             $path = MODULES_DIR . '/' . $dir . '/module.xml';
             if ($dir !== '.' && $dir !== '..' && is_file($path) === true) {
-                $mod_info = XML::parseXmlFile($path, 'info');
+                $moduleInfo = XML::parseXmlFile($path, 'info');
 
-                if (!empty($mod_info)) {
-                    $mod_name = strtolower($dir);
-                    $mod_db = Registry::get('Db')->fetchAssoc('SELECT version, active FROM ' . DB_PRE . 'modules WHERE name = ?', array($mod_name));
-                    $infos[$mod_name] = array(
+                if (!empty($moduleInfo)) {
+                    $moduleName = strtolower($dir);
+                    $moduleInfoDb = Registry::get('Db')->fetchAssoc('SELECT id, version, active FROM ' . DB_PRE . 'modules WHERE name = ?', array($moduleName));
+                    $infos[$moduleName] = array(
+                        'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
                         'dir' => $dir,
-                        'active' => !empty($mod_db) && $mod_db['active'] == 1 ? true : false,
-                        'schema_version' => !empty($mod_db) ? (int)$mod_db['version'] : 0,
-                        'description' => isset($mod_info['description']['lang']) && $mod_info['description']['lang'] === 'true' ? Registry::get('Lang')->t($mod_name, 'mod_description') : $mod_info['description']['lang'],
-                        'author' => $mod_info['author'],
-                        'version' => isset($mod_info['version']['core']) && $mod_info['version']['core'] === 'true' ? CONFIG_VERSION : $mod_info['version'],
-                        'name' => isset($mod_info['name']['lang']) && $mod_info['name']['lang'] == 'true' ? Registry::get('Lang')->t($mod_name, $mod_name) : $mod_info['name'],
-                        'categories' => isset($mod_info['categories']) ? true : false,
-                        'protected' => isset($mod_info['protected']) ? true : false,
+                        'active' => !empty($moduleInfoDb) && $moduleInfoDb['active'] == 1 ? true : false,
+                        'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
+                        'description' => isset($moduleInfo['description']['lang']) && $moduleInfo['description']['lang'] === 'true' ? Registry::get('Lang')->t($moduleName, 'mod_description') : $moduleInfo['description']['lang'],
+                        'author' => $moduleInfo['author'],
+                        'version' => isset($moduleInfo['version']['core']) && $moduleInfo['version']['core'] === 'true' ? CONFIG_VERSION : $moduleInfo['version'],
+                        'name' => isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] == 'true' ? Registry::get('Lang')->t($moduleName, $moduleName) : $moduleInfo['name'],
+                        'categories' => isset($moduleInfo['categories']) ? true : false,
+                        'protected' => isset($moduleInfo['protected']) ? true : false,
                     );
-                    $infos[$mod_name]['dependencies'] = array_values(XML::parseXmlFile($path, 'info/dependencies'));
+                    $infos[$moduleName]['dependencies'] = array_values(XML::parseXmlFile($path, 'info/dependencies'));
                 }
             }
         }

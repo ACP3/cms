@@ -12,42 +12,42 @@ class Image
      *
      * @var boolean
      */
-    protected $enable_cache = false;
+    protected $enableCache = false;
     /**
      *
      * @var string
      */
-    protected $cache_dir = 'images/';
+    protected $cacheDir = 'images/';
     /**
      *
      * @var string
      */
-    protected $cache_prefix = '';
+    protected $cachePrefix = '';
     /**
      *
      * @var integer
      */
-    protected $max_width = 0;
+    protected $maxWidth = 0;
     /**
      *
      * @var integer
      */
-    protected $max_height = 0;
+    protected $maxHeight = 0;
     /**
      *
      * @var integer
      */
-    protected $jpg_quality = 85;
+    protected $jpgQuality = 85;
     /**
      *
      * @var boolean
      */
-    protected $prefer_width = false;
+    protected $preferWidth = false;
     /**
      *
      * @var boolean
      */
-    protected $prefer_height = false;
+    protected $preferHeight = false;
     /**
      *
      * @var string
@@ -57,7 +57,7 @@ class Image
      *
      * @var boolean
      */
-    protected $force_resample = false;
+    protected $forceResample = false;
     /**
      *
      * @var resource
@@ -72,24 +72,34 @@ class Image
      */
     public function __construct(array $options)
     {
-        if (isset($options['enable_cache']) && is_bool($options['enable_cache']) === true)
-            $this->enable_cache = $options['enable_cache'];
-        if (isset($options['cache_prefix']))
-            $this->cache_prefix = $options['cache_prefix'];
-        if ($this->cache_prefix !== '' && !preg_match('/_$/', $this->cache_prefix))
-            $this->cache_prefix .= '_';
-        if (isset($options['max_width']) && Validate::isNumber($options['max_width']) === true)
-            $this->max_width = $options['max_width'];
-        if (isset($options['max_height']) && Validate::isNumber($options['max_height']) === true)
-            $this->max_height = $options['max_height'];
-        if (isset($options['prefer_width']) && is_bool($options['prefer_width']) === true)
-            $this->prefer_width = $options['prefer_width'];
-        if (isset($options['prefer_height']) && is_bool($options['prefer_height']) === true)
-            $this->prefer_height = $options['prefer_height'];
-        if (isset($options['jpg_quality']) && Validate::isNumber($options['jpg_quality']) === true)
-            $this->jpg_quality = $options['jpg_quality'];
-        if (isset($options['force_resample']) && is_bool($options['force_resample']) === true)
-            $this->force_resample = $options['force_resample'];
+        if (isset($options['enable_cache']) && is_bool($options['enable_cache']) === true) {
+            $this->enableCache = $options['enable_cache'];
+        }
+        if (isset($options['cache_prefix'])) {
+            $this->cachePrefix = $options['cache_prefix'];
+        }
+        if ($this->cachePrefix !== '' && !preg_match('/_$/', $this->cachePrefix)) {
+            $this->cachePrefix .= '_';
+        }
+        if (isset($options['max_width']) && Validate::isNumber($options['max_width']) === true) {
+            $this->maxWidth = $options['max_width'];
+        }
+        if (isset($options['max_height']) && Validate::isNumber($options['max_height']) === true) {
+            $this->maxHeight = $options['max_height'];
+        }
+        if (isset($options['prefer_width']) && is_bool($options['prefer_width']) === true) {
+            $this->preferWidth = $options['prefer_width'];
+        }
+        if (isset($options['prefer_height']) && is_bool($options['prefer_height']) === true) {
+            $this->preferHeight = $options['prefer_height'];
+        }
+        if (isset($options['jpg_quality']) && Validate::isNumber($options['jpg_quality']) === true) {
+            $this->jpgQuality = $options['jpg_quality'];
+        }
+        if (isset($options['force_resample']) && is_bool($options['force_resample']) === true) {
+            $this->forceResample = $options['force_resample'];
+        }
+
         $this->file = $options['file'];
     }
 
@@ -98,8 +108,9 @@ class Image
      */
     public function __destruct()
     {
-        if (is_resource($this->image) === true)
+        if (is_resource($this->image) === true) {
             imagedestroy($this->image);
+        }
     }
 
     /**
@@ -113,11 +124,11 @@ class Image
      */
     protected function calcNewDimensions($width, $height)
     {
-        if (($width >= $height || $this->prefer_width === true) && $this->prefer_height === false) {
-            $newWidth = $this->max_width;
+        if (($width >= $height || $this->preferWidth === true) && $this->preferHeight === false) {
+            $newWidth = $this->maxWidth;
             $newHeight = intval($height * $newWidth / $width);
         } else {
-            $newHeight = $this->max_height;
+            $newHeight = $this->maxHeight;
             $newWidth = intval($width * $newHeight / $height);
         }
 
@@ -131,7 +142,7 @@ class Image
      */
     protected function setCacheName()
     {
-        return $this->cache_prefix . substr($this->file, strrpos($this->file, '/') + 1);
+        return $this->cachePrefix . substr($this->file, strrpos($this->file, '/') + 1);
     }
 
     /**
@@ -142,27 +153,28 @@ class Image
      * @param integer $width
      * @param integer $height
      * @param integer $type
+     * @param null $cacheFile
      */
-    protected function resample($newWidth, $newHeight, $width, $height, $type, $cache_file = null)
+    protected function resample($newWidth, $newHeight, $width, $height, $type, $cacheFile = null)
     {
         $this->image = imagecreatetruecolor($newWidth, $newHeight);
         switch ($type) {
             case 1:
                 $oldPic = imagecreatefromgif($this->file);
                 imagecopyresampled($this->image, $oldPic, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
-                imagegif($this->image, $cache_file);
+                imagegif($this->image, $cacheFile);
                 break;
             case 2:
                 $oldPic = imagecreatefromjpeg($this->file);
                 imagecopyresampled($this->image, $oldPic, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
-                imagejpeg($this->image, $cache_file, $this->jpg_quality);
+                imagejpeg($this->image, $cacheFile, $this->jpgQuality);
                 break;
             case 3:
                 imagealphablending($this->image, false);
                 $oldPic = imagecreatefrompng($this->file);
                 imagecopyresampled($this->image, $oldPic, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
                 imagesavealpha($this->image, true);
-                imagepng($this->image, $cache_file, 9);
+                imagepng($this->image, $cacheFile, 9);
                 break;
         }
     }
@@ -178,11 +190,22 @@ class Image
     }
 
     /**
+     * Get the name of a possibly cached picture
+     *
+     * @return string
+     */
+    protected function getCacheFileName()
+    {
+        return CACHE_DIR . $this->cacheDir . $this->setCacheName();
+    }
+
+    /**
      * Gibt das Bild aus
      */
     public function output()
     {
         if (is_file($this->file) === true) {
+            $cacheFile = $this->getCacheFileName();
             $picInfo = getimagesize($this->file);
             $width = $picInfo[0];
             $height = $picInfo[1];
@@ -195,31 +218,17 @@ class Image
             header('Content-type: ' . $picInfo['mime']);
 
             // Falls Cache aktiviert ist und das Bild bereits gecachet wurde, dieses direkt ausgeben
-            if ($this->enable_cache === true &&
-                is_file(CACHE_DIR . $this->cache_dir . $this->setCacheName()) === true
-            ) {
-                $this->file = CACHE_DIR . $this->cache_dir . $this->setCacheName();
+            if ($this->enableCache === true && file_exists($cacheFile) === true) {
+                $this->file = $cacheFile;
                 $this->readFromFile();
-                // Bild resampeln
-            } elseif (($this->force_resample === true || ($width > $this->max_width || $height > $this->max_height)) &&
-                ($type === 1 || $type === 2 || $type === 3)
-            ) {
+            } elseif (($this->forceResample === true || ($width > $this->maxWidth || $height > $this->maxHeight)) && ($type === 1 || $type === 2 || $type === 3)) { // Bild resampeln
                 $dimensions = $this->calcNewDimensions($width, $height);
-                $cache_file = null;
-                if ($this->enable_cache === true &&
-                    is_file(CACHE_DIR . $this->cache_dir . $this->setCacheName()) === false
-                )
-                    $cache_file = CACHE_DIR . $this->cache_dir . $this->setCacheName();
 
-                $this->resample($dimensions['width'], $dimensions['height'], $width, $height, $type, $cache_file);
-
-                if (is_null($cache_file) === false) {
-                    $this->file = $cache_file;
-                    $this->readFromFile();
-                }
-                // Bild direkt ausgeben
-            } else {
+                $this->resample($dimensions['width'], $dimensions['height'], $width, $height, $type, $cacheFile);
+                $this->file = $cacheFile;
                 $this->readFromFile();
+            } else {
+                $this->readFromFile(); // Bild direkt ausgeben
             }
         }
     }
