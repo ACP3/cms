@@ -44,7 +44,7 @@ class Model extends Core\Model
      * @param string $id
      * @return boolean
      */
-    protected function userNameExists($nickname, $id = '')
+    protected function resultExistsByUserName($nickname, $id = '')
     {
         if (Core\Validate::isNumber($id) === true) {
             return !empty($nickname) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id != ? AND nickname = ?', array($id, $nickname)) == 1 ? true : false;
@@ -61,7 +61,7 @@ class Model extends Core\Model
      * @param string $id
      * @return boolean
      */
-    protected  function userEmailExists($mail, $id = '')
+    protected  function resultExistsByEmail($mail, $id = '')
     {
         if (Core\Validate::isNumber($id) === true) {
             return Core\Validate::email($mail) === true && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id != ? AND mail = ?', array($id, $mail)) > 0 ? true : false;
@@ -139,13 +139,13 @@ class Model extends Core\Model
         if (!empty($formData['birthday']) && Core\Validate::birthday($formData['birthday']) === false) {
             $errors[] = $this->lang->t('users', 'invalid_birthday');
         }
-        if ($this->userNameExists($formData['nickname'])) {
+        if ($this->resultExistsByUserName($formData['nickname'])) {
             $errors['nickname'] = $this->lang->t('users', 'user_name_already_exists');
         }
         if (Core\Validate::email($formData['mail']) === false) {
             $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
-        if ($this->userEmailExists($formData['mail'])) {
+        if ($this->resultExistsByEmail($formData['mail'])) {
             $errors['mail'] = $this->lang->t('users', 'user_email_already_exists');
         }
         if (empty($formData['roles']) || is_array($formData['roles']) === false || Core\Validate::aclRolesExist($formData['roles']) === false) {
@@ -204,13 +204,13 @@ class Model extends Core\Model
         if (!empty($formData['birthday']) && Core\Validate::birthday($formData['birthday']) === false) {
             $errors[] = $this->lang->t('users', 'invalid_birthday');
         }
-        if ($this->userNameExists($formData['nickname'], $this->uri->id)) {
+        if ($this->resultExistsByUserName($formData['nickname'], $this->uri->id)) {
             $errors['nickname'] = $this->lang->t('users', 'user_name_already_exists');
         }
         if (Core\Validate::email($formData['mail']) === false) {
             $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
-        if ($this->userEmailExists($formData['mail'], $this->uri->id)) {
+        if ($this->resultExistsByEmail($formData['mail'], $this->uri->id)) {
             $errors['mail'] = $this->lang->t('users', 'user_email_already_exists');
         }
         if (empty($formData['roles']) || is_array($formData['roles']) === false || Core\Validate::aclRolesExist($formData['roles']) === false) {
@@ -263,7 +263,7 @@ class Model extends Core\Model
         if (empty($formData['nickname'])) {
             $errors['nnickname'] = $this->lang->t('system', 'name_to_short');
         }
-        if ($this->userNameExists($formData['nickname'], $this->auth->getUserId()) === true) {
+        if ($this->resultExistsByUserName($formData['nickname'], $this->auth->getUserId()) === true) {
             $errors['nickname'] = $this->lang->t('users', 'user_name_already_exists');
         }
         if (Core\Validate::gender($formData['gender']) === false) {
@@ -275,7 +275,7 @@ class Model extends Core\Model
         if (Core\Validate::email($formData['mail']) === false) {
             $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
-        if ($this->userEmailExists($formData['mail'], $this->auth->getUserId()) === true) {
+        if ($this->resultExistsByEmail($formData['mail'], $this->auth->getUserId()) === true) {
             $errors['mail'] = $this->lang->t('users', 'user_email_already_exists');
         }
         if (!empty($formData['icq']) && Core\Validate::icq($formData['icq']) === false) {
@@ -332,9 +332,9 @@ class Model extends Core\Model
         $errors = array();
         if (empty($formData['nick_mail'])) {
             $errors['nick-mail'] = $this->lang->t('users', 'type_in_nickname_or_email');
-        } elseif (Core\Validate::email($formData['nick_mail']) === false && $this->userNameExists($formData['nick_mail']) === false) {
+        } elseif (Core\Validate::email($formData['nick_mail']) === false && $this->resultExistsByUserName($formData['nick_mail']) === false) {
             $errors['nick-mail'] = $this->lang->t('users', 'user_not_exists');
-        } elseif (Core\Validate::email($formData['nick_mail']) === true && $this->userEmailExists($formData['nick_mail']) === false) {
+        } elseif (Core\Validate::email($formData['nick_mail']) === true && $this->resultExistsByEmail($formData['nick_mail']) === false) {
             $errors['nick-mail'] = $this->lang->t('users', 'user_not_exists');
         }
         if (Core\Modules::hasPermission('captcha', 'image') === true && Core\Validate::captcha($formData['captcha']) === false) {
@@ -354,7 +354,7 @@ class Model extends Core\Model
         if (empty($formData['nickname'])) {
             $errors['nickname'] = $this->lang->t('system', 'name_to_short');
         }
-        if ($this->userNameExists($formData['nickname']) === true) {
+        if ($this->resultExistsByUserName($formData['nickname']) === true) {
             $errors['nickname'] = $this->lang->t('users', 'user_name_already_exists');
         }
         if (Core\Validate::email($formData['mail']) === false) {

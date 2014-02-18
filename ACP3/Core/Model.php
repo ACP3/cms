@@ -18,6 +18,11 @@ class Model
      * @var Lang
      */
     protected $lang;
+    /**
+     * The table prefix
+     *
+     * @var string
+     */
     protected $prefix = DB_PRE;
 
     const TABLE_NAME = '';

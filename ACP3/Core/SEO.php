@@ -6,7 +6,7 @@ namespace ACP3\Core;
  *
  * @author Tino Goratsch
  */
-abstract class SEO
+class SEO
 {
     /**
      * @var \Doctrine\DBAL\Connection

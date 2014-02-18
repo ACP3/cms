@@ -180,7 +180,6 @@ class Session
      * Session Garbage Collector
      *
      * @param integer $session_lifetime Angaben in Sekunden
-     *
      * @return boolean
      */
     public function session_gc($session_lifetime = 1800)

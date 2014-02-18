@@ -21,7 +21,7 @@ class Lang
      */
     protected $cache = array();
 
-    function __construct(\ACP3\Core\Auth $auth)
+    function __construct(Auth $auth)
     {
         $lang = $auth->getUserLanguage();
         $this->lang = $this->languagePackExists($lang) === true ? $lang : CONFIG_LANG;

@@ -29,13 +29,15 @@ class NestedSet
 
     /**
      *
-     * @param string $table_name
+     * @param \Doctrine\DBAL\Connection $db
+     * @param string $tableName
+     * @param bool $enableBlocks
      */
-    public function __construct(\Doctrine\DBAL\Connection $db, $table_name, $enable_blocks = false)
+    public function __construct(\Doctrine\DBAL\Connection $db, $tableName, $enableBlocks = false)
     {
         $this->db = $db;
-        $this->tableName = DB_PRE . $table_name;
-        $this->enableBlocks = $enable_blocks;
+        $this->tableName = DB_PRE . $tableName;
+        $this->enableBlocks = $enableBlocks;
     }
 
     /**

@@ -9,6 +9,8 @@ namespace ACP3\Core;
 class URI
 {
 
+    const PATTERN = '=^acp/=';
+
     /**
      * Array, welches die URI Parameter enthält
      *
@@ -24,8 +26,9 @@ class URI
      */
     public $query = '';
 
-    const PATTERN = '=^acp/=';
-
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
     protected $db;
 
     /**

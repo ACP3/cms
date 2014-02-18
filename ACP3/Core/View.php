@@ -9,18 +9,17 @@ namespace ACP3\Core;
  */
 class View
 {
-
     /**
      * Nicht ausgeben
      */
-    protected $no_output = false;
+    protected $noOutput = false;
 
     /**
      * Der auszugebende Content-Type der Seite
      *
      * @var string
      */
-    protected $content_type = 'Content-Type: text/html; charset=UTF-8';
+    protected $contentType = 'Content-Type: text/html; charset=UTF-8';
 
     /**
      * Das zuverwendende Seitenlayout
@@ -34,7 +33,7 @@ class View
      *
      * @var string
      */
-    protected $content_template = '';
+    protected $contentTemplate = '';
 
     /**
      * Der auszugebende Seiteninhalt
@@ -47,24 +46,28 @@ class View
      *
      * @var string
      */
-    protected $content_append = '';
+    protected $contentAppend = '';
 
     /**
      * Legt fest, welche JavaScript Bibliotheken beim Seitenaufruf geladen werden sollen
      *
      * @var array
      */
-    protected $js_libraries = array('bootbox' => false, 'fancybox' => false, 'jquery-ui' => false, 'timepicker' => false, 'datatables' => false);
-    protected static $renderer_obj = null;
+    protected $jsLibraries = array('bootbox' => false, 'fancybox' => false, 'jquery-ui' => false, 'timepicker' => false, 'datatables' => false);
+    /**
+     * @var null
+     */
+    protected static $rendererObject = null;
 
     /**
      * Setter Methode für die $this->no_output Variable
      *
      * @param boolean $value
+     * @return $this
      */
     public function setNoOutput($value)
     {
-        $this->no_output = (bool)$value;
+        $this->noOutput = (bool)$value;
 
         return $this;
     }
@@ -77,17 +80,18 @@ class View
      */
     public function getNoOutput()
     {
-        return $this->no_output;
+        return $this->noOutput;
     }
 
     /**
      * Weist der aktuell auszugebenden Seite den Content-Type zu
      *
      * @param string $data
+     * @return $this
      */
     public function setContentType($data)
     {
-        $this->content_type = $data;
+        $this->contentType = $data;
 
         return $this;
     }
@@ -99,13 +103,14 @@ class View
      */
     public function getContentType()
     {
-        return $this->content_type;
+        return $this->contentType;
     }
 
     /**
      * Weist der aktuell auszugebenden Seite ein Layout zu
      *
      * @param string $file
+     * @return $this
      */
     public function setLayout($file)
     {
@@ -128,10 +133,11 @@ class View
      * Setzt das Template für den Contentbereich der Seite
      *
      * @param string $file
+     * @return $this
      */
     public function setContentTemplate($file)
     {
-        $this->content_template = $file;
+        $this->contentTemplate = $file;
 
         return $this;
     }
@@ -143,13 +149,14 @@ class View
      */
     public function getContentTemplate()
     {
-        return $this->content_template;
+        return $this->contentTemplate;
     }
 
     /**
      * Weist dem Template den auszugebenden Inhalt zu
      *
      * @param string $data
+     * @return $this
      */
     public function setContent($data)
     {
@@ -162,10 +169,11 @@ class View
      * Fügt weitere Daten an den Seiteninhalt an
      *
      * @param string $data
+     * @return $this
      */
     public function appendContent($data)
     {
-        $this->content_append .= $data;
+        $this->contentAppend .= $data;
 
         return $this;
     }
@@ -187,16 +195,17 @@ class View
      */
     public function getContentAppend()
     {
-        return $this->content_append;
+        return $this->contentAppend;
     }
 
     /**
+     * Gets the renderer
      *
      * @return object
      */
     public static function getRenderer()
     {
-        return self::$renderer_obj;
+        return self::$rendererObject;
     }
 
     /**
@@ -208,10 +217,10 @@ class View
     public function enableJsLibraries(array $libraries)
     {
         foreach ($libraries as $library) {
-            if (array_key_exists($library, $this->js_libraries) === true) {
-                $this->js_libraries[$library] = true;
+            if (array_key_exists($library, $this->jsLibraries) === true) {
+                $this->jsLibraries[$library] = true;
                 if ($library === 'timepicker') {
-                    $this->js_libraries['jquery-ui'] = true;
+                    $this->jsLibraries['jquery-ui'] = true;
                 }
             }
         }
@@ -220,6 +229,8 @@ class View
     }
 
     /**
+     * Set the disered renderer with an optional config array
+     *
      * @param string $renderer
      * @param array $params
      * @throws \Exception
@@ -229,7 +240,7 @@ class View
         $path = CLASSES_DIR . 'View/Renderer/' . $renderer . '.php';
         if (is_file($path) === true) {
             $className = "\\ACP3\\Core\\View\\Renderer\\{$renderer}";
-            self::$renderer_obj = new $className($params);
+            self::$rendererObject = new $className($params);
         } else {
             throw new \Exception('File ' . $path . ' not found!');
         }
@@ -244,9 +255,9 @@ class View
     {
         $minify = ROOT_DIR . 'libraries/min/' . ((bool)CONFIG_SEO_MOD_REWRITE === true && defined('IN_ADM') === false ? '' : '?') . 'g=%s&amp;' . CONFIG_DESIGN;
 
-        ksort($this->js_libraries);
+        ksort($this->jsLibraries);
         $libraries = '';
-        foreach ($this->js_libraries as $library => $enable) {
+        foreach ($this->jsLibraries as $library => $enable) {
             if ($enable === true) {
                 $libraries .= $library . ',';
             }
@@ -260,11 +271,10 @@ class View
     }
 
     /**
-     *
-     * @param type $systemPath
-     * @param type $designPath
-     * @param type $dir
-     * @param type $file
+     * @param $systemPath
+     * @param $designPath
+     * @param $dir
+     * @param $file
      * @return string
      */
     protected static function getCssJsPath($systemPath, $designPath, $dir, $file)
@@ -419,7 +429,9 @@ class View
      *
      * @param string $template
      * @param mixed $cache_id
-     * @param integer $cache_lifetime
+     * @param null $compile_id
+     * @param null $parent
+     * @internal param int $cache_lifetime
      */
     public function displayTemplate($template, $cache_id = null, $compile_id = null, $parent = null)
     {
@@ -434,19 +446,20 @@ class View
      * @param mixed $compile_id
      * @param object $parent
      * @param boolean $display
+     * @throws \Exception
      * @return string
      */
     public function fetchTemplate($template, $cache_id = null, $compile_id = null, $parent = null, $display = false)
     {
         if ($this->templateExists($template)) {
-            return self::$renderer_obj->fetch($template, $cache_id, $compile_id, $parent, $display);
+            return self::$rendererObject->fetch($template, $cache_id, $compile_id, $parent, $display);
         } else {
             // Pfad zerlegen
             $fragments = explode('/', $template);
             $fragments[0] = ucfirst($fragments[0]);
             $path = $fragments[0] . '/View/' . $fragments[1];
             if (count($fragments) > 1 && $this->templateExists($path)) {
-                return self::$renderer_obj->fetch($path, $cache_id, $compile_id, $parent, $display);
+                return self::$rendererObject->fetch($path, $cache_id, $compile_id, $parent, $display);
             } else {
                 throw new \Exception("The requested template " + $template + " can't be found!");
             }
@@ -461,7 +474,7 @@ class View
      */
     public function templateExists($template)
     {
-        return self::$renderer_obj->templateExists($template);
+        return self::$rendererObject->templateExists($template);
     }
 
     /**
@@ -473,7 +486,7 @@ class View
      */
     public function assign($name, $value = null)
     {
-        return self::$renderer_obj->assign($name, $value);
+        return self::$rendererObject->assign($name, $value);
     }
 
 }
