@@ -26,9 +26,10 @@ class Admin extends Core\Modules\Controller\Admin
         Core\Lang $lang,
         Core\Session $session,
         Core\URI $uri,
-        Core\View $view)
+        Core\View $view,
+        Core\SEO $seo)
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
         $this->model = new Menus\Model($this->db, $this->lang, $this->uri);
     }
@@ -85,16 +86,16 @@ class Admin extends Core\Modules\Controller\Admin
                 // Verhindern, dass externen URIs Aliase, Keywords, etc. zugewiesen bekommen
                 if ($_POST['mode'] != 3) {
                     $path = $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'];
-                    if (Core\SEO::uriAliasExists($_POST['uri'])) {
-                        $alias = !empty($_POST['alias']) ? $_POST['alias'] : Core\SEO::getUriAlias($_POST['uri']);
-                        $keywords = Core\SEO::getKeywords($_POST['uri']);
-                        $description = Core\SEO::getDescription($_POST['uri']);
+                    if ($this->seo->uriAliasExists($_POST['uri'])) {
+                        $alias = !empty($_POST['alias']) ? $_POST['alias'] : $this->seo->getUriAlias($_POST['uri']);
+                        $keywords = $this->seo->getKeywords($_POST['uri']);
+                        $description = $this->seo->getDescription($_POST['uri']);
                     } else {
                         $alias = $_POST['alias'];
                         $keywords = $_POST['seo_keywords'];
                         $description = $_POST['seo_description'];
                     }
-                    Core\SEO::insertUriAlias($path, $_POST['mode'] == 1 ? '' : $alias, $keywords, $description, (int)$_POST['seo_robots']);
+                    $this->uri->insertUriAlias($path, $_POST['mode'] == 1 ? '' : $alias, $keywords, $description, (int)$_POST['seo_robots']);
                 }
 
                 $this->model->setMenuItemsCache();
@@ -154,7 +155,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         // Daten an Smarty übergeben
         $this->view->assign('pages_list', Menus\Helpers::menuItemsList());
-        $this->view->assign('SEO_FORM_FIELDS', Core\SEO::formFields());
+        $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
         $this->view->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
         $this->session->generateFormToken();
@@ -202,7 +203,7 @@ class Admin extends Core\Modules\Controller\Admin
                 // URI-Alias löschen
                 $itemUri = $this->model->getMenuItemUriById($item);
                 $bool = $nestedSet->deleteNode($item);
-                Core\SEO::deleteUriAlias($itemUri);
+                $this->uri->deleteUriAlias($itemUri);
             }
 
             $this->model->setMenuItemsCache();
@@ -254,9 +255,9 @@ class Admin extends Core\Modules\Controller\Admin
         $menuItem = $this->model->getOneMenuItemById($this->uri->id);
 
         if (empty($menuItem) === false) {
-            $menuItem['alias'] = $menuItem['mode'] == 2 || $menuItem['mode'] == 4 ? Core\SEO::getUriAlias($menuItem['uri'], true) : '';
-            $menuItem['seo_keywords'] = Core\SEO::getKeywords($menuItem['uri']);
-            $menuItem['seo_description'] = Core\SEO::getDescription($menuItem['uri']);
+            $menuItem['alias'] = $menuItem['mode'] == 2 || $menuItem['mode'] == 4 ? $this->seo->getUriAlias($menuItem['uri'], true) : '';
+            $menuItem['seo_keywords'] = $this->seo->getKeywords($menuItem['uri']);
+            $menuItem['seo_description'] = $this->seo->getDescription($menuItem['uri']);
 
             if (isset($_POST['submit']) === true) {
                 try {
@@ -285,7 +286,7 @@ class Admin extends Core\Modules\Controller\Admin
                         $keywords = $_POST['seo_keywords'] === $menuItem['seo_keywords'] ? $menuItem['seo_keywords'] : $_POST['seo_keywords'];
                         $description = $_POST['seo_description'] === $menuItem['seo_description'] ? $menuItem['seo_description'] : $_POST['seo_description'];
                         $path = $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'];
-                        Core\SEO::insertUriAlias($path, $_POST['mode'] == 1 ? '' : $alias, $keywords, $description, (int)$_POST['seo_robots']);
+                        $this->uri->insertUriAlias($path, $_POST['mode'] == 1 ? '' : $alias, $keywords, $description, (int)$_POST['seo_robots']);
                     }
 
                     $this->model->setMenuItemsCache();
@@ -342,7 +343,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             // Daten an Smarty übergeben
             $this->view->assign('pages_list', Menus\Helpers::menuItemsList($menuItem['parent_id'], $menuItem['left_id'], $menuItem['right_id']));
-            $this->view->assign('SEO_FORM_FIELDS', Core\SEO::formFields($menuItem['uri']));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields($menuItem['uri']));
             $this->view->assign('form', isset($_POST['submit']) ? $_POST : $menuItem);
 
             $this->session->generateFormToken();

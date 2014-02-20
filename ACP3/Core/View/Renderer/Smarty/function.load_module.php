@@ -14,7 +14,8 @@ function smarty_function_load_module($params)
             \ACP3\Core\Registry::get('Lang'),
             \ACP3\Core\Registry::get('Session'),
             \ACP3\Core\Registry::get('URI'),
-            \ACP3\Core\Registry::get('View')
+            \ACP3\Core\Registry::get('View'),
+            \ACP3\Core\Registry::get('SEO')
         );
         $mod->$action();
     }

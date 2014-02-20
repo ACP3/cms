@@ -29,9 +29,10 @@ class Admin extends Core\Modules\Controller\Admin
         Core\Lang $lang,
         Core\Session $session,
         Core\URI $uri,
-        Core\View $view)
+        Core\View $view,
+        Core\SEO $seo)
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
         $this->model = new Files\Model($this->db, $this->lang);
     }
@@ -79,7 +80,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                 $lastId = $this->model->insert($insert_values);
                 if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
-                    Core\SEO::insertUriAlias('files/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    $this->uri->insertUriAlias('files/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
 
                 $this->session->unsetFormToken();
 
@@ -121,7 +122,7 @@ class Admin extends Core\Modules\Controller\Admin
             'seo_description' => '',
         );
 
-        $this->view->assign('SEO_FORM_FIELDS', Core\SEO::formFields());
+        $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
         $this->view->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
@@ -145,7 +146,7 @@ class Admin extends Core\Modules\Controller\Admin
                     }
 
                     Core\Cache::delete('details_id_' . $item, 'files');
-                    Core\SEO::deleteUriAlias('files/details/id_' . $item);
+                    $this->uri->deleteUriAlias('files/details/id_' . $item);
                 }
             }
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/files');
@@ -208,7 +209,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                     $bool = $this->model->update($update_values, $this->uri->id);
                     if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
-                        Core\SEO::insertUriAlias('files/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                        $this->uri->insertUriAlias('files/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
 
                     $this->model->setCache($this->uri->id);
 
@@ -244,7 +245,7 @@ class Admin extends Core\Modules\Controller\Admin
             $this->view->assign('checked_external', isset($_POST['external']) ? ' checked="checked"' : '');
             $this->view->assign('current_file', $dl['file']);
 
-            $this->view->assign('SEO_FORM_FIELDS', Core\SEO::formFields('files/details/id_' . $this->uri->id));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('files/details/id_' . $this->uri->id));
             $this->view->assign('form', isset($_POST['submit']) ? $_POST : $dl);
 
             $this->session->generateFormToken();

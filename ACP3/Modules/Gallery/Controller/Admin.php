@@ -50,7 +50,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                 $lastId = $this->db->insert(DB_PRE . 'gallery', $insert_values);
                 if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
-                    Core\SEO::insertUriAlias('gallery/pics/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    $this->uri->insertUriAlias('gallery/pics/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
 
                 $this->session->unsetFormToken();
 
@@ -65,7 +65,7 @@ class Admin extends Core\Modules\Controller\Admin
         // Datumsauswahl
         $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end')));
 
-        $this->view->assign('SEO_FORM_FIELDS', Core\SEO::formFields());
+        $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
         $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('title' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => ''));
 
@@ -161,7 +161,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                     // Galerie Cache löschen
                     Core\Cache::delete('pics_id_' . $item, 'gallery');
-                    Core\SEO::deleteUriAlias('gallery/pics/id_' . $item);
+                    $this->uri->deleteUriAlias('gallery/pics/id_' . $item);
                     Gallery\Helpers::deletePictureAliases($item);
 
                     // Fotogalerie mitsamt Bildern löschen
@@ -190,7 +190,7 @@ class Admin extends Core\Modules\Controller\Admin
                     Gallery\Helpers::removePicture($picture['file']);
 
                     $bool = $this->model->delete($item, '', Model::TABLE_NAME_PICTURES);
-                    Core\SEO::deleteUriAlias('gallery/details/id_' . $item);
+                    $this->uri->deleteUriAlias('gallery/details/id_' . $item);
                     $this->model->setCache($picture['gallery_id']);
                 }
             }
@@ -205,7 +205,7 @@ class Admin extends Core\Modules\Controller\Admin
         if ($this->model->galleryExists((int)$this->uri->id) === true) {
             $gallery = $this->model->getGalleryById((int)$this->uri->id);
 
-            $this->view->assign('SEO_FORM_FIELDS', Core\SEO::formFields('gallery/pics/id_' . $this->uri->id));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('gallery/pics/id_' . $this->uri->id));
 
             $this->breadcrumb->append($gallery['title']);
 
@@ -222,7 +222,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                     $bool = $this->model->update($update_values, $this->uri->id);
                     if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias'])) {
-                        Core\SEO::insertUriAlias('gallery/pics/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                        $this->uri->insertUriAlias('gallery/pics/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                         Gallery\Helpers::generatePictureAliases($this->uri->id);
                     }
 

@@ -27,9 +27,10 @@ class Admin extends Core\Modules\Controller\Admin
         Core\Lang $lang,
         Core\Session $session,
         Core\URI $uri,
-        Core\View $view)
+        Core\View $view,
+        Core\SEO $seo)
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
         $this->model = new Polls\Model($this->db, $this->lang);
     }

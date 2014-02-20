@@ -31,9 +31,10 @@ class Admin extends Core\Modules\Controller\Admin
         Core\Lang $lang,
         Core\Session $session,
         Core\URI $uri,
-        Core\View $view)
+        Core\View $view,
+        Core\SEO $seo)
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
         $this->menuModel = new \ACP3\Modules\Menus\Model($this->db, $this->lang, $this->uri);
         $this->model = new Articles\Model($this->db, $this->lang, $this->menuModel, $this->uri);
@@ -56,7 +57,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                 $lastId = $this->model->insert($insertValues);
                 if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias'])) {
-                    Core\SEO::insertUriAlias('articles/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    $this->uri->insertUriAlias('articles/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                 }
 
                 if (isset($_POST['create']) === true && Core\Modules::hasPermission('menus', 'acp_create_item') === true) {
@@ -109,7 +110,7 @@ class Admin extends Core\Modules\Controller\Admin
             'seo_description' => ''
         );
 
-        $this->view->assign('SEO_FORM_FIELDS', Core\SEO::formFields());
+        $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
         $this->view->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
 
@@ -132,7 +133,7 @@ class Admin extends Core\Modules\Controller\Admin
                 $nestedSet->deleteNode($this->menuModel->getMenuItemIdByUri($uri));
 
                 Core\Cache::delete('list_id_' . $item, 'articles');
-                Core\SEO::deleteUriAlias($uri);
+                $this->uri->deleteUriAlias($uri);
             }
 
             if (Core\Modules::isInstalled('menus') === true) {
@@ -165,7 +166,7 @@ class Admin extends Core\Modules\Controller\Admin
                     $bool = $this->model->update($updateValues, $this->uri->id);
 
                     if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias'])) {
-                        Core\SEO::insertUriAlias('articles/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                        $this->uri->insertUriAlias('articles/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                     }
 
                     $this->model->setCache($this->uri->id);
@@ -186,7 +187,7 @@ class Admin extends Core\Modules\Controller\Admin
             // Datumsauswahl
             $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end'), array($article['start'], $article['end'])));
 
-            $this->view->assign('SEO_FORM_FIELDS', Core\SEO::formFields('articles/details/id_' . $this->uri->id));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('articles/details/id_' . $this->uri->id));
 
             $this->view->assign('form', isset($_POST['submit']) ? $_POST : $article);
 

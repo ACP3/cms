@@ -28,9 +28,10 @@ class Admin extends Core\Modules\Controller\Admin
         Core\Lang $lang,
         Core\Session $session,
         Core\URI $uri,
-        Core\View $view)
+        Core\View $view,
+        Core\SEO $seo)
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
         $this->model = new News\Model($this->db, $this->lang);
     }
@@ -60,7 +61,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                 $lastId = $this->model->insert($insertValues);
                 if ((bool)CONFIG_SEO_ALIASES === true) {
-                    Core\SEO::insertUriAlias('news/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    $this->uri->insertUriAlias('news/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                 }
 
                 $this->session->unsetFormToken();
@@ -101,7 +102,7 @@ class Admin extends Core\Modules\Controller\Admin
         $lang_target = array($this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank'));
         $this->view->assign('target', Core\Functions::selectGenerator('target', array(1, 2), $lang_target));
 
-        $this->view->assign('SEO_FORM_FIELDS', Core\SEO::formFields());
+        $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
         $defaults = array('title' => '', 'text' => '', 'uri' => '', 'link_title' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => '');
         $this->view->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
@@ -124,7 +125,7 @@ class Admin extends Core\Modules\Controller\Admin
                 }
                 // News Cache löschen
                 Core\Cache::delete('details_id_' . $item, 'news');
-                Core\SEO::deleteUriAlias('news/details/id_' . $item);
+                $this->uri->deleteUriAlias('news/details/id_' . $item);
             }
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/news');
         } elseif (is_string($items)) {
@@ -160,7 +161,7 @@ class Admin extends Core\Modules\Controller\Admin
                     $bool = $this->model->update($updateValues, $this->uri->id);
 
                     if ((bool)CONFIG_SEO_ALIASES === true) {
-                        Core\SEO::insertUriAlias('news/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                        $this->uri->insertUriAlias('news/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                     }
 
                     $this->model->setCache($this->uri->id);
@@ -203,7 +204,7 @@ class Admin extends Core\Modules\Controller\Admin
             $lang_target = array($this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank'));
             $this->view->assign('target', Core\Functions::selectGenerator('target', array(1, 2), $lang_target, $news['target']));
 
-            $this->view->assign('SEO_FORM_FIELDS', Core\SEO::formFields('news/details/id_' . $this->uri->id));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('news/details/id_' . $this->uri->id));
 
             $this->view->assign('form', isset($_POST['submit']) ? $_POST : $news);
 

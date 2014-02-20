@@ -1,6 +1,8 @@
 <?php
 
 namespace ACP3;
+use ACP3\Core\Modules\Controller;
+use ACP3\Core\SEO;
 
 /**
  * Front Controller of the CMS
@@ -125,6 +127,12 @@ class Application
 
         Core\Registry::set('Lang', new Core\Lang(Core\Registry::get('Auth')));
 
+        Core\Registry::set('SEO', new Core\SEO(
+            Core\Registry::get('Lang'),
+            Core\Registry::get('URI'),
+            Core\Registry::get('View')
+        ));
+
         Core\Registry::set('Date', new Core\Date(
             Core\Registry::get('Auth'),
             Core\Registry::get('Lang'),
@@ -180,6 +188,7 @@ class Application
             $action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', defined('IN_ADM') === true ? substr($uri->file, 4) : $uri->file))));
 
             // Modul einbinden
+            /** @var Controller $mod */
             $mod = new $className(
                 Core\Registry::get('Auth'),
                 Core\Registry::get('Breadcrumb'),
@@ -188,7 +197,8 @@ class Application
                 Core\Registry::get('Lang'),
                 Core\Registry::get('Session'),
                 Core\Registry::get('URI'),
-                Core\Registry::get('View')
+                Core\Registry::get('View'),
+                Core\Registry::get('SEO')
             );
             $mod->$action();
             $mod->display();

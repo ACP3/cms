@@ -27,9 +27,10 @@ class Frontend extends Core\Modules\Controller
         Core\Lang $lang,
         Core\Session $session,
         Core\URI $uri,
-        Core\View $view)
+        Core\View $view,
+        Core\SEO $seo)
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
         $this->model = new Gallery\Model($this->db, $this->lang);
     }
@@ -73,14 +74,14 @@ class Frontend extends Core\Modules\Controller
             // Vorheriges Bild
             $picture_back = $this->model->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($picture_back)) {
-                Core\SEO::setPreviousPage($this->uri->route('gallery/details/id_' . $picture_back));
+                $this->seo->setPreviousPage($this->uri->route('gallery/details/id_' . $picture_back));
                 $this->view->assign('picture_back', $picture_back);
             }
 
             // Nächstes Bild
             $picture_next = $this->model->getNextPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($picture_next)) {
-                Core\SEO::setNextPage($this->uri->route('gallery/details/id_' . $picture_next));
+                $this->seo->setNextPage($this->uri->route('gallery/details/id_' . $picture_next));
                 $this->view->assign('picture_next', $picture_next);
             }
 
@@ -94,6 +95,7 @@ class Frontend extends Core\Modules\Controller
                     $this->session,
                     $this->uri,
                     $this->view,
+                    $this->seo,
                     'gallery',
                     $this->uri->id
                 );
@@ -140,6 +142,7 @@ class Frontend extends Core\Modules\Controller
                 $this->auth,
                 $this->breadcrumb,
                 $this->lang,
+                $this->seo,
                 $this->uri,
                 $this->view,
                 $this->model->countAll($time)
