@@ -31,10 +31,11 @@ class Frontend extends Core\Modules\Controller
         Core\Session $session,
         Core\URI $uri,
         Core\View $view,
+        Core\SEO $seo,
         $module,
         $entry_id)
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
         $this->module = $module;
         $this->entryId = $entry_id;

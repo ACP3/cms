@@ -26,9 +26,10 @@ class Frontend extends Core\Modules\Controller
         Core\Lang $lang,
         Core\Session $session,
         Core\URI $uri,
-        Core\View $view)
+        Core\View $view,
+        Core\SEO $seo)
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
         $this->menuModel = new \ACP3\Modules\Menus\Model($this->db, $this->lang, $this->uri);
         $this->model = new Articles\Model($this->db, $this->lang, $this->menuModel, $this->uri);
@@ -46,6 +47,7 @@ class Frontend extends Core\Modules\Controller
                 $this->auth,
                 $this->breadcrumb,
                 $this->lang,
+                $this->seo,
                 $this->uri,
                 $this->view,
                 $this->model->countAll($time)

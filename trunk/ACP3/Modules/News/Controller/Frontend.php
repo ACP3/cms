@@ -27,9 +27,10 @@ class Frontend extends Core\Modules\Controller
         Core\Lang $lang,
         Core\Session $session,
         Core\URI $uri,
-        Core\View $view)
+        Core\View $view,
+        Core\SEO $seo)
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
         $this->model = new News\Model($this->db, $this->lang);
     }
@@ -68,6 +69,7 @@ class Frontend extends Core\Modules\Controller
                     $this->session,
                     $this->uri,
                     $this->view,
+                    $this->seo,
                     'news',
                     $this->uri->id
                 );
@@ -95,7 +97,7 @@ class Frontend extends Core\Modules\Controller
         $settings = Core\Config::getSettings('news');
         // Kategorie in Brotkrümelspur anzeigen
         if ($cat !== 0 && $settings['category_in_breadcrumb'] == 1) {
-            Core\SEO::setCanonicalUri($this->uri->route('news'));
+            $this->seo->setCanonicalUri($this->uri->route('news'));
             $this->breadcrumb->append($this->lang->t('news', 'news'), $this->uri->route('news'));
             $category = $this->db->fetchColumn('SELECT title FROM ' . DB_PRE . 'categories WHERE id = ?', array($cat));
             if (!empty($category)) {
@@ -123,6 +125,7 @@ class Frontend extends Core\Modules\Controller
                 $this->auth,
                 $this->breadcrumb,
                 $this->lang,
+                $this->seo,
                 $this->uri,
                 $this->view,
                 $this->model->countAll($time, $cat)

@@ -43,6 +43,11 @@ abstract class Controller
     protected $lang;
 
     /**
+     * @var \ACP3\Core\SEO
+     */
+    protected $seo;
+
+    /**
      *
      * @var \ACP3\Core\Session
      */
@@ -68,7 +73,8 @@ abstract class Controller
         Core\Lang $lang,
         Core\Session $session,
         Core\URI $uri,
-        Core\View $view)
+        Core\View $view,
+        Core\SEO $seo)
     {
         $this->auth = $auth;
         $this->breadcrumb = $breadcrumb;
@@ -78,6 +84,7 @@ abstract class Controller
         $this->session = $session;
         $this->uri = $uri;
         $this->view = $view;
+        $this->seo = $seo;
     }
 
     public function display()
@@ -101,7 +108,7 @@ abstract class Controller
                 $view->assign('HEAD_TITLE', $this->breadcrumb->output(3));
                 $view->assign('TITLE', $this->breadcrumb->output(2));
                 $view->assign('BREADCRUMB', $this->breadcrumb->output());
-                $view->assign('META', \ACP3\Core\SEO::getMetaTags());
+                $view->assign('META', $this->seo->getMetaTags());
                 $view->assign('CONTENT', $view->getContent() . $view->getContentAppend());
 
                 $minify = $view->buildMinifyLink();

@@ -9,96 +9,54 @@ namespace ACP3\Core;
 class SEO
 {
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected static $db;
-    /**
      * @var Lang
      */
-    protected static $lang;
+    protected $lang;
     /**
      * @var URI
      */
-    protected static $uri;
+    protected $uri;
     /**
      * @var View
      */
-    protected static $view;
-    /**
-     * Caching Variable für die URI-Aliases
-     *
-     * @access private
-     * @var array
-     */
-    protected static $aliases = array();
+    protected $view;
     /**
      * Gibt die nächste Seite an
      *
      * @var string
      */
-    protected static $nextPage = '';
+    protected $nextPage = '';
     /**
      * Gibt die vorherige Seite an
      *
      * @var string
      */
-    protected static $previousPage = '';
+    protected $previousPage = '';
     /**
      * Kanonische URL
      *
      * @var string
      */
-    protected static $canonical = '';
+    protected $canonical = '';
+    /**
+     * @var array
+     */
+    protected $aliases = array();
 
-    protected static $metaDescriptionPostfix = '';
+    protected $metaDescriptionPostfix = '';
 
-    protected static function _init()
+    public function __construct(Lang $lang, URI $uri, View $view)
     {
-        if (!static::$db) {
-            static::$db = Registry::get('Db');
-            static::$lang = Registry::get('Lang');
-            static::$uri = Registry::get('URI');
-            static::$view = Registry::get('View');
-        }
+        $this->lang = $lang;
+        $this->uri = $uri;
+        $this->view = $view;
     }
 
-    /**
-     * Setzt den Cache für die URI-Aliase
-     *
-     * @return boolean
-     */
-    protected static function setSEOCache()
+    private function _initCache()
     {
-        static::_init();
-
-        $aliases = static::$db->fetchAll('SELECT uri, alias, keywords, description, robots FROM ' . DB_PRE . 'seo');
-        $c_aliases = count($aliases);
-        $data = array();
-
-        for ($i = 0; $i < $c_aliases; ++$i) {
-            $data[$aliases[$i]['uri']] = array(
-                'alias' => $aliases[$i]['alias'],
-                'keywords' => $aliases[$i]['keywords'],
-                'description' => $aliases[$i]['description'],
-                'robots' => $aliases[$i]['robots']
-            );
+        if (empty($this->aliases) === true) {
+            $this->uri->getSEOCache();
         }
-
-        return Cache::create('aliases', $data, 'seo');
-    }
-
-    /**
-     * Gibt den Cache der URI-Aliase zurück
-     *
-     * @return array
-     */
-    protected static function getSEOCache()
-    {
-        if (Cache::check('aliases', 'seo') === false) {
-            self::setSEOCache();
-        }
-
-        return Cache::output('aliases', 'seo');
     }
 
     /**
@@ -106,21 +64,19 @@ class SEO
      *
      * @return string
      */
-    public static function getMetaTags()
+    public function getMetaTags()
     {
-        static::_init();
-
         $meta = array(
-            'description' => defined('IN_ADM') === true ? '' : self::getPageDescription(),
-            'keywords' => defined('IN_ADM') === true ? '' : self::getPageKeywords(),
-            'robots' => defined('IN_ADM') === true ? 'noindex,nofollow' : self::getPageRobotsSetting(),
-            'previous_page' => self::$previousPage,
-            'next_page' => self::$nextPage,
-            'canonical' => self::$canonical,
+            'description' => defined('IN_ADM') === true ? '' : $this->getPageDescription(),
+            'keywords' => defined('IN_ADM') === true ? '' : $this->getPageKeywords(),
+            'robots' => defined('IN_ADM') === true ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
+            'previous_page' => $this->previousPage,
+            'next_page' => $this->nextPage,
+            'canonical' => $this->canonical,
         );
-        static::$view->assign('meta', $meta);
+        $this->view->assign('meta', $meta);
 
-        return static::$view->fetchTemplate('system/meta.tpl');
+        return $this->view->fetchTemplate('system/meta.tpl');
     }
 
     /**
@@ -128,20 +84,18 @@ class SEO
      *
      * @return string
      */
-    public static function getPageDescription()
+    public function getPageDescription()
     {
-        static::_init();
-
         // Meta Description für die Homepage einer Website
-        if (static::$uri->query === CONFIG_HOMEPAGE) {
+        if ($this->uri->query === CONFIG_HOMEPAGE) {
             return CONFIG_SEO_META_DESCRIPTION !== '' ? CONFIG_SEO_META_DESCRIPTION : '';
         } else {
-            $description = self::getDescription(static::$uri->getUriWithoutPages());
+            $description = $this->getDescription($this->uri->getUriWithoutPages());
             if (empty($description)) {
-                $description = self::getDescription(static::$uri->mod . '/' . static::$uri->file);
+                $description = $this->getDescription($this->uri->mod . '/' . $this->uri->file);
             }
 
-            return $description . (!empty($description) && !empty(self::$metaDescriptionPostfix) ? ' - ' . self::$metaDescriptionPostfix : '');
+            return $description . (!empty($description) && !empty($this->metaDescriptionPostfix) ? ' - ' . $this->metaDescriptionPostfix : '');
         }
     }
 
@@ -151,16 +105,14 @@ class SEO
      *
      * @return string
      */
-    public static function getPageKeywords()
+    public function getPageKeywords()
     {
-        static::_init();
-
-        $keywords = self::getKeywords(static::$uri->getUriWithoutPages());
+        $keywords = $this->getKeywords($this->uri->getUriWithoutPages());
         if (empty($keywords)) {
-            $keywords = self::getKeywords(static::$uri->mod . '/' . static::$uri->file);
+            $keywords = $this->getKeywords($this->uri->mod . '/' . $this->uri->file);
         }
         if (empty($keywords)) {
-            $keywords = self::getKeywords(static::$uri->mod);
+            $keywords = $this->getKeywords($this->uri->mod);
         }
 
         return strtolower(!empty($keywords) ? $keywords : CONFIG_SEO_META_KEYWORDS);
@@ -172,19 +124,17 @@ class SEO
      *
      * @return string
      */
-    public static function getPageRobotsSetting()
+    public function getPageRobotsSetting()
     {
-        static::_init();
-
-        $robots = self::getRobotsSetting(static::$uri->getUriWithoutPages());
+        $robots = $this->getRobotsSetting($this->uri->getUriWithoutPages());
         if (empty($robots)) {
-            $robots = self::getRobotsSetting(static::$uri->mod . '/' . static::$uri->file);
+            $robots = $this->getRobotsSetting($this->uri->mod . '/' . $this->uri->file);
         }
         if (empty($robots)) {
-            $robots = self::getRobotsSetting(static::$uri->mod);
+            $robots = $this->getRobotsSetting($this->uri->mod);
         }
 
-        return strtolower(!empty($robots) ? $robots : self::getRobotsSetting());
+        return strtolower(!empty($robots) ? $robots : $this->getRobotsSetting());
     }
 
     /**
@@ -193,22 +143,22 @@ class SEO
      * @param string $path
      * @return string
      */
-    public static function getDescription($path)
+    public function getDescription($path)
     {
-        self::_initCache();
+        $this->_initCache();
 
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-        return !empty(self::$aliases[$path]['description']) ? self::$aliases[$path]['description'] : '';
+        return !empty($this->aliases[$path]['description']) ? $this->aliases[$path]['description'] : '';
     }
 
     /**
      *
      * @param string $string
      */
-    public static function setDescriptionPostfix($string)
+    public function setDescriptionPostfix($string)
     {
-        self::$metaDescriptionPostfix = $string;
+        $this->metaDescriptionPostfix = $string;
     }
 
     /**
@@ -217,13 +167,13 @@ class SEO
      * @param string $path
      * @return string
      */
-    public static function getKeywords($path)
+    public function getKeywords($path)
     {
-        self::_initCache();
+        $this->_initCache();
 
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-        return !empty(self::$aliases[$path]['keywords']) ? self::$aliases[$path]['keywords'] : '';
+        return !empty($this->aliases[$path]['keywords']) ? $this->aliases[$path]['keywords'] : '';
     }
 
     /**
@@ -232,7 +182,7 @@ class SEO
      * @param string $path
      * @return string
      */
-    public static function getRobotsSetting($path = '')
+    public function getRobotsSetting($path = '')
     {
         $replace = array(
             1 => 'index,follow',
@@ -244,29 +194,13 @@ class SEO
         if ($path === '') {
             return strtr(CONFIG_SEO_ROBOTS, $replace);
         } else {
-            self::_initCache();
+            $this->_initCache();
 
             $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-            $robot = isset(self::$aliases[$path]) === false || self::$aliases[$path]['robots'] == 0 ? CONFIG_SEO_ROBOTS : self::$aliases[$path]['robots'];
+            $robot = isset($this->aliases[$path]) === false || $this->aliases[$path]['robots'] == 0 ? CONFIG_SEO_ROBOTS : $this->aliases[$path]['robots'];
             return strtr($robot, $replace);
         }
-    }
-
-    /**
-     * Gibt einen URI-Alias zurück
-     *
-     * @param string $path
-     * @param bool $for_form
-     * @return string
-     */
-    public static function getUriAlias($path, $for_form = false)
-    {
-        self::_initCache();
-
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
-
-        return !empty(self::$aliases[$path]['alias']) ? self::$aliases[$path]['alias'] : ($for_form === true ? '' : $path);
     }
 
     /**
@@ -274,9 +208,9 @@ class SEO
      *
      * @param string $path
      */
-    public static function setCanonicalUri($path)
+    public function setCanonicalUri($path)
     {
-        self::$canonical = $path;
+        $this->canonical = $path;
     }
 
     /**
@@ -284,9 +218,9 @@ class SEO
      *
      * @param string $path
      */
-    public static function setNextPage($path)
+    public function setNextPage($path)
     {
-        self::$nextPage = $path;
+        $this->nextPage = $path;
     }
 
     /**
@@ -294,56 +228,9 @@ class SEO
      *
      * @param string $path
      */
-    public static function setPreviousPage($path)
+    public function setPreviousPage($path)
     {
-        self::$previousPage = $path;
-    }
-
-    /**
-     * Löscht einen URI-Alias
-     *
-     * @param string $path
-     * @return boolean
-     */
-    public static function deleteUriAlias($path)
-    {
-        static::_init();
-
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
-
-        $bool = static::$db->delete(DB_PRE . 'seo', array('uri' => $path));
-        $bool2 = self::setSEOCache();
-        return $bool !== false && $bool2 !== false ? true : false;
-    }
-
-    /**
-     * Trägt einen URI-Alias in die Datenbank ein bzw. aktualisiert den Eintrag
-     *
-     * @param string $path
-     * @param string $alias
-     * @param string $keywords
-     * @param string $description
-     * @param int $robots
-     * @return boolean
-     */
-    public static function insertUriAlias($path, $alias, $keywords = '', $description = '', $robots = 0)
-    {
-        static::_init();
-
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
-        $keywords = Functions::strEncode($keywords);
-        $description = Functions::strEncode($description);
-
-        // Vorhandenen Alias aktualisieren
-        if (static::$db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE uri = ?', array($path)) == 1) {
-            $bool = static::$db->update(DB_PRE . 'seo', array('alias' => $alias, 'keywords' => $keywords, 'description' => $description, 'robots' => (int)$robots), array('uri' => $path));
-            // Neuer Eintrag in DB
-        } else {
-            $bool = static::$db->insert(DB_PRE . 'seo', array('alias' => $alias, 'uri' => $path, 'keywords' => $keywords, 'description' => $description, 'robots' => (int)$robots));
-        }
-
-        $bool2 = self::setSEOCache();
-        return $bool !== false && $bool2 !== false ? true : false;
+        $this->previousPage = $path;
     }
 
     /**
@@ -352,63 +239,37 @@ class SEO
      * @param string $path
      * @return string
      */
-    public static function formFields($path = '')
+    public function formFields($path = '')
     {
-        static::_init();
-
         if (!empty($path)) {
             $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-            $alias = isset($_POST['alias']) ? $_POST['alias'] : self::getUriAlias($path, true);
-            $keywords = isset($_POST['seo_keywords']) ? $_POST['seo_keywords'] : self::getKeywords($path);
-            $description = isset($_POST['seo_description']) ? $_POST['seo_description'] : self::getDescription($path);
-            $robots = isset(self::$aliases[$path]) === true ? self::$aliases[$path]['robots'] : 0;
+            $alias = isset($_POST['alias']) ? $_POST['alias'] : $this->getUriAlias($path, true);
+            $keywords = isset($_POST['seo_keywords']) ? $_POST['seo_keywords'] : $this->getKeywords($path);
+            $description = isset($_POST['seo_description']) ? $_POST['seo_description'] : $this->getDescription($path);
+            $robots = isset($this->aliases[$path]) === true ? $this->aliases[$path]['robots'] : 0;
         } else {
             $alias = $keywords = $description = '';
             $robots = 0;
         }
 
-        $lang_robots = array(
-            sprintf(static::$lang->t('system', 'seo_robots_use_system_default'), self::getRobotsSetting()),
-            static::$lang->t('system', 'seo_robots_index_follow'),
-            static::$lang->t('system', 'seo_robots_index_nofollow'),
-            static::$lang->t('system', 'seo_robots_noindex_follow'),
-            static::$lang->t('system', 'seo_robots_noindex_nofollow')
+        $langRobots = array(
+            sprintf($this->lang->t('system', 'seo_robots_use_system_default'), $this->getRobotsSetting()),
+            $this->lang->t('system', 'seo_robots_index_follow'),
+            $this->lang->t('system', 'seo_robots_index_nofollow'),
+            $this->lang->t('system', 'seo_robots_noindex_follow'),
+            $this->lang->t('system', 'seo_robots_noindex_nofollow')
         );
         $seo = array(
             'enable_uri_aliases' => (bool)CONFIG_SEO_ALIASES,
             'alias' => isset($alias) ? $alias : '',
             'keywords' => $keywords,
             'description' => $description,
-            'robots' => Functions::selectGenerator('seo_robots', array(0, 1, 2, 3, 4), $lang_robots, $robots)
+            'robots' => Functions::selectGenerator('seo_robots', array(0, 1, 2, 3, 4), $langRobots, $robots)
         );
 
-        static::$view->assign('seo', $seo);
-        return static::$view->fetchTemplate('system/seo_fields.tpl');
+        $this->view->assign('seo', $seo);
+        return $this->view->fetchTemplate('system/seo_fields.tpl');
     }
 
-    /**
-     * Initialize the SEO Cache
-     */
-    private static function _initCache()
-    {
-        if (empty(self::$aliases)) {
-            self::$aliases = self::getSEOCache();
-        }
-    }
-
-    /**
-     * Überprüft, ob ein URI-Alias existiert
-     *
-     * @param string $path
-     * @return boolean
-     */
-    public static function uriAliasExists($path)
-    {
-        self::_initCache();
-
-        $path .= !preg_match('/\/$/', $path) ? '/' : '';
-
-        return array_key_exists($path, self::$aliases) === true && !empty(self::$aliases[$path]['alias']);
-    }
 }

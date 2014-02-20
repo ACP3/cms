@@ -12,6 +12,10 @@ use ACP3\Modules\Search;
  */
 class Frontend extends Core\Modules\Controller
 {
+    /**
+     * @var \ACP3\Modules\Search\Model
+     */
+    protected $model;
 
     public function __construct(
         Core\Auth $auth,
@@ -21,46 +25,44 @@ class Frontend extends Core\Modules\Controller
         Core\Lang $lang,
         Core\Session $session,
         Core\URI $uri,
-        Core\View $view)
+        Core\View $view,
+        Core\SEO $seo)
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
+
+        $this->model = new Search\Model($db, $lang);
     }
 
     public function actionList()
     {
         if (isset($_POST['submit']) === true) {
-            if (strlen($_POST['search_term']) < 3)
-                $errors['search-term'] = $this->lang->t('search', 'search_term_to_short');
-            if (empty($_POST['mods']))
-                $errors[] = $this->lang->t('search', 'no_module_selected');
-            if (empty($_POST['area']))
-                $errors[] = $this->lang->t('search', 'no_area_selected');
-            if (empty($_POST['sort']) || $_POST['sort'] != 'asc' && $_POST['sort'] != 'desc')
-                $errors[] = $this->lang->t('search', 'no_sorting_selected');
+            try {
+                $this->model->validate($_POST);
 
-            if (isset($errors) === true) {
-                $this->view->assign('error_msg', Core\Functions::errorBox($errors));
-            } else {
                 $this->displaySearchResults($_POST['mods'], Core\Functions::strEncode($_POST['search_term']), $_POST['area'], strtoupper($_POST['sort']));
+                return;
+            } catch (Core\Exceptions\InvalidFormToken $e) {
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'search');
+            } catch (Core\Exceptions\ValidationFailed $e) {
+                $this->view->assign('error_msg', $e->getMessage());
             }
         }
-        if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('search_term' => ''));
 
-            $this->view->assign('search_mods', Search\Helpers::getModules());
+        $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('search_term' => ''));
 
-            // Zu durchsuchende Bereiche
-            $lang_search_areas = array(
-                $this->lang->t('search', 'title_and_content'),
-                $this->lang->t('search', 'title_only'),
-                $this->lang->t('search', 'content_only')
-            );
-            $this->view->assign('search_areas', Core\Functions::selectGenerator('area', array('title_content', 'title', 'content'), $lang_search_areas, 'title_content', 'checked'));
+        $this->view->assign('search_mods', Search\Helpers::getModules());
 
-            // Treffer sortieren
-            $lang_sort_hits = array($this->lang->t('search', 'asc'), $this->lang->t('search', 'desc'));
-            $this->view->assign('sort_hits', Core\Functions::selectGenerator('sort', array('asc', 'desc'), $lang_sort_hits, 'asc', 'checked'));
-        }
+        // Zu durchsuchende Bereiche
+        $langSearchAreas = array(
+            $this->lang->t('search', 'title_and_content'),
+            $this->lang->t('search', 'title_only'),
+            $this->lang->t('search', 'content_only')
+        );
+        $this->view->assign('search_areas', Core\Functions::selectGenerator('area', array('title_content', 'title', 'content'), $langSearchAreas, 'title_content', 'checked'));
+
+        // Treffer sortieren
+        $langSortHits = array($this->lang->t('search', 'asc'), $this->lang->t('search', 'desc'));
+        $this->view->assign('sort_hits', Core\Functions::selectGenerator('sort', array('asc', 'desc'), $langSortHits, 'asc', 'checked'));
     }
 
     protected function displaySearchResults($modules, $searchTerm, $area, $sort)
@@ -75,7 +77,7 @@ class Frontend extends Core\Modules\Controller
             if (method_exists("\\ACP3\\Modules\\Search\\Extensions", $action) &&
                 Core\Modules::hasPermission($module, 'list') === true
             ) {
-                $results = new Extensions($area, $sort, $searchTerm);
+                $results = new Search\Extensions($area, $sort, $searchTerm);
                 $searchResults = array_merge($searchResults, $results->$action());
             }
         }

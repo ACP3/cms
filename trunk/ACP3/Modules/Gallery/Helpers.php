@@ -20,9 +20,15 @@ abstract class Helpers
      */
     protected static $model;
 
+    protected static $uri;
+
+    protected static $seo;
+
     protected static function _init()
     {
         if (!self::$model) {
+            self::$uri = Core\Registry::get('URI');
+            self::$seo = Core\Registry::get('SEO');
             self::$model = new Model(Core\Registry::get('Db'), Core\Registry::get('Lang'));
         }
     }
@@ -38,14 +44,14 @@ abstract class Helpers
         self::_init();
 
         $galleryId = self::$model->getGalleryIdFromPictureId($pictureId);
-        $alias = Core\SEO::getUriAlias('gallery/pics/id_' . $galleryId, true);
+        $alias = self::$uri->getUriAlias('gallery/pics/id_' . $galleryId, true);
         if (!empty($alias)) {
             $alias .= '/img-' . $pictureId;
         }
-        $seoKeywords = Core\SEO::getKeywords('gallery/pics/id_' . $galleryId);
-        $seoDescription = Core\SEO::getDescription('gallery/pics/id_' . $galleryId);
+        $seoKeywords = self::$seo->getKeywords('gallery/pics/id_' . $galleryId);
+        $seoDescription = self::$seo->getDescription('gallery/pics/id_' . $galleryId);
 
-        return Core\SEO::insertUriAlias('gallery/details/id_' . $pictureId, $alias, $seoKeywords, $seoDescription);
+        return self::$uri->insertUriAlias('gallery/details/id_' . $pictureId, $alias, $seoKeywords, $seoDescription);
     }
 
     /**
@@ -61,15 +67,15 @@ abstract class Helpers
         $pictures = self::$model->getPicturesByGalleryId($galleryId);
         $c_pictures = count($pictures);
 
-        $alias = Core\SEO::getUriAlias('gallery/pics/id_' . $galleryId, true);
+        $alias = self::$seo->getUriAlias('gallery/pics/id_' . $galleryId, true);
         if (!empty($alias)) {
             $alias .= '/img';
         }
-        $seo_keywords = Core\SEO::getKeywords('gallery/pics/id_' . $galleryId);
-        $seo_description = Core\SEO::getDescription('gallery/pics/id_' . $galleryId);
+        $seo_keywords = self::$seo->getKeywords('gallery/pics/id_' . $galleryId);
+        $seo_description = self::$seo->getDescription('gallery/pics/id_' . $galleryId);
 
         for ($i = 0; $i < $c_pictures; ++$i) {
-            Core\SEO::insertUriAlias('gallery/details/id_' . $pictures[$i]['id'], !empty($alias) ? $alias . '-' . $pictures[$i]['id'] : '', $seo_keywords, $seo_description);
+            self::$uri->insertUriAlias('gallery/details/id_' . $pictures[$i]['id'], !empty($alias) ? $alias . '-' . $pictures[$i]['id'] : '', $seo_keywords, $seo_description);
         }
 
         return true;
@@ -90,7 +96,7 @@ abstract class Helpers
         $c_pictures = count($pictures);
 
         for ($i = 0; $i < $c_pictures; ++$i) {
-            Core\SEO::deleteUriAlias('gallery/details/id_' . $pictures[$i]['id']);
+            self::$uri->deleteUriAlias('gallery/details/id_' . $pictures[$i]['id']);
         }
 
         return true;

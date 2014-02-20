@@ -16,6 +16,10 @@ class Pagination
      */
     protected $lang;
     /**
+     * @var SEO
+     */
+    protected $seo;
+    /**
      * @var URI
      */
     protected $uri;
@@ -60,11 +64,19 @@ class Pagination
      */
     private $pagination = array();
 
-    function __construct(Auth $auth, Breadcrumb $breadcrumb, Lang $lang, URI $uri, View $view, $totalResults)
+    function __construct(
+        Auth $auth,
+        Breadcrumb $breadcrumb,
+        Lang $lang,
+        SEO $seo,
+        URI $uri,
+        View $view,
+        $totalResults)
     {
         $this->auth = $auth;
         $this->breadcrumb = $breadcrumb;
         $this->lang = $lang;
+        $this->seo = $seo;
         $this->uri = $uri;
         $this->view = $view;
 
@@ -193,14 +205,14 @@ class Pagination
         if (defined('IN_ADM') === false) {
             if ($this->currentPage - 1 > 0) {
                 // Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben
-                SEO::setDescriptionPostfix(sprintf($this->lang->t('system', 'page_x'), $this->currentPage));
-                SEO::setPreviousPage($link . 'page_' . ($this->currentPage - 1) . '/');
+                $this->seo->setDescriptionPostfix(sprintf($this->lang->t('system', 'page_x'), $this->currentPage));
+                $this->seo->setPreviousPage($link . 'page_' . ($this->currentPage - 1) . '/');
             }
             if ($this->currentPage + 1 <= $this->totalPages) {
-                SEO::setNextPage($link . 'page_' . ($this->currentPage + 1) . '/');
+                $this->seo->setNextPage($link . 'page_' . ($this->currentPage + 1) . '/');
             }
             if (isset($this->uri->page) && $this->uri->page === 1) {
-                SEO::setCanonicalUri($link);
+                $this->seo->setCanonicalUri($link);
             }
         }
     }

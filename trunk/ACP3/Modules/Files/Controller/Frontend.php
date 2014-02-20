@@ -30,9 +30,10 @@ class Frontend extends Core\Modules\Controller
         Core\Lang $lang,
         Core\Session $session,
         Core\URI $uri,
-        Core\View $view)
+        Core\View $view,
+        Core\SEO $seo)
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
         $this->model = new Files\Model($this->db, $this->lang);
 
@@ -95,6 +96,7 @@ class Frontend extends Core\Modules\Controller
                         $this->session,
                         $this->uri,
                         $this->view,
+                        $this->seo,
                         'files',
                         $this->uri->id
                     );
