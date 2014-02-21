@@ -15,9 +15,13 @@ class Model extends Core\Model
     const TABLE_NAME = 'gallery';
     const TABLE_NAME_PICTURES = 'gallery_pictures';
 
-    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang)
+    private $uri;
+
+    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang, Core\URI $uri)
     {
         parent::__construct($db, $lang);
+
+        $this->uri;
     }
 
     public function galleryExists($id, $time = '')
@@ -102,19 +106,19 @@ class Model extends Core\Model
 
     public function validateCreate(array $formData)
     {
-        $this->validateFormKey($lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (Core\Validate::date($formData['start'], $formData['end']) === false) {
-            $errors[] = $lang->t('system', 'select_date');
+            $errors[] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
-            $errors['title'] = $lang->t('gallery', 'type_in_gallery_title');
+            $errors['title'] = $this->lang->t('gallery', 'type_in_gallery_title');
         }
         if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
             (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias']) === true)
         ) {
-            $errors['alias'] = $lang->t('system', 'uri_alias_unallowed_characters_or_exists');
+            $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 
         if (!empty($errors)) {
@@ -124,17 +128,17 @@ class Model extends Core\Model
 
     public function validateCreatePicture(array $file, array $settings)
     {
-        $this->validateFormKey($lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (empty($file['tmp_name'])) {
-            $errors['file'] = $lang->t('gallery', 'no_picture_selected');
+            $errors['file'] = $this->lang->t('gallery', 'no_picture_selected');
         }
         if (!empty($file['tmp_name']) &&
             (Core\Validate::isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) === false ||
                 $_FILES['file']['error'] !== UPLOAD_ERR_OK)
         ) {
-            $errors['file'] = $lang->t('gallery', 'invalid_image_selected');
+            $errors['file'] = $this->lang->t('gallery', 'invalid_image_selected');
         }
 
         if (!empty($errors)) {
@@ -144,19 +148,19 @@ class Model extends Core\Model
 
     public function validateEdit(array $formData)
     {
-        $this->validateFormKey($lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (Core\Validate::date($formData['start'], $formData['end']) === false) {
-            $errors[] = $lang->t('system', 'select_date');
+            $errors[] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
-            $errors['title'] = $lang->t('gallery', 'type_in_gallery_title');
+            $errors['title'] = $this->lang->t('gallery', 'type_in_gallery_title');
         }
         if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
             (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], 'gallery/pics/id_' . $this->uri->id))
         ) {
-            $errors['alias'] = $lang->t('system', 'uri_alias_unallowed_characters_or_exists');
+            $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 
         if (!empty($errors)) {
@@ -166,14 +170,14 @@ class Model extends Core\Model
 
     public function validateEditPicture(array $file, array $settings)
     {
-        $this->validateFormKey($lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (!empty($file['tmp_name']) &&
             (Core\Validate::isPicture($file['tmp_name'], $settings['maxwidth'], $settings['maxheight'], $settings['filesize']) === false ||
                 $_FILES['file']['error'] !== UPLOAD_ERR_OK)
         ) {
-            $errors['file'] = $lang->t('gallery', 'invalid_image_selected');
+            $errors['file'] = $this->lang->t('gallery', 'invalid_image_selected');
         }
 
         if (!empty($errors)) {
@@ -184,29 +188,29 @@ class Model extends Core\Model
 
     public function validateSettings(array $formData)
     {
-        $this->validateFormKey($lang);
+        $this->validateFormKey();
 
         $errors = array();
         if (empty($formData['dateformat']) || ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short')) {
-            $errors['dateformat'] = $lang->t('system', 'select_date_format');
+            $errors['dateformat'] = $this->lang->t('system', 'select_date_format');
         }
         if (Core\Validate::isNumber($formData['sidebar']) === false) {
-            $errors['sidebar'] = $lang->t('system', 'select_sidebar_entries');
+            $errors['sidebar'] = $this->lang->t('system', 'select_sidebar_entries');
         }
         if (!isset($formData['overlay']) || $formData['overlay'] != 1 && $formData['overlay'] != 0) {
-            $errors[] = $lang->t('gallery', 'select_use_overlay');
+            $errors[] = $this->lang->t('gallery', 'select_use_overlay');
         }
         if (Core\Modules::isActive('comments') === true && (!isset($formData['comments']) || $formData['comments'] != 1 && $formData['comments'] != 0)) {
-            $errors[] = $lang->t('gallery', 'select_allow_comments');
+            $errors[] = $this->lang->t('gallery', 'select_allow_comments');
         }
         if (Core\Validate::isNumber($formData['thumbwidth']) === false || Core\Validate::isNumber($formData['width']) === false || Core\Validate::isNumber($formData['maxwidth']) === false) {
-            $errors[] = $lang->t('gallery', 'invalid_image_width_entered');
+            $errors[] = $this->lang->t('gallery', 'invalid_image_width_entered');
         }
         if (Core\Validate::isNumber($formData['thumbheight']) === false || Core\Validate::isNumber($formData['height']) === false || Core\Validate::isNumber($formData['maxheight']) === false) {
-            $errors[] = $lang->t('gallery', 'invalid_image_height_entered');
+            $errors[] = $this->lang->t('gallery', 'invalid_image_height_entered');
         }
         if (Core\Validate::isNumber($formData['filesize']) === false) {
-            $errors['filesize'] = $lang->t('gallery', 'invalid_image_filesize_entered');
+            $errors['filesize'] = $this->lang->t('gallery', 'invalid_image_filesize_entered');
         }
 
         if (!empty($errors)) {

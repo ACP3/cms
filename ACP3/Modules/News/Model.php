@@ -14,9 +14,16 @@ class Model extends Core\Model
 
     const TABLE_NAME = 'news';
 
-    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang)
+    /**
+     * @var \ACP3\Core\URI
+     */
+    private $uri;
+
+    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang, Core\URI $uri)
     {
         parent::__construct($db, $lang);
+
+        $this->uri = $uri;
     }
 
     public function resultExists($id, $time = '')
@@ -60,7 +67,7 @@ class Model extends Core\Model
         return $this->db->fetchAll('SELECT n.*, c.title AS cat FROM ' . $this->prefix . static::TABLE_NAME . ' AS n, ' . $this->prefix . \ACP3\Modules\Categories\Model::TABLE_NAME . ' AS c WHERE n.category_id = c.id ORDER BY n.start DESC, n.end DESC, n.id DESC');
     }
 
-    public function validate(array $formData)
+    public function validateCreate(array $formData)
     {
         $this->validateFormKey();
 
@@ -85,6 +92,40 @@ class Model extends Core\Model
         }
         if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
             (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias']) === true)
+        ) {
+            $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
+        }
+
+        if (!empty($errors)) {
+            throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
+        }
+    }
+
+    public function validateEdit(array $formData)
+    {
+        $this->validateFormKey();
+
+        $errors = array();
+        if (Core\Validate::date($formData['start'], $formData['end']) === false) {
+            $errors[] = $this->lang->t('system', 'select_date');
+        }
+        if (strlen($formData['title']) < 3) {
+            $errors['title'] = $this->lang->t('news', 'title_to_short');
+        }
+        if (strlen($formData['text']) < 3) {
+            $errors['text'] = $this->lang->t('news', 'text_to_short');
+        }
+        if (strlen($formData['cat_create']) < 3 && \ACP3\Modules\Categories\Helpers::categoryExists($formData['cat']) === false) {
+            $errors['cat'] = $this->lang->t('news', 'select_category');
+        }
+        if (strlen($formData['cat_create']) >= 3 && \ACP3\Modules\Categories\Helpers::categoryIsDuplicate($formData['cat_create'], 'news') === true) {
+            $errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
+        }
+        if (!empty($formData['link_title']) && (empty($formData['uri']) || Core\Validate::isNumber($formData['target']) === false)) {
+            $errors[] = $this->lang->t('news', 'complete_hyperlink_statements');
+        }
+        if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
+            (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], 'news/details/id_' . $this->uri->id) === true)
         ) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }

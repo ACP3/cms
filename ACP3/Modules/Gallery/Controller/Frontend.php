@@ -32,7 +32,7 @@ class Frontend extends Core\Modules\Controller
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
-        $this->model = new Gallery\Model($this->db, $this->lang);
+        $this->model = new Gallery\Model($db, $lang, $uri);
     }
 
     public function actionDetails()

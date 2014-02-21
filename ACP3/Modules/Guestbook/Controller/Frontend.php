@@ -31,7 +31,7 @@ class Frontend extends Core\Modules\Controller
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
-        $this->model = new Guestbook\Model($this->db, $this->lang, $this->date, $this->auth);
+        $this->model = new Guestbook\Model($db, $lang, $date, $auth);
     }
 
     public function actionCreate()

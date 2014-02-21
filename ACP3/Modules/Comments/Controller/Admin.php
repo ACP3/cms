@@ -32,7 +32,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
-        $this->model = new Comments\Model($this->db, $this->lang, $this->auth, $this->date);
+        $this->model = new Comments\Model($db, $lang, $auth, $date);
     }
 
     public function actionDelete()

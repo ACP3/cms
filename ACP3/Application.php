@@ -128,6 +128,7 @@ class Application
         Core\Registry::set('Lang', new Core\Lang(Core\Registry::get('Auth')));
 
         Core\Registry::set('SEO', new Core\SEO(
+            Core\Registry::get('Db'),
             Core\Registry::get('Lang'),
             Core\Registry::get('URI'),
             Core\Registry::get('View')

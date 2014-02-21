@@ -34,7 +34,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
-        $this->model = new Files\Model($this->db, $this->lang);
+        $this->model = new Files\Model($db, $lang, $uri);
     }
 
     public function actionCreate()
@@ -79,8 +79,10 @@ class Admin extends Core\Modules\Controller\Admin
 
 
                 $lastId = $this->model->insert($insert_values);
-                if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
+                if ((bool)CONFIG_SEO_ALIASES === true) {
                     $this->uri->insertUriAlias('files/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    $this->seo->setCache();
+                }
 
                 $this->session->unsetFormToken();
 
@@ -149,6 +151,9 @@ class Admin extends Core\Modules\Controller\Admin
                     $this->uri->deleteUriAlias('files/details/id_' . $item);
                 }
             }
+
+            $this->seo->setCache();
+
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/files');
         } elseif (is_string($items)) {
             $this->uri->redirect('errors/404');
@@ -208,8 +213,10 @@ class Admin extends Core\Modules\Controller\Admin
                     }
 
                     $bool = $this->model->update($update_values, $this->uri->id);
-                    if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
+                    if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias'])) {
                         $this->uri->insertUriAlias('files/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                        $this->seo->setCache();
+                    }
 
                     $this->model->setCache($this->uri->id);
 

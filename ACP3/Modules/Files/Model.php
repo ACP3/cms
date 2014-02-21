@@ -14,9 +14,16 @@ class Model extends Core\Model
 
     const TABLE_NAME = 'files';
 
-    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang)
+    /**
+     * @var \ACP3\Core\URI
+     */
+    private $uri;
+
+    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang, Core\URI $uri)
     {
         parent::__construct($db, $lang);
+
+        $this->uri = $uri;
     }
 
     /**
