@@ -32,7 +32,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
-        $this->model = new Emoticons\Model($this->db, $this->lang);
+        $this->model = new Emoticons\Model($db, $lang);
     }
 
     public function actionCreate()

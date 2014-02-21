@@ -32,7 +32,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
-        $this->model = new Polls\Model($this->db, $this->lang);
+        $this->model = new Polls\Model($db, $lang);
     }
 
     public function actionCreate()

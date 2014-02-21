@@ -36,8 +36,8 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
-        $this->menuModel = new \ACP3\Modules\Menus\Model($this->db, $this->lang, $this->uri);
-        $this->model = new Articles\Model($this->db, $this->lang, $this->menuModel, $this->uri);
+        $this->menuModel = new \ACP3\Modules\Menus\Model($db, $lang, uri);
+        $this->model = new Articles\Model($db, $lang, $this->menuModel, uri);
     }
 
     public function actionCreate()
@@ -56,8 +56,9 @@ class Admin extends Core\Modules\Controller\Admin
                 );
 
                 $lastId = $this->model->insert($insertValues);
-                if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias'])) {
+                if ((bool)CONFIG_SEO_ALIASES === true) {
                     $this->uri->insertUriAlias('articles/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    $this->seo->setCache();
                 }
 
                 if (isset($_POST['create']) === true && Core\Modules::hasPermission('menus', 'acp_create_item') === true) {
@@ -140,6 +141,8 @@ class Admin extends Core\Modules\Controller\Admin
                 $this->menuModel->setMenuItemsCache();
             }
 
+            $this->seo->setCache();
+
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/articles');
         } elseif (is_string($items)) {
             $this->uri->redirect('errors/404');
@@ -165,8 +168,9 @@ class Admin extends Core\Modules\Controller\Admin
 
                     $bool = $this->model->update($updateValues, $this->uri->id);
 
-                    if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias'])) {
+                    if ((bool)CONFIG_SEO_ALIASES === true) {
                         $this->uri->insertUriAlias('articles/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                        $this->seo->setCache();
                     }
 
                     $this->model->setCache($this->uri->id);

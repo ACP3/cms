@@ -31,7 +31,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
-        $this->model = new Menus\Model($this->db, $this->lang, $this->uri);
+        $this->model = new Menus\Model($db, $lang, $uri);
     }
 
     public function actionCreate()
@@ -83,7 +83,7 @@ class Admin extends Core\Modules\Controller\Admin
                 $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
                 $bool = $nestedSet->insertNode((int)$_POST['parent'], $insertValues);
 
-                // Verhindern, dass externen URIs Aliase, Keywords, etc. zugewiesen bekommen
+                // Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
                 if ($_POST['mode'] != 3) {
                     $path = $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'];
                     if ($this->seo->uriAliasExists($_POST['uri'])) {
@@ -96,6 +96,7 @@ class Admin extends Core\Modules\Controller\Admin
                         $description = $_POST['seo_description'];
                     }
                     $this->uri->insertUriAlias($path, $_POST['mode'] == 1 ? '' : $alias, $keywords, $description, (int)$_POST['seo_robots']);
+                    $this->seo->setCache();
                 }
 
                 $this->model->setMenuItemsCache();
@@ -208,6 +209,8 @@ class Admin extends Core\Modules\Controller\Admin
 
             $this->model->setMenuItemsCache();
 
+            $this->seo->setCache();
+
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
         } elseif (is_string($items)) {
             $this->uri->redirect('errors/404');
@@ -287,6 +290,7 @@ class Admin extends Core\Modules\Controller\Admin
                         $description = $_POST['seo_description'] === $menuItem['seo_description'] ? $menuItem['seo_description'] : $_POST['seo_description'];
                         $path = $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'];
                         $this->uri->insertUriAlias($path, $_POST['mode'] == 1 ? '' : $alias, $keywords, $description, (int)$_POST['seo_robots']);
+                        $this->seo->setCache();
                     }
 
                     $this->model->setMenuItemsCache();
@@ -302,17 +306,17 @@ class Admin extends Core\Modules\Controller\Admin
             }
 
             // Seitentyp
-            $values_mode = array(1, 2, 3);
-            $lang_mode = array(
+            $modeValues = array(1, 2, 3);
+            $modeLang = array(
                 $this->lang->t('menus', 'module'),
                 $this->lang->t('menus', 'dynamic_page'),
                 $this->lang->t('menus', 'hyperlink')
             );
             if (Core\Modules::isActive('articles')) {
-                $values_mode[] = 4;
-                $lang_mode[] = $this->lang->t('menus', 'article');
+                $modeValues[] = 4;
+                $modeLang[] = $this->lang->t('menus', 'article');
             }
-            $this->view->assign('mode', Core\Functions::selectGenerator('mode', $values_mode, $lang_mode, $menuItem['mode']));
+            $this->view->assign('mode', Core\Functions::selectGenerator('mode', $modeValues, $modeLang, $menuItem['mode']));
 
             // Block
             $this->view->assign('blocks', Menus\Helpers::menusDropdown($menuItem['block_id']));
@@ -368,15 +372,15 @@ class Admin extends Core\Modules\Controller\Admin
             $this->view->assign('can_edit', Core\Modules::hasPermission('menus', 'acp_edit'));
             $this->view->assign('colspan', $can_delete_item && $can_order_item ? 5 : ($can_delete_item || $can_order_item ? 4 : 3));
 
-            $pages_list = Menus\Helpers::menuItemsList();
+            $pagesList = Menus\Helpers::menuItemsList();
             for ($i = 0; $i < $c_menus; ++$i) {
-                if (isset($pages_list[$menus[$i]['index_name']]) === false) {
-                    $pages_list[$menus[$i]['index_name']]['title'] = $menus[$i]['title'];
-                    $pages_list[$menus[$i]['index_name']]['menu_id'] = $menus[$i]['id'];
-                    $pages_list[$menus[$i]['index_name']]['items'] = array();
+                if (isset($pagesList[$menus[$i]['index_name']]) === false) {
+                    $pagesList[$menus[$i]['index_name']]['title'] = $menus[$i]['title'];
+                    $pagesList[$menus[$i]['index_name']]['menu_id'] = $menus[$i]['id'];
+                    $pagesList[$menus[$i]['index_name']]['items'] = array();
                 }
             }
-            $this->view->assign('pages_list', $pages_list);
+            $this->view->assign('pages_list', $pagesList);
         }
     }
 

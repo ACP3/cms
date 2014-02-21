@@ -33,7 +33,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
-        $this->model = new News\Model($this->db, $this->lang);
+        $this->model = new News\Model($db, $lang, $uri);
     }
 
     public function actionCreate()
@@ -42,7 +42,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         if (isset($_POST['submit']) === true) {
             try {
-                $this->model->validate($_POST);
+                $this->model->validateCreate($_POST);
 
                 $insertValues = array(
                     'id' => '',
@@ -62,6 +62,7 @@ class Admin extends Core\Modules\Controller\Admin
                 $lastId = $this->model->insert($insertValues);
                 if ((bool)CONFIG_SEO_ALIASES === true) {
                     $this->uri->insertUriAlias('news/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    $this->seo->setCache();
                 }
 
                 $this->session->unsetFormToken();
@@ -127,6 +128,9 @@ class Admin extends Core\Modules\Controller\Admin
                 Core\Cache::delete('details_id_' . $item, 'news');
                 $this->uri->deleteUriAlias('news/details/id_' . $item);
             }
+
+            $this->seo->setCache();
+
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/news');
         } elseif (is_string($items)) {
             $this->uri->redirect('errors/404');
@@ -142,7 +146,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             if (isset($_POST['submit']) === true) {
                 try {
-                    $this->model->validate($_POST);
+                    $this->model->validateEdit($_POST);
 
                     $updateValues = array(
                         'start' => $this->date->toSQL($_POST['start']),
@@ -162,6 +166,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                     if ((bool)CONFIG_SEO_ALIASES === true) {
                         $this->uri->insertUriAlias('news/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                        $this->seo->setCache();
                     }
 
                     $this->model->setCache($this->uri->id);

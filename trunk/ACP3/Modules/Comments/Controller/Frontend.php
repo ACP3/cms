@@ -39,7 +39,7 @@ class Frontend extends Core\Modules\Controller
 
         $this->module = $module;
         $this->entryId = $entry_id;
-        $this->model = new Comments\Model($this->db, $this->lang, $this->auth, $this->date);
+        $this->model = new Comments\Model($db, $lang, $auth, $date);
     }
 
     public function actionCreate()

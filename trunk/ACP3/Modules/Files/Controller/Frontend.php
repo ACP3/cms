@@ -35,9 +35,9 @@ class Frontend extends Core\Modules\Controller
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
-        $this->model = new Files\Model($this->db, $this->lang);
+        $this->model = new Files\Model($db, $lang, $uri);
 
-        $this->categoriesModel = new \ACP3\Modules\Categories\Model($this->db, $this->lang);
+        $this->categoriesModel = new \ACP3\Modules\Categories\Model($db, $lang);
     }
 
     public function actionList()

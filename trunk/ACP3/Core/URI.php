@@ -44,6 +44,8 @@ class URI
     {
         $this->db = $db;
 
+        $this->aliases = $this->getCache();
+
         // Minify von der URI-Verarbeitung ausschließen
         if ((bool)preg_match('=libraries/.+=', $_SERVER['PHP_SELF']) === false) {
             $this->preprocessUriQuery();
@@ -124,7 +126,7 @@ class URI
         // Nur ausführen, falls URI-Aliase aktiviert sind
         if ((bool)CONFIG_SEO_ALIASES === true && !defined('IN_ADM')) {
             // Falls für Query ein Alias existiert, zu diesem weiterleiten
-            if ($this->uriAliasExists($this->query) === true) {
+            if ($this->_uriAliasExists($this->query) === true) {
                 $this->redirect($this->query, 0, true); // URI-Alias wird von uri::route() erzeugt
             }
 
@@ -183,11 +185,9 @@ class URI
                 // Position
                 if (preg_match('/^(page_(\d+))$/', $query[$i])) {
                     $this->page = (int)substr($query[$i], 5);
-                    // ID eines Datensatzes
-                } elseif (preg_match('/^(id_(\d+))$/', $query[$i])) {
+                } elseif (preg_match('/^(id_(\d+))$/', $query[$i])) { // ID eines Datensatzes
                     $this->id = (int)substr($query[$i], 3);
-                    // Additional URI parameters
-                } elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) {
+                } elseif (preg_match('/^(([a-z0-9-]+)_(.+))$/', $query[$i])) { // Additional URI parameters
                     $param = explode('_', $query[$i], 2);
                     $this->$param[0] = $param[1];
                 }
@@ -286,16 +286,14 @@ class URI
      * Gibt einen URI-Alias zurück
      *
      * @param string $path
-     * @param bool $for_form
+     * @param bool $emptyIsNoResult
      * @return string
      */
-    public function getUriAlias($path, $for_form = false)
+    public function getUriAlias($path, $emptyIsNoResult = false)
     {
-        $this->_initCache();
-
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-        return !empty($this->aliases[$path]['alias']) ? $this->aliases[$path]['alias'] : ($for_form === true ? '' : $path);
+        return !empty($this->aliases[$path]['alias']) ? $this->aliases[$path]['alias'] : ($emptyIsNoResult === true ? '' : $path);
     }
 
 
@@ -304,29 +302,19 @@ class URI
      *
      * @return boolean
      */
-    protected function setSEOCache()
+    protected function setCache()
     {
-        $aliases = $this->db->fetchAll('SELECT uri, alias, keywords, description, robots FROM ' . DB_PRE . 'seo');
+        $aliases = $this->db->fetchAll('SELECT uri, alias FROM ' . DB_PRE . 'seo WHERE alias != ""');
         $c_aliases = count($aliases);
         $data = array();
 
         for ($i = 0; $i < $c_aliases; ++$i) {
             $data[$aliases[$i]['uri']] = array(
                 'alias' => $aliases[$i]['alias'],
-                'keywords' => $aliases[$i]['keywords'],
-                'description' => $aliases[$i]['description'],
-                'robots' => $aliases[$i]['robots']
             );
         }
 
-        return Cache::create('aliases', $data, 'seo');
-    }
-
-    private function _initCache()
-    {
-        if (empty($this->aliases) === true) {
-            $this->getSEOCache();
-        }
+        return Cache::create('aliases', $data, 'uri');
     }
 
     /**
@@ -334,13 +322,13 @@ class URI
      *
      * @return array
      */
-    public function getSEOCache()
+    public function getCache()
     {
-        if (Cache::check('aliases', 'seo') === false) {
-            $this->setSEOCache();
+        if (Cache::check('aliases', 'uri') === false) {
+            $this->setCache();
         }
 
-        return Cache::output('aliases', 'seo');
+        return Cache::output('aliases', 'uri');
     }
 
     /**
@@ -354,8 +342,7 @@ class URI
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
         $bool = $this->db->delete(DB_PRE . 'seo', array('uri' => $path));
-        $bool2 = $this->setSEOCache();
-        return $bool !== false && $bool2 !== false ? true : false;
+        return $bool !== false && $this->setCache() !== false;
     }
 
     /**
@@ -373,17 +360,22 @@ class URI
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
         $keywords = Functions::strEncode($keywords);
         $description = Functions::strEncode($description);
+        $values = array(
+            'alias' => $alias,
+            'keywords' => $keywords,
+            'description' => $description,
+            'robots' => (int)$robots
+        );
 
         // Vorhandenen Alias aktualisieren
         if ($this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE uri = ?', array($path)) == 1) {
-            $bool = $this->db->update(DB_PRE . 'seo', array('alias' => $alias, 'keywords' => $keywords, 'description' => $description, 'robots' => (int)$robots), array('uri' => $path));
-            // Neuer Eintrag in DB
+            $bool = $this->db->update(DB_PRE . 'seo', $values, array('uri' => $path));
         } else {
-            $bool = $this->db->insert(DB_PRE . 'seo', array('alias' => $alias, 'uri' => $path, 'keywords' => $keywords, 'description' => $description, 'robots' => (int)$robots));
+            $values['uri'] = $path;
+            $bool = $this->db->insert(DB_PRE . 'seo', $values); // Neuer Eintrag in DB
         }
 
-        $bool2 = $this->setSEOCache();
-        return $bool !== false && $bool2 !== false ? true : false;
+        return $bool !== false && $this->setCache() !== false;
     }
 
     /**
@@ -392,13 +384,11 @@ class URI
      * @param string $path
      * @return boolean
      */
-    public function uriAliasExists($path)
+    private function _uriAliasExists($path)
     {
-        $this->_initCache();
-
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-        return array_key_exists($path, $this->aliases) === true && !empty($this->aliases[$path]['alias']);
+        return isset($this->aliases[$path]) === true && !empty($this->aliases[$path]['alias']);
     }
 
 }

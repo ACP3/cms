@@ -11,6 +11,10 @@ class SEO
     /**
      * @var Lang
      */
+    protected $db;
+    /**
+     * @var Lang
+     */
     protected $lang;
     /**
      * @var URI
@@ -45,18 +49,54 @@ class SEO
 
     protected $metaDescriptionPostfix = '';
 
-    public function __construct(Lang $lang, URI $uri, View $view)
+    public function __construct(
+        \Doctrine\DBAL\Connection $db,
+        Lang $lang,
+        URI $uri,
+        View $view)
     {
+        $this->db = $db;
         $this->lang = $lang;
         $this->uri = $uri;
         $this->view = $view;
+
+        $this->aliases = $this->getCache();
     }
 
-    private function _initCache()
+    /**
+     * Setzt den Cache für die URI-Aliase
+     *
+     * @return boolean
+     */
+    public function setCache()
     {
-        if (empty($this->aliases) === true) {
-            $this->uri->getSEOCache();
+        $aliases = $this->db->fetchAll('SELECT uri, keywords, description, robots FROM ' . DB_PRE . 'seo WHERE keywords != "" OR description != "" OR robots != 0');
+        $c_aliases = count($aliases);
+        $data = array();
+
+        for ($i = 0; $i < $c_aliases; ++$i) {
+            $data[$aliases[$i]['uri']] = array(
+                'keywords' => $aliases[$i]['keywords'],
+                'description' => $aliases[$i]['description'],
+                'robots' => $aliases[$i]['robots']
+            );
         }
+
+        return Cache::create('meta', $data, 'seo');
+    }
+
+    /**
+     * Gibt den Cache der URI-Aliase zurück
+     *
+     * @return array
+     */
+    public function getCache()
+    {
+        if (Cache::check('meta', 'seo') === false) {
+            $this->setCache();
+        }
+
+        return Cache::output('meta', 'seo');
     }
 
     /**
@@ -145,8 +185,6 @@ class SEO
      */
     public function getDescription($path)
     {
-        $this->_initCache();
-
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
         return !empty($this->aliases[$path]['description']) ? $this->aliases[$path]['description'] : '';
@@ -169,8 +207,6 @@ class SEO
      */
     public function getKeywords($path)
     {
-        $this->_initCache();
-
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
         return !empty($this->aliases[$path]['keywords']) ? $this->aliases[$path]['keywords'] : '';
@@ -194,8 +230,6 @@ class SEO
         if ($path === '') {
             return strtr(CONFIG_SEO_ROBOTS, $replace);
         } else {
-            $this->_initCache();
-
             $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
             $robot = isset($this->aliases[$path]) === false || $this->aliases[$path]['robots'] == 0 ? CONFIG_SEO_ROBOTS : $this->aliases[$path]['robots'];
@@ -244,7 +278,7 @@ class SEO
         if (!empty($path)) {
             $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-            $alias = isset($_POST['alias']) ? $_POST['alias'] : $this->getUriAlias($path, true);
+            $alias = isset($_POST['alias']) ? $_POST['alias'] : $this->uri->getUriAlias($path, true);
             $keywords = isset($_POST['seo_keywords']) ? $_POST['seo_keywords'] : $this->getKeywords($path);
             $description = isset($_POST['seo_description']) ? $_POST['seo_description'] : $this->getDescription($path);
             $robots = isset($this->aliases[$path]) === true ? $this->aliases[$path]['robots'] : 0;

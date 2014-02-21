@@ -20,8 +20,14 @@ abstract class Helpers
      */
     protected static $model;
 
+    /**
+     * @var Core\URI
+     */
     protected static $uri;
 
+    /**
+     * @var Core\SEO
+     */
     protected static $seo;
 
     protected static function _init()
@@ -29,7 +35,7 @@ abstract class Helpers
         if (!self::$model) {
             self::$uri = Core\Registry::get('URI');
             self::$seo = Core\Registry::get('SEO');
-            self::$model = new Model(Core\Registry::get('Db'), Core\Registry::get('Lang'));
+            self::$model = new Model(Core\Registry::get('Db'), Core\Registry::get('Lang'), Core\Registry::get('URI'));
         }
     }
 

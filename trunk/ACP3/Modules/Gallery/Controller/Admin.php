@@ -27,11 +27,12 @@ class Admin extends Core\Modules\Controller\Admin
         Core\Lang $lang,
         Core\Session $session,
         Core\URI $uri,
-        Core\View $view)
+        Core\View $view,
+        Core\SEO $seo)
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view);
+        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
-        $this->model = new Gallery\Model($this->db, $this->lang);
+        $this->model = new Gallery\Model($db, $lang, $uri);
     }
 
     public function actionCreate()
@@ -40,7 +41,7 @@ class Admin extends Core\Modules\Controller\Admin
             try {
                 $this->model->validateCreate($_POST);
 
-                $insert_values = array(
+                $insertValues = array(
                     'id' => '',
                     'start' => $this->date->toSQL($_POST['start']),
                     'end' => $this->date->toSQL($_POST['end']),
@@ -48,9 +49,11 @@ class Admin extends Core\Modules\Controller\Admin
                     'user_id' => $this->auth->getUserId(),
                 );
 
-                $lastId = $this->db->insert(DB_PRE . 'gallery', $insert_values);
-                if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias']))
+                $lastId = $this->db->insert(DB_PRE . 'gallery', $insertValues);
+                if ((bool)CONFIG_SEO_ALIASES === true) {
                     $this->uri->insertUriAlias('gallery/pics/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    $this->seo->setCache();
+                }
 
                 $this->session->unsetFormToken();
 
@@ -169,6 +172,9 @@ class Admin extends Core\Modules\Controller\Admin
                     $bool2 = $this->model->delete($item, 'gallery_id', Model::TABLE_NAME_PICTURES);
                 }
             }
+
+            $this->seo->setCache();
+
             Core\Functions::setRedirectMessage($bool && $bool2, $this->lang->t('system', $bool !== false && $bool2 !== false ? 'delete_success' : 'delete_error'), 'acp/gallery');
         } elseif (is_string($items)) {
             $this->uri->redirect('errors/404');
@@ -194,6 +200,9 @@ class Admin extends Core\Modules\Controller\Admin
                     $this->model->setCache($picture['gallery_id']);
                 }
             }
+
+            $this->seo->setCache();
+
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/gallery/edit/id_' . $picture['gallery_id']);
         } elseif (is_string($items)) {
             $this->uri->redirect('errors/404');
@@ -213,17 +222,19 @@ class Admin extends Core\Modules\Controller\Admin
                 try {
                     $this->model->validateEdit($_POST);
 
-                    $update_values = array(
+                    $updateValues = array(
                         'start' => $this->date->toSQL($_POST['start']),
                         'end' => $this->date->toSQL($_POST['end']),
                         'title' => Core\Functions::strEncode($_POST['title']),
                         'user_id' => $this->auth->getUserId(),
                     );
 
-                    $bool = $this->model->update($update_values, $this->uri->id);
-                    if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias'])) {
+                    $bool = $this->model->update($updateValues, $this->uri->id);
+                    if ((bool)CONFIG_SEO_ALIASES === true) {
                         $this->uri->insertUriAlias('gallery/pics/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                         Gallery\Helpers::generatePictureAliases($this->uri->id);
+
+                        $this->seo->setCache();
                     }
 
                     $this->session->unsetFormToken();
@@ -294,7 +305,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                     $this->model->validateEditPicture($file, $settings);
 
-                    $update_values = array(
+                    $updateValues = array(
                         'description' => Core\Functions::strEncode($_POST['description'], true),
                         'comments' => $settings['comments'] == 1 ? (isset($_POST['comments']) && $_POST['comments'] == 1 ? 1 : 0) : $settings['comments'],
                     );
@@ -305,10 +316,10 @@ class Admin extends Core\Modules\Controller\Admin
 
                         Gallery\Helpers::removePicture($oldFile);
 
-                        $update_values = array_merge($update_values, array('file' => $result['name']));
+                        $updateValues = array_merge($updateValues, array('file' => $result['name']));
                     }
 
-                    $bool = $this->model->update($update_values, $this->uri->id, Model::TABLE_NAME_PICTURES);
+                    $bool = $this->model->update($updateValues, $this->uri->id, Model::TABLE_NAME_PICTURES);
                     $this->model->setCache($picture['gallery_id']);
 
                     $this->session->unsetFormToken();
