@@ -13,9 +13,10 @@ function smarty_function_include_js($params)
     ) {
         $script = '<script type="text/javascript" src="%s"></script>';
         $module = ucfirst($params['module']);
+        $moduleLower = strtolower($params['module']);
         $file = $params['file'];
-        if (is_file(DESIGN_PATH_INTERNAL . $module . '/' . $file . '.js') === true) {
-            return sprintf($script, DESIGN_PATH . $module . '/' . $file . '.js');
+        if (is_file(DESIGN_PATH_INTERNAL . $moduleLower . '/' . $file . '.js') === true) {
+            return sprintf($script, DESIGN_PATH . $moduleLower . '/' . $file . '.js');
         } elseif (is_file(MODULES_DIR . $module . '/View/' . $file . '.js') === true) {
             return sprintf($script, ROOT_DIR . 'ACP3/Modules/' . $module . '/View/' . $file . '.js');
         }
