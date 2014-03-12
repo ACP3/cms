@@ -15,9 +15,9 @@ function smarty_function_include_js($params)
         $module = ucfirst($params['module']);
         $moduleLower = strtolower($params['module']);
         $file = $params['file'];
-        if (is_file(DESIGN_PATH_INTERNAL . $moduleLower . '/' . $file . '.js') === true) {
+        if (file_exists(DESIGN_PATH_INTERNAL . $moduleLower . '/' . $file . '.js') === true) {
             return sprintf($script, DESIGN_PATH . $moduleLower . '/' . $file . '.js');
-        } elseif (is_file(MODULES_DIR . $module . '/View/' . $file . '.js') === true) {
+        } elseif (file_exists(MODULES_DIR . $module . '/View/' . $file . '.js') === true) {
             return sprintf($script, ROOT_DIR . 'ACP3/Modules/' . $module . '/View/' . $file . '.js');
         }
     } else {
