@@ -4,9 +4,9 @@
   *
   *      @desc Base configuration file
   *   @package KCFinder
-  *   @version 2.51
-  *    @author Pavel Tzonkov <pavelc@users.sourceforge.net>
-  * @copyright 2010, 2011 KCFinder Project
+  *   @version 2.54
+  *    @author Pavel Tzonkov <sunhater@sunhater.com>
+  * @copyright 2010-2014 KCFinder Project
   *   @license http://www.opensource.org/licenses/gpl-2.0.php GPLv2
   *   @license http://www.opensource.org/licenses/lgpl-2.1.php LGPLv2
   *      @link http://kcfinder.sunhater.com
@@ -19,19 +19,55 @@
 $dirname = dirname($_SERVER['PHP_SELF']);
 $dirname = $dirname != '/' ? $dirname . '/' : '/';
 $dirname = str_replace('/libraries/kcfinder/', '', $dirname);
-$upload_dir = $dirname . '/uploads/';
+$uploadDir = $dirname . '/uploads/';
 
 $_CONFIG = array(
 
+
+// GENERAL SETTINGS
+
     'disabled' => true,
+    'theme' => "oxygen",
+    'uploadURL' => $uploadDir,
+    'uploadDir' => "",
+
+    'types' => array(
+
+    // (F)CKEditor types
+        'files'   =>  "",
+        'flash'   =>  "swf",
+        'images'  =>  "*img",
+
+    // TinyMCE types
+        'file'    =>  "",
+        'media'   =>  "swf flv avi mpg mpeg qt mov wmv asf rm",
+        'image'   =>  "*img",
+    ),
+
+
+// IMAGE SETTINGS
+
+    'imageDriversPriority' => "imagick gmagick gd",
+    'jpegQuality' => 90,
+    'thumbsDir' => ".thumbs",
+
+    'maxImageWidth' => 0,
+    'maxImageHeight' => 0,
+
+    'thumbWidth' => 100,
+    'thumbHeight' => 100,
+
+    'watermark' => "",
+
+
+// DISABLE / ENABLE SETTINGS
+
     'denyZipDownload' => false,
     'denyUpdateCheck' => false,
     'denyExtensionRename' => false,
 
-    'theme' => "oxygen",
 
-    'uploadURL' => $upload_dir,
-    'uploadDir' => '',
+// PERMISSION SETTINGS
 
     'dirPerms' => 0755,
     'filePerms' => 0644,
@@ -41,8 +77,8 @@ $_CONFIG = array(
         'files' => array(
             'upload' => true,
             'delete' => true,
-            'copy' => true,
-            'move' => true,
+            'copy'   => true,
+            'move'   => true,
             'rename' => true
         ),
 
@@ -55,18 +91,8 @@ $_CONFIG = array(
 
     'deniedExts' => "exe com msi bat php phps phtml php3 php4 cgi pl",
 
-    'types' => array(
 
-        // CKEditor & FCKEditor types
-        'files'   =>  "",
-        'flash'   =>  "swf",
-        'gallery'  =>  "*img",
-
-        // TinyMCE types
-        'file'    =>  "",
-        'media'   =>  "swf flv avi mpg mpeg qt mov wmv asf rm",
-        'image'   =>  "*img",
-    ),
+// MISC SETTINGS
 
     'filenameChangeChars' => array(/*
         ' ' => "_",
@@ -80,21 +106,13 @@ $_CONFIG = array(
 
     'mime_magic' => "",
 
-    'maxImageWidth' => 0,
-    'maxImageHeight' => 0,
-
-    'thumbWidth' => 100,
-    'thumbHeight' => 100,
-
-    'thumbsDir' => "cache/images",
-
-    'jpegQuality' => 90,
-
     'cookieDomain' => "",
     'cookiePath' => "",
     'cookiePrefix' => 'KCFINDER_',
 
-    // THE FOLLOWING SETTINGS CANNOT BE OVERRIDED WITH SESSION CONFIGURATION
+
+// THE FOLLOWING SETTINGS CANNOT BE OVERRIDED WITH SESSION SETTINGS
+
     '_check4htaccess' => false,
     '_tinyMCEPath' => $dirname . '/includes/wysiwyg/tinymce',
 

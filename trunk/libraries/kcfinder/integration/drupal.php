@@ -4,9 +4,9 @@
   *
   *      @desc CMS integration code: Drupal
   *   @package KCFinder
-  *   @version 2.52-dev
+  *   @version 2.54
   *    @author Dany Alejandro Cabrera <otello2040@gmail.com>
-  * @copyright 2010, 2011 KCFinder Project
+  * @copyright 2010-2014 KCFinder Project
   *   @license http://www.opensource.org/licenses/gpl-2.0.php GPLv2
   *   @license http://www.opensource.org/licenses/lgpl-2.1.php LGPLv2
   *      @link http://kcfinder.sunhater.com
@@ -48,11 +48,11 @@ function CheckAuthentication($drupal_path) {
         if (!isset($bootstrap_file_found) || $bootstrap_file_found) {
             $current_cwd = getcwd();
             if (!defined('DRUPAL_ROOT')){
-                define('ACP3_ROOT', $drupal_path);
+                define('DRUPAL_ROOT', $drupal_path);
             }
 
             // Simulate being in the drupal root folder so we can share the session
-            chdir(ACP3_ROOT);
+            chdir(DRUPAL_ROOT);
 
             global $base_url;
             $base_root = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https' : 'http';
@@ -68,13 +68,13 @@ function CheckAuthentication($drupal_path) {
             $base_url = substr($base_url, 0, $pos); // drupal root absolute url
 
             // If we aren't in a Drupal installation, or if Drupal path hasn't been properly found, die
-            if(!file_exists(ACP3_ROOT . '/includes/bootstrap.inc')) {
+            if(!file_exists(DRUPAL_ROOT . '/includes/bootstrap.inc')) {
                 die("The CMS integration service for -drupal- requires KCFinder to be properly placed inside your Drupal installation.");
             }
 
 
             // bootstrap
-            require_once(ACP3_ROOT . '/includes/bootstrap.inc');
+            require_once(DRUPAL_ROOT . '/includes/bootstrap.inc');
             drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 
             // if user has access permission...

@@ -4,9 +4,9 @@
   *
   *      @desc Uploader class
   *   @package KCFinder
-  *   @version 2.52-dev
-  *    @author Pavel Tzonkov <pavelc@users.sourceforge.net>
-  * @copyright 2010, 2011 KCFinder Project
+  *   @version 2.54
+  *    @author Pavel Tzonkov <sunhater@sunhater.com>
+  * @copyright 2010-2014 KCFinder Project
   *   @license http://www.opensource.org/licenses/gpl-2.0.php GPLv2
   *   @license http://www.opensource.org/licenses/lgpl-2.1.php LGPLv2
   *      @link http://kcfinder.sunhater.com
@@ -15,7 +15,7 @@
 class uploader {
 
 /** Release version */
-    const VERSION = "2.52-dev";
+    const VERSION = "2.54";
 
 /** Config session-overrided settings
   * @var array */
@@ -121,7 +121,7 @@ class uploader {
 
         // SET CMS INTEGRATION ATTRIBUTE
         if (isset($this->get['cms']) &&
-            in_array($this->get['cms'], array('acp3', "drupal"))
+            in_array($this->get['cms'], array("acp3", "drupal"))
         )
             $this->cms = $this->get['cms'];
 
@@ -142,7 +142,7 @@ class uploader {
         switch ($this->cms) {
             case "acp3": break;
             case "drupal": break;
-            default: session_start(); break;
+            default: if (!session_id()) session_start(); break;
         }
 
         // RELOAD DEFAULT CONFIGURATION
