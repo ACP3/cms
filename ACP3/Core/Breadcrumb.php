@@ -76,6 +76,7 @@ class Breadcrumb
     /**
      *
      * @param string $value
+     * @return $this
      */
     public function setTitleSeparator($value)
     {
@@ -87,6 +88,7 @@ class Breadcrumb
     /**
      *
      * @param string $value
+     * @return $this
      */
     public function setTitlePrefix($value)
     {
@@ -98,6 +100,7 @@ class Breadcrumb
     /**
      *
      * @param string $value
+     * @return $this
      */
     public function setTitlePostfix($value)
     {
@@ -111,9 +114,9 @@ class Breadcrumb
      *
      * @param string $title
      *    Bezeichnung der jeweiligen Stufe der Brotkrume
-     * @param string $path
+     * @param int|string $path
      *    Die zum $title zugehörige ACP3-interne URI
-     * @return \bBreadcrumb
+     * @return $this
      */
     protected function appendFromDB($title, $path = 0)
     {
@@ -132,9 +135,9 @@ class Breadcrumb
      *    Bezeichnung der jeweiligen Stufe der Brotkrume
      * @param string $path
      *    Die zum $title zugehörige ACP3-interne URI
-     * @return \bBreadcrumb
+     * @return $this
      */
-    public function append($title, $path = 0)
+    public function append($title, $path = '')
     {
         $this->stepsFromModules[] = array(
             'title' => $title,
@@ -151,7 +154,7 @@ class Breadcrumb
      *    Bezeichnung der jeweiligen Stufe der Brotkrume
      * @param string $path
      *    Die zum $title zugehörige ACP3-interne URI
-     * @return \bBreadcrumb
+     * @return $this
      */
     protected function prepend($title, $path)
     {
@@ -170,9 +173,10 @@ class Breadcrumb
      *    Bezeichnung der jeweiligen Stufe der Brotkrume
      * @param string $path
      *    Die zum $title zugehörige ACP3-interne URI
-     * @return \bBreadcrumb
+     * @param bool $db_steps
+     * @return $this
      */
-    public function replaceAnchestor($title, $path = 0, $db_steps = false)
+    public function replaceAnchestor($title, $path = '', $db_steps = false)
     {
         if ($db_steps === true) {
             $index = count($this->stepsFromDb) - (!empty($this->stepsFromDb) ? 1 : 0);

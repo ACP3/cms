@@ -13,24 +13,13 @@ use ACP3\Modules\Permissions;
 class Admin extends Core\Modules\Controller\Admin
 {
     /**
-     * @var \ACP3\Modules\Permissions\Model
+     * @var Permissions\Model
      */
     protected $model;
 
-    public function __construct(
-        Core\Auth $auth,
-        Core\Breadcrumb $breadcrumb,
-        Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
-        Core\Lang $lang,
-        Core\Session $session,
-        Core\URI $uri,
-        Core\View $view,
-        Core\SEO $seo)
+    protected function _init()
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
-
-        $this->model = new Permissions\Model($db, $lang, $uri);
+        $this->model = new Permissions\Model($this->db, $this->lang, $this->uri);
     }
 
     public function actionCreate()
@@ -120,10 +109,10 @@ class Admin extends Core\Modules\Controller\Admin
             try {
                 $this->model->validateCreateResource($_POST);
 
-                $moduleId = $this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($_POST['modules']));
+                $moduleInfo = Core\Modules::getModuleInfo($_POST['modules']);
                 $insertValues = array(
                     'id' => '',
-                    'module_id' => $moduleId,
+                    'module_id' => $moduleInfo['id'],
                     'page' => $_POST['resource'],
                     'params' => '',
                     'privilege_id' => $_POST['privileges'],

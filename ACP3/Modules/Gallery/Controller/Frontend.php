@@ -15,24 +15,13 @@ class Frontend extends Core\Modules\Controller
 
     /**
      *
-     * @var Model
+     * @var Gallery\Model
      */
     protected $model;
 
-    public function __construct(
-        Core\Auth $auth,
-        Core\Breadcrumb $breadcrumb,
-        Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
-        Core\Lang $lang,
-        Core\Session $session,
-        Core\URI $uri,
-        Core\View $view,
-        Core\SEO $seo)
+    protected function _init()
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
-
-        $this->model = new Gallery\Model($db, $lang, $uri);
+        $this->model = new Gallery\Model($this->db, $this->lang, $this->uri);
     }
 
     public function actionDetails()

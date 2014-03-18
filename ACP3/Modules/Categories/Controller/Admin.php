@@ -19,20 +19,9 @@ class Admin extends Core\Modules\Controller\Admin
      */
     protected $model;
 
-    public function __construct(
-        Core\Auth $auth,
-        Core\Breadcrumb $breadcrumb,
-        Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
-        Core\Lang $lang,
-        Core\Session $session,
-        Core\URI $uri,
-        Core\View $view,
-        Core\SEO $seo)
+    protected function _init()
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
-
-        $this->model = new Categories\Model($db, $lang);
+        $this->model = new Categories\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
@@ -55,12 +44,12 @@ class Admin extends Core\Modules\Controller\Admin
                     $file_sql = array('picture' => $result['name']);
                 }
 
-                $mod_id = $this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($_POST['module']));
+                $moduleInfo = Core\Modules::getModuleInfo($_POST['module']);
                 $insert_values = array(
                     'id' => '',
                     'title' => Core\Functions::strEncode($_POST['title']),
                     'description' => Core\Functions::strEncode($_POST['description']),
-                    'module_id' => $mod_id,
+                    'module_id' => $moduleInfo['id'],
                 );
                 if (is_array($file_sql) === true) {
                     $insert_values = array_merge($insert_values, $file_sql);

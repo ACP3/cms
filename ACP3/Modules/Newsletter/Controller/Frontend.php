@@ -15,24 +15,13 @@ class Frontend extends Core\Modules\Controller
 
     /**
      *
-     * @var Model
+     * @var Newsletter\Model
      */
     protected $model;
 
-    public function __construct(
-        Core\Auth $auth,
-        Core\Breadcrumb $breadcrumb,
-        Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
-        Core\Lang $lang,
-        Core\Session $session,
-        Core\URI $uri,
-        Core\View $view,
-        Core\SEO $seo)
+    protected function _init()
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
-
-        $this->model = new Newsletter\Model($db, $lang);
+        $this->model = new Newsletter\Model($this->db, $this->lang);
     }
 
     public function actionActivate()
@@ -45,8 +34,9 @@ class Frontend extends Core\Modules\Controller
             return;
         }
 
-        if ($this->model->accountExists($mail, $hash) === false)
+        if ($this->model->accountExists($mail, $hash) === false) {
             $errors[] = $this->lang->t('newsletter', 'account_not_exists');
+        }
 
         if (isset($errors) === true) {
             $this->view->setContent(Core\Functions::errorBox($errors));
