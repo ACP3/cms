@@ -64,14 +64,14 @@ abstract class Helpers
     public static function categoriesCreate($title, $module)
     {
         if (self::categoryIsDuplicate($title, $module) === false) {
-            $moduleId = Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($module));
+            $moduleInfo = Core\Modules::getModuleInfo($module);
 
             $insertValues = array(
                 'id' => '',
                 'title' => Core\Functions::strEncode($title),
                 'picture' => '',
                 'description' => '',
-                'module_id' => $moduleId,
+                'module_id' => $moduleInfo['id'],
             );
             $result = self::$model->insert($insertValues);
 

@@ -85,6 +85,12 @@ abstract class Controller
         $this->uri = $uri;
         $this->view = $view;
         $this->seo = $seo;
+
+        $this->_init();
+    }
+
+    protected function _init() {
+
     }
 
     public function display()

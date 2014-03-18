@@ -13,26 +13,13 @@ use ACP3\Modules\Guestbook;
 class Admin extends Core\Modules\Controller\Admin
 {
     /**
-     *
-     * @var Model
+     * @var Guestbook\Model
      */
     protected $model;
 
-    public function __construct(
-        Core\Auth $auth,
-        Core\Breadcrumb $breadcrumb,
-        Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
-        Core\Lang $lang,
-        Core\Session $session,
-        Core\URI $uri,
-        Core\View $view,
-        Core\View $view,
-        Core\SEO $seo)
+    protected function _init()
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
-
-        $this->model = new Guestbook\Model($db, $lang, $date, $auth);
+        $this->model = new Guestbook\Model($this->db, $this->lang, $this->date, $this->auth);
     }
 
     public function actionDelete()

@@ -13,12 +13,17 @@ use ACP3\Modules\Comments;
 class Frontend extends Core\Modules\Controller
 {
 
+    /**
+     * @var string
+     */
     protected $module;
+    /**
+     * @var int
+     */
     protected $entryId;
-
     /**
      *
-     * @var Model
+     * @var Comments\Model
      */
     protected $model;
 
@@ -39,7 +44,11 @@ class Frontend extends Core\Modules\Controller
 
         $this->module = $module;
         $this->entryId = $entry_id;
-        $this->model = new Comments\Model($db, $lang, $auth, $date);
+    }
+
+    protected function _init()
+    {
+        $this->model = new Comments\Model($this->db, $this->lang, $this->auth, $this->date);
     }
 
     public function actionCreate()
@@ -51,19 +60,19 @@ class Frontend extends Core\Modules\Controller
 
                 $this->model->validateCreate($_POST, $ip);
 
-                $mod_id = $this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($this->module));
-                $insert_values = array(
+                $moduleInfo = Core\Modules::getModuleInfo($this->module);
+                $insertValues = array(
                     'id' => '',
                     'date' => $this->date->toSQL(),
                     'ip' => $ip,
                     'name' => Core\Functions::strEncode($_POST['name']),
                     'user_id' => $this->auth->isUser() === true && Core\Validate::isNumber($this->auth->getUserId() === true) ? $this->auth->getUserId() : '',
                     'message' => Core\Functions::strEncode($_POST['message']),
-                    'module_id' => $mod_id,
+                    'module_id' => $moduleInfo['id'],
                     'entry_id' => $this->entryId,
                 );
 
-                $bool = $this->model->insert($insert_values);
+                $bool = $this->model->insert($insertValues);
 
                 $this->session->unsetFormToken();
 
@@ -131,7 +140,16 @@ class Frontend extends Core\Modules\Controller
                 $emoticonsActive = Core\Modules::isActive('emoticons');
             }
 
-            $this->view->assign('pagination', Core\Functions::pagination($this->model->countAllByModule($this->module, $this->entryId)));
+            $pagination = new Core\Pagination(
+                $this->auth,
+                $this->breadcrumb,
+                $this->lang,
+                $this->seo,
+                $this->uri,
+                $this->view,
+                $this->model->countAllByModule($this->module, $this->entryId)
+            );
+            $pagination->display();
 
             for ($i = 0; $i < $c_comments; ++$i) {
                 if (empty($comments[$i]['user_name']) && empty($comments[$i]['name'])) {

@@ -13,24 +13,13 @@ use ACP3\Modules\Search;
 class Frontend extends Core\Modules\Controller
 {
     /**
-     * @var \ACP3\Modules\Search\Model
+     * @var Search\Model
      */
     protected $model;
 
-    public function __construct(
-        Core\Auth $auth,
-        Core\Breadcrumb $breadcrumb,
-        Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
-        Core\Lang $lang,
-        Core\Session $session,
-        Core\URI $uri,
-        Core\View $view,
-        Core\SEO $seo)
+    protected function _init()
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
-
-        $this->model = new Search\Model($db, $lang);
+        $this->model = new Search\Model($this->db, $this->lang);
     }
 
     public function actionList()

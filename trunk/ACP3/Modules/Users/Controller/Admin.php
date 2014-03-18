@@ -13,24 +13,13 @@ use ACP3\Modules\Users;
 class Admin extends Core\Modules\Controller\Admin
 {
     /**
-     * @var \ACP3\Modules\Users\Model
+     * @var Users\Model
      */
     protected $model;
 
-    public function __construct(
-        Core\Auth $auth,
-        Core\Breadcrumb $breadcrumb,
-        Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
-        Core\Lang $lang,
-        Core\Session $session,
-        Core\URI $uri,
-        Core\View $view,
-        Core\SEO $seo)
+    protected function _init()
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
-
-        $this->model = new Users\Model($db, $lang, $auth, $uri);
+        $this->model = new Users\Model($this->db, $this->lang, $this->auth, $this->uri);
     }
 
     public function actionCreate()

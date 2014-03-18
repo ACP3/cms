@@ -14,24 +14,13 @@ class Admin extends Core\Modules\Controller\Admin
 {
     /**
      *
-     * @var Model
+     * @var System\Model
      */
     protected $model;
 
-    public function __construct(
-        Core\Auth $auth,
-        Core\Breadcrumb $breadcrumb,
-        Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
-        Core\Lang $lang,
-        Core\Session $session,
-        Core\URI $uri,
-        Core\View $view,
-        Core\SEO $seo)
+    protected function _init()
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
-
-        $this->model = new System\Model($db, $lang);
+        $this->model = new System\Model($this->db, $this->lang);
     }
 
     public function actionConfiguration()

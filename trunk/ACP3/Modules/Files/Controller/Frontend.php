@@ -16,28 +16,18 @@ class Frontend extends Core\Modules\Controller
 
     /**
      *
-     * @var Model
+     * @var Files\Model
      */
     protected $model;
-
+    /**
+     * @var \ACP3\Modules\Categories\Model
+     */
     protected $categoriesModel;
 
-    public function __construct(
-        Core\Auth $auth,
-        Core\Breadcrumb $breadcrumb,
-        Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
-        Core\Lang $lang,
-        Core\Session $session,
-        Core\URI $uri,
-        Core\View $view,
-        Core\SEO $seo)
+    protected function _init()
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
-
-        $this->model = new Files\Model($db, $lang, $uri);
-
-        $this->categoriesModel = new \ACP3\Modules\Categories\Model($db, $lang);
+        $this->model = new Files\Model($this->db, $this->lang, $this->uri);
+        $this->categoriesModel = new \ACP3\Modules\Categories\Model($this->db, $this->lang);
     }
 
     public function actionList()

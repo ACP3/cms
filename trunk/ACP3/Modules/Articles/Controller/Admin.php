@@ -23,21 +23,10 @@ class Admin extends Core\Modules\Controller\Admin
      */
     protected $menuModel;
 
-    public function __construct(
-        Core\Auth $auth,
-        Core\Breadcrumb $breadcrumb,
-        Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
-        Core\Lang $lang,
-        Core\Session $session,
-        Core\URI $uri,
-        Core\View $view,
-        Core\SEO $seo)
+    protected function _init()
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
-
-        $this->menuModel = new \ACP3\Modules\Menus\Model($db, $lang, uri);
-        $this->model = new Articles\Model($db, $lang, $this->menuModel, uri);
+        $this->menuModel = new \ACP3\Modules\Menus\Model($this->db, $this->lang, $this->uri);
+        $this->model = new Articles\Model($this->db, $this->lang, $this->menuModel, $this->uri);
     }
 
     public function actionCreate()
