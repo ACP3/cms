@@ -16,11 +16,11 @@
     <item key="activate_error">While activating the newsletter account an error has occured.</item>
     <item key="activate_success">The newsletter account has been successfully activated and may now be used.</item>
     <item key="already_sent">Already sent</item>
-    <item key="archive">Archive</item>
     <item key="select_newsletter">To display a newsletter please select one from the above dropdown list.</item>
     <item key="create_save_error">While sending respectively saving the newsletter an error has occured.</item>
     <item key="create_success">The newsletter has been successfully sent.</item>
-    <item key="list">Subscribe/Unsubscribe the newsletter</item>
+    <item key="list">Newsletter</item>
+    <item key="list_archive">Archive</item>
     <item key="mailsig">E-mail signature</item>
     <item key="missed_out_newsletter">Missed out a newsletter edition?</item>
     <item key="mod_description">This module is responsible for the newsletter.</item>
@@ -43,9 +43,9 @@
     <item key="subscribe_mail_subject">Welcome to the newsletter of %s!</item>
     <item key="subscribe_newsletter">Subscribe the newsletter</item>
     <item key="subscribe_success">The newsletter account has been successfully created.</item>
+    <item key="subscribe_unsubscribe_the_newsletter">Subscribe/Unsubscribe the newsletter</item>
     <item key="test_newsletter">Test newsletter</item>
-    <item key="test_nl_description">Will only be send to the E-mail adress which is stated in the newsletter settings.
-    </item>
+    <item key="test_nl_description">Will only be send to the E-mail adress which is stated in the newsletter settings.</item>
     <item key="text">Text</item>
     <item key="text_to_short">The text should be at least 3 characters long.</item>
     <item key="unsubscribe">Unsubscribe</item>

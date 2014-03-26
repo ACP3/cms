@@ -21,7 +21,7 @@
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-10">
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-            <a href="{uri args="newsletter/archive"}" class="btn btn-link">{lang t="newsletter|missed_out_newsletter"}</a>
+            <a href="{uri args="newsletter/list_archive"}" class="btn btn-link">{lang t="newsletter|missed_out_newsletter"}</a>
             {$form_token}
         </div>
     </div>

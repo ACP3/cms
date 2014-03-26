@@ -40,7 +40,8 @@ class Model extends Core\Model
 
     public function countAll($status = '')
     {
-        return $this->getAll($status);
+        $where = empty($time) === false ? ' WHERE status = :status' : '';
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . $where, array('status' => $status));
     }
 
     public function getAll($status = '', $limitStart = '', $resultsPerPage = '')

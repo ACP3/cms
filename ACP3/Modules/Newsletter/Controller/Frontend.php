@@ -47,34 +47,22 @@ class Frontend extends Core\Modules\Controller
         }
     }
 
-    public function actionArchive()
+    public function actionDetails()
     {
-        $this->breadcrumb->append($this->lang->t('newsletter', 'archive'));
+        $newsletter = $this->model->getOneById((int)$this->uri->id, 1);
 
-        if (isset($_POST['newsletter']) === true &&
-            Core\Validate::isNumber($_POST['newsletter'])
-        ) {
-            $id = (int)$_POST['newsletter'];
+        if (!empty($newsletter)) {
+            $this->breadcrumb->append($this->lang->t('newsletter', 'list'), $this->uri->route('newsletter/list'))
+                ->append($this->lang->t('newsletter', 'list_archive'), $this->uri->route('newsletter/list_archive'))
+                ->append($newsletter['title']);
 
-            $newsletter = $this->model->getOneById($id, 1);
-            if (!empty($newsletter)) {
-                $newsletter['date_formatted'] = $this->date->format($newsletter['date'], 'short');
-                $newsletter['date_iso'] = $this->date->format($newsletter['date'], 'c');
-                $newsletter['text'] = Core\Functions::nl2p($newsletter['text']);
+            $newsletter['date_formatted'] = $this->date->format($newsletter['date'], 'short');
+            $newsletter['date_iso'] = $this->date->format($newsletter['date'], 'c');
+            $newsletter['text'] = Core\Functions::nl2p($newsletter['text']);
 
-                $this->view->assign('newsletter', $newsletter);
-            }
-        }
-
-        $newsletters = $this->model->getAll(1);
-        $c_newsletters = count($newsletters);
-
-        if ($c_newsletters > 0) {
-            for ($i = 0; $i < $c_newsletters; ++$i) {
-                $newsletters[$i]['date_formatted'] = $this->date->format($newsletters[$i]['date'], 'short');
-                $newsletters[$i]['selected'] = Core\Functions::selectEntry('newsletter', $newsletters[$i]['id']);
-            }
-            $this->view->assign('newsletters', $newsletters);
+            $this->view->assign('newsletter', $newsletter);
+        } else {
+            $this->uri->redirect('errors/404');
         }
     }
 
@@ -128,6 +116,33 @@ class Frontend extends Core\Modules\Controller
         }
 
         $this->session->generateFormToken();
+    }
+
+    public function actionListArchive()
+    {
+        $this->breadcrumb->append($this->lang->t('newsletter', 'list'), $this->uri->route('newsletter/list'))
+            ->append($this->lang->t('newsletter', 'list_archive'));
+
+        $newsletters = $this->model->getAll(1, POS, $this->auth->entries);
+        $c_newsletters = count($newsletters);
+
+        if ($c_newsletters > 0) {
+            $pagination = new Core\Pagination(
+                $this->auth,
+                $this->breadcrumb,
+                $this->lang,
+                $this->seo,
+                $this->uri,
+                $this->view,
+                $this->model->countAll(1)
+            );
+            $pagination->display();
+
+            for ($i = 0; $i < $c_newsletters; ++$i) {
+                $newsletters[$i]['date_formatted'] = $this->date->format($newsletters[$i]['date'], 'short');
+            }
+            $this->view->assign('newsletters', $newsletters);
+        }
     }
 
     public function actionSidebar()
