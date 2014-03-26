@@ -3,7 +3,7 @@
         {if isset($categories)}
             {if {has_permission mod="newsletter" file="list"}}
                 <div class="navbar-text">
-                    <a href="{uri args="newsletter/list"}">{lang t="newsletter|list"}</a>
+                    <a href="{uri args="newsletter/list"}">{lang t="newsletter|subscribe_unsubscribe_the_newsletter"}</a>
                 </div>
             {/if}
             <form action="{uri args="news/list"}" method="post" class="navbar-form navbar-right">

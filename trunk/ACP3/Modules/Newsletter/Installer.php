@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'newsletter';
-    const SCHEMA_VERSION = 34;
+    const SCHEMA_VERSION = 35;
 
     public function __construct()
     {
@@ -69,6 +69,11 @@ class Installer extends Modules\AbstractInstaller
             ),
             34 => array(
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
+            ),
+            35 => array(
+                "DELETE FROM `{pre}acl_resources` WHERE module_id = '" . $this->getModuleId() . "' AND page = 'archive';",
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'list_archive', '', 1);",
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'details', '', 1);",
             )
         );
     }

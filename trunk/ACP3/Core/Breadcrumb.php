@@ -68,7 +68,7 @@ class Breadcrumb
 
             // Dynamische Seite (ACP3 intern)
             for ($i = 0; $i < $c_items; ++$i) {
-                $this->appendFromDB($items[$i]['title'], $uri->route($items[$i]['uri']));
+                $this->_appendFromDB($items[$i]['title'], $uri->route($items[$i]['uri']));
             }
         }
     }
@@ -118,7 +118,7 @@ class Breadcrumb
      *    Die zum $title zugehörige ACP3-interne URI
      * @return $this
      */
-    protected function appendFromDB($title, $path = 0)
+    protected function _appendFromDB($title, $path = 0)
     {
         $this->stepsFromDb[] = array(
             'title' => $title,
