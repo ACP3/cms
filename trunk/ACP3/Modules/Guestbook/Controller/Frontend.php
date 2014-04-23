@@ -38,7 +38,7 @@ class Frontend extends Core\Modules\Controller
             $this->view->setLayout('simple.tpl');
         }
 
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validateCreate($_POST, $hasNewsletterAccess);
 

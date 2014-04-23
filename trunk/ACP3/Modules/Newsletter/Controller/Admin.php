@@ -36,7 +36,7 @@ class Admin extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validate($_POST);
 
@@ -134,7 +134,7 @@ class Admin extends Core\Modules\Controller\Admin
                 ->append($this->lang->t('newsletter', 'newsletter'), $this->uri->route('acp/newsletter'))
                 ->append($this->lang->t('newsletter', 'acp_edit'));
 
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 try {
                     $this->model->validate($_POST);
 
@@ -267,7 +267,7 @@ class Admin extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validateSettings($_POST);
 

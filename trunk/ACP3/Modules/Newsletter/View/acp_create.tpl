@@ -1,8 +1,7 @@
 {if isset($error_msg)}
     {$error_msg}
 {/if}
-{include_js module="newsletter" file="acp"}
-<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal ajax-form">
     <div class="form-group">
         <label for="title" class="col-lg-2 control-label">{lang t="newsletter|subject"}</label>
 
@@ -53,3 +52,10 @@
         </div>
     </div>
 </form>
+{include_js module="newsletter" file="acp"}
+{include_js module="system" file="forms"}
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $('.ajax-form').formSubmit('{lang t="system|loading_please_wait"}');
+    });
+</script>

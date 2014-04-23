@@ -25,7 +25,7 @@ class Admin extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validateCreate($_POST);
 
@@ -54,7 +54,7 @@ class Admin extends Core\Modules\Controller\Admin
 
     public function actionCreateItem()
     {
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validateItem($_POST);
 
@@ -211,7 +211,7 @@ class Admin extends Core\Modules\Controller\Admin
         $menu = $this->model->getOneById($this->uri->id);
 
         if (empty($menu) === false) {
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 try {
                     $this->model->validateEdit($_POST);
 
@@ -251,7 +251,7 @@ class Admin extends Core\Modules\Controller\Admin
             $menuItem['seo_keywords'] = $this->seo->getKeywords($menuItem['uri']);
             $menuItem['seo_description'] = $this->seo->getDescription($menuItem['uri']);
 
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 try {
                     $this->model->validateItem($_POST);
 

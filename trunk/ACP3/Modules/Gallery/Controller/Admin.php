@@ -26,7 +26,7 @@ class Admin extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validateCreate($_POST);
 
@@ -75,7 +75,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             $settings = Core\Config::getSettings('gallery');
 
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 try {
                     $file = array();
                     $file['tmp_name'] = $_FILES['file']['tmp_name'];
@@ -207,7 +207,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             $this->breadcrumb->append($gallery['title']);
 
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 try {
                     $this->model->validateEdit($_POST);
 
@@ -283,7 +283,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             $settings = Core\Config::getSettings('gallery');
 
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 try {
                     $file = array();
                     if (!empty($_FILES['file']['tmp_name']) && $_FILES['file']['size'] > '0') {
@@ -382,7 +382,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         $settings = Core\Config::getSettings('gallery');
 
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validateSettings($_POST);
 

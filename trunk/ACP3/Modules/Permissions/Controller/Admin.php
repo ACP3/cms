@@ -24,7 +24,7 @@ class Admin extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validateCreate($_POST);
 
@@ -105,7 +105,7 @@ class Admin extends Core\Modules\Controller\Admin
             ->append($this->lang->t('permissions', 'acp_list_resources'), $this->uri->route('acp/permissions/list_resources'))
             ->append($this->lang->t('permissions', 'acp_create_resource'));
 
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validateCreateResource($_POST);
 
@@ -209,7 +209,7 @@ class Admin extends Core\Modules\Controller\Admin
     public function actionEdit()
     {
         if (Core\Validate::isNumber($this->uri->id) === true && $this->model->roleExists($this->uri->id) === true) {
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 try {
                     $this->model->validateEdit($_POST);
 
@@ -305,7 +305,7 @@ class Admin extends Core\Modules\Controller\Admin
             ->append($this->lang->t('permissions', 'acp_edit_resource'));
 
         if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resourceExists($this->uri->id) === true) {
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 try {
                     $this->model->validateEditResource($_POST);
 

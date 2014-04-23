@@ -38,6 +38,11 @@ class URI
     protected $db;
 
     /**
+     * @var bool
+     */
+    protected $isAjax = false;
+
+    /**
      * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
      */
     function __construct(\Doctrine\DBAL\Connection $db, $defaultModule = '', $defaultFile = '')
@@ -116,6 +121,14 @@ class URI
     }
 
     /**
+     * @return bool
+     */
+    public function getIsAjax()
+    {
+        return $this->isAjax;
+    }
+
+    /**
      * Überprüft die URI auf einen möglichen URI-Alias und
      * macht im Erfolgsfall einen Redirect darauf
      *
@@ -168,6 +181,10 @@ class URI
      */
     protected function setUriParameters($defaultModule, $defaultFile)
     {
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $this->isAjax = true;
+        }
+
         $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
 
         if (empty($defaultModule) && empty($defaultFile)) {
@@ -237,18 +254,28 @@ class URI
      *  Leitet auf eine interne ACP3 Seite weiter
      * @param int|string $newPage
      *  Leitet auf eine externe Seite weiter
-     * @param bool|int $moved_permanently
+     * @param bool|int $movedPermanently
      */
-    public function redirect($args, $newPage = '', $moved_permanently = false)
+    public function redirect($args, $newPage = '', $movedPermanently = false)
     {
         if (!empty($args)) {
             $protocol = empty($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) === 'off' ? 'http://' : 'https://';
             $host = $_SERVER['HTTP_HOST'];
-            if ($moved_permanently === true) {
-                header('HTTP/1.1 301 Moved Permanently');
+            $url = $protocol . $host . $this->route($args);
+
+            if ($this->isAjax === true) {
+                $return = array(
+                    'redirect_url' => $url
+                );
+
+                Functions::outputJson($return);
+            } else {
+                if ($movedPermanently === true) {
+                    header('HTTP/1.1 301 Moved Permanently');
+                }
+                header('Location: ' . $url);
+                exit;
             }
-            header('Location: ' . $protocol . $host . $this->route($args));
-            exit;
         }
         header('Location:' . str_replace('&amp;', '&', $newPage));
         exit;

@@ -6,28 +6,7 @@
     {if isset($error_msg)}
         {$error_msg}
     {/if}
-    <script type="text/javascript">
-        function mark_options(action) {
-            var $elem = $('form #tables option');
-            if (action === 'add') {
-                $elem.attr('selected', true);
-            } else {
-                $elem.removeAttr('selected');
-            }
-        }
-
-        $(function () {
-            $('input[name="export_type"]').bind('click',function () {
-                var $elem = $('#options-container');
-                if ($(this).attr('id') === 'complete' || $(this).attr('id') === 'structure') {
-                    $elem.show();
-                } else {
-                    $elem.hide();
-                }
-            }).filter(':checked').trigger('click');
-        });
-    </script>
-    <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
+    <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal ajax-form">
         <div class="form-group">
             <label for="tables" class="col-lg-2 control-label">{lang t="system|sql_tables"}</label>
 
@@ -90,4 +69,11 @@
             </div>
         </div>
     </form>
+    {include_js module="system" file="acp_sql_export"}
+    {include_js module="system" file="forms"}
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('.ajax-form').formSubmit('{lang t="system|loading_please_wait"}');
+        });
+    </script>
 {/if}

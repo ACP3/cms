@@ -1,4 +1,4 @@
-$(document).ready(function () {
+jQuery(document).ready(function ($) {
     $(':checkbox[name="create"]').bind('onload click',function () {
         var $elem = $('#create-item-container');
         if ($(this).is(':checked')) {

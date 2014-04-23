@@ -24,7 +24,7 @@ class Frontend extends Core\Modules\Controller
 
     public function actionList()
     {
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validate($_POST);
 

@@ -32,7 +32,7 @@ class Frontend extends Core\Modules\Controller
                 ->append($this->lang->t('users', 'home'), $this->uri->route('users/home'))
                 ->append($this->lang->t('users', 'edit_profile'));
 
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 try {
                     $this->model->validateEditProfile($_POST);
 
@@ -137,7 +137,7 @@ class Frontend extends Core\Modules\Controller
                 ->append($this->lang->t('users', 'home'), $this->uri->route('users/home'))
                 ->append($this->lang->t('users', 'edit_settings'));
 
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 try {
                     $this->model->validateUserSettings($_POST, $settings);
 
@@ -227,7 +227,7 @@ class Frontend extends Core\Modules\Controller
                 ->append($this->lang->t('users', 'users'), $this->uri->route('users'))
                 ->append($this->lang->t('users', 'forgot_pwd'));
 
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 try {
                     $this->model->validateForgotPassword($_POST);
 
@@ -293,7 +293,7 @@ class Frontend extends Core\Modules\Controller
                 ->append($this->lang->t('users', 'users'), $this->uri->route('users'))
                 ->append($this->lang->t('users', 'home'));
 
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 $updateValues = array(
                     'draft' => Core\Functions::strEncode($_POST['draft'], true)
                 );
@@ -343,7 +343,7 @@ class Frontend extends Core\Modules\Controller
         // Falls der Benutzer schon eingeloggt ist, diesen zur Startseite weiterleiten
         if ($this->auth->isUser() === true) {
             $this->uri->redirect(0, ROOT_DIR);
-        } elseif (isset($_POST['submit']) === true) {
+        } elseif (empty($_POST) === false) {
             $result = $this->auth->login(Core\Functions::strEncode($_POST['nickname']), $_POST['pwd'], isset($_POST['remember']) ? 31104000 : 3600);
             if ($result == 1) {
                 if ($this->uri->redirect) {
@@ -382,7 +382,7 @@ class Frontend extends Core\Modules\Controller
                 ->append($this->lang->t('users', 'users'), $this->uri->route('users'))
                 ->append($this->lang->t('users', 'register'));
 
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 try {
                     $this->model->validateRegistration($_POST);
 

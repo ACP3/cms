@@ -25,7 +25,7 @@ class Admin extends Core\Modules\Controller\Admin
 
     public function actionConfiguration()
     {
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validateSettings($_POST);
 
@@ -390,7 +390,7 @@ class Admin extends Core\Modules\Controller\Admin
             ->append($this->lang->t('system', 'acp_maintenance'), $this->uri->route('acp/system/maintenance'))
             ->append($this->lang->t('system', 'acp_sql_export'));
 
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             if (empty($_POST['tables']) || is_array($_POST['tables']) === false)
                 $errors['tables'] = $this->lang->t('system', 'select_sql_tables');
             if ($_POST['output'] !== 'file' && $_POST['output'] !== 'text')
@@ -491,7 +491,7 @@ class Admin extends Core\Modules\Controller\Admin
             ->append($this->lang->t('system', 'acp_maintenance'), $this->uri->route('acp/system/maintenance'))
             ->append($this->lang->t('system', 'acp_sql_import'));
 
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             if (isset($_FILES['file'])) {
                 $file['tmp_name'] = $_FILES['file']['tmp_name'];
                 $file['name'] = $_FILES['file']['name'];
