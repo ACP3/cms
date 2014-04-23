@@ -21,16 +21,16 @@ class CKEditor extends AbstractWYSIWYG
 
     protected function configure()
     {
-        $filebrowser_uri = ROOT_DIR . 'libraries/kcfinder/browse.php%s&cms=acp3';
-        $upload_uri = ROOT_DIR . 'libraries/kcfinder/upload.php%s&cms=acp3';
+        $filebrowser_uri = ROOT_DIR . 'libraries/kcfinder/browse.php?opener=ckeditor%s&cms=acp3';
+        $upload_uri = ROOT_DIR . 'libraries/kcfinder/upload.php?opener=ckeditor%s&cms=acp3';
 
         $this->config = array();
-        $this->config['filebrowserBrowseUrl'] = sprintf($filebrowser_uri, '?type=files&amp;cms=');
-        $this->config['filebrowserImageBrowseUrl'] = sprintf($filebrowser_uri, '?type=gallery');
-        $this->config['filebrowserFlashBrowseUrl'] = sprintf($filebrowser_uri, '?type=files');
-        $this->config['filebrowserUploadUrl'] = sprintf($upload_uri, '?type=files');
-        $this->config['filebrowserImageUploadUrl'] = sprintf($upload_uri, '?type=gallery');
-        $this->config['filebrowserFlashUploadUrl'] = sprintf($upload_uri, '?type=files');
+        $this->config['filebrowserBrowseUrl'] = sprintf($filebrowser_uri, '&type=files');
+        $this->config['filebrowserImageBrowseUrl'] = sprintf($filebrowser_uri, '&type=gallery');
+        $this->config['filebrowserFlashBrowseUrl'] = sprintf($filebrowser_uri, '&type=files');
+        $this->config['filebrowserUploadUrl'] = sprintf($upload_uri, '&type=files');
+        $this->config['filebrowserImageUploadUrl'] = sprintf($upload_uri, '&type=gallery');
+        $this->config['filebrowserFlashUploadUrl'] = sprintf($upload_uri, '&type=files');
 
         $this->config['extraPlugins'] = 'divarea,oembed,codemirror';
         $this->config['allowedContent'] = true;
