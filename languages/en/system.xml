@@ -158,6 +158,7 @@
     <item key="languages_edit_error">While switching the language an error has occured.</item>
     <item key="languages_edit_success">The language has been successfully selected and may now be used.</item>
     <item key="last_page">Last page</item>
+    <item key="loading_please_wait">Loading - please wait</item>
     <item key="mailer_smtp_auth">SMTP Authentication</item>
     <item key="mailer_smtp_hostname">SMTP Host</item>
     <item key="mailer_smtp_port">SMTP Port</item>

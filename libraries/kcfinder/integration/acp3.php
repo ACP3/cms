@@ -1,5 +1,6 @@
 <?php
 namespace kcfinder\cms;
+use ACP3\Application;
 
 /**
  * Class ACP3
@@ -26,10 +27,10 @@ class ACP3
 
             require_once ACP3_ROOT_DIR . 'ACP3/Application.php';
 
-            \ACP3\Application::defineDirConstants();
-            \ACP3\Application::startupChecks();
-            \ACP3\Application::includeAutoLoader();
-            \ACP3\Application::initializeClasses();
+            Application::defineDirConstants();
+            Application::startupChecks();
+            Application::includeAutoLoader();
+            Application::initializeClasses();
 
             chdir(ACP3_ROOT_DIR);
 

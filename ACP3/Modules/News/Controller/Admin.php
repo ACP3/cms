@@ -29,7 +29,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         $settings = Core\Config::getSettings('news');
 
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validateCreate($_POST);
 
@@ -133,7 +133,7 @@ class Admin extends Core\Modules\Controller\Admin
         if (empty($news) === false) {
             $settings = Core\Config::getSettings('news');
 
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 try {
                     $this->model->validateEdit($_POST);
 
@@ -235,7 +235,7 @@ class Admin extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validateSettings($_POST, $this->lang);
 

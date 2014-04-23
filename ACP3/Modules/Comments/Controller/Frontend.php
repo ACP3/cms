@@ -54,7 +54,7 @@ class Frontend extends Core\Modules\Controller
     public function actionCreate()
     {
         // Formular für das Eintragen von Kommentaren
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $ip = $_SERVER['REMOTE_ADDR'];
 

@@ -44,7 +44,7 @@ class Admin extends Core\Modules\Controller\Admin
         if (empty($guestbook) === false) {
             $settings = Core\Config::getSettings('guestbook');
 
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 try {
                     $this->model->validateEdit($_POST);
 
@@ -124,7 +124,7 @@ class Admin extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validateSettings($_POST);
 

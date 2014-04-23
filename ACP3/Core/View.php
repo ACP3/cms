@@ -461,7 +461,7 @@ class View
             if (count($fragments) > 1 && $this->templateExists($path)) {
                 return self::$rendererObject->fetch($path, $cache_id, $compile_id, $parent, $display);
             } else {
-                throw new \Exception("The requested template " + $template + " can't be found!");
+                throw new \Exception("The requested template " . $template . " can't be found!");
             }
         }
     }

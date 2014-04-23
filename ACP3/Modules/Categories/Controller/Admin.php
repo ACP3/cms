@@ -26,7 +26,7 @@ class Admin extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $file = array();
                 if (!empty($_FILES['picture']['name'])) {
@@ -131,7 +131,7 @@ class Admin extends Core\Modules\Controller\Admin
         $category = $this->model->getOneById($this->uri->id);
 
         if (empty($category) === false) {
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 try {
                     $file = array();
                     if (!empty($_FILES['picture']['name'])) {
@@ -202,7 +202,7 @@ class Admin extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validateSettings($_POST, $this->lang);
 

@@ -159,7 +159,24 @@ class Functions
             $errors = (array)$errors;
         }
         static::$view->assign('error_box', array('non_integer_keys' => $hasNonIntegerKeys, 'errors' => $errors));
-        return static::$view->fetchTemplate('system/error_box.tpl');
+        $content = static::$view->fetchTemplate('system/error_box.tpl');
+
+        if (static::$uri->getIsAjax() === true) {
+            $return = array(
+                'success' => false,
+                'content' => $content,
+            );
+
+            self::outputJson($return);
+        }
+        return $content;
+    }
+
+    public static function outputJson(array $data) {
+        header('Content-type: application/json; charset="UTF-8"');
+
+        echo json_encode($data);
+        exit;
     }
 
     /**

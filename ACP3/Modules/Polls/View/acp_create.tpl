@@ -1,7 +1,7 @@
 {if isset($error_msg)}
     {$error_msg}
 {/if}
-<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal">
+<form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal ajax-form">
     <div class="tabbable">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|publication_period"}</a></li>
@@ -52,3 +52,9 @@
         </div>
     </div>
 </form>
+{include_js module="system" file="forms"}
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $('.ajax-form').formSubmit('{lang t="system|loading_please_wait"}');
+    });
+</script>

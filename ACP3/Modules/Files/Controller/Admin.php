@@ -30,7 +30,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         $settings = Core\Config::getSettings('files');
 
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 if (isset($_POST['external'])) {
                     $file = $_POST['file_external'];
@@ -156,7 +156,7 @@ class Admin extends Core\Modules\Controller\Admin
         if (empty($dl) === false) {
             $settings = Core\Config::getSettings('files');
 
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 try {
                     if (isset($_POST['external'])) {
                         $file = $_POST['file_external'];
@@ -277,7 +277,7 @@ class Admin extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validateSettings($_POST);
 

@@ -26,7 +26,7 @@ class Admin extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validateCreate($_POST);
 
@@ -118,7 +118,7 @@ class Admin extends Core\Modules\Controller\Admin
         $poll = $this->model->getOneById($this->uri->id);
 
         if (empty($poll) === false) {
-            if (isset($_POST['submit']) === true) {
+            if (empty($_POST) === false) {
                 try {
                     $this->model->validateEdit($_POST);
 

@@ -24,7 +24,7 @@ class Admin extends Core\Modules\Controller\Admin
 
     public function actionList()
     {
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 $this->model->validateSettings($_POST);
 

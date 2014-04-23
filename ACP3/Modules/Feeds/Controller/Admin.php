@@ -13,7 +13,7 @@ class Admin extends Core\Modules\Controller\Admin
 {
     public function actionList()
     {
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             if (empty($_POST['feed_type']) || in_array($_POST['feed_type'], array('RSS 1.0', 'RSS 2.0', 'ATOM')) === false)
                 $errors['mail'] = $this->lang->t('feeds', 'select_feed_type');
 

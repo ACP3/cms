@@ -68,7 +68,7 @@ class Frontend extends Core\Modules\Controller
 
     public function actionList()
     {
-        if (isset($_POST['submit']) === true) {
+        if (empty($_POST) === false) {
             try {
                 switch ($this->uri->action) {
                     case 'subscribe':
