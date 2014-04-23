@@ -1,7 +1,10 @@
 {if isset($error_msg)}
     {$error_msg}
 {/if}
-<form action="{uri args="search/list"}" method="post" accept-charset="UTF-8" class="form-horizontal ajax-form">
+{if isset($redirect_message)}
+    {$redirect_message}
+{/if}
+<form action="{uri args="search/list"}" method="post" accept-charset="UTF-8" class="form-horizontal">
     <div class="form-group">
         <label for="search-term" class="col-lg-2 control-label">{lang t="search|search_term"}</label>
 
@@ -54,6 +57,7 @@
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-10">
             <button type="submit" name="submit" class="btn btn-primary">{lang t="search|submit_search"}</button>
+            {$form_token}
         </div>
     </div>
 </form>

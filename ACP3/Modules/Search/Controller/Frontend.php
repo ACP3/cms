@@ -28,6 +28,8 @@ class Frontend extends Core\Modules\Controller
             try {
                 $this->model->validate($_POST);
 
+                $this->session->unsetFormToken();
+
                 $this->displaySearchResults($_POST['mods'], Core\Functions::strEncode($_POST['search_term']), $_POST['area'], strtoupper($_POST['sort']));
                 return;
             } catch (Core\Exceptions\InvalidFormToken $e) {
@@ -36,6 +38,8 @@ class Frontend extends Core\Modules\Controller
                 $this->view->assign('error_msg', $e->getMessage());
             }
         }
+
+        Core\Functions::getRedirectMessage();
 
         $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('search_term' => ''));
 
@@ -52,6 +56,8 @@ class Frontend extends Core\Modules\Controller
         // Treffer sortieren
         $langSortHits = array($this->lang->t('search', 'asc'), $this->lang->t('search', 'desc'));
         $this->view->assign('sort_hits', Core\Functions::selectGenerator('sort', array('asc', 'desc'), $langSortHits, 'asc', 'checked'));
+
+        $this->session->generateFormToken();
     }
 
     protected function displaySearchResults($modules, $searchTerm, $area, $sort)
