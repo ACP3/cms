@@ -14,18 +14,54 @@
 
 #loading-layer {
     width: 100%;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.5);
     display: none;
+    z-index: 999999;
     position: fixed;
     top: 0;
     left: 0;
 }
+
 #loading-layer h1 {
+    margin: -32px 0 0;
+    font-size: 26px;
     position: relative;
     top: 50%;
     text-align: center;
 }
 
-#loading-layer span {
+@-webkit-keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(350deg);
+    }
+}
+
+@-moz-keyframes rotate {
+    from {
+        -moz-transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(350deg);
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(350deg);
+    }
+}
+
+#loading-layer .glyphicon {
+    margin-bottom: 10px;
     display: block;
+    -webkit-animation: rotate 2s linear infinite;
+    -moz-animation: rotate 2s linear infinite;
+    -o-animation: rotate 2s linear infinite;
+    animation: rotate 2s linear infinite;
 }
