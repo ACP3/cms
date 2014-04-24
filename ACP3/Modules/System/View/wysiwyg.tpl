@@ -26,17 +26,20 @@
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#page-break-form .modal-footer button.btn-primary').click(function (e) {
-                if ($('#toc-title').val().length > 0) {
-                    var text = '<hr class="page-break" title="' + $('#toc-title').val() + '" />';
+            $('#page-break-form').find('.modal-footer button.btn-primary').click(function (e) {
+                e.preventDefault();
+
+                var $tocTitle = $('#toc-title'),
+                    text;
+
+                if ($tocTitle.val().length > 0) {
+                    text = '<hr class="page-break" title="' + $tocTitle.val() + '" />';
                 } else {
-                    var text = '<hr class="page-break" />';
+                    text = '<hr class="page-break" />';
                 }
 
                 {$wysiwyg.advanced_replace_content}
                 $('#page-break-form').modal('hide');
-
-                e.preventDefault();
             });
         });
     </script>

@@ -15,13 +15,14 @@ function smarty_function_include_js($params)
         $module = ucfirst($params['module']);
         $moduleLower = strtolower($params['module']);
         $file = $params['file'];
-        if (file_exists(DESIGN_PATH_INTERNAL . $moduleLower . '/' . $file . '.js') === true) {
-            return sprintf($script, DESIGN_PATH . $moduleLower . '/' . $file . '.js');
-        } elseif (file_exists(MODULES_DIR . $module . '/View/' . $file . '.js') === true) {
-            return sprintf($script, ROOT_DIR . 'ACP3/Modules/' . $module . '/View/' . $file . '.js');
+
+        if (file_exists(DESIGN_PATH_INTERNAL . $moduleLower . '/js/' . $file . '.js') === true) {
+            return sprintf($script, DESIGN_PATH . $moduleLower . '/js/' . $file . '.js');
+        } elseif (file_exists(MODULES_DIR . $module . '/js/' . $file . '.js') === true) {
+            return sprintf($script, ROOT_DIR . 'ACP3/Modules/' . $module . '/js/' . $file . '.js');
         }
-    } else {
-        return 'Not all necessary arguments for the function ' . __FUNCTION__ . ' were passed!';
     }
+
+    return 'Not all necessary arguments for the function ' . __FUNCTION__ . ' were passed!';
 }
 /* vim: set expandtab: */
