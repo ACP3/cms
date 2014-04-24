@@ -162,7 +162,7 @@
     <item key="languages_edit_error">Beim Verändern der Sprache ist ein Fehler aufgetreten.</item>
     <item key="languages_edit_success">Die Sprache wurde erfolgreich ausgewählt und kann nun verwendet werden.</item>
     <item key="last_page">Letzte Seite</item>
-    <item key="loading_please_wait">Lädt - bitte warten</item>
+    <item key="loading_please_wait">Lädt - bitte warten...</item>
     <item key="mailer_smtp_auth">SMTP-Authentifizierung</item>
     <item key="mailer_smtp_hostname">SMTP Hostname</item>
     <item key="mailer_smtp_port">SMTP Port</item>
