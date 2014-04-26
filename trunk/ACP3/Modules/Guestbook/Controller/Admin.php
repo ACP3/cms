@@ -76,7 +76,7 @@ class Admin extends Core\Modules\Controller\Admin
                 $this->view->assign('activate', Core\Functions::selectGenerator('active', array(1, 0), $langActivate, $guestbook['active'], 'checked'));
             }
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $guestbook);
+            $this->view->assign('form', empty($_POST) === false ? $_POST : $guestbook);
 
             $this->session->generateFormToken();
         } else {
@@ -174,7 +174,7 @@ class Admin extends Core\Modules\Controller\Admin
             $this->view->assign('newsletter_integration', Core\Functions::selectGenerator('newsletter_integration', array(1, 0), $lang_newsletter_integration, $settings['newsletter_integration'], 'checked'));
         }
 
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('notify_email' => $settings['notify_email']));
+        $this->view->assign('form', empty($_POST) === false ? $_POST : array('notify_email' => $settings['notify_email']));
 
         $this->session->generateFormToken();
     }

@@ -59,4 +59,44 @@ abstract class Helpers
         return $mods_to_uninstall;
     }
 
+    public static function exportDatabase(array $tables, $exportType, $withDropTables)
+    {
+        $db = \ACP3\Core\Registry::get('Db');
+
+        $structure = $data = '';
+        foreach ($tables as $table) {
+            // Struktur ausgeben
+            if ($exportType === 'complete' || $exportType === 'structure') {
+                $result = $db->fetchAssoc('SHOW CREATE TABLE ' . $table);
+                if (!empty($result)) {
+                    $structure .= $withDropTables == 1 ? 'DROP TABLE IF EXISTS `' . $table . '`;' . "\n\n" : '';
+                    $structure .= $result['Create Table'] . ';' . "\n\n";
+                }
+            }
+
+            // Datensätze ausgeben
+            if ($exportType === 'complete' || $exportType === 'data') {
+                $resultSets = $db->fetchAll('SELECT * FROM ' . DB_PRE . substr($table, strlen(CONFIG_DB_PRE)));
+                if (count($resultSets) > 0) {
+                    $fields = '';
+                    // Felder der jeweiligen Tabelle auslesen
+                    foreach (array_keys($resultSets[0]) as $field) {
+                        $fields .= '`' . $field . '`, ';
+                    }
+
+                    // Datensätze auslesen
+                    foreach ($resultSets as $row) {
+                        $values = '';
+                        foreach ($row as $value) {
+                            $values .= '\'' . $value . '\', ';
+                        }
+                        $data .= 'INSERT INTO `' . $table . '` (' . substr($fields, 0, -2) . ') VALUES (' . substr($values, 0, -2) . ');' . "\n";
+                    }
+                }
+            }
+        }
+
+        return $structure . $data;
+    }
+
 }

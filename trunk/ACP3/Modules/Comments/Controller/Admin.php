@@ -92,7 +92,7 @@ class Admin extends Core\Modules\Controller\Admin
                 $this->view->assign('emoticons', \ACP3\Modules\Emoticons\Helpers::emoticonsList());
             }
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $comment);
+            $this->view->assign('form', empty($_POST) === false ? $_POST : $comment);
             $this->view->assign('module_id', (int)$comment['module_id']);
 
             $this->session->generateFormToken();

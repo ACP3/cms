@@ -3,6 +3,7 @@
 namespace ACP3\Modules\Feeds\Controller;
 
 use ACP3\Core;
+use ACP3\Modules\Feeds;
 
 /**
  * Description of FeedsAdmin
@@ -11,17 +12,23 @@ use ACP3\Core;
  */
 class Admin extends Core\Modules\Controller\Admin
 {
+    /**
+     *
+     * @var Feeds\Model
+     */
+    protected $model;
+
+    protected function _init()
+    {
+        $this->model = new Feeds\Model($this->db, $this->lang);
+    }
+
     public function actionList()
     {
         if (empty($_POST) === false) {
-            if (empty($_POST['feed_type']) || in_array($_POST['feed_type'], array('RSS 1.0', 'RSS 2.0', 'ATOM')) === false)
-                $errors['mail'] = $this->lang->t('feeds', 'select_feed_type');
+            try {
+                $this->model->validateSettings($_POST);
 
-            if (isset($errors) === true) {
-                $this->view->assign('error_msg', Core\Functions::errorBox($errors));
-            } elseif (Core\Validate::formToken() === false) {
-                $this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-            } else {
                 $data = array(
                     'feed_image' => Core\Functions::strEncode($_POST['feed_image']),
                     'feed_type' => $_POST['feed_type']
@@ -32,24 +39,27 @@ class Admin extends Core\Modules\Controller\Admin
                 $this->session->unsetFormToken();
 
                 Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/feeds');
+            } catch (Core\Exceptions\InvalidFormToken $e) {
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/feeds');
+            } catch (Core\Exceptions\ValidationFailed $e) {
+                $this->view->assign('error_msg', $e->getMessage());
             }
         }
-        if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-            Core\Functions::getRedirectMessage();
 
-            $settings = Core\Config::getSettings('feeds');
+        Core\Functions::getRedirectMessage();
 
-            $feed_type = array(
-                'RSS 1.0',
-                'RSS 2.0',
-                'ATOM'
-            );
-            $this->view->assign('feed_types', Core\Functions::selectGenerator('feed_type', $feed_type, $feed_type, $settings['feed_type']));
+        $settings = Core\Config::getSettings('feeds');
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $settings);
+        $feed_type = array(
+            'RSS 1.0',
+            'RSS 2.0',
+            'ATOM'
+        );
+        $this->view->assign('feed_types', Core\Functions::selectGenerator('feed_type', $feed_type, $feed_type, $settings['feed_type']));
 
-            $this->session->generateFormToken();
-        }
+        $this->view->assign('form', empty($_POST) === false ? $_POST : $settings);
+
+        $this->session->generateFormToken();
     }
 
 }

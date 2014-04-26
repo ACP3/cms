@@ -92,19 +92,19 @@ class Frontend extends Core\Modules\Controller
             $contact = array();
             $contact[0]['name'] = 'mail';
             $contact[0]['lang'] = $this->lang->t('system', 'email_address');
-            $contact[0]['value'] = isset($_POST['submit']) ? $_POST['mail'] : $user['mail'];
+            $contact[0]['value'] = empty($_POST) === false ? $_POST['mail'] : $user['mail'];
             $contact[0]['maxlength'] = '120';
             $contact[1]['name'] = 'website';
             $contact[1]['lang'] = $this->lang->t('system', 'website');
-            $contact[1]['value'] = isset($_POST['submit']) ? $_POST['website'] : $user['website'];
+            $contact[1]['value'] = empty($_POST) === false ? $_POST['website'] : $user['website'];
             $contact[1]['maxlength'] = '120';
             $contact[2]['name'] = 'icq';
             $contact[2]['lang'] = $this->lang->t('users', 'icq');
-            $contact[2]['value'] = isset($_POST['submit']) ? $_POST['icq'] : $user['icq'];
+            $contact[2]['value'] = empty($_POST) === false ? $_POST['icq'] : $user['icq'];
             $contact[2]['maxlength'] = '9';
             $contact[3]['name'] = 'skype';
             $contact[3]['lang'] = $this->lang->t('users', 'skype');
-            $contact[3]['value'] = isset($_POST['submit']) ? $_POST['skype'] : $user['skype'];
+            $contact[3]['value'] = empty($_POST) === false ? $_POST['skype'] : $user['skype'];
             $contact[3]['maxlength'] = '28';
             $this->view->assign('contact', $contact);
 
@@ -119,7 +119,7 @@ class Frontend extends Core\Modules\Controller
             }
             $this->view->assign('countries', $countries_select);
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $user);
+            $this->view->assign('form', empty($_POST) === false ? $_POST : $user);
 
             $this->session->generateFormToken();
         }
@@ -212,7 +212,7 @@ class Frontend extends Core\Modules\Controller
             );
             $this->view->assign('birthday_display', Core\Functions::selectGenerator('birthday_display', array(0, 1, 2), $lang_birthday_display, $user['birthday_display'], 'checked'));
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $user);
+            $this->view->assign('form', empty($_POST) === false ? $_POST : $user);
 
             $this->session->generateFormToken();
         }
@@ -274,7 +274,7 @@ class Frontend extends Core\Modules\Controller
 
             $defaults = array('nick_mail' => '');
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
+            $this->view->assign('form', empty($_POST) === false ? $_POST : $defaults);
 
             if (Core\Modules::hasPermission('captcha', 'image') === true) {
                 $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());
@@ -432,7 +432,7 @@ class Frontend extends Core\Modules\Controller
                 'mail' => '',
             );
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
+            $this->view->assign('form', empty($_POST) === false ? $_POST : $defaults);
 
             if (Core\Modules::hasPermission('captcha', 'image') === true) {
                 $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());

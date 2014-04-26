@@ -47,7 +47,7 @@ class Admin extends Core\Modules\Controller\Admin
             }
         }
 
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('index_name' => '', 'title' => ''));
+        $this->view->assign('form', empty($_POST) === false ? $_POST : array('index_name' => '', 'title' => ''));
 
         $this->session->generateFormToken();
     }
@@ -146,7 +146,7 @@ class Admin extends Core\Modules\Controller\Admin
         // Daten an Smarty übergeben
         $this->view->assign('pages_list', Menus\Helpers::menuItemsList());
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
+        $this->view->assign('form', empty($_POST) === false ? $_POST : $defaults);
 
         $this->session->generateFormToken();
     }
@@ -234,7 +234,7 @@ class Admin extends Core\Modules\Controller\Admin
                 }
             }
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $menu);
+            $this->view->assign('form', empty($_POST) === false ? $_POST : $menu);
 
             $this->session->generateFormToken();
         } else {
@@ -327,7 +327,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             if (Core\Modules::isActive('articles') === true) {
                 $matches = array();
-                if (!isset($_POST['submit']) && $menuItem['mode'] == 4) {
+                if (!empty($_POST) === false && $menuItem['mode'] == 4) {
                     preg_match_all('/^(articles\/details\/id_([0-9]+)\/)$/', $menuItem['uri'], $matches);
                 }
 
@@ -337,7 +337,7 @@ class Admin extends Core\Modules\Controller\Admin
             // Daten an Smarty übergeben
             $this->view->assign('pages_list', Menus\Helpers::menuItemsList($menuItem['parent_id'], $menuItem['left_id'], $menuItem['right_id']));
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields($menuItem['uri']));
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $menuItem);
+            $this->view->assign('form', empty($_POST) === false ? $_POST : $menuItem);
 
             $this->session->generateFormToken();
         } else {

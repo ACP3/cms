@@ -60,7 +60,7 @@ class Frontend extends Core\Modules\Controller
             $defaults['name'] = !empty($defaults['realname']) ? $defaults['realname'] : $defaults['nickname'];
             $defaults['message'] = '';
 
-            if (isset($_POST['submit'])) {
+            if (empty($_POST) === false) {
                 $_POST['name_disabled'] = $disabled;
                 $_POST['mail_disabled'] = $disabled;
             } else {
@@ -76,7 +76,7 @@ class Frontend extends Core\Modules\Controller
                 'message' => '',
             );
         }
-        $this->view->assign('form', isset($_POST['submit']) ? array_merge($defaults, $_POST) : $defaults);
+        $this->view->assign('form', empty($_POST) === false ? array_merge($defaults, $_POST) : $defaults);
         $this->view->assign('copy_checked', Core\Functions::selectEntry('copy', 1, 0, 'checked'));
 
         if (Core\Modules::hasPermission('captcha', 'image') === true) {

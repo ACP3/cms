@@ -84,4 +84,44 @@ class Model extends Core\Model
         }
     }
 
+    public function validateSqlExport(array $formData)
+    {
+        $this->validateFormKey();
+
+        $errors = array();
+        if (empty($formData['tables']) || is_array($formData['tables']) === false) {
+            $errors['tables'] = $this->lang->t('system', 'select_sql_tables');
+        }
+        if ($formData['output'] !== 'file' && $formData['output'] !== 'text') {
+            $errors[] = $this->lang->t('system', 'select_output');
+        }
+        if (in_array($formData['export_type'], array('complete', 'structure', 'data')) === false) {
+            $errors[] = $this->lang->t('system', 'select_export_type');
+        }
+
+        if (!empty($errors)) {
+            throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
+        }
+    }
+
+    public function validateSqlImport(array $formData, array $file)
+    {
+        $this->validateFormKey();
+
+        $errors = array();
+        if (empty($formData['text']) && empty($file['size'])) {
+            $errors['text'] = $this->lang->t('system', 'type_in_text_or_select_sql_file');
+        }
+        if (!empty($file['size']) &&
+            (!Core\Validate::mimeType($file['tmp_name'], 'text/plain') ||
+                $_FILES['file']['error'] !== UPLOAD_ERR_OK)
+        ) {
+            $errors['file'] = $this->lang->t('system', 'select_sql_file');
+        }
+
+        if (!empty($errors)) {
+            throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
+        }
+    }
+
 }

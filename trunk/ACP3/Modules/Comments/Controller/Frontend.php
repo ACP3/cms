@@ -99,7 +99,7 @@ class Frontend extends Core\Modules\Controller
             $user = $this->auth->getUserInfo();
             $disabled = ' readonly="readonly" class="readonly"';
 
-            if (isset($_POST['submit'])) {
+            if (empty($_POST) === false) {
                 $_POST['name'] = $user['nickname'];
                 $_POST['name_disabled'] = $disabled;
             } else {
@@ -112,7 +112,7 @@ class Frontend extends Core\Modules\Controller
             $defaults['name_disabled'] = '';
             $defaults['message'] = '';
         }
-        $this->view->assign('form', isset($_POST['submit']) ? array_merge($defaults, $_POST) : $defaults);
+        $this->view->assign('form', empty($_POST) === false ? array_merge($defaults, $_POST) : $defaults);
 
         if (Core\Modules::hasPermission('captcha', 'image') === true) {
             $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());

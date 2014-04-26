@@ -68,7 +68,7 @@ class Admin extends Core\Modules\Controller\Admin
             }
         }
 
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('title' => '', 'description' => ''));
+        $this->view->assign('form', empty($_POST) === false ? $_POST : array('title' => '', 'description' => ''));
 
         $mod_list = Core\Modules::getActiveModules();
         foreach ($mod_list as $name => $info) {
@@ -168,7 +168,7 @@ class Admin extends Core\Modules\Controller\Admin
                 }
             }
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $category);
+            $this->view->assign('form', empty($_POST) === false ? $_POST : $category);
 
             $this->session->generateFormToken();
         } else {
@@ -225,7 +225,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         $settings = Core\Config::getSettings('categories');
 
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : $settings);
+        $this->view->assign('form', empty($_POST) === false ? $_POST : $settings);
 
         $this->session->generateFormToken();
     }

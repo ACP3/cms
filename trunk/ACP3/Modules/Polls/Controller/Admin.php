@@ -75,7 +75,7 @@ class Admin extends Core\Modules\Controller\Admin
                 ++$i;
             }
             // Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
-            if (!empty($_POST['answers'][$i - 1]) && isset($_POST['submit']) === false) {
+            if (!empty($_POST['answers'][$i - 1])) {
                 $answers[$i]['number'] = $i;
                 $answers[$i]['value'] = '';
             }
@@ -177,7 +177,7 @@ class Admin extends Core\Modules\Controller\Admin
                     ++$i;
                 }
                 // Neue Antwort nur hinzufügen, wenn die vorangegangene nicht leer ist
-                if (!empty($_POST['answers'][$i - 1]['value']) && isset($_POST['submit']) === false) {
+                if (!empty($_POST['answers'][$i - 1]['value'])) {
                     $answers[$i]['number'] = $i;
                     $answers[$i]['id'] = '0';
                     $answers[$i]['value'] = '';
