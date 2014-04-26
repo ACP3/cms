@@ -61,7 +61,7 @@ class Admin extends Core\Modules\Controller\Admin
             }
         }
 
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('name' => ''));
+        $this->view->assign('form', empty($_POST) === false ? $_POST : array('name' => ''));
 
         $roles = Core\ACL::getAllRoles();
         $c_roles = count($roles);
@@ -81,13 +81,13 @@ class Admin extends Core\Modules\Controller\Admin
                 // Für jede Privilegie ein Input-Feld zuweisen
                 $select = array();
                 $select[0]['value'] = 0;
-                $select[0]['selected'] = isset($_POST['submit']) && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 0 ? ' checked="checked"' : '';
+                $select[0]['selected'] = empty($_POST) === false && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 0 ? ' checked="checked"' : '';
                 $select[0]['lang'] = $this->lang->t('permissions', 'deny_access');
                 $select[1]['value'] = 1;
-                $select[1]['selected'] = isset($_POST['submit']) && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 1 ? ' checked="checked"' : '';
+                $select[1]['selected'] = empty($_POST) === false && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 1 ? ' checked="checked"' : '';
                 $select[1]['lang'] = $this->lang->t('permissions', 'allow_access');
                 $select[2]['value'] = 2;
-                $select[2]['selected'] = !isset($_POST['submit']) || isset($_POST['submit']) && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 2 ? ' checked="checked"' : '';
+                $select[2]['selected'] = !empty($_POST) === false || empty($_POST) === false && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 2 ? ' checked="checked"' : '';
                 $select[2]['lang'] = $this->lang->t('permissions', 'inherit_access');
                 $privileges[$j]['select'] = $select;
             }
@@ -144,7 +144,7 @@ class Admin extends Core\Modules\Controller\Admin
         }
         $this->view->assign('privileges', $privileges);
 
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('resource' => ''));
+        $this->view->assign('form', empty($_POST) === false ? $_POST : array('resource' => ''));
 
         $this->session->generateFormToken();
     }
@@ -272,14 +272,14 @@ class Admin extends Core\Modules\Controller\Admin
                     $privilegeValue = isset($rules[$moduleDir][$privileges[$j]['key']]['permission']) ? $rules[$moduleDir][$privileges[$j]['key']]['permission'] : 0;
                     $select = array();
                     $select[0]['value'] = 0;
-                    $select[0]['selected'] = !isset($_POST['submit']) && $privilegeValue == 0 || isset($_POST['submit']) && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 0 ? ' checked="checked"' : '';
+                    $select[0]['selected'] = !empty($_POST) === false && $privilegeValue == 0 || empty($_POST) === false && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 0 ? ' checked="checked"' : '';
                     $select[0]['lang'] = $this->lang->t('permissions', 'deny_access');
                     $select[1]['value'] = 1;
-                    $select[1]['selected'] = !isset($_POST['submit']) && $privilegeValue == 1 || isset($_POST['submit']) && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 1 ? ' checked="checked"' : '';
+                    $select[1]['selected'] = !empty($_POST) === false && $privilegeValue == 1 || empty($_POST) === false && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 1 ? ' checked="checked"' : '';
                     $select[1]['lang'] = $this->lang->t('permissions', 'allow_access');
                     if ($this->uri->id != 1) {
                         $select[2]['value'] = 2;
-                        $select[2]['selected'] = !isset($_POST['submit']) && $privilegeValue == 2 || isset($_POST['submit']) && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 2 ? ' checked="checked"' : '';
+                        $select[2]['selected'] = !empty($_POST) === false && $privilegeValue == 2 || empty($_POST) === false && $_POST['privileges'][$params['id']][$privileges[$j]['id']] == 2 ? ' checked="checked"' : '';
                         $select[2]['lang'] = $this->lang->t('permissions', 'inherit_access');
                         //$privileges[$j]['calculated'] = sprintf($this->lang->t('permissions', 'calculated_permission'), $rules[$privileges[$j]['key']]['access'] === true ? $this->lang->t('permissions', 'allow_access') :  $this->lang->t('permissions', 'deny_access'));
                     }
@@ -290,7 +290,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             $this->view->assign('modules', $modules);
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $role);
+            $this->view->assign('form', empty($_POST) === false ? $_POST : $role);
 
             $this->session->generateFormToken();
         } else {
@@ -336,7 +336,7 @@ class Admin extends Core\Modules\Controller\Admin
             }
             $this->view->assign('privileges', $privileges);
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('resource' => $resource['page'], 'modules' => $resource['module_name']));
+            $this->view->assign('form', empty($_POST) === false ? $_POST : array('resource' => $resource['page'], 'modules' => $resource['module_name']));
 
             $this->session->generateFormToken();
         } else {

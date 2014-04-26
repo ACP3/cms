@@ -115,7 +115,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
+        $this->view->assign('form', empty($_POST) === false ? $_POST : $defaults);
 
         $this->session->generateFormToken();
     }
@@ -242,7 +242,7 @@ class Admin extends Core\Modules\Controller\Admin
             $this->view->assign('current_file', $dl['file']);
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('files/details/id_' . $this->uri->id));
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $dl);
+            $this->view->assign('form', empty($_POST) === false ? $_POST : $dl);
 
             $this->session->generateFormToken();
         } else {

@@ -95,7 +95,7 @@ class Admin extends Core\Modules\Controller\Admin
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
         $defaults = array('title' => '', 'text' => '', 'uri' => '', 'link_title' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => '');
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
+        $this->view->assign('form', empty($_POST) === false ? $_POST : $defaults);
 
         $this->session->generateFormToken();
     }
@@ -200,7 +200,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('news/details/id_' . $this->uri->id));
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $news);
+            $this->view->assign('form', empty($_POST) === false ? $_POST : $news);
 
             $this->session->generateFormToken();
         } else {
@@ -266,7 +266,7 @@ class Admin extends Core\Modules\Controller\Admin
         $lang_readmore = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
         $this->view->assign('readmore', Core\Functions::selectGenerator('readmore', array(1, 0), $lang_readmore, $settings['readmore'], 'checked'));
 
-        $this->view->assign('readmore_chars', isset($_POST['submit']) ? $_POST['readmore_chars'] : $settings['readmore_chars']);
+        $this->view->assign('readmore_chars', empty($_POST) === false ? $_POST['readmore_chars'] : $settings['readmore_chars']);
 
         if (Core\Modules::isActive('comments') === true) {
             $lang_allow_comments = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));

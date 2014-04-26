@@ -81,7 +81,7 @@ class Admin extends Core\Modules\Controller\Admin
             }
         }
 
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('title' => '', 'text' => ''));
+        $this->view->assign('form', empty($_POST) === false ? $_POST : array('title' => '', 'text' => ''));
 
         $lang_test = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
         $this->view->assign('test', Core\Functions::selectGenerator('test', array(1, 0), $lang_test, 0, 'checked'));
@@ -179,7 +179,7 @@ class Admin extends Core\Modules\Controller\Admin
                 }
             }
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $newsletter);
+            $this->view->assign('form', empty($_POST) === false ? $_POST : $newsletter);
 
             $lang_test = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
             $this->view->assign('test', Core\Functions::selectGenerator('test', array(1, 0), $lang_test, 0, 'checked'));
@@ -290,7 +290,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         $settings = Core\Config::getSettings('newsletter');
 
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : $settings);
+        $this->view->assign('form', empty($_POST) === false ? $_POST : $settings);
 
         $this->session->generateFormToken();
     }

@@ -133,19 +133,19 @@ class Admin extends Core\Modules\Controller\Admin
         $contact = array();
         $contact[0]['name'] = 'mail';
         $contact[0]['lang'] = $this->lang->t('system', 'email_address');
-        $contact[0]['value'] = isset($_POST['submit']) ? $_POST['mail'] : '';
+        $contact[0]['value'] = empty($_POST) === false ? $_POST['mail'] : '';
         $contact[0]['maxlength'] = '120';
         $contact[1]['name'] = 'website';
         $contact[1]['lang'] = $this->lang->t('system', 'website');
-        $contact[1]['value'] = isset($_POST['submit']) ? $_POST['website'] : '';
+        $contact[1]['value'] = empty($_POST) === false ? $_POST['website'] : '';
         $contact[1]['maxlength'] = '120';
         $contact[2]['name'] = 'icq';
         $contact[2]['lang'] = $this->lang->t('users', 'icq');
-        $contact[2]['value'] = isset($_POST['submit']) ? $_POST['icq'] : '';
+        $contact[2]['value'] = empty($_POST) === false ? $_POST['icq'] : '';
         $contact[2]['maxlength'] = '9';
         $contact[3]['name'] = 'skype';
         $contact[3]['lang'] = $this->lang->t('users', 'skype');
-        $contact[3]['value'] = isset($_POST['submit']) ? $_POST['skype'] : '';
+        $contact[3]['value'] = empty($_POST) === false ? $_POST['skype'] : '';
         $contact[3]['maxlength'] = '28';
         $this->view->assign('contact', $contact);
 
@@ -189,7 +189,7 @@ class Admin extends Core\Modules\Controller\Admin
             'date_format_short' => CONFIG_DATE_FORMAT_SHORT
         );
 
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : $defaults);
+        $this->view->assign('form', empty($_POST) === false ? $_POST : $defaults);
 
         $this->session->generateFormToken();
     }
@@ -348,19 +348,19 @@ class Admin extends Core\Modules\Controller\Admin
             $contact = array();
             $contact[0]['name'] = 'mail';
             $contact[0]['lang'] = $this->lang->t('system', 'email_address');
-            $contact[0]['value'] = isset($_POST['submit']) ? $_POST['mail'] : $user['mail'];
+            $contact[0]['value'] = empty($_POST) === false ? $_POST['mail'] : $user['mail'];
             $contact[0]['maxlength'] = '120';
             $contact[1]['name'] = 'website';
             $contact[1]['lang'] = $this->lang->t('system', 'website');
-            $contact[1]['value'] = isset($_POST['submit']) ? $_POST['website'] : $user['website'];
+            $contact[1]['value'] = empty($_POST) === false ? $_POST['website'] : $user['website'];
             $contact[1]['maxlength'] = '120';
             $contact[2]['name'] = 'icq';
             $contact[2]['lang'] = $this->lang->t('users', 'icq');
-            $contact[2]['value'] = isset($_POST['submit']) ? $_POST['icq'] : $user['icq'];
+            $contact[2]['value'] = empty($_POST) === false ? $_POST['icq'] : $user['icq'];
             $contact[2]['maxlength'] = '9';
             $contact[3]['name'] = 'skype';
             $contact[3]['lang'] = $this->lang->t('users', 'skype');
-            $contact[3]['value'] = isset($_POST['submit']) ? $_POST['skype'] : $user['skype'];
+            $contact[3]['value'] = empty($_POST) === false ? $_POST['skype'] : $user['skype'];
             $contact[3]['maxlength'] = '28';
             $this->view->assign('contact', $contact);
 
@@ -391,7 +391,7 @@ class Admin extends Core\Modules\Controller\Admin
             );
             $this->view->assign('birthday_display', Core\Functions::selectGenerator('birthday_display', array(0, 1, 2), $lang_birthday_display, $user['birthday_display'], 'checked'));
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $user);
+            $this->view->assign('form', empty($_POST) === false ? $_POST : $user);
 
             $this->session->generateFormToken();
         } else {
@@ -434,7 +434,7 @@ class Admin extends Core\Modules\Controller\Admin
         $lang_registration = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
         $this->view->assign('registration', Core\Functions::selectGenerator('enable_registration', array(1, 0), $lang_registration, $settings['enable_registration'], 'checked'));
 
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('mail' => $settings['mail']));
+        $this->view->assign('form', empty($_POST) === false ? $_POST : array('mail' => $settings['mail']));
 
         $this->session->generateFormToken();
     }

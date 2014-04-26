@@ -59,7 +59,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('title' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => ''));
+        $this->view->assign('form', empty($_POST) === false ? $_POST : array('title' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => ''));
 
         $this->session->generateFormToken();
     }
@@ -126,7 +126,7 @@ class Admin extends Core\Modules\Controller\Admin
             }
 
             $this->view->assign('galleries', $galleries);
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('description' => ''));
+            $this->view->assign('form', empty($_POST) === false ? $_POST : array('description' => ''));
             $this->view->assign('gallery_id', $this->uri->id);
 
             $this->session->generateFormToken();
@@ -243,7 +243,7 @@ class Admin extends Core\Modules\Controller\Admin
             // Datumsauswahl
             $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end'), array($gallery['start'], $gallery['end'])));
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $gallery);
+            $this->view->assign('form', empty($_POST) === false ? $_POST : $gallery);
 
             $pictures = $this->model->getPicturesByGalleryId((int)$this->uri->id);
             $c_pictures = count($pictures);
@@ -329,7 +329,7 @@ class Admin extends Core\Modules\Controller\Admin
                 $this->view->assign('options', $options);
             }
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $picture);
+            $this->view->assign('form', empty($_POST) === false ? $_POST : $picture);
             $this->view->assign('gallery_id', $this->uri->id);
 
             $this->session->generateFormToken();
@@ -434,7 +434,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         $this->view->assign('sidebar_entries', Core\Functions::recordsPerPage((int)$settings['sidebar'], 1, 10));
 
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : $settings);
+        $this->view->assign('form', empty($_POST) === false ? $_POST : $settings);
 
         $this->session->generateFormToken();
     }

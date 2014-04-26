@@ -144,7 +144,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         $settings = Core\Config::getSettings('system');
 
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : $settings);
+        $this->view->assign('form', empty($_POST) === false ? $_POST : $settings);
 
         $this->session->generateFormToken();
     }
@@ -391,98 +391,61 @@ class Admin extends Core\Modules\Controller\Admin
             ->append($this->lang->t('system', 'acp_sql_export'));
 
         if (empty($_POST) === false) {
-            if (empty($_POST['tables']) || is_array($_POST['tables']) === false)
-                $errors['tables'] = $this->lang->t('system', 'select_sql_tables');
-            if ($_POST['output'] !== 'file' && $_POST['output'] !== 'text')
-                $errors[] = $this->lang->t('system', 'select_output');
-            if (in_array($_POST['export_type'], array('complete', 'structure', 'data')) === false)
-                $errors[] = $this->lang->t('system', 'select_export_type');
+            try {
+                $this->model->validateSqlExport($_POST);
 
-            if (isset($errors) === true) {
-                $this->view->assign('error_msg', Core\Functions::errorBox($errors));
-            } elseif (Core\Validate::formToken() === false) {
-                $this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-            } else {
                 $this->session->unsetFormToken();
 
-                $structure = '';
-                $data = '';
-                foreach ($_POST['tables'] as $table) {
-                    // Struktur ausgeben
-                    if ($_POST['export_type'] === 'complete' || $_POST['export_type'] === 'structure') {
-                        $result = $this->db->fetchAssoc('SHOW CREATE TABLE ' . $table);
-                        if (!empty($result)) {
-                            $structure .= isset($_POST['drop']) && $_POST['drop'] == 1 ? 'DROP TABLE IF EXISTS `' . $table . '`;' . "\n\n" : '';
-                            $structure .= $result['Create Table'] . ';' . "\n\n";
-                        }
-                    }
-
-                    // Datensätze ausgeben
-                    if ($_POST['export_type'] === 'complete' || $_POST['export_type'] === 'data') {
-                        $resultsets = $this->db->fetchAll('SELECT * FROM ' . DB_PRE . substr($table, strlen(CONFIG_DB_PRE)));
-                        if (count($resultsets) > 0) {
-                            $fields = '';
-                            // Felder der jeweiligen Tabelle auslesen
-                            foreach (array_keys($resultsets[0]) as $field) {
-                                $fields .= '`' . $field . '`, ';
-                            }
-
-                            // Datensätze auslesen
-                            foreach ($resultsets as $row) {
-                                $values = '';
-                                foreach ($row as $value) {
-                                    $values .= '\'' . $value . '\', ';
-                                }
-                                $data .= 'INSERT INTO `' . $table . '` (' . substr($fields, 0, -2) . ') VALUES (' . substr($values, 0, -2) . ');' . "\n";
-                            }
-                        }
-                    }
-                }
-                $export = $structure . $data;
+                $export = System\Helpers::exportDatabase($_POST['tables'], $_POST['export_type'], isset($_POST['drop']) === true);
 
                 // Als Datei ausgeben
                 if ($_POST['output'] === 'file') {
                     header('Content-Type: text/sql');
                     header('Content-Disposition: attachment; filename=' . CONFIG_DB_NAME . '_export.sql');
+                    header('Content-Length: ' . strlen($export));
                     exit($export);
-                    // Im Browser ausgeben
-                } else {
+                } else { // Im Browser ausgeben
                     $this->view->assign('export', htmlentities($export, ENT_QUOTES, 'UTF-8'));
                 }
+
+                return;
+            } catch (Core\Exceptions\InvalidFormToken $e) {
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/system/sql_import');
+            } catch (Core\Exceptions\ValidationFailed $e) {
+                $this->view->assign('error_msg', $e->getMessage());
             }
         }
-        if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-            $dbTables = $this->model->getSchemaTables();
-            $tables = array();
-            foreach ($dbTables as $row) {
-                $table = $row['TABLE_NAME'];
-                if (strpos($table, CONFIG_DB_PRE) === 0) {
-                    $tables[$table]['name'] = $table;
-                    $tables[$table]['selected'] = Core\Functions::selectEntry('tables', $table);
-                }
+
+        $dbTables = $this->model->getSchemaTables();
+        $tables = array();
+        foreach ($dbTables as $row) {
+            $table = $row['TABLE_NAME'];
+            if (strpos($table, CONFIG_DB_PRE) === 0) {
+                $tables[$table]['name'] = $table;
+                $tables[$table]['selected'] = Core\Functions::selectEntry('tables', $table);
             }
-            ksort($tables);
-            $this->view->assign('tables', $tables);
-
-            // Ausgabe
-            $lang_output = array($this->lang->t('system', 'output_as_file'), $this->lang->t('system', 'output_as_text'));
-            $this->view->assign('output', Core\Functions::selectGenerator('output', array('file', 'text'), $lang_output, 'file', 'checked'));
-
-            // Exportart
-            $lang_export_type = array(
-                $this->lang->t('system', 'complete_export'),
-                $this->lang->t('system', 'export_structure'),
-                $this->lang->t('system', 'export_data')
-            );
-            $this->view->assign('export_type', Core\Functions::selectGenerator('export_type', array('complete', 'structure', 'data'), $lang_export_type, 'complete', 'checked'));
-
-            $drop = array();
-            $drop['checked'] = Core\Functions::selectEntry('drop', '1', '', 'checked');
-            $drop['lang'] = $this->lang->t('system', 'drop_tables');
-            $this->view->assign('drop', $drop);
-
-            $this->session->generateFormToken();
         }
+        ksort($tables);
+        $this->view->assign('tables', $tables);
+
+        // Ausgabe
+        $lang_output = array($this->lang->t('system', 'output_as_file'), $this->lang->t('system', 'output_as_text'));
+        $this->view->assign('output', Core\Functions::selectGenerator('output', array('file', 'text'), $lang_output, 'file', 'checked'));
+
+        // Exportart
+        $lang_export_type = array(
+            $this->lang->t('system', 'complete_export'),
+            $this->lang->t('system', 'export_structure'),
+            $this->lang->t('system', 'export_data')
+        );
+        $this->view->assign('export_type', Core\Functions::selectGenerator('export_type', array('complete', 'structure', 'data'), $lang_export_type, 'complete', 'checked'));
+
+        $drop = array();
+        $drop['checked'] = Core\Functions::selectEntry('drop', '1', '', 'checked');
+        $drop['lang'] = $this->lang->t('system', 'drop_tables');
+        $this->view->assign('drop', $drop);
+
+        $this->session->generateFormToken();
     }
 
     public function actionSqlImport()
@@ -492,37 +455,28 @@ class Admin extends Core\Modules\Controller\Admin
             ->append($this->lang->t('system', 'acp_sql_import'));
 
         if (empty($_POST) === false) {
-            if (isset($_FILES['file'])) {
-                $file['tmp_name'] = $_FILES['file']['tmp_name'];
-                $file['name'] = $_FILES['file']['name'];
-                $file['size'] = $_FILES['file']['size'];
-            }
+            try {
+                $file = array();
+                if (isset($_FILES['file'])) {
+                    $file['tmp_name'] = $_FILES['file']['tmp_name'];
+                    $file['name'] = $_FILES['file']['name'];
+                    $file['size'] = $_FILES['file']['size'];
+                }
 
-            if (empty($_POST['text']) && empty($file['size']))
-                $errors['text'] = $this->lang->t('system', 'type_in_text_or_select_sql_file');
-            if (!empty($file['size']) &&
-                (!Core\Validate::mimeType($file['tmp_name'], 'text/plain') ||
-                    $_FILES['file']['error'] !== UPLOAD_ERR_OK)
-            )
-                $errors['file'] = $this->lang->t('system', 'select_sql_file');
+                $this->model->validateSqlImport($_POST, $file);
 
-            if (isset($errors) === true) {
-                $this->view->assign('error_msg', Core\Functions::errorBox($errors));
-            } elseif (Core\Validate::formToken() === false) {
-                $this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'form_already_submitted')));
-            } else {
                 $this->session->unsetFormToken();
 
                 $data = isset($file) ? file_get_contents($file['tmp_name']) : $_POST['text'];
-                $data_ary = explode(";\n", str_replace(array("\r\n", "\r", "\n"), "\n", $data));
-                $sql_queries = array();
+                $importData = explode(";\n", str_replace(array("\r\n", "\r", "\n"), "\n", $data));
+                $sqlQueries = array();
 
                 $i = 0;
-                foreach ($data_ary as $row) {
+                foreach ($importData as $row) {
                     if (!empty($row)) {
                         $bool = $this->db->query($row);
-                        $sql_queries[$i]['query'] = str_replace("\n", '<br />', $row);
-                        $sql_queries[$i]['color'] = $bool !== null ? '090' : 'f00';
+                        $sqlQueries[$i]['query'] = str_replace("\n", '<br />', $row);
+                        $sqlQueries[$i]['color'] = $bool !== null ? '090' : 'f00';
                         ++$i;
 
                         if (!$bool) {
@@ -531,16 +485,20 @@ class Admin extends Core\Modules\Controller\Admin
                     }
                 }
 
-                $this->view->assign('sql_queries', $sql_queries);
+                $this->view->assign('sql_queries', $sqlQueries);
 
                 Core\Cache::purge();
+                return;
+            } catch (Core\Exceptions\InvalidFormToken $e) {
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/system/sql_import');
+            } catch (Core\Exceptions\ValidationFailed $e) {
+                $this->view->assign('error_msg', $e->getMessage());
             }
         }
-        if (isset($_POST['submit']) === false || isset($errors) === true && is_array($errors) === true) {
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('text' => ''));
 
-            $this->session->generateFormToken();
-        }
+        $this->view->assign('form', empty($_POST) === false ? $_POST : array('text' => ''));
+
+        $this->session->generateFormToken();
     }
 
     public function actionUpdateCheck()

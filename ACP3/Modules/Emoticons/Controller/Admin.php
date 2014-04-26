@@ -59,7 +59,7 @@ class Admin extends Core\Modules\Controller\Admin
             }
         }
 
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : array('code' => '', 'description' => ''));
+        $this->view->assign('form', empty($_POST) === false ? $_POST : array('code' => '', 'description' => ''));
 
         $this->session->generateFormToken();
     }
@@ -128,7 +128,7 @@ class Admin extends Core\Modules\Controller\Admin
                 }
             }
 
-            $this->view->assign('form', isset($_POST['submit']) ? $_POST : $emoticon);
+            $this->view->assign('form', empty($_POST) === false ? $_POST : $emoticon);
 
             $this->session->generateFormToken();
         } else {
@@ -180,7 +180,7 @@ class Admin extends Core\Modules\Controller\Admin
             }
         }
 
-        $this->view->assign('form', isset($_POST['submit']) ? $_POST : Core\Config::getSettings('emoticons'));
+        $this->view->assign('form', empty($_POST) === false ? $_POST : Core\Config::getSettings('emoticons'));
 
         $this->session->generateFormToken();
     }
