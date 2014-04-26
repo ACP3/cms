@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'newsletter';
-    const SCHEMA_VERSION = 35;
+    const SCHEMA_VERSION = 37;
 
     public function __construct()
     {
@@ -31,6 +31,7 @@ class Installer extends Modules\AbstractInstaller
                 `date` DATETIME NOT NULL,
                 `title` VARCHAR(120) NOT NULL,
                 `text` TEXT NOT NULL,
+                `html` TINYINT(1) NOT NULL,
                 `status` TINYINT(1) UNSIGNED NOT NULL,
                 `user_id` INT UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
@@ -51,6 +52,7 @@ class Installer extends Modules\AbstractInstaller
         return array(
             'mail' => '',
             'mailsig' => '',
+            'html' => 1
         );
     }
 
@@ -58,8 +60,8 @@ class Installer extends Modules\AbstractInstaller
     {
         return array(
             31 => array(
-                "RENAME TABLE `{pre}newsletter_archive` TO `{pre}newsletters`",
-                "ALTER TABLE `{pre}newsletters` CHANGE `subject` `title` VARCHAR(120) {charset} NOT NULL",
+                "RENAME TABLE `{pre}newsletter_archive` TO `{pre}newsletters`;",
+                "ALTER TABLE `{pre}newsletters` CHANGE `subject` `title` VARCHAR(120) {charset} NOT NULL;",
             ),
             32 => array(
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'archive', '', 1);",
@@ -74,6 +76,12 @@ class Installer extends Modules\AbstractInstaller
                 "DELETE FROM `{pre}acl_resources` WHERE module_id = '" . $this->getModuleId() . "' AND page = 'archive';",
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'list_archive', '', 1);",
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'details', '', 1);",
+            ),
+            36 => array(
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', " . $this->getModuleId() . ", 'html', '1');",
+            ),
+            37 => array(
+                "ALTER TABLE `{pre}newsletters` ADD `html` TINYINT(1) NOT NULL;",
             )
         );
     }

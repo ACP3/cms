@@ -185,7 +185,7 @@ class Session
     public function session_gc($session_lifetime = 1800)
     {
         if ($session_lifetime == 0) {
-            return;
+            return false;
         }
 
         $this->db->executeUpdate('DELETE FROM ' . DB_PRE . 'sessions WHERE session_starttime + ? < ?', array($session_lifetime, time()));
@@ -205,11 +205,13 @@ class Session
             $_SESSION[self::XSRF_TOKEN_NAME] = array();
         }
 
-        $token = sha1(uniqid(mt_rand(), true));
         $path = !empty($path) ? $path . (!preg_match('/\/$/', $path) ? '/' : '') : $this->uri->query;
-        $_SESSION[self::XSRF_TOKEN_NAME][$path] = $token;
 
-        $this->view->assign('form_token', '<input type="hidden" name="' . self::XSRF_TOKEN_NAME . '" value="' . $token . '" />');
+        if (empty($_SESSION[self::XSRF_TOKEN_NAME][$path])) {
+            $_SESSION[self::XSRF_TOKEN_NAME][$path] = sha1(uniqid(mt_rand(), true));
+        }
+
+        $this->view->assign('form_token', '<input type="hidden" name="' . self::XSRF_TOKEN_NAME . '" value="' . $_SESSION[self::XSRF_TOKEN_NAME][$path] . '" />');
     }
 
     /**

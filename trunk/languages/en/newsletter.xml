@@ -31,6 +31,7 @@
     <item key="only_save">Only save</item>
     <item key="save_success">The newsletter has been successfully saved.</item>
     <item key="send_and_save">Send and save</item>
+    <item key="send_html_emails">Send HTML E-mails</item>
     <item key="status">Status</item>
     <item key="subject">Subject</item>
     <item key="subject_to_short">The subject should be at least 3 characters long.</item>
@@ -44,8 +45,8 @@
     <item key="subscribe_newsletter">Subscribe the newsletter</item>
     <item key="subscribe_success">The newsletter account has been successfully created.</item>
     <item key="subscribe_unsubscribe_the_newsletter">Subscribe/Unsubscribe the newsletter</item>
-    <item key="test_newsletter">Test newsletter</item>
-    <item key="test_nl_description">Will only be send to the E-mail adress which is stated in the newsletter settings.</item>
+    <item key="test_newsletter">Send Test newsletter</item>
+    <item key="test_newsletter_description">Will be send to the E-mail adress which is configured in the newsletter settings.</item>
     <item key="text">Text</item>
     <item key="text_to_short">The text should be at least 3 characters long.</item>
     <item key="unsubscribe">Unsubscribe</item>

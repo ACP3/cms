@@ -4,15 +4,26 @@
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal ajax-form">
     <div class="form-group">
         <label for="mail" class="col-lg-2 control-label">{lang t="system|email_address"}</label>
-
         <div class="col-lg-10">
             <input class="form-control" type="email" name="mail" id="mail" value="{$form.mail}" maxlength="120"></div>
     </div>
     <div class="form-group">
         <label for="mailsig" class="col-lg-2 control-label">{lang t="newsletter|mailsig"}</label>
-
         <div class="col-lg-10">
             <textarea class="form-control" name="mailsig" id="mailsig" cols="50" rows="3">{$form.mailsig}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="{$html.0.id}" class="col-lg-2 control-label">{lang t="newsletter|send_html_emails"}</label>
+        <div class="col-lg-10">
+            <div class="btn-group" data-toggle="buttons">
+                {foreach $html as $row}
+                    <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
+                        <input type="radio" name="html" id="{$row.id}" value="{$row.value}"{$row.checked}>
+                        {$row.lang}
+                    </label>
+                {/foreach}
+            </div>
         </div>
     </div>
     <div class="form-group">

@@ -26,6 +26,10 @@ class Functions
      */
     protected static $lang;
     /**
+     * @var SEO
+     */
+    protected static $seo;
+    /**
      * @var URI
      */
     protected static $uri;
@@ -46,6 +50,7 @@ class Functions
             static::$breadcrumb = Registry::get('Breadcrumb');
             static::$db = Registry::get('Db');
             static::$lang = Registry::get('Lang');
+            static::$seo = Registry::get('SEO');
             static::$uri = Registry::get('URI');
             static::$view = Registry::get('View');
         }
@@ -172,7 +177,8 @@ class Functions
         return $content;
     }
 
-    public static function outputJson(array $data) {
+    public static function outputJson(array $data)
+    {
         header('Content-type: application/json; charset="UTF-8"');
 
         echo json_encode($data);
@@ -348,19 +354,21 @@ class Functions
                 preg_match_all($regex, $text, $matches);
 
                 $currentPage = Validate::isNumber(static::$uri->page) === true && static::$uri->page <= $c_pages ? static::$uri->page : 1;
-                $next_page = !empty($pages[$currentPage]) ? static::$uri->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
-                $previous_page = $currentPage > 1 ? static::$uri->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
+                $nextPage = !empty($pages[$currentPage]) ? static::$uri->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
+                $previousPage = $currentPage > 1 ? static::$uri->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
 
-                if (!empty($next_page))
-                    SEO::setNextPage($next_page);
-                if (!empty($previous_page))
-                    SEO::setPreviousPage($previous_page);
+                if (!empty($nextPage)) {
+                    static::$seo->setNextPage($nextPage);
+                }
+                if (!empty($previousPage)) {
+                    static::$seo->setPreviousPage($previousPage);
+                }
 
                 $page = array(
                     'toc' => self::generateTOC($matches[0], $path),
                     'text' => $pages[$currentPage - 1],
-                    'next' => $next_page,
-                    'previous' => $previous_page,
+                    'next' => $nextPage,
+                    'previous' => $previousPage,
                 );
 
                 return $page;
@@ -624,9 +632,9 @@ class Functions
      */
     public static function rewriteInternalUri($text)
     {
-        $root_dir = str_replace('/', '\/', ROOT_DIR);
+        $rootDir = str_replace('/', '\/', ROOT_DIR);
         $host = $_SERVER['HTTP_HOST'];
-        return preg_replace_callback('/<a href="(http(s?):\/\/' . $host . ')?(' . $root_dir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})"/', "\\ACP3\\Core\\Functions::rewriteInternalUriCallback", $text);
+        return preg_replace_callback('/<a href="(http(s?):\/\/' . $host . ')?(' . $rootDir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})"/', "\\ACP3\\Core\\Functions::rewriteInternalUriCallback", $text);
     }
 
     /**
@@ -670,7 +678,7 @@ class Functions
      * @param string $name
      *  Name des Feldes im Formular
      * @param mixed $defValue
-     *  Abzugleichender Parameter mit $currentvalue
+     *  Abzugleichender Parameter mit $currentValue
      * @param mixed $currentValue
      *  Wert aus der SQL Tabelle
      * @param string $attr
@@ -681,26 +689,22 @@ class Functions
     {
         $attr = ' ' . $attr . '="' . $attr . '"';
 
-        if (isset($_POST[$name])) {
-            if (is_array($_POST[$name]) === false && $_POST[$name] == $defValue) {
-                return $attr;
-            } elseif (is_array($_POST[$name]) === true) {
-                foreach ($_POST[$name] as $row) {
-                    if ($row == $defValue)
-                        return $attr;
-                }
-            }
-        } else {
-            if (is_array($currentValue) === false && $currentValue == $defValue) {
-                return $attr;
-            } elseif (is_array($currentValue) === true) {
-                foreach ($currentValue as $row) {
-                    if ($row == $defValue)
-                        return $attr;
-                }
-            }
-            return '';
+
+        if (isset($_POST[$name]) === true) {
+            $currentValue = $_POST[$name];
         }
+
+        if (is_array($currentValue) === false && $currentValue == $defValue) {
+            return $attr;
+        } elseif (is_array($currentValue) === true) {
+            foreach ($currentValue as $row) {
+                if ($row == $defValue) {
+                    return $attr;
+                }
+            }
+        }
+
+        return '';
     }
 
     /**
@@ -740,7 +744,7 @@ class Functions
      *    Die anzuzeigenden Zeichen
      * @param integer $diff
      *    Anzahl der Zeichen, welche nach strlen($data) - $chars noch kommen müssen
-     * @param string append
+     * @param string $append
      *    Kann bspw. dazu genutzt werden, um an den gekürzten Text noch einen Weiterlesen-Link anzuhängen
      * @return string
      */
@@ -761,13 +765,13 @@ class Functions
      * zur Vermeidung von XSS
      *
      * @param string $var
-     * @param boolean $script_tag_only
+     * @param boolean $scriptTagOnly
      * @return string
      */
-    public static function strEncode($var, $script_tag_only = false)
+    public static function strEncode($var, $scriptTagOnly = false)
     {
         $var = preg_replace('=<script[^>]*>.*</script>=isU', '', $var);
-        return $script_tag_only === true ? $var : htmlentities($var, ENT_QUOTES, 'UTF-8');
+        return $scriptTagOnly === true ? $var : htmlentities($var, ENT_QUOTES, 'UTF-8');
     }
 
 }

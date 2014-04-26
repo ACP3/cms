@@ -21,29 +21,25 @@ class Frontend extends Core\Modules\Controller
 
     protected function _init()
     {
-        $this->model = new Newsletter\Model($this->db, $this->lang);
+        $this->model = new Newsletter\Model($this->db, $this->lang, $this->auth);
     }
 
     public function actionActivate()
     {
-        if (Core\Validate::email($this->uri->mail) && Core\Validate::isMD5($this->uri->hash)) {
-            $mail = $this->uri->mail;
-            $hash = $this->uri->hash;
-        } else {
-            $this->uri->redirect('errors/404');
-            return;
-        }
+        try {
+            $mail = $hash = '';
+            if (Core\Validate::email($this->uri->mail) && Core\Validate::isMD5($this->uri->hash)) {
+                $mail = $this->uri->mail;
+                $hash = $this->uri->hash;
+            }
 
-        if ($this->model->accountExists($mail, $hash) === false) {
-            $errors[] = $this->lang->t('newsletter', 'account_not_exists');
-        }
+            $this->model->validateActivate($mail, $hash);
 
-        if (isset($errors) === true) {
-            $this->view->setContent(Core\Functions::errorBox($errors));
-        } else {
             $bool = $this->model->update(array('hash' => ''), array('mail' => $mail, 'hash' => $hash), Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
             $this->view->setContent(Core\Functions::confirmBox($this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
+        } catch (Core\Exceptions\ValidationFailed $e) {
+            $this->view->assign('error_msg', $e->getMessage());
         }
     }
 

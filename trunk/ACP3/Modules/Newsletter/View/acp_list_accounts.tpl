@@ -37,7 +37,7 @@
                     {/if}
                     <td>{$row.mail}</td>
                     <td>
-                        {if !empty($row.has)}
+                        {if !empty($row.hash)}
                             <a href="{uri args="acp/newsletter/activate/id_`$row.id`"}" title="{lang t="newsletter|activate_account"}">{icon path="16/cancel"}</a>
                         {else}
                             {icon path="16/apply"}
