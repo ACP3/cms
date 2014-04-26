@@ -23,36 +23,65 @@ abstract class Helpers
     protected static function _init()
     {
         if (!self::$model) {
-            self::$model = new Model(Core\Registry::get('Db'), Core\Registry::get('Lang'));
+            self::$model = new Model(
+                Core\Registry::get('Db'),
+                Core\Registry::get('Lang'),
+                Core\Registry::get('Auth')
+            );
         }
     }
 
     /**
      * Versendet einen Newsletter
      *
-     * @param string $subject
-     * @param string $body
-     * @param string $from_address
-     * @return boolean
+     * @param $newsletterId
+     * @param null $recipient
+     * @param bool $bcc
+     * @return bool
      */
-    public static function sendNewsletter($subject, $body, $from_address)
+    public static function sendNewsletter($newsletterId, $recipient = null, $bcc = false)
     {
         self::_init();
 
-        $accounts = self::$model->getAllAccounts();
-        $c_accounts = count($accounts);
+        $settings = Core\Config::getSettings('newsletter');
+        $newsletter = self::$model->getOneById($newsletterId);
 
-        for ($i = 0; $i < $c_accounts; ++$i) {
-            if (!empty($accounts[$i]['hash'])) {
-                continue;
+        $mailer = new Core\Mailer(Core\Registry::get('View'));
+        $mailer
+            ->setFrom($settings['mail'])
+            ->setSubject($newsletter['title'])
+            ->setMailSignature($settings['mailsig']);
+
+        if ($newsletter['html'] == 1) {
+            $mailer->setTemplate('newsletter/email.tpl');
+            $mailer->setHtmlBody($newsletter['text']);
+        } else {
+            $mailer->setBody($newsletter['text']);
+        }
+
+        if ($recipient !== null) {
+            if ($bcc === true) {
+                $mailer->setBcc($recipient);
+            } else {
+                $mailer->setTo($recipient);
+            }
+        } else {
+            $accounts = self::$model->getAllActiveAccount();
+            $c_accounts = count($accounts);
+            $recipients = array();
+
+            for ($i = 0; $i < $c_accounts; ++$i) {
+                $recipients[] = $accounts[$i]['mail'];
             }
 
-            $bool2 = Core\Functions::generateEmail('', $accounts[$i]['mail'], $from_address, $subject, $body);
-            if ($bool2 === false) {
-                return false;
+            if ($bcc === true) {
+                $mailer->setBcc($recipients);
+            } else {
+                $mailer->setTo($recipients);
             }
         }
-        return true;
+
+        return $mailer->send();
     }
 
     /**
@@ -73,11 +102,11 @@ abstract class Helpers
         $subject = sprintf(Core\Registry::get('Lang')->t('newsletter', 'subscribe_mail_subject'), CONFIG_SEO_TITLE);
         $body = str_replace('{host}', $host, Core\Registry::get('Lang')->t('newsletter', 'subscribe_mail_body')) . "\n\n";
         $body .= 'http://' . $host . Core\Registry::get('URI')->route('newsletter/activate/hash_' . $hash . '/mail_' . $emailAddress);
-        $mail_sent = Core\Functions::generateEmail('', $emailAddress, $settings['mail'], $subject, $body);
+        $mailSent = Core\Functions::generateEmail('', $emailAddress, $settings['mail'], $subject, $body);
         $bool = false;
 
         // Newsletter-Konto nur erstellen, wenn die E-Mail erfolgreich versendet werden konnte
-        if ($mail_sent === true) {
+        if ($mailSent === true) {
             $insertValues = array(
                 'id' => '',
                 'mail' => $emailAddress,
@@ -86,7 +115,7 @@ abstract class Helpers
             $bool = self::$model->insert($insertValues, Model::TABLE_NAME_ACCOUNTS);
         }
 
-        return $mail_sent === true && $bool !== false;
+        return $mailSent === true && $bool !== false;
     }
 
 }

@@ -32,6 +32,7 @@
     <item key="only_save">Nur speichern</item>
     <item key="save_success">Der Newsletter wurde erfolgreich gespeichert.</item>
     <item key="send_and_save">Senden und speichern</item>
+    <item key="send_html_emails">HTML-E-Mails versenden</item>
     <item key="status">Status</item>
     <item key="subject">Betreff</item>
     <item key="subject_to_short">Der Betreff sollte mindestens 3 Zeichen lang sein</item>
@@ -46,8 +47,8 @@
     <item key="subscribe_newsletter">Newsletter bestellen</item>
     <item key="subscribe_success">Das Newsletterkonto wurde erfolgreich erstellt.</item>
     <item key="subscribe_unsubscribe_the_newsletter">In Newsletter eintragen/austragen</item>
-    <item key="test_newsletter">Test-Newsletter</item>
-    <item key="test_nl_description">Wird nur an die E-Mail-Adresse der Newsletter Einstellungen gesendet.</item>
+    <item key="test_newsletter">Test-Newsletter versenden</item>
+    <item key="test_newsletter_description">Wird an die E-Mail-Adresse der Newsletter-Einstellungen gesendet.</item>
     <item key="text">Text</item>
     <item key="text_to_short">Der Text sollte mindestens 3 Zeichen lang sein.</item>
     <item key="unsubscribe">Austragen</item>

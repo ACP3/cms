@@ -65,6 +65,7 @@ class Model
             return $lastId;
         } catch (\Exception $e) {
             $this->db->rollback();
+            return false;
         }
     }
 
@@ -85,6 +86,7 @@ class Model
             return $bool;
         } catch (\Exception $e) {
             $this->db->rollback();
+            return false;
         }
     }
 
@@ -105,6 +107,7 @@ class Model
             return $bool;
         } catch (\Exception $e) {
             $this->db->rollback();
+            return false;
         }
     }
 

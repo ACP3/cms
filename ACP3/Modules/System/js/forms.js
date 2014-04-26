@@ -3,7 +3,7 @@
  *
  * @param loadingText
  */
-jQuery.fn.formSubmit = function(loadingText) {
+jQuery.fn.formSubmit = function (loadingText) {
     var $this = jQuery(this);
 
     /**
@@ -25,22 +25,28 @@ jQuery.fn.formSubmit = function(loadingText) {
      * @private
      */
     function _hideLoadingLayer() {
-        $('#loading-layer').stop().fadeOut(function() {
+        $('#loading-layer').stop().fadeOut(function () {
             $(this).remove();
         });
     }
 
-    $this.on('submit', function(e) {
+    $this.on('submit', function (e) {
         e.preventDefault();
+
+        if (typeof CKEDITOR !== "undefined") {
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+        }
 
         $.ajax({
             url: $this.attr('action'),
             type: $this.attr('method').toUpperCase(),
             data: $this.serialize(),
-            beforeSend: function() {
+            beforeSend: function () {
                 _showLoadingLayer();
             },
-            success: function(data) {
+            success: function (data) {
                 try {
                     if (data.redirect_url) {
                         window.location.href = data.redirect_url;
@@ -56,11 +62,11 @@ jQuery.fn.formSubmit = function(loadingText) {
                             newDoc.close();
                         }
                     }
-                } catch(err) {
+                } catch (err) {
                     console.log(err.message);
                 }
             },
-            complete: function() {
+            complete: function () {
                 _hideLoadingLayer();
             }
         });

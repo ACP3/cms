@@ -53,11 +53,18 @@ class View
      *
      * @var array
      */
-    protected $jsLibraries = array('bootbox' => false, 'fancybox' => false, 'jquery-ui' => false, 'timepicker' => false, 'datatables' => false);
+    protected $jsLibraries = array(
+        'bootbox' => false,
+        'fancybox' => false,
+        'jquery-ui' => false,
+        'timepicker' => false,
+        'datatables' => false
+    );
+
     /**
-     * @var null
+     * @var
      */
-    protected static $rendererObject = null;
+    protected static $rendererObject;
 
     /**
      * Setter Methode für die $this->no_output Variable
