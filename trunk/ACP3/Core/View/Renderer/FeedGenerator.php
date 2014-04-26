@@ -7,7 +7,9 @@ namespace ACP3\Core\View\Renderer;
  */
 class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
 {
-
+    /**
+     * @param array $params
+     */
     public function __construct($params)
     {
         parent::__construct($params);
@@ -27,6 +29,10 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
         $this->generateChannel();
     }
 
+    /**
+     * @param $name
+     * @param null $value
+     */
     public function assign($name, $value = null)
     {
         $item = $this->renderer->createNewItem();
@@ -44,6 +50,9 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
         $this->renderer->addItem($item);
     }
 
+    /**
+     * Generates the channel element for a feed
+     */
     protected function generateChannel()
     {
         $link = $this->config['feed_link'];
@@ -60,16 +69,27 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
             $this->renderer->setImage($this->config['feed_title'], $link, $this->config['feed_image']);
     }
 
+    /**
+     * @param $type
+     * @return mixed
+     */
     public function fetch($type)
     {
         return $this->renderer->generateFeed();
     }
 
+    /**
+     * @param $type
+     */
     public function display($type)
     {
         echo $this->fetch($type);
     }
 
+    /**
+     * @param $template
+     * @return bool
+     */
     public function templateExists($template)
     {
         return true;

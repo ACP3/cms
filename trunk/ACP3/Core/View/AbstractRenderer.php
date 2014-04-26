@@ -8,8 +8,18 @@ namespace ACP3\Core\View;
 abstract class AbstractRenderer implements RendererInterface
 {
 
+    /**
+     * Possible configuration options for the current renderer
+     *
+     * @var array
+     */
     protected $config = array();
-    public $renderer = null;
+    /**
+     * The assigned layout renderer
+     *
+     * @var
+     */
+    public $renderer;
 
     public function __construct(array $params = array())
     {
