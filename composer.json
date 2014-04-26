@@ -37,6 +37,7 @@
 		"php": ">=5.3.2",
 		"doctrine/dbal": "2.4.2",
 		"phpmailer/phpmailer": "5.2.*",
-		"smarty/smarty": "3.1.18"
+		"smarty/smarty": "3.1.18",
+        "mibe/feedwriter": "dev-master"
 	}
 }

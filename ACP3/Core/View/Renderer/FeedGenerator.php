@@ -12,10 +12,18 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
     {
         parent::__construct($params);
 
-        require_once LIBRARIES_DIR . 'feedcreator/FeedWriter.php';
-        require_once LIBRARIES_DIR . 'feedcreator/FeedItem.php';
-
-        $this->renderer = new \FeedWriter($this->config['feed_type']);
+        switch ($this->config['feed_type']) {
+            case 'ATOM':
+                $feedType = 'ATOM';
+                break;
+            case 'RSS 1.0':
+                $feedType = 'RSS1';
+                break;
+            default:
+                $feedType = 'RSS2';
+        }
+        $className = '\\FeedWriter\\' . $feedType;
+        $this->renderer = new $className;
         $this->generateChannel();
     }
 
@@ -54,7 +62,6 @@ class FeedGenerator extends \ACP3\Core\View\AbstractRenderer
 
     public function fetch($type)
     {
-        $this->renderer->setType($type);
         return $this->renderer->generateFeed();
     }
 
