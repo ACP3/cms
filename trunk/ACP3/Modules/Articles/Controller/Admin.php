@@ -102,7 +102,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : $defaults);
+        $this->view->assign('form', array_merge($defaults, $_POST));
 
         $this->session->generateFormToken();
     }
@@ -182,7 +182,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('articles/details/id_' . $this->uri->id));
 
-            $this->view->assign('form', empty($_POST) === false ? $_POST : $article);
+            $this->view->assign('form', array_merge($article, $_POST));
 
             $this->session->generateFormToken();
         } else {

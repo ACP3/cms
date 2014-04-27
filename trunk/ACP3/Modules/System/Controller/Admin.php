@@ -144,7 +144,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         $settings = Core\Config::getSettings('system');
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : $settings);
+        $this->view->assign('form', array_merge($settings, $_POST));
 
         $this->session->generateFormToken();
     }
@@ -246,16 +246,16 @@ class Admin extends Core\Modules\Controller\Admin
 
         switch ($this->uri->action) {
             case 'activate':
-                $this->enableModule();
+                $this->_enableModule();
                 break;
             case 'deactivate':
-                $this->disableModule();
+                $this->_disableModule();
                 break;
             case 'install':
-                $this->installModule();
+                $this->_installModule();
                 break;
             case 'uninstall':
-                $this->uninstallModule();
+                $this->_uninstallModule();
                 break;
             default:
                 Core\Functions::getRedirectMessage();
@@ -280,7 +280,7 @@ class Admin extends Core\Modules\Controller\Admin
         }
     }
 
-    protected function enableModule()
+    protected function _enableModule()
     {
         $bool = false;
         $info = Core\Modules::getModuleInfo($this->uri->dir);
@@ -298,7 +298,7 @@ class Admin extends Core\Modules\Controller\Admin
         Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
     }
 
-    protected function disableModule()
+    protected function _disableModule()
     {
         $bool = false;
         $info = Core\Modules::getModuleInfo($this->uri->dir);
@@ -323,7 +323,7 @@ class Admin extends Core\Modules\Controller\Admin
         Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
     }
 
-    protected function installModule()
+    protected function _installModule()
     {
         $bool = false;
         // Nur noch nicht installierte Module berücksichtigen
@@ -353,7 +353,7 @@ class Admin extends Core\Modules\Controller\Admin
         Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
     }
 
-    protected function uninstallModule()
+    protected function _uninstallModule()
     {
         $bool = false;
         $mod_info = Core\Modules::getModuleInfo($this->uri->dir);
@@ -496,7 +496,7 @@ class Admin extends Core\Modules\Controller\Admin
             }
         }
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : array('text' => ''));
+        $this->view->assign('form', array_merge(array('text' => ''), $_POST));
 
         $this->session->generateFormToken();
     }

@@ -61,7 +61,7 @@ class Admin extends Core\Modules\Controller\Admin
             }
         }
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : array('name' => ''));
+        $this->view->assign('form', array_merge(array('name' => ''), $_POST));
 
         $roles = Core\ACL::getAllRoles();
         $c_roles = count($roles);
@@ -144,7 +144,7 @@ class Admin extends Core\Modules\Controller\Admin
         }
         $this->view->assign('privileges', $privileges);
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : array('resource' => ''));
+        $this->view->assign('form', array_merge(array('resource' => ''), $_POST));
 
         $this->session->generateFormToken();
     }
@@ -290,7 +290,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             $this->view->assign('modules', $modules);
 
-            $this->view->assign('form', empty($_POST) === false ? $_POST : $role);
+            $this->view->assign('form', array_merge($role, $_POST));
 
             $this->session->generateFormToken();
         } else {
@@ -336,7 +336,11 @@ class Admin extends Core\Modules\Controller\Admin
             }
             $this->view->assign('privileges', $privileges);
 
-            $this->view->assign('form', empty($_POST) === false ? $_POST : array('resource' => $resource['page'], 'modules' => $resource['module_name']));
+            $defaults = array(
+                'resource' => $resource['page'],
+                'modules' => $resource['module_name']
+            );
+            $this->view->assign('form', array_merge($defaults, $_POST));
 
             $this->session->generateFormToken();
         } else {

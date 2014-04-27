@@ -44,7 +44,7 @@ class Model extends Core\Model
      * @param string $id
      * @return boolean
      */
-    protected function resultExistsByUserName($nickname, $id = '')
+    public function resultExistsByUserName($nickname, $id = '')
     {
         if (Core\Validate::isNumber($id) === true) {
             return !empty($nickname) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id != ? AND nickname = ?', array($id, $nickname)) == 1 ? true : false;
@@ -61,7 +61,7 @@ class Model extends Core\Model
      * @param string $id
      * @return boolean
      */
-    protected  function resultExistsByEmail($mail, $id = '')
+    public function resultExistsByEmail($mail, $id = '')
     {
         if (Core\Validate::isNumber($id) === true) {
             return Core\Validate::email($mail) === true && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id != ? AND mail = ?', array($id, $mail)) > 0 ? true : false;

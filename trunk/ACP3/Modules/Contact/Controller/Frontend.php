@@ -53,30 +53,25 @@ class Frontend extends Core\Modules\Controller
             }
         }
 
+        $defaults = array(
+            'name' => '',
+            'name_disabled' => '',
+            'mail' => '',
+            'mail_disabled' => '',
+            'message' => '',
+        );
+
         // Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
         if ($this->auth->isUser() === true) {
-            $defaults = $this->auth->getUserInfo();
+            $user = $this->auth->getUserInfo();
             $disabled = ' readonly="readonly" class="readonly"';
-            $defaults['name'] = !empty($defaults['realname']) ? $defaults['realname'] : $defaults['nickname'];
-            $defaults['message'] = '';
-
-            if (empty($_POST) === false) {
-                $_POST['name_disabled'] = $disabled;
-                $_POST['mail_disabled'] = $disabled;
-            } else {
-                $defaults['name_disabled'] = $disabled;
-                $defaults['mail_disabled'] = $disabled;
-            }
-        } else {
-            $defaults = array(
-                'name' => '',
-                'name_disabled' => '',
-                'mail' => '',
-                'mail_disabled' => '',
-                'message' => '',
-            );
+            $defaults['name'] = !empty($user['realname']) ? $user['realname'] : $user['nickname'];
+            $defaults['name_disabled'] = $disabled;
+            $defaults['mail'] = $user['mail'];
+            $defaults['mail_disabled'] = $disabled;
         }
-        $this->view->assign('form', empty($_POST) === false ? array_merge($defaults, $_POST) : $defaults);
+
+        $this->view->assign('form', array_merge($defaults, $_POST));
         $this->view->assign('copy_checked', Core\Functions::selectEntry('copy', 1, 0, 'checked'));
 
         if (Core\Modules::hasPermission('captcha', 'image') === true) {

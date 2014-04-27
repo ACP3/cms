@@ -50,14 +50,14 @@ class Admin extends Core\Modules\Controller\Admin
 
         $settings = Core\Config::getSettings('feeds');
 
-        $feed_type = array(
+        $feedType = array(
             'RSS 1.0',
             'RSS 2.0',
             'ATOM'
         );
-        $this->view->assign('feed_types', Core\Functions::selectGenerator('feed_type', $feed_type, $feed_type, $settings['feed_type']));
+        $this->view->assign('feed_types', Core\Functions::selectGenerator('feed_type', $feedType, $feedType, $settings['feed_type']));
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : $settings);
+        $this->view->assign('form', array_merge($settings, $_POST));
 
         $this->session->generateFormToken();
     }

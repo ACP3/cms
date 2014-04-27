@@ -188,9 +188,9 @@ class Functions
     /**
      * Generiert eine E-Mail und versendet diese
      *
-     * @param string $recipient_name
+     * @param string $recipientName
      *    Name des Empfängers
-     * @param string $recipient_email
+     * @param string $recipientEmail
      *    E-Mail-Adresse des Empfängers
      * @param string $from
      *    E-mail-Adresse des Versenders
@@ -198,40 +198,28 @@ class Functions
      *    Betreff der E-Mail
      * @param string $body
      *    E-Mail-Body
+     * @param string $mailSignature
      * @return boolean|string
      */
-    public static function generateEmail($recipient_name, $recipient_email, $from, $subject, $body)
+    public static function generateEmail($recipientName, $recipientEmail, $from, $subject, $body, $mailSignature = '')
     {
-        $mail = new \PHPMailer(true);
-        try {
-            if (strtolower(CONFIG_MAILER_TYPE) === 'smtp') {
-                $mail->set('Mailer', 'smtp');
-                $mail->Host = CONFIG_MAILER_SMTP_HOST;
-                $mail->Port = CONFIG_MAILER_SMTP_PORT;
-                $mail->SMTPSecure = CONFIG_MAILER_SMTP_SECURITY === 'ssl' || CONFIG_MAILER_SMTP_SECURITY === 'tls' ? CONFIG_MAILER_SMTP_SECURITY : '';
-                if ((bool)CONFIG_MAILER_SMTP_AUTH === true) {
-                    $mail->SMTPAuth = true;
-                    $mail->Username = CONFIG_MAILER_SMTP_USER;
-                    $mail->Password = CONFIG_MAILER_SMTP_PASSWORD;
-                }
-            } else {
-                $mail->set('Mailer', 'mail');
-            }
-            $mail->CharSet = 'UTF-8';
-            $mail->Encoding = '8bit';
-            $mail->Subject = $subject;
-            $mail->Body = $body;
-            $mail->WordWrap = 76;
-            $mail->SetFrom($from);
-            $mail->AddAddress($recipient_email, $recipient_name);
-            $mail->Send();
-
-            return true;
-        } catch (\phpmailerException $e) {
-            return $e->errorMessage();
-        } catch (\Exception $e) {
-            return $e->getMessage();
+        if (!empty($recipientName)) {
+            $to = array(
+                'name' => $recipientName,
+                'email' => $recipientEmail
+            );
+        } else {
+            $to = $recipientEmail;
         }
+
+        $mailer = new Mailer(self::$view);
+        return $mailer
+            ->setSubject($subject)
+            ->setBody($body)
+            ->setMailSignature($mailSignature)
+            ->setFrom($from)
+            ->setTo($to)
+            ->send();
     }
 
     /**
@@ -255,11 +243,11 @@ class Functions
      *
      * @param array $pages
      * @param string $path
-     * @param boolean $titles_from_db
-     * @param boolean $custom_uris
+     * @param boolean $titlesFromDb
+     * @param boolean $customUris
      * @return string
      */
-    public static function generateTOC(array $pages, $path = '', $titles_from_db = false, $custom_uris = false)
+    protected static function _generateTOC(array $pages, $path = '', $titlesFromDb = false, $customUris = false)
     {
         if (!empty($pages)) {
             static::_init();
@@ -270,17 +258,17 @@ class Functions
             $i = 0;
             foreach ($pages as $page) {
                 $page_num = $i + 1;
-                if ($titles_from_db === false) {
-                    $attributes = self::getHtmlAttributes($page);
+                if ($titlesFromDb === false) {
+                    $attributes = self::_getHtmlAttributes($page);
                     $toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf(static::$lang->t('system', 'toc_page'), $page_num);
                 } else {
                     $toc[$i]['title'] = !empty($page['title']) ? $page['title'] : sprintf(static::$lang->t('system', 'toc_page'), $page_num);
                 }
 
-                $toc[$i]['uri'] = $custom_uris === true ? $page['uri'] : $uri->route($path) . ($page_num > 1 ? 'page_' . $page_num . '/' : '');
+                $toc[$i]['uri'] = $customUris === true ? $page['uri'] : $uri->route($path) . ($page_num > 1 ? 'page_' . $page_num . '/' : '');
 
                 $toc[$i]['selected'] = false;
-                if ($custom_uris === true) {
+                if ($customUris === true) {
                     if ($page['uri'] === $uri->route($uri->query) ||
                         $uri->route($uri->query) === $uri->route($uri->mod . '/' . $uri->file) && $i == 0
                     ) {
@@ -308,7 +296,7 @@ class Functions
      * @param string $string
      * @return array
      */
-    public static function getHtmlAttributes($string)
+    protected static function _getHtmlAttributes($string)
     {
         $matches = array();
         preg_match_all('/([\w:-]+)[\s]?=[\s]?"([^"]*)"/i', $string, $matches);
@@ -365,7 +353,7 @@ class Functions
                 }
 
                 $page = array(
-                    'toc' => self::generateTOC($matches[0], $path),
+                    'toc' => self::_generateTOC($matches[0], $path),
                     'text' => $pages[$currentPage - 1],
                     'next' => $nextPage,
                     'previous' => $previousPage,
@@ -377,7 +365,7 @@ class Functions
     }
 
     /**
-     * Holt sich die von setRedirectMatch() erzeugte Redirect Nachricht
+     * Holt sich die von setRedirectMessage() erzeugte Redirect Nachricht
      */
     public static function getRedirectMessage()
     {
@@ -483,15 +471,15 @@ class Functions
     {
         $path = UPLOADS_DIR . $dir . '/';
         $ext = strrchr($filename, '.');
-        $new_name = 1;
+        $newName = 1;
 
         // Dateiname solange ändern, wie eine Datei mit dem selben Dateinamen im aktuellen Ordner existiert
-        while (is_file($path . $new_name . $ext) === true) {
-            ++$new_name;
+        while (is_file($path . $newName . $ext) === true) {
+            ++$newName;
         }
 
         if (is_writable($path) === true) {
-            if (!@move_uploaded_file($tmpFilename, $path . $new_name . $ext)) {
+            if (!@move_uploaded_file($tmpFilename, $path . $newName . $ext)) {
                 static::_init();
 
                 $error = array(
@@ -499,11 +487,11 @@ class Functions
                 );
                 throw new Exceptions\ValidationFailed(self::errorBox($error));
             } else {
-                $new_file = array();
-                $new_file['name'] = $new_name . $ext;
-                $new_file['size'] = self::calcFilesize(filesize($path . $new_file['name']));
+                $newFile = array();
+                $newFile['name'] = $newName . $ext;
+                $newFile['size'] = self::calcFilesize(filesize($path . $newFile['name']));
 
-                return $new_file;
+                return $newFile;
             }
         }
         return array();
@@ -517,9 +505,9 @@ class Functions
      *    down = einen Schritt nach unten verschieben
      * @param string $table
      *    Die betroffene Tabelle
-     * @param string $id_field
+     * @param string $idField
      *    Name des ID-Feldes
-     * @param string $sort_field
+     * @param string $sortField
      *    Name des Sortier-Feldes. damit die Sortierung geändert werden kann
      * @param string $id
      *    Die ID des Datensatzes, welcher umsortiert werden soll
@@ -527,7 +515,7 @@ class Functions
      *    Optionales Vergleichsfeld, um den richtigen Vorgänger/Nachfolger bestimmen zu können
      * @return boolean
      */
-    public static function moveOneStep($action, $table, $id_field, $sort_field, $id, $where = '')
+    public static function moveOneStep($action, $table, $idField, $sortField, $id, $where = '')
     {
         if ($action === 'up' || $action === 'down') {
             static::_init();
@@ -543,20 +531,20 @@ class Functions
                 // Ein Schritt nach oben
                 if ($action === 'up') {
                     // Aktuelles Element und das vorherige Element selektieren
-                    $query = static::$db->fetchAssoc('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' < b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' DESC LIMIT 1');
+                    $query = static::$db->fetchAssoc('SELECT a.' . $idField . ' AS other_id, a.' . $sortField . ' AS other_sort, b.' . $sortField . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $idField . ' = ' . $id . ' AND a.' . $sortField . ' < b.' . $sortField . ' ORDER BY a.' . $sortField . ' DESC LIMIT 1');
                     // Ein Schritt nach unten
                 } else {
                     // Aktuelles Element und das nachfolgende Element selektieren
-                    $query = static::$db->fetchAssoc('SELECT a.' . $id_field . ' AS other_id, a.' . $sort_field . ' AS other_sort, b.' . $sort_field . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $id_field . ' = ' . $id . ' AND a.' . $sort_field . ' > b.' . $sort_field . ' ORDER BY a.' . $sort_field . ' ASC LIMIT 1');
+                    $query = static::$db->fetchAssoc('SELECT a.' . $idField . ' AS other_id, a.' . $sortField . ' AS other_sort, b.' . $sortField . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $idField . ' = ' . $id . ' AND a.' . $sortField . ' > b.' . $sortField . ' ORDER BY a.' . $sortField . ' ASC LIMIT 1');
                 }
 
                 if (!empty($query)) {
                     // Sortierreihenfolge des aktuellen Elementes zunächst auf 0 setzen
                     // um Probleme mit möglichen Duplicate-Keys zu umgehen
-                    static::$db->update($table, array($sort_field => 0), array($id_field => $id));
-                    static::$db->update($table, array($sort_field => $query['elem_sort']), array($id_field => $query['other_id']));
+                    static::$db->update($table, array($sortField => 0), array($idField => $id));
+                    static::$db->update($table, array($sortField => $query['elem_sort']), array($idField => $query['other_id']));
                     // Element nun den richtigen Wert zuweisen
-                    static::$db->update($table, array($sort_field => $query['other_sort']), array($id_field => $id));
+                    static::$db->update($table, array($sortField => $query['other_sort']), array($idField => $id));
 
                     static::$db->commit();
                     return true;
@@ -569,18 +557,18 @@ class Functions
     }
 
     /**
-     * Konvertiert Zeilenumbrüche zu neuen Abschnitten
+     * Konvertiert Zeilenumbrüche zu neuen Absätzen
      *
      * @param string $data
-     * @param boolean $is_xhtml
-     * @param boolean $line_breaks
+     * @param boolean $isXhtml
+     * @param boolean $lineBreaks
      * @return string
      */
-    public static function nl2p($data, $is_xhtml = true, $line_breaks = false)
+    public static function nl2p($data, $isXhtml = true, $lineBreaks = false)
     {
         $data = trim($data);
-        if ($line_breaks === true) {
-            return '<p>' . preg_replace(array("/([\n]{2,})/i", "/([^>])\n([^<])/i"), array("</p>\n<p>", '<br' . ($is_xhtml == true ? ' /' : '') . '>'), $data) . '</p>';
+        if ($lineBreaks === true) {
+            return '<p>' . preg_replace(array("/([\n]{2,})/i", "/([^>])\n([^<])/i"), array("</p>\n<p>", '<br' . ($isXhtml == true ? ' /' : '') . '>'), $data) . '</p>';
         } else {
             return '<p>' . preg_replace("/([\n]{1,})/i", "</p>\n<p>", $data) . '</p>';
         }
@@ -590,18 +578,17 @@ class Functions
      * Liefert ein Array zur Ausgabe als Dropdown-Menü
      * für die Anzahl der anzuzeigenden Datensätze je Seite
      *
-     * @param integer $current_value
+     * @param integer $currentValue
      * @param integer $steps
-     * @param integer $max_value
+     * @param integer $maxValue
      * @return array
      */
-    public static function recordsPerPage($current_value, $steps = 5, $max_value = 50)
+    public static function recordsPerPage($currentValue, $steps = 5, $maxValue = 50)
     {
-        // Einträge pro Seite
         $records = array();
-        for ($i = 0, $j = $steps; $j <= $max_value; $i++, $j += $steps) {
+        for ($i = 0, $j = $steps; $j <= $maxValue; $i++, $j += $steps) {
             $records[$i]['value'] = $j;
-            $records[$i]['selected'] = self::selectEntry('entries', $j, $current_value);
+            $records[$i]['selected'] = self::selectEntry('entries', $j, $currentValue);
         }
         return $records;
     }
@@ -653,16 +640,16 @@ class Functions
     /**
      * Generiert einen Zufallsstring beliebiger Länge
      *
-     * @param integer $str_length
+     * @param integer $strLength
      *  Länge des zufälligen Strings
      * @return string
      */
-    public static function salt($str_length)
+    public static function salt($strLength)
     {
         $salt = '';
         $chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         $c_chars = strlen($chars) - 1;
-        while (strlen($salt) < $str_length) {
+        while (strlen($salt) < $strLength) {
             $char = $chars[mt_rand(0, $c_chars)];
             // Zeichen nur hinzufügen, wenn sich dieses nicht bereits im Salz befindet
             if (strpos($salt, $char) === false) {
@@ -689,7 +676,6 @@ class Functions
     {
         $attr = ' ' . $attr . '="' . $attr . '"';
 
-
         if (isset($_POST[$name]) === true) {
             $currentValue = $_POST[$name];
         }
@@ -712,11 +698,11 @@ class Functions
      * @param string $name
      * @param array $values
      * @param array $lang
-     * @param string|integer $current_value
+     * @param string|integer $currentValue
      * @param string $selected
      * @return array
      */
-    public static function selectGenerator($name, array $values, array $lang, $current_value = '', $selected = 'selected')
+    public static function selectGenerator($name, array $values, array $lang, $currentValue = '', $selected = 'selected')
     {
         $array = array();
         if (count($values) == count($lang)) {
@@ -726,7 +712,7 @@ class Functions
                 $array[] = array(
                     'value' => $values[$i],
                     'id' => ($selected == 'checked' ? $id . '-' . $values[$i] : ''),
-                    $selected => self::selectEntry($name, $values[$i], $current_value, $selected),
+                    $selected => self::selectEntry($name, $values[$i], $currentValue, $selected),
                     'lang' => $lang[$i]
                 );
             }

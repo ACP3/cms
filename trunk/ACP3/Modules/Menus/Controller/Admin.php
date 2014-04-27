@@ -47,7 +47,7 @@ class Admin extends Core\Modules\Controller\Admin
             }
         }
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : array('index_name' => '', 'title' => ''));
+        $this->view->assign('form', array_merge(array('index_name' => '', 'title' => ''), $_POST));
 
         $this->session->generateFormToken();
     }
@@ -146,7 +146,7 @@ class Admin extends Core\Modules\Controller\Admin
         // Daten an Smarty übergeben
         $this->view->assign('pages_list', Menus\Helpers::menuItemsList());
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
-        $this->view->assign('form', empty($_POST) === false ? $_POST : $defaults);
+        $this->view->assign('form', array_merge($defaults, $_POST));
 
         $this->session->generateFormToken();
     }
@@ -234,7 +234,7 @@ class Admin extends Core\Modules\Controller\Admin
                 }
             }
 
-            $this->view->assign('form', empty($_POST) === false ? $_POST : $menu);
+            $this->view->assign('form', array_merge($menu, $_POST));
 
             $this->session->generateFormToken();
         } else {
@@ -337,7 +337,7 @@ class Admin extends Core\Modules\Controller\Admin
             // Daten an Smarty übergeben
             $this->view->assign('pages_list', Menus\Helpers::menuItemsList($menuItem['parent_id'], $menuItem['left_id'], $menuItem['right_id']));
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields($menuItem['uri']));
-            $this->view->assign('form', empty($_POST) === false ? $_POST : $menuItem);
+            $this->view->assign('form', array_merge($menuItem, $_POST));
 
             $this->session->generateFormToken();
         } else {

@@ -119,7 +119,7 @@ class Frontend extends Core\Modules\Controller
             }
             $this->view->assign('countries', $countries_select);
 
-            $this->view->assign('form', empty($_POST) === false ? $_POST : $user);
+            $this->view->assign('form', array_merge($user, $_POST));
 
             $this->session->generateFormToken();
         }
@@ -176,15 +176,15 @@ class Frontend extends Core\Modules\Controller
 
             // Sprache
             $languages = array();
-            $lang_dir = scandir(ACP3_ROOT_DIR . 'languages');
-            $c_lang_dir = count($lang_dir);
-            for ($i = 0; $i < $c_lang_dir; ++$i) {
-                $lang_info = Core\XML::parseXmlFile(ACP3_ROOT_DIR . 'languages/' . $lang_dir[$i] . '/info.xml', '/language');
-                if (!empty($lang_info)) {
-                    $name = $lang_info['name'];
-                    $languages[$name]['dir'] = $lang_dir[$i];
-                    $languages[$name]['selected'] = Core\Functions::selectEntry('language', $lang_dir[$i], $user['language']);
-                    $languages[$name]['name'] = $lang_info['name'];
+            $langDir = scandir(ACP3_ROOT_DIR . 'languages');
+            $c_langDir = count($langDir);
+            for ($i = 0; $i < $c_langDir; ++$i) {
+                $langInfo = Core\XML::parseXmlFile(ACP3_ROOT_DIR . 'languages/' . $langDir[$i] . '/info.xml', '/language');
+                if (!empty($langInfo)) {
+                    $name = $langInfo['name'];
+                    $languages[$name]['dir'] = $langDir[$i];
+                    $languages[$name]['selected'] = Core\Functions::selectEntry('language', $langDir[$i], $user['language']);
+                    $languages[$name]['name'] = $langInfo['name'];
                 }
             }
             ksort($languages);
@@ -196,23 +196,23 @@ class Frontend extends Core\Modules\Controller
             // Zeitzonen
             $this->view->assign('time_zones', Core\Date::getTimeZones($user['time_zone']));
 
-            $lang_mail_display = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('mail_display', Core\Functions::selectGenerator('mail_display', array(1, 0), $lang_mail_display, $user['mail_display'], 'checked'));
+            $lang_mailDisplay = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
+            $this->view->assign('mail_display', Core\Functions::selectGenerator('mail_display', array(1, 0), $lang_mailDisplay, $user['mail_display'], 'checked'));
 
-            $lang_address_display = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('address_display', Core\Functions::selectGenerator('address_display', array(1, 0), $lang_address_display, $user['address_display'], 'checked'));
+            $lang_addressDisplay = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
+            $this->view->assign('address_display', Core\Functions::selectGenerator('address_display', array(1, 0), $lang_addressDisplay, $user['address_display'], 'checked'));
 
-            $lang_country_display = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('country_display', Core\Functions::selectGenerator('country_display', array(1, 0), $lang_country_display, $user['country_display'], 'checked'));
+            $lang_countryDisplay = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
+            $this->view->assign('country_display', Core\Functions::selectGenerator('country_display', array(1, 0), $lang_countryDisplay, $user['country_display'], 'checked'));
 
-            $lang_birthday_display = array(
+            $lang_birthdayDisplay = array(
                 $this->lang->t('users', 'birthday_hide'),
                 $this->lang->t('users', 'birthday_display_completely'),
                 $this->lang->t('users', 'birthday_hide_year')
             );
-            $this->view->assign('birthday_display', Core\Functions::selectGenerator('birthday_display', array(0, 1, 2), $lang_birthday_display, $user['birthday_display'], 'checked'));
+            $this->view->assign('birthday_display', Core\Functions::selectGenerator('birthday_display', array(0, 1, 2), $lang_birthdayDisplay, $user['birthday_display'], 'checked'));
 
-            $this->view->assign('form', empty($_POST) === false ? $_POST : $user);
+            $this->view->assign('form', array_merge($user, $_POST));
 
             $this->session->generateFormToken();
         }
@@ -236,7 +236,7 @@ class Frontend extends Core\Modules\Controller
                     $host = htmlentities($_SERVER['HTTP_HOST']);
 
                     // Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
-                    if (Core\Validate::email($_POST['nick_mail']) === true && Helpers::userEmailExists($_POST['nick_mail']) === true) {
+                    if (Core\Validate::email($_POST['nick_mail']) === true && $this->model->resultExistsByEmail($_POST['nick_mail']) === true) {
                         $user = $this->model->getOneByEmail($_POST['nick_mail']);
                     } else {
                         $user = $this->model->getOneByNickname($_POST['nick_mail']);
@@ -272,9 +272,7 @@ class Frontend extends Core\Modules\Controller
                 }
             }
 
-            $defaults = array('nick_mail' => '');
-
-            $this->view->assign('form', empty($_POST) === false ? $_POST : $defaults);
+            $this->view->assign('form', array_merge(array('nick_mail' => ''), $_POST));
 
             if (Core\Modules::hasPermission('captcha', 'image') === true) {
                 $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());
@@ -432,7 +430,7 @@ class Frontend extends Core\Modules\Controller
                 'mail' => '',
             );
 
-            $this->view->assign('form', empty($_POST) === false ? $_POST : $defaults);
+            $this->view->assign('form', array_merge($defaults, $_POST));
 
             if (Core\Modules::hasPermission('captcha', 'image') === true) {
                 $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());

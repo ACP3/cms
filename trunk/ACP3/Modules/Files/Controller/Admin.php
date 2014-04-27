@@ -115,7 +115,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : $defaults);
+        $this->view->assign('form', array_merge($defaults, $_POST));
 
         $this->session->generateFormToken();
     }
@@ -183,16 +183,16 @@ class Admin extends Core\Modules\Controller\Admin
                     if (isset($file)) {
                         if (is_array($file) === true) {
                             $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'files');
-                            $new_file = $result['name'];
+                            $newFile = $result['name'];
                             $filesize = $result['size'];
                         } else {
                             $_POST['filesize'] = (float)$_POST['filesize'];
-                            $new_file = $file;
+                            $newFile = $file;
                             $filesize = $_POST['filesize'] . ' ' . $_POST['unit'];
                         }
                         // SQL Query für die Änderungen
                         $new_file_sql = array(
-                            'file' => $new_file,
+                            'file' => $newFile,
                             'size' => $filesize,
                         );
 
@@ -242,7 +242,7 @@ class Admin extends Core\Modules\Controller\Admin
             $this->view->assign('current_file', $dl['file']);
 
             $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('files/details/id_' . $this->uri->id));
-            $this->view->assign('form', empty($_POST) === false ? $_POST : $dl);
+            $this->view->assign('form', array_merge($dl, $_POST));
 
             $this->session->generateFormToken();
         } else {

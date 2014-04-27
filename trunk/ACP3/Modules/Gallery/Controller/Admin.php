@@ -59,7 +59,13 @@ class Admin extends Core\Modules\Controller\Admin
 
         $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields());
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : array('title' => '', 'alias' => '', 'seo_keywords' => '', 'seo_description' => ''));
+        $defaults = array(
+            'title' => '',
+            'alias' => '',
+            'seo_keywords' => '',
+            'seo_description' => ''
+        );
+        $this->view->assign('form',array_merge($defaults, $_POST));
 
         $this->session->generateFormToken();
     }
@@ -87,7 +93,7 @@ class Admin extends Core\Modules\Controller\Admin
                     $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'gallery');
                     $picNum = $this->model->getLastPictureByGalleryId($this->uri->id);
 
-                    $insert_values = array(
+                    $insertValues = array(
                         'id' => '',
                         'pic' => !is_null($picNum) ? $picNum + 1 : 1,
                         'gallery_id' => $this->uri->id,
@@ -96,7 +102,7 @@ class Admin extends Core\Modules\Controller\Admin
                         'comments' => $settings['comments'] == 1 ? (isset($_POST['comments']) && $_POST['comments'] == 1 ? 1 : 0) : $settings['comments'],
                     );
 
-                    $lastId = $this->model->insert($insert_values, Model::TABLE_NAME_PICTURES);
+                    $lastId = $this->model->insert($insertValues, Gallery\Model::TABLE_NAME_PICTURES);
                     $bool2 = Gallery\Helpers::generatePictureAlias($lastId);
                     $this->model->setCache($this->uri->id);
 
@@ -126,7 +132,7 @@ class Admin extends Core\Modules\Controller\Admin
             }
 
             $this->view->assign('galleries', $galleries);
-            $this->view->assign('form', empty($_POST) === false ? $_POST : array('description' => ''));
+            $this->view->assign('form', array_merge(array('description' => ''), $_POST));
             $this->view->assign('gallery_id', $this->uri->id);
 
             $this->session->generateFormToken();
@@ -158,7 +164,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                     // Fotogalerie mitsamt Bildern löschen
                     $bool = $this->model->delete($item);
-                    $bool2 = $this->model->delete($item, 'gallery_id', Model::TABLE_NAME_PICTURES);
+                    $bool2 = $this->model->delete($item, 'gallery_id', Gallery\Model::TABLE_NAME_PICTURES);
                 }
             }
 
@@ -184,7 +190,7 @@ class Admin extends Core\Modules\Controller\Admin
                     $this->model->updatePicturesNumbers($picture['pic'], $picture['gallery_id']);
                     Gallery\Helpers::removePicture($picture['file']);
 
-                    $bool = $this->model->delete($item, '', Model::TABLE_NAME_PICTURES);
+                    $bool = $this->model->delete($item, '', Gallery\Model::TABLE_NAME_PICTURES);
                     $this->uri->deleteUriAlias('gallery/details/id_' . $item);
                     $this->model->setCache($picture['gallery_id']);
                 }
@@ -243,7 +249,7 @@ class Admin extends Core\Modules\Controller\Admin
             // Datumsauswahl
             $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end'), array($gallery['start'], $gallery['end'])));
 
-            $this->view->assign('form', empty($_POST) === false ? $_POST : $gallery);
+            $this->view->assign('form', array_merge($gallery, $_POST));
 
             $pictures = $this->model->getPicturesByGalleryId((int)$this->uri->id);
             $c_pictures = count($pictures);
@@ -308,7 +314,7 @@ class Admin extends Core\Modules\Controller\Admin
                         $updateValues = array_merge($updateValues, array('file' => $result['name']));
                     }
 
-                    $bool = $this->model->update($updateValues, $this->uri->id, Model::TABLE_NAME_PICTURES);
+                    $bool = $this->model->update($updateValues, $this->uri->id, Gallery\Model::TABLE_NAME_PICTURES);
                     $this->model->setCache($picture['gallery_id']);
 
                     $this->session->unsetFormToken();
@@ -329,7 +335,7 @@ class Admin extends Core\Modules\Controller\Admin
                 $this->view->assign('options', $options);
             }
 
-            $this->view->assign('form', empty($_POST) === false ? $_POST : $picture);
+            $this->view->assign('form', array_merge($picture, $_POST));
             $this->view->assign('gallery_id', $this->uri->id);
 
             $this->session->generateFormToken();
@@ -366,7 +372,7 @@ class Admin extends Core\Modules\Controller\Admin
     {
         if (Core\Validate::isNumber($this->uri->id) === true) {
             if (($this->uri->action === 'up' || $this->uri->action === 'down') && $this->model->pictureExists((int)$this->uri->id) === true) {
-                Core\Functions::moveOneStep($this->uri->action, Model::TABLE_NAME_PICTURES, 'id', 'pic', $this->uri->id, 'gallery_id');
+                Core\Functions::moveOneStep($this->uri->action, Gallery\Model::TABLE_NAME_PICTURES, 'id', 'pic', $this->uri->id, 'gallery_id');
 
                 $galleryId = $this->model->getGalleryIdFromPictureId($this->uri->id);
 
@@ -434,7 +440,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         $this->view->assign('sidebar_entries', Core\Functions::recordsPerPage((int)$settings['sidebar'], 1, 10));
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : $settings);
+        $this->view->assign('form', array_merge($settings, $_POST));
 
         $this->session->generateFormToken();
     }

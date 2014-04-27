@@ -189,7 +189,7 @@ class Admin extends Core\Modules\Controller\Admin
             'date_format_short' => CONFIG_DATE_FORMAT_SHORT
         );
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : $defaults);
+        $this->view->assign('form', array_merge($defaults, $_POST));
 
         $this->session->generateFormToken();
     }
@@ -391,7 +391,7 @@ class Admin extends Core\Modules\Controller\Admin
             );
             $this->view->assign('birthday_display', Core\Functions::selectGenerator('birthday_display', array(0, 1, 2), $lang_birthday_display, $user['birthday_display'], 'checked'));
 
-            $this->view->assign('form', empty($_POST) === false ? $_POST : $user);
+            $this->view->assign('form', array_merge($user, $_POST));
 
             $this->session->generateFormToken();
         } else {
@@ -434,7 +434,7 @@ class Admin extends Core\Modules\Controller\Admin
         $lang_registration = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
         $this->view->assign('registration', Core\Functions::selectGenerator('enable_registration', array(1, 0), $lang_registration, $settings['enable_registration'], 'checked'));
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : array('mail' => $settings['mail']));
+        $this->view->assign('form', array_merge(array('mail' => $settings['mail']), $_POST));
 
         $this->session->generateFormToken();
     }

@@ -96,12 +96,15 @@ class Model extends Core\Model
         $this->validateFormKey();
 
         $errors = array();
-        if (empty($formData['name']))
+        if (empty($formData['name'])) {
             $errors['name'] = $this->lang->t('system', 'name_to_short');
-        if (strlen($formData['message']) < 3)
+        }
+        if (strlen($formData['message']) < 3) {
             $errors['message'] = $this->lang->t('system', 'message_to_short');
-        if ($settings['notify'] == 2 && (!isset($formData['active']) || ($formData['active'] != 0 && $formData['active'] != 1)))
+        }
+        if ($settings['notify'] == 2 && (!isset($formData['active']) || ($formData['active'] != 0 && $formData['active'] != 1))) {
             $errors['notify'] = $this->lang->t('guestbook', 'select_activate');
+        }
 
         if (!empty($errors)) {
             throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
@@ -113,18 +116,24 @@ class Model extends Core\Model
         $this->validateFormKey();
 
         $errors = array();
-        if (empty($formData['dateformat']) || ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short'))
+        if (empty($formData['dateformat']) || ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short')) {
             $errors['dateformat'] = $this->lang->t('system', 'select_date_format');
-        if (!isset($formData['notify']) || ($formData['notify'] != 0 && $formData['notify'] != 1 && $formData['notify'] != 2))
+        }
+        if (!isset($formData['notify']) || ($formData['notify'] != 0 && $formData['notify'] != 1 && $formData['notify'] != 2)) {
             $errors['notify'] = $this->lang->t('guestbook', 'select_notification_type');
-        if ($formData['notify'] != 0 && Core\Validate::email($formData['notify_email']) === false)
+        }
+        if ($formData['notify'] != 0 && Core\Validate::email($formData['notify_email']) === false) {
             $errors['notify-email'] = $this->lang->t('system', 'wrong_email_format');
-        if (!isset($formData['overlay']) || $formData['overlay'] != 1 && $formData['overlay'] != 0)
+        }
+        if (!isset($formData['overlay']) || $formData['overlay'] != 1 && $formData['overlay'] != 0) {
             $errors[] = $this->lang->t('guestbook', 'select_use_overlay');
-        if (Core\Modules::isActive('emoticons') === true && (!isset($formData['emoticons']) || ($formData['emoticons'] != 0 && $formData['emoticons'] != 1)))
+        }
+        if (Core\Modules::isActive('emoticons') === true && (!isset($formData['emoticons']) || ($formData['emoticons'] != 0 && $formData['emoticons'] != 1))) {
             $errors[] = $this->lang->t('guestbook', 'select_emoticons');
-        if (Core\Modules::isActive('newsletter') === true && (!isset($formData['newsletter_integration']) || ($formData['newsletter_integration'] != 0 && $formData['newsletter_integration'] != 1)))
+        }
+        if (Core\Modules::isActive('newsletter') === true && (!isset($formData['newsletter_integration']) || ($formData['newsletter_integration'] != 0 && $formData['newsletter_integration'] != 1))) {
             $errors[] = $this->lang->t('guestbook', 'select_newsletter_integration');
+        }
 
         if (!empty($errors)) {
             throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
