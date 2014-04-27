@@ -41,7 +41,7 @@ class Frontend extends Core\Modules\Controller
 
         Core\Functions::getRedirectMessage();
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : array('search_term' => ''));
+        $this->view->assign('form', array_merge(array('search_term' => ''), $_POST));
 
         $this->view->assign('search_mods', Search\Helpers::getModules());
 

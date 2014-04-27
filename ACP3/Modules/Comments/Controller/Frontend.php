@@ -92,27 +92,22 @@ class Frontend extends Core\Modules\Controller
             $this->view->assign('emoticons', \ACP3\Modules\Emoticons\Helpers::emoticonsList());
         }
 
-        $defaults = array();
+        $defaults = array(
+            'name' => '',
+            'name_disabled' => '',
+            'message' => ''
+        );
 
         // Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
         if ($this->auth->isUser() === true) {
             $user = $this->auth->getUserInfo();
             $disabled = ' readonly="readonly" class="readonly"';
-
-            if (empty($_POST) === false) {
-                $_POST['name'] = $user['nickname'];
-                $_POST['name_disabled'] = $disabled;
-            } else {
-                $defaults['name'] = $user['nickname'];
-                $defaults['name_disabled'] = $disabled;
-                $defaults['message'] = '';
-            }
-        } else {
-            $defaults['name'] = '';
-            $defaults['name_disabled'] = '';
+            $defaults['name'] = $user['nickname'];
+            $defaults['name_disabled'] = $disabled;
             $defaults['message'] = '';
         }
-        $this->view->assign('form', empty($_POST) === false ? array_merge($defaults, $_POST) : $defaults);
+
+        $this->view->assign('form', array_merge($defaults, $_POST));
 
         if (Core\Modules::hasPermission('captcha', 'image') === true) {
             $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());

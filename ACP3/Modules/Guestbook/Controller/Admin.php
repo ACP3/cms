@@ -46,7 +46,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             if (empty($_POST) === false) {
                 try {
-                    $this->model->validateEdit($_POST);
+                    $this->model->validateEdit($_POST, $settings);
 
                     $updateValues = array(
                         'name' => Core\Functions::strEncode($_POST['name']),
@@ -76,7 +76,7 @@ class Admin extends Core\Modules\Controller\Admin
                 $this->view->assign('activate', Core\Functions::selectGenerator('active', array(1, 0), $langActivate, $guestbook['active'], 'checked'));
             }
 
-            $this->view->assign('form', empty($_POST) === false ? $_POST : $guestbook);
+            $this->view->assign('form', array_merge($guestbook, $_POST));
 
             $this->session->generateFormToken();
         } else {
@@ -174,7 +174,7 @@ class Admin extends Core\Modules\Controller\Admin
             $this->view->assign('newsletter_integration', Core\Functions::selectGenerator('newsletter_integration', array(1, 0), $lang_newsletter_integration, $settings['newsletter_integration'], 'checked'));
         }
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : array('notify_email' => $settings['notify_email']));
+        $this->view->assign('form', array_merge(array('notify_email' => $settings['notify_email']), $_POST));
 
         $this->session->generateFormToken();
     }

@@ -53,7 +53,7 @@ class Model extends Core\Model
 
     public function getAll($status = '', $limitStart = '', $resultsPerPage = '')
     {
-        $where = empty($time) === false ? ' WHERE status = :status' : '';
+        $where = empty($status) === false ? ' WHERE status = :status' : '';
         $limitStmt = $this->_buildLimitStmt($limitStart, $resultsPerPage);
         return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . $where . ' ORDER BY date DESC' . $limitStmt, array('status' => $status));
     }

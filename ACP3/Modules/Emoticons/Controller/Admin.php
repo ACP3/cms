@@ -39,14 +39,14 @@ class Admin extends Core\Modules\Controller\Admin
 
                 $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'emoticons');
 
-                $insert_values = array(
+                $insertValues = array(
                     'id' => '',
                     'code' => Core\Functions::strEncode($_POST['code']),
                     'description' => Core\Functions::strEncode($_POST['description']),
                     'img' => $result['name'],
                 );
 
-                $bool = $this->model->insert($insert_values);
+                $bool = $this->model->insert($insertValues);
                 $this->model->setCache();
 
                 $this->session->unsetFormToken();
@@ -59,7 +59,7 @@ class Admin extends Core\Modules\Controller\Admin
             }
         }
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : array('code' => '', 'description' => ''));
+        $this->view->assign('form', array_merge(array('code' => '', 'description' => ''), $_POST));
 
         $this->session->generateFormToken();
     }
@@ -128,7 +128,7 @@ class Admin extends Core\Modules\Controller\Admin
                 }
             }
 
-            $this->view->assign('form', empty($_POST) === false ? $_POST : $emoticon);
+            $this->view->assign('form', array_merge($emoticon, $_POST));
 
             $this->session->generateFormToken();
         } else {
@@ -180,7 +180,7 @@ class Admin extends Core\Modules\Controller\Admin
             }
         }
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : Core\Config::getSettings('emoticons'));
+        $this->view->assign('form', array_merge(Core\Config::getSettings('emoticons'), $_POST));
 
         $this->session->generateFormToken();
     }

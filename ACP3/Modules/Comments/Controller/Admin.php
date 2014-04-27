@@ -92,7 +92,7 @@ class Admin extends Core\Modules\Controller\Admin
                 $this->view->assign('emoticons', \ACP3\Modules\Emoticons\Helpers::emoticonsList());
             }
 
-            $this->view->assign('form', empty($_POST) === false ? $_POST : $comment);
+            $this->view->assign('form', array_merge($comment, $_POST));
             $this->view->assign('module_id', (int)$comment['module_id']);
 
             $this->session->generateFormToken();
@@ -202,8 +202,8 @@ class Admin extends Core\Modules\Controller\Admin
 
         // Emoticons erlauben
         if (Core\Modules::isActive('emoticons') === true) {
-            $lang_allow_emoticons = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-            $this->view->assign('allow_emoticons', Core\Functions::selectGenerator('emoticons', array(1, 0), $lang_allow_emoticons, $settings['emoticons'], 'checked'));
+            $lang_allowEmoticons = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
+            $this->view->assign('allow_emoticons', Core\Functions::selectGenerator('emoticons', array(1, 0), $lang_allowEmoticons, $settings['emoticons'], 'checked'));
         }
 
         $this->session->generateFormToken();

@@ -1,5 +1,7 @@
-<nav id="toc" class="well well-small">
-    <h4>{lang t="system|table_of_contents"}</h4>
+<nav id="toc" class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{lang t="system|table_of_contents"}</h3>
+    </div>
 
     <div class="list-group">
         {foreach $toc as $row}

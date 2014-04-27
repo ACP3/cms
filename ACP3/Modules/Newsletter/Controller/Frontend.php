@@ -97,7 +97,7 @@ class Frontend extends Core\Modules\Controller
             }
         }
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : array('mail' => ''));
+        $this->view->assign('form', array_merge(array('mail' => ''), $_POST));
 
         $field_value = $this->uri->action ? $this->uri->action : 'subscribe';
 

@@ -16,6 +16,15 @@ abstract class Helpers
 {
 
     /**
+     * @var Core\Lang
+     */
+    protected static $lang;
+
+    /**
+     * @var Core\URI
+     */
+    protected static $uri;
+    /**
      * @var Model
      */
     protected static $model;
@@ -28,6 +37,9 @@ abstract class Helpers
                 Core\Registry::get('Lang'),
                 Core\Registry::get('Auth')
             );
+
+            self::$lang = Core\Registry::get('Lang');
+            self::$uri = Core\Registry::get('URI');
         }
     }
 
@@ -88,7 +100,7 @@ abstract class Helpers
      * Meldet eine E-Mail-Adresse beim Newsletter an
      *
      * @param string $emailAddress
-     *    Die anzumeldente E-Mail-Adresse
+     *    Die anzumeldende E-Mail-Adresse
      * @return boolean
      */
     public static function subscribeToNewsletter($emailAddress)
@@ -96,12 +108,12 @@ abstract class Helpers
         self::_init();
 
         $hash = md5(mt_rand(0, microtime(true)));
-        $host = htmlentities($_SERVER['HTTP_HOST']);
+        $host = htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES, 'UTF-8');
         $settings = Core\Config::getSettings('newsletter');
 
-        $subject = sprintf(Core\Registry::get('Lang')->t('newsletter', 'subscribe_mail_subject'), CONFIG_SEO_TITLE);
-        $body = str_replace('{host}', $host, Core\Registry::get('Lang')->t('newsletter', 'subscribe_mail_body')) . "\n\n";
-        $body .= 'http://' . $host . Core\Registry::get('URI')->route('newsletter/activate/hash_' . $hash . '/mail_' . $emailAddress);
+        $subject = sprintf(self::$lang->t('newsletter', 'subscribe_mail_subject'), CONFIG_SEO_TITLE);
+        $body = str_replace('{host}', $host, self::$lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
+        $body .= 'http://' . $host . self::$uri->route('newsletter/activate/hash_' . $hash . '/mail_' . $emailAddress);
         $mailSent = Core\Functions::generateEmail('', $emailAddress, $settings['mail'], $subject, $body);
         $bool = false;
 

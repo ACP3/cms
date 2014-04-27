@@ -91,38 +91,29 @@ class Frontend extends Core\Modules\Controller
             $this->view->assign('LANG_subscribe_to_newsletter', sprintf($this->lang->t('guestbook', 'subscribe_to_newsletter'), CONFIG_SEO_TITLE));
         }
 
+        $defaults = array(
+            'name' => '',
+            'name_disabled' => '',
+            'mail' => '',
+            'mail_disabled' => '',
+            'website' => '',
+            'website_disabled' => '',
+            'message' => '',
+        );
+
         // Falls Benutzer eingeloggt ist, Formular schon teilweise ausfüllen
         if ($this->auth->isUser() === true) {
-            $user = $this->auth->getUserInfo();
+            $users = $this->auth->getUserInfo();
             $disabled = ' readonly="readonly" class="readonly"';
-
-            if (empty($_POST) === false) {
-                $_POST['name'] = $user['nickname'];
-                $_POST['name_disabled'] = $disabled;
-                $_POST['mail'] = $user['mail'];
-                $_POST['mail_disabled'] = $disabled;
-                $_POST['website_disabled'] = !empty($user['website']) ? $disabled : '';
-            } else {
-                $user['name'] = $user['nickname'];
-                $user['name_disabled'] = $disabled;
-                $user['mail_disabled'] = $disabled;
-                $user['website_disabled'] = !empty($user['website']) ? $disabled : '';
-                $user['message'] = '';
-            }
-            $this->view->assign('form', empty($_POST) === false ? $_POST : $user);
-        } else {
-            $defaults = array(
-                'name' => '',
-                'name_disabled' => '',
-                'mail' => '',
-                'mail_disabled' => '',
-                'website' => '',
-                'website_disabled' => '',
-                'message' => '',
-            );
-
-            $this->view->assign('form', empty($_POST) === false ? array_merge($defaults, $_POST) : $defaults);
+            $defaults['name'] = $users['nickname'];
+            $defaults['name_disabled'] = $disabled;
+            $defaults['mail'] = $users['mail'];
+            $defaults['mail_disabled'] = $disabled;
+            $defaults['website'] = $users['website'];
+            $defaults['website_disabled'] = !empty($users['website']) ? $disabled : '';
         }
+
+        $this->view->assign('form', array_merge($defaults, $_POST));
 
         if (Core\Modules::hasPermission('captcha', 'image') === true) {
             $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());

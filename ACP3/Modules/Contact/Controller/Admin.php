@@ -52,7 +52,7 @@ class Admin extends Core\Modules\Controller\Admin
 
         $settings = Core\Config::getSettings('contact');
 
-        $this->view->assign('form', empty($_POST) === false ? $_POST : $settings);
+        $this->view->assign('form', array_merge($settings, $_POST));
 
         $this->session->generateFormToken();
     }
