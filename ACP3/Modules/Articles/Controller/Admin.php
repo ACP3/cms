@@ -112,7 +112,6 @@ class Admin extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/articles/delete', 'acp/articles');
 
         if ($this->uri->action === 'confirmed') {
-            $items = explode('|', $items);
             $bool = false;
 
             $nestedSet = new Core\NestedSet($this->db, \ACP3\Modules\Menus\Model::TABLE_NAME_ITEMS, true);

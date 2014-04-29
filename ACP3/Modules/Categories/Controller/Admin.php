@@ -88,7 +88,6 @@ class Admin extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/categories/delete', 'acp/categories');
 
         if ($this->uri->action === 'confirmed') {
-            $items = explode('|', $items);
             $bool = false;
             $isInUse = false;
 

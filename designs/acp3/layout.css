@@ -23,10 +23,12 @@
 }
 
 #loading-layer h1 {
-    margin: -32px 0 0;
+    width: 100%;
+    margin: 0;
     font-size: 26px;
-    position: relative;
-    top: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
     text-align: center;
 }
 

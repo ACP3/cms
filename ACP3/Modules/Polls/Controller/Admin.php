@@ -100,7 +100,6 @@ class Admin extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/polls/delete', 'acp/polls');
 
         if ($this->uri->action === 'confirmed') {
-            $items = explode('|', $items);
             $bool = $bool2 = $bool3 = false;
             foreach ($items as $item) {
                 $bool = $this->model->delete($item);

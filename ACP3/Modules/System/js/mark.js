@@ -57,20 +57,29 @@ jQuery.fn.highlightTableRow = function (checkboxName) {
  * @param noEntriesSelectText
  */
 jQuery.fn.deleteMarkedResults = function (checkboxName, confirmationText, noEntriesSelectText) {
-    $(this).click(function (e) {
+    var $this = $(this);
+
+    $this.on('click', function(e) {
         e.preventDefault();
 
-        var entries = $('form .table input[name="' + checkboxName + '[]"]:checked') || [],
-            ary = '';
+        var $entries = $('form .table input[name="' + checkboxName + '[]"]:checked');
 
-        jQuery.each(entries, function () {
-            ary = ary + $(this).val() + '|';
-        });
+        if ($entries.length > 0) {
+            var data = {
+                action: 'confirmed',
+                entries: []
+            };
 
-        if (ary !== '') {
+            $entries.each(function() {
+                data.entries.push($(this).val());
+            });
+
             bootbox.confirm(confirmationText, function (result) {
                 if (result) {
-                    location.href = $('.table').parents('form').prop('action') + 'entries_' + ary.substr(0, ary.length - 1) + '/action_confirmed/';
+                    var $form = $this.closest('form');
+
+                    $form.formSubmit('', data);
+                    $form.triggerHandler('submit');
                 }
             });
         } else {

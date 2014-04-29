@@ -27,7 +27,6 @@ class Admin extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/guestbook/delete', 'acp/guestbook');
 
         if ($this->uri->action === 'confirmed') {
-            $items = explode('|', $items);
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->model->delete($item);
