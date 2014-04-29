@@ -91,12 +91,12 @@ class Admin extends Core\Modules\Controller\Admin
         $c_guestbook = count($guestbook);
 
         if ($c_guestbook > 0) {
-            $can_delete = Core\Modules::hasPermission('guestbook', 'acp_delete');
+            $canDelete = Core\Modules::hasPermission('guestbook', 'acp_delete');
             $config = array(
                 'element' => '#acp-table',
-                'sort_col' => $can_delete === true ? 1 : 0,
+                'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
-                'hide_col_sort' => $can_delete === true ? 0 : ''
+                'hide_col_sort' => $canDelete === true ? 0 : ''
             );
             $this->view->appendContent(Core\Functions::dataTable($config));
 
@@ -117,7 +117,7 @@ class Admin extends Core\Modules\Controller\Admin
                 }
             }
             $this->view->assign('guestbook', $guestbook);
-            $this->view->assign('can_delete', $can_delete);
+            $this->view->assign('can_delete', $canDelete);
         }
     }
 
