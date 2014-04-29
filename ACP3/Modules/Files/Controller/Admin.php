@@ -257,12 +257,12 @@ class Admin extends Core\Modules\Controller\Admin
         $c_files = count($files);
 
         if ($c_files > 0) {
-            $can_delete = Core\Modules::hasPermission('files', 'acp_delete');
+            $canDelete = Core\Modules::hasPermission('files', 'acp_delete');
             $config = array(
                 'element' => '#acp-table',
-                'sort_col' => $can_delete === true ? 1 : 0,
+                'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
-                'hide_col_sort' => $can_delete === true ? 0 : ''
+                'hide_col_sort' => $canDelete === true ? 0 : ''
             );
             $this->view->appendContent(Core\Functions::dataTable($config));
             for ($i = 0; $i < $c_files; ++$i) {
@@ -270,7 +270,7 @@ class Admin extends Core\Modules\Controller\Admin
                 $files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : $this->lang->t('files', 'unknown_filesize');
             }
             $this->view->assign('files', $files);
-            $this->view->assign('can_delete', $can_delete);
+            $this->view->assign('can_delete', $canDelete);
         }
     }
 

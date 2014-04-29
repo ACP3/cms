@@ -351,13 +351,13 @@ class Admin extends Core\Modules\Controller\Admin
         $c_menus = count($menus);
 
         if ($c_menus > 0) {
-            $can_delete_item = Core\Modules::hasPermission('menus', 'acp_delete_item');
-            $can_order_item = Core\Modules::hasPermission('menus', 'acp_order');
-            $this->view->assign('can_delete_item', $can_delete_item);
-            $this->view->assign('can_order_item', $can_order_item);
+            $canDeleteItem = Core\Modules::hasPermission('menus', 'acp_delete_item');
+            $canSortItem = Core\Modules::hasPermission('menus', 'acp_order');
+            $this->view->assign('can_delete_item', $canDeleteItem);
+            $this->view->assign('can_order_item', $canSortItem);
             $this->view->assign('can_delete', Core\Modules::hasPermission('menus', 'acp_delete'));
             $this->view->assign('can_edit', Core\Modules::hasPermission('menus', 'acp_edit'));
-            $this->view->assign('colspan', $can_delete_item && $can_order_item ? 5 : ($can_delete_item || $can_order_item ? 4 : 3));
+            $this->view->assign('colspan', $canDeleteItem && $canSortItem ? 5 : ($canDeleteItem || $canSortItem ? 4 : 3));
 
             $pagesList = Menus\Helpers::menuItemsList();
             for ($i = 0; $i < $c_menus; ++$i) {

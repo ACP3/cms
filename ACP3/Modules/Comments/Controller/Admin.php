@@ -107,19 +107,19 @@ class Admin extends Core\Modules\Controller\Admin
         $c_comments = count($comments);
 
         if ($c_comments > 0) {
-            $can_delete = Core\Modules::hasPermission('comments', 'acp_delete');
+            $canDelete = Core\Modules::hasPermission('comments', 'acp_delete');
             $config = array(
                 'element' => '#acp-table',
-                'sort_col' => $can_delete === true ? 1 : 0,
+                'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
-                'hide_col_sort' => $can_delete === true ? 0 : ''
+                'hide_col_sort' => $canDelete === true ? 0 : ''
             );
             $this->view->appendContent(Core\Functions::dataTable($config));
             for ($i = 0; $i < $c_comments; ++$i) {
                 $comments[$i]['name'] = $this->lang->t($comments[$i]['module'], $comments[$i]['module']);
             }
             $this->view->assign('comments', $comments);
-            $this->view->assign('can_delete', $can_delete);
+            $this->view->assign('can_delete', $canDelete);
         }
     }
 
@@ -138,12 +138,12 @@ class Admin extends Core\Modules\Controller\Admin
             $c_comments = count($comments);
 
             if ($c_comments > 0) {
-                $can_delete = Core\Modules::hasPermission('comments', 'acp_delete_comments');
+                $canDelete = Core\Modules::hasPermission('comments', 'acp_delete_comments');
                 $config = array(
                     'element' => '#acp-table',
-                    'sort_col' => $can_delete === true ? 5 : 4,
+                    'sort_col' => $canDelete === true ? 5 : 4,
                     'sort_dir' => 'asc',
-                    'hide_col_sort' => $can_delete === true ? 0 : ''
+                    'hide_col_sort' => $canDelete === true ? 0 : ''
                 );
                 $this->view->appendContent(Core\Functions::dataTable($config));
 
@@ -167,7 +167,7 @@ class Admin extends Core\Modules\Controller\Admin
                     }
                 }
                 $this->view->assign('comments', $comments);
-                $this->view->assign('can_delete', $can_delete);
+                $this->view->assign('can_delete', $canDelete);
             }
         }
     }

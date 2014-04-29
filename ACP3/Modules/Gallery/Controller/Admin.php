@@ -253,10 +253,10 @@ class Admin extends Core\Modules\Controller\Admin
             $c_pictures = count($pictures);
 
             if ($c_pictures > 0) {
-                $can_delete = Core\Modules::hasPermission('gallery', 'acp_delete_picture');
+                $canDelete = Core\Modules::hasPermission('gallery', 'acp_delete_picture');
                 $config = array(
                     'element' => '#acp-table',
-                    'hide_col_sort' => $can_delete === true ? 0 : ''
+                    'hide_col_sort' => $canDelete === true ? 0 : ''
                 );
                 $this->view->appendContent(Core\Functions::dataTable($config));
 
@@ -265,7 +265,7 @@ class Admin extends Core\Modules\Controller\Admin
                     $pictures[$i]['last'] = $i == $c_pictures - 1 ? true : false;
                 }
                 $this->view->assign('pictures', $pictures);
-                $this->view->assign('can_delete', $can_delete);
+                $this->view->assign('can_delete', $canDelete);
                 $this->view->assign('can_order', Core\Modules::hasPermission('gallery', 'acp_order'));
                 $this->view->assign('can_edit_picture', Core\Modules::hasPermission('gallery', 'acp_edit_picture'));
             }
