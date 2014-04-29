@@ -199,7 +199,6 @@ class Admin extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/users/delete', 'acp/users');
 
         if ($this->uri->action === 'confirmed') {
-            $items = explode('|', $items);
             $bool = $isAdminUser = $selfDelete = false;
             foreach ($items as $item) {
                 if ($item == 1) {

@@ -146,7 +146,6 @@ class Admin extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/gallery/delete', 'acp/gallery');
 
         if ($this->uri->action === 'confirmed') {
-            $items = explode('|', $items);
             $bool = $bool2 = false;
 
             foreach ($items as $item) {
@@ -181,7 +180,6 @@ class Admin extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/gallery/delete_picture', 'acp/gallery/edit/id_' . $this->uri->id);
 
         if ($this->uri->action === 'confirmed') {
-            $items = explode('|', $items);
             $bool = false;
             foreach ($items as $item) {
                 if (!empty($item) && $this->model->pictureExists($item) === true) {

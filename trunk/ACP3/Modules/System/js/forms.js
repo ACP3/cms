@@ -2,8 +2,9 @@
  * Simple AJAX form handler
  *
  * @param loadingText
+ * @param [customFormData]
  */
-jQuery.fn.formSubmit = function (loadingText) {
+jQuery.fn.formSubmit = function (loadingText, customFormData) {
     var $this = jQuery(this);
 
     /**
@@ -12,10 +13,26 @@ jQuery.fn.formSubmit = function (loadingText) {
      */
     function _showLoadingLayer() {
         var $body = $('body'),
+            $loadingLayer = $('#loading-layer'),
             documentHeight = $body.outerHeight(true);
 
-        if ($('#loading-layer').length === 0) {
-            $('<div id="loading-layer" style="height: ' + documentHeight + 'px"><h1><span class="glyphicon glyphicon-cog"></span>' + loadingText + '</h1></div>').appendTo($body).fadeIn();
+        if ($loadingLayer.length === 0) {
+            $('<div id="loading-layer" style="height: ' + documentHeight + 'px"><h1><span class="glyphicon glyphicon-cog"></span>' + loadingText + '</h1></div>').appendTo($body);
+
+            $loadingLayer = $('#loading-layer');
+
+            $loadingLayer.show();
+            var windowHeight = $(window).outerHeight(true),
+                $heading = $loadingLayer.find('h1'),
+                headingHeight = $heading.height();
+
+            $heading.css({
+                marginTop: (Math.round(windowHeight / 2) - headingHeight) + 'px'
+            });
+
+            $loadingLayer.hide().fadeIn();
+        } else {
+            $loadingLayer.fadeIn();
         }
     }
 
@@ -25,24 +42,37 @@ jQuery.fn.formSubmit = function (loadingText) {
      * @private
      */
     function _hideLoadingLayer() {
-        $('#loading-layer').stop().fadeOut(function () {
-            $(this).remove();
-        });
+        $('#loading-layer').stop().fadeOut();
     }
 
-    $this.on('submit', function (e) {
-        e.preventDefault();
+    /**
+     * Processes the AJAX requests
+     *
+     * @param $form
+     * @param [customFormData]
+     * @private
+     */
+    function _processAjaxRequest($form, customFormData) {
+        var url = $form.attr('action') || $form.attr('href'),
+            processData = (customFormData) ? true : false,
+            contentType = (customFormData) ? 'application/x-www-form-urlencoded; charset=UTF-8' : false,
+            type,
+            data;
 
-        if (typeof CKEDITOR !== "undefined") {
-            for (instance in CKEDITOR.instances) {
-                CKEDITOR.instances[instance].updateElement();
-            }
+        if ($form.attr('method')) {
+            type = $form.attr('method').toUpperCase();
+            data = customFormData || new FormData($form[0]);
+        } else {
+            type = 'GET';
+            data = customFormData || {};
         }
 
         $.ajax({
-            url: $this.attr('action'),
-            type: $this.attr('method').toUpperCase(),
-            data: $this.serialize(),
+            url: url,
+            type: type,
+            data: data,
+            processData: processData,
+            contentType: contentType,
             beforeSend: function () {
                 _showLoadingLayer();
             },
@@ -53,7 +83,7 @@ jQuery.fn.formSubmit = function (loadingText) {
                     } else {
                         if (data.success === false) {
                             $('#error-box').remove();
-                            $(data.content).hide().prependTo($this).fadeIn();
+                            $(data.content).hide().prependTo($form).fadeIn();
                         } else if (data.success === true) {
 
                         } else {
@@ -70,5 +100,23 @@ jQuery.fn.formSubmit = function (loadingText) {
                 _hideLoadingLayer();
             }
         });
+    }
+
+    $this.on('submit',function (e) {
+        e.preventDefault();
+
+        if (typeof CKEDITOR !== "undefined") {
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+        }
+
+        _processAjaxRequest($this, customFormData);
+    }).on('click', function (e) {
+        if ($this.prop('tagName') === 'A') {
+            e.preventDefault();
+
+            _processAjaxRequest($this, customFormData);
+        }
     });
 };

@@ -154,7 +154,6 @@ class Admin extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/permissions/delete', 'acp/permissions');
 
         if ($this->uri->action === 'confirmed') {
-            $items = explode('|', $items);
             $bool = $bool2 = $bool3 = false;
             $levelUndeletable = false;
 
@@ -191,7 +190,6 @@ class Admin extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/permissions/delete_resources', 'acp/permissions/list_resources');
 
         if ($this->uri->action === 'confirmed') {
-            $items = explode('|', $items);
             $bool = false;
 
             foreach ($items as $item) {

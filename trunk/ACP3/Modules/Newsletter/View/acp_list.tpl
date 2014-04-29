@@ -47,7 +47,7 @@
                     <td>{$row.status}</td>
                     {if $can_send}
                         <td>
-                            <a href="{uri args="acp/newsletter/send/id_`$row.id`"}" title="{lang t="newsletter|acp_send"}">{icon path="16/mail_send" width="16" height="16" alt="{lang t="newsletter|send"}"}</a>
+                            <a href="{uri args="acp/newsletter/send/id_`$row.id`"}" title="{lang t="newsletter|acp_send"}" class="ajax-send">{icon path="16/mail_send" width="16" height="16" alt="{lang t="newsletter|send"}"}</a>
                         </td>
                     {/if}
                     <td>{$row.id}</td>
@@ -58,6 +58,12 @@
         {if $can_delete === true}
             {mark name="entries"}
         {/if}
+        {include_js module="system" file="forms"}
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                $('.ajax-send').formSubmit('{lang t="system|loading_please_wait"}');
+            });
+        </script>
     {else}
         <div class="alert alert-warning text-center">
             <strong>{lang t="system|no_entries"}</strong>

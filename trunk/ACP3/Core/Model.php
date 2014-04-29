@@ -27,6 +27,12 @@ class Model
 
     const TABLE_NAME = '';
 
+    /**
+     * Injects the dependencies
+     *
+     * @param \Doctrine\DBAL\Connection $db
+     * @param Lang $lang
+     */
     public function __construct(\Doctrine\DBAL\Connection $db, Lang $lang)
     {
         $this->db = $db;
@@ -34,6 +40,8 @@ class Model
     }
 
     /**
+     * Build the SQL limit
+     *
      * @param $limitStart
      * @param $resultsPerPage
      * @return string
@@ -50,6 +58,8 @@ class Model
     }
 
     /**
+     * Executes the SQL insert statement
+     *
      * @param array $params
      * @param string $tableName
      * @return int
@@ -70,6 +80,8 @@ class Model
     }
 
     /**
+     * Executes thr SQL delete statement
+     *
      * @param int|array $id
      * @param string $field
      * @param string $tableName
@@ -91,6 +103,8 @@ class Model
     }
 
     /**
+     * Executes the SQL update statement
+     *
      * @param array $params
      * @param int|array $id
      * @param string $tableName

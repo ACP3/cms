@@ -7,11 +7,12 @@
         </a>
         {if isset($user_sidebar.modules)}
             <div class="list-group-item dropdown">
-                <a href="{uri args="acp"}" class="dropdown-toggle" data-toggle="dropdown" data-target="#">
+                <a href="{uri args="acp"}" id="menu-administration" class="dropdown-toggle" data-toggle="dropdown" data-target="#">
                     <i class="glyphicon glyphicon-file"></i>
                     {lang t="users|administration"}
-                    <b class="caret"></b> </a>
-                <ul class="dropdown-menu">
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="menu-administration">
                     {foreach $user_sidebar.modules as $row}
                         <li{$row.active}><a href="{uri args="acp/`$row.dir`"}">{$row.name}</a></li>
                     {/foreach}
@@ -20,11 +21,12 @@
         {/if}
         {if isset($user_sidebar.system)}
             <div class="list-group-item dropdown">
-                <a href="{uri args="acp/system"}" class="dropdown-toggle" data-toggle="dropdown" data-target="#">
+                <a href="{uri args="acp/system"}" id="menu-system" class="dropdown-toggle" data-toggle="dropdown" data-target="#">
                     <i class="glyphicon glyphicon-wrench"></i>
                     {lang t="system|system"}
-                    <b class="caret"></b> </a>
-                <ul class="dropdown-menu">
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="menu-system">
                     {foreach $user_sidebar.system as $row}
                         <li{$row.active}><a href="{uri args="acp/system/`$row.page`"}">{$row.name}</a></li>
                     {/foreach}

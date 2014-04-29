@@ -36,11 +36,11 @@ class Admin extends Core\Modules\Controller
 
         if (!isset($entries)) {
             $this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
-        } elseif (is_array($entries) === true) {
-            $marked_entries = implode('|', $entries);
-            $this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route($moduleConfirmUrl) . 'entries_' . $marked_entries . '/action_confirmed/', $this->uri->route($moduleIndexUrl)));
+        } elseif (is_array($entries) === true && $this->uri->action !== 'confirmed') {
+            $markedEntries = implode('|', $entries);
+            $this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route($moduleConfirmUrl) . 'entries_' . $markedEntries . '/action_confirmed/', $this->uri->route($moduleIndexUrl)));
         } else {
-            return $entries;
+            return is_array($entries) ? $entries : explode('|', $entries);
         }
     }
 

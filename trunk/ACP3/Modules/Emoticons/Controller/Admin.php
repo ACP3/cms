@@ -69,7 +69,6 @@ class Admin extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/emoticons/delete', 'acp/emoticons');
 
         if ($this->uri->action === 'confirmed') {
-            $items = explode('|', $items);
             $bool = false;
             foreach ($items as $item) {
                 if (!empty($item) && $this->model->resultExists($item) === true) {

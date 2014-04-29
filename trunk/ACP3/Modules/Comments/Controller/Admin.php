@@ -29,7 +29,6 @@ class Admin extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/comments/delete', 'acp/comments');
 
         if ($this->uri->action === 'confirmed') {
-            $items = explode('|', $items);
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->model->delete($item, 'module_id');
@@ -45,7 +44,6 @@ class Admin extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/comments/delete_comments', 'acp/comments');
 
         if ($this->uri->action === 'confirmed') {
-            $items = explode('|', $items);
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->model->delete($item);

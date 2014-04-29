@@ -125,7 +125,6 @@ class Admin extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/files/delete', 'acp/files');
 
         if ($this->uri->action === 'confirmed') {
-            $items = explode('|', $items);
             $bool = false;
             $commentsInstalled = Core\Modules::isInstalled('comments');
             foreach ($items as $item) {

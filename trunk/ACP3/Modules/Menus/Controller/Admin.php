@@ -156,7 +156,6 @@ class Admin extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/menus/delete', 'acp/menus');
 
         if ($this->uri->action === 'confirmed') {
-            $items = explode('|', $items);
             $bool = false;
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
             foreach ($items as $item) {
@@ -186,7 +185,6 @@ class Admin extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/menus/delete_item', 'acp/menus');
 
         if ($this->uri->action === 'confirmed') {
-            $items = explode('|', $items);
             $bool = false;
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
             foreach ($items as $item) {

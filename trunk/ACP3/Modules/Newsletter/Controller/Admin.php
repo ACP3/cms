@@ -96,7 +96,6 @@ class Admin extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/newsletter/delete', 'acp/newsletter');
 
         if ($this->uri->action === 'confirmed') {
-            $items = explode('|', $items);
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->model->delete($item);
@@ -112,7 +111,6 @@ class Admin extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/newsletter/delete_account', 'acp/newsletter/list_accounts');
 
         if ($this->uri->action === 'confirmed') {
-            $items = explode('|', $items);
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->model->delete($item, Newsletter\Model::TABLE_NAME_ACCOUNTS);
@@ -242,7 +240,7 @@ class Admin extends Core\Modules\Controller\Admin
                 $bool2 = $this->model->update(array('status' => '1'), $this->uri->id);
             }
 
-            Core\Functions::setRedirectMessage($bool && $bool2, $this->lang->t('newsletter', $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error'), 'acp/newsletter');
+            Core\Functions::setRedirectMessage($bool && $bool2 !== false, $this->lang->t('newsletter', $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error'), 'acp/newsletter');
         } else {
             $this->uri->redirect('errors/404');
         }
