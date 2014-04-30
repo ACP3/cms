@@ -49,11 +49,11 @@ class Cache
             $cacheId .= $cacheId !== '' ? '_' : '';
             $bool = @file_put_contents(ACP3_ROOT_DIR . self::$sqlCacheDir . $cacheId . md5($filename) . '.php', serialize($data), LOCK_EX);
 
-            return $bool !== false ? true : false;
+            return ($bool !== false);
         } elseif (self::check($filename, $cacheId) === true) {
             return self::delete($filename, $cacheId);
         }
-        return false;
+        return true; // Nothing happened -> return true
     }
 
     /**

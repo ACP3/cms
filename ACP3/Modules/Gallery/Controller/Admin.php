@@ -196,7 +196,7 @@ class Admin extends Core\Modules\Controller\Admin
 
             $this->seo->setCache();
 
-            Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/gallery/edit/id_' . $picture['gallery_id']);
+            Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/gallery/edit/id_' . $this->uri->id);
         } elseif (is_string($items)) {
             $this->uri->redirect('errors/404');
         }

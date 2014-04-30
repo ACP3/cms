@@ -394,7 +394,7 @@ class URI
             'robots' => (int)$robots
         );
 
-        // Vorhandenen Alias aktualisieren
+        // Update an existing result
         if ($this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE uri = ?', array($path)) == 1) {
             $bool = $this->db->update(DB_PRE . 'seo', $values, array('uri' => $path));
         } else {
