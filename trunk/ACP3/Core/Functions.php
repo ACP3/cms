@@ -124,7 +124,8 @@ class Functions
      * @param int $backward
      * @return string
      */
-    public static function confirmBoxPost($text, array $data, $forward, $backward = 0) {
+    public static function confirmBoxPost($text, array $data, $forward, $backward = 0)
+    {
         if (!empty($text) && !empty($data)) {
             static::_init();
 
