@@ -12,6 +12,17 @@ use ACP3\Core;
 class Admin extends Core\Modules\Controller
 {
 
+    /**
+     * @param Core\Auth $auth
+     * @param Core\Breadcrumb $breadcrumb
+     * @param Core\Date $date
+     * @param \Doctrine\DBAL\Connection $db
+     * @param Core\Lang $lang
+     * @param Core\Session $session
+     * @param Core\URI $uri
+     * @param Core\View $view
+     * @param Core\SEO $seo
+     */
     public function __construct(
         Core\Auth $auth,
         Core\Breadcrumb $breadcrumb,
@@ -26,6 +37,13 @@ class Admin extends Core\Modules\Controller
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
     }
 
+    /**
+     * Little helper function for deleting an result set
+     *
+     * @param string $moduleConfirmUrl
+     * @param string $moduleIndexUrl
+     * @return array
+     */
     protected function _deleteItem($moduleConfirmUrl = '', $moduleIndexUrl = '')
     {
         if (isset($_POST['entries']) && is_array($_POST['entries']) === true) {
@@ -37,8 +55,12 @@ class Admin extends Core\Modules\Controller
         if (!isset($entries)) {
             $this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
         } elseif (is_array($entries) === true && $this->uri->action !== 'confirmed') {
-            $markedEntries = implode('|', $entries);
-            $this->view->setContent(Core\Functions::confirmBox($this->lang->t('system', 'confirm_delete'), $this->uri->route($moduleConfirmUrl) . 'entries_' . $markedEntries . '/action_confirmed/', $this->uri->route($moduleIndexUrl)));
+            $data = array(
+                'action' => 'confirmed',
+                'entries' => $entries
+            );
+            $confirmBox = Core\Functions::confirmBoxPost($this->lang->t('system', 'confirm_delete'), $data, $this->uri->route($moduleConfirmUrl), $this->uri->route($moduleIndexUrl));
+            $this->view->setContent($confirmBox);
         } else {
             return is_array($entries) ? $entries : explode('|', $entries);
         }

@@ -86,16 +86,12 @@ class Functions
     }
 
     /**
-     * Gibt je nach angegebenen Parametern eine Fehlerbox oder eine Bestätigungsbox aus
+     * Displays a confirm box
      *
      * @param string $text
-     *  Zu übergebender Text
      * @param int|string $forward
-     *  Weiter Hyperlink
      * @param int|string $backward
-     *  Zurück Hyperlink
      * @param integer $overlay
-     *    Wenn Wert "1", dann wird das Fenster geschlossen
      * @return string
      */
     public static function confirmBox($text, $forward = 0, $backward = 0, $overlay = 0)
@@ -115,6 +111,35 @@ class Functions
             static::$view->assign('confirm', $confirm);
 
             return static::$view->fetchTemplate('system/confirm_box.tpl');
+        }
+        return '';
+    }
+
+    /**
+     * Displays a confirm box, where the forward button triggers a form submit using POST
+     *
+     * @param $text
+     * @param array $data
+     * @param $forward
+     * @param int $backward
+     * @return string
+     */
+    public static function confirmBoxPost($text, array $data, $forward, $backward = 0) {
+        if (!empty($text) && !empty($data)) {
+            static::_init();
+
+            $confirm = array(
+                'text' => $text,
+                'data' => $data,
+                'forward' => $forward,
+            );
+            if (!empty($backward)) {
+                $confirm['backward'] = $backward;
+            }
+
+            static::$view->assign('confirm', $confirm);
+
+            return static::$view->fetchTemplate('system/confirm_box_post.tpl');
         }
         return '';
     }
