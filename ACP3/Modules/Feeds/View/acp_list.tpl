@@ -4,7 +4,7 @@
 {if isset($redirect_message)}
     {$redirect_message}
 {/if}
-<form action="{uri args="acp/feeds"}" method="post" accept-charset="UTF-8" class="form-horizontal " data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
+<form action="{uri args="acp/feeds"}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
     <div class="form-group">
         <label for="feed-image" class="col-lg-2 control-label">{lang t="feeds|feed_image"}</label>
 
