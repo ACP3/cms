@@ -75,8 +75,8 @@ class Admin extends Core\Modules\Controller\Admin
                 // Verhindern, dass externe URIs Aliase, Keywords, etc. zugewiesen bekommen
                 if ($_POST['mode'] != 3) {
                     $path = $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'];
-                    if ($this->seo->uriAliasExists($_POST['uri'])) {
-                        $alias = !empty($_POST['alias']) ? $_POST['alias'] : $this->seo->getUriAlias($_POST['uri']);
+                    if ($this->uri->uriAliasExists($_POST['uri'])) {
+                        $alias = !empty($_POST['alias']) ? $_POST['alias'] : $this->uri->getUriAlias($_POST['uri']);
                         $keywords = $this->seo->getKeywords($_POST['uri']);
                         $description = $this->seo->getDescription($_POST['uri']);
                     } else {

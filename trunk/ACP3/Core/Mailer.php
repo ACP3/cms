@@ -315,7 +315,7 @@ class Mailer
     {
         $i = 0;
 
-        if (is_array($this->bcc) === false) {
+        if (is_array($this->bcc) === false || count($this->bcc) === 1) {
             $this->bcc = array($this->bcc);
         }
 
@@ -344,6 +344,10 @@ class Mailer
      */
     private function _sendTo()
     {
+        if (is_array($this->to) === false || count($this->to) === 1) {
+            $this->to = array($this->to);
+        }
+
         foreach ($this->to as $recipient) {
             $this->_addRecipients($recipient);
             $this->mailer->send();
