@@ -139,7 +139,7 @@ class URI
         // Nur ausführen, falls URI-Aliase aktiviert sind
         if ((bool)CONFIG_SEO_ALIASES === true && !defined('IN_ADM')) {
             // Falls für Query ein Alias existiert, zu diesem weiterleiten
-            if ($this->_uriAliasExists($this->query) === true) {
+            if ($this->uriAliasExists($this->query) === true) {
                 $this->redirect($this->query, 0, true); // URI-Alias wird von uri::route() erzeugt
             }
 
@@ -411,7 +411,7 @@ class URI
      * @param string $path
      * @return boolean
      */
-    private function _uriAliasExists($path)
+    public function uriAliasExists($path)
     {
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
