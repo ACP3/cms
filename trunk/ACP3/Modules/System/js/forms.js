@@ -1,10 +1,9 @@
 /**
  * Simple AJAX form handler
  *
- * @param loadingText
  * @param [customFormData]
  */
-jQuery.fn.formSubmit = function (loadingText, customFormData) {
+jQuery.fn.formSubmit = function (customFormData) {
     var $this = jQuery(this);
 
     /**
@@ -13,6 +12,7 @@ jQuery.fn.formSubmit = function (loadingText, customFormData) {
      */
     function _showLoadingLayer() {
         var $body = $('body'),
+            loadingText = $this.data('ajax-form-loading-text') || '',
             $loadingLayer = $('#loading-layer'),
             documentHeight = $body.outerHeight(true);
 
@@ -120,3 +120,7 @@ jQuery.fn.formSubmit = function (loadingText, customFormData) {
         }
     });
 };
+
+jQuery(document).ready(function($) {
+   $('form[data-ajax-form="true"]').formSubmit();
+});
