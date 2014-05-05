@@ -89,7 +89,7 @@ class Functions
      * Displays a confirm box
      *
      * @param string $text
-     * @param int|string $forward
+     * @param int|string|array $forward
      * @param int|string $backward
      * @param integer $overlay
      * @return string
