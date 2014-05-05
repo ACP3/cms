@@ -78,7 +78,7 @@ jQuery.fn.deleteMarkedResults = function (checkboxName, confirmationText, noEntr
                 if (result) {
                     var $form = $this.closest('form');
 
-                    $form.formSubmit('', data);
+                    $form.formSubmit(data);
                     $form.triggerHandler('submit');
                 }
             });
