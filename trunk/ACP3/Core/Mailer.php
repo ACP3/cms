@@ -1,6 +1,7 @@
 <?php
 
 namespace ACP3\Core;
+use InlineStyle\InlineStyle;
 
 /**
  * Class Email
@@ -179,11 +180,15 @@ class Mailer
     private function _addRecipients($recipients, $bcc = false)
     {
         if (is_array($recipients) === true) {
-            foreach ($recipients as $recipient) {
-                if (is_array($recipient) === true) {
-                    $this->_addRecipient($recipient['email'], $recipient['name'], '', $bcc);
-                } else {
-                    $this->_addRecipient($recipient, '', $bcc);
+            if (empty($recipients['email']) === false && empty($recipients['name']) === false) {
+                $this->_addRecipient($recipients['email'], $recipients['name'], $bcc);
+            } else {
+                foreach ($recipients as $recipient) {
+                    if (is_array($recipient) === true) {
+                        $this->_addRecipient($recipient['email'], $recipient['name'], '', $bcc);
+                    } else {
+                        $this->_addRecipient($recipient, '', $bcc);
+                    }
                 }
             }
         } else {
@@ -264,13 +269,16 @@ class Mailer
             );
             $this->view->assign('mail', $mail);
 
-            $this->mailer->msgHTML($this->view->fetchTemplate($this->template));
+            $htmlDocument = new InlineStyle($this->view->fetchTemplate($this->template));
+            $htmlDocument->applyStylesheet($htmlDocument->extractStylesheets());
+
+            $this->mailer->msgHTML($htmlDocument->getHTML());
 
             // Fallback for E-mail clients which don't support HTML E-mails
             if (!empty($this->body)) {
                 $this->mailer->AltBody = $this->_decodeHtmlEntities($this->body . $this->_getTextSignature());
             } else {
-                $this->mailer->AltBody = $this->mailer->html2text($htmlBody, true);
+                $this->mailer->AltBody = $this->mailer->html2text($htmlDocument->getHTML(), true);
             }
         } else {
             $this->mailer->Body = $this->_decodeHtmlEntities($this->body . $this->_getTextSignature());
@@ -315,7 +323,7 @@ class Mailer
     {
         $i = 0;
 
-        if (is_array($this->bcc) === false || count($this->bcc) === 1) {
+        if (is_array($this->bcc) === false || isset($this->bcc['email']) === true) {
             $this->bcc = array($this->bcc);
         }
 
@@ -344,7 +352,7 @@ class Mailer
      */
     private function _sendTo()
     {
-        if (is_array($this->to) === false || count($this->to) === 1) {
+        if (is_array($this->to) === false || isset($this->to['email']) === true) {
             $this->to = array($this->to);
         }
 

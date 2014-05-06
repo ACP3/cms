@@ -19,7 +19,8 @@
 $dirname = dirname($_SERVER['PHP_SELF']);
 $dirname = $dirname != '/' ? $dirname . '/' : '/';
 $dirname = str_replace('/libraries/kcfinder/', '', $dirname);
-$uploadDir = $dirname . '/uploads/';
+$hostname = 'http://' . $_SERVER['HTTP_HOST'];
+$uploadDir = $hostname . $dirname . '/uploads/';
 
 $_CONFIG = array(
 
