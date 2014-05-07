@@ -2,7 +2,10 @@
 
 namespace ACP3;
 use ACP3\Core\Modules\Controller;
-use ACP3\Core\SEO;
+use Doctrine\DBAL;
+use Monolog\ErrorHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 /**
  * Front Controller of the CMS
@@ -20,6 +23,7 @@ class Application
         self::defineDirConstants();
         self::startupChecks();
         self::includeAutoLoader();
+        self::setErrorHandler();
         self::initializeClasses();
         self::outputPage();
     }
@@ -39,9 +43,6 @@ class Application
             // Wenn alles okay ist, config.php einbinden und error_reporting setzen
         } else {
             require_once ACP3_DIR . 'config.php';
-
-            // Wenn der DEBUG Modus aktiv ist, Fehler ausgeben
-            error_reporting(defined('DEBUG') === true && DEBUG === true ? E_ALL : 0);
         }
     }
 
@@ -71,6 +72,29 @@ class Application
     }
 
     /**
+     * Set monolog as the default PHP error handler
+     */
+    public static function setErrorHandler()
+    {
+        $errorLevelMap = array(
+            E_ERROR,
+            E_PARSE,
+            E_CORE_ERROR,
+            E_COMPILE_ERROR,
+            E_USER_ERROR,
+            E_WARNING,
+            E_COMPILE_WARNING,
+            E_DEPRECATED,
+            E_NOTICE,
+            E_USER_NOTICE
+        );
+
+        $logger = new Logger('system');
+        $logger->pushHandler(new StreamHandler(UPLOADS_DIR . 'logs/system.log', Logger::NOTICE));
+        ErrorHandler::register($logger, $errorLevelMap);
+    }
+
+    /**
      * Überprüfen, ob der Wartungsmodus aktiv ist
      */
     public static function checkForMaintenanceMode()
@@ -90,7 +114,7 @@ class Application
      */
     public static function initializeClasses()
     {
-        $config = new \Doctrine\DBAL\Configuration();
+        $config = new DBAL\Configuration();
         $connectionParams = array(
             'dbname' => CONFIG_DB_NAME,
             'user' => CONFIG_DB_USER,
@@ -99,7 +123,7 @@ class Application
             'driver' => 'pdo_mysql',
             'charset' => 'utf8'
         );
-        Core\Registry::set('Db', \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config));
+        Core\Registry::set('Db', DBAL\DriverManager::getConnection($connectionParams, $config));
         define('DB_PRE', CONFIG_DB_PRE);
 
         // Sytemeinstellungen laden
@@ -207,5 +231,4 @@ class Application
             $uri->redirect('errors/404');
         }
     }
-
 }

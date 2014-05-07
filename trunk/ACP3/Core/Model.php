@@ -25,6 +25,9 @@ class Model
      */
     protected $prefix = DB_PRE;
 
+    /**
+     * The name of the default sql table
+     */
     const TABLE_NAME = '';
 
     /**
@@ -75,6 +78,7 @@ class Model
             return $lastId;
         } catch (\Exception $e) {
             $this->db->rollback();
+            Logger::log('db', 'error', $e->getMessage());
             return false;
         }
     }
@@ -98,6 +102,7 @@ class Model
             return $bool;
         } catch (\Exception $e) {
             $this->db->rollback();
+            Logger::log('db', 'error', $e->getMessage());
             return false;
         }
     }
@@ -121,6 +126,7 @@ class Model
             return $bool;
         } catch (\Exception $e) {
             $this->db->rollback();
+            Logger::log('db', 'error', $e->getMessage());
             return false;
         }
     }
