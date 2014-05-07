@@ -41,7 +41,8 @@
                 </div>
                 {navbar block="sidebar" class="list-group" classLink="list-group-item" dropdownItemClass="dropdown" itemTag="" dropdownWrapperTag="div" tag="div"}
             </div>
-            {load_module module="users|sidebar"}
+            {load_module module="users|sidebar_login"}
+            {load_module module="users|sidebar_user_menu"}
         </div>
         <main role="main" class="col-lg-8">
             <div id="breadcrumb">

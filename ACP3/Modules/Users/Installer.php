@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'users';
-    const SCHEMA_VERSION = 34;
+    const SCHEMA_VERSION = 35;
 
     public function removeResources()
     {
@@ -110,6 +110,11 @@ class Installer extends Modules\AbstractInstaller
             34 => array(
                 "ALTER TABLE `{pre}users` ADD `registration_date` DATETIME NOT NULL AFTER `draft`;",
                 "UPDATE `{pre}users` SET registration_date = '" . gmdate('Y-m-d H:i:s') . "';"
+            ),
+            35 => array(
+                "DELETE FROM `{pre}acl_resources` WHERE module_id =" . $this->getModuleId() . " AND page = 'sidebar';",
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'sidebar_login', '', 1);",
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'sidebar_user_menu', '', 1);",
             )
         );
     }

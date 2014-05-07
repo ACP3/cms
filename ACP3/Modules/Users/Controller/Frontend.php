@@ -460,14 +460,11 @@ class Frontend extends Core\Modules\Controller
         }
     }
 
-    public function actionSidebar()
+    public function actionSidebarUserMenu()
     {
-        $currentPage = base64_encode((defined('IN_ADM') === true ? 'acp/' : '') . $this->uri->query);
-
-        // Usermenü anzeigen, falls der Benutzer eingeloggt ist
         if ($this->auth->isUser() === true) {
             $userSidebar = array();
-            $userSidebar['page'] = $currentPage;
+            $userSidebar['page'] = base64_encode((defined('IN_ADM') === true ? 'acp/' : '') . $this->uri->query);;
 
             // Module holen
             $activeModules = Core\Modules::getActiveModules();
@@ -515,7 +512,14 @@ class Frontend extends Core\Modules\Controller
             $this->view->assign('user_sidebar', $userSidebar);
 
             $this->view->displayTemplate('users/sidebar_user_menu.tpl');
-        } else {
+        }
+    }
+
+    public function actionSidebarLogin()
+    {
+        // Usermenü anzeigen, falls der Benutzer eingeloggt ist
+        if ($this->auth->isUser() === false) {
+            $currentPage = base64_encode((defined('IN_ADM') === true ? 'acp/' : '') . $this->uri->query);
             $settings = Core\Config::getSettings('users');
 
             $this->view->assign('enable_registration', $settings['enable_registration']);
