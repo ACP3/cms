@@ -197,12 +197,10 @@ class Validate
      */
     public static function formToken()
     {
-        if (isset($_POST[\ACP3\Core\Session::XSRF_TOKEN_NAME]) && isset($_SESSION[\ACP3\Core\Session::XSRF_TOKEN_NAME][Registry::get('URI')->query]) &&
-            $_POST[\ACP3\Core\Session::XSRF_TOKEN_NAME] === $_SESSION[\ACP3\Core\Session::XSRF_TOKEN_NAME][Registry::get('URI')->query]
-        ) {
-            return true;
-        }
-        return false;
+        $tokenName = \ACP3\Core\Session::XSRF_TOKEN_NAME;
+        $urlQueryString = Registry::get('URI')->query;
+
+        return (isset($_POST[$tokenName]) && isset($_SESSION[$tokenName][$urlQueryString]) && $_POST[$tokenName] === $_SESSION[$tokenName][$urlQueryString]);
     }
 
     /**
