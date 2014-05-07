@@ -39,6 +39,7 @@
 		"phpmailer/phpmailer": "5.2.*",
 		"smarty/smarty": "3.1.18",
         "inlinestyle/inlinestyle": "1.*",
-        "mibe/feedwriter": "dev-master"
+        "mibe/feedwriter": "dev-master",
+        "monolog/monolog": "1.9.1"
 	}
 }
