@@ -4,15 +4,13 @@
  * @param [customFormData]
  */
 jQuery.fn.formSubmit = function (customFormData) {
-    var $this = jQuery(this);
-
     /**
      * Display a loading layer
      * @private
      */
-    function _showLoadingLayer() {
+    function _showLoadingLayer($form) {
         var $body = $('body'),
-            loadingText = $this.data('ajax-form-loading-text') || '',
+            loadingText = $form.data('ajax-form-loading-text') || '',
             $loadingLayer = $('#loading-layer'),
             documentHeight = $body.outerHeight(true);
 
@@ -74,7 +72,7 @@ jQuery.fn.formSubmit = function (customFormData) {
             processData: processData,
             contentType: contentType,
             beforeSend: function () {
-                _showLoadingLayer();
+                _showLoadingLayer($form);
             },
             success: function (data) {
                 try {
@@ -102,25 +100,29 @@ jQuery.fn.formSubmit = function (customFormData) {
         });
     }
 
-    $this.on('submit',function (e) {
-        e.preventDefault();
+    $(this).each(function () {
+        var $this = $(this);
 
-        if (typeof CKEDITOR !== "undefined") {
-            for (instance in CKEDITOR.instances) {
-                CKEDITOR.instances[instance].updateElement();
-            }
-        }
-
-        _processAjaxRequest($this, customFormData);
-    }).on('click', function (e) {
-        if ($this.prop('tagName') === 'A') {
+        $this.on('submit',function (e) {
             e.preventDefault();
 
+            if (typeof CKEDITOR !== "undefined") {
+                for (instance in CKEDITOR.instances) {
+                    CKEDITOR.instances[instance].updateElement();
+                }
+            }
+
             _processAjaxRequest($this, customFormData);
-        }
+        }).on('click', function (e) {
+            if ($this.prop('tagName') === 'A') {
+                e.preventDefault();
+
+                _processAjaxRequest($this, customFormData);
+            }
+        });
     });
 };
 
-jQuery(document).ready(function($) {
-   $('form[data-ajax-form="true"]').formSubmit();
+jQuery(document).ready(function ($) {
+    $('form[data-ajax-form="true"]').formSubmit();
 });
