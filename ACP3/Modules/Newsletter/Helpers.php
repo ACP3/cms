@@ -57,10 +57,14 @@ abstract class Helpers
 
         $settings = Core\Config::getSettings('newsletter');
         $newsletter = self::$model->getOneById($newsletterId);
+        $from = array(
+            'email' => $settings['mail'],
+            'name' => CONFIG_SEO_TITLE
+        );
 
         $mailer = new Core\Mailer(Core\Registry::get('View'));
         $mailer
-            ->setFrom($settings['mail'])
+            ->setFrom($from)
             ->setSubject($newsletter['title'])
             ->setMailSignature($settings['mailsig']);
 

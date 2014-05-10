@@ -94,7 +94,7 @@ class Mailer
     }
 
     /**
-     * @param string $from
+     * @param string|array $from
      * @return $this
      */
     public function setFrom($from)
@@ -260,12 +260,11 @@ class Mailer
     private function _generateBody()
     {
         if (!empty($this->htmlBody) && !empty($this->template)) {
-            $htmlBody = $this->htmlBody . $this->_getHtmlSignature();
-
             $mail = array(
                 'charset' => 'UTF-8',
                 'title' => $this->subject,
-                'body' => $htmlBody
+                'body' => $this->htmlBody,
+                'signature' => $this->_getHtmlSignature()
             );
             $this->view->assign('mail', $mail);
 
@@ -278,7 +277,7 @@ class Mailer
             if (!empty($this->body)) {
                 $this->mailer->AltBody = $this->_decodeHtmlEntities($this->body . $this->_getTextSignature());
             } else {
-                $this->mailer->AltBody = $this->mailer->html2text($htmlDocument->getHTML(), true);
+                $this->mailer->AltBody = $this->mailer->html2text($this->htmlBody . $this->_getHtmlSignature(), true);
             }
         } else {
             $this->mailer->Body = $this->_decodeHtmlEntities($this->body . $this->_getTextSignature());
@@ -296,7 +295,12 @@ class Mailer
     {
         try {
             $this->mailer->Subject = $this->subject;
-            $this->mailer->SetFrom($this->from);
+
+            if (is_array($this->from) === true) {
+                $this->mailer->SetFrom($this->from['email'], $this->from['name']);
+            } else {
+                $this->mailer->SetFrom($this->from);
+            }
 
             $this->_generateBody();
 
