@@ -1,6 +1,7 @@
 <?php
 
 namespace ACP3\Core;
+
 use InlineStyle\InlineStyle;
 
 /**
@@ -21,6 +22,10 @@ class Mailer
      * @var string
      */
     private $htmlBody = '';
+    /**
+     * @var string
+     */
+    private $urlWeb = '';
     /**
      * @var string
      */
@@ -122,6 +127,17 @@ class Mailer
     public function setHtmlBody($htmlText)
     {
         $this->htmlBody = $htmlText;
+
+        return $this;
+    }
+
+    /**
+     * @param string $urlWeb
+     * @return $this
+     */
+    public function setUrlWeb($urlWeb)
+    {
+        $this->urlWeb = $urlWeb;
 
         return $this;
     }
@@ -264,7 +280,8 @@ class Mailer
                 'charset' => 'UTF-8',
                 'title' => $this->subject,
                 'body' => $this->htmlBody,
-                'signature' => $this->_getHtmlSignature()
+                'signature' => $this->_getHtmlSignature(),
+                'url_web_view' => $this->urlWeb
             );
             $this->view->assign('mail', $mail);
 
