@@ -66,6 +66,7 @@ abstract class Helpers
         $mailer
             ->setFrom($from)
             ->setSubject($newsletter['title'])
+            ->setUrlWeb(HOST_NAME . Core\Registry::get('URI')->route('newsletter/details/id_' . $newsletterId))
             ->setMailSignature($settings['mailsig']);
 
         if ($newsletter['html'] == 1) {
