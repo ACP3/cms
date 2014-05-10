@@ -173,7 +173,7 @@ class Session
         }
 
         // Session aus Datenbank löschen
-        Registry::get('Db')->delete(DB_PRE . 'sessions', array('session_id' => $session_id));
+        $this->db->delete(DB_PRE . 'sessions', array('session_id' => $session_id));
     }
 
     /**

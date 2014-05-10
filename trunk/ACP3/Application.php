@@ -1,6 +1,7 @@
 <?php
 
 namespace ACP3;
+
 use ACP3\Core\Modules\Controller;
 use Doctrine\DBAL;
 use Monolog\ErrorHandler;
@@ -14,6 +15,43 @@ use Monolog\Logger;
  */
 class Application
 {
+    /**
+     * @var \ACP3\Core\Auth
+     */
+    private static $auth;
+    /**
+     * @var \ACP3\Core\Breadcrumb
+     */
+    private static $breadcrumb;
+    /**
+     * @var \ACP3\Core\Date
+     */
+    private static $date;
+    /**
+     * @var DBAL\Connection
+     */
+    private static $db;
+    /**
+     * @var \ACP3\Core\Lang
+     */
+    private static $lang;
+    /**
+     * @var \ACP3\Core\SEO
+     */
+    private static $seo;
+    /**
+     * @var \ACP3\Core\Session
+     */
+    private static $session;
+    /**
+     * @var \ACP3\Core\URI
+     */
+    private static $uri;
+    /**
+     * @var \ACP3\Core\View
+     */
+    private static $view;
+
 
     /**
      * Führt alle nötigen Schritte aus, um die Seite anzuzeigen
@@ -40,7 +78,6 @@ class Application
         $path = ACP3_DIR . 'config.php';
         if (is_file($path) === false || filesize($path) === 0) {
             exit('The ACP3 is not correctly installed. Please navigate to the <a href="' . ROOT_DIR . 'installation/">installation wizard</a> and follow its instructions.');
-            // Wenn alles okay ist, config.php einbinden und error_reporting setzen
         } else {
             require_once ACP3_DIR . 'config.php';
         }
@@ -54,6 +91,8 @@ class Application
         define('PHP_SELF', htmlentities($_SERVER['SCRIPT_NAME']));
         $php_self = dirname(PHP_SELF);
         define('ROOT_DIR', $php_self !== '/' ? $php_self . '/' : '/');
+        define('HOST_NAME', 'http://' . $_SERVER['HTTP_HOST']);
+        define('ROOT_DIR_ABSOLUTE', HOST_NAME . ROOT_DIR);
         define('ACP3_DIR', ACP3_ROOT_DIR . 'ACP3/');
         define('CLASSES_DIR', ACP3_DIR . 'Core/');
         define('MODULES_DIR', ACP3_DIR . 'Modules/');
@@ -89,8 +128,7 @@ class Application
             E_USER_NOTICE
         );
 
-        $logger = new Logger('system');
-        $logger->pushHandler(new StreamHandler(UPLOADS_DIR . 'logs/system.log', Logger::NOTICE));
+        $logger = new Logger('system', array(new StreamHandler(UPLOADS_DIR . 'logs/system.log', Logger::NOTICE)));
         ErrorHandler::register($logger, $errorLevelMap);
     }
 
@@ -100,11 +138,11 @@ class Application
     public static function checkForMaintenanceMode()
     {
         if ((bool)CONFIG_MAINTENANCE_MODE === true &&
-            (defined('IN_ADM') === false && strpos(Core\Registry::get('URI')->query, 'users/login/') !== 0)
+            (defined('IN_ADM') === false && strpos(self::$uri->query, 'users/login/') !== 0)
         ) {
-            Core\Registry::get('View')->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
-            Core\Registry::get('View')->assign('CONTENT', CONFIG_MAINTENANCE_MESSAGE);
-            Core\Registry::get('View')->displayTemplate('system/maintenance.tpl');
+            self::$view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
+            self::$view->assign('CONTENT', CONFIG_MAINTENANCE_MESSAGE);
+            self::$view->displayTemplate('system/maintenance.tpl');
             exit;
         }
     }
@@ -123,7 +161,8 @@ class Application
             'driver' => 'pdo_mysql',
             'charset' => 'utf8'
         );
-        Core\Registry::set('Db', DBAL\DriverManager::getConnection($connectionParams, $config));
+        self::$db = DBAL\DriverManager::getConnection($connectionParams, $config);
+
         define('DB_PRE', CONFIG_DB_PRE);
 
         // Sytemeinstellungen laden
@@ -132,48 +171,31 @@ class Application
         // Pfade zum Theme setzen
         define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
         define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
+        define('DESIGN_PATH_ABSOLUTE', HOST_NAME . DESIGN_PATH);
 
         // Restliche Klassen instanziieren
-        Core\Registry::set('View', new Core\View());
+        self::$view = new Core\View();
+        self::$uri = new Core\URI(self::$db);
+        self::$session = new Core\Session(self::$db, self::$uri, self::$view);
+        self::$auth = new Core\Auth(self::$db, self::$session);
+        self::$lang = new Core\Lang(self::$auth);
+        self::$seo = new Core\SEO(self::$db, self::$lang, self::$uri, self::$view);
+        self::$date = new Core\Date(self::$auth, self::$lang, self::$view);
+        self::$breadcrumb = new Core\Breadcrumb(self::$db, self::$lang, self::$uri, self::$view);
 
-        Core\Registry::set('URI', new Core\URI(Core\Registry::get('Db')));
-
-        Core\Registry::set('Session', new Core\Session(
-            Core\Registry::get('Db'),
-            Core\Registry::get('URI'),
-            Core\Registry::get('View')
-        ));
-
-        Core\Registry::set('Auth', new Core\Auth(
-            Core\Registry::get('Db'),
-            Core\Registry::get('Session')
-        ));
-
-        Core\Registry::set('Lang', new Core\Lang(Core\Registry::get('Auth')));
-
-        Core\Registry::set('SEO', new Core\SEO(
-            Core\Registry::get('Db'),
-            Core\Registry::get('Lang'),
-            Core\Registry::get('URI'),
-            Core\Registry::get('View')
-        ));
-
-        Core\Registry::set('Date', new Core\Date(
-            Core\Registry::get('Auth'),
-            Core\Registry::get('Lang'),
-            Core\Registry::get('View')
-        ));
-
-        Core\Registry::set('Breadcrumb', new Core\Breadcrumb(
-            Core\Registry::get('Db'),
-            Core\Registry::get('Lang'),
-            Core\Registry::get('URI'),
-            Core\Registry::get('View')
-        ));
+        Core\Registry::set('Db', self::$db);
+        Core\Registry::set('View', self::$view);
+        Core\Registry::set('URI', self::$uri);
+        Core\Registry::set('Session', self::$session);
+        Core\Registry::set('Auth', self::$auth);
+        Core\Registry::set('Lang', self::$lang);
+        Core\Registry::set('SEO', self::$seo);
+        Core\Registry::set('Date', self::$date);
+        Core\Registry::set('Breadcrumb', self::$breadcrumb);
 
         Core\View::factory('Smarty');
 
-        Core\ACL::initialize(Core\Registry::get('Auth')->getUserId());
+        Core\ACL::initialize(self::$auth->getUserId());
     }
 
     /**
@@ -181,54 +203,54 @@ class Application
      */
     public static function outputPage()
     {
-        $view = Core\Registry::get('View');
-        $uri = Core\Registry::get('URI');
-
         // Einige Template Variablen setzen
-        $view->assign('PHP_SELF', PHP_SELF);
-        $view->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
-        $view->assign('ROOT_DIR', ROOT_DIR);
-        $view->assign('DESIGN_PATH', DESIGN_PATH);
-        $view->assign('UA_IS_MOBILE', Core\Functions::isMobileBrowser());
-        $view->assign('IN_ADM', defined('IN_ADM') ? true : false);
+        self::$view->assign('PHP_SELF', PHP_SELF);
+        self::$view->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
+        self::$view->assign('ROOT_DIR', ROOT_DIR);
+        self::$view->assign('ROOT_DIR_ABSOLUTE', ROOT_DIR_ABSOLUTE);
+        self::$view->assign('DESIGN_PATH', DESIGN_PATH);
+        self::$view->assign('DESIGN_PATH_ABSOLUTE', DESIGN_PATH_ABSOLUTE);
+        self::$view->assign('UA_IS_MOBILE', Core\Functions::isMobileBrowser());
+        self::$view->assign('IN_ADM', defined('IN_ADM'));
 
-        $lang_info = Core\XML::parseXmlFile(ACP3_ROOT_DIR . 'languages/' . Core\Registry::get('Lang')->getLanguage() . '/info.xml', '/language');
-        $view->assign('LANG_DIRECTION', isset($lang_info['direction']) ? $lang_info['direction'] : 'ltr');
-        $view->assign('LANG', CONFIG_LANG);
+        $langInfo = Core\XML::parseXmlFile(ACP3_ROOT_DIR . 'languages/' . self::$lang->getLanguage() . '/info.xml', '/language');
+        self::$view->assign('LANG_DIRECTION', isset($langInfo['direction']) ? $langInfo['direction'] : 'ltr');
+        self::$view->assign('LANG', CONFIG_LANG);
 
         self::checkForMaintenanceMode();
 
         // Aktuelle Datensatzposition bestimmen
-        define('POS', Core\Validate::isNumber($uri->page) && $uri->page >= 1 ? (int)($uri->page - 1) * Core\Registry::get('Auth')->entries : 0);
+        define('POS', Core\Validate::isNumber(self::$uri->page) && self::$uri->page >= 1 ? (int)(self::$uri->page - 1) * Core\Registry::get('Auth')->entries : 0);
 
-        if (defined('IN_ADM') === true && Core\Registry::get('Auth')->isUser() === false && $uri->query !== 'users/login/') {
-            $redirect_uri = base64_encode('acp/' . $uri->query);
-            $uri->redirect('users/login/redirect_' . $redirect_uri);
+        if (defined('IN_ADM') === true && self::$auth->isUser() === false && self::$uri->query !== 'users/login/') {
+            $redirect_uri = base64_encode('acp/' . self::$uri->query);
+            self::$uri->redirect('users/login/redirect_' . $redirect_uri);
         }
 
-        if (Core\Modules::hasPermission($uri->mod, $uri->file) === true) {
-            $module = ucfirst($uri->mod);
+        if (Core\Modules::hasPermission(self::$uri->mod, self::$uri->file) === true) {
+            $module = ucfirst(self::$uri->mod);
             $section = defined('IN_ADM') === true ? 'Admin' : 'Frontend';
             $className = "\\ACP3\\Modules\\" . $module . "\\Controller\\" . $section;
-            $action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', defined('IN_ADM') === true ? substr($uri->file, 4) : $uri->file))));
+            $action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', defined('IN_ADM') === true ? substr(self::$uri->file, 4) : self::$uri->file))));
 
             // Modul einbinden
-            /** @var Controller $mod */
-            $mod = new $className(
-                Core\Registry::get('Auth'),
-                Core\Registry::get('Breadcrumb'),
-                Core\Registry::get('Date'),
-                Core\Registry::get('Db'),
-                Core\Registry::get('Lang'),
-                Core\Registry::get('Session'),
-                Core\Registry::get('URI'),
-                Core\Registry::get('View'),
-                Core\Registry::get('SEO')
+            /** @var Controller $controller */
+            $controller = new $className(
+                self::$auth,
+                self::$breadcrumb,
+                self::$date,
+                self::$db,
+                self::$lang,
+                self::$session,
+                self::$uri,
+                self::$view,
+                self::$seo
             );
-            $mod->$action();
-            $mod->display();
+
+            $controller->$action();
+            $controller->display();
         } else {
-            $uri->redirect('errors/404');
+            self::$uri->redirect('errors/404');
         }
     }
 }
