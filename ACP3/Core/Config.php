@@ -39,7 +39,7 @@ class Config
             $bool2 = self::setModuleCache($module);
         }
 
-        return $bool !== false && $bool2 !== false ? true : false;
+        return $bool !== false && $bool2 !== false;
     }
 
     /**
