@@ -117,11 +117,15 @@ abstract class Controller
                 $view->assign('META', $this->seo->getMetaTags());
                 $view->assign('CONTENT', $view->getContent() . $view->getContentAppend());
 
-                $minify = $view->buildMinifyLink();
-                $file = $view->getLayout();
-                $layout = substr($file, 0, strpos($file, '.'));
-                $view->assign('MIN_STYLESHEET', sprintf($minify, 'css') . ($layout !== 'layout' ? '&amp;layout=' . $layout : ''));
-                $view->assign('MIN_JAVASCRIPT', sprintf($minify, 'js'));
+                if ($this->uri->getIsAjax() === true) {
+                    $file = 'system/ajax.tpl';
+                } else {
+                    $minify = $view->buildMinifyLink();
+                    $file = $view->getLayout();
+                    $layout = substr($file, 0, strpos($file, '.'));
+                    $view->assign('MIN_STYLESHEET', sprintf($minify, 'css') . ($layout !== 'layout' ? '&amp;layout=' . $layout : ''));
+                    $view->assign('MIN_JAVASCRIPT', sprintf($minify, 'js'));
+                }
 
                 $view->displayTemplate($file);
             } else {
