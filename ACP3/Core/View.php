@@ -336,13 +336,13 @@ class View
         }
 
         // Stylesheet für das Layout-Tenplate
-        $css[] = DESIGN_PATH_INTERNAL . 'common.css';
+        $css[] = self::getCssJsPath(MODULES_DIR . 'System/', DESIGN_PATH_INTERNAL . 'system/', 'css', 'style.css');
         $css[] = DESIGN_PATH_INTERNAL . (is_file(DESIGN_PATH_INTERNAL . $layout . '.css') === true ? $layout : 'layout') . '.css';
 
         // Zusätzliche Stylesheets einbinden
-        $extra_css = explode(',', CONFIG_EXTRA_CSS);
-        if (count($extra_css) > 0) {
-            foreach ($extra_css as $file) {
+        $extraCss = explode(',', CONFIG_EXTRA_CSS);
+        if (count($extraCss) > 0) {
+            foreach ($extraCss as $file) {
                 $path = DESIGN_PATH_INTERNAL . 'css/' . trim($file);
                 if (is_file($path) && in_array($path, $css) === false) {
                     $css[] = $path;
@@ -353,15 +353,16 @@ class View
         // Stylesheets der Module
         $modules = \ACP3\Core\Modules::getActiveModules();
         foreach ($modules as $module) {
-            $systemPath = MODULES_DIR . $module['dir'] . '/View/';
+            $systemPath = MODULES_DIR . $module['dir'] . '/';
             $designPath = DESIGN_PATH_INTERNAL . strtolower($module['dir']) . '/';
-            if (true == ($stylesheet = self::getCssJsPath($systemPath, $designPath, '', 'style.css'))) {
+            if (true == ($stylesheet = self::getCssJsPath($systemPath, $designPath, 'css', 'style.css')) &&
+                $module['dir'] !== 'System') {
                 $css[] = $stylesheet;
             }
             // Append some custom styles to the default module styling
-            $path_module_append = $designPath . 'append.css';
-            if (is_file($path_module_append) === true) {
-                $css[] = $path_module_append;
+            $pathModuleAppend = $designPath . 'append.css';
+            if (is_file($pathModuleAppend) === true) {
+                $css[] = $pathModuleAppend;
             }
         }
 
@@ -418,9 +419,9 @@ class View
         }
 
         // Include additional js files from the system config
-        $extra_js = explode(',', CONFIG_EXTRA_JS);
-        if (count($extra_js) > 0) {
-            foreach ($extra_js as $file) {
+        $extraJs = explode(',', CONFIG_EXTRA_JS);
+        if (count($extraJs) > 0) {
+            foreach ($extraJs as $file) {
                 $path = DESIGN_PATH_INTERNAL . 'js/' . trim($file);
                 if (is_file($path) && in_array($path, $scripts) === false) {
                     $scripts[] = $path;

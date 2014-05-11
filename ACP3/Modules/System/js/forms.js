@@ -82,12 +82,8 @@ jQuery.fn.formSubmit = function (customFormData) {
                         if (data.success === false) {
                             $('#error-box').remove();
                             $(data.content).hide().prependTo($form).fadeIn();
-                        } else if (data.success === true) {
-
                         } else {
-                            var newDoc = document.open("text/html", "replace");
-                            newDoc.write(data);
-                            newDoc.close();
+                            $('#content').html(data);
                         }
                     }
                 } catch (err) {
@@ -124,5 +120,5 @@ jQuery.fn.formSubmit = function (customFormData) {
 };
 
 jQuery(document).ready(function ($) {
-    $('form[data-ajax-form="true"]').formSubmit();
+    $('[data-ajax-form="true"]').formSubmit();
 });
