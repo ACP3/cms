@@ -351,7 +351,7 @@ class View
         }
 
         // Stylesheets der Module
-        $modules = \ACP3\Core\Modules::getActiveModules();
+        $modules = Modules::getActiveModules();
         foreach ($modules as $module) {
             $systemPath = MODULES_DIR . $module['dir'] . '/';
             $designPath = DESIGN_PATH_INTERNAL . strtolower($module['dir']) . '/';
