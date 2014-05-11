@@ -209,6 +209,7 @@ class Application
         self::$view->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
         self::$view->assign('ROOT_DIR', ROOT_DIR);
         self::$view->assign('ROOT_DIR_ABSOLUTE', ROOT_DIR_ABSOLUTE);
+        self::$view->assign('HOST_NAME', HOST_NAME);
         self::$view->assign('DESIGN_PATH', DESIGN_PATH);
         self::$view->assign('DESIGN_PATH_ABSOLUTE', DESIGN_PATH_ABSOLUTE);
         self::$view->assign('UA_IS_MOBILE', Core\Functions::isMobileBrowser());
