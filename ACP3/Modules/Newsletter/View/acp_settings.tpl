@@ -10,7 +10,7 @@
     <div class="form-group">
         <label for="mailsig" class="col-lg-2 control-label">{lang t="newsletter|mailsig"}</label>
         <div class="col-lg-10">
-            <textarea class="form-control" name="mailsig" id="mailsig" cols="50" rows="3">{$form.mailsig}</textarea>
+            {wysiwyg name="mailsig" value="`$form.mailsig`" height="250"}
         </div>
     </div>
     <div class="form-group">

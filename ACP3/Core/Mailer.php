@@ -253,7 +253,7 @@ class Mailer
     private function _getTextSignature()
     {
         if (!empty($this->mailSignature)) {
-            return "\n-- \n" . strip_tags($this->mailSignature);
+            return "\n-- \n" . $this->mailer->html2text($this->mailSignature, true);
         }
         return '';
     }

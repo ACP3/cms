@@ -165,6 +165,8 @@ class Application
 
         define('DB_PRE', CONFIG_DB_PRE);
 
+        Core\Registry::set('Db', self::$db);
+
         // Sytemeinstellungen laden
         Core\Config::getSystemSettings();
 
@@ -183,7 +185,6 @@ class Application
         self::$date = new Core\Date(self::$auth, self::$lang, self::$view);
         self::$breadcrumb = new Core\Breadcrumb(self::$db, self::$lang, self::$uri, self::$view);
 
-        Core\Registry::set('Db', self::$db);
         Core\Registry::set('View', self::$view);
         Core\Registry::set('URI', self::$uri);
         Core\Registry::set('Session', self::$session);
