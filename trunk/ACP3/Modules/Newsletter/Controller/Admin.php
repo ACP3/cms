@@ -254,7 +254,7 @@ class Admin extends Core\Modules\Controller\Admin
 
                 $data = array(
                     'mail' => $_POST['mail'],
-                    'mailsig' => Core\Functions::strEncode($_POST['mailsig']),
+                    'mailsig' => Core\Functions::strEncode($_POST['mailsig'], true),
                     'html' => (int) $_POST['html']
                 );
 
