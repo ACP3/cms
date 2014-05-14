@@ -37,9 +37,9 @@ class Mailer
     /**
      * @var string|array
      */
-    private $to;
+    private $recipients;
     /**
-     * @var string|array
+     * @var bool
      */
     private $bcc;
     /**
@@ -62,7 +62,7 @@ class Mailer
     /**
      * Initializes PHPMailer and sets the basic configuration parameters
      */
-    public function __construct(View $view = null, $bccCount = 50)
+    public function __construct(View $view = null, $bcc = false, $bccCount = 50)
     {
         $this->view = $view;
         $this->mailer = new \PHPMailer(true);
@@ -84,18 +84,8 @@ class Mailer
         $this->mailer->Encoding = '8bit';
         $this->mailer->WordWrap = 76;
 
-        $this->bccCount = $bccCount;
-    }
-
-    /**
-     * @param array|string $bcc
-     * @return $this
-     */
-    public function setBcc($bcc)
-    {
         $this->bcc = $bcc;
-
-        return $this;
+        $this->bccCount = $bccCount;
     }
 
     /**
@@ -168,9 +158,9 @@ class Mailer
      * @param array|string $to
      * @return $this
      */
-    public function setTo($to)
+    public function setRecipients($to)
     {
-        $this->to = $to;
+        $this->recipients = $to;
 
         return $this;
     }
@@ -321,10 +311,8 @@ class Mailer
 
             $this->_generateBody();
 
-            if (!empty($this->bcc)) {
-                return $this->_sendBcc();
-            } elseif (!empty($this->to)) {
-                return $this->_sendTo();
+            if (!empty($this->recipients)) {
+                return $this->bcc === true ? $this->_sendBcc() : $this->_sendTo();
             }
 
             return false;
@@ -346,13 +334,13 @@ class Mailer
     {
         $i = 0;
 
-        if (is_array($this->bcc) === false || isset($this->bcc['email']) === true) {
-            $this->bcc = array($this->bcc);
+        if (is_array($this->recipients) === false || isset($this->recipients['email']) === true) {
+            $this->recipients = array($this->recipients);
         }
 
-        $c_bcc = count($this->bcc);
+        $c_recipients = count($this->recipients);
 
-        foreach ($this->bcc as $recipient) {
+        foreach ($this->recipients as $recipient) {
             // First collect some addresses
             if ($i < $this->bccCount) {
                 $this->_addRecipients($recipient, true);
@@ -360,7 +348,7 @@ class Mailer
             }
 
             // If enough addresses have been collected, perform a bulk mail sending
-            if ($i % $this->bccCount === 0 || $i === $c_bcc) {
+            if ($i % $this->bccCount === 0 || $i === $c_recipients) {
                 $this->mailer->send();
             }
         }
@@ -375,11 +363,11 @@ class Mailer
      */
     private function _sendTo()
     {
-        if (is_array($this->to) === false || isset($this->to['email']) === true) {
-            $this->to = array($this->to);
+        if (is_array($this->recipients) === false || isset($this->recipients['email']) === true) {
+            $this->recipients = array($this->recipients);
         }
 
-        foreach ($this->to as $recipient) {
+        foreach ($this->recipients as $recipient) {
             $this->_addRecipients($recipient);
             $this->mailer->send();
         }

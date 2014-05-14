@@ -62,7 +62,7 @@ abstract class Helpers
             'name' => CONFIG_SEO_TITLE
         );
 
-        $mailer = new Core\Mailer(Core\Registry::get('View'));
+        $mailer = new Core\Mailer(Core\Registry::get('View'), $bcc);
         $mailer
             ->setFrom($from)
             ->setSubject($newsletter['title'])
@@ -77,11 +77,7 @@ abstract class Helpers
         }
 
         if ($recipient !== null) {
-            if ($bcc === true) {
-                $mailer->setBcc($recipient);
-            } else {
-                $mailer->setTo($recipient);
-            }
+            $mailer->setRecipients($recipient);
         } else {
             $accounts = self::$model->getAllActiveAccount();
             $c_accounts = count($accounts);
@@ -91,11 +87,7 @@ abstract class Helpers
                 $recipients[] = $accounts[$i]['mail'];
             }
 
-            if ($bcc === true) {
-                $mailer->setBcc($recipients);
-            } else {
-                $mailer->setTo($recipients);
-            }
+            $mailer->setRecipients($recipients);
         }
 
         return $mailer->send();

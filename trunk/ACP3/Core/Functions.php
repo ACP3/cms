@@ -244,7 +244,7 @@ class Functions
             ->setBody($body)
             ->setMailSignature($mailSignature)
             ->setFrom($from)
-            ->setTo($to)
+            ->setRecipients($to)
             ->send();
     }
 
