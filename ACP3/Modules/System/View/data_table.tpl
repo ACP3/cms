@@ -4,35 +4,36 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('{$dt.element}').dataTable({
-            "aLengthMenu": [
+            lengthMenu: [
                 [10, 15, 20, 25, 50, -1],
                 [10, 15, 20, 25, 50, "{lang t="system|data_table_all"}"]
             ],
-            "iDisplayLength": {$dt.records_per_page},
-            'bStateSave': true,
+            iDisplayLength: {$dt.records_per_page},
+            stateSave: true,
             {if isset($dt.sort_col, $dt.sort_dir)}
-            'aaSorting': [
+            sorting: [
                 [ {$dt.sort_col}, "{$dt.sort_dir}" ]
             ],
             {/if}
-            "oLanguage": {
-                "sLoadingRecords": "{lang t="system|data_table_loading_records"}",
-                "sEmptyTable": "{lang t="system|no_entries"}",
-                "sSearch": "{lang t="system|data_table_search"}",
-                "sLengthMenu": "{lang t="system|data_table_length_menu"}",
-                "sZeroRecords": "{lang t="system|data_table_zero_records"}",
-                "sInfo": "{lang t="system|data_table_info"}",
-                "sInfoEmpty": "{lang t="system|data_table_info_empty"}",
-                "sInfoFiltered": "{lang t="system|data_table_info_filtered"}",
-                "oPaginate": {
-                    "sPrevious": "{lang t="system|previous"}",
-                    "sNext": "{lang t="system|next"}"
+            language: {
+                loadingRecords: "{lang t="system|data_table_loading_records"}",
+                emptyTable: "{lang t="system|no_entries"}",
+                search: "{lang t="system|data_table_search"}",
+                lengthMenu: "{lang t="system|data_table_length_menu"}",
+                zeroRecords: "{lang t="system|data_table_zero_records"}",
+                info: "{lang t="system|data_table_info"}",
+                infoEmpty: "{lang t="system|data_table_info_empty"}",
+                infoFiltered: "{lang t="system|data_table_info_filtered"}",
+                paginate: {
+                    previous: "{lang t="system|previous"}",
+                    next: "{lang t="system|next"}"
                 }
             },
             {if isset($dt.hide_col_sort) && $dt.hide_col_sort !== ''}
-            "aoColumnDefs": [
+            columnDefs: [
                 {
-                    "bSortable": false, "aTargets": [ {$dt.hide_col_sort} ]
+                    sortable: false,
+                    targets: [ {$dt.hide_col_sort} ]
                 }
             ]
             {/if}
