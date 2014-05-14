@@ -201,17 +201,18 @@ class Session
      */
     public function generateFormToken($path = '')
     {
-        if (!isset($_SESSION[self::XSRF_TOKEN_NAME]) || is_array($_SESSION[self::XSRF_TOKEN_NAME]) === false) {
-            $_SESSION[self::XSRF_TOKEN_NAME] = array();
+        $tokenName = self::XSRF_TOKEN_NAME;
+        if (!isset($_SESSION[$tokenName]) || is_array($_SESSION[$tokenName]) === false) {
+            $_SESSION[$tokenName] = array();
         }
 
         $path = !empty($path) ? $path . (!preg_match('/\/$/', $path) ? '/' : '') : $this->uri->query;
 
-        if (empty($_SESSION[self::XSRF_TOKEN_NAME][$path])) {
-            $_SESSION[self::XSRF_TOKEN_NAME][$path] = sha1(uniqid(mt_rand(), true));
+        if (empty($_SESSION[$tokenName][$path])) {
+            $_SESSION[$tokenName][$path] = sha1(uniqid(mt_rand(), true));
         }
 
-        $this->view->assign('form_token', '<input type="hidden" name="' . self::XSRF_TOKEN_NAME . '" value="' . $_SESSION[self::XSRF_TOKEN_NAME][$path] . '" />');
+        $this->view->assign('form_token', '<input type="hidden" name="' . $tokenName . '" value="' . $_SESSION[$tokenName][$path] . '" />');
     }
 
     /**
@@ -219,12 +220,13 @@ class Session
      */
     public function unsetFormToken($token = '')
     {
-        if (empty($token) && isset($_POST[self::XSRF_TOKEN_NAME])) {
-            $token = $_POST[self::XSRF_TOKEN_NAME];
+        $tokenName = self::XSRF_TOKEN_NAME;
+        if (empty($token) && isset($_POST[$tokenName])) {
+            $token = $_POST[$tokenName];
         }
-        if (!empty($token) && is_array($_SESSION[self::XSRF_TOKEN_NAME]) === true) {
-            if (isset($_SESSION[self::XSRF_TOKEN_NAME][$this->uri->query])) {
-                unset($_SESSION[self::XSRF_TOKEN_NAME][$this->uri->query]);
+        if (!empty($token) && is_array($_SESSION[$tokenName]) === true) {
+            if (isset($_SESSION[$tokenName][$this->uri->query])) {
+                unset($_SESSION[$tokenName][$this->uri->query]);
             }
         }
     }
