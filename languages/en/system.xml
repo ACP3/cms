@@ -37,6 +37,7 @@
     <item key="close_window">Close window</item>
     <item key="create_error">While creating the entry an error has occured.</item>
     <item key="create_success">The entry has been successfully created.</item>
+    <item key="critical_error_occurred_see_log">A critical error has occurred. For further details please see the log files.</item>
     <item key="current_version">Current version</item>
     <item key="data_of_table">Data of table %s</item>
     <item key="data_table_all">All</item>

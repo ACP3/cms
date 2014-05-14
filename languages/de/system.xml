@@ -37,6 +37,7 @@
     <item key="confirm_delete">Sollen die ausgewählten Einträge wirklich gelöscht werden?</item>
     <item key="create_error">Beim Erstellen des Eintrages ist ein Fehler aufgetreten.</item>
     <item key="create_success">Der Eintrag wurde erfolgreich erstellt.</item>
+    <item key="critical_error_occurred_see_log">Es ist ein schwerwiegender Fehler aufgetreten. Für Details schauen Sie bitte in den Log-Dateien nach.</item>
     <item key="current_version">Aktuelle Version</item>
     <item key="data_of_table">Daten der Tabelle %s</item>
     <item key="data_table_all">Alle</item>

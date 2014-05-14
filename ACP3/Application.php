@@ -135,7 +135,7 @@ class Application
     /**
      * Überprüfen, ob der Wartungsmodus aktiv ist
      */
-    public static function checkForMaintenanceMode()
+    private static function _checkForMaintenanceMode()
     {
         if ((bool)CONFIG_MAINTENANCE_MODE === true &&
             (defined('IN_ADM') === false && strpos(self::$uri->query, 'users/login/') !== 0)
@@ -219,7 +219,7 @@ class Application
         self::$view->assign('LANG_DIRECTION', isset($langInfo['direction']) ? $langInfo['direction'] : 'ltr');
         self::$view->assign('LANG', CONFIG_LANG);
 
-        self::checkForMaintenanceMode();
+        self::_checkForMaintenanceMode();
 
         // Aktuelle Datensatzposition bestimmen
         define('POS', Core\Validate::isNumber(self::$uri->page) && self::$uri->page >= 1 ? (int)(self::$uri->page - 1) * Core\Registry::get('Auth')->entries : 0);
@@ -252,12 +252,29 @@ class Application
 
                 $controller->$action();
                 $controller->display();
-            } catch(\Exception $e) {
-                \ACP3\Core\Logger::log('exception', 'error', $e->getMessage());
-                echo $e->getMessage();
+            } catch (\Exception $e) {
+                \ACP3\Core\Logger::log('exception', 'error', $e);
+
+                if (defined('DEBUG') && DEBUG === true) {
+                    $errorMessage = $e->getMessage();
+                } else {
+                    $errorMessage = self::$lang->t('system', 'critical_error_occurred_see_log');
+                }
+                self::_renderApplicationException($errorMessage);
             }
         } else {
             self::$uri->redirect('errors/404');
         }
+    }
+
+    /**
+     * Renders an exception
+     * @param $errorMessage
+     */
+    private static function _renderApplicationException($errorMessage)
+    {
+        self::$view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
+        self::$view->assign('CONTENT', $errorMessage);
+        self::$view->displayTemplate('system/maintenance.tpl');
     }
 }

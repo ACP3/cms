@@ -4,7 +4,7 @@
     <title>{$PAGE_TITLE}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}vendor/twitter/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}libraries/bootstrap/css/bootstrap.min.css">
     <style type="text/css">
         #maintenance {
             width: 70%;
@@ -21,7 +21,7 @@
 </head>
 
 <body>
-<div id="maintenance" class="alert">
+<div id="maintenance" class="alert alert-warning">
     <strong>{$CONTENT}</strong>
 </div>
 </body>
