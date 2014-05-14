@@ -106,12 +106,36 @@ abstract class Helpers
 
         $hash = md5(mt_rand(0, microtime(true)));
         $host = htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES, 'UTF-8');
+        $url = 'http://' . $host . self::$uri->route('newsletter/activate/hash_' . $hash . '/mail_' . $emailAddress);
         $settings = Core\Config::getSettings('newsletter');
 
         $subject = sprintf(self::$lang->t('newsletter', 'subscribe_mail_subject'), CONFIG_SEO_TITLE);
         $body = str_replace('{host}', $host, self::$lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
-        $body .= 'http://' . $host . self::$uri->route('newsletter/activate/hash_' . $hash . '/mail_' . $emailAddress);
-        $mailSent = Core\Functions::generateEmail('', $emailAddress, $settings['mail'], $subject, $body);
+
+        $from = array(
+            'email' => $settings['mail'],
+            'name' => CONFIG_SEO_TITLE
+        );
+
+        $mailer = new Core\Mailer(Core\Registry::get('View'));
+        $mailer
+            ->setFrom($from)
+            ->setSubject($subject)
+            ->setMailSignature($settings['mailsig']);
+
+        if ($settings['html'] == 1) {
+            $mailer->setTemplate('newsletter/email.tpl');
+
+            $body .= '<a href="' . $url . '">' . $url . '<a>';
+            $mailer->setHtmlBody(Core\Functions::nl2p($body));
+        } else {
+            $body .= $url;
+            $mailer->setBody($body);
+        }
+
+        $mailer->setRecipients($emailAddress);
+
+        $mailSent = $mailer->send();
         $bool = false;
 
         // Newsletter-Konto nur erstellen, wenn die E-Mail erfolgreich versendet werden konnte

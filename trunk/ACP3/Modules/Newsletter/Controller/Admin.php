@@ -113,7 +113,7 @@ class Admin extends Core\Modules\Controller\Admin
         if ($this->uri->action === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
-                $bool = $this->model->delete($item, Newsletter\Model::TABLE_NAME_ACCOUNTS);
+                $bool = $this->model->delete($item, '', Newsletter\Model::TABLE_NAME_ACCOUNTS);
             }
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/newsletter/list_accounts');
         } elseif (is_string($items)) {
