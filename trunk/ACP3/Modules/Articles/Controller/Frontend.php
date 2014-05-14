@@ -14,14 +14,14 @@ class Frontend extends Core\Modules\Controller
 {
     /**
      *
-     * @var Model
+     * @var Articles\Model
      */
     protected $model;
 
     protected function _init()
     {
-        $this->menuModel = new \ACP3\Modules\Menus\Model($this->db, $this->lang, $this->uri);
-        $this->model = new Articles\Model($this->db, $this->lang, $this->menuModel, $this->uri);
+        $menuModel = new \ACP3\Modules\Menus\Model($this->db, $this->lang, $this->uri);
+        $this->model = new Articles\Model($this->db, $this->lang, $menuModel, $this->uri);
     }
 
     public function actionList()
