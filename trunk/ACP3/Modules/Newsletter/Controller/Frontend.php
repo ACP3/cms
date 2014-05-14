@@ -68,7 +68,7 @@ class Frontend extends Core\Modules\Controller
             try {
                 switch ($this->uri->action) {
                     case 'subscribe':
-                        $this->model->validateSubscribe($_POST, $this->lang);
+                        $this->model->validateSubscribe($_POST);
 
                         $bool = Newsletter\Helpers::subscribeToNewsletter($_POST['mail']);
 
@@ -78,7 +78,7 @@ class Frontend extends Core\Modules\Controller
                         return;
                         break;
                     case 'unsubscribe':
-                        $this->model->validateUnsubscribe($_POST, $this->lang);
+                        $this->model->validateUnsubscribe($_POST);
 
                         $bool = $this->model->delete($_POST['mail'], 'mail', Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
