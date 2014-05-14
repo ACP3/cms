@@ -1,6 +1,5 @@
-{js_libraries enable="bootbox"}
 {include_js module="system" file="forms"}
-{include_js module="system" file="mark"}
+{include_js module="system" file="mark" depends="bootbox"}
 <script type="text/javascript">
     jQuery(document).ready(function ($) {
         $('#{$mark_all_id}').click(function () {
