@@ -116,16 +116,16 @@ class Application
     public static function setErrorHandler()
     {
         $errorLevelMap = array(
-            E_ERROR,
-            E_PARSE,
-            E_CORE_ERROR,
-            E_COMPILE_ERROR,
-            E_USER_ERROR,
-            E_WARNING,
-            E_COMPILE_WARNING,
-            E_DEPRECATED,
-            E_NOTICE,
-            E_USER_NOTICE
+            E_ERROR => Logger::ERROR,
+            E_PARSE => Logger::ERROR,
+            E_CORE_ERROR => Logger::ERROR,
+            E_COMPILE_ERROR => Logger::ERROR,
+            E_USER_ERROR => Logger::ERROR,
+            E_WARNING => Logger::WARNING,
+            E_COMPILE_WARNING => Logger::WARNING,
+            E_DEPRECATED => Logger::WARNING,
+            E_NOTICE => Logger::NOTICE,
+            E_USER_NOTICE => Logger::NOTICE
         );
 
         $logger = new Logger('system', array(new StreamHandler(UPLOADS_DIR . 'logs/system.log', Logger::NOTICE)));
@@ -225,32 +225,37 @@ class Application
         define('POS', Core\Validate::isNumber(self::$uri->page) && self::$uri->page >= 1 ? (int)(self::$uri->page - 1) * Core\Registry::get('Auth')->entries : 0);
 
         if (defined('IN_ADM') === true && self::$auth->isUser() === false && self::$uri->query !== 'users/login/') {
-            $redirect_uri = base64_encode('acp/' . self::$uri->query);
-            self::$uri->redirect('users/login/redirect_' . $redirect_uri);
+            $redirectUri = base64_encode('acp/' . self::$uri->query);
+            self::$uri->redirect('users/login/redirect_' . $redirectUri);
         }
 
         if (Core\Modules::hasPermission(self::$uri->mod, self::$uri->file) === true) {
-            $module = ucfirst(self::$uri->mod);
-            $section = defined('IN_ADM') === true ? 'Admin' : 'Frontend';
-            $className = "\\ACP3\\Modules\\" . $module . "\\Controller\\" . $section;
-            $action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', defined('IN_ADM') === true ? substr(self::$uri->file, 4) : self::$uri->file))));
+            try {
+                $module = ucfirst(self::$uri->mod);
+                $section = defined('IN_ADM') === true ? 'Admin' : 'Frontend';
+                $className = "\\ACP3\\Modules\\" . $module . "\\Controller\\" . $section;
+                $action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', defined('IN_ADM') === true ? substr(self::$uri->file, 4) : self::$uri->file))));
 
-            // Modul einbinden
-            /** @var Controller $controller */
-            $controller = new $className(
-                self::$auth,
-                self::$breadcrumb,
-                self::$date,
-                self::$db,
-                self::$lang,
-                self::$session,
-                self::$uri,
-                self::$view,
-                self::$seo
-            );
+                // Modul einbinden
+                /** @var Controller $controller */
+                $controller = new $className(
+                    self::$auth,
+                    self::$breadcrumb,
+                    self::$date,
+                    self::$db,
+                    self::$lang,
+                    self::$session,
+                    self::$uri,
+                    self::$view,
+                    self::$seo
+                );
 
-            $controller->$action();
-            $controller->display();
+                $controller->$action();
+                $controller->display();
+            } catch(\Exception $e) {
+                \ACP3\Core\Logger::log('exception', 'error', $e->getMessage());
+                echo $e->getMessage();
+            }
         } else {
             self::$uri->redirect('errors/404');
         }

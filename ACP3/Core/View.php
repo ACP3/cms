@@ -436,38 +436,44 @@ class View
      * Gibt ein Template direkt aus
      *
      * @param string $template
-     * @param mixed $cache_id
-     * @param null $compile_id
+     * @param mixed $cacheId
+     * @param null $compileId
      * @param null $parent
      * @internal param int $cache_lifetime
      */
-    public function displayTemplate($template, $cache_id = null, $compile_id = null, $parent = null)
+    public function displayTemplate($template, $cacheId = null, $compileId = null, $parent = null)
     {
-        echo $this->fetchTemplate($template, $cache_id, $compile_id, $parent, true);
+        echo $this->fetchTemplate($template, $cacheId, $compileId, $parent, true);
     }
 
     /**
      * Gibt ein Template aus
      *
      * @param string $template
-     * @param mixed $cache_id
-     * @param mixed $compile_id
+     * @param mixed $cacheId
+     * @param mixed $compileId
      * @param object $parent
      * @param boolean $display
      * @throws \Exception
      * @return string
      */
-    public function fetchTemplate($template, $cache_id = null, $compile_id = null, $parent = null, $display = false)
+    public function fetchTemplate($template, $cacheId = null, $compileId = null, $parent = null, $display = false)
     {
         if ($this->templateExists($template)) {
-            return self::$rendererObject->fetch($template, $cache_id, $compile_id, $parent, $display);
+            return self::$rendererObject->fetch($template, $cacheId, $compileId, $parent, $display);
         } else {
             // Pfad zerlegen
             $fragments = explode('/', $template);
             $fragments[0] = ucfirst($fragments[0]);
-            $path = $fragments[0] . '/View/' . $fragments[1];
+
+            if (count($fragments) === 3) {
+                $path = $fragments[0] . '/View/' . $fragments[1] . '/' . $fragments[2];
+            } else {
+                $path = $fragments[0] . '/View/' . $fragments[1];
+            }
+
             if (count($fragments) > 1 && $this->templateExists($path)) {
-                return self::$rendererObject->fetch($path, $cache_id, $compile_id, $parent, $display);
+                return self::$rendererObject->fetch($path, $cacheId, $compileId, $parent, $display);
             } else {
                 throw new \Exception("The requested template " . $template . " can't be found!");
             }

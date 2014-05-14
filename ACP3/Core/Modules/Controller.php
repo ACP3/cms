@@ -98,7 +98,12 @@ abstract class Controller
         $view = $this->view;
         // Content-Template automatisch setzen
         if ($view->getContentTemplate() === '') {
-            $view->setContentTemplate($this->uri->mod . '/' . $this->uri->file . '.tpl');
+            $tplFile = $this->uri->file;
+            if (strpos($tplFile, 'acp_') === 0) {
+                $tplFile = 'acp/' . substr($tplFile, 4);
+            }
+
+            $view->setContentTemplate($this->uri->mod . '/' . $tplFile . '.tpl');
         }
 
         if ($view->getNoOutput() === false) {

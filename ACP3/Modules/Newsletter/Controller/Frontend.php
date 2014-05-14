@@ -136,6 +136,7 @@ class Frontend extends Core\Modules\Controller
 
             for ($i = 0; $i < $c_newsletters; ++$i) {
                 $newsletters[$i]['date_formatted'] = $this->date->format($newsletters[$i]['date'], 'short');
+                $newsletters[$i]['date_iso'] = $this->date->format($newsletters[$i]['date'], 'c');
             }
             $this->view->assign('newsletters', $newsletters);
         }
