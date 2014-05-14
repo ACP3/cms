@@ -1,17 +1,7 @@
 {if isset($pictures)}
     {if $overlay == 1}
         {js_libraries enable="fancybox"}
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $(".thumbnails li a").fancybox({
-                    type: 'image',
-                    padding: 0,
-                    nextClick: true,
-                    arrows: true,
-                    loop: true
-                });
-            });
-        </script>
+        {include_js module="gallery" file="pics"}
         <ul class="thumbnails">
             {foreach $pictures as $row}
                 <li>
