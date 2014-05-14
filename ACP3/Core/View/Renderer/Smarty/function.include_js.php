@@ -16,6 +16,10 @@ function smarty_function_include_js($params)
         // Do not include the same file multiple times
         $key = $params['module'] . '/' . $params['file'];
         if (isset($alreadyIncluded[$key]) === false) {
+            if (!empty($params['depends'])) {
+                \ACP3\Core\Registry::get('View')->enableJsLibraries(explode(',', $params['depends']));
+            }
+
             $alreadyIncluded[$key] = true;
 
             $script = '<script type="text/javascript" src="%s"></script>';

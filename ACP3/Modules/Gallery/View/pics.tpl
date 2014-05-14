@@ -1,7 +1,6 @@
 {if isset($pictures)}
     {if $overlay == 1}
-        {js_libraries enable="fancybox"}
-        {include_js module="gallery" file="pics"}
+        {include_js module="gallery" file="pics" depends="fancybox"}
         <ul class="thumbnails">
             {foreach $pictures as $row}
                 <li>
