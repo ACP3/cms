@@ -117,15 +117,20 @@ class Application
     {
         $errorLevelMap = array(
             E_ERROR => Logger::ERROR,
-            E_PARSE => Logger::ERROR,
-            E_CORE_ERROR => Logger::ERROR,
-            E_COMPILE_ERROR => Logger::ERROR,
-            E_USER_ERROR => Logger::ERROR,
             E_WARNING => Logger::WARNING,
-            E_COMPILE_WARNING => Logger::WARNING,
-            E_DEPRECATED => Logger::WARNING,
+            E_PARSE => Logger::ERROR,
             E_NOTICE => Logger::NOTICE,
-            E_USER_NOTICE => Logger::NOTICE
+            E_CORE_ERROR => Logger::ERROR,
+            E_CORE_WARNING => Logger::WARNING,
+            E_COMPILE_ERROR => Logger::ERROR,
+            E_COMPILE_WARNING => Logger::WARNING,
+            E_USER_ERROR => Logger::ERROR,
+            E_USER_WARNING => Logger::WARNING,
+            E_USER_NOTICE => Logger::NOTICE,
+            E_STRICT => Logger::WARNING,
+            E_RECOVERABLE_ERROR => Logger::ERROR,
+            E_DEPRECATED => Logger::WARNING,
+            E_USER_DEPRECATED => Logger::WARNING,
         );
 
         $logger = new Logger('system', array(new StreamHandler(UPLOADS_DIR . 'logs/system.log', Logger::NOTICE)));
