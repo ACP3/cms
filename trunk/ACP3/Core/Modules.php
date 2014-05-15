@@ -47,10 +47,11 @@ class Modules
     public static function actionExists($module, $action)
     {
         $moduleUc = ucfirst($module);
-        $section = strpos($action, 'acp_') === 0 ? 'Admin' : 'Frontend';
+        $section = strpos($action, 'acp_') === 0 ? "Admin\\Index" : 'Index';
 
         $className = "\\ACP3\\Modules\\" . $moduleUc . "\\Controller\\" . $section;
-        $action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $section === 'Admin' ? substr($action, 4) : $action))));
+
+        $action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $section === 'Admin\Index' ? substr($action, 4) : $action))));
 
         return (method_exists($className, $action) === true);
     }
