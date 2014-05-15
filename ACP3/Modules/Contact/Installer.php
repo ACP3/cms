@@ -12,7 +12,7 @@ class Installer extends Modules\AbstractInstaller
 
     public function __construct()
     {
-        $this->special_resources = array(
+        $this->specialResources = array(
             'acp_list' => 7
         );
     }
