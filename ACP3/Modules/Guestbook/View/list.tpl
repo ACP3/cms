@@ -1,5 +1,5 @@
 {if $overlay == 1}
-{include_ls module="guestbook" file="list" depends="fancybox"}
+{include_js module="guestbook" file="list" depends="fancybox"}
 {/if}
     <p class="text-center">
         <a href="{uri args="guestbook/create"}" id="create-link" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>
