@@ -297,7 +297,7 @@ class Index extends Core\Modules\Controller
                 );
                 $bool = $this->model->update($updateValues, $this->auth->getUserId());
 
-                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/home');
+                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/index/home');
             }
 
             Core\Functions::getRedirectMessage();
