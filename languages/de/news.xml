@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="acp_create">Neue News erstellen</item>
-    <item key="acp_delete">News löschen</item>
-    <item key="acp_edit">News bearbeiten</item>
-    <item key="acp_settings">Einstellungen</item>
+    <item key="create">Neue News erstellen</item>
+    <item key="delete">News löschen</item>
+    <item key="edit">News bearbeiten</item>
+    <item key="settings">Einstellungen</item>
     <item key="activate_readmore">&quot;Weiterlesen...&quot; aktivieren</item>
     <item key="hyperlink">Link</item>
     <item key="complete_hyperlink_statements">Bitte vervollständigen Sie die Angaben zum Hyperlink</item>

@@ -99,8 +99,8 @@ abstract class Controller
         // Content-Template automatisch setzen
         if ($view->getContentTemplate() === '') {
             $tplFile = $this->uri->file;
-            if (strpos($tplFile, 'acp_') === 0) {
-                $tplFile = 'acp/' . substr($tplFile, 4);
+            if ($this->uri->area === 'admin') {
+                $tplFile = 'acp/' . $tplFile;
             }
 
             $view->setContentTemplate($this->uri->mod . '/' . $tplFile . '.tpl');

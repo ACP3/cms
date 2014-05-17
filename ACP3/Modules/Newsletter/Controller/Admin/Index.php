@@ -93,7 +93,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/newsletter/delete', 'acp/newsletter');
+        $items = $this->_deleteItem('acp/newsletter/index/delete', 'acp/newsletter');
 
         if ($this->uri->action === 'confirmed') {
             $bool = false;
@@ -102,22 +102,22 @@ class Index extends Core\Modules\Controller\Admin
             }
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/newsletter');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
     public function actionDeleteAccount()
     {
-        $items = $this->_deleteItem('acp/newsletter/delete_account', 'acp/newsletter/list_accounts');
+        $items = $this->_deleteItem('acp/newsletter/index/delete_account', 'acp/newsletter/index/index_accounts');
 
         if ($this->uri->action === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
                 $bool = $this->model->delete($item, '', Newsletter\Model::TABLE_NAME_ACCOUNTS);
             }
-            Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/newsletter/list_accounts');
+            Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/newsletter/index/index_accounts');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -176,11 +176,11 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         Core\Functions::getRedirectMessage();
 
@@ -188,7 +188,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_newsletter = count($newsletter);
 
         if ($c_newsletter > 0) {
-            $canDelete = Core\Modules::hasPermission('newsletter', 'acp_delete');
+            $canDelete = Core\Modules::hasPermission('admin/newsletter/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
@@ -205,11 +205,11 @@ class Index extends Core\Modules\Controller\Admin
             }
             $this->view->assign('newsletter', $newsletter);
             $this->view->assign('can_delete', $canDelete);
-            $this->view->assign('can_send', Core\Modules::hasPermission('newsletter', 'acp_send'));
+            $this->view->assign('can_send', Core\Modules::hasPermission('admin/newsletter/index/send'));
         }
     }
 
-    public function actionListAccounts()
+    public function actionIndexAccounts()
     {
         Core\Functions::getRedirectMessage();
 
@@ -217,7 +217,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_accounts = count($accounts);
 
         if ($c_accounts > 0) {
-            $canDelete = Core\Modules::hasPermission('newsletter', 'acp_delete_account');
+            $canDelete = Core\Modules::hasPermission('admin/newsletter/index/delete_account');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 3 : 2,
@@ -242,7 +242,7 @@ class Index extends Core\Modules\Controller\Admin
 
             Core\Functions::setRedirectMessage($bool && $bool2 !== false, $this->lang->t('newsletter', $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error'), 'acp/newsletter');
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 

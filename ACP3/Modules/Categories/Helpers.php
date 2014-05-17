@@ -110,7 +110,7 @@ abstract class Helpers
         } else {
             $categories['categories'] = array();
         }
-        if ($categoryCreate === true && Core\Modules::hasPermission('categories', 'acp_create') === true) {
+        if ($categoryCreate === true && Core\Modules::hasPermission('admin/categories/index/create') === true) {
             $categories['create']['name'] = $formFieldName . '_create';
             $categories['create']['value'] = isset($_POST[$categories['create']['name']]) ? $_POST[$categories['create']['name']] : '';
         }

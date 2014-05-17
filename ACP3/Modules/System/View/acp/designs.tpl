@@ -22,7 +22,7 @@
                 {if $row.selected == 1}
                     {icon path="16/apply"}
                 {else}
-                    <a href="{uri args="acp/system/designs/dir_`$row.dir`"}">{icon path="16/cancel"}</a>
+                    <a href="{uri args="acp/system/index/designs/dir_`$row.dir`"}">{icon path="16/cancel"}</a>
                 {/if}
             </td>
         </tr>

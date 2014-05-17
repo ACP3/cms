@@ -30,7 +30,7 @@ class Index extends Core\Modules\Controller
         $this->categoriesModel = new \ACP3\Modules\Categories\Model($this->db, $this->lang);
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         if (Core\Modules::isActive('categories') === true) {
             $categories = $this->categoriesModel->getCache('files');
@@ -61,7 +61,7 @@ class Index extends Core\Modules\Controller
                 } elseif (preg_match('/^([a-z]+):\/\//', $file['file'])) {
                     $this->uri->redirect(0, $file['file']); // Externe Datei
                 } else {
-                    $this->uri->redirect('errors/404');
+                    $this->uri->redirect('errors/index/404');
                 }
             } else {
                 // Brotkrümelspur
@@ -76,7 +76,7 @@ class Index extends Core\Modules\Controller
                 $file['date_iso'] = $this->date->format($file['start'], 'c');
                 $this->view->assign('file', $file);
 
-                if ($settings['comments'] == 1 && $file['comments'] == 1 && Core\Modules::hasPermission('comments', 'list') === true) {
+                if ($settings['comments'] == 1 && $file['comments'] == 1 && Core\Modules::hasPermission('frontend/comments') === true) {
                     $comments = new \ACP3\Modules\Comments\Controller\Index(
                         $this->auth,
                         $this->breadcrumb,
@@ -90,11 +90,11 @@ class Index extends Core\Modules\Controller
                         'files',
                         $this->uri->id
                     );
-                    $this->view->assign('comments', $comments->actionList());
+                    $this->view->assign('comments', $comments->actionIndex());
                 }
             }
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -121,26 +121,8 @@ class Index extends Core\Modules\Controller
                 $this->view->assign('files', $files);
             }
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
-    }
-
-    public function actionSidebar()
-    {
-        $settings = Core\Config::getSettings('files');
-
-        $files = $this->model->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
-        $c_files = count($files);
-
-        if ($c_files > 0) {
-            for ($i = 0; $i < $c_files; ++$i) {
-                $files[$i]['start'] = $this->date->format($files[$i]['start']);
-                $files[$i]['title_short'] = Core\Functions::shortenEntry($files[$i]['title'], 30, 5, '...');
-            }
-            $this->view->assign('sidebar_files', $files);
-        }
-
-        $this->view->displayTemplate('files/sidebar.tpl');
     }
 
 }

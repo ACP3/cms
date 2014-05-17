@@ -46,11 +46,11 @@ class Index extends Core\Modules\Controller\Admin
 
                 $lastId = $this->model->insert($insertValues);
                 if ((bool)CONFIG_SEO_ALIASES === true) {
-                    $this->uri->insertUriAlias('articles/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    $this->uri->insertUriAlias('articles/index/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                     $this->seo->setCache();
                 }
 
-                if (isset($_POST['create']) === true && Core\Modules::hasPermission('menus', 'acp_create_item') === true) {
+                if (isset($_POST['create']) === true && Core\Modules::hasPermission('admin/menus/index/create_item') === true) {
                     $insertValues = array(
                         'id' => '',
                         'mode' => 4,
@@ -77,7 +77,7 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
 
-        if (Core\Modules::hasPermission('menus', 'acp_create_item') === true) {
+        if (Core\Modules::hasPermission('admin/menus/index/create_item') === true) {
             $lang_options = array($this->lang->t('articles', 'create_menu_item'));
             $this->view->assign('options', Core\Functions::selectGenerator('create', array(1), $lang_options, 0, 'checked'));
 
@@ -109,7 +109,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/articles/delete', 'acp/articles');
+        $items = $this->_deleteItem('acp/articles/index/delete', 'acp/articles');
 
         if ($this->uri->action === 'confirmed') {
             $bool = false;
@@ -133,7 +133,7 @@ class Index extends Core\Modules\Controller\Admin
 
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/articles');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -157,7 +157,7 @@ class Index extends Core\Modules\Controller\Admin
                     $bool = $this->model->update($updateValues, $this->uri->id);
 
                     if ((bool)CONFIG_SEO_ALIASES === true) {
-                        $this->uri->insertUriAlias('articles/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                        $this->uri->insertUriAlias('articles/index/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                         $this->seo->setCache();
                     }
 
@@ -179,17 +179,17 @@ class Index extends Core\Modules\Controller\Admin
             // Datumsauswahl
             $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end'), array($article['start'], $article['end'])));
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('articles/details/id_' . $this->uri->id));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('articles/index/details/id_' . $this->uri->id));
 
             $this->view->assign('form', array_merge($article, $_POST));
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         Core\Functions::getRedirectMessage();
 
@@ -197,7 +197,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_articles = count($articles);
 
         if ($c_articles > 0) {
-            $canDelete = Core\Modules::hasPermission('articles', 'acp_delete');
+            $canDelete = Core\Modules::hasPermission('admin/articles/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 2 : 1,

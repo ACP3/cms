@@ -23,7 +23,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->model = new Feeds\Model($this->db, $this->lang);
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         if (empty($_POST) === false) {
             try {

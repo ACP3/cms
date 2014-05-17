@@ -22,7 +22,7 @@ class Index extends Core\Modules\Controller
         $this->model = new Search\Model($this->db, $this->lang);
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         if (empty($_POST) === false) {
             try {
@@ -70,7 +70,7 @@ class Index extends Core\Modules\Controller
         foreach ($modules as $module) {
             $action = $module . 'Search';
             if (method_exists("\\ACP3\\Modules\\Search\\Extensions", $action) &&
-                Core\Modules::hasPermission($module, 'list') === true
+                Core\Modules::hasPermission('frontend/' . $module) === true
             ) {
                 $results = new Search\Extensions($area, $sort, $searchTerm);
                 $searchResults = array_merge($searchResults, $results->$action());
@@ -84,13 +84,6 @@ class Index extends Core\Modules\Controller
         }
 
         $this->view->setContentTemplate('search/results.tpl');
-    }
-
-    public function actionSidebar()
-    {
-        $this->view->assign('search_mods', Search\Helpers::getModules());
-
-        $this->view->displayTemplate('search/sidebar.tpl');
     }
 
 }

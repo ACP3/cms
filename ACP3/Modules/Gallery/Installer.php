@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'gallery';
-    const SCHEMA_VERSION = 32;
+    const SCHEMA_VERSION = 33;
 
     public function createTables()
     {
@@ -66,6 +66,9 @@ class Installer extends Modules\AbstractInstaller
             ),
             32 => array(
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
+            ),
+            33 => array(
+                'UPDATE `{pre}seo` SET uri=REPLACE(uri, "gallery/", "gallery/index/") WHERE uri LIKE "gallery/%";',
             )
         );
     }

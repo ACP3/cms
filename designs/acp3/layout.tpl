@@ -29,7 +29,7 @@
             </div>
             <div id="navbar-collapse" class="collapse navbar-collapse">
                 {navbar block="main"}
-                {load_module module="search|sidebar"}
+                {load_module module="sidebar/search"}
             </div>
         </div>
     </nav>
@@ -41,8 +41,8 @@
                 </div>
                 {navbar block="sidebar" class="list-group" classLink="list-group-item" dropdownItemClass="dropdown" itemTag="" dropdownWrapperTag="div" tag="div"}
             </div>
-            {load_module module="users|sidebar_login"}
-            {load_module module="users|sidebar_user_menu"}
+            {load_module module="sidebar/users/index/login"}
+            {load_module module="sidebar/users/index/user_menu"}
         </div>
         <main role="main" id="content" class="col-lg-8">
             <div id="breadcrumb">
@@ -52,11 +52,11 @@
             {$CONTENT}
         </main>
         <div class="col-lg-2">
-            {load_module module="news|sidebar"}
-            {load_module module="newsletter|sidebar"}
-            {load_module module="files|sidebar"}
-            {load_module module="gallery|sidebar"}
-            {load_module module="polls|sidebar"}
+            {load_module module="sidebar/news"}
+            {load_module module="sidebar/newsletter"}
+            {load_module module="sidebar/files"}
+            {load_module module="sidebar/gallery"}
+            {load_module module="sidebar/polls"}
         </div>
     </div>
 </div>

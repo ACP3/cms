@@ -71,7 +71,7 @@ class Model extends Core\Model
             $errors['title'] = $this->lang->t('articles', 'title_to_short');
         if (strlen($formData['text']) < 3)
             $errors['text'] = $this->lang->t('articles', 'text_to_short');
-        if (Core\Modules::hasPermission('menus', 'acp_create_item') === true && isset($formData['create']) === true) {
+        if (Core\Modules::hasPermission('admin/menus/index/create_item') === true && isset($formData['create']) === true) {
             if ($formData['create'] == 1) {
                 if (Core\Validate::isNumber($formData['block_id']) === false)
                     $errors['block-id'] = $this->lang->t('menus', 'select_menu_bar');

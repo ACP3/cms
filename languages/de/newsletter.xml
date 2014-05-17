@@ -3,14 +3,14 @@
     <item key="account_exists">Für die angegebene E-Mail-Adresse existiert bereits ein Newsletter-Konto.</item>
     <item key="account_not_exists">Für die angegebene E-Mail-Adresse konnte kein Newsletter-Konto gefunden werden.
     </item>
-    <item key="acp_activate">Newsletterkonto löschen</item>
-    <item key="acp_create">Neuen Newsletter erstellen</item>
-    <item key="acp_delete">Newsletter löschen</item>
-    <item key="acp_delete_account">Newsletterkonten löschen</item>
-    <item key="acp_edit">Newsletter bearbeiten</item>
-    <item key="acp_list_accounts">Newsletterkonten</item>
-    <item key="acp_send">Newsletter absenden</item>
-    <item key="acp_settings">Einstellungen</item>
+    <item key="activate">Newsletterkonto löschen</item>
+    <item key="create">Neuen Newsletter erstellen</item>
+    <item key="delete">Newsletter löschen</item>
+    <item key="delete_account">Newsletterkonten löschen</item>
+    <item key="edit">Newsletter bearbeiten</item>
+    <item key="list_accounts">Newsletterkonten</item>
+    <item key="send">Newsletter absenden</item>
+    <item key="settings">Einstellungen</item>
     <item key="action">Aktion</item>
     <item key="activate">Newsletterkonto aktivieren</item>
     <item key="activate_account">Newsletterkonto aktivieren</item>

@@ -1,4 +1,4 @@
-<form action="{uri args="search/list"}" method="post" accept-charset="UTF-8" class="navbar-form navbar-right" role="search">
+<form action="{uri args="search"}" method="post" accept-charset="UTF-8" class="navbar-form navbar-right" role="search">
     <div class="form-group">
         <input class="form-control" type="text" name="search_term" value="" placeholder="{lang t="search|search_term"}">
     </div>

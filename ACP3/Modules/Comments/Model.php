@@ -85,7 +85,7 @@ class Model extends Core\Model
         if (strlen($formData['message']) < 3) {
             $errors['message'] = $this->lang->t('system', 'message_to_short');
         }
-        if (Core\Modules::hasPermission('captcha', 'image') === true && $this->auth->isUser() === false && Core\Validate::captcha($formData['captcha']) === false) {
+        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && Core\Validate::captcha($formData['captcha']) === false) {
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 

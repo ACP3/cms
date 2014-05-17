@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'errors';
-    const SCHEMA_VERSION = 30;
+    const SCHEMA_VERSION = 31;
 
     public function removeResources()
     {
@@ -42,7 +42,11 @@ class Installer extends Modules\AbstractInstaller
 
     public function schemaUpdates()
     {
-        return array();
+        return array(
+            31 => array(
+                'UPDATE `{pre}seo` SET uri=REPLACE(uri, "errors/", "errors/index/") WHERE uri LIKE "errors/%";',
+            )
+        );
     }
 
 }

@@ -229,17 +229,24 @@ class Application
         // Aktuelle Datensatzposition bestimmen
         define('POS', Core\Validate::isNumber(self::$uri->page) && self::$uri->page >= 1 ? (int)(self::$uri->page - 1) * Core\Registry::get('Auth')->entries : 0);
 
-        if (defined('IN_ADM') === true && self::$auth->isUser() === false && self::$uri->query !== 'users/login/') {
+        if (defined('IN_ADM') === true && self::$auth->isUser() === false && self::$uri->query !== 'users/index/login/') {
             $redirectUri = base64_encode('acp/' . self::$uri->query);
-            self::$uri->redirect('users/login/redirect_' . $redirectUri);
+            self::$uri->redirect('users/index/login/redirect_' . $redirectUri);
         }
 
-        if (Core\Modules::hasPermission(self::$uri->mod, self::$uri->file) === true) {
+        $path = self::$uri->area . '/' . self::$uri->mod . '/' . self::$uri->controller . '/' . self::$uri->file;
+
+        if (Core\Modules::hasPermission($path) === true) {
             try {
                 $module = ucfirst(self::$uri->mod);
-                $section = defined('IN_ADM') === true ? "Admin\\Index" : 'Index';
-                $className = "\\ACP3\\Modules\\" . $module . "\\Controller\\" . $section;
-                $action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', defined('IN_ADM') === true ? substr(self::$uri->file, 4) : self::$uri->file))));
+
+                if (self::$uri->area !== 'frontend') {
+                    $className = "\\ACP3\\Modules\\" . $module . "\\Controller\\" . ucfirst(self::$uri->area) . "\\" . ucfirst(self::$uri->controller);
+                } else {
+                    $className = "\\ACP3\\Modules\\" . $module . "\\Controller\\" . ucfirst(self::$uri->controller);
+                }
+
+                $action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', self::$uri->file))));
 
                 // Modul einbinden
                 /** @var Controller $controller */
@@ -268,7 +275,7 @@ class Application
                 self::_renderApplicationException($errorMessage);
             }
         } else {
-            self::$uri->redirect('errors/404');
+            self::$uri->redirect('errors/index/404');
         }
     }
 

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="acp_create">Create new gallery</item>
-    <item key="acp_create_picture">Add picture</item>
-    <item key="acp_delete">Delete galleries</item>
-    <item key="acp_delete_picture">Delete pictures</item>
-    <item key="acp_edit">Edit gallery</item>
-    <item key="acp_edit_picture">Edit picture</item>
-    <item key="acp_settings">Settings</item>
+    <item key="create">Create new gallery</item>
+    <item key="create_picture">Add picture</item>
+    <item key="delete">Delete galleries</item>
+    <item key="delete_picture">Delete pictures</item>
+    <item key="edit">Edit gallery</item>
+    <item key="edit_picture">Edit picture</item>
+    <item key="settings">Settings</item>
     <item key="details">Picture details</item>
     <item key="filename">Filename</item>
     <item key="gallery">Gallery</item>

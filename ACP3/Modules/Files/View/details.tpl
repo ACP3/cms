@@ -12,7 +12,7 @@
             {$file.text}
         </div>
         <footer class="hyperlink">
-            <a href="{uri args="files/details/id_`$file.id`/action_download"}" class="download-file">
+            <a href="{uri args="files/index/details/id_`$file.id`/action_download"}" class="download-file">
                 <i class="glyphicon glyphicon-download-alt"></i>
                 {lang t="files|download_file"} ({$file.size}) </a>
         </footer>

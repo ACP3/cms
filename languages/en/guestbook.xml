@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="acp_delete">Delete guestbook entries</item>
-    <item key="acp_edit">Edit guestbook entry</item>
-    <item key="acp_settings">Settings</item>
+    <item key="delete">Delete guestbook entries</item>
+    <item key="edit">Edit guestbook entry</item>
+    <item key="settings">Settings</item>
     <item key="activate_entry">Enable entry</item>
     <item key="allow_emoticons">Allow Emoticons</item>
     <item key="create">New entry</item>

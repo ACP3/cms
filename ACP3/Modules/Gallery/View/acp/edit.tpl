@@ -31,7 +31,7 @@
         </div>
     </div>
 </form>
-<form action="{uri args="acp/gallery/delete_picture/id_$gallery_id"}" method="post">
+<form action="{uri args="acp/gallery/index/delete_picture/id_$gallery_id"}" method="post">
     <nav id="adm-list" class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex2-collapse">
@@ -43,8 +43,8 @@
         </div>
         <div class="collapse navbar-collapse navbar-ex2-collapse">
             <div class="navbar-text pull-right">
-                {check_access mode="link" path="acp/gallery/create_picture/id_`$gallery_id`" icon="32/image" width="32" height="32"}
-                {check_access mode="input" path="acp/gallery/delete_picture" icon="32/cancel" lang="system|delete_marked"}
+                {check_access mode="link" path="acp/gallery/index/create_picture/id_`$gallery_id`" icon="32/image" width="32" height="32"}
+                {check_access mode="input" path="acp/gallery/index/delete_picture" icon="32/cancel" lang="system|delete_marked"}
             </div>
         </div>
     </nav>
@@ -73,17 +73,21 @@
                         <td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
                     {/if}
                     <td>{if $can_edit_picture}
-                        <a href="{uri args="acp/gallery/edit_picture/id_`$row.id`"}" title="{lang t="gallery|acp_edit_picture"}">
-                            <img src="{uri args="gallery/image/id_`$row.id`/action_thumb"}" alt=""></a>{else}
-                            <img src="{uri args="gallery/image/id_`$row.id`/action_thumb"}" alt="">{/if}</td>
+                        <a href="{uri args="acp/gallery/index/edit_picture/id_`$row.id`"}" title="{lang t="gallery|acp_edit_picture"}">
+                            <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt=""></a>{else}
+                            <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt="">{/if}</td>
                     <td>{$row.description}</td>
                     {if $can_order === true}
                         <td>
                             {if !$row.last}
-                                <a href="{uri args="acp/gallery/order/id_`$row.id`/action_down"}" title="{lang t="system|move_down"}">{icon path="16/down" width="16" height="16" alt={lang t="system|move_down"}}</a>
+                                <a href="{uri args="acp/gallery/index/order/id_`$row.id`/action_down"}" title="{lang t="system|move_down"}">
+                                    {icon path="16/down" width="16" height="16" alt={lang t="system|move_down"}}
+                                </a>
                             {/if}
                             {if !$row.first}
-                                <a href="{uri args="acp/gallery/order/id_`$row.id`/action_up"}" title="{lang t="system|move_up"}">{icon path="16/up" width="16" height="16" alt={lang t="system|move_up"}}</a>
+                                <a href="{uri args="acp/gallery/index/order/id_`$row.id`/action_up"}" title="{lang t="system|move_up"}">
+                                    {icon path="16/up" width="16" height="16" alt={lang t="system|move_up"}}
+                                </a>
                             {/if}
                             {if $row.first && $row.last}
                                 {icon path="16/editdelete" width="16" height="16" alt={lang t="system|move_impossible"} title={lang t="system|move_impossible"}}

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="acp_create">Create new menu bar</item>
-    <item key="acp_create_item">Create new menu item</item>
-    <item key="acp_delete">Delete menu bar</item>
-    <item key="acp_delete_item">Delete menu items</item>
-    <item key="acp_edit">Edit menu bar</item>
-    <item key="acp_edit_item">Edit menu item</item>
-    <item key="acp_list_items">Menu items</item>
+    <item key="create">Create new menu bar</item>
+    <item key="create_item">Create new menu item</item>
+    <item key="delete">Delete menu bar</item>
+    <item key="delete_item">Delete menu items</item>
+    <item key="edit">Edit menu bar</item>
+    <item key="edit_item">Edit menu item</item>
+    <item key="list_items">Menu items</item>
     <item key="article">Article</item>
     <item key="chronology">Chronology</item>
     <item key="display_item">Display menu item</item>

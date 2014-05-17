@@ -66,7 +66,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/emoticons/delete', 'acp/emoticons');
+        $items = $this->_deleteItem('acp/emoticons/index/delete', 'acp/emoticons');
 
         if ($this->uri->action === 'confirmed') {
             $bool = false;
@@ -83,7 +83,7 @@ class Index extends Core\Modules\Controller\Admin
 
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/emoticons');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -131,11 +131,11 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         Core\Functions::getRedirectMessage();
 
@@ -143,7 +143,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_emoticons = count($emoticons);
 
         if ($c_emoticons > 0) {
-            $canDelete = Core\Modules::hasPermission('emoticons', 'acp_delete');
+            $canDelete = Core\Modules::hasPermission('admin/emoticons/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 4 : 3,

@@ -25,15 +25,15 @@ abstract class Helpers
     {
         $module = strtolower($module);
         $deps = Core\Modules\AbstractInstaller::getDependencies($module);
-        $mods_to_enable = array();
+        $modulesToEnable = array();
         if (!empty($deps)) {
             foreach ($deps as $dep) {
                 if (Core\Modules::isActive($dep) === false) {
-                    $mods_to_enable[] = ucfirst($dep);
+                    $modulesToEnable[] = ucfirst($dep);
                 }
             }
         }
-        return $mods_to_enable;
+        return $modulesToEnable;
     }
 
     /**
@@ -46,17 +46,17 @@ abstract class Helpers
     {
         $module = strtolower($module);
         $modules = scandir(MODULES_DIR);
-        $mods_to_uninstall = array();
+        $modulesToUninstall = array();
         foreach ($modules as $row) {
             $row = strtolower($row);
             if ($row !== '.' && $row !== '..' && $row !== $module) {
                 $deps = Core\Modules\AbstractInstaller::getDependencies($row); // Modulabhängigkeiten
                 if (!empty($deps) && Core\Modules::isInstalled($row) === true && in_array($module, $deps) === true) {
-                    $mods_to_uninstall[] = ucfirst($row);
+                    $modulesToUninstall[] = ucfirst($row);
                 }
             }
         }
-        return $mods_to_uninstall;
+        return $modulesToUninstall;
     }
 
     public static function exportDatabase(array $tables, $exportType, $withDropTables)

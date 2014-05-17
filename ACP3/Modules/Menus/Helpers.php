@@ -98,7 +98,12 @@ abstract class Helpers
      *    Name des Blocks, für welchen die Navigationspunkte ausgegeben werden sollen
      * @param boolean $useBootstrap
      * @param string $class
-     *
+     * @param string $dropdownItemClass
+     * @param string $tag
+     * @param string $itemTag
+     * @param string $dropdownWrapperTag
+     * @param string $linkCss
+     * @param string $inlineStyles
      * @return string
      */
     public static function processNavbar(
@@ -126,8 +131,13 @@ abstract class Helpers
 
             if ($c_items > 0) {
                 // Selektion nur vornehmen, wenn man sich im Frontend befindet
-                if (defined('IN_ADM') === false) {
-                    $in = array($uri->query, $uri->getUriWithoutPages(), $uri->mod . '/' . $uri->file . '/', $uri->mod);
+                if ($uri->area !== 'admin') {
+                    $in = array(
+                        $uri->query,
+                        $uri->getUriWithoutPages(),
+                        $uri->mod . '/' . $uri->controller . '/' . $uri->file . '/',
+                        $uri->mod . '/' . $uri->controller . '/'
+                    );
                     $selected = Core\Registry::get('Db')->executeQuery('SELECT m.left_id FROM ' . DB_PRE . Model::TABLE_NAME_ITEMS . ' AS m JOIN ' . DB_PRE . Model::TABLE_NAME . ' AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC', array($menu, $in), array(\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetch(\PDO::FETCH_COLUMN);
                 }
 

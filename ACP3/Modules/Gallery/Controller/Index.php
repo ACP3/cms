@@ -74,7 +74,7 @@ class Index extends Core\Modules\Controller
                 $this->view->assign('picture_next', $picture_next);
             }
 
-            if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $picture['comments'] == 1 && Core\Modules::hasPermission('comments', 'list') === true) {
+            if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $picture['comments'] == 1 && Core\Modules::hasPermission('frontend/comments') === true) {
                 $comments = new \ACP3\Modules\Comments\Controller\Index(
                     $this->auth,
                     $this->breadcrumb,
@@ -88,10 +88,10 @@ class Index extends Core\Modules\Controller
                     'gallery',
                     $this->uri->id
                 );
-                $this->view->assign('comments', $comments->actionList());
+                $this->view->assign('comments', $comments->actionIndex());
             }
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -119,7 +119,7 @@ class Index extends Core\Modules\Controller
         }
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         $time = $this->date->getCurrentDateTime();
 
@@ -175,26 +175,8 @@ class Index extends Core\Modules\Controller
                 $this->view->assign('overlay', (int)$settings['overlay']);
             }
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
-    }
-
-    public function actionSidebar()
-    {
-        $settings = Core\Config::getSettings('gallery');
-
-        $galleries = $this->model->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
-        $c_galleries = count($galleries);
-
-        if ($c_galleries > 0) {
-            for ($i = 0; $i < $c_galleries; ++$i) {
-                $galleries[$i]['start'] = $this->date->format($galleries[$i]['start']);
-                $galleries[$i]['title_short'] = Core\Functions::shortenEntry($galleries[$i]['title'], 30, 5, '...');
-            }
-            $this->view->assign('sidebar_galleries', $galleries);
-        }
-
-        $this->view->displayTemplate('gallery/sidebar.tpl');
     }
 
 }

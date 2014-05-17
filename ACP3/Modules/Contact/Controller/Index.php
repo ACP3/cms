@@ -22,7 +22,7 @@ class Index extends Core\Modules\Controller
         $this->model = new Contact\Model($this->db, $this->lang, $this->auth);
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         if (empty($_POST) === false) {
             try {
@@ -74,7 +74,7 @@ class Index extends Core\Modules\Controller
         $this->view->assign('form', array_merge($defaults, $_POST));
         $this->view->assign('copy_checked', Core\Functions::selectEntry('copy', 1, 0, 'checked'));
 
-        if (Core\Modules::hasPermission('captcha', 'image') === true) {
+        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());
         }
 

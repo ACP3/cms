@@ -27,14 +27,13 @@ class Index extends Core\Modules\Controller
     public function actionDetails()
     {
         if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id, $this->date->getCurrentDateTime()) == 1) {
-
             $settings = Core\Config::getSettings('news');
             $news = $this->model->getCache($this->uri->id);
 
             $this->breadcrumb->append($this->lang->t('news', 'news'), $this->uri->route('news'));
 
             if ($settings['category_in_breadcrumb'] == 1) {
-                $this->breadcrumb->append($news['category_title'], $this->uri->route('news/list/cat_' . $news['category_id']));
+                $this->breadcrumb->append($news['category_title'], $this->uri->route('news/index/index/cat_' . $news['category_id']));
             }
             $this->breadcrumb->append($news['title']);
 
@@ -48,7 +47,7 @@ class Index extends Core\Modules\Controller
 
             $this->view->assign('news', $news);
 
-            if ($settings['comments'] == 1 && $news['comments'] == 1 && Core\Modules::hasPermission('comments', 'list') === true) {
+            if ($settings['comments'] == 1 && $news['comments'] == 1 && Core\Modules::hasPermission('frontend/comments') === true) {
                 $comments = new \ACP3\Modules\Comments\Controller\Index(
                     $this->auth,
                     $this->breadcrumb,
@@ -62,14 +61,14 @@ class Index extends Core\Modules\Controller
                     'news',
                     $this->uri->id
                 );
-                $this->view->assign('comments', $comments->actionList());
+                $this->view->assign('comments', $comments->actionIndex());
             }
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         if (isset($_POST['cat']) && Core\Validate::isNumber($_POST['cat']) === true) {
             $cat = (int)$_POST['cat'];
@@ -134,25 +133,6 @@ class Index extends Core\Modules\Controller
             }
             $this->view->assign('news', $news);
         }
-    }
-
-    public function actionSidebar()
-    {
-        $settings = Core\Config::getSettings('news');
-
-        $news = $this->model->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
-        $c_news = count($news);
-
-        if ($c_news > 0) {
-            for ($i = 0; $i < $c_news; ++$i) {
-                $news[$i]['start'] = $this->date->format($news[$i]['start'], $settings['dateformat']);
-                $news[$i]['title'] = $news[$i]['title'];
-                $news[$i]['title_short'] = Core\Functions::shortenEntry($news[$i]['title'], 30, 5, '...');
-            }
-            $this->view->assign('sidebar_news', $news);
-        }
-
-        $this->view->displayTemplate('news/sidebar.tpl');
     }
 
 }

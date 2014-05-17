@@ -20,18 +20,18 @@ abstract class Functions
      */
     public static function errorBox($errors)
     {
-        $non_integer_keys = false;
+        $hasNonIntegerKeys = false;
         if (is_array($errors) === true) {
             foreach (array_keys($errors) as $key) {
                 if (Core\Validate::isNumber($key) === false) {
-                    $non_integer_keys = true;
+                    $hasNonIntegerKeys = true;
                     break;
                 }
             }
         } else {
             $errors = (array)$errors;
         }
-        Core\Registry::get('View')->assign('error_box', array('non_integer_keys' => $non_integer_keys, 'errors' => $errors));
+        Core\Registry::get('View')->assign('error_box', array('non_integer_keys' => $hasNonIntegerKeys, 'errors' => $errors));
         return Core\Registry::get('View')->fetch('error_box.tpl');
     }
 
@@ -42,6 +42,7 @@ abstract class Functions
      *    Array mit den durchzuführenden Datenbankschema-Änderungen
      * @param integer $version
      *    Version der Datenbank, auf welche aktualisiert werden soll
+     * @return array
      */
     public static function executeSqlQueries(array $queries, $version)
     {
@@ -70,9 +71,10 @@ abstract class Functions
         $path = MODULES_DIR . $module . '/Installer.php';
         if (is_file($path) === true) {
             $className = Core\Modules\AbstractInstaller::buildClassName($module);
-            $install = new $className();
-            if ($install instanceof Core\Modules\AbstractInstaller) {
-                $bool = $install->install();
+            /** @var Core\Modules\AbstractInstaller $installer */
+            $installer = new $className(Core\Registry::get('db'));
+            if ($installer instanceof Core\Modules\AbstractInstaller) {
+                $bool = $installer->install();
             }
         }
 
@@ -82,10 +84,10 @@ abstract class Functions
     /**
      * Generiert das Dropdown-Menü mit der zur Verfügung stehenden Installersprachen
      *
-     * @param string $selected_language
+     * @param string $selectedLanguage
      * @return array
      */
-    public static function languagesDropdown($selected_language)
+    public static function languagesDropdown($selectedLanguage)
     {
         // Dropdown-Menü für die Sprachen
         $languages = array();
@@ -97,7 +99,7 @@ abstract class Functions
                 if (!empty($lang_info)) {
                     $languages[] = array(
                         'language' => substr($row, 0, -4),
-                        'selected' => $selected_language === substr($row, 0, -4) ? ' selected="selected"' : '',
+                        'selected' => $selectedLanguage === substr($row, 0, -4) ? ' selected="selected"' : '',
                         'name' => $lang_info['name']
                     );
                 }
@@ -119,8 +121,9 @@ abstract class Functions
             $path = MODULES_DIR . $module . '/Installer.php';
             if ($module !== '.' && $module !== '..' && is_file($path) === true) {
                 $className = Core\Modules\AbstractInstaller::buildClassName($module);
-                $install = new $className();
-                $install->addResources($mode);
+                /** @var Core\Modules\AbstractInstaller $installer */
+                $installer = new $className(Core\Registry::get('Db'));
+                $installer->addResources($mode);
             }
         }
     }
@@ -139,11 +142,12 @@ abstract class Functions
         $path = MODULES_DIR . $module . '/Installer.php';
         if (is_file($path) === true) {
             $className = Core\Modules\AbstractInstaller::buildClassName($module);
-            $install = new $className();
-            if ($install instanceof Core\Modules\AbstractInstaller &&
-                (\ACP3\Core\Modules::isInstalled($module) || count($install->renameModule()) > 0)
+            /** @var Core\Modules\AbstractInstaller $installer */
+            $installer = new $className(Core\Registry::get('Db'));
+            if ($installer instanceof Core\Modules\AbstractInstaller &&
+                (\ACP3\Core\Modules::isInstalled($module) || count($installer->renameModule()) > 0)
             ) {
-                $result = $install->updateSchema();
+                $result = $installer->updateSchema();
             }
         }
 

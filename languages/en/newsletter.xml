@@ -2,14 +2,14 @@
 <language>
     <item key="account_exists">There is already an newsletter account with the same E-Mail address registered.</item>
     <item key="account_not_exists">For the stated E-mail address is no newsletter account registered.</item>
-    <item key="acp_activate">Activate newsletter account</item>
-    <item key="acp_create">Create new newsletter</item>
-    <item key="acp_delete">Delete newsletters</item>
-    <item key="acp_delete_account">Delete newsletter accounts</item>
-    <item key="acp_edit">Edit newsletter</item>
-    <item key="acp_list_accounts">Newsletter accounts</item>
-    <item key="acp_send">Send newsletter</item>
-    <item key="acp_settings">Settings</item>
+    <item key="activate">Activate newsletter account</item>
+    <item key="create">Create new newsletter</item>
+    <item key="delete">Delete newsletters</item>
+    <item key="delete_account">Delete newsletter accounts</item>
+    <item key="edit">Edit newsletter</item>
+    <item key="list_accounts">Newsletter accounts</item>
+    <item key="send">Send newsletter</item>
+    <item key="settings">Settings</item>
     <item key="action">Action</item>
     <item key="activate">Activate newsletter account</item>
     <item key="activate_account">Active newsletter account</item>

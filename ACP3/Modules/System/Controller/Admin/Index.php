@@ -71,9 +71,9 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), 'acp/system/configuration');
+                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), 'acp/system/index/configuration');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/system/configuration');
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/system/index/configuration');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $this->view->assign('error_msg', $e->getMessage());
             }
@@ -152,8 +152,8 @@ class Index extends Core\Modules\Controller\Admin
     public function actionDesigns()
     {
         $this->breadcrumb
-            ->append($this->lang->t('system', 'acp_extensions'), $this->uri->route('acp/system/extensions'))
-            ->append($this->lang->t('system', 'acp_designs'));
+            ->append($this->lang->t('system', 'extensions'), $this->uri->route('acp/system/index/extensions'))
+            ->append($this->lang->t('system', 'designs'));
 
         if (isset($this->uri->dir)) {
             $bool = false;
@@ -169,7 +169,7 @@ class Index extends Core\Modules\Controller\Admin
             }
             $text = $this->lang->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
 
-            Core\Functions::setRedirectMessage($bool, $text, 'acp/system/designs');
+            Core\Functions::setRedirectMessage($bool, $text, 'acp/system/index/designs');
         } else {
             Core\Functions::getRedirectMessage();
 
@@ -197,8 +197,8 @@ class Index extends Core\Modules\Controller\Admin
     public function actionLanguages()
     {
         $this->breadcrumb
-            ->append($this->lang->t('system', 'acp_extensions'), $this->uri->route('acp/system/extensions'))
-            ->append($this->lang->t('system', 'acp_languages'));
+            ->append($this->lang->t('system', 'extensions'), $this->uri->route('acp/system/index/extensions'))
+            ->append($this->lang->t('system', 'languages'));
 
         if (isset($this->uri->dir)) {
             $bool = false;
@@ -209,7 +209,7 @@ class Index extends Core\Modules\Controller\Admin
             }
             $text = $this->lang->t('system', $bool === true ? 'languages_edit_success' : 'languages_edit_error');
 
-            Core\Functions::setRedirectMessage($bool, $text, 'acp/system/languages');
+            Core\Functions::setRedirectMessage($bool, $text, 'acp/system/index/languages');
         } else {
             Core\Functions::getRedirectMessage();
 
@@ -228,7 +228,7 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         return;
     }
@@ -241,8 +241,8 @@ class Index extends Core\Modules\Controller\Admin
     public function actionModules()
     {
         $this->breadcrumb
-            ->append($this->lang->t('system', 'acp_extensions'), $this->uri->route('acp/system/extensions'))
-            ->append($this->lang->t('system', 'acp_modules'));
+            ->append($this->lang->t('system', 'extensions'), $this->uri->route('acp/system/index/extensions'))
+            ->append($this->lang->t('system', 'modules'));
 
         switch ($this->uri->action) {
             case 'activate':
@@ -295,7 +295,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $text = $this->lang->t('system', 'mod_activate_' . ($bool !== false ? 'success' : 'error'));
         }
-        Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
+        Core\Functions::setRedirectMessage($bool, $text, 'acp/system/index/modules');
     }
 
     protected function _disableModule()
@@ -320,7 +320,7 @@ class Index extends Core\Modules\Controller\Admin
                 $text = sprintf($this->lang->t('system', 'module_disable_not_possible'), implode(', ', $deps));
             }
         }
-        Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
+        Core\Functions::setRedirectMessage($bool, $text, 'acp/system/index/modules');
     }
 
     protected function _installModule()
@@ -328,8 +328,8 @@ class Index extends Core\Modules\Controller\Admin
         $bool = false;
         // Nur noch nicht installierte Module berücksichtigen
         if (Core\Modules::isInstalled($this->uri->dir) === false) {
-            $mod_name = ucfirst($this->uri->dir);
-            $path = MODULES_DIR . $mod_name . '/Installer.php';
+            $moduleName = ucfirst($this->uri->dir);
+            $path = MODULES_DIR . $moduleName . '/Installer.php';
             if (is_file($path) === true) {
                 // Modulabhängigkeiten prüfen
                 $deps = System\Helpers::checkInstallDependencies($this->uri->dir);
@@ -337,8 +337,9 @@ class Index extends Core\Modules\Controller\Admin
                 // Modul installieren
                 if (empty($deps)) {
                     $className = Core\Modules\AbstractInstaller::buildClassName($this->uri->dir);
-                    $install = new $className();
-                    $bool = $install->install();
+                    /** @var Core\Modules\AbstractInstaller $installer */
+                    $installer = new $className($this->db);
+                    $bool = $installer->install();
                     Core\Modules::setModulesCache();
                     $text = $this->lang->t('system', 'mod_installation_' . ($bool !== false ? 'success' : 'error'));
                 } else {
@@ -350,17 +351,17 @@ class Index extends Core\Modules\Controller\Admin
         } else {
             $text = $this->lang->t('system', 'module_already_installed');
         }
-        Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
+        Core\Functions::setRedirectMessage($bool, $text, 'acp/system/index/modules');
     }
 
     protected function _uninstallModule()
     {
         $bool = false;
-        $mod_info = Core\Modules::getModuleInfo($this->uri->dir);
+        $info = Core\Modules::getModuleInfo($this->uri->dir);
         // Nur installierte und Nicht-Core-Module berücksichtigen
-        if ($mod_info['protected'] === false && Core\Modules::isInstalled($this->uri->dir) === true) {
-            $mod_name = ucfirst($this->uri->dir);
-            $path = MODULES_DIR . $mod_name . '/Installer.php';
+        if ($info['protected'] === false && Core\Modules::isInstalled($this->uri->dir) === true) {
+            $moduleName = ucfirst($this->uri->dir);
+            $path = MODULES_DIR . $moduleName . '/Installer.php';
             if (is_file($path) === true) {
                 // Modulabhängigkeiten prüfen
                 $deps = System\Helpers::checkUninstallDependencies($this->uri->dir);
@@ -368,8 +369,9 @@ class Index extends Core\Modules\Controller\Admin
                 // Modul deinstallieren
                 if (empty($deps)) {
                     $className = Core\Modules\AbstractInstaller::buildClassName($this->uri->dir);
-                    $install = new $className();
-                    $bool = $install->uninstall();
+                    /** @var Core\Modules\AbstractInstaller $installer */
+                    $installer = new $className($this->db);
+                    $bool = $installer->uninstall();
                     Core\Modules::setModulesCache();
                     $text = $this->lang->t('system', 'mod_uninstallation_' . ($bool !== false ? 'success' : 'error'));
                 } else {
@@ -381,14 +383,14 @@ class Index extends Core\Modules\Controller\Admin
         } else {
             $text = $this->lang->t('system', 'protected_module_description');
         }
-        Core\Functions::setRedirectMessage($bool, $text, 'acp/system/modules');
+        Core\Functions::setRedirectMessage($bool, $text, 'acp/system/index/modules');
     }
 
     public function actionSqlExport()
     {
         $this->breadcrumb
-            ->append($this->lang->t('system', 'acp_maintenance'), $this->uri->route('acp/system/maintenance'))
-            ->append($this->lang->t('system', 'acp_sql_export'));
+            ->append($this->lang->t('system', 'maintenance'), $this->uri->route('acp/system/index/maintenance'))
+            ->append($this->lang->t('system', 'sql_export'));
 
         if (empty($_POST) === false) {
             try {
@@ -410,7 +412,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 return;
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/system/sql_import');
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/system/index/sql_import');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $this->view->assign('error_msg', $e->getMessage());
             }
@@ -451,8 +453,8 @@ class Index extends Core\Modules\Controller\Admin
     public function actionSqlImport()
     {
         $this->breadcrumb
-            ->append($this->lang->t('system', 'acp_maintenance'), $this->uri->route('acp/system/maintenance'))
-            ->append($this->lang->t('system', 'acp_sql_import'));
+            ->append($this->lang->t('system', 'maintenance'), $this->uri->route('acp/system/index/maintenance'))
+            ->append($this->lang->t('system', 'sql_import'));
 
         if (empty($_POST) === false) {
             try {
@@ -490,7 +492,7 @@ class Index extends Core\Modules\Controller\Admin
                 Core\Cache::purge();
                 return;
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/system/sql_import');
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/system/index/sql_import');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $this->view->assign('error_msg', $e->getMessage());
             }
@@ -504,8 +506,8 @@ class Index extends Core\Modules\Controller\Admin
     public function actionUpdateCheck()
     {
         $this->breadcrumb
-            ->append($this->lang->t('system', 'acp_maintenance'), $this->uri->route('acp/system/maintenance'))
-            ->append($this->lang->t('system', 'acp_update_check'));
+            ->append($this->lang->t('system', 'maintenance'), $this->uri->route('acp/system/index/maintenance'))
+            ->append($this->lang->t('system', 'update_check'));
 
         $file = @file_get_contents('http://www.acp3-cms.net/update.txt');
         if ($file !== false) {

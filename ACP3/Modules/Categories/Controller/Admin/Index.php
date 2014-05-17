@@ -85,7 +85,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/categories/delete', 'acp/categories');
+        $items = $this->_deleteItem('acp/categories/index/delete', 'acp/categories');
 
         if ($this->uri->action === 'confirmed') {
             $bool = false;
@@ -121,7 +121,7 @@ class Index extends Core\Modules\Controller\Admin
             }
             Core\Functions::setRedirectMessage($bool, $text, 'acp/categories');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -142,7 +142,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $this->model->validate($_POST, $file, $settings, $this->uri->id);
 
-                    $update_values = array(
+                    $updateValues = array(
                         'title' => Core\Functions::strEncode($_POST['title']),
                         'description' => Core\Functions::strEncode($_POST['description']),
                     );
@@ -150,10 +150,10 @@ class Index extends Core\Modules\Controller\Admin
                     if (empty($file) === false) {
                         Core\Functions::removeUploadedFile('categories', $category['picture']);
                         $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'categories');
-                        $update_values['picture'] = $result['name'];
+                        $updateValues['picture'] = $result['name'];
                     }
 
-                    $bool = $this->model->update($update_values, $this->uri->id);
+                    $bool = $this->model->update($updateValues, $this->uri->id);
 
                     $this->model->setCache($this->model->getModuleNameFromCategoryId($this->uri->id));
 
@@ -171,11 +171,11 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         Core\Functions::getRedirectMessage();
 
@@ -183,7 +183,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_categories = count($categories);
 
         if ($c_categories > 0) {
-            $canDelete = Core\Modules::hasPermission('categories', 'acp_delete');
+            $canDelete = Core\Modules::hasPermission('admin/categories/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,

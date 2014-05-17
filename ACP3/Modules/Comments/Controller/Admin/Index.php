@@ -26,7 +26,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/comments/delete', 'acp/comments');
+        $items = $this->_deleteItem('acp/comments/index/delete', 'acp/comments');
 
         if ($this->uri->action === 'confirmed') {
             $bool = false;
@@ -35,13 +35,13 @@ class Index extends Core\Modules\Controller\Admin
             }
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
     public function actionDeleteComments()
     {
-        $items = $this->_deleteItem('acp/comments/delete_comments', 'acp/comments');
+        $items = $this->_deleteItem('acp/comments/index/delete_comments', 'acp/comments');
 
         if ($this->uri->action === 'confirmed') {
             $bool = false;
@@ -50,7 +50,7 @@ class Index extends Core\Modules\Controller\Admin
             }
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -60,8 +60,8 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($comment) === false) {
             $this->breadcrumb
-                ->append($this->lang->t($comment['module'], $comment['module']), $this->uri->route('acp/comments/list_comments/id_' . $comment['module_id']))
-                ->append($this->lang->t('comments', 'acp_edit'));
+                ->append($this->lang->t($comment['module'], $comment['module']), $this->uri->route('acp/comments/index/index_comments/id_' . $comment['module_id']))
+                ->append($this->lang->t('comments', 'edit'));
 
             if (empty($_POST) === false) {
                 try {
@@ -77,7 +77,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $this->session->unsetFormToken();
 
-                    Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/comments/list_comments/id_' . $comment['module_id']);
+                    Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/comments/index/index_comments/id_' . $comment['module_id']);
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/comments');
                 } catch (Core\Exceptions\ValidationFailed $e) {
@@ -95,11 +95,11 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         Core\Functions::getRedirectMessage();
 
@@ -107,7 +107,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_comments = count($comments);
 
         if ($c_comments > 0) {
-            $canDelete = Core\Modules::hasPermission('comments', 'acp_delete');
+            $canDelete = Core\Modules::hasPermission('admin/comments/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
@@ -123,7 +123,7 @@ class Index extends Core\Modules\Controller\Admin
         }
     }
 
-    public function actionListComments()
+    public function actionIndexComments()
     {
         Core\Functions::getRedirectMessage();
 
@@ -138,7 +138,7 @@ class Index extends Core\Modules\Controller\Admin
             $c_comments = count($comments);
 
             if ($c_comments > 0) {
-                $canDelete = Core\Modules::hasPermission('comments', 'acp_delete_comments');
+                $canDelete = Core\Modules::hasPermission('admin/comments/index/delete_comments');
                 $config = array(
                     'element' => '#acp-table',
                     'sort_col' => $canDelete === true ? 5 : 4,

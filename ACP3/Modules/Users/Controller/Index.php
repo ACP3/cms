@@ -25,7 +25,7 @@ class Index extends Core\Modules\Controller
     public function actionEditProfile()
     {
         if ($this->auth->isUser() === false || Core\Validate::isNumber($this->auth->getUserId()) === false) {
-            $this->uri->redirect('errors/403');
+            $this->uri->redirect('errors/index/403');
         } else {
             $this->breadcrumb
                 ->append($this->lang->t('users', 'users'), $this->uri->route('users'))
@@ -128,7 +128,7 @@ class Index extends Core\Modules\Controller
     public function actionEditSettings()
     {
         if ($this->auth->isUser() === false || Core\Validate::isNumber($this->auth->getUserId()) === false) {
-            $this->uri->redirect('errors/403');
+            $this->uri->redirect('errors/index/403');
         } else {
             $settings = Core\Config::getSettings('users');
 
@@ -274,7 +274,7 @@ class Index extends Core\Modules\Controller
 
             $this->view->assign('form', array_merge(array('nick_mail' => ''), $_POST));
 
-            if (Core\Modules::hasPermission('captcha', 'image') === true) {
+            if (Core\Modules::hasPermission('frontend/captcha/index/image') === true) {
                 $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());
             }
 
@@ -285,7 +285,7 @@ class Index extends Core\Modules\Controller
     public function actionHome()
     {
         if ($this->auth->isUser() === false || !Core\Validate::isNumber($this->auth->getUserId())) {
-            $this->uri->redirect('errors/403');
+            $this->uri->redirect('errors/index/403');
         } else {
             $this->breadcrumb
                 ->append($this->lang->t('users', 'users'), $this->uri->route('users'))
@@ -308,7 +308,7 @@ class Index extends Core\Modules\Controller
         }
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         $users = $this->model->getAll(POS, $this->auth->entries);
         $c_users = count($users);
@@ -432,7 +432,7 @@ class Index extends Core\Modules\Controller
 
             $this->view->assign('form', array_merge($defaults, $_POST));
 
-            if (Core\Modules::hasPermission('captcha', 'image') === true) {
+            if (Core\Modules::hasPermission('frontend/captcha/index/image') === true) {
                 $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());
             }
 
@@ -456,76 +456,7 @@ class Index extends Core\Modules\Controller
 
             $this->view->assign('user', $user);
         } else {
-            $this->uri->redirect('errors/404');
-        }
-    }
-
-    public function actionSidebarUserMenu()
-    {
-        if ($this->auth->isUser() === true) {
-            $userSidebar = array();
-            $userSidebar['page'] = base64_encode((defined('IN_ADM') === true ? 'acp/' : '') . $this->uri->query);;
-
-            // Module holen
-            $activeModules = Core\Modules::getActiveModules();
-            $navMods = $navSystem = array();
-            $hasAccessToSystem = false;
-
-            foreach ($activeModules as $name => $info) {
-                $dir = strtolower($info['dir']);
-                if ($dir !== 'acp' && Core\Modules::hasPermission($dir, 'acp_list') === true) {
-                    if ($dir === 'system') {
-                        $hasAccessToSystem = true;
-                    } else {
-                        $navMods[$name]['name'] = $name;
-                        $navMods[$name]['dir'] = $dir;
-                        $navMods[$name]['active'] = defined('IN_ADM') === true && $dir === $this->uri->mod ? ' class="active"' : '';
-                    }
-                }
-            }
-            if (!empty($navMods)) {
-                $userSidebar['modules'] = $navMods;
-            }
-
-            if ($hasAccessToSystem === true) {
-                $i = 0;
-                if (Core\Modules::hasPermission('system', 'acp_configuration') === true) {
-                    $navSystem[$i]['page'] = 'configuration';
-                    $navSystem[$i]['name'] = $this->lang->t('system', 'acp_configuration');
-                    $navSystem[$i]['active'] = $this->uri->query === 'system/configuration/' ? ' class="active"' : '';
-                }
-                if (Core\Modules::hasPermission('system', 'acp_extensions') === true) {
-                    $i++;
-                    $navSystem[$i]['page'] = 'extensions';
-                    $navSystem[$i]['name'] = $this->lang->t('system', 'acp_extensions');
-                    $navSystem[$i]['active'] = $this->uri->query === 'system/extensions/' ? ' class="active"' : '';
-                }
-                if (Core\Modules::hasPermission('system', 'acp_maintenance') === true) {
-                    $i++;
-                    $navSystem[$i]['page'] = 'maintenance';
-                    $navSystem[$i]['name'] = $this->lang->t('system', 'acp_maintenance');
-                    $navSystem[$i]['active'] = $this->uri->query === 'system/maintenance/' ? ' class="active"' : '';
-                }
-                $userSidebar['system'] = $navSystem;
-            }
-
-            $this->view->assign('user_sidebar', $userSidebar);
-
-            $this->view->displayTemplate('users/sidebar_user_menu.tpl');
-        }
-    }
-
-    public function actionSidebarLogin()
-    {
-        // Usermenü anzeigen, falls der Benutzer eingeloggt ist
-        if ($this->auth->isUser() === false) {
-            $currentPage = base64_encode((defined('IN_ADM') === true ? 'acp/' : '') . $this->uri->query);
-            $settings = Core\Config::getSettings('users');
-
-            $this->view->assign('enable_registration', $settings['enable_registration']);
-            $this->view->assign('redirect_uri', isset($_POST['redirect_uri']) ? $_POST['redirect_uri'] : $currentPage);
-
-            $this->view->displayTemplate('users/sidebar_login.tpl');
+            $this->uri->redirect('errors/index/404');
         }
     }
 

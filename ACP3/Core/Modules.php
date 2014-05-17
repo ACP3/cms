@@ -21,39 +21,49 @@ class Modules
     /**
      * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat
      *
-     * @param string $module
+     * @param string $path
      *    Zu überprüfendes Modul
-     * @param string $action
-     *    Zu überprüfende Aktion
      *
      * @return integer
      */
-    public static function hasPermission($module, $action)
+    public static function hasPermission($path)
     {
-        if (self::actionExists($module, $action) === true && self::isActive($module) === true) {
-            $module = strtolower($module);
-            return ACL::canAccessResource($module . '/' . $action . '/');
+        if (self::actionExists($path) === true) {
+            $pathArray = explode('/', $path);
+
+            if (self::isActive($pathArray[1]) === true) {
+                return ACL::canAccessResource($path);
+            }
         }
         return 0;
     }
 
     /**
-     * Überprüft, ob eine Modulaktion überhaupt existier
+     * Überprüft, ob eine Modulaktion überhaupt existiert
      *
-     * @param string $module
-     * @param string $action
+     * @param string $path
      * @return boolean
      */
-    public static function actionExists($module, $action)
+    public static function actionExists($path)
     {
-        $moduleUc = ucfirst($module);
-        $section = strpos($action, 'acp_') === 0 ? "Admin\\Index" : 'Index';
+        $pathArray = array_map(function($value) {
+            return str_replace(' ', '', ucwords(strtolower(str_replace('_', ' ', $value))));
+        }, explode('/', $path));
 
-        $className = "\\ACP3\\Modules\\" . $moduleUc . "\\Controller\\" . $section;
+        if (empty($pathArray[2]) === true) {
+            $pathArray[2] = 'Index';
+        }
+        if (empty($pathArray[3]) === true) {
+            $pathArray[3] = 'Index';
+        }
 
-        $action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $section === 'Admin\Index' ? substr($action, 4) : $action))));
+        if ($pathArray[0] !== 'Frontend') {
+            $className = "\\ACP3\\Modules\\$pathArray[1]\\Controller\\$pathArray[0]\\$pathArray[2]";
+        } else {
+            $className = "\\ACP3\\Modules\\$pathArray[1]\\Controller\\$pathArray[2]";
+        }
 
-        return (method_exists($className, $action) === true);
+        return method_exists($className, 'action' . $pathArray[3]);
     }
 
     /**
@@ -65,7 +75,7 @@ class Modules
     public static function isActive($module)
     {
         $info = self::getModuleInfo($module);
-        return !empty($info) && $info['active'] == 1 ? true : false;
+        return !empty($info) && $info['active'] == 1;
     }
 
     /**
@@ -77,7 +87,7 @@ class Modules
      */
     public static function isInstalled($module)
     {
-        return Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'modules WHERE name = ?', array($module)) == 1 ? true : false;
+        return Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'modules WHERE name = ?', array($module)) == 1;
     }
 
     /**

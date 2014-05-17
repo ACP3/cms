@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'users';
-    const SCHEMA_VERSION = 35;
+    const SCHEMA_VERSION = 36;
 
     public function removeResources()
     {
@@ -115,6 +115,9 @@ class Installer extends Modules\AbstractInstaller
                 "DELETE FROM `{pre}acl_resources` WHERE module_id =" . $this->getModuleId() . " AND page = 'sidebar';",
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'sidebar_login', '', 1);",
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'sidebar_user_menu', '', 1);",
+            ),
+            36 => array(
+                'UPDATE `{pre}seo` SET uri=REPLACE(uri, "users/", "users/index/") WHERE uri LIKE "users/%";',
             )
         );
     }

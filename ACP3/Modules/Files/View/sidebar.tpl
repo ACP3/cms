@@ -5,7 +5,7 @@
     <div class="list-group">
         {if isset($sidebar_files)}
             {foreach $sidebar_files as $row}
-                <a href="{uri args="files/details/id_`$row.id`"}" class="list-group-item" title="{$row.start} - {$row.title}">{$row.title_short}</a>
+                <a href="{uri args="files/index/details/id_`$row.id`"}" class="list-group-item" title="{$row.start} - {$row.title}">{$row.title_short}</a>
             {/foreach}
         {else}
             <span class="list-group-item">{lang t="system|no_entries_short"}</span>

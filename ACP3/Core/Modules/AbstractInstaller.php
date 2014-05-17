@@ -11,6 +11,10 @@ use ACP3\Core;
  */
 abstract class AbstractInstaller implements InstallerInterface
 {
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
 
     /**
      * Die bei der Installation an das Modul zugewiesene ID
@@ -40,6 +44,11 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     protected $specialResources = array();
 
+    public function __construct(\Doctrine\DBAL\Connection $db)
+    {
+        $this->db = $db;
+    }
+
     public static function buildClassName($module)
     {
         $moduleName = preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $module))));
@@ -51,7 +60,7 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     public function setModuleId()
     {
-        $moduleId = Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array(static::MODULE_NAME));
+        $moduleId = $this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array(static::MODULE_NAME));
         $this->moduleId = !empty($moduleId) ? (int)$moduleId : 0;
     }
 
@@ -145,6 +154,8 @@ abstract class AbstractInstaller implements InstallerInterface
                 return array_values($deps);
             }
         }
+
+        return array();
     }
 
     /**
@@ -160,51 +171,19 @@ abstract class AbstractInstaller implements InstallerInterface
         $moduleName = static::MODULE_NAME;
         $dir = ucfirst($moduleName);
         $path = MODULES_DIR . $dir . '/Controller/';
-        $files = array("Admin\\Index", 'Index');
+        $controllers = scandir($path);
 
-        foreach ($files as $file) {
-            if (is_file($path . $file . '.php') === true) {
-                $className = "\\ACP3\\Modules\\$dir\\Controller\\$file";
-                $actions = get_class_methods($className);
+        foreach ($controllers as $controller) {
+            if ($controller !== '.' && $controller !== '..') {
+                if (is_file($path . $controller) === true) {
+                    $this->_insertAclResources($dir, substr($controller, 0, -4));
+                } elseif (is_dir($path . $controller) === true) {
+                    $subModuleControllers = scandir($path . $dir);
 
-                foreach ($actions as $action) {
-                    // Nur die Module-Actions als Ressourcen hinzufügen
-                    if (strpos($action, 'action') === 0) {
-                        $actionUnderscored = strtolower(preg_replace('/\B([A-Z])/', '_$1', $action));
-                        // Modulaktionen berücksichtigen, die mit Ziffern anfangen
-                        $action = substr($actionUnderscored, strpos($actionUnderscored, '_') === 6 ? 7 : 6);
-
-                        if (isset($this->specialResources[$action])) {
-                            $privilegeId = $this->specialResources[$action];
-                        } else {
-                            if ($file === 'Index') { // Frontend Seiten
-                                $privilegeId = 1;
-                                if (strpos($action, 'create') === 0) {
-                                    $privilegeId = 2;
-                                }
-                            } else { // Admin-Panel Seiten
-                                $action = 'acp_' . $action;
-                                $privilegeId = 3;
-                                if (strpos($action, 'acp_create') === 0 || strpos($action, 'acp_order') === 0) {
-                                    $privilegeId = 4;
-                                } elseif (strpos($action, 'acp_edit') === 0) {
-                                    $privilegeId = 5;
-                                } elseif (strpos($action, 'acp_delete') === 0) {
-                                    $privilegeId = 6;
-                                } elseif (strpos($action, 'acp_settings') === 0) {
-                                    $privilegeId = 7;
-                                }
-                            }
+                    foreach ($subModuleControllers as $subController) {
+                        if ($subController !== '.' && $subController !== '..' && is_file($path . $controller . '/' . $subController) === true) {
+                            $this->_insertAclResources($dir, substr($subController, 0, -4), $controller);
                         }
-
-                        $insertValues = array(
-                            'id' => '',
-                            'module_id' => $this->getModuleId(),
-                            'page' => $action,
-                            'params' => '',
-                            'privilege_id' => (int)$privilegeId
-                        );
-                        Core\Registry::get('Db')->insert(DB_PRE . 'acl_resources', $insertValues);
                     }
                 }
             }
@@ -212,39 +191,108 @@ abstract class AbstractInstaller implements InstallerInterface
 
         // Regeln für die Rollen setzen
         if ($mode === 1) {
-            $roles = Core\Registry::get('Db')->fetchAll('SELECT id FROM ' . DB_PRE . 'acl_roles');
-            $privileges = Core\Registry::get('Db')->fetchAll('SELECT id FROM ' . DB_PRE . 'acl_privileges');
-            foreach ($roles as $role) {
-                foreach ($privileges as $privilege) {
-                    $permission = 0;
-                    if ($role['id'] == 1 && ($privilege['id'] == 1 || $privilege['id'] == 2)) {
-                        $permission = 1;
-                    }
-                    if ($role['id'] > 1 && $role['id'] < 4) {
-                        $permission = 2;
-                    }
-                    if ($role['id'] == 3 && $privilege['id'] == 3) {
-                        $permission = 1;
-                    }
-                    if ($role['id'] == 4) {
-                        $permission = 1;
-                    }
-
-                    $insertValues = array(
-                        'id' => '',
-                        'role_id' => $role['id'],
-                        'module_id' => $this->getModuleId(),
-                        'privilege_id' => $privilege['id'],
-                        'permission' => $permission
-                    );
-                    Core\Registry::get('Db')->insert(DB_PRE . 'acl_rules', $insertValues);
-                }
-            }
+            $this->_insertAclRules();
         }
 
         Core\Cache::purge(0, 'acl');
 
         return true;
+    }
+
+    /**
+     * Inserts
+     */
+    protected function _insertAclRules()
+    {
+        $roles = $this->db->fetchAll('SELECT id FROM ' . DB_PRE . 'acl_roles');
+        $privileges = $this->db->fetchAll('SELECT id FROM ' . DB_PRE . 'acl_privileges');
+        foreach ($roles as $role) {
+            foreach ($privileges as $privilege) {
+                $permission = 0;
+                if ($role['id'] == 1 && ($privilege['id'] == 1 || $privilege['id'] == 2)) {
+                    $permission = 1;
+                }
+                if ($role['id'] > 1 && $role['id'] < 4) {
+                    $permission = 2;
+                }
+                if ($role['id'] == 3 && $privilege['id'] == 3) {
+                    $permission = 1;
+                }
+                if ($role['id'] == 4) {
+                    $permission = 1;
+                }
+
+                $insertValues = array(
+                    'id' => '',
+                    'role_id' => $role['id'],
+                    'module_id' => $this->getModuleId(),
+                    'privilege_id' => $privilege['id'],
+                    'permission' => $permission
+                );
+                $this->db->insert(DB_PRE . 'acl_rules', $insertValues);
+            }
+        }
+    }
+
+    /**
+     * Inserts a new resource into the database
+     *
+     * @param $module
+     * @param $controller
+     * @param string $area
+     */
+    protected function _insertAclResources($module, $controller, $area = '')
+    {
+        if (!empty($area)) {
+            $className = "\\ACP3\\Modules\\$module\\Controller\\$area\\$controller";
+        } else {
+            $className = "\\ACP3\\Modules\\$module\\Controller\\$controller";
+        }
+        $actions = get_class_methods($className);
+
+        foreach ($actions as $action) {
+            // Only add the actual module actions (methods which begin with "action")
+            if (strpos($action, 'action') === 0) {
+                $actionUnderscored = strtolower(preg_replace('/\B([A-Z])/', '_$1', $action));
+                // Modulaktionen berücksichtigen, die mit Ziffern anfangen (Error pages)
+                $action = substr($actionUnderscored, strpos($actionUnderscored, '_') === 6 ? 7 : 6);
+
+                // Handle resources with differing access levels
+                if (isset($this->specialResources[$area][$controller][$action])) {
+                    $privilegeId = $this->specialResources[$area][$controller][$action];
+                } else {
+                    // Admin panel pages
+                    if ($area === 'Admin') {
+                        $privilegeId = 3;
+                        if (strpos($action, 'create') === 0 || strpos($action, 'order') === 0) {
+                            $privilegeId = 4;
+                        } elseif (strpos($action, 'edit') === 0) {
+                            $privilegeId = 5;
+                        } elseif (strpos($action, 'delete') === 0) {
+                            $privilegeId = 6;
+                        } elseif (strpos($action, 'settings') === 0) {
+                            $privilegeId = 7;
+                        }
+                    } else { // Frontend pages
+                        $privilegeId = 1;
+                        if (strpos($action, 'create') === 0) {
+                            $privilegeId = 2;
+                        }
+                    }
+                }
+
+                $insertValues = array(
+                    'id' => '',
+                    'module_id' => $this->getModuleId(),
+                    'area' => strtolower($area),
+                    'controller' => strtolower($controller),
+                    'page' => $action,
+                    'params' => '',
+                    'privilege_id' => (int)$privilegeId
+                );
+                $this->db->insert(DB_PRE . 'acl_resources', $insertValues);
+            }
+        }
     }
 
     /**
@@ -254,8 +302,8 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     protected function removeResources()
     {
-        $bool = Core\Registry::get('Db')->delete(DB_PRE . 'acl_resources', array('module_id' => $this->getModuleId()));
-        $bool2 = Core\Registry::get('Db')->delete(DB_PRE . 'acl_rules', array('module_id' => $this->getModuleId()));
+        $bool = $this->db->delete(DB_PRE . 'acl_resources', array('module_id' => $this->getModuleId()));
+        $bool2 = $this->db->delete(DB_PRE . 'acl_rules', array('module_id' => $this->getModuleId()));
 
         Core\Cache::purge(0, 'acl');
 
@@ -271,15 +319,14 @@ abstract class AbstractInstaller implements InstallerInterface
     protected function installSettings(array $settings)
     {
         if (count($settings) > 0) {
-            $db = Core\Registry::get('Db');
-            $db->beginTransaction();
+            $this->db->beginTransaction();
             try {
                 foreach ($settings as $key => $value) {
-                    $db->insert(DB_PRE . 'settings', array('id' => '', 'module_id' => $this->getModuleId(), 'name' => $key, 'value' => $value));
+                    $this->db->insert(DB_PRE . 'settings', array('id' => '', 'module_id' => $this->getModuleId(), 'name' => $key, 'value' => $value));
                 }
-                $db->commit();
+                $this->db->commit();
             } catch (\Exception $e) {
-                $db->rollback();
+                $this->db->rollback();
 
                 Core\Logger::log('installer', 'warning', $e);
                 return false;
@@ -295,7 +342,7 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     protected function removeSettings()
     {
-        return Core\Registry::get('Db')->delete(DB_PRE . 'settings', array('module_id' => (int)$this->getModuleId())) !== false;
+        return $this->db->delete(DB_PRE . 'settings', array('module_id' => (int)$this->getModuleId())) !== false;
     }
 
     /**
@@ -312,8 +359,8 @@ abstract class AbstractInstaller implements InstallerInterface
             'version' => static::SCHEMA_VERSION,
             'active' => 1
         );
-        $bool = Core\Registry::get('Db')->insert(DB_PRE . 'modules', $insertValues);
-        $this->moduleId = Core\Registry::get('Db')->lastInsertId();
+        $bool = $this->db->insert(DB_PRE . 'modules', $insertValues);
+        $this->moduleId = $this->db->lastInsertId();
 
         return $bool !== false;
     }
@@ -324,7 +371,7 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     protected function removeFromModulesTable()
     {
-        return Core\Registry::get('Db')->delete(DB_PRE . 'modules', array('id' => (int)$this->getModuleId())) !== false;
+        return $this->db->delete(DB_PRE . 'modules', array('id' => (int)$this->getModuleId())) !== false;
     }
 
     /**
@@ -334,15 +381,15 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     public function updateSchema()
     {
-        $module = Core\Registry::get('Db')->fetchAssoc('SELECT version FROM ' . DB_PRE . 'modules WHERE name = ?', array(static::MODULE_NAME));
-        $installed_schema_version = isset($module['version']) ? (int)$module['version'] : 0;
+        $module = $this->db->fetchAssoc('SELECT version FROM ' . DB_PRE . 'modules WHERE name = ?', array(static::MODULE_NAME));
+        $installedSchemaVersion = isset($module['version']) ? (int)$module['version'] : 0;
         $result = -1;
 
         // Falls eine Methode zum Umbenennen des Moduls existiert,
         // diese mit der aktuell installierten Schemaverion aufrufen
-        $module_names = $this->renameModule();
-        if (count($module_names) > 0) {
-            $result = $this->interateOverSchemaUpdates($module_names, $installed_schema_version);
+        $moduleNames = $this->renameModule();
+        if (count($moduleNames) > 0) {
+            $result = $this->interateOverSchemaUpdates($moduleNames, $installedSchemaVersion);
             // Modul-ID explizit nochmal neu setzen
             $this->setModuleId();
         }
@@ -352,7 +399,7 @@ abstract class AbstractInstaller implements InstallerInterface
             // Nur für den Fall der Fälle... ;)
             ksort($queries);
 
-            $result = $this->interateOverSchemaUpdates($queries, $installed_schema_version);
+            $result = $this->interateOverSchemaUpdates($queries, $installedSchemaVersion);
         }
         return $result;
     }
@@ -397,7 +444,7 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     public function setNewSchemaVersion($newVersion)
     {
-        return Core\Registry::get('Db')->update(DB_PRE . 'modules', array('version' => (int)$newVersion), array('name' => static::MODULE_NAME)) !== false;
+        return $this->db->update(DB_PRE . 'modules', array('version' => (int)$newVersion), array('name' => static::MODULE_NAME)) !== false;
     }
 
     /**

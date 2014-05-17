@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="acp_delete">Delete comments</item>
-    <item key="acp_delete_comments">Delete comments</item>
-    <item key="acp_edit">Edit comment</item>
-    <item key="acp_list_comments">Comments</item>
-    <item key="acp_settings">Settings</item>
+    <item key="delete">Delete comments</item>
+    <item key="delete_comments">Delete comments</item>
+    <item key="edit">Edit comment</item>
+    <item key="list_comments">Comments</item>
+    <item key="settings">Settings</item>
     <item key="allow_emoticons">Allow Emoticons</item>
     <item key="comments">Comments</item>
     <item key="comments_count">Comments</item>

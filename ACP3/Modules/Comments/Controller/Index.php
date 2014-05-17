@@ -109,7 +109,7 @@ class Index extends Core\Modules\Controller
 
         $this->view->assign('form', array_merge($defaults, $_POST));
 
-        if (Core\Modules::hasPermission('captcha', 'image') === true) {
+        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());
         }
 
@@ -118,7 +118,7 @@ class Index extends Core\Modules\Controller
         return $this->view->fetchTemplate('comments/create.tpl');
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         Core\Functions::getRedirectMessage();
 
@@ -162,7 +162,7 @@ class Index extends Core\Modules\Controller
             $this->view->assign('comments', $comments);
         }
 
-        if (Core\Modules::hasPermission('comments', 'create') === true) {
+        if (Core\Modules::hasPermission('frontend/comments/index/create') === true) {
             $this->view->assign('comments_create_form', $this->actionCreate());
         }
 
