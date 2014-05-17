@@ -21,21 +21,21 @@ abstract class Helpers
     {
         $className = "\\ACP3\\Modules\\Search\\Extensions";
         $modules = get_class_methods($className);
-        $search_mods = array();
+        $searchModules = array();
 
         foreach ($modules as $module) {
             $module = substr($module, 0, strpos($module, 'Search'));
-            if (Core\Modules::hasPermission($module, 'list') === true) {
+            if (Core\Modules::hasPermission('frontend/' . $module) === true) {
                 $info = Core\Modules::getModuleInfo($module);
                 $name = $info['name'];
-                $search_mods[$name]['dir'] = $module;
-                $search_mods[$name]['checked'] = Core\Functions::selectEntry('mods', $module, $module, 'checked');
-                $search_mods[$name]['name'] = $name;
+                $searchModules[$name]['dir'] = $module;
+                $searchModules[$name]['checked'] = Core\Functions::selectEntry('mods', $module, $module, 'checked');
+                $searchModules[$name]['name'] = $name;
             }
         }
-        ksort($search_mods);
+        ksort($searchModules);
 
-        return $search_mods;
+        return $searchModules;
     }
 
 }

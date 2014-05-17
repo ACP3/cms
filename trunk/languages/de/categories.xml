@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="acp_create">Neue Kategorie erstellen</item>
-    <item key="acp_delete">Kategorien löschen</item>
-    <item key="acp_edit">Kategorie bearbeiten</item>
-    <item key="acp_settings">Einstellungen</item>
+    <item key="create">Neue Kategorie erstellen</item>
+    <item key="delete">Kategorien löschen</item>
+    <item key="edit">Kategorie bearbeiten</item>
+    <item key="settings">Einstellungen</item>
     <item key="categories">Kategorien</item>
     <item key="category">Kategorie</item>
     <item key="category_already_exists">Für das gewählte Modul existiert bereits eine Kategorie mit diesem Namen.</item>

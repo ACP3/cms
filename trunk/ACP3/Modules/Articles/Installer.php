@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'articles';
-    const SCHEMA_VERSION = 33;
+    const SCHEMA_VERSION = 34;
 
     public function renameModule()
     {
@@ -60,6 +60,9 @@ class Installer extends Modules\AbstractInstaller
             33 => array(
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"extensions/search\";",
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
+            ),
+            34 => array(
+                'UPDATE `{pre}seo` SET uri=REPLACE(uri, "articles/", "articles/index/") WHERE uri LIKE "articles/%";',
             )
         );
     }

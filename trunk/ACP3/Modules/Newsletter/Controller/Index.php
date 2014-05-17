@@ -48,8 +48,8 @@ class Index extends Core\Modules\Controller
         $newsletter = $this->model->getOneById((int)$this->uri->id, 1);
 
         if (!empty($newsletter)) {
-            $this->breadcrumb->append($this->lang->t('newsletter', 'list'), $this->uri->route('newsletter/list'))
-                ->append($this->lang->t('newsletter', 'list_archive'), $this->uri->route('newsletter/list_archive'))
+            $this->breadcrumb->append($this->lang->t('newsletter', 'list'), $this->uri->route('newsletter'))
+                ->append($this->lang->t('newsletter', 'list_archive'), $this->uri->route('newsletter/index/index_archive'))
                 ->append($newsletter['title']);
 
             $newsletter['date_formatted'] = $this->date->format($newsletter['date'], 'short');
@@ -58,11 +58,11 @@ class Index extends Core\Modules\Controller
 
             $this->view->assign('newsletter', $newsletter);
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         if (empty($_POST) === false) {
             try {
@@ -76,7 +76,6 @@ class Index extends Core\Modules\Controller
 
                         $this->view->setContent(Core\Functions::confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
                         return;
-                        break;
                     case 'unsubscribe':
                         $this->model->validateUnsubscribe($_POST);
 
@@ -86,9 +85,8 @@ class Index extends Core\Modules\Controller
 
                         $this->view->setContent(Core\Functions::confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
                         return;
-                        break;
                     default:
-                        $this->uri->redirect('errors/404');
+                        $this->uri->redirect('errors/index/404');
                 }
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->view->setContent(Core\Functions::errorBox($e->getMessage()));
@@ -107,16 +105,16 @@ class Index extends Core\Modules\Controller
         );
         $this->view->assign('actions', Core\Functions::selectGenerator('action', array('subscribe', 'unsubscribe'), $actions_Lang, $field_value, 'checked'));
 
-        if (Core\Modules::hasPermission('captcha', 'image') === true) {
+        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());
         }
 
         $this->session->generateFormToken();
     }
 
-    public function actionListArchive()
+    public function actionIndexArchive()
     {
-        $this->breadcrumb->append($this->lang->t('newsletter', 'list'), $this->uri->route('newsletter/list'))
+        $this->breadcrumb->append($this->lang->t('newsletter', 'list'), $this->uri->route('newsletter'))
             ->append($this->lang->t('newsletter', 'list_archive'));
 
         $newsletters = $this->model->getAll(1, POS, $this->auth->entries);
@@ -140,17 +138,6 @@ class Index extends Core\Modules\Controller
             }
             $this->view->assign('newsletters', $newsletters);
         }
-    }
-
-    public function actionSidebar()
-    {
-        if (Core\Modules::hasPermission('captcha', 'image') === true) {
-            $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha(3, 'captcha', true, 'newsletter'));
-        }
-
-        $this->session->generateFormToken('newsletter/list');
-
-        $this->view->displayTemplate('newsletter/sidebar.tpl');
     }
 
 }

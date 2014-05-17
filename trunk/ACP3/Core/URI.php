@@ -45,7 +45,7 @@ class URI
     /**
      * Zerlegt u.a. die übergebenen Parameter in der URI in ihre Bestandteile
      */
-    function __construct(\Doctrine\DBAL\Connection $db, $defaultModule = '', $defaultFile = '')
+    function __construct(\Doctrine\DBAL\Connection $db, $defaultPath = '')
     {
         $this->db = $db;
 
@@ -54,6 +54,7 @@ class URI
         // Minify von der URI-Verarbeitung ausschließen
         if ((bool)preg_match('=libraries/.+=', $_SERVER['PHP_SELF']) === false) {
             $this->preprocessUriQuery();
+
             if (defined('IN_INSTALL') === false) {
                 // Query auf eine benutzerdefinierte Startseite setzen
                 if ($this->query === '/' && CONFIG_HOMEPAGE !== '') {
@@ -62,7 +63,7 @@ class URI
                 $this->checkForUriAlias();
             }
 
-            $this->setUriParameters($defaultModule, $defaultFile);
+            $this->setUriParameters();
         }
     }
 
@@ -110,11 +111,13 @@ class URI
         $this->query = substr(str_replace(PHP_SELF, '', htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES)), 1);
         $this->query .= !preg_match('/\/$/', $this->query) ? '/' : '';
 
+        // Definieren, dass man sich im Administrationsbereich befindet
         if (preg_match(self::PATTERN, $this->query)) {
-            // Definieren, dass man sich im Administrationsbereich befindet
-            define('IN_ADM', true);
+            $this->area = 'admin';
             // "acp/" entfernen
             $this->query = substr($this->query, 4);
+        } else {
+            $this->area = 'frontend';
         }
 
         return;
@@ -137,7 +140,7 @@ class URI
     protected function checkForUriAlias()
     {
         // Nur ausführen, falls URI-Aliase aktiviert sind
-        if ((bool)CONFIG_SEO_ALIASES === true && !defined('IN_ADM')) {
+        if ((bool)CONFIG_SEO_ALIASES === true && $this->area !== 'admin') {
             // Falls für Query ein Alias existiert, zu diesem weiterleiten
             if ($this->uriAliasExists($this->query) === true) {
                 $this->redirect($this->query, 0, true); // URI-Alias wird von uri::route() erzeugt
@@ -148,7 +151,7 @@ class URI
             if (preg_match('/^([a-z]{1}[a-z\d\-]*\/)+(([a-z\d\-]+)_(.+)\/)+$/', $this->query)) {
                 $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
                 // Keine entsprechende Module-Action gefunden -> muss Alias sein
-                if (Modules::actionExists($query[0], $query[1]) === false) {
+                if (Modules::actionExists($this->area . '/' . $query[0] . '/' . $query[1]) === false) {
                     $length = 0;
                     foreach ($query as $row) {
                         if (strpos($row, '_') === false) {
@@ -175,11 +178,9 @@ class URI
     /**
      * Setzt alle in URI::query enthaltenen Parameter
      *
-     * @param string $defaultModule
-     * @param string $defaultFile
      * @return void
      */
-    protected function setUriParameters($defaultModule, $defaultFile)
+    protected function setUriParameters()
     {
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             $this->isAjax = true;
@@ -187,18 +188,19 @@ class URI
 
         $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
 
-        if (empty($defaultModule) && empty($defaultFile)) {
-            $defaultModule = defined('IN_ADM') ? 'acp' : 'news';
-            $defaultFile = 'list';
+        if (isset($query[0])) {
+            $this->mod = $query[0];
+        } else {
+            $this->mod = ($this->area === 'admin') ? 'acp' : 'news';
         }
 
-        $this->mod = isset($query[0]) ? $query[0] : $defaultModule;
-        $this->file = (defined('IN_ADM') ? 'acp_' : '') . (isset($query[1]) ? $query[1] : $defaultFile);
+        $this->controller = isset($query[1]) ? $query[1] : 'index';
+        $this->file = isset($query[2]) ? $query[2] : 'index';
 
-        if (isset($query[2])) {
+        if (isset($query[3])) {
             $c_query = count($query);
 
-            for ($i = 2; $i < $c_query; ++$i) {
+            for ($i = 3; $i < $c_query; ++$i) {
                 // Position
                 if (preg_match('/^(page_(\d+))$/', $query[$i])) {
                     $this->page = (int)substr($query[$i], 5);
@@ -212,9 +214,9 @@ class URI
         } elseif (isset($query[0]) && !isset($query[1])) {
             // Workaround für Securitytoken-Generierung,
             // falls die URL nur aus dem Modulnamen besteht
-            $this->query .= $defaultFile . '/';
+            $this->query .= $this->controller . '/' . $this->file . '/';
         } elseif (!isset($query[0]) && !isset($query[1])) {
-            $this->query = $defaultModule . '/' . $defaultFile . '/';
+            $this->query = $this->mod . '/' . $this->controller . '/' . $this->file . '/';
         }
 
         if (!empty($_POST['cat']) && Validate::isNumber($_POST['cat']) === true) {
@@ -297,7 +299,7 @@ class URI
 
         if ((bool)CONFIG_SEO_ALIASES === true && !preg_match(self::PATTERN, $path)) {
             if (count(preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY)) === 1) {
-                $path .= 'list/';
+                $path .= 'index/index/';
             }
             // Überprüfen, ob Alias vorhanden ist und diesen als URI verwenden
             if ($alias === 1) {

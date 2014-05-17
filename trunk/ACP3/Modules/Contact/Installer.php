@@ -8,12 +8,18 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'contact';
-    const SCHEMA_VERSION = 32;
+    const SCHEMA_VERSION = 33;
 
-    public function __construct()
+    public function __construct(\Doctrine\DBAL\Connection $db)
     {
+        parent::__construct($db);
+
         $this->specialResources = array(
-            'acp_list' => 7
+            'Admin' => array(
+                'Index' => array(
+                    'list' => 7
+                )
+            )
         );
     }
 
@@ -46,6 +52,9 @@ class Installer extends Modules\AbstractInstaller
             ),
             32 => array(
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'sidebar', '', 1);",
+            ),
+            33 => array(
+                'UPDATE `{pre}seo` SET uri=REPLACE(uri, "contact/", "contact/index/") WHERE uri LIKE "contact/%";',
             )
         );
     }

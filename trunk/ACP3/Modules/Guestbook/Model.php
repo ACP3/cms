@@ -76,7 +76,7 @@ class Model extends Core\Model
             $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         if (strlen($formData['message']) < 3)
             $errors['message'] = $this->lang->t('system', 'message_to_short');
-        if (Core\Modules::hasPermission('captcha', 'image') === true && $this->auth->isUser() === false && Core\Validate::captcha($formData['captcha']) === false)
+        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && Core\Validate::captcha($formData['captcha']) === false)
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         if ($newsletterAccess === true && isset($formData['subscribe_newsletter']) && $formData['subscribe_newsletter'] == 1) {
             $newsletterModel = new \ACP3\Modules\Newsletter\Model($this->db);

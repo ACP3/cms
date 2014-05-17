@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="acp_create">Create new category</item>
-    <item key="acp_delete">Delete categories</item>
-    <item key="acp_edit">Edit category</item>
-    <item key="acp_settings">Settings</item>
+    <item key="create">Create new category</item>
+    <item key="delete">Delete categories</item>
+    <item key="edit">Edit category</item>
+    <item key="settings">Settings</item>
     <item key="categories">Categories</item>
     <item key="category">Category</item>
     <item key="category_already_exists">There is already a category with the same name for the selected module.</item>

@@ -22,7 +22,7 @@ class Extensions
                 'title' => $result[$i]['title'],
                 'date' => Core\Registry::get('Date')->timestamp($result[$i]['start']),
                 'description' => Core\Functions::shortenEntry($result[$i]['text'], 300, 0),
-                'link' => FEED_LINK . Core\Registry::get('URI')->route('news/details/id_' . $result[$i]['id'], false)
+                'link' => FEED_LINK . Core\Registry::get('URI')->route('news/index/details/id_' . $result[$i]['id'], false)
             );
             Core\Registry::get('View')->assign($params);
         }
@@ -38,7 +38,7 @@ class Extensions
                 'title' => $result[$i]['title'],
                 'date' => Core\Registry::get('Date')->timestamp($result[$i]['start']),
                 'description' => Core\Functions::shortenEntry($result[$i]['text'], 300, 0),
-                'link' => FEED_LINK . Core\Registry::get('URI')->route('files/details/id_' . $result[$i]['id'], false)
+                'link' => FEED_LINK . Core\Registry::get('URI')->route('files/index/details/id_' . $result[$i]['id'], false)
             );
             Core\Registry::get('View')->assign($params);
         }

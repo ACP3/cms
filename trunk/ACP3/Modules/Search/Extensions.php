@@ -82,7 +82,7 @@ class Extensions
             $name = Core\Registry::get('Lang')->t('articles', 'articles');
             $search_results[$name]['dir'] = 'articles';
             for ($i = 0; $i < $c_results; ++$i) {
-                $search_results[$name]['results'][$i]['hyperlink'] = Core\Registry::get('URI')->route('articles/details/id_' . $results[$i]['id']);
+                $search_results[$name]['results'][$i]['hyperlink'] = Core\Registry::get('URI')->route('articles/index/details/id_' . $results[$i]['id']);
                 $search_results[$name]['results'][$i]['title'] = $results[$i]['title'];
                 $search_results[$name]['results'][$i]['text'] = Core\Functions::shortenEntry($results[$i]['text'], 200, 0, '...');
             }
@@ -112,7 +112,7 @@ class Extensions
             $name = Core\Registry::get('Lang')->t('files', 'files');
             $search_results[$name]['dir'] = 'files';
             for ($i = 0; $i < $c_results; ++$i) {
-                $search_results[$name]['results'][$i]['hyperlink'] = Core\Registry::get('URI')->route('files/details/id_' . $results[$i]['id']);
+                $search_results[$name]['results'][$i]['hyperlink'] = Core\Registry::get('URI')->route('files/index/details/id_' . $results[$i]['id']);
                 $search_results[$name]['results'][$i]['title'] = $results[$i]['title'];
                 $search_results[$name]['results'][$i]['text'] = Core\Functions::shortenEntry($results[$i]['text'], 200, 0, '...');
             }
@@ -142,7 +142,7 @@ class Extensions
             $name = Core\Registry::get('Lang')->t('news', 'news');
             $search_results[$name]['dir'] = 'news';
             for ($i = 0; $i < $c_results; ++$i) {
-                $search_results[$name]['results'][$i]['hyperlink'] = Core\Registry::get('URI')->route('news/details/id_' . $results[$i]['id']);
+                $search_results[$name]['results'][$i]['hyperlink'] = Core\Registry::get('URI')->route('news/index/details/id_' . $results[$i]['id']);
                 $search_results[$name]['results'][$i]['title'] = $results[$i]['title'];
                 $search_results[$name]['results'][$i]['text'] = Core\Functions::shortenEntry($results[$i]['text'], 200, 0, '...');
             }

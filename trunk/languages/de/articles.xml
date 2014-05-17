@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="acp_create">Neuen Artikel erstellen</item>
-    <item key="acp_delete">Artikel löschen</item>
-    <item key="acp_edit">Artikel bearbeiten</item>
+    <item key="create">Neuen Artikel erstellen</item>
+    <item key="delete">Artikel löschen</item>
+    <item key="edit">Artikel bearbeiten</item>
     <item key="articles">Artikel</item>
     <item key="create_menu_item">Für Artikel einen Menüpunkt erstellen</item>
     <item key="mod_description">Dieses Modul verwaltet die Artikel.</item>

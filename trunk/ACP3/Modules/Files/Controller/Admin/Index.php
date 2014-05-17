@@ -69,7 +69,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $lastId = $this->model->insert($insert_values);
                 if ((bool)CONFIG_SEO_ALIASES === true) {
-                    $this->uri->insertUriAlias('files/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    $this->uri->insertUriAlias('files/index/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                     $this->seo->setCache();
                 }
 
@@ -122,7 +122,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/files/delete', 'acp/files');
+        $items = $this->_deleteItem('acp/files/index/delete', 'acp/files');
 
         if ($this->uri->action === 'confirmed') {
             $bool = false;
@@ -136,7 +136,7 @@ class Index extends Core\Modules\Controller\Admin
                     }
 
                     Core\Cache::delete('details_id_' . $item, 'files');
-                    $this->uri->deleteUriAlias('files/details/id_' . $item);
+                    $this->uri->deleteUriAlias('files/index/details/id_' . $item);
                 }
             }
 
@@ -144,7 +144,7 @@ class Index extends Core\Modules\Controller\Admin
 
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/files');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -202,7 +202,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $bool = $this->model->update($update_values, $this->uri->id);
                     if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias'])) {
-                        $this->uri->insertUriAlias('files/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                        $this->uri->insertUriAlias('files/index/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                         $this->seo->setCache();
                     }
 
@@ -240,16 +240,16 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('checked_external', isset($_POST['external']) ? ' checked="checked"' : '');
             $this->view->assign('current_file', $dl['file']);
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('files/details/id_' . $this->uri->id));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('files/index/details/id_' . $this->uri->id));
             $this->view->assign('form', array_merge($dl, $_POST));
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/403');
+            $this->uri->redirect('errors/index/403');
         }
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         Core\Functions::getRedirectMessage();
 
@@ -257,7 +257,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_files = count($files);
 
         if ($c_files > 0) {
-            $canDelete = Core\Modules::hasPermission('files', 'acp_delete');
+            $canDelete = Core\Modules::hasPermission('admin/files/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,

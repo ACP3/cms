@@ -8,12 +8,18 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'newsletter';
-    const SCHEMA_VERSION = 37;
+    const SCHEMA_VERSION = 38;
 
-    public function __construct()
+    public function __construct(\Doctrine\DBAL\Connection $db)
     {
+        parent::__construct($db);
+
         $this->specialResources = array(
-            'acp_send' => 4,
+            'Admin' => array(
+                'Index' => array(
+                    'send' => 4
+                )
+            )
         );
     }
 
@@ -82,6 +88,9 @@ class Installer extends Modules\AbstractInstaller
             ),
             37 => array(
                 "ALTER TABLE `{pre}newsletters` ADD `html` TINYINT(1) NOT NULL;",
+            ),
+            38 => array(
+                'UPDATE `{pre}seo` SET uri=REPLACE(uri, "newsletter/", "newsletter/index/") WHERE uri LIKE "newsletter/%";',
             )
         );
     }

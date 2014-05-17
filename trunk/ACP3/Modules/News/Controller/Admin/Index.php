@@ -50,7 +50,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $lastId = $this->model->insert($insertValues);
                 if ((bool)CONFIG_SEO_ALIASES === true) {
-                    $this->uri->insertUriAlias('news/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    $this->uri->insertUriAlias('news/details/index/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                     $this->seo->setCache();
                 }
 
@@ -102,7 +102,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/news/delete', 'acp/news');
+        $items = $this->_deleteItem('acp/news/index/delete', 'acp/news');
 
         if ($this->uri->action === 'confirmed') {
             $bool = false;
@@ -114,14 +114,14 @@ class Index extends Core\Modules\Controller\Admin
                 }
                 // News Cache löschen
                 Core\Cache::delete('details_id_' . $item, 'news');
-                $this->uri->deleteUriAlias('news/details/id_' . $item);
+                $this->uri->deleteUriAlias('news/index/details/id_' . $item);
             }
 
             $this->seo->setCache();
 
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/news');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -153,7 +153,7 @@ class Index extends Core\Modules\Controller\Admin
                     $bool = $this->model->update($updateValues, $this->uri->id);
 
                     if ((bool)CONFIG_SEO_ALIASES === true) {
-                        $this->uri->insertUriAlias('news/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                        $this->uri->insertUriAlias('news/index/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                         $this->seo->setCache();
                     }
 
@@ -197,17 +197,17 @@ class Index extends Core\Modules\Controller\Admin
             $lang_target = array($this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank'));
             $this->view->assign('target', Core\Functions::selectGenerator('target', array(1, 2), $lang_target, $news['target']));
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('news/details/id_' . $this->uri->id));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('news/index/details/id_' . $this->uri->id));
 
             $this->view->assign('form', array_merge($news, $_POST));
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         Core\Functions::getRedirectMessage();
 
@@ -215,7 +215,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_news = count($news);
 
         if ($c_news > 0) {
-            $canDelete = Core\Modules::hasPermission('news', 'acp_delete');
+            $canDelete = Core\Modules::hasPermission('admin/news/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,

@@ -49,7 +49,8 @@
             </dd>
         {/if}
     </dl>
-</fieldset>{if $user.address_display == 1 || $user.country_display == 1}
+</fieldset>
+{if $user.address_display == 1 || $user.country_display == 1}
     <fieldset>
         <legend>{lang t="users|address"}</legend>
         <dl class="dl-horizontal">
@@ -76,4 +77,5 @@
                 <dd>{$user.country_formatted}</dd>
             {/if}
         </dl>
-    </fieldset>{/if}
+    </fieldset>
+{/if}

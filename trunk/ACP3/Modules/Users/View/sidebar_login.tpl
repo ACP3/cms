@@ -3,7 +3,7 @@
         <h3 class="panel-title">{lang t="users|login"}</h3>
     </div>
     <div class="panel-body">
-        <form action="{uri args="users/login/redirect_`$redirect_uri`"}" method="post" accept-charset="UTF-8">
+        <form action="{uri args="users/index/login/redirect_`$redirect_uri`"}" method="post" accept-charset="UTF-8">
             <div class="form-group">
                 <input class="form-control" type="text" name="nickname" id="nav-nickname" maxlength="30" placeholder="{lang t="users|nickname"}" required>
             </div>
@@ -20,10 +20,14 @@
         </form>
     </div>
     <div class="list-group">
-        <a href="{uri args="users/forgot_pwd"}" class="list-group-item"><i class="glyphicon glyphicon-question-sign"></i> {lang t="users|forgot_pwd"}
+        <a href="{uri args="users/index/forgot_pwd"}" class="list-group-item">
+            <i class="glyphicon glyphicon-question-sign"></i>
+            {lang t="users|forgot_pwd"}
         </a>
         {if $enable_registration == 1}
-            <a href="{uri args="users/register"}" class="list-group-item"><i class="glyphicon glyphicon-star"></i> {lang t="users|register"}
+            <a href="{uri args="users/index/register"}" class="list-group-item">
+                <i class="glyphicon glyphicon-star"></i>
+                {lang t="users|register"}
             </a>
         {/if}
     </div>

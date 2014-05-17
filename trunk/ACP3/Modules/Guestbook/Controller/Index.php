@@ -30,7 +30,7 @@ class Index extends Core\Modules\Controller
             ->append($this->lang->t('guestbook', 'create'));
 
         $settings = Core\Config::getSettings('guestbook');
-        $hasNewsletterAccess = Core\Modules::hasPermission('newsletter', 'list') === true && $settings['newsletter_integration'] == 1;
+        $hasNewsletterAccess = Core\Modules::hasPermission('frontend/newsletter') === true && $settings['newsletter_integration'] == 1;
 
         $overlayIsActive = false;
         if ($this->uri->layout === 'simple') {
@@ -115,14 +115,14 @@ class Index extends Core\Modules\Controller
 
         $this->view->assign('form', array_merge($defaults, $_POST));
 
-        if (Core\Modules::hasPermission('captcha', 'image') === true) {
+        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true) {
             $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());
         }
 
         $this->session->generateFormToken();
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         Core\Functions::getRedirectMessage();
 

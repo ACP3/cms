@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="acp_create">Neue Navigationsleiste erstellen</item>
-    <item key="acp_create_item">Neuen Menüpunkt erstellen</item>
-    <item key="acp_delete">Navigationsleiste löschen</item>
-    <item key="acp_delete_item">Menüpunkte löschen</item>
-    <item key="acp_edit">Navigationsleiste bearbeiten</item>
-    <item key="acp_edit_item">Menüpunkt bearbeiten</item>
-    <item key="acp_list_items">Menüpunkte</item>
+    <item key="create">Neue Navigationsleiste erstellen</item>
+    <item key="create_item">Neuen Menüpunkt erstellen</item>
+    <item key="delete">Navigationsleiste löschen</item>
+    <item key="delete_item">Menüpunkte löschen</item>
+    <item key="edit">Navigationsleiste bearbeiten</item>
+    <item key="edit_item">Menüpunkt bearbeiten</item>
+    <item key="list_items">Menüpunkte</item>
     <item key="article">Artikel</item>
     <item key="chronology">Reihenfolge</item>
     <item key="display_item">Menüpunkt anzeigen</item>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="acp_create">Create new emoticon</item>
-    <item key="acp_delete">Delete emoticons</item>
-    <item key="acp_edit">Edit emoticon</item>
-    <item key="acp_settings">Settings</item>
+    <item key="create">Create new emoticon</item>
+    <item key="delete">Delete emoticons</item>
+    <item key="edit">Edit emoticon</item>
+    <item key="settings">Settings</item>
     <item key="code">Code</item>
     <item key="emoticons">Emoticons</item>
     <item key="image_filesize">Maximum image filesize</item>

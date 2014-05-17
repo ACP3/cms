@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="acp_delete">Kommentare löschen</item>
-    <item key="acp_delete_comments">Kommentare löschen</item>
-    <item key="acp_edit">Kommentar bearbeiten</item>
-    <item key="acp_list_comments">Kommentare</item>
-    <item key="acp_settings">Einstellungen</item>
+    <item key="delete">Kommentare löschen</item>
+    <item key="delete_comments">Kommentare löschen</item>
+    <item key="edit">Kommentar bearbeiten</item>
+    <item key="list_comments">Kommentare</item>
+    <item key="settings">Einstellungen</item>
     <item key="allow_emoticons">Emoticons erlauben</item>
     <item key="comments">Kommentare</item>
     <item key="comments_count">Kommentar Anzahl</item>

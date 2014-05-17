@@ -22,14 +22,13 @@ class Update extends Core\Modules\Controller
         if (isset($_POST['update'])) {
             $results = array();
             // Zuerst die wichtigen System-Module aktualisieren...
-            $update_first = array('system', 'permissions', 'users');
-            foreach ($update_first as $row) {
+            $coreModules = array('system', 'permissions', 'users');
+            foreach ($coreModules as $row) {
                 $result = Core\Functions::updateModule($row);
                 $module = ucfirst($row);
-                $text = $this->lang->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'));
                 $results[$module] = array(
                     'text' => sprintf($this->lang->t('db_update_text'), $module),
-                    'class' => $result === 1 ? 'success' : ($result === 0 ? 'important' : 'info'),
+                    'class' => $result === 1 ? 'success' : ($result === 0 ? 'danger' : 'info'),
                     'result_text' => $this->lang->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
                 );
             }
@@ -37,13 +36,12 @@ class Update extends Core\Modules\Controller
             // ...danach die Restlichen
             $modules = scandir(MODULES_DIR);
             foreach ($modules as $row) {
-                if ($row !== '.' && $row !== '..' && in_array(strtolower($row), $update_first) === false) {
+                if ($row !== '.' && $row !== '..' && in_array(strtolower($row), $coreModules) === false) {
                     $result = Core\Functions::updateModule($row);
                     $module = ucfirst($row);
-                    $text = $this->lang->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'));
                     $results[$module] = array(
                         'text' => sprintf($this->lang->t('db_update_text'), $module),
-                        'class' => $result === 1 ? 'success' : ($result === 0 ? 'important' : 'info'),
+                        'class' => $result === 1 ? 'success' : ($result === 0 ? 'danger' : 'info'),
                         'result_text' => $this->lang->t($result === 1 ? 'db_update_success' : ($result === 0 ? 'db_update_error' : 'db_update_no_update'))
                     );
                 }

@@ -4,7 +4,7 @@
             <div class="navbar navbar-default">
                 <div class="navbar-header">
                     <h2 class="navbar-brand">
-                        <a href="{uri args="files/details/id_`$row.id`"}">{$row.title} ({$row.size})</a></h2>
+                        <a href="{uri args="files/index/details/id_`$row.id`"}">{$row.title} ({$row.size})</a></h2>
                 </div>
                 <small class="navbar-text pull-right">
                     <time datetime="{$row.date_iso}">{$row.date_formatted}</time>

@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'search';
-    const SCHEMA_VERSION = 31;
+    const SCHEMA_VERSION = 32;
 
     public function createTables()
     {
@@ -35,6 +35,9 @@ class Installer extends Modules\AbstractInstaller
         return array(
             31 => array(
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES ('', " . $this->getModuleId() . ", 'sidebar', '', 1);",
+            ),
+            32 => array(
+                'UPDATE `{pre}seo` SET uri=REPLACE(uri, "search/", "search/index/") WHERE uri LIKE "search/%";',
             )
         );
     }

@@ -6,7 +6,7 @@
         <div class="panel-body">
             <h5>{$sidebar_polls.title}</h5>
 
-            <form action="{uri args="polls/vote/id_`$sidebar_polls.id`"}" method="post" accept-charset="UTF-8">
+            <form action="{uri args="polls/index/vote/id_`$sidebar_polls.id`"}" method="post" accept-charset="UTF-8">
                 {foreach $sidebar_poll_answers as $row}
                     {if $sidebar_polls.multiple == '1'}
                         <div class="checkbox">

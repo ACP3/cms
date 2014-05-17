@@ -126,7 +126,12 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('gender', Core\Functions::selectGenerator('gender', array(1, 2, 3), $lang_gender, ''));
 
         // Geburtstag
-        $datepickerParams = array('constrainInput' => 'true', 'changeMonth' => 'true', 'changeYear' => 'true', 'yearRange' => '\'-50:+0\'');
+        $datepickerParams = array(
+            'constrainInput' => 'true',
+            'changeMonth' => 'true',
+            'changeYear' => 'true',
+            'yearRange' => '\'-50:+0\''
+        );
         $this->view->assign('birthday_datepicker', $this->date->datepicker('birthday', '', 'Y-m-d', $datepickerParams, 0, false, true));
 
         // Kontaktangaben
@@ -196,7 +201,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/users/delete', 'acp/users');
+        $items = $this->_deleteItem('acp/users/index/delete', 'acp/users');
 
         if ($this->uri->action === 'confirmed') {
             $bool = $isAdminUser = $selfDelete = false;
@@ -220,7 +225,7 @@ class Index extends Core\Modules\Controller\Admin
             }
             Core\Functions::setRedirectMessage($bool, $text, $selfDelete === true ? ROOT_DIR : 'acp/users');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -394,7 +399,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -438,7 +443,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->session->generateFormToken();
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         Core\Functions::getRedirectMessage();
 
@@ -446,7 +451,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_users = count($users);
 
         if ($c_users > 0) {
-            $canDelete = Core\Modules::hasPermission('users', 'acp_delete');
+            $canDelete = Core\Modules::hasPermission('admin/users/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,

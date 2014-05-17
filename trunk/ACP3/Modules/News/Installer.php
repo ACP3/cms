@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'news';
-    const SCHEMA_VERSION = 32;
+    const SCHEMA_VERSION = 33;
 
     public function createTables()
     {
@@ -61,6 +61,9 @@ class Installer extends Modules\AbstractInstaller
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"extensions/search\";",
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"extensions/feeds\";",
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
+            ),
+            33 => array(
+                'UPDATE `{pre}seo` SET uri=REPLACE(uri, "news/", "news/index/") WHERE uri LIKE "news/%";',
             )
         );
     }

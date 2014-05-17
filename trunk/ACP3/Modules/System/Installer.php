@@ -8,18 +8,24 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'system';
-    const SCHEMA_VERSION = 35;
+    const SCHEMA_VERSION = 39;
 
-    public function __construct()
+    public function __construct(\Doctrine\DBAL\Connection $db)
     {
+        parent::__construct($db);
+
         $this->specialResources = array(
-            'acp_configuration' => 7,
-            'acp_designs' => 7,
-            'acp_extensions' => 7,
-            'acp_languages' => 7,
-            'acp_modules' => 7,
-            'acp_sql_export' => 7,
-            'acp_sql_import' => 7,
+            'Admin' => array(
+                'Index' => array(
+                    'configuration' => 7,
+                    'designs' => 7,
+                    'extensions' => 7,
+                    'languages' => 7,
+                    'modules' => 7,
+                    'sql_export' => 7,
+                    'sql_import' => 7,
+                )
+            )
         );
     }
 
@@ -70,6 +76,8 @@ class Installer extends Modules\AbstractInstaller
             "CREATE TABLE`{pre}acl_resources` (
                 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
                 `module_id` int(10) unsigned NOT NULL,
+                `area` VARCHAR(255) NOT NULL,
+                `controller` VARCHAR(255) NOT NULL,
                 `page` varchar(255) NOT NULL,
                 `params` varchar(255) NOT NULL,
                 `privilege_id` int(10) unsigned NOT NULL,
@@ -186,6 +194,23 @@ class Installer extends Modules\AbstractInstaller
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
                 "UPDATE `{pre}settings` SET value = \"4.0-dev\" WHERE module_id = " . $this->getModuleId() . " AND name = \"version\";",
             ),
+            36 => array(
+                'ALTER TABLE `{pre}acl_resources` ADD COLUMN `area` VARCHAR(255) NOT NULL AFTER `module_id`;',
+                'ALTER TABLE `{pre}acl_resources` ADD COLUMN `controller` VARCHAR(255) NOT NULL AFTER `area`;',
+                'UPDATE `{pre}acl_resources` SET area="frontend";',
+                'UPDATE `{pre}acl_resources` SET area="admin" WHERE page LIKE "acp_%";',
+                'UPDATE `{pre}acl_resources` SET area="sidebar" WHERE page LIKE "sidebar%";',
+            ),
+            37 => array(
+                'UPDATE `{pre}acl_resources` SET controller="index";',
+                'UPDATE `{pre}acl_resources` SET page=REPLACE(page, "acp_", "") WHERE page LIKE "acp_%";',
+            ),
+            38 => array(
+                'UPDATE `{pre}acl_resources` SET page="index" WHERE page="sidebar";',
+            ),
+            39 => array(
+                'UPDATE `{pre}acl_resources` SET page=REPLACE(page, "list", "index") WHERE page LIKE "list%";',
+            )
         );
     }
 

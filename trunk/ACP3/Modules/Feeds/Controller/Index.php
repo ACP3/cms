@@ -12,12 +12,12 @@ use ACP3\Modules\Feeds;
  */
 class Index extends Core\Modules\Controller
 {
-    public function actionList()
+    public function actionIndex()
     {
         $module = $this->uri->feed;
         $className = "\\ACP3\\Modules\\Feeds\\Extensions";
         $action = strtolower($module) . 'Feed';
-        if (Core\Modules::hasPermission($module, 'list') === true &&
+        if (Core\Modules::hasPermission('frontend/' . $module) === true &&
             method_exists($className, $action) === true
         ) {
             $settings = Core\Config::getSettings('feeds');
@@ -41,7 +41,7 @@ class Index extends Core\Modules\Controller
             $this->view->setContentType('text/xml');
             $this->view->displayTemplate($settings['feed_type']);
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 

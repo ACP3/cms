@@ -22,7 +22,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->model = new Contact\Model($this->db, $this->lang, $this->auth);
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         if (empty($_POST) === false) {
             try {

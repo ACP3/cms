@@ -10,10 +10,16 @@ class Installer extends Modules\AbstractInstaller
     const MODULE_NAME = 'feeds';
     const SCHEMA_VERSION = 31;
 
-    public function __construct()
+    public function __construct(\Doctrine\DBAL\Connection $db)
     {
+        parent::__construct($db);
+
         $this->specialResources = array(
-            'acp_list' => 7
+            'Admin' => array(
+                'Index' => array(
+                    'list' => 7
+                )
+            )
         );
     }
 

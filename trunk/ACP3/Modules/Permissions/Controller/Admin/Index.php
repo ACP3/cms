@@ -40,9 +40,15 @@ class Index extends Core\Modules\Controller\Admin
                 $bool = $nestedSet->insertNode((int)$_POST['parent'], $insertValues);
                 $roleId = $this->db->lastInsertId();
 
-                foreach ($_POST['privileges'] as $module_id => $privileges) {
+                foreach ($_POST['privileges'] as $moduleId => $privileges) {
                     foreach ($privileges as $id => $permission) {
-                        $ruleInsertValues = array('id' => '', 'role_id' => $roleId, 'module_id' => $module_id, 'privilege_id' => $id, 'permission' => $permission);
+                        $ruleInsertValues = array(
+                            'id' => '',
+                            'role_id' => $roleId,
+                            'module_id' => $moduleId,
+                            'privilege_id' => $id,
+                            'permission' => $permission
+                        );
                         $this->model->insert($ruleInsertValues, Permissions\Model::TABLE_NAME_RULES);
                     }
                 }
@@ -102,8 +108,8 @@ class Index extends Core\Modules\Controller\Admin
     public function actionCreateResource()
     {
         $this->breadcrumb
-            ->append($this->lang->t('permissions', 'acp_list_resources'), $this->uri->route('acp/permissions/list_resources'))
-            ->append($this->lang->t('permissions', 'acp_create_resource'));
+            ->append($this->lang->t('permissions', 'list_resources'), $this->uri->route('acp/permissions/index/index_resources'))
+            ->append($this->lang->t('permissions', 'create_resource'));
 
         if (empty($_POST) === false) {
             try {
@@ -123,9 +129,9 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/permissions/list_resources');
+                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/permissions/index/index_resources');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/permissions/list_resources');
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/permissions/index/index_resources');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $this->view->assign('error_msg', $e->getMessage());
             }
@@ -151,7 +157,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/permissions/delete', 'acp/permissions');
+        $items = $this->_deleteItem('acp/permissions/index/delete', 'acp/permissions');
 
         if ($this->uri->action === 'confirmed') {
             $bool = $bool2 = $bool3 = false;
@@ -177,17 +183,17 @@ class Index extends Core\Modules\Controller\Admin
             }
             Core\Functions::setRedirectMessage($bool && $bool2 && $bool3, $text, 'acp/permissions');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
     public function actionDeleteResources()
     {
         $this->breadcrumb
-            ->append($this->lang->t('permissions', 'acp_list_resources'), $this->uri->route('acp/permissions/acp_list_resources'))
+            ->append($this->lang->t('permissions', 'list_resources'), $this->uri->route('acp/permissions/index/index_resources'))
             ->append($this->lang->t('permissions', 'delete_resources'));
 
-        $items = $this->_deleteItem('acp/permissions/delete_resources', 'acp/permissions/list_resources');
+        $items = $this->_deleteItem('acp/permissions/index/delete_resources', 'acp/permissions/index/index_resources');
 
         if ($this->uri->action === 'confirmed') {
             $bool = false;
@@ -198,9 +204,9 @@ class Index extends Core\Modules\Controller\Admin
 
             Core\ACL::setResourcesCache();
 
-            Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/permissions/list_resources');
+            Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/permissions/index/index_resources');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -221,9 +227,9 @@ class Index extends Core\Modules\Controller\Admin
                     $this->db->beginTransaction();
                     // Bestehende Berechtigungen löschen, da in der Zwischenzeit neue hinzugekommen sein könnten
                     $this->model->delete($this->uri->id, 'role_id', Permissions\Model::TABLE_NAME_RULES);
-                    foreach ($_POST['privileges'] as $module_id => $privileges) {
+                    foreach ($_POST['privileges'] as $moduleId => $privileges) {
                         foreach ($privileges as $id => $permission) {
-                            $ruleInsertValues = array('id' => '', 'role_id' => $this->uri->id, 'module_id' => $module_id, 'privilege_id' => $id, 'permission' => $permission);
+                            $ruleInsertValues = array('id' => '', 'role_id' => $this->uri->id, 'module_id' => $moduleId, 'privilege_id' => $id, 'permission' => $permission);
                             $this->model->insert($ruleInsertValues, Permissions\Model::TABLE_NAME_RULES);
                         }
                     }
@@ -292,15 +298,15 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
     public function actionEditResource()
     {
         $this->breadcrumb
-            ->append($this->lang->t('permissions', 'acp_list_resources'), $this->uri->route('acp/permissions/list_resources'))
-            ->append($this->lang->t('permissions', 'acp_edit_resource'));
+            ->append($this->lang->t('permissions', 'list_resources'), $this->uri->route('acp/permissions/index/index_resources'))
+            ->append($this->lang->t('permissions', 'edit_resource'));
 
         if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resourceExists($this->uri->id) === true) {
             if (empty($_POST) === false) {
@@ -317,9 +323,9 @@ class Index extends Core\Modules\Controller\Admin
 
                     $this->session->unsetFormToken();
 
-                    Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/permissions/list_resources');
+                    Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/permissions/index/index_resources');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/permissions/list_resources');
+                    Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/permissions/index/index_resources');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $this->view->assign('error_msg', $e->getMessage());
                 }
@@ -342,11 +348,11 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         Core\Functions::getRedirectMessage();
 
@@ -358,12 +364,12 @@ class Index extends Core\Modules\Controller\Admin
                 $roles[$i]['spaces'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']);
             }
             $this->view->assign('roles', $roles);
-            $this->view->assign('can_delete', Core\Modules::hasPermission('permissions', 'acp_delete'));
-            $this->view->assign('can_order', Core\Modules::hasPermission('permissions', 'acp_order'));
+            $this->view->assign('can_delete', Core\Modules::hasPermission('admin/permissions/index/delete'));
+            $this->view->assign('can_order', Core\Modules::hasPermission('admin/permissions/index/acp_order'));
         }
     }
 
-    public function actionListResources()
+    public function actionIndexResources()
     {
         Core\Functions::getRedirectMessage();
 
@@ -378,7 +384,7 @@ class Index extends Core\Modules\Controller\Admin
         }
         ksort($output);
         $this->view->assign('resources', $output);
-        $this->view->assign('can_delete_resource', Core\Modules::hasPermission('permissions', 'acp_delete_resources'));
+        $this->view->assign('can_delete_resource', Core\Modules::hasPermission('admin/permissions/index/delete_resources'));
     }
 
     public function actionOrder()
@@ -391,7 +397,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->uri->redirect('acp/permissions');
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 }

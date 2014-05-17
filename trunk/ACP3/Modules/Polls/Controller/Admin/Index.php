@@ -97,7 +97,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/polls/delete', 'acp/polls');
+        $items = $this->_deleteItem('acp/polls/index/delete', 'acp/polls');
 
         if ($this->uri->action === 'confirmed') {
             $bool = $bool2 = $bool3 = false;
@@ -106,9 +106,9 @@ class Index extends Core\Modules\Controller\Admin
                 $bool2 = $this->model->delete($item, 'poll_id', Polls\Model::TABLE_NAME_ANSWERS);
                 $bool3 = $this->model->delete($item, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
             }
-            Core\Functions::setRedirectMessage($bool && $bool2 && $bool3, $this->lang->t('system', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error'), 'acp/polls');
+            Core\Functions::setRedirectMessage($bool !== false && $bool2 !== false && $bool3 !== false, $this->lang->t('system', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error'), 'acp/polls');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -187,7 +187,6 @@ class Index extends Core\Modules\Controller\Admin
 
                 for ($i = 0; $i < $c_answers; ++$i) {
                     $answers[$i]['number'] = $i;
-                    $answers[$i]['id'] = $answers[$i]['id'];
                     $answers[$i]['value'] = $answers[$i]['text'];
                 }
             }
@@ -208,11 +207,11 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         Core\Functions::getRedirectMessage();
 
@@ -220,7 +219,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_polls = count($polls);
 
         if ($c_polls > 0) {
-            $canDelete = Core\Modules::hasPermission('polls', 'acp_delete');
+            $canDelete = Core\Modules::hasPermission('admin/polls/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,

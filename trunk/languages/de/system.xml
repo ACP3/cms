@@ -2,15 +2,15 @@
 <language>
     <item key="access_to_following_modules">Sie haben Zugriff auf folgende %d Module.</item>
     <item key="acp">Administration Control Panel</item>
-    <item key="acp_configuration">Konfiguration</item>
-    <item key="acp_designs">Designs</item>
-    <item key="acp_extensions">Erweiterungen</item>
-    <item key="acp_languages">Sprachen</item>
-    <item key="acp_maintenance">Wartung</item>
-    <item key="acp_modules">Module</item>
-    <item key="acp_sql_export">SQL-Tabellen-Export</item>
-    <item key="acp_sql_import">SQL-Tabellen-Import</item>
-    <item key="acp_update_check">Versionsüberprüfung</item>
+    <item key="configuration">Konfiguration</item>
+    <item key="designs">Designs</item>
+    <item key="extensions">Erweiterungen</item>
+    <item key="languages">Sprachen</item>
+    <item key="maintenance">Wartung</item>
+    <item key="modules">Module</item>
+    <item key="sql_export">SQL-Tabellen-Export</item>
+    <item key="sql_import">SQL-Tabellen-Import</item>
+    <item key="update_check">Versionsüberprüfung</item>
     <item key="acp3_not_up_to_date">Es ist eine neue Version des ACP3 verfügbar. Sie kann %1$shier%2$s heruntergeladen
         werden.
     </item>

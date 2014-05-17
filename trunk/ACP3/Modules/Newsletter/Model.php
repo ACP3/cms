@@ -101,7 +101,7 @@ class Model extends Core\Model
         if (Core\Validate::email($formData['mail']) && $this->accountExists($formData['mail']) === true) {
             $errors['mail'] = $this->lang->t('newsletter', 'account_exists');
         }
-        if (Core\Modules::hasPermission('captcha', 'image') === true && $this->auth->isUser() === false && Core\Validate::captcha($formData['captcha']) === false) {
+        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && Core\Validate::captcha($formData['captcha']) === false) {
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
@@ -121,7 +121,7 @@ class Model extends Core\Model
         if (Core\Validate::email($formData['mail']) && $this->accountExists($formData['mail']) === false) {
             $errors[] = $this->lang->t('newsletter', 'account_not_exists');
         }
-        if (Core\Modules::hasPermission('captcha', 'image') === true && $this->auth->isUser() === false && Core\Validate::captcha($formData['captcha']) === false) {
+        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && Core\Validate::captcha($formData['captcha']) === false) {
             $errors[] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 

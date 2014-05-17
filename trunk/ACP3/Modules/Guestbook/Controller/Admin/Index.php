@@ -24,7 +24,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/guestbook/delete', 'acp/guestbook');
+        $items = $this->_deleteItem('acp/guestbook/index/delete', 'acp/guestbook');
 
         if ($this->uri->action === 'confirmed') {
             $bool = false;
@@ -33,7 +33,7 @@ class Index extends Core\Modules\Controller\Admin
             }
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/guestbook');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -79,11 +79,11 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         Core\Functions::getRedirectMessage();
 
@@ -91,7 +91,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_guestbook = count($guestbook);
 
         if ($c_guestbook > 0) {
-            $canDelete = Core\Modules::hasPermission('guestbook', 'acp_delete');
+            $canDelete = Core\Modules::hasPermission('admin/guestbook/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,

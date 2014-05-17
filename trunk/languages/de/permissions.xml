@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="acp_create">Neue Rolle erstellen</item>
-    <item key="acp_create_resource">Neue Ressource erstellen</item>
-    <item key="acp_delete">Rolle löschen</item>
-    <item key="acp_edit">Rolle bearbeiten</item>
-    <item key="acp_edit_resource">Ressource bearbeiten</item>
-    <item key="acp_list_resources">Ressourcen verwalten</item>
+    <item key="create">Neue Rolle erstellen</item>
+    <item key="create_resource">Neue Ressource erstellen</item>
+    <item key="delete">Rolle löschen</item>
+    <item key="edit">Rolle bearbeiten</item>
+    <item key="edit_resource">Ressource bearbeiten</item>
+    <item key="list_resources">Ressourcen verwalten</item>
     <item key="allow_access">Erlaubt</item>
     <item key="assigned_privilege">Zugeordnetes Privileg</item>
     <item key="filename">Dateiname</item>

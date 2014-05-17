@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'polls';
-    const SCHEMA_VERSION = 31;
+    const SCHEMA_VERSION = 32;
 
     public function createTables()
     {
@@ -63,6 +63,9 @@ class Installer extends Modules\AbstractInstaller
         return array(
             31 => array(
                 "ALTER TABLE `{pre}polls` CHANGE `question` `title` VARCHAR(120) {charset} NOT NULL",
+            ),
+            32 => array(
+                'UPDATE `{pre}seo` SET uri=REPLACE(uri, "polls/", "polls/index/") WHERE uri LIKE "polls/%";',
             )
         );
     }

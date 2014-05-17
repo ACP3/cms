@@ -5,7 +5,7 @@
             {foreach $pictures as $row}
                 <li>
                     <a href="{$row.uri}" class="thumbnail" data-fancybox-group="gallery"{if !empty($row.description)} title="{$row.description}"{/if}>
-                        <img src="{uri args="gallery/image/id_`$row.id`/action_thumb"}" alt="" width="{$row.width}" height="{$row.height}">
+                        <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt="" width="{$row.width}" height="{$row.height}">
                     </a>
                 </li>
             {/foreach}
@@ -15,7 +15,7 @@
             {foreach $pictures as $row}
                 <li>
                     <a href="{$row.uri}" class="thumbnail">
-                        <img src="{uri args="gallery/image/id_`$row.id`/action_thumb"}" alt="" width="{$row.width}" height="{$row.height}">
+                        <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt="" width="{$row.width}" height="{$row.height}">
                     </a>
                 </li>
             {/foreach}

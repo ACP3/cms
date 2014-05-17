@@ -24,7 +24,7 @@ class Index extends Core\Modules\Controller
         $this->model = new Articles\Model($this->db, $this->lang, $menuModel, $this->uri);
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         $time = $this->date->getCurrentDateTime();
 
@@ -61,7 +61,7 @@ class Index extends Core\Modules\Controller
 
             $this->view->assign('page', Core\Functions::splitTextIntoPages(Core\Functions::rewriteInternalUri($article['text']), $this->uri->getUriWithoutPages()));
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 

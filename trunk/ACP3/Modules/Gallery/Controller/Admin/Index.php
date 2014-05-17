@@ -40,7 +40,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $lastId = $this->db->insert(DB_PRE . 'gallery', $insertValues);
                 if ((bool)CONFIG_SEO_ALIASES === true) {
-                    $this->uri->insertUriAlias('gallery/pics/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    $this->uri->insertUriAlias('gallery/index/pics/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                     $this->seo->setCache();
                 }
 
@@ -76,8 +76,8 @@ class Index extends Core\Modules\Controller\Admin
             $gallery = $this->model->getGalleryTitle((int)$this->uri->id);
 
             $this->breadcrumb
-                ->append($gallery, $this->uri->route('acp/gallery/edit/id_' . $this->uri->id))
-                ->append($this->lang->t('gallery', 'acp_create_picture'));
+                ->append($gallery, $this->uri->route('acp/gallery/index/edit/id_' . $this->uri->id))
+                ->append($this->lang->t('gallery', 'create_picture'));
 
             $settings = Core\Config::getSettings('gallery');
 
@@ -108,7 +108,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $this->session->unsetFormToken();
 
-                    Core\Functions::setRedirectMessage($lastId && $bool2, $this->lang->t('system', $lastId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/gallery/edit/id_' . $this->uri->id);
+                    Core\Functions::setRedirectMessage($lastId && $bool2, $this->lang->t('system', $lastId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/gallery/index/edit/id_' . $this->uri->id);
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/files');
                 } catch (Core\Exceptions\ValidationFailed $e) {
@@ -137,13 +137,13 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/gallery/delete', 'acp/gallery');
+        $items = $this->_deleteItem('acp/gallery/index/delete', 'acp/gallery');
 
         if ($this->uri->action === 'confirmed') {
             $bool = $bool2 = false;
@@ -158,7 +158,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     // Galerie Cache löschen
                     Core\Cache::delete('pics_id_' . $item, 'gallery');
-                    $this->uri->deleteUriAlias('gallery/pics/id_' . $item);
+                    $this->uri->deleteUriAlias('gallery/index/pics/id_' . $item);
                     Gallery\Helpers::deletePictureAliases($item);
 
                     // Fotogalerie mitsamt Bildern löschen
@@ -171,13 +171,13 @@ class Index extends Core\Modules\Controller\Admin
 
             Core\Functions::setRedirectMessage($bool && $bool2, $this->lang->t('system', $bool !== false && $bool2 !== false ? 'delete_success' : 'delete_error'), 'acp/gallery');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
     public function actionDeletePicture()
     {
-        $items = $this->_deleteItem('acp/gallery/delete_picture', 'acp/gallery/edit/id_' . $this->uri->id);
+        $items = $this->_deleteItem('acp/gallery/index/delete_picture', 'acp/gallery/index/edit/id_' . $this->uri->id);
 
         if ($this->uri->action === 'confirmed') {
             $bool = false;
@@ -189,16 +189,16 @@ class Index extends Core\Modules\Controller\Admin
                     Gallery\Helpers::removePicture($picture['file']);
 
                     $bool = $this->model->delete($item, '', Gallery\Model::TABLE_NAME_PICTURES);
-                    $this->uri->deleteUriAlias('gallery/details/id_' . $item);
+                    $this->uri->deleteUriAlias('gallery/index/details/id_' . $item);
                     $this->model->setCache($picture['gallery_id']);
                 }
             }
 
             $this->seo->setCache();
 
-            Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/gallery/edit/id_' . $this->uri->id);
+            Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/gallery/index/edit/id_' . $this->uri->id);
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -207,7 +207,7 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->model->galleryExists((int)$this->uri->id) === true) {
             $gallery = $this->model->getGalleryById((int)$this->uri->id);
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('gallery/pics/id_' . $this->uri->id));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('gallery/index/pics/id_' . $this->uri->id));
 
             $this->breadcrumb->append($gallery['title']);
 
@@ -224,7 +224,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $bool = $this->model->update($updateValues, $this->uri->id);
                     if ((bool)CONFIG_SEO_ALIASES === true) {
-                        $this->uri->insertUriAlias('gallery/pics/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                        $this->uri->insertUriAlias('gallery/index/pics/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                         Gallery\Helpers::generatePictureAliases($this->uri->id);
 
                         $this->seo->setCache();
@@ -253,7 +253,7 @@ class Index extends Core\Modules\Controller\Admin
             $c_pictures = count($pictures);
 
             if ($c_pictures > 0) {
-                $canDelete = Core\Modules::hasPermission('gallery', 'acp_delete_picture');
+                $canDelete = Core\Modules::hasPermission('admin/gallery/index/delete_picture');
                 $config = array(
                     'element' => '#acp-table',
                     'hide_col_sort' => $canDelete === true ? 0 : ''
@@ -266,13 +266,13 @@ class Index extends Core\Modules\Controller\Admin
                 }
                 $this->view->assign('pictures', $pictures);
                 $this->view->assign('can_delete', $canDelete);
-                $this->view->assign('can_order', Core\Modules::hasPermission('gallery', 'acp_order'));
-                $this->view->assign('can_edit_picture', Core\Modules::hasPermission('gallery', 'acp_edit_picture'));
+                $this->view->assign('can_order', Core\Modules::hasPermission('admin/gallery/index/order'));
+                $this->view->assign('can_edit_picture', Core\Modules::hasPermission('admin/gallery/index/edit_picture'));
             }
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -282,8 +282,8 @@ class Index extends Core\Modules\Controller\Admin
             $picture = $this->model->getPictureById((int)$this->uri->id);
 
             $this->breadcrumb
-                ->append($picture['gallery_title'], $this->uri->route('acp/gallery/edit/id_' . $picture['gallery_id']))
-                ->append($this->lang->t('gallery', 'acp_edit_picture'));
+                ->append($picture['gallery_title'], $this->uri->route('acp/gallery/index/edit/id_' . $picture['gallery_id']))
+                ->append($this->lang->t('gallery', 'edit_picture'));
 
             $settings = Core\Config::getSettings('gallery');
 
@@ -317,7 +317,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $this->session->unsetFormToken();
 
-                    Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/gallery/edit/id_' . $picture['gallery_id']);
+                    Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/gallery/index/edit/id_' . $picture['gallery_id']);
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/files');
                 } catch (Core\Exceptions\ValidationFailed $e) {
@@ -338,11 +338,11 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         Core\Functions::getRedirectMessage();
 
@@ -350,7 +350,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_galleries = count($galleries);
 
         if ($c_galleries > 0) {
-            $canDelete = Core\Modules::hasPermission('gallery', 'acp_delete');
+            $canDelete = Core\Modules::hasPermission('admin/gallery/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
@@ -376,10 +376,10 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->model->setCache($galleryId);
 
-                $this->uri->redirect('acp/gallery/edit/id_' . $galleryId);
+                $this->uri->redirect('acp/gallery/index/edit/id_' . $galleryId);
             }
         }
-        $this->uri->redirect('errors/404');
+        $this->uri->redirect('errors/index/404');
     }
 
     public function actionSettings()

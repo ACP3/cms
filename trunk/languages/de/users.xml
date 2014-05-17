@@ -3,10 +3,10 @@
     <item key="account_locked">Ihr Benutzerkonto wurde gesperrt. Um es wieder zu aktivieren, verwenden Sie bitte die
         &quot;Passwort vergessen&quot; Funktion, welche Ihnen dann ein neues Passwort zusenden wird.
     </item>
-    <item key="acp_create">Neuen Benutzer erstellen</item>
-    <item key="acp_delete">Benutzer löschen</item>
-    <item key="acp_edit">Benutzer bearbeiten</item>
-    <item key="acp_settings">Einstellungen</item>
+    <item key="create">Neuen Benutzer erstellen</item>
+    <item key="delete">Benutzer löschen</item>
+    <item key="edit">Benutzer bearbeiten</item>
+    <item key="settings">Einstellungen</item>
     <item key="address">Adresse</item>
     <item key="address_street">Straße</item>
     <item key="address_house_number">Hausnummer</item>

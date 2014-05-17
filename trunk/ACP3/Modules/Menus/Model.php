@@ -248,6 +248,7 @@ class Model extends Core\Model
     /**
      * Erstellt den Cache für die Menüpunkte
      *
+     * @param $block
      * @return boolean
      */
     public function setVisibleMenuItemsCache($block)
@@ -259,6 +260,7 @@ class Model extends Core\Model
     /**
      * Bindet die gecacheten Menüpunkte ein
      *
+     * @param $block
      * @return array
      */
     public function getVisibleMenuItems($block)

@@ -3,7 +3,9 @@
         <h3 class="panel-title">{lang t="users|user_menu"}</h3>
     </div>
     <div class="list-group">
-        <a href="{uri args="users/home"}" class="list-group-item"><i class="glyphicon glyphicon-home"></i> {lang t="users|home"}
+        <a href="{uri args="users/index/home"}" class="list-group-item">
+            <i class="glyphicon glyphicon-home"></i>
+            {lang t="users|home"}
         </a>
         {if isset($user_sidebar.modules)}
             <div class="list-group-item dropdown">
@@ -28,12 +30,12 @@
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu-system">
                     {foreach $user_sidebar.system as $row}
-                        <li{$row.active}><a href="{uri args="acp/system/`$row.page`"}">{$row.name}</a></li>
+                        <li{$row.active}><a href="{uri args="acp/system/index/`$row.page`"}">{$row.name}</a></li>
                     {/foreach}
                 </ul>
             </div>
         {/if}
-        <a href="{uri args="users/logout/last_`$user_sidebar.page`"}" class="list-group-item"><i class="glyphicon glyphicon-off"></i> {lang t="users|logout"}
+        <a href="{uri args="users/index/logout/last_`$user_sidebar.page`"}" class="list-group-item"><i class="glyphicon glyphicon-off"></i> {lang t="users|logout"}
         </a>
     </div>
 </div>

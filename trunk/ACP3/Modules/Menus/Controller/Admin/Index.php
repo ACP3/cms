@@ -60,12 +60,12 @@ class Index extends Core\Modules\Controller\Admin
 
                 $insertValues = array(
                     'id' => '',
-                    'mode' => ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match('/^(articles\/details\/id_([0-9]+)\/)$/', $_POST['uri']) ? '4' : $_POST['mode'],
+                    'mode' => ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match('/^(articles\/index\/details\/id_([0-9]+)\/)$/', $_POST['uri']) ? '4' : $_POST['mode'],
                     'block_id' => (int)$_POST['block_id'],
                     'parent_id' => (int)$_POST['parent'],
                     'display' => $_POST['display'],
                     'title' => Core\Functions::strEncode($_POST['title']),
-                    'uri' => $_POST['mode'] == 1 ? $_POST['module'] : ($_POST['mode'] == 4 ? 'articles/details/id_' . $_POST['articles'] . '/' : $_POST['uri']),
+                    'uri' => $_POST['mode'] == 1 ? $_POST['module'] : ($_POST['mode'] == 4 ? 'articles/index/details/id_' . $_POST['articles'] . '/' : $_POST['uri']),
                     'target' => $_POST['display'] == 0 ? 1 : $_POST['target'],
                 );
 
@@ -153,7 +153,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionDelete()
     {
-        $items = $this->_deleteItem('acp/menus/delete', 'acp/menus');
+        $items = $this->_deleteItem('acp/menus/index/delete', 'acp/menus');
 
         if ($this->uri->action === 'confirmed') {
             $bool = false;
@@ -176,13 +176,13 @@ class Index extends Core\Modules\Controller\Admin
 
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
     public function actionDeleteItem()
     {
-        $items = $this->_deleteItem('acp/menus/delete_item', 'acp/menus');
+        $items = $this->_deleteItem('acp/menus/index/delete_item', 'acp/menus');
 
         if ($this->uri->action === 'confirmed') {
             $bool = false;
@@ -200,7 +200,7 @@ class Index extends Core\Modules\Controller\Admin
 
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -236,7 +236,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
@@ -254,8 +254,8 @@ class Index extends Core\Modules\Controller\Admin
                     $this->model->validateItem($_POST);
 
                     // Vorgenommene Änderungen am Datensatz anwenden
-                    $mode = ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match('/^(articles\/details\/id_([0-9]+)\/)$/', $_POST['uri']) ? '4' : $_POST['mode'];
-                    $uriType = $_POST['mode'] == 4 ? 'articles/details/id_' . $_POST['articles'] . '/' : $_POST['uri'];
+                    $mode = ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match('/^(articles\/index\/details\/id_([0-9]+)\/)$/', $_POST['uri']) ? '4' : $_POST['mode'];
+                    $uriType = $_POST['mode'] == 4 ? 'articles/index/details/id_' . $_POST['articles'] . '/' : $_POST['uri'];
 
                     $updateValues = array(
                         'mode' => $mode,
@@ -339,11 +339,11 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         Core\Functions::getRedirectMessage();
 
@@ -351,12 +351,12 @@ class Index extends Core\Modules\Controller\Admin
         $c_menus = count($menus);
 
         if ($c_menus > 0) {
-            $canDeleteItem = Core\Modules::hasPermission('menus', 'acp_delete_item');
-            $canSortItem = Core\Modules::hasPermission('menus', 'acp_order');
+            $canDeleteItem = Core\Modules::hasPermission('admin/menus/index/delete_item');
+            $canSortItem = Core\Modules::hasPermission('admin/menus/index/order');
             $this->view->assign('can_delete_item', $canDeleteItem);
             $this->view->assign('can_order_item', $canSortItem);
-            $this->view->assign('can_delete', Core\Modules::hasPermission('menus', 'acp_delete'));
-            $this->view->assign('can_edit', Core\Modules::hasPermission('menus', 'acp_edit'));
+            $this->view->assign('can_delete', Core\Modules::hasPermission('admin/menus/index/delete'));
+            $this->view->assign('can_edit', Core\Modules::hasPermission('admin/menus/index/edit'));
             $this->view->assign('colspan', $canDeleteItem && $canSortItem ? 5 : ($canDeleteItem || $canSortItem ? 4 : 3));
 
             $pagesList = Menus\Helpers::menuItemsList();
@@ -381,7 +381,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->uri->redirect('acp/menus');
         } else {
-            $this->uri->redirect('errors/404');
+            $this->uri->redirect('errors/index/404');
         }
     }
 

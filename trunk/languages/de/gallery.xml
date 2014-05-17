@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="acp_create">Neue Fotogalerie erstellen</item>
-    <item key="acp_create_picture">Bild hinzufügen</item>
-    <item key="acp_delet">Fotogalerien löschen</item>
-    <item key="acp_delete_picture">Bilder löschen</item>
-    <item key="acp_edit">Fotogalerie bearbeiten</item>
-    <item key="acp_edit_picture">Bild bearbeiten</item>
-    <item key="acp_settings">Einstellungen</item>
+    <item key="create">Neue Fotogalerie erstellen</item>
+    <item key="create_picture">Bild hinzufügen</item>
+    <item key="delet">Fotogalerien löschen</item>
+    <item key="delete_picture">Bilder löschen</item>
+    <item key="edit">Fotogalerie bearbeiten</item>
+    <item key="edit_picture">Bild bearbeiten</item>
+    <item key="settings">Einstellungen</item>
     <item key="details">Bilddetails</item>
     <item key="filename">Dateiname</item>
     <item key="gallery">Fotogalerien</item>

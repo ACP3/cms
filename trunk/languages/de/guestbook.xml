@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="acp_delete">Gästebucheinträge löschen</item>
-    <item key="acp_edit">Gästebucheintrag bearbeiten</item>
-    <item key="acp_settings">Einstellungen</item>
+    <item key="delete">Gästebucheinträge löschen</item>
+    <item key="edit">Gästebucheintrag bearbeiten</item>
+    <item key="settings">Einstellungen</item>
     <item key="activate_entry">Eintrag freischalten</item>
     <item key="allow_emoticons">Emoticons erlauben</item>
     <item key="create">Neuer Eintrag</item>

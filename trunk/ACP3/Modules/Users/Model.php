@@ -337,7 +337,7 @@ class Model extends Core\Model
         } elseif (Core\Validate::email($formData['nick_mail']) === true && $this->resultExistsByEmail($formData['nick_mail']) === false) {
             $errors['nick-mail'] = $this->lang->t('users', 'user_not_exists');
         }
-        if (Core\Modules::hasPermission('captcha', 'image') === true && Core\Validate::captcha($formData['captcha']) === false) {
+        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true && Core\Validate::captcha($formData['captcha']) === false) {
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
@@ -366,7 +366,7 @@ class Model extends Core\Model
         if (empty($formData['pwd']) || empty($formData['pwd_repeat']) || $formData['pwd'] != $formData['pwd_repeat']) {
             $errors[] = $this->lang->t('users', 'type_in_pwd');
         }
-        if (Core\Modules::hasPermission('captcha', 'image') === true && Core\Validate::captcha($formData['captcha']) === false) {
+        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true && Core\Validate::captcha($formData['captcha']) === false) {
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
