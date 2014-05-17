@@ -29,7 +29,7 @@ class Index extends Core\Modules\Controller
         } else {
             $this->breadcrumb
                 ->append($this->lang->t('users', 'users'), $this->uri->route('users'))
-                ->append($this->lang->t('users', 'home'), $this->uri->route('users/home'))
+                ->append($this->lang->t('users', 'home'), $this->uri->route('users/index/home'))
                 ->append($this->lang->t('users', 'edit_profile'));
 
             if (empty($_POST) === false) {
@@ -134,7 +134,7 @@ class Index extends Core\Modules\Controller
 
             $this->breadcrumb
                 ->append($this->lang->t('users', 'users'), $this->uri->route('users'))
-                ->append($this->lang->t('users', 'home'), $this->uri->route('users/home'))
+                ->append($this->lang->t('users', 'home'), $this->uri->route('users/index/home'))
                 ->append($this->lang->t('users', 'edit_settings'));
 
             if (empty($_POST) === false) {
