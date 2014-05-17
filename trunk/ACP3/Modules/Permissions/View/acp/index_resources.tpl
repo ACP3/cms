@@ -26,6 +26,8 @@
                 {if $can_delete_resource === true}
                     <th style="width:3%"><input type="checkbox" id="mark-all" value="1"></th>
                 {/if}
+                <th>{lang t="permissions|area"}</th>
+                <th>{lang t="permissions|controller"}</th>
                 <th>{lang t="permissions|filename"}</th>
                 <th>{lang t="permissions|assigned_privilege"}</th>
                 <th style="width:5%">{lang t="system|id"}</th>
@@ -34,13 +36,15 @@
             <tbody>
             {foreach $resources as $module => $values}
                 <tr class="sub-table-header">
-                    <th colspan="{if $can_delete_resource === true}4{else}3{/if}">{$module}</th>
+                    <th colspan="{if $can_delete_resource === true}6{else}5{/if}">{$module}</th>
                 </tr>
                 {foreach $values as $row}
                     <tr>
                         {if $can_delete_resource === true}
                             <td><input type="checkbox" name="entries[]" value="{$row.resource_id}"></td>
                         {/if}
+                        <td>{$row.area}</td>
+                        <td>{$row.controller}</td>
                         <td>{check_access mode="link" path="acp/permissions/index/edit_resource/id_`$row.resource_id`" title=$row.page}</td>
                         <td>{$row.privilege_name}</td>
                         <td>{$row.resource_id}</td>

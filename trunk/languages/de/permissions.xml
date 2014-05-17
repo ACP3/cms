@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
+    <item key="area">Bereich</item>
+    <item key="controller">Controller</item>
     <item key="create">Neue Rolle erstellen</item>
     <item key="create_resource">Neue Ressource erstellen</item>
     <item key="delete">Rolle löschen</item>
     <item key="edit">Rolle bearbeiten</item>
     <item key="edit_resource">Ressource bearbeiten</item>
-    <item key="list_resources">Ressourcen verwalten</item>
+    <item key="index_resources">Ressourcen verwalten</item>
     <item key="allow_access">Erlaubt</item>
     <item key="assigned_privilege">Zugeordnetes Privileg</item>
     <item key="filename">Dateiname</item>
@@ -26,5 +28,7 @@
     <item key="superior_role">Übergeordnete Rolle</item>
     <item key="select_module">Bitte wählen Sie das Modul aus, für welches die Ressource erstellt werden soll.</item>
     <item key="select_privilege">Bitte wählen Sie für die gewählte Ressource ein Privileg aus.</item>
+    <item key="type_in_area">Bitte geben Sie den Namen des Sichtbarkeitsbereichs der Resource an.</item>
+    <item key="type_in_controller">Bitte geben Sie den Namen des Controllers an.</item>
     <item key="type_in_resource">Bitte geben Sie den Namen der Ressource an.</item>
 </language>

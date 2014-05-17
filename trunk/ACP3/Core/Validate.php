@@ -237,7 +237,7 @@ class Validate
      */
     public static function isInternalURI($var)
     {
-        return (bool)preg_match('/^([a-z\d_\-]+\/){2,}$/', $var);
+        return (bool)preg_match('/^([a-z\d_\-]+\/){3,}$/', $var);
     }
 
     /**

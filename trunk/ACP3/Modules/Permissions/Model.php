@@ -63,12 +63,12 @@ class Model extends Core\Model
 
     public function getResourceById($id)
     {
-        return $this->db->fetchAssoc('SELECT r.page, r.privilege_id, m.name AS module_name FROM ' . $this->prefix . static::TABLE_NAME_RESOURCES . ' AS r JOIN ' . $this->prefix . \ACP3\Modules\System\Model::TABLE_NAME . ' AS m ON(m.id = r.module_id) WHERE r.id = ?', array($id));
+        return $this->db->fetchAssoc('SELECT r.page, r.area, r.controller, r.privilege_id, m.name AS module_name FROM ' . $this->prefix . static::TABLE_NAME_RESOURCES . ' AS r JOIN ' . $this->prefix . \ACP3\Modules\System\Model::TABLE_NAME . ' AS m ON(m.id = r.module_id) WHERE r.id = ?', array($id));
     }
 
     public function getAllResources()
     {
-        return $this->db->fetchAll('SELECT m.id AS module_id, m.name AS module_name, r.id AS resource_id, r.page, r.privilege_id, p.key AS privilege_name FROM ' . $this->prefix . static::TABLE_NAME_RESOURCES . ' AS r JOIN ' . $this->prefix . \ACP3\Modules\System\Model::TABLE_NAME . ' AS m ON(r.module_id = m.id) JOIN ' . $this->prefix . static::TABLE_NAME_PRIVILEGES . ' AS p ON(r.privilege_id = p.id) ORDER BY r.module_id ASC, r.page ASC');
+        return $this->db->fetchAll('SELECT m.id AS module_id, m.name AS module_name, r.id AS resource_id, r.page, r.area, r.controller, r.privilege_id, p.key AS privilege_name FROM ' . $this->prefix . static::TABLE_NAME_RESOURCES . ' AS r JOIN ' . $this->prefix . \ACP3\Modules\System\Model::TABLE_NAME . ' AS m ON(r.module_id = m.id) JOIN ' . $this->prefix . static::TABLE_NAME_PRIVILEGES . ' AS p ON(r.privilege_id = p.id) ORDER BY r.module_id ASC, r.area ASC, r.controller ASC, r.page ASC');
     }
 
     public function validateCreate(array $formData)
@@ -102,7 +102,13 @@ class Model extends Core\Model
         if (empty($formData['modules']) || Core\Modules::isInstalled($formData['modules']) === false) {
             $errors['modules'] = $this->lang->t('permissions', 'select_module');
         }
-        if (empty($formData['resource']) || preg_match('=/=', $formData['resource']) || Core\Validate::isInternalURI(strtolower($formData['modules']) . '/' . $formData['resource'] . '/') === false) {
+        if (empty($formData['area']) || in_array($formData['area'], array('admin', 'frontend', 'sidebar')) === false) {
+            $errors['controller'] = $this->lang->t('permissions', 'type_in_area');
+        }
+        if (empty($formData['controller'])) {
+            $errors['controller'] = $this->lang->t('permissions', 'type_in_controller');
+        }
+        if (empty($formData['resource']) || preg_match('=/=', $formData['resource']) || Core\Validate::isInternalURI(strtolower($formData['modules']) . '/' . $formData['controller'] . '/' . $formData['resource'] . '/') === false) {
             $errors['resource'] = $this->lang->t('permissions', 'type_in_resource');
         }
         if (empty($formData['privileges']) || Core\Validate::isNumber($formData['privileges']) === false) {
@@ -148,7 +154,13 @@ class Model extends Core\Model
         if (empty($formData['modules']) || Core\Modules::isInstalled($formData['modules']) === false) {
             $errors['modules'] = $this->lang->t('permissions', 'select_module');
         }
-        if (empty($formData['resource']) || preg_match('=/=', $formData['resource']) || Core\Validate::isInternalURI($formData['modules'] . '/' . $formData['resource'] . '/') === false) {
+        if (empty($formData['area']) || in_array($formData['area'], array('admin', 'frontend', 'sidebar')) === false) {
+            $errors['controller'] = $this->lang->t('permissions', 'type_in_area');
+        }
+        if (empty($formData['controller'])) {
+            $errors['controller'] = $this->lang->t('permissions', 'type_in_controller');
+        }
+        if (empty($formData['resource']) || preg_match('=/=', $formData['resource']) || Core\Validate::isInternalURI($formData['modules'] . '/' . $formData['controller'] . '/' . $formData['resource'] . '/') === false) {
             $errors['resource'] = $this->lang->t('permissions', 'type_in_resource');
         }
         if (empty($formData['privileges']) || Core\Validate::isNumber($formData['privileges']) === false) {

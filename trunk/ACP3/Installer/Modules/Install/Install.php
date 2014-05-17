@@ -45,12 +45,15 @@ class Install extends Core\Modules\Controller
         if (isset($_POST['submit'])) {
             $config_path = ACP3_DIR . 'config.php';
 
-            if (empty($_POST['db_host']))
+            if (empty($_POST['db_host'])) {
                 $errors['db-host'] = $this->lang->t('type_in_db_host');
-            if (empty($_POST['db_user']))
+            }
+            if (empty($_POST['db_user'])) {
                 $errors['db-user'] = $this->lang->t('type_in_db_username');
-            if (empty($_POST['db_name']))
+            }
+            if (empty($_POST['db_name'])) {
                 $errors['db-name'] = $this->lang->t('type_in_db_name');
+            }
             if (!empty($_POST['db_host']) && !empty($_POST['db_user']) && !empty($_POST['db_name'])) {
                 try {
                     $config = new \Doctrine\DBAL\Configuration();
@@ -65,26 +68,33 @@ class Install extends Core\Modules\Controller
                     );
                     $db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
                     $db->query('USE `' . $_POST['db_name'] . '`');
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     $errors[] = sprintf($this->lang->t('db_connection_failed'), $e->getMessage());
                 }
             }
-            if (empty($_POST['user_name']))
+            if (empty($_POST['user_name'])) {
                 $errors['user-name'] = $this->lang->t('type_in_user_name');
+            }
             if ((empty($_POST['user_pwd']) || empty($_POST['user_pwd_wdh'])) ||
                 (!empty($_POST['user_pwd']) && !empty($_POST['user_pwd_wdh']) && $_POST['user_pwd'] != $_POST['user_pwd_wdh'])
-            )
+            ) {
                 $errors['user-pwd'] = $this->lang->t('type_in_pwd');
-            if (\ACP3\Core\Validate::email($_POST['mail']) === false)
+            }
+            if (\ACP3\Core\Validate::email($_POST['mail']) === false) {
                 $errors['mail'] = $this->lang->t('wrong_email_format');
-            if (empty($_POST['date_format_long']))
+            }
+            if (empty($_POST['date_format_long'])) {
                 $errors['date-format-long'] = $this->lang->t('type_in_date_format');
-            if (empty($_POST['date_format_short']))
+            }
+            if (empty($_POST['date_format_short'])) {
                 $errors['date-format-short'] = $this->lang->t('type_in_date_format');
-            if (\ACP3\Core\Validate::timeZone($_POST['date_time_zone']) === false)
+            }
+            if (\ACP3\Core\Validate::timeZone($_POST['date_time_zone']) === false) {
                 $errors['date-time-zone'] = $this->lang->t('select_time_zone');
-            if (is_file($config_path) === false || is_writable($config_path) === false)
+            }
+            if (is_file($config_path) === false || is_writable($config_path) === false) {
                 $errors[] = $this->lang->t('wrong_chmod_for_config_file');
+            }
 
             if (isset($errors)) {
                 $this->view->assign('error_msg', Core\Functions::errorBox($errors));
@@ -140,13 +150,13 @@ class Install extends Core\Modules\Controller
                 // Admin-User, Menüpunkte, News, etc. in die DB schreiben
                 if ($bool === true) {
                     $salt = \ACP3\Core\Functions::salt(12);
-                    $current_date = gmdate('Y-m-d H:i:s');
+                    $currentDate = gmdate('Y-m-d H:i:s');
 
-                    $news_mod_id = \ACP3\Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('news'));
+                    $newsModuleId = \ACP3\Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('news'));
                     $queries = array(
-                        "INSERT INTO `{pre}users` VALUES ('', 1, " . \ACP3\Core\Registry::get('Db')->quote($_POST["user_name"]) . ", '" . \ACP3\Core\Functions::generateSaltedPassword($salt, $_POST["user_pwd"]) . ":" . $salt . "', 0, '', '1', '', 0, '" . $_POST["mail"] . "', 0, '', '', '', '', '', '', '', '', 0, 0, " . \ACP3\Core\Registry::get('Db')->quote($_POST["date_format_long"]) . ", " . \ACP3\Core\Registry::get('Db')->quote($_POST["date_format_short"]) . ", '" . $_POST["date_time_zone"] . "', '" . LANG . "', '20', '', '" . $current_date . "');",
-                        'INSERT INTO `{pre}categories` VALUES (\'\', \'' . $this->lang->t('category_name') . '\', \'\', \'' . $this->lang->t('category_description') . '\', \'' . $news_mod_id . '\');',
-                        'INSERT INTO `{pre}news` VALUES (\'\', \'' . $current_date . '\', \'' . $current_date . '\', \'' . $this->lang->t('news_headline') . '\', \'' . $this->lang->t('news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\', \'\');',
+                        "INSERT INTO `{pre}users` VALUES ('', 1, " . \ACP3\Core\Registry::get('Db')->quote($_POST["user_name"]) . ", '" . \ACP3\Core\Functions::generateSaltedPassword($salt, $_POST["user_pwd"]) . ":" . $salt . "', 0, '', '1', '', 0, '" . $_POST["mail"] . "', 0, '', '', '', '', '', '', '', '', 0, 0, " . \ACP3\Core\Registry::get('Db')->quote($_POST["date_format_long"]) . ", " . \ACP3\Core\Registry::get('Db')->quote($_POST["date_format_short"]) . ", '" . $_POST["date_time_zone"] . "', '" . LANG . "', '20', '', '" . $currentDate . "');",
+                        'INSERT INTO `{pre}categories` VALUES (\'\', \'' . $this->lang->t('category_name') . '\', \'\', \'' . $this->lang->t('category_description') . '\', \'' . $newsModuleId . '\');',
+                        'INSERT INTO `{pre}news` VALUES (\'\', \'' . $currentDate . '\', \'' . $currentDate . '\', \'' . $this->lang->t('news_headline') . '\', \'' . $this->lang->t('news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\', \'\');',
                         'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 1, 0, 1, 4, 1, \'' . $this->lang->t('pages_news') . '\', \'news\', 1);',
                         'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 1, 1, 2, 3, 1, \'' . $this->lang->t('pages_newsletter') . '\', \'newsletter\', 1);',
                         'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 3, 0, 5, 6, 1, \'' . $this->lang->t('pages_files') . '\', \'files\', 1);',
@@ -155,7 +165,7 @@ class Install extends Core\Modules\Controller
                         'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 6, 0, 11, 12, 1, \'' . $this->lang->t('pages_polls') . '\', \'polls\', 1);',
                         'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 7, 0, 13, 14, 1, \'' . $this->lang->t('pages_search') . '\', \'search\', 1);',
                         'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 2, 8, 0, 15, 16, 1, \'' . $this->lang->t('pages_contact') . '\', \'contact\', 1);',
-                        'INSERT INTO `{pre}menu_items` VALUES (\'\', 2, 2, 9, 0, 17, 18, 1, \'' . $this->lang->t('pages_imprint') . '\', \'contact/imprint/\', 1);',
+                        'INSERT INTO `{pre}menu_items` VALUES (\'\', 2, 2, 9, 0, 17, 18, 1, \'' . $this->lang->t('pages_imprint') . '\', \'contact/index/imprint/\', 1);',
                         'INSERT INTO `{pre}menus` VALUES (1, \'main\', \'' . $this->lang->t('pages_main') . '\');',
                         'INSERT INTO `{pre}menus` VALUES (2, \'sidebar\', \'' . $this->lang->t('pages_sidebar') . '\');',
                     );
@@ -165,7 +175,7 @@ class Install extends Core\Modules\Controller
                     }
 
                     // Modulkonfigurationsdateien schreiben
-                    $system_settings = array(
+                    $systemSettings = array(
                         'cache_images' => true,
                         'cache_minify' => 3600,
                         'date_format_long' => \ACP3\Core\Functions::strEncode($_POST['date_format_long']),
@@ -194,7 +204,7 @@ class Install extends Core\Modules\Controller
                         'version' => CONFIG_VERSION,
                         'wysiwyg' => 'CKEditor'
                     );
-                    \ACP3\Core\Config::setSettings('system', $system_settings);
+                    \ACP3\Core\Config::setSettings('system', $systemSettings);
                     \ACP3\Core\Config::setSettings('users', array('mail' => $_POST['mail']));
                     \ACP3\Core\Config::setSettings('contact', array('mail' => $_POST['mail'], 'disclaimer' => $this->lang->t('disclaimer')));
                     \ACP3\Core\Config::setSettings('newsletter', array('mail' => $_POST['mail'], 'mailsig' => $this->lang->t('sincerely') . "\n\n" . $this->lang->t('newsletter_mailsig')));
@@ -316,12 +326,12 @@ class Install extends Core\Modules\Controller
 
     public function actionLicence()
     {
-        $this->view->setContentTemplate('install/licence.tpl');
+        return;
     }
 
     public function actionWelcome()
     {
-        $this->view->setContentTemplate('install/welcome.tpl');
+        return;
     }
 
 }

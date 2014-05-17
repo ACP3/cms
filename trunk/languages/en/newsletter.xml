@@ -7,7 +7,7 @@
     <item key="delete">Delete newsletters</item>
     <item key="delete_account">Delete newsletter accounts</item>
     <item key="edit">Edit newsletter</item>
-    <item key="list_accounts">Newsletter accounts</item>
+    <item key="index_accounts">Newsletter accounts</item>
     <item key="send">Send newsletter</item>
     <item key="settings">Settings</item>
     <item key="action">Action</item>
@@ -19,8 +19,8 @@
     <item key="select_newsletter">To display a newsletter please select one from the above dropdown list.</item>
     <item key="create_save_error">While sending respectively saving the newsletter an error has occured.</item>
     <item key="create_success">The newsletter has been successfully sent.</item>
-    <item key="list">Newsletter</item>
-    <item key="list_archive">Archive</item>
+    <item key="index">Newsletter</item>
+    <item key="index_archive">Archive</item>
     <item key="mailsig">E-mail signature</item>
     <item key="missed_out_newsletter">Missed out a newsletter edition?</item>
     <item key="mod_description">This module is responsible for the newsletter.</item>

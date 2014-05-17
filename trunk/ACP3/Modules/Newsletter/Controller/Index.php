@@ -48,8 +48,8 @@ class Index extends Core\Modules\Controller
         $newsletter = $this->model->getOneById((int)$this->uri->id, 1);
 
         if (!empty($newsletter)) {
-            $this->breadcrumb->append($this->lang->t('newsletter', 'list'), $this->uri->route('newsletter'))
-                ->append($this->lang->t('newsletter', 'list_archive'), $this->uri->route('newsletter/index/index_archive'))
+            $this->breadcrumb->append($this->lang->t('newsletter', 'index'), $this->uri->route('newsletter'))
+                ->append($this->lang->t('newsletter', 'index_archive'), $this->uri->route('newsletter/index/index_archive'))
                 ->append($newsletter['title']);
 
             $newsletter['date_formatted'] = $this->date->format($newsletter['date'], 'short');
@@ -114,8 +114,8 @@ class Index extends Core\Modules\Controller
 
     public function actionIndexArchive()
     {
-        $this->breadcrumb->append($this->lang->t('newsletter', 'list'), $this->uri->route('newsletter'))
-            ->append($this->lang->t('newsletter', 'list_archive'));
+        $this->breadcrumb->append($this->lang->t('newsletter', 'index'), $this->uri->route('newsletter'))
+            ->append($this->lang->t('newsletter', 'index_archive'));
 
         $newsletters = $this->model->getAll(1, POS, $this->auth->entries);
         $c_newsletters = count($newsletters);

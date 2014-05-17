@@ -5,7 +5,7 @@
     <item key="delete">Delete roles</item>
     <item key="edit">Edit role</item>
     <item key="edit_resource">Edit resource</item>
-    <item key="list_resources">Manage resources</item>
+    <item key="index_resources">Manage resources</item>
     <item key="allow_access">Allow</item>
     <item key="assigned_privilege">Assigned privilege</item>
     <item key="filename">Filename</item>
