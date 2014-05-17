@@ -30,7 +30,7 @@ class Index extends Core\Modules\Controller
             $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha(3, 'captcha', true, 'newsletter'));
         }
 
-        $this->session->generateFormToken('newsletter/list');
+        $this->session->generateFormToken('newsletter/index/index');
 
         $this->view->displayTemplate('newsletter/sidebar.tpl');
     }
