@@ -16,6 +16,8 @@ class Index extends Core\Modules\Controller
     {
         $this->view->assign('search_mods', Search\Helpers::getModules());
 
+        $this->session->generateFormToken('search/index/index');
+
         $this->view->displayTemplate('search/sidebar.tpl');
     }
 
