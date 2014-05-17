@@ -108,7 +108,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionCreateResource()
     {
         $this->breadcrumb
-            ->append($this->lang->t('permissions', 'list_resources'), $this->uri->route('acp/permissions/index/index_resources'))
+            ->append($this->lang->t('permissions', 'index_resources'), $this->uri->route('acp/permissions/index/index_resources'))
             ->append($this->lang->t('permissions', 'create_resource'));
 
         if (empty($_POST) === false) {
@@ -119,6 +119,8 @@ class Index extends Core\Modules\Controller\Admin
                 $insertValues = array(
                     'id' => '',
                     'module_id' => $moduleInfo['id'],
+                    'area' => $_POST['area'],
+                    'controller' => $_POST['controller'],
                     'page' => $_POST['resource'],
                     'params' => '',
                     'privilege_id' => $_POST['privileges'],
@@ -150,7 +152,7 @@ class Index extends Core\Modules\Controller\Admin
         }
         $this->view->assign('privileges', $privileges);
 
-        $this->view->assign('form', array_merge(array('resource' => ''), $_POST));
+        $this->view->assign('form', array_merge(array('resource' => '', 'area' => '', 'controller' => ''), $_POST));
 
         $this->session->generateFormToken();
     }
@@ -190,7 +192,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionDeleteResources()
     {
         $this->breadcrumb
-            ->append($this->lang->t('permissions', 'list_resources'), $this->uri->route('acp/permissions/index/index_resources'))
+            ->append($this->lang->t('permissions', 'index_resources'), $this->uri->route('acp/permissions/index/index_resources'))
             ->append($this->lang->t('permissions', 'delete_resources'));
 
         $items = $this->_deleteItem('acp/permissions/index/delete_resources', 'acp/permissions/index/index_resources');
@@ -305,7 +307,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionEditResource()
     {
         $this->breadcrumb
-            ->append($this->lang->t('permissions', 'list_resources'), $this->uri->route('acp/permissions/index/index_resources'))
+            ->append($this->lang->t('permissions', 'index_resources'), $this->uri->route('acp/permissions/index/index_resources'))
             ->append($this->lang->t('permissions', 'edit_resource'));
 
         if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resourceExists($this->uri->id) === true) {
@@ -314,10 +316,12 @@ class Index extends Core\Modules\Controller\Admin
                     $this->model->validateEditResource($_POST);
 
                     $updateValues = array(
+                        'controller' => $_POST['controller'],
+                        'area' => $_POST['area'],
                         'page' => $_POST['resource'],
                         'privilege_id' => $_POST['privileges'],
                     );
-                    $bool = $this->model->update($updateValues, $this->uri->id . Permissions\Model::TABLE_NAME_RESOURCES);
+                    $bool = $this->model->update($updateValues, $this->uri->id, Permissions\Model::TABLE_NAME_RESOURCES);
 
                     Core\ACL::setResourcesCache();
 
@@ -342,6 +346,8 @@ class Index extends Core\Modules\Controller\Admin
 
             $defaults = array(
                 'resource' => $resource['page'],
+                'area' => $resource['area'],
+                'controller' => $resource['controller'],
                 'modules' => $resource['module_name']
             );
             $this->view->assign('form', array_merge($defaults, $_POST));

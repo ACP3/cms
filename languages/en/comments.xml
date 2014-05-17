@@ -3,7 +3,7 @@
     <item key="delete">Delete comments</item>
     <item key="delete_comments">Delete comments</item>
     <item key="edit">Edit comment</item>
-    <item key="list_comments">Comments</item>
+    <item key="index_comments">Comments</item>
     <item key="settings">Settings</item>
     <item key="allow_emoticons">Allow Emoticons</item>
     <item key="comments">Comments</item>

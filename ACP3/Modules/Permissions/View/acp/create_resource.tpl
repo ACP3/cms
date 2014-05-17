@@ -3,7 +3,7 @@
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
     <div class="form-group">
-        <label for="privileges" class="col-lg-2 control-label">{lang t="system|module"}</label>
+        <label for="modules" class="col-lg-2 control-label">{lang t="system|module"}</label>
 
         <div class="col-lg-10">
             <select class="form-control" name="modules" id="modules">
@@ -11,6 +11,20 @@
                     <option value="{$row.dir}"{$row.selected}>{$row.name}</option>
                 {/foreach}
             </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="area" class="col-lg-2 control-label">{lang t="permissions|area"}</label>
+
+        <div class="col-lg-10">
+            <input class="form-control" type="text" name="area" id="area" value="{$form.area}" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="controller" class="col-lg-2 control-label">{lang t="permissions|controller"}</label>
+
+        <div class="col-lg-10">
+            <input class="form-control" type="text" name="controller" id="controller" value="{$form.controller}" required>
         </div>
     </div>
     <div class="form-group">

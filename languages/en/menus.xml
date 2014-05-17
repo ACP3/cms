@@ -6,7 +6,7 @@
     <item key="delete_item">Delete menu items</item>
     <item key="edit">Edit menu bar</item>
     <item key="edit_item">Edit menu item</item>
-    <item key="list_items">Menu items</item>
+    <item key="index_items">Menu items</item>
     <item key="article">Article</item>
     <item key="chronology">Chronology</item>
     <item key="display_item">Display menu item</item>

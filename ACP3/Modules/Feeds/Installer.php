@@ -17,7 +17,7 @@ class Installer extends Modules\AbstractInstaller
         $this->specialResources = array(
             'Admin' => array(
                 'Index' => array(
-                    'list' => 7
+                    'index' => 7
                 )
             )
         );
