@@ -143,7 +143,7 @@ class Application
     private static function _checkForMaintenanceMode()
     {
         if ((bool)CONFIG_MAINTENANCE_MODE === true &&
-            (defined('IN_ADM') === false && strpos(self::$uri->query, 'users/login/') !== 0)
+            (self::$uri->area !== 'admin' && strpos(self::$uri->query, 'users/login/') !== 0)
         ) {
             self::$view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
             self::$view->assign('CONTENT', CONFIG_MAINTENANCE_MESSAGE);
@@ -218,7 +218,7 @@ class Application
         self::$view->assign('DESIGN_PATH', DESIGN_PATH);
         self::$view->assign('DESIGN_PATH_ABSOLUTE', DESIGN_PATH_ABSOLUTE);
         self::$view->assign('UA_IS_MOBILE', Core\Functions::isMobileBrowser());
-        self::$view->assign('IN_ADM', defined('IN_ADM'));
+        self::$view->assign('IN_ADM', self::$uri->area === 'admin');
 
         $langInfo = Core\XML::parseXmlFile(ACP3_ROOT_DIR . 'languages/' . self::$lang->getLanguage() . '/info.xml', '/language');
         self::$view->assign('LANG_DIRECTION', isset($langInfo['direction']) ? $langInfo['direction'] : 'ltr');
@@ -229,7 +229,7 @@ class Application
         // Aktuelle Datensatzposition bestimmen
         define('POS', Core\Validate::isNumber(self::$uri->page) && self::$uri->page >= 1 ? (int)(self::$uri->page - 1) * Core\Registry::get('Auth')->entries : 0);
 
-        if (defined('IN_ADM') === true && self::$auth->isUser() === false && self::$uri->query !== 'users/index/login/') {
+        if (self::$uri->area === 'admin' && self::$auth->isUser() === false && self::$uri->query !== 'users/index/login/') {
             $redirectUri = base64_encode('acp/' . self::$uri->query);
             self::$uri->redirect('users/index/login/redirect_' . $redirectUri);
         }

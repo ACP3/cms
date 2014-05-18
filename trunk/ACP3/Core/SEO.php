@@ -107,9 +107,9 @@ class SEO
     public function getMetaTags()
     {
         $meta = array(
-            'description' => defined('IN_ADM') === true ? '' : $this->getPageDescription(),
-            'keywords' => defined('IN_ADM') === true ? '' : $this->getPageKeywords(),
-            'robots' => defined('IN_ADM') === true ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
+            'description' => $this->uri->area === 'admin' ? '' : $this->getPageDescription(),
+            'keywords' => $this->uri->area === 'admin' ? '' : $this->getPageKeywords(),
+            'robots' => $this->uri->area === 'admin' ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
             'previous_page' => $this->previousPage,
             'next_page' => $this->nextPage,
             'canonical' => $this->canonical,
