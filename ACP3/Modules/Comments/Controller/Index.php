@@ -166,7 +166,7 @@ class Index extends Core\Modules\Controller
             $this->view->assign('comments_create_form', $this->actionCreate());
         }
 
-        return $this->view->fetchTemplate('comments/list.tpl');
+        return $this->view->fetchTemplate('comments/index.tpl');
     }
 
 }
