@@ -260,7 +260,7 @@ class View
      */
     public function buildMinifyLink()
     {
-        $minify = ROOT_DIR . 'libraries/min/' . ((bool)CONFIG_SEO_MOD_REWRITE === true && defined('IN_ADM') === false ? '' : '?') . 'g=%s&amp;' . CONFIG_DESIGN;
+        $minify = ROOT_DIR . 'libraries/min/' . ((bool)CONFIG_SEO_MOD_REWRITE === true && Registry::get('URI')->area !== 'admin' ? '' : '?') . 'g=%s&amp;' . CONFIG_DESIGN;
 
         ksort($this->jsLibraries);
         $libraries = '';
