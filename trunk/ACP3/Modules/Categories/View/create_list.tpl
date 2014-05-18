@@ -9,7 +9,7 @@
     </div>
     {if isset($categories.create)}
         <div class="col-lg-6">
-            <input class="form-control" type="text" name="{$categories.create.name}" id="{$categories.create.name|replace:'_':'-'}" value="{$categories.create.value}" placeholder="{lang t="categories|acp_create"}">
+            <input class="form-control" type="text" name="{$categories.create.name}" id="{$categories.create.name|replace:'_':'-'}" value="{$categories.create.value}" placeholder="{lang t="categories|create"}">
         </div>
     {/if}
 </div>

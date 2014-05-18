@@ -73,7 +73,7 @@
                         <td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
                     {/if}
                     <td>{if $can_edit_picture}
-                        <a href="{uri args="acp/gallery/index/edit_picture/id_`$row.id`"}" title="{lang t="gallery|acp_edit_picture"}">
+                        <a href="{uri args="acp/gallery/index/edit_picture/id_`$row.id`"}" title="{lang t="gallery|edit_picture"}">
                             <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt=""></a>{else}
                             <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt="">{/if}</td>
                     <td>{$row.description}</td>

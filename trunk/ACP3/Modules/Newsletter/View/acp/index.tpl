@@ -47,7 +47,7 @@
                     <td>{$row.status}</td>
                     {if $can_send}
                         <td>
-                            <a href="{uri args="acp/newsletter/index/send/id_`$row.id`"}" title="{lang t="newsletter|acp_send"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
+                            <a href="{uri args="acp/newsletter/index/send/id_`$row.id`"}" title="{lang t="newsletter|send"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
                                 {icon path="16/mail_send" width="16" height="16" alt="{lang t="newsletter|send"}"}
                             </a>
                         </td>
