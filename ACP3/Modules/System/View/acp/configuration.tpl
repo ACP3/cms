@@ -9,7 +9,7 @@
         <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general"}</a></li>
             <li><a href="#tab-2" data-toggle="tab">{lang t="system|date"}</a></li>
-            <li><a href="#tab-3" data-toggle="tab">{lang t="system|acp_maintenance"}</a></li>
+            <li><a href="#tab-3" data-toggle="tab">{lang t="system|maintenance"}</a></li>
             <li><a href="#tab-4" data-toggle="tab">{lang t="system|seo"}</a></li>
             <li><a href="#tab-5" data-toggle="tab">{lang t="system|performance"}</a></li>
             <li><a href="#tab-6" data-toggle="tab">{lang t="system|email"}</a></li>

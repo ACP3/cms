@@ -10,7 +10,7 @@
         </div>
         <div class="collapse navbar-collapse navbar-ex2-collapse">
             <div class="navbar-text pull-right">
-                {check_access mode="link" path="acp/permissions/index/create_resource"  icon="32/resource" lang="permissions|acp_create_resource"}
+                {check_access mode="link" path="acp/permissions/index/create_resource"  icon="32/resource" lang="permissions|create_resource"}
                 {check_access mode="input" path="acp/permissions/index/delete_resources" icon="32/cancel" lang="system|delete_marked"}
             </div>
         </div>

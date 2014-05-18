@@ -7,7 +7,7 @@
             <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general"}</a></li>
             <li><a href="#tab-2" data-toggle="tab">{lang t="users|contact"}</a></li>
             <li><a href="#tab-3" data-toggle="tab">{lang t="users|address"}</a></li>
-            <li><a href="#tab-4" data-toggle="tab">{lang t="users|acp_settings"}</a></li>
+            <li><a href="#tab-4" data-toggle="tab">{lang t="users|settings"}</a></li>
             <li><a href="#tab-5" data-toggle="tab">{lang t="users|privacy"}</a></li>
             <li><a href="#tab-6" data-toggle="tab">{lang t="users|pwd"}</a></li>
         </ul>
