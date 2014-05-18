@@ -46,7 +46,7 @@ abstract class Helpers
 
         Core\Registry::get('View')->assign('emoticons_field_id', empty($formFieldId) ? 'message' : $formFieldId);
         Core\Registry::get('View')->assign('emoticons', self::$emoticons);
-        return Core\Registry::get('View')->fetchTemplate('emoticons/list.tpl');
+        return Core\Registry::get('View')->fetchTemplate('emoticons/index.tpl');
     }
 
     /**

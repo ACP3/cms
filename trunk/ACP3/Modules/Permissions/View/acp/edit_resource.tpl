@@ -38,7 +38,7 @@
         <div class="col-lg-offset-2 col-lg-10">
             <input type="hidden" name="modules" value="{$form.modules}">
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-            <a href="{uri args="acp/permissions/list_resources"}" class="btn btn-default">{lang t="system|cancel"}</a>
+            <a href="{uri args="acp/permissions/index/index_resources"}" class="btn btn-default">{lang t="system|cancel"}</a>
             {$form_token}
         </div>
     </div>

@@ -60,7 +60,7 @@ class Index extends Core\Modules\Controller
                 // E-Mail-Adresse zusenden
                 if ($settings['notify'] == 1 || $settings['notify'] == 2) {
                     $host = 'http://' . htmlentities($_SERVER['HTTP_HOST']);
-                    $fullPath = $host . $this->uri->route('guestbook/list') . '#gb-entry-' . $this->db->lastInsertId();
+                    $fullPath = $host . $this->uri->route('guestbook') . '#gb-entry-' . $this->db->lastInsertId();
                     $body = sprintf($settings['notify'] == 1 ? $this->lang->t('guestbook', 'notification_email_body_1') : $this->lang->t('guestbook', 'notification_email_body_2'), $host, $fullPath);
                     Core\Functions::generateEmail('', $settings['notify_email'], $settings['notify_email'], $this->lang->t('guestbook', 'notification_email_subject'), $body);
                 }

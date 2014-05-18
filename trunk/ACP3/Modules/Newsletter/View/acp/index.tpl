@@ -11,7 +11,7 @@
         <div class="collapse navbar-collapse navbar-ex2-collapse">
             <div class="navbar-text pull-right">
                 {check_access mode="link" path="acp/newsletter/index/create" icon="32/mail_new" width="32" height="32"}
-                {check_access mode="link" path="acp/newsletter/index/list_accounts" icon="32/personal" width="32" height="32"}
+                {check_access mode="link" path="acp/newsletter/index/index_accounts" icon="32/personal" width="32" height="32"}
                 {check_access mode="link" path="acp/newsletter/index/settings" icon="32/advancedsettings" width="32" height="32"}
                 {check_access mode="input" path="acp/newsletter/index/delete" icon="32/cancel" lang="system|delete_marked"}
             </div>

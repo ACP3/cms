@@ -141,7 +141,7 @@ class Installer extends Modules\AbstractInstaller
             'extra_css' => '',
             'extra_js' => '',
             'flood' => '',
-            'homepage' => 'news/list/',
+            'homepage' => 'news/index/index/',
             'icons_path' => 'libraries/crystal_project/',
             'lang' => '',
             'mailer_smtp_auth' => false,
