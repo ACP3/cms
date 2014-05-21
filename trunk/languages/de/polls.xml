@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="create">Neue Umfrage erstellen</item>
-    <item key="delete">Umfragen löschen</item>
-    <item key="edit">Umfrage bearbeiten</item>
+    <item key="admin_index_create">Neue Umfrage erstellen</item>
+    <item key="admin_index_delete">Umfragen löschen</item>
+    <item key="admin_index_edit">Umfrage bearbeiten</item>
     <item key="add_answer">Antwort hinzufügen</item>
     <item key="already_voted">Sie haben bereits an dieser Umfrage teilgenommen.</item>
     <item key="answer">Antwort</item>

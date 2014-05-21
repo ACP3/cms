@@ -3,16 +3,16 @@
     <item key="account_locked">Your user account has been locked. To reactivate it, please use the &quot;forgot password&quot;
         function, to receive a new password.
     </item>
-    <item key="create">Create new user</item>
-    <item key="delete">Delete users</item>
-    <item key="edit">Edit user</item>
-    <item key="settings">Settings</item>
     <item key="address">Address</item>
     <item key="address_street">Street</item>
     <item key="address_house_number">House number</item>
     <item key="address_zip">Zip code</item>
     <item key="address_city">City</item>
     <item key="administration">Administration</item>
+    <item key="admin_index_create">Create new user</item>
+    <item key="admin_index_delete">Delete users</item>
+    <item key="admin_index_edit">Edit user</item>
+    <item key="admin_index_settings">Settings</item>
     <item key="admin_user_undeletable">The administrator can't be deleted.</item>
     <item key="allow_language_override">Allow users to override the default language</item>
     <item key="allow_entries_override">Allow users to override the number of displayed resultsets per page</item>

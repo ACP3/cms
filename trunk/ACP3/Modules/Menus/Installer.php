@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'menus';
-    const SCHEMA_VERSION = 32;
+    const SCHEMA_VERSION = 33;
 
     public function renameModule()
     {
@@ -73,6 +73,11 @@ class Installer extends Modules\AbstractInstaller
             ),
             32 => array(
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
+            ),
+            33 => array(
+                'UPDATE `{pre}acl_resources` SET controller = "items" WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_item";',
+                'UPDATE `{pre}acl_resources` SET page = REPLACE(page, "_item", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_item";',
+                'UPDATE `{pre}acl_resources` SET controller = "items" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "order";',
             )
         );
     }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="create">Emoticon hinzufügen</item>
-    <item key="delete">Emoticon löschen</item>
-    <item key="edit">Emoticon bearbeiten</item>
-    <item key="settings">Einstellungen</item>
+    <item key="admin_index_create">Emoticon hinzufügen</item>
+    <item key="admin_index_delete">Emoticon löschen</item>
+    <item key="admin_index_edit">Emoticon bearbeiten</item>
+    <item key="admin_index_settings">Einstellungen</item>
     <item key="code">Code</item>
     <item key="emoticons">Emoticons</item>
     <item key="image_filesize">Maximale Dateigröße des Bildes</item>

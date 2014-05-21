@@ -2,12 +2,12 @@
 <language>
     <item key="area">Bereich</item>
     <item key="controller">Controller</item>
-    <item key="create">Neue Rolle erstellen</item>
-    <item key="create_resource">Neue Ressource erstellen</item>
-    <item key="delete">Rolle löschen</item>
-    <item key="edit">Rolle bearbeiten</item>
-    <item key="edit_resource">Ressource bearbeiten</item>
-    <item key="index_resources">Ressourcen verwalten</item>
+    <item key="admin_index_create">Neue Rolle erstellen</item>
+    <item key="admin_index_delete">Rolle löschen</item>
+    <item key="admin_index_edit">Rolle bearbeiten</item>
+    <item key="admin_resources_create">Neue Ressource erstellen</item>
+    <item key="admin_resources_edit">Ressource bearbeiten</item>
+    <item key="admin_resources_index">Ressourcen verwalten</item>
     <item key="allow_access">Erlaubt</item>
     <item key="assigned_privilege">Zugeordnetes Privileg</item>
     <item key="filename">Dateiname</item>

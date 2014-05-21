@@ -52,7 +52,6 @@ class Application
      */
     private static $view;
 
-
     /**
      * Führt alle nötigen Schritte aus, um die Seite anzuzeigen
      */

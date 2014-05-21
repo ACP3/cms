@@ -8,9 +8,8 @@
     </div>
     <div class="collapse navbar-collapse navbar-ex2-collapse">
         <div class="navbar-text pull-right">
-            {check_access mode="link" path="acp/system/index/maintenance" icon="32/package_utilities" width="32" height="32"}
-            {check_access mode="link" path="acp/system/index/extensions" icon="32/package_applications" width="32" height="32"}
-            {check_access mode="link" path="acp/system/index/server_config" icon="32/kpackage" width="32" height="32"}
+            {check_access mode="link" path="acp/system/maintenance" icon="32/package_utilities" width="32" height="32"}
+            {check_access mode="link" path="acp/system/extensions" icon="32/package_applications" width="32" height="32"}
             {check_access mode="link" path="acp/system/index/configuration" icon="32/systemsettings" width="32" height="32"}
         </div>
     </div>

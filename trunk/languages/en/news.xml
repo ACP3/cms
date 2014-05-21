@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="create">Create new news</item>
-    <item key="delete">Delete news</item>
-    <item key="edit">Edit news</item>
-    <item key="settings">Settings</item>
+    <item key="admin_index_create">Create new news</item>
+    <item key="admin_index_delete">Delete news</item>
+    <item key="admin_index_edit">Edit news</item>
+    <item key="admin_index_settings">Settings</item>
     <item key="activate_readmore">Activate &quot;read more...&quot;</item>
     <item key="hyperlink">Link</item>
     <item key="complete_hyperlink_statements">Please complete the statements for the hyperlink.</item>

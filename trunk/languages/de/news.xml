@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="create">Neue News erstellen</item>
-    <item key="delete">News löschen</item>
-    <item key="edit">News bearbeiten</item>
-    <item key="settings">Einstellungen</item>
     <item key="activate_readmore">&quot;Weiterlesen...&quot; aktivieren</item>
+    <item key="admin_index_create">Neue News erstellen</item>
+    <item key="admin_index_delete">News löschen</item>
+    <item key="admin_index_edit">News bearbeiten</item>
+    <item key="admin_index_settings">Einstellungen</item>
     <item key="hyperlink">Link</item>
     <item key="complete_hyperlink_statements">Bitte vervollständigen Sie die Angaben zum Hyperlink</item>
     <item key="details">News</item>

@@ -30,7 +30,7 @@
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu-system">
                     {foreach $user_sidebar.system as $row}
-                        <li{$row.active}><a href="{uri args="acp/system/index/`$row.page`"}">{$row.name}</a></li>
+                        <li{$row.active}><a href="{uri args="acp/`$row.path`"}">{$row.name}</a></li>
                     {/foreach}
                 </ul>
             </div>

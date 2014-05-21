@@ -1,4 +1,4 @@
-<form action="{uri args="acp/newsletter/index/delete_account"}" method="post">
+<form action="{uri args="acp/newsletter/accounts/delete"}" method="post">
     <nav id="adm-list" class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex2-collapse">
@@ -10,7 +10,7 @@
         </div>
         <div class="collapse navbar-collapse navbar-ex2-collapse">
             <div class="navbar-text pull-right">
-                {check_access mode="input" path="acp/newsletter/index/delete_account" icon="32/cancel" lang="system|delete_marked"}
+                {check_access mode="input" path="acp/newsletter/accounts/delete" icon="32/cancel" lang="system|delete_marked"}
             </div>
         </div>
     </nav>
@@ -38,7 +38,7 @@
                     <td>{$row.mail}</td>
                     <td>
                         {if !empty($row.hash)}
-                            <a href="{uri args="acp/newsletter/index/activate/id_`$row.id`"}" title="{lang t="newsletter|activate_account"}">
+                            <a href="{uri args="acp/newsletter/accounts/activate/id_`$row.id`"}" title="{lang t="newsletter|activate_account"}">
                                 {icon path="16/cancel"}
                             </a>
                         {else}

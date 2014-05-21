@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="delete">Gästebucheinträge löschen</item>
-    <item key="edit">Gästebucheintrag bearbeiten</item>
-    <item key="settings">Einstellungen</item>
-    <item key="activate_entry">Eintrag freischalten</item>
+    <item key="admin_index_delete">Gästebucheinträge löschen</item>
+    <item key="admin_index_edit">Gästebucheintrag bearbeiten</item>
+    <item key="admin_index_settings">Einstellungen</item>
+    <item key="admin_index_activate_entry">Eintrag freischalten</item>
     <item key="allow_emoticons">Emoticons erlauben</item>
     <item key="create">Neuer Eintrag</item>
     <item key="guestbook">Gästebuch</item>

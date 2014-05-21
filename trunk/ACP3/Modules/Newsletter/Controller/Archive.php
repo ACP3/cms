@@ -1,0 +1,76 @@
+<?php
+
+namespace ACP3\Modules\Newsletter\Controller;
+
+use ACP3\Core;
+use ACP3\Modules\Newsletter;
+
+/**
+ * Description of NewsletterFrontend
+ *
+ * @author Tino Goratsch
+ */
+class Archive extends Core\Modules\Controller
+{
+
+    /**
+     *
+     * @var Newsletter\Model
+     */
+    protected $model;
+
+    protected function _init()
+    {
+        $this->model = new Newsletter\Model($this->db, $this->lang, $this->auth);
+    }
+
+    public function actionDetails()
+    {
+        $newsletter = $this->model->getOneById((int)$this->uri->id, 1);
+
+        if (!empty($newsletter)) {
+            $this->breadcrumb
+                ->append($this->lang->t('newsletter', 'index'), 'newsletter')
+                ->append($this->lang->t('newsletter', 'index_archive'), 'newsletter/archive/index')
+                ->append($newsletter['title']);
+
+            $newsletter['date_formatted'] = $this->date->format($newsletter['date'], 'short');
+            $newsletter['date_iso'] = $this->date->format($newsletter['date'], 'c');
+            $newsletter['text'] = Core\Functions::nl2p($newsletter['text']);
+
+            $this->view->assign('newsletter', $newsletter);
+        } else {
+            $this->uri->redirect('errors/index/404');
+        }
+    }
+
+    public function actionIndex()
+    {
+        $this->breadcrumb
+            ->append($this->lang->t('newsletter', 'index'), 'newsletter')
+            ->append($this->lang->t('newsletter', 'index_archive'));
+
+        $newsletters = $this->model->getAll(1, POS, $this->auth->entries);
+        $c_newsletters = count($newsletters);
+
+        if ($c_newsletters > 0) {
+            $pagination = new Core\Pagination(
+                $this->auth,
+                $this->breadcrumb,
+                $this->lang,
+                $this->seo,
+                $this->uri,
+                $this->view,
+                $this->model->countAll(1)
+            );
+            $pagination->display();
+
+            for ($i = 0; $i < $c_newsletters; ++$i) {
+                $newsletters[$i]['date_formatted'] = $this->date->format($newsletters[$i]['date'], 'short');
+                $newsletters[$i]['date_iso'] = $this->date->format($newsletters[$i]['date'], 'c');
+            }
+            $this->view->assign('newsletters', $newsletters);
+        }
+    }
+
+}

@@ -1,4 +1,4 @@
-<form action="{uri args="acp/menus/index/delete_item"}" method="post">
+<form action="{uri args="acp/menus/items/delete"}" method="post">
     <nav id="adm-list" class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex2-collapse">
@@ -10,9 +10,9 @@
         </div>
         <div class="collapse navbar-collapse navbar-ex2-collapse">
             <div class="navbar-text pull-right">
-                {check_access mode="link" path="acp/menus/index/create_item" icon="32/kmenuedit" width="32" height="32"}
+                {check_access mode="link" path="acp/menus/items/create" icon="32/kmenuedit" width="32" height="32"}
                 {check_access mode="link" path="acp/menus/index/create" icon="32/source_moc" width="32" height="32"}
-                {check_access mode="input" path="acp/menus/index/delete" icon="32/cancel" lang="system|delete_marked"}
+                {check_access mode="input" path="acp/menus/items/delete" icon="32/cancel" lang="system|delete_marked"}
             </div>
         </div>
     </nav>
@@ -62,17 +62,17 @@
                         {if $can_delete_item === true}
                             <td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
                         {/if}
-                        <td>{$row.spaces}{check_access mode="link" path="acp/menus/index/edit_item/id_`$row.id`" title=$row.title}</td>
+                        <td>{$row.spaces}{check_access mode="link" path="acp/menus/items/edit/id_`$row.id`" title=$row.title}</td>
                         <td>{$row.mode_formatted}</td>
                         {if $can_order_item === true}
                             <td>
                                 {if !$row.last}
-                                    <a href="{uri args="acp/menus/index/order/id_`$row.id`/action_down"}" title="{lang t="system|move_down"}">
+                                    <a href="{uri args="acp/menus/items/order/id_`$row.id`/action_down"}" title="{lang t="system|move_down"}">
                                         {icon path="16/down" width="16" height="16" alt={lang t="system|move_down"}}
                                     </a>
                                 {/if}
                                 {if !$row.first}
-                                    <a href="{uri args="acp/menus/index/order/id_`$row.id`/action_up"}" title="{lang t="system|move_up"}">
+                                    <a href="{uri args="acp/menus/items/order/id_`$row.id`/action_up"}" title="{lang t="system|move_up"}">
                                         {icon path="16/up" width="16" height="16" alt={lang t="system|move_up"}}
                                     </a>
                                 {/if}

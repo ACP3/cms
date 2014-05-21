@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="create">Neue Fotogalerie erstellen</item>
-    <item key="create_picture">Bild hinzufügen</item>
-    <item key="delet">Fotogalerien löschen</item>
-    <item key="delete_picture">Bilder löschen</item>
-    <item key="edit">Fotogalerie bearbeiten</item>
-    <item key="edit_picture">Bild bearbeiten</item>
-    <item key="settings">Einstellungen</item>
+    <item key="admin_index_create">Neue Fotogalerie erstellen</item>
+    <item key="admin_index_delete">Fotogalerien löschen</item>
+    <item key="admin_index_edit">Fotogalerie bearbeiten</item>
+    <item key="admin_index_settings">Einstellungen</item>
+    <item key="admin_pictures_create">Bild hinzufügen</item>
+    <item key="admin_pictures_delete">Bilder löschen</item>
+    <item key="admin_pictures_edit">Bild bearbeiten</item>
     <item key="details">Bilddetails</item>
     <item key="filename">Dateiname</item>
     <item key="gallery">Fotogalerien</item>
