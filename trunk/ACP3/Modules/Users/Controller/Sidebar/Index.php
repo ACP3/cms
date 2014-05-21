@@ -22,7 +22,7 @@ class Index extends Core\Modules\Controller\Sidebar
             $this->view->assign('enable_registration', $settings['enable_registration']);
             $this->view->assign('redirect_uri', isset($_POST['redirect_uri']) ? $_POST['redirect_uri'] : $currentPage);
 
-            $this->setLayout('Users/Sidebar/login.tpl');
+            $this->setLayout('Users/Sidebar/index.login.tpl');
         }
     }
 
@@ -77,7 +77,7 @@ class Index extends Core\Modules\Controller\Sidebar
 
             $this->view->assign('user_sidebar', $userSidebar);
 
-            $this->setLayout('Users/Sidebar/user_menu.tpl');
+            $this->setLayout('Users/Sidebar/index.user_menu.tpl');
         }
     }
 
