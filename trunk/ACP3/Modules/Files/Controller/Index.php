@@ -65,7 +65,7 @@ class Index extends Core\Modules\Controller
                 }
             } else {
                 // Brotkrümelspur
-                $this->breadcrumb->append($this->lang->t('files', 'files'), $this->uri->route('files'))
+                $this->breadcrumb->append($this->lang->t('files', 'files'), 'files')
                     ->append($file['category_title'], $this->uri->route('files/files/cat_' . $file['category_id']))
                     ->append($file['title']);
 
@@ -104,7 +104,7 @@ class Index extends Core\Modules\Controller
             $category = $this->categoriesModel->getOneById($this->uri->cat);
 
             $this->breadcrumb
-                ->append($this->lang->t('files', 'files'), $this->uri->route('files'))
+                ->append($this->lang->t('files', 'files'), 'files')
                 ->append($category['title']);
 
             $files = $this->model->getAllByCategoryId($this->uri->cat, $this->date->getCurrentDateTime());

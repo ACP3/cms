@@ -76,7 +76,7 @@ class Index extends Core\Modules\Controller\Admin
             $gallery = $this->model->getGalleryTitle((int)$this->uri->id);
 
             $this->breadcrumb
-                ->append($gallery, $this->uri->route('acp/gallery/index/edit/id_' . $this->uri->id))
+                ->append($gallery, 'acp/gallery/index/edit/id_' . $this->uri->id)
                 ->append($this->lang->t('gallery', 'create_picture'));
 
             $settings = Core\Config::getSettings('gallery');
@@ -282,7 +282,7 @@ class Index extends Core\Modules\Controller\Admin
             $picture = $this->model->getPictureById((int)$this->uri->id);
 
             $this->breadcrumb
-                ->append($picture['gallery_title'], $this->uri->route('acp/gallery/index/edit/id_' . $picture['gallery_id']))
+                ->append($picture['gallery_title'], 'acp/gallery/index/edit/id_' . $picture['gallery_id'])
                 ->append($this->lang->t('gallery', 'edit_picture'));
 
             $settings = Core\Config::getSettings('gallery');
