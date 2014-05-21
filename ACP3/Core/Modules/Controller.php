@@ -283,7 +283,7 @@ abstract class Controller
     {
         // Content-Template automatisch setzen
         if ($this->getContentTemplate() === '') {
-            $this->setContentTemplate($this->uri->mod . '/' . $this->uri->file . '.tpl');
+            $this->setContentTemplate($this->uri->mod . '/' . $this->uri->controller . '.' . $this->uri->file . '.tpl');
         }
 
         if ($this->getNoOutput() === false) {

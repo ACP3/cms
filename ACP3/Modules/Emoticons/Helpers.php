@@ -23,10 +23,19 @@ abstract class Helpers
      */
     protected static $model;
 
+    /**
+     * @var Core\View
+     */
+    protected static $view;
+
     protected static function _init()
     {
         if (!self::$model) {
             self::$model = new Model(Core\Registry::get('Db'), Core\Registry::get('Lang'));
+            self::$view = Core\Registry::get('View');
+
+            // Initialize emoticons
+            self::$emoticons = self::$model->getCache();
         }
     }
 
@@ -39,14 +48,11 @@ abstract class Helpers
      */
     public static function emoticonsList($formFieldId = '')
     {
-        if (empty(self::$emoticons)) {
-            self::_init();
-            self::$emoticons = self::$model->getCache();
-        }
+        self::_init();
 
-        Core\Registry::get('View')->assign('emoticons_field_id', empty($formFieldId) ? 'message' : $formFieldId);
-        Core\Registry::get('View')->assign('emoticons', self::$emoticons);
-        return Core\Registry::get('View')->fetchTemplate('emoticons/index.tpl');
+        self::$view->assign('emoticons_field_id', empty($formFieldId) ? 'message' : $formFieldId);
+        self::$view->assign('emoticons', self::$emoticons);
+        return self::$view->fetchTemplate('emoticons/index.index.tpl');
     }
 
     /**
@@ -58,10 +64,7 @@ abstract class Helpers
      */
     public static function emoticonsReplace($string)
     {
-        if (empty(self::$emoticons)) {
-            self::_init();
-            self::$emoticons = self::$model->getCache();
-        }
+        self::_init();
 
         return strtr($string, self::$emoticons);
     }

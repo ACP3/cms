@@ -45,7 +45,7 @@ class Admin extends Core\Modules\Controller
     {
         // Content-Template automatisch setzen
         if ($this->getContentTemplate() === '') {
-            $this->setContentTemplate($this->uri->mod . '/Admin/' . $this->uri->file . '.tpl');
+            $this->setContentTemplate($this->uri->mod . '/Admin/' . $this->uri->controller . '.' . $this->uri->file . '.tpl');
         }
 
         parent::display();

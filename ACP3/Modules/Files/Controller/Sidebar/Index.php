@@ -40,7 +40,7 @@ class Index extends Core\Modules\Controller\Sidebar
             $this->view->assign('sidebar_files', $files);
         }
 
-        $this->setLayout('Files/Sidebar/index.tpl');
+        $this->setLayout('Files/Sidebar/index.index.tpl');
     }
 
 }

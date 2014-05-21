@@ -32,7 +32,7 @@ class Index extends Core\Modules\Controller\Sidebar
 
         $this->session->generateFormToken('newsletter/index/index');
 
-        $this->setLayout('Newsletter/Sidebar/index.tpl');
+        $this->setLayout('Newsletter/Sidebar/index.index.tpl');
     }
 
 }

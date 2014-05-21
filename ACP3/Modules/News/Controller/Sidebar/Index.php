@@ -39,7 +39,7 @@ class Index extends Core\Modules\Controller\Sidebar
             $this->view->assign('sidebar_news', $news);
         }
 
-        $this->setLayout('News/Sidebar/index.tpl');
+        $this->setLayout('News/Sidebar/index.index.tpl');
     }
 
 }

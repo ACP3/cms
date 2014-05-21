@@ -39,7 +39,7 @@ class Index extends Core\Modules\Controller\Sidebar
             $this->view->assign('sidebar_galleries', $galleries);
         }
 
-        $this->setLayout('Gallery/Sidebar/index.tpl');
+        $this->setLayout('Gallery/Sidebar/index.index.tpl');
     }
 
 }

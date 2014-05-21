@@ -19,7 +19,7 @@ class Index extends Core\Modules\Controller\Sidebar
         $settings['disclaimer'] = Core\Functions::rewriteInternalUri($settings['disclaimer']);
         $this->view->assign('sidebar_contact', $settings);
 
-        $this->setLayout('Contact/Sidebar/index.tpl');
+        $this->setLayout('Contact/Sidebar/index.index.tpl');
     }
 
 }

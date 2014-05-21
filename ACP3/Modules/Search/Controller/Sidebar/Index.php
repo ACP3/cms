@@ -18,7 +18,7 @@ class Index extends Core\Modules\Controller\Sidebar
 
         $this->session->generateFormToken('search/index/index');
 
-        $this->setLayout('Search/Sidebar/index.tpl');
+        $this->setLayout('Search/Sidebar/index.index.tpl');
     }
 
 }
