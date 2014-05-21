@@ -52,7 +52,7 @@ abstract class Helpers
 
         self::$view->assign('emoticons_field_id', empty($formFieldId) ? 'message' : $formFieldId);
         self::$view->assign('emoticons', self::$emoticons);
-        return self::$view->fetchTemplate('emoticons/index.index.tpl');
+        return self::$view->fetchTemplate('emoticons/emoticons.tpl');
     }
 
     /**
