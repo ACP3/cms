@@ -20,7 +20,7 @@ class CKEditor
 	/**
 	 * The version of %CKEditor.
 	 */
-	const version = '4.3.4';
+	const version = '4.4.1';
 	/**
 	 * A constant string unique for each release of %CKEditor.
 	 */
