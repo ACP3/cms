@@ -8,11 +8,12 @@
     </div>
     <div class="collapse navbar-collapse navbar-ex2-collapse">
         <div class="navbar-text pull-right">
-            {check_access mode="link" path="users/index/edit_profile" icon="32/edit_user" width="32" height="32"}
-            {check_access mode="link" path="users/index/edit_settings" icon="32/advancedsettings" width="32" height="32"}
+            {check_access mode="link" path="users/account/edit" icon="32/edit_user" width="32" height="32"}
+            {check_access mode="link" path="users/account/settings" icon="32/advancedsettings" width="32" height="32"}
         </div>
     </div>
-</nav>{if isset($redirect_message)}
+</nav>
+{if isset($redirect_message)}
     {$redirect_message}
 {/if}
 <form action="{$REQUEST_URI}" method="post" accept-charset="UTF-8" class="form-horizontal" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">

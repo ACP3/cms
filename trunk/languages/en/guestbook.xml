@@ -6,6 +6,7 @@
     <item key="activate_entry">Enable entry</item>
     <item key="allow_emoticons">Allow Emoticons</item>
     <item key="create">New entry</item>
+    <item key="frontend_index_create">New entry</item>
     <item key="guestbook">Guestbook</item>
     <item key="guestbook_entries">Guestbook entries</item>
     <item key="ip">IP Address</item>

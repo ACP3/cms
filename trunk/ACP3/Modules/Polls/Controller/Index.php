@@ -56,10 +56,6 @@ class Index extends Core\Modules\Controller
             $this->model->pollExists($this->uri->id, $this->date->getCurrentDateTime()) === true) {
             Core\Functions::getRedirectMessage();
 
-            $this->breadcrumb
-                ->append($this->lang->t('polls', 'polls'), 'polls')
-                ->append($this->lang->t('polls', 'result'));
-
             $question = $this->model->getOneByIdWithTotalVotes($this->uri->id);
             $answers = $this->model->getAnswersByPollId($this->uri->id);
             $c_answers = count($answers);
@@ -81,10 +77,6 @@ class Index extends Core\Modules\Controller
         $time = $this->date->getCurrentDateTime();
         if (Core\Validate::isNumber($this->uri->id) === true &&
             $this->model->pollExists($this->uri->id, $time, !empty($_POST['answer']) && is_array($_POST['answer'])) === true) {
-            // Brotkrümelspur
-            $this->breadcrumb
-                ->append($this->lang->t('polls', 'polls'), 'polls')
-                ->append($this->lang->t('polls', 'vote'));
 
             // Wenn abgestimmt wurde
             if (!empty($_POST['answer']) && (is_array($_POST['answer']) === true || Core\Validate::isNumber($_POST['answer']) === true)) {
@@ -123,7 +115,7 @@ class Index extends Core\Modules\Controller
                     $text = $this->lang->t('polls', 'already_voted');
                 }
 
-                Core\Functions::setRedirectMessage($bool, $text, 'polls/result/id_' . $this->uri->id);
+                Core\Functions::setRedirectMessage($bool, $text, 'polls/index/result/id_' . $this->uri->id);
             } else {
                 $poll = $this->model->getOneById($this->uri->id);
 

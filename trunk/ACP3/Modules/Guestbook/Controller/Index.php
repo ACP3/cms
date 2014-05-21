@@ -25,10 +25,6 @@ class Index extends Core\Modules\Controller
 
     public function actionCreate()
     {
-        $this->breadcrumb
-            ->append($this->lang->t('guestbook', 'guestbook'), 'guestbook')
-            ->append($this->lang->t('guestbook', 'create'));
-
         $settings = Core\Config::getSettings('guestbook');
         $hasNewsletterAccess = Core\Modules::hasPermission('frontend/newsletter') === true && $settings['newsletter_integration'] == 1;
 

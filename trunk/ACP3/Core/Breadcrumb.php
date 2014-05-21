@@ -67,7 +67,7 @@ class Breadcrumb
 
             // Dynamische Seite (ACP3 intern)
             for ($i = 0; $i < $c_items; ++$i) {
-                $this->_appendFromDB($items[$i]['title'], $uri->route($items[$i]['uri']));
+                $this->_appendFromDB($items[$i]['title'], $items[$i]['uri']);
             }
         }
     }
@@ -193,69 +193,91 @@ class Breadcrumb
     /**
      * Sets the breadcrumb cache for the current request
      */
-    private function _setBreadcrumbCache() {
-        $area = $this->uri->area;
-        $module = $this->uri->mod;
-        $controller = $this->uri->controller;
-        $file = $this->uri->file;
-        $languageKey = $area . '_' . $controller . '_' . $file;
-        $languageKeyIndex = $area . '_' . $controller . '_index';
-
+    private function _setBreadcrumbCache()
+    {
         // Brotkrümelspur für das Admin-Panel
         if ($this->uri->area === 'admin') {
-            if ($module !== 'acp') {
-                $this->setTitlePostfix($this->lang->t('system', 'acp'));
-            }
-
-            // Wenn noch keine Brotkrümelspur gesetzt ist, dies nun tun
-            if (empty($this->stepsFromModules)) {
-                $this->append($this->lang->t('system', 'acp'), 'acp');
-
-                if ($module !== 'acp') {
-                    $this->append($this->lang->t($module, $module), 'acp/' . $module);
-                    if ($controller !== 'index') {
-                        $this->append($this->lang->t($module, $languageKeyIndex), 'acp/' . $module . '/' . $controller . '/');
-                    }
-                    if ($file !== 'index') {
-                        $this->append($this->lang->t($module, $languageKey), 'acp/' . $module . '/' . $controller . '/' . $file);
-                    }
-                }
-                // Falls bereits Stufen gesetzt wurden, Links für das Admin-Panel und
-                // die Modulverwaltung in umgedrehter Reihenfolge voranstellen
-            } else {
-                if ($module !== 'acp') {
-                    $this->prepend($this->lang->t($module, $module), 'acp/' . $module);
-                }
-                $this->prepend($this->lang->t('system', 'acp'), 'acp');
-            }
-            $this->breadcrumbCache = $this->stepsFromModules;
-            // Brotkrümelspur für das Frontend
-        } else {
-            if (empty($this->stepsFromDb) && empty($this->stepsFromModules)) {
-                if ($controller === 'index' && $file === 'index') {
-                    $this->append($this->lang->t($module, $module), $module . '/' . $controller . '/' . $file);
-                } else {
-                    $this->append($this->lang->t($module, $languageKey), $module . '/' . $controller . '/' . $file);
-                }
-                $this->breadcrumbCache = $this->stepsFromModules;
-            } elseif (!empty($this->stepsFromDb) && empty($this->stepsFromModules)) {
-                $this->breadcrumbCache = $this->stepsFromDb;
-            } elseif (!empty($this->stepsFromModules) && empty($this->stepsFromDb)) {
-                $this->breadcrumbCache = $this->stepsFromModules;
-            } else {
-                $this->breadcrumbCache = $this->stepsFromDb;
-
-                if ($this->breadcrumbCache[count($this->breadcrumbCache) - 1]['uri'] === $this->stepsFromModules[0]['uri']) {
-                    $c_stepsFromModules = count($this->stepsFromModules);
-                    for ($i = 1; $i < $c_stepsFromModules; ++$i) {
-                        $this->breadcrumbCache[] = $this->stepsFromModules[$i];
-                    }
-                }
-            }
+            $this->_setBreadcrumbCacheForAdmin();
+        } else { // Breadcrumb for frontend requests
+            $this->_setBreadcrumbCacheForFrontend();
         }
 
         // Letzte Brotkrume markieren
         $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['last'] = true;
+    }
+
+    /**
+     * Sets the breadcrumb steps cache for admin panel action requests
+     */
+    private function _setBreadcrumbCacheForAdmin()
+    {
+        $module = $this->uri->mod;
+        $controller = $this->uri->controller;
+        $file = $this->uri->file;
+        $languageKey = $this->uri->area . '_' . $controller . '_' . $file;
+        $languageKeyIndex = $this->uri->area . '_' . $controller . '_index';
+
+        if ($module !== 'acp') {
+            $this->setTitlePostfix($this->lang->t('system', 'acp'));
+        }
+
+        // No breadcrumb is set yet
+        if (empty($this->stepsFromModules)) {
+            $this->append($this->lang->t('system', 'acp'), 'acp');
+
+            if ($module !== 'acp') {
+                $this->append($this->lang->t($module, $module), 'acp/' . $module);
+                if ($controller !== 'index') {
+                    $this->append($this->lang->t($module, $languageKeyIndex), 'acp/' . $module . '/' . $controller);
+                }
+                if ($file !== 'index') {
+                    $this->append($this->lang->t($module, $languageKey), 'acp/' . $module . '/' . $controller . '/' . $file);
+                }
+            }
+        } else { // Prepend breadcrumb steps, if there have been already some steps set
+            if ($module !== 'acp') {
+                $this->prepend($this->lang->t($module, $module), 'acp/' . $module);
+            }
+            $this->prepend($this->lang->t('system', 'acp'), 'acp');
+        }
+        $this->breadcrumbCache = $this->stepsFromModules;
+    }
+
+    /**
+     * Sets the breadcrumb steps cache for frontend action requests
+     */
+    private function _setBreadcrumbCacheForFrontend()
+    {
+        $module = $this->uri->mod;
+        $controller = $this->uri->controller;
+        $file = $this->uri->file;
+        $languageKey = $this->uri->area . '_' . $controller . '_' . $file;
+        $languageKeyIndex = $this->uri->area . '_' . $controller . '_index';
+
+        // No breadcrumb has been set yet
+        if (empty($this->stepsFromModules)) {
+            $this->append($this->lang->t($module, $module), $module);
+
+            if ($controller !== 'index') {
+                $this->append($this->lang->t($module, $languageKeyIndex), $module . '/' . $controller);
+            }
+            if ($file !== 'index') {
+                $this->append($this->lang->t($module, $languageKey), 'acp/' . $module . '/' . $controller . '/' . $file);
+            }
+        }
+
+        if (!empty($this->stepsFromModules) && empty($this->stepsFromDb)) {
+            $this->breadcrumbCache = $this->stepsFromModules;
+        } else {
+            $this->breadcrumbCache = $this->stepsFromDb;
+
+            if ($this->breadcrumbCache[count($this->breadcrumbCache) - 1]['uri'] === $this->stepsFromModules[0]['uri']) {
+                $c_stepsFromModules = count($this->stepsFromModules);
+                for ($i = 1; $i < $c_stepsFromModules; ++$i) {
+                    $this->breadcrumbCache[] = $this->stepsFromModules[$i];
+                }
+            }
+        }
     }
 
     /**
@@ -293,4 +315,5 @@ class Breadcrumb
             return $title;
         }
     }
+
 }

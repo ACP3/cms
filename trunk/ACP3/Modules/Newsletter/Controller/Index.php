@@ -113,33 +113,4 @@ class Index extends Core\Modules\Controller
         $this->session->generateFormToken();
     }
 
-    public function actionIndexArchive()
-    {
-        $this->breadcrumb
-            ->append($this->lang->t('newsletter', 'index'), 'newsletter')
-            ->append($this->lang->t('newsletter', 'index_archive'));
-
-        $newsletters = $this->model->getAll(1, POS, $this->auth->entries);
-        $c_newsletters = count($newsletters);
-
-        if ($c_newsletters > 0) {
-            $pagination = new Core\Pagination(
-                $this->auth,
-                $this->breadcrumb,
-                $this->lang,
-                $this->seo,
-                $this->uri,
-                $this->view,
-                $this->model->countAll(1)
-            );
-            $pagination->display();
-
-            for ($i = 0; $i < $c_newsletters; ++$i) {
-                $newsletters[$i]['date_formatted'] = $this->date->format($newsletters[$i]['date'], 'short');
-                $newsletters[$i]['date_iso'] = $this->date->format($newsletters[$i]['date'], 'c');
-            }
-            $this->view->assign('newsletters', $newsletters);
-        }
-    }
-
 }

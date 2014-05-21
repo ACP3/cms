@@ -66,7 +66,7 @@ class Index extends Core\Modules\Controller
             } else {
                 // Brotkrümelspur
                 $this->breadcrumb->append($this->lang->t('files', 'files'), 'files')
-                    ->append($file['category_title'], $this->uri->route('files/files/cat_' . $file['category_id']))
+                    ->append($file['category_title'], 'files/files/cat_' . $file['category_id'])
                     ->append($file['title']);
 
                 $settings = Core\Config::getSettings('files');

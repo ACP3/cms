@@ -298,18 +298,33 @@ class URI
     public function route($path, $alias = 1)
     {
         $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
+        $pathArray = preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY);
+        $adminUrl = strpos($path, 'acp/');
 
-        if ((bool)CONFIG_SEO_ALIASES === true && !preg_match(self::PATTERN, $path)) {
-            if (count(preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY)) === 1) {
-                $path .= 'index/index/';
+        if ($adminUrl === 0) {
+            if (isset($pathArray[2]) === false) {
+                $path.= 'index/';
             }
+            if (isset($pathArray[3]) === false) {
+                $path.= 'index/';
+            }
+        } else {
+            if (isset($pathArray[1]) === false) {
+                $path.= 'index/';
+            }
+            if (isset($pathArray[2]) === false) {
+                $path.= 'index/';
+            }
+        }
+
+        if ((bool)CONFIG_SEO_ALIASES === true && $adminUrl === false) {
             // Überprüfen, ob Alias vorhanden ist und diesen als URI verwenden
             if ($alias === 1) {
                 $alias = $this->getUriAlias($path);
                 $path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
             }
         }
-        $prefix = (bool)CONFIG_SEO_MOD_REWRITE === false || preg_match(self::PATTERN, $path) ? PHP_SELF . '/' : (defined('IN_INSTALL') === true ? INSTALLER_ROOT_DIR : ROOT_DIR);
+        $prefix = ((bool)CONFIG_SEO_MOD_REWRITE === false || $adminUrl === false) ? PHP_SELF . '/' : ROOT_DIR;
         return $prefix . $path;
     }
 
