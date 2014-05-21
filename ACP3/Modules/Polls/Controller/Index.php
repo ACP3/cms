@@ -57,7 +57,7 @@ class Index extends Core\Modules\Controller
             Core\Functions::getRedirectMessage();
 
             $this->breadcrumb
-                ->append($this->lang->t('polls', 'polls'), $this->uri->route('polls'))
+                ->append($this->lang->t('polls', 'polls'), 'polls')
                 ->append($this->lang->t('polls', 'result'));
 
             $question = $this->model->getOneByIdWithTotalVotes($this->uri->id);
@@ -83,7 +83,7 @@ class Index extends Core\Modules\Controller
             $this->model->pollExists($this->uri->id, $time, !empty($_POST['answer']) && is_array($_POST['answer'])) === true) {
             // Brotkrümelspur
             $this->breadcrumb
-                ->append($this->lang->t('polls', 'polls'), $this->uri->route('polls'))
+                ->append($this->lang->t('polls', 'polls'), 'polls')
                 ->append($this->lang->t('polls', 'vote'));
 
             // Wenn abgestimmt wurde

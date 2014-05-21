@@ -152,7 +152,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionDesigns()
     {
         $this->breadcrumb
-            ->append($this->lang->t('system', 'extensions'), $this->uri->route('acp/system/index/extensions'))
+            ->append($this->lang->t('system', 'extensions'), 'acp/system/index/extensions')
             ->append($this->lang->t('system', 'designs'));
 
         if (isset($this->uri->dir)) {
@@ -197,7 +197,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionLanguages()
     {
         $this->breadcrumb
-            ->append($this->lang->t('system', 'extensions'), $this->uri->route('acp/system/index/extensions'))
+            ->append($this->lang->t('system', 'extensions'), 'acp/system/index/extensions')
             ->append($this->lang->t('system', 'languages'));
 
         if (isset($this->uri->dir)) {
@@ -241,7 +241,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionModules()
     {
         $this->breadcrumb
-            ->append($this->lang->t('system', 'extensions'), $this->uri->route('acp/system/index/extensions'))
+            ->append($this->lang->t('system', 'extensions'), 'acp/system/index/extensions')
             ->append($this->lang->t('system', 'modules'));
 
         switch ($this->uri->action) {
@@ -389,7 +389,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionSqlExport()
     {
         $this->breadcrumb
-            ->append($this->lang->t('system', 'maintenance'), $this->uri->route('acp/system/index/maintenance'))
+            ->append($this->lang->t('system', 'maintenance'), 'acp/system/index/maintenance')
             ->append($this->lang->t('system', 'sql_export'));
 
         if (empty($_POST) === false) {
@@ -453,7 +453,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionSqlImport()
     {
         $this->breadcrumb
-            ->append($this->lang->t('system', 'maintenance'), $this->uri->route('acp/system/index/maintenance'))
+            ->append($this->lang->t('system', 'maintenance'), 'acp/system/index/maintenance')
             ->append($this->lang->t('system', 'sql_import'));
 
         if (empty($_POST) === false) {
@@ -506,7 +506,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionUpdateCheck()
     {
         $this->breadcrumb
-            ->append($this->lang->t('system', 'maintenance'), $this->uri->route('acp/system/index/maintenance'))
+            ->append($this->lang->t('system', 'maintenance'), 'acp/system/index/maintenance')
             ->append($this->lang->t('system', 'update_check'));
 
         $file = @file_get_contents('http://www.acp3-cms.net/update.txt');

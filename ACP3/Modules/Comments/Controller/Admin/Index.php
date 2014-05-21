@@ -60,7 +60,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($comment) === false) {
             $this->breadcrumb
-                ->append($this->lang->t($comment['module'], $comment['module']), $this->uri->route('acp/comments/index/index_comments/id_' . $comment['module_id']))
+                ->append($this->lang->t($comment['module'], $comment['module']), 'acp/comments/index/index_comments/id_' . $comment['module_id'])
                 ->append($this->lang->t('comments', 'edit'));
 
             if (empty($_POST) === false) {

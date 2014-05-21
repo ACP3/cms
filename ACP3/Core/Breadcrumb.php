@@ -113,15 +113,15 @@ class Breadcrumb
      *
      * @param string $title
      *    Bezeichnung der jeweiligen Stufe der Brotkrume
-     * @param int|string $path
+     * @param string $path
      *    Die zum $title zugehörige ACP3-interne URI
      * @return $this
      */
-    protected function _appendFromDB($title, $path = 0)
+    protected function _appendFromDB($title, $path = '')
     {
         $this->stepsFromDb[] = array(
             'title' => $title,
-            'uri' => $path
+            'uri' => !empty($path) ? $this->uri->route($path) : ''
         );
 
         return $this;
@@ -140,7 +140,7 @@ class Breadcrumb
     {
         $this->stepsFromModules[] = array(
             'title' => $title,
-            'uri' => $path
+            'uri' => !empty($path) ? $this->uri->route($path) : ''
         );
 
         return $this;
@@ -159,7 +159,7 @@ class Breadcrumb
     {
         $step = array(
             'title' => $title,
-            'uri' => $path,
+            'uri' => $this->uri->route($path)
         );
         array_unshift($this->stepsFromModules, $step);
         return $this;
@@ -172,19 +172,19 @@ class Breadcrumb
      *    Bezeichnung der jeweiligen Stufe der Brotkrume
      * @param string $path
      *    Die zum $title zugehörige ACP3-interne URI
-     * @param bool $db_steps
+     * @param bool $dbSteps
      * @return $this
      */
-    public function replaceAnchestor($title, $path = '', $db_steps = false)
+    public function replaceAnchestor($title, $path = '', $dbSteps = false)
     {
-        if ($db_steps === true) {
+        if ($dbSteps === true) {
             $index = count($this->stepsFromDb) - (!empty($this->stepsFromDb) ? 1 : 0);
             $this->stepsFromDb[$index]['title'] = $title;
-            $this->stepsFromDb[$index]['uri'] = $path;
+            $this->stepsFromDb[$index]['uri'] = !empty($path) ? $this->uri->route($path) : '';
         } else {
             $index = count($this->stepsFromModules) - (!empty($this->stepsFromModules) ? 1 : 0);
             $this->stepsFromModules[$index]['title'] = $title;
-            $this->stepsFromModules[$index]['uri'] = $path;
+            $this->stepsFromModules[$index]['uri'] = !empty($path) ? $this->uri->route($path) : '';
         }
 
         return $this;
@@ -202,6 +202,7 @@ class Breadcrumb
     public function output($mode = 1)
     {
         $module = $this->uri->mod;
+        $controller = $this->uri->controller;
         $file = $this->uri->file;
 
         if (empty($this->breadcrumbCache)) {
@@ -213,30 +214,30 @@ class Breadcrumb
 
                 // Wenn noch keine Brotkrümelspur gesetzt ist, dies nun tun
                 if (empty($this->stepsFromModules)) {
-                    $this->append($this->lang->t('system', 'acp'), $this->uri->route('acp'));
+                    $this->append($this->lang->t('system', 'acp'), 'acp');
                     if ($module !== 'errors') {
                         if ($module !== 'acp') {
-                            $this->append($this->lang->t($module, $module), $this->uri->route('acp/' . $module));
+                            $this->append($this->lang->t($module, $module), 'acp/' . $module);
                             if ($file !== 'index') {
-                                $this->append($this->lang->t($module, $file), $this->uri->route('acp/' . $module . '/' . $file));
+                                $this->append($this->lang->t($module, $file), 'acp/' . $module . '/' . $controller . '/' . $file);
                             }
                         }
                     } else {
-                        $this->append($this->lang->t($module, $file), $this->uri->route('acp/' . $module . '/' . $file));
+                        $this->append($this->lang->t($module, $file), 'acp/' . $module . '/' . $controller . '/' . $file);
                     }
                     // Falls bereits Stufen gesetzt wurden, Links für das Admin-Panel und
                     // die Modulverwaltung in umgedrehter Reihenfolge voranstellen
                 } else {
                     if ($module !== 'acp') {
-                        $this->prepend($this->lang->t($module, $module), $this->uri->route('acp/' . $module));
+                        $this->prepend($this->lang->t($module, $module), 'acp/' . $module);
                     }
-                    $this->prepend($this->lang->t('system', 'acp'), $this->uri->route('acp'));
+                    $this->prepend($this->lang->t('system', 'acp'), 'acp');
                 }
                 $this->breadcrumbCache = $this->stepsFromModules;
                 // Brotkrümelspur für das Frontend
             } else {
                 if (empty($this->stepsFromDb) && empty($this->stepsFromModules)) {
-                    $this->append($file === 'index' ? $this->lang->t($module, $module) : $this->lang->t($module, $file), $this->uri->route($module . '/' . $file));
+                    $this->append($file === 'index' ? $this->lang->t($module, $module) : $this->lang->t($module, $file), $module . '/' . $controller . '/' . $file);
                     $this->breadcrumbCache = $this->stepsFromModules;
                 } elseif (!empty($this->stepsFromDb) && empty($this->stepsFromModules)) {
                     $this->breadcrumbCache = $this->stepsFromDb;
@@ -258,20 +259,22 @@ class Breadcrumb
             $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['last'] = true;
         }
 
-        // Brotkrümelspur ausgeben
+        // Just return the breadcrumb
         if ($mode === 1) {
             $this->view->assign('breadcrumb', $this->breadcrumbCache);
             return $this->view->fetchTemplate('system/breadcrumb.tpl');
             // Nur Titel ausgeben
-        } else {
-            // Letzter Eintrag der Brotkrümelspur ist der Seitentitel
+        } else { // Just return the title
+            // The last index of the breadcrumb is the page title
             $title = $this->breadcrumbCache[count($this->breadcrumbCache) - 1]['title'];
             if ($mode === 3) {
                 $separator = ' ' . $this->title['separator'] . ' ';
-                if (!empty($this->title['prefix']))
+                if (!empty($this->title['prefix'])) {
                     $title = $this->title['prefix'] . $separator . $title;
-                if (!empty($this->title['postfix']))
+                }
+                if (!empty($this->title['postfix'])) {
                     $title .= $separator . $this->title['postfix'];
+                }
                 $title .= ' | ' . CONFIG_SEO_TITLE;
             }
             return $title;

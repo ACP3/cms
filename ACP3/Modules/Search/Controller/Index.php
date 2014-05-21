@@ -63,7 +63,7 @@ class Index extends Core\Modules\Controller
     protected function displaySearchResults($modules, $searchTerm, $area, $sort)
     {
         $this->breadcrumb
-            ->append($this->lang->t('search', 'search'), $this->uri->route('search'))
+            ->append($this->lang->t('search', 'search'), 'search')
             ->append($this->lang->t('search', 'search_results'));
 
         $searchResults = array();

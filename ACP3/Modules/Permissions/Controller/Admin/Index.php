@@ -108,7 +108,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionCreateResource()
     {
         $this->breadcrumb
-            ->append($this->lang->t('permissions', 'index_resources'), $this->uri->route('acp/permissions/index/index_resources'))
+            ->append($this->lang->t('permissions', 'index_resources'), 'acp/permissions/index/index_resources')
             ->append($this->lang->t('permissions', 'create_resource'));
 
         if (empty($_POST) === false) {
@@ -192,7 +192,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionDeleteResources()
     {
         $this->breadcrumb
-            ->append($this->lang->t('permissions', 'index_resources'), $this->uri->route('acp/permissions/index/index_resources'))
+            ->append($this->lang->t('permissions', 'index_resources'), 'acp/permissions/index/index_resources')
             ->append($this->lang->t('permissions', 'delete_resources'));
 
         $items = $this->_deleteItem('acp/permissions/index/delete_resources', 'acp/permissions/index/index_resources');
@@ -307,7 +307,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionEditResource()
     {
         $this->breadcrumb
-            ->append($this->lang->t('permissions', 'index_resources'), $this->uri->route('acp/permissions/index/index_resources'))
+            ->append($this->lang->t('permissions', 'index_resources'), 'acp/permissions/index/index_resources')
             ->append($this->lang->t('permissions', 'edit_resource'));
 
         if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resourceExists($this->uri->id) === true) {

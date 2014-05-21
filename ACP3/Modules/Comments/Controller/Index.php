@@ -38,12 +38,12 @@ class Index extends Core\Modules\Controller
         Core\View $view,
         Core\SEO $seo,
         $module,
-        $entry_id)
+        $entryId)
     {
         parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
 
         $this->module = $module;
-        $this->entryId = $entry_id;
+        $this->entryId = $entryId;
     }
 
     protected function _init()

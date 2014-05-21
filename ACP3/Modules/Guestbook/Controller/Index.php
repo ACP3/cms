@@ -26,7 +26,7 @@ class Index extends Core\Modules\Controller
     public function actionCreate()
     {
         $this->breadcrumb
-            ->append($this->lang->t('guestbook', 'guestbook'), $this->uri->route('guestbook'))
+            ->append($this->lang->t('guestbook', 'guestbook'), 'guestbook')
             ->append($this->lang->t('guestbook', 'create'));
 
         $settings = Core\Config::getSettings('guestbook');

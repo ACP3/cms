@@ -33,8 +33,8 @@ class Index extends Core\Modules\Controller
 
             // Brotkrümelspur
             $this->breadcrumb
-                ->append($this->lang->t('gallery', 'gallery'), $this->uri->route('gallery'))
-                ->append($picture['title'], $this->uri->route('gallery/pics/id_' . $picture['gallery_id']))
+                ->append($this->lang->t('gallery', 'gallery'), 'gallery')
+                ->append($picture['title'], 'gallery/pics/id_' . $picture['gallery_id'])
                 ->append($this->lang->t('gallery', 'details'))
                 ->setTitlePrefix($picture['title'])
                 ->setTitlePostfix(sprintf($this->lang->t('gallery', 'picture_x'), $picture['pic']));
@@ -161,7 +161,7 @@ class Index extends Core\Modules\Controller
 
                 // Brotkrümelspur
                 $this->breadcrumb
-                    ->append($this->lang->t('gallery', 'gallery'), $this->uri->route('gallery'))
+                    ->append($this->lang->t('gallery', 'gallery'), 'gallery')
                     ->append($galleryTitle);
 
                 $settings = Core\Config::getSettings('gallery');

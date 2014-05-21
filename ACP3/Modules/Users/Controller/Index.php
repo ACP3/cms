@@ -28,8 +28,8 @@ class Index extends Core\Modules\Controller
             $this->uri->redirect('errors/index/403');
         } else {
             $this->breadcrumb
-                ->append($this->lang->t('users', 'users'), $this->uri->route('users'))
-                ->append($this->lang->t('users', 'home'), $this->uri->route('users/index/home'))
+                ->append($this->lang->t('users', 'users'), 'users')
+                ->append($this->lang->t('users', 'home'), 'users/index/home')
                 ->append($this->lang->t('users', 'edit_profile'));
 
             if (empty($_POST) === false) {
@@ -133,8 +133,8 @@ class Index extends Core\Modules\Controller
             $settings = Core\Config::getSettings('users');
 
             $this->breadcrumb
-                ->append($this->lang->t('users', 'users'), $this->uri->route('users'))
-                ->append($this->lang->t('users', 'home'), $this->uri->route('users/index/home'))
+                ->append($this->lang->t('users', 'users'), 'users')
+                ->append($this->lang->t('users', 'home'), 'users/index/home')
                 ->append($this->lang->t('users', 'edit_settings'));
 
             if (empty($_POST) === false) {
@@ -224,7 +224,7 @@ class Index extends Core\Modules\Controller
             $this->uri->redirect(0, ROOT_DIR);
         } else {
             $this->breadcrumb
-                ->append($this->lang->t('users', 'users'), $this->uri->route('users'))
+                ->append($this->lang->t('users', 'users'), 'users')
                 ->append($this->lang->t('users', 'forgot_pwd'));
 
             if (empty($_POST) === false) {
@@ -288,7 +288,7 @@ class Index extends Core\Modules\Controller
             $this->uri->redirect('errors/index/403');
         } else {
             $this->breadcrumb
-                ->append($this->lang->t('users', 'users'), $this->uri->route('users'))
+                ->append($this->lang->t('users', 'users'), 'users')
                 ->append($this->lang->t('users', 'home'));
 
             if (empty($_POST) === false) {
@@ -377,7 +377,7 @@ class Index extends Core\Modules\Controller
             $this->setContent(Core\Functions::errorBox($this->lang->t('users', 'user_registration_disabled')));
         } else {
             $this->breadcrumb
-                ->append($this->lang->t('users', 'users'), $this->uri->route('users'))
+                ->append($this->lang->t('users', 'users'), 'users')
                 ->append($this->lang->t('users', 'register'));
 
             if (empty($_POST) === false) {
@@ -443,7 +443,7 @@ class Index extends Core\Modules\Controller
     public function actionViewProfile()
     {
         $this->breadcrumb
-            ->append($this->lang->t('users', 'users'), $this->uri->route('users'))
+            ->append($this->lang->t('users', 'users'), 'users')
             ->append($this->lang->t('users', 'view_profile'));
 
         if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id) === true) {

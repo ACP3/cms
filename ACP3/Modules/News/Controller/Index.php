@@ -30,10 +30,10 @@ class Index extends Core\Modules\Controller
             $settings = Core\Config::getSettings('news');
             $news = $this->model->getCache($this->uri->id);
 
-            $this->breadcrumb->append($this->lang->t('news', 'news'), $this->uri->route('news'));
+            $this->breadcrumb->append($this->lang->t('news', 'news'), 'news');
 
             if ($settings['category_in_breadcrumb'] == 1) {
-                $this->breadcrumb->append($news['category_title'], $this->uri->route('news/index/index/cat_' . $news['category_id']));
+                $this->breadcrumb->append($news['category_title'], 'news/index/index/cat_' . $news['category_id']);
             }
             $this->breadcrumb->append($news['title']);
 
@@ -86,7 +86,7 @@ class Index extends Core\Modules\Controller
         // Kategorie in Brotkrümelspur anzeigen
         if ($cat !== 0 && $settings['category_in_breadcrumb'] == 1) {
             $this->seo->setCanonicalUri($this->uri->route('news'));
-            $this->breadcrumb->append($this->lang->t('news', 'news'), $this->uri->route('news'));
+            $this->breadcrumb->append($this->lang->t('news', 'news'), 'news');
             $category = $this->db->fetchColumn('SELECT title FROM ' . DB_PRE . 'categories WHERE id = ?', array($cat));
             if (!empty($category)) {
                 $this->breadcrumb->append($category);
