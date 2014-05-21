@@ -37,9 +37,9 @@ class Index extends Core\Modules\Controller
             $feed = new Feeds\Extensions();
             $feed->$action();
 
-            $this->view->setNoOutput(true);
-            $this->view->setContentType('text/xml');
-            $this->view->displayTemplate($settings['feed_type']);
+            $this->setNoOutput(true);
+            $this->setContentType('text/xml');
+            $this->setLayout($settings['feed_type']);
         } else {
             $this->uri->redirect('errors/index/404');
         }

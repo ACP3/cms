@@ -22,7 +22,7 @@ class Index extends Core\Modules\Controller
 
     public function actionImage()
     {
-        $this->view->setNoOutput(true);
+        $this->setNoOutput(true);
 
         if (!empty($this->uri->path) &&
             isset($_SESSION['captcha_' . $this->uri->path])

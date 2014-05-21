@@ -10,7 +10,7 @@ use ACP3\Modules\Polls;
  *
  * @author Tino Goratsch
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Modules\Controller\Sidebar
 {
 
     /**
@@ -50,13 +50,13 @@ class Index extends Core\Modules\Controller
                 }
 
                 $this->view->assign('sidebar_poll_answers', $answers);
-                $this->view->displayTemplate('polls/sidebar_result.tpl');
+                $this->setLayout('Polls/Sidebar/result.tpl');
             } else {
                 $this->view->assign('sidebar_poll_answers', $answers);
-                $this->view->displayTemplate('polls/sidebar_vote.tpl');
+                $this->setLayout('Polls/Sidebar/vote.tpl');
             }
         } else {
-            $this->view->displayTemplate('polls/sidebar_vote.tpl');
+            $this->setLayout('Polls/Sidebar/vote.tpl');
         }
     }
 }

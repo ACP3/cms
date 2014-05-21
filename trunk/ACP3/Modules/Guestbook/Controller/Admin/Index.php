@@ -98,7 +98,7 @@ class Index extends Core\Modules\Controller\Admin
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->view->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent(Core\Functions::dataTable($config));
 
             $settings = Core\Config::getSettings('guestbook');
             // Emoticons einbinden

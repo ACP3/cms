@@ -66,7 +66,7 @@ abstract class Helpers
         $mailer
             ->setFrom($from)
             ->setSubject($newsletter['title'])
-            ->setUrlWeb(HOST_NAME . Core\Registry::get('URI')->route('newsletter/details/id_' . $newsletterId))
+            ->setUrlWeb(HOST_NAME . Core\Registry::get('URI')->route('newsletter/index/details/id_' . $newsletterId))
             ->setMailSignature($settings['mailsig']);
 
         if ($newsletter['html'] == 1) {
@@ -106,7 +106,7 @@ abstract class Helpers
 
         $hash = md5(mt_rand(0, microtime(true)));
         $host = htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES, 'UTF-8');
-        $url = 'http://' . $host . self::$uri->route('newsletter/activate/hash_' . $hash . '/mail_' . $emailAddress);
+        $url = 'http://' . $host . self::$uri->route('newsletter/index/activate/hash_' . $hash . '/mail_' . $emailAddress);
         $settings = Core\Config::getSettings('newsletter');
 
         $subject = sprintf(self::$lang->t('newsletter', 'subscribe_mail_subject'), CONFIG_SEO_TITLE);

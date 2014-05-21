@@ -152,7 +152,7 @@ class Index extends Core\Modules\Controller\Admin
             );
             $this->view->assign('emoticons', $emoticons);
             $this->view->assign('can_delete', $canDelete);
-            $this->view->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent(Core\Functions::dataTable($config));
         }
     }
 

@@ -222,7 +222,7 @@ class Index extends Core\Modules\Controller\Admin
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->view->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent(Core\Functions::dataTable($config));
 
             for ($i = 0; $i < $c_news; ++$i) {
                 $news[$i]['period'] = $this->date->formatTimeRange($news[$i]['start'], $news[$i]['end']);

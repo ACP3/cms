@@ -258,7 +258,7 @@ class Index extends Core\Modules\Controller\Admin
                     'element' => '#acp-table',
                     'hide_col_sort' => $canDelete === true ? 0 : ''
                 );
-                $this->view->appendContent(Core\Functions::dataTable($config));
+                $this->appendContent(Core\Functions::dataTable($config));
 
                 for ($i = 0; $i < $c_pictures; ++$i) {
                     $pictures[$i]['first'] = $i == 0 ? true : false;
@@ -357,7 +357,7 @@ class Index extends Core\Modules\Controller\Admin
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->view->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent(Core\Functions::dataTable($config));
             for ($i = 0; $i < $c_galleries; ++$i) {
                 $galleries[$i]['period'] = $this->date->formatTimeRange($galleries[$i]['start'], $galleries[$i]['end']);
             }

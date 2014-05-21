@@ -20,7 +20,8 @@ function smarty_function_load_module($params)
         }
 
         $action = 'action' . $pathArray[3];
-        $mod = new $className(
+        /** @var \ACP3\Core\Modules\Controller $controller */
+        $controller = new $className(
             \ACP3\Core\Registry::get('Auth'),
             \ACP3\Core\Registry::get('Breadcrumb'),
             \ACP3\Core\Registry::get('Date'),
@@ -31,7 +32,8 @@ function smarty_function_load_module($params)
             \ACP3\Core\Registry::get('View'),
             \ACP3\Core\Registry::get('SEO')
         );
-        $mod->$action();
+        $controller->$action();
+        $controller->display();
     }
 }
 /* vim: set expandtab: */

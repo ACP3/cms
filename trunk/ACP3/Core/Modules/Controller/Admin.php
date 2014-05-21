@@ -13,31 +13,6 @@ class Admin extends Core\Modules\Controller
 {
 
     /**
-     * @param Core\Auth $auth
-     * @param Core\Breadcrumb $breadcrumb
-     * @param Core\Date $date
-     * @param \Doctrine\DBAL\Connection $db
-     * @param Core\Lang $lang
-     * @param Core\Session $session
-     * @param Core\URI $uri
-     * @param Core\View $view
-     * @param Core\SEO $seo
-     */
-    public function __construct(
-        Core\Auth $auth,
-        Core\Breadcrumb $breadcrumb,
-        Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
-        Core\Lang $lang,
-        Core\Session $session,
-        Core\URI $uri,
-        Core\View $view,
-        Core\SEO $seo)
-    {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
-    }
-
-    /**
      * Little helper function for deleting an result set
      *
      * @param string $moduleConfirmUrl
@@ -53,17 +28,27 @@ class Admin extends Core\Modules\Controller
         }
 
         if (!isset($entries)) {
-            $this->view->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
+            $this->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
         } elseif (is_array($entries) === true && $this->uri->action !== 'confirmed') {
             $data = array(
                 'action' => 'confirmed',
                 'entries' => $entries
             );
             $confirmBox = Core\Functions::confirmBoxPost($this->lang->t('system', 'confirm_delete'), $data, $this->uri->route($moduleConfirmUrl), $this->uri->route($moduleIndexUrl));
-            $this->view->setContent($confirmBox);
+            $this->setContent($confirmBox);
         } else {
             return is_array($entries) ? $entries : explode('|', $entries);
         }
+    }
+
+    public function display()
+    {
+        // Content-Template automatisch setzen
+        if ($this->getContentTemplate() === '') {
+            $this->setContentTemplate($this->uri->mod . '/Admin/' . $this->uri->file . '.tpl');
+        }
+
+        parent::display();
     }
 
 }

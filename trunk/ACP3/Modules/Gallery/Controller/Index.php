@@ -97,7 +97,7 @@ class Index extends Core\Modules\Controller
 
     public function actionImage()
     {
-        $this->view->setNoOutput(true);
+        $this->setNoOutput(true);
 
         if (Core\Validate::isNumber($this->uri->id) === true) {
             @set_time_limit(20);

@@ -37,7 +37,7 @@ class Index extends Core\Modules\Controller
 
             $bool = $this->model->update(array('hash' => ''), array('mail' => $mail, 'hash' => $hash), Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
-            $this->view->setContent(Core\Functions::confirmBox($this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
+            $this->setContent(Core\Functions::confirmBox($this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
         } catch (Core\Exceptions\ValidationFailed $e) {
             $this->view->assign('error_msg', $e->getMessage());
         }
@@ -74,7 +74,7 @@ class Index extends Core\Modules\Controller
 
                         $this->session->unsetFormToken();
 
-                        $this->view->setContent(Core\Functions::confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
+                        $this->setContent(Core\Functions::confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
                         return;
                     case 'unsubscribe':
                         $this->model->validateUnsubscribe($_POST);
@@ -83,13 +83,13 @@ class Index extends Core\Modules\Controller
 
                         $this->session->unsetFormToken();
 
-                        $this->view->setContent(Core\Functions::confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
+                        $this->setContent(Core\Functions::confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
                         return;
                     default:
                         $this->uri->redirect('errors/index/404');
                 }
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->view->setContent(Core\Functions::errorBox($e->getMessage()));
+                $this->setContent(Core\Functions::errorBox($e->getMessage()));
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $this->view->assign('error_msg', $e->getMessage());
             }

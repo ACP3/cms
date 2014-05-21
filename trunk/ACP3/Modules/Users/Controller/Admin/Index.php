@@ -458,7 +458,7 @@ class Index extends Core\Modules\Controller\Admin
                 'sort_dir' => 'asc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->view->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent(Core\Functions::dataTable($config));
 
             for ($i = 0; $i < $c_users; ++$i) {
                 $users[$i]['roles'] = implode(', ', Core\ACL::getUserRoles($users[$i]['id'], 2));

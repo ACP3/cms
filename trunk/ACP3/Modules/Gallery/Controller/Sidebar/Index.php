@@ -10,7 +10,7 @@ use ACP3\Modules\Gallery;
  *
  * @author Tino Goratsch
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Modules\Controller\Sidebar
 {
 
     /**
@@ -39,7 +39,7 @@ class Index extends Core\Modules\Controller
             $this->view->assign('sidebar_galleries', $galleries);
         }
 
-        $this->view->displayTemplate('gallery/sidebar.tpl');
+        $this->setLayout('Gallery/Sidebar/index.tpl');
     }
 
 }

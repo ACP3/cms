@@ -263,7 +263,7 @@ class Index extends Core\Modules\Controller
 
                     $this->session->unsetFormToken();
 
-                    $this->view->setContent(Core\Functions::confirmBox($this->lang->t('users', $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'), ROOT_DIR));
+                    $this->setContent(Core\Functions::confirmBox($this->lang->t('users', $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'), ROOT_DIR));
                     return;
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     Core\Functions::setRedirectMessage(false, $e->getMessage(), 'users/forgot_pwd');
@@ -374,7 +374,7 @@ class Index extends Core\Modules\Controller
         if ($this->auth->isUser() === true) {
             $this->uri->redirect(0, ROOT_DIR);
         } elseif ($settings['enable_registration'] == 0) {
-            $this->view->setContent(Core\Functions::errorBox($this->lang->t('users', 'user_registration_disabled')));
+            $this->setContent(Core\Functions::errorBox($this->lang->t('users', 'user_registration_disabled')));
         } else {
             $this->breadcrumb
                 ->append($this->lang->t('users', 'users'), $this->uri->route('users'))
@@ -416,7 +416,7 @@ class Index extends Core\Modules\Controller
 
                     $this->session->unsetFormToken();
 
-                    $this->view->setContent(Core\Functions::confirmBox($this->lang->t('users', $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
+                    $this->setContent(Core\Functions::confirmBox($this->lang->t('users', $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
                     return;
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     Core\Functions::setRedirectMessage(false, $e->getMessage(), 'users/register');

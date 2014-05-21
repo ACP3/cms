@@ -10,7 +10,7 @@ use ACP3\Modules\Search;
  *
  * @author Tino Goratsch
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Modules\Controller\Sidebar
 {
     public function actionIndex()
     {
@@ -18,7 +18,7 @@ class Index extends Core\Modules\Controller
 
         $this->session->generateFormToken('search/index/index');
 
-        $this->view->displayTemplate('search/sidebar.tpl');
+        $this->setLayout('Search/Sidebar/index.tpl');
     }
 
 }
