@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'newsletter';
-    const SCHEMA_VERSION = 38;
+    const SCHEMA_VERSION = 40;
 
     public function __construct(\Doctrine\DBAL\Connection $db)
     {
@@ -91,6 +91,16 @@ class Installer extends Modules\AbstractInstaller
             ),
             38 => array(
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "newsletter/", "newsletter/index/") WHERE uri LIKE "newsletter/%";',
+            ),
+            39 => array(
+                'UPDATE `{pre}acl_resources` SET controller = "accounts" WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_account%";',
+                'UPDATE `{pre}acl_resources` SET page = REPLACE(page, "_accounts", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_accounts";',
+                'UPDATE `{pre}acl_resources` SET page = REPLACE(page, "_account", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_account";',
+                'UPDATE `{pre}acl_resources` SET controller = "archive", page = "index" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "index_archive";',
+                'UPDATE `{pre}acl_resources` SET controller = "archive" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "details";',
+            ),
+            40 => array(
+                'UPDATE `{pre}acl_resources` SET controller = "accounts" WHERE `module_id` = ' . $this->getModuleId() . ' AND area = "admin" AND page = "activate";',
             )
         );
     }

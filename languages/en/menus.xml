@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="create">Create new menu bar</item>
-    <item key="create_item">Create new menu item</item>
-    <item key="delete">Delete menu bar</item>
-    <item key="delete_item">Delete menu items</item>
-    <item key="edit">Edit menu bar</item>
-    <item key="edit_item">Edit menu item</item>
-    <item key="index_items">Menu items</item>
+    <item key="admin_index_create">Create new menu bar</item>
+    <item key="admin_index_delete">Delete menu bar</item>
+    <item key="admin_index_edit">Edit menu bar</item>
+    <item key="admin_items_create">Create new menu item</item>
+    <item key="admin_items_delete">Delete menu items</item>
+    <item key="admin_items_edit">Edit menu item</item>
+    <item key="admin_items_index">Menu items</item>
     <item key="article">Article</item>
     <item key="chronology">Chronology</item>
     <item key="display_item">Display menu item</item>

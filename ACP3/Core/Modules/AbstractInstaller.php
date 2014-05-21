@@ -415,7 +415,7 @@ abstract class AbstractInstaller implements InstallerInterface
         $result = -1;
         foreach ($schemaUpdates as $newSchemaVersion => $queries) {
             // Schema-Änderungen nur für neuere Versionen durchführen
-            if ($installedSchemaVersion < $newSchemaVersion) {
+            if ($installedSchemaVersion < $newSchemaVersion && $newSchemaVersion <= static::SCHEMA_VERSION) {
                 // Einzelne Schema-Änderung bei einer Version
                 if (!empty($queries) && is_array($queries) === false) {
                     $result = self::executeSqlQueries((array)$queries) === true ? 1 : 0;

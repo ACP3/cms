@@ -35,7 +35,7 @@
                     {if $can_delete === true}
                         <td><input type="checkbox" name="entries[]" value="{$row.module_id}"></td>
                     {/if}
-                    <td>{check_access mode="link" path="acp/comments/index/index_comments/id_`$row.module_id`" lang="comments|show_comments" title=$row.name}</td>
+                    <td>{check_access mode="link" path="acp/comments/details/index/id_`$row.module_id`" lang="comments|show_comments" title=$row.name}</td>
                     <td>{$row.comments_count}</td>
                 </tr>
             {/foreach}

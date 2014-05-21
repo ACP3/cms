@@ -2,29 +2,26 @@
 <language>
     <item key="access_to_following_modules">Sie haben Zugriff auf folgende %d Module.</item>
     <item key="acp">Administration Control Panel</item>
-    <item key="configuration">Konfiguration</item>
-    <item key="designs">Designs</item>
-    <item key="extensions">Erweiterungen</item>
-    <item key="languages">Sprachen</item>
-    <item key="maintenance">Wartung</item>
-    <item key="modules">Module</item>
-    <item key="sql_export">SQL-Tabellen-Export</item>
-    <item key="sql_import">SQL-Tabellen-Import</item>
-    <item key="update_check">Versionsüberprüfung</item>
-    <item key="acp3_not_up_to_date">Es ist eine neue Version des ACP3 verfügbar. Sie kann %1$shier%2$s heruntergeladen
-        werden.
+    <item key="acp3_not_up_to_date">Es ist eine neue Version des ACP3 verfügbar. Sie kann %1$shier%2$s heruntergeladen werden.
     </item>
     <item key="acp3_up_to_date">Sie verwenden bereits die aktuelle Version des ACP3.</item>
     <item key="activate_module">
         <![CDATA[Das Modul &quot;%s&quot; ist deaktiviert, wodurch bestimmte Funktionen eingeschränkt sein könnten.<br />Bitte aktivieren Sie dieses Modul, um diesen Fehler zu beheben.]]></item>
     <item key="additional_javascript_files">Zusätzlich zu ladende JavaScript Dateien</item>
-    <item key="additional_javascript_files_description">Die Dateien müssen sich im &quot;js&quot;-Ordner des Designs
-        befinden. Die einzelnen Dateien bitte jeweils mit einem Komma separieren.
+    <item key="additional_javascript_files_description">Die Dateien müssen sich im &quot;js&quot;-Ordner des Designs befinden. Die einzelnen Dateien bitte jeweils mit einem Komma separieren.
     </item>
     <item key="additional_stylesheets">Zusätzlich zu ladende Stylesheet Dateien</item>
-    <item key="additional_stylesheets_description">Die Stylesheets müssen sich im &quot;css&quot;-Ordner des Designs
-        befinden. Die einzelnen Stylesheets bitte jeweils mit einem Komma separieren.
+    <item key="additional_stylesheets_description">Die Stylesheets müssen sich im &quot;css&quot;-Ordner des Designs befinden. Die einzelnen Stylesheets bitte jeweils mit einem Komma separieren.
     </item>
+    <item key="admin_extensions_designs">Designs</item>
+    <item key="admin_extensions_index">Erweiterungen</item>
+    <item key="admin_extensions_languages">Sprachen</item>
+    <item key="admin_extensions_modules">Module</item>
+    <item key="admin_index_configuration">Konfiguration</item>
+    <item key="admin_maintenance_index">Wartung</item>
+    <item key="admin_maintenance_sql_export">SQL-Tabellen-Export</item>
+    <item key="admin_maintenance_sql_import">SQL-Tabellen-Import</item>
+    <item key="admin_maintenance_update_check">Versionsüberprüfung</item>
     <item key="allow_comments">Kommentare erlauben</item>
     <item key="author">Autor</item>
     <item key="back">Zurück</item>
@@ -32,6 +29,7 @@
     <item key="cancel">Abbrechen</item>
     <item key="close_window">Fenster schließen</item>
     <item key="complete_export">Komplett</item>
+    <item key="configuration">Konfiguration</item>
     <item key="config_edit_error">Beim Bearbeiten der Konfiguration ist ein Fehler aufgetreten.</item>
     <item key="config_edit_success">Die Konfiguration wurde erfolgreich bearbeitet.</item>
     <item key="confirm_delete">Sollen die ausgewählten Einträge wirklich gelöscht werden?</item>
@@ -56,9 +54,7 @@
     <item key="date_august">August</item>
     <item key="date_dec">Dez</item>
     <item key="date_december">Dezember</item>
-    <item key="date_description">Wenn Sie kein Enddatum festlegen möchten, so setzen Sie bitte das
-        Veröffentlichungsdatum und das Enddatum auf die gleichen Werte.
-    </item>
+    <item key="date_description">Wenn Sie kein Enddatum festlegen möchten, so setzen Sie bitte das Veröffentlichungsdatum und das Enddatum auf die gleichen Werte.</item>
     <item key="date_feb">Feb</item>
     <item key="date_february">Februar</item>
     <item key="date_format">Datumsformat</item>
@@ -116,9 +112,7 @@
     <item key="email_address">E-Mail-Adresse</item>
     <item key="enable">Aktivieren</item>
     <item key="enable_module">Modul aktivieren</item>
-    <item key="enable_following_modules_first">Um das Modul installieren zu können, müssen Sie zunächst folgende Module
-        aktivieren: %s
-    </item>
+    <item key="enable_following_modules_first">Um das Modul installieren zu können, müssen Sie zunächst folgende Module aktivieren: %s</item>
     <item key="enable_seo_aliases">URI-Aliase aktivieren</item>
     <item key="end_date">Enddatum</item>
     <item key="entries">Einträge</item>
@@ -129,12 +123,12 @@
     <item key="export_options">Exportoptionen</item>
     <item key="export_structure">Nur Struktur</item>
     <item key="export_type">Exportart</item>
+    <item key="extensions">Erweiterungen</item>
     <item key="failure">Es sind folgende Fehler aufgetreten:</item>
     <item key="file">Datei</item>
     <item key="first_page">Erste Seite</item>
     <item key="flood_barrier">Flood Sperre</item>
-    <item key="flood_barrier_description">Zeit in Sekunden, die ein Benutzer warten muss, bevor er einen neuen Beitrag
-        verfassen kann.
+    <item key="flood_barrier_description">Zeit in Sekunden, die ein Benutzer warten muss, bevor er einen neuen Beitrag verfassen kann.
     </item>
     <item key="flood_no_entry_possible">Sie können erst in %d Sekunden einen neuen Beitrag verfassen.</item>
     <item key="form_already_submitted">Das Formular wurde bereits abgesendet.</item>
@@ -144,13 +138,11 @@
     <item key="general_statements">Allgemeine Angaben</item>
     <item key="home">Home</item>
     <item key="homepage">Startseite</item>
-    <item key="homepage_description">Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot;
-        ein.
+    <item key="homepage_description">Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein.
     </item>
     <item key="hour">Stunde</item>
     <item key="id">ID</item>
-    <item key="incorrect_homepage">Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot;
-        ein.
+    <item key="incorrect_homepage">Bitte geben Sie die Startseite in der Form &quot;modul/datei/weitere_parameter/&quot; ein.
     </item>
     <item key="incorrect_path_to_icons">Der Pfad zum Ordner mit den Icons muss mit einem Slash enden.</item>
     <item key="insert_page_break">Seitenumbruch einfügen</item>
@@ -176,6 +168,7 @@
     <item key="mailer_type">Mailertyp</item>
     <item key="mailer_type_php_mail">PHP Mail</item>
     <item key="mailer_type_smtp">SMTP</item>
+    <item key="maintenance">Warnung</item>
     <item key="maintenance_message_to_short">Die Wartungsnachricht sollte mindestens 3 Zeichen lanng sein.</item>
     <item key="maintenance_mode">In Wartungsmodus versetzen</item>
     <item key="maintenance_msg">Wartungsnachricht</item>
@@ -201,11 +194,9 @@
     <item key="mod_uninstallation_success">Das Modul wurde erfolgreich deinstalliert.</item>
     <item key="module">Modul</item>
     <item key="module_already_installed">Das Modul ist bereits installiert!</item>
-    <item key="module_disable_not_possible">Das Modul kann nicht deaktiviert werden, da folgende Module sonst nicht mehr
-        funktionieren würden: %s
+    <item key="module_disable_not_possible">Das Modul kann nicht deaktiviert werden, da folgende Module sonst nicht mehr funktionieren würden: %s
     </item>
-    <item key="module_installer_not_found">Es konnte für dieses Module leider keine Installationsroutine gefunden
-        werden!
+    <item key="module_installer_not_found">Es konnte für dieses Module leider keine Installationsroutine gefunden werden!
     </item>
     <item key="module_name">Modul Name</item>
     <item key="modules">Module</item>
@@ -248,34 +239,26 @@
     <item key="reset">Zurücksetzen</item>
     <item key="result">Ergebnis</item>
     <item key="select_cache_images">Bitte wählen Sie aus, ob Bilder gecached werden sollen.</item>
-    <item key="select_date">Bitte vervollständigen Sie die Angaben zum Veröffentlichungsdatum bzw. dem Enddatum dieses
-        Eintrages.
+    <item key="select_date">Bitte vervollständigen Sie die Angaben zum Veröffentlichungsdatum bzw. dem Enddatum dieses Eintrages.
     </item>
-    <item key="select_date_format">Bitte wählen Sie aus, ob das lange oder das kurze Datumsformat verwendet werden
-        soll.
+    <item key="select_date_format">Bitte wählen Sie aus, ob das lange oder das kurze Datumsformat verwendet werden soll.
     </item>
     <item key="select_editor">Bitte wählen Sie aus, mit welchen Editor Sie Ihre Einträge erstellen wollen.</item>
     <item key="select_export_type">Bitte wählen Sie die Exportart aus.</item>
-    <item key="select_menu_item">Bitte wählen Sie einen der oben stehenden Menüpunkte aus, um zur gewünschten Aktion zu
-        gelangen.
+    <item key="select_menu_item">Bitte wählen Sie einen der oben stehenden Menüpunkte aus, um zur gewünschten Aktion zu gelangen.
     </item>
-    <item key="select_mod_rewrite">Bitte geben Sie an, ob die suchmaschinenfreundlichen URIs verwendet werden sollen,
-        oder nicht.
+    <item key="select_mod_rewrite">Bitte geben Sie an, ob die suchmaschinenfreundlichen URIs verwendet werden sollen, oder nicht.
     </item>
-    <item key="select_online_maintenance">Bitte wählen Sie aus, ob sich die Seite im Wartungsmodus befinden soll oder
-        nicht.
+    <item key="select_online_maintenance">Bitte wählen Sie aus, ob sich die Seite im Wartungsmodus befinden soll oder nicht.
     </item>
-    <item key="select_output">Bittw wählen Sie aus, ob die Sicherung der SQL-Tabellen als Datei oder als Text ausgegeben
-        werden soll.
+    <item key="select_output">Bittw wählen Sie aus, ob die Sicherung der SQL-Tabellen als Datei oder als Text ausgegeben werden soll.
     </item>
     <item key="select_records_per_page">Bitte wählen Sie aus, wie viele Datensätze pro Seite angezeigt werden sollen.
     </item>
     <item key="select_seo_aliases">Bitte wählen Sie aus, ob die URI-Aliase aktiviert werden sollen oder nicht.</item>
-    <item key="select_seo_robots">Bitte wählen Sie aus, wie die Website von Suchmaschinen-Crawlern indexiert werden
-        soll.
+    <item key="select_seo_robots">Bitte wählen Sie aus, wie die Website von Suchmaschinen-Crawlern indexiert werden soll.
     </item>
-    <item key="select_sidebar_entries">Bitte wählen Sie aus, wie viele Einträge in der Modul-Sidebar angezeigt werden
-        sollen.
+    <item key="select_sidebar_entries">Bitte wählen Sie aus, wie viele Einträge in der Modul-Sidebar angezeigt werden sollen.
     </item>
     <item key="select_sql_file">Die angegebene Datei ist keine Textdatei.</item>
     <item key="select_sql_tables">Bitte wählen Sie mindestens eine SQL-Tabelle aus, welche exportiert werden soll.
@@ -294,6 +277,7 @@
     <item key="seo_uri_alias">URI-Alias</item>
     <item key="seo_uri_alias_description">Bitte nur Kleinbuchstaben von a-z, Ziffern und den Bindestrich verwenden.
     </item>
+    <item key="settings">Einstellungen</item>
     <item key="settings_error">Beim Bearbeiten der Einstellungen ist ein Fehler aufgetreten.</item>
     <item key="settings_success">Die Einstellungen wurden erfolgreich aktualisiert.</item>
     <item key="sidebar_entries_to_display">Anzuzeigende Sidebareinträge</item>
@@ -314,32 +298,26 @@
     <item key="title_to_short">Bitte geben Sie einen Seitentitel ein.</item>
     <item key="toc_page">Seite %d</item>
     <item key="toggle_navigation">Navigation einblenden/ausblenden</item>
-    <item key="type_in_additional_javascript_files">Einige der angegebenen JavaScript Dateien konnten nicht gefunden
-        werden.
+    <item key="type_in_additional_javascript_files">Einige der angegebenen JavaScript Dateien konnten nicht gefunden werden.
     </item>
     <item key="type_in_additional_stylesheets">Einige der angegebenen Stylesheets konnten nicht gefunden werden.</item>
     <item key="type_in_date_format">Bitte geben Sie eine Datumsformatierung ein.</item>
-    <item key="type_in_flood_barrier">Bitte geben Sie ein, für wie viele Sekunden ein Benutzer keine Beiträge abschicken
-        kann.
+    <item key="type_in_flood_barrier">Bitte geben Sie ein, für wie viele Sekunden ein Benutzer keine Beiträge abschicken kann.
     </item>
     <item key="type_in_mailer_smtp_host">Bitte geben Sie den Hostnamen des SMTP-Servers an.</item>
     <item key="type_in_mailer_smtp_port">Bitte geben Sie die Portnummer des SMTP-Servers an.</item>
     <item key="type_in_mailer_smtp_username">Bitte geben Sie den Benutzernamen des SMTP-Servers an.</item>
-    <item key="type_in_minify_cache_lifetime">Bitte geben Sie die Cache-Lebenszeit der CSS- und JavaScript-Dateien
-        ein.
+    <item key="type_in_minify_cache_lifetime">Bitte geben Sie die Cache-Lebenszeit der CSS- und JavaScript-Dateien ein.
     </item>
-    <item key="type_in_text_or_select_sql_file">Bitte geben Sie die SQL-Abfragen entweder in dem Textfeld ein oder laden
-        Sie eine Datei hoch.
+    <item key="type_in_text_or_select_sql_file">Bitte geben Sie die SQL-Abfragen entweder in dem Textfeld ein oder laden Sie eine Datei hoch.
     </item>
     <item key="uninstall">Deinstallieren</item>
-    <item key="uninstall_following_modules_first">Um das Modul deinstallieren zu können, müssen zunächst die Folgenden
-        deinstalliert werden: %s
+    <item key="uninstall_following_modules_first">Um das Modul deinstallieren zu können, müssen zunächst die Folgenden deinstalliert werden: %s
     </item>
     <item key="uninstall_module">Modul deinstallieren</item>
     <item key="unmark_all">Markierung aufheben</item>
     <item key="upload_error">Die Datei %s konnte leider nicht verschoben werden.</item>
-    <item key="uri_alias_unallowed_characters_or_exists">Entweder haben Sie für den URI-Alias unerlaubte Zeichen
-        eingegeben oder es existiert bereits einer mit diesem Namen.
+    <item key="uri_alias_unallowed_characters_or_exists">Entweder haben Sie für den URI-Alias unerlaubte Zeichen eingegeben oder es existiert bereits einer mit diesem Namen.
     </item>
     <item key="version">Version</item>
     <item key="website">Website</item>

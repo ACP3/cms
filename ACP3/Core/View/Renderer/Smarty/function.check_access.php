@@ -25,6 +25,7 @@ function smarty_function_check_access($params)
             $accessCheck = array();
             $accessCheck['uri'] = \ACP3\Core\Registry::get('URI')->route($params['path']);
 
+            $path = '';
             if (isset($params['icon'])) {
                 $path = ROOT_DIR . CONFIG_ICONS_PATH . $params['icon'] . '.png';
                 $accessCheck['icon'] = $path;
@@ -36,7 +37,7 @@ function smarty_function_check_access($params)
                 $lang_ary = explode('|', $params['lang']);
                 $accessCheck['lang'] = \ACP3\Core\Registry::get('Lang')->t($lang_ary[0], $lang_ary[1]);
             } else {
-                $accessCheck['lang'] = \ACP3\Core\Registry::get('Lang')->t($action[0], $action[2]);
+                $accessCheck['lang'] = \ACP3\Core\Registry::get('Lang')->t($action[0], $area . '_' . $action[1] . '_' . $action[2]);
             }
 
             // Dimensionen der Grafik bestimmen

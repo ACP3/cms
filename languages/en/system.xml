@@ -2,35 +2,29 @@
 <language>
     <item key="access_to_following_modules">You have access to the following %d modules.</item>
     <item key="acp">Administration Control Panel</item>
-    <item key="configuration">Configuration</item>
-    <item key="designs">Designs</item>
-    <item key="extensions">Extensions</item>
-    <item key="languages">Languages</item>
-    <item key="maintenance">Maintenance</item>
-    <item key="modules">Modules</item>
-    <item key="sql_export">SQL table export</item>
-    <item key="sql_import">SQL table import</item>
-    <item key="update_check">Version check</item>
-    <item key="acp3_not_up_to_date">A newer version of ACP3 is available. Click %1$shere%2$s to download the latest
-        version.
-    </item>
+    <item key="acp3_not_up_to_date">A newer version of ACP3 is available. Click %1$shere%2$s to download the latest version.</item>
     <item key="acp3_up_to_date">You're already using the latest version of ACP3.</item>
-    <item key="activate_module">
-        <![CDATA[The module &quot;%s&quot; is disabled, whereby certain features can be limited.<br />Please enable the module, to resolve this problem.]]></item>
+    <item key="activate_module"><![CDATA[The module &quot;%s&quot; is disabled, whereby certain features can be limited.<br />Please enable the module, to resolve this problem.]]></item>
     <item key="additional_javascript_files">Additional JavaScript files</item>
-    <item key="additional_javascript_files_description">The javascript files have to be located in the &quot;js&quot;
-        directory. Please separate each file with a comma.
-    </item>
+    <item key="additional_javascript_files_description">The javascript files have to be located in the &quot;js&quot; directory. Please separate each file with a comma.</item>
     <item key="additional_stylesheets">Additional stylesheets</item>
-    <item key="additional_stylesheets_description">The stylesheets have to be located in the &quot;css&quot; directory.
-        Please separate each file with a comma.
-    </item>
+    <item key="additional_stylesheets_description">The stylesheets have to be located in the &quot;css&quot; directory. Please separate each file with a comma.</item>
+    <item key="admin_extensions_designs">Designs</item>
+    <item key="admin_extensions_index">Extensions</item>
+    <item key="admin_extensions_languages">Languages</item>
+    <item key="admin_extensions_modules">Modules</item>
+    <item key="admin_index_configuration">Configuration</item>
+    <item key="admin_maintenance_index">Maintenance</item>
+    <item key="admin_maintenance_sql_export">SQL table export</item>
+    <item key="admin_maintenance_sql_import">SQL table import</item>
+    <item key="admin_maintenance_update_check">Version check</item>
     <item key="allow_comments">Allow comments</item>
     <item key="author">Author</item>
     <item key="back">Back</item>
     <item key="cache_images">Cache pictures</item>
     <item key="cancel">Cancel</item>
     <item key="complete_export">Complete</item>
+    <item key="configuration">Configuration</item>
     <item key="config_edit_error">While editing the ACP3 configuration an error has occured.</item>
     <item key="config_edit_success">The ACP3 configuration has been successfully edited.</item>
     <item key="confirm_delete">Do you really want to delete the marked entries?</item>
@@ -56,9 +50,7 @@
     <item key="date_august">August</item>
     <item key="date_dec">Dec</item>
     <item key="date_december">December</item>
-    <item key="date_description">If you wouldn't like to set a enddate, just set the release date and the end date to
-        the same values.
-    </item>
+    <item key="date_description">If you wouldn't like to set a enddate, just set the release date and the end date to the same values.</item>
     <item key="date_feb">Feb</item>
     <item key="date_february">February</item>
     <item key="date_format">Date format</item>
@@ -116,9 +108,7 @@
     <item key="email_address">E-mail address</item>
     <item key="enable">Enable</item>
     <item key="enable_module">Enable module</item>
-    <item key="enable_following_modules_first">To install the module you have to enable the following modules first:
-        %s
-    </item>
+    <item key="enable_following_modules_first">To install the module you have to enable the following modules first: %s</item>
     <item key="enable_seo_aliases">Enable URI-Aliases</item>
     <item key="end_date">End date</item>
     <item key="entries">Entries</item>
@@ -129,13 +119,12 @@
     <item key="export_options">Exportoptions</item>
     <item key="export_structure">Struture only</item>
     <item key="export_type">Export type</item>
+    <item key="extensions">Extensions</item>
     <item key="failure">The following errors have occured:</item>
     <item key="file">File</item>
     <item key="first_page">First page</item>
     <item key="flood_barrier">Flood barrier</item>
-    <item key="flood_barrier_description">Time in seconds, how long an user has to wait, before he can write a new
-        entry.
-    </item>
+    <item key="flood_barrier_description">Time in seconds, how long an user has to wait, before he can write a new entry.</item>
     <item key="flood_no_entry_possible">You have to wait for %d seconds to submit a new entry.</item>
     <item key="form_already_submitted">The form has been already submitted.</item>
     <item key="forward">Forward</item>
@@ -172,6 +161,7 @@
     <item key="mailer_type">Mailer type</item>
     <item key="mailer_type_php_mail">PHP Mail</item>
     <item key="mailer_type_smtp">SMTP</item>
+    <item key="maintenance">Maintenance</item>
     <item key="maintenance_message_to_short">The maintenance message should be at least 3 characters long.</item>
     <item key="maintenance_mode">Turn maintenance mode on</item>
     <item key="maintenance_msg">Maintenance message</item>
@@ -197,8 +187,7 @@
     <item key="mod_uninstallation_success">The module has been successfully uninstalled.</item>
     <item key="module">Module</item>
     <item key="module_already_installed">The module is already installed!</item>
-    <item key="module_disable_not_possible">This module can not be disabled, because the following modules would
-        otherwise cease to function: %s
+    <item key="module_disable_not_possible">This module can not be disabled, because the following modules would otherwise cease to function: %s
     </item>
     <item key="module_installer_not_found">Unfortunately, this module does not have an installer!</item>
     <item key="module_name">Module name</item>
@@ -270,6 +259,7 @@
     <item key="seo_robots_noindex_nofollow">noindex, nofollow</item>
     <item key="seo_uri_alias">URI-Alias</item>
     <item key="seo_uri_alias_description">Please use only lower case letters, numbers and the hyphen.</item>
+    <item key="settings">Settings</item>
     <item key="settings_error">While editing the settings an error has occured.</item>
     <item key="settings_success">The settings have been successfully edited.</item>
     <item key="sidebar_entries_to_display">Sidebar entries to display</item>
@@ -298,18 +288,15 @@
     <item key="type_in_mailer_smtp_port">Please type in the portnumber of the SMTP server.</item>
     <item key="type_in_mailer_smtp_username">Please type in the username of the SMTP server.</item>
     <item key="type_in_minify_cache_lifetime">Please type in the cache lifetime of CSS and JavaScript files.</item>
-    <item key="type_in_text_or_select_sql_file">Please enter the sql queries either in the textarea oder upload a
-        file.
+    <item key="type_in_text_or_select_sql_file">Please enter the sql queries either in the textarea oder upload a file.
     </item>
     <item key="uninstall">Uninstall</item>
-    <item key="uninstall_following_modules_first">To uninstall the module you have to uninstall the following modules
-        first: %s
+    <item key="uninstall_following_modules_first">To uninstall the module you have to uninstall the following modules first: %s
     </item>
     <item key="uninstall_module">Uninstall module</item>
     <item key="unmark_all">Unmark all</item>
     <item key="upload_error">While moving the file %s an error has occured.</item>
-    <item key="uri_alias_unallowed_characters_or_exists">Either you have typed in unallowed characters or there is
-        already an URI-Alias with the given name.
+    <item key="uri_alias_unallowed_characters_or_exists">Either you have typed in unallowed characters or there is already an URI-Alias with the given name.
     </item>
     <item key="version">Version</item>
     <item key="website">Website</item>

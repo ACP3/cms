@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'comments';
-    const SCHEMA_VERSION = 32;
+    const SCHEMA_VERSION = 33;
 
     public function createTables()
     {
@@ -50,6 +50,11 @@ class Installer extends Modules\AbstractInstaller
             32 => array(
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = " . $this->getModuleId() . " AND page = \"functions\";",
                 "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'list', '', 1);",
+            ),
+            33 => array(
+                'UPDATE `{pre}acl_resources` SET controller = "details" WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_comments";',
+                'UPDATE `{pre}acl_resources` SET page = REPLACE(page, "_comments", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_comments";',
+                'UPDATE `{pre}acl_resources` SET controller = "details" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "edit";',
             )
         );
     }

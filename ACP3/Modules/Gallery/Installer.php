@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'gallery';
-    const SCHEMA_VERSION = 33;
+    const SCHEMA_VERSION = 34;
 
     public function createTables()
     {
@@ -69,6 +69,11 @@ class Installer extends Modules\AbstractInstaller
             ),
             33 => array(
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "gallery/", "gallery/index/") WHERE uri LIKE "gallery/%";',
+            ),
+            34 => array(
+                'UPDATE `{pre}acl_resources` SET controller = "pictures" WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_picture";',
+                'UPDATE `{pre}acl_resources` SET page = REPLACE(page, "_picture", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_picture";',
+                'UPDATE `{pre}acl_resources` SET controller = "pictures" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "order";',
             )
         );
     }

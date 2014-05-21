@@ -12,11 +12,6 @@ use ACP3\Installer\Core;
 class Update extends Core\Modules\Controller
 {
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function actionDbUpdate()
     {
         if (isset($_POST['update'])) {

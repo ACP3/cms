@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="create">Create new role</item>
-    <item key="create_resource">Create new resource</item>
-    <item key="delete">Delete roles</item>
-    <item key="edit">Edit role</item>
-    <item key="edit_resource">Edit resource</item>
-    <item key="index_resources">Manage resources</item>
+    <item key="admin_index_create">Create new role</item>
+    <item key="admin_index_delete">Delete roles</item>
+    <item key="admin_index_edit">Edit role</item>
+    <item key="admin_resources_create">Create new resource</item>
+    <item key="admin_resources_edit">Edit resource</item>
+    <item key="admin_resources_index">Manage resources</item>
     <item key="allow_access">Allow</item>
     <item key="assigned_privilege">Assigned privilege</item>
     <item key="filename">Filename</item>

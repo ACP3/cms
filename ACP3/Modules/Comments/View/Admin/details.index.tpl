@@ -1,5 +1,5 @@
 {if isset($comments)}
-    <form action="{uri args="acp/comments/index/delete_comments"}" method="post">
+    <form action="{uri args="acp/comments/details/delete"}" method="post">
         <nav id="adm-list" class="navbar navbar-default" role="navigation">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex2-collapse">
@@ -11,7 +11,7 @@
             </div>
             <div class="collapse navbar-collapse navbar-ex2-collapse">
                 <div class="navbar-text pull-right">
-                    {check_access mode="input" path="acp/comments/index/delete_comments" icon="32/cancel" lang="system|delete_marked"}
+                    {check_access mode="input" path="acp/comments/details/delete" icon="32/cancel" lang="system|delete_marked"}
                 </div>
             </div>
         </nav>
@@ -38,7 +38,7 @@
                         <td><input type="checkbox" name="entries[]" value="{$row.id}"></td>
                     {/if}
                     <td>{$row.date_formatted}</td>
-                    <td>{check_access mode="link" path="acp/comments/index/edit/id_`$row.id`" title=$row.name}</td>
+                    <td>{check_access mode="link" path="acp/comments/details/edit/id_`$row.id`" title=$row.name}</td>
                     <td>{$row.message}</td>
                     <td>{$row.ip}</td>
                     <td>{$row.id}</td>

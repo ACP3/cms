@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="create">Create new gallery</item>
-    <item key="create_picture">Add picture</item>
-    <item key="delete">Delete galleries</item>
-    <item key="delete_picture">Delete pictures</item>
-    <item key="edit">Edit gallery</item>
-    <item key="edit_picture">Edit picture</item>
-    <item key="settings">Settings</item>
+    <item key="admin_index_create">Create new gallery</item>
+    <item key="admin_index_delete">Delete galleries</item>
+    <item key="admin_index_edit">Edit gallery</item>
+    <item key="admin_index_settings">Settings</item>
+    <item key="admin_pictures_create">Add picture</item>
+    <item key="admin_pictures_delete">Delete pictures</item>
+    <item key="admin_pictures_edit">Edit picture</item>
     <item key="details">Picture details</item>
     <item key="filename">Filename</item>
     <item key="gallery">Gallery</item>

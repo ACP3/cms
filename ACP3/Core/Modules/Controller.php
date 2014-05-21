@@ -136,7 +136,6 @@ abstract class Controller
         return;
     }
 
-
     /**
      * Setter Methode für die $this->no_output Variable
      *

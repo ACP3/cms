@@ -3,16 +3,16 @@
     <item key="account_locked">Ihr Benutzerkonto wurde gesperrt. Um es wieder zu aktivieren, verwenden Sie bitte die
         &quot;Passwort vergessen&quot; Funktion, welche Ihnen dann ein neues Passwort zusenden wird.
     </item>
-    <item key="create">Neuen Benutzer erstellen</item>
-    <item key="delete">Benutzer löschen</item>
-    <item key="edit">Benutzer bearbeiten</item>
-    <item key="settings">Einstellungen</item>
     <item key="address">Adresse</item>
     <item key="address_street">Straße</item>
     <item key="address_house_number">Hausnummer</item>
     <item key="address_zip">Postleitzahl</item>
     <item key="address_city">Stadt</item>
     <item key="administration">Verwaltung</item>
+    <item key="admin_index_create">Neuen Benutzer erstellen</item>
+    <item key="admin_index_delete">Benutzer löschen</item>
+    <item key="admin_index_edit">Benutzer bearbeiten</item>
+    <item key="admin_index_settings">Einstellungen</item>
     <item key="admin_user_undeletable">Der Administrator kann nicht gelöscht werden.</item>
     <item key="allow_language_override">Benutzern erlauben, Sprache selber festzulegen</item>
     <item key="allow_entries_override">Benutzern erlauben, angezeigte Datensätze pro Seite selber festzulegen</item>

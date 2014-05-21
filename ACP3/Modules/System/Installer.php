@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'system';
-    const SCHEMA_VERSION = 39;
+    const SCHEMA_VERSION = 41;
 
     public function __construct(\Doctrine\DBAL\Connection $db)
     {
@@ -16,12 +16,16 @@ class Installer extends Modules\AbstractInstaller
 
         $this->specialResources = array(
             'Admin' => array(
-                'Index' => array(
-                    'configuration' => 7,
+                'Extensions' => array(
+                    'index' => 7,
                     'designs' => 7,
-                    'extensions' => 7,
                     'languages' => 7,
                     'modules' => 7,
+                ),
+                'Index' => array(
+                    'configuration' => 7,
+                ),
+                'Maintenance' => array(
                     'sql_export' => 7,
                     'sql_import' => 7,
                 )
@@ -210,6 +214,18 @@ class Installer extends Modules\AbstractInstaller
             ),
             39 => array(
                 'UPDATE `{pre}acl_resources` SET page=REPLACE(page, "list", "index") WHERE page LIKE "list%";',
+            ),
+            40 => array(
+                'UPDATE `{pre}acl_resources` SET controller = "maintenance" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "sql_export";',
+                'UPDATE `{pre}acl_resources` SET controller = "maintenance" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "sql_import";',
+                'UPDATE `{pre}acl_resources` SET controller = "maintenance" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "update_check";',
+                'UPDATE `{pre}acl_resources` SET controller = "maintenance", page = "index" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "maintenance";',
+            ),
+            41 => array(
+                'UPDATE `{pre}acl_resources` SET controller = "extensions" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "designs";',
+                'UPDATE `{pre}acl_resources` SET controller = "extensions" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "languages";',
+                'UPDATE `{pre}acl_resources` SET controller = "extensions" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "modules";',
+                'UPDATE `{pre}acl_resources` SET controller = "extensions", page = "index" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "extensions";',
             )
         );
     }

@@ -1,4 +1,4 @@
-<form action="{uri args="acp/permissions/index/delete_resources"}" method="post">
+<form action="{uri args="acp/permissions/resources/delete"}" method="post">
     <nav id="adm-list" class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex2-collapse">
@@ -10,8 +10,8 @@
         </div>
         <div class="collapse navbar-collapse navbar-ex2-collapse">
             <div class="navbar-text pull-right">
-                {check_access mode="link" path="acp/permissions/index/create_resource"  icon="32/resource" lang="permissions|create_resource"}
-                {check_access mode="input" path="acp/permissions/index/delete_resources" icon="32/cancel" lang="system|delete_marked"}
+                {check_access mode="link" path="acp/permissions/resources/create"  icon="32/resource"}
+                {check_access mode="input" path="acp/permissions/resources/delete" icon="32/cancel" lang="system|delete_marked"}
             </div>
         </div>
     </nav>
@@ -45,7 +45,7 @@
                         {/if}
                         <td>{$row.area}</td>
                         <td>{$row.controller}</td>
-                        <td>{check_access mode="link" path="acp/permissions/index/edit_resource/id_`$row.resource_id`" title=$row.page}</td>
+                        <td>{check_access mode="link" path="acp/permissions/resources/edit/id_`$row.resource_id`" title=$row.page}</td>
                         <td>{$row.privilege_name}</td>
                         <td>{$row.resource_id}</td>
                     </tr>

@@ -11,7 +11,7 @@
         <div class="collapse navbar-collapse navbar-ex2-collapse">
             <div class="navbar-text pull-right">
                 {check_access mode="link" path="acp/permissions/index/create" icon="32/add_group" width="32" height="32"}
-                {check_access mode="link" path="acp/permissions/index/index_resources" icon="32/resource" width="32" height="32"}
+                {check_access mode="link" path="acp/permissions/resources" icon="32/resource" width="32" height="32"}
                 {check_access mode="input" path="acp/permissions/index/delete" icon="32/cancel" lang="system|delete_marked"}
             </div>
         </div>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="create">Neuen Download erstellen</item>
-    <item key="delete">Downloads löschen</item>
-    <item key="edit">Download bearbeiten</item>
-    <item key="settings">Einstellungen</item>
+    <item key="admin_index_create">Neuen Download erstellen</item>
+    <item key="admin_index_delete">Downloads löschen</item>
+    <item key="admin_index_edit">Download bearbeiten</item>
+    <item key="admin_index_settings">Einstellungen</item>
     <item key="category_select">Bitte wählen Sie eine der untenstehenden Kategorien aus.</item>
     <item key="description_to_short">Der Beschreibungstext sollte mindestens 3 Zeichen lang sein.</item>
     <item key="details">Downloads</item>

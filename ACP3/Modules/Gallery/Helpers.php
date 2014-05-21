@@ -73,7 +73,7 @@ abstract class Helpers
         $pictures = self::$model->getPicturesByGalleryId($galleryId);
         $c_pictures = count($pictures);
 
-        $alias = self::$seo->getUriAlias('gallery/index/pics/id_' . $galleryId, true);
+        $alias = self::$uri->getUriAlias('gallery/index/pics/id_' . $galleryId, true);
         if (!empty($alias)) {
             $alias .= '/img';
         }

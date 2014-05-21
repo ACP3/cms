@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'permissions';
-    const SCHEMA_VERSION = 31;
+    const SCHEMA_VERSION = 32;
 
     public function renameModule()
     {
@@ -49,7 +49,13 @@ class Installer extends Modules\AbstractInstaller
 
     public function schemaUpdates()
     {
-        return array();
+        return array(
+            32 => array(
+                'UPDATE `{pre}acl_resources` SET controller = "resources" WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_resource%";',
+                'UPDATE `{pre}acl_resources` SET page = REPLACE(page, "_resources", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_resources";',
+                'UPDATE `{pre}acl_resources` SET page = REPLACE(page, "_resource", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_resource";',
+            )
+        );
     }
 
 }
