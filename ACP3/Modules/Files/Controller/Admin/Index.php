@@ -264,7 +264,7 @@ class Index extends Core\Modules\Controller\Admin
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->view->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent(Core\Functions::dataTable($config));
             for ($i = 0; $i < $c_files; ++$i) {
                 $files[$i]['period'] = $this->date->formatTimeRange($files[$i]['start'], $files[$i]['end']);
                 $files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : $this->lang->t('files', 'unknown_filesize');

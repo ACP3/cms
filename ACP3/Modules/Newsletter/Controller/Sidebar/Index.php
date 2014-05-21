@@ -10,7 +10,7 @@ use ACP3\Modules\Newsletter;
  *
  * @author Tino Goratsch
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Modules\Controller\Sidebar
 {
 
     /**
@@ -32,7 +32,7 @@ class Index extends Core\Modules\Controller
 
         $this->session->generateFormToken('newsletter/index/index');
 
-        $this->view->displayTemplate('newsletter/sidebar.tpl');
+        $this->setLayout('Newsletter/Sidebar/index.tpl');
     }
 
 }

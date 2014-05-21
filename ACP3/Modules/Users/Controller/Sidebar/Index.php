@@ -10,18 +10,8 @@ use ACP3\Modules\Users;
  *
  * @author Tino Goratsch
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Modules\Controller\Sidebar
 {
-    /**
-     * @var Users\Model
-     */
-    protected $model;
-
-    protected function _init()
-    {
-        $this->model = new Users\Model($this->db, $this->lang, $this->auth, $this->uri);
-    }
-
     public function actionLogin()
     {
         // Usermenü anzeigen, falls der Benutzer eingeloggt ist
@@ -32,7 +22,7 @@ class Index extends Core\Modules\Controller
             $this->view->assign('enable_registration', $settings['enable_registration']);
             $this->view->assign('redirect_uri', isset($_POST['redirect_uri']) ? $_POST['redirect_uri'] : $currentPage);
 
-            $this->view->displayTemplate('users/sidebar_login.tpl');
+            $this->setLayout('Users/Sidebar/login.tpl');
         }
     }
 
@@ -87,7 +77,7 @@ class Index extends Core\Modules\Controller
 
             $this->view->assign('user_sidebar', $userSidebar);
 
-            $this->view->displayTemplate('users/sidebar_user_menu.tpl');
+            $this->setLayout('Users/Sidebar/user_menu.tpl');
         }
     }
 

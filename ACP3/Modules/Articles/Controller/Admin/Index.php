@@ -204,7 +204,7 @@ class Index extends Core\Modules\Controller\Admin
                 'sort_dir' => 'asc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->view->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent(Core\Functions::dataTable($config));
             for ($i = 0; $i < $c_articles; ++$i) {
                 $articles[$i]['period'] = $this->date->formatTimeRange($articles[$i]['start'], $articles[$i]['end']);
             }

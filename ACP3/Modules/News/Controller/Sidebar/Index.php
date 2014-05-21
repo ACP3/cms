@@ -10,7 +10,7 @@ use ACP3\Modules\News;
  *
  * @author Tino Goratsch
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Modules\Controller\Sidebar
 {
 
     /**
@@ -39,7 +39,7 @@ class Index extends Core\Modules\Controller
             $this->view->assign('sidebar_news', $news);
         }
 
-        $this->view->displayTemplate('news/sidebar.tpl');
+        $this->setLayout('News/Sidebar/index.tpl');
     }
 
 }

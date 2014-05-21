@@ -11,7 +11,7 @@ use ACP3\Modules\Files;
  *
  * @author Tino Goratsch
  */
-class Index extends Core\Modules\Controller
+class Index extends Core\Modules\Controller\Sidebar
 {
 
     /**
@@ -40,7 +40,7 @@ class Index extends Core\Modules\Controller
             $this->view->assign('sidebar_files', $files);
         }
 
-        $this->view->displayTemplate('files/sidebar.tpl');
+        $this->setLayout('Files/Sidebar/index.tpl');
     }
 
 }

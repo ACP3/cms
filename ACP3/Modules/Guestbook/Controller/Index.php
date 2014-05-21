@@ -33,9 +33,9 @@ class Index extends Core\Modules\Controller
         $hasNewsletterAccess = Core\Modules::hasPermission('frontend/newsletter') === true && $settings['newsletter_integration'] == 1;
 
         $overlayIsActive = false;
-        if ($this->uri->layout === 'simple') {
-            $overlayIsActive = true;
-            $this->view->setLayout('simple.tpl');
+        if ($this->uri->getIsAjax() === true) {
+            $this->setContentTemplate('Guestbook/create_ajax.tpl');
+            $this->setLayout('');
         }
 
         if (empty($_POST) === false) {

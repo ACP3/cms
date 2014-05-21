@@ -1,9 +1,18 @@
 {if $overlay == 1}
-{include_js module="guestbook" file="list" depends="fancybox"}
-{/if}
+    <div class="modal fade" id="modal-create" tabindex="-1" role="dialog" aria-labelledby="modal-create" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+    <p class="text-center">
+        <a href="{uri args="guestbook/index/create"}" id="create-link" title="{lang t="guestbook|create"}" data-toggle="modal" data-target="#modal-create">{lang t="guestbook|create"}</a>
+    </p>
+{else}
     <p class="text-center">
         <a href="{uri args="guestbook/index/create"}" id="create-link" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>
     </p>
+{/if}
 {if isset($redirect_message)}
     {$redirect_message}
 {/if}

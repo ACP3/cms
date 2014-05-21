@@ -114,7 +114,7 @@ class Index extends Core\Modules\Controller\Admin
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->view->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent(Core\Functions::dataTable($config));
             for ($i = 0; $i < $c_comments; ++$i) {
                 $comments[$i]['name'] = $this->lang->t($comments[$i]['module'], $comments[$i]['module']);
             }
@@ -145,7 +145,7 @@ class Index extends Core\Modules\Controller\Admin
                     'sort_dir' => 'asc',
                     'hide_col_sort' => $canDelete === true ? 0 : ''
                 );
-                $this->view->appendContent(Core\Functions::dataTable($config));
+                $this->appendContent(Core\Functions::dataTable($config));
 
                 $settings = Core\Config::getSettings('comments');
                 // Emoticons einbinden

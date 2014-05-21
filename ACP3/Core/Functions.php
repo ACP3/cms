@@ -421,10 +421,10 @@ class Functions
                 'success' => is_int($success) ? true : (bool)$success,
                 'text' => $text
             );
-            if ($overlay === true) {
-                static::$view->setContentTemplate('system/close_overlay.tpl');
-                return;
-            }
+//            if ($overlay === true) {
+//                static::$view->setContentTemplate('system/close_overlay.tpl');
+//                return;
+//            }
 
             static::$uri->redirect($path);
         }

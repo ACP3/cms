@@ -55,13 +55,11 @@ class URI
         if ((bool)preg_match('=libraries/.+=', $_SERVER['PHP_SELF']) === false) {
             $this->preprocessUriQuery();
 
-            if (defined('IN_INSTALL') === false) {
-                // Query auf eine benutzerdefinierte Startseite setzen
-                if ($this->query === '/' && CONFIG_HOMEPAGE !== '') {
-                    $this->query = CONFIG_HOMEPAGE;
-                }
-                $this->checkForUriAlias();
+            // Query auf eine benutzerdefinierte Startseite setzen
+            if ($this->query === '/' && CONFIG_HOMEPAGE !== '') {
+                $this->query = CONFIG_HOMEPAGE;
             }
+            $this->checkForUriAlias();
 
             $this->setUriParameters();
         }
@@ -211,12 +209,16 @@ class URI
                     $this->$param[0] = $param[1];
                 }
             }
-        } elseif (isset($query[0]) && !isset($query[1])) {
-            // Workaround für Securitytoken-Generierung,
-            // falls die URL nur aus dem Modulnamen besteht
-            $this->query .= $this->controller . '/' . $this->file . '/';
-        } elseif (!isset($query[0]) && !isset($query[1])) {
-            $this->query = $this->mod . '/' . $this->controller . '/' . $this->file . '/';
+        }
+
+        if (!isset($query[0])) {
+            $this->query = $this->mod . '/';
+        }
+        if (!isset($query[1])) {
+            $this->query .= $this->controller . '/';
+        }
+        if (!isset($query[2])) {
+            $this->query .= $this->file . '/';
         }
 
         if (!empty($_POST['cat']) && Validate::isNumber($_POST['cat']) === true) {
