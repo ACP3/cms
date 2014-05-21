@@ -6,6 +6,7 @@
     <item key="admin_index_activate_entry">Eintrag freischalten</item>
     <item key="allow_emoticons">Emoticons erlauben</item>
     <item key="create">Neuer Eintrag</item>
+    <item key="frontend_index_create">Neuer Eintrag</item>
     <item key="guestbook">Gästebuch</item>
     <item key="guestbook_entries">Gästebucheinträge</item>
     <item key="ip">IP Adresse</item>

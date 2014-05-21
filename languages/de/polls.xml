@@ -8,9 +8,9 @@
     <item key="answer">Antwort</item>
     <item key="answers">Antworten</item>
     <item key="can_not_delete_all_answers">Es ist nicht möglich alle Antworten zu löschen</item>
-    <item key="delete_answer_description">Sie können Antworten löschen, indem Sie einfach auf das Auswahlfeld links
-        neben den Antworten klicken.
-    </item>
+    <item key="delete_answer_description">Sie können Antworten löschen, indem Sie einfach auf das Auswahlfeld links neben den Antworten klicken.</item>
+    <item key="frontend_index_result">Ergebnis</item>
+    <item key="frontend_index_vote">Abstimmen</item>
     <item key="latest_poll">Aktuelle Umfrage</item>
     <item key="mod_description">Mit diesem Modul können die Umfragen verwaltet werden.</item>
     <item key="multiple_choice">Mehrfachauswahl erlauben</item>
@@ -25,10 +25,8 @@
     <item key="polls_archive">Umfragen Archiv</item>
     <item key="question">Frage</item>
     <item key="reset_votes">Stimmen zurücksetzen</item>
-    <item key="result">Ergebnis</item>
     <item key="total_votes">Gesamt</item>
     <item key="type_in_answer">Bitte geben Sie zumindest eine Antwort ein.</item>
     <item key="type_in_question">Bitte geben Sie eine Frage ein.</item>
-    <item key="vote">Abstimmen</item>
     <item key="votes">Stimmen</item>
 </language>

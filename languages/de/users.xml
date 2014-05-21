@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
-    <item key="account_locked">Ihr Benutzerkonto wurde gesperrt. Um es wieder zu aktivieren, verwenden Sie bitte die
-        &quot;Passwort vergessen&quot; Funktion, welche Ihnen dann ein neues Passwort zusenden wird.
-    </item>
+    <item key="account_locked">Ihr Benutzerkonto wurde gesperrt. Um es wieder zu aktivieren, verwenden Sie bitte die &quot;Passwort vergessen&quot; Funktion, welche Ihnen dann ein neues Passwort zusenden wird.</item>
     <item key="address">Adresse</item>
     <item key="address_street">Straße</item>
     <item key="address_house_number">Hausnummer</item>
@@ -26,25 +24,16 @@
     <item key="display_address">Adresse im öffentlichen Profil anzeigen</item>
     <item key="display_country">Land im öffentlichen Profil anzeigen</item>
     <item key="display_mail">E-Mail Adresse im öffentlichen Profil anzeigen</item>
-    <item key="display_profile_field_info">Ein Profilfeld kann versteckt werden, indem der Haken links neben dem
-        jeweiligen Feld entfernt wird.
-    </item>
+    <item key="display_profile_field_info">Ein Profilfeld kann versteckt werden, indem der Haken links neben dem jeweiligen Feld entfernt wird.</item>
     <item key="drafts">Entwürfe</item>
-    <item key="edit_profile">Profil bearbeiten</item>
-    <item key="edit_settings">Einstellungen bearbeiten</item>
     <item key="enable_registration">Registrierung neuer Benutzer erlauben</item>
     <item key="forgot_pwd">Passwort vergessen?</item>
-    <item key="forgot_pwd_error">Beim Versenden der E-Mail-Adresse mit Ihrem neuen Passwort ist ein Fehler
-        aufgetreten.
-    </item>
-    <item key="forgot_pwd_description">Bitte geben Sie ihren Benutzernamen bzw. die E-Mail-Adresse Ihres Benutzerkontos
-        ein.
-    </item>
+    <item key="forgot_pwd_error">Beim Versenden der E-Mail-Adresse mit Ihrem neuen Passwort ist ein Fehler aufgetreten.</item>
+    <item key="forgot_pwd_description">Bitte geben Sie ihren Benutzernamen bzw. die E-Mail-Adresse Ihres Benutzerkontos ein.</item>
     <item key="forgot_pwd_mail_subject">Passwortänderung bei {title} ({host})</item>
     <item key="forgot_pwd_mail_message">Hallo {name},
 
-        Sie haben auf der Website {title} ({host}) ein neues Passwort für Ihr Benutzerkonto angefordert.
-        Anbei alle Details:
+        Sie haben auf der Website {title} ({host}) ein neues Passwort für Ihr Benutzerkonto angefordert. Anbei alle Details:
 
         Benutzername: {name}
         E-Mail-Adresse: {mail}
@@ -53,6 +42,12 @@
         Bitte ändern Sie, nachdem Sie sich mit obrigem Passwort angemeldet haben, das Passwort zu einem Ihrer Wahl ab.
     </item>
     <item key="forgot_pwd_success">Das neue Passwort wurde erfolgreich an Ihre E-Mail-Adresse versendet.</item>
+    <item key="frontend_account_edit">Profil bearbeiten</item>
+    <item key="frontend_account_index">Kontrollzentrum</item>
+    <item key="frontend_account_settings">Einstellungen bearbeiten</item>
+    <item key="frontend_index_forgot_pwd">Passwort vergessen?</item>
+    <item key="frontend_index_register">Registrieren</item>
+    <item key="frontend_index_view_profile">Benutzerprofil ansehen</item>
     <item key="gender">Geschlecht</item>
     <item key="gender_female">Frau</item>
     <item key="gender_male">Mann</item>
@@ -81,8 +76,7 @@
     <item key="register_mail_subject">Ihre Registrierung bei {title} ({host})</item>
     <item key="register_mail_message">Hallo {name},
 
-        Sie haben soeben auf der Website von {title} ({host}) ein Benutzerkonto erstellt.
-        Im Folgenden sehen Sie die Daten, mit welchen Sie sich auf der Seite registriert haben.
+        Sie haben soeben auf der Website von {title} ({host}) ein Benutzerkonto erstellt. Im Folgenden sehen Sie die Daten, mit welchen Sie sich auf der Seite registriert haben.
 
         Benutzername: {name}
         E-Mail-Adresse: {mail}
@@ -90,42 +84,24 @@
     </item>
     <item key="register_success">Ihr Benutzerkonto wurde erfolgreich erstellt.</item>
     <item key="select_access_level">Bitte wählen Sie einen Zugriffslevel für den Benutzer aus.</item>
-    <item key="select_address_display">Bitte geben Sie an, ob Ihre Adresse im öffentlichen Profil angezeigt werden soll
-        oder nicht.
-    </item>
-    <item key="select_birthday_display">Bitte geben Sie das Format Ihres Geburtstages in Ihrem öffentlichen Profil an.
-    </item>
-    <item key="select_country_display">Bitte geben Sie an, ob Ihre Nation im öffentlichen Profil angezeigt werden soll
-        oder nicht.
-    </item>
-    <item key="select_enable_registration">Bitten wählen Sie aus, ob die Registrierung neuer Benutzer erlaubt werden
-        soll oder nicht.
-    </item>
-    <item key="select_entries_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die angezeigten
-        Datensätze pro Seite selber festzulegen.
-    </item>
-    <item key="select_language">Bitte wählen Sie aus, in welcher Sprache Sie die Website angezeigt bekommen möchten.
-    </item>
-    <item key="select_language_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die Anzeigesprache
-        selber festzulegen.
-    </item>
-    <item key="select_mail_display">Bitte geben Sie an, ob Ihre E-Mail-Adresse im öffentlichen Profil angezeigt werden
-        soll oder nicht.
-    </item>
+    <item key="select_address_display">Bitte geben Sie an, ob Ihre Adresse im öffentlichen Profil angezeigt werden soll oder nicht.</item>
+    <item key="select_birthday_display">Bitte geben Sie das Format Ihres Geburtstages in Ihrem öffentlichen Profil an.</item>
+    <item key="select_country_display">Bitte geben Sie an, ob Ihre Nation im öffentlichen Profil angezeigt werden soll oder nicht.</item>
+    <item key="select_enable_registration">Bitten wählen Sie aus, ob die Registrierung neuer Benutzer erlaubt werden soll oder nicht.</item>
+    <item key="select_entries_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die angezeigten Datensätze pro Seite selber festzulegen.</item>
+    <item key="select_language">Bitte wählen Sie aus, in welcher Sprache Sie die Website angezeigt bekommen möchten.</item>
+    <item key="select_language_override">Bitte geben Sie an, ob es Benutzern gestattet sein soll, die Anzeigesprache selber festzulegen.</item>
+    <item key="select_mail_display">Bitte geben Sie an, ob Ihre E-Mail-Adresse im öffentlichen Profil angezeigt werden soll oder nicht.</item>
     <item key="select_super_user">Bitte geben Sie an, ob der gewählte Benutzer Super User sein soll oder nicht.</item>
     <item key="send_email">E-Mail senden</item>
     <item key="skype">Skype</item>
     <item key="super_user">Super User</item>
-    <item key="type_in_nickname_or_email">Bitte geben Sie entweder den bei der Registrierung verwendeten Benutzernamen
-        oder die E-Mail-Adresse ein.
-    </item>
+    <item key="type_in_nickname_or_email">Bitte geben Sie entweder den bei der Registrierung verwendeten Benutzernamen oder die E-Mail-Adresse ein.</item>
     <item key="type_in_pwd">Entweder ist das Passwort leer oder in der Wiederholung ist ein Tippfehler.</item>
     <item key="user_email_already_exists">Für die angegebene E-Mail-Adresse existiert bereits ein Benutzerkonto.</item>
     <item key="user_menu">Benutzermenü</item>
     <item key="user_name_already_exists">Für den angegebenen Benutzernamen existiert bereits ein Benutzerkonto.</item>
-    <item key="user_not_exists">Für den eingegebenen Benutzernamen bzw. die eingegebene E-Mail-Adresse konnte kein
-        Benutzerprofil gefunden werden.
-    </item>
+    <item key="user_not_exists">Für den eingegebenen Benutzernamen bzw. die eingegebene E-Mail-Adresse konnte kein Benutzerprofil gefunden werden.</item>
     <item key="user_profile_not_exists">Das angeforderte Benutzerprofil konnte nicht gefunden werden.</item>
     <item key="user_registration_disabled">Die Registrierung für neue Benutzer ist derzeit deaktiviert!</item>
     <item key="users">Benutzer</item>

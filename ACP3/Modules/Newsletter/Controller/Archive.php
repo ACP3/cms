@@ -31,7 +31,7 @@ class Archive extends Core\Modules\Controller
         if (!empty($newsletter)) {
             $this->breadcrumb
                 ->append($this->lang->t('newsletter', 'index'), 'newsletter')
-                ->append($this->lang->t('newsletter', 'index_archive'), 'newsletter/archive/index')
+                ->append($this->lang->t('newsletter', 'frontend_archive_index'), 'newsletter/archive/index')
                 ->append($newsletter['title']);
 
             $newsletter['date_formatted'] = $this->date->format($newsletter['date'], 'short');
@@ -46,10 +46,6 @@ class Archive extends Core\Modules\Controller
 
     public function actionIndex()
     {
-        $this->breadcrumb
-            ->append($this->lang->t('newsletter', 'index'), 'newsletter')
-            ->append($this->lang->t('newsletter', 'index_archive'));
-
         $newsletters = $this->model->getAll(1, POS, $this->auth->entries);
         $c_newsletters = count($newsletters);
 

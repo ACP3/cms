@@ -19,8 +19,8 @@
     <item key="select_newsletter">To display a newsletter please select one from the above dropdown list.</item>
     <item key="create_save_error">While sending respectively saving the newsletter an error has occured.</item>
     <item key="create_success">The newsletter has been successfully sent.</item>
+    <item key="frontend_archive_index">Archive</item>
     <item key="index">Newsletter</item>
-    <item key="index_archive">Archive</item>
     <item key="mailsig">E-mail signature</item>
     <item key="missed_out_newsletter">Missed out a newsletter edition?</item>
     <item key="mod_description">This module is responsible for the newsletter.</item>

@@ -3,7 +3,7 @@
         <h3 class="panel-title">{lang t="users|user_menu"}</h3>
     </div>
     <div class="list-group">
-        <a href="{uri args="users/index/home"}" class="list-group-item">
+        <a href="{uri args="users/account"}" class="list-group-item">
             <i class="glyphicon glyphicon-home"></i>
             {lang t="users|home"}
         </a>
