@@ -178,7 +178,7 @@ abstract class AbstractInstaller implements InstallerInterface
                 if (is_file($path . $controller) === true) {
                     $this->_insertAclResources($dir, substr($controller, 0, -4));
                 } elseif (is_dir($path . $controller) === true) {
-                    $subModuleControllers = scandir($path . $dir);
+                    $subModuleControllers = scandir($path . $controller);
 
                     foreach ($subModuleControllers as $subController) {
                         if ($subController !== '.' && $subController !== '..' && is_file($path . $controller . '/' . $subController) === true) {
@@ -284,7 +284,7 @@ abstract class AbstractInstaller implements InstallerInterface
                 $insertValues = array(
                     'id' => '',
                     'module_id' => $this->getModuleId(),
-                    'area' => strtolower($area),
+                    'area' => !empty($area) ? strtolower($area) : 'frontend',
                     'controller' => strtolower($controller),
                     'page' => $action,
                     'params' => '',

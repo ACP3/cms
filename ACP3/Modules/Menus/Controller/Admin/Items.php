@@ -232,7 +232,7 @@ class Items extends Core\Modules\Controller\Admin
             if (Core\Modules::isActive('articles') === true) {
                 $matches = array();
                 if (!empty($_POST) === false && $menuItem['mode'] == 4) {
-                    preg_match_all('/^(articles\/details\/id_([0-9]+)\/)$/', $menuItem['uri'], $matches);
+                    preg_match_all('/^(articles\/index\/details\/id_([0-9]+)\/)$/', $menuItem['uri'], $matches);
                 }
 
                 $this->view->assign('articles', \ACP3\Modules\Articles\Helpers::articlesList(!empty($matches[2]) ? $matches[2][0] : ''));
