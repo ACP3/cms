@@ -81,7 +81,12 @@ jQuery.fn.formSubmit = function (customFormData) {
                     } else {
                         if (data.success === false) {
                             $('#error-box').remove();
-                            $(data.content).hide().prependTo($form).fadeIn();
+                            var $modalBody = $form.find('.modal-body');
+                            if ($modalBody.length > 0) {
+                                $(data.content).hide().prependTo($modalBody).fadeIn();
+                            } else {
+                                $(data.content).hide().prependTo($form).fadeIn();
+                            }
                         } else {
                             $('#content').html(data);
                         }
