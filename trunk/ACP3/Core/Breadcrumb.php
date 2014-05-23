@@ -223,7 +223,7 @@ class Breadcrumb
 
         // No breadcrumb is set yet
         if (empty($this->stepsFromModules)) {
-            $this->append($this->lang->t('system', 'acp'), 'acp');
+            $this->append($this->lang->t('system', 'acp'), 'acp/acp');
 
             if ($module !== 'acp') {
                 $this->append($this->lang->t($module, $module), 'acp/' . $module);
@@ -256,8 +256,9 @@ class Breadcrumb
 
         // No breadcrumb has been set yet
         if (empty($this->stepsFromModules)) {
-            $this->append($this->lang->t($module, $module), $module);
-
+            if ($module !== 'errors') {
+                $this->append($this->lang->t($module, $module), $module);
+            }
             if ($controller !== 'index') {
                 $this->append($this->lang->t($module, $languageKeyIndex), $module . '/' . $controller);
             }
