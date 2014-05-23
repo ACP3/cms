@@ -157,6 +157,7 @@ class Index extends Core\Modules\Controller\Admin
 
             if (empty($_POST) === false) {
                 try {
+                    $file = array();
                     if (isset($_POST['external'])) {
                         $file = $_POST['file_external'];
                     } elseif (!empty($_FILES['file_internal']['name'])) {
@@ -168,7 +169,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $this->model->validateEdit($_POST, $file);
 
-                    $update_values = array(
+                    $updateValues = array(
                         'start' => $this->date->toSQL($_POST['start']),
                         'end' => $this->date->toSQL($_POST['end']),
                         'category_id' => strlen($_POST['cat_create']) >= 3 ? Categories\Helpers::categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
@@ -190,17 +191,17 @@ class Index extends Core\Modules\Controller\Admin
                             $filesize = $_POST['filesize'] . ' ' . $_POST['unit'];
                         }
                         // SQL Query für die Änderungen
-                        $new_file_sql = array(
+                        $newFileSql = array(
                             'file' => $newFile,
                             'size' => $filesize,
                         );
 
                         Core\Functions::removeUploadedFile('files', $dl['file']);
 
-                        $update_values = array_merge($update_values, $new_file_sql);
+                        $updateValues = array_merge($updateValues, $newFileSql);
                     }
 
-                    $bool = $this->model->update($update_values, $this->uri->id);
+                    $bool = $this->model->update($updateValues, $this->uri->id);
                     if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias'])) {
                         $this->uri->insertUriAlias('files/index/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
                         $this->seo->setCache();

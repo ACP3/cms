@@ -58,7 +58,7 @@ class Index extends Core\Modules\Controller\Admin
                         'parent_id' => (int)$_POST['parent'],
                         'display' => $_POST['display'],
                         'title' => Core\Functions::strEncode($_POST['title']),
-                        'uri' => 'articles/details/id_' . $lastId . '/',
+                        'uri' => 'articles/index/details/id_' . $lastId . '/',
                         'target' => 1,
                     );
 
