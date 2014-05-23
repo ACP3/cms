@@ -34,7 +34,7 @@ class Index extends Core\Modules\Controller
             // Brotkrümelspur
             $this->breadcrumb
                 ->append($this->lang->t('gallery', 'gallery'), 'gallery')
-                ->append($picture['title'], 'gallery/pics/id_' . $picture['gallery_id'])
+                ->append($picture['title'], 'gallery/index/pics/id_' . $picture['gallery_id'])
                 ->append($this->lang->t('gallery', 'details'))
                 ->setTitlePrefix($picture['title'])
                 ->setTitlePostfix(sprintf($this->lang->t('gallery', 'picture_x'), $picture['pic']));
@@ -63,14 +63,14 @@ class Index extends Core\Modules\Controller
             // Vorheriges Bild
             $picture_back = $this->model->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($picture_back)) {
-                $this->seo->setPreviousPage($this->uri->route('gallery/details/id_' . $picture_back));
+                $this->seo->setPreviousPage($this->uri->route('gallery/index/details/id_' . $picture_back));
                 $this->view->assign('picture_back', $picture_back);
             }
 
             // Nächstes Bild
             $picture_next = $this->model->getNextPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($picture_next)) {
-                $this->seo->setNextPage($this->uri->route('gallery/details/id_' . $picture_next));
+                $this->seo->setNextPage($this->uri->route('gallery/index/details/id_' . $picture_next));
                 $this->view->assign('picture_next', $picture_next);
             }
 
@@ -156,18 +156,18 @@ class Index extends Core\Modules\Controller
             $pictures = $this->model->getCache($this->uri->id);
             $c_pictures = count($pictures);
 
+            $galleryTitle = $this->model->getGalleryTitle($this->uri->id);
+
+            // Brotkrümelspur
+            $this->breadcrumb
+                ->append($this->lang->t('gallery', 'gallery'), 'gallery')
+                ->append($galleryTitle);
+
             if ($c_pictures > 0) {
-                $galleryTitle = $this->model->getGalleryTitle($this->uri->id);
-
-                // Brotkrümelspur
-                $this->breadcrumb
-                    ->append($this->lang->t('gallery', 'gallery'), 'gallery')
-                    ->append($galleryTitle);
-
                 $settings = Core\Config::getSettings('gallery');
 
                 for ($i = 0; $i < $c_pictures; ++$i) {
-                    $pictures[$i]['uri'] = $this->uri->route($settings['overlay'] == 1 ? 'gallery/image/id_' . $pictures[$i]['id'] . '/action_normal' : 'gallery/details/id_' . $pictures[$i]['id']);
+                    $pictures[$i]['uri'] = $this->uri->route($settings['overlay'] == 1 ? 'gallery/index/image/id_' . $pictures[$i]['id'] . '/action_normal' : 'gallery/index/details/id_' . $pictures[$i]['id']);
                     $pictures[$i]['description'] = strip_tags($pictures[$i]['description']);
                 }
 

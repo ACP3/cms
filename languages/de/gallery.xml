@@ -25,7 +25,7 @@
     <item key="next_image">Nächstes Bild</item>
     <item key="no_picture_selected">Bitte wählen Sie ein Bild aus.</item>
     <item key="no_pictures">Zu dieser Fotogalerie wurden noch keine Bilder hinzugefügt.</item>
-    <item key="pics">Fotogalerien</item>
+    <item key="frontend_index_pics">Bilder</item>
     <item key="picture">Bild</item>
     <item key="picture_index">Bildübersicht</item>
     <item key="picture_information">Bild Informationen</item>

@@ -25,7 +25,7 @@
     <item key="next_image">Next image</item>
     <item key="no_picture_selected">Please select a picture</item>
     <item key="no_pictures">In this gallery no pictures have been added.</item>
-    <item key="pics">Gallery</item>
+    <item key="frontend_index_pics">Pictures</item>
     <item key="picture">Picture</item>
     <item key="picture_index">Picture overview</item>
     <item key="picture_information">Picture information</item>
