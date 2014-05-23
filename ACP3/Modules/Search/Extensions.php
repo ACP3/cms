@@ -30,7 +30,7 @@ class Extensions
      *
      * @var string
      */
-    protected $search_term;
+    protected $searchTerm;
 
     /**
      * DB Connection Handler
@@ -46,16 +46,16 @@ class Extensions
      */
     protected $params = array();
 
-    public function __construct($area, $sort, $search_term)
+    public function __construct($area, $sort, $searchTerm)
     {
         $this->area = $area;
         $this->sort = $sort;
-        $this->search_term = $search_term;
+        $this->searchTerm = $searchTerm;
 
         $this->db = Core\Registry::get('Db');
 
         $this->params = array(
-            'searchterm' => $this->search_term,
+            'searchterm' => $this->searchTerm,
             'time' => Core\Registry::get('Date')->getCurrentDateTime()
         );
     }
