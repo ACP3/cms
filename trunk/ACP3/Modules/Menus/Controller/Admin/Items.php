@@ -3,6 +3,7 @@
 namespace ACP3\Modules\Menus\Controller\Admin;
 
 use ACP3\Core;
+use ACP3\Modules\Articles\Helpers;
 use ACP3\Modules\Menus;
 
 /**
@@ -31,12 +32,12 @@ class Items extends Core\Modules\Controller\Admin
 
                 $insertValues = array(
                     'id' => '',
-                    'mode' => ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match('/^(articles\/index\/details\/id_([0-9]+)\/)$/', $_POST['uri']) ? '4' : $_POST['mode'],
+                    'mode' => ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $_POST['uri']) ? '4' : $_POST['mode'],
                     'block_id' => (int)$_POST['block_id'],
                     'parent_id' => (int)$_POST['parent'],
                     'display' => $_POST['display'],
                     'title' => Core\Functions::strEncode($_POST['title']),
-                    'uri' => $_POST['mode'] == 1 ? $_POST['module'] : ($_POST['mode'] == 4 ? 'articles/index/details/id_' . $_POST['articles'] . '/' : $_POST['uri']),
+                    'uri' => $_POST['mode'] == 1 ? $_POST['module'] : ($_POST['mode'] == 4 ? sprintf(Helpers::URL_KEY_PATTERN, $_POST['articles']) : $_POST['uri']),
                     'target' => $_POST['display'] == 0 ? 1 : $_POST['target'],
                 );
 
@@ -55,7 +56,13 @@ class Items extends Core\Modules\Controller\Admin
                         $keywords = $_POST['seo_keywords'];
                         $description = $_POST['seo_description'];
                     }
-                    $this->uri->insertUriAlias($path, $_POST['mode'] == 1 ? '' : $alias, $keywords, $description, (int)$_POST['seo_robots']);
+                    $this->uri->insertUriAlias(
+                        $path,
+                        $_POST['mode'] == 1 ? '' : $alias,
+                        $keywords,
+                        $description,
+                        (int)$_POST['seo_robots']
+                    );
                     $this->seo->setCache();
                 }
 
@@ -160,8 +167,8 @@ class Items extends Core\Modules\Controller\Admin
                     $this->model->validateItem($_POST);
 
                     // Vorgenommene Änderungen am Datensatz anwenden
-                    $mode = ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match('/^(articles\/index\/details\/id_([0-9]+)\/)$/', $_POST['uri']) ? '4' : $_POST['mode'];
-                    $uriType = $_POST['mode'] == 4 ? 'articles/index/details/id_' . $_POST['articles'] . '/' : $_POST['uri'];
+                    $mode = ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $_POST['uri']) ? '4' : $_POST['mode'];
+                    $uriType = $_POST['mode'] == 4 ? sprintf(Helpers::URL_KEY_PATTERN, $_POST['articles']) : $_POST['uri'];
 
                     $updateValues = array(
                         'mode' => $mode,
@@ -182,7 +189,13 @@ class Items extends Core\Modules\Controller\Admin
                         $keywords = $_POST['seo_keywords'] === $menuItem['seo_keywords'] ? $menuItem['seo_keywords'] : $_POST['seo_keywords'];
                         $description = $_POST['seo_description'] === $menuItem['seo_description'] ? $menuItem['seo_description'] : $_POST['seo_description'];
                         $path = $_POST['mode'] == 1 ? $_POST['module'] : $_POST['uri'];
-                        $this->uri->insertUriAlias($path, $_POST['mode'] == 1 ? '' : $alias, $keywords, $description, (int)$_POST['seo_robots']);
+                        $this->uri->insertUriAlias(
+                            $path,
+                            $_POST['mode'] == 1 ? '' : $alias,
+                            $keywords,
+                            $description,
+                            (int)$_POST['seo_robots']
+                        );
                         $this->seo->setCache();
                     }
 
@@ -232,7 +245,7 @@ class Items extends Core\Modules\Controller\Admin
             if (Core\Modules::isActive('articles') === true) {
                 $matches = array();
                 if (!empty($_POST) === false && $menuItem['mode'] == 4) {
-                    preg_match_all('/^(articles\/index\/details\/id_([0-9]+)\/)$/', $menuItem['uri'], $matches);
+                    preg_match_all(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $menuItem['uri'], $matches);
                 }
 
                 $this->view->assign('articles', \ACP3\Modules\Articles\Helpers::articlesList(!empty($matches[2]) ? $matches[2][0] : ''));

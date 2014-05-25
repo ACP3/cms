@@ -14,6 +14,8 @@ use ACP3\Core;
 
 abstract class Helpers
 {
+    const URL_KEY_PATTERN_GALLERY = 'gallery/index/pics/id_%s/';
+    const URL_KEY_PATTERN_PICTURE = 'gallery/index/details/id_%s/';
     /**
      *
      * @var Model
@@ -50,14 +52,19 @@ abstract class Helpers
         self::_init();
 
         $galleryId = self::$model->getGalleryIdFromPictureId($pictureId);
-        $alias = self::$uri->getUriAlias('gallery/index/pics/id_' . $galleryId, true);
+        $alias = self::$uri->getUriAlias(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId), true);
         if (!empty($alias)) {
             $alias .= '/img-' . $pictureId;
         }
-        $seoKeywords = self::$seo->getKeywords('gallery/index/pics/id_' . $galleryId);
-        $seoDescription = self::$seo->getDescription('gallery/index/pics/id_' . $galleryId);
+        $seoKeywords = self::$seo->getKeywords(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
+        $seoDescription = self::$seo->getDescription(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
 
-        return self::$uri->insertUriAlias('gallery/index/details/id_' . $pictureId, $alias, $seoKeywords, $seoDescription);
+        return self::$uri->insertUriAlias(
+            sprintf(self::URL_KEY_PATTERN_PICTURE, $pictureId),
+            $alias,
+            $seoKeywords,
+            $seoDescription
+        );
     }
 
     /**
@@ -73,15 +80,20 @@ abstract class Helpers
         $pictures = self::$model->getPicturesByGalleryId($galleryId);
         $c_pictures = count($pictures);
 
-        $alias = self::$uri->getUriAlias('gallery/index/pics/id_' . $galleryId, true);
+        $alias = self::$uri->getUriAlias(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId), true);
         if (!empty($alias)) {
             $alias .= '/img';
         }
-        $seo_keywords = self::$seo->getKeywords('gallery/index/pics/id_' . $galleryId);
-        $seo_description = self::$seo->getDescription('gallery/index/pics/id_' . $galleryId);
+        $seoKeywords = self::$seo->getKeywords(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
+        $seoDescription = self::$seo->getDescription(sprintf(self::URL_KEY_PATTERN_GALLERY, $galleryId));
 
         for ($i = 0; $i < $c_pictures; ++$i) {
-            self::$uri->insertUriAlias('gallery/index/details/id_' . $pictures[$i]['id'], !empty($alias) ? $alias . '-' . $pictures[$i]['id'] : '', $seo_keywords, $seo_description);
+            self::$uri->insertUriAlias(
+                sprintf(self::URL_KEY_PATTERN_PICTURE, $pictures[$i]['id']),
+                !empty($alias) ? $alias . '-' . $pictures[$i]['id'] : '',
+                $seoKeywords,
+                $seoDescription
+            );
         }
 
         return true;
@@ -102,7 +114,7 @@ abstract class Helpers
         $c_pictures = count($pictures);
 
         for ($i = 0; $i < $c_pictures; ++$i) {
-            self::$uri->deleteUriAlias('gallery/index/details/id_' . $pictures[$i]['id']);
+            self::$uri->deleteUriAlias(sprintf(self::URL_KEY_PATTERN_PICTURE, $pictures[$i]['id']));
         }
 
         return true;
