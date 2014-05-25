@@ -50,7 +50,13 @@ class Index extends Core\Modules\Controller\Admin
 
                 $lastId = $this->model->insert($insertValues);
                 if ((bool)CONFIG_SEO_ALIASES === true) {
-                    $this->uri->insertUriAlias('news/index/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    $this->uri->insertUriAlias(
+                        sprintf(News\Helpers::URL_KEY_PATTERN, $lastId),
+                        $_POST['alias'],
+                        $_POST['seo_keywords'],
+                        $_POST['seo_description'],
+                        (int)$_POST['seo_robots']
+                    );
                     $this->seo->setCache();
                 }
 
@@ -114,7 +120,7 @@ class Index extends Core\Modules\Controller\Admin
                 }
                 // News Cache löschen
                 Core\Cache::delete('details_id_' . $item, 'news');
-                $this->uri->deleteUriAlias('news/index/details/id_' . $item);
+                $this->uri->deleteUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $item));
             }
 
             $this->seo->setCache();
@@ -153,7 +159,13 @@ class Index extends Core\Modules\Controller\Admin
                     $bool = $this->model->update($updateValues, $this->uri->id);
 
                     if ((bool)CONFIG_SEO_ALIASES === true) {
-                        $this->uri->insertUriAlias('news/index/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                        $this->uri->insertUriAlias(
+                            sprintf(News\Helpers::URL_KEY_PATTERN, $this->uri->id),
+                            $_POST['alias'],
+                            $_POST['seo_keywords'],
+                            $_POST['seo_description'],
+                            (int)$_POST['seo_robots']
+                        );
                         $this->seo->setCache();
                     }
 
@@ -197,7 +209,7 @@ class Index extends Core\Modules\Controller\Admin
             $lang_target = array($this->lang->t('system', 'window_self'), $this->lang->t('system', 'window_blank'));
             $this->view->assign('target', Core\Functions::selectGenerator('target', array(1, 2), $lang_target, $news['target']));
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('news/index/details/id_' . $this->uri->id));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(News\Helpers::URL_KEY_PATTERN, $this->uri->id)));
 
             $this->view->assign('form', array_merge($news, $_POST));
 

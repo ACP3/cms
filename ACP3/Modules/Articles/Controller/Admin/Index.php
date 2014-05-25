@@ -46,7 +46,12 @@ class Index extends Core\Modules\Controller\Admin
 
                 $lastId = $this->model->insert($insertValues);
                 if ((bool)CONFIG_SEO_ALIASES === true) {
-                    $this->uri->insertUriAlias('articles/index/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    $this->uri->insertUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
+                        $_POST['alias'],
+                        $_POST['seo_keywords'],
+                        $_POST['seo_description'],
+                        (int)$_POST['seo_robots']
+                    );
                     $this->seo->setCache();
                 }
 
@@ -58,7 +63,7 @@ class Index extends Core\Modules\Controller\Admin
                         'parent_id' => (int)$_POST['parent'],
                         'display' => $_POST['display'],
                         'title' => Core\Functions::strEncode($_POST['title']),
-                        'uri' => 'articles/index/details/id_' . $lastId . '/',
+                        'uri' => sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
                         'target' => 1,
                     );
 
@@ -116,7 +121,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $nestedSet = new Core\NestedSet($this->db, \ACP3\Modules\Menus\Model::TABLE_NAME_ITEMS, true);
             foreach ($items as $item) {
-                $uri = 'articles/details/id_' . $item . '/';
+                $uri = sprintf(Articles\Helpers::URL_KEY_PATTERN, $item);
 
                 $bool = $this->model->delete($item);
                 $nestedSet->deleteNode($this->menuModel->getMenuItemIdByUri($uri));
@@ -157,7 +162,13 @@ class Index extends Core\Modules\Controller\Admin
                     $bool = $this->model->update($updateValues, $this->uri->id);
 
                     if ((bool)CONFIG_SEO_ALIASES === true) {
-                        $this->uri->insertUriAlias('articles/index/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                        $this->uri->insertUriAlias(
+                            sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->uri->id),
+                            $_POST['alias'],
+                            $_POST['seo_keywords'],
+                            $_POST['seo_description'],
+                            (int)$_POST['seo_robots']
+                        );
                         $this->seo->setCache();
                     }
 
@@ -179,7 +190,7 @@ class Index extends Core\Modules\Controller\Admin
             // Datumsauswahl
             $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end'), array($article['start'], $article['end'])));
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('articles/index/details/id_' . $this->uri->id));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->uri->id)));
 
             $this->view->assign('form', array_merge($article, $_POST));
 

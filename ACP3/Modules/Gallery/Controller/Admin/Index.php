@@ -40,7 +40,13 @@ class Index extends Core\Modules\Controller\Admin
 
                 $lastId = $this->db->insert(DB_PRE . 'gallery', $insertValues);
                 if ((bool)CONFIG_SEO_ALIASES === true) {
-                    $this->uri->insertUriAlias('gallery/index/pics/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    $this->uri->insertUriAlias(
+                        sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $lastId),
+                        $_POST['alias'],
+                        $_POST['seo_keywords'],
+                        $_POST['seo_description'],
+                        (int)$_POST['seo_robots']
+                    );
                     $this->seo->setCache();
                 }
 
@@ -87,7 +93,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     // Galerie Cache löschen
                     Core\Cache::delete('pics_id_' . $item, 'gallery');
-                    $this->uri->deleteUriAlias('gallery/index/pics/id_' . $item);
+                    $this->uri->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item));
                     Gallery\Helpers::deletePictureAliases($item);
 
                     // Fotogalerie mitsamt Bildern löschen
@@ -108,7 +114,7 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->model->galleryExists((int)$this->uri->id) === true) {
             $gallery = $this->model->getGalleryById((int)$this->uri->id);
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('gallery/index/pics/id_' . $this->uri->id));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->uri->id)));
 
             $this->breadcrumb->append($gallery['title']);
 
@@ -125,7 +131,13 @@ class Index extends Core\Modules\Controller\Admin
 
                     $bool = $this->model->update($updateValues, $this->uri->id);
                     if ((bool)CONFIG_SEO_ALIASES === true) {
-                        $this->uri->insertUriAlias('gallery/index/pics/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                        $this->uri->insertUriAlias(
+                            sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->uri->id),
+                            $_POST['alias'],
+                            $_POST['seo_keywords'],
+                            $_POST['seo_description'],
+                            (int)$_POST['seo_robots']
+                        );
                         Gallery\Helpers::generatePictureAliases($this->uri->id);
 
                         $this->seo->setCache();
@@ -162,8 +174,8 @@ class Index extends Core\Modules\Controller\Admin
                 $this->appendContent(Core\Functions::dataTable($config));
 
                 for ($i = 0; $i < $c_pictures; ++$i) {
-                    $pictures[$i]['first'] = $i == 0 ? true : false;
-                    $pictures[$i]['last'] = $i == $c_pictures - 1 ? true : false;
+                    $pictures[$i]['first'] = $i == 0;
+                    $pictures[$i]['last'] = $i == $c_pictures - 1;
                 }
                 $this->view->assign('pictures', $pictures);
                 $this->view->assign('can_delete', $canDelete);

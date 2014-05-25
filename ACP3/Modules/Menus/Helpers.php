@@ -14,6 +14,8 @@ use ACP3\Core;
 
 abstract class Helpers
 {
+    const ARTICLES_URL_KEY_REGEX = '/^(articles\/index\/details\/id_([0-9]+)\/)$/';
+
     protected static $menuItems = array();
 
     protected static $navbar = array();

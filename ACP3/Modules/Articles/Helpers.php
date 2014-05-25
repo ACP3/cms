@@ -12,8 +12,9 @@ namespace ACP3\Modules\Articles;
 
 use ACP3\Core;
 
-abstract class Helpers
+class Helpers
 {
+    const URL_KEY_PATTERN = 'articles/index/details/id_%s/';
     /**
      *
      * @var Model

@@ -45,11 +45,11 @@ class Index extends Core\Modules\Controller\Admin
 
                 if (is_array($file) === true) {
                     $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'files');
-                    $new_file = $result['name'];
+                    $newFile = $result['name'];
                     $filesize = $result['size'];
                 } else {
                     $_POST['filesize'] = (float)$_POST['filesize'];
-                    $new_file = $file;
+                    $newFile = $file;
                     $filesize = $_POST['filesize'] . ' ' . $_POST['unit'];
                 }
 
@@ -58,7 +58,7 @@ class Index extends Core\Modules\Controller\Admin
                     'start' => $this->date->toSQL($_POST['start']),
                     'end' => $this->date->toSQL($_POST['end']),
                     'category_id' => strlen($_POST['cat_create']) >= 3 ? Categories\Helpers::categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
-                    'file' => $new_file,
+                    'file' => $newFile,
                     'size' => $filesize,
                     'title' => Core\Functions::strEncode($_POST['title']),
                     'text' => Core\Functions::strEncode($_POST['text'], true),
@@ -69,7 +69,12 @@ class Index extends Core\Modules\Controller\Admin
 
                 $lastId = $this->model->insert($insert_values);
                 if ((bool)CONFIG_SEO_ALIASES === true) {
-                    $this->uri->insertUriAlias('files/index/details/id_' . $lastId, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                    $this->uri->insertUriAlias(
+                        sprintf(Files\Helpers::URL_KEY_PATTERN, $lastId),
+                        $_POST['alias'],
+                        $_POST['seo_keywords'],
+                        $_POST['seo_description'],
+                        (int)$_POST['seo_robots']);
                     $this->seo->setCache();
                 }
 
@@ -136,7 +141,7 @@ class Index extends Core\Modules\Controller\Admin
                     }
 
                     Core\Cache::delete('details_id_' . $item, 'files');
-                    $this->uri->deleteUriAlias('files/index/details/id_' . $item);
+                    $this->uri->deleteUriAlias(sprintf(Files\Helpers::URL_KEY_PATTERN, $item));
                 }
             }
 
@@ -203,7 +208,13 @@ class Index extends Core\Modules\Controller\Admin
 
                     $bool = $this->model->update($updateValues, $this->uri->id);
                     if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias'])) {
-                        $this->uri->insertUriAlias('files/index/details/id_' . $this->uri->id, $_POST['alias'], $_POST['seo_keywords'], $_POST['seo_description'], (int)$_POST['seo_robots']);
+                        $this->uri->insertUriAlias(
+                            sprintf(Files\Helpers::URL_KEY_PATTERN, $this->uri->id),
+                            $_POST['alias'],
+                            $_POST['seo_keywords'],
+                            $_POST['seo_description'],
+                            (int)$_POST['seo_robots']
+                        );
                         $this->seo->setCache();
                     }
 
@@ -241,7 +252,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('checked_external', isset($_POST['external']) ? ' checked="checked"' : '');
             $this->view->assign('current_file', $dl['file']);
 
-            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields('files/index/details/id_' . $this->uri->id));
+            $this->view->assign('SEO_FORM_FIELDS', $this->seo->formFields(sprintf(Files\Helpers::URL_KEY_PATTERN, $this->uri->id)));
             $this->view->assign('form', array_merge($dl, $_POST));
 
             $this->session->generateFormToken();
