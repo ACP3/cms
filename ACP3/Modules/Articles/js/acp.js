@@ -9,10 +9,11 @@ jQuery(document).ready(function ($) {
     }).trigger('onload');
 
     // Nur die zum Block zugehörigen übergeordneten Seiten anzeigen
-    $('#parent optgroup').hide();
+    var $parent = $('#parent');
+    $parent.find('optgroup').hide();
     $('#block-id').change(function () {
-        var block = $('#block-id option:selected').eq(0).text();
-        $('#parent optgroup:not([label=\'' + block + '\'])').hide();
-        $('#parent optgroup[label=\'' + block + '\']').show();
+        var block = $('#block-id').find('option:selected').eq(0).text();
+        $parent.find('optgroup:not([label=\'' + block + '\'])').hide();
+        $parent.find('optgroup[label=\'' + block + '\']').show();
     }).change();
 });
