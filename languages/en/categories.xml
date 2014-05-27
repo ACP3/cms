@@ -10,6 +10,7 @@
     <item key="category_in_use">Not all marked categories have been deleted, because they are used by at least one
         resultset.
     </item>
+    <item key="create">Create new category</item>
     <item key="description_to_short">The description should be at least 3 characters long.</item>
     <item key="image_filesize">Maximum image filesize</item>
     <item key="image_height">Maximum image height</item>

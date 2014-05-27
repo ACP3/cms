@@ -51,18 +51,13 @@ class URI
 
         $this->aliases = $this->getCache();
 
-        // Minify von der URI-Verarbeitung ausschließen
-        if ((bool)preg_match('=libraries/.+=', $_SERVER['PHP_SELF']) === false) {
-            $this->preprocessUriQuery();
-
-            // Query auf eine benutzerdefinierte Startseite setzen
-            if ($this->query === '/' && CONFIG_HOMEPAGE !== '') {
-                $this->query = CONFIG_HOMEPAGE;
-            }
-            $this->checkForUriAlias();
-
-            $this->setUriParameters();
+        $this->preprocessUriQuery();
+        // Query auf eine benutzerdefinierte Startseite setzen
+        if ($this->query === '/' && CONFIG_HOMEPAGE !== '') {
+            $this->query = CONFIG_HOMEPAGE;
         }
+        $this->checkForUriAlias();
+        $this->setUriParameters();
     }
 
     /**
@@ -303,17 +298,17 @@ class URI
 
         if ($adminUrl === 0) {
             if (isset($pathArray[2]) === false) {
-                $path.= 'index/';
+                $path .= 'index/';
             }
             if (isset($pathArray[3]) === false) {
-                $path.= 'index/';
+                $path .= 'index/';
             }
         } else {
             if (isset($pathArray[1]) === false) {
-                $path.= 'index/';
+                $path .= 'index/';
             }
             if (isset($pathArray[2]) === false) {
-                $path.= 'index/';
+                $path .= 'index/';
             }
         }
 

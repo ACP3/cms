@@ -280,12 +280,12 @@ abstract class Controller
      */
     public function display()
     {
-        // Content-Template automatisch setzen
-        if ($this->getContentTemplate() === '') {
-            $this->setContentTemplate($this->uri->mod . '/' . $this->uri->controller . '.' . $this->uri->file . '.tpl');
-        }
-
         if ($this->getNoOutput() === false) {
+            // Content-Template automatisch setzen
+            if ($this->getContentTemplate() === '') {
+                $this->setContentTemplate($this->uri->mod . '/' . $this->uri->controller . '.' . $this->uri->file . '.tpl');
+            }
+
             $this->view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
             $this->view->assign('HEAD_TITLE', $this->breadcrumb->output(3));
             $this->view->assign('TITLE', $this->breadcrumb->output(2));
@@ -305,11 +305,9 @@ abstract class Controller
                 if ($this->uri->getIsAjax() === true) {
                     $file = 'system/ajax.tpl';
                 } else {
-                    $minify = $this->view->buildMinifyLink();
                     $file = $this->getLayout();
-                    $layout = substr($file, 0, strpos($file, '.'));
-                    $this->view->assign('MIN_STYLESHEET', sprintf($minify, 'css') . ($layout !== 'layout' ? '&amp;layout=' . $layout : ''));
-                    $this->view->assign('MIN_JAVASCRIPT', sprintf($minify, 'js'));
+                    $this->view->assign('MIN_STYLESHEET', $this->view->buildMinifyLink('css', substr($file, 0, strpos($file, '.'))));
+                    $this->view->assign('MIN_JAVASCRIPT', $this->view->buildMinifyLink('js'));
                 }
 
                 $this->view->displayTemplate($file);
