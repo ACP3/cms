@@ -21,6 +21,10 @@ class View
         'timepicker' => false,
         'datatables' => false
     );
+    /**
+     * @var string
+     */
+    protected $jsLibrariesCache = '';
 
     /**
      * @var
@@ -78,25 +82,41 @@ class View
     /**
      * Erstellt den Link zum Minifier mitsamt allen zu ladenden JavaScript Bibliotheken
      *
+     * @param $group
+     * @param string $layout
      * @return string
      */
-    public function buildMinifyLink()
+    public function buildMinifyLink($group, $layout = '')
     {
-        $minify = ROOT_DIR . 'libraries/min/' . ((bool)CONFIG_SEO_MOD_REWRITE === true && Registry::get('URI')->area !== 'admin' ? '' : '?') . 'g=%s&amp;' . CONFIG_DESIGN;
+        if (!empty($layout)) {
+            $layout = '/layout_' . $layout;
+        }
 
-        ksort($this->jsLibraries);
-        $libraries = '';
-        foreach ($this->jsLibraries as $library => $enable) {
-            if ($enable === true) {
-                $libraries .= $library . ',';
+        $libraries = $this->_getJsLibrariesCache();
+
+        if ($libraries !== '') {
+            $libraries = '/libraries_' . substr($libraries, 0, -1);
+        }
+
+        return Registry::get('URI')->route('minify/index/index/group_' . $group . '/design_' . CONFIG_DESIGN . $layout . $libraries);
+    }
+
+    /**
+     * @return string
+     */
+    private function _getJsLibrariesCache()
+    {
+        if (empty($this->jsLibrariesCache)) {
+            ksort($this->jsLibraries);
+            foreach ($this->jsLibraries as $library => $enable) {
+                if ($enable === true) {
+                    $this->jsLibrariesCache .= $library . ',';
+                }
             }
         }
 
-        if ($libraries !== '') {
-            $minify .= '&amp;libraries=' . substr($libraries, 0, -1);
-        }
+        return $this->jsLibrariesCache;
 
-        return $minify;
     }
 
     /**
@@ -178,7 +198,8 @@ class View
             $systemPath = MODULES_DIR . $module['dir'] . '/';
             $designPath = DESIGN_PATH_INTERNAL . strtolower($module['dir']) . '/';
             if (true == ($stylesheet = self::getCssJsPath($systemPath, $designPath, 'css', 'style.css')) &&
-                $module['dir'] !== 'System') {
+                $module['dir'] !== 'System'
+            ) {
                 $css[] = $stylesheet;
             }
             // Append some custom styles to the default module styling

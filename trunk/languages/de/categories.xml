@@ -10,6 +10,7 @@
     <item key="category_is_in_use">Es konnten nicht alle Kategorien gelöscht werden, da sie noch von mindestens einem
         Datensatz verwendet werden.
     </item>
+    <item key="create">Neue Kategorie erstellen</item>
     <item key="description_to_short">Der Beschreibungstext der Kategorie sollte mindestens 3 Zeichen lang sein.</item>
     <item key="image_filesize">Maximale Dateigröße des Bildes</item>
     <item key="image_height">Maximale Bildhöhe</item>

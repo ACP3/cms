@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <item key="minify">Minify</item>
+    <item key="mod_description">Fasst CSS und JavaScript Dateien zusammen und komprimiert diese.</item>
+</language>

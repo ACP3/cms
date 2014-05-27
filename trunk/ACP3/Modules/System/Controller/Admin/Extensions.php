@@ -102,23 +102,22 @@ class Extensions extends Core\Modules\Controller\Admin
             default:
                 Core\Functions::getRedirectMessage();
 
-                // Languagecache neu erstellen, für den Fall, dass neue Module hinzugefügt wurden
-                $this->lang->setLanguageCache();
+                $this->_renewCaches();
 
                 $modules = Core\Modules::getAllModules();
-                $installed_modules = $new_modules = array();
+                $installedModules = $newModules = array();
 
                 foreach ($modules as $key => $values) {
                     $values['dir'] = strtolower($values['dir']);
                     if (Core\Modules::isInstalled($values['dir']) === true) {
-                        $installed_modules[$key] = $values;
+                        $installedModules[$key] = $values;
                     } else {
-                        $new_modules[$key] = $values;
+                        $newModules[$key] = $values;
                     }
                 }
 
-                $this->view->assign('installed_modules', $installed_modules);
-                $this->view->assign('new_modules', $new_modules);
+                $this->view->assign('installed_modules', $installedModules);
+                $this->view->assign('new_modules', $newModules);
         }
     }
 
@@ -132,8 +131,8 @@ class Extensions extends Core\Modules\Controller\Admin
             $text = $this->lang->t('system', 'mod_deactivate_forbidden');
         } else {
             $bool = $this->db->update(DB_PRE . 'modules', array('active' => 1), array('name' => $this->uri->dir));
-            Core\Modules::setModulesCache();
-            Core\ACL::setResourcesCache();
+
+            $this->_renewCaches();
 
             $text = $this->lang->t('system', 'mod_activate_' . ($bool !== false ? 'success' : 'error'));
         }
@@ -154,8 +153,8 @@ class Extensions extends Core\Modules\Controller\Admin
 
             if (empty($deps)) {
                 $bool = $this->db->update(DB_PRE . 'modules', array('active' => 0), array('name' => $this->uri->dir));
-                Core\Modules::setModulesCache();
-                Core\ACL::setResourcesCache();
+
+                $this->_renewCaches();
 
                 $text = $this->lang->t('system', 'mod_deactivate_' . ($bool !== false ? 'success' : 'error'));
             } else {
@@ -182,7 +181,9 @@ class Extensions extends Core\Modules\Controller\Admin
                     /** @var Core\Modules\AbstractInstaller $installer */
                     $installer = new $className($this->db);
                     $bool = $installer->install();
-                    Core\Modules::setModulesCache();
+
+                    $this->_renewCaches();
+
                     $text = $this->lang->t('system', 'mod_installation_' . ($bool !== false ? 'success' : 'error'));
                 } else {
                     $text = sprintf($this->lang->t('system', 'enable_following_modules_first'), implode(', ', $deps));
@@ -214,7 +215,9 @@ class Extensions extends Core\Modules\Controller\Admin
                     /** @var Core\Modules\AbstractInstaller $installer */
                     $installer = new $className($this->db);
                     $bool = $installer->uninstall();
-                    Core\Modules::setModulesCache();
+
+                    $this->_renewCaches();
+
                     $text = $this->lang->t('system', 'mod_uninstallation_' . ($bool !== false ? 'success' : 'error'));
                 } else {
                     $text = sprintf($this->lang->t('system', 'uninstall_following_modules_first'), implode(', ', $deps));
@@ -226,6 +229,13 @@ class Extensions extends Core\Modules\Controller\Admin
             $text = $this->lang->t('system', 'protected_module_description');
         }
         Core\Functions::setRedirectMessage($bool, $text, 'acp/system/extensions/modules');
+    }
+
+    protected function _renewCaches()
+    {
+        $this->lang->setLanguageCache();
+        Core\Modules::setModulesCache();
+        Core\ACL::setResourcesCache();
     }
 
 }
