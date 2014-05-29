@@ -46,6 +46,7 @@
     <item key="frontend_account_index">Kontrollzentrum</item>
     <item key="frontend_account_settings">Einstellungen bearbeiten</item>
     <item key="frontend_index_forgot_pwd">Passwort vergessen?</item>
+    <item key="frontend_index_login">Login</item>
     <item key="frontend_index_register">Registrieren</item>
     <item key="frontend_index_view_profile">Benutzerprofil ansehen</item>
     <item key="gender">Geschlecht</item>

@@ -46,6 +46,7 @@
     <item key="frontend_account_index">Control center</item>
     <item key="frontend_account_settings">Edit settings</item>
     <item key="frontend_index_forgot_pwd">Forgot password?</item>
+    <item key="frontend_index_login">Login</item>
     <item key="frontend_index_register">Register</item>
     <item key="frontend_index_view_profile">View profile</item>
     <item key="gender">Gender</item>
