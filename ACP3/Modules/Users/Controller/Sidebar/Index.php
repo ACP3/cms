@@ -6,15 +6,17 @@ use ACP3\Core;
 use ACP3\Modules\Users;
 
 /**
- * Description of UsersFrontend
+ * Sidebar controller of the users module
  *
  * @author Tino Goratsch
  */
 class Index extends Core\Modules\Controller\Sidebar
 {
+    /**
+     * Displays the login mask, if the user is not already logged in
+     */
     public function actionLogin()
     {
-        // Usermenü anzeigen, falls der Benutzer eingeloggt ist
         if ($this->auth->isUser() === false) {
             $currentPage = base64_encode(($this->uri->area === 'admin' ? 'acp/' : '') . $this->uri->query);
             $settings = Core\Config::getSettings('users');
@@ -26,13 +28,15 @@ class Index extends Core\Modules\Controller\Sidebar
         }
     }
 
+    /**
+     * Displays the user menu, if the user in logged in
+     */
     public function actionUserMenu()
     {
         if ($this->auth->isUser() === true) {
             $userSidebar = array();
             $userSidebar['page'] = base64_encode(($this->uri->area === 'admin' ? 'acp/' : '') . $this->uri->query);
 
-            // Module holen
             $activeModules = Core\Modules::getActiveModules();
             $navMods = $navSystem = array();
             $hasAccessToSystem = false;
@@ -53,6 +57,7 @@ class Index extends Core\Modules\Controller\Sidebar
                 $userSidebar['modules'] = $navMods;
             }
 
+            // If the user has access to the system module, display some more options
             if ($hasAccessToSystem === true) {
                 $i = 0;
                 if (Core\Modules::hasPermission('admin/system/index/configuration') === true) {

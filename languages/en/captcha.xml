@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<language>
-    <item key="captcha">Captcha</item>
-    <item key="invalid_captcha_entered">Either the captcha is incorrect, or it is no longer valid.</item>
-    <item key="mod_description">Captchas provide effective protection against spambots.</item>
-</language>

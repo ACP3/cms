@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>Deutsch (Deutschland)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="captcha">Captcha</item>
+        <item key="invalid_captcha_entered">Entweder wurde das Captcha falsch eingegeben oder es ist nicht mehr gültig.
+        </item>
+        <item key="mod_description">Captchas bieten wirkungsvollen Schutz gegen Spambots.</item>
+    </keys>
+</language>

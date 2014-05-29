@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>English (United States)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="403">Access denied</item>
+        <item key="404">File not found</item>
+        <item key="errors">Error messages</item>
+        <item key="file_not_found">
+            <![CDATA[The requested module or the requested file is either missing or has not been activated.<br />Please contact the administrator of this site, if the error should occur repeatedly.]]></item>
+        <item key="mod_description">This module returns useful error messages.</item>
+        <item key="no_access">You don't have the needed rights to view this page.</item>
+        <item key="tpl_not_found">The desired template %s was not found.</item>
+    </keys>
+</language>

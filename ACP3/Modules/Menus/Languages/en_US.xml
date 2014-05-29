@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <info>
+        <name>English (United States)</name>
+        <direction>ltr</direction>
+    </info>
+    <keys>
+        <item key="admin_index_create">Create new menu bar</item>
+        <item key="admin_index_delete">Delete menu bar</item>
+        <item key="admin_index_edit">Edit menu bar</item>
+        <item key="admin_items_create">Create new menu item</item>
+        <item key="admin_items_delete">Delete menu items</item>
+        <item key="admin_items_edit">Edit menu item</item>
+        <item key="admin_items_index">Menu items</item>
+        <item key="article">Article</item>
+        <item key="chronology">Chronology</item>
+        <item key="display_item">Display menu item</item>
+        <item key="dynamic_page">Dynamic page</item>
+        <item key="dynamic_page_hints">Please use the format &quot;module/file/optional_parameters/&quot;, e.g.
+            news/details/id_1/.
+        </item>
+        <item key="hyperlink">Hyperlink</item>
+        <item key="index_name">Index name</item>
+        <item key="index_name2">Index name:</item>
+        <item key="index_name_description">This describes the name of the placeholder in the templates.</item>
+        <item key="index_name_unique">The name of the template placeholder has to be unique.</item>
+        <item key="menus">Menu bars</item>
+        <item key="menu_bar">Menu bar</item>
+        <item key="menu_bar_title">Name of the menu bar</item>
+        <item key="menu_bar_title_to_short">The name of the menu bar should be at least 3 characters long.</item>
+        <item key="menu_items">Menu items</item>
+        <item key="mod_description">This module is responsible for the navbars.</item>
+        <item key="module">Module</item>
+        <item key="no_superior_page">No superior page</item>
+        <item key="page_type">Page type</item>
+        <item key="select_item_visibility">Please select whether you want to display to menu item or not.</item>
+        <item key="select_menu_bar">Please choose in which navigation bar the menu item should appear.</item>
+        <item key="select_page_type">Please select the page type.</item>
+        <item key="select_superior_page">Please select a superior page.</item>
+        <item key="superior_page">Superior page</item>
+        <item key="superior_page_not_allowed">It's impossible to use the selected page as a superior page.</item>
+        <item key="target_page">Target page</item>
+        <item key="title">Title</item>
+        <item key="title_to_short">The title should be at least 3 characters long.</item>
+        <item key="type_in_index_name">The index name can only contain letters, digits and the underscore.</item>
+        <item key="type_in_uri_and_target">Please specify the target page and the module resp. the URI you want to link
+            to.
+        </item>
+        <item key="uri">URI</item>
+    </keys>
+</language>

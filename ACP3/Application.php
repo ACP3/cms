@@ -219,8 +219,7 @@ class Application
         self::$view->assign('UA_IS_MOBILE', Core\Functions::isMobileBrowser());
         self::$view->assign('IN_ADM', self::$uri->area === 'admin');
 
-        $langInfo = Core\XML::parseXmlFile(ACP3_ROOT_DIR . 'languages/' . self::$lang->getLanguage() . '/info.xml', '/language');
-        self::$view->assign('LANG_DIRECTION', isset($langInfo['direction']) ? $langInfo['direction'] : 'ltr');
+        self::$view->assign('LANG_DIRECTION',self::$lang->getDirection());
         self::$view->assign('LANG', CONFIG_LANG);
 
         self::_checkForMaintenanceMode();

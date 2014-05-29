@@ -162,20 +162,7 @@ class Account extends Core\Modules\Controller
         $this->view->assign('entries_override', $settings['entries_override']);
 
         // Sprache
-        $languages = array();
-        $langDir = scandir(ACP3_ROOT_DIR . 'languages');
-        $c_langDir = count($langDir);
-        for ($i = 0; $i < $c_langDir; ++$i) {
-            $langInfo = Core\XML::parseXmlFile(ACP3_ROOT_DIR . 'languages/' . $langDir[$i] . '/info.xml', '/language');
-            if (!empty($langInfo)) {
-                $name = $langInfo['name'];
-                $languages[$name]['dir'] = $langDir[$i];
-                $languages[$name]['selected'] = Core\Functions::selectEntry('language', $langDir[$i], $user['language']);
-                $languages[$name]['name'] = $langInfo['name'];
-            }
-        }
-        ksort($languages);
-        $this->view->assign('languages', $languages);
+        $this->view->assign('languages', $this->lang->getLanguages(isset($_POST['language']) ? $_POST['language'] : $user['language']));
 
         // Einträge pro Seite
         $this->view->assign('entries', Core\Functions::recordsPerPage((int)$user['entries']));

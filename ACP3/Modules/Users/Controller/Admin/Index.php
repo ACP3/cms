@@ -96,20 +96,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('super_user', Core\Functions::selectGenerator('super_user', array(1, 0), $lang_super_user, 0, 'checked'));
 
         // Sprache
-        $languages = array();
-        $lang_dir = scandir(ACP3_ROOT_DIR . 'languages');
-        $c_lang_dir = count($lang_dir);
-        for ($i = 0; $i < $c_lang_dir; ++$i) {
-            $lang_info = Core\XML::parseXmlFile(ACP3_ROOT_DIR . 'languages/' . $lang_dir[$i] . '/info.xml', '/language');
-            if (!empty($lang_info)) {
-                $name = $lang_info['name'];
-                $languages[$name]['dir'] = $lang_dir[$i];
-                $languages[$name]['selected'] = Core\Functions::selectEntry('language', $lang_dir[$i], CONFIG_LANG);
-                $languages[$name]['name'] = $lang_info['name'];
-            }
-        }
-        ksort($languages);
-        $this->view->assign('languages', $languages);
+        $this->view->assign('languages', $this->lang->getLanguages(isset($_POST['language']) ? $_POST['language'] : CONFIG_LANG));
 
         // Einträge pro Seite
         $this->view->assign('entries', Core\Functions::recordsPerPage(CONFIG_ENTRIES));
@@ -315,20 +302,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('super_user', Core\Functions::selectGenerator('super_user', array(1, 0), $langSuperUser, $user['super_user'], 'checked'));
 
             // Sprache
-            $languages = array();
-            $langDir = scandir(ACP3_ROOT_DIR . 'languages');
-            $c_langDir = count($langDir);
-            for ($i = 0; $i < $c_langDir; ++$i) {
-                $langInfo = Core\XML::parseXmlFile(ACP3_ROOT_DIR . 'languages/' . $langDir[$i] . '/info.xml', '/language');
-                if (!empty($langInfo)) {
-                    $name = $langInfo['name'];
-                    $languages[$name]['dir'] = $langDir[$i];
-                    $languages[$name]['selected'] = Core\Functions::selectEntry('language', $langDir[$i], $user['language']);
-                    $languages[$name]['name'] = $langInfo['name'];
-                }
-            }
-            ksort($languages);
-            $this->view->assign('languages', $languages);
+            $this->view->assign('languages', $this->lang->getLanguages(isset($_POST['language']) ? $_POST['language'] : $user['language']));
 
             // Einträge pro Seite
             $this->view->assign('entries', Core\Functions::recordsPerPage((int)$user['entries']));
