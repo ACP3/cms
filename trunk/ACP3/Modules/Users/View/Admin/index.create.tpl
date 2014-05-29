@@ -130,7 +130,7 @@
                         <select class="form-control" name="language" id="language">
                             <option value="">{lang t="system|pls_select"}</option>
                             {foreach $languages as $row}
-                                <option value="{$row.dir}"{$row.selected}>{$row.name}</option>
+                                <option value="{$row.iso}"{if $row.selected} selected="selected"{/if}>{$row.name}</option>
                             {/foreach}
                         </select>
                     </div>

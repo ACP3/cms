@@ -16,6 +16,11 @@ class Lang
     protected $lang = '';
 
     /**
+     * @var array
+     */
+    protected $languages = array();
+
+    /**
      *
      * @var array
      */
@@ -59,14 +64,20 @@ class Lang
     public function setLanguageCache()
     {
         $data = array();
-        $path = ACP3_ROOT_DIR . 'languages/' . $this->lang . '/';
-        $dir = scandir($path);
-        foreach ($dir as $module) {
-            if ((bool)preg_match('/\.xml$/', $module) === true) {
-                $xml = simplexml_load_file($path . $module);
+
+        $modules = scandir(MODULES_DIR);
+
+        foreach ($modules as $module) {
+            $path = MODULES_DIR . $module . '/Languages/' . $this->lang . '.xml';
+            if ($module !== '.' && $module !== '..' && is_file($path) === true) {
+                $xml = simplexml_load_file($path);
+                if (isset($data['info']['direction']) === false) {
+                    $data['info']['direction'] = (string)$xml->info->direction;
+                }
+
                 // Über die einzelnen Sprachstrings iterieren
-                foreach ($xml->item as $item) {
-                    $data[substr($module, 0, -4)][(string)$item['key']] = (string)$item;
+                foreach ($xml->keys->item as $item) {
+                    $data['keys'][strtolower($module)][(string)$item['key']] = trim((string)$item);
                 }
             }
         }
@@ -74,6 +85,20 @@ class Lang
         $this->cache = array();
 
         return Cache::create($this->lang, $data, 'lang');
+    }
+
+    /**
+     * Gets the writing direction of the language
+     *
+     * @return string
+     */
+    public function getDirection()
+    {
+        if (empty($this->cache)) {
+            $this->cache = $this->getLanguageCache();
+        }
+
+        return isset($this->cache['info']['direction']) ? $this->cache['info']['direction'] : 'ltr';
     }
 
     /**
@@ -103,7 +128,7 @@ class Lang
             $this->cache = $this->getLanguageCache();
         }
 
-        return isset($this->cache[$module][$key]) ? $this->cache[$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
+        return isset($this->cache['keys'][$module][$key]) ? $this->cache['keys'][$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
     }
 
     /**
@@ -114,7 +139,7 @@ class Lang
      */
     public static function languagePackExists($lang)
     {
-        return !preg_match('=/=', $lang) && is_file(ACP3_ROOT_DIR . 'languages/' . $lang . '/info.xml') === true;
+        return !preg_match('=/=', $lang) && is_file(MODULES_DIR . 'System/Languages/' . $lang . '.xml') === true;
     }
 
     /**
@@ -373,6 +398,78 @@ class Lang
     }
 
     /**
+     * Gets all currently available languages
+     *
+     * @param string $currentLanguage
+     * @return array
+     */
+    public function getLanguages($currentLanguage = '')
+    {
+        if (empty($currentLanguage)) {
+            $currentLanguage = $this->lang;
+        }
+
+        if (empty($this->languages)) {
+            $this->languages = $this->_getLanguagesCache();
+        }
+
+        $languages = $this->languages;
+
+        foreach ($languages as $key => $value) {
+            $languages[$key]['selected'] = $languages[$key]['iso'] === $currentLanguage;
+        }
+
+        return $languages;
+    }
+
+    /**
+     * Sets the cache for all registered languages
+     *
+     * @return bool
+     */
+    protected function _setLanguagesCache()
+    {
+        $modules = scandir(MODULES_DIR);
+        $languages = array();
+
+        foreach ($modules as $module) {
+            $path = MODULES_DIR . $module . '/Languages/';
+            if ($module !== '.' && $module !== '..' && is_dir($path) === true) {
+                $moduleLanguages = scandir($path);
+
+                foreach ($moduleLanguages as $language) {
+                    if ($language !== '.' && $language !== '..' && is_file($path . $language) === true) {
+                        $xml = simplexml_load_file($path . $language);
+                        $languageIso = substr($language, 0, -4);
+                        if (!empty($xml) && isset($languages[$languageIso]) === false) {
+                            $languages[$languageIso] = array(
+                                'iso' => $languageIso,
+                                'name' => (string)$xml->info->name
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
+        return Cache::create('languages', $languages, 'lang');
+    }
+
+    /**
+     * Gets the cache for all registered languages
+     *
+     * @return mixed
+     */
+    protected function _getLanguagesCache()
+    {
+        if (Cache::check('languages', 'lang') === false) {
+            $this->_setLanguagesCache();
+        }
+
+        return Cache::output('languages', 'lang');
+    }
+
+    /**
      * Parst den ACCEPT-LANGUAGE Header des Browsers
      * und selektiert die präferierte Sprache
      *
@@ -391,8 +488,9 @@ class Lang
 
                 // Für Einträge ohne q-Faktor, Wert auf 1 setzen
                 foreach ($langs as $lang => $val) {
-                    if ($val === '')
+                    if ($val === '') {
                         $langs[$lang] = 1;
+                    }
                 }
 
                 // Liste nach Sprachpräferenz sortieren
@@ -406,6 +504,6 @@ class Lang
                 return $lang;
             }
         }
-        return 'en';
+        return 'en_US';
     }
 }

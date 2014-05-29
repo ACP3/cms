@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'users';
-    const SCHEMA_VERSION = 37;
+    const SCHEMA_VERSION = 38;
 
     public function removeResources()
     {
@@ -123,6 +123,10 @@ class Installer extends Modules\AbstractInstaller
                 'UPDATE `{pre}acl_resources` SET controller = "account", page = "edit" WHERE `module_id` = ' . $this->getModuleId() . ' AND area = "frontend" AND page = "edit_profile";',
                 'UPDATE `{pre}acl_resources` SET controller = "account", page = "settings" WHERE `module_id` = ' . $this->getModuleId() . ' AND area = "frontend" AND page = "edit_settings";',
                 'UPDATE `{pre}acl_resources` SET controller = "account", page = "index" WHERE `module_id` = ' . $this->getModuleId() . ' AND area = "frontend" AND page = "home";',
+            ),
+            38 => array(
+                'UPDATE `{pre}users` SET language = "de_DE" WHERE language = "de";',
+                'UPDATE `{pre}users` SET language = "en_US" WHERE language = "en";',
             )
         );
     }

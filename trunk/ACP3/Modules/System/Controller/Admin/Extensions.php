@@ -56,31 +56,20 @@ class Extensions extends Core\Modules\Controller\Admin
 
     public function actionLanguages()
     {
-        if (isset($this->uri->dir)) {
+        if (isset($this->uri->language)) {
             $bool = false;
 
-            if ($this->lang->languagePackExists($this->uri->dir) === true) {
-                $bool = Core\Config::setSettings('system', array('lang' => $this->uri->dir));
-                $this->lang->setLanguage($this->uri->dir);
+            if ($this->lang->languagePackExists($this->uri->language) === true) {
+                $bool = Core\Config::setSettings('system', array('lang' => $this->uri->language));
+                $this->lang->setLanguage($this->uri->language);
             }
             $text = $this->lang->t('system', $bool === true ? 'languages_edit_success' : 'languages_edit_error');
 
-            Core\Functions::setRedirectMessage($bool, $text, 'acp/system/index/languages');
+            Core\Functions::setRedirectMessage($bool, $text, 'acp/system/extensions/languages');
         } else {
             Core\Functions::getRedirectMessage();
 
-            $languages = array();
-            $directories = scandir(ACP3_ROOT_DIR . 'languages');
-            $count_dir = count($directories);
-            for ($i = 0; $i < $count_dir; ++$i) {
-                $lang_info = Core\XML::parseXmlFile(ACP3_ROOT_DIR . 'languages/' . $directories[$i] . '/info.xml', '/language');
-                if (!empty($lang_info)) {
-                    $languages[$i] = $lang_info;
-                    $languages[$i]['selected'] = CONFIG_LANG == $directories[$i] ? 1 : 0;
-                    $languages[$i]['dir'] = $directories[$i];
-                }
-            }
-            $this->view->assign('languages', $languages);
+            $this->view->assign('languages', $this->lang->getLanguages(CONFIG_LANG));
         }
     }
 

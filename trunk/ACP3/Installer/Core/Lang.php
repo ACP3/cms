@@ -26,7 +26,7 @@ class Lang extends \ACP3\Core\Lang
             $xml = simplexml_load_file($path);
             // Über die einzelnen Sprachstrings iterieren
             foreach ($xml->strings[0]->item as $item) {
-                $data[(string)$item['key']] = (string)$item;
+                $data[(string)$item['key']] = trim((string)$item);
             }
         }
         return $data;
@@ -36,6 +36,7 @@ class Lang extends \ACP3\Core\Lang
      * Gibt den angeforderten Sprachstring aus
      *
      * @param string $key
+     * @param string $unused
      * @return string
      */
     public function t($key, $unused = '')
