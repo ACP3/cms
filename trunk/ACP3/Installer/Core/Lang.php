@@ -13,6 +13,7 @@ class Lang extends \ACP3\Core\Lang
     function __construct($lang)
     {
         $this->lang = $lang;
+        $this->lang2Characters = substr($this->lang, 0, strpos($this->lang, '_'));
     }
 
     /**

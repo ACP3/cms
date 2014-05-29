@@ -177,7 +177,7 @@ class Application
 
         $lang_info = \ACP3\Core\XML::parseXmlFile(INSTALLER_DIR . 'languages/' . \ACP3\Core\Registry::get('Lang')->getLanguage() . '.xml', '/language/info');
         $view->assign('LANG_DIRECTION', isset($lang_info['direction']) ? $lang_info['direction'] : 'ltr');
-        $view->assign('LANG', LANG);
+        $view->assign('LANG', \ACP3\Core\Registry::get('Lang')->getLanguage2Characters());
 
         $module = ucfirst($uri->mod);
         $className = "\\ACP3\\Installer\\Modules\\" . $module . "\\" . $module;

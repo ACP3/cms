@@ -220,7 +220,7 @@ class Application
         self::$view->assign('IN_ADM', self::$uri->area === 'admin');
 
         self::$view->assign('LANG_DIRECTION',self::$lang->getDirection());
-        self::$view->assign('LANG', CONFIG_LANG);
+        self::$view->assign('LANG', self::$lang->getLanguage2Characters());
 
         self::_checkForMaintenanceMode();
 

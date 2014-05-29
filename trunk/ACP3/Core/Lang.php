@@ -15,6 +15,8 @@ class Lang
      */
     protected $lang = '';
 
+    protected $lang2Characters = '';
+
     /**
      * @var array
      */
@@ -30,6 +32,7 @@ class Lang
     {
         $lang = $auth->getUserLanguage();
         $this->lang = $this->languagePackExists($lang) === true ? $lang : CONFIG_LANG;
+        $this->lang2Characters = substr($this->lang, 0, strpos($this->lang, '_'));
     }
 
     /**
@@ -40,6 +43,14 @@ class Lang
     public function getLanguage()
     {
         return $this->lang;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage2Characters()
+    {
+        return $this->lang2Characters;
     }
 
     /**
