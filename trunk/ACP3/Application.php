@@ -260,7 +260,7 @@ class Application
                     throw new \Exception('Controller action ' . $className . '::' . $action . '() was not found!');
                 }
             } else {
-                throw new \Exception('Class ' . $className . ' was not found!');
+                throw new \Exception('Class ' . $className . '() was not found!');
             }
         } catch (\Exception $e) {
             Core\Logger::log('exception', 'error', $e);

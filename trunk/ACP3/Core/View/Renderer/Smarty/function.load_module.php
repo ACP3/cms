@@ -2,14 +2,14 @@
 function smarty_function_load_module($params)
 {
     $pathArray = array_map(function ($value) {
-        return str_replace(' ', '', ucfirst(str_replace('_', ' ', $value)));
+        return str_replace(' ', '', ucwords(str_replace('_', ' ', $value)));
     }, explode('/', $params['module']));
 
     if (empty($pathArray[2]) === true) {
-        $pathArray[2] = 'index';
+        $pathArray[2] = 'Index';
     }
     if (empty($pathArray[3]) === true) {
-        $pathArray[3] = 'index';
+        $pathArray[3] = 'Index';
     }
 
     if ($pathArray[0] !== 'Frontend') {
@@ -37,7 +37,11 @@ function smarty_function_load_module($params)
             $controller->preDispatch();
             $controller->$action();
             $controller->display();
+        } else {
+            throw new Exception('Controller action ' . $className . '::' . $action . '() was not found!');
         }
+    } else {
+        throw new Exception('Class ' . $className . '() was not found!');
     }
 }
 /* vim: set expandtab: */

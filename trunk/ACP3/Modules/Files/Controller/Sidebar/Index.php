@@ -1,6 +1,6 @@
 <?php
 
-namespace ACP3\Modules\Files\Controller\Files\Sidebar;
+namespace ACP3\Modules\Files\Controller\Sidebar;
 
 use ACP3\Core;
 use ACP3\Modules\Files;
