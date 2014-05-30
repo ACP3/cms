@@ -17,8 +17,10 @@ class Account extends Core\Modules\Controller
      */
     protected $model;
 
-    protected function _init()
+    public function preDispatch()
     {
+        parent::preDispatch();
+
         if ($this->auth->isUser() === false || Core\Validate::isNumber($this->auth->getUserId()) === false) {
             $this->uri->redirect('users/index/login');
         }

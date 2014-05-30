@@ -46,8 +46,10 @@ class Index extends Core\Modules\Controller
         $this->entryId = $entryId;
     }
 
-    protected function _init()
+    public function preDispatch()
     {
+        parent::preDispatch();
+
         $this->model = new Comments\Model($this->db, $this->lang, $this->auth, $this->date);
     }
 

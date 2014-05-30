@@ -219,7 +219,7 @@ class Application
         self::$view->assign('UA_IS_MOBILE', Core\Functions::isMobileBrowser());
         self::$view->assign('IN_ADM', self::$uri->area === 'admin');
 
-        self::$view->assign('LANG_DIRECTION',self::$lang->getDirection());
+        self::$view->assign('LANG_DIRECTION', self::$lang->getDirection());
         self::$view->assign('LANG', self::$lang->getLanguage2Characters());
 
         self::_checkForMaintenanceMode();
@@ -227,26 +227,16 @@ class Application
         // Aktuelle Datensatzposition bestimmen
         define('POS', Core\Validate::isNumber(self::$uri->page) && self::$uri->page >= 1 ? (int)(self::$uri->page - 1) * Core\Registry::get('Auth')->entries : 0);
 
-        if (self::$uri->area === 'admin' && self::$auth->isUser() === false && self::$uri->query !== 'users/index/login/') {
-            $redirectUri = base64_encode('acp/' . self::$uri->query);
-            self::$uri->redirect('users/index/login/redirect_' . $redirectUri);
-        }
+        try {
+            $module = ucfirst(self::$uri->mod);
 
-        $path = self::$uri->area . '/' . self::$uri->mod . '/' . self::$uri->controller . '/' . self::$uri->file;
+            if (self::$uri->area !== 'frontend') {
+                $className = "\\ACP3\\Modules\\" . $module . "\\Controller\\" . ucfirst(self::$uri->area) . "\\" . ucfirst(self::$uri->controller);
+            } else {
+                $className = "\\ACP3\\Modules\\" . $module . "\\Controller\\" . ucfirst(self::$uri->controller);
+            }
 
-        if (Core\Modules::hasPermission($path) === true) {
-            try {
-                $module = ucfirst(self::$uri->mod);
-
-                if (self::$uri->area !== 'frontend') {
-                    $className = "\\ACP3\\Modules\\" . $module . "\\Controller\\" . ucfirst(self::$uri->area) . "\\" . ucfirst(self::$uri->controller);
-                } else {
-                    $className = "\\ACP3\\Modules\\" . $module . "\\Controller\\" . ucfirst(self::$uri->controller);
-                }
-
-                $action = 'action' . preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', self::$uri->file))));
-
-                // Modul einbinden
+            if (class_exists($className)) {
                 /** @var Controller $controller */
                 $controller = new $className(
                     self::$auth,
@@ -260,20 +250,27 @@ class Application
                     self::$seo
                 );
 
-                $controller->$action();
-                $controller->display();
-            } catch (\Exception $e) {
-                \ACP3\Core\Logger::log('exception', 'error', $e);
+                $action = 'action' . str_replace('_', '', self::$uri->file);
 
-                if (defined('DEBUG') && DEBUG === true) {
-                    $errorMessage = $e->getMessage();
+                if (method_exists($controller, $action) === true) {
+                    $controller->preDispatch();
+                    $controller->$action();
+                    $controller->display();
                 } else {
-                    $errorMessage = self::$lang->t('system', 'critical_error_occurred_see_log');
+                    throw new \Exception('Controller action ' . $className . '::' . $action . '() was not found!');
                 }
-                self::_renderApplicationException($errorMessage);
+            } else {
+                throw new \Exception('Class ' . $className . ' was not found!');
             }
-        } else {
-            self::$uri->redirect('errors/index/404');
+        } catch (\Exception $e) {
+            Core\Logger::log('exception', 'error', $e);
+
+            if (defined('DEBUG') && DEBUG === true) {
+                $errorMessage = $e->getMessage();
+                self::_renderApplicationException($errorMessage);
+            } else {
+                self::$uri->redirect('errors/index/404');
+            }
         }
     }
 

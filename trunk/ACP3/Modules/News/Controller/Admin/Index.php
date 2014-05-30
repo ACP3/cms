@@ -20,8 +20,10 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $model;
 
-    protected function _init()
+    public function preDispatch()
     {
+        parent::preDispatch();
+
         $this->model = new News\Model($this->db, $this->lang, $this->uri);
     }
 
