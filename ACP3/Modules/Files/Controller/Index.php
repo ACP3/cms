@@ -24,8 +24,10 @@ class Index extends Core\Modules\Controller
      */
     protected $categoriesModel;
 
-    protected function _init()
+    public function preDispatch()
     {
+        parent::preDispatch();
+
         $this->model = new Files\Model($this->db, $this->lang, $this->uri);
         $this->categoriesModel = new \ACP3\Modules\Categories\Model($this->db, $this->lang);
     }

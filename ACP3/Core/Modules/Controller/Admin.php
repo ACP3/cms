@@ -11,6 +11,15 @@ use ACP3\Core;
  */
 class Admin extends Core\Modules\Controller
 {
+    public function preDispatch()
+    {
+        if ($this->auth->isUser() === false) {
+            $redirectUri = base64_encode('acp/' . $this->uri->query);
+            $this->uri->redirect('users/index/login/redirect_' . $redirectUri);
+        }
+
+        parent::preDispatch();
+    }
 
     /**
      * Little helper function for deleting an result set

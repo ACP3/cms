@@ -19,8 +19,10 @@ class Accounts extends Core\Modules\Controller\Admin
      */
     protected $model;
 
-    protected function _init()
+    public function preDispatch()
     {
+        parent::preDispatch();
+
         $this->model = new Newsletter\Model($this->db, $this->lang, $this->auth);
     }
 

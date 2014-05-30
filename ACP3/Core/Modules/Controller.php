@@ -124,16 +124,18 @@ abstract class Controller
         $this->uri = $uri;
         $this->view = $view;
         $this->seo = $seo;
-
-        $this->_init();
     }
 
     /**
      * Helper function for initializing models, etc.
      */
-    protected function _init()
+    public function preDispatch()
     {
-        return;
+        $path = $this->uri->area . '/' . $this->uri->mod . '/' . $this->uri->controller . '/' . $this->uri->file;
+
+        if (Core\Modules::hasPermission($path) === false) {
+            $this->uri->redirect('errors/index/404');
+        }
     }
 
     /**

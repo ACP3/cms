@@ -13,17 +13,6 @@ use ACP3\Modules\Newsletter;
 class Index extends Core\Modules\Controller\Sidebar
 {
 
-    /**
-     *
-     * @var Newsletter\Model
-     */
-    protected $model;
-
-    protected function _init()
-    {
-        $this->model = new Newsletter\Model($this->db, $this->lang, $this->auth);
-    }
-
     public function actionIndex()
     {
         if (Core\Modules::hasPermission('frontend/captcha/index/image') === true) {

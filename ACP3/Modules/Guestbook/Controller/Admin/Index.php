@@ -17,8 +17,10 @@ class Index extends Core\Modules\Controller\Admin
      */
     protected $model;
 
-    protected function _init()
+    public function preDispatch()
     {
+        parent::preDispatch();
+
         $this->model = new Guestbook\Model($this->db, $this->lang, $this->date, $this->auth);
     }
 

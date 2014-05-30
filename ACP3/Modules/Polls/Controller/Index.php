@@ -19,8 +19,10 @@ class Index extends Core\Modules\Controller
      */
     protected $model;
 
-    protected function _init()
+    public function preDispatch()
     {
+        parent::preDispatch();
+
         $this->model = new Polls\Model($this->db, $this->lang);
     }
 

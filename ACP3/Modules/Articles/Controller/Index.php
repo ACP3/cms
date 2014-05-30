@@ -18,8 +18,10 @@ class Index extends Core\Modules\Controller
      */
     protected $model;
 
-    protected function _init()
+    public function preDispatch()
     {
+        parent::preDispatch();
+
         $menuModel = new \ACP3\Modules\Menus\Model($this->db, $this->lang, $this->uri);
         $this->model = new Articles\Model($this->db, $this->lang, $menuModel, $this->uri);
     }
