@@ -62,6 +62,18 @@
                         </select>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="language" class="col-lg-2 control-label">{lang t="system|language"}</label>
+
+                    <div class="col-lg-10">
+                        <select class="form-control" name="language" id="language">
+                            <option value="">{lang t="system|pls_select"}</option>
+                            {foreach $languages as $row}
+                                <option value="{$row.iso}"{if $row.selected} selected="selected"{/if}>{$row.name}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
             </div>
             <div id="tab-2" class="tab-pane fade">
                 <div class="form-group">

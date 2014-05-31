@@ -9,7 +9,7 @@ namespace ACP3\Core;
 class URI
 {
 
-    const PATTERN = '=^acp/=';
+    const ADMIN_PANEL_PATTERN = '=^acp/=';
 
     /**
      * Array, welches die URI Parameter enthält
@@ -52,11 +52,14 @@ class URI
         $this->aliases = $this->getCache();
 
         $this->preprocessUriQuery();
-        // Query auf eine benutzerdefinierte Startseite setzen
+
+        // Set the user defined homepage of the website
         if ($this->query === '/' && CONFIG_HOMEPAGE !== '') {
             $this->query = CONFIG_HOMEPAGE;
+        } else {
+            $this->checkForUriAlias();
         }
-        $this->checkForUriAlias();
+
         $this->setUriParameters();
     }
 
@@ -79,7 +82,7 @@ class URI
      */
     public function __set($key, $value)
     {
-        // Parameter sollten nicht überschrieben werden können
+        // Make it impossible to overwrite already set parameters
         if (isset($this->params[$key]) === false) {
             $this->params[$key] = $value;
         }
@@ -105,7 +108,7 @@ class URI
         $this->query .= !preg_match('/\/$/', $this->query) ? '/' : '';
 
         // Definieren, dass man sich im Administrationsbereich befindet
-        if (preg_match(self::PATTERN, $this->query)) {
+        if (preg_match(self::ADMIN_PANEL_PATTERN, $this->query)) {
             $this->area = 'admin';
             // "acp/" entfernen
             $this->query = substr($this->query, 4);

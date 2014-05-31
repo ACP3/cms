@@ -44,6 +44,7 @@ class Index extends Core\Modules\Controller\Admin
                     'flood' => (int)$_POST['flood'],
                     'homepage' => $_POST['homepage'],
                     'icons_path' => $_POST['icons_path'],
+                    'language' => $_POST['language'],
                     'mailer_smtp_auth' => (int)$_POST['mailer_smtp_auth'],
                     'mailer_smtp_host' => $_POST['mailer_smtp_host'],
                     'mailer_smtp_password' => $_POST['mailer_smtp_password'],
@@ -99,6 +100,8 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
         $this->view->assign('wysiwyg', $wysiwyg);
+
+        $this->view->assign('languages', $this->lang->getLanguages(CONFIG_LANG));
 
         // Zeitzonen
         $this->view->assign('time_zones', Core\Date::getTimeZones(CONFIG_DATE_TIME_ZONE));
