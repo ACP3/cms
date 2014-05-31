@@ -16,10 +16,24 @@ abstract class Helpers
 {
     const ARTICLES_URL_KEY_REGEX = '/^(articles\/index\/details\/id_([0-9]+)\/)$/';
 
+    /**
+     * @var array
+     */
     protected static $menuItems = array();
 
+    /**
+     * @var array
+     */
     protected static $navbar = array();
 
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected static $db;
+    /**
+     * @var Core\URI
+     */
+    protected static $uri;
     /**
      *
      * @var Model
@@ -29,10 +43,12 @@ abstract class Helpers
     protected static function _init()
     {
         if (!self::$model) {
+            self::$db = Core\Registry::get('Db');
+            self::$uri = Core\Registry::get('URI');
             self::$model = new Model(
-                Core\Registry::get('Db'),
+                self::$db,
                 Core\Registry::get('Lang'),
-                Core\Registry::get('URI')
+                self::$uri
             );
         }
     }
@@ -119,15 +135,14 @@ abstract class Helpers
         $linkCss = '',
         $inlineStyles = '')
     {
-        self::_init();
-
-        $uri = Core\Registry::get('URI');
-
         // Navigationsleiste sofort ausgeben, falls diese schon einmal verarbeitet wurde...
         if (isset(self::$navbar[$menu])) {
             return self::$navbar[$menu];
-            // ...ansonsten Verarbeitung starten
-        } else {
+        } else { // ...ansonsten Verarbeitung starten
+            self::_init();
+
+            $uri = self::$uri;
+
             $items = self::$model->getVisibleMenuItems($menu);
             $c_items = count($items);
 
@@ -138,9 +153,10 @@ abstract class Helpers
                         $uri->query,
                         $uri->getUriWithoutPages(),
                         $uri->mod . '/' . $uri->controller . '/' . $uri->file . '/',
-                        $uri->mod . '/' . $uri->controller . '/'
+                        $uri->mod . '/' . $uri->controller . '/',
+                        $uri->mod
                     );
-                    $selected = Core\Registry::get('Db')->executeQuery('SELECT m.left_id FROM ' . DB_PRE . Model::TABLE_NAME_ITEMS . ' AS m JOIN ' . DB_PRE . Model::TABLE_NAME . ' AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC', array($menu, $in), array(\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetch(\PDO::FETCH_COLUMN);
+                    $selected = self::$db->executeQuery('SELECT m.left_id FROM ' . DB_PRE . Model::TABLE_NAME_ITEMS . ' AS m JOIN ' . DB_PRE . Model::TABLE_NAME . ' AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC', array($menu, $in), array(\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetch(\PDO::FETCH_COLUMN);
                 }
 
                 self::$navbar[$menu] = '';
@@ -175,8 +191,7 @@ abstract class Helpers
 
                         $link = sprintf('<a href="%1$s"%2$s%3$s>%4$s%5$s</a>', $href, $target, $attributes, $items[$i]['title'], $caret);
                         self::$navbar[$menu] .= sprintf('<%1$s class="%2$s">%3$s<ul class="%4$snavigation-%5$s-subnav-%6$d">', $dropdownWrapperTag, $css, $link, $subNavbarCss, $menu, $items[$i]['id']);
-                        // Elemente ohne Kindelemente
-                    } else {
+                    } else { // Elemente ohne Kindelemente
                         $link = sprintf('<a href="%1$s"%2$s%3$s>%4$s</a>', $href, $target, $attributes, $items[$i]['title']);
                         self::$navbar[$menu] .= $itemTag === '' ? $link : sprintf('<%1$s class="%2$s">%3$s</%1$s>', $itemTag, $css, $link);
 
@@ -184,7 +199,7 @@ abstract class Helpers
                         if (isset($items[$i + 1]) && $items[$i + 1]['level'] < $items[$i]['level'] || !isset($items[$i + 1]) && $items[$i]['level'] != '0') {
                             // Differenz ermitteln, wieviele Level zwischen dem aktuellen und dem nachfolgendem Element liegen
                             $diff = (isset($items[$i + 1]['level']) ? $items[$i]['level'] - $items[$i + 1]['level'] : $items[$i]['level']) * 2;
-                            for ($diff; $diff > 0; --$diff) {
+                            for (; $diff > 0; --$diff) {
                                 self::$navbar[$menu] .= ($diff % 2 == 0 ? '</ul>' : '</' . $dropdownWrapperTag . '>');
                             }
                         }

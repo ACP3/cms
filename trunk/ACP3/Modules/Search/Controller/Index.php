@@ -85,7 +85,7 @@ class Index extends Core\Modules\Controller
             $this->view->assign('no_search_results', sprintf($this->lang->t('search', 'no_search_results'), $searchTerm));
         }
 
-        $this->setContentTemplate('search/results.tpl');
+        $this->setContentTemplate('search/index.results.tpl');
     }
 
 }
