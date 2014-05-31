@@ -158,7 +158,7 @@ class Model extends Core\Model
             $errors['title'] = $this->lang->t('gallery', 'type_in_gallery_title');
         }
         if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
-            (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], 'gallery/pics/id_' . $this->uri->id))
+            (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $this->uri->id)))
         ) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
