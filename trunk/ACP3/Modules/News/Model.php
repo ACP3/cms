@@ -125,7 +125,7 @@ class Model extends Core\Model
             $errors[] = $this->lang->t('news', 'complete_hyperlink_statements');
         }
         if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
-            (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], 'news/details/id_' . $this->uri->id) === true)
+            (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->uri->id)) === true)
         ) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }

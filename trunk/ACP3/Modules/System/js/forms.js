@@ -83,7 +83,7 @@ jQuery.fn.formSubmit = function (customFormData) {
                             $('#error-box').remove();
                             var $modalBody = $form.find('.modal-body');
                             // Place the error messages inside the modal body for a better styling
-                            if ($modalBody.length > 0) {
+                            if ($modalBody.length > 0 && $modalBody.is(':visible')) {
                                 $(data.content).hide().prependTo($modalBody).fadeIn();
                             } else {
                                 $(data.content).hide().prependTo($form).fadeIn();

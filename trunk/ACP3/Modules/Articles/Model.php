@@ -8,7 +8,6 @@
 
 namespace ACP3\Modules\Articles;
 
-
 use ACP3\Core;
 
 /**
@@ -109,7 +108,7 @@ class Model extends Core\Model
         if (strlen($formData['text']) < 3)
             $errors['text'] = $this->lang->t('articles', 'text_to_short');
         if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
-            (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], 'articles/details/id_' . $this->uri->id) === true)
+            (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->uri->id)) === true)
         )
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
 
