@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'gallery';
-    const SCHEMA_VERSION = 34;
+    const SCHEMA_VERSION = 35;
 
     public function createTables()
     {
@@ -74,6 +74,11 @@ class Installer extends Modules\AbstractInstaller
                 'UPDATE `{pre}acl_resources` SET controller = "pictures" WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_picture";',
                 'UPDATE `{pre}acl_resources` SET page = REPLACE(page, "_picture", "") WHERE `module_id` = ' . $this->getModuleId() . ' AND page LIKE "%_picture";',
                 'UPDATE `{pre}acl_resources` SET controller = "pictures" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "order";',
+            ),
+            35 => array(
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "gallery/list/", "gallery/index/index/") WHERE uri LIKE "gallery/list/%";' : '',
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "gallery/pics/", "gallery/index/pics/") WHERE uri LIKE "gallery/pics/%";' : '',
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "gallery/details/", "gallery/index/details/") WHERE uri LIKE "gallery/details/%";' : '',
             )
         );
     }

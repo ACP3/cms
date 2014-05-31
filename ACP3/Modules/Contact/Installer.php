@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'contact';
-    const SCHEMA_VERSION = 33;
+    const SCHEMA_VERSION = 34;
 
     public function __construct(\Doctrine\DBAL\Connection $db)
     {
@@ -55,6 +55,10 @@ class Installer extends Modules\AbstractInstaller
             ),
             33 => array(
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "contact/", "contact/index/") WHERE uri LIKE "contact/%";',
+            ),
+            34 => array(
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri = "contact/index/index/" WHERE uri = "contact/list";' : '',
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri = "contact/index/imprint/" WHERE uri = "contact/imprint";' : '',
             )
         );
     }

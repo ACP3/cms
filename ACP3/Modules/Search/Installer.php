@@ -38,6 +38,9 @@ class Installer extends Modules\AbstractInstaller
             ),
             32 => array(
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "search/", "search/index/") WHERE uri LIKE "search/%";',
+            ),
+            33 => array(
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "search/list/", "search/index/index/") WHERE uri LIKE "search/list/%";' : '',
             )
         );
     }
