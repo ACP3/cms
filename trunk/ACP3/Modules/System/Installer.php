@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'system';
-    const SCHEMA_VERSION = 42;
+    const SCHEMA_VERSION = 43;
 
     public function __construct(\Doctrine\DBAL\Connection $db)
     {
@@ -230,6 +230,9 @@ class Installer extends Modules\AbstractInstaller
             42 => array(
                 "UPDATE `{pre}settings` SET value = \"de_DE\" WHERE module_id = " . $this->getModuleId() . " AND name = \"lang\" AND value = \"de\";",
                 "UPDATE `{pre}settings` SET value = \"en_US\" WHERE module_id = " . $this->getModuleId() . " AND name = \"lang\" AND value = \"en\";",
+            ),
+            43 => array(
+                'DELETE FROM `{pre}acl_resources` WHERE `module_id` = ' . $this->getModuleId() . ' AND area = "admin" AND controller = "extensions" AND page = "languages";',
             )
         );
     }

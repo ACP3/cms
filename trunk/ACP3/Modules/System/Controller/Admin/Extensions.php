@@ -54,25 +54,6 @@ class Extensions extends Core\Modules\Controller\Admin
         return;
     }
 
-    public function actionLanguages()
-    {
-        if (isset($this->uri->language)) {
-            $bool = false;
-
-            if ($this->lang->languagePackExists($this->uri->language) === true) {
-                $bool = Core\Config::setSettings('system', array('lang' => $this->uri->language));
-                $this->lang->setLanguage($this->uri->language);
-            }
-            $text = $this->lang->t('system', $bool === true ? 'languages_edit_success' : 'languages_edit_error');
-
-            Core\Functions::setRedirectMessage($bool, $text, 'acp/system/extensions/languages');
-        } else {
-            Core\Functions::getRedirectMessage();
-
-            $this->view->assign('languages', $this->lang->getLanguages(CONFIG_LANG));
-        }
-    }
-
     public function actionModules()
     {
         switch ($this->uri->action) {
