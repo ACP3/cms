@@ -297,9 +297,9 @@ class URI
     {
         $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
         $pathArray = preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY);
-        $isFrontendUrl = preg_match(self::ADMIN_PANEL_PATTERN, $path) === false;
+        $isAdminUrl = preg_match(self::ADMIN_PANEL_PATTERN, $path) === true;
 
-        if ($isFrontendUrl === false) {
+        if ($isAdminUrl === true) {
             if (isset($pathArray[2]) === false) {
                 $path .= 'index/';
             }
@@ -315,14 +315,14 @@ class URI
             }
         }
 
-        if ((bool)CONFIG_SEO_ALIASES === true && $isFrontendUrl === true) {
+        if ((bool)CONFIG_SEO_ALIASES === true && $isAdminUrl === false) {
             // Überprüfen, ob Alias vorhanden ist und diesen als URI verwenden
             if ($alias === 1) {
                 $alias = $this->getUriAlias($path);
                 $path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
             }
         }
-        $prefix = ((bool)CONFIG_SEO_MOD_REWRITE === false || $isFrontendUrl === false) ? PHP_SELF . '/' : ROOT_DIR;
+        $prefix = ((bool)CONFIG_SEO_MOD_REWRITE === false || $isAdminUrl === true) ? PHP_SELF . '/' : ROOT_DIR;
         return $prefix . $path;
     }
 
