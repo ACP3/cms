@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'users';
-    const SCHEMA_VERSION = 38;
+    const SCHEMA_VERSION = 39;
 
     public function removeResources()
     {
@@ -127,6 +127,14 @@ class Installer extends Modules\AbstractInstaller
             38 => array(
                 'UPDATE `{pre}users` SET language = "de_DE" WHERE language = "de";',
                 'UPDATE `{pre}users` SET language = "en_US" WHERE language = "en";',
+            ),
+            39 => array(
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/forgot_pwd/", "users/index/forgot_pwd/") WHERE uri LIKE "users/forgot_pwd/%";' : '',
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/list/", "users/index/index/") WHERE uri LIKE "users/list/%";' : '',
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/login/", "users/index/login/") WHERE uri LIKE "users/login/%";' : '',
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/logout/", "users/index/logout/") WHERE uri LIKE "users/logout/%";' : '',
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/register/", "users/index/register/") WHERE uri LIKE "users/register/%";' : '',
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "users/view_profile/", "users/index/view_profile/") WHERE uri LIKE "users/view_profile/%";' : '',
             )
         );
     }

@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'files';
-    const SCHEMA_VERSION = 33;
+    const SCHEMA_VERSION = 34;
 
     public function createTables()
     {
@@ -59,6 +59,11 @@ class Installer extends Modules\AbstractInstaller
             ),
             33 => array(
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "files/", "files/index/") WHERE uri LIKE "files/%";',
+            ),
+            34 => array(
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "files/list/", "files/index/index/") WHERE uri LIKE "files/list/%";' : '',
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "files/files/", "files/index/files/") WHERE uri LIKE "files/files/%";' : '',
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "files/details/", "files/index/details/") WHERE uri LIKE "files/details/%";' : '',
             )
         );
     }

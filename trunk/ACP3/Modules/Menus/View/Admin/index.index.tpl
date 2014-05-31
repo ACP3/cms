@@ -42,13 +42,13 @@
                         {if $can_delete || $can_edit}
                             <div class="btn-group pull-right">
                                 {if $can_edit}
-                                    <a href="{uri args="acp/menus/index/edit/id_`$values.menu_id`"}" class="btn btn-default btn-sm" title="{lang t="menus|edit"}">
+                                    <a href="{uri args="acp/menus/index/edit/id_`$values.menu_id`"}" class="btn btn-default btn-sm" title="{lang t="menus|admin_index_edit"}">
                                         <i class="glyphicon glyphicon-edit"></i>
                                         {lang t="system|edit"}
                                     </a>
                                 {/if}
                                 {if $can_delete}
-                                    <a href="{uri args="acp/menus/index/delete/entries_`$values.menu_id`"}" class="btn btn-default btn-sm" title="{lang t="menus|delete"}">
+                                    <a href="{uri args="acp/menus/index/delete/entries_`$values.menu_id`"}" class="btn btn-default btn-sm" title="{lang t="menus|admin_index_delete"}">
                                         <i class="glyphicon glyphicon-remove"></i>
                                         {lang t="system|delete"}
                                     </a>

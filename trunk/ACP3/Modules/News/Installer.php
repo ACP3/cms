@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'news';
-    const SCHEMA_VERSION = 33;
+    const SCHEMA_VERSION = 34;
 
     public function createTables()
     {
@@ -64,6 +64,10 @@ class Installer extends Modules\AbstractInstaller
             ),
             33 => array(
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "news/", "news/index/") WHERE uri LIKE "news/%";',
+            ),
+            34 => array(
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "news/list/", "news/index/index/") WHERE uri LIKE "news/list/%";' : '',
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "news/details/", "news/index/details/") WHERE uri LIKE "news/details/%";' : '',
             )
         );
     }
