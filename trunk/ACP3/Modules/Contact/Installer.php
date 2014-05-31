@@ -57,8 +57,8 @@ class Installer extends Modules\AbstractInstaller
                 'UPDATE `{pre}seo` SET uri=REPLACE(uri, "contact/", "contact/index/") WHERE uri LIKE "contact/%";',
             ),
             34 => array(
-                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri = "contact/index/index/" WHERE uri = "contact/list";' : '',
-                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri = "contact/index/imprint/" WHERE uri = "contact/imprint";' : '',
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri = "contact/index/index/" WHERE uri = "contact/list/";' : '',
+                Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri = "contact/index/imprint/" WHERE uri = "contact/imprint/";' : '',
             )
         );
     }
