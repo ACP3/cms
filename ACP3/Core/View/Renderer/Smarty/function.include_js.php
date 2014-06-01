@@ -24,12 +24,11 @@ function smarty_function_include_js($params)
 
             $script = '<script type="text/javascript" src="%s"></script>';
             $module = ucfirst($params['module']);
-            $moduleLower = strtolower($params['module']);
             $file = $params['file'];
 
-            if (file_exists(DESIGN_PATH_INTERNAL . $moduleLower . '/js/' . $file . '.js') === true) {
-                return sprintf($script, DESIGN_PATH . $moduleLower . '/js/' . $file . '.js');
-            } elseif (file_exists(MODULES_DIR . $module . '/js/' . $file . '.js') === true) {
+            if (is_file(DESIGN_PATH_INTERNAL . $module . '/js/' . $file . '.js') === true) {
+                return sprintf($script, DESIGN_PATH . $module . '/js/' . $file . '.js');
+            } elseif (is_file(MODULES_DIR . $module . '/js/' . $file . '.js') === true) {
                 return sprintf($script, ROOT_DIR . 'ACP3/Modules/' . $module . '/js/' . $file . '.js');
             }
         }

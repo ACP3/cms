@@ -302,12 +302,12 @@ class View
      */
     public function fetchTemplate($template, $cacheId = null, $compileId = null, $parent = null, $display = false)
     {
+        $template = ucfirst($template);
         if ($this->templateExists($template)) {
             return self::$rendererObject->fetch($template, $cacheId, $compileId, $parent, $display);
         } else {
             // Pfad zerlegen
             $fragments = explode('/', $template);
-            $fragments[0] = ucfirst($fragments[0]);
 
             if (count($fragments) === 3) {
                 $path = $fragments[0] . '/View/' . $fragments[1] . '/' . $fragments[2];
