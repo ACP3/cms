@@ -47,6 +47,10 @@ class Mailer
      */
     private $bccCount;
     /**
+     * @var array
+     */
+    private $attachments = array();
+    /**
      * @var string
      */
     private $template = '';
@@ -163,6 +167,14 @@ class Mailer
         $this->recipients = $to;
 
         return $this;
+    }
+
+    /**
+     * @param string $attachment
+     */
+    public function setAttachments($attachment)
+    {
+        $this->attachments[] = $attachment;
     }
 
     /**
@@ -310,6 +322,15 @@ class Mailer
             }
 
             $this->_generateBody();
+
+            // Add attachments to the E-mail
+            if (count($this->attachments) > 0) {
+                foreach ($this->attachments as $attachment) {
+                    if (!empty($attachment) && is_file($attachment)) {
+                        $this->mailer->addAttachment($attachment);
+                    }
+                }
+            }
 
             if (!empty($this->recipients)) {
                 return $this->bcc === true ? $this->_sendBcc() : $this->_sendTo();
