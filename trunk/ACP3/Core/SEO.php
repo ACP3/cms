@@ -296,7 +296,7 @@ class SEO
         );
         $seo = array(
             'enable_uri_aliases' => (bool)CONFIG_SEO_ALIASES,
-            'alias' => isset($alias) ? $alias : '',
+            'alias' => $alias,
             'keywords' => $keywords,
             'description' => $description,
             'robots' => Functions::selectGenerator('seo_robots', array(0, 1, 2, 3, 4), $langRobots, $robots)
