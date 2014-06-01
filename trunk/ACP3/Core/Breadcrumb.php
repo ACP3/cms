@@ -234,7 +234,7 @@ class Breadcrumb
             if ($module !== 'acp') {
                 $this->append($this->lang->t($module, $module), 'acp/' . $module);
                 if ($controller !== 'index' &&
-                    method_exists("\\ACP3\\Modules\\" . ucfirst($module) . "\\Admin\\" . ucfirst($controller), 'actionIndex')
+                    method_exists("\\ACP3\\Modules\\" . ucfirst($module) . "\\Controller\\Admin\\" . ucfirst($controller), 'actionIndex')
                 ) {
                     $this->append($this->lang->t($module, $languageKeyIndex), 'acp/' . $module . '/' . $controller);
                 }
