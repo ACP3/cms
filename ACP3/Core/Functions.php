@@ -489,23 +489,30 @@ class Functions
      *  Dateiname
      * @param string $dir
      *  Ordner, in den die Datei verschoben werden soll
+     * @param bool $retainFilename
      * @throws Exceptions\ValidationFailed
      * @return array
-     *  Gibt ein Array mit dem Namen und der Größe der neuen Datei zurück
      */
-    public static function moveFile($tmpFilename, $filename, $dir)
+    public static function moveFile($tmpFilename, $filename, $dir, $retainFilename = false)
     {
         $path = UPLOADS_DIR . $dir . '/';
-        $ext = strrchr($filename, '.');
-        $newName = 1;
 
-        // Dateiname solange ändern, wie eine Datei mit dem selben Dateinamen im aktuellen Ordner existiert
-        while (is_file($path . $newName . $ext) === true) {
-            ++$newName;
+        if ($retainFilename === true) {
+            $newFilename = $filename;
+        } else {
+            $newFilename = 1;
+            $ext = strrchr($filename, '.');
+
+            // Dateiname solange ändern, wie eine Datei mit dem selben Dateinamen im aktuellen Ordner existiert
+            while (is_file($path . $newFilename . $ext) === true) {
+                ++$newFilename;
+            }
+
+            $newFilename .= $ext;
         }
 
         if (is_writable($path) === true) {
-            if (!@move_uploaded_file($tmpFilename, $path . $newName . $ext)) {
+            if (!@move_uploaded_file($tmpFilename, $path . $newFilename)) {
                 static::_init();
 
                 $error = array(
@@ -513,11 +520,11 @@ class Functions
                 );
                 throw new Exceptions\ValidationFailed(self::errorBox($error));
             } else {
-                $newFile = array();
-                $newFile['name'] = $newName . $ext;
-                $newFile['size'] = self::calcFilesize(filesize($path . $newFile['name']));
+                $return = array();
+                $return['name'] = $newFilename;
+                $return['size'] = self::calcFilesize(filesize($path . $return['name']));
 
-                return $newFile;
+                return $return;
             }
         }
         return array();
