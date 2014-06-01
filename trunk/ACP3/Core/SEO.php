@@ -132,7 +132,7 @@ class SEO
         } else {
             $description = $this->getDescription($this->uri->getUriWithoutPages());
             if (empty($description)) {
-                $description = $this->getDescription($this->uri->mod . '/' . $this->uri->file);
+                $description = $this->getDescription($this->uri->mod . '/' . $this->uri->controller . '/' . $this->uri->file);
             }
 
             return $description . (!empty($description) && !empty($this->metaDescriptionPostfix) ? ' - ' . $this->metaDescriptionPostfix : '');
@@ -149,7 +149,7 @@ class SEO
     {
         $keywords = $this->getKeywords($this->uri->getUriWithoutPages());
         if (empty($keywords)) {
-            $keywords = $this->getKeywords($this->uri->mod . '/' . $this->uri->file);
+            $keywords = $this->getKeywords($this->uri->mod . '/' . $this->uri->controller . '/' . $this->uri->file);
         }
         if (empty($keywords)) {
             $keywords = $this->getKeywords($this->uri->mod);
@@ -168,7 +168,7 @@ class SEO
     {
         $robots = $this->getRobotsSetting($this->uri->getUriWithoutPages());
         if (empty($robots)) {
-            $robots = $this->getRobotsSetting($this->uri->mod . '/' . $this->uri->file);
+            $robots = $this->getRobotsSetting($this->uri->mod . '/' . $this->uri->controller . '/' . $this->uri->file);
         }
         if (empty($robots)) {
             $robots = $this->getRobotsSetting($this->uri->mod);
