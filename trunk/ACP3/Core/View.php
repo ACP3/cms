@@ -178,7 +178,7 @@ class View
         }
 
         // Stylesheet für das Layout-Tenplate
-        $css[] = self::getCssJsPath(MODULES_DIR . 'System/', DESIGN_PATH_INTERNAL . 'system/', 'css', 'style.css');
+        $css[] = self::getCssJsPath(MODULES_DIR . 'System/', DESIGN_PATH_INTERNAL . 'System/', 'css', 'style.css');
         $css[] = DESIGN_PATH_INTERNAL . (is_file(DESIGN_PATH_INTERNAL . $layout . '.css') === true ? $layout : 'layout') . '.css';
 
         // Zusätzliche Stylesheets einbinden
@@ -196,7 +196,7 @@ class View
         $modules = Modules::getActiveModules();
         foreach ($modules as $module) {
             $systemPath = MODULES_DIR . $module['dir'] . '/';
-            $designPath = DESIGN_PATH_INTERNAL . strtolower($module['dir']) . '/';
+            $designPath = DESIGN_PATH_INTERNAL . $module['dir'] . '/';
             if (true == ($stylesheet = self::getCssJsPath($systemPath, $designPath, 'css', 'style.css')) &&
                 $module['dir'] !== 'System'
             ) {
@@ -302,7 +302,10 @@ class View
      */
     public function fetchTemplate($template, $cacheId = null, $compileId = null, $parent = null, $display = false)
     {
-        $template = ucfirst($template);
+        if (strpos($template, '/') !== false) {
+            $template = ucfirst($template);
+        }
+
         if ($this->templateExists($template)) {
             return self::$rendererObject->fetch($template, $cacheId, $compileId, $parent, $display);
         } else {
