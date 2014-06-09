@@ -218,10 +218,6 @@ class Breadcrumb
     private function _setBreadcrumbCacheForAdmin()
     {
         $module = $this->uri->mod;
-        $controller = $this->uri->controller;
-        $file = $this->uri->file;
-        $languageKey = $this->uri->area . '_' . $controller . '_' . $file;
-        $languageKeyIndex = $this->uri->area . '_' . $controller . '_index';
 
         if ($module !== 'acp') {
             $this->setTitlePostfix($this->lang->t('system', 'acp'));
@@ -229,10 +225,16 @@ class Breadcrumb
 
         // No breadcrumb is set yet
         if (empty($this->stepsFromModules)) {
+            $controller = $this->uri->controller;
+            $file = $this->uri->file;
+            $languageKey = $this->uri->area . '_' . $controller . '_' . $file;
+            $languageKeyIndex = $this->uri->area . '_' . $controller . '_index';
+
             $this->append($this->lang->t('system', 'acp'), 'acp/acp');
 
             if ($module !== 'acp') {
                 $this->append($this->lang->t($module, $module), 'acp/' . $module);
+
                 if ($controller !== 'index' &&
                     method_exists("\\ACP3\\Modules\\" . ucfirst($module) . "\\Controller\\Admin\\" . ucfirst($controller), 'actionIndex')
                 ) {
@@ -256,18 +258,20 @@ class Breadcrumb
      */
     private function _setBreadcrumbCacheForFrontend()
     {
-        $module = $this->uri->mod;
-        $controller = $this->uri->controller;
-        $file = $this->uri->file;
-        $languageKey = $this->uri->area . '_' . $controller . '_' . $file;
-        $languageKeyIndex = $this->uri->area . '_' . $controller . '_index';
-
         // No breadcrumb has been set yet
         if (empty($this->stepsFromModules)) {
+            $module = $this->uri->mod;
+            $controller = $this->uri->controller;
+            $file = $this->uri->file;
+            $languageKey = $this->uri->area . '_' . $controller . '_' . $file;
+            $languageKeyIndex = $this->uri->area . '_' . $controller . '_index';
+
             if ($module !== 'errors') {
                 $this->append($this->lang->t($module, $module), $module);
             }
-            if ($controller !== 'index') {
+            if ($controller !== 'index' &&
+                method_exists("\\ACP3\\Modules\\" . ucfirst($module) . "\\Controller\\" . ucfirst($controller), 'actionIndex')
+            ) {
                 $this->append($this->lang->t($module, $languageKeyIndex), $module . '/' . $controller);
             }
             if ($file !== 'index') {
