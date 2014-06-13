@@ -288,11 +288,6 @@ abstract class Controller
                 $this->setContentTemplate($this->uri->mod . '/' . $this->uri->controller . '.' . $this->uri->file . '.tpl');
             }
 
-            $this->view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
-            $this->view->assign('HEAD_TITLE', $this->breadcrumb->output(3));
-            $this->view->assign('TITLE', $this->breadcrumb->output(2));
-            $this->view->assign('BREADCRUMB', $this->breadcrumb->output());
-
             if ($this->getContent() === '') {
                 $this->setContent($this->view->fetchTemplate($this->getContentTemplate()));
             }
@@ -301,6 +296,10 @@ abstract class Controller
             header($this->getContentType());
 
             if ($this->getLayout() !== '') {
+                $this->view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
+                $this->view->assign('HEAD_TITLE', $this->breadcrumb->output(3));
+                $this->view->assign('TITLE', $this->breadcrumb->output(2));
+                $this->view->assign('BREADCRUMB', $this->breadcrumb->output());
                 $this->view->assign('META', $this->seo->getMetaTags());
                 $this->view->assign('CONTENT', $this->getContent() . $this->getContentAppend());
 

@@ -11,36 +11,65 @@ use ACP3\Core;
  */
 class Extensions
 {
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    private $db;
+    /**
+     * @var \ACP3\Core\Date
+     */
+    private $date;
+    /**
+     * @var \ACP3\Core\URI
+     */
+    private $uri;
+    /**
+     * @var \ACP3\Core\View
+     */
+    private $view;
+
+    public function __construct(
+        \Doctrine\DBAL\Connection $db,
+        Core\Date $date,
+        Core\URI $uri,
+        Core\View $view
+    )
+    {
+        $this->date = $date;
+        $this->db = $db;
+        $this->uri = $uri;
+        $this->view = $view;
+    }
 
     public function newsFeed()
     {
-        $result = Core\Registry::get('Db')->fetchAll('SELECT id, start, title, text FROM ' . DB_PRE . 'news WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end) ORDER BY start DESC, end DESC, id DESC LIMIT 10', array('time' => Core\Registry::get('Date')->getCurrentDateTime()));
-        $c_result = count($result);
+        $results = $this->db->fetchAll('SELECT id, start, title, text FROM ' . DB_PRE . 'news WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end) ORDER BY start DESC, end DESC, id DESC LIMIT 10', array('time' => $this->date->getCurrentDateTime()));
+        $c_results = count($results);
 
-        for ($i = 0; $i < $c_result; ++$i) {
+        for ($i = 0; $i < $c_results; ++$i) {
             $params = array(
-                'title' => $result[$i]['title'],
-                'date' => Core\Registry::get('Date')->timestamp($result[$i]['start']),
-                'description' => Core\Functions::shortenEntry($result[$i]['text'], 300, 0),
-                'link' => FEED_LINK . Core\Registry::get('URI')->route('news/index/details/id_' . $result[$i]['id'], false)
+                'title' => $results[$i]['title'],
+                'date' => $this->date->timestamp($results[$i]['start']),
+                'description' => Core\Functions::shortenEntry($results[$i]['text'], 300, 0),
+                'link' => FEED_LINK . $this->uri->route('news/index/details/id_' . $results[$i]['id'], false)
             );
-            Core\Registry::get('View')->assign($params);
+            $this->view->assign($params);
         }
     }
 
     public function filesFeed()
     {
-        $result = Core\Registry::get('Db')->fetchAll('SELECT id, start, title, text FROM ' . DB_PRE . 'files WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end) ORDER BY start DESC, end DESC, id DESC LIMIT 10', array('time' => Core\Registry::get('Date')->getCurrentDateTime()));
-        $c_result = count($result);
+        $results = $this->db->fetchAll('SELECT id, start, title, text FROM ' . DB_PRE . 'files WHERE (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end) ORDER BY start DESC, end DESC, id DESC LIMIT 10', array('time' => $this->date->getCurrentDateTime()));
+        $c_results = count($results);
 
-        for ($i = 0; $i < $c_result; ++$i) {
+        for ($i = 0; $i < $c_results; ++$i) {
             $params = array(
-                'title' => $result[$i]['title'],
-                'date' => Core\Registry::get('Date')->timestamp($result[$i]['start']),
-                'description' => Core\Functions::shortenEntry($result[$i]['text'], 300, 0),
-                'link' => FEED_LINK . Core\Registry::get('URI')->route('files/index/details/id_' . $result[$i]['id'], false)
+                'title' => $results[$i]['title'],
+                'date' => $this->date->timestamp($results[$i]['start']),
+                'description' => Core\Functions::shortenEntry($results[$i]['text'], 300, 0),
+                'link' => FEED_LINK . $this->uri->route('files/index/details/id_' . $results[$i]['id'], false)
             );
-            Core\Registry::get('View')->assign($params);
+            $this->view->assign($params);
         }
     }
 
