@@ -34,12 +34,17 @@ class Index extends Core\Modules\Controller
 
             Core\View::factory('FeedGenerator', $config);
 
-            $feed = new Feeds\Extensions();
+            $feed = new Feeds\Extensions(
+                $this->db,
+                $this->date,
+                $this->uri,
+                $this->view
+            );
             $feed->$action();
 
-            $this->setNoOutput(true);
             $this->setContentType('text/xml');
-            $this->setLayout($settings['feed_type']);
+            $this->setContentTemplate($settings['feed_type']);
+            $this->setLayout('');
         } else {
             $this->uri->redirect('errors/index/404');
         }
