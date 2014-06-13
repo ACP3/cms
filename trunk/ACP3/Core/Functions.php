@@ -273,7 +273,7 @@ class Functions
      * @param boolean $customUris
      * @return string
      */
-    protected static function _generateTOC(array $pages, $path = '', $titlesFromDb = false, $customUris = false)
+    public static function generateTOC(array $pages, $path = '', $titlesFromDb = false, $customUris = false)
     {
         if (!empty($pages)) {
             static::_init();
@@ -379,7 +379,7 @@ class Functions
                 }
 
                 $page = array(
-                    'toc' => self::_generateTOC($matches[0], $path),
+                    'toc' => self::generateTOC($matches[0], $path),
                     'text' => $pages[$currentPage - 1],
                     'next' => $nextPage,
                     'previous' => $previousPage,

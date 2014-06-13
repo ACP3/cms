@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'newsletter';
-    const SCHEMA_VERSION = 41;
+    const SCHEMA_VERSION = 42;
 
     public function __construct(\Doctrine\DBAL\Connection $db)
     {
@@ -106,6 +106,10 @@ class Installer extends Modules\AbstractInstaller
                 Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "newsletter/list/", "newsletter/index/index/") WHERE uri LIKE "newsletter/list/%";' : '',
                 Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "newsletter/list_archive/", "newsletter/archive/index/") WHERE uri LIKE "newsletter/list_archive/%";' : '',
                 Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "newsletter/details/", "newsletter/archive/details/") WHERE uri LIKE "newsletter/details/%";' : '',
+            ),
+            42 => array(
+                'UPDATE `{pre}acl_resources` SET area = "frontend", controller = "archive", page = "index" WHERE `module_id` = ' . $this->getModuleId() . ' AND page = "list_archive";',
+                'UPDATE `{pre}acl_resources` SET area = "frontend" WHERE `module_id` = ' . $this->getModuleId() . ' AND controller="archive" AND page = "details";',
             )
         );
     }
