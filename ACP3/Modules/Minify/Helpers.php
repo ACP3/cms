@@ -80,7 +80,7 @@ class Helpers
                 $css[] = $stylesheet;
             }
             // Append some custom styles to the default module styling
-            $pathModuleAppend = $designPath . 'append.css';
+            $pathModuleAppend = $designPath . 'css/append.css';
             if (is_file($pathModuleAppend) === true) {
                 $css[] = $pathModuleAppend;
             }
