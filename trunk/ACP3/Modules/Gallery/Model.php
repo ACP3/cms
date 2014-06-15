@@ -15,13 +15,16 @@ class Model extends Core\Model
     const TABLE_NAME = 'gallery';
     const TABLE_NAME_PICTURES = 'gallery_pictures';
 
+    /**
+     * @var \ACP3\Core\URI
+     */
     private $uri;
 
     public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang, Core\URI $uri)
     {
         parent::__construct($db, $lang);
 
-        $this->uri;
+        $this->uri = $uri;
     }
 
     public function galleryExists($id, $time = '')
@@ -265,6 +268,5 @@ class Model extends Core\Model
 
         return Core\Cache::output('pics_id_' . $id, 'gallery');
     }
-
 
 }

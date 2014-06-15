@@ -56,7 +56,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 Core\Functions::setRedirectMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/gallery');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/files');
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/gallery');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $this->view->assign('error_msg', $e->getMessage());
             }
@@ -149,7 +149,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/gallery');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/files');
+                    Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/gallery');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $this->view->assign('error_msg', $e->getMessage());
                 }
@@ -251,7 +251,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/gallery');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/files');
+                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/gallery');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $this->view->assign('error_msg', $e->getMessage());
             }
