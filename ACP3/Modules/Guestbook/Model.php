@@ -14,7 +14,13 @@ class Model extends Core\Model
 
     const TABLE_NAME = 'guestbook';
 
+    /**
+     * @var \ACP3\Core\Auth
+     */
     protected $auth;
+    /**
+     * @var \ACP3\Core\Date
+     */
     protected $date;
 
     public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang, Core\Date $date, Core\Auth $auth)
@@ -79,7 +85,7 @@ class Model extends Core\Model
         if (Core\Modules::hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && Core\Validate::captcha($formData['captcha']) === false)
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         if ($newsletterAccess === true && isset($formData['subscribe_newsletter']) && $formData['subscribe_newsletter'] == 1) {
-            $newsletterModel = new \ACP3\Modules\Newsletter\Model($this->db);
+            $newsletterModel = new \ACP3\Modules\Newsletter\Model($this->db, $this->lang, $this->auth);
             if (Core\Validate::email($formData['mail']) === false)
                 $errors['mail'] = $this->lang->t('guestbook', 'type_in_email_address_to_subscribe_to_newsletter');
             if (Core\Validate::email($formData['mail']) === true && $newsletterModel->accountExists($formData['mail']) === true)
