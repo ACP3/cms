@@ -189,7 +189,15 @@ class Index extends Core\Modules\Controller\Admin
     public function actionSend()
     {
         if (Core\Validate::isNumber($this->uri->id) === true && $this->model->newsletterExists($this->uri->id) === true) {
-            $bool = Newsletter\Helpers::sendNewsletter($this->uri->id, null, true);
+            $accounts = $this->model->getAllActiveAccounts();
+            $c_accounts = count($accounts);
+            $recipients = array();
+
+            for ($i = 0; $i < $c_accounts; ++$i) {
+                $recipients[] = $accounts[$i]['mail'];
+            }
+
+            $bool = Newsletter\Helpers::sendNewsletter($this->uri->id, $recipients);
             $bool2 = false;
             if ($bool === true) {
                 $bool2 = $this->model->update(array('status' => '1'), $this->uri->id);
