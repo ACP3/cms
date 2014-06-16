@@ -92,7 +92,8 @@ class Date
      * @param integer $range
      *    1 = Start- und Enddatum anzeigen
      *    2 = Einfaches Inputfeld mitsamt Datepicker anzeigen
-     * @param integer $withTime
+     * @param bool|int $withTime
+     * @param bool $inputFieldOnly
      * @return string
      */
     public function datepicker($name, $value = '', $format = 'Y-m-d H:i', array $params = array(), $range = 1, $withTime = true, $inputFieldOnly = false)

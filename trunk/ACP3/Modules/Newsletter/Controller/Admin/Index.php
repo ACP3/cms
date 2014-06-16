@@ -37,7 +37,7 @@ class Index extends Core\Modules\Controller\Admin
                 // Newsletter archivieren
                 $insertValues = array(
                     'id' => '',
-                    'date' => $this->date->toSQL(),
+                    'date' => $this->date->toSQL($_POST['date']),
                     'title' => Core\Functions::strEncode($_POST['title']),
                     'text' => Core\Functions::strEncode($_POST['text'], true),
                     'html' => $settings['html'],
@@ -48,13 +48,13 @@ class Index extends Core\Modules\Controller\Admin
 
                 // Test-Newsletter
                 if ($_POST['test'] == 1) {
-                    $bool2 = Newsletter\Helpers::sendNewsletter($lastId, $settings['mail'], true);
+                    $bool2 = Newsletter\Helpers::sendNewsletter($lastId, $settings['mail']);
 
                     $lang = $this->lang->t('newsletter', 'create_success');
-                    $result = $lastId && $bool2;
+                    $result = $lastId !== false && $bool2 !== false;
                 } else {
                     $lang = $this->lang->t('newsletter', 'save_success');
-                    $result = $lastId;
+                    $result = $lastId !== false;
                 }
 
                 $this->session->unsetFormToken();
@@ -70,8 +70,8 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
 
+        $this->view->assign('date', $this->date->datepicker('date'));
         $this->view->assign('settings', $settings);
-
         $this->view->assign('form', array_merge(array('title' => '', 'text' => ''), $_POST));
 
         $lang_test = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
@@ -110,7 +110,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     // Newsletter archivieren
                     $updateValues = array(
-                        'date' => $this->date->toSQL(),
+                        'date' => $this->date->toSQL($_POST['date']),
                         'title' => Core\Functions::strEncode($_POST['title']),
                         'text' => Core\Functions::strEncode($_POST['text'], true),
                         'user_id' => $this->auth->getUserId(),
@@ -119,13 +119,13 @@ class Index extends Core\Modules\Controller\Admin
 
                     // Test-Newsletter
                     if ($_POST['test'] == 1) {
-                        $bool2 = Newsletter\Helpers::sendNewsletter($this->uri->id, $settings['mail'], true);
+                        $bool2 = Newsletter\Helpers::sendNewsletter($this->uri->id, $settings['mail']);
 
                         $lang = $this->lang->t('newsletter', 'create_success');
-                        $result = $bool && $bool2;
+                        $result = $bool !== false && $bool2;
                     } else {
                         $lang = $this->lang->t('newsletter', 'save_success');
-                        $result = $bool;
+                        $result = $bool !== false;
                     }
 
                     $this->session->unsetFormToken();
@@ -141,8 +141,8 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
+            $this->view->assign('date', $this->date->datepicker('date', $newsletter['date']));
             $this->view->assign('settings', array_merge($settings, array('html' => $newsletter['html'])));
-
             $this->view->assign('form', array_merge($newsletter, $_POST));
 
             $lang_test = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));

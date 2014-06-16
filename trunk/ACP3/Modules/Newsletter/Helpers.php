@@ -16,6 +16,10 @@ abstract class Helpers
 {
 
     /**
+     * @var Core\Date
+     */
+    protected static $date;
+    /**
      * @var Core\Lang
      */
     protected static $lang;
@@ -28,6 +32,10 @@ abstract class Helpers
      * @var Model
      */
     protected static $model;
+    /**
+     * @var Core\View
+     */
+    protected static $view;
 
     protected static function _init()
     {
@@ -40,6 +48,8 @@ abstract class Helpers
 
             self::$lang = Core\Registry::get('Lang');
             self::$uri = Core\Registry::get('URI');
+            self::$view = Core\Registry::get('View');
+            self::$date = Core\Registry::get('Date');
         }
     }
 
@@ -47,11 +57,11 @@ abstract class Helpers
      * Versendet einen Newsletter
      *
      * @param $newsletterId
-     * @param null $recipient
+     * @param null $recipients
      * @param bool $bcc
      * @return bool
      */
-    public static function sendNewsletter($newsletterId, $recipient, $bcc = false)
+    public static function sendNewsletter($newsletterId, $recipients, $bcc = false)
     {
         self::_init();
 
@@ -62,11 +72,11 @@ abstract class Helpers
             'name' => CONFIG_SEO_TITLE
         );
 
-        $mailer = new Core\Mailer(Core\Registry::get('View'), $bcc);
+        $mailer = new Core\Mailer(self::$view, $bcc);
         $mailer
             ->setFrom($from)
             ->setSubject($newsletter['title'])
-            ->setUrlWeb(HOST_NAME . static::$uri->route('newsletter/index/details/id_' . $newsletterId))
+            ->setUrlWeb(HOST_NAME . self::$uri->route('newsletter/index/details/id_' . $newsletterId))
             ->setMailSignature($settings['mailsig']);
 
         if ($newsletter['html'] == 1) {
@@ -76,7 +86,7 @@ abstract class Helpers
             $mailer->setBody($newsletter['text']);
         }
 
-        $mailer->setRecipients($recipient);
+        $mailer->setRecipients($recipients);
 
         return $mailer->send();
     }
