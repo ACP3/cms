@@ -166,10 +166,13 @@ class Mailer
 
     /**
      * @param string $attachment
+     * @return $this
      */
     public function setAttachments($attachment)
     {
         $this->attachments[] = $attachment;
+
+        return $this;
     }
 
     /**

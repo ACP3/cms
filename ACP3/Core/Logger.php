@@ -26,17 +26,20 @@ class Logger
      */
     public static function log($channel, $level, $message)
     {
-        if (!isset(self::$channels[$channel])) {
-            $logger = new \Monolog\Logger($channel);
+        $channelName = $channel . '-' . $level;
 
-            $fileName = UPLOADS_DIR . 'logs/' . $channel . '-' . $level . '.log';
-            $logger->pushHandler(new StreamHandler($fileName, \Monolog\Logger::NOTICE));
+        if (!isset(self::$channels[$channelName])) {
+            $logger = new \Monolog\Logger($channelName);
 
-            self::$channels[$channel] = $logger;
+            $fileName = UPLOADS_DIR . 'logs/' . $channelName . '.log';
+            $logLevelConst = constant('\Monolog\Logger::' . strtoupper($level));
+            $logger->pushHandler(new StreamHandler($fileName, $logLevelConst));
+
+            self::$channels[$channelName] = $logger;
         }
 
         /** @var \Monolog\Logger $logger */
-        $logger = self::$channels[$channel];
+        $logger = self::$channels[$channelName];
 
         switch ($level) {
             case 'debug':

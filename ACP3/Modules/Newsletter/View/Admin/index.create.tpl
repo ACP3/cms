@@ -8,6 +8,7 @@
         <div class="col-lg-10">
             <input class="form-control" type="text" name="title" id="title" value="{$form.title}" required></div>
     </div>
+    {$date}
     <div class="form-group">
         <label for="text" class="col-lg-2 control-label">{lang t="newsletter|text"}</label>
 

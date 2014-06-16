@@ -33,7 +33,7 @@ class Archive extends Core\Modules\Controller
         if (!empty($newsletter)) {
             $this->breadcrumb
                 ->append($this->lang->t('newsletter', 'index'), 'newsletter')
-                ->append($this->lang->t('newsletter', 'frontend_archive_index'), 'newsletter/archive/index')
+                ->append($this->lang->t('newsletter', 'frontend_archive_index'), 'newsletter/archive')
                 ->append($newsletter['title']);
 
             $newsletter['date_formatted'] = $this->date->format($newsletter['date'], 'short');
