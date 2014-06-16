@@ -68,7 +68,7 @@ class Model extends Core\Model
         return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME_ACCOUNTS . ' ORDER BY id DESC');
     }
 
-    public function getAllActiveAccount()
+    public function getAllActiveAccounts()
     {
         return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME_ACCOUNTS . ' WHERE hash = "" ORDER BY id DESC');
     }

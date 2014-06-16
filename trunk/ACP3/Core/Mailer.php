@@ -43,10 +43,6 @@ class Mailer
      */
     private $bcc;
     /**
-     * @var int
-     */
-    private $bccCount;
-    /**
      * @var array
      */
     private $attachments = array();
@@ -66,7 +62,7 @@ class Mailer
     /**
      * Initializes PHPMailer and sets the basic configuration parameters
      */
-    public function __construct(View $view = null, $bcc = false, $bccCount = 50)
+    public function __construct(View $view = null, $bcc = false)
     {
         $this->view = $view;
         $this->mailer = new \PHPMailer(true);
@@ -89,7 +85,6 @@ class Mailer
         $this->mailer->WordWrap = 76;
 
         $this->bcc = $bcc;
-        $this->bccCount = $bccCount;
     }
 
     /**
@@ -353,28 +348,17 @@ class Mailer
      */
     private function _sendBcc()
     {
-        $i = 0;
-
         if (is_array($this->recipients) === false || isset($this->recipients['email']) === true) {
             $this->recipients = array($this->recipients);
         }
 
-        $c_recipients = count($this->recipients);
-
         foreach ($this->recipients as $recipient) {
-            // First collect some addresses
-            if ($i < $this->bccCount) {
-                $this->_addRecipients($recipient, true);
-                ++$i;
-            }
+            set_time_limit(10);
 
-            // If enough addresses have been collected, perform a bulk mail sending
-            if ($i % $this->bccCount === 0 || $i === $c_recipients) {
-                $this->mailer->send();
-            }
+            $this->_addRecipients($recipient, true);
         }
 
-        return true;
+        return $this->mailer->send();
     }
 
     /**
@@ -389,8 +373,10 @@ class Mailer
         }
 
         foreach ($this->recipients as $recipient) {
+            set_time_limit(20);
             $this->_addRecipients($recipient);
             $this->mailer->send();
+            $this->mailer->clearAllRecipients();
         }
 
         return true;
