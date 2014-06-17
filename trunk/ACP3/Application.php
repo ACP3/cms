@@ -263,7 +263,7 @@ class Application
                 throw new \Exception('Class ' . $className . '() was not found!');
             }
         } catch (\Exception $e) {
-            Core\Logger::log('exception', 'error', $e);
+            Core\Logger::error('exception', $e);
 
             if (defined('DEBUG') && DEBUG === true) {
                 $errorMessage = $e->getMessage();
