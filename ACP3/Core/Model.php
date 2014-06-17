@@ -78,7 +78,7 @@ class Model
             return $lastId;
         } catch (\Exception $e) {
             $this->db->rollback();
-            Logger::log('db', 'error', $e->getMessage());
+            Logger::error('database', $e->getMessage());
             return false;
         }
     }
@@ -102,7 +102,7 @@ class Model
             return $bool;
         } catch (\Exception $e) {
             $this->db->rollback();
-            Logger::log('db', 'error', $e->getMessage());
+            Logger::error('database', $e->getMessage());
             return false;
         }
     }
@@ -126,7 +126,7 @@ class Model
             return $bool;
         } catch (\Exception $e) {
             $this->db->rollback();
-            Logger::log('db', 'error', $e->getMessage());
+            Logger::error('database', $e->getMessage());
             return false;
         }
     }

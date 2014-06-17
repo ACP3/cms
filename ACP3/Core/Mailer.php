@@ -336,10 +336,10 @@ class Mailer
 
             return false;
         } catch (\phpmailerException $e) {
-            Logger::log('mailer', 'error', $e->getMessage());
+            Logger::error('mailer', $e->getMessage());
             return false;
         } catch (\Exception $e) {
-            Logger::log('mailer', 'error', $e->getMessage());
+            Logger::error('mailer', $e->getMessage());
             return false;
         }
     }

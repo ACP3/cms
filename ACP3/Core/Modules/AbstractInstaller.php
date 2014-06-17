@@ -132,7 +132,7 @@ abstract class AbstractInstaller implements InstallerInterface
             } catch (\Exception $e) {
                 $db->rollBack();
 
-                Core\Logger::log('installer', 'warning', $e);
+                Core\Logger::warning('installer', $e);
                 return false;
             }
         }
@@ -328,7 +328,7 @@ abstract class AbstractInstaller implements InstallerInterface
             } catch (\Exception $e) {
                 $this->db->rollback();
 
-                Core\Logger::log('installer', 'warning', $e);
+                Core\Logger::warning('installer', $e);
                 return false;
             }
         }

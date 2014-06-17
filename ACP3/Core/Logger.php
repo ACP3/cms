@@ -18,13 +18,13 @@ class Logger
     private static $channels = array();
 
     /**
-     * Logs an warning, error, etc.
+     * Wrapper method for logging notices, warnings, errors, etc.
      *
      * @param $channel
      * @param $level
      * @param $message
      */
-    public static function log($channel, $level, $message)
+    private static function _log($channel, $level, $message)
     {
         $channelName = $channel . '-' . $level;
 
@@ -68,4 +68,93 @@ class Logger
                 break;
         }
     }
-} 
+
+    /**
+     * Debug log
+     *
+     * @param $channel
+     * @param $message
+     */
+    public static function debug($channel, $message)
+    {
+        self::_log($channel, 'debug', $message);
+    }
+
+    /**
+     * Info log
+     *
+     * @param $channel
+     * @param $message
+     */
+    public static function info($channel, $message)
+    {
+        self::_log($channel, 'info', $message);
+    }
+
+    /**
+     * Notice log
+     *
+     * @param $channel
+     * @param $message
+     */
+    public static function notice($channel, $message)
+    {
+        self::_log($channel, 'notice', $message);
+    }
+
+    /**
+     * Warning log
+     *
+     * @param $channel
+     * @param $message
+     */
+    public static function warning($channel, $message)
+    {
+        self::_log($channel, 'warning', $message);
+    }
+
+    /**
+     * Error log
+     *
+     * @param $channel
+     * @param $message
+     */
+    public static function error($channel, $message)
+    {
+        self::_log($channel, 'error', $message);
+    }
+
+    /**
+     * Critical log
+     *
+     * @param $channel
+     * @param $message
+     */
+    public static function critical($channel, $message)
+    {
+        self::_log($channel, 'critical', $message);
+    }
+
+    /**
+     * Alert log
+     *
+     * @param $channel
+     * @param $message
+     */
+    public static function alert($channel, $message)
+    {
+        self::_log($channel, 'alert', $message);
+    }
+
+    /**
+     * Emergency log
+     *
+     * @param $channel
+     * @param $message
+     */
+    public static function emergency($channel, $message)
+    {
+        self::_log($channel, 'emergency', $message);
+    }
+
+}
