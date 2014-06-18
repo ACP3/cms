@@ -70,7 +70,7 @@ class Index extends Core\Modules\Controller
             $this->view->assign('answers', $answers);
             $this->view->assign('total_votes', $totalVotes);
         } else {
-            $this->uri->redirect('errors/index/404');
+            throw new Core\Exceptions\ResultNotExists();
         }
     }
 
@@ -126,7 +126,7 @@ class Index extends Core\Modules\Controller
                 $this->view->assign('answers', $this->model->getAnswersById($this->uri->id));
             }
         } else {
-            $this->uri->redirect('errors/index/404');
+            throw new Core\Exceptions\ResultNotExists();
         }
     }
 

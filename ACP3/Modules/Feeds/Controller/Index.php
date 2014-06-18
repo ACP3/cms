@@ -46,7 +46,7 @@ class Index extends Core\Modules\Controller
             $this->setContentTemplate($settings['feed_type']);
             $this->setLayout('');
         } else {
-            $this->uri->redirect('errors/index/404');
+            throw new Core\Exceptions\ResultNotExists();
         }
     }
 

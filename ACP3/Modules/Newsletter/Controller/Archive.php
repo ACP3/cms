@@ -42,7 +42,7 @@ class Archive extends Core\Modules\Controller
 
             $this->view->assign('newsletter', $newsletter);
         } else {
-            $this->uri->redirect('errors/index/404');
+            throw new Core\Exceptions\ResultNotExists();
         }
     }
 

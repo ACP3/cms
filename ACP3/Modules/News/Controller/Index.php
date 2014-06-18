@@ -66,7 +66,7 @@ class Index extends Core\Modules\Controller
                 $this->view->assign('comments', $comments->actionIndex());
             }
         } else {
-            $this->uri->redirect('errors/index/404');
+            throw new Core\Exceptions\ResultNotExists();
         }
     }
 

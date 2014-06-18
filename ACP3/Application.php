@@ -144,6 +144,8 @@ class Application
         if ((bool)CONFIG_MAINTENANCE_MODE === true &&
             (self::$uri->area !== 'admin' && strpos(self::$uri->query, 'users/login/') !== 0)
         ) {
+            header('HTTP/1.0 503 Service Unavailable');
+
             self::$view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
             self::$view->assign('CONTENT', CONFIG_MAINTENANCE_MESSAGE);
             self::$view->displayTemplate('system/maintenance.tpl');
@@ -257,10 +259,30 @@ class Application
                     $controller->$action();
                     $controller->display();
                 } else {
-                    throw new \Exception('Controller action ' . $className . '::' . $action . '() was not found!');
+                    throw new Core\Exceptions\ControllerActionNotFound('Controller action ' . $className . '::' . $action . '() was not found!');
                 }
             } else {
-                throw new \Exception('Class ' . $className . '() was not found!');
+                throw new Core\Exceptions\ControllerActionNotFound('Class ' . $className . '() was not found!');
+            }
+        } catch (Core\Exceptions\ResultNotExists $e) {
+            if ($e->getMessage()) {
+                Core\Logger::error('404', $e);
+            } else {
+                Core\Logger::error('404', 'Could not find any results for request: ' . self::$uri->query);
+            }
+
+            self::$uri->redirect('errors/index/404');
+        } catch (Core\Exceptions\UnauthorizedAccess $e) {
+            self::$uri->redirect('errors/index/401');
+        } catch (Core\Exceptions\ControllerActionNotFound $e) {
+            Core\Logger::error('404', 'Request: ' . self::$uri->query);
+            Core\Logger::error('404', $e);
+
+            if (defined('DEBUG') && DEBUG === true) {
+                $errorMessage = $e->getMessage();
+                self::_renderApplicationException($errorMessage);
+            } else {
+                self::$uri->redirect('errors/index/404');
             }
         } catch (\Exception $e) {
             Core\Logger::error('exception', $e);
@@ -269,7 +291,7 @@ class Application
                 $errorMessage = $e->getMessage();
                 self::_renderApplicationException($errorMessage);
             } else {
-                self::$uri->redirect('errors/index/404');
+                self::$uri->redirect('errors/index/500');
             }
         }
     }

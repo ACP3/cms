@@ -224,7 +224,7 @@ class Index extends Core\Modules\Controller
 
             $this->view->assign('user', $user);
         } else {
-            $this->uri->redirect('errors/index/404');
+            throw new Core\Exceptions\ResultNotExists();
         }
     }
 
