@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-    $(".thumbnails li a").fancybox({
+    $(".thumbnail").fancybox({
         type: 'image',
         padding: 0,
         nextClick: true,

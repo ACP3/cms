@@ -18,7 +18,7 @@
         <item key="admin_index_create">Neuen Newsletter erstellen</item>
         <item key="admin_index_delete">Newsletter löschen</item>
         <item key="admin_index_edit">Newsletter bearbeiten</item>
-        <item key="admin_index_send">Newsletter absenden</item>
+        <item key="admin_index_send">Newsletter versenden</item>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="already_sent">Bereits versendet</item>
         <item key="select_newsletter">Bitte wählen Sie einen der oben stehenden Newsletter aus, um diesen anzuzeigen.</item>
@@ -35,6 +35,7 @@
         <item key="not_yet_sent">Noch nicht versendet</item>
         <item key="only_save">Nur speichern</item>
         <item key="save_success">Der Newsletter wurde erfolgreich gespeichert.</item>
+        <item key="send">Newsletter versenden</item>
         <item key="send_and_save">Senden und speichern</item>
         <item key="send_html_emails">HTML-E-Mails versenden</item>
         <item key="status">Status</item>

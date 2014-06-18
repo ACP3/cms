@@ -35,6 +35,7 @@
         <item key="not_yet_sent">Not yet sent</item>
         <item key="only_save">Only save</item>
         <item key="save_success">The newsletter has been successfully saved.</item>
+        <item key="send">Send newsletter</item>
         <item key="send_and_save">Send and save</item>
         <item key="send_html_emails">Send HTML E-mails</item>
         <item key="status">Status</item>
