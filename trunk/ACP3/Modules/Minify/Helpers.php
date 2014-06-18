@@ -48,7 +48,7 @@ class Helpers
             $css[] = $this->_getStaticAssetPath(LIBRARIES_DIR, DESIGN_PATH_INTERNAL, 'js', 'jquery-timepicker.css');
         }
         if (in_array('fancybox', $libraries)) {
-            $css[] = $this->_getStaticAssetPath(LIBRARIES_DIR, DESIGN_PATH_INTERNAL, 'js', 'jquery-fancybox.css');
+            $css[] = $this->_getStaticAssetPath(LIBRARIES_DIR, DESIGN_PATH_INTERNAL, 'js', 'jquery.fancybox.css');
         }
         if (in_array('datatables', $libraries)) {
             $css[] = $this->_getStaticAssetPath(LIBRARIES_DIR, DESIGN_PATH_INTERNAL, 'js', 'jquery-datatables.css');
