@@ -63,7 +63,7 @@ class Index extends Core\Modules\Controller
                 } elseif (preg_match('/^([a-z]+):\/\//', $file['file'])) {
                     $this->uri->redirect(0, $file['file']); // Externe Datei
                 } else {
-                    $this->uri->redirect('errors/index/404');
+                    throw new Core\Exceptions\ResultNotExists();
                 }
             } else {
                 // Brotkrümelspur
@@ -96,7 +96,7 @@ class Index extends Core\Modules\Controller
                 }
             }
         } else {
-            $this->uri->redirect('errors/index/404');
+            throw new Core\Exceptions\ResultNotExists();
         }
     }
 
@@ -123,7 +123,7 @@ class Index extends Core\Modules\Controller
                 $this->view->assign('files', $files);
             }
         } else {
-            $this->uri->redirect('errors/index/404');
+            throw new Core\Exceptions\ResultNotExists();
         }
     }
 

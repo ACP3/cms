@@ -37,7 +37,7 @@ class Index extends Core\Modules\Controller\Admin
             }
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/index/404');
+            throw new Core\Exceptions\ResultNotExists();
         }
     }
 

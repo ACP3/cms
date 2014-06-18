@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'errors';
-    const SCHEMA_VERSION = 32;
+    const SCHEMA_VERSION = 33;
 
     public function removeResources()
     {
@@ -49,6 +49,10 @@ class Installer extends Modules\AbstractInstaller
             32 => array(
                 Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "errors/403/", "errors/index/403/") WHERE uri LIKE "errors/403/%";' : '',
                 Modules::isInstalled('menus') || Modules::isInstalled('menu_items') ? 'UPDATE `{pre}menu_items` SET uri=REPLACE(uri, "errors/404/", "errors/index/404/") WHERE uri LIKE "errors/404/%";' : '',
+            ),
+            33 => array(
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', " . $this->getModuleId() . ", 'frontend', 'index', '500', '', 1);",
+                "UPDATE `{pre}acl_resources` SET page = '401' WHERE module_id = " . $this->getModuleId() . " AND area = 'frontend' AND controller = 'index' AND page = '403';"
             )
         );
     }

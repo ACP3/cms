@@ -134,7 +134,7 @@ abstract class Controller
         $path = $this->uri->area . '/' . $this->uri->mod . '/' . $this->uri->controller . '/' . $this->uri->file;
 
         if (Core\Modules::hasPermission($path) === false) {
-            $this->uri->redirect('errors/index/404');
+            throw new Core\Exceptions\UnauthorizedAccess();
         }
     }
 

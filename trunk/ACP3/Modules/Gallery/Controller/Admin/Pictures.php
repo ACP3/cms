@@ -93,7 +93,7 @@ class Pictures extends Core\Modules\Controller\Admin
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/index/404');
+            throw new Core\Exceptions\ResultNotExists();
         }
     }
 
@@ -120,7 +120,7 @@ class Pictures extends Core\Modules\Controller\Admin
 
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/gallery/index/edit/id_' . $this->uri->id);
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/index/404');
+            throw new Core\Exceptions\ResultNotExists();
         }
     }
 
@@ -186,7 +186,7 @@ class Pictures extends Core\Modules\Controller\Admin
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/index/404');
+            throw new Core\Exceptions\ResultNotExists();
         }
     }
 
@@ -203,6 +203,7 @@ class Pictures extends Core\Modules\Controller\Admin
                 $this->uri->redirect('acp/gallery/index/edit/id_' . $galleryId);
             }
         }
-        $this->uri->redirect('errors/index/404');
+
+        throw new Core\Exceptions\ResultNotExists();
     }
 }

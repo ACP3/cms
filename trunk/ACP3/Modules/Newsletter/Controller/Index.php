@@ -61,7 +61,7 @@ class Index extends Core\Modules\Controller
 
             $this->view->assign('newsletter', $newsletter);
         } else {
-            $this->uri->redirect('errors/index/404');
+            throw new Core\Exceptions\ResultNotExists();
         }
     }
 
@@ -89,7 +89,7 @@ class Index extends Core\Modules\Controller
                         $this->setContent(Core\Functions::confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
                         return;
                     default:
-                        $this->uri->redirect('errors/index/404');
+                        throw new Core\Exceptions\ResultNotExists();
                 }
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->setContent(Core\Functions::errorBox($e->getMessage()));

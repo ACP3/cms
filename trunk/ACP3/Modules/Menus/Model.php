@@ -140,7 +140,7 @@ class Model extends Core\Model
         )
             $errors[] = $this->lang->t('menus', 'type_in_uri_and_target');
         if ($formData['mode'] == 2 && (bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
-            (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias']) === true)
+            (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], $formData['uri']) === true)
         )
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
 

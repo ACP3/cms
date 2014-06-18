@@ -135,7 +135,7 @@ class Index extends Core\Modules\Controller\Admin
             }
             Core\Functions::setRedirectMessage($bool && $bool2 && $bool3, $text, 'acp/permissions');
         } elseif (is_string($items)) {
-            $this->uri->redirect('errors/index/404');
+            throw new Core\Exceptions\ResultNotExists();
         }
     }
 
@@ -227,7 +227,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->session->generateFormToken();
         } else {
-            $this->uri->redirect('errors/index/404');
+            throw new Core\Exceptions\ResultNotExists();
         }
     }
 
@@ -258,7 +258,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->uri->redirect('acp/permissions');
         } else {
-            $this->uri->redirect('errors/index/404');
+            throw new Core\Exceptions\ResultNotExists();
         }
     }
 }
