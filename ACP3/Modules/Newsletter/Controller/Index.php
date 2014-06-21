@@ -23,7 +23,7 @@ class Index extends Core\Modules\Controller
     {
         parent::preDispatch();
 
-        $this->model = new Newsletter\Model($this->db, $this->lang, $this->auth);
+        $this->model = new Newsletter\Model($this->db, $this->lang);
     }
 
     public function actionActivate()
@@ -35,7 +35,8 @@ class Index extends Core\Modules\Controller
                 $hash = $this->uri->hash;
             }
 
-            $this->model->validateActivate($mail, $hash);
+            $validator = new Newsletter\Validator($this->lang, $this->auth, $this->model);
+            $validator->validateActivate($mail, $hash);
 
             $bool = $this->model->update(array('hash' => ''), array('mail' => $mail, 'hash' => $hash), Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
@@ -69,9 +70,10 @@ class Index extends Core\Modules\Controller
     {
         if (empty($_POST) === false) {
             try {
+                $validator = new Newsletter\Validator($this->lang, $this->auth, $this->model);
                 switch ($this->uri->action) {
                     case 'subscribe':
-                        $this->model->validateSubscribe($_POST);
+                        $validator->validateSubscribe($_POST);
 
                         $bool = Newsletter\Helpers::subscribeToNewsletter($_POST['mail']);
 
@@ -80,7 +82,7 @@ class Index extends Core\Modules\Controller
                         $this->setContent(Core\Functions::confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
                         return;
                     case 'unsubscribe':
-                        $this->model->validateUnsubscribe($_POST);
+                        $validator->validateUnsubscribe($_POST);
 
                         $bool = $this->model->delete($_POST['mail'], 'mail', Newsletter\Model::TABLE_NAME_ACCOUNTS);
 

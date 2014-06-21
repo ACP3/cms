@@ -23,7 +23,7 @@ class Archive extends Core\Modules\Controller
     {
         parent::preDispatch();
 
-        $this->model = new Newsletter\Model($this->db, $this->lang, $this->auth);
+        $this->model = new Newsletter\Model($this->db, $this->lang);
     }
 
     public function actionDetails()

@@ -3,12 +3,10 @@
 namespace ACP3\Modules\Newsletter\Controller\Sidebar;
 
 use ACP3\Core;
-use ACP3\Modules\Newsletter;
 
 /**
- * Description of NewsletterFrontend
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Newsletter\Controller\Sidebar
  */
 class Index extends Core\Modules\Controller\Sidebar
 {

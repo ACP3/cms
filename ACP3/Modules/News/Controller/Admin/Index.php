@@ -24,7 +24,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new News\Model($this->db, $this->lang, $this->uri);
+        $this->model = new News\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
@@ -33,7 +33,8 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($_POST) === false) {
             try {
-                $this->model->validateCreate($_POST);
+                $validator = new News\Validator($this->lang, $this->uri);
+                $validator->validateCreate($_POST);
 
                 $insertValues = array(
                     'id' => '',
@@ -142,7 +143,8 @@ class Index extends Core\Modules\Controller\Admin
 
             if (empty($_POST) === false) {
                 try {
-                    $this->model->validateEdit($_POST);
+                    $validator = new News\Validator($this->lang, $this->uri);
+                    $validator->validateEdit($_POST);
 
                     $updateValues = array(
                         'start' => $this->date->toSQL($_POST['start']),
@@ -250,7 +252,8 @@ class Index extends Core\Modules\Controller\Admin
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateSettings($_POST, $this->lang);
+                $validator = new News\Validator($this->lang, $this->uri);
+                $validator->validateSettings($_POST, $this->lang);
 
                 $data = array(
                     'dateformat' => Core\Functions::strEncode($_POST['dateformat']),
