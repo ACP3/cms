@@ -5,11 +5,10 @@ namespace ACP3\Modules\Contact;
 use ACP3\Core;
 
 /**
- * Description of Model
- *
- * @author goratsch
+ * Class Validator
+ * @package ACP3\Modules\Contact
  */
-class Model extends Core\Model
+class Validator extends Core\Validation\AbstractValidator
 {
 
     /**
@@ -17,13 +16,17 @@ class Model extends Core\Model
      */
     protected $auth;
 
-    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang, Core\Auth $auth)
+    public function __construct(Core\Lang $lang, Core\Auth $auth)
     {
-        parent::__construct($db, $lang);
+        parent::__construct($lang);
 
         $this->auth = $auth;
     }
 
+    /**
+     * @param array $formData
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     */
     public function validate(array $formData)
     {
         $this->validateFormKey();
@@ -48,6 +51,10 @@ class Model extends Core\Model
         }
     }
 
+    /**
+     * @param array $formData
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     */
     public function validateSettings(array $formData)
     {
         $this->validateFormKey();

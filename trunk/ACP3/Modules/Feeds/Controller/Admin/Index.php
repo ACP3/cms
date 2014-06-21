@@ -12,24 +12,12 @@ use ACP3\Modules\Feeds;
  */
 class Index extends Core\Modules\Controller\Admin
 {
-    /**
-     *
-     * @var Feeds\Model
-     */
-    protected $model;
-
-    public function preDispatch()
-    {
-        parent::preDispatch();
-
-        $this->model = new Feeds\Model($this->db, $this->lang);
-    }
-
     public function actionIndex()
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateSettings($_POST);
+                $validator = new Feeds\Validator($this->db, $this->lang);
+                $validator->validateSettings($_POST);
 
                 $data = array(
                     'feed_image' => Core\Functions::strEncode($_POST['feed_image']),

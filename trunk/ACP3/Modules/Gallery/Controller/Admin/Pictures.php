@@ -23,7 +23,7 @@ class Pictures extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new Gallery\Model($this->db, $this->lang, $this->uri);
+        $this->model = new Gallery\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
@@ -44,7 +44,8 @@ class Pictures extends Core\Modules\Controller\Admin
                     $file['name'] = $_FILES['file']['name'];
                     $file['size'] = $_FILES['file']['size'];
 
-                    $this->model->validateCreatePicture($file, $settings);
+                    $validator = new Gallery\Validator($this->lang);
+                    $validator->validateCreatePicture($file, $settings);
 
                     $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'gallery');
                     $picNum = $this->model->getLastPictureByGalleryId($this->uri->id);
@@ -144,7 +145,8 @@ class Pictures extends Core\Modules\Controller\Admin
                         $file['size'] = $_FILES['file']['size'];
                     }
 
-                    $this->model->validateEditPicture($file, $settings);
+                    $validator = new Gallery\Validator($this->lang);
+                    $validator->validateEditPicture($file, $settings);
 
                     $updateValues = array(
                         'description' => Core\Functions::strEncode($_POST['description'], true),

@@ -23,7 +23,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new Comments\Model($this->db, $this->lang, $this->auth, $this->date);
+        $this->model = new Comments\Model($this->db, $this->lang);
     }
 
     public function actionDelete()
@@ -69,7 +69,8 @@ class Index extends Core\Modules\Controller\Admin
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateSettings($_POST);
+                $validator = new Comments\Validator($this->lang, $this->auth, $this->date, $this->model);
+                $validator->validateSettings($_POST);
 
                 $data = array(
                     'dateformat' => Core\Functions::strEncode($_POST['dateformat']),

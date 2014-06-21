@@ -23,14 +23,15 @@ class Index extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new Gallery\Model($this->db, $this->lang, $this->uri);
+        $this->model = new Gallery\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateCreate($_POST);
+                $validator = new Gallery\Validator($this->lang);
+                $validator->validateCreate($_POST);
 
                 $insertValues = array(
                     'id' => '',
@@ -122,7 +123,8 @@ class Index extends Core\Modules\Controller\Admin
 
             if (empty($_POST) === false) {
                 try {
-                    $this->model->validateEdit($_POST);
+                    $validator = new Gallery\Validator($this->lang);
+                    $validator->validateEdit($_POST);
 
                     $updateValues = array(
                         'start' => $this->date->toSQL($_POST['start']),
@@ -219,7 +221,8 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($_POST) === false) {
             try {
-                $this->model->validateSettings($_POST);
+                $validator = new Gallery\Validator($this->lang);
+                $validator->validateSettings($_POST);
 
                 $data = array(
                     'width' => (int)$_POST['width'],

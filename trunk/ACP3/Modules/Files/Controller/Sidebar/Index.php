@@ -24,7 +24,7 @@ class Index extends Core\Modules\Controller\Sidebar
     {
         parent::preDispatch();
 
-        $this->model = new Files\Model($this->db, $this->lang, $this->uri);
+        $this->model = new Files\Model($this->db, $this->lang);
     }
 
    public function actionIndex()

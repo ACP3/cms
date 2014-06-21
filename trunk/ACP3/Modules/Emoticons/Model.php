@@ -14,11 +14,6 @@ class Model extends Core\Model
 
     const TABLE_NAME = 'emoticons';
 
-    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang)
-    {
-        parent::__construct($db, $lang);
-    }
-
     public function resultExists($id)
     {
         return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = ?', array($id)) > 0 ? true : false;
@@ -42,70 +37,6 @@ class Model extends Core\Model
     public function getAll()
     {
         return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' ORDER BY id DESC');
-    }
-
-    public function validateCreate(array $formData, $file)
-    {
-        $this->validateFormKey();
-
-        $settings = Core\Config::getSettings('emoticons');
-
-        if (empty($formData['code'])) {
-            $errors['code'] = $this->lang->t('emoticons', 'type_in_code');
-        }
-        if (empty($formData['description'])) {
-            $errors['description'] = $this->lang->t('emoticons', 'type_in_description');
-        }
-        if (Core\Validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
-            $_FILES['picture']['error'] !== UPLOAD_ERR_OK
-        ) {
-            $errors['picture'] = $this->lang->t('emoticons', 'invalid_image_selected');
-        }
-
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
-        }
-    }
-
-    public function validateEdit(array $formData, $file)
-    {
-        $this->validateFormKey();
-
-        $settings = Core\Config::getSettings('emoticons');
-
-        if (empty($formData['code'])) {
-            $errors['code'] = $this->lang->t('emoticons', 'type_in_code');
-        }
-        if (empty($formData['description'])) {
-            $errors['description'] = $this->lang->t('emoticons', 'type_in_description');
-        }
-        if (!empty($file) && (Core\Validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false || $_FILES['picture']['error'] !== UPLOAD_ERR_OK)) {
-            $errors['picture'] = $this->lang->t('emoticons', 'invalid_image_selected');
-        }
-
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
-        }
-    }
-
-    public function validateSettings(array $formData)
-    {
-        $this->validateFormKey();
-
-        $errors = array();
-        if (Core\Validate::isNumber($formData['width']) === false) {
-            $errors['width'] = $this->lang->t('emoticons', 'invalid_image_width_entered');
-        }
-        if (Core\Validate::isNumber($formData['height']) === false) {
-            $errors['height'] = $this->lang->t('emoticons', 'invalid_image_height_entered');
-        }
-        if (Core\Validate::isNumber($formData['filesize']) === false) {
-            $errors['filesize'] = $this->lang->t('emoticons', 'invalid_image_filesize_entered');
-        }
-
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
-        }
     }
 
     /**

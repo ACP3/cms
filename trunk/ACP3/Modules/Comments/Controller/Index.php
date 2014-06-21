@@ -50,7 +50,7 @@ class Index extends Core\Modules\Controller
     {
         parent::preDispatch();
 
-        $this->model = new Comments\Model($this->db, $this->lang, $this->auth, $this->date);
+        $this->model = new Comments\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
@@ -60,7 +60,8 @@ class Index extends Core\Modules\Controller
             try {
                 $ip = $_SERVER['REMOTE_ADDR'];
 
-                $this->model->validateCreate($_POST, $ip);
+                $validator = new Comments\Validator($this->lang, $this->auth, $this->date, $this->model);
+                $validator->validateCreate($_POST, $ip);
 
                 $moduleInfo = Core\Modules::getModuleInfo($this->module);
                 $insertValues = array(

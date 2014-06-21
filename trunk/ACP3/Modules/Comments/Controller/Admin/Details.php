@@ -23,7 +23,7 @@ class Details extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new Comments\Model($this->db, $this->lang, $this->auth, $this->date);
+        $this->model = new Comments\Model($this->db, $this->lang);
     }
 
     public function actionDelete()
@@ -52,7 +52,8 @@ class Details extends Core\Modules\Controller\Admin
 
             if (empty($_POST) === false) {
                 try {
-                    $this->model->validateEdit($_POST);
+                    $validator = new Comments\Validator($this->lang, $this->auth, $this->date, $this->model);
+                    $validator->validateEdit($_POST);
 
                     $update_values = array();
                     $update_values['message'] = Core\Functions::strEncode($_POST['message']);

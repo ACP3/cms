@@ -28,14 +28,15 @@ class Index extends Core\Modules\Controller\Admin
         parent::preDispatch();
 
         $this->menuModel = new \ACP3\Modules\Menus\Model($this->db, $this->lang, $this->uri);
-        $this->model = new Articles\Model($this->db, $this->lang, $this->menuModel, $this->uri);
+        $this->model = new Articles\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateCreate($_POST);
+                $validator = new Articles\Validator($this->lang, $this->menuModel);
+                $validator->validateCreate($_POST);
 
                 $insertValues = array(
                     'id' => '',
@@ -151,7 +152,8 @@ class Index extends Core\Modules\Controller\Admin
         if (empty($article) === false) {
             if (empty($_POST) === false) {
                 try {
-                    $this->model->validateEdit($_POST);
+                    $validator = new Articles\Validator($this->lang, $this->menuModel);
+                    $validator->validateEdit($_POST);
 
                     $updateValues = array(
                         'start' => $this->date->toSQL($_POST['start']),

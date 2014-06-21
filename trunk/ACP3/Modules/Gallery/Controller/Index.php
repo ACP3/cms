@@ -23,7 +23,7 @@ class Index extends Core\Modules\Controller
     {
         parent::preDispatch();
 
-        $this->model = new Gallery\Model($this->db, $this->lang, $this->uri);
+        $this->model = new Gallery\Model($this->db, $this->lang);
     }
 
     public function actionDetails()

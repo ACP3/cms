@@ -20,13 +20,15 @@ class Validate
      */
     public static function aclPrivilegesExist(array $privileges)
     {
-        $all_privs = ACL::getAllPrivileges();
-        $c_all_privs = count($all_privs);
-        for ($i = 0; $i < $c_all_privs; ++$i) {
+        $allPrivileges = ACL::getAllPrivileges();
+        $c_allPrivileges = count($allPrivileges);
+        $valid = false;
+
+        for ($i = 0; $i < $c_allPrivileges; ++$i) {
             $valid = false;
             foreach ($privileges as $module) {
-                foreach ($module as $priv_id => $value) {
-                    if ($priv_id == $all_privs[$i]['id'] && $value >= 0 && $value <= 2) {
+                foreach ($module as $privilegeId => $value) {
+                    if ($privilegeId == $allPrivileges[$i]['id'] && $value >= 0 && $value <= 2) {
                         $valid = true;
                     }
                 }
@@ -44,9 +46,9 @@ class Validate
      */
     public static function aclRolesExist(array $roles)
     {
-        $all_roles = ACL::getAllRoles();
+        $allRoles = ACL::getAllRoles();
         $good = array();
-        foreach ($all_roles as $row) {
+        foreach ($allRoles as $row) {
             $good[] = $row['id'];
         }
 

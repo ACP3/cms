@@ -12,23 +12,12 @@ use ACP3\Modules\Contact;
  */
 class Index extends Core\Modules\Controller\Admin
 {
-    /**
-     * @var Contact\Model
-     */
-    protected $model;
-
-    public function preDispatch()
-    {
-        parent::preDispatch();
-
-        $this->model = new Contact\Model($this->db, $this->lang, $this->auth);
-    }
-
     public function actionIndex()
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateSettings($_POST);
+                $validator = new Contact\Validator($this->lang, $this->auth);
+                $validator->validateSettings($_POST);
 
                 $data = array(
                     'address' => Core\Functions::strEncode($_POST['address'], true),
