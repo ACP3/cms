@@ -21,7 +21,7 @@ class Index extends Core\Modules\Controller
     {
         parent::preDispatch();
 
-        $this->model = new Users\Model($this->db, $this->lang, $this->auth, $this->uri);
+        $this->model = new Users\Model($this->db, $this->lang);
     }
 
     public function actionForgotPwd()
@@ -31,7 +31,8 @@ class Index extends Core\Modules\Controller
         } else {
             if (empty($_POST) === false) {
                 try {
-                    $this->model->validateForgotPassword($_POST);
+                    $validator = new Users\Validator($this->lang, $this->auth, $this->uri, $this->model);
+                    $validator->validateForgotPassword($_POST);
 
                     // Neues Passwort und neuen Zufallsschlüssel erstellen
                     $newPassword = Core\Functions::salt(8);
@@ -154,7 +155,8 @@ class Index extends Core\Modules\Controller
         } else {
             if (empty($_POST) === false) {
                 try {
-                    $this->model->validateRegistration($_POST);
+                    $validator = new Users\Validator($this->lang, $this->auth, $this->uri, $this->model);
+                    $validator->validateRegistration($_POST);
 
                     // E-Mail mit den Accountdaten zusenden
                     $host = htmlentities($_SERVER['HTTP_HOST']);

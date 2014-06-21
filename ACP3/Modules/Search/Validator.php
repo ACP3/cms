@@ -1,28 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: goratsch
- * Date: 22.12.13
- * Time: 17:00
- */
-
 namespace ACP3\Modules\Search;
 
 use ACP3\Core;
 
-/**
- * Description of Model
- *
- * @author Tino Goratsch
- */
-class Model extends Core\Model
+
+class Validator extends Core\Validation\AbstractValidator
 {
 
-    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang)
+    public function __construct(Core\Lang $lang)
     {
-        parent::__construct($db, $lang);
+        parent::__construct($lang);
     }
 
+    /**
+     * @param array $formData
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     */
     public function validate(array $formData)
     {
         $this->validateFormKey();

@@ -16,11 +16,6 @@ class Model extends Core\Model
     const TABLE_NAME_ANSWERS = 'poll_answers';
     const TABLE_NAME_VOTES = 'poll_votes';
 
-    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang)
-    {
-        parent::__construct($db, $lang);
-    }
-
     public function pollExists($pollId, $time = '', $multiple = false)
     {
         $where = !empty($time) ? ' AND (start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)' : '';
@@ -81,62 +76,4 @@ class Model extends Core\Model
         return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' ORDER BY start DESC, end DESC, id DESC');
     }
 
-    public function validateCreate(array $formData)
-    {
-        $this->validateFormKey();
-
-        $errors = array();
-        if (Core\Validate::date($formData['start'], $formData['end']) === false) {
-            $errors[] = $this->lang->t('system', 'select_date');
-        }
-        if (empty($formData['title'])) {
-            $errors['title'] = $this->lang->t('polls', 'type_in_question');
-        }
-        $i = 0;
-        foreach ($formData['answers'] as $row) {
-            if (!empty($row)) {
-                ++$i;
-            }
-        }
-        if ($i <= 1) {
-            $errors[] = $this->lang->t('polls', 'type_in_answer');
-        }
-
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
-        }
-    }
-
-    public function validateEdit(array $formData)
-    {
-        $this->validateFormKey();
-
-        $errors = array();
-        if (Core\Validate::date($formData['start'], $formData['end']) === false) {
-            $errors[] = $this->lang->t('system', 'select_date');
-        }
-        if (empty($formData['title'])) {
-            $errors['title'] = $this->lang->t('polls', 'type_in_question');
-        }
-        $markedAnswers = 0;
-        $allAnswersEmpty = true;
-        foreach ($formData['answers'] as $row) {
-            if (!empty($row['value'])) {
-                $allAnswersEmpty = false;
-            }
-            if (isset($row['delete'])) {
-                ++$markedAnswers;
-            }
-        }
-        if ($allAnswersEmpty === true) {
-            $errors[] = $this->lang->t('polls', 'type_in_answer');
-        }
-        if (count($formData['answers']) - $markedAnswers < 2) {
-            $errors[] = $this->lang->t('polls', 'can_not_delete_all_answers');
-        }
-
-        if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
-        }
-    }
 }

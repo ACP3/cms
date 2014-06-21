@@ -21,14 +21,15 @@ class Resources extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new Permissions\Model($this->db, $this->lang, $this->uri);
+        $this->model = new Permissions\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateCreateResource($_POST);
+                $validator = new Permissions\Validator($this->lang, $this->uri, $this->model);
+                $validator->validateCreateResource($_POST);
 
                 $moduleInfo = Core\Modules::getModuleInfo($_POST['modules']);
                 $insertValues = array(
@@ -93,10 +94,12 @@ class Resources extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resourceExists($this->uri->id) === true) {
+        $resource = $this->model->getResourceById((int) $this->uri->id);
+        if (!empty($resource)) {
             if (empty($_POST) === false) {
                 try {
-                    $this->model->validateEditResource($_POST);
+                    $validator = new Permissions\Validator($this->lang, $this->uri, $this->model);
+                    $validator->validateEditResource($_POST);
 
                     $updateValues = array(
                         'controller' => $_POST['controller'],
@@ -117,8 +120,6 @@ class Resources extends Core\Modules\Controller\Admin
                     $this->view->assign('error_msg', $e->getMessage());
                 }
             }
-
-            $resource = $this->model->getResourceById($this->uri->id);
 
             $privileges = Core\ACL::getAllPrivileges();
             $c_privileges = count($privileges);

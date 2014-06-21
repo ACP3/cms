@@ -25,14 +25,15 @@ class Account extends Core\Modules\Controller
             $this->uri->redirect('users/index/login');
         }
 
-        $this->model = new Users\Model($this->db, $this->lang, $this->auth, $this->uri);
+        $this->model = new Users\Model($this->db, $this->lang);
     }
 
     public function actionEdit()
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateEditProfile($_POST);
+                $validator = new Users\Validator($this->lang, $this->auth, $this->uri, $this->model);
+                $validator->validateEditProfile($_POST);
 
                 $updateValues = array(
                     'nickname' => Core\Functions::strEncode($_POST['nickname']),
@@ -128,7 +129,8 @@ class Account extends Core\Modules\Controller
 
         if (empty($_POST) === false) {
             try {
-                $this->model->validateUserSettings($_POST, $settings);
+                $validator = new Users\Validator($this->lang, $this->auth, $this->uri, $this->model);
+                $validator->validateUserSettings($_POST, $settings);
 
                 $updateValues = array(
                     'mail_display' => (int)$_POST['mail_display'],
