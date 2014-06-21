@@ -21,14 +21,15 @@ class Index extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new Users\Model($this->db, $this->lang, $this->auth, $this->uri);
+        $this->model = new Users\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateCreate($_POST);
+                $validator = new Users\Validator($this->lang, $this->auth, $this->uri, $this->model);
+                $validator->validateCreate($_POST);
 
                 $salt = Core\Functions::salt(12);
 
@@ -225,7 +226,8 @@ class Index extends Core\Modules\Controller\Admin
 
             if (empty($_POST) === false) {
                 try {
-                    $this->model->validateEdit($_POST);
+                    $validator = new Users\Validator($this->lang, $this->auth, $this->uri, $this->model);
+                    $validator->validateEdit($_POST);
 
                     $updateValues = array(
                         'super_user' => (int)$_POST['super_user'],
@@ -383,7 +385,8 @@ class Index extends Core\Modules\Controller\Admin
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateSettings($_POST);
+                $validator = new Users\Validator($this->lang, $this->auth, $this->uri, $this->model);
+                $validator->validateSettings($_POST);
 
                 $data = array(
                     'enable_registration' => $_POST['enable_registration'],

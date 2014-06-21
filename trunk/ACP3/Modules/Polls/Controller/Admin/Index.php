@@ -30,7 +30,8 @@ class Index extends Core\Modules\Controller\Admin
     {
         if (isset($_POST['submit']) === true) {
             try {
-                $this->model->validateCreate($_POST);
+                $validator = new Polls\Validator($this->lang);
+                $validator->validateCreate($_POST);
 
                 $insertValues = array(
                     'id' => '',
@@ -121,7 +122,8 @@ class Index extends Core\Modules\Controller\Admin
         if (empty($poll) === false) {
             if (isset($_POST['submit']) === true) {
                 try {
-                    $this->model->validateEdit($_POST);
+                    $validator = new Polls\Validator($this->lang);
+                    $validator->validateEdit($_POST);
 
                     // Frage aktualisieren
                     $updateValues = array(

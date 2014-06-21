@@ -12,24 +12,12 @@ use ACP3\Modules\System;
  */
 class Index extends Core\Modules\Controller\Admin
 {
-    /**
-     *
-     * @var System\Model
-     */
-    protected $model;
-
-    public function preDispatch()
-    {
-        parent::preDispatch();
-
-        $this->model = new System\Model($this->db, $this->lang);
-    }
-
     public function actionConfiguration()
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateSettings($_POST);
+                $validator = new System\Validator($this->lang);
+                $validator->validateSettings($_POST);
 
                 // Config aktualisieren
                 $config = array(

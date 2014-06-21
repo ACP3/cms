@@ -21,14 +21,15 @@ class Index extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new Permissions\Model($this->db, $this->lang, $this->uri);
+        $this->model = new Permissions\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateCreate($_POST);
+                $validator = new Permissions\Validator($this->lang, $this->uri, $this->model);
+                $validator->validateCreate($_POST);
 
                 $this->db->beginTransaction();
 
@@ -141,10 +142,13 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        if (Core\Validate::isNumber($this->uri->id) === true && $this->model->roleExists($this->uri->id) === true) {
+        $role = $this->model->getRoleById((int) $this->uri->id);
+
+        if (!empty($role)) {
             if (empty($_POST) === false) {
                 try {
-                    $this->model->validateEdit($_POST);
+                    $validator = new Permissions\Validator($this->lang, $this->uri, $this->model);
+                    $validator->validateEdit($_POST);
 
                     $updateValues = array(
                         'name' => Core\Functions::strEncode($_POST['name']),
@@ -176,8 +180,6 @@ class Index extends Core\Modules\Controller\Admin
                     $this->view->assign('error_msg', $e->getMessage());
                 }
             }
-
-            $role = $this->model->getRoleById($this->uri->id);
 
             if ($this->uri->id != 1) {
                 $roles = Core\ACL::getAllRoles();

@@ -34,7 +34,8 @@ class Maintenance extends Core\Modules\Controller\Admin
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateSqlExport($_POST);
+                $validator = new System\Validator($this->lang);
+                $validator->validateSqlExport($_POST);
 
                 $this->session->unsetFormToken();
 
@@ -101,7 +102,8 @@ class Maintenance extends Core\Modules\Controller\Admin
                     $file['size'] = $_FILES['file']['size'];
                 }
 
-                $this->model->validateSqlImport($_POST, $file);
+                $validator = new System\Validator($this->lang);
+                $validator->validateSqlImport($_POST, $file);
 
                 $this->session->unsetFormToken();
 

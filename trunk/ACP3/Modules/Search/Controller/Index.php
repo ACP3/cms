@@ -12,23 +12,12 @@ use ACP3\Modules\Search;
  */
 class Index extends Core\Modules\Controller
 {
-    /**
-     * @var Search\Model
-     */
-    protected $model;
-
-    public function preDispatch()
-    {
-        parent::preDispatch();
-
-        $this->model = new Search\Model($this->db, $this->lang);
-    }
-
     public function actionIndex()
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validate($_POST);
+                $validator = new Search\Validator($this->lang);
+                $validator->validate($_POST);
 
                 $this->session->unsetFormToken();
 
