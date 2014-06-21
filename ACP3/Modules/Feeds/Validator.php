@@ -5,18 +5,16 @@ namespace ACP3\Modules\Feeds;
 use ACP3\Core;
 
 /**
- * Description of Model
- *
- * @author goratsch
+ * Class Validator
+ * @package ACP3\Modules\Feeds
  */
-class Model extends Core\Model
+class Validator extends Core\Validation\AbstractValidator
 {
 
-    public function __construct(\Doctrine\DBAL\Connection $db, Core\Lang $lang)
-    {
-        parent::__construct($db, $lang);
-    }
-
+    /**
+     * @param array $formData
+     * @throws \ACP3\Core\Exceptions\ValidationFailed
+     */
     public function validateSettings(array $formData)
     {
         $this->validateFormKey();

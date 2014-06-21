@@ -25,7 +25,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new Files\Model($this->db, $this->lang, $this->uri);
+        $this->model = new Files\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
@@ -43,7 +43,8 @@ class Index extends Core\Modules\Controller\Admin
                     $file['size'] = $_FILES['file_internal']['size'];
                 }
 
-                $this->model->validateCreate($_POST, $file);
+                $validator = new Files\Validator($this->lang, $this->uri);
+                $validator->validateCreate($_POST, $file);
 
                 if (is_array($file) === true) {
                     $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'files');
@@ -174,7 +175,8 @@ class Index extends Core\Modules\Controller\Admin
                         $file['size'] = $_FILES['file_internal']['size'];
                     }
 
-                    $this->model->validateEdit($_POST, $file);
+                    $validator = new Files\Validator($this->lang, $this->uri);
+                    $validator->validateEdit($_POST, $file);
 
                     $updateValues = array(
                         'start' => $this->date->toSQL($_POST['start']),
@@ -292,7 +294,8 @@ class Index extends Core\Modules\Controller\Admin
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateSettings($_POST);
+                $validator = new Files\Validator($this->lang, $this->uri);
+                $validator->validateSettings($_POST);
 
                 $data = array(
                     'dateformat' => Core\Functions::strEncode($_POST['dateformat']),

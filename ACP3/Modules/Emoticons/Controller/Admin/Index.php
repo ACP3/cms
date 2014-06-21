@@ -37,7 +37,8 @@ class Index extends Core\Modules\Controller\Admin
                     $file['size'] = $_FILES['picture']['size'];
                 }
 
-                $this->model->validateCreate($_POST, $file);
+                $validator = new Emoticons\Validator($this->lang);
+                $validator->validateCreate($_POST, $file);
 
                 $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'emoticons');
 
@@ -103,7 +104,8 @@ class Index extends Core\Modules\Controller\Admin
                         $file['size'] = $_FILES['picture']['size'];
                     }
 
-                    $this->model->validateEdit($_POST, $file);
+                    $validator = new Emoticons\Validator($this->lang);
+                    $validator->validateEdit($_POST, $file);
 
                     $update_values = array(
                         'code' => Core\Functions::strEncode($_POST['code']),
@@ -162,7 +164,8 @@ class Index extends Core\Modules\Controller\Admin
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateSettings($_POST);
+                $validator = new Emoticons\Validator($this->lang);
+                $validator->validateSettings($_POST);
 
                 $data = array(
                     'width' => (int)$_POST['width'],

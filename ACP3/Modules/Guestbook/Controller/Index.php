@@ -22,7 +22,7 @@ class Index extends Core\Modules\Controller
     {
         parent::preDispatch();
 
-        $this->model = new Guestbook\Model($this->db, $this->lang, $this->date, $this->auth);
+        $this->model = new Guestbook\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
@@ -38,7 +38,8 @@ class Index extends Core\Modules\Controller
 
         if (empty($_POST) === false) {
             try {
-                $this->model->validateCreate($_POST, $hasNewsletterAccess);
+                $validator = new Guestbook\Validator($this->lang, $this->auth, $this->date, $this->db, $this->model);
+                $validator->validateCreate($_POST, $hasNewsletterAccess);
 
                 $insertValues = array(
                     'id' => '',

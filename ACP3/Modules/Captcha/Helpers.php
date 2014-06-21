@@ -21,11 +21,11 @@ abstract class Helpers
      * @param integer $captcha_length
      *  Anzahl der Zeichen, welche das Captcha haben soll
      * @param string $id
-     * @param bool $input_only
+     * @param bool $inputOnly
      * @param string $path
      * @return string
      */
-    public static function captcha($captcha_length = 5, $id = 'captcha', $input_only = false, $path = '')
+    public static function captcha($captcha_length = 5, $id = 'captcha', $inputOnly = false, $path = '')
     {
         // Wenn man als User angemeldet ist, Captcha nicht anzeigen
         if (Core\Registry::get('Auth')->isUser() === false) {
@@ -37,7 +37,7 @@ abstract class Helpers
             $captcha['width'] = $captcha_length * 25;
             $captcha['id'] = $id;
             $captcha['height'] = 30;
-            $captcha['input_only'] = $input_only;
+            $captcha['input_only'] = $inputOnly;
             $captcha['path'] = $path;
             Core\Registry::get('View')->assign('captcha', $captcha);
             return Core\Registry::get('View')->fetchTemplate('captcha/captcha.tpl');

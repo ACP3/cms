@@ -21,7 +21,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new Guestbook\Model($this->db, $this->lang, $this->date, $this->auth);
+        $this->model = new Guestbook\Model($this->db, $this->lang);
     }
 
     public function actionDelete()
@@ -47,7 +47,8 @@ class Index extends Core\Modules\Controller\Admin
 
             if (empty($_POST) === false) {
                 try {
-                    $this->model->validateEdit($_POST, $settings);
+                    $validator = new Guestbook\Validator($this->lang, $this->auth, $this->date, $this->db, $this->model);
+                    $validator->validateEdit($_POST, $settings);
 
                     $updateValues = array(
                         'name' => Core\Functions::strEncode($_POST['name']),
@@ -127,7 +128,8 @@ class Index extends Core\Modules\Controller\Admin
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateSettings($_POST);
+                $validator = new Guestbook\Validator($this->lang, $this->auth, $this->date, $this->db, $this->model);
+                $validator->validateSettings($_POST);
 
                 $data = array(
                     'dateformat' => Core\Functions::strEncode($_POST['dateformat']),

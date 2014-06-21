@@ -38,7 +38,8 @@ class Index extends Core\Modules\Controller\Admin
                 }
                 $settings = Core\Config::getSettings('categories');
 
-                $this->model->validate($_POST, $file, $settings);
+                $validator = new Categories\Validator($this->lang, $this->model);
+                $validator->validate($_POST, $file, $settings);
 
                 $file_sql = null;
                 if (!empty($file)) {
@@ -142,7 +143,8 @@ class Index extends Core\Modules\Controller\Admin
                     }
                     $settings = Core\Config::getSettings('categories');
 
-                    $this->model->validate($_POST, $file, $settings, $this->uri->id);
+                    $validator = new Categories\Validator($this->lang, $this->model);
+                    $validator->validate($_POST, $file, $settings, $this->uri->id);
 
                     $updateValues = array(
                         'title' => Core\Functions::strEncode($_POST['title']),
@@ -205,7 +207,8 @@ class Index extends Core\Modules\Controller\Admin
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateSettings($_POST, $this->lang);
+                $validator = new Categories\Validator($this->lang, $this->model);
+                $validator->validateSettings($_POST, $this->lang);
 
                 $data = array(
                     'width' => (int)$_POST['width'],
