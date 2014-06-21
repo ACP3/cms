@@ -21,7 +21,7 @@ class Index extends Core\Modules\Controller
     {
         parent::preDispatch();
 
-        $this->model = new Users\Model($this->db, $this->lang);
+        $this->model = new Users\Model($this->db);
     }
 
     public function actionForgotPwd()

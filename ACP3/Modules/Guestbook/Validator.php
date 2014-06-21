@@ -67,7 +67,7 @@ class Validator extends Core\Validation\AbstractValidator
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
         if ($newsletterAccess === true && isset($formData['subscribe_newsletter']) && $formData['subscribe_newsletter'] == 1) {
-            $newsletterModel = new \ACP3\Modules\Newsletter\Model($this->db, $this->lang, $this->auth);
+            $newsletterModel = new \ACP3\Modules\Newsletter\Model($this->db);
             if (Core\Validate::email($formData['mail']) === false) {
                 $errors['mail'] = $this->lang->t('guestbook', 'type_in_email_address_to_subscribe_to_newsletter');
             }

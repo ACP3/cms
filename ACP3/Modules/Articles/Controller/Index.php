@@ -22,7 +22,7 @@ class Index extends Core\Modules\Controller
     {
         parent::preDispatch();
 
-        $this->model = new Articles\Model($this->db, $this->lang);
+        $this->model = new Articles\Model($this->db);
     }
 
     public function actionIndex()

@@ -15,10 +15,6 @@ class Model
      */
     protected $db;
     /**
-     * @var Lang
-     */
-    protected $lang;
-    /**
      * The table prefix
      *
      * @var string
@@ -34,12 +30,10 @@ class Model
      * Injects the dependencies
      *
      * @param \Doctrine\DBAL\Connection $db
-     * @param Lang $lang
      */
-    public function __construct(\Doctrine\DBAL\Connection $db, Lang $lang)
+    public function __construct(\Doctrine\DBAL\Connection $db)
     {
         $this->db = $db;
-        $this->lang = $lang;
     }
 
     /**
@@ -128,16 +122,6 @@ class Model
             $this->db->rollback();
             Logger::error('database', $e->getMessage());
             return false;
-        }
-    }
-
-    /**
-     * @throws Exceptions\InvalidFormToken
-     */
-    public function validateFormKey()
-    {
-        if (Validate::formToken() === false) {
-            throw new Exceptions\InvalidFormToken($this->lang->t('system', 'form_already_submitted'));
         }
     }
 

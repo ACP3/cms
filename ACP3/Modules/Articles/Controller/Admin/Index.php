@@ -27,8 +27,8 @@ class Index extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->menuModel = new \ACP3\Modules\Menus\Model($this->db, $this->lang, $this->uri);
-        $this->model = new Articles\Model($this->db, $this->lang);
+        $this->menuModel = new \ACP3\Modules\Menus\Model($this->db);
+        $this->model = new Articles\Model($this->db);
     }
 
     public function actionCreate()
