@@ -667,7 +667,24 @@ class Functions
     {
         static::_init();
 
-        return '<a href="' . static::$uri->route($matches[6], 1) . '"';
+        if (Validate::uriAliasExists($matches[6]) === true) {
+            return $matches[0];
+        } else {
+            $uriArray = explode('/', $matches[6]);
+            $path = 'frontend/' . $uriArray[0];
+            if (!empty($uriArray[1])) {
+                $path .= '/' . $uriArray[1];
+            }
+            if (!empty($uriArray[2])) {
+                $path .= '/' . $uriArray[2];
+            }
+
+            if (Modules::actionExists($path)) {
+                return '<a href="' . static::$uri->route($matches[6]) . '"';
+            } else {
+                return $matches[0];
+            }
+        }
     }
 
     /**

@@ -33,7 +33,7 @@ class Index extends Core\Modules\Controller
         $overlayIsActive = false;
         if ($this->uri->getIsAjax() === true) {
             $this->setContentTemplate('Guestbook/index.create_ajax.tpl');
-            $this->setLayout('');
+            $this->setLayout('Guestbook/ajax.tpl');
         }
 
         if (empty($_POST) === false) {
