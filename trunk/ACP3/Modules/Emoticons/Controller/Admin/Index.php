@@ -23,7 +23,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new Emoticons\Model($this->db, $this->lang);
+        $this->model = new Emoticons\Model($this->db);
     }
 
     public function actionCreate()

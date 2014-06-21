@@ -25,7 +25,7 @@ class Account extends Core\Modules\Controller
             $this->uri->redirect('users/index/login');
         }
 
-        $this->model = new Users\Model($this->db, $this->lang);
+        $this->model = new Users\Model($this->db);
     }
 
     public function actionEdit()

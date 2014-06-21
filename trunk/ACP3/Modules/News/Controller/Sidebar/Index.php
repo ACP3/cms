@@ -23,7 +23,7 @@ class Index extends Core\Modules\Controller\Sidebar
     {
         parent::preDispatch();
 
-        $this->model = new News\Model($this->db, $this->lang);
+        $this->model = new News\Model($this->db);
     }
 
     public function actionIndex()

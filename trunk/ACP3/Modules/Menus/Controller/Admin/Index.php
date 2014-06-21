@@ -22,7 +22,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new Menus\Model($this->db, $this->lang);
+        $this->model = new Menus\Model($this->db);
     }
 
     public function actionCreate()

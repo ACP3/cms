@@ -23,7 +23,7 @@ class Details extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new Comments\Model($this->db, $this->lang);
+        $this->model = new Comments\Model($this->db);
     }
 
     public function actionDelete()

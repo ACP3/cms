@@ -22,7 +22,7 @@ class Maintenance extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new System\Model($this->db, $this->lang);
+        $this->model = new System\Model($this->db);
     }
 
     public function actionIndex()

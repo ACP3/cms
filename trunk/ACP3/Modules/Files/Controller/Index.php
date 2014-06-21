@@ -28,8 +28,8 @@ class Index extends Core\Modules\Controller
     {
         parent::preDispatch();
 
-        $this->model = new Files\Model($this->db, $this->lang);
-        $this->categoriesModel = new \ACP3\Modules\Categories\Model($this->db, $this->lang);
+        $this->model = new Files\Model($this->db);
+        $this->categoriesModel = new \ACP3\Modules\Categories\Model($this->db);
     }
 
     public function actionIndex()

@@ -23,7 +23,7 @@ class Accounts extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new Newsletter\Model($this->db, $this->lang, $this->auth);
+        $this->model = new Newsletter\Model($this->db);
     }
 
     public function actionActivate()
