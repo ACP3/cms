@@ -23,14 +23,15 @@ class Items extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new Menus\Model($this->db, $this->lang, $this->uri);
+        $this->model = new Menus\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateItem($_POST);
+                $validator = new Menus\Validator($this->lang, $this->uri, $this->model);
+                $validator->validateItem($_POST);
 
                 $insertValues = array(
                     'id' => '',
@@ -166,7 +167,8 @@ class Items extends Core\Modules\Controller\Admin
 
             if (empty($_POST) === false) {
                 try {
-                    $this->model->validateItem($_POST);
+                    $validator = new Menus\Validator($this->lang, $this->uri, $this->model);
+                    $validator->validateItem($_POST);
 
                     // Vorgenommene Änderungen am Datensatz anwenden
                     $mode = ($_POST['mode'] == 2 || $_POST['mode'] == 3) && preg_match(Menus\Helpers::ARTICLES_URL_KEY_REGEX, $_POST['uri']) ? '4' : $_POST['mode'];

@@ -23,7 +23,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new Newsletter\Model($this->db, $this->lang, $this->auth);
+        $this->model = new Newsletter\Model($this->db, $this->lang);
     }
 
     public function actionCreate()
@@ -32,7 +32,8 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($_POST) === false) {
             try {
-                $this->model->validate($_POST);
+                $validator = new Newsletter\Validator($this->lang, $this->auth, $this->model);
+                $validator->validate($_POST);
 
                 // Newsletter archivieren
                 $insertValues = array(
@@ -106,7 +107,8 @@ class Index extends Core\Modules\Controller\Admin
         if (empty($newsletter) === false) {
             if (empty($_POST) === false) {
                 try {
-                    $this->model->validate($_POST);
+                    $validator = new Newsletter\Validator($this->lang, $this->auth, $this->model);
+                    $validator->validate($_POST);
 
                     // Newsletter archivieren
                     $updateValues = array(
@@ -213,7 +215,8 @@ class Index extends Core\Modules\Controller\Admin
     {
         if (empty($_POST) === false) {
             try {
-                $this->model->validateSettings($_POST);
+                $validator = new Newsletter\Validator($this->lang, $this->auth, $this->model);
+                $validator->validateSettings($_POST);
 
                 $data = array(
                     'mail' => $_POST['mail'],
