@@ -34,7 +34,7 @@
         </div>
         {if isset($subscribe_newsletter)}
             <div class="form-group">
-                <div class="col-lg-10">
+                <div class="col-lg-offset-2 col-lg-10">
                     <div class="checkbox">
                         <label for="subscribe-newsletter">
                             <input type="checkbox" name="subscribe_newsletter" id="subscribe-newsletter" value="1"{$subscribe_newsletter}>
