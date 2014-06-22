@@ -58,7 +58,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->db->commit();
 
-                Core\ACL::setRolesCache();
+                $this->get('ACL')->setRolesCache();
 
                 $this->session->unsetFormToken();
 
@@ -72,7 +72,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(array('name' => ''), $_POST));
 
-        $roles = Core\ACL::getAllRoles();
+        $roles = $this->get('ACL')->getAllRoles();
         $c_roles = count($roles);
         for ($i = 0; $i < $c_roles; ++$i) {
             $roles[$i]['selected'] = Core\Functions::selectEntry('roles', $roles[$i]['id'], !empty($parent[0]['id']) ? $parent[0]['id'] : 0);
@@ -81,7 +81,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('parent', $roles);
 
         $modules = Core\Modules::getActiveModules();
-        $privileges = Core\ACL::getAllPrivileges();
+        $privileges = $this->get('ACL')->getAllPrivileges();
         $c_privileges = count($privileges);
         $this->view->assign('privileges', $privileges);
 
@@ -182,7 +182,7 @@ class Index extends Core\Modules\Controller\Admin
             }
 
             if ($this->uri->id != 1) {
-                $roles = Core\ACL::getAllRoles();
+                $roles = $this->get('ACL')->getAllRoles();
                 $c_roles = count($roles);
                 for ($i = 0; $i < $c_roles; ++$i) {
                     if ($roles[$i]['left_id'] >= $role['left_id'] && $roles[$i]['right_id'] <= $role['right_id']) {
@@ -195,9 +195,9 @@ class Index extends Core\Modules\Controller\Admin
                 $this->view->assign('parent', $roles);
             }
 
-            $rules = Core\ACL::getRules(array($this->uri->id));
+            $rules = $this->get('ACL')->getRules(array($this->uri->id));
             $modules = Core\Modules::getActiveModules();
-            $privileges = Core\ACL::getAllPrivileges();
+            $privileges = $this->get('ACL')->getAllPrivileges();
             $c_privileges = count($privileges);
             $this->view->assign('privileges', $privileges);
 
@@ -237,7 +237,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         Core\Functions::getRedirectMessage();
 
-        $roles = Core\ACL::getAllRoles();
+        $roles = $this->get('ACL')->getAllRoles();
         $c_roles = count($roles);
 
         if ($c_roles > 0) {

@@ -67,6 +67,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
+        $config = new Core\Config($this->db, 'comments');
+
         if (empty($_POST) === false) {
             try {
                 $validator = new Comments\Validator($this->lang, $this->auth, $this->date, $this->model);
@@ -76,7 +78,7 @@ class Index extends Core\Modules\Controller\Admin
                     'dateformat' => Core\Functions::strEncode($_POST['dateformat']),
                     'emoticons' => $_POST['emoticons'],
                 );
-                $bool = Core\Config::setSettings('comments', $data);
+                $bool = $config->setSettings($data);
 
                 $this->session->unsetFormToken();
 
@@ -88,7 +90,7 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
 
-        $settings = Core\Config::getSettings('comments');
+        $settings = $config->getSettings();
 
         $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 

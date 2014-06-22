@@ -27,7 +27,8 @@ class Index extends Core\Modules\Controller
 
     public function actionCreate()
     {
-        $settings = Core\Config::getSettings('guestbook');
+        $config = new Core\Config($this->db, 'guestbook');
+        $settings = $config->getSettings();
         $hasNewsletterAccess = Core\Modules::hasPermission('frontend/newsletter') === true && $settings['newsletter_integration'] == 1;
 
         $overlayIsActive = false;
@@ -125,7 +126,8 @@ class Index extends Core\Modules\Controller
     {
         Core\Functions::getRedirectMessage();
 
-        $settings = Core\Config::getSettings('guestbook');
+        $config = new Core\Config($this->db, 'guestbook');
+        $settings = $config->getSettings();
         $this->view->assign('overlay', $settings['overlay']);
 
         $guestbook = $this->model->getAll($settings['notify'], POS, $this->auth->entries);

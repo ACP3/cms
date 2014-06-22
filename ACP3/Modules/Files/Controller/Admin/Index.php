@@ -30,7 +30,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        $settings = Core\Config::getSettings('files');
+        $config = new Core\Config($this->db, 'files');
+        $settings = $config->getSettings();
 
         if (empty($_POST) === false) {
             try {
@@ -56,7 +57,7 @@ class Index extends Core\Modules\Controller\Admin
                     $filesize = $_POST['filesize'] . ' ' . $_POST['unit'];
                 }
 
-                $insert_values = array(
+                $insertValues = array(
                     'id' => '',
                     'start' => $this->date->toSQL($_POST['start']),
                     'end' => $this->date->toSQL($_POST['end']),
@@ -70,7 +71,7 @@ class Index extends Core\Modules\Controller\Admin
                 );
 
 
-                $lastId = $this->model->insert($insert_values);
+                $lastId = $this->model->insert($insertValues);
                 if ((bool)CONFIG_SEO_ALIASES === true) {
                     $this->uri->insertUriAlias(
                         sprintf(Files\Helpers::URL_KEY_PATTERN, $lastId),
@@ -161,7 +162,8 @@ class Index extends Core\Modules\Controller\Admin
         $dl = $this->model->getOneById((int)$this->uri->id);
 
         if (empty($dl) === false) {
-            $settings = Core\Config::getSettings('files');
+            $config = new Core\Config($this->db, 'files');
+            $settings = $config->getSettings();
 
             if (empty($_POST) === false) {
                 try {
@@ -292,6 +294,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
+        $config = new Core\Config($this->db, 'files');
+
         if (empty($_POST) === false) {
             try {
                 $validator = new Files\Validator($this->lang, $this->uri);
@@ -302,7 +306,7 @@ class Index extends Core\Modules\Controller\Admin
                     'sidebar' => (int)$_POST['sidebar'],
                     'comments' => $_POST['comments']
                 );
-                $bool = Core\Config::setSettings('files', $data);
+                $bool = $config->setSettings($data);
 
                 $this->session->unsetFormToken();
 
@@ -314,7 +318,7 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
 
-        $settings = Core\Config::getSettings('files');
+        $settings = $config->getSettings();
 
         if (Core\Modules::isActive('comments') === true) {
             $lang_comments = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));

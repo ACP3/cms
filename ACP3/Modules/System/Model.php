@@ -1,13 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: goratsch
- * Date: 22.12.13
- * Time: 17:00
- */
-
 namespace ACP3\Modules\System;
-
 
 use ACP3\Core;
 
@@ -20,10 +12,26 @@ class Model extends Core\Model
 {
 
     const TABLE_NAME = 'modules';
+    const TABLE_NAME_SETTINGS = 'settings';
 
     public function getSchemaTables()
     {
         return $this->db->fetchAll('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_TYPE = ? AND TABLE_SCHEMA = ?', array('BASE TABLE', CONFIG_DB_NAME));
+    }
+
+    public function getModuleId($moduleName)
+    {
+        return $this->db->fetchColumn('SELECT id FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE name = ?', array($moduleName));
+    }
+
+    public function getSettingsByModuleName($moduleName)
+    {
+        return $this->db->fetchAll('SELECT s.name, s.value FROM ' . $this->prefix . static::TABLE_NAME_SETTINGS . ' AS s JOIN ' . $this->prefix . static::TABLE_NAME . ' AS m ON(m.id = s.module_id) WHERE m.name = ?', array($moduleName));
+    }
+
+    public function getModuleSchemaVersion($moduleName)
+    {
+        return $this->db->fetchColumn('SELECT version FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE name = ?', array($moduleName));
     }
 
 }

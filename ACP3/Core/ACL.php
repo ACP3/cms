@@ -9,41 +9,57 @@ namespace ACP3\Core;
 class ACL
 {
     /**
+     * @var Auth
+     */
+    protected $auth;
+    /**
+     * @var Cache2
+     */
+    protected $cache;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * Array mit den jeweiligen Rollen zugewiesenen Berechtigungen
      *
      * @var array
      */
-    protected static $privileges = array();
+    protected $privileges = array();
     /**
      * ID des eingeloggten Users
      *
      * @var array
      */
-    protected static $userId = 0;
+    protected $userId = 0;
     /**
      * Array mit den dem Benutzer zugewiesenen Rollen
      *
      * @var array
      */
-    protected static $userRoles = array();
+    protected $userRoles = array();
     /**
      * Array mit allen registrierten Ressourcen
      *
      * @var array
      */
-    protected static $resources = array();
+    protected $resources = array();
 
     /**
      * Konstruktor - erzeugt die ACL für den jeweiligen User
      *
-     * @param integer $userId
+     * @param Auth $auth
+     * @param \Doctrine\DBAL\Connection $db
      */
-    public static function initialize($userId)
+    public function __construct(Auth $auth, \Doctrine\DBAL\Connection $db)
     {
-        self::$userId = $userId;
-        self::$userRoles = self::getUserRoles();
-        self::$resources = self::getResources();
-        self::$privileges = self::getRules(self::$userRoles);
+        $this->auth = $auth;
+        $this->db = $db;
+        $this->cache = new Cache2('acl');
+        $this->userId = $auth->getUserId();
+        $this->userRoles = $this->getUserRoles();
+        $this->resources = $this->getResources();
+        $this->privileges = $this->getRules($this->userRoles);
     }
 
     /**
@@ -51,9 +67,9 @@ class ACL
      *
      * @return boolean
      */
-    public static function setResourcesCache()
+    public function setResourcesCache()
     {
-        $resources = Registry::get('Db')->fetchAll('SELECT r.id AS resource_id, r.module_id, m.name AS module, r.area, r.controller, r.page, r.params, r.privilege_id, p.key FROM ' . DB_PRE . 'acl_resources AS r JOIN ' . DB_PRE . 'acl_privileges AS p ON(r.privilege_id = p.id) JOIN ' . DB_PRE . 'modules AS m ON(r.module_id = m.id) WHERE m.active = 1 ORDER BY r.module_id ASC, r.page ASC');
+        $resources = $this->db->fetchAll('SELECT r.id AS resource_id, r.module_id, m.name AS module, r.area, r.controller, r.page, r.params, r.privilege_id, p.key FROM ' . DB_PRE . 'acl_resources AS r JOIN ' . DB_PRE . 'acl_privileges AS p ON(r.privilege_id = p.id) JOIN ' . DB_PRE . 'modules AS m ON(r.module_id = m.id) WHERE m.active = 1 ORDER BY r.module_id ASC, r.page ASC');
         $c_resources = count($resources);
         $data = array();
 
@@ -70,7 +86,7 @@ class ACL
                 'key' => $resources[$i]['key'],
             );
         }
-        return Cache::create('acl_resources', $data, 'acl');
+        return $this->cache->save('resources', $data);
     }
 
     /**
@@ -78,13 +94,13 @@ class ACL
      *
      * @return array
      */
-    public static function getResources()
+    public function getResources()
     {
-        if (Cache::check('acl_resources', 'acl') === false) {
-            self::setResourcesCache();
+        if ($this->cache->contains('resources') === false) {
+            $this->setResourcesCache();
         }
 
-        return Cache::output('acl_resources', 'acl');
+        return $this->cache->fetch('resources');
     }
 
     /**
@@ -94,18 +110,18 @@ class ACL
      *    ID des Benutzers, dessen Rollen ausgegeben werden sollen
      * @param integer $mode
      *  1 = IDs der Rollen ausgeben
-     *    2 = Namen der Rollen ausgeben
+     *  2 = Namen der Rollen ausgeben
      * @return array
      */
-    public static function getUserRoles($userId = 0, $mode = 1)
+    public function getUserRoles($userId = 0, $mode = 1)
     {
         if ($userId === 0) {
-            $userId = self::$userId;
+            $userId = $this->userId;
         }
 
         $field = $mode === 2 ? 'r.name' : 'r.id';
         $key = substr($field, 2);
-        $userRoles = Registry::get('Db')->fetchAll('SELECT ' . $field . ' FROM ' . DB_PRE . 'acl_user_roles AS ur JOIN ' . DB_PRE . 'acl_roles AS r ON(ur.role_id = r.id) WHERE ur.user_id = ? ORDER BY r.left_id DESC', array($userId), array(\PDO::PARAM_INT));
+        $userRoles = $this->db->fetchAll('SELECT ' . $field . ' FROM ' . DB_PRE . 'acl_user_roles AS ur JOIN ' . DB_PRE . 'acl_roles AS r ON(ur.role_id = r.id) WHERE ur.user_id = ? ORDER BY r.left_id DESC', array($userId), array(\PDO::PARAM_INT));
         $c_userRoles = count($userRoles);
         $roles = array();
 
@@ -120,9 +136,9 @@ class ACL
      *
      * @return boolean
      */
-    public static function setRolesCache()
+    public function setRolesCache()
     {
-        $roles = Registry::get('Db')->fetchAll('SELECT n.id, n.name, n.parent_id, n.left_id, n.right_id, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . DB_PRE . 'acl_roles AS p, ' . DB_PRE . 'acl_roles AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
+        $roles = $this->db->fetchAll('SELECT n.id, n.name, n.parent_id, n.left_id, n.right_id, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . DB_PRE . 'acl_roles AS p, ' . DB_PRE . 'acl_roles AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
         $c_roles = count($roles);
 
         for ($i = 0; $i < $c_roles; ++$i) {
@@ -148,7 +164,7 @@ class ACL
             $roles[$i]['last'] = $last;
         }
 
-        return Cache::create('acl_all_roles', $roles, 'acl');
+        return $this->cache->save('all_roles', $roles);
     }
 
     /**
@@ -158,10 +174,10 @@ class ACL
      *    Array mit den IDs der zu cachenden Rollen
      * @return boolean
      */
-    public static function setRulesCache(array $roles)
+    public function setRulesCache(array $roles)
     {
         // Berechtigungen einlesen, auf die der Benutzer laut seinen Rollen Zugriff hat
-        $rules = Registry::get('Db')->executeQuery('SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM ' . DB_PRE . 'acl_rules AS ru JOIN ' . DB_PRE . 'modules AS m ON (ru.module_id = m.id) JOIN ' . DB_PRE . 'acl_privileges AS p ON(ru.privilege_id = p.id) WHERE ru.role_id IN(?)',
+        $rules = $this->db->executeQuery('SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM ' . DB_PRE . 'acl_rules AS ru JOIN ' . DB_PRE . 'modules AS m ON (ru.module_id = m.id) JOIN ' . DB_PRE . 'acl_privileges AS p ON(ru.privilege_id = p.id) WHERE ru.role_id IN(?)',
             array($roles), array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY))->fetchAll();
         $c_rules = count($rules);
         $privileges = array();
@@ -171,11 +187,11 @@ class ACL
                 'id' => $rules[$i]['privilege_id'],
                 'description' => $rules[$i]['description'],
                 'permission' => $rules[$i]['permission'],
-                'access' => $rules[$i]['permission'] == 1 || ($rules[$i]['permission'] == 2 && self::getPermissionValue($key, $rules[$i]['role_id']) == 1) ? true : false,
+                'access' => $rules[$i]['permission'] == 1 || ($rules[$i]['permission'] == 2 && $this->getPermissionValue($key, $rules[$i]['role_id']) == 1) ? true : false,
             );
         }
 
-        return Cache::create('acl_rules_' . implode(',', $roles), $privileges, 'acl');
+        return $this->cache->save('rules' . implode(',', $roles), $privileges);
     }
 
     /**
@@ -183,13 +199,13 @@ class ACL
      *
      * @return array
      */
-    public static function getAllRoles()
+    public function getAllRoles()
     {
-        if (Cache::check('acl_all_roles', 'acl') === false) {
-            self::setRolesCache();
+        if ($this->cache->contains('all_roles') === false) {
+            $this->setRolesCache();
         }
 
-        return Cache::output('acl_all_roles', 'acl');
+        return $this->cache->fetch('all_roles');
     }
 
     /**
@@ -197,9 +213,9 @@ class ACL
      *
      * @return array
      */
-    public static function getAllPrivileges()
+    public function getAllPrivileges()
     {
-        return Registry::get('Db')->fetchAll('SELECT id, `key`, description FROM ' . DB_PRE . 'acl_privileges ORDER BY `key` ASC');
+        return $this->db->fetchAll('SELECT id, `key`, description FROM ' . DB_PRE . 'acl_privileges ORDER BY `key` ASC');
     }
 
     /**
@@ -211,9 +227,9 @@ class ACL
      *    ID der Rolle, dessen übergeordnete Rolle sucht werden soll
      * @return integer
      */
-    protected static function getPermissionValue($key, $roleId)
+    protected function getPermissionValue($key, $roleId)
     {
-        $value = Registry::get('Db')->fetchAssoc('SELECT ru.permission FROM ' . DB_PRE . 'acl_roles AS r, ' . DB_PRE . 'acl_roles AS parent JOIN ' . DB_PRE . 'acl_rules AS ru ON(parent.id = ru.role_id) JOIN ' . DB_PRE . 'acl_privileges AS p ON(ru.privilege_id = p.id) WHERE r.id = ? AND p.key = ? AND ru.permission != 2 AND parent.left_id < r.left_id AND parent.right_id > r.right_id ORDER BY parent.left_id DESC LIMIT 1', array($roleId, $key));
+        $value = $this->db->fetchAssoc('SELECT ru.permission FROM ' . DB_PRE . 'acl_roles AS r, ' . DB_PRE . 'acl_roles AS parent JOIN ' . DB_PRE . 'acl_rules AS ru ON(parent.id = ru.role_id) JOIN ' . DB_PRE . 'acl_privileges AS p ON(ru.privilege_id = p.id) WHERE r.id = ? AND p.key = ? AND ru.permission != 2 AND parent.left_id < r.left_id AND parent.right_id > r.right_id ORDER BY parent.left_id DESC LIMIT 1', array($roleId, $key));
         return isset($value['permission']) ? $value['permission'] : 0;
     }
 
@@ -224,14 +240,14 @@ class ACL
      *    Array mit den IDs der Rollen
      * @return boolean
      */
-    public static function getRules(array $roles)
+    public function getRules(array $roles)
     {
         $filename = 'acl_rules_' . implode(',', $roles);
-        if (Cache::check($filename, 'acl') === false) {
-            self::setRulesCache($roles);
+        if ($this->cache->contains($filename) === false) {
+            $this->setRulesCache($roles);
         }
 
-        return Cache::output($filename, 'acl');
+        return $this->cache->fetch($filename);
     }
 
     /**
@@ -241,9 +257,9 @@ class ACL
      *    ID der zu überprüfenden Rolle
      * @return boolean
      */
-    public static function userHasRole($roleId)
+    public function userHasRole($roleId)
     {
-        return in_array($roleId, self::$userRoles);
+        return in_array($roleId, $this->userRoles);
     }
 
     /**
@@ -254,11 +270,11 @@ class ACL
      *    The key of the privilege
      * @return boolean
      */
-    public static function userHasPrivilege($module, $key)
+    public function userHasPrivilege($module, $key)
     {
         $key = strtolower($key);
-        if (isset(self::$privileges[$module][$key])) {
-            return self::$privileges[$module][$key]['access'];
+        if (isset($this->privileges[$module][$key])) {
+            return $this->privileges[$module][$key]['access'];
         }
         return false;
     }
@@ -270,7 +286,7 @@ class ACL
      *    The path of a resource in the format of an internal ACP3 url
      * @return boolean
      */
-    public static function canAccessResource($resource)
+    public function canAccessResource($resource)
     {
         $resourceArray = explode('/', $resource);
 
@@ -284,10 +300,10 @@ class ACL
         $area = $resourceArray[0];
         $resource = $resourceArray[1] . '/' . $resourceArray[2] . '/' . $resourceArray[3] . '/';
 
-        if (isset(self::$resources[$area][$resource])) {
+        if (isset($this->resources[$area][$resource])) {
             $module = $resourceArray[1];
-            $key = self::$resources[$area][$resource]['key'];
-            return self::userHasPrivilege($module, $key) === true || Registry::get('Auth')->isSuperUser() === true;
+            $key = $this->resources[$area][$resource]['key'];
+            return $this->userHasPrivilege($module, $key) === true || $this->auth->isSuperUser() === true;
         }
         return false;
     }

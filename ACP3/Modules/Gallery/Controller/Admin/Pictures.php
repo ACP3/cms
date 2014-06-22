@@ -35,7 +35,8 @@ class Pictures extends Core\Modules\Controller\Admin
                 ->append($gallery, 'acp/gallery/index/edit/id_' . $this->uri->id)
                 ->append($this->lang->t('gallery', 'admin_pictures_create'));
 
-            $settings = Core\Config::getSettings('gallery');
+            $config = new Core\Config($this->db, 'gallery');
+            $settings = $config->getSettings();
 
             if (empty($_POST) === false) {
                 try {
@@ -134,7 +135,8 @@ class Pictures extends Core\Modules\Controller\Admin
                 ->append($picture['title'], 'acp/gallery/index/edit/id_' . $picture['gallery_id'])
                 ->append($this->lang->t('gallery', 'admin_pictures_edit'));
 
-            $settings = Core\Config::getSettings('gallery');
+            $config = new Core\Config($this->db, 'gallery');
+            $settings = $config->getSettings();
 
             if (empty($_POST) === false) {
                 try {

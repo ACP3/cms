@@ -217,7 +217,7 @@ class Index extends Core\Modules\Controller\Admin
     }
     public function actionSettings()
     {
-        $settings = Core\Config::getSettings('gallery');
+        $config = new Core\Config($this->db, 'gallery');
 
         if (empty($_POST) === false) {
             try {
@@ -240,7 +240,7 @@ class Index extends Core\Modules\Controller\Admin
                     $data['comments'] = (int)$_POST['comments'];
                 }
 
-                $bool = Core\Config::setSettings('gallery', $data);
+                $bool = $config->setSettings($data);
 
                 // Falls sich die anzuzeigenden Bildgrößen geändert haben, die gecacheten Bilder löschen
                 if ($_POST['thumbwidth'] !== $settings['thumbwidth'] || $_POST['thumbheight'] !== $settings['thumbheight'] ||
@@ -259,6 +259,8 @@ class Index extends Core\Modules\Controller\Admin
                 $this->view->assign('error_msg', $e->getMessage());
             }
         }
+
+        $settings = $config->getSettings();
 
         if (Core\Modules::isActive('comments') === true) {
             $lang_comments = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));

@@ -9,30 +9,35 @@ namespace ACP3\Core;
 class Lang
 {
     /**
+     * @var Cache2
+     */
+    protected $cache;
+    /**
      * Die zur Zeit eingestellte Sprache
      *
      * @var string
      */
     protected $lang = '';
-
+    /**
+     * @var string
+     */
     protected $lang2Characters = '';
-
     /**
      * @var array
      */
     protected $languages = array();
-
     /**
-     *
      * @var array
      */
-    protected $cache = array();
+    protected $buffer = array();
 
     function __construct(Auth $auth)
     {
         $lang = $auth->getUserLanguage();
         $this->lang = $this->languagePackExists($lang) === true ? $lang : CONFIG_LANG;
         $this->lang2Characters = substr($this->lang, 0, strpos($this->lang, '_'));
+
+        $this->cache = new Cache2('lang');
     }
 
     /**
@@ -63,7 +68,7 @@ class Lang
     {
         if ($this->languagePackExists($lang) === true) {
             $this->lang = $lang;
-            $this->cache = array();
+            $this->buffer = array();
         }
 
         return $this;
@@ -93,9 +98,9 @@ class Lang
             }
         }
 
-        $this->cache = array();
+        $this->buffer = array();
 
-        return Cache::create($this->lang, $data, 'lang');
+        return $this->cache->save($this->lang, $data);
     }
 
     /**
@@ -105,11 +110,11 @@ class Lang
      */
     public function getDirection()
     {
-        if (empty($this->cache)) {
-            $this->cache = $this->getLanguageCache();
+        if (empty($this->buffer)) {
+            $this->buffer = $this->getLanguageCache();
         }
 
-        return isset($this->cache['info']['direction']) ? $this->cache['info']['direction'] : 'ltr';
+        return isset($this->buffer['info']['direction']) ? $this->buffer['info']['direction'] : 'ltr';
     }
 
     /**
@@ -119,11 +124,11 @@ class Lang
      */
     protected function getLanguageCache()
     {
-        if (Cache::check($this->lang, 'lang') === false) {
+        if ($this->cache->contains($this->lang) === false) {
             $this->setLanguageCache();
         }
 
-        return Cache::output($this->lang, 'lang');
+        return $this->cache->fetch($this->lang);
     }
 
     /**
@@ -135,11 +140,11 @@ class Lang
      */
     public function t($module, $key)
     {
-        if (empty($this->cache)) {
-            $this->cache = $this->getLanguageCache();
+        if (empty($this->buffer)) {
+            $this->buffer = $this->getLanguageCache();
         }
 
-        return isset($this->cache['keys'][$module][$key]) ? $this->cache['keys'][$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
+        return isset($this->buffer['keys'][$module][$key]) ? $this->buffer['keys'][$module][$key] : strtoupper('{' . $module . '_' . $key . '}');
     }
 
     /**
@@ -463,7 +468,7 @@ class Lang
             }
         }
 
-        return Cache::create('languages', $languages, 'lang');
+        return $this->cache->save('languages', $languages);
     }
 
     /**
@@ -473,11 +478,11 @@ class Lang
      */
     protected function _getLanguagesCache()
     {
-        if (Cache::check('languages', 'lang') === false) {
+        if ($this->cache->contains('languages') === false) {
             $this->_setLanguagesCache();
         }
 
-        return Cache::output('languages', 'lang');
+        return $this->cache->fetch('languages');
     }
 
     /**

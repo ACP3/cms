@@ -2,6 +2,7 @@
 
 namespace ACP3;
 
+use ACP3\Core\Config;
 use ACP3\Core\Modules\Controller;
 use Doctrine\DBAL;
 use Monolog\ErrorHandler;
@@ -15,6 +16,10 @@ use Monolog\Logger;
  */
 class Application
 {
+    /**
+     * @var \ACP3\Core\ACL
+     */
+    private static $acl;
     /**
      * @var \ACP3\Core\Auth
      */
@@ -173,8 +178,9 @@ class Application
 
         Core\Registry::set('Db', self::$db);
 
-        // Sytemeinstellungen laden
-        Core\Config::getSystemSettings();
+        // Systemeinstellungen laden
+        $config = new Config(self::$db, 'system');
+        $config->getSettingsAsConstants();
 
         // Pfade zum Theme setzen
         define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
@@ -186,6 +192,7 @@ class Application
         self::$uri = new Core\URI(self::$db);
         self::$session = new Core\Session(self::$db, self::$uri, self::$view);
         self::$auth = new Core\Auth(self::$db, self::$session);
+        self::$acl = new Core\ACL(self::$auth, self::$db);
         self::$lang = new Core\Lang(self::$auth);
         self::$seo = new Core\SEO(self::$db, self::$lang, self::$uri, self::$view);
         self::$date = new Core\Date(self::$auth, self::$lang, self::$view);
@@ -195,14 +202,13 @@ class Application
         Core\Registry::set('URI', self::$uri);
         Core\Registry::set('Session', self::$session);
         Core\Registry::set('Auth', self::$auth);
+        Core\Registry::set('ACL', self::$acl);
         Core\Registry::set('Lang', self::$lang);
         Core\Registry::set('SEO', self::$seo);
         Core\Registry::set('Date', self::$date);
         Core\Registry::set('Breadcrumb', self::$breadcrumb);
 
         Core\View::factory('Smarty');
-
-        Core\ACL::initialize(self::$auth->getUserId());
     }
 
     /**

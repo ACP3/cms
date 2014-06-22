@@ -32,7 +32,7 @@ class Modules
             $pathArray = explode('/', $path);
 
             if (self::isActive($pathArray[1]) === true) {
-                return ACL::canAccessResource($path);
+                return Registry::get('ACL')->canAccessResource($path);
             }
         }
         return 0;

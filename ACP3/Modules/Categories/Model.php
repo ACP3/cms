@@ -48,32 +48,4 @@ class Model extends Core\Model
         return $this->db->fetchAssoc('SELECT c.picture, m.name AS module FROM ' . $this->prefix . static::TABLE_NAME . ' AS c JOIN ' . $this->prefix . \ACP3\Modules\System\Model::TABLE_NAME . ' AS m ON(m.id = c.module_id) WHERE c.id = ?', array($id));
     }
 
-    /**
-     * Erstellt den Cache für die Kategorien eines Moduls
-     *
-     * @param string $moduleName
-     *  Das Modul, für welches der Kategorien-Cache erstellt werden soll
-     * @return boolean
-     */
-    public function setCache($moduleName)
-    {
-        return Core\Cache::create($moduleName, $this->getAllByModuleName($moduleName), 'categories');
-    }
-
-    /**
-     * Gibt die gecacheten Kategorien des jeweiligen Moduls zurück
-     *
-     * @param string $moduleName
-     *  Das jeweilige Modul, für welches die Kategorien geholt werden sollen
-     * @return array
-     */
-    public function getCache($moduleName)
-    {
-        if (Core\Cache::check($moduleName, 'categories') === false) {
-            $this->setCache($moduleName);
-        }
-
-        return Core\Cache::output($moduleName, 'categories');
-    }
-
 }

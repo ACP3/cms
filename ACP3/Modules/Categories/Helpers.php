@@ -20,11 +20,16 @@ abstract class Helpers
      * @var Model
      */
     protected static $model;
+    /**
+     * @var Cache
+     */
+    protected static $cache;
 
     protected static function _init()
     {
         if (!self::$model) {
             self::$model = new Model(Core\Registry::get('Db'), Core\Registry::get('Lang'));
+            self::$cache = new Cache(self::$model);
         }
     }
 
@@ -75,7 +80,7 @@ abstract class Helpers
             );
             $result = self::$model->insert($insertValues);
 
-            self::$model->setCache($module);
+            self::$cache->setCache($module);
 
             return $result;
         }
@@ -97,7 +102,7 @@ abstract class Helpers
         self::_init();
 
         $categories = array();
-        $data = self::$model->getCache($module);
+        $data = self::$cache->getCache($module);
         $c_data = count($data);
 
         $categories['custom_text'] = !empty($customText) ? $customText : Core\Registry::get('Lang')->t('system', 'pls_select');

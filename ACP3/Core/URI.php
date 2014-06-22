@@ -11,6 +11,7 @@ class URI
 
     const ADMIN_PANEL_PATTERN = '=^acp/=';
 
+    protected $cache;
     /**
      * Array, welches die URI Parameter enthält
      *
@@ -48,7 +49,7 @@ class URI
     function __construct(\Doctrine\DBAL\Connection $db, $defaultPath = '')
     {
         $this->db = $db;
-
+        $this->cache = new Cache2('uri');
         $this->aliases = $this->getCache();
 
         $this->preprocessUriQuery();
@@ -358,7 +359,7 @@ class URI
             );
         }
 
-        return Cache::create('aliases', $data, 'uri');
+        return $this->cache->save('aliases', $data);
     }
 
     /**
@@ -368,11 +369,11 @@ class URI
      */
     public function getCache()
     {
-        if (Cache::check('aliases', 'uri') === false) {
+        if ($this->cache->contains('aliases') === false) {
             $this->setCache();
         }
 
-        return Cache::output('aliases', 'uri');
+        return $this->cache->fetch('aliases');
     }
 
     /**

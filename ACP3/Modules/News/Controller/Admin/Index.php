@@ -29,7 +29,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        $settings = Core\Config::getSettings('news');
+        $config = new Core\Config($this->db, 'news');
+        $settings = $config->getSettings();
 
         if (empty($_POST) === false) {
             try {
@@ -139,7 +140,8 @@ class Index extends Core\Modules\Controller\Admin
         $news = $this->model->getOneById((int)$this->uri->id);
 
         if (empty($news) === false) {
-            $settings = Core\Config::getSettings('news');
+            $config = new Core\Config($this->db, 'news');
+            $settings = $config->getSettings();
 
             if (empty($_POST) === false) {
                 try {
@@ -250,6 +252,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
+        $config = new Core\Config($this->db, 'news');
+
         if (empty($_POST) === false) {
             try {
                 $validator = new News\Validator($this->lang, $this->uri);
@@ -263,7 +267,7 @@ class Index extends Core\Modules\Controller\Admin
                     'category_in_breadcrumb' => $_POST['category_in_breadcrumb'],
                     'comments' => $_POST['comments'],
                 );
-                $bool = Core\Config::setSettings('news', $data);
+                $bool = $config->setSettings($data);
 
                 $this->session->unsetFormToken();
 
@@ -275,7 +279,7 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
 
-        $settings = Core\Config::getSettings('news');
+        $settings = $config->getSettings();
 
         $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 

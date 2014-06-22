@@ -20,7 +20,7 @@ class Validate
      */
     public static function aclPrivilegesExist(array $privileges)
     {
-        $allPrivileges = ACL::getAllPrivileges();
+        $allPrivileges = Registry::get('ACL')->getAllPrivileges();
         $c_allPrivileges = count($allPrivileges);
         $valid = false;
 
@@ -46,7 +46,7 @@ class Validate
      */
     public static function aclRolesExist(array $roles)
     {
-        $allRoles = ACL::getAllRoles();
+        $allRoles = Registry::get('ACL')->getAllRoles();
         $good = array();
         foreach ($allRoles as $row) {
             $good[] = $row['id'];

@@ -20,6 +20,10 @@ abstract class Helpers
      */
     protected static $date;
     /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected static $db;
+    /**
      * @var Core\Lang
      */
     protected static $lang;
@@ -40,12 +44,8 @@ abstract class Helpers
     protected static function _init()
     {
         if (!self::$model) {
-            self::$model = new Model(
-                Core\Registry::get('Db'),
-                Core\Registry::get('Lang'),
-                Core\Registry::get('Auth')
-            );
-
+            self::$db = Core\Registry::get('Db');
+            self::$model = new Model(Core\Registry::get('Db'));
             self::$lang = Core\Registry::get('Lang');
             self::$uri = Core\Registry::get('URI');
             self::$view = Core\Registry::get('View');
@@ -65,7 +65,9 @@ abstract class Helpers
     {
         self::_init();
 
-        $settings = Core\Config::getSettings('newsletter');
+        $config = new Core\Config(self::$db, 'newsletter');
+        $settings = $config->getSettings();
+
         $newsletter = self::$model->getOneById($newsletterId);
         $from = array(
             'email' => $settings['mail'],
@@ -105,7 +107,9 @@ abstract class Helpers
         $hash = md5(mt_rand(0, microtime(true)));
         $host = htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES, 'UTF-8');
         $url = 'http://' . $host . self::$uri->route('newsletter/index/activate/hash_' . $hash . '/mail_' . $emailAddress);
-        $settings = Core\Config::getSettings('newsletter');
+
+        $config = new Core\Config(self::$db, 'newsletter');
+        $settings = $config->getSettings();
 
         $subject = sprintf(self::$lang->t('newsletter', 'subscribe_mail_subject'), CONFIG_SEO_TITLE);
         $body = str_replace('{host}', $host, self::$lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";

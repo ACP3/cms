@@ -14,7 +14,8 @@ class Index extends Core\Modules\Controller\Sidebar
 {
     public function actionIndex()
     {
-        $settings = Core\Config::getSettings('contact');
+        $config = new Core\Config($this->db, 'contact');
+        $settings = $config->getSettings();
         $settings['address'] = Core\Functions::rewriteInternalUri($settings['address']);
         $settings['disclaimer'] = Core\Functions::rewriteInternalUri($settings['disclaimer']);
         $this->view->assign('sidebar_contact', $settings);

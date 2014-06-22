@@ -49,6 +49,11 @@ class Model extends Core\Model
         return $this->db->fetchAssoc('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id = ?', array($id));
     }
 
+    public function getAllRoles()
+    {
+        return $this->db->fetchAll('SELECT id FROM ' . $this->prefix . static::TABLE_NAME);
+    }
+
     public function getResourceById($id)
     {
         return $this->db->fetchAssoc('SELECT r.page, r.area, r.controller, r.privilege_id, m.name AS module_name FROM ' . $this->prefix . static::TABLE_NAME_RESOURCES . ' AS r JOIN ' . $this->prefix . \ACP3\Modules\System\Model::TABLE_NAME . ' AS m ON(m.id = r.module_id) WHERE r.id = ?', array($id));
@@ -57,6 +62,11 @@ class Model extends Core\Model
     public function getAllResources()
     {
         return $this->db->fetchAll('SELECT m.id AS module_id, m.name AS module_name, r.id AS resource_id, r.page, r.area, r.controller, r.privilege_id, p.key AS privilege_name FROM ' . $this->prefix . static::TABLE_NAME_RESOURCES . ' AS r JOIN ' . $this->prefix . \ACP3\Modules\System\Model::TABLE_NAME . ' AS m ON(r.module_id = m.id) JOIN ' . $this->prefix . static::TABLE_NAME_PRIVILEGES . ' AS p ON(r.privilege_id = p.id) ORDER BY r.module_id ASC, r.area ASC, r.controller ASC, r.page ASC');
+    }
+
+    public function getAllResourceIds()
+    {
+        return $this->db->fetchAll('SELECT id FROM ' . $this->prefix . static::TABLE_NAME_PRIVILEGES);
     }
 
 }

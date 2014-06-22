@@ -20,7 +20,8 @@ class Index extends Core\Modules\Controller
         if (Core\Modules::hasPermission('frontend/' . $module) === true &&
             method_exists($className, $action) === true
         ) {
-            $settings = Core\Config::getSettings('feeds');
+            $config = new Core\Config($this->db, 'feeds');
+            $settings = $config->getSettings();
 
             define('FEED_LINK', 'http://' . htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES));
 

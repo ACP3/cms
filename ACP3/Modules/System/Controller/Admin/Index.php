@@ -14,13 +14,15 @@ class Index extends Core\Modules\Controller\Admin
 {
     public function actionConfiguration()
     {
+        $config = new Core\Config($this->db, 'system');
+
         if (empty($_POST) === false) {
             try {
                 $validator = new System\Validator($this->lang);
                 $validator->validateSettings($_POST);
 
                 // Config aktualisieren
-                $config = array(
+                $data = array(
                     'cache_images' => (int)$_POST['cache_images'],
                     'cache_minify' => (int)$_POST['cache_minify'],
                     'date_format_long' => Core\Functions::strEncode($_POST['date_format_long']),
@@ -51,7 +53,7 @@ class Index extends Core\Modules\Controller\Admin
                     'wysiwyg' => $_POST['wysiwyg']
                 );
 
-                $bool = Core\Config::setSettings('system', $config);
+                $bool = $config->setSettings($data);
 
                 // Gecachete Stylesheets und JavaScript Dateien löschen
                 if (CONFIG_EXTRA_CSS !== $_POST['extra_css'] ||
@@ -135,7 +137,7 @@ class Index extends Core\Modules\Controller\Admin
         );
         $this->view->assign('mailer_smtp_security', Core\Functions::selectGenerator('mailer_smtp_security', array('none', 'ssl', 'tls'), $lang_mailer_smtp_security, CONFIG_MAILER_SMTP_SECURITY));
 
-        $settings = Core\Config::getSettings('system');
+        $settings = $config->getSettings();
 
         $this->view->assign('form', array_merge($settings, $_POST));
 

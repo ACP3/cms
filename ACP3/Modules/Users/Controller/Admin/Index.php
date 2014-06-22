@@ -86,7 +86,7 @@ class Index extends Core\Modules\Controller\Admin
         }
 
         // Zugriffslevel holen
-        $roles = Core\ACL::getAllRoles();
+        $roles = $this->get('ACL')->getAllRoles();
         $c_roles = count($roles);
         for ($i = 0; $i < $c_roles; ++$i) {
             $roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
@@ -292,9 +292,9 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
             // Zugriffslevel holen
-            $roles = Core\ACL::getAllRoles();
+            $roles = $this->get('ACL')->getAllRoles();
             $c_roles = count($roles);
-            $userRoles = Core\ACL::getUserRoles($this->uri->id);
+            $userRoles = $this->get('ACL')->getUserRoles($this->uri->id);
             for ($i = 0; $i < $c_roles; ++$i) {
                 $roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
                 $roles[$i]['selected'] = Core\Functions::selectEntry('roles', $roles[$i]['id'], in_array($roles[$i]['id'], $userRoles) ? $roles[$i]['id'] : '');
@@ -383,6 +383,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
+        $config = new Core\Config($this->db, 'users');
+
         if (empty($_POST) === false) {
             try {
                 $validator = new Users\Validator($this->lang, $this->auth, $this->uri, $this->model);
@@ -394,7 +396,7 @@ class Index extends Core\Modules\Controller\Admin
                     'language_override' => $_POST['language_override'],
                     'mail' => $_POST['mail']
                 );
-                $bool = Core\Config::setSettings('users', $data);
+                $bool = $config->setSettings($data);
 
                 $this->session->unsetFormToken();
 
@@ -406,7 +408,7 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
 
-        $settings = Core\Config::getSettings('users');
+        $settings = $config->getSettings();
 
         $lang_languages = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
         $this->view->assign('languages', Core\Functions::selectGenerator('language_override', array(1, 0), $lang_languages, $settings['language_override'], 'checked'));
@@ -440,7 +442,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->appendContent(Core\Functions::dataTable($config));
 
             for ($i = 0; $i < $c_users; ++$i) {
-                $users[$i]['roles'] = implode(', ', Core\ACL::getUserRoles($users[$i]['id'], 2));
+                $users[$i]['roles'] = implode(', ', $this->get('ACL')->getUserRoles($users[$i]['id'], 2));
             }
             $this->view->assign('users', $users);
             $this->view->assign('can_delete', $canDelete);

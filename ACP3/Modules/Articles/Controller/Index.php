@@ -56,7 +56,8 @@ class Index extends Core\Modules\Controller
     public function actionDetails()
     {
         if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id, $this->date->getCurrentDateTime()) === true) {
-            $article = $this->model->getCache($this->uri->id);
+            $cache = new Articles\Cache($this->model);
+            $article = $cache->getCache($this->uri->id);
 
             $this->breadcrumb->replaceAnchestor($article['title'], 0, true);
 

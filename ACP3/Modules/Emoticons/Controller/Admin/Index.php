@@ -37,8 +37,10 @@ class Index extends Core\Modules\Controller\Admin
                     $file['size'] = $_FILES['picture']['size'];
                 }
 
+                $config = new Core\Config($this->db, 'emoticons');
+
                 $validator = new Emoticons\Validator($this->lang);
-                $validator->validateCreate($_POST, $file);
+                $validator->validateCreate($_POST, $file, $config->getSettings());
 
                 $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'emoticons');
 
@@ -104,10 +106,12 @@ class Index extends Core\Modules\Controller\Admin
                         $file['size'] = $_FILES['picture']['size'];
                     }
 
-                    $validator = new Emoticons\Validator($this->lang);
-                    $validator->validateEdit($_POST, $file);
+                    $config = new Core\Config($this->db, 'emoticons');
 
-                    $update_values = array(
+                    $validator = new Emoticons\Validator($this->lang);
+                    $validator->validateEdit($_POST, $file, $config->getSettings());
+
+                    $updateValues = array(
                         'code' => Core\Functions::strEncode($_POST['code']),
                         'description' => Core\Functions::strEncode($_POST['description']),
                     );
@@ -115,10 +119,10 @@ class Index extends Core\Modules\Controller\Admin
                     if (empty($file) === false) {
                         Core\Functions::removeUploadedFile('emoticons', $emoticon['img']);
                         $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'emoticons');
-                        $update_values['img'] = $result['name'];
+                        $updateValues['img'] = $result['name'];
                     }
 
-                    $bool = $this->model->update($update_values, $this->uri->id);
+                    $bool = $this->model->update($updateValues, $this->uri->id);
                     $this->model->setCache();
 
                     $this->session->unsetFormToken();
@@ -162,6 +166,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
+        $config = new Core\Config($this->db, 'emoticons');
+
         if (empty($_POST) === false) {
             try {
                 $validator = new Emoticons\Validator($this->lang);
@@ -172,7 +178,7 @@ class Index extends Core\Modules\Controller\Admin
                     'height' => (int)$_POST['height'],
                     'filesize' => (int)$_POST['filesize'],
                 );
-                $bool = Core\Config::setSettings('emoticons', $data);
+                $bool = $config->setSettings($data);
 
                 $this->session->unsetFormToken();
 
@@ -184,7 +190,7 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
 
-        $this->view->assign('form', array_merge(Core\Config::getSettings('emoticons'), $_POST));
+        $this->view->assign('form', array_merge($config->getSettings(), $_POST));
 
         $this->session->generateFormToken();
     }

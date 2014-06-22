@@ -123,13 +123,15 @@ class Index extends Core\Modules\Controller\Admin
             $bool = false;
 
             $nestedSet = new Core\NestedSet($this->db, \ACP3\Modules\Menus\Model::TABLE_NAME_ITEMS, true);
+
+            $cache = new Core\Cache2('articles');
             foreach ($items as $item) {
                 $uri = sprintf(Articles\Helpers::URL_KEY_PATTERN, $item);
 
                 $bool = $this->model->delete($item);
                 $nestedSet->deleteNode($this->menuModel->getMenuItemIdByUri($uri));
 
-                Core\Cache::delete('list_id_' . $item, 'articles');
+                $cache->delete(Articles\Cache::CACHE_ID . $item);
                 $this->uri->deleteUriAlias($uri);
             }
 
@@ -176,7 +178,8 @@ class Index extends Core\Modules\Controller\Admin
                         $this->seo->setCache();
                     }
 
-                    $this->model->setCache($this->uri->id);
+                    $cache = new Articles\Cache($this->model);
+                    $cache->setCache($this->uri->id);
 
                     // Aliase in der Navigation aktualisieren
                     $this->menuModel->setMenuItemsCache();

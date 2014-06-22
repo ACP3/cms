@@ -126,11 +126,14 @@ class Application
             'driver' => 'pdo_mysql',
             'charset' => 'utf8'
         );
-        \ACP3\Core\Registry::set('Db', \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config));
+        $db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
+        \ACP3\Core\Registry::set('Db', $db);
+
         define('DB_PRE', CONFIG_DB_PRE);
 
         // Sytemeinstellungen laden
-        \ACP3\Core\Config::getSystemSettings();
+        $config = new \ACP3\Core\Config($db, 'system');
+        $config->getSettingsAsConstants();
 
         \ACP3\Core\Registry::set('View', new \ACP3\Core\View());
 

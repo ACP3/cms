@@ -21,7 +21,8 @@ class Extensions extends Core\Modules\Controller\Admin
             if ((bool)preg_match('=/=', $this->uri->dir) === false &&
                 is_file(ACP3_ROOT_DIR . 'designs/' . $this->uri->dir . '/info.xml') === true
             ) {
-                $bool = Core\Config::setSettings('system', array('design' => $this->uri->dir));
+                $config = new Core\Config($this->db, 'system');
+                $bool = $config->setSettings(array('design' => $this->uri->dir));
 
                 // Template Cache leeren
                 Core\Cache::purge('tpl_compiled');
@@ -205,7 +206,7 @@ class Extensions extends Core\Modules\Controller\Admin
     {
         $this->lang->setLanguageCache();
         Core\Modules::setModulesCache();
-        Core\ACL::setResourcesCache();
+        $this->get('ACL')->setResourcesCache();
     }
 
 }

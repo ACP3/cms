@@ -48,32 +48,4 @@ class Model extends Core\Model
         return $this->db->fetchAll('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' ORDER BY title ASC');
     }
 
-    /**
-     * Erstellt den Cache eines Artikels anhand der angegebenen ID
-     *
-     * @param integer $id
-     *  Die ID der statischen Seite
-     * @return boolean
-     */
-    public function setCache($id)
-    {
-        return Core\Cache::create('list_id_' . $id, $this->getOneById($id), 'articles');
-    }
-
-    /**
-     * Bindet den gecacheten Artikel ein
-     *
-     * @param integer $id
-     *  Die ID der statischen Seite
-     * @return array
-     */
-    public function getCache($id)
-    {
-        if (Core\Cache::check('list_id_' . $id, 'articles') === false) {
-            $this->setCache($id);
-        }
-
-        return Core\Cache::output('list_id_' . $id, 'articles');
-    }
-
 }
