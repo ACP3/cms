@@ -43,7 +43,7 @@ class Resources extends Core\Modules\Controller\Admin
                 );
                 $bool = $this->model->insert($insertValues, Permissions\Model::TABLE_NAME_RESOURCES);
 
-                Core\ACL::setResourcesCache();
+                $this->get('ACL')->setResourcesCache();
 
                 $this->session->unsetFormToken();
 
@@ -61,7 +61,7 @@ class Resources extends Core\Modules\Controller\Admin
         }
         $this->view->assign('modules', $modules);
 
-        $privileges = Core\ACL::getAllPrivileges();
+        $privileges = $this->get('ACL')->getAllPrivileges();
         $c_privileges = count($privileges);
         for ($i = 0; $i < $c_privileges; ++$i) {
             $privileges[$i]['selected'] = Core\Functions::selectEntry('privileges', $privileges[$i]['id']);
@@ -84,7 +84,7 @@ class Resources extends Core\Modules\Controller\Admin
                 $bool = $this->db->delete(DB_PRE . 'acl_resources', array('id' => $item));
             }
 
-            Core\ACL::setResourcesCache();
+            $this->get('ACL')->setResourcesCache();
 
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/permissions/resources');
         } elseif (is_string($items)) {
@@ -109,7 +109,7 @@ class Resources extends Core\Modules\Controller\Admin
                     );
                     $bool = $this->model->update($updateValues, $this->uri->id, Permissions\Model::TABLE_NAME_RESOURCES);
 
-                    Core\ACL::setResourcesCache();
+                    $this->get('ACL')->setResourcesCache();
 
                     $this->session->unsetFormToken();
 
@@ -121,7 +121,7 @@ class Resources extends Core\Modules\Controller\Admin
                 }
             }
 
-            $privileges = Core\ACL::getAllPrivileges();
+            $privileges = $this->get('ACL')->getAllPrivileges();
             $c_privileges = count($privileges);
             for ($i = 0; $i < $c_privileges; ++$i) {
                 $privileges[$i]['selected'] = Core\Functions::selectEntry('privileges', $privileges[$i]['id'], $resource['privilege_id']);

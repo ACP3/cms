@@ -19,7 +19,9 @@ class Index extends Core\Modules\Controller\Sidebar
     {
         if ($this->auth->isUser() === false) {
             $currentPage = base64_encode(($this->uri->area === 'admin' ? 'acp/' : '') . $this->uri->query);
-            $settings = Core\Config::getSettings('users');
+
+            $config = new Core\Config($this->db, 'users');
+            $settings = $config->getSettings();
 
             $this->view->assign('enable_registration', $settings['enable_registration']);
             $this->view->assign('redirect_uri', isset($_POST['redirect_uri']) ? $_POST['redirect_uri'] : $currentPage);

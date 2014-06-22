@@ -3,6 +3,8 @@
 namespace ACP3\Core\Modules;
 
 use ACP3\Core;
+use ACP3\Modules\System;
+use ACP3\Modules\Permissions;
 
 /**
  * Module Installer Klasse
@@ -12,29 +14,35 @@ use ACP3\Core;
 abstract class AbstractInstaller implements InstallerInterface
 {
     /**
+     * Name des Moduls
+     *
+     * @var string
+     */
+    const MODULE_NAME = '';
+    /**
+     * Version des Tabellen-Schema für das Modul
+     * @var integer
+     */
+    const SCHEMA_VERSION = 0;
+
+    /**
      * @var \Doctrine\DBAL\Connection
      */
     protected $db;
-
+    /**
+     * @var \ACP3\Modules\System\Model
+     */
+    protected $systemModel;
+    /**
+     * @var \ACP3\Modules\Permissions\Model
+     */
+    protected $aclModel;
     /**
      * Die bei der Installation an das Modul zugewiesene ID
      *
      * @var integer
      */
     protected $moduleId = null;
-
-    /**
-     * Name des Moduls
-     *
-     * @var string
-     */
-    const MODULE_NAME = '';
-
-    /**
-     * Version des Tabellen-Schema für das Modul
-     * @var integer
-     */
-    const SCHEMA_VERSION = 0;
 
     /**
      * Ressourcen, welche vom standardmäßigen Namensschema abweichen
@@ -47,8 +55,15 @@ abstract class AbstractInstaller implements InstallerInterface
     public function __construct(\Doctrine\DBAL\Connection $db)
     {
         $this->db = $db;
+
+        $this->systemModel = new System\Model($db);
+        $this->aclModel = new Permissions\Model($db);
     }
 
+    /**
+     * @param $module
+     * @return string
+     */
     public static function buildClassName($module)
     {
         $moduleName = preg_replace('/(\s+)/', '', ucwords(strtolower(str_replace('_', ' ', $module))));
@@ -60,7 +75,7 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     public function setModuleId()
     {
-        $moduleId = $this->db->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array(static::MODULE_NAME));
+        $moduleId = $this->systemModel->getModuleId(static::MODULE_NAME);
         $this->moduleId = !empty($moduleId) ? (int)$moduleId : 0;
     }
 
@@ -194,7 +209,8 @@ abstract class AbstractInstaller implements InstallerInterface
             $this->_insertAclRules();
         }
 
-        Core\Cache::purge(0, 'acl');
+        $cache = new Core\Cache2('acl');
+        $cache->getDriver()->deleteAll();
 
         return true;
     }
@@ -204,8 +220,8 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     protected function _insertAclRules()
     {
-        $roles = $this->db->fetchAll('SELECT id FROM ' . DB_PRE . 'acl_roles');
-        $privileges = $this->db->fetchAll('SELECT id FROM ' . DB_PRE . 'acl_privileges');
+        $roles = $this->aclModel->getAllRoles();
+        $privileges = $this->aclModel->getAllResourceIds();
         foreach ($roles as $role) {
             foreach ($privileges as $privilege) {
                 $permission = 0;
@@ -229,7 +245,7 @@ abstract class AbstractInstaller implements InstallerInterface
                     'privilege_id' => $privilege['id'],
                     'permission' => $permission
                 );
-                $this->db->insert(DB_PRE . 'acl_rules', $insertValues);
+                $this->aclModel->insert($insertValues, Permissions\Model::TABLE_NAME_RULES);
             }
         }
     }
@@ -290,7 +306,7 @@ abstract class AbstractInstaller implements InstallerInterface
                     'params' => '',
                     'privilege_id' => (int)$privilegeId
                 );
-                $this->db->insert(DB_PRE . 'acl_resources', $insertValues);
+                $this->aclModel->insert($insertValues, Permissions\Model::TABLE_NAME_RESOURCES);
             }
         }
     }
@@ -302,10 +318,11 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     protected function removeResources()
     {
-        $bool = $this->db->delete(DB_PRE . 'acl_resources', array('module_id' => $this->getModuleId()));
-        $bool2 = $this->db->delete(DB_PRE . 'acl_rules', array('module_id' => $this->getModuleId()));
+        $bool = $this->aclModel->delete($this->getModuleId(), 'module_id', Permissions\Model::TABLE_NAME_RESOURCES);
+        $bool2 = $this->aclModel->delete($this->getModuleId(), 'module_id', Permissions\Model::TABLE_NAME_RULES);
 
-        Core\Cache::purge(0, 'acl');
+        $cache = new Core\Cache2('acl');
+        $cache->getDriver()->deleteAll();
 
         return $bool !== false && $bool2 !== false;
     }
@@ -322,7 +339,13 @@ abstract class AbstractInstaller implements InstallerInterface
             $this->db->beginTransaction();
             try {
                 foreach ($settings as $key => $value) {
-                    $this->db->insert(DB_PRE . 'settings', array('id' => '', 'module_id' => $this->getModuleId(), 'name' => $key, 'value' => $value));
+                    $insertValues = array(
+                        'id' => '',
+                        'module_id' => $this->getModuleId(),
+                        'name' => $key,
+                        'value' => $value
+                    );
+                    $this->systemModel->insert($insertValues, System\Model::TABLE_NAME_SETTINGS);
                 }
                 $this->db->commit();
             } catch (\Exception $e) {
@@ -342,7 +365,7 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     protected function removeSettings()
     {
-        return $this->db->delete(DB_PRE . 'settings', array('module_id' => (int)$this->getModuleId())) !== false;
+        return $this->systemModel->delete((int) $this->getModuleId(), 'module_id', System\Model::TABLE_NAME_SETTINGS) !== false;
     }
 
     /**
@@ -359,10 +382,10 @@ abstract class AbstractInstaller implements InstallerInterface
             'version' => static::SCHEMA_VERSION,
             'active' => 1
         );
-        $bool = $this->db->insert(DB_PRE . 'modules', $insertValues);
-        $this->moduleId = $this->db->lastInsertId();
+        $lastId = $this->systemModel->insert($insertValues);
+        $this->moduleId = $lastId;
 
-        return $bool !== false;
+        return $lastId !== false;
     }
 
     /**
@@ -371,7 +394,7 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     protected function removeFromModulesTable()
     {
-        return $this->db->delete(DB_PRE . 'modules', array('id' => (int)$this->getModuleId())) !== false;
+        return $this->systemModel->delete((int)$this->getModuleId()) !== false;
     }
 
     /**
@@ -381,8 +404,8 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     public function updateSchema()
     {
-        $module = $this->db->fetchAssoc('SELECT version FROM ' . DB_PRE . 'modules WHERE name = ?', array(static::MODULE_NAME));
-        $installedSchemaVersion = isset($module['version']) ? (int)$module['version'] : 0;
+        $module = $this->systemModel->getModuleSchemaVersion(static::MODULE_NAME);
+        $installedSchemaVersion = !empty($module) ? (int)$module : 0;
         $result = -1;
 
         // Falls eine Methode zum Umbenennen des Moduls existiert,
@@ -444,7 +467,8 @@ abstract class AbstractInstaller implements InstallerInterface
      */
     public function setNewSchemaVersion($newVersion)
     {
-        return $this->db->update(DB_PRE . 'modules', array('version' => (int)$newVersion), array('name' => static::MODULE_NAME)) !== false;
+        $updateValues = array('version' => (int)$newVersion);
+        return $this->systemModel->update($updateValues, array('name' => static::MODULE_NAME)) !== false;
     }
 
     /**

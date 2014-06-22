@@ -14,6 +14,8 @@ class Index extends Core\Modules\Controller\Admin
 {
     public function actionIndex()
     {
+        $config = new Core\Config($this->db, 'feeds');
+
         if (empty($_POST) === false) {
             try {
                 $validator = new Feeds\Validator($this->db, $this->lang);
@@ -24,7 +26,7 @@ class Index extends Core\Modules\Controller\Admin
                     'feed_type' => $_POST['feed_type']
                 );
 
-                $bool = Core\Config::setSettings('feeds', $data);
+                $bool = $config->setSettings($data);
 
                 $this->session->unsetFormToken();
 
@@ -38,7 +40,7 @@ class Index extends Core\Modules\Controller\Admin
 
         Core\Functions::getRedirectMessage();
 
-        $settings = Core\Config::getSettings('feeds');
+        $settings = $config->getSettings();
 
         $feedType = array(
             'RSS 1.0',

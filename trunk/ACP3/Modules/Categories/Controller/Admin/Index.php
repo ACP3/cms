@@ -36,30 +36,28 @@ class Index extends Core\Modules\Controller\Admin
                     $file['name'] = $_FILES['picture']['name'];
                     $file['size'] = $_FILES['picture']['size'];
                 }
-                $settings = Core\Config::getSettings('categories');
+                $config = new Core\Config($this->db, 'categories');
+                $settings = $config->getSettings();
 
                 $validator = new Categories\Validator($this->lang, $this->model);
                 $validator->validate($_POST, $file, $settings);
 
-                $file_sql = null;
-                if (!empty($file)) {
-                    $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'categories');
-                    $file_sql = array('picture' => $result['name']);
-                }
-
                 $moduleInfo = Core\Modules::getModuleInfo($_POST['module']);
-                $insert_values = array(
+                $insertValues = array(
                     'id' => '',
                     'title' => Core\Functions::strEncode($_POST['title']),
                     'description' => Core\Functions::strEncode($_POST['description']),
                     'module_id' => $moduleInfo['id'],
                 );
-                if (is_array($file_sql) === true) {
-                    $insert_values = array_merge($insert_values, $file_sql);
+                if (!empty($file)) {
+                    $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'categories');
+                    $insertValues['picture'] = $result['name'];
                 }
 
-                $bool = $this->model->insert($insert_values);
-                $this->model->setCache($_POST['module']);
+                $bool = $this->model->insert($insertValues);
+
+                $cache = new Categories\Cache($this->model);
+                $cache->setCache($_POST['module']);
 
                 $this->session->unsetFormToken();
 
@@ -73,15 +71,15 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(array('title' => '', 'description' => ''), $_POST));
 
-        $mod_list = Core\Modules::getActiveModules();
-        foreach ($mod_list as $name => $info) {
+        $modules = Core\Modules::getActiveModules();
+        foreach ($modules as $name => $info) {
             if ($info['active'] && in_array('categories', $info['dependencies']) === true) {
-                $mod_list[$name]['selected'] = Core\Functions::selectEntry('module', $info['dir']);
+                $modules[$name]['selected'] = Core\Functions::selectEntry('module', $info['dir']);
             } else {
-                unset($mod_list[$name]);
+                unset($modules[$name]);
             }
         }
-        $this->view->assign('mod_list', $mod_list);
+        $this->view->assign('mod_list', $modules);
 
         $this->session->generateFormToken();
     }
@@ -114,7 +112,8 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
-            Core\Cache::purge('sql', 'categories');
+            $cache = new Core\Cache2('categories');
+            $cache->getDriver()->deleteAll();
 
             if ($isInUse === true) {
                 $text = $this->lang->t('categories', 'category_is_in_use');
@@ -141,7 +140,8 @@ class Index extends Core\Modules\Controller\Admin
                         $file['name'] = $_FILES['picture']['name'];
                         $file['size'] = $_FILES['picture']['size'];
                     }
-                    $settings = Core\Config::getSettings('categories');
+                    $config = new Core\Config($this->db, 'categories');
+                    $settings = $config->getSettings();
 
                     $validator = new Categories\Validator($this->lang, $this->model);
                     $validator->validate($_POST, $file, $settings, $this->uri->id);
@@ -205,6 +205,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
+        $config = new Core\Config($this->db, 'categories');
+
         if (empty($_POST) === false) {
             try {
                 $validator = new Categories\Validator($this->lang, $this->model);
@@ -215,7 +217,7 @@ class Index extends Core\Modules\Controller\Admin
                     'height' => (int)$_POST['height'],
                     'filesize' => (int)$_POST['filesize'],
                 );
-                $bool = Core\Config::setSettings('categories', $data);
+                $bool = $config->setSettings($data);
 
                 $this->session->unsetFormToken();
 
@@ -227,7 +229,7 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
 
-        $settings = Core\Config::getSettings('categories');
+        $settings = $config->getSettings();
 
         $this->view->assign('form', array_merge($settings, $_POST));
 

@@ -43,7 +43,8 @@ class Index extends Core\Modules\Controller\Admin
     {
         $guestbook = $this->model->getOneById($this->uri->id);
         if (empty($guestbook) === false) {
-            $settings = Core\Config::getSettings('guestbook');
+            $config = new Core\Config($this->db, 'guestbook');
+            $settings = $config->getSettings();
 
             if (empty($_POST) === false) {
                 try {
@@ -103,7 +104,8 @@ class Index extends Core\Modules\Controller\Admin
             );
             $this->appendContent(Core\Functions::dataTable($config));
 
-            $settings = Core\Config::getSettings('guestbook');
+            $config = new Core\Config($this->db, 'guestbook');
+            $settings = $config->getSettings();
             // Emoticons einbinden
             $emoticons_active = false;
             if ($settings['emoticons'] == 1) {
@@ -126,6 +128,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
+        $config = new Core\Config($this->db, 'guestbook');
+
         if (empty($_POST) === false) {
             try {
                 $validator = new Guestbook\Validator($this->lang, $this->auth, $this->date, $this->db, $this->model);
@@ -139,7 +143,7 @@ class Index extends Core\Modules\Controller\Admin
                     'emoticons' => $_POST['emoticons'],
                     'newsletter_integration' => $_POST['newsletter_integration'],
                 );
-                $bool = Core\Config::setSettings('guestbook', $data);
+                $bool = $config->setSettings($data);
 
                 $this->session->unsetFormToken();
 
@@ -151,7 +155,7 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
 
-        $settings = Core\Config::getSettings('guestbook');
+        $settings = $config->getSettings();
 
         $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 

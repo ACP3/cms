@@ -51,7 +51,8 @@ class Index extends Core\Modules\Controller
                     $replace = array($user['nickname'], $user['mail'], $newPassword, CONFIG_SEO_TITLE, $host);
                     $body = str_replace($search, $replace, $this->lang->t('users', 'forgot_pwd_mail_message'));
 
-                    $settings = Core\Config::getSettings('users');
+                    $config = new Core\Config($this->db, 'users');
+                    $settings = $config->getSettings();
                     $mailIsSent = Core\Functions::generateEmail(substr($user['realname'], 0, -2), $user['mail'], $settings['mail'], $subject, $body);
 
                     // Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
@@ -146,7 +147,8 @@ class Index extends Core\Modules\Controller
 
     public function actionRegister()
     {
-        $settings = Core\Config::getSettings('users');
+        $config = new Core\Config($this->db, 'users');
+        $settings = $config->getSettings();
 
         if ($this->auth->isUser() === true) {
             $this->uri->redirect(0, ROOT_DIR);

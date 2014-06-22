@@ -31,7 +31,8 @@ class Index extends Core\Modules\Controller
         if ($this->model->pictureExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
             $picture = $this->model->getPictureById((int) $this->uri->id);
 
-            $settings = Core\Config::getSettings('gallery');
+            $config = new Core\Config($this->db, 'gallery');
+            $settings = $config->getSettings();
 
             // Brotkrümelspur
             $this->breadcrumb
@@ -106,7 +107,8 @@ class Index extends Core\Modules\Controller
             $picture = $this->model->getFileById($this->uri->id);
             $action = $this->uri->action === 'thumb' ? 'thumb' : '';
 
-            $settings = Core\Config::getSettings('gallery');
+            $config = new Core\Config($this->db, 'gallery');
+            $settings = $config->getSettings();
             $options = array(
                 'enable_cache' => CONFIG_CACHE_IMAGES == 1 ? true : false,
                 'cache_prefix' => 'gallery_' . $action,
@@ -140,7 +142,8 @@ class Index extends Core\Modules\Controller
             );
             $pagination->display();
 
-            $settings = Core\Config::getSettings('gallery');
+            $config = new Core\Config($this->db, 'gallery');
+            $settings = $config->getSettings();
 
             for ($i = 0; $i < $c_galleries; ++$i) {
                 $galleries[$i]['date_formatted'] = $this->date->format($galleries[$i]['start'], $settings['dateformat']);
@@ -166,7 +169,8 @@ class Index extends Core\Modules\Controller
                 ->append($galleryTitle);
 
             if ($c_pictures > 0) {
-                $settings = Core\Config::getSettings('gallery');
+                $config = new Core\Config($this->db, 'gallery');
+                $settings = $config->getSettings();
 
                 for ($i = 0; $i < $c_pictures; ++$i) {
                     $pictures[$i]['uri'] = $this->uri->route($settings['overlay'] == 1 ? 'gallery/index/image/id_' . $pictures[$i]['id'] . '/action_normal' : 'gallery/index/details/id_' . $pictures[$i]['id']);

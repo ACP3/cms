@@ -1,6 +1,9 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Modules\System\Model;
+use Doctrine\DBAL\Connection;
+
 /**
  * Manages the various module settings
  *
@@ -8,35 +11,53 @@ namespace ACP3\Core;
  */
 class Config
 {
-
     /**
-     * Gibt die Systemeinstellungen aus
+     * @var \Doctrine\DBAL\Connection
      */
-    public static function getSystemSettings()
+    protected $db;
+    /**
+     * @var Model
+     */
+    protected $systemModel;
+    /**
+     * @var Cache2
+     */
+    protected $cache;
+    /**
+     * @var string
+     */
+    protected $module = '';
+
+    public function __construct(Connection $db, $module)
     {
-        $settings = self::getSettings('system');
-        foreach ($settings as $key => $value) {
-            define('CONFIG_' . strtoupper($key), $value);
-        }
-        return;
+        $this->cache = new Cache2($module);
+        $this->db = $db;
+        $this->module = strtolower($module);
+        $this->systemModel = new Model($db);
     }
 
     /**
      * Erstellt/Verändert die Konfigurationsdateien für die Module
      *
-     * @param string $module
      * @param array $data
      * @return boolean
      */
-    public static function setSettings($module, $data)
+    public function setSettings($data)
     {
         $bool = $bool2 = false;
-        $mod_id = Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array($module));
-        if (!empty($mod_id)) {
+        $moduleId = $this->systemModel->getModuleId($this->module);
+        if (!empty($moduleId)) {
             foreach ($data as $key => $value) {
-                $bool = Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'settings SET value = ? WHERE module_id = ? AND name = ?', array($value, (int)$mod_id, $key));
+                $updateValues = array(
+                    'value' => $value
+                );
+                $where = array(
+                    'module_id' => $moduleId,
+                    'name' => $key
+                );
+                $bool = $this->systemModel->update($updateValues, $where, Model::TABLE_NAME_SETTINGS);
             }
-            $bool2 = self::setModuleCache($module);
+            $bool2 = $this->setCache();
         }
 
         return $bool !== false && $bool2 !== false;
@@ -45,27 +66,36 @@ class Config
     /**
      * Gibt den Inhalt der Konfigurationsdateien der Module aus
      *
-     * @param string $module
      * @return array
      */
-    public static function getSettings($module)
+    public function getSettings()
     {
-        if (Cache::check($module, 'settings') === false) {
-            self::setModuleCache($module);
+        if ($this->cache->contains('settings') === false) {
+            $this->setCache();
         }
 
-        return Cache::output($module, 'settings');
+        return $this->cache->fetch('settings');
+    }
+
+    /**
+     * Outputs module settings as constants
+     */
+    public function getSettingsAsConstants()
+    {
+        $settings = $this->getSettings();
+        foreach ($settings as $key => $value) {
+            define('CONFIG_' . strtoupper($key), $value);
+        }
     }
 
     /**
      * Setzt den Cache für die Einstellungen eines Moduls
      *
-     * @param string $module
      * @return boolean
      */
-    protected static function setModuleCache($module)
+    protected function setCache()
     {
-        $settings = Registry::get('Db')->executeQuery('SELECT s.name, s.value FROM ' . DB_PRE . 'settings AS s JOIN ' . DB_PRE . 'modules AS m ON(m.id = s.module_id) WHERE m.name = ?', array($module))->fetchAll();
+        $settings = $this->systemModel->getSettingsByModuleName($this->module);
         $c_settings = count($settings);
 
         $data = array();
@@ -79,7 +109,7 @@ class Config
             }
         }
 
-        return Cache::create($module, $data, 'settings');
+        return $this->cache->save('settings', $data);
     }
 
 }

@@ -8,6 +8,7 @@ namespace ACP3\Core;
  */
 class SEO
 {
+    protected $cache;
     /**
      * @var Lang
      */
@@ -55,6 +56,7 @@ class SEO
         URI $uri,
         View $view)
     {
+        $this->cache = new Cache2('seo');
         $this->db = $db;
         $this->lang = $lang;
         $this->uri = $uri;
@@ -82,7 +84,7 @@ class SEO
             );
         }
 
-        return Cache::create('meta', $data, 'seo');
+        return $this->cache->save('meta', $data);
     }
 
     /**
@@ -92,11 +94,11 @@ class SEO
      */
     public function getCache()
     {
-        if (Cache::check('meta', 'seo') === false) {
+        if ($this->cache->contains('meta') === false) {
             $this->setCache();
         }
 
-        return Cache::output('meta', 'seo');
+        return $this->cache->fetch('meta');
     }
 
     /**

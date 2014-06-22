@@ -28,7 +28,8 @@ class Index extends Core\Modules\Controller\Sidebar
 
     public function actionIndex()
     {
-        $settings = Core\Config::getSettings('gallery');
+        $config = new Core\Config($this->db, 'gallery');
+        $settings = $config->getSettings();
 
         $galleries = $this->model->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         $c_galleries = count($galleries);

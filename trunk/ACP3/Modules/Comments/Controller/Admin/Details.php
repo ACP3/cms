@@ -111,7 +111,9 @@ class Details extends Core\Modules\Controller\Admin
                 );
                 $this->appendContent(Core\Functions::dataTable($config));
 
-                $settings = Core\Config::getSettings('comments');
+                $config = new Core\Config($this->db, 'comments');
+                $settings = $config->getSettings();
+
                 // Emoticons einbinden
                 $emoticons_active = false;
                 if ($settings['emoticons'] == 1) {

@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'system';
-    const SCHEMA_VERSION = 43;
+    const SCHEMA_VERSION = 44;
 
     public function __construct(\Doctrine\DBAL\Connection $db)
     {
@@ -135,6 +135,7 @@ class Installer extends Modules\AbstractInstaller
     public function settings()
     {
         return array(
+            'cache_driver' => 'file',
             'cache_images' => true,
             'cache_minify' => 3600,
             'date_format_long' => '',
@@ -233,6 +234,9 @@ class Installer extends Modules\AbstractInstaller
             ),
             43 => array(
                 'DELETE FROM `{pre}acl_resources` WHERE `module_id` = ' . $this->getModuleId() . ' AND area = "admin" AND controller = "extensions" AND page = "languages";',
+            ),
+            44 => array(
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', " . $this->getModuleId() . ", 'cache_driver', 'PhpFile');",
             )
         );
     }

@@ -322,4 +322,14 @@ abstract class Controller
         }
     }
 
+    /**
+     * Gets an class from the code registry
+     *
+     * @param $classAlias
+     * @return mixed
+     */
+    public function get($classAlias)
+    {
+        return Core\Registry::get($classAlias);
+    }
 }

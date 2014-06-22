@@ -29,7 +29,8 @@ class Index extends Core\Modules\Controller
     public function actionDetails()
     {
         if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id, $this->date->getCurrentDateTime()) == 1) {
-            $settings = Core\Config::getSettings('news');
+            $config = new Core\Config($this->db, 'news');
+            $settings = $config->getSettings();
             $news = $this->model->getCache($this->uri->id);
 
             $this->breadcrumb->append($this->lang->t('news', 'news'), 'news');
@@ -84,7 +85,8 @@ class Index extends Core\Modules\Controller
             $this->view->assign('categories', \ACP3\Modules\Categories\Helpers::categoriesList('news', $cat));
         }
 
-        $settings = Core\Config::getSettings('news');
+        $config = new Core\Config($this->db, 'news');
+        $settings = $config->getSettings();
         // Kategorie in Brotkrümelspur anzeigen
         if ($cat !== 0 && $settings['category_in_breadcrumb'] == 1) {
             $this->seo->setCanonicalUri($this->uri->route('news'));

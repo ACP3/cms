@@ -71,7 +71,8 @@ class Index extends Core\Modules\Controller
                     ->append($file['category_title'], 'files/files/cat_' . $file['category_id'])
                     ->append($file['title']);
 
-                $settings = Core\Config::getSettings('files');
+                $config = new Core\Config($this->db, 'files');
+                $settings = $config->getSettings();
 
                 $file['size'] = !empty($file['size']) ? $file['size'] : $this->lang->t('files', 'unknown_filesize');
                 $file['date_formatted'] = $this->date->format($file['start'], $settings['dateformat']);
@@ -113,7 +114,8 @@ class Index extends Core\Modules\Controller
             $c_files = count($files);
 
             if ($c_files > 0) {
-                $settings = Core\Config::getSettings('files');
+                $config = new Core\Config($this->db, 'files');
+                $settings = $config->getSettings();
 
                 for ($i = 0; $i < $c_files; ++$i) {
                     $files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : $this->lang->t('files', 'unknown_filesize');

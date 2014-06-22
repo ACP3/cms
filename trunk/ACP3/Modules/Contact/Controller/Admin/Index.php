@@ -14,6 +14,8 @@ class Index extends Core\Modules\Controller\Admin
 {
     public function actionIndex()
     {
+        $config = new Core\Config($this->db, 'contact');
+
         if (empty($_POST) === false) {
             try {
                 $validator = new Contact\Validator($this->lang, $this->auth);
@@ -27,7 +29,7 @@ class Index extends Core\Modules\Controller\Admin
                     'disclaimer' => Core\Functions::strEncode($_POST['disclaimer'], true),
                 );
 
-                $bool = Core\Config::setSettings('contact', $data);
+                $bool = $config->setSettings($data);
 
                 $this->session->unsetFormToken();
 
@@ -41,7 +43,7 @@ class Index extends Core\Modules\Controller\Admin
 
         Core\Functions::getRedirectMessage();
 
-        $settings = Core\Config::getSettings('contact');
+        $settings = $config->getSettings();
 
         $this->view->assign('form', array_merge($settings, $_POST));
 

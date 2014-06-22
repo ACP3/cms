@@ -28,7 +28,8 @@ class Index extends Core\Modules\Controller\Sidebar
 
     public function actionIndex()
     {
-        $settings = Core\Config::getSettings('news');
+        $config = new Core\Config($this->db, 'news');
+        $settings = $config->getSettings();
 
         $news = $this->model->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         $c_news = count($news);

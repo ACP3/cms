@@ -125,7 +125,8 @@ class Account extends Core\Modules\Controller
 
     public function actionSettings()
     {
-        $settings = Core\Config::getSettings('users');
+        $config = new Core\Config($this->db, 'users');
+        $settings = $config->getSettings();
 
         if (empty($_POST) === false) {
             try {

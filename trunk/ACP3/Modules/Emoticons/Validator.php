@@ -12,13 +12,12 @@ class Validator extends Core\Validation\AbstractValidator
     /**
      * @param array $formData
      * @param $file
+     * @param array $settings
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
-    public function validateCreate(array $formData, $file)
+    public function validateCreate(array $formData, $file, array $settings)
     {
         $this->validateFormKey();
-
-        $settings = Core\Config::getSettings('emoticons');
 
         if (empty($formData['code'])) {
             $errors['code'] = $this->lang->t('emoticons', 'type_in_code');
@@ -40,13 +39,12 @@ class Validator extends Core\Validation\AbstractValidator
     /**
      * @param array $formData
      * @param $file
+     * @param array $settings
      * @throws \ACP3\Core\Exceptions\ValidationFailed
      */
-    public function validateEdit(array $formData, $file)
+    public function validateEdit(array $formData, $file, array $settings)
     {
         $this->validateFormKey();
-
-        $settings = Core\Config::getSettings('emoticons');
 
         if (empty($formData['code'])) {
             $errors['code'] = $this->lang->t('emoticons', 'type_in_code');

@@ -28,7 +28,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionCreate()
     {
-        $settings = Core\Config::getSettings('newsletter');
+        $config = new Core\Config($this->db, 'newsletter');
+        $settings = $config->getSettings();
 
         if (empty($_POST) === false) {
             try {
@@ -102,9 +103,11 @@ class Index extends Core\Modules\Controller\Admin
     public function actionEdit()
     {
         $newsletter = $this->model->getOneById($this->uri->id);
-        $settings = Core\Config::getSettings('newsletter');
 
         if (empty($newsletter) === false) {
+            $config = new Core\Config($this->db, 'newsletter');
+            $settings = $config->getSettings();
+
             if (empty($_POST) === false) {
                 try {
                     $validator = new Newsletter\Validator($this->lang, $this->auth, $this->model);
@@ -213,6 +216,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionSettings()
     {
+        $config = new Core\Config($this->db, 'newsletter');
+
         if (empty($_POST) === false) {
             try {
                 $validator = new Newsletter\Validator($this->lang, $this->auth, $this->model);
@@ -224,7 +229,7 @@ class Index extends Core\Modules\Controller\Admin
                     'html' => (int) $_POST['html']
                 );
 
-                $bool = Core\Config::setSettings('newsletter', $data);
+                $bool = $config->setSettings($data);
 
                 $this->session->unsetFormToken();
 
@@ -236,7 +241,7 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
 
-        $settings = Core\Config::getSettings('newsletter');
+        $settings = $config->getSettings();
 
         $this->view->assign('form', array_merge($settings, $_POST));
 

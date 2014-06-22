@@ -29,7 +29,8 @@ class Index extends Core\Modules\Controller\Sidebar
 
    public function actionIndex()
     {
-        $settings = Core\Config::getSettings('files');
+        $config = new Core\Config($this->db, 'files');
+        $settings = $config->getSettings();
 
         $files = $this->model->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         $c_files = count($files);

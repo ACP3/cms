@@ -87,7 +87,8 @@ class Index extends Core\Modules\Controller
             }
         }
 
-        $settings = Core\Config::getSettings('comments');
+        $config = new Core\Config($this->db, 'comments');
+        $settings = $config->getSettings();
 
         // Emoticons einbinden, falls diese aktiv sind
         if ($settings['emoticons'] == 1 && Core\Modules::isActive('emoticons') === true) {
@@ -125,7 +126,8 @@ class Index extends Core\Modules\Controller
     {
         Core\Functions::getRedirectMessage();
 
-        $settings = Core\Config::getSettings('comments');
+        $config = new Core\Config($this->db, 'comments');
+        $settings = $config->getSettings();
 
         // Auflistung der Kommentare
         $comments = $this->model->getAllByModule($this->module, $this->entryId, POS, $this->auth->entries);

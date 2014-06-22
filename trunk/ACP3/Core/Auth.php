@@ -78,7 +78,9 @@ class Auth
                     $this->isUser = true;
                     $this->userId = (int)$user[0]['id'];
                     $this->superUser = (bool)$user[0]['super_user'];
-                    $settings = Config::getSettings('users');
+
+                    $config = new Config($db, 'users');
+                    $settings = $config->getSettings();
                     $this->entries = $settings['entries_override'] == 1 && $user[0]['entries'] > 0 ? (int)$user[0]['entries'] : (int)CONFIG_ENTRIES;
                     $this->language = $settings['language_override'] == 1 ? $user[0]['language'] : CONFIG_LANG;
                 }
