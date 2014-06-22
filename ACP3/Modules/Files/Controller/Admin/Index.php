@@ -16,7 +16,6 @@ class Index extends Core\Modules\Controller\Admin
 {
 
     /**
-     *
      * @var Files\Model
      */
     protected $model;
@@ -224,7 +223,8 @@ class Index extends Core\Modules\Controller\Admin
                         $this->seo->setCache();
                     }
 
-                    $this->model->setCache($this->uri->id);
+                    $cache = new Files\Cache($this->model);
+                    $cache->setCache($this->uri->id);
 
                     $this->session->unsetFormToken();
 

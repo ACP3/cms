@@ -3,6 +3,7 @@
 namespace ACP3\Modules\Files\Controller;
 
 use ACP3\Core;
+use ACP3\Modules\Categories;
 use ACP3\Modules\Files;
 
 
@@ -35,7 +36,8 @@ class Index extends Core\Modules\Controller
     public function actionIndex()
     {
         if (Core\Modules::isActive('categories') === true) {
-            $categories = $this->categoriesModel->getCache('files');
+            $categoriesCache = new Categories\Cache($this->categoriesModel);
+            $categories = $categoriesCache->getCache('files');
             if (count($categories) > 0) {
                 $this->view->assign('categories', $categories);
             }
@@ -45,7 +47,8 @@ class Index extends Core\Modules\Controller
     public function actionDetails()
     {
         if ($this->model->resultExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
-            $file = $this->model->getCache($this->uri->id);
+            $cache = new Files\Cache($this->model);
+            $file = $cache->getCache($this->uri->id);
 
             if ($this->uri->action === 'download') {
                 $path = UPLOADS_DIR . 'files/';

@@ -16,6 +16,7 @@ abstract class Helpers
 {
     const URL_KEY_PATTERN_GALLERY = 'gallery/index/pics/id_%s/';
     const URL_KEY_PATTERN_PICTURE = 'gallery/index/details/id_%s/';
+
     /**
      *
      * @var Model
@@ -37,7 +38,7 @@ abstract class Helpers
         if (!self::$model) {
             self::$uri = Core\Registry::get('URI');
             self::$seo = Core\Registry::get('SEO');
-            self::$model = new Model(Core\Registry::get('Db'), Core\Registry::get('Lang'), Core\Registry::get('URI'));
+            self::$model = new Model(Core\Registry::get('Db'));
         }
     }
 

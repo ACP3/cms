@@ -158,7 +158,8 @@ class Index extends Core\Modules\Controller
     {
         if ($this->model->galleryExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
             // Cache der Galerie holen
-            $pictures = $this->model->getCache($this->uri->id);
+            $cache = new Gallery\Cache($this->db, $this->model);
+            $pictures = $cache->getCache($this->uri->id);
             $c_pictures = count($pictures);
 
             $galleryTitle = $this->model->getGalleryTitle($this->uri->id);
