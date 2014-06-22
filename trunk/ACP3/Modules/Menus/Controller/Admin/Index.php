@@ -62,6 +62,8 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->uri->action === 'confirmed') {
             $bool = false;
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
+            $cache = new Core\Cache2('menus');
+
             foreach ($items as $item) {
                 if (!empty($item) && $this->model->menuExists($item) === true) {
                     // Der Navigationsleiste zugeordnete Menüpunkte ebenfalls löschen
@@ -72,11 +74,12 @@ class Index extends Core\Modules\Controller\Admin
 
                     $block = $this->model->getMenuNameById($item);
                     $bool = $this->model->delete($item);
-                    Core\Cache::delete('visible_items_' . $block, 'menus');
+                    $cache->delete(Menus\Cache::CACHE_ID_VISIBLE . $block);
                 }
             }
 
-            $this->model->setMenuItemsCache();
+            $menusCache = new Menus\Cache($this->model);
+            $menusCache->setMenuItemsCache();
 
             Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
         } elseif (is_string($items)) {
@@ -101,7 +104,8 @@ class Index extends Core\Modules\Controller\Admin
 
                     $bool = $this->model->update($updateValues, $this->uri->id);
 
-                    $this->model->setMenuItemsCache();
+                    $cache = new Menus\Cache($this->model);
+                    $cache->setMenuItemsCache();
 
                     $this->session->unsetFormToken();
 

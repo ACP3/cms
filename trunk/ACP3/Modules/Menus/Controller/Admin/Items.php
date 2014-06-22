@@ -69,7 +69,8 @@ class Items extends Core\Modules\Controller\Admin
                     $this->seo->setCache();
                 }
 
-                $this->model->setMenuItemsCache();
+                $cache = new Menus\Cache($this->model);
+                $cache->setMenuItemsCache();
 
                 $this->session->unsetFormToken();
 
@@ -146,7 +147,8 @@ class Items extends Core\Modules\Controller\Admin
                 $this->uri->deleteUriAlias($itemUri);
             }
 
-            $this->model->setMenuItemsCache();
+            $cache = new Menus\Cache($this->model);
+            $cache->setMenuItemsCache();
 
             $this->seo->setCache();
 
@@ -203,7 +205,8 @@ class Items extends Core\Modules\Controller\Admin
                         $this->seo->setCache();
                     }
 
-                    $this->model->setMenuItemsCache();
+                    $cache = new Menus\Cache($this->model);
+                    $cache->setMenuItemsCache();
 
                     $this->session->unsetFormToken();
 
@@ -272,7 +275,8 @@ class Items extends Core\Modules\Controller\Admin
             $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
             $nestedSet->order($this->uri->id, $this->uri->action);
 
-            $this->model->setMenuItemsCache();
+            $cache = new Menus\Cache($this->model);
+            $cache->setMenuItemsCache();
 
             $this->uri->redirect('acp/menus');
         } else {

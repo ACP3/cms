@@ -31,7 +31,9 @@ class Index extends Core\Modules\Controller
         if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id, $this->date->getCurrentDateTime()) == 1) {
             $config = new Core\Config($this->db, 'news');
             $settings = $config->getSettings();
-            $news = $this->model->getCache($this->uri->id);
+
+            $cache = new News\Cache($this->model);
+            $news = $cache->getCache($this->uri->id);
 
             $this->breadcrumb->append($this->lang->t('news', 'news'), 'news');
 
@@ -107,10 +109,10 @@ class Index extends Core\Modules\Controller
         $c_news = count($news);
 
         if ($c_news > 0) {
-            $comment_check = false;
+            $commentsCheck = false;
             // Überprüfen, ob das Kommentare Modul aktiv ist
             if (Core\Modules::isActive('comments') === true) {
-                $comment_check = true;
+                $commentsCheck = true;
             }
 
             $pagination = new Core\Pagination(
@@ -128,7 +130,7 @@ class Index extends Core\Modules\Controller
                 $news[$i]['date_formatted'] = $this->date->format($news[$i]['start'], $settings['dateformat']);
                 $news[$i]['date_iso'] = $this->date->format($news[$i]['start'], 'c');
                 $news[$i]['text'] = Core\Functions::rewriteInternalUri($news[$i]['text']);
-                if ($settings['comments'] == 1 && $news[$i]['comments'] == 1 && $comment_check === true) {
+                if ($settings['comments'] == 1 && $news[$i]['comments'] == 1 && $commentsCheck === true) {
                     $news[$i]['comments_count'] = \ACP3\Modules\Comments\Helpers::commentsCount('news', $news[$i]['id']);
                 }
                 if ($settings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
