@@ -117,13 +117,15 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->uri->action === 'confirmed') {
             $bool = false;
             $commentsInstalled = Core\Modules::isInstalled('comments');
+            $cache = new Core\Cache2('news');
+
             foreach ($items as $item) {
                 $bool = $this->model->delete($item);
                 if ($commentsInstalled === true) {
                     \ACP3\Modules\Comments\Helpers::deleteCommentsByModuleAndResult('news', $item);
                 }
-                // News Cache löschen
-                Core\Cache::delete('details_id_' . $item, 'news');
+
+                $cache->delete(News\Cache::CACHE_ID . $item);
                 $this->uri->deleteUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $item));
             }
 
@@ -175,7 +177,8 @@ class Index extends Core\Modules\Controller\Admin
                         $this->seo->setCache();
                     }
 
-                    $this->model->setCache($this->uri->id);
+                    $cache = new News\Cache($this->model);
+                    $cache->setCache($this->uri->id);
 
                     $this->session->unsetFormToken();
 

@@ -20,12 +20,10 @@ abstract class Helpers
      * @var array
      */
     protected static $menuItems = array();
-
     /**
      * @var array
      */
     protected static $navbar = array();
-
     /**
      * @var \Doctrine\DBAL\Connection
      */
@@ -39,44 +37,45 @@ abstract class Helpers
      * @var Model
      */
     protected static $model;
+    /**
+     * @var Cache
+     */
+    protected static $cache;
 
     protected static function _init()
     {
         if (!self::$model) {
             self::$db = Core\Registry::get('Db');
             self::$uri = Core\Registry::get('URI');
-            self::$model = new Model(
-                self::$db,
-                Core\Registry::get('Lang'),
-                self::$uri
-            );
+            self::$model = new Model(self::$db);
+            self::$cache = new Cache(self::$model);
         }
     }
 
     /**
      * Auflistung der Seiten
      *
-     * @param integer $parent_id
+     * @param integer $parentId
      *  ID des Elternknotens
-     * @param integer $left_id
-     * @param integer $right_id
+     * @param integer $leftId
+     * @param integer $rightId
      * @return array
      */
-    public static function menuItemsList($parent_id = 0, $left_id = 0, $right_id = 0)
+    public static function menuItemsList($parentId = 0, $leftId = 0, $rightId = 0)
     {
         self::_init();
 
         // Menüpunkte einbinden
         if (empty(self::$menuItems)) {
-            self::$menuItems = self::$model->getMenuItemsCache();
+            self::$menuItems = self::$cache->getMenuItemsCache();
         }
 
         $output = array();
 
         if (count(self::$menuItems) > 0) {
             foreach (self::$menuItems as $row) {
-                if (!($row['left_id'] >= $left_id && $row['right_id'] <= $right_id)) {
-                    $row['selected'] = Core\Functions::selectEntry('parent', $row['id'], $parent_id);
+                if (!($row['left_id'] >= $leftId && $row['right_id'] <= $rightId)) {
+                    $row['selected'] = Core\Functions::selectEntry('parent', $row['id'], $parentId);
                     $row['spaces'] = str_repeat('&nbsp;&nbsp;', $row['level']);
 
                     // Titel für den aktuellen Block setzen
@@ -143,7 +142,7 @@ abstract class Helpers
 
             $uri = self::$uri;
 
-            $items = self::$model->getVisibleMenuItems($menu);
+            $items = self::$cache->getVisibleMenuItems($menu);
             $c_items = count($items);
 
             if ($c_items > 0) {

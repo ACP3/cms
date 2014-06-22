@@ -19,6 +19,18 @@ class Modules
     private static $allModules = array();
 
     /**
+     * @var Cache2
+     */
+    protected static $cache;
+
+    private static function _init()
+    {
+        if (!self::$cache) {
+            self::$cache = new Cache2('modules');
+        }
+    }
+
+    /**
      * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat
      *
      * @param string $path
@@ -46,7 +58,7 @@ class Modules
      */
     public static function actionExists($path)
     {
-        $pathArray = array_map(function($value) {
+        $pathArray = array_map(function ($value) {
             return str_replace(' ', '', ucwords(strtolower(str_replace('_', ' ', $value))));
         }, explode('/', $path));
 
@@ -134,13 +146,15 @@ class Modules
      */
     public static function getModuleInfo($module)
     {
+        self::_init();
+
         $module = strtolower($module);
         if (empty(static::$parseModules)) {
             $filename = 'infos_' . Registry::get('Lang')->getLanguage();
-            if (Cache::check($filename, 'modules') === false) {
+            if (self::$cache->contains($filename) === false) {
                 self::setModulesCache();
             }
-            static::$parseModules = Cache::output($filename, 'modules');
+            static::$parseModules = self::$cache->fetch($filename);
         }
         return !empty(static::$parseModules[$module]) ? static::$parseModules[$module] : array();
     }
@@ -150,6 +164,8 @@ class Modules
      */
     public static function setModulesCache()
     {
+        self::_init();
+
         $infos = array();
         $dirs = scandir(MODULES_DIR);
         foreach ($dirs as $dir) {
@@ -176,7 +192,8 @@ class Modules
                 }
             }
         }
-        Cache::create('infos_' . Registry::get('Lang')->getLanguage(), $infos, 'modules');
+
+        self::$cache->save('infos_' . Registry::get('Lang')->getLanguage(), $infos);
     }
 
 }
