@@ -2,6 +2,7 @@
 
 namespace ACP3\Installer\Modules\Install;
 
+use ACP3\Core\Config;
 use ACP3\Installer\Core;
 
 /**
@@ -204,10 +205,18 @@ class Install extends Core\Modules\Controller
                         'version' => CONFIG_VERSION,
                         'wysiwyg' => 'CKEditor'
                     );
-                    \ACP3\Core\Config::setSettings('system', $systemSettings);
-                    \ACP3\Core\Config::setSettings('users', array('mail' => $_POST['mail']));
-                    \ACP3\Core\Config::setSettings('contact', array('mail' => $_POST['mail'], 'disclaimer' => $this->lang->t('disclaimer')));
-                    \ACP3\Core\Config::setSettings('newsletter', array('mail' => $_POST['mail'], 'mailsig' => $this->lang->t('sincerely') . "\n\n" . $this->lang->t('newsletter_mailsig')));
+
+                    $configSystem = new Config(\ACP3\Core\Registry::get('Db'), 'system');
+                    $configSystem->setSettings($systemSettings);
+
+                    $configUsers = new Config(\ACP3\Core\Registry::get('Db'), 'users');
+                    $configUsers->setSettings(array('mail' => $_POST['mail']));
+
+                    $configContact = new Config(\ACP3\Core\Registry::get('Db'), 'contact');
+                    $configContact->setSettings(array('mail' => $_POST['mail'], 'disclaimer' => $this->lang->t('disclaimer')));
+
+                    $configNewsletter = new Config(\ACP3\Core\Registry::get('Db'), 'newsletter');
+                    $configNewsletter->setSettings(array('mail' => $_POST['mail'], 'mailsig' => $this->lang->t('sincerely') . "\n\n" . $this->lang->t('newsletter_mailsig')));
                 }
 
                 $this->view->setContentTemplate('install/result.tpl');

@@ -107,7 +107,8 @@ class Model extends Core\Model
         $pictures = $this->getPicturesByGalleryId($id);
         $c_pictures = count($pictures);
 
-        $settings = Core\Config::getSettings('gallery');
+        $cache = new Core\Config($this->db, 'gallery');
+        $settings = $cache->getSettings();
 
         for ($i = 0; $i < $c_pictures; ++$i) {
             $pictures[$i]['width'] = $settings['thumbwidth'];
