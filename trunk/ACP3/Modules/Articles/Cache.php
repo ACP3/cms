@@ -5,7 +5,7 @@ use ACP3\Core;
 
 class Cache
 {
-    const CACHE_ID = 'list_id';
+    const CACHE_ID = 'list_id_';
 
     /**
      * @var Model

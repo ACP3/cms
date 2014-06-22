@@ -15,13 +15,10 @@ use ACP3\Core;
 abstract class Helpers
 {
 
-    protected static $emoticons = array();
-
     /**
-     *
-     * @var Model
+     * @var array
      */
-    protected static $model;
+    protected static $emoticons = array();
 
     /**
      * @var Core\View
@@ -30,12 +27,14 @@ abstract class Helpers
 
     protected static function _init()
     {
-        if (!self::$model) {
-            self::$model = new Model(Core\Registry::get('Db'), Core\Registry::get('Lang'));
+        if (!self::$view) {
             self::$view = Core\Registry::get('View');
 
+            $model = new Model(Core\Registry::get('Db'));
+            $cache = new Cache($model);
+
             // Initialize emoticons
-            self::$emoticons = self::$model->getCache();
+            self::$emoticons = $cache->getCache();
         }
     }
 

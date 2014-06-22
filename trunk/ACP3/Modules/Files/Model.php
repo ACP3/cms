@@ -91,33 +91,4 @@ class Model extends Core\Model
         return $this->db->fetchAll('SELECT f.*, c.title AS cat FROM ' . $this->prefix . static::TABLE_NAME . ' AS f, ' . $this->prefix . \ACP3\Modules\Categories\Model::TABLE_NAME . ' AS c WHERE f.category_id = c.id ORDER BY f.start DESC, f.end DESC, f.id DESC');
     }
 
-    /**
-     * Erstellt den Cache einer News anhand der angegebenen ID
-     *
-     * @param integer $id
-     *  Die ID der News
-     * @return boolean
-     */
-    public function setCache($id)
-    {
-        return Core\Cache::create('details_id_' . $id, $this->getOneById($id), 'files');
-    }
-
-    /**
-     * Bindet die gecachete News ein
-     *
-     * @param integer $id
-     *  Die ID der News
-     * @return array
-     */
-    public function getCache($id)
-    {
-        $cacheId = 'details_id_' . $id;
-        if (Core\Cache::check($cacheId, 'files') === false) {
-            $this->setCache($id);
-        }
-
-        return Core\Cache::output($cacheId, 'files');
-    }
-
 }

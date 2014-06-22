@@ -62,7 +62,9 @@ class Pictures extends Core\Modules\Controller\Admin
 
                     $lastId = $this->model->insert($insertValues, Gallery\Model::TABLE_NAME_PICTURES);
                     $bool2 = Gallery\Helpers::generatePictureAlias($lastId);
-                    $this->model->setCache($this->uri->id);
+
+                    $cache = new Gallery\Cache($this->db, $this->model);
+                    $cache->setCache($this->uri->id);
 
                     $this->session->unsetFormToken();
 
@@ -104,6 +106,8 @@ class Pictures extends Core\Modules\Controller\Admin
         $items = $this->_deleteItem('acp/gallery/pictures/delete', 'acp/gallery/index/edit/id_' . $this->uri->id);
 
         if ($this->uri->action === 'confirmed') {
+            $cache = new Gallery\Cache($this->db, $this->model);
+
             $bool = false;
             foreach ($items as $item) {
                 if (!empty($item) && $this->model->pictureExists($item) === true) {
@@ -113,8 +117,9 @@ class Pictures extends Core\Modules\Controller\Admin
                     Gallery\Helpers::removePicture($picture['file']);
 
                     $bool = $this->model->delete($item, '', Gallery\Model::TABLE_NAME_PICTURES);
-                    $this->uri->deleteUriAlias('gallery/index/details/id_' . $item);
-                    $this->model->setCache($picture['gallery_id']);
+                    $this->uri->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item));
+
+                    $cache->setCache($picture['gallery_id']);
                 }
             }
 
@@ -165,7 +170,9 @@ class Pictures extends Core\Modules\Controller\Admin
                     }
 
                     $bool = $this->model->update($updateValues, $this->uri->id, Gallery\Model::TABLE_NAME_PICTURES);
-                    $this->model->setCache($picture['gallery_id']);
+
+                    $cache = new Gallery\Cache($this->db, $this->model);
+                    $cache->setCache($picture['gallery_id']);
 
                     $this->session->unsetFormToken();
 
@@ -202,7 +209,8 @@ class Pictures extends Core\Modules\Controller\Admin
 
                 $galleryId = $this->model->getGalleryIdFromPictureId($this->uri->id);
 
-                $this->model->setCache($galleryId);
+                $cache = new Gallery\Cache($this->db, $this->model);
+                $cache->setCache($galleryId);
 
                 $this->uri->redirect('acp/gallery/index/edit/id_' . $galleryId);
             }

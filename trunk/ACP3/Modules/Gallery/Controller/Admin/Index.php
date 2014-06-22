@@ -86,6 +86,8 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->uri->action === 'confirmed') {
             $bool = $bool2 = false;
 
+            $cache = new Core\Cache2('gallery');
+
             foreach ($items as $item) {
                 if (!empty($item) && $this->model->galleryExists($item) === true) {
                     // Hochgeladene Bilder löschen
@@ -95,7 +97,7 @@ class Index extends Core\Modules\Controller\Admin
                     }
 
                     // Galerie Cache löschen
-                    Core\Cache::delete('pics_id_' . $item, 'gallery');
+                    $cache->delete(Gallery\Cache::CACHE_ID . $item);
                     $this->uri->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item));
                     Gallery\Helpers::deletePictureAliases($item);
 
@@ -218,6 +220,7 @@ class Index extends Core\Modules\Controller\Admin
     public function actionSettings()
     {
         $config = new Core\Config($this->db, 'gallery');
+        $settings = $config->getSettings();
 
         if (empty($_POST) === false) {
             try {
@@ -259,8 +262,6 @@ class Index extends Core\Modules\Controller\Admin
                 $this->view->assign('error_msg', $e->getMessage());
             }
         }
-
-        $settings = $config->getSettings();
 
         if (Core\Modules::isActive('comments') === true) {
             $lang_comments = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
