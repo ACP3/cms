@@ -4,7 +4,7 @@ namespace ACP3\Modules\Articles;
 use ACP3\Core;
 use ACP3\Modules\Menus\Model;
 
-class Validator extends Core\Validation\AbstractValidator
+class Validator extends Core\Validator\AbstractValidator
 {
     /**
      * @var \ACP3\Modules\Menus\Model
