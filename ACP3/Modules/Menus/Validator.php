@@ -7,7 +7,7 @@ use ACP3\Core;
  * Class Validator
  * @package ACP3\Modules\Menus
  */
-class Validator extends Core\Validation\AbstractValidator
+class Validator extends Core\Validator\AbstractValidator
 {
     /**
      * @var \ACP3\Core\URI

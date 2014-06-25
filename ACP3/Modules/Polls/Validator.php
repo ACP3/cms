@@ -7,7 +7,7 @@ use ACP3\Core;
  * Class Validator
  * @package ACP3\Modules\Polls
  */
-class Validator extends Core\Validation\AbstractValidator
+class Validator extends Core\Validator\AbstractValidator
 {
     /**
      * @param array $formData

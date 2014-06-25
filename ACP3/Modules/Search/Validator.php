@@ -4,7 +4,7 @@ namespace ACP3\Modules\Search;
 use ACP3\Core;
 
 
-class Validator extends Core\Validation\AbstractValidator
+class Validator extends Core\Validator\AbstractValidator
 {
 
     public function __construct(Core\Lang $lang)

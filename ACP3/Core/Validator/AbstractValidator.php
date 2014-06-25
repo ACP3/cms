@@ -1,11 +1,11 @@
 <?php
-namespace ACP3\Core\Validation;
+namespace ACP3\Core\Validator;
 
 use ACP3\Core;
 
 /**
  * Class AbstractValidator
- * @package ACP3\Core\Validation
+ * @package ACP3\Core\Validator
  */
 class AbstractValidator
 {
