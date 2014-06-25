@@ -53,16 +53,15 @@ class Index extends Core\Modules\Controller\Admin
                 );
 
                 $lastId = $this->model->insert($insertValues);
-                if ((bool)CONFIG_SEO_ALIASES === true) {
-                    $this->uri->insertUriAlias(
-                        sprintf(News\Helpers::URL_KEY_PATTERN, $lastId),
-                        $_POST['alias'],
-                        $_POST['seo_keywords'],
-                        $_POST['seo_description'],
-                        (int)$_POST['seo_robots']
-                    );
-                    $this->seo->setCache();
-                }
+
+                $this->uri->insertUriAlias(
+                    sprintf(News\Helpers::URL_KEY_PATTERN, $lastId),
+                    $_POST['alias'],
+                    $_POST['seo_keywords'],
+                    $_POST['seo_description'],
+                    (int)$_POST['seo_robots']
+                );
+                $this->seo->setCache();
 
                 $this->session->unsetFormToken();
 
@@ -166,16 +165,14 @@ class Index extends Core\Modules\Controller\Admin
 
                     $bool = $this->model->update($updateValues, $this->uri->id);
 
-                    if ((bool)CONFIG_SEO_ALIASES === true) {
-                        $this->uri->insertUriAlias(
-                            sprintf(News\Helpers::URL_KEY_PATTERN, $this->uri->id),
-                            $_POST['alias'],
-                            $_POST['seo_keywords'],
-                            $_POST['seo_description'],
-                            (int)$_POST['seo_robots']
-                        );
-                        $this->seo->setCache();
-                    }
+                    $this->uri->insertUriAlias(
+                        sprintf(News\Helpers::URL_KEY_PATTERN, $this->uri->id),
+                        $_POST['alias'],
+                        $_POST['seo_keywords'],
+                        $_POST['seo_description'],
+                        (int)$_POST['seo_robots']
+                    );
+                    $this->seo->setCache();
 
                     $cache = new News\Cache($this->model);
                     $cache->setCache($this->uri->id);

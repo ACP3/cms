@@ -71,15 +71,14 @@ class Index extends Core\Modules\Controller\Admin
 
 
                 $lastId = $this->model->insert($insertValues);
-                if ((bool)CONFIG_SEO_ALIASES === true) {
-                    $this->uri->insertUriAlias(
-                        sprintf(Files\Helpers::URL_KEY_PATTERN, $lastId),
-                        $_POST['alias'],
-                        $_POST['seo_keywords'],
-                        $_POST['seo_description'],
-                        (int)$_POST['seo_robots']);
-                    $this->seo->setCache();
-                }
+
+                $this->uri->insertUriAlias(
+                    sprintf(Files\Helpers::URL_KEY_PATTERN, $lastId),
+                    $_POST['alias'],
+                    $_POST['seo_keywords'],
+                    $_POST['seo_description'],
+                    (int)$_POST['seo_robots']);
+                $this->seo->setCache();
 
                 $this->session->unsetFormToken();
 
@@ -135,6 +134,8 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->uri->action === 'confirmed') {
             $bool = false;
             $commentsInstalled = Core\Modules::isInstalled('comments');
+
+            $cache = new Core\Cache2('files');
             foreach ($items as $item) {
                 if (!empty($item)) {
                     Core\Functions::removeUploadedFile('files', $this->model->getFileById($item)); // Datei ebenfalls löschen
@@ -143,7 +144,7 @@ class Index extends Core\Modules\Controller\Admin
                         \ACP3\Modules\Comments\Helpers::deleteCommentsByModuleAndResult('files', $item);
                     }
 
-                    Core\Cache::delete('details_id_' . $item, 'files');
+                    $cache->delete(Files\Cache::CACHE_ID);
                     $this->uri->deleteUriAlias(sprintf(Files\Helpers::URL_KEY_PATTERN, $item));
                 }
             }
@@ -212,16 +213,15 @@ class Index extends Core\Modules\Controller\Admin
                     }
 
                     $bool = $this->model->update($updateValues, $this->uri->id);
-                    if ((bool)CONFIG_SEO_ALIASES === true && !empty($_POST['alias'])) {
-                        $this->uri->insertUriAlias(
-                            sprintf(Files\Helpers::URL_KEY_PATTERN, $this->uri->id),
-                            $_POST['alias'],
-                            $_POST['seo_keywords'],
-                            $_POST['seo_description'],
-                            (int)$_POST['seo_robots']
-                        );
-                        $this->seo->setCache();
-                    }
+
+                    $this->uri->insertUriAlias(
+                        sprintf(Files\Helpers::URL_KEY_PATTERN, $this->uri->id),
+                        $_POST['alias'],
+                        $_POST['seo_keywords'],
+                        $_POST['seo_description'],
+                        (int)$_POST['seo_robots']
+                    );
+                    $this->seo->setCache();
 
                     $cache = new Files\Cache($this->model);
                     $cache->setCache($this->uri->id);

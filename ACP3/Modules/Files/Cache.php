@@ -9,6 +9,8 @@ use ACP3\Core;
  */
 class Cache
 {
+    const CACHE_ID = 'details_id_';
+
     /**
      * @var Core\Cache2
      */
@@ -17,10 +19,6 @@ class Cache
      * @var Model
      */
     protected $filesModel;
-    /**
-     * @var string
-     */
-    private $cacheId = 'details_id_';
 
     public function __construct(Model $filesModel)
     {
@@ -34,7 +32,7 @@ class Cache
      */
     public function setCache($id)
     {
-        return $this->cache->save($this->cacheId . $id, $this->filesModel->getOneById($id));
+        return $this->cache->save(self::CACHE_ID . $id, $this->filesModel->getOneById($id));
     }
 
     /**
@@ -43,11 +41,11 @@ class Cache
      */
     public function getCache($id)
     {
-        if ($this->cache->contains($this->cacheId . $id) === false) {
+        if ($this->cache->contains(self::CACHE_ID . $id) === false) {
             $this->setCache($id);
         }
 
-        return $this->cache->fetch($this->cacheId . $id);
+        return $this->cache->fetch(self::CACHE_ID . $id);
     }
 
 } 

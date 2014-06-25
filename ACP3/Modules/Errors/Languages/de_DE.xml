@@ -5,7 +5,7 @@
         <direction>ltr</direction>
     </info>
     <keys>
-        <item key="frontend_index_403">Zugriff verweigert</item>
+        <item key="frontend_index_401">Zugriff verweigert</item>
         <item key="frontend_index_404">Datei nicht gefunden</item>
         <item key="errors">Fehlermeldungen</item>
         <item key="file_not_found">

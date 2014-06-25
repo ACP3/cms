@@ -68,7 +68,6 @@ class Update extends Core\Modules\Controller
             if (defined('CONFIG_CACHE_IMAGES') == false) {
                 define('CONFIG_CACHE_IMAGES', 1);
                 define('CONFIG_CACHE_MINIFY', 3600);
-                define('CONFIG_SEO_ALIASES', 1);
             }
             if (defined('CONFIG_MAILER_TYPE') === false) {
                 define('CONFIG_MAILER_SMTP_AUTH', 0);
@@ -405,7 +404,6 @@ class Update extends Core\Modules\Controller
                     'mailer_type' => CONFIG_MAILER_TYPE,
                     'maintenance_message' => CONFIG_MAINTENANCE_MESSAGE,
                     'maintenance_mode' => (int)CONFIG_MAINTENANCE_MODE,
-                    'seo_aliases' => (int)CONFIG_SEO_ALIASES,
                     'seo_meta_description' => CONFIG_SEO_META_DESCRIPTION,
                     'seo_meta_keywords' => CONFIG_SEO_META_KEYWORDS,
                     'seo_mod_rewrite' => (int)CONFIG_SEO_MOD_REWRITE,

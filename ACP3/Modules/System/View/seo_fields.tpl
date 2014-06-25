@@ -1,14 +1,12 @@
-{if $seo.enable_uri_aliases === true}
-    <div class="form-group">
-        <label for="alias" class="col-lg-2 control-label">{lang t="system|seo_uri_alias"}</label>
+<div class="form-group">
+    <label for="alias" class="col-lg-2 control-label">{lang t="system|seo_uri_alias"}</label>
 
-        <div class="col-lg-10">
-            <input class="form-control" type="text" name="alias" id="alias" value="{$seo.alias}">
+    <div class="col-lg-10">
+        <input class="form-control" type="text" name="alias" id="alias" value="{$seo.alias}">
 
-            <p class="help-block">{lang t="system|seo_uri_alias_description"}</p>
-        </div>
+        <p class="help-block">{lang t="system|seo_uri_alias_description"}</p>
     </div>
-{/if}
+</div>
 <div class="form-group">
     <label for="seo-keywords" class="col-lg-2 control-label">{lang t="system|seo_keywords"}</label>
 

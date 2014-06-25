@@ -54,9 +54,6 @@ class Validator extends Core\Validation\AbstractValidator
         if (Core\Validate::isNumber($formData['seo_robots']) === false) {
             $errors[] = $this->lang->t('system', 'select_seo_robots');
         }
-        if (Core\Validate::isNumber($formData['seo_aliases']) === false) {
-            $errors[] = $this->lang->t('system', 'select_seo_aliases');
-        }
         if (Core\Validate::isNumber($formData['seo_mod_rewrite']) === false) {
             $errors[] = $this->lang->t('system', 'select_mod_rewrite');
         }

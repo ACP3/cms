@@ -297,7 +297,6 @@ class SEO
             $this->lang->t('system', 'seo_robots_noindex_nofollow')
         );
         $seo = array(
-            'enable_uri_aliases' => (bool)CONFIG_SEO_ALIASES,
             'alias' => $alias,
             'keywords' => $keywords,
             'description' => $description,

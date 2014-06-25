@@ -82,7 +82,6 @@ class Application
 
         if (defined('IN_UPDATER') === false) {
             define('CONFIG_VERSION', '4.0-dev');
-            define('CONFIG_SEO_ALIASES', false);
             define('CONFIG_SEO_MOD_REWRITE', false);
         }
     }

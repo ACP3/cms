@@ -4,6 +4,7 @@ namespace ACP3\Modules\Articles\Controller\Admin;
 
 use ACP3\Core;
 use ACP3\Modules\Articles;
+use ACP3\Modules\Menus;
 
 /**
  * Module controller of the articles backend
@@ -27,7 +28,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->menuModel = new \ACP3\Modules\Menus\Model($this->db);
+        $this->menuModel = new Menus\Model($this->db);
         $this->model = new Articles\Model($this->db);
     }
 
@@ -48,15 +49,14 @@ class Index extends Core\Modules\Controller\Admin
                 );
 
                 $lastId = $this->model->insert($insertValues);
-                if ((bool)CONFIG_SEO_ALIASES === true) {
-                    $this->uri->insertUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
-                        $_POST['alias'],
-                        $_POST['seo_keywords'],
-                        $_POST['seo_description'],
-                        (int)$_POST['seo_robots']
-                    );
-                    $this->seo->setCache();
-                }
+
+                $this->uri->insertUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $lastId),
+                    $_POST['alias'],
+                    $_POST['seo_keywords'],
+                    $_POST['seo_description'],
+                    (int)$_POST['seo_robots']
+                );
+                $this->seo->setCache();
 
                 if (isset($_POST['create']) === true && Core\Modules::hasPermission('admin/menus/index/create_item') === true) {
                     $insertValues = array(
@@ -70,9 +70,11 @@ class Index extends Core\Modules\Controller\Admin
                         'target' => 1,
                     );
 
-                    $nestedSet = new Core\NestedSet($this->db, \ACP3\Modules\Menus\Model::TABLE_NAME_ITEMS, true);
+                    $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
                     $lastId = $nestedSet->insertNode((int)$_POST['parent'], $insertValues);
-                    $this->menuModel->setMenuItemsCache();
+
+                    $cacheMenu = new Menus\Cache($this->menuModel);
+                    $cacheMenu->setMenuItemsCache();
                 }
 
                 $this->session->unsetFormToken();
@@ -90,12 +92,12 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('options', Core\Functions::selectGenerator('create', array(1), $lang_options, 0, 'checked'));
 
             // Block
-            $this->view->assign('blocks', \ACP3\Modules\Menus\Helpers::menusDropdown());
+            $this->view->assign('blocks', Menus\Helpers::menusDropdown());
 
             $lang_display = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
             $this->view->assign('display', Core\Functions::selectGenerator('display', array(1, 0), $lang_display, 1, 'checked'));
 
-            $this->view->assign('pages_list', \ACP3\Modules\Menus\Helpers::menuItemsList());
+            $this->view->assign('pages_list', Menus\Helpers::menuItemsList());
         }
 
         $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end')));
@@ -122,7 +124,7 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->uri->action === 'confirmed') {
             $bool = false;
 
-            $nestedSet = new Core\NestedSet($this->db, \ACP3\Modules\Menus\Model::TABLE_NAME_ITEMS, true);
+            $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
 
             $cache = new Core\Cache2('articles');
             foreach ($items as $item) {
@@ -135,9 +137,8 @@ class Index extends Core\Modules\Controller\Admin
                 $this->uri->deleteUriAlias($uri);
             }
 
-            if (Core\Modules::isInstalled('menus') === true) {
-                $this->menuModel->setMenuItemsCache();
-            }
+            $cacheMenu = new Menus\Cache($this->menuModel);
+            $cacheMenu->setMenuItemsCache();
 
             $this->seo->setCache();
 
@@ -167,22 +168,21 @@ class Index extends Core\Modules\Controller\Admin
 
                     $bool = $this->model->update($updateValues, $this->uri->id);
 
-                    if ((bool)CONFIG_SEO_ALIASES === true) {
-                        $this->uri->insertUriAlias(
-                            sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->uri->id),
-                            $_POST['alias'],
-                            $_POST['seo_keywords'],
-                            $_POST['seo_description'],
-                            (int)$_POST['seo_robots']
-                        );
-                        $this->seo->setCache();
-                    }
+                    $this->uri->insertUriAlias(
+                        sprintf(Articles\Helpers::URL_KEY_PATTERN, $this->uri->id),
+                        $_POST['alias'],
+                        $_POST['seo_keywords'],
+                        $_POST['seo_description'],
+                        (int)$_POST['seo_robots']
+                    );
+                    $this->seo->setCache();
 
                     $cache = new Articles\Cache($this->model);
                     $cache->setCache($this->uri->id);
 
                     // Aliase in der Navigation aktualisieren
-                    $this->menuModel->setMenuItemsCache();
+                    $cacheMenu = new Menus\Cache($this->menuModel);
+                    $cacheMenu->setMenuItemsCache();
 
                     $this->session->unsetFormToken();
 

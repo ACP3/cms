@@ -137,7 +137,7 @@ class URI
     protected function checkForUriAlias()
     {
         // Nur ausführen, falls URI-Aliase aktiviert sind
-        if ((bool)CONFIG_SEO_ALIASES === true && $this->area !== 'admin') {
+        if ($this->area !== 'admin') {
             // Falls für Query ein Alias existiert, zu diesem weiterleiten
             if ($this->uriAliasExists($this->query) === true) {
                 $this->redirect($this->query, 0, true); // URI-Alias wird von uri::route() erzeugt
@@ -294,7 +294,7 @@ class URI
      * @internal param string $uri Inhalt der zu generierenden URL
      * @return string
      */
-    public function route($path, $alias = 1)
+    public function route($path)
     {
         $path = $path . (!preg_match('/\/$/', $path) ? '/' : '');
         $pathArray = preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY);
@@ -316,12 +316,9 @@ class URI
             }
         }
 
-        if ((bool)CONFIG_SEO_ALIASES === true && $isAdminUrl === false) {
-            // Überprüfen, ob Alias vorhanden ist und diesen als URI verwenden
-            if ($alias === 1) {
-                $alias = $this->getUriAlias($path);
-                $path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
-            }
+        if ($isAdminUrl === false) {
+            $alias = $this->getUriAlias($path);
+            $path = $alias . (!preg_match('/\/$/', $alias) ? '/' : '');
         }
         $prefix = ((bool)CONFIG_SEO_MOD_REWRITE === false || $isAdminUrl === true) ? PHP_SELF . '/' : ROOT_DIR;
         return $prefix . $path;

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @param $params
+ * @return string
+ */
 function smarty_function_navbar($params)
 {
     if (\ACP3\Core\Modules::isActive('menus') === true) {

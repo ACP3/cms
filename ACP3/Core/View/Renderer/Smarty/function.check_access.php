@@ -1,4 +1,8 @@
 <?php
+/**
+ * @param $params
+ * @return string
+ */
 function smarty_function_check_access($params)
 {
     if (isset($params['mode']) && isset($params['path'])) {

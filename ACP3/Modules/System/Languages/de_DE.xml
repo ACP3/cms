@@ -117,7 +117,6 @@
         <item key="enable">Aktivieren</item>
         <item key="enable_module">Modul aktivieren</item>
         <item key="enable_following_modules_first">Um das Modul installieren zu können, müssen Sie zunächst folgende Module aktivieren: %s</item>
-        <item key="enable_seo_aliases">URI-Aliase aktivieren</item>
         <item key="end_date">Enddatum</item>
         <item key="entries">Einträge</item>
         <item key="entry">Eintrag</item>
@@ -253,7 +252,6 @@
         <item key="select_online_maintenance">Bitte wählen Sie aus, ob sich die Seite im Wartungsmodus befinden soll oder nicht.</item>
         <item key="select_output">Bittw wählen Sie aus, ob die Sicherung der SQL-Tabellen als Datei oder als Text ausgegeben werden soll.</item>
         <item key="select_records_per_page">Bitte wählen Sie aus, wie viele Datensätze pro Seite angezeigt werden sollen.</item>
-        <item key="select_seo_aliases">Bitte wählen Sie aus, ob die URI-Aliase aktiviert werden sollen oder nicht.</item>
         <item key="select_seo_robots">Bitte wählen Sie aus, wie die Website von Suchmaschinen-Crawlern indexiert werden soll.</item>
         <item key="select_sidebar_entries">Bitte wählen Sie aus, wie viele Einträge in der Modul-Sidebar angezeigt werden sollen.</item>
         <item key="select_sql_file">Die angegebene Datei ist keine Textdatei.</item>

@@ -48,7 +48,7 @@ class Validator extends Core\Validation\AbstractValidator
         if (!empty($formData['link_title']) && (empty($formData['uri']) || Core\Validate::isNumber($formData['target']) === false)) {
             $errors[] = $this->lang->t('news', 'complete_hyperlink_statements');
         }
-        if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
+        if (!empty($formData['alias']) &&
             (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias']) === true)
         ) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
@@ -86,7 +86,7 @@ class Validator extends Core\Validation\AbstractValidator
         if (!empty($formData['link_title']) && (empty($formData['uri']) || Core\Validate::isNumber($formData['target']) === false)) {
             $errors[] = $this->lang->t('news', 'complete_hyperlink_statements');
         }
-        if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
+        if (!empty($formData['alias']) &&
             (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->uri->id)) === true)
         ) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');

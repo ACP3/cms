@@ -4,6 +4,10 @@
  * @package Smarty
  * @subpackage plugins
  */
+/**
+ * @param $params
+ * @return mixed
+ */
 function smarty_function_wysiwyg($params)
 {
     $params['id'] = !empty($params['id']) ? $params['id'] : $params['name'];

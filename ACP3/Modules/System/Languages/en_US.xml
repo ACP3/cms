@@ -113,7 +113,6 @@
         <item key="enable">Enable</item>
         <item key="enable_module">Enable module</item>
         <item key="enable_following_modules_first">To install the module you have to enable the following modules first: %s</item>
-        <item key="enable_seo_aliases">Enable URI-Aliases</item>
         <item key="end_date">End date</item>
         <item key="entries">Entries</item>
         <item key="entry">Entry</item>
@@ -245,7 +244,6 @@
         <item key="select_online_maintenance">Please select whether the maintenance mode should be turned on or off.</item>
         <item key="select_output">Please select whether the backup should be outputed as a file or a text.</item>
         <item key="select_records_per_page">Please select how many records per page to display.</item>
-        <item key="select_seo_aliases">Please select whether to enable URI-Aliases or not.</item>
         <item key="select_seo_robots">Please select how your website should be indexed by the seach engine crawlers.</item>
         <item key="select_sidebar_entries">Please select how many entries should be to displayed in the Module-Sidebar.</item>
         <item key="select_sql_file">The uploaded file is not a valid textfile.</item>
