@@ -127,7 +127,8 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
-            Core\Cache::purge(0, 'acl');
+            $cache = new Core\Cache2('acl');
+            $cache->getDriver()->deleteAll();
 
             if ($levelUndeletable === true) {
                 $text = $this->lang->t('permissions', 'role_undeletable');
@@ -168,8 +169,8 @@ class Index extends Core\Modules\Controller\Admin
                     }
                     $this->db->commit();
 
-                    // Cache der ACL zurücksetzen
-                    Core\Cache::purge(0, 'acl');
+                    $cache = new Core\Cache2('acl');
+                    $cache->getDriver()->deleteAll();
 
                     $this->session->unsetFormToken();
 
@@ -256,7 +257,8 @@ class Index extends Core\Modules\Controller\Admin
             $nestedSet = new Core\NestedSet($this->db, 'acl_roles');
             $nestedSet->order($this->uri->id, $this->uri->action);
 
-            Core\Cache::purge(0, 'acl');
+            $cache = new Core\Cache2('acl');
+            $cache->getDriver()->deleteAll();
 
             $this->uri->redirect('acp/permissions');
         } else {

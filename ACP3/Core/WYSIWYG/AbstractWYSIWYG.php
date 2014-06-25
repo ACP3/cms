@@ -3,8 +3,7 @@ namespace ACP3\Core\WYSIWYG;
 
 /**
  * Abstract Class for the various WYSIWYG editors
- *
- * @author Tino Goratsch
+ * @package ACP3\Core\WYSIWYG
  */
 abstract class AbstractWYSIWYG
 {

@@ -251,7 +251,9 @@ class Index extends Core\Modules\Controller\Admin
                     $_POST['width'] !== $settings['width'] || $_POST['height'] !== $settings['height']
                 ) {
                     Core\Cache::purge('images', 'gallery');
-                    Core\Cache::purge('sql', 'gallery');
+
+                    $cache = new Core\Cache2('gallery');
+                    $cache->getDriver()->deleteAll();
                 }
 
                 $this->session->unsetFormToken();

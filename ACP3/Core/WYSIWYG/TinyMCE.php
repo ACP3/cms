@@ -4,6 +4,7 @@ namespace ACP3\Core\WYSIWYG;
 
 /**
  * Implementation of the AbstractWYSIWYG class for TinyMCE
+ * @package ACP3\Core\WYSIWYG
  */
 class TinyMCE extends AbstractWYSIWYG
 {
@@ -23,15 +24,11 @@ class TinyMCE extends AbstractWYSIWYG
         return;
     }
 
+    /**
+     * @return string
+     */
     public function display()
     {
-        if ($this->config['toolbar'] === 'simple') {
-            $tinymce_options['plugins'] = 'inlinepopups,contextmenu';
-        } else {
-            $tinymce_options['plugins'] = 'autolink,lists,safari,style,layer,table,hr,image,link,advlist,emoticons,preview,media,searchreplace,contextmenu,paste,noneditable,visualchars,nonbreaking';
-        }
-
-        // Normale Initialisierung
         $editor = '<script type="text/javascript" src="' . ROOT_DIR . 'libraries/tinymce/tinymce.min.js"></script>';
         $editor .= '<script type="text/javascript">' . "\n";
         $editor .= "tinymce.init({\n";
@@ -61,7 +58,7 @@ class TinyMCE extends AbstractWYSIWYG
         "advlist autolink lists link image charmap print preview hr anchor pagebreak",
         "searchreplace wordcount visualblocks visualchars code fullscreen",
         "insertdatetime media nonbreaking save table contextmenu directionality",
-        "emoticons template paste textcolor"],' . "\n";
+        "emoticons template paste textcolor colorpicker"],' . "\n";
             $editor .= 'image_advtab: true,' . "\n";
             $editor .= 'toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons"' . "\n";
         }

@@ -3,7 +3,8 @@
 namespace ACP3\Core\WYSIWYG;
 
 /**
- * Implementation of the AbstractWYSIWYG class for a simple Textarea
+ * Implementation of the AbstractWYSIWYG class for a simple textarea
+ * @package ACP3\Core\WYSIWYG
  */
 class Textarea extends AbstractWYSIWYG
 {
@@ -23,6 +24,9 @@ class Textarea extends AbstractWYSIWYG
         return;
     }
 
+    /**
+     * @return string
+     */
     public function display()
     {
         $out = '';
