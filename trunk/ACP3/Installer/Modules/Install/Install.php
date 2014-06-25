@@ -196,7 +196,6 @@ class Install extends Core\Modules\Controller
                         'mailer_type' => 'mail',
                         'maintenance_mode' => 0,
                         'maintenance_message' => $this->lang->t('offline_message'),
-                        'seo_aliases' => 1,
                         'seo_meta_description' => '',
                         'seo_meta_keywords' => '',
                         'seo_mod_rewrite' => 1,

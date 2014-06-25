@@ -2,6 +2,8 @@
 
 namespace ACP3\Installer\Modules\Update;
 
+use ACP3\Core\Registry;
+use ACP3\Core\Cache;
 use ACP3\Installer\Core;
 
 /**
@@ -47,9 +49,9 @@ class Update extends Core\Modules\Controller
             $this->view->assign('results', $results);
 
             // Cache leeren
-            \ACP3\Core\Cache::purge('minify');
-            \ACP3\Core\Cache::purge('sql');
-            \ACP3\Core\Cache::purge('tpl_compiled');
+            Cache::purge('minify');
+            Cache::purge('sql');
+            Cache::purge('tpl_compiled');
         }
     }
 
@@ -165,14 +167,14 @@ class Update extends Core\Modules\Controller
                 );
                 $results[] = Core\Functions::executeSqlQueries($queries, 4);
 
-                $user = \ACP3\Core\Registry::get('Db')->fetchColumn('SELECT MIN(id) AS id FROM ' . DB_PRE . 'users');
+                $user = Registry::get('Db')->fetchColumn('SELECT MIN(id) AS id FROM ' . DB_PRE . 'users');
 
-                \ACP3\Core\Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'files SET user_id = ?', array($user));
-                \ACP3\Core\Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'gallery SET user_id = ?', array($user));
-                \ACP3\Core\Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'news SET user_id = ?', array($user));
-                \ACP3\Core\Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'newsletter_archive SET user_id = ?', array($user));
-                \ACP3\Core\Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'polls SET user_id = ?', array($user));
-                \ACP3\Core\Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'static_pages SET user_id = ?', array($user));
+                Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'files SET user_id = ?', array($user));
+                Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'gallery SET user_id = ?', array($user));
+                Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'news SET user_id = ?', array($user));
+                Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'newsletter_archive SET user_id = ?', array($user));
+                Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'polls SET user_id = ?', array($user));
+                Registry::get('Db')->executeUpdate('UPDATE ' . DB_PRE . 'static_pages SET user_id = ?', array($user));
             }
             if (CONFIG_DB_VERSION < 5) {
                 $queries = array(
@@ -183,7 +185,7 @@ class Update extends Core\Modules\Controller
                 $dir = scandir(MODULES_DIR);
                 foreach ($dir as $row) {
                     if ($row !== '.' && $row !== '..' && is_file(MODULES_DIR . $row . '/module.xml') === true) {
-                        \ACP3\Core\Registry::get('Db')->insert(DB_PRE . 'modules', array('name' => $row, 'active' => 1));
+                        Registry::get('Db')->insert(DB_PRE . 'modules', array('name' => $row, 'active' => 1));
                     }
                 }
             }
@@ -208,16 +210,16 @@ class Update extends Core\Modules\Controller
                 );
                 $results[] = Core\Functions::executeSqlQueries($queries, 10);
 
-                $roles = \ACP3\Core\Registry::get('Db')->fetchAll('SELECT id, left_id, right_id FROM ' . DB_PRE . 'acl_roles');
+                $roles = Registry::get('Db')->fetchAll('SELECT id, left_id, right_id FROM ' . DB_PRE . 'acl_roles');
                 foreach ($roles as $row) {
-                    $parent_id = \ACP3\Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'acl_roles WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', array($row['left_id'], $row['right_id']));
-                    \ACP3\Core\Registry::get('Db')->update(DB_PRE . 'acl_roles', array('parent_id' => !empty($parent_id) ? $parent_id : 0), array('id' => $row['id']));
+                    $parent_id = Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'acl_roles WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', array($row['left_id'], $row['right_id']));
+                    Registry::get('Db')->update(DB_PRE . 'acl_roles', array('parent_id' => !empty($parent_id) ? $parent_id : 0), array('id' => $row['id']));
                 }
 
-                $pages = \ACP3\Core\Registry::get('Db')->fetchAll('SELECT id, left_id, right_id FROM ' . DB_PRE . 'menu_items');
+                $pages = Registry::get('Db')->fetchAll('SELECT id, left_id, right_id FROM ' . DB_PRE . 'menu_items');
                 foreach ($pages as $row) {
-                    $parent_id = \ACP3\Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'menu_items WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', array($row['left_id'], $row['right_id']));
-                    \ACP3\Core\Registry::get('Db')->update(DB_PRE . 'menu_items', array('parent_id' => !empty($parent_id) ? $parent_id : 0), array('id' => $row['id']));
+                    $parent_id = Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'menu_items WHERE left_id < ? AND right_id > ? ORDER BY left_id DESC LIMIT 1', array($row['left_id'], $row['right_id']));
+                    Registry::get('Db')->update(DB_PRE . 'menu_items', array('parent_id' => !empty($parent_id) ? $parent_id : 0), array('id' => $row['id']));
                 }
 
                 Core\Functions::resetResources();
@@ -294,7 +296,7 @@ class Update extends Core\Modules\Controller
                 $results[] = Core\Functions::executeSqlQueries($queries, 21);
             }
             if (CONFIG_DB_VERSION < 22) {
-                $mod_id = \ACP3\Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('access'));
+                $mod_id = Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('access'));
                 $queries = array(
                     "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `page`, `params`, `privilege_id`) VALUES ('', '" . $mod_id . "', 'create_resources', '', 4);",
                 );
@@ -413,9 +415,9 @@ class Update extends Core\Modules\Controller
                     'wysiwyg' => CONFIG_WYSIWYG == 'fckeditor' ? 'ckeditor' : CONFIG_WYSIWYG
                 );
 
-                $mod_id = \ACP3\Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('system'));
+                $mod_id = Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('system'));
                 foreach ($system_settings as $key => $value) {
-                    \ACP3\Core\Registry::get('Db')->insert(DB_PRE . 'settings', array('id' => '', 'module_id' => $mod_id, 'name' => $key, 'value' => $value));
+                    Registry::get('Db')->insert(DB_PRE . 'settings', array('id' => '', 'module_id' => $mod_id, 'name' => $key, 'value' => $value));
                 }
 
                 // DB-Config anpassen
@@ -439,9 +441,9 @@ class Update extends Core\Modules\Controller
             $this->view->assign('results', $results);
 
             // Cache leeren
-            \ACP3\Core\Cache::purge('sql');
-            \ACP3\Core\Cache::purge('tpl_compiled');
-            \ACP3\Core\Cache::purge('minify');
+            Cache::purge('sql');
+            Cache::purge('tpl_compiled');
+            Cache::purge('minify');
         }
 
         $this->view->assign('legacy', true);
