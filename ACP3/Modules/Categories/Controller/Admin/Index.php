@@ -50,7 +50,8 @@ class Index extends Core\Modules\Controller\Admin
                     'module_id' => $moduleInfo['id'],
                 );
                 if (!empty($file)) {
-                    $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'categories');
+                    $upload = new Core\Helpers\Upload('categories');
+                    $result = $upload->moveFile($file['tmp_name'], $file['name']);
                     $insertValues['picture'] = $result['name'];
                 }
 
@@ -107,7 +108,8 @@ class Index extends Core\Modules\Controller\Admin
                     }
 
                     // Kategoriebild ebenfalls löschen
-                    Core\Functions::removeUploadedFile('categories', $category['picture']);
+                    $upload = new Core\Helpers\Upload('categories');
+                    $upload->removeUploadedFile($category['picture']);
                     $bool = $this->model->delete($item);
                 }
             }
@@ -152,14 +154,16 @@ class Index extends Core\Modules\Controller\Admin
                     );
 
                     if (empty($file) === false) {
-                        Core\Functions::removeUploadedFile('categories', $category['picture']);
-                        $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'categories');
+                        $upload = new Core\Helpers\Upload('categories');
+                        $upload->removeUploadedFile($category['picture']);
+                        $result = $upload->moveFile($file['tmp_name'], $file['name']);
                         $updateValues['picture'] = $result['name'];
                     }
 
                     $bool = $this->model->update($updateValues, $this->uri->id);
 
-                    $this->model->setCache($this->model->getModuleNameFromCategoryId($this->uri->id));
+                    $cache = new Categories\Cache($this->model);
+                    $cache->setCache($this->model->getModuleNameFromCategoryId($this->uri->id));
 
                     $this->session->unsetFormToken();
 

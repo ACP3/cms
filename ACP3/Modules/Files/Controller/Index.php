@@ -53,9 +53,10 @@ class Index extends Core\Modules\Controller
             if ($this->uri->action === 'download') {
                 $path = UPLOADS_DIR . 'files/';
                 if (is_file($path . $file['file'])) {
+                    $formatter = new Core\Helpers\StringFormatter();
                     // Schönen Dateinamen generieren
                     $ext = strrchr($file['file'], '.');
-                    $filename = Core\Functions::makeStringUrlSafe($file['title']) . $ext;
+                    $filename = $formatter->makeStringUrlSafe($file['title']) . $ext;
 
                     header('Content-Type: application/force-download');
                     header('Content-Transfer-Encoding: binary');

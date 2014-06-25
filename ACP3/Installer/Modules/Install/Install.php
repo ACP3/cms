@@ -3,6 +3,7 @@
 namespace ACP3\Installer\Modules\Install;
 
 use ACP3\Core\Config;
+use ACP3\Core\Helpers\Secure;
 use ACP3\Installer\Core;
 
 /**
@@ -150,12 +151,13 @@ class Install extends Core\Modules\Controller
 
                 // Admin-User, Menüpunkte, News, etc. in die DB schreiben
                 if ($bool === true) {
-                    $salt = \ACP3\Core\Functions::salt(12);
+                    $securityHelper = new Secure();
+                    $salt = $securityHelper->salt(12);
                     $currentDate = gmdate('Y-m-d H:i:s');
 
                     $newsModuleId = \ACP3\Core\Registry::get('Db')->fetchColumn('SELECT id FROM ' . DB_PRE . 'modules WHERE name = ?', array('news'));
                     $queries = array(
-                        "INSERT INTO `{pre}users` VALUES ('', 1, " . \ACP3\Core\Registry::get('Db')->quote($_POST["user_name"]) . ", '" . \ACP3\Core\Functions::generateSaltedPassword($salt, $_POST["user_pwd"]) . ":" . $salt . "', 0, '', '1', '', 0, '" . $_POST["mail"] . "', 0, '', '', '', '', '', '', '', '', 0, 0, " . \ACP3\Core\Registry::get('Db')->quote($_POST["date_format_long"]) . ", " . \ACP3\Core\Registry::get('Db')->quote($_POST["date_format_short"]) . ", '" . $_POST["date_time_zone"] . "', '" . LANG . "', '20', '', '" . $currentDate . "');",
+                        "INSERT INTO `{pre}users` VALUES ('', 1, " . \ACP3\Core\Registry::get('Db')->quote($_POST["user_name"]) . ", '" . $securityHelper->generateSaltedPassword($salt, $_POST["user_pwd"]) . ":" . $salt . "', 0, '', '1', '', 0, '" . $_POST["mail"] . "', 0, '', '', '', '', '', '', '', '', 0, 0, " . \ACP3\Core\Registry::get('Db')->quote($_POST["date_format_long"]) . ", " . \ACP3\Core\Registry::get('Db')->quote($_POST["date_format_short"]) . ", '" . $_POST["date_time_zone"] . "', '" . LANG . "', '20', '', '" . $currentDate . "');",
                         'INSERT INTO `{pre}categories` VALUES (\'\', \'' . $this->lang->t('category_name') . '\', \'\', \'' . $this->lang->t('category_description') . '\', \'' . $newsModuleId . '\');',
                         'INSERT INTO `{pre}news` VALUES (\'\', \'' . $currentDate . '\', \'' . $currentDate . '\', \'' . $this->lang->t('news_headline') . '\', \'' . $this->lang->t('news_text') . '\', \'1\', \'1\', \'1\', \'\', \'\', \'\', \'\');',
                         'INSERT INTO `{pre}menu_items` VALUES (\'\', 1, 1, 1, 0, 1, 4, 1, \'' . $this->lang->t('pages_news') . '\', \'news\', 1);',

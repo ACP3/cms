@@ -29,6 +29,7 @@ class Index extends Core\Modules\Controller\Sidebar
 
    public function actionIndex()
     {
+        $formatter = new Core\Helpers\StringFormatter();
         $config = new Core\Config($this->db, 'files');
         $settings = $config->getSettings();
 
@@ -38,7 +39,7 @@ class Index extends Core\Modules\Controller\Sidebar
         if ($c_files > 0) {
             for ($i = 0; $i < $c_files; ++$i) {
                 $files[$i]['start'] = $this->date->format($files[$i]['start']);
-                $files[$i]['title_short'] = Core\Functions::shortenEntry($files[$i]['title'], 30, 5, '...');
+                $files[$i]['title_short'] = $formatter->shortenEntry($files[$i]['title'], 30, 5, '...');
             }
             $this->view->assign('sidebar_files', $files);
         }

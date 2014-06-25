@@ -1,6 +1,8 @@
 <?php
 namespace ACP3\Core;
 
+use ACP3\Modules\System;
+
 /**
  * URI Router
  *
@@ -39,6 +41,11 @@ class URI
     protected $db;
 
     /**
+     * @var \ACP3\Modules\System\Model
+     */
+    protected $systemModel;
+
+    /**
      * @var bool
      */
     protected $isAjax = false;
@@ -49,6 +56,7 @@ class URI
     function __construct(\Doctrine\DBAL\Connection $db, $defaultPath = '')
     {
         $this->db = $db;
+        $this->systemModel = new System\Model($this->db);
         $this->cache = new Cache2('uri');
         $this->aliases = $this->getCache();
 
@@ -288,10 +296,6 @@ class URI
      * Generiert die ACP3 internen Hyperlinks
      *
      * @param $path
-     * @param integer $alias
-     *    Gibt an, ob für die auszugebende Seite der URI-Alias ausgegeben werden soll,
-     *    falls dieser existiert
-     * @internal param string $uri Inhalt der zu generierenden URL
      * @return string
      */
     public function route($path)
@@ -346,7 +350,7 @@ class URI
      */
     protected function setCache()
     {
-        $aliases = $this->db->fetchAll('SELECT uri, alias FROM ' . DB_PRE . 'seo WHERE alias != ""');
+        $aliases = $this->systemModel->getAllUriAliases();
         $c_aliases = count($aliases);
         $data = array();
 
@@ -383,7 +387,7 @@ class URI
     {
         $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-        $bool = $this->db->delete(DB_PRE . 'seo', array('uri' => $path));
+        $bool = $this->systemModel->delete($path, 'uri', System\Model::TABLE_NAME_SEO);
         return $bool !== false && $this->setCache() !== false;
     }
 
@@ -410,11 +414,11 @@ class URI
         );
 
         // Update an existing result
-        if ($this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE uri = ?', array($path)) == 1) {
-            $bool = $this->db->update(DB_PRE . 'seo', $values, array('uri' => $path));
+        if ($this->systemModel->uriAliasExists($path) === true) {
+            $bool = $this->systemModel->update($values, array('uri' => $path), System\Model::TABLE_NAME_SEO);
         } else {
             $values['uri'] = $path;
-            $bool = $this->db->insert(DB_PRE . 'seo', $values); // Neuer Eintrag in DB
+            $bool = $this->systemModel->insert($values, System\Model::TABLE_NAME_SEO);
         }
 
         return $bool !== false && $this->setCache() !== false;

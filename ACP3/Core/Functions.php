@@ -10,25 +10,9 @@ namespace ACP3\Core;
 class Functions
 {
     /**
-     * @var Auth
-     */
-    protected static $auth;
-    /**
-     * @var Breadcrumb
-     */
-    protected static $breadcrumb;
-    /**
      * @var \Doctrine\DBAL\Connection
      */
     protected static $db;
-    /**
-     * @var Lang
-     */
-    protected static $lang;
-    /**
-     * @var SEO
-     */
-    protected static $seo;
     /**
      * @var URI
      */
@@ -45,44 +29,11 @@ class Functions
      */
     protected static function _init()
     {
-        if (!static::$auth) {
-            static::$auth = Registry::get('Auth');
-            static::$breadcrumb = Registry::get('Breadcrumb');
+        if (!static::$db) {
             static::$db = Registry::get('Db');
-            static::$lang = Registry::get('Lang');
-            static::$seo = Registry::get('SEO');
             static::$uri = Registry::get('URI');
             static::$view = Registry::get('View');
         }
-    }
-
-    /**
-     * Ermittelt die Dateigröße gemäß IEC 60027-2
-     *
-     * @param integer $value
-     *    Die Dateigröße in Byte
-     * @return string
-     *    Die Dateigröße als Fließkommazahl mit der dazugehörigen Einheit
-     */
-    public static function calcFilesize($value)
-    {
-        $units = array(
-            0 => 'Byte',
-            1 => 'KiB',
-            2 => 'MiB',
-            3 => 'GiB',
-            4 => 'TiB',
-            5 => 'PiB',
-            6 => 'EiB',
-            7 => 'ZiB',
-            8 => 'YiB',
-        );
-
-        for ($i = 0; $value >= 1024; ++$i) {
-            $value = $value / 1024;
-        }
-
-        return round($value, 2) . ' ' . $units[$i];
     }
 
     /**
@@ -249,148 +200,6 @@ class Functions
     }
 
     /**
-     * Generiert ein gesalzenes Passwort
-     *
-     * @param string $salt
-     *    Das zu verwendende Salz
-     * @param string $plaintext
-     *    Das Passwort in Klartextform, welches verschlüsselt werden soll
-     * @param string $algorithm
-     *    Der zu verwendende Hash-Algorithmus
-     * @return string
-     */
-    public static function generateSaltedPassword($salt, $plaintext, $algorithm = 'sha1')
-    {
-        return hash($algorithm, $salt . hash($algorithm, $plaintext));
-    }
-
-    /**
-     * Generiert ein Inhaltsverzeichnis
-     *
-     * @param array $pages
-     * @param string $path
-     * @param boolean $titlesFromDb
-     * @param boolean $customUris
-     * @return string
-     */
-    public static function generateTOC(array $pages, $path = '', $titlesFromDb = false, $customUris = false)
-    {
-        if (!empty($pages)) {
-            static::_init();
-
-            $uri = static::$uri;
-            $path = empty($path) ? $uri->getUriWithoutPages() : $path;
-            $toc = array();
-            $i = 0;
-            foreach ($pages as $page) {
-                $page_num = $i + 1;
-                if ($titlesFromDb === false) {
-                    $attributes = self::_getHtmlAttributes($page);
-                    $toc[$i]['title'] = !empty($attributes['title']) ? $attributes['title'] : sprintf(static::$lang->t('system', 'toc_page'), $page_num);
-                } else {
-                    $toc[$i]['title'] = !empty($page['title']) ? $page['title'] : sprintf(static::$lang->t('system', 'toc_page'), $page_num);
-                }
-
-                $toc[$i]['uri'] = $customUris === true ? $page['uri'] : $uri->route($path) . ($page_num > 1 ? 'page_' . $page_num . '/' : '');
-
-                $toc[$i]['selected'] = false;
-                if ($customUris === true) {
-                    if ($page['uri'] === $uri->route($uri->query) ||
-                        $uri->route($uri->query) === $uri->route($uri->mod . '/' . $uri->file) && $i == 0
-                    ) {
-                        $toc[$i]['selected'] = true;
-                        static::$breadcrumb->setTitlePostfix($toc[$i]['title']);
-                    }
-                } else {
-                    if ((Validate::isNumber($uri->page) === false && $i === 0) || $uri->page === $page_num) {
-                        $toc[$i]['selected'] = true;
-                        static::$breadcrumb->setTitlePostfix($toc[$i]['title']);
-                    }
-                }
-                ++$i;
-            }
-            static::$view->assign('toc', $toc);
-            return static::$view->fetchTemplate('system/toc.tpl');
-        }
-        return '';
-    }
-
-    /**
-     * Liest aus einem String alle vorhandenen HTML-Attribute ein und
-     * liefert diese als assoziatives Array zurück
-     *
-     * @param string $string
-     * @return array
-     */
-    protected static function _getHtmlAttributes($string)
-    {
-        $matches = array();
-        preg_match_all('/([\w:-]+)[\s]?=[\s]?"([^"]*)"/i', $string, $matches);
-
-        $return = array();
-        if (!empty($matches)) {
-            $c_matches = count($matches[1]);
-            for ($i = 0; $i < $c_matches; ++$i)
-                $return[$matches[1][$i]] = $matches[2][$i];
-        }
-
-        return $return;
-    }
-
-    /**
-     * Parst einen Text und zerlegt diesen bei Bedarf mehrere Seiten
-     *
-     * @param string $text
-     *    Der zu parsende Text
-     * @param string $path
-     *    Der ACP3-interne URI-Pfad, um die Links zu generieren
-     * @return string|array
-     */
-    public static function splitTextIntoPages($text, $path)
-    {
-        // Falls keine Seitenumbrüche vorhanden sein sollten, Text nicht unnötig bearbeiten
-        if (strpos($text, 'class="page-break"') === false) {
-            return $text;
-        } else {
-            static::_init();
-
-            $regex = '/<hr(.+)class="page-break"(.*)(\/>|>)/iU';
-
-            $pages = preg_split($regex, $text, -1, PREG_SPLIT_NO_EMPTY);
-            $c_pages = count($pages);
-
-            // Falls zwar Seitenumbruch gesetzt ist, aber danach
-            // kein weiterer Text kommt, den unbearbeiteten Text ausgeben
-            if ($c_pages == 1) {
-                return $text;
-            } else {
-                $matches = array();
-                preg_match_all($regex, $text, $matches);
-
-                $currentPage = Validate::isNumber(static::$uri->page) === true && static::$uri->page <= $c_pages ? static::$uri->page : 1;
-                $nextPage = !empty($pages[$currentPage]) ? static::$uri->route($path) . 'page_' . ($currentPage + 1) . '/' : '';
-                $previousPage = $currentPage > 1 ? static::$uri->route($path) . ($currentPage - 1 > 1 ? 'page_' . ($currentPage - 1) . '/' : '') : '';
-
-                if (!empty($nextPage)) {
-                    static::$seo->setNextPage($nextPage);
-                }
-                if (!empty($previousPage)) {
-                    static::$seo->setPreviousPage($previousPage);
-                }
-
-                $page = array(
-                    'toc' => self::generateTOC($matches[0], $path),
-                    'text' => $pages[$currentPage - 1],
-                    'next' => $nextPage,
-                    'previous' => $previousPage,
-                );
-
-                return $page;
-            }
-        }
-    }
-
-    /**
      * Holt sich die von setRedirectMessage() erzeugte Redirect Nachricht
      */
     public static function getRedirectMessage()
@@ -449,88 +258,6 @@ class Functions
     }
 
     /**
-     * Macht einen String URL sicher
-     *
-     * @param string $var
-     *    Die unzuwandelnde Variable
-     * @return string
-     */
-    public static function makeStringUrlSafe($var)
-    {
-        $var = strip_tags($var);
-        if (!preg_match('/&([a-z]+);/', $var)) {
-            $var = htmlentities($var, ENT_QUOTES, 'UTF-8');
-        }
-        $search = array(
-            '/&([a-z]{1})uml;/',
-            '/&szlig;/',
-            '/&([a-z0-9]+);/',
-            '/(\s+)/',
-            '/-{2,}/',
-            '/[^a-z0-9-]/',
-        );
-        $replace = array(
-            '${1}e',
-            'ss',
-            '',
-            '-',
-            '-',
-            '',
-        );
-        return preg_replace($search, $replace, strtolower($var));
-    }
-
-    /**
-     * Hochgeladene Dateien verschieben und umbenennen
-     *
-     * @param string $tmpFilename
-     *  Temporäre Datei
-     * @param string $filename
-     *  Dateiname
-     * @param string $dir
-     *  Ordner, in den die Datei verschoben werden soll
-     * @param bool $retainFilename
-     * @throws Exceptions\ValidationFailed
-     * @return array
-     */
-    public static function moveFile($tmpFilename, $filename, $dir, $retainFilename = false)
-    {
-        $path = UPLOADS_DIR . $dir . '/';
-
-        if ($retainFilename === true) {
-            $newFilename = $filename;
-        } else {
-            $newFilename = 1;
-            $ext = strrchr($filename, '.');
-
-            // Dateiname solange ändern, wie eine Datei mit dem selben Dateinamen im aktuellen Ordner existiert
-            while (is_file($path . $newFilename . $ext) === true) {
-                ++$newFilename;
-            }
-
-            $newFilename .= $ext;
-        }
-
-        if (is_writable($path) === true) {
-            if (!@move_uploaded_file($tmpFilename, $path . $newFilename)) {
-                static::_init();
-
-                $error = array(
-                    sprintf(static::$lang->t('system', 'upload_error'), $filename)
-                );
-                throw new Exceptions\ValidationFailed(self::errorBox($error));
-            } else {
-                $return = array();
-                $return['name'] = $newFilename;
-                $return['size'] = self::calcFilesize(filesize($path . $return['name']));
-
-                return $return;
-            }
-        }
-        return array();
-    }
-
-    /**
      * Verschiebt einen DB-Eintrag um einen Schritt nach oben bzw. unten
      *
      * @param string $action
@@ -582,29 +309,11 @@ class Functions
                     static::$db->commit();
                     return true;
                 }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 static::$db->rollback();
             }
         }
         return false;
-    }
-
-    /**
-     * Konvertiert Zeilenumbrüche zu neuen Absätzen
-     *
-     * @param string $data
-     * @param boolean $isXhtml
-     * @param boolean $lineBreaks
-     * @return string
-     */
-    public static function nl2p($data, $isXhtml = true, $lineBreaks = false)
-    {
-        $data = trim($data);
-        if ($lineBreaks === true) {
-            return '<p>' . preg_replace(array("/([\n]{2,})/i", "/([^>])\n([^<])/i"), array("</p>\n<p>", '<br' . ($isXhtml == true ? ' /' : '') . '>'), $data) . '</p>';
-        } else {
-            return '<p>' . preg_replace("/([\n]{1,})/i", "</p>\n<p>", $data) . '</p>';
-        }
     }
 
     /**
@@ -624,89 +333,6 @@ class Functions
             $records[$i]['selected'] = self::selectEntry('entries', $j, $currentValue);
         }
         return $records;
-    }
-
-    /**
-     * Löscht eine Datei im uploads Ordner
-     *
-     * @param string $dir
-     *    Der Ordner, in welchem die Datei liegt
-     * @param string $file
-     *    Der Name der Datei
-     * @return boolean
-     */
-    public static function removeUploadedFile($dir, $file)
-    {
-        $path = UPLOADS_DIR . $dir . '/' . $file;
-        if (!empty($dir) && !empty($file) && !preg_match('=/=', $file) && is_file($path) === true) {
-            return @unlink($path);
-        }
-        return false;
-    }
-
-    /**
-     * Ersetzt interne ACP3 interne URIs in Texten mit ihren jeweiligen Aliasen
-     *
-     * @param string $text
-     * @return string
-     */
-    public static function rewriteInternalUri($text)
-    {
-        $rootDir = str_replace('/', '\/', ROOT_DIR);
-        $host = $_SERVER['HTTP_HOST'];
-        return preg_replace_callback('/<a href="(http(s?):\/\/' . $host . ')?(' . $rootDir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})"/', "\\ACP3\\Core\\Functions::rewriteInternalUriCallback", $text);
-    }
-
-    /**
-     * Callback-Funktion zum Ersetzen der ACP3 internen URIs gegen ihre Aliase
-     *
-     * @param string $matches
-     * @return string
-     */
-    public static function rewriteInternalUriCallback($matches)
-    {
-        static::_init();
-
-        if (Validate::uriAliasExists($matches[6]) === true) {
-            return $matches[0];
-        } else {
-            $uriArray = explode('/', $matches[6]);
-            $path = 'frontend/' . $uriArray[0];
-            if (!empty($uriArray[1])) {
-                $path .= '/' . $uriArray[1];
-            }
-            if (!empty($uriArray[2])) {
-                $path .= '/' . $uriArray[2];
-            }
-
-            if (Modules::actionExists($path)) {
-                return '<a href="' . static::$uri->route($matches[6]) . '"';
-            } else {
-                return $matches[0];
-            }
-        }
-    }
-
-    /**
-     * Generiert einen Zufallsstring beliebiger Länge
-     *
-     * @param integer $strLength
-     *  Länge des zufälligen Strings
-     * @return string
-     */
-    public static function salt($strLength)
-    {
-        $salt = '';
-        $chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-        $c_chars = strlen($chars) - 1;
-        while (strlen($salt) < $strLength) {
-            $char = $chars[mt_rand(0, $c_chars)];
-            // Zeichen nur hinzufügen, wenn sich dieses nicht bereits im Salz befindet
-            if (strpos($salt, $char) === false) {
-                $salt .= $char;
-            }
-        }
-        return $salt;
     }
 
     /**
@@ -768,32 +394,6 @@ class Functions
             }
         }
         return $array;
-    }
-
-    /**
-     * Kürzt einen String, welcher im UTF-8-Charset vorliegt
-     * auf eine bestimmte Länge
-     *
-     * @param string $data
-     *    Der zu kürzende String
-     * @param integer $chars
-     *    Die anzuzeigenden Zeichen
-     * @param integer $diff
-     *    Anzahl der Zeichen, welche nach strlen($data) - $chars noch kommen müssen
-     * @param string $append
-     *    Kann bspw. dazu genutzt werden, um an den gekürzten Text noch einen Weiterlesen-Link anzuhängen
-     * @return string
-     */
-    public static function shortenEntry($data, $chars = 300, $diff = 50, $append = '')
-    {
-        if ($chars <= $diff)
-            $diff = 0;
-
-        $shortened = utf8_decode(html_entity_decode(strip_tags($data), ENT_QUOTES, 'UTF-8'));
-        if (strlen($shortened) > $chars && strlen($shortened) - $chars >= $diff) {
-            return utf8_encode(substr($shortened, 0, $chars - $diff)) . $append;
-        }
-        return $data;
     }
 
     /**

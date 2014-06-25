@@ -47,7 +47,8 @@ class Index extends Core\Modules\Controller\Admin
                 $validator->validateCreate($_POST, $file);
 
                 if (is_array($file) === true) {
-                    $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'files');
+                    $upload = new Core\Helpers\Upload('files');
+                    $result = $upload->moveFile($file['tmp_name'], $file['name']);
                     $newFile = $result['name'];
                     $filesize = $result['size'];
                 } else {
@@ -136,9 +137,10 @@ class Index extends Core\Modules\Controller\Admin
             $commentsInstalled = Core\Modules::isInstalled('comments');
 
             $cache = new Core\Cache2('files');
+            $upload = new Core\Helpers\Upload('files');
             foreach ($items as $item) {
                 if (!empty($item)) {
-                    Core\Functions::removeUploadedFile('files', $this->model->getFileById($item)); // Datei ebenfalls löschen
+                    $upload->removeUploadedFile($this->model->getFileById($item)); // Datei ebenfalls löschen
                     $bool = $this->model->delete($item);
                     if ($commentsInstalled === true) {
                         \ACP3\Modules\Comments\Helpers::deleteCommentsByModuleAndResult('files', $item);
@@ -192,8 +194,10 @@ class Index extends Core\Modules\Controller\Admin
 
                     // Falls eine neue Datei angegeben wurde, Änderungen durchführen
                     if (isset($file)) {
+                        $upload = new Core\Helpers\Upload('files');
+
                         if (is_array($file) === true) {
-                            $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'files');
+                            $result = $upload->moveFile($file['tmp_name'], $file['name']);
                             $newFile = $result['name'];
                             $filesize = $result['size'];
                         } else {
@@ -207,7 +211,7 @@ class Index extends Core\Modules\Controller\Admin
                             'size' => $filesize,
                         );
 
-                        Core\Functions::removeUploadedFile('files', $dl['file']);
+                        $upload->removeUploadedFile($dl['file']);
 
                         $updateValues = array_merge($updateValues, $newFileSql);
                     }

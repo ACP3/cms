@@ -46,26 +46,6 @@ class Index extends Core\Modules\Controller
         }
     }
 
-    public function actionDetails()
-    {
-        $newsletter = $this->model->getOneById((int)$this->uri->id, 1);
-
-        if (!empty($newsletter)) {
-            $this->breadcrumb
-                ->append($this->lang->t('newsletter', 'index'), 'newsletter')
-                ->append($this->lang->t('newsletter', 'index_archive'), 'newsletter/index/index_archive')
-                ->append($newsletter['title']);
-
-            $newsletter['date_formatted'] = $this->date->format($newsletter['date'], 'short');
-            $newsletter['date_iso'] = $this->date->format($newsletter['date'], 'c');
-            $newsletter['text'] = Core\Functions::nl2p($newsletter['text']);
-
-            $this->view->assign('newsletter', $newsletter);
-        } else {
-            throw new Core\Exceptions\ResultNotExists();
-        }
-    }
-
     public function actionIndex()
     {
         if (empty($_POST) === false) {

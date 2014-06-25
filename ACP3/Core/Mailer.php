@@ -2,6 +2,7 @@
 
 namespace ACP3\Core;
 
+use ACP3\Core\Helpers\StringFormatter;
 use InlineStyle\InlineStyle;
 
 /**
@@ -240,7 +241,8 @@ class Mailer
     {
         if (!empty($this->mailSignature)) {
             if ($this->mailSignature === strip_tags($this->mailSignature)) {
-                return Functions::nl2p($this->mailSignature);
+                $formatter = new StringFormatter();
+                return $formatter->nl2p($this->mailSignature);
             }
             return $this->mailSignature;
         }

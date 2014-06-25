@@ -42,7 +42,8 @@ class Index extends Core\Modules\Controller\Admin
                 $validator = new Emoticons\Validator($this->lang);
                 $validator->validateCreate($_POST, $file, $config->getSettings());
 
-                $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'emoticons');
+                $upload = new Core\Helpers\Upload('emoticons');
+                $result = $upload->moveFile($file['tmp_name'], $file['name']);
 
                 $insertValues = array(
                     'id' => '',
@@ -77,11 +78,13 @@ class Index extends Core\Modules\Controller\Admin
 
         if ($this->uri->action === 'confirmed') {
             $bool = false;
+
+            $upload = new Core\Helpers\Upload('emoticons');
             foreach ($items as $item) {
                 if (!empty($item) && $this->model->resultExists($item) === true) {
                     // Datei ebenfalls löschen
                     $file = $this->model->getOneImageById($item);
-                    Core\Functions::removeUploadedFile('emoticons', $file);
+                    $upload->removeUploadedFile($file);
                     $bool = $this->model->delete($item);
                 }
             }
@@ -120,8 +123,9 @@ class Index extends Core\Modules\Controller\Admin
                     );
 
                     if (empty($file) === false) {
-                        Core\Functions::removeUploadedFile('emoticons', $emoticon['img']);
-                        $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'emoticons');
+                        $upload = new Core\Helpers\Upload('emoticons');
+                        $upload->removeUploadedFile($emoticon['img']);
+                        $result = $upload->moveFile($file['tmp_name'], $file['name']);
                         $updateValues['img'] = $result['name'];
                     }
 

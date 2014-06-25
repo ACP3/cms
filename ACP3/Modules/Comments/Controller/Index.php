@@ -151,6 +151,7 @@ class Index extends Core\Modules\Controller
             );
             $pagination->display();
 
+            $formatter = new Core\Helpers\StringFormatter();
             for ($i = 0; $i < $c_comments; ++$i) {
                 if (empty($comments[$i]['user_name']) && empty($comments[$i]['name'])) {
                     $comments[$i]['name'] = $this->lang->t('users', 'deleted_user');
@@ -159,7 +160,7 @@ class Index extends Core\Modules\Controller
                 $comments[$i]['name'] = !empty($comments[$i]['user_name']) ? $comments[$i]['user_name'] : $comments[$i]['name'];
                 $comments[$i]['date_formatted'] = $this->date->format($comments[$i]['date'], $settings['dateformat']);
                 $comments[$i]['date_iso'] = $this->date->format($comments[$i]['date'], 'c');
-                $comments[$i]['message'] = Core\Functions::nl2p($comments[$i]['message']);
+                $comments[$i]['message'] = $formatter->nl2p($comments[$i]['message']);
                 if ($emoticonsActive === true) {
                     $comments[$i]['message'] = \ACP3\Modules\Emoticons\Helpers::emoticonsReplace($comments[$i]['message']);
                 }

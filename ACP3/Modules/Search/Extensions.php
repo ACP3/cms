@@ -39,6 +39,8 @@ class Extensions
      */
     protected $db;
 
+    protected $formatter;
+
     /**
      * SQL Prepared Parameters
      *
@@ -53,6 +55,8 @@ class Extensions
         $this->searchTerm = $searchTerm;
 
         $this->db = Core\Registry::get('Db');
+
+        $this->formatter = new Core\Helpers\StringFormatter();
 
         $this->params = array(
             'searchterm' => $this->searchTerm,
@@ -76,18 +80,18 @@ class Extensions
         $period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
         $results = $this->db->fetchAll('SELECT id, title, text FROM ' . DB_PRE . 'articles WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', title ' . $this->sort, $this->params);
         $c_results = count($results);
-        $search_results = array();
+        $searchResults = array();
 
         if ($c_results > 0) {
             $name = Core\Registry::get('Lang')->t('articles', 'articles');
-            $search_results[$name]['dir'] = 'articles';
+            $searchResults[$name]['dir'] = 'articles';
             for ($i = 0; $i < $c_results; ++$i) {
-                $search_results[$name]['results'][$i]['hyperlink'] = Core\Registry::get('URI')->route('articles/index/details/id_' . $results[$i]['id']);
-                $search_results[$name]['results'][$i]['title'] = $results[$i]['title'];
-                $search_results[$name]['results'][$i]['text'] = Core\Functions::shortenEntry($results[$i]['text'], 200, 0, '...');
+                $searchResults[$name]['results'][$i]['hyperlink'] = Core\Registry::get('URI')->route('articles/index/details/id_' . $results[$i]['id']);
+                $searchResults[$name]['results'][$i]['title'] = $results[$i]['title'];
+                $searchResults[$name]['results'][$i]['text'] = $this->formatter->shortenEntry($results[$i]['text'], 200, 0, '...');
             }
         }
-        return $search_results;
+        return $searchResults;
     }
 
     public function filesSearch()
@@ -106,18 +110,18 @@ class Extensions
         $period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
         $results = $this->db->fetchAll('SELECT id, title, text FROM ' . DB_PRE . 'files WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', id ' . $this->sort, $this->params);
         $c_results = count($results);
-        $search_results = array();
+        $searchResults = array();
 
         if ($c_results > 0) {
             $name = Core\Registry::get('Lang')->t('files', 'files');
-            $search_results[$name]['dir'] = 'files';
+            $searchResults[$name]['dir'] = 'files';
             for ($i = 0; $i < $c_results; ++$i) {
-                $search_results[$name]['results'][$i]['hyperlink'] = Core\Registry::get('URI')->route('files/index/details/id_' . $results[$i]['id']);
-                $search_results[$name]['results'][$i]['title'] = $results[$i]['title'];
-                $search_results[$name]['results'][$i]['text'] = Core\Functions::shortenEntry($results[$i]['text'], 200, 0, '...');
+                $searchResults[$name]['results'][$i]['hyperlink'] = Core\Registry::get('URI')->route('files/index/details/id_' . $results[$i]['id']);
+                $searchResults[$name]['results'][$i]['title'] = $results[$i]['title'];
+                $searchResults[$name]['results'][$i]['text'] = $this->formatter->shortenEntry($results[$i]['text'], 200, 0, '...');
             }
         }
-        return $search_results;
+        return $searchResults;
     }
 
     public function newsSearch()
@@ -136,18 +140,18 @@ class Extensions
         $period = '(start = end AND start <= :time OR start != end AND :time BETWEEN start AND end)';
         $results = $this->db->fetchAll('SELECT id, title, text FROM ' . DB_PRE . 'news WHERE MATCH (' . $fields . ') AGAINST (:searchterm IN BOOLEAN MODE) AND ' . $period . ' ORDER BY start ' . $this->sort . ', end ' . $this->sort . ', id ' . $this->sort, $this->params);
         $c_results = count($results);
-        $search_results = array();
+        $searchResults = array();
 
         if ($c_results > 0) {
             $name = Core\Registry::get('Lang')->t('news', 'news');
-            $search_results[$name]['dir'] = 'news';
+            $searchResults[$name]['dir'] = 'news';
             for ($i = 0; $i < $c_results; ++$i) {
-                $search_results[$name]['results'][$i]['hyperlink'] = Core\Registry::get('URI')->route('news/index/details/id_' . $results[$i]['id']);
-                $search_results[$name]['results'][$i]['title'] = $results[$i]['title'];
-                $search_results[$name]['results'][$i]['text'] = Core\Functions::shortenEntry($results[$i]['text'], 200, 0, '...');
+                $searchResults[$name]['results'][$i]['hyperlink'] = Core\Registry::get('URI')->route('news/index/details/id_' . $results[$i]['id']);
+                $searchResults[$name]['results'][$i]['title'] = $results[$i]['title'];
+                $searchResults[$name]['results'][$i]['text'] = $this->formatter->shortenEntry($results[$i]['text'], 200, 0, '...');
             }
         }
-        return $search_results;
+        return $searchResults;
     }
 
 }

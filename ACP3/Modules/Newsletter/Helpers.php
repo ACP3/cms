@@ -129,7 +129,8 @@ abstract class Helpers
             $mailer->setTemplate('newsletter/email.tpl');
 
             $body .= '<a href="' . $url . '">' . $url . '<a>';
-            $mailer->setHtmlBody(Core\Functions::nl2p($body));
+            $formatter = new Core\Helpers\StringFormatter();
+            $mailer->setHtmlBody($formatter->nl2p($body));
         } else {
             $body .= $url;
             $mailer->setBody($body);

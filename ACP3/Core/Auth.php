@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core;
+use ACP3\Core\Helpers\Secure;
 
 /**
  * Authenticates the user
@@ -183,7 +184,9 @@ class Auth
 
             // Hash für eingegebenes Passwort generieren
             $salt = substr($user['pwd'], 41, 53);
-            $formPasswordHash = Functions::generateSaltedPassword($salt, $password);
+
+            $securityHelper = new Secure();
+            $formPasswordHash = $securityHelper->generateSaltedPassword($salt, $password);
 
             // Wenn beide Hashwerte gleich sind, Benutzer authentifizieren
             if ($dbHash === $formPasswordHash) {

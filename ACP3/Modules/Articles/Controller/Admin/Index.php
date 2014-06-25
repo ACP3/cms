@@ -36,7 +36,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         if (empty($_POST) === false) {
             try {
-                $validator = new Articles\Validator($this->lang, $this->menuModel);
+                $validator = new Articles\Validator($this->lang, $this->menuModel, $this->uri);
                 $validator->validateCreate($_POST);
 
                 $insertValues = array(
@@ -155,7 +155,7 @@ class Index extends Core\Modules\Controller\Admin
         if (empty($article) === false) {
             if (empty($_POST) === false) {
                 try {
-                    $validator = new Articles\Validator($this->lang, $this->menuModel);
+                    $validator = new Articles\Validator($this->lang, $this->menuModel, $this->uri);
                     $validator->validateEdit($_POST);
 
                     $updateValues = array(

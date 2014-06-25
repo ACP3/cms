@@ -18,23 +18,26 @@ abstract class Helpers
     /**
      * Erzeugt das Captchafeld für das Template
      *
-     * @param integer $captcha_length
+     * @param integer $captchaLength
      *  Anzahl der Zeichen, welche das Captcha haben soll
      * @param string $id
      * @param bool $inputOnly
      * @param string $path
      * @return string
      */
-    public static function captcha($captcha_length = 5, $id = 'captcha', $inputOnly = false, $path = '')
+    public static function captcha($captchaLength = 5, $id = 'captcha', $inputOnly = false, $path = '')
     {
         // Wenn man als User angemeldet ist, Captcha nicht anzeigen
         if (Core\Registry::get('Auth')->isUser() === false) {
             $uri = Core\Registry::get('URI');
             $path = sha1($uri->route(empty($path) === true ? $uri->query : $path));
-            $_SESSION['captcha_' . $path] = Core\Functions::salt($captcha_length);
+
+            $securityHelper = new Core\Helpers\Secure();
+
+            $_SESSION['captcha_' . $path] = $securityHelper->salt($captchaLength);
 
             $captcha = array();
-            $captcha['width'] = $captcha_length * 25;
+            $captcha['width'] = $captchaLength * 25;
             $captcha['id'] = $id;
             $captcha['height'] = 30;
             $captcha['input_only'] = $inputOnly;
