@@ -114,9 +114,10 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
+            $formatter = new Core\Helpers\StringFormatter();
             for ($i = 0; $i < $c_guestbook; ++$i) {
                 $guestbook[$i]['date_formatted'] = $this->date->formatTimeRange($guestbook[$i]['date']);
-                $guestbook[$i]['message'] = Core\Functions::nl2p($guestbook[$i]['message']);
+                $guestbook[$i]['message'] = $formatter->nl2p($guestbook[$i]['message']);
                 if ($emoticons_active === true) {
                     $guestbook[$i]['message'] = \ACP3\Modules\Emoticons\Helpers::emoticonsReplace($guestbook[$i]['message']);
                 }

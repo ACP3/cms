@@ -122,12 +122,13 @@ class Details extends Core\Modules\Controller\Admin
                     }
                 }
 
+                $formatter = new Core\Helpers\StringFormatter();
                 for ($i = 0; $i < $c_comments; ++$i) {
                     if (!empty($comments[$i]['user_id']) && empty($comments[$i]['name'])) {
                         $comments[$i]['name'] = $this->lang->t('users', 'deleted_user');
                     }
                     $comments[$i]['date_formatted'] = $this->date->formatTimeRange($comments[$i]['date']);
-                    $comments[$i]['message'] = Core\Functions::nl2p($comments[$i]['message']);
+                    $comments[$i]['message'] = $formatter->nl2p($comments[$i]['message']);
                     if ($emoticons_active === true) {
                         $comments[$i]['message'] = \ACP3\Modules\Emoticons\Helpers::emoticonsReplace($comments[$i]['message']);
                     }

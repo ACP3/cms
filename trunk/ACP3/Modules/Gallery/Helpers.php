@@ -128,9 +128,13 @@ abstract class Helpers
      */
     public static function removePicture($file)
     {
-        Core\Functions::removeUploadedFile('cache/images', 'gallery_thumb_' . $file);
-        Core\Functions::removeUploadedFile('cache/images', 'gallery_' . $file);
-        Core\Functions::removeUploadedFile('gallery', $file);
+        $upload = new Core\Helpers\Upload('cache/images');
+
+        $upload->removeUploadedFile('gallery_thumb_' . $file);
+        $upload->removeUploadedFile('gallery_' . $file);
+
+        $upload = new Core\Helpers\Upload('gallery');
+        $upload->removeUploadedFile($file);
     }
 
 }

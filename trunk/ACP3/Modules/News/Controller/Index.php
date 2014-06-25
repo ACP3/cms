@@ -30,6 +30,7 @@ class Index extends Core\Modules\Controller
     {
         if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id, $this->date->getCurrentDateTime()) == 1) {
             $config = new Core\Config($this->db, 'news');
+            $formatter = new Core\Helpers\StringFormatter();
             $settings = $config->getSettings();
 
             $cache = new News\Cache($this->model);
@@ -44,7 +45,7 @@ class Index extends Core\Modules\Controller
 
             $news['date_formatted'] = $this->date->format($news['start'], $settings['dateformat']);
             $news['date_iso'] = $this->date->format($news['start'], 'c');
-            $news['text'] = Core\Functions::rewriteInternalUri($news['text']);
+            $news['text'] = $formatter->rewriteInternalUri($news['text']);
             if (!empty($news['uri']) && (bool)preg_match('=^http(s)?://=', $news['uri']) === false) {
                 $news['uri'] = 'http://' . $news['uri'];
             }
@@ -126,15 +127,16 @@ class Index extends Core\Modules\Controller
             );
             $pagination->display();
 
+            $formatter = new Core\Helpers\StringFormatter();
             for ($i = 0; $i < $c_news; ++$i) {
                 $news[$i]['date_formatted'] = $this->date->format($news[$i]['start'], $settings['dateformat']);
                 $news[$i]['date_iso'] = $this->date->format($news[$i]['start'], 'c');
-                $news[$i]['text'] = Core\Functions::rewriteInternalUri($news[$i]['text']);
+                $news[$i]['text'] = $formatter->rewriteInternalUri($news[$i]['text']);
                 if ($settings['comments'] == 1 && $news[$i]['comments'] == 1 && $commentsCheck === true) {
                     $news[$i]['comments_count'] = \ACP3\Modules\Comments\Helpers::commentsCount('news', $news[$i]['id']);
                 }
                 if ($settings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
-                    $news[$i]['text'] = Core\Functions::shortenEntry($news[$i]['text'], $settings['readmore_chars'], 50, '...<a href="' . $this->uri->route('news/details/id_' . $news[$i]['id']) . '">[' . $this->lang->t('news', 'readmore') . "]</a>\n");
+                    $news[$i]['text'] = $formatter->shortenEntry($news[$i]['text'], $settings['readmore_chars'], 50, '...<a href="' . $this->uri->route('news/details/id_' . $news[$i]['id']) . '">[' . $this->lang->t('news', 'readmore') . "]</a>\n");
                 }
             }
             $this->view->assign('news', $news);

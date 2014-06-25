@@ -28,6 +28,7 @@ class Index extends Core\Modules\Controller\Sidebar
 
     public function actionIndex()
     {
+        $formatter = new Core\Helpers\StringFormatter();
         $config = new Core\Config($this->db, 'gallery');
         $settings = $config->getSettings();
 
@@ -37,7 +38,7 @@ class Index extends Core\Modules\Controller\Sidebar
         if ($c_galleries > 0) {
             for ($i = 0; $i < $c_galleries; ++$i) {
                 $galleries[$i]['start'] = $this->date->format($galleries[$i]['start']);
-                $galleries[$i]['title_short'] = Core\Functions::shortenEntry($galleries[$i]['title'], 30, 5, '...');
+                $galleries[$i]['title_short'] = $formatter->shortenEntry($galleries[$i]['title'], 30, 5, '...');
             }
             $this->view->assign('sidebar_galleries', $galleries);
         }

@@ -35,7 +35,8 @@ class Index extends Core\Modules\Controller
                     $validator->validateForgotPassword($_POST);
 
                     // Neues Passwort und neuen Zufallsschlüssel erstellen
-                    $newPassword = Core\Functions::salt(8);
+                    $securityHelper = new Core\Helpers\Secure();
+                    $newPassword = $securityHelper->salt(8);
                     $host = htmlentities($_SERVER['HTTP_HOST']);
 
                     // Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
@@ -57,9 +58,11 @@ class Index extends Core\Modules\Controller
 
                     // Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
                     if ($mailIsSent === true) {
-                        $salt = Core\Functions::salt(12);
+                        $securityHelper = new Core\Helpers\Secure();
+
+                        $salt = $securityHelper->salt(12);
                         $updateValues = array(
-                            'pwd' => Core\Functions::generateSaltedPassword($salt, $newPassword) . ':' . $salt,
+                            'pwd' => $securityHelper->generateSaltedPassword($salt, $newPassword) . ':' . $salt,
                             'login_errors' => 0
                         );
                         $bool = $this->model->update($updateValues, $user['id']);
@@ -166,11 +169,12 @@ class Index extends Core\Modules\Controller
                     $body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($_POST['nickname'], $_POST['mail'], $_POST['pwd'], CONFIG_SEO_TITLE, $host), $this->lang->t('users', 'register_mail_message'));
                     $mailIsSent = Core\Functions::generateEmail('', $_POST['mail'], $settings['mail'], $subject, $body);
 
-                    $salt = Core\Functions::salt(12);
+                    $securityHelper = new Core\Helpers\Secure();
+                    $salt = $securityHelper->salt(12);
                     $insertValues = array(
                         'id' => '',
                         'nickname' => Core\Functions::strEncode($_POST['nickname']),
-                        'pwd' => Core\Functions::generateSaltedPassword($salt, $_POST['pwd']) . ':' . $salt,
+                        'pwd' => $securityHelper->generateSaltedPassword($salt, $_POST['pwd']) . ':' . $salt,
                         'mail' => $_POST['mail'],
                         'date_format_long' => CONFIG_DATE_FORMAT_LONG,
                         'date_format_short' => CONFIG_DATE_FORMAT_SHORT,

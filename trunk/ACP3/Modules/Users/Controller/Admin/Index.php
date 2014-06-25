@@ -31,13 +31,14 @@ class Index extends Core\Modules\Controller\Admin
                 $validator = new Users\Validator($this->lang, $this->auth, $this->uri, $this->model);
                 $validator->validateCreate($_POST);
 
-                $salt = Core\Functions::salt(12);
+                $securityHelper = new Core\Helpers\Secure();
+                $salt = $securityHelper->salt(12);
 
                 $insertValues = array(
                     'id' => '',
                     'super_user' => (int)$_POST['super_user'],
                     'nickname' => Core\Functions::strEncode($_POST['nickname']),
-                    'pwd' => Core\Functions::generateSaltedPassword($salt, $_POST['pwd']) . ':' . $salt,
+                    'pwd' => $securityHelper->generateSaltedPassword($salt, $_POST['pwd']) . ':' . $salt,
                     'realname' => Core\Functions::strEncode($_POST['realname']),
                     'gender' => (int)$_POST['gender'],
                     'birthday' => $_POST['birthday'],
@@ -269,8 +270,10 @@ class Index extends Core\Modules\Controller\Admin
 
                     // Neues Passwort
                     if (!empty($_POST['new_pwd']) && !empty($_POST['new_pwd_repeat'])) {
-                        $salt = Core\Functions::salt(12);
-                        $newPassword = Core\Functions::generateSaltedPassword($salt, $_POST['new_pwd']);
+                        $securityHelper = new Core\Helpers\Secure();
+
+                        $salt = $securityHelper->salt(12);
+                        $newPassword = $securityHelper->generateSaltedPassword($salt, $_POST['new_pwd']);
                         $updateValues['pwd'] = $newPassword . ':' . $salt;
                     }
 

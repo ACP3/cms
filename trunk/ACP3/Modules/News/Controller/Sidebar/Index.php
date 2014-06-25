@@ -28,6 +28,7 @@ class Index extends Core\Modules\Controller\Sidebar
 
     public function actionIndex()
     {
+        $formatter = new Core\Helpers\StringFormatter();
         $config = new Core\Config($this->db, 'news');
         $settings = $config->getSettings();
 
@@ -37,7 +38,7 @@ class Index extends Core\Modules\Controller\Sidebar
         if ($c_news > 0) {
             for ($i = 0; $i < $c_news; ++$i) {
                 $news[$i]['start'] = $this->date->format($news[$i]['start'], $settings['dateformat']);
-                $news[$i]['title_short'] = Core\Functions::shortenEntry($news[$i]['title'], 30, 5, '...');
+                $news[$i]['title_short'] = $formatter->shortenEntry($news[$i]['title'], 30, 5, '...');
             }
             $this->view->assign('sidebar_news', $news);
         }

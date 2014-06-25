@@ -14,10 +14,12 @@ class Index extends Core\Modules\Controller\Sidebar
 {
     public function actionIndex()
     {
+        $formatter = new Core\Helpers\StringFormatter();
+
         $config = new Core\Config($this->db, 'contact');
         $settings = $config->getSettings();
-        $settings['address'] = Core\Functions::rewriteInternalUri($settings['address']);
-        $settings['disclaimer'] = Core\Functions::rewriteInternalUri($settings['disclaimer']);
+        $settings['address'] = $formatter->rewriteInternalUri($settings['address']);
+        $settings['disclaimer'] = $formatter->rewriteInternalUri($settings['disclaimer']);
         $this->view->assign('sidebar_contact', $settings);
 
         $this->setLayout('Contact/Sidebar/index.index.tpl');

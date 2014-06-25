@@ -53,8 +53,10 @@ class Account extends Core\Modules\Controller
 
                 // Neues Passwort
                 if (!empty($_POST['new_pwd']) && !empty($_POST['new_pwd_repeat'])) {
-                    $salt = Core\Functions::salt(12);
-                    $newPassword = Core\Functions::generateSaltedPassword($salt, $_POST['new_pwd']);
+                    $securityHelper = new Core\Helpers\Secure();
+
+                    $salt = $securityHelper->salt(12);
+                    $newPassword = $securityHelper->generateSaltedPassword($salt, $_POST['new_pwd']);
                     $updateValues['pwd'] = $newPassword . ':' . $salt;
                 }
 

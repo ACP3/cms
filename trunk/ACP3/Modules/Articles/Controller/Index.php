@@ -61,7 +61,15 @@ class Index extends Core\Modules\Controller
 
             $this->breadcrumb->replaceAnchestor($article['title'], 0, true);
 
-            $this->view->assign('page', Core\Functions::splitTextIntoPages(Core\Functions::rewriteInternalUri($article['text']), $this->uri->getUriWithoutPages()));
+            $toc = new Core\Helpers\TableOfContents(
+                $this->breadcrumb,
+                $this->lang,
+                $this->seo,
+                $this->uri,
+                $this->view
+            );
+            $formatter = new Core\Helpers\StringFormatter();
+            $this->view->assign('page', $toc->splitTextIntoPages($formatter->rewriteInternalUri($article['text']), $this->uri->getUriWithoutPages()));
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }

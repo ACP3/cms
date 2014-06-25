@@ -28,6 +28,8 @@ class Extensions
      */
     private $view;
 
+    private $formatter;
+
     public function __construct(
         \Doctrine\DBAL\Connection $db,
         Core\Date $date,
@@ -39,6 +41,8 @@ class Extensions
         $this->db = $db;
         $this->uri = $uri;
         $this->view = $view;
+
+        $this->formatter = new Core\Helpers\StringFormatter();
     }
 
     public function newsFeed()
@@ -50,7 +54,7 @@ class Extensions
             $params = array(
                 'title' => $results[$i]['title'],
                 'date' => $this->date->timestamp($results[$i]['start']),
-                'description' => Core\Functions::shortenEntry($results[$i]['text'], 300, 0),
+                'description' => $this->formatter->shortenEntry($results[$i]['text'], 300, 0),
                 'link' => FEED_LINK . $this->uri->route('news/index/details/id_' . $results[$i]['id'])
             );
             $this->view->assign($params);
@@ -66,7 +70,7 @@ class Extensions
             $params = array(
                 'title' => $results[$i]['title'],
                 'date' => $this->date->timestamp($results[$i]['start']),
-                'description' => Core\Functions::shortenEntry($results[$i]['text'], 300, 0),
+                'description' => $this->formatter->shortenEntry($results[$i]['text'], 300, 0),
                 'link' => FEED_LINK . $this->uri->route('files/index/details/id_' . $results[$i]['id'])
             );
             $this->view->assign($params);

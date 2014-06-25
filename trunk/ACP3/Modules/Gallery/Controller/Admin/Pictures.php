@@ -48,7 +48,8 @@ class Pictures extends Core\Modules\Controller\Admin
                     $validator = new Gallery\Validator($this->lang);
                     $validator->validateCreatePicture($file, $settings);
 
-                    $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'gallery');
+                    $upload = new Core\Helpers\Upload('gallery');
+                    $result = $upload->moveFile($file['tmp_name'], $file['name']);
                     $picNum = $this->model->getLastPictureByGalleryId($this->uri->id);
 
                     $insertValues = array(
@@ -161,7 +162,8 @@ class Pictures extends Core\Modules\Controller\Admin
                     );
 
                     if (!empty($file)) {
-                        $result = Core\Functions::moveFile($file['tmp_name'], $file['name'], 'gallery');
+                        $upload = new Core\Helpers\Upload('gallery');
+                        $result = $upload->moveFile($file['tmp_name'], $file['name']);
                         $oldFile = $this->model->getFileById($this->uri->id);
 
                         Gallery\Helpers::removePicture($oldFile);

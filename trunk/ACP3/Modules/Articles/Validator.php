@@ -2,7 +2,7 @@
 namespace ACP3\Modules\Articles;
 
 use ACP3\Core;
-use ACP3\Modules\Menus\Model;
+use ACP3\Modules\Menus;
 
 class Validator extends Core\Validator\AbstractValidator
 {
@@ -10,12 +10,17 @@ class Validator extends Core\Validator\AbstractValidator
      * @var \ACP3\Modules\Menus\Model
      */
     protected $menuModel;
+    /**
+     * @var \ACP3\Core\URI
+     */
+    protected $uri;
 
-    public function __construct(Core\Lang $lang, Model $menuModel)
+    public function __construct(Core\Lang $lang, Menus\Model $menuModel, Core\URI $uri)
     {
         parent::__construct($lang);
 
         $this->menuModel = $menuModel;
+        $this->uri = $uri;
     }
 
     /**
@@ -46,8 +51,8 @@ class Validator extends Core\Validator\AbstractValidator
                 }
                 if (!empty($formData['parent']) && Core\Validate::isNumber($formData['parent']) === true) {
                     // Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
-                    $parent_block = $this->menuModel->getMenuItemBlockIdById($formData['parent']);
-                    if (!empty($parent_block) && $parent_block != $formData['block_id']) {
+                    $parentBlock = $this->menuModel->getMenuItemBlockIdById($formData['parent']);
+                    if (!empty($parentBlock) && $parentBlock != $formData['block_id']) {
                         $errors['parent'] = $this->lang->t('menus', 'superior_page_not_allowed');
                     }
                 }

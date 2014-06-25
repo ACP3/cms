@@ -13,6 +13,7 @@ class Model extends Core\Model
 
     const TABLE_NAME = 'modules';
     const TABLE_NAME_SETTINGS = 'settings';
+    const TABLE_NAME_SEO = 'seo';
 
     public function getSchemaTables()
     {
@@ -32,6 +33,16 @@ class Model extends Core\Model
     public function getModuleSchemaVersion($moduleName)
     {
         return $this->db->fetchColumn('SELECT version FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE name = ?', array($moduleName));
+    }
+
+    public function uriAliasExists($path)
+    {
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME_SEO . ' WHERE uri = ?', array($path)) > 0;
+    }
+
+    public function getAllUriAliases()
+    {
+        return $this->db->fetchAll('SELECT uri, alias FROM ' . $this->prefix . static::TABLE_NAME_SEO . ' WHERE alias != ""');
     }
 
 }

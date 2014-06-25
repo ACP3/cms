@@ -151,11 +151,12 @@ class Index extends Core\Modules\Controller
                 $emoticons_active = Core\Modules::isActive('emoticons') === true && $settings['emoticons'] == 1 ? true : false;
             }
 
+            $formatter = new Core\Helpers\StringFormatter();
             for ($i = 0; $i < $c_guestbook; ++$i) {
                 $guestbook[$i]['name'] = !empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'];
                 $guestbook[$i]['date_formatted'] = $this->date->format($guestbook[$i]['date'], $settings['dateformat']);
                 $guestbook[$i]['date_iso'] = $this->date->format($guestbook[$i]['date'], 'c');
-                $guestbook[$i]['message'] = Core\Functions::nl2p($guestbook[$i]['message']);
+                $guestbook[$i]['message'] = $formatter->nl2p($guestbook[$i]['message']);
                 if ($emoticons_active === true) {
                     $guestbook[$i]['message'] = \ACP3\Modules\Emoticons\Helpers::emoticonsReplace($guestbook[$i]['message']);
                 }
