@@ -27,12 +27,6 @@ class ACL
      */
     protected $privileges = array();
     /**
-     * ID des eingeloggten Users
-     *
-     * @var array
-     */
-    protected $userId = 0;
-    /**
      * Array mit den dem Benutzer zugewiesenen Rollen
      *
      * @var array
@@ -56,8 +50,7 @@ class ACL
         $this->auth = $auth;
         $this->db = $db;
         $this->cache = new Cache2('acl');
-        $this->userId = $auth->getUserId();
-        $this->userRoles = $this->getUserRoles();
+        $this->userRoles = $this->getUserRoles($auth->getUserId());
         $this->resources = $this->getResources();
         $this->privileges = $this->getRules($this->userRoles);
     }
@@ -113,12 +106,8 @@ class ACL
      *  2 = Namen der Rollen ausgeben
      * @return array
      */
-    public function getUserRoles($userId = 0, $mode = 1)
+    public function getUserRoles($userId, $mode = 1)
     {
-        if ($userId === 0) {
-            $userId = $this->userId;
-        }
-
         $field = $mode === 2 ? 'r.name' : 'r.id';
         $key = substr($field, 2);
         $userRoles = $this->db->fetchAll('SELECT ' . $field . ' FROM ' . DB_PRE . 'acl_user_roles AS ur JOIN ' . DB_PRE . 'acl_roles AS r ON(ur.role_id = r.id) WHERE ur.user_id = ? ORDER BY r.left_id DESC', array($userId), array(\PDO::PARAM_INT));
@@ -177,8 +166,11 @@ class ACL
     public function setRulesCache(array $roles)
     {
         // Berechtigungen einlesen, auf die der Benutzer laut seinen Rollen Zugriff hat
-        $rules = $this->db->executeQuery('SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM ' . DB_PRE . 'acl_rules AS ru JOIN ' . DB_PRE . 'modules AS m ON (ru.module_id = m.id) JOIN ' . DB_PRE . 'acl_privileges AS p ON(ru.privilege_id = p.id) WHERE ru.role_id IN(?)',
-            array($roles), array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY))->fetchAll();
+        $rules = $this->db->executeQuery(
+            'SELECT ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM ' . DB_PRE . 'acl_rules AS ru JOIN ' . DB_PRE . 'modules AS m ON (ru.module_id = m.id) JOIN ' . DB_PRE . 'acl_privileges AS p ON(ru.privilege_id = p.id) WHERE ru.role_id IN(?)',
+            array($roles),
+            array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
+        )->fetchAll();
         $c_rules = count($rules);
         $privileges = array();
         for ($i = 0; $i < $c_rules; ++$i) {
@@ -191,7 +183,7 @@ class ACL
             );
         }
 
-        return $this->cache->save('rules' . implode(',', $roles), $privileges);
+        return $this->cache->save('rules_' . implode(',', $roles), $privileges);
     }
 
     /**
@@ -242,7 +234,7 @@ class ACL
      */
     public function getRules(array $roles)
     {
-        $filename = 'acl_rules_' . implode(',', $roles);
+        $filename = 'rules_' . implode(',', $roles);
         if ($this->cache->contains($filename) === false) {
             $this->setRulesCache($roles);
         }
