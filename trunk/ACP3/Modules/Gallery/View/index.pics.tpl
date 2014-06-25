@@ -17,18 +17,20 @@
             {$i=$i+1}
         {/foreach}
     {else}
-        {if $i % 4 === 0}
-            <div class="row">
-        {/if}
-        <div class="col-lg-3">
-            <a href="{$row.uri}" class="thumbnail">
-                <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt="" width="{$row.width}" height="{$row.height}">
-            </a>
-        </div>
-        {if $i % 4 === 0}
+        {foreach $pictures as $row}
+            {if $i % 4 === 0}
+                <div class="row">
+            {/if}
+            <div class="col-lg-3">
+                <a href="{$row.uri}" class="thumbnail">
+                    <img src="{uri args="gallery/index/image/id_`$row.id`/action_thumb"}" alt="" width="{$row.width}" height="{$row.height}">
+                </a>
             </div>
-        {/if}
-        {$i=$i+1}
+            {if $i % 4 === 0}
+                </div>
+            {/if}
+            {$i=$i+1}
+        {/foreach}
     {/if}
 {else}
     <div class="alert alert-warning text-center">

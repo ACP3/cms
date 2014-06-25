@@ -4,6 +4,7 @@ namespace ACP3\Core\WYSIWYG;
 
 /**
  * Implementation of the AbstractWYSIWYG class for CKEditor
+ * @package ACP3\Core\WYSIWYG
  */
 class CKEditor extends AbstractWYSIWYG
 {
@@ -73,6 +74,9 @@ class CKEditor extends AbstractWYSIWYG
         }
     }
 
+    /**
+     * @return string
+     */
     public function display()
     {
         require_once LIBRARIES_DIR . 'ckeditor/ckeditor.php';
