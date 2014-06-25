@@ -135,7 +135,7 @@ class Installer extends Modules\AbstractInstaller
     public function settings()
     {
         return array(
-            'cache_driver' => 'file',
+            'cache_driver' => 'PhpFile',
             'cache_images' => true,
             'cache_minify' => 3600,
             'date_format_long' => '',
