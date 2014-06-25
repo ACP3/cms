@@ -8,7 +8,7 @@ class Installer extends Modules\AbstractInstaller
 {
 
     const MODULE_NAME = 'system';
-    const SCHEMA_VERSION = 44;
+    const SCHEMA_VERSION = 45;
 
     public function __construct(\Doctrine\DBAL\Connection $db)
     {
@@ -158,7 +158,6 @@ class Installer extends Modules\AbstractInstaller
             'mailer_type' => 'mail',
             'maintenance_mode' => false,
             'maintenance_message' => '',
-            'seo_aliases' => true,
             'seo_meta_description' => '',
             'seo_meta_keywords' => '',
             'seo_mod_rewrite' => false,
@@ -237,6 +236,9 @@ class Installer extends Modules\AbstractInstaller
             ),
             44 => array(
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', " . $this->getModuleId() . ", 'cache_driver', 'PhpFile');",
+            ),
+            45 => array(
+                "DELETE FROM `{pre}settings` WHERE module_id = " . $this->getModuleId() . " AND name = \"seo_aliases\";",
             )
         );
     }

@@ -42,16 +42,15 @@ class Index extends Core\Modules\Controller\Admin
                 );
 
                 $lastId = $this->db->insert(DB_PRE . 'gallery', $insertValues);
-                if ((bool)CONFIG_SEO_ALIASES === true) {
-                    $this->uri->insertUriAlias(
-                        sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $lastId),
-                        $_POST['alias'],
-                        $_POST['seo_keywords'],
-                        $_POST['seo_description'],
-                        (int)$_POST['seo_robots']
-                    );
-                    $this->seo->setCache();
-                }
+
+                $this->uri->insertUriAlias(
+                    sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $lastId),
+                    $_POST['alias'],
+                    $_POST['seo_keywords'],
+                    $_POST['seo_description'],
+                    (int)$_POST['seo_robots']
+                );
+                $this->seo->setCache();
 
                 $this->session->unsetFormToken();
 
@@ -74,7 +73,7 @@ class Index extends Core\Modules\Controller\Admin
             'seo_keywords' => '',
             'seo_description' => ''
         );
-        $this->view->assign('form',array_merge($defaults, $_POST));
+        $this->view->assign('form', array_merge($defaults, $_POST));
 
         $this->session->generateFormToken();
     }
@@ -114,6 +113,7 @@ class Index extends Core\Modules\Controller\Admin
             throw new Core\Exceptions\ResultNotExists();
         }
     }
+
     public function actionEdit()
     {
         if ($this->model->galleryExists((int)$this->uri->id) === true) {
@@ -136,18 +136,17 @@ class Index extends Core\Modules\Controller\Admin
                     );
 
                     $bool = $this->model->update($updateValues, $this->uri->id);
-                    if ((bool)CONFIG_SEO_ALIASES === true) {
-                        $this->uri->insertUriAlias(
-                            sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->uri->id),
-                            $_POST['alias'],
-                            $_POST['seo_keywords'],
-                            $_POST['seo_description'],
-                            (int)$_POST['seo_robots']
-                        );
-                        Gallery\Helpers::generatePictureAliases($this->uri->id);
 
-                        $this->seo->setCache();
-                    }
+                    $this->uri->insertUriAlias(
+                        sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $this->uri->id),
+                        $_POST['alias'],
+                        $_POST['seo_keywords'],
+                        $_POST['seo_description'],
+                        (int)$_POST['seo_robots']
+                    );
+                    Gallery\Helpers::generatePictureAliases($this->uri->id);
+
+                    $this->seo->setCache();
 
                     $this->session->unsetFormToken();
 
@@ -194,6 +193,7 @@ class Index extends Core\Modules\Controller\Admin
             throw new Core\Exceptions\ResultNotExists();
         }
     }
+
     public function actionIndex()
     {
         Core\Functions::getRedirectMessage();
@@ -217,6 +217,7 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('can_delete', $canDelete);
         }
     }
+
     public function actionSettings()
     {
         $config = new Core\Config($this->db, 'gallery');

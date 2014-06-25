@@ -54,7 +54,7 @@ class Validator extends Core\Validation\AbstractValidator
         if (strlen($formData['cat_create']) >= 3 && \ACP3\Modules\Categories\Helpers::categoryIsDuplicate($formData['cat_create'], 'files') === true) {
             $errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
-        if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) && (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias']) === true)) {
+        if (!empty($formData['alias']) && (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias']) === true)) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 
@@ -96,7 +96,7 @@ class Validator extends Core\Validation\AbstractValidator
         if (strlen($formData['cat_create']) >= 3 && \ACP3\Modules\Categories\Helpers::categoryIsDuplicate($formData['cat_create'], 'files') === true) {
             $errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
-        if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
+        if (!empty($formData['alias']) &&
             (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->uri->id)) === true)
         ) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');

@@ -24,7 +24,7 @@ class Validator extends Core\Validation\AbstractValidator
         if (strlen($formData['title']) < 3) {
             $errors['title'] = $this->lang->t('gallery', 'type_in_gallery_title');
         }
-        if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
+        if (!empty($formData['alias']) &&
             (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias']) === true)
         ) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
@@ -75,7 +75,7 @@ class Validator extends Core\Validation\AbstractValidator
         if (strlen($formData['title']) < 3) {
             $errors['title'] = $this->lang->t('gallery', 'type_in_gallery_title');
         }
-        if ((bool)CONFIG_SEO_ALIASES === true && !empty($formData['alias']) &&
+        if (!empty($formData['alias']) &&
             (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $this->uri->id)))
         ) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @param $params
+ * @return bool|int
+ */
 function smarty_function_has_permission($params)
 {
     if (isset($params['path']) === true) {

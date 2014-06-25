@@ -1,4 +1,8 @@
 <?php
+/**
+ * @param $params
+ * @return string
+ */
 function smarty_function_icon($params)
 {
     $path = ROOT_DIR . CONFIG_ICONS_PATH . $params['path'] . '.png';

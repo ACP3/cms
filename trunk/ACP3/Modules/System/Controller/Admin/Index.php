@@ -44,7 +44,6 @@ class Index extends Core\Modules\Controller\Admin
                     'mailer_type' => $_POST['mailer_type'],
                     'maintenance_message' => $_POST['maintenance_message'],
                     'maintenance_mode' => (int)$_POST['maintenance_mode'],
-                    'seo_aliases' => (int)$_POST['seo_aliases'],
                     'seo_meta_description' => Core\Functions::strEncode($_POST['seo_meta_description']),
                     'seo_meta_keywords' => Core\Functions::strEncode($_POST['seo_meta_keywords']),
                     'seo_mod_rewrite' => (int)$_POST['seo_mod_rewrite'],
@@ -108,10 +107,6 @@ class Index extends Core\Modules\Controller\Admin
             $this->lang->t('system', 'seo_robots_noindex_nofollow')
         );
         $this->view->assign('robots', Core\Functions::selectGenerator('seo_robots', array(1, 2, 3, 4), $lang_robots, CONFIG_SEO_ROBOTS));
-
-        // URI-Aliases aktivieren/deaktivieren
-        $lang_aliases = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
-        $this->view->assign('aliases', Core\Functions::selectGenerator('seo_aliases', array(1, 0), $lang_aliases, CONFIG_SEO_ALIASES, 'checked'));
 
         // Sef-URIs
         $lang_mod_rewrite = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));

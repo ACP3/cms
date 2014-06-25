@@ -167,20 +167,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="{$aliases.0.id}" class="col-lg-2 control-label">{lang t="system|enable_seo_aliases"}</label>
-
-                    <div class="col-lg-10">
-                        <div class="btn-group" data-toggle="buttons">
-                            {foreach $aliases as $row}
-                                <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                                    <input type="radio" name="seo_aliases" id="{$row.id}" value="{$row.value}"{$row.checked}>
-                                    {$row.lang}
-                                </label>
-                            {/foreach}
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label for="{$mod_rewrite.0.id}" class="col-lg-2 control-label">{lang t="system|mod_rewrite"}</label>
 
                     <div class="col-lg-10">

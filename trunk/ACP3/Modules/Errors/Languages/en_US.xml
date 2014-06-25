@@ -5,8 +5,8 @@
         <direction>ltr</direction>
     </info>
     <keys>
-        <item key="403">Access denied</item>
-        <item key="404">File not found</item>
+        <item key="frontend_index_401">Access denied</item>
+        <item key="frontend_index_404">File not found</item>
         <item key="errors">Error messages</item>
         <item key="file_not_found">
             <![CDATA[The requested module or the requested file is either missing or has not been activated.<br />Please contact the administrator of this site, if the error should occur repeatedly.]]></item>

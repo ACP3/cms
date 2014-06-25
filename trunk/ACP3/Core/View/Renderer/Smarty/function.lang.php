@@ -1,4 +1,8 @@
 <?php
+/**
+ * @param $params
+ * @return mixed
+ */
 function smarty_function_lang($params)
 {
     $values = explode('|', $params['t']);

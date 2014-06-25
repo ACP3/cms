@@ -1,4 +1,8 @@
 <?php
+/**
+ * @param $params
+ * @throws Exception
+ */
 function smarty_function_load_module($params)
 {
     $pathArray = array_map(function ($value) {
