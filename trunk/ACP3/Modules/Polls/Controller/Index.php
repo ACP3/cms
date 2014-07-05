@@ -56,7 +56,9 @@ class Index extends Core\Modules\Controller
     {
         if (Core\Validate::isNumber($this->uri->id) === true &&
             $this->model->pollExists($this->uri->id, $this->date->getCurrentDateTime()) === true) {
-            Core\Functions::getRedirectMessage();
+
+            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+            $redirect->getMessage();
 
             $question = $this->model->getOneByIdWithTotalVotes($this->uri->id);
             $answers = $this->model->getAnswersByPollId($this->uri->id);
@@ -117,7 +119,8 @@ class Index extends Core\Modules\Controller
                     $text = $this->lang->t('polls', 'already_voted');
                 }
 
-                Core\Functions::setRedirectMessage($bool, $text, 'polls/index/result/id_' . $this->uri->id);
+                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                $redirect->setMessage($bool, $text, 'polls/index/result/id_' . $this->uri->id);
             } else {
                 $poll = $this->model->getOneById($this->uri->id);
 

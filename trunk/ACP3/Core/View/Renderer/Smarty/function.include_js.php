@@ -3,6 +3,7 @@
  * Fügt die angegebene JavaScript-Datei in ein Template ein
  *
  * @param array $params
+ * @throws Exception
  * @return string
  */
 function smarty_function_include_js($params)
@@ -26,15 +27,15 @@ function smarty_function_include_js($params)
             $module = ucfirst($params['module']);
             $file = $params['file'];
 
-            if (is_file(DESIGN_PATH_INTERNAL . $module . '/js/' . $file . '.js') === true) {
-                return sprintf($script, DESIGN_PATH . $module . '/js/' . $file . '.js');
-            } elseif (is_file(MODULES_DIR . $module . '/js/' . $file . '.js') === true) {
-                return sprintf($script, ROOT_DIR . 'ACP3/Modules/' . $module . '/js/' . $file . '.js');
+            if (is_file(DESIGN_PATH_INTERNAL . $module . '/assets/' . $file . '.js') === true) {
+                return sprintf($script, DESIGN_PATH . $module . '/assets/' . $file . '.js');
+            } elseif (is_file(MODULES_DIR . $module . '/View/assets/' . $file . '.js') === true) {
+                return sprintf($script, ROOT_DIR . 'ACP3/Modules/' . $module . '/View/assets/' . $file . '.js');
             }
         }
         return '';
     }
 
-    return 'Not all necessary arguments for the function ' . __FUNCTION__ . ' were passed!';
+    throw new Exception('Not all necessary arguments for the function ' . __FUNCTION__ . ' were passed!');
 }
 /* vim: set expandtab: */

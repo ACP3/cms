@@ -55,7 +55,7 @@ class Helpers
         }
 
         // Stylesheet für das Layout-Tenplate
-        $css[] = self::_getStaticAssetPath(MODULES_DIR . 'System/', DESIGN_PATH_INTERNAL . 'System/', 'css', 'style.css');
+        $css[] = self::_getStaticAssetPath(MODULES_DIR . 'System/View/', DESIGN_PATH_INTERNAL . 'System/', 'assets', 'style.css');
         $css[] = DESIGN_PATH_INTERNAL . (is_file(DESIGN_PATH_INTERNAL . $layout . '.css') === true ? $layout : 'layout') . '.css';
 
         // Zusätzliche Stylesheets einbinden
@@ -72,9 +72,9 @@ class Helpers
         // Stylesheets der Module
         $modules = Core\Modules::getActiveModules();
         foreach ($modules as $module) {
-            $systemPath = MODULES_DIR . $module['dir'] . '/';
+            $systemPath = MODULES_DIR . $module['dir'] . '/View/';
             $designPath = DESIGN_PATH_INTERNAL . $module['dir'] . '/';
-            if (true == ($stylesheet = $this->_getStaticAssetPath($systemPath, $designPath, 'css', 'style.css')) &&
+            if (true == ($stylesheet = $this->_getStaticAssetPath($systemPath, $designPath, 'assets', 'style.css')) &&
                 $module['dir'] !== 'System'
             ) {
                 $css[] = $stylesheet;

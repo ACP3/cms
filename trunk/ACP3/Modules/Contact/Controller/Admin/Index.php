@@ -16,6 +16,8 @@ class Index extends Core\Modules\Controller\Admin
     {
         $config = new Core\Config($this->db, 'contact');
 
+        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+
         if (empty($_POST) === false) {
             try {
                 $validator = new Contact\Validator($this->lang, $this->auth);
@@ -33,16 +35,16 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/contact');
+                $redirect->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/contact');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/contact');
+                $redirect->setMessage(false, $e->getMessage(), 'acp/contact');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
             }
         }
 
-        Core\Functions::getRedirectMessage();
+        $redirect->getMessage();
 
         $settings = $config->getSettings();
 
