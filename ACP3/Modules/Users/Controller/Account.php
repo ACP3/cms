@@ -71,7 +71,8 @@ class Account extends Core\Modules\Controller
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 Core\Functions::setRedirectMessage(false, $e->getMessage(), 'users/account');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $e->getMessage());
+                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
             }
         }
 
@@ -159,7 +160,8 @@ class Account extends Core\Modules\Controller
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 Core\Functions::setRedirectMessage(false, $e->getMessage(), 'users/account');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $e->getMessage());
+                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
             }
         }
 

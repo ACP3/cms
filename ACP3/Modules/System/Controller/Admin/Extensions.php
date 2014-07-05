@@ -13,6 +13,18 @@ use ACP3\Modules\System;
 class Extensions extends Core\Modules\Controller\Admin
 {
 
+    /**
+     * @var System\Model
+     */
+    private $model;
+
+    public function preDispatch()
+    {
+        parent::preDispatch();
+
+        $this->model = new System\Model($this->db);
+    }
+
     public function actionDesigns()
     {
         if (isset($this->uri->dir)) {
@@ -101,7 +113,7 @@ class Extensions extends Core\Modules\Controller\Admin
         } elseif ($info['protected'] === true) {
             $text = $this->lang->t('system', 'mod_deactivate_forbidden');
         } else {
-            $bool = $this->db->update(DB_PRE . 'modules', array('active' => 1), array('name' => $this->uri->dir));
+            $bool = $this->model->update(array('active' => 1), array('name' => $this->uri->dir));
 
             $this->_renewCaches();
 
@@ -123,7 +135,7 @@ class Extensions extends Core\Modules\Controller\Admin
             $deps = System\Helpers::checkUninstallDependencies($this->uri->dir);
 
             if (empty($deps)) {
-                $bool = $this->db->update(DB_PRE . 'modules', array('active' => 0), array('name' => $this->uri->dir));
+                $bool = $this->model->update(array('active' => 0), array('name' => $this->uri->dir));
 
                 $this->_renewCaches();
 

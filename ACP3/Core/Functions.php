@@ -37,66 +37,6 @@ class Functions
     }
 
     /**
-     * Displays a confirm box
-     *
-     * @param string $text
-     * @param int|string|array $forward
-     * @param int|string $backward
-     * @param integer $overlay
-     * @return string
-     */
-    public static function confirmBox($text, $forward = 0, $backward = 0, $overlay = 0)
-    {
-        if (!empty($text)) {
-            static::_init();
-
-            $confirm = array(
-                'text' => $text,
-                'forward' => $forward,
-                'overlay' => $overlay,
-            );
-            if (!empty($backward)) {
-                $confirm['backward'] = $backward;
-            }
-
-            static::$view->assign('confirm', $confirm);
-
-            return static::$view->fetchTemplate('system/confirm_box.tpl');
-        }
-        return '';
-    }
-
-    /**
-     * Displays a confirm box, where the forward button triggers a form submit using POST
-     *
-     * @param $text
-     * @param array $data
-     * @param $forward
-     * @param int $backward
-     * @return string
-     */
-    public static function confirmBoxPost($text, array $data, $forward, $backward = 0)
-    {
-        if (!empty($text) && !empty($data)) {
-            static::_init();
-
-            $confirm = array(
-                'text' => $text,
-                'data' => $data,
-                'forward' => $forward,
-            );
-            if (!empty($backward)) {
-                $confirm['backward'] = $backward;
-            }
-
-            static::$view->assign('confirm', $confirm);
-
-            return static::$view->fetchTemplate('system/confirm_box_post.tpl');
-        }
-        return '';
-    }
-
-    /**
      *
      * @param array $config
      * @return string
@@ -117,41 +57,6 @@ class Functions
         self::$dataTableInitialized = true;
 
         return static::$view->fetchTemplate('system/data_table.tpl');
-    }
-
-    /**
-     * Gibt eine Box mit den aufgetretenen Fehlern aus
-     *
-     * @param string|array $errors
-     * @return string
-     */
-    public static function errorBox($errors)
-    {
-        static::_init();
-
-        $hasNonIntegerKeys = false;
-        if (is_array($errors) === true) {
-            foreach (array_keys($errors) as $key) {
-                if (Validate::isNumber($key) === false) {
-                    $hasNonIntegerKeys = true;
-                    break;
-                }
-            }
-        } else {
-            $errors = (array)$errors;
-        }
-        static::$view->assign('error_box', array('non_integer_keys' => $hasNonIntegerKeys, 'errors' => $errors));
-        $content = static::$view->fetchTemplate('system/error_box.tpl');
-
-        if (static::$uri->getIsAjax() === true) {
-            $return = array(
-                'success' => false,
-                'content' => $content,
-            );
-
-            self::outputJson($return);
-        }
-        return $content;
     }
 
     public static function outputJson(array $data)

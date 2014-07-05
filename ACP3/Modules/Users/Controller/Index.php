@@ -70,12 +70,14 @@ class Index extends Core\Modules\Controller
 
                     $this->session->unsetFormToken();
 
-                    $this->setContent(Core\Functions::confirmBox($this->lang->t('users', $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'), ROOT_DIR));
+                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                    $this->setContent($alerts->confirmBox($this->lang->t('users', $mailIsSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'), ROOT_DIR));
                     return;
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     Core\Functions::setRedirectMessage(false, $e->getMessage(), 'users/forgot_pwd');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $e->getMessage());
+                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
                 }
             }
 
@@ -196,12 +198,14 @@ class Index extends Core\Modules\Controller
 
                     $this->session->unsetFormToken();
 
-                    $this->setContent(Core\Functions::confirmBox($this->lang->t('users', $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
+                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                    $this->setContent($alerts->confirmBox($this->lang->t('users', $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
                     return;
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     Core\Functions::setRedirectMessage(false, $e->getMessage(), 'users/register');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $e->getMessage());
+                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
                 }
             }
 

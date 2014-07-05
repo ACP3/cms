@@ -3,6 +3,7 @@
 namespace ACP3\Modules\Users\Controller\Admin;
 
 use ACP3\Core;
+use ACP3\Modules\Permissions;
 use ACP3\Modules\Users;
 
 /**
@@ -16,12 +17,17 @@ class Index extends Core\Modules\Controller\Admin
      * @var Users\Model
      */
     protected $model;
+    /**
+     * @var Permissions\Model
+     */
+    protected $permissionsModel;
 
     public function preDispatch()
     {
         parent::preDispatch();
 
         $this->model = new Users\Model($this->db);
+        $this->permissionsModel = new Permissions\Model($this->db);
     }
 
     public function actionCreate()
@@ -68,7 +74,7 @@ class Index extends Core\Modules\Controller\Admin
                 try {
                     $lastId = $this->model->insert($insertValues);
                     foreach ($_POST['roles'] as $row) {
-                        $this->db->insert(DB_PRE . 'acl_user_roles', array('user_id' => $lastId, 'role_id' => $row));
+                        $this->permissionsModel->insert(array('user_id' => $lastId, 'role_id' => $row), Permissions\Model::TABLE_NAME_USER_ROLES);
                     }
                     $this->db->commit();
                 } catch (\Exception $e) {
@@ -82,7 +88,8 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/users');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $e->getMessage());
+                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
             }
         }
 
@@ -259,9 +266,9 @@ class Index extends Core\Modules\Controller\Admin
                     // Rollen aktualisieren
                     $this->db->beginTransaction();
                     try {
-                        $this->db->delete(DB_PRE . 'acl_user_roles', array('user_id' => $this->uri->id));
+                        $this->permissionsModel->delete(array('user_id' => $this->uri->id), Permissions\Model::TABLE_NAME_USER_ROLES);
                         foreach ($_POST['roles'] as $row) {
-                            $this->db->insert(DB_PRE . 'acl_user_roles', array('user_id' => $this->uri->id, 'role_id' => $row));
+                            $this->permissionsModel->insert(array('user_id' => $this->uri->id, 'role_id' => $row), Permissions\Model::TABLE_NAME_USER_ROLES);
                         }
                         $this->db->commit();
                     } catch (\Exception $e) {
@@ -291,7 +298,8 @@ class Index extends Core\Modules\Controller\Admin
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/users');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $e->getMessage());
+                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
                 }
             }
             // Zugriffslevel holen
@@ -407,7 +415,8 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/users');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $e->getMessage());
+                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
             }
         }
 

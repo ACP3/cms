@@ -36,14 +36,16 @@ class Admin extends Core\Modules\Controller
             $entries = $this->uri->entries;
         }
 
+        $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+
         if (!isset($entries)) {
-            $this->setContent(Core\Functions::errorBox($this->lang->t('system', 'no_entries_selected')));
+            $this->setContent($alerts->errorBox($this->lang->t('system', 'no_entries_selected')));
         } elseif (is_array($entries) === true && $this->uri->action !== 'confirmed') {
             $data = array(
                 'action' => 'confirmed',
                 'entries' => $entries
             );
-            $confirmBox = Core\Functions::confirmBoxPost($this->lang->t('system', 'confirm_delete'), $data, $this->uri->route($moduleConfirmUrl), $this->uri->route($moduleIndexUrl));
+            $confirmBox = $alerts->confirmBoxPost($this->lang->t('system', 'confirm_delete'), $data, $this->uri->route($moduleConfirmUrl), $this->uri->route($moduleIndexUrl));
             $this->setContent($confirmBox);
         } else {
             return is_array($entries) ? $entries : explode('|', $entries);
