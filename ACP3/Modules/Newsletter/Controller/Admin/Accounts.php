@@ -33,7 +33,8 @@ class Accounts extends Core\Modules\Controller\Admin
             $bool = $this->model->update(array('hash' => ''), $this->uri->id, Newsletter\Model::TABLE_NAME_ACCOUNTS);
         }
 
-        Core\Functions::setRedirectMessage($bool, $this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), 'acp/newsletter/accounts');
+        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+        $redirect->setMessage($bool, $this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), 'acp/newsletter/accounts');
     }
 
     public function actionDelete()
@@ -45,7 +46,9 @@ class Accounts extends Core\Modules\Controller\Admin
             foreach ($items as $item) {
                 $bool = $this->model->delete($item, '', Newsletter\Model::TABLE_NAME_ACCOUNTS);
             }
-            Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/newsletter/accounts');
+
+            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+            $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/newsletter/accounts');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -53,7 +56,8 @@ class Accounts extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        Core\Functions::getRedirectMessage();
+        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+        $redirect->getMessage();
 
         $accounts = $this->model->getAllAccounts();
         $c_accounts = count($accounts);

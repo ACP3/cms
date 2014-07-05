@@ -67,9 +67,11 @@ class Account extends Core\Modules\Controller
 
                 $this->session->unsetFormToken();
 
-                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/account');
+                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/account');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'users/account');
+                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                $redirect->setMessage(false, $e->getMessage(), 'users/account');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -156,9 +158,11 @@ class Account extends Core\Modules\Controller
 
                 $this->session->unsetFormToken();
 
-                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'), 'users/account');
+                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'settings_success' : 'settings_error'), 'users/account');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'users/account');
+                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                $redirect->setMessage(false, $e->getMessage(), 'users/account');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -208,10 +212,12 @@ class Account extends Core\Modules\Controller
             );
             $bool = $this->model->update($updateValues, $this->auth->getUserId());
 
-            Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/account');
+            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+            $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'users/account');
         }
 
-        Core\Functions::getRedirectMessage();
+        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+        $redirect->getMessage();
 
         $user = $this->model->getOneById($this->auth->getUserId());
 

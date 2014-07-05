@@ -79,9 +79,11 @@ class Index extends Core\Modules\Controller
 
                 $this->session->unsetFormToken();
 
-                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->uri->query);
+                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->uri->query);
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), $this->uri->query);
+                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                $redirect->setMessage(false, $e->getMessage(), $this->uri->query);
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -125,7 +127,8 @@ class Index extends Core\Modules\Controller
 
     public function actionIndex()
     {
-        Core\Functions::getRedirectMessage();
+        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+        $redirect->getMessage();
 
         $config = new Core\Config($this->db, 'comments');
         $settings = $config->getSettings();

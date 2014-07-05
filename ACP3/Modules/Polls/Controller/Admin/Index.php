@@ -60,9 +60,11 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                Core\Functions::setRedirectMessage($pollId && $bool2, $this->lang->t('system', $pollId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/polls');
+                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                $redirect->setMessage($pollId && $bool2, $this->lang->t('system', $pollId !== false && $bool2 !== false ? 'create_success' : 'create_error'), 'acp/polls');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/polls');
+                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                $redirect->setMessage(false, $e->getMessage(), 'acp/polls');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -110,7 +112,8 @@ class Index extends Core\Modules\Controller\Admin
                 $bool2 = $this->model->delete($item, 'poll_id', Polls\Model::TABLE_NAME_ANSWERS);
                 $bool3 = $this->model->delete($item, 'poll_id', Polls\Model::TABLE_NAME_VOTES);
             }
-            Core\Functions::setRedirectMessage($bool !== false && $bool2 !== false && $bool3 !== false, $this->lang->t('system', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error'), 'acp/polls');
+            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+            $redirect->setMessage($bool !== false && $bool2 !== false && $bool3 !== false, $this->lang->t('system', $bool !== false && $bool2 !== false && $bool3 !== false ? 'delete_success' : 'delete_error'), 'acp/polls');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -161,9 +164,11 @@ class Index extends Core\Modules\Controller\Admin
 
                     $this->session->unsetFormToken();
 
-                    Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/polls');
+                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                    $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/polls');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/polls');
+                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                    $redirect->setMessage(false, $e->getMessage(), 'acp/polls');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -219,7 +224,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        Core\Functions::getRedirectMessage();
+        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+        $redirect->getMessage();
 
         $polls = $this->model->getAllInAcp();
         $c_polls = count($polls);

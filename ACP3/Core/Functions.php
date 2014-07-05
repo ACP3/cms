@@ -14,10 +14,6 @@ class Functions
      */
     protected static $db;
     /**
-     * @var URI
-     */
-    protected static $uri;
-    /**
      * @var View
      */
     protected static $view;
@@ -31,7 +27,6 @@ class Functions
     {
         if (!static::$db) {
             static::$db = Registry::get('Db');
-            static::$uri = Registry::get('URI');
             static::$view = Registry::get('View');
         }
     }
@@ -102,46 +97,6 @@ class Functions
             ->setFrom($from)
             ->setRecipients($to)
             ->send();
-    }
-
-    /**
-     * Holt sich die von setRedirectMessage() erzeugte Redirect Nachricht
-     */
-    public static function getRedirectMessage()
-    {
-        if (isset($_SESSION['redirect_message']) && is_array($_SESSION['redirect_message'])) {
-            static::_init();
-
-            static::$view->assign('redirect', $_SESSION['redirect_message']);
-            static::$view->assign('redirect_message', static::$view->fetchTemplate('system/redirect_message.tpl'));
-            unset($_SESSION['redirect_message']);
-        }
-    }
-
-    /**
-     * Setzt eine Redirect Nachricht
-     *
-     * @param $success
-     * @param $text
-     * @param $path
-     * @param bool $overlay
-     */
-    public static function setRedirectMessage($success, $text, $path, $overlay = false)
-    {
-        if (empty($text) === false && empty($path) === false) {
-            static::_init();
-
-            $_SESSION['redirect_message'] = array(
-                'success' => is_int($success) ? true : (bool)$success,
-                'text' => $text
-            );
-//            if ($overlay === true) {
-//                static::$view->setContentTemplate('system/close_overlay.tpl');
-//                return;
-//            }
-
-            static::$uri->redirect($path);
-        }
     }
 
     /**

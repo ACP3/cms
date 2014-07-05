@@ -64,9 +64,11 @@ class Index extends Core\Modules\Controller\Admin
                 if ($result === false) {
                     $lang = $this->lang->t('newsletter', 'create_save_error');
                 }
-                Core\Functions::setRedirectMessage($result, $lang, 'acp/newsletter');
+                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                $redirect->setMessage($result, $lang, 'acp/newsletter');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/newsletter');
+                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                $redirect->setMessage(false, $e->getMessage(), 'acp/newsletter');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -95,7 +97,9 @@ class Index extends Core\Modules\Controller\Admin
             foreach ($items as $item) {
                 $bool = $this->model->delete($item);
             }
-            Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/newsletter');
+
+            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+            $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/newsletter');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -139,9 +143,12 @@ class Index extends Core\Modules\Controller\Admin
                     if ($result === false) {
                         $lang = $this->lang->t('newsletter', 'create_save_error');
                     }
-                    Core\Functions::setRedirectMessage($result, $lang, 'acp/newsletter');
+
+                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                    $redirect->setMessage($result, $lang, 'acp/newsletter');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/newsletter');
+                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                    $redirect->setMessage(false, $e->getMessage(), 'acp/newsletter');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -166,7 +173,8 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        Core\Functions::getRedirectMessage();
+        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+        $redirect->getMessage();
 
         $newsletter = $this->model->getAllInAcp();
         $c_newsletter = count($newsletter);
@@ -210,7 +218,8 @@ class Index extends Core\Modules\Controller\Admin
                 $bool2 = $this->model->update(array('status' => '1'), $this->uri->id);
             }
 
-            Core\Functions::setRedirectMessage($bool && $bool2 !== false, $this->lang->t('newsletter', $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error'), 'acp/newsletter');
+            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+            $redirect->setMessage($bool && $bool2 !== false, $this->lang->t('newsletter', $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error'), 'acp/newsletter');
         } else {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -235,9 +244,11 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/newsletter');
+                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                $redirect->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/newsletter');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/newsletter');
+                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                $redirect->setMessage(false, $e->getMessage(), 'acp/newsletter');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));

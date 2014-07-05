@@ -16,6 +16,8 @@ class Index extends Core\Modules\Controller\Admin
     {
         $config = new Core\Config($this->db, 'system');
 
+        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+
         if (empty($_POST) === false) {
             try {
                 $validator = new System\Validator($this->lang);
@@ -63,16 +65,16 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), 'acp/system/index/configuration');
+                $redirect->setMessage($bool, $this->lang->t('system', $bool === true ? 'config_edit_success' : 'config_edit_error'), 'acp/system/index/configuration');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/system/index/configuration');
+                $redirect->setMessage(false, $e->getMessage(), 'acp/system/index/configuration');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
             }
         }
 
-        Core\Functions::getRedirectMessage();
+        $redirect->getMessage();
 
         $this->view->assign('entries', Core\Functions::recordsPerPage(CONFIG_ENTRIES));
 

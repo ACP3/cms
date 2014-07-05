@@ -74,9 +74,11 @@ class Items extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
+                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/menus');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/menus');
+                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                $redirect->setMessage(false, $e->getMessage(), 'acp/menus');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -153,7 +155,8 @@ class Items extends Core\Modules\Controller\Admin
 
             $this->seo->setCache();
 
-            Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
+            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+            $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -211,9 +214,11 @@ class Items extends Core\Modules\Controller\Admin
 
                     $this->session->unsetFormToken();
 
-                    Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
+                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                    $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/menus');
+                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                    $redirect->setMessage(false, $e->getMessage(), 'acp/menus');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));

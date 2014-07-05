@@ -14,6 +14,8 @@ class Index extends Core\Modules\Controller
 {
     public function actionIndex()
     {
+        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+
         if (empty($_POST) === false) {
             try {
                 $validator = new Search\Validator($this->lang);
@@ -24,14 +26,14 @@ class Index extends Core\Modules\Controller
                 $this->displaySearchResults($_POST['mods'], Core\Functions::strEncode($_POST['search_term']), $_POST['area'], strtoupper($_POST['sort']));
                 return;
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                Core\Functions::setRedirectMessage(false, $e->getMessage(), 'search');
+                $redirect->setMessage(false, $e->getMessage(), 'search');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
             }
         }
 
-        Core\Functions::getRedirectMessage();
+        $redirect->getMessage();
 
         $this->view->assign('form', array_merge(array('search_term' => ''), $_POST));
 

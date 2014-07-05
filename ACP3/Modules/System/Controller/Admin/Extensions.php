@@ -27,6 +27,8 @@ class Extensions extends Core\Modules\Controller\Admin
 
     public function actionDesigns()
     {
+        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+
         if (isset($this->uri->dir)) {
             $bool = false;
 
@@ -42,9 +44,9 @@ class Extensions extends Core\Modules\Controller\Admin
             }
             $text = $this->lang->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
 
-            Core\Functions::setRedirectMessage($bool, $text, 'acp/system/index/designs');
+            $redirect->setMessage($bool, $text, 'acp/system/index/designs');
         } else {
-            Core\Functions::getRedirectMessage();
+            $redirect->getMessage();
 
             $designs = array();
             $path = ACP3_ROOT_DIR . 'designs/';
@@ -83,7 +85,8 @@ class Extensions extends Core\Modules\Controller\Admin
                 $this->_uninstallModule();
                 break;
             default:
-                Core\Functions::getRedirectMessage();
+                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                $redirect->getMessage();
 
                 $this->_renewCaches();
 
@@ -119,7 +122,9 @@ class Extensions extends Core\Modules\Controller\Admin
 
             $text = $this->lang->t('system', 'mod_activate_' . ($bool !== false ? 'success' : 'error'));
         }
-        Core\Functions::setRedirectMessage($bool, $text, 'acp/system/extensions/modules');
+
+        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+        $redirect->setMessage($bool, $text, 'acp/system/extensions/modules');
     }
 
     protected function _disableModule()
@@ -144,7 +149,9 @@ class Extensions extends Core\Modules\Controller\Admin
                 $text = sprintf($this->lang->t('system', 'module_disable_not_possible'), implode(', ', $deps));
             }
         }
-        Core\Functions::setRedirectMessage($bool, $text, 'acp/system/extensions/modules');
+
+        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+        $redirect->setMessage($bool, $text, 'acp/system/extensions/modules');
     }
 
     protected function _installModule()
@@ -177,7 +184,9 @@ class Extensions extends Core\Modules\Controller\Admin
         } else {
             $text = $this->lang->t('system', 'module_already_installed');
         }
-        Core\Functions::setRedirectMessage($bool, $text, 'acp/system/extensions/modules');
+
+        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+        $redirect->setMessage($bool, $text, 'acp/system/extensions/modules');
     }
 
     protected function _uninstallModule()
@@ -211,7 +220,9 @@ class Extensions extends Core\Modules\Controller\Admin
         } else {
             $text = $this->lang->t('system', 'protected_module_description');
         }
-        Core\Functions::setRedirectMessage($bool, $text, 'acp/system/extensions/modules');
+
+        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+        $redirect->setMessage($bool, $text, 'acp/system/extensions/modules');
     }
 
     protected function _renewCaches()

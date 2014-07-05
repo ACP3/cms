@@ -35,7 +35,9 @@ class Details extends Core\Modules\Controller\Admin
             foreach ($items as $item) {
                 $bool = $this->model->delete($item);
             }
-            Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
+
+            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+            $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -65,9 +67,11 @@ class Details extends Core\Modules\Controller\Admin
 
                     $this->session->unsetFormToken();
 
-                    Core\Functions::setRedirectMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/comments/details/index/id_' . $comment['module_id']);
+                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                    $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/comments/details/index/id_' . $comment['module_id']);
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/comments');
+                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+                    $redirect->setMessage(false, $e->getMessage(), 'acp/comments');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -90,7 +94,8 @@ class Details extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        Core\Functions::getRedirectMessage();
+        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+        $redirect->getMessage();
 
         $comments = $this->model->getAllByModuleInAcp((int)$this->uri->id);
 
