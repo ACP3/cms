@@ -67,7 +67,8 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/system/index/configuration');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $e->getMessage());
+                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
             }
         }
 

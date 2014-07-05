@@ -67,9 +67,8 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 
-
         if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
+            throw new Core\Exceptions\ValidationFailed($errors);
         }
     }
 
@@ -98,7 +97,7 @@ class Validator extends Core\Validator\AbstractValidator
         }
 
         if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
+            throw new Core\Exceptions\ValidationFailed($errors);
         }
     }
 

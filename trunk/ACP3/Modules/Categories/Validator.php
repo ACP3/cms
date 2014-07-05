@@ -55,7 +55,7 @@ class Validator extends Core\Validator\AbstractValidator
         }
 
         if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
+            throw new Core\Exceptions\ValidationFailed($errors);
         }
     }
 
@@ -79,7 +79,7 @@ class Validator extends Core\Validator\AbstractValidator
         }
 
         if (!empty($errors)) {
-            throw new Core\Exceptions\ValidationFailed(Core\Functions::errorBox($errors));
+            throw new Core\Exceptions\ValidationFailed($errors);
         }
     }
 

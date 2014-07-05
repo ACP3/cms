@@ -40,9 +40,11 @@ class Index extends Core\Modules\Controller
 
             $bool = $this->model->update(array('hash' => ''), array('mail' => $mail, 'hash' => $hash), Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
-            $this->setContent(Core\Functions::confirmBox($this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
+            $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+            $this->setContent($alerts->confirmBox($this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
         } catch (Core\Exceptions\ValidationFailed $e) {
-            $this->view->assign('error_msg', $e->getMessage());
+            $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+            $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
         }
     }
 
@@ -59,7 +61,8 @@ class Index extends Core\Modules\Controller
 
                         $this->session->unsetFormToken();
 
-                        $this->setContent(Core\Functions::confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
+                        $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                        $this->setContent($alerts->confirmBox($this->lang->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'), ROOT_DIR));
                         return;
                     case 'unsubscribe':
                         $validator->validateUnsubscribe($_POST);
@@ -68,7 +71,8 @@ class Index extends Core\Modules\Controller
 
                         $this->session->unsetFormToken();
 
-                        $this->setContent(Core\Functions::confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
+                        $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                        $this->setContent($alerts->confirmBox($this->lang->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'), ROOT_DIR));
                         return;
                     default:
                         throw new Core\Exceptions\ResultNotExists();
@@ -76,7 +80,8 @@ class Index extends Core\Modules\Controller
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $this->setContent(Core\Functions::errorBox($e->getMessage()));
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $e->getMessage());
+                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
             }
         }
 

@@ -41,7 +41,7 @@ class Index extends Core\Modules\Controller\Admin
                     'user_id' => $this->auth->getUserId(),
                 );
 
-                $lastId = $this->db->insert(DB_PRE . 'gallery', $insertValues);
+                $lastId = $this->model->insert($insertValues);
 
                 $this->uri->insertUriAlias(
                     sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $lastId),
@@ -58,7 +58,8 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/gallery');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $e->getMessage());
+                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
             }
         }
 
@@ -154,7 +155,8 @@ class Index extends Core\Modules\Controller\Admin
                 } catch (Core\Exceptions\InvalidFormToken $e) {
                     Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/gallery');
                 } catch (Core\Exceptions\ValidationFailed $e) {
-                    $this->view->assign('error_msg', $e->getMessage());
+                    $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                    $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
                 }
             }
 
@@ -262,7 +264,8 @@ class Index extends Core\Modules\Controller\Admin
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 Core\Functions::setRedirectMessage(false, $e->getMessage(), 'acp/gallery');
             } catch (Core\Exceptions\ValidationFailed $e) {
-                $this->view->assign('error_msg', $e->getMessage());
+                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
             }
         }
 
