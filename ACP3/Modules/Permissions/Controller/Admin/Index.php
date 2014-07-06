@@ -58,7 +58,8 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->db->commit();
 
-                $this->get('ACL')->setRolesCache();
+                $cache = new Permissions\Cache($this->model);
+                $cache->setRolesCache();
 
                 $this->session->unsetFormToken();
 

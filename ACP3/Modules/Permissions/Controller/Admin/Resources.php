@@ -43,7 +43,8 @@ class Resources extends Core\Modules\Controller\Admin
                 );
                 $bool = $this->model->insert($insertValues, Permissions\Model::TABLE_NAME_RESOURCES);
 
-                $this->get('ACL')->setResourcesCache();
+                $cache = new Permissions\Cache($this->model);
+                $cache->setResourcesCache();
 
                 $this->session->unsetFormToken();
 
@@ -84,10 +85,11 @@ class Resources extends Core\Modules\Controller\Admin
             $bool = false;
 
             foreach ($items as $item) {
-                $bool = $this->db->delete(DB_PRE . 'acl_resources', array('id' => $item));
+                $bool = $this->model->delete($item, Permissions\Model::TABLE_NAME_RESOURCES);
             }
 
-            $this->get('ACL')->setResourcesCache();
+            $cache = new Permissions\Cache($this->model);
+            $cache->setResourcesCache();
 
             $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
             $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/permissions/resources');
@@ -113,7 +115,8 @@ class Resources extends Core\Modules\Controller\Admin
                     );
                     $bool = $this->model->update($updateValues, $this->uri->id, Permissions\Model::TABLE_NAME_RESOURCES);
 
-                    $this->get('ACL')->setResourcesCache();
+                    $cache = new Permissions\Cache($this->model);
+                    $cache->setResourcesCache();
 
                     $this->session->unsetFormToken();
 

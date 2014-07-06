@@ -1,6 +1,7 @@
 <?php
 namespace ACP3\Core;
 use ACP3\Core\Helpers\Secure;
+use ACP3\Modules\Users;
 
 /**
  * Authenticates the user
@@ -50,14 +51,14 @@ class Auth
     protected $userInfo = array();
 
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-
-    /**
      * @var Session
      */
     protected $session;
+
+    /**
+     * @var \ACP3\Modules\Users\Model
+     */
+    protected $userModel;
 
     /**
      * Findet heraus, falls der ACP3_AUTH Cookie gesetzt ist, ob der
@@ -65,25 +66,25 @@ class Auth
      */
     function __construct(\Doctrine\DBAL\Connection $db, Session $session)
     {
-        $this->db = $db;
         $this->session = $session;
+        $this->userModel = new Users\Model($db);
 
         if (isset($_COOKIE[self::COOKIE_NAME])) {
             $cookie = base64_decode($_COOKIE[self::COOKIE_NAME]);
-            $cookie_arr = explode('|', $cookie);
+            $cookieData = explode('|', $cookie);
 
-            $user = $this->db->executeQuery('SELECT id, super_user, pwd, entries, language FROM ' . DB_PRE . 'users WHERE nickname = ? AND login_errors < 3', array($cookie_arr[0]))->fetchAll();
-            if (count($user) === 1) {
-                $db_password = substr($user[0]['pwd'], 0, 40);
-                if ($db_password === $cookie_arr[1]) {
+            $user = $this->userModel->getOneActiveUserByNickname($cookieData[0]);
+            if (!empty($user)) {
+                $dbPassword = substr($user['pwd'], 0, 40);
+                if ($dbPassword === $cookieData[1]) {
                     $this->isUser = true;
-                    $this->userId = (int)$user[0]['id'];
-                    $this->superUser = (bool)$user[0]['super_user'];
+                    $this->userId = (int)$user['id'];
+                    $this->superUser = (bool)$user['super_user'];
 
                     $config = new Config($db, 'users');
                     $settings = $config->getSettings();
-                    $this->entries = $settings['entries_override'] == 1 && $user[0]['entries'] > 0 ? (int)$user[0]['entries'] : (int)CONFIG_ENTRIES;
-                    $this->language = $settings['language_override'] == 1 ? $user[0]['language'] : CONFIG_LANG;
+                    $this->entries = $settings['entries_override'] == 1 && $user['entries'] > 0 ? (int)$user['entries'] : (int)CONFIG_ENTRIES;
+                    $this->language = $settings['language_override'] == 1 ? $user['language'] : CONFIG_LANG;
                 }
             } else {
                 $this->logout();
@@ -116,7 +117,7 @@ class Auth
         if (Validate::isNumber($userId) === true) {
             if (empty($this->userInfo[$userId])) {
                 $countries = Lang::worldCountries();
-                $info = $this->db->fetchAssoc('SELECT * FROM ' . DB_PRE . 'users WHERE id = ?', array($userId), array(\PDO::PARAM_INT));
+                $info = $this->userModel->getOneById($userId);
                 if (!empty($info)) {
                     $info['country_formatted'] = !empty($info['country']) && isset($countries[$info['country']]) ? $countries[$info['country']] : '';
                     $this->userInfo[$userId] = $info;
@@ -171,7 +172,7 @@ class Auth
      */
     public function login($username, $password, $expiry)
     {
-        $user = $this->db->fetchAssoc('SELECT id, pwd, login_errors FROM ' . DB_PRE . 'users WHERE nickname = ?', array($username));
+        $user = $this->userModel->getOneByNickname($username);
 
         if (!empty($user)) {
             // Useraccount ist gesperrt
@@ -192,7 +193,7 @@ class Auth
             if ($dbHash === $formPasswordHash) {
                 // Login-Fehler zurücksetzen
                 if ($user['login_errors'] > 0) {
-                    $this->db->update(DB_PRE . 'users', array('login_errors' => 0), array('id', (int)$user['id']));
+                    $this->userModel->update(array('login_errors' => 0), (int)$user['id']);
                 }
 
                 $this->setCookie($username, $dbHash, $expiry);
@@ -204,10 +205,9 @@ class Auth
                 $this->userId = (int)$user['id'];
 
                 return 1;
-                // Beim dritten falschen Login den Account sperren
-            } else {
+            } else { // Beim dritten falschen Login den Account sperren
                 $loginErrors = $user['login_errors'] + 1;
-                $this->db->update(DB_PRE . 'users', array('login_errors' => $loginErrors), array('id' => (int)$user['id']));
+                $this->userModel->update(array('login_errors' => $loginErrors), (int)$user['id']);
                 if ($loginErrors === 3) {
                     return -1;
                 }
