@@ -63,6 +63,11 @@ class Model extends Core\Model
         return $this->db->fetchAssoc('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE nickname = ?', array($nickname));
     }
 
+    public function getOneActiveUserByNickname($nickname)
+    {
+        return $this->db->fetchAssoc('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE nickname = ? AND login_errors < 3', array($nickname));
+    }
+
     public function getOneByEmail($email)
     {
         return $this->db->fetchAssoc('SELECT * FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE mail = ?', array($email));
@@ -72,7 +77,6 @@ class Model extends Core\Model
     {
         return count($this->getAll());
     }
-
 
     public function getAll($limitStart = '', $resultsPerPage = '')
     {

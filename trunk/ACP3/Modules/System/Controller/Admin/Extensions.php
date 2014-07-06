@@ -3,6 +3,7 @@
 namespace ACP3\Modules\System\Controller\Admin;
 
 use ACP3\Core;
+use ACP3\Modules\Permissions;
 use ACP3\Modules\System;
 
 /**
@@ -229,7 +230,9 @@ class Extensions extends Core\Modules\Controller\Admin
     {
         $this->lang->setLanguageCache();
         Core\Modules::setModulesCache();
-        $this->get('ACL')->setResourcesCache();
+
+        $cache = new Permissions\Cache(new Permissions\Model($this->db));
+        $cache->setResourcesCache();
     }
 
 }
