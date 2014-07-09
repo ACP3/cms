@@ -15,12 +15,17 @@ class Validator extends Core\Validator\AbstractValidator
      * @var \ACP3\Core\Auth
      */
     protected $auth;
+    /**
+     * @var Core\Modules
+     */
+    protected $modules;
 
-    public function __construct(Core\Lang $lang, Core\Auth $auth)
+    public function __construct(Core\Lang $lang, Core\Validate $validate, Core\Auth $auth, Core\Modules $modules)
     {
-        parent::__construct($lang);
+        parent::__construct($lang, $validate);
 
         $this->auth = $auth;
+        $this->modules;
     }
 
     /**
@@ -35,14 +40,14 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['name'])) {
             $errors['name'] = $this->lang->t('system', 'name_to_short');
         }
-        if (Core\Validate::email($formData['mail']) === false) {
+        if ($this->validate->email($formData['mail']) === false) {
             $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
         if (strlen($formData['message']) < 3) {
             $errors['message'] = $this->lang->t('system', 'message_to_short');
         }
-        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true &&
-            $this->auth->isUser() === false && Core\Validate::captcha($formData['captcha']) === false) {
+        if ($this->modules->hasPermission('frontend/captcha/index/image') === true &&
+            $this->auth->isUser() === false && $this->validate->captcha($formData['captcha']) === false) {
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
@@ -60,7 +65,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if (!empty($formData['mail']) && Core\Validate::email($formData['mail']) === false) {
+        if (!empty($formData['mail']) && $this->validate->email($formData['mail']) === false) {
             $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
 

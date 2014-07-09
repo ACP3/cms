@@ -44,7 +44,8 @@ class Model extends Core\Model
         return $this->db->fetchColumn('SELECT m.name FROM ' . $this->prefix . \ACP3\Modules\System\Model::TABLE_NAME . ' AS m JOIN ' . $this->prefix . static::TABLE_NAME . ' AS c ON(m.id = c.module_id) WHERE c.id = ?', array($categoryId));
     }
 
-    public function getCategoryDeleteInfosById($id) {
+    public function getCategoryDeleteInfosById($id)
+    {
         return $this->db->fetchAssoc('SELECT c.picture, m.name AS module FROM ' . $this->prefix . static::TABLE_NAME . ' AS c JOIN ' . $this->prefix . \ACP3\Modules\System\Model::TABLE_NAME . ' AS m ON(m.id = c.module_id) WHERE c.id = ?', array($id));
     }
 

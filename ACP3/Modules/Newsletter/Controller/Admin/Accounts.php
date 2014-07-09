@@ -29,7 +29,7 @@ class Accounts extends Core\Modules\Controller\Admin
     public function actionActivate()
     {
         $bool = false;
-        if (Core\Validate::isNumber($this->uri->id) === true) {
+        if ($this->get('core.validate')->isNumber($this->uri->id) === true) {
             $bool = $this->model->update(array('hash' => ''), $this->uri->id, Newsletter\Model::TABLE_NAME_ACCOUNTS);
         }
 
@@ -63,14 +63,14 @@ class Accounts extends Core\Modules\Controller\Admin
         $c_accounts = count($accounts);
 
         if ($c_accounts > 0) {
-            $canDelete = Core\Modules::hasPermission('admin/newsletter/accounts/delete');
+            $canDelete = $this->modules->hasPermission('admin/newsletter/accounts/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 3 : 2,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent($this->get('core.functions')->dataTable($config));
 
             $this->view->assign('accounts', $accounts);
             $this->view->assign('can_delete', $canDelete);

@@ -33,7 +33,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($_POST) === false) {
             try {
-                $validator = new Newsletter\Validator($this->lang, $this->auth, $this->model);
+                $validator = $this->get('newsletter.validator');
                 $validator->validate($_POST);
 
                 // Newsletter archivieren
@@ -50,7 +50,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 // Test-Newsletter
                 if ($_POST['test'] == 1) {
-                    $bool2 = Newsletter\Helpers::sendNewsletter($lastId, $settings['mail']);
+                    $bool2 = $this->get('newsletter.helpers')->sendNewsletter($lastId, $settings['mail']);
 
                     $lang = $this->lang->t('newsletter', 'create_success');
                     $result = $lastId !== false && $bool2 !== false;
@@ -115,7 +115,7 @@ class Index extends Core\Modules\Controller\Admin
 
             if (empty($_POST) === false) {
                 try {
-                    $validator = new Newsletter\Validator($this->lang, $this->auth, $this->model);
+                    $validator = $this->get('newsletter.validator');
                     $validator->validate($_POST);
 
                     // Newsletter archivieren
@@ -129,7 +129,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     // Test-Newsletter
                     if ($_POST['test'] == 1) {
-                        $bool2 = Newsletter\Helpers::sendNewsletter($this->uri->id, $settings['mail']);
+                        $bool2 = $this->get('newsletter.helpers')->sendNewsletter($this->uri->id, $settings['mail']);
 
                         $lang = $this->lang->t('newsletter', 'create_success');
                         $result = $bool !== false && $bool2;
@@ -180,14 +180,14 @@ class Index extends Core\Modules\Controller\Admin
         $c_newsletter = count($newsletter);
 
         if ($c_newsletter > 0) {
-            $canDelete = Core\Modules::hasPermission('admin/newsletter/index/delete');
+            $canDelete = $this->modules->hasPermission('admin/newsletter/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent($this->get('core.functions')->dataTable($config));
 
             $search = array('0', '1');
             $replace = array($this->lang->t('newsletter', 'not_yet_sent'), $this->lang->t('newsletter', 'already_sent'));
@@ -197,13 +197,13 @@ class Index extends Core\Modules\Controller\Admin
             }
             $this->view->assign('newsletter', $newsletter);
             $this->view->assign('can_delete', $canDelete);
-            $this->view->assign('can_send', Core\Modules::hasPermission('admin/newsletter/index/send'));
+            $this->view->assign('can_send', $this->modules->hasPermission('admin/newsletter/index/send'));
         }
     }
 
     public function actionSend()
     {
-        if (Core\Validate::isNumber($this->uri->id) === true && $this->model->newsletterExists($this->uri->id) === true) {
+        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->model->newsletterExists($this->uri->id) === true) {
             $accounts = $this->model->getAllActiveAccounts();
             $c_accounts = count($accounts);
             $recipients = array();
@@ -212,7 +212,7 @@ class Index extends Core\Modules\Controller\Admin
                 $recipients[] = $accounts[$i]['mail'];
             }
 
-            $bool = Newsletter\Helpers::sendNewsletter($this->uri->id, $recipients);
+            $bool = $this->get('newsletter.helpers')->sendNewsletter($this->uri->id, $recipients);
             $bool2 = false;
             if ($bool === true) {
                 $bool2 = $this->model->update(array('status' => '1'), $this->uri->id);
@@ -231,7 +231,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($_POST) === false) {
             try {
-                $validator = new Newsletter\Validator($this->lang, $this->auth, $this->model);
+                $validator = $this->get('newsletter.validator');
                 $validator->validateSettings($_POST);
 
                 $data = array(

@@ -2,12 +2,18 @@
 
 namespace ACP3\Core\WYSIWYG;
 
+use ACP3\Application;
+
 /**
  * Implementation of the AbstractWYSIWYG class for TinyMCE
  * @package ACP3\Core\WYSIWYG
  */
 class TinyMCE extends AbstractWYSIWYG
 {
+    /**
+     * @var \Symfony\Component\DependencyInjection\ContainerBuilder
+     */
+    protected $serviceContainer;
 
     public function __construct($id, $name, $value = '', $toolbar = '', $advanced = false, $height = '')
     {
@@ -17,6 +23,8 @@ class TinyMCE extends AbstractWYSIWYG
         $this->advanced = (bool)$advanced;
         $this->config['toolbar'] = $toolbar;
         $this->config['height'] = $height . 'px';
+
+        $this->serviceContainer = Application::getServiceContainer();
     }
 
     protected function configure()
@@ -40,7 +48,7 @@ class TinyMCE extends AbstractWYSIWYG
             $editor .= 'plugins: ["advlist autolink lists link image charmap print preview anchor","searchreplace visualblocks code fullscreen","insertdatetime media table contextmenu paste"],' . "\n";
             $editor .= 'toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"' . "\n";
         } else {
-            $editor.= "file_browser_callback: function(field, url, type, win) {
+            $editor .= "file_browser_callback: function(field, url, type, win) {
                     tinyMCE.activeEditor.windowManager.open({
                     file: '" . ROOT_DIR . "libraries/kcfinder/browse.php?opener=tinymce4&field=' + field + '&cms=acp3&type=' + (type == 'image' ? 'gallery' : 'files'),
                     title: 'KCFinder',
@@ -77,8 +85,10 @@ class TinyMCE extends AbstractWYSIWYG
         if ($wysiwyg['advanced'] === true)
             $wysiwyg['advanced_replace_content'] = 'tinyMCE.execInstanceCommand(\'' . $this->id . '\',"mceInsertContent",false,text);';
 
-        \ACP3\Core\Registry::get('View')->assign('wysiwyg', $wysiwyg);
-        return \ACP3\Core\Registry::get('View')->fetchTemplate('system/wysiwyg.tpl');
+        $view = $this->serviceContainer->get('core.view');
+
+        $view->assign('wysiwyg', $wysiwyg);
+        return $view->fetchTemplate('system/wysiwyg.tpl');
     }
 
 }

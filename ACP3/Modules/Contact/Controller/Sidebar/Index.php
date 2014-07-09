@@ -14,7 +14,7 @@ class Index extends Core\Modules\Controller\Sidebar
 {
     public function actionIndex()
     {
-        $formatter = new Core\Helpers\StringFormatter();
+        $formatter = $this->get('core.helpers.string.formatter');
 
         $config = new Core\Config($this->db, 'contact');
         $settings = $config->getSettings();

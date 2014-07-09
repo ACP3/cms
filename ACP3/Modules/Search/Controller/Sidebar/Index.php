@@ -14,7 +14,7 @@ class Index extends Core\Modules\Controller\Sidebar
 {
     public function actionIndex()
     {
-        $this->view->assign('search_mods', Search\Helpers::getModules());
+        $this->view->assign('search_mods', $this->get('search.helpers')->getModules());
 
         $this->session->generateFormToken('search/index/index');
 

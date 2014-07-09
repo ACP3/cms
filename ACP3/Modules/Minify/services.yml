@@ -1,0 +1,4 @@
+services:
+  minify.helpers:
+    class: ACP3\Modules\Minify\Helpers
+    arguments: ['@core.modules']

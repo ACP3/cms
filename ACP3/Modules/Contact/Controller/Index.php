@@ -16,7 +16,7 @@ class Index extends Core\Modules\Controller
     {
         if (empty($_POST) === false) {
             try {
-                $validator = new Contact\Validator($this->lang, $this->auth);
+                $validator = $this->get('contact.validator');
                 $validator->validate($_POST);
 
                 $config = new Core\Config($this->db, 'contact');
@@ -25,13 +25,13 @@ class Index extends Core\Modules\Controller
 
                 $subject = sprintf($this->lang->t('contact', 'contact_subject'), CONFIG_SEO_TITLE);
                 $body = str_replace(array('{name}', '{mail}', '{message}', '\n'), array($_POST['name'], $_POST['mail'], $_POST['message'], "\n"), $this->lang->t('contact', 'contact_body'));
-                $bool = Core\Functions::generateEmail('', $settings['mail'], $_POST['mail'], $subject, $body);
+                $bool = $this->get('core.functions')->generateEmail('', $settings['mail'], $_POST['mail'], $subject, $body);
 
                 // Nachrichtenkopie an Absender senden
                 if (isset($_POST['copy'])) {
                     $subjectCopy = sprintf($this->lang->t('contact', 'sender_subject'), CONFIG_SEO_TITLE);
                     $bodyCopy = sprintf($this->lang->t('contact', 'sender_body'), CONFIG_SEO_TITLE, $_POST['message']);
-                    Core\Functions::generateEmail($_POST['name'], $_POST['mail'], $settings['mail'], $subjectCopy, $bodyCopy);
+                    $this->get('core.functions')->generateEmail($_POST['name'], $_POST['mail'], $settings['mail'], $subjectCopy, $bodyCopy);
                 }
 
                 $this->session->unsetFormToken();
@@ -69,8 +69,8 @@ class Index extends Core\Modules\Controller
         $this->view->assign('form', array_merge($defaults, $_POST));
         $this->view->assign('copy_checked', Core\Functions::selectEntry('copy', 1, 0, 'checked'));
 
-        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true) {
-            $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());
+        if ($this->modules->hasPermission('frontend/captcha/index/image') === true) {
+            $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
         }
 
         $this->session->generateFormToken();
@@ -78,7 +78,7 @@ class Index extends Core\Modules\Controller
 
     public function actionImprint()
     {
-        $formatter = new Core\Helpers\StringFormatter();
+        $formatter = $this->get('core.helpers.string.formatter');
 
         $config = new Core\Config($this->db, 'contact');
         $settings = $config->getSettings();

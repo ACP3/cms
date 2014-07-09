@@ -35,7 +35,7 @@ class Index extends Core\Modules\Controller
 
     public function actionIndex()
     {
-        if (Core\Modules::isActive('categories') === true) {
+        if ($this->modules->isActive('categories') === true) {
             $categoriesCache = new Categories\Cache($this->categoriesModel);
             $categories = $categoriesCache->getCache('files');
             if (count($categories) > 0) {
@@ -53,7 +53,7 @@ class Index extends Core\Modules\Controller
             if ($this->uri->action === 'download') {
                 $path = UPLOADS_DIR . 'files/';
                 if (is_file($path . $file['file'])) {
-                    $formatter = new Core\Helpers\StringFormatter();
+                    $formatter = $this->get('core.helpers.string.formatter');
                     // Schönen Dateinamen generieren
                     $ext = strrchr($file['file'], '.');
                     $filename = $formatter->makeStringUrlSafe($file['title']) . $ext;
@@ -83,7 +83,7 @@ class Index extends Core\Modules\Controller
                 $file['date_iso'] = $this->date->format($file['start'], 'c');
                 $this->view->assign('file', $file);
 
-                if ($settings['comments'] == 1 && $file['comments'] == 1 && Core\Modules::hasPermission('frontend/comments') === true) {
+                if ($settings['comments'] == 1 && $file['comments'] == 1 && $this->modules->hasPermission('frontend/comments') === true) {
                     $comments = new \ACP3\Modules\Comments\Controller\Index(
                         $this->auth,
                         $this->breadcrumb,
@@ -107,7 +107,7 @@ class Index extends Core\Modules\Controller
 
     public function actionFiles()
     {
-        if (Core\Validate::isNumber($this->uri->cat) && $this->categoriesModel->resultExists($this->uri->cat) === true) {
+        if ($this->get('core.validate')->isNumber($this->uri->cat) && $this->categoriesModel->resultExists($this->uri->cat) === true) {
             $category = $this->categoriesModel->getOneById($this->uri->cat);
 
             $this->breadcrumb

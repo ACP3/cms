@@ -1,0 +1,10 @@
+services:
+  articles.helpers:
+    class: ACP3\Modules\Articles\Helpers
+    arguments: ['@core.db']
+  articles.model:
+    class: ACP3\Modules\Articles\Model
+    arguments: ['@core.db']
+  articles.validator:
+    class: ACP3\Modules\Articles\Validator
+    arguments: ['@core.lang', '@core.modules', '@core.uri', '@core.validate', '@menus.model']

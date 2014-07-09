@@ -52,14 +52,14 @@ class Index extends Core\Modules\Controller\Admin
         $c_comments = count($comments);
 
         if ($c_comments > 0) {
-            $canDelete = Core\Modules::hasPermission('admin/comments/index/delete');
+            $canDelete = $this->modules->hasPermission('admin/comments/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent($this->get('core.functions')->dataTable($config));
             for ($i = 0; $i < $c_comments; ++$i) {
                 $comments[$i]['name'] = $this->lang->t($comments[$i]['module'], $comments[$i]['module']);
             }
@@ -74,7 +74,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($_POST) === false) {
             try {
-                $validator = new Comments\Validator($this->lang, $this->auth, $this->date, $this->model);
+                $validator = $this->get('comments.validator');
                 $validator->validateSettings($_POST);
 
                 $data = array(
@@ -101,7 +101,7 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('dateformat', $this->date->dateFormatDropdown($settings['dateformat']));
 
         // Emoticons erlauben
-        if (Core\Modules::isActive('emoticons') === true) {
+        if ($this->modules->isActive('emoticons') === true) {
             $lang_allowEmoticons = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
             $this->view->assign('allow_emoticons', Core\Functions::selectGenerator('emoticons', array(1, 0), $lang_allowEmoticons, $settings['emoticons'], 'checked'));
         }

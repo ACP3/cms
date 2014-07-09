@@ -45,7 +45,7 @@ class Pictures extends Core\Modules\Controller\Admin
                     $file['name'] = $_FILES['file']['name'];
                     $file['size'] = $_FILES['file']['size'];
 
-                    $validator = new Gallery\Validator($this->lang);
+                    $validator = $this->get('gallery.validator');
                     $validator->validateCreatePicture($file, $settings);
 
                     $upload = new Core\Helpers\Upload('gallery');
@@ -62,7 +62,7 @@ class Pictures extends Core\Modules\Controller\Admin
                     );
 
                     $lastId = $this->model->insert($insertValues, Gallery\Model::TABLE_NAME_PICTURES);
-                    $bool2 = Gallery\Helpers::generatePictureAlias($lastId);
+                    $bool2 = $this->get('gallery.helpers')->generatePictureAlias($lastId);
 
                     $cache = new Gallery\Cache($this->db, $this->model);
                     $cache->setCache($this->uri->id);
@@ -80,7 +80,7 @@ class Pictures extends Core\Modules\Controller\Admin
                 }
             }
 
-            if ($settings['overlay'] == 0 && $settings['comments'] == 1 && Core\Modules::isActive('comments') === true) {
+            if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
                 $options = array();
                 $options[0]['name'] = 'comments';
                 $options[0]['checked'] = Core\Functions::selectEntry('comments', '1', '0', 'checked');
@@ -118,7 +118,7 @@ class Pictures extends Core\Modules\Controller\Admin
                     // Datei ebenfalls löschen
                     $picture = $this->model->getPictureById($item);
                     $this->model->updatePicturesNumbers($picture['pic'], $picture['gallery_id']);
-                    Gallery\Helpers::removePicture($picture['file']);
+                    $this->get('gallery.helpers')->removePicture($picture['file']);
 
                     $bool = $this->model->delete($item, '', Gallery\Model::TABLE_NAME_PICTURES);
                     $this->uri->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item));
@@ -157,7 +157,7 @@ class Pictures extends Core\Modules\Controller\Admin
                         $file['size'] = $_FILES['file']['size'];
                     }
 
-                    $validator = new Gallery\Validator($this->lang);
+                    $validator = $this->get('gallery.validator');
                     $validator->validateEditPicture($file, $settings);
 
                     $updateValues = array(
@@ -170,7 +170,7 @@ class Pictures extends Core\Modules\Controller\Admin
                         $result = $upload->moveFile($file['tmp_name'], $file['name']);
                         $oldFile = $this->model->getFileById($this->uri->id);
 
-                        Gallery\Helpers::removePicture($oldFile);
+                        $this->get('gallery.helpers')->removePicture($oldFile);
 
                         $updateValues = array_merge($updateValues, array('file' => $result['name']));
                     }
@@ -193,7 +193,7 @@ class Pictures extends Core\Modules\Controller\Admin
                 }
             }
 
-            if ($settings['overlay'] == 0 && $settings['comments'] == 1 && Core\Modules::isActive('comments') === true) {
+            if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
                 $options = array();
                 $options[0]['name'] = 'comments';
                 $options[0]['checked'] = Core\Functions::selectEntry('comments', '1', $picture['comments'], 'checked');
@@ -212,9 +212,9 @@ class Pictures extends Core\Modules\Controller\Admin
 
     public function actionOrder()
     {
-        if (Core\Validate::isNumber($this->uri->id) === true) {
+        if ($this->get('core.validate')->isNumber($this->uri->id) === true) {
             if (($this->uri->action === 'up' || $this->uri->action === 'down') && $this->model->pictureExists((int)$this->uri->id) === true) {
-                Core\Functions::moveOneStep($this->uri->action, Gallery\Model::TABLE_NAME_PICTURES, 'id', 'pic', $this->uri->id, 'gallery_id');
+                $this->get('core.functions')->moveOneStep($this->uri->action, Gallery\Model::TABLE_NAME_PICTURES, 'id', 'pic', $this->uri->id, 'gallery_id');
 
                 $galleryId = $this->model->getGalleryIdFromPictureId($this->uri->id);
 

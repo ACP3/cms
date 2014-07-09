@@ -17,6 +17,10 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
+     * @var \ACP3\Core\Modules
+     */
+    protected $modules;
+    /**
      * @var \ACP3\Core\URI
      */
     protected $uri;
@@ -25,10 +29,11 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $permissionsModel;
 
-    public function __construct(Core\Lang $lang, Core\URI $uri, Model $permissionsModel)
+    public function __construct(Core\Lang $lang, Core\Validate $validate, Core\Modules $modules, Core\URI $uri, Model $permissionsModel)
     {
-        parent::__construct($lang);
+        parent::__construct($lang, $validate);
 
+        $this->modules = $modules;
         $this->uri = $uri;
         $this->permissionsModel = $permissionsModel;
     }
@@ -51,7 +56,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['privileges']) || is_array($formData['privileges']) === false) {
             $errors[] = $this->lang->t('permissions', 'no_privilege_selected');
         }
-        if (!empty($formData['privileges']) && Core\Validate::aclPrivilegesExist($formData['privileges']) === false) {
+        if (!empty($formData['privileges']) && $this->validate->aclPrivilegesExist($formData['privileges']) === false) {
             $errors[] = $this->lang->t('permissions', 'invalid_privileges');
         }
 
@@ -69,7 +74,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if (empty($formData['modules']) || Core\Modules::isInstalled($formData['modules']) === false) {
+        if (empty($formData['modules']) || $this->modules->isInstalled($formData['modules']) === false) {
             $errors['modules'] = $this->lang->t('permissions', 'select_module');
         }
         if (empty($formData['area']) || in_array($formData['area'], array('admin', 'frontend', 'sidebar')) === false) {
@@ -78,13 +83,13 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['controller'])) {
             $errors['controller'] = $this->lang->t('permissions', 'type_in_controller');
         }
-        if (empty($formData['resource']) || preg_match('=/=', $formData['resource']) || Core\Validate::isInternalURI(strtolower($formData['modules']) . '/' . $formData['controller'] . '/' . $formData['resource'] . '/') === false) {
+        if (empty($formData['resource']) || preg_match('=/=', $formData['resource']) || $this->validate->isInternalURI(strtolower($formData['modules']) . '/' . $formData['controller'] . '/' . $formData['resource'] . '/') === false) {
             $errors['resource'] = $this->lang->t('permissions', 'type_in_resource');
         }
-        if (empty($formData['privileges']) || Core\Validate::isNumber($formData['privileges']) === false) {
+        if (empty($formData['privileges']) || $this->validate->isNumber($formData['privileges']) === false) {
             $errors['privileges'] = $this->lang->t('permissions', 'select_privilege');
         }
-        if (Core\Validate::isNumber($formData['privileges']) && $this->permissionsModel->resourceExists($formData['privileges']) === false) {
+        if ($this->validate->isNumber($formData['privileges']) && $this->permissionsModel->resourceExists($formData['privileges']) === false) {
             $errors['privileges'] = $this->lang->t('permissions', 'privilege_does_not_exist');
         }
 
@@ -111,7 +116,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['privileges']) || is_array($formData['privileges']) === false) {
             $errors[] = $this->lang->t('permissions', 'no_privilege_selected');
         }
-        if (!empty($formData['privileges']) && Core\Validate::aclPrivilegesExist($formData['privileges']) === false) {
+        if (!empty($formData['privileges']) && $this->validate->aclPrivilegesExist($formData['privileges']) === false) {
             $errors[] = $this->lang->t('permissions', 'invalid_privileges');
         }
 
@@ -129,7 +134,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if (empty($formData['modules']) || Core\Modules::isInstalled($formData['modules']) === false) {
+        if (empty($formData['modules']) || $this->modules->isInstalled($formData['modules']) === false) {
             $errors['modules'] = $this->lang->t('permissions', 'select_module');
         }
         if (empty($formData['area']) || in_array($formData['area'], array('admin', 'frontend', 'sidebar')) === false) {
@@ -138,13 +143,13 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['controller'])) {
             $errors['controller'] = $this->lang->t('permissions', 'type_in_controller');
         }
-        if (empty($formData['resource']) || preg_match('=/=', $formData['resource']) || Core\Validate::isInternalURI($formData['modules'] . '/' . $formData['controller'] . '/' . $formData['resource'] . '/') === false) {
+        if (empty($formData['resource']) || preg_match('=/=', $formData['resource']) || $this->validate->isInternalURI($formData['modules'] . '/' . $formData['controller'] . '/' . $formData['resource'] . '/') === false) {
             $errors['resource'] = $this->lang->t('permissions', 'type_in_resource');
         }
-        if (empty($formData['privileges']) || Core\Validate::isNumber($formData['privileges']) === false) {
+        if (empty($formData['privileges']) || $this->validate->isNumber($formData['privileges']) === false) {
             $errors['privileges'] = $this->lang->t('permissions', 'select_privilege');
         }
-        if (Core\Validate::isNumber($formData['privileges']) && $this->permissionsModel->resourceExists($formData['privileges']) === false) {
+        if ($this->validate->isNumber($formData['privileges']) && $this->permissionsModel->resourceExists($formData['privileges']) === false) {
             $errors['privileges'] = $this->lang->t('permissions', 'privilege_does_not_exist');
         }
 

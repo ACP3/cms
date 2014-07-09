@@ -39,10 +39,10 @@ class Index extends Core\Modules\Controller\Admin
                 $config = new Core\Config($this->db, 'categories');
                 $settings = $config->getSettings();
 
-                $validator = new Categories\Validator($this->lang, $this->model);
+                $validator = $this->get('categories.validator');
                 $validator->validate($_POST, $file, $settings);
 
-                $moduleInfo = Core\Modules::getModuleInfo($_POST['module']);
+                $moduleInfo = $this->modules->getModuleInfo($_POST['module']);
                 $insertValues = array(
                     'id' => '',
                     'title' => Core\Functions::strEncode($_POST['title']),
@@ -75,7 +75,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(array('title' => '', 'description' => ''), $_POST));
 
-        $modules = Core\Modules::getActiveModules();
+        $modules = $this->modules->getActiveModules();
         foreach ($modules as $name => $info) {
             if ($info['active'] && in_array('categories', $info['dependencies']) === true) {
                 $modules[$name]['selected'] = Core\Functions::selectEntry('module', $info['dir']);
@@ -150,7 +150,7 @@ class Index extends Core\Modules\Controller\Admin
                     $config = new Core\Config($this->db, 'categories');
                     $settings = $config->getSettings();
 
-                    $validator = new Categories\Validator($this->lang, $this->model);
+                    $validator = $this->get('categories.validator');
                     $validator->validate($_POST, $file, $settings, $this->uri->id);
 
                     $updateValues = array(
@@ -200,14 +200,14 @@ class Index extends Core\Modules\Controller\Admin
         $c_categories = count($categories);
 
         if ($c_categories > 0) {
-            $canDelete = Core\Modules::hasPermission('admin/categories/index/delete');
+            $canDelete = $this->modules->hasPermission('admin/categories/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent($this->get('core.functions')->dataTable($config));
             for ($i = 0; $i < $c_categories; ++$i) {
                 $categories[$i]['module'] = $this->lang->t($categories[$i]['module'], $categories[$i]['module']);
             }
@@ -222,7 +222,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($_POST) === false) {
             try {
-                $validator = new Categories\Validator($this->lang, $this->model);
+                $validator = $this->get('categories.validator');
                 $validator->validateSettings($_POST, $this->lang);
 
                 $data = array(

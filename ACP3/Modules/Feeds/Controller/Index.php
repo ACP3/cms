@@ -17,7 +17,7 @@ class Index extends Core\Modules\Controller
         $module = $this->uri->feed;
         $className = "\\ACP3\\Modules\\Feeds\\Extensions";
         $action = strtolower($module) . 'Feed';
-        if (Core\Modules::hasPermission('frontend/' . $module) === true &&
+        if ($this->modules->hasPermission('frontend/' . $module) === true &&
             method_exists($className, $action) === true
         ) {
             $config = new Core\Config($this->db, 'feeds');
@@ -35,12 +35,7 @@ class Index extends Core\Modules\Controller
 
             Core\View::factory('FeedGenerator', $config);
 
-            $feed = new Feeds\Extensions(
-                $this->db,
-                $this->date,
-                $this->uri,
-                $this->view
-            );
+            $feed = $this->get('feeds.extensions');
             $feed->$action();
 
             $this->setContentType('text/xml');

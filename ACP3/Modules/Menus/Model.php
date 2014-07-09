@@ -88,4 +88,9 @@ class Model extends Core\Model
     {
         return $this->db->fetchAll('SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, b.title AS block_title, b.index_name AS block_name FROM ' . $this->prefix . static::TABLE_NAME_ITEMS . ' AS p, ' . $this->prefix . static::TABLE_NAME_ITEMS . ' AS n JOIN ' . $this->prefix . static::TABLE_NAME . ' AS b ON(n.block_id = b.id) WHERE b.index_name = ? AND n.display = 1 AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id', array($blockName));
     }
+
+    public function getLeftIdByUris($menu, $uris)
+    {
+        return $this->db->executeQuery('SELECT m.left_id FROM ' . $this->prefix . static::TABLE_NAME_ITEMS . ' AS m JOIN ' . $this->prefix . static::TABLE_NAME . ' AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC', array($menu, $uris), array(\PDO::PARAM_STR, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY))->fetch(\PDO::FETCH_COLUMN);
+    }
 }

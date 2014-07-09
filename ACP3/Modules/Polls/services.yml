@@ -1,0 +1,4 @@
+services:
+  polls.validator:
+    class: ACP3\Modules\Polls\Validator
+    parent: core.validator.abstract

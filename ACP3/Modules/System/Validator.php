@@ -18,13 +18,13 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if (Core\Validate::isInternalURI($formData['homepage']) === false) {
+        if ($this->validate->isInternalURI($formData['homepage']) === false) {
             $errors['homepage'] = $this->lang->t('system', 'incorrect_homepage');
         }
-        if (Core\Validate::isNumber($formData['entries']) === false) {
+        if ($this->validate->isNumber($formData['entries']) === false) {
             $errors['entries'] = $this->lang->t('system', 'select_records_per_page');
         }
-        if (Core\Validate::isNumber($formData['flood']) === false) {
+        if ($this->validate->isNumber($formData['flood']) === false) {
             $errors['flood'] = $this->lang->t('system', 'type_in_flood_barrier');
         }
         if ((bool)preg_match('/\/$/', $formData['icons_path']) === false) {
@@ -39,10 +39,10 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['date_format_long']) || empty($formData['date_format_short'])) {
             $errors[] = $this->lang->t('system', 'type_in_date_format');
         }
-        if (Core\Validate::timeZone($formData['date_time_zone']) === false) {
+        if ($this->validate->timeZone($formData['date_time_zone']) === false) {
             $errors['date-time-zone'] = $this->lang->t('system', 'select_time_zone');
         }
-        if (Core\Validate::isNumber($formData['maintenance_mode']) === false) {
+        if ($this->validate->isNumber($formData['maintenance_mode']) === false) {
             $errors[] = $this->lang->t('system', 'select_online_maintenance');
         }
         if (strlen($formData['maintenance_message']) < 3) {
@@ -51,29 +51,29 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['seo_title'])) {
             $errors['seo-title'] = $this->lang->t('system', 'title_to_short');
         }
-        if (Core\Validate::isNumber($formData['seo_robots']) === false) {
+        if ($this->validate->isNumber($formData['seo_robots']) === false) {
             $errors[] = $this->lang->t('system', 'select_seo_robots');
         }
-        if (Core\Validate::isNumber($formData['seo_mod_rewrite']) === false) {
+        if ($this->validate->isNumber($formData['seo_mod_rewrite']) === false) {
             $errors[] = $this->lang->t('system', 'select_mod_rewrite');
         }
-        if (Core\Validate::isNumber($formData['cache_images']) === false) {
+        if ($this->validate->isNumber($formData['cache_images']) === false) {
             $errors[] = $this->lang->t('system', 'select_cache_images');
         }
-        if (Core\Validate::isNumber($formData['cache_minify']) === false) {
+        if ($this->validate->isNumber($formData['cache_minify']) === false) {
             $errors['cache-minify'] = $this->lang->t('system', 'type_in_minify_cache_lifetime');
         }
-        if (!empty($formData['extra_css']) && Core\Validate::extraCSS($formData['extra_css']) === false) {
+        if (!empty($formData['extra_css']) && $this->validate->extraCSS($formData['extra_css']) === false) {
             $errors['extra-css'] = $this->lang->t('system', 'type_in_additional_stylesheets');
         }
-        if (!empty($formData['extra_js']) && Core\Validate::extraJS($formData['extra_js']) === false) {
+        if (!empty($formData['extra_js']) && $this->validate->extraJS($formData['extra_js']) === false) {
             $errors['extra-js'] = $this->lang->t('system', 'type_in_additional_javascript_files');
         }
         if ($formData['mailer_type'] === 'smtp') {
             if (empty($formData['mailer_smtp_host'])) {
                 $errors['mailer-smtp-host'] = $this->lang->t('system', 'type_in_mailer_smtp_host');
             }
-            if (Core\Validate::isNumber($formData['mailer_smtp_port']) === false) {
+            if ($this->validate->isNumber($formData['mailer_smtp_port']) === false) {
                 $errors['mailer-smtp-port'] = $this->lang->t('system', 'type_in_mailer_smtp_port');
             }
             if ($formData['mailer_smtp_auth'] == 1 && empty($formData['mailer_smtp_user'])) {
@@ -124,7 +124,7 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['text'] = $this->lang->t('system', 'type_in_text_or_select_sql_file');
         }
         if (!empty($file['size']) &&
-            (!Core\Validate::mimeType($file['tmp_name'], 'text/plain') ||
+            (!$this->validate->mimeType($file['tmp_name'], 'text/plain') ||
                 $_FILES['file']['error'] !== UPLOAD_ERR_OK)
         ) {
             $errors['file'] = $this->lang->t('system', 'select_sql_file');

@@ -26,7 +26,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         parent::preDispatch();
 
-        $this->model = new Users\Model($this->db);
+        $this->model = $this->get('users.model');
         $this->permissionsModel = new Permissions\Model($this->db);
     }
 
@@ -34,7 +34,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         if (empty($_POST) === false) {
             try {
-                $validator = new Users\Validator($this->lang, $this->auth, $this->uri, $this->model);
+                $validator = $this->get('users.validator');
                 $validator->validateCreate($_POST);
 
                 $securityHelper = new Core\Helpers\Secure();
@@ -96,7 +96,7 @@ class Index extends Core\Modules\Controller\Admin
         }
 
         // Zugriffslevel holen
-        $roles = $this->get('ACL')->getAllRoles();
+        $roles = $this->acl->getAllRoles();
         $c_roles = count($roles);
         for ($i = 0; $i < $c_roles; ++$i) {
             $roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
@@ -232,12 +232,12 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id) === true) {
+        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id) === true) {
             $user = $this->auth->getUserInfo($this->uri->id);
 
             if (empty($_POST) === false) {
                 try {
-                    $validator = new Users\Validator($this->lang, $this->auth, $this->uri, $this->model);
+                    $validator = $this->get('users.validator');
                     $validator->validateEdit($_POST);
 
                     $updateValues = array(
@@ -308,9 +308,9 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
             // Zugriffslevel holen
-            $roles = $this->get('ACL')->getAllRoles();
+            $roles = $this->acl->getAllRoles();
             $c_roles = count($roles);
-            $userRoles = $this->get('ACL')->getUserRoles($this->uri->id);
+            $userRoles = $this->acl->getUserRoles($this->uri->id);
             for ($i = 0; $i < $c_roles; ++$i) {
                 $roles[$i]['name'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
                 $roles[$i]['selected'] = Core\Functions::selectEntry('roles', $roles[$i]['id'], in_array($roles[$i]['id'], $userRoles) ? $roles[$i]['id'] : '');
@@ -403,7 +403,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($_POST) === false) {
             try {
-                $validator = new Users\Validator($this->lang, $this->auth, $this->uri, $this->model);
+                $validator = $this->get('users.validator');
                 $validator->validateSettings($_POST);
 
                 $data = array(
@@ -452,17 +452,17 @@ class Index extends Core\Modules\Controller\Admin
         $c_users = count($users);
 
         if ($c_users > 0) {
-            $canDelete = Core\Modules::hasPermission('admin/users/index/delete');
+            $canDelete = $this->modules->hasPermission('admin/users/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'asc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent($this->get('core.functions')->dataTable($config));
 
             for ($i = 0; $i < $c_users; ++$i) {
-                $users[$i]['roles'] = implode(', ', $this->get('ACL')->getUserRoles($users[$i]['id'], 2));
+                $users[$i]['roles'] = implode(', ', $this->acl->getUserRoles($users[$i]['id'], 2));
             }
             $this->view->assign('users', $users);
             $this->view->assign('can_delete', $canDelete);

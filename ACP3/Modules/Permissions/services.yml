@@ -1,0 +1,7 @@
+services:
+  permissions.model:
+    class: ACP3\Modules\Permissions\Model
+    arguments: ['@core.db']
+  permissions.validator:
+    class: ACP3\Modules\Permissions\Validator
+    arguments: ['@core.lang', '@core.validate', '@core.modules', '@core.uri', '@permissions.model']

@@ -21,7 +21,7 @@ class Index extends Core\Modules\Controller
             $libraries = !empty($this->uri->libraries) ? explode(',', $this->uri->libraries) : array();
             $layout = isset($this->uri->layout) && !preg_match('=/=', $this->uri->layout) ? $this->uri->layout : 'layout';
 
-            $helper = new Minify\Helpers();
+            $helper = $this->get('minify.helpers');
 
             $options = array();
             switch ($this->uri->group) {

@@ -14,12 +14,12 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $mod_list = Core\Modules::getAllModules();
+        $modules = $this->modules->getActiveModules();
         $mods = array();
 
-        foreach ($mod_list as $name => $info) {
+        foreach ($modules as $name => $info) {
             $dir = strtolower($info['dir']);
-            if (Core\Modules::hasPermission('admin/' . $dir) === true && $dir !== 'acp') {
+            if ($this->modules->hasPermission('admin/' . $dir) === true && $dir !== 'acp') {
                 $mods[$name]['name'] = $name;
                 $mods[$name]['dir'] = $dir;
             }

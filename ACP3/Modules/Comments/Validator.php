@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: goratsch
- * Date: 21.06.14
- * Time: 22:51
- */
-
 namespace ACP3\Modules\Comments;
 
 use ACP3\Core;
@@ -25,16 +18,21 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $date;
     /**
+     * @var \ACP3\Core\Modules
+     */
+    protected $modules;
+    /**
      * @var Model
      */
     protected $commentsModel;
 
-    public function __construct(Core\Lang $lang, Core\Auth $auth, Core\Date $date, Model $commentsModel)
+    public function __construct(Core\Lang $lang, Core\Auth $auth, Core\Date $date, Core\Modules $modules, Core\Validate $validate, Model $commentsModel)
     {
-        parent::__construct($lang);
+        parent::__construct($lang, $validate);
 
         $this->auth = $auth;
         $this->date = $date;
+        $this->modules = $modules;
         $this->commentsModel = $commentsModel;
     }
 
@@ -62,7 +60,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (strlen($formData['message']) < 3) {
             $errors['message'] = $this->lang->t('system', 'message_to_short');
         }
-        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && Core\Validate::captcha($formData['captcha']) === false) {
+        if ($this->modules->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->validate->captcha($formData['captcha']) === false) {
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
@@ -80,7 +78,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if ((empty($comment['user_id']) || Core\Validate::isNumber($comment['user_id']) === false) && empty($formData['name'])) {
+        if ((empty($comment['user_id']) || $this->validate->isNumber($comment['user_id']) === false) && empty($formData['name'])) {
             $errors['name'] = $this->lang->t('system', 'name_to_short');
         }
         if (strlen($formData['message']) < 3) {
@@ -104,7 +102,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['dateformat']) || ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short')) {
             $errors['dateformat'] = $this->lang->t('system', 'select_date_format');
         }
-        if (Core\Modules::isActive('emoticons') === true && (!isset($formData['emoticons']) || ($formData['emoticons'] != 0 && $formData['emoticons'] != 1))) {
+        if ($this->modules->isActive('emoticons') === true && (!isset($formData['emoticons']) || ($formData['emoticons'] != 0 && $formData['emoticons'] != 1))) {
             $errors[] = $this->lang->t('comments', 'select_emoticons');
         }
 

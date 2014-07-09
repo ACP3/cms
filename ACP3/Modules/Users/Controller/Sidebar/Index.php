@@ -39,13 +39,13 @@ class Index extends Core\Modules\Controller\Sidebar
             $userSidebar = array();
             $userSidebar['page'] = base64_encode(($this->uri->area === 'admin' ? 'acp/' : '') . $this->uri->query);
 
-            $activeModules = Core\Modules::getActiveModules();
+            $activeModules = $this->modules->getActiveModules();
             $navMods = $navSystem = array();
             $hasAccessToSystem = false;
 
             foreach ($activeModules as $name => $info) {
                 $dir = strtolower($info['dir']);
-                if ($dir !== 'acp' && Core\Modules::hasPermission('admin/' . $dir . '/index') === true) {
+                if ($dir !== 'acp' && $this->modules->hasPermission('admin/' . $dir . '/index') === true) {
                     if ($dir === 'system') {
                         $hasAccessToSystem = true;
                     } else {
@@ -62,18 +62,18 @@ class Index extends Core\Modules\Controller\Sidebar
             // If the user has access to the system module, display some more options
             if ($hasAccessToSystem === true) {
                 $i = 0;
-                if (Core\Modules::hasPermission('admin/system/index/configuration') === true) {
+                if ($this->modules->hasPermission('admin/system/index/configuration') === true) {
                     $navSystem[$i]['path'] = 'system/index/configuration/';
                     $navSystem[$i]['name'] = $this->lang->t('system', 'configuration');
                     $navSystem[$i]['active'] = $this->uri->query === $navSystem[$i]['path'] ? ' class="active"' : '';
                 }
-                if (Core\Modules::hasPermission('admin/system/extensions/index') === true) {
+                if ($this->modules->hasPermission('admin/system/extensions/index') === true) {
                     $i++;
                     $navSystem[$i]['path'] = 'system/extensions/';
                     $navSystem[$i]['name'] = $this->lang->t('system', 'extensions');
                     $navSystem[$i]['active'] = strpos($this->uri->query, $navSystem[$i]['path']) === 0 ? ' class="active"' : '';
                 }
-                if (Core\Modules::hasPermission('admin/system/maintenance/index') === true) {
+                if ($this->modules->hasPermission('admin/system/maintenance/index') === true) {
                     $i++;
                     $navSystem[$i]['path'] = 'system/maintenance/';
                     $navSystem[$i]['name'] = $this->lang->t('system', 'maintenance');

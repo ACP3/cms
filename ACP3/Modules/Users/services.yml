@@ -1,0 +1,7 @@
+services:
+  users.model:
+    class: ACP3\Modules\Users\Model
+    arguments: ['@core.db']
+  users.validator:
+    class: ACP3\Modules\Users\Validator
+    arguments: ['@core.lang', '@core.validate', '@core.auth', '@core.modules', 'users.model']

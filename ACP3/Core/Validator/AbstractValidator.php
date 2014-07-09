@@ -13,10 +13,15 @@ class AbstractValidator
      * @var \ACP3\Core\Lang
      */
     protected $lang;
+    /**
+     * @var \ACP3\Core\Validate
+     */
+    protected $validate;
 
-    public function __construct(Core\Lang $lang)
+    public function __construct(Core\Lang $lang, Core\Validate $validate)
     {
         $this->lang = $lang;
+        $this->validate = $validate;
     }
 
     /**
@@ -24,7 +29,7 @@ class AbstractValidator
      */
     public function validateFormKey()
     {
-        if (Core\Validate::formToken() === false) {
+        if ($this->validate->formToken() === false) {
             throw new Core\Exceptions\InvalidFormToken($this->lang->t('system', 'form_already_submitted'));
         }
     }

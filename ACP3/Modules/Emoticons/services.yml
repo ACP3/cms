@@ -1,0 +1,13 @@
+services:
+  emoticons.model:
+    class: ACP3\Modules\Emoticons\Model
+    arguments: ['@core.db']
+  emoticons.cache:
+    class: ACP3\Modules\Emoticons\Cache
+    arguments: ['@emoticons.model']
+  emoticons.helpers:
+    class: ACP3\Modules\Emoticons\Helpers
+    arguments: ['@core.view', '@emoticons.cache']
+  emoticons.validator:
+    class: ACP3\Modules\Emoticons\Validator
+    parent: core.validator.abstract

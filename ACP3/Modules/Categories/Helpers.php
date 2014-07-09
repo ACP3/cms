@@ -12,25 +12,31 @@ namespace ACP3\Modules\Categories;
 
 use ACP3\Core;
 
-abstract class Helpers
+class Helpers
 {
-
     /**
-     *
-     * @var Model
+     * @var \ACP3\Core\Lang
      */
-    protected static $model;
+    protected $lang;
     /**
      * @var Cache
      */
-    protected static $cache;
+    protected $cache;
+    /**
+     * @var Model
+     */
+    protected $model;
+    /**
+     * @var Core\Modules
+     */
+    protected $modules;
 
-    protected static function _init()
+    public function __construct(Core\Lang $lang, Core\Modules $modules, Core\View $view, Cache $cache)
     {
-        if (!self::$model) {
-            self::$model = new Model(Core\Registry::get('Db'), Core\Registry::get('Lang'));
-            self::$cache = new Cache(self::$model);
-        }
+        $this->lang = $lang;
+        $this->modules = $modules;
+        $this->view = $view;
+        $this->cache = $cache;
     }
 
     /**
@@ -39,10 +45,9 @@ abstract class Helpers
      * @param integer $categoryId
      * @return boolean
      */
-    public static function categoryExists($categoryId)
+    public function categoryExists($categoryId)
     {
-        self::_init();
-        return self::$model->resultExists($categoryId);
+        return $this->model->resultExists($categoryId);
     }
 
     /**
@@ -53,10 +58,9 @@ abstract class Helpers
      * @param int|string $categoryId
      * @return boolean
      */
-    public static function categoryIsDuplicate($title, $module, $categoryId = '')
+    public function categoryIsDuplicate($title, $module, $categoryId = '')
     {
-        self::_init();
-        return self::$model->resultIsDuplicate($title, $module, $categoryId);
+        return $this->model->resultIsDuplicate($title, $module, $categoryId);
     }
 
     /**
@@ -66,10 +70,10 @@ abstract class Helpers
      * @param string $module
      * @return integer
      */
-    public static function categoriesCreate($title, $module)
+    public function categoriesCreate($title, $module)
     {
-        if (self::categoryIsDuplicate($title, $module) === false) {
-            $moduleInfo = Core\Modules::getModuleInfo($module);
+        if ($this->categoryIsDuplicate($title, $module) === false) {
+            $moduleInfo = $this->modules->getModuleInfo($module);
 
             $insertValues = array(
                 'id' => '',
@@ -78,9 +82,9 @@ abstract class Helpers
                 'description' => '',
                 'module_id' => $moduleInfo['id'],
             );
-            $result = self::$model->insert($insertValues);
+            $result = $this->model->insert($insertValues);
 
-            self::$cache->setCache($module);
+            $this->cache->setCache($module);
 
             return $result;
         }
@@ -97,15 +101,13 @@ abstract class Helpers
      * @param string $customText
      * @return string
      */
-    public static function categoriesList($module, $categoryId = '', $categoryCreate = false, $formFieldName = 'cat', $customText = '')
+    public function categoriesList($module, $categoryId = '', $categoryCreate = false, $formFieldName = 'cat', $customText = '')
     {
-        self::_init();
-
         $categories = array();
-        $data = self::$cache->getCache($module);
+        $data = $this->cache->getCache($module);
         $c_data = count($data);
 
-        $categories['custom_text'] = !empty($customText) ? $customText : Core\Registry::get('Lang')->t('system', 'pls_select');
+        $categories['custom_text'] = !empty($customText) ? $customText : $this->lang->t('system', 'pls_select');
         $categories['name'] = $formFieldName;
         if ($c_data > 0) {
             for ($i = 0; $i < $c_data; ++$i) {
@@ -115,12 +117,12 @@ abstract class Helpers
         } else {
             $categories['categories'] = array();
         }
-        if ($categoryCreate === true && Core\Modules::hasPermission('admin/categories/index/create') === true) {
+        if ($categoryCreate === true && $this->modules->hasPermission('admin/categories/index/create') === true) {
             $categories['create']['name'] = $formFieldName . '_create';
             $categories['create']['value'] = isset($_POST[$categories['create']['name']]) ? $_POST[$categories['create']['name']] : '';
         }
-        Core\Registry::get('View')->assign('categories', $categories);
-        return Core\Registry::get('View')->fetchTemplate('categories/create_list.tpl');
+        $this->view->assign('categories', $categories);
+        return $this->view->fetchTemplate('categories/create_list.tpl');
     }
 
 }

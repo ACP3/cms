@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core;
+use ACP3\Modules\System;
 
 /**
  * Klasse für die Module
@@ -11,23 +12,41 @@ class Modules
     /**
      * @var array
      */
-    private static $parseModules = array();
+    private $parseModules = array();
 
     /**
      * @var array
      */
-    private static $allModules = array();
+    private $allModules = array();
 
+    /**
+     * @var ACL
+     */
+    protected $acl;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
+     * @var Lang
+     */
+    protected $lang;
     /**
      * @var Cache2
      */
-    protected static $cache;
+    protected $cache;
+    /**
+     * @var System\Model
+     */
+    protected $systemModel;
 
-    private static function _init()
+    public function __construct(\Doctrine\DBAL\Connection $db, ACL $acl, Lang $lang)
     {
-        if (!self::$cache) {
-            self::$cache = new Cache2('modules');
-        }
+        $this->db = $db;
+        $this->acl = $acl;
+        $this->lang = $lang;
+        $this->cache = new Cache2('modules');
+        $this->systemModel = new System\Model($db);
     }
 
     /**
@@ -38,13 +57,13 @@ class Modules
      *
      * @return integer
      */
-    public static function hasPermission($path)
+    public function hasPermission($path)
     {
-        if (self::actionExists($path) === true) {
+        if ($this->actionExists($path) === true) {
             $pathArray = explode('/', $path);
 
-            if (self::isActive($pathArray[1]) === true) {
-                return Registry::get('ACL')->canAccessResource($path);
+            if ($this->isActive($pathArray[1]) === true) {
+                return $this->acl->canAccessResource($path);
             }
         }
         return 0;
@@ -56,7 +75,7 @@ class Modules
      * @param string $path
      * @return boolean
      */
-    public static function actionExists($path)
+    public function actionExists($path)
     {
         $pathArray = array_map(function ($value) {
             return str_replace(' ', '', ucwords(strtolower(str_replace('_', ' ', $value))));
@@ -84,9 +103,9 @@ class Modules
      * @param string $module
      * @return boolean
      */
-    public static function isActive($module)
+    public function isActive($module)
     {
-        $info = self::getModuleInfo($module);
+        $info = $this->getModuleInfo($module);
         return !empty($info) && $info['active'] == 1;
     }
 
@@ -94,12 +113,12 @@ class Modules
      * Überprüft, ob ein Modul in der modules DB-Tabelle
      * eingetragen und somit installiert ist
      *
-     * @param string $module
+     * @param string $moduleName
      * @return boolean
      */
-    public static function isInstalled($module)
+    public function isInstalled($moduleName)
     {
-        return Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'modules WHERE name = ?', array($module)) == 1;
+        return $this->systemModel->moduleExists($moduleName);
     }
 
     /**
@@ -109,22 +128,22 @@ class Modules
      * @param bool $onlyActiveModules
      * @return mixed
      */
-    public static function getAllModules($onlyActiveModules = false)
+    public function getAllModules($onlyActiveModules = false)
     {
-        if (empty(static::$allModules)) {
+        if (empty($this->allModules)) {
             $dir = scandir(MODULES_DIR);
             foreach ($dir as $module) {
                 if ($module !== '.' && $module !== '..') {
-                    $info = self::getModuleInfo($module);
-                    if (!empty($info) && ($onlyActiveModules === false || ($onlyActiveModules === true && self::isActive($module) === true))) {
-                        static::$allModules[$info['name']] = $info;
+                    $info = $this->getModuleInfo($module);
+                    if (!empty($info) && ($onlyActiveModules === false || ($onlyActiveModules === true && $this->isActive($module) === true))) {
+                        $this->allModules[$info['name']] = $info;
                     }
                 }
             }
-            ksort(static::$allModules);
+            ksort($this->allModules);
         }
 
-        return static::$allModules;
+        return $this->allModules;
     }
 
     /**
@@ -132,9 +151,17 @@ class Modules
      *
      * @return array
      */
-    public static function getActiveModules()
+    public function getActiveModules()
     {
-        return self::getAllModules(true);
+        return $this->getAllModules(true);
+    }
+
+    /**
+     * @return string
+     */
+    protected function _getCacheKey()
+    {
+        return 'infos_' . $this->lang->getLanguage();
     }
 
     /**
@@ -144,28 +171,24 @@ class Modules
      * @param string $module
      * @return array
      */
-    public static function getModuleInfo($module)
+    public function getModuleInfo($module)
     {
-        self::_init();
-
         $module = strtolower($module);
-        if (empty(static::$parseModules)) {
-            $filename = 'infos_' . Registry::get('Lang')->getLanguage();
-            if (self::$cache->contains($filename) === false) {
-                self::setModulesCache();
+        if (empty($this->parseModules)) {
+            $filename = $this->_getCacheKey();
+            if ($this->cache->contains($filename) === false) {
+                $this->setModulesCache();
             }
-            static::$parseModules = self::$cache->fetch($filename);
+            $this->parseModules = $this->cache->fetch($filename);
         }
-        return !empty(static::$parseModules[$module]) ? static::$parseModules[$module] : array();
+        return !empty($this->parseModules[$module]) ? $this->parseModules[$module] : array();
     }
 
     /**
      * Setzt den Cache für alle vorliegenden Modulinformationen
      */
-    public static function setModulesCache()
+    public function setModulesCache()
     {
-        self::_init();
-
         $infos = array();
         $dirs = scandir(MODULES_DIR);
         foreach ($dirs as $dir) {
@@ -175,25 +198,26 @@ class Modules
 
                 if (!empty($moduleInfo)) {
                     $moduleName = strtolower($dir);
-                    $moduleInfoDb = Registry::get('Db')->fetchAssoc('SELECT id, version, active FROM ' . DB_PRE . 'modules WHERE name = ?', array($moduleName));
+                    $moduleInfoDb = $this->systemModel->getInfoByModuleName($moduleName);
                     $infos[$moduleName] = array(
                         'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
                         'dir' => $dir,
                         'active' => !empty($moduleInfoDb) && $moduleInfoDb['active'] == 1 ? true : false,
                         'schema_version' => !empty($moduleInfoDb) ? (int)$moduleInfoDb['version'] : 0,
-                        'description' => isset($moduleInfo['description']['lang']) && $moduleInfo['description']['lang'] === 'true' ? Registry::get('Lang')->t($moduleName, 'mod_description') : $moduleInfo['description']['lang'],
+                        'description' => isset($moduleInfo['description']['lang']) && $moduleInfo['description']['lang'] === 'true' ? $this->lang->t($moduleName, 'mod_description') : $moduleInfo['description']['lang'],
                         'author' => $moduleInfo['author'],
                         'version' => isset($moduleInfo['version']['core']) && $moduleInfo['version']['core'] === 'true' ? CONFIG_VERSION : $moduleInfo['version'],
-                        'name' => isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] == 'true' ? Registry::get('Lang')->t($moduleName, $moduleName) : $moduleInfo['name'],
+                        'name' => isset($moduleInfo['name']['lang']) && $moduleInfo['name']['lang'] == 'true' ? $this->lang->t($moduleName, $moduleName) : $moduleInfo['name'],
                         'categories' => isset($moduleInfo['categories']) ? true : false,
                         'protected' => isset($moduleInfo['protected']) ? true : false,
+                        'has_services' => isset($moduleInfo['services']) && $moduleInfo['services'] == 'true' ? true : false
                     );
                     $infos[$moduleName]['dependencies'] = array_values(XML::parseXmlFile($path, 'info/dependencies'));
                 }
             }
         }
 
-        self::$cache->save('infos_' . Registry::get('Lang')->getLanguage(), $infos);
+        $this->cache->save($this->_getCacheKey(), $infos);
     }
 
 }

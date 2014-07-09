@@ -30,7 +30,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         if (isset($_POST['submit']) === true) {
             try {
-                $validator = new Polls\Validator($this->lang);
+                $validator = $this->get('polls.validator');
                 $validator->validateCreate($_POST);
 
                 $insertValues = array(
@@ -126,7 +126,7 @@ class Index extends Core\Modules\Controller\Admin
         if (empty($poll) === false) {
             if (isset($_POST['submit']) === true) {
                 try {
-                    $validator = new Polls\Validator($this->lang);
+                    $validator = $this->get('polls.validator');
                     $validator->validateEdit($_POST);
 
                     // Frage aktualisieren
@@ -153,11 +153,11 @@ class Index extends Core\Modules\Controller\Admin
                             if (!empty($row['value']) && !isset($row['delete']))
                                 $this->model->insert(array('text' => Core\Functions::strEncode($row['value']), 'poll_id' => $this->uri->id), Polls\Model::TABLE_NAME_ANSWERS);
                             // Antwort mitsamt Stimmen löschen
-                        } elseif (isset($row['delete']) && Core\Validate::isNumber($row['id'])) {
+                        } elseif (isset($row['delete']) && $this->get('core.validate')->isNumber($row['id'])) {
                             $this->model->delete($row['id'], '', Polls\Model::TABLE_NAME_ANSWERS);
                             $this->model->delete($row['id'], 'answer_id', Polls\Model::TABLE_NAME_VOTES);
                             // Antwort aktualisieren
-                        } elseif (!empty($row['value']) && Core\Validate::isNumber($row['id'])) {
+                        } elseif (!empty($row['value']) && $this->get('core.validate')->isNumber($row['id'])) {
                             $bool = $this->model->update(array('text' => Core\Functions::strEncode($row['value'])), $row['id'], Polls\Model::TABLE_NAME_ANSWERS);
                         }
                     }
@@ -231,14 +231,14 @@ class Index extends Core\Modules\Controller\Admin
         $c_polls = count($polls);
 
         if ($c_polls > 0) {
-            $canDelete = Core\Modules::hasPermission('admin/polls/index/delete');
+            $canDelete = $this->modules->hasPermission('admin/polls/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent($this->get('core.functions')->dataTable($config));
 
             for ($i = 0; $i < $c_polls; ++$i) {
                 $polls[$i]['period'] = $this->date->formatTimeRange($polls[$i]['start'], $polls[$i]['end']);

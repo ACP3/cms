@@ -29,7 +29,11 @@ class Breadcrumb
     /**
      * @var array
      */
-    protected $title = array('separator' => '-', 'prefix' => '', 'postfix' => '');
+    protected $title = array(
+        'separator' => '-',
+        'prefix' => '',
+        'postfix' => ''
+    );
 
     /**
      * Enthält die gecachete Brotkrümelspur

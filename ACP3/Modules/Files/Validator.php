@@ -31,7 +31,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if (Core\Validate::date($formData['start'], $formData['end']) === false) {
+        if ($this->validate->date($formData['start'], $formData['end']) === false) {
             $errors[] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
@@ -54,7 +54,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (strlen($formData['cat_create']) >= 3 && \ACP3\Modules\Categories\Helpers::categoryIsDuplicate($formData['cat_create'], 'files') === true) {
             $errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
-        if (!empty($formData['alias']) && (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias']) === true)) {
+        if (!empty($formData['alias']) && ($this->validate->isUriSafe($formData['alias']) === false || $this->validate->uriAliasExists($formData['alias']) === true)) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
 
@@ -73,7 +73,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if (Core\Validate::date($formData['start'], $formData['end']) === false) {
+        if ($this->validate->date($formData['start'], $formData['end']) === false) {
             $errors[] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
@@ -97,7 +97,7 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
         if (!empty($formData['alias']) &&
-            (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->uri->id)) === true)
+            ($this->validate->isUriSafe($formData['alias']) === false || $this->validate->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->uri->id)) === true)
         ) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
@@ -119,10 +119,10 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['dateformat']) || ($formData['dateformat'] !== 'long' && $formData['dateformat'] !== 'short')) {
             $errors['dateformat'] = $this->lang->t('system', 'select_date_format');
         }
-        if (Core\Validate::isNumber($formData['sidebar']) === false) {
+        if ($this->validate->isNumber($formData['sidebar']) === false) {
             $errors['sidebar'] = $this->lang->t('system', 'select_sidebar_entries');
         }
-        if (Core\Modules::isActive('comments') === true && (!isset($formData['comments']) || $formData['comments'] != 1 && $formData['comments'] != 0)) {
+        if ($this->modules->isActive('comments') === true && (!isset($formData['comments']) || $formData['comments'] != 1 && $formData['comments'] != 0)) {
             $errors[] = $this->lang->t('files', 'select_allow_comments');
         }
 

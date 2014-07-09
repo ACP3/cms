@@ -12,8 +12,36 @@ namespace ACP3\Modules\Captcha;
 
 use ACP3\Core;
 
-abstract class Helpers
+/**
+ * Class Helpers
+ * @package ACP3\Modules\Captcha
+ */
+class Helpers
 {
+    /**
+     * @var Core\Auth
+     */
+    protected $auth;
+    /**
+     * @var \ACP3\Core\Helpers\Secure
+     */
+    protected $securityHelper;
+    /**
+     * @var Core\URI
+     */
+    protected $uri;
+    /**
+     * @var Core\View
+     */
+    protected $view;
+
+    public function __construct(Core\Auth $auth, Core\URI $uri, Core\View $view, Core\Helpers\Secure $securityHelper)
+    {
+        $this->auth = $auth;
+        $this->uri = $uri;
+        $this->view = $view;
+        $this->securityHelper = $securityHelper;
+    }
 
     /**
      * Erzeugt das Captchafeld für das Template
@@ -25,16 +53,13 @@ abstract class Helpers
      * @param string $path
      * @return string
      */
-    public static function captcha($captchaLength = 5, $id = 'captcha', $inputOnly = false, $path = '')
+    public function captcha($captchaLength = 5, $id = 'captcha', $inputOnly = false, $path = '')
     {
         // Wenn man als User angemeldet ist, Captcha nicht anzeigen
-        if (Core\Registry::get('Auth')->isUser() === false) {
-            $uri = Core\Registry::get('URI');
-            $path = sha1($uri->route(empty($path) === true ? $uri->query : $path));
+        if ($this->auth->isUser() === false) {
+            $path = sha1($this->uri->route(empty($path) === true ? $this->uri->query : $path));
 
-            $securityHelper = new Core\Helpers\Secure();
-
-            $_SESSION['captcha_' . $path] = $securityHelper->salt($captchaLength);
+            $_SESSION['captcha_' . $path] = $this->securityHelper->salt($captchaLength);
 
             $captcha = array();
             $captcha['width'] = $captchaLength * 25;
@@ -42,8 +67,8 @@ abstract class Helpers
             $captcha['height'] = 30;
             $captcha['input_only'] = $inputOnly;
             $captcha['path'] = $path;
-            Core\Registry::get('View')->assign('captcha', $captcha);
-            return Core\Registry::get('View')->fetchTemplate('captcha/captcha.tpl');
+            $this->view->assign('captcha', $captcha);
+            return $this->view->fetchTemplate('captcha/captcha.tpl');
         }
         return '';
     }

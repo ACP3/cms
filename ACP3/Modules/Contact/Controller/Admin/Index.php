@@ -6,9 +6,8 @@ use ACP3\Core;
 use ACP3\Modules\Contact;
 
 /**
- * Description of ContactAdmin
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Contact\Controller\Admin
  */
 class Index extends Core\Modules\Controller\Admin
 {
@@ -20,7 +19,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($_POST) === false) {
             try {
-                $validator = new Contact\Validator($this->lang, $this->auth);
+                $validator = $this->get('contact.validator');
                 $validator->validateSettings($_POST);
 
                 $data = array(

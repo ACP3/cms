@@ -1,0 +1,10 @@
+services:
+  gallery.model:
+    class: ACP3\Modules\Gallery\Model
+    arguments: ['@core.db']
+  gallery.helpers:
+    class: ACP3\Modules\Gallery\Helpers
+    arguments: ['@core.uri', '@core.seo', 'gallery.model']
+  gallery.validator:
+    class: ACP3\Modules\Gallery\Validator
+    arguments: ['@core.lang', '@core.validate', '@core.modules', '@core.uri']

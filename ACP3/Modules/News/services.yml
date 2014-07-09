@@ -1,0 +1,4 @@
+services:
+  news.validator:
+    class: ACP3\Modules\News\Validator
+    arguments: ['@core.lang', '@core.validate', '@core.modules', '@core.uri', '@categories.helpers']

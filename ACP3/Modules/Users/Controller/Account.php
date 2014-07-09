@@ -21,18 +21,18 @@ class Account extends Core\Modules\Controller
     {
         parent::preDispatch();
 
-        if ($this->auth->isUser() === false || Core\Validate::isNumber($this->auth->getUserId()) === false) {
+        if ($this->auth->isUser() === false || $this->get('core.validate')->isNumber($this->auth->getUserId()) === false) {
             $this->uri->redirect('users/index/login');
         }
 
-        $this->model = new Users\Model($this->db);
+        $this->model = $this->get('users.model');
     }
 
     public function actionEdit()
     {
         if (empty($_POST) === false) {
             try {
-                $validator = new Users\Validator($this->lang, $this->auth, $this->uri, $this->model);
+                $validator = $this->get('users.validator');
                 $validator->validateEditProfile($_POST);
 
                 $updateValues = array(
@@ -135,7 +135,7 @@ class Account extends Core\Modules\Controller
 
         if (empty($_POST) === false) {
             try {
-                $validator = new Users\Validator($this->lang, $this->auth, $this->uri, $this->model);
+                $validator = $this->get('users.validator');
                 $validator->validateUserSettings($_POST, $settings);
 
                 $updateValues = array(

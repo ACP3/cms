@@ -1,0 +1,10 @@
+services:
+  newsletter.model:
+    class: ACP3\Modules\Newsletter\Model
+    arguments: ['@core.db']
+  newsletter.helpers:
+    class: ACP3\Modules\Newsletter\Helpers
+    arguments: ['@core.db', '@core.date', '@core.lang', '@core.modules', '@core.uri', '@core.view', '@core.helpers.string.formatter']
+  newsletter.validator:
+    class: ACP3\Modules\Newsletter\Validator
+    arguments: ['@core.lang', '@core.validate', '@core.auth', '@core.modules', '@newsletter.model']

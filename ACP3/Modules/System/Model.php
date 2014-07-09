@@ -40,9 +40,19 @@ class Model extends Core\Model
         return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME_SEO . ' WHERE uri = ?', array($path)) > 0;
     }
 
+    public function moduleExists($moduleName)
+    {
+        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE name = ?', array($moduleName)) > 0;
+    }
+
     public function getAllUriAliases()
     {
         return $this->db->fetchAll('SELECT uri, alias FROM ' . $this->prefix . static::TABLE_NAME_SEO . ' WHERE alias != ""');
+    }
+
+    public function getInfoByModuleName($moduleName)
+    {
+        return $this->db->fetchAssoc('SELECT id, version, active FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE name = ?', array($moduleName));
     }
 
 }

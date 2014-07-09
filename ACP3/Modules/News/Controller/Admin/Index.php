@@ -34,7 +34,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($_POST) === false) {
             try {
-                $validator = new News\Validator($this->lang, $this->uri);
+                $validator = $this->get('news.validator');
                 $validator->validateCreate($_POST);
 
                 $insertValues = array(
@@ -45,7 +45,7 @@ class Index extends Core\Modules\Controller\Admin
                     'text' => Core\Functions::strEncode($_POST['text'], true),
                     'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,
                     'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
-                    'category_id' => strlen($_POST['cat_create']) >= 3 ? Categories\Helpers::categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
+                    'category_id' => strlen($_POST['cat_create']) >= 3 ? $this->get('categories.helpers')->categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
                     'uri' => Core\Functions::strEncode($_POST['uri'], true),
                     'target' => (int)$_POST['target'],
                     'link_title' => Core\Functions::strEncode($_POST['link_title']),
@@ -80,10 +80,10 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end')));
 
         // Kategorien
-        $this->view->assign('categories', Categories\Helpers::categoriesList('news', '', true));
+        $this->view->assign('categories', $this->get('categories.helpers')->categoriesList('news', '', true));
 
         // Weiterlesen & Kommentare
-        if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && Core\Modules::isActive('comments') === true)) {
+        if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && $this->modules->isActive('comments') === true)) {
             $i = 0;
             $options = array();
             if ($settings['readmore'] == 1) {
@@ -92,7 +92,7 @@ class Index extends Core\Modules\Controller\Admin
                 $options[$i]['lang'] = $this->lang->t('news', 'activate_readmore');
                 $i++;
             }
-            if ($settings['comments'] == 1 && Core\Modules::isActive('comments') === true) {
+            if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
                 $options[$i]['name'] = 'comments';
                 $options[$i]['checked'] = Core\Functions::selectEntry('comments', '1', '0', 'checked');
                 $options[$i]['lang'] = $this->lang->t('system', 'allow_comments');
@@ -118,13 +118,13 @@ class Index extends Core\Modules\Controller\Admin
 
         if ($this->uri->action === 'confirmed') {
             $bool = false;
-            $commentsInstalled = Core\Modules::isInstalled('comments');
+            $commentsInstalled = $this->modules->isInstalled('comments');
             $cache = new Core\Cache2('news');
 
             foreach ($items as $item) {
                 $bool = $this->model->delete($item);
                 if ($commentsInstalled === true) {
-                    \ACP3\Modules\Comments\Helpers::deleteCommentsByModuleAndResult('news', $item);
+                    $this->get('comments.helpers')->deleteCommentsByModuleAndResult('news', $item);
                 }
 
                 $cache->delete(News\Cache::CACHE_ID . $item);
@@ -150,7 +150,7 @@ class Index extends Core\Modules\Controller\Admin
 
             if (empty($_POST) === false) {
                 try {
-                    $validator = new News\Validator($this->lang, $this->uri);
+                    $validator = $this->get('news.validator');
                     $validator->validateEdit($_POST);
 
                     $updateValues = array(
@@ -160,7 +160,7 @@ class Index extends Core\Modules\Controller\Admin
                         'text' => Core\Functions::strEncode($_POST['text'], true),
                         'readmore' => $settings['readmore'] == 1 && isset($_POST['readmore']) ? 1 : 0,
                         'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
-                        'category_id' => strlen($_POST['cat_create']) >= 3 ? Categories\Helpers::categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
+                        'category_id' => strlen($_POST['cat_create']) >= 3 ? $this->get('categories.helpers')->categoriesCreate($_POST['cat_create'], 'news') : $_POST['cat'],
                         'uri' => Core\Functions::strEncode($_POST['uri'], true),
                         'target' => (int)$_POST['target'],
                         'link_title' => Core\Functions::strEncode($_POST['link_title']),
@@ -198,10 +198,10 @@ class Index extends Core\Modules\Controller\Admin
             $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end'), array($news['start'], $news['end'])));
 
             // Kategorien
-            $this->view->assign('categories', Categories\Helpers::categoriesList('news', $news['category_id'], true));
+            $this->view->assign('categories', $this->get('categories.helpers')->categoriesList('news', $news['category_id'], true));
 
             // Weiterlesen & Kommentare
-            if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && Core\Modules::isActive('comments') === true)) {
+            if ($settings['readmore'] == 1 || ($settings['comments'] == 1 && $this->modules->isActive('comments') === true)) {
                 $i = 0;
                 $options = array();
                 if ($settings['readmore'] == 1) {
@@ -210,7 +210,7 @@ class Index extends Core\Modules\Controller\Admin
                     $options[$i]['lang'] = $this->lang->t('news', 'activate_readmore');
                     $i++;
                 }
-                if ($settings['comments'] == 1 && Core\Modules::isActive('comments') === true) {
+                if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
                     $options[$i]['name'] = 'comments';
                     $options[$i]['checked'] = Core\Functions::selectEntry('comments', '1', $news['comments'], 'checked');
                     $options[$i]['lang'] = $this->lang->t('system', 'allow_comments');
@@ -241,14 +241,14 @@ class Index extends Core\Modules\Controller\Admin
         $c_news = count($news);
 
         if ($c_news > 0) {
-            $canDelete = Core\Modules::hasPermission('admin/news/index/delete');
+            $canDelete = $this->modules->hasPermission('admin/news/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent($this->get('core.functions')->dataTable($config));
 
             for ($i = 0; $i < $c_news; ++$i) {
                 $news[$i]['period'] = $this->date->formatTimeRange($news[$i]['start'], $news[$i]['end']);
@@ -264,7 +264,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($_POST) === false) {
             try {
-                $validator = new News\Validator($this->lang, $this->uri);
+                $validator = $this->get('news.validator');
                 $validator->validateSettings($_POST, $this->lang);
 
                 $data = array(
@@ -299,7 +299,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('readmore_chars', empty($_POST) === false ? $_POST['readmore_chars'] : $settings['readmore_chars']);
 
-        if (Core\Modules::isActive('comments') === true) {
+        if ($this->modules->isActive('comments') === true) {
             $lang_allow_comments = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
             $this->view->assign('allow_comments', Core\Functions::selectGenerator('comments', array(1, 0), $lang_allow_comments, $settings['comments'], 'checked'));
         }

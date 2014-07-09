@@ -2,12 +2,16 @@
 
 namespace ACP3;
 
-use ACP3\Core\Config;
+use ACP3\Core\Modules;
 use ACP3\Core\Modules\Controller;
 use Doctrine\DBAL;
 use Monolog\ErrorHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Config\FileLocator;
 
 /**
  * Front Controller of the CMS
@@ -17,37 +21,9 @@ use Monolog\Logger;
 class Application
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var ContainerBuilder
      */
-    private static $acl;
-    /**
-     * @var \ACP3\Core\Auth
-     */
-    private static $auth;
-    /**
-     * @var \ACP3\Core\Breadcrumb
-     */
-    private static $breadcrumb;
-    /**
-     * @var \ACP3\Core\Date
-     */
-    private static $date;
-    /**
-     * @var DBAL\Connection
-     */
-    private static $db;
-    /**
-     * @var \ACP3\Core\Lang
-     */
-    private static $lang;
-    /**
-     * @var \ACP3\Core\SEO
-     */
-    private static $seo;
-    /**
-     * @var \ACP3\Core\Session
-     */
-    private static $session;
+    private static $di;
     /**
      * @var \ACP3\Core\URI
      */
@@ -163,6 +139,8 @@ class Application
      */
     public static function initializeClasses()
     {
+        $file = UPLOADS_DIR . 'cache/sql/container.php';
+
         $config = new DBAL\Configuration();
         $connectionParams = array(
             'dbname' => CONFIG_DB_NAME,
@@ -172,43 +150,65 @@ class Application
             'driver' => 'pdo_mysql',
             'charset' => 'utf8'
         );
-        self::$db = DBAL\DriverManager::getConnection($connectionParams, $config);
+        $db = DBAL\DriverManager::getConnection($connectionParams, $config);
 
         define('DB_PRE', CONFIG_DB_PRE);
 
-        Core\Registry::set('Db', self::$db);
+        if (file_exists($file)) {
+            require_once $file;
+            self::$di = new \ACP3ServiceContainer();
 
-        // Systemeinstellungen laden
-        $config = new Config(self::$db, 'system');
-        $config->getSettingsAsConstants();
+            self::$di->set('core.db', $db);
 
-        // Pfade zum Theme setzen
-        define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
-        define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
-        define('DESIGN_PATH_ABSOLUTE', HOST_NAME . DESIGN_PATH);
+            // Systemeinstellungen laden
+            self::$di
+                ->get('system.config')
+                ->getSettingsAsConstants();
 
-        // Restliche Klassen instanziieren
-        self::$view = new Core\View();
-        self::$uri = new Core\URI(self::$db);
-        self::$session = new Core\Session(self::$db, self::$uri, self::$view);
-        self::$auth = new Core\Auth(self::$db, self::$session);
-        self::$acl = new Core\ACL(self::$auth, self::$db);
-        self::$lang = new Core\Lang(self::$auth);
-        self::$seo = new Core\SEO(self::$db, self::$lang, self::$uri, self::$view);
-        self::$date = new Core\Date(self::$auth, self::$lang, self::$view);
-        self::$breadcrumb = new Core\Breadcrumb(self::$db, self::$lang, self::$uri, self::$view);
+            // Pfade zum Theme setzen
+            define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
+            define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
+            define('DESIGN_PATH_ABSOLUTE', HOST_NAME . DESIGN_PATH);
 
-        Core\Registry::set('View', self::$view);
-        Core\Registry::set('URI', self::$uri);
-        Core\Registry::set('Session', self::$session);
-        Core\Registry::set('Auth', self::$auth);
-        Core\Registry::set('ACL', self::$acl);
-        Core\Registry::set('Lang', self::$lang);
-        Core\Registry::set('SEO', self::$seo);
-        Core\Registry::set('Date', self::$date);
-        Core\Registry::set('Breadcrumb', self::$breadcrumb);
+            Core\View::factory('Smarty');
+        } else {
+            self::$di = new ContainerBuilder();
+            $loader = new YamlFileLoader(self::$di, new FileLocator(__DIR__));
+            $loader->load(CLASSES_DIR . 'services.yml');
+            $loader->load(CLASSES_DIR . 'View/Renderer/Smarty/plugins.yml');
 
-        Core\View::factory('Smarty');
+            self::$di->set('core.db', $db);
+
+            // Systemeinstellungen laden
+            self::$di
+                ->get('system.config')
+                ->getSettingsAsConstants();
+
+            // Pfade zum Theme setzen
+            define('DESIGN_PATH', ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
+            define('DESIGN_PATH_INTERNAL', ACP3_ROOT_DIR . 'designs/' . CONFIG_DESIGN . '/');
+            define('DESIGN_PATH_ABSOLUTE', HOST_NAME . DESIGN_PATH);
+
+            // Try to get all available services
+            /** @var Modules $modules */
+            $modules = self::$di->get('core.modules');
+            $activeModules = $modules->getActiveModules();
+            foreach ($activeModules as $module) {
+                if ($module['has_services'] === true) {
+                    $path = MODULES_DIR . $module['dir'] . '/services.yml';
+                    if (is_file($path)) {
+                        $loader->load($path);
+                    }
+                }
+            }
+
+            Core\View::factory('Smarty');
+
+            self::$di->compile();
+
+            $dumper = new PhpDumper(self::$di);
+            file_put_contents($file, $dumper->dump(array('class' => 'ACP3ServiceContainer')));
+        }
     }
 
     /**
@@ -216,79 +216,43 @@ class Application
      */
     public static function outputPage()
     {
-        // Einige Template Variablen setzen
-        self::$view->assign('PHP_SELF', PHP_SELF);
-        self::$view->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
-        self::$view->assign('ROOT_DIR', ROOT_DIR);
-        self::$view->assign('ROOT_DIR_ABSOLUTE', ROOT_DIR_ABSOLUTE);
-        self::$view->assign('HOST_NAME', HOST_NAME);
-        self::$view->assign('DESIGN_PATH', DESIGN_PATH);
-        self::$view->assign('DESIGN_PATH_ABSOLUTE', DESIGN_PATH_ABSOLUTE);
-        self::$view->assign('UA_IS_MOBILE', Core\Functions::isMobileBrowser());
-        self::$view->assign('IN_ADM', self::$uri->area === 'admin');
-
-        self::$view->assign('LANG_DIRECTION', self::$lang->getDirection());
-        self::$view->assign('LANG', self::$lang->getLanguage2Characters());
-
         self::_checkForMaintenanceMode();
 
+        $auth = self::$di->get('core.auth');
+        $uri = self::$di->get('core.uri');
+
         // Aktuelle Datensatzposition bestimmen
-        define('POS', Core\Validate::isNumber(self::$uri->page) && self::$uri->page >= 1 ? (int)(self::$uri->page - 1) * Core\Registry::get('Auth')->entries : 0);
+        define('POS', self::$di->get('core.validate')->isNumber($uri->page) && $uri->page >= 1 ? (int)($uri->page - 1) * $auth->entries : 0);
 
         try {
-            $module = ucfirst(self::$uri->mod);
+            $module = ucfirst($uri->mod);
 
-            if (self::$uri->area !== 'frontend') {
-                $className = "\\ACP3\\Modules\\" . $module . "\\Controller\\" . ucfirst(self::$uri->area) . "\\" . ucfirst(self::$uri->controller);
+            if ($uri->area !== 'frontend') {
+                $className = "\\ACP3\\Modules\\" . $module . "\\Controller\\" . ucfirst($uri->area) . "\\" . ucfirst($uri->controller);
             } else {
-                $className = "\\ACP3\\Modules\\" . $module . "\\Controller\\" . ucfirst(self::$uri->controller);
+                $className = "\\ACP3\\Modules\\" . $module . "\\Controller\\" . ucfirst($uri->controller);
             }
 
-            if (class_exists($className)) {
-                /** @var Controller $controller */
-                $controller = new $className(
-                    self::$auth,
-                    self::$breadcrumb,
-                    self::$date,
-                    self::$db,
-                    self::$lang,
-                    self::$session,
-                    self::$uri,
-                    self::$view,
-                    self::$seo
-                );
-
-                $action = 'action' . str_replace('_', '', self::$uri->file);
-
-                if (method_exists($controller, $action) === true) {
-                    $controller->preDispatch();
-                    $controller->$action();
-                    $controller->display();
-                } else {
-                    throw new Core\Exceptions\ControllerActionNotFound('Controller action ' . $className . '::' . $action . '() was not found!');
-                }
-            } else {
-                throw new Core\Exceptions\ControllerActionNotFound('Class ' . $className . '() was not found!');
-            }
+            self::dispatch($className, $uri->file);
         } catch (Core\Exceptions\ResultNotExists $e) {
             if ($e->getMessage()) {
                 Core\Logger::error('404', $e);
             } else {
-                Core\Logger::error('404', 'Could not find any results for request: ' . self::$uri->query);
+                Core\Logger::error('404', 'Could not find any results for request: ' . $uri->query);
             }
 
-            self::$uri->redirect('errors/index/404');
+            $uri->redirect('errors/index/404');
         } catch (Core\Exceptions\UnauthorizedAccess $e) {
-            self::$uri->redirect('errors/index/401');
+            $uri->redirect('errors/index/401');
         } catch (Core\Exceptions\ControllerActionNotFound $e) {
-            Core\Logger::error('404', 'Request: ' . self::$uri->query);
+            Core\Logger::error('404', 'Request: ' . $uri->query);
             Core\Logger::error('404', $e);
 
             if (defined('DEBUG') && DEBUG === true) {
                 $errorMessage = $e->getMessage();
                 self::_renderApplicationException($errorMessage);
             } else {
-                self::$uri->redirect('errors/index/404');
+                $uri->redirect('errors/index/404');
             }
         } catch (\Exception $e) {
             Core\Logger::error('exception', $e);
@@ -297,9 +261,55 @@ class Application
                 $errorMessage = $e->getMessage();
                 self::_renderApplicationException($errorMessage);
             } else {
-                self::$uri->redirect('errors/index/500');
+                $uri->redirect('errors/index/500');
             }
         }
+    }
+
+    /**
+     * @param $className
+     * @param $action
+     * @throws Core\Exceptions\ControllerActionNotFound
+     */
+    public static function dispatch($className, $action)
+    {
+        if (class_exists($className)) {
+            /** @var Controller $controller */
+            $controller = new $className(
+                self::$di->get('core.auth'),
+                self::$di->get('core.breadcrumb'),
+                self::$di->get('core.date'),
+                self::$di->get('core.db'),
+                self::$di->get('core.lang'),
+                self::$di->get('core.session'),
+                self::$di->get('core.uri'),
+                self::$di->get('core.view'),
+                self::$di->get('core.seo'),
+                self::$di->get('core.modules'),
+                self::$di->get('core.acl')
+            );
+
+            $action = 'action' . str_replace('_', '', $action);
+
+            if (method_exists($controller, $action) === true) {
+                $controller->setContainer(self::$di);
+                $controller->preDispatch();
+                $controller->$action();
+                $controller->display();
+            } else {
+                throw new Core\Exceptions\ControllerActionNotFound('Controller action ' . $className . '::' . $action . '() was not found!');
+            }
+        } else {
+            throw new Core\Exceptions\ControllerActionNotFound('Class ' . $className . '() was not found!');
+        }
+    }
+
+    /**
+     * @return ContainerBuilder
+     */
+    public static function getServiceContainer()
+    {
+        return self::$di;
     }
 
     /**
@@ -308,8 +318,9 @@ class Application
      */
     private static function _renderApplicationException($errorMessage)
     {
-        self::$view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
-        self::$view->assign('CONTENT', $errorMessage);
-        self::$view->displayTemplate('system/maintenance.tpl');
+        $view = self::$di->get('core.view');
+        $view->assign('PAGE_TITLE', CONFIG_SEO_TITLE);
+        $view->assign('CONTENT', $errorMessage);
+        $view->displayTemplate('system/maintenance.tpl');
     }
 }

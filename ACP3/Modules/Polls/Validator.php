@@ -18,7 +18,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if (Core\Validate::date($formData['start'], $formData['end']) === false) {
+        if ($this->validate->date($formData['start'], $formData['end']) === false) {
             $errors[] = $this->lang->t('system', 'select_date');
         }
         if (empty($formData['title'])) {
@@ -48,7 +48,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if (Core\Validate::date($formData['start'], $formData['end']) === false) {
+        if ($this->validate->date($formData['start'], $formData['end']) === false) {
             $errors[] = $this->lang->t('system', 'select_date');
         }
         if (empty($formData['title'])) {

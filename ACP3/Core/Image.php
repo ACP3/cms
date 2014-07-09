@@ -81,11 +81,11 @@ class Image
         if ($this->cachePrefix !== '' && !preg_match('/_$/', $this->cachePrefix)) {
             $this->cachePrefix .= '_';
         }
-        if (isset($options['max_width']) && Validate::isNumber($options['max_width']) === true) {
-            $this->maxWidth = $options['max_width'];
+        if (isset($options['max_width'])) {
+            $this->maxWidth = (int) $options['max_width'];
         }
-        if (isset($options['max_height']) && Validate::isNumber($options['max_height']) === true) {
-            $this->maxHeight = $options['max_height'];
+        if (isset($options['max_height'])) {
+            $this->maxHeight = (int) $options['max_height'];
         }
         if (isset($options['prefer_width']) && is_bool($options['prefer_width']) === true) {
             $this->preferWidth = $options['prefer_width'];
@@ -93,8 +93,8 @@ class Image
         if (isset($options['prefer_height']) && is_bool($options['prefer_height']) === true) {
             $this->preferHeight = $options['prefer_height'];
         }
-        if (isset($options['jpg_quality']) && Validate::isNumber($options['jpg_quality']) === true) {
-            $this->jpgQuality = $options['jpg_quality'];
+        if (isset($options['jpg_quality'])) {
+            $this->jpgQuality = (int) $options['jpg_quality'];
         }
         if (isset($options['force_resample']) && is_bool($options['force_resample']) === true) {
             $this->forceResample = $options['force_resample'];

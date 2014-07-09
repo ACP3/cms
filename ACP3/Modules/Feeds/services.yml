@@ -1,0 +1,7 @@
+services:
+  feeds.validator:
+    class: ACP3\Modules\Feeds\Validator
+    parent: core.validator.abstract
+  feeds.extensions:
+    class: ACP3\Modules\Feeds\Extensions
+    arguments: ['@core.date', '@core.db', '@core.uri', '@core.view', '@core.helpers.string.formatter']

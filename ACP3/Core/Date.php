@@ -35,7 +35,10 @@ class Date
      * @var \ACP3\Core\Lang
      */
     protected $lang;
-
+    /**
+     * @var Validate
+     */
+    protected $validate;
     /**
      * @var \ACP3\Core\View
      */
@@ -44,21 +47,22 @@ class Date
     /**
      * Falls man sich als User authentifiziert hat, eingestellte Zeitzone + Sommerzeiteinstellung holen
      */
-    function __construct(Auth $auth, Lang $lang, View $view)
+    function __construct(Auth $auth, Lang $lang, Validate $validate, View $view)
     {
         $info = $auth->getUserInfo();
 
         $this->lang = $lang;
+        $this->validate = $validate;
         $this->view = $view;
 
         if (!empty($info)) {
             $this->dateFormatLong = $info['date_format_long'];
             $this->dateFormatShort = $info['date_format_short'];
-            $time_zone = $info['time_zone'];
+            $timeZone = $info['time_zone'];
         } else {
-            $time_zone = CONFIG_DATE_TIME_ZONE;
+            $timeZone = CONFIG_DATE_TIME_ZONE;
         }
-        $this->dateTimeZone = new \DateTimeZone($time_zone);
+        $this->dateTimeZone = new \DateTimeZone($timeZone);
     }
 
     /**
@@ -127,7 +131,7 @@ class Date
                 $value_end = $_POST[$name[1]];
                 $value_start_r = $this->format($_POST[$name[0]], 'r', false);
                 $value_end_r = $this->format($_POST[$name[1]], 'r', false);
-            } elseif (is_array($value) === true && Validate::date($value[0], $value[1]) === true) {
+            } elseif (is_array($value) === true && $this->validate->date($value[0], $value[1]) === true) {
                 $value_start = $this->format($value[0], $format);
                 $value_end = $this->format($value[1], $format);
                 $value_start_r = $this->format($value[0], 'r');
@@ -149,7 +153,7 @@ class Date
         } else {
             if (!empty($_POST[$name])) {
                 $value = $_POST[$name];
-            } elseif (Validate::date($value) === true) {
+            } elseif ($this->validate->date($value) === true) {
                 $value = $this->format($value, $format);
             } else {
                 $value = $this->format('now', $format, false);
@@ -215,6 +219,9 @@ class Date
         return strtr($dateTime->format($format), $replace);
     }
 
+    /**
+     * @return array
+     */
     protected function localizeDaysAbbr()
     {
         return array(
@@ -228,6 +235,9 @@ class Date
         );
     }
 
+    /**
+     * @return array
+     */
     protected function localizeDays()
     {
         return array(
@@ -241,6 +251,9 @@ class Date
         );
     }
 
+    /**
+     * @return array
+     */
     protected function localizeMonths()
     {
         return array(
@@ -259,6 +272,9 @@ class Date
         );
     }
 
+    /**
+     * @return array
+     */
     protected function localizeMonthsAbbr()
     {
         return array(
@@ -345,7 +361,7 @@ class Date
     /**
      * Gibt die aktuelle Uhrzeit im MySQL-Datetime Format zurück
      *
-     * @param bool $islocalTime
+     * @param bool $isLocalTime
      * @return string
      */
     public function getCurrentDateTime($isLocalTime = false)

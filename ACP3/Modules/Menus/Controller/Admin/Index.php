@@ -29,7 +29,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         if (empty($_POST) === false) {
             try {
-                $validator = new Menus\Validator($this->lang, $this->uri, $this->model);
+                $validator = $this->get('menus.validator');
                 $validator->validateCreate($_POST);
 
                 $insertValues = array(
@@ -81,7 +81,7 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
-            $menusCache = new Menus\Cache($this->model);
+            $menusCache = new Menus\Cache($this->lang, $this->model);
             $menusCache->setMenuItemsCache();
 
             $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
@@ -98,7 +98,7 @@ class Index extends Core\Modules\Controller\Admin
         if (empty($menu) === false) {
             if (empty($_POST) === false) {
                 try {
-                    $validator = new Menus\Validator($this->lang, $this->uri, $this->model);
+                    $validator = $this->get('menus.validator');
                     $validator->validateEdit($_POST);
 
                     $updateValues = array(
@@ -108,7 +108,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $bool = $this->model->update($updateValues, $this->uri->id);
 
-                    $cache = new Menus\Cache($this->model);
+                    $cache = new Menus\Cache($this->lang, $this->model);
                     $cache->setMenuItemsCache();
 
                     $this->session->unsetFormToken();
@@ -141,15 +141,15 @@ class Index extends Core\Modules\Controller\Admin
         $c_menus = count($menus);
 
         if ($c_menus > 0) {
-            $canDeleteItem = Core\Modules::hasPermission('admin/menus/items/delete');
-            $canSortItem = Core\Modules::hasPermission('admin/menus/items/order');
+            $canDeleteItem = $this->modules->hasPermission('admin/menus/items/delete');
+            $canSortItem = $this->modules->hasPermission('admin/menus/items/order');
             $this->view->assign('can_delete_item', $canDeleteItem);
             $this->view->assign('can_order_item', $canSortItem);
-            $this->view->assign('can_delete', Core\Modules::hasPermission('admin/menus/index/delete'));
-            $this->view->assign('can_edit', Core\Modules::hasPermission('admin/menus/index/edit'));
+            $this->view->assign('can_delete', $this->modules->hasPermission('admin/menus/index/delete'));
+            $this->view->assign('can_edit', $this->modules->hasPermission('admin/menus/index/edit'));
             $this->view->assign('colspan', $canDeleteItem && $canSortItem ? 5 : ($canDeleteItem || $canSortItem ? 4 : 3));
 
-            $pagesList = Menus\Helpers::menuItemsList();
+            $pagesList = $this->get('menus.helpers')->menuItemsList();
             for ($i = 0; $i < $c_menus; ++$i) {
                 if (isset($pagesList[$menus[$i]['index_name']]) === false) {
                     $pagesList[$menus[$i]['index_name']]['title'] = $menus[$i]['title'];

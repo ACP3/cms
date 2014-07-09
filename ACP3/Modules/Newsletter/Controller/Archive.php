@@ -36,7 +36,7 @@ class Archive extends Core\Modules\Controller
                 ->append($this->lang->t('newsletter', 'frontend_archive_index'), 'newsletter/archive')
                 ->append($newsletter['title']);
 
-            $formatter = new Core\Helpers\StringFormatter();
+            $formatter = $this->get('core.helpers.string.formatter');
 
             $newsletter['date_formatted'] = $this->date->format($newsletter['date'], 'short');
             $newsletter['date_iso'] = $this->date->format($newsletter['date'], 'c');

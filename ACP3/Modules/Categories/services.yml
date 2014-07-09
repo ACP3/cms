@@ -1,0 +1,13 @@
+services:
+  categories.model:
+    class: ACP3\Modules\Categories\Model
+    arguments: ['@core.db']
+  categories.cache:
+    class: ACP3\Modules\Categories\Cache
+    arguments: ['@categories.model']
+  categories.helpers:
+    class: ACP3\Modules\Categories\Helpers
+    arguments: ['@core.lang', '@core.modules', '@core.view', '@categories.cache']
+  categories.validator:
+    class: ACP3\Modules\Categories\Validator
+    arguments: ['@core.lang', '@core.validate', '@categories.helpers', '@categories.model']

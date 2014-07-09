@@ -1,0 +1,7 @@
+services:
+  system.helpers:
+    class: ACP3\Modules\System\Helpers
+    arguments: ['@core.db', '@core.modules']
+  system.validator:
+    class: ACP3\Modules\System\Validator
+    parent: core.validator.abstract

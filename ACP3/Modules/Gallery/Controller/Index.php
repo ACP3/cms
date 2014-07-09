@@ -77,7 +77,7 @@ class Index extends Core\Modules\Controller
                 $this->view->assign('picture_next', $picture_next);
             }
 
-            if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $picture['comments'] == 1 && Core\Modules::hasPermission('frontend/comments') === true) {
+            if ($settings['overlay'] == 0 && $settings['comments'] == 1 && $picture['comments'] == 1 && $this->modules->hasPermission('frontend/comments') === true) {
                 $comments = new \ACP3\Modules\Comments\Controller\Index(
                     $this->auth,
                     $this->breadcrumb,
@@ -102,7 +102,7 @@ class Index extends Core\Modules\Controller
     {
         $this->setNoOutput(true);
 
-        if (Core\Validate::isNumber($this->uri->id) === true) {
+        if ($this->get('core.validate')->isNumber($this->uri->id) === true) {
             @set_time_limit(20);
             $picture = $this->model->getFileById($this->uri->id);
             $action = $this->uri->action === 'thumb' ? 'thumb' : '';

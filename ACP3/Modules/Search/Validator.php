@@ -7,11 +7,6 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
 
-    public function __construct(Core\Lang $lang)
-    {
-        parent::__construct($lang);
-    }
-
     /**
      * @param array $formData
      * @throws \ACP3\Core\Exceptions\ValidationFailed

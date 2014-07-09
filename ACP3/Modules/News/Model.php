@@ -5,9 +5,8 @@ namespace ACP3\Modules\News;
 use ACP3\Core;
 
 /**
- * Description of Model
- *
- * @author Tino Goratsch
+ * Class Model
+ * @package ACP3\Modules\News
  */
 class Model extends Core\Model
 {

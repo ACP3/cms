@@ -18,39 +18,55 @@ abstract class Helpers
     /**
      * @var Core\Date
      */
-    protected static $date;
+    protected $date;
     /**
      * @var \Doctrine\DBAL\Connection
      */
-    protected static $db;
+    protected $db;
     /**
      * @var Core\Lang
      */
-    protected static $lang;
-
-    /**
-     * @var Core\URI
-     */
-    protected static $uri;
+    protected $lang;
     /**
      * @var Model
      */
-    protected static $model;
+    protected $model;
+    /**
+     * @var Core\Modules
+     */
+    protected $modules;
+    /**
+     * @var Core\URI
+     */
+    protected $uri;
     /**
      * @var Core\View
      */
-    protected static $view;
+    protected $view;
+    /**
+     * @var Core\Helpers\StringFormatter
+     */
+    protected $stringFormatter;
 
-    protected static function _init()
+    protected function __construct(
+        \Doctrine\DBAL\Connection $db,
+        Core\Date $date,
+        Core\Lang $lang,
+        Core\Modules $modules,
+        Core\URI $uri,
+        Core\View $view,
+        Core\Helpers\StringFormatter $stringFormatter
+    )
     {
-        if (!self::$model) {
-            self::$db = Core\Registry::get('Db');
-            self::$model = new Model(Core\Registry::get('Db'));
-            self::$lang = Core\Registry::get('Lang');
-            self::$uri = Core\Registry::get('URI');
-            self::$view = Core\Registry::get('View');
-            self::$date = Core\Registry::get('Date');
-        }
+        $this->db = $db;
+        $this->date = $date;
+        $this->lang = $lang;
+        $this->modules = $modules;
+        $this->uri = $uri;
+        $this->view = $view;
+        $this->stringFormatter = $stringFormatter;
+
+        $this->model = new Model($db);
     }
 
     /**
@@ -61,24 +77,22 @@ abstract class Helpers
      * @param bool $bcc
      * @return bool
      */
-    public static function sendNewsletter($newsletterId, $recipients, $bcc = false)
+    public function sendNewsletter($newsletterId, $recipients, $bcc = false)
     {
-        self::_init();
-
-        $config = new Core\Config(self::$db, 'newsletter');
+        $config = new Core\Config($this->db, 'newsletter');
         $settings = $config->getSettings();
 
-        $newsletter = self::$model->getOneById($newsletterId);
+        $newsletter = $this->model->getOneById($newsletterId);
         $from = array(
             'email' => $settings['mail'],
             'name' => CONFIG_SEO_TITLE
         );
 
-        $mailer = new Core\Mailer(self::$view, $bcc);
+        $mailer = new Core\Mailer($this->view, $bcc);
         $mailer
             ->setFrom($from)
             ->setSubject($newsletter['title'])
-            ->setUrlWeb(HOST_NAME . self::$uri->route('newsletter/archive/details/id_' . $newsletterId))
+            ->setUrlWeb(HOST_NAME . $this->uri->route('newsletter/archive/details/id_' . $newsletterId))
             ->setMailSignature($settings['mailsig']);
 
         if ($newsletter['html'] == 1) {
@@ -100,26 +114,24 @@ abstract class Helpers
      *    Die anzumeldende E-Mail-Adresse
      * @return boolean
      */
-    public static function subscribeToNewsletter($emailAddress)
+    public function subscribeToNewsletter($emailAddress)
     {
-        self::_init();
-
         $hash = md5(mt_rand(0, microtime(true)));
         $host = htmlentities($_SERVER['HTTP_HOST'], ENT_QUOTES, 'UTF-8');
-        $url = 'http://' . $host . self::$uri->route('newsletter/index/activate/hash_' . $hash . '/mail_' . $emailAddress);
+        $url = 'http://' . $host . $this->uri->route('newsletter/index/activate/hash_' . $hash . '/mail_' . $emailAddress);
 
-        $config = new Core\Config(self::$db, 'newsletter');
+        $config = new Core\Config($this->db, 'newsletter');
         $settings = $config->getSettings();
 
-        $subject = sprintf(self::$lang->t('newsletter', 'subscribe_mail_subject'), CONFIG_SEO_TITLE);
-        $body = str_replace('{host}', $host, self::$lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
+        $subject = sprintf($this->lang->t('newsletter', 'subscribe_mail_subject'), CONFIG_SEO_TITLE);
+        $body = str_replace('{host}', $host, $this->lang->t('newsletter', 'subscribe_mail_body')) . "\n\n";
 
         $from = array(
             'email' => $settings['mail'],
             'name' => CONFIG_SEO_TITLE
         );
 
-        $mailer = new Core\Mailer(Core\Registry::get('View'));
+        $mailer = new Core\Mailer($this->view);
         $mailer
             ->setFrom($from)
             ->setSubject($subject)
@@ -129,8 +141,7 @@ abstract class Helpers
             $mailer->setTemplate('newsletter/email.tpl');
 
             $body .= '<a href="' . $url . '">' . $url . '<a>';
-            $formatter = new Core\Helpers\StringFormatter();
-            $mailer->setHtmlBody($formatter->nl2p($body));
+            $mailer->setHtmlBody($this->stringFormatter->nl2p($body));
         } else {
             $body .= $url;
             $mailer->setBody($body);
@@ -148,7 +159,7 @@ abstract class Helpers
                 'mail' => $emailAddress,
                 'hash' => $hash
             );
-            $bool = self::$model->insert($insertValues, Model::TABLE_NAME_ACCOUNTS);
+            $bool = $this->model->insert($insertValues, Model::TABLE_NAME_ACCOUNTS);
         }
 
         return $mailSent === true && $bool !== false;

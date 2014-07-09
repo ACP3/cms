@@ -1,0 +1,7 @@
+services:
+  guestbook.model:
+    class: ACP3\Modules\Guestbook\Model
+    arguments: ['@core.db']
+  guestbook.validator:
+    class: ACP3\Modules\Guestbook\Validator
+    arguments: ['@core.lang', '@core.validate', '@core.auth', '@core.date', '@core.modules', '@guestbook.model', '@newsletter.model']

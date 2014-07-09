@@ -9,6 +9,28 @@ use ACP3\Core;
  */
 class StringFormatter
 {
+
+    /**
+     * @var Core\Modules
+     */
+    protected $modules;
+
+    /**
+     * @var Core\URI
+     */
+    protected $uri;
+    /**
+     * @var Core\Validate
+     */
+    protected $validate;
+
+    public function __construct(Core\Modules $modules, Core\URI $uri, Core\Validate $validate)
+    {
+        $this->modules = $modules;
+        $this->uri = $uri;
+        $this->validate = $validate;
+    }
+
     /**
      * Macht einen String URL sicher
      *
@@ -80,7 +102,7 @@ class StringFormatter
      */
     public function rewriteInternalUriCallback($matches)
     {
-        if (Core\Validate::uriAliasExists($matches[6]) === true) {
+        if ($this->validate->uriAliasExists($matches[6]) === true) {
             return $matches[0];
         } else {
             $uriArray = explode('/', $matches[6]);
@@ -92,8 +114,8 @@ class StringFormatter
                 $path .= '/' . $uriArray[2];
             }
 
-            if (Core\Modules::actionExists($path)) {
-                return '<a href="' . Core\Registry::get('URI')->route($matches[6]) . '"';
+            if ($this->modules->actionExists($path)) {
+                return '<a href="' . $this->uri->route($matches[6]) . '"';
             } else {
                 return $matches[0];
             }

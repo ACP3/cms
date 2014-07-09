@@ -21,7 +21,7 @@ class Index extends Core\Modules\Controller
     {
         parent::preDispatch();
 
-        $this->model = new Users\Model($this->db);
+        $this->model = $this->get('users.model');
     }
 
     public function actionForgotPwd()
@@ -31,7 +31,7 @@ class Index extends Core\Modules\Controller
         } else {
             if (empty($_POST) === false) {
                 try {
-                    $validator = new Users\Validator($this->lang, $this->auth, $this->uri, $this->model);
+                    $validator = $this->get('users.validator');
                     $validator->validateForgotPassword($_POST);
 
                     // Neues Passwort und neuen Zufallsschlüssel erstellen
@@ -40,7 +40,7 @@ class Index extends Core\Modules\Controller
                     $host = htmlentities($_SERVER['HTTP_HOST']);
 
                     // Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
-                    if (Core\Validate::email($_POST['nick_mail']) === true && $this->model->resultExistsByEmail($_POST['nick_mail']) === true) {
+                    if ($this->get('core.validate')->email($_POST['nick_mail']) === true && $this->model->resultExistsByEmail($_POST['nick_mail']) === true) {
                         $user = $this->model->getOneByEmail($_POST['nick_mail']);
                     } else {
                         $user = $this->model->getOneByNickname($_POST['nick_mail']);
@@ -54,7 +54,7 @@ class Index extends Core\Modules\Controller
 
                     $config = new Core\Config($this->db, 'users');
                     $settings = $config->getSettings();
-                    $mailIsSent = Core\Functions::generateEmail(substr($user['realname'], 0, -2), $user['mail'], $settings['mail'], $subject, $body);
+                    $mailIsSent = $this->get('core.functions')->generateEmail(substr($user['realname'], 0, -2), $user['mail'], $settings['mail'], $subject, $body);
 
                     // Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
                     if ($mailIsSent === true) {
@@ -84,8 +84,8 @@ class Index extends Core\Modules\Controller
 
             $this->view->assign('form', array_merge(array('nick_mail' => ''), $_POST));
 
-            if (Core\Modules::hasPermission('frontend/captcha/index/image') === true) {
-                $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());
+            if ($this->modules->hasPermission('frontend/captcha/index/image') === true) {
+                $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
             }
 
             $this->session->generateFormToken();
@@ -134,7 +134,8 @@ class Index extends Core\Modules\Controller
                     $this->uri->redirect(0, ROOT_DIR);
                 }
             } else {
-                $this->view->assign('error_msg', Core\Functions::errorBox($this->lang->t('users', $result == -1 ? 'account_locked' : 'nickname_or_password_wrong')));
+                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                $this->view->assign('error_msg', $alerts->errorBox($this->lang->t('users', $result == -1 ? 'account_locked' : 'nickname_or_password_wrong')));
             }
         }
     }
@@ -145,8 +146,10 @@ class Index extends Core\Modules\Controller
 
         if ($this->uri->last) {
             $lastPage = base64_decode($this->uri->last);
-            if (!preg_match('/^((acp|users)\/)/', $lastPage))
+
+            if (!preg_match('/^((acp|users)\/)/', $lastPage)) {
                 $this->uri->redirect($lastPage);
+            }
         }
         $this->uri->redirect(0, ROOT_DIR);
     }
@@ -159,18 +162,19 @@ class Index extends Core\Modules\Controller
         if ($this->auth->isUser() === true) {
             $this->uri->redirect(0, ROOT_DIR);
         } elseif ($settings['enable_registration'] == 0) {
-            $this->setContent(Core\Functions::errorBox($this->lang->t('users', 'user_registration_disabled')));
+            $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+            $this->setContent($alerts->errorBox($this->lang->t('users', 'user_registration_disabled')));
         } else {
             if (empty($_POST) === false) {
                 try {
-                    $validator = new Users\Validator($this->lang, $this->auth, $this->uri, $this->model);
+                    $validator = $this->get('users.validator');
                     $validator->validateRegistration($_POST);
 
                     // E-Mail mit den Accountdaten zusenden
                     $host = htmlentities($_SERVER['HTTP_HOST']);
                     $subject = str_replace(array('{title}', '{host}'), array(CONFIG_SEO_TITLE, $host), $this->lang->t('users', 'register_mail_subject'));
                     $body = str_replace(array('{name}', '{mail}', '{password}', '{title}', '{host}'), array($_POST['nickname'], $_POST['mail'], $_POST['pwd'], CONFIG_SEO_TITLE, $host), $this->lang->t('users', 'register_mail_message'));
-                    $mailIsSent = Core\Functions::generateEmail('', $_POST['mail'], $settings['mail'], $subject, $body);
+                    $mailIsSent = $this->get('core.functions')->generateEmail('', $_POST['mail'], $settings['mail'], $subject, $body);
 
                     $securityHelper = new Core\Helpers\Secure();
                     $salt = $securityHelper->salt(12);
@@ -218,8 +222,8 @@ class Index extends Core\Modules\Controller
 
             $this->view->assign('form', array_merge($defaults, $_POST));
 
-            if (Core\Modules::hasPermission('frontend/captcha/index/image') === true) {
-                $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());
+            if ($this->modules->hasPermission('frontend/captcha/index/image') === true) {
+                $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
             }
 
             $this->session->generateFormToken();
@@ -228,7 +232,7 @@ class Index extends Core\Modules\Controller
 
     public function actionViewProfile()
     {
-        if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id) === true) {
+        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id) === true) {
             $user = $this->auth->getUserInfo($this->uri->id);
             $user['gender'] = str_replace(array(1, 2, 3), array('', $this->lang->t('users', 'female'), $this->lang->t('users', 'male')), $user['gender']);
             $user['birthday'] = $this->date->format($user['birthday'], $user['birthday_display'] == 1 ? 'd.m.Y' : 'd.m.');
