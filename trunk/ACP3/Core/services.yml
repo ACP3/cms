@@ -1,0 +1,57 @@
+services:
+    core.validate:
+      class: ACP3\Core\Validate
+      arguments: ['@core.acl', '@core.db', '@core.uri']
+    core.view:
+      class: ACP3\Core\View
+      arguments: ['@core.uri']
+    core.uri:
+      class: ACP3\Core\URI
+      arguments: ['@core.db']
+    core.session:
+      class: ACP3\Core\Session
+      arguments: ['@core.db', '@core.uri', '@core.view']
+    core.auth:
+      class: ACP3\Core\Auth
+      arguments: ['@core.db', '@core.session']
+    core.acl:
+      class: ACP3\Core\ACL
+      arguments: ['@core.auth', '@core.db']
+    core.lang:
+      class: ACP3\Core\Lang
+      arguments: ['@core.auth']
+    core.modules:
+      class: ACP3\Core\Modules
+      arguments: ['@core.db', '@core.acl', '@core.lang']
+    core.seo:
+      class: ACP3\Core\SEO
+      arguments: ['@core.db', '@core.lang', '@core.uri', '@core.view']
+    core.date:
+      class: ACP3\Core\Date
+      arguments: ['@core.auth', '@core.lang', '@core.validate', '@core.view']
+    core.breadcrumb:
+      class: ACP3\Core\Breadcrumb
+      arguments: ['@core.db', '@core.lang', '@core.uri', '@core.view']
+    core.functions:
+      class: ACP3\Core\Functions
+      arguments: ['@core.auth', '@core.db', '@core.view']
+    core.helpers.alerts:
+      class: ACP3\Core\Helpers\Alerts
+      arguments: ['@core.uri', '@core.view']
+    core.helpers.redirect:
+      class: ACP3\Core\Helpers\RedirectMessages
+      arguments: ['@core.uri', '@core.view']
+    core.helpers.secure:
+      class: ACP3\Core\Helpers\Secure
+    core.helpers.string.formatter:
+      class: ACP3\Core\Helpers\StringFormatter
+      arguments: ['@core.modules', '@core.uri', '@core.validate']
+    core.helpers.toc:
+      class: ACP3\Core\Helpers\TableOfContents
+      arguments: ['@core.breadcrumb', '@core.lang', '@core.seo', '@core.uri', '@core.view']
+    core.validator.abstract:
+      abstract: true
+      arguments: ['@core.lang', '@core.validate']
+    system.config:
+      class: ACP3\Core\Config
+      arguments: ['@core.db', 'system']

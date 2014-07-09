@@ -29,7 +29,7 @@ class Index extends Core\Modules\Controller
     {
         $config = new Core\Config($this->db, 'guestbook');
         $settings = $config->getSettings();
-        $hasNewsletterAccess = Core\Modules::hasPermission('frontend/newsletter') === true && $settings['newsletter_integration'] == 1;
+        $hasNewsletterAccess = $this->modules->hasPermission('frontend/newsletter') === true && $settings['newsletter_integration'] == 1;
 
         $overlayIsActive = false;
         if ($this->uri->getIsAjax() === true) {
@@ -39,7 +39,7 @@ class Index extends Core\Modules\Controller
 
         if (empty($_POST) === false) {
             try {
-                $validator = new Guestbook\Validator($this->lang, $this->auth, $this->date, $this->db, $this->model);
+                $validator = $this->get('guestbook.validator');
                 $validator->validateCreate($_POST, $hasNewsletterAccess);
 
                 $insertValues = array(
@@ -62,12 +62,12 @@ class Index extends Core\Modules\Controller
                     $host = 'http://' . htmlentities($_SERVER['HTTP_HOST']);
                     $fullPath = $host . $this->uri->route('guestbook') . '#gb-entry-' . $this->db->lastInsertId();
                     $body = sprintf($settings['notify'] == 1 ? $this->lang->t('guestbook', 'notification_email_body_1') : $this->lang->t('guestbook', 'notification_email_body_2'), $host, $fullPath);
-                    Core\Functions::generateEmail('', $settings['notify_email'], $settings['notify_email'], $this->lang->t('guestbook', 'notification_email_subject'), $body);
+                    $this->get('core.functions')->generateEmail('', $settings['notify_email'], $settings['notify_email'], $this->lang->t('guestbook', 'notification_email_subject'), $body);
                 }
 
                 // Falls es der Benutzer ausgewählt hat, diesen in den Newsletter eintragen
                 if ($hasNewsletterAccess === true && isset($_POST['subscribe_newsletter']) && $_POST['subscribe_newsletter'] == 1) {
-                    \ACP3\Modules\Newsletter\Helpers::subscribeToNewsletter($_POST['mail']);
+                    $this->get('newsletter.helpers')->subscribeToNewsletter($_POST['mail']);
                 }
 
                 $this->session->unsetFormToken();
@@ -84,8 +84,8 @@ class Index extends Core\Modules\Controller
         }
 
         // Emoticons einbinden
-        if ($settings['emoticons'] == 1 && Core\Modules::isActive('emoticons') === true) {
-            $this->view->assign('emoticons', \ACP3\Modules\Emoticons\Helpers::emoticonsList());
+        if ($settings['emoticons'] == 1 && $this->modules->isActive('emoticons') === true) {
+            $this->view->assign('emoticons', $this->get('emoticons.helpers')->emoticonsList());
         }
 
         // In Newsletter integrieren
@@ -118,8 +118,8 @@ class Index extends Core\Modules\Controller
 
         $this->view->assign('form', array_merge($defaults, $_POST));
 
-        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true) {
-            $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());
+        if ($this->modules->hasPermission('frontend/captcha/index/image') === true) {
+            $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
         }
 
         $this->session->generateFormToken();
@@ -152,17 +152,17 @@ class Index extends Core\Modules\Controller
             // Emoticons einbinden
             $emoticons_active = false;
             if ($settings['emoticons'] == 1) {
-                $emoticons_active = Core\Modules::isActive('emoticons') === true && $settings['emoticons'] == 1 ? true : false;
+                $emoticons_active = $this->modules->isActive('emoticons') === true && $settings['emoticons'] == 1 ? true : false;
             }
 
-            $formatter = new Core\Helpers\StringFormatter();
+            $formatter = $this->get('core.helpers.string.formatter');
             for ($i = 0; $i < $c_guestbook; ++$i) {
                 $guestbook[$i]['name'] = !empty($guestbook[$i]['user_name']) ? $guestbook[$i]['user_name'] : $guestbook[$i]['name'];
                 $guestbook[$i]['date_formatted'] = $this->date->format($guestbook[$i]['date'], $settings['dateformat']);
                 $guestbook[$i]['date_iso'] = $this->date->format($guestbook[$i]['date'], 'c');
                 $guestbook[$i]['message'] = $formatter->nl2p($guestbook[$i]['message']);
                 if ($emoticons_active === true) {
-                    $guestbook[$i]['message'] = \ACP3\Modules\Emoticons\Helpers::emoticonsReplace($guestbook[$i]['message']);
+                    $guestbook[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($guestbook[$i]['message']);
                 }
                 $guestbook[$i]['website'] = strlen($guestbook[$i]['user_website']) > 2 ? substr($guestbook[$i]['user_website'], 0, -2) : $guestbook[$i]['website'];
                 if (!empty($guestbook[$i]['website']) && (bool)preg_match('=^http(s)?://=', $guestbook[$i]['website']) === false)

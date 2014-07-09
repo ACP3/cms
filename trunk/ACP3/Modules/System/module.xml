@@ -5,6 +5,7 @@
         <description lang="true"/>
         <author>Tino Goratsch</author>
         <version core="true"/>
+        <services>true</services>
         <protected/>
     </info>
 </module>

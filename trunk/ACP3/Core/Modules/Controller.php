@@ -13,34 +13,44 @@ abstract class Controller
 {
 
     /**
-     *
+     * @var \ACP3\Core\ACL
+     */
+    protected $acl;
+
+    /**
      * @var \ACP3\Core\Auth
      */
     protected $auth;
 
     /**
-     *
      * @var \ACP3\Core\Breadcrumb
      */
     protected $breadcrumb;
 
     /**
-     *
+     * @var \Symfony\Component\DependencyInjection\ContainerBuilder
+     */
+    protected $container;
+
+    /**
      * @var \ACP3\Core\Date
      */
     protected $date;
 
     /**
-     *
      * @var \Doctrine\DBAL\Connection
      */
     protected $db;
 
     /**
-     *
      * @var \ACP3\Core\Lang
      */
     protected $lang;
+
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    protected $modules;
 
     /**
      * @var \ACP3\Core\SEO
@@ -48,25 +58,22 @@ abstract class Controller
     protected $seo;
 
     /**
-     *
      * @var \ACP3\Core\Session
      */
     protected $session;
 
     /**
-     *
      * @var \ACP3\Core\URI
      */
     protected $uri;
 
     /**
-     *
      * @var \ACP3\Core\View
      */
     protected $view;
 
     /**
-     * Nicht ausgeben
+     * Nichts ausgeben
      */
     protected $noOutput = false;
 
@@ -113,7 +120,9 @@ abstract class Controller
         Core\Session $session,
         Core\URI $uri,
         Core\View $view,
-        Core\SEO $seo)
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\ACL $acl)
     {
         $this->auth = $auth;
         $this->breadcrumb = $breadcrumb;
@@ -124,6 +133,8 @@ abstract class Controller
         $this->uri = $uri;
         $this->view = $view;
         $this->seo = $seo;
+        $this->modules = $modules;
+        $this->acl = $acl;
     }
 
     /**
@@ -133,9 +144,24 @@ abstract class Controller
     {
         $path = $this->uri->area . '/' . $this->uri->mod . '/' . $this->uri->controller . '/' . $this->uri->file;
 
-        if (Core\Modules::hasPermission($path) === false) {
+        if ($this->modules->hasPermission($path) === false) {
             throw new Core\Exceptions\UnauthorizedAccess();
         }
+
+        $this->view->assign('PHP_SELF', PHP_SELF);
+        $this->view->assign('REQUEST_URI', htmlentities($_SERVER['REQUEST_URI']));
+        $this->view->assign('ROOT_DIR', ROOT_DIR);
+        $this->view->assign('ROOT_DIR_ABSOLUTE', ROOT_DIR_ABSOLUTE);
+        $this->view->assign('HOST_NAME', HOST_NAME);
+        $this->view->assign('DESIGN_PATH', DESIGN_PATH);
+        $this->view->assign('DESIGN_PATH_ABSOLUTE', DESIGN_PATH_ABSOLUTE);
+        $this->view->assign('UA_IS_MOBILE', Core\Functions::isMobileBrowser());
+        $this->view->assign('IN_ADM', $this->uri->area === 'admin');
+
+        $this->view->assign('LANG_DIRECTION', $this->lang->getDirection());
+        $this->view->assign('LANG', $this->lang->getLanguage2Characters());
+
+        return $this;
     }
 
     /**
@@ -323,13 +349,24 @@ abstract class Controller
     }
 
     /**
-     * Gets an class from the code registry
+     * Gets a class from the service container
      *
-     * @param $classAlias
+     * @param $serviceId
      * @return mixed
      */
-    public function get($classAlias)
+    public function get($serviceId)
     {
-        return Core\Registry::get($classAlias);
+        return $this->container->get($serviceId);
+    }
+
+    /**
+     * @param $container
+     * @return $this
+     */
+    public function setContainer($container)
+    {
+        $this->container = $container;
+
+        return $this;
     }
 }

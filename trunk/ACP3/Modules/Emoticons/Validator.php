@@ -25,7 +25,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['description'])) {
             $errors['description'] = $this->lang->t('emoticons', 'type_in_description');
         }
-        if (Core\Validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
+        if ($this->validate->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
             $_FILES['picture']['error'] !== UPLOAD_ERR_OK
         ) {
             $errors['picture'] = $this->lang->t('emoticons', 'invalid_image_selected');
@@ -52,7 +52,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['description'])) {
             $errors['description'] = $this->lang->t('emoticons', 'type_in_description');
         }
-        if (!empty($file) && (Core\Validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false || $_FILES['picture']['error'] !== UPLOAD_ERR_OK)) {
+        if (!empty($file) && ($this->validate->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false || $_FILES['picture']['error'] !== UPLOAD_ERR_OK)) {
             $errors['picture'] = $this->lang->t('emoticons', 'invalid_image_selected');
         }
 
@@ -70,13 +70,13 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if (Core\Validate::isNumber($formData['width']) === false) {
+        if ($this->validate->isNumber($formData['width']) === false) {
             $errors['width'] = $this->lang->t('emoticons', 'invalid_image_width_entered');
         }
-        if (Core\Validate::isNumber($formData['height']) === false) {
+        if ($this->validate->isNumber($formData['height']) === false) {
             $errors['height'] = $this->lang->t('emoticons', 'invalid_image_height_entered');
         }
-        if (Core\Validate::isNumber($formData['filesize']) === false) {
+        if ($this->validate->isNumber($formData['filesize']) === false) {
             $errors['filesize'] = $this->lang->t('emoticons', 'invalid_image_filesize_entered');
         }
 

@@ -41,6 +41,9 @@
         "inlinestyle/inlinestyle": "1.*",
         "mibe/feedwriter": "dev-master",
         "monolog/monolog": "1.10.0",
-        "mrclay/minify": "2.2.0"
+        "mrclay/minify": "2.2.0",
+        "symfony/config": "v2.5.0",
+        "symfony/dependency-injection": "v2.5.0",
+        "symfony/yaml": "v2.5.0"
     }
 }

@@ -29,8 +29,8 @@ class Model extends Core\Model
      */
     public function resultExistsByUserName($nickname, $id = '')
     {
-        if (Core\Validate::isNumber($id) === true) {
-            return !empty($nickname) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id != ? AND nickname = ?', array($id, $nickname)) == 1 ? true : false;
+        if (!empty($id)) {
+            return !empty($nickname) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id != ? AND nickname = ?', array((int) $id, $nickname)) == 1 ? true : false;
         } else {
             return !empty($nickname) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE nickname = ?', array($nickname)) == 1 ? true : false;
         }
@@ -46,10 +46,10 @@ class Model extends Core\Model
      */
     public function resultExistsByEmail($mail, $id = '')
     {
-        if (Core\Validate::isNumber($id) === true) {
-            return Core\Validate::email($mail) === true && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id != ? AND mail = ?', array($id, $mail)) > 0 ? true : false;
+        if (!empty($id)) {
+            return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE id != ? AND mail = ?', array((int) $id, $mail)) > 0 ? true : false;
         } else {
-            return Core\Validate::email($mail) === true && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE mail = ?', array($mail)) > 0 ? true : false;
+            return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->prefix . static::TABLE_NAME . ' WHERE mail = ?', array($mail)) > 0 ? true : false;
         }
     }
 

@@ -91,12 +91,12 @@ class Extensions extends Core\Modules\Controller\Admin
 
                 $this->_renewCaches();
 
-                $modules = Core\Modules::getAllModules();
+                $modules = $this->modules->getAllModules();
                 $installedModules = $newModules = array();
 
                 foreach ($modules as $key => $values) {
                     $values['dir'] = strtolower($values['dir']);
-                    if (Core\Modules::isInstalled($values['dir']) === true) {
+                    if ($this->modules->isInstalled($values['dir']) === true) {
                         $installedModules[$key] = $values;
                     } else {
                         $newModules[$key] = $values;
@@ -111,7 +111,7 @@ class Extensions extends Core\Modules\Controller\Admin
     protected function _enableModule()
     {
         $bool = false;
-        $info = Core\Modules::getModuleInfo($this->uri->dir);
+        $info = $this->modules->getModuleInfo($this->uri->dir);
         if (empty($info)) {
             $text = $this->lang->t('system', 'module_not_found');
         } elseif ($info['protected'] === true) {
@@ -131,14 +131,14 @@ class Extensions extends Core\Modules\Controller\Admin
     protected function _disableModule()
     {
         $bool = false;
-        $info = Core\Modules::getModuleInfo($this->uri->dir);
+        $info = $this->modules->getModuleInfo($this->uri->dir);
         if (empty($info)) {
             $text = $this->lang->t('system', 'module_not_found');
         } elseif ($info['protected'] === true) {
             $text = $this->lang->t('system', 'mod_deactivate_forbidden');
         } else {
             // Modulabhängigkeiten prüfen
-            $deps = System\Helpers::checkUninstallDependencies($this->uri->dir);
+            $deps = $this->get('system.helpers')->checkUninstallDependencies($this->uri->dir);
 
             if (empty($deps)) {
                 $bool = $this->model->update(array('active' => 0), array('name' => $this->uri->dir));
@@ -159,12 +159,12 @@ class Extensions extends Core\Modules\Controller\Admin
     {
         $bool = false;
         // Nur noch nicht installierte Module berücksichtigen
-        if (Core\Modules::isInstalled($this->uri->dir) === false) {
+        if ($this->modules->isInstalled($this->uri->dir) === false) {
             $moduleName = ucfirst($this->uri->dir);
             $path = MODULES_DIR . $moduleName . '/Installer.php';
             if (is_file($path) === true) {
                 // Modulabhängigkeiten prüfen
-                $deps = System\Helpers::checkInstallDependencies($this->uri->dir);
+                $deps = $this->get('system.helpers')->checkInstallDependencies($this->uri->dir);
 
                 // Modul installieren
                 if (empty($deps)) {
@@ -193,14 +193,14 @@ class Extensions extends Core\Modules\Controller\Admin
     protected function _uninstallModule()
     {
         $bool = false;
-        $info = Core\Modules::getModuleInfo($this->uri->dir);
+        $info = $this->modules->getModuleInfo($this->uri->dir);
         // Nur installierte und Nicht-Core-Module berücksichtigen
-        if ($info['protected'] === false && Core\Modules::isInstalled($this->uri->dir) === true) {
+        if ($info['protected'] === false && $this->modules->isInstalled($this->uri->dir) === true) {
             $moduleName = ucfirst($this->uri->dir);
             $path = MODULES_DIR . $moduleName . '/Installer.php';
             if (is_file($path) === true) {
                 // Modulabhängigkeiten prüfen
-                $deps = System\Helpers::checkUninstallDependencies($this->uri->dir);
+                $deps = $this->get('system.helpers')->checkUninstallDependencies($this->uri->dir);
 
                 // Modul deinstallieren
                 if (empty($deps)) {
@@ -229,7 +229,7 @@ class Extensions extends Core\Modules\Controller\Admin
     protected function _renewCaches()
     {
         $this->lang->setLanguageCache();
-        Core\Modules::setModulesCache();
+        $this->modules->setModulesCache();
 
         $cache = new Permissions\Cache(new Permissions\Model($this->db));
         $cache->setResourcesCache();

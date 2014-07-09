@@ -28,9 +28,10 @@ class Index extends Core\Modules\Controller
 
     public function actionDetails()
     {
-        if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id, $this->date->getCurrentDateTime()) == 1) {
+        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id, $this->date->getCurrentDateTime()) == 1) {
             $config = new Core\Config($this->db, 'news');
-            $formatter = new Core\Helpers\StringFormatter();
+            /** @var Core\Helpers\StringFormatter $formatter */
+            $formatter = $this->get('core.helpers.string.formatter');
             $settings = $config->getSettings();
 
             $cache = new News\Cache($this->model);
@@ -53,7 +54,7 @@ class Index extends Core\Modules\Controller
 
             $this->view->assign('news', $news);
 
-            if ($settings['comments'] == 1 && $news['comments'] == 1 && Core\Modules::hasPermission('frontend/comments') === true) {
+            if ($settings['comments'] == 1 && $news['comments'] == 1 && $this->modules->hasPermission('frontend/comments') === true) {
                 $comments = new \ACP3\Modules\Comments\Controller\Index(
                     $this->auth,
                     $this->breadcrumb,
@@ -76,16 +77,16 @@ class Index extends Core\Modules\Controller
 
     public function actionIndex()
     {
-        if (isset($_POST['cat']) && Core\Validate::isNumber($_POST['cat']) === true) {
+        if (isset($_POST['cat']) && $this->get('core.validate')->isNumber($_POST['cat']) === true) {
             $cat = (int)$_POST['cat'];
-        } elseif (Core\Validate::isNumber($this->uri->cat) === true) {
+        } elseif ($this->get('core.validate')->isNumber($this->uri->cat) === true) {
             $cat = (int)$this->uri->cat;
         } else {
             $cat = 0;
         }
 
-        if (Core\Modules::isActive('categories') === true) {
-            $this->view->assign('categories', \ACP3\Modules\Categories\Helpers::categoriesList('news', $cat));
+        if ($this->modules->isActive('categories') === true) {
+            $this->view->assign('categories', $this->get('categories.helpers')->categoriesList('news', $cat));
         }
 
         $config = new Core\Config($this->db, 'news');
@@ -112,7 +113,7 @@ class Index extends Core\Modules\Controller
         if ($c_news > 0) {
             $commentsCheck = false;
             // Überprüfen, ob das Kommentare Modul aktiv ist
-            if (Core\Modules::isActive('comments') === true) {
+            if ($this->modules->isActive('comments') === true) {
                 $commentsCheck = true;
             }
 
@@ -127,13 +128,13 @@ class Index extends Core\Modules\Controller
             );
             $pagination->display();
 
-            $formatter = new Core\Helpers\StringFormatter();
+            $formatter = $this->get('core.helpers.string.formatter');
             for ($i = 0; $i < $c_news; ++$i) {
                 $news[$i]['date_formatted'] = $this->date->format($news[$i]['start'], $settings['dateformat']);
                 $news[$i]['date_iso'] = $this->date->format($news[$i]['start'], 'c');
                 $news[$i]['text'] = $formatter->rewriteInternalUri($news[$i]['text']);
                 if ($settings['comments'] == 1 && $news[$i]['comments'] == 1 && $commentsCheck === true) {
-                    $news[$i]['comments_count'] = \ACP3\Modules\Comments\Helpers::commentsCount('news', $news[$i]['id']);
+                    $news[$i]['comments_count'] = $this->get('comments.helpers')->commentsCount('news', $news[$i]['id']);
                 }
                 if ($settings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
                     $news[$i]['text'] = $formatter->shortenEntry($news[$i]['text'], $settings['readmore_chars'], 50, '...<a href="' . $this->uri->route('news/details/id_' . $news[$i]['id']) . '">[' . $this->lang->t('news', 'readmore') . "]</a>\n");

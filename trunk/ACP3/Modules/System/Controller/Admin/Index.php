@@ -20,7 +20,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($_POST) === false) {
             try {
-                $validator = new System\Validator($this->lang);
+                $validator = $this->get('system.validator');
                 $validator->validateSettings($_POST);
 
                 // Config aktualisieren

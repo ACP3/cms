@@ -43,7 +43,7 @@ class Index extends Core\Modules\Controller\Admin
                     $file['size'] = $_FILES['file_internal']['size'];
                 }
 
-                $validator = new Files\Validator($this->lang, $this->uri);
+                $validator = $this->get('files.validator');
                 $validator->validateCreate($_POST, $file);
 
                 if (is_array($file) === true) {
@@ -61,7 +61,7 @@ class Index extends Core\Modules\Controller\Admin
                     'id' => '',
                     'start' => $this->date->toSQL($_POST['start']),
                     'end' => $this->date->toSQL($_POST['end']),
-                    'category_id' => strlen($_POST['cat_create']) >= 3 ? Categories\Helpers::categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
+                    'category_id' => strlen($_POST['cat_create']) >= 3 ? $this->get('categories.helpers')->categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
                     'file' => $newFile,
                     'size' => $filesize,
                     'title' => Core\Functions::strEncode($_POST['title']),
@@ -101,9 +101,9 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('units', Core\Functions::selectGenerator('units', $units, $units, ''));
 
         // Formularelemente
-        $this->view->assign('categories', Categories\Helpers::categoriesList('files', '', true));
+        $this->view->assign('categories', $this->get('categories.helpers')->categoriesList('files', '', true));
 
-        if ($settings['comments'] == 1 && Core\Modules::isActive('comments') === true) {
+        if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
             $options = array();
             $options[0]['name'] = 'comments';
             $options[0]['checked'] = Core\Functions::selectEntry('comments', '1', '0', 'checked');
@@ -137,7 +137,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if ($this->uri->action === 'confirmed') {
             $bool = false;
-            $commentsInstalled = Core\Modules::isInstalled('comments');
+            $commentsInstalled = $this->modules->isInstalled('comments');
 
             $cache = new Core\Cache2('files');
             $upload = new Core\Helpers\Upload('files');
@@ -146,7 +146,7 @@ class Index extends Core\Modules\Controller\Admin
                     $upload->removeUploadedFile($this->model->getFileById($item)); // Datei ebenfalls löschen
                     $bool = $this->model->delete($item);
                     if ($commentsInstalled === true) {
-                        \ACP3\Modules\Comments\Helpers::deleteCommentsByModuleAndResult('files', $item);
+                        $this->get('comments.helpers')->deleteCommentsByModuleAndResult('files', $item);
                     }
 
                     $cache->delete(Files\Cache::CACHE_ID);
@@ -183,13 +183,13 @@ class Index extends Core\Modules\Controller\Admin
                         $file['size'] = $_FILES['file_internal']['size'];
                     }
 
-                    $validator = new Files\Validator($this->lang, $this->uri);
+                    $validator = $this->get('files.validator');
                     $validator->validateEdit($_POST, $file);
 
                     $updateValues = array(
                         'start' => $this->date->toSQL($_POST['start']),
                         'end' => $this->date->toSQL($_POST['end']),
-                        'category_id' => strlen($_POST['cat_create']) >= 3 ? Categories\Helpers::categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
+                        'category_id' => strlen($_POST['cat_create']) >= 3 ? $this->get('categories.helpers')->categoriesCreate($_POST['cat_create'], 'files') : $_POST['cat'],
                         'title' => Core\Functions::strEncode($_POST['title']),
                         'text' => Core\Functions::strEncode($_POST['text'], true),
                         'comments' => $settings['comments'] == 1 && isset($_POST['comments']) ? 1 : 0,
@@ -256,9 +256,9 @@ class Index extends Core\Modules\Controller\Admin
             $dl['filesize'] = substr($dl['size'], 0, strpos($dl['size'], ' '));
 
             // Formularelemente
-            $this->view->assign('categories', Categories\Helpers::categoriesList('files', $dl['category_id'], true));
+            $this->view->assign('categories', $this->get('categories.helpers')->categoriesList('files', $dl['category_id'], true));
 
-            if ($settings['comments'] == 1 && Core\Modules::isActive('comments') === true) {
+            if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
                 $options = array();
                 $options[0]['name'] = 'comments';
                 $options[0]['checked'] = Core\Functions::selectEntry('comments', '1', $dl['comments'], 'checked');
@@ -287,14 +287,14 @@ class Index extends Core\Modules\Controller\Admin
         $c_files = count($files);
 
         if ($c_files > 0) {
-            $canDelete = Core\Modules::hasPermission('admin/files/index/delete');
+            $canDelete = $this->modules->hasPermission('admin/files/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent($this->get('core.functions')->dataTable($config));
             for ($i = 0; $i < $c_files; ++$i) {
                 $files[$i]['period'] = $this->date->formatTimeRange($files[$i]['start'], $files[$i]['end']);
                 $files[$i]['size'] = !empty($files[$i]['size']) ? $files[$i]['size'] : $this->lang->t('files', 'unknown_filesize');
@@ -310,7 +310,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($_POST) === false) {
             try {
-                $validator = new Files\Validator($this->lang, $this->uri);
+                $validator = $this->get('files.validator');
                 $validator->validateSettings($_POST);
 
                 $data = array(
@@ -335,7 +335,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $settings = $config->getSettings();
 
-        if (Core\Modules::isActive('comments') === true) {
+        if ($this->modules->isActive('comments') === true) {
             $lang_comments = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
             $this->view->assign('comments', Core\Functions::selectGenerator('comments', array(1, 0), $lang_comments, $settings['comments'], 'checked'));
         }

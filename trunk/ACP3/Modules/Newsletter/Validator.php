@@ -14,15 +14,20 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $auth;
     /**
+     * @var \ACP3\Core\Modules
+     */
+    protected $modules;
+    /**
      * @var Model
      */
     protected $newsletterModel;
 
-    public function __construct(Core\Lang $lang, Core\Auth $auth, Model $newsletterModel)
+    public function __construct(Core\Lang $lang, Core\Validate $validate, Core\Auth $auth, Core\Modules $modules, Model $newsletterModel)
     {
-        parent::__construct($lang);
+        parent::__construct($lang, $validate);
 
         $this->auth = $auth;
+        $this->modules = $modules;
         $this->newsletterModel = $newsletterModel;
     }
 
@@ -56,13 +61,13 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if (Core\Validate::email($formData['mail']) === false) {
+        if ($this->validate->email($formData['mail']) === false) {
             $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
-        if (Core\Validate::email($formData['mail']) && $this->newsletterModel->accountExists($formData['mail']) === true) {
+        if ($this->validate->email($formData['mail']) && $this->newsletterModel->accountExists($formData['mail']) === true) {
             $errors['mail'] = $this->lang->t('newsletter', 'account_exists');
         }
-        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && Core\Validate::captcha($formData['captcha']) === false) {
+        if ($this->modules->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->validate->captcha($formData['captcha']) === false) {
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
@@ -80,13 +85,13 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if (Core\Validate::email($formData['mail']) === false) {
+        if ($this->validate->email($formData['mail']) === false) {
             $errors[] = $this->lang->t('system', 'wrong_email_format');
         }
-        if (Core\Validate::email($formData['mail']) && $this->newsletterModel->accountExists($formData['mail']) === false) {
+        if ($this->validate->email($formData['mail']) && $this->newsletterModel->accountExists($formData['mail']) === false) {
             $errors[] = $this->lang->t('newsletter', 'account_not_exists');
         }
-        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && Core\Validate::captcha($formData['captcha']) === false) {
+        if ($this->modules->hasPermission('frontend/captcha/index/image') === true && $this->auth->isUser() === false && $this->validate->captcha($formData['captcha']) === false) {
             $errors[] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
@@ -104,7 +109,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if (Core\Validate::email($formData['mail']) === false) {
+        if ($this->validate->email($formData['mail']) === false) {
             $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
 
@@ -130,5 +135,4 @@ class Validator extends Core\Validator\AbstractValidator
         }
     }
 
-
-} 
+}

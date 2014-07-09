@@ -14,35 +14,37 @@ class Extensions
     /**
      * @var \Doctrine\DBAL\Connection
      */
-    private $db;
+    protected $db;
     /**
      * @var \ACP3\Core\Date
      */
-    private $date;
+    protected $date;
     /**
      * @var \ACP3\Core\URI
      */
-    private $uri;
+    protected $uri;
     /**
      * @var \ACP3\Core\View
      */
-    private $view;
-
-    private $formatter;
+    protected $view;
+    /**
+     * @var Core\Helpers\StringFormatter
+     */
+    protected $formatter;
 
     public function __construct(
         \Doctrine\DBAL\Connection $db,
         Core\Date $date,
         Core\URI $uri,
-        Core\View $view
+        Core\View $view,
+        Core\Helpers\StringFormatter $stringFormatter
     )
     {
         $this->date = $date;
         $this->db = $db;
         $this->uri = $uri;
         $this->view = $view;
-
-        $this->formatter = new Core\Helpers\StringFormatter();
+        $this->formatter = $stringFormatter;
     }
 
     public function newsFeed()

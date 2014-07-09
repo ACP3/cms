@@ -26,17 +26,17 @@ class Index extends Core\Modules\Controller\Admin
 
     public function preDispatch()
     {
-        parent::preDispatch();
-
         $this->menuModel = new Menus\Model($this->db);
         $this->model = new Articles\Model($this->db);
+
+        return parent::preDispatch();
     }
 
     public function actionCreate()
     {
         if (empty($_POST) === false) {
             try {
-                $validator = new Articles\Validator($this->lang, $this->menuModel, $this->uri);
+                $validator = $this->get('articles.validator');
                 $validator->validateCreate($_POST);
 
                 $insertValues = array(
@@ -58,7 +58,7 @@ class Index extends Core\Modules\Controller\Admin
                 );
                 $this->seo->setCache();
 
-                if (isset($_POST['create']) === true && Core\Modules::hasPermission('admin/menus/index/create_item') === true) {
+                if (isset($_POST['create']) === true && $this->modules->hasPermission('admin/menus/index/create_item') === true) {
                     $insertValues = array(
                         'id' => '',
                         'mode' => 4,
@@ -73,7 +73,7 @@ class Index extends Core\Modules\Controller\Admin
                     $nestedSet = new Core\NestedSet($this->db, Menus\Model::TABLE_NAME_ITEMS, true);
                     $lastId = $nestedSet->insertNode((int)$_POST['parent'], $insertValues);
 
-                    $cacheMenu = new Menus\Cache($this->menuModel);
+                    $cacheMenu = new Menus\Cache($this->lang, $this->menuModel);
                     $cacheMenu->setMenuItemsCache();
                 }
 
@@ -90,17 +90,17 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
 
-        if (Core\Modules::hasPermission('admin/menus/index/create_item') === true) {
+        if ($this->modules->hasPermission('admin/menus/index/create_item') === true) {
             $lang_options = array($this->lang->t('articles', 'create_menu_item'));
             $this->view->assign('options', Core\Functions::selectGenerator('create', array(1), $lang_options, 0, 'checked'));
 
             // Block
-            $this->view->assign('blocks', Menus\Helpers::menusDropdown());
+            $this->view->assign('blocks', $this->get('menus.helpers')->menusDropdown());
 
             $lang_display = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
             $this->view->assign('display', Core\Functions::selectGenerator('display', array(1, 0), $lang_display, 1, 'checked'));
 
-            $this->view->assign('pages_list', Menus\Helpers::menuItemsList());
+            $this->view->assign('pages_list', $this->get('menus.helpers')->menuItemsList());
         }
 
         $this->view->assign('publication_period', $this->date->datepicker(array('start', 'end')));
@@ -140,7 +140,7 @@ class Index extends Core\Modules\Controller\Admin
                 $this->uri->deleteUriAlias($uri);
             }
 
-            $cacheMenu = new Menus\Cache($this->menuModel);
+            $cacheMenu = new Menus\Cache($this->lang, $this->menuModel);
             $cacheMenu->setMenuItemsCache();
 
             $this->seo->setCache();
@@ -159,7 +159,7 @@ class Index extends Core\Modules\Controller\Admin
         if (empty($article) === false) {
             if (empty($_POST) === false) {
                 try {
-                    $validator = new Articles\Validator($this->lang, $this->menuModel, $this->uri);
+                    $validator = $this->get('articles.validator');
                     $validator->validateEdit($_POST);
 
                     $updateValues = array(
@@ -185,7 +185,7 @@ class Index extends Core\Modules\Controller\Admin
                     $cache->setCache($this->uri->id);
 
                     // Aliase in der Navigation aktualisieren
-                    $cacheMenu = new Menus\Cache($this->menuModel);
+                    $cacheMenu = new Menus\Cache($this->lang, $this->menuModel);
                     $cacheMenu->setMenuItemsCache();
 
                     $this->session->unsetFormToken();
@@ -223,14 +223,14 @@ class Index extends Core\Modules\Controller\Admin
         $c_articles = count($articles);
 
         if ($c_articles > 0) {
-            $canDelete = Core\Modules::hasPermission('admin/articles/index/delete');
+            $canDelete = $this->modules->hasPermission('admin/articles/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 2 : 1,
                 'sort_dir' => 'asc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent($this->get('core.functions')->dataTable($config));
             for ($i = 0; $i < $c_articles; ++$i) {
                 $articles[$i]['period'] = $this->date->formatTimeRange($articles[$i]['start'], $articles[$i]['end']);
             }

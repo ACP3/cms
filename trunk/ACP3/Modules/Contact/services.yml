@@ -1,0 +1,4 @@
+services:
+  contact.validator:
+    class: ACP3\Modules\Contact\Validator
+    arguments: ['@core.lang', '@core.validate', '@core.auth', '@core.modules']

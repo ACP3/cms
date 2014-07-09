@@ -12,8 +12,26 @@ namespace ACP3\Modules\System;
 
 use ACP3\Core;
 
-abstract class Helpers
+/**
+ * Class Helpers
+ * @package ACP3\Modules\System
+ */
+class Helpers
 {
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
+     * @var Core\Modules
+     */
+    protected $modules;
+
+    public function __construct(\Doctrine\DBAL\Connection $db, Core\Modules $modules)
+    {
+        $this->db = $db;
+        $this->modules = $modules;
+    }
 
     /**
      * Überprüft die Modulabhängigkeiten beim Installieren eines Moduls
@@ -21,14 +39,14 @@ abstract class Helpers
      * @param string $module
      * @return array
      */
-    public static function checkInstallDependencies($module)
+    public function checkInstallDependencies($module)
     {
         $module = strtolower($module);
         $deps = Core\Modules\AbstractInstaller::getDependencies($module);
         $modulesToEnable = array();
         if (!empty($deps)) {
             foreach ($deps as $dep) {
-                if (Core\Modules::isActive($dep) === false) {
+                if ($this->modules->isActive($dep) === false) {
                     $modulesToEnable[] = ucfirst($dep);
                 }
             }
@@ -42,7 +60,7 @@ abstract class Helpers
      * @param string $module
      * @return array
      */
-    public static function checkUninstallDependencies($module)
+    public function checkUninstallDependencies($module)
     {
         $module = strtolower($module);
         $modules = scandir(MODULES_DIR);
@@ -51,7 +69,7 @@ abstract class Helpers
             $row = strtolower($row);
             if ($row !== '.' && $row !== '..' && $row !== $module) {
                 $deps = Core\Modules\AbstractInstaller::getDependencies($row); // Modulabhängigkeiten
-                if (!empty($deps) && Core\Modules::isInstalled($row) === true && in_array($module, $deps) === true) {
+                if (!empty($deps) && $this->modules->isInstalled($row) === true && in_array($module, $deps) === true) {
                     $modulesToUninstall[] = ucfirst($row);
                 }
             }
@@ -59,15 +77,13 @@ abstract class Helpers
         return $modulesToUninstall;
     }
 
-    public static function exportDatabase(array $tables, $exportType, $withDropTables)
+    public function exportDatabase(array $tables, $exportType, $withDropTables)
     {
-        $db = \ACP3\Core\Registry::get('Db');
-
         $structure = $data = '';
         foreach ($tables as $table) {
             // Struktur ausgeben
             if ($exportType === 'complete' || $exportType === 'structure') {
-                $result = $db->fetchAssoc('SHOW CREATE TABLE ' . $table);
+                $result = $this->db->fetchAssoc('SHOW CREATE TABLE ' . $table);
                 if (!empty($result)) {
                     $structure .= $withDropTables == 1 ? 'DROP TABLE IF EXISTS `' . $table . '`;' . "\n\n" : '';
                     $structure .= $result['Create Table'] . ';' . "\n\n";
@@ -76,7 +92,7 @@ abstract class Helpers
 
             // Datensätze ausgeben
             if ($exportType === 'complete' || $exportType === 'data') {
-                $resultSets = $db->fetchAll('SELECT * FROM ' . DB_PRE . substr($table, strlen(CONFIG_DB_PRE)));
+                $resultSets = $this->db->fetchAll('SELECT * FROM ' . DB_PRE . substr($table, strlen(CONFIG_DB_PRE)));
                 if (count($resultSets) > 0) {
                     $fields = '';
                     // Felder der jeweiligen Tabelle auslesen

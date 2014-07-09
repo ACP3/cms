@@ -38,8 +38,18 @@ class Extensions
      * @var \Doctrine\DBAL\Connection
      */
     protected $db;
-
-    protected $formatter;
+    /**
+     * @var \ACP3\Core\Lang
+     */
+    protected $lang;
+    /**
+     * @var \ACP3\Core\URI
+     */
+    protected $uri;
+    /**
+     * @var \ACP3\Core\Helpers\StringFormatter
+     */
+    protected $stringFormatter;
 
     /**
      * SQL Prepared Parameters
@@ -48,20 +58,50 @@ class Extensions
      */
     protected $params = array();
 
-    public function __construct($area, $sort, $searchTerm)
+    public function __construct(\Doctrine\DBAL\Connection $db, Core\Date $date, Core\Lang $lang, Core\URI $uri, Core\Helpers\StringFormatter $stringFormatter)
     {
-        $this->area = $area;
-        $this->sort = $sort;
-        $this->searchTerm = $searchTerm;
-
-        $this->db = Core\Registry::get('Db');
-
-        $this->formatter = new Core\Helpers\StringFormatter();
+        $this->db = $db;
+        $this->lang = $lang;
+        $this->uri = $uri;
+        $this->stringFormatter = $stringFormatter;
 
         $this->params = array(
             'searchterm' => $this->searchTerm,
-            'time' => Core\Registry::get('Date')->getCurrentDateTime()
+            'time' => $date->getCurrentDateTime()
         );
+    }
+
+    /**
+     * @param $area
+     * @return $this
+     */
+    public function setArea($area)
+    {
+        $this->area = $area;
+
+        return $this;
+    }
+
+    /**
+     * @param $sort
+     * @return $this
+     */
+    public function setSort($sort)
+    {
+        $this->sort = $sort;
+
+        return $this;
+    }
+
+    /**
+     * @param $searchTerm
+     * @return $this
+     */
+    public function setSearchTerm($searchTerm)
+    {
+        $this->searchTerm = $searchTerm;
+
+        return $this;
     }
 
     public function articlesSearch()
@@ -83,12 +123,12 @@ class Extensions
         $searchResults = array();
 
         if ($c_results > 0) {
-            $name = Core\Registry::get('Lang')->t('articles', 'articles');
+            $name = $this->lang->t('articles', 'articles');
             $searchResults[$name]['dir'] = 'articles';
             for ($i = 0; $i < $c_results; ++$i) {
-                $searchResults[$name]['results'][$i]['hyperlink'] = Core\Registry::get('URI')->route('articles/index/details/id_' . $results[$i]['id']);
+                $searchResults[$name]['results'][$i]['hyperlink'] = $this->uri->route('articles/index/details/id_' . $results[$i]['id']);
                 $searchResults[$name]['results'][$i]['title'] = $results[$i]['title'];
-                $searchResults[$name]['results'][$i]['text'] = $this->formatter->shortenEntry($results[$i]['text'], 200, 0, '...');
+                $searchResults[$name]['results'][$i]['text'] = $this->stringFormatter->shortenEntry($results[$i]['text'], 200, 0, '...');
             }
         }
         return $searchResults;
@@ -113,12 +153,12 @@ class Extensions
         $searchResults = array();
 
         if ($c_results > 0) {
-            $name = Core\Registry::get('Lang')->t('files', 'files');
+            $name = $this->lang->t('files', 'files');
             $searchResults[$name]['dir'] = 'files';
             for ($i = 0; $i < $c_results; ++$i) {
-                $searchResults[$name]['results'][$i]['hyperlink'] = Core\Registry::get('URI')->route('files/index/details/id_' . $results[$i]['id']);
+                $searchResults[$name]['results'][$i]['hyperlink'] = $this->uri->route('files/index/details/id_' . $results[$i]['id']);
                 $searchResults[$name]['results'][$i]['title'] = $results[$i]['title'];
-                $searchResults[$name]['results'][$i]['text'] = $this->formatter->shortenEntry($results[$i]['text'], 200, 0, '...');
+                $searchResults[$name]['results'][$i]['text'] = $this->stringFormatter->shortenEntry($results[$i]['text'], 200, 0, '...');
             }
         }
         return $searchResults;
@@ -143,12 +183,12 @@ class Extensions
         $searchResults = array();
 
         if ($c_results > 0) {
-            $name = Core\Registry::get('Lang')->t('news', 'news');
+            $name = $this->lang->t('news', 'news');
             $searchResults[$name]['dir'] = 'news';
             for ($i = 0; $i < $c_results; ++$i) {
-                $searchResults[$name]['results'][$i]['hyperlink'] = Core\Registry::get('URI')->route('news/index/details/id_' . $results[$i]['id']);
+                $searchResults[$name]['results'][$i]['hyperlink'] = $this->uri->route('news/index/details/id_' . $results[$i]['id']);
                 $searchResults[$name]['results'][$i]['title'] = $results[$i]['title'];
-                $searchResults[$name]['results'][$i]['text'] = $this->formatter->shortenEntry($results[$i]['text'], 200, 0, '...');
+                $searchResults[$name]['results'][$i]['text'] = $this->stringFormatter->shortenEntry($results[$i]['text'], 200, 0, '...');
             }
         }
         return $searchResults;

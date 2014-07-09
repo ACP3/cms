@@ -11,6 +11,10 @@ use ACP3\Core;
  */
 class Admin extends Core\Modules\Controller
 {
+    /**
+     * @return $this
+     * @throws \ACP3\Core\Exceptions\UnauthorizedAccess
+     */
     public function preDispatch()
     {
         if ($this->auth->isUser() === false) {
@@ -18,7 +22,7 @@ class Admin extends Core\Modules\Controller
             $this->uri->redirect('users/index/login/redirect_' . $redirectUri);
         }
 
-        parent::preDispatch();
+        return parent::preDispatch();
     }
 
     /**

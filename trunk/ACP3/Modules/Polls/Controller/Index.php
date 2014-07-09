@@ -54,7 +54,7 @@ class Index extends Core\Modules\Controller
 
     public function actionResult()
     {
-        if (Core\Validate::isNumber($this->uri->id) === true &&
+        if ($this->get('core.validate')->isNumber($this->uri->id) === true &&
             $this->model->pollExists($this->uri->id, $this->date->getCurrentDateTime()) === true) {
 
             $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
@@ -79,11 +79,11 @@ class Index extends Core\Modules\Controller
     public function actionVote()
     {
         $time = $this->date->getCurrentDateTime();
-        if (Core\Validate::isNumber($this->uri->id) === true &&
+        if ($this->get('core.validate')->isNumber($this->uri->id) === true &&
             $this->model->pollExists($this->uri->id, $time, !empty($_POST['answer']) && is_array($_POST['answer'])) === true) {
 
             // Wenn abgestimmt wurde
-            if (!empty($_POST['answer']) && (is_array($_POST['answer']) === true || Core\Validate::isNumber($_POST['answer']) === true)) {
+            if (!empty($_POST['answer']) && (is_array($_POST['answer']) === true || $this->get('core.validate')->isNumber($_POST['answer']) === true)) {
                 $ip = $_SERVER['REMOTE_ADDR'];
                 $answers = $_POST['answer'];
 
@@ -103,7 +103,7 @@ class Index extends Core\Modules\Controller
                     }
 
                     foreach ($answers as $answer) {
-                        if (Core\Validate::isNumber($answer) === true) {
+                        if ($this->get('core.validate')->isNumber($answer) === true) {
                             $insertValues = array(
                                 'poll_id' => $this->uri->id,
                                 'answer_id' => $answer,

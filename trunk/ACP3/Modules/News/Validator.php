@@ -2,6 +2,7 @@
 namespace ACP3\Modules\News;
 
 use ACP3\Core;
+use ACP3\Modules\Categories;
 
 /**
  * Class Validator
@@ -10,15 +11,25 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
+     * @var Core\Modules
+     */
+    protected $modules;
+    /**
      * @var \ACP3\Core\URI
      */
     protected $uri;
+    /**
+     * @var Categories\Helpers
+     */
+    protected $categoriesHelpers;
 
-    public function __construct(Core\Lang $lang, Core\URI $uri)
+    public function __construct(Core\Lang $lang, Core\Validate $validate, Core\Modules $modules, Core\URI $uri, Categories\Helpers $categoriesHelpers)
     {
-        parent::__construct($lang);
+        parent::__construct($lang, $validate);
 
+        $this->modules = $modules;
         $this->uri = $uri;
+        $this->categoriesHelpers = $categoriesHelpers;
     }
 
     /**
@@ -30,7 +41,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if (Core\Validate::date($formData['start'], $formData['end']) === false) {
+        if ($this->validate->date($formData['start'], $formData['end']) === false) {
             $errors[] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
@@ -39,17 +50,17 @@ class Validator extends Core\Validator\AbstractValidator
         if (strlen($formData['text']) < 3) {
             $errors['text'] = $this->lang->t('news', 'text_to_short');
         }
-        if (strlen($formData['cat_create']) < 3 && \ACP3\Modules\Categories\Helpers::categoryExists($formData['cat']) === false) {
+        if (strlen($formData['cat_create']) < 3 && $this->categoriesHelpers->categoryExists($formData['cat']) === false) {
             $errors['cat'] = $this->lang->t('news', 'select_category');
         }
-        if (strlen($formData['cat_create']) >= 3 && \ACP3\Modules\Categories\Helpers::categoryIsDuplicate($formData['cat_create'], 'news') === true) {
+        if (strlen($formData['cat_create']) >= 3 && $this->categoriesHelpers->categoryIsDuplicate($formData['cat_create'], 'news') === true) {
             $errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
-        if (!empty($formData['link_title']) && (empty($formData['uri']) || Core\Validate::isNumber($formData['target']) === false)) {
+        if (!empty($formData['link_title']) && (empty($formData['uri']) || $this->validate->isNumber($formData['target']) === false)) {
             $errors[] = $this->lang->t('news', 'complete_hyperlink_statements');
         }
         if (!empty($formData['alias']) &&
-            (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias']) === true)
+            ($this->validate->isUriSafe($formData['alias']) === false || $this->validate->uriAliasExists($formData['alias']) === true)
         ) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
@@ -68,7 +79,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if (Core\Validate::date($formData['start'], $formData['end']) === false) {
+        if ($this->validate->date($formData['start'], $formData['end']) === false) {
             $errors[] = $this->lang->t('system', 'select_date');
         }
         if (strlen($formData['title']) < 3) {
@@ -77,17 +88,17 @@ class Validator extends Core\Validator\AbstractValidator
         if (strlen($formData['text']) < 3) {
             $errors['text'] = $this->lang->t('news', 'text_to_short');
         }
-        if (strlen($formData['cat_create']) < 3 && \ACP3\Modules\Categories\Helpers::categoryExists($formData['cat']) === false) {
+        if (strlen($formData['cat_create']) < 3 && $this->categoriesHelpers->categoryExists($formData['cat']) === false) {
             $errors['cat'] = $this->lang->t('news', 'select_category');
         }
-        if (strlen($formData['cat_create']) >= 3 && \ACP3\Modules\Categories\Helpers::categoryIsDuplicate($formData['cat_create'], 'news') === true) {
+        if (strlen($formData['cat_create']) >= 3 && $this->categoriesHelpers->categoryIsDuplicate($formData['cat_create'], 'news') === true) {
             $errors['cat-create'] = $this->lang->t('categories', 'category_already_exists');
         }
-        if (!empty($formData['link_title']) && (empty($formData['uri']) || Core\Validate::isNumber($formData['target']) === false)) {
+        if (!empty($formData['link_title']) && (empty($formData['uri']) || $this->validate->isNumber($formData['target']) === false)) {
             $errors[] = $this->lang->t('news', 'complete_hyperlink_statements');
         }
         if (!empty($formData['alias']) &&
-            (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->uri->id)) === true)
+            ($this->validate->isUriSafe($formData['alias']) === false || $this->validate->uriAliasExists($formData['alias'], sprintf(Helpers::URL_KEY_PATTERN, $this->uri->id)) === true)
         ) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }
@@ -111,7 +122,7 @@ class Validator extends Core\Validator\AbstractValidator
         ) {
             $errors['dateformat'] = $this->lang->t('system', 'select_date_format');
         }
-        if (Core\Validate::isNumber($formData['sidebar']) === false) {
+        if ($this->validate->isNumber($formData['sidebar']) === false) {
             $errors['sidebar'] = $this->lang->t('system', 'select_sidebar_entries');
         }
         if (!isset($formData['readmore']) ||
@@ -119,7 +130,7 @@ class Validator extends Core\Validator\AbstractValidator
         ) {
             $errors[] = $this->lang->t('news', 'select_activate_readmore');
         }
-        if (Core\Validate::isNumber($formData['readmore_chars']) === false ||
+        if ($this->validate->isNumber($formData['readmore_chars']) === false ||
             $formData['readmore_chars'] == 0
         ) {
             $errors['readmore-chars'] = $this->lang->t('news', 'type_in_readmore_chars');
@@ -129,7 +140,7 @@ class Validator extends Core\Validator\AbstractValidator
         ) {
             $errors[] = $this->lang->t('news', 'select_display_category_in_breadcrumb');
         }
-        if (Core\Modules::isActive('comments') === true &&
+        if ($this->modules->isActive('comments') === true &&
             (!isset($formData['comments']) || $formData['comments'] != 1 && $formData['comments'] != 0)
         ) {
             $errors[] = $this->lang->t('news', 'select_allow_comments');

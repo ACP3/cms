@@ -54,12 +54,12 @@ class Details extends Core\Modules\Controller\Admin
 
             if (empty($_POST) === false) {
                 try {
-                    $validator = new Comments\Validator($this->lang, $this->auth, $this->date, $this->model);
+                    $validator = $this->get('comments.validator');
                     $validator->validateEdit($_POST);
 
                     $update_values = array();
                     $update_values['message'] = Core\Functions::strEncode($_POST['message']);
-                    if ((empty($comment['user_id']) || Core\Validate::isNumber($comment['user_id']) === false) && !empty($_POST['name'])) {
+                    if ((empty($comment['user_id']) || $this->get('core.validate')->isNumber($comment['user_id']) === false) && !empty($_POST['name'])) {
                         $update_values['name'] = Core\Functions::strEncode($_POST['name']);
                     }
 
@@ -78,9 +78,9 @@ class Details extends Core\Modules\Controller\Admin
                 }
             }
 
-            if (Core\Modules::isActive('emoticons') === true) {
+            if ($this->modules->isActive('emoticons') === true) {
                 // Emoticons im Formular anzeigen
-                $this->view->assign('emoticons', \ACP3\Modules\Emoticons\Helpers::emoticonsList());
+                $this->view->assign('emoticons', $this->get('emoticons.helpers')->emoticonsList());
             }
 
             $this->view->assign('form', array_merge($comment, $_POST));
@@ -108,14 +108,14 @@ class Details extends Core\Modules\Controller\Admin
             $c_comments = count($comments);
 
             if ($c_comments > 0) {
-                $canDelete = Core\Modules::hasPermission('admin/comments/details/delete');
+                $canDelete = $this->modules->hasPermission('admin/comments/details/delete');
                 $config = array(
                     'element' => '#acp-table',
                     'sort_col' => $canDelete === true ? 5 : 4,
                     'sort_dir' => 'asc',
                     'hide_col_sort' => $canDelete === true ? 0 : ''
                 );
-                $this->appendContent(Core\Functions::dataTable($config));
+                $this->appendContent($this->get('core.functions')->dataTable($config));
 
                 $config = new Core\Config($this->db, 'comments');
                 $settings = $config->getSettings();
@@ -123,12 +123,12 @@ class Details extends Core\Modules\Controller\Admin
                 // Emoticons einbinden
                 $emoticons_active = false;
                 if ($settings['emoticons'] == 1) {
-                    if (Core\Modules::isActive('emoticons') === true) {
+                    if ($this->modules->isActive('emoticons') === true) {
                         $emoticons_active = true;
                     }
                 }
 
-                $formatter = new Core\Helpers\StringFormatter();
+                $formatter = $this->get('core.helpers.string.formatter');
                 for ($i = 0; $i < $c_comments; ++$i) {
                     if (!empty($comments[$i]['user_id']) && empty($comments[$i]['name'])) {
                         $comments[$i]['name'] = $this->lang->t('users', 'deleted_user');
@@ -136,7 +136,7 @@ class Details extends Core\Modules\Controller\Admin
                     $comments[$i]['date_formatted'] = $this->date->formatTimeRange($comments[$i]['date']);
                     $comments[$i]['message'] = $formatter->nl2p($comments[$i]['message']);
                     if ($emoticons_active === true) {
-                        $comments[$i]['message'] = \ACP3\Modules\Emoticons\Helpers::emoticonsReplace($comments[$i]['message']);
+                        $comments[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($comments[$i]['message']);
                     }
                 }
                 $this->view->assign('comments', $comments);

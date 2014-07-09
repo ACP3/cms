@@ -13,11 +13,16 @@ class Validator extends Core\Validator\AbstractValidator
      * @var Model
      */
     protected $categoriesModel;
+    /**
+     * @var Helpers
+     */
+    protected $categoriesHelpers;
 
-    public function __construct(Core\Lang $lang, Model $categoriesModel)
+    public function __construct(Core\Lang $lang, Core\Validate $validate, Helpers $categoriesHelpers, Model $categoriesModel)
     {
-        parent::__construct($lang);
+        parent::__construct($lang, $validate);
 
+        $this->categoriesHelpers = $categoriesHelpers;
         $this->categoriesModel = $categoriesModel;
     }
 
@@ -40,7 +45,7 @@ class Validator extends Core\Validator\AbstractValidator
             $errors['description'] = $this->lang->t('categories', 'description_to_short');
         }
         if (!empty($file) && (empty($file['tmp_name']) || empty($file['size']) ||
-                Core\Validate::isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
+                $this->validate->isPicture($file['tmp_name'], $settings['width'], $settings['height'], $settings['filesize']) === false ||
                 $_FILES['picture']['error'] !== UPLOAD_ERR_OK)
         ) {
             $errors['picture'] = $this->lang->t('categories', 'invalid_image_selected');
@@ -50,7 +55,7 @@ class Validator extends Core\Validator\AbstractValidator
         }
 
         $categoryName = empty($categoryId) ? $formData['module'] : $this->categoriesModel->getModuleNameFromCategoryId($categoryId);
-        if (strlen($formData['title']) >= 3 && Helpers::categoryIsDuplicate($formData['title'], $categoryName, $categoryId)) {
+        if (strlen($formData['title']) >= 3 && $this->categoriesHelpers->categoryIsDuplicate($formData['title'], $categoryName, $categoryId)) {
             $errors['title'] = $this->lang->t('categories', 'category_already_exists');
         }
 
@@ -68,13 +73,13 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if (Core\Validate::isNumber($formData['width']) === false) {
+        if ($this->validate->isNumber($formData['width']) === false) {
             $errors['width'] = $this->lang->t('categories', 'invalid_image_width_entered');
         }
-        if (Core\Validate::isNumber($formData['height']) === false) {
+        if ($this->validate->isNumber($formData['height']) === false) {
             $errors['height'] = $this->lang->t('categories', 'invalid_image_height_entered');
         }
-        if (Core\Validate::isNumber($formData['filesize']) === false) {
+        if ($this->validate->isNumber($formData['filesize']) === false) {
             $errors['filesize'] = $this->lang->t('categories', 'invalid_image_filesize_entered');
         }
 

@@ -30,7 +30,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         if (empty($_POST) === false) {
             try {
-                $validator = new Gallery\Validator($this->lang);
+                $validator = $this->get('gallery.validator');
                 $validator->validateCreate($_POST);
 
                 $insertValues = array(
@@ -95,13 +95,13 @@ class Index extends Core\Modules\Controller\Admin
                     // Hochgeladene Bilder löschen
                     $pictures = $this->model->getPicturesByGalleryId($item);
                     foreach ($pictures as $row) {
-                        Gallery\Helpers::removePicture($row['file']);
+                        $this->get('gallery.helpers')->removePicture($row['file']);
                     }
 
                     // Galerie Cache löschen
                     $cache->delete(Gallery\Cache::CACHE_ID . $item);
                     $this->uri->deleteUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item));
-                    Gallery\Helpers::deletePictureAliases($item);
+                    $this->get('gallery.helpers')->deletePictureAliases($item);
 
                     // Fotogalerie mitsamt Bildern löschen
                     $bool = $this->model->delete($item);
@@ -131,7 +131,7 @@ class Index extends Core\Modules\Controller\Admin
 
             if (empty($_POST) === false) {
                 try {
-                    $validator = new Gallery\Validator($this->lang);
+                    $validator = $this->get('gallery.validator');
                     $validator->validateEdit($_POST);
 
                     $updateValues = array(
@@ -150,7 +150,7 @@ class Index extends Core\Modules\Controller\Admin
                         $_POST['seo_description'],
                         (int)$_POST['seo_robots']
                     );
-                    Gallery\Helpers::generatePictureAliases($this->uri->id);
+                    $this->get('gallery.helpers')->generatePictureAliases($this->uri->id);
 
                     $this->seo->setCache();
 
@@ -178,12 +178,12 @@ class Index extends Core\Modules\Controller\Admin
             $c_pictures = count($pictures);
 
             if ($c_pictures > 0) {
-                $canDelete = Core\Modules::hasPermission('admin/gallery/pictures/delete');
+                $canDelete = $this->modules->hasPermission('admin/gallery/pictures/delete');
                 $config = array(
                     'element' => '#acp-table',
                     'hide_col_sort' => $canDelete === true ? 0 : ''
                 );
-                $this->appendContent(Core\Functions::dataTable($config));
+                $this->appendContent($this->get('core.functions')->dataTable($config));
 
                 for ($i = 0; $i < $c_pictures; ++$i) {
                     $pictures[$i]['first'] = $i == 0;
@@ -191,8 +191,8 @@ class Index extends Core\Modules\Controller\Admin
                 }
                 $this->view->assign('pictures', $pictures);
                 $this->view->assign('can_delete', $canDelete);
-                $this->view->assign('can_order', Core\Modules::hasPermission('admin/gallery/pictures/order'));
-                $this->view->assign('can_edit_picture', Core\Modules::hasPermission('admin/gallery/pictures/edit'));
+                $this->view->assign('can_order', $this->modules->hasPermission('admin/gallery/pictures/order'));
+                $this->view->assign('can_edit_picture', $this->modules->hasPermission('admin/gallery/pictures/edit'));
             }
 
             $this->session->generateFormToken();
@@ -210,14 +210,14 @@ class Index extends Core\Modules\Controller\Admin
         $c_galleries = count($galleries);
 
         if ($c_galleries > 0) {
-            $canDelete = Core\Modules::hasPermission('admin/gallery/index/delete');
+            $canDelete = $this->modules->hasPermission('admin/gallery/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent($this->get('core.functions')->dataTable($config));
             for ($i = 0; $i < $c_galleries; ++$i) {
                 $galleries[$i]['period'] = $this->date->formatTimeRange($galleries[$i]['start'], $galleries[$i]['end']);
             }
@@ -233,7 +233,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($_POST) === false) {
             try {
-                $validator = new Gallery\Validator($this->lang);
+                $validator = $this->get('gallery.validator');
                 $validator->validateSettings($_POST);
 
                 $data = array(
@@ -248,7 +248,7 @@ class Index extends Core\Modules\Controller\Admin
                     'dateformat' => Core\Functions::strEncode($_POST['dateformat']),
                     'sidebar' => (int)$_POST['sidebar'],
                 );
-                if (Core\Modules::isActive('comments') === true) {
+                if ($this->modules->isActive('comments') === true) {
                     $data['comments'] = (int)$_POST['comments'];
                 }
 
@@ -277,7 +277,7 @@ class Index extends Core\Modules\Controller\Admin
             }
         }
 
-        if (Core\Modules::isActive('comments') === true) {
+        if ($this->modules->isActive('comments') === true) {
             $lang_comments = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
             $this->view->assign('comments', Core\Functions::selectGenerator('comments', array(1, 0), $lang_comments, $settings['comments'], 'checked'));
         }

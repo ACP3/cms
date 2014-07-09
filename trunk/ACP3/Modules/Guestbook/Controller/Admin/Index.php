@@ -50,7 +50,7 @@ class Index extends Core\Modules\Controller\Admin
 
             if (empty($_POST) === false) {
                 try {
-                    $validator = new Guestbook\Validator($this->lang, $this->auth, $this->date, $this->db, $this->model);
+                    $validator = $this->get('guestbook.validator');
                     $validator->validateEdit($_POST, $settings);
 
                     $updateValues = array(
@@ -74,9 +74,9 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
-            if ($settings['emoticons'] == 1 && Core\Modules::isActive('emoticons') === true) {
+            if ($settings['emoticons'] == 1 && $this->modules->isActive('emoticons') === true) {
                 // Emoticons im Formular anzeigen
-                $this->view->assign('emoticons', \ACP3\Modules\Emoticons\Helpers::emoticonsList());
+                $this->view->assign('emoticons', $this->get('emoticons.helpers')->emoticonsList());
             }
 
             if ($settings['notify'] == 2) {
@@ -101,31 +101,31 @@ class Index extends Core\Modules\Controller\Admin
         $c_guestbook = count($guestbook);
 
         if ($c_guestbook > 0) {
-            $canDelete = Core\Modules::hasPermission('admin/guestbook/index/delete');
+            $canDelete = $this->modules->hasPermission('admin/guestbook/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 1 : 0,
                 'sort_dir' => 'desc',
                 'hide_col_sort' => $canDelete === true ? 0 : ''
             );
-            $this->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent($this->get('core.functions')->dataTable($config));
 
             $config = new Core\Config($this->db, 'guestbook');
             $settings = $config->getSettings();
             // Emoticons einbinden
             $emoticons_active = false;
             if ($settings['emoticons'] == 1) {
-                if (Core\Modules::isActive('emoticons') === true) {
+                if ($this->modules->isActive('emoticons') === true) {
                     $emoticons_active = true;
                 }
             }
 
-            $formatter = new Core\Helpers\StringFormatter();
+            $formatter = $this->get('core.functions');
             for ($i = 0; $i < $c_guestbook; ++$i) {
                 $guestbook[$i]['date_formatted'] = $this->date->formatTimeRange($guestbook[$i]['date']);
                 $guestbook[$i]['message'] = $formatter->nl2p($guestbook[$i]['message']);
                 if ($emoticons_active === true) {
-                    $guestbook[$i]['message'] = \ACP3\Modules\Emoticons\Helpers::emoticonsReplace($guestbook[$i]['message']);
+                    $guestbook[$i]['message'] = $this->get('emoticons.helpers')->emoticonsReplace($guestbook[$i]['message']);
                 }
             }
             $this->view->assign('guestbook', $guestbook);
@@ -139,7 +139,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($_POST) === false) {
             try {
-                $validator = new Guestbook\Validator($this->lang, $this->auth, $this->date, $this->db, $this->model);
+                $validator = $this->get('guestbook.validator');
                 $validator->validateSettings($_POST);
 
                 $data = array(
@@ -180,13 +180,13 @@ class Index extends Core\Modules\Controller\Admin
         $this->view->assign('overlay', Core\Functions::selectGenerator('overlay', array(1, 0), $lang_overlay, $settings['overlay'], 'checked'));
 
         // Emoticons erlauben
-        if (Core\Modules::isActive('emoticons') === true) {
+        if ($this->modules->isActive('emoticons') === true) {
             $lang_allow_emoticons = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
             $this->view->assign('allow_emoticons', Core\Functions::selectGenerator('emoticons', array(1, 0), $lang_allow_emoticons, $settings['emoticons'], 'checked'));
         }
 
         // In Newsletter integrieren
-        if (Core\Modules::isActive('newsletter') === true) {
+        if ($this->modules->isActive('newsletter') === true) {
             $lang_newsletter_integration = array($this->lang->t('system', 'yes'), $this->lang->t('system', 'no'));
             $this->view->assign('newsletter_integration', Core\Functions::selectGenerator('newsletter_integration', array(1, 0), $lang_newsletter_integration, $settings['newsletter_integration'], 'checked'));
         }

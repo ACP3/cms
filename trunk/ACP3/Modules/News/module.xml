@@ -8,5 +8,6 @@
         <dependencies>
             <module>categories</module>
         </dependencies>
+        <services>true</services>
     </info>
 </module>

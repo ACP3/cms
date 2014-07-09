@@ -12,25 +12,21 @@ namespace ACP3\Modules\Comments;
 
 use ACP3\Core;
 
-abstract class Helpers
+/**
+ * Class Helpers
+ * @package ACP3\Modules\Comments
+ */
+class Helpers
 {
 
     /**
-     *
      * @var Model
      */
-    protected static $model;
+    protected $model;
 
-    protected static function _init()
+    public function __construct(Model $model)
     {
-        if (!self::$model) {
-            self::$model = new Model(
-                Core\Registry::get('Db'),
-                Core\Registry::get('Lang'),
-                Core\Registry::get('Auth'),
-                Core\Registry::get('Date')
-            );
-        }
+        $this->model = $model;
     }
 
     /**
@@ -42,16 +38,19 @@ abstract class Helpers
      *    Die ID des jeweiligen Eintrages
      * @return integer
      */
-    public static function commentsCount($moduleId, $resultId)
+    public function commentsCount($moduleId, $resultId)
     {
-        self::_init();
-        return self::$model->countAllByModule($moduleId, $resultId);
+        return $this->model->countAllByModule($moduleId, $resultId);
     }
 
-    public static function deleteCommentsByModuleAndResult($moduleName, $resultId)
+    /**
+     * @param $moduleName
+     * @param $resultId
+     * @return int
+     */
+    public function deleteCommentsByModuleAndResult($moduleName, $resultId)
     {
-        self::_init();
-        return self::$model->delete(array('module_id' => $moduleName, 'entry_id' => $resultId));
+        return $this->model->delete(array('module_id' => $moduleName, 'entry_id' => $resultId));
     }
 
 }

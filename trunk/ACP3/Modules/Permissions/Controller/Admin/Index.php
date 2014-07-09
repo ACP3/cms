@@ -28,7 +28,7 @@ class Index extends Core\Modules\Controller\Admin
     {
         if (empty($_POST) === false) {
             try {
-                $validator = new Permissions\Validator($this->lang, $this->uri, $this->model);
+                $validator = $this->get('permissions.validator');
                 $validator->validateCreate($_POST);
 
                 $this->db->beginTransaction();
@@ -76,7 +76,7 @@ class Index extends Core\Modules\Controller\Admin
 
         $this->view->assign('form', array_merge(array('name' => ''), $_POST));
 
-        $roles = $this->get('ACL')->getAllRoles();
+        $roles = $this->acl->getAllRoles();
         $c_roles = count($roles);
         for ($i = 0; $i < $c_roles; ++$i) {
             $roles[$i]['selected'] = Core\Functions::selectEntry('roles', $roles[$i]['id'], !empty($parent[0]['id']) ? $parent[0]['id'] : 0);
@@ -84,8 +84,8 @@ class Index extends Core\Modules\Controller\Admin
         }
         $this->view->assign('parent', $roles);
 
-        $modules = Core\Modules::getActiveModules();
-        $privileges = $this->get('ACL')->getAllPrivileges();
+        $modules = $this->modules->getActiveModules();
+        $privileges = $this->acl->getAllPrivileges();
         $c_privileges = count($privileges);
         $this->view->assign('privileges', $privileges);
 
@@ -154,7 +154,7 @@ class Index extends Core\Modules\Controller\Admin
         if (!empty($role)) {
             if (empty($_POST) === false) {
                 try {
-                    $validator = new Permissions\Validator($this->lang, $this->uri, $this->model);
+                    $validator = $this->get('permissions.validator');
                     $validator->validateEdit($_POST);
 
                     $updateValues = array(
@@ -192,7 +192,7 @@ class Index extends Core\Modules\Controller\Admin
             }
 
             if ($this->uri->id != 1) {
-                $roles = $this->get('ACL')->getAllRoles();
+                $roles = $this->acl->getAllRoles();
                 $c_roles = count($roles);
                 for ($i = 0; $i < $c_roles; ++$i) {
                     if ($roles[$i]['left_id'] >= $role['left_id'] && $roles[$i]['right_id'] <= $role['right_id']) {
@@ -205,9 +205,9 @@ class Index extends Core\Modules\Controller\Admin
                 $this->view->assign('parent', $roles);
             }
 
-            $rules = $this->get('ACL')->getRules(array($this->uri->id));
-            $modules = Core\Modules::getActiveModules();
-            $privileges = $this->get('ACL')->getAllPrivileges();
+            $rules = $this->acl->getRules(array($this->uri->id));
+            $modules = $this->modules->getActiveModules();
+            $privileges = $this->acl->getAllPrivileges();
             $c_privileges = count($privileges);
             $this->view->assign('privileges', $privileges);
 
@@ -248,7 +248,7 @@ class Index extends Core\Modules\Controller\Admin
         $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
         $redirect->getMessage();
 
-        $roles = $this->get('ACL')->getAllRoles();
+        $roles = $this->acl->getAllRoles();
         $c_roles = count($roles);
 
         if ($c_roles > 0) {
@@ -256,14 +256,14 @@ class Index extends Core\Modules\Controller\Admin
                 $roles[$i]['spaces'] = str_repeat('&nbsp;&nbsp;', $roles[$i]['level']);
             }
             $this->view->assign('roles', $roles);
-            $this->view->assign('can_delete', Core\Modules::hasPermission('admin/permissions/index/delete'));
-            $this->view->assign('can_order', Core\Modules::hasPermission('admin/permissions/index/order'));
+            $this->view->assign('can_delete', $this->modules->hasPermission('admin/permissions/index/delete'));
+            $this->view->assign('can_order', $this->modules->hasPermission('admin/permissions/index/order'));
         }
     }
 
     public function actionOrder()
     {
-        if (Core\Validate::isNumber($this->uri->id) === true && $this->model->roleExists($this->uri->id) === true) {
+        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->model->roleExists($this->uri->id) === true) {
             $nestedSet = new Core\NestedSet($this->db, 'acl_roles');
             $nestedSet->order($this->uri->id, $this->uri->action);
 

@@ -9,8 +9,14 @@ use ACP3\Core;
  */
 class Cache
 {
+    const CACHE_ID = 'list';
+    /**
+     * @var \ACP3\Core\Cache2
+     */
     protected $cache;
-
+    /**
+     * @var Model
+     */
     protected $emoticonsModel;
 
     public function __construct(Model $emoticonsModel)
@@ -37,7 +43,7 @@ class Cache
             $data[$code] = '<img src="' . ROOT_DIR . 'uploads/emoticons/' . $emoticons[$i]['img'] . '" width="' . $picInfos[0] . '" height="' . $picInfos[1] . '" alt="' . $description . '" title="' . $description . '" />';
         }
 
-        return $this->cache->save('list', $data);
+        return $this->cache->save(static::CACHE_ID, $data);
     }
 
     /**
@@ -47,11 +53,11 @@ class Cache
      */
     public function getCache()
     {
-        if ($this->cache->contains('list') === false) {
+        if ($this->cache->contains(static::CACHE_ID) === false) {
             $this->setCache();
         }
 
-        return $this->cache->fetch('list');
+        return $this->cache->fetch(static::CACHE_ID);
     }
 
 

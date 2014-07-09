@@ -13,13 +13,18 @@ class Cache
      */
     protected $cache;
     /**
+     * @var \ACP3\Core\Lang
+     */
+    protected $lang;
+    /**
      * @var Model
      */
     protected $menuModel;
 
-    public function __construct(Model $menuModel)
+    public function __construct(Core\Lang $lang, Model $menuModel)
     {
         $this->cache = new Core\Cache2('menus');
+        $this->lang = $lang;
         $this->menuModel = $menuModel;
     }
 
@@ -50,16 +55,16 @@ class Cache
                 }
             }
 
-            $mode_search = array('1', '2', '3', '4');
-            $mode_replace = array(
-                Core\Registry::get('Lang')->t('menus', 'module'),
-                Core\Registry::get('Lang')->t('menus', 'dynamic_page'),
-                Core\Registry::get('Lang')->t('menus', 'hyperlink'),
-                Core\Registry::get('Lang')->t('menus', 'article')
+            $modeSearch = array('1', '2', '3', '4');
+            $modeReplace = array(
+                $this->lang->t('menus', 'module'),
+                $this->lang->t('menus', 'dynamic_page'),
+                $this->lang->t('menus', 'hyperlink'),
+                $this->lang->t('menus', 'article')
             );
 
             for ($i = 0; $i < $c_items; ++$i) {
-                $items[$i]['mode_formatted'] = str_replace($mode_search, $mode_replace, $items[$i]['mode']);
+                $items[$i]['mode_formatted'] = str_replace($modeSearch, $modeReplace, $items[$i]['mode']);
 
                 // Bestimmen, ob die Seite die Erste und/oder Letzte eines Knotens ist
                 $first = $last = true;

@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core;
+
 use ACP3\Core\Helpers\Secure;
 use ACP3\Modules\Users;
 
@@ -114,19 +115,18 @@ class Auth
             $userId = $this->getUserId();
         }
 
-        if (Validate::isNumber($userId) === true) {
-            if (empty($this->userInfo[$userId])) {
-                $countries = Lang::worldCountries();
-                $info = $this->userModel->getOneById($userId);
-                if (!empty($info)) {
-                    $info['country_formatted'] = !empty($info['country']) && isset($countries[$info['country']]) ? $countries[$info['country']] : '';
-                    $this->userInfo[$userId] = $info;
-                }
-            }
+        $userId = (int)$userId;
 
-            return !empty($this->userInfo[$userId]) ? $this->userInfo[$userId] : false;
+        if (empty($this->userInfo[$userId])) {
+            $countries = Lang::worldCountries();
+            $info = $this->userModel->getOneById($userId);
+            if (!empty($info)) {
+                $info['country_formatted'] = !empty($info['country']) && isset($countries[$info['country']]) ? $countries[$info['country']] : '';
+                $this->userInfo[$userId] = $info;
+            }
         }
-        return false;
+
+        return !empty($this->userInfo[$userId]) ? $this->userInfo[$userId] : false;
     }
 
     /**
@@ -146,7 +146,7 @@ class Auth
      */
     public function isUser()
     {
-        return $this->isUser === true && Validate::isNumber($this->getUserId()) === true ? true : false;
+        return $this->isUser === true && $this->getUserId() !== 0;
     }
 
     /**

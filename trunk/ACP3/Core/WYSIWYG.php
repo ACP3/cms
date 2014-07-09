@@ -11,7 +11,6 @@ class WYSIWYG
 {
 
     /**
-     *
      * @var \ACP3\Core\WYSIWYG\AbstractWYSIWYG
      */
     protected static $editor = null;

@@ -2,6 +2,7 @@
 namespace ACP3\Modules\Menus;
 
 use ACP3\Core;
+use ACP3\Modules\Articles;
 
 /**
  * Class Validator
@@ -10,6 +11,10 @@ use ACP3\Core;
 class Validator extends Core\Validator\AbstractValidator
 {
     /**
+     * @var Core\Modules
+     */
+    protected $modules;
+    /**
      * @var \ACP3\Core\URI
      */
     protected $uri;
@@ -17,12 +22,19 @@ class Validator extends Core\Validator\AbstractValidator
      * @var Model
      */
     protected $menuModel;
+    /**
+     * @var Articles\Helpers
+     */
+    protected $articlesHelpers;
 
-    public function __construct(Core\Lang $lang, Core\URI $uri, Model $menuModel) {
-        parent::__construct($lang);
+    public function __construct(Core\Lang $lang, Core\Validate $validate, Core\Modules $modules, Core\URI $uri, Model $menuModel, Articles\Helpers $articlesHelpers)
+    {
+        parent::__construct($lang, $validate);
 
+        $this->modules = $modules;
         $this->uri = $uri;
         $this->menuModel = $menuModel;
+        $this->articlesHelpers = $articlesHelpers;
     }
 
     /**
@@ -58,19 +70,19 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if (Core\Validate::isNumber($formData['mode']) === false) {
+        if ($this->validate->isNumber($formData['mode']) === false) {
             $errors['mode'] = $this->lang->t('menus', 'select_page_type');
         }
         if (strlen($formData['title']) < 3) {
             $errors['title'] = $this->lang->t('menus', 'title_to_short');
         }
-        if (Core\Validate::isNumber($formData['block_id']) === false) {
+        if ($this->validate->isNumber($formData['block_id']) === false) {
             $errors['block-id'] = $this->lang->t('menus', 'select_menu_bar');
         }
-        if (!empty($formData['parent']) && Core\Validate::isNumber($formData['parent']) === false) {
+        if (!empty($formData['parent']) && $this->validate->isNumber($formData['parent']) === false) {
             $errors['parent'] = $this->lang->t('menus', 'select_superior_page');
         }
-        if (!empty($formData['parent']) && Core\Validate::isNumber($formData['parent']) === true) {
+        if (!empty($formData['parent']) && $this->validate->isNumber($formData['parent']) === true) {
             // Überprüfen, ob sich die ausgewählte übergeordnete Seite im selben Block befindet
             $parentBlock = $this->menuModel->getMenuItemBlockIdById($formData['parent']);
             if (!empty($parentBlock) && $parentBlock != $formData['block_id']) {
@@ -80,16 +92,16 @@ class Validator extends Core\Validator\AbstractValidator
         if ($formData['display'] != 0 && $formData['display'] != 1) {
             $errors[] = $this->lang->t('menus', 'select_item_visibility');
         }
-        if (Core\Validate::isNumber($formData['target']) === false ||
-            $formData['mode'] == 1 && Core\Modules::isInstalled($formData['module']) === false ||
-            $formData['mode'] == 2 && Core\Validate::isInternalURI($formData['uri']) === false ||
+        if ($this->validate->isNumber($formData['target']) === false ||
+            $formData['mode'] == 1 && $this->modules->isInstalled($formData['module']) === false ||
+            $formData['mode'] == 2 && $this->validate->isInternalURI($formData['uri']) === false ||
             $formData['mode'] == 3 && empty($formData['uri']) ||
-            $formData['mode'] == 4 && (Core\Validate::isNumber($formData['articles']) === false || \ACP3\Modules\Articles\Helpers::articleExists($formData['articles']) === false)
+            $formData['mode'] == 4 && ($this->validate->isNumber($formData['articles']) === false || $this->articlesHelpers->articleExists($formData['articles']) === false)
         ) {
             $errors[] = $this->lang->t('menus', 'type_in_uri_and_target');
         }
         if ($formData['mode'] == 2 && !empty($formData['alias']) &&
-            (Core\Validate::isUriSafe($formData['alias']) === false || Core\Validate::uriAliasExists($formData['alias'], $formData['uri']) === true)
+            ($this->validate->isUriSafe($formData['alias']) === false || $this->validate->uriAliasExists($formData['alias'], $formData['uri']) === true)
         ) {
             $errors['alias'] = $this->lang->t('system', 'uri_alias_unallowed_characters_or_exists');
         }

@@ -14,20 +14,24 @@ class Validator extends Core\Validator\AbstractValidator
      */
     protected $auth;
     /**
+     * @var \ACP3\Core\Modules
+     */
+    protected $modules;
+    /**
      * @var \ACP3\Core\URI
      */
     protected $uri;
-
     /**
      * @var Model
      */
     protected $userModel;
 
-    public function __construct(Core\Lang $lang, Core\Auth $auth, Core\URI $uri, Model $userModel)
+    public function __construct(Core\Lang $lang, Core\Validate $validate, Core\Auth $auth, Core\Modules $modules, Core\URI $uri, Model $userModel)
     {
-        parent::__construct($lang);
+        parent::__construct($lang, $validate);
 
         $this->auth = $auth;
+        $this->modules = $modules;
         $this->uri = $uri;
         $this->userModel = $userModel;
     }
@@ -41,7 +45,7 @@ class Validator extends Core\Validator\AbstractValidator
         $this->validateFormKey();
 
         $errors = array();
-        if (!empty($formData['mail']) && Core\Validate::email($formData['mail']) === false) {
+        if (!empty($formData['mail']) && $this->validate->email($formData['mail']) === false) {
             $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
         if (!isset($formData['language_override']) || $formData['language_override'] != 1 && $formData['language_override'] != 0) {
@@ -71,22 +75,22 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['nickname'])) {
             $errors['nickname'] = $this->lang->t('system', 'name_to_short');
         }
-        if (Core\Validate::gender($formData['gender']) === false) {
+        if ($this->validate->gender($formData['gender']) === false) {
             $errors['gender'] = $this->lang->t('users', 'select_gender');
         }
-        if (!empty($formData['birthday']) && Core\Validate::birthday($formData['birthday']) === false) {
+        if (!empty($formData['birthday']) && $this->validate->birthday($formData['birthday']) === false) {
             $errors[] = $this->lang->t('users', 'invalid_birthday');
         }
         if ($this->userModel->resultExistsByUserName($formData['nickname'])) {
             $errors['nickname'] = $this->lang->t('users', 'user_name_already_exists');
         }
-        if (Core\Validate::email($formData['mail']) === false) {
+        if ($this->validate->email($formData['mail']) === false) {
             $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
         if ($this->userModel->resultExistsByEmail($formData['mail'])) {
             $errors['mail'] = $this->lang->t('users', 'user_email_already_exists');
         }
-        if (empty($formData['roles']) || is_array($formData['roles']) === false || Core\Validate::aclRolesExist($formData['roles']) === false) {
+        if (empty($formData['roles']) || is_array($formData['roles']) === false || $this->validate->aclRolesExist($formData['roles']) === false) {
             $errors['roles'] = $this->lang->t('users', 'select_access_level');
         }
         if (!isset($formData['super_user']) || ($formData['super_user'] != 1 && $formData['super_user'] != 0)) {
@@ -95,16 +99,16 @@ class Validator extends Core\Validator\AbstractValidator
         if ($this->lang->languagePackExists($formData['language']) === false) {
             $errors['language'] = $this->lang->t('users', 'select_language');
         }
-        if (Core\Validate::isNumber($formData['entries']) === false) {
+        if ($this->validate->isNumber($formData['entries']) === false) {
             $errors['entries'] = $this->lang->t('system', 'select_records_per_page');
         }
         if (empty($formData['date_format_long']) || empty($formData['date_format_short'])) {
             $errors[] = $this->lang->t('system', 'type_in_date_format');
         }
-        if (Core\Validate::timeZone($formData['date_time_zone']) === false) {
+        if ($this->validate->timeZone($formData['date_time_zone']) === false) {
             $errors['time-zone'] = $this->lang->t('system', 'select_time_zone');
         }
-        if (!empty($formData['icq']) && Core\Validate::icq($formData['icq']) === false) {
+        if (!empty($formData['icq']) && $this->validate->icq($formData['icq']) === false) {
             $errors['icq'] = $this->lang->t('users', 'invalid_icq_number');
         }
         if (in_array($formData['mail_display'], array(0, 1)) === false) {
@@ -140,22 +144,22 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['nickname'])) {
             $errors['nickname'] = $this->lang->t('system', 'name_to_short');
         }
-        if (Core\Validate::gender($formData['gender']) === false) {
+        if ($this->validate->gender($formData['gender']) === false) {
             $errors['gender'] = $this->lang->t('users', 'select_gender');
         }
-        if (!empty($formData['birthday']) && Core\Validate::birthday($formData['birthday']) === false) {
+        if (!empty($formData['birthday']) && $this->validate->birthday($formData['birthday']) === false) {
             $errors[] = $this->lang->t('users', 'invalid_birthday');
         }
         if ($this->userModel->resultExistsByUserName($formData['nickname'], $this->uri->id)) {
             $errors['nickname'] = $this->lang->t('users', 'user_name_already_exists');
         }
-        if (Core\Validate::email($formData['mail']) === false) {
+        if ($this->validate->email($formData['mail']) === false) {
             $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
         if ($this->userModel->resultExistsByEmail($formData['mail'], $this->uri->id)) {
             $errors['mail'] = $this->lang->t('users', 'user_email_already_exists');
         }
-        if (empty($formData['roles']) || is_array($formData['roles']) === false || Core\Validate::aclRolesExist($formData['roles']) === false) {
+        if (empty($formData['roles']) || is_array($formData['roles']) === false || $this->validate->aclRolesExist($formData['roles']) === false) {
             $errors['roles'] = $this->lang->t('users', 'select_access_level');
         }
         if (!isset($formData['super_user']) || ($formData['super_user'] != 1 && $formData['super_user'] != 0)) {
@@ -164,16 +168,16 @@ class Validator extends Core\Validator\AbstractValidator
         if ($this->lang->languagePackExists($formData['language']) === false) {
             $errors['language'] = $this->lang->t('users', 'select_language');
         }
-        if (Core\Validate::isNumber($formData['entries']) === false) {
+        if ($this->validate->isNumber($formData['entries']) === false) {
             $errors['entries'] = $this->lang->t('system', 'select_records_per_page');
         }
         if (empty($formData['date_format_long']) || empty($formData['date_format_short'])) {
             $errors[] = $this->lang->t('system', 'type_in_date_format');
         }
-        if (Core\Validate::timeZone($formData['date_time_zone']) === false) {
+        if ($this->validate->timeZone($formData['date_time_zone']) === false) {
             $errors['time-zone'] = $this->lang->t('system', 'select_time_zone');
         }
-        if (!empty($formData['icq']) && Core\Validate::icq($formData['icq']) === false) {
+        if (!empty($formData['icq']) && $this->validate->icq($formData['icq']) === false) {
             $errors['icq'] = $this->lang->t('users', 'invalid_icq_number');
         }
         if (in_array($formData['mail_display'], array(0, 1)) === false) {
@@ -212,19 +216,19 @@ class Validator extends Core\Validator\AbstractValidator
         if ($this->userModel->resultExistsByUserName($formData['nickname'], $this->auth->getUserId()) === true) {
             $errors['nickname'] = $this->lang->t('users', 'user_name_already_exists');
         }
-        if (Core\Validate::gender($formData['gender']) === false) {
+        if ($this->validate->gender($formData['gender']) === false) {
             $errors['gender'] = $this->lang->t('users', 'select_gender');
         }
-        if (!empty($formData['birthday']) && Core\Validate::birthday($formData['birthday']) === false) {
+        if (!empty($formData['birthday']) && $this->validate->birthday($formData['birthday']) === false) {
             $errors[] = $this->lang->t('users', 'invalid_birthday');
         }
-        if (Core\Validate::email($formData['mail']) === false) {
+        if ($this->validate->email($formData['mail']) === false) {
             $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
         if ($this->userModel->resultExistsByEmail($formData['mail'], $this->auth->getUserId()) === true) {
             $errors['mail'] = $this->lang->t('users', 'user_email_already_exists');
         }
-        if (!empty($formData['icq']) && Core\Validate::icq($formData['icq']) === false) {
+        if (!empty($formData['icq']) && $this->validate->icq($formData['icq']) === false) {
             $errors['icq'] = $this->lang->t('users', 'invalid_icq_number');
         }
         if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat']) && $formData['new_pwd'] != $formData['new_pwd_repeat']) {
@@ -249,13 +253,13 @@ class Validator extends Core\Validator\AbstractValidator
         if ($settings['language_override'] == 1 && $this->lang->languagePackExists($formData['language']) === false) {
             $errors['language'] = $this->lang->t('users', 'select_language');
         }
-        if ($settings['entries_override'] == 1 && Core\Validate::isNumber($formData['entries']) === false) {
+        if ($settings['entries_override'] == 1 && $this->validate->isNumber($formData['entries']) === false) {
             $errors['entries'] = $this->lang->t('system', 'select_records_per_page');
         }
         if (empty($formData['date_format_long']) || empty($formData['date_format_short'])) {
             $errors[] = $this->lang->t('system', 'type_in_date_format');
         }
-        if (Core\Validate::timeZone($formData['date_time_zone']) === false) {
+        if ($this->validate->timeZone($formData['date_time_zone']) === false) {
             $errors['time-zone'] = $this->lang->t('system', 'select_time_zone');
         }
         if (in_array($formData['mail_display'], array(0, 1)) === false) {
@@ -287,12 +291,12 @@ class Validator extends Core\Validator\AbstractValidator
         $errors = array();
         if (empty($formData['nick_mail'])) {
             $errors['nick-mail'] = $this->lang->t('users', 'type_in_nickname_or_email');
-        } elseif (Core\Validate::email($formData['nick_mail']) === false && $this->userModel->resultExistsByUserName($formData['nick_mail']) === false) {
+        } elseif ($this->validate->email($formData['nick_mail']) === false && $this->userModel->resultExistsByUserName($formData['nick_mail']) === false) {
             $errors['nick-mail'] = $this->lang->t('users', 'user_not_exists');
-        } elseif (Core\Validate::email($formData['nick_mail']) === true && $this->userModel->resultExistsByEmail($formData['nick_mail']) === false) {
+        } elseif ($this->validate->email($formData['nick_mail']) === true && $this->userModel->resultExistsByEmail($formData['nick_mail']) === false) {
             $errors['nick-mail'] = $this->lang->t('users', 'user_not_exists');
         }
-        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true && Core\Validate::captcha($formData['captcha']) === false) {
+        if ($this->modules->hasPermission('frontend/captcha/index/image') === true && $this->validate->captcha($formData['captcha']) === false) {
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 
@@ -316,7 +320,7 @@ class Validator extends Core\Validator\AbstractValidator
         if ($this->userModel->resultExistsByUserName($formData['nickname']) === true) {
             $errors['nickname'] = $this->lang->t('users', 'user_name_already_exists');
         }
-        if (Core\Validate::email($formData['mail']) === false) {
+        if ($this->validate->email($formData['mail']) === false) {
             $errors['mail'] = $this->lang->t('system', 'wrong_email_format');
         }
         if ($this->userModel->resultExistsByEmail($formData['mail']) === true) {
@@ -325,7 +329,7 @@ class Validator extends Core\Validator\AbstractValidator
         if (empty($formData['pwd']) || empty($formData['pwd_repeat']) || $formData['pwd'] != $formData['pwd_repeat']) {
             $errors[] = $this->lang->t('users', 'type_in_pwd');
         }
-        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true && Core\Validate::captcha($formData['captcha']) === false) {
+        if ($this->modules->hasPermission('frontend/captcha/index/image') === true && $this->validate->captcha($formData['captcha']) === false) {
             $errors['captcha'] = $this->lang->t('captcha', 'invalid_captcha_entered');
         }
 

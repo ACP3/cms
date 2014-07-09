@@ -28,10 +28,10 @@ class Resources extends Core\Modules\Controller\Admin
     {
         if (empty($_POST) === false) {
             try {
-                $validator = new Permissions\Validator($this->lang, $this->uri, $this->model);
+                $validator = $this->get('permissions.validator');
                 $validator->validateCreateResource($_POST);
 
-                $moduleInfo = Core\Modules::getModuleInfo($_POST['modules']);
+                $moduleInfo = $this->modules->getModuleInfo($_POST['modules']);
                 $insertValues = array(
                     'id' => '',
                     'module_id' => $moduleInfo['id'],
@@ -59,13 +59,13 @@ class Resources extends Core\Modules\Controller\Admin
             }
         }
 
-        $modules = Core\Modules::getActiveModules();
+        $modules = $this->modules->getActiveModules();
         foreach ($modules as $row) {
             $modules[$row['name']]['selected'] = Core\Functions::selectEntry('modules', $row['name']);
         }
         $this->view->assign('modules', $modules);
 
-        $privileges = $this->get('ACL')->getAllPrivileges();
+        $privileges = $this->acl->getAllPrivileges();
         $c_privileges = count($privileges);
         for ($i = 0; $i < $c_privileges; ++$i) {
             $privileges[$i]['selected'] = Core\Functions::selectEntry('privileges', $privileges[$i]['id']);
@@ -104,7 +104,7 @@ class Resources extends Core\Modules\Controller\Admin
         if (!empty($resource)) {
             if (empty($_POST) === false) {
                 try {
-                    $validator = new Permissions\Validator($this->lang, $this->uri, $this->model);
+                    $validator = $this->get('permissions.validator');
                     $validator->validateEditResource($_POST);
 
                     $updateValues = array(
@@ -131,7 +131,7 @@ class Resources extends Core\Modules\Controller\Admin
                 }
             }
 
-            $privileges = $this->get('ACL')->getAllPrivileges();
+            $privileges = $this->acl->getAllPrivileges();
             $c_privileges = count($privileges);
             for ($i = 0; $i < $c_privileges; ++$i) {
                 $privileges[$i]['selected'] = Core\Functions::selectEntry('privileges', $privileges[$i]['id'], $resource['privilege_id']);
@@ -161,13 +161,13 @@ class Resources extends Core\Modules\Controller\Admin
         $c_resources = count($resources);
         $output = array();
         for ($i = 0; $i < $c_resources; ++$i) {
-            if (Core\Modules::isActive($resources[$i]['module_name']) === true) {
+            if ($this->modules->isActive($resources[$i]['module_name']) === true) {
                 $module = $this->lang->t($resources[$i]['module_name'], $resources[$i]['module_name']);
                 $output[$module][] = $resources[$i];
             }
         }
         ksort($output);
         $this->view->assign('resources', $output);
-        $this->view->assign('can_delete_resource', Core\Modules::hasPermission('admin/permissions/resources/delete'));
+        $this->view->assign('can_delete_resource', $this->modules->hasPermission('admin/permissions/resources/delete'));
     }
 }

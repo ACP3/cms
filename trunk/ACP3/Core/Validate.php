@@ -9,6 +9,25 @@ namespace ACP3\Core;
  */
 class Validate
 {
+    /**
+     * @var ACL
+     */
+    protected $acl;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
+     * @var URI
+     */
+    protected $uri;
+
+    public function __construct(ACL $acl, \Doctrine\DBAL\Connection $db, URI $uri)
+    {
+        $this->acl = $acl;
+        $this->db = $db;
+        $this->uri = $uri;
+    }
 
     /**
      * Überprüft, ob die übergebenen Privilegien existieren und
@@ -18,9 +37,9 @@ class Validate
      *    Array mit den IDs der zu überprüfenden Privilegien mit ihren Berechtigungen
      * @return boolean
      */
-    public static function aclPrivilegesExist(array $privileges)
+    public function aclPrivilegesExist(array $privileges)
     {
-        $allPrivileges = Registry::get('ACL')->getAllPrivileges();
+        $allPrivileges = $this->acl->getAllPrivileges();
         $c_allPrivileges = count($allPrivileges);
         $valid = false;
 
@@ -44,9 +63,9 @@ class Validate
      *    Die zu überprüfenden Rollen
      * @return boolean
      */
-    public static function aclRolesExist(array $roles)
+    public function aclRolesExist(array $roles)
     {
-        $allRoles = Registry::get('ACL')->getAllRoles();
+        $allRoles = $this->acl->getAllRoles();
         $good = array();
         foreach ($allRoles as $row) {
             $good[] = $row['id'];
@@ -67,7 +86,7 @@ class Validate
      *  Das zu überprüfende Datum
      * @return boolean
      */
-    public static function birthday($var)
+    public function birthday($var)
     {
         $regex = '/^(\d{4})-(\d{2})-(\d{2})$/';
         $matches = array();
@@ -86,10 +105,9 @@ class Validate
      * @param string $path
      * @return boolean
      */
-    public static function captcha($input, $path = '')
+    public function captcha($input, $path = '')
     {
-        $uri = Registry::get('URI');
-        $index = 'captcha_' . sha1($uri->route(empty($path) === true ? $uri->query : $path));
+        $index = 'captcha_' . sha1($this->uri->route(empty($path) === true ? $this->uri->query : $path));
 
         return preg_match('/^[a-zA-Z0-9]+$/', $input) && isset($_SESSION[$index]) && strtolower($input) === strtolower($_SESSION[$index]) ? true : false;
     }
@@ -103,22 +121,22 @@ class Validate
      *  Enddatum
      * @return boolean
      */
-    public static function date($start, $end = null)
+    public function date($start, $end = null)
     {
-        $matches_start = $matches_end = array();
+        $matchesStart = $matchesEnd = array();
         $regex = '/^(\d{4})-(\d{2})-(\d{2})( ([01][0-9]|2[0-3])(:([0-5][0-9])){1,2}){0,1}$/';
-        if (preg_match($regex, $start, $matches_start)) {
+        if (preg_match($regex, $start, $matchesStart)) {
             // Wenn ein Enddatum festgelegt wurde, dieses ebenfalls mit überprüfen
-            if ($end != null && preg_match($regex, $end, $matches_end)) {
-                if (checkdate($matches_start[2], $matches_start[3], $matches_start[1]) &&
-                    checkdate($matches_end[2], $matches_end[3], $matches_end[1]) &&
+            if ($end != null && preg_match($regex, $end, $matchesEnd)) {
+                if (checkdate($matchesStart[2], $matchesStart[3], $matchesStart[1]) &&
+                    checkdate($matchesEnd[2], $matchesEnd[3], $matchesEnd[1]) &&
                     strtotime($start) <= strtotime($end)
                 ) {
                     return true;
                 }
                 // Nur Startdatum überprüfen
             } else {
-                if (checkdate($matches_start[2], $matches_start[3], $matches_start[1])) {
+                if (checkdate($matchesStart[2], $matchesStart[3], $matchesStart[1])) {
                     return true;
                 }
             }
@@ -126,7 +144,7 @@ class Validate
         return false;
     }
 
-    public static function deleteEntries($entries)
+    public function deleteEntries($entries)
     {
         return (bool)preg_match('/^((\d+)\|)*(\d+)$/', $entries);
     }
@@ -140,7 +158,7 @@ class Validate
      *  Zu überprüfende E-Mail-Adresse
      * @return boolean
      */
-    public static function email($var)
+    public function email($var)
     {
         if (function_exists('filter_var')) {
             return (bool)filter_var($var, FILTER_VALIDATE_EMAIL);
@@ -156,7 +174,7 @@ class Validate
      * @param string $var
      * @return boolean
      */
-    public static function extraCSS($var)
+    public function extraCSS($var)
     {
         if ((bool)preg_match('=/=', $var) === false) {
             $var_ary = explode(',', $var);
@@ -177,7 +195,7 @@ class Validate
      * @param string $var
      * @return boolean
      */
-    public static function extraJS($var)
+    public function extraJS($var)
     {
         if ((bool)preg_match('=/=', $var) === false) {
             $var_ary = explode(',', $var);
@@ -197,10 +215,10 @@ class Validate
      *
      * @return boolean
      */
-    public static function formToken()
+    public function formToken()
     {
         $tokenName = \ACP3\Core\Session::XSRF_TOKEN_NAME;
-        $urlQueryString = Registry::get('URI')->query;
+        $urlQueryString = $this->uri->query;
 
         return (isset($_POST[$tokenName]) && isset($_SESSION[$tokenName][$urlQueryString]) && $_POST[$tokenName] === $_SESSION[$tokenName][$urlQueryString]);
     }
@@ -215,7 +233,7 @@ class Validate
      *  Die zu überprüfende Variable
      * @return boolean
      */
-    public static function gender($var)
+    public function gender($var)
     {
         return $var == 1 || $var == 2 || $var == 3 ? true : false;
     }
@@ -226,7 +244,7 @@ class Validate
      * @param integer $var
      * @return boolean
      */
-    public static function icq($var)
+    public function icq($var)
     {
         return (bool)preg_match('/^(\d{6,9})$/', $var);
     }
@@ -237,7 +255,7 @@ class Validate
      * @param mixed $var
      * @return boolean
      */
-    public static function isInternalURI($var)
+    public function isInternalURI($var)
     {
         return (bool)preg_match('/^([a-z\d_\-]+\/){3,}$/', $var);
     }
@@ -248,7 +266,7 @@ class Validate
      * @param string $string
      * @return boolean
      */
-    public static function isMD5($string)
+    public function isMD5($string)
     {
         return is_string($string) === true && preg_match('/^[a-f\d]+$/', $string) && strlen($string) === 32 ? true : false;
     }
@@ -259,7 +277,7 @@ class Validate
      * @param mixed $var
      * @return boolean
      */
-    public static function isNumber($var)
+    public function isNumber($var)
     {
         return (bool)preg_match('/^(\d+)$/', $var);
     }
@@ -274,7 +292,7 @@ class Validate
      * @param string $filesize
      * @return boolean
      */
-    public static function isPicture($file, $width = '', $height = '', $filesize = '')
+    public function isPicture($file, $width = '', $height = '', $filesize = '')
     {
         $info = getimagesize($file);
         $isPicture = $info[2] >= 1 && $info[2] <= 3 ? true : false;
@@ -282,9 +300,9 @@ class Validate
         if ($isPicture === true) {
             $bool = true;
             // Optionale Parameter
-            if (Validate::isNumber($width) && $info[0] > $width ||
-                Validate::isNumber($height) && $info[1] > $height ||
-                filesize($file) === 0 || self::isNumber($filesize) && filesize($file) > $filesize
+            if ($this->isNumber($width) && $info[0] > $width ||
+                $this->isNumber($height) && $info[1] > $height ||
+                filesize($file) === 0 || $this->isNumber($filesize) && filesize($file) > $filesize
             ) {
                 $bool = false;
             }
@@ -295,13 +313,13 @@ class Validate
     }
 
     /**
-     *    Überprüft, ob der eingegebene URI-Alias sicher ist, d.h. es dürfen nur
-     *    die Kleinbuchstaben von a-z, Zahlen, der Bindestrich und das Slash eingegeben werden
+     * Überprüft, ob der eingegebene URI-Alias sicher ist, d.h. es dürfen nur
+     * die Kleinbuchstaben von a-z, Zahlen, der Bindestrich und das Slash eingegeben werden
      *
      * @param string $var
      * @return boolean
      */
-    public static function isUriSafe($var)
+    public function isUriSafe($var)
     {
         return (bool)preg_match('/^([a-z]{1}[a-z\d\-]*(\/[a-z\d\-]+)*)$/', $var);
     }
@@ -317,7 +335,7 @@ class Validate
      *  Der zu vergleichende MIMETYPE
      * @return mixed
      */
-    public static function mimeType($file, $mimetype = '')
+    public function mimeType($file, $mimetype = '')
     {
         if (is_file($file) === true) {
             if (function_exists('finfo_open') === true && $fp = finfo_open(FILEINFO_MIME)) {
@@ -342,7 +360,7 @@ class Validate
      *    Die zu überprüfende Variable
      * @return boolean
      */
-    public static function timeZone($var)
+    public function timeZone($var)
     {
         $bool = true;
         try {
@@ -360,16 +378,16 @@ class Validate
      * @param string $path
      * @return boolean
      */
-    public static function uriAliasExists($alias, $path = '')
+    public function uriAliasExists($alias, $path = '')
     {
-        if (self::isUriSafe($alias)) {
+        if ($this->isUriSafe($alias)) {
             if (is_dir(MODULES_DIR . $alias) === true) {
                 return true;
             } else {
                 $path .= !preg_match('=/$=', $path) ? '/' : '';
-                if ($path !== '/' && self::isInternalURI($path) === true) {
-                    return Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE alias = ? AND uri != ?', array($alias, $path)) > 0 ? true : false;
-                } elseif (Registry::get('Db')->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE alias = ?', array($alias)) > 0) {
+                if ($path !== '/' && $this->isInternalURI($path) === true) {
+                    return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE alias = ? AND uri != ?', array($alias, $path)) > 0 ? true : false;
+                } elseif ($this->db->fetchColumn('SELECT COUNT(*) FROM ' . DB_PRE . 'seo WHERE alias = ?', array($alias)) > 0) {
                     return true;
                 }
             }

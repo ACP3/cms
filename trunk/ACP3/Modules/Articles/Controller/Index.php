@@ -13,7 +13,6 @@ use ACP3\Modules\Articles;
 class Index extends Core\Modules\Controller
 {
     /**
-     *
      * @var Articles\Model
      */
     protected $model;
@@ -55,7 +54,7 @@ class Index extends Core\Modules\Controller
 
     public function actionDetails()
     {
-        if (Core\Validate::isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id, $this->date->getCurrentDateTime()) === true) {
+        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id, $this->date->getCurrentDateTime()) === true) {
             $cache = new Articles\Cache($this->model);
             $article = $cache->getCache($this->uri->id);
 
@@ -68,7 +67,7 @@ class Index extends Core\Modules\Controller
                 $this->uri,
                 $this->view
             );
-            $formatter = new Core\Helpers\StringFormatter();
+            $formatter = $this->get('core.helpers.string.formatter');
             $this->view->assign('page', $toc->splitTextIntoPages($formatter->rewriteInternalUri($article['text']), $this->uri->getUriWithoutPages()));
         } else {
             throw new Core\Exceptions\ResultNotExists();

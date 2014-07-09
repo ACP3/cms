@@ -39,7 +39,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $config = new Core\Config($this->db, 'emoticons');
 
-                $validator = new Emoticons\Validator($this->lang);
+                $validator = $this->get('emoticons.validator');
                 $validator->validateCreate($_POST, $file, $config->getSettings());
 
                 $upload = new Core\Helpers\Upload('emoticons');
@@ -118,7 +118,7 @@ class Index extends Core\Modules\Controller\Admin
 
                     $config = new Core\Config($this->db, 'emoticons');
 
-                    $validator = new Emoticons\Validator($this->lang);
+                    $validator = $this->get('emoticons.validator');
                     $validator->validateEdit($_POST, $file, $config->getSettings());
 
                     $updateValues = array(
@@ -168,7 +168,7 @@ class Index extends Core\Modules\Controller\Admin
         $c_emoticons = count($emoticons);
 
         if ($c_emoticons > 0) {
-            $canDelete = Core\Modules::hasPermission('admin/emoticons/index/delete');
+            $canDelete = $this->modules->hasPermission('admin/emoticons/index/delete');
             $config = array(
                 'element' => '#acp-table',
                 'sort_col' => $canDelete === true ? 4 : 3,
@@ -177,7 +177,7 @@ class Index extends Core\Modules\Controller\Admin
             );
             $this->view->assign('emoticons', $emoticons);
             $this->view->assign('can_delete', $canDelete);
-            $this->appendContent(Core\Functions::dataTable($config));
+            $this->appendContent($this->get('core.functions')->dataTable($config));
         }
     }
 
@@ -187,7 +187,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($_POST) === false) {
             try {
-                $validator = new Emoticons\Validator($this->lang);
+                $validator = $this->get('emoticons.validator');
                 $validator->validateSettings($_POST);
 
                 $data = array(

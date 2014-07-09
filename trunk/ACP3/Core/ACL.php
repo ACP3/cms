@@ -1,5 +1,6 @@
 <?php
 namespace ACP3\Core;
+
 use ACP3\Modules\Permissions;
 
 /**
@@ -91,7 +92,7 @@ class ACL
     }
 
     /**
-     * Gibt alle existieren Rollen aus
+     * Returns all existing roles
      *
      * @return array
      */
@@ -101,19 +102,28 @@ class ACL
     }
 
     /**
-     * Gibt die Rollen-Berechtigungen aus
+     * Returns all existing privileges
      *
-     * @param array $roles
-     *    Array mit den IDs der Rollen
-     * @return boolean
+     * @return array
      */
-    public function getRules(array $roles)
+    public function getAllPrivileges()
     {
-        return $this->cache->getRulesCache($roles);
+        return $this->permissionsModel->getAllPrivileges();
     }
 
     /**
-     * Gibt aus ob dem Benutzer die jeweilige Rolle zugeordnet ist
+     * Returns the role permissions
+     *
+     * @param array $roleIds
+     * @return boolean
+     */
+    public function getRules(array $roleIds)
+    {
+        return $this->cache->getRulesCache($roleIds);
+    }
+
+    /**
+     * Gibt zurück ob dem Benutzer die jeweilige Rolle zugeordnet ist
      *
      * @param integer $roleId
      *    ID der zu überprüfenden Rolle
@@ -125,7 +135,7 @@ class ACL
     }
 
     /**
-     * Gibt aus, ob ein Benutzer die Berechtigung auf eine Privilegie besitzt
+     * Gibt zurück, ob ein Benutzer die Berechtigung auf eine Privilegie besitzt
      *
      * @param $module
      * @param string $key
@@ -142,7 +152,7 @@ class ACL
     }
 
     /**
-     * Gibt aus, ob ein Benutzer berichtigt ist, eine Ressource zu betreten
+     * Gibt zurück, ob ein Benutzer berichtigt ist, eine Ressource zu betreten
      *
      * @param string $resource
      *    The path of a resource in the format of an internal ACP3 url

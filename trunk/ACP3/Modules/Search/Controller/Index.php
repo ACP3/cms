@@ -18,7 +18,7 @@ class Index extends Core\Modules\Controller
 
         if (empty($_POST) === false) {
             try {
-                $validator = new Search\Validator($this->lang);
+                $validator = $this->get('search.validator');
                 $validator->validate($_POST);
 
                 $this->session->unsetFormToken();
@@ -37,7 +37,7 @@ class Index extends Core\Modules\Controller
 
         $this->view->assign('form', array_merge(array('search_term' => ''), $_POST));
 
-        $this->view->assign('search_mods', Search\Helpers::getModules());
+        $this->view->assign('search_mods', $this->get('search.helpers')->getModules());
 
         // Zu durchsuchende Bereiche
         $langSearchAreas = array(
@@ -64,9 +64,13 @@ class Index extends Core\Modules\Controller
         foreach ($modules as $module) {
             $action = $module . 'Search';
             if (method_exists("\\ACP3\\Modules\\Search\\Extensions", $action) &&
-                Core\Modules::hasPermission('frontend/' . $module) === true
+                $this->modules->hasPermission('frontend/' . $module) === true
             ) {
-                $results = new Search\Extensions($area, $sort, $searchTerm);
+                $results = $this->get('search.extensions');
+                $results
+                    ->setArea($area)
+                    ->setSort($sort)
+                    ->setSearchTerm($searchTerm);
                 $searchResults = array_merge($searchResults, $results->$action());
             }
         }

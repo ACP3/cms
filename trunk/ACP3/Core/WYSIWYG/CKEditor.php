@@ -2,12 +2,19 @@
 
 namespace ACP3\Core\WYSIWYG;
 
+use ACP3\Application;
+
 /**
  * Implementation of the AbstractWYSIWYG class for CKEditor
  * @package ACP3\Core\WYSIWYG
  */
 class CKEditor extends AbstractWYSIWYG
 {
+    /**
+     * @var \Symfony\Component\DependencyInjection\ContainerBuilder
+     */
+    protected $serviceContainer;
+
     public function __construct($id, $name, $value = '', $toolbar = '', $advanced = false, $height = '')
     {
         $this->id = $id;
@@ -16,6 +23,8 @@ class CKEditor extends AbstractWYSIWYG
         $this->advanced = (bool)$advanced;
         $this->config['toolbar'] = $toolbar === 'simple' ? 'Basic' : 'Full';
         $this->config['height'] = $height . 'px';
+
+        $this->serviceContainer = Application::getServiceContainer();
 
         $this->configure();
     }
@@ -54,10 +63,10 @@ class CKEditor extends AbstractWYSIWYG
 		}';
 
         // Smilies
-        if ((!isset($this->config['toolbar']) || $this->config['toolbar'] !== 'simple') && \ACP3\Core\Modules::isActive('emoticons') === true) {
+        if ((!isset($this->config['toolbar']) || $this->config['toolbar'] !== 'simple') && $this->serviceContainer->get('core.modules')->isActive('emoticons') === true) {
             $this->config['smiley_path'] = ROOT_DIR . 'uploads/emoticons/';
             $this->config['smiley_images'] = $this->config['smiley_descriptions'] = '';
-            $emoticons = \ACP3\Core\Registry::get('Db')->fetchAll('SELECT description, img FROM ' . DB_PRE . 'emoticons');
+            $emoticons = $this->serviceContainer->get('core.db')->fetchAll('SELECT description, img FROM ' . DB_PRE . 'emoticons');
             $c_emoticons = count($emoticons);
 
             for ($i = 0; $i < $c_emoticons; ++$i) {
@@ -94,8 +103,10 @@ class CKEditor extends AbstractWYSIWYG
             $wysiwyg['advanced_replace_content'] = 'CKEDITOR.instances.' . $wysiwyg['id'] . '.insertHtml(text);';
         }
 
-        \ACP3\Core\Registry::get('View')->assign('wysiwyg', $wysiwyg);
-        return \ACP3\Core\Registry::get('View')->fetchTemplate('system/wysiwyg.tpl');
+        $view = $this->serviceContainer->get('core.view');
+
+        $view->assign('wysiwyg', $wysiwyg);
+        return $view->fetchTemplate('system/wysiwyg.tpl');
     }
 
 }

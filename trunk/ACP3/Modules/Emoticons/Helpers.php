@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Emoticons
  *
@@ -12,30 +11,28 @@ namespace ACP3\Modules\Emoticons;
 
 use ACP3\Core;
 
-abstract class Helpers
+/**
+ * Class Helpers
+ * @package ACP3\Modules\Emoticons
+ */
+class Helpers
 {
-
     /**
      * @var array
      */
-    protected static $emoticons = array();
+    protected $emoticons = array();
 
     /**
      * @var Core\View
      */
-    protected static $view;
+    protected $view;
 
-    protected static function _init()
+    public function __construct(Core\View $view, Cache $emoticonsCache)
     {
-        if (!self::$view) {
-            self::$view = Core\Registry::get('View');
+        $this->view = $view;
 
-            $model = new Model(Core\Registry::get('Db'));
-            $cache = new Cache($model);
-
-            // Initialize emoticons
-            self::$emoticons = $cache->getCache();
-        }
+        // Initialize emoticons
+        $this->emoticons = $emoticonsCache->getCache();
     }
 
     /**
@@ -45,13 +42,11 @@ abstract class Helpers
      *    Die ID des Eingabefeldes, in welches die Emoticons eingefügt werden sollen
      * @return string
      */
-    public static function emoticonsList($formFieldId = '')
+    public function emoticonsList($formFieldId = '')
     {
-        self::_init();
-
-        self::$view->assign('emoticons_field_id', empty($formFieldId) ? 'message' : $formFieldId);
-        self::$view->assign('emoticons', self::$emoticons);
-        return self::$view->fetchTemplate('emoticons/emoticons.tpl');
+        $this->view->assign('emoticons_field_id', empty($formFieldId) ? 'message' : $formFieldId);
+        $this->view->assign('emoticons', $this->emoticons);
+        return $this->view->fetchTemplate('emoticons/emoticons.tpl');
     }
 
     /**
@@ -61,11 +56,9 @@ abstract class Helpers
      *  Zu durchsuchender Text nach Zeichen
      * @return string
      */
-    public static function emoticonsReplace($string)
+    public function emoticonsReplace($string)
     {
-        self::_init();
-
-        return strtr($string, self::$emoticons);
+        return strtr($string, $this->emoticons);
     }
 
 }

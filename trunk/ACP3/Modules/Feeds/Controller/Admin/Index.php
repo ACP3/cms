@@ -20,7 +20,7 @@ class Index extends Core\Modules\Controller\Admin
 
         if (empty($_POST) === false) {
             try {
-                $validator = new Feeds\Validator($this->db, $this->lang);
+                $validator = $this->get('feeds.validator');
                 $validator->validateSettings($_POST);
 
                 $data = array(

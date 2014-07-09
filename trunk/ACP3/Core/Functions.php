@@ -10,51 +10,54 @@ namespace ACP3\Core;
 class Functions
 {
     /**
+     * @var Auth
+     */
+    protected $auth;
+    /**
      * @var \Doctrine\DBAL\Connection
      */
-    protected static $db;
+    protected $db;
     /**
      * @var View
      */
-    protected static $view;
+    protected $view;
 
-    private static $dataTableInitialized = false;
+    private $dataTableInitialized = false;
 
     /**
      * Set the class attributes
      */
-    protected static function _init()
+    public function __construct(Auth $auth, \Doctrine\DBAL\Connection $db, View $view)
     {
-        if (!static::$db) {
-            static::$db = Registry::get('Db');
-            static::$view = Registry::get('View');
-        }
+        $this->auth = $auth;
+        $this->db = $db;
+        $this->view = $view;
     }
 
     /**
-     *
      * @param array $config
      * @return string
      */
-    public static function dataTable(array $config)
+    public function dataTable(array $config)
     {
-        static::_init();
-
-        static::$view->enableJsLibraries(array('datatables'));
+        $this->view->enableJsLibraries(array('datatables'));
 
         if (isset($config['records_per_page']) === false) {
-            $config['records_per_page'] = Registry::get('Auth')->entries;
+            $config['records_per_page'] = $this->auth->entries;
         }
 
-        $config['initialized'] = self::$dataTableInitialized;
+        $config['initialized'] = $this->dataTableInitialized;
 
-        static::$view->assign('dt', $config);
-        self::$dataTableInitialized = true;
+        $this->view->assign('dt', $config);
+        $this->dataTableInitialized = true;
 
-        return static::$view->fetchTemplate('system/data_table.tpl');
+        return $this->view->fetchTemplate('system/data_table.tpl');
     }
 
-    public static function outputJson(array $data)
+    /**
+     * @param array $data
+     */
+    public function outputJson(array $data)
     {
         header('Content-type: application/json; charset="UTF-8"');
 
@@ -78,7 +81,7 @@ class Functions
      * @param string $mailSignature
      * @return boolean|string
      */
-    public static function generateEmail($recipientName, $recipientEmail, $from, $subject, $body, $mailSignature = '')
+    public function generateEmail($recipientName, $recipientEmail, $from, $subject, $body, $mailSignature = '')
     {
         if (!empty($recipientName)) {
             $to = array(
@@ -89,7 +92,7 @@ class Functions
             $to = $recipientEmail;
         }
 
-        $mailer = new Mailer(self::$view);
+        $mailer = new Mailer($this->view);
         return $mailer
             ->setSubject($subject)
             ->setBody($body)
@@ -135,12 +138,10 @@ class Functions
      *    Optionales Vergleichsfeld, um den richtigen Vorgänger/Nachfolger bestimmen zu können
      * @return boolean
      */
-    public static function moveOneStep($action, $table, $idField, $sortField, $id, $where = '')
+    public function moveOneStep($action, $table, $idField, $sortField, $id, $where = '')
     {
         if ($action === 'up' || $action === 'down') {
-            static::_init();
-
-            static::$db->beginTransaction();
+            $this->db->beginTransaction();
             try {
                 $id = (int)$id;
                 $table = DB_PRE . $table;
@@ -151,26 +152,26 @@ class Functions
                 // Ein Schritt nach oben
                 if ($action === 'up') {
                     // Aktuelles Element und das vorherige Element selektieren
-                    $query = static::$db->fetchAssoc('SELECT a.' . $idField . ' AS other_id, a.' . $sortField . ' AS other_sort, b.' . $sortField . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $idField . ' = ' . $id . ' AND a.' . $sortField . ' < b.' . $sortField . ' ORDER BY a.' . $sortField . ' DESC LIMIT 1');
+                    $query = $this->db->fetchAssoc('SELECT a.' . $idField . ' AS other_id, a.' . $sortField . ' AS other_sort, b.' . $sortField . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $idField . ' = ' . $id . ' AND a.' . $sortField . ' < b.' . $sortField . ' ORDER BY a.' . $sortField . ' DESC LIMIT 1');
                     // Ein Schritt nach unten
                 } else {
                     // Aktuelles Element und das nachfolgende Element selektieren
-                    $query = static::$db->fetchAssoc('SELECT a.' . $idField . ' AS other_id, a.' . $sortField . ' AS other_sort, b.' . $sortField . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $idField . ' = ' . $id . ' AND a.' . $sortField . ' > b.' . $sortField . ' ORDER BY a.' . $sortField . ' ASC LIMIT 1');
+                    $query = $this->db->fetchAssoc('SELECT a.' . $idField . ' AS other_id, a.' . $sortField . ' AS other_sort, b.' . $sortField . ' AS elem_sort FROM ' . $table . ' AS a, ' . $table . ' AS b WHERE ' . $where . 'b.' . $idField . ' = ' . $id . ' AND a.' . $sortField . ' > b.' . $sortField . ' ORDER BY a.' . $sortField . ' ASC LIMIT 1');
                 }
 
                 if (!empty($query)) {
                     // Sortierreihenfolge des aktuellen Elementes zunächst auf 0 setzen
                     // um Probleme mit möglichen Duplicate-Keys zu umgehen
-                    static::$db->update($table, array($sortField => 0), array($idField => $id));
-                    static::$db->update($table, array($sortField => $query['elem_sort']), array($idField => $query['other_id']));
+                    $this->db->update($table, array($sortField => 0), array($idField => $id));
+                    $this->db->update($table, array($sortField => $query['elem_sort']), array($idField => $query['other_id']));
                     // Element nun den richtigen Wert zuweisen
-                    static::$db->update($table, array($sortField => $query['other_sort']), array($idField => $id));
+                    $this->db->update($table, array($sortField => $query['other_sort']), array($idField => $id));
 
-                    static::$db->commit();
+                    $this->db->commit();
                     return true;
                 }
             } catch (\Exception $e) {
-                static::$db->rollback();
+                $this->db->rollback();
             }
         }
         return false;

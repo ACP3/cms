@@ -19,14 +19,11 @@ class Helpers
      *
      * @var Model
      */
-    protected static $model;
+    protected $model;
 
-    protected static function _init()
+    public function __construct(\Doctrine\DBAL\Connection $db)
     {
-        if (!self::$model) {
-            $menuModel = new \ACP3\Modules\Menus\Model(Core\Registry::get('Db'), Core\Registry::get('Lang'), Core\Registry::get('URI'));
-            self::$model = new Model(Core\Registry::get('Db'), Core\Registry::get('Lang'), $menuModel, Core\Registry::get('URI'));
-        }
+        $this->model = new Model($db);
     }
 
     /**
@@ -35,11 +32,9 @@ class Helpers
      * @param integer $id
      * @return array
      */
-    public static function articlesList($id = 0)
+    public function articlesList($id = 0)
     {
-        self::_init();
-
-        $articles = self::$model->getAll();
+        $articles = $this->model->getAll();
         $c_articles = count($articles);
 
         if ($c_articles > 0) {
@@ -50,11 +45,9 @@ class Helpers
         return $articles;
     }
 
-    public static function articleExists($id)
+    public function articleExists($id)
     {
-        self::_init();
-
-        return self::$model->resultExists($id);
+        return $this->model->resultExists($id);
     }
 
 }

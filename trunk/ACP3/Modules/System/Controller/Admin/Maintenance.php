@@ -34,12 +34,12 @@ class Maintenance extends Core\Modules\Controller\Admin
     {
         if (empty($_POST) === false) {
             try {
-                $validator = new System\Validator($this->lang);
+                $validator = $this->get('system.validator');
                 $validator->validateSqlExport($_POST);
 
                 $this->session->unsetFormToken();
 
-                $export = System\Helpers::exportDatabase($_POST['tables'], $_POST['export_type'], isset($_POST['drop']) === true);
+                $export = $this->get('system.helpers')->exportDatabase($_POST['tables'], $_POST['export_type'], isset($_POST['drop']) === true);
 
                 // Als Datei ausgeben
                 if ($_POST['output'] === 'file') {
@@ -104,7 +104,7 @@ class Maintenance extends Core\Modules\Controller\Admin
                     $file['size'] = $_FILES['file']['size'];
                 }
 
-                $validator = new System\Validator($this->lang);
+                $validator = $this->get('system.validator');
                 $validator->validateSqlImport($_POST, $file);
 
                 $this->session->unsetFormToken();

@@ -10,6 +10,10 @@ namespace ACP3\Core;
 class View
 {
     /**
+     * @var URI
+     */
+    protected $uri;
+    /**
      * Legt fest, welche JavaScript Bibliotheken beim Seitenaufruf geladen werden sollen
      *
      * @var array
@@ -30,6 +34,11 @@ class View
      * @var
      */
     protected static $rendererObject;
+
+    public function __construct(URI $uri)
+    {
+        $this->uri = $uri;
+    }
 
     /**
      * Gets the renderer
@@ -98,7 +107,7 @@ class View
             $libraries = '/libraries_' . substr($libraries, 0, -1);
         }
 
-        return Registry::get('URI')->route('minify/index/index/group_' . $group . '/design_' . CONFIG_DESIGN . $layout . $libraries);
+        return $this->uri->route('minify/index/index/group_' . $group . '/design_' . CONFIG_DESIGN . $layout . $libraries);
     }
 
     /**

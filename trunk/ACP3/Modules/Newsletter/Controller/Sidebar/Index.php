@@ -13,8 +13,8 @@ class Index extends Core\Modules\Controller\Sidebar
 
     public function actionIndex()
     {
-        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true) {
-            $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha(3, 'captcha', true, 'newsletter'));
+        if ($this->modules->hasPermission('frontend/captcha/index/image') === true) {
+            $this->view->assign('captcha', $this->get('captcha.helpers')->captcha(3, 'captcha', true, 'newsletter'));
         }
 
         $this->session->generateFormToken('newsletter/index/index');

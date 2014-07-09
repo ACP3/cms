@@ -15,6 +15,16 @@ use ACP3\Core;
 class Helpers
 {
     /**
+     * @var Core\Modules
+     */
+    protected $modules;
+
+    public function __construct(Core\Modules $modules)
+    {
+        $this->modules = $modules;
+    }
+
+    /**
      *
      * @param string $libraries
      * @param string $layout
@@ -70,7 +80,7 @@ class Helpers
         }
 
         // Stylesheets der Module
-        $modules = Core\Modules::getActiveModules();
+        $modules = $this->modules->getActiveModules();
         foreach ($modules as $module) {
             $systemPath = MODULES_DIR . $module['dir'] . '/View/';
             $designPath = DESIGN_PATH_INTERNAL . $module['dir'] . '/';

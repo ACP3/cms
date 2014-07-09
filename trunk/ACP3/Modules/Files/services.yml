@@ -1,0 +1,4 @@
+services:
+  files.validator:
+    class: ACP3\Modules\Files\Validator
+    parent: core.validator.abstract

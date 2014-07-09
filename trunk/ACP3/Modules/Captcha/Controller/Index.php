@@ -36,6 +36,7 @@ class Index extends Core\Modules\Controller
             $height = 30;
 
             $im = imagecreate($width, $height);
+
             // Hintergrundfarbe
             imagecolorallocate($im, 255, 255, 255);
 

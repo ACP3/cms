@@ -30,12 +30,12 @@ class Index extends Core\Modules\Controller
     {
         try {
             $mail = $hash = '';
-            if (Core\Validate::email($this->uri->mail) && Core\Validate::isMD5($this->uri->hash)) {
+            if ($this->get('core.validate')->email($this->uri->mail) && $this->get('core.validate')->isMD5($this->uri->hash)) {
                 $mail = $this->uri->mail;
                 $hash = $this->uri->hash;
             }
 
-            $validator = new Newsletter\Validator($this->lang, $this->auth, $this->model);
+            $validator = $this->get('newsletter.validator');
             $validator->validateActivate($mail, $hash);
 
             $bool = $this->model->update(array('hash' => ''), array('mail' => $mail, 'hash' => $hash), Newsletter\Model::TABLE_NAME_ACCOUNTS);
@@ -52,12 +52,12 @@ class Index extends Core\Modules\Controller
     {
         if (empty($_POST) === false) {
             try {
-                $validator = new Newsletter\Validator($this->lang, $this->auth, $this->model);
+                $validator = $this->get('newsletter.validator');
                 switch ($this->uri->action) {
                     case 'subscribe':
                         $validator->validateSubscribe($_POST);
 
-                        $bool = Newsletter\Helpers::subscribeToNewsletter($_POST['mail']);
+                        $bool = $this->get('newsletter.helpers')->subscribeToNewsletter($_POST['mail']);
 
                         $this->session->unsetFormToken();
 
@@ -78,7 +78,8 @@ class Index extends Core\Modules\Controller
                         throw new Core\Exceptions\ResultNotExists();
                 }
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $this->setContent(Core\Functions::errorBox($e->getMessage()));
+                $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
+                $this->setContent($alerts->errorBox($e->getMessage()));
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -95,8 +96,8 @@ class Index extends Core\Modules\Controller
         );
         $this->view->assign('actions', Core\Functions::selectGenerator('action', array('subscribe', 'unsubscribe'), $actions_Lang, $field_value, 'checked'));
 
-        if (Core\Modules::hasPermission('frontend/captcha/index/image') === true) {
-            $this->view->assign('captcha', \ACP3\Modules\Captcha\Helpers::captcha());
+        if ($this->modules->hasPermission('frontend/captcha/index/image') === true) {
+            $this->view->assign('captcha', $this->get('captcha.helpers')->captcha());
         }
 
         $this->session->generateFormToken();
