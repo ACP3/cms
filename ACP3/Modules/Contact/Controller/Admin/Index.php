@@ -12,9 +12,9 @@ use ACP3\Modules\Contact;
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var \ACP3\Core\Config
      */
-    protected $db;
+    protected $contactConfig;
 
     public function __construct(
         Core\Auth $auth,
@@ -26,16 +26,16 @@ class Index extends Core\Modules\Controller\Admin
         Core\Modules $modules,
         Core\Validate $validate,
         Core\Session $session,
-        \Doctrine\DBAL\Connection $db)
+        Core\Config $contactConfig)
     {
         parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->db = $db;
+        $this->contactConfig = $contactConfig;
     }
 
     public function actionIndex()
     {
-        $config = new Core\Config($this->db, 'contact');
+        $config = $this->contactConfig;
 
         if (empty($_POST) === false) {
             try {

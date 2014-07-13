@@ -12,9 +12,9 @@ use ACP3\Modules\Contact;
 class Index extends Core\Modules\Controller\Sidebar
 {
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var \ACP3\Core\Config
      */
-    protected $db;
+    protected $contactConfig;
 
     public function __construct(
         Core\Auth $auth,
@@ -24,19 +24,18 @@ class Index extends Core\Modules\Controller\Sidebar
         Core\View $view,
         Core\SEO $seo,
         Core\Modules $modules,
-        \Doctrine\DBAL\Connection $db)
+        Core\Config $contactConfig)
     {
         parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
 
-        $this->db = $db;
+        $this->contactConfig = $contactConfig;
     }
 
     public function actionIndex()
     {
         $formatter = $this->get('core.helpers.string.formatter');
 
-        $config = new Core\Config($this->db, 'contact');
-        $settings = $config->getSettings();
+        $settings = $this->contactConfig->getSettings();
         $settings['address'] = $formatter->rewriteInternalUri($settings['address']);
         $settings['disclaimer'] = $formatter->rewriteInternalUri($settings['disclaimer']);
         $this->view->assign('sidebar_contact', $settings);
