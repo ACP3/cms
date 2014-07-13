@@ -7,23 +7,44 @@ use ACP3\Modules\Permissions;
 use ACP3\Modules\System;
 
 /**
- * Description of SystemAdmin
- *
- * @author Tino Goratsch
+ * Class Extensions
+ * @package ACP3\Modules\System\Controller\Admin
  */
 class Extensions extends Core\Modules\Controller\Admin
 {
 
     /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var System\Model
      */
-    private $model;
+    protected $systemModel;
+    /**
+     * @var \ACP3\Modules\Permissions\Cache
+     */
+    protected $permissionsCache;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        \Doctrine\DBAL\Connection $db,
+        System\Model $systemModel,
+        Permissions\Cache $permissionsCache)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->model = new System\Model($this->db);
+        $this->db = $db;
+        $this->systemModel = $systemModel;
+        $this->permissionsCache = $permissionsCache;
     }
 
     public function actionDesigns()
@@ -40,8 +61,8 @@ class Extensions extends Core\Modules\Controller\Admin
                 $bool = $config->setSettings(array('design' => $this->uri->dir));
 
                 // Template Cache leeren
-                Core\Cache::purge('tpl_compiled');
-                Core\Cache::purge('tpl_cached');
+                Core\Cache2::purge('tpl_compiled');
+                Core\Cache2::purge('tpl_cached');
             }
             $text = $this->lang->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
 
@@ -117,7 +138,7 @@ class Extensions extends Core\Modules\Controller\Admin
         } elseif ($info['protected'] === true) {
             $text = $this->lang->t('system', 'mod_deactivate_forbidden');
         } else {
-            $bool = $this->model->update(array('active' => 1), array('name' => $this->uri->dir));
+            $bool = $this->systemModel->update(array('active' => 1), array('name' => $this->uri->dir));
 
             $this->_renewCaches();
 
@@ -141,7 +162,7 @@ class Extensions extends Core\Modules\Controller\Admin
             $deps = $this->get('system.helpers')->checkUninstallDependencies($this->uri->dir);
 
             if (empty($deps)) {
-                $bool = $this->model->update(array('active' => 0), array('name' => $this->uri->dir));
+                $bool = $this->systemModel->update(array('active' => 0), array('name' => $this->uri->dir));
 
                 $this->_renewCaches();
 
@@ -231,8 +252,7 @@ class Extensions extends Core\Modules\Controller\Admin
         $this->lang->setLanguageCache();
         $this->modules->setModulesCache();
 
-        $cache = new Permissions\Cache(new Permissions\Model($this->db));
-        $cache->setResourcesCache();
+        $this->permissionsCache->setResourcesCache();
     }
 
 }

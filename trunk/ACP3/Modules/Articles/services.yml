@@ -1,10 +1,20 @@
 services:
+  articles.controller.admin.index:
+    class: ACP3\Modules\Articles\Controller\Admin\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@core.date', '@core.db', '@articles.model', '@menus.model']
+
+  articles.controller.frontend.index:
+    class: ACP3\Modules\Articles\Controller\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.date', '@articles.model']
+
   articles.helpers:
     class: ACP3\Modules\Articles\Helpers
     arguments: ['@core.db']
+
   articles.model:
     class: ACP3\Modules\Articles\Model
     arguments: ['@core.db']
+
   articles.validator:
     class: ACP3\Modules\Articles\Validator
     arguments: ['@core.lang', '@core.modules', '@core.uri', '@core.validate', '@menus.model']

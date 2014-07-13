@@ -7,27 +7,55 @@ use ACP3\Modules\Permissions;
 use ACP3\Modules\Users;
 
 /**
- * Description of UsersAdmin
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Users\Controller\Admin
  */
 class Index extends Core\Modules\Controller\Admin
 {
     /**
+     * @var \ACP3\Core\ACL
+     */
+    protected $acl;
+    /**
+     * @var Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var Users\Model
      */
-    protected $model;
+    protected $usersModel;
     /**
      * @var Permissions\Model
      */
     protected $permissionsModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        Core\ACL $acl,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        Users\Model $usersModel,
+        Permissions\Model $permissionsModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->model = $this->get('users.model');
-        $this->permissionsModel = new Permissions\Model($this->db);
+        $this->acl = $acl;
+        $this->date = $date;
+        $this->db = $db;
+        $this->usersModel = $usersModel;
+        $this->permissionsModel = $permissionsModel;
     }
 
     public function actionCreate()
@@ -37,7 +65,7 @@ class Index extends Core\Modules\Controller\Admin
                 $validator = $this->get('users.validator');
                 $validator->validateCreate($_POST);
 
-                $securityHelper = new Core\Helpers\Secure();
+                $securityHelper = $this->get('core.helpers.secure');
                 $salt = $securityHelper->salt(12);
 
                 $insertValues = array(
@@ -72,7 +100,7 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->db->beginTransaction();
                 try {
-                    $lastId = $this->model->insert($insertValues);
+                    $lastId = $this->usersModel->insert($insertValues);
                     foreach ($_POST['roles'] as $row) {
                         $this->permissionsModel->insert(array('user_id' => $lastId, 'role_id' => $row), Permissions\Model::TABLE_NAME_USER_ROLES);
                     }
@@ -84,11 +112,9 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/users');
+                $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/users');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/users');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/users');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -214,7 +240,7 @@ class Index extends Core\Modules\Controller\Admin
                         $this->auth->logout();
                         $selfDelete = true;
                     }
-                    $bool = $this->model->delete($item);
+                    $bool = $this->usersModel->delete($item);
                 }
             }
             if ($isAdminUser === true) {
@@ -223,8 +249,8 @@ class Index extends Core\Modules\Controller\Admin
             } else {
                 $text = $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error');
             }
-            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-            $redirect->setMessage($bool, $text, $selfDelete === true ? ROOT_DIR : 'acp/users');
+
+            $this->redirectMessages()->setMessage($bool, $text, $selfDelete === true ? ROOT_DIR : 'acp/users');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -232,7 +258,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id) === true) {
+        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->usersModel->resultExists($this->uri->id) === true) {
             $user = $this->auth->getUserInfo($this->uri->id);
 
             if (empty($_POST) === false) {
@@ -287,7 +313,7 @@ class Index extends Core\Modules\Controller\Admin
                         $updateValues['pwd'] = $newPassword . ':' . $salt;
                     }
 
-                    $bool = $this->model->update($updateValues, $this->uri->id);
+                    $bool = $this->usersModel->update($updateValues, $this->uri->id);
 
                     // Falls sich der User selbst bearbeitet hat, Cookie aktualisieren
                     if ($this->uri->id == $this->auth->getUserId()) {
@@ -297,11 +323,9 @@ class Index extends Core\Modules\Controller\Admin
 
                     $this->session->unsetFormToken();
 
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/users');
+                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/users');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage(false, $e->getMessage(), 'acp/users');
+                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/users');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -416,11 +440,9 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/users');
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/users');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/users');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/users');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -445,10 +467,9 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
-        $users = $this->model->getAllInAcp();
+        $users = $this->usersModel->getAllInAcp();
         $c_users = count($users);
 
         if ($c_users > 0) {

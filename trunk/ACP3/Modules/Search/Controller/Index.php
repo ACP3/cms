@@ -6,15 +6,35 @@ use ACP3\Core;
 use ACP3\Modules\Search;
 
 /**
- * Description of SearchFrontend
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Search\Controller
  */
 class Index extends Core\Modules\Controller
 {
+
+    /**
+     * @var Core\Session
+     */
+    protected $session;
+
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Session $session)
+    {
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
+
+        $this->session = $session;
+    }
+
     public function actionIndex()
     {
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
+        $redirect = $this->redirectMessages();
 
         if (empty($_POST) === false) {
             try {
@@ -63,7 +83,7 @@ class Index extends Core\Modules\Controller
         $searchResults = array();
         foreach ($modules as $module) {
             $action = $module . 'Search';
-            if (method_exists("\\ACP3\\Modules\\Search\\Extensions", $action) &&
+            if (method_exists($this->get('search.extensions'), $action) &&
                 $this->modules->hasPermission('frontend/' . $module) === true
             ) {
                 $results = $this->get('search.extensions');

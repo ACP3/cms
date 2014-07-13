@@ -6,12 +6,39 @@ use ACP3\Core;
 use ACP3\Modules\System;
 
 /**
- * Description of SystemAdmin
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\System\Controller\Admin
  */
 class Index extends Core\Modules\Controller\Admin
 {
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
+     * @var System\Model
+     */
+    protected $systemModel;
+
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        \Doctrine\DBAL\Connection $db,
+        System\Model $systemModel)
+    {
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
+
+        $this->db = $db;
+        $this->systemModel = $systemModel;
+    }
+
     public function actionConfiguration()
     {
         $config = new Core\Config($this->db, 'system');
@@ -60,7 +87,7 @@ class Index extends Core\Modules\Controller\Admin
                 if (CONFIG_EXTRA_CSS !== $_POST['extra_css'] ||
                     CONFIG_EXTRA_JS !== $_POST['extra_js']
                 ) {
-                    Core\Cache::purge('minify');
+                    Core\Cache2::purge('minify');
                 }
 
                 $this->session->unsetFormToken();

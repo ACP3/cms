@@ -1,10 +1,32 @@
 services:
+  newsletter.controller.admin.accounts:
+    class: ACP3\Modules\Newsletter\Controller\Admin\Accounts
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@newsletter.model']
+
+  newsletter.controller.admin.index:
+    class: ACP3\Modules\Newsletter\Controller\Admin\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@core.date', '@core.db', '@newsletter.model']
+
+  newsletter.controller.frontend.archive:
+    class: ACP3\Modules\Newsletter\Controller\Archive
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.date', '@core.db', '@newsletter.model']
+
+  newsletter.controller.frontend.index:
+    class: ACP3\Modules\Newsletter\Controller\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.session', '@core.db', '@newsletter.model']
+
+  newsletter.controller.sidebar.index:
+    class: ACP3\Modules\Newsletter\Controller\Sidebar\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.session']
+
   newsletter.model:
     class: ACP3\Modules\Newsletter\Model
     arguments: ['@core.db']
+
   newsletter.helpers:
     class: ACP3\Modules\Newsletter\Helpers
     arguments: ['@core.db', '@core.date', '@core.lang', '@core.modules', '@core.uri', '@core.view', '@core.helpers.string.formatter']
+
   newsletter.validator:
     class: ACP3\Modules\Newsletter\Validator
     arguments: ['@core.lang', '@core.validate', '@core.auth', '@core.modules', '@newsletter.model']

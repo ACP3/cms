@@ -10,6 +10,26 @@ use ACP3\Core;
  */
 class Index extends Core\Modules\Controller\Sidebar
 {
+    /**
+     * @var Core\Session
+     */
+    protected $session;
+
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Session $session)
+    {
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
+
+        $this->session = $session;
+    }
+
 
     public function actionIndex()
     {

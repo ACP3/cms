@@ -6,22 +6,37 @@ use ACP3\Core;
 use ACP3\Modules\Permissions;
 
 /**
- * Description of PermissionsAdmin
- *
- * @author Tino Goratsch
+ * Class Resources
+ * @package ACP3\Modules\Permissions\Controller\Admin
  */
 class Resources extends Core\Modules\Controller\Admin
 {
     /**
+     * @var Core\ACL
+     */
+    protected $acl;
+    /**
      * @var Permissions\Model
      */
-    protected $model;
+    protected $permissionsModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        Core\ACL $acl,
+        Permissions\Model $permissionsModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->model = new Permissions\Model($this->db);
+        $this->acl = $acl;
+        $this->permissionsModel = $permissionsModel;
     }
 
     public function actionCreate()
@@ -41,18 +56,16 @@ class Resources extends Core\Modules\Controller\Admin
                     'params' => '',
                     'privilege_id' => $_POST['privileges'],
                 );
-                $bool = $this->model->insert($insertValues, Permissions\Model::TABLE_NAME_RESOURCES);
+                $bool = $this->permissionsModel->insert($insertValues, Permissions\Model::TABLE_NAME_RESOURCES);
 
-                $cache = new Permissions\Cache($this->model);
+                $cache = new Permissions\Cache($this->permissionsModel);
                 $cache->setResourcesCache();
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/permissions/resources');
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/permissions/resources');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/permissions/resources');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/permissions/resources');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -85,14 +98,13 @@ class Resources extends Core\Modules\Controller\Admin
             $bool = false;
 
             foreach ($items as $item) {
-                $bool = $this->model->delete($item, Permissions\Model::TABLE_NAME_RESOURCES);
+                $bool = $this->permissionsModel->delete($item, Permissions\Model::TABLE_NAME_RESOURCES);
             }
 
-            $cache = new Permissions\Cache($this->model);
+            $cache = new Permissions\Cache($this->permissionsModel);
             $cache->setResourcesCache();
 
-            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-            $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/permissions/resources');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/permissions/resources');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -100,7 +112,7 @@ class Resources extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $resource = $this->model->getResourceById((int) $this->uri->id);
+        $resource = $this->permissionsModel->getResourceById((int) $this->uri->id);
         if (!empty($resource)) {
             if (empty($_POST) === false) {
                 try {
@@ -113,18 +125,16 @@ class Resources extends Core\Modules\Controller\Admin
                         'page' => $_POST['resource'],
                         'privilege_id' => $_POST['privileges'],
                     );
-                    $bool = $this->model->update($updateValues, $this->uri->id, Permissions\Model::TABLE_NAME_RESOURCES);
+                    $bool = $this->permissionsModel->update($updateValues, $this->uri->id, Permissions\Model::TABLE_NAME_RESOURCES);
 
-                    $cache = new Permissions\Cache($this->model);
+                    $cache = new Permissions\Cache($this->permissionsModel);
                     $cache->setResourcesCache();
 
                     $this->session->unsetFormToken();
 
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/permissions/resources');
+                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/permissions/resources');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage(false, $e->getMessage(), 'acp/permissions/resources');
+                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/permissions/resources');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -157,7 +167,7 @@ class Resources extends Core\Modules\Controller\Admin
         $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
         $redirect->getMessage();
 
-        $resources = $this->model->getAllResources();
+        $resources = $this->permissionsModel->getAllResources();
         $c_resources = count($resources);
         $output = array();
         for ($i = 0; $i < $c_resources; ++$i) {

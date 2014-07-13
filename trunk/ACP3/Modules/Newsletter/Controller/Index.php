@@ -6,24 +6,42 @@ use ACP3\Core;
 use ACP3\Modules\Newsletter;
 
 /**
- * Description of NewsletterFrontend
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Newsletter\Controller
  */
 class Index extends Core\Modules\Controller
 {
 
     /**
-     *
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
+     * @var Core\Session
+     */
+    protected $session;
+    /**
      * @var Newsletter\Model
      */
-    protected $model;
+    protected $newsletterModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Session $session,
+        \Doctrine\DBAL\Connection $db,
+        Newsletter\Model $newsModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
 
-        $this->model = new Newsletter\Model($this->db);
+        $this->db = $db;
+        $this->session = $session;
+        $this->newsletterModel = $newsModel;
     }
 
     public function actionActivate()
@@ -38,7 +56,7 @@ class Index extends Core\Modules\Controller
             $validator = $this->get('newsletter.validator');
             $validator->validateActivate($mail, $hash);
 
-            $bool = $this->model->update(array('hash' => ''), array('mail' => $mail, 'hash' => $hash), Newsletter\Model::TABLE_NAME_ACCOUNTS);
+            $bool = $this->newsletterModel->update(array('hash' => ''), array('mail' => $mail, 'hash' => $hash), Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
             $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
             $this->setContent($alerts->confirmBox($this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), ROOT_DIR));
@@ -67,7 +85,7 @@ class Index extends Core\Modules\Controller
                     case 'unsubscribe':
                         $validator->validateUnsubscribe($_POST);
 
-                        $bool = $this->model->delete($_POST['mail'], 'mail', Newsletter\Model::TABLE_NAME_ACCOUNTS);
+                        $bool = $this->newsletterModel->delete($_POST['mail'], 'mail', Newsletter\Model::TABLE_NAME_ACCOUNTS);
 
                         $this->session->unsetFormToken();
 

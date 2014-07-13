@@ -1,7 +1,16 @@
 services:
+  feeds.controller.admin.index:
+    class: ACP3\Modules\Feeds\Controller\Admin\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@core.db']
+
+  feeds.controller.frontend.index:
+    class: ACP3\Modules\Feeds\Controller\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.db']
+
   feeds.validator:
     class: ACP3\Modules\Feeds\Validator
     parent: core.validator.abstract
+
   feeds.extensions:
     class: ACP3\Modules\Feeds\Extensions
     arguments: ['@core.date', '@core.db', '@core.uri', '@core.view', '@core.helpers.string.formatter']

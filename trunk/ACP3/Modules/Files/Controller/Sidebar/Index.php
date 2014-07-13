@@ -7,33 +7,51 @@ use ACP3\Modules\Files;
 
 
 /**
- * Description of FilesFrontend
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Files\Controller\Sidebar
  */
 class Index extends Core\Modules\Controller\Sidebar
 {
 
     /**
-     *
+     * @var \ACP3\Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var Files\Model
      */
-    protected $model;
+    protected $filesModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        Files\Model $filesModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
 
-        $this->model = new Files\Model($this->db);
+        $this->date = $date;
+        $this->db = $db;
+        $this->filesModel = $filesModel;
     }
 
-   public function actionIndex()
+    public function actionIndex()
     {
         $formatter = $this->get('core.helpers.string.formatter');
         $config = new Core\Config($this->db, 'files');
         $settings = $config->getSettings();
 
-        $files = $this->model->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
+        $files = $this->filesModel->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         $c_files = count($files);
 
         if ($c_files > 0) {

@@ -1,4 +1,20 @@
 services:
+  polls.controller.admin.index:
+    class: ACP3\Modules\Polls\Controller\Admin\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@core.date', '@polls.model']
+
+  polls.controller.frontend.index:
+    class: ACP3\Modules\Polls\Controller\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.date', '@polls.model']
+
+  polls.controller.sidebar.index:
+    class: ACP3\Modules\Polls\Controller\Sidebar\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.date', '@polls.model']
+
+  polls.model:
+    class: ACP3\Modules\Polls\Model
+    arguments: ['@core.db']
+
   polls.validator:
     class: ACP3\Modules\Polls\Validator
     parent: core.validator.abstract

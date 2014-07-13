@@ -1,21 +1,12 @@
 <?php
 
-/**
- * Captcha
- *
- * @author Tino Goratsch
- * @package ACP3
- * @subpackage Modules
- */
-
 namespace ACP3\Modules\Captcha\Controller;
 
 use ACP3\Core;
 
 /**
- * Description of Frontend
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Captcha\Controller
  */
 class Index extends Core\Modules\Controller
 {

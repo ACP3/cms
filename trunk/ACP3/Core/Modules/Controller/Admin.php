@@ -5,12 +5,37 @@ namespace ACP3\Core\Modules\Controller;
 use ACP3\Core;
 
 /**
- * Description of AdminController
- *
- * @author goratsch
+ * Class Admin
+ * @package ACP3\Core\Modules\Controller
  */
 class Admin extends Core\Modules\Controller
 {
+    /**
+     * @var \ACP3\Core\Session
+     */
+    protected $session;
+    /**
+     * @var Core\Validate
+     */
+    protected $validate;
+
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session)
+    {
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
+
+        $this->validate = $validate;
+        $this->session = $session;
+    }
+
     /**
      * @return $this
      * @throws \ACP3\Core\Exceptions\UnauthorizedAccess
@@ -36,7 +61,7 @@ class Admin extends Core\Modules\Controller
     {
         if (isset($_POST['entries']) && is_array($_POST['entries']) === true) {
             $entries = $_POST['entries'];
-        } elseif (Core\Validate::deleteEntries($this->uri->entries) === true) {
+        } elseif ($this->validate->deleteEntries($this->uri->entries) === true) {
             $entries = $this->uri->entries;
         }
 

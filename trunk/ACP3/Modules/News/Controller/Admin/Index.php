@@ -7,24 +7,44 @@ use ACP3\Modules\Categories;
 use ACP3\Modules\News;
 
 /**
- * Description of NewsAdmin
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\News\Controller\Admin
  */
 class Index extends Core\Modules\Controller\Admin
 {
 
     /**
-     *
+     * @var Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var News\Model
      */
-    protected $model;
+    protected $newsModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        News\Model $newsModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->model = new News\Model($this->db);
+        $this->date = $date;
+        $this->db = $db;
+        $this->newsModel = $newsModel;
     }
 
     public function actionCreate()
@@ -52,7 +72,7 @@ class Index extends Core\Modules\Controller\Admin
                     'user_id' => $this->auth->getUserId(),
                 );
 
-                $lastId = $this->model->insert($insertValues);
+                $lastId = $this->newsModel->insert($insertValues);
 
                 $this->uri->insertUriAlias(
                     sprintf(News\Helpers::URL_KEY_PATTERN, $lastId),
@@ -65,11 +85,9 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/news');
+                $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/news');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/news');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -122,7 +140,7 @@ class Index extends Core\Modules\Controller\Admin
             $cache = new Core\Cache2('news');
 
             foreach ($items as $item) {
-                $bool = $this->model->delete($item);
+                $bool = $this->newsModel->delete($item);
                 if ($commentsInstalled === true) {
                     $this->get('comments.helpers')->deleteCommentsByModuleAndResult('news', $item);
                 }
@@ -133,8 +151,7 @@ class Index extends Core\Modules\Controller\Admin
 
             $this->seo->setCache();
 
-            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-            $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/news');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/news');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -142,7 +159,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $news = $this->model->getOneById((int)$this->uri->id);
+        $news = $this->newsModel->getOneById((int)$this->uri->id);
 
         if (empty($news) === false) {
             $config = new Core\Config($this->db, 'news');
@@ -167,7 +184,7 @@ class Index extends Core\Modules\Controller\Admin
                         'user_id' => $this->auth->getUserId(),
                     );
 
-                    $bool = $this->model->update($updateValues, $this->uri->id);
+                    $bool = $this->newsModel->update($updateValues, $this->uri->id);
 
                     $this->uri->insertUriAlias(
                         sprintf(News\Helpers::URL_KEY_PATTERN, $this->uri->id),
@@ -178,16 +195,14 @@ class Index extends Core\Modules\Controller\Admin
                     );
                     $this->seo->setCache();
 
-                    $cache = new News\Cache($this->model);
+                    $cache = new News\Cache($this->newsModel);
                     $cache->setCache($this->uri->id);
 
                     $this->session->unsetFormToken();
 
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/news');
+                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/news');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage(false, $e->getMessage(), 'acp/news');
+                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -234,10 +249,9 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
-        $news = $this->model->getAllInAcp();
+        $news = $this->newsModel->getAllInAcp();
         $c_news = count($news);
 
         if ($c_news > 0) {
@@ -279,11 +293,9 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/news');
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/news');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/news');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));

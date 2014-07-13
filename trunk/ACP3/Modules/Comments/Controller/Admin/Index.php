@@ -6,24 +6,43 @@ use ACP3\Core;
 use ACP3\Modules\Comments;
 
 /**
- * Description of CommentsAdmin
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Comments\Controller\Admin
  */
 class Index extends Core\Modules\Controller\Admin
 {
-
     /**
-     *
+     * @var \ACP3\Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var Comments\Model
      */
-    protected $model;
+    protected $commentsModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        Comments\Model $commentsModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->model = new Comments\Model($this->db);
+        $this->date = $date;
+        $this->db = $db;
+        $this->commentsModel = $commentsModel;
     }
 
     public function actionDelete()
@@ -33,11 +52,10 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->uri->action === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
-                $bool = $this->model->delete($item, 'module_id');
+                $bool = $this->commentsModel->delete($item, 'module_id');
             }
 
-            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-            $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/comments');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -45,10 +63,9 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
-        $comments = $this->model->getCommentsGroupedByModule();
+        $comments = $this->commentsModel->getCommentsGroupedByModule();
         $c_comments = count($comments);
 
         if ($c_comments > 0) {
@@ -85,11 +102,9 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/comments');
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/comments');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/comments');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/comments');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));

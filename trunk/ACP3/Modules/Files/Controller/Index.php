@@ -8,29 +8,47 @@ use ACP3\Modules\Files;
 
 
 /**
- * Description of FilesFrontend
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Files\Controller
  */
 class Index extends Core\Modules\Controller
 {
-
     /**
-     *
+     * @var \ACP3\Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var Files\Model
      */
-    protected $model;
+    protected $filesModel;
     /**
      * @var \ACP3\Modules\Categories\Model
      */
     protected $categoriesModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        Files\Model $filesModel,
+        Categories\Model $categoriesModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
 
-        $this->model = new Files\Model($this->db);
-        $this->categoriesModel = new \ACP3\Modules\Categories\Model($this->db);
+        $this->date = $date;
+        $this->db = $db;
+        $this->filesModel = $filesModel;
+        $this->categoriesModel = $categoriesModel;
     }
 
     public function actionIndex()
@@ -46,8 +64,8 @@ class Index extends Core\Modules\Controller
 
     public function actionDetails()
     {
-        if ($this->model->resultExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
-            $cache = new Files\Cache($this->model);
+        if ($this->filesModel->resultExists((int) $this->uri->id, $this->date->getCurrentDateTime()) === true) {
+            $cache = new Files\Cache($this->filesModel);
             $file = $cache->getCache($this->uri->id);
 
             if ($this->uri->action === 'download') {
@@ -71,7 +89,8 @@ class Index extends Core\Modules\Controller
                 }
             } else {
                 // Brotkrümelspur
-                $this->breadcrumb->append($this->lang->t('files', 'files'), 'files')
+                $this->breadcrumb
+                    ->append($this->lang->t('files', 'files'), 'files')
                     ->append($file['category_title'], 'files/files/cat_' . $file['category_id'])
                     ->append($file['title']);
 
@@ -84,19 +103,10 @@ class Index extends Core\Modules\Controller
                 $this->view->assign('file', $file);
 
                 if ($settings['comments'] == 1 && $file['comments'] == 1 && $this->modules->hasPermission('frontend/comments') === true) {
-                    $comments = new \ACP3\Modules\Comments\Controller\Index(
-                        $this->auth,
-                        $this->breadcrumb,
-                        $this->date,
-                        $this->db,
-                        $this->lang,
-                        $this->session,
-                        $this->uri,
-                        $this->view,
-                        $this->seo,
-                        'files',
-                        $this->uri->id
-                    );
+                    $comments = $this->get('comments.controller.frontend.index');
+                    $comments
+                        ->setModule('files')
+                        ->setEntryId($this->uri->id);
                     $this->view->assign('comments', $comments->actionIndex());
                 }
             }
@@ -114,7 +124,7 @@ class Index extends Core\Modules\Controller
                 ->append($this->lang->t('files', 'files'), 'files')
                 ->append($category['title']);
 
-            $files = $this->model->getAllByCategoryId($this->uri->cat, $this->date->getCurrentDateTime());
+            $files = $this->filesModel->getAllByCategoryId($this->uri->cat, $this->date->getCurrentDateTime());
             $c_files = count($files);
 
             if ($c_files > 0) {

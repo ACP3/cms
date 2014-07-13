@@ -6,22 +6,43 @@ use ACP3\Core;
 use ACP3\Modules\Guestbook;
 
 /**
- * Description of GuestbookAdmin
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Guestbook\Controller\Admin
  */
 class Index extends Core\Modules\Controller\Admin
 {
     /**
+     * @var Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var Guestbook\Model
      */
-    protected $model;
+    protected $guestbookModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        Guestbook\Model $guestbookModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->model = new Guestbook\Model($this->db);
+        $this->date = $date;
+        $this->db = $db;
+        $this->guestbookModel = $guestbookModel;
     }
 
     public function actionDelete()
@@ -31,11 +52,10 @@ class Index extends Core\Modules\Controller\Admin
         if ($this->uri->action === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
-                $bool = $this->model->delete($item);
+                $bool = $this->guestbookModel->delete($item);
             }
 
-            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-            $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/guestbook');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/guestbook');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -43,7 +63,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $guestbook = $this->model->getOneById($this->uri->id);
+        $guestbook = $this->guestbookModel->getOneById($this->uri->id);
         if (empty($guestbook) === false) {
             $config = new Core\Config($this->db, 'guestbook');
             $settings = $config->getSettings();
@@ -59,15 +79,13 @@ class Index extends Core\Modules\Controller\Admin
                         'active' => $settings['notify'] == 2 ? $_POST['active'] : 1,
                     );
 
-                    $bool = $this->model->update($updateValues, $this->uri->id);
+                    $bool = $this->guestbookModel->update($updateValues, $this->uri->id);
 
                     $this->session->unsetFormToken();
 
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/guestbook');
+                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/guestbook');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage(false, $e->getMessage(), 'acp/guestbook');
+                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/guestbook');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -94,10 +112,9 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
-        $guestbook = $this->model->getAllInAcp();
+        $guestbook = $this->guestbookModel->getAllInAcp();
         $c_guestbook = count($guestbook);
 
         if ($c_guestbook > 0) {
@@ -120,7 +137,7 @@ class Index extends Core\Modules\Controller\Admin
                 }
             }
 
-            $formatter = $this->get('core.functions');
+            $formatter = $this->get('core.helpers.string.formatter');
             for ($i = 0; $i < $c_guestbook; ++$i) {
                 $guestbook[$i]['date_formatted'] = $this->date->formatTimeRange($guestbook[$i]['date']);
                 $guestbook[$i]['message'] = $formatter->nl2p($guestbook[$i]['message']);
@@ -154,11 +171,9 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/guestbook');
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/guestbook');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/guestbook');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/guestbook');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));

@@ -1,4 +1,16 @@
 services:
+  contact.controller.admin.index:
+    class: ACP3\Modules\Contact\Controller\Admin\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@core.db']
+
+  contact.controller.frontend.index:
+    class: ACP3\Modules\Contact\Controller\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.db', '@core.session']
+
+  contact.controller.sidebar.index:
+    class: ACP3\Modules\Contact\Controller\Sidebar\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.db', '@core.session']
+
   contact.validator:
     class: ACP3\Modules\Contact\Validator
     arguments: ['@core.lang', '@core.validate', '@core.auth', '@core.modules']

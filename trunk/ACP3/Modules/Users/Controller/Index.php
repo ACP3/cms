@@ -6,22 +6,47 @@ use ACP3\Core;
 use ACP3\Modules\Users;
 
 /**
- * Description of UsersFrontend
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Users\Controller
  */
 class Index extends Core\Modules\Controller
 {
     /**
+     * @var Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
+     * @var \ACP3\Core\Session
+     */
+    protected $session;
+    /**
      * @var Users\Model
      */
-    protected $model;
+    protected $usersModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Session $session,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        Users\Model $usersModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
 
-        $this->model = $this->get('users.model');
+        $this->date = $date;
+        $this->db = $db;
+        $this->session = $session;
+        $this->usersModel = $usersModel;
     }
 
     public function actionForgotPwd()
@@ -40,10 +65,10 @@ class Index extends Core\Modules\Controller
                     $host = htmlentities($_SERVER['HTTP_HOST']);
 
                     // Je nachdem, wie das Feld ausgefüllt wurde, dieses auswählen
-                    if ($this->get('core.validate')->email($_POST['nick_mail']) === true && $this->model->resultExistsByEmail($_POST['nick_mail']) === true) {
-                        $user = $this->model->getOneByEmail($_POST['nick_mail']);
+                    if ($this->get('core.validate')->email($_POST['nick_mail']) === true && $this->usersModel->resultExistsByEmail($_POST['nick_mail']) === true) {
+                        $user = $this->usersModel->getOneByEmail($_POST['nick_mail']);
                     } else {
-                        $user = $this->model->getOneByNickname($_POST['nick_mail']);
+                        $user = $this->usersModel->getOneByNickname($_POST['nick_mail']);
                     }
 
                     // E-Mail mit dem neuen Passwort versenden
@@ -65,7 +90,7 @@ class Index extends Core\Modules\Controller
                             'pwd' => $securityHelper->generateSaltedPassword($salt, $newPassword) . ':' . $salt,
                             'login_errors' => 0
                         );
-                        $bool = $this->model->update($updateValues, $user['id']);
+                        $bool = $this->usersModel->update($updateValues, $user['id']);
                     }
 
                     $this->session->unsetFormToken();
@@ -94,9 +119,9 @@ class Index extends Core\Modules\Controller
 
     public function actionIndex()
     {
-        $users = $this->model->getAll(POS, $this->auth->entries);
+        $users = $this->usersModel->getAll(POS, $this->auth->entries);
         $c_users = count($users);
-        $allUsers = $this->model->countAll();
+        $allUsers = $this->usersModel->countAll();
 
         if ($c_users > 0) {
             $pagination = new Core\Pagination(
@@ -193,7 +218,7 @@ class Index extends Core\Modules\Controller
 
                     $this->db->beginTransaction();
                     try {
-                        $lastId = $this->model->insert($insertValues);
+                        $lastId = $this->usersModel->insert($insertValues);
                         $bool2 = $this->db->insert(DB_PRE . 'acl_user_roles', array('user_id' => $lastId, 'role_id' => 2));
                         $this->db->commit();
                     } catch (\Exception $e) {
@@ -207,8 +232,7 @@ class Index extends Core\Modules\Controller
                     $this->setContent($alerts->confirmBox($this->lang->t('users', $mailIsSent === true && $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'), ROOT_DIR));
                     return;
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage(false, $e->getMessage(), 'users/register');
+                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'users/register');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -232,7 +256,7 @@ class Index extends Core\Modules\Controller
 
     public function actionViewProfile()
     {
-        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->model->resultExists($this->uri->id) === true) {
+        if ($this->get('core.validate')->isNumber($this->uri->id) === true && $this->usersModel->resultExists($this->uri->id) === true) {
             $user = $this->auth->getUserInfo($this->uri->id);
             $user['gender'] = str_replace(array(1, 2, 3), array('', $this->lang->t('users', 'female'), $this->lang->t('users', 'male')), $user['gender']);
             $user['birthday'] = $this->date->format($user['birthday'], $user['birthday_display'] == 1 ? 'd.m.Y' : 'd.m.');

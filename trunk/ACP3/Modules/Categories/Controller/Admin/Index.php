@@ -6,24 +6,37 @@ use ACP3\Core;
 use ACP3\Modules\Categories;
 
 /**
- * Description of CategoriesAdmin
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Categories\Controller\Admin
  */
 class Index extends Core\Modules\Controller\Admin
 {
-
     /**
-     *
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var Categories\Model
      */
-    protected $model;
+    protected $categoriesModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        \Doctrine\DBAL\Connection $db,
+        Categories\Model $categoriesModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->model = new Categories\Model($this->db);
+        $this->db = $db;
+        $this->categoriesModel = $categoriesModel;
     }
 
     public function actionCreate()
@@ -55,18 +68,16 @@ class Index extends Core\Modules\Controller\Admin
                     $insertValues['picture'] = $result['name'];
                 }
 
-                $bool = $this->model->insert($insertValues);
+                $bool = $this->categoriesModel->insert($insertValues);
 
-                $cache = new Categories\Cache($this->model);
+                $cache = new Categories\Cache($this->categoriesModel);
                 $cache->setCache($_POST['module']);
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/categories');
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), 'acp/categories');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/categories');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/categories');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -97,8 +108,8 @@ class Index extends Core\Modules\Controller\Admin
             $isInUse = false;
 
             foreach ($items as $item) {
-                if (!empty($item) && $this->model->resultExists($item) === true) {
-                    $category = $this->model->getCategoryDeleteInfosById($item);
+                if (!empty($item) && $this->categoriesModel->resultExists($item) === true) {
+                    $category = $this->categoriesModel->getCategoryDeleteInfosById($item);
 
                     $className = "\\ACP3\\Modules\\" . ucfirst($category['module']) . "\\Model";
                     if (class_exists($className) === true) {
@@ -113,7 +124,7 @@ class Index extends Core\Modules\Controller\Admin
                     // Kategoriebild ebenfalls löschen
                     $upload = new Core\Helpers\Upload('categories');
                     $upload->removeUploadedFile($category['picture']);
-                    $bool = $this->model->delete($item);
+                    $bool = $this->categoriesModel->delete($item);
                 }
             }
 
@@ -127,8 +138,7 @@ class Index extends Core\Modules\Controller\Admin
                 $text = $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error');
             }
 
-            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-            $redirect->setMessage($bool, $text, 'acp/categories');
+            $this->redirectMessages()->setMessage($bool, $text, 'acp/categories');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -136,7 +146,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $category = $this->model->getOneById($this->uri->id);
+        $category = $this->categoriesModel->getOneById($this->uri->id);
 
         if (empty($category) === false) {
             if (empty($_POST) === false) {
@@ -165,18 +175,16 @@ class Index extends Core\Modules\Controller\Admin
                         $updateValues['picture'] = $result['name'];
                     }
 
-                    $bool = $this->model->update($updateValues, $this->uri->id);
+                    $bool = $this->categoriesModel->update($updateValues, $this->uri->id);
 
-                    $cache = new Categories\Cache($this->model);
-                    $cache->setCache($this->model->getModuleNameFromCategoryId($this->uri->id));
+                    $cache = new Categories\Cache($this->categoriesModel);
+                    $cache->setCache($this->categoriesModel->getModuleNameFromCategoryId($this->uri->id));
 
                     $this->session->unsetFormToken();
 
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/categories');
+                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/categories');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage(false, $e->getMessage(), 'acp/news');
+                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -193,10 +201,9 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
-        $categories = $this->model->getAllWithModuleName();
+        $categories = $this->categoriesModel->getAllWithModuleName();
         $c_categories = count($categories);
 
         if ($c_categories > 0) {
@@ -234,11 +241,9 @@ class Index extends Core\Modules\Controller\Admin
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/categories');
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool === true ? 'settings_success' : 'settings_error'), 'acp/categories');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/news');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/news');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));

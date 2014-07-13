@@ -6,23 +6,37 @@ use ACP3\Core;
 use ACP3\Modules\Menus;
 
 /**
- * Description of MenusAdmin
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Menus\Controller\Admin
  */
 class Index extends Core\Modules\Controller\Admin
 {
     /**
-     *
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var Menus\Model
      */
-    protected $model;
+    protected $menusModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        \Doctrine\DBAL\Connection $db,
+        Menus\Model $menusModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->model = new Menus\Model($this->db);
+        $this->db = $db;
+        $this->menusModel = $menusModel;
     }
 
     public function actionCreate()
@@ -38,15 +52,13 @@ class Index extends Core\Modules\Controller\Admin
                     'title' => Core\Functions::strEncode($_POST['title']),
                 );
 
-                $lastId = $this->model->insert($insertValues);
+                $lastId = $this->menusModel->insert($insertValues);
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/menus');
+                $this->redirectMessages()->setMessage($lastId, $this->lang->t('system', $lastId !== false ? 'create_success' : 'create_error'), 'acp/menus');
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), 'acp/menus');
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -68,24 +80,23 @@ class Index extends Core\Modules\Controller\Admin
             $cache = new Core\Cache2('menus');
 
             foreach ($items as $item) {
-                if (!empty($item) && $this->model->menuExists($item) === true) {
+                if (!empty($item) && $this->menusModel->menuExists($item) === true) {
                     // Der Navigationsleiste zugeordnete Menüpunkte ebenfalls löschen
-                    $items = $this->model->getAllItemsByBlockId($item);
+                    $items = $this->menusModel->getAllItemsByBlockId($item);
                     foreach ($items as $row) {
                         $nestedSet->deleteNode($row['id']);
                     }
 
-                    $block = $this->model->getMenuNameById($item);
-                    $bool = $this->model->delete($item);
+                    $block = $this->menusModel->getMenuNameById($item);
+                    $bool = $this->menusModel->delete($item);
                     $cache->delete(Menus\Cache::CACHE_ID_VISIBLE . $block);
                 }
             }
 
-            $menusCache = new Menus\Cache($this->lang, $this->model);
+            $menusCache = new Menus\Cache($this->lang, $this->menusModel);
             $menusCache->setMenuItemsCache();
 
-            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-            $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/menus');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -93,7 +104,7 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionEdit()
     {
-        $menu = $this->model->getOneById($this->uri->id);
+        $menu = $this->menusModel->getOneById($this->uri->id);
 
         if (empty($menu) === false) {
             if (empty($_POST) === false) {
@@ -106,18 +117,16 @@ class Index extends Core\Modules\Controller\Admin
                         'title' => Core\Functions::strEncode($_POST['title']),
                     );
 
-                    $bool = $this->model->update($updateValues, $this->uri->id);
+                    $bool = $this->menusModel->update($updateValues, $this->uri->id);
 
-                    $cache = new Menus\Cache($this->lang, $this->model);
+                    $cache = new Menus\Cache($this->lang, $this->menusModel);
                     $cache->setMenuItemsCache();
 
                     $this->session->unsetFormToken();
 
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
+                    $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'edit_success' : 'edit_error'), 'acp/menus');
                 } catch (Core\Exceptions\InvalidFormToken $e) {
-                    $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                    $redirect->setMessage(false, $e->getMessage(), 'acp/menus');
+                    $this->redirectMessages()->setMessage(false, $e->getMessage(), 'acp/menus');
                 } catch (Core\Exceptions\ValidationFailed $e) {
                     $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                     $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -134,10 +143,9 @@ class Index extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
-        $menus = $this->model->getAllMenus();
+        $menus = $this->menusModel->getAllMenus();
         $c_menus = count($menus);
 
         if ($c_menus > 0) {

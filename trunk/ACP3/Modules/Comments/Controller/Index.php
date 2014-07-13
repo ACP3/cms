@@ -6,13 +6,24 @@ use ACP3\Core;
 use ACP3\Modules\Comments;
 
 /**
- * Description of CommentsFrontend
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Comments\Controller
  */
 class Index extends Core\Modules\Controller
 {
 
+    /**
+     * @var \ACP3\Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
+     * @var \ACP3\Core\Session
+     */
+    protected $session;
     /**
      * @var string
      */
@@ -22,35 +33,51 @@ class Index extends Core\Modules\Controller
      */
     protected $entryId;
     /**
-     *
      * @var Comments\Model
      */
-    protected $model;
+    protected $commentsModel;
 
     public function __construct(
         Core\Auth $auth,
         Core\Breadcrumb $breadcrumb,
-        Core\Date $date,
-        \Doctrine\DBAL\Connection $db,
         Core\Lang $lang,
-        Core\Session $session,
         Core\URI $uri,
         Core\View $view,
         Core\SEO $seo,
-        $module,
-        $entryId)
+        Core\Modules $modules,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        Core\Session $session,
+        Comments\Model $commentsModel)
     {
-        parent::__construct($auth, $breadcrumb, $date, $db, $lang, $session, $uri, $view, $seo);
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
 
-        $this->module = $module;
-        $this->entryId = $entryId;
+        $this->date = $date;
+        $this->db = $db;
+        $this->session = $session;
+        $this->commentsModel = $commentsModel;
     }
 
-    public function preDispatch()
+    /**
+     * @param $module
+     * @return $this
+     */
+    public function setModule($module)
     {
-        parent::preDispatch();
+        $this->module = $module;
 
-        $this->model = new Comments\Model($this->db);
+        return $this;
+    }
+
+    /**
+     * @param $entryId
+     * @return $this
+     */
+    public function setEntryId($entryId)
+    {
+        $this->entryId = $entryId;
+
+        return $this;
     }
 
     public function actionCreate()
@@ -75,15 +102,13 @@ class Index extends Core\Modules\Controller
                     'entry_id' => $this->entryId,
                 );
 
-                $bool = $this->model->insert($insertValues);
+                $bool = $this->commentsModel->insert($insertValues);
 
                 $this->session->unsetFormToken();
 
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->uri->query);
+                $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'create_success' : 'create_error'), $this->uri->query);
             } catch (Core\Exceptions\InvalidFormToken $e) {
-                $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-                $redirect->setMessage(false, $e->getMessage(), $this->uri->query);
+                $this->redirectMessages()->setMessage(false, $e->getMessage(), $this->uri->query);
             } catch (Core\Exceptions\ValidationFailed $e) {
                 $alerts = new Core\Helpers\Alerts($this->uri, $this->view);
                 $this->view->assign('error_msg', $alerts->errorBox($e->getMessage()));
@@ -127,14 +152,13 @@ class Index extends Core\Modules\Controller
 
     public function actionIndex()
     {
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
         $config = new Core\Config($this->db, 'comments');
         $settings = $config->getSettings();
 
         // Auflistung der Kommentare
-        $comments = $this->model->getAllByModule($this->module, $this->entryId, POS, $this->auth->entries);
+        $comments = $this->commentsModel->getAllByModule($this->module, $this->entryId, POS, $this->auth->entries);
         $c_comments = count($comments);
 
         if ($c_comments > 0) {
@@ -151,7 +175,7 @@ class Index extends Core\Modules\Controller
                 $this->seo,
                 $this->uri,
                 $this->view,
-                $this->model->countAllByModule($this->module, $this->entryId)
+                $this->commentsModel->countAllByModule($this->module, $this->entryId)
             );
             $pagination->display();
 

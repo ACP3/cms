@@ -75,7 +75,7 @@ class Model extends Core\Model
 
     public function countAll($time)
     {
-        return count($this->getAll($time, POS));
+        return count($this->getAll($time));
     }
 
     public function getAll($time = '', $limitStart = '', $resultsPerPage = '')

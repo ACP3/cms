@@ -84,4 +84,34 @@ class Cache2
     {
         return $this->driver;
     }
+
+    /**
+     * @param string $dir
+     * @param string $cacheId
+     * @return bool
+     */
+    public static function purge($dir = 'sql', $cacheId = '')
+    {
+        $cacheDir = UPLOADS_DIR . 'cache/' . $dir;
+        $files = array_diff(scandir($cacheDir), array('.', '..'));
+        foreach ($files as $file) {
+            $path = "$cacheDir/$file";
+
+            if (is_dir($path) ) {
+                static::purge($path, $cacheId);
+            } else {
+                if (!empty($cacheId) && strpos($file, $cacheId) === false) {
+                    continue;
+                }
+
+                @unlink($path);
+            }
+        }
+
+        if (!empty($cacheId)) {
+            return true;
+        }
+
+        return @rmdir($dir);
+    }
 } 

@@ -6,23 +6,37 @@ use ACP3\Core;
 use ACP3\Modules\System;
 
 /**
- * Description of SystemAdmin
- *
- * @author Tino Goratsch
+ * Class Maintenance
+ * @package ACP3\Modules\System\Controller\Admin
  */
 class Maintenance extends Core\Modules\Controller\Admin
 {
     /**
-     *
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var System\Model
      */
-    protected $model;
+    protected $systemModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        \Doctrine\DBAL\Connection $db,
+        System\Model $systemModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->model = new System\Model($this->db);
+        $this->db = $db;
+        $this->systemModel = $systemModel;
     }
 
     public function actionIndex()
@@ -129,7 +143,7 @@ class Maintenance extends Core\Modules\Controller\Admin
 
                 $this->view->assign('sql_queries', $sqlQueries);
 
-                Core\Cache::purge();
+                Core\Cache2::purge();
                 return;
             } catch (Core\Exceptions\InvalidFormToken $e) {
                 $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);

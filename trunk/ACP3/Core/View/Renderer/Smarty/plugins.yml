@@ -2,31 +2,42 @@ services:
   smarty.plugin.check_access:
     class: ACP3\Core\View\Renderer\Smarty\CheckAccess
     arguments: ['@core.lang', '@core.modules', '@core.uri', '@core.validate', '@core.view']
+
   smarty.plugin.has_permission:
     class: ACP3\Core\View\Renderer\Smarty\HasPermission
     arguments: ['@core.modules']
+
   smarty.plugin.icon:
     class: ACP3\Core\View\Renderer\Smarty\Icon
     arguments: ['@core.validate']
+
   smarty.plugin.include_js:
     class: ACP3\Core\View\Renderer\Smarty\IncludeJs
     arguments: ['@core.view']
+
   smarty.plugin.js_libraries:
     class: ACP3\Core\View\Renderer\Smarty\JsLibraries
     arguments: ['@core.view']
+
   smarty.plugin.lang:
     class: ACP3\Core\View\Renderer\Smarty\Lang
     arguments: ['@core.lang']
+
   smarty.plugin.load_module:
     class: ACP3\Core\View\Renderer\Smarty\LoadModule
+    arguments: ['@core.modules']
+
   smarty.plugin.mark:
     class: ACP3\Core\View\Renderer\Smarty\Mark
     arguments: ['@core.view']
+
   smarty.plugin.navbar:
     class: ACP3\Core\View\Renderer\Smarty\Navbar
     arguments: ['@core.modules', '@menus.helpers']
+
   smarty.plugin.uri:
     class: ACP3\Core\View\Renderer\Smarty\URI
     arguments: ['@core.uri']
+
   smarty.plugin.wysiwyg:
     class: ACP3\Core\View\Renderer\Smarty\WYSIWYG

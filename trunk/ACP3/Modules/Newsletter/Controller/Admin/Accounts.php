@@ -6,35 +6,42 @@ use ACP3\Core;
 use ACP3\Modules\Newsletter;
 
 /**
- * Description of NewsletterAdmin
- *
- * @author Tino Goratsch
+ * Class Accounts
+ * @package ACP3\Modules\Newsletter\Controller\Admin
  */
 class Accounts extends Core\Modules\Controller\Admin
 {
 
     /**
-     *
      * @var Newsletter\Model
      */
-    protected $model;
+    protected $newsletterModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Validate $validate,
+        Core\Session $session,
+        Newsletter\Model $newsletterModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules, $validate, $session);
 
-        $this->model = new Newsletter\Model($this->db);
+        $this->newsletterModel = $newsletterModel;
     }
 
     public function actionActivate()
     {
         $bool = false;
         if ($this->get('core.validate')->isNumber($this->uri->id) === true) {
-            $bool = $this->model->update(array('hash' => ''), $this->uri->id, Newsletter\Model::TABLE_NAME_ACCOUNTS);
+            $bool = $this->newsletterModel->update(array('hash' => ''), $this->uri->id, Newsletter\Model::TABLE_NAME_ACCOUNTS);
         }
 
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->setMessage($bool, $this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), 'acp/newsletter/accounts');
+        $this->redirectMessages()->setMessage($bool, $this->lang->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error'), 'acp/newsletter/accounts');
     }
 
     public function actionDelete()
@@ -44,11 +51,10 @@ class Accounts extends Core\Modules\Controller\Admin
         if ($this->uri->action === 'confirmed') {
             $bool = false;
             foreach ($items as $item) {
-                $bool = $this->model->delete($item, '', Newsletter\Model::TABLE_NAME_ACCOUNTS);
+                $bool = $this->newsletterModel->delete($item, '', Newsletter\Model::TABLE_NAME_ACCOUNTS);
             }
 
-            $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-            $redirect->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/newsletter/accounts');
+            $this->redirectMessages()->setMessage($bool, $this->lang->t('system', $bool !== false ? 'delete_success' : 'delete_error'), 'acp/newsletter/accounts');
         } elseif (is_string($items)) {
             throw new Core\Exceptions\ResultNotExists();
         }
@@ -56,10 +62,9 @@ class Accounts extends Core\Modules\Controller\Admin
 
     public function actionIndex()
     {
-        $redirect = new Core\Helpers\RedirectMessages($this->uri, $this->view);
-        $redirect->getMessage();
+        $this->redirectMessages()->getMessage();
 
-        $accounts = $this->model->getAllAccounts();
+        $accounts = $this->newsletterModel->getAllAccounts();
         $c_accounts = count($accounts);
 
         if ($c_accounts > 0) {

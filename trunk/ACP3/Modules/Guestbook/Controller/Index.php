@@ -6,23 +6,41 @@ use ACP3\Core;
 use ACP3\Modules\Guestbook;
 
 /**
- * Description of GuestbookFrontend
- *
- * @author Tino Goratsch
+ * Class Index
+ * @package ACP3\Modules\Guestbook\Controller
  */
 class Index extends Core\Modules\Controller
 {
     /**
-     *
+     * @var Core\Date
+     */
+    protected $date;
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+    /**
      * @var Guestbook\Model
      */
-    protected $model;
+    protected $guestbookModel;
 
-    public function preDispatch()
+    public function __construct(
+        Core\Auth $auth,
+        Core\Breadcrumb $breadcrumb,
+        Core\Lang $lang,
+        Core\URI $uri,
+        Core\View $view,
+        Core\SEO $seo,
+        Core\Modules $modules,
+        Core\Date $date,
+        \Doctrine\DBAL\Connection $db,
+        Guestbook\Model $guestbookModel)
     {
-        parent::preDispatch();
+        parent::__construct($auth, $breadcrumb, $lang, $uri, $view, $seo, $modules);
 
-        $this->model = new Guestbook\Model($this->db);
+        $this->date = $date;
+        $this->db = $db;
+        $this->guestbookModel = $guestbookModel;
     }
 
     public function actionCreate()
@@ -54,7 +72,7 @@ class Index extends Core\Modules\Controller
                     'active' => $settings['notify'] == 2 ? 0 : 1,
                 );
 
-                $lastId = $this->model->insert($insertValues);
+                $lastId = $this->guestbookModel->insert($insertValues);
 
                 // E-Mail-Benachrichtigung bei neuem Eintrag der hinterlegten
                 // E-Mail-Adresse zusenden
@@ -134,7 +152,7 @@ class Index extends Core\Modules\Controller
         $settings = $config->getSettings();
         $this->view->assign('overlay', $settings['overlay']);
 
-        $guestbook = $this->model->getAll($settings['notify'], POS, $this->auth->entries);
+        $guestbook = $this->guestbookModel->getAll($settings['notify'], POS, $this->auth->entries);
         $c_guestbook = count($guestbook);
 
         if ($c_guestbook > 0) {
@@ -145,7 +163,7 @@ class Index extends Core\Modules\Controller
                 $this->seo,
                 $this->uri,
                 $this->view,
-                $this->model->countAll($settings['notify'])
+                $this->guestbookModel->countAll($settings['notify'])
             );
             $pagination->display();
 

@@ -1,10 +1,20 @@
 services:
+  search.controller.frontend.index:
+    class: ACP3\Modules\Search\Controller\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.session']
+
+  search.controller.sidebar.index:
+    class: ACP3\Modules\Search\Controller\Sidebar\Index
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.session']
+
   search.helpers:
     class: ACP3\Modules\Search\Helpers
     arguments: ['@core.modules']
+
   search.validator:
     class: ACP3\Modules\Search\Validator
     parent: core.validator.abstract
+
   search.extensions:
     class: ACP3\Modules\Search\Extensions
     arguments: ['@core.db', '@core.date', '@core.lang', '@core.uri', '@core.helpers.string.formatter']
