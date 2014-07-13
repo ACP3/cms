@@ -1,15 +1,19 @@
 services:
   contact.controller.admin.index:
     class: ACP3\Modules\Contact\Controller\Admin\Index
-    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@core.db']
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.validate', '@core.session', '@contact.config']
 
   contact.controller.frontend.index:
     class: ACP3\Modules\Contact\Controller\Index
-    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.db', '@core.session']
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.session', '@contact.config']
 
   contact.controller.sidebar.index:
     class: ACP3\Modules\Contact\Controller\Sidebar\Index
-    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@core.db', '@core.session']
+    arguments: ['@core.auth', '@core.breadcrumb', '@core.lang', '@core.uri', '@core.view', '@core.seo', '@core.modules', '@contact.config']
+
+  contact.config:
+    class: ACP3\Core\Config
+    arguments: ['@core.db', 'contact']
 
   contact.validator:
     class: ACP3\Modules\Contact\Validator
